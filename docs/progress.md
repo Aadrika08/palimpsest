@@ -15,7 +15,7 @@ remains unchanged. Historical evidence below retains its original source identit
 | --- | --- | --- |
 | M5 memory | All nine fixed-FLYNN conditions completed with no own-U task/timing advantage; own-source actions/policy replay passed. | Implement the [eight-cell admission stage](plans/m5-counterbalanced-development.md) before reviewed execution. Route confounding, full counterbalance and held-out evaluation remain open. |
 | M6 body / tasks | Four-probe calibration, native/replay/paired metrics and actual browser workflow passed on their frozen sources. | Prepare restoration checks at exploration dwell and homing phase transitions; held-out body/task evaluation remains open. |
-| M6 puck | Constructor/task admission separation is integrated at `5cde483`; 58 focused checks and both CI workflows pass. Two zero-step v3 owners construct matching models/state/images, but the gate fails full native-data equality. | Trace the 986 differing serialized bytes without normalization or deserialization. No pushing or learned-task claim yet. |
+| M6 puck | Constructor/task admission separation is integrated at `5cde483`; 58 focused checks and both CI workflows pass. Two zero-step [v3 owners](reports/m6-puck-construction-v3.md) construct matching models/state/images, but the gate fails full native-data equality. | Trace the 986 differing serialized bytes without normalization or deserialization. No pushing or learned-task claim yet. |
 | M7 model | Three-seed development threshold failed; retained diagnosis identifies a coverage gap without causal proof. | Held-out evaluation stays locked. |
 | Physical / exhibition | Software protocols and supervised artwork controls exist. | Equipment and independent-operator evidence are still required. |
 
