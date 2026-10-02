@@ -1,7 +1,7 @@
 # M5 bounded development acquisition batch
 
-This is a prepared runner, not a batch result, held-out protocol freeze or R2
-qualification. The first manual pilot remains separate: its collected actual E
+This development protocol was executed once at frozen source `1cb70a3` on
+2026-10-02. It is not a held-out protocol freeze or R2 qualification. The first manual pilot remains separate: its collected actual E
 has support local=1 changed/paired=1 unchanged, so `fit(E)` returns empty U under
 the unchanged four-support threshold. Pilot report:
 `runs/m5-first-history-20261002/report.json`, SHA256
@@ -66,7 +66,7 @@ Pure checks:
 PYTHONPATH=src:tests ../lab-hardening/.venv/bin/python -m unittest test_memory_acquisition test_memory_history test_memory_cases test_memory_experiment test_memory_task test_memory test_records -v
 ```
 
-Prepared execution command, **not run in this slice** (output must be new):
+Recorded execution command (already run once; retained as provenance):
 
 ```sh
 PYTHONPATH=src ../lab-hardening/.venv/bin/python scripts/acquire_memory_history.py \
@@ -76,4 +76,11 @@ PYTHONPATH=src ../lab-hardening/.venv/bin/python scripts/acquire_memory_history.
 ```
 
 Add `--plan-only` to inspect the fixed jobs without runtime work or output writes.
-Review/commit/source freeze and exclusive runtime allocation remain pending.
+The executed batch used the reviewed/frozen source and exclusive runtime slot.
+All eight runs completed normally: 3,280 ticks, 674,361,116 recording bytes and
+no gaps. Four checks per relation supported a local rule in the local history
+and a paired rule in the paired history; `fit` received E only. Source identity
+remained unchanged, recording/chunk validation passed, normal cleanup completed
+and the slot was released. See the [recorded-history report](../reports/m5-recorded-history.md)
+for exact support, byte counts, per-run provenance and hash-pinned artifacts.
+These development acquisitions do not establish held-out transfer or R2 completion.
