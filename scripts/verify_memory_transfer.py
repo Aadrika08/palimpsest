@@ -1,6 +1,6 @@
-"""One development transfer case; prepare-only until exclusive runtime GO.
+"""Two fixed all-nine development blocks; pure preparation until runtime GO.
 
-Source acquisition uses privileged pose. Four continuations use declared bearing
+Source acquisition uses privileged pose. All continuations use declared bearing
 only. Expected cue-loss/task failures remain failed terminal recordings.
 """
 import argparse
@@ -25,8 +25,13 @@ HISTORY_INPUTS = {
         '016c5b5e9472b116d065fb922b32d64089db6e27839aec09d751238f8ce7ffc1'),
     'swapped': ('runs/m5-acquisition-batch-20261002/paired_cue-history.json',
         '64628e37cc6e861194f810baa92926eba8f57260047cdd8ad320a4601023d213')}
-CONDITIONS = ('own', 'swapped', 'sham', 'no-U')
+CONDITIONS = experiment.CONDITIONS
 STAGES = ('source', 'anchor', *CONDITIONS)
+BLOCKS = ({'id':'local-8', 'seed':8, 'regime':'local_cue'},
+          {'id':'paired-9', 'seed':9, 'regime':'paired_cue'})
+SEMANTIC_CASE_SHA256 = {
+    'local-8':'3750fa458baf335552ac168e0ad9a3c1cf39f76004d800baf7391e3b93c82635',
+    'paired-9':'d47f632b856a768632b0d9988e0847d41ac47eac18714d88dc724a842583fa61'}
 SOURCE_PREPARATION = {'version': 2, 'name': 'fixed-visible-boundary-source-v2',
     'access': 'privileged-manual-pose-supervision', 'uses_u': False,
     'uses_regime': False, 'uses_gold': False, 'start_tick': 200, 'stop_tick': 300,
@@ -44,8 +49,11 @@ GOAL_HANDOFF = {'version': 2, 'name': 'paused-source-goal-handoff-v4',
     'physics_guard': 'exact-authoritative-state-v1',
     'snapshot_binding': 'typed-integration-after-digest-v1'}
 GOAL_HANDOFF_SHA256 = memory.sha256(GOAL_HANDOFF)
-PROTOCOL = {'version': 4, 'claim': 'single-development-case-mechanism-check',
-    'seed': 8, 'regime': 'local_cue', 'kind': 'change', 'split': 'development-test',
+PROTOCOL = {'version': 5, 'claim': 'two-development-block-all-nine-selector-check',
+    'blocks':list(BLOCKS), 'stages_per_block':list(STAGES), 'total_stages':22,
+    'allowed_branch_differences':['u','declared-selector-configuration'],
+    'historical_semantic_base':'64c8ccb', 'semantic_case_sha256':SEMANTIC_CASE_SHA256,
+    'kind': 'change', 'split': 'development-test',
     'source_prefix_ticks': 300, 'remaining_ticks': 300, 'target_limit': 1,
     'controller': 'manual', 'device': 'cpu', 'velocity': .65,
     'driver': 'last-published-declared-bearing-only-one-tick-delay',
@@ -60,6 +68,57 @@ PROTOCOL = {'version': 4, 'claim': 'single-development-case-mechanism-check',
 PROTOCOL_SHA256 = memory.sha256(PROTOCOL)
 
 
+def block_spec(identifier):
+    return next((b for b in BLOCKS if b['id']==identifier), None)
+
+
+def semantic_case(case):
+    return {k:copy.deepcopy(v) for k,v in case.items()
+        if k not in ('protocol_sha256','source_sha256','case_sha256')}
+
+
+def block_histories(identifier, histories):
+    if block_spec(identifier) is None:
+        raise ValueError('Unknown fixed development block')
+    return histories if identifier=='local-8' else {'own':histories['swapped'], 'swapped':histories['own']}
+
+
+def condition_u(stage, histories):
+    if stage=='swapped':
+        return copy.deepcopy(histories['swapped']['u'])
+    if stage in ('anchor','own','sham'):
+        return copy.deepcopy(histories['own']['u'])
+    if stage=='hand-authored':
+        return memory.artifact('local_cue')
+    return memory.artifact(method='empty-v1')
+
+
+def selector_config(stage, histories, oracle=None):
+    if stage=='source':
+        return None
+    condition='own' if stage=='anchor' else stage
+    resource=histories['own']['e'] if condition=='retrieval' else (
+        oracle['gold_target_ids'] if condition=='oracle' and oracle is not None else None)
+    if condition=='oracle' and oracle is None:
+        raise ValueError('Oracle requires independently retained actual geometry evidence')
+    provenance=(memory.sha256(oracle) if condition=='oracle' else histories['swapped']['sha256']
+        if condition=='swapped' else histories['own']['sha256']
+        if condition in ('own','sham','retrieval') else PROTOCOL_SHA256)
+    return {'version':1,'condition':condition,'limit':1,'resource':copy.deepcopy(resource),
+        'resource_sha256':memory.sha256(resource),'provenance_sha256':provenance}
+
+
+def baseline_invariants(native):
+    """Exclude only U and declared selector configuration/version, nothing else."""
+    normalized=copy.deepcopy(native)
+    state=memory_task.validate_state(normalized['application']['memory'])
+    normalized['application']['memory']=state
+    if state.get('version')==2:
+        state.pop('selector')
+        state['version']=1
+    return invariant_hashes(normalized)
+
+
 def _hash(path):
     with Path(path).open('rb') as stream:
         return hashlib.file_digest(stream, 'sha256').hexdigest()
@@ -69,6 +128,11 @@ def _write(path, value):
     with Path(path).open('x') as stream:
         json.dump(value, stream, indent=2, allow_nan=False)
         stream.write('\n')
+
+
+def recording_digest(data):
+    return memory.sha256([{'path':str(p.relative_to(data['run'])), 'sha256':_hash(p)}
+        for p in data['paths']])
 
 
 def source_identity(repo):
@@ -349,9 +413,7 @@ def occupancy(case, circles):
 
 
 def score_nine(m, trigger, histories, gold):
-    choices = {'own': histories['own']['u'], 'swapped': histories['swapped']['u'],
-        'sham': copy.deepcopy(histories['own']['u']), 'no-U': memory.artifact(method='empty-v1'),
-        'hand-authored': memory.artifact('local_cue')}
+    choices = {condition:condition_u(condition,histories) for condition in memory_task.ARTIFACT_CONDITIONS}
     result = []
     for condition in experiment.CONDITIONS:
         resources = {'u': choices[condition]} if condition in choices else (
@@ -381,15 +443,95 @@ def score_nine(m, trigger, histories, gold):
     return result
 
 
+def actual_trigger(source_state, data, case):
+    """Reconstruct the event from the retained native cue and real next packet."""
+    triggers=[e['detail']['trigger'] for e in data['events'] if e['kind']=='memory_decision'
+        and e['detail']['kind']=='memory_trigger']
+    packet=preparation_packet(data['events'],case,source_state,300)
+    before=source_state['detector']
+    if before['tick']!=299 or len(before['cues'])!=1:
+        raise ValueError('Gold source lacks the consecutive actually observed cue')
+    cue=packet['cues'][0];previous=before['cues'][0];episode=source_state['episode_id']
+    expected={'id':memory_task._sensor_id(episode,300,'trigger',cue['id']),
+        'episode_id':episode,'tick':300,'kind':'cue_changed','cue_id':cue['id'],
+        'before':previous['state'],'after':cue['state'],
+        'before_observation_id':previous['observation_id'],
+        'observation_id':memory_task._sensor_id(episode,300,'cue',cue['id'])}
+    if (previous['id']!=cue['id'] or previous['state']!=0 or cue['state']!=1
+            or previous['observation_id']!=memory_task._sensor_id(episode,299,'cue',cue['id'])
+            or len(triggers)!=1 or memory.canonical_bytes(triggers[0])!=memory.canonical_bytes(expected)):
+        raise ValueError('Gold event differs from consecutive actual visible cues')
+    return memory.validate_trigger(expected)
+
+
+def oracle_evidence(case, source_native, source_report, own_data, own_report, source_data):
+    """Actual clearance plus observed expectations; never select/fit/regime labels."""
+    state=source_native['application']['memory']
+    trigger=actual_trigger(state,own_data,case)
+    before=source_report['before_circles'];after=own_report['after_circles']
+    if (source_native['application']['source_run_id']!=source_data['manifest']['run_id']
+            or memory.canonical_bytes(before)!=memory.canonical_bytes(artifacts._world_at(source_data['events'],0,300)['obstacles'])
+            or memory.canonical_bytes(after)!=memory.canonical_bytes(artifacts._world_at(own_data['events'],0,300)['obstacles'])):
+        raise ValueError('Evaluator geometry differs from the actual recorded world')
+    proof={'version':1, 'source_run_id':source_native['application']['source_run_id'],
+        'source_snapshot_sha256':source_report['snapshot_sha256'],
+        'source_recording_sha256':recording_digest(source_data),
+        'source_worker_sha256':_hash(source_data['run']/'transfer-worker.json'),
+        'post_run_id':own_data['manifest']['run_id'], 'post_recording_sha256':recording_digest(own_data),
+        'post_worker_sha256':_hash(own_data['run']/'transfer-worker.json'),
+        'pre_m_sha256':memory.sha256(state['m']), 'before_circles':before, 'after_circles':after,
+        'trigger':trigger,'gold_target_ids':experiment.gold_target_ids(state['m'],occupancy(case,before),occupancy(case,after),trigger)}
+    return validate_oracle_evidence(proof,state['m'],case)
+
+
+def validate_oracle_evidence(proof, m, case):
+    memory._fields(proof,'version source_run_id source_snapshot_sha256 source_recording_sha256 source_worker_sha256 post_run_id post_recording_sha256 post_worker_sha256 pre_m_sha256 before_circles after_circles trigger gold_target_ids')
+    memory._version(proof['version']);memory._bounded(proof,64*1024)
+    for key in ('source_run_id','post_run_id'):
+        artifacts._id(proof[key])
+    for key in ('source_snapshot_sha256','source_recording_sha256','source_worker_sha256',
+                'post_recording_sha256','post_worker_sha256','pre_m_sha256'):
+        memory._digest(proof[key])
+    trigger=memory.validate_trigger(proof['trigger'])
+    if (trigger['tick']!=300 or trigger['cue_id']!=case['cue_id'] or trigger['episode_id']!='episode-0'
+            or proof['pre_m_sha256']!=memory.sha256(m)
+            or memory.canonical_bytes(proof['gold_target_ids'])!=memory.canonical_bytes(
+                experiment.gold_target_ids(m,occupancy(case,proof['before_circles']),occupancy(case,proof['after_circles']),trigger))):
+        raise ValueError('Oracle proof contradicts the retained factual state/actual geometry')
+    return copy.deepcopy(proof)
+
+
+def check_oracle_sources(job):
+    """Only oracle reads its actual donor recordings; no geometry enters motors."""
+    proof=job['oracle_evidence'];runs=Path(job['output']).parent
+    source=read_run(runs/proof['source_run_id']);post=read_run(runs/proof['post_run_id'])
+    reports=[artifacts._json(artifacts._read(d['run']/'transfer-worker.json',1024**2)) for d in (source,post)]
+    source_native,entry,_=_initial_snapshot(source)
+    for data,stage in ((source,'source'),(post,'own')):
+        manifest=data['manifest']
+        if (manifest.get('transfer_block')!=job['block'] or manifest.get('transfer_stage')!=stage
+                or manifest.get('transfer_protocol_sha256')!=PROTOCOL_SHA256
+                or memory.canonical_bytes(manifest.get('memory_case'))!=memory.canonical_bytes(job['case'])):
+            raise ValueError('Oracle donor recording belongs to a different case/block/source protocol')
+    expected=oracle_evidence(job['case'],source_native,reports[0],post,reports[1],source)
+    if (memory.canonical_bytes(proof)!=memory.canonical_bytes(expected)
+            or proof['source_snapshot_sha256']!=entry['sha256']
+            or baseline_invariants(source_native)!=job['expected_non_u']):
+        raise ValueError('Oracle evidence differs from its hash-validated actual donor recordings')
+
+
 def validate_job(job, *, prepared=False):
-    memory._fields(job, 'repo assets output run_id stage case source_identity protocol_sha256 snapshot_path snapshot_sha256 expected_non_u')
-    if (job['stage'] not in STAGES or job['protocol_sha256'] != PROTOCOL_SHA256
+    memory._fields(job, 'repo assets output run_id block stage case source_identity protocol_sha256 snapshot_path snapshot_sha256 expected_non_u selector oracle_evidence')
+    block=block_spec(job['block'])
+    if (block is None or job['stage'] not in STAGES or job['protocol_sha256'] != PROTOCOL_SHA256
             or Path(job['repo']) != Path(__file__).resolve().parents[1]
             or artifacts._id(job['run_id']) != artifacts._id(Path(job['output']).name)):
         raise ValueError('Unsupported transfer worker identity')
-    expected = experiment.make_world_case(8, 'local_cue', 'development-test', acquisition=True)
+    expected = experiment.make_world_case(block['seed'], block['regime'], 'development-test', acquisition=True)
     if memory.canonical_bytes(experiment.validate_world_case(job['case'])) != memory.canonical_bytes(expected):
         raise ValueError('Transfer requires the fixed fresh development case')
+    if memory.sha256(semantic_case(job['case']))!=SEMANTIC_CASE_SHA256[block['id']]:
+        raise ValueError('Non-provenance case fields differ from the historical fixed design')
     if any(not Path(job[k]).is_absolute() for k in ('repo', 'assets', 'output')):
         raise ValueError('Worker paths must be absolute')
     bound = (job['snapshot_path'], job['snapshot_sha256'], job['expected_non_u'])
@@ -398,24 +540,50 @@ def validate_job(job, *, prepared=False):
     if job['stage'] != 'source' and not prepared and (any(x is None for x in bound)
             or not Path(job['snapshot_path']).is_absolute() or type(job['expected_non_u']) is not dict):
         raise ValueError('Continuation requires a hash-bound native snapshot')
+    if job['stage']=='source':
+        if job['selector'] is not None:
+            raise ValueError('Source must use unchanged legacy empty-U acquisition')
+    elif not (prepared and job['stage']=='oracle' and job['selector'] is None):
+        condition='own' if job['stage']=='anchor' else job['stage']
+        config=memory_task.validate_selector(job['selector'],memory.seed_m(expected['facts'],[]),
+            memory.artifact('local_cue') if condition=='hand-authored' else memory.artifact(method='empty-v1'))
+        if config['condition']!=condition:
+            raise ValueError('Worker condition differs from selector configuration')
+    if job['stage']!='oracle' and job['oracle_evidence'] is not None:
+        raise ValueError('Only oracle may receive evaluator gold evidence')
+    if job['stage']=='oracle' and not prepared and (job['oracle_evidence'] is None or
+            job['selector']['provenance_sha256']!=memory.sha256(job['oracle_evidence']) or
+            job['selector']['resource']!=job['oracle_evidence'].get('gold_target_ids')):
+        raise ValueError('Oracle configuration lacks its actual source evidence binding')
     return copy.deepcopy(job)
 
 
 def make_plan(repo, assets, output):
     repo, assets, output = (Path(p).resolve() for p in (repo, assets, output))
     histories = load_histories(repo)
-    case = experiment.make_world_case(8, 'local_cue', 'development-test', acquisition=True)
-    if experiment._ids(case) & (experiment._ids(histories['own']['e']) | experiment._ids(histories['swapped']['e'])):
-        raise ValueError('Fresh test and history IDs overlap')
     identity = source_identity(repo)
     jobs = []
-    for stage in STAGES:
-        run_id = uuid.uuid4().hex
-        jobs.append(validate_job({'repo': str(repo), 'assets': str(assets), 'output': str(output/'runs'/run_id),
-            'run_id': run_id, 'stage': stage, 'case': case, 'source_identity': identity,
-            'protocol_sha256': PROTOCOL_SHA256, 'snapshot_path': None,
-            'snapshot_sha256': None, 'expected_non_u': None}, prepared=True))
+    instance_ids=set()
+    for block in BLOCKS:
+        case = experiment.make_world_case(block['seed'],block['regime'],'development-test',acquisition=True)
+        ids=experiment._ids(case)
+        if ids & (instance_ids | experiment._ids(histories['own']['e']) | experiment._ids(histories['swapped']['e'])):
+            raise ValueError('Current blocks and historical instance IDs overlap')
+        instance_ids.update(ids)
+        matching=block_histories(block['id'],histories)
+        for stage in STAGES:
+            run_id = uuid.uuid4().hex
+            jobs.append(validate_job({'repo': str(repo), 'assets': str(assets), 'output': str(output/'runs'/run_id),
+                'run_id': run_id, 'block':block['id'], 'stage': stage, 'case': case, 'source_identity': identity,
+                'protocol_sha256': PROTOCOL_SHA256, 'snapshot_path': None,
+                'snapshot_sha256': None, 'expected_non_u': None,
+                'selector':None if stage=='oracle' else selector_config(stage,matching),
+                'oracle_evidence':None}, prepared=True))
+    cases={b['id']:next(j['case'] for j in jobs if j['block']==b['id']) for b in BLOCKS}
     return {'output': str(output), 'protocol': PROTOCOL, 'protocol_sha256': PROTOCOL_SHA256,
+        'case_identities':{key:{'canonical_case_sha256':memory.sha256(case),
+            'generator_case_sha256':case['case_sha256'],'semantic_case_sha256':memory.sha256(semantic_case(case))}
+            for key,case in cases.items()},
         'source_identity': identity, 'history_inputs': {k: {'path': v['path'], 'sha256': v['sha256']} for k,v in histories.items()},
         'jobs': jobs}
 
@@ -466,16 +634,20 @@ def worker(raw):
     job = validate_job(raw)
     if source_identity(job['repo']) != job['source_identity']:
         raise ValueError('Worker source changed before initialization')
-    histories=load_histories(job['repo'])
+    histories=block_histories(job['block'],load_histories(job['repo']))
     run,stage,case=Path(job['output']),job['stage'],job['case']
     engine=None
     started=time.monotonic()
-    report={'stage':stage,'status':'failed','run_path':str(run),'task_pass':False,'r2_complete':False}
+    report={'block':job['block'],'stage':stage,'status':'failed','run_path':str(run),'task_pass':False,'r2_complete':False}
     try:
+        if stage=='oracle':
+            check_oracle_sources(job)
         engine=Engine.open(job['repo'],job['assets'],run/'recording',controller='manual',device='cpu',
-            scenario='memory-passages',seed=8,run_id=job['run_id'],max_bytes=PROTOCOL['recording_max_bytes'],memory_case=case)
+            scenario='memory-passages',seed=case['seed'],run_id=job['run_id'],max_bytes=PROTOCOL['recording_max_bytes'],memory_case=case)
         engine.writer.manifest.update(transfer_protocol=PROTOCOL,transfer_protocol_sha256=PROTOCOL_SHA256,
-            transfer_driver_sha256=job['source_identity']['driver_sha256'],transfer_stage=stage,
+            transfer_driver_sha256=job['source_identity']['driver_sha256'],transfer_stage=stage,transfer_block=job['block'],
+            selector_configuration=job['selector'],selector_configuration_sha256=memory.sha256(job['selector']),
+            oracle_evidence=job['oracle_evidence'],semantic_case_sha256=memory.sha256(semantic_case(case)),
             source_preparation_protocol=SOURCE_PREPARATION,source_preparation_sha256=SOURCE_PREPARATION_SHA256,
             acquisition_schedule_override=ACQUISITION_OVERRIDE,
             goal_handoff_protocol=GOAL_HANDOFF,goal_handoff_sha256=GOAL_HANDOFF_SHA256)
@@ -486,16 +658,27 @@ def worker(raw):
             if _hash(path) != job['snapshot_sha256']:
                 raise ValueError('Snapshot hash differs before restore')
             native=read_snapshot(path)
-            if invariant_hashes(native) != job['expected_non_u']:
+            if baseline_invariants(native) != job['expected_non_u']:
                 raise ValueError('Source snapshot scientific invariants differ')
-            u=(histories['swapped']['u'] if stage=='swapped' else memory.artifact(method='empty-v1')
-                if stage=='no-U' else copy.deepcopy(histories['own']['u']))
+            if stage=='oracle':
+                validate_oracle_evidence(job['oracle_evidence'],native['application']['memory']['m'],case)
+            expected_config=selector_config(stage,histories,job['oracle_evidence'])
+            if memory.canonical_bytes(job['selector'])!=memory.canonical_bytes(expected_config):
+                raise ValueError('Selector resources/provenance differ from the pinned condition')
+            u=condition_u(stage,histories)
             engine.restore_memory_branch(native,u)
             from palimpsest.snapshots import capture
+            # Engine's restore remains strictly U-only before this explicit change.
             initial=capture(engine.env,engine.observation,application=engine.application_state())
-            if invariant_hashes(initial) != job['expected_non_u']:
-                raise ValueError('Initial branch state changed outside U')
-            report['initial_non_u']=invariant_hashes(initial)
+            if invariant_hashes(initial)!=invariant_hashes(native):
+                raise ValueError('Strict restoration changed state outside U')
+            engine.memory=memory_task.configure_selector(engine.memory,job['selector'])
+            configured=capture(engine.env,engine.observation,application=engine.application_state())
+            if baseline_invariants(configured)!=job['expected_non_u']:
+                raise ValueError('Initial branch state changed outside U and declared selector')
+            engine._event('selector_configured',configuration=job['selector'],
+                configuration_sha256=memory.sha256(job['selector']))
+            report['initial_non_u']=baseline_invariants(configured)
             if stage in CONDITIONS:
                 _register_initial(engine,run)
                 report.update(initial_snapshot_sha256=_hash(run/'snapshots/initial.snp'))
@@ -525,7 +708,7 @@ def worker(raw):
             _register_initial(engine,run)
             native=read_snapshot(run/'snapshots/initial.snp')
             report.update(snapshot_path=str(run/'snapshots/initial.snp'),snapshot_sha256=_hash(run/'snapshots/initial.snp'),
-                non_u=invariant_hashes(native),pre_m=copy.deepcopy(engine.memory['m']),status='recorded')
+                non_u=baseline_invariants(native),pre_m=copy.deepcopy(engine.memory['m']),status='recorded')
         else:
             engine.writer.manifest['continuation_access']='last-published-declared-bearing-only'
             for _ in range(300):
@@ -574,6 +757,9 @@ def validate_stage(job, supervised):
     expected={'memory_case':job['case'],'memory_case_sha256':memory.sha256(job['case']),
         'transfer_protocol':PROTOCOL,'transfer_protocol_sha256':PROTOCOL_SHA256,
         'transfer_driver_sha256':job['source_identity']['driver_sha256'],'transfer_stage':job['stage'],
+        'transfer_block':job['block'],'selector_configuration':job['selector'],
+        'selector_configuration_sha256':memory.sha256(job['selector']),
+        'oracle_evidence':job['oracle_evidence'], 'semantic_case_sha256':memory.sha256(semantic_case(job['case'])),
         'source_preparation_protocol':SOURCE_PREPARATION,'source_preparation_sha256':SOURCE_PREPARATION_SHA256,
         'acquisition_schedule_override':ACQUISITION_OVERRIDE,
         'goal_handoff_protocol':GOAL_HANDOFF,'goal_handoff_sha256':GOAL_HANDOFF_SHA256}
@@ -583,9 +769,9 @@ def validate_stage(job, supervised):
     if len(environments)!=1 or any(environments[0].get(k)!=job['source_identity'][k]
             for k in ('source_sha256','lock_sha256','upstream_commit')):
         raise ValueError('Recorded source identity differs')
-    if (manifest.get('controller')!='manual' or manifest.get('requested_device')!='cpu' or manifest.get('seed')!=8
+    if (manifest.get('controller')!='manual' or manifest.get('requested_device')!='cpu' or manifest.get('seed')!=job['case']['seed']
             or manifest.get('recording_max_bytes')!=PROTOCOL['recording_max_bytes']
-            or report.get('status')!='recorded' or report.get('stage')!=job['stage']
+            or report.get('status')!='recorded' or report.get('stage')!=job['stage'] or report.get('block')!=job['block']
             or report.get('run_path')!=str(run) or 'cleanup_error' in report
             or manifest.get('close_reason')!='operator_closed'):
         raise ValueError('Transfer controller, quota, cleanup or worker report differs')
@@ -594,7 +780,7 @@ def validate_stage(job, supervised):
             or (manifest['status']=='failed')!=(report.get('final_phase')=='failed')):
         raise ValueError('Terminal recording and worker outcome differ')
     native,entry,_=_initial_snapshot(data)
-    hashes=invariant_hashes(native)
+    hashes=baseline_invariants(native)
     declarations=[e for e in events if e['kind']=='source_preparation_declared']
     if (len(declarations)!=1
             or memory.canonical_bytes(declarations[0].get('protocol'))!=memory.canonical_bytes(SOURCE_PREPARATION)
@@ -605,11 +791,28 @@ def validate_stage(job, supervised):
         raise ValueError('Native event prefix lacks the declared source preparation protocol')
     if memory.canonical_bytes(native['application']['world_task_state'].get('case'))!=memory.canonical_bytes(job['case']):
         raise ValueError('Native snapshot case identity differs')
-    histories=load_histories(job['repo'])
-    expected_u=(memory.artifact(method='empty-v1') if job['stage'] in ('source','no-U') else
-        histories['swapped']['u'] if job['stage']=='swapped' else histories['own']['u'])
+    histories=block_histories(job['block'],load_histories(job['repo']))
+    expected_u=condition_u(job['stage'],histories)
     if memory.canonical_bytes(native['application']['memory']['u'])!=memory.canonical_bytes(expected_u):
         raise ValueError('Registered native U differs from its declared condition')
+    state=native['application']['memory']
+    configured=[e for e in events if e['kind']=='selector_configured']
+    if job['stage']=='source':
+        if configured or state.get('version')!=1 or 'selector' in state:
+            raise ValueError('Source acquired evidence with a configured selector')
+    else:
+        expected_config=selector_config(job['stage'],histories,job['oracle_evidence'])
+        if (state.get('version')!=2 or memory.canonical_bytes(state.get('selector'))!=memory.canonical_bytes(expected_config)
+                or memory.canonical_bytes(job['selector'])!=memory.canonical_bytes(expected_config)
+                or len(configured)!=1 or configured[0].get('configuration_sha256')!=memory.sha256(expected_config)
+                or memory.canonical_bytes(configured[0].get('configuration'))!=memory.canonical_bytes(expected_config)
+                or any(type(configured[0].get(k)) is not int for k in ('tick','episode','episode_step','sequence'))
+                or (configured[0]['tick'],configured[0]['episode'],configured[0]['episode_step'])!=(300,0,300)
+                or configured[0]['sequence']>=native['application']['event_prefix']['event_count']):
+            raise ValueError('Declared selector/resources/provenance differ from the native event prefix')
+        memory_task.validate_selector(state['selector'],state['m'],state['u'])
+        if job['stage']=='oracle':
+            validate_oracle_evidence(job['oracle_evidence'],state['m'],job['case'])
     cursor=native['application']['memory']['cursor']
     if (type(cursor.get('tick')) is not int or cursor['tick']!=299
             or cursor.get('episode_id')!='episode-0' or cursor.get('common_goal_id')!=job['case']['common_goal_id']):
@@ -709,29 +912,33 @@ def validate_stage(job, supervised):
             next(e['proof'] for e in events if e['kind']=='goal_handoff_probe')):
         raise ValueError('Worker goal handoff report differs from its durable source proof')
     if job['stage']!='source' and hashes!=job['expected_non_u']:
-        raise ValueError('Registered initial native state differs outside U')
+        raise ValueError('Registered initial native state differs outside U and declared selector')
     if report.get('initial_non_u',report.get('non_u'))!=hashes:
         raise ValueError('Worker/native invariant report differs')
+    final=memory_task.validate_state(report['final_memory'])
+    if (memory.canonical_bytes(final['e'])!=memory.canonical_bytes(state['e'])
+            or memory.canonical_bytes(final['u'])!=memory.canonical_bytes(state['u'])
+            or memory.canonical_bytes(final.get('selector'))!=memory.canonical_bytes(state.get('selector'))):
+        raise ValueError('Continuation mutated its E/U/declared selector resources')
     return data,report,native,entry
 
 
-def evaluate_case(case,source_native,source_report,branch_data,branch_reports,histories):
+def evaluate_case(case,source_native,source_report,branch_data,branch_reports,histories,source_data):
     m=source_native['application']['memory']['m']
     reference=branch_data['own']
-    triggers=[e['detail']['trigger'] for e in reference['events']
-        if e['kind']=='memory_decision' and e['detail']['kind']=='memory_trigger']
-    if len(triggers)!=1 or triggers[0]['tick']!=300:
-        raise ValueError('Comparison lacks exactly one witnessed scheduled trigger')
-    trigger=memory.validate_trigger(triggers[0])
-    before=occupancy(case,source_report['before_circles'])
-    after=occupancy(case,branch_reports['own']['after_circles'])
-    gold=experiment.gold_target_ids(m,before,after,trigger)
+    proof=oracle_evidence(case,source_native,source_report,reference,branch_reports['own'],source_data)
+    trigger=proof['trigger']
+    before=occupancy(case,proof['before_circles'])
+    after=occupancy(case,proof['after_circles'])
+    gold=proof['gold_target_ids']
     scored=score_nine(m,trigger,histories,gold)
     expected={r['condition']:r['selection'] for r in scored}
     runtime=[]
     for condition in CONDITIONS:
         data,report=branch_data[condition],branch_reports[condition]
-        if occupancy(case,report['after_circles'])!=after:
+        if (memory.canonical_bytes(report['after_circles'])!=memory.canonical_bytes(proof['after_circles'])
+                or memory.canonical_bytes(report['after_circles'])!=memory.canonical_bytes(artifacts._world_at(data['events'],0,300)['obstacles'])
+                or actual_trigger(source_native['application']['memory'],data,case)!=trigger):
             raise ValueError('Actual post-change geometry differs across conditions')
         selections=[e['detail']['selection'] for e in data['events']
             if e['kind']=='memory_decision' and e['detail']['kind']=='memory_selection']
@@ -747,15 +954,43 @@ def evaluate_case(case,source_native,source_report,branch_data,branch_reports,hi
         started=sum(e['status']=='started' for e in inspections)
         navigation_pass=report['final_phase']=='terminated' and (report['outcome'] or {}).get('reason')=='goal'
         revision_pass=not unresolved and set(gold)<=set(fresh_correct)
+        timing=[]
+        for fact in m['facts']:
+            observed=[e['packet']['tick'] for e in data['events'] if e['kind']=='memory_sensed'
+                for sample in e['packet']['passages'] if sample['subject_id']==fact['subject_id']
+                and sample['passability']==after[fact['subject_id']] and e['packet']['tick']>=300]
+            revisions=[e['detail']['revision'] for e in data['events'] if e['kind']=='memory_decision'
+                and e['detail']['kind']=='memory_revision' and e['detail']['revision']['fact_id']==fact['id']]
+            committed=[r['tick'] for r in revisions if r['after']['status']=='observed'
+                and r['after']['estimate']==after[fact['subject_id']] and r['tick']>=300]
+            intervals=[];start=None
+            for revision in revisions:
+                uncertain=revision['after']['status']=='uncertain'
+                if uncertain and start is None:
+                    start=revision['tick']
+                elif not uncertain and start is not None:
+                    intervals.append({'start_tick':start,'end_tick':revision['tick'],
+                        'duration_ticks':revision['tick']-start,'censored':False});start=None
+            if start is not None:
+                intervals.append({'start_tick':start,'end_tick':None,
+                    'duration_ticks':report['steps']-start,'censored':True})
+            timing.append({'fact_id':fact['id'],'gold':fact['id'] in gold,
+                'first_correct_observed_tick':min(observed,default=None),
+                'first_correct_committed_tick':min(committed,default=None),'uncertainty_intervals':intervals})
+        final_selector=final['selector']
         runtime.append({'condition':condition,'recording_status':data['manifest']['status'],
             'final_phase':report['final_phase'],'outcome':report['outcome'],'requested':requested,'started':started,
             'resolved':sum(e['status']=='resolved' for e in inspections),
             'timeouts':sum(e['status']=='timeout' for e in inspections),'unresolved_fact_ids':unresolved,
             'inspection_not_started':bool(requested and not started and unresolved),
             'fresh_correct_fact_ids':fresh_correct,'navigation_pass':navigation_pass,
-            'revision_pass':revision_pass,'task_pass':navigation_pass and revision_pass})
+            'revision_pass':revision_pass,'task_pass':navigation_pass and revision_pass,
+            'worker_task_pass':report['task_pass'],'terminal_control_boundary':report['steps'],
+            'timing':timing,'selector_configuration_sha256':memory.sha256(final_selector),
+            'resource_sha256':final_selector['resource_sha256'],
+            'provenance_sha256':final_selector['provenance_sha256']})
     comparisons=[]
-    for condition in ('swapped','sham','no-U'):
+    for condition in CONDITIONS[1:]:
         left,right=reference['rows'],branch_data[condition]['rows']
         mismatch=None
         for a,b in zip(left,right):
@@ -771,19 +1006,31 @@ def evaluate_case(case,source_native,source_report,branch_data,branch_reports,hi
     if not sham['same_length'] or sham['first_divergence'] is not None:
         raise ValueError('Own/sham continuation differs')
     return {'pre_m_sha256':memory.sha256(m),'trigger':trigger,'before_occupancy':before,'after_occupancy':after,
-        'gold_target_ids':gold,'targeting':scored,'runtime':runtime,'trajectory_comparisons':comparisons,
+        'gold_target_ids':gold,'oracle_evidence':proof,'oracle_evidence_sha256':memory.sha256(proof),
+        'targeting':scored,'runtime':runtime,'trajectory_comparisons':comparisons,
         'r2_complete':False,'held_out_executed':False,'operator_blindness_verified':False}
 
 
 def run_verifier(plan):
     jobs=plan['jobs']
-    if ([j['stage'] for j in jobs]!=list(STAGES) or len({j['run_id'] for j in jobs})!=6
+    if ([(j['block'],j['stage']) for j in jobs]!=[(b['id'],s) for b in BLOCKS for s in STAGES]
+            or len({j['run_id'] for j in jobs})!=22
             or any(Path(j['output'])!=Path(plan['output'])/'runs'/j['run_id'] for j in jobs)
             or memory.canonical_bytes(plan['protocol'])!=memory.canonical_bytes(PROTOCOL)
             or plan['protocol_sha256']!=PROTOCOL_SHA256):
-        raise ValueError('Verifier requires the fixed six-stage plan')
+        raise ValueError('Verifier requires the fixed 22-stage two-block plan')
     for job in jobs:
         validate_job(job,prepared=True)
+        if job['source_identity']!=plan['source_identity']:
+            raise ValueError('Job source identity differs from the fixed plan')
+        if job['stage']=='oracle' and (job['selector'] is not None or job['oracle_evidence'] is not None):
+            raise ValueError('Prepared oracle cannot receive unacquired gold')
+    cases={b['id']:next(j['case'] for j in jobs if j['block']==b['id']) for b in BLOCKS}
+    expected_identities={key:{'canonical_case_sha256':memory.sha256(case),
+        'generator_case_sha256':case['case_sha256'],'semantic_case_sha256':memory.sha256(semantic_case(case))}
+        for key,case in cases.items()}
+    if memory.canonical_bytes(plan.get('case_identities'))!=memory.canonical_bytes(expected_identities):
+        raise ValueError('Plan case provenance/semantic identities differ from its fixed jobs')
     output=Path(plan['output'])
     output.mkdir(parents=True,exist_ok=False)
     (output/'runs').mkdir()
@@ -796,34 +1043,45 @@ def run_verifier(plan):
     summaries=[]
     data,reports,natives={}, {}, {}
     result={'version':1,'claim':PROTOCOL['claim'],'protocol_sha256':PROTOCOL_SHA256,
-        'status':'mechanism_unverified','runs':summaries,'history_inputs':plan['history_inputs'],'r2_complete':False}
+        'status':'mechanism_unverified','runs':summaries,'history_inputs':plan['history_inputs'],
+        'comparisons':[],'r2_complete':False,'held_out_executed':False}
     try:
+        histories=load_histories(jobs[0]['repo'])
         for raw in jobs:
             job=copy.deepcopy(raw)
+            block,stage=job['block'],job['stage']
             if job['stage']!='source':
                 parent='source' if job['stage']=='anchor' else 'anchor'
-                job.update(snapshot_path=reports[parent]['snapshot_path'],snapshot_sha256=reports[parent]['snapshot_sha256'],
-                    expected_non_u=reports[parent]['non_u'])
+                ancestor=reports[(block,parent)]
+                job.update(snapshot_path=ancestor['snapshot_path'],snapshot_sha256=ancestor['snapshot_sha256'],
+                    expected_non_u=ancestor['non_u'])
+            if stage=='oracle':
+                proof=oracle_evidence(job['case'],natives[(block,'source')],reports[(block,'source')],
+                    data[(block,'own')],reports[(block,'own')],data[(block,'source')])
+                job.update(oracle_evidence=proof,selector=selector_config(stage,block_histories(block,histories),proof))
             validate_job(job)
-            print(json.dumps({'stage':job['stage'],'run_id':job['run_id']}),flush=True)
+            print(json.dumps({'block':block,'stage':stage,'run_id':job['run_id']}),flush=True)
             supervised=bounded_process([sys.executable,str(Path(__file__).resolve()),'--worker',json.dumps(job)],
                 Path(job['output']),160,env,log_max_bytes=1024**2)
-            summary={'stage':job['stage'],'run_id':job['run_id'],'run_path':job['output'],'supervisor':supervised}
+            summary={'block':block,'stage':stage,'run_id':job['run_id'],'run_path':job['output'],'supervisor':supervised,
+                'selector_configuration_sha256':memory.sha256(job['selector']),
+                'oracle_evidence_sha256':None if job['oracle_evidence'] is None else memory.sha256(job['oracle_evidence'])}
             summaries.append(summary)
             current,report,native,entry=validate_stage(job,supervised)
-            stage=job['stage']
-            data[stage],reports[stage],natives[stage]=current,report,native
+            data[(block,stage)],reports[(block,stage)],natives[(block,stage)]=current,report,native
             summary.update(recording_status=current['manifest']['status'],final_phase=report['final_phase'],
                 worker_report_sha256=_hash(Path(job['output'])/'transfer-worker.json'),
-                snapshot_sha256=entry['sha256'],initial_non_u=invariant_hashes(native),
+                snapshot_sha256=entry['sha256'],initial_non_u=baseline_invariants(native),
                 files=[{'path':str(p.relative_to(Path(job['output']))),'bytes':p.stat().st_size,'sha256':_hash(p)} for p in current['paths']])
-        histories=load_histories(jobs[0]['repo'])
-        result['comparison']=evaluate_case(jobs[0]['case'],natives['source'],reports['source'],
-            {c:data[c] for c in CONDITIONS},{c:reports[c] for c in CONDITIONS},histories)
+            if stage=='oracle':
+                comparison=evaluate_case(job['case'],natives[(block,'source')],reports[(block,'source')],
+                    {c:data[(block,c)] for c in CONDITIONS},{c:reports[(block,c)] for c in CONDITIONS},
+                    block_histories(block,histories),data[(block,'source')])
+                result['comparisons'].append({'block':block,**comparison})
         result['status']='mechanism_checked'
     except (OSError,ValueError,KeyError,TypeError) as error:
         result['first_failure']={'type':type(error).__name__,'message':str(error)}
-    result['unattempted_stages']=[{'stage':j['stage'],'run_id':j['run_id'],'status':'unattempted',
+    result['unattempted_stages']=[{'block':j['block'],'stage':j['stage'],'run_id':j['run_id'],'status':'unattempted',
         'reason':'earlier first failure; no retry or replacement'} for j in jobs[len(summaries):]]
     final=source_identity(jobs[0]['repo'])
     result.update(source_identity=plan['source_identity'],final_source_identity=final,

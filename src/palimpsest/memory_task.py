@@ -9,6 +9,11 @@ import math
 
 from . import memory
 
+# Retrieval reuses the existing 4 MiB E ceiling. The extra 2 KiB accommodates
+# fixed selector fields/hashes; no resource is truncated to meet the cap.
+MAX_SELECTOR_BYTES = memory.MAX_STATE_BYTES + 2048
+ARTIFACT_CONDITIONS = ('own', 'swapped', 'sham', 'no-U', 'hand-authored')
+
 
 class CueUnavailable(ValueError):
     """A required observed bearing is unavailable; the caller must stop."""
@@ -146,9 +151,60 @@ def initialize(m, e, u, episode_id):
             'requests': [], 'active': None, 'last_decisions': []}
 
 
+def selector_resources(config, u):
+    """Only declared per-condition resources enter the existing pure selector."""
+    condition = config['condition']
+    return ({'u': u} if condition in ARTIFACT_CONDITIONS else
+            {'history': config['resource']} if condition == 'retrieval' else
+            {'gold_target_ids': config['resource']} if condition == 'oracle' else {})
+
+
+def validate_selector(config, m, u):
+    """Validate a normalized copy; provenance is pinned by the run's protocol."""
+    from .memory_experiment import CONDITIONS
+    m, u = memory.validate_m(m), memory.validate_u(u)
+    memory._fields(config, 'version condition limit resource resource_sha256 provenance_sha256')
+    memory._version(config['version'])
+    memory._enum(config['condition'], CONDITIONS)
+    if type(config['limit']) is not int or config['limit'] != 1:
+        raise ValueError('Declared baseline selector requires target budget one')
+    memory._digest(config['resource_sha256'])
+    memory._digest(config['provenance_sha256'])
+    memory._bounded(config, MAX_SELECTOR_BYTES)
+    condition, resource = config['condition'], config['resource']
+    if condition == 'retrieval':
+        resource = memory.validate_e(resource)
+    elif condition == 'oracle':
+        memory._list(resource, memory.MAX_FACTS)
+        for fact_id in resource:
+            memory._id(fact_id)
+        if len(set(resource)) != len(resource) or not set(resource).issubset({f['id'] for f in m['facts']}):
+            raise ValueError('Duplicate or dangling selector gold')
+    elif resource is not None:
+        raise ValueError('Condition received unsupported selector resources')
+    if memory.sha256(resource) != config['resource_sha256']:
+        raise ValueError('Selector resource hash differs')
+    if condition not in ARTIFACT_CONDITIONS and u['payload']['rules']:
+        raise ValueError('Non-artifact baseline requires empty U')
+    if condition == 'no-U' and u['payload']['rules']:
+        raise ValueError('No-U requires empty rules')
+    if condition == 'hand-authored' and u['payload']['rules'] != [{'trigger':'cue_changed', 'relation':'local_cue'}]:
+        raise ValueError('Hand-authored baseline requires its fixed local rule')
+    return {**copy.deepcopy(config), 'resource': copy.deepcopy(resource)}
+
+
+def configure_selector(state, config):
+    """Explicit baseline configuration; never rewrite M/E/U or episodic state."""
+    state = validate_state(state)
+    config = validate_selector(config, state['m'], state['u'])
+    return validate_state({**state, 'version':2, 'selector':config})
+
+
 def validate_state(state):
-    memory._fields(state, 'version m e u initial_m episode_id detector cursor requests active last_decisions')
-    memory._version(state['version'])
+    if type(state) is not dict or type(state.get('version')) is not int or state['version'] not in (1, 2):
+        raise ValueError('Unsupported memory task state version')
+    memory._fields(state, 'version m e u initial_m episode_id detector cursor requests active last_decisions'
+                   + (' selector' if state['version'] == 2 else ''))
     memory._id(state['episode_id'])
     m, initial_m = memory.validate_m(state['m']), memory.validate_m(state['initial_m'])
     e, u = memory.validate_e(state['e']), memory.validate_u(state['u'])
@@ -214,12 +270,16 @@ def validate_state(state):
             raise ValueError('Dangling decision fact')
         if item['bearing'] is not None:
             _bearing(item['bearing'])
-    return {**copy.deepcopy(state), 'm': m, 'initial_m': initial_m, 'e': e, 'u': u}
+    normalized = {**copy.deepcopy(state), 'm': m, 'initial_m': initial_m, 'e': e, 'u': u}
+    if state['version'] == 2:
+        normalized['selector'] = validate_selector(state['selector'], m, u)
+    return normalized
 
 
 def reset(state, episode_id):
     state = validate_state(state)
-    return initialize(state['initial_m'], state['e'], state['u'], episode_id)
+    result = initialize(state['initial_m'], state['e'], state['u'], episode_id)
+    return configure_selector(result, state['selector']) if state['version'] == 2 else result
 
 
 def _summary(event):
@@ -264,7 +324,13 @@ def advance_memory(state, packet):
                     'before_observation_id': before['observation_id'],
                     'observation_id': _sensor_id(episode_id, tick, 'cue', cue['id'])})
     for trigger in triggers:
-        selection = memory.select(state['m'], trigger, state['u'])
+        if state['version'] == 1:
+            selection = memory.select(state['m'], trigger, state['u'])
+        else:
+            from .memory_experiment import selection_for_condition
+            config = state['selector']
+            selection = selection_for_condition(config['condition'], state['m'], trigger,
+                limit=config['limit'], **selector_resources(config, state['u']))
         audit.extend([{'kind': 'memory_trigger', 'tick': tick, 'trigger': trigger},
                       {'kind': 'memory_selection', 'tick': tick, 'selection': selection}])
         state['m'], revisions, requests = memory.revise(state['m'], trigger, selection, [], episode_id=episode_id, tick=tick)
@@ -323,10 +389,16 @@ def inspect(state):
     state = validate_state(state)
     facts = [{**fact, 'associations': fact['associations'][:8],
               'association_count': len(fact['associations'])} for fact in state['m']['facts'][:16]]
-    return {'version': 1, 'episode_id': state['episode_id'],
+    result = {'version': 1, 'episode_id': state['episode_id'],
             'tick': None if state['cursor'] is None else state['cursor']['tick'],
             'hashes': {key: memory.sha256(state[key]) for key in ('m', 'e', 'u')},
             'counts': {'facts': len(state['m']['facts']), 'episodes': len(state['e']['episodes']),
                        'requests': len(state['requests']) + (state['active'] is not None)},
             'u': state['u'], 'facts': facts, 'facts_truncated': max(0, len(state['m']['facts']) - 16),
             'active': state['active'], 'recent_decisions': state['last_decisions']}
+    if state['version'] == 2:
+        config = state['selector']
+        result['selector'] = {key: config[key] for key in config if key != 'resource'}
+        result['selector']['resource_bytes'] = len(memory.canonical_bytes(config['resource']))
+        result['selector']['configuration_sha256'] = memory.sha256(config)
+    return result
