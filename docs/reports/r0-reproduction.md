@@ -4,7 +4,7 @@ M0 is complete for the pinned FLYNN full-vision profile on the development lapto
 
 ## Executed checks
 
-- 62 local fixture tests passed, without skips; [GitHub CPU fixture CI](https://github.com/Aadrika08/palimpsest/actions/runs/36966522233) also passed for `818fd3e`.
+- 63 local fixture tests passed, without skips; [GitHub CPU fixture CI](https://github.com/Aadrika08/palimpsest/actions/runs/36966522233) also passed for `818fd3e`.
 - Both downloaded assets, the extracted graph and all seven mapping files passed pinned identity checks. Archived CRLF mappings remain unchanged; separate Git LF identities and normalized equality are checked.
 - MuJoCo 3.3.6 rendered through EGL on the NVIDIA GeForce RTX 4050 Laptop GPU. Runtime: Python 3.11.15, Torch 2.9.0, float32, two CPU threads, Linux x86_64, NVIDIA driver 610.57.04. Dependencies are locked in `uv.lock`.
 - The original single-episode teacher reference reached the goal in 366 ticks. FLYNN reached it in 375 ticks with parity checked at every tick, including camera conversion, effective neural input, unsanitized readout, action, hidden state and retina state. The largest measured absolute discrepancy was `1.1920928955078125e-07`, within `atol=rtol=1e-6`.

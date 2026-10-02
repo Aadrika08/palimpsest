@@ -16,7 +16,7 @@ Working-set binding: `98d42920e321b42d22c6336f938d2c3ba9fd770d8ba24a2a`. Its MCP
 
 ## Verification
 
-62 local tests passed without skips; CPU fixture CI passed for `818fd3e`. Teacher 30/30 goals; FLYNN 28/30 goals, 2 time limits. All 30 initial states/inputs matched. Reference parity passed on 375 ticks. Every completed bundle chunk was verified. See the [report](reports/r0-reproduction.md). These are simulation development results only.
+63 local tests passed without skips; CPU fixture CI passed for `818fd3e`. Teacher 30/30 goals; FLYNN 28/30 goals, 2 time limits. All 30 initial states/inputs matched. Reference parity passed on 375 ticks. Every completed bundle chunk was verified. See the [report](reports/r0-reproduction.md). These are simulation development results only.
 
 ## Git and environment
 

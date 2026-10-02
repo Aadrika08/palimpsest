@@ -5,18 +5,24 @@ from collections import Counter
 import json
 from pathlib import Path
 
-import numpy as np
-
 from palimpsest.assets import sha256_file
 from palimpsest.records import iter_ticks
 
 
-def inspect(path):
+def inspect(path, expected_controller):
     path = Path(path)
     recording = path / 'recording'
     manifest = json.loads((recording / 'manifest.json').read_text())
+    supervisor = json.loads((path / 'supervisor.json').read_text())
+    if supervisor.get('status') != 'completed' or supervisor.get('returncode') != 0:
+        raise ValueError(f'Worker did not complete successfully: {path}')
     if manifest['status'] != 'completed':
         raise ValueError(f'Incomplete run: {path}')
+    expected_profile = 'flynn-full-vision' if expected_controller == 'flynn' else 'privileged-teacher'
+    if (manifest.get('profile') != expected_profile or
+            manifest.get('configuration', {}).get('controller') != expected_controller or
+            manifest.get('teacher_privileged') is not (expected_controller == 'teacher')):
+        raise ValueError(f'Wrong controller/profile for {expected_controller}: {path}')
     events = [json.loads(line) for line in (recording / 'events.jsonl').read_text().splitlines()]
     first = {}
     for tick in iter_ticks(recording):  # Exhaust to verify hashes, every chunk and terminal counts.
@@ -36,9 +42,14 @@ def inspect(path):
 
 
 def report(reference, teacher, flynn):
-    ref, ref_events, _, _ = inspect(reference)
-    teacher_result, _, teacher_starts, teacher_first = inspect(teacher)
-    flynn_result, _, flynn_starts, flynn_first = inspect(flynn)
+    import numpy as np
+    ref, ref_events, _, _ = inspect(reference, 'flynn')
+    teacher_result, _, teacher_starts, teacher_first = inspect(teacher, 'teacher')
+    flynn_result, flynn_events, flynn_starts, flynn_first = inspect(flynn, 'flynn')
+    ref_provenance = [e['provenance'] for e in ref_events if e['kind'] == 'policy_loaded']
+    dev_provenance = [e['provenance'] for e in flynn_events if e['kind'] == 'policy_loaded']
+    if len(ref_provenance) != 1 or ref_provenance != dev_provenance:
+        raise ValueError('Reference/development FLYNN provenance differs or is missing')
     parity = [event['result'] for event in ref_events if event['kind'] == 'parity']
     if len(parity) != ref['recorded_ticks'] or not all(p['checked'] and p['ok'] for p in parity):
         raise ValueError('Reference does not establish parity for every recorded tick')
@@ -51,10 +62,12 @@ def report(reference, teacher, flynn):
         for key in teacher_first[episode]:
             if not np.array_equal(teacher_first[episode][key], flynn_first[episode][key]):
                 raise ValueError(f'Unpaired initial input {key} in episode {episode}')
-    return {'schema_version': 1, 'reference': ref, 'teacher': teacher_result, 'flynn': flynn_result,
+    return {'schema_version': 1, 'profiles_and_supervisors_verified': True,
+            'matching_flynn_provenance': True,
+            'reference': ref, 'teacher': teacher_result, 'flynn': flynn_result,
             'initial_states_and_inputs_matched': 30, 'reference_parity_ticks': len(parity),
             'parity_max_abs_error': max(error for p in parity for error in p['max_abs_errors'].values()),
-            'provenance': next(event['provenance'] for event in ref_events if event['kind'] == 'policy_loaded'),
+            'provenance': ref_provenance[0],
             'limitations': ['Development smoke seeds, not held-out generalization evidence.',
                             'Teacher has privileged information; information budgets differ.',
                             'Legacy checkpoint training lineage is not established.',
