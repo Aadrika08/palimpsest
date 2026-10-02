@@ -318,9 +318,11 @@ def validate_goal_handoff(data, native, case, stage):
             or proof.get('derived_pose_delta')!=[b-a for a,b in zip(before['pose'],world['pose'])]
             or actual['goal']!=world['goal']):
         raise ValueError('Recorded goal handoff changed other world geometry')
+    facts_by_subject={f['subject_id']:f for f in case['facts']}
     symbolic={'cues':[{'id':case['cue_id'],'xy':case['cue_xy'],'state':0}],
         'landmarks':[{'id':case['common_goal_id'],'xy':world['goal'][:2]}]+
-            [{'id':f['inspection_landmark_id'],'xy':xy} for f,xy in zip(case['facts'],case['inspection_xy'])],
+            [{'id':facts_by_subject[subject]['inspection_landmark_id'],'xy':xy}
+             for subject,xy in zip(case['subjects_by_side'],case['inspection_xy'])],
         'passages':[{'subject_id':f['subject_id'],'inspection_landmark_id':f['inspection_landmark_id'],
             'passability':occupancy(case,world['obstacles'])[f['subject_id']]} for f in case['facts']],
         'common_goal_id':case['common_goal_id']}
