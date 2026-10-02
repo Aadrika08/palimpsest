@@ -13,7 +13,8 @@ GROUND_SUPPORT = ['left_wheel_geom', 'right_wheel_geom', 'caster_wheel_geom']
 ROBOT_BODIES = {'base', 'left_wheel', 'right_wheel', 'front_caster_mount', 'caster_wheel'}
 ROBOT_GEOMS = {'base_geom', 'left_wheel_geom', 'right_wheel_geom', 'caster_fork',
                'caster_wheel_geom', 'cam_left_marker', 'cam_right_marker'}
-ARTIFACT = {'report_sha256': '9d2cd4729d32f84b490db3a6726764111989fcc80be74c7a2ba44a97cb419331',
+ARTIFACT = {'world_profile_sha256': 'ed6d7996b1c5dd412621533ebc87c0712ef3ed618031167774f27e313371379c',
+ 'report_sha256': '9d2cd4729d32f84b490db3a6726764111989fcc80be74c7a2ba44a97cb419331',
  'protocol_sha256': 'bf883b89156201ccd35659fa7971fda507876e357c733356ed3eec59bac760f0',
  'baseline_model_sha256': 'c4d30fef8fbe05739e72e762d10d2dc435c1c831993a32d0662560d494b158e5',
  'model_sha256': 'bf3ca4b0d32600444e0f23e658c790da50a7675fb3c26fee8f9b0a16e0839d67',
@@ -38,8 +39,10 @@ ARTIFACT = {'report_sha256': '9d2cd4729d32f84b490db3a6726764111989fcc80be74c7a2b
  'between_trial_gain_range_over_mean_max': 0.2,
  'observed_gain_range_over_mean': [0.1195000151912334, 0.03133850076547491]}
 PROTOCOL = {
-    'version': 1, 'scenario': SCENARIO, 'claim': 'loaded fixed calibration; no online learning or physical qualification',
-    'artifact': ARTIFACT, 'world_protocol_sha256': 'ed6d7996b1c5dd412621533ebc87c0712ef3ed618031167774f27e313371379c',
+    'version': 2, 'scenario': SCENARIO, 'claim': 'loaded fixed calibration; no online learning or physical qualification',
+    'artifact': ARTIFACT,
+    'authoring_source_sha256': '508d7c53cf78e8a26a2c459e2b6e2a02c8c0823535005a19668a31717f0dbb12',
+    'semantic_world_profile_sha256': 'cbc3f2cfbcf0ef25efb260f21771fe0ac52f4bd0b1a78b8e0dfd64378febe753',
     'start_pose': [-3.5, 0., 0.], 'goal_xy': [-3.5, 3.],
     'left_gear': 3.*.8, 'right_gear': 3., 'radius_m': .06, 'track_m': .36,
     'max_compensation_ratio': 1.5, 'control_limit': 2., 'max_steps': 600,
@@ -327,12 +330,33 @@ def validate_snapshot_application(application, env, model, data):
                            episode=application.get('episode'), episode_step=application.get('episode_step'))
     validate_native(state, model, data, env)
 
+
+def world_identity(profile, profile_sha256):
+    """Separate authoring/geometry compatibility from recorded producer lineage.
+
+    Only the three declared source-metadata fields are excluded from semantic
+    identity; authoring source itself remains independently pinned.
+    """
+    metadata = {'memory_source_sha256', 'sensor_bridge_source_sha256', 'world_source_sha256'}
+    if (type(profile) is not dict or not metadata <= profile.keys() or
+            any(type(profile[key]) is not str or len(profile[key]) != 64 or
+                any(char not in '0123456789abcdef' for char in profile[key]) for key in metadata)):
+        raise ValueError('Declared world source metadata required')
+    if profile['world_source_sha256'] != PROTOCOL['authoring_source_sha256']:
+        raise ValueError('Pinned calibration world authoring source differs')
+    semantic = {key:value for key,value in profile.items() if key not in metadata}
+    if _sha(semantic) != PROTOCOL['semantic_world_profile_sha256']:
+        raise ValueError('Pinned calibration world semantic geometry differs')
+    if _sha(profile) != profile_sha256:
+        raise ValueError('Recorded current full world PROFILE identity differs')
+    return {'profile_sha256':profile_sha256, 'authoring_source_sha256':profile['world_source_sha256'],
+            'semantic_profile_sha256':_sha(semantic), 'profile':copy.deepcopy(profile)}
+
 def configure(env, episode_id):
     import mujoco
     from . import memory_world, task_profiles
     from .snapshots import _model_digest
-    if memory_world.PROFILE_SHA256 != PROTOCOL['world_protocol_sha256']:
-        raise ValueError('Pinned calibration authored world protocol differs')
+    runtime_world = world_identity(memory_world.PROFILE, memory_world.PROFILE_SHA256)
     if mujoco.get_mjcb_control() is not None:
         raise ValueError('Body setup refuses existing global control callback')
     left = mujoco.mj_name2id(env.model, mujoco.mjtObj.mjOBJ_ACTUATOR, 'left_motor')
@@ -362,6 +386,7 @@ def configure(env, episode_id):
     # Probe construction validates the exact named descendant geometry partition.
     env._body_contact_ownership = ContactProbe(mujoco, env).ownership
     env._body_profile_identity = profile_identity()
+    env._body_runtime_world_profile = runtime_world
     return initialize_state(episode_id, task_profiles.encoder_angles(env), float(env.data.time))
 
 

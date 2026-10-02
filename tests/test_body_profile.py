@@ -50,11 +50,35 @@ class BodyFixtureEnv(SmallEnv):
 def fixture_configure(env, episode):
     env._body_profile_identity = body.profile_identity()
     env._body_contact_ownership = body.contact_ownership(env.mj, env.model)
+    env._body_runtime_world_profile = {'fixture':True}
     return body.initialize_state(episode, [0.,0.], env.data.time)
 
 
 @unittest.skipIf(np is None, 'NumPy is provided by the simulation extra')
 class BodyChecks(unittest.TestCase):
+    def test_world_metadata_does_not_relax_geometry_or_authoring_source_pins(self):
+        from palimpsest import memory_world
+        current = copy.deepcopy(memory_world.PROFILE)
+        accepted = body.world_identity(current, memory_world.PROFILE_SHA256)
+        changed = copy.deepcopy(current)
+        changed['memory_source_sha256'] = '1'*64
+        changed['sensor_bridge_source_sha256'] = '2'*64
+        newer = body.world_identity(changed, body._sha(changed))
+        self.assertNotEqual(accepted['profile_sha256'], newer['profile_sha256'])
+        self.assertEqual(accepted['semantic_profile_sha256'], newer['semantic_profile_sha256'])
+        self.assertEqual(newer['profile'], changed)
+        with self.assertRaisesRegex(ValueError, 'full world PROFILE'):
+            body.world_identity(current, 'f'*64)
+        changed['posts'][0][0] += .01
+        with self.assertRaisesRegex(ValueError, 'geometry'):
+            body.world_identity(changed, body._sha(changed))
+        changed = copy.deepcopy(current); changed['world_source_sha256'] = '3'*64
+        with self.assertRaisesRegex(ValueError, 'authoring'):
+            body.world_identity(changed, body._sha(changed))
+        changed = copy.deepcopy(current); changed['other_source_sha256'] = '4'*64
+        with self.assertRaisesRegex(ValueError, 'geometry'):
+            body.world_identity(changed, body._sha(changed))
+
     def test_shared_helpers_preserve_frozen_diagnostic_protocol(self):
         self.assertIs(diagnostic.verify.ContactProbe, body.ContactProbe)
         self.assertIs(diagnostic.verify.contact_ownership, body.contact_ownership)
@@ -210,6 +234,7 @@ class BodyChecks(unittest.TestCase):
                 env._body_profile_identity = body.profile_identity()
                 env.model.actuator_gear = np.array([[3.*.8,0,0,0,0,0],[3.,0,0,0,0,0]])
                 env._body_contact_ownership = {'fixture': True}
+                env._body_runtime_world_profile = {'fixture':True}
                 return body.initialize_state(episode, [0., 0.], env.data.time)
             with patch.object(body, 'configure', side_effect=configure):
                 source = Engine(SmallEnv(), RunWriter(paths[0], {}), scenario=body.SCENARIO)

@@ -321,6 +321,8 @@ class Engine:
             self.writer.manifest['body_protocol'] = copy.deepcopy(PROTOCOL)
             self.writer.manifest['body_profile_identity'] = profile_identity()
             self.writer.manifest['body_contact_ownership'] = copy.deepcopy(self.env._body_contact_ownership)
+            self.writer.manifest['body_runtime_world_profile'] = copy.deepcopy(self.env._body_runtime_world_profile)
+            self._event('body_world_provenance', detail=self.env._body_runtime_world_profile)
             self._event('body_loaded', identity=profile_identity(), state=self.body_state,
                         contact_ownership=self.env._body_contact_ownership,
                         actuator_gear=self.env.model.actuator_gear.tolist(), world=self.world())
