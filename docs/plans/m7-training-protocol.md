@@ -3,9 +3,7 @@
 Frozen before teacher collection or model execution. This prepares a separately
 trained **male-reduced model with an artificial boundary interface**, not a biological
 sensor mapping, intact male nervous system, female-checkpoint transfer, topology
-benefit result, or runtime-integrated R3 profile. Current verification is NumPy/stdlib
-preparation only. Actual teacher collection, Torch checks, training, and held-out
-evaluation remain deferred until the orchestrator releases their execution window.
+benefit result, or runtime-integrated R3 profile. The frozen first pilot has now completed its actual CPU mechanism check, 16-scene teacher collection and paired training/recorded-input held-out evaluation. See the [measured pilot](../reports/m7-training-pilot.md). Runtime-integrated closed-loop qualification remains open.
 
 ## Frozen first pilot
 
@@ -173,7 +171,7 @@ the complete protocol/collection and source hashes, both graph artifacts, fresh
 checkpoint state dictionaries with ordered-ID/protocol/graph identities, checkpoint
 file hashes, every epoch's train/dev losses, selected epochs, and final held-out
 metrics. Failure remains explicit; a directory without a completed report is not a
-trained-profile release. Training and held-out results have not yet been executed.
+trained-profile release. The first frozen execution completed; its measured results and file hashes are linked above. Repeating this command is a new execution, not an extension of the original held-out evaluation.
 
 This first single-seed paired pilot can establish code/data compatibility and bounded
 recorded-input imitation results. It cannot establish a topology advantage, navigation
