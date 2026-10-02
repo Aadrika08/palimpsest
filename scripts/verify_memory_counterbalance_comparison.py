@@ -1,4 +1,4 @@
-"""Fixed four-cell Stage C DEVELOPMENT comparison; no execution without a GO."""
+"""Two fixed four-cell DEVELOPMENT profiles; no execution without a GO."""
 import argparse
 import copy
 import importlib.util
@@ -14,7 +14,7 @@ import numpy as np
 from palimpsest import artifacts, memory, memory_experiment as experiment, memory_task, memory_world
 from palimpsest.evaluate import bounded_process
 from palimpsest.replay import _initial_snapshot, _register_initial
-from palimpsest.snapshots import capture, read_snapshot, state_digest
+from palimpsest.snapshots import capture, invariant_hashes, read_snapshot, state_digest
 from palimpsest.storage import GiB, MiB, StorageBudget, StorageLimits
 
 HELPER = Path(__file__).with_name('verify_memory_counterbalance.py')
@@ -38,10 +38,11 @@ def pinned_json(path, digest, maximum=MiB):
     return result
 
 
-def derive_anchor(plan, terminal, cell):
+def derive_anchor(plan, terminal, cell, *, protocol_sha256=None):
     """Join the declared owner to its completed report; never choose by UUID alone."""
     key = admission.cell_key(cell)
-    if tuple(cell) not in CELLS or terminal.get('status') != 'admission_checked' or not all(
+    cells, _ = fixed_profile(protocol_sha256)
+    if tuple(cell) not in cells or terminal.get('status') != 'admission_checked' or not all(
             terminal.get(k) is True for k in ('source_unchanged', 'retained_unchanged')):
         raise ValueError('Unsupported cell or incomplete immutable admission')
     if (terminal.get('protocol_sha256') != plan['protocol_sha256']
@@ -86,13 +87,14 @@ def policy_boundary(data, native, case):
     return state
 
 
-def load_bindings(plan_path, report_path):
+def load_bindings(plan_path, report_path, *, protocol_sha256=None):
     """Validate all three original owners per cell, retaining their actual provenance."""
     plan = admission.validate_plan(pinned_json(plan_path, B_PLAN_SHA256))
     terminal = pinned_json(report_path, B_REPORT_SHA256)
     result = {}
-    for cell in CELLS:
-        lineage = derive_anchor(plan, terminal, cell)
+    cells, _ = fixed_profile(protocol_sha256)
+    for cell in cells:
+        lineage = derive_anchor(plan, terminal, cell, protocol_sha256=protocol_sha256)
         checked = {}
         pins = []
         for stage, (prepared, summary) in lineage.items():
@@ -139,11 +141,11 @@ def load_bindings(plan_path, report_path):
     return result
 
 
-def verify_binding(binding):
+def verify_binding(binding, *, protocol_sha256=None):
     """Reconcile a supplied binding with pinned plan/report before native restoration."""
     plan = admission.validate_plan(pinned_json(binding['plan_path'], B_PLAN_SHA256))
     terminal = pinned_json(binding['report_path'], B_REPORT_SHA256)
-    joined = derive_anchor(plan, terminal, binding['cell'])
+    joined = derive_anchor(plan, terminal, binding['cell'], protocol_sha256=protocol_sha256)
     job, row = joined['policy-anchor']
     if (binding['run_id'] != job['run_id'] or memory.canonical_bytes(binding['case']) != memory.canonical_bytes(job['case'])
             or binding['snapshot_path'] != str(Path(job['output']) / 'snapshots/initial.snp')
@@ -196,6 +198,35 @@ PROTOCOL = {'version': 1, 'claim': 'four-cell-fixed-cpu-flynn-development-compar
     'manual_helper_sha256': common._hash(neural.HELPER),
     'resource_reference': neural.PROTOCOL['resource_reference']}
 PROTOCOL_SHA256 = memory.sha256(PROTOCOL)
+C4_CELLS = ((25, 'local_cue', 'change'), (28, 'paired_cue', 'change'),
+            (26, 'paired_cue', 'null'), (31, 'local_cue', 'no-event'))
+CORE_CONDITIONS = ('own', 'swapped', 'sham', 'no-U')
+C4_PROTOCOL = {**copy.deepcopy(PROTOCOL), 'version': 2,
+    'claim': 'remaining-four-b-cells-fixed-cpu-flynn-development-comparison',
+    'cells': [list(c) for c in C4_CELLS],
+    'strict_u_only_conditions': list(CORE_CONDITIONS),
+    'core_selector': 'shared-own-dispatch-inherited-from-own-u-anchor',
+    'allowed_branch_differences': {
+        'core': ['u'], 'other-five': ['u', 'declared-selector-configuration-and-resources']}}
+C4_PROTOCOL_SHA256 = memory.sha256(C4_PROTOCOL)
+
+
+def fixed_profile(protocol_sha256=None):
+    """Only historical C3 and the separately versioned C4 profile are admissible."""
+    if protocol_sha256 is None or protocol_sha256 == PROTOCOL_SHA256:
+        return CELLS, copy.deepcopy(PROTOCOL)
+    if protocol_sha256 == C4_PROTOCOL_SHA256:
+        return C4_CELLS, copy.deepcopy(C4_PROTOCOL)
+    raise ValueError('Unknown fixed comparison profile')
+
+
+def strict_core(job):
+    return job['protocol_sha256'] == C4_PROTOCOL_SHA256 and job['stage'] in CORE_CONDITIONS
+
+
+def branch_invariants(native, job):
+    """Core C4 forks retain the selector/version and all scientific state except U."""
+    return invariant_hashes(native) if strict_core(job) else common.baseline_invariants(native)
 
 
 def source_identity(repo, assets):
@@ -219,39 +250,47 @@ def history_pins(root, histories):
         'e_sha256': memory.sha256(v['e']), 'u_sha256': memory.sha256(v['u'])} for k, v in histories.items()}
 
 
-def selector_config(stage, histories, oracle=None):
+def selector_config(stage, histories, oracle=None, *, protocol_sha256=None):
+    _, protocol = fixed_profile(protocol_sha256)
+    digest = memory.sha256(protocol)
+    if digest == C4_PROTOCOL_SHA256 and stage in ('anchor', *CORE_CONDITIONS):
+        return {'version': 1, 'condition': 'own', 'limit': 1, 'resource': None,
+            'resource_sha256': memory.sha256(None), 'provenance_sha256': digest}
     result = common.selector_config(stage, histories, oracle)
     if stage in ('no-U', 'hand-authored', 'history-independent', 'traversal'):
-        result['provenance_sha256'] = PROTOCOL_SHA256
+        result['provenance_sha256'] = digest
     return result
 
 
-def make_plan(repo, assets, output, history_root, admission_plan, admission_report):
+def make_plan(repo, assets, output, history_root, admission_plan, admission_report, *, protocol_sha256=None):
+    cells, protocol = fixed_profile(protocol_sha256)
+    digest = memory.sha256(protocol)
     repo, assets, output, history_root = map(artifacts._safe_path, (repo, assets, output, history_root))
-    bindings = load_bindings(admission_plan, admission_report)
+    bindings = load_bindings(admission_plan, admission_report, protocol_sha256=digest)
     histories = common.load_histories(history_root)
-    return {'version': 1, 'protocol': PROTOCOL, 'protocol_sha256': PROTOCOL_SHA256,
+    return {'version': 1, 'protocol': protocol, 'protocol_sha256': digest,
         'repo': str(repo), 'assets': str(assets), 'output': str(output), 'history_root': str(history_root),
         'source_identity': source_identity(repo, assets), 'history_inputs': history_pins(history_root, histories),
         'bindings': bindings, 'jobs': [{'cell': list(c), 'stage': s, 'run_id': uuid.uuid4().hex}
-                                     for c in CELLS for s in STAGES]}
+                                     for c in cells for s in STAGES]}
 
 
 def validate_plan(plan):
     memory._fields(plan, 'version protocol protocol_sha256 repo assets output history_root source_identity history_inputs bindings jobs')
     memory._version(plan['version']); memory._bounded(plan, MiB)
-    if (memory.canonical_bytes(plan['protocol']) != memory.canonical_bytes(PROTOCOL)
-            or plan['protocol_sha256'] != PROTOCOL_SHA256
+    memory._digest(plan['protocol_sha256'])
+    cells, protocol = fixed_profile(plan['protocol_sha256'])
+    if (memory.canonical_bytes(plan['protocol']) != memory.canonical_bytes(protocol)
             or Path(plan['repo']) != Path(__file__).resolve().parents[1]
-            or [(j['cell'], j['stage']) for j in plan['jobs']] != [(list(c), s) for c in CELLS for s in STAGES]
+            or [(j['cell'], j['stage']) for j in plan['jobs']] != [(list(c), s) for c in cells for s in STAGES]
             or len({j['run_id'] for j in plan['jobs']}) != 40
-            or set(plan['bindings']) != {admission.cell_key(c) for c in CELLS}):
+            or set(plan['bindings']) != {admission.cell_key(c) for c in cells}):
         raise ValueError('Exactly the declared forty-owner comparison plan is required')
     for name in ('repo', 'assets', 'output', 'history_root'):
         if not Path(plan[name]).is_absolute(): raise ValueError('Comparison paths must be absolute')
     for job in plan['jobs']:
         memory._fields(job, 'cell stage run_id'); artifacts._id(job['run_id'])
-    for cell in CELLS:
+    for cell in cells:
         binding = plan['bindings'][admission.cell_key(cell)]
         if memory.canonical_bytes(binding['cell']) != memory.canonical_bytes(list(cell)) or memory.canonical_bytes(binding['case']) != memory.canonical_bytes(admission.make_case(cell)):
             raise ValueError('Comparison binding has another canonical case')
@@ -303,7 +342,7 @@ def check_oracle(job, source_native):
     report = artifacts._json(artifacts._read(data['run']/'comparison-worker.json', MiB))
     manifest = data['manifest']
     if (manifest.get('comparison_stage') != 'own' or manifest.get('comparison_cell') != job['cell']
-            or manifest.get('comparison_protocol_sha256') != PROTOCOL_SHA256
+            or manifest.get('comparison_protocol_sha256') != job['protocol_sha256']
             or manifest.get('comparison_binding_sha256') != memory.sha256(job['binding'])
             or manifest.get('memory_case') != job['binding']['case']):
         raise ValueError('Oracle donor belongs to another owner/cell/protocol')
@@ -314,9 +353,10 @@ def check_oracle(job, source_native):
 def validate_job(job):
     memory._fields(job, 'repo assets history_root output root_output run_id cell stage binding protocol_sha256 source_identity history_inputs snapshot_path snapshot_sha256 expected_non_u selector oracle_evidence')
     memory._bounded(job, 128*1024)
+    memory._digest(job['protocol_sha256'])
+    cells, _ = fixed_profile(job['protocol_sha256'])
     artifacts._id(job['run_id'])
-    if (tuple(job['cell']) not in CELLS or job['stage'] not in STAGES
-            or job['protocol_sha256'] != PROTOCOL_SHA256
+    if (tuple(job['cell']) not in cells or job['stage'] not in STAGES
             or Path(job['repo']) != Path(__file__).resolve().parents[1]
             or Path(job['output']) != Path(job['root_output'])/'runs'/job['run_id']
             or memory.canonical_bytes(job['binding']['cell']) != memory.canonical_bytes(job['cell'])
@@ -329,24 +369,66 @@ def validate_job(job):
     if history_pins(job['history_root'], histories) != job['history_inputs']:
         raise ValueError('Historical E/U source differs')
     histories = histories_for(job['cell'], histories)
-    if memory.canonical_bytes(job['selector']) != memory.canonical_bytes(selector_config(job['stage'], histories, job['oracle_evidence'])):
+    config = selector_config(job['stage'], histories, job['oracle_evidence'], protocol_sha256=job['protocol_sha256'])
+    if memory.canonical_bytes(job['selector']) != memory.canonical_bytes(config):
         raise ValueError('Condition-specific resource/provenance differs')
+    memory_task.validate_selector(config, memory.seed_m(job['binding']['case']['facts'], []),
+                                 common.condition_u(job['stage'], histories))
     if (job['stage'] == 'oracle') != (job['oracle_evidence'] is not None):
         raise ValueError('Only oracle may receive privileged gold')
     return copy.deepcopy(job)
 
 
+def validate_selector_boundary(job, native, ancestor, events, histories):
+    """Bind logical artifacts and the exact core state before the first policy call."""
+    app = native['application']
+    state = memory_task.validate_state(app['memory'])
+    expected = selector_config(job['stage'], histories, job['oracle_evidence'],
+                               protocol_sha256=job['protocol_sha256'])
+    if (state['u'] != common.condition_u(job['stage'], histories)
+            or state.get('selector') != expected or job['selector'] != expected
+            or branch_invariants(native, job) != job['expected_non_u']
+            or branch_invariants(ancestor, job) != job['expected_non_u']):
+        raise ValueError('Logical condition artifact or native selector/preservation guard differs')
+    configured = [e for e in events if e['kind'] == 'selector_configured']
+    if strict_core(job):
+        source = memory_task.validate_state(ancestor['application']['memory'])
+        restored = [e for e in events if e['kind'] == 'application_restored']
+        if (source.get('selector') != expected or source['u'] != common.condition_u('anchor', histories)
+                or common.baseline_invariants(ancestor) != job['binding']['non_u']
+                or configured or len(restored) != 1
+                or restored[0].get('parent_run_id') != ancestor['application']['source_run_id']
+                or restored[0].get('parent_event_prefix') != ancestor['application']['event_prefix']
+                or restored[0]['sequence'] >= app['event_prefix']['event_count']):
+            raise ValueError('Strict U-only fork did not inherit its shared anchor selector/prefix')
+    elif (len(configured) != 1 or configured[0].get('configuration') != expected
+            or configured[0].get('configuration_sha256') != memory.sha256(expected)
+            or configured[0].get('episode_step') != 300
+            or configured[0]['sequence'] >= app['event_prefix']['event_count']):
+        raise ValueError('Registered selector event prefix differs')
+    if job['protocol_sha256'] == C4_PROTOCOL_SHA256:
+        swaps = [e for e in events if e['kind'] == 'memory_u_replaced']
+        if (len(swaps) != 1 or swaps[0].get('old_u') != ancestor['application']['memory']['u']
+                or swaps[0].get('new_u') != state['u']
+                or swaps[0].get('invariant_hashes') != invariant_hashes(ancestor)
+                or swaps[0]['sequence'] >= app['event_prefix']['event_count']):
+            raise ValueError('Exact condition U replacement proof differs')
+    return state
+
+
 def worker(raw):
     from palimpsest.engine import Engine
     job = validate_job(raw)
+    _, protocol = fixed_profile(job['protocol_sha256'])
     if source_identity(job['repo'], job['assets']) != job['source_identity']:
         raise ValueError('Worker authoring source/assets changed')
-    original = verify_binding(job['binding'])
+    original = verify_binding(job['binding'], protocol_sha256=job['protocol_sha256'])
     if common._hash(job['snapshot_path']) != job['snapshot_sha256']:
         raise ValueError('Comparison ancestor snapshot changed')
     ancestor = read_snapshot(job['snapshot_path'])
-    if (common.baseline_invariants(ancestor) != job['expected_non_u']
-            or common.baseline_invariants(original) != job['expected_non_u']):
+    if (branch_invariants(ancestor, job) != job['expected_non_u']
+            or common.baseline_invariants(ancestor) != job['binding']['non_u']
+            or common.baseline_invariants(original) != job['binding']['non_u']):
         raise ValueError('Ancestor changed physics/controller/RNG/task state')
     if job['stage'] == 'oracle': check_oracle(job, original)
     histories = histories_for(job['cell'], common.load_histories(job['history_root']))
@@ -359,21 +441,27 @@ def worker(raw):
         engine = Engine.open(job['repo'],job['assets'],run/'recording',run_id=job['run_id'],
             controller='flynn',device='cpu',scenario='memory-passages',seed=case['seed'],
             memory_case=case,max_bytes=192*MiB,storage_budget=storage,restore_snapshot=ancestor,memory_u=u)
-        engine.writer.manifest.update(comparison_protocol=PROTOCOL,comparison_protocol_sha256=PROTOCOL_SHA256,
+        engine.writer.manifest.update(comparison_protocol=protocol,comparison_protocol_sha256=job['protocol_sha256'],
             comparison_cell=job['cell'],comparison_stage=job['stage'],comparison_source_identity=job['source_identity'],
             comparison_binding=job['binding'],comparison_binding_sha256=memory.sha256(job['binding']),
             selector_configuration=job['selector'],oracle_evidence=job['oracle_evidence'],
-            continuation_access=PROTOCOL['continuation_access'])
-        engine.memory = memory_task.configure_selector(engine.memory,job['selector'])
-        engine._event('selector_configured',configuration=job['selector'],configuration_sha256=memory.sha256(job['selector']))
+            continuation_access=protocol['continuation_access'])
+        if job['protocol_sha256'] == C4_PROTOCOL_SHA256:
+            engine.writer.manifest.update(comparison_history_inputs=job['history_inputs'],
+                comparison_condition_u_sha256=memory.sha256(u),
+                comparison_preservation='u-only' if strict_core(job) else 'declared-u-and-selector')
+        if not strict_core(job):
+            engine.memory = memory_task.configure_selector(engine.memory,job['selector'])
+            engine._event('selector_configured',configuration=job['selector'],configuration_sha256=memory.sha256(job['selector']))
         current = capture(engine.env,engine.observation,policy=engine.policy,application=engine.application_state())
-        if common.baseline_invariants(current) != job['expected_non_u']:
+        if branch_invariants(current, job) != job['expected_non_u']:
             raise ValueError('Atomic restore/configuration changed non-U/selector state')
         report['before_circles'] = memory_world.sensing_inputs(engine.env,engine.world_task_state)[2]
         _register_initial(engine,run,neural._SnapshotBudget(storage))
         native = read_snapshot(run/'snapshots/initial.snp')
+        validate_selector_boundary(job, native, ancestor, artifacts._events(run), histories)
         report.update(snapshot_path=str(run/'snapshots/initial.snp'),snapshot_sha256=common._hash(run/'snapshots/initial.snp'),
-                      non_u=common.baseline_invariants(native))
+                      non_u=branch_invariants(native, job))
         if job['stage'] != 'anchor':
             neural.audit_policy(engine)
             for _ in range(300):
@@ -403,6 +491,7 @@ def worker(raw):
 
 
 def validate_stage(job, supervised):
+    _, protocol = fixed_profile(job['protocol_sha256'])
     if supervised['status'] != 'completed' or supervised.get('returncode') != 0:
         raise ValueError('Infrastructure/worker failure; no retry')
     data = common.read_run(Path(job['output']))
@@ -412,12 +501,16 @@ def validate_stage(job, supervised):
     state = memory_task.validate_state(app['memory']); case = job['binding']['case']
     histories = histories_for(job['cell'],common.load_histories(job['history_root']))
     expected = {'memory_case':case,'memory_case_sha256':memory.sha256(case),
-        'comparison_protocol':PROTOCOL,'comparison_protocol_sha256':PROTOCOL_SHA256,
+        'comparison_protocol':protocol,'comparison_protocol_sha256':job['protocol_sha256'],
         'comparison_cell':job['cell'],'comparison_stage':job['stage'],
         'comparison_source_identity':job['source_identity'],'comparison_binding':job['binding'],
         'comparison_binding_sha256':memory.sha256(job['binding']),
         'selector_configuration':job['selector'],'oracle_evidence':job['oracle_evidence'],
-        'continuation_access':PROTOCOL['continuation_access']}
+        'continuation_access':protocol['continuation_access']}
+    if job['protocol_sha256'] == C4_PROTOCOL_SHA256:
+        expected.update(comparison_history_inputs=job['history_inputs'],
+            comparison_condition_u_sha256=memory.sha256(common.condition_u(job['stage'], histories)),
+            comparison_preservation='u-only' if strict_core(job) else 'declared-u-and-selector')
     if (any(memory.canonical_bytes(manifest.get(k)) != memory.canonical_bytes(v) for k,v in expected.items())
             or manifest.get('run_id') != job['run_id'] or manifest.get('controller') != 'flynn'
             or manifest.get('requested_device') != 'cpu' or manifest.get('seed') != case['seed']
@@ -441,7 +534,7 @@ def validate_stage(job, supervised):
             or state['e']['episodes'] or state['u']!=common.condition_u(job['stage'],histories)
             or state.get('selector')!=job['selector'] or state['initial_m']!=memory.seed_m(case['facts'],[])
             or app['world_task_state']['case']!=case or app['world_task_state']['applied']
-            or common.baseline_invariants(native)!=job['expected_non_u'] or report['non_u']!=job['expected_non_u']
+            or branch_invariants(native,job)!=job['expected_non_u'] or report['non_u']!=job['expected_non_u']
             or not np.array_equal(native['environment']['values']['_goal_xy'],np.asarray(common.effective_goal(),np.float32))):
         raise ValueError('Native CPU/controller/RNG/M/E/U/selector/world boundary differs')
     if common._hash(job['snapshot_path'])!=job['snapshot_sha256']: raise ValueError('Ancestor native changed')
@@ -450,13 +543,9 @@ def validate_stage(job, supervised):
         'source_controller':ancestor['application']['controller'],'snapshot_state_sha256':state_digest(ancestor),
         'native_sha256':ancestor['native_sha256'],'case_sha256':memory.sha256(case),
         'replace_controller':False,'memory_u_sha256':memory.sha256(common.condition_u(job['stage'],histories))}
-    configured = [e for e in events if e['kind']=='selector_configured']
-    if (manifest.get('memory_continuation_admission')!=expected_admission
-            or common.baseline_invariants(ancestor)!=job['expected_non_u']
-            or len(configured)!=1 or configured[0].get('configuration')!=job['selector']
-            or configured[0].get('configuration_sha256')!=memory.sha256(job['selector'])
-            or configured[0].get('episode_step')!=300 or configured[0]['sequence']>=app['event_prefix']['event_count']):
+    if manifest.get('memory_continuation_admission')!=expected_admission:
         raise ValueError('Atomic restoration or registered selector event prefix differs')
+    validate_selector_boundary(job,native,ancestor,events,histories)
     final = memory_task.validate_state(report['final_memory'])
     world = memory_world.validate_state(report['final_world'])
     if (world['case']!=case or world['gate_result']!=report['gate_result']
@@ -591,8 +680,10 @@ def evaluate_cell(binding, native, parents, histories):
 
 def run_verifier(raw):
     plan = validate_plan(raw); output = Path(plan['output'])
+    _, protocol = fixed_profile(plan['protocol_sha256'])
     first = next(iter(plan['bindings'].values()))
-    if memory.canonical_bytes(load_bindings(first['plan_path'],first['report_path'])) != memory.canonical_bytes(plan['bindings']):
+    if memory.canonical_bytes(load_bindings(first['plan_path'],first['report_path'],
+            protocol_sha256=plan['protocol_sha256'])) != memory.canonical_bytes(plan['bindings']):
         raise ValueError('Prepared policy bindings differ from original admission lineage')
     histories = common.load_histories(plan['history_root'])
     if history_pins(plan['history_root'],histories)!=plan['history_inputs']:
@@ -608,7 +699,7 @@ def run_verifier(raw):
     if shutil.disk_usage(existing).free < 12*GiB+64*MiB:
         raise ValueError('Comparison requires 10 GiB allowance + 2 GiB free floor + headroom')
     storage = budget(output); summaries = []; parents = {}; retained = []; started = time.monotonic()
-    result = {'version':1,'claim':PROTOCOL['claim'],'protocol_sha256':PROTOCOL_SHA256,
+    result = {'version':1,'claim':protocol['claim'],'protocol_sha256':plan['protocol_sha256'],
         'status':'comparison_unverified','runs':summaries,'comparisons':[],
         'history_inputs':plan['history_inputs'],'bindings':plan['bindings'],
         'r2_complete':False,'held_out_executed':False,'full_matrix_executed':False}
@@ -626,15 +717,18 @@ def run_verifier(raw):
                 key, stage = admission.cell_key(prepared['cell']), prepared['stage']
                 binding = plan['bindings'][key]
                 cell_parents = parents.setdefault(key,{})
-                source = verify_binding(binding)
+                source = verify_binding(binding,protocol_sha256=plan['protocol_sha256'])
                 ancestor = binding if stage=='anchor' else cell_parents['anchor'][1]
                 mapped = histories_for(prepared['cell'],histories)
                 proof = None if stage!='oracle' else gold_proof(binding,source,*cell_parents['own'][:2])
                 job = {**copy.deepcopy(prepared), **{k:plan[k] for k in ('repo','assets','history_root','source_identity','history_inputs')},
                     'root_output':str(output),'output':str(output/'runs'/prepared['run_id']),
-                    'binding':binding,'protocol_sha256':PROTOCOL_SHA256,
+                    'binding':binding,'protocol_sha256':plan['protocol_sha256'],
                     'snapshot_path':ancestor['snapshot_path'],'snapshot_sha256':ancestor['snapshot_sha256'],
-                    'expected_non_u':binding['non_u'],'selector':selector_config(stage,mapped,proof),'oracle_evidence':proof}
+                    'expected_non_u':invariant_hashes(cell_parents['anchor'][2])
+                        if plan['protocol_sha256']==C4_PROTOCOL_SHA256 and stage in CORE_CONDITIONS else binding['non_u'],
+                    'selector':selector_config(stage,mapped,proof,protocol_sha256=plan['protocol_sha256']),
+                    'oracle_evidence':proof}
                 validate_job(job); neural.write(output/f"{job['run_id']}-job.json",job,storage)
                 print(json.dumps({'cell':key,'stage':stage,'run_id':job['run_id']}),flush=True)
                 supervised = bounded_process([sys.executable,str(Path(__file__).resolve()),'--worker',json.dumps(job)],
@@ -645,7 +739,7 @@ def run_verifier(raw):
                 cell_parents[stage] = (data,report,native); retained.append((data,report,summary))
                 summary.update(mechanism_pass=True,task_pass=None,final_phase=report['final_phase'],
                     worker_report_sha256=common._hash(data['run']/'comparison-worker.json'),snapshot_sha256=entry['sha256'],
-                    initial_non_u=common.baseline_invariants(native),
+                    initial_non_u=branch_invariants(native,job),
                     files=[{'path':str(p.relative_to(data['run'])),'bytes':p.stat().st_size,'sha256':common._hash(p)} for p in data['paths']])
                 if stage=='oracle':
                     comparison = evaluate_cell(binding,source,cell_parents,mapped)
@@ -666,7 +760,7 @@ def run_verifier(raw):
         final = None; changed = False
         try:
             final = source_identity(plan['repo'],plan['assets'])
-            for binding in plan['bindings'].values(): verify_binding(binding)
+            for binding in plan['bindings'].values(): verify_binding(binding,protocol_sha256=plan['protocol_sha256'])
             common.load_histories(plan['history_root'])
             changed = any(artifacts._fingerprint(d['paths'])!=d['fingerprint'] or
                 common._hash(r['snapshot_path'])!=r['snapshot_sha256'] or
@@ -686,19 +780,23 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--worker'); parser.add_argument('--prepared-plan',type=Path)
     parser.add_argument('--prepared-plan-sha256'); parser.add_argument('--plan-only',action='store_true')
+    parser.add_argument('--fixed-profile',choices=('c3','c4'))
     for name in ('repo','assets','output','history-root','admission-plan','admission-report'):
         parser.add_argument('--'+name,type=Path)
     args = parser.parse_args()
-    if args.worker is not None: return worker(json.loads(args.worker))
+    if args.worker is not None:
+        if args.fixed_profile is not None: parser.error('Worker profile comes only from its validated job')
+        return worker(json.loads(args.worker))
     names = ('repo','assets','output','history_root','admission_plan','admission_report')
     if args.prepared_plan is not None:
-        if args.plan_only or any(getattr(args,k) is not None for k in names) or args.prepared_plan_sha256 is None:
+        if args.plan_only or args.fixed_profile is not None or any(getattr(args,k) is not None for k in names) or args.prepared_plan_sha256 is None:
             parser.error('Prepared execution requires only an immutable plan and its hash')
         plan = neural.read_prepared_plan(args.prepared_plan,args.prepared_plan_sha256)
     else:
         if args.prepared_plan_sha256 is not None or any(getattr(args,k) is None for k in names):
             parser.error('All six planning paths are required')
-        plan = make_plan(*(getattr(args,k) for k in names))
+        plan = make_plan(*(getattr(args,k) for k in names),
+                         protocol_sha256=C4_PROTOCOL_SHA256 if args.fixed_profile=='c4' else PROTOCOL_SHA256)
     if args.plan_only:
         print(json.dumps(validate_plan(plan),indent=2,allow_nan=False)); return 0
     return 0 if run_verifier(plan)['status']=='comparison_checked' else 1

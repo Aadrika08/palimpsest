@@ -117,7 +117,7 @@ class CounterbalanceComparison(unittest.TestCase):
             changed = copy.deepcopy(binding); changed['before_circles'][0][0] = 99.
             with self.assertRaisesRegex(ValueError,'hash-pinned admission worker'): r.verify_binding(changed)
 
-    def fixture(self, cell, condition='own'):
+    def fixture(self, cell, condition='own', *, protocol_sha256=None):
         """Synthetic sensor/retained-M fixture only, never an acquired recording."""
         from tests.test_memory_counterbalance import CounterbalanceAdmission
         from palimpsest import memory_task
@@ -128,7 +128,8 @@ class CounterbalanceComparison(unittest.TestCase):
         histories = {'own':{'e':{'version':1,'episodes':[]},'u':memory.artifact(cell[1]),'sha256':'a'*64},
             'swapped':{'e':{'version':1,'episodes':[]},'u':memory.artifact(memory.RELATIONS[1-memory.RELATIONS.index(cell[1])]),'sha256':'b'*64}}
         state['u'] = self.runner.common.condition_u(condition,histories)
-        config = self.runner.selector_config(condition,histories, {'gold_target_ids':[]} if condition=='oracle' else None)
+        config = self.runner.selector_config(condition,histories, {'gold_target_ids':[]} if condition=='oracle' else None,
+                                             protocol_sha256=protocol_sha256)
         state = memory_task.configure_selector(state,config)
         native['application']['memory'] = state
         packet = data['events'][0]['packet']
@@ -214,7 +215,7 @@ class CounterbalanceComparison(unittest.TestCase):
         bindings = {r.admission.cell_key(c):{'cell':list(c),'case':r.admission.make_case(c),
             'snapshot_path':'/fixture/initial.snp','snapshot_sha256':'a'*64,'non_u':{'fixture':True},
             'plan_path':'/fixture/plan.json','report_path':'/fixture/report.json'} for c in r.CELLS}
-        def original(binding):
+        def original(binding, **_):
             return {'application':{'memory':{'m':memory.seed_m(binding['case']['facts'],[])}}}
         calls = []
         def validate(job):
@@ -268,6 +269,177 @@ class CounterbalanceComparison(unittest.TestCase):
             with self.assertRaisesRegex(ValueError,'comparison job'): r.validate_job(changed)
             changed = copy.deepcopy(job); changed['output']=str(root/'out/runs'/'87654321876543218765432187654321')
             with self.assertRaisesRegex(ValueError,'comparison job'): r.validate_job(changed)
+
+    def test_two_fixed_profiles_preserve_c3_and_reject_cross_profile_cells(self):
+        r = self.runner
+        old = copy.deepcopy(r.PROTOCOL)
+        self.assertEqual(r.fixed_profile(), (r.CELLS, old))
+        self.assertEqual(r.fixed_profile(r.PROTOCOL_SHA256), (r.CELLS, old))
+        self.assertEqual(r.fixed_profile(r.C4_PROTOCOL_SHA256)[0], r.C4_CELLS)
+        self.assertEqual(set(r.CELLS) | set(r.C4_CELLS), set(r.admission.CELLS))
+        self.assertFalse(set(r.CELLS) & set(r.C4_CELLS))
+        plan, report = self.joined_fixture()
+        for cell in r.C4_CELLS:
+            self.assertEqual(r.derive_anchor(plan, report, cell,
+                protocol_sha256=r.C4_PROTOCOL_SHA256)['policy-anchor'][0]['cell'], list(cell))
+            with self.assertRaises(ValueError): r.derive_anchor(plan, report, cell)
+        with self.assertRaisesRegex(ValueError, 'profile'): r.fixed_profile('0'*64)
+        histories = self.fixture(r.CELLS[0])[-1]
+        for stage in r.STAGES:
+            proof = {'gold_target_ids': []} if stage == 'oracle' else None
+            expected = r.common.selector_config(stage, histories, proof)
+            if stage in ('no-U', 'hand-authored', 'history-independent', 'traversal'):
+                expected['provenance_sha256'] = r.PROTOCOL_SHA256
+            self.assertEqual(r.selector_config(stage, histories, proof), expected)
+        self.assertEqual(r.PROTOCOL, old)
+
+    def test_historical_admission_keeps_exact_physical_repository_contract(self):
+        r = self.runner; cell = r.C4_CELLS[0]; run_id = '9'*32
+        with tempfile.TemporaryDirectory() as root:
+            root = Path(root)
+            job = {'repo': str(self.repo), 'assets': str(root/'assets'), 'output': str(root/'runs'/run_id),
+                'root_output': str(root), 'run_id': run_id, 'cell': list(cell), 'stage': 'policy-anchor',
+                'case': r.admission.make_case(cell), 'protocol_sha256': r.admission.PROTOCOL_SHA256,
+                'source_identity': {'fixture': True}, 'snapshot_path': None, 'snapshot_sha256': None,
+                'expected_non_u': None, 'replacement_preserved': None}
+            self.assertEqual(r.admission.validate_job(job, prepared=True), job)
+            bad = copy.deepcopy(job); bad['repo'] = str(root/'another-checkout')
+            with self.assertRaisesRegex(ValueError, 'admission job'):
+                r.admission.validate_job(bad, prepared=True)
+
+    def test_c4_real_plan_job_validators_bind_shared_core_and_resources(self):
+        r = self.runner; histories = self.fixture(r.C4_CELLS[0])[-1]
+        for h in histories.values(): h['path'] = 'fixture-history.json'
+        frozen_histories = copy.deepcopy(histories)
+        bindings = {r.admission.cell_key(c): {'cell': list(c), 'case': r.admission.make_case(c)} for c in r.C4_CELLS}
+        with tempfile.TemporaryDirectory() as root, patch.object(r, 'load_bindings', return_value=bindings), \
+                patch.object(r.common, 'load_histories', return_value=histories), \
+                patch.object(r, 'source_identity', return_value={'fixture': True}):
+            root = Path(root)
+            plan = r.make_plan(self.repo, root/'assets', root/'out', root/'history', root/'B-plan', root/'B-report',
+                               protocol_sha256=r.C4_PROTOCOL_SHA256)
+            self.assertEqual(r.validate_plan(plan), plan)
+            self.assertEqual(len(plan['jobs']), 40)
+            self.assertEqual(len({j['run_id'] for j in plan['jobs']}), 40)
+            self.assertEqual(plan['protocol']['max_numeric_ticks'], 10800)
+            self.assertEqual(plan['protocol']['aggregate_max_bytes'], 10*r.GiB)
+            bad = copy.deepcopy(plan); bad['protocol_sha256'] = r.PROTOCOL_SHA256
+            with self.assertRaises(ValueError): r.validate_plan(bad)
+            bad = copy.deepcopy(plan); bad['jobs'][0]['cell'] = list(r.CELLS[0])
+            with self.assertRaises(ValueError): r.validate_plan(bad)
+            for cell in r.C4_CELLS:
+                mapped = r.histories_for(cell, histories)
+                shared = r.selector_config('anchor', mapped, protocol_sha256=r.C4_PROTOCOL_SHA256)
+                for stage in r.STAGES:
+                    run_id = f'{25+r.STAGES.index(stage):032x}'
+                    proof = {'gold_target_ids': []} if stage == 'oracle' else None
+                    config = r.selector_config(stage, mapped, proof, protocol_sha256=r.C4_PROTOCOL_SHA256)
+                    job = {'repo': str(self.repo), 'assets': str(root/'assets'), 'history_root': str(root/'history'),
+                        'root_output': str(root/'out'), 'output': str(root/'out/runs'/run_id), 'run_id': run_id,
+                        'cell': list(cell), 'stage': stage, 'binding': bindings[r.admission.cell_key(cell)],
+                        'protocol_sha256': r.C4_PROTOCOL_SHA256, 'source_identity': {'fixture': True},
+                        'history_inputs': r.history_pins(root/'history', histories), 'snapshot_path': str(root/'initial.snp'),
+                        'snapshot_sha256': 'a'*64, 'expected_non_u': {'fixture': True}, 'selector': config, 'oracle_evidence': proof}
+                    self.assertEqual(r.validate_job(job), job)  # Only the retained history reader is mocked.
+                    if stage in ('anchor', *r.CORE_CONDITIONS): self.assertEqual(config, shared)
+                    self.assertEqual(config['resource'], mapped['own']['e'] if stage == 'retrieval' else [] if stage == 'oracle' else None)
+                    bad = copy.deepcopy(job); bad['selector']['provenance_sha256'] = 'f'*64
+                    with self.assertRaisesRegex(ValueError, 'resource/provenance'): r.validate_job(bad)
+                    bad = copy.deepcopy(job); bad['history_inputs'].pop('own')
+                    with self.assertRaisesRegex(ValueError, 'Historical'): r.validate_job(bad)
+                    if stage in r.CORE_CONDITIONS:
+                        bad = copy.deepcopy(job); bad['selector']['condition'] = 'swapped'
+                        with self.assertRaisesRegex(ValueError, 'resource/provenance'): r.validate_job(bad)
+        self.assertEqual(histories, frozen_histories)
+
+    def test_c4_upper_change_null_and_no_event_use_actual_pure_sensor_packets(self):
+        r = self.runner
+        for cell in r.C4_CELLS:
+            for condition in r.common.CONDITIONS:
+                case, native, report, data, histories = self.fixture(cell, condition,
+                    protocol_sha256=r.C4_PROTOCOL_SHA256)
+                state = native['application']['memory']
+                trigger, selections = r.observed_trigger(state, data, case)
+                before = r.common.occupancy(case, report['before_circles'])
+                after = r.common.occupancy(case, report['after_circles'])
+                gold = r.experiment.gold_target_ids(state['m'], before, after, trigger)
+                self.assertEqual(len(gold), int(cell[2] == 'change'))
+                if cell[2] == 'change':
+                    fact = next(f for f in report['final_memory']['m']['facts'] if f['id'] == gold[0])
+                    self.assertEqual(fact['subject_id'], case['subjects_by_side'][1])
+                    self.assertEqual((fact['estimate'], fact['status'], fact['evidence']['tick']), ('blocked', 'observed', 300))
+                elif cell[2] == 'null':
+                    self.assertEqual(gold, [])
+                    self.assertEqual(len(selections), 1)
+                    self.assertTrue(all(f['estimate'] == 'open' for f in report['final_memory']['m']['facts']))
+                else:
+                    self.assertEqual((trigger, selections), (None, []))
+                    scores = r.common.score_nine(state['m'], trigger, histories, gold)
+                    self.assertTrue(all(s['behavior_input_bytes'] == 0 for s in scores))
+
+    def strict_fixture(self, stage='own'):
+        from palimpsest import memory_task
+        from palimpsest.snapshots import SNAPSHOT_KEYS
+        r = self.runner; cell = r.C4_CELLS[0]
+        _, native, _, _, histories = self.fixture(cell)
+        state = native['application']['memory']
+        config = r.selector_config('anchor', histories, protocol_sha256=r.C4_PROTOCOL_SHA256)
+        state = memory_task.configure_selector(state, config)
+        ancestor = dict.fromkeys(SNAPSHOT_KEYS)
+        ancestor.update(integration=r.np.array([1., 2.]), policy={'hidden': [3.]}, rng={'numpy': [4.]},
+            application={'memory': state, 'source_run_id': 'a'*32, 'event_prefix': {'event_count': 3},
+                         'command_history': {'fixture': True}})
+        job = {'stage': stage, 'protocol_sha256': r.C4_PROTOCOL_SHA256, 'selector': config,
+               'oracle_evidence': None, 'expected_non_u': r.invariant_hashes(ancestor),
+               'binding': {'non_u': r.common.baseline_invariants(ancestor)}}
+        branch = copy.deepcopy(ancestor)
+        branch['application'].update(source_run_id='b'*32, event_prefix={'event_count': 2})
+        branch['application']['memory']['u'] = r.common.condition_u(stage, histories)
+        events = [{'kind': 'application_restored', 'sequence': 0, 'parent_run_id': 'a'*32,
+                   'parent_event_prefix': ancestor['application']['event_prefix']},
+                  {'kind': 'memory_u_replaced', 'sequence': 1, 'old_u': state['u'],
+                   'new_u': branch['application']['memory']['u'], 'invariant_hashes': job['expected_non_u']}]
+        return job, branch, ancestor, events, histories
+
+    def test_strict_core_keeps_every_non_u_field_and_exact_artifact(self):
+        r = self.runner
+        for stage in r.CORE_CONDITIONS:
+            job, native, ancestor, events, histories = self.strict_fixture(stage)
+            original = copy.deepcopy((job, native, ancestor, events, histories))
+            self.assertEqual(r.validate_selector_boundary(job, native, ancestor, events, histories), native['application']['memory'])
+            self.assertEqual((job, native['application'], ancestor['application'], events, histories),
+                             (original[0], original[1]['application'], original[2]['application'], original[3], original[4]))
+            bad = copy.deepcopy(native)
+            bad['application']['memory']['u'] = r.common.condition_u('swapped' if stage != 'swapped' else 'own', histories)
+            with self.assertRaisesRegex(ValueError, 'artifact'): r.validate_selector_boundary(job, bad, ancestor, events, histories)
+            for field in ('m', 'e', 'initial_m', 'detector', 'cursor', 'requests', 'active', 'last_decisions', 'selector', 'version'):
+                bad = copy.deepcopy(native); bad['application']['memory'][field] = {'changed': True}
+                self.assertNotEqual(r.branch_invariants(bad, job), job['expected_non_u'], field)
+            for field in ('integration', 'policy', 'rng'):
+                bad = copy.deepcopy(native); bad[field] = {'changed': True}
+                self.assertNotEqual(r.branch_invariants(bad, job), job['expected_non_u'], field)
+            bad = copy.deepcopy(native); bad['application']['command_history'] = {}
+            self.assertNotEqual(r.branch_invariants(bad, job), job['expected_non_u'])
+            bad_events = copy.deepcopy(events); bad_events.append({'kind': 'selector_configured'})
+            with self.assertRaisesRegex(ValueError, 'inherit'): r.validate_selector_boundary(job, native, ancestor, bad_events, histories)
+            bad_events = copy.deepcopy(events); bad_events[0]['parent_event_prefix']['event_count'] += 1
+            with self.assertRaisesRegex(ValueError, 'prefix'): r.validate_selector_boundary(job, native, ancestor, bad_events, histories)
+            bad_events = copy.deepcopy(events); bad_events[1]['new_u'] = memory.artifact(method='empty-v1')
+            if stage != 'no-U':
+                with self.assertRaisesRegex(ValueError, 'replacement'): r.validate_selector_boundary(job, native, ancestor, bad_events, histories)
+        # Legacy C3 deliberately permits label/provenance changes and requires a new config event.
+        from palimpsest import memory_task
+        job, native, ancestor, _, histories = self.strict_fixture('swapped')
+        job['protocol_sha256'] = r.PROTOCOL_SHA256
+        job['selector'] = r.selector_config('swapped', histories)
+        native['application']['memory'] = memory_task.configure_selector(native['application']['memory'], job['selector'])
+        job['expected_non_u'] = r.common.baseline_invariants(ancestor)
+        self.assertNotEqual(r.invariant_hashes(native), r.invariant_hashes(ancestor))
+        event = {'kind': 'selector_configured', 'sequence': 0, 'episode_step': 300,
+            'configuration': job['selector'], 'configuration_sha256': memory.sha256(job['selector'])}
+        r.validate_selector_boundary(job, native, ancestor, [event], histories)
+        with self.assertRaisesRegex(ValueError, 'selector event'):
+            r.validate_selector_boundary(job, native, ancestor, [], histories)
 
 
 if __name__ == '__main__':
