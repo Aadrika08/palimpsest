@@ -1,7 +1,7 @@
 """CPU inference for one explicitly selected, completed male training artifact.
 
-No Engine integration, retina state, biological sensor mapping, or downloads.
-The caller supplies the expected report hash; a directory name is not identity.
+Fixed original/control lab profiles; no retina state or biological sensor mapping.
+The tracked manifest supplies the expected report hash; no downloads or API paths.
 """
 import hashlib
 import io
@@ -14,6 +14,13 @@ from .male_model import (CELL_SHA256, FEATURE_PROTOCOL, digest, features,
                          load_graph, make_model, reachability, rewire)
 
 VARIANTS = ('original', 'degree_rewired')
+CONTROLLERS = {'male-original': 'original', 'male-control': 'degree_rewired'}
+PROFILE = 'male-reduced-artificial-interface-v1'
+ASSET_DIRECTORY = 'male-reduced-v1'
+MANIFEST = 'data/manifests/male-reduced-policy-v1.json'
+IDENTITY_HASHES = ('model_manifest_sha256', 'training_report_sha256', 'protocol_sha256', 'checkpoint_sha256',
+                   'graph_sha256', 'topology_sha256', 'ordered_ids_sha256', 'feature_protocol_sha256',
+                   'cell_source_sha256', 'source_graph_sha256', 'graph_manifest_sha256')
 TRAINING_PROTOCOL_SHA256 = '3e6e2aea41bdce07581f0875288a1e20cc5379cbb41d89d3d387cac24db7832b'
 MAX_FILE_BYTES = 8 * 1024**2
 
@@ -24,6 +31,59 @@ def _sha(payload):
 
 def _hash(value):
     return isinstance(value, str) and len(value) == 64 and all(c in '0123456789abcdef' for c in value)
+
+
+def validate_identity(value, controller):
+    if (controller not in CONTROLLERS or not isinstance(value, dict) or
+            set(value) != {'controller', 'variant', 'profile', *IDENTITY_HASHES} or
+            value['controller'] != controller or value['variant'] != CONTROLLERS[controller] or
+            value['profile'] != PROFILE or not all(_hash(value[key]) for key in IDENTITY_HASHES)):
+        raise ValueError('invalid male policy identity')
+    return dict(value)
+
+
+def resolve_profile(repo_root, asset_root, controller, expected_identity=None):
+    """Fixed server-side paths only; returns verified identity and loader arguments."""
+    if controller not in CONTROLLERS:
+        raise ValueError('unknown male controller')
+    root, directory = artifacts._safe_path(repo_root), artifacts._safe_path(Path(asset_root) / ASSET_DIRECTORY)
+    manifest_bytes = artifacts._read(root / MANIFEST, 1024**2)
+    manifest = artifacts._json(manifest_bytes)
+    names = {'report.json', 'protocol.json', 'original-graph.json', 'original.pt',
+             'degree_rewired-graph.json', 'degree_rewired.pt', 'source-graph.json'}
+    if (not isinstance(manifest, dict) or set(manifest) != {'schema_version', 'profile', 'controllers', 'files', 'qualification_claims'} or
+            type(manifest['schema_version']) is not int or manifest['schema_version'] != 1 or
+            manifest['profile'] != PROFILE or manifest['controllers'] != CONTROLLERS or
+            manifest['qualification_claims'] != [] or not isinstance(manifest['files'], dict) or set(manifest['files']) != names):
+        raise ValueError('unsupported pinned male model manifest')
+    for name, item in manifest['files'].items():
+        if (not isinstance(item, dict) or set(item) != {'sha256', 'size_bytes'} or not _hash(item['sha256']) or
+                type(item['size_bytes']) is not int or not 0 < item['size_bytes'] <= MAX_FILE_BYTES):
+            raise ValueError('invalid pinned male asset entry')
+        payload = artifacts._read(directory / name, MAX_FILE_BYTES)
+        if len(payload) != item['size_bytes'] or _sha(payload) != item['sha256']:
+            raise ValueError('pinned male asset differs: ' + name)
+    arguments = {'directory': directory, 'variant': CONTROLLERS[controller],
+        'expected_report_sha256': manifest['files']['report.json']['sha256'],
+        'graph_path': directory / 'source-graph.json',
+        'graph_manifest': root / 'data/manifests/malecns-reduced-neighborhood-v1.json',
+        'cell_path': root / 'upstream/fly-gym/models/connectome_rnn_model.py'}
+    if _sha(artifacts._read(arguments['cell_path'], 1024**2)) != CELL_SHA256:
+        raise ValueError('pinned male cell source differs')
+    _, _, provenance = _bundle(**{key: value for key, value in arguments.items() if key != 'cell_path'})
+    provenance['model_manifest_sha256'] = _sha(manifest_bytes)
+    identity = validate_identity({'controller': controller, 'variant': CONTROLLERS[controller], 'profile': PROFILE,
+                                 **{key: provenance[key] for key in IDENTITY_HASHES}}, controller)
+    if expected_identity is not None and validate_identity(expected_identity, controller) != identity:
+        raise ValueError('recorded male policy identity differs from pinned assets')
+    return identity, arguments
+
+
+def load_pinned_policy(repo_root, asset_root, controller, seed, expected_identity=None):
+    identity, arguments = resolve_profile(repo_root, asset_root, controller, expected_identity)
+    policy = load_policy(**arguments, seed=seed)
+    policy.provenance.update(policy_identity=identity, model_manifest_sha256=identity['model_manifest_sha256'])
+    return policy
 
 
 def _check_archive(payload):
@@ -158,6 +218,7 @@ def load_policy(directory, variant, *, expected_report_sha256, graph_path, graph
 
 class MalePolicy:
     """One-tick CPU wrapper; hidden state commits only after every output validates."""
+    snapshot_kind = 'male-reduced-v1'
     def __init__(self, model, provenance):
         import torch
         self.torch, self.agent = torch, model

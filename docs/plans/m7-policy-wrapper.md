@@ -1,8 +1,9 @@
 # M7 separate male policy wrapper
 
-This bounded slice loads a completed offline training artifact. It does not add an
-Engine controller, API choice, snapshot format, replay path, retina state, or
-population mapping. Those require a separately reviewed integration gate.
+The wrapper loads a completed offline training artifact. The initial lab slice
+adds two fixed CPU controllers and explicit identity/native-state handling.
+Pure fixture checks cover admission, propagation and rejection. Actual native
+continuation, replay and UI validation remain pending their runtime gates.
 
 `palimpsest.male_policy.load_policy` requires explicit arguments:
 
@@ -60,19 +61,19 @@ The synthetic CPU loader/state/rollback check is skipped unless
 both actual checkpoints passed at `4941468`, including all 600 held-out recorded
 inputs per variant compared against frozen 32-tick-window evaluation. See the
 [validation report](../reports/m7-wrapper-validation.md) for exact scope and
-hashes. Engine integration and closed-loop/native continuation remain separate
-unexecuted gates. Fixture checks and single-seed imitation metrics establish
+hashes. The later [lab integration gate](../reports/m7-lab-integration.md) passes native
+continuation and replay; navigation and live-owner/browser gates remain separate. Fixture checks and single-seed imitation metrics establish
 neither topology benefit nor biological sensing or navigation competence.
 
-## Proposed integration contract, not implemented
+## Initial lab integration
 
-Use two explicit controller IDs, `male-original` and `male-control`, mapping only
+Two explicit controller IDs, `male-original` and `male-control`, map only
 to `original` and `degree_rewired`. Admit CPU, reproduction and checker initially;
 other scenarios/devices fail explicitly. The existing API request schema keeps
 only scenario/texture/controller/device/seed, with no user-provided model paths.
 
-Place retained artifacts in the fixed `asset_root/male-reduced-v1/` subdirectory.
-A tracked `data/manifests/male-reduced-policy-v1.json` pins the completed report
+Retained artifacts use the fixed `asset_root/male-reduced-v1/` subdirectory.
+`data/manifests/male-reduced-policy-v1.json` pins the completed report
 hash, the fixed artifact names/hashes and source-graph hash. Keep the existing
 tracked extraction manifest and pinned upstream cell source. A small helper in
 `male_policy.py` resolves these fixed names and calls the validated loader; no
@@ -80,24 +81,58 @@ general registry or fetching subsystem is required.
 
 Retain a server-derived `policy_identity` in the run manifest and native snapshot
 configuration: controller/variant, model-manifest hash, report/checkpoint/protocol/
-graph/topology/ordered-ID/feature/cell hashes. Record full loader provenance in
+graph/topology/ordered-ID/feature/cell hashes. Full loader provenance is recorded in
 `policy_loaded`. The worker passes an expected identity internally to Engine;
 fresh starts bind current pinned identity, same-controller branches and replay
 require the recorded identity before restore. Changing `male-original` to
 `male-control` is an explicit controller replacement with fresh hidden state and
 the existing replacement event; it must not reuse the source model identity.
 
-Add an explicit male snapshot policy state containing `kind`, finite float32
+The explicit male snapshot policy state contains `kind`, finite float32
 `hidden[1,138]`, and bounded failure diagnostics. Keep existing FLYNN snapshots
 compatible. Stage and validate male state before native mutation, preserve the
 full policy/runtime identity comparison, and invalidate cell caches on restore.
 Do not add retina attributes or invent visual populations. Existing
 `agent=model` supports tensor hashing and the current 136+2 neural-byte estimate.
 
-Engine needs the two policy creation/reset/action branches and a male population
-guard. Profiles/Lab need fixed choices and verified availability. Worker and
-replay snapshot registration must retain `policy_identity`; replay must mark male
+Engine has two policy creation/reset/action branches and a male population
+guard. Profiles/Lab have fixed choices and verified availability. Worker and
+replay snapshot registration retain `policy_identity`; replay marks male
 policy inference correctly and include male source files in its relevant runtime
 hash checks for male replays only. Policy/action replay keeps its existing labels.
-Actual snapshot continuation and replay must pass a separately bounded runtime
-gate before claiming this integration works.
+The separately bounded [actual runtime gate](../reports/m7-lab-integration.md)
+passes for both variants; it is not navigation or live-owner qualification.
+
+Stage exactly seven files, without changing the frozen training outputs:
+`report.json`, `protocol.json`, `original-graph.json`, `original.pt`,
+`degree_rewired-graph.json`, `degree_rewired.pt`, and `source-graph.json` (the
+unchanged 101,560-byte raw extraction graph). The tracked extraction manifest
+stays at `data/manifests/malecns-reduced-neighborhood-v1.json`; the cell source uses
+the normal pinned `repo_root/upstream/fly-gym/models/connectome_rnn_model.py`.
+The resolver verifies every fixed file's hash and size. No downloads or data
+copies happen in controller admission. This worktree's upstream submodule must
+be populated before actual runtime validation.
+
+Pure checks, with Torch/native/build work gated off:
+
+```sh
+PYTHONPATH=src:tests ../lab-hardening/.venv/bin/python -m unittest test_male_lab test_male_policy test_male_model test_male_runtime test_engine test_profiles test_worker test_replay -q
+```
+
+After review, source freeze, pinned asset staging and explicit runtime release,
+the proposed retained CPU/EGL gate is:
+
+```sh
+timeout --signal=KILL 180s env PALIMPSEST_MALE_RUNTIME_TESTS=1 \
+  PALIMPSEST_TEST_ASSETS="$PWD/data/assets/flynn" \
+  PALIMPSEST_MALE_RUNTIME_OUTPUT="$PWD/runs/m7-male-lab-gate-v1" \
+  PYTHONPATH=src:tests ../lab-hardening/.venv/bin/python -m unittest test_male_runtime -v
+```
+
+The test exclusively creates its output directory. It retains source hashes and
+all UUID runs; each source executes three control ticks. Both controllers undergo
+two-tick native continuation, invalid state/identity rejection before mutation,
+action replay and policy replay, followed by explicit original-to-control
+replacement. It does not score navigation or tune/select models. A live Lab owner
+and browser/build check remain separate gates; pure API fixtures use a mocked
+supervisor and acquire no runtime/storage-owner slot.

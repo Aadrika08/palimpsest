@@ -10,6 +10,7 @@ from pathlib import Path
 import threading
 import time
 import uuid
+from .male_policy import CONTROLLERS as MALE_CONTROLLERS, validate_identity
 
 
 PHASES = {"paused", "running", "terminated", "truncated", "stopped", "failed"}
@@ -85,10 +86,15 @@ class Engine:
                  scenario="reproduction", texture="checker", *, memory_case=None):
         import numpy as np
 
-        if controller not in {"manual", "teacher", "flynn"}:
-            raise ValueError("controller must be manual, teacher, or flynn")
-        if (controller == "flynn" and policy is None) or (controller == "teacher" and teacher is None):
+        if controller not in {"manual", "teacher", "flynn", *MALE_CONTROLLERS}:
+            raise ValueError("unknown controller")
+        if (controller in {"flynn", *MALE_CONTROLLERS} and policy is None) or (controller == "teacher" and teacher is None):
             raise ValueError("selected controller must be supplied")
+        if controller in MALE_CONTROLLERS:
+            from .profiles import validate
+            validate(scenario, texture, controller)
+            identity = validate_identity(policy.provenance.get('policy_identity'), controller)
+            writer.manifest['policy_identity'] = identity
         dt = float(env.model.opt.timestep * env.frame_skip)
         if not math.isclose(dt, .02, rel_tol=0., abs_tol=1e-12):
             raise ValueError("this profile requires a 0.02-second control interval")
@@ -142,15 +148,19 @@ class Engine:
     @classmethod
     def open(cls, repo_root, asset_root, output, controller="manual", device="cpu", seed=0,
              max_bytes=2 * 1024**3, scenario="reproduction", texture="checker", run_id=None,
-             storage_budget=None, memory_case=None):
+             storage_budget=None, memory_case=None, expected_policy_identity=None):
         """Create an actual pinned runtime. The caller owns its process watchdog."""
         from .assets import load_manifest, prepare_graph, sha256_file, verify_assets
         from .doctor import diagnose
         from .records import RunWriter
         from .profiles import validate, configure_world, POPULATIONS
 
-        if controller not in {"manual", "teacher", "flynn"} or device not in {"cpu", "cuda"}:
+        if controller not in {"manual", "teacher", "flynn", *MALE_CONTROLLERS} or device not in {"cpu", "cuda"}:
             raise ValueError("unknown controller or device")
+        if controller in MALE_CONTROLLERS and device != 'cpu':
+            raise ValueError('Male pilot controllers require CPU')
+        if controller not in MALE_CONTROLLERS and expected_policy_identity is not None:
+            raise ValueError('Male policy identity requires a male controller')
         seed = _seed(seed)
         profile = validate(scenario, texture, controller)
         memory_case = cls._validate_memory_case(memory_case, scenario, controller)
@@ -161,6 +171,9 @@ class Engine:
                 'acquisition_protocol_sha256': memory_case['acquisition_protocol_sha256']}
         run_id = uuid.uuid4().hex if run_id is None else uuid.UUID(run_id).hex
         root, assets = Path(repo_root).resolve(), Path(asset_root).resolve()
+        if controller in MALE_CONTROLLERS:
+            from .male_policy import resolve_profile
+            identity, _ = resolve_profile(root, assets, controller, expected_policy_identity)
         os.environ.setdefault("MUJOCO_GL", "egl")
         os.environ.setdefault("MPLBACKEND", "Agg")
         writer = RunWriter(Path(output), {
@@ -209,6 +222,11 @@ class Engine:
                 writer.event("policy_loaded", run_id=writer.manifest["run_id"], provenance=policy.provenance)
             elif controller == "teacher":
                 teacher = reference.PlannerAnalyticTeacher(arena_half_extent=env.arena, device="cpu")
+            elif controller in MALE_CONTROLLERS:
+                from .male_policy import load_pinned_policy
+                policy = load_pinned_policy(root, assets, controller, seed, identity)
+                writer.manifest['policy_identity'] = policy.provenance['policy_identity']
+                writer.event('policy_loaded', run_id=writer.manifest['run_id'], provenance=policy.provenance)
             writer.event("environment", run_id=writer.manifest["run_id"], upstream_commit=load_manifest(root)["upstream_commit"],
                          lock_sha256=sha256_file(root / "uv.lock"),
                          source_sha256={str(path.relative_to(root)): sha256_file(path)
@@ -267,7 +285,7 @@ class Engine:
         if type(self.env.model).__module__.startswith("mujoco"):
             from .profiles import validate_world
             validate_world(self.env, require_route=self.scenario == 'sparse-navigation')
-        if self.controller == "flynn":
+        if self.controller in {"flynn", *MALE_CONTROLLERS}:
             self.policy.reset()
         elif self.controller == "teacher":
             self.teacher = copy.deepcopy(self._initial_teacher)
@@ -520,7 +538,7 @@ class Engine:
         neural = {}
         if action_override is not None:
             action = action_override
-        elif self.controller == "flynn":
+        elif self.controller in {"flynn", *MALE_CONTROLLERS}:
             projected = {**cameras, "sensors": {name: copy.deepcopy(sensors[name])
                          for name in ("collision", "collision_angle", "wind_direction")}}
             result = self.policy.act(projected)
@@ -656,6 +674,8 @@ class Engine:
         return result
 
     def _population_stats(self):
+        if self.controller in MALE_CONTROLLERS:
+            return []
         agent = getattr(self.policy, 'agent', None)
         if agent is None:
             return []

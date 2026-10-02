@@ -2,6 +2,7 @@
 
 import importlib.util
 from pathlib import Path
+from .male_policy import CONTROLLERS as MALE_CONTROLLERS
 
 
 SCENARIOS = {
@@ -16,13 +17,15 @@ SCENARIOS = {
     'encoder-homing': ('Encoder-only homing (development)', 'Explicit outbound/home phases using a quantized local encoder estimate; slip and actual return accuracy are unqualified.', 20),
 }
 TEXTURES = ('checker', 'realistic')
-CONTROLLERS = ('manual', 'teacher', 'flynn')
+CONTROLLERS = ('manual', 'teacher', 'flynn', *MALE_CONTROLLERS)
 POPULATIONS = ('visual_left', 'visual_right', 'descending')
 
 
 def validate(scenario, texture, controller):
     if any(type(value) is not str for value in (scenario, texture, controller)) or scenario not in SCENARIOS or controller not in CONTROLLERS or texture not in TEXTURES:
         raise ValueError('Unknown scenario, controller or texture')
+    if controller in MALE_CONTROLLERS and (scenario, texture) != ('reproduction', 'checker'):
+        raise ValueError('Male pilot controllers require reproduction/checker')
     if scenario != 'texture-variation' and texture != 'checker':
         raise ValueError('Realistic textures require the texture-variation scenario')
     if scenario == 'memory-passages' and controller == 'teacher':
@@ -68,6 +71,19 @@ def list_profiles(root, assets):
                             'available': available, 'privileged': name == 'teacher',
                             'reason': None if available else 'Install simulation dependencies and verify required model assets.',
                             'license': 'CC BY-NC 4.0 graph/checkpoint' if name == 'flynn' else 'Upstream MIT code'})
+    from .male_policy import resolve_profile
+    for name, label in (('male-original', 'Male reduced original'), ('male-control', 'Male degree-rewired control')):
+        available, reason = False, 'Install simulation dependencies and stage the pinned male pilot assets.'
+        if runtime:
+            try:
+                resolve_profile(root, assets, name)
+                available, reason = True, None
+            except (OSError, ValueError) as error:
+                reason = str(error)
+        controllers.append({'id': name, 'label': label, 'available': available, 'reason': reason, 'privileged': False,
+            'description': 'CPU reproduction/checker pilot; authored RGB/contact/bearing encoder, no biological sensor mapping or navigation qualification.',
+            'license': 'Male CNS graph CC BY 4.0; retained pilot training provenance',
+            'scenarios': ['reproduction'], 'textures': ['checker'], 'devices': ['cpu']})
     return {'scenarios': [{'id': key, 'label': value[0], 'description': value[1]} for key, value in SCENARIOS.items()],
             'controllers': controllers, 'textures': [{'id': name, 'label': name.title(),
                 'description': 'Upstream texture variant'} for name in TEXTURES]}
