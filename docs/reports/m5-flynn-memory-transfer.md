@@ -110,5 +110,5 @@ these totals is described as solely recording bytes. All stayed below4GiB and th
 
 Counterbalanced local/paired development, null/no-event and reviewed held-out
 protocol remain outstanding. Existing manual22-stage and earlier negative evidence
-are preserved. A separately bounded predeclared own-source actions+policy replay
-gate may now be prepared; it has not run and cannot change this timing/null result.
+are preserved. The separately bounded predeclared own-source actions+policy
+[replay gate subsequently passed](m5-flynn-replay.md); it does not change this timing/null result.
