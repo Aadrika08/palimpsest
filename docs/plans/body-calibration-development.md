@@ -120,4 +120,6 @@ Physical radius/track remain 0.06/0.36; no product coefficient integration was
 made or required by this observation. Twenty settling intervals were excluded:
 mixed straight/turn transitions and the earlier high-amplitude homing path are
 not validated by these fits. A separately declared bounded manual driver v2 is
-prepared in the [M6 task plan](m6-exploration-homing.md), pending its own actual run.
+declared in the [M6 task plan](m6-exploration-homing.md). Its single separate actual
+development path [passed a predeclared actual-home gate](../reports/m6-homing-driver-v2.md);
+this adds no learned or held-out qualification.

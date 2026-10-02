@@ -6,7 +6,9 @@ It adds no body-gain runtime, puck controller, new dependencies or UI framework.
 Both profiles remain development profiles. The bounded manual development gate
 observed declared exploration completion, shaft/forward direction and executable
 replay, but **actual homing failed**: estimated arrival was 0.0898 m while the robot
-remained 1.5006 m from its true start. True stopping, held-out behavior and learned
+remained 1.5006 m from its true start. A separate bounded v2 manual path later
+passed its predeclared actual-home gate at 0.1524 m; the original failure remains
+retained. True stopping, held-out behavior and learned
 competence remain unqualified. The raw verifier's `passed` label is its declared
 estimated-state/mechanism gate, not true home closure or M6 release.
 
@@ -110,7 +112,7 @@ PYTHONPATH=src:tests ../lab-hardening/.venv/bin/python -m unittest \
 The pinned upstream checkout is initialized locally. The actual development gate
 below retained both sources, one progress snapshot per task, native continuation,
 full manual actions/policy replay and evaluator measurements. Pending gates are
-independent turning calibration, actual home closure, snapshots during target
+mixed/transient calibration limits, actual home generalization, snapshots during target
 dwell and both homing phases, and held-out layouts/paths with explicit criteria.
 Use the existing isolated runtime watchdog and quota controls. Learned competence
 and M6 release remain open.
@@ -187,9 +189,10 @@ The read-only audit exactly reproduced all 197 homing odometry states from raw
 recorded angles. High-amplitude turns predicted −3.028027 rad cumulative yaw
 against actual −1.565932 rad, with agreeing turn signs. Specific slip/contact
 causality is unproven; independent low-amplitude calibration is proposed before
-another demonstration. Actual homing remains failed and M6 remains open.
+another demonstration. This v1 actual-home result remains failed; the separate
+v2 observation below does not replace it. M6 remains open.
 
-## Prepared separate bounded driver v2
+## Separate bounded driver v2
 
 The verifier retains driver `v1` as its default and preserves the failed
 `runs/m6-tasks-development-20261002` evidence unchanged. Optional `--driver v2`
@@ -211,8 +214,8 @@ V1 retains its old estimated-state gate. The native snapshot/replay comparison,
 600-tick cap, watchdogs and byte quotas remain unchanged. Failed outcomes remain
 retained, without retry or tuning.
 
-Only after review/source freeze and release of the actual slot, run one fresh
-homing validation:
+The runnable homing command uses an exclusive output; further execution requires
+a fresh directory and a separately released runtime slot:
 
 ```sh
 PYTHONPATH=src MUJOCO_GL=egl OMP_NUM_THREADS=2 \
@@ -224,7 +227,14 @@ PYTHONPATH=src MUJOCO_GL=egl OMP_NUM_THREADS=2 \
 
 The added pure check covers zero/forward/alignment/clipped-turn commands and the
 distinct true-home boundary, including preserving v1's estimate-only behavior.
-No v2 actual run, held-out or learned-policy result is claimed.
+One v2 actual invocation at unchanged `2cfaa2097d10dd098bde675bd4ac37c4949572b4`
+passed in 63.052259 seconds: 300 source ticks, actual home 0.1524490 m <=0.25 m,
+estimated home 0.1075682 m; native four-tick outbound continuation and both full
+300-tick replays matched. Four owners exited 0 and recordings completed, with
+unchanged source/script and no observed scoped worker or semaphore warning.
+See the [scoped evidence](../reports/m6-homing-driver-v2.md) and
+[artifact index](../reports/m6-homing-driver-v2.json). No retry/tuning, held-out,
+learned competence or M6 release completion is claimed.
 
 ## Limited actual browser observation
 
