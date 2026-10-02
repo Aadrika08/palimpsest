@@ -1204,5 +1204,243 @@
       "No rerun of historical task, endurance, held-out, exhibition or physical qualification.",
       "Adaptive calibration and atomic fixed-FLYNN acquisition continuation are still separate unintegrated work."
     ]
+  },
+  "adaptive_regression": {
+    "source_commit": "f233a726c209cb745c85f555f4a2bf22c08f51b4",
+    "status": "passed",
+    "tests": 427,
+    "passed": 427,
+    "skipped": 0,
+    "suite_seconds": 103.927,
+    "supervision": {
+      "elapsed_seconds": 107.15871121700184,
+      "output": "/home/utkarsh/Work/shraddha/brain/.worktrees/project-integration/runs/integration-adaptive-f233a72-20261002/supervisor",
+      "returncode": 0,
+      "schema_version": 1,
+      "started_utc": "2026-10-02T16:22:29.750746+00:00",
+      "status": "completed",
+      "timeout_seconds": 300
+    },
+    "enabled_flags": {
+      "PALIMPSEST_MALE_RUNTIME_TESTS": "1",
+      "PALIMPSEST_MALE_TORCH_CHECKS": "1",
+      "PALIMPSEST_SIMULATION_TESTS": "1"
+    },
+    "asset_root": "/home/utkarsh/Work/shraddha/brain/.worktrees/r0-reproduction/data/assets/flynn",
+    "sources_unchanged": true,
+    "assets_unchanged": true,
+    "model_identities_unchanged": true,
+    "retained_files_independently_rehashed": 50,
+    "primary_report": "runs/integration-adaptive-f233a72-20261002/report.json",
+    "primary_report_sha256": "caa5b50e20f6c932573b6c805ca01a1b086bb9339d049adf82a437e5c37d4de1",
+    "launcher": "runs/integration-adaptive-f233a72-launch.py",
+    "launcher_sha256": "49d195dcd0a6f887f4cbe15fe7522e514192626d2943487744db016f58b29c32",
+    "retained_files": {
+      "launch.json": {
+        "sha256": "704959105d1a068a62a2e0b6acca38b580021e02f1c37a2686369808904347e4",
+        "size_bytes": 38668
+      },
+      "male-runtime/0242fd1f0d234d7ab865e39a03f6bf24/recording/chunks/000000.npz": {
+        "sha256": "0506c38e7ce3f6fb9f53ed1882fcdbbb4a1d3cf52dffb382d60a04f9bb800759",
+        "size_bytes": 201820
+      },
+      "male-runtime/0242fd1f0d234d7ab865e39a03f6bf24/recording/chunks/000001.npz": {
+        "sha256": "9579bb2da9469c4d28322718791ca0c8d847c24f581069e4a227b6d60a380fae",
+        "size_bytes": 399110
+      },
+      "male-runtime/0242fd1f0d234d7ab865e39a03f6bf24/recording/events.jsonl": {
+        "sha256": "d50259c1f65c165c51c37074c31a40bf2f2fcd11b873be591838a2f2180012c5",
+        "size_bytes": 24354
+      },
+      "male-runtime/0242fd1f0d234d7ab865e39a03f6bf24/recording/manifest.json": {
+        "sha256": "ac0e0c2c52240568da6a2215752756e2f516c868875349d679b5fdba6fea847b",
+        "size_bytes": 4036
+      },
+      "male-runtime/0242fd1f0d234d7ab865e39a03f6bf24/snapshots/index.json": {
+        "sha256": "fc80b0698506c19793164482962b23268c217bd1c87c176dbae183657a2de1ba",
+        "size_bytes": 1527
+      },
+      "male-runtime/0242fd1f0d234d7ab865e39a03f6bf24/snapshots/initial.snp": {
+        "sha256": "6a61a34423241d4dca52a4b0eb28d86df72be58b4bebcec08a2b9718ac0312e5",
+        "size_bytes": 531775
+      },
+      "male-runtime/03fdd52626d1490a9860543d3c518157/recording/chunks/000000.npz": {
+        "sha256": "776a98f2fd8ccb2edc161bc0817d8e7cf1e20df13a14a69e351fe661cabb55d0",
+        "size_bytes": 399110
+      },
+      "male-runtime/03fdd52626d1490a9860543d3c518157/recording/events.jsonl": {
+        "sha256": "99867eaaffd10ccaa9477747f7e9056088d86907bd38e2c2d9d574e3a23c35a0",
+        "size_bytes": 23532
+      },
+      "male-runtime/03fdd52626d1490a9860543d3c518157/recording/manifest.json": {
+        "sha256": "6f5c043471a5f967a802113a7d926745512eb0c82bcfe2ad33ae858ef970647b",
+        "size_bytes": 4204
+      },
+      "male-runtime/08a5812405d6431d95d0de57a131aac8/recording/chunks/000000.npz": {
+        "sha256": "97fce30bc5496503e5a1e9cedeec93c6ecb3ab3452e88c8d77a3969bc21d89bb",
+        "size_bytes": 594234
+      },
+      "male-runtime/08a5812405d6431d95d0de57a131aac8/recording/events.jsonl": {
+        "sha256": "3c0e93a0dfdcd204511bfc893afd90bec7d878f8a5342a73f656a39d703d928c",
+        "size_bytes": 26172
+      },
+      "male-runtime/08a5812405d6431d95d0de57a131aac8/recording/manifest.json": {
+        "sha256": "dfd8e9de8676e1c76604eb1700ae24058b72485561d839bba03092c5ce480268",
+        "size_bytes": 4415
+      },
+      "male-runtime/08a5812405d6431d95d0de57a131aac8/replay-report.json": {
+        "sha256": "40f8f63994f4aabe18851f7d5eadea890edb8e3771b31df0fe06bfa7fc0113e1",
+        "size_bytes": 1923
+      },
+      "male-runtime/08a5812405d6431d95d0de57a131aac8/snapshots/index.json": {
+        "sha256": "39b4e4f42894dee277951c6b2408a1492d5fc7511a6f8493fda8aa3f89312cfc",
+        "size_bytes": 1527
+      },
+      "male-runtime/08a5812405d6431d95d0de57a131aac8/snapshots/initial.snp": {
+        "sha256": "d23a7c501d5cf11c4bed1ae2e7f4b139b9c07a51f8033e9e0afbbe18180c7390",
+        "size_bytes": 531778
+      },
+      "male-runtime/37f523a9be9e4128ae669daa93eefea1/recording/chunks/000000.npz": {
+        "sha256": "b6022a870ff9ca5e569ba9d09bf13a70c53f0213c7b607292f7a98f0427acaf0",
+        "size_bytes": 594234
+      },
+      "male-runtime/37f523a9be9e4128ae669daa93eefea1/recording/events.jsonl": {
+        "sha256": "863b4803e94f571d7069429a461c6d9ff59347d8dad011c0d2154054bf5d2c37",
+        "size_bytes": 26162
+      },
+      "male-runtime/37f523a9be9e4128ae669daa93eefea1/recording/manifest.json": {
+        "sha256": "c1d036d9a92e543c25326cd026ec4143f67517bda52a6467b7812485f06736bb",
+        "size_bytes": 4414
+      },
+      "male-runtime/37f523a9be9e4128ae669daa93eefea1/replay-report.json": {
+        "sha256": "8a38501ea7be7592c133b4b13fd7c1ce5acf15ddd3846658c9f2ce721eda197d",
+        "size_bytes": 1923
+      },
+      "male-runtime/37f523a9be9e4128ae669daa93eefea1/snapshots/index.json": {
+        "sha256": "43ea7ab310a732d2a0fa45d215a2e57d898fa8682a9871eff6b0140976531d67",
+        "size_bytes": 1523
+      },
+      "male-runtime/37f523a9be9e4128ae669daa93eefea1/snapshots/initial.snp": {
+        "sha256": "c49192ced208a61599f8c22df1c52b4c31b509c8001ec8a3dcdc4abe69da4724",
+        "size_bytes": 531768
+      },
+      "male-runtime/45a97bd3081647c98de4693bc383f08b/recording/chunks/000000.npz": {
+        "sha256": "6946a9549a144a1c38c6eecae9a323470d9850bb2410332153bfacfb9866009c",
+        "size_bytes": 596400
+      },
+      "male-runtime/45a97bd3081647c98de4693bc383f08b/recording/events.jsonl": {
+        "sha256": "4173838b32d9eaa14432bbfdf043b5945c0507f92e1ce4fadf049dba63ed9a3b",
+        "size_bytes": 26100
+      },
+      "male-runtime/45a97bd3081647c98de4693bc383f08b/recording/manifest.json": {
+        "sha256": "bf2697c69cf8ed45aebe93ff3aaac4eea59888535dadab83cb625d2cbf7d89e8",
+        "size_bytes": 4411
+      },
+      "male-runtime/45a97bd3081647c98de4693bc383f08b/replay-report.json": {
+        "sha256": "a517984b75a2f29a6f15845825ca34d639359fdb86dfc12cc3ec23d5b266c1c8",
+        "size_bytes": 1650
+      },
+      "male-runtime/45a97bd3081647c98de4693bc383f08b/snapshots/index.json": {
+        "sha256": "b89f092911a8e79f544e1f11d52ddff988ec8009bd9279d558b0f44d92246fab",
+        "size_bytes": 1527
+      },
+      "male-runtime/45a97bd3081647c98de4693bc383f08b/snapshots/initial.snp": {
+        "sha256": "d04f747622d6e1de8bf9bfe3ae303b760375b437ecbbfbe6986d4497e387874f",
+        "size_bytes": 531777
+      },
+      "male-runtime/8490c5d9ecde4e3b9f723cbbf9c079d2/recording/chunks/000000.npz": {
+        "sha256": "3049a2a18aef76e2bc237aadb9efc2e1432052328ce08c830a9352f2cdc6317d",
+        "size_bytes": 201820
+      },
+      "male-runtime/8490c5d9ecde4e3b9f723cbbf9c079d2/recording/chunks/000001.npz": {
+        "sha256": "1512d53949b40d27a4741190dce72d4e92c0fa58df66c39a04a5d6a163088215",
+        "size_bytes": 399110
+      },
+      "male-runtime/8490c5d9ecde4e3b9f723cbbf9c079d2/recording/events.jsonl": {
+        "sha256": "09d98d9e9a01c8e5dac92a97bb618b1d7984a2b2565989dbbe75706912a00cc0",
+        "size_bytes": 24344
+      },
+      "male-runtime/8490c5d9ecde4e3b9f723cbbf9c079d2/recording/manifest.json": {
+        "sha256": "ee26a7866df83f5abd76acbbb18049072e5c2cb21e16dafc1c5a0ea257303955",
+        "size_bytes": 4035
+      },
+      "male-runtime/8490c5d9ecde4e3b9f723cbbf9c079d2/snapshots/index.json": {
+        "sha256": "73f480b2cc58c14c3a0eb38cc4212bdbd69604a0a889f9c6a16c786f8d3dc667",
+        "size_bytes": 1523
+      },
+      "male-runtime/8490c5d9ecde4e3b9f723cbbf9c079d2/snapshots/initial.snp": {
+        "sha256": "83ac18dd7b0ff0673a9021c80678274cbc10d2cab534d6ea78ba1aeac3d6a04f",
+        "size_bytes": 531765
+      },
+      "male-runtime/9f2ee151587c4d7bb7f2deb9c1fd652e/recording/chunks/000000.npz": {
+        "sha256": "299ac10b15cf7aedeb6e27da17c7e5c5ff6a5c9c26819b3e7e95daea247f46c9",
+        "size_bytes": 596400
+      },
+      "male-runtime/9f2ee151587c4d7bb7f2deb9c1fd652e/recording/events.jsonl": {
+        "sha256": "14b89533637a412d801d4e01f83338d783c0b5dcf34668bda0721d4982f93d6e",
+        "size_bytes": 26090
+      },
+      "male-runtime/9f2ee151587c4d7bb7f2deb9c1fd652e/recording/manifest.json": {
+        "sha256": "08e9bde04252e9f66ba2e99ece5fd90fbb01d6f549017db116c1ac6b187d1e9d",
+        "size_bytes": 4410
+      },
+      "male-runtime/9f2ee151587c4d7bb7f2deb9c1fd652e/replay-report.json": {
+        "sha256": "260e62efa8e46d2357bbfa4003ebd2835af3d3f8c2c36a2352050357365bbe93",
+        "size_bytes": 1650
+      },
+      "male-runtime/9f2ee151587c4d7bb7f2deb9c1fd652e/snapshots/index.json": {
+        "sha256": "bd21c4d330b608f5f046e183c2650a91fa78a700574dc44b61b7c5d06f32e614",
+        "size_bytes": 1523
+      },
+      "male-runtime/9f2ee151587c4d7bb7f2deb9c1fd652e/snapshots/initial.snp": {
+        "sha256": "27291debe921e8de4fdf90e4472e9949f209f1604a87801dc17f9d1a0fa37202",
+        "size_bytes": 531767
+      },
+      "male-runtime/d882219f78104302b894c0bdf0db5030/recording/chunks/000000.npz": {
+        "sha256": "462a936ff1d3295df532df85da5f882f5ebecb6f0700eba1a859fa96f3d213f1",
+        "size_bytes": 399110
+      },
+      "male-runtime/d882219f78104302b894c0bdf0db5030/recording/events.jsonl": {
+        "sha256": "b7ea1d71b8e4c526e06c747d112360cb18f2da3e57d882d72e4908f930b3ca34",
+        "size_bytes": 23520
+      },
+      "male-runtime/d882219f78104302b894c0bdf0db5030/recording/manifest.json": {
+        "sha256": "6750087ce5c45cbcc224a66b646d4942bf3dbc6eab8c5152af93b1b5f1ebda4a",
+        "size_bytes": 4201
+      },
+      "male-runtime/f73781d568b5424c98ad7901ed3cb4c1/recording/chunks/000000.npz": {
+        "sha256": "c00eb7e17f3f92d37a0353fb3415fdc51a03131ebeee972f4d187aca77cecd47",
+        "size_bytes": 201820
+      },
+      "male-runtime/f73781d568b5424c98ad7901ed3cb4c1/recording/events.jsonl": {
+        "sha256": "30639fcdde8f3a23351a8a8d5973a2fda5c93b6329424d48d783b89c7f967c75",
+        "size_bytes": 23039
+      },
+      "male-runtime/f73781d568b5424c98ad7901ed3cb4c1/recording/manifest.json": {
+        "sha256": "f5e3f7c44c43729acbf769de53dcbb3c61c3c687951087c46828ddd74d69231d",
+        "size_bytes": 4204
+      },
+      "male-runtime/report.json": {
+        "sha256": "ed0eaddc1f002b7d1979626beb59235bad830a4ec7162e9dde598669f7091e14",
+        "size_bytes": 11943
+      },
+      "supervisor/stderr.log": {
+        "sha256": "f5dcb583da26d6647ad073d23ccf733e91bf8e02c8e9b0b914e61e319234a153",
+        "size_bytes": 16586
+      },
+      "supervisor/stdout.log": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_bytes": 0
+      },
+      "supervisor/supervisor.json": {
+        "sha256": "1940799f49b19126f1bb9c3331288df26efea99f7409e4af675fc31b01932c5a",
+        "size_bytes": 324
+      }
+    },
+    "limitations": [
+      "Adaptive actual profile coverage is one step; the full four-probe, native/replay and paired comparison gate remains unexecuted.",
+      "Male runtime checks use production v1 checkpoints, not newly trained research models.",
+      "Historical task, endurance, held-out, exhibition and physical gates were not rerun."
+    ]
   }
 }

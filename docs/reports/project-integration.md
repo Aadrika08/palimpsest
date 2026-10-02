@@ -69,3 +69,12 @@ root is supplied explicitly. Actual male checks use the original pinned v1
 controllers, not the still-untrained research candidates. Adaptive calibration
 and fixed-FLYNN acquisition continuation remain separate work. This regression
 does not rerun historical task, endurance, held-out, exhibition or physical gates.
+
+At `f233a72`, the adaptive calibration session and Engine/native/replay/UI glue
+are integrated. All **427 tests pass, no skips**, in 103.927 seconds under the
+300-second supervisor (exit zero, 107.159 seconds). Source/asset inventories and
+production model identities remain unchanged; all 50 retained gate artifacts were
+independently rehashed. Actual profile coverage includes one adaptive tick. The
+full four-probe fit, partial/fitted native continuation, adaptive executable
+replays, paired compensation metrics and browser workflow still require their
+separate frozen gate. Male runtime checks continue using the production v1 models.
