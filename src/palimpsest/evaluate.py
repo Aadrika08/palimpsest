@@ -1,5 +1,6 @@
 """Isolate the upstream runtime and retain bounded, explicitly labelled evidence."""
 
+from dataclasses import asdict
 from datetime import datetime, timezone
 import contextlib
 import json
@@ -12,9 +13,12 @@ import threading
 import time
 
 
-def _json(path, value):
+def _json(path, value, budget=None):
+    payload = (json.dumps(value, indent=2, allow_nan=False) + '\n').encode('utf-8')
+    if budget is not None:
+        budget.check(len(payload), path=path)
     temporary = path.with_suffix('.tmp')
-    temporary.write_text(json.dumps(value, indent=2, allow_nan=False) + '\n')
+    temporary.write_bytes(payload)
     temporary.replace(path)
 
 
@@ -59,13 +63,18 @@ def bounded_logs(output, max_bytes, on_failure):
             os.close(reader)
 
 
-def bounded_process(command, output, timeout, env=None, *, log_max_bytes=1024**2):
+def bounded_process(command, output, timeout, env=None, *, log_max_bytes=1024**2, storage_budget=None):
     """One isolated process group; timeout includes model loading and renderer stalls."""
     output = Path(output)
+    control_budget = None
+    if storage_budget is not None:
+        from .storage import StorageBudget
+        storage_budget.check(1024**2, path=output)
+        control_budget = StorageBudget(storage_budget.roots, storage_budget.limits)
     output.mkdir(parents=True, exist_ok=False)
     report = {'schema_version': 1, 'status': 'running', 'timeout_seconds': timeout,
               'started_utc': datetime.now(timezone.utc).isoformat(), 'output': str(output)}
-    _json(output / 'supervisor.json', report)
+    _json(output / 'supervisor.json', report, control_budget)
     started, process = time.perf_counter(), None
     log_failure = []
     def fail_log(reason):
@@ -106,7 +115,7 @@ def bounded_process(command, output, timeout, env=None, *, log_max_bytes=1024**2
                       elapsed_seconds=time.perf_counter() - started)
         if log_failure:
             report.update(status='failed', failure={'type': 'LogLimit', 'message': log_failure[0]})
-        _json(output / 'supervisor.json', report)
+        _json(output / 'supervisor.json', report, control_budget)
     return report
 
 
@@ -121,29 +130,60 @@ def outcome(terminated, truncated, info, goal_radius):
 
 
 def evaluate(repo_root, asset_root, args):
+    from .storage import StorageBudget, StorageLimits
     stamp = datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%S.%fZ')
     output = (args.output or repo_root / 'runs' / f'{stamp}-{args.controller}').resolve()
+    assets = Path(asset_root).resolve()
+    managed_root = output.parent
+    if managed_root == assets or managed_root in assets.parents or assets in managed_root.parents:
+        raise ValueError('Model assets must be outside managed storage roots')
+    log_max_bytes = getattr(args, 'log_max_bytes', 1024**2)
+    if type(log_max_bytes) is not int or not 1024 <= log_max_bytes <= 64 * 1024**2:
+        raise ValueError('Per-stream log limit must be 1 KiB to 64 MiB')
+    limits = StorageLimits(max_bytes=getattr(args, 'storage_max_bytes', 20 * 1024**3),
+        min_free_bytes=getattr(args, 'min_free_bytes', 1024**3), max_runs=getattr(args, 'max_runs', 1024),
+        max_snapshots=getattr(args, 'max_snapshots', 64), max_exports=getattr(args, 'max_exports', 1024))
+    budget = StorageBudget((managed_root,), limits, headroom_bytes=2 * log_max_bytes + 8 * 1024**2)
+    control_budget = StorageBudget(budget.roots, limits)
     config = {key: getattr(args, key) for key in
               ('controller', 'device', 'episodes', 'max_steps', 'seed', 'parity', 'max_bytes', 'threads')}
     config.update(repo_root=str(repo_root), asset_root=str(asset_root), output=str(output))
+    config['storage'] = {'roots': [str(path) for path in budget.roots], 'limits': asdict(limits),
+                         'headroom_bytes': budget.headroom_bytes}
     env = os.environ.copy()
     env.setdefault('MUJOCO_GL', 'egl')
     env['OMP_NUM_THREADS'] = str(args.threads)
     env['MPLBACKEND'] = 'Agg'
-    report = bounded_process([sys.executable, '-m', 'palimpsest.evaluate', json.dumps(config)],
-                             output, args.timeout, env)
-    manifest = output / 'recording/manifest.json'
-    if manifest.exists():
-        try:
-            report['recording'] = json.loads(manifest.read_text())
-        except (OSError, ValueError) as error:
-            report.update(status='failed', error=f'Invalid recording manifest: {error}')
-        if report['status'] == 'completed' and report.get('recording', {}).get('status') != 'completed':
-            report['status'] = 'failed'
-    elif report['status'] == 'completed':
-        report.update(status='failed', error='Worker exited without a recording manifest')
-    _json(output / 'supervisor.json', report)
-    return report
+    with budget.lock():
+        budget.check_count('runs', sum(path.is_dir() for path in managed_root.iterdir()))
+        budget.check(1024**2, path=output)
+        report = bounded_process([sys.executable, '-m', 'palimpsest.evaluate', json.dumps(config)],
+                                 output, args.timeout, env, log_max_bytes=log_max_bytes, storage_budget=budget)
+        manifest = output / 'recording/manifest.json'
+        if manifest.exists():
+            try:
+                report['recording'] = json.loads(manifest.read_text())
+            except (OSError, ValueError) as error:
+                report.update(status='failed', error=f'Invalid recording manifest: {error}')
+            if report['status'] == 'completed' and report.get('recording', {}).get('status') != 'completed':
+                report['status'] = 'failed'
+        elif report['status'] == 'completed':
+            report.update(status='failed', error='Worker exited without a recording manifest')
+        _json(output / 'supervisor.json', report, control_budget)
+        return report
+
+
+def _evaluation_preflight(observation, policy, config, budget):
+    cameras = sum(observation[name].nbytes for name in ('cam_left', 'cam_right'))
+    neural = (policy.agent.cell.Nin + 2) * policy.hidden.element_size() if policy is not None else 0
+    ticks = config['episodes'] * config['max_steps']
+    estimate = ticks * (cameras + neural + 4096) + 1024**2
+    if estimate > config['max_bytes']:
+        raise RuntimeError('Estimated batch recording exceeds per-recording quota before first step')
+    return {'planned_ticks': ticks, 'raw_camera_bytes_per_tick': cameras, 'neural_bytes_per_tick': neural,
+            'recording_bytes_estimate': estimate,
+            'scope': 'uncompressed planned batch and scalar/NPZ/event allowance; actual writes remain bounded',
+            'admission': budget.check(estimate, path=Path(config['output']) / 'recording')}
 
 
 def worker(config):
@@ -153,6 +193,10 @@ def worker(config):
     from .doctor import diagnose
 
     root, assets, output = (Path(config[key]) for key in ('repo_root', 'asset_root', 'output'))
+    from .storage import StorageBudget, StorageLimits
+    storage = config.get('storage')
+    budget = StorageBudget(tuple(Path(path) for path in storage['roots']), StorageLimits(**storage['limits']),
+                           headroom_bytes=storage['headroom_bytes']) if storage else None
     writer = RunWriter(output / 'recording', {
         'schema_version': 1,
         'configuration': config, 'profile': 'flynn-full-vision' if config['controller'] == 'flynn' else 'privileged-teacher',
@@ -165,7 +209,7 @@ def worker(config):
         'parity_tolerance': {'atol': 1e-6, 'rtol': 1e-6},
         'recording_budget_bytes': config['max_bytes'],
         'budget_scope': 'recording files including atomic manifest staging; supervisor logs excluded',
-    }, max_bytes=config['max_bytes'])
+    }, max_bytes=config['max_bytes'], storage_budget=budget)
     env = policy = None
     started = time.perf_counter()
     try:
@@ -220,6 +264,8 @@ def worker(config):
             else:
                 # Upstream teacher.reset leaves the planner's previous path direction.
                 teacher = reference.PlannerAnalyticTeacher(arena_half_extent=env.arena, device='cpu')
+            if episode == 0 and budget is not None:
+                writer.event('storage_preflight', **_evaluation_preflight(obs, policy, config, budget))
             writer.event('episode_started', episode=episode, seed=seed,
                          reset_protocol='fresh physics and controller episode state; upstream seeded layout',
                          goal=env._goal_xy.tolist(), obstacles=env._obstacle_xy.tolist(),
