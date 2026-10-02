@@ -34,10 +34,18 @@ class VerifierBoundaries(unittest.TestCase):
             return self.runner.make_plan(self.repo, self.root/'assets', output or self.root/'comparison')
 
     def test_goal_handoff_uses_paused_command_without_memory_or_physics_advance(self):
+        self._check_goal_handoff_fixture(8)
+
+    def test_goal_handoff_joins_physical_landmarks_across_permuted_fact_ids(self):
+        for seed in (24,26,30,31):
+            with self.subTest(seed=seed):
+                self._check_goal_handoff_fixture(seed)
+
+    def _check_goal_handoff_fixture(self, seed):
         from palimpsest.engine import Engine
         from palimpsest.records import RunWriter
         from test_engine import SmallEnv
-        case=experiment.make_world_case(8,'local_cue','development-test',acquisition=True)
+        case=experiment.make_world_case(seed,'local_cue','development-test',acquisition=True)
         run=self.root/uuid.uuid4().hex
         env=SmallEnv()
         engine=Engine(env,RunWriter(run/'recording',{'run_id':run.name}),scenario='sparse-navigation')
@@ -61,7 +69,8 @@ class VerifierBoundaries(unittest.TestCase):
         def sensing(actual,state):
             world={'cues':[{'id':case['cue_id'],'xy':case['cue_xy'],'state':0}],
                 'landmarks':[{'id':case['common_goal_id'],'xy':actual._goal_xy.tolist()}]+
-                  [{'id':f['inspection_landmark_id'],'xy':xy} for f,xy in zip(case['facts'],case['inspection_xy'])],
+                  [{'id':next(f for f in case['facts'] if f['subject_id']==subject)['inspection_landmark_id'],'xy':xy}
+                   for subject,xy in zip(case['subjects_by_side'],case['inspection_xy'])],
                 'passages':[{'subject_id':f['subject_id'],'inspection_landmark_id':f['inspection_landmark_id'],
                     'passability':'open'} for f in case['facts']], 'common_goal_id':case['common_goal_id']}
             return world,[*actual._base_xy().tolist(),float(actual._base_yaw())],[]
