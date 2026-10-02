@@ -19,3 +19,7 @@ results, not a new browser endurance or full-model navigation claim.
 The [evidence index](project-integration.json) preserves logs, bounds, skipped
 coverage and hashes. Each historical actual model/task report still names its
 original source. Unified qualification and remaining M5–M10 gates remain open.
+
+After the atlas and export-close cleanup merges, 48 focused export/CLI tests
+passed at `0693a2f` in 2.755 seconds with no skips. The merged atlas CLI also
+exported the pinned actual graph; full task and endurance gates were not rerun.

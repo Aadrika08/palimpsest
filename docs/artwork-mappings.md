@@ -1,7 +1,7 @@
 # Artwork mappings
 
-These are bounded M9 implementation slices of **counterfactual choir** and
-**one map, many possible lives**, not completion of PRD §20 or ART-003. They export
+These are bounded M9 implementation slices of **counterfactual choir**,
+**one map, many possible lives**, and **atlas of what disappears**, not completion of PRD §20 or ART-003. They export
 recorded population means as WAV and recorded route comparisons as standalone HTML.
 Sonification verification includes synthetic recording fixtures and two short offline derivatives of
 previously recorded actual CPU FLYNN telemetry. No new inference, listening study, or
@@ -132,13 +132,13 @@ be output destinations. Native expandable details, labelled tables, SVG titles a
 descriptions, line patterns, and keyboard focus styles provide the accessibility
 baseline without JavaScript.
 
-## Other four modes: separate, unfinished work
+## Other modes and remaining work
 
 | Mode | Existing basis and work still required |
 | --- | --- |
 | **afterimage** | Not implemented. Requires an explicit consented stimulus-acquisition path, recorded stimulus/controller alignment, and a documented response-to-line mapping. It must label an authored model portrait, not fly perception. |
 | **borrowed body** | Recorded simulated route export exists. A complete physical drawing work remains unfinished: calibrated rover/pen, independent safety gates, measured coordinates, and substrate provenance; visible pen marks require a new closed-loop scenario if they affect camera input. |
-| **atlas of what disappears** | Not implemented. Requires a versioned graph-intervention/analysis path, named structural metrics, and validated visual mappings; disconnected structure is not automatically lost memory or impaired behaviour. |
+| **atlas of what disappears** | [Implemented offline atlas](artwork-atlas.md): pinned reduced graph, explicit node isolation, directed reachability losses, nonanatomical layout and embedded provenance. Actual graph checks and browser inspection pass; this measures structure, not lost memory or impaired behaviour. Exhibition gates remain open. |
 | **the space between two flies** | Not implemented. Requires curated anatomical correspondences with dataset/version/units and correspondence uncertainty; specimen differences do not establish population-wide sex effects. |
 
 Camera portraits, anatomy-only output, live sonification, and multi-run synchronized
