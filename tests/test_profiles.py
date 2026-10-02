@@ -48,7 +48,7 @@ class ActualScenarios(unittest.TestCase):
                     engine.submit({'id': 'step', 'kind': 'step', 'expected_state': 'paused', 'expected_episode': 0})
                     self.assertEqual(engine.advance()['phase'], 'paused')
                     self.assertTrue((engine.last_transition['cam_left'] == 0).all())
-                    if index == 0:
+                    if scenario == 'reproduction':
                         snapshot = capture(engine.env, engine.observation, application=engine.application_state())
                         world, rng, source_id = engine.world(), engine.env.np_random.bit_generator.state, engine.run_id
                 finally:
