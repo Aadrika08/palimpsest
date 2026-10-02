@@ -6,6 +6,9 @@ This integration branch combines the completed R0–R1 lab and memory mechanics 
 
 Implementation is under review in stacked draft PRs. `feat/project-integration` is the combined checkout; `main` has not been advanced automatically. Historical evidence identifies its original source commit and does not certify this combined source.
 
+The [architecture guide](docs/architecture.md) maps live control, snapshots,
+recordings and research extensions to their implementation and evidence boundaries.
+
 ## Setup
 
 Use Linux, Git, and [uv](https://docs.astral.sh/uv/getting-started/installation/). Python 3.11 and package versions are recorded in `.python-version` and `uv.lock`.
