@@ -1,0 +1,37 @@
+{
+  "status": "passed",
+  "source_commit": "bea60f06493e7ec163cda1bcae5612f0434a9d2f",
+  "tests": 4,
+  "skipped": 0,
+  "unittest_seconds": 5.01,
+  "supervised_seconds": 6.4399771180032985,
+  "wall_seconds": 6.441884793006466,
+  "supervisor_returncode": 0,
+  "timeout_seconds": 60,
+  "source_files_unchanged": 311,
+  "git_clean_after": true,
+  "source_review": "Independent read-only review found a completed-report fsync failure path. Final report now stages/syncs and checks deadline before atomic publication; failed staging remains unadmitted. Focused failure injection covers sync failure and timeout.",
+  "scope": "Tiny authored CPU model/data fixtures only. No actual demonstration training, learned task, native/runtime replay or held-out result.",
+  "artifacts": {
+    "launcher": {
+      "path": "runs/puck-model-mechanism-bea60f0-launch.py",
+      "bytes": 2520,
+      "sha256": "6b77c688e6343caf3cd07c69eea210ae77caa0fa27e3f52c1672a38ff54a2930"
+    },
+    "report": {
+      "path": "runs/puck-model-mechanism-bea60f0-20261003/report.json",
+      "bytes": 68077,
+      "sha256": "17540b70e7edf20c60d1509724c9a8aaa617f27c76c109239bc3f64f42ad0933"
+    },
+    "stderr": {
+      "path": "runs/puck-model-mechanism-bea60f0-20261003/supervisor/stderr.log",
+      "bytes": 795,
+      "sha256": "342a1dd33facb51cd0f02834996b3f57fb8fa0f8b5fa3c8bd93f630058736cce"
+    },
+    "supervisor": {
+      "path": "runs/puck-model-mechanism-bea60f0-20261003/supervisor/supervisor.json",
+      "bytes": 317,
+      "sha256": "31ad4bfc33da80e89f77f19769837e15f16603b64824d1dacda39929592c03da"
+    }
+  }
+}
