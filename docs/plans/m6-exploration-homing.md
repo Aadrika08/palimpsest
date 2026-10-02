@@ -3,8 +3,10 @@
 This slice connects the M6 pure mechanisms to the existing single-owner Engine,
 application snapshots, worker samples, replay comparison and recorded playback.
 It adds no body-gain runtime, puck controller, new dependencies or UI framework.
-Both profiles are development profiles: no actual functional, held-out, stopping,
-calibration, native restore or runtime replay qualification has been claimed.
+Both profiles remain development profiles. Task completion, held-out behavior,
+wheel-direction calibration, true stopping and complete executable replay remain
+unqualified. The limited actual browser/native branch observation below does
+not establish those outcomes.
 
 ## Declared sensor/objective contracts
 
@@ -101,8 +103,8 @@ PYTHONPATH=src:tests ../lab-hardening/.venv/bin/python -m unittest \
   test_worker.ReplayTransport test_replay.ReplayValidation
 ```
 
-Pending actual gate: initialize the task worktree's pinned upstream checkout from
-the already available local source; verify source/model identities; measure wheel
+The pinned upstream checkout is now initialized locally. Pending actual gate:
+verify source/model identities; measure wheel
 signs, quantum and dimensions; run both profiles with retained sensor/control
 packets; pause during target approach/dwell and both homing phases; capture native
 snapshots; continue original/restored runs; execute full actions/policy replay;
@@ -117,3 +119,68 @@ asset-backed checks were skipped. The source remained unchanged. The retained
 index is `runs/m6-runtime-pure-20261002/report.json`, SHA-256
 `ab705f262bb3b3f56afbf48249a705dbcc5691a3a7f2478a504a731ba7e3a6af`.
 This is fixture/runtime-contract evidence only; actual gates above remain open.
+
+
+## Prepared actual manual development gate
+
+[`scripts/verify_tasks.py`](../../scripts/verify_tasks.py) prepares two bounded,
+sequential manual task demonstrations. Its fixed driver receives only the
+previous recorded effective `sensors[2:4]` bearing: the first action is zero,
+forward command is `0.5*clip(cos,0,1)`, and heading is `atan2(sin,cos)`. Neutral
+bearing produces zero. The protocol and script hash are recorded before the
+initial snapshot; no true pose, goal or task state is an input to the driver.
+This is an artificial manual cue-following fixture, not a learned controller,
+a trained adaptation result or a held-out evaluation. No tuning is permitted
+inside the verifier.
+
+After eight steps with measured encoder progress, it captures one paused native
+snapshot. Four subsequent requested commands and task states are retained. A
+fresh restored process repeats those commands and compares all recorded tick
+fields except wall latency with the existing exact camera/integer and
+`atol=rtol=1e-6` float profile, plus complete task JSON state. Action and policy
+replay each start from the registered initial source snapshot; source hashes
+must remain unchanged. A functional pass requires actual `task_completed`, not
+an operator stop, truncation or a selected target. Each child has a hard watchdog
+and recording byte quota, bounded native logs and explicit cleanup; outputs are
+exclusive and failed outcomes remain retained.
+
+Wheel dimensions/quantum, measured shaft direction, signed true forward motion,
+encoder estimate versus true local displacement, and true displacement/yaw
+during counted dwell are isolated evaluator measurements. They never correct
+the cue or command. Quantized apparent rest can coexist with body motion;
+commanded zero and estimated home arrival do not establish physical stopping
+or true home closure. One progress snapshot does not cover target dwell or both
+homing phases; those snapshots, additional layouts and held-out gates remain
+pending even if this development fixture later passes.
+
+Run only after the actual runtime slot is released, using a fresh output:
+
+```sh
+PYTHONPATH=src MUJOCO_GL=egl OMP_NUM_THREADS=2 \
+  ../lab-hardening/.venv/bin/python scripts/verify_tasks.py \
+  --assets ../r0-reproduction/data/assets/flynn \
+  --output runs/m6-manual-tasks-development
+```
+
+Preparation checks are pure: six NumPy/comparator tests cover bounded declared
+cue actions, isolation of the previous bearing, malformed cues, real completion
+criteria, exact-image/fixed-float comparison and signed evaluator evidence.
+A seventh check exercises the real Engine with SmallEnv fixture physics: action
+application does not step; the idempotent receipt lookup and step helper produce
+exactly one nonzero-action transition. This is helper-contract coverage, not a
+physics proof. Syntax/help checks are separate from actual physics. The verifier has not been
+executed on MuJoCo by this slice; no task-success result is claimed.
+
+## Limited actual browser observation
+
+The root-run [browser index](../../runs/m6-browser-20261002/report.json), SHA-256
+`01a72ff19e578f32ddd12716bc6e80332822ab75022758e31ed88c6ddc3f17a3`,
+records two manual declared-task workflows passing (exploration 11.7 seconds,
+homing 8.3 seconds; suite 21.6 seconds). Each accepts the loaded body calibration,
+advances one source step, captures/restores a native snapshot, advances one
+branch continuation step and displays matching recorded task state. Both final
+owner responses are HTTP 200/closed. Runtime sources stayed unchanged; the
+service exits SIGTERM −15 and its listener is absent. Copied browser results and
+UI build log are retained in that directory. These are limited UI/state and
+one-step continuation observations, not task completion, learned competence,
+wheel-direction calibration, full replay or M6 release qualification.
