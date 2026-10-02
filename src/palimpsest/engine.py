@@ -83,7 +83,8 @@ class Engine:
     MAX_IDS = 4096
 
     def __init__(self, env, writer, controller="manual", policy=None, teacher=None, seed=0,
-                 scenario="reproduction", texture="checker", *, memory_case=None):
+                 scenario="reproduction", texture="checker", *, memory_case=None,
+                 restore_snapshot=None, replace_controller=False, memory_u=None):
         import numpy as np
 
         if controller not in {"manual", "teacher", "flynn", *MALE_CONTROLLERS}:
@@ -102,7 +103,9 @@ class Engine:
         self.env, self.writer = env, writer
         self.controller, self.policy, self.teacher = controller, policy, teacher
         self.scenario, self.texture = scenario, texture
-        self.memory_case = self._validate_memory_case(memory_case, scenario, controller)
+        self.memory_case, restore_snapshot, memory_u = self._memory_restore(
+            memory_case, scenario, controller, str(getattr(policy, 'device', '')),
+            restore_snapshot, replace_controller, memory_u)
         if self.memory_case is not None:
             from .memory import sha256
             writer.manifest.update(memory_case=copy.deepcopy(self.memory_case),
@@ -124,6 +127,8 @@ class Engine:
         self.seed = _seed(seed)
         if scenario == 'adaptive-wheel-calibration' and self.seed != 1:
             raise ValueError('Measured calibration requires its declared seed 1')
+        if restore_snapshot is not None and self.seed != self.memory_case['seed']:
+            raise ValueError('Continuation seed differs from its exact acquisition case')
         self.run_id = writer.manifest.get("run_id", uuid.uuid4().hex)
         self.parent_run_id = None
         self.parent_event_prefix = None
@@ -140,6 +145,22 @@ class Engine:
         self._reset_world()
         self._event("engine_opened", controller=controller, control_interval_seconds=dt)
         self._episode_started()
+        if restore_snapshot is not None:
+            from .memory import sha256
+            from .snapshots import state_digest
+            admission = {'source_run_id': restore_snapshot['application']['source_run_id'],
+                'source_controller': restore_snapshot['application']['controller'],
+                'snapshot_state_sha256': state_digest(restore_snapshot),
+                'native_sha256': restore_snapshot['native_sha256'],
+                'case_sha256': sha256(self.memory_case),
+                'replace_controller': replace_controller,
+                'memory_u_sha256': None if memory_u is None else sha256(memory_u)}
+            self.writer.manifest['memory_continuation_admission'] = admission
+            self._event('memory_continuation_admitted', admission=admission)
+            if memory_u is not None:
+                self.restore_memory_branch(restore_snapshot, memory_u)
+            else:
+                self.restore_branch(restore_snapshot, replace_controller=replace_controller)
 
     @classmethod
     def _validate_memory_case(cls, value, scenario, controller):
@@ -152,9 +173,55 @@ class Engine:
         return case
 
     @classmethod
+    def _memory_restore(cls, value, scenario, controller, device,
+                        snapshot, replace_controller, u):
+        """One narrow atomic continuation exception; ordinary admission is unchanged."""
+        if type(replace_controller) is not bool:
+            raise ValueError('Controller replacement must be an explicit boolean')
+        if snapshot is None:
+            if replace_controller or u is not None:
+                raise ValueError('Memory continuation requires its source snapshot')
+            return cls._validate_memory_case(value, scenario, controller), None, None
+        from . import memory, memory_experiment, memory_task, memory_world
+        from .snapshots import MAX_BYTES, MAX_METADATA, SCHEMA_VERSION, SNAPSHOT_KEYS
+        case = memory_experiment.validate_world_case(value)
+        if scenario != 'memory-passages' or controller != 'flynn' or device != 'cpu' or not case['acquisition']:
+            raise ValueError('Atomic memory continuation requires an acquisition case and CPU FLYNN')
+        if replace_controller and u is not None:
+            raise ValueError('Controller and U replacement must be separate boundaries')
+        if (type(snapshot) is not dict or set(snapshot) != SNAPSHOT_KEYS or
+                type(snapshot.get('schema_version')) is not int or snapshot['schema_version'] != SCHEMA_VERSION):
+            raise ValueError('Unsupported continuation snapshot')
+        native = snapshot['native_data']
+        if (type(native) is not bytes or not native or len(native) > MAX_BYTES or
+                hashlib.sha256(native).hexdigest() != snapshot['native_sha256']):
+            raise ValueError('Invalid continuation native bytes/hash')
+        state = snapshot['application']
+        if type(state) is not dict:
+            raise ValueError('Continuation lacks application state')
+        encoded = json.dumps(state, allow_nan=False, sort_keys=True, separators=(',', ':')).encode()
+        if len(encoded) > MAX_METADATA:
+            raise ValueError('Continuation application exceeds snapshot metadata bound')
+        expected_controller = 'manual' if replace_controller else 'flynn'
+        if (state.get('controller') != expected_controller or state.get('phase') != 'paused' or
+                state.get('scenario') != scenario or state.get('execution_mode') not in ('live', 'policy', 'actions') or
+                (replace_controller or u is not None) and state['execution_mode'] == 'actions'):
+            raise ValueError('Continuation requires the declared paused source controller/mode')
+        if _seed(state.get('seed')) != case['seed']:
+            raise ValueError('Continuation source seed differs from its acquisition case')
+        world = memory_world.validate_state(state.get('world_task_state'))
+        if memory.canonical_bytes(world.get('case')) != memory.canonical_bytes(case):
+            raise ValueError('Continuation case differs from destination')
+        memory_task.validate_state(state.get('memory'))
+        # Full application/tensor/runtime/RNG validation still precedes native mutation
+        # in the existing restoration, after the fixed destination policy is loaded.
+        return case, copy.deepcopy(snapshot), None if u is None else memory.validate_u(u)
+
+    @classmethod
     def open(cls, repo_root, asset_root, output, controller="manual", device="cpu", seed=0,
              max_bytes=2 * 1024**3, scenario="reproduction", texture="checker", run_id=None,
-             storage_budget=None, memory_case=None, expected_policy_identity=None, *, research_binding=None):
+             storage_budget=None, memory_case=None, expected_policy_identity=None, *, research_binding=None,
+             restore_snapshot=None, replace_controller=False, memory_u=None):
         """Create an actual pinned runtime. The caller owns its process watchdog."""
         from .assets import load_manifest, prepare_graph, sha256_file, verify_assets
         from .doctor import diagnose
@@ -173,7 +240,10 @@ class Engine:
             raise ValueError('Wheel calibration profiles require CPU')
         if scenario == 'adaptive-wheel-calibration' and seed != 1:
             raise ValueError('Measured calibration requires its declared seed 1')
-        memory_case = cls._validate_memory_case(memory_case, scenario, controller)
+        memory_case, restore_snapshot, memory_u = cls._memory_restore(
+            memory_case, scenario, controller, device, restore_snapshot, replace_controller, memory_u)
+        if restore_snapshot is not None and seed != memory_case['seed']:
+            raise ValueError('Continuation seed differs from its exact acquisition case')
         case_manifest = {}
         if memory_case is not None:
             from .memory import sha256
@@ -254,7 +324,8 @@ class Engine:
                          lock_sha256=sha256_file(root / "uv.lock"),
                          source_sha256={str(path.relative_to(root)): sha256_file(path)
                                         for path in sorted((root / "src/palimpsest").glob("*.py"))})
-            return cls(env, writer, controller, policy, teacher, seed, scenario, texture, memory_case=memory_case)
+            return cls(env, writer, controller, policy, teacher, seed, scenario, texture, memory_case=memory_case,
+                       restore_snapshot=restore_snapshot, replace_controller=replace_controller, memory_u=memory_u)
         except BaseException as error:
             try:
                 writer.finish({"error": {"type": type(error).__name__, "message": str(error)}}, status="failed")
