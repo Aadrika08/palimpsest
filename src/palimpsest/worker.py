@@ -48,7 +48,24 @@ def _trace(path, application):
     return result[-601:]
 
 
-def _sample(engine, run_id, trace, started):
+class _ExecutionTiming:
+    """Wall time includes active IPC/render/log work, excluding load and pauses."""
+    def __init__(self, now, total_tick):
+        self.last, self.tick, self.running = now, total_tick, False
+        self.active, self.simulated = 0., 0.
+
+    def update(self, now, total_tick, running, step_wall=0.):
+        ticks = total_tick - self.tick
+        self.active += now - self.last if self.running else step_wall if ticks else 0.
+        self.simulated += ticks * .02
+        self.last, self.tick, self.running = now, total_tick, running
+
+    def view(self):
+        return {"active_wall_seconds": self.active, "advanced_simulation_seconds": self.simulated,
+                "rtf": self.simulated / self.active if self.active else None}
+
+
+def _sample(engine, run_id, trace, started, timing=None):
     from .artifacts import image_data_url
     state = engine.public_state()
     state["receipts"] = list(engine.receipts.values())
@@ -77,7 +94,8 @@ def _sample(engine, run_id, trace, started):
             "world": engine.world(), "inputs": {"episode": episode, "tick": tick, "stage": stage,
                 "cam_left": image_data_url(cameras["cam_left"]), "cam_right": image_data_url(cameras["cam_right"]),
                 "sensors": sensors.tolist() if hasattr(sensors, "tolist") else sensors, "eyes": eyes},
-            "transition": projected, "trace": copy.deepcopy(trace[-601:]), "wall_elapsed": time.monotonic() - started}
+            "transition": projected, "trace": copy.deepcopy(trace[-601:]), "wall_elapsed": time.monotonic() - started,
+            "performance": timing.view() if timing else None}
 
 
 class Conflict(ValueError):
@@ -285,16 +303,17 @@ def _own(config, commands, replies, display, disconnected, stop, progress):
                 "snapshots": [{k: v for k, v in item.items() if k not in ("filename", "config", "sha256")}
                               for item in registry.values()], "initial_snapshot_id": initial}
         send(status())
-        latest_display(display, _sample(engine, run_id, trace, started))
+        timing = _ExecutionTiming(time.monotonic(), engine.total_tick)
+        latest_display(display, _sample(engine, run_id, trace, started, timing))
         last_signature, last_tick, last_episode = None, engine.total_tick, engine.episode
-        last_display, next_tick = time.monotonic(), time.monotonic()
+        next_display, next_tick = time.monotonic(), time.monotonic()
         while not stop.is_set():
             heartbeat()
             if disconnected.is_set():
                 engine.pause_for_disconnect()
                 disconnected.clear()
                 send(status())
-            advance = False
+            step_wall = 0.
             for _ in range(8):
                 try:
                     request = commands.get_nowait()
@@ -305,7 +324,6 @@ def _own(config, commands, replies, display, disconnected, stop, progress):
                     operation, body = request["op"], request["body"]
                     if operation == "command":
                         value = engine.submit(body)
-                        advance = True
                     elif operation in ("preview", "snapshot"):
                         if type(body.get("expected_revision")) is not int or body["expected_revision"] != engine.revision:
                             raise Conflict("Expected revision is stale")
@@ -321,10 +339,15 @@ def _own(config, commands, replies, display, disconnected, stop, progress):
                           "error": {"type": type(error).__name__, "message": str(error)}})
                 heartbeat()
             now = time.monotonic()
-            if advance or engine.phase == "running" and now >= next_tick:
+            running = engine.phase == "running"
+            if (not running and engine.public_state()["pending_commands"]) or running and now >= next_tick:
+                advance_started = time.monotonic()
                 engine.advance()
+                step_wall = time.monotonic() - advance_started
                 heartbeat()
-                next_tick = time.monotonic() + .02
+                # Deadlines include computation. Slow owners keep every physics tick;
+                # they do not accumulate a catch-up burst after a stall or pause.
+                next_tick = max(next_tick + .02, advance_started) if running else advance_started + .02
             if engine.episode != last_episode:
                 trace, last_episode = [engine.world()["pose"][:2]], engine.episode
             elif engine.total_tick != last_tick:
@@ -335,13 +358,16 @@ def _own(config, commands, replies, display, disconnected, stop, progress):
             if signature != last_signature:
                 send(status())
                 last_signature = signature
-            if time.monotonic() - last_display >= .1:
-                latest_display(display, _sample(engine, run_id, trace, started))
-                last_display = time.monotonic()
+            timing.update(time.monotonic(), engine.total_tick, engine.phase == "running", step_wall)
+            if time.monotonic() >= next_display:
+                display_started = time.monotonic()
+                latest_display(display, _sample(engine, run_id, trace, started, timing))
+                next_display = max(next_display + 1 / 30, display_started)
             if engine.phase == "failed":
                 failed = True
                 break
-            stop.wait(.005)
+            delay = max(0., min(.005, next_tick - time.monotonic())) if engine.phase == "running" else .005
+            stop.wait(delay)
     except BaseException as error:
         failed = True
         traceback.print_exc()

@@ -8,10 +8,23 @@ import time
 from types import SimpleNamespace
 import unittest
 
-from palimpsest.worker import latest_display, authoritative, _ReplayTransport
+from palimpsest.worker import latest_display, authoritative, _ReplayTransport, _ExecutionTiming
 
 
 class QueueContracts(unittest.TestCase):
+    def test_active_timing_excludes_loading_pauses_and_branch_origin(self):
+        clock = _ExecutionTiming(100., 50)
+        self.assertIsNone(clock.view()["rtf"])
+        clock.update(110., 51, True, .01)
+        clock.update(110.04, 53, True, .01)
+        clock.update(110.05, 53, False)
+        clock.update(210., 53, False)
+        self.assertAlmostEqual(clock.view()["advanced_simulation_seconds"], .06)
+        self.assertAlmostEqual(clock.view()["active_wall_seconds"], .06)
+        self.assertAlmostEqual(clock.view()["rtf"], 1.)
+        clock.update(220., 54, False, .008)  # A paused single step charges its execution.
+        self.assertAlmostEqual(clock.view()["active_wall_seconds"], .068)
+
     def test_only_display_sample_is_replaced(self):
         queue = Queue(maxsize=1)
         latest_display(queue, {"tick": 1})

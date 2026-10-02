@@ -273,7 +273,7 @@ class LabSupervisor:
         self._handle(identifier, message)
 
     def _monitor(self):
-        while not self.stopping.wait(.025):
+        while not self.stopping.wait(.01):
             with self.lock:
                 for identifier, owner in list(self.workers.items()):
                     if owner.done.is_set():
@@ -653,7 +653,7 @@ def create_app(repo_root, asset_root, runs_root, export_root=None, *, port=8765,
                         await socket.send_json(sample)
                         last_sample = marker
                 try:
-                    incoming = await asyncio.wait_for(socket.receive(), timeout=.04)
+                    incoming = await asyncio.wait_for(socket.receive(), timeout=.01)
                     if incoming["type"] == "websocket.disconnect":
                         return
                     if len((incoming.get("text") or "").encode()) + len(incoming.get("bytes", b"") or b"") > BODY_LIMIT:
