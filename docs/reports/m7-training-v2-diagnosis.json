@@ -1,0 +1,375 @@
+{
+  "causal_status": "Observed coverage limitation, not a proved cause of failure. No concrete implementation defect found within these checked interfaces.",
+  "checked_sources": [
+    {
+      "path": "src/palimpsest/engine.py",
+      "sha256": "b3b286d2cfe0a91cf14ce20c5efd591ab3b0e320eb5b429ca4c48f669ae582eb",
+      "size_bytes": 56711
+    },
+    {
+      "path": "src/palimpsest/male_model.py",
+      "sha256": "9327bca1db3cbeda7aab8b222ccfa59daef4e01f3f1b4689f83009955d970cad",
+      "size_bytes": 23088
+    },
+    {
+      "path": "src/palimpsest/male_policy.py",
+      "sha256": "12f2ff72a46e4b240c38a986b285ea087cdddfd2dcb6f574cc944f73eb7f168c",
+      "size_bytes": 18953
+    },
+    {
+      "path": "src/palimpsest/snapshots.py",
+      "sha256": "a8f521c117e70009f95d3cef0cb4cdfd2a711ee842b3cc85ea2a3782d16ef3a9",
+      "size_bytes": 37408
+    },
+    {
+      "path": "scripts/train_male_reduced.py",
+      "sha256": "75d3fc1fd71bab6b749c158a58fe9d802fc10253f4416d1c8f5739a2bdf4ff4a",
+      "size_bytes": 18670
+    },
+    {
+      "path": "upstream/fly-gym/environment/mujoco_two_cam_env_random_obstacles.py",
+      "sha256": "37612bc4d2cbcda2aa5604d9975c06f2a6d77a64c6c1ebcb4330897d3e2bc751",
+      "size_bytes": 33934
+    }
+  ],
+  "checks": {
+    "declared_goal_bearing_matches_pose_goal": true,
+    "first_stall_boundary_matches_recorded_outcome": true,
+    "pose_continuity_exact": true,
+    "training_hidden_carried_between_windows": true,
+    "wheel_projection_matches_upstream": true
+  },
+  "development_rows": [
+    {
+      "final_distance_metres": 6.6611249288166725,
+      "first_stall_tick": 327,
+      "initial_snapshot": {
+        "path": "runs/m7-v2-stage-c-26483f8-20261002/evaluation/runs/47f070de5f69452cbe4648692a6d97e4/snapshots/initial.snp",
+        "sha256": "21d7c1586be6fde1ff6a3bf28d3943a15fe7b594d7887739b8a4d1107818f938",
+        "size_bytes": 532206
+      },
+      "last50_contact_ticks": 48,
+      "last50_displacement_sum_metres": 0.011339207297963538,
+      "last50_max_step_metres": 0.0016746445132379162,
+      "last50_mean_abs_heading_command_radians": 0.08286523818969727,
+      "last50_mean_velocity_command": 0.6951202154159546,
+      "manifest": {
+        "path": "runs/m7-v2-stage-c-26483f8-20261002/evaluation/runs/47f070de5f69452cbe4648692a6d97e4/recording/manifest.json",
+        "sha256": "90efc38da6ba8ba46121e6058a7eb0fd7786e597db24096b21f3f030c4f26aeb",
+        "size_bytes": 4450
+      },
+      "max_goal_bearing_projection_error": 4.4923739006552665e-08,
+      "max_wheel_control_projection_error": 0.0,
+      "model_identity": {
+        "cell_source_sha256": "707cba79e7bf92923618ccc596e3d7a2d779edc02a970b0949f6dd3c0d28ae80",
+        "checkpoint_sha256": "13610d80c17e12b5deda4dc9c7fee0d7543e7be6c0c5604fac7a4db09b453736",
+        "controller": "male-original",
+        "feature_protocol_sha256": "78dc3adf6ca08555aec9a1f05eb89e331d101b95afb4b689b180bf06aaa379dd",
+        "graph_manifest_sha256": "7a205342b4ada8ab8b78d6ca866c61735003e601531c65a1c1b6c819df00026f",
+        "graph_sha256": "baa5c1302d3eb62aa6c29b4f7781100a7c2d0c16c328e7537855eec2b0be5d81",
+        "model_manifest_sha256": "7d4b3fd42359aeb119f12c2638006f38ae3ee9afa3f833929c9f6a73cecba26b",
+        "ordered_ids_sha256": "afd114fcd1dc666b0fbb7b1d5d686ef86ca4390831bfea355e4a9c97270d15b1",
+        "profile": "male-reduced-artificial-interface-v1",
+        "protocol_sha256": "7c33f9d7afb2c08e03c7df8fec01d88bcf4c618fa1ac5f47740315c8aa1b746d",
+        "source_graph_sha256": "5aba0fef99afba666b88e40fc535091454e46d9330580d9280b203e8da0abac0",
+        "topology_sha256": "39b804d9a4cd0ad4368b1d827cd0b485222d10c56adea622834b648fba7f3c79",
+        "training_report_sha256": "c42e7bbe7579aea2a1a99903dc9b105bd6614e8b5f25458fce4648c9ca0ae3c7",
+        "variant": "original"
+      },
+      "outcome": "stalled",
+      "pose_continuity_exact": true,
+      "recording_inventory_sha256": "10d3f060eeee397a085cb1ce69f791f09b6c3ae20135f5234c14688e5e2af6b5",
+      "run_directory": "runs/m7-v2-stage-c-26483f8-20261002/evaluation/runs/47f070de5f69452cbe4648692a6d97e4",
+      "run_id": "47f070de5f69452cbe4648692a6d97e4",
+      "seed": 1100,
+      "ticks": 327
+    },
+    {
+      "final_distance_metres": 0.7963828047105205,
+      "first_stall_tick": null,
+      "initial_snapshot": {
+        "path": "runs/m7-v2-stage-c-26483f8-20261002/evaluation/runs/b50ff09a33d6424ca25d4d4cde08a88c/snapshots/initial.snp",
+        "sha256": "597de0ad3665376a61f41f534e3576beacb2d538516c3e46be525b74c6b21dce",
+        "size_bytes": 532210
+      },
+      "last50_contact_ticks": 0,
+      "last50_displacement_sum_metres": 1.2366294542160075,
+      "last50_max_step_metres": 0.0248341754818354,
+      "last50_mean_abs_heading_command_radians": 0.04662325233221054,
+      "last50_mean_velocity_command": 0.6921427845954895,
+      "manifest": {
+        "path": "runs/m7-v2-stage-c-26483f8-20261002/evaluation/runs/b50ff09a33d6424ca25d4d4cde08a88c/recording/manifest.json",
+        "sha256": "02fc0ed68d525ca63cb0385af72f84e429252f36639779849311b1e61360cbff",
+        "size_bytes": 4438
+      },
+      "max_goal_bearing_projection_error": 4.719596030655637e-08,
+      "max_wheel_control_projection_error": 0.0,
+      "model_identity": {
+        "cell_source_sha256": "707cba79e7bf92923618ccc596e3d7a2d779edc02a970b0949f6dd3c0d28ae80",
+        "checkpoint_sha256": "13610d80c17e12b5deda4dc9c7fee0d7543e7be6c0c5604fac7a4db09b453736",
+        "controller": "male-original",
+        "feature_protocol_sha256": "78dc3adf6ca08555aec9a1f05eb89e331d101b95afb4b689b180bf06aaa379dd",
+        "graph_manifest_sha256": "7a205342b4ada8ab8b78d6ca866c61735003e601531c65a1c1b6c819df00026f",
+        "graph_sha256": "baa5c1302d3eb62aa6c29b4f7781100a7c2d0c16c328e7537855eec2b0be5d81",
+        "model_manifest_sha256": "7d4b3fd42359aeb119f12c2638006f38ae3ee9afa3f833929c9f6a73cecba26b",
+        "ordered_ids_sha256": "afd114fcd1dc666b0fbb7b1d5d686ef86ca4390831bfea355e4a9c97270d15b1",
+        "profile": "male-reduced-artificial-interface-v1",
+        "protocol_sha256": "7c33f9d7afb2c08e03c7df8fec01d88bcf4c618fa1ac5f47740315c8aa1b746d",
+        "source_graph_sha256": "5aba0fef99afba666b88e40fc535091454e46d9330580d9280b203e8da0abac0",
+        "topology_sha256": "39b804d9a4cd0ad4368b1d827cd0b485222d10c56adea622834b648fba7f3c79",
+        "training_report_sha256": "c42e7bbe7579aea2a1a99903dc9b105bd6614e8b5f25458fce4648c9ca0ae3c7",
+        "variant": "original"
+      },
+      "outcome": "goal",
+      "pose_continuity_exact": true,
+      "recording_inventory_sha256": "e269fc5895be90e0881fc7d76cd0af250c89e5dcf8f8d4c7a70252424e820175",
+      "run_directory": "runs/m7-v2-stage-c-26483f8-20261002/evaluation/runs/b50ff09a33d6424ca25d4d4cde08a88c",
+      "run_id": "b50ff09a33d6424ca25d4d4cde08a88c",
+      "seed": 1101,
+      "ticks": 295
+    },
+    {
+      "final_distance_metres": 3.7382144498177725,
+      "first_stall_tick": 215,
+      "initial_snapshot": {
+        "path": "runs/m7-v2-stage-c-26483f8-20261002/evaluation/runs/5e85fc8124ae4214812097f4131ad00c/snapshots/initial.snp",
+        "sha256": "3591eff6b1c354cbc0e03ea3220a824fc6c31d624ffddbbe293455b81300ccba",
+        "size_bytes": 532228
+      },
+      "last50_contact_ticks": 50,
+      "last50_displacement_sum_metres": 0.007104069305572502,
+      "last50_max_step_metres": 0.0011683977972145646,
+      "last50_mean_abs_heading_command_radians": 0.11357709765434265,
+      "last50_mean_velocity_command": 0.7089841961860657,
+      "manifest": {
+        "path": "runs/m7-v2-stage-c-26483f8-20261002/evaluation/runs/5e85fc8124ae4214812097f4131ad00c/recording/manifest.json",
+        "sha256": "a51fed30e61e2d394b4dbf27be694166b98a88d00a59b6dace726aed50a3ae37",
+        "size_bytes": 4449
+      },
+      "max_goal_bearing_projection_error": 5.1406228496198025e-08,
+      "max_wheel_control_projection_error": 0.0,
+      "model_identity": {
+        "cell_source_sha256": "707cba79e7bf92923618ccc596e3d7a2d779edc02a970b0949f6dd3c0d28ae80",
+        "checkpoint_sha256": "13610d80c17e12b5deda4dc9c7fee0d7543e7be6c0c5604fac7a4db09b453736",
+        "controller": "male-original",
+        "feature_protocol_sha256": "78dc3adf6ca08555aec9a1f05eb89e331d101b95afb4b689b180bf06aaa379dd",
+        "graph_manifest_sha256": "7a205342b4ada8ab8b78d6ca866c61735003e601531c65a1c1b6c819df00026f",
+        "graph_sha256": "baa5c1302d3eb62aa6c29b4f7781100a7c2d0c16c328e7537855eec2b0be5d81",
+        "model_manifest_sha256": "7d4b3fd42359aeb119f12c2638006f38ae3ee9afa3f833929c9f6a73cecba26b",
+        "ordered_ids_sha256": "afd114fcd1dc666b0fbb7b1d5d686ef86ca4390831bfea355e4a9c97270d15b1",
+        "profile": "male-reduced-artificial-interface-v1",
+        "protocol_sha256": "7c33f9d7afb2c08e03c7df8fec01d88bcf4c618fa1ac5f47740315c8aa1b746d",
+        "source_graph_sha256": "5aba0fef99afba666b88e40fc535091454e46d9330580d9280b203e8da0abac0",
+        "topology_sha256": "39b804d9a4cd0ad4368b1d827cd0b485222d10c56adea622834b648fba7f3c79",
+        "training_report_sha256": "c42e7bbe7579aea2a1a99903dc9b105bd6614e8b5f25458fce4648c9ca0ae3c7",
+        "variant": "original"
+      },
+      "outcome": "stalled",
+      "pose_continuity_exact": true,
+      "recording_inventory_sha256": "2082b714a94b4f961b1f20f29278425983cc0234b485e78a1186c8ce88f03bd5",
+      "run_directory": "runs/m7-v2-stage-c-26483f8-20261002/evaluation/runs/5e85fc8124ae4214812097f4131ad00c",
+      "run_id": "5e85fc8124ae4214812097f4131ad00c",
+      "seed": 1102,
+      "ticks": 215
+    },
+    {
+      "final_distance_metres": 2.5145645193549506,
+      "first_stall_tick": 389,
+      "initial_snapshot": {
+        "path": "runs/m7-v2-stage-c-26483f8-20261002/evaluation/runs/95b76d36a0eb4439a453c8c6965f4215/snapshots/initial.snp",
+        "sha256": "3072de48aaeec4808f523135d21d35f3d3c7d34395161d51b9b74fe8b8b7d380",
+        "size_bytes": 532200
+      },
+      "last50_contact_ticks": 50,
+      "last50_displacement_sum_metres": 0.05400535577122948,
+      "last50_max_step_metres": 0.0019721262309455837,
+      "last50_mean_abs_heading_command_radians": 0.03138679638504982,
+      "last50_mean_velocity_command": 0.6799119710922241,
+      "manifest": {
+        "path": "runs/m7-v2-stage-c-26483f8-20261002/evaluation/runs/95b76d36a0eb4439a453c8c6965f4215/recording/manifest.json",
+        "sha256": "f9096bd83056caa9acb377202f03fc270742ddd6bd965ae87ada4a1e7ad812cb",
+        "size_bytes": 4449
+      },
+      "max_goal_bearing_projection_error": 4.485209842419735e-08,
+      "max_wheel_control_projection_error": 0.0,
+      "model_identity": {
+        "cell_source_sha256": "707cba79e7bf92923618ccc596e3d7a2d779edc02a970b0949f6dd3c0d28ae80",
+        "checkpoint_sha256": "13610d80c17e12b5deda4dc9c7fee0d7543e7be6c0c5604fac7a4db09b453736",
+        "controller": "male-original",
+        "feature_protocol_sha256": "78dc3adf6ca08555aec9a1f05eb89e331d101b95afb4b689b180bf06aaa379dd",
+        "graph_manifest_sha256": "7a205342b4ada8ab8b78d6ca866c61735003e601531c65a1c1b6c819df00026f",
+        "graph_sha256": "baa5c1302d3eb62aa6c29b4f7781100a7c2d0c16c328e7537855eec2b0be5d81",
+        "model_manifest_sha256": "7d4b3fd42359aeb119f12c2638006f38ae3ee9afa3f833929c9f6a73cecba26b",
+        "ordered_ids_sha256": "afd114fcd1dc666b0fbb7b1d5d686ef86ca4390831bfea355e4a9c97270d15b1",
+        "profile": "male-reduced-artificial-interface-v1",
+        "protocol_sha256": "7c33f9d7afb2c08e03c7df8fec01d88bcf4c618fa1ac5f47740315c8aa1b746d",
+        "source_graph_sha256": "5aba0fef99afba666b88e40fc535091454e46d9330580d9280b203e8da0abac0",
+        "topology_sha256": "39b804d9a4cd0ad4368b1d827cd0b485222d10c56adea622834b648fba7f3c79",
+        "training_report_sha256": "c42e7bbe7579aea2a1a99903dc9b105bd6614e8b5f25458fce4648c9ca0ae3c7",
+        "variant": "original"
+      },
+      "outcome": "stalled",
+      "pose_continuity_exact": true,
+      "recording_inventory_sha256": "e38f7a878f0d4038a5efc8038f544d88c6a1fa34119c0234c2353f24d279c2d1",
+      "run_directory": "runs/m7-v2-stage-c-26483f8-20261002/evaluation/runs/95b76d36a0eb4439a453c8c6965f4215",
+      "run_id": "95b76d36a0eb4439a453c8c6965f4215",
+      "seed": 1103,
+      "ticks": 389
+    }
+  ],
+  "environment_contract": {
+    "goal_radius_metres": 0.8,
+    "stall_command_velocity_magnitude_minimum": 0.05,
+    "stall_limit_ticks": 50,
+    "stall_threshold_metres": 0.002
+  },
+  "evaluation_report": {
+    "path": "runs/m7-v2-stage-c-26483f8-20261002/evaluation/evaluation.json",
+    "sha256": "c05bdbce4dd24165beeb26061567a3b3a6565c76c26e07f39d7160f3c0b1a468",
+    "size_bytes": 187068
+  },
+  "finding": "Sustained contact and forward commands preceded each seed11 stall. Training rows never exercised the contact or collision-angle channels and contained one constant velocity target.",
+  "held_out_status": "locked_unopened",
+  "inventory_binding": "Full per-run files inventories are retained in the hash-pinned evaluation and teacher collection reports; their row identities and manifest hashes are repeated here.",
+  "limitations": [
+    "No new inference or checkpoint tensor inspection",
+    "No hidden-state trace or causal intervention",
+    "No held-out input or outcome access",
+    "No new training, tuning or runtime execution"
+  ],
+  "mujoco_imported": false,
+  "qualification_claims": [],
+  "runtime_source_commit": "26483f854378040b237d77dbf9f86116bc6f69f2",
+  "stage_c_audit": {
+    "path": "runs/m7-v2-stage-c-26483f8-20261002/independent-audit.json",
+    "sha256": "edfd121e9cd25b41b5a3cea62efdc25e86a26156529573ef52a899414741bdc5",
+    "size_bytes": 82997
+  },
+  "status": "read_only_diagnosis_complete",
+  "teacher_collection_report": {
+    "path": "runs/m7-v2-stage-a-cc1cea9-20261002/collection/collection.json",
+    "sha256": "72da787b534b64c872269b97a5c4248fe620ab3e8c5337f7371fba5c21e78b72",
+    "size_bytes": 49333
+  },
+  "torch_imported": false,
+  "training_label_summary": {
+    "absolute_heading_quantiles_radians": {
+      "maximum": 2.3503668308258057,
+      "p50": 0.019558453932404518,
+      "p90": 0.36876956820487955,
+      "p99": 1.6909566068649295
+    },
+    "contact_ticks": 0,
+    "large_abs_heading_over_pi_2_ticks": 31,
+    "negative_velocity_ticks": 0,
+    "nonzero_collision_angle_ticks": 0,
+    "ticks": 1983,
+    "unique_velocity_target_float32": 0.699999988079071
+  },
+  "training_rows": [
+    {
+      "contact_ticks": 0,
+      "files_sha256_canonical_json": "d2aca98c88cf4e49eddeba8b178efc021cfb7c25b0ffa3a2ca054987e5789a61",
+      "manifest": {
+        "path": "runs/m7-v2-stage-a-cc1cea9-20261002/collection/runs/af159322f4054a4f8929bc51f936a23a/recording/manifest.json",
+        "sha256": "a8fddcf852701a30953b4105a67f657ce1814dbeb07110dc2db6994f8705539b",
+        "size_bytes": 2984
+      },
+      "run_directory": "runs/m7-v2-stage-a-cc1cea9-20261002/collection/runs/af159322f4054a4f8929bc51f936a23a",
+      "run_id": "af159322f4054a4f8929bc51f936a23a",
+      "seed": 1000,
+      "ticks": 277
+    },
+    {
+      "contact_ticks": 0,
+      "files_sha256_canonical_json": "a46b3ed1603c4ceedc552c7207a937d3f152d191eca65771c534463c66b716ec",
+      "manifest": {
+        "path": "runs/m7-v2-stage-a-cc1cea9-20261002/collection/runs/94049f618c9b438190339242e42b6394/recording/manifest.json",
+        "sha256": "aec20dbbeb9d578734fff24f4701d40cab8210848d314eabd3cfe730f90af6bd",
+        "size_bytes": 2985
+      },
+      "run_directory": "runs/m7-v2-stage-a-cc1cea9-20261002/collection/runs/94049f618c9b438190339242e42b6394",
+      "run_id": "94049f618c9b438190339242e42b6394",
+      "seed": 1001,
+      "ticks": 182
+    },
+    {
+      "contact_ticks": 0,
+      "files_sha256_canonical_json": "f27cb759790047e06a8dd59139deb394674b80e9d38e343512fccf564fe0788a",
+      "manifest": {
+        "path": "runs/m7-v2-stage-a-cc1cea9-20261002/collection/runs/226c734f06da4cb08c7c56545b998402/recording/manifest.json",
+        "sha256": "963ee9aa9dd1b9345df904fc4a676e29c8fcb5b7a4beadc2a947246a52aa0401",
+        "size_bytes": 2986
+      },
+      "run_directory": "runs/m7-v2-stage-a-cc1cea9-20261002/collection/runs/226c734f06da4cb08c7c56545b998402",
+      "run_id": "226c734f06da4cb08c7c56545b998402",
+      "seed": 1002,
+      "ticks": 315
+    },
+    {
+      "contact_ticks": 0,
+      "files_sha256_canonical_json": "498ead879799096b65afc6bc501284cf3e039037682efd949e9433855cf09b4e",
+      "manifest": {
+        "path": "runs/m7-v2-stage-a-cc1cea9-20261002/collection/runs/7ea32277f1d74cd39ee51132f8a168f1/recording/manifest.json",
+        "sha256": "5175e077d5a099813895485325b6b34ec636a0495fc2f7948f151906e67bb510",
+        "size_bytes": 2983
+      },
+      "run_directory": "runs/m7-v2-stage-a-cc1cea9-20261002/collection/runs/7ea32277f1d74cd39ee51132f8a168f1",
+      "run_id": "7ea32277f1d74cd39ee51132f8a168f1",
+      "seed": 1003,
+      "ticks": 245
+    },
+    {
+      "contact_ticks": 0,
+      "files_sha256_canonical_json": "621baf9784cfae9a03c7d417c636a098b46e29ae0e4bc2a87d9ac5b3720d7b2f",
+      "manifest": {
+        "path": "runs/m7-v2-stage-a-cc1cea9-20261002/collection/runs/86545ca2510740afb6d4bf9214681d19/recording/manifest.json",
+        "sha256": "2e862a2eb7ab1aa6055c1b7250a8b37639f88860f39f2d113336c6db4445bcd7",
+        "size_bytes": 2975
+      },
+      "run_directory": "runs/m7-v2-stage-a-cc1cea9-20261002/collection/runs/86545ca2510740afb6d4bf9214681d19",
+      "run_id": "86545ca2510740afb6d4bf9214681d19",
+      "seed": 1004,
+      "ticks": 199
+    },
+    {
+      "contact_ticks": 0,
+      "files_sha256_canonical_json": "00ceae7708928698cc7e5a0a3e17b6224500c96d99acceb652eeb0dad39bc998",
+      "manifest": {
+        "path": "runs/m7-v2-stage-a-cc1cea9-20261002/collection/runs/27ac855f78084953bbed3a2d4c007447/recording/manifest.json",
+        "sha256": "39a828b78b1797cb84d890c0ddad68cfda71fa0a7f82a5c1ac681182b4cdb737",
+        "size_bytes": 2986
+      },
+      "run_directory": "runs/m7-v2-stage-a-cc1cea9-20261002/collection/runs/27ac855f78084953bbed3a2d4c007447",
+      "run_id": "27ac855f78084953bbed3a2d4c007447",
+      "seed": 1005,
+      "ticks": 265
+    },
+    {
+      "contact_ticks": 0,
+      "files_sha256_canonical_json": "cf86adf5e52a2fe962b391840c191985983058fe471977299f44f2184bb10922",
+      "manifest": {
+        "path": "runs/m7-v2-stage-a-cc1cea9-20261002/collection/runs/0c9b563cbe144d0d89b1d50872476c98/recording/manifest.json",
+        "sha256": "c608c51554d0925b74884723d0e1e7858068f384394165750bfd7715e966cc91",
+        "size_bytes": 2987
+      },
+      "run_directory": "runs/m7-v2-stage-a-cc1cea9-20261002/collection/runs/0c9b563cbe144d0d89b1d50872476c98",
+      "run_id": "0c9b563cbe144d0d89b1d50872476c98",
+      "seed": 1006,
+      "ticks": 243
+    },
+    {
+      "contact_ticks": 0,
+      "files_sha256_canonical_json": "d7a5c2ed801a632a32d45ddeb2a7e912b59e8c1ca1b12fe4ccf4a2d50b536977",
+      "manifest": {
+        "path": "runs/m7-v2-stage-a-cc1cea9-20261002/collection/runs/32547bb3e6f0470aaac636a51384d7bc/recording/manifest.json",
+        "sha256": "113c88ac6506e5afea4d7752ce38eb3845dff7390e628602f88271e3eb8aecb4",
+        "size_bytes": 2979
+      },
+      "run_directory": "runs/m7-v2-stage-a-cc1cea9-20261002/collection/runs/32547bb3e6f0470aaac636a51384d7bc",
+      "run_id": "32547bb3e6f0470aaac636a51384d7bc",
+      "seed": 1007,
+      "ticks": 257
+    }
+  ]
+}
