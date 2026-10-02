@@ -17,9 +17,12 @@ test('actual local manual workflow, snapshots, sequential branches, comparison a
   await page.getByRole('button',{name:'Create run',exact:true}).click();
   await expect(page.getByRole('button',{name:'Step',exact:true})).toBeEnabled({timeout:90_000});
   await expect(page.getByRole('img',{name:'Actual left eye policy input'})).toBeVisible();
+  for(const name of ['Export SVG','Export PNG','Export bundle'])await expect(page.getByRole('button',{name,exact:true})).toBeDisabled();
+  await expect(page.getByText('Close the active run before exporting.',{exact:true})).toBeVisible();
   const source=await page.locator('.identity').innerText();
   await page.getByRole('button',{name:'Start',exact:true}).click();
   await expect(page.locator('.run-heading strong')).toHaveText('running');
+  await expect(page.getByRole('button',{name:'Export bundle',exact:true})).toBeDisabled();
   const manual=page.getByRole('button',{name:/Focus manual drive/});await manual.focus();await page.keyboard.down('ArrowUp');await page.waitForTimeout(150);await page.keyboard.up('ArrowUp');await page.keyboard.down('ArrowLeft');
   await page.getByLabel('Edit',{exact:true}).focus();await page.keyboard.up('ArrowLeft');
   await expect.poll(async()=>{const result=await api(page,`/runs/${source.replace('Run ','')}`);return result.state.pending_commands;}).toBe(0);
@@ -75,7 +78,7 @@ test('actual replay jobs recover without samples and expose controls, reports an
   await page.getByRole('button',{name:'Action replay',exact:true}).click();await expect(page.locator('.mode')).toHaveText('Action replay');
   await expect(page.locator('.run-heading strong')).toHaveText('running',{timeout:90_000});const actions=await runId(page);expect(actions).not.toBe(source);
   await page.getByRole('button',{name:'Pause',exact:true}).click();await expect(page.locator('.run-heading strong')).toHaveText('paused');
-  for(const name of ['Step','Reset','Preview edit','Apply edit','Capture snapshot','Apply eye mask'])await expect(page.getByRole('button',{name,exact:true})).toBeDisabled();
+  for(const name of ['Step','Reset','Preview edit','Apply edit','Capture snapshot','Apply eye mask','Export SVG','Export PNG','Export bundle'])await expect(page.getByRole('button',{name,exact:true})).toBeDisabled();
   await expect(page.getByRole('button',{name:/Focus manual drive/})).toBeDisabled();await expect(page.getByRole('img',{name:'Actual left eye policy input'})).toHaveCount(0);
   const token=(await api(page,'/session')).token;
   await page.getByRole('button',{name:'Start',exact:true}).click();await expect(page.locator('.run-heading strong')).toHaveText('running');await page.goto('about:blank');
@@ -91,6 +94,8 @@ test('actual replay jobs recover without samples and expose controls, reports an
   const actionResult=JSON.parse(await actionReport.innerText());expect(actionResult.mode).toBe('actions');expect(actionResult.compared_ticks).toBe(sourceTicks);expect(actionResult.controller_reexecuted).toBe(false);
   await page.getByLabel('Recorded run',{exact:true}).selectOption('');
   const artifactRequests:string[]=[];page.on('request',request=>{if(request.url().includes('/artifacts/')){expect(request.url()).not.toMatch(/token|session=/);expect(request.headers()['x-palimpsest-session']).toBeTruthy();artifactRequests.push(request.url());}});
+  await expect(page.getByRole('button',{name:'Export bundle',exact:true})).toBeEnabled();
+  let released=false;page.on('response',response=>{if(response.url().endsWith(`/runs/${actions}/close`)&&response.status()===200)released=true;});page.on('request',request=>{if(request.url().endsWith(`/runs/${actions}/exports`))expect(released).toBe(true);});
   const downloading=page.waitForEvent('download');await page.getByRole('button',{name:'Export bundle',exact:true}).click();const artifact=await downloading;expect(await artifact.failure()).toBeNull();expect(artifact.suggestedFilename()).toContain(actions);const downloadPath=await artifact.path();expect(downloadPath).toBeTruthy();
   const bundle=JSON.parse(execFileSync('python',['-c',"import hashlib,json,sys,zipfile; z=zipfile.ZipFile(sys.argv[1]); m=json.loads(z.read('bundle-manifest.json')); assert all(hashlib.sha256(z.read(f['path'])).hexdigest()==f['sha256'] for f in m['files']); print(json.dumps({'names':z.namelist(),'report':json.loads(z.read('replay-report.json'))}))",downloadPath!],{encoding:'utf8'}));expect(bundle.names).toContain('job-events.jsonl');expect(bundle.report.status).toBe('passed');expect(artifactRequests.length).toBeGreaterThan(0);
   await page.getByLabel('Recorded run',{exact:true}).selectOption(source);await page.getByRole('button',{name:'Policy replay',exact:true}).click();await expect(page.locator('.mode')).toHaveText('Policy replay');await expect(page.locator('.run-heading strong')).toHaveText('completed',{timeout:90_000});
