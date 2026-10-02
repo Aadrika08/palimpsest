@@ -1582,5 +1582,34 @@
       "Both puck mechanics attempts failed their positive teacher; memory C1 started zero owners.",
       "The retained-fit turn verifier has only fixture evidence at this source freeze."
     ]
+  },
+  "puck_recovery_regression": {
+    "source_commit": "a8f6aa0a1d7f0bbc606057fc133b523d765bf90a",
+    "tests": 557,
+    "passed": 557,
+    "skipped": 0,
+    "suite_seconds": 118.908,
+    "supervisor": {
+      "elapsed_seconds": 121.68320166999183,
+      "output": "/home/utkarsh/Work/shraddha/brain/.worktrees/project-integration/runs/integration-puck-recovery-a8f6aa0-20261003/supervisor",
+      "returncode": 0,
+      "schema_version": 1,
+      "started_utc": "2026-10-02T22:56:03.723877+00:00",
+      "status": "completed",
+      "timeout_seconds": 300
+    },
+    "all_runtime_gates_enabled": true,
+    "sources_unchanged": true,
+    "assets_unchanged": true,
+    "model_identities_unchanged": true,
+    "retained_files_rehashed": 50,
+    "report": "runs/integration-puck-recovery-a8f6aa0-20261003/report.json",
+    "report_sha256": "091f14cc5bff23996ecdc3e71d9d15ede0aa32d00e748bc9c5b56ea145810236",
+    "launcher_sha256": "1f5019363c39093c188e7271625cf4608f33f8e8c97a696936aba25d452860d6",
+    "limitations": [
+      "Production model assets remain v1; this regression does not qualify failed research models or held-out outcomes.",
+      "The standalone puck mechanics pass retains its own frozen source and separate actual evidence.",
+      "M7 recovery v2 had not executed at this regression freeze; subsequent collection failed the unchanged contact guard."
+    ]
   }
 }
