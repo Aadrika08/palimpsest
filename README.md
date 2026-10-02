@@ -40,6 +40,16 @@ uv run --no-sync palimpsest assets prepare
 
 Global options precede the command, for example `uv run --no-sync palimpsest --assets /path/to/assets assets verify`. Once dependencies and assets are cached, these commands require no model-hosting service during execution.
 
+The two reduced male CPU controllers use a separate, committed 836,835-byte
+bundle in `data/assets/flynn/male-reduced-v1/`; they need no FLYNN checkpoint
+download. [Its manifest](data/manifests/male-reduced-policy-v1.json) pins all seven
+files. The normal lab validates these identities before loading either model.
+If using a custom `--assets` directory, copy that complete subdirectory there
+unchanged. These are the existing five-epoch pilot checkpoints, not a newly
+trained or navigation-qualified release. Their artificial sensor mapping,
+training lineage and limits are in the [training report](docs/reports/m7-training-pilot.md).
+See [MaleCNS attribution and modifications](THIRD_PARTY_NOTICES.md#malecns-reduced-pilot).
+
 ## Interactive lab
 
 Use Node 24 (exact version in `ui/.node-version`) to prepare the local UI once:
