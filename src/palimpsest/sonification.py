@@ -168,8 +168,9 @@ def sonify(run_path, output_path, *, populations, episode=0, storage_budget=None
         raise ValueError('recording changed before sonification')
     if storage_budget is not None:
         storage_budget.check(bound, path=output)
-    with output.open('xb') as stream:
-        try:
+    stream = output.open('xb')
+    try:
+        with stream:
             digest = hashlib.sha256()
             with wave.open(stream, 'wb') as audio:
                 audio.setparams((1, 2, SAMPLE_RATE, boundaries[-1], 'NONE', 'not compressed'))
@@ -189,10 +190,7 @@ def sonify(run_path, output_path, *, populations, episode=0, storage_budget=None
             stream.write(struct.pack('<I', size - 8))
             if size != bound or artifacts._fingerprint(data['paths']) != data['fingerprint']:
                 raise ValueError('recording changed or output size differs during sonification')
-        except BaseException:
-            try:
-                stream.close()
-            finally:
-                output.unlink()
-            raise
+    except BaseException:
+        output.unlink()
+        raise
     return output
