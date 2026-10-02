@@ -1,0 +1,492 @@
+{
+  "schema_version": 1,
+  "gate": "TGT-HO-START-1",
+  "status": "passed",
+  "actual_invocations": 1,
+  "retries": 0,
+  "source_commit": "03a8476b9ef871f1c8610aff5cfb670d8be22d21",
+  "upstream_commit": "8d964599119b420de67ee259434d273651a1a76d",
+  "protocol_sha256": "b6bf65c714c3cc03541cefaf117c06baad4cc48050498de228bc64827d98848a",
+  "source_script_sha256": "ee5b2facae4dd91eb7caf2e041b97db126bcd863ec13ecde54931dd99fda888b",
+  "primary_report_sha256": "1dd451cb6b5d999b01f8c36cde2ffb02796d4652a54cb2d2bae82540efa968de",
+  "terminal_sha256": "783fc42af92c6cc11f01ddb89735cd648ca7d2bfc063d3612b5fc7a165371d05",
+  "owners": 8,
+  "numeric_ticks": 1980,
+  "source_ticks": 990,
+  "actions_replay_ticks": 990,
+  "snapshot_files": 8,
+  "cases": {
+    "ho-start-north-1001/exploration-landmarks": {
+      "case": {
+        "id": "ho-start-north-1001",
+        "start_pose": [
+          -2.75,
+          0.15,
+          0.1
+        ],
+        "seed": 1001,
+        "scenario": "exploration-landmarks",
+        "driver": "v1"
+      },
+      "status": "passed",
+      "source_ticks": 203,
+      "replay_ticks": 203,
+      "natural_outcome": "task_completed",
+      "criterion": {
+        "passed": true,
+        "natural_outcome": "task_completed",
+        "declared_origin_actual_home_distance_m": null,
+        "declared_origin_pose": [
+          -2.75,
+          0.15,
+          0.1
+        ],
+        "threshold_m": null,
+        "engine_default_origin_outcome": {
+          "reason": "task_completed",
+          "episode": 0,
+          "steps": 203,
+          "upstream_goal_distance_m": 0.11897925287485123,
+          "task_phase": "complete",
+          "completed_inspection_ids": [
+            "inspect-a",
+            "inspect-b"
+          ]
+        },
+        "evaluator_only": true
+      },
+      "motion": {
+        "loaded_body_calibration": {
+          "radius_m": 0.06,
+          "track_m": 0.36,
+          "quantum_rad": 0.001
+        },
+        "straight_forward_intervals": 63,
+        "measured_straight_shaft_delta_rad": [
+          18.04448198642703,
+          18.1528715318517
+        ],
+        "measured_straight_body_forward_m": 1.0826760048557833,
+        "positive_shaft_and_forward_direction_observed": true,
+        "max_encoder_vs_true_local_error_m": 0.03044862809144328,
+        "dwell_intervals": 21,
+        "max_dwell_true_displacement_m": 2.8069372025159917e-05,
+        "max_dwell_true_yaw_change_rad": 1.3214794219174042e-06,
+        "scope": "isolated evaluator measurements; no correction/input to driver. Quantized shaft rest does not prove body rest, slip-free travel or physical stopping."
+      },
+      "source_run_id": "5fe62dfbafba4ec68273ce4692425379",
+      "actions_run_id": "6e4898b19c874d0d8e8004c79eb092e9",
+      "override_sha256": "d9a52d5f8735b5758341f5ed7526d0669ca38e4618b49dafb09310cdd37cd6a0",
+      "normalized_initial_sha256": "b2851bb31921e844394b9fe8346ef430c883afde76fd1448f1134e59a104928b",
+      "initial_native_comparison": "all snapshot fields; only three transport fields excluded",
+      "full_semantic_events_each": 1427,
+      "replay_events_after_initial_prefix": 1426,
+      "comparison_fields": [
+        "action",
+        "cam_left",
+        "cam_right",
+        "control",
+        "eyes",
+        "next_pose",
+        "pose",
+        "raw_cam_left",
+        "raw_cam_right",
+        "revision",
+        "reward",
+        "sensors",
+        "simulation_time"
+      ],
+      "inference_executed": false,
+      "owner_elapsed_seconds": {
+        "source": 17.020084855001187,
+        "actions": 16.514944473994547
+      }
+    },
+    "ho-start-north-1001/encoder-homing": {
+      "case": {
+        "id": "ho-start-north-1001",
+        "start_pose": [
+          -2.75,
+          0.15,
+          0.1
+        ],
+        "seed": 1001,
+        "scenario": "encoder-homing",
+        "driver": "v2"
+      },
+      "status": "passed",
+      "source_ticks": 292,
+      "replay_ticks": 292,
+      "natural_outcome": "task_completed",
+      "criterion": {
+        "passed": true,
+        "natural_outcome": "task_completed",
+        "declared_origin_actual_home_distance_m": 0.16283366951741848,
+        "declared_origin_pose": [
+          -2.75,
+          0.15,
+          0.1
+        ],
+        "threshold_m": 0.25,
+        "engine_default_origin_outcome": {
+          "reason": "task_completed",
+          "episode": 0,
+          "steps": 292,
+          "upstream_goal_distance_m": 1.7416434288024902,
+          "task_phase": "complete",
+          "completed_inspection_ids": [],
+          "evaluator_actual_home_distance_m": 0.37574258496009155,
+          "estimated_home_distance_m": 0.10736506694131819
+        },
+        "evaluator_only": true
+      },
+      "motion": {
+        "loaded_body_calibration": {
+          "radius_m": 0.06,
+          "track_m": 0.36,
+          "quantum_rad": 0.001
+        },
+        "straight_forward_intervals": 147,
+        "measured_straight_shaft_delta_rad": [
+          31.90244147598641,
+          31.974037351896964
+        ],
+        "measured_straight_body_forward_m": 1.906541593538227,
+        "positive_shaft_and_forward_direction_observed": true,
+        "max_encoder_vs_true_local_error_m": 0.16945423897946826,
+        "dwell_intervals": 9,
+        "max_dwell_true_displacement_m": 4.088497396065559e-05,
+        "max_dwell_true_yaw_change_rad": 3.5943811709238105e-06,
+        "scope": "isolated evaluator measurements; no correction/input to driver. Quantized shaft rest does not prove body rest, slip-free travel or physical stopping."
+      },
+      "source_run_id": "edefe31f08884d729b8dab86dfe98431",
+      "actions_run_id": "010f5e123048480a90999999613eb882",
+      "override_sha256": "f0150fbea94c7c0c365f5dee7b0f5bebb10c35b5fe6a867432250d4f7490b9ad",
+      "normalized_initial_sha256": "841070d752f984ec430f8c9431b36d6da635b476f3cf9ffe9dd09cad09117f32",
+      "initial_native_comparison": "all snapshot fields; only three transport fields excluded",
+      "full_semantic_events_each": 2048,
+      "replay_events_after_initial_prefix": 2047,
+      "comparison_fields": [
+        "action",
+        "cam_left",
+        "cam_right",
+        "control",
+        "eyes",
+        "next_pose",
+        "pose",
+        "raw_cam_left",
+        "raw_cam_right",
+        "revision",
+        "reward",
+        "sensors",
+        "simulation_time"
+      ],
+      "inference_executed": false,
+      "owner_elapsed_seconds": {
+        "source": 21.280627707994427,
+        "actions": 23.285704965994228
+      }
+    },
+    "ho-start-south-1002/exploration-landmarks": {
+      "case": {
+        "id": "ho-start-south-1002",
+        "start_pose": [
+          -2.75,
+          -0.15,
+          -0.1
+        ],
+        "seed": 1002,
+        "scenario": "exploration-landmarks",
+        "driver": "v1"
+      },
+      "status": "passed",
+      "source_ticks": 203,
+      "replay_ticks": 203,
+      "natural_outcome": "task_completed",
+      "criterion": {
+        "passed": true,
+        "natural_outcome": "task_completed",
+        "declared_origin_actual_home_distance_m": null,
+        "declared_origin_pose": [
+          -2.75,
+          -0.15,
+          -0.1
+        ],
+        "threshold_m": null,
+        "engine_default_origin_outcome": {
+          "reason": "task_completed",
+          "episode": 0,
+          "steps": 203,
+          "upstream_goal_distance_m": 0.11897925287485123,
+          "task_phase": "complete",
+          "completed_inspection_ids": [
+            "inspect-a",
+            "inspect-b"
+          ]
+        },
+        "evaluator_only": true
+      },
+      "motion": {
+        "loaded_body_calibration": {
+          "radius_m": 0.06,
+          "track_m": 0.36,
+          "quantum_rad": 0.001
+        },
+        "straight_forward_intervals": 63,
+        "measured_straight_shaft_delta_rad": [
+          18.1528715318517,
+          18.044481986427026
+        ],
+        "measured_straight_body_forward_m": 1.0826760048557833,
+        "positive_shaft_and_forward_direction_observed": true,
+        "max_encoder_vs_true_local_error_m": 0.03044862809144328,
+        "dwell_intervals": 21,
+        "max_dwell_true_displacement_m": 2.8069372025159917e-05,
+        "max_dwell_true_yaw_change_rad": 1.3214794219451598e-06,
+        "scope": "isolated evaluator measurements; no correction/input to driver. Quantized shaft rest does not prove body rest, slip-free travel or physical stopping."
+      },
+      "source_run_id": "75c436b1599645ca9dc906b905a23a31",
+      "actions_run_id": "1ab59fef79fe4b75985cb52695a373e8",
+      "override_sha256": "d12ac494d0269ca61fda83a8601199e366e7dcfb6a22f35d5394836b203e96cc",
+      "normalized_initial_sha256": "2f3dd1eb309f89d5dbadea203bab76755eb6e4abf9b1a41fa929a8b0aca553eb",
+      "initial_native_comparison": "all snapshot fields; only three transport fields excluded",
+      "full_semantic_events_each": 1427,
+      "replay_events_after_initial_prefix": 1426,
+      "comparison_fields": [
+        "action",
+        "cam_left",
+        "cam_right",
+        "control",
+        "eyes",
+        "next_pose",
+        "pose",
+        "raw_cam_left",
+        "raw_cam_right",
+        "revision",
+        "reward",
+        "sensors",
+        "simulation_time"
+      ],
+      "inference_executed": false,
+      "owner_elapsed_seconds": {
+        "source": 18.371927859989228,
+        "actions": 22.183253719995264
+      }
+    },
+    "ho-start-south-1002/encoder-homing": {
+      "case": {
+        "id": "ho-start-south-1002",
+        "start_pose": [
+          -2.75,
+          -0.15,
+          -0.1
+        ],
+        "seed": 1002,
+        "scenario": "encoder-homing",
+        "driver": "v2"
+      },
+      "status": "passed",
+      "source_ticks": 292,
+      "replay_ticks": 292,
+      "natural_outcome": "task_completed",
+      "criterion": {
+        "passed": true,
+        "natural_outcome": "task_completed",
+        "declared_origin_actual_home_distance_m": 0.16283366951741848,
+        "declared_origin_pose": [
+          -2.75,
+          -0.15,
+          -0.1
+        ],
+        "threshold_m": 0.25,
+        "engine_default_origin_outcome": {
+          "reason": "task_completed",
+          "episode": 0,
+          "steps": 292,
+          "upstream_goal_distance_m": 1.7416434288024902,
+          "task_phase": "complete",
+          "completed_inspection_ids": [],
+          "evaluator_actual_home_distance_m": 0.37574258496009155,
+          "estimated_home_distance_m": 0.10736506694131819
+        },
+        "evaluator_only": true
+      },
+      "motion": {
+        "loaded_body_calibration": {
+          "radius_m": 0.06,
+          "track_m": 0.36,
+          "quantum_rad": 0.001
+        },
+        "straight_forward_intervals": 147,
+        "measured_straight_shaft_delta_rad": [
+          31.97403735189696,
+          31.902441475986418
+        ],
+        "measured_straight_body_forward_m": 1.906541593538227,
+        "positive_shaft_and_forward_direction_observed": true,
+        "max_encoder_vs_true_local_error_m": 0.16945423897946826,
+        "dwell_intervals": 9,
+        "max_dwell_true_displacement_m": 4.088497396065559e-05,
+        "max_dwell_true_yaw_change_rad": 3.5943811704797213e-06,
+        "scope": "isolated evaluator measurements; no correction/input to driver. Quantized shaft rest does not prove body rest, slip-free travel or physical stopping."
+      },
+      "source_run_id": "cbd2a21cace0429e9278e15ed11360ed",
+      "actions_run_id": "621218a612954b5d840d47f9d10b2e4d",
+      "override_sha256": "6db3d15163a634538c2bb9e840e0e61818b25636f0a51bea2f0f00c337f32df2",
+      "normalized_initial_sha256": "4e9409eb6cf1add0ba99cf462172168531aac8ad783490f32d3e282f5f3d71d5",
+      "initial_native_comparison": "all snapshot fields; only three transport fields excluded",
+      "full_semantic_events_each": 2048,
+      "replay_events_after_initial_prefix": 2047,
+      "comparison_fields": [
+        "action",
+        "cam_left",
+        "cam_right",
+        "control",
+        "eyes",
+        "next_pose",
+        "pose",
+        "raw_cam_left",
+        "raw_cam_right",
+        "revision",
+        "reward",
+        "sensors",
+        "simulation_time"
+      ],
+      "inference_executed": false,
+      "owner_elapsed_seconds": {
+        "source": 24.135075174999656,
+        "actions": 25.078320293992874
+      }
+    }
+  },
+  "gate_wall_seconds": 171.6069116360013,
+  "outer_process_seconds": 172.60776766399795,
+  "launcher_wall_seconds": 174.07692696299637,
+  "normal_owner_returncodes": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "outer_returncode": 0,
+  "inner_returncode": 0,
+  "source_assets_unchanged": true,
+  "before_after_inventory_sha256": "eed66c15b994c6aa8765064866f0f484c703ab14efde3c7ff37368cb8ba08ffa",
+  "inventory_counts": {
+    "tracked": 302,
+    "upstream": 122,
+    "assets": 20
+  },
+  "indexed_inner_artifacts_rehashed": 151,
+  "cleanup": {
+    "inner_observed_pid_start_pairs": 9,
+    "outer_observed_pid_start_pairs": 10,
+    "union_absent_pid_start_pairs": 10,
+    "explicit_forced_signals": [],
+    "sampled_survivors": [],
+    "sampler_errors": [],
+    "native_warning_matches": [],
+    "scope": "Finite .25-second sampling and PID/start verification; not universal transient-process proof. Existing bounded_process best-effort group cleanup after leader exit is not a signal-delivery ledger."
+  },
+  "storage": {
+    "admission_bytes": 1840775168,
+    "max_bytes": 2147483648,
+    "free_floor_bytes": 1073741824,
+    "per_recording_max_bytes": 268435456,
+    "snapshot_size_range_bytes": [
+      523724,
+      523920
+    ],
+    "report_usage_before_final_report_bytes": 403460673,
+    "outer_terminal_recount_before_terminal_write_bytes": 403673851
+  },
+  "read_only_audits": {
+    "root": {
+      "status": "passed",
+      "seconds": 5.432762117998209,
+      "tracked_upstream_asset_files": 444,
+      "indexed_artifacts": 151,
+      "numeric_rows": 1980,
+      "snapshots_read": 8,
+      "driver_actions_reconstructed": true,
+      "full_semantic_streams_compared": true
+    },
+    "evaluator": {
+      "status": "passed",
+      "seconds": 1.9027882740047062,
+      "source_rows_recomputed": 990,
+      "native_runtime_executed": false
+    }
+  },
+  "limitations": [
+    "Two symmetric fixed starts on one authored layout; four observed case results are not population or independent-layout evidence.",
+    "Artificial sensor-only manual drivers; no learned/Flynn policy, held-out body parameter, adaptive-body/task composition or hardware qualification.",
+    "Standalone pose override records exact source context; ordinary generic playback/profile-world readers remain unqualified and unchanged.",
+    "Declared-origin evaluator metric is separate; Engine default-origin outcome remains unchanged and is not requalified.",
+    "All actual sources completed tasks. Natural unsuccessful-outcome continuation and clean failed-functional exit distinction remain fixture-only coverage.",
+    "Four action replays only; no policy replay or repeated task-phase continuation in this gate.",
+    "Quantized encoder dwell includes measured residual translation/yaw; no continuous-contact, slip-free travel or physical-stop claim.",
+    "No runtime/source changes, retries, threshold tuning or truth feedback during the single invocation."
+  ],
+  "artifacts_sha256": {
+    "runs/m6-task-heldout-starts-development-20261003/report.json": "1dd451cb6b5d999b01f8c36cde2ffb02796d4652a54cb2d2bae82540efa968de",
+    "runs/m6-task-starts-control-03a8476/terminal.json": "783fc42af92c6cc11f01ddb89735cd648ca7d2bfc063d3612b5fc7a165371d05",
+    "runs/m6-task-starts-control-03a8476/before.json": "eed66c15b994c6aa8765064866f0f484c703ab14efde3c7ff37368cb8ba08ffa",
+    "runs/m6-task-starts-control-03a8476/after.json": "eed66c15b994c6aa8765064866f0f484c703ab14efde3c7ff37368cb8ba08ffa",
+    "runs/m6-task-starts-control-03a8476/inventory.py": "2800164cc94e76263c6c2349f36e91d18a50b7956d84ba30219bba115123f523",
+    "runs/m6-task-starts-control-03a8476/launch.py": "8da7b5d05c2fae878e2e9284538df4424be52c91d5ed0d44ae0aa86eebd05fb7",
+    "runs/m6-task-starts-control-03a8476/invocation.json": "c68652c5b1d7046bb520c180c994f45e70c35b2b3afef1f4dd7513567b11af1b",
+    "runs/m6-task-starts-control-03a8476/launcher-console.log": "585e08185d00607cf9e5297874be19234cfc27920fa2252ab462950a36eb65de",
+    "runs/m6-task-starts-control-03a8476/outer-launch/stdout.log": "1c1ff09d59cd0c865e366d31266b1961fa2b36b5a785851c372a915255a874cc",
+    "runs/m6-task-starts-control-03a8476/outer-launch/stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "runs/m6-task-starts-control-03a8476/outer-launch/supervisor.json": "7602c41d77a90e725b1f7b6b8607cb5cd76c18a617324bdec92f305b06d75136",
+    "runs/m6-task-starts-control-03a8476/evaluator-audit.py": "870d9dae61dffafc36fbc90c15d0eca6d013e748aff004cd58bc4dffae897dd8",
+    "runs/m6-task-starts-control-03a8476/evaluator-audit.json": "90a575d2914406fbd98ab947638f7c84417cf8eac11b4640d86be9fb13024b18",
+    "../project-integration/runs/m6-task-starts-root-audit-03a8476/audit.py": "1c3893d88f731d82e69baead47d00bd6e473a8557aa1f98a59fa5c7eeea91512",
+    "../project-integration/runs/m6-task-starts-root-audit-03a8476/audit.json": "036efc3f8402906d64769cb4aabf333f31b88ad2935b20d616de0d5be83368a9",
+    "runs/m6-task-heldout-starts-development-20261003/ho-start-north-1001/exploration-landmarks/source/5fe62dfbafba4ec68273ce4692425379/recording/manifest.json": "1416a8494787852523f91dcab719423db32db60da3b4ef82b42138b8af9b98d8",
+    "runs/m6-task-heldout-starts-development-20261003/ho-start-north-1001/exploration-landmarks/source/5fe62dfbafba4ec68273ce4692425379/snapshots/initial.snp": "1d4063472f4cab93c9d88cd17c4a7d08608fdbd8285359ed9460cce974fad452",
+    "runs/m6-task-heldout-starts-development-20261003/ho-start-north-1001/exploration-landmarks/source/result.json": "baca493e7cb31240cdee6de2c3156be06e90e1912f14d99872497d1c351e3217",
+    "runs/m6-task-heldout-starts-development-20261003/ho-start-north-1001/exploration-landmarks/source/supervisor.json": "e249fe3252669ee236ae34e28236eb306858866fbe3ca22d6bae24694a0da8df",
+    "runs/m6-task-heldout-starts-development-20261003/ho-start-north-1001/exploration-landmarks/actions/6e4898b19c874d0d8e8004c79eb092e9/recording/manifest.json": "7bb7a04f8f047cf34f04cbc6375e5362b7a81d97e0fd0a7828a893ebed1c1e1a",
+    "runs/m6-task-heldout-starts-development-20261003/ho-start-north-1001/exploration-landmarks/actions/6e4898b19c874d0d8e8004c79eb092e9/snapshots/initial.snp": "1fd27fc0e186a2c7d10c0051efcaf4ee8f7cebaa3a05b8b8a04866f8df13fbfb",
+    "runs/m6-task-heldout-starts-development-20261003/ho-start-north-1001/exploration-landmarks/actions/result.json": "b60adc2bf4e24fbf654d8adabb5cad59bfe1c9fa23f3d1bd182067d5d1d86064",
+    "runs/m6-task-heldout-starts-development-20261003/ho-start-north-1001/exploration-landmarks/actions/supervisor.json": "0449f8d7be052a43052bd1b3d36212f497f02c79d25741ebba5a56be8a4bd0b2",
+    "runs/m6-task-heldout-starts-development-20261003/ho-start-north-1001/exploration-landmarks/actions/6e4898b19c874d0d8e8004c79eb092e9/replay-report.json": "85ec389ba5b8523a7f09bdfebf70c981c6c5a6997194e115983d4499be291668",
+    "runs/m6-task-heldout-starts-development-20261003/ho-start-north-1001/exploration-landmarks/source/rows.json": "91840a27ac627fb7b8e4ac8db030da5e363af1e24c6776764c4beaebdb228f26",
+    "runs/m6-task-heldout-starts-development-20261003/ho-start-north-1001/encoder-homing/source/edefe31f08884d729b8dab86dfe98431/recording/manifest.json": "5452407882ae077bda0f65cb068f7cfb77f2bdb363dc19d74ad957b888cccf74",
+    "runs/m6-task-heldout-starts-development-20261003/ho-start-north-1001/encoder-homing/source/edefe31f08884d729b8dab86dfe98431/snapshots/initial.snp": "54529a6095790284196290abf2db0d1a99be3a3c9a4ec70f09a52a9d11bf0e4e",
+    "runs/m6-task-heldout-starts-development-20261003/ho-start-north-1001/encoder-homing/source/result.json": "e13b758adef98bfbde1d3a7566c618ab1fd3029fb0b4d602d559295467ab33fa",
+    "runs/m6-task-heldout-starts-development-20261003/ho-start-north-1001/encoder-homing/source/supervisor.json": "7a7c864b91a1457b836cf419f81f14aa38060a46b83c8ad541207e7d11f49e1b",
+    "runs/m6-task-heldout-starts-development-20261003/ho-start-north-1001/encoder-homing/actions/010f5e123048480a90999999613eb882/recording/manifest.json": "6f45ee04f911716daa6c66eb1a179dba2f069869cb60821bea8a6b6de30e3859",
+    "runs/m6-task-heldout-starts-development-20261003/ho-start-north-1001/encoder-homing/actions/010f5e123048480a90999999613eb882/snapshots/initial.snp": "0623d3a684ed518d45e2f5e26e61013adfc2757f6d7d61d8ea3922b25b33946e",
+    "runs/m6-task-heldout-starts-development-20261003/ho-start-north-1001/encoder-homing/actions/result.json": "840844725d4e00b8993445ff57ad848474bd3e5006929a13a3456c43ed9ae7e1",
+    "runs/m6-task-heldout-starts-development-20261003/ho-start-north-1001/encoder-homing/actions/supervisor.json": "64d72a9fcb8ed7e9853de77a5621537beb559d7a0e71b552eea879520e2b8393",
+    "runs/m6-task-heldout-starts-development-20261003/ho-start-north-1001/encoder-homing/actions/010f5e123048480a90999999613eb882/replay-report.json": "c5464fce85cc23ac93e64fcb10ad472ef4e1baae4247a6980444856691334af0",
+    "runs/m6-task-heldout-starts-development-20261003/ho-start-north-1001/encoder-homing/source/rows.json": "dcdeb30eb932cfbdea077919666c68d0c09dc8bdcb950c3b9f8819fad9c6928c",
+    "runs/m6-task-heldout-starts-development-20261003/ho-start-south-1002/exploration-landmarks/source/75c436b1599645ca9dc906b905a23a31/recording/manifest.json": "6a24747ddb8899782180a87c6411500b826a0b57e7748466002195bf85ae5ac7",
+    "runs/m6-task-heldout-starts-development-20261003/ho-start-south-1002/exploration-landmarks/source/75c436b1599645ca9dc906b905a23a31/snapshots/initial.snp": "d9dd21f6e23a3623f574fd28a92cd41b813b94167a3763d997953a9f58fc35da",
+    "runs/m6-task-heldout-starts-development-20261003/ho-start-south-1002/exploration-landmarks/source/result.json": "acf69773c325df64519f04d9101af96b248307d309ce257b8725450ca730bb2e",
+    "runs/m6-task-heldout-starts-development-20261003/ho-start-south-1002/exploration-landmarks/source/supervisor.json": "416fa31a307e0df95e32eab1587c094fc38f9597c719597c2a35c8b0b16ec267",
+    "runs/m6-task-heldout-starts-development-20261003/ho-start-south-1002/exploration-landmarks/actions/1ab59fef79fe4b75985cb52695a373e8/recording/manifest.json": "2f69035f40b927f38e40742162b7dae6c8d6ffe6312c0a0c2302805870c88134",
+    "runs/m6-task-heldout-starts-development-20261003/ho-start-south-1002/exploration-landmarks/actions/1ab59fef79fe4b75985cb52695a373e8/snapshots/initial.snp": "e1024d5156b006f9d90c24e2de50e8fc1cfef749969971f552c7865bf9e10162",
+    "runs/m6-task-heldout-starts-development-20261003/ho-start-south-1002/exploration-landmarks/actions/result.json": "fd74288f0323b2079bfe9a518c82a603b1e20e8b039c9684351fc5c131ec2514",
+    "runs/m6-task-heldout-starts-development-20261003/ho-start-south-1002/exploration-landmarks/actions/supervisor.json": "547f8f261d2ec98afc2691e99af47997a671601a0cbf28a15bd28cd621f108b7",
+    "runs/m6-task-heldout-starts-development-20261003/ho-start-south-1002/exploration-landmarks/actions/1ab59fef79fe4b75985cb52695a373e8/replay-report.json": "ac1400b69e65a282379f25de1433a94859d496ec5d2b526de136f9645ae09231",
+    "runs/m6-task-heldout-starts-development-20261003/ho-start-south-1002/exploration-landmarks/source/rows.json": "bb5df194a4f3ab3fbb8970e3bfaabf30d0a40ce81cd07970dde34d46b9c98589",
+    "runs/m6-task-heldout-starts-development-20261003/ho-start-south-1002/encoder-homing/source/cbd2a21cace0429e9278e15ed11360ed/recording/manifest.json": "e462d7bf2b2bbbb09a2ef55600b09bc58e91a70b8b9207660d39c54d31392064",
+    "runs/m6-task-heldout-starts-development-20261003/ho-start-south-1002/encoder-homing/source/cbd2a21cace0429e9278e15ed11360ed/snapshots/initial.snp": "c86fc42d9040c25e31d92029d64e01f0b27a4a946d1464857649be1659f5af86",
+    "runs/m6-task-heldout-starts-development-20261003/ho-start-south-1002/encoder-homing/source/result.json": "3a9f1c60a48856eae5d1b911b40cd7fbcb8a3efc91a188d758a968e28ef20eba",
+    "runs/m6-task-heldout-starts-development-20261003/ho-start-south-1002/encoder-homing/source/supervisor.json": "5cdd81b65848df41b1959e125427af7c5d7f1d09515de71ebc2ea64f3e67bdb0",
+    "runs/m6-task-heldout-starts-development-20261003/ho-start-south-1002/encoder-homing/actions/621218a612954b5d840d47f9d10b2e4d/recording/manifest.json": "818e8c73b046280cacfdce36c44f7c762f331632c6cbded8a54dc6c93d07b7b7",
+    "runs/m6-task-heldout-starts-development-20261003/ho-start-south-1002/encoder-homing/actions/621218a612954b5d840d47f9d10b2e4d/snapshots/initial.snp": "706918e7787e687fae3dcaeba8721fd2acb25c20adf0341ce93947ca8f4c713e",
+    "runs/m6-task-heldout-starts-development-20261003/ho-start-south-1002/encoder-homing/actions/result.json": "57c8553d7c399b986fb67e344fe698a2c9d25a018438179d51501e5caa1468f1",
+    "runs/m6-task-heldout-starts-development-20261003/ho-start-south-1002/encoder-homing/actions/supervisor.json": "a1489697ab8ab42252181232b0d47fe478fa711ff63d9c1ac0257f6dff8c4591",
+    "runs/m6-task-heldout-starts-development-20261003/ho-start-south-1002/encoder-homing/actions/621218a612954b5d840d47f9d10b2e4d/replay-report.json": "4e33d1a322ba81d4615c10d6339b615075c53281ce10f9f895551b56cc40c341",
+    "runs/m6-task-heldout-starts-development-20261003/ho-start-south-1002/encoder-homing/source/rows.json": "b996c4b79248343b9214eec54db81b5d3c593c1a61bedf5e0880ad3e9f6902ce"
+  }
+}
