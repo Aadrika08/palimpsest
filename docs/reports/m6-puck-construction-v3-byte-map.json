@@ -1,0 +1,175 @@
+{
+  "analysis_script": {
+    "bytes": 6218,
+    "path": "runs/m6-puck-construction-v3-prepared/serialization-map.py",
+    "sha256": "ddf2a4dd38fc7b61251ef62c89102f988243c454cfbe4efb7fdd6deb86e110d8"
+  },
+  "audit_sha256": "5675c0533fb7eb74a3b4e6ddc7cf4123dd67b9570eded1b792262b919bdf0b03",
+  "complete_field_map": {
+    "bytes": 26704,
+    "path": "runs/m6-puck-construction-v3-prepared/serialization-map.json",
+    "sha256": "3e4882fd8b8f9f24519b2ce02b29aab65160ebe002747b018febea657552857d"
+  },
+  "different_bytes": 986,
+  "different_fields": [
+    {
+      "bytes": 240,
+      "classification": "diagnostic timer.duration doubles; counts/padding equal",
+      "different_bytes": 70,
+      "end": 280211,
+      "name": "timer",
+      "start": 279971
+    },
+    {
+      "bytes": 3456,
+      "classification": "mjContact trailing C ABI padding; every declared field equal",
+      "different_bytes": 20,
+      "end": 334581,
+      "name": "contact",
+      "start": 331125
+    },
+    {
+      "bytes": 440,
+      "classification": "unused allocation tail after 50 active entries; capacity 110",
+      "different_bytes": 180,
+      "end": 341729,
+      "name": "iM_colind",
+      "start": 341289
+    },
+    {
+      "bytes": 880,
+      "classification": "unused allocation tail after 50 active entries; capacity 110",
+      "different_bytes": 356,
+      "end": 342617,
+      "name": "iM",
+      "start": 341737
+    },
+    {
+      "bytes": 880,
+      "classification": "unused allocation tail after 50 active entries; capacity 110",
+      "different_bytes": 360,
+      "end": 343505,
+      "name": "iLD",
+      "start": 342625
+    }
+  ],
+  "dimensions": {
+    "maxuse_con": 6,
+    "maxuse_efc": 24,
+    "nA": 0,
+    "nC": 110,
+    "nJ": 176,
+    "ncon": 6,
+    "ne": 0,
+    "nefc": 24,
+    "nf": 0,
+    "nidof": 10,
+    "nisland": 1,
+    "ntendon": 0,
+    "nv": 70
+  },
+  "failure_retention_audit": {
+    "bytes": 10082,
+    "path": "runs/m6-puck-construction-v3-prepared/audit.json",
+    "sha256": "5675c0533fb7eb74a3b4e6ddc7cf4123dd67b9570eded1b792262b919bdf0b03"
+  },
+  "framing": {
+    "byte_order": "little",
+    "embedded_model_bytes": 119898,
+    "exact_eof": 347881,
+    "fields": 162,
+    "size_prefix_bytes": 8
+  },
+  "interpretation_limits": [
+    "This does not change the strict failed v3 result or prove future stepping/restore determinism.",
+    "Unused array tail contents are not assigned numerical/physical meaning; this trace proves their location beyond the populated sparse rows, not which prior allocation produced their bytes.",
+    "Padding classification follows pinned declarations and the observed 576-byte x86-64 layout; this is not portable across arbitrary ABI/version.",
+    "Reference source is official MuJoCo tag 3.3.6 with retained hashes, matched to the reported installed runtime version; no rebuilt-library provenance claim."
+  ],
+  "island_sparse_rows": {
+    "active_entries": 50,
+    "allocated_entries": 110,
+    "rowadr": [
+      0,
+      1,
+      3,
+      6,
+      10,
+      15,
+      21,
+      28,
+      35,
+      42
+    ],
+    "rownnz": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      7,
+      7,
+      8
+    ]
+  },
+  "method": "Read-only size-prefixed byte framing and source-declared field ordering; no MuJoCo import, native deserialization, compiler, simulation, or modified native bytes.",
+  "primary_report_sha256": "1469c05864efcd15836ee2d8a6e253e5c51c089dff5272618946ad44089534e4",
+  "qualification_claims": [],
+  "source_commit": "b28ad05b62a4885b3d744450d7c214da35cd4201",
+  "source_index": {
+    "bytes": 2226,
+    "path": "runs/m6-puck-construction-v3-prepared/serialization-source/index.json",
+    "sha256": "317d21e2f07c14937bbb7edde2366f0daa2c47fbb4a6256909992a76f84bc46b"
+  },
+  "status": "source_mapped_all_retained_differing_bytes",
+  "unmapped_differing_bytes": 0,
+  "upstream_sources": {
+    "include/mujoco/mjdata.h": {
+      "bytes": 27364,
+      "sha256": "7ea8b0342f379a351ffd7c8380f891f258e939e67be668f46ec74e02e951d78d",
+      "url": "https://raw.githubusercontent.com/google-deepmind/mujoco/3.3.6/include/mujoco/mjdata.h"
+    },
+    "include/mujoco/mjxmacro.h": {
+      "bytes": 57110,
+      "sha256": "6027d223e214c76e09b7ded09bf4106c71d5557975bc19af36ded3eb253ba2a8",
+      "url": "https://raw.githubusercontent.com/google-deepmind/mujoco/3.3.6/include/mujoco/mjxmacro.h"
+    },
+    "python/mujoco/serialization.h": {
+      "bytes": 2356,
+      "sha256": "71b25ddb1278157e38f0529d28b69f8bac0d5641ff79b3217f87d21bd117f21e",
+      "url": "https://raw.githubusercontent.com/google-deepmind/mujoco/3.3.6/python/mujoco/serialization.h"
+    },
+    "python/mujoco/structs.cc": {
+      "bytes": 45698,
+      "sha256": "1e91c0b0a7dd396b34ec4b51f1014b9fab51af7e8b5ad19932931bba7177a047",
+      "url": "https://raw.githubusercontent.com/google-deepmind/mujoco/3.3.6/python/mujoco/structs.cc"
+    },
+    "python/mujoco/structs_wrappers.cc": {
+      "bytes": 39911,
+      "sha256": "4960456972a997c5c529d5f9ea93f955f7371df750164ec884c16bd0c348eb9b",
+      "url": "https://raw.githubusercontent.com/google-deepmind/mujoco/3.3.6/python/mujoco/structs_wrappers.cc"
+    },
+    "src/engine/engine_core_smooth.c": {
+      "bytes": 70016,
+      "sha256": "53167381dc69f1320def54dca4eada6acd945f2d9a547afb8727b80026eabb80",
+      "url": "https://raw.githubusercontent.com/google-deepmind/mujoco/3.3.6/src/engine/engine_core_smooth.c"
+    },
+    "src/engine/engine_island.c": {
+      "bytes": 17751,
+      "sha256": "b4c56df2dad75524c62f7232c66a6d622fc1e1d712683933220822eb87db9fb0",
+      "url": "https://raw.githubusercontent.com/google-deepmind/mujoco/3.3.6/src/engine/engine_island.c"
+    },
+    "src/engine/engine_memory.c": {
+      "bytes": 12366,
+      "sha256": "edb622669d56cb005baff410f822ea2551dd2891fdffa6dace67c4462f71a009",
+      "url": "https://raw.githubusercontent.com/google-deepmind/mujoco/3.3.6/src/engine/engine_memory.c"
+    },
+    "src/engine/engine_util_sparse.c": {
+      "bytes": 32333,
+      "sha256": "e83238788c3f0edad56046c48f665f54d0c2a6d4c9dcbccb06c349b8a5d41e40",
+      "url": "https://raw.githubusercontent.com/google-deepmind/mujoco/3.3.6/src/engine/engine_util_sparse.c"
+    }
+  }
+}
