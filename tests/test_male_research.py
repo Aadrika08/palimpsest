@@ -163,6 +163,38 @@ class ResearchFixtures(unittest.TestCase):
             with self.assertRaises(ValueError, msg=change):
                 research.passed_development(bad, 'c' * 64, identities)
 
+    def test_unlock_rechecks_hex_run_paths_and_exact_retained_inventory(self):
+        report, identities = development()
+        report_path = self.root / 'evaluation.json'
+        manifest_path = self.root / 'research-manifest.json'
+        for row in report['runs']:
+            run = self.root / 'runs' / row['run_id']
+            (run / 'recording').mkdir(parents=True)
+            row.update(final_phase='terminated', last_outcome={'reason': row['outcome']})
+            manifest = {'status': 'completed', 'recording_format': 'palimpsest-npz-v1', 'run_id': row['run_id'], 'recorded_ticks': row['ticks'],
+                'policy_identity': row['model_identity'], 'seed': row['seed'], 'final_phase': row['final_phase'],
+                'last_outcome': row['last_outcome'],
+                'research': research.Binding(manifest_path, 'c' * 64, row['training_seed']).provenance()}
+            payload = json.dumps(manifest).encode()
+            (run / 'recording/manifest.json').write_bytes(payload)
+            row['files'] = [{'path': 'recording/manifest.json', 'size_bytes': len(payload), 'sha256': research.sha(payload)}]
+        payload = json.dumps(report).encode()
+        report_path.write_bytes(payload)
+        def resolve(root, assets, path, sha, seed, controller):
+            return identities[f'{seed}:{controller}'], {}
+        with patch.object(research, 'resolve', side_effect=resolve):
+            receipt = research.unlock(ROOT, self.root, manifest_path, 'c' * 64, report_path, research.sha(payload))
+            self.assertEqual(receipt['status'], 'held_out_unlocked')
+            extra = self.root / 'runs' / report['runs'][0]['run_id'] / 'recording/undeclared.json'
+            extra.write_text('{}')
+            with self.assertRaisesRegex(ValueError, 'inventory'):
+                research.unlock(ROOT, self.root, manifest_path, 'c' * 64, report_path, research.sha(payload))
+            extra.unlink()
+            changed = extra.with_name('manifest.json')
+            changed.write_bytes(changed.read_bytes() + b' ')
+            with self.assertRaisesRegex(ValueError, 'artifact changed'):
+                research.unlock(ROOT, self.root, manifest_path, 'c' * 64, report_path, research.sha(payload))
+
     def test_heldout_routes_stop_before_source_reads_output_or_owner(self):
         args = SimpleNamespace(repo=ROOT, assets=self.root, output=self.root / 'unopened', research_stage='held_out',
             research_manifest=self.root / 'missing.json', research_manifest_sha256='a' * 64,

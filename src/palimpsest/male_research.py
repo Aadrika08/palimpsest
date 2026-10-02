@@ -233,7 +233,7 @@ def unlock(root, assets, manifest_path, manifest_sha256, development_path, devel
     goals = passed_development(report, manifest_sha256, identities)
     directory = artifacts._safe_path(development_path).parent
     for row in report['runs']:
-        run = directory / 'runs' / str(artifacts._id(row['run_id']))
+        run = directory / 'runs' / artifacts._id(row['run_id']).hex
         manifest = artifacts._manifest(run)
         outcome = manifest.get('last_outcome')
         reason = outcome.get('reason') if isinstance(outcome, dict) else 'evaluation_tick_cap'
