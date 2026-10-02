@@ -3,10 +3,12 @@
 This slice connects the M6 pure mechanisms to the existing single-owner Engine,
 application snapshots, worker samples, replay comparison and recorded playback.
 It adds no body-gain runtime, puck controller, new dependencies or UI framework.
-Both profiles remain development profiles. Task completion, held-out behavior,
-wheel-direction calibration, true stopping and complete executable replay remain
-unqualified. The limited actual browser/native branch observation below does
-not establish those outcomes.
+Both profiles remain development profiles. The bounded manual development gate
+observed declared exploration completion, shaft/forward direction and executable
+replay, but **actual homing failed**: estimated arrival was 0.0898 m while the robot
+remained 1.5006 m from its true start. True stopping, held-out behavior and learned
+competence remain unqualified. The raw verifier's `passed` label is its declared
+estimated-state/mechanism gate, not true home closure or M6 release.
 
 ## Declared sensor/objective contracts
 
@@ -56,8 +58,9 @@ Y=+0.18/-0.18, with equal radius 0.06 m cylinders. The adapter reads radius and
 track from the loaded body, checking cylinder/hinge types, unrotated symmetric
 wheel bodies and the supported axes rather than substituting those values.
 With body +X forward, positive +Y shaft rotation implies forward travel under
-no-slip kinematics. This source-grounded sign convention still needs a measured
-runtime direction/calibration trial. The adapter never reads base qpos as an
+no-slip kinematics. The development fixture observed positive shaft and body
+forward direction on straight intervals; its high-amplitude turn odometry failed
+to match actual yaw. Broader calibration remains pending. The adapter never reads base qpos as an
 encoder. It intentionally rejects unsupported body configurations.
 
 The declared simulated encoder quantum is 0.001 rad; it emulates quantization,
@@ -91,8 +94,9 @@ Authoritative `task_sensed`, `task_decision`, `task_cue` and `task_inspected` ev
 are compared in executable replay. Runtime provenance includes both new task
 modules. Worker displays hide raw upstream bearing before the next owned task
 tick; playback returns the retained task state from that tick's recorded event.
-The actual replay runner has not been executed for these profiles. Mocked checks
-exercise its tick/event comparators and both inference/override paths.
+Both actual manual development sources were replayed in actions and policy modes
+with matching recorded ticks/task events. This does not qualify a learned policy.
+Mocked checks separately exercise comparators and inference/override paths.
 
 Run the focused pure/mock checks:
 
@@ -103,16 +107,13 @@ PYTHONPATH=src:tests ../lab-hardening/.venv/bin/python -m unittest \
   test_worker.ReplayTransport test_replay.ReplayValidation
 ```
 
-The pinned upstream checkout is now initialized locally. Pending actual gate:
-verify source/model identities; measure wheel
-signs, quantum and dimensions; run both profiles with retained sensor/control
-packets; pause during target approach/dwell and both homing phases; capture native
-snapshots; continue original/restored runs; execute full actions/policy replay;
-measure actual home closure versus estimate and dwell motion; then evaluate
-held-out layouts/paths with explicit success/failure criteria. Use the existing
-isolated runtime watchdog and quota controls. No model downloads, environment
-changes or runtime jobs were performed by this slice. Learned competence and M6
-release remain open even if manual or synthetic checks pass.
+The pinned upstream checkout is initialized locally. The actual development gate
+below retained both sources, one progress snapshot per task, native continuation,
+full manual actions/policy replay and evaluator measurements. Pending gates are
+independent turning calibration, actual home closure, snapshots during target
+dwell and both homing phases, and held-out layouts/paths with explicit criteria.
+Use the existing isolated runtime watchdog and quota controls. Learned competence
+and M6 release remain open.
 
 Root review on 2 October 2026 ran 70 checks in 1.319 seconds: 65 passed and five
 asset-backed checks were skipped. The source remained unchanged. The retained
@@ -121,7 +122,7 @@ index is `runs/m6-runtime-pure-20261002/report.json`, SHA-256
 This is fixture/runtime-contract evidence only; actual gates above remain open.
 
 
-## Prepared actual manual development gate
+## Actual manual development gate
 
 [`scripts/verify_tasks.py`](../../scripts/verify_tasks.py) prepares two bounded,
 sequential manual task demonstrations. Its fixed driver receives only the
@@ -139,8 +140,9 @@ fresh restored process repeats those commands and compares all recorded tick
 fields except wall latency with the existing exact camera/integer and
 `atol=rtol=1e-6` float profile, plus complete task JSON state. Action and policy
 replay each start from the registered initial source snapshot; source hashes
-must remain unchanged. A functional pass requires actual `task_completed`, not
-an operator stop, truncation or a selected target. Each child has a hard watchdog
+must remain unchanged. Its declared mechanism pass requires `task_completed`, not
+an operator stop, truncation or a selected target. That event is based on declared
+estimated-state thresholds and cannot qualify true home closure. Each child has a hard watchdog
 and recording byte quota, bounded native logs and explicit cleanup; outputs are
 exclusive and failed outcomes remain retained.
 
@@ -151,7 +153,7 @@ the cue or command. Quantized apparent rest can coexist with body motion;
 commanded zero and estimated home arrival do not establish physical stopping
 or true home closure. One progress snapshot does not cover target dwell or both
 homing phases; those snapshots, additional layouts and held-out gates remain
-pending even if this development fixture later passes.
+pending despite the observed development mechanism/replay checks.
 
 Run only after the actual runtime slot is released, using a fresh output:
 
@@ -168,8 +170,24 @@ criteria, exact-image/fixed-float comparison and signed evaluator evidence.
 A seventh check exercises the real Engine with SmallEnv fixture physics: action
 application does not step; the idempotent receipt lookup and step helper produce
 exactly one nonzero-action transition. This is helper-contract coverage, not a
-physics proof. Syntax/help checks are separate from actual physics. The verifier has not been
-executed on MuJoCo by this slice; no task-success result is claimed.
+physics proof. Syntax/help checks are separate from actual physics.
+
+The single actual invocation at unchanged `05d788b` ran eight sequential owners
+in 101.513572 seconds, exit 0. Exploration completed both declared inspections in
+182 ticks. Homing completed its estimated arrival/dwell condition in 197 ticks,
+but true home distance was 1.5006287 m versus estimated 0.0897618 m. Both paused
+tick-8 snapshots matched four continuation ticks, and both full actions/policy
+replays passed. All eight owners exited 0 and recording manifests completed;
+sources/script stayed unchanged, with no semaphore warning or remaining scoped
+worker command line observed. Cleanup does not include persisted PID/start-time
+identities. See the [development evidence and next-step proposal](../reports/m6-task-development.md)
+and [hashed index](../reports/m6-task-development.json). No retry or tuning was run.
+
+The read-only audit exactly reproduced all 197 homing odometry states from raw
+recorded angles. High-amplitude turns predicted −3.028027 rad cumulative yaw
+against actual −1.565932 rad, with agreeing turn signs. Specific slip/contact
+causality is unproven; independent low-amplitude calibration is proposed before
+another demonstration. Actual homing remains failed and M6 remains open.
 
 ## Limited actual browser observation
 
