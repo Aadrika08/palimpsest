@@ -1,0 +1,155 @@
+{
+  "base_commit": "c167421c3049aa7442bfaa09508e000ac1058d2c",
+  "closed_loop_scene_seeds": {
+    "dev": [
+      1100,
+      1101,
+      1102,
+      1103
+    ],
+    "held_out": [
+      1200,
+      1201,
+      1202,
+      1203,
+      1204,
+      1205,
+      1206,
+      1207
+    ]
+  },
+  "collection_limits": {
+    "development_seconds": 1200,
+    "held_out_seconds": 480,
+    "outer_grace_seconds": 60,
+    "owner_seconds": 180,
+    "progress_seconds": 30,
+    "startup_seconds": 60
+  },
+  "control_interval_seconds": 0.02,
+  "dev_goals_required_per_original_seed": 2,
+  "dev_owner_count": 24,
+  "dev_scenes_per_model": 4,
+  "device": "cpu",
+  "dtype": "float32",
+  "episodes_per_run": 1,
+  "epochs": 20,
+  "evaluation_limits": {
+    "dev_bytes": 4294967296,
+    "dev_outer_seconds": 1860,
+    "dev_seconds": 1800,
+    "held_out_bytes": 8589934592,
+    "held_out_outer_seconds": 3660,
+    "held_out_recorded_outer_seconds": 180,
+    "held_out_recorded_seconds": 120,
+    "held_out_seconds": 3600,
+    "owner_seconds": 180,
+    "progress_seconds": 30,
+    "run_bytes": 167772160,
+    "startup_seconds": 60
+  },
+  "external_kill_grace_seconds": 15,
+  "gradient_norm_cap": 1.0,
+  "held_out_owner_count": 48,
+  "held_out_scenes_per_model": 8,
+  "held_out_unlock": "all six checkpoints frozen; all 24 dev owners completed without infrastructure failure; each original training seed has at least 2 goals among its 4 fixed dev scenes",
+  "held_out_use": "collect four held-out teacher runs only after unlock; evaluate all six models once on those records and all eight fresh closed-loop scenes; no refitting, model selection or replacement",
+  "hidden_state": "zero at episode start; carry and detach at each 32-tick training-window boundary",
+  "id": "male-reduced-longer-demonstrations-v2",
+  "interface": "unchanged artificial 388-feature encoder and upstream cell/readout; fixed recurrent positive-count weights; no privileged student inputs",
+  "learning_rate": 0.001,
+  "log_bytes_each": 1048576,
+  "loss": "mean(0.5*((velocity_error/3)^2 + 1-cos(heading_error_radians)))",
+  "max_ticks_per_run": 600,
+  "min_free_bytes": 1073741824,
+  "minimum_training_ticks_per_run": 32,
+  "model_pairs": [
+    {
+      "rewiring_seed": 10,
+      "training_seed": 10
+    },
+    {
+      "rewiring_seed": 11,
+      "training_seed": 11
+    },
+    {
+      "rewiring_seed": 12,
+      "training_seed": 12
+    }
+  ],
+  "natural_endings": [
+    "goal",
+    "collision",
+    "stalled",
+    "time_limit"
+  ],
+  "optimizer": "Adam",
+  "order": "increasing declared scene seed, episode 0, increasing tick; identical across all six models",
+  "production_asset_pins_unchanged": true,
+  "qualification_claims": [],
+  "replacement_scene_count": 0,
+  "report_bytes": 4194304,
+  "report_policy": "report all six models, paired per-scene outcomes, every seed and failure; scenes/model seeds are experimental units, not ticks",
+  "reset_count": 0,
+  "retry_count": 0,
+  "rewiring": "existing degree-preserving swaps, count and weight multiset; declared seed only, no reachability screening/retries",
+  "scenario": "reproduction",
+  "scope": "bounded research preparation and candidate development; no topology advantage, biology, generalization or R3 completion claim",
+  "selection": "minimum recorded-dev loss over exactly 20 epochs; first epoch wins exact ties; no winning seed or held-out selection",
+  "source_limits": {
+    "max_bytes": 3221225472,
+    "max_run_bytes": 167772160,
+    "max_runs": 16,
+    "max_ticks": 9600
+  },
+  "stop_policy": "first infrastructure/data/source/finite/budget error stops stage; retain all planned rows and not_started rows; failed dev gate leaves both held-out stages unopened",
+  "teacher_collection_stages": {
+    "development": [
+      "train",
+      "dev"
+    ],
+    "held_out": [
+      "held_out"
+    ]
+  },
+  "teacher_scene_seeds": {
+    "dev": [
+      1008,
+      1009,
+      1010,
+      1011
+    ],
+    "held_out": [
+      1012,
+      1013,
+      1014,
+      1015
+    ],
+    "train": [
+      1000,
+      1001,
+      1002,
+      1003,
+      1004,
+      1005,
+      1006,
+      1007
+    ]
+  },
+  "texture": "checker",
+  "threads": 1,
+  "training_graph": "unchanged pinned 138-node 1647-edge extraction; W[post,pre]; original incoming-strength scalar shared with matched control",
+  "training_limits": {
+    "all_pair_output_bytes": 201326592,
+    "file_bytes": 8388608,
+    "pair_outer_seconds": 660,
+    "pair_output_bytes": 67108864,
+    "pair_seconds": 600
+  },
+  "variants": [
+    "original",
+    "degree_rewired"
+  ],
+  "version": 2,
+  "window": 32
+}
