@@ -15,7 +15,7 @@ Pacing uses fixed 20 ms simulation ticks and deadlines including computation, wi
 
 ## Release checks
 
-Evidence: [requirements matrix](../requirements-evidence.md), [M3 report/index](../reports/m3-release-hardening.md), and [operating runbook](../reports/lab-hardening-runbook.md). The fresh mixed gate passed on unchanged `c43f5df` in 3600.000099 seconds under `runs/m3-endurance-hour-20261002b`. Checked items below describe scoped operational evidence; documentation publication/final R1 review remains pending.
+Evidence: [requirements matrix](../requirements-evidence.md), [M3 report/index](../reports/m3-release-hardening.md), and [operating runbook](../reports/lab-hardening-runbook.md). The fresh mixed gate passed on unchanged `c43f5df` in 3600.000099 seconds under `runs/m3-endurance-hour-20261002b`. Checked items below describe scoped operational evidence; final R1 review is complete under PRD §21.3, retaining documented limitations.
 
 - [x] All lifecycle, allowlist, interruption, full-state recovery, replay and export checks pass with actual EGL enabled.
 - [x] Aggregate storage/free-space/count bounds and native/Python log caps stop explicitly before exceeding their configured budget; recovery preserves the published prefix.
@@ -25,7 +25,7 @@ Evidence: [requirements matrix](../requirements-evidence.md), [M3 report/index](
 - [x] Recorded-source `ec1d2e6` browser receipt p95 is 43.4 ms (<150 ms), application p95 separately 53.8 ms. Full-window display updates measure 27.9809 Hz; the 30 Hz target is explicitly unmet, not checked as a pass.
 - [x] Overlay changes cannot mutate policy inputs; controls remain accessible by keyboard and usable at narrow widths.
 - [x] Frozen-runtime 60-minute mixed gate passes all eight declared gates:29 complete cycles (manual 10/teacher 10/Flynn 9),58 passed executable replays,116 closed/completed supervisor/job dispositions, one sampled owner, resource/growth bounds and orderly server SIGTERM. Finite sampling and per-owner exit-code recording limits remain explicit; original failed hour/close reports are retained.
-- [x] Requirements-to-evidence matrix, linked setup/recovery/retention instructions and licence/provenance limits are prepared and cross-checked; release status explicitly remains incomplete.
-- [ ] Commit/publish the prepared documentation and terminal release-status review after this terminal evidence review. Draft PR #4 already exists as the stack above PR #3; push as Aadrika08, do not merge automatically.
+- [x] Requirements-to-evidence matrix, linked setup/recovery/retention instructions and licence/provenance limits are prepared and cross-checked; release status retains the documented limits.
+- [x] Publish the reviewed documentation and terminal release-status assessment with this change. Draft PR #4 already exists as the stack above PR #3; push as Aadrika08, do not merge automatically.
 
 M3 has retained short full-model CPU smoke, cached offline and browser observations on their recorded sources, plus current natural throughput and two normal full-model close passes. The fresh 60-minute mixed gate has now passed; it does not represent continuous inference or qualify browser 30 Hz/full-FLYNN real-time behavior. No hardware, memory-learning or original-training-lineage qualification follows. Keep raw results and measured source identities; do not rewrite prior evidence after source changes.

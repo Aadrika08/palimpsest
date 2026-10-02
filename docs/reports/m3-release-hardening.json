@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "milestone": "M3 / R1 hardening",
-  "status": "operational_gates_passed_publication_pending",
-  "r1_qualified": false,
+  "status": "complete_with_documented_limits",
+  "r1_qualified": true,
   "as_of_date": "2026-10-02",
   "as_of_head": "c43f5dfb38b0cef0084a1458940aa6ada9f206a9",
   "source": {
@@ -1339,10 +1339,16 @@
       },
       "limits": [
         "3600 seconds mixed operation/loading/paused workload; only 809 recorded ticks/16.18 simulated seconds across sources, branches and replays.",
-        "Full Flynn CPU 173 inference ticks versus 82 inference-bypassing action replay ticks; no ≥1 full-Flynn or continuous inference qualification.",
+        "Full Flynn CPU 173 inference ticks versus 82 inference-bypassing action replay ticks; no \u22651 full-Flynn or continuous inference qualification.",
         "Finite resource sampling, not a universal no-growth/process-liveness proof.",
         "Historical browser/offline tests retain their measured source identities; display 27.9809 Hz remains below 30 Hz."
       ]
+    },
+    "independent_terminal_audit": {
+      "path": "runs/m3-hour-audit-20261002/verification.json",
+      "sha256": "ed73782c5a9faf72707a63705efaddd9ba5debfd30d3cf714602703f93f41676",
+      "size_bytes": 162194,
+      "scope": "Independent read-only terminal recording/replay/resource/source/process validation; verifier process exit0 observed by root."
     }
   },
   "earlier_performance": [
@@ -1647,10 +1653,7 @@
     "control_interval_seconds": 0.02,
     "cuda_repeatability": "Unqualified; retained M1 upstream sparse-CSR variation/strict-continuation failure."
   },
-  "pending": [
-    "Commit/publish prepared M3 requirements matrix, setup/recovery/retention/licence limits and terminal release-status review; operational gates now pass under the existing scoped contract.",
-    "Keep measured27.9809Hz display target unmet, CUDA continuation failure, historical source scopes and all prior failures visible."
-  ],
+  "pending": [],
   "limits": [
     "This index hashes small reports and runtime files only; it does not rescan large recordings or model assets.",
     "Raw runs are ignored local artifacts; source reports retain their original identities and failed outcomes.",
@@ -1684,6 +1687,7 @@
     "pause_seconds": 15,
     "OMP_NUM_THREADS": "2",
     "MUJOCO_GL": "egl",
-    "scope": "Terminal measured mixed API workload; no continuous-inference/browser-performance claim. Documentation publication remains pending."
-  }
+    "scope": "Terminal measured mixed API workload; no continuous-inference/browser-performance claim."
+  },
+  "qualification_scope": "PRD21.3 R1 definition of done and reviewed M3 contract on the recorded CPU Linux profile; 30Hz target remains unmet, historical source scopes remain explicit, no later-release qualification."
 }
