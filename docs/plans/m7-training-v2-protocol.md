@@ -127,3 +127,90 @@ optimizer settings, stopping rules and resource budgets did not change. This is
 a transparent pre-execution clarification of the first protocol commit `38a704c`,
 whose JSON SHA256 was `25327bf82871d7b5453ab63d0a62341d5f545d5dcd747ce620a003eb24d28210`.
 The clarified JSON SHA256 is `8f360289ce286f56e31051c7bcfc6932a8f413dce662b83ddb9817b3e509d69b`.
+
+## Implementation and launch contract
+
+The existing collector accepts `--research-stage development` or `held_out` with
+this exact JSON. Stage A collects only twelve scenes. The existing trainer accepts
+`--research-v2 --training-seed 10` (then 11 and 12) and no `--held-out` argument.
+Its validated source lists must follow increasing declared seed order. Use three
+exclusive sibling outputs named `seed-10`, `seed-11`, `seed-12`. Each pair retains
+both model statuses on failure; the retained ordered parent launcher must list all
+six models before starting, stop on the first failed pair, and leave subsequent
+models `not_started`. No automatic loop in the product selects, replaces or retries
+models. The unchanged one-pair trainer remains the unit of supervision.
+
+After all three complete, `scripts/male_research.py publish` exclusively writes a
+research manifest alongside those directories. Publication and resolution require
+all pairs to bind identical teacher collection and training-source hashes. Each
+pair is checked against its exact declared rewiring seed, twenty epoch history,
+earliest minimum-dev checkpoint rule, source checks and unopened held-out status.
+The standard production resolver still rejects these research bundles.
+
+The existing evaluator accepts `--research-stage dev` or `held_out`, explicit
+`--research-manifest PATH --research-manifest-sha256 SHA`, and uses the reviewed
+Python-only `Binding`. The worker admits fresh CPU/reproduction/checker root runs
+only. It rejects replay, native branches and interventions. Research provenance is
+in the manifest and policy-loaded event before the initial snapshot. Initial
+physical state, environment identity/RNG and exact declared inputs must match
+across all six models for a scene before each later owner moves. There are no new
+REST/UI flags, registries, arbitrary controller IDs or production asset pins.
+
+Held-out collection, recorded evaluation and closed-loop evaluation additionally
+require `--development-report PATH --development-sha256 SHA`. The admission code
+checks every planned dev owner, all twelve matched pairs, each original seed's
+2/4 threshold, exact model identities, successful cleanup/source checks and the
+complete retained recording/snapshot inventories and hashes. Failed admission
+occurs before any held-out source read or owner construction. Recorded held-out
+metrics use `scripts/male_research.py held-out-recorded` with four ordered
+`--held-out PATH` arguments and a new output directory; they never alter bundles.
+
+Run commands with the locked shared interpreter, `PYTHONPATH=src:tests`, pinned
+upstream source and the existing combined read-only asset root. The first actual
+collection command, after regression/source review and explicit Stage A release,
+is:
+
+```sh
+python scripts/collect_male_teachers.py \
+  --repo . --assets ../project-integration/data/assets/flynn \
+  --protocol docs/plans/m7-training-v2-protocol.json \
+  --research-stage development --output runs/m7-v2-teachers-development
+```
+
+This is the child command, not an unsupervised launch instruction. Retain each
+launch's exact command/environment, source/asset hashes, stdout/stderr and
+`bounded_process` result. Wrap the child with GNU `timeout --signal=TERM
+--kill-after=15s LIMITs`; supervise that command with `bounded_process` at
+`LIMIT+20` seconds so its existing three-second emergency cleanup does not shorten
+the declared fifteen-second grace. LIMIT is 1260 for Stage A, 660 per training
+pair, 1860 for dev, 540 for held-out collection, 180 for recorded held-out, and
+3660 for final rollouts. Log caps stay 1 MiB per stream. Parent launch logs require
+a separate bounded allowance; no model or source quota is relaxed. At every
+stage boundary retain failed artifacts and stop for review. This document grants
+no actual runtime slot and no permission to open held-out stages early.
+
+## Timing basis and uncertainty
+
+The retained v1 watchdog measured **23.33608936699602 seconds** for the complete
+paired training command, including source preparation/imports, both five-epoch
+fits, checkpoint writes and final recorded-input evaluation. Its supervisor JSON
+SHA256 is `7df03f23f3533bcd884584534cf8d2627480feb09f56d3323ac4672b32de2e1b`;
+the completed training report SHA256 is
+`594d4d330624ed1040ae2b3ffe2dedfbfacd6a2d360a29dcfcc6584d76b80e28`.
+Those retained files are in the original `malecns-pilot/runs/` worktree under
+`m7-training-watchdog-20261002/` and `m7-male-training-pilot-v1/`.
+
+Each old variant processed 1,200 train and 600 dev ticks in each of five epochs:
+18,000 tick-forwards across both fits, plus 1,200 final recorded-held-out forwards.
+The new per-pair maximum is `2 × 20 × (4,800 + 2,400) = 288,000` epoch
+tick-forwards. Scaling the whole old wall duration by 288,000/19,200 yields
+350.04 seconds; scaling it by the epoch-only ratio 288,000/18,000 yields 373.38
+seconds. Three pairs therefore suggest roughly 17.5–18.7 minutes under simple
+linear scaling. The earlier rough eighteen-minute estimate used this scale.
+
+These are estimates, not measured v2 throughput or a probabilistic upper bound.
+The old run did not retain isolated fit/epoch timings or peak RSS. Backpropagation,
+window tails, startup/I/O, graph realizations and machine load need not scale
+linearly; natural shorter episodes may reduce work. **The frozen 600-second inner
+and 660-second outer per-pair deadlines stay unchanged.** A timeout is retained as
+a failure and stops the pilot, without a mid-run extension or replacement.

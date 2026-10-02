@@ -278,7 +278,7 @@ def _snapshot(engine, path, registry, config, initial=False, budget=None, prefli
     return identifier
 
 
-def run_worker(config, commands, replies, display, disconnected, stop, progress):
+def run_worker(config, commands, replies, display, disconnected, stop, progress, *, engine_factory=None):
     """All Engine calls, GL contexts and tensors stay in this process/thread."""
     os.setsid()
     os.environ.setdefault("MUJOCO_GL", "egl")
@@ -301,7 +301,7 @@ def run_worker(config, commands, replies, display, disconnected, stop, progress)
             os.dup2(stderr.fileno(), 2)
             with os.fdopen(os.dup(1), "w", buffering=1) as out, os.fdopen(os.dup(2), "w", buffering=1) as err:
                 with contextlib.redirect_stdout(out), contextlib.redirect_stderr(err):
-                    _own(config, commands, replies, display, disconnected, stop, progress, final_messages)
+                    _own(config, commands, replies, display, disconnected, stop, progress, final_messages, engine_factory=engine_factory)
         finally:
             for target, original in zip((1, 2), saved):
                 os.dup2(original, target)
@@ -319,7 +319,7 @@ def run_worker(config, commands, replies, display, disconnected, stop, progress)
     os._exit(0)
 
 
-def _own(config, commands, replies, display, disconnected, stop, progress, final_messages=None):
+def _own(config, commands, replies, display, disconnected, stop, progress, final_messages=None, *, engine_factory=None):
     from .storage import StorageBudget, StorageLimits, StorageLimitError
     storage = config.get("storage")
     budget = StorageBudget(tuple(Path(p) for p in storage["roots"]), StorageLimits(**storage["limits"]),
@@ -346,7 +346,7 @@ def _own(config, commands, replies, display, disconnected, stop, progress, final
             replay_transport.finish(report)
             return
         from .engine import Engine
-        engine = Engine.open(Path(config["repo_root"]), Path(config["asset_root"]), path / "recording",
+        engine = (Engine.open if engine_factory is None else engine_factory)(Path(config["repo_root"]), Path(config["asset_root"]), path / "recording",
             controller=config["controller"], device=config["device"], seed=config["seed"],
             scenario=config["scenario"], texture=config["texture"], run_id=run_id, storage_budget=budget,
             expected_policy_identity=config.get('policy_identity'))

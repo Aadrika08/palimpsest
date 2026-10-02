@@ -148,7 +148,7 @@ class Engine:
     @classmethod
     def open(cls, repo_root, asset_root, output, controller="manual", device="cpu", seed=0,
              max_bytes=2 * 1024**3, scenario="reproduction", texture="checker", run_id=None,
-             storage_budget=None, memory_case=None, expected_policy_identity=None):
+             storage_budget=None, memory_case=None, expected_policy_identity=None, *, research_binding=None):
         """Create an actual pinned runtime. The caller owns its process watchdog."""
         from .assets import load_manifest, prepare_graph, sha256_file, verify_assets
         from .doctor import diagnose
@@ -171,7 +171,14 @@ class Engine:
                 'acquisition_protocol_sha256': memory_case['acquisition_protocol_sha256']}
         run_id = uuid.uuid4().hex if run_id is None else uuid.UUID(run_id).hex
         root, assets = Path(repo_root).resolve(), Path(asset_root).resolve()
-        if controller in MALE_CONTROLLERS:
+        research_manifest = {}
+        if research_binding is not None:
+            from .male_research import Binding
+            if type(research_binding) is not Binding or controller not in MALE_CONTROLLERS or memory_case is not None:
+                raise ValueError('unsupported trusted research binding')
+            identity, research_arguments = research_binding.resolve(root, assets, controller, device, scenario, texture, expected_policy_identity)
+            research_manifest = {'research': research_binding.provenance()}
+        elif controller in MALE_CONTROLLERS:
             from .male_policy import resolve_profile
             identity, _ = resolve_profile(root, assets, controller, expected_policy_identity)
         os.environ.setdefault("MUJOCO_GL", "egl")
@@ -190,7 +197,7 @@ class Engine:
                 "integer_and_camera_exact": True,
                 "scope": "matching software/hardware regime; compare before claiming repeatability",
                 "cuda_limit": "upstream CSR inference can vary even with identical inputs and deterministic algorithms enabled"},
-            **case_manifest,
+            **case_manifest, **research_manifest,
         }, max_bytes=max_bytes, storage_budget=storage_budget)
         env = None
         try:
@@ -224,7 +231,13 @@ class Engine:
                 teacher = reference.PlannerAnalyticTeacher(arena_half_extent=env.arena, device="cpu")
             elif controller in MALE_CONTROLLERS:
                 from .male_policy import load_pinned_policy
-                policy = load_pinned_policy(root, assets, controller, seed, identity)
+                if research_binding is None:
+                    policy = load_pinned_policy(root, assets, controller, seed, identity)
+                else:
+                    from .male_policy import load_policy as load_research_policy
+                    policy = load_research_policy(**research_arguments, seed=seed)
+                    policy.provenance.update(policy_identity=identity, model_manifest_sha256=identity['model_manifest_sha256'],
+                                             research=research_binding.provenance())
                 writer.manifest['policy_identity'] = policy.provenance['policy_identity']
                 writer.event('policy_loaded', run_id=writer.manifest['run_id'], provenance=policy.provenance)
             writer.event("environment", run_id=writer.manifest["run_id"], upstream_commit=load_manifest(root)["upstream_commit"],

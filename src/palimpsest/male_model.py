@@ -170,9 +170,20 @@ def features(row):
     return np.concatenate([*images, sensor.astype(np.float32) / np.array([1, math.pi, 1, 1], dtype=np.float32)])
 
 
-def prepare_splits(paths):
+def prepare_splits(paths, *, research_stage=None):
     import numpy as np
-    if set(paths) != {'train', 'dev', 'held_out'} or any(not isinstance(value, list) or not value for value in paths.values()):
+    run_limit, byte_limit, tick_limit = MAX_RUN_BYTES, MAX_SOURCE_BYTES, MAX_TICKS
+    required = ('train', 'dev', 'held_out')
+    if research_stage is not None:
+        from .male_research import protocol
+        p = protocol()
+        if research_stage not in p['teacher_collection_stages']:
+            raise ValueError('unknown research collection stage')
+        required = p['teacher_collection_stages'][research_stage]
+        if any(paths.get(key) for key in ('train', 'dev', 'held_out') if key not in required):
+            raise ValueError('held-out stage boundary violated before reading sources')
+        run_limit, byte_limit, tick_limit = (p['source_limits'][key] for key in ('max_run_bytes', 'max_bytes', 'max_ticks'))
+    if set(paths) != {'train', 'dev', 'held_out'} or any(not isinstance(value, list) or (key in required and not value) for key, value in paths.items()):
         raise ValueError('explicit nonempty train/dev/held_out run lists are required')
     if sum(map(len, paths.values())) > MAX_RUNS:
         raise ValueError('teacher run count exceeds limit')
@@ -212,11 +223,11 @@ def prepare_splits(paths):
                     snapshot_paths.append(snapshot)
             snapshot_fingerprint = artifacts._fingerprint(snapshot_paths)
             run_bytes = sum(item[2] for item in (*before, *snapshot_fingerprint))
-            if run_bytes > MAX_RUN_BYTES:
-                raise ValueError('teacher recording and snapshots exceed 32 MiB')
+            if run_bytes > run_limit:
+                raise ValueError('teacher recording and snapshots exceed the stage byte limit')
             report['total_source_bytes'] += run_bytes
             count = manifest.get('recorded_ticks')
-            if type(count) is not int or count < 1 or report['total_ticks'] + count > MAX_TICKS or report['total_source_bytes'] > MAX_SOURCE_BYTES:
+            if type(count) is not int or count < 1 or report['total_ticks'] + count > tick_limit or report['total_source_bytes'] > byte_limit:
                 raise ValueError('teacher recording duration/byte budget exceeded or recording incomplete')
             data = artifacts._load(run)
             if data['fingerprint'] != before:
@@ -285,6 +296,9 @@ def prepare_splits(paths):
                 'episodes': [{'episode': item['episode'], 'seed': starts[item['episode']], 'ticks': len(item['features'])} for item in episodes.values()]})
             report['total_ticks'] += count
     check_sources(report)
+    if research_stage is not None:
+        from .male_research import validate_collection
+        validate_collection(report, research_stage)
     return result, report
 
 
