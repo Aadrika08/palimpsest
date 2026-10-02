@@ -43,8 +43,8 @@ test('actual calibrated body manual controls, snapshot, reset and action replay'
     for (const [label, value] of [['Controller', 'manual'], ['Inference device', 'cpu'], ['Texture', 'checker']]) {
       await expect(page.getByLabel(label, {exact: true})).toHaveValue(value);
     }
-    await expect(page.getByLabel('Controller', {exact: true}).locator('option[value="teacher"]')).toBeDisabled();
-    await expect(page.getByLabel('Inference device', {exact: true}).locator('option[value="cuda"]')).toBeDisabled();
+    await expect(page.getByLabel('Controller', {exact: true}).locator('option[value="teacher"]')).toHaveJSProperty('disabled', true);
+    await expect(page.getByLabel('Inference device', {exact: true}).locator('option[value="cuda"]')).toHaveJSProperty('disabled', true);
     await page.getByLabel('Seed', {exact: true}).fill('1');
     const creating = page.waitForResponse(response => response.url().endsWith('/api/v1/runs') && response.request().method() === 'POST');
     await page.getByRole('button', {name: 'Create run', exact: true}).click();
@@ -73,7 +73,7 @@ test('actual calibrated body manual controls, snapshot, reset and action replay'
     await page.getByRole('button', {name: 'Capture snapshot', exact: true}).click();
     const captured = await capturing; expect(captured.status()).toBe(200); report.snapshot_id = (await captured.json()).snapshot_id;
     await expect(page.getByLabel('Snapshot', {exact: true})).toHaveValue(report.snapshot_id);
-    await expect(page.getByLabel('Branch controller', {exact: true}).locator('option[value="teacher"]')).toBeDisabled();
+    await expect(page.getByLabel('Branch controller', {exact: true}).locator('option[value="teacher"]')).toHaveJSProperty('disabled', true);
     await page.getByRole('button', {name: 'Reset', exact: true}).click();
     await expect.poll(async () => (await get(`/runs/${source}`)).state.episode).toBe(1);
     const reset = await get(`/runs/${source}`); expect(reset.state.total_tick).toBe(paused.state.total_tick); expect(reset.state.body).toMatchObject({phase: 'loaded', last_tick: null, previous_angles_rad: [0, 0], time_s: 0});
