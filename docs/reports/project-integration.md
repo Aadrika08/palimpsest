@@ -92,3 +92,10 @@ At `f4addb3`, the separate fixed-CPU-FLYNN memory verifier is integrated. All
 in 7.795 seconds. This is fixture validation; the 12-stage neural run has not
 yet executed. Both CI workflows pass on the preceding `00999c1`; CI for this
 new verifier is tracked separately.
+
+At `81dd5f2`, the 12-owner adaptive calibration verifier is integrated. All
+73 focused calibration, Engine, replay, memory-admission and male research checks
+pass without skips in 21.007 seconds. The replay merge preserves atomic memory
+restoration and adds the optional recording cap; default calls are unchanged.
+The full adaptive gate remains pending. Both CI workflows pass on the preceding
+`b283657`, independently of these focused checks.
