@@ -1,8 +1,8 @@
 # Palimpsest
 
-A local, inspectable lab for embodied neural controllers. The current implementation is the **M0 / R0 reproduction harness**: setup diagnostics, pinned FLYNN assets, bounded teacher/FLYNN evaluation, reference preprocessing parity, and recorded inputs, actions, outcomes, and resource measurements.
+A local, inspectable lab for embodied neural controllers. Implemented: the **M0 / R0 reproduction harness** and **M1 execution/recovery API**, with manual/teacher/FLYNN control, bounded commands, world edits, lossless recording and complete state snapshots.
 
-M1 and later milestones are not implemented: there is no interactive lab, snapshot continuation, replay command, memory learning, additional task controller, MaleCNS profile, or hardware control. See the [R0 evidence report](docs/reports/r0-reproduction.md), [implementation plan](docs/implementation-plan.md), [current progress](docs/progress.md), and preserved [Borrowed Body PRD](docs/borrowed-body-prd-v1.md). A completed evaluation means the bounded experiment finished; inspect its outcomes before making a navigation or performance claim.
+The interactive lab, replay command, memory learning, additional task controllers, MaleCNS and hardware control remain unimplemented. See the [R0 evidence](docs/reports/r0-reproduction.md), [M1 evidence and CUDA limitation](docs/reports/m1-execution.md), [implementation plan](docs/implementation-plan.md), [current progress](docs/progress.md), and preserved [Borrowed Body PRD](docs/borrowed-body-prd-v1.md). A completed evaluation means the bounded experiment finished; inspect its outcomes before making a navigation or performance claim.
 
 ## Setup
 
@@ -62,10 +62,28 @@ uv run --no-sync palimpsest evaluate --controller flynn --device cuda \
 
 Each run retains `supervisor.json`, `stdout.log`, `stderr.log`, and a `recording/` bundle containing `manifest.json`, `events.jsonl`, and typed numeric chunks. The manifest records configuration and completion status; events record provenance and episode outcomes. Camera inputs, declared sensors, poses, actions, controls, and timings are retained; FLYNN also records encoded inputs and raw outputs. A timeout or failure is retained explicitly. These records are not full resumable snapshots.
 
+## Execution and snapshots
+
+`palimpsest.engine.Engine` owns simulation/controller state on its creating thread. `submit()` queues an idempotent command; `advance()` applies pending commands at a control boundary and advances at most one tick. Receipts distinguish queued, applied, rejected and failed operations. Supported commands are run, pause, step, stop, reset, manual action, and validated goal/obstacle edits.
+
+`palimpsest.snapshots` captures/restores paused application state, native MuJoCo state including derived caches, controller/retinal state, RNGs and pending commands. Restore into a fresh compatible engine, validate application metadata before restoring physics, then restore application metadata. New branches retain their own run IDs and the original event-prefix identity. Snapshot files are trusted local artifacts tied to their software/model/numerical profile; the native decoder is not a hostile-import sandbox.
+
+Run the fresh-process verification on the real environment and full model:
+
+```sh
+uv run --no-sync python scripts/verify_execution.py --controller flynn --device cpu \
+  --assets data/assets/flynn --continuation 100 --output runs/cpu-continuation
+```
+
+Use `--controller manual` or `teacher` for those paths. The verifier preserves a goal edit and a queued command, checks recording integrity and branch lineage, and compares inputs, actions, physics, RNGs, full hidden state and retinal state. It reports failures and exits nonzero. Camera/integer values must match exactly; float tolerances are fixed at `atol=rtol=1e-6`.
+
+CPU continuation passed on the measured host. CUDA inference remains available, but upstream CUDA sparse matrix multiplication varied on repeated identical inputs; one saved continuation failed the strict check. No device fallback or tolerance relaxation occurs. Reproduce that kernel diagnosis with `scripts/probe_cuda_repeatability.py --assets data/assets/flynn --output runs/cuda-kernels`.
+
 ## Tests
 
 ```sh
 uv run --no-sync pytest -q
+PALIMPSEST_SIMULATION_TESTS=1 MUJOCO_GL=egl uv run --no-sync pytest -q
 ```
 
-CI runs all fixture tests on Python 3.11 using CPU PyTorch and small synthetic graphs/checkpoints/archives. It downloads no model assets, requires no GPU or renderer, and makes no full-model runtime or performance claim. Real teacher/FLYNN evaluation and resource evidence remain separate from fixture results.
+The second command also exercises actual EGL world edits, teacher contact/recovery and termination continuation. CI runs CPU fixture tests and skips renderer-dependent cases. It downloads no model assets and makes no full-model runtime or performance claim. Actual full-model evidence remains separate from fixture results.
