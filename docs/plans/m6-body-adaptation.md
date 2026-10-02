@@ -1,0 +1,42 @@
+# M6 measured body adaptation: development session protocol
+
+This first slice implements only a bounded pure calibration session in [body_adaptation.py](../../src/palimpsest/body_adaptation.py) and synthetic [fixtures](../../tests/test_body_adaptation.py). Engine, API, UI, physics, native snapshot and executable replay integration are pending review. No actual simulator, browser, build or model job has been run for this profile. The existing loaded-calibration profile remains unchanged.
+
+The proposed new profile is `adaptive-wheel-calibration`, manual CPU/checker, with the same pinned authored lane/start `[-3.5,0,0]`, goal `[-3.5,3]`, left gear `3*.8`, right gear `3`, wheel radius `.06` and track `.36`. Its native model identity is `bf3ca4b0d32600444e0f23e658c790da50a7675fb3c26fee8f9b0a16e0839d67`. Actual authoring source and semantic world PROFILE pins are reused from the loaded profile. Model/profile identity is immutable and separate from measured fit, sample digest and native cursor. Historical baseline gains define the desired response; the old perturbed gains are never loaded as a candidate or fallback.
+
+## Frozen development procedure
+
+Use seed 1 and four **fresh** 120-tick trials, in the accepted diagnostic order: nominal straight actions `[.2,0]`, `[.4,0]`, `[-.2,0]`, `[-.4,0]`. The profile supplies these fixed actions. Deliberate `set_action` requests must reject during collection, even when their values happen to match the probe. Run/pause/step controls only advance this fixed procedure; pause consumes no extra interval. Stop remains available, and ordinary Reset always aborts and clears the session. No pose, goal, desired displacement or gear-strength feedback enters fitting or action selection.
+
+All 120 intervals require actual control/encoder/time measurements and the existing read-only contact probe. First 20 intervals are declared settling and remain in normal raw recording; next 100 enter that trial's fit. Do not skip rejected intervals or relocate/retry after failure. Unexpected robot contacts, callback/pipeline mismatch, nonfinite data, control mismatch or early termination/truncation reject immediately, including during settling. Every raw contact pair/stage remains recorded through the existing numeric body fields; allowed support and moving world-only contacts retain their existing structural scope.
+
+The fit uses exactly 400 new samples, each containing actual controls, measured raw shaft increments and measured dt. `fit_wheel_gains` computes four 100-sample fits plus one pooled fit through zero intercept. Existing bounds stay fixed: excitation at least 1; gains in `[1,100]`; controls at most 2; dt `.02 ± 1e-9`; absolute rate at most 100 rad/s; every residual at most 2 rad/s; relative RMS at most 20%; between-trial gain range/mean at most 20%. A candidate must also satisfy the existing compensation ratio bound 1.5 and control limit 2. These are development rejection limits, not physical safety limits. Failed fit retains all 400 samples and its rejection reason, with no accepted/fallback fit.
+
+## Command and reset contract
+
+The one new command is `calibration-next`. The Engine must use its existing idempotent receipt handling and expected-state/episode/revision guards. It is valid **only** for this profile, paused, after exactly 120 completed probe ticks:
+
+| Before | After prescribed fresh reset | Preserved |
+|---|---|---|
+| Trial 0–2, `trial_complete` | Next fixed trial, `collecting` | Accepted sample buffer and its hash; immutable identity |
+| Trial 3, `fit_complete` | One fresh `fitted` episode | All 400 samples, accepted fit and both hashes; immutable identity |
+
+`collecting`, incomplete, running, `rejected` and already `fitted` states reject the command without physical reset. Thus there are exactly four allowed prescribed resets; no fifth probe or later arbitrary fit-preserving reset. Reapplying the command to the returned state rejects; an identical Engine command ID will later reuse its original receipt rather than invoke this transition twice.
+
+Prevalidate the old session and next logical state before changing physics. Reset the same pinned authored model/world, clear manual intent and verify the actual fresh hinge angles `[0,0]`, native time 0 and application step 0 against the new logical cursor before continuing. Trial index stays 3 in the final fitted episode; its episode is session-start + 4. The pure function prepares this expected state but does not reset or prove native physics. Ordinary Reset always starts a new session at trial 0 with an empty buffer, no fit and zero cursor; it never uses `calibration-next` semantics implicitly.
+
+The fresh fitted episode is the first point where manual nominal commands may be compensated with the **newly measured** fit. `fit_complete` waits for its prescribed reset without stepping. Compensated control uses the existing bounded `compensate_wheels` and proven inverse, requiring exact effective float32 control roundtrip; no direct `data.ctrl` writes, clipping or loaded-fit substitution. Evaluation intervals advance native cursor but never refill the sample buffer or refit.
+
+## State and restoration contract
+
+State is exact typed JSON, at most 128 KiB, with immutable identity, session-start/current episode, current native step, trial index, phase, raw encoder/time cursor, at most 400 ordered fit samples, sample digest, optional derived fit/digest and bounded rejection reason. Sample metadata must match trial and ticks 20–119 exactly. Validation recomputes sample hashes and all fitted coefficients from the retained samples, rejects malformed numeric types/digests and binds current episode/step/raw angles/time to the staged native destination before mutation. Fit hashing distinguishes JSON booleans from numeric version fields.
+
+Partial collecting, completed-trial, fit-complete and fresh fitted snapshots must later retain the entire bounded session, using existing native model/data and application snapshot machinery. Native model/profile identity stays immutable; fitted coefficients are application state. Buffer contents must not be dumped into every JSON measurement event: emit bounded progress/cursor/hash summaries, retain per-tick raw controls/encoders/contact arrays in NPZ, and keep the full buffer only in current application state/snapshots. Preserve the existing loaded schema and inactive legacy schema; conditional adaptive application schema and native binding will be reviewed before integration.
+
+## Remaining execution gate
+
+After state/command review, implement only the new profile's Engine/API/UI progress and `calibration-next` glue, using the existing ownership, receipt, contact, conversion, storage and snapshot helpers. Pause/restore must work during collection and after acceptance. Actions replay applies effective action once and still advances identical collection/fit state; policy replay rebuilds the fixed probes/new fit from nominal timeline. Both must compare complete semantic events, raw numeric body fields and native continuation, without changing historical replay compatibility.
+
+Freeze the actual gate before running it: all four fresh trials; deliberate rejected samples/fit and malformed native restore; partial and fitted snapshot continuation; both executable replays; then paired fixed ±.3 held-command comparisons against baseline and uncompensated gear-.8 response from matched fresh states. Reuse the predeclared aligned 100×2 shaft-rate RMSE and absolute yaw/lateral deviation metrics, requiring improvement per direction without pooling. Baseline/evaluation observations remain evaluator-only. Do not reuse evaluation intervals for fitting, tune limits after failures or call prior ±.3 tests held-out generalization. Actual native controls/contact coverage, artifact/source identity, storage estimates and normal cleanup must be retained before any qualification claim.
+
+This is a transparent development calibration mechanism, not neural learning, generalized adaptation, navigation competence or physical motor qualification. Held-out body/task evaluation and physical validation remain open. The pure fixtures use manufactured encoder responses and prove software guards/state transitions only.
