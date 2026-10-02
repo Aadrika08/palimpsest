@@ -216,7 +216,9 @@
     "../project-integration/runs/m6-adaptive-ui-root-audit-d6108e6/audit.json": "db86d910cd794d916b87179424fd13a9aa536477ea0a8e10892b5856fade111a",
     "../project-integration/runs/m6-adaptive-ui-root-audit-d6108e6/audit.py": "cb25c6ae35ad4b70361498f7191381edea67633f573feb7fa63c38ee778ddc75",
     "runs/m6-body-adaptation-ui-development-20261002/browser-results/adaptive-lab-actual-adapti-00994-ive-reset-and-action-replay/adaptive-fitted.png": "e2a0ac547d0a5d0768dc2b5de06a675f9e0dc1d323161b487af8ff3cdd20c382",
-    "runs/m6-body-adaptation-ui-development-20261002/browser-results/adaptive-lab-actual-adapti-00994-ive-reset-and-action-replay/adaptive-reset.png": "6ae353e32139c5130918eaf1558108a7b0826240f921ec1d5de1341117ffd2ee"
+    "runs/m6-body-adaptation-ui-development-20261002/browser-results/adaptive-lab-actual-adapti-00994-ive-reset-and-action-replay/adaptive-reset.png": "6ae353e32139c5130918eaf1558108a7b0826240f921ec1d5de1341117ffd2ee",
+    "runs/m6-body-adaptation-ui-development-20261002/event-audit.py": "da1015f23a1c9ec4c127a6083b6667cab4b367a5cdd07f0f614cf1a1e15e1d5a",
+    "runs/m6-body-adaptation-ui-development-20261002/event-audit.json": "9948d659225fdb0b6a0f8e99f16cf5eb324d41a2ec332e4ed5ff4eb9da5e7821"
   },
   "limitations": [
     "One manual CPU/checker/seed1 authored development profile",
@@ -227,5 +229,13 @@
     "Existing retain-on-failure removes successful Playwright trace; no universal independent HTTP/network trace claim",
     "Viewport screenshots do not show the complete calibration panel; DOM assertions establish displayed fit workflow",
     "No physical hardware, neural learning or real-time performance qualification"
-  ]
+  ],
+  "separate_semantic_event_audit": {
+    "semantic_events_compared": 543,
+    "status": "passed",
+    "elapsed_seconds": 0.24721466699702432,
+    "method": "registered initial prefixes, _EVENTS filter and _same_event; separate from numeric/hash audit",
+    "scope": "Retained source/destination events only; no native runtime or browser"
+  },
+  "root_independent_audit_scope": "2.538878s numeric/hash/snapshot/visual audit verifies reported543event count; root separately compared543semantic events in1.728s. The separately indexed local event audit compares all543 directly."
 }
