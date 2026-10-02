@@ -12,6 +12,30 @@ from unittest.mock import patch
 from palimpsest.lab import LabSupervisor
 
 
+class SlowModuleFinalizer:
+    def __init__(self):
+        self.sleep = time.sleep
+
+    def __del__(self):
+        self.sleep(30.)
+
+
+def module_finalization_owner(*args):
+    from palimpsest import worker
+    def complete(config, commands, replies, display, disconnected, stop, progress,
+                 final_messages=None):
+        # Retained until interpreter module cleanup, after all worker work.
+        global late_finalizer
+        late_finalizer = SlowModuleFinalizer()
+        os.write(1, b"durable last diagnostic\n")
+        display.put({"type": "sample", "pixels": b"x" * (2 * 1024**2),
+                     "state": {"revision": 0, "total_tick": 0}})
+        final_messages.append({"version": 1, "type": "closed", "run_id": config["run_id"],
+                               "status": "closed", "state": {"revision": 0, "total_tick": 0}})
+    with patch.object(worker, '_own', complete):
+        worker.run_worker(*args)
+
+
 def delayed_final_display_owner(config, commands, replies, display, disconnected, stop, progress):
     os.setsid()
     replies.put({"version": 1, "type": "closed", "run_id": config["run_id"], "status": "closed"})
@@ -74,6 +98,23 @@ def late_log_failure_owner(*args):
 
 
 class WorkerLogCompletion(unittest.TestCase):
+    def test_completed_worker_flushes_queues_without_module_finalization(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            supervisor = LabSupervisor(Path(__file__).resolve().parents[1], root / 'assets', root / 'runs',
+                                       worker_target=module_finalization_owner)
+            try:
+                identifier = supervisor.start({})
+                owner = supervisor.workers[identifier]
+                result = supervisor.close(identifier)
+                self.assertEqual(result['status'], 'closed', result.get('failure'))
+                self.assertEqual(owner.process.exitcode, 0)
+                self.assertFalse(owner.process.is_alive())
+                self.assertTrue(supervisor.thread.is_alive())
+                self.assertEqual((supervisor.path(identifier) / 'stdout.log').read_bytes(), b'durable last diagnostic\n')
+            finally:
+                supervisor.shutdown()
+
     def test_truncated_display_cannot_hold_monitor_after_producer_exit(self):
         context = multiprocessing.get_context("spawn")
         result = context.Queue()
