@@ -56,7 +56,48 @@ PYTHONPATH=src:tests ../lab-hardening/.venv/bin/python -m unittest test_male_pol
 ```
 
 The synthetic CPU loader/state/rollback check is skipped unless
-`PALIMPSEST_MALE_TORCH_CHECKS=1` is explicitly authorized. Actual checkpoint loading
-and closed-loop continuation require separate runtime windows. Fixture checks
-and single-seed imitation metrics establish neither topology benefit nor
-biological sensing or navigation competence.
+`PALIMPSEST_MALE_TORCH_CHECKS=1` is explicitly authorized. That check and loading
+both actual checkpoints passed at `4941468`, including all 600 held-out recorded
+inputs per variant compared against frozen 32-tick-window evaluation. See the
+[validation report](../reports/m7-wrapper-validation.md) for exact scope and
+hashes. Engine integration and closed-loop/native continuation remain separate
+unexecuted gates. Fixture checks and single-seed imitation metrics establish
+neither topology benefit nor biological sensing or navigation competence.
+
+## Proposed integration contract, not implemented
+
+Use two explicit controller IDs, `male-original` and `male-control`, mapping only
+to `original` and `degree_rewired`. Admit CPU, reproduction and checker initially;
+other scenarios/devices fail explicitly. The existing API request schema keeps
+only scenario/texture/controller/device/seed, with no user-provided model paths.
+
+Place retained artifacts in the fixed `asset_root/male-reduced-v1/` subdirectory.
+A tracked `data/manifests/male-reduced-policy-v1.json` pins the completed report
+hash, the fixed artifact names/hashes and source-graph hash. Keep the existing
+tracked extraction manifest and pinned upstream cell source. A small helper in
+`male_policy.py` resolves these fixed names and calls the validated loader; no
+general registry or fetching subsystem is required.
+
+Retain a server-derived `policy_identity` in the run manifest and native snapshot
+configuration: controller/variant, model-manifest hash, report/checkpoint/protocol/
+graph/topology/ordered-ID/feature/cell hashes. Record full loader provenance in
+`policy_loaded`. The worker passes an expected identity internally to Engine;
+fresh starts bind current pinned identity, same-controller branches and replay
+require the recorded identity before restore. Changing `male-original` to
+`male-control` is an explicit controller replacement with fresh hidden state and
+the existing replacement event; it must not reuse the source model identity.
+
+Add an explicit male snapshot policy state containing `kind`, finite float32
+`hidden[1,138]`, and bounded failure diagnostics. Keep existing FLYNN snapshots
+compatible. Stage and validate male state before native mutation, preserve the
+full policy/runtime identity comparison, and invalidate cell caches on restore.
+Do not add retina attributes or invent visual populations. Existing
+`agent=model` supports tensor hashing and the current 136+2 neural-byte estimate.
+
+Engine needs the two policy creation/reset/action branches and a male population
+guard. Profiles/Lab need fixed choices and verified availability. Worker and
+replay snapshot registration must retain `policy_identity`; replay must mark male
+policy inference correctly and include male source files in its relevant runtime
+hash checks for male replays only. Policy/action replay keeps its existing labels.
+Actual snapshot continuation and replay must pass a separately bounded runtime
+gate before claiming this integration works.
