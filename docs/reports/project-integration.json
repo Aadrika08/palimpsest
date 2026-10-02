@@ -1636,5 +1636,24 @@
     },
     "native_execution": false,
     "limitation": "C4 runtime controls are being prepared; no C4 result or held-out claim."
+  },
+  "puck_learning_source_review": {
+    "source_commit": "0fd589ca346253f2e61bff0b09cbfb802c1cf451",
+    "root_focused_tests": 19,
+    "root_focused_seconds": 1.227,
+    "skipped": 0,
+    "protocol_sha256": "513c7f5045b919241d7fdc6fa6ab058bd94134f8d168661b6453fadfb3b6b158",
+    "native_execution": false,
+    "model_execution": false,
+    "scope": "Pure sensor-only cursor, output arithmetic and record admission; collector and learned control remain pending."
+  },
+  "recovery_v3_source_review": {
+    "source_commit": "c382c86781a7a5d6651af721119789729cc890ae",
+    "root_focused_tests": 8,
+    "root_focused_seconds": 0.043,
+    "skipped": 0,
+    "protocol_sha256": "e41ebb10ca58351b2fe00c858a62c42260c6110da1a0047ad3a62c8f832f92cc",
+    "native_execution": false,
+    "scope": "First-cycle collection only; later driving deliberately censored. Preserves independent terminal-reason validation and historical failures."
   }
 }
