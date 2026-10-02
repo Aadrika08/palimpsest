@@ -112,3 +112,5 @@ The documentation matrix, linked operating instructions and licence/provenance l
 [notices]: ../THIRD_PARTY_NOTICES.md
 
 [hour]: ../runs/m3-endurance-hour-20261002b/report.json
+
+The [fixed CPU FLYNN own-branch executable replays](reports/m5-flynn-replay.md) pass both actions and policy modes (129 transitions and 835 events each) with unchanged initial state/source and normal cleanup. The original nine-condition own-U task/timing benefit remains absent; counterbalance, null/no-event controls and held-out R2 evaluation remain open.
