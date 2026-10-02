@@ -3,6 +3,7 @@
 import copy
 import math
 import unittest
+from unittest.mock import patch
 
 from palimpsest import memory, memory_task
 
@@ -173,6 +174,85 @@ class MemoryTaskTests(unittest.TestCase):
         state['active']['fact_id'] = []
         with self.assertRaises(ValueError):
             self.task.validate_state(state)
+
+    def test_declared_baselines_share_selection_without_hidden_motor_inputs(self):
+        from palimpsest import memory_experiment as experiment
+        history = experiment.make_history(0, 'local_cue')
+        for condition in experiment.CONDITIONS:
+            with self.subTest(condition=condition):
+                u = (memory.artifact(method='empty-v1') if condition in
+                     ('no-U', 'history-independent', 'traversal', 'retrieval', 'oracle') else
+                     memory.artifact('paired_cue' if condition == 'swapped' else 'local_cue'))
+                resource = history if condition == 'retrieval' else ['fact-b'] if condition == 'oracle' else None
+                config = {'version': 1, 'condition': condition, 'limit': 1,
+                          'resource': resource, 'resource_sha256': memory.sha256(resource),
+                          'provenance_sha256': '1'*64}
+                original = self.task.initialize(bank(), {'version': 1, 'episodes': []}, u, 'live')
+                state = self.task.configure_selector(original, config)
+                untouched = copy.deepcopy((original, config))
+                with patch.object(experiment, 'selection_for_condition', wraps=experiment.selection_for_condition) as dispatch, \
+                     patch.object(memory, 'fit', side_effect=AssertionError('Live dispatch cannot fit')):
+                    state, _, audit = self.task.advance_memory(state, self.packet(0))
+                    # Validator accepts resources without invoking the selector.
+                    self.assertEqual(dispatch.call_count, 0)
+                    state, bearing, audit = self.task.advance_memory(state, self.packet(1, 1))
+                    self.assertEqual(dispatch.call_count, 1)
+                target = 'fact-b' if condition in ('swapped', 'oracle') else 'fact-a'
+                selected = next(e['selection'] for e in audit if e['kind']=='memory_selection')
+                self.assertEqual(selected['target_ids'], [] if condition == 'no-U' else [target])
+                self.assertEqual((original, config), untouched)
+                self.assertEqual(state['e'], original['e'])
+                self.assertEqual(state['u'], u)
+                self.assertEqual(self.task.validate_state(state), state)
+                reset = self.task.reset(state, 'next')
+                self.assertEqual(reset['selector'], config)
+                self.assertEqual((reset['version'], reset['cursor'], reset['active']), (2, None, None))
+                self.assertEqual(bearing, [1.,0.] if condition=='no-U' else
+                                 [math.cos(-math.pi/4 if target=='fact-b' else math.pi/4),
+                                  math.sin(-math.pi/4 if target=='fact-b' else math.pi/4)])
+
+    def test_selector_resources_are_bounded_condition_specific_and_hash_bound(self):
+        from palimpsest import memory_experiment as experiment
+        config = {'version':1, 'condition':'retrieval', 'limit':1,
+                  'resource':experiment.make_history(0,'local_cue'),
+                  'resource_sha256':'0'*64, 'provenance_sha256':'1'*64}
+        config['resource_sha256'] = memory.sha256(config['resource'])
+        state = self.task.configure_selector(self.state(None), config)
+        self.assertEqual(state['version'], 2)
+        for mutate in (lambda c:c.update(condition='own'),
+                       lambda c:c.update(resource_sha256='0'*64),
+                       lambda c:c.update(provenance_sha256=True),
+                       lambda c:c.update(limit=True),
+                       lambda c:c.update(limit=2),
+                       lambda c:c.update(version=True),
+                       lambda c:c.update(resource=None),
+                       lambda c:c.update(private_world={'truth':'blocked'})):
+            bad = copy.deepcopy(config); mutate(bad)
+            with self.assertRaises(ValueError):
+                self.task.configure_selector(self.state(None), bad)
+        oracle={**config,'condition':'oracle','resource':['missing']}
+        oracle['resource_sha256']=memory.sha256(oracle['resource'])
+        with self.assertRaises(ValueError):
+            self.task.configure_selector(self.state(None),oracle)
+        bad=copy.deepcopy(state);bad['selector']['resource']['episodes'][0]['id']='tampered'
+        with self.assertRaises(ValueError):self.task.validate_state(bad)
+        with patch.object(self.task,'MAX_SELECTOR_BYTES',len(memory.canonical_bytes(config))-1):
+            with self.assertRaisesRegex(ValueError,'byte limit'):
+                self.task.configure_selector(self.state(None),config)
+        legacy=self.state()
+        self.assertNotIn('selector',legacy)
+        self.assertEqual(self.task.validate_state(legacy),legacy)
+        self.assertEqual(self.task.reset(legacy,'next')['version'],1)
+
+    def test_own_dispatch_is_exact_legacy_update_parity(self):
+        legacy=self.state()
+        configured=self.task.configure_selector(legacy,{'version':1,'condition':'own','limit':1,
+            'resource':None,'resource_sha256':memory.sha256(None),'provenance_sha256':'1'*64})
+        for packet in (self.packet(0),self.packet(1,1),self.packet(2,1,pose=(.5,.6,0.))):
+            legacy,bearing,audit=self.task.advance_memory(legacy,packet)
+            configured,other_bearing,other_audit=self.task.advance_memory(configured,packet)
+            comparable=copy.deepcopy(configured);comparable.pop('selector');comparable['version']=1
+            self.assertEqual((comparable,other_bearing,other_audit),(legacy,bearing,audit))
 
 
 if __name__ == '__main__':
