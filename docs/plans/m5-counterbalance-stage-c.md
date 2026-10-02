@@ -1,6 +1,6 @@
 # M5 Stage C: four fixed development comparisons
 
-Status: historical C1/C2 launches failed operationally; fresh C3 preparation only. No C3 launch, full matrix, or held-out run is authorized.
+Status: C3 completed and was retained-audited across the four selected development cells; [actual evidence](../reports/m5-counterbalance-stage-c-v3.md) preserves historical C1/C2 operational failures. No further actual gate, full matrix or held-out run is authorized.
 
 Use only s24/local_cue/change, s29/paired_cue/change, s30/local_cue/null and s27/paired_cue/no-event. Each restores its existing Stage B CPU FLYNN policy anchor, creates a zero-tick own-U anchor, then executes the existing nine conditions for at most 300 ticks each. This adds 40 owners and at most 10,800 numeric ticks. Both change cells close the lower passage; the fixed source, goal route, lexical/side factors, eight shared namespaces and controller-seed confounds remain. This is a selected development comparison, without a power or route-independent claim.
 
@@ -10,7 +10,7 @@ All nine branches share the exact same own-U native anchor within each cell, dif
 
 Fixed ceilings: 160 seconds per child, 150 seconds internal wall bound, 192 MiB recording and 16 MiB initial SNP per owner; 10 GiB aggregate allowance, 2 GiB free floor and 64 MiB headroom; 6460 seconds outer (40 × 160 + 60), single verifier-parent storage lease, serialized owners, no retries or substitutes. Before an actual GO, freeze all 40 UUIDs and case/SNP/history/helper/source pins and a retained outer TERM/KILL/PID-start cleanup launcher. Stage B results and old runners stay immutable. No R2 completion claim follows from preparation or admission alone.
 
-## Frozen preparation and readouts
+## Historical C1 frozen preparation and readouts
 
 The Stage C composition is `scripts/verify_memory_counterbalance_comparison.py`. It imports the unchanged B, fixed neural and manual helpers for native/recording readers, actual sensor projection, U/selector construction, policy call bindings, snapshots, child supervision and quotas. Its local schedule accounting supports null and no-event directly; it does not rewrite a null/no-event case into a change to satisfy an older helper. Old runners and runtime production files are untouched. The source protocol SHA256 is `bedda73b18ac5525b3ea4e667aa505d22d47decefac016947b190024337db134`; the prospective immutable prepared plan records the fresh driver SHA, all 40 UUIDs, exact cases and actual source SNP pins. It supplies no future oracle gold.
 
@@ -35,17 +35,24 @@ Preparation checks use pure stdlib/NumPy fixtures, not model/EGL inference. The 
 
 The ignored prepared plan is `runs/m5-counterbalance-stage-c-preparation-5a512c4/prepared-plan.json` (90,909 bytes), SHA256 `271aeb35ccd0dc839cb0ee23a633a15d91e7831236358fc81fb979e1e39382ab`. It retains exactly 40 fresh, unique owner IDs; the fixed destination `runs/m5-counterbalance-stage-c-20261003` does not yet exist. Its driver SHA256 is `425d8b4eb429a290bfc28f16e767dc608b47016504d948ed9e6aa13051de1d16`. Full canonical case hashes (including their existing case envelope pins) are s24/change `ad28b06c152c8972d506b49ea92e784044f7c7dcee5f603027789a3a7eabd8ef`, s29/change `328465bd1f2ee1a2309e2e64c4ac20204b1c92384946742b551d4c300cbdf32c`, s30/null `6554e6b5cfffc556df5bb92bf70a5ec32ccdf19794b64d9268cd2dbf0e4acac9`, and s27/no-event `14d81ad7fce6a729c55363d87be2d9ae6c7d0075c73a9bbf61f3813c054f3f69`. Preparation only read existing recordings, native snapshots, histories and source/assets; it performed no neural inference or simulation.
 
-## Separately frozen v2 admission correction
+## Historical C2 frozen admission correction
 
 The single v1 launch at source `a181576` stopped before its first owner because its validator joined a `uuid.UUID` object into a `Path`. All forty owners were unattempted and zero numeric ticks occurred; [the failed gate remains immutable](../reports/m5-counterbalance-stage-c-v1.md). Evidence was committed separately at `f74c17c`. The source-only correction validates `_id(run_id)` separately and joins the original validated canonical string, without changing the shared helper or any experimental/runtime limits. A real unmocked validator fixture now accepts the canonical job and rejects malformed IDs and mismatched root/owner paths. All forty focused comparison/B/transfer/neural/experiment checks passed without skips in 6.198 seconds.
 
 The fresh v2 prepared plan is `runs/m5-counterbalance-stage-c-v2-preparation-f74c17c/prepared-plan.json` (90,912 bytes), SHA256 `9cdbd1b3f45bb3e01f5fa959243b793b2c54dd0be64875b190620a93a2773cbc`. It declares a new fixed destination `runs/m5-counterbalance-stage-c-v2-20261003` and forty UUIDs disjoint from the failed v1 plan. Its driver SHA256 is `de3775b8267fd8fbf009d16e372720fe88957d4a764007a82ac0c908fa6ee3cc`. Original B bindings, canonical cases, recorded history pins and scientific protocol remain exactly equal to v1. A pure check of the real first plan-derived anchor job passed; no runtime owner has started. The prospective outer wrapper keeps the reviewed obtainable-after-inventory reporting and all original bounds, with fresh control paths and a new frozen source commit. Actual v2 execution requires another explicit GO.
 
 
-## Separate C3 monitor preparation
+## Historical C3 monitor preparation
 
 C2 at `c626f3c` ended with fourteen terminal worker recordings, thirteen finalized supervisors, 1,561 neural rows and twenty-six unstarted owners after an outer monitor IndexError. [The separate immutable failure evidence](../reports/m5-counterbalance-stage-c-v2.md) was committed at `a7f8c05`; its JSON SHA256 is `de253f3bb486a85ba0a242b087a675fe73e3c80054151372b9075ef9219b508f`. This does not complete the four-cell protocol. In the local cell, all nine corrections occurred at 358, with own/sham goal 430 versus no-U 429; no own-U timing benefit was observed. Null/no-event owners were unstarted.
 
 The approved correction is confined to fresh ignored outer controls. Compare the second cmdline read with the immutable base monitor's captured argv_sha256 before indexing it. On a missing/changed read, recheck the exact PID/start/state and skip the semantic reread only for proven disappearance, PID reuse or zombie state; a live mismatch or unreadable state still fails closed. Preserve the exact cell/binding checks, base helper and start-verified cleanup. Seven pure fixtures passed in 0.011 seconds (root 0.013 seconds), including the original synthetic IndexError reproduction and live mismatch rejection. The actual failed second-read bytes/traceback were not retained, so an exit race remains plausible rather than proven.
 
 Fresh C3 controls must retain forty new IDs disjoint from B/C1/C2 and unchanged four cells, original anchor/history bindings, runtime implementation and all resource/stop limits. Only plan/output/source/control pins and the approved Owners.sample guard differ from C2; all other non-pin function ASTs must match. Freeze and review the prepared plan, wrapper and complete source/upstream/assets inventories before a new GO. The retained C1/C2 controls, failed outputs, proposal and original base helper remain immutable; no retries or replacements are authorized by preparation.
+
+
+## C3 retained development result
+
+The separately frozen C3 launch at `5199961` completed forty owners / 4,660 actual CPU FLYNN rows with all supervisors finalized at exit zero. Plan SHA256 `f2389333ddbf0c6a0af00e38034261cadf735ecbd1da163bf1fb180f1cc03125`, wrapper `b857fabae73ada92e1ad6cc34e701e89e91ccf21fcbf0542b3f0267c1fdbe208`, and terminal comparison report `c8ba721b0b861cb554811d78791a5f90a5bb2b7d2f2f4ff32e691db106aa376d` are retained under the explicit v3 paths. [The result and audits](../reports/m5-counterbalance-stage-c-v3.md) preserve all thirty-six target/timing/access readouts and earlier failures. The 295-file gate inventory matched before/after; all forty-two non-launcher PID/start identities were absent, with no forced signals or monitor errors.
+
+All change conditions corrected at 358; own U provided no measured timing/task benefit. Null confirms unchanged values rather than correcting stale values and exposes seven false-target selectors. No-event has zero invocation/behavior bytes/inspection and identical trajectories under existing tolerances. The four selected cells retain goal-route, side, lexical, namespace and seed confounds; all evaluator task passes do not imply correct targeting or full R2 completion. This evidence authorizes no additional native batch or held-out access.
