@@ -58,3 +58,14 @@ replacement. The one-line test fix selects `reproduction` by identity. Product
 controller restrictions are unchanged. Both attempts and their hashes are retained
 in the evidence index. This regression does not qualify historical task outcomes,
 online adaptation, exhibition operation, or physical hardware.
+
+At `eda9ba3`, the all-nine memory dispatcher, corrected body replay metadata and
+frozen staged MaleCNS research path are integrated. All **414 tests pass, no
+skips**, in 82.272 seconds with simulation, male Torch and native/replay gates
+enabled. The 300-second supervisor exits zero in 85.705 seconds. Source/asset
+inventories and production model identities remain unchanged; the independently
+rehashed evidence index retains every gate artifact. The shared combined asset
+root is supplied explicitly. Actual male checks use the original pinned v1
+controllers, not the still-untrained research candidates. Adaptive calibration
+and fixed-FLYNN acquisition continuation remain separate work. This regression
+does not rerun historical task, endurance, held-out, exhibition or physical gates.
