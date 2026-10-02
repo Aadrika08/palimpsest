@@ -42,6 +42,13 @@ that terminates early is reset into another explicitly recorded episode until
 the total reaches the requested count. Loading and paused time are excluded
 from the worker's active execution telemetry.
 
+For an independently labelled natural-completion probe, add `--finish-episode`.
+The final episode continues to termination or truncation after the minimum tick
+count; the verifier does not issue an operator pause at that threshold. The JSON
+records the completion protocol and minimum ticks. Its threshold, bounded
+timeout and recorded continuity checks are unchanged. Retain earlier operator
+pause reports rather than treating the protocols as interchangeable.
+
 `worker_active.rtf` measures advanced simulation time divided by active owner
 wall time, including owner-side logging and display work; it must be at least
 one. `outer_rtf` additionally includes monitor polling and inter-episode reset

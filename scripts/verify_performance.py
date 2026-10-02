@@ -19,6 +19,9 @@ def measure(args):
     output, root = args.output.resolve(), args.repo.resolve()
     output.mkdir(parents=True, exist_ok=False)
     report = {'version': 1, 'status': 'running', 'requested_ticks_per_controller': args.ticks,
+              'minimum_ticks_per_controller': args.ticks,
+              'completion_protocol': 'natural-episode-completion-after-minimum-ticks' if getattr(args, 'finish_episode', False)
+                                     else 'operator-pause-at-minimum-ticks-unless-current-episode-already-terminal',
               'scope': 'actual spawned owner, CPU manual/teacher, sparse-navigation/checker, EGL',
               'limitations': ['No browser paint/FPS claim', 'Only this measured host and software regime'],
               'script_sha256': hashlib.sha256(Path(__file__).read_bytes()).hexdigest(), 'controllers': {}}
@@ -83,7 +86,7 @@ def measure(args):
                         break
                     command(identifier, 'reset', {'seed': args.seed + state['episode'] + 1})
                     command(identifier, 'run')
-                elif state['total_tick'] >= args.ticks:
+                elif state['total_tick'] >= args.ticks and not getattr(args, 'finish_episode', False):
                     command(identifier, 'pause', allow_terminal_rejection=True)
                     break
                 time.sleep(.01)
@@ -152,6 +155,8 @@ if __name__ == '__main__':
     parser.add_argument('--assets', type=Path)
     parser.add_argument('--output', type=Path, required=True, help='exclusive new directory')
     parser.add_argument('--ticks', type=int, default=600)
+    parser.add_argument('--finish-episode', action='store_true',
+                        help='After the minimum ticks, finish the current episode naturally instead of requesting pause')
     parser.add_argument('--timeout', type=float, default=300.)
     parser.add_argument('--seed', type=int, default=0)
     parser.add_argument('--controllers', nargs='+', choices=('manual', 'teacher'), default=['manual', 'teacher'])
