@@ -1,4 +1,4 @@
-# M6 puck construction gate — prepared, not executed
+# M6 puck construction gate v3 — prepared, not executed
 
 This gate precedes the separate ten-owner mechanics gate in the
 [pushing protocol](m6-puck-pushing-protocol.json). It admits exactly two fresh
@@ -9,7 +9,7 @@ images. The existing upstream constructor also compiles its baseline and renders
 its reset observation; the gate does not call `env.step` or `mj_step`. It runs no
 policy, teacher, training or mechanics episode.
 
-The [construction protocol](m6-puck-construction.json) pins the module, parent
+The [v3 construction protocol](m6-puck-construction-v3.json) pins the module, parent
 protocol, upstream revision, constructor arguments, runtime and limits. Compare
 the two complete native model/data hashes, model/profile identity, qpos/qvel/
 zero-control/zero-force state and retained camera hashes. Require zero time and
@@ -18,6 +18,20 @@ global control callback, no surviving exact child PID/process-group identities,
 and unchanged source hashes. A mismatch is a retained failure, not a reason to
 relax equality or retry. Native determinism and successful compilation remain
 unmeasured until the approved execution passes.
+
+The [v1 launcher failure](../reports/m6-puck-construction-v1.md) and
+[v2 pre-install admission failure](../reports/m6-puck-construction-v2.md) remain
+retained with their original protocol and raw outputs. V3 changes the module
+pin after separating shared native array/binding/quaternion validation from
+the authored task goal domain. Generic owner admission accepts only the pinned
+upstream constructor domain ±5.5; `native_state` still requires the authored
+task goal within ±5. The fixture with goal `[5.25, -5.25]` reproduced v2's failure
+before this correction and now reaches the authored reset; values beyond ±5.5
+and nonunit quaternions still fail admission. All 58 focused pure checks pass.
+This is fixture verification, not successful native construction. The original
+task/XML/layout, two owners, zero steps, comparisons and budgets are unchanged.
+Use a fresh v3 output and reviewed launcher, with the inner verifier alone
+holding the lifetime writer lease.
 
 Per owner: 60 seconds; parent internal bound: 150 seconds. The retained outer
 launcher must run `timeout --signal=TERM --kill-after=15s 180s` around the script,

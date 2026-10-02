@@ -98,12 +98,8 @@ def _world(world):
     return world
 
 
-def native_state(data, *, base_qpos_adr, puck_qpos_adrs, puck_dof_adrs, goal_xy):
-    """Read post-integration qpos/qvel only, never xpos/geom_xpos caches.
-
-    The later fixed-model constructor must verify these named bindings and the
-    puck body's fixed [0,0,.062] transform. This helper does not certify a model.
-    """
+def _native_values(data, *, base_qpos_adr, puck_qpos_adrs, puck_dof_adrs):
+    """Validate current native arrays/bindings without an authored goal domain."""
     import numpy as np
     qpos, qvel = data.qpos, data.qvel
     for value in (qpos, qvel):
@@ -127,9 +123,20 @@ def native_state(data, *, base_qpos_adr, puck_qpos_adrs, puck_dof_adrs, goal_xy)
     yaw = math.atan2(2*(qw*qz + qx*qy), 1 - 2*(qy*qy + qz*qz))
     puck = [float(qpos[a]) for a in puck_qpos_adrs]
     puck[2] += .062
-    return _world({'time_s': float(data.time), 'rover_pose': [float(qpos[base]), float(qpos[base+1]), yaw],
-                   'puck_xyz': puck, 'puck_velocity_xy': [float(qvel[a]) for a in puck_dof_adrs[:2]],
-                   'goal_xy': _pair(goal_xy, 'goal')})
+    return {'time_s': _number(float(data.time), 'current qpos time', nonnegative=True),
+            'rover_pose': [float(qpos[base]), float(qpos[base+1]), yaw],
+            'puck_xyz': puck, 'puck_velocity_xy': [float(qvel[a]) for a in puck_dof_adrs[:2]]}
+
+
+def native_state(data, *, base_qpos_adr, puck_qpos_adrs, puck_dof_adrs, goal_xy):
+    """Read authored task qpos/qvel only, never xpos/geom_xpos caches.
+
+    The fixed-model constructor must verify these named bindings and the puck
+    body's fixed [0,0,.062] transform. This helper does not certify a model.
+    """
+    return _world({**_native_values(data, base_qpos_adr=base_qpos_adr,
+        puck_qpos_adrs=puck_qpos_adrs, puck_dof_adrs=puck_dof_adrs),
+        'goal_xy': _pair(goal_xy, 'goal')})
 
 
 def _geometry_map(ownership):
@@ -435,8 +442,11 @@ def _admit_owner(env):
     for value in (env.data.qvel, env.data.ctrl, env.data.qfrc_applied, env.data.xfrc_applied, env._last_action):
         if not np.isfinite(value).all() or np.any(value):
             raise ValueError('Fresh zero velocity/control/applied force required')
-    native_state(env.data, **{k: extra[k] for k in ('base_qpos_adr', 'puck_qpos_adrs', 'puck_dof_adrs')},
-                 goal_xy=env._goal_xy.astype(float).tolist())
+    _native_values(env.data, **{k: extra[k] for k in ('base_qpos_adr', 'puck_qpos_adrs', 'puck_dof_adrs')})
+    # Pinned upstream reset samples within arena-1.5 (5.5); the authored task
+    # still has its stricter ±5 goal domain, enforced only by native_state/_world.
+    if np.any(np.abs(env._goal_xy) > env.arena - 1.5):
+        raise ValueError('Goal outside pinned constructor reset domain')
     if (not np.array_equal(env._obstacle_xy[0], env.data.qpos[extra['puck_qpos_adrs'][:2]].astype(np.float32)) or
             not np.array_equal(env._prev_xy, env.data.qpos[extra['base_qpos_adr']:extra['base_qpos_adr']+2].astype(np.float32)) or
             not np.array_equal(env._goal_xy, env.model.site_pos[env.goal_site_id, :2].astype(np.float32))):
