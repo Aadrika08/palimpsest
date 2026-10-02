@@ -1,0 +1,249 @@
+{
+  "actual": {
+    "aggregate_report_numeric_ticks": 0,
+    "callback_restored": true,
+    "completed_owners": 0,
+    "end_caches": 29,
+    "engine_closed": true,
+    "executed_reverse_ticks": [],
+    "expert_reverse_ticks": [
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27,
+      28
+    ],
+    "failure": {
+      "actual_action": [
+        0.699999988079071,
+        0.0
+      ],
+      "after_count": 8,
+      "before_count": 7,
+      "distance_m": -0.0006269752086418903,
+      "end_cache_repeats": true,
+      "expert_action": [
+        -0.3499999940395355,
+        0.10000000149011612
+      ],
+      "geom_names": [
+        "floor",
+        "base_geom"
+      ],
+      "guard": "Unexpected robot/self/world contact outside declared obstacle1 approach",
+      "pre_control_stage": 9,
+      "previous_bad_contact": true,
+      "sensor_angle": null,
+      "sensor_bad": false,
+      "tick": 28
+    },
+    "first_intended_contact_cache": {
+      "stage": 3,
+      "tick": 20
+    },
+    "first_recovery_query": 21,
+    "initial_snapshots": 1,
+    "inner_supervision": {
+      "elapsed_seconds": 13.50838599599956,
+      "output": "/home/utkarsh/Work/shraddha/brain/.worktrees/task-phases/runs/m7-recovery-coverage-development-20261003/inner-supervision",
+      "returncode": 1,
+      "schema_version": 1,
+      "started_utc": "2026-10-02T22:36:10.750141+00:00",
+      "status": "failed",
+      "timeout_seconds": 420
+    },
+    "numeric_rows_in_completed_recording": 29,
+    "outer_supervision": {
+      "elapsed_seconds": 13.861182282998925,
+      "output": "/home/utkarsh/Work/shraddha/brain/.worktrees/task-phases/runs/m7-recovery-control-83ca0eb/outer-launch",
+      "returncode": 1,
+      "schema_version": 1,
+      "started_utc": "2026-10-02T22:36:10.477152+00:00",
+      "status": "failed",
+      "timeout_seconds": 480
+    },
+    "pre_control_stages": 290,
+    "retry_count": 0,
+    "sensor_contact_ticks": [
+      21,
+      22,
+      23
+    ],
+    "snapshot_bytes": 526467,
+    "south": "not_started",
+    "wall_seconds": 16.069029292993946
+  },
+  "argv": [
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/lab-hardening/.venv/bin/python",
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/task-phases/scripts/collect_male_recovery.py",
+    "--repo",
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/task-phases",
+    "--assets",
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/r0-reproduction/data/assets/flynn",
+    "--output",
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/task-phases/runs/m7-recovery-coverage-development-20261003"
+  ],
+  "audits": {
+    "own": {
+      "scope": "482 identity entries,13 artifacts,29 numeric rows,1 SNP hash without native decode,290+29 caches/labels/controls,3 sampled PID/start identities absent",
+      "seconds": 1.310489711991977,
+      "status": "passed-retained-failure-audit"
+    },
+    "root": {
+      "original_root": "/home/utkarsh/Work/shraddha/brain/.worktrees/project-integration/runs/m7-recovery-root-audit-83ca0eb",
+      "scope": "482 identity entries,13 artifacts,29 rows/1 SNP,teacher/action/contact/pose bindings,3 process identities absent",
+      "seconds": 1.152157998,
+      "status": "passed"
+    }
+  },
+  "bounds": {
+    "aggregate_bytes": 1073741824,
+    "free_floor_bytes": 1073741824,
+    "initial_snapshots": 2,
+    "inner_seconds": 420,
+    "numeric_intervals": 240,
+    "outer_seconds": 480,
+    "owners": 2,
+    "per_owner_seconds": 180,
+    "recording_bytes_per_owner": 150994944,
+    "snapshot_bytes_per_owner": 16777216
+  },
+  "cleanup": {
+    "forced_signals": [],
+    "observed_owned_processes": [
+      {
+        "pid": 566223,
+        "start_ticks": 7422374
+      },
+      {
+        "pid": 566228,
+        "start_ticks": 7422402
+      },
+      {
+        "pid": 566233,
+        "start_ticks": 7422448
+      }
+    ],
+    "sample_errors": [],
+    "sampler_stopped": true,
+    "scope": "finite .25 s sampling, PID/start recheck before owned containment; not universal transient-process proof",
+    "survivors": []
+  },
+  "evidence": {
+    "after": {
+      "bytes": 77165,
+      "path": "runs/m7-recovery-control-83ca0eb/after.json",
+      "sha256": "72e5ec21e9a6b64f6170a5282ef87b890f7bbd0a3729562fa3c3986bb0b15336"
+    },
+    "audit_result": {
+      "bytes": 1568,
+      "path": "runs/m7-recovery-control-83ca0eb/audit.json",
+      "sha256": "fb7c1d195f129e18a6e2aaef9b985a6aca66e3d48b7dd8e9401c13cf2fa48f8a"
+    },
+    "audit_script": {
+      "bytes": 8200,
+      "path": "runs/m7-recovery-control-83ca0eb/audit.py",
+      "sha256": "5e36b6f25dca143bdd94484793eaaaf943865298698aa22b4a75c6e7c99caec8"
+    },
+    "before": {
+      "bytes": 77165,
+      "path": "runs/m7-recovery-control-83ca0eb/before.json",
+      "sha256": "72e5ec21e9a6b64f6170a5282ef87b890f7bbd0a3729562fa3c3986bb0b15336"
+    },
+    "failure_cameras": {
+      "bytes": 98824,
+      "path": "runs/m7-recovery-coverage-development-20261003/recovery-north-2100/failure-cameras.npz",
+      "sha256": "299f29eb907186a794e13b1afed4b6bc007ad0e4c9126e824042c8fae250a5e9"
+    },
+    "final_launcher_console": {
+      "bytes": 465,
+      "path": "runs/m7-recovery-control-83ca0eb/launcher-console.log",
+      "sha256": "3b4a6c9832c15f13f8babaa4960ab4537aa3724552bfcbf1a031932aded24b79"
+    },
+    "initial_snapshot": {
+      "bytes": 526467,
+      "path": "runs/m7-recovery-coverage-development-20261003/recovery-north-2100/9c6b6c37fd704985941919b9b0e09c6e/snapshots/initial.snp",
+      "sha256": "681864c0a05d1471326959b6adf6d152ebff77f98d614c177bc1e488de035927"
+    },
+    "inventory_script": {
+      "bytes": 5187,
+      "path": "runs/m7-recovery-control-83ca0eb/inventory.py",
+      "sha256": "65617975bd68d151c18e9603abec41c501393b0b1f532b8913d1f21bf4a80a85"
+    },
+    "invocation": {
+      "bytes": 2738,
+      "path": "runs/m7-recovery-control-83ca0eb/invocation.json",
+      "sha256": "ef7b7ad3a7fa2b64f2ce4819cf39fb1d847ba6d5593f191da9dd7a00abd75a43"
+    },
+    "launcher": {
+      "bytes": 6903,
+      "path": "runs/m7-recovery-control-83ca0eb/launch.py",
+      "sha256": "741f700100f2412879e3c24044989a9f22a9931ba782baf1df10a33b108a18e4"
+    },
+    "north_result": {
+      "bytes": 632105,
+      "path": "runs/m7-recovery-coverage-development-20261003/recovery-north-2100/result.json",
+      "sha256": "3a8e570a14a2060fd320db1ef51faf6e275f873b8f1c977a5393af1399bed3a3"
+    },
+    "report": {
+      "bytes": 37544,
+      "path": "runs/m7-recovery-coverage-development-20261003/report.json",
+      "sha256": "8034783a11bc1f5aa0e58d57949d7fad735070cbf2f589f3a2e43f68ffaaa1ec"
+    },
+    "root_audit_result": {
+      "bytes": 1100,
+      "path": "runs/m7-recovery-control-83ca0eb/root-audit.json",
+      "sha256": "e381f39bd47cc41d9d4721764c2e0559c000d09d4614272ccb76809f9c578ea8"
+    },
+    "root_audit_script": {
+      "bytes": 6949,
+      "path": "runs/m7-recovery-control-83ca0eb/root-audit.py",
+      "sha256": "deda536a9d0c54653edb7708309828e49b6dd92eb4608b388acfdbf376aa4b51"
+    },
+    "terminal": {
+      "bytes": 2691,
+      "path": "runs/m7-recovery-control-83ca0eb/terminal.json",
+      "sha256": "bb31c596760e697bb271b3f5317a2aa5fcce52a0c4e000973df6693bd6ed6bfc"
+    }
+  },
+  "identity": {
+    "artifact_hashes_checked": 13,
+    "assets": 20,
+    "before_after_equal": true,
+    "frozen_entries": 482,
+    "tracked_files": 340,
+    "upstream_files": 122
+  },
+  "limitations": [
+    "Completed recording is not completed owner or coverage pass. First cycle has8 returned back targets, no executed reverse; no45-query cycle completed.",
+    "Only north case ran; south not_started.",
+    "No causal proof of chassis contact mechanism from absent roll/pitch trajectory.",
+    "Finite sampled-process cleanup is not universal transient-process proof.",
+    "Standalone world/profile is rejected by existing loader; no generic playback/replay or training admission.",
+    "No training/checkpoint/optimizer/held-out data or competence claim.",
+    "Raw ignored artifacts retained locally; tracked report is a compact hash index."
+  ],
+  "log_scan": {
+    "matching_retained_native_log_lines": 0,
+    "patterns": [
+      "resource_tracker",
+      "leaked semaphore",
+      "Traceback",
+      "SIGKILL",
+      "timed out"
+    ]
+  },
+  "next_action": "Review separate observable-contact prefix-handoff v2 proposal; no source guard weakening or actual retry authorized",
+  "protocol_id": "M7-REC-COVER-1",
+  "protocol_sha256": "5b032f7c246432a063e167082d60b83a2b44e50b3ec5153e8b14e45c524bb146",
+  "protocol_version": 1,
+  "schema_version": 1,
+  "source_commit": "83ca0eb343b78b5bcc1713054b5063c255c46796",
+  "source_script_sha256": "135809f81522cda8a95ee0acbf021e31a629a8694a9fd39b04718bcf6d7be4c1",
+  "status": "failed-infrastructure",
+  "teacher_sha256": "5edca9a587dea0a2996856e42a96013aab1b1b0a277eacb74b7fc4270c55c586",
+  "upstream_commit": "8d964599119b420de67ee259434d273651a1a76d"
+}
