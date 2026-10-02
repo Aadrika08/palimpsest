@@ -140,7 +140,7 @@ def timing(values):
             'p95_seconds': ordered[math.ceil(.95 * len(ordered)) - 1], 'max_seconds': ordered[-1]}
 
 
-def validate_recording(run, seed, identity, final_state, initial):
+def validate_recording(run, seed, identity, final_state, initial, *, research_provenance=None):
     """Completed validated telemetry is the source of outcomes and timing."""
     import numpy as np
     data = artifacts._load(run)
@@ -158,6 +158,9 @@ def validate_recording(run, seed, identity, final_state, initial):
     if (len(starts) != 1 or starts[0].get('seed') != seed or starts[0].get('episode') != 0 or
             len(policies) != 1 or policies[0].get('provenance', {}).get('policy_identity') != identity):
         raise ValueError('Episode/model event lineage differs')
+    if research_provenance is not None and (manifest.get('research') != research_provenance or
+            policies[0].get('provenance', {}).get('research') != research_provenance):
+        raise ValueError('Research model provenance differs')
     forbidden = {'application_restored', 'controller_replaced', 'replay_started', 'intervention', 'eyes_changed'}
     if any(event['kind'] in forbidden or event['kind'].startswith('memory_') or
            (event['kind'] == 'command_received' and event['command']['kind'] != 'step') for event in events):
@@ -239,9 +242,35 @@ def inventory(run):
 
 def evaluate(args):
     root, assets, output = args.repo.resolve(), args.assets.resolve(), artifacts._safe_path(args.output)
+    stage = getattr(args, 'research_stage', None)
+    settings = dict(PROTOCOL)
+    research = None
+    if stage is not None:
+        from palimpsest import male_research as research
+        frozen = research.protocol(root)
+        if stage not in ('dev', 'held_out') or not args.research_manifest or not args.research_manifest_sha256:
+            raise ValueError('research evaluation requires explicit stage and frozen model manifest')
+        if stage == 'held_out':
+            unlock = research.require_unlock(args)
+        settings.update(scene_seeds=frozen['closed_loop_scene_seeds'][stage], max_runs=len(research.planned(stage)),
+            total_timeout_seconds=frozen['evaluation_limits'][stage + '_seconds'],
+            external_timeout_seconds=frozen['evaluation_limits'][stage + '_outer_seconds'],
+            aggregate_limit_bytes=frozen['evaluation_limits'][stage + '_bytes'],
+            scope=frozen['scope'], dataset_id=frozen['id'] + '-' + stage)
     output.mkdir(parents=True, exist_ok=False)
-    report = {'version': 2, 'status': 'running', 'protocol': PROTOCOL, 'protocol_sha256': digest(PROTOCOL),
-              'qualification_claims': [], 'runs': planned_runs(), 'paired_initial_states': []}
+    report = {'version': 2, 'status': 'running', 'protocol': settings, 'protocol_sha256': digest(settings),
+              'qualification_claims': [], 'runs': research.planned(stage) if research else planned_runs(), 'paired_initial_states': []}
+    if research:
+        report.update(stage=stage, research_protocol_sha256=research.PROTOCOL_SHA256, research_manifest_sha256=args.research_manifest_sha256)
+        if stage == 'held_out':
+            report['unlock'] = unlock
+    def model_identity(key):
+        if research:
+            pair, controller = key.split(':')
+            return research.resolve(root, assets, args.research_manifest, args.research_manifest_sha256, int(pair), controller)[0]
+        return resolve_profile(root, assets, key)[0]
+    def source_identity():
+        return sources(root) | (research.research_sources(root) if research else {})
     supervisor, active, interrupted, fingerprints = None, None, [], []
     started = time.monotonic()
     old_handlers = {sig: signal.signal(sig, lambda sig, frame: interrupted.append(sig)) for sig in (signal.SIGTERM, signal.SIGINT)}
@@ -249,7 +278,7 @@ def evaluate(args):
 
     def save():
         payload = (json.dumps(report, allow_nan=False, indent=2) + '\n').encode()
-        if len(payload) > PROTOCOL['max_report_bytes']:
+        if len(payload) > settings['max_report_bytes']:
             raise ValueError('Evaluation report exceeds 4 MiB')
         temporary = output / 'evaluation.tmp'
         if supervisor is not None:
@@ -259,7 +288,7 @@ def evaluate(args):
 
     def check_deadline(owner=True):
         now = time.monotonic()
-        if interrupted or now - started > PROTOCOL['total_timeout_seconds'] or (owner and now - owner_started > PROTOCOL['owner_timeout_seconds']):
+        if interrupted or now - started > settings['total_timeout_seconds'] or (owner and now - owner_started > settings['owner_timeout_seconds']):
             raise TimeoutError('Evaluation interrupted or frozen total/owner deadline exceeded')
 
     def boundary(identifier):
@@ -277,26 +306,31 @@ def evaluate(args):
             time.sleep(.01)
 
     try:
-        report['sources_before'] = sources(root)
-        report['model_identities'] = {name: resolve_profile(root, assets, name)[0] for name in PROTOCOL['controller_order']}
-        supervisor = LabSupervisor(root, assets, output / 'runs', export_root=output,
-            startup_timeout=PROTOCOL['startup_timeout_seconds'], step_timeout=PROTOCOL['progress_timeout_seconds'],
-            storage_limits=StorageLimits(max_bytes=PROTOCOL['aggregate_limit_bytes'], min_free_bytes=PROTOCOL['min_free_bytes'],
-                                         max_runs=16, max_snapshots=1, max_exports=1))
+        report['sources_before'] = source_identity()
+        keys = [f'{pair}:{controller}' for pair in research.PAIR_SEEDS for controller in research.CONTROLLERS] if research else settings['controller_order']
+        report['model_identities'] = {key: model_identity(key) for key in keys}
+        worker_options = {'worker_target': research.worker} if research else {}
+        supervisor = LabSupervisor(root, assets, output / 'runs', export_root=output, **worker_options,
+            startup_timeout=settings['startup_timeout_seconds'], step_timeout=settings['progress_timeout_seconds'],
+            storage_limits=StorageLimits(max_bytes=settings['aggregate_limit_bytes'], min_free_bytes=settings['min_free_bytes'],
+                                         max_runs=settings['max_runs'], max_snapshots=1, max_exports=1))
         # The shared budget covers reports as well as runs. Admit the full planned
         # per-run allowance before any owner; never silently shorten for storage.
-        report['storage_admission'] = supervisor.budget.check(16 * PROTOCOL['recording_plus_snapshot_limit_bytes'], path=output / 'runs')
-        (output / 'protocol.json').write_text(json.dumps(PROTOCOL, indent=2, allow_nan=False) + '\n')
+        report['storage_admission'] = supervisor.budget.check(settings['max_runs'] * settings['recording_plus_snapshot_limit_bytes'], path=output / 'runs')
+        (output / 'protocol.json').write_text(json.dumps(settings, indent=2, allow_nan=False) + '\n')
         (output / 'evaluator.py').write_bytes(Path(__file__).read_bytes())
         save()
-        first = None
+        first, scene_initials = None, {}
         for entry in report['runs']:
             active, owner_started = entry, time.monotonic()
             check_deadline(owner=False)
             seed, controller = entry['seed'], entry['controller']
-            identity = report['model_identities'][controller]
+            model_key = f"{entry['training_seed']}:{controller}" if research else controller
+            identity = report['model_identities'][model_key]
+            extra = {'_male_research': {'manifest': str(args.research_manifest.resolve()),
+                'manifest_sha256': args.research_manifest_sha256, 'training_seed': entry['training_seed']}} if research else {}
             identifier = supervisor.start({'controller': controller, 'device': 'cpu', 'seed': seed,
-                'scenario': 'reproduction', 'texture': 'checker', 'policy_identity': identity})
+                'scenario': 'reproduction', 'texture': 'checker', 'policy_identity': identity, **extra})
             run = supervisor.path(identifier)
             entry.update(run_id=identifier, status='running', model_identity=identity)
             save()
@@ -306,18 +340,22 @@ def evaluate(args):
                 raise ValueError('Initial snapshot registry identity differs')
             entry['initial_snapshot'] = {'snapshot_id': registered['snapshot_id'], 'sha256': registered['sha256']}
             entry['initial_fingerprint'] = initial_fingerprint(read_snapshot(path), initial['sample']['world'], seed, identity)
+            if seed in scene_initials:
+                require_matched_initial(scene_initials[seed], entry['initial_fingerprint'])
+            else:
+                scene_initials[seed] = entry['initial_fingerprint']
             if controller == 'male-original':
                 first = entry
             else:
                 require_matched_initial(first['initial_fingerprint'], entry['initial_fingerprint'])
-                report['paired_initial_states'].append({'seed': seed, 'original_run_id': first['run_id'],
+                report['paired_initial_states'].append({**({'training_seed': entry['training_seed']} if research else {}), 'seed': seed, 'original_run_id': first['run_id'],
                     'control_run_id': identifier, 'status': 'exact_match', 'fingerprint': entry['initial_fingerprint']})
             preflight = initial['storage_preflight']
             _, _, initial_bytes = inventory(run)
             estimate = initial_bytes + preflight['recording_bytes_estimate']
             entry['storage_preflight'] = {'initial_bytes': initial_bytes, 'estimated_total_bytes': estimate,
-                                          'limit_bytes': PROTOCOL['recording_plus_snapshot_limit_bytes']}
-            if estimate > PROTOCOL['recording_plus_snapshot_limit_bytes']:
+                                          'limit_bytes': settings['recording_plus_snapshot_limit_bytes']}
+            if estimate > settings['recording_plus_snapshot_limit_bytes']:
                 raise ValueError('Run admission estimate exceeds 160 MiB')
             save()
             state = step_episode(supervisor, identifier, initial, wait)
@@ -326,7 +364,8 @@ def evaluate(args):
             entry.update(close_status=closed['status'], owner_exitcode=owner.process.exitcode, owner_alive=owner.process.is_alive())
             if closed['status'] != 'closed' or owner.process.exitcode != 0 or owner.process.is_alive():
                 raise ValueError('Owner did not close normally')
-            entry.update(validate_recording(run, seed, identity, state, entry['initial_fingerprint']))
+            expected_research = research.Binding(args.research_manifest, args.research_manifest_sha256, entry['training_seed']).provenance() if research else None
+            entry.update(validate_recording(run, seed, identity, state, entry['initial_fingerprint'], research_provenance=expected_research))
             files, fingerprint, size = inventory(run)
             fingerprints.append((run, files, fingerprint))
             check_deadline()
@@ -335,11 +374,11 @@ def evaluate(args):
             save()
             print(json.dumps({key: entry[key] for key in ('seed', 'controller', 'run_id', 'status', 'ticks', 'outcome')}), flush=True)
             active = None
-        report['summary'] = {controller: {'episodes': 8,
-            'outcomes': dict(Counter(entry['outcome'] for entry in report['runs'] if entry['controller'] == controller)),
-            'goal_count': sum(entry['goal_reached'] for entry in report['runs'] if entry['controller'] == controller)}
-            for controller in PROTOCOL['controller_order']}
-        report['dataset_sha256'] = digest([{'seed': entry['seed'], 'controller': entry['controller'],
+        report['summary'] = {key: {'episodes': len(settings['scene_seeds']),
+            'outcomes': dict(Counter(entry['outcome'] for entry in report['runs'] if entry['model_identity'] == identity)),
+            'goal_count': sum(entry['goal_reached'] for entry in report['runs'] if entry['model_identity'] == identity)}
+            for key, identity in report['model_identities'].items()}
+        report['dataset_sha256'] = digest([{**({'training_seed': entry['training_seed']} if research else {}), 'seed': entry['seed'], 'controller': entry['controller'],
             'recording_sha256': entry['recording_sha256'], 'initial_fingerprint': entry['initial_fingerprint']}
             for entry in report['runs']])
         report['status'] = 'completed'
@@ -397,7 +436,7 @@ def evaluate(args):
                 finalization_failure('recording_fingerprint:' + run.name, error)
         report['sources_unchanged'] = False
         try:
-            report['sources_unchanged'] = sources(root) == report.get('sources_before')
+            report['sources_unchanged'] = source_identity() == report.get('sources_before')
             if not report['sources_unchanged']:
                 raise ValueError('Sources changed during evaluation')
         except BaseException as error:
@@ -406,14 +445,14 @@ def evaluate(args):
         for name, value in report.get('model_identities', {}).items():
             model_checks[name] = False
             try:
-                model_checks[name] = resolve_profile(root, assets, name)[0] == value
+                model_checks[name] = model_identity(name) == value
                 if not model_checks[name]:
                     raise ValueError('Model identity changed during evaluation')
             except BaseException as error:
                 finalization_failure('model_identity:' + name, error)
-        report['model_identities_unchanged'] = len(model_checks) == 2 and all(model_checks.values())
+        report['model_identities_unchanged'] = len(model_checks) == (6 if research else 2) and all(model_checks.values())
         try:
-            if interrupted or time.monotonic() - started > PROTOCOL['total_timeout_seconds']:
+            if interrupted or time.monotonic() - started > settings['total_timeout_seconds']:
                 raise TimeoutError('Evaluation interrupted or final validation exceeded total deadline')
         except BaseException as error:
             finalization_failure('total_deadline', error)
@@ -432,4 +471,6 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__)
     for name in ('repo', 'assets', 'output'):
         parser.add_argument('--' + name, type=Path, required=True)
+    from palimpsest.male_research import add_arguments
+    add_arguments(parser, stages=('dev', 'held_out'))
     sys.exit(evaluate(parser.parse_args()))

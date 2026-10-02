@@ -69,15 +69,25 @@ def prepare(args):
     cell = artifacts._read(args.cell_source, 1024**2)
     if hashlib.sha256(cell).hexdigest() != CELL_SHA256:
         raise ValueError('pinned upstream cell source hash differs')
-    data, collection = prepare_splits({'train': args.train, 'dev': args.dev, 'held_out': args.held_out})
-    validate_initial_split(collection)
-    control, control_report = rewire(graph, INITIAL_PROTOCOL['rewiring_seed'])
+    research = getattr(args, 'research_v2', False)
+    training = INITIAL_PROTOCOL
+    if research:
+        from palimpsest.male_research import training as research_training
+        training = research_training(args.training_seed)
+    data, collection = prepare_splits({'train': args.train, 'dev': args.dev, 'held_out': args.held_out or []},
+                                     research_stage='development' if research else None)
+    if not research:
+        validate_initial_split(collection)
+    control, control_report = rewire(graph, training['rewiring_seed'])
     graphs = {'original': graph, 'degree_rewired': control}
     from palimpsest import male_model, records
     sources = {str(Path(module.__file__).name): hashlib.sha256(Path(module.__file__).read_bytes()).hexdigest()
                for module in (male_model, artifacts, records)}
     sources[Path(__file__).name] = hashlib.sha256(Path(__file__).read_bytes()).hexdigest()
-    protocol = {'training': INITIAL_PROTOCOL, 'feature_protocol': FEATURE_PROTOCOL,
+    if research:
+        from palimpsest import male_research
+        sources['male_research.py'] = hashlib.sha256(Path(male_research.__file__).read_bytes()).hexdigest()
+    protocol = {'training': training, 'feature_protocol': FEATURE_PROTOCOL,
         'feature_protocol_sha256': digest(FEATURE_PROTOCOL), 'cell_source_sha256': CELL_SHA256,
         'cell_source_path': str(Path(args.cell_source).absolute()), 'source_code_sha256': sources,
         'collection': collection, 'collection_sha256': digest(collection),
@@ -89,12 +99,23 @@ def prepare(args):
     return data, graphs, protocol
 
 
+def check_code(protocol):
+    root = Path(__file__).resolve().parents[1]
+    paths = {path.name: path for path in (root / 'src/palimpsest').glob('*.py')}
+    paths['train_male_reduced.py'] = Path(__file__)
+    for name, expected in protocol['source_code_sha256'].items():
+        if hashlib.sha256(artifacts._read(paths[name], 4 * 1024**2)).hexdigest() != expected:
+            raise ValueError('training source changed: ' + name)
+    if hashlib.sha256(artifacts._read(protocol['cell_source_path'], 1024**2)).hexdigest() != CELL_SHA256:
+        raise ValueError('pinned cell source changed during training')
+
+
 def loss_for(actions, targets):
     import torch
     return .5 * ((actions[..., 0] - targets[..., 0]).square() / 9 + 1 - torch.cos(actions[..., 1] - targets[..., 1]))
 
 
-def evaluate(model, episodes, deadline):
+def evaluate(model, episodes, deadline, training=INITIAL_PROTOCOL):
     import torch
     model.eval()
     model.cell.invalidate_caches()
@@ -102,7 +123,7 @@ def evaluate(model, episodes, deadline):
     with torch.no_grad():
         for episode in episodes:
             hidden = model.reset()
-            for start in range(0, len(episode['features']), INITIAL_PROTOCOL['window']):
+            for start in range(0, len(episode['features']), training['window']):
                 if time.monotonic() > deadline:
                     raise TimeoutError('male pilot exceeded the frozen wall budget')
                 inputs = torch.from_numpy(episode['features'][start:start + 32]).unsqueeze(1)
@@ -123,19 +144,19 @@ def evaluate(model, episodes, deadline):
             'interpretation': 'recorded-input teacher imitation; not closed-loop navigation success'}
 
 
-def fit(graph, data, cell_source, deadline):
+def fit(graph, data, cell_source, deadline, training=INITIAL_PROTOCOL):
     import torch
-    model = make_model(graph, cell_source, INITIAL_PROTOCOL['training_seed'])
+    model = make_model(graph, cell_source, training['training_seed'])
     parameters = [parameter for parameter in model.parameters() if parameter.requires_grad]
-    optimizer = torch.optim.Adam(parameters, lr=INITIAL_PROTOCOL['learning_rate'])
+    optimizer = torch.optim.Adam(parameters, lr=training['learning_rate'])
     history, best_loss, best_state, best_epoch = [], math.inf, None, None
-    for epoch in range(INITIAL_PROTOCOL['epochs']):
+    for epoch in range(training['epochs']):
         model.train()
         model.cell.invalidate_caches()
         total, count = 0., 0
         for episode in data['train']:
             hidden = model.reset()
-            for start in range(0, len(episode['features']), INITIAL_PROTOCOL['window']):
+            for start in range(0, len(episode['features']), training['window']):
                 if time.monotonic() > deadline:
                     raise TimeoutError('male pilot exceeded the frozen wall budget')
                 optimizer.zero_grad(set_to_none=True)
@@ -153,7 +174,7 @@ def fit(graph, data, cell_source, deadline):
                     raise ValueError('nonfinite male parameters after optimizer step')
                 total += float(values.detach().sum())
                 count += values.numel()
-        dev = evaluate(model, data['dev'], deadline)
+        dev = evaluate(model, data['dev'], deadline, training)
         history.append({'epoch': epoch + 1, 'train_ticks': count, 'train_loss': total / count, 'dev': dev})
         if dev['loss'] < best_loss:
             best_loss, best_epoch = dev['loss'], epoch + 1
@@ -168,18 +189,24 @@ def fit(graph, data, cell_source, deadline):
 def train(args, data, graphs, protocol):
     """Only call after the actual-runtime window is available; owns storage lease."""
     import torch
+    training = protocol['training']
+    research = training.get('research_protocol_sha256') is not None
     output = artifacts._safe_path(args.output)
     check_sources(protocol['collection'])
+    check_code(protocol)
+    if research and output.name != f"seed-{training['training_seed']}":
+        raise ValueError('research pair output must use its fixed seed-N directory')
     if any(output.is_relative_to(Path(source['path'])) for split in protocol['collection']['splits'].values() for source in split):
         raise ValueError('training output cannot alter a teacher source run')
-    budget = StorageBudget((output.parent,), StorageLimits(max_bytes=1024**3, min_free_bytes=256 * 1024**2))
+    budget = StorageBudget((output.parent,), StorageLimits(max_bytes=training['training_limits']['all_pair_output_bytes'] if research else 1024**3,
+        min_free_bytes=1024**3 if research else 256 * 1024**2))
     with budget.lock():
-        budget.check(INITIAL_PROTOCOL['output_limit_bytes'], path=output)
+        budget.check(training['output_limit_bytes'], path=output)
         output.mkdir(exist_ok=False)
         files, written = [], 0
         def write(name, payload):
             nonlocal written
-            if len(payload) > 8 * 1024**2 or written + len(payload) > INITIAL_PROTOCOL['output_limit_bytes']:
+            if len(payload) > 8 * 1024**2 or written + len(payload) > training['output_limit_bytes']:
                 raise ValueError('male training artifact byte budget exceeded')
             path = output / name
             budget.check(len(payload), path=path)
@@ -198,14 +225,21 @@ def train(args, data, graphs, protocol):
         report = {'status': 'running', 'protocol_sha256': digest(protocol), 'training_completed': False,
                   'training_attempted': False,
                   'qualification_claims': [], 'models': {}, 'held_out_used_for_selection': False}
+        if research:
+            report['models'] = {variant: {'status': 'not_started'} for variant in training['variants']}
+            report['held_out_status'] = 'locked_unopened'
+        active_variant = None
         try:
             write('protocol.json', canonical(protocol))
-            deadline = time.monotonic() + INITIAL_PROTOCOL['wall_budget_seconds']
+            deadline = time.monotonic() + training['wall_budget_seconds']
             models = {}
             # Freeze both dev-selected checkpoints before any held-out evaluation.
-            for variant in INITIAL_PROTOCOL['variants']:
+            for variant in training['variants']:
                 report['training_attempted'] = True
-                model, result = fit(graphs[variant], data, args.cell_source, deadline)
+                active_variant = variant
+                if research:
+                    report['models'][variant] = {'status': 'running'}
+                model, result = fit(graphs[variant], data, args.cell_source, deadline, training)
                 check_sources(protocol['collection'])
                 models[variant] = model
                 graph_file = variant + '-graph.json'
@@ -217,17 +251,36 @@ def train(args, data, graphs, protocol):
                 torch.save(checkpoint, buffer)
                 filename = variant + '.pt'
                 write(filename, buffer.getvalue())
-                report['models'][variant] = {**result, 'checkpoint': files[-1], 'graph_file': graph_file}
-            for variant, model in models.items():
-                report['models'][variant]['held_out'] = evaluate(model, data['held_out'], deadline)
+                report['models'][variant] = {**result, 'checkpoint': files[-1], 'graph_file': graph_file,
+                    **({'status': 'completed'} if research else {})}
+                active_variant = None
+            if research:
+                report['held_out_status'] = 'locked_unopened'
+            else:
+                for variant, model in models.items():
+                    report['models'][variant]['held_out'] = evaluate(model, data['held_out'], deadline, training)
             check_sources(protocol['collection'])
             report.update(status='completed', training_completed=True)
         except BaseException as error:
             report.update(status='failed', error={'type': type(error).__name__, 'message': str(error)[:2048]})
+            if research and active_variant is not None:
+                report['models'][active_variant].update(status='failed', error=report['error'])
             raise
         finally:
+            report['finalization_errors'] = []
+            for name, check in (('source_code_unchanged', lambda: check_code(protocol)),
+                                ('teacher_sources_unchanged', lambda: check_sources(protocol['collection']))):
+                report[name] = False
+                try:
+                    check()
+                    report[name] = True
+                except BaseException as error:
+                    report.update(status='failed', training_completed=False)
+                    report['finalization_errors'].append({'check': name, 'type': type(error).__name__, 'message': str(error)[:2048]})
             report['files'] = list(files)
             write('report.json', canonical(report))
+    if report['status'] != 'completed':
+        raise ValueError('training final source validation failed; retained report is failed')
     return report
 
 
@@ -238,10 +291,14 @@ def main(argv=None):
     parser.add_argument('--graph-manifest', type=Path, default=root / 'data/manifests/malecns-reduced-neighborhood-v1.json')
     parser.add_argument('--cell-source', type=Path, required=True)
     for split in ('train', 'dev', 'held-out'):
-        parser.add_argument('--' + split, type=Path, action='append', required=True, help='repeat for each frozen root teacher run')
+        parser.add_argument('--' + split, type=Path, action='append', required=split != 'held-out', help='repeat for each frozen root teacher run')
+    parser.add_argument('--research-v2', action='store_true')
+    parser.add_argument('--training-seed', type=int, choices=(10, 11, 12))
     parser.add_argument('--prepare-only', action='store_true', help='NumPy/stdlib validation only; no Torch execution or checkpoint')
     parser.add_argument('--output', type=Path, help='new directory required for actual training')
     args = parser.parse_args(argv)
+    if (args.research_v2 and (args.training_seed is None or args.held_out)) or (not args.research_v2 and (args.training_seed is not None or not args.held_out)):
+        parser.error('v2 requires one paired training seed and unopened held-out; v1 requires held-out and no seed override')
     if not args.prepare_only and args.output is None:
         parser.error('actual training requires an exclusive --output directory')
     try:

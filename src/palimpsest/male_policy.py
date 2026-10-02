@@ -103,7 +103,7 @@ def _check_archive(payload):
         raise ValueError('checkpoint requires the bounded Torch ZIP format') from error
 
 
-def _bundle(directory, variant, expected_report_sha256, graph_path, graph_manifest):
+def _bundle(directory, variant, expected_report_sha256, graph_path, graph_manifest, *, research_seed=None):
     """Validate retained bytes before importing Torch; never reread teacher data."""
     if variant not in VARIANTS or not _hash(expected_report_sha256):
         raise ValueError('explicit supported variant and expected report SHA256 required')
@@ -137,19 +137,32 @@ def _bundle(directory, variant, expected_report_sha256, graph_path, graph_manife
     protocol = artifacts._json(payloads['protocol.json'])
     if not isinstance(protocol, dict) or report.get('protocol_sha256') != digest(protocol):
         raise ValueError('training protocol hash differs')
-    if (digest(protocol.get('training')) != TRAINING_PROTOCOL_SHA256 or
+    training_ok = digest(protocol.get('training')) == TRAINING_PROTOCOL_SHA256
+    source_names = {'male_model.py', 'artifacts.py', 'records.py', 'train_male_reduced.py'}
+    if research_seed is not None:
+        from .male_research import validate_training, validate_collection, PAIR_SEEDS
+        if type(research_seed) is not int or research_seed not in PAIR_SEEDS or validate_training(protocol.get('training')) != research_seed:
+            raise ValueError('research training seed differs')
+        validate_collection(protocol.get('collection'), 'development')
+        if report.get('held_out_status') != 'locked_unopened' or any('held_out' in item for item in report.get('models', {}).values()):
+            raise ValueError('research training opened held-out data')
+        if (report.get('source_code_unchanged') is not True or report.get('teacher_sources_unchanged') is not True or
+                report.get('finalization_errors') != []):
+            raise ValueError('research training final source checks differ')
+        source_names.add('male_research.py')
+        training_ok = True
+    if (not training_ok or
             protocol.get('feature_protocol') != FEATURE_PROTOCOL or
             protocol.get('feature_protocol_sha256') != digest(FEATURE_PROTOCOL) or
             protocol.get('cell_source_sha256') != CELL_SHA256 or
             protocol.get('collection_sha256') != digest(protocol.get('collection'))):
         raise ValueError('training feature, collection, cell, or frozen protocol differs')
     source_hashes = protocol.get('source_code_sha256')
-    if (not isinstance(source_hashes, dict) or set(source_hashes) !=
-            {'male_model.py', 'artifacts.py', 'records.py', 'train_male_reduced.py'} or
+    if (not isinstance(source_hashes, dict) or set(source_hashes) != source_names or
             not all(_hash(value) for value in source_hashes.values())):
         raise ValueError('training source hashes are incomplete')
     original = load_graph(graph_path, graph_manifest)
-    control, control_report = rewire(original, 0)
+    control, control_report = rewire(original, 0 if research_seed is None else research_seed)
     graphs = {'original': original, 'degree_rewired': control}
     descriptions = {name: {key: graph[key] for key in ('topology_sha256', 'ordered_ids_sha256',
                     'source_graph_sha256', 'graph_manifest_sha256', 'type_missing_ids')}
@@ -164,6 +177,16 @@ def _bundle(directory, variant, expected_report_sha256, graph_path, graph_manife
                 model.get('checkpoint') != entries[name + '.pt'] or
                 artifacts._json(payloads[name + '-graph.json']) != graphs[name]):
             raise ValueError('selected model graph or checkpoint identity differs')
+    if research_seed is not None:
+        for model in report['models'].values():
+            history = model.get('history')
+            if (model.get('status') != 'completed' or not isinstance(history, list) or len(history) != 20 or
+                    [item.get('epoch') for item in history] != list(range(1, 21))):
+                raise ValueError('research requires every frozen training epoch')
+            losses = [item.get('dev', {}).get('loss') for item in history]
+            if (any(type(value) not in (int, float) or not math.isfinite(value) or value < 0 for value in losses) or
+                    model.get('selected_epoch') != min(range(1, 21), key=lambda epoch: losses[epoch - 1])):
+                raise ValueError('research checkpoint selection differs from frozen dev rule')
     if artifacts._fingerprint(paths) != before:
         raise ValueError('training artifacts changed while loading')
     provenance = {'profile': 'male-reduced-artificial-interface-v1', 'variant': variant,
@@ -176,15 +199,17 @@ def _bundle(directory, variant, expected_report_sha256, graph_path, graph_manife
         'qualification_claims': [], 'biological_sensor_mapping': False,
         'interface_limit': 'authored learned RGB/contact/goal-bearing encoder; no biological sensor mapping',
         'evaluation_limit': 'single-seed recorded-input imitation; no topology advantage or navigation qualification'}
+    if research_seed is not None:
+        provenance['evaluation_limit'] = 'one fixed member of three paired research seeds; no topology advantage or navigation qualification'
     return graphs[variant], payloads[variant + '.pt'], provenance
 
 
 def load_policy(directory, variant, *, expected_report_sha256, graph_path, graph_manifest,
-                cell_path, device='cpu', seed=0):
+                cell_path, device='cpu', seed=0, research_seed=None):
     """Load exact completed-artifact bytes, validating frozen graph and tensor state."""
     if device != 'cpu' or type(seed) is not int or not 0 <= seed < 2**31:
         raise ValueError('male policy requires explicit CPU and a bounded integer seed')
-    graph, payload, provenance = _bundle(directory, variant, expected_report_sha256, graph_path, graph_manifest)
+    graph, payload, provenance = _bundle(directory, variant, expected_report_sha256, graph_path, graph_manifest, research_seed=research_seed)
     _check_archive(payload)
     model = make_model(graph, cell_path, seed)
     import torch
