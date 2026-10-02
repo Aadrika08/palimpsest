@@ -333,6 +333,68 @@ class ArtifactTests(unittest.TestCase):
         self.assertEqual(stored["scenario"], "reproduction")
         self.assertEqual(artifacts.compare_runs(run, run)["left"]["provenance"]["scenario"], profile)
 
+    def test_export_budget_checks_before_publication_and_exact_image_bytes(self):
+        from palimpsest.storage import StorageLimitError
+        run = self.run_fixture()
+        for format in ("svg", "png", "bundle"):
+            output = self.root / ("bounded." + format)
+            class Budget:
+                def check(budget, amount, *, path):
+                    self.assertEqual(path, output)
+                    self.assertFalse(output.exists())
+                    budget.amount = amount
+            budget = Budget()
+            artifacts.export_run(run, output, format, storage_budget=budget)
+            if format == "bundle":
+                self.assertGreaterEqual(budget.amount, output.stat().st_size)
+            else:
+                self.assertEqual(budget.amount, output.stat().st_size)
+            rejected = self.root / ("rejected." + format)
+            original_open = Path.open
+            def guarded_open(path, *args, **kwargs):
+                self.assertFalse(path == rejected and (args[0] if args else kwargs.get("mode")) == "xb")
+                return original_open(path, *args, **kwargs)
+            class Reject:
+                def check(budget, amount, *, path):
+                    raise StorageLimitError("quota exhausted")
+            with patch.object(Path, "open", autospec=True, side_effect=guarded_open):
+                with self.assertRaisesRegex(StorageLimitError, "quota"):
+                    artifacts.export_run(run, rejected, format, storage_budget=Reject())
+            self.assertFalse(rejected.exists())
+
+    def test_budgeted_bundle_partial_cleanup_and_exclusivity(self):
+        run = self.run_fixture()
+        output = self.root / "partial.zip"
+        def fail(data, metadata, stream, **kwargs):
+            stream.write(b"partial")
+            raise OSError("disk full")
+        with patch.object(artifacts, "_bundle", side_effect=fail):
+            with self.assertRaisesRegex(OSError, "disk full"):
+                artifacts.export_run(run, output, "bundle")
+        self.assertFalse(output.exists())
+        output.write_bytes(b"existing")
+        with self.assertRaises(FileExistsError):
+            artifacts.export_run(run, output, "bundle")
+        self.assertEqual(output.read_bytes(), b"existing")
+
+    def test_list_runs_optional_index_and_quota_fallback(self):
+        from palimpsest.storage import StorageLimitError
+        run = self.run_fixture()
+        with patch.object(artifacts.tempfile, "mkstemp", side_effect=AssertionError("must not write")):
+            self.assertEqual(artifacts.list_runs(self.root, rebuild_index=False)[0]["run_id"], run.name)
+        self.assertFalse((self.root / "index.sqlite3").exists())
+        class Reject:
+            def check(budget, amount, *, path):
+                self.assertEqual(amount, 4 * 1024**2)
+                raise StorageLimitError("quota exhausted")
+        with patch.object(artifacts.tempfile, "mkstemp", side_effect=AssertionError("must preflight")):
+            self.assertEqual(artifacts.list_runs(self.root, storage_budget=Reject())[0]["run_id"], run.name)
+        self.assertFalse((self.root / "index.sqlite3").exists())
+        artifacts.list_runs(self.root)
+        with sqlite3.connect(self.root / "index.sqlite3") as database:
+            self.assertLessEqual(database.execute("PRAGMA page_count").fetchone()[0], 1024)
+        self.assertEqual(list(self.root.glob(".index-*")), [])
+
     def test_bounded_metadata_and_no_inference_imports(self):
         run = self.run_fixture()
         with patch.object(artifacts, "MAX_EVENTS", 32):

@@ -9,7 +9,9 @@ from __future__ import annotations
 import base64
 from collections import OrderedDict
 import copy
+from contextlib import closing
 import hashlib
+import io
 import json
 import math
 import os
@@ -532,7 +534,7 @@ def registered_snapshots(run_path, events=None):
     return records
 
 
-def _bundle(data, metadata, stream):
+def _bundle_inputs(data):
     paths = [(f"recording/{path.relative_to(data['run'] / 'recording').as_posix()}", path) for path in data["paths"]]
     snapshots = registered_snapshots(data["run"], data["events"])
     expected_hashes = {"snapshots/" + record["filename"]: record["sha256"] for record in snapshots}
@@ -560,6 +562,22 @@ def _bundle(data, metadata, stream):
     fingerprint = _fingerprint([path for _, path in paths])
     _no_secrets(data["manifest"])
     _no_secrets(data["events"])
+    return paths, expected_hashes, fingerprint
+
+
+def _bundle_bound(paths, metadata):
+    # ZIP_STORED has no compression expansion. Reserve ZIP64 headers, central
+    # directory, descriptors and manifest text without buffering the payload.
+    files = [{"path": relative, "size_bytes": path.stat().st_size, "sha256": "0" * 64}
+             for relative, path in paths]
+    manifest = json.dumps({"format": "palimpsest-bundle-v1", "files": files, "derived": metadata}, allow_nan=False).encode()
+    return sum(file["size_bytes"] for file in files) + len(manifest) + 4096 + sum(256 + 2 * len(relative.encode()) for relative, _ in paths)
+
+
+def _bundle(data, metadata, stream, *, prepared=None):
+    paths, expected_hashes, fingerprint = prepared or _bundle_inputs(data)
+    if _fingerprint([path for _, path in paths]) != fingerprint:
+        raise ValueError("artifact changed before export")
     files = []
     with zipfile.ZipFile(stream, "w", compression=zipfile.ZIP_STORED) as archive:
         for relative, path in paths:
@@ -580,23 +598,36 @@ def _bundle(data, metadata, stream):
         raise ValueError("artifact changed during export")
 
 
-def export_run(run_path, output_path, format):
+def export_run(run_path, output_path, format, storage_budget=None):
     if format not in {"svg", "png", "bundle"}:
         raise ValueError("export format must be svg, png or bundle")
     data = _load(run_path)
     metadata = _export_metadata(data, allow_empty=format == "bundle")
     _no_secrets(metadata)
     output = _safe_path(output_path)
-    # Exclusive creation is also the artifact's reservation. Remove our partial
+    prepared, payload = None, None
+    if format == "bundle":
+        prepared = _bundle_inputs(data)
+        bound = _bundle_bound(prepared[0], metadata)
+    else:
+        payload = io.BytesIO()
+        if format == "svg":
+            payload.write(_svg(metadata))
+        else:
+            _png(metadata, payload)
+        bound = payload.tell()
+        payload.seek(0)
+    if storage_budget is not None:
+        storage_budget.check(bound, path=output)
+    # Reserve exclusively only after validation/preflight. Remove our partial
     # file on error, but never replace an existing artifact.
     with output.open("xb") as stream:
         try:
-            if format == "svg":
-                stream.write(_svg(metadata))
-            elif format == "png":
-                _png(metadata, stream)
+            if format == "bundle":
+                _bundle(data, metadata, stream, prepared=prepared)
             else:
-                _bundle(data, metadata, stream)
+                while block := payload.read(1024 * 1024):
+                    stream.write(block)
             if _fingerprint(data["paths"]) != data["fingerprint"]:
                 raise ValueError("recording changed during export")
         except BaseException:
@@ -606,7 +637,7 @@ def export_run(run_path, output_path, format):
     return output
 
 
-def list_runs(root):
+def list_runs(root, *, rebuild_index=True, storage_budget=None):
     """Rebuild a disposable SQLite index from immediate UUID run manifests.
 
     Invalid or not-yet-published manifests are excluded. Summary discovery does
@@ -635,14 +666,26 @@ def list_runs(root):
             summaries.append(summary)
         except (ValueError, OSError):
             continue
+    if not rebuild_index:
+        return summaries
     index = _safe_path(root / "index.sqlite3")
+    if storage_budget is not None:
+        from .storage import StorageLimitError
+        try:
+            storage_budget.check(4 * 1024**2, path=index)
+        except StorageLimitError:
+            return summaries
     fd, name = tempfile.mkstemp(prefix=".index-", suffix=".sqlite3", dir=root)
     os.close(fd)
     temporary = Path(name)
     try:
-        with sqlite3.connect(temporary) as database:
+        with closing(sqlite3.connect(temporary)) as database:
+            database.execute("PRAGMA page_size=4096")
+            database.execute("PRAGMA max_page_count=1024")
+            database.execute("PRAGMA journal_mode=OFF")
             database.execute("CREATE TABLE runs (run_id TEXT PRIMARY KEY, summary TEXT NOT NULL)")
             database.executemany("INSERT INTO runs VALUES (?, ?)", [(item["run_id"], json.dumps(item, allow_nan=False)) for item in summaries])
+            database.commit()
         os.replace(temporary, index)
     finally:
         temporary.unlink(missing_ok=True)

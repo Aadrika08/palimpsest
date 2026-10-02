@@ -100,3 +100,33 @@ test('actual replay jobs recover without samples and expose controls, reports an
   await page.getByRole('button',{name:'Stop',exact:true}).click();await expect(page.locator('.run-heading strong')).toHaveText('canceled',{timeout:90_000});await expect(actionReport).toContainText('"status": "cancelled"');
   expect(browserErrors).toEqual([]);expect(await page.locator('.error').count()).toBe(0);
 });
+
+test('actual trajectory overlay isolation and keyboard error recovery',async({page})=>{
+  const id=await createManual(page);await expect(page.locator('.notice')).not.toContainText('Loading run');
+  await page.getByRole('button',{name:'Step',exact:true}).focus();await page.keyboard.press('Enter');
+  await expect.poll(async()=>(await api(page,`/runs/${id}`)).state.total_tick).toBe(1);
+  const before=await api(page,`/runs/${id}`);const eventsBefore=await api(page,`/runs/${id}/events?after=0&limit=200`);
+  const mutations:string[]=[];page.on('request',request=>{if(request.url().includes('/api/')&&!['GET','HEAD'].includes(request.method()))mutations.push(request.method()+' '+new URL(request.url()).pathname);});
+  const toggle=page.getByLabel('Show trajectory overlays',{exact:true});await toggle.focus();await page.keyboard.press('Space');await expect(toggle).not.toBeChecked();await expect(page.locator('[data-overlay="trajectory"]')).toHaveCount(0);await page.keyboard.press('Space');await expect(toggle).toBeChecked();await expect(page.locator('[data-overlay="trajectory"]')).toHaveCount(1);
+  expect(await toggle.evaluate(element=>getComputedStyle(element).outlineWidth)).toBe('3px');
+  const after=await api(page,`/runs/${id}`);expect(after.sample.inputs).toEqual(before.sample.inputs);expect(after.sample.transition).toEqual(before.sample.transition);expect(after.state).toEqual(before.state);expect(await api(page,`/runs/${id}/events?after=0&limit=200`)).toEqual(eventsBefore);expect(mutations).toEqual([]);
+  await page.getByLabel('X (m)',{exact:true}).fill('100');await page.getByRole('button',{name:'Preview edit',exact:true}).focus();await page.keyboard.press('Enter');await expect(page.getByRole('alert')).toBeVisible();await expect(page.getByRole('alert')).toBeFocused();await page.keyboard.press('Tab');await expect(page.getByRole('button',{name:'Dismiss error',exact:true})).toBeFocused();await page.keyboard.press('Enter');await expect(page.getByRole('alert')).toHaveCount(0);await expect(page.getByRole('button',{name:'Preview edit',exact:true})).toBeFocused();expect((await api(page,`/runs/${id}`)).state).toEqual(before.state);
+  await page.getByRole('link',{name:'Skip to run controls',exact:true}).focus();await page.keyboard.press('Enter');await expect(page.getByRole('navigation',{name:'Run controls',exact:true})).toBeFocused();
+});
+
+test('measured browser responsiveness and actual display cadence',async({page},info)=>{
+  test.skip(process.env.PALIMPSEST_MEASURE_UI!=='1','Opt-in measurement; serialize actual simulation jobs.');
+  const {installMeter,startMeter,stopMeter,commandMetrics,cadence,summarize}=await import('./measurement');await installMeter(page);
+  const id=await createManual(page);await page.getByRole('button',{name:'Start',exact:true}).click();await expect(page.locator('.run-heading strong')).toHaveText('running');
+  await expect(page.getByLabel('Active real-time factor',{exact:true})).not.toContainText('unavailable');
+  const first=await api(page,`/runs/${id}`);expect(first.sample.performance.active_wall_seconds).toBeGreaterThan(0);expect(first.sample.performance.rtf).toBeCloseTo(first.sample.performance.advanced_simulation_seconds/first.sample.performance.active_wall_seconds,8);
+  await startMeter(page);await page.waitForTimeout(8000);const stream=await stopMeter(page);
+  for(let cycle=0;cycle<5;cycle++){await page.getByRole('button',{name:'Pause',exact:true}).click();await expect(page.locator('.run-heading strong')).toHaveText('paused');await page.getByRole('button',{name:'Start',exact:true}).click();await expect(page.locator('.run-heading strong')).toHaveText('running');}
+  await page.getByRole('button',{name:'Pause',exact:true}).click();await expect(page.locator('.run-heading strong')).toHaveText('paused');await page.waitForTimeout(150);
+  const paused=await api(page,`/runs/${id}`);await page.waitForTimeout(400);const stillPaused=await api(page,`/runs/${id}`);expect(stillPaused.sample.performance).toEqual(paused.sample.performance);
+  const commands=await commandMetrics(page);const acknowledgements=summarize(commands.map((command:any)=>command.ack_ms));const applications=summarize(commands.filter((command:any)=>command.applied_ms!==null).map((command:any)=>command.applied_ms));const samples=cadence(stream.ws),commits=cadence(stream.commits),paints=cadence(stream.paint),raf=cadence(stream.raf);
+  const report={schema_version:1,percentile_method:'nearest rank ceil(p*n)',run_id:id,profile:{scenario:'sparse-navigation',controller:'manual',device:'cpu'},window_ms:stream.window_ms,sample_arrival:samples,dom_sample_commit:commits,after_commit_animation_frame:paints,animation_frame_opportunities:raf,acknowledgement_ms:acknowledgements,observed_application_ms:applications,commands,performance:paused.sample.performance,targets:{display_hz:30,acknowledgement_p95_ms_below:150},meets_targets:{actual_sample_hz:samples.hz!==null&&samples.hz>=30,actual_dom_updates_hz:commits.hz!==null&&commits.hz>=30,acknowledgement_p95:acknowledgements.p95!==null&&acknowledgements.p95<150},limitations:['animation frames are callback opportunities, not physical scanout or invented samples','ack timing starts at browser fetch dispatch and includes response body parsing; loading excluded','application timing is first authoritative applied/rejected receipt observed over WebSocket, including delivery delay','manual CPU profile only; not a full-model/GPU performance claim']};
+  await info.attach('ui-performance.json',{body:JSON.stringify(report,null,2),contentType:'application/json'});const {writeFile}=await import('node:fs/promises');await writeFile(info.outputPath('ui-performance.json'),JSON.stringify(report,null,2)+'\n');console.log('UI_PERFORMANCE '+JSON.stringify(report));
+  expect(samples.count).toBeGreaterThan(2);expect(commits.count).toBeGreaterThan(2);expect(commands.every((command:any)=>command.http_status===200)).toBe(true);expect(acknowledgements.count).toBeGreaterThanOrEqual(10);expect(applications.count).toBe(acknowledgements.count);await expect(page.locator('.error')).toHaveCount(0);
+  if(process.env.PALIMPSEST_REQUIRE_UI_TARGETS==='1'){expect(report.meets_targets.actual_sample_hz).toBe(true);expect(report.meets_targets.actual_dom_updates_hz).toBe(true);expect(report.meets_targets.acknowledgement_p95).toBe(true);}
+});
