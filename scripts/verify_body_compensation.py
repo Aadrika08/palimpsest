@@ -80,6 +80,32 @@ def command_plan(trial, fits):
             'gain_artifact': fits['identity']}
 
 
+def settled_response(fit, identifier):
+    """Existing fixed 100-interval evaluator kernel; caller retains trial guards."""
+    if len(fit) != 100:
+        raise ValueError(identifier + ': 100 measured intervals required')
+    if any(type(row['increments_rad']) is not list or len(row['increments_rad']) != 2 for row in fit):
+        raise ValueError(identifier + ': two measured shaft increments required')
+    rates = [[value / row['dt_s'] for value in row['increments_rad']] for row in fit]
+    yaw = math.fsum(math.remainder(row['after']['pose'][2] - row['before']['pose'][2], math.tau) for row in fit)
+    lateral = fit[-1]['after']['pose'][1] - fit[0]['before']['pose'][1]
+    if any(not math.isfinite(value) for row in rates for value in row) or not math.isfinite(yaw) or not math.isfinite(lateral):
+        raise ValueError(identifier + ': nonfinite evaluator input')
+    if any(abs(value) > gains.FIT_BOUNDS['max_rate_rad_s'] for row in rates for value in row):
+        raise ValueError(identifier + ': measured rate exceeds frozen bound')
+    return {'rates': rates, 'yaw_rad': yaw, 'lateral_m': lateral}
+
+
+def paired_response(baseline, actual):
+    """Unchanged aligned 100x2 wheel, wrapped-yaw and lane-Y differences."""
+    wheel_error = math.sqrt(math.fsum((a - b)**2 for row_a, row_b in zip(actual['rates'], baseline['rates'])
+                                      for a, b in zip(row_a, row_b)) / 200)
+    return {'wheel_rate_rmse': wheel_error,
+            'yaw_error': abs(actual['yaw_rad'] - baseline['yaw_rad']),
+            'lateral_error': abs(actual['lateral_m'] - baseline['lateral_m']),
+            'raw_yaw_rad': actual['yaw_rad'], 'raw_lateral_m': actual['lateral_m']}
+
+
 def compare_trials(trials):
     result = {'accepted': False, 'directions': {}}
     try:
@@ -97,26 +123,12 @@ def compare_trials(trials):
             if any(row['fit_interval'] is not (row['tick'] >= 20) or
                    not gains.FIT_BOUNDS['dt_bounds_s'][0] <= row['dt_s'] <= gains.FIT_BOUNDS['dt_bounds_s'][1] for row in rows):
                 raise ValueError(identifier + ': interval/settling protocol mismatch')
-            if any(type(row['increments_rad']) is not list or len(row['increments_rad']) != 2 for row in fit):
-                raise ValueError(identifier + ': two measured shaft increments required')
-            rates = [[value / row['dt_s'] for value in row['increments_rad']] for row in fit]
-            yaw = math.fsum(math.remainder(row['after']['pose'][2] - row['before']['pose'][2], math.tau) for row in fit)
-            lateral = fit[-1]['after']['pose'][1] - fit[0]['before']['pose'][1]
-            if any(not math.isfinite(value) for row in rates for value in row) or not math.isfinite(yaw) or not math.isfinite(lateral):
-                raise ValueError(identifier + ': nonfinite evaluator input')
-            if any(abs(value) > gains.FIT_BOUNDS['max_rate_rad_s'] for row in rates for value in row):
-                raise ValueError(identifier + ': measured rate exceeds frozen bound')
-            prepared[identifier] = {'rates': rates, 'yaw_rad': yaw, 'lateral_m': lateral}
+            prepared[identifier] = settled_response(fit, identifier)
         for direction in ('forward', 'reverse'):
             baseline = prepared['baseline-' + direction]; comparisons = {}
             for condition in ('uncompensated', 'compensated'):
                 actual = prepared[condition + '-' + direction]
-                wheel_error = math.sqrt(math.fsum((a - b)**2 for row_a, row_b in zip(actual['rates'], baseline['rates'])
-                                                  for a, b in zip(row_a, row_b)) / 200)
-                comparisons[condition] = {'wheel_rate_rmse': wheel_error,
-                    'yaw_error': abs(actual['yaw_rad'] - baseline['yaw_rad']),
-                    'lateral_error': abs(actual['lateral_m'] - baseline['lateral_m']),
-                    'raw_yaw_rad': actual['yaw_rad'], 'raw_lateral_m': actual['lateral_m']}
+                comparisons[condition] = paired_response(baseline, actual)
             improved = {metric: comparisons['compensated'][metric] < comparisons['uncompensated'][metric]
                         for metric in ('wheel_rate_rmse', 'yaw_error', 'lateral_error')}
             result['directions'][direction] = {'accepted': all(improved.values()), 'improved': improved,

@@ -67,6 +67,24 @@ class CompensationChecks(unittest.TestCase):
         malformed = self.trials(); malformed[identifier]['rows'][30]['increments_rad'].pop()
         self.assertFalse(verify.compare_trials(malformed)['accepted'])
 
+    def test_extracted_kernel_preserves_old_straight_metrics_and_exact_guards(self):
+        import math
+        result = verify.compare_trials(self.trials())
+        self.assertTrue(result['accepted'])
+        for direction in ('forward', 'reverse'):
+            metrics = result['directions'][direction]['comparisons']
+            self.assertAlmostEqual(metrics['uncompensated']['wheel_rate_rmse'], math.sqrt(2))
+            self.assertAlmostEqual(metrics['compensated']['wheel_rate_rmse'], .5/math.sqrt(2))
+            self.assertAlmostEqual(metrics['uncompensated']['yaw_error'], .2)
+            self.assertAlmostEqual(metrics['compensated']['lateral_error'], .1)
+        for key, value in [('contact', True), ('coverage_passed', False), ('fit_interval', False), ('dt_s', 0.)]:
+            bad = self.trials(); bad['baseline-forward']['rows'][30][key] = value
+            self.assertFalse(verify.compare_trials(bad)['accepted'])
+        bad = self.trials(); bad['baseline-forward']['trial'] = {**bad['baseline-forward']['trial'], 'action': [0., .2]}
+        self.assertFalse(verify.compare_trials(bad)['accepted'])
+        bad = self.trials(); bad['baseline-forward']['rows'][30]['increments_rad'] = [3., 0.]
+        self.assertFalse(verify.compare_trials(bad)['accepted'])
+
     def test_artifact_hash_and_saturation_reject_before_plan(self):
         with tempfile.TemporaryDirectory() as directory:
             path = Path(directory) / 'report.json'; path.write_text('{}')
