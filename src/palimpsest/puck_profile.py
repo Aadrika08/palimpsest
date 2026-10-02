@@ -16,8 +16,8 @@ from .body_profile import GROUND_SUPPORT, ROBOT_GEOMS
 from .task_mechanics import _fields, _identifier, _integer, _number, _pair, _version
 
 SCENARIO = 'puck-pushing-development'
-PROTOCOL_SHA256 = 'fd8dbcea35d226bed522d02f27f7bc11149ac77f72ca49838493489e330eb88c'
-PROTOCOL_PATH = 'docs/plans/m6-puck-pushing-protocol-v2.json'
+PROTOCOL_SHA256 = '7129265b8483e6932a7745f6af77176855139aab398bd229b78430fe8ae87534'
+PROTOCOL_PATH = 'docs/plans/m6-puck-pushing-protocol-v3.json'
 WORLD_GEOMS = {'floor', 'wall_n', 'wall_s', 'wall_e', 'wall_w',
                *[f'obstacle{i}' for i in range(20)]}
 CONTACT_FIELDS = ('tick', 'time_s', 'source_start_time_s', 'contact_cache_time_s',
@@ -373,8 +373,10 @@ def advance(state, world, contact, action):
     return result, reward
 
 
-def demonstrate(world):
-    """Frozen, stateless privileged teacher; no learned capability claim."""
+def demonstrate(world, mode):
+    """One privileged teacher transition; callers own and retain explicit mode."""
+    if type(mode) is not str or mode not in ('approach', 'push'):
+        raise ValueError('Invalid explicit puck teacher mode')
     _world(world)
     if _world_failure(world):
         raise ValueError('Invalid puck state for demonstrator')
@@ -382,19 +384,23 @@ def demonstrate(world):
     gx, gy = world['goal_xy']
     distance = math.hypot(gx-px, gy-py)
     if distance <= .18:
-        return [0., 0.]
+        return [0., 0.], mode
     dx, dy = (gx-px)/distance, (gy-py)/distance
     x, y, yaw = world['rover_pose']
     axial, lateral = (px-x)*dx+(py-y)*dy, abs(-(px-x)*dy+(py-y)*dx)
     ready = .35 <= axial <= .63 and lateral <= .06
     ax, ay = px-.55*dx-x, py-.55*dy-y
-    if ready or math.hypot(ax, ay) <= .08:
+    if mode == 'push' and not ready:
+        mode = 'approach'
+    elif mode == 'approach' and ready and math.hypot(ax, ay) <= .08:
+        mode = 'push'
+    if mode == 'push':
         ax, ay = dx, dy
     error = math.remainder(math.atan2(ay, ax)-yaw, math.tau)
     heading = max(-.4, min(.4, error))
     if abs(error) > .12:
-        return [0., heading]
-    return [.2 if ready else .25, heading]
+        return [0., heading], mode
+    return [.2 if mode == 'push' else .25, heading], mode
 
 
 def _fixed_bindings(env, model):

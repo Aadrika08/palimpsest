@@ -28,7 +28,7 @@ def application(tick=0):
         world['time_s'] = (n+1)*.02
         contact = puck.classify_contacts(raw_contacts(n+1), OWNERSHIP, tick=n+1, time_s=world['time_s'])
         state, _ = puck.advance(state, world, contact, [0., 0.])
-    return {'version': 1, 'gate_protocol_sha256': gate.PROTOCOL_SHA256, 'case': 'zero',
+    return {'version': 2, 'teacher_mode': 'fixed', 'gate_protocol_sha256': gate.PROTOCOL_SHA256, 'case': 'zero',
             'profile_identity': {'fixture': True}, 'model_sha256': 'a'*64,
             'state': state, 'world': world, 'contact': contact,
             'inputs': puck.project(world, contact), 'paused': True}
@@ -82,13 +82,22 @@ class MechanicsFixtures(unittest.TestCase):
         with self.assertRaises(ValueError): gate.validate_application(app, 'zero', 1, '0'*64)
         with self.assertRaises(ValueError): gate.validate_application(app, 'push-positive', 1, expected)
 
-    def test_v1_snapshot_gate_and_task_pins_rejected_before_native_restore(self):
+    def test_historical_versions_and_protocol_pins_rejected_before_native_restore(self):
         app=application(1)
-        old_gate=copy.deepcopy(app)
-        old_gate['gate_protocol_sha256']='27dac414c5828eaaf3b560114b7413aa5547175448a03bf22d42027fbe9914d9'
-        old_task=copy.deepcopy(app)
-        old_task['state']['protocol_sha256']='8a7f14ee69fe386fe1150b644e71737a5e39ab3c8c4987d7cdf61277796f3bac'
-        for old in (old_gate,old_task):
+        variants=[]
+        for version in (1,True,3):
+            bad=copy.deepcopy(app);bad['version']=version;variants.append(bad)
+        bad=copy.deepcopy(app);del bad['teacher_mode'];variants.append(bad)
+        for filename in ('m6-puck-mechanics-v1.json','m6-puck-mechanics-v2.json'):
+            import hashlib
+            path=ROOT/'docs/plans'/filename;old=json.loads(path.read_text())
+            for target,value in (('gate',hashlib.sha256(path.read_bytes()).hexdigest()),
+                                 ('task',old['pushing_protocol_sha256'])):
+                bad=copy.deepcopy(app)
+                if target=='gate': bad['gate_protocol_sha256']=value
+                else: bad['state']['protocol_sha256']=value
+                variants.append(bad)
+        for old in variants:
             with self.assertRaises(ValueError): gate.validate_application(old,'zero',1,state_digest(old))
 
     def test_historical_construction_pin_is_not_silently_promoted(self):
@@ -97,7 +106,7 @@ class MechanicsFixtures(unittest.TestCase):
             verify_puck_construction.protocol(ROOT)
         old=json.loads((ROOT/'docs/plans/m6-puck-mechanics-v1.json').read_text())
         new=gate.protocol(ROOT)
-        for key in ('limits','environment_kwargs','runtime','owner_order','boundary_rules','recording','snapshot','watchdog'):
+        for key in ('limits','environment_kwargs','runtime','owner_order','boundary_rules','watchdog'):
             self.assertEqual(new[key],old[key])
         self.assertNotEqual(new['pushing_protocol_sha256'],old['pushing_protocol_sha256'])
 
@@ -108,7 +117,7 @@ class MechanicsFixtures(unittest.TestCase):
         app['state'].update(previous_puck_xy=[1.01,0.], previous_rover_xy=[.46,0.],
                             previous_distance=.18999999999999995, had_contact=True, dwell_ticks=1)
         app['inputs'] = puck.project(app['world'], app['contact'])
-        self.assertNotEqual(puck.demonstrate(app['world']), [0.,0.])
+        self.assertNotEqual(puck.demonstrate(app['world'],'approach')[0], [0.,0.])
         gate.validate_application(app, 'zero', 20, state_digest(app))
         self.assertEqual(gate.boundaries(app['state'], app['contact'], {'initial','tick1','contact'}), ['dwell'])
 
@@ -121,12 +130,108 @@ class MechanicsFixtures(unittest.TestCase):
             bad=copy.deepcopy(row);bad[name]=changed
             with self.assertRaises(ValueError): gate.same_row(row,bad)
 
-    def test_frozen_action_selection_calls_teacher_once_only_for_policy(self):
-        row={'kind':'native-continuation'}; recorded={'action':np.array([.2,.1])}
-        with patch.object(puck,'demonstrate',return_value=[.2,.1]) as teacher:
-            self.assertEqual(gate.action_for(row, {}, recorded), [.2,.1]); teacher.assert_called_once()
-        with patch.object(puck,'demonstrate',side_effect=AssertionError('not an action replay policy')):
-            self.assertEqual(gate.action_for({'kind':'action-replay'}, {}, recorded), [.2,.1])
+    def test_explicit_mode_selection_and_fixed_action_replay_never_calls_teacher(self):
+        app=application(1)
+        app['world']['rover_pose']=[-.55,0.,0.]
+        for kind in ('root','native-continuation','policy-replay'):
+            action,mode=gate.action_for({'kind':kind,'case':'teacher-positive'},app['world'],'approach')
+            self.assertEqual((action,mode),([.2,0.],'push'))
+        fixed={'kind':'root','case':'push-positive','action':[.25,0.]}
+        recorded={'action':np.array([.25,0.]),'teacher_mode_before':np.array(0,np.uint8),
+                  'teacher_mode_after':np.array(0,np.uint8)}
+        with patch.object(puck,'demonstrate',side_effect=AssertionError('teacher called for fixed action')):
+            self.assertEqual(gate.action_for(fixed,{},'fixed'),([.25,0.],'fixed'))
+            self.assertEqual(gate.action_for(fixed|{'kind':'action-replay'}, {}, 'fixed', recorded),([.25,0.],'fixed'))
+        for before,after in ((np.array(1,np.uint8),np.array(0,np.uint8)),
+                             (np.array(0,np.uint8),np.array(2,np.uint8)),
+                             (np.array(0,np.int64),np.array(0,np.uint8)),
+                             (np.array([0],np.uint8),np.array(0,np.uint8))):
+            bad=recorded|{'teacher_mode_before':before,'teacher_mode_after':after}
+            with self.assertRaises(ValueError): gate.action_for(fixed|{'kind':'action-replay'}, {}, 'fixed', bad)
+        with self.assertRaises(ValueError): gate.action_for(fixed,{},'approach')
+        with self.assertRaises(ValueError): gate.action_for({'kind':'policy-replay','case':'teacher-positive'},app['world'],'fixed')
+
+    def test_snapshot_mode_admission_and_restored_policy_successors(self):
+        app=application(1)
+        app['case']=app['state']['episode_id']='teacher-positive'
+        app['teacher_mode']='approach'
+        app['world']['rover_pose']=[-.46742095296335834,.016918583801692796,.03331900718597027]
+        app['state']['previous_rover_xy']=app['world']['rover_pose'][:2]
+        app['inputs']=puck.project(app['world'],app['contact'])
+        gate.validate_application(app,'teacher-positive',1,state_digest(app))
+        # Serialize/read generic application without decoding any native bytes.
+        from palimpsest.snapshots import save_snapshot, read_snapshot
+        with tempfile.TemporaryDirectory() as tmp:
+            path=Path(tmp)/'fixture.snp'
+            save_snapshot({'application':app},path)
+            restored=read_snapshot(path)['application']
+        gate.validate_application(restored,'teacher-positive',1,state_digest(app))
+        for kind in ('native-continuation','policy-replay'):
+            self.assertEqual(gate.action_for({'kind':kind,'case':'teacher-positive'},
+                             restored['world'],restored['teacher_mode']),([0.,-.4],'approach'))
+        for mode in ('fixed',None,True,1,[], 'recover'):
+            bad=copy.deepcopy(app);bad['teacher_mode']=mode
+            with self.assertRaises(ValueError): gate.validate_application(bad,'teacher-positive',1,state_digest(bad))
+        bad=application(1);bad['teacher_mode']='approach'
+        with self.assertRaises(ValueError): gate.validate_application(bad,'zero',1,state_digest(bad))
+        # A changed valid mode must change the application hash.
+        bad=copy.deepcopy(app);bad['teacher_mode']='push'
+        with self.assertRaises(ValueError): gate.validate_application(bad,'teacher-positive',1,state_digest(app))
+        initial=application(0);initial['case']=initial['state']['episode_id']='teacher-positive';initial['teacher_mode']='push'
+        with self.assertRaises(ValueError): gate.validate_application(initial,'teacher-positive',0,state_digest(initial))
+
+    def test_mode_packets_roundtrip_and_exact_policy_continuation(self):
+        # Authored array fixtures, not simulated outcomes. Expected transitions
+        # are literal so losing/restoring the wrong mode changes actual rows.
+        from palimpsest.records import RunWriter, iter_ticks
+        from palimpsest.snapshots import save_snapshot, read_snapshot
+        app=application(0);app['case']=app['state']['episode_id']='teacher-positive'
+        app['teacher_mode']='approach'
+        worlds=[]
+        for tick,pose in enumerate(([-.8,0.,0.],[-.55,0.,0.],[-.45,.07,0.],[-.45,.055,0.],[-.45,.055,0.])):
+            value=copy.deepcopy(app['world']);value.update(time_s=tick*.02,rover_pose=pose);worlds.append(value)
+        env=SimpleNamespace(data=SimpleNamespace(qpos=np.zeros(71),qvel=np.zeros(70),ctrl=np.zeros(2),
+                            qfrc_applied=np.zeros(70),xfrc_applied=np.zeros((26,6))))
+        observation={key:np.zeros((128,128,3),np.uint8) for key in ('cam_left','cam_right')}
+        actions=([.25,0.],[.2,0.],[0.,-.4],[0.,-.4])
+        modes=('approach','approach','push','approach','approach')
+        state=app['state'];contact=app['contact'];source=[];cursors=[]
+        for tick in range(4):
+            cursors.append(copy.deepcopy(app|{'state':state,'world':worlds[tick],'contact':contact,
+                'teacher_mode':modes[tick],'inputs':puck.project(worlds[tick],contact)}))
+            next_contact=puck.classify_contacts(raw_contacts(tick+1),OWNERSHIP,tick=tick+1,time_s=(tick+1)*.02)
+            state,reward=puck.advance(state,worlds[tick+1],next_contact,actions[tick])
+            values=gate.packet(env,observation,worlds[tick],worlds[tick+1],puck.project(worlds[tick],contact),
+                actions[tick],state,next_contact,raw_contacts(tick+1),reward,[0.,0.,0.,0.,0.],
+                modes[tick],modes[tick+1],'teacher-positive')
+            source.append({'episode':0,'tick':tick,**values});contact=next_contact
+        with tempfile.TemporaryDirectory() as tmp:
+            record=Path(tmp)/'recording'
+            writer=RunWriter(record,{'schema':'puck-mechanics-v2'})
+            for row in source: writer.tick(**row)
+            writer.finish({'fixture':True});writer.close()
+            rows=list(iter_ticks(record))
+            for kind,start in (('policy-replay',0),('native-continuation',2)):
+                path=Path(tmp)/(kind+'.snp');cursor=cursors[start]
+                save_snapshot({'application':cursor},path)
+                restored=read_snapshot(path)['application']
+                gate.validate_application(restored,'teacher-positive',start,state_digest(cursor))
+                mode=restored['teacher_mode']
+                for row in gate.window(rows,start,4-start):
+                    tick=row['tick']
+                    action,next_mode=gate.action_for({'kind':kind,'case':'teacher-positive'},worlds[tick],mode)
+                    actual=copy.deepcopy(row);actual.update(action=np.array(action,np.float64),
+                        teacher_mode_before=np.array(gate.mode_code(mode,'teacher-positive'),np.uint8),
+                        teacher_mode_after=np.array(gate.mode_code(next_mode,'teacher-positive'),np.uint8))
+                    gate.same_row(row,actual);mode=next_mode
+            for field in ('teacher_mode_before','teacher_mode_after'):
+                self.assertEqual(rows[2][field].dtype,np.uint8);self.assertEqual(rows[2][field].shape,())
+                bad=copy.deepcopy(rows[2]);bad[field]=np.array(0,np.uint8)
+                with self.assertRaises(ValueError): gate.same_row(rows[2],bad)
+        # State digest binds mode even with identical task/world/contact.
+        different=gate.packet(env,observation,worlds[3],worlds[4],np.zeros(8,np.float32),actions[3],state,
+            contact,raw_contacts(4),0.,[0.]*5,'approach','push','teacher-positive')
+        self.assertNotEqual(source[3]['task_sha256'].tobytes(),different['task_sha256'].tobytes())
 
     def test_progress_binds_identity_and_monotonic_ticks(self):
         identity={'pid':321,'start_ticks':10,'process_group':321}

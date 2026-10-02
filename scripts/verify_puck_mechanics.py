@@ -23,8 +23,8 @@ from verify_afterimage import digest, write_json, process_identity, cleanup_chec
 from palimpsest import puck_profile as puck
 from palimpsest.snapshots import state_digest
 
-PROTOCOL_FILE = 'docs/plans/m6-puck-mechanics-v2.json'
-PROTOCOL_SHA256 = '51dfaff0c0ac852f52df779a4b5c5ce38f0c3404f45f13edca6bc180fde6fa00'
+PROTOCOL_FILE = 'docs/plans/m6-puck-mechanics-v3.json'
+PROTOCOL_SHA256 = 'c37c620b7796996d4a00e7d1da0ff6e8d25bfacf663c716ce6fc9ca4150c44d1'
 MiB = 1024**2
 
 
@@ -98,21 +98,41 @@ def same_row(expected, actual):
             raise ValueError('Exact replay differs: ' + key)
 
 
-def action_for(row, world, recorded=None):
+def mode_code(mode, case):
+    allowed = ('approach','push') if case in ('teacher-positive','teacher-negative') else (
+        ('fixed',) if case in ('zero','push-positive','push-negative') else ())
+    if type(mode) is not str or mode not in allowed:
+        raise ValueError('Teacher mode differs from fixed mechanics case')
+    return {'fixed':0, 'approach':1, 'push':2}[mode]
+
+
+def action_for(row, world, mode, recorded=None):
+    mode_code(mode, row['case'])
     if row['kind'] == 'action-replay':
-        return recorded['action'].tolist()
+        import numpy as np
+        if mode != 'fixed' or recorded is None:
+            raise ValueError('Only the fixed-action mechanics source admits action replay')
+        for name in ('teacher_mode_before','teacher_mode_after'):
+            value = recorded.get(name)
+            if not isinstance(value,np.ndarray) or value.dtype != np.uint8 or value.shape != () or value.item() != 0:
+                raise ValueError('Fixed action replay has incompatible recorded mode')
+        return recorded['action'].tolist(), mode
     if row['kind'] == 'root' and 'action' in row:
-        return list(row['action'])
-    return puck.demonstrate(world)  # Exactly once per teacher/policy interval.
+        if mode != 'fixed': raise ValueError('Teacher source cannot use a fixed command')
+        return list(row['action']), mode
+    return puck.demonstrate(world, mode)  # Exactly once per teacher/policy interval.
 
 
 def validate_application(app, case, tick, expected_hash):
     import numpy as np
     required={'version','gate_protocol_sha256','case','profile_identity','model_sha256',
-              'state','world','contact','inputs','paused'}
-    if (type(app) is not dict or set(app) != required or app['version'] != 1 or app['paused'] is not True or
+              'state','world','contact','inputs','paused','teacher_mode'}
+    if (type(app) is not dict or set(app) != required or type(app['version']) is not int or app['version'] != 2 or app['paused'] is not True or
             app['gate_protocol_sha256'] != PROTOCOL_SHA256 or app['case'] != case or state_digest(app) != expected_hash):
         raise ValueError('Puck verifier snapshot application identity differs')
+    mode_code(app['teacher_mode'], case)
+    if tick == 0 and case.startswith('teacher-') and app['teacher_mode'] != 'approach':
+        raise ValueError('Initial teacher snapshot must retain approach mode')
     state, world, contact = app['state'], app['world'], app['contact']
     puck._world(world); puck._contact(contact, world['time_s'])
     if (type(tick) is not int or not 0 <= tick < 600 or state['tick'] != tick or contact['tick'] != tick or
@@ -256,13 +276,17 @@ def world_array(world):
     return np.array([world['time_s'],*world['rover_pose'],*world['puck_xyz'],*world['puck_velocity_xy'],*world['goal_xy']],np.float64)
 
 
-def packet(env, observation, before, after, inputs, action, state, contact, interval, reward, upstream):
+def packet(env, observation, before, after, inputs, action, state, contact, interval, reward, upstream,
+           teacher_mode_before, teacher_mode_after, case):
     import numpy as np
     from palimpsest.body_profile import contact_arrays
     arrays={'inputs':inputs, 'action':np.asarray(action,np.float64),
+        'teacher_mode_before':np.array(mode_code(teacher_mode_before,case),np.uint8),
+        'teacher_mode_after':np.array(mode_code(teacher_mode_after,case),np.uint8),
         'world_before':world_array(before),'world_after':world_array(after),
         'reward':np.array(reward,np.float64),'upstream_diagnostics':np.asarray(upstream,np.float64),
-        'task_sha256':np.frombuffer(bytes.fromhex(state_digest({'state':state,'world':after,'contact':contact})),np.uint8),
+        'task_sha256':np.frombuffer(bytes.fromhex(state_digest({'state':state,'world':after,'contact':contact,
+                                                             'teacher_mode':teacher_mode_after})),np.uint8),
         **{name:np.asarray(getattr(env.data,name)).copy() for name in
            ('qpos','qvel','ctrl','qfrc_applied','xfrc_applied')},**contact_arrays(interval)}
     for name in ('cam_left','cam_right'):
@@ -309,7 +333,9 @@ def owner(config):
         observation=env._get_obs()
         model_hash=hashlib.sha256(env.model.__getstate__()).hexdigest()
         expected_rows=None
-        if row['kind']!='root':
+        if row['kind']=='root':
+            teacher_mode='fixed' if 'action' in case else 'approach'
+        else:
             source=Path(config['source_output']); receipt=config['source_snapshot']
             snapshot=read_bounded_snapshot(source/receipt['file'],receipt['sha256'])
             validate_application(snapshot['application'],case['id'],start_tick,receipt['application_sha256'])
@@ -324,13 +350,15 @@ def owner(config):
             if hashlib.sha256(env.model.__getstate__()).hexdigest()!=model_hash:
                 raise ValueError('Restore changed fixed full model')
             state,world,contact=app['state'],app['world'],app['contact']
+            teacher_mode=app['teacher_mode']
             if world_from(env,case['goal_xy'])!=world or env._t!=start_tick: raise ValueError('Restored current qpos/cursor differs')
             probe=ContactProbe(mj,env)
             source_rows=list(iter_ticks(source/'recording'))
             expected_rows=window(source_rows,start_tick,config['ticks'])
             result['source_snapshot']=receipt
         def application():
-            return {'version':1,'gate_protocol_sha256':PROTOCOL_SHA256,'case':case['id'],
+            return {'version':2,'gate_protocol_sha256':PROTOCOL_SHA256,'case':case['id'],
+                    'teacher_mode':teacher_mode,
                     'profile_identity':identity_profile,'model_sha256':model_hash,'state':copy.deepcopy(state),
                     'world':copy.deepcopy(world),'contact':copy.deepcopy(contact),'inputs':puck.project(world,contact),'paused':True}
         def snapshot_at(name):
@@ -344,11 +372,11 @@ def owner(config):
             result['snapshots'][name]={'file':path.name,'sha256':digest(path),'bytes':size,'tick':state['tick'],
                 'application_sha256':app_hash,'world':world,'contact':contact}
             writer.event('paused_snapshot',name=name,**result['snapshots'][name])
-        writer=RunWriter(output/'recording',{'schema':'puck-mechanics-v1','protocol_sha256':PROTOCOL_SHA256,
+        writer=RunWriter(output/'recording',{'schema':'puck-mechanics-v2','protocol_sha256':PROTOCOL_SHA256,
             'pushing_protocol_sha256':puck.PROTOCOL_SHA256,'row':row,'source':config.get('source_snapshot'),
             'source_hashes':config['sources'],'profile_identity':identity_profile,'full_model_sha256':model_hash,
             'contact_ownership':probe.ownership,'record_contract':spec['recording']},max_bytes=row['max_bytes'],storage_budget=budget)
-        writer.event('episode_start',episode=0,seed=row['seed'],state=state,world=world,contact=contact)
+        writer.event('episode_start',episode=0,seed=row['seed'],state=state,world=world,contact=contact,teacher_mode=teacher_mode)
         snapshot_at('initial')
         count=config.get('ticks',row['max_ticks'])
         estimate=record_estimate(count,4 if case['id']=='teacher-positive' and row['kind']=='root' else 1)
@@ -360,7 +388,8 @@ def owner(config):
             if state['reason'] is not None: break
             before=world; inputs=puck.project(before,contact)
             reference=None if expected_rows is None else expected_rows[index]
-            action=action_for({**row,**case},before,reference)
+            mode_before=teacher_mode
+            action,next_mode=action_for({**row,**case},before,mode_before,reference)
             if len(action)!=2 or any(type(v) not in (int,float) or not math.isfinite(v) or abs(v)>.4 for v in action):
                 raise ValueError('Command exceeds frozen task bounds before control')
             if row['kind']!='action-replay' and 'action' not in case: result['controller_calls']+=1
@@ -376,14 +405,18 @@ def owner(config):
             env._obstacle_xy[0]=np.asarray(world['puck_xyz'][:2],np.float32)
             contact=puck.classify_contacts(interval,probe.ownership,tick=state['tick']+1,time_s=world['time_s'])
             state,reward=puck.advance(state,world,contact,action)
+            teacher_mode=next_mode
             arrays=packet(env,observation,before,world,inputs,action,state,contact,interval,reward,
-                          [nav_reward,bool(nav_done),bool(nav_truncated),nav_info['dist_to_goal'],bool(nav_info['stalled'])])
+                          [nav_reward,bool(nav_done),bool(nav_truncated),nav_info['dist_to_goal'],bool(nav_info['stalled'])],
+                          mode_before,teacher_mode,case['id'])
             if sum(a.nbytes for a in arrays.values())>128*1024:
                 raise ValueError('Numeric row exceeds preflight allowance')
-            if len(json.dumps({'state':state,'world':world,'contact':contact,'reward':reward},allow_nan=False).encode())>16*1024:
+            event={'state':state,'world':world,'contact':contact,'reward':reward,
+                   'teacher_mode_before':mode_before,'teacher_mode_after':teacher_mode}
+            if len(json.dumps(event,allow_nan=False).encode())>16*1024:
                 raise ValueError('Interval event exceeds preflight allowance')
             writer.tick(0,state['tick']-1,**arrays)
-            writer.event('puck_interval',state=state,world=world,contact=contact,reward=reward)
+            writer.event('puck_interval',**event)
             observation=next_observation
             max_displacement=max(max_displacement,math.dist(world['puck_xyz'][:2],origin))
             if reference is not None: same_row(reference,{'episode':0,'tick':state['tick']-1,**arrays})
@@ -391,13 +424,13 @@ def owner(config):
                 for name in boundaries(state,contact,result['snapshots']): snapshot_at(name)
             progress(state['tick'])
         ticks=state['tick']-start_tick
-        result.update(ticks=ticks,final_state=state,final_world=world,max_puck_displacement_m=max_displacement,
+        result.update(ticks=ticks,final_state=state,final_world=world,final_teacher_mode=teacher_mode,max_puck_displacement_m=max_displacement,
                       profile_identity=identity_profile,full_model_sha256=model_hash,
                       completed_control_tick=state['tick'],data_time_s=float(env.data.time),
                       physics_steps_this_owner=ticks*10)
         completion=state['reason'] or ('continuation_window_complete' if row['kind']=='native-continuation' else 'fixed_mechanics_horizon')
         result['completion']=completion
-        writer.finish({'outcome':state['reason'],'completion':completion,'final_state':state,'ticks':ticks})
+        writer.finish({'outcome':state['reason'],'completion':completion,'final_state':state,'teacher_mode':teacher_mode,'ticks':ticks})
         if row['kind']=='root':
             accept_root(case,ticks,state,max_displacement,state['had_contact'],[world['puck_xyz'][i]-origin[i] for i in range(2)])
             if case['id']=='teacher-positive':

@@ -1,40 +1,71 @@
-# Fixed puck mechanics v2 — prepared, not executed
+# Fixed puck mechanics v3 — source preparation, not executed
 
-This verifier implements the mechanics stage of the frozen
-[puck plan](m6-puck-pushing.md) and [v2 task protocol](m6-puck-pushing-protocol-v2.json).
-The [v2 mechanics contract](m6-puck-mechanics-v2.json) pins its lifecycle and
-resources without changing the disk, fixed actions, layouts or task thresholds.
-V2 changes only the analytical teacher target-selection rule described below. The prior [v4 construction result](../reports/m6-puck-construction-v4.md)
-qualifies zero-step construction only. This gate has **not** established contact
-stability, pushing, continuation or learned control.
+This verifier implements the mechanics stage of the prospective
+[puck plan](m6-puck-pushing.md) and [v3 task protocol](m6-puck-pushing-protocol-v3.json).
+The [v3 mechanics contract](m6-puck-mechanics-v3.json) pins the explicit recovery
+mode, standalone record/application schemas and unchanged finite resources.
+The [v4 construction result](../reports/m6-puck-construction-v4.md) qualifies only
+its historical zero-step construction. There is no successful complete mechanics,
+continuation, replay or learned-control gate yet.
 
 `verify_puck_mechanics.py` is an explicit **pre-product exception** to the plan's
 prospective LabSupervisor ownership sentence: ten serialized, separately
 supervised subprocesses directly own the existing fixed-profile environment.
 There is no Engine, worker, REST, UI, registry or production snapshot change.
-Product wiring and a separately trained controller remain later reviewed work.
 No Torch, training, external camera, network or physical hardware is involved.
 
-V1 remains a [failed mechanics result](../reports/m6-puck-mechanics-v1.md) at
-`0560886`; both original protocol JSON files and every raw artifact remain
-unchanged. V2 chooses the goal direction whenever the **existing** axial/lateral
-push corridor is ready, or the existing behind-point arrival test passes.
-Otherwise it still approaches the behind point. Stop priority, heading alignment,
-velocity/heading caps, numerical thresholds, state, layouts and all budgets are
-unchanged. No hysteresis or added controller state is introduced. These are the
-same already-inspected development scenes, not fresh held-out scenes.
+The [v1 failure](../reports/m6-puck-mechanics-v1.md) at `0560886` and
+[v2 failure](../reports/m6-puck-mechanics-v2.md) at `d65d5fe` retain their original
+protocol JSON, source history, snapshots, records and audits. V2 lost useful
+pushing at action 161 when lateral error crossed .06 m, then reversed its turn
+at 188 when the corridor became ready before recovery reached its behind point.
+V3 is a prospective correction of that observed incomplete recovery, not a
+prediction that the unchanged 600-tick task will succeed.
 
-The caller review found the analytical teacher is used only by this standalone
-mechanics verifier and pure tests. The XML derivation, installer, authored reset,
-contact interpretation, task transition and native snapshot helpers are unchanged.
-New task and gate hashes bind the current profile/application identity; a v1
-cursor or snapshot is rejected before native restore. The numeric record schema
-remains v1 because its fields are unchanged; its protocol hashes distinguish the
-new semantics. The historical construction verifier deliberately retains its old
-module pin and rejects this checkout; reproduce it at its committed source.
-Unchanged XML bytes and expected native hashes do not automatically transfer
-construction qualification to v2. Each prospective fresh owner must still admit,
-construct and check the fixed model, then pass its own mechanics conditions.
+The teacher now takes an explicit `approach` or `push` argument and returns one
+command plus its next mode. Fresh teacher episodes start in `approach`; no mode
+is global or implicitly reset. Stop distance ≤.18 retains first priority and
+returns zero action with mode unchanged. Otherwise, `approach` enters `push`
+only when **both** behind-point distance ≤.08 and the existing corridor
+(.35≤axial≤.63, lateral≤.06) hold. `push` exits to `approach` on readiness loss.
+Approach always aims at the puck minus .55 times the goal direction; corridor
+re-entry alone does not interrupt this recovery. Push aims in the goal direction.
+The .12 rad heading gate and .4 rad cap precede motion; approach/push use their
+existing .25/.2 velocities. Geometry, physics, task/success thresholds, fixed
+commands, layouts, triggers and all budgets remain unchanged. These are already
+inspected development scenes, with no unseen or held-out claim.
+
+Every caller of `demonstrate`, `action_for`, `application` and `packet` was
+reviewed. The teacher is used only by this standalone verifier and pure tests.
+XML derivation, installation, authored reset, native snapshot implementation,
+contact interpretation and task transition logic are unchanged. Protocol hashes
+bind the current task/profile; standalone application version **2** additionally
+binds `teacher_mode`. V1/v2 task/gate pins, old application versions, missing or
+case-incompatible modes are rejected before native restore. Initial teacher
+snapshots require approach; later snapshots preserve the prior decision's mode,
+which need not already satisfy readiness in the post-step world. Each next
+teacher decision evaluates that world exactly once.
+
+Numeric schema **`puck-mechanics-v2`** adds scalar uint8 `teacher_mode_before`
+and `teacher_mode_after`: fixed=0, approach=1, push=2. Fixed-action roots and the
+fixed-action replay use only `fixed`, never a fabricated teacher state. Events
+retain the corresponding mode names; the completed-state digest also binds the
+after mode. Continuations/policy replay restore the mode without resetting it and
+compare exact recorded bytes. Action replay accepts only the frozen fixed-action
+source with both recorded mode codes zero and never recomputes a teacher action.
+The production snapshot container/schema is unchanged.
+
+The prior eight-input stateless learner proposal is **closed pending re-review**:
+privileged teacher mode can produce different action labels for identical
+declared observations. V3 adds neither a learner input nor an architecture or
+training change. Teacher collection and all training/evaluation stages stay
+closed pending a separately reviewed learning contract and mechanics outcome.
+
+The historical construction verifier keeps its old module pin and rejects this
+checkout; reproduce it at its committed source. Unchanged XML bytes and expected
+native hashes do not automatically transfer construction qualification to v3.
+Each future owner must still admit, construct and check the fixed model before
+its own mechanics conditions are assessed.
 
 | Owner order | Fixed source/layout | Maximum control ticks | Owner storage |
 | --- | --- | ---: | ---: |
@@ -91,7 +122,7 @@ boundary, or fewer than four source successors fails; no later boundary is used.
 Snapshots retain full native bytes and the existing `mjSTATE_INTEGRATION` audit.
 A verifier-owned, hash-bound generic application payload carries the fixed puck
 identity, full model hash, source case, task cursor, exact world, contact summary
-and projected inputs. Before native decoding, each source snapshot must match
+projected inputs and explicit teacher mode. Before native decoding, each source snapshot must match
 its completed owner's receipt, ≤8 MiB file and uncompressed member limits, and
 pure cursor/input checks. After restore, validate all cached named bindings,
 current qpos/qvel/world, full model and cursor before movement; construct a new
@@ -108,7 +139,7 @@ bounded numeric chunks; `iter_ticks` revalidates their checksums, schema and
 coverage. All floats must be finite. Each derivative compares every recorded
 array's exact dtype, shape and bytes, including images and inputs. Action replay
 uses only recorded actions; policy replay and native continuations invoke the
-same stateless demonstrator once per interval. Neither makes a learned claim.
+same explicitly stateful demonstrator once per interval. Neither makes a learned claim.
 Source rows and snapshots remain immutable; both child and parent check parity.
 
 Per-owner startup is 60 s, progress 30 s and total 180 s. A script-local watchdog
@@ -146,7 +177,7 @@ hash-pinned launcher/plan before any execution:
 ```sh
 PYTHONPATH=src ../lab-hardening/.venv/bin/python scripts/verify_puck_mechanics.py \
   --repo "$PWD" --expected-commit FROZEN_HEAD \
-  --output runs/m6-puck-mechanics-v2-YYYYMMDD/gate --retention-root runs
+  --output runs/m6-puck-mechanics-v3-YYYYMMDD/gate --retention-root runs
 ```
 
 The actual invocation must use the reviewed outer launcher, not this unbounded
@@ -156,10 +187,13 @@ source/model identity, exact selected boundary/successors, outcomes and cleanup.
 No downstream teacher collection, learning or physical qualification follows
 automatically from this gate.
 
-V2 preparation validation: 85 focused pure tests passed in 0.881 s, no skips.
-The actual v1 tick-109 fixture failed with the old `[0, -.4]` action before the
-correction, then passed with `[.2, -.03331900718597027]`. Reflected, outside-corridor,
-misaligned and stop-priority checks pass; numeric/physics/layout/budget equality
-and explicit historical task/snapshot/construction-pin rejection are covered.
-These are pure counterfactual checks at seen development states, not a v2 native
-result or proof of task completion.
+V3 verification remains pure fixture evidence until a separately approved native
+gate. Fixtures cover the actual v2 action-161/188 states and reflection, conjunctive
+arrival/corridor admission, stop/alignment/cap behavior, invalid and restored
+modes, fixed-action replay without teacher execution, scalar numeric mode
+round-trips, exact continuation/policy decision parity, and old schema/pin
+rejection. The full native suite and a v3 launcher/run have not been executed.
+
+Source preparation validation: **87 focused pure checks passed in 0.898 s**,
+with no skips. These checks import no native model or run physics. The full
+native suite and v3 mechanics outcome remain pending separate approval.
