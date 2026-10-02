@@ -1,6 +1,6 @@
-"""Pure preparation for one frozen, near-planar native-contact puck profile.
+"""One frozen, near-planar native-contact puck profile, not Engine-integrated.
 
-No native compilation, Engine wiring or trained controller is implemented here.
+Native installation is explicit and lazy; no trained controller is implemented.
 Geometry is privileged evaluator/teacher data; project() is the only eight-value
 student input. ContactProbe retains its existing calibration classifications;
 this module validates its raw timing/pairs and derives separate task meanings.
@@ -44,7 +44,13 @@ def load_protocol(repo_root):
 def layout(repo_root, seed, split):
     """Return only an exact authored row; split admission is explicit."""
     _integer(seed, 'layout seed')
-    for row in load_protocol(repo_root)['layouts']:
+    protocol = load_protocol(repo_root)
+    if split == 'mechanics':
+        for row in protocol['physics_cases']:
+            if row['seed'] == seed:
+                return {key: row[key] for key in ('seed', 'rover_pose', 'puck_xy', 'goal_xy')} | {
+                    'split': 'mechanics', 'initial_qvel': 'all zeros'}
+    for row in protocol['layouts']:
         if row['seed'] == seed and row['split'] == split:
             return row
     raise ValueError('Unknown puck layout or wrong declared split')
@@ -381,3 +387,211 @@ def demonstrate(world):
         return [0., heading]
     axial, lateral = (px-x)*dx+(py-y)*dy, abs(-(px-x)*dy+(py-y)*dx)
     return [.2 if .35 <= axial <= .63 and lateral <= .06 else .25, heading]
+
+
+def _fixed_bindings(env, model):
+    import mujoco as mj
+    from .snapshots import _bindings
+    bindings = _bindings(env, model)
+    def joint(name):
+        value = mj.mj_name2id(model, mj.mjtObj.mjOBJ_JOINT, name)
+        if not 0 <= value < model.njnt:
+            raise ValueError('Missing fixed joint: ' + name)
+        return value
+    base, puck = joint('base_free'), [joint(f'obstacle0_{axis}') for axis in 'xyz']
+    if int(model.jnt_type[base]) != 0 or any(int(model.jnt_type[j]) != 2 for j in puck):
+        raise ValueError('Fixed base free joint and three puck slides required')
+    extra = {'base_qpos_adr': int(model.jnt_qposadr[base]), 'puck_joint_ids': puck,
+             'puck_qpos_adrs': [int(model.jnt_qposadr[j]) for j in puck],
+             'puck_dof_adrs': [int(model.jnt_dofadr[j]) for j in puck]}
+    if extra != {'base_qpos_adr': 60, 'puck_joint_ids': [0, 1, 2],
+                 'puck_qpos_adrs': [0, 1, 2], 'puck_dof_adrs': [0, 1, 2]}:
+        raise ValueError('Named fixed-profile native addresses changed')
+    return bindings, extra
+
+
+def _admit_owner(env):
+    import mujoco as mj
+    import numpy as np
+    settings = {'W': 128, 'H': 128, 'n_obstacles': 1, 'frame_skip': 10, 'k_nearest': 5,
+                'arena': 7., 'max_steps': 600, 'texture_mode': 'checker', 'render_mode': None,
+                '_action_scale': 2., '_t': 0, '_speed': 0., '_stall_steps': 0,
+                'window': None, '_view_ctx': None, 'explore_binsize': .2}
+    if any(type(getattr(env, key, None)) is not type(value) or getattr(env, key, object()) != value
+           for key, value in settings.items()):
+        raise ValueError('Fresh fixed checker owner settings required')
+    if (mj.__version__ != '3.3.6' or mj.get_mjcb_control() is not None or
+            env.data.time != 0. or env._view_scn.maxgeom != 10000 or
+            (env.renderer.height, env.renderer.width) != (128, 128)):
+        raise ValueError('Fresh owner without callback/view context/tick required')
+    bindings, extra = _fixed_bindings(env, env.model)
+    for key, value in bindings.items():
+        if not np.array_equal(getattr(env, key, None), value):
+            raise ValueError('Stale cached native binding: ' + key)
+    for key, shape in [('_obstacle_xy', (1, 2)), ('_goal_xy', (2,)), ('_prev_xy', (2,)), ('_last_action', (2,))]:
+        value = getattr(env, key)
+        if not isinstance(value, np.ndarray) or value.dtype != np.float32 or value.shape != shape or not np.isfinite(value).all():
+            raise ValueError('Invalid fixed environment array: ' + key)
+    for value in (env.data.qvel, env.data.ctrl, env.data.qfrc_applied, env.data.xfrc_applied, env._last_action):
+        if not np.isfinite(value).all() or np.any(value):
+            raise ValueError('Fresh zero velocity/control/applied force required')
+    native_state(env.data, **{k: extra[k] for k in ('base_qpos_adr', 'puck_qpos_adrs', 'puck_dof_adrs')},
+                 goal_xy=env._goal_xy.astype(float).tolist())
+    if (not np.array_equal(env._obstacle_xy[0], env.data.qpos[extra['puck_qpos_adrs'][:2]].astype(np.float32)) or
+            not np.array_equal(env._prev_xy, env.data.qpos[extra['base_qpos_adr']:extra['base_qpos_adr']+2].astype(np.float32)) or
+            not np.array_equal(env._goal_xy, env.model.site_pos[env.goal_site_id, :2].astype(np.float32))):
+        raise ValueError('Current reset qpos differs from cached environment positions')
+    return bindings, extra
+
+
+def _validate_compiled(old, new):
+    """Reviewable fixed delta, including collision bounds/inertia; no native step."""
+    import mujoco as mj
+    import numpy as np
+    dimensions = {'nq': 71, 'nv': 70, 'nu': 2, 'nbody': 26, 'njnt': 65,
+                  'ngeom': 32, 'ncam': 2, 'nsite': 1, 'na': 0}
+    if any(getattr(model, key) != value for model in (old, new) for key, value in dimensions.items()):
+        raise ValueError('Fixed native dimensions changed')
+    for model in (old, new):
+        if (model.opt.timestep != .002 or int(model.opt.integrator) != 0 or int(model.opt.disableflags) != 0
+                or not np.array_equal(model.opt.gravity, [0., 0., -9.81])):
+            raise ValueError('Fixed Euler/contact/actuation pipeline changed')
+    for kind, count in [('BODY', 26), ('JOINT', 65), ('GEOM', 32), ('CAMERA', 2), ('SITE', 1), ('ACTUATOR', 2)]:
+        enum = getattr(mj.mjtObj, 'mjOBJ_' + kind)
+        if [mj.mj_id2name(old, enum, i) for i in range(count)] != [mj.mj_id2name(new, enum, i) for i in range(count)]:
+            raise ValueError('Named native ordering changed: ' + kind)
+    puck = mj.mj_name2id(new, mj.mjtObj.mjOBJ_GEOM, 'obstacle0')
+    body = mj.mj_name2id(new, mj.mjtObj.mjOBJ_BODY, 'obstacle0_body')
+    goal = mj.mj_name2id(new, mj.mjtObj.mjOBJ_SITE, 'goal_site')
+    replacements = {
+        'body_pos': {body: [0., 0., .062]}, 'body_mass': {body: .25},
+        'body_inertia': {body: [.00420625, .00420625, .0078125]},
+        'jnt_range': {0: [-5.5, 5.5], 1: [-5.5, 5.5], 2: [-.002, .002]},
+        'geom_size': {puck: [.25, .06, 0.]}, 'geom_friction': {puck: [.25, .005, .0001]},
+        'geom_priority': {puck: 1}, 'geom_condim': {puck: 3}, 'geom_solref': {puck: [.004, 1.]},
+        'geom_solimp': {puck: [.95, .99, .001, .5, 2.]}, 'geom_rgba': {puck: [.9, .7, .1, 1.]},
+        # The XML pins two cylinder dimensions; site size[2] keeps MuJoCo's
+        # unused .005 default (XMLreference.html#body-site, pinned 3.3.6).
+        'site_type': {goal: 5}, 'site_size': {goal: [.45, .001, .005]}, 'site_pos': {goal: [0., 0., .001]}}
+    unchanged = ('body_parentid', 'body_quat', 'body_ipos', 'body_iquat', 'jnt_type', 'jnt_bodyid',
+        'jnt_axis', 'jnt_pos', 'jnt_limited', 'jnt_qposadr', 'jnt_dofadr', 'geom_type', 'geom_bodyid',
+        'geom_pos', 'geom_quat', 'geom_contype', 'geom_conaffinity', 'site_quat', 'cam_pos', 'cam_quat',
+        'cam_fovy', 'actuator_trnid', 'actuator_trntype', 'actuator_gear', 'actuator_ctrlrange',
+        'actuator_ctrllimited', 'qpos0')
+    for key in (*unchanged, *replacements):
+        expected, actual = getattr(old, key).copy(), getattr(new, key)
+        for index, value in replacements.get(key, {}).items(): expected[index] = value
+        if expected.shape != actual.shape or expected.dtype != actual.dtype or not np.isfinite(actual).all() or not np.array_equal(expected, actual):
+            raise ValueError('Compiled fixed-model delta differs: ' + key)
+    for actual, expected in [(new.jnt_axis[:3], np.eye(3)), (new.jnt_limited[:3], [1, 1, 1]),
+                             (new.actuator_gear, [[3., 0, 0, 0, 0, 0]]*2),
+                             (new.actuator_ctrlrange, [[-2., 2.]]*2), (new.actuator_ctrllimited, [1, 1]),
+                             (new.geom_pos[puck], [0., 0., 0.]), (new.body_ipos[body], [0., 0., 0.]),
+                             (new.geom_aabb[puck], [0., 0., 0., .25, .25, .06])]:
+        if not np.array_equal(actual, expected):
+            raise ValueError('Fixed transform, collision extent or actuator contract changed')
+    if (int(new.geom_type[puck]) != 5 or int(new.geom_bodyid[puck]) != body or
+            not math.isclose(float(new.geom_rbound[puck]), math.hypot(.25, .06), rel_tol=0., abs_tol=1e-12)):
+        raise ValueError('Compiled puck cylinder ownership/bounds changed')
+    if [mj.mj_id2name(new, mj.mjtObj.mjOBJ_ACTUATOR, i) for i in range(2)] != ['left_motor', 'right_motor']:
+        raise ValueError('Only the original ordered wheel actuators are allowed')
+    if not np.array_equal(new.actuator_trnid[:, 0], [61, 62]):
+        raise ValueError('Wheel actuator joint bindings changed')
+
+
+def install_fixed_model(env, repo_root):
+    """Stage once before any Engine exists; commit before retiring old renderer.
+
+    A post-commit old-renderer close error is terminal: the caller owns and must
+    close the newly committed renderer. It must not continue with a partial task.
+    """
+    import mujoco as mj
+    import numpy as np
+    from .profiles import configure_world
+    from .snapshots import _model_digest
+    if hasattr(env, '_puck_profile_identity'):
+        raise ValueError('Fixed puck model is already installed')
+    _admit_owner(env)
+    xml = derive_xml(repo_root)
+    model = mj.MjModel.from_xml_string(xml.decode('utf-8'))
+    _validate_compiled(env.model, model)
+    data = mj.MjData(model)
+    bindings, extra = _fixed_bindings(env, model)
+    staged = copy.copy(env)
+    staged.model, staged.data = model, data
+    vars(staged).update(bindings)
+    configure_world(staged)  # Existing inactive-obstacle parking, on staged resources only.
+    raw = model.__getstate__()
+    if type(raw) is not bytes or len(raw) > 8 * 1024**2:
+        raise ValueError('Compiled native model exceeds 8 MiB bound')
+    identity = {'version': 1, 'scenario': SCENARIO, 'protocol_sha256': PROTOCOL_SHA256,
+                'derived_xml_sha256': hashlib.sha256(xml).hexdigest(),
+                'model_sha256': _model_digest(model), 'compiled_native_sha256': hashlib.sha256(raw).hexdigest()}
+    renderer = None
+    try:
+        renderer = mj.Renderer(model, height=128, width=128)
+        scene = mj.MjvScene(model, maxgeom=10000)
+        updates = {**bindings, 'model': model, 'data': data, 'renderer': renderer, '_view_scn': scene,
+                   '_puck_profile_identity': identity, '_puck_bindings': extra,
+                   '_obstacle_xy': data.qpos[extra['puck_qpos_adrs'][:2]].astype(np.float32).reshape(1, 2),
+                   '_goal_xy': model.site_pos[bindings['goal_site_id'], :2].astype(np.float32),
+                   '_prev_xy': data.qpos[60:62].astype(np.float32), '_last_action': np.zeros(2, np.float32),
+                   'visited': set(), 'path_to_draw': None, 'target_to_draw': None}
+        vars(staged).update(updates)
+        _admit_owner(staged)
+    except BaseException:
+        if renderer is not None: renderer.close()
+        raise
+    old_renderer = env.renderer
+    vars(env).update(updates)
+    old_renderer.close()
+    return copy.deepcopy(identity)
+
+
+def authored_reset(env, repo_root, seed, split, episode_id):
+    """Apply one explicit time-zero layout after upstream reset has relocked XY.
+
+    Stage new data; restore old mutable model arrays if mj_forward/validation
+    fails. Never call env.step, reset, render or change RNG inside this adapter.
+    """
+    import mujoco as mj
+    import numpy as np
+    from .snapshots import ASTAR_CACHE, _model_digest
+    row = layout(repo_root, seed, split)
+    _identifier(episode_id)
+    _, extra = _admit_owner(env)
+    identity = getattr(env, '_puck_profile_identity', {})
+    if (identity.get('protocol_sha256') != PROTOCOL_SHA256 or identity.get('model_sha256') != _model_digest(env.model)
+            or getattr(env, '_puck_bindings', None) != extra or hasattr(env, '_puck_reset_seed')):
+        raise ValueError('Matching installed puck model and first reset required')
+    if (not np.array_equal(env.model.jnt_range[3:60], np.tile([-1e-6, 1e-6], (57, 1))) or
+            np.any(env.model.jnt_range[60:]) or not np.array_equal(env.model.jnt_range[2], [-.002, .002])):
+        raise ValueError('Only upstream-reset puck XY lock ranges may differ')
+    data = mj.MjData(env.model)
+    x, y, yaw = row['rover_pose']
+    data.qpos[60:67] = [x, y, .1, math.cos(yaw/2), 0., 0., math.sin(yaw/2)]
+    data.qpos[extra['puck_qpos_adrs']] = [*row['puck_xy'], 0.]
+    data.qvel[:] = data.ctrl[:] = data.qfrc_applied[:] = 0.
+    data.xfrc_applied[:] = 0.
+    before = {key: getattr(env.model, key).copy() for key in ('jnt_range', 'geom_rgba', 'site_pos')}
+    try:
+        env.model.jnt_range[extra['puck_joint_ids']] = [[-5.5, 5.5], [-5.5, 5.5], [-.002, .002]]
+        env.model.geom_rgba[env.obstacle_ids[0]] = [.9, .7, .1, 1.]
+        env.model.site_pos[env.goal_site_id] = [*row['goal_xy'], .001]
+        mj.mj_forward(env.model, data)
+        world = native_state(data, **{k: extra[k] for k in ('base_qpos_adr', 'puck_qpos_adrs', 'puck_dof_adrs')},
+                             goal_xy=row['goal_xy'])
+        state = initialize(world, episode_id)
+        if data.time != 0. or np.any(data.ctrl) or np.any(data.qfrc_applied) or np.any(data.xfrc_applied):
+            raise ValueError('Authored reset must retain zero controls/forces/time')
+    except BaseException:
+        for key, value in before.items(): getattr(env.model, key)[:] = value
+        raise
+    vars(env).update(data=data, _obstacle_xy=np.asarray([row['puck_xy']], np.float32),
+                     _goal_xy=np.asarray(row['goal_xy'], np.float32), _prev_xy=np.asarray([x, y], np.float32),
+                     _last_action=np.zeros(2, np.float32), _speed=0., _t=0, _stall_steps=0,
+                     visited={(math.floor(x/.2), math.floor(y/.2))}, path_to_draw=None, target_to_draw=None,
+                     _puck_reset_seed=seed)
+    if hasattr(env, 'planner'):
+        for name in ASTAR_CACHE: setattr(env.planner, name, None)
+    return state

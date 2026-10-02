@@ -5,12 +5,14 @@ import importlib
 import importlib.util
 import json
 import math
+import pickle
 from pathlib import Path
 import subprocess
 import sys
 import tempfile
 from types import SimpleNamespace
 import unittest
+from unittest.mock import patch
 import xml.etree.ElementTree as ET
 
 import numpy as np
@@ -375,6 +377,248 @@ class PuckProfileTests(unittest.TestCase):
                 'assert not ({"torch", "mujoco", "glfw"} & set(sys.modules))')
         result = subprocess.run([sys.executable, '-c', code, str(ROOT)], capture_output=True, text=True, timeout=10)
         self.assertEqual(result.returncode, 0, result.stderr)
+
+
+class FixtureModel:
+    """Array-only owner fixture, never a MuJoCo model or physics substitute."""
+    def __init__(self):
+        self.nq, self.nv, self.nu, self.nbody = 71, 70, 2, 26
+        self.njnt, self.ngeom, self.ncam, self.nsite, self.na = 65, 32, 2, 1, 0
+        self.opt = SimpleNamespace(timestep=.002, integrator=0, disableflags=0, gravity=np.array([0., 0., -9.81]))
+        self.names = {'body': ['world', *[f'obstacle{i}_body' for i in range(20)],
+                             'base', 'left_wheel', 'right_wheel', 'front_caster_mount', 'caster_wheel'],
+                      'joint': [*[f'obstacle{i}_{axis}' for i in range(20) for axis in 'xyz'],
+                                'base_free', 'left_hinge', 'right_hinge', 'caster_swivel', 'caster_axle'],
+                      'geom': NAMES, 'camera': ['cam_left', 'cam_right'], 'site': ['goal_site'],
+                      'actuator': ['left_motor', 'right_motor']}
+        shapes = {'body_pos': (26, 3), 'body_quat': (26, 4), 'body_ipos': (26, 3), 'body_iquat': (26, 4),
+                  'body_mass': (26,), 'body_inertia': (26, 3), 'body_parentid': (26,),
+                  'jnt_type': (65,), 'jnt_bodyid': (65,), 'jnt_axis': (65, 3), 'jnt_pos': (65, 3),
+                  'jnt_limited': (65,), 'jnt_range': (65, 2), 'jnt_qposadr': (65,), 'jnt_dofadr': (65,),
+                  'geom_type': (32,), 'geom_bodyid': (32,), 'geom_pos': (32, 3), 'geom_quat': (32, 4),
+                  'geom_size': (32, 3), 'geom_friction': (32, 3), 'geom_solref': (32, 2),
+                  'geom_solimp': (32, 5), 'geom_priority': (32,), 'geom_condim': (32,),
+                  'geom_contype': (32,), 'geom_conaffinity': (32,), 'geom_rgba': (32, 4),
+                  'geom_aabb': (32, 6), 'geom_rbound': (32,),
+                  'site_pos': (1, 3), 'site_size': (1, 3), 'site_type': (1,), 'site_quat': (1, 4),
+                  'cam_pos': (2, 3), 'cam_quat': (2, 4), 'cam_fovy': (2,),
+                  'actuator_trnid': (2, 2), 'actuator_trntype': (2,), 'actuator_gear': (2, 6),
+                  'actuator_ctrlrange': (2, 2), 'actuator_ctrllimited': (2,), 'qpos0': (71,)}
+        for name, shape in shapes.items(): setattr(self, name, np.zeros(shape))
+        self.body_quat[:, 0] = self.body_iquat[:, 0] = self.geom_quat[:, 0] = 1
+        self.site_quat[:, 0] = self.cam_quat[:, 0] = 1
+        self.body_pos[1:21, 2] = .8
+        self.body_pos[21] = [0, 0, .11]
+        self.body_mass[1:21] = 30
+        self.body_inertia[1:21] = 2
+        self.jnt_type[:60] = 2
+        self.jnt_type[61:] = 3
+        self.jnt_axis[:60] = np.tile(np.eye(3), (20, 1))
+        self.jnt_qposadr[:] = [*range(61), 67, 68, 69, 70]
+        self.jnt_dofadr[:] = [*range(61), 66, 67, 68, 69]
+        self.jnt_limited[:60] = 1
+        self.jnt_range[:60] = [-1e-6, 1e-6]
+        self.jnt_bodyid[:60] = np.repeat(np.arange(1, 21), 3)
+        puck = NAMES.index('obstacle0')
+        self.geom_bodyid[puck] = 1
+        self.geom_type[puck] = 5
+        self.geom_size[puck] = [.4, .8, 0]
+        self.geom_rgba[:] = 1
+        self.geom_contype[:] = self.geom_conaffinity[:] = 1
+        self.actuator_trnid[:] = [[61, -1], [62, -1]]
+        self.actuator_gear[:, 0] = 3
+        self.actuator_ctrlrange[:] = [-2, 2]
+        self.actuator_ctrllimited[:] = 1
+        self.qpos0[60:67] = [0, 0, .11, 1, 0, 0, 0]
+
+    def __getstate__(self):
+        return pickle.dumps(self.__dict__, protocol=4)  # Only locally created fixture state.
+
+    def __setstate__(self, raw):
+        self.__dict__.update(pickle.loads(raw))
+
+    def geom(self, name): return SimpleNamespace(id=self.names['geom'].index(name))
+    def body(self, name): return SimpleNamespace(id=self.names['body'].index(name))
+
+
+class FixtureData:
+    def __init__(self, model):
+        self.model = model
+        self.qpos, self.qvel = model.qpos0.copy(), np.zeros(model.nv)
+        self.ctrl, self.qfrc_applied = np.zeros(model.nu), np.zeros(model.nv)
+        self.xfrc_applied = np.zeros((model.nbody, 6))
+        self.time = 0.
+
+
+class FixtureRenderer:
+    def __init__(self, model, *, height=128, width=128):
+        self.model, self.height, self.width = model, height, width
+        self.closed = 0
+        self.fail_close = False
+
+    def close(self):
+        self.closed += 1
+        if self.fail_close: raise RuntimeError('fixture renderer close failure')
+
+
+class PuckInstallationTests(unittest.TestCase):
+    def setUp(self):
+        PuckProfileTests.setUp(self)
+        self.assertTrue(hasattr(self.p, 'install_fixed_model'), 'staged installation is missing')
+        self.assertTrue(hasattr(self.p, 'authored_reset'), 'authored reset adapter is missing')
+        self.old = FixtureModel()
+        self.new = copy.deepcopy(self.old)
+        puck = NAMES.index('obstacle0')
+        self.new.body_pos[1] = [0, 0, .062]
+        self.new.body_mass[1] = .25
+        self.new.body_inertia[1] = [.00420625, .00420625, .0078125]
+        self.new.jnt_range[:3] = [[-5.5, 5.5], [-5.5, 5.5], [-.002, .002]]
+        self.new.geom_size[puck] = [.25, .06, 0]
+        self.new.geom_friction[puck] = [.25, .005, .0001]
+        self.new.geom_priority[puck], self.new.geom_condim[puck] = 1, 3
+        self.new.geom_solref[puck] = [.004, 1]
+        self.new.geom_solimp[puck] = [.95, .99, .001, .5, 2]
+        self.new.geom_rgba[puck] = [.9, .7, .1, 1]
+        self.new.geom_aabb[puck] = [0, 0, 0, .25, .25, .06]
+        self.new.geom_rbound[puck] = math.hypot(.25, .06)
+        self.new.site_type[0] = 5
+        # MuJoCo 3.3.6 site size has a .005 third default even for cylinders.
+        self.new.site_size[0] = [.45, .001, .005]
+        self.new.site_pos[0] = [0, 0, .001]
+        self.renderers = []
+        def renderer(*args, **kwargs):
+            result = FixtureRenderer(*args, **kwargs)
+            self.renderers.append(result)
+            return result
+        objects = SimpleNamespace(**{f'mjOBJ_{key.upper()}': key for key in self.old.names})
+        self.mj = SimpleNamespace(__version__='3.3.6', mjtObj=objects, MjData=FixtureData,
+            MjModel=FixtureModel, Renderer=renderer, get_mjcb_control=lambda: None,
+            mj_name2id=lambda model, kind, name: model.names[kind].index(name),
+            mj_id2name=lambda model, kind, index: model.names[kind][index],
+            MjvScene=lambda model, maxgeom: SimpleNamespace(model=model, maxgeom=maxgeom),
+            mj_setConst=lambda model, data: None, mj_resetData=lambda model, data: None,
+            mj_forward=lambda model, data: None)
+        self.native = patch.dict(sys.modules, {'mujoco': self.mj})
+        self.native.start()
+        self.addCleanup(self.native.stop)
+        self.compile = patch.object(FixtureModel, 'from_xml_string', create=True,
+                                    side_effect=lambda xml: self.new)
+        self.compile.start()
+        self.addCleanup(self.compile.stop)
+        from palimpsest.snapshots import _bindings
+        self.env = SimpleNamespace(model=self.old, data=FixtureData(self.old),
+            renderer=FixtureRenderer(self.old), _view_scn=SimpleNamespace(maxgeom=10000),
+            window=None, _view_ctx=None, W=128, H=128, n_obstacles=1, k_nearest=5,
+            frame_skip=10, texture_mode='checker', render_mode=None, arena=7., max_steps=600,
+            _t=0, _action_scale=2., _obstacle_xy=np.zeros((1, 2), np.float32),
+            _goal_xy=np.zeros(2, np.float32), _prev_xy=np.zeros(2, np.float32),
+            _last_action=np.zeros(2, np.float32), _speed=0., _stall_steps=0,
+            explore_binsize=.2, visited=set(), path_to_draw=None, target_to_draw=None,
+            base_body_id=21, planner=SimpleNamespace(_cached_occ='old'))
+        vars(self.env).update(_bindings(self.env, self.old))
+
+    def test_install_rebinds_and_closes_only_retired_renderer(self):
+        old_renderer = self.env.renderer
+        identity = self.p.install_fixed_model(self.env, ROOT)
+        self.assertIs(self.env.model, self.new)
+        self.assertIs(self.env.data.model, self.new)
+        self.assertIs(self.env.renderer.model, self.new)
+        self.assertEqual((old_renderer.closed, self.env.renderer.closed), (1, 0))
+        self.assertEqual(identity['protocol_sha256'], self.p.PROTOCOL_SHA256)
+        self.assertEqual(self.env._puck_bindings['puck_qpos_adrs'], [0, 1, 2])
+        np.testing.assert_array_equal(self.env.model.geom_contype[NAMES.index('obstacle1'):NAMES.index('obstacle19')+1], 0)
+        with self.assertRaises(ValueError): self.p.install_fixed_model(self.env, ROOT)
+
+    def test_install_rejects_live_wrong_settings_or_stale_ids_before_compile(self):
+        original = vars(self.env).copy()
+        for key, value in [('W', 84), ('n_obstacles', 2), ('_t', 1), ('window', object()),
+                           ('cam_left_id', 1), ('_action_scale', 3.)]:
+            setattr(self.env, key, value)
+            with self.subTest(key=key), self.assertRaises(ValueError):
+                self.p.install_fixed_model(self.env, ROOT)
+            vars(self.env).clear()
+            vars(self.env).update(original)
+        self.assertEqual(self.renderers, [])
+
+    def test_staged_structural_or_transform_changes_leave_old_owner_intact(self):
+        for field, index, value in [('nq', None, 72), ('body_mass', 1, .26),
+                                  ('geom_aabb', (NAMES.index('obstacle0'), 5), .8),
+                                  ('actuator_gear', (0, 0), 4), ('cam_pos', (0, 0), .5),
+                                  ('jnt_axis', (0, 0), 0), ('jnt_range', (0, 1), 5.4)]:
+            baseline = copy.deepcopy(self.new)
+            if index is None: setattr(self.new, field, value)
+            else: getattr(self.new, field)[index] = value
+            with self.subTest(field=field), self.assertRaises(ValueError):
+                self.p.install_fixed_model(self.env, ROOT)
+            self.assertIs(self.env.model, self.old)
+            self.assertEqual(self.env.renderer.closed, 0)
+            self.new = baseline
+
+    def test_scene_allocation_failure_closes_staged_renderer_only(self):
+        self.mj.MjvScene = lambda *args, **kwargs: (_ for _ in ()).throw(RuntimeError('scene failure'))
+        with self.assertRaisesRegex(RuntimeError, 'scene failure'):
+            self.p.install_fixed_model(self.env, ROOT)
+        self.assertIs(self.env.model, self.old)
+        self.assertEqual(self.env.renderer.closed, 0)
+        self.assertEqual([r.closed for r in self.renderers], [1])
+
+    def test_wrong_staged_renderer_and_callback_are_rejected_without_commit(self):
+        self.mj.get_mjcb_control = lambda: object()
+        with self.assertRaises(ValueError): self.p.install_fixed_model(self.env, ROOT)
+        self.assertEqual(self.renderers, [])
+        self.mj.get_mjcb_control = lambda: None
+        def wrong_renderer(model, **kwargs):
+            result = FixtureRenderer(model, height=64)
+            self.renderers.append(result)
+            return result
+        self.mj.Renderer = wrong_renderer
+        with self.assertRaises(ValueError): self.p.install_fixed_model(self.env, ROOT)
+        self.assertIs(self.env.model, self.old)
+        self.assertEqual((self.env.renderer.closed, self.renderers[0].closed), (0, 1))
+
+    def test_old_renderer_close_failure_is_terminal_after_owner_commit(self):
+        old_renderer = self.env.renderer
+        old_renderer.fail_close = True
+        with self.assertRaisesRegex(RuntimeError, 'close failure'):
+            self.p.install_fixed_model(self.env, ROOT)
+        self.assertIs(self.env.model, self.new)
+        self.assertEqual((old_renderer.closed, self.env.renderer.closed), (1, 0))
+        self.env.renderer.close()  # The terminal caller still owns the new renderer.
+
+    def test_authored_reset_replaces_reset_locks_at_zero_time_without_step(self):
+        self.p.install_fixed_model(self.env, ROOT)
+        self.env.model.jnt_range[:2] = [[1.1, 1.2], [2.1, 2.2]]
+        self.env.model.geom_rgba[NAMES.index('obstacle0')] = .5
+        old_data = self.env.data
+        state = self.p.authored_reset(self.env, ROOT, 6000, 'train', 'episode-puck')
+        self.assertIsNot(self.env.data, old_data)
+        np.testing.assert_array_equal(self.env.data.qpos[:3], [-.4, -.3, 0.])
+        np.testing.assert_array_equal(self.env.data.qpos[60:63], [-1.3, -.6, .1])
+        np.testing.assert_array_equal(self.env.model.jnt_range[:3], [[-5.5, 5.5], [-5.5, 5.5], [-.002, .002]])
+        self.assertEqual((state['tick'], state['episode_id']), (0, 'episode-puck'))
+        self.assertEqual(self.env.data.time, 0.)
+        self.assertTrue(np.all(self.env.data.ctrl == 0) and np.all(self.env.data.qvel == 0))
+        self.assertIsNone(self.env.planner._cached_occ)
+
+    def test_authored_reset_rejects_layout_before_mutation_and_rolls_back_forward_failure(self):
+        self.p.install_fixed_model(self.env, ROOT)
+        model, data = self.env.model, self.env.data
+        arrays = {key: getattr(model, key).copy() for key in ('jnt_range', 'geom_rgba', 'site_pos')}
+        self.mj.mj_forward = lambda *args: (_ for _ in ()).throw(RuntimeError('forward failure'))
+        for seed, split, error in [(6000, 'held_out', ValueError), (6000, 'train', RuntimeError)]:
+            with self.assertRaises(error):
+                self.p.authored_reset(self.env, ROOT, seed, split, 'episode-puck')
+            self.assertIs(self.env.data, data)
+            for key, value in arrays.items(): np.testing.assert_array_equal(getattr(model, key), value)
+        self.env.data.time = .02
+        with self.assertRaises(ValueError):
+            self.p.authored_reset(self.env, ROOT, 6000, 'train', 'episode-puck')
+
+    def test_authored_reset_rejects_changed_non_puck_range(self):
+        self.p.install_fixed_model(self.env, ROOT)
+        self.env.model.jnt_range[3] = [-1., 1.]
+        with self.assertRaises(ValueError):
+            self.p.authored_reset(self.env, ROOT, 6000, 'train', 'episode-puck')
 
 
 if __name__ == '__main__':
