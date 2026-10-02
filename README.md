@@ -1,15 +1,17 @@
 # Palimpsest
 
-A local, inspectable lab for embodied neural controllers. Includes the **M0 / R0 reproduction harness**, **M1 execution/recovery**, and the **M2 interactive lab** with actual sensor inputs, world edits, snapshots, sequential branches and recorded artifacts.
+A local, inspectable lab for embodied neural controllers, with actual sensor inputs, world edits, full snapshots, sequential branches, recorded artifacts and bounded research profiles.
 
-Release endurance, memory learning, additional task controllers, MaleCNS and hardware control remain incomplete. See the [R0 evidence](docs/reports/r0-reproduction.md), [M1 evidence and CUDA limitation](docs/reports/m1-execution.md), [M2 interactive lab evidence](docs/reports/m2-interactive-lab.md), [implementation plan](docs/implementation-plan.md), [current progress](docs/progress.md), and preserved [Borrowed Body PRD](docs/borrowed-body-prd-v1.md). A completed evaluation means the bounded experiment finished; inspect its outcomes before making a navigation or performance claim.
+This integration branch combines the completed R0–R1 lab and memory mechanics with development memory acquisition, exploration/encoder-homing, a trained reduced MaleCNS pilot and offline artwork exporters. R2–R5 remain incomplete; hardware control is not qualified. The recorded hour gate passed its scoped R1 contract, while the measured 27.98 Hz display rate remains below the 30 Hz target. See the [R0 evidence](docs/reports/r0-reproduction.md), [M1 evidence and CUDA limitation](docs/reports/m1-execution.md), [M2 interactive lab evidence](docs/reports/m2-interactive-lab.md), [implementation plan](docs/implementation-plan.md), [current progress](docs/progress.md), and preserved [Borrowed Body PRD](docs/borrowed-body-prd-v1.md). A completed evaluation means the bounded experiment finished; inspect its outcomes before making a navigation or performance claim.
+
+Implementation is under review in stacked draft PRs. `feat/project-integration` is the combined checkout; `main` has not been advanced automatically. Historical evidence identifies its original source commit and does not certify this combined source.
 
 ## Setup
 
 Use Linux, Git, and [uv](https://docs.astral.sh/uv/getting-started/installation/). Python 3.11 and package versions are recorded in `.python-version` and `uv.lock`.
 
 ```sh
-git clone --recurse-submodules https://github.com/Aadrika08/palimpsest.git
+git clone --branch feat/project-integration --recurse-submodules https://github.com/Aadrika08/palimpsest.git
 cd palimpsest
 uv python install 3.11
 uv sync --locked --extra simulation --extra lab
@@ -68,6 +70,22 @@ uv run --no-sync palimpsest export runs/lab/SOURCE_UUID --format svg --output ro
 
 Replace UUID placeholders with recorded run IDs. A branch can begin at a nonzero episode/tick; select its first recorded transition. Exports also support `png` and `bundle`, never overwrite existing files, and exclude session credentials. Executable replay uses a bounded child process (`--timeout 900` by default); replay job pause/resume controls affect transport only, preserving the recorded engine timeline. Old runs without registered snapshot hashes cannot be replayed as compatible evidence.
 
+## Development profiles and artwork
+
+| Capability | Entry point and current boundary |
+| --- | --- |
+| Memory mechanics | Select **Memory passages** in the lab. Typed M/E/U, visibility-limited sensing, evidence-backed revision and U-only snapshot branches are implemented. [Mechanics evidence](docs/reports/m4-memory-mechanics.md). |
+| Recorded revision histories | [Acquisition protocol](docs/plans/m5-acquisition-batch.md) and `scripts/acquire_memory_history.py`. Eight recorded development episodes fit distinct local/paired rules; embodied and held-out transfer are pending. |
+| Exploration and encoder homing | Select the corresponding lab scenario. Use manual or FLYNN control through the declared cue. [Manual homing evidence](docs/reports/m6-homing-driver-v2.md) covers one bounded cue-following driver; it does not establish pretrained FLYNN competence. |
+| Reduced MaleCNS pilot | [Training protocol](docs/plans/m7-training-protocol.md), `scripts/collect_male_teachers.py`, and `scripts/train_male_reduced.py`. Separate artificial input mapping, trained weights and degree-rewired control; recorded-input parity is measured. Lab integration is pending. |
+| Recorded artwork | [Fixed sound mapping and offline comparison](docs/artwork-mappings.md): `sonify` renders selected neural telemetry, `compare LEFT RIGHT --output comparison.html` renders labelled route panels. Neither performs inference or modifies source records. |
+| Physical rover | [Procurement proposal](docs/rover-procurement-proposal.md). No physical operation is qualified. |
+
+Run each command with `--help` and retain new output directories. Research runners
+have frozen protocols, explicit source identities and finite resource limits.
+Earlier failures remain part of the evidence. A completed mechanism check is not
+held-out competence or a demonstrated advantage from connectome topology.
+
 ## Bounded evaluation
 
 ```sh
@@ -98,7 +116,7 @@ Lab, evaluation, executable replay and export accept `--storage-max-bytes` (defa
 
 Preflight estimates use the loaded profile's actual camera/neural dimensions and the serialized snapshot. Every subsequent write is checked too, so resets do not bypass the quota. Log pipes cap native and Python output and retain its prefix on failure. Reserved space supports bounded failure reports. One per-user writer lease serializes Palimpsest lab/CLI writers, including overlapping output directories; close another running lab before starting a separate writer.
 
-After a quota, process or recording failure, preserve the diagnostics and published recording prefix, close the failed owner, then start a fresh run or branch from a registered compatible snapshot. Do not treat orphan chunks or incomplete commands as applied data. Archive or remove selected old output directories yourself after the lab is closed; the application does not choose evidence to delete. See the [hardening verification and recovery runbook](docs/reports/lab-hardening-runbook.md) for cached offline setup, sustained execution, failure checks and endurance commands. Release qualification remains pending while those gates are incomplete.
+After a quota, process or recording failure, preserve the diagnostics and published recording prefix, close the failed owner, then start a fresh run or branch from a registered compatible snapshot. Do not treat orphan chunks or incomplete commands as applied data. Archive or remove selected old output directories yourself after the lab is closed; the application does not choose evidence to delete. See the [hardening verification and recovery runbook](docs/reports/lab-hardening-runbook.md) for cached offline setup, sustained execution, failure checks and endurance commands. The retained R1 release observations and explicit limits are indexed in [requirements and evidence](docs/requirements-evidence.md); later release gates remain pending.
 
 ## Execution and snapshots
 

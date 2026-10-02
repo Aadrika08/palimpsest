@@ -1,4 +1,4 @@
-# R1 requirements and evidence
+# Requirements and evidence
 
 **M3 / R1 is complete under the reviewed contract and PRD §21.3, with documented limitations.** This matrix follows the unchanged [PRD requirements](borrowed-body-prd-v1.md#7-functional-requirements), performance/resource requirements (§17), local/privacy/licensing limits (§18), and acceptance criteria (§21). Runtime `c43f5df` has 195 passing EGL-enabled tests, two normal restored full-model CPU-FLYNN close checks, and passing natural manual/teacher throughput. The [fresh mixed hour gate][hour] **passes all eight gates** in 3600.000099 seconds:29 complete cycles (manual 10/teacher 10/Flynn 9),58 passed executable replays and116 closed/completed dispositions. A documentation entry or implementation check is not release qualification.
 
@@ -25,6 +25,32 @@ The [M3 report](reports/m3-release-hardening.md) and [JSON evidence index](repor
 | LAB-015: invalid outputs/timeouts stop and preserve diagnostics | [Flynn NaN/infinity/shape guards][flynn]; [watchdogs][lab]; [log-drain tests][evaluate] | [Suite][suite] passes guard/fault tests; raw invalid values are preserved in bounded diagnostics before sanitization/stepping. Full-model invalid-output fault injection is not claimed. |
 | LAB-016: documented headless evaluation and dependency diagnostics | [Doctor tests][doctor]; [CLI/evaluation][cli] | [Final integration index][integration] retains actual 30-tick teacher CLI evaluation on `a24c237`; [offline][offline] retains headless full-model verification. See existing setup/evaluation commands below. |
 | ART-001: real trajectory overlay cannot alter agent input | [Artifact geometry][artifacts]; [overlay/input-isolation UI test][ui] | [Browser][browser] actual manual overlay and keyboard/error recovery pass on `ec1d2e6`. This is evaluator-only presentation; marks affecting cameras would require a different scenario. |
+
+## Later requirements: current implementation and missing release evidence
+
+These rows extend the R1 matrix without promoting development observations to
+R2–R5 qualification. Full later release gates remain in the
+[implementation plan](implementation-plan.md).
+
+| PRD ID | Implemented and runnable evidence | Remaining boundary |
+| --- | --- | --- |
+| MEM-001 | [M/E/U schemas and hashes](../src/palimpsest/memory.py); `test_memory`, `test_memory_task`; [actual M4 evidence](reports/m4-memory-mechanics.md). | No claim that neural hidden state is this explicit memory representation. |
+| MEM-002 | Selection changes uncertainty/inspection requests, never factual payloads; `test_memory` and `test_memory_task`. | Useful held-out targeting and closed-loop effects remain pending. |
+| MEM-003 | Explicit abstention, unobserved samples and evidence-only factual revisions; actual one-episode history abstains, four-episode histories fit. [Recorded-history report](reports/m5-recorded-history.md). | Missing evidence is not an unchanged negative label; no R2 result. |
+| MEM-004 | Native U-only branching with complete invariant hashes, sham checks and actual full-FLYNN CPU continuation/replay. [M4 report](reports/m4-memory-mechanics.md). | Same software/numerical regime only; CUDA repeatability is unqualified. |
+| MEM-005 | [Nine targeting baselines](../src/palimpsest/memory_experiment.py), synthetic development fixtures, recorded E and separate live cases. | All-condition embodied comparison and frozen held-out evaluation remain missing. |
+| MEM-006 | Deterministic bounded `fit(E)` outside motor inference; [collector](../src/palimpsest/memory_history.py) verifies complete recorded sensor histories. | No LLM runtime dependency; history information and privileged baseline access must remain labelled. |
+| ART-002 | Memory observations/decisions/inspection events carry tick and evidence IDs; route/UI annotations covered by `ui/tests/memory-events.check.ts` and actual M4 browser flows. | No useful-memory or route-improvement inference from an annotation alone. |
+| ART-003 | [Sonification and comparison exports](artwork-mappings.md), individually requested offline mappings with embedded provenance; actual short recorded derivatives/browser checks. | Camera portraits, curated specimen correspondence, declared-duration exhibition and independent operation remain incomplete. |
+| HW-001 | [Reviewed-cost proposal](rover-procurement-proposal.md); no actuator path released. | Components/operator, electrical and lifted-wheel checks, fault injection, measured stopping/thermal deadlines and enclosed floor trials are required. |
+
+Additional M6 task, M7 model and M9 artwork gates are broader than these IDs.
+Exploration and homing have manual development demonstrations with native/replay
+evidence; body adaptation and learned puck manipulation remain unfinished.
+The reduced MaleCNS pilot has separate training and recorded-input held-out
+scores, with a guarded CPU wrapper; it does not establish closed-loop navigation,
+biological sensing, topology benefit or population-wide sex differences.
+M10 handoff remains partial while those gates and unified integration are open.
 
 ## Runnable checks and operating instructions
 
