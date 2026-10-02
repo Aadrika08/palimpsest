@@ -1,0 +1,45 @@
+# Palimpsest implementation plan
+
+Approved direction: 2 October 2026. Specification: [original PRD](borrowed-body-prd-v1.md) and [brainstorm](borrowed-body-brainstorm.md).
+
+## Scope and decisions
+
+Implement R0–R5, including exploration, homing, body adaptation, puck pushing, and all six artwork modes. Use Palimpsest for the product, Python package, and CLI; retain Borrowed Body as the preserved PRD and an artwork title. Local compute first; propose concrete costs before hardware purchases or cloud provisioning. No rover hardware currently exists.
+
+U learns revision rules from past episodes and transfers them to unfamiliar instances. The first experiment uses declared symbolic sensing, including local passage observations (`open`, `blocked`, `unobserved`). Complete dependency truth remains evaluator-only. A null research result can complete an experiment; failed capabilities and unqualified hardware remain incomplete.
+
+Mandatory LLM integration, multiple robots, and unattended day-long operation are outside the release gate. Do not rewrite the original PRD.
+
+## Architecture and contracts
+
+Use Python 3.11 with uv, MuJoCo/Gymnasium, PyTorch, a local FastAPI service, and React/TypeScript/Vite with Node 24 LTS. Pin the upstream FLYNN submodule at `8d964599119b420de67ee259434d273651a1a76d`; retain its effective preprocessing, control interval, and action conversion. Freeze the working environment in uv.lock after reference checks.
+
+One simulation worker owns mutable environment/controller/renderer state. UI commands pass through bounded queues; display frames may be dropped, authoritative events may not. Simulation ticks remain independent of display/wall time. Comparisons run sequentially. Browser disconnect pauses an interactive run at a control boundary; continuing headlessly is explicit.
+
+Persist authoritative JSON manifests/events and typed numeric chunks; SQLite is a rebuildable index. Full snapshots include mutable world properties, integration state, wrappers, neural/retina state, random generators, pending commands, and later memory/supervisor state. Agent observations are constructed from an allowlist.
+
+Expose `palimpsest doctor`, `assets verify`, `lab`, `evaluate`, `replay`, `compare`, and `export`, adding training/hardware commands with their milestones. Replay modes remain distinct: playback, actions, policy. Version manifests and API messages. Commands carry idempotency and expected state; an applied event gives the actual tick separately from receipt. Bind to loopback, validate session/origin and imported paths/artifacts, and exclude credentials from exports.
+
+## Milestones and completion gates
+
+- [ ] **M0 / R0 — reproduction.** Diagnostics, asset hashes/licences/order/provenance, bounded teacher and FLYNN harness, one episode each then 30 development layouts, retained inputs/raw outputs/actions/outcomes and resource measurements. Gate: asset verification, reference parity, environment lock, resource report. Check invalid cell outputs before upstream sanitization; finite outputs retain upstream scaling. Missing provenance remains explicitly qualified, not invented.
+- [ ] **M1 — execution and recovery.** Manual/teacher/FLYNN paths, lifecycle, observation projection, deterministic events, recorder, complete snapshots. Obstacle edits update qpos, locked ranges, cached geometry and planners. Gate: single-tick stepping, idempotency, isolation, invalid-output handling, snapshot continuation.
+- [ ] **M2 — interactive lab.** Arena, actual sensors, inspector, timeline, keyboard controls, validated intervention previews, all R1 scenarios, three replay modes, sequential comparison, SVG/PNG/bundle exports. Gate: one interruption/two traces end-to-end workflow.
+- [ ] **M3 / R1 release — hardening.** Offline setup, one-command launch after setup, quotas, crash/disconnect/recorder recovery, accessibility, operational docs. Gate: LAB-001–016 and ART-001, 60-minute mixed-operation endurance, measured responsiveness/real-time factor.
+- [ ] **M4 — memory mechanics.** Separate typed M/E/U, bounded rules, evidence-based reviser, inspector, atomic U-only branching. Begin with a finite two-relation vocabulary or abstention, deterministic history fitting, independent regime-generated truth, and no unobserved negative labels. Gate: selection cannot rewrite payloads, evidence cannot create unsupported certainty, swap invariants pass.
+- [ ] **M5 / R2 release — transfer and embodiment.** Two passages; visibility-limited cue/bearing/passage observations; fixed reinspection supervisor. Compare own/swapped/sham/no U, hand-authored, history-independent, traversal, retrieval, and labelled oracle. Freeze splits, budgets, tolerances and outcomes before held-out evaluation. Gate: reproducible targeting and closed-loop bundles, all conditions, paired analysis and explicit positive/null result.
+- [ ] **M6 — all additional task profiles.** Exploration via visible-landmark supervisor; homing via encoder odometry without true-pose correction; body adaptation via measured bounded wheel gains; puck pushing via teacher demonstrations and a separately trained task controller. Each requires explicit sensors/objective/lineage, a successful functional demonstration, failure handling and held-out evaluation. Teacher success is not learned-controller competence.
+- [ ] **M7 / R3 — MaleCNS.** Bounded public-data pilot; freeze documented endpoints, extraction, IDs, boundaries, mappings and resource limits; train a separate profile, never transplant female parameters. Evaluate size-matched graph controls under matched information/training budgets and multiple training seeds for topology claims. Gate: reproducible extraction, trained compatible profile, bounded execution and held-out evaluation. A failed pilot does not complete R3.
+- [ ] **M8 / R4 — rover.** Reviewed BOM/cost proposal before procurement; exact component/electrical dossier; calibrated sensing/actions; bounded USB protocol with sessions, sequence, corruption checks, acknowledgement and Uno-local command expiry; disabled startup and explicit arming. Progress through electrical checks, wheels-lifted tests, fault injection, stopping-envelope measurement and enclosed floor trials. Choose timing/speed/clearance from measurements under recording and thermal load. Gate: physical qualification with raw data, calibration/hashes and repeated trials; simulation is insufficient.
+- [ ] **M9 / R5 — all artwork modes.** Afterimage; One map, many possible lives; Counterfactual choir; Borrowed body; Atlas of what disappears; The space between two flies. Reuse the evidence engine, document mappings and specimen provenance, provide supervised exhibition controls/runbook/retention and honest live/playback labels. Gate: independent operation, provenance, declared-duration tests, no undeclared sensor feedback.
+- [ ] **M10 — handoff.** Requirements-to-evidence matrix, installation/architecture guides, protocols, hardware/art runbooks, limitations. Gate: each requirement has runnable checks and retained evidence; unmet model/task/physical gates remain visible.
+
+## Validation and execution
+
+Routine CI covers synthetic fixtures, validation, lifecycle/events, storage/replay, and browser checks. Asset-backed teacher/FLYNN/MaleCNS runs are separate and cannot be replaced by skipped tests. Cover privileged-state leakage, masks, overlay isolation, U-only invariants, malformed/stale commands, invalid outputs/timeouts, queues/disk exhaustion, disconnects/interrupted recordings, held-out cases and sham controls. Physical release requires the complete PRD fault matrix and measured deadlines/stopping.
+
+One focused branch/draft PR per reviewable change; commit verified increments and push as Aadrika08 with repository-local Aadrika Maurya identity. No automatic merges or force-pushes. Dependent work may use explicitly stacked branches. Parallelize independent work only after shared contracts are fixed; serialize large ML jobs on the laptop.
+
+R0 precedes R1. R1 unlocks R2 and independent R3/R4 feasibility; this resolves the scheduling inconsistency between PRD sections 4.3 and 22 without relaxing release gates. Memory claims require R2; physical presentations require qualified R4.
+
+PRD planning estimates: R0–R1 18–30 engineering days; R2 12–20 plus research iteration; rover integration 10–20 after parts/model feasibility. Re-estimate additional skills, anatomy training and artwork after bounded pilots. These are estimates, not a full-project delivery commitment.
