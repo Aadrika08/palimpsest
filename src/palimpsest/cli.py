@@ -17,6 +17,42 @@ def _bounded_int(low, high):
     return parse
 
 
+def _storage_flags(parser):
+    group = parser.add_argument_group('managed storage', 'Limits apply to managed run/export roots, not the whole filesystem.')
+    group.add_argument('--storage-max-bytes', type=_bounded_int(1024**2, 100 * 1024**3), default=20 * 1024**3, help='aggregate bytes under managed roots')
+    group.add_argument('--min-free-bytes', type=_bounded_int(0, 100 * 1024**3), default=1024**3, help='free-space floor on destination filesystem')
+    for name, default in (('runs', 1024), ('snapshots', 64), ('exports', 1024)):
+        group.add_argument('--max-' + name, type=_bounded_int(1, 4096), default=default, help='per-run snapshot limit' if name == 'snapshots' else 'managed ' + name + ' count limit')
+    group.add_argument('--log-max-bytes', type=_bounded_int(1024, 64 * 1024**2), default=1024**2, help='maximum bytes per child stdout/stderr log')
+
+
+def _limits(args):
+    from .storage import StorageLimits
+    return StorageLimits(max_bytes=args.storage_max_bytes, min_free_bytes=args.min_free_bytes,
+                         max_runs=args.max_runs, max_snapshots=args.max_snapshots, max_exports=args.max_exports)
+
+
+def _managed_root(output, asset_root):
+    root = output.parent.absolute()
+    if root.resolve().is_relative_to(asset_root) or asset_root.is_relative_to(root.resolve()):
+        raise ValueError('Model assets must be outside managed storage roots')
+    return root
+
+
+def _run_count(root):
+    count = 0
+    for path in root.iterdir():
+        if not path.is_dir():
+            continue
+        try:
+            value = uuid.UUID(path.name)
+            known = path.name in (value.hex, str(value))
+        except ValueError:
+            known = False
+        count += bool(known or (path / 'recording/manifest.json').is_file())
+    return count
+
+
 def main(argv=None):
     parser = argparse.ArgumentParser(prog='palimpsest')
     parser.add_argument('--repo', type=Path, default=Path(__file__).resolve().parents[2])
@@ -48,14 +84,16 @@ def main(argv=None):
     replay.add_argument('--episode', type=_bounded_int(0, 100000), default=0)
     replay.add_argument('--tick', type=_bounded_int(0, 599), default=0)
     replay.add_argument('--timeout', type=_bounded_int(1, 86400), default=900)
-    replay.add_argument('--output', type=Path, help='new UUID-named run directory (actions/policy only)')
+    replay.add_argument('--output', type=Path, help='new UUID-named run directory; parent is managed root (actions/policy only)')
     compare = commands.add_parser('compare', help='compare completed runs and provenance')
     compare.add_argument('left', type=Path)
     compare.add_argument('right', type=Path)
     export = commands.add_parser('export', help='export a completed run without inference')
     export.add_argument('source', type=Path)
     export.add_argument('--format', choices=('svg', 'png', 'bundle'), required=True)
-    export.add_argument('--output', type=Path, required=True, help='new artifact path; never overwritten')
+    export.add_argument('--output', type=Path, required=True, help='new artifact path; never overwritten; parent directory is managed storage root')
+    for command in (lab, evaluate, replay, export):
+        _storage_flags(command)
     args = parser.parse_args(argv)
     root = args.repo.resolve()
     asset_root = (args.assets or root / 'data/assets/flynn').resolve()
@@ -82,7 +120,8 @@ def main(argv=None):
                 raise ValueError('Build the UI first: cd ui && npm ci && npm run build')
             app = create_app(root, asset_root, (args.runs or root / 'runs/lab').resolve(),
                              (args.exports or root / 'exports').resolve(), port=args.port,
-                             headless_continue=args.headless_continue)
+                             headless_continue=args.headless_continue, storage_limits=_limits(args),
+                             log_max_bytes=args.log_max_bytes)
             uvicorn.run(app, host='127.0.0.1', port=args.port, access_log=False, ws_max_size=16384)
             return 0
         elif args.command == 'compare':
@@ -90,7 +129,15 @@ def main(argv=None):
             report, ok = compare_runs(args.left, args.right), True
         elif args.command == 'export':
             from .artifacts import export_run
-            report = {'artifact': str(export_run(args.source, args.output, args.format))}
+            from .storage import StorageBudget
+            output = args.output.absolute()
+            managed = _managed_root(output, asset_root)
+            budget = StorageBudget((managed,), _limits(args))
+            with budget.lock():
+                budget.check(0, path=output)
+                count = sum(path.is_file() and path.suffix.lower() in {'.svg', '.png', '.zip'} for path in managed.rglob('*'))
+                budget.check_count('exports', count)
+                report = {'artifact': str(export_run(args.source, output, args.format, storage_budget=budget))}
             ok = True
         elif args.mode == 'playback':
             from .artifacts import playback
@@ -99,16 +146,25 @@ def main(argv=None):
             report, ok = playback(args.source, args.episode, args.tick), True
         else:
             from .evaluate import bounded_process
-            output = (args.output or root / 'runs/lab' / uuid.uuid4().hex).resolve()
+            output = (args.output or root / 'runs/lab' / uuid.uuid4().hex).absolute()
             if uuid.UUID(output.name).hex != output.name:
                 raise ValueError('Replay output directory must have a canonical hexadecimal UUID name')
+            from dataclasses import asdict
+            from .storage import StorageBudget
+            managed = _managed_root(output, asset_root)
+            budget = StorageBudget((managed,), _limits(args), headroom_bytes=2 * args.log_max_bytes + 8 * 1024**2)
             config = dict(source_run_path=str(args.source.resolve()), destination_run_path=str(output),
-                          mode=args.mode, repo_root=str(root), asset_root=str(asset_root))
+                          mode=args.mode, repo_root=str(root), asset_root=str(asset_root),
+                          storage={'roots': [str(managed)], 'limits': asdict(budget.limits),
+                                   'headroom_bytes': budget.headroom_bytes})
             env = os.environ.copy()
             env.setdefault('MUJOCO_GL', 'egl')
             env.update(OMP_NUM_THREADS='2', MPLBACKEND='Agg')
-            report = bounded_process([sys.executable, '-m', 'palimpsest.replay', json.dumps(config)],
-                                     output, args.timeout, env)
+            with budget.lock():
+                budget.check(1024**2, path=output)
+                budget.check_count('runs', _run_count(managed))
+                report = bounded_process([sys.executable, '-m', 'palimpsest.replay', json.dumps(config)],
+                                         output, args.timeout, env, storage_budget=budget, log_max_bytes=args.log_max_bytes)
             result = output / 'replay-report.json'
             if result.is_file():
                 report['replay'] = json.loads(result.read_text())
