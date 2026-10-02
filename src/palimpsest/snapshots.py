@@ -493,9 +493,17 @@ def restore(snapshot, env, *, policy=None, teacher=None, replace_controller=Fals
     return snp["observation"], snp["application"]
 
 
-def save_snapshot(snapshot, path):
-    """Write a new, versioned container; existing files are never overwritten."""
+def save_snapshot(snapshot, path, *, storage_budget=None, preflight_bytes=0):
+    """Write an exclusive bounded container and return its exact byte count.
+
+    Optional preflight bytes estimate subsequent recording needs; they are
+    checked with the actual serialized snapshot before any disk write.
+    """
     import numpy as np
+    if type(preflight_bytes) is not int or preflight_bytes < 0:
+        raise ValueError("preflight_bytes must be a nonnegative integer")
+    if preflight_bytes and storage_budget is None:
+        raise ValueError("Snapshot preflight requires a storage budget")
     entries = {}
     def encode(value, depth=0):
         if depth > 64:
@@ -521,16 +529,26 @@ def save_snapshot(snapshot, path):
                            "container": encode(_copy(snapshot))}, allow_nan=False, separators=(",", ":")).encode()
     if len(metadata) > MAX_METADATA or len(entries) + 1 > MAX_ENTRIES or sum(map(len, entries.values())) + len(metadata) > MAX_BYTES:
         raise ValueError("Snapshot container exceeds limits")
+    with io.BytesIO() as staging:
+        with zipfile.ZipFile(staging, "w", compression=zipfile.ZIP_STORED) as archive:
+            archive.writestr("metadata.json", metadata)
+            for name, payload in entries.items():
+                archive.writestr(name, payload)
+        payload = staging.getvalue()
+    if len(payload) > MAX_BYTES:
+        raise ValueError("Snapshot container exceeds limits")
     path = Path(path)
+    if storage_budget is not None:
+        storage_budget.check(len(payload) + preflight_bytes, path=path)
     with path.open("xb") as stream:
         try:
-            with zipfile.ZipFile(stream, "w", compression=zipfile.ZIP_STORED) as archive:
-                archive.writestr("metadata.json", metadata)
-                for name, payload in entries.items():
-                    archive.writestr(name, payload)
+            stream.write(payload)
+            stream.flush()
+            os.fsync(stream.fileno())
         except BaseException:
             path.unlink()
             raise
+    return len(payload)
 
 
 def read_snapshot(path):

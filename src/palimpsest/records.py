@@ -49,10 +49,11 @@ def _load_json(value):
 
 
 class RunWriter:
-    def __init__(self, path: Path, manifest: dict, max_bytes=None):
+    def __init__(self, path: Path, manifest: dict, max_bytes=None, *, storage_budget=None):
         if max_bytes is not None and (not _integer(max_bytes) or max_bytes == 0):
             raise ValueError("max_bytes must be a positive integer or None")
         self._max_bytes = max_bytes
+        self.storage_budget = storage_budget
         self._bytes = self._manifest_bytes = 0
         self._broken = False
         self.path = Path(path)
@@ -73,9 +74,14 @@ class RunWriter:
         self._finished = False
 
     def _check_budget(self, additional):
-        if self._max_bytes is not None and self._bytes + additional > self._max_bytes:
+        try:
+            if self._max_bytes is not None and self._bytes + additional > self._max_bytes:
+                raise RuntimeError("Recording quota exceeded before publication")
+            if self.storage_budget is not None:
+                self.storage_budget.check(additional, path=self.path)
+        except (OSError, ValueError, RuntimeError):
             self._broken = True
-            raise RuntimeError("Recording quota exceeded before publication")
+            raise
 
     def _write_manifest(self, value):
         payload = (_json(value) + "\n").encode("utf-8")

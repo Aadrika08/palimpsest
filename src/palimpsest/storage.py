@@ -1,0 +1,155 @@
+"""Storage bounds for one admitted writer; no persisted accounting ledger."""
+from contextlib import contextmanager
+from dataclasses import dataclass
+import fcntl
+import os
+from pathlib import Path
+import shutil
+
+MiB = 1024**2
+GiB = 1024**3
+MAX_SCAN_ENTRIES = 100_000
+LOCK_NAME = ".palimpsest-storage.lock"
+
+
+class StorageLimitError(RuntimeError):
+    """A storage operation must stop before publishing more data."""
+
+
+@dataclass(frozen=True)
+class StorageLimits:
+    max_bytes: int = 20 * GiB
+    min_free_bytes: int = GiB
+    max_runs: int = 1024
+    max_snapshots: int = 64  # Per run, including its initial snapshot.
+    max_exports: int = 1024
+
+    def __post_init__(self):
+        for name in ("max_bytes", "max_runs", "max_snapshots", "max_exports"):
+            if type(getattr(self, name)) is not int or getattr(self, name) <= 0:
+                raise ValueError(f"{name} must be a positive integer")
+        if type(self.min_free_bytes) is not int or self.min_free_bytes < 0:
+            raise ValueError("min_free_bytes must be a nonnegative integer")
+
+
+def _safe_path(path):
+    result = Path(os.path.abspath(path))
+    if any(part.is_symlink() for part in (result, *result.parents)):
+        raise StorageLimitError("Storage paths cannot traverse symlinks")
+    return result
+
+
+def _nonnegative(value, name):
+    if type(value) is not int or value < 0:
+        raise ValueError(f"{name} must be a nonnegative integer")
+
+
+class StorageBudget:
+    """Recount configured roots before a write, with fixed concurrent headroom.
+
+    The caller admits only one payload writer. Capped native logs and parent
+    status files may run concurrently only within ``headroom_bytes``. Hold
+    ``lock()`` for the service/CLI operation; the admitted child shares its
+    parent's lease and receives this roots/limits configuration, not a new lock.
+    """
+    def __init__(self, roots, limits: StorageLimits, *, headroom_bytes=0):
+        if not isinstance(limits, StorageLimits):
+            raise TypeError("limits must be StorageLimits")
+        _nonnegative(headroom_bytes, "headroom_bytes")
+        self.roots = tuple(sorted({_safe_path(root) for root in roots}))
+        if not self.roots:
+            raise ValueError("At least one storage root is required")
+        if any(root.exists() and not root.is_dir() for root in self.roots):
+            raise ValueError("Storage roots must be directories")
+        self.limits, self.headroom_bytes = limits, headroom_bytes
+        self._count_roots = tuple(root for root in self.roots
+                                  if not any(root != other and root.is_relative_to(other) for other in self.roots))
+
+    def usage(self):
+        # ponytail: O(files) recount avoids a crash-recovery ledger; one payload
+        # writer and a bounded inventory are adequate for this local lab.
+        total = files = entries = 0
+        pending = list(self._count_roots)
+        while pending:
+            directory = _safe_path(pending.pop())
+            if not directory.exists():
+                continue
+            with os.scandir(directory) as children:
+                for child in children:
+                    entries += 1
+                    if entries > MAX_SCAN_ENTRIES:
+                        raise StorageLimitError("Storage inventory exceeds entry limit")
+                    if child.is_symlink():
+                        raise StorageLimitError("Storage inventory contains a symlink")
+                    try:
+                        if child.is_dir(follow_symlinks=False):
+                            pending.append(Path(child.path))
+                        elif child.is_file(follow_symlinks=False):
+                            total += child.stat(follow_symlinks=False).st_size
+                            files += 1
+                        elif not os.path.lexists(child.path):
+                            continue
+                        else:
+                            raise StorageLimitError("Storage inventory contains a nonregular file")
+                    except FileNotFoundError:
+                        # Parent status files may be atomically replaced; their
+                        # maximum concurrent footprint is reserved as headroom.
+                        continue
+        return {"used_bytes": total, "files": files, "remaining_bytes": max(0, self.limits.max_bytes - total),
+                "max_bytes": self.limits.max_bytes, "headroom_bytes": self.headroom_bytes,
+                "min_free_bytes": self.limits.min_free_bytes}
+
+    def check(self, additional_bytes, *, path):
+        _nonnegative(additional_bytes, "additional_bytes")
+        destination = _safe_path(path)
+        if not any(destination.is_relative_to(root) for root in self.roots):
+            raise StorageLimitError("Destination is outside configured storage roots")
+        report = self.usage()
+        required = additional_bytes + self.headroom_bytes
+        if report["used_bytes"] + required > self.limits.max_bytes:
+            raise StorageLimitError(f"Storage quota exceeded: used={report['used_bytes']}, additional={additional_bytes}, "
+                                    f"headroom={self.headroom_bytes}, limit={self.limits.max_bytes}")
+        existing = destination
+        while not existing.exists():
+            existing = existing.parent
+        free = shutil.disk_usage(existing).free
+        if free - required < self.limits.min_free_bytes:
+            raise StorageLimitError(f"Storage free-space floor reached: free={free}, additional={additional_bytes}, "
+                                    f"headroom={self.headroom_bytes}, floor={self.limits.min_free_bytes}")
+        return {**report, "additional_bytes": additional_bytes, "free_bytes": free}
+
+    def check_count(self, kind, current, additional=1):
+        _nonnegative(current, "current")
+        _nonnegative(additional, "additional")
+        if kind not in {"runs", "snapshots", "exports"}:
+            raise ValueError("Count kind must be runs, snapshots or exports")
+        maximum = getattr(self.limits, "max_" + kind)
+        if current + additional > maximum:
+            raise StorageLimitError(f"Storage {kind} count limit reached ({maximum})")
+
+    @contextmanager
+    def lock(self):
+        """Exclusive nonblocking leases on every configured root, even nested ones."""
+        streams = []
+        try:
+            for root in self.roots:
+                _safe_path(root)
+                root.mkdir(parents=True, exist_ok=True)
+                path = _safe_path(root / LOCK_NAME)
+                flags = os.O_RDWR | os.O_CREAT | getattr(os, "O_NOFOLLOW", 0)
+                descriptor = os.open(path, flags, 0o600)
+                stream = os.fdopen(descriptor, "r+b")
+                try:
+                    fcntl.flock(stream, fcntl.LOCK_EX | fcntl.LOCK_NB)
+                except BlockingIOError as error:
+                    stream.close()
+                    raise StorageLimitError("Storage root is already owned by another writer") from error
+                except BaseException:
+                    stream.close()
+                    raise
+                streams.append(stream)
+            yield self
+        finally:
+            for stream in reversed(streams):
+                fcntl.flock(stream, fcntl.LOCK_UN)
+                stream.close()
