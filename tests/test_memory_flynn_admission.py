@@ -7,6 +7,7 @@ checks establish current application contracts, not actual FLYNN continuation.
 import copy
 import hashlib
 import json
+import os
 from pathlib import Path
 import tempfile
 import unittest
@@ -189,12 +190,13 @@ class FlynnMemoryAdmission(unittest.TestCase):
         policy.device = 'cpu'
         policy.provenance = {'requested_device': 'cpu', 'claim': 'pure-policy-fixture'}
         torch_stub = SimpleNamespace(manual_seed=Mock(), set_num_threads=Mock())
+        backend_before = {key: os.environ.get(key) for key in ('MUJOCO_GL', 'MPLBACKEND')}
         output = self.root / 'failed-atomic'
         def configure(env, state):
             env.data.qpos[:] = case['start_pose']
             env._goal_xy[:] = case['goal_xy']
             return memory_world.validate_state(state)
-        with patch.dict('sys.modules', {'torch': torch_stub}), \
+        with patch.dict('os.environ'), patch.dict('sys.modules', {'torch': torch_stub}), \
                 patch('palimpsest.doctor.diagnose', return_value={'checks': []}), \
                 patch('palimpsest.profiles.configure_world'), \
                 patch('palimpsest.assets.verify_assets', return_value={'ok': True}), \
@@ -208,6 +210,7 @@ class FlynnMemoryAdmission(unittest.TestCase):
                 Engine.open(Path(__file__).resolve().parents[1], self.root, output,
                     controller='flynn', seed=case['seed'], scenario='memory-passages', memory_case=case,
                     restore_snapshot=native, replace_controller=True)
+        self.assertEqual({key: os.environ.get(key) for key in backend_before}, backend_before)
         restore.assert_called_once()
         self.assertTrue(env.closed)
         env.renderer.close.assert_called_once()
