@@ -4260,5 +4260,6 @@
     "path": "runs/m6-body-gain-diagnostic-20261002/report.json",
     "sha256": "7f8c14fd1d68ecfd484b9ac4744b3be6f6af2de505e4d24147d0cef9e3a5b523"
   },
-  "finding": "Global allowlist rejected stationary floor-obstacle support before fit support accumulated; this is a diagnostic classification failure, not a measured wheel response."
+  "finding": "Global allowlist rejected authored floor-obstacle support before fit support accumulated; this is a diagnostic classification failure, not a measured wheel response.",
+  "scope_correction": "Obstacle joints are soft-limited, not exactly static. A future robot-incident contact classification must not invent an immobility threshold."
 }
