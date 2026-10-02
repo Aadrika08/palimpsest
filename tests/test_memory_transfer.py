@@ -465,6 +465,7 @@ class VerifierBoundaries(unittest.TestCase):
             self.runner.run_verifier(forged)
         self.assertFalse(Path(plan['output']).exists())
         with patch.object(self.runner, 'bounded_process', return_value={'status': 'timeout', 'returncode': -15}) as child, \
+             patch.object(self.runner, 'load_histories', return_value=self.histories), \
              patch.object(self.runner, 'print', create=True):
             result = self.runner.run_verifier(plan)
         self.assertEqual(child.call_count, 1)
