@@ -1,0 +1,94 @@
+{
+  "corrected_regression": {
+    "audit": {
+      "path": "runs/m7-v2-full-suite-v2-cc1cea9-independent-audit.json",
+      "sha256": "1909f030f7310b949952593f89d791a1992535a940d90050f0d54d28a8257fce"
+    },
+    "launcher": {
+      "path": "runs/m7-v2-full-suite-v2-cc1cea9-launch.py",
+      "sha256": "d68eff4800fcc2f2cff969bf333fd2df8648e8071734517f619ad7d23b766ba2"
+    },
+    "report": {
+      "path": "runs/m7-v2-full-suite-v2-cc1cea9-20261002/report.json",
+      "sha256": "f7119ff6fd2fc3351ea2f29b7a0670ddd46cc0b544b38896d06f6c82ef5ff09e"
+    },
+    "skips": 0,
+    "sources_assets_unchanged": true,
+    "supervisor": {
+      "elapsed_seconds": 82.32272417700005,
+      "output": "/home/utkarsh/Work/shraddha/brain/.worktrees/male-training-v2/runs/m7-v2-full-suite-v2-cc1cea9-20261002/supervisor",
+      "returncode": 0,
+      "schema_version": 1,
+      "started_utc": "2026-10-02T15:38:59.462156+00:00",
+      "status": "completed",
+      "timeout_seconds": 300
+    },
+    "tests": 395,
+    "unittest_seconds": 79.658
+  },
+  "first_regression": {
+    "cause": "Default run_worker passed engine_factory=None to historical owner fixtures; unexpected keyword prevented their log/completion boundary.",
+    "failures": 3,
+    "fix_commit": "cc1cea93d4c3333a0ee2a091dd34fff0b2986887",
+    "launcher": {
+      "path": "runs/m7-v2-full-suite-6eeac92-launch.py",
+      "sha256": "b7357c263028c3e1dc30d1f94b78a2627aaaa505df6a13e2ec65f8dc8525eb54"
+    },
+    "report": {
+      "path": "runs/m7-v2-full-suite-6eeac92-20261002/report.json",
+      "sha256": "8621fbc6701ea02452ea4640faeb707b7936593d7783b953122bc2852e2e2f2b"
+    },
+    "supervisor": {
+      "elapsed_seconds": 88.16659917100333,
+      "output": "/home/utkarsh/Work/shraddha/brain/.worktrees/male-training-v2/runs/m7-v2-full-suite-6eeac92-20261002/supervisor",
+      "returncode": 1,
+      "schema_version": 1,
+      "started_utc": "2026-10-02T15:33:44.547830+00:00",
+      "status": "failed",
+      "timeout_seconds": 300
+    },
+    "tests": 395,
+    "unittest_seconds": 84.6
+  },
+  "limitations": [
+    "Stage A teacher sources only; no v2 student training or evaluation yet.",
+    "No held-out scenes were opened.",
+    "Raw local runs remain ignored; primary report hashes bind their complete inventories.",
+    "No topology, biology, generalization, or R3 completion claim."
+  ],
+  "protocol_sha256": "8f360289ce286f56e31051c7bcfc6932a8f413dce662b83ddb9817b3e509d69b",
+  "qualification_claims": [],
+  "source_commit": "cc1cea93d4c3333a0ee2a091dd34fff0b2986887",
+  "stage_a": {
+    "audit": {
+      "path": "runs/m7-v2-stage-a-cc1cea9-20261002/independent-audit.json",
+      "sha256": "1c95e14ec0feb260b3a41f2914a59d636070bbf8b530f2bc0f34531b8090906b"
+    },
+    "audit_script": {
+      "path": "runs/m7-v2-stage-a-cc1cea9-audit.py",
+      "sha256": "432b4847b0c45e467f485c7b8a3f2150018b5968607393c51676d232e0a947cd"
+    },
+    "collection": {
+      "path": "runs/m7-v2-stage-a-cc1cea9-20261002/collection/collection.json",
+      "sha256": "72da787b534b64c872269b97a5c4248fe620ab3e8c5337f7371fba5c21e78b72"
+    },
+    "dev_ticks": 1228,
+    "launcher": {
+      "path": "runs/m7-v2-stage-a-cc1cea9-launch.py",
+      "sha256": "64ab6200a0112da8198ae44319e03334a428e6a850ed1b5591b164a363384545"
+    },
+    "minimum_training_ticks": 182,
+    "natural_goal_count": 12,
+    "observed_processes": 15,
+    "process_survivors": [],
+    "recording_and_snapshot_bytes": 641994477,
+    "report": {
+      "path": "runs/m7-v2-stage-a-cc1cea9-20261002/report.json",
+      "sha256": "0744095a4467571b2f3caf5544ffaff4cfa7e02c9b84b7c4bdac579b65610559"
+    },
+    "runs": 12,
+    "source_assets_unchanged": true,
+    "total_ticks": 3211,
+    "training_ticks": 1983
+  }
+}
