@@ -1,11 +1,15 @@
 # Artwork mappings
 
-These are bounded M9 implementation slices of **counterfactual choir**,
-**one map, many possible lives**, and **atlas of what disappears**, not completion of PRD §20 or ART-003. They export
-recorded population means as WAV and recorded route comparisons as standalone HTML.
-Sonification verification includes synthetic recording fixtures and two short offline derivatives of
-previously recorded actual CPU FLYNN telemetry. No new inference, listening study, or
-exhibition was run for this slice.
+The integrated project supplies bounded offline presentations for the six concepts
+in PRD §20: recorded sound, route comparison, simulated route export, a structural
+atlas, an authored model portrait and a curated anatomical pair. Their mappings
+and evidence are linked below. These software paths do not complete physical
+rover/pen work, declared-duration exhibition trials or independent-operator acceptance.
+
+Sonification verification includes synthetic recording fixtures and two short
+offline derivatives of previously recorded actual CPU FLYNN telemetry. That
+sonification slice ran no new inference, listening study or exhibition; the
+separate Afterimage mechanism check did run the pinned reduced male model.
 
 ## Counterfactual choir: implemented offline derivative
 
@@ -136,14 +140,16 @@ baseline without JavaScript.
 
 | Mode | Existing basis and work still required |
 | --- | --- |
-| **afterimage** | Not implemented. Requires an explicit consented stimulus-acquisition path, recorded stimulus/controller alignment, and a documented response-to-line mapping. It must label an authored model portrait, not fly perception. |
+| **afterimage** | [Implemented offline portrait](artwork-afterimage.md): explicit operator-supplied RGB sequence and rights statement, one response per frame, fixed response-plane line and exact alignment/provenance. The [eight-frame actual model and browser check](reports/m9-afterimage-validation.md) passed. This is an authored model portrait, not fly perception or independently verified consent; live capture and exhibition acceptance remain open. |
 | **borrowed body** | Recorded simulated route export exists. A complete physical drawing work remains unfinished: calibrated rover/pen, independent safety gates, measured coordinates, and substrate provenance; visible pen marks require a new closed-loop scenario if they affect camera input. |
 | **atlas of what disappears** | [Implemented offline atlas](artwork-atlas.md): pinned reduced graph, explicit node isolation, directed reachability losses, nonanatomical layout and embedded provenance. Actual graph checks and browser inspection pass; this measures structure, not lost memory or impaired behaviour. Exhibition gates remain open. |
-| **the space between two flies** | Not implemented. Requires curated anatomical correspondences with dataset/version/units and correspondence uncertainty; specimen differences do not establish population-wide sex effects. |
+| **the space between two flies** | [Implemented offline anatomical pair](artwork-specimens.md): one curated DNge104 pairing with dataset/version/units, separate native coordinate spaces, a shared scale and unequal-coverage labels. The [actual-source and browser evidence](reports/m9-specimens.md) verifies preserved geometry and provenance. This is not point-to-point homology, biological function or a population-wide sex effect; exhibition acceptance remains open. |
 
-Camera portraits, anatomy-only output, live sonification, and multi-run synchronized
-choirs remain unfinished. No empty mode handlers or fabricated demonstration data
-stand in for these requirements. ART-003 remains only partially implemented.
+The bounded offline portrait, anatomy-only and selected-population sound paths
+are implemented. Live camera acquisition, live sonification and synchronized
+multi-run choirs remain unimplemented. Physical drawing, declared-duration trials
+and independent operation remain separate open qualifications; these exports do
+not establish completion of R5 or all ART-003 extensions.
 
 ## Verification
 
