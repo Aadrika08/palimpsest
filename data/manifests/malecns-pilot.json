@@ -1,0 +1,837 @@
+{
+  "manifest_version": 1,
+  "status": "bounded_access_pilot_finished_circuit_eligibility_unresolved",
+  "checked_date_utc": "2026-10-02",
+  "dataset": {
+    "name": "male-cns:v1.0",
+    "latest_listed_release": "v1.0",
+    "release_date": "2026-06-08",
+    "release_source": "https://male-cns.janelia.org/release/",
+    "download_source": "https://male-cns.janelia.org/download/",
+    "neuprint_server": "https://neuprint.janelia.org",
+    "server_version_observed": "1.9.5",
+    "query_dataset_accepted": true,
+    "immutable_api_snapshot_id": null
+  },
+  "license": {
+    "dataset_license": "CC-BY-4.0",
+    "license_url": "https://creativecommons.org/licenses/by/4.0/",
+    "statement_source": "https://male-cns.janelia.org/download/",
+    "attribution_parties_as_listed": [
+      "FlyEM (HHMI Janelia)",
+      "University of Cambridge (Department of Zoology)",
+      "MRC Laboratory of Molecular Biology",
+      "Google Research"
+    ],
+    "asset_modified": false,
+    "female_asset_terms_unchanged": true
+  },
+  "annotation_asset": {
+    "status": 200,
+    "url": "https://storage.googleapis.com/flyem-male-cns/v1.0/connectome-data/flat-connectome/body-annotations-male-cns-v1.0-minconf-0.5.feather",
+    "download_url": "https://storage.googleapis.com/flyem-male-cns/v1.0/connectome-data/flat-connectome/body-annotations-male-cns-v1.0-minconf-0.5.feather?generation=1780494878811468",
+    "retrieved_at_utc": "2026-10-02T10:05:03.532628+00:00",
+    "size_bytes": 14483314,
+    "sha256": "2177e246113e4cfbf1e7772ec37c6da1955ff22e8063d0b1f833101f99a9a3b2",
+    "seconds": 3.491,
+    "headers": {
+      "Content-Length": "14483314",
+      "Content-Type": "application/octet-stream",
+      "ETag": "\"50a7718770c57220f160ba4f431ab89e\"",
+      "Last-Modified": "Wed, 03 Jun 2026 13:54:38 GMT",
+      "x-goog-generation": "1780494878811468",
+      "x-goog-hash": "crc32c=vjz9cg=="
+    },
+    "path": "data/assets/malecns-metadata/body-annotations-male-cns-v1.0-minconf-0.5.feather",
+    "max_download_bytes": 20971520,
+    "exclusive_create": true,
+    "prefix_hex": "4152524f5731",
+    "suffix_hex": "4152524f5731"
+  },
+  "annotation_read": {
+    "status": "verified",
+    "reader": "pyarrow.ipc.open_file/read_all",
+    "python_version": "3.11.15",
+    "pyarrow_version": "25.0.1",
+    "asset_sha256": "2177e246113e4cfbf1e7772ec37c6da1955ff22e8063d0b1f833101f99a9a3b2",
+    "asset_size_bytes": 14483314,
+    "row_count": 211577,
+    "column_count": 36,
+    "columns": [
+      {
+        "name": "assignedOlHex1",
+        "type": "double",
+        "null_count": 187857
+      },
+      {
+        "name": "assignedOlHex2",
+        "type": "double",
+        "null_count": 187857
+      },
+      {
+        "name": "bodyId",
+        "type": "int64",
+        "null_count": 0
+      },
+      {
+        "name": "flywireType",
+        "type": "string",
+        "null_count": 68421
+      },
+      {
+        "name": "group",
+        "type": "double",
+        "null_count": 64063
+      },
+      {
+        "name": "instance",
+        "type": "string",
+        "null_count": 50071
+      },
+      {
+        "name": "somaSide",
+        "type": "string",
+        "null_count": 60851
+      },
+      {
+        "name": "statusLabel",
+        "type": "dictionary<values=string, indices=int8, ordered=1>",
+        "null_count": 887
+      },
+      {
+        "name": "superclass",
+        "type": "string",
+        "null_count": 44877
+      },
+      {
+        "name": "type",
+        "type": "string",
+        "null_count": 47071
+      },
+      {
+        "name": "vfbId",
+        "type": "string",
+        "null_count": 44891
+      },
+      {
+        "name": "hemibrainType",
+        "type": "string",
+        "null_count": 178658
+      },
+      {
+        "name": "itoleeHl",
+        "type": "string",
+        "null_count": 173823
+      },
+      {
+        "name": "supertype",
+        "type": "string",
+        "null_count": 177481
+      },
+      {
+        "name": "birthtime",
+        "type": "string",
+        "null_count": 203673
+      },
+      {
+        "name": "mancBodyid",
+        "type": "double",
+        "null_count": 192862
+      },
+      {
+        "name": "mancGroup",
+        "type": "double",
+        "null_count": 197023
+      },
+      {
+        "name": "mancType",
+        "type": "string",
+        "null_count": 188833
+      },
+      {
+        "name": "subclass",
+        "type": "string",
+        "null_count": 189647
+      },
+      {
+        "name": "synonyms",
+        "type": "string",
+        "null_count": 207622
+      },
+      {
+        "name": "class",
+        "type": "string",
+        "null_count": 185064
+      },
+      {
+        "name": "rootSide",
+        "type": "string",
+        "null_count": 193638
+      },
+      {
+        "name": "somaNeuromere",
+        "type": "string",
+        "null_count": 189757
+      },
+      {
+        "name": "trumanHl",
+        "type": "string",
+        "null_count": 191824
+      },
+      {
+        "name": "dimorphism",
+        "type": "string",
+        "null_count": 209209
+      },
+      {
+        "name": "matchingNotes",
+        "type": "string",
+        "null_count": 208152
+      },
+      {
+        "name": "entryNerve",
+        "type": "string",
+        "null_count": 199742
+      },
+      {
+        "name": "mancSerial",
+        "type": "double",
+        "null_count": 206155
+      },
+      {
+        "name": "mcnsSerial",
+        "type": "double",
+        "null_count": 207632
+      },
+      {
+        "name": "serialMotif",
+        "type": "string",
+        "null_count": 210675
+      },
+      {
+        "name": "fruDsx",
+        "type": "string",
+        "null_count": 206565
+      },
+      {
+        "name": "exitNerve",
+        "type": "string",
+        "null_count": 210572
+      },
+      {
+        "name": "receptorType",
+        "type": "string",
+        "null_count": 210825
+      },
+      {
+        "name": "somaLocation",
+        "type": "list<item: int64>",
+        "null_count": 69796
+      },
+      {
+        "name": "tosomaLocation",
+        "type": "list<item: int64>",
+        "null_count": 210582
+      },
+      {
+        "name": "status",
+        "type": "string",
+        "null_count": 5472
+      }
+    ],
+    "candidate_rows": [
+      {
+        "bodyId": 12781,
+        "type": "DNge104",
+        "instance": "DNge104_R",
+        "status": "Traced",
+        "somaSide": "R"
+      },
+      {
+        "bodyId": 556329,
+        "type": "DNge104",
+        "instance": "DNge104_L",
+        "status": "Traced",
+        "somaSide": "L"
+      }
+    ],
+    "candidate_fields_compared": [
+      "bodyId",
+      "type",
+      "instance",
+      "status",
+      "somaSide"
+    ],
+    "candidate_rows_match_api": true,
+    "cropped_column_present": false,
+    "circuit_eligibility_verified": false,
+    "script_sha256": "f44d84b27b60495ffcc95b027ea0da81e6d2b922bde6c010fd882f0a2580c289"
+  },
+  "connection_asset": {
+    "url": "https://storage.googleapis.com/flyem-male-cns/v1.0/connectome-data/flat-connectome/connectome-weights-male-cns-v1.0-minconf-0.5.feather",
+    "method": "HEAD",
+    "http_status": 200,
+    "content_length_bytes": 1051241946,
+    "generation": "1780494887545976",
+    "etag": "\"f30e9dcca25cfd021bf1e7b3d975599e\"",
+    "last_modified": "Wed, 03 Jun 2026 13:54:47 GMT",
+    "gcs_crc32c": "dKRPVQ==",
+    "downloaded": false,
+    "sha256": null
+  },
+  "api_contract_sources": {
+    "client_docs": "https://connectome-neuprint.github.io/neuprint-python/docs/client.html",
+    "query_docs": "https://connectome-neuprint.github.io/neuprint-python/docs/queries.html",
+    "version_pinned_client": "https://github.com/connectome-neuprint/neuprint-python/blob/0.6.4/neuprint/client.py",
+    "docs_version_observed": "0.6.4"
+  },
+  "unauthenticated_metadata": {
+    "checked_at_utc": "2026-10-02T10:06:19.728119+00:00",
+    "credential_provided": false,
+    "credential_search_performed": false,
+    "authenticated_queries_performed": false,
+    "max_response_bytes": 65536,
+    "requests": [
+      {
+        "url": "https://neuprint.janelia.org/api/serverinfo",
+        "method": "GET",
+        "authorization_sent": false,
+        "status": 200,
+        "content_type": "application/json; charset=UTF-8",
+        "final_url": "https://neuprint.janelia.org/api/serverinfo",
+        "response_bytes": 242,
+        "truncated": false,
+        "response": {
+          "IsPublic": true,
+          "Version": "1.9.5",
+          "announcement": "neuPrint has moved to a new authorization system. Existing API tokens no longer work. Log in and visit your Account page to generate a new token.",
+          "announcement-id": "auth-migration-2026-08"
+        }
+      },
+      {
+        "url": "https://neuprint.janelia.org/api/version",
+        "method": "GET",
+        "authorization_sent": false,
+        "status": 200,
+        "content_type": "application/json; charset=UTF-8",
+        "final_url": "https://neuprint.janelia.org/api/version",
+        "response_bytes": 20,
+        "truncated": false,
+        "response": {
+          "Version": "1.9.5"
+        }
+      },
+      {
+        "url": "https://neuprint.janelia.org/api/dbmeta/datasets",
+        "method": "GET",
+        "authorization_sent": false,
+        "status": 200,
+        "content_type": "application/json; charset=UTF-8",
+        "final_url": "https://neuprint.janelia.org/api/dbmeta/datasets",
+        "response_bytes": 65537,
+        "truncated": true
+      }
+    ]
+  },
+  "unauthenticated_candidate_query": {
+    "checked_at_utc": "2026-10-02T10:09:51.886884+00:00",
+    "url": "https://neuprint.janelia.org/api/custom/custom",
+    "method": "POST",
+    "dataset": "male-cns:v1.0",
+    "query": "MATCH (n:Neuron) WHERE n.bodyId IN [12781, 556329] RETURN n.bodyId AS bodyId, n.type AS type, n.instance AS instance, n.status AS status, n.cropped AS cropped, n.somaSide AS somaSide, n.pre AS pre, n.post AS post, keys(n) AS property_keys ORDER BY n.bodyId LIMIT 2",
+    "authorization_sent": false,
+    "credential_provided": false,
+    "max_response_bytes": 65536,
+    "status": 200,
+    "content_type": "application/json; charset=UTF-8",
+    "response_bytes": 1785,
+    "truncated": false,
+    "response_sha256": "1a79dad944df4438c8b2be0714ab11bfb0fad7b0018df0281d241c46ccf2a73e",
+    "response": {
+      "columns": [
+        "bodyId",
+        "type",
+        "instance",
+        "status",
+        "cropped",
+        "somaSide",
+        "pre",
+        "post",
+        "property_keys"
+      ],
+      "data": [
+        [
+          12781,
+          "DNge104",
+          "DNge104_R",
+          "Traced",
+          null,
+          "R",
+          3831,
+          13487,
+          [
+            "post",
+            "pre",
+            "downstream",
+            "upstream",
+            "synweight",
+            "bodyId",
+            "flywireType",
+            "group",
+            "instance",
+            "somaSide",
+            "statusLabel",
+            "superclass",
+            "type",
+            "vfbId",
+            "itoleeHl",
+            "supertype",
+            "mancBodyid",
+            "mancGroup",
+            "mancType",
+            "subclass",
+            "somaNeuromere",
+            "somaLocation",
+            "status",
+            "totalNtPredictions",
+            "predictedNtConfidence",
+            "predictedNt",
+            "celltypeTotalNtPredictions",
+            "celltypePredictedNt",
+            "celltypePredictedNtConfidence",
+            "consensusNt",
+            "roiInfo",
+            "size",
+            "AMMC(L)",
+            "CentralBrain",
+            "CentralBrain-unspecified",
+            "PENP",
+            "SAD",
+            "CV",
+            "CV-unspecified",
+            "GNG",
+            "LegNp(T1)(L)",
+            "LegNp(T2)(L)",
+            "VNC",
+            "VNC-unspecified",
+            "ANm",
+            "LegNp(T3)(L)",
+            "Ov(L)",
+            "Ov(R)",
+            "SAD(-AMMC)",
+            "PDMN(L)"
+          ]
+        ],
+        [
+          556329,
+          "DNge104",
+          "DNge104_L",
+          "Traced",
+          null,
+          "L",
+          4034,
+          14095,
+          [
+            "post",
+            "pre",
+            "downstream",
+            "upstream",
+            "synweight",
+            "bodyId",
+            "flywireType",
+            "group",
+            "instance",
+            "somaSide",
+            "statusLabel",
+            "superclass",
+            "type",
+            "vfbId",
+            "itoleeHl",
+            "supertype",
+            "mancBodyid",
+            "mancGroup",
+            "mancType",
+            "subclass",
+            "somaNeuromere",
+            "somaLocation",
+            "status",
+            "totalNtPredictions",
+            "predictedNtConfidence",
+            "predictedNt",
+            "celltypeTotalNtPredictions",
+            "celltypePredictedNt",
+            "celltypePredictedNtConfidence",
+            "consensusNt",
+            "roiInfo",
+            "size",
+            "CV",
+            "CV-unspecified",
+            "CentralBrain",
+            "CentralBrain-unspecified",
+            "GNG",
+            "LTct",
+            "LegNp(T1)(R)",
+            "Ov(R)",
+            "PENP",
+            "SAD",
+            "SAD(-AMMC)",
+            "VNC",
+            "VNC-unspecified",
+            "AMMC(R)",
+            "ANm",
+            "LegNp(T2)(R)",
+            "LegNp(T3)(R)",
+            "PDMN(R)"
+          ]
+        ]
+      ],
+      "debug": "MATCH (n:`male-cns_Neuron`) WHERE n.bodyId IN [12781, 556329] RETURN n.bodyId AS bodyId, n.type AS type, n.instance AS instance, n.status AS status, n.cropped AS cropped, n.somaSide AS somaSide, n.pre AS pre, n.post AS post, keys(n) AS property_keys ORDER BY n.bodyId LIMIT 2"
+    }
+  },
+  "candidates": [
+    {
+      "bodyId": 12781,
+      "type": "DNge104",
+      "instance": "DNge104_R",
+      "status": "Traced",
+      "cropped": null,
+      "somaSide": "R",
+      "pre": 3831,
+      "post": 13487,
+      "property_keys": [
+        "post",
+        "pre",
+        "downstream",
+        "upstream",
+        "synweight",
+        "bodyId",
+        "flywireType",
+        "group",
+        "instance",
+        "somaSide",
+        "statusLabel",
+        "superclass",
+        "type",
+        "vfbId",
+        "itoleeHl",
+        "supertype",
+        "mancBodyid",
+        "mancGroup",
+        "mancType",
+        "subclass",
+        "somaNeuromere",
+        "somaLocation",
+        "status",
+        "totalNtPredictions",
+        "predictedNtConfidence",
+        "predictedNt",
+        "celltypeTotalNtPredictions",
+        "celltypePredictedNt",
+        "celltypePredictedNtConfidence",
+        "consensusNt",
+        "roiInfo",
+        "size",
+        "AMMC(L)",
+        "CentralBrain",
+        "CentralBrain-unspecified",
+        "PENP",
+        "SAD",
+        "CV",
+        "CV-unspecified",
+        "GNG",
+        "LegNp(T1)(L)",
+        "LegNp(T2)(L)",
+        "VNC",
+        "VNC-unspecified",
+        "ANm",
+        "LegNp(T3)(L)",
+        "Ov(L)",
+        "Ov(R)",
+        "SAD(-AMMC)",
+        "PDMN(L)"
+      ],
+      "annotation_source": "bounded_public_neuprint_query",
+      "raw_feather_row_verified": true,
+      "circuit_eligible": null,
+      "cropping_interpretation": "unknown_property_absent",
+      "output_laterality": null,
+      "sensory_to_output_reachability": null
+    },
+    {
+      "bodyId": 556329,
+      "type": "DNge104",
+      "instance": "DNge104_L",
+      "status": "Traced",
+      "cropped": null,
+      "somaSide": "L",
+      "pre": 4034,
+      "post": 14095,
+      "property_keys": [
+        "post",
+        "pre",
+        "downstream",
+        "upstream",
+        "synweight",
+        "bodyId",
+        "flywireType",
+        "group",
+        "instance",
+        "somaSide",
+        "statusLabel",
+        "superclass",
+        "type",
+        "vfbId",
+        "itoleeHl",
+        "supertype",
+        "mancBodyid",
+        "mancGroup",
+        "mancType",
+        "subclass",
+        "somaNeuromere",
+        "somaLocation",
+        "status",
+        "totalNtPredictions",
+        "predictedNtConfidence",
+        "predictedNt",
+        "celltypeTotalNtPredictions",
+        "celltypePredictedNt",
+        "celltypePredictedNtConfidence",
+        "consensusNt",
+        "roiInfo",
+        "size",
+        "CV",
+        "CV-unspecified",
+        "CentralBrain",
+        "CentralBrain-unspecified",
+        "GNG",
+        "LTct",
+        "LegNp(T1)(R)",
+        "Ov(R)",
+        "PENP",
+        "SAD",
+        "SAD(-AMMC)",
+        "VNC",
+        "VNC-unspecified",
+        "AMMC(R)",
+        "ANm",
+        "LegNp(T2)(R)",
+        "LegNp(T3)(R)",
+        "PDMN(R)"
+      ],
+      "annotation_source": "bounded_public_neuprint_query",
+      "raw_feather_row_verified": true,
+      "circuit_eligible": null,
+      "cropping_interpretation": "unknown_property_absent",
+      "output_laterality": null,
+      "sensory_to_output_reachability": null
+    }
+  ],
+  "schema": {
+    "raw_feather_columns": [
+      "assignedOlHex1",
+      "assignedOlHex2",
+      "bodyId",
+      "flywireType",
+      "group",
+      "instance",
+      "somaSide",
+      "statusLabel",
+      "superclass",
+      "type",
+      "vfbId",
+      "hemibrainType",
+      "itoleeHl",
+      "supertype",
+      "birthtime",
+      "mancBodyid",
+      "mancGroup",
+      "mancType",
+      "subclass",
+      "synonyms",
+      "class",
+      "rootSide",
+      "somaNeuromere",
+      "trumanHl",
+      "dimorphism",
+      "matchingNotes",
+      "entryNerve",
+      "mancSerial",
+      "mcnsSerial",
+      "serialMotif",
+      "fruDsx",
+      "exitNerve",
+      "receptorType",
+      "somaLocation",
+      "tosomaLocation",
+      "status"
+    ],
+    "raw_feather_column_types": {
+      "assignedOlHex1": "double",
+      "assignedOlHex2": "double",
+      "bodyId": "int64",
+      "flywireType": "string",
+      "group": "double",
+      "instance": "string",
+      "somaSide": "string",
+      "statusLabel": "dictionary<values=string, indices=int8, ordered=1>",
+      "superclass": "string",
+      "type": "string",
+      "vfbId": "string",
+      "hemibrainType": "string",
+      "itoleeHl": "string",
+      "supertype": "string",
+      "birthtime": "string",
+      "mancBodyid": "double",
+      "mancGroup": "double",
+      "mancType": "string",
+      "subclass": "string",
+      "synonyms": "string",
+      "class": "string",
+      "rootSide": "string",
+      "somaNeuromere": "string",
+      "trumanHl": "string",
+      "dimorphism": "string",
+      "matchingNotes": "string",
+      "entryNerve": "string",
+      "mancSerial": "double",
+      "mcnsSerial": "double",
+      "serialMotif": "string",
+      "fruDsx": "string",
+      "exitNerve": "string",
+      "receptorType": "string",
+      "somaLocation": "list<item: int64>",
+      "tosomaLocation": "list<item: int64>",
+      "status": "string"
+    },
+    "raw_feather_row_count": 211577,
+    "api_return_columns": [
+      "bodyId",
+      "type",
+      "instance",
+      "status",
+      "cropped",
+      "somaSide",
+      "pre",
+      "post",
+      "property_keys"
+    ],
+    "api_observed_value_types": {
+      "bodyId": "integer",
+      "type": "string",
+      "instance": "string",
+      "status": "string",
+      "cropped": "null",
+      "somaSide": "string",
+      "pre": "integer",
+      "post": "integer",
+      "property_keys": "array of strings"
+    },
+    "cropped_property_present": false,
+    "api_schema_does_not_establish_feather_schema": true
+  },
+  "bounds": {
+    "max_download_bytes": 20971520,
+    "max_api_response_bytes": 65536,
+    "api_timeout_seconds": 25,
+    "exclusive_asset_create": true,
+    "asset_ignored_before_download": true,
+    "manifest_ignored_by_existing_rule": true,
+    "package_installations": 1,
+    "authenticated_queries": 0,
+    "credential_searches": 0,
+    "connection_body_downloads": 0,
+    "adjacency_queries": 0,
+    "model_jobs": 0,
+    "reader_environment": "isolated malecns-pilot/.venv; lab-hardening environment unchanged"
+  },
+  "proposed_next_boundary": {
+    "status": "provisional_not_frozen_not_extracted",
+    "endpoint_body_ids": [
+      12781,
+      556329
+    ],
+    "expansion": "direct incoming partners only after count/cap checks",
+    "sensory_body_ids": null,
+    "sensory_mapping": null,
+    "action_mapping": null,
+    "max_nodes": 256,
+    "max_directed_edges": 4096,
+    "max_json_bytes": 4194304,
+    "request_timeout_seconds": 30,
+    "cap_rationale": "engineering resource limits; no scientific success threshold",
+    "oversize_policy": "fail explicitly; no silent truncation",
+    "omitted_inputs": [
+      "partners outside retained endpoint fan-in",
+      "incoming inputs to retained upstream nodes",
+      "omitted neuropils",
+      "downstream populations outside endpoints"
+    ],
+    "omitted_synapse_count_mass": null,
+    "synapse_confidence_or_weight_rule": null,
+    "counts_are_measured_effective_weights": false,
+    "neurotransmitter_values_acquired": false,
+    "neurotransmitter_mapping": null
+  },
+  "unresolved": [
+    "candidate completeness/truncation is unknown; absent cropped is not false",
+    "sensory population needs independent anatomical/functional documentation",
+    "connectivity and sensory-to-output reachability not measured",
+    "ROI/side/annotation coverage and cut-input mass not measured",
+    "immutable server snapshot identity not obtained",
+    "no trained/calibrated male-ID model or held-out evaluation"
+  ],
+  "claims": {
+    "public_candidate_annotation_query_succeeded": true,
+    "raw_annotation_rows_verified": true,
+    "circuit_extracted": false,
+    "physically_acquired_evidence": false,
+    "biological_sensor_mapping_validated": false,
+    "trained_compatible_profile": false,
+    "r3_complete": false
+  },
+  "capture_artifacts": [
+    {
+      "path": "data/assets/malecns-metadata/annotation-acquisition.json",
+      "size_bytes": 1042,
+      "sha256": "fec30ec1587efc74d432030928027b1be42de3a9792890e37ceaff35236c09e4"
+    },
+    {
+      "path": "data/assets/malecns-metadata/annotation-read-attempt.json",
+      "size_bytes": 283,
+      "sha256": "9de07f8a0688e65005be5d69b96fc7f4a45c7d974a8cf61d895908c9e89432f7"
+    },
+    {
+      "path": "data/assets/malecns-metadata/neuprint-candidate-query.json",
+      "size_bytes": 3950,
+      "sha256": "e4ad884bc5f7547b3ee9e2dcd988472fad2ede476b5c0a4a45445621e2546233"
+    },
+    {
+      "path": "data/assets/malecns-metadata/neuprint-unauthenticated-probe.json",
+      "size_bytes": 1581,
+      "sha256": "2efbf5ddd4cb2d00abeb0b62900285a24f7beb6de5a114408ccc0961906469d7"
+    },
+    {
+      "path": "data/assets/malecns-metadata/annotation-read-verified.json",
+      "size_bytes": 4266,
+      "sha256": "ce0d63def7cda50c0bab910f600c4a66fc7b95524b2028eb3a8c344b6c3250ef"
+    }
+  ],
+  "initial_annotation_read": {
+    "status": "blocked",
+    "reader": "pandas.read_feather",
+    "pandas_version": "2.2.3",
+    "exception_type": "ImportError",
+    "message": "Missing optional dependency 'pyarrow'.  Use pip or conda to install pyarrow.",
+    "columns_verified": false,
+    "candidate_rows_verified": false
+  },
+  "reader_reproduction": {
+    "environment": [
+      "uv venv .venv --python 3.11",
+      "uv pip install --python .venv/bin/python pyarrow==25.0.1"
+    ],
+    "command": ".venv/bin/python scripts/inspect_malecns_annotations.py",
+    "source": "https://arrow.apache.org/docs/python/feather.html",
+    "scope": "No project runtime dependency change; annotation-only read"
+  }
+}

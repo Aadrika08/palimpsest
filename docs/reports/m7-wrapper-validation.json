@@ -1,0 +1,147 @@
+{
+  "schema_version": 1,
+  "status": "passed",
+  "commit": "4941468d0a60ed876cf44d21eb0b1e20603b3b94",
+  "scope": "CPU checkpoint loader and recorded-input wrapper parity; no simulator, new training, or selection",
+  "qualification_claims": [],
+  "biological_sensor_mapping": false,
+  "evidence_directory": "runs/m7-wrapper-validation-4941468",
+  "evidence_files": {
+    "validate_recorded.py": {
+      "sha256": "90bb63ac389515b1dae000363e7d49ba0bbafb7f5b807f463c8943bcd45a488f",
+      "size_bytes": 8851
+    },
+    "commands.json": {
+      "sha256": "3f64d76d86499530e02de7a9cf7fa79e52b4b53f79f53a6fb6bf0fb8df44efd7",
+      "size_bytes": 1670
+    },
+    "synthetic.log": {
+      "sha256": "fba87440d14a721ce98156cdfae921a0bff77da28213c98616be6bc22fc70ea8",
+      "size_bytes": 671
+    },
+    "actual.log": {
+      "sha256": "670c017f09f31e282101e2c7c117c75eb3e47c4f6dd8e57539330d76b8453a61",
+      "size_bytes": 824
+    },
+    "checks-report.json": {
+      "sha256": "94b43309e3d8f8d03afc9747eb9461958bfd5feb3f156a49a357d52dc2c77f22",
+      "size_bytes": 3419
+    },
+    "actual-report.json": {
+      "sha256": "9e492965bc02d1fe410e3e40499c4e436323b35acdc756cef7e671680025a8df",
+      "size_bytes": 40784
+    }
+  },
+  "source_and_artifact_sha256": {
+    "src/palimpsest/male_model.py": "4caeabb6c61dcd4f17ceb23455c18cda4ca2bab6b98ac3f51da0eadde259e5fa",
+    "src/palimpsest/male_policy.py": "421256f989137e70304f12c7f4bc319c60fc0aa6663f1761902dcc2c86e05f24",
+    "src/palimpsest/artifacts.py": "55223cb24359de16cf5f62b833b4e3cca3a21d3f25c8442f6436d53c4f120741",
+    "src/palimpsest/records.py": "c4be6f1699c1d8550a7f2db2979f7f9f18196ac986eef2aefe3ba665cae99ac3",
+    "tests/test_male_policy.py": "8192ffb0549231a9b86cfafcd526abcba3e3303d3f54965f88c2e78b1833ab39",
+    "scripts/train_male_reduced.py": "2c69ee96a8f6496305f503fb6b0a3b854450e34e837b7be4f08e6e6483a78261",
+    "runs/m7-wrapper-validation-4941468/validate_recorded.py": "90bb63ac389515b1dae000363e7d49ba0bbafb7f5b807f463c8943bcd45a488f",
+    "../memory-mechanics/upstream/fly-gym/models/connectome_rnn_model.py": "707cba79e7bf92923618ccc596e3d7a2d779edc02a970b0949f6dd3c0d28ae80",
+    "../malecns-pilot/data/assets/malecns-metadata/reduced-neighborhood-v1b/graph.json": "5aba0fef99afba666b88e40fc535091454e46d9330580d9280b203e8da0abac0",
+    "../malecns-pilot/data/manifests/malecns-reduced-neighborhood-v1.json": "7a205342b4ada8ab8b78d6ca866c61735003e601531c65a1c1b6c819df00026f",
+    "../malecns-pilot/runs/m7-male-training-pilot-v1/report.json": "594d4d330624ed1040ae2b3ffe2dedfbfacd6a2d360a29dcfcc6584d76b80e28",
+    "../malecns-pilot/runs/m7-male-training-pilot-v1/protocol.json": "477885033bf30f5857293e0f09fc75b4d850d9eb564f2cd7ec36355110ff5d42",
+    "../malecns-pilot/runs/m7-male-training-pilot-v1/original.pt": "0e1418e7f9adf8b1a908c2e12f61def835d6ca11c41fd0d272e7d71b68572da4",
+    "../malecns-pilot/runs/m7-male-training-pilot-v1/original-graph.json": "baa5c1302d3eb62aa6c29b4f7781100a7c2d0c16c328e7537855eec2b0be5d81",
+    "../malecns-pilot/runs/m7-male-training-pilot-v1/degree_rewired.pt": "7d455316344efd91042efc2e0c511f3774e3c5e0f5f4e6342c41573d86b385a5",
+    "../malecns-pilot/runs/m7-male-training-pilot-v1/degree_rewired-graph.json": "cca9a6bbb803f7717bf7a360f3b1f1d4ffd9b355fc875a1b815108e31d31c566"
+  },
+  "source_and_artifact_hashes_unchanged": true,
+  "held_out_source_hashes_matched_training_manifest": true,
+  "held_out_source_final_fingerprints_unchanged": true,
+  "hard_limits_seconds": {
+    "each_job": 120,
+    "overall": 240
+  },
+  "process_seconds": {
+    "synthetic": 3.249968224998156,
+    "actual": 10.174067567000748
+  },
+  "overall_seconds": 13.425030906000757,
+  "exit_codes": {
+    "synthetic": 0,
+    "actual": 0
+  },
+  "synthetic": {
+    "tests": 1,
+    "passed": 1,
+    "unittest_seconds": 2.478,
+    "checks": [
+      "fixed W_values and structural buffers",
+      "tensor names/shapes/dtypes/finite values",
+      "one invocation telemetry",
+      "reset",
+      "invalid sensor/raw-output rejection without hidden commit"
+    ]
+  },
+  "actual": {
+    "reference": "same checkpoint model, eval mode, frozen 32-tick windows, hidden carried between windows and reset at each recorded episode",
+    "atol": 1e-06,
+    "rtol": 1e-06,
+    "sources": [
+      {
+        "run_id": "c26a90decc8a4d868d694432fb8cc20f",
+        "seed": 112,
+        "ticks": 150
+      },
+      {
+        "run_id": "1daefa3f7b1947c0acefadd0dd21c4e2",
+        "seed": 113,
+        "ticks": 150
+      },
+      {
+        "run_id": "d7350371375c44538f4ef16132d527c9",
+        "seed": 114,
+        "ticks": 150
+      },
+      {
+        "run_id": "616e147801c54a118bd344f1ff7a1df8",
+        "seed": 115,
+        "ticks": 150
+      }
+    ],
+    "checks": [
+      "exact cameras, sensor values and 388 features for every input",
+      "one model invocation per act",
+      "exact first-step direct-forward outputs and reset repeat per episode",
+      "finite CPU float32 hidden shape (1,138) each tick",
+      "hidden compared at 32-window boundaries"
+    ],
+    "variants": {
+      "original": {
+        "recorded_ticks": 600,
+        "extra_first_tick_reset_repeats": 4,
+        "max_absolute_errors": {
+          "action": 1.7881393432617188e-07,
+          "encoded_input": 3.8743019104003906e-07,
+          "raw_output": 5.960464477539063e-08,
+          "hidden": 1.1920928955078125e-07
+        }
+      },
+      "degree_rewired": {
+        "recorded_ticks": 600,
+        "extra_first_tick_reset_repeats": 4,
+        "max_absolute_errors": {
+          "action": 2.384185791015625e-07,
+          "encoded_input": 7.078051567077637e-07,
+          "raw_output": 5.960464477539063e-08,
+          "hidden": 1.2759119272232056e-07
+        }
+      }
+    }
+  },
+  "limitations": [
+    "single host CPU regime",
+    "held-out recorded inputs only; no closed-loop navigation",
+    "single training seed and rewiring seed; no topology benefit inference",
+    "no Engine/snapshot/replay/Lab integration yet",
+    "no biological sensor mapping"
+  ],
+  "warnings": [
+    "pinned upstream Torch sparse CSR beta warning only"
+  ]
+}
