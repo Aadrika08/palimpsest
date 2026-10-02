@@ -18,7 +18,7 @@ from palimpsest.records import RunWriter
 ROOT = Path(__file__).resolve().parents[1]
 GRAPH = ROOT / 'data/assets/malecns-metadata/reduced-neighborhood-v1b/graph.json'
 MANIFEST = ROOT / 'data/manifests/malecns-reduced-neighborhood-v1.json'
-CELL = ROOT.parent / 'memory-mechanics/upstream/fly-gym/models/connectome_rnn_model.py'
+CELL = ROOT / 'upstream/fly-gym/models/connectome_rnn_model.py'
 
 
 def graph_fixture():
