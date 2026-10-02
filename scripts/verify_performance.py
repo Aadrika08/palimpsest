@@ -15,6 +15,22 @@ from palimpsest.records import iter_ticks
 from verify_endurance import source_identity, summary, write_json
 
 
+def host_observation():
+    value = {'thread_environment': {key: os.environ.get(key) for key in
+                                   ('OMP_NUM_THREADS', 'OPENBLAS_NUM_THREADS', 'MKL_NUM_THREADS')},
+             'scope': 'verifier process environment, affinity and host load at sample time',
+             'cpu_affinity': None, 'load_average_1_5_15_minutes': None}
+    try:
+        value['cpu_affinity'] = sorted(os.sched_getaffinity(0))
+    except (AttributeError, OSError):
+        pass
+    try:
+        value['load_average_1_5_15_minutes'] = list(os.getloadavg())
+    except (AttributeError, OSError):
+        pass
+    return value
+
+
 def measure(args):
     output, root = args.output.resolve(), args.repo.resolve()
     output.mkdir(parents=True, exist_ok=False)
@@ -24,7 +40,8 @@ def measure(args):
                                      else 'operator-pause-at-minimum-ticks-unless-current-episode-already-terminal',
               'scope': 'actual spawned owner, CPU manual/teacher, sparse-navigation/checker, EGL',
               'limitations': ['No browser paint/FPS claim', 'Only this measured host and software regime'],
-              'script_sha256': hashlib.sha256(Path(__file__).read_bytes()).hexdigest(), 'controllers': {}}
+              'script_sha256': hashlib.sha256(Path(__file__).read_bytes()).hexdigest(), 'controllers': {},
+              'pre_close_observations': {}, 'host_at_start': host_observation()}
     write_json(output / 'report.json', report)
     supervisor = None
     interrupted = []
@@ -96,13 +113,19 @@ def measure(args):
             final = wait(identifier, lambda v: v['sample']['state']['total_tick'] == final_ticks
                          and abs(v['sample']['performance']['advanced_simulation_seconds'] - final_ticks * .02) < 1e-8)
             performance = final['sample']['performance']
+            report['pre_close_observations'][controller] = {'run_id': identifier, 'final_ticks': final_ticks,
+                'final_phase': final['state']['phase'], 'worker_active': dict(performance),
+                'outer_running_wall_seconds': active_outer_wall, 'qualification': 'unqualified',
+                'scope': 'copied telemetry before teardown and recorded-tick integrity validation'}
+            write_json(output / 'report.json', report)
             paused_tick = final['state']['total_tick']
             time.sleep(.1)
             if view(identifier)['state']['total_tick'] != paused_tick:
                 raise RuntimeError('Paused or terminal owner continued advancing')
             closed = supervisor.close(identifier)
             if closed['status'] != 'closed':
-                raise RuntimeError(str(closed))
+                raise RuntimeError({'run_id': identifier, 'operation': 'close',
+                                    'status': closed['status'], 'failure': closed.get('failure')})
             policy, step, episode_ticks = [], [], collections.defaultdict(list)
             for row in iter_ticks(supervisor.path(identifier) / 'recording'):
                 episode, tick = int(row['episode']), int(row['tick'])
@@ -140,6 +163,7 @@ def measure(args):
         for sig, handler in previous.items():
             signal.signal(sig, handler)
         report['wall_seconds'] = time.monotonic() - started
+        report['host_at_end'] = host_observation()
         if 'runtime_source' in report:
             report['runtime_source_at_end'] = source_identity(root)
             report['runtime_source_unchanged'] = report['runtime_source_at_end'] == report['runtime_source']

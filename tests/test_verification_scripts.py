@@ -39,7 +39,7 @@ class VerificationScriptTests(unittest.TestCase):
             self.assertFalse(any('rtf' in name or 'real_time' in name for name in report['gates']))
             self.assertEqual(report['cleanup']['owned_survivors_requiring_kill'], [])
 
-    def test_explicit_natural_completion_does_not_request_operator_pause(self):
+    def test_completion_protocol_preserves_unqualified_diagnostics_on_failed_close(self):
         # Supervisor-boundary fixture verifies verifier control flow only.
         # Its synthetic timing/rows are not simulation or performance evidence.
         with patch.object(sys, 'path', [str(ROOT / 'scripts'), *sys.path]):
@@ -47,8 +47,9 @@ class VerificationScriptTests(unittest.TestCase):
             module = importlib.util.module_from_spec(spec)
             spec.loader.exec_module(module)
         class OwnerBoundary:
-            def __init__(self, root):
+            def __init__(self, root, fail_close):
                 self.root, self.kinds, self.receipts = root, [], []
+                self.fail_close, self.persisted_before_close = fail_close, None
                 self.state = {'phase': 'paused', 'episode': 0, 'episode_step': 0, 'total_tick': 0,
                               'revision': 0, 'last_outcome': None}
             def start(self, config):
@@ -72,26 +73,48 @@ class VerificationScriptTests(unittest.TestCase):
                 elif body['kind'] == 'pause':
                     self.state['phase'] = 'paused'
             def close(self, identifier):
+                self.persisted_before_close = json.loads((self.root / 'evidence/report.json').read_text())
+                if self.fail_close:
+                    return {'status': 'failed', 'failure': {'type': 'CloseTimeout', 'message': 'fixture close timeout'},
+                            'sample': {'inputs': 'oversized-image-sentinel' + 'x' * 200000}}
                 return {'status': 'closed'}
             def path(self, identifier):
                 return self.root
             def shutdown(self):
                 pass
-        for finish in (False, True):
-            with self.subTest(finish_episode=finish), tempfile.TemporaryDirectory() as temporary:
+        for finish, fail_close in ((False, False), (True, False), (True, True)):
+            with self.subTest(finish_episode=finish, fail_close=fail_close), tempfile.TemporaryDirectory() as temporary:
                 root = Path(temporary)
-                owner = OwnerBoundary(root)
+                owner = OwnerBoundary(root, fail_close)
                 args = SimpleNamespace(output=root / 'evidence', repo=ROOT, assets=root / 'assets', ticks=600,
                                        timeout=30., controllers=['teacher'], seed=0, finish_episode=finish)
                 def rows(path):
                     return ({'episode': 0, 'tick': tick, 'simulation_time': (tick + 1) * .02,
                              'latency': .001, 'step_latency': .001} for tick in range(owner.state['total_tick']))
                 with patch.object(module, 'LabSupervisor', return_value=owner), patch.object(module, 'iter_ticks', side_effect=rows):
-                    report = module.measure(args)
-                self.assertEqual(report['status'], 'passed', report.get('error'))
+                    with patch.dict(os.environ, {'OMP_NUM_THREADS': '3', 'OPENBLAS_NUM_THREADS': '4', 'MKL_NUM_THREADS': '5'}):
+                        with patch.object(module.os, 'sched_getaffinity', return_value={1, 3}), patch.object(
+                                module.os, 'getloadavg', side_effect=[(1., 2., 3.), (4., 5., 6.)]):
+                            report = module.measure(args)
+                self.assertEqual(report['status'], 'failed' if fail_close else 'passed', report.get('error'))
                 self.assertEqual('pause' in owner.kinds, not finish)
                 self.assertEqual(owner.state['phase'], 'truncated' if finish else 'paused')
                 self.assertIn('natural-episode-completion' if finish else 'operator-pause', report['completion_protocol'])
+                observation = owner.persisted_before_close['pre_close_observations']['teacher']
+                self.assertEqual(observation['qualification'], 'unqualified')
+                self.assertEqual(observation['final_ticks'], owner.state['total_tick'])
+                self.assertEqual(observation['final_phase'], owner.state['phase'])
+                self.assertEqual(observation['worker_active']['rtf'], 1.)
+                self.assertEqual(report['host_at_start']['cpu_affinity'], [1, 3])
+                self.assertEqual(report['host_at_start']['load_average_1_5_15_minutes'], [1., 2., 3.])
+                self.assertEqual(report['host_at_end']['load_average_1_5_15_minutes'], [4., 5., 6.])
+                self.assertEqual(report['host_at_end']['thread_environment'],
+                                 {'OMP_NUM_THREADS': '3', 'OPENBLAS_NUM_THREADS': '4', 'MKL_NUM_THREADS': '5'})
+                if fail_close:
+                    self.assertEqual(report['controllers'], {})
+                    self.assertIn('fixture close timeout', report['error']['message'])
+                    self.assertNotIn('oversized-image-sentinel', json.dumps(report))
+                    self.assertLess(len(report['error']['message']), 1000)
 
     def test_performance_constructor_failure_persists_failed_report(self):
         scripts = str(ROOT / 'scripts')
