@@ -11,6 +11,16 @@ from palimpsest.evaluate import bounded_process, evaluate, outcome
 
 
 class EvaluationTests(unittest.TestCase):
+    def test_native_and_python_log_floods_preserve_bounded_prefix_and_fail(self):
+        for source, filename in (("import os; os.write(1,b'x'*1000000)", 'stdout.log'),
+                                 ("import sys; sys.stderr.write('y'*1000000)", 'stderr.log')):
+            with self.subTest(filename=filename), tempfile.TemporaryDirectory() as directory:
+                output = Path(directory) / 'run'
+                report = bounded_process([sys.executable, '-c', source], output, 5, log_max_bytes=4096)
+                self.assertEqual(report['status'], 'failed')
+                self.assertEqual(report['failure']['type'], 'LogLimit')
+                self.assertEqual((output / filename).stat().st_size, 4096)
+
     def test_termination_has_priority_over_time_limit(self):
         self.assertEqual(outcome(True, True, {'dist_to_goal': .2, 'stalled': False}, .8), 'goal')
         self.assertEqual(outcome(True, False, {'dist_to_goal': 2, 'stalled': True}, .8), 'stalled')

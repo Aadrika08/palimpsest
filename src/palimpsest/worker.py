@@ -10,6 +10,7 @@ from queue import Empty, Full
 import time
 import traceback
 import uuid
+import sys
 
 
 def authoritative(queue, message, timeout=1.):
@@ -243,9 +244,26 @@ def run_worker(config, commands, replies, display, disconnected, stop, progress)
     os.environ.setdefault("MUJOCO_GL", "egl")
     os.environ.setdefault("MPLBACKEND", "Agg")
     path = Path(config["run_path"])
-    with (path / "stdout.log").open("w") as stdout, (path / "stderr.log").open("w") as stderr:
-        with contextlib.redirect_stdout(stdout), contextlib.redirect_stderr(stderr):
-            _own(config, commands, replies, display, disconnected, stop, progress)
+    from .evaluate import bounded_logs
+    def log_failure(reason):
+        stop.set()
+        with contextlib.suppress(Exception):
+            authoritative(replies, {"version": 1, "run_id": config["run_id"], "type": "failure",
+                "status": "failed", "failure": {"type": "LogLimit", "message": reason}})
+    with bounded_logs(path, config.get("log_max_bytes", 1024**2), log_failure) as (stdout, stderr):
+        sys.stdout.flush()
+        sys.stderr.flush()
+        saved = os.dup(1), os.dup(2)
+        try:
+            os.dup2(stdout.fileno(), 1)
+            os.dup2(stderr.fileno(), 2)
+            with os.fdopen(os.dup(1), "w", buffering=1) as out, os.fdopen(os.dup(2), "w", buffering=1) as err:
+                with contextlib.redirect_stdout(out), contextlib.redirect_stderr(err):
+                    _own(config, commands, replies, display, disconnected, stop, progress)
+        finally:
+            for target, original in zip((1, 2), saved):
+                os.dup2(original, target)
+                os.close(original)
 
 
 def _own(config, commands, replies, display, disconnected, stop, progress):

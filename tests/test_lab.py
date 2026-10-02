@@ -47,6 +47,15 @@ def completed_owner(config, commands, replies, display, disconnected, stop, prog
                  "state": {"phase": "stopped", "episode": 0, "total_tick": 0}, "receipts": []})
 
 
+def flooding_owner(*args):
+    from palimpsest import worker
+    def flood(*unused):
+        os.write(1, b"native diagnostic\n" * 100000)
+        time.sleep(30)
+    worker._own = flood
+    worker.run_worker(*args)
+
+
 class ApiGuards(unittest.TestCase):
     def setUp(self):
         self.temp = tempfile.TemporaryDirectory()
@@ -57,6 +66,18 @@ class ApiGuards(unittest.TestCase):
         self.assertEqual(response.status_code, 200)
         self.token = response.json()["token"]
         self.headers = {"X-Palimpsest-Session": self.token, "Origin": "http://127.0.0.1:8765"}
+
+    def test_native_owner_log_limit_is_terminal_and_bounded(self):
+        supervisor = self.client.app.state.lab
+        supervisor.worker_target = flooding_owner
+        run = supervisor.start({"log_max_bytes": 4096})
+        owner = supervisor.workers[run]
+        self.assertTrue(owner.done.wait(5.))
+        result = supervisor.close(run)
+        self.assertEqual(result["status"], "failed")
+        self.assertEqual(result["failure"]["type"], "LogLimit")
+        self.assertEqual((supervisor.path(run) / "stdout.log").stat().st_size, 4096)
+        self.assertFalse(owner.process.is_alive())
 
     def test_host_origin_and_session_guards(self):
         for headers in ({"Host": "evil.example:8765"}, {"Origin": "https://evil.example"},

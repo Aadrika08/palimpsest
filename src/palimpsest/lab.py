@@ -188,6 +188,12 @@ class LabSupervisor:
     def _handle(self, identifier, message):
         owner = self.workers[identifier]
         kind = message["type"]
+        if kind == "failure" and message.get("failure", {}).get("type") == "LogLimit":
+            self._kill(owner)
+        if kind == "closed" and owner.view["status"] == "failed":
+            message = {**message, "status": "failed"}
+            if owner.config.get("job") == "replay":
+                message["jobstate"] = "failed"
         if kind == "response":
             pending = owner.pending.pop(message["request_id"], None)
             if pending:

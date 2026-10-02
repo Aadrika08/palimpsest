@@ -1,12 +1,14 @@
 """Isolate the upstream runtime and retain bounded, explicitly labelled evidence."""
 
 from datetime import datetime, timezone
+import contextlib
 import json
 import os
 from pathlib import Path
 import signal
 import subprocess
 import sys
+import threading
 import time
 
 
@@ -16,7 +18,48 @@ def _json(path, value):
     temporary.replace(path)
 
 
-def bounded_process(command, output, timeout, env=None):
+@contextlib.contextmanager
+def bounded_logs(output, max_bytes, on_failure):
+    """Drain native/Python output through pipes; retain only each bounded prefix."""
+    if type(max_bytes) is not int or max_bytes < 1:
+        raise ValueError('log limit must be a positive byte count')
+    writers, readers, threads = [], [], []
+    def drain(fd, path):
+        used, failed = 0, False
+        try:
+            with path.open('xb') as target:
+                while block := os.read(fd, 65536):
+                    kept = block[:max(0, max_bytes - used)]
+                    target.write(kept)
+                    used += len(kept)
+                    if len(kept) != len(block) and not failed:
+                        target.flush()
+                        os.fsync(target.fileno())
+                        failed = True
+                        on_failure(f'{path.name} exceeded {max_bytes} bytes; retained prefix')
+                target.flush()
+                os.fsync(target.fileno())
+        except OSError as error:
+            on_failure(f'{path.name}: {error}')
+    try:
+        for name in ('stdout.log', 'stderr.log'):
+            reader, writer = os.pipe()
+            readers.append(reader)
+            writers.append(os.fdopen(writer, 'wb', buffering=0))
+            thread = threading.Thread(target=drain, args=(reader, Path(output) / name), daemon=True)
+            thread.start()
+            threads.append(thread)
+        yield writers
+    finally:
+        for writer in writers:
+            writer.close()
+        for thread in threads:
+            thread.join(timeout=2.)
+        for reader in readers:
+            os.close(reader)
+
+
+def bounded_process(command, output, timeout, env=None, *, log_max_bytes=1024**2):
     """One isolated process group; timeout includes model loading and renderer stalls."""
     output = Path(output)
     output.mkdir(parents=True, exist_ok=False)
@@ -24,10 +67,18 @@ def bounded_process(command, output, timeout, env=None):
               'started_utc': datetime.now(timezone.utc).isoformat(), 'output': str(output)}
     _json(output / 'supervisor.json', report)
     started, process = time.perf_counter(), None
+    log_failure = []
+    def fail_log(reason):
+        log_failure.append(reason)
+        if process is not None:
+            with contextlib.suppress(ProcessLookupError):
+                os.killpg(process.pid, signal.SIGTERM)
     try:
-        with (output / 'stdout.log').open('w') as stdout, (output / 'stderr.log').open('w') as stderr:
+        with bounded_logs(output, log_max_bytes, fail_log) as (stdout, stderr):
             process = subprocess.Popen(command, stdout=stdout, stderr=stderr, env=env,
                                        start_new_session=True)
+            if log_failure:
+                fail_log(log_failure[0])
             try:
                 code = process.wait(timeout=timeout)
                 report['status'] = 'completed' if code == 0 else 'failed'
@@ -35,24 +86,26 @@ def bounded_process(command, output, timeout, env=None):
                 report['status'] = 'timeout'
             except KeyboardInterrupt:
                 report['status'] = 'interrupted'
+            finally:
+                # Descendants can outlive their leader while retaining a log pipe.
+                with contextlib.suppress(ProcessLookupError):
+                    os.killpg(process.pid, signal.SIGTERM)
+                if process.poll() is None:
+                    try:
+                        process.wait(timeout=3)
+                    except subprocess.TimeoutExpired:
+                        with contextlib.suppress(ProcessLookupError):
+                            os.killpg(process.pid, signal.SIGKILL)
+                        process.wait(timeout=3)
+                with contextlib.suppress(ProcessLookupError):
+                    os.killpg(process.pid, signal.SIGKILL)
     except OSError as error:
         report.update(status='failed', error=str(error))
     finally:
-        if process is not None and process.poll() is None:
-            try:
-                os.killpg(process.pid, signal.SIGTERM)
-            except ProcessLookupError:
-                pass
-            try:
-                process.wait(timeout=3)
-            except subprocess.TimeoutExpired:
-                try:
-                    os.killpg(process.pid, signal.SIGKILL)
-                except ProcessLookupError:
-                    pass
-                process.wait(timeout=3)
         report.update(returncode=process.returncode if process else None,
                       elapsed_seconds=time.perf_counter() - started)
+        if log_failure:
+            report.update(status='failed', failure={'type': 'LogLimit', 'message': log_failure[0]})
         _json(output / 'supervisor.json', report)
     return report
 
