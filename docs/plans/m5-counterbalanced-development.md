@@ -1,7 +1,12 @@
 # Counterbalanced development: staged proposal
 
-Proposal only, based on reviewed replay evidence `78e4ba8`. No runtime source is
-changed, no new model job is authorized, and held-out splits remain unopened.
+Stage A/B source preparation, based on reviewed replay evidence `78e4ba8`.
+The bounded admission runner is prepared; no actual launch is authorized, and
+held-out splits remain unopened. Stage C/full-batch execution remains a proposal.
+Engine, application schema, sensors and controller production code are unchanged.
+The shared handoff audit now joins physical subjects rather than lexical fact IDs
+(`009c950`), with original and permuted-order fixtures; canonical cases are unchanged.
+
 The completed manual, fixed FLYNN and replay data remain immutable. This proposes
 the smallest admission check and limited comparison before deciding whether a
 48-cell development batch is feasible. It does not assert statistical power or
@@ -141,11 +146,13 @@ matrix or a completed counterbalance. No automatic full batch follows.
 ## Readouts, nulls and implementation boundary
 
 Reuse existing selector dispatch, native guards/readers, policy-call/row binding,
-world geometry gold and evaluator accounting. The existing verifier is deliberately
+world geometry gold and evaluator accounting. The original verifier is deliberately
 hard-coded to seed 16/change and its trigger/evaluator assumes one event/closed
-gate; it cannot execute this proposal unchanged. A reviewed thin bounded cell list
-and explicit null/no-event evaluator path are prerequisites, not already supported
-runtime behavior. Keep old frozen runners/results unchanged. No Engine, schema,
+gate; it cannot execute this proposal unchanged. The new fixed eight-cell
+`scripts/verify_memory_counterbalance.py` composes its source/native guards and
+the neural runner's actual policy-call binding, quota and owner supervision.
+Null/no-event validation stays local to the new admission runner; actual behavior
+is still unverified until a frozen runtime gate. Keep old frozen runners/results unchanged. No Engine, schema,
 controller, sensor or generic experiment framework expansion is proposed.
 
 Gold comes from actual before/post clearance plus pre-source observed expectations
@@ -217,3 +224,69 @@ any full-batch GO.
 Root review is needed for the concrete staged scope, the fixed-route interpretation,
 and the later storage/full-matrix decision. Held-out case IDs, splits and artifacts
 are not generated or opened by this proposal.
+
+## Stage B prepared review boundary
+
+Pure preparation only: no worker has started. The ignored prepared plan is
+`runs/m5-counterbalance-stage-b-preparation-009c950/prepared-plan.json`
+(586,017 bytes), SHA `ecaedc5c9341063eaa619635da69bda2149dd66e46ed1d01a7ffe13834515131`.
+Protocol SHA `85f6ec028aefa4d02a4c61701452f2a5275f57744786adf8670ec238960ee214`;
+runner SHA `ffb7fa9d3b84441c6fa05945b893d4c4028481502d80355f8e951e5238d30927`.
+The source inventory actually verified 122 pinned upstream files and 10 declared
+assets. An independent frozen outer source/test/lock/upstream/asset inventory and
+PID/PPID/PGID/start monitor are still required before any runtime GO. The full
+plan binds every raw and semantic case pin to this source; historical planning
+case hashes are not substituted. Output must be fresh:
+`runs/m5-counterbalance-stage-b-20261003`.
+
+One parent holds the existing storage lease throughout the batch; each child
+shares that allowance and is the sole serialized payload writer. No concurrent
+owner, retry, replacement cell or goal/target tuning is admitted. A failure before
+the next owner preserves the preceding owner's passed status, names the current
+unattempted owner and stops. Any attempted task/runtime/admission failure stops;
+it is not accepted as successful coverage. Normal close is required on every
+owned Engine. The prospective outer bound is 3,900 s plus explicit cleanup grace;
+start-verified surviving-owner cleanup and any forced signal must be reported and
+fail the operational gate. Nested process groups must be surveyed independently.
+
+Worst-case recording/SNP payload is **5,234,491,392 bytes** (24 × 208 MiB).
+A conservative retained estimate adds 48 MiB child streams, 72 MiB for 24
+supervisor/worker/job envelopes (1 MiB each), 2 MiB plan/report, and 64 MiB
+outer/control/monitor allowance: **5,429,526,528 bytes** (5.06 GiB). This estimate
+is below the enforced 6 GiB aggregate ceiling; envelope size is bounded by the
+existing writers/validators, and outer controls must share aggregate accounting.
+Require 6 GiB + 2 GiB floor + 64 MiB headroom before admission. This is a bound,
+not a measured Stage B recording size. Maximum numeric ticks remain 2,408.
+
+| Cell | Source UUID | Empty-U policy-anchor UUID | One-tick no-U probe UUID |
+| --- | --- | --- | --- |
+| s24/local_cue/change | `b3cbd532336d4b86a5d2c6545dff91b8` | `ba309a22cb374001a180ba7d20f8bb1b` | `0c98e6ff6280435795b3dacd4a578f13` |
+| s25/local_cue/change | `fff91d6a5a40470c963469b5a02960ca` | `d8028dc1dd2a45658cd299a087ec48fe` | `22afca39e626414085caa639b260a83b` |
+| s26/paired_cue/null | `2b29549c42e647518102f8e0511b087d` | `1f29205a25664bb78dff5d46a89b4652` | `a1b15dc6b2914f8e88d2b7d2297d726e` |
+| s27/paired_cue/no-event | `19d59574a0e242f08060753c37694b4e` | `881e9078ad38428c9e0e172873302b30` | `b78286d80c56445da2eb3272c8deb432` |
+| s28/paired_cue/change | `dbc07665346a4fdb89b6040387612bf8` | `eef0d4869a9940a88204e2de727eac20` | `f96b989d9b8b44a2857ce2716c53cbce` |
+| s29/paired_cue/change | `5c2d61f814e24b1590dd0ae3b71a1f52` | `80b95e4d84e84d0a91c36197c11165aa` | `aed1cc64bb1b4ea49209198279e8436b` |
+| s30/local_cue/null | `e41be252316046a88f81dc593c4a51d8` | `bda16c15d1d349c19a154cd453e25442` | `357f6d9af3414230b94f186a2ea693b9` |
+| s31/local_cue/no-event | `44cfe6e3628a4958bfe8b4fc146d7349` | `88ee6eb04dde4e1d9d294fa0541b8840` | `baef9736aab0487992367243188e0123` |
+
+The native detector299 and actual packet300 must reconstruct exactly the recorded
+trigger/selection; reconstructed values are audit-only and never injected into
+Engine or history. No-event requires zero trigger/selection events and zero
+selector behavior bytes. Null requires the recorded cue flip, unchanged actual
+clearance, empty gold and separately recorded observed confirmations/revisions.
+Gold uses actual before/post clearance and retained observed pre-event M, with
+unknown facts excluded. Passive upper-passage correction observed at tick 300 is
+reported as an actual event; the one-tick stage does not score completed tasks or
+aggregate correction/goal times. Controller access stays real CPU `policy.act`
+with step-only commands and exact row/input/output bindings. Across cells the
+case seed also changes controller/RNG initialization; only within-cell native
+anchors are matched. Stage B is diagnostic admission coverage, not an effect estimate.
+
+Pure command:
+
+```sh
+PYTHONPATH=src:tests ../lab-hardening/.venv/bin/python -m unittest tests.test_memory_counterbalance tests.test_memory_transfer tests.test_flynn_memory_transfer tests.test_memory_experiment -q
+```
+
+No actual invocation is authorized by this document. Review/freeze the new source,
+prepared plan, bounded outer launcher and cleanup/resource inventory before GO.
