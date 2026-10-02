@@ -22,7 +22,8 @@ export async function installMeter(page:Page){await page.addInitScript(()=>{
 });}
 
 export async function startMeter(page:Page){await page.evaluate(()=>{const meter=(window as any).__labMeter;meter.ws=[];meter.commits=[];meter.paint=[];meter.raf=[];meter.started=performance.now();meter.active=true;});}
-export async function stopMeter(page:Page){return page.evaluate(()=>{const meter=(window as any).__labMeter;meter.active=false;meter.ended=performance.now();return {window_ms:meter.ended-meter.started,ws:meter.ws,commits:meter.commits,paint:meter.paint,raf:meter.raf};});}
+export async function stopMeter(page:Page){return page.evaluate(()=>{const meter=(window as any).__labMeter;meter.active=false;meter.ended=performance.now();return {started:meter.started,ended:meter.ended,window_ms:meter.ended-meter.started,ws:meter.ws,commits:meter.commits,paint:meter.paint,raf:meter.raf};});}
 export async function commandMetrics(page:Page){return page.evaluate(()=>(window as any).__labMeter.commands.map((command:any)=>({...command,applied_ms:(window as any).__labMeter.applied[command.id]===undefined?null:(window as any).__labMeter.applied[command.id]-command.started})));}
 export function summarize(values:number[]){const sorted=[...values].sort((a,b)=>a-b);const percentile=(p:number)=>sorted.length?sorted[Math.max(0,Math.ceil(sorted.length*p)-1)]:null;return{count:values.length,p50:percentile(.5),p95:percentile(.95),p99:percentile(.99)};}
 export function cadence(times:number[]){const intervals=times.slice(1).map((time,index)=>time-times[index]);return{count:times.length,hz:times.length>1?(times.length-1)*1000/(times.at(-1)!-times[0]):null,interval_ms:summarize(intervals)};}
+export function windowRate(times:number[],started:number,ended:number){const duration=ended-started;return{count:times.length,window_ms:Number.isFinite(duration)?duration:null,hz:Number.isFinite(duration)&&duration>0?times.length*1000/duration:null};}
