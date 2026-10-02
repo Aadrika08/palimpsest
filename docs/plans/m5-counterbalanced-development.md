@@ -290,3 +290,15 @@ PYTHONPATH=src:tests ../lab-hardening/.venv/bin/python -m unittest tests.test_me
 
 No actual invocation is authorized by this document. Review/freeze the new source,
 prepared plan, bounded outer launcher and cleanup/resource inventory before GO.
+
+## Retained Stage B outcome
+
+The separately authorized frozen gate at `8506407` completed all 24 owners and
+2,408 numeric ticks with no retries, failures or unattempted cells. Native/source
+identity and cleanup checks passed. Upper changes were passively observed and
+committed at 300; lower changes remained stale at the one-tick stop. Null gold
+was empty; no-event cases had zero trigger/selector invocation and zero selector
+behavior bytes. Task completion and benefit remain unscored. Exact results,
+immutable hashes and the two retained audits are in
+[the Stage B evidence report](../reports/m5-counterbalance-stage-b.md). Stage C,
+full-matrix and held-out execution still require separate reviewed runtime GO.
