@@ -2,7 +2,7 @@
 
 A local, inspectable lab for embodied neural controllers. The current implementation is the **M0 / R0 reproduction harness**: setup diagnostics, pinned FLYNN assets, bounded teacher/FLYNN evaluation, reference preprocessing parity, and recorded inputs, actions, outcomes, and resource measurements.
 
-M1 and later milestones are not implemented: there is no interactive lab, snapshot continuation, replay command, memory learning, additional task controller, MaleCNS profile, or hardware control. See the [implementation plan](docs/implementation-plan.md), [current progress](docs/progress.md), and preserved [Borrowed Body PRD](docs/borrowed-body-prd-v1.md). A completed evaluation means the bounded experiment finished; inspect its outcomes before making a navigation or performance claim.
+M1 and later milestones are not implemented: there is no interactive lab, snapshot continuation, replay command, memory learning, additional task controller, MaleCNS profile, or hardware control. See the [R0 evidence report](docs/reports/r0-reproduction.md), [implementation plan](docs/implementation-plan.md), [current progress](docs/progress.md), and preserved [Borrowed Body PRD](docs/borrowed-body-prd-v1.md). A completed evaluation means the bounded experiment finished; inspect its outcomes before making a navigation or performance claim.
 
 ## Setup
 
