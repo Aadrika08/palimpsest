@@ -16,8 +16,8 @@ from .body_profile import GROUND_SUPPORT, ROBOT_GEOMS
 from .task_mechanics import _fields, _identifier, _integer, _number, _pair, _version
 
 SCENARIO = 'puck-pushing-development'
-PROTOCOL_SHA256 = '8a7f14ee69fe386fe1150b644e71737a5e39ab3c8c4987d7cdf61277796f3bac'
-PROTOCOL_PATH = 'docs/plans/m6-puck-pushing-protocol.json'
+PROTOCOL_SHA256 = 'fd8dbcea35d226bed522d02f27f7bc11149ac77f72ca49838493489e330eb88c'
+PROTOCOL_PATH = 'docs/plans/m6-puck-pushing-protocol-v2.json'
 WORLD_GEOMS = {'floor', 'wall_n', 'wall_s', 'wall_e', 'wall_w',
                *[f'obstacle{i}' for i in range(20)]}
 CONTACT_FIELDS = ('tick', 'time_s', 'source_start_time_s', 'contact_cache_time_s',
@@ -385,15 +385,16 @@ def demonstrate(world):
         return [0., 0.]
     dx, dy = (gx-px)/distance, (gy-py)/distance
     x, y, yaw = world['rover_pose']
+    axial, lateral = (px-x)*dx+(py-y)*dy, abs(-(px-x)*dy+(py-y)*dx)
+    ready = .35 <= axial <= .63 and lateral <= .06
     ax, ay = px-.55*dx-x, py-.55*dy-y
-    if math.hypot(ax, ay) <= .08:
+    if ready or math.hypot(ax, ay) <= .08:
         ax, ay = dx, dy
     error = math.remainder(math.atan2(ay, ax)-yaw, math.tau)
     heading = max(-.4, min(.4, error))
     if abs(error) > .12:
         return [0., heading]
-    axial, lateral = (px-x)*dx+(py-y)*dy, abs(-(px-x)*dy+(py-y)*dx)
-    return [.2 if .35 <= axial <= .63 and lateral <= .06 else .25, heading]
+    return [.2 if ready else .25, heading]
 
 
 def _fixed_bindings(env, model):
