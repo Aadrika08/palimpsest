@@ -1,0 +1,1523 @@
+{
+  "attempt": "v5",
+  "audit_report": {
+    "bytes": 28079,
+    "path": "runs/m6-puck-mechanics-v5-prepared/audit.json",
+    "sha256": "f4a80f888261f152a7500e922c262e1e30c0fbb6f267db5e6763142c889c0193"
+  },
+  "audit_script": {
+    "bytes": 19149,
+    "path": "runs/m6-puck-mechanics-v5-prepared/audit.py",
+    "sha256": "75a37b0f7394a010e46b27d61262aa917abd319d9e5de8379e17ee1607b04f60"
+  },
+  "cleanup": {
+    "forced_signals": [],
+    "observed_owned_processes": [
+      {
+        "pid": 571594,
+        "start_ticks": 7506952
+      },
+      {
+        "pid": 571595,
+        "start_ticks": 7506952
+      },
+      {
+        "pid": 571604,
+        "start_ticks": 7506976
+      },
+      {
+        "pid": 571606,
+        "start_ticks": 7507062
+      },
+      {
+        "pid": 571669,
+        "start_ticks": 7507343
+      },
+      {
+        "pid": 571688,
+        "start_ticks": 7507688
+      },
+      {
+        "pid": 571707,
+        "start_ticks": 7508017
+      },
+      {
+        "pid": 571726,
+        "start_ticks": 7508834
+      },
+      {
+        "pid": 571746,
+        "start_ticks": 7509520
+      },
+      {
+        "pid": 571760,
+        "start_ticks": 7509846
+      },
+      {
+        "pid": 571774,
+        "start_ticks": 7510137
+      },
+      {
+        "pid": 571809,
+        "start_ticks": 7510361
+      },
+      {
+        "pid": 571830,
+        "start_ticks": 7510679
+      }
+    ],
+    "sample_errors": [],
+    "sampler_stopped": true,
+    "scope": {
+      "cleanup_scope": "sampled owned PID/start identities, immediate recheck before TERM/KILL, group signal only for an owned group leader",
+      "cleanup_wait_each_signal_seconds": 2,
+      "copy": "exact source text, only this function, no adaptive imports",
+      "failure_conditions": [
+        "sampler exception",
+        "sampler remains alive",
+        "any forced signal",
+        "any surviving sampled identity"
+      ],
+      "function": "cleanup_observed",
+      "function_sha256": "d308e0ffbe3cdbbdd93fd81865e8cdb96d51539afc38bc294f2e5b3c49b8d3b8",
+      "limitation": "finite .25s descendant sampling; no claim to observe every transient descendant",
+      "max_observed_processes": 128,
+      "original_source": "/home/utkarsh/Work/shraddha/brain/.worktrees/project-integration/scripts/verify_body_adaptation.py",
+      "original_source_commit": "3a0b085ea376d7cedf4bd6d533233e30b1e1b6cc",
+      "original_source_sha256": "197662faf19e7d11b8ab42d67f5ccb0b7d64867bdb0e296f23408daeecb08da3",
+      "outer_supervisor_seconds_unchanged": 680,
+      "sampler_interval_seconds": 0.25,
+      "sampler_join_seconds": 2
+    },
+    "survivors": []
+  },
+  "downstream_execution": false,
+  "exact_replay_and_continuations": [
+    {
+      "exact_all_numeric_fields": true,
+      "id": "continue-tick1",
+      "native_snapshot_raw_and_integration_equal_to_source": true,
+      "record_manifest_sha256": "afd6c3f3af391d21cbd1ba46973356537f1a3282d8d8a6c7a5026091e971f671",
+      "source_completed_tick": 1,
+      "status": "passed",
+      "ticks": 4
+    },
+    {
+      "exact_all_numeric_fields": true,
+      "id": "continue-contact",
+      "native_snapshot_raw_and_integration_equal_to_source": true,
+      "record_manifest_sha256": "aeba8aef2a4eef62592b185eddf3a735e11ce9202f702053d42bdf4c3c28b7fd",
+      "source_completed_tick": 112,
+      "status": "passed",
+      "ticks": 4
+    },
+    {
+      "exact_all_numeric_fields": true,
+      "id": "continue-dwell",
+      "native_snapshot_raw_and_integration_equal_to_source": true,
+      "record_manifest_sha256": "7580ec60d49082f55a5b891ad8ffc9b935e090b9c14993d0b4f661b99d966c9a",
+      "source_completed_tick": 352,
+      "status": "passed",
+      "ticks": 4
+    },
+    {
+      "exact_all_numeric_fields": true,
+      "id": "replay-actions",
+      "native_snapshot_raw_and_integration_equal_to_source": true,
+      "record_manifest_sha256": "8717d174ff0055ca640d32424f4610add81bfbc7427e3c5ccdf633bf9653d6e7",
+      "source_completed_tick": 0,
+      "status": "passed",
+      "ticks": 120
+    },
+    {
+      "exact_all_numeric_fields": true,
+      "id": "replay-policy",
+      "native_snapshot_raw_and_integration_equal_to_source": true,
+      "record_manifest_sha256": "6d20ad8cdbdf94e6f40d872ebf5eb941778581e455c881cef5f4dfd70c25ceb0",
+      "source_completed_tick": 0,
+      "status": "passed",
+      "ticks": 361
+    }
+  ],
+  "finalization_errors": {
+    "inner": [],
+    "outer": []
+  },
+  "independent_root_audit": {
+    "report": {
+      "bytes": 3610,
+      "path": "../project-integration/runs/m6-puck-mechanics-root-audit-eba4c39/audit.json",
+      "sha256": "2ceace580b4f30a4c1e73701838f826f48d064ab8802006086fdb1b86ecd0d3f"
+    },
+    "script": {
+      "bytes": 11603,
+      "path": "../project-integration/runs/m6-puck-mechanics-root-audit-eba4c39/audit.py",
+      "sha256": "3e7df6e762efbb1f5fe23745b63d2a59e149f7c0fa52ed7a0b9f757e156df04b"
+    }
+  },
+  "inner_elapsed_seconds": 45.45680260899826,
+  "inner_report": {
+    "bytes": 110630,
+    "path": "runs/m6-puck-mechanics-v5-20261003/gate/report.json",
+    "sha256": "0180cd00ad89a17fa2e57eb41211009836f54f5e53d1790a867373fe8b44ae42"
+  },
+  "inventory_bytes_checked": 198032371,
+  "inventory_files_checked": 146,
+  "launcher": {
+    "bytes": 7523,
+    "path": "runs/m6-puck-mechanics-v5-prepared/launch.py",
+    "sha256": "10cef56e1815d0ff69de44b7738c9e2f447ff9df42d0056106d8bb91bf5f9d3b"
+  },
+  "mechanics_protocol": {
+    "bytes": 7580,
+    "path": "docs/plans/m6-puck-mechanics-v4.json",
+    "sha256": "e24a60ef1e2ddc74cf04e9d640e537fdeb157f7f0c781707a9d092bed421ddc7"
+  },
+  "native_restoration_performed_by_audits": false,
+  "not_qualified": [
+    "physical contact",
+    "learned controller",
+    "held-out layout performance",
+    "production Engine/UI integration"
+  ],
+  "outer_elapsed_seconds": 45.694474692005315,
+  "outer_exitcode": 0,
+  "outer_report": {
+    "bytes": 36510,
+    "path": "runs/m6-puck-mechanics-v5-20261003/launch-result.json",
+    "sha256": "4b6c8028f63bc359130f98ce0858d641a7f14c6cafe019cde68002259111a6f5"
+  },
+  "owners": [
+    {
+      "completion": "fixed_mechanics_horizon",
+      "controller_calls": 0,
+      "id": "zero",
+      "owner_report": {
+        "bytes": 3338,
+        "path": "runs/m6-puck-mechanics-v5-20261003/gate/zero/result.json",
+        "sha256": "eeca1e9a9f55e07c6645c9d3fd7a06d24b33769df9f3f59ce44609ccaa2ef57e"
+      },
+      "record_manifest": {
+        "bytes": 15116,
+        "path": "runs/m6-puck-mechanics-v5-20261003/gate/zero/recording/manifest.json",
+        "sha256": "a35260540dfdb28c9c691aca18b7f8c514d306939549673724b4574a1538a2a0"
+      },
+      "recorded_ticks": 120,
+      "snapshots": {
+        "initial": {
+          "application_sha256": "1556278919bb1990f8f95d522b85a986031a0337588ea0beb5fb72af9a2e4503",
+          "bytes": 469333,
+          "contact": {
+            "contact_cache_time_s": 0.0,
+            "failure": null,
+            "initial_forwarded": true,
+            "other_robot_contact": false,
+            "puck_floor_support": false,
+            "puck_wall_contact": false,
+            "rover_ground_support": true,
+            "rover_puck_contact": false,
+            "rover_puck_max_penetration_m": 0.0,
+            "source_start_time_s": 0.0,
+            "tick": 0,
+            "time_s": 0.0
+          },
+          "file": "initial.snp",
+          "sha256": "1207d4ab3897e3bd2a4666127e9f29a21271b22ed444950d71ee51a90147ae8d",
+          "tick": 0,
+          "world": {
+            "goal_xy": [
+              1.2,
+              0.0
+            ],
+            "puck_velocity_xy": [
+              0.0,
+              0.0
+            ],
+            "puck_xyz": [
+              0.0,
+              0.0,
+              0.062
+            ],
+            "rover_pose": [
+              -0.8,
+              0.0,
+              0.0
+            ],
+            "time_s": 0.0
+          }
+        }
+      },
+      "status": "passed"
+    },
+    {
+      "completion": "fixed_mechanics_horizon",
+      "controller_calls": 0,
+      "id": "push-positive",
+      "owner_report": {
+        "bytes": 3496,
+        "path": "runs/m6-puck-mechanics-v5-20261003/gate/push-positive/result.json",
+        "sha256": "e77b95188382963b2eb1e0408c2b27f7470a56e4f2a55ee43f116ae5c11a9f14"
+      },
+      "record_manifest": {
+        "bytes": 15190,
+        "path": "runs/m6-puck-mechanics-v5-20261003/gate/push-positive/recording/manifest.json",
+        "sha256": "cb1b401a8bcba04c052387e887efb041e9b60b06e6cc4dba0bd9edb9adea70f6"
+      },
+      "recorded_ticks": 120,
+      "snapshots": {
+        "initial": {
+          "application_sha256": "6adc7535112aaaa23305ccb8e003b0b76cc5709a071e653865894a054f282bf8",
+          "bytes": 469335,
+          "contact": {
+            "contact_cache_time_s": 0.0,
+            "failure": null,
+            "initial_forwarded": true,
+            "other_robot_contact": false,
+            "puck_floor_support": false,
+            "puck_wall_contact": false,
+            "rover_ground_support": true,
+            "rover_puck_contact": false,
+            "rover_puck_max_penetration_m": 0.0,
+            "source_start_time_s": 0.0,
+            "tick": 0,
+            "time_s": 0.0
+          },
+          "file": "initial.snp",
+          "sha256": "589911314cb1ac6ebe940225bfa287aede7eddafc00317202530cf2b936ecc59",
+          "tick": 0,
+          "world": {
+            "goal_xy": [
+              1.2,
+              0.0
+            ],
+            "puck_velocity_xy": [
+              0.0,
+              0.0
+            ],
+            "puck_xyz": [
+              0.0,
+              0.0,
+              0.062
+            ],
+            "rover_pose": [
+              -0.8,
+              0.0,
+              0.0
+            ],
+            "time_s": 0.0
+          }
+        }
+      },
+      "status": "passed"
+    },
+    {
+      "completion": "fixed_mechanics_horizon",
+      "controller_calls": 0,
+      "id": "push-negative",
+      "owner_report": {
+        "bytes": 3512,
+        "path": "runs/m6-puck-mechanics-v5-20261003/gate/push-negative/result.json",
+        "sha256": "1c36f9207815dc590f330b7c465644db983e9ea7b62fd4fb87dc1b99c93c39da"
+      },
+      "record_manifest": {
+        "bytes": 15192,
+        "path": "runs/m6-puck-mechanics-v5-20261003/gate/push-negative/recording/manifest.json",
+        "sha256": "5f673eedcf3b124f6f36da414b8cc1ab20adabb0ccc1061e67218a5a55084b84"
+      },
+      "recorded_ticks": 120,
+      "snapshots": {
+        "initial": {
+          "application_sha256": "65c93f152cc4d3485b0de86d14d2bb6e008f2fef6aa2e04a8c028987740e03ae",
+          "bytes": 469358,
+          "contact": {
+            "contact_cache_time_s": 0.0,
+            "failure": null,
+            "initial_forwarded": true,
+            "other_robot_contact": false,
+            "puck_floor_support": false,
+            "puck_wall_contact": false,
+            "rover_ground_support": true,
+            "rover_puck_contact": false,
+            "rover_puck_max_penetration_m": 0.0,
+            "source_start_time_s": 0.0,
+            "tick": 0,
+            "time_s": 0.0
+          },
+          "file": "initial.snp",
+          "sha256": "e428064177111f4651039f4fced938dc6e014dba2817cc20b05aa92426963c75",
+          "tick": 0,
+          "world": {
+            "goal_xy": [
+              -1.2,
+              0.0
+            ],
+            "puck_velocity_xy": [
+              0.0,
+              0.0
+            ],
+            "puck_xyz": [
+              0.0,
+              0.0,
+              0.062
+            ],
+            "rover_pose": [
+              0.8,
+              0.0,
+              3.141592653589793
+            ],
+            "time_s": 0.0
+          }
+        }
+      },
+      "status": "passed"
+    },
+    {
+      "completion": "puck_goal",
+      "controller_calls": 361,
+      "id": "teacher-positive",
+      "owner_report": {
+        "bytes": 7079,
+        "path": "runs/m6-puck-mechanics-v5-20261003/gate/teacher-positive/result.json",
+        "sha256": "a217aee1dca7cf85d22fb54813d56e82d4777ff4c3ec54d5749af6cc4586ad00"
+      },
+      "record_manifest": {
+        "bytes": 15202,
+        "path": "runs/m6-puck-mechanics-v5-20261003/gate/teacher-positive/recording/manifest.json",
+        "sha256": "a49ca9982f422737f151d18211c8a78eef93096d1627abca5f8f3addb6babb77"
+      },
+      "recorded_ticks": 361,
+      "snapshots": {
+        "contact": {
+          "application_sha256": "3c65032e238a7b5dbcacf07b3c2f65acbe299356981e1e61973c2a04ab18430a",
+          "bytes": 480641,
+          "contact": {
+            "contact_cache_time_s": 2.238,
+            "failure": null,
+            "initial_forwarded": false,
+            "other_robot_contact": false,
+            "puck_floor_support": true,
+            "puck_wall_contact": false,
+            "rover_ground_support": true,
+            "rover_puck_contact": true,
+            "rover_puck_max_penetration_m": 0.0004352386029819774,
+            "source_start_time_s": 2.22,
+            "tick": 112,
+            "time_s": 2.239999999999975
+          },
+          "file": "contact.snp",
+          "sha256": "81f938048faf8769bac056e2d5c9857f7a30983b0054d4678c8ac9c9e0ae9eb3",
+          "tick": 112,
+          "world": {
+            "goal_xy": [
+              1.2,
+              0.0
+            ],
+            "puck_velocity_xy": [
+              0.37570753011302294,
+              -0.004096774414381802
+            ],
+            "puck_xyz": [
+              0.002251319168147419,
+              -2.5190442384051925e-05,
+              0.06044073282355022
+            ],
+            "rover_pose": [
+              -0.447320887077911,
+              0.018067977234050042,
+              0.039611012379369974
+            ],
+            "time_s": 2.239999999999975
+          }
+        },
+        "dwell": {
+          "application_sha256": "9684a8a5a73cfa9500b7354a19cac703678314aacd9c59db42d65d02c447df4b",
+          "bytes": 483560,
+          "contact": {
+            "contact_cache_time_s": 7.038,
+            "failure": null,
+            "initial_forwarded": false,
+            "other_robot_contact": false,
+            "puck_floor_support": true,
+            "puck_wall_contact": false,
+            "rover_ground_support": true,
+            "rover_puck_contact": true,
+            "rover_puck_max_penetration_m": 8.278762709100239e-06,
+            "source_start_time_s": 7.0200000000000005,
+            "tick": 352,
+            "time_s": 7.039999999999447
+          },
+          "file": "dwell.snp",
+          "sha256": "32c785bfda18eac4feb750af012139ceb4d0b00a876453172207e38f6aa7be02",
+          "tick": 352,
+          "world": {
+            "goal_xy": [
+              1.2,
+              0.0
+            ],
+            "puck_velocity_xy": [
+              0.0167271438021526,
+              -0.015183816969228934
+            ],
+            "puck_xyz": [
+              1.0391579926465753,
+              0.004613903358964229,
+              0.059997172086075
+            ],
+            "rover_pose": [
+              0.590591127289497,
+              -0.03126701083461145,
+              -0.1629613099629127
+            ],
+            "time_s": 7.039999999999447
+          }
+        },
+        "initial": {
+          "application_sha256": "779704d10896e4e3c9ba64b2ef7b876f77675f5ae8b4cb2530e9beb502accba4",
+          "bytes": 469353,
+          "contact": {
+            "contact_cache_time_s": 0.0,
+            "failure": null,
+            "initial_forwarded": true,
+            "other_robot_contact": false,
+            "puck_floor_support": false,
+            "puck_wall_contact": false,
+            "rover_ground_support": true,
+            "rover_puck_contact": false,
+            "rover_puck_max_penetration_m": 0.0,
+            "source_start_time_s": 0.0,
+            "tick": 0,
+            "time_s": 0.0
+          },
+          "file": "initial.snp",
+          "sha256": "ccc57950774d7e7cceed2efff5e3800f4319825d1e218500aecd40bd45306292",
+          "tick": 0,
+          "world": {
+            "goal_xy": [
+              1.2,
+              0.0
+            ],
+            "puck_velocity_xy": [
+              0.0,
+              0.0
+            ],
+            "puck_xyz": [
+              0.0,
+              0.0,
+              0.062
+            ],
+            "rover_pose": [
+              -0.95,
+              0.2,
+              0.3
+            ],
+            "time_s": 0.0
+          }
+        },
+        "tick1": {
+          "application_sha256": "5912d9e229ceff5466cd1183ecb7c5f43567f168b6ab5b1e13ba2b29c16f0677",
+          "bytes": 477603,
+          "contact": {
+            "contact_cache_time_s": 0.018,
+            "failure": null,
+            "initial_forwarded": false,
+            "other_robot_contact": false,
+            "puck_floor_support": false,
+            "puck_wall_contact": false,
+            "rover_ground_support": true,
+            "rover_puck_contact": false,
+            "rover_puck_max_penetration_m": 0.0,
+            "source_start_time_s": 0.0,
+            "tick": 1,
+            "time_s": 0.020000000000000004
+          },
+          "file": "tick1.snp",
+          "sha256": "6d18322c5fe41be7e4af6d98e1be81c21306e4eea66d46c087d44358d2caf2e9",
+          "tick": 1,
+          "world": {
+            "goal_xy": [
+              1.2,
+              0.0
+            ],
+            "puck_velocity_xy": [
+              0.0,
+              0.0
+            ],
+            "puck_xyz": [
+              0.0,
+              0.0,
+              0.0598418
+            ],
+            "rover_pose": [
+              -0.94996861416315,
+              0.1999081541869123,
+              0.2974325145438783
+            ],
+            "time_s": 0.020000000000000004
+          }
+        }
+      },
+      "status": "passed"
+    },
+    {
+      "completion": "puck_goal",
+      "controller_calls": 361,
+      "id": "teacher-negative",
+      "owner_report": {
+        "bytes": 3514,
+        "path": "runs/m6-puck-mechanics-v5-20261003/gate/teacher-negative/result.json",
+        "sha256": "c739a1c2ae206fa615177c3ee07b475e1f7978ac91e88e8ec9f3ea3ed87fd807"
+      },
+      "record_manifest": {
+        "bytes": 15204,
+        "path": "runs/m6-puck-mechanics-v5-20261003/gate/teacher-negative/recording/manifest.json",
+        "sha256": "0c93b575b7e8406a870b9084ac16404a187b0405e284acee315942aae0c10fd7"
+      },
+      "recorded_ticks": 361,
+      "snapshots": {
+        "initial": {
+          "application_sha256": "7a27bbaa25006522e18c09d6a60c4d90be5dabbd7aa5316e5cd8933007554272",
+          "bytes": 469367,
+          "contact": {
+            "contact_cache_time_s": 0.0,
+            "failure": null,
+            "initial_forwarded": true,
+            "other_robot_contact": false,
+            "puck_floor_support": false,
+            "puck_wall_contact": false,
+            "rover_ground_support": true,
+            "rover_puck_contact": false,
+            "rover_puck_max_penetration_m": 0.0,
+            "source_start_time_s": 0.0,
+            "tick": 0,
+            "time_s": 0.0
+          },
+          "file": "initial.snp",
+          "sha256": "46f85f33db9ccdbdd483ed05d6d97133509fe1041392c469872d5c63958dab1b",
+          "tick": 0,
+          "world": {
+            "goal_xy": [
+              -1.2,
+              0.0
+            ],
+            "puck_velocity_xy": [
+              0.0,
+              0.0
+            ],
+            "puck_xyz": [
+              0.0,
+              0.0,
+              0.062
+            ],
+            "rover_pose": [
+              0.95,
+              -0.2,
+              -2.8415926535897937
+            ],
+            "time_s": 0.0
+          }
+        }
+      },
+      "status": "passed"
+    },
+    {
+      "completion": "continuation_window_complete",
+      "controller_calls": 4,
+      "id": "continue-tick1",
+      "owner_report": {
+        "bytes": 4570,
+        "path": "runs/m6-puck-mechanics-v5-20261003/gate/continue-tick1/result.json",
+        "sha256": "cdea635396733d2e433687c513110199da498f33e418c57e531f54ea323579fd"
+      },
+      "record_manifest": {
+        "bytes": 15943,
+        "path": "runs/m6-puck-mechanics-v5-20261003/gate/continue-tick1/recording/manifest.json",
+        "sha256": "afd6c3f3af391d21cbd1ba46973356537f1a3282d8d8a6c7a5026091e971f671"
+      },
+      "recorded_ticks": 4,
+      "snapshots": {
+        "initial": {
+          "application_sha256": "5912d9e229ceff5466cd1183ecb7c5f43567f168b6ab5b1e13ba2b29c16f0677",
+          "bytes": 477603,
+          "contact": {
+            "contact_cache_time_s": 0.018,
+            "failure": null,
+            "initial_forwarded": false,
+            "other_robot_contact": false,
+            "puck_floor_support": false,
+            "puck_wall_contact": false,
+            "rover_ground_support": true,
+            "rover_puck_contact": false,
+            "rover_puck_max_penetration_m": 0.0,
+            "source_start_time_s": 0.0,
+            "tick": 1,
+            "time_s": 0.020000000000000004
+          },
+          "file": "initial.snp",
+          "sha256": "31776a58bad428559e57838ae6a16518948eb09ddc7f6d9751b1c369ea55b8fa",
+          "tick": 1,
+          "world": {
+            "goal_xy": [
+              1.2,
+              0.0
+            ],
+            "puck_velocity_xy": [
+              0.0,
+              0.0
+            ],
+            "puck_xyz": [
+              0.0,
+              0.0,
+              0.0598418
+            ],
+            "rover_pose": [
+              -0.94996861416315,
+              0.1999081541869123,
+              0.2974325145438783
+            ],
+            "time_s": 0.020000000000000004
+          }
+        }
+      },
+      "status": "passed"
+    },
+    {
+      "completion": "continuation_window_complete",
+      "controller_calls": 4,
+      "id": "continue-contact",
+      "owner_report": {
+        "bytes": 4912,
+        "path": "runs/m6-puck-mechanics-v5-20261003/gate/continue-contact/result.json",
+        "sha256": "45d1e2400c163b8458df616e8ac2e4f51434cca62a8ec080869072b2d1b681b5"
+      },
+      "record_manifest": {
+        "bytes": 16099,
+        "path": "runs/m6-puck-mechanics-v5-20261003/gate/continue-contact/recording/manifest.json",
+        "sha256": "aeba8aef2a4eef62592b185eddf3a735e11ce9202f702053d42bdf4c3c28b7fd"
+      },
+      "recorded_ticks": 4,
+      "snapshots": {
+        "initial": {
+          "application_sha256": "3c65032e238a7b5dbcacf07b3c2f65acbe299356981e1e61973c2a04ab18430a",
+          "bytes": 480641,
+          "contact": {
+            "contact_cache_time_s": 2.238,
+            "failure": null,
+            "initial_forwarded": false,
+            "other_robot_contact": false,
+            "puck_floor_support": true,
+            "puck_wall_contact": false,
+            "rover_ground_support": true,
+            "rover_puck_contact": true,
+            "rover_puck_max_penetration_m": 0.0004352386029819774,
+            "source_start_time_s": 2.22,
+            "tick": 112,
+            "time_s": 2.239999999999975
+          },
+          "file": "initial.snp",
+          "sha256": "15230d601fb12fe0134c0d7109893312b0fe87a82121ce77b4373c2a53918f09",
+          "tick": 112,
+          "world": {
+            "goal_xy": [
+              1.2,
+              0.0
+            ],
+            "puck_velocity_xy": [
+              0.37570753011302294,
+              -0.004096774414381802
+            ],
+            "puck_xyz": [
+              0.002251319168147419,
+              -2.5190442384051925e-05,
+              0.06044073282355022
+            ],
+            "rover_pose": [
+              -0.447320887077911,
+              0.018067977234050042,
+              0.039611012379369974
+            ],
+            "time_s": 2.239999999999975
+          }
+        }
+      },
+      "status": "passed"
+    },
+    {
+      "completion": "continuation_window_complete",
+      "controller_calls": 4,
+      "id": "continue-dwell",
+      "owner_report": {
+        "bytes": 4907,
+        "path": "runs/m6-puck-mechanics-v5-20261003/gate/continue-dwell/result.json",
+        "sha256": "51688bb7455568d3c6620321c8a1347e5c3ad25628bb3170dc824a5f7dedd4f1"
+      },
+      "record_manifest": {
+        "bytes": 16098,
+        "path": "runs/m6-puck-mechanics-v5-20261003/gate/continue-dwell/recording/manifest.json",
+        "sha256": "7580ec60d49082f55a5b891ad8ffc9b935e090b9c14993d0b4f661b99d966c9a"
+      },
+      "recorded_ticks": 4,
+      "snapshots": {
+        "initial": {
+          "application_sha256": "9684a8a5a73cfa9500b7354a19cac703678314aacd9c59db42d65d02c447df4b",
+          "bytes": 483560,
+          "contact": {
+            "contact_cache_time_s": 7.038,
+            "failure": null,
+            "initial_forwarded": false,
+            "other_robot_contact": false,
+            "puck_floor_support": true,
+            "puck_wall_contact": false,
+            "rover_ground_support": true,
+            "rover_puck_contact": true,
+            "rover_puck_max_penetration_m": 8.278762709100239e-06,
+            "source_start_time_s": 7.0200000000000005,
+            "tick": 352,
+            "time_s": 7.039999999999447
+          },
+          "file": "initial.snp",
+          "sha256": "ecb727b559236564c4b6e465738aa217ca4bb5b5c9985f0d7e8643337688565d",
+          "tick": 352,
+          "world": {
+            "goal_xy": [
+              1.2,
+              0.0
+            ],
+            "puck_velocity_xy": [
+              0.0167271438021526,
+              -0.015183816969228934
+            ],
+            "puck_xyz": [
+              1.0391579926465753,
+              0.004613903358964229,
+              0.059997172086075
+            ],
+            "rover_pose": [
+              0.590591127289497,
+              -0.03126701083461145,
+              -0.1629613099629127
+            ],
+            "time_s": 7.039999999999447
+          }
+        }
+      },
+      "status": "passed"
+    },
+    {
+      "completion": "fixed_mechanics_horizon",
+      "controller_calls": 0,
+      "id": "replay-actions",
+      "owner_report": {
+        "bytes": 4535,
+        "path": "runs/m6-puck-mechanics-v5-20261003/gate/replay-actions/result.json",
+        "sha256": "9cf25a3aca1b802dab81fd98a9cff72c9369e4f7105557fb3a397b3a653b08a7"
+      },
+      "record_manifest": {
+        "bytes": 15905,
+        "path": "runs/m6-puck-mechanics-v5-20261003/gate/replay-actions/recording/manifest.json",
+        "sha256": "8717d174ff0055ca640d32424f4610add81bfbc7427e3c5ccdf633bf9653d6e7"
+      },
+      "recorded_ticks": 120,
+      "snapshots": {
+        "initial": {
+          "application_sha256": "6adc7535112aaaa23305ccb8e003b0b76cc5709a071e653865894a054f282bf8",
+          "bytes": 469335,
+          "contact": {
+            "contact_cache_time_s": 0.0,
+            "failure": null,
+            "initial_forwarded": true,
+            "other_robot_contact": false,
+            "puck_floor_support": false,
+            "puck_wall_contact": false,
+            "rover_ground_support": true,
+            "rover_puck_contact": false,
+            "rover_puck_max_penetration_m": 0.0,
+            "source_start_time_s": 0.0,
+            "tick": 0,
+            "time_s": 0.0
+          },
+          "file": "initial.snp",
+          "sha256": "08b5efed327408d8979c33d4c8acaa149066f121282cdeb4b337c7f12982174c",
+          "tick": 0,
+          "world": {
+            "goal_xy": [
+              1.2,
+              0.0
+            ],
+            "puck_velocity_xy": [
+              0.0,
+              0.0
+            ],
+            "puck_xyz": [
+              0.0,
+              0.0,
+              0.062
+            ],
+            "rover_pose": [
+              -0.8,
+              0.0,
+              0.0
+            ],
+            "time_s": 0.0
+          }
+        }
+      },
+      "status": "passed"
+    },
+    {
+      "completion": "puck_goal",
+      "controller_calls": 361,
+      "id": "replay-policy",
+      "owner_report": {
+        "bytes": 4533,
+        "path": "runs/m6-puck-mechanics-v5-20261003/gate/replay-policy/result.json",
+        "sha256": "9ba55d2a27c0ac44da31f27cb36f813f66a57de44dd78dc044e5bca1298676f5"
+      },
+      "record_manifest": {
+        "bytes": 15914,
+        "path": "runs/m6-puck-mechanics-v5-20261003/gate/replay-policy/recording/manifest.json",
+        "sha256": "6d20ad8cdbdf94e6f40d872ebf5eb941778581e455c881cef5f4dfd70c25ceb0"
+      },
+      "recorded_ticks": 361,
+      "snapshots": {
+        "initial": {
+          "application_sha256": "779704d10896e4e3c9ba64b2ef7b876f77675f5ae8b4cb2530e9beb502accba4",
+          "bytes": 469353,
+          "contact": {
+            "contact_cache_time_s": 0.0,
+            "failure": null,
+            "initial_forwarded": true,
+            "other_robot_contact": false,
+            "puck_floor_support": false,
+            "puck_wall_contact": false,
+            "rover_ground_support": true,
+            "rover_puck_contact": false,
+            "rover_puck_max_penetration_m": 0.0,
+            "source_start_time_s": 0.0,
+            "tick": 0,
+            "time_s": 0.0
+          },
+          "file": "initial.snp",
+          "sha256": "0abacdfa708a641549e02d95fbf474175f15ee75ae614d59f2bd1205346d6043",
+          "tick": 0,
+          "world": {
+            "goal_xy": [
+              1.2,
+              0.0
+            ],
+            "puck_velocity_xy": [
+              0.0,
+              0.0
+            ],
+            "puck_xyz": [
+              0.0,
+              0.0,
+              0.062
+            ],
+            "rover_pose": [
+              -0.95,
+              0.2,
+              0.3
+            ],
+            "time_s": 0.0
+          }
+        }
+      },
+      "status": "passed"
+    }
+  ],
+  "plan": {
+    "bytes": 14099,
+    "path": "runs/m6-puck-mechanics-v5-prepared/plan.json",
+    "sha256": "b3637dc8326c8efe8b2c360ba0b7de824b99f587792b99d6af1b18a9018bf82b"
+  },
+  "preflight": {
+    "bytes": 1335,
+    "path": "runs/m6-puck-mechanics-v5-prepared/preparation-check.json",
+    "sha256": "23fd5444c4a2f78d1682b5b62fe5d8f9f49401fa9e78e0240497043f1adfd96b"
+  },
+  "previous_failed_attempt": {
+    "bytes": 43525,
+    "path": "docs/reports/m6-puck-mechanics-v4.json",
+    "sha256": "f31769f6d9fd1c7a32601f845d740e7c39694b154e9cb7e373e38002b6579037"
+  },
+  "qualification_claims": [
+    "bounded standalone simulator mechanics on fixed development layouts",
+    "exact recorded numeric parity across three native continuations and two full replays"
+  ],
+  "raw_ticks_checked": 1575,
+  "snapshot_receipts_checked": 13,
+  "source_commit": "eba4c397b883da717130d8ea1d65cc42f23a2cff",
+  "source_files_checked": 81,
+  "source_or_threshold_changes_after_execution": false,
+  "status": "passed_bounded_standalone_simulator_mechanics",
+  "task_protocol": {
+    "bytes": 21119,
+    "path": "docs/plans/m6-puck-pushing-protocol-v4.json",
+    "sha256": "edf868c868922a3d7a946e705553c7144509a2a6af7f208e399f63346d2b20b9"
+  },
+  "teacher_diagnosis": {
+    "teacher-negative": {
+      "mode_counts_after": {
+        "approach": 143,
+        "push": 218
+      },
+      "mode_transitions": [
+        {
+          "axial_m": 0.6253860553540048,
+          "behind_body_xy": [
+            0.07895186045559568,
+            0.0058314845606757156
+          ],
+          "behind_distance_m": 0.07916692795341532,
+          "behind_reverse_heading_error_rad": -3.0678652635732195,
+          "command": [
+            0.0,
+            0.3840281843522866
+          ],
+          "goal_heading_error_rad": 0.3840281843522866,
+          "in_push_corridor": true,
+          "lateral_m": 0.02417323188454907,
+          "owner": "teacher-negative",
+          "puck_goal_distance_m": 1.2,
+          "reward": 0.0,
+          "selected_heading_error_rad": 0.3840281843522866,
+          "target": "goal_direction",
+          "teacher_mode_after": "push",
+          "teacher_mode_before": "approach",
+          "tick": 72,
+          "world": {
+            "goal_xy": [
+              -1.2,
+              0.0
+            ],
+            "puck_velocity_xy": [
+              0.0,
+              0.0
+            ],
+            "puck_xyz": [
+              0.0,
+              0.0,
+              0.05999990569251062
+            ],
+            "rover_pose": [
+              0.6253860553540048,
+              -0.02417323188454907,
+              2.7575644692375065
+            ],
+            "time_s": 1.440000000000001
+          },
+          "world_after": {
+            "goal_xy": [
+              -1.2,
+              0.0
+            ],
+            "puck_velocity_xy": [
+              0.0,
+              0.0
+            ],
+            "puck_xyz": [
+              0.0,
+              0.0,
+              0.059999905692510624
+            ],
+            "rover_pose": [
+              0.6174916340376582,
+              -0.02115969058158682,
+              2.7637257994180784
+            ],
+            "time_s": 1.460000000000001
+          },
+          "yaw_rad": 2.7575644692375065
+        },
+        {
+          "axial_m": 0.44598779778984615,
+          "behind_body_xy": [
+            -0.10313173777116955,
+            -0.06204670904566886
+          ],
+          "behind_distance_m": 0.12035758986910285,
+          "behind_reverse_heading_error_rad": 0.5416140470509165,
+          "command": [
+            0.0,
+            0.4
+          ],
+          "goal_heading_error_rad": 0.014362270718356829,
+          "in_push_corridor": false,
+          "lateral_m": 0.06055915480332625,
+          "owner": "teacher-negative",
+          "puck_goal_distance_m": 0.8584297618309008,
+          "reward": 0.006494360058391657,
+          "selected_heading_error_rad": 0.5416140470509165,
+          "target": "behind_point",
+          "teacher_mode_after": "approach",
+          "teacher_mode_before": "push",
+          "tick": 161,
+          "world": {
+            "goal_xy": [
+              -1.2,
+              0.0
+            ],
+            "puck_velocity_xy": [
+              -0.3576127924601795,
+              0.030360348876804284
+            ],
+            "puck_xyz": [
+              -0.3418748862374441,
+              0.022867993507471058,
+              0.06033040391553166
+            ],
+            "rover_pose": [
+              0.1055678902743587,
+              -0.025788853444821448,
+              -3.129312442750247
+            ],
+            "time_s": 3.219999999999867
+          },
+          "world_after": {
+            "goal_xy": [
+              -1.2,
+              0.0
+            ],
+            "puck_velocity_xy": [
+              -0.311966277680155,
+              0.030360348876804284
+            ],
+            "puck_xyz": [
+              -0.3483880908797274,
+              0.023475200485007144,
+              0.060307616433083217
+            ],
+            "rover_pose": [
+              0.09900063220240254,
+              -0.025911434827134355,
+              -3.126446801033413
+            ],
+            "time_s": 3.2399999999998648
+          },
+          "yaw_rad": -3.129312442750247
+        },
+        {
+          "axial_m": 0.4955759168352737,
+          "behind_body_xy": [
+            -0.0786479477499628,
+            -0.007638892936949658
+          ],
+          "behind_distance_m": 0.07901805091612331,
+          "behind_reverse_heading_error_rad": 0.09682397294327094,
+          "command": [
+            0.0,
+            -0.4
+          ],
+          "goal_heading_error_rad": -0.7142018640924515,
+          "in_push_corridor": true,
+          "lateral_m": 0.05728762119570005,
+          "owner": "teacher-negative",
+          "puck_goal_distance_m": 0.8157967717223927,
+          "reward": 0.0,
+          "selected_heading_error_rad": -0.7142018640924515,
+          "target": "goal_direction",
+          "teacher_mode_after": "push",
+          "teacher_mode_before": "approach",
+          "tick": 205,
+          "world": {
+            "goal_xy": [
+              -1.2,
+              0.0
+            ],
+            "puck_velocity_xy": [
+              2.197313766883027e-19,
+              1.5152854515804658e-19
+            ],
+            "puck_xyz": [
+              -0.38461429826750515,
+              0.02589459717556324,
+              0.059999905692510624
+            ],
+            "rover_pose": [
+              0.11253029784089189,
+              -0.015633844278492907,
+              -2.3956439767206352
+            ],
+            "time_s": 4.0999999999997705
+          },
+          "world_after": {
+            "goal_xy": [
+              -1.2,
+              0.0
+            ],
+            "puck_velocity_xy": [
+              -2.313228236728606e-21,
+              -7.051605976698474e-20
+            ],
+            "puck_xyz": [
+              -0.38461429826750515,
+              0.02589459717556324,
+              0.05999990569251062
+            ],
+            "rover_pose": [
+              0.11737991683913912,
+              -0.011405837004969378,
+              -2.392727741143584
+            ],
+            "time_s": 4.119999999999768
+          },
+          "yaw_rad": -2.3956439767206352
+        },
+        {
+          "axial_m": 0.44595545956387045,
+          "behind_body_xy": [
+            -0.1026695019699206,
+            0.06263509041075001
+          ],
+          "behind_distance_m": 0.12026712429219531,
+          "behind_reverse_heading_error_rad": -0.5477875318594383,
+          "command": [
+            0.0,
+            -0.4
+          ],
+          "goal_heading_error_rad": -0.022364961406052153,
+          "in_push_corridor": false,
+          "lateral_m": 0.06032341826313356,
+          "owner": "teacher-negative",
+          "puck_goal_distance_m": 0.21521292917016274,
+          "reward": 0.006806584798471488,
+          "selected_heading_error_rad": -0.5477875318594383,
+          "target": "behind_point",
+          "teacher_mode_after": "approach",
+          "teacher_mode_before": "push",
+          "tick": 334,
+          "world": {
+            "goal_xy": [
+              -1.2,
+              0.0
+            ],
+            "puck_velocity_xy": [
+              -0.3595594183097721,
+              -0.0023220692277408674
+            ],
+            "puck_xyz": [
+              -0.9851878694853878,
+              -0.013128345888752687,
+              0.0603331546926241
+            ],
+            "rover_pose": [
+              -0.536383099920087,
+              0.01987870670927714,
+              3.102918058451886
+            ],
+            "time_s": 6.679999999999486
+          },
+          "world_after": {
+            "goal_xy": [
+              -1.2,
+              0.0
+            ],
+            "puck_velocity_xy": [
+              -0.31349051490094615,
+              -0.0023220692277408674
+            ],
+            "puck_xyz": [
+              -0.9920105066243127,
+              -0.0131747872733075,
+              0.06040063235154153
+            ],
+            "rover_pose": [
+              -0.5429294226943636,
+              0.020250513493670182,
+              3.098753692723921
+            ],
+            "time_s": 6.699999999999484
+          },
+          "yaw_rad": 3.102918058451886
+        }
+      ],
+      "moving_commands": 236,
+      "reverse_commands": 15,
+      "stopped_commands": 18,
+      "ticks": 361,
+      "turn_only_commands": 107
+    },
+    "teacher-positive": {
+      "mode_counts_after": {
+        "approach": 142,
+        "push": 219
+      },
+      "mode_transitions": [
+        {
+          "axial_m": 0.6253860553540047,
+          "behind_body_xy": [
+            0.07895186045559571,
+            0.005831484560675209
+          ],
+          "behind_distance_m": 0.07916692795341533,
+          "behind_reverse_heading_error_rad": -3.0678652635732258,
+          "command": [
+            0.0,
+            0.38402818435228525
+          ],
+          "goal_heading_error_rad": 0.38402818435228525,
+          "in_push_corridor": true,
+          "lateral_m": 0.02417323188454944,
+          "owner": "teacher-positive",
+          "puck_goal_distance_m": 1.2,
+          "reward": 0.0,
+          "selected_heading_error_rad": 0.38402818435228525,
+          "target": "goal_direction",
+          "teacher_mode_after": "push",
+          "teacher_mode_before": "approach",
+          "tick": 72,
+          "world": {
+            "goal_xy": [
+              1.2,
+              0.0
+            ],
+            "puck_velocity_xy": [
+              0.0,
+              0.0
+            ],
+            "puck_xyz": [
+              0.0,
+              0.0,
+              0.05999990569251062
+            ],
+            "rover_pose": [
+              -0.6253860553540047,
+              0.02417323188454944,
+              -0.38402818435228525
+            ],
+            "time_s": 1.440000000000001
+          },
+          "world_after": {
+            "goal_xy": [
+              1.2,
+              0.0
+            ],
+            "puck_velocity_xy": [
+              0.0,
+              0.0
+            ],
+            "puck_xyz": [
+              0.0,
+              0.0,
+              0.059999905692510624
+            ],
+            "rover_pose": [
+              -0.617491634037658,
+              0.021159690581587193,
+              -0.3778668541717133
+            ],
+            "time_s": 1.460000000000001
+          },
+          "yaw_rad": -0.38402818435228525
+        },
+        {
+          "axial_m": 0.4458964105219123,
+          "behind_body_xy": [
+            -0.10322454549805798,
+            -0.061950163850354054
+          ],
+          "behind_distance_m": 0.12038741460122133,
+          "behind_reverse_heading_error_rad": 0.5405294514128667,
+          "command": [
+            0.0,
+            0.4
+          ],
+          "goal_heading_error_rad": 0.014361868368330226,
+          "in_push_corridor": false,
+          "lateral_m": 0.06046132856747472,
+          "owner": "teacher-positive",
+          "puck_goal_distance_m": 0.8585362844382693,
+          "reward": 0.006801492305338552,
+          "selected_heading_error_rad": 0.5405294514128667,
+          "target": "behind_point",
+          "teacher_mode_after": "approach",
+          "teacher_mode_before": "push",
+          "tick": 161,
+          "world": {
+            "goal_xy": [
+              1.2,
+              0.0
+            ],
+            "puck_velocity_xy": [
+              0.36158623204097373,
+              -0.020400357509611246
+            ],
+            "puck_xyz": [
+              0.3417668301639983,
+              -0.02281179279051964,
+              0.060402737920408796
+            ],
+            "rover_pose": [
+              -0.10557864384951335,
+              0.025780470462970276,
+              0.012211822488032919
+            ],
+            "time_s": 3.219999999999867
+          },
+          "world_after": {
+            "goal_xy": [
+              1.2,
+              0.0
+            ],
+            "puck_velocity_xy": [
+              0.3094885245984156,
+              -0.020400357509611246
+            ],
+            "puck_xyz": [
+              0.3485817731452772,
+              -0.023219799940711855,
+              0.06039073628894386
+            ],
+            "rover_pose": [
+              -0.09902002281765805,
+              0.025902261262632453,
+              0.015065835085684777
+            ],
+            "time_s": 3.2399999999998648
+          },
+          "yaw_rad": 0.012211822488032919
+        },
+        {
+          "axial_m": 0.49709478855506956,
+          "behind_body_xy": [
+            -0.07522569516171324,
+            -0.007486317858230292
+          ],
+          "behind_distance_m": 0.07559728941990886,
+          "behind_reverse_heading_error_rad": 0.09919149584303766,
+          "command": [
+            0.0,
+            -0.4
+          ],
+          "goal_heading_error_rad": -0.6964460877084642,
+          "in_push_corridor": true,
+          "lateral_m": 0.053999896014757784,
+          "owner": "teacher-positive",
+          "puck_goal_distance_m": 0.8157308080424782,
+          "reward": 0.0,
+          "selected_heading_error_rad": -0.6964460877084642,
+          "target": "goal_direction",
+          "teacher_mode_after": "push",
+          "teacher_mode_before": "approach",
+          "tick": 205,
+          "world": {
+            "goal_xy": [
+              1.2,
+              0.0
+            ],
+            "puck_velocity_xy": [
+              1.55783762615448e-19,
+              2.7654385703490467e-20
+            ],
+            "puck_xyz": [
+              0.38462589749684745,
+              -0.02412103142100446,
+              0.05999990569251062
+            ],
+            "rover_pose": [
+              -0.11384828817398823,
+              0.015156236788625118,
+              0.7260202409795041
+            ],
+            "time_s": 4.0999999999997705
+          },
+          "world_after": {
+            "goal_xy": [
+              1.2,
+              0.0
+            ],
+            "puck_velocity_xy": [
+              1.55783762615448e-19,
+              2.7654385703490467e-20
+            ],
+            "puck_xyz": [
+              0.38462589749684745,
+              -0.02412103142100446,
+              0.059999905692510624
+            ],
+            "rover_pose": [
+              -0.11881630534769333,
+              0.011021985992873316,
+              0.7290547939926327
+            ],
+            "time_s": 4.119999999999768
+          },
+          "yaw_rad": 0.7260202409795041
+        },
+        {
+          "axial_m": 0.44595412075250024,
+          "behind_body_xy": [
+            -0.10322102374167993,
+            0.062316424353193886
+          ],
+          "behind_distance_m": 0.12057328263942965,
+          "behind_reverse_heading_error_rad": -0.5431490839235049,
+          "command": [
+            0.0,
+            -0.4
+          ],
+          "goal_heading_error_rad": -0.013385350922064235,
+          "in_push_corridor": false,
+          "lateral_m": 0.060929233525972404,
+          "owner": "teacher-positive",
+          "puck_goal_distance_m": 0.20363269350852387,
+          "reward": 0.006729678866309874,
+          "selected_heading_error_rad": -0.5431490839235049,
+          "target": "behind_point",
+          "teacher_mode_after": "approach",
+          "teacher_mode_before": "push",
+          "tick": 335,
+          "world": {
+            "goal_xy": [
+              1.2,
+              0.0
+            ],
+            "puck_velocity_xy": [
+              0.3177361037782881,
+              -0.0008585229806762013
+            ],
+            "puck_xyz": [
+              0.9966934487808641,
+              0.011520420865458663,
+              0.06015346699931152
+            ],
+            "rover_pose": [
+              0.5480065354411976,
+              -0.024081589076687275,
+              -0.043219387035853284
+            ],
+            "time_s": 6.699999999999484
+          },
+          "world_after": {
+            "goal_xy": [
+              1.2,
+              0.0
+            ],
+            "puck_velocity_xy": [
+              0.2963632975742569,
+              -0.005930703027473976
+            ],
+            "puck_xyz": [
+              1.0034285552044562,
+              0.01142209552509637,
+              0.060046918626007556
+            ],
+            "rover_pose": [
+              0.554549284162,
+              -0.024468295469938155,
+              -0.04697589330350728
+            ],
+            "time_s": 6.719999999999482
+          },
+          "yaw_rad": -0.043219387035853284
+        }
+      ],
+      "moving_commands": 238,
+      "reverse_commands": 15,
+      "stopped_commands": 21,
+      "ticks": 361,
+      "turn_only_commands": 102
+    }
+  },
+  "teacher_task_version": "v4"
+}
