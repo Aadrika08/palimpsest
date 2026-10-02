@@ -1,0 +1,450 @@
+{
+  "version": 1,
+  "claim": "failed development preparation; zero actual continuation owners",
+  "source_commit": "a1815763db70152a21b4796ea89015c382ff08eb",
+  "protocol_sha256": "bedda73b18ac5525b3ea4e667aa505d22d47decefac016947b190024337db134",
+  "prepared_plan_sha256": "271aeb35ccd0dc839cb0ee23a633a15d91e7831236358fc81fb979e1e39382ab",
+  "report_sha256": "9e6ed998ed4ef25fb3398129bdacfd440075f4cbd7e5ebb656ac1ab35d4f811a",
+  "launch_sha256": "997f4b39a9803c1d4da81d3c538e0441920b26c7ccff7c213c70b897d7d8fb61",
+  "output": "runs/m5-counterbalance-stage-c-20261003",
+  "control": "runs/m5-counterbalance-stage-c-launch-a181576",
+  "result_status": "comparison_unverified",
+  "first_failure": {
+    "type": "TypeError",
+    "message": "unsupported operand type(s) for /: 'PosixPath' and 'UUID'",
+    "cell": "s24/local_cue/change",
+    "stage": "anchor",
+    "run_id": "522beb4299c54c8096e70f63843d0067",
+    "scope": "before-owner"
+  },
+  "started_owners": 0,
+  "numeric_ticks": 0,
+  "unattempted_stages": [
+    {
+      "cell": "s24/local_cue/change",
+      "stage": "anchor",
+      "run_id": "522beb4299c54c8096e70f63843d0067",
+      "status": "unattempted",
+      "reason": "first infrastructure/invariant failure; no retry"
+    },
+    {
+      "cell": "s24/local_cue/change",
+      "stage": "own",
+      "run_id": "74443dca8865450b8ccedad20063dfa7",
+      "status": "unattempted",
+      "reason": "first infrastructure/invariant failure; no retry"
+    },
+    {
+      "cell": "s24/local_cue/change",
+      "stage": "swapped",
+      "run_id": "0516318920a34bcd8c920b46f9f884a1",
+      "status": "unattempted",
+      "reason": "first infrastructure/invariant failure; no retry"
+    },
+    {
+      "cell": "s24/local_cue/change",
+      "stage": "sham",
+      "run_id": "cc0aec1bfe184610999c549cd52d419b",
+      "status": "unattempted",
+      "reason": "first infrastructure/invariant failure; no retry"
+    },
+    {
+      "cell": "s24/local_cue/change",
+      "stage": "no-U",
+      "run_id": "3590917591c641d7824f70559295de2c",
+      "status": "unattempted",
+      "reason": "first infrastructure/invariant failure; no retry"
+    },
+    {
+      "cell": "s24/local_cue/change",
+      "stage": "hand-authored",
+      "run_id": "d3eee2801b384336bc3d9d37030fe423",
+      "status": "unattempted",
+      "reason": "first infrastructure/invariant failure; no retry"
+    },
+    {
+      "cell": "s24/local_cue/change",
+      "stage": "history-independent",
+      "run_id": "69ca21bdf43a4fba83a80869313e2167",
+      "status": "unattempted",
+      "reason": "first infrastructure/invariant failure; no retry"
+    },
+    {
+      "cell": "s24/local_cue/change",
+      "stage": "traversal",
+      "run_id": "86862a17550a437fb40e266fde0a6551",
+      "status": "unattempted",
+      "reason": "first infrastructure/invariant failure; no retry"
+    },
+    {
+      "cell": "s24/local_cue/change",
+      "stage": "retrieval",
+      "run_id": "a7db95285add4130821c294efbb92cb6",
+      "status": "unattempted",
+      "reason": "first infrastructure/invariant failure; no retry"
+    },
+    {
+      "cell": "s24/local_cue/change",
+      "stage": "oracle",
+      "run_id": "c4fc79f0c46d4daf8e83f6aab99ae3ab",
+      "status": "unattempted",
+      "reason": "first infrastructure/invariant failure; no retry"
+    },
+    {
+      "cell": "s29/paired_cue/change",
+      "stage": "anchor",
+      "run_id": "1c0391fec09d4a52aa7a21a4bba05a6c",
+      "status": "unattempted",
+      "reason": "first infrastructure/invariant failure; no retry"
+    },
+    {
+      "cell": "s29/paired_cue/change",
+      "stage": "own",
+      "run_id": "796f8ed4d35d417e91f54c85f867e7a2",
+      "status": "unattempted",
+      "reason": "first infrastructure/invariant failure; no retry"
+    },
+    {
+      "cell": "s29/paired_cue/change",
+      "stage": "swapped",
+      "run_id": "3ca5f12e01d44975aa92344f9d52ef02",
+      "status": "unattempted",
+      "reason": "first infrastructure/invariant failure; no retry"
+    },
+    {
+      "cell": "s29/paired_cue/change",
+      "stage": "sham",
+      "run_id": "2b3d373c644e4fc899366881d50bb43a",
+      "status": "unattempted",
+      "reason": "first infrastructure/invariant failure; no retry"
+    },
+    {
+      "cell": "s29/paired_cue/change",
+      "stage": "no-U",
+      "run_id": "219ebf704baf48ccba0407f26b253dfb",
+      "status": "unattempted",
+      "reason": "first infrastructure/invariant failure; no retry"
+    },
+    {
+      "cell": "s29/paired_cue/change",
+      "stage": "hand-authored",
+      "run_id": "93e7da88e2b34f3cbb3a78f8ab0cee85",
+      "status": "unattempted",
+      "reason": "first infrastructure/invariant failure; no retry"
+    },
+    {
+      "cell": "s29/paired_cue/change",
+      "stage": "history-independent",
+      "run_id": "8a01a46bf6e04cacbf79fc918ef613ea",
+      "status": "unattempted",
+      "reason": "first infrastructure/invariant failure; no retry"
+    },
+    {
+      "cell": "s29/paired_cue/change",
+      "stage": "traversal",
+      "run_id": "dc87ad15b7cf467c8981e2906755f1be",
+      "status": "unattempted",
+      "reason": "first infrastructure/invariant failure; no retry"
+    },
+    {
+      "cell": "s29/paired_cue/change",
+      "stage": "retrieval",
+      "run_id": "cfae71f441e4434faa0b5380989bfef4",
+      "status": "unattempted",
+      "reason": "first infrastructure/invariant failure; no retry"
+    },
+    {
+      "cell": "s29/paired_cue/change",
+      "stage": "oracle",
+      "run_id": "a565ed3706cf4ad1a9fa003e5b225f98",
+      "status": "unattempted",
+      "reason": "first infrastructure/invariant failure; no retry"
+    },
+    {
+      "cell": "s30/local_cue/null",
+      "stage": "anchor",
+      "run_id": "23128602a7ea4e5eb325df2605e52fc9",
+      "status": "unattempted",
+      "reason": "first infrastructure/invariant failure; no retry"
+    },
+    {
+      "cell": "s30/local_cue/null",
+      "stage": "own",
+      "run_id": "e28411979e3644a7b1d4ef1a7958767a",
+      "status": "unattempted",
+      "reason": "first infrastructure/invariant failure; no retry"
+    },
+    {
+      "cell": "s30/local_cue/null",
+      "stage": "swapped",
+      "run_id": "a5c44b38778c41aa9a3642aaf5648d4e",
+      "status": "unattempted",
+      "reason": "first infrastructure/invariant failure; no retry"
+    },
+    {
+      "cell": "s30/local_cue/null",
+      "stage": "sham",
+      "run_id": "69f0061e1e3149bebb0b09f14ac8ab4f",
+      "status": "unattempted",
+      "reason": "first infrastructure/invariant failure; no retry"
+    },
+    {
+      "cell": "s30/local_cue/null",
+      "stage": "no-U",
+      "run_id": "dbca408bc06c454ea69a4cb4be94b6f1",
+      "status": "unattempted",
+      "reason": "first infrastructure/invariant failure; no retry"
+    },
+    {
+      "cell": "s30/local_cue/null",
+      "stage": "hand-authored",
+      "run_id": "d768f82826ae41feb78f3bf5d2bbaa87",
+      "status": "unattempted",
+      "reason": "first infrastructure/invariant failure; no retry"
+    },
+    {
+      "cell": "s30/local_cue/null",
+      "stage": "history-independent",
+      "run_id": "7a6dce4cb1dc435a811fd0a8d6365f81",
+      "status": "unattempted",
+      "reason": "first infrastructure/invariant failure; no retry"
+    },
+    {
+      "cell": "s30/local_cue/null",
+      "stage": "traversal",
+      "run_id": "f23e9d27b9ad49e3a5d661f36690cff2",
+      "status": "unattempted",
+      "reason": "first infrastructure/invariant failure; no retry"
+    },
+    {
+      "cell": "s30/local_cue/null",
+      "stage": "retrieval",
+      "run_id": "0263e10c6b3b472fbc307b066a1dff47",
+      "status": "unattempted",
+      "reason": "first infrastructure/invariant failure; no retry"
+    },
+    {
+      "cell": "s30/local_cue/null",
+      "stage": "oracle",
+      "run_id": "86d4b5d57d0849b687a34e0dbca9b6c9",
+      "status": "unattempted",
+      "reason": "first infrastructure/invariant failure; no retry"
+    },
+    {
+      "cell": "s27/paired_cue/no-event",
+      "stage": "anchor",
+      "run_id": "12c8b38524fc46679b84aa4a74c3d573",
+      "status": "unattempted",
+      "reason": "first infrastructure/invariant failure; no retry"
+    },
+    {
+      "cell": "s27/paired_cue/no-event",
+      "stage": "own",
+      "run_id": "cb2aa6ad4c5f491183f8cc7fa26678ec",
+      "status": "unattempted",
+      "reason": "first infrastructure/invariant failure; no retry"
+    },
+    {
+      "cell": "s27/paired_cue/no-event",
+      "stage": "swapped",
+      "run_id": "0c83caf17e62417c9c85cad93c973870",
+      "status": "unattempted",
+      "reason": "first infrastructure/invariant failure; no retry"
+    },
+    {
+      "cell": "s27/paired_cue/no-event",
+      "stage": "sham",
+      "run_id": "cb89893527c0470787dbc0c93e8d8ea1",
+      "status": "unattempted",
+      "reason": "first infrastructure/invariant failure; no retry"
+    },
+    {
+      "cell": "s27/paired_cue/no-event",
+      "stage": "no-U",
+      "run_id": "346a7b7a511146ca96777858c02c3349",
+      "status": "unattempted",
+      "reason": "first infrastructure/invariant failure; no retry"
+    },
+    {
+      "cell": "s27/paired_cue/no-event",
+      "stage": "hand-authored",
+      "run_id": "6a6eb81edb884e14a9c42de2d19747f2",
+      "status": "unattempted",
+      "reason": "first infrastructure/invariant failure; no retry"
+    },
+    {
+      "cell": "s27/paired_cue/no-event",
+      "stage": "history-independent",
+      "run_id": "6d8f18b881754075832b009d43f774eb",
+      "status": "unattempted",
+      "reason": "first infrastructure/invariant failure; no retry"
+    },
+    {
+      "cell": "s27/paired_cue/no-event",
+      "stage": "traversal",
+      "run_id": "4d13a198b3ae4229b8fc8ed856209c4a",
+      "status": "unattempted",
+      "reason": "first infrastructure/invariant failure; no retry"
+    },
+    {
+      "cell": "s27/paired_cue/no-event",
+      "stage": "retrieval",
+      "run_id": "995d1b1220874b71a7e063e839250f80",
+      "status": "unattempted",
+      "reason": "first infrastructure/invariant failure; no retry"
+    },
+    {
+      "cell": "s27/paired_cue/no-event",
+      "stage": "oracle",
+      "run_id": "950a3d074dfb4d6b8f292fa6a613bf23",
+      "status": "unattempted",
+      "reason": "first infrastructure/invariant failure; no retry"
+    }
+  ],
+  "supervision": {
+    "schema_version": 1,
+    "status": "failed",
+    "timeout_seconds": 6495,
+    "started_utc": "2026-10-02T20:48:36.015778+00:00",
+    "output": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-flynn-continuation/runs/m5-counterbalance-stage-c-launch-a181576/process",
+    "returncode": 1,
+    "elapsed_seconds": 9.439746912001283
+  },
+  "wall_seconds_including_cleanup": 10.339206121003372,
+  "cleanup_seconds": 0.07037794700590894,
+  "operational_pass": false,
+  "source_unchanged": true,
+  "retained_unchanged": true,
+  "inventories_unchanged": true,
+  "cleanup": {
+    "observed_owner_count": 3,
+    "terminal_pid_start_checks": [
+      {
+        "pid": 517930,
+        "start_ticks": 6776929,
+        "pgid": 517929,
+        "role": "outer-verifier",
+        "run_id": null,
+        "start_identity_present": false
+      },
+      {
+        "pid": 517929,
+        "start_ticks": 6776928,
+        "pgid": 517929,
+        "role": "observed-descendant",
+        "run_id": null,
+        "start_identity_present": false
+      }
+    ],
+    "final_owned_processes": [],
+    "forced_signals": [],
+    "watchdog_signal_messages": [],
+    "monitor_errors": [],
+    "timeout_or_external_failure": true
+  },
+  "cause": {
+    "location": "scripts/verify_memory_counterbalance_comparison.py:validate_job",
+    "predicate": "Path(job['root_output'])/'runs'/artifacts._id(job['run_id'])",
+    "parsed_id_type": "uuid.UUID",
+    "reproduction": "exact frozen validate_job with first plan-derived job raises the same TypeError before owner admission",
+    "coverage_gap": "previous failure-bookkeeping fixture mocked validate_job; no real happy-path validator exercise"
+  },
+  "read_only_audit": {
+    "frozen_identity_files_rehashed": 291,
+    "tracked": 149,
+    "upstream": 122,
+    "assets": 20,
+    "before_after_inventory_bytes_equal": true,
+    "terminal_pids_absent": 2,
+    "owner_directories": 0
+  },
+  "files": [
+    {
+      "path": "runs/m5-counterbalance-stage-c-20261003/.palimpsest-storage.lock",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "runs/m5-counterbalance-stage-c-20261003/comparison-plan.json",
+      "bytes": 90909,
+      "sha256": "271aeb35ccd0dc839cb0ee23a633a15d91e7831236358fc81fb979e1e39382ab"
+    },
+    {
+      "path": "runs/m5-counterbalance-stage-c-20261003/comparison-report.json",
+      "bytes": 109539,
+      "sha256": "9e6ed998ed4ef25fb3398129bdacfd440075f4cbd7e5ebb656ac1ab35d4f811a"
+    },
+    {
+      "path": "runs/m5-counterbalance-stage-c-launch-a181576/after-inventory-check.py",
+      "bytes": 2197,
+      "sha256": "17d52ebae1eede0953b74659c0527f85a7915cc5525ef860d007fa59ffd88e7a"
+    },
+    {
+      "path": "runs/m5-counterbalance-stage-c-launch-a181576/identity-after.json",
+      "bytes": 62962,
+      "sha256": "dd0beafc117e7844374e06fa5e3aec5681583c35145651fec677fd71f2d16b12"
+    },
+    {
+      "path": "runs/m5-counterbalance-stage-c-launch-a181576/identity-before.json",
+      "bytes": 62962,
+      "sha256": "dd0beafc117e7844374e06fa5e3aec5681583c35145651fec677fd71f2d16b12"
+    },
+    {
+      "path": "runs/m5-counterbalance-stage-c-launch-a181576/identity-prepared.json",
+      "bytes": 62962,
+      "sha256": "dd0beafc117e7844374e06fa5e3aec5681583c35145651fec677fd71f2d16b12"
+    },
+    {
+      "path": "runs/m5-counterbalance-stage-c-launch-a181576/launch-start.json",
+      "bytes": 1056,
+      "sha256": "3cee51d73a50f9166834536722788f8f5af0cd00013b98873649e9c3a6a4f18b"
+    },
+    {
+      "path": "runs/m5-counterbalance-stage-c-launch-a181576/launch.json",
+      "bytes": 1778,
+      "sha256": "997f4b39a9803c1d4da81d3c538e0441920b26c7ccff7c213c70b897d7d8fb61"
+    },
+    {
+      "path": "runs/m5-counterbalance-stage-c-launch-a181576/launch.py",
+      "bytes": 13978,
+      "sha256": "8a6280a9cd50b223d84effadb2322730a4a39dfcdf0884a5b2f745ff2836f7c0"
+    },
+    {
+      "path": "runs/m5-counterbalance-stage-c-launch-a181576/ownership-samples.jsonl",
+      "bytes": 5441,
+      "sha256": "a529e5e8dd19bad6229edaec2a51ee8ddce2a21abe052a0698fff5d767d46097"
+    },
+    {
+      "path": "runs/m5-counterbalance-stage-c-launch-a181576/prepared-plan.json",
+      "bytes": 90909,
+      "sha256": "271aeb35ccd0dc839cb0ee23a633a15d91e7831236358fc81fb979e1e39382ab"
+    },
+    {
+      "path": "runs/m5-counterbalance-stage-c-launch-a181576/prepared.json",
+      "bytes": 8055,
+      "sha256": "a15980200399762f268f53d96605b4273291a25e317a66f4b1fbc0560f5486ce"
+    },
+    {
+      "path": "runs/m5-counterbalance-stage-c-launch-a181576/process/stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "runs/m5-counterbalance-stage-c-launch-a181576/process/stdout.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "runs/m5-counterbalance-stage-c-launch-a181576/process/supervisor.json",
+      "bytes": 327,
+      "sha256": "e3666e8f7b7020a1b1f422f7355d8c1c82234c79f61ac7edac0db646ddbd77b1"
+    }
+  ],
+  "indexed_files": 16,
+  "indexed_bytes": 513075,
+  "index_scope": "all retained control/output regular files excluding ignored bytecode caches; no native or recording artifacts exist",
+  "task_outcomes": null,
+  "r2_complete": false,
+  "held_out_executed": false,
+  "retry_executed": false
+}
