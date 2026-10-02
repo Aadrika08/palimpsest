@@ -1,0 +1,126 @@
+{
+  "version": 1,
+  "status": "single_seed_recorded_input_pilot_completed",
+  "training_commit": "e1f9ba83a93cc72d8805def8404de04e216b5595",
+  "qualification_claims": [],
+  "collection": {
+    "status": "completed",
+    "wall_seconds": 224.07750171700172,
+    "runs": 16,
+    "ticks": 2400,
+    "all_owner_exitcodes_zero": true,
+    "source_unchanged": true,
+    "supervisor_shutdown": "completed",
+    "per_run_storage": "initial admission estimate plus actual final32MiB acceptance; global1GiB hard write cap"
+  },
+  "cpu_mechanism": {
+    "tests": 1,
+    "seconds": 2.482,
+    "source_unchanged": true
+  },
+  "training_supervisor": {
+    "schema_version": 1,
+    "status": "completed",
+    "timeout_seconds": 660,
+    "started_utc": "2026-10-02T11:31:04.792850+00:00",
+    "output": "/home/utkarsh/Work/shraddha/brain/.worktrees/malecns-pilot/runs/m7-training-watchdog-20261002",
+    "returncode": 0,
+    "elapsed_seconds": 23.33608936699602
+  },
+  "training_source_unchanged": true,
+  "protocol_sha256": "477885033bf30f5857293e0f09fc75b4d850d9eb564f2cd7ec36355110ff5d42",
+  "models": {
+    "degree_rewired": {
+      "selected_epoch": 5,
+      "trainable_parameters": 61872,
+      "held_out": {
+        "interpretation": "recorded-input teacher imitation; not closed-loop navigation success",
+        "loss": 0.04646455725034078,
+        "ticks": 600,
+        "velocity_mae": 0.01532956729332606,
+        "wrapped_heading_mae_radians": 0.252368255952994
+      },
+      "checkpoint": {
+        "path": "degree_rewired.pt",
+        "sha256": "7d455316344efd91042efc2e0c511f3774e3c5e0f5f4e6342c41573d86b385a5",
+        "size_bytes": 303341
+      }
+    },
+    "original": {
+      "selected_epoch": 5,
+      "trainable_parameters": 61872,
+      "held_out": {
+        "interpretation": "recorded-input teacher imitation; not closed-loop navigation success",
+        "loss": 0.048314734896024066,
+        "ticks": 600,
+        "velocity_mae": 0.023965251942475636,
+        "wrapped_heading_mae_radians": 0.25944117923577625
+      },
+      "checkpoint": {
+        "path": "original.pt",
+        "sha256": "0e1418e7f9adf8b1a908c2e12f61def835d6ca11c41fd0d272e7d71b68572da4",
+        "size_bytes": 303341
+      }
+    }
+  },
+  "limitations": [
+    "One training seed and one rewiring seed; no topology-benefit inference",
+    "Artificial encoder and positive count weights; no biological sensor/sign mapping",
+    "Recorded teacher-input imitation only; no closed-loop student navigation or R3 qualification",
+    "At most150ticks from one episode per scene; no long-horizon coverage"
+  ],
+  "artifacts": {
+    "runs/m7-teacher-collection-20261002/collection.json": {
+      "sha256": "484a3b473a411940c38ef053f39305213410023f649a74b1834e04530217550b",
+      "bytes": 41857
+    },
+    "runs/m7-teacher-collection-20261002/collector.py": {
+      "sha256": "ce50943f16da6d5427fb908c3f257cbe8af0fa8a60fce7f051c602c4a45bf09f",
+      "bytes": 8781
+    },
+    "runs/m7-teacher-collection-20261002/protocol.json": {
+      "sha256": "69f2e6b4390753fa6499eec9fc33bc612105e6d64d8412c3786d6bb77fd88f02",
+      "bytes": 1842
+    },
+    "runs/m7-teacher-watchdog-20261002/supervisor.json": {
+      "sha256": "0d2e1176f1a95ebc068ffcf233d43b0914c224b431d2b3a654fb11ad65a4d3a2",
+      "bytes": 298
+    },
+    "runs/m7-training-watchdog-20261002/root-index.json": {
+      "sha256": "f18ac3c547be44924a24af90b43329498e8d01f8d7ad60569f8e57fd0e6bafeb",
+      "bytes": 2706
+    },
+    "runs/m7-preparation-20261002/report.json": {
+      "sha256": "7e652763395be779220920a9c8ed19a3de24bf36119daf95f6c4d4ba6db19e6b",
+      "bytes": 114961
+    },
+    "runs/m7-cpu-mechanism-20261002T112257Z/report.json": {
+      "sha256": "4a25663606ea0ac7177f306fd65420db2f114185851f540c7e95ee5ee43ea779",
+      "bytes": 3476
+    },
+    "runs/m7-male-training-pilot-v1/report.json": {
+      "sha256": "594d4d330624ed1040ae2b3ffe2dedfbfacd6a2d360a29dcfcc6584d76b80e28",
+      "bytes": 5165
+    },
+    "runs/m7-male-training-pilot-v1/protocol.json": {
+      "sha256": "477885033bf30f5857293e0f09fc75b4d850d9eb564f2cd7ec36355110ff5d42",
+      "bytes": 57700
+    },
+    "runs/m7-male-training-pilot-v1/original-graph.json": {
+      "sha256": "baa5c1302d3eb62aa6c29b4f7781100a7c2d0c16c328e7537855eec2b0be5d81",
+      "bytes": 32864
+    },
+    "runs/m7-male-training-pilot-v1/original.pt": {
+      "sha256": "0e1418e7f9adf8b1a908c2e12f61def835d6ca11c41fd0d272e7d71b68572da4",
+      "bytes": 303341
+    },
+    "runs/m7-male-training-pilot-v1/degree_rewired-graph.json": {
+      "sha256": "cca9a6bbb803f7717bf7a360f3b1f1d4ffd9b355fc875a1b815108e31d31c566",
+      "bytes": 32864
+    },
+    "runs/m7-male-training-pilot-v1/degree_rewired.pt": {
+      "sha256": "7d455316344efd91042efc2e0c511f3774e3c5e0f5f4e6342c41573d86b385a5",
+      "bytes": 303341
+    }
+  }
+}
