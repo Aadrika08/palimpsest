@@ -413,9 +413,9 @@ def _own(config, commands, replies, display, disconnected, stop, progress, final
                 engine.advance()
                 step_wall = time.monotonic() - advance_started
                 heartbeat()
-                # Deadlines include computation. Slow owners keep every physics tick;
-                # they do not accumulate a catch-up burst after a stall or pause.
-                next_tick = max(next_tick + .02, advance_started) if running else advance_started + .02
+                # Keep every tick and its deadline across brief log/render stalls.
+                # Pausing and resuming establishes a new wall-clock schedule.
+                next_tick = next_tick + .02 if running else advance_started + .02
             if engine.episode != last_episode:
                 trace, last_episode = [engine.world()["pose"][:2]], engine.episode
             elif engine.total_tick != last_tick:
