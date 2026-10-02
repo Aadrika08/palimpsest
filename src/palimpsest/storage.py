@@ -5,6 +5,7 @@ import fcntl
 import os
 from pathlib import Path
 import shutil
+import stat
 
 MiB = 1024**2
 GiB = 1024**3
@@ -129,21 +130,38 @@ class StorageBudget:
 
     @contextmanager
     def lock(self):
-        """Exclusive nonblocking leases on every configured root, even nested ones."""
+        """One payload writer per user, plus leases on each configured root."""
         streams = []
         try:
+            # ponytail: A per-user ceiling also covers differently configured,
+            # overlapping roots. Add overlap-aware leases only if independent
+            # concurrent labs become necessary; no lease registry is needed now.
+            cache = _safe_path(Path.home() / ".cache")
+            cache.mkdir(mode=0o700, exist_ok=True)
+            private = _safe_path(cache / "palimpsest")
+            private.mkdir(mode=0o700, exist_ok=True)
+            if private.stat().st_uid != os.getuid():
+                raise StorageLimitError("Writer lease directory belongs to another user")
             for root in self.roots:
-                _safe_path(root)
-                root.mkdir(parents=True, exist_ok=True)
-                path = _safe_path(root / LOCK_NAME)
+                _safe_path(root).mkdir(parents=True, exist_ok=True)
+            paths = [private / "writer.lock", *(root / LOCK_NAME for root in self.roots)]
+            for path in paths:
+                path = _safe_path(path)
                 flags = os.O_RDWR | os.O_CREAT | getattr(os, "O_NOFOLLOW", 0)
                 descriptor = os.open(path, flags, 0o600)
-                stream = os.fdopen(descriptor, "r+b")
+                try:
+                    info = os.fstat(descriptor)
+                    if not stat.S_ISREG(info.st_mode) or info.st_uid != os.getuid():
+                        raise StorageLimitError("Writer lease must be a regular file owned by the current user")
+                    stream = os.fdopen(descriptor, "r+b")
+                except BaseException:
+                    os.close(descriptor)
+                    raise
                 try:
                     fcntl.flock(stream, fcntl.LOCK_EX | fcntl.LOCK_NB)
                 except BlockingIOError as error:
                     stream.close()
-                    raise StorageLimitError("Storage root is already owned by another writer") from error
+                    raise StorageLimitError("Storage is already owned by another writer for this user") from error
                 except BaseException:
                     stream.close()
                     raise

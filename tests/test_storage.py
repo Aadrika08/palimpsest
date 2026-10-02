@@ -1,4 +1,6 @@
+import fcntl
 import json
+import os
 from pathlib import Path
 import subprocess
 import sys
@@ -112,11 +114,56 @@ except StorageLimitError:
 
     def test_failed_multi_root_lock_releases_already_acquired_roots(self):
         first, last = self.root / "a", self.root / "z"
-        with self.budget([last]).lock():
+        last.mkdir()
+        with (last / ".palimpsest-storage.lock").open("wb") as held:
+            fcntl.flock(held, fcntl.LOCK_EX | fcntl.LOCK_NB)
             with self.assertRaises(StorageLimitError):
                 with self.budget([first, last]).lock():
                     self.fail("second lock unexpectedly acquired")
             with self.budget([first]).lock():
+                pass
+
+    def test_overlapping_scopes_cannot_bypass_the_single_writer_lease(self):
+        outer = self.budget([self.root / "runs"])
+        nested = self.budget([self.root / "runs/lab", self.root / "exports"])
+        for first, second in ((outer, nested), (nested, outer)):
+            with first.lock():
+                with self.assertRaisesRegex(StorageLimitError, "another writer"):
+                    with second.lock():
+                        self.fail("overlapping root scopes both acquired")
+            with second.lock():
+                pass
+
+    def test_global_lease_rejects_symlinks_and_nonregular_files(self):
+        home = self.root / "home"
+        home.mkdir()
+        budget = self.budget([self.root / "runs"])
+        with patch("palimpsest.storage.Path.home", return_value=home):
+            (home / ".cache").symlink_to(self.root, target_is_directory=True)
+            with self.assertRaisesRegex(StorageLimitError, "symlink"):
+                with budget.lock():
+                    self.fail("symlink cache accepted")
+            (home / ".cache").unlink()
+            private = home / ".cache/palimpsest"
+            private.mkdir(parents=True)
+            lease = private / "writer.lock"
+            lease.symlink_to(self.root / "other")
+            with self.assertRaisesRegex(StorageLimitError, "symlink"):
+                with budget.lock():
+                    self.fail("symlink lease accepted")
+            lease.unlink()
+            os.mkfifo(lease)
+            with self.assertRaisesRegex(StorageLimitError, "regular file"):
+                with budget.lock():
+                    self.fail("FIFO lease accepted")
+            lease.unlink()
+            lease.touch()
+            wrong_owner = SimpleNamespace(st_mode=0o100600, st_uid=os.getuid() + 1)
+            with patch("palimpsest.storage.os.fstat", return_value=wrong_owner):
+                with self.assertRaisesRegex(StorageLimitError, "owned by the current user"):
+                    with budget.lock():
+                        self.fail("foreign-owned lease accepted")
+            with budget.lock():
                 pass
 
 
