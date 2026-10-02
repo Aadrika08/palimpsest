@@ -1,0 +1,94 @@
+{
+  "version": 1,
+  "status": "failed-startup",
+  "source_commit": "fd2d70dea9557971f7d5570fe4a24698dfa2a355",
+  "scope": "one actual invocation of loaded-calibration development gate; zero control ticks; continuation/replays not run",
+  "report_sha256": "be2315c573db6a89846bf6999a1479f74a14016df4a61c0003226241d4c7bad6",
+  "invocation": {
+    "argv": [
+      "/home/utkarsh/Work/shraddha/brain/.worktrees/body-runtime/../lab-hardening/.venv/bin/python",
+      "/home/utkarsh/Work/shraddha/brain/.worktrees/body-runtime/scripts/verify_body_runtime.py",
+      "--assets",
+      "/home/utkarsh/Work/shraddha/brain/.worktrees/r0-reproduction/data/assets/flynn",
+      "--output",
+      "/home/utkarsh/Work/shraddha/brain/.worktrees/body-runtime/runs/m6-body-runtime-development-20261002"
+    ],
+    "environment": {
+      "PYTHONPATH": "/home/utkarsh/Work/shraddha/brain/.worktrees/body-runtime/src",
+      "MUJOCO_GL": "egl",
+      "MPLBACKEND": "Agg",
+      "OMP_NUM_THREADS": "2",
+      "OPENBLAS_NUM_THREADS": null,
+      "MKL_NUM_THREADS": null
+    },
+    "outer_timeout_seconds": 780,
+    "log_max_bytes": 1048576,
+    "source_commit": "fd2d70dea9557971f7d5570fe4a24698dfa2a355",
+    "launch_script_sha256": "3bfe704a8704cc6b0069a18d29d5c305bfc773492dda4fafe1b479721af39cfc",
+    "supervision": {
+      "schema_version": 1,
+      "status": "failed",
+      "timeout_seconds": 780,
+      "started_utc": "2026-10-02T14:22:40.190613+00:00",
+      "output": "/home/utkarsh/Work/shraddha/brain/.worktrees/body-runtime/runs/m6-body-runtime-launch-fd2d70d",
+      "returncode": 1,
+      "elapsed_seconds": 5.832282393996138
+    },
+    "verifier_sha256": "69fa132701a9972f0d1071090dc665a933e353b4fc8667ff4d881a14ec8ffca8"
+  },
+  "outer_seconds": 5.832282393996138,
+  "inner_seconds": 5.47916376899957,
+  "source_error": {
+    "type": "ValueError",
+    "message": "Pinned calibration authored world protocol differs"
+  },
+  "recording": {
+    "path": "runs/m6-body-runtime-development-20261002/source/1e7670196d884d1a93b42db237aa0672/recording",
+    "status": "failed",
+    "recorded_ticks": 0
+  },
+  "workers": {
+    "source": "failed-startup",
+    "restored": "not-run",
+    "actions": "not-run",
+    "policy": "not-run"
+  },
+  "cleanup": {
+    "observed_owned_processes": [
+      {
+        "pid": 375269,
+        "start_ticks": 4461374
+      }
+    ],
+    "survivors": [],
+    "sampler_stopped": true,
+    "sample_errors": [],
+    "scope": "finite .25s descendant sampling plus final PID/start-time check; no claim to observe every transient process; no server/listener created; existing bounded_process sends TERM/KILL to its owned groups after leader exit"
+  },
+  "callback_restored": true,
+  "source_unchanged": true,
+  "assets_unchanged": true,
+  "cause": {
+    "historical_world_profile_sha256": "ed6d7996b1c5dd412621533ebc87c0712ef3ed618031167774f27e313371379c",
+    "current_world_profile_sha256": "73923fa4ac16f76a4bffd598ca5d2a455806a50275d2bc8441fc743faa09311c",
+    "only_different_profile_field": "world_source_sha256",
+    "old_authoring_source_sha256": "e1a1b655f3698b4f238dd6b92b93fbe5c38dce26be4f908c76cc9db25a852eb7",
+    "current_authoring_source_sha256": "508d7c53cf78e8a26a2c459e2b6e2a02c8c0823535005a19668a31717f0dbb12",
+    "semantic_profile_sha256_excluding_declared_source_metadata": "cbc3f2cfbcf0ef25efb260f21771fe0ac52f4bd0b1a78b8e0dfd64378febe753",
+    "evidence": "Replacing only current world_source_sha256 with historical source hash reproduces the historical full PROFILE SHA exactly; no simulation rerun.",
+    "limits": "No actual native model-match/control/contact/gain/continuation/replay claim; failure precedes profile authoring and control."
+  },
+  "artifacts_sha256": {
+    "runs/m6-body-runtime-development-20261002/report.json": "be2315c573db6a89846bf6999a1479f74a14016df4a61c0003226241d4c7bad6",
+    "runs/m6-body-runtime-development-20261002/source/1e7670196d884d1a93b42db237aa0672/recording/events.jsonl": "03834a43f26d96138bfa24ac61c0d9570270b514200438190d89a51a1dc816cb",
+    "runs/m6-body-runtime-development-20261002/source/1e7670196d884d1a93b42db237aa0672/recording/manifest.json": "c28757bd0d198362a3083d3548b8840ab74472cc59ffc25edcf0c1bcb6b539c6",
+    "runs/m6-body-runtime-development-20261002/source/result.json": "691bba06f6069292c27bf4492533ba9caf3e46b32f3a198a6246ba4e48f06763",
+    "runs/m6-body-runtime-development-20261002/source/stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "runs/m6-body-runtime-development-20261002/source/stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "runs/m6-body-runtime-development-20261002/source/supervisor.json": "d66040b02757e59a9657332aa2e2868b98b2e91aea61f17d60aa355cbd34b2b1",
+    "runs/m6-body-runtime-launch-fd2d70d/invocation.json": "bd8e0d0b5a606c578a5c6b8f4caa715ee2e7d9d4954617a68f95e92943f96750",
+    "runs/m6-body-runtime-launch-fd2d70d/stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "runs/m6-body-runtime-launch-fd2d70d/stdout.log": "f4635f7a7b11ce4f814cc03fd0f510fa63dce059327e4e53ad07eb6481670ae9",
+    "runs/m6-body-runtime-launch-fd2d70d/supervisor.json": "d374708da35c3a0e4dd8c1d7a2465acba7da4c7dfa63a9288810a76b24bb30e4"
+  }
+}

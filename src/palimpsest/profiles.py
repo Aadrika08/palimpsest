@@ -6,6 +6,7 @@ from .male_policy import CONTROLLERS as MALE_CONTROLLERS
 
 
 SCENARIOS = {
+    'calibrated-wheel-compensation': ('Calibrated wheel compensation (development)', 'Manual CPU with loaded wheel calibration and a fixed weaker left motor; no online learning or navigation qualification.', 20),
     'reproduction': ('Upstream reproduction', 'Pinned 20-obstacle paper configuration.', 20),
     'sparse-navigation': ('Sparse navigation', 'Five seeded obstacles and a validated free route; pretrained success is not guaranteed.', 5),
     'blocked-route': ('Blocked route', 'Move an existing obstacle during travel and measure the response.', 20),
@@ -24,6 +25,8 @@ POPULATIONS = ('visual_left', 'visual_right', 'descending')
 def validate(scenario, texture, controller):
     if any(type(value) is not str for value in (scenario, texture, controller)) or scenario not in SCENARIOS or controller not in CONTROLLERS or texture not in TEXTURES:
         raise ValueError('Unknown scenario, controller or texture')
+    if scenario == 'calibrated-wheel-compensation' and controller != 'manual':
+        raise ValueError('Calibrated wheel compensation requires manual CPU control')
     if controller in MALE_CONTROLLERS and (scenario, texture) != ('reproduction', 'checker'):
         raise ValueError('Male pilot controllers require reproduction/checker')
     if scenario != 'texture-variation' and texture != 'checker':
@@ -51,6 +54,10 @@ def validate(scenario, texture, controller):
                                  'two-rgb-eyes-contact-encoder-estimated-local-home-bearing-v1'),
             objective=('inspect both visible landmarks with stopped dwell' if scenario == 'exploration-landmarks'
                        else 'depart estimated local origin then return with stopped dwell'))
+    if scenario == 'calibrated-wheel-compensation':
+        from .body_profile import PROFILE_SHA256, ARTIFACT
+        profile.update(task='loaded-wheel-compensation-development', body_profile_sha256=PROFILE_SHA256,
+                       calibration_artifact_sha256=ARTIFACT['report_sha256'], devices=['cpu'])
     return profile
 
 

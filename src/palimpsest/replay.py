@@ -18,11 +18,12 @@ ATOL = RTOL = 1e-6
 _RUNTIME = tuple(f"src/palimpsest/{name}.py" for name in
                  ("engine", "profiles", "interventions", "flynn", "snapshots", "records", "evaluate", "assets", "doctor",
                   "memory", "memory_task", "memory_world", "task_mechanics", "task_profiles"))
+_BODY_RUNTIME = ('src/palimpsest/body_profile.py',)
 _MALE_RUNTIME = ('src/palimpsest/male_policy.py', 'src/palimpsest/male_model.py')
 _EVENTS = {"command_received", "command_applied", "command_rejected", "episode_started",
            "episode_finished", "intervention", "eyes_changed", "browser_disconnected", "runtime_failure",
            "memory_world_changed", "memory_sensed", "memory_decision", "memory_cue", "memory_inspected",
-           "task_sensed", "task_decision", "task_cue", "task_inspected"}
+           "body_loaded", "body_measured", "body_failed", "task_sensed", "task_decision", "task_cue", "task_inspected"}
 _IGNORED_EVENT_KEYS = {"sequence", "run_id", "received_run_id", "applied_run_id"}
 _PHYSICAL = {"cam_left", "cam_right", "raw_cam_left", "raw_cam_right", "sensors", "action",
              "control", "pose", "next_pose", "reward", "simulation_time", "eyes", "revision"}
@@ -73,6 +74,10 @@ def _same_tick(expected, actual, mode, global_tick):
     if (expected["episode"], expected["tick"]) != (actual["episode"], actual["tick"]):
         _difference("tick", "recorded episode/tick differs", **context)
     fields = (_PHYSICAL if mode == "actions" else set(expected) - _LATENCIES - {"episode", "tick"})
+    if mode == 'actions':
+        from .body_profile import TICK_FIELDS
+        if TICK_FIELDS & (set(expected) | set(actual)):
+            fields = fields | TICK_FIELDS
     actual_fields = set(actual) - _LATENCIES - {"episode", "tick"}
     if not fields <= set(expected) or not fields <= actual_fields or (mode == "policy" and fields != actual_fields):
         _difference("fields", "recorded tick fields differ", expected=sorted(fields), actual=sorted(actual_fields), **context)
@@ -127,8 +132,10 @@ def _initial_snapshot(data):
     return snapshot, entry, data["events"][prefix["event_count"]:]
 
 
-def _compatible(source, destination, controller=None):
+def _compatible(source, destination, controller=None, scenario=None):
     runtime = _RUNTIME + (_MALE_RUNTIME if controller in MALE_CONTROLLERS else ())
+    if scenario == 'calibrated-wheel-compensation':
+        runtime += _BODY_RUNTIME
     def environment(events):
         found = [event for event in events if event["kind"] == "environment"]
         if len(found) != 1:
@@ -263,7 +270,7 @@ def replay_run(source_run_path, destination_run_path, *, mode, repo_root, asset_
             controller=manifest["controller"], device=manifest["requested_device"], seed=manifest["seed"],
             scenario=profile["id"], texture=manifest["texture"], run_id=destination.name,
             storage_budget=storage_budget, memory_case=memory_case, expected_policy_identity=identity)
-        _compatible(data["events"], _events(destination), manifest['controller'])
+        _compatible(data["events"], _events(destination), manifest['controller'], manifest['scenario']['id'])
         engine.restore_branch(snapshot)
         del snapshot
         engine.writer.manifest.update(execution_mode=mode, inference_executed=report["inference_executed"],
