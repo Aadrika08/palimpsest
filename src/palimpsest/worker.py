@@ -301,7 +301,8 @@ def run_worker(config, commands, replies, display, disconnected, stop, progress,
             os.dup2(stderr.fileno(), 2)
             with os.fdopen(os.dup(1), "w", buffering=1) as out, os.fdopen(os.dup(2), "w", buffering=1) as err:
                 with contextlib.redirect_stdout(out), contextlib.redirect_stderr(err):
-                    _own(config, commands, replies, display, disconnected, stop, progress, final_messages, engine_factory=engine_factory)
+                    _own(config, commands, replies, display, disconnected, stop, progress, final_messages,
+                         **({'engine_factory': engine_factory} if engine_factory is not None else {}))
         finally:
             for target, original in zip((1, 2), saved):
                 os.dup2(original, target)
