@@ -1,0 +1,175 @@
+{
+  "version": 1,
+  "id": "m6-puck-mechanics-v3",
+  "scope": "standalone pre-product native mechanics exception; no Engine, LabSupervisor, learned policy or physical qualification",
+  "pushing_protocol_sha256": "7129265b8483e6932a7745f6af77176855139aab398bd229b78430fe8ae87534",
+  "puck_module_sha256": "a6402e5213abcd645da961282251734a132f3eaaea190d6b72fb97014bb87c3c",
+  "upstream_commit": "8d964599119b420de67ee259434d273651a1a76d",
+  "construction_source": "3e1e2b8b3dbe6fb1b5b1e7e32277f29bc562c7f5",
+  "construction_report_sha256": "348e346cb9b256cad65a0de37ca36363b0a117f4f5e55f82bfb16a93ab269851",
+  "runtime": {
+    "python": "3.11.15",
+    "numpy": "2.2.5",
+    "mujoco": "3.3.6",
+    "backend": "egl"
+  },
+  "environment_kwargs": {
+    "width": 128,
+    "height": 128,
+    "max_episode_steps": 600,
+    "n_obstacles": 1,
+    "arena_half_extent": 7.0,
+    "render_mode": null,
+    "end_on_collision": false,
+    "goal_bonus": 0,
+    "contact_penalty": 0,
+    "time_penalty": 0.01,
+    "prog_scale": 10.0,
+    "ctrl_penalty": 0.001,
+    "texture_mode": "checker",
+    "seed": 5990
+  },
+  "profile_identity": {
+    "compiled_native_sha256": "98e8a1a3a783ef112085433a9a9921f0e8d76d5995a6525561dee9f84fd58c03",
+    "derived_xml_sha256": "f6a781836d21c5fd8ffb6b1e35f7ca47586772e11e2b1329695a6965ea5fb06a",
+    "model_sha256": "30b4fe74de3ed74513f9a651c453b2142bf98941feb5124467571b9de66bc804",
+    "protocol_sha256": "7129265b8483e6932a7745f6af77176855139aab398bd229b78430fe8ae87534",
+    "scenario": "puck-pushing-development",
+    "version": 1
+  },
+  "limits": {
+    "owner_seconds": 180,
+    "startup_seconds": 60,
+    "progress_seconds": 30,
+    "per_600_tick_record_and_snapshot_bytes": 167772160,
+    "per_120_tick_record_and_snapshot_bytes": 67108864,
+    "per_short_branch_bytes": 33554432,
+    "log_bytes_each": 1048576,
+    "report_bytes": 4194304,
+    "min_free_bytes": 1073741824,
+    "total_retained_bytes": 17179869184,
+    "checkpoint_bytes": 1048576,
+    "checkpoint_uncompressed_bytes": 2097152,
+    "physics": {
+      "inner_seconds": 600,
+      "term_seconds": 660,
+      "kill_grace_seconds": 15,
+      "supervised_seconds": 680,
+      "bytes": 1073741824,
+      "max_owners": 10,
+      "planned_record_allowance_bytes": 872415232,
+      "remaining_control_allowance_bytes": 201326592
+    },
+    "teacher": {
+      "inner_seconds": 1500,
+      "term_seconds": 1560,
+      "kill_grace_seconds": 15,
+      "supervised_seconds": 1580,
+      "bytes": 4294967296,
+      "owners": 20
+    },
+    "training_per_seed": {
+      "inner_seconds": 120,
+      "term_seconds": 180,
+      "kill_grace_seconds": 15,
+      "supervised_seconds": 200,
+      "bytes": 16777216
+    },
+    "all_training_bytes": 67108864,
+    "dev": {
+      "inner_seconds": 1200,
+      "term_seconds": 1260,
+      "kill_grace_seconds": 15,
+      "supervised_seconds": 1280,
+      "bytes": 3221225472,
+      "owners": 12
+    },
+    "held_out": {
+      "inner_seconds": 1800,
+      "term_seconds": 1860,
+      "kill_grace_seconds": 15,
+      "supervised_seconds": 1880,
+      "bytes": 4294967296,
+      "owners": 24
+    },
+    "snapshot_max_bytes": 8388608
+  },
+  "owner_order": [
+    "zero",
+    "push-positive",
+    "push-negative",
+    "teacher-positive",
+    "teacher-negative",
+    "continue-tick1",
+    "continue-contact",
+    "continue-dwell",
+    "replay-actions",
+    "replay-policy"
+  ],
+  "boundary_rules": {
+    "tick1": "after exactly one completed interval",
+    "contact": "first completed interval with rover_puck_contact true",
+    "dwell": "first completed interval with dwell_ticks == 1; no additional command-zero predicate",
+    "paused": "synchronous step returned, callback removed, writer flushed; no elapsed simulated time while captured",
+    "continuation": "exact four source rows starting at snapshot completed tick; missing trigger/successors fails; no later selection"
+  },
+  "recording": {
+    "version": 2,
+    "episode": 0,
+    "tick": "zero-based action index; state tick is completed intervals",
+    "world_order": [
+      "time_s",
+      "rover_x",
+      "rover_y",
+      "rover_yaw",
+      "puck_x",
+      "puck_y",
+      "puck_z",
+      "puck_vx",
+      "puck_vy",
+      "goal_x",
+      "goal_y"
+    ],
+    "features": "exact puck.project float32[8] before one command; virtual privileged-derived sensors",
+    "cameras": "actual pre-action returned cam_left/cam_right uint8[128,128,3], not controller inputs",
+    "contacts": "all ten .002s pre-integration packets plus cached last packet, using unmodified ContactProbe classes; separate puck summary",
+    "task": "pure puck cursor and reward, separate upstream navigation diagnostics; task_sha256 binds state/world/contact/teacher_mode_after",
+    "comparison": "exact schema/dtype/shape/bytes for all recorded arrays and application hashes; all numeric values finite; no cross-owner raw allocation-byte equality claim",
+    "schema": "puck-mechanics-v2",
+    "teacher_mode": {
+      "fields": [
+        "teacher_mode_before",
+        "teacher_mode_after"
+      ],
+      "dtype": "uint8",
+      "shape": [],
+      "codes": {
+        "fixed": 0,
+        "approach": 1,
+        "push": 2
+      },
+      "events": "episode_start teacher_mode; every puck_interval teacher_mode_before/teacher_mode_after; final result/record summary retain mode",
+      "semantics": "before=caller mode before exactly one decision; after=returned mode committed with completed control interval; not inferred from the resulting world"
+    }
+  },
+  "snapshot": "Generic native snapshot with verifier application version2 retaining explicit teacher_mode; validate case-specific mode, initial approach, version, gate/task hashes and application digest BEFORE native restore. Fixed command roots/action replay retain fixed mode. No mode reset on continuation or policy replay; production snapshot format unchanged.",
+  "watchdog": {
+    "poll_seconds": 0.1,
+    "startup_seconds": 60,
+    "progress_seconds": 30,
+    "owner_seconds": 180,
+    "term_to_kill_seconds": 3,
+    "identity": "discover new direct child by exact script/--child argv and new session PID=PGID before receipt; bind every atomic receipt to PID/start/owner and monotonically completed ticks",
+    "forced_cleanup": "any watchdog signal or receipt/identity error fails gate; bounded_process retains final supervision and group cleanup",
+    "limits": "at most128 observed descendants; late or missing final PID/group absence fails"
+  },
+  "storage_headroom_bytes": 8388608,
+  "qualification_claims": [],
+  "version_notes": {
+    "previous_mechanics_source": "d65d5fea4a0a881bb0eb6ebc1de7a496c675d1d0",
+    "previous_failed_report_sha256": "ac14f445d161e876a4b0d065ca516755ac153df6f219f0daa10b8e910062f69b",
+    "change": "Explicit two-mode teacher recovery; existing numeric thresholds, physics, task objectives, layouts, fixed commands and resource ceilings unchanged. Numeric record schema and standalone application are version2; v1/v2 protocol snapshots are rejected before restore.",
+    "construction_compatibility": "XML and native constructor unchanged except protocol identity; construction evidence remains historical, not automatic v3 qualification. Each fresh owner still validates and constructs the fixed model.",
+    "development_status": "Same inspected development scenes. No success, unseen, learned or held-out claim. Learning remains closed pending review of mode-dependent labels for the prior stateless student."
+  }
+}

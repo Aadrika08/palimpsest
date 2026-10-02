@@ -87,23 +87,27 @@ class PuckProfileTests(unittest.TestCase):
         a['goal_xy'][0] = 999
         self.assertEqual(self.p.layout(ROOT, 6000, 'train')['goal_xy'], [.6, -.3])
 
-    def test_v2_only_versions_teacher_aim_not_physics_or_numeric_protocol(self):
-        old_path=ROOT/'docs/plans/m6-puck-pushing-protocol.json'
-        self.assertEqual(hashlib.sha256(old_path.read_bytes()).hexdigest(),
+    def test_v3_preserves_v1_v2_protocols_and_numeric_task_contract(self):
+        original=ROOT/'docs/plans/m6-puck-pushing-protocol.json'
+        previous=ROOT/'docs/plans/m6-puck-pushing-protocol-v2.json'
+        self.assertEqual(hashlib.sha256(original.read_bytes()).hexdigest(),
                          '8a7f14ee69fe386fe1150b644e71737a5e39ab3c8c4987d7cdf61277796f3bac')
-        old=json.loads(old_path.read_text());new=self.p.load_protocol(ROOT)
-        self.assertEqual(new['id'],'m6-puck-pushing-plan-v2')
-        self.assertEqual(new['demonstrator']['id'],'analytic-puck-behind-align-push-v2')
-        self.assertIn('aim_selection',new['demonstrator'])
-        new['id']=old['id'];new['demonstrator']['id']=old['demonstrator']['id']
-        del new['demonstrator']['aim_selection']
+        self.assertEqual(hashlib.sha256(previous.read_bytes()).hexdigest(),
+                         'fd8dbcea35d226bed522d02f27f7bc11149ac77f72ca49838493489e330eb88c')
+        old=json.loads(previous.read_text());new=self.p.load_protocol(ROOT)
+        self.assertEqual(new['id'],'m6-puck-pushing-plan-v3')
+        self.assertEqual(new['demonstrator']['mode']['initial'],'approach')
+        new['id']=old['id']
+        for key in ('id','aim_selection'): new['demonstrator'][key]=old['demonstrator'][key]
+        del new['demonstrator']['mode'];del new['learning_admission']
         self.assertEqual(new,old)
 
-    def test_v1_task_cursor_not_reinterpreted_as_v2(self):
-        state=self.p.initialize(world(),'old-episode')
-        state['protocol_sha256']='8a7f14ee69fe386fe1150b644e71737a5e39ab3c8c4987d7cdf61277796f3bac'
-        with self.assertRaisesRegex(ValueError,'Incompatible'):
-            self.p.advance(state,world(1),self.contacts(1),[0.,0.])
+    def test_historical_task_cursors_not_reinterpreted_as_v3(self):
+        for old in ('8a7f14ee69fe386fe1150b644e71737a5e39ab3c8c4987d7cdf61277796f3bac',
+                    'fd8dbcea35d226bed522d02f27f7bc11149ac77f72ca49838493489e330eb88c'):
+            state=self.p.initialize(world(),'old-episode');state['protocol_sha256']=old
+            with self.assertRaisesRegex(ValueError,'Incompatible'):
+                self.p.advance(state,world(1),self.contacts(1),[0.,0.])
 
     def test_protocol_tampering_and_oversized_sources_fail(self):
         with tempfile.TemporaryDirectory() as directory:
@@ -360,48 +364,65 @@ class PuckProfileTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             self.p.classify_contacts(raw_contacts(0), ownership, tick=0, time_s=0.)
 
-    def test_demonstrator_stop_turn_approach_push_and_zero_aim(self):
-        cases = [(world(rover=(-1., 0., 0.)), [.25, 0.]),
-                 (world(rover=(-.55, 0., 0.)), [.2, 0.]),
-                 (world(rover=(-.55, 0., .12)), [.2, -.12]),
-                 (world(rover=(-.55, 0., .120001)), [0., -.120001]),
-                 (world(rover=(-1., 0., 1.)), [0., -.4]),
-                 (world(goal=(.18, 0.), rover=(0., 0., 2.)), [0., 0.]),
-                 (world(puck=(1., 0., .062)), [0., 0.]),
-                 (world(rover=(-.55, .06, 0.)), [.2, 0.])]
-        for state, expected in cases:
-            with self.subTest(state=state):
-                action = self.p.demonstrate(state)
+    def test_demonstrator_explicit_modes_arrival_alignment_stop_and_bounds(self):
+        cases = [(world(rover=(-1., 0., 0.)), 'approach', [.25, 0.], 'approach'),
+                 (world(rover=(-.55, 0., 0.)), 'approach', [.2, 0.], 'push'),
+                 (world(rover=(-.55, 0., .12)), 'approach', [.2, -.12], 'push'),
+                 (world(rover=(-.55, 0., .120001)), 'push', [0., -.120001], 'push'),
+                 (world(rover=(-1., 0., 1.)), 'push', [0., -.4], 'approach'),
+                 (world(goal=(.18, 0.), rover=(0., 0., 2.)), 'push', [0., 0.], 'push'),
+                 (world(puck=(1., 0., .062)), 'approach', [0., 0.], 'approach'),
+                 (world(rover=(-.55, .06, 0.)), 'approach', [.2, 0.], 'push'),
+                 # Arrival alone cannot admit push; lateral corridor still applies.
+                 (world(rover=(-.55, .060001, 0.)), 'approach', [0., -.4], 'approach')]
+        for state, mode, expected, next_mode in cases:
+            with self.subTest(state=state, mode=mode):
+                original=copy.deepcopy(state)
+                action, after = self.p.demonstrate(state, mode)
                 np.testing.assert_allclose(action, expected, rtol=0, atol=1e-12)
-                self.assertEqual(self.p.demonstrate(state), action)
+                self.assertEqual(after, next_mode)
+                self.assertEqual(self.p.demonstrate(state, mode), (action, after))
+                self.assertEqual(state, original)
+        # Exact arrival bound, and a ready point just beyond it: mode matters.
+        arrived=world(puck=(.55,0.,.062),rover=(.08,0.,0.))
+        outside=world(puck=(.55,0.,.062),rover=(.080001,0.,0.))
+        self.assertEqual(self.p.demonstrate(arrived,'approach'),([.2,0.],'push'))
+        self.assertEqual(self.p.demonstrate(outside,'approach'),([0.,.4],'approach'))
+        self.assertEqual(self.p.demonstrate(outside,'push'),([.2,0.],'push'))
+        for mode in (None, True, 1, 'fixed', '', [], 'recover'):
+            with self.subTest(mode=mode), self.assertRaises(ValueError):
+                self.p.demonstrate(world(),mode)
+        with self.assertRaises(TypeError): self.p.demonstrate(world())
 
-    def test_demonstrator_aim_switch_and_lateral_boundaries(self):
-        # The behind point is exactly x=0 here, so .08 has no subtraction
-        # rounding ambiguity. The push corridor keeps the goal-direction aim.
-        inside = world(puck=(.55, 0., .062), rover=(.08, 0., 0.))
-        self.assertEqual(self.p.demonstrate(inside), [.2, 0.])
-        self.assertEqual(self.p.demonstrate(world(puck=(.55, 0., .062),
-                           rover=(.080001, 0., 0.))), [.2, 0.])
-        self.assertEqual(self.p.demonstrate(world(rover=(-.55, .060001, 0.))), [.25, 0.])
-        # Readiness changes target direction, never bypasses heading alignment.
-        self.assertEqual(self.p.demonstrate(world(rover=(-.35, 0., 0.))), [.2, 0.])
-        self.assertEqual(self.p.demonstrate(world(rover=(-.63, 0., 0.))), [.2, 0.])
-        self.assertEqual(self.p.demonstrate(world(rover=(-.630001, 0., 0.))), [.25, 0.])
+    def test_v3_retained_lateral_exit_recovery_and_reflection(self):
+        # Exact v2 action161/188 worlds, retained audit b2b0cf7c...ca39421.
+        first=world(161,rover=(-.10557864384951335,.025780470462970276,.012211822488032919),
+                    puck=(.3417668301639983,-.02281179279051964,.060402737920408796),
+                    velocity=(.36158623204097373,-.020400357509611246),goal=(1.2,0.))
+        returned=world(188,rover=(-.060754749893484276,-.0011209739238077347,-.6506301818704533),
+                       puck=(.3880176726862764,-.03851541145471215,.05999990569249625),
+                       velocity=(-6.261345744802956e-20,-1.805099186540132e-20),goal=(1.2,0.))
+        first['time_s']=3.219999999999867;returned['time_s']=3.7599999999998075
+        for reflect in (False,True):
+            a,b=copy.deepcopy(first),copy.deepcopy(returned)
+            if reflect:
+                for value in (a,b):
+                    for key in ('rover_pose','puck_xyz','goal_xy','puck_velocity_xy'):
+                        value[key][:2]=[-v for v in value[key][:2]]
+                    value['rover_pose'][2]+=math.pi
+            self.assertEqual(self.p.demonstrate(a,'push'),([0.,-.4],'approach'))
+            # Corridor re-entry alone must not reverse the recovery yaw command.
+            self.assertEqual(self.p.demonstrate(b,'approach'),([0.,-.4],'approach'))
+            self.assertEqual(self.p.demonstrate(b,'push'),([0.,.4],'push'))
 
-    def test_v2_retained_tick109_corridor_aim_and_reflection(self):
-        # V1 recorded action109; audit SHA 5db66ece...99fb98. These are pure
-        # counterfactual commands at a seen development state, not new physics.
+    def test_retained_v1_tick109_keeps_goal_aim_only_in_push_mode(self):
         x,y,yaw=-.46742095296335834,.016918583801692796,.03331900718597027
-        actual=world(rover=(x,y,yaw),goal=(1.2,0.))
-        reflected=world(rover=(-x,-y,yaw+math.pi),goal=(-1.2,0.))
-        for value in (actual,reflected):
-            np.testing.assert_allclose(self.p.demonstrate(value),[.2,-yaw],rtol=0,atol=1e-12)
-        # Same point, outside alignment: still turn, with the unchanged cap.
-        self.assertEqual(self.p.demonstrate(world(rover=(x,y,1.),goal=(1.2,0.))),[0.,-.4])
-        # Outside the corridor and approach arrival: aim at the behind point.
-        self.assertEqual(self.p.demonstrate(world(rover=(-.45,.2,0.),goal=(1.2,0.))),[0.,-.4])
-        # Stop remains first priority despite readiness and heading error.
-        self.assertEqual(self.p.demonstrate(world(rover=(-.45,0.,1.),goal=(.18,0.))),[0.,0.])
+        for value in (world(rover=(x,y,yaw),goal=(1.2,0.)),
+                      world(rover=(-x,-y,yaw+math.pi),goal=(-1.2,0.))):
+            action,mode=self.p.demonstrate(value,'push')
+            np.testing.assert_allclose(action,[.2,-yaw],rtol=0,atol=1e-12)
+            self.assertEqual(mode,'push')
+            self.assertEqual(self.p.demonstrate(value,'approach'),([0.,-.4],'approach'))
 
     def test_import_and_pure_use_never_imports_torch_or_mujoco(self):
         code = ('import sys; from palimpsest.puck_profile import load_protocol; '
