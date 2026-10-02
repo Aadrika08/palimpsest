@@ -1,0 +1,1133 @@
+{
+  "schema_version": 1,
+  "milestone": "M3 / R1 hardening",
+  "status": "incomplete",
+  "r1_qualified": false,
+  "as_of_date": "2026-10-02",
+  "as_of_head": "a24c2379716bf21f1d497896e25a1227f8de5c49",
+  "source": {
+    "prd": {
+      "path": "docs/borrowed-body-prd-v1.md",
+      "sha256": "4ce71144b2ce3b72b5f7318e0d357ee0f13efb20302befe9482650318d2352db",
+      "size_bytes": 71568
+    },
+    "upstream_commit": "8d964599119b420de67ee259434d273651a1a76d",
+    "runtime_files_sha256": {
+      "src/palimpsest/__init__.py": "bb99e30d22e4662c4ded455b1b23f49b77ce811dcfa1b69bf358925487a566d8",
+      "src/palimpsest/__main__.py": "935a1c1166b0c1ea35a82256345000bf2c73ded718d77773bc27a71ecce28f7d",
+      "src/palimpsest/artifacts.py": "9d479a23d06f7e272e363c21cd10a51cdcf27c49904cedd02a87b60d87f5f971",
+      "src/palimpsest/assets.py": "aa4a38c7403cd9f72bc23027acd7c212202f25574bea6af65053c34664da49e3",
+      "src/palimpsest/cli.py": "7f322927a2b04666569c6a9dac24935134ed8f813cb5dbc926b88ee37a5e3647",
+      "src/palimpsest/doctor.py": "109de62468161f35461eee76af244daabef38f2faa1526c5a6ed268817e6b834",
+      "src/palimpsest/engine.py": "e9828712c1ba8f53431f6729139d9dd0cdd0a045f75a6b2f548261c7951d73d9",
+      "src/palimpsest/evaluate.py": "74a9afb710b36a366ab680462e9440f285730a0360bda704af25ebbcfd74256a",
+      "src/palimpsest/flynn.py": "409b7503d76fd6f971a33d053e86c968b529edc226b85f44122e17a649f8f9f4",
+      "src/palimpsest/interventions.py": "fd2c1e6f160f7d251ddcf3275b383e8e3e265fc462452d1bc20c0030a6acf9c8",
+      "src/palimpsest/lab.py": "20c46910afc7f229cc5af4b979bf9fe229e8d3108126447832a43d8e19241b70",
+      "src/palimpsest/profiles.py": "808c7636b10667ef8aea70422475e0ca4f8b23d869f6347529cf0957df184db3",
+      "src/palimpsest/records.py": "c4be6f1699c1d8550a7f2db2979f7f9f18196ac986eef2aefe3ba665cae99ac3",
+      "src/palimpsest/replay.py": "3b7dbcd72ac2b51fd38c405d955b77d0ec1153a9862b570eada5ea72c960bb41",
+      "src/palimpsest/snapshots.py": "8fe642da67b6de7769c64cbcaa85c76ba168e7934dceaf626d05269f647ae6c5",
+      "src/palimpsest/storage.py": "35e51e9f97c547e41d12a542a1d4c657ab888417285cb23fd8c42e0945270e80",
+      "src/palimpsest/worker.py": "d495f89784d593536fffd1095ebde03a352957fba6209338f0ad02512982c6a9",
+      "pyproject.toml": "13435cdf27674955809c67d3d81410c502bf0f258b661e68ed82197842fbc800",
+      "uv.lock": "8a7a880d020c1907e221575fda65642241f809fc628a55381f1b6137bff1b732"
+    },
+    "current_runtime_matches_natural_performance": false,
+    "runtime_files_sha256_scope": "Natural performance and browser v1 measured runtime; not the later current working tree.",
+    "later_changes": [
+      "821a82b updates the browser measurement protocol; the retained v1 evidence is unchanged.",
+      "7778c4e changes storage inventory traversal; no new end-to-end performance pass is claimed.",
+      "a0828f5 commits supervisor resource cleanup and the later never-started-process join guard. The 191-test suite predates only that guard/new test; three retained focused tests cover the final cleanup. No full 192-test pass is claimed."
+    ],
+    "current_runtime_matches_final_natural_performance": true,
+    "current_runtime_sha256": {
+      "src/palimpsest/__init__.py": "bb99e30d22e4662c4ded455b1b23f49b77ce811dcfa1b69bf358925487a566d8",
+      "src/palimpsest/__main__.py": "935a1c1166b0c1ea35a82256345000bf2c73ded718d77773bc27a71ecce28f7d",
+      "src/palimpsest/artifacts.py": "9d479a23d06f7e272e363c21cd10a51cdcf27c49904cedd02a87b60d87f5f971",
+      "src/palimpsest/assets.py": "aa4a38c7403cd9f72bc23027acd7c212202f25574bea6af65053c34664da49e3",
+      "src/palimpsest/cli.py": "7f322927a2b04666569c6a9dac24935134ed8f813cb5dbc926b88ee37a5e3647",
+      "src/palimpsest/doctor.py": "109de62468161f35461eee76af244daabef38f2faa1526c5a6ed268817e6b834",
+      "src/palimpsest/engine.py": "e9828712c1ba8f53431f6729139d9dd0cdd0a045f75a6b2f548261c7951d73d9",
+      "src/palimpsest/evaluate.py": "74a9afb710b36a366ab680462e9440f285730a0360bda704af25ebbcfd74256a",
+      "src/palimpsest/flynn.py": "409b7503d76fd6f971a33d053e86c968b529edc226b85f44122e17a649f8f9f4",
+      "src/palimpsest/interventions.py": "fd2c1e6f160f7d251ddcf3275b383e8e3e265fc462452d1bc20c0030a6acf9c8",
+      "src/palimpsest/lab.py": "fb9e669d974d8d30723f97b9d0608de37ed16f14ee23ce73daf96be1689a17c2",
+      "src/palimpsest/profiles.py": "808c7636b10667ef8aea70422475e0ca4f8b23d869f6347529cf0957df184db3",
+      "src/palimpsest/records.py": "c4be6f1699c1d8550a7f2db2979f7f9f18196ac986eef2aefe3ba665cae99ac3",
+      "src/palimpsest/replay.py": "3b7dbcd72ac2b51fd38c405d955b77d0ec1153a9862b570eada5ea72c960bb41",
+      "src/palimpsest/snapshots.py": "8fe642da67b6de7769c64cbcaa85c76ba168e7934dceaf626d05269f647ae6c5",
+      "src/palimpsest/storage.py": "79664d876834ef20b459cc83963515effdaf75d0256fe5764a9cf8e18cd448c2",
+      "src/palimpsest/worker.py": "d495f89784d593536fffd1095ebde03a352957fba6209338f0ad02512982c6a9",
+      "pyproject.toml": "13435cdf27674955809c67d3d81410c502bf0f258b661e68ed82197842fbc800",
+      "uv.lock": "8a7a880d020c1907e221575fda65642241f809fc628a55381f1b6137bff1b732"
+    },
+    "current_runtime_matches_natural_performance_scope": "The earlier natural_performance entry remains pre-storage/cleanup; final_natural_performance is the current runtime."
+  },
+  "evidence": {
+    "natural_performance": {
+      "path": "runs/m3-performance-natural-20261002b/report.json",
+      "sha256": "1bff795b3ee62266a5af0faf2490882bc8f99c761d4a8ceebbe7bfe5010a6bf2",
+      "size_bytes": 10782,
+      "status": "passed",
+      "source_commit": "dc911f32c68b7507e3b0c917309f5e31fb00f903",
+      "source_unchanged": true,
+      "script_sha256": "f7c34f039be12709350ee62acf0d30e77f467d9a8aa72207635179a8f928c338",
+      "scope": "actual spawned owner, CPU manual/teacher, sparse-navigation/checker, EGL",
+      "protocol": "natural-episode-completion-after-minimum-ticks",
+      "wall_seconds": 37.586127951999515,
+      "controllers": {
+        "manual": {
+          "run_id": "e7417a5276f448958ae825fe2bdaf683",
+          "recorded_ticks": 600,
+          "loading_wall_seconds": 4.861363141000766,
+          "episodes": {
+            "0": 600
+          },
+          "worker_active": {
+            "active_wall_seconds": 11.989581491001445,
+            "advanced_simulation_seconds": 11.999999999999833,
+            "rtf": 1.0008689635252246
+          },
+          "active_rtf_at_least_one": true,
+          "outer_running_wall_seconds": 12.021249954999803,
+          "outer_rtf": 0.9982323007108787,
+          "kernel_rtf": 4.646169660170156,
+          "policy_seconds": {
+            "p50": 3.108799865003675e-05,
+            "p95": 4.87020006403327e-05
+          },
+          "step_with_cameras_seconds": {
+            "p50": 0.004093193001608597,
+            "p95": 0.005596249997324776
+          },
+          "unique_display_samples_observed": 341,
+          "episode_ending_reasons": {
+            "0": "time_limit"
+          }
+        },
+        "teacher": {
+          "run_id": "015424e16e764550b4d855295492c6d6",
+          "recorded_ticks": 653,
+          "loading_wall_seconds": 4.418733398000768,
+          "episodes": {
+            "0": 266,
+            "1": 191,
+            "2": 196
+          },
+          "worker_active": {
+            "active_wall_seconds": 13.052300809998997,
+            "advanced_simulation_seconds": 13.05999999999981,
+            "rtf": 1.000589872246502
+          },
+          "active_rtf_at_least_one": true,
+          "outer_running_wall_seconds": 13.213025072000164,
+          "outer_rtf": 0.9884186194178621,
+          "kernel_rtf": 2.5057094076385646,
+          "policy_seconds": {
+            "p50": 0.004160520002187695,
+            "p95": 0.005382275001466041
+          },
+          "step_with_cameras_seconds": {
+            "p50": 0.004614366000168957,
+            "p95": 0.0056525750005675945
+          },
+          "unique_display_samples_observed": 371,
+          "episode_ending_reasons": {
+            "0": "goal",
+            "1": "goal",
+            "2": "goal"
+          }
+        }
+      },
+      "limits": [
+        "Active RTF excludes loading/pauses; outer RTF includes requests, resets and polling and is below 1 for both controllers.",
+        "Manual uses zero action: this is execution load, not navigation success.",
+        "Teacher has privileged geometry; its goal outcomes do not establish student capability.",
+        "Transport sample count is not browser paint/FPS.",
+        "Raw pre_close_observations are unqualified copied telemetry; qualified metrics are controllers after close/integrity validation.",
+        "Default full-model assets were absent: diagnostics.ready was false; this does not qualify full FLYNN."
+      ]
+    },
+    "cached_setup": {
+      "path": "runs/m3-cached-setup-20261002a/report.json",
+      "sha256": "ed1cee4babaad50a88a430814d608950389b1137cb600ff4d5a616ab5292fb60",
+      "size_bytes": 5334,
+      "status": "passed",
+      "source_commit": "6c54e11b9b9fee50d87ea83cbfe1e2efe7ca0907",
+      "source_unchanged": true,
+      "script_sha256": "a576294726a97284ad3aed154929c30401db06c9ed1f8ea614dd4bdb1d685bad",
+      "wall_seconds": 7.853243482997641,
+      "scope": "OS network isolation + fresh cached Python/Node setup",
+      "child_returncode": 0,
+      "owned_survivors_requiring_kill": [],
+      "network": {
+        "path": "runs/m3-cached-setup-20261002a/network.json",
+        "sha256": "6ed20237d7a7b488780e3a6f0c2b6fce407cbe2f61a9ccad1d604946a531d30f",
+        "size_bytes": 13516
+      },
+      "setup": {
+        "path": "runs/m3-cached-setup-20261002a/setup.json",
+        "sha256": "b133cb3589c456506899a15863c9eb29b3bbc872b5c78843429f52c3fbbc07cb",
+        "size_bytes": 3207
+      },
+      "limits": [
+        "Setup-only at an earlier runtime, not a live server/full-FLYNN offline qualification.",
+        "Existing Git objects, Python/Node caches and externally shared model assets are prerequisites.",
+        "Configured duration 55 is not observed live execution; actual setup wall time is 7.853 seconds.",
+        "Child network namespace had loopback only and external probes returned ENETUNREACH; host namespaces were unchanged."
+      ]
+    },
+    "python_suite_188": {
+      "path": "/tmp/palimpsest-m3-post-queue-full-suite.log",
+      "sha256": "4c9f9492276c1497c6b3d723918fe30d0c304b077a2b0d487f127934efd70ff8",
+      "size_bytes": 43151,
+      "status": "passed",
+      "tests": 188,
+      "skips": 0,
+      "seconds": 56.889,
+      "scope": "Retained unittest output; actual EGL checks enabled according to orchestration. Fixture and actual-runtime tests are distinguished by their names.",
+      "source_attribution": "Runtime f063886 is orchestration attribution; the log has no embedded source manifest. Its retained runtime hashes match the natural-performance report.",
+      "portability": "Local temporary log is not included in this commit."
+    },
+    "python_suite": {
+      "path": "/tmp/palimpsest-m3-post-resource-full-suite.log",
+      "sha256": "90f4c3d90b457810755884bd36445e145b6c690280449005d313694da2b9875f",
+      "size_bytes": 44266,
+      "status": "passed",
+      "tests": 191,
+      "skips": 0,
+      "seconds": 55.739,
+      "scope": "Full actual-EGL suite including storage traversal and resource-cleanup regressions.",
+      "source_attribution": "Parent confirms HEAD 7778c4e plus uncommitted supervisor cleanup; log has no embedded source manifest. Later never-started-process join guard/new test are excluded. Current lab.py hash is intentionally not attributed to this test result.",
+      "portability": "Local temporary log is not included in this commit."
+    },
+    "browser_v1": {
+      "path": "runs/m3-ui-evidence/20261002T074408Z/final-verification.json",
+      "sha256": "38f500d5eaf06857c811f0cc86312f1a4a3550df61b72a1370539f18f76ac780",
+      "size_bytes": 10423,
+      "performance_report": {
+        "path": "runs/m3-ui-evidence/20261002T074408Z/ui-performance.json",
+        "sha256": "e0df5e5d16b8518ea325ff511fa83bf8acfa0307094b06c1928e23c84b530f75",
+        "size_bytes": 5156
+      },
+      "source_before": {
+        "path": "runs/m3-ui-evidence/20261002T074408Z/source-before.json",
+        "sha256": "e47c0469ef8a21741421cba3e66497fe1b3c41463855a9eb5924a39c22888fa0",
+        "size_bytes": 3138
+      },
+      "source_after": {
+        "path": "runs/m3-ui-evidence/20261002T074408Z/source-after.json",
+        "sha256": "83a9e152fbb274cc216b115e13b0167606cd4f25709678e7f84069d9c57b11fa",
+        "size_bytes": 2998
+      },
+      "source_commit": "dc911f32c68b7507e3b0c917309f5e31fb00f903",
+      "source_unchanged": true,
+      "scope": "Actual CPU/manual lab browser workflows; no full-model/GPU qualification",
+      "performance_targets_passed": false,
+      "sample_arrivals": 148,
+      "window_ms": 8035.699999999255,
+      "full_window_sample_hz": 18.417810520553743,
+      "sample_span_ms": 5518.0,
+      "interarrival_only_sample_hz": 26.640086988039144,
+      "dom_commits": 148,
+      "full_window_dom_commit_hz": 18.417810520553743,
+      "after_commit_animation_callbacks": 144,
+      "full_window_after_commit_callback_hz": 17.920031857836076,
+      "acknowledgement_ms": {
+        "count": 12,
+        "p50": 33.19999999925494,
+        "p95": 927.6000000014901,
+        "p99": 927.6000000014901
+      },
+      "observed_application_ms": {
+        "count": 12,
+        "p50": 52.100000001490116,
+        "p95": 1020.4000000022352,
+        "p99": 1020.4000000022352
+      },
+      "percentile_method": "nearest rank ceil(p*n)",
+      "worker_active_rtf": 0.6465478519308113,
+      "targets": {
+        "display_hz": 30,
+        "acknowledgement_p95_ms_below": 150
+      },
+      "shutdown": {
+        "server_pid": 212205,
+        "start_ticks": "2071586",
+        "signal": "SIGTERM",
+        "signal_scope": "PID only; process group not captured",
+        "exec_exit_code": 143,
+        "timeout_or_kill_escalation": false,
+        "port_8766_listening": false,
+        "remaining_matching_server_or_spawn_processes": [],
+        "diagnostic": "resource_tracker reports 160 semaphore objects to clean up at shutdown; no clean semaphore qualification",
+        "final_owner_close_response_status": "afterEach awaits close request but does not assert response status"
+      },
+      "limits": [
+        "Raw arrival arrays were used by the meter but not persisted; missing coverage cannot be located at the start/end or internal gaps from aggregates alone.",
+        "animation frames are callback opportunities, not physical scanout or invented samples",
+        "ack timing starts at browser fetch dispatch and includes response body parsing; loading excluded",
+        "application timing is first authoritative applied/rejected receipt observed over WebSocket, including delivery delay",
+        "manual CPU profile only; not a full-model/GPU performance claim",
+        "Functional instrumentation assertions passing does not mean timing targets passed.",
+        "The final owner close HTTP response was awaited but not asserted; the semaphore warning prevents clean resource qualification.",
+        "Later storage and shutdown changes require a fresh browser gate."
+      ],
+      "workflows_passed": 4,
+      "workflow_names": [
+        "core manual lifecycle/intervention/branch/export",
+        "action/policy replay and disconnect/reload/export",
+        "trajectory input isolation and keyboard/error recovery",
+        "actual responsiveness/cadence instrumentation"
+      ],
+      "replay_compared_ticks": {
+        "actions": 257,
+        "actions_cancelled": 32,
+        "policy": 257
+      }
+    },
+    "browser_diagnostic": {
+      "path": "runs/m3-ui-profile-20261002/diagnosis.json",
+      "sha256": "e51ab6ed4e34371ab3ee14f83d19ef41539c7e78d470df51b6994aa890f62bf3",
+      "size_bytes": 7198,
+      "status": "diagnostic_only",
+      "source_commit": "dc911f32c68b7507e3b0c917309f5e31fb00f903",
+      "source_unchanged": true,
+      "scope": "instrumented diagnostic; not qualification; cannot retrospectively prove cause of the earlier 927.6ms ack or missing sample time",
+      "instrumented_browser": {
+        "window_ms": 8004,
+        "sample_count": 220,
+        "samples_per_full_window_second": 27.48625687156422,
+        "max_sample_interval_ms": 137.5,
+        "acknowledgement": {
+          "count": 12,
+          "p50": 43.100000001490116,
+          "p95": 63.100000001490116,
+          "p99": 63.100000001490116
+        },
+        "observed_application": {
+          "count": 12,
+          "p50": 68.19999999925494,
+          "p95": 87.5,
+          "p99": 87.5
+        },
+        "active_rtf": 0.962054702986793
+      },
+      "publication_calls_over_20ms": 14,
+      "publication_max_seconds": 0.10732252600064385,
+      "publication_total_seconds": 1.2305036530015059,
+      "contained_quota_check_seconds": 0.6923255280016747,
+      "conclusion": "Repeated 88-138ms display gaps coincide with synchronous durable publication on the sole owner. The earlier multi-second delay did not reproduce; storage-latency tail remains plausible but unproven. No queue blocking was observed in this rerun.",
+      "limits": [
+        "Instrumentation changes timing; the improved acknowledgement result does not replace failed qualification evidence.",
+        "Clock alignment is estimated, with no independently bounded absolute error.",
+        "Diagnostic launch.json contains a local session token and is intentionally not copied into this report."
+      ]
+    },
+    "inventory_microbenchmark": {
+      "path": "runs/m3-inventory-microbenchmark-20261002/report.json",
+      "sha256": "421f333556a5ae60afc42fb414affdab95f9ab6d7ec65b60955af855a771f6e9",
+      "size_bytes": 4892,
+      "status": "microbenchmark_only",
+      "scope": "stdlib inventory microbenchmark only; no lease, simulation, renderer or browser; not end-to-end qualification",
+      "recorded_head": "dc911f32c68b7507e3b0c917309f5e31fb00f903",
+      "change_commit": "7778c4eebf62d188cf7d476b005fb582e98c577b",
+      "source": {
+        "old_sha256": "35e51e9f97c547e41d12a542a1d4c657ab888417285cb23fd8c42e0945270e80",
+        "new_sha256": "79664d876834ef20b459cc83963515effdaf75d0256fe5764a9cf8e18cd448c2"
+      },
+      "actual_ui_roots": {
+        "inventory": {
+          "used_bytes": 376648439,
+          "files": 140
+        },
+        "repeats": 30,
+        "order": "alternating old/new, new/old, warm filesystem metadata; each usage performs a fresh recount",
+        "median_seconds": {
+          "old": 0.009135459999015438,
+          "new": 0.003237031500248122
+        },
+        "median_speedup": 2.8221721037670457
+      },
+      "synthetic": {
+        "inventory": {
+          "used_bytes": 51200,
+          "files": 400
+        },
+        "repeats": 20,
+        "order": "alternating old/new, new/old, warm filesystem metadata; each usage performs a fresh recount",
+        "median_seconds": {
+          "old": 0.1167299759999878,
+          "new": 0.03580630000033125
+        },
+        "median_speedup": 3.26004016049991,
+        "description": "100 branches each9directories,400regular128bytefiles; all cleaned after benchmark"
+      },
+      "limits": [
+        "Warm filesystem metadata; fresh recount each iteration.",
+        "No simulation, renderer, lease or browser: no end-to-end improvement or timing-target pass follows."
+      ]
+    },
+    "shutdown_focused": {
+      "path": "/tmp/palimpsest-m3-final-shutdown-focused.log",
+      "sha256": "afe762aa3fc6b0396f3201c281a3064476d8c0489af2e4e56a9f51b89b806523",
+      "size_bytes": 1465,
+      "status": "passed",
+      "tests": 3,
+      "seconds": 1.701,
+      "scope": "Failed spawn close/shutdown, cached-process and semaphore release before interpreter exit, unread-command feeder release.",
+      "source_attribution": "Final cleanup/guard committed as a0828f5 after these tests; local log contains no embedded source manifest.",
+      "limits": [
+        "Not a new full-suite result or a whole-service SIGTERM qualification."
+      ]
+    },
+    "browser_v2": {
+      "path": "runs/m3-ui-evidence/20261002T080624Z/final-verification.json",
+      "sha256": "4c0dd1aa51ccd576dddfc505742a6b8ea41a2301f70b3d1b1a2195353493bf27",
+      "size_bytes": 39459,
+      "performance_report": {
+        "path": "runs/m3-ui-evidence/20261002T080624Z/ui-performance.json",
+        "sha256": "cb490404ba1f230ce9f8ef9c49602ac2c4ec29e33eb4d05cdbd2a43f03412a5a",
+        "size_bytes": 25997
+      },
+      "source_before": {
+        "path": "runs/m3-ui-evidence/20261002T080624Z/source-before.json",
+        "sha256": "662377227855460fda7efaedef3bf5d9af658d5f243716d38d642392423b7294",
+        "size_bytes": 3167
+      },
+      "source_after": {
+        "path": "runs/m3-ui-evidence/20261002T080624Z/source-after.json",
+        "sha256": "517e042e67bbf1df3d5216fde8de60e39d9103166028f14df1587273a75f5533",
+        "size_bytes": 2998
+      },
+      "shutdown_report": {
+        "path": "runs/m3-ui-evidence/20261002T080624Z/shutdown.json",
+        "sha256": "1ec2322b31772e2c654ecccf2dcd2ff8231a5c123325f1157fb0a288ee85403d",
+        "size_bytes": 860
+      },
+      "stderr": {
+        "path": "runs/m3-ui-evidence/20261002T080624Z/server.stderr.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_bytes": 0
+      },
+      "source_commit": "ec1d2e6bce368024ed7a9829dec6f93eed317968",
+      "source_unchanged": true,
+      "scope": "Actual CPU/manual browser workflows and measured full-window cadence; no full-model/GPU qualification",
+      "performance_targets_passed": false,
+      "rate_method": "event count / entire declared window seconds",
+      "window_ms": 8041.199999999255,
+      "sample_arrival": {
+        "count": 225,
+        "window_ms": 8041.199999999255,
+        "hz": 27.980898373379702
+      },
+      "dom_sample_commit": {
+        "count": 225,
+        "window_ms": 8041.199999999255,
+        "hz": 27.980898373379702
+      },
+      "after_commit_animation_frame": {
+        "count": 220,
+        "window_ms": 8041.199999999255,
+        "hz": 27.35910063174904
+      },
+      "animation_frame_opportunities": {
+        "count": 472,
+        "window_ms": 8041.199999999255,
+        "hz": 58.6977068099343
+      },
+      "sample_gaps": {
+        "leading_ms": 4.299999997019768,
+        "trailing_ms": 9.5,
+        "largest_internal_ms": 202.80000000074506
+      },
+      "acknowledgement_ms": {
+        "count": 12,
+        "p50": 29.699999999254942,
+        "p95": 43.400000002235174,
+        "p99": 43.400000002235174
+      },
+      "observed_application_ms": {
+        "count": 12,
+        "p50": 43.20000000298023,
+        "p95": 53.80000000074506,
+        "p99": 53.80000000074506
+      },
+      "percentile_method": "nearest rank ceil(p*n)",
+      "worker_active": {
+        "active_wall_seconds": 9.012768470998708,
+        "advanced_simulation_seconds": 8.899999999999899,
+        "rtf": 0.9874879210132075
+      },
+      "targets": {
+        "display_hz": 30,
+        "acknowledgement_p95_ms_below": 150
+      },
+      "meets_targets": {
+        "actual_sample_hz": false,
+        "actual_dom_updates_hz": false,
+        "acknowledgement_p95": true
+      },
+      "shutdown": {
+        "pid": 228795,
+        "start_ticks": "2205195",
+        "process_group": 228788,
+        "signal": "SIGTERM",
+        "signal_scope": "PID only",
+        "seconds_until_process_exit": 0.20053867000024184,
+        "escalation": false,
+        "owner_closes": [
+          {
+            "run_id": "a37cde96c52241fd9655d9574a3b3503",
+            "http_status": 200,
+            "status": "closed"
+          },
+          {
+            "run_id": "c58c4b557b644599b0c1c32f060ac7fa",
+            "http_status": 200,
+            "status": "closed"
+          },
+          {
+            "run_id": "f128050494db48449034d41668313cd1",
+            "http_status": 200,
+            "status": "closed"
+          },
+          {
+            "run_id": "3dba6e0619c14f6eb94b439f9cafce14",
+            "http_status": 200,
+            "status": "closed"
+          }
+        ],
+        "exec_exit_code": 143,
+        "stderr_bytes": 0,
+        "resource_tracker_warning_present": false,
+        "port_8766_listening": false,
+        "remaining_matching_python_processes": []
+      },
+      "limits": [
+        "full-window rates include leading, trailing and internal gaps; interarrival cadence is separate",
+        "timestamp arrays are capped at 2000 events per channel",
+        "animation frames are callback opportunities, not physical scanout or invented samples",
+        "ack timing starts at browser fetch dispatch and includes response body parsing; loading excluded",
+        "application timing is first authoritative applied/rejected receipt observed over WebSocket, including delivery delay",
+        "manual CPU profile only; not a full-model/GPU performance claim",
+        "All four owner close responses assert HTTP 200/status closed; actual PID-only SIGTERM has no semaphore warning or surviving matching process.",
+        "Display target remains unmet; the M3 contract requires measurement and explicit labelling, not relabelling 27.98 Hz as a 30 Hz pass.",
+        "This short manual browser run with pause cycles is not the natural-throughput, full-model, offline or hour-long gate."
+      ],
+      "workflows_passed": 4,
+      "workflow_names": [
+        "core manual lifecycle/intervention/branch/export",
+        "action/policy replay and disconnect/reload/export",
+        "trajectory input isolation and keyboard/error recovery",
+        "actual responsiveness/cadence instrumentation"
+      ],
+      "replay_compared_ticks": {
+        "actions": 256,
+        "policy": 256,
+        "actions_cancelled": 67
+      }
+    },
+    "offline_full": {
+      "path": "runs/m3-offline-full-20261002/offline-index.json",
+      "sha256": "b48fefbbdf7c7e248cab0cc6ecce268e0c1ebf856702276d5dc66c7a7df31867",
+      "size_bytes": 16404,
+      "raw_report": {
+        "path": "runs/m3-offline-full-20261002/report.json",
+        "sha256": "98271907d609f5bb4a08bb4572f5090e839ffb8320a1f2bb1bd0029fa310da5a",
+        "size_bytes": 5682
+      },
+      "network_report": {
+        "path": "runs/m3-offline-full-20261002/network.json",
+        "sha256": "fadcbb918fa2373b2d3b4ac0beccc8c2c749e9a075625daf34e3919e71b4da3a",
+        "size_bytes": 21853
+      },
+      "setup_report": {
+        "path": "runs/m3-offline-full-20261002/setup.json",
+        "sha256": "aee64a2c0e84b8ed29142a0e8d707fb70bd5deb745e8e77905fe454ff8881d57",
+        "size_bytes": 3206
+      },
+      "full_model_report": {
+        "path": "runs/m3-offline-full-20261002/full-flynn/verification.json",
+        "sha256": "a062610f588e87e7857e2b53009ca92bdeffdfe3e8e5ce936c092702a976d394",
+        "size_bytes": 156253
+      },
+      "api_smoke_report": {
+        "path": "runs/m3-offline-full-20261002/api-smoke/report.json",
+        "sha256": "fb84871ecdc0182725be8ae5597f3c66de88db632b8a67ac83e0901986d328cb",
+        "size_bytes": 13360
+      },
+      "status": "passed",
+      "source_commit": "ec1d2e6bce368024ed7a9829dec6f93eed317968",
+      "source_unchanged": true,
+      "wall_seconds": 213.99375994000002,
+      "scope": "OS network isolation + fresh cached Python/Node setup + actual cached CPU manual/teacher API smoke + actual CPU full-FLYNN lab verification",
+      "setup": {
+        "status": "passed",
+        "node_pin": "24.21.0",
+        "upstream_commit": "8d964599119b420de67ee259434d273651a1a76d",
+        "assets_shared_not_copied": true,
+        "all_phase_commands_returned_zero": true
+      },
+      "network": {
+        "child_user_owns_network": true,
+        "interface_names": [
+          "lo"
+        ],
+        "external_connections": [
+          {
+            "address": "1.1.1.1",
+            "errno": 101,
+            "message": "[Errno 101] Network is unreachable"
+          },
+          {
+            "address": "2606:4700:4700::1111",
+            "errno": 101,
+            "message": "[Errno 101] Network is unreachable"
+          }
+        ],
+        "all_observed_descendants_isolated": true,
+        "observed_processes": 40,
+        "host_namespaces_unchanged": true
+      },
+      "full_cpu_flynn": {
+        "status": "passed",
+        "wall_seconds": 149.11454323399812,
+        "prefix_ticks": 4,
+        "continuation_ticks": 4,
+        "continuation_status": "passed",
+        "max_abs_continuation_error": 0.0,
+        "source_run_id": "d89475c11ef34440adfdd3f503764712",
+        "branch_run_id": "b1012576189c4385be6eee4180a2e99c",
+        "recorded_runs": 5,
+        "actions_replay_ticks": 8,
+        "policy_replay_ticks": 8,
+        "compared_events_each": 22,
+        "export_formats": [
+          "svg",
+          "png",
+          "bundle"
+        ],
+        "live_intervention_scope": "Exploratory world intervention; no required direction or size of behavioral effect"
+      },
+      "api_smoke": {
+        "status": "passed",
+        "qualification": "short-smoke",
+        "measured_seconds": 55.000138514002174,
+        "completed_cycles": 3,
+        "controllers_seen": [
+          "manual",
+          "teacher"
+        ],
+        "cleanup": {
+          "server_exit_code": -15,
+          "owned_survivors_requiring_kill": []
+        },
+        "gates": {
+          "duration_completed": true,
+          "mixed_operations_completed": true,
+          "http_receipt_p95_below_150ms": true,
+          "one_owner": true,
+          "resource_budgets": true,
+          "late_server_growth_within_budget": null,
+          "clean_shutdown": true,
+          "runtime_source_unchanged": true
+        }
+      },
+      "cleanup": {
+        "owned_survivors_requiring_kill": [],
+        "resource_tracker_warning_paths": [],
+        "log_files_checked": 38
+      },
+      "limits": [
+        "Fresh setup requires existing cached Python, Node and package/Git objects",
+        "Shared Git object sources and verified asset root must remain available",
+        "Short offline CPU gates; not60-minute endurance, CUDA, browser FPS, full-model real-time or physical qualification",
+        "Transient sub100ms processes may be missed by namespace observations; executed commands are separately recorded"
+      ]
+    },
+    "flynn_240s_smoke": {
+      "path": "runs/m3-flynn-smoke-20261002/report.json",
+      "sha256": "5fb0eacc2c2f8c3af7fd7d5849b358ca86d9433e296627e1a58e283c8e245d18",
+      "size_bytes": 11636,
+      "controller_metrics": {
+        "path": "runs/m3-flynn-smoke-20261002/controller-metrics.json",
+        "sha256": "70c0e374ac4b87f6aed878c11e9181eff7975b8f39f8242eacd5100355b6de99",
+        "size_bytes": 2440
+      },
+      "status": "passed",
+      "qualification": "short-smoke",
+      "source_commit": "19787f72c997961bbc73502f4b6e51675368ee64",
+      "source_unchanged": true,
+      "verifier_sha256": "8b469245c4e737bea7a35b7976c4dae6de9c743bdbe845b4bdc1cf7f252f7b76",
+      "scope": "actual loopback HTTP + authenticated WebSocket, CPU flynn; browser-independent",
+      "measured_seconds": 240.000149083,
+      "completed_cycles": 2,
+      "recorded_ticks": 56,
+      "simulated_seconds": 1.1200000000000006,
+      "inference_executed_ticks": 38,
+      "actions_replay_ticks_without_inference": 18,
+      "controller_kernel_metrics": {
+        "source": {
+          "ticks": 18,
+          "policy_mean_seconds": 0.01316663300005732,
+          "policy_p95_seconds": 0.015384405000077095,
+          "kernel_rtf": 1.1858768002335949
+        },
+        "branch": {
+          "ticks": 2,
+          "policy_mean_seconds": 0.016697797998858732,
+          "policy_p95_seconds": 0.016884541997569613,
+          "kernel_rtf": 0.3230615196387203
+        },
+        "policy_replay": {
+          "ticks": 18,
+          "policy_mean_seconds": 0.012915561999357629,
+          "policy_p95_seconds": 0.016034748001402477,
+          "kernel_rtf": 1.3502026756025698
+        },
+        "actions_replay": {
+          "ticks": 18,
+          "policy_mean_seconds": 1.2004833479295485e-05,
+          "policy_p95_seconds": 1.7523001588415354e-05,
+          "kernel_rtf": 11.602291993676102
+        }
+      },
+      "observed_burst_rtf": [
+        0.7176895657691049,
+        0.7066220484609269
+      ],
+      "http_receipt_p95_seconds": 0.02171295299922349,
+      "observed_application_p95_seconds": 0.10718103500039433,
+      "resource_samples": 48,
+      "resource_observed_max": {
+        "total_rss_bytes": 1525854208,
+        "total_fds": 92,
+        "total_threads": 16,
+        "root_bytes": 22745509,
+        "owner_count": 1
+      },
+      "late_growth_gate": null,
+      "cleanup": {
+        "server_exit_code": -15,
+        "owned_survivors_requiring_kill": []
+      },
+      "limits": [
+        "240 seconds is the mixed-operation wall-clock window, not continuous inference: only 56 ticks/1.12 simulated seconds were recorded.",
+        "All eight recordings close paused; this is not navigation success or natural episode throughput.",
+        "Pooled kernel RTF1.544735 includes18 inference-bypassing action replay ticks and excludes loading/API/recording; it is not FLYNN throughput.",
+        "Source and policy-replay latency samples each contain18 ticks, branches only2; kernel-only rates are not owner end-to-end rates.",
+        "Two run-to-observed-pause bursts include IPC/polling and are below1x; no full-model real-time claim.",
+        "The short-smoke late-growth gate is null; no hour-long or unbounded-growth qualification."
+      ]
+    },
+    "final_validation": {
+      "path": "runs/m3-validation-20261002/report.json",
+      "sha256": "7a017709e7dceaf46ae3ce90aa5ce221b0ceac8a39f6cc28d61ddf35d2e8f8ba",
+      "size_bytes": 24840,
+      "status": "passed",
+      "source_commit": "a24c2379716bf21f1d497896e25a1227f8de5c49",
+      "source_unchanged": true,
+      "tracked_files_hashed": 69,
+      "python_tests": 193,
+      "python_test_seconds": 59.444,
+      "python_skips": 0,
+      "scope": "Actual EGL opt-in enabled; FLYNN suite fixture is a small real upstream cell, full model evidence remains separate.",
+      "checks": [
+        {
+          "name": "natural_completion_performance",
+          "status": "passed",
+          "exit_code": 0,
+          "wall_seconds": 38.815944953003054,
+          "wall_scope": "exact verifier-measured wall; process import overhead excluded"
+        },
+        {
+          "name": "teacher_cli_evaluate",
+          "status": "passed",
+          "exit_code": 0,
+          "wall_seconds": 6.832045638002455,
+          "wall_scope": "command process wall including startup"
+        },
+        {
+          "name": "actual_egl_unittest",
+          "status": "passed",
+          "exit_code": 0,
+          "wall_seconds": 61.34007644399753,
+          "wall_scope": "command process wall including startup"
+        },
+        {
+          "name": "node_measurement",
+          "status": "passed",
+          "exit_code": 0,
+          "wall_seconds": 0.3809484609992069,
+          "wall_scope": "command process wall including startup"
+        },
+        {
+          "name": "node_build",
+          "status": "passed",
+          "exit_code": 0,
+          "wall_seconds": 1.2690045710005506,
+          "wall_scope": "command process wall including startup"
+        }
+      ],
+      "test_log": {
+        "path": "runs/m3-validation-20261002/actual_egl_unittest.stderr.log",
+        "sha256": "34c9947b7301790ff1be013b58648fdb6a1dfd651c1fff4b0b24f438853ccabc",
+        "size_bytes": 44571
+      },
+      "teacher_cli": {
+        "path": "runs/m3-cli-evaluate-20261002/teacher/supervisor.json",
+        "sha256": "c010e26d3d128399a60ee2596988eba4c4a93284ce5625632936258a60a028f6",
+        "size_bytes": 3041
+      },
+      "cleanup": "No matching Python owner/verifier/server processes; listener inventory unchanged; no resource_tracker warnings."
+    },
+    "final_natural_performance": {
+      "path": "runs/m3-performance-final-20261002/report.json",
+      "sha256": "70e21c70fb71fb7ddfd51435142435083c247f6be6ac9b0db7f881cc638fdf4e",
+      "size_bytes": 10778,
+      "status": "passed",
+      "source_commit": "a24c2379716bf21f1d497896e25a1227f8de5c49",
+      "source_unchanged": true,
+      "protocol": "natural-episode-completion-after-minimum-ticks",
+      "wall_seconds": 38.815944953003054,
+      "controllers": {
+        "manual": {
+          "recorded_ticks": 600,
+          "worker_active": {
+            "active_wall_seconds": 11.99870104099682,
+            "advanced_simulation_seconds": 11.999999999999833,
+            "rtf": 1.0001082583021756
+          },
+          "outer_rtf": 0.9955734678073362,
+          "kernel_rtf": 4.375393327144184,
+          "loading_wall_seconds": 5.095936936002545
+        },
+        "teacher": {
+          "recorded_ticks": 653,
+          "worker_active": {
+            "active_wall_seconds": 13.056012486998952,
+            "advanced_simulation_seconds": 13.05999999999981,
+            "rtf": 1.0003054158384752
+          },
+          "outer_rtf": 0.98877306496588,
+          "kernel_rtf": 2.4584982436083225,
+          "loading_wall_seconds": 5.130765157002315
+        }
+      },
+      "scope": "Actual spawned CPU manual/teacher sparse-navigation/checker owners, natural episode completion; narrow host-specific active-time margin. Outer RTF remains below one."
+    }
+  },
+  "earlier_performance": [
+    {
+      "path": "runs/m3-performance-600ticks-20261002/report.json",
+      "sha256": "91c095deee8efc93ef502917ec5e985f374b391d9743439d2f6f842ab7a296a4",
+      "size_bytes": 386,
+      "reported_status": "running",
+      "protocol": "not retained",
+      "assessment": "Incomplete artifact with raw status running; no terminal result or controller measurements.",
+      "source_commit": null,
+      "script_sha256": "fbcad98af1e54a69f557808892230bf5c47883a45c9d87d5a91d95f76055032b"
+    },
+    {
+      "path": "runs/m3-performance-startup-failure-20261002/report.json",
+      "sha256": "57a877f63299ca626360b97dabe9966ffe53162e6d033d6d7a5229d4564a8560",
+      "size_bytes": 533,
+      "reported_status": "failed",
+      "protocol": "startup only",
+      "assessment": "ModuleNotFoundError: palimpsest.storage; no performance result.",
+      "source_commit": null,
+      "script_sha256": "75bd93677c6f1348fb5a48b7835f72c1de28de6ec1aead5ba6967d0b4ef3afc2",
+      "wall_seconds": 0.0003609890009101946
+    },
+    {
+      "path": "runs/m3-performance-600-20261002/report.json",
+      "sha256": "cbae7c1d6c2b80c19b9d0f3e8811b92b0c4f1a78688bc836c0af043493881653",
+      "size_bytes": 8325,
+      "reported_status": "failed",
+      "protocol": "operator-pause at minimum ticks (legacy report)",
+      "assessment": "Both active real-time factors below 1; failed unchanged threshold.",
+      "source_commit": "a8edfb1af57387b6bbad863a794dc3dea4c831df",
+      "script_sha256": "83b43746a1b586ca827cd66a6edbd071acddebc4547176551ad64fad40337705",
+      "wall_seconds": 38.49154938599895,
+      "controllers": {
+        "manual": {
+          "recorded_ticks": 600,
+          "active_rtf": 0.9626785329523126,
+          "outer_rtf": 0.9602319160571687
+        },
+        "teacher": {
+          "recorded_ticks": 601,
+          "active_rtf": 0.9468697810343127,
+          "outer_rtf": 0.9364256687070263
+        }
+      }
+    },
+    {
+      "path": "runs/m3-performance-600-20261002b/report.json",
+      "sha256": "23ee0efaec9eea2b3c5d8066c7b6a556e7877c366f7eb5f2b6dcb0a1d75c9373",
+      "size_bytes": 8329,
+      "reported_status": "failed",
+      "protocol": "operator-pause at minimum ticks (legacy report)",
+      "assessment": "Manual active factor passes; teacher is below 1; overall failure.",
+      "source_commit": "58307142e8bc66a79714c7ebf6a67cfa273618c4",
+      "script_sha256": "83b43746a1b586ca827cd66a6edbd071acddebc4547176551ad64fad40337705",
+      "wall_seconds": 35.18278809700132,
+      "controllers": {
+        "manual": {
+          "recorded_ticks": 600,
+          "active_rtf": 1.0000324640538918,
+          "outer_rtf": 0.9981161961644419
+        },
+        "teacher": {
+          "recorded_ticks": 601,
+          "active_rtf": 0.9987449927461322,
+          "outer_rtf": 0.9876867583242095
+        }
+      }
+    },
+    {
+      "path": "runs/m3-performance-natural-20261002/report.json",
+      "sha256": "677e446b0896f112a48860b2441e9ce051397dbe0bbf4d73f9efd449f4a5a49b",
+      "size_bytes": 41171,
+      "reported_status": "failed",
+      "protocol": "natural-episode-completion-after-minimum-ticks",
+      "assessment": "Manual reached 600 ticks then CloseTimeout. No qualified controller result; teacher was not measured.",
+      "source_commit": "becab6ced7b09fdefbc5409ddac920e8796c1cb3",
+      "script_sha256": "caf466fb4d363aef5afa7b65b307a4c4e495bedf08edabf879065c00b42c6e72",
+      "wall_seconds": 29.52150959500068
+    }
+  ],
+  "requirements": [
+    {
+      "id": "LAB-001",
+      "status": "test-backed",
+      "evidence": [
+        "cached_setup",
+        "offline_full"
+      ],
+      "limits": "Fresh cached checkout/setup and actual full-CPU-FLYNN plus manual/teacher CLI API smoke pass inside verified isolated networking; existing caches/shared assets required."
+    },
+    {
+      "id": "LAB-002",
+      "status": "test-backed",
+      "evidence": [
+        "python_suite",
+        "final_validation"
+      ],
+      "limits": "Actual six-scenario and explicit controller-replacement tests; no general compatibility claim beyond registered profiles."
+    },
+    {
+      "id": "LAB-003",
+      "status": "test-backed",
+      "evidence": [
+        "python_suite",
+        "final_validation"
+      ],
+      "limits": "Lifecycle, stale commands, idempotency, queue bounds and actual owner checks."
+    },
+    {
+      "id": "LAB-004",
+      "status": "test-backed",
+      "evidence": [
+        "python_suite",
+        "natural_performance",
+        "final_validation",
+        "final_natural_performance"
+      ],
+      "limits": "Actual time-limit and goal endings; injected stop/failure and close-time diagnostics remain distinct."
+    },
+    {
+      "id": "LAB-005",
+      "status": "test-backed",
+      "evidence": [
+        "python_suite",
+        "browser_v1",
+        "browser_v2",
+        "final_validation"
+      ],
+      "limits": "Queue/revision checks, actual edits and retained browser intervention workflow on recorded sources."
+    },
+    {
+      "id": "LAB-006",
+      "status": "test-backed",
+      "evidence": [
+        "python_suite",
+        "browser_v1",
+        "browser_v2",
+        "final_validation"
+      ],
+      "limits": "Retained aligned-panel workflows pass. Current acknowledgement p95 is 43.4 ms; actual full-window display 27.98 Hz remains below the labelled 30 Hz target."
+    },
+    {
+      "id": "LAB-007",
+      "status": "test-backed",
+      "evidence": [
+        "python_suite",
+        "natural_performance",
+        "historic_m2",
+        "offline_full",
+        "flynn_240s_smoke",
+        "final_validation"
+      ],
+      "limits": "Current offline paths plus240-second full-FLYNN CPU mixed smoke pass; only38 inference-executed ticks, with explicit kernel/burst timing scopes and no real-time claim."
+    },
+    {
+      "id": "LAB-008",
+      "status": "test-backed",
+      "evidence": [
+        "python_suite",
+        "final_validation"
+      ],
+      "limits": "Schema/leakage and eye-mask tests; privileged teacher is labelled and not an equal-information baseline."
+    },
+    {
+      "id": "LAB-009",
+      "status": "test-backed",
+      "evidence": [
+        "python_suite",
+        "offline_full",
+        "flynn_240s_smoke",
+        "final_validation"
+      ],
+      "limits": "Recorded inputs/events/configuration, corruption checks, quotas and durable-prefix recovery; incomplete artifacts are not valid completed replay sources."
+    },
+    {
+      "id": "LAB-010",
+      "status": "test-backed",
+      "evidence": [
+        "python_suite",
+        "historic_m2",
+        "offline_full",
+        "flynn_240s_smoke",
+        "final_validation"
+      ],
+      "limits": "Actual contact/recovery/endings/RNG tests and current full-FLYNN CPU four-tick branch continuation with zero max error; short scope only."
+    },
+    {
+      "id": "LAB-011",
+      "status": "test-backed",
+      "evidence": [
+        "python_suite",
+        "historic_m2",
+        "browser_v1",
+        "browser_v2",
+        "offline_full",
+        "flynn_240s_smoke",
+        "final_validation"
+      ],
+      "limits": "Actual replay tests and current browser manual replays; offline full-FLYNN actions/policy each pass 8 ticks/22 events. Modes retain distinct neural comparison boundaries."
+    },
+    {
+      "id": "LAB-012",
+      "status": "test-backed",
+      "evidence": [
+        "python_suite",
+        "historic_m2",
+        "final_validation"
+      ],
+      "limits": "Provenance precedes trace comparison; no causal interpretation of exploratory different-duration traces."
+    },
+    {
+      "id": "LAB-013",
+      "status": "test-backed",
+      "evidence": [
+        "python_suite",
+        "offline_full",
+        "final_validation"
+      ],
+      "limits": "Recorded world-coordinate projection, registered snapshot hashes, bounded sidecars, exclusivity and quota failures tested."
+    },
+    {
+      "id": "LAB-014",
+      "status": "test-backed",
+      "evidence": [
+        "python_suite",
+        "browser_v1",
+        "browser_v2",
+        "offline_full",
+        "flynn_240s_smoke",
+        "final_validation"
+      ],
+      "limits": "Recovery and semaphore/feeder tests pass. Browser v2 asserts four closed owners and clean PID-only service SIGTERM without semaphore warning, escalation or matching survivors. Prior v1 warning remains retained."
+    },
+    {
+      "id": "LAB-015",
+      "status": "test-backed",
+      "evidence": [
+        "python_suite",
+        "final_validation"
+      ],
+      "limits": "NaN/infinity/shape failures before stepping, watchdogs, recorder faults and final native-log fsync failure tested."
+    },
+    {
+      "id": "LAB-016",
+      "status": "test-backed",
+      "evidence": [
+        "python_suite",
+        "cached_setup",
+        "historic_m2",
+        "offline_full",
+        "flynn_240s_smoke",
+        "final_validation"
+      ],
+      "limits": "Current teacher CLI evaluation completes30ticks; offline CLI/API and full-FLYNN CPU verification remain separately scoped."
+    },
+    {
+      "id": "ART-001",
+      "status": "test-backed",
+      "evidence": [
+        "python_suite",
+        "browser_v1",
+        "browser_v2",
+        "final_validation"
+      ],
+      "limits": "Recorded geometry tests plus retained actual browser trajectory/input-isolation and keyboard/error-recovery workflows, most recently source ec1d2e6."
+    }
+  ],
+  "historic_evidence": [
+    {
+      "id": "historic_m2",
+      "path": "docs/reports/m2-interactive-lab.json",
+      "sha256": "784b6f1e3c0b100ad97d6c6d73f141324192e25e70245da5cab6d1311ccca8c0",
+      "size_bytes": 41941,
+      "narrative": {
+        "path": "docs/reports/m2-interactive-lab.md",
+        "sha256": "026d9f32b5aaab87e5d45e6b72c79ff52849548fd06afc5638b91358af96799c",
+        "size_bytes": 5243
+      },
+      "scope": "M2 actual browser, full-FLYNN CPU replay/continuation and exports on their recorded sources; not a requalification of current M3 runtime."
+    }
+  ],
+  "numerical_boundary": {
+    "float_atol": 1e-06,
+    "float_rtol": 1e-06,
+    "cameras_and_integers": "exact",
+    "control_interval_seconds": 0.02,
+    "cuda_repeatability": "Unqualified; retained M1 upstream sparse-CSR variation/strict-continuation failure."
+  },
+  "pending": [
+    "Frozen-runtime 60-minute mixed manual/teacher/FLYNN endurance with complete cycles per controller, declared RSS/FD/thread/storage bounds and clean child shutdown.",
+    "Final release-status review after the hour gate; keep the unmet27.98Hz display target and historical failures visible."
+  ],
+  "limits": [
+    "This index hashes small reports and runtime files only; it does not rescan large recordings or model assets.",
+    "Raw runs are ignored local artifacts; source reports retain their original identities and failed outcomes.",
+    "Fault-injected recorder disk-failure Engine test uses fixture physics; actual MuJoCo continuation and quota-publication tests are separate.",
+    "No new weight learning, memory effect, topology result, original checkpoint training-lineage claim or physical-rover qualification.",
+    "Physical hardware remains blocked/unqualified and is not required for R1.",
+    "The later five-test metadata result has no retained log and is not counted as qualification evidence here."
+  ],
+  "measured_performance_runtime_commit": "f0638861b4c5cc830a613fe1a8aaf55d19621368",
+  "current_runtime_commit": "a0828f5fb4dd1a8a60535e81b47b1a3a4cba0d7b",
+  "unmet_measured_targets": [
+    {
+      "name": "30 Hz display target",
+      "measured_full_window_hz": 27.980898373379702,
+      "source": "browser_v2",
+      "status": "unmet and explicitly labelled",
+      "limitation": "Callback opportunities are not fresh-data updates or scanout; no 30 Hz pass is claimed."
+    }
+  ]
+}

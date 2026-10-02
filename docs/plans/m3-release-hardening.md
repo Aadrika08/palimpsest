@@ -15,13 +15,13 @@ Pacing uses fixed 20 ms simulation ticks and deadlines including computation, wi
 
 ## Release checks
 
-- [ ] All lifecycle, allowlist, interruption, full-state recovery, replay and export checks pass with actual EGL enabled.
-- [ ] Aggregate storage/free-space/count bounds and native/Python log caps stop explicitly before exceeding their configured budget; recovery preserves the published prefix.
-- [ ] Abrupt owner exit, renderer stalls, recorder failures, browser disconnect and explicit headless continuation have runnable checks and retained diagnostics.
-- [ ] Cached setup and one-command launch run inside an isolated network namespace without changing host networking; include the cached full-model profile where feasible.
-- [ ] Manual and teacher supplied simple profiles meet real-time execution on this host; full FLYNN latency/RTF is measured with its actual device/profile.
-- [ ] Actual browser command receipt p95 is below 150 ms outside loading; report application latency separately. Measure 30 FPS display target and label any unmet target.
-- [ ] Overlay changes cannot mutate policy inputs; controls remain accessible by keyboard and usable at narrow widths.
+- [x] All lifecycle, allowlist, interruption, full-state recovery, replay and export checks pass with actual EGL enabled.
+- [x] Aggregate storage/free-space/count bounds and native/Python log caps stop explicitly before exceeding their configured budget; recovery preserves the published prefix.
+- [x] Abrupt owner exit, renderer stalls, recorder failures, browser disconnect and explicit headless continuation have runnable checks and retained diagnostics.
+- [x] Cached setup and one-command launch run inside an isolated network namespace without changing host networking; include the cached full-model profile where feasible.
+- [x] Manual and teacher supplied simple profiles meet real-time execution on this host; full FLYNN latency/RTF is measured with its actual device/profile.
+- [x] Actual browser command receipt p95 is below 150 ms outside loading; report application latency separately. Measure 30 FPS display target and label any unmet target.
+- [x] Overlay changes cannot mutate policy inputs; controls remain accessible by keyboard and usable at narrow widths.
 - [ ] Frozen-runtime 60-minute mixed-operation run passes declared resource/growth budgets with clean child shutdown and a complete report.
 - [ ] Requirements-to-evidence matrix, setup/recovery/retention instructions, licence/provenance limits and release status are committed. Push as Aadrika08 and open a stacked draft PR; do not merge automatically.
 
