@@ -1,0 +1,289 @@
+{
+  "schema_version": 1,
+  "date": "2026-10-02",
+  "claim": "development-source-guard-failure",
+  "source_commit": "2f43840ce9d27e7fdaecda4165fe6d2e2df626f8",
+  "directory": "runs/m5-memory-goal-handoff-20261002",
+  "run_id": "c86b56841b9344de91ae4c03ba27322c",
+  "report_sha256": "53c36769a41da7f5939c562c65f9871a28005dc1e60e53a20e28937a00d8d243",
+  "plan_sha256": "dc55610cc2e71167829cf12ab0e874e927d4c46ed59889cca8f84512fb0fcb90",
+  "worker_report_sha256": "04cfb982f19c6621ae79c89ebc4f0ab2315b6b427ac47defe1e02b7c639ec9e6",
+  "status": "mechanism_unverified",
+  "worker_status": "failed",
+  "worker_error": {
+    "type": "ValueError",
+    "message": "Goal handoff changed memory/physics or did not apply exactly"
+  },
+  "recording_status": "completed",
+  "phase": "paused",
+  "close_reason": "operator_closed",
+  "gate_result": "pending",
+  "cleanup_error": null,
+  "numeric_ticks": 300,
+  "recording_bytes": 61744394,
+  "task_pass": false,
+  "r2_complete": false,
+  "held_out_executed": false,
+  "runtime_or_replay_during_audit": false,
+  "unattempted_stages": [
+    {
+      "stage": "anchor",
+      "run_id": "56bd3b143f724504b543826767229398",
+      "status": "unattempted",
+      "reason": "earlier first failure; no retry or replacement"
+    },
+    {
+      "stage": "own",
+      "run_id": "1dcd1471576448fa836716f8be8ed6c8",
+      "status": "unattempted",
+      "reason": "earlier first failure; no retry or replacement"
+    },
+    {
+      "stage": "swapped",
+      "run_id": "a89fa9fa5cc94a62ad45b188ef2fa7e9",
+      "status": "unattempted",
+      "reason": "earlier first failure; no retry or replacement"
+    },
+    {
+      "stage": "sham",
+      "run_id": "db67e791093f424c926137e59a5785c5",
+      "status": "unattempted",
+      "reason": "earlier first failure; no retry or replacement"
+    },
+    {
+      "stage": "no-U",
+      "run_id": "128fb9097260453bb62d8b5aba44f628",
+      "status": "unattempted",
+      "reason": "earlier first failure; no retry or replacement"
+    }
+  ],
+  "outer_supervisor": {
+    "origin": "root terminal execution report",
+    "returncode": 1,
+    "elapsed_seconds": 19.48
+  },
+  "child_supervisor": {
+    "schema_version": 1,
+    "status": "failed",
+    "timeout_seconds": 160,
+    "started_utc": "2026-10-02T13:43:43.513184+00:00",
+    "output": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-experiments/runs/m5-memory-goal-handoff-20261002/runs/c86b56841b9344de91ae4c03ba27322c",
+    "returncode": 1,
+    "elapsed_seconds": 19.366555624001194
+  },
+  "protocol_sha256": "7ed387974a6d81cb48a6c183269b34e6e4cdf5a2dc4621be60053a74a59acc60",
+  "case_sha256": "02e99c315631db532ed86bfde2905e231a3ff4eecd926553ccc5e480ac788b9f",
+  "source_unchanged": true,
+  "actual_command_applied": {
+    "command_kind": "intervene",
+    "episode": 0,
+    "episode_step": 300,
+    "id": "source-goal-handoff-v3",
+    "kind": "command_applied",
+    "result": {
+      "applied_episode": 0,
+      "applied_revision": 301,
+      "applied_run_id": "c86b56841b9344de91ae4c03ba27322c",
+      "applied_tick": 300,
+      "id": "source-goal-handoff-v3",
+      "kind": "intervene",
+      "received_episode": 0,
+      "received_run_id": "c86b56841b9344de91ae4c03ba27322c",
+      "received_tick": 300,
+      "status": "applied"
+    },
+    "run_id": "c86b56841b9344de91ae4c03ba27322c",
+    "sequence": 2753,
+    "tick": 300
+  },
+  "actual_intervention": {
+    "change": {
+      "kind": "move_goal",
+      "new": {
+        "xy": [
+          -0.5,
+          -2.700000047683716
+        ]
+      },
+      "old": {
+        "xy": [
+          -1.2999999523162842,
+          2.5
+        ]
+      },
+      "simulation_time": 5.999999999999561
+    },
+    "episode": 0,
+    "episode_step": 300,
+    "id": "source-goal-handoff-v3",
+    "kind": "intervention",
+    "run_id": "c86b56841b9344de91ae4c03ba27322c",
+    "sequence": 2752,
+    "tick": 300
+  },
+  "last_recorded_pose": [
+    -1.2341991662979126,
+    0.6053884029388428,
+    0.15652213684807542
+  ],
+  "packet299_sha256": "fcbc111a9fe583da084205f3e8d2c0a34723a100e0036d1268886344d9f21fa3",
+  "final_m": {
+    "version": 1,
+    "facts": [
+      {
+        "id": "live-development-test-00000008-fact-a",
+        "subject_id": "live-development-test-00000008-subject-a",
+        "kind": "passability",
+        "estimate": "open",
+        "status": "observed",
+        "associations": [
+          {
+            "cue_id": "live-development-test-00000008-cue",
+            "relation": "local_cue"
+          }
+        ],
+        "inspection_landmark_id": "live-development-test-00000008-subject-a-inspection",
+        "evidence": {
+          "id": "sensor-282cc45e107407a9dd860df3198a43cd425dc2ae3bcc043977c603fc21307dd8",
+          "episode_id": "episode-0",
+          "tick": 29
+        },
+        "revision": 1,
+        "origin": "observed"
+      },
+      {
+        "id": "live-development-test-00000008-fact-z",
+        "subject_id": "live-development-test-00000008-subject-z",
+        "kind": "passability",
+        "estimate": "open",
+        "status": "observed",
+        "associations": [
+          {
+            "cue_id": "live-development-test-00000008-cue",
+            "relation": "paired_cue"
+          }
+        ],
+        "inspection_landmark_id": "live-development-test-00000008-subject-z-inspection",
+        "evidence": {
+          "id": "sensor-fec6fa08b50cd1b471dc9c67c6ffa13f3272af4c2294a05a2d0caa718fe34f12",
+          "episode_id": "episode-0",
+          "tick": 299
+        },
+        "revision": 1,
+        "origin": "observed"
+      }
+    ]
+  },
+  "final_e_sha256": "c95abb75984d8b4c0a1771181548e2b413bd66374b5e2d62b32d95cb62eb4b56",
+  "final_u_sha256": "70575d969610e9392033501a21f594e4a7a60d04f83bdc73e510fd5c32019fed",
+  "final_cursor_tick": 299,
+  "probe_or_native_snapshot_captured": false,
+  "checks": {
+    "terminal_hashes_counts": true,
+    "source_actions_and_override": true,
+    "real_evidence_backed_facts": true,
+    "collector_source_admission_unchanged": true,
+    "no_pre_event_trigger": true,
+    "matched_v2_all300_numeric_fields": {
+      "action": true,
+      "pose": true,
+      "next_pose": true,
+      "control": true,
+      "simulation_time": true
+    }
+  },
+  "matched_prefix_inference": {
+    "label": "inference from retained V2 native snapshot plus bitwise-identical V3 prefix; V3 post-guard operands not retained",
+    "v2_snapshot_sha256": "d0c63a90ba25da89c9e00765553d3587b904f47dd1e41d2e26ca780e57797697",
+    "v2_base_qpos_xy": [
+      -1.2342004354379925,
+      0.6053890620968724
+    ],
+    "expected_refreshed_float32_xy": [
+      -1.2342004776000977,
+      0.6053890585899353
+    ],
+    "cached_xy": [
+      -1.2341991662979126,
+      0.6053884029388428
+    ],
+    "expected_delta_m": [
+      -1.3113021850585938e-06,
+      6.556510925292969e-07
+    ],
+    "obstacle_qpos_xy_vs_retained_circles_exact": true,
+    "proposed_failed_predicate": "world['pose'] != before_world['pose'] after mj_forward refresh",
+    "limits": "No V3 post-guard world/qpos/site arrays were recorded, so direct predicate reconstruction is unavailable. Applied command and canonical goal are verified; site mismatch is not established."
+  },
+  "additional_admission_bug": {
+    "actual_snapshot_environment_keys": [
+      "values",
+      "absent"
+    ],
+    "frozen_validator_expectation": "flat environment._goal_xy",
+    "scope": "separate later validator mismatch; did not cause observed earlier guard failure"
+  },
+  "proposed_separate_fix": "V4 exact typed authoritative pre/post physical and model guards; cached/refreshed poses separately labelled; integration-after digest binding using existing snapshot API without serialized offsets; wrapped environment fixture; preserve old negative record",
+  "files": [
+    {
+      "path": "recording/manifest.json",
+      "bytes": 8790,
+      "sha256": "9a66ae2439288c0799236d2085b4611e7785ed5f6441644635179bb325a73682"
+    },
+    {
+      "path": "recording/events.jsonl",
+      "bytes": 2671604,
+      "sha256": "4662d30e8e96588a9412a5a761bc29329257b6b8b26ce9430b557a52a0ea0d4c"
+    },
+    {
+      "path": "recording/chunks/000000.npz",
+      "bytes": 6299892,
+      "sha256": "f4e564ffb6708e58e64ad7b7489f4cc1116dcc96b5cc1b0f8dae967ef27d3c94"
+    },
+    {
+      "path": "recording/chunks/000001.npz",
+      "bytes": 6299892,
+      "sha256": "e41c42876a155b277e35cd028a1f1c82a6bb31f210ab10a8cbfecba6abd871df"
+    },
+    {
+      "path": "recording/chunks/000002.npz",
+      "bytes": 6299892,
+      "sha256": "c6111de026ba4f9ee8282458bfeb8d4f389af5ab2d8112db1fc901eaaee82f28"
+    },
+    {
+      "path": "recording/chunks/000003.npz",
+      "bytes": 6299892,
+      "sha256": "7b2c8df3ce72b2d5dcbb5758023d46c251db906f22d56480a9c29afcd4f1bb6b"
+    },
+    {
+      "path": "recording/chunks/000004.npz",
+      "bytes": 6299892,
+      "sha256": "7e4dd11662de590a094c927206f8e639ea0839a806d5035520489d859cfcd8ff"
+    },
+    {
+      "path": "recording/chunks/000005.npz",
+      "bytes": 6299892,
+      "sha256": "e33777a89e672365df232b534df14a834e2835f0930b1acc7f2a13d6a47fc43e"
+    },
+    {
+      "path": "recording/chunks/000006.npz",
+      "bytes": 6299892,
+      "sha256": "0b73671654f0ba619a8bdfbbd3ec14f786c37f207859abf537335c3f1df4cea4"
+    },
+    {
+      "path": "recording/chunks/000007.npz",
+      "bytes": 6299892,
+      "sha256": "fc63abdb77178d171102563ea70098434bd3a2e8f9c1746deb318102e84a30b3"
+    },
+    {
+      "path": "recording/chunks/000008.npz",
+      "bytes": 6299892,
+      "sha256": "50db6f3f0e3038fd41c7ac1d2f00c0e3d84e6dbd9f3ea0a5faec00479570404f"
+    },
+    {
+      "path": "recording/chunks/000009.npz",
+      "bytes": 2364972,
+      "sha256": "6be423f7d1981280fa21ced633c9cdff21e73725f3e808d20c5464133a8a349a"
+    }
+  ]
+}
