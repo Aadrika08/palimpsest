@@ -82,7 +82,7 @@ class Engine:
     MAX_IDS = 4096
 
     def __init__(self, env, writer, controller="manual", policy=None, teacher=None, seed=0,
-                 scenario="reproduction", texture="checker"):
+                 scenario="reproduction", texture="checker", *, memory_case=None):
         import numpy as np
 
         if controller not in {"manual", "teacher", "flynn"}:
@@ -96,6 +96,12 @@ class Engine:
         self.env, self.writer = env, writer
         self.controller, self.policy, self.teacher = controller, policy, teacher
         self.scenario, self.texture = scenario, texture
+        self.memory_case = self._validate_memory_case(memory_case, scenario, controller)
+        if self.memory_case is not None:
+            from .memory import sha256
+            writer.manifest.update(memory_case=copy.deepcopy(self.memory_case),
+                memory_case_sha256=sha256(self.memory_case),
+                acquisition_protocol_sha256=self.memory_case['acquisition_protocol_sha256'])
         self.memory = self.world_task_state = None
         self.task_state = None
         if scenario in ('exploration-landmarks', 'encoder-homing') and controller == 'teacher':
@@ -124,9 +130,19 @@ class Engine:
         self._episode_started()
 
     @classmethod
+    def _validate_memory_case(cls, value, scenario, controller):
+        if value is None:
+            return None
+        from .memory_experiment import validate_world_case
+        case = validate_world_case(value)
+        if scenario != 'memory-passages' or controller == 'teacher' or case['acquisition'] and controller != 'manual':
+            raise ValueError('Runtime memory case requires its declared profile/manual acquisition controller')
+        return case
+
+    @classmethod
     def open(cls, repo_root, asset_root, output, controller="manual", device="cpu", seed=0,
              max_bytes=2 * 1024**3, scenario="reproduction", texture="checker", run_id=None,
-             storage_budget=None):
+             storage_budget=None, memory_case=None):
         """Create an actual pinned runtime. The caller owns its process watchdog."""
         from .assets import load_manifest, prepare_graph, sha256_file, verify_assets
         from .doctor import diagnose
@@ -137,6 +153,12 @@ class Engine:
             raise ValueError("unknown controller or device")
         seed = _seed(seed)
         profile = validate(scenario, texture, controller)
+        memory_case = cls._validate_memory_case(memory_case, scenario, controller)
+        case_manifest = {}
+        if memory_case is not None:
+            from .memory import sha256
+            case_manifest = {'memory_case': memory_case, 'memory_case_sha256': sha256(memory_case),
+                'acquisition_protocol_sha256': memory_case['acquisition_protocol_sha256']}
         run_id = uuid.uuid4().hex if run_id is None else uuid.UUID(run_id).hex
         root, assets = Path(repo_root).resolve(), Path(asset_root).resolve()
         os.environ.setdefault("MUJOCO_GL", "egl")
@@ -155,6 +177,7 @@ class Engine:
                 "integer_and_camera_exact": True,
                 "scope": "matching software/hardware regime; compare before claiming repeatability",
                 "cuda_limit": "upstream CSR inference can vary even with identical inputs and deterministic algorithms enabled"},
+            **case_manifest,
         }, max_bytes=max_bytes, storage_budget=storage_budget)
         env = None
         try:
@@ -190,7 +213,7 @@ class Engine:
                          lock_sha256=sha256_file(root / "uv.lock"),
                          source_sha256={str(path.relative_to(root)): sha256_file(path)
                                         for path in sorted((root / "src/palimpsest").glob("*.py"))})
-            return cls(env, writer, controller, policy, teacher, seed, scenario, texture)
+            return cls(env, writer, controller, policy, teacher, seed, scenario, texture, memory_case=memory_case)
         except BaseException as error:
             try:
                 writer.finish({"error": {"type": type(error).__name__, "message": str(error)}}, status="failed")
@@ -226,11 +249,11 @@ class Engine:
         self.observation, _ = self.env.reset(seed=self.seed)
         if self.scenario == 'memory-passages':
             from . import memory, memory_task, memory_world
-            self.world_task_state = memory_world.configure(self.env, memory_world.initial_state())
+            self.world_task_state = memory_world.configure(self.env, memory_world.initial_state(case=self.memory_case))
             episode_id = f'episode-{self.episode}'
             if self.memory is None:
                 self.memory = memory_task.initialize(
-                    memory.seed_m(memory_world.initial_facts(), []), {'version': 1, 'episodes': []},
+                    memory.seed_m(memory_world.initial_facts(self.world_task_state), []), {'version': 1, 'episodes': []},
                     memory.artifact(method='empty-v1'), episode_id=episode_id)
             else:
                 self.memory = memory_task.reset(self.memory, episode_id=episode_id)
@@ -751,6 +774,10 @@ class Engine:
             from .snapshots import controller_hashes
             state['memory'] = memory_task.validate_state(state['memory'])
             state['world_task_state'] = memory_world.validate_state(state['world_task_state'])
+            if state['world_task_state'].get('case') != self.memory_case:
+                raise ValueError('Snapshot runtime memory case differs from destination')
+            if self.memory_case is not None and state['memory']['initial_m'] != {'version': 1, 'facts': memory_world.initial_facts(state['world_task_state'])}:
+                raise ValueError('Snapshot initial factual bank differs from its runtime case')
             cursor = state['memory']['cursor']
             previous = state['episode_step'] - 1 if state['episode_step'] else None
             if (state['memory']['episode_id'] != f"episode-{state['episode']}" or
