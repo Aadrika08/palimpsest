@@ -101,10 +101,21 @@ def preflight(observation):
     per_run = 600*per_tick + 2*MiB
     if per_run > PROTOCOL['recording_max_bytes']:
         raise ValueError('Actual camera recording estimate exceeds per-run quota')
-    total = 3624*per_tick + 18*16*MiB + 24*MiB + 64*MiB + 8*MiB
+    allowances = {'numeric_bytes': 3624*per_tick, 'snapshot_bytes': 18*16*MiB,
+                  'row_results_bytes': 12*64*MiB, 'native_logs_bytes': 26*MiB,
+                  'control_results_bytes': 32*MiB, 'atomic_native_staging_bytes': 128*MiB,
+                  'supervisor_headroom_bytes': 8*MiB}
+    total = sum(allowances.values())
     if total > PROTOCOL['output_max_bytes']:
         raise ValueError('Actual camera/snapshot/control/log estimate exceeds aggregate quota')
-    return {'per_tick_bytes': per_tick, 'per_recording_bytes': per_run, 'aggregate_bytes': total}
+    return {'per_tick_bytes': per_tick, 'per_recording_bytes': per_run,
+            'aggregate_bytes': total, 'allowances': allowances}
+
+
+def initial_ready(run, stage, state=None):
+    # Published under the aggregate budget. Validate before the first numeric step.
+    if stage == 'ready':
+        snapshot_path(Path(run)/'snapshots/initial.snp')
 
 
 def successor(engine, driver, *, recorded_action=None):
@@ -136,7 +147,8 @@ def worker(config):
         if mode in ('actions', 'policy'):
             replay = replay_run(Path(config['source']), run, mode=mode,
                 repo_root=Path(config['repo']), asset_root=Path(config['assets']), storage_budget=budget,
-                recording_max_bytes=PROTOCOL['recording_max_bytes'])
+                recording_max_bytes=PROTOCOL['recording_max_bytes'],
+                progress=lambda stage,state=None: initial_ready(run,stage,state))
             result.update(status=replay['status'], compared_ticks=replay['compared_ticks'], engine_closed=True)
             if replay['status'] != 'passed' or replay['compared_ticks'] != config['source_ticks']:
                 raise ValueError('Executable replay did not compare all source ticks')
@@ -148,8 +160,12 @@ def worker(config):
                                 harness_sha256=harness_hashes())
             if mode == 'source':
                 result['preflight'] = admission = preflight(engine.observation)
-                budget.check(admission['aggregate_bytes'], path=run)
+                # Reserve the whole plan once; later sources admit only their own remaining writes.
+                requested = (admission['aggregate_bytes'] if config['aggregate_preflight'] else
+                             admission['per_recording_bytes'] + 4*16*MiB + 4*MiB)
+                budget.check(requested, path=run)
                 _register_initial(engine, run, budget)
+                initial_ready(run, 'ready')
                 snapshots = {}
                 result['snapshots'] = snapshots
                 for _ in range(600):
@@ -183,6 +199,7 @@ def worker(config):
                 engine.restore_branch(snp)
                 _same_json(snp['application']['task_state'], engine.task_state, 'initial_restored_task')
                 _register_initial(engine, run, budget)
+                initial_ready(run, 'ready')
                 expected = read_json(config['window'], maximum=64*MiB)
                 valid_window(expected)
                 for item in expected:
@@ -254,7 +271,8 @@ def gate(config):
                 budget.check_count('runs', len(list(output.glob('*/*/*/recording/manifest.json'))))
                 stage = base/mode
                 child = {**config, 'scenario': scenario, 'mode': mode, 'stage': str(stage),
-                         'run': str(stage/uuid.uuid4().hex)}
+                         'run': str(stage/uuid.uuid4().hex),
+                         'aggregate_preflight': scenario == SCENARIOS[0] and mode == 'source'}
                 if source is not None:
                     child.update(source=source['run'], source_ticks=source['recorded_ticks'])
                 if mode in PHASES[scenario]:

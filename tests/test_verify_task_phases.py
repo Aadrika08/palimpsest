@@ -93,10 +93,26 @@ class PhaseGuards(unittest.TestCase):
         self.assertEqual(verify.PROTOCOL['snapshot_files'],2+6+6+4)
         obs={key:np.zeros((128,128,3),np.uint8) for key in ('cam_left','cam_right')}
         estimate=verify.preflight(obs)
+        self.assertEqual(estimate['aggregate_bytes'],sum(estimate['allowances'].values()))
+        self.assertEqual(estimate['allowances']['row_results_bytes'],12*64*1024**2)
+        self.assertEqual(estimate['allowances']['atomic_native_staging_bytes'],128*1024**2)
         self.assertLess(estimate['aggregate_bytes'],2*1024**3)
         self.assertLess(estimate['per_recording_bytes'],256*1024**2)
         with self.assertRaises(ValueError):
             verify.preflight({**obs,'cam_left':np.zeros((256,256,3),np.uint8)})
+
+    def test_initial_snapshot_bound_is_checked_at_ready_not_loading(self):
+        import tempfile
+        with tempfile.TemporaryDirectory() as temp:
+            run=Path(temp)/'run'
+            verify.initial_ready(run,'loading')  # No snapshot yet; no premature access.
+            path=run/'snapshots/initial.snp';path.parent.mkdir(parents=True)
+            with path.open('wb') as stream:
+                stream.truncate(16*1024**2+1)
+            with self.assertRaises(ValueError):
+                verify.initial_ready(run,'ready',state={'episode_step':0})
+            path.write_bytes(b'bounded snapshot bytes')
+            verify.initial_ready(run,'ready',state={'episode_step':0})
 
     def test_restored_step_uses_saved_command_without_previous_transition(self):
         from unittest.mock import patch
