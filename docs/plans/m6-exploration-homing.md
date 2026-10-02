@@ -189,6 +189,43 @@ against actual −1.565932 rad, with agreeing turn signs. Specific slip/contact
 causality is unproven; independent low-amplitude calibration is proposed before
 another demonstration. Actual homing remains failed and M6 remains open.
 
+## Prepared separate bounded driver v2
+
+The verifier retains driver `v1` as its default and preserves the failed
+`runs/m6-tasks-development-20261002` evidence unchanged. Optional `--driver v2`
+is a separately recorded manual protocol: first/neutral cue commands zero; when
+the previous recorded cue angle has magnitude above 0.1 rad, it turns in place
+with heading clipped to ±0.4 rad. Otherwise it commands forward 0.4 and the cue
+angle. The driver still consumes only the previous effective bearing. It neither
+reads true pose/goal nor changes the original nominal encoder odometry.
+
+The independent [eight-trial calibration observation](body-calibration-development.md)
+supported nominal dimensions over fixed low-amplitude commands after settling.
+V2 stays within that measured command range, but mixed/transient generalization
+is unproven. No fitted coefficient is integrated into the task or body.
+
+For encoder homing, v2 must both emit `task_completed` and pass a separately
+declared isolated evaluator true-home distance **<=0.25 m**. Missing/nonfinite
+truth or larger distance fails; this measurement never feeds the cue or action.
+V1 retains its old estimated-state gate. The native snapshot/replay comparison,
+600-tick cap, watchdogs and byte quotas remain unchanged. Failed outcomes remain
+retained, without retry or tuning.
+
+Only after review/source freeze and release of the actual slot, run one fresh
+homing validation:
+
+```sh
+PYTHONPATH=src MUJOCO_GL=egl OMP_NUM_THREADS=2 \
+  ../lab-hardening/.venv/bin/python scripts/verify_tasks.py \
+  --assets ../r0-reproduction/data/assets/flynn \
+  --output runs/m6-homing-driver-v2-development \
+  --scenarios encoder-homing --driver v2
+```
+
+The added pure check covers zero/forward/alignment/clipped-turn commands and the
+distinct true-home boundary, including preserving v1's estimate-only behavior.
+No v2 actual run, held-out or learned-policy result is claimed.
+
 ## Limited actual browser observation
 
 The root-run [browser index](../../runs/m6-browser-20261002/report.json), SHA-256

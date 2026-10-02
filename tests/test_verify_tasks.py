@@ -13,6 +13,27 @@ SPEC.loader.exec_module(verify)
 
 
 class DriverChecks(unittest.TestCase):
+    def test_v2_fixed_alignment_driver_and_distinct_actual_home_gate(self):
+        self.assertEqual(verify.cue_action(None, driver='v2'), [0., 0.])
+        self.assertEqual(verify.cue_action([0., 0.], driver='v2'), [0., 0.])
+        self.assertEqual(verify.cue_action([1., 0.], driver='v2'), [.4, 0.])
+        for angle in (-2., -.2, .2, 2.):
+            actual = verify.cue_action([math.cos(angle), math.sin(angle)], driver='v2')
+            self.assertEqual(actual[0], 0.)
+            self.assertAlmostEqual(actual[1], max(-.4, min(.4, angle)))
+        actual = verify.cue_action([math.cos(.09), math.sin(.09)], driver='v2')
+        self.assertEqual(actual[0], .4); self.assertAlmostEqual(actual[1], .09)
+        state = {'scenario': 'encoder-homing', 'phase': 'terminated',
+                 'task': {'phase': 'complete'},
+                 'last_outcome': {'reason': 'task_completed', 'evaluator_actual_home_distance_m': 1.5}}
+        self.assertTrue(verify.completion_passed(state, driver='v1'))
+        self.assertFalse(verify.completion_passed(state, driver='v2'))
+        for distance, expected in ((.25, True), (.250001, False), (None, False), (float('nan'), False)):
+            state['last_outcome']['evaluator_actual_home_distance_m'] = distance
+            self.assertEqual(verify.completion_passed(state, driver='v2'), expected)
+        with self.assertRaises(ValueError):
+            verify.cue_action([1., 0.], driver='unknown')
+
     def test_initial_neutral_forward_and_turn_are_bounded(self):
         self.assertEqual(verify.cue_action(None), [0., 0.])
         self.assertEqual(verify.cue_action([0., 0.]), [0., 0.])

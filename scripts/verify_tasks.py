@@ -17,10 +17,18 @@ DRIVER = {'version': 1, 'kind': 'artificial-manual-cue-following-fixture',
           'rule': 'v=.5*clip(cos,0,1); heading=atan2(sin,cos); neutral cue gives zero',
           'max_ticks': 600, 'snapshot_tick': 8, 'continuation_ticks': 4,
           'claim': 'development fixture; no training, tuning, held-out or learned-policy result'}
+DRIVERS = {'v1': DRIVER, 'v2': {**DRIVER, 'version': 2, 'forward_max': .4,
+          'heading_turn_cap_rad': .4, 'align_threshold_rad': .1,
+          'rule': 'if abs(atan2(sin,cos))>.1: v=0, heading=clip(angle,-.4,.4); else v=.4, heading=angle; neutral cue gives zero',
+          'actual_home_max_distance_m': .25,
+          'actual_home_gate': 'task_completed plus isolated evaluator true home distance<=.25m; no truth feedback',
+          'claim': 'development manual fixture in independently measured command range; no transient/mixed generalization guarantee'}}
 
 
-def cue_action(bearing):
+def cue_action(bearing, *, driver='v1'):
     import numpy as np
+    if driver not in DRIVERS:
+        raise ValueError('Unknown manual driver')
     if bearing is None:
         return [0., 0.]
     try:
@@ -35,6 +43,10 @@ def cue_action(bearing):
     if not math.isclose(norm, 1., abs_tol=1e-5, rel_tol=0.):
         raise ValueError('Bearing must be neutral or a unit direction')
     angle = math.atan2(float(pair[1]), float(pair[0]))
+    if driver == 'v2':
+        if abs(angle) > DRIVERS['v2']['align_threshold_rad']:
+            return [0., max(-.4, min(.4, angle))]
+        return [.4, angle]
     return [DRIVER['forward_max'] * min(1., max(0., float(pair[0]))), angle]
 
 
@@ -54,6 +66,18 @@ def task_completed(state):
     return (state.get('phase') == 'terminated' and
             (state.get('last_outcome') or {}).get('reason') == 'task_completed' and
             (state.get('task') or {}).get('phase') == 'complete')
+
+
+def completion_passed(state, *, driver='v1'):
+    if driver not in DRIVERS:
+        raise ValueError('Unknown manual driver')
+    if not task_completed(state):
+        return False
+    if driver == 'v2' and state.get('scenario') == 'encoder-homing':
+        distance = state['last_outcome'].get('evaluator_actual_home_distance_m')
+        return (type(distance) in (int, float) and math.isfinite(distance) and
+                0 <= distance <= DRIVERS['v2']['actual_home_max_distance_m'])
+    return True
 
 
 def compare_tick(expected, actual, expected_task, actual_task):
@@ -136,6 +160,7 @@ def worker(config):
     from palimpsest.replay import _register_initial, replay_run
     from palimpsest.snapshots import capture, restore, save_snapshot, read_snapshot
     stage, run = Path(config['stage']), Path(config['run'])
+    driver = config.get('driver', 'v1'); protocol = DRIVERS[driver]
     if config['mode'] in ('actions', 'policy'):
         run.mkdir(exist_ok=False)
         result = replay_run(Path(config['source']), run, mode=config['mode'],
@@ -144,7 +169,7 @@ def worker(config):
                    'compared_ticks': result['compared_ticks'], 'report': str(run / 'replay-report.json')})
         return result['status'] == 'passed'
     engine = None
-    result = {'status': 'running', 'run': str(run), 'mode': config['mode'], 'driver': DRIVER}
+    result = {'status': 'running', 'run': str(run), 'mode': config['mode'], 'driver': protocol}
     rows = []
     try:
         run.mkdir(exist_ok=False)
@@ -152,26 +177,26 @@ def worker(config):
                              controller='manual', device='cpu', seed=config['seed'],
                              scenario=config['scenario'], texture='checker', run_id=run.name,
                              max_bytes=config['max_bytes'])
-        engine.writer.event('manual_driver_protocol', protocol=DRIVER,
+        engine.writer.event('manual_driver_protocol', protocol=protocol,
                             script_sha256=hashlib.sha256(Path(__file__).read_bytes()).hexdigest())
         if config['mode'] == 'source':
             _register_initial(engine, run)
             origin = evaluator_sample(engine)['pose']
             continuation, snapshot = [], None
-            for tick in range(DRIVER['max_ticks']):
-                action = cue_action(previous_bearing(engine.last_transition))
+            for tick in range(protocol['max_ticks']):
+                action = cue_action(previous_bearing(engine.last_transition), driver=driver)
                 before = evaluator_sample(engine)
                 command(engine, f'action-{tick}', 'set_action', {'action': action})
                 command(engine, f'step-{tick}', 'step')
                 if engine.last_transition is None:
                     raise ValueError('Missing recorded task transition')
                 rows.append(evaluator_record(engine, before, evaluator_sample(engine), origin, action))
-                if snapshot is not None and len(continuation) < DRIVER['continuation_ticks']:
+                if snapshot is not None and len(continuation) < protocol['continuation_ticks']:
                     continuation.append({'tick': tick, 'requested_action': action,
                                          'task': copy.deepcopy(engine.task_state)})
                 if engine.phase != 'paused':
                     break
-                if engine.total_tick == DRIVER['snapshot_tick']:
+                if engine.total_tick == protocol['snapshot_tick']:
                     if engine.task_state['odometry']['travel_m'] <= 0.:
                         raise ValueError('Snapshot boundary has no measured encoder progress')
                     engine.writer.flush()
@@ -182,6 +207,12 @@ def worker(config):
             state = engine.public_state()
             result.update(final_state=state, task_completed=task_completed(state), recorded_ticks=len(rows),
                           motion=evaluate_motion(rows, engine.task_state['odometry']['calibration']))
+            result['completion_gate_passed'] = completion_passed(state, driver=driver)
+            if driver == 'v2' and config['scenario'] == 'encoder-homing':
+                result['actual_home_closure'] = {
+                    'distance_m': (state.get('last_outcome') or {}).get('evaluator_actual_home_distance_m'),
+                    'threshold_m': protocol['actual_home_max_distance_m'],
+                    'passed': result['completion_gate_passed'], 'evaluator_only': True}
             write_json(stage / 'evaluator.json', rows)
             write_json(stage / 'continuation.json', continuation)
             result['continuation_ticks'] = len(continuation)
@@ -189,6 +220,8 @@ def worker(config):
                                          if snapshot is not None else None)
             if not result['task_completed'] or snapshot is None or len(continuation) != 4:
                 raise ValueError('Task did not complete with a four-tick progress-snapshot window')
+            if not result['completion_gate_passed']:
+                raise ValueError('Actual home closure failed the predeclared 0.25m evaluator gate')
         else:
             snapshot = read_snapshot(Path(config['snapshot']))
             engine.validate_application(snapshot['application'])
@@ -235,7 +268,8 @@ def verify(args):
     from verify_endurance import source_identity
     root, output = args.repo.resolve(), args.output.resolve()
     output.mkdir(parents=True, exist_ok=False)
-    report = {'version': 1, 'status': 'running', 'driver': DRIVER,
+    protocol = DRIVERS[args.driver]
+    report = {'version': 1, 'status': 'running', 'driver': protocol,
               'scope': 'actual manual declared-cue development fixture; no true-pose/goal feedback',
               'limitations': ['No learned policy, held-out, physical or full-FLYNN task qualification',
                              'One progress snapshot per task; dwell/home-phase snapshots remain pending'],
@@ -252,7 +286,7 @@ def verify(args):
                 stage = base / mode
                 config = {'mode': mode, 'stage': str(stage), 'run': str(source_run if mode == 'source' else stage / uuid.uuid4().hex),
                           'repo': str(root), 'assets': str(args.assets.resolve()), 'scenario': scenario,
-                          'seed': args.seed, 'max_bytes': args.max_bytes, **extra}
+                          'seed': args.seed, 'max_bytes': args.max_bytes, 'driver': args.driver, **extra}
                 supervision = bounded_process([sys.executable, str(Path(__file__).resolve()), '--worker', json.dumps(config)],
                                                stage, args.timeout, environment)
                 result['workers'][mode] = supervision
@@ -306,6 +340,7 @@ def main():
     parser.add_argument('--assets', type=Path, required=True)
     parser.add_argument('--output', type=Path, required=True)
     parser.add_argument('--scenarios', choices=SCENARIOS, nargs='+', default=list(SCENARIOS))
+    parser.add_argument('--driver', choices=tuple(DRIVERS), default='v1', help='v1 retains legacy estimate-only gate; v2 also requires actual home closure<=0.25m')
     parser.add_argument('--seed', type=int, default=0)
     parser.add_argument('--timeout', type=int, default=180, help='hard timeout for each of eight sequential owners')
     parser.add_argument('--max-bytes', type=int, default=2 * 1024**3, help='per-recording byte quota')
