@@ -1,0 +1,45 @@
+{
+  "version": 1,
+  "correspondence": {
+    "curator": "Palimpsest source-based selection; no independent anatomical review",
+    "evidence": "Both sources annotate right-side DNge104 and supertype12601. Male flywireType explicitly names DNge104; the matched FlyWire annotation release is v3.1.0.",
+    "uncertainty": "Cell-type correspondence only. No node correspondence, spatial registration, completeness equivalence or population-level sex inference.",
+    "source_url": "https://github.com/flyconnectome/flywire_annotations/releases/tag/v3.1.0"
+  },
+  "specimens": [
+    {
+      "dataset": "MaleCNS",
+      "version": "1.0",
+      "specimen": "MaleCNS EM specimen",
+      "sex": "male",
+      "cell_id": "12781",
+      "cell_type": "DNge104",
+      "side": "right",
+      "file": "male-12781.swc",
+      "units": "8nm",
+      "coordinate_space": "MaleCNS native EM; unregistered",
+      "coverage": "Full CNS reconstruction; NeuTu coarse skeleton. Brain and nerve-cord coverage differs from FlyWire.",
+      "license": "CC-BY-4.0; https://male-cns.janelia.org/download/",
+      "attribution": "FlyEM (HHMI Janelia), University of Cambridge, MRC LMB, Google Research; Berg et al. 2026.",
+      "source_url": "https://storage.googleapis.com/flyem-male-cns/v1.0/segmentation/skeletons-malecns/skeletons-swc/12781.swc",
+      "sha256": "84f14c2f8b98da664db2c322c6f3f47f83b61c412207bddfa67e2315b86fc699"
+    },
+    {
+      "dataset": "FlyWire",
+      "version": "783; annotations3.1.0",
+      "specimen": "FAFB adult female brain",
+      "sex": "female",
+      "cell_id": "720575940640723315",
+      "cell_type": "DNge104",
+      "side": "right",
+      "file": "female-720575940640723315.swc",
+      "units": "nm",
+      "coordinate_space": "FAFB14.1 native CATMAID physical coordinates; unregistered",
+      "coverage": "Brain reconstruction only; CATMAID snapshot. Different skeleton extraction and sampling; no VNC reconstruction.",
+      "license": "CC-BY-NC-4.0 source edits/annotations; https://flywire.ai/tos",
+      "attribution": "FlyWire Consortium; Schlegel et al. 2024; Dorkenwald et al. 2024; Matsliah et al. 2024; Berg et al. 2026.",
+      "source_url": "https://fafb-flywire.catmaid.org/1/skeletons/48391329/compact-detail?with_connectors=false&with_tags=false",
+      "sha256": "999ab8934af1b912a6dc5d9f411913b264cb1f49dc6c9512f7cf2f15bda2847a"
+    }
+  ]
+}

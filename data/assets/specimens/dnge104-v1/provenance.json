@@ -1,0 +1,132 @@
+{
+  "version": 1,
+  "retrieved_date_utc": "2026-10-02",
+  "male_acquisition": {
+    "url": "https://storage.googleapis.com/flyem-male-cns/v1.0/segmentation/skeletons-malecns/skeletons-swc/12781.swc",
+    "bytes": 552929,
+    "sha256": "84f14c2f8b98da664db2c322c6f3f47f83b61c412207bddfa67e2315b86fc699",
+    "headers": {
+      "Last-Modified": "Tue, 05 May 2026 14:58:43 GMT",
+      "ETag": "\"37cb89eb1bc63845a09a90e34af6193f\"",
+      "x-goog-generation": "1777993123308257",
+      "x-goog-hash": "crc32c=bvdY5A==",
+      "Content-Length": "552929"
+    }
+  },
+  "female_acquisition": {
+    "neuron": 48391330,
+    "root_id": "720575940640723315",
+    "lookup": {
+      "url": "https://fafb-flywire.catmaid.org/1/neuron/48391330/get-all-skeletons",
+      "bytes": 10,
+      "sha256": "a973f56a05503ac6b78ba7adeb814d0155b71a23eef8ff676dab9878fa283f1f"
+    },
+    "url": "https://fafb-flywire.catmaid.org/1/skeletons/48391329/compact-detail?with_connectors=false&with_tags=false",
+    "bytes": 1286842,
+    "sha256": "66b9dc89e25b3c936d52fbb3b806e7a97b47b91910ec7cdf9d74f8fe8d1c8e69"
+  },
+  "female_annotation_source": {
+    "url": "https://raw.githubusercontent.com/flyconnectome/flywire_annotations/8587524c1748ce5ef2080822a2fc890fc03bf597/supplemental_files/Supplemental_file1_neuron_annotations.tsv",
+    "commit": "8587524c1748ce5ef2080822a2fc890fc03bf597",
+    "bytes": 31718505,
+    "sha256": "9a4f8b2f843196074431ebd7cd883536afa1be86c8a4ce90970441e8be81d1be"
+  },
+  "female_annotation_row": {
+    "supervoxel_id": "79451604046502927",
+    "root_id": "720575940640723315",
+    "pos_x": "127944.0",
+    "pos_y": "84777.0",
+    "pos_z": "3920.0",
+    "soma_x": "144848",
+    "soma_y": "90744",
+    "soma_z": "2558",
+    "nucleus_id": "6021708",
+    "flow": "efferent",
+    "super_class": "descending",
+    "cell_class": "",
+    "cell_sub_class": "",
+    "supertype": "12601",
+    "cell_type": "DNge104",
+    "hemibrain_type": "",
+    "ito_lee_hemilineage": "MX3",
+    "hartenstein_hemilineage": "MX3",
+    "top_nt": "gaba",
+    "top_nt_conf": "0.6823572659333305",
+    "known_nt": "",
+    "known_nt_source": "",
+    "side": "right",
+    "nerve": "CV",
+    "vfb_id": "fw035500",
+    "fbbt_id": "FBbt_00047516",
+    "status": "",
+    "dimorphism": "isomorphic",
+    "matching_notes": "",
+    "fru_dsx": "",
+    "synonyms": ""
+  },
+  "female_conversion": "Sort original CATMAID nodes by ID; preserve ID/parent/x/y/z/radius; null parent becomes-1; SWC type0 unspecified. Drop user ID/confidence; do not downsample or transform coordinates.",
+  "female_snapshot_limit": "Mutable public CATMAID mirror; retained content SHA pins this acquisition, not an immutable server snapshot. Not asserted identical to the Zenodo parquet skeleton.",
+  "units_sources": [
+    "https://male-cns.janelia.org/download/",
+    "https://catmaid.readthedocs.io/en/stable/_static/api/index.html"
+  ],
+  "license_sources": [
+    "https://male-cns.janelia.org/download/",
+    "https://flywire.ai/tos"
+  ],
+  "annotation_release": "8587524c1748ce5ef2080822a2fc890fc03bf597",
+  "qualification_claims": [],
+  "male_annotation_source": {
+    "sha256": "2177e246113e4cfbf1e7772ec37c6da1955ff22e8063d0b1f833101f99a9a3b2",
+    "url": "https://storage.googleapis.com/flyem-male-cns/v1.0/connectome-data/flat-connectome/body-annotations-male-cns-v1.0-minconf-0.5.feather?generation=1780494878811468"
+  },
+  "male_annotation_row": {
+    "assignedOlHex1": null,
+    "assignedOlHex2": null,
+    "bodyId": 12781,
+    "flywireType": "DNge104",
+    "group": 12781.0,
+    "instance": "DNge104_R",
+    "somaSide": "R",
+    "statusLabel": "Prelim Roughly traced",
+    "superclass": "descending_neuron",
+    "type": "DNge104",
+    "vfbId": "VFB_jrmc30ik",
+    "hemibrainType": null,
+    "itoleeHl": "MX3",
+    "supertype": "12601",
+    "birthtime": null,
+    "mancBodyid": 10868.0,
+    "mancGroup": 10868.0,
+    "mancType": "DNxl132",
+    "subclass": "xl",
+    "synonyms": null,
+    "class": null,
+    "rootSide": null,
+    "somaNeuromere": "MX",
+    "trumanHl": null,
+    "dimorphism": null,
+    "matchingNotes": null,
+    "entryNerve": null,
+    "mancSerial": null,
+    "mcnsSerial": null,
+    "serialMotif": null,
+    "fruDsx": null,
+    "exitNerve": null,
+    "receptorType": null,
+    "somaLocation": [
+      45223,
+      45927,
+      22023
+    ],
+    "tosomaLocation": null,
+    "status": "Traced"
+  },
+  "female_origin": {
+    "source_id": 720575940640723315,
+    "source_url": "https://flywire.ai",
+    "source_name": "FlyWire_783",
+    "catmaid_skeleton_id": 48391329,
+    "source": "https://fafb-flywire.catmaid.org/1/skeletons/origin?skeleton_ids[0]=48391329"
+  }
+}
