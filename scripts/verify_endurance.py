@@ -499,6 +499,8 @@ def main():
                 signal.signal(sig, handler)
             report.update(stream_messages=dict(gate.stream_counts), operations=dict(gate.operations),
                           controllers_seen=sorted(gate.controllers_seen), completed_cycles=len(report['cycles']))
+            # A cycle is appended only after branch, both replays and playback succeed.
+            report['completed_controllers'] = sorted({cycle['controller'] for cycle in report['cycles']})
             try:
                 report['recorded'] = recorded_metrics(output)
                 report['http_receipt_seconds'] = summary([row['http_receipt_seconds'] for row in gate.commands])
@@ -516,7 +518,9 @@ def main():
                 growth_gate = (growth['status'] == 'measured' and changes['rss_bytes'] <= args.max_server_growth_mib * 1024**2
                     and changes['fds'] <= args.max_server_fd_growth and changes['threads'] <= args.max_server_thread_growth)
                 required = {'run', 'pause', 'step', 'reset', 'set_eyes', 'preview', 'intervene', 'snapshot', 'branch', 'replay_actions', 'replay_policy', 'playback'}
-                functional = required <= gate.operations.keys() and set(args.controllers) <= gate.controllers_seen and gate.stream_counts['sample'] > 0
+                functional = (required <= gate.operations.keys()
+                    and set(args.controllers) <= set(report['completed_controllers'])
+                    and gate.stream_counts['sample'] > 0)
                 measured = report['measured_seconds'] >= args.duration - .5
                 receipt_gate = report['http_receipt_seconds'].get('p95', float('inf')) < .150
                 report['gates'] = {'duration_completed': measured, 'mixed_operations_completed': functional,

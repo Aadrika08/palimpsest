@@ -12,13 +12,52 @@ import sys
 import tempfile
 from types import SimpleNamespace
 import unittest
-from unittest.mock import patch
+from unittest.mock import MagicMock, patch
 
 
 ROOT = Path(__file__).resolve().parents[1]
 
 
 class VerificationScriptTests(unittest.TestCase):
+    def test_endurance_requires_completed_cycle_per_controller(self):
+        # Verifier-boundary fixture only; no server, renderer or policy is launched.
+        spec = importlib.util.spec_from_file_location('endurance_coverage', ROOT / 'scripts/verify_endurance.py')
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+        controllers = ['manual', 'teacher', 'flynn']
+        required = ('run', 'pause', 'step', 'reset', 'set_eyes', 'preview', 'intervene',
+                    'snapshot', 'branch', 'replay_actions', 'replay_policy', 'playback')
+        for complete in (controllers[:2], controllers):
+            with self.subTest(completed=complete), tempfile.TemporaryDirectory() as temporary:
+                gate = MagicMock()
+                gate.controllers_seen = set(controllers)  # Flynn source-ready is observed in both cases.
+                gate.operations = dict.fromkeys(required, 1)
+                gate.stream_counts = {'sample': 1}
+                gate.commands = [{'http_receipt_seconds': .01, 'observed_application_seconds': .02}]
+                gate.resources, gate.failure = [], None
+                gate.signal, gate.started = None, module.time.monotonic()
+                gate.http.get.return_value.json.return_value = {'token': 'fixture'}
+                gate.cleanup.return_value = {'server_exit_code': 0, 'owned_survivors_requiring_kill': []}
+                gate.cycle.side_effect = [
+                    *({'controller': controller, 'active_run': {'real_time_factor': .5}}
+                      for controller in complete), module.DeadlineReached()]
+                server = MagicMock()
+                server.poll.return_value = None
+                output = Path(temporary) / 'evidence'
+                argv = ['verify_endurance.py', '--output', str(output), '--duration', '30',
+                        '--cycle-seconds', '1', '--controllers', *controllers]
+                with patch.object(sys, 'argv', argv), patch.object(module, 'Gate', return_value=gate), \
+                        patch.object(module.subprocess, 'Popen', return_value=server), \
+                        patch.object(module.subprocess, 'run', return_value=SimpleNamespace(returncode=0, stdout='fixture')), \
+                        patch.object(module.threading, 'Thread'), patch.object(module, 'recorded_metrics', return_value={}):
+                    with contextlib.redirect_stdout(io.StringIO()):
+                        module.main()
+                report = json.loads((output / 'report.json').read_text())
+                self.assertEqual(report['controllers_seen'], sorted(controllers))
+                self.assertEqual(report['completed_controllers'], sorted(complete))
+                self.assertEqual(report['completed_cycles'], len(complete))
+                self.assertEqual(report['gates']['mixed_operations_completed'], complete == controllers)
+
     def test_optional_cpu_flynn_report_scope_without_launching_runtime(self):
         spec = importlib.util.spec_from_file_location('endurance_selection', ROOT / 'scripts/verify_endurance.py')
         module = importlib.util.module_from_spec(spec)

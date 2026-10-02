@@ -86,7 +86,7 @@ PYTHONPATH=src .venv/bin/python scripts/verify_endurance.py \
   --output runs/endurance-smoke --duration 55 --cycle-seconds 15 \
   --pause-seconds 0 --sample-seconds 2
 
-# Run only after the runtime/storage freeze and explicit hour-gate scheduling.
+# Run after the runtime/storage freeze.
 PYTHONPATH=src .venv/bin/python scripts/verify_endurance.py \
   --output runs/endurance-hour
 
@@ -95,7 +95,7 @@ PYTHONPATH=src .venv/bin/python scripts/verify_endurance.py \
   --output runs/endurance-flynn-smoke --controllers flynn --duration 240 \
   --cycle-seconds 120 --pause-seconds 0
 
-# Schedule only after the representative smoke and frozen-runtime approval.
+# Run after the representative smoke and runtime freeze.
 PYTHONPATH=src .venv/bin/python scripts/verify_endurance.py \
   --output runs/endurance-mixed-hour --controllers manual teacher flynn \
   --cycle-seconds 120
@@ -105,7 +105,8 @@ The default duration is 3600 seconds. This is a browser-independent mixed
 HTTP/WebSocket workload with modest tick bursts and paused intervals. Every
 cycle records its controller and operations. It measures HTTP receipt latency
 separately from the observed applied-boundary latency, which includes polling.
-It checks the functional operation set, completed duration, one owner,
+It requires a complete cycle for every requested controller, the functional
+operation set, completed duration, one owner,
 configured resource budgets, and clean shutdown. The hour gate additionally
 compares server RSS/FD/thread p95 in the 25–50% and 75–100% windows. These are
 finite observed growth limits, not a mathematical guarantee about future runs.
