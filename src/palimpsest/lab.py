@@ -51,6 +51,7 @@ class OwnerError(RuntimeError):
 class LabSupervisor:
     """Process/IPC boundaries are injectable only for supervision tests."""
     MAX_COMPLETED = 8
+    CLOSE_GRACE_SECONDS = 5.
     def __init__(self, repo_root, asset_root, runs_root, *, startup_timeout=180., step_timeout=30.,
                  headless_continue=False, worker_target=run_worker, export_root=None,
                  storage_limits=None, log_max_bytes=1024**2):
@@ -335,7 +336,7 @@ class LabSupervisor:
                             self._dispose_queues(owner)
                             owner.exited.set()
                             continue
-                        elif owner.closed_seen is not None and time.monotonic() - owner.closed_seen > 5.:
+                        elif owner.closed_seen is not None and time.monotonic() - owner.closed_seen > self.CLOSE_GRACE_SECONDS:
                             self._fail(identifier, "CloseTimeout", "Owner did not exit after reporting closed")
                             continue
                         # Completion can overtake the independent display feeder.
@@ -386,7 +387,9 @@ class LabSupervisor:
                 self._fail(identifier, "CloseTimeout", "Owner did not close within 5 seconds")
         # Let the monitor drain the final queues; joining while holding its lock
         # deadlocks a child whose display feeder still has bytes to write.
-        owner.exited.wait(1.)
+        # Model/interpreter finalization can outlast one second after closed.
+        # Use the same bounded grace as the monitor, which keeps draining IPC.
+        owner.exited.wait(self.CLOSE_GRACE_SECONDS)
         with self.lock:
             if identifier not in self.workers:
                 return self.describe(identifier)
