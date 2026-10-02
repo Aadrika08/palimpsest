@@ -334,7 +334,7 @@ def make_model(graph, cell_path, seed):
         def reset(self):
             return torch.zeros(1, len(graph['ids']), dtype=torch.float32)
 
-        def forward(self, inputs, hidden):
+        def forward(self, inputs, hidden, *, diagnostics=False):
             if inputs.device.type != 'cpu' or inputs.dtype != torch.float32 or inputs.ndim != 3 or inputs.shape[1:] != (1, 388) or not 1 <= inputs.shape[0] <= 64:
                 raise ValueError('male model requires a bounded CPU float32 feature window')
             if hidden.device.type != 'cpu' or hidden.dtype != torch.float32 or hidden.shape != (1, len(graph['ids'])):
@@ -350,6 +350,8 @@ def make_model(graph, cell_path, seed):
             actions = torch.tanh(raw) * raw.new_tensor([3., math.pi])
             if not torch.isfinite(actions).all():
                 raise ValueError('nonfinite male action')
+            if diagnostics:
+                return next_hidden, actions, {'encoded_input': encoded, 'raw_output': raw}
             return next_hidden, actions
 
     return MaleReducedModel()
