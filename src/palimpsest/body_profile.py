@@ -397,21 +397,26 @@ class BodyFailure(ValueError):
 
 
 def step(env, state, nominal_action, tick, *, action_override=None):
-    """Apply one mapped action and retain every observed contact cache.
+    """Loaded compensation; an effective replay override is applied once."""
+    if state['last_tick'] != (tick - 1 if tick else None):
+        raise ValueError('Body tick cursor differs')
+    result, packet, arrays = measure_step(env, plan_action(nominal_action), tick,
+        previous_angles_rad=state['previous_angles_rad'], time_s=state['time_s'],
+        action_override=action_override)
+    advanced = {**state, 'last_tick': tick, 'phase': 'compensating',
+                'previous_angles_rad': packet['encoder_after'], 'time_s': float(env.data.time)}
+    return result, advanced, packet, arrays
 
-    Override is already effective; reject mismatch and never compensate it again.
-    The outgoing state advances once in either replay mode.
-    """
+
+def measure_step(env, plan, tick, *, previous_angles_rad, time_s, action_override=None, retain_outcome=False):
+    """Shared one-interval native collector, without fitting or session mutation."""
     import mujoco
     import numpy as np
     from .task_profiles import encoder_angles
-    plan = plan_action(nominal_action)
     action = plan['applied_action'] if action_override is None else list(map(float, action_override))
     if action != plan['applied_action']:
         raise ValueError('Recorded body effective override differs from nominal plan')
-    if state['last_tick'] != (tick - 1 if tick else None):
-        raise ValueError('Body tick cursor differs')
-    validate_native(state, env.model, env.data, env)
+    validate_native({'previous_angles_rad':previous_angles_rad,'time_s':time_s}, env.model, env.data, env)
     probe = ContactProbe(mujoco, env)
     before = encoder_angles(env)
     packet = {'command': plan, 'interval': None, 'encoder_before': before}
@@ -419,9 +424,11 @@ def step(env, state, nominal_action, tick, *, action_override=None):
         probe.install()
         probe.begin(tick)
         result = env.step(np.asarray(action, dtype=np.float64))
+        if retain_outcome:
+            packet['outcome'] = {'terminated':result[2], 'truncated':result[3]}
         interval = packet['interval'] = probe.end()
         after = packet['encoder_after'] = encoder_angles(env)
-        dt = packet['dt_s'] = float(env.data.time) - state['time_s']
+        dt = packet['dt_s'] = float(env.data.time) - time_s
         increments = packet['increments_rad'] = [b-a for a,b in zip(before, after)]
         if len(json.dumps(packet, allow_nan=False, separators=(',', ':')).encode()) > MAX_PACKET_BYTES:
             raise BodyFailure('Body contact packet exceeds bounded size', packet)
@@ -440,15 +447,13 @@ def step(env, state, nominal_action, tick, *, action_override=None):
         raise BodyFailure(str(error), packet) from error
     finally:
         probe.close()
-    advanced = {**state, 'last_tick': tick, 'phase': 'compensating',
-                'previous_angles_rad': after, 'time_s': float(env.data.time)}
     arrays = {'body_nominal_action': np.asarray(plan['nominal_action'], np.float64),
               'body_nominal_control': np.asarray(plan['nominal_control'], np.float32),
               'body_encoder_before': np.asarray(before, np.float64),
               'body_encoder_after': np.asarray(after, np.float64),
               'body_encoder_increment': np.asarray(increments, np.float64), 'body_dt': np.array(dt, np.float64)}
     arrays.update(contact_arrays(packet['interval']))
-    return result, advanced, packet, arrays
+    return result, packet, arrays
 
 
 def contact_arrays(interval):

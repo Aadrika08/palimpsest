@@ -332,7 +332,10 @@ def capture(env, observation, *, policy=None, teacher=None, application: dict):
     if hasattr(env, '_body_profile_identity'):
         if mujoco.get_mjcb_control() is not None:
             raise ValueError('Body snapshots require no active global control callback')
-        from .body_profile import validate_snapshot_application
+        if application.get('scenario') == 'adaptive-wheel-calibration':
+            from .body_adaptation import validate_snapshot_application
+        else:
+            from .body_profile import validate_snapshot_application
         validate_snapshot_application(application, env, env.model, env.data)
     native = env.data.__getstate__()
     if len(native) > MAX_BYTES:
@@ -539,7 +542,10 @@ def restore(snapshot, env, *, policy=None, teacher=None, replace_controller=Fals
     if hasattr(env, '_body_profile_identity'):
         if mujoco.get_mjcb_control() is not None:
             raise ValueError('Body snapshots require no active global control callback')
-        from .body_profile import validate_snapshot_application
+        if snp['application'].get('scenario') == 'adaptive-wheel-calibration':
+            from .body_adaptation import validate_snapshot_application
+        else:
+            from .body_profile import validate_snapshot_application
         validate_snapshot_application(snp['application'], env, model, data)
     elif 'body_state' in snp['application']:
         raise ValueError('Body state requires a loaded compensation profile')

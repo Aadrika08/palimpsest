@@ -14,7 +14,7 @@ from .male_policy import CONTROLLERS as MALE_CONTROLLERS, validate_identity
 
 
 PHASES = {"paused", "running", "terminated", "truncated", "stopped", "failed"}
-KINDS = {"run", "pause", "step", "stop", "reset", "set_action", "set_eyes", "intervene"}
+KINDS = {"run", "pause", "step", "stop", "reset", "set_action", "set_eyes", "intervene", "calibration-next"}
 
 
 class CommandRejected(ValueError):
@@ -111,7 +111,7 @@ class Engine:
         self.memory = self.world_task_state = None
         self.task_state = None
         self.body_state = None
-        if scenario == "calibrated-wheel-compensation":
+        if scenario in ("calibrated-wheel-compensation", "adaptive-wheel-calibration"):
             from .profiles import validate
             validate(scenario, texture, controller)
         if scenario in ('exploration-landmarks', 'encoder-homing') and controller == 'teacher':
@@ -122,6 +122,8 @@ class Engine:
         self._initial_teacher = copy.deepcopy(teacher) if controller == "teacher" else None
         self._teacher_reset_identity = _teacher_fingerprint(self._initial_teacher)
         self.seed = _seed(seed)
+        if scenario == 'adaptive-wheel-calibration' and self.seed != 1:
+            raise ValueError('Measured calibration requires its declared seed 1')
         self.run_id = writer.manifest.get("run_id", uuid.uuid4().hex)
         self.parent_run_id = None
         self.parent_event_prefix = None
@@ -167,8 +169,10 @@ class Engine:
             raise ValueError('Male policy identity requires a male controller')
         seed = _seed(seed)
         profile = validate(scenario, texture, controller)
-        if scenario == "calibrated-wheel-compensation" and device != "cpu":
-            raise ValueError("Loaded wheel calibration profile requires CPU")
+        if scenario in ('calibrated-wheel-compensation','adaptive-wheel-calibration') and device != 'cpu':
+            raise ValueError('Wheel calibration profiles require CPU')
+        if scenario == 'adaptive-wheel-calibration' and seed != 1:
+            raise ValueError('Measured calibration requires its declared seed 1')
         memory_case = cls._validate_memory_case(memory_case, scenario, controller)
         case_manifest = {}
         if memory_case is not None:
@@ -265,7 +269,7 @@ class Engine:
         self.writer.event(kind, run_id=self.run_id, episode=self.episode, tick=self.total_tick,
                           episode_step=self.episode_step, **data)
 
-    def _reset_world(self):
+    def _reset_world(self, *, calibration_session=None):
         # Fixture environments reset themselves; the production environment uses real MjData.
         if type(self.env.data).__module__.split(".", 1)[0] == "mujoco":
             import mujoco
@@ -292,6 +296,10 @@ class Engine:
             from . import body_profile
             self.body_state = body_profile.configure(self.env, f'episode-{self.episode}')
             self.observation = self.env._get_obs()
+        if self.scenario == 'adaptive-wheel-calibration':
+            from . import body_adaptation
+            self.body_state = body_adaptation.configure(self.env,episode=self.episode,session=calibration_session)
+            self.observation = self.env._get_obs()
         if type(self.env.model).__module__.startswith("mujoco"):
             from .profiles import validate_world
             validate_world(self.env, require_route=self.scenario == 'sparse-navigation')
@@ -317,19 +325,26 @@ class Engine:
             self.writer.manifest['task_calibration'] = copy.deepcopy(self.task_state['odometry']['calibration'])
             self.writer.manifest['task_profile_sha256'] = self.task_state['profile_sha256']
         if self.body_state is not None:
-            from .body_profile import PROTOCOL, profile_identity
+            if self.scenario == 'adaptive-wheel-calibration':
+                from .body_adaptation import PROTOCOL, IDENTITY, inspect
+                identity, body_view, event_kind = copy.deepcopy(IDENTITY), inspect(self.body_state), 'body_calibration_started'
+            else:
+                from .body_profile import PROTOCOL, profile_identity
+                identity, body_view, event_kind = profile_identity(), self.body_state, 'body_loaded'
             self.writer.manifest['body_protocol'] = copy.deepcopy(PROTOCOL)
-            self.writer.manifest['body_profile_identity'] = profile_identity()
+            self.writer.manifest['body_profile_identity'] = identity
             self.writer.manifest['body_contact_ownership'] = copy.deepcopy(self.env._body_contact_ownership)
             self.writer.manifest['body_runtime_world_profile'] = copy.deepcopy(self.env._body_runtime_world_profile)
             self._event('body_world_provenance', detail=self.env._body_runtime_world_profile)
-            self._event('body_loaded', identity=profile_identity(), state=self.body_state,
+            self._event(event_kind, identity=identity, state=body_view,
                         contact_ownership=self.env._body_contact_ownership,
                         actuator_gear=self.env.model.actuator_gear.tolist(), world=self.world())
         self._event("episode_started", seed=self.seed, goal=self.env._goal_xy.tolist(),
                     obstacles=self.env._obstacle_xy.tolist(), initial_qpos=self.env.data.qpos.tolist(),
                     initial_qvel=self.env.data.qvel.tolist(),
-                    reset_protocol=("authored calibrated development lane; fixed left gear .8, loaded gains, fresh encoders/controller"
+                    reset_protocol=("authored measured calibration lane; fixed left gear .8, explicit probe/fitted reset, fresh encoders/controller"
+                                    if self.scenario == 'adaptive-wheel-calibration' else
+                                    "authored calibrated development lane; fixed left gear .8, loaded gains, fresh encoders/controller"
                                     if self.body_state is not None else
                                     "authored declared task layout; fresh local encoder, supervisor and controller state"
                                     if self.task_state is not None else
@@ -386,7 +401,7 @@ class Engine:
             if set(payload) != {"action"}:
                 raise ValueError("set_action requires only an action vector")
             _action(payload["action"], manual=True)
-            if self.body_state is not None:
+            if self.body_state is not None and self.scenario != 'adaptive-wheel-calibration':
                 from .body_profile import plan_action
                 plan_action(payload['action'])
         elif kind == "reset":
@@ -443,6 +458,15 @@ class Engine:
             raise CommandRejected('stale expected revision')
         if kind != "reset" and self.phase not in {"paused", "running"}:
             raise CommandRejected("terminal episode requires an explicit reset")
+        adaptive = self.scenario == 'adaptive-wheel-calibration'
+        if kind == 'calibration-next' and not adaptive:
+            raise CommandRejected('calibration-next requires measured calibration profile')
+        if adaptive and kind in ('run','step') and self.body_state['phase'] not in ('collecting','fitted'):
+            raise CommandRejected('Complete calibration trial waits for explicit calibration-next or Reset')
+        if adaptive and kind == 'intervene':
+            raise CommandRejected('Measured calibration retains its declared authored world')
+        if adaptive and kind == 'reset' and payload.get('seed',self.seed)!=1:
+            raise CommandRejected('Measured calibration retains declared seed 1')
         if kind == "step":
             if self.phase != "paused":
                 raise CommandRejected("step requires a paused engine")
@@ -465,13 +489,32 @@ class Engine:
             self.phase = "paused"
             self.last_outcome = None
             self._episode_started()
+        elif kind == 'calibration-next':
+            from . import body_adaptation
+            try:
+                next_session = body_adaptation.calibration_next(self.body_state,application_phase=self.phase)
+                body_adaptation.validate_native(self.body_state,self.env.model,self.env.data,self.env)
+            except ValueError as error:
+                raise CommandRejected(str(error)) from error
+            # All logical preconditions checked before closing/resetting native state.
+            self._end_episode('calibration_next')
+            self.episode = next_session['episode']
+            self.episode_step = 0
+            self._reset_world(calibration_session=next_session)
+            self.phase = 'paused'
+            self.last_outcome = None
+            self._episode_started()
         elif kind == "set_action":
             if self.controller != "manual":
                 raise CommandRejected("set_action requires the manual controller")
             if self.body_state is not None:
                 from .body_profile import plan_action
                 try:
-                    plan_action(payload['action'])
+                    if adaptive:
+                        from .body_adaptation import plan_action as measured_plan
+                        measured_plan(self.body_state,payload['action'])
+                    else:
+                        plan_action(payload['action'])
                 except ValueError as error:
                     raise CommandRejected(str(error)) from error
             self.manual_action = _action(payload["action"], manual=True)
@@ -590,14 +633,21 @@ class Engine:
         if self.body_state is not None:
             from . import body_profile
             try:
-                result, state, packet, body_arrays = body_profile.step(self.env, self.body_state,
+                body_step = body_profile.step
+                if self.scenario == 'adaptive-wheel-calibration':
+                    from .body_adaptation import step as body_step
+                result, state, packet, body_arrays = body_step(self.env, self.body_state,
                     self.manual_action, self.episode_step, action_override=action_override)
             except body_profile.BodyFailure as error:
                 self._event('body_failed', detail=error.packet, reason=str(error))
                 raise
             self.body_state = state
             action = np.asarray(packet['command']['applied_action'], np.float64)
-            self._event('body_measured', detail=body_profile.measurement_event(packet), state=state)
+            body_view = state
+            if self.scenario == 'adaptive-wheel-calibration':
+                from .body_adaptation import inspect
+                body_view = inspect(state)
+            self._event('body_measured', detail=body_profile.measurement_event(packet), state=body_view)
             next_obs, reward, terminated, truncated, info = result
         else:
             next_obs, reward, terminated, truncated, info = self.env.step(action)
@@ -639,6 +689,12 @@ class Engine:
             terminated = reason in ('stalled', 'collision')
         else:
             reason = outcome(terminated, truncated, info, self.env.goal_radius)
+        if self.scenario == 'adaptive-wheel-calibration' and not reason:
+            if self.body_state['phase'] in ('trial_complete','fit_complete','rejected'):
+                self.phase = 'paused'
+                self.revision += 1
+                from .body_adaptation import inspect
+                self._event('body_calibration_boundary', state=inspect(self.body_state))
         if reason:
             self.phase = "terminated" if terminated else "truncated"
             self.revision += 1
@@ -686,6 +742,10 @@ class Engine:
 
     def public_state(self):
         self._owner_only()
+        body_view = self.body_state
+        if self.scenario == 'adaptive-wheel-calibration':
+            from .body_adaptation import inspect
+            body_view = inspect(self.body_state)
         return copy.deepcopy({"run_id": self.run_id, "parent_run_id": self.parent_run_id,
                               "controller": self.controller, "phase": self.phase,
                               "scenario": self.scenario, "texture": self.texture,
@@ -695,7 +755,7 @@ class Engine:
                               "total_tick": self.total_tick, "pending_commands": len(self._pending),
                               "metrics": self.metrics, "last_outcome": self.last_outcome,
                               "task": self.task_state,
-                              **({"body": self.body_state} if self.body_state is not None else {}),
+                              **({"body": body_view} if self.body_state is not None else {}),
                               "closed": self._closed})
 
     @property
@@ -743,6 +803,8 @@ class Engine:
 
     def preview(self, payload):
         self._active()
+        if self.scenario == 'adaptive-wheel-calibration':
+            raise ValueError('Measured calibration retains its declared authored world')
         if self.phase not in {'paused', 'running'}:
             raise ValueError('Preview requires an active episode')
         from .interventions import apply_intervention
@@ -783,7 +845,7 @@ class Engine:
                 size += len(data)
                 count += data.count(b"\n")
         from .snapshots import controller_hashes
-        return copy.deepcopy({"schema_version": 5 if self.body_state is not None else 4,
+        return copy.deepcopy({"schema_version": 6 if self.scenario == 'adaptive-wheel-calibration' else 5 if self.body_state is not None else 4,
             **({"body_state": self.body_state} if self.body_state is not None else {}), "source_run_id": self.run_id,
             "execution_mode": self.writer.manifest.get('execution_mode', 'live'),
             "memory": self.memory, "world_task_state": self.world_task_state,
@@ -819,7 +881,7 @@ class Engine:
                     "receipts", "original_commands", "memory", "world_task_state", "controller_tensors", "execution_mode", "task_state"}
         schema = 4
         if self.body_state is not None:
-            schema = 5
+            schema = 6 if self.scenario == 'adaptive-wheel-calibration' else 5
             expected.add("body_state")
         if not isinstance(state, dict) or set(state) != expected or type(state["schema_version"]) is not int or state["schema_version"] != schema or state["controller"] != self.controller or state["phase"] != "paused":
             raise ValueError("incompatible application state or non-paused snapshot")
@@ -841,9 +903,17 @@ class Engine:
         if state["episode_step"] > state["total_tick"] or state["episode_step"] > 600:
             raise ValueError("invalid episode step count")
         if self.body_state is not None:
-            from .body_profile import validate_state
-            state['body_state'] = validate_state(state['body_state'], self.env._body_profile_identity,
-                episode=state['episode'], episode_step=state['episode_step'])
+            if self.scenario == 'adaptive-wheel-calibration':
+                from .body_adaptation import IDENTITY, validate_session
+                if self.env._body_profile_identity != IDENTITY or state['seed']!=1:
+                    raise ValueError('Adaptive profile/seed differs')
+                state['body_state'] = validate_session(state['body_state'],episode=state['episode'],episode_step=state['episode_step'])
+                if state['body_state']['phase']=='fitted_terminal':
+                    raise ValueError('Terminal calibration state cannot restore as paused')
+            else:
+                from .body_profile import validate_state
+                state['body_state'] = validate_state(state['body_state'], self.env._body_profile_identity,
+                    episode=state['episode'], episode_step=state['episode_step'])
         if self.scenario == 'memory-passages':
             from . import memory_task, memory_world
             from .snapshots import controller_hashes
@@ -883,8 +953,15 @@ class Engine:
             raise ValueError("invalid durable event prefix")
         _action(state["manual_action"], manual=True)
         if self.body_state is not None:
-            from .body_profile import plan_action
-            plan_action(state['manual_action'])
+            if self.scenario == 'adaptive-wheel-calibration':
+                from .body_adaptation import plan_action
+                if state['body_state']['phase']=='fitted':
+                    plan_action(state['body_state'],state['manual_action'])
+                elif state['manual_action'] != [0.,0.]:
+                    raise ValueError('Fixed probe cannot retain user manual intent')
+            else:
+                from .body_profile import plan_action
+                plan_action(state['manual_action'])
         _seed(state["seed"])
         originals, receipts, pending = state["original_commands"], state["receipts"], state["pending_commands"]
         if not isinstance(originals, dict) or not isinstance(receipts, dict) or set(originals) != set(receipts) or len(originals) > self.MAX_IDS or not isinstance(pending, list) or len(pending) > self.MAX_QUEUE:

@@ -37,7 +37,7 @@ class ReplayValidation(unittest.TestCase):
                 self.assertFalse((destination / "recording").exists())
 
     def test_report_lists_checked_body_fields_and_runtime_sources(self):
-        from palimpsest.replay import _RUNTIME, _BODY_RUNTIME, _MALE_RUNTIME, _PHYSICAL
+        from palimpsest.replay import _RUNTIME, _BODY_RUNTIME, _ADAPTIVE_RUNTIME, _MALE_RUNTIME, _PHYSICAL
         from palimpsest.body_profile import TICK_FIELDS
         with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary)
@@ -45,6 +45,7 @@ class ReplayValidation(unittest.TestCase):
             source.mkdir()
             for controller, scenario, extra in (
                     ('manual', 'calibrated-wheel-compensation', _BODY_RUNTIME),
+                    ('manual', 'adaptive-wheel-calibration', _ADAPTIVE_RUNTIME),
                     ('manual', 'reproduction', ()),
                     ('male-original', 'reproduction', _MALE_RUNTIME)):
                 for mode in ('actions', 'policy'):
@@ -64,7 +65,7 @@ class ReplayValidation(unittest.TestCase):
                                                 repo_root=REPO, asset_root=root)
                         self.assertEqual(report['status'], 'failed')
                         self.assertEqual(report['comparison']['runtime_source_keys'], list(_RUNTIME + extra))
-                        fields = _PHYSICAL | (TICK_FIELDS if scenario == 'calibrated-wheel-compensation' else set())
+                        fields = _PHYSICAL | (TICK_FIELDS if scenario in ('calibrated-wheel-compensation','adaptive-wheel-calibration') else set())
                         self.assertEqual(report['comparison']['fields'], sorted(fields) if mode == 'actions'
                                          else 'all recorded fields except wall latencies')
                         self.assertEqual(report, json.loads((destination/'replay-report.json').read_text()))

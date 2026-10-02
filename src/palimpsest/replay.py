@@ -19,11 +19,12 @@ _RUNTIME = tuple(f"src/palimpsest/{name}.py" for name in
                  ("engine", "profiles", "interventions", "flynn", "snapshots", "records", "evaluate", "assets", "doctor",
                   "memory", "memory_task", "memory_world", "task_mechanics", "task_profiles"))
 _BODY_RUNTIME = ('src/palimpsest/body_profile.py',)
+_ADAPTIVE_RUNTIME = _BODY_RUNTIME + ('src/palimpsest/body_adaptation.py',)
 _MALE_RUNTIME = ('src/palimpsest/male_policy.py', 'src/palimpsest/male_model.py')
 _EVENTS = {"command_received", "command_applied", "command_rejected", "episode_started",
            "episode_finished", "intervention", "eyes_changed", "browser_disconnected", "runtime_failure",
            "memory_world_changed", "memory_sensed", "memory_decision", "memory_cue", "memory_inspected",
-           "body_loaded", "body_measured", "body_failed", "task_sensed", "task_decision", "task_cue", "task_inspected"}
+           "body_loaded", "body_measured", "body_failed", "body_calibration_started", "body_calibration_boundary", "task_sensed", "task_decision", "task_cue", "task_inspected"}
 _IGNORED_EVENT_KEYS = {"sequence", "run_id", "received_run_id", "applied_run_id"}
 _PHYSICAL = {"cam_left", "cam_right", "raw_cam_left", "raw_cam_right", "sensors", "action",
              "control", "pose", "next_pose", "reward", "simulation_time", "eyes", "revision"}
@@ -136,6 +137,8 @@ def _compatible(source, destination, controller=None, scenario=None):
     runtime = _RUNTIME + (_MALE_RUNTIME if controller in MALE_CONTROLLERS else ())
     if scenario == 'calibrated-wheel-compensation':
         runtime += _BODY_RUNTIME
+    if scenario == 'adaptive-wheel-calibration':
+        runtime += _ADAPTIVE_RUNTIME
     def environment(events):
         found = [event for event in events if event["kind"] == "environment"]
         if len(found) != 1:
@@ -252,9 +255,9 @@ def replay_run(source_run_path, destination_run_path, *, mode, repo_root, asset_
         profile = manifest.get("scenario")
         if not isinstance(profile, dict) or not isinstance(profile.get("id"), str):
             raise ValueError("replay requires a recorded scenario configuration")
-        if profile['id'] == 'calibrated-wheel-compensation':
+        if profile['id'] in ('calibrated-wheel-compensation','adaptive-wheel-calibration'):
             from .body_profile import TICK_FIELDS
-            report['comparison']['runtime_source_keys'] += list(_BODY_RUNTIME)
+            report['comparison']['runtime_source_keys'] += list(_ADAPTIVE_RUNTIME if profile['id']=='adaptive-wheel-calibration' else _BODY_RUNTIME)
             if mode == 'actions':
                 report['comparison']['fields'] = sorted(_PHYSICAL | TICK_FIELDS)
         memory_case = manifest.get('memory_case')

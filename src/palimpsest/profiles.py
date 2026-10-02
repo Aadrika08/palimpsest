@@ -6,6 +6,7 @@ from .male_policy import CONTROLLERS as MALE_CONTROLLERS
 
 
 SCENARIOS = {
+    'adaptive-wheel-calibration': ('Measured wheel calibration (development)', 'Manual CPU with four fixed encoder probes, an explicit next-trial action and a fresh fitted episode; Reset clears the calibration. No neural learning or physical qualification.', 20),
     'calibrated-wheel-compensation': ('Calibrated wheel compensation (development)', 'Manual CPU with loaded wheel calibration and a fixed weaker left motor; no online learning or navigation qualification.', 20),
     'reproduction': ('Upstream reproduction', 'Pinned 20-obstacle paper configuration.', 20),
     'sparse-navigation': ('Sparse navigation', 'Five seeded obstacles and a validated free route; pretrained success is not guaranteed.', 5),
@@ -27,6 +28,8 @@ def validate(scenario, texture, controller):
         raise ValueError('Unknown scenario, controller or texture')
     if scenario == 'calibrated-wheel-compensation' and controller != 'manual':
         raise ValueError('Calibrated wheel compensation requires manual CPU control')
+    if scenario == 'adaptive-wheel-calibration' and controller != 'manual':
+        raise ValueError('Measured wheel calibration requires manual CPU control')
     if controller in MALE_CONTROLLERS and (scenario, texture) != ('reproduction', 'checker'):
         raise ValueError('Male pilot controllers require reproduction/checker')
     if scenario != 'texture-variation' and texture != 'checker':
@@ -58,6 +61,10 @@ def validate(scenario, texture, controller):
         from .body_profile import PROFILE_SHA256, ARTIFACT
         profile.update(task='loaded-wheel-compensation-development', body_profile_sha256=PROFILE_SHA256,
                        calibration_artifact_sha256=ARTIFACT['report_sha256'], devices=['cpu'])
+    if scenario == 'adaptive-wheel-calibration':
+        from .body_adaptation import IDENTITY, PROTOCOL
+        profile.update(task='measured-wheel-calibration-development', body_profile_sha256=IDENTITY['profile_sha256'],
+                       baseline_artifact_sha256=PROTOCOL['baseline_report_sha256'], devices=['cpu'], seed=1)
     return profile
 
 

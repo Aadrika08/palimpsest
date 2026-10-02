@@ -155,5 +155,33 @@ class SessionState(unittest.TestCase):
         for state in corruptions:
             with self.assertRaises(ValueError):adaptation.validate_session(state)
 
+    def test_fitted_terminal_interval_retains_cursor_and_fit_then_cannot_advance(self):
+        state = self.fitted()
+        # Pure cursor fixture at the bound, not a claim of 599 physics intervals.
+        state.update(episode_step=599,time_s=599*.02)
+        plan = adaptation.plan_action(state,[.3,0.])
+        after = [u*k*.02 for u,k in zip(plan['applied_control'],(12.,14.))]
+        terminal = adaptation.observe_interval(state,nominal_action=[.3,0.],actual_control=plan['applied_control'],
+            before=[0.,0.],after=after,dt_s=.02,time_s=600*.02,
+            contact=False,coverage_passed=True,terminated=False,truncated=True)
+        self.assertEqual(terminal['phase'],'fitted_terminal')
+        self.assertEqual(terminal['terminal'],{'terminated':False,'truncated':True})
+        self.assertEqual(terminal['episode_step'],600)
+        self.assertEqual(terminal['previous_angles_rad'],after)
+        for key in ('samples','samples_sha256','fit','fit_sha256'):
+            self.assertEqual(state[key],terminal[key])
+        adaptation.validate_session(terminal,episode=4,episode_step=600,angles=after,time_s=12.)
+        with self.assertRaises(ValueError):adaptation.plan_action(terminal,[.3,0.])
+        with self.assertRaises(ValueError):adaptation.calibration_next(terminal,application_phase='paused')
+        with self.assertRaises(ValueError):adaptation.observe_interval(terminal,
+            nominal_action=[.3,0.],actual_control=plan['applied_control'],before=after,after=after,
+            dt_s=.02,time_s=12.02,contact=False,coverage_passed=True,terminated=False,truncated=False)
+        malformed = copy.deepcopy(terminal)
+        malformed.update(phase='fitted',terminal=None)
+        with self.assertRaises(ValueError):adaptation.validate_session(malformed)
+        reset = adaptation.ordinary_reset(terminal,episode=5)
+        self.assertEqual(reset['phase'],'collecting')
+        self.assertEqual(reset['samples'],[])
+
 
 if __name__=='__main__':unittest.main()
