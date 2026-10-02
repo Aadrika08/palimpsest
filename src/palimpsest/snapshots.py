@@ -229,6 +229,8 @@ def _identity(env, policy, teacher):
                   "context_class": _class(renderer._gl_context), "requested_backend": os.environ.get("MUJOCO_GL"),
                   "requested_egl_device": os.environ.get("MUJOCO_EGL_DEVICE_ID")},
               "policy": None, "teacher": None}
+    if hasattr(env, '_body_profile_identity'):
+        result['body_profile'] = _copy(env._body_profile_identity)
     if hasattr(env, "planner"):
         result["environment_planner"] = {"class": _class(env.planner), "spec": _copy(vars(env.planner.spec))}
     if policy is not None:
@@ -327,6 +329,11 @@ def capture(env, observation, *, policy=None, teacher=None, application: dict):
         raise TypeError("application must be pure-state dict")
     if getattr(env, "window", None) is not None or getattr(env, "_view_ctx", None) is not None:
         raise ValueError("Snapshot profile supports headless environments only")
+    if hasattr(env, '_body_profile_identity'):
+        if mujoco.get_mjcb_control() is not None:
+            raise ValueError('Body snapshots require no active global control callback')
+        from .body_profile import validate_snapshot_application
+        validate_snapshot_application(application, env, env.model, env.data)
     native = env.data.__getstate__()
     if len(native) > MAX_BYTES:
         raise ValueError("Native snapshot exceeds byte limit")
@@ -529,6 +536,13 @@ def restore(snapshot, env, *, policy=None, teacher=None, replace_controller=Fals
     mujoco.mj_getState(model, data, audit, enum)
     if not isinstance(snp["integration"], np.ndarray) or snp["integration"].dtype != audit.dtype or snp["integration"].shape != audit.shape or not np.array_equal(snp["integration"].view(np.uint8), audit.view(np.uint8)):
         raise ValueError("Snapshot integration audit differs")
+    if hasattr(env, '_body_profile_identity'):
+        if mujoco.get_mjcb_control() is not None:
+            raise ValueError('Body snapshots require no active global control callback')
+        from .body_profile import validate_snapshot_application
+        validate_snapshot_application(snp['application'], env, model, data)
+    elif 'body_state' in snp['application']:
+        raise ValueError('Body state requires a loaded compensation profile')
     updates = _bindings(env, model)
     renderer = None
     if snp["identity"]["renderer"] is not None:

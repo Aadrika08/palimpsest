@@ -242,11 +242,17 @@ def _episode_preflight(engine, path, budget):
     neural = 0
     if engine.policy is not None:
         neural = (engine.policy.agent.cell.Nin + 2) * engine.policy.hidden.element_size()
+    body = 0
+    if getattr(engine, 'body_state', None) is not None:
+        from .body_profile import MAX_TICK_BYTES
+        body = MAX_TICK_BYTES + 4096
     # Numeric scalars, NPZ headers and chunk/event overhead, not full hidden logging.
-    estimate = 600 * (cameras + neural + 4096) + 1024**2
+    estimate = 600 * (cameras + neural + body + 4096) + 1024**2
     report = {"episode_ticks": 600, "recording_bytes_estimate": estimate,
               "raw_and_effective_camera_bytes_per_tick": cameras, "neural_bytes_per_tick": neural,
               "scope": "one episode estimate plus actual initial snapshot; every write and reset remains quota bounded"}
+    if body:
+        report['body_numeric_and_event_bytes_per_tick_bound'] = body
     if budget is not None:
         report["admission"] = budget.check(estimate, path=path / "recording")
     return report

@@ -60,28 +60,7 @@ def load_fits(path):
                          'protocol_sha256': report['protocol_sha256']}}
 
 
-def effective_control(action):
-    """Pinned converter restricted to its unnormalized branch; validation only."""
-    import numpy as np
-    if type(action) is not list or len(action) != 2 or any(type(x) not in (int, float) or not math.isfinite(x) for x in action):
-        raise ValueError('Two finite numeric action values required')
-    wheels = [action[0] - .5 * action[1], action[0] + .5 * action[1]]
-    if any(abs(wheel) > 1 for wheel in wheels):
-        raise ValueError('Inverse would invoke upstream normalization/clipping')
-    return (np.asarray(wheels, dtype=np.float32) * 2).tolist()
-
-
-def inverse_control(control):
-    import numpy as np
-    if type(control) is not list or len(control) != 2 or any(type(x) not in (int, float) or not math.isfinite(x) or abs(x) > 2 for x in control):
-        raise ValueError('Two finite controls within +/-2 required')
-    target = np.asarray(control, dtype=np.float32).tolist()
-    action = [(target[0] + target[1]) / 4, (target[1] - target[0]) / 2]
-    if effective_control(action) != target:
-        raise ValueError('Exact float32 control inverse roundtrip failed')
-    return {'action': action, 'control_float32': target,
-            'rounding_delta': [b - a for a, b in zip(control, target)]}
-
+from palimpsest.body_profile import effective_control, inverse_control
 
 def command_plan(trial, fits):
     from palimpsest.task_mechanics import compensate_wheels

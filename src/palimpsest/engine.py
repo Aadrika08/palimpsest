@@ -110,6 +110,10 @@ class Engine:
                 acquisition_protocol_sha256=self.memory_case['acquisition_protocol_sha256'])
         self.memory = self.world_task_state = None
         self.task_state = None
+        self.body_state = None
+        if scenario == "calibrated-wheel-compensation":
+            from .profiles import validate
+            validate(scenario, texture, controller)
         if scenario in ('exploration-landmarks', 'encoder-homing') and controller == 'teacher':
             raise ValueError('Declared tasks cannot use the privileged geometry teacher')
         self.revision = 0
@@ -163,6 +167,8 @@ class Engine:
             raise ValueError('Male policy identity requires a male controller')
         seed = _seed(seed)
         profile = validate(scenario, texture, controller)
+        if scenario == "calibrated-wheel-compensation" and device != "cpu":
+            raise ValueError("Loaded wheel calibration profile requires CPU")
         memory_case = cls._validate_memory_case(memory_case, scenario, controller)
         case_manifest = {}
         if memory_case is not None:
@@ -282,6 +288,10 @@ class Engine:
             self.task_state = task_profiles.initialize(self.scenario, f'episode-{self.episode}',
                 task_profiles.encoder_angles(self.env), task_profiles.body_calibration(self.env))
             self.observation = self.env._get_obs()
+        if self.scenario == 'calibrated-wheel-compensation':
+            from . import body_profile
+            self.body_state = body_profile.configure(self.env, f'episode-{self.episode}')
+            self.observation = self.env._get_obs()
         if type(self.env.model).__module__.startswith("mujoco"):
             from .profiles import validate_world
             validate_world(self.env, require_route=self.scenario == 'sparse-navigation')
@@ -306,10 +316,20 @@ class Engine:
             self.writer.manifest['task_protocol'] = copy.deepcopy(PROTOCOL)
             self.writer.manifest['task_calibration'] = copy.deepcopy(self.task_state['odometry']['calibration'])
             self.writer.manifest['task_profile_sha256'] = self.task_state['profile_sha256']
+        if self.body_state is not None:
+            from .body_profile import PROTOCOL, profile_identity
+            self.writer.manifest['body_protocol'] = copy.deepcopy(PROTOCOL)
+            self.writer.manifest['body_profile_identity'] = profile_identity()
+            self.writer.manifest['body_contact_ownership'] = copy.deepcopy(self.env._body_contact_ownership)
+            self._event('body_loaded', identity=profile_identity(), state=self.body_state,
+                        contact_ownership=self.env._body_contact_ownership,
+                        actuator_gear=self.env.model.actuator_gear.tolist(), world=self.world())
         self._event("episode_started", seed=self.seed, goal=self.env._goal_xy.tolist(),
                     obstacles=self.env._obstacle_xy.tolist(), initial_qpos=self.env.data.qpos.tolist(),
                     initial_qvel=self.env.data.qvel.tolist(),
-                    reset_protocol=("authored declared task layout; fresh local encoder, supervisor and controller state"
+                    reset_protocol=("authored calibrated development lane; fixed left gear .8, loaded gains, fresh encoders/controller"
+                                    if self.body_state is not None else
+                                    "authored declared task layout; fresh local encoder, supervisor and controller state"
                                     if self.task_state is not None else
                                     "authored memory development layout; initial M, retained E/U, fresh episodic state"
                                     if self.memory is not None else "fresh physics and controller episode state; upstream seeded layout"),
@@ -364,6 +384,9 @@ class Engine:
             if set(payload) != {"action"}:
                 raise ValueError("set_action requires only an action vector")
             _action(payload["action"], manual=True)
+            if self.body_state is not None:
+                from .body_profile import plan_action
+                plan_action(payload['action'])
         elif kind == "reset":
             if set(payload) - {"seed"}:
                 raise ValueError("reset accepts only an optional seed")
@@ -443,6 +466,12 @@ class Engine:
         elif kind == "set_action":
             if self.controller != "manual":
                 raise CommandRejected("set_action requires the manual controller")
+            if self.body_state is not None:
+                from .body_profile import plan_action
+                try:
+                    plan_action(payload['action'])
+                except ValueError as error:
+                    raise CommandRejected(str(error)) from error
             self.manual_action = _action(payload["action"], manual=True)
         elif kind == "set_eyes":
             self.eyes = payload.copy()
@@ -555,7 +584,21 @@ class Engine:
             action = np.zeros(2, dtype=action.dtype)
         latency = time.perf_counter() - started
         started = time.perf_counter()
-        next_obs, reward, terminated, truncated, info = self.env.step(action)
+        body_arrays = {}
+        if self.body_state is not None:
+            from . import body_profile
+            try:
+                result, state, packet, body_arrays = body_profile.step(self.env, self.body_state,
+                    self.manual_action, self.episode_step, action_override=action_override)
+            except body_profile.BodyFailure as error:
+                self._event('body_failed', detail=error.packet, reason=str(error))
+                raise
+            self.body_state = state
+            action = np.asarray(packet['command']['applied_action'], np.float64)
+            self._event('body_measured', detail=body_profile.measurement_event(packet), state=state)
+            next_obs, reward, terminated, truncated, info = result
+        else:
+            next_obs, reward, terminated, truncated, info = self.env.step(action)
         step_latency = time.perf_counter() - started
         recorded_step = self.episode_step
         populations = self._population_stats() if action_override is None else []
@@ -566,14 +609,14 @@ class Engine:
         self.writer.tick(self.episode, recorded_step, **cameras, sensors=sensor_vector, action=action,
                          control=self.env.data.ctrl.copy(), pose=pose, next_pose=next_pose,
                          reward=np.array(reward), simulation_time=np.array(self.env.data.time),
-                         latency=np.array(latency), step_latency=np.array(step_latency), **neural,
+                         latency=np.array(latency), step_latency=np.array(step_latency), **neural, **body_arrays,
                          raw_cam_left=raw_cameras['cam_left'], raw_cam_right=raw_cameras['cam_right'],
                          eyes=np.array([self.eyes['left'], self.eyes['right']], dtype=np.bool_), revision=np.array(self.revision),
                          population_stats=np.array([[p[key] for key in ('count', 'mean', 'min', 'max')]
                                                     for p in populations], dtype=np.float64).reshape(-1, 4))
         self.last_transition = {"episode": self.episode, "tick": recorded_step,
             **cameras, "sensors": sensor_vector.copy(), "eyes": self.eyes.copy(),
-            "action": action.copy(), "control": self.env.data.ctrl.copy(), **neural,
+            "action": action.copy(), "control": self.env.data.ctrl.copy(), **neural, **body_arrays,
             "populations": populations, "latency": latency, "step_latency": step_latency}
         self.metrics["reward"] += float(reward)
         self.metrics["contact_ticks"] += int(bool(sensors["collision"]))
@@ -650,6 +693,7 @@ class Engine:
                               "total_tick": self.total_tick, "pending_commands": len(self._pending),
                               "metrics": self.metrics, "last_outcome": self.last_outcome,
                               "task": self.task_state,
+                              **({"body": self.body_state} if self.body_state is not None else {}),
                               "closed": self._closed})
 
     @property
@@ -737,7 +781,8 @@ class Engine:
                 size += len(data)
                 count += data.count(b"\n")
         from .snapshots import controller_hashes
-        return copy.deepcopy({"schema_version": 4, "source_run_id": self.run_id,
+        return copy.deepcopy({"schema_version": 5 if self.body_state is not None else 4,
+            **({"body_state": self.body_state} if self.body_state is not None else {}), "source_run_id": self.run_id,
             "execution_mode": self.writer.manifest.get('execution_mode', 'live'),
             "memory": self.memory, "world_task_state": self.world_task_state,
             "task_state": self.task_state,
@@ -770,7 +815,11 @@ class Engine:
                     "episode_step", "phase", "manual_action", "metrics", "last_outcome", "seed",
                     "episode_finished", "pending_commands", "session_exhausted", "recording_failed",
                     "receipts", "original_commands", "memory", "world_task_state", "controller_tensors", "execution_mode", "task_state"}
-        if not isinstance(state, dict) or set(state) != expected or type(state["schema_version"]) is not int or state["schema_version"] != 4 or state["controller"] != self.controller or state["phase"] != "paused":
+        schema = 4
+        if self.body_state is not None:
+            schema = 5
+            expected.add("body_state")
+        if not isinstance(state, dict) or set(state) != expected or type(state["schema_version"]) is not int or state["schema_version"] != schema or state["controller"] != self.controller or state["phase"] != "paused":
             raise ValueError("incompatible application state or non-paused snapshot")
         if state["teacher_reset_identity"] != self._teacher_reset_identity:
             raise ValueError("teacher reset baseline identity differs")
@@ -789,6 +838,10 @@ class Engine:
             raise ValueError('Invalid snapshot eye settings')
         if state["episode_step"] > state["total_tick"] or state["episode_step"] > 600:
             raise ValueError("invalid episode step count")
+        if self.body_state is not None:
+            from .body_profile import validate_state
+            state['body_state'] = validate_state(state['body_state'], self.env._body_profile_identity,
+                episode=state['episode'], episode_step=state['episode_step'])
         if self.scenario == 'memory-passages':
             from . import memory_task, memory_world
             from .snapshots import controller_hashes
@@ -827,6 +880,9 @@ class Engine:
         if not isinstance(prefix, dict) or set(prefix) != {"sha256", "size_bytes", "event_count"} or any(type(prefix[key]) is not int or prefix[key] < 0 for key in ("size_bytes", "event_count")) or not isinstance(prefix["sha256"], str) or len(prefix["sha256"]) != 64 or any(char not in "0123456789abcdef" for char in prefix["sha256"]):
             raise ValueError("invalid durable event prefix")
         _action(state["manual_action"], manual=True)
+        if self.body_state is not None:
+            from .body_profile import plan_action
+            plan_action(state['manual_action'])
         _seed(state["seed"])
         originals, receipts, pending = state["original_commands"], state["receipts"], state["pending_commands"]
         if not isinstance(originals, dict) or not isinstance(receipts, dict) or set(originals) != set(receipts) or len(originals) > self.MAX_IDS or not isinstance(pending, list) or len(pending) > self.MAX_QUEUE:
@@ -850,6 +906,8 @@ class Engine:
         self.parent_event_prefix = state["event_prefix"]
         for name in ("episode", "total_tick", "episode_step", "phase", "metrics", "last_outcome", "seed", "revision", "eyes", "memory", "world_task_state", "task_state"):
             setattr(self, name, state[name])
+        if self.body_state is not None:
+            self.body_state = state['body_state']
         self.manual_action = _action(state["manual_action"], manual=True)
         self._episode_finished = state["episode_finished"]
         self._pending = deque(state["pending_commands"])
