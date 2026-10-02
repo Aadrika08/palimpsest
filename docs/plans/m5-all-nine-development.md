@@ -156,6 +156,20 @@ PYTHONPATH=src ../lab-hardening/.venv/bin/python scripts/verify_memory_transfer.
 
 After root reviews, commits and freezes source, the same command without
 `--plan-only` is the fixed22-stage actual gate. It requires an exclusive runtime
-slot; no execution has occurred during this preparation. Maximum child execution
+slot; execution was not authorized during preparation. The subsequently frozen
+actual gate is recorded below. Maximum child execution
 is22×160seconds; the launch owner must retain an external whole-gate watchdog and
 normal process-group cleanup. Do not add runs or retries after examining outcomes.
+
+## Recorded execution at frozen source
+
+On 2026-10-02, frozen `0a05233` completed the exact 22-stage gate without retries
+in 367.611026407 seconds; source and launch before/after identities matched. All
+18 continuations reached goal426 after126ticks and committed lower blockage354,
+with no own-U timing or task benefit. Both blocks' own/sham numeric streams match
+exactly. This manual-controller development gate is not neural FLYNN evaluation,
+held-out evidence or R2 completion. Full targets, timings, information access and
+artifact accounting are retained in [the evidence report](../reports/m5-all-nine-development.md)
+and [index](../reports/m5-all-nine-development.json). Earlier evidence is unchanged.
+The later test-only mocked-history portability fix does not change the frozen
+runtime source or these records.
