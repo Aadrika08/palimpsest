@@ -19,6 +19,39 @@ from palimpsest.records import iter_ticks
 
 
 class VerifierChecks(unittest.TestCase):
+    def test_reference_uses_exact_snapshot_environment_envelope(self):
+        from palimpsest import task_profiles
+        from palimpsest.snapshots import ENV_PROFILE, _fields
+        class NativeFixture:
+            def __setstate__(self, raw):
+                self.model='same-model'
+        integration=np.array([0.,1.],np.float64)
+        env=SimpleNamespace(**{name:1. for name in ENV_PROFILE})
+        env.model='same-model';env.data=SimpleNamespace(state=integration.copy())
+        engine=SimpleNamespace(env=env)
+        snapshot={'native_data':b'fixture','integration':integration.copy(),
+                  'identity':{'environment_profile':_fields(env,ENV_PROFILE)}}
+        mj=SimpleNamespace(MjData=NativeFixture,mjtState=SimpleNamespace(mjSTATE_INTEGRATION=1),
+            mj_stateSize=lambda model,enum:2,
+            mj_getState=lambda model,data,array,enum:array.__setitem__(slice(None),data.state))
+        with patch.dict('sys.modules',mujoco=mj), patch.object(verify,'canonical_model',side_effect=lambda model:model), \
+                patch.object(task_profiles,'body_calibration',return_value={'radius_m':.06,'track_m':.36}):
+            self.assertTrue(verify.match_reference(engine,snapshot)['integration_exact'])
+            env.W=2.
+            with self.assertRaisesRegex(ValueError,'environment profile differs'):
+                verify.match_reference(engine,snapshot)
+            env.W=1.;del env.H
+            with self.assertRaisesRegex(ValueError,'environment profile differs'):
+                verify.match_reference(engine,snapshot)
+            snapshot['identity']['environment_profile']=_fields(env,ENV_PROFILE)
+            self.assertTrue(verify.match_reference(engine,snapshot)['integration_exact'])
+            env.H=1.  # Absence is part of compatibility, not a default value.
+            with self.assertRaisesRegex(ValueError,'environment profile differs'):
+                verify.match_reference(engine,snapshot)
+            del env.H;env.data.state[0]=.1
+            with self.assertRaisesRegex(ValueError,'fresh physical state/model differs'):
+                verify.match_reference(engine,snapshot)
+
     def test_plan_exact_owners_ticks_deadlines_and_hard_caps(self):
         self.assertEqual(len(verify.OWNERS),12)
         self.assertEqual(sum(ticks for _,ticks in verify.OWNERS),2276)

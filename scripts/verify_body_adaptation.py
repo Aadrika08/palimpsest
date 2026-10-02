@@ -27,7 +27,7 @@ from verify_tasks import file_hashes
 MiB = 1024**2
 OWNERS = [('source',516), ('collecting',4), ('fitted',4), ('actions',516), ('policy',516)] + [
     (trial['id'],120) for trial in TRIALS] + [('expected-rejection',0)]
-PROTOCOL = {'version':1, 'scenario':adaptive.SCENARIO, 'identity':adaptive.IDENTITY,
+PROTOCOL = {'version':2, 'scenario':adaptive.SCENARIO, 'identity':adaptive.IDENTITY,
     'session_protocol':adaptive.PROTOCOL, 'owners':[{'id':name,'numeric_ticks':ticks,
         'deadline_seconds':60 if name=='expected-rejection' else 180} for name,ticks in OWNERS],
     'source_ticks':516, 'positive_numeric_ticks':2276, 'maximum_physics_intervals':2277,
@@ -242,14 +242,14 @@ def match_reference(engine, snapshot):
     import numpy as np
     import mujoco
     from palimpsest import task_profiles
-    from palimpsest.snapshots import ENV_PROFILE
+    from palimpsest.snapshots import ENV_PROFILE, _fields
     reference=mujoco.MjData.__new__(mujoco.MjData);reference.__setstate__(snapshot['native_data'])
     actual=np.empty(mujoco.mj_stateSize(engine.env.model,mujoco.mjtState.mjSTATE_INTEGRATION))
     mujoco.mj_getState(engine.env.model,engine.env.data,actual,mujoco.mjtState.mjSTATE_INTEGRATION)
     if (not np.array_equal(actual.view(np.uint8),snapshot['integration'].view(np.uint8)) or
             canonical_model(engine.env.model)!=canonical_model(reference.model)):
         raise ValueError('Diagnostic fresh physical state/model differs beyond declared gear')
-    profile={key:getattr(engine.env,key) for key in ENV_PROFILE}
+    profile=_fields(engine.env,ENV_PROFILE)
     if profile!=snapshot['identity']['environment_profile']:
         raise ValueError('Diagnostic physical environment profile differs')
     calibration=task_profiles.body_calibration(engine.env)
