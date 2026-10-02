@@ -35,3 +35,12 @@ At `7a51346`, the recorded transfer verifier/negative evidence and wheel-respons
 diagnostic are integrated. All 62 focused memory/history/recording/contact checks
 pass in 3.083 seconds, no skips. This checks the merged logic without rerunning
 the source-scoped physical simulation experiments.
+
+At `8c74181`, the committed male asset bundle, audited 16-run male evaluation,
+visible-preparation memory verifier and measured body compensation are integrated.
+All **363 tests pass, no skips**, in 58.919 seconds with actual EGL, male Torch
+and native/replay gates enabled. The 300-second supervisor exits zero in
+61.363 seconds. Runtime, test and environment-lock hashes remain unchanged.
+The actual male mechanism check uses this checkout's tracked inference assets.
+This regression preserves the negative task outcomes in their separate reports;
+it does not establish useful navigation, memory transfer or online adaptation.
