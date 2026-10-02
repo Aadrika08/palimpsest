@@ -249,12 +249,16 @@ def replay_run(source_run_path, destination_run_path, *, mode, repo_root, asset_
         if snapshot_case != memory_case:
             raise ValueError('Recorded runtime case differs from initial application snapshot')
         from .engine import Engine
+        atomic_memory = (memory_case is not None and memory_case['acquisition'] and
+            profile['id'] == 'memory-passages' and manifest['controller'] == 'flynn')
+        restoration = {'restore_snapshot': snapshot} if atomic_memory else {}
         engine = Engine.open(Path(repo_root), Path(asset_root), destination / "recording",
             controller=manifest["controller"], device=manifest["requested_device"], seed=manifest["seed"],
             scenario=profile["id"], texture=manifest["texture"], run_id=destination.name,
-            storage_budget=storage_budget, memory_case=memory_case)
+            storage_budget=storage_budget, memory_case=memory_case, **restoration)
         _compatible(data["events"], _events(destination))
-        engine.restore_branch(snapshot)
+        if not atomic_memory:
+            engine.restore_branch(snapshot)
         del snapshot
         engine.writer.manifest.update(execution_mode=mode, inference_executed=report["inference_executed"],
             controller_reexecuted=mode == "policy", replay_mode=mode,

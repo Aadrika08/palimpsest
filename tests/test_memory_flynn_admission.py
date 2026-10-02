@@ -5,11 +5,14 @@ checks establish current application contracts, not actual FLYNN continuation.
 """
 
 import copy
+import hashlib
 import json
 from pathlib import Path
 import tempfile
 import unittest
-from unittest.mock import patch
+import uuid
+from types import SimpleNamespace
+from unittest.mock import Mock, patch
 
 import numpy as np
 
@@ -40,7 +43,7 @@ class FlynnMemoryAdmission(unittest.TestCase):
         return memory_experiment.make_world_case(16, 'local_cue',
             'development-test', acquisition=acquisition, change_tick=300)
 
-    def engine(self, case, *, controller='manual'):
+    def engine(self, case, *, controller='manual', **restoration):
         env = SmallEnv()
         env.n_obstacles, env.obstacle_ids = 20, list(range(20))
         env.model.geom_size = np.array([[.4, .8, 0.]] * 20)
@@ -48,6 +51,8 @@ class FlynnMemoryAdmission(unittest.TestCase):
         env.data.geom_xpos = np.array([[*xy, .8] for xy in memory_world.validate_layout()])
         env._obstacle_xy = np.array(memory_world.validate_layout())
         policy = SmallPolicy(action=(.25, -.1)) if controller == 'flynn' else None
+        if policy is not None:
+            policy.device = 'cpu'
         path = self.root / str(len(self.engines))
         writer = RunWriter(path / 'recording', {'run_id': path.name})
 
@@ -58,7 +63,7 @@ class FlynnMemoryAdmission(unittest.TestCase):
 
         with patch.object(memory_world, 'configure', side_effect=configure):
             engine = Engine(env, writer, controller=controller, policy=policy,
-                scenario='memory-passages', memory_case=case)
+                seed=case['seed'], scenario='memory-passages', memory_case=case, **restoration)
         self.engines.append(engine)
         return engine
 
@@ -85,6 +90,179 @@ class FlynnMemoryAdmission(unittest.TestCase):
         engine.manual_action[:] = [1., .2]
         self.assertTrue(all(f['status'] == 'observed' for f in engine.memory['m']['facts']))
         return engine
+
+    def snapshot(self, engine):
+        # Full container shape with explicitly synthetic native bytes; never decode it.
+        result = dict.fromkeys(snapshots.SNAPSHOT_KEYS)
+        native = b'pure-fixture-not-mujoco-native'
+        result.update(schema_version=snapshots.SCHEMA_VERSION,
+            native_data=native, native_sha256=hashlib.sha256(native).hexdigest(),
+            application=engine.application_state())
+        return result
+
+    def test_atomic_acquisition_replacement_returns_only_restored_engine(self):
+        case = self.case(acquisition=True)
+        source = self.observed_source(case)
+        native = self.snapshot(source)
+        before = snapshots.state_digest(native)
+        with patch.object(snapshots, 'restore',
+                side_effect=lambda saved, env, **kwargs: (env._get_obs(), saved['application'])) as restore:
+            destination = self.engine(case, controller='flynn',
+                restore_snapshot=native, replace_controller=True)
+        restore.assert_called_once()
+        self.assertTrue(restore.call_args.kwargs['replace_controller'])
+        self.assertEqual((destination.controller, destination.total_tick, destination.episode_step),
+            ('flynn', 2, 2))
+        self.assertTrue(destination._restored)
+        self.assertIsNone(destination.policy.seen)
+        self.assertEqual(destination.memory, source.memory)
+        self.assertEqual(destination.world_task_state, source.world_task_state)
+        self.assertEqual(snapshots.state_digest(native), before)
+        proof = destination.writer.manifest['memory_continuation_admission']
+        self.assertEqual(proof['snapshot_state_sha256'], before)
+        self.assertEqual(proof['case_sha256'], memory.sha256(case))
+        self.assertEqual(proof['source_controller'], 'manual')
+        self.assertIsNone(proof['memory_u_sha256'])
+
+        anchor = self.snapshot(destination)
+        own = memory.artifact('local_cue')
+        current = []
+        def restored(saved, env, **kwargs):
+            self.assertFalse(kwargs['replace_controller'])
+            return env._get_obs(), saved['application']
+        def captured(env, observation, *, policy, teacher, application):
+            result = copy.deepcopy(anchor)
+            result['application'] = application
+            current.append(result)
+            return result
+        with patch.object(snapshots, 'restore', side_effect=restored) as restore, \
+                patch.object(snapshots, 'capture', side_effect=captured):
+            branch = self.engine(case, controller='flynn', restore_snapshot=anchor, memory_u=own)
+        restore.assert_called_once()
+        self.assertEqual(branch.memory['u'], own)
+        self.assertEqual(branch.memory['m'], destination.memory['m'])
+        self.assertEqual(branch.memory['e'], destination.memory['e'])
+        self.assertTrue(all(snapshots.invariant_hashes(s) == snapshots.invariant_hashes(anchor)
+            for s in current))
+        self.assertEqual(branch.writer.manifest['memory_continuation_admission']['memory_u_sha256'], memory.sha256(own))
+        self.assertIsNone(branch.policy.seen)
+
+    def test_narrow_atomic_preflight_rejects_invalid_routes_before_allocation(self):
+        case = self.case(acquisition=True)
+        source = self.observed_source(case)
+        native = self.snapshot(source)
+        invalid = [
+            {'device': 'cuda'}, {'controller': 'manual'}, {'scenario': 'reproduction'}, {'seed': 17},
+            {'replace_controller': 1}, {'memory_u': memory.artifact('local_cue')},
+            {'restore_snapshot': None}, {'memory_case': self.case()},
+        ]
+        for altered in ('controller', 'phase', 'execution_mode', 'native_sha256', 'case'):
+            bad = copy.deepcopy(native)
+            if altered == 'native_sha256':
+                bad[altered] = '0' * 64
+            elif altered == 'case':
+                bad['application']['world_task_state']['case'] = self.case()
+            else:
+                bad['application'][altered] = {'controller': 'flynn', 'phase': 'running',
+                    'execution_mode': 'actions'}[altered]
+            invalid.append({'restore_snapshot': bad})
+        for index, update in enumerate(invalid):
+            args = {'controller': 'flynn', 'device': 'cpu', 'scenario': 'memory-passages',
+                'seed': case['seed'], 'memory_case': case, 'restore_snapshot': native, 'replace_controller': True}
+            args.update(update)
+            with self.subTest(route=index), patch('palimpsest.records.RunWriter') as writer, \
+                    patch('palimpsest.doctor.diagnose') as diagnose, self.assertRaises((ValueError, TypeError)):
+                Engine.open(self.root, self.root, self.root / 'not-allocated', **args)
+            writer.assert_not_called()
+            diagnose.assert_not_called()
+        with self.assertRaises(ValueError):
+            Engine._memory_restore(None, 'reproduction', 'manual', 'cpu', None, False, memory.artifact())
+
+    def test_atomic_open_failure_closes_owned_runtime_without_model_import(self):
+        case = self.case(acquisition=True)
+        source = self.observed_source(case)
+        native = self.snapshot(source)
+        source_before = snapshots.state_digest(native)
+        env = SmallEnv()
+        env.renderer = Mock()
+        policy = SmallPolicy()
+        policy.device = 'cpu'
+        policy.provenance = {'requested_device': 'cpu', 'claim': 'pure-policy-fixture'}
+        torch_stub = SimpleNamespace(manual_seed=Mock(), set_num_threads=Mock())
+        output = self.root / 'failed-atomic'
+        def configure(env, state):
+            env.data.qpos[:] = case['start_pose']
+            env._goal_xy[:] = case['goal_xy']
+            return memory_world.validate_state(state)
+        with patch.dict('sys.modules', {'torch': torch_stub}), \
+                patch('palimpsest.doctor.diagnose', return_value={'checks': []}), \
+                patch('palimpsest.profiles.configure_world'), \
+                patch('palimpsest.assets.verify_assets', return_value={'ok': True}), \
+                patch('palimpsest.assets.prepare_graph', return_value=self.root / 'graph'), \
+                patch('palimpsest.assets.load_manifest', return_value={'files': [{'id': 'checkpoint', 'path': 'fixture'}], 'upstream_commit': 'fixture'}), \
+                patch('palimpsest.flynn.import_upstream', return_value=SimpleNamespace(_make_env=lambda *a, **kw: env)), \
+                patch('palimpsest.flynn.load_policy', return_value=policy), \
+                patch.object(memory_world, 'configure', side_effect=configure), \
+                patch.object(snapshots, 'restore', side_effect=ValueError('pure native failure')) as restore:
+            with self.assertRaisesRegex(ValueError, 'pure native failure'):
+                Engine.open(Path(__file__).resolve().parents[1], self.root, output,
+                    controller='flynn', seed=case['seed'], scenario='memory-passages', memory_case=case,
+                    restore_snapshot=native, replace_controller=True)
+        restore.assert_called_once()
+        self.assertTrue(env.closed)
+        env.renderer.close.assert_called_once()
+        self.assertIsNone(policy.seen)
+        self.assertFalse(source.env.closed)
+        self.assertEqual(snapshots.state_digest(native), source_before)
+        failed = json.loads((output / 'manifest.json').read_text())
+        self.assertEqual(failed['status'], 'failed')
+        self.assertEqual(failed['recorded_ticks'], 0)
+        self.assertIn('pure native failure', failed['error']['message'])
+
+    def test_replay_uses_atomic_route_only_for_acquisition_flynn(self):
+        from palimpsest import replay
+        for controller, acquisition in (('flynn', True), ('manual', True), ('flynn', False)):
+            for mode in ('actions', 'policy'):
+                with self.subTest(controller=controller, acquisition=acquisition, mode=mode):
+                    source = self.root / uuid.uuid4().hex
+                    destination = self.root / uuid.uuid4().hex
+                    source.mkdir()
+                    destination.mkdir()
+                    case = self.case(acquisition=acquisition)
+                    writer = RunWriter(source / 'recording', {'run_id': source.name,
+                        'controller': controller, 'requested_device': 'cpu', 'seed': 16,
+                        'texture': 'checker', 'scenario': {'id': 'memory-passages'},
+                        'memory_case': case, 'memory_case_sha256': memory.sha256(case),
+                        'acquisition_protocol_sha256': case['acquisition_protocol_sha256']})
+                    (source / 'snapshots').mkdir()
+                    filename = source / 'snapshots/initial.snp'
+                    snapshot = {'application': {'source_run_id': source.name,
+                        'event_prefix': {'sha256': hashlib.sha256(b'').hexdigest(), 'size_bytes': 0, 'event_count': 0},
+                        'world_task_state': memory_world.initial_state(case=case)}}
+                    snapshots.save_snapshot(snapshot, filename)
+                    writer.event('snapshot_registered', run_id=source.name, initial=True,
+                        filename='initial.snp', snapshot_id=uuid.uuid4().hex,
+                        sha256=hashlib.sha256(filename.read_bytes()).hexdigest())
+                    writer.finish({})
+                    fake = Mock()
+                    fake.run_id = destination.name
+                    fake.writer.manifest = {}
+                    with patch.object(Engine, 'open', return_value=fake) as opened, \
+                            patch.object(replay, '_compatible'), patch.object(replay, '_events', return_value=[]), \
+                            patch.object(replay, '_register_initial', side_effect=InterruptedError('pure boundary')):
+                        report = replay.replay_run(source, destination, mode=mode,
+                            repo_root=self.root, asset_root=self.root)
+                    self.assertEqual(report['status'], 'cancelled', report)
+                    self.assertEqual(opened.call_args.kwargs['memory_case'], case)
+                    atomic = controller == 'flynn' and acquisition
+                    self.assertEqual('restore_snapshot' in opened.call_args.kwargs, atomic)
+                    if atomic:
+                        self.assertEqual(opened.call_args.kwargs['restore_snapshot'], snapshot)
+                        fake.restore_branch.assert_not_called()
+                    else:
+                        fake.restore_branch.assert_called_once_with(snapshot)
+                    self.assertEqual(report['inference_executed'], mode == 'policy' and controller == 'flynn')
+                    fake.close.assert_called_once()
 
     def test_acquisition_flynn_rejects_before_runtime_allocation(self):
         case = self.case(acquisition=True)
