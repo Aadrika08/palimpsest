@@ -61,11 +61,11 @@ The synthetic CPU loader/state/rollback check is skipped unless
 both actual checkpoints passed at `4941468`, including all 600 held-out recorded
 inputs per variant compared against frozen 32-tick-window evaluation. See the
 [validation report](../reports/m7-wrapper-validation.md) for exact scope and
-hashes. Engine integration and closed-loop/native continuation remain separate
-unexecuted gates. Fixture checks and single-seed imitation metrics establish
+hashes. The later [lab integration gate](../reports/m7-lab-integration.md) passes native
+continuation and replay; navigation and live-owner/browser gates remain separate. Fixture checks and single-seed imitation metrics establish
 neither topology benefit nor biological sensing or navigation competence.
 
-## Initial lab integration, awaiting actual gate
+## Initial lab integration
 
 Two explicit controller IDs, `male-original` and `male-control`, map only
 to `original` and `degree_rewired`. Admit CPU, reproduction and checker initially;
@@ -100,8 +100,8 @@ guard. Profiles/Lab have fixed choices and verified availability. Worker and
 replay snapshot registration retain `policy_identity`; replay marks male
 policy inference correctly and include male source files in its relevant runtime
 hash checks for male replays only. Policy/action replay keeps its existing labels.
-Actual snapshot continuation and replay must pass a separately bounded runtime
-gate before claiming this integration works.
+The separately bounded [actual runtime gate](../reports/m7-lab-integration.md)
+passes for both variants; it is not navigation or live-owner qualification.
 
 Stage exactly seven files, without changing the frozen training outputs:
 `report.json`, `protocol.json`, `original-graph.json`, `original.pt`,
