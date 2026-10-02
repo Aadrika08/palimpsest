@@ -54,6 +54,8 @@ Create a run, start or step it, then pause to capture a snapshot. World edits ha
 
 Branches run sequentially in fresh workers. Preserving the controller restores its state; choosing a different controller retains the world but starts fresh controller state and records that distinction. Compare provenance before interpreting route overlays. Loading, replay, failure, termination and time limits retain explicit labels. CPU full-model continuation is qualified only for the measured profile; CUDA has the known strict-continuation limitation described below.
 
+The inspector reports measured active execution time and real-time factor (advanced simulated seconds divided by active wall seconds). Loading and paused periods are excluded; logging, rendering and waiting for a requested pause boundary are included. A value below one means slower than real time. Trajectory visibility is a presentation-only control and sends no simulation command. Close the active owner before exporting a completed recording.
+
 The lab stores UUID-named directories under `runs/lab/`. Playback reads recorded values without simulation or inference. Action replay advances physics using recorded actions and skips inference. Policy replay recomputes the recorded controller. Both executable replays check compatible source provenance, snapshots and numeric records, then report agreement or the first divergence under fixed tolerances; completion alone is not agreement.
 
 ```sh
@@ -80,7 +82,7 @@ Use a new output directory each time; existing runs are never overwritten. Omitt
 
 `--parity` compares each FLYNN tick with upstream observation conversion and checks encoded input, raw output, action, hidden state, and retinal state within recorded tolerances. It adds work and does not establish original checkpoint training provenance. Non-finite neural outputs fail before upstream sanitization or a world step.
 
-The subprocess timeout includes loading and renderer stalls. The recording quota defaults to 2 GiB (`--max-bytes 2147483648`); it covers recording files, including atomic manifest staging, and excludes supervisor logs. Episode counts are bounded to 1–1000, steps to 1–600, and worker threads to 1–16 (default 2). Inspect free RAM, VRAM, and disk before increasing budgets. For a sequential development batch of seeds 0–29:
+The subprocess timeout includes loading and renderer stalls. The per-recording quota defaults to 2 GiB (`--max-bytes 2147483648`), including atomic manifest staging. Shared storage limits below additionally cover logs and other outputs. Episode counts are bounded to 1–1000, steps to 1–600, and worker threads to 1–16 (default 2). For a sequential development batch of seeds 0–29:
 
 ```sh
 uv run --no-sync palimpsest evaluate --controller flynn --device cuda \
@@ -89,6 +91,14 @@ uv run --no-sync palimpsest evaluate --controller flynn --device cuda \
 ```
 
 Each run retains `supervisor.json`, `stdout.log`, `stderr.log`, and a `recording/` bundle containing `manifest.json`, `events.jsonl`, and typed numeric chunks. The manifest records configuration and completion status; events record provenance and episode outcomes. Camera inputs, declared sensors, poses, actions, controls, and timings are retained; FLYNN also records encoded inputs and raw outputs. A timeout or failure is retained explicitly. These records are not full resumable snapshots.
+
+## Storage and recovery
+
+Lab, evaluation, executable replay and export accept `--storage-max-bytes` (default 20 GiB), `--min-free-bytes` (1 GiB), `--max-runs` (1024), `--max-snapshots` (64 per run), `--max-exports` (1024), and `--log-max-bytes` (1 MiB per stdout/stderr stream). Use `--help` for accepted bounds. The lab counts its configured run/export roots; CLI writers count the output's parent directory. Assets must be outside those roots. Existing and interrupted files count, including temporary publication files; nothing is automatically deleted.
+
+Preflight estimates use the loaded profile's actual camera/neural dimensions and the serialized snapshot. Every subsequent write is checked too, so resets do not bypass the quota. Log pipes cap native and Python output and retain its prefix on failure. Reserved space supports bounded failure reports. One per-user writer lease serializes Palimpsest lab/CLI writers, including overlapping output directories; close another running lab before starting a separate writer.
+
+After a quota, process or recording failure, preserve the diagnostics and published recording prefix, close the failed owner, then start a fresh run or branch from a registered compatible snapshot. Do not treat orphan chunks or incomplete commands as applied data. Archive or remove selected old output directories yourself after the lab is closed; the application does not choose evidence to delete. See the [hardening verification and recovery runbook](docs/reports/lab-hardening-runbook.md) for cached offline setup, sustained execution, failure checks and endurance commands. Release qualification remains pending while those gates are incomplete.
 
 ## Execution and snapshots
 
