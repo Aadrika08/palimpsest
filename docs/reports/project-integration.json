@@ -1553,5 +1553,34 @@
       "This regression checks the newly integrated verifier fixtures, not actual success of their separate experiments.",
       "Puck mechanics naturally failed at the first teacher; Stage C memory comparison is unexecuted. Held-out task-start evidence retains its separate frozen source."
     ]
+  },
+  "fixes_turns_regression": {
+    "source_commit": "ff0520a5001c7ad2d1a380b7e8b2bbf931506ca5",
+    "tests": 547,
+    "passed": 547,
+    "skipped": 0,
+    "suite_seconds": 122.303,
+    "supervisor": {
+      "elapsed_seconds": 125.25391965699964,
+      "output": "/home/utkarsh/Work/shraddha/brain/.worktrees/project-integration/runs/integration-fixes-turns-ff0520a-20261003/supervisor",
+      "returncode": 0,
+      "schema_version": 1,
+      "started_utc": "2026-10-02T21:13:23.479360+00:00",
+      "status": "completed",
+      "timeout_seconds": 300
+    },
+    "all_runtime_gates_enabled": true,
+    "sources_unchanged": true,
+    "assets_unchanged": true,
+    "model_identities_unchanged": true,
+    "retained_files_rehashed": 50,
+    "report": "runs/integration-fixes-turns-ff0520a-20261003/report.json",
+    "report_sha256": "1ad3e337ceee7c390e48b17da45e0a60338b8bdc7ec01cff5e2e50410f09943c",
+    "launcher_sha256": "bc94ad6bd630b6d37345889cce08df4eff2c52dc007a45160d064e7d41251d87",
+    "limitations": [
+      "Production model assets remain v1; this regression does not qualify failed research models.",
+      "Both puck mechanics attempts failed their positive teacher; memory C1 started zero owners.",
+      "The retained-fit turn verifier has only fixture evidence at this source freeze."
+    ]
   }
 }
