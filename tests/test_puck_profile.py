@@ -87,10 +87,28 @@ class PuckProfileTests(unittest.TestCase):
         a['goal_xy'][0] = 999
         self.assertEqual(self.p.layout(ROOT, 6000, 'train')['goal_xy'], [.6, -.3])
 
+    def test_v2_only_versions_teacher_aim_not_physics_or_numeric_protocol(self):
+        old_path=ROOT/'docs/plans/m6-puck-pushing-protocol.json'
+        self.assertEqual(hashlib.sha256(old_path.read_bytes()).hexdigest(),
+                         '8a7f14ee69fe386fe1150b644e71737a5e39ab3c8c4987d7cdf61277796f3bac')
+        old=json.loads(old_path.read_text());new=self.p.load_protocol(ROOT)
+        self.assertEqual(new['id'],'m6-puck-pushing-plan-v2')
+        self.assertEqual(new['demonstrator']['id'],'analytic-puck-behind-align-push-v2')
+        self.assertIn('aim_selection',new['demonstrator'])
+        new['id']=old['id'];new['demonstrator']['id']=old['demonstrator']['id']
+        del new['demonstrator']['aim_selection']
+        self.assertEqual(new,old)
+
+    def test_v1_task_cursor_not_reinterpreted_as_v2(self):
+        state=self.p.initialize(world(),'old-episode')
+        state['protocol_sha256']='8a7f14ee69fe386fe1150b644e71737a5e39ab3c8c4987d7cdf61277796f3bac'
+        with self.assertRaisesRegex(ValueError,'Incompatible'):
+            self.p.advance(state,world(1),self.contacts(1),[0.,0.])
+
     def test_protocol_tampering_and_oversized_sources_fail(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
-            target = root / 'docs/plans/m6-puck-pushing-protocol.json'
+            target = root / self.p.PROTOCOL_PATH
             target.parent.mkdir(parents=True)
             target.write_bytes((ROOT / target.relative_to(root)).read_bytes() + b' ')
             with self.assertRaisesRegex(ValueError, 'protocol'):
@@ -121,7 +139,7 @@ class PuckProfileTests(unittest.TestCase):
     def test_xml_mutation_duplicate_missing_or_extra_topology_is_rejected(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
-            protocol = root / 'docs/plans/m6-puck-pushing-protocol.json'
+            protocol = root / self.p.PROTOCOL_PATH
             protocol.parent.mkdir(parents=True)
             protocol.write_bytes((ROOT / protocol.relative_to(root)).read_bytes())
             target = root / XML.relative_to(ROOT)
@@ -359,17 +377,31 @@ class PuckProfileTests(unittest.TestCase):
 
     def test_demonstrator_aim_switch_and_lateral_boundaries(self):
         # The behind point is exactly x=0 here, so .08 has no subtraction
-        # rounding ambiguity. Crossing it switches back to behind-point aim.
+        # rounding ambiguity. The push corridor keeps the goal-direction aim.
         inside = world(puck=(.55, 0., .062), rover=(.08, 0., 0.))
         self.assertEqual(self.p.demonstrate(inside), [.2, 0.])
         self.assertEqual(self.p.demonstrate(world(puck=(.55, 0., .062),
-                           rover=(.080001, 0., 0.))), [0., .4])
+                           rover=(.080001, 0., 0.))), [.2, 0.])
         self.assertEqual(self.p.demonstrate(world(rover=(-.55, .060001, 0.))), [.25, 0.])
-        # At axial .35 the aim is behind the rover, so the heading rule wins;
-        # the axial condition never bypasses alignment.
-        self.assertEqual(self.p.demonstrate(world(rover=(-.35, 0., 0.))), [0., .4])
+        # Readiness changes target direction, never bypasses heading alignment.
+        self.assertEqual(self.p.demonstrate(world(rover=(-.35, 0., 0.))), [.2, 0.])
         self.assertEqual(self.p.demonstrate(world(rover=(-.63, 0., 0.))), [.2, 0.])
         self.assertEqual(self.p.demonstrate(world(rover=(-.630001, 0., 0.))), [.25, 0.])
+
+    def test_v2_retained_tick109_corridor_aim_and_reflection(self):
+        # V1 recorded action109; audit SHA 5db66ece...99fb98. These are pure
+        # counterfactual commands at a seen development state, not new physics.
+        x,y,yaw=-.46742095296335834,.016918583801692796,.03331900718597027
+        actual=world(rover=(x,y,yaw),goal=(1.2,0.))
+        reflected=world(rover=(-x,-y,yaw+math.pi),goal=(-1.2,0.))
+        for value in (actual,reflected):
+            np.testing.assert_allclose(self.p.demonstrate(value),[.2,-yaw],rtol=0,atol=1e-12)
+        # Same point, outside alignment: still turn, with the unchanged cap.
+        self.assertEqual(self.p.demonstrate(world(rover=(x,y,1.),goal=(1.2,0.))),[0.,-.4])
+        # Outside the corridor and approach arrival: aim at the behind point.
+        self.assertEqual(self.p.demonstrate(world(rover=(-.45,.2,0.),goal=(1.2,0.))),[0.,-.4])
+        # Stop remains first priority despite readiness and heading error.
+        self.assertEqual(self.p.demonstrate(world(rover=(-.45,0.,1.),goal=(.18,0.))),[0.,0.])
 
     def test_import_and_pure_use_never_imports_torch_or_mujoco(self):
         code = ('import sys; from palimpsest.puck_profile import load_protocol; '

@@ -1,10 +1,10 @@
-# Fixed puck mechanics gate — prepared, not executed
+# Fixed puck mechanics v2 — prepared, not executed
 
 This verifier implements the mechanics stage of the frozen
-[puck plan](m6-puck-pushing.md) and [task protocol](m6-puck-pushing-protocol.json).
-The [v1 mechanics contract](m6-puck-mechanics-v1.json) pins its lifecycle and
-resources without changing the disk, actions, layouts, demonstrator or task
-thresholds. The prior [v4 construction result](../reports/m6-puck-construction-v4.md)
+[puck plan](m6-puck-pushing.md) and [v2 task protocol](m6-puck-pushing-protocol-v2.json).
+The [v2 mechanics contract](m6-puck-mechanics-v2.json) pins its lifecycle and
+resources without changing the disk, fixed actions, layouts or task thresholds.
+V2 changes only the analytical teacher target-selection rule described below. The prior [v4 construction result](../reports/m6-puck-construction-v4.md)
 qualifies zero-step construction only. This gate has **not** established contact
 stability, pushing, continuation or learned control.
 
@@ -14,6 +14,27 @@ supervised subprocesses directly own the existing fixed-profile environment.
 There is no Engine, worker, REST, UI, registry or production snapshot change.
 Product wiring and a separately trained controller remain later reviewed work.
 No Torch, training, external camera, network or physical hardware is involved.
+
+V1 remains a [failed mechanics result](../reports/m6-puck-mechanics-v1.md) at
+`0560886`; both original protocol JSON files and every raw artifact remain
+unchanged. V2 chooses the goal direction whenever the **existing** axial/lateral
+push corridor is ready, or the existing behind-point arrival test passes.
+Otherwise it still approaches the behind point. Stop priority, heading alignment,
+velocity/heading caps, numerical thresholds, state, layouts and all budgets are
+unchanged. No hysteresis or added controller state is introduced. These are the
+same already-inspected development scenes, not fresh held-out scenes.
+
+The caller review found the analytical teacher is used only by this standalone
+mechanics verifier and pure tests. The XML derivation, installer, authored reset,
+contact interpretation, task transition and native snapshot helpers are unchanged.
+New task and gate hashes bind the current profile/application identity; a v1
+cursor or snapshot is rejected before native restore. The numeric record schema
+remains v1 because its fields are unchanged; its protocol hashes distinguish the
+new semantics. The historical construction verifier deliberately retains its old
+module pin and rejects this checkout; reproduce it at its committed source.
+Unchanged XML bytes and expected native hashes do not automatically transfer
+construction qualification to v2. Each prospective fresh owner must still admit,
+construct and check the fixed model, then pass its own mechanics conditions.
 
 | Owner order | Fixed source/layout | Maximum control ticks | Owner storage |
 | --- | --- | ---: | ---: |
@@ -125,7 +146,7 @@ hash-pinned launcher/plan before any execution:
 ```sh
 PYTHONPATH=src ../lab-hardening/.venv/bin/python scripts/verify_puck_mechanics.py \
   --repo "$PWD" --expected-commit FROZEN_HEAD \
-  --output runs/m6-puck-mechanics-v1-YYYYMMDD/gate --retention-root runs
+  --output runs/m6-puck-mechanics-v2-YYYYMMDD/gate --retention-root runs
 ```
 
 The actual invocation must use the reviewed outer launcher, not this unbounded
@@ -135,10 +156,10 @@ source/model identity, exact selected boundary/successors, outcomes and cleanup.
 No downstream teacher collection, learning or physical qualification follows
 automatically from this gate.
 
-Preparation validation: the 80 focused pure tests passed (0.697 s, no skips),
-covering existing profile/construction/task/body helpers plus 15 new verifier
-fixtures. The new fixtures include missing/late startup receipt discovery,
-identity reuse/shared-group rejection, progress timeout and forced cleanup,
-first-failure plan retention, exact row/schema comparisons, bounded snapshots,
-and literal first-dwell selection. This is fixture verification, not a native
-mechanics result.
+V2 preparation validation: 85 focused pure tests passed in 0.881 s, no skips.
+The actual v1 tick-109 fixture failed with the old `[0, -.4]` action before the
+correction, then passed with `[.2, -.03331900718597027]`. Reflected, outside-corridor,
+misaligned and stop-priority checks pass; numeric/physics/layout/budget equality
+and explicit historical task/snapshot/construction-pin rejection are covered.
+These are pure counterfactual checks at seen development states, not a v2 native
+result or proof of task completion.

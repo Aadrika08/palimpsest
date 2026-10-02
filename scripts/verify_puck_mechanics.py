@@ -23,8 +23,8 @@ from verify_afterimage import digest, write_json, process_identity, cleanup_chec
 from palimpsest import puck_profile as puck
 from palimpsest.snapshots import state_digest
 
-PROTOCOL_FILE = 'docs/plans/m6-puck-mechanics-v1.json'
-PROTOCOL_SHA256 = '27dac414c5828eaaf3b560114b7413aa5547175448a03bf22d42027fbe9914d9'
+PROTOCOL_FILE = 'docs/plans/m6-puck-mechanics-v2.json'
+PROTOCOL_SHA256 = '51dfaff0c0ac852f52df779a4b5c5ce38f0c3404f45f13edca6bc180fde6fa00'
 MiB = 1024**2
 
 
@@ -49,7 +49,7 @@ def protocol(root):
 def sources(root):
     from verify_puck_construction import sources as construction_sources
     result = construction_sources(root)
-    for name in (PROTOCOL_FILE, 'scripts/verify_puck_mechanics.py', 'scripts/verify_endurance.py',
+    for name in (PROTOCOL_FILE, puck.PROTOCOL_PATH, 'scripts/verify_puck_mechanics.py', 'scripts/verify_endurance.py',
                  'tests/test_puck_mechanics.py'):
         result[name] = digest(root/name)
     return dict(sorted(result.items()))

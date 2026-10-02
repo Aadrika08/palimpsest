@@ -82,6 +82,25 @@ class MechanicsFixtures(unittest.TestCase):
         with self.assertRaises(ValueError): gate.validate_application(app, 'zero', 1, '0'*64)
         with self.assertRaises(ValueError): gate.validate_application(app, 'push-positive', 1, expected)
 
+    def test_v1_snapshot_gate_and_task_pins_rejected_before_native_restore(self):
+        app=application(1)
+        old_gate=copy.deepcopy(app)
+        old_gate['gate_protocol_sha256']='27dac414c5828eaaf3b560114b7413aa5547175448a03bf22d42027fbe9914d9'
+        old_task=copy.deepcopy(app)
+        old_task['state']['protocol_sha256']='8a7f14ee69fe386fe1150b644e71737a5e39ab3c8c4987d7cdf61277796f3bac'
+        for old in (old_gate,old_task):
+            with self.assertRaises(ValueError): gate.validate_application(old,'zero',1,state_digest(old))
+
+    def test_historical_construction_pin_is_not_silently_promoted(self):
+        import verify_puck_construction
+        with self.assertRaisesRegex(ValueError,'module differs'):
+            verify_puck_construction.protocol(ROOT)
+        old=json.loads((ROOT/'docs/plans/m6-puck-mechanics-v1.json').read_text())
+        new=gate.protocol(ROOT)
+        for key in ('limits','environment_kwargs','runtime','owner_order','boundary_rules','recording','snapshot','watchdog'):
+            self.assertEqual(new[key],old[key])
+        self.assertNotEqual(new['pushing_protocol_sha256'],old['pushing_protocol_sha256'])
+
     def test_application_dwell_is_not_command_zero(self):
         # The frozen dwell predicate can be valid at distance .19, outside teacher stop .18.
         app = application(20)
