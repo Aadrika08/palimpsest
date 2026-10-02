@@ -84,7 +84,7 @@ class MaleEvaluationFixtures(unittest.TestCase):
             camera[0, 0, 0] = 1
         for tick in range(2):
             writer.tick(0, tick, cam_left=camera, cam_right=camera, raw_cam_left=camera, raw_cam_right=camera,
-                sensors=np.array([0., 0., 1., 0.]), action=np.array([1., 0.], np.float32), control=np.zeros(2),
+                sensors=np.array([0., 0., 1., 0.], np.float32), action=np.array([1., 0.], np.float32), control=np.zeros(2),
                 pose=np.array([tick * .1, 0., 0.]), next_pose=np.array([(tick + 1) * .1, 0., 0.]),
                 reward=np.array(.5), simulation_time=np.array((tick + 1) * .02),
                 latency=np.array(.001 * (tick + 1)), step_latency=np.array(.002),
@@ -103,9 +103,10 @@ class MaleEvaluationFixtures(unittest.TestCase):
     def test_frozen_plan_and_bounds(self):
         plan = evaluation.planned_runs()
         self.assertEqual([(row['seed'], row['controller']) for row in plan],
-                         [(seed, controller) for seed in range(120, 128) for controller in CONTROLLERS])
+                         [(seed, controller) for seed in range(128, 136) for controller in CONTROLLERS])
         self.assertTrue(all(row['status'] == 'not_started' for row in plan))
-        self.assertTrue(set(evaluation.PROTOCOL['scene_seeds']).isdisjoint(range(100, 117)))
+        self.assertTrue(set(evaluation.PROTOCOL['scene_seeds']).isdisjoint(range(100, 128)))
+        self.assertEqual(evaluation.PROTOCOL['version'], 2)
         self.assertEqual(evaluation.PROTOCOL['max_ticks_per_run'], 600)
         self.assertEqual(evaluation.PROTOCOL['max_runs'], 16)
         self.assertEqual(evaluation.PROTOCOL['retry_count'], 0)
@@ -137,6 +138,16 @@ class MaleEvaluationFixtures(unittest.TestCase):
                 value['observation']['sensors']['wind_direction'] = np.array([2., 0.])
             with self.assertRaises(ValueError):
                 evaluation.initial_fingerprint(value, WORLD, 120, identity())
+
+    def test_initial_input_hash_matches_exact_engine_float32_projection(self):
+        value = initial()
+        value['observation']['sensors'] = {'collision': 0., 'collision_angle': .123456789,
+                                          'wind_direction': np.array([.6, .8], np.float64)}
+        projected = {'cam_left': value['observation']['cam_left'], 'cam_right': value['observation']['cam_right'],
+                     'sensors': np.array([0., .123456789, .6, .8], np.float32)}
+        result = evaluation.initial_fingerprint(value, WORLD, 120, identity())
+        self.assertEqual(result['inputs'], evaluation.state_digest(projected))
+        self.assertEqual(result['features'], evaluation.state_digest(evaluation.features(projected)))
 
     def test_serial_steps_stop_naturally_without_reset_and_cap_at_600(self):
         for terminal, count in ((1, 1), (None, 600)):
@@ -209,6 +220,49 @@ class MaleEvaluationFixtures(unittest.TestCase):
         self.assertNotIn('summary', report)
         supervisor.start.assert_called_once()
         supervisor.shutdown.assert_called_once()
+
+    def test_disposed_handle_is_not_queried_and_shutdown_failure_cannot_skip_identity_checks(self):
+        class ProcessHandle:
+            closed = False
+            @property
+            def exitcode(self):
+                if self.closed:
+                    raise ValueError('process object is closed')
+                return 0
+            def is_alive(self):
+                if self.closed:
+                    raise ValueError('process object is closed')
+                return False
+
+        for shutdown_fails in (False, True):
+            with self.subTest(shutdown_fails=shutdown_fails):
+                process = ProcessHandle()
+                def shutdown():
+                    process.closed = True
+                    if shutdown_fails:
+                        raise RuntimeError('fixture shutdown failure')
+                owner = SimpleNamespace(view={'status': 'closed'}, process=process)
+                supervisor = SimpleNamespace(budget=SimpleNamespace(check=Mock(return_value={})),
+                    control_budget=SimpleNamespace(check=Mock()), workers={'a' * 32: owner},
+                    shutdown=Mock(side_effect=shutdown), close=Mock(return_value={'status': 'closed'}),
+                    start=Mock(side_effect=RuntimeError('fixture initial failure')))
+                output = self.root / ('shutdown-fails' if shutdown_fails else 'disposed')
+                with patch.object(evaluation, 'LabSupervisor', return_value=supervisor), \
+                        patch.object(evaluation, 'sources', return_value={'fixture.py': 'a' * 64}) as source_check, \
+                        patch.object(evaluation, 'resolve_profile', side_effect=lambda root, assets, name: (identity(name), {})) as models:
+                    evaluation.evaluate(SimpleNamespace(repo=self.root, assets=self.root / 'assets', output=output))
+                report = json.loads((output / 'evaluation.json').read_text())
+                self.assertTrue(report['sources_unchanged'])
+                self.assertTrue(report['model_identities_unchanged'])
+                self.assertTrue(report['recording_fingerprints_unchanged'])
+                self.assertEqual(source_check.call_count, 2)
+                self.assertEqual(models.call_count, 4)
+                self.assertEqual(report['cleanup'][0]['owner_exitcode'], 0)
+                self.assertFalse(report['cleanup'][0]['owner_alive'])
+                self.assertEqual(report['supervisor_shutdown'], 'failed' if shutdown_fails else 'completed')
+                self.assertNotIn('process object is closed', json.dumps(report))
+                if shutdown_fails:
+                    self.assertEqual(report['finalization_errors'][0]['stage'], 'supervisor_shutdown')
 
 
 if __name__ == '__main__':

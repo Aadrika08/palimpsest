@@ -25,8 +25,11 @@ from palimpsest.storage import StorageLimits
 
 
 PROTOCOL = {
-    'version': 1, 'dataset_id': 'male-closed-loop-seeds120-127-v1',
-    'scene_seeds': list(range(120, 128)), 'controller_order': ['male-original', 'male-control'],
+    'version': 2, 'dataset_id': 'male-closed-loop-seeds128-135-v2',
+    'scene_seeds': list(range(128, 136)), 'controller_order': ['male-original', 'male-control'],
+    'rejected_v1': {'protocol_sha256': '0a90158f6592e22c180de403ff6a0fec80495d63e35823fe096af3ddf886b384',
+                    'report_sha256': '379c7a5f3775a3c5b71c4dfcfc1ab9084fca9a438c661c820abf9906b039bc6d'},
+    'initial_sensor_projection': 'exact Engine float32 vector: collision, collision_angle-or-zero, wind_cos, wind_sin',
     'scenario': 'reproduction', 'texture': 'checker', 'device': 'cpu',
     'episodes_per_run': 1, 'max_ticks_per_run': 600, 'control_interval_seconds': .02,
     'natural_termination': ['goal', 'collision', 'stalled', 'time_limit'],
@@ -86,8 +89,9 @@ def initial_fingerprint(snapshot, world, seed, identity):
         raise ValueError('Initial male hidden state is not fresh finite float32 zeros')
     raw = snapshot['observation']
     sensor = raw['sensors']
-    vector = np.array([sensor['collision'], 0. if sensor['collision_angle'] is None else sensor['collision_angle'],
-                       *sensor['wind_direction']], dtype=np.float64)
+    # Match Engine._step's actual recorded projection, including its dtype.
+    vector = np.array([float(sensor['collision']), 0. if sensor['collision_angle'] is None else float(sensor['collision_angle']),
+                       *sensor['wind_direction']], dtype=np.float32)
     inputs = {'cam_left': raw['cam_left'], 'cam_right': raw['cam_right'], 'sensors': vector}
     encoded = features(inputs)  # Validate exact allowlisted shapes, units and finite values.
     integration = np.asarray(snapshot['integration'])
@@ -180,6 +184,8 @@ def validate_recording(run, seed, identity, final_state, initial):
     latency, step_latency, inputs_hash = [], [], hashlib.sha256()
     for row in iter_ticks(run / 'recording'):
         features(row)
+        if np.asarray(row['sensors']).dtype != np.float32:
+            raise ValueError('Recorded sensor dtype differs from the exact Engine projection')
         input_value = {key: row[key] for key in ('cam_left', 'cam_right', 'sensors')}
         input_sha = state_digest(input_value)
         if row['tick'] == 0 and input_sha != initial['inputs']:
@@ -234,7 +240,7 @@ def inventory(run):
 def evaluate(args):
     root, assets, output = args.repo.resolve(), args.assets.resolve(), artifacts._safe_path(args.output)
     output.mkdir(parents=True, exist_ok=False)
-    report = {'version': 1, 'status': 'running', 'protocol': PROTOCOL, 'protocol_sha256': digest(PROTOCOL),
+    report = {'version': 2, 'status': 'running', 'protocol': PROTOCOL, 'protocol_sha256': digest(PROTOCOL),
               'qualification_claims': [], 'runs': planned_runs(), 'paired_initial_states': []}
     supervisor, active, interrupted, fingerprints = None, None, [], []
     started = time.monotonic()
@@ -343,30 +349,76 @@ def evaluate(args):
         if active is not None:
             active.update(status='failed', failure=failure)
     finally:
-        try:
-            if supervisor is not None:
-                cleanup_owners = list(supervisor.workers.items())
+        report['cleanup'], report['finalization_errors'] = [], []
+
+        def finalization_failure(stage, error):
+            report['status'] = 'failed'
+            report['finalization_errors'].append({'stage': stage, 'type': type(error).__name__, 'message': str(error)[:2048]})
+
+        if supervisor is not None:
+            # shutdown deliberately closes Process handles. Capture terminal facts
+            # before disposal; never inspect a retained Process reference afterward.
+            for identifier in list(supervisor.workers):
+                try:
+                    previous = next((entry for entry in report['runs'] if entry.get('run_id') == identifier and
+                                     entry.get('close_status') == 'closed' and entry.get('owner_exitcode') == 0 and
+                                     entry.get('owner_alive') is False), None)
+                    if previous is not None:
+                        detail = {'run_id': identifier, 'status': previous['close_status'],
+                                  'owner_exitcode': previous['owner_exitcode'], 'owner_alive': previous['owner_alive']}
+                    else:
+                        closed = supervisor.close(identifier)
+                        owner = supervisor.workers[identifier]
+                        detail = {'run_id': identifier, 'status': closed['status'],
+                                  'owner_exitcode': owner.process.exitcode, 'owner_alive': owner.process.is_alive()}
+                    report['cleanup'].append(detail)
+                    if detail['owner_alive']:
+                        raise RuntimeError('Evaluation owner remained alive after close')
+                except BaseException as error:
+                    finalization_failure('owner_close:' + identifier, error)
+            try:
                 supervisor.shutdown()
-                report['cleanup'] = [{'run_id': identifier, 'status': owner.view['status'],
-                    'owner_exitcode': owner.process.exitcode, 'owner_alive': owner.process.is_alive()}
-                    for identifier, owner in cleanup_owners]
-                if any(item['owner_alive'] for item in report['cleanup']):
-                    raise RuntimeError('An evaluation owner survived supervisor shutdown')
-            report['supervisor_shutdown'] = 'completed'
-            for run, files, fingerprint in fingerprints:
+                report['supervisor_shutdown'] = 'completed'
+            except BaseException as error:
+                report['supervisor_shutdown'] = 'failed'
+                finalization_failure('supervisor_shutdown', error)
+        else:
+            report['supervisor_shutdown'] = 'not_created'
+
+        # Each evidence check runs independently, including after cleanup failures.
+        report['recording_fingerprints_unchanged'] = True
+        for run, files, fingerprint in fingerprints:
+            try:
                 if (recording_paths(run) != [run / item['path'] for item in files] or
                         artifacts._fingerprint([run / item['path'] for item in files]) != fingerprint):
                     raise ValueError('An earlier recording changed before final publication')
-            report['recording_fingerprints_unchanged'] = True
+            except BaseException as error:
+                report['recording_fingerprints_unchanged'] = False
+                finalization_failure('recording_fingerprint:' + run.name, error)
+        report['sources_unchanged'] = False
+        try:
             report['sources_unchanged'] = sources(root) == report.get('sources_before')
-            report['model_identities_unchanged'] = all(resolve_profile(root, assets, name)[0] == value
-                for name, value in report.get('model_identities', {}).items())
-            if not report['sources_unchanged'] or not report['model_identities_unchanged']:
-                raise ValueError('Source/model identities changed during evaluation')
+            if not report['sources_unchanged']:
+                raise ValueError('Sources changed during evaluation')
+        except BaseException as error:
+            finalization_failure('source_identity', error)
+        model_checks = report['model_identity_checks'] = {}
+        for name, value in report.get('model_identities', {}).items():
+            model_checks[name] = False
+            try:
+                model_checks[name] = resolve_profile(root, assets, name)[0] == value
+                if not model_checks[name]:
+                    raise ValueError('Model identity changed during evaluation')
+            except BaseException as error:
+                finalization_failure('model_identity:' + name, error)
+        report['model_identities_unchanged'] = len(model_checks) == 2 and all(model_checks.values())
+        try:
             if interrupted or time.monotonic() - started > PROTOCOL['total_timeout_seconds']:
                 raise TimeoutError('Evaluation interrupted or final validation exceeded total deadline')
         except BaseException as error:
-            report.update(status='failed', finalization_error={'type': type(error).__name__, 'message': str(error)[:2048]})
+            finalization_failure('total_deadline', error)
+        if report['status'] != 'completed':
+            report.pop('summary', None)
         report['wall_seconds'] = time.monotonic() - started
         try:
             save()

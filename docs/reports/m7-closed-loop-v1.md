@@ -22,8 +22,13 @@ Finalization also recorded `ValueError: process object is closed`; consequently
 its shutdown/source-recheck fields were not written. A separate root audit
 confirmed all source hashes still matched the frozen inventory before any repair.
 No evaluation owner or resource-tracker process remained in the subsequent
-process inventory. The precise cleanup cause is being investigated; normal
-owner exit does not make the failed finalization a pass.
+process inventory. A lightweight completed-owner reproduction then isolated the
+cleanup defect: supervisor shutdown completed and disposed its process handle;
+the evaluator subsequently queried that closed handle. No shared supervisor fix
+was needed. The separately versioned evaluator captures terminal facts before
+disposal and runs evidence checks independently after cleanup failures. Twelve
+pure checks pass, including actual float32 records and a disposed-handle fixture;
+this repair does not change the v1 batch's failed status.
 
 The original protocol, report and recording remain unchanged. Any subsequent
 evaluation uses a separately versioned protocol and new scene seeds. The stalled

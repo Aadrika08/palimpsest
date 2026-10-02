@@ -1,11 +1,22 @@
-# M7 frozen paired closed-loop evaluation
+# M7 frozen paired closed-loop evaluation v2
 
 This protocol is frozen before running either existing male checkpoint on scene
-seeds **120–127**. It evaluates eight new fixed scenes for each of the original and
+seeds **128–135**. It evaluates eight new fixed scenes for each of the original and
 degree-rewired models, trained with the one existing training seed. It is not a
 new training/selection round, a topology-benefit test, a generalization claim, or
 evidence of biological sensor mapping. The earlier recorded-input test used
-112–115; the runtime and browser mechanism gates observed 116. None is reused.
+112–115; the runtime and browser mechanism gates observed 116. The rejected v1
+plan reserved 120–127 and observed 120. None is reused.
+
+[The v1 batch remains rejected](../reports/m7-closed-loop-v1.md). Its first owner
+completed a 268-tick stalled episode, but the evaluator hashed float64 initial
+sensors against Engine's actual float32 recording. Its cleanup then queried a
+Process handle after normal supervisor disposal, preventing later provenance
+checks. These are evaluator defects. V2 corrects the exact projection and disposal
+order, independently attempts every evidence-finalization stage, and reserves
+fresh seeds. The old report, recordings and outcome remain unchanged; offline
+diagnosis does not promote v1 into a complete or paired evaluation. V2 records
+the rejected v1 protocol/report hashes and never automatically reruns its scenes.
 
 The machine-readable contract is `PROTOCOL` in
 `scripts/evaluate_male_closed_loop.py`. Its canonical hash, exact JSON, evaluator
@@ -38,8 +49,10 @@ control model's first step, compare exact typed-state hashes of:
 
 - Initial world geometry and pose, MuJoCo integration state, environment fields,
   environment/runtime/model/renderer identity excluding the policy and Torch entry.
-- Both actual 128 × 128 uint8 RGB cameras, declared contact/relative-goal-bearing
-  vector, and its deterministic 388-feature projection.
+- Both actual 128 × 128 uint8 RGB cameras, the exact **float32** contact/relative-
+  goal-bearing vector produced by Engine (including its angle-or-zero conversion),
+  and its deterministic 388-feature projection. Match values and dtypes; do not
+  weaken exact equality or silently cast the retained record to fit an expectation.
 - Environment RNG state, its seed and observation/action-space RNG states.
 
 Policy weights intentionally differ and are identified separately. Do not compare
@@ -66,7 +79,12 @@ policy inputs must independently equal each run's initial snapshot inputs.
 The existing LabSupervisor supplies per-user writer ownership, child process-group
 watchdogs, progress checks, bounded native logs, single-owner admission and close
 handling. The evaluator adds total/per-owner boundary deadlines and records normal
-exit status. Signals cause failure and shutdown. The parent must still supervise
+exit status before Process handles are disposed. An already retained clean-close
+observation is reused; otherwise close/reap and capture it before shutdown.
+No process attribute is queried after shutdown. Cleanup, each completed recording
+fingerprint, source identity, each model identity and the final deadline are checked
+independently, with a list of stage-specific errors. A failed cleanup never skips
+the remaining provenance checks. Signals cause failure and shutdown. The parent must still supervise
 the evaluator and verify no owner process survives; a Python boundary deadline
 alone cannot bound a blocked native operation.
 
@@ -128,7 +146,7 @@ Actual evaluation, only after root reviews/freezes the source and grants the slo
 timeout --signal=TERM --kill-after=15s 960s env PYTHONPATH=src \
   ../lab-hardening/.venv/bin/python scripts/evaluate_male_closed_loop.py \
   --repo "$PWD" --assets "$PWD/data/assets/flynn" \
-  --output "$PWD/runs/m7-male-closed-loop-v1"
+  --output "$PWD/runs/m7-male-closed-loop-v2"
 ```
 
 The script never overwrites an existing output directory. Preserve failed output;
