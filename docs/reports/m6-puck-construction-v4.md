@@ -34,6 +34,7 @@ was released at terminal, before read-only auditing. The original
 and every prior artifact remain unchanged.
 
 This establishes this fixed model's construction, defined initial-state equality,
-rendering and cleanup under v4. It does not establish stepped contact stability,+pushing, learned control, native continuation/replay, Engine/UI integration or
+rendering and cleanup under v4. It does not establish stepped contact stability,
+pushing, learned control, native continuation/replay, Engine/UI integration or
 physical behavior. The ten-owner mechanics verifier is the next separately
 reviewed gate; no mechanics execution is included here.
