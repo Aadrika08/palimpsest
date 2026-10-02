@@ -1,0 +1,335 @@
+{
+  "version": 1,
+  "status": "failed-development-gate",
+  "source_commit": "2abc9daddbdf7bb6bc5c043be363ae8228bd15c3",
+  "upstream_commit": "8d964599119b420de67ee259434d273651a1a76d",
+  "protocol_sha256": "06ba90c2e1d871ac81a797870f353fe1fc52ff96a2a9cacd6711255322d4a61e",
+  "verifier_sha256": "7da2ba1d69519dd71e36e53fbb5884d35cfd7016a4e8c47e82d9800ed3231a11",
+  "scope": "Actual manual CPU MuJoCo/EGL, one development seed/world; partial mechanism evidence, not complete adaptation qualification",
+  "wall_seconds": 150.67856066999957,
+  "numeric_intervals": 1556,
+  "pre_control_stages": 15560,
+  "cached_ends": 1556,
+  "workers": {
+    "source": {
+      "status": "passed",
+      "planned_numeric_ticks": 516,
+      "observed_numeric_ticks": 516,
+      "returncode": 0,
+      "elapsed_seconds": 39.83351307400153,
+      "engine_closed": true,
+      "callback_restored": true
+    },
+    "collecting": {
+      "status": "passed",
+      "planned_numeric_ticks": 4,
+      "observed_numeric_ticks": 4,
+      "returncode": 0,
+      "elapsed_seconds": 3.842331973995897,
+      "engine_closed": true,
+      "callback_restored": true
+    },
+    "fitted": {
+      "status": "passed",
+      "planned_numeric_ticks": 4,
+      "observed_numeric_ticks": 4,
+      "returncode": 0,
+      "elapsed_seconds": 4.486905708996346,
+      "engine_closed": true,
+      "callback_restored": true
+    },
+    "actions": {
+      "status": "passed",
+      "planned_numeric_ticks": 516,
+      "observed_numeric_ticks": 516,
+      "returncode": 0,
+      "elapsed_seconds": 44.94970989499416,
+      "engine_closed": true,
+      "callback_restored": true
+    },
+    "policy": {
+      "status": "passed",
+      "planned_numeric_ticks": 516,
+      "observed_numeric_ticks": 516,
+      "returncode": 0,
+      "elapsed_seconds": 45.30047800999455,
+      "engine_closed": true,
+      "callback_restored": true
+    },
+    "baseline-forward": {
+      "status": "failed",
+      "planned_numeric_ticks": 120,
+      "observed_numeric_ticks": 0,
+      "returncode": 1,
+      "elapsed_seconds": 3.386710070000845,
+      "engine_closed": true,
+      "callback_restored": true
+    },
+    "baseline-reverse": {
+      "status": "not_started",
+      "planned_numeric_ticks": 120,
+      "observed_numeric_ticks": 0
+    },
+    "uncompensated-forward": {
+      "status": "not_started",
+      "planned_numeric_ticks": 120,
+      "observed_numeric_ticks": 0
+    },
+    "uncompensated-reverse": {
+      "status": "not_started",
+      "planned_numeric_ticks": 120,
+      "observed_numeric_ticks": 0
+    },
+    "compensated-forward": {
+      "status": "not_started",
+      "planned_numeric_ticks": 120,
+      "observed_numeric_ticks": 0
+    },
+    "compensated-reverse": {
+      "status": "not_started",
+      "planned_numeric_ticks": 120,
+      "observed_numeric_ticks": 0
+    },
+    "expected-rejection": {
+      "status": "not_started",
+      "planned_numeric_ticks": 0,
+      "observed_numeric_ticks": 0
+    }
+  },
+  "fit": {
+    "fit": {
+      "pooled": {
+        "version": 1,
+        "gains_rad_s_per_control": [
+          11.851776561760323,
+          14.374415787256368
+        ],
+        "excitation": [
+          160.0000047683716,
+          160.0000047683716
+        ],
+        "rmse_rad_s": [
+          0.435802065001471,
+          0.3676085033176917
+        ],
+        "relative_rmse": [
+          0.05804209068994394,
+          0.04040271846909737
+        ],
+        "sample_count": 400,
+        "gain_bounds": [
+          1.0,
+          100.0
+        ],
+        "control_limit": 2.0
+      },
+      "per_trial": [
+        {
+          "version": 1,
+          "gains_rad_s_per_control": [
+            12.384643095539786,
+            14.427662573894791
+          ],
+          "excitation": [
+            16.00000047683716,
+            16.00000047683716
+          ],
+          "rmse_rad_s": [
+            0.02339951735206643,
+            0.04681956007599956
+          ],
+          "relative_rmse": [
+            0.004723441723200628,
+            0.008112543947558693
+          ],
+          "sample_count": 100,
+          "gain_bounds": [
+            1.0,
+            100.0
+          ],
+          "control_limit": 2.0
+        },
+        {
+          "version": 1,
+          "gains_rad_s_per_control": [
+            12.354074304850611,
+            14.45868931212808
+          ],
+          "excitation": [
+            64.00000190734865,
+            64.00000190734865
+          ],
+          "rmse_rad_s": [
+            0.06503795325183187,
+            0.07514454161575031
+          ],
+          "relative_rmse": [
+            0.006580475244908065,
+            0.006496349116735442
+          ],
+          "sample_count": 100,
+          "gain_bounds": [
+            1.0,
+            100.0
+          ],
+          "control_limit": 2.0
+        },
+        {
+          "version": 1,
+          "gains_rad_s_per_control": [
+            10.976038091666,
+            14.010044827936591
+          ],
+          "excitation": [
+            16.00000047683716,
+            16.00000047683716
+          ],
+          "rmse_rad_s": [
+            0.40630753903423455,
+            0.47733944492861247
+          ],
+          "relative_rmse": [
+            0.09215044849854906,
+            0.08487074600897615
+          ],
+          "sample_count": 100,
+          "gain_bounds": [
+            1.0,
+            100.0
+          ],
+          "control_limit": 2.0
+        },
+        {
+          "version": 1,
+          "gains_rad_s_per_control": [
+            11.435196802748749,
+            14.36792330555499
+          ],
+          "excitation": [
+            64.00000190734865,
+            64.00000190734865
+          ],
+          "rmse_rad_s": [
+            0.38620385781226196,
+            0.527810406938296
+          ],
+          "relative_rmse": [
+            0.04217900271763181,
+            0.045870826622058866
+          ],
+          "sample_count": 100,
+          "gain_bounds": [
+            1.0,
+            100.0
+          ],
+          "control_limit": 2.0
+        }
+      ],
+      "gain_range_over_mean": [
+        0.1195000151912334,
+        0.03133850076547491
+      ]
+    },
+    "fit_sha256": "4d738e670b89cad1ca5db18dbb64d4465cc8f22663503d3c663fc6a6000a4428",
+    "samples_sha256": "8dcc254855a32bf41870fa4fb8660f6e96e4fbb3411077f816802985b4d4284c",
+    "session_sha256": "2086d435f0bd40a5b85997ede4f7b8666ac042ecda8e135e34fba5ee239ba77b",
+    "sample_count": 400,
+    "evaluation_data_reused": false
+  },
+  "failure": {
+    "owner": "baseline-forward",
+    "observed_numeric_ticks": 0,
+    "error": {
+      "type": "ValueError",
+      "message": "Diagnostic physical environment profile differs"
+    },
+    "cause": "Verifier compared flat environment attributes with snapshot values/absent envelope; retained fitted/baseline envelopes and integration bytes are identical.",
+    "interval_failure_packet": false
+  },
+  "unqualified": [
+    "All six signed paired comparisons",
+    "Separate expected-negative owner",
+    "Adaptive UI workflow",
+    "Held-out task/body validation",
+    "Physical qualification"
+  ],
+  "cleanup": {
+    "observed_owned_processes": [
+      {
+        "pid": 472547,
+        "start_ticks": 5640317
+      },
+      {
+        "pid": 472551,
+        "start_ticks": 5640368
+      },
+      {
+        "pid": 472743,
+        "start_ticks": 5644633
+      },
+      {
+        "pid": 472760,
+        "start_ticks": 5645028
+      },
+      {
+        "pid": 472782,
+        "start_ticks": 5645494
+      },
+      {
+        "pid": 472952,
+        "start_ticks": 5650268
+      },
+      {
+        "pid": 473124,
+        "start_ticks": 5655017
+      }
+    ],
+    "forced_signals": [],
+    "survivors": [],
+    "sampler_stopped": true,
+    "sample_errors": [],
+    "scope": "finite .25s sampling and final PID/start check; not universal transient-process proof; no server/listener; bounded_process attempts owned-group TERM/KILL cleanup even after normal leader exit, signal delivery is not recorded"
+  },
+  "source_unchanged": true,
+  "assets_unchanged": true,
+  "source_recording_unchanged": true,
+  "output_usage": {
+    "used_bytes": 346588124,
+    "files": 117,
+    "remaining_bytes": 1800895524,
+    "max_bytes": 2147483648,
+    "headroom_bytes": 8388608,
+    "min_free_bytes": 1073741824
+  },
+  "inventory": {
+    "runs": 6,
+    "snapshot_files": 8,
+    "snapshot_bytes": 5057912
+  },
+  "independent_root_audit": {
+    "source_commit": "2abc9daddbdf7bb6bc5c043be363ae8228bd15c3",
+    "report_sha256": "33636896bf41964b407bb7f731177b279229f98b180d46b405383b6c9f61b29b",
+    "artifact_hashes_checked": 115,
+    "numeric_ticks": 1556,
+    "replay_ticks_each": 516,
+    "native_ticks_each": 4,
+    "fitted_samples": 400,
+    "baseline_ticks": 0,
+    "retained_profiles_equal": true,
+    "failure_cause": "flat environment values compared with snapshot values/absent envelope",
+    "observed_identities_absent": 7,
+    "elapsed_seconds": 3.0198501569975633,
+    "scope": "NumPy-only retained v1 failure audit; no new runtime"
+  },
+  "evidence_sha256": {
+    "runs/m6-body-adaptation-development-20261002/report.json": "33636896bf41964b407bb7f731177b279229f98b180d46b405383b6c9f61b29b",
+    "runs/m6-body-adaptation-control-2abc9da/invocation.json": "477351e2b08ba40157cdc8db2743bde7d48eb8137a6ec76c82868b93f42fb60d",
+    "runs/m6-body-adaptation-control-2abc9da/terminal.json": "b6e685cc00f79bc975ea603c06d1ada059ad8f49c5118ab20202eebaf5e3c1a3",
+    "runs/m6-body-adaptation-control-2abc9da/gate.log": "34e18e9af42ed73271d22b909cfdac75be4cb9ff5c0a9d41c689d0c03e5b603a",
+    "runs/m6-body-adaptation-control-2abc9da/before.json": "8dac7e8937ff49b8023541f6e67da749edf2210e47efe3336c5bca6dafbf381f",
+    "runs/m6-body-adaptation-control-2abc9da/after.json": "8dac7e8937ff49b8023541f6e67da749edf2210e47efe3336c5bca6dafbf381f",
+    "runs/m6-body-adaptation-control-2abc9da/inventory.py": "02cd0396b6c612e1aef06ff5a0632d179c4fffa7b15caa4ee5ee5c43340c35be",
+    "../project-integration/runs/m6-adaptive-v1-root-audit-2abc9da/audit.json": "5f63c579abbf464993c9de79eb06291111fbede959eaace6adae9be610f92f77",
+    "../project-integration/runs/m6-adaptive-v1-root-audit-2abc9da/audit.py": "e0fcb8340f0dd542dcc03a3a169efe7773bb6da7387aefae8cc554a806365302"
+  }
+}
