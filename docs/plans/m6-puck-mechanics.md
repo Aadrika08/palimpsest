@@ -1,12 +1,23 @@
-# Fixed puck mechanics v4 — source preparation, not executed
+# Fixed puck mechanics v4 — action-replay boundary repair
 
 This verifier implements the mechanics stage of the prospective
 [puck plan](m6-puck-pushing.md) and [v4 task protocol](m6-puck-pushing-protocol-v4.json).
 The [v4 mechanics contract](m6-puck-mechanics-v4.json) pins signed approach
 selection, unchanged explicit modes and unchanged finite resources.
 The [v4 construction result](../reports/m6-puck-construction-v4.md) qualifies only
-its historical zero-step construction. There is no successful complete mechanics,
-continuation, replay or learned-control gate yet.
+its historical zero-step construction. The [first v4 gate](../reports/m6-puck-mechanics-v4.md)
+reached both teacher goals and passed all three native continuation windows,
+then failed before the first action-replay control. There is no successful
+complete mechanics, replay or learned-control gate yet.
+
+The source repair normalizes each recorded mode using `np.asarray` before the
+unchanged exact uint8/scalar/code-0 checks. `RunWriter` retains scalar shape;
+`iter_ticks` yields NumPy scalars, which the prior ndarray-only admission wrongly
+rejected. A writer/reader roundtrip fixture reproduces the failure and checks
+the repair, including rejection of other dtypes, non-scalar shapes, missing
+fields and non-fixed codes. Teacher, physics, task/mechanics JSON and snapshot
+contracts stay unchanged. Any prospective execution requires a separate frozen
+source/control set and approval; the first v4 failure remains failed.
 
 `verify_puck_mechanics.py` is an explicit **pre-product exception** to the plan's
 prospective LabSupervisor ownership sentence: ten serialized, separately
