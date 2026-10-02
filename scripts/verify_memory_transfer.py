@@ -18,7 +18,7 @@ from palimpsest import artifacts, memory, memory_experiment as experiment, memor
 from palimpsest.evaluate import bounded_process
 from palimpsest.records import iter_ticks
 from palimpsest.replay import _initial_snapshot, _register_initial, _same_tick, Divergence
-from palimpsest.snapshots import invariant_hashes, read_snapshot
+from palimpsest.snapshots import invariant_hashes, read_snapshot, state_digest
 
 HISTORY_INPUTS = {
     'own': ('runs/m5-acquisition-batch-20261002/local_cue-history.json',
@@ -36,7 +36,15 @@ SOURCE_PREPARATION = {'version': 2, 'name': 'fixed-visible-boundary-source-v2',
 SOURCE_PREPARATION_SHA256 = memory.sha256(SOURCE_PREPARATION)
 ACQUISITION_OVERRIDE = {'first_tick': 200, 'last_tick': 299,
     'replacement': 'fixed-source-orientation-only', 'source_preparation_sha256': SOURCE_PREPARATION_SHA256}
-PROTOCOL = {'version': 2, 'claim': 'single-development-case-mechanism-check',
+GOAL_HANDOFF = {'version': 2, 'name': 'paused-source-goal-handoff-v4',
+    'boundary': 300, 'command_id': 'source-goal-handoff-v4', 'kind': 'move_goal',
+    'xy': [-.5, -2.7], 'access': 'declared-source-only-world-intervention',
+    'uses_u': False, 'uses_regime': False, 'uses_gold': False,
+    'probe': 'post-intervention-visibility-only-no-memory-advance',
+    'physics_guard': 'exact-authoritative-state-v1',
+    'snapshot_binding': 'typed-integration-after-digest-v1'}
+GOAL_HANDOFF_SHA256 = memory.sha256(GOAL_HANDOFF)
+PROTOCOL = {'version': 4, 'claim': 'single-development-case-mechanism-check',
     'seed': 8, 'regime': 'local_cue', 'kind': 'change', 'split': 'development-test',
     'source_prefix_ticks': 300, 'remaining_ticks': 300, 'target_limit': 1,
     'controller': 'manual', 'device': 'cpu', 'velocity': .65,
@@ -46,6 +54,7 @@ PROTOCOL = {'version': 2, 'claim': 'single-development-case-mechanism-check',
     'retries': 0, 'history_inputs': {role: list(value) for role, value in HISTORY_INPUTS.items()},
     'source_preparation': SOURCE_PREPARATION, 'source_preparation_sha256': SOURCE_PREPARATION_SHA256,
     'acquisition_schedule_override': ACQUISITION_OVERRIDE,
+    'goal_handoff': GOAL_HANDOFF, 'goal_handoff_sha256': GOAL_HANDOFF_SHA256,
     'case_producer_sha256': experiment.SOURCE_SHA256,
     'memory_protocol_sha256': memory.PROTOCOL_SHA256}
 PROTOCOL_SHA256 = memory.sha256(PROTOCOL)
@@ -108,6 +117,152 @@ def source_action(schedule, pose, tick):
     error=math.remainder(SOURCE_PREPARATION['target_yaw_rad']-yaw,2*math.pi)
     bound=SOURCE_PREPARATION['max_heading_rad']
     return [0.,max(-bound,min(bound,error))]
+
+
+def effective_goal():
+    import numpy as np
+    return np.asarray(GOAL_HANDOFF['xy'],np.float32).astype(float).tolist()
+
+
+def probe_packet(world, pose, circles, case):
+    """An actual geometry projection, never consumed as a memory observation."""
+    packet=memory_task.capture_symbolic(world,pose,circles,episode_id='episode-0',tick=300)
+    required={case['common_goal_id'],*[f['inspection_landmark_id'] for f in case['facts']]}
+    if (not required.issubset({x['id'] for x in packet['landmarks']})
+            or len(packet['cues'])!=1 or packet['cues'][0]['id']!=case['cue_id'] or packet['cues'][0]['state']!=0
+            or next(x['passability'] for x in packet['passages'] if x['subject_id']==case['subjects_by_side'][0])!='unobserved'):
+        raise ValueError('Post-intervention source visibility is inadmissible')
+    return packet
+
+
+def authoritative_digest(env):
+    """Exact physical inputs; derived xpos/geom_xpos may refresh during forward."""
+    data={name:getattr(env.data,name).copy() for name in ('qpos','qvel','act','ctrl',
+        'mocap_pos','mocap_quat','qfrc_applied','xfrc_applied','eq_active') if hasattr(env.data,name)}
+    model={name:getattr(env.model,name).copy() for name in ('jnt_range','geom_rgba','geom_size','site_pos')}
+    model['site_pos'][env.goal_site_id,:2]=0.  # Exactly these two coordinates may change.
+    return state_digest({'time':float(env.data.time),'data':data,'model_except_goal_xy':model,
+        'obstacle_map':env._obstacle_xy.copy()})
+
+
+def integration_digest(env):
+    """Use the same state API/enum as native snapshot capture; no byte offsets."""
+    import mujoco
+    import numpy as np
+    kind=mujoco.mjtState.mjSTATE_INTEGRATION
+    integration=np.empty(mujoco.mj_stateSize(env.model,kind))
+    mujoco.mj_getState(env.model,env.data,integration,kind)
+    return state_digest(integration),int(kind)
+
+
+def apply_goal_handoff(engine, case):
+    """Use the existing paused command; preserve all memory and control ticks."""
+    if engine.phase!='paused' or engine.episode!=0 or engine.episode_step!=300 or engine.total_tick!=300:
+        raise ValueError('Goal handoff requires the fixed paused source boundary')
+    before=copy.deepcopy(engine.memory)
+    before_world=engine.world()
+    before_physics=authoritative_digest(engine.env)
+    command={'id':GOAL_HANDOFF['command_id'],'kind':'intervene','expected_state':'paused',
+        'expected_episode':0,'expected_revision':engine.revision,
+        'payload':{'kind':'move_goal','xy':GOAL_HANDOFF['xy']}}
+    if engine.submit(command)['status']!='queued':
+        raise ValueError('Goal handoff command was not queued')
+    engine.advance()
+    receipt=engine.receipts[command['id']]
+    world=engine.world()
+    after_physics=authoritative_digest(engine.env)
+    integration_after,enum=integration_digest(engine.env)
+    proof={'protocol_sha256':GOAL_HANDOFF_SHA256,'command':command,'receipt':receipt,
+        'effective_goal_xy':world['goal'][:2],'before_world':before_world,'world':world,
+        'before_world_stage':'cached-before-forward','world_stage':'refreshed-after-forward',
+        'derived_pose_delta':[b-a for a,b in zip(before_world['pose'],world['pose'])],
+        'authoritative_before_sha256':before_physics,'authoritative_after_sha256':after_physics,
+        'integration_after_sha256':integration_after,'integration_enum':enum,
+        'simulation_time':float(engine.env.data.time),
+        'memory_before_sha256':memory.sha256(before),'memory_after_sha256':memory.sha256(engine.memory)}
+    engine._event('goal_handoff_state',proof=proof)
+    if (receipt['status']!='applied' or engine.phase!='paused' or engine.episode_step!=300
+            or engine.total_tick!=300 or memory.canonical_bytes(engine.memory)!=memory.canonical_bytes(before)
+            or world['goal'][:2]!=effective_goal() or before_physics!=after_physics
+            or list(map(float,engine.env.model.site_pos[engine.env.goal_site_id,:2]))!=effective_goal()):
+        raise ValueError('Goal handoff changed memory/physics or did not apply exactly')
+    symbolic,pose,circles=memory_world.sensing_inputs(engine.env,engine.world_task_state)
+    packet=probe_packet(symbolic,pose,circles,case)
+    proof={**proof,'packet':packet,'packet_sha256':memory.sha256(packet)}
+    engine._event('goal_handoff_probe',proof=proof)
+    return proof
+
+
+def validate_goal_handoff(data, native, case, stage):
+    """Bind the shared relocated world to its source command and durable prefix."""
+    import numpy as np
+    app=native['application'];identifier=GOAL_HANDOFF['command_id']
+    goal=native['environment'].get('values',{}).get('_goal_xy')
+    command=app.get('original_commands',{}).get(identifier,{})
+    receipt=app.get('receipts',{}).get(identifier,{})
+    if (set(command)!={'id','kind','expected_state','expected_episode','expected_revision','payload'}
+            or command.get('id')!=identifier or command.get('kind')!='intervene'
+            or command.get('expected_state')!='paused' or type(command.get('expected_episode')) is not int
+            or command['expected_episode']!=0 or type(command.get('expected_revision')) is not int
+            or memory.canonical_bytes(command.get('payload'))!=memory.canonical_bytes({'kind':'move_goal','xy':GOAL_HANDOFF['xy']})
+            or receipt.get('status')!='applied' or receipt.get('id')!=identifier
+            or any(type(receipt.get(k)) is not int for k in ('received_tick','applied_tick',
+                'received_episode','applied_episode','applied_revision'))
+            or receipt.get('kind')!='intervene' or receipt.get('applied_tick')!=300
+            or receipt.get('received_tick')!=300 or receipt.get('applied_episode')!=0
+            or receipt.get('received_episode')!=0 or receipt.get('applied_revision')!=command['expected_revision']+1
+            or receipt.get('received_run_id')!=receipt.get('applied_run_id')
+            or type(goal) is not np.ndarray or goal.dtype!=np.dtype(np.float32)
+            or not np.array_equal(goal,np.asarray(GOAL_HANDOFF['xy'],np.float32))):
+        raise ValueError('Native goal handoff command/receipt/effective goal differs')
+    probes=[e for e in data['events'] if e['kind']=='goal_handoff_probe']
+    states=[e for e in data['events'] if e['kind']=='goal_handoff_state']
+    if stage!='source':
+        if probes or states:
+            raise ValueError('Goal relocation may only execute in the source')
+        return
+    if len(probes)!=1 or len(states)!=1:
+        raise ValueError('Source lacks exactly one post-intervention probe')
+    event=probes[0];proof=event.get('proof',{})
+    changes=[e for e in data['events'] if e['kind']=='intervention' and e.get('change',{}).get('kind')=='move_goal']
+    applied=[e for e in data['events'] if e['kind']=='command_applied' and e.get('id')==identifier]
+    if (len(changes)!=1 or len(applied)!=1 or memory.canonical_bytes(applied[0].get('result'))!=memory.canonical_bytes(receipt)
+            or changes[0].get('id')!=identifier or changes[0]['change']['new']['xy']!=effective_goal()
+            or changes[0]['change'].get('simulation_time')!=proof.get('simulation_time')
+            or any(type(e.get(k)) is not int for e in [event,*changes,*applied,*states] for k in ('episode','episode_step','tick','sequence'))
+            or any(e['episode']!=0 or e['episode_step']!=300 or e['tick']!=300 for e in [*changes,*applied,*states])
+            or event.get('episode_step')!=300 or event.get('tick')!=300 or event.get('episode')!=0
+            or not changes[0]['sequence']<applied[0]['sequence']<states[0]['sequence']<event['sequence']<app['event_prefix']['event_count']
+            or memory.canonical_bytes(proof.get('command'))!=memory.canonical_bytes(command)
+            or memory.canonical_bytes(proof.get('receipt'))!=memory.canonical_bytes(receipt)
+            or proof.get('protocol_sha256')!=GOAL_HANDOFF_SHA256 or proof.get('effective_goal_xy')!=effective_goal()
+            or proof.get('memory_before_sha256')!=proof.get('memory_after_sha256')
+            or proof.get('memory_after_sha256')!=memory.sha256(app['memory'])
+            or proof.get('authoritative_before_sha256')!=proof.get('authoritative_after_sha256')
+            or type(proof.get('integration_enum')) is not int or proof['integration_enum']!=native['integration_enum']
+            or proof.get('integration_after_sha256')!=state_digest(native['integration'])
+            or proof.get('before_world_stage')!='cached-before-forward' or proof.get('world_stage')!='refreshed-after-forward'
+            or memory.canonical_bytes(states[0].get('proof'))!=memory.canonical_bytes(
+                {k:v for k,v in proof.items() if k not in ('packet','packet_sha256')})):
+        raise ValueError('Source goal handoff proof differs from its durable native boundary')
+    world=proof['world'];before=proof['before_world']
+    old=np.asarray(case['goal_xy'],np.float32).astype(float).tolist()
+    actual=artifacts._world_at(data['events'],0,300)
+    if (before['goal'][:2]!=old or world['goal'][:2]!=effective_goal()
+            or changes[0]['change']['old']['xy']!=old
+            or not np.array_equal(np.asarray(before['pose']),data['rows'][-1]['next_pose'])
+            or proof.get('derived_pose_delta')!=[b-a for a,b in zip(before['pose'],world['pose'])]
+            or actual['goal']!=world['goal']):
+        raise ValueError('Recorded goal handoff changed other world geometry')
+    symbolic={'cues':[{'id':case['cue_id'],'xy':case['cue_xy'],'state':0}],
+        'landmarks':[{'id':case['common_goal_id'],'xy':world['goal'][:2]}]+
+            [{'id':f['inspection_landmark_id'],'xy':xy} for f,xy in zip(case['facts'],case['inspection_xy'])],
+        'passages':[{'subject_id':f['subject_id'],'inspection_landmark_id':f['inspection_landmark_id'],
+            'passability':occupancy(case,world['obstacles'])[f['subject_id']]} for f in case['facts']],
+        'common_goal_id':case['common_goal_id']}
+    packet=probe_packet(symbolic,world['pose'],world['obstacles'],case)
+    if memory.canonical_bytes(proof.get('packet'))!=memory.canonical_bytes(packet) or proof.get('packet_sha256')!=memory.sha256(packet):
+        raise ValueError('Post-intervention probe differs from actual retained geometry')
 
 
 def preparation_packet(events, case, state, tick):
@@ -322,7 +477,8 @@ def worker(raw):
         engine.writer.manifest.update(transfer_protocol=PROTOCOL,transfer_protocol_sha256=PROTOCOL_SHA256,
             transfer_driver_sha256=job['source_identity']['driver_sha256'],transfer_stage=stage,
             source_preparation_protocol=SOURCE_PREPARATION,source_preparation_sha256=SOURCE_PREPARATION_SHA256,
-            acquisition_schedule_override=ACQUISITION_OVERRIDE)
+            acquisition_schedule_override=ACQUISITION_OVERRIDE,
+            goal_handoff_protocol=GOAL_HANDOFF,goal_handoff_sha256=GOAL_HANDOFF_SHA256)
         engine._event('source_preparation_declared',protocol=SOURCE_PREPARATION,
             source_preparation_sha256=SOURCE_PREPARATION_SHA256,override=ACQUISITION_OVERRIDE)
         if stage != 'source':
@@ -363,6 +519,7 @@ def worker(raw):
             evidence_backed_source(engine.memory['m'],events,engine.memory['episode_id'])
             report['visibility_admission']={'299':memory.sha256(packet)}
             report['boundary_memory']={'299':packet_cursor(packet,engine.memory)}
+            report['goal_handoff']=apply_goal_handoff(engine,case)
         if stage in ('source','anchor'):
             report['before_circles']=memory_world.sensing_inputs(engine.env,engine.world_task_state)[2]
             _register_initial(engine,run)
@@ -418,7 +575,8 @@ def validate_stage(job, supervised):
         'transfer_protocol':PROTOCOL,'transfer_protocol_sha256':PROTOCOL_SHA256,
         'transfer_driver_sha256':job['source_identity']['driver_sha256'],'transfer_stage':job['stage'],
         'source_preparation_protocol':SOURCE_PREPARATION,'source_preparation_sha256':SOURCE_PREPARATION_SHA256,
-        'acquisition_schedule_override':ACQUISITION_OVERRIDE}
+        'acquisition_schedule_override':ACQUISITION_OVERRIDE,
+        'goal_handoff_protocol':GOAL_HANDOFF,'goal_handoff_sha256':GOAL_HANDOFF_SHA256}
     if any(memory.canonical_bytes(manifest.get(k))!=memory.canonical_bytes(v) for k,v in expected.items()):
         raise ValueError('Recorded case/protocol/driver identity differs')
     environments=[e for e in events if e['kind']=='environment']
@@ -495,6 +653,16 @@ def validate_stage(job, supervised):
         if not rows or [r['tick'] for r in rows]!=list(range(300,300+len(rows))) or len(rows)>300:
             raise ValueError('Branch has missing or invalid continuation ticks')
         packet=preparation_packet(events,job['case'],native['application']['memory'],300)
+        physical=artifacts._world_at(events,0,300)
+        if physical['goal'][:2]!=effective_goal():
+            raise ValueError('Branch first sensing world lacks the declared relocated goal')
+        pose=rows[0]['pose'].tolist()
+        marker=next(x for x in packet['landmarks'] if x['id']==job['case']['common_goal_id'])
+        projected=memory_task.capture_symbolic({'cues':[],'passages':[],
+            'landmarks':[{'id':job['case']['common_goal_id'],'xy':physical['goal'][:2]}],
+            'common_goal_id':job['case']['common_goal_id']},pose,physical['obstacles'],episode_id='episode-0',tick=300)
+        if projected['landmarks']!=[marker]:
+            raise ValueError('Branch first goal bearing differs from the actual relocated world')
         if report.get('visibility_admission')!={'300':memory.sha256(packet)}:
             raise ValueError('Continuation visibility admission report differs from actual packet')
         inspected=[e['memory'] for e in events if e['kind']=='memory_inspected' and e.get('episode_step')==300]
@@ -536,6 +704,10 @@ def validate_stage(job, supervised):
             action=np.asarray(by_tick[row['tick']]['action'],dtype=np.float64)
             if row['action'].dtype!=action.dtype or not np.array_equal(row['action'],action):
                 raise ValueError('Recorded action differs from its declared driver input at the exact tick')
+    validate_goal_handoff(data,native,job['case'],job['stage'])
+    if job['stage']=='source' and memory.canonical_bytes(report.get('goal_handoff'))!=memory.canonical_bytes(
+            next(e['proof'] for e in events if e['kind']=='goal_handoff_probe')):
+        raise ValueError('Worker goal handoff report differs from its durable source proof')
     if job['stage']!='source' and hashes!=job['expected_non_u']:
         raise ValueError('Registered initial native state differs outside U')
     if report.get('initial_non_u',report.get('non_u'))!=hashes:
@@ -651,6 +823,8 @@ def run_verifier(plan):
         result['status']='mechanism_checked'
     except (OSError,ValueError,KeyError,TypeError) as error:
         result['first_failure']={'type':type(error).__name__,'message':str(error)}
+    result['unattempted_stages']=[{'stage':j['stage'],'run_id':j['run_id'],'status':'unattempted',
+        'reason':'earlier first failure; no retry or replacement'} for j in jobs[len(summaries):]]
     final=source_identity(jobs[0]['repo'])
     result.update(source_identity=plan['source_identity'],final_source_identity=final,
         source_unchanged=final==plan['source_identity'])

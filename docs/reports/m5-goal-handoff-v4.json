@@ -1,0 +1,1944 @@
+{
+  "schema_version": 1,
+  "date": "2026-10-02",
+  "claim": "single-development-case-recorded-mechanism-check",
+  "source_commit": "03ac88840814959ed4c67601c8f477da6a59e4f6",
+  "retained_directory": "runs/m5-memory-goal-handoff-v4-20261002",
+  "terminal_status": "mechanism_checked",
+  "r2_complete": false,
+  "held_out_executed": false,
+  "operator_blindness_verified": false,
+  "audit_runtime_or_replay": false,
+  "outer_launch_directory": "runs/m5-goal-handoff-launch-03ac888",
+  "outer_supervisor": {
+    "schema_version": 1,
+    "status": "completed",
+    "timeout_seconds": 1020,
+    "started_utc": "2026-10-02T14:03:03.735732+00:00",
+    "output": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-experiments/runs/m5-goal-handoff-launch-03ac888",
+    "returncode": 0,
+    "elapsed_seconds": 70.34852610700182
+  },
+  "outer_supervisor_sha256": "7891258ebd97a41539f8f437f9abeb8ec1dbd49ec146f880ea17bbad8d3be837",
+  "unattempted_stages": [],
+  "audit": {
+    "plan_sha256": "675ebbc5d3d435c87ae1b810288fbef54dbb48a879c313ec47f70e0a1867ad6b",
+    "report_sha256": "09ec6deca4ab567b60ed84b5f58c6e8224753fb68643b2dc63f7e5d82b3793e0",
+    "source_identity_matches_current": true,
+    "source_identity_sha256": "b93f74bd875efd7e3fed39baadb434f0200d672bccedc83435be85ae558bac38",
+    "protocol_sha256": "019c8dcc28a03346c306684dbbcee21ebf1e5043c81d349b7a493acf623d6575",
+    "goal_handoff_sha256": "cd95786316dc1e1df28761659dabfd7018f1b83c20e23200ab7a167247038bb8",
+    "case_sha256": "02e99c315631db532ed86bfde2905e231a3ff4eecd926553ccc5e480ac788b9f",
+    "history_inputs": [
+      {
+        "role": "own",
+        "path": "runs/m5-acquisition-batch-20261002/local_cue-history.json",
+        "sha256": "016c5b5e9472b116d065fb922b32d64089db6e27839aec09d751238f8ce7ffc1",
+        "E_sha256": "b6c92a7638af926ed625069b0f1e23fc804db08e621b3bcdf2d5bae8cc1a0457",
+        "U_sha256": "032d40d14192eadc66588a2b63339bb990750a1f70aef036a54453f8746ed9bb"
+      },
+      {
+        "role": "swapped",
+        "path": "runs/m5-acquisition-batch-20261002/paired_cue-history.json",
+        "sha256": "64628e37cc6e861194f810baa92926eba8f57260047cdd8ad320a4601023d213",
+        "E_sha256": "35588d3fdfde95f339aa99bd2eb3b7b63b46f135d79ac14688f7951dc0129f34",
+        "U_sha256": "aa37a394fee509275adddb06355388c23e5ef9e8d31c3306327ac29d54800700"
+      }
+    ],
+    "stages": [
+      {
+        "stage": "source",
+        "run_id": "0063307623c3490fa0f429399d5c7430",
+        "numeric_ticks": 300,
+        "recording_bytes": 61751085,
+        "worker_report_sha256": "19ba6370d4f677274b0d76ced5e15e09edb42add10031648468b3acb3b3622e6",
+        "snapshot_sha256": "41de2761175c617f7c606d7d6bd6ea9bc6f91b973bc56ff2f7a68ccaebf1f458",
+        "native_non_u_sha256": "f576e8456f505ec10b4651911f03c221f140dfc32ae9c73ebd144c257ecaf093",
+        "initial_u_sha256": "70575d969610e9392033501a21f594e4a7a60d04f83bdc73e510fd5c32019fed",
+        "status": "completed",
+        "phase": "paused",
+        "steps": 300,
+        "outcome": null,
+        "gate_result": "pending",
+        "close_reason": "operator_closed",
+        "cleanup_error": null,
+        "supervisor": {
+          "schema_version": 1,
+          "status": "completed",
+          "timeout_seconds": 160,
+          "returncode": 0,
+          "elapsed_seconds": 19.07693829300115
+        },
+        "timing": {},
+        "final_m": {
+          "version": 1,
+          "facts": [
+            {
+              "id": "live-development-test-00000008-fact-a",
+              "subject_id": "live-development-test-00000008-subject-a",
+              "kind": "passability",
+              "estimate": "open",
+              "status": "observed",
+              "associations": [
+                {
+                  "cue_id": "live-development-test-00000008-cue",
+                  "relation": "local_cue"
+                }
+              ],
+              "inspection_landmark_id": "live-development-test-00000008-subject-a-inspection",
+              "evidence": {
+                "id": "sensor-282cc45e107407a9dd860df3198a43cd425dc2ae3bcc043977c603fc21307dd8",
+                "episode_id": "episode-0",
+                "tick": 29
+              },
+              "revision": 1,
+              "origin": "observed"
+            },
+            {
+              "id": "live-development-test-00000008-fact-z",
+              "subject_id": "live-development-test-00000008-subject-z",
+              "kind": "passability",
+              "estimate": "open",
+              "status": "observed",
+              "associations": [
+                {
+                  "cue_id": "live-development-test-00000008-cue",
+                  "relation": "paired_cue"
+                }
+              ],
+              "inspection_landmark_id": "live-development-test-00000008-subject-z-inspection",
+              "evidence": {
+                "id": "sensor-fec6fa08b50cd1b471dc9c67c6ffa13f3272af4c2294a05a2d0caa718fe34f12",
+                "episode_id": "episode-0",
+                "tick": 299
+              },
+              "revision": 1,
+              "origin": "observed"
+            }
+          ]
+        },
+        "final_E_sha256": "c95abb75984d8b4c0a1771181548e2b413bd66374b5e2d62b32d95cb62eb4b56",
+        "final_U_sha256": "70575d969610e9392033501a21f594e4a7a60d04f83bdc73e510fd5c32019fed",
+        "files": [
+          {
+            "path": "recording/manifest.json",
+            "bytes": 9002,
+            "sha256": "d498d92d04ab14237c7fb9c1588df3433a78cea06803935c22d3a585441a4c1c"
+          },
+          {
+            "path": "recording/events.jsonl",
+            "bytes": 2678083,
+            "sha256": "b5df5d3aff83a575f6ec265b8f93f050c5971fd3a439c4dd6cafd554ebad4644"
+          },
+          {
+            "path": "recording/chunks/000000.npz",
+            "bytes": 6299892,
+            "sha256": "6fdf9818f9a0e37d72abc3b11dc83737afd4b23cf1b3c46355615bbbd809138f"
+          },
+          {
+            "path": "recording/chunks/000001.npz",
+            "bytes": 6299892,
+            "sha256": "83a0d63e1c1a4df432a70588dadf44929f525bcca64bae649f124c9d7dab6c62"
+          },
+          {
+            "path": "recording/chunks/000002.npz",
+            "bytes": 6299892,
+            "sha256": "3597e967b51a255c096617851b9078fec2cd4286a1621e9fe6aa036f2115a54d"
+          },
+          {
+            "path": "recording/chunks/000003.npz",
+            "bytes": 6299892,
+            "sha256": "c941f039c6c26b829a0438ec477c27759faf04702b02e9cf4699bc5a72d66796"
+          },
+          {
+            "path": "recording/chunks/000004.npz",
+            "bytes": 6299892,
+            "sha256": "c54eca194886773d9df84db3cfae99ad19587330dbec11b920da332cd37614ac"
+          },
+          {
+            "path": "recording/chunks/000005.npz",
+            "bytes": 6299892,
+            "sha256": "162df6d154f0ec07164c7aacabe4e2d397fa43af2eb6741f995819fa556a1285"
+          },
+          {
+            "path": "recording/chunks/000006.npz",
+            "bytes": 6299892,
+            "sha256": "ae5092f19e12befb5f543e29c234ee5f52d81cb4ee4afcff7457f9af3f7e5b78"
+          },
+          {
+            "path": "recording/chunks/000007.npz",
+            "bytes": 6299892,
+            "sha256": "5a2f74283794f99a13c6d3fc5ad084706150bf4edef278dd66fabc9107bb80e4"
+          },
+          {
+            "path": "recording/chunks/000008.npz",
+            "bytes": 6299892,
+            "sha256": "eef63d95d4644b7bd5029a08d3bffc9d48895a2029d47c0e3186d524754d918e"
+          },
+          {
+            "path": "recording/chunks/000009.npz",
+            "bytes": 2364972,
+            "sha256": "a9ba4e0a7f5d59b62a5df624dfd5bf546438220667fabc5117fb923d2d35229a"
+          }
+        ],
+        "worker_task_pass_placeholder": false,
+        "runtime_result": null
+      },
+      {
+        "stage": "anchor",
+        "run_id": "be9af389155a4b35aea791ec28e9aa5e",
+        "numeric_ticks": 0,
+        "recording_bytes": 22634,
+        "worker_report_sha256": "39564ebfcff515339f2938e3bcf917451403263a05bbaf89e01d1948e4d66c7d",
+        "snapshot_sha256": "f877de69dffb9eb86d674deb7997dc8f3c7d62be572f7b4c42dab9044db3aca4",
+        "native_non_u_sha256": "f576e8456f505ec10b4651911f03c221f140dfc32ae9c73ebd144c257ecaf093",
+        "initial_u_sha256": "032d40d14192eadc66588a2b63339bb990750a1f70aef036a54453f8746ed9bb",
+        "status": "completed",
+        "phase": "paused",
+        "steps": 300,
+        "outcome": null,
+        "gate_result": "pending",
+        "close_reason": "operator_closed",
+        "cleanup_error": null,
+        "supervisor": {
+          "schema_version": 1,
+          "status": "completed",
+          "timeout_seconds": 160,
+          "returncode": 0,
+          "elapsed_seconds": 3.438625523005612
+        },
+        "timing": {},
+        "final_m": {
+          "version": 1,
+          "facts": [
+            {
+              "id": "live-development-test-00000008-fact-a",
+              "subject_id": "live-development-test-00000008-subject-a",
+              "kind": "passability",
+              "estimate": "open",
+              "status": "observed",
+              "associations": [
+                {
+                  "cue_id": "live-development-test-00000008-cue",
+                  "relation": "local_cue"
+                }
+              ],
+              "inspection_landmark_id": "live-development-test-00000008-subject-a-inspection",
+              "evidence": {
+                "id": "sensor-282cc45e107407a9dd860df3198a43cd425dc2ae3bcc043977c603fc21307dd8",
+                "episode_id": "episode-0",
+                "tick": 29
+              },
+              "revision": 1,
+              "origin": "observed"
+            },
+            {
+              "id": "live-development-test-00000008-fact-z",
+              "subject_id": "live-development-test-00000008-subject-z",
+              "kind": "passability",
+              "estimate": "open",
+              "status": "observed",
+              "associations": [
+                {
+                  "cue_id": "live-development-test-00000008-cue",
+                  "relation": "paired_cue"
+                }
+              ],
+              "inspection_landmark_id": "live-development-test-00000008-subject-z-inspection",
+              "evidence": {
+                "id": "sensor-fec6fa08b50cd1b471dc9c67c6ffa13f3272af4c2294a05a2d0caa718fe34f12",
+                "episode_id": "episode-0",
+                "tick": 299
+              },
+              "revision": 1,
+              "origin": "observed"
+            }
+          ]
+        },
+        "final_E_sha256": "c95abb75984d8b4c0a1771181548e2b413bd66374b5e2d62b32d95cb62eb4b56",
+        "final_U_sha256": "032d40d14192eadc66588a2b63339bb990750a1f70aef036a54453f8746ed9bb",
+        "files": [
+          {
+            "path": "recording/manifest.json",
+            "bytes": 9111,
+            "sha256": "b24a703ac8038de6aacc143c3ccd0472afa8d776364d56cc4f28477c64820e11"
+          },
+          {
+            "path": "recording/events.jsonl",
+            "bytes": 13523,
+            "sha256": "51d8e6a0d25453b3fd8094951529b59812ab79e4bb7d6731abc4bf14b04e36e9"
+          }
+        ],
+        "worker_task_pass_placeholder": false,
+        "runtime_result": null
+      },
+      {
+        "stage": "own",
+        "run_id": "96ef5425f03e4ac49dacef7275dd5422",
+        "numeric_ticks": 126,
+        "recording_bytes": 25924858,
+        "worker_report_sha256": "aa5f179d0afdef2cb7f6f7588ee6207004ab50dad5d9c1f96660ae8aa58544bf",
+        "snapshot_sha256": "1696cc1231039ff08c54edd22ebd8f379ab6fe8a960a621044dec2fb5a87972f",
+        "native_non_u_sha256": "f576e8456f505ec10b4651911f03c221f140dfc32ae9c73ebd144c257ecaf093",
+        "initial_u_sha256": "032d40d14192eadc66588a2b63339bb990750a1f70aef036a54453f8746ed9bb",
+        "status": "completed",
+        "phase": "terminated",
+        "steps": 426,
+        "outcome": {
+          "reason": "goal",
+          "episode": 0,
+          "steps": 426,
+          "final_distance": 0.7899753451347351
+        },
+        "gate_result": "closed",
+        "close_reason": "operator_closed",
+        "cleanup_error": null,
+        "supervisor": {
+          "schema_version": 1,
+          "status": "completed",
+          "timeout_seconds": 160,
+          "returncode": 0,
+          "elapsed_seconds": 13.383047340001212
+        },
+        "timing": {
+          "first_lower_blocked_sensor_tick": 354,
+          "inspection_events": [
+            {
+              "event_id": "sensor-d3b44e437ca0d3b053127ae36a039a9cdf507542e48af059054f5d53ab831bae",
+              "fact_id": "live-development-test-00000008-fact-a",
+              "kind": "memory_inspection",
+              "requested_tick": 300,
+              "status": "requested",
+              "tick": 300
+            },
+            {
+              "event_id": "sensor-d3b44e437ca0d3b053127ae36a039a9cdf507542e48af059054f5d53ab831bae",
+              "fact_id": "live-development-test-00000008-fact-a",
+              "kind": "memory_inspection",
+              "requested_tick": 300,
+              "status": "started",
+              "tick": 300
+            },
+            {
+              "event_id": "sensor-d3b44e437ca0d3b053127ae36a039a9cdf507542e48af059054f5d53ab831bae",
+              "fact_id": "live-development-test-00000008-fact-a",
+              "kind": "memory_inspection",
+              "status": "resolved",
+              "tick": 354
+            }
+          ],
+          "selection": [
+            {
+              "kind": "memory_selection",
+              "selection": {
+                "event_id": "sensor-d3b44e437ca0d3b053127ae36a039a9cdf507542e48af059054f5d53ab831bae",
+                "reason": "matched",
+                "target_ids": [
+                  "live-development-test-00000008-fact-a"
+                ]
+              },
+              "tick": 300
+            }
+          ],
+          "lower_state_changes": [
+            {
+              "tick": 300,
+              "reason": "reconsider",
+              "before": {
+                "estimate": "open",
+                "status": "observed",
+                "revision": 1
+              },
+              "after": {
+                "estimate": "open",
+                "status": "uncertain",
+                "revision": 2
+              },
+              "evidence_ids": [
+                "sensor-90ad37a357021f436b87e17eacef2cc619197189b559ec6d6306750e80709e1b"
+              ]
+            },
+            {
+              "tick": 354,
+              "reason": "direct_observation",
+              "before": {
+                "estimate": "open",
+                "status": "uncertain",
+                "revision": 2
+              },
+              "after": {
+                "estimate": "blocked",
+                "status": "observed",
+                "revision": 3
+              },
+              "evidence_ids": [
+                "sensor-98ae51f0171c8df505a887a9dcdb5e654a73d316248a3109429c52c1767b54fd"
+              ]
+            }
+          ],
+          "common_goal_visible_at354": true,
+          "packet354_sha256": "39b92c9edc82371131ac235efee2d71e1a2e6be40b8625bfd264d751cd3dd4ba",
+          "committed_lower_blocked_at354": true,
+          "packet300_sha256": "c7f3bafeccb4fd1102ffef8ad85d666e696fc7dbb43d65ec36076a378d6871da"
+        },
+        "final_m": {
+          "version": 1,
+          "facts": [
+            {
+              "id": "live-development-test-00000008-fact-a",
+              "subject_id": "live-development-test-00000008-subject-a",
+              "kind": "passability",
+              "estimate": "blocked",
+              "status": "observed",
+              "associations": [
+                {
+                  "cue_id": "live-development-test-00000008-cue",
+                  "relation": "local_cue"
+                }
+              ],
+              "inspection_landmark_id": "live-development-test-00000008-subject-a-inspection",
+              "evidence": {
+                "id": "sensor-55a88c21fab196717fba190d5ec61abfd7cba6b130cc64f83908d27492761938",
+                "episode_id": "episode-0",
+                "tick": 385
+              },
+              "revision": 3,
+              "origin": "observed"
+            },
+            {
+              "id": "live-development-test-00000008-fact-z",
+              "subject_id": "live-development-test-00000008-subject-z",
+              "kind": "passability",
+              "estimate": "open",
+              "status": "observed",
+              "associations": [
+                {
+                  "cue_id": "live-development-test-00000008-cue",
+                  "relation": "paired_cue"
+                }
+              ],
+              "inspection_landmark_id": "live-development-test-00000008-subject-z-inspection",
+              "evidence": {
+                "id": "sensor-3bee1c7df56c5f250976b199c3e090caea83588384d4bf934692c9fab83af4ac",
+                "episode_id": "episode-0",
+                "tick": 314
+              },
+              "revision": 1,
+              "origin": "observed"
+            }
+          ]
+        },
+        "final_E_sha256": "c95abb75984d8b4c0a1771181548e2b413bd66374b5e2d62b32d95cb62eb4b56",
+        "final_U_sha256": "032d40d14192eadc66588a2b63339bb990750a1f70aef036a54453f8746ed9bb",
+        "files": [
+          {
+            "path": "recording/manifest.json",
+            "bytes": 9254,
+            "sha256": "e3498fe26cc4531cefa84258670d05de714d0cb7fdc3a2a9d142cacbd0216482"
+          },
+          {
+            "path": "recording/events.jsonl",
+            "bytes": 1109528,
+            "sha256": "777425c2c738ed70b0e544f3141b10f8227986f961771d19ad12cfb4f22379a1"
+          },
+          {
+            "path": "recording/chunks/000000.npz",
+            "bytes": 6299892,
+            "sha256": "97689c9e92cf49af4f4252987de6439b34982ec8a53ebff9f2350d06b1a217ac"
+          },
+          {
+            "path": "recording/chunks/000001.npz",
+            "bytes": 6299892,
+            "sha256": "ba13cf14af52c095d664f2823759489d43c7af7102e3902e5f4ff49a810be900"
+          },
+          {
+            "path": "recording/chunks/000002.npz",
+            "bytes": 6299892,
+            "sha256": "920b8fe2df83e7de749795ed3e081d365059a1c94c64724cb89913abe475f30e"
+          },
+          {
+            "path": "recording/chunks/000003.npz",
+            "bytes": 5906400,
+            "sha256": "bcec477de60bb19de1bb2c9e647aa4ab90810719a02f320fc38cffb47f96455f"
+          }
+        ],
+        "worker_task_pass_placeholder": false,
+        "runtime_result": {
+          "condition": "own",
+          "recording_status": "completed",
+          "final_phase": "terminated",
+          "outcome": {
+            "reason": "goal",
+            "episode": 0,
+            "steps": 426,
+            "final_distance": 0.7899753451347351
+          },
+          "requested": 1,
+          "started": 1,
+          "resolved": 1,
+          "timeouts": 0,
+          "unresolved_fact_ids": [],
+          "inspection_not_started": false,
+          "fresh_correct_fact_ids": [
+            "live-development-test-00000008-fact-a",
+            "live-development-test-00000008-fact-z"
+          ],
+          "navigation_pass": true,
+          "revision_pass": true,
+          "task_pass": true
+        }
+      },
+      {
+        "stage": "swapped",
+        "run_id": "54e4938bb2f746d896ef1e1e5c41f6fe",
+        "numeric_ticks": 126,
+        "recording_bytes": 25908890,
+        "worker_report_sha256": "1e9767d99b010e6a70890c39a23397189b0f081aea6551fe9a52c7d2402118b4",
+        "snapshot_sha256": "9396215161eb9c26be7ccb4941487d23265fe1604a9f5543052fe974b965327f",
+        "native_non_u_sha256": "f576e8456f505ec10b4651911f03c221f140dfc32ae9c73ebd144c257ecaf093",
+        "initial_u_sha256": "aa37a394fee509275adddb06355388c23e5ef9e8d31c3306327ac29d54800700",
+        "status": "completed",
+        "phase": "terminated",
+        "steps": 426,
+        "outcome": {
+          "reason": "goal",
+          "episode": 0,
+          "steps": 426,
+          "final_distance": 0.7895011901855469
+        },
+        "gate_result": "closed",
+        "close_reason": "operator_closed",
+        "cleanup_error": null,
+        "supervisor": {
+          "schema_version": 1,
+          "status": "completed",
+          "timeout_seconds": 160,
+          "returncode": 0,
+          "elapsed_seconds": 12.050688205999904
+        },
+        "timing": {
+          "first_lower_blocked_sensor_tick": 354,
+          "inspection_events": [],
+          "selection": [
+            {
+              "kind": "memory_selection",
+              "selection": {
+                "event_id": "sensor-d3b44e437ca0d3b053127ae36a039a9cdf507542e48af059054f5d53ab831bae",
+                "reason": "matched",
+                "target_ids": [
+                  "live-development-test-00000008-fact-z"
+                ]
+              },
+              "tick": 300
+            }
+          ],
+          "lower_state_changes": [
+            {
+              "tick": 354,
+              "reason": "direct_observation",
+              "before": {
+                "estimate": "open",
+                "status": "observed",
+                "revision": 1
+              },
+              "after": {
+                "estimate": "blocked",
+                "status": "observed",
+                "revision": 2
+              },
+              "evidence_ids": [
+                "sensor-98ae51f0171c8df505a887a9dcdb5e654a73d316248a3109429c52c1767b54fd"
+              ]
+            }
+          ],
+          "common_goal_visible_at354": true,
+          "packet354_sha256": "9a5defc954191a7683310ca8204409ad3882bf85c2b1003dbaadedf95950ab9a",
+          "committed_lower_blocked_at354": true,
+          "packet300_sha256": "c7f3bafeccb4fd1102ffef8ad85d666e696fc7dbb43d65ec36076a378d6871da"
+        },
+        "final_m": {
+          "version": 1,
+          "facts": [
+            {
+              "id": "live-development-test-00000008-fact-a",
+              "subject_id": "live-development-test-00000008-subject-a",
+              "kind": "passability",
+              "estimate": "blocked",
+              "status": "observed",
+              "associations": [
+                {
+                  "cue_id": "live-development-test-00000008-cue",
+                  "relation": "local_cue"
+                }
+              ],
+              "inspection_landmark_id": "live-development-test-00000008-subject-a-inspection",
+              "evidence": {
+                "id": "sensor-55a88c21fab196717fba190d5ec61abfd7cba6b130cc64f83908d27492761938",
+                "episode_id": "episode-0",
+                "tick": 385
+              },
+              "revision": 2,
+              "origin": "observed"
+            },
+            {
+              "id": "live-development-test-00000008-fact-z",
+              "subject_id": "live-development-test-00000008-subject-z",
+              "kind": "passability",
+              "estimate": "open",
+              "status": "observed",
+              "associations": [
+                {
+                  "cue_id": "live-development-test-00000008-cue",
+                  "relation": "paired_cue"
+                }
+              ],
+              "inspection_landmark_id": "live-development-test-00000008-subject-z-inspection",
+              "evidence": {
+                "id": "sensor-3bee1c7df56c5f250976b199c3e090caea83588384d4bf934692c9fab83af4ac",
+                "episode_id": "episode-0",
+                "tick": 314
+              },
+              "revision": 3,
+              "origin": "observed"
+            }
+          ]
+        },
+        "final_E_sha256": "c95abb75984d8b4c0a1771181548e2b413bd66374b5e2d62b32d95cb62eb4b56",
+        "final_U_sha256": "aa37a394fee509275adddb06355388c23e5ef9e8d31c3306327ac29d54800700",
+        "files": [
+          {
+            "path": "recording/manifest.json",
+            "bytes": 9259,
+            "sha256": "43dcffcf99c182880962b0e893560ad9ba2183c9b4d36069ec3b3b54908ff5af"
+          },
+          {
+            "path": "recording/events.jsonl",
+            "bytes": 1093555,
+            "sha256": "50974f9ae39a4d254df65b0b07657e7bf371d9e85b728b8682551a3e32fa4480"
+          },
+          {
+            "path": "recording/chunks/000000.npz",
+            "bytes": 6299892,
+            "sha256": "f8367a514e851de4511982b54cb233eddeb4b76251d577bbcbd9d52510658f24"
+          },
+          {
+            "path": "recording/chunks/000001.npz",
+            "bytes": 6299892,
+            "sha256": "807c7278a11d7c7fcaa664977402360ec63441e48bbc9910204cc3b3f51516df"
+          },
+          {
+            "path": "recording/chunks/000002.npz",
+            "bytes": 6299892,
+            "sha256": "da3a0bb31bb3ed541bc3eca90601ba579bd55009bf5419fd411548f0abb9fbc6"
+          },
+          {
+            "path": "recording/chunks/000003.npz",
+            "bytes": 5906400,
+            "sha256": "45dccd03188870d659628b75d253b51750c774bfeedf1647a6f373dc65511c14"
+          }
+        ],
+        "worker_task_pass_placeholder": false,
+        "runtime_result": {
+          "condition": "swapped",
+          "recording_status": "completed",
+          "final_phase": "terminated",
+          "outcome": {
+            "reason": "goal",
+            "episode": 0,
+            "steps": 426,
+            "final_distance": 0.7895011901855469
+          },
+          "requested": 0,
+          "started": 0,
+          "resolved": 0,
+          "timeouts": 0,
+          "unresolved_fact_ids": [],
+          "inspection_not_started": false,
+          "fresh_correct_fact_ids": [
+            "live-development-test-00000008-fact-a",
+            "live-development-test-00000008-fact-z"
+          ],
+          "navigation_pass": true,
+          "revision_pass": true,
+          "task_pass": true
+        }
+      },
+      {
+        "stage": "sham",
+        "run_id": "ecd2fba2e37d4d2682050d8dcf3390b8",
+        "numeric_ticks": 126,
+        "recording_bytes": 25924859,
+        "worker_report_sha256": "eff5b04062eafd44b7fbedc4e8a23a667961d9532e905acf5ead0ca418046d5d",
+        "snapshot_sha256": "2cb45e7617bb7c4c8a347d61cc08afe8c3cd16b10b1bcd827105faf6014a10e5",
+        "native_non_u_sha256": "f576e8456f505ec10b4651911f03c221f140dfc32ae9c73ebd144c257ecaf093",
+        "initial_u_sha256": "032d40d14192eadc66588a2b63339bb990750a1f70aef036a54453f8746ed9bb",
+        "status": "completed",
+        "phase": "terminated",
+        "steps": 426,
+        "outcome": {
+          "reason": "goal",
+          "episode": 0,
+          "steps": 426,
+          "final_distance": 0.7899753451347351
+        },
+        "gate_result": "closed",
+        "close_reason": "operator_closed",
+        "cleanup_error": null,
+        "supervisor": {
+          "schema_version": 1,
+          "status": "completed",
+          "timeout_seconds": 160,
+          "returncode": 0,
+          "elapsed_seconds": 10.795566577005957
+        },
+        "timing": {
+          "first_lower_blocked_sensor_tick": 354,
+          "inspection_events": [
+            {
+              "event_id": "sensor-d3b44e437ca0d3b053127ae36a039a9cdf507542e48af059054f5d53ab831bae",
+              "fact_id": "live-development-test-00000008-fact-a",
+              "kind": "memory_inspection",
+              "requested_tick": 300,
+              "status": "requested",
+              "tick": 300
+            },
+            {
+              "event_id": "sensor-d3b44e437ca0d3b053127ae36a039a9cdf507542e48af059054f5d53ab831bae",
+              "fact_id": "live-development-test-00000008-fact-a",
+              "kind": "memory_inspection",
+              "requested_tick": 300,
+              "status": "started",
+              "tick": 300
+            },
+            {
+              "event_id": "sensor-d3b44e437ca0d3b053127ae36a039a9cdf507542e48af059054f5d53ab831bae",
+              "fact_id": "live-development-test-00000008-fact-a",
+              "kind": "memory_inspection",
+              "status": "resolved",
+              "tick": 354
+            }
+          ],
+          "selection": [
+            {
+              "kind": "memory_selection",
+              "selection": {
+                "event_id": "sensor-d3b44e437ca0d3b053127ae36a039a9cdf507542e48af059054f5d53ab831bae",
+                "reason": "matched",
+                "target_ids": [
+                  "live-development-test-00000008-fact-a"
+                ]
+              },
+              "tick": 300
+            }
+          ],
+          "lower_state_changes": [
+            {
+              "tick": 300,
+              "reason": "reconsider",
+              "before": {
+                "estimate": "open",
+                "status": "observed",
+                "revision": 1
+              },
+              "after": {
+                "estimate": "open",
+                "status": "uncertain",
+                "revision": 2
+              },
+              "evidence_ids": [
+                "sensor-90ad37a357021f436b87e17eacef2cc619197189b559ec6d6306750e80709e1b"
+              ]
+            },
+            {
+              "tick": 354,
+              "reason": "direct_observation",
+              "before": {
+                "estimate": "open",
+                "status": "uncertain",
+                "revision": 2
+              },
+              "after": {
+                "estimate": "blocked",
+                "status": "observed",
+                "revision": 3
+              },
+              "evidence_ids": [
+                "sensor-98ae51f0171c8df505a887a9dcdb5e654a73d316248a3109429c52c1767b54fd"
+              ]
+            }
+          ],
+          "common_goal_visible_at354": true,
+          "packet354_sha256": "39b92c9edc82371131ac235efee2d71e1a2e6be40b8625bfd264d751cd3dd4ba",
+          "committed_lower_blocked_at354": true,
+          "packet300_sha256": "c7f3bafeccb4fd1102ffef8ad85d666e696fc7dbb43d65ec36076a378d6871da"
+        },
+        "final_m": {
+          "version": 1,
+          "facts": [
+            {
+              "id": "live-development-test-00000008-fact-a",
+              "subject_id": "live-development-test-00000008-subject-a",
+              "kind": "passability",
+              "estimate": "blocked",
+              "status": "observed",
+              "associations": [
+                {
+                  "cue_id": "live-development-test-00000008-cue",
+                  "relation": "local_cue"
+                }
+              ],
+              "inspection_landmark_id": "live-development-test-00000008-subject-a-inspection",
+              "evidence": {
+                "id": "sensor-55a88c21fab196717fba190d5ec61abfd7cba6b130cc64f83908d27492761938",
+                "episode_id": "episode-0",
+                "tick": 385
+              },
+              "revision": 3,
+              "origin": "observed"
+            },
+            {
+              "id": "live-development-test-00000008-fact-z",
+              "subject_id": "live-development-test-00000008-subject-z",
+              "kind": "passability",
+              "estimate": "open",
+              "status": "observed",
+              "associations": [
+                {
+                  "cue_id": "live-development-test-00000008-cue",
+                  "relation": "paired_cue"
+                }
+              ],
+              "inspection_landmark_id": "live-development-test-00000008-subject-z-inspection",
+              "evidence": {
+                "id": "sensor-3bee1c7df56c5f250976b199c3e090caea83588384d4bf934692c9fab83af4ac",
+                "episode_id": "episode-0",
+                "tick": 314
+              },
+              "revision": 1,
+              "origin": "observed"
+            }
+          ]
+        },
+        "final_E_sha256": "c95abb75984d8b4c0a1771181548e2b413bd66374b5e2d62b32d95cb62eb4b56",
+        "final_U_sha256": "032d40d14192eadc66588a2b63339bb990750a1f70aef036a54453f8746ed9bb",
+        "files": [
+          {
+            "path": "recording/manifest.json",
+            "bytes": 9255,
+            "sha256": "a067ba8ec723bc02bbaa50f33f0a2d3c980135676ecf167d552ee45f6296b42d"
+          },
+          {
+            "path": "recording/events.jsonl",
+            "bytes": 1109528,
+            "sha256": "19d0861eaf81f3664ec54bb93f61c02ed2ea087d5861953a4a00e04c0dc2fdda"
+          },
+          {
+            "path": "recording/chunks/000000.npz",
+            "bytes": 6299892,
+            "sha256": "dec786012a91210b4fbdb9c2187e419978790d7ab1771d7eac4699316dc0bf2d"
+          },
+          {
+            "path": "recording/chunks/000001.npz",
+            "bytes": 6299892,
+            "sha256": "ad6ff337eca20f09d98ca53aada7bf416e5085619f9fb2053829c711d2f157be"
+          },
+          {
+            "path": "recording/chunks/000002.npz",
+            "bytes": 6299892,
+            "sha256": "5858a2778e31bf6feb71af1e9eafef9d6778e0a19725cf25f58878a3683d819c"
+          },
+          {
+            "path": "recording/chunks/000003.npz",
+            "bytes": 5906400,
+            "sha256": "f113143221833d58a99671a92857f574f3cb718e369d7beec13ced586f10328c"
+          }
+        ],
+        "worker_task_pass_placeholder": false,
+        "runtime_result": {
+          "condition": "sham",
+          "recording_status": "completed",
+          "final_phase": "terminated",
+          "outcome": {
+            "reason": "goal",
+            "episode": 0,
+            "steps": 426,
+            "final_distance": 0.7899753451347351
+          },
+          "requested": 1,
+          "started": 1,
+          "resolved": 1,
+          "timeouts": 0,
+          "unresolved_fact_ids": [],
+          "inspection_not_started": false,
+          "fresh_correct_fact_ids": [
+            "live-development-test-00000008-fact-a",
+            "live-development-test-00000008-fact-z"
+          ],
+          "navigation_pass": true,
+          "revision_pass": true,
+          "task_pass": true
+        }
+      },
+      {
+        "stage": "no-U",
+        "run_id": "305ff934b29e4ea5829c7610296fb8d6",
+        "numeric_ticks": 126,
+        "recording_bytes": 25891700,
+        "worker_report_sha256": "4e4c98a5ab3da3373eb4a7963c370833b9157d72000167f89d44e15a0a6fd2f1",
+        "snapshot_sha256": "4528c4d1549675e07dc29d7c1a51080aac13b4dcbe38381bc5d26063a52a197a",
+        "native_non_u_sha256": "f576e8456f505ec10b4651911f03c221f140dfc32ae9c73ebd144c257ecaf093",
+        "initial_u_sha256": "70575d969610e9392033501a21f594e4a7a60d04f83bdc73e510fd5c32019fed",
+        "status": "completed",
+        "phase": "terminated",
+        "steps": 426,
+        "outcome": {
+          "reason": "goal",
+          "episode": 0,
+          "steps": 426,
+          "final_distance": 0.7895011901855469
+        },
+        "gate_result": "closed",
+        "close_reason": "operator_closed",
+        "cleanup_error": null,
+        "supervisor": {
+          "schema_version": 1,
+          "status": "completed",
+          "timeout_seconds": 160,
+          "returncode": 0,
+          "elapsed_seconds": 9.795166641000833
+        },
+        "timing": {
+          "first_lower_blocked_sensor_tick": 354,
+          "inspection_events": [],
+          "selection": [
+            {
+              "kind": "memory_selection",
+              "selection": {
+                "event_id": "sensor-d3b44e437ca0d3b053127ae36a039a9cdf507542e48af059054f5d53ab831bae",
+                "reason": "no_rule",
+                "target_ids": []
+              },
+              "tick": 300
+            }
+          ],
+          "lower_state_changes": [
+            {
+              "tick": 354,
+              "reason": "direct_observation",
+              "before": {
+                "estimate": "open",
+                "status": "observed",
+                "revision": 1
+              },
+              "after": {
+                "estimate": "blocked",
+                "status": "observed",
+                "revision": 2
+              },
+              "evidence_ids": [
+                "sensor-98ae51f0171c8df505a887a9dcdb5e654a73d316248a3109429c52c1767b54fd"
+              ]
+            }
+          ],
+          "common_goal_visible_at354": true,
+          "packet354_sha256": "9a5defc954191a7683310ca8204409ad3882bf85c2b1003dbaadedf95950ab9a",
+          "committed_lower_blocked_at354": true,
+          "packet300_sha256": "c7f3bafeccb4fd1102ffef8ad85d666e696fc7dbb43d65ec36076a378d6871da"
+        },
+        "final_m": {
+          "version": 1,
+          "facts": [
+            {
+              "id": "live-development-test-00000008-fact-a",
+              "subject_id": "live-development-test-00000008-subject-a",
+              "kind": "passability",
+              "estimate": "blocked",
+              "status": "observed",
+              "associations": [
+                {
+                  "cue_id": "live-development-test-00000008-cue",
+                  "relation": "local_cue"
+                }
+              ],
+              "inspection_landmark_id": "live-development-test-00000008-subject-a-inspection",
+              "evidence": {
+                "id": "sensor-55a88c21fab196717fba190d5ec61abfd7cba6b130cc64f83908d27492761938",
+                "episode_id": "episode-0",
+                "tick": 385
+              },
+              "revision": 2,
+              "origin": "observed"
+            },
+            {
+              "id": "live-development-test-00000008-fact-z",
+              "subject_id": "live-development-test-00000008-subject-z",
+              "kind": "passability",
+              "estimate": "open",
+              "status": "observed",
+              "associations": [
+                {
+                  "cue_id": "live-development-test-00000008-cue",
+                  "relation": "paired_cue"
+                }
+              ],
+              "inspection_landmark_id": "live-development-test-00000008-subject-z-inspection",
+              "evidence": {
+                "id": "sensor-3bee1c7df56c5f250976b199c3e090caea83588384d4bf934692c9fab83af4ac",
+                "episode_id": "episode-0",
+                "tick": 314
+              },
+              "revision": 1,
+              "origin": "observed"
+            }
+          ]
+        },
+        "final_E_sha256": "c95abb75984d8b4c0a1771181548e2b413bd66374b5e2d62b32d95cb62eb4b56",
+        "final_U_sha256": "70575d969610e9392033501a21f594e4a7a60d04f83bdc73e510fd5c32019fed",
+        "files": [
+          {
+            "path": "recording/manifest.json",
+            "bytes": 9256,
+            "sha256": "a9fdf67a7352d2fe187cbf448c42f485523906c83c1145ed78d3f0cdc8c31877"
+          },
+          {
+            "path": "recording/events.jsonl",
+            "bytes": 1076368,
+            "sha256": "72e84e6dc518aaf22074a326262480e0f1246a6a2fb3812d7d5e98b9c054af69"
+          },
+          {
+            "path": "recording/chunks/000000.npz",
+            "bytes": 6299892,
+            "sha256": "649707d4c3a201bbed24c2b15863cb814f41f5775c6da7bd481dca6495f0873b"
+          },
+          {
+            "path": "recording/chunks/000001.npz",
+            "bytes": 6299892,
+            "sha256": "2255332a97821b0bb9d3f5e0e2be0c629ce0b4f3a2723e3197f3a548bd158273"
+          },
+          {
+            "path": "recording/chunks/000002.npz",
+            "bytes": 6299892,
+            "sha256": "493134334b71806148244ee8877456e0aec2715a28dd4ad2c2d4146d143c8fe0"
+          },
+          {
+            "path": "recording/chunks/000003.npz",
+            "bytes": 5906400,
+            "sha256": "5ffc0a0dc65d567fadb7fb7a74da16bdf47269e313975410ab3aab4a5306e4ac"
+          }
+        ],
+        "worker_task_pass_placeholder": false,
+        "runtime_result": {
+          "condition": "no-U",
+          "recording_status": "completed",
+          "final_phase": "terminated",
+          "outcome": {
+            "reason": "goal",
+            "episode": 0,
+            "steps": 426,
+            "final_distance": 0.7895011901855469
+          },
+          "requested": 0,
+          "started": 0,
+          "resolved": 0,
+          "timeouts": 0,
+          "unresolved_fact_ids": [],
+          "inspection_not_started": false,
+          "fresh_correct_fact_ids": [
+            "live-development-test-00000008-fact-a",
+            "live-development-test-00000008-fact-z"
+          ],
+          "navigation_pass": true,
+          "revision_pass": true,
+          "task_pass": true
+        }
+      }
+    ],
+    "goal_handoff": {
+      "protocol_sha256": "cd95786316dc1e1df28761659dabfd7018f1b83c20e23200ab7a167247038bb8",
+      "command": {
+        "id": "source-goal-handoff-v4",
+        "kind": "intervene",
+        "expected_state": "paused",
+        "expected_episode": 0,
+        "expected_revision": 300,
+        "payload": {
+          "kind": "move_goal",
+          "xy": [
+            -0.5,
+            -2.7
+          ]
+        }
+      },
+      "receipt": {
+        "id": "source-goal-handoff-v4",
+        "kind": "intervene",
+        "status": "applied",
+        "received_run_id": "0063307623c3490fa0f429399d5c7430",
+        "received_episode": 0,
+        "received_tick": 300,
+        "applied_run_id": "0063307623c3490fa0f429399d5c7430",
+        "applied_episode": 0,
+        "applied_tick": 300,
+        "applied_revision": 301
+      },
+      "effective_goal_xy": [
+        -0.5,
+        -2.700000047683716
+      ],
+      "before_world": {
+        "arena": 7.0,
+        "pose": [
+          -1.2341991662979126,
+          0.6053884029388428,
+          0.15652213684807542
+        ],
+        "obstacles": [
+          [
+            0.0,
+            -2.0,
+            0.4
+          ],
+          [
+            0.0,
+            0.0,
+            0.4
+          ],
+          [
+            0.0,
+            2.0,
+            0.4
+          ],
+          [
+            2.5,
+            -1.0,
+            0.4
+          ],
+          [
+            2.5,
+            1.0,
+            0.4
+          ],
+          [
+            3.7,
+            -5.6,
+            0.4
+          ],
+          [
+            3.7,
+            -4.4,
+            0.4
+          ],
+          [
+            3.7,
+            -3.2,
+            0.4
+          ],
+          [
+            3.7,
+            3.2,
+            0.4
+          ],
+          [
+            3.7,
+            4.4,
+            0.4
+          ],
+          [
+            4.9,
+            -5.6,
+            0.4
+          ],
+          [
+            4.9,
+            -4.4,
+            0.4
+          ],
+          [
+            4.9,
+            -3.2,
+            0.4
+          ],
+          [
+            4.9,
+            3.2,
+            0.4
+          ],
+          [
+            4.9,
+            4.4,
+            0.4
+          ],
+          [
+            6.1,
+            -5.6,
+            0.4
+          ],
+          [
+            6.1,
+            -4.4,
+            0.4
+          ],
+          [
+            6.1,
+            -3.2,
+            0.4
+          ],
+          [
+            6.1,
+            3.2,
+            0.4
+          ],
+          [
+            6.1,
+            4.4,
+            0.4
+          ]
+        ],
+        "goal": [
+          -1.2999999523162842,
+          2.5,
+          0.25
+        ]
+      },
+      "world": {
+        "arena": 7.0,
+        "pose": [
+          -1.2342004776000977,
+          0.6053890585899353,
+          0.15652213684807542
+        ],
+        "obstacles": [
+          [
+            0.0,
+            -2.0,
+            0.4
+          ],
+          [
+            0.0,
+            0.0,
+            0.4
+          ],
+          [
+            0.0,
+            2.0,
+            0.4
+          ],
+          [
+            2.5,
+            -1.0,
+            0.4
+          ],
+          [
+            2.5,
+            1.0,
+            0.4
+          ],
+          [
+            3.7,
+            -5.6,
+            0.4
+          ],
+          [
+            3.7,
+            -4.4,
+            0.4
+          ],
+          [
+            3.7,
+            -3.2,
+            0.4
+          ],
+          [
+            3.7,
+            3.2,
+            0.4
+          ],
+          [
+            3.7,
+            4.4,
+            0.4
+          ],
+          [
+            4.9,
+            -5.6,
+            0.4
+          ],
+          [
+            4.9,
+            -4.4,
+            0.4
+          ],
+          [
+            4.9,
+            -3.2,
+            0.4
+          ],
+          [
+            4.9,
+            3.2,
+            0.4
+          ],
+          [
+            4.9,
+            4.4,
+            0.4
+          ],
+          [
+            6.1,
+            -5.6,
+            0.4
+          ],
+          [
+            6.1,
+            -4.4,
+            0.4
+          ],
+          [
+            6.1,
+            -3.2,
+            0.4
+          ],
+          [
+            6.1,
+            3.2,
+            0.4
+          ],
+          [
+            6.1,
+            4.4,
+            0.4
+          ]
+        ],
+        "goal": [
+          -0.5,
+          -2.700000047683716,
+          0.25
+        ]
+      },
+      "before_world_stage": "cached-before-forward",
+      "world_stage": "refreshed-after-forward",
+      "derived_pose_delta": [
+        -1.3113021850585938e-06,
+        6.556510925292969e-07,
+        0.0
+      ],
+      "authoritative_before_sha256": "5670d66db79cb4e2932b199b31382d21187ec10ea00330e627556730051135ae",
+      "authoritative_after_sha256": "5670d66db79cb4e2932b199b31382d21187ec10ea00330e627556730051135ae",
+      "integration_after_sha256": "09edd1c9d8cc22676ff1a4c77ea63ce72b6a5bc36c0b1e2b7db42568ce326672",
+      "integration_enum": 8191,
+      "simulation_time": 5.999999999999561,
+      "memory_before_sha256": "e846b25569bef2e9b9d7de5b6a81580189283f21d618b558c958520f286d13fc",
+      "memory_after_sha256": "e846b25569bef2e9b9d7de5b6a81580189283f21d618b558c958520f286d13fc",
+      "packet": {
+        "version": 1,
+        "id": "sensor-4588003f00ea5c240007cb28c629f6c735e8aa252815ede6aeee195fc41f46cd",
+        "episode_id": "episode-0",
+        "tick": 300,
+        "common_goal_id": "live-development-test-00000008-common-goal",
+        "cues": [
+          {
+            "id": "live-development-test-00000008-cue",
+            "state": 0,
+            "bearing_rad": 0.9624141624381837
+          }
+        ],
+        "landmarks": [
+          {
+            "id": "live-development-test-00000008-common-goal",
+            "bearing_rad": -1.508744783918457
+          },
+          {
+            "id": "live-development-test-00000008-subject-a-inspection",
+            "bearing_rad": -1.4631738985988367
+          },
+          {
+            "id": "live-development-test-00000008-subject-z-inspection",
+            "bearing_rad": 0.5811456664340486
+          }
+        ],
+        "passages": [
+          {
+            "id": "sensor-3aba2ea116e3e557a2abe9ba90a16cb6ddc772e5e64304e7618b2566116ddb04",
+            "episode_id": "episode-0",
+            "tick": 300,
+            "subject_id": "live-development-test-00000008-subject-a",
+            "passability": "unobserved"
+          },
+          {
+            "id": "sensor-93dc4cfd8b2a91bca3bb4e8f47d77e340a959651318f6dabd26318e3836f8b73",
+            "episode_id": "episode-0",
+            "tick": 300,
+            "subject_id": "live-development-test-00000008-subject-z",
+            "passability": "open"
+          }
+        ]
+      },
+      "packet_sha256": "4b7c3def5813064d87eef28f4a3938756f59a4c501972862c22d6360f0d95197"
+    },
+    "totals": {
+      "numeric_ticks": 804,
+      "recording_bytes": 165424026,
+      "recording_files": 38
+    },
+    "comparison": {
+      "pre_m_sha256": "948eaeaeb4cd59e5746820e38c973334e2b5156aff3b6eff535172fa912e25e1",
+      "trigger": {
+        "after": 1,
+        "before": 0,
+        "before_observation_id": "sensor-4f39408d2d6e1d94b5c4b10781c470fffeed1226421574744960a7ce6ea38c30",
+        "cue_id": "live-development-test-00000008-cue",
+        "episode_id": "episode-0",
+        "id": "sensor-d3b44e437ca0d3b053127ae36a039a9cdf507542e48af059054f5d53ab831bae",
+        "kind": "cue_changed",
+        "observation_id": "sensor-90ad37a357021f436b87e17eacef2cc619197189b559ec6d6306750e80709e1b",
+        "tick": 300
+      },
+      "before_occupancy": {
+        "live-development-test-00000008-subject-a": "open",
+        "live-development-test-00000008-subject-z": "open"
+      },
+      "after_occupancy": {
+        "live-development-test-00000008-subject-a": "blocked",
+        "live-development-test-00000008-subject-z": "open"
+      },
+      "gold_target_ids": [
+        "live-development-test-00000008-fact-a"
+      ],
+      "targeting": [
+        {
+          "condition": "own",
+          "selection": {
+            "event_id": "sensor-d3b44e437ca0d3b053127ae36a039a9cdf507542e48af059054f5d53ab831bae",
+            "target_ids": [
+              "live-development-test-00000008-fact-a"
+            ],
+            "reason": "matched"
+          },
+          "target_limit": 1,
+          "exact_set": true,
+          "false_targets": 0,
+          "missed_targets": 0,
+          "abstained": false,
+          "correct_abstention": false,
+          "precision": 1.0,
+          "recall": 1.0,
+          "privileged": false,
+          "runtime_access": [
+            "m",
+            "trigger",
+            "u"
+          ],
+          "validation_access": [
+            "m",
+            "trigger",
+            "u"
+          ],
+          "behavior_access": [
+            "m",
+            "trigger",
+            "u.payload"
+          ],
+          "validation_input_bytes": 2008,
+          "behavior_input_bytes": 1534,
+          "payload_bytes": 108,
+          "envelope_bytes": 590,
+          "runtime_history_bytes": 0
+        },
+        {
+          "condition": "swapped",
+          "selection": {
+            "event_id": "sensor-d3b44e437ca0d3b053127ae36a039a9cdf507542e48af059054f5d53ab831bae",
+            "target_ids": [
+              "live-development-test-00000008-fact-z"
+            ],
+            "reason": "matched"
+          },
+          "target_limit": 1,
+          "exact_set": false,
+          "false_targets": 1,
+          "missed_targets": 1,
+          "abstained": false,
+          "correct_abstention": false,
+          "precision": 0.0,
+          "recall": 0.0,
+          "privileged": false,
+          "runtime_access": [
+            "m",
+            "trigger",
+            "u"
+          ],
+          "validation_access": [
+            "m",
+            "trigger",
+            "u"
+          ],
+          "behavior_access": [
+            "m",
+            "trigger",
+            "u.payload"
+          ],
+          "validation_input_bytes": 2009,
+          "behavior_input_bytes": 1535,
+          "payload_bytes": 109,
+          "envelope_bytes": 591,
+          "runtime_history_bytes": 0
+        },
+        {
+          "condition": "sham",
+          "selection": {
+            "event_id": "sensor-d3b44e437ca0d3b053127ae36a039a9cdf507542e48af059054f5d53ab831bae",
+            "target_ids": [
+              "live-development-test-00000008-fact-a"
+            ],
+            "reason": "matched"
+          },
+          "target_limit": 1,
+          "exact_set": true,
+          "false_targets": 0,
+          "missed_targets": 0,
+          "abstained": false,
+          "correct_abstention": false,
+          "precision": 1.0,
+          "recall": 1.0,
+          "privileged": false,
+          "runtime_access": [
+            "m",
+            "trigger",
+            "u"
+          ],
+          "validation_access": [
+            "m",
+            "trigger",
+            "u"
+          ],
+          "behavior_access": [
+            "m",
+            "trigger",
+            "u.payload"
+          ],
+          "validation_input_bytes": 2008,
+          "behavior_input_bytes": 1534,
+          "payload_bytes": 108,
+          "envelope_bytes": 590,
+          "runtime_history_bytes": 0
+        },
+        {
+          "condition": "no-U",
+          "selection": {
+            "event_id": "sensor-d3b44e437ca0d3b053127ae36a039a9cdf507542e48af059054f5d53ab831bae",
+            "target_ids": [],
+            "reason": "no_rule"
+          },
+          "target_limit": 1,
+          "exact_set": false,
+          "false_targets": 0,
+          "missed_targets": 1,
+          "abstained": true,
+          "correct_abstention": false,
+          "precision": null,
+          "recall": 0.0,
+          "privileged": false,
+          "runtime_access": [
+            "m",
+            "trigger",
+            "u"
+          ],
+          "validation_access": [
+            "m",
+            "trigger",
+            "u"
+          ],
+          "behavior_access": [
+            "m",
+            "trigger",
+            "u.payload"
+          ],
+          "validation_input_bytes": 1892,
+          "behavior_input_bytes": 1486,
+          "payload_bytes": 60,
+          "envelope_bytes": 474,
+          "runtime_history_bytes": 0
+        },
+        {
+          "condition": "hand-authored",
+          "selection": {
+            "event_id": "sensor-d3b44e437ca0d3b053127ae36a039a9cdf507542e48af059054f5d53ab831bae",
+            "target_ids": [
+              "live-development-test-00000008-fact-a"
+            ],
+            "reason": "matched"
+          },
+          "target_limit": 1,
+          "exact_set": true,
+          "false_targets": 0,
+          "missed_targets": 0,
+          "abstained": false,
+          "correct_abstention": false,
+          "precision": 1.0,
+          "recall": 1.0,
+          "privileged": false,
+          "runtime_access": [
+            "m",
+            "trigger",
+            "u"
+          ],
+          "validation_access": [
+            "m",
+            "trigger",
+            "u"
+          ],
+          "behavior_access": [
+            "m",
+            "trigger",
+            "u.payload"
+          ],
+          "validation_input_bytes": 1948,
+          "behavior_input_bytes": 1534,
+          "payload_bytes": 108,
+          "envelope_bytes": 530,
+          "runtime_history_bytes": 0
+        },
+        {
+          "condition": "history-independent",
+          "selection": {
+            "event_id": "sensor-d3b44e437ca0d3b053127ae36a039a9cdf507542e48af059054f5d53ab831bae",
+            "target_ids": [
+              "live-development-test-00000008-fact-a"
+            ],
+            "reason": "budget"
+          },
+          "target_limit": 1,
+          "exact_set": true,
+          "false_targets": 0,
+          "missed_targets": 0,
+          "abstained": false,
+          "correct_abstention": false,
+          "precision": 1.0,
+          "recall": 1.0,
+          "privileged": false,
+          "runtime_access": [
+            "m",
+            "trigger"
+          ],
+          "validation_access": [
+            "m",
+            "trigger"
+          ],
+          "behavior_access": [
+            "m",
+            "trigger"
+          ],
+          "validation_input_bytes": 1413,
+          "behavior_input_bytes": 1413,
+          "payload_bytes": 0,
+          "envelope_bytes": 0,
+          "runtime_history_bytes": 0
+        },
+        {
+          "condition": "traversal",
+          "selection": {
+            "event_id": "sensor-d3b44e437ca0d3b053127ae36a039a9cdf507542e48af059054f5d53ab831bae",
+            "target_ids": [
+              "live-development-test-00000008-fact-a"
+            ],
+            "reason": "budget"
+          },
+          "target_limit": 1,
+          "exact_set": true,
+          "false_targets": 0,
+          "missed_targets": 0,
+          "abstained": false,
+          "correct_abstention": false,
+          "precision": 1.0,
+          "recall": 1.0,
+          "privileged": false,
+          "runtime_access": [
+            "m",
+            "trigger"
+          ],
+          "validation_access": [
+            "m",
+            "trigger"
+          ],
+          "behavior_access": [
+            "m",
+            "trigger"
+          ],
+          "validation_input_bytes": 1413,
+          "behavior_input_bytes": 1413,
+          "payload_bytes": 0,
+          "envelope_bytes": 0,
+          "runtime_history_bytes": 0
+        },
+        {
+          "condition": "retrieval",
+          "selection": {
+            "event_id": "sensor-d3b44e437ca0d3b053127ae36a039a9cdf507542e48af059054f5d53ab831bae",
+            "target_ids": [
+              "live-development-test-00000008-fact-a"
+            ],
+            "reason": "matched"
+          },
+          "target_limit": 1,
+          "exact_set": true,
+          "false_targets": 0,
+          "missed_targets": 0,
+          "abstained": false,
+          "correct_abstention": false,
+          "precision": 1.0,
+          "recall": 1.0,
+          "privileged": false,
+          "runtime_access": [
+            "m",
+            "trigger",
+            "history"
+          ],
+          "validation_access": [
+            "m",
+            "trigger",
+            "history"
+          ],
+          "behavior_access": [
+            "m",
+            "trigger",
+            "history"
+          ],
+          "validation_input_bytes": 9034,
+          "behavior_input_bytes": 9034,
+          "payload_bytes": 0,
+          "envelope_bytes": 0,
+          "runtime_history_bytes": 7610
+        },
+        {
+          "condition": "oracle",
+          "selection": {
+            "event_id": "sensor-d3b44e437ca0d3b053127ae36a039a9cdf507542e48af059054f5d53ab831bae",
+            "target_ids": [
+              "live-development-test-00000008-fact-a"
+            ],
+            "reason": "matched"
+          },
+          "target_limit": 1,
+          "exact_set": true,
+          "false_targets": 0,
+          "missed_targets": 0,
+          "abstained": false,
+          "correct_abstention": false,
+          "precision": 1.0,
+          "recall": 1.0,
+          "privileged": true,
+          "runtime_access": [
+            "m",
+            "trigger",
+            "gold_target_ids"
+          ],
+          "validation_access": [
+            "m",
+            "trigger",
+            "gold_target_ids"
+          ],
+          "behavior_access": [
+            "m",
+            "trigger",
+            "gold_target_ids"
+          ],
+          "validation_input_bytes": 1473,
+          "behavior_input_bytes": 1473,
+          "payload_bytes": 0,
+          "envelope_bytes": 0,
+          "runtime_history_bytes": 0
+        }
+      ],
+      "runtime": [
+        {
+          "condition": "own",
+          "recording_status": "completed",
+          "final_phase": "terminated",
+          "outcome": {
+            "reason": "goal",
+            "episode": 0,
+            "steps": 426,
+            "final_distance": 0.7899753451347351
+          },
+          "requested": 1,
+          "started": 1,
+          "resolved": 1,
+          "timeouts": 0,
+          "unresolved_fact_ids": [],
+          "inspection_not_started": false,
+          "fresh_correct_fact_ids": [
+            "live-development-test-00000008-fact-a",
+            "live-development-test-00000008-fact-z"
+          ],
+          "navigation_pass": true,
+          "revision_pass": true,
+          "task_pass": true
+        },
+        {
+          "condition": "swapped",
+          "recording_status": "completed",
+          "final_phase": "terminated",
+          "outcome": {
+            "reason": "goal",
+            "episode": 0,
+            "steps": 426,
+            "final_distance": 0.7895011901855469
+          },
+          "requested": 0,
+          "started": 0,
+          "resolved": 0,
+          "timeouts": 0,
+          "unresolved_fact_ids": [],
+          "inspection_not_started": false,
+          "fresh_correct_fact_ids": [
+            "live-development-test-00000008-fact-a",
+            "live-development-test-00000008-fact-z"
+          ],
+          "navigation_pass": true,
+          "revision_pass": true,
+          "task_pass": true
+        },
+        {
+          "condition": "sham",
+          "recording_status": "completed",
+          "final_phase": "terminated",
+          "outcome": {
+            "reason": "goal",
+            "episode": 0,
+            "steps": 426,
+            "final_distance": 0.7899753451347351
+          },
+          "requested": 1,
+          "started": 1,
+          "resolved": 1,
+          "timeouts": 0,
+          "unresolved_fact_ids": [],
+          "inspection_not_started": false,
+          "fresh_correct_fact_ids": [
+            "live-development-test-00000008-fact-a",
+            "live-development-test-00000008-fact-z"
+          ],
+          "navigation_pass": true,
+          "revision_pass": true,
+          "task_pass": true
+        },
+        {
+          "condition": "no-U",
+          "recording_status": "completed",
+          "final_phase": "terminated",
+          "outcome": {
+            "reason": "goal",
+            "episode": 0,
+            "steps": 426,
+            "final_distance": 0.7895011901855469
+          },
+          "requested": 0,
+          "started": 0,
+          "resolved": 0,
+          "timeouts": 0,
+          "unresolved_fact_ids": [],
+          "inspection_not_started": false,
+          "fresh_correct_fact_ids": [
+            "live-development-test-00000008-fact-a",
+            "live-development-test-00000008-fact-z"
+          ],
+          "navigation_pass": true,
+          "revision_pass": true,
+          "task_pass": true
+        }
+      ],
+      "trajectory_comparisons": [
+        {
+          "reference": "own",
+          "condition": "swapped",
+          "shared_ticks": 126,
+          "same_length": true,
+          "first_divergence": {
+            "field": "sensors",
+            "reason": "numeric replay divergence",
+            "episode": 0,
+            "tick": 300,
+            "global_tick": 300,
+            "index": [
+              2
+            ],
+            "expected": 0.10741478949785233,
+            "actual": 0.062011729925870895,
+            "max_abs_error": 0.04540305957198143
+          },
+          "scope": "existing replay tolerances; frames are not independent samples"
+        },
+        {
+          "reference": "own",
+          "condition": "sham",
+          "shared_ticks": 126,
+          "same_length": true,
+          "first_divergence": null,
+          "scope": "existing replay tolerances; frames are not independent samples"
+        },
+        {
+          "reference": "own",
+          "condition": "no-U",
+          "shared_ticks": 126,
+          "same_length": true,
+          "first_divergence": {
+            "field": "sensors",
+            "reason": "numeric replay divergence",
+            "episode": 0,
+            "tick": 300,
+            "global_tick": 300,
+            "index": [
+              2
+            ],
+            "expected": 0.10741478949785233,
+            "actual": 0.062011729925870895,
+            "max_abs_error": 0.04540305957198143
+          },
+          "scope": "existing replay tolerances; frames are not independent samples"
+        }
+      ],
+      "r2_complete": false,
+      "held_out_executed": false,
+      "operator_blindness_verified": false
+    },
+    "own_sham_exact_fields": {
+      "action": true,
+      "pose": true,
+      "next_pose": true,
+      "control": true,
+      "sensors": true,
+      "cam_left": true,
+      "cam_right": true,
+      "raw_cam_left": true,
+      "raw_cam_right": true,
+      "reward": true,
+      "simulation_time": true,
+      "eyes": true,
+      "revision": true
+    },
+    "swapped_no_U_exact_fields": {
+      "action": true,
+      "pose": true,
+      "next_pose": true,
+      "control": true,
+      "sensors": true,
+      "cam_left": true,
+      "cam_right": true,
+      "raw_cam_left": true,
+      "raw_cam_right": true,
+      "reward": true,
+      "simulation_time": true,
+      "eyes": true,
+      "revision": true
+    }
+  },
+  "metric_source": "comparison.runtime is evaluator-derived from recorded terminal outcome, final evidence and independent geometry; worker task_pass=false remains a reserved placeholder, not the evaluator score",
+  "interpretation": {
+    "mechanism": "Own/sham selected changed lower fact, committed reconsideration and requested/started inspection300, directly observed blocked and committed resolution354, then goal426. Source-only goal relocation preserves authoritative state and fixes visible return handoff.",
+    "controls": "Swapped targets wrong upper fact but its same packet300 directly refreshes it, so no queued inspection. No-U abstains. Both directly observe/commit lowerblocked354 while following relocated common goal, and all four tasks pass at426.",
+    "causal_effect_limits": "Own U changes target choice, uncertainty/inspection state and published bearing; no improvement in task success, lower repair timing or completion ticks in this fixture. Own/sham bitwise parity and swapped/no-U bitwise physical parity verified.",
+    "baselines": "Nine targeting scores share one target budget and declare differing access. Only own/swapped/sham/no-U execute embodied continuations. Seven targetsets correct here, swapped wrong and no-U abstains; single-case agreement with simple baselines establishes no learned advantage.",
+    "sample_unit": "one development case; correlated branch frames are not independent samples",
+    "prior_failures": "V1/V2/V3 negative records remain unchanged; no v4 result retroactively changes them"
+  }
+}
