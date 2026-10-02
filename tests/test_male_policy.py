@@ -18,7 +18,7 @@ from palimpsest.male_model import CELL_SHA256, FEATURE_PROTOCOL, canonical, dige
 from test_male_model import graph_fixture
 
 ROOT = Path(__file__).resolve().parents[1]
-CELL = ROOT.parent / 'memory-mechanics/upstream/fly-gym/models/connectome_rnn_model.py'
+CELL = ROOT / 'upstream/fly-gym/models/connectome_rnn_model.py'
 
 
 class PolicyArtifactTests(unittest.TestCase):
