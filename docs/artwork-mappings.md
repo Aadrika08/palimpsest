@@ -181,3 +181,9 @@ validation still pending. The retained local index is
 `de3b32b7a216bdef49cd0a8fc9b59ddbddf890455974a67512b79f08ce5aba7c`.
 These unchanged tested files were moved to the separate `feat/artwork-comparison`
 branch for review; the original evidence keeps its observed output path.
+
+## Recorded comparison browser evidence
+
+On 2 October 2026, Chromium opened the unchanged prior actual-branch comparison HTML (SHA-256 `2857dc2118578af71950a7d29f1de9d57b8310747bb15349b7823da7b0523bb1`). Desktop and 390px mobile layouts have no page overflow; the bounded source table scrolls horizontally on narrow screens. Keyboard disclosure, all three SVG views and PDF print generation passed, with zero page exceptions or external requests. Desktop/mobile screenshots were inspected. This verifies a short recorded comparison presentation, not exhibition duration or a causal memory effect.
+
+Retained report: `runs/m9-browser-comparison-20261002/report.json`, SHA-256 `f2357d45889f39077f55a516dfa6b8eeefe12cca285b552d65a6cb719a729f55`. The source HTML stayed unchanged; full M9 qualification remains open.
