@@ -154,6 +154,30 @@ class MechanicsFixtures(unittest.TestCase):
         with self.assertRaises(ValueError): gate.action_for(fixed,{},'approach')
         with self.assertRaises(ValueError): gate.action_for({'kind':'policy-replay','case':'teacher-positive'},app['world'],'fixed')
 
+    def test_fixed_action_replay_accepts_record_reader_scalars_only_with_exact_mode_contract(self):
+        from palimpsest.records import RunWriter, iter_ticks
+        with tempfile.TemporaryDirectory() as tmp:
+            path=Path(tmp)/'recording'
+            writer=RunWriter(path,{'schema':'puck-mechanics-v2'})
+            writer.tick(0,0,action=np.array([.25,0.],np.float64),
+                        teacher_mode_before=np.array(0,np.uint8),teacher_mode_after=np.array(0,np.uint8))
+            writer.finish({'fixture':True});writer.close()
+            recorded=next(iter_ticks(path))
+        row={'kind':'action-replay','case':'push-positive'}
+        for field in ('teacher_mode_before','teacher_mode_after'):
+            self.assertIsInstance(recorded[field],np.uint8)
+            self.assertNotIsInstance(recorded[field],np.ndarray)
+        with patch.object(puck,'demonstrate',side_effect=AssertionError('action replay called teacher')):
+            self.assertEqual(gate.action_for(row,{},'fixed',recorded),([.25,0.],'fixed'))
+            for field in ('teacher_mode_before','teacher_mode_after'):
+                for value in (np.uint8(1),np.uint8(2),np.int64(0),np.float32(0),
+                              np.bool_(False),np.array([0],np.uint8),np.array([[0]],np.uint8),None):
+                    with self.subTest(field=field,value=value):
+                        with self.assertRaises(ValueError):
+                            gate.action_for(row,{},'fixed',recorded|{field:value})
+                missing=recorded.copy();del missing[field]
+                with self.assertRaises(ValueError):gate.action_for(row,{},'fixed',missing)
+
     def test_snapshot_mode_admission_and_restored_policy_successors(self):
         app=application(1)
         app['case']=app['state']['episode_id']='teacher-positive'

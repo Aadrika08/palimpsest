@@ -113,8 +113,8 @@ def action_for(row, world, mode, recorded=None):
         if mode != 'fixed' or recorded is None:
             raise ValueError('Only the fixed-action mechanics source admits action replay')
         for name in ('teacher_mode_before','teacher_mode_after'):
-            value = recorded.get(name)
-            if not isinstance(value,np.ndarray) or value.dtype != np.uint8 or value.shape != () or value.item() != 0:
+            value = np.asarray(recorded.get(name))
+            if value.dtype != np.uint8 or value.shape != () or value.item() != 0:
                 raise ValueError('Fixed action replay has incompatible recorded mode')
         return recorded['action'].tolist(), mode
     if row['kind'] == 'root' and 'action' in row:
