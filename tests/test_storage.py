@@ -90,6 +90,41 @@ class StorageTests(_StorageFixture, unittest.TestCase):
         with self.assertRaises(ValueError):
             budget.check(True, path=self.root / "new")
 
+    def test_nested_inventory_rejects_special_files_scan_errors_and_changed_root(self):
+        managed = self.root / "managed"
+        nested = managed / "a/b"
+        nested.mkdir(parents=True)
+        budget = self.budget([managed])
+        file = nested / "native.log"
+        file.write_bytes(b"abc")
+        self.assertEqual(budget.usage()["used_bytes"], 3)
+        file.write_bytes(b"abcdef")
+        self.assertEqual(budget.usage()["used_bytes"], 6)
+        special = nested / "special"
+        os.mkfifo(special)
+        with self.assertRaisesRegex(StorageLimitError, "nonregular"):
+            budget.usage()
+        special.unlink()
+        special.symlink_to(nested / "absent")
+        with self.assertRaisesRegex(StorageLimitError, "symlink"):
+            budget.usage()
+        special.unlink()
+        nested.chmod(0)
+        try:
+            with self.assertRaises(PermissionError):
+                budget.usage()
+        finally:
+            nested.chmod(0o700)
+        retained = self.root / "retained"
+        managed.rename(retained)
+        managed.symlink_to(retained, target_is_directory=True)
+        with self.assertRaisesRegex(StorageLimitError, "symlink"):
+            budget.usage()
+        managed.unlink()
+        os.mkfifo(managed)
+        with self.assertRaisesRegex(StorageLimitError, "root is not a directory"):
+            budget.usage()
+
     def test_nested_root_lease_blocks_another_process_and_releases(self):
         run = self.root / "runs"
         exports = run / "exports"

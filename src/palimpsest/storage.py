@@ -70,32 +70,36 @@ class StorageBudget:
         # ponytail: O(files) recount avoids a crash-recovery ledger; one payload
         # writer and a bounded inventory are adequate for this local lab.
         total = files = entries = 0
-        pending = list(self._count_roots)
-        while pending:
-            directory = _safe_path(pending.pop())
-            if not directory.exists():
+        def scan_error(error):
+            raise error
+        for root in self._count_roots:
+            root = _safe_path(root)
+            try:
+                mode = root.stat(follow_symlinks=False).st_mode
+            except FileNotFoundError:
                 continue
-            with os.scandir(directory) as children:
-                for child in children:
+            if not stat.S_ISDIR(mode):
+                raise StorageLimitError("Storage inventory root is not a directory")
+            # fwalk anchors descendants to directory descriptors and guards
+            # against symlink swaps without rechecking every ancestor per folder.
+            for _, directories, names, descriptor in os.fwalk(root, follow_symlinks=False, onerror=scan_error):
+                for name in directories + names:
                     entries += 1
                     if entries > MAX_SCAN_ENTRIES:
                         raise StorageLimitError("Storage inventory exceeds entry limit")
-                    if child.is_symlink():
-                        raise StorageLimitError("Storage inventory contains a symlink")
                     try:
-                        if child.is_dir(follow_symlinks=False):
-                            pending.append(Path(child.path))
-                        elif child.is_file(follow_symlinks=False):
-                            total += child.stat(follow_symlinks=False).st_size
-                            files += 1
-                        elif not os.path.lexists(child.path):
-                            continue
-                        else:
-                            raise StorageLimitError("Storage inventory contains a nonregular file")
+                        info = os.stat(name, dir_fd=descriptor, follow_symlinks=False)
                     except FileNotFoundError:
                         # Parent status files may be atomically replaced; their
                         # maximum concurrent footprint is reserved as headroom.
                         continue
+                    if stat.S_ISLNK(info.st_mode):
+                        raise StorageLimitError("Storage inventory contains a symlink")
+                    if stat.S_ISREG(info.st_mode):
+                        total += info.st_size
+                        files += 1
+                    elif not stat.S_ISDIR(info.st_mode):
+                        raise StorageLimitError("Storage inventory contains a nonregular file")
         return {"used_bytes": total, "files": files, "remaining_bytes": max(0, self.limits.max_bytes - total),
                 "max_bytes": self.limits.max_bytes, "headroom_bytes": self.headroom_bytes,
                 "min_free_bytes": self.limits.min_free_bytes}
