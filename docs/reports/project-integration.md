@@ -30,3 +30,8 @@ MaleCNS Torch and native/replay gates enabled. The 300-second supervisor exits
 zero in 88.045 seconds; runtime/test hashes remain unchanged. The merged UI
 build, seven measurement checks and memory annotations also pass. This regression
 does not repeat historical held-out or endurance qualification.
+
+At `7a51346`, the recorded transfer verifier/negative evidence and wheel-response
+diagnostic are integrated. All 62 focused memory/history/recording/contact checks
+pass in 3.083 seconds, no skips. This checks the merged logic without rerunning
+the source-scoped physical simulation experiments.

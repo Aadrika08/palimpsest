@@ -38,7 +38,7 @@ R2–R5 qualification. Full later release gates remain in the
 | MEM-002 | Selection changes uncertainty/inspection requests, never factual payloads; `test_memory` and `test_memory_task`. | Useful held-out targeting and closed-loop effects remain pending. |
 | MEM-003 | Explicit abstention, unobserved samples and evidence-only factual revisions; actual one-episode history abstains, four-episode histories fit. [Recorded-history report](reports/m5-recorded-history.md). | Missing evidence is not an unchanged negative label; no R2 result. |
 | MEM-004 | Native U-only branching with complete invariant hashes, sham checks and actual full-FLYNN CPU continuation/replay. [M4 report](reports/m4-memory-mechanics.md). | Same software/numerical regime only; CUDA repeatability is unqualified. |
-| MEM-005 | [Nine targeting baselines](../src/palimpsest/memory_experiment.py), synthetic development fixtures, recorded E and separate live cases. | All-condition embodied comparison and frozen held-out evaluation remain missing. |
+| MEM-005 | [Nine targeting baselines](../src/palimpsest/memory_experiment.py), synthetic development fixtures, recorded E and [one actual four-branch transfer case](reports/m5-recorded-transfer.md), whose combined task outcomes all fail. | All-condition embodied comparison and frozen held-out evaluation remain missing. |
 | MEM-006 | Deterministic bounded `fit(E)` outside motor inference; [collector](../src/palimpsest/memory_history.py) verifies complete recorded sensor histories. | No LLM runtime dependency; history information and privileged baseline access must remain labelled. |
 | ART-002 | Memory observations/decisions/inspection events carry tick and evidence IDs; route/UI annotations covered by `ui/tests/memory-events.check.ts` and actual M4 browser flows. | No useful-memory or route-improvement inference from an annotation alone. |
 | ART-003 | [Sonification and comparison exports](artwork-mappings.md) and [connectivity atlas](artwork-atlas.md), individually requested offline mappings with embedded provenance; actual short recorded derivatives/browser checks. | Camera portraits, curated specimen correspondence, declared-duration exhibition and independent operation remain incomplete. |
@@ -46,9 +46,9 @@ R2–R5 qualification. Full later release gates remain in the
 
 Additional M6 task, M7 model and M9 artwork gates are broader than these IDs.
 Exploration and homing have manual development demonstrations with native/replay
-evidence; body adaptation and learned puck manipulation remain unfinished.
+evidence; [measured wheel response](reports/m6-body-gains-v2.md) now passes a standalone diagnostic, while runtime adaptation and learned puck manipulation remain unfinished.
 The reduced MaleCNS pilot has separate training and recorded-input held-out
-scores, with a guarded CPU wrapper; it does not establish closed-loop navigation,
+scores, with a guarded CPU wrapper, native/replay integration and [actual live browser workflow](reports/m7-live-lab.md); it does not establish closed-loop navigation,
 biological sensing, topology benefit or population-wide sex differences.
 M10 handoff remains partial while those gates and unified integration are open.
 
