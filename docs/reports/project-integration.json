@@ -1442,5 +1442,32 @@
       "Male runtime checks use production v1 checkpoints, not newly trained research models.",
       "Historical task, endurance, held-out, exhibition and physical gates were not rerun."
     ]
+  },
+  "memory_flynn_regression": {
+    "source_commit": "a15b07cb88ec30ecc5e1b9a1b7f9c5fbde55f021",
+    "tests": 435,
+    "passed": 435,
+    "skipped": 0,
+    "suite_seconds": 98.824,
+    "supervisor": {
+      "elapsed_seconds": 101.97528528099792,
+      "output": "/home/utkarsh/Work/shraddha/brain/.worktrees/project-integration/runs/integration-memory-a15b07c-20261002/supervisor",
+      "returncode": 0,
+      "schema_version": 1,
+      "started_utc": "2026-10-02T16:43:32.663154+00:00",
+      "status": "completed",
+      "timeout_seconds": 300
+    },
+    "all_runtime_gates_enabled": true,
+    "sources_unchanged": true,
+    "assets_unchanged": true,
+    "model_identities_unchanged": true,
+    "retained_files_rehashed": 50,
+    "report": "runs/integration-memory-a15b07c-20261002/report.json",
+    "report_sha256": "ae26a7d23472f09891534bf70b864fb8ddadb7673a386d17216b135d5a1cea8b",
+    "limitations": [
+      "Regression includes mocked atomic memory admission checks; full CPU FLYNN memory continuation experiment remains unexecuted.",
+      "Actual male checks use production v1 assets. No historical task, held-out, endurance or physical qualification rerun."
+    ]
   }
 }

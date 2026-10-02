@@ -78,3 +78,9 @@ independently rehashed. Actual profile coverage includes one adaptive tick. The
 full four-probe fit, partial/fitted native continuation, adaptive executable
 replays, paired compensation metrics and browser workflow still require their
 separate frozen gate. Male runtime checks continue using the production v1 models.
+
+## Atomic fixed-FLYNN memory integration regression
+
+Frozen combined source `a15b07cb88ec30ecc5e1b9a1b7f9c5fbde55f021` passed all 435 tests without skips in 98.824 seconds (101.975 seconds supervised). Simulation, male Torch and male native/replay gates were explicitly enabled using verified shared assets. The 300-second supervisor exited zero; source, assets and production model identities stayed unchanged. Root rehashed all 50 retained files and checked terminal unittest output.
+
+Report: `runs/integration-memory-a15b07c-20261002/report.json`, SHA256 `ae26a7d23472f09891534bf70b864fb8ddadb7673a386d17216b135d5a1cea8b`. The atomic memory admission tests mock native/model boundaries; the separate full CPU FLYNN memory experiment remains unexecuted. Actual male checks retain v1 production assets. This regression does not rerun historical task/endurance qualification.
