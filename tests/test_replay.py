@@ -36,6 +36,39 @@ class ReplayValidation(unittest.TestCase):
                 self.assertEqual(report, json.loads((destination / "replay-report.json").read_text()))
                 self.assertFalse((destination / "recording").exists())
 
+    def test_report_lists_checked_body_fields_and_runtime_sources(self):
+        from palimpsest.replay import _RUNTIME, _BODY_RUNTIME, _MALE_RUNTIME, _PHYSICAL
+        from palimpsest.body_profile import TICK_FIELDS
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            source = root / uuid.uuid4().hex
+            source.mkdir()
+            for controller, scenario, extra in (
+                    ('manual', 'calibrated-wheel-compensation', _BODY_RUNTIME),
+                    ('manual', 'reproduction', ()),
+                    ('male-original', 'reproduction', _MALE_RUNTIME)):
+                for mode in ('actions', 'policy'):
+                    with self.subTest(controller=controller, scenario=scenario, mode=mode):
+                        destination = root / uuid.uuid4().hex
+                        destination.mkdir()
+                        # A stray identity key must not select body reporting for another scenario.
+                        manifest = {'controller': controller, 'scenario': {'id': scenario},
+                                    'requested_device': 'cpu', 'seed': 1, 'texture': 'checker',
+                                    'body_profile_identity': {}}
+                        with patch('palimpsest.replay._load', return_value={'manifest': manifest}), \
+                             patch('palimpsest.replay._initial_snapshot', return_value=(
+                                 {'application': {}}, {'snapshot_id': 'fixture', 'sha256': 'a'*64}, [])), \
+                             patch('palimpsest.replay.validate_identity', return_value={}), \
+                             patch('palimpsest.engine.Engine.open', side_effect=RuntimeError('fixture stop before physics')):
+                            report = replay_run(source, destination, mode=mode,
+                                                repo_root=REPO, asset_root=root)
+                        self.assertEqual(report['status'], 'failed')
+                        self.assertEqual(report['comparison']['runtime_source_keys'], list(_RUNTIME + extra))
+                        fields = _PHYSICAL | (TICK_FIELDS if scenario == 'calibrated-wheel-compensation' else set())
+                        self.assertEqual(report['comparison']['fields'], sorted(fields) if mode == 'actions'
+                                         else 'all recorded fields except wall latencies')
+                        self.assertEqual(report, json.loads((destination/'replay-report.json').read_text()))
+
     @unittest.skipIf(np is None, "NumPy is provided by simulation extra")
     def test_float_tolerance_integer_exact_and_first_field_details(self):
         expected = {"episode": 2, "tick": 7, "hidden": np.array([.3, .4]), "camera": np.array([1, 2], np.uint8)}
