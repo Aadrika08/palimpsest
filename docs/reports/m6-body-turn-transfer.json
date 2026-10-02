@@ -1,0 +1,160 @@
+{
+  "schema_version": 1,
+  "gate": "BGT-TURN-1",
+  "status": "passed",
+  "actual_invocations": 1,
+  "retries": 0,
+  "source_commit": "1c87b273b274fb7a323a5aca89711ae21cc054a1",
+  "upstream_commit": "8d964599119b420de67ee259434d273651a1a76d",
+  "protocol_sha256": "ffeb1cad08709b6534100f1369edfd8be9983d0ed88496f5a0f0843e6b87e910",
+  "source_script_sha256": "3d53eac9ea0adf278d9a0b2fd9d2515c24420f0bf443e3a5783a6cec320df529",
+  "primary_report_sha256": "c31764608a8e0d700cd7f96da39ae31f244d5ff9a01f01cb9a408a3b5bb4eb97",
+  "terminal_sha256": "c665088d03b43b40c63c427ca199f1dfc4078141838f596bed88f61c58b245d7",
+  "owners": 6,
+  "numeric_ticks": 720,
+  "settled_scored_ticks": 600,
+  "snapshot_files": 6,
+  "pre_control_stages": 7200,
+  "end_caches": 720,
+  "paired_metrics": {
+    "accepted": true,
+    "directions": {
+      "left": {
+        "accepted": true,
+        "improved": {
+          "wheel_rate_rmse": true,
+          "yaw_error": true,
+          "lateral_error": true
+        },
+        "comparisons": {
+          "uncompensated": {
+            "wheel_rate_rmse": 0.42918386195064556,
+            "yaw_error": 0.23273714431813963,
+            "lateral_error": 0.02115978579968214,
+            "raw_yaw_rad": 1.4169530320717842,
+            "raw_lateral_m": 0.09583506733179092
+          },
+          "compensated": {
+            "wheel_rate_rmse": 0.060968275067641076,
+            "yaw_error": 0.021637156484372033,
+            "lateral_error": 0.0038892393931746483,
+            "raw_yaw_rad": 1.671327332874296,
+            "raw_lateral_m": 0.07856452092528343
+          }
+        },
+        "baseline": {
+          "raw_yaw_rad": 1.6496901763899239,
+          "raw_lateral_m": 0.07467528153210878
+        }
+      },
+      "right": {
+        "accepted": true,
+        "improved": {
+          "wheel_rate_rmse": true,
+          "yaw_error": true,
+          "lateral_error": true
+        },
+        "comparisons": {
+          "uncompensated": {
+            "wheel_rate_rmse": 0.3931287195609077,
+            "yaw_error": 0.17731112593760767,
+            "lateral_error": 0.02375482441857457,
+            "raw_yaw_rad": -1.4723790504523155,
+            "raw_lateral_m": -0.05092045711353421
+          },
+          "compensated": {
+            "wheel_rate_rmse": 0.07074754996517925,
+            "yaw_error": 0.03441068484799481,
+            "lateral_error": 0.003584343008697033,
+            "raw_yaw_rad": -1.684100861237918,
+            "raw_lateral_m": -0.07109093852341175
+          }
+        },
+        "baseline": {
+          "raw_yaw_rad": -1.6496901763899232,
+          "raw_lateral_m": -0.07467528153210878
+        }
+      }
+    }
+  },
+  "fitted_reference": {
+    "source_commit": "5f22c1c06edec7ab0ba27447e0c2360f6e09243d",
+    "report_sha256": "231956442698655fc8f511018067a9515797b2baa7dd5e9f7d1a174374546121",
+    "snapshot_sha256": "af42213e0bc0440906371a53fe23902b02c692e806c64b609621fed2feb63ca4",
+    "samples_sha256": "8dcc254855a32bf41870fa4fb8660f6e96e4fbb3411077f816802985b4d4284c",
+    "fit_sha256": "4d738e670b89cad1ca5db18dbb64d4465cc8f22663503d3c663fc6a6000a4428",
+    "session_sha256": "2086d435f0bd40a5b85997ede4f7b8666ac042ecda8e135e34fba5ee239ba77b"
+  },
+  "source_upstream_assets_fit_inputs_unchanged": true,
+  "inventory_entries": 451,
+  "inner_indexed_artifacts": 75,
+  "cleanup": {
+    "all_owner_inner_outer_exitcodes": 0,
+    "forced_signals": [],
+    "sampled_survivors": [],
+    "union_pid_start_absent": 8,
+    "scope": "finite .25 s observed PID/start sampling; not universal transient-process proof"
+  },
+  "durations_seconds": {
+    "verifier": 91.66290968400426,
+    "outer": 93.91449837900291,
+    "supervised_process": 92.40908045700053
+  },
+  "storage": {
+    "preflight_admission_bytes": 855965696,
+    "report_usage_before_final_write_bytes": 308577411,
+    "outer_combined_recount_before_terminal_write_bytes": 308818071,
+    "snapshot_sizes": [
+      523025,
+      523025,
+      880374,
+      523025,
+      523025,
+      880374
+    ]
+  },
+  "audits": {
+    "root": {
+      "seconds": 3.652480433,
+      "scope": "independent raw metrics/control/action math, all451 inventory/75 artifact hashes, six native integration/session containers and eight absent PID/start identities; no native decode/import"
+    },
+    "local": {
+      "seconds": 4.057818959001452,
+      "scope": "retained pure container/array reads, hashes, process survey; no MuJoCo native decoding or runtime launch",
+      "initial_observations_and_integration_exact": 6
+    }
+  },
+  "source_checks": {
+    "focused_tests": 29,
+    "seconds": 21.156,
+    "native_run": false,
+    "local_upstream_ast_and_pin": "passed"
+  },
+  "fixed_file_index": {
+    "runs/m6-body-turn-transfer-development-20261003/report.json": "c31764608a8e0d700cd7f96da39ae31f244d5ff9a01f01cb9a408a3b5bb4eb97",
+    "runs/m6-body-turn-control-1c87b27/terminal.json": "c665088d03b43b40c63c427ca199f1dfc4078141838f596bed88f61c58b245d7",
+    "runs/m6-body-turn-control-1c87b27/before.json": "373883be39dc49807d384449c0178b333b065c0d1de790b5cee7b03b995f4c2c",
+    "runs/m6-body-turn-control-1c87b27/after.json": "373883be39dc49807d384449c0178b333b065c0d1de790b5cee7b03b995f4c2c",
+    "runs/m6-body-turn-control-1c87b27/invocation.json": "148cf8c9f9c11b45ae043229abf2943b8759fdf2fe74a7497f7733d637ef1b18",
+    "runs/m6-body-turn-control-1c87b27/launch.py": "52289387357a575f3935a58866d0059cd198e0c50eedad57447b9c6fa8a37ae6",
+    "runs/m6-body-turn-control-1c87b27/inventory.py": "585c5305f0e941cfd5bfefe2e3e85a52d6a28b87ea2bdcbd7986ac536b2cb068",
+    "runs/m6-body-turn-control-1c87b27/launcher.diff": "10baf78a5927107d7854cfd693af67f54022f64b434ffff2bc7db6433ebaf9e4",
+    "runs/m6-body-turn-control-1c87b27/inventory.diff": "b48c4f38062a511f5a054986b98b949603f509fed229c3008834784a387be59f",
+    "runs/m6-body-turn-control-1c87b27/launcher-console.log": "241746df885b17f034a6ab29a67140e3784f1941bfeafe279acea6a688af5ea0",
+    "runs/m6-body-turn-control-1c87b27/audit.py": "58b8dd325eb7b999576e20c2492aec12e98a86604fa8665d13f9ae200b6fc5e3",
+    "runs/m6-body-turn-control-1c87b27/audit.json": "20cb5eeced958284e4ecf670f0b17170e62616a043fd082199854a0d33e0a40d",
+    "runs/m6-body-turn-control-1c87b27/outer-launch/stdout.log": "e5fc930c928d5852451af88a8bb2df88d0165f4ef0b3d28c4d5cfe168bf279a7",
+    "runs/m6-body-turn-control-1c87b27/outer-launch/stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "runs/m6-body-turn-control-1c87b27/outer-launch/supervisor.json": "473d1a80b76f6541ff554c66b6f79733040db6a74197d20a03be9ae4abe6cb69",
+    "../project-integration/runs/m6-body-turn-root-audit-1c87b27/audit.py": "87bb99270baa9e6a1a2e5ffbb234a697bea8dd2a17e3ac10983b67021aaeef96",
+    "../project-integration/runs/m6-body-turn-root-audit-1c87b27/audit.json": "38362176a6b13647593b4f4b688367e8a652e6c0ced738826eaa4b7680ab8883"
+  },
+  "limitations": [
+    "One existing fitted gear-.8 body/world/seed; opposite-wheel fixed-command transfer, not new-body or population competence.",
+    "Metrics exclude first20 settling intervals; all raw intervals retained. Lane-Y error is not general planar tracking.",
+    "Discrete pre-control/end contact caches; world-only support retained; no continuous collision, force, exact body rest or hardware claim.",
+    "Historical fit/native snapshot reuse through existing restore guards; strict historical recording replay compatibility unchanged.",
+    "Standalone baseline/uncompensated authored traces retain ordinary playback/profile-world reader limitation.",
+    "No recalibration, task composition, policy/actions replay or browser repetition in this gate."
+  ]
+}
