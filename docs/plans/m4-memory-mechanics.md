@@ -1,6 +1,6 @@
 # M4 memory mechanics and M5 development contract
 
-Implementation contract fixed on 2 October 2026 before memory development. This isolated dependent draft does not qualify R2. Its M3 base remains frozen in a separate worktree for the actual 60-minute gate; R1 qualification remains pending. The engineering defaults below are fixed for development, not measured research outcomes. Held-out M5 evaluation requires a later explicit protocol freeze.
+Implementation contract fixed on 2 October 2026 before memory development. This isolated dependent draft does not qualify R2. R1 passed its scoped hardening contract; [M4 actual mechanics gates](../reports/m4-memory-mechanics.md) now pass. The engineering defaults below are fixed for development, not measured research outcomes. Held-out M5 evaluation requires a later explicit protocol freeze.
 
 ## Product constraints and development choices
 
@@ -149,7 +149,7 @@ Freeze protocol hash, generator/fit/selector versions, separate development/held
 - `replay.py:_EVENTS` currently excludes every memory event and `_RUNTIME` excludes the three new modules. Extend both, and bind memory profile/U hashes. Policy replay must recompute and compare symbolic observations, selection, revision and bridge records as well as neural outputs. Action replay bypasses the policy and can reconstruct physical inputs; it must not claim to rerun neural inference or certify memory causality. Recorded playback simply displays retained memory events.
 - Existing outcome handling calls upstream navigation termination (`Engine._step:467`). The memory task needs its own declared outcome predicate for reinspection/common-goal completion, while retaining timeout/failure handling; otherwise an unrelated upstream target can terminate a reinspection. This is a new validated task profile, not silent reproduction-profile behaviour.
 
-M4 symbolic inputs are labelled fixtures until an actual world/sensor acquisition implementation is validated; M4 fixture success is not an embodied result.
+M4 now has actual world/sensor and U-only continuation validation on the default authored scene. Pure fixture results remain distinct; successful learned or embodied transfer requires M5.
 
 ## 5. Smallest meaningful checks before integration
 

@@ -1,5 +1,6 @@
 import {test,expect,type Page} from '@playwright/test';
 import {execFileSync} from 'node:child_process';
+import {createHash} from 'node:crypto';
 
 async function api(page:Page,path:string,body?:unknown){return page.evaluate(async({path,body})=>{const token=(await(await fetch('/api/v1/session')).json()).token;const response=await fetch('/api/v1'+path,{method:body===undefined?'GET':'POST',headers:{'X-Palimpsest-Session':token,'Content-Type':'application/json'},...(body===undefined?{}:{body:JSON.stringify(body)})});const value=await response.json();if(!response.ok)throw Error(`${response.status}: ${JSON.stringify(value)}`);return value;},{path,body});}
 async function validPlacement(page:Page,kind:'move_goal'|'move_obstacle',different?:number[]){const id=(await page.locator('.identity').innerText()).replace('Run ','');return page.evaluate(async({id,kind,different})=>{const token=(await(await fetch('/api/v1/session')).json()).token;const headers={'X-Palimpsest-Session':token,'Content-Type':'application/json'};const state=(await(await fetch(`/api/v1/runs/${id}`,{headers})).json()).state;for(const x of [-5,-3,0,3,5])for(const y of [-5,-3,0,3,5]){if(different&&x===different[0]&&y===different[1])continue;const payload=kind==='move_goal'?{kind,xy:[x,y]}:{kind,index:0,xy:[x,y]};const result=await fetch(`/api/v1/runs/${id}/previews`,{method:'POST',headers,body:JSON.stringify({payload,expected_revision:state.revision})});if(result.ok)return[x,y];}throw Error('No valid placement in actual scenario');},{id,kind,different});}
@@ -8,9 +9,10 @@ async function runId(page:Page){return(await page.locator('.identity').innerText
 async function createManual(page:Page){await page.goto('/');await expect(page.getByRole('button',{name:'Create run',exact:true})).toBeEnabled();await page.getByLabel('Scenario',{exact:true}).selectOption('sparse-navigation');await page.getByLabel('Controller',{exact:true}).selectOption('manual');await page.getByRole('button',{name:'Create run',exact:true}).click();await expect(page.getByRole('button',{name:'Step',exact:true})).toBeEnabled({timeout:90_000});return runId(page);}
 
 test.afterEach(async({page},info)=>{
+  if(info.status==='skipped')return;
   const cleanup=await page.evaluate(async()=>{const id=document.querySelector('.identity')?.textContent?.replace('Run ','');if(!id||! /^[0-9a-f]{32}$/.test(id))return null;const token=(await(await fetch('/api/v1/session')).json()).token;const response=await fetch(`/api/v1/runs/${id}/close`,{method:'POST',headers:{'X-Palimpsest-Session':token,'Content-Type':'application/json'},body:'{}'});return {run_id:id,http_status:response.status,response:await response.json()};});
   const body=JSON.stringify(cleanup,null,2);await info.attach('owner-close.json',{body,contentType:'application/json'});const {writeFile}=await import('node:fs/promises');await writeFile(info.outputPath('owner-close.json'),body+'\n');
-  expect(cleanup,'Every actual workflow must retain an owner close response').not.toBeNull();if(!cleanup)return;expect(cleanup.http_status).toBe(200);expect(cleanup.response.run_id).toBe(cleanup.run_id);
+  if(info.status==='passed')expect(cleanup,'Every successful actual workflow must retain an owner close response').not.toBeNull();if(!cleanup)return;expect(cleanup.http_status).toBe(200);expect(cleanup.response.run_id).toBe(cleanup.run_id);
   // A successful workflow requires a clean close. Failed tests retain the
   // already failed owner's authoritative status instead of hiding teardown.
   if(info.status==='passed')expect(cleanup.response.status).toBe('closed');else expect(['closed','failed']).toContain(cleanup.response.status);
@@ -124,6 +126,76 @@ test('actual trajectory overlay isolation and keyboard error recovery',async({pa
   const after=await api(page,`/runs/${id}`);expect(after.sample.inputs).toEqual(before.sample.inputs);expect(after.sample.transition).toEqual(before.sample.transition);expect(after.state).toEqual(before.state);expect(await api(page,`/runs/${id}/events?after=0&limit=200`)).toEqual(eventsBefore);expect(mutations).toEqual([]);
   await page.getByLabel('X (m)',{exact:true}).fill('100');await page.getByRole('button',{name:'Preview edit',exact:true}).focus();await page.keyboard.press('Enter');await expect(page.getByRole('alert')).toBeVisible();await expect(page.getByRole('alert')).toBeFocused();await page.keyboard.press('Tab');await expect(page.getByRole('button',{name:'Dismiss error',exact:true})).toBeFocused();await page.keyboard.press('Enter');await expect(page.getByRole('alert')).toHaveCount(0);await expect(page.getByRole('button',{name:'Preview edit',exact:true})).toBeFocused();expect((await api(page,`/runs/${id}`)).state).toEqual(before.state);
   await page.getByRole('link',{name:'Skip to run controls',exact:true}).focus();await page.keyboard.press('Enter');await expect(page.getByRole('navigation',{name:'Run controls',exact:true})).toBeFocused();
+});
+
+test('actual memory inspector, U-only branch and evidence-linked route annotations',async({page})=>{
+  const browserErrors:string[]=[];page.on('pageerror',error=>browserErrors.push(error.message));
+  await page.goto('/');await expect(page.getByRole('button',{name:'Create run',exact:true})).toBeEnabled();
+  await page.getByLabel('Controller',{exact:true}).selectOption('teacher');
+  await page.getByLabel('Scenario',{exact:true}).selectOption('memory-passages');
+  await expect(page.getByLabel('Controller',{exact:true})).toHaveValue('manual');
+  await expect(page.getByLabel('Controller',{exact:true}).locator('option[value="teacher"]')).toHaveJSProperty('disabled',true);
+  await page.getByRole('button',{name:'Create run',exact:true}).click();
+  await expect(page.getByRole('button',{name:'Step',exact:true})).toBeEnabled({timeout:90_000});
+  const source=await runId(page);await expect(page.getByRole('region',{name:'Artificial memory'})).toBeVisible();
+  await expect(page.locator('.input-stage')).toContainText('bearing will be selected');
+  for(let tick=0;tick<8;tick++){
+    await page.getByRole('button',{name:'Step',exact:true}).click();
+    await expect.poll(async()=>(await api(page,`/runs/${source}`)).state.total_tick).toBe(tick+1);
+  }
+  await page.getByRole('button',{name:'Capture snapshot',exact:true}).click();
+  await expect(page.locator('.notice')).toHaveText('Snapshot captured.');
+  await page.getByRole('button',{name:'Use displayed U',exact:true}).click();
+  await expect(page.getByRole('button',{name:'Start U-only branch',exact:true})).toBeDisabled();
+  const before=await api(page,`/runs/${source}`), u=structuredClone(before.sample.memory.u);
+  u.payload={rules:[{relation:'local_cue',trigger:'cue_changed'}],version:1,vocabulary:'passage-relations-v1'};
+  u.provenance.method='hand-authored-v1';u.payload_sha256=createHash('sha256').update(JSON.stringify(u.payload)).digest('hex');
+  await page.getByRole('button',{name:'Close run',exact:true}).click();
+  await page.getByLabel('U artifact JSON',{exact:true}).setInputFiles({name:'invalid.json',mimeType:'application/json',buffer:Buffer.from('{}')});
+  await expect(page.getByText('invalid.json',{exact:true})).toBeVisible();
+  const count=(await api(page,'/runs')).runs.length;
+  await page.getByRole('button',{name:'Start U-only branch',exact:true}).click();
+  await expect(page.getByRole('alert')).toBeVisible();
+  expect((await api(page,'/runs')).runs.length).toBe(count);
+  await page.getByRole('button',{name:'Dismiss error',exact:true}).click();
+  await page.getByLabel('U artifact JSON',{exact:true}).setInputFiles({name:'authored-local.json',mimeType:'application/json',buffer:Buffer.from(JSON.stringify(u))});
+  await expect(page.getByText('authored-local.json',{exact:true})).toBeVisible();
+  await page.getByRole('button',{name:'Start U-only branch',exact:true}).click();
+  await expect(page.getByRole('button',{name:'Step',exact:true})).toBeEnabled({timeout:90_000});
+  const branch=await runId(page);expect(branch).not.toBe(source);
+  await expect.poll(async()=>(await api(page,`/runs/${branch}`)).sample?.memory?.tick).toBe(7);
+  const initial=await api(page,`/runs/${branch}`);
+  expect(initial.state.total_tick).toBe(8);
+  expect(initial.sample.memory.hashes.m).toBe(before.sample.memory.hashes.m);
+  expect(initial.sample.memory.hashes.e).toBe(before.sample.memory.hashes.e);
+  expect(initial.sample.memory.u).toEqual(u);
+  for(let tick=8;tick<12;tick++){
+    await page.getByRole('button',{name:'Step',exact:true}).click();
+    await expect.poll(async()=>(await api(page,`/runs/${branch}`)).state.total_tick).toBe(tick+1);
+  }
+  await expect(page.locator('.memory-facts')).toContainText('uncertain');
+  const marker=page.locator('a[href^="#event-"]').first();await expect(marker).toBeVisible();
+  const href=await marker.getAttribute('href');expect(href).toMatch(new RegExp(`^#event-${branch}-[0-9]+$`));
+  await marker.focus();await page.keyboard.press('Enter');
+  await expect(page.locator(href!)).toBeVisible();await expect(page.locator(href!).locator('summary')).toContainText('memory_decision');
+  const paused=await api(page,`/runs/${branch}`);
+  const toggle=page.getByLabel('Show trajectory overlays',{exact:true});await toggle.uncheck();
+  await expect(page.locator('[data-overlay="memory"]')).toHaveCount(0);await toggle.check();
+  const after=await api(page,`/runs/${branch}`);expect(after.sample.inputs).toEqual(paused.sample.inputs);
+  expect(after.sample.memory).toEqual(paused.sample.memory);expect(after.state).toEqual(paused.state);
+  await page.getByRole('button',{name:'Close run',exact:true}).click();
+  await page.getByLabel('Recorded run',{exact:true}).selectOption(branch);
+  await page.getByLabel('Transition tick',{exact:true}).fill('10');
+  await page.getByRole('button',{name:'Recorded playback',exact:true}).click();
+  await expect(page.locator('.mode')).toHaveText('Recorded playback');
+  await expect(page.locator('.memory-facts')).toContainText('uncertain');
+  await expect(page.locator('a[href^="#event-"]').first()).toBeVisible();
+  const recorded=await api(page,`/runs/${branch}/playback?episode=0&tick=10`);
+  expect(recorded.memory.active.fact_id).toBe('fact-passage-a');
+  await page.screenshot({path:'test-results/actual-memory-desktop.png',fullPage:true});
+  await page.setViewportSize({width:390,height:844});expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);
+  await page.screenshot({path:'test-results/actual-memory-mobile.png',fullPage:true});
+  expect(browserErrors).toEqual([]);await expect(page.getByRole('alert')).toHaveCount(0);
 });
 
 test('measured browser responsiveness and actual display cadence',async({page},info)=>{

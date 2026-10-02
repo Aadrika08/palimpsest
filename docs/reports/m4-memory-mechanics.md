@@ -1,26 +1,25 @@
-# M4 memory mechanics: development evidence
+# M4 memory mechanics evidence
 
-M4 is not qualified yet. The typed M/E/U mechanisms, declared symbolic sensor and authored two-passage world are implemented; engine/API/inspector integration is a draft. No learned transfer, embodied task success or R2 result follows from fixture checks.
+M4 mechanics are complete on the default development world. M/E/U remain separate, U selects reinspection without rewriting facts, fresh declared observations establish values, and atomic U-only branches preserve world, M/E, controller, neural, RNG and supervisor state. This is not an R2 learned-transfer result.
 
-The [development contract](../plans/m4-memory-mechanics.md) defines finite relation fitting, abstention, evidence-based revision and the fixed one-target bridge. The [world contract](../plans/m4-memory-world.md) defines geometric passage occupancy independently of the rules. The live profile begins with unknown M and empty E/U.
+The [development contract](../plans/m4-memory-mechanics.md) fixes the finite rule vocabulary, fitting/abstention thresholds and one-target bridge. The [world contract](../plans/m4-memory-world.md) defines independent geometric truth. Live M begins unknown, with empty E/U. Application schema v3 and exact typed hashes guard U-only restoration; action-replay snapshots and invalid guidance cannot allocate a live branch. Inspector and route annotations use recorded evidence and never feed policy inputs.
 
-Application schema v3 retains memory, world schedule, execution mode and hashes of actual graph/parameter tensors. A U-only branch requires a cleanly closed source, validates its registered snapshot and guidance, restores all state, then compares exact typed hashes before and after replacing U. Only U and destination recording identities are excluded. Action-replay snapshots are rejected because a live branch carries no recorded action stream. Failed admission preserves the source and allocates no destination.
+The runtime was measured at `23d5847`; later M3 documentation merging did not change its Python/lock hashes. The [JSON index](m4-memory-mechanics.json) binds the local retained reports and exact scope.
 
-The inspector exposes bounded M/E/U views; comparison provenance includes initial memory and replacement hashes. Recorded selection/revision/inspection events carry evaluator-only pre-control coordinates. Route diamonds link to the matching event sequence, episode and transition. They are display annotations and do not feed policy inputs.
+- **218 tests passed**, no skips, with actual MuJoCo/EGL enabled (67.757 seconds). Coverage includes rejection of unsupported certainty, missing/conflicting sensing, malformed U, state invariants, actual world changes and manual continuation/replay.
+- **Full CPU FLYNN gate passed** in 200.164 seconds. An eight-tick source snapshot produced empty-U sham, local-rule and paired-rule branches. Invariant hashes matched for all three; the four-tick sham had zero maximum numerical difference. The authored rules selected their expected different inspection targets. Source recording and runtime files stayed unchanged.
+- Both executable replays passed **four ticks and 33 events** each. Floating tolerance stayed 1e-6; cameras and integers were exact. Action replay bypassed inference. All six owners exited zero without survivors.
+- UI build/typecheck passed. **Four actual manual browser workflows passed** (18.1/27.4/5.6/18.2 seconds): existing lab/replay/overlay flows plus memory inspection, rejected malformed upload, valid U-only branch, M/E preservation, evidence-linked keyboard navigation, overlay isolation and recorded playback. Four clean owner closes were retained; PID-only server SIGTERM left no listener. Desktop/mobile screenshots were inspected with no horizontal page overflow or browser exceptions.
 
-## Observed checks
+The opt-in cadence benchmark was skipped intentionally; this is not a new frame-rate result. The first browser attempt is retained as failed: the disabled-option assertion was retargeted by the test framework, and cleanup incorrectly asserted an owner for the skipped benchmark. The corrected check reads the native option property; cleanup still requires a clean owner close for every successful workflow. No application behavior was weakened to pass those checks.
 
-[Pure integration index](../../runs/m4-pure-integration-20261002/report.json), SHA256 `b4b6c8d8863fdb701a5666146e4e187b4c719872759e8ef4e824716898b95e74`: **41 tests passed in 0.699 s**, no skips; the Node annotation check also passed. The index retains command argv, log hashes and unchanged before/after hashes for the tested source. M5 development code was excluded from this check while its separate owner was editing it.
+Scope: authored rules and one default world, not acquired training history, successful embodied reinspection, held-out transfer, CUDA or physical hardware. M5 retains those open gates. Raw bundles are ignored local artifacts under this worktree's `runs/`; the committed index preserves their identities.
 
-Scope: schema/cap/ID validation, history fitting, no unsupported certainty, declared visibility, detector/bridge timing, independent world geometry fixtures, exact invariant hashing, mocked API admission, existing fixture engine behavior, comparison provenance, profile rejection and verifier startup failure. The annotation check covers recorded coordinates/evidence links, wrong-run/episode/future filtering, bounds and input immutability. No renderer, full model, physical device or browser ran in these checks.
+Earlier pure integration evidence remains retained: [41 checks in 0.699 seconds](../../runs/m4-pure-integration-20261002/report.json), no skips, plus the Node route-annotation check. That fixture pass did not establish actual runtime behavior; the gates above now cover their stated native scopes.
 
-## Pending actual gates
-
-After the M3 endurance job releases the exclusive runtime window:
+Repeat the native gates from this worktree with the cached interpreter/assets and a fresh output directory:
 
 ```sh
-PALIMPSEST_SIMULATION_TESTS=1 MUJOCO_GL=egl OMP_NUM_THREADS=2 PYTHONPATH=src:tests ../lab-hardening/.venv/bin/python -m unittest test_memory_branch.ActualMemoryBranch -v
-PYTHONPATH=src MUJOCO_GL=egl OMP_NUM_THREADS=2 ../lab-hardening/.venv/bin/python scripts/verify_memory.py --assets ../r0-reproduction/data/assets/flynn --controller flynn --output runs/m4-full-memory-gate
+PALIMPSEST_SIMULATION_TESTS=1 MUJOCO_GL=egl OMP_NUM_THREADS=2 PYTHONPATH=src:tests ../lab-hardening/.venv/bin/python -m unittest discover -s tests -v
+PYTHONPATH=src MUJOCO_GL=egl OMP_NUM_THREADS=2 ../lab-hardening/.venv/bin/python scripts/verify_memory.py --assets ../r0-reproduction/data/assets/flynn --controller flynn --output runs/new-memory-gate
 ```
-
-The prepared owner/API verifier checks a source continuation, empty-U sham, two explicitly authored relation rules, exact U-only snapshot invariants, recorded target selection, playback, both executable replays, normal owner exit and immutable source files. It does not fit history or claim learned transfer. Full actual suite, final UI build and browser interaction/overlay checks also remain pending. M5 requires separately reviewed and frozen held-out and embodied protocols; synthetic development comparisons are not their substitute.
