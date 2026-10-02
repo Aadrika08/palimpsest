@@ -1,5 +1,5 @@
 export type Phase = 'loading'|'paused'|'running'|'terminated'|'truncated'|'stopped'|'failed'|'playback';
-export type Profile = {id:string; label:string; description:string; available?:boolean; reason?:string; privileged?:boolean};
+export type Profile = {id:string; label:string; description:string; available?:boolean; reason?:string; privileged?:boolean;scenarios?:string[];textures?:string[];devices?:string[]};
 export type Profiles = {scenarios:Profile[];controllers:Profile[];textures:Profile[]};
 export type Receipt = {id:string;status:string;kind?:string;tick?:number;episode?:number;reason?:string;error?:string;[key:string]:unknown};
 export type State = {run_id?:string;phase:Phase;controller?:string;episode:number;total_tick:number;episode_step:number;revision:number;simulation_time?:number;eyes?:{left:boolean;right:boolean};last_outcome?:unknown;metrics?:Record<string,unknown>;receipts?:Receipt[]|Record<string,Receipt>;[key:string]:unknown};

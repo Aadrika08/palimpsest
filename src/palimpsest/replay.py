@@ -12,11 +12,13 @@ import uuid
 
 from .artifacts import _events, _fingerprint, _id, _load, _safe_path
 from .records import iter_ticks
+from .male_policy import CONTROLLERS as MALE_CONTROLLERS, validate_identity
 
 ATOL = RTOL = 1e-6
 _RUNTIME = tuple(f"src/palimpsest/{name}.py" for name in
                  ("engine", "profiles", "interventions", "flynn", "snapshots", "records", "evaluate", "assets", "doctor",
                   "memory", "memory_task", "memory_world"))
+_MALE_RUNTIME = ('src/palimpsest/male_policy.py', 'src/palimpsest/male_model.py')
 _EVENTS = {"command_received", "command_applied", "command_rejected", "episode_started",
            "episode_finished", "intervention", "eyes_changed", "browser_disconnected", "runtime_failure",
            "memory_world_changed", "memory_sensed", "memory_decision", "memory_cue", "memory_inspected"}
@@ -124,17 +126,18 @@ def _initial_snapshot(data):
     return snapshot, entry, data["events"][prefix["event_count"]:]
 
 
-def _compatible(source, destination):
+def _compatible(source, destination, controller=None):
+    runtime = _RUNTIME + (_MALE_RUNTIME if controller in MALE_CONTROLLERS else ())
     def environment(events):
         found = [event for event in events if event["kind"] == "environment"]
         if len(found) != 1:
             raise ValueError("replay requires one recorded environment provenance event")
         event = found[0]
         hashes = event.get("source_sha256")
-        if not isinstance(hashes, dict) or any(key not in hashes for key in _RUNTIME):
+        if not isinstance(hashes, dict) or any(key not in hashes for key in runtime):
             raise ValueError("replay source lacks relevant runtime source hashes")
         return {"upstream_commit": event.get("upstream_commit"), "lock_sha256": event.get("lock_sha256"),
-                "source_sha256": {key: hashes[key] for key in _RUNTIME}}
+                "source_sha256": {key: hashes[key] for key in runtime}}
     left, right = environment(source), environment(destination)
     if left != right:
         raise ValueError("replay runtime provenance differs (upstream, lock or relevant runtime source)")
@@ -158,6 +161,8 @@ def _register_initial(engine, destination, storage_budget=None, preflight_bytes=
         "revision": engine.revision, "episode": engine.episode, "tick": engine.episode_step, "sha256": digest,
         "config": {"scenario": engine.scenario, "texture": engine.texture, "controller": engine.controller,
                    "device": engine.writer.manifest["requested_device"], "seed": engine.seed}}}
+    if 'policy_identity' in engine.writer.manifest:
+        registry[identifier]['config']['policy_identity'] = copy.deepcopy(engine.writer.manifest['policy_identity'])
     payload = (json.dumps({"version": 1, "snapshots": registry}, allow_nan=False) + "\n").encode()
     if storage_budget is not None:
         storage_budget.check(len(payload), path=path / "index.json")
@@ -229,7 +234,11 @@ def replay_run(source_run_path, destination_run_path, *, mode, repo_root, asset_
         snapshot, registration, events = _initial_snapshot(data)
         notify("loading")
         manifest = data["manifest"]
-        report["inference_executed"] = mode == "policy" and manifest.get("controller") == "flynn"
+        male = manifest.get('controller') in MALE_CONTROLLERS
+        identity = validate_identity(manifest.get('policy_identity'), manifest['controller']) if male else None
+        report["inference_executed"] = mode == "policy" and (male or manifest.get("controller") == "flynn")
+        if male:
+            report['comparison']['runtime_source_keys'] = list(_RUNTIME + _MALE_RUNTIME)
         report["source_snapshot_id"] = registration["snapshot_id"]
         report["source_snapshot_sha256"] = registration["sha256"]
         profile = manifest.get("scenario")
@@ -239,8 +248,8 @@ def replay_run(source_run_path, destination_run_path, *, mode, repo_root, asset_
         engine = Engine.open(Path(repo_root), Path(asset_root), destination / "recording",
             controller=manifest["controller"], device=manifest["requested_device"], seed=manifest["seed"],
             scenario=profile["id"], texture=manifest["texture"], run_id=destination.name,
-            storage_budget=storage_budget)
-        _compatible(data["events"], _events(destination))
+            storage_budget=storage_budget, expected_policy_identity=identity)
+        _compatible(data["events"], _events(destination), manifest['controller'])
         engine.restore_branch(snapshot)
         del snapshot
         engine.writer.manifest.update(execution_mode=mode, inference_executed=report["inference_executed"],

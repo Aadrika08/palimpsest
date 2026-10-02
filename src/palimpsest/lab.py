@@ -532,9 +532,10 @@ def create_app(repo_root, asset_root, runs_root, export_root=None, *, port=8765,
         return value
 
     def configuration(value):
+        from .male_policy import CONTROLLERS as MALE_CONTROLLERS, resolve_profile
         result = {"scenario": "reproduction", "texture": "checker", "controller": "manual", "device": "cpu", "seed": 0, **value}
-        if result["controller"] not in ("manual", "teacher", "flynn") or result["device"] not in ("cpu", "cuda") or result["controller"] != "flynn" and result["device"] != "cpu":
-            raise ValueError("Choose a supported controller and explicit device; manual/teacher use cpu")
+        if result["controller"] not in ("manual", "teacher", "flynn", *MALE_CONTROLLERS) or result["device"] not in ("cpu", "cuda") or result["controller"] != "flynn" and result["device"] != "cpu":
+            raise ValueError("Choose a supported controller and explicit device; only FLYNN supports CUDA")
         if type(result["seed"]) is not int or not 0 <= result["seed"] < 2**31:
             raise ValueError("seed must be an integer in [0, 2**31)")
         from .profiles import list_profiles, validate
@@ -542,6 +543,11 @@ def create_app(repo_root, asset_root, runs_root, export_root=None, *, port=8765,
         selected = next(item for item in list_profiles(supervisor.repo_root, supervisor.asset_root)["controllers"] if item["id"] == result["controller"])
         if not selected["available"]:
             raise RuntimeError(selected["reason"])
+        if result['controller'] in MALE_CONTROLLERS:
+            result['policy_identity'], _ = resolve_profile(supervisor.repo_root, supervisor.asset_root,
+                result['controller'], result.get('policy_identity'))
+        elif 'policy_identity' in result:
+            raise ValueError('Male policy identity requires a male controller')
         return result
 
     @app.get("/api/v1/session")
@@ -627,6 +633,8 @@ def create_app(repo_root, asset_root, runs_root, export_root=None, *, port=8765,
             config = dict(item["config"])
             previous = config["controller"]
             config["controller"] = value.get("controller", previous)
+            if config['controller'] != previous:
+                config.pop('policy_identity', None)
             if config["controller"] != "flynn":
                 config["device"] = "cpu"
             config = await asyncio.to_thread(configuration, config)

@@ -267,6 +267,8 @@ def _snapshot(engine, path, registry, config, initial=False, budget=None, prefli
         "revision": engine.revision, "episode": engine.episode, "tick": engine.episode_step,
         "sha256": hashlib.sha256(destination.read_bytes()).hexdigest(),
         "config": {key: config[key] for key in ("scenario", "texture", "controller", "device", "seed")}}
+    if 'policy_identity' in engine.writer.manifest:
+        registry[identifier]['config']['policy_identity'] = copy.deepcopy(engine.writer.manifest['policy_identity'])
     _json(path / "snapshots/index.json", {"version": 1, "snapshots": registry}, budget)
     engine.writer.event("snapshot_registered", run_id=engine.run_id, snapshot_id=identifier,
                         filename=filename, initial=initial, episode=engine.episode, tick=engine.episode_step,
@@ -344,7 +346,8 @@ def _own(config, commands, replies, display, disconnected, stop, progress, final
         from .engine import Engine
         engine = Engine.open(Path(config["repo_root"]), Path(config["asset_root"]), path / "recording",
             controller=config["controller"], device=config["device"], seed=config["seed"],
-            scenario=config["scenario"], texture=config["texture"], run_id=run_id, storage_budget=budget)
+            scenario=config["scenario"], texture=config["texture"], run_id=run_id, storage_budget=budget,
+            expected_policy_identity=config.get('policy_identity'))
         heartbeat()
         trace = []
         if config.get("snapshot_path"):

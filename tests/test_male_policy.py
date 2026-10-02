@@ -149,6 +149,46 @@ class PolicyArtifactTests(unittest.TestCase):
             with patch.object(male_policy, 'MAX_FILE_BYTES', 16), self.assertRaisesRegex(ValueError, 'byte limit'):
                 male_policy._check_archive(archive())
 
+    def test_fixed_profile_paths_and_identity_reject_asset_and_manifest_changes(self):
+        repo, assets = self.root / 'repo', self.root / 'assets'
+        directory = assets / male_policy.ASSET_DIRECTORY
+        directory.mkdir(parents=True)
+        cell = repo / 'upstream/fly-gym/models/connectome_rnn_model.py'
+        cell.parent.mkdir(parents=True)
+        cell.write_bytes(b'pure fixture source; never executed')
+        cell_hash = hashlib.sha256(cell.read_bytes()).hexdigest()
+        self.protocol['cell_source_sha256'] = cell_hash
+        self.payloads['protocol.json'] = canonical(self.protocol)
+        self.publish()
+        payloads = {**self.payloads, 'report.json': canonical(self.report), 'source-graph.json': b'fixture graph'}
+        for name, payload in payloads.items():
+            (directory / name).write_bytes(payload)
+        manifest = {'schema_version': 1, 'profile': male_policy.PROFILE, 'controllers': male_policy.CONTROLLERS,
+            'qualification_claims': [], 'files': {name: {'sha256': hashlib.sha256(payload).hexdigest(), 'size_bytes': len(payload)}
+                                                for name, payload in payloads.items()}}
+        path = repo / male_policy.MANIFEST
+        path.parent.mkdir(parents=True)
+        path.write_bytes(canonical(manifest))
+        with patch.object(male_policy, 'CELL_SHA256', cell_hash), patch.dict('sys.modules', {'torch': None}):
+            identity, arguments = male_policy.resolve_profile(repo, assets, 'male-original')
+            self.assertEqual(arguments['directory'], directory)
+            self.assertEqual(arguments['graph_path'], directory / 'source-graph.json')
+            self.assertEqual(identity['checkpoint_sha256'], manifest['files']['original.pt']['sha256'])
+            self.assertEqual(male_policy.resolve_profile(repo, assets, 'male-original', identity)[0], identity)
+            for bad in (None, {}, {**identity, 'variant': 'degree_rewired'}, {**identity, 'checkpoint_sha256': 'invalid'}):
+                with self.assertRaisesRegex(ValueError, 'identity'):
+                    male_policy.validate_identity(bad, 'male-original')
+            with self.assertRaisesRegex(ValueError, 'identity differs'):
+                male_policy.resolve_profile(repo, assets, 'male-original', {**identity, 'checkpoint_sha256': '0' * 64})
+            (directory / 'original.pt').write_bytes(b'changed')
+            with self.assertRaisesRegex(ValueError, 'asset differs'):
+                male_policy.resolve_profile(repo, assets, 'male-original')
+            (directory / 'original.pt').write_bytes(payloads['original.pt'])
+            manifest['files']['../escape'] = manifest['files'].pop('original.pt')
+            path.write_bytes(canonical(manifest))
+            with self.assertRaisesRegex(ValueError, 'manifest'):
+                male_policy.resolve_profile(repo, assets, 'male-original')
+
     @unittest.skipUnless(os.environ.get('PALIMPSEST_MALE_TORCH_CHECKS') == '1', 'Torch execution requires the released model window')
     def test_cpu_loader_state_guards_and_single_invocation_policy(self):
         if not CELL.is_file():

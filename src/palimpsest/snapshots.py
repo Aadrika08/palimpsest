@@ -336,8 +336,13 @@ def capture(env, observation, *, policy=None, teacher=None, application: dict):
     if policy is not None:
         def tensor(value):
             return None if value is None else {k: tensor(v) for k, v in value.items()} if isinstance(value, dict) else value.detach().cpu().numpy().copy()
-        policy_state = {"hidden": tensor(policy.hidden), "left": tensor(policy.agent.state_vision_left),
-                        "right": tensor(policy.agent.state_vision_right), "failure_diagnostics": _copy(getattr(policy, "failure_diagnostics", {}))}
+        if getattr(policy, 'snapshot_kind', None) == 'male-reduced-v1':
+            policy_state = {'kind': 'male-reduced-v1', 'hidden': tensor(policy.hidden),
+                            'failure_diagnostics': _copy(policy.failure_diagnostics)}
+            _male_state(policy_state)
+        else:
+            policy_state = {"hidden": tensor(policy.hidden), "left": tensor(policy.agent.state_vision_left),
+                            "right": tensor(policy.agent.state_vision_right), "failure_diagnostics": _copy(getattr(policy, "failure_diagnostics", {}))}
     teacher_state = None if teacher is None else {"state": _fields(teacher, TEACHER_STATE),
         "pid": _fields(teacher.pid_state, ("integral", "last_error")), "planner": _fields(teacher.planner, VFH_STATE)}
     return _copy({"schema_version": SCHEMA_VERSION, "identity": _identity(env, policy, teacher),
@@ -347,6 +352,21 @@ def capture(env, observation, *, policy=None, teacher=None, application: dict):
         "observation": observation, "application": application})
 
 
+def _male_state(state):
+    """Pure validation of the one supported male hidden-state snapshot contract."""
+    import numpy as np
+    if type(state) is not dict or set(state) != {'kind', 'hidden', 'failure_diagnostics'} or state['kind'] != 'male-reduced-v1':
+        raise ValueError('invalid male snapshot policy state')
+    hidden, diagnostics = state['hidden'], state['failure_diagnostics']
+    if not isinstance(hidden, np.ndarray) or hidden.shape != (1, 138) or hidden.dtype != np.float32 or not np.isfinite(hidden).all():
+        raise ValueError('male snapshot hidden shape/dtype/value differs')
+    if (type(diagnostics) is not dict or diagnostics and (set(diagnostics) != {'type', 'message'} or
+            any(type(diagnostics[key]) is not str or len(diagnostics[key]) > limit
+                for key, limit in (('type', 128), ('message', 512))))):
+        raise ValueError('invalid bounded male snapshot diagnostics')
+    return hidden.copy(), dict(diagnostics)
+
+
 def _stage_policy(state, policy):
     import numpy as np
     if policy is None:
@@ -354,6 +374,11 @@ def _stage_policy(state, policy):
             raise ValueError("Snapshot controller differs")
         return None
     torch = policy.torch
+    if getattr(policy, 'snapshot_kind', None) == 'male-reduced-v1':
+        hidden, diagnostics = _male_state(state)
+        if policy.agent.cell.N != 138 or str(policy.device) != 'cpu' or policy.dtype != torch.float32:
+            raise ValueError('male snapshot destination profile differs')
+        return (torch.as_tensor(hidden, device=policy.device, dtype=policy.dtype),), diagnostics
     if type(state) is not dict or set(state) != {"hidden", "left", "right", "failure_diagnostics"} or type(state["failure_diagnostics"]) is not dict:
         raise ValueError("Missing policy snapshot state")
     def tensor(value, shape):
@@ -527,11 +552,15 @@ def restore(snapshot, env, *, policy=None, teacher=None, replace_controller=Fals
         for name in ASTAR_CACHE:
             setattr(env.planner, name, None)
     if policy is not None and not replace_controller:
-        policy._restore(policy_state[0])
+        if getattr(policy, 'snapshot_kind', None) == 'male-reduced-v1':
+            policy.hidden = policy_state[0][0]
+            policy.agent.cell.invalidate_caches()
+        else:
+            policy._restore(policy_state[0])
+            policy._current_raw_output = None
+            policy.agent.cell._cached_alphas = None
+            policy.agent.cell._alphas_dirty = True
         policy.failure_diagnostics = policy_state[1]
-        policy._current_raw_output = None
-        policy.agent.cell._cached_alphas = None
-        policy.agent.cell._alphas_dirty = True
     if teacher is not None and not replace_controller:
         _apply_fields(teacher, teacher_state["state"])
         _apply_fields(teacher.pid_state, teacher_state["pid"])
