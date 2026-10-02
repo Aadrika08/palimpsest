@@ -1,6 +1,6 @@
 # BGT-TURN-1: retained-fit turn transfer
 
-Source preparation only. Actual native compatibility and the six functional comparisons remain unobserved until a separately reviewed, frozen launch. The existing adaptive and loaded profiles remain unchanged.
+This prospective contract was frozen before execution. The later single observed result is indexed below; the existing adaptive and loaded profiles remain unchanged.
 
 The new regime is nominal `[0,+0.2]` and `[0,-0.2]`: opposite-sign wheel controls, unlike the same-sign straight calibration probes and prior straight ±0.3 evaluation. This is command transfer for one existing fitted body, authored lane and seed. It does not establish new-body, task/body composition, cross-seed or hardware competence.
 
@@ -64,3 +64,7 @@ PYTHONPATH=src MUJOCO_GL=egl OMP_NUM_THREADS=2 ../lab-hardening/.venv/bin/python
 ```
 
 Curved/transient/task motion, different body/load/friction/gear, broader held-out coverage and physical actuation remain separate open gates regardless of this result.
+
+## Observed fixed-gate result
+
+The single approved invocation at `1c87b273` passed six owners/720 intervals/six initial SNPs. All six settled metric comparisons strictly improved. Source/upstream/assets/external inputs were unchanged; every owner/inner/outer exit was 0, with no forced signals or sampled survivor. The [evidence report](../reports/m6-body-turn-transfer.md) binds the original results/inventories and independent retained audits. This closes only the stated same-fit turn-command-transfer diagnostic; the limits above remain. No retry, recalibration, source/control change or threshold change occurred.
