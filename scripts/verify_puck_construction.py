@@ -16,9 +16,10 @@ import sys
 import time
 
 from verify_afterimage import digest, write_json, process_identity, cleanup_check
+from puck_construction_compare import compare_native_data
 
-PROTOCOL_FILE = 'docs/plans/m6-puck-construction-v3.json'
-PROTOCOL_SHA256 = 'd515e9a234b6bffa551e0083c1fd8e3dde940a425cbbcd7a8ed336b437c36754'
+PROTOCOL_FILE = 'docs/plans/m6-puck-construction-v4.json'
+PROTOCOL_SHA256 = 'c11d31fb0892c036bcbbe908ee1463859b49392958de290a2ef3b31fa4d6694d'
 
 
 def protocol(root):
@@ -37,7 +38,8 @@ def sources(root):
              *sorted((root / 'upstream/fly-gym').rglob('*.py')),
              root / 'upstream/fly-gym/environment/mujoco_model_random_obstacles.xml',
              root / 'scripts/verify_afterimage.py', Path(__file__).resolve(),
-             root / 'tests/test_puck_profile.py', root / PROTOCOL_FILE,
+             root / 'scripts/puck_construction_compare.py',
+             root / 'tests/test_puck_profile.py', root / 'tests/test_puck_construction.py', root / PROTOCOL_FILE,
              root / 'docs/plans/m6-puck-pushing-protocol.json', root / 'pyproject.toml', root / 'uv.lock'}
     if len(files) > 1024 or any(path.stat().st_size > 2*1024**2 for path in files):
         raise ValueError('Construction source inventory exceeds bound')
@@ -217,10 +219,26 @@ def main(args):
                 row['status'] = 'passed'
                 write_json(output / 'report.json', report, budget)
             left, right = (row['result'] for row in report['owners'])
-            for key in ('profile_identity', 'full_native_model', 'full_native_data',
+            for key in ('profile_identity', 'full_native_model',
                         'qpos_qvel_ctrl_forces_sha256', 'cameras', 'task_state'):
                 if left[key] != right[key]:
                     raise ValueError('Fresh-owner equality failed: ' + key)
+            contract = spec['native_data_comparison']
+            raw_data = []
+            for row in report['owners']:
+                model_path = Path(row['output']) / 'model.native'
+                if (model_path.stat().st_size != contract['model_bytes'] or
+                        digest(model_path) != contract['model_sha256'] or
+                        row['result']['full_native_model'] != {
+                            'bytes': contract['model_bytes'], 'sha256': contract['model_sha256']}):
+                    raise ValueError('Retained native model differs from v4 pin')
+                with (Path(row['output']) / 'data.native').open('rb') as stream:
+                    raw = stream.read(contract['data_bytes'] + 1)
+                if (len(raw) != contract['data_bytes'] or row['result']['full_native_data'] != {
+                        'bytes': len(raw), 'sha256': hashlib.sha256(raw).hexdigest()}):
+                    raise ValueError('Retained native data differs from owner receipt')
+                raw_data.append(raw)
+            report['native_data_comparison'] = compare_native_data(*raw_data, contract)
             report['status'] = 'passed'
         except Exception as error:
             report.update(status='failed', error={'type': type(error).__name__, 'message': str(error)[:4096]})
