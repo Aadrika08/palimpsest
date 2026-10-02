@@ -37,7 +37,10 @@ def hung_owner_with_child(config, commands, replies, display, disconnected, stop
     if child == 0:
         while True:
             time.sleep(.05)
-    (Path(config["run_path"]) / "child.pid").write_text(str(child))
+    pid_file = Path(config["run_path"]) / "child.pid"
+    temporary = pid_file.with_suffix(".tmp")
+    temporary.write_text(str(child))
+    temporary.replace(pid_file)  # Existence is the reader's readiness signal.
     progress.value = time.monotonic()
     while True:
         time.sleep(.05)
