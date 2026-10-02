@@ -1,0 +1,294 @@
+{
+  "version": 1,
+  "status": "passed-development-ui",
+  "scope": "Manual loaded-calibration UI mechanism and executable action replay on actual MuJoCo/EGL; no adaptive learning, task completion or physical qualification",
+  "attempts": [
+    {
+      "path": "runs/m6-body-ui-development-20261002",
+      "status": "failed",
+      "source_commit": "b4de6dc5439882d22d95bc7cfa155b29adde3cce",
+      "report_sha256": "757e3bc24d310041b69cc0598ddc9cff8aa02e5e23ca0880a1f068d056b030e8",
+      "owners": [],
+      "source_ticks": 0,
+      "replay_status": null,
+      "replay_compared_ticks": 0,
+      "normal_closes": [],
+      "server_returncode": -15,
+      "server_kill_escalation": false,
+      "sampled_survivors": [],
+      "listener_remaining": false,
+      "source_unchanged": true,
+      "assets_unchanged": true,
+      "outer": {
+        "schema_version": 1,
+        "status": "failed",
+        "timeout_seconds": 240,
+        "started_utc": "2026-10-02T14:56:05.425191+00:00",
+        "output": "/home/utkarsh/Work/shraddha/brain/.worktrees/body-runtime/runs/m6-body-ui-development-20261002/outer",
+        "returncode": 1,
+        "elapsed_seconds": 11.801285825000377
+      },
+      "artifact_sha256_final": {
+        "runs/m6-body-ui-development-20261002/browser/stderr.log": "2ed8d78716511364ea16c596f56329a196b83e7e13587f97515cd93f4bf7c401",
+        "runs/m6-body-ui-development-20261002/browser/stdout.log": "78240e1e4615d0ba981c1946a3211480b32fc34d903de339e4b0396f3a239d34",
+        "runs/m6-body-ui-development-20261002/browser/supervisor.json": "a95c37d005b697e7cc824f2e4f6088b849597519d37278ed44a75e3328418bbc",
+        "runs/m6-body-ui-development-20261002/browser-results/.last-run.json": "a10ccb65ab0c04b9e319dbc3731194eeccf319be83eae2a8cec182830daafc3e",
+        "runs/m6-body-ui-development-20261002/browser-results/body-lab-actual-calibrated-6cd18-hot-reset-and-action-replay/body-lab-report.json": "7d65a676c2b74e6b2a5d30464ff9d26314d632728f086b0c5c9291ddedccf651",
+        "runs/m6-body-ui-development-20261002/browser-results/body-lab-actual-calibrated-6cd18-hot-reset-and-action-replay/error-context.md": "76ae31366255b96491359d1aeeec382ef91326b1f16762c151879bfb1e5e8f79",
+        "runs/m6-body-ui-development-20261002/browser-results/body-lab-actual-calibrated-6cd18-hot-reset-and-action-replay/test-failed-1.png": "048693cd0bba08d068c84bbe3d3bce887bf671236f32482f6af06d7ccd072cb7",
+        "runs/m6-body-ui-development-20261002/browser-results/body-lab-actual-calibrated-6cd18-hot-reset-and-action-replay/trace.zip": "919be0713d5a2ffc64d491a44c2c4fef6ee980892f0c4d5707c1a40145d62f5d",
+        "runs/m6-body-ui-development-20261002/exports/.palimpsest-storage.lock": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "runs/m6-body-ui-development-20261002/outer/stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "runs/m6-body-ui-development-20261002/outer/stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "runs/m6-body-ui-development-20261002/outer/supervisor.json": "b58cb4c6fdb4fb5006ed69a5fc55860ed9aeb32bc40bb8e205093a1e01cdd9d7",
+        "runs/m6-body-ui-development-20261002/registered-runs/.palimpsest-storage.lock": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "runs/m6-body-ui-development-20261002/registered-runs/index.sqlite3": "531004e3a8eb223d5d25c89e5f1ba5ebccd91f075e3544acd52f3460577118d1",
+        "runs/m6-body-ui-development-20261002/report.json": "757e3bc24d310041b69cc0598ddc9cff8aa02e5e23ca0880a1f068d056b030e8",
+        "runs/m6-body-ui-development-20261002/runner.py": "c895b216f7ccc821048df58787026b77698f0e366496ab8344686c138f161300",
+        "runs/m6-body-ui-development-20261002/server/stderr.log": "fba3379808332cb90f3302819d1e550b02a82ccad1650d922464944bc8fdf627",
+        "runs/m6-body-ui-development-20261002/server/stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "runs/m6-body-ui-development-20261002/source-before.json": "7d0f0b75ecc70daa80e7435d4c4865300af68f3b6133269b2c723b5665551a67",
+        "runs/m6-body-ui-development-20261002/ui-build-exit.txt": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+        "runs/m6-body-ui-development-20261002/ui-build.log": "67ca2e91a00471947086780940e9cf4b2851a428cf87cc2d89ecfcf73e943b6f"
+      }
+    },
+    {
+      "path": "runs/m6-body-ui-development-v2-20261002",
+      "status": "failed",
+      "source_commit": "a5fc3d51a5d544a55497a40af17a356bdc0b20d5",
+      "report_sha256": "f77d3cd1f72701c7934833ffc451e52845306a623d029995361dc6b30de30e02",
+      "owners": [
+        "0814c03dda924f34883708502b598c02",
+        "ea83b9d2e7f7464f9f5c5b2123c37402"
+      ],
+      "source_ticks": 17,
+      "replay_status": "passed",
+      "replay_compared_ticks": 17,
+      "normal_closes": [
+        {
+          "run_id": "0814c03dda924f34883708502b598c02",
+          "http_status": 200,
+          "status": "closed"
+        },
+        {
+          "run_id": "ea83b9d2e7f7464f9f5c5b2123c37402",
+          "http_status": 200,
+          "status": "closed"
+        }
+      ],
+      "server_returncode": -15,
+      "server_kill_escalation": false,
+      "sampled_survivors": [],
+      "listener_remaining": false,
+      "source_unchanged": true,
+      "assets_unchanged": true,
+      "outer": {
+        "schema_version": 1,
+        "status": "failed",
+        "timeout_seconds": 240,
+        "started_utc": "2026-10-02T14:58:39.087048+00:00",
+        "output": "/home/utkarsh/Work/shraddha/brain/.worktrees/body-runtime/runs/m6-body-ui-development-v2-20261002/outer",
+        "returncode": 1,
+        "elapsed_seconds": 25.480626846998348
+      },
+      "artifact_sha256_final": {
+        "runs/m6-body-ui-development-v2-20261002/browser/stderr.log": "4580dea059ce7d4e67453980cb3f66a95718840bffc6491ceb3f1c91156f4eac",
+        "runs/m6-body-ui-development-v2-20261002/browser/stdout.log": "53165ef6ec554d3a455ef948082ea3f21e0e5f9fe692314c38fb2fdf7b822177",
+        "runs/m6-body-ui-development-v2-20261002/browser/supervisor.json": "ed46d7687b6d8530b7bb40c1e36caeddfcfdc305b3d89bf5ee065b06b1490940",
+        "runs/m6-body-ui-development-v2-20261002/browser-results/.last-run.json": "a10ccb65ab0c04b9e319dbc3731194eeccf319be83eae2a8cec182830daafc3e",
+        "runs/m6-body-ui-development-v2-20261002/browser-results/body-lab-actual-calibrated-6cd18-hot-reset-and-action-replay/body-action-replay.png": "5d40f9188770c605b89b6fee20d3b80f8756af3a1d359247830cd0d3353cda0b",
+        "runs/m6-body-ui-development-v2-20261002/browser-results/body-lab-actual-calibrated-6cd18-hot-reset-and-action-replay/body-lab-report.json": "d469513dfda0f911222fbc0c2cea3dab51777c81054f057371b526e404433462",
+        "runs/m6-body-ui-development-v2-20261002/browser-results/body-lab-actual-calibrated-6cd18-hot-reset-and-action-replay/body-paused.png": "819c6e671c8754adfc8fc2ab2fb76682ee7b4db66e541b4bed0d572a4a4bde3b",
+        "runs/m6-body-ui-development-v2-20261002/browser-results/body-lab-actual-calibrated-6cd18-hot-reset-and-action-replay/error-context.md": "ede9e8c5a74585dce4a5eedd77ed34f78992c08da17cd79975df0d404df40d6c",
+        "runs/m6-body-ui-development-v2-20261002/browser-results/body-lab-actual-calibrated-6cd18-hot-reset-and-action-replay/test-failed-1.png": "5d40f9188770c605b89b6fee20d3b80f8756af3a1d359247830cd0d3353cda0b",
+        "runs/m6-body-ui-development-v2-20261002/browser-results/body-lab-actual-calibrated-6cd18-hot-reset-and-action-replay/trace.zip": "0aef3c33ec14338820e425bf035bfafb31c7da7019c198c66649cf2fad5889d4",
+        "runs/m6-body-ui-development-v2-20261002/build-provenance.json": "fee676334721afe7dbb363e21d78035b721dbc58470c92c7da62dff9372345c3",
+        "runs/m6-body-ui-development-v2-20261002/exports/.palimpsest-storage.lock": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "runs/m6-body-ui-development-v2-20261002/outer/stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "runs/m6-body-ui-development-v2-20261002/outer/stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "runs/m6-body-ui-development-v2-20261002/outer/supervisor.json": "8e854c2dfbf4fa9119b054eec61ef6879c01333306f0c6803b54ad8719bcf619",
+        "runs/m6-body-ui-development-v2-20261002/registered-runs/.palimpsest-storage.lock": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "runs/m6-body-ui-development-v2-20261002/registered-runs/0814c03dda924f34883708502b598c02/recording/chunks/000000.npz": "42d963f74d48ac644594b3731d071a7974cdcb7bfe11d4b3d19937eec94d79bd",
+        "runs/m6-body-ui-development-v2-20261002/registered-runs/0814c03dda924f34883708502b598c02/recording/chunks/000001.npz": "9d9911fbecc587188b63d676772cfb9242c768f64ffb5f1918beab6134ddfb40",
+        "runs/m6-body-ui-development-v2-20261002/registered-runs/0814c03dda924f34883708502b598c02/recording/events.jsonl": "8d82cb25e48178593651f18b79971d39bb63e514a4f06fbd50761b772a7fca6a",
+        "runs/m6-body-ui-development-v2-20261002/registered-runs/0814c03dda924f34883708502b598c02/recording/manifest.json": "e4fa31fb266eea518e3d1ac0d6dbca29d67145648cea040df08958fabe7d351d",
+        "runs/m6-body-ui-development-v2-20261002/registered-runs/0814c03dda924f34883708502b598c02/snapshots/29af6d3d87e244c887630c6b10568212.snp": "71d82b086856cc3d581fb2f42a31fc47e19d4538fbe731c3b96407f59d25bea6",
+        "runs/m6-body-ui-development-v2-20261002/registered-runs/0814c03dda924f34883708502b598c02/snapshots/index.json": "4013ebc2e05ee6eb742321e71cb2a14d1d7cfd8bcdb4ba20abaec86ab09e2443",
+        "runs/m6-body-ui-development-v2-20261002/registered-runs/0814c03dda924f34883708502b598c02/snapshots/initial.snp": "2a1bb99944d70d169e8e01dc51d7e56d3aeceb7e502351b64a412eea9307bcee",
+        "runs/m6-body-ui-development-v2-20261002/registered-runs/0814c03dda924f34883708502b598c02/stderr.log": "4ad0f1c3fe69bc9cdb7a9292640501f7da85a560e7584a6dd6f7559610a75e00",
+        "runs/m6-body-ui-development-v2-20261002/registered-runs/0814c03dda924f34883708502b598c02/stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "runs/m6-body-ui-development-v2-20261002/registered-runs/0814c03dda924f34883708502b598c02/supervisor.json": "db2c7ef2b5b60bda89f95f50007bf6ff305c6b46dce3303f76893c40a75c1cb5",
+        "runs/m6-body-ui-development-v2-20261002/registered-runs/ea83b9d2e7f7464f9f5c5b2123c37402/job-events.jsonl": "059b867a26da3e169076970ac91caac9d6777ad718e195ab04fe463e11996788",
+        "runs/m6-body-ui-development-v2-20261002/registered-runs/ea83b9d2e7f7464f9f5c5b2123c37402/recording/chunks/000000.npz": "dbb9e1b5757ac1b9c351e21a2caa6a33a83919c10895afdda4ec194aa1ae80af",
+        "runs/m6-body-ui-development-v2-20261002/registered-runs/ea83b9d2e7f7464f9f5c5b2123c37402/recording/chunks/000001.npz": "94685342a43226f6c1579d0b9adf9c0d7391cfc2b710aaf3d06de6b1aa460777",
+        "runs/m6-body-ui-development-v2-20261002/registered-runs/ea83b9d2e7f7464f9f5c5b2123c37402/recording/events.jsonl": "ac00e5607027efc80d06106d7c1d2be4f8c812f8820b5b189639e59c49f90c98",
+        "runs/m6-body-ui-development-v2-20261002/registered-runs/ea83b9d2e7f7464f9f5c5b2123c37402/recording/manifest.json": "b5782d8304f8dea7bef37fcea2e1b2522e3801e63ac7a06345d341998927d7d2",
+        "runs/m6-body-ui-development-v2-20261002/registered-runs/ea83b9d2e7f7464f9f5c5b2123c37402/replay-report.json": "0ade817bed80add0e8d58b4d9a1d0a91651f67eb163651307bfb56cb450fa7ae",
+        "runs/m6-body-ui-development-v2-20261002/registered-runs/ea83b9d2e7f7464f9f5c5b2123c37402/snapshots/index.json": "4dd236ecc8e8938a1264a70ab61b843a0623c2ce54c667fd87b1c743775ca594",
+        "runs/m6-body-ui-development-v2-20261002/registered-runs/ea83b9d2e7f7464f9f5c5b2123c37402/snapshots/initial.snp": "1cc16c70db9fd83f32de83672e8aa7f5b239928aebc9737e843da2055e5ffee0",
+        "runs/m6-body-ui-development-v2-20261002/registered-runs/ea83b9d2e7f7464f9f5c5b2123c37402/stderr.log": "4ad0f1c3fe69bc9cdb7a9292640501f7da85a560e7584a6dd6f7559610a75e00",
+        "runs/m6-body-ui-development-v2-20261002/registered-runs/ea83b9d2e7f7464f9f5c5b2123c37402/stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "runs/m6-body-ui-development-v2-20261002/registered-runs/ea83b9d2e7f7464f9f5c5b2123c37402/supervisor.json": "5829424697fdbf600f2bb56430b5f742f6a066e4b7299f4a83af5c1f571c3565",
+        "runs/m6-body-ui-development-v2-20261002/registered-runs/index.sqlite3": "3bc5add9806b12d225e5c6184c22c5fd8dfc9e7e6c6fcb376348b81ca9ad4ea0",
+        "runs/m6-body-ui-development-v2-20261002/report.json": "f77d3cd1f72701c7934833ffc451e52845306a623d029995361dc6b30de30e02",
+        "runs/m6-body-ui-development-v2-20261002/runner.py": "c895b216f7ccc821048df58787026b77698f0e366496ab8344686c138f161300",
+        "runs/m6-body-ui-development-v2-20261002/server/stderr.log": "dbaa33d782d8bb837ab4b461db7f45b394d5e2c0c70a190337039f3c8f8bdf45",
+        "runs/m6-body-ui-development-v2-20261002/server/stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "runs/m6-body-ui-development-v2-20261002/source-before.json": "fc9ba51c90df32a262e269141d95b8262f7ff394e614f52fbbef2d767c9a2fd2",
+        "runs/m6-body-ui-development-v2-20261002/ui-typecheck-exit.txt": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+        "runs/m6-body-ui-development-v2-20261002/ui-typecheck.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "path": "runs/m6-body-ui-development-v3-20261002",
+      "status": "passed",
+      "source_commit": "cbe1a3d918443205c40a0a58198f9f17944a157f",
+      "report_sha256": "2ce9e68ef08e829d288dca0b26c96f82c7649a26aeec9b9b54891503bb84df66",
+      "owners": [
+        "ef8face3b52b4f2fa826700f3b79d062",
+        "13932a5955384230b0eb2a83b2d167f8"
+      ],
+      "source_ticks": 26,
+      "replay_status": "passed",
+      "replay_compared_ticks": 26,
+      "normal_closes": [
+        {
+          "run_id": "ef8face3b52b4f2fa826700f3b79d062",
+          "http_status": 200,
+          "status": "closed"
+        },
+        {
+          "run_id": "13932a5955384230b0eb2a83b2d167f8",
+          "http_status": 200,
+          "status": "closed"
+        }
+      ],
+      "server_returncode": -15,
+      "server_kill_escalation": false,
+      "sampled_survivors": [],
+      "listener_remaining": false,
+      "source_unchanged": true,
+      "assets_unchanged": true,
+      "outer": {
+        "schema_version": 1,
+        "status": "completed",
+        "timeout_seconds": 240,
+        "started_utc": "2026-10-02T15:04:47.939567+00:00",
+        "output": "/home/utkarsh/Work/shraddha/brain/.worktrees/body-runtime/runs/m6-body-ui-development-v3-20261002/outer",
+        "returncode": 0,
+        "elapsed_seconds": 20.369722265000746
+      },
+      "artifact_sha256_final": {
+        "runs/m6-body-ui-development-v3-20261002/browser/stderr.log": "694d1902aed888925cfac39a11b6007627291bb1f48ce1cb3f7519c650d8a7ea",
+        "runs/m6-body-ui-development-v3-20261002/browser/stdout.log": "f3d719ce32261702f244c273810b2358edac175233d8f894b9f14b8373577818",
+        "runs/m6-body-ui-development-v3-20261002/browser/supervisor.json": "dc26cba785a757e227687aaaf63a7e3579d1613e66e809e33ff9dc496125a335",
+        "runs/m6-body-ui-development-v3-20261002/browser-results/.last-run.json": "91d1c43004802cd49950d78eb11c8fa7d05da8ffffe219a8b13b2f561bc00903",
+        "runs/m6-body-ui-development-v3-20261002/browser-results/body-lab-actual-calibrated-6cd18-hot-reset-and-action-replay/body-action-replay.png": "8c1ee8456b496343c9daebc4bb92cd9a28bbdba1e7ee61abfac203d7a4685bb0",
+        "runs/m6-body-ui-development-v3-20261002/browser-results/body-lab-actual-calibrated-6cd18-hot-reset-and-action-replay/body-lab-report.json": "79b1ffc484847daa30ad176e77268cee6823211132a5441e200e82630179799b",
+        "runs/m6-body-ui-development-v3-20261002/browser-results/body-lab-actual-calibrated-6cd18-hot-reset-and-action-replay/body-paused.png": "414269301808af8cd1938021f24b104c64e5600ef1d5a8c98045ef6658875ece",
+        "runs/m6-body-ui-development-v3-20261002/build-provenance.json": "98757fc1f44657d7ee5718db42fff17cbe8ee49f0dbe3538098582054c4782bb",
+        "runs/m6-body-ui-development-v3-20261002/exports/.palimpsest-storage.lock": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "runs/m6-body-ui-development-v3-20261002/independent-audit.json": "3691b3e4b041a62837e56a851740361b59f79e6daebb17cd17fcab9c68b47b13",
+        "runs/m6-body-ui-development-v3-20261002/independent-audit.py": "cbbf4228269b75eb9561a7ac41e3524b4011039957d3ab0c9329bec2e0873de6",
+        "runs/m6-body-ui-development-v3-20261002/outer/stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "runs/m6-body-ui-development-v3-20261002/outer/stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "runs/m6-body-ui-development-v3-20261002/outer/supervisor.json": "8c0d0f8cd9c7c7f6cab194212bf322b2e64bf6fefb8d46793916c9825e084564",
+        "runs/m6-body-ui-development-v3-20261002/registered-runs/.palimpsest-storage.lock": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "runs/m6-body-ui-development-v3-20261002/registered-runs/13932a5955384230b0eb2a83b2d167f8/job-events.jsonl": "059b867a26da3e169076970ac91caac9d6777ad718e195ab04fe463e11996788",
+        "runs/m6-body-ui-development-v3-20261002/registered-runs/13932a5955384230b0eb2a83b2d167f8/recording/chunks/000000.npz": "419afb653b4770ee6a6fbd73e2507e4e3cb293f33ed7ec4511972488b8c9b690",
+        "runs/m6-body-ui-development-v3-20261002/registered-runs/13932a5955384230b0eb2a83b2d167f8/recording/chunks/000001.npz": "f57ab60de1478676b1596efdf5fad3a0a2b32f51dd5cf6be78ae456a4548bad6",
+        "runs/m6-body-ui-development-v3-20261002/registered-runs/13932a5955384230b0eb2a83b2d167f8/recording/events.jsonl": "f766089e9fd0c6509fb7602e20582f293b4763d58bc194ab5888ba707af79ec6",
+        "runs/m6-body-ui-development-v3-20261002/registered-runs/13932a5955384230b0eb2a83b2d167f8/recording/manifest.json": "9910453caa4beb571e98b469656d64510762953c0a916b571f2dc5da7795b67a",
+        "runs/m6-body-ui-development-v3-20261002/registered-runs/13932a5955384230b0eb2a83b2d167f8/replay-report.json": "3da4905a8ab6cb64ef017def35f8b686250b6bf04eb7cf5c8fe4f2b5d16281ea",
+        "runs/m6-body-ui-development-v3-20261002/registered-runs/13932a5955384230b0eb2a83b2d167f8/snapshots/index.json": "63945bc6564dde8acd2e7840ad34445eecef664c6b62cefe2a4736b449d4af0c",
+        "runs/m6-body-ui-development-v3-20261002/registered-runs/13932a5955384230b0eb2a83b2d167f8/snapshots/initial.snp": "009824a3e786da8622361d78ed9fe5a75a863195e5ee085e3a0fb1a06564c11a",
+        "runs/m6-body-ui-development-v3-20261002/registered-runs/13932a5955384230b0eb2a83b2d167f8/stderr.log": "4ad0f1c3fe69bc9cdb7a9292640501f7da85a560e7584a6dd6f7559610a75e00",
+        "runs/m6-body-ui-development-v3-20261002/registered-runs/13932a5955384230b0eb2a83b2d167f8/stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "runs/m6-body-ui-development-v3-20261002/registered-runs/13932a5955384230b0eb2a83b2d167f8/supervisor.json": "5841079ef1c055c05e45ac0afb252b5fceb55e8ee833f5f52a5a9c8e673959d8",
+        "runs/m6-body-ui-development-v3-20261002/registered-runs/ef8face3b52b4f2fa826700f3b79d062/recording/chunks/000000.npz": "ae2e2ba2e895f7b1a169f4e5325169b7609665ed7f3f41911743ee4639e0922c",
+        "runs/m6-body-ui-development-v3-20261002/registered-runs/ef8face3b52b4f2fa826700f3b79d062/recording/chunks/000001.npz": "d740ead328b909b699f0b314edc286a39439efdd6030e7634d1654c79748e8a5",
+        "runs/m6-body-ui-development-v3-20261002/registered-runs/ef8face3b52b4f2fa826700f3b79d062/recording/events.jsonl": "b28bdc86bd6cd7ce23fb35c317ae898f6aa34498aa4323ec94307931ba664ab2",
+        "runs/m6-body-ui-development-v3-20261002/registered-runs/ef8face3b52b4f2fa826700f3b79d062/recording/manifest.json": "8b26c39bb8463789313603bc6cd8177ccfd0bf1c0ab623ce8ac40c4ac8152fb0",
+        "runs/m6-body-ui-development-v3-20261002/registered-runs/ef8face3b52b4f2fa826700f3b79d062/snapshots/d2095eebf1474b6d814df16919e7e692.snp": "8fb03a9eede51419f7fbf62abed993d806be48c8a99be98af69b815dbbf338ca",
+        "runs/m6-body-ui-development-v3-20261002/registered-runs/ef8face3b52b4f2fa826700f3b79d062/snapshots/index.json": "c6ef9e54d45fef8aeaa693156a9ce07691c9cdcf64a31d2d9251d98b58334ce2",
+        "runs/m6-body-ui-development-v3-20261002/registered-runs/ef8face3b52b4f2fa826700f3b79d062/snapshots/initial.snp": "313be7e417c31f081f3e06579c73d5cac771af9d0a2c616db7a2c46efa656cd7",
+        "runs/m6-body-ui-development-v3-20261002/registered-runs/ef8face3b52b4f2fa826700f3b79d062/stderr.log": "4ad0f1c3fe69bc9cdb7a9292640501f7da85a560e7584a6dd6f7559610a75e00",
+        "runs/m6-body-ui-development-v3-20261002/registered-runs/ef8face3b52b4f2fa826700f3b79d062/stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "runs/m6-body-ui-development-v3-20261002/registered-runs/ef8face3b52b4f2fa826700f3b79d062/supervisor.json": "1657c09c6cc6e5743628f80d046b8c8da7ccab81cc7b1b8f302d29e59d4c1492",
+        "runs/m6-body-ui-development-v3-20261002/registered-runs/index.sqlite3": "e9392524d015411c4b7d404eeaaf76a7d188631909d05887a74abdf42faab6b8",
+        "runs/m6-body-ui-development-v3-20261002/report.json": "2ce9e68ef08e829d288dca0b26c96f82c7649a26aeec9b9b54891503bb84df66",
+        "runs/m6-body-ui-development-v3-20261002/runner.py": "c895b216f7ccc821048df58787026b77698f0e366496ab8344686c138f161300",
+        "runs/m6-body-ui-development-v3-20261002/server/stderr.log": "160afbe2750ce679d322d470424a508fb0edcfda4c0e33a9d73cfefd5d69a906",
+        "runs/m6-body-ui-development-v3-20261002/server/stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "runs/m6-body-ui-development-v3-20261002/source-before.json": "0a633806c92ca582878796379b66626eabd56609f6aab39f2fc85c573e0de854"
+      }
+    }
+  ],
+  "retained_failures": {
+    "v1": "Rendered disabled option was incorrectly classified by toBeDisabled matcher, before owner creation. Test-only correction checks native disabled property.",
+    "v2": "Source/replay mechanism passed17 ticks, but replay handler sent a new zero-action command to alreadyclosed source, receiving409 and showing Owner is not ready. Final no-alert assertion correctlyfailed.",
+    "fix": "cbe1a3d shared clearManual always clears keys/focus; sends stop only for matching ready manual non-replay owner."
+  },
+  "independent_final_audit": {
+    "status": "passed",
+    "indexed_hashes_checked": 39,
+    "finalization_hash_mismatches": {
+      "outer/supervisor.json": {
+        "recorded_sha256": "e6487a963416de22710485ae465f796b8b2a1d1537eb32e7bc6cfffece526de5",
+        "final_sha256": "8c0d0f8cd9c7c7f6cab194212bf322b2e64bf6fefb8d46793916c9825e084564"
+      }
+    },
+    "successful_network_trace_retained": false,
+    "api_http_errors": null,
+    "api_post_requests": [],
+    "raw_records": [
+      {
+        "mode": "source",
+        "ticks": 26,
+        "pre_control_stages": 260,
+        "end_caches": 26,
+        "pairs": 18876,
+        "classes": {
+          "0": 0,
+          "1": 17160,
+          "2": 1716,
+          "3": 0
+        }
+      },
+      {
+        "mode": "actions",
+        "ticks": 26,
+        "pre_control_stages": 260,
+        "end_caches": 26,
+        "pairs": 18876,
+        "classes": {
+          "0": 0,
+          "1": 17160,
+          "2": 1716,
+          "3": 0
+        }
+      }
+    ],
+    "checked_arrays_exact": true,
+    "max_absolute_float_difference": 0.0,
+    "captured_snapshot": {
+      "snapshot_id": "d2095eebf1474b6d814df16919e7e692",
+      "filename": "d2095eebf1474b6d814df16919e7e692.snp",
+      "sha256": "8fb03a9eede51419f7fbf62abed993d806be48c8a99be98af69b815dbbf338ca"
+    }
+  },
+  "build": {
+    "node": "24.21.0",
+    "build_and_typecheck": "passed",
+    "log": "runs/m6-body-ui-fix-build-20261002/ui-build.log",
+    "sha256": "a93ce679ed5884bbc6e6b8bf482eabec6173b9a724dc3b8fad96f76696875ad9"
+  },
+  "limitations": [
+    "Replay comparison.runtime_source_keys and comparison.fields currently emit common-only metadata for body profile although actual runtime checks include _BODY_RUNTIME and action comparator adds TICK_FIELDS. This evidence independently checks body raw fields; metadata correction is separate.",
+    "Inner report indexed nested outer/supervisor.json before outer completion; its recorded hash is stale. Immutable primary report preserved; artifact_sha256_final above pins terminal files.",
+    "Successful Playwright trace is not retained under retain-on-failure; both failed traces retained. Final no-alert/browser-error checks pass; no universal HTTP request audit claim.",
+    "Finite .25-second descendant sampling plus final observed PID/start identities; not every transient process. Shared supervisor performs owned group cleanup after leader exit.",
+    "Live UI ticks are workload/timing dependent: v2 had17 and v3 had26, no performance threshold or exacttickbudget comparison.",
+    "No UI native branch continuation in this gate; independent four-owner runtime gate checks four native-restored continuation ticks plus both replay modes."
+  ]
+}
