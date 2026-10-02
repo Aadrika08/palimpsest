@@ -1,0 +1,278 @@
+{
+  "actual": {
+    "aggregate_report_numeric_ticks": 0,
+    "callback_restored": true,
+    "completed_owners": 0,
+    "end_caches": 75,
+    "engine_closed": true,
+    "failure": {
+      "actual_action": [
+        0.699999988079071,
+        0.9979897737503052
+      ],
+      "after_count": 0,
+      "before_count": 0,
+      "distances_m": [
+        -0.00013614936778658104,
+        -3.546385428784826e-05
+      ],
+      "end_cache_contains_floor_base": false,
+      "expert_action": [
+        0.699999988079071,
+        0.9979897737503052
+      ],
+      "geom_names": [
+        "floor",
+        "base_geom"
+      ],
+      "guard": "Unexpected robot/self/world contact outside declared obstacle1 approach",
+      "phase": null,
+      "pre_control_stages": [
+        0,
+        1
+      ],
+      "prefix": false,
+      "previous_bad_contact": false,
+      "sensor_angle": null,
+      "sensor_bad": false,
+      "tick": 74
+    },
+    "initial_snapshots": 1,
+    "inner_supervision": {
+      "elapsed_seconds": 9.446435684003518,
+      "output": "/home/utkarsh/Work/shraddha/brain/.worktrees/task-phases/runs/m7-recovery-coverage-development-v2-20261003/inner-supervision",
+      "returncode": 1,
+      "schema_version": 1,
+      "started_utc": "2026-10-02T22:59:55.483585+00:00",
+      "status": "failed",
+      "timeout_seconds": 420
+    },
+    "north_supervision": {
+      "elapsed_seconds": 8.654024556002696,
+      "output": "/home/utkarsh/Work/shraddha/brain/.worktrees/task-phases/runs/m7-recovery-coverage-development-v2-20261003/recovery-north-2100",
+      "returncode": 1,
+      "schema_version": 1,
+      "started_utc": "2026-10-02T22:59:55.943247+00:00",
+      "status": "failed",
+      "timeout_seconds": 180
+    },
+    "numeric_rows_in_completed_recording": 75,
+    "observed_subset": {
+      "completed_first_cycle_query": 65,
+      "executed_reverse_range": [
+        21,
+        65
+      ],
+      "expert_reverse_range": [
+        21,
+        65
+      ],
+      "first_intended_contact_cache": {
+        "stage": 3,
+        "tick": 20
+      },
+      "old_label_replaced": false,
+      "permanent_handoff_tick": 21,
+      "reverse_rows": 45,
+      "sensor_contact_ticks": [
+        21,
+        22,
+        23
+      ],
+      "subsequent_cached_and_stage0_clearance_query": 66,
+      "whole_gate_pass": false
+    },
+    "outer_supervision": {
+      "elapsed_seconds": 9.851447049004491,
+      "output": "/home/utkarsh/Work/shraddha/brain/.worktrees/task-phases/runs/m7-recovery-control-9f05674/outer-launch",
+      "returncode": 1,
+      "schema_version": 1,
+      "started_utc": "2026-10-02T22:59:55.203486+00:00",
+      "status": "failed",
+      "timeout_seconds": 480
+    },
+    "pre_control_stages": 750,
+    "retry_count": 0,
+    "snapshot_bytes": 526467,
+    "south": "not_started",
+    "wall_seconds": 11.456337244002498
+  },
+  "argv": [
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/lab-hardening/.venv/bin/python",
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/task-phases/scripts/collect_male_recovery.py",
+    "--repo",
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/task-phases",
+    "--assets",
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/r0-reproduction/data/assets/flynn",
+    "--output",
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/task-phases/runs/m7-recovery-coverage-development-v2-20261003"
+  ],
+  "audits": {
+    "own": {
+      "scope": "484 identities,15 artifacts,75 numeric rows/1 SNP hash without native decode,750+75 caches,raw action/label/counter/contact binding,3 process identities absent",
+      "seconds": 1.514402175002033,
+      "status": "passed-retained-failure-audit"
+    },
+    "root": {
+      "original_root": "/home/utkarsh/Work/shraddha/brain/.worktrees/project-integration/runs/m7-recovery-root-audit-9f05674",
+      "scope": "484 identities,15 artifacts,75 rows/1 SNP,persistent raw sensor/action binding,45 reverse,cycle completion/clearance,finite unit/continuous XYZ/quaternions,3 process identities absent",
+      "seconds": 1.083498771,
+      "status": "passed"
+    }
+  },
+  "bounds": {
+    "aggregate_bytes": 1073741824,
+    "free_floor_bytes": 1073741824,
+    "initial_snapshots": 2,
+    "inner_seconds": 420,
+    "numeric_intervals": 240,
+    "outer_seconds": 480,
+    "owners": 2,
+    "per_owner_seconds": 180,
+    "recording_bytes_per_owner": 150994944,
+    "snapshot_bytes_per_owner": 16777216
+  },
+  "cleanup": {
+    "forced_signals": [],
+    "observed_owned_processes": [
+      {
+        "pid": 577476,
+        "start_ticks": 7564847
+      },
+      {
+        "pid": 577481,
+        "start_ticks": 7564875
+      },
+      {
+        "pid": 577484,
+        "start_ticks": 7564921
+      }
+    ],
+    "sample_errors": [],
+    "sampler_stopped": true,
+    "scope": "finite .25 s sampling, PID/start recheck before owned containment; not universal transient-process proof",
+    "survivors": []
+  },
+  "correction_to_v1_report": {
+    "correct_scope": "Offline orientation estimates are available; root explicitly verified finiteness, quaternion unit norm and continuity for v2 only. No contact-force or controlled causal account is established. V1 report/raw bytes remain unchanged.",
+    "issue": "Its absent-roll/pitch-trajectory wording is inaccurate; before/after samples retain XYZ and quaternions in both versions.",
+    "unchanged_file": "docs/reports/m7-recovery-coverage-v1.json"
+  },
+  "evidence": {
+    "after": {
+      "bytes": 77493,
+      "path": "runs/m7-recovery-control-9f05674/after.json",
+      "sha256": "5f5d113b26023786d056dc6c76377f27ea9b5a6f16d4fa000778b1a231f2f15e"
+    },
+    "audit_result": {
+      "bytes": 2227,
+      "path": "runs/m7-recovery-control-9f05674/audit.json",
+      "sha256": "28f80f362d9cee027039fe678a6024ab7f7b2661b14ef96945c0df1a71764f9d"
+    },
+    "audit_script": {
+      "bytes": 8636,
+      "path": "runs/m7-recovery-control-9f05674/audit.py",
+      "sha256": "e97adcb2db81f92767dc84fe708d7893d3384edfb07cd835a60c34f5a179d94f"
+    },
+    "before": {
+      "bytes": 77493,
+      "path": "runs/m7-recovery-control-9f05674/before.json",
+      "sha256": "5f5d113b26023786d056dc6c76377f27ea9b5a6f16d4fa000778b1a231f2f15e"
+    },
+    "failure_cameras": {
+      "bytes": 98824,
+      "path": "runs/m7-recovery-coverage-development-v2-20261003/recovery-north-2100/failure-cameras.npz",
+      "sha256": "6c8cd2d06aac05e9e5f7054e80f8669dd21ab8d2b8d86dc024ce610bc7b51a31"
+    },
+    "final_launcher_console": {
+      "bytes": 465,
+      "path": "runs/m7-recovery-control-9f05674/launcher-console.log",
+      "sha256": "00823066f0ea59e6697a8e2f2491f058e85d9519318ec618e09eb94d7e485c25"
+    },
+    "initial_snapshot": {
+      "bytes": 526467,
+      "path": "runs/m7-recovery-coverage-development-v2-20261003/recovery-north-2100/27b2114b873543039e9976f98adcf0e9/snapshots/initial.snp",
+      "sha256": "e620bdfe888e70a5292d386f4cd327ccc85cdfde63ebd135890a4a55a2e595ec"
+    },
+    "inventory_script": {
+      "bytes": 5187,
+      "path": "runs/m7-recovery-control-9f05674/inventory.py",
+      "sha256": "976a8ba9dfd1d7db6465525c05a83da6f6132633de0e763d42734db13f3f70d9"
+    },
+    "invocation": {
+      "bytes": 2741,
+      "path": "runs/m7-recovery-control-9f05674/invocation.json",
+      "sha256": "a1f78767c2cfb6c55eb1f827e8e5e35632c5512d071d2fef1cc69de0e83514cd"
+    },
+    "launcher": {
+      "bytes": 6906,
+      "path": "runs/m7-recovery-control-9f05674/launch.py",
+      "sha256": "ed155901f909815508c744a65fc889c21eea0f399d4e5a6a577521f7e9154499"
+    },
+    "north_result": {
+      "bytes": 721057,
+      "path": "runs/m7-recovery-coverage-development-v2-20261003/recovery-north-2100/result.json",
+      "sha256": "9b02f8117208154deb7904f1ad42c8dea8a8900a6583b62a049919ff134c63e6"
+    },
+    "report": {
+      "bytes": 38022,
+      "path": "runs/m7-recovery-coverage-development-v2-20261003/report.json",
+      "sha256": "ba39326fe7ffed055044ce924a2b168c7d95e0607fb214572f3b72eea3858e14"
+    },
+    "root_audit_result": {
+      "bytes": 1202,
+      "path": "runs/m7-recovery-control-9f05674/root-audit.json",
+      "sha256": "3a88abb39f427589a74585583ef03c4f15b7e9c10ce77bc89cd4713c665100c2"
+    },
+    "root_audit_script": {
+      "bytes": 8467,
+      "path": "runs/m7-recovery-control-9f05674/root-audit.py",
+      "sha256": "928891a28e3251872c8b7fdfcb240a61b9397511df229c2258933e3d68b0aae9"
+    },
+    "terminal": {
+      "bytes": 2694,
+      "path": "runs/m7-recovery-control-9f05674/terminal.json",
+      "sha256": "0172353766c1bf685d832e093b44757b502486d09859f23e98bf54289ac93e3e"
+    }
+  },
+  "identity": {
+    "artifact_hashes_checked": 15,
+    "assets": 20,
+    "before_after_equal": true,
+    "frozen_entries": 484,
+    "tracked_files": 342,
+    "upstream_files": 122
+  },
+  "limitations": [
+    "One completed north recording is not a completed owner or full collection pass; south remains not_started.",
+    "Observed first-cycle/clearance subset does not qualify post-recovery driving or whole gate.",
+    "Floor/base guard is unchanged; failed rows remain published rather than censored.",
+    "True pose/quaternions are evaluator-only and were not used for control or handoff.",
+    "No causal claim about v1 versus v2 later behavior; only declared protocol changes are known.",
+    "Partial native/replay/generic playback compatibility remains unqualified for standalone profile/latch.",
+    "No existing loader admission,training,checkpoint,optimizer,held-out,learned/general/body/task/physical claim.",
+    "Finite sampled process cleanup is not universal transient-process proof.",
+    "Raw ignored artifacts retained locally; tracked report is a compact hash index."
+  ],
+  "log_scan": {
+    "matching_retained_native_log_lines": 0,
+    "patterns": [
+      "resource_tracker",
+      "leaked semaphore",
+      "Traceback",
+      "SIGKILL",
+      "timed out"
+    ]
+  },
+  "next_action": "Review smallest separate prospective options; no source change, guard relaxation or actual retry authorized",
+  "protocol_id": "M7-REC-COVER-1",
+  "protocol_sha256": "425d2f8b105637cc1a052214f8db114bf99f08bc74a8977c8c1cbe791c298201",
+  "protocol_status": "incomplete",
+  "protocol_version": 2,
+  "schema_version": 1,
+  "source_commit": "9f05674203fdd0f80274a985744014fb14257c03",
+  "source_script_sha256": "c949d5cc5b5468de6420ed7f0f42d55d7582e5e0291717456d9f1a0ccdd12123",
+  "status": "failed-infrastructure",
+  "teacher_sha256": "5edca9a587dea0a2996856e42a96013aab1b1b0a277eacb74b7fc4270c55c586",
+  "upstream_commit": "8d964599119b420de67ee259434d273651a1a76d"
+}
