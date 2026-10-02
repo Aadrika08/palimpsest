@@ -298,6 +298,14 @@ def run_worker(config, commands, replies, display, disconnected, stop, progress)
     if not log_failed.is_set():
         for message in final_messages:
             authoritative(replies, message)
+    # This isolated owner has closed its engine/renderer/recorder and durable
+    # logs. Flush both outgoing queues before exiting; module-finalization GC
+    # can fault thousands of cold pages after completion. Parent-owned IPC is
+    # released by the supervisor. Never cancel these feeders or truncate frames.
+    for queue in (replies, display):
+        queue.close()
+        queue.join_thread()
+    os._exit(0)
 
 
 def _own(config, commands, replies, display, disconnected, stop, progress, final_messages=None):
