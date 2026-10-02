@@ -99,3 +99,8 @@ pass without skips in 21.007 seconds. The replay merge preserves atomic memory
 restoration and adds the optional recording cap; default calls are unchanged.
 The full adaptive gate remains pending. Both CI workflows pass on the preceding
 `b283657`, independently of these focused checks.
+
+At `d2a07eb`, the fixed thin-puck protocol and pure task primitives are integrated.
+All 46 focused puck/task/body checks pass without skips in 0.494 seconds. This
+covers XML derivation and task arithmetic only; native model construction, contact
+dynamics, runtime integration and learned manipulation remain untested.
