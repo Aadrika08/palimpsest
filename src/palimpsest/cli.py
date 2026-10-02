@@ -105,7 +105,10 @@ def main(argv=None):
     atlas.add_argument('--graph-manifest', type=Path, required=True)
     atlas.add_argument('--cut-node', type=int, action='append', default=[], help='bodyId to isolate; repeat up to 32 times; omit for no-op')
     atlas.add_argument('--output', type=Path, required=True, help='new SVG; offline structural analysis, not model execution')
-    for command in (lab, evaluate, replay, export, sonify, compare, atlas):
+    specimens = commands.add_parser('specimens', help='render two curated anatomical skeletons without registration')
+    specimens.add_argument('manifest', type=Path, help='local pair manifest with two SWC hashes and correspondence evidence')
+    specimens.add_argument('--output', type=Path, required=True, help='new SVG; offline anatomy, no inference')
+    for command in (lab, evaluate, replay, export, sonify, compare, atlas, specimens):
         _storage_flags(command)
     args = parser.parse_args(argv)
     root = args.repo.resolve()
@@ -147,7 +150,7 @@ def main(argv=None):
         elif args.command == 'compare' and args.output is None:
             from .artifacts import compare_runs
             report, ok = compare_runs(args.left, args.right), True
-        elif args.command in {'export', 'sonify', 'compare', 'atlas'}:
+        elif args.command in {'export', 'sonify', 'compare', 'atlas', 'specimens'}:
             from .artifacts import export_run
             from .storage import StorageBudget
             output = args.output.absolute()
@@ -157,7 +160,10 @@ def main(argv=None):
                 budget.check(0, path=output)
                 count = sum(path.is_file() and path.suffix.lower() in {'.svg', '.png', '.zip', '.wav', '.html'} for path in managed.rglob('*'))
                 budget.check_count('exports', count)
-                if args.command == 'atlas':
+                if args.command == 'specimens':
+                    from .specimens import export_specimens
+                    result = export_specimens(args.manifest, output, storage_budget=budget)
+                elif args.command == 'atlas':
                     from .atlas import export_atlas
                     result = export_atlas(args.graph, args.graph_manifest, output, cut_nodes=args.cut_node, storage_budget=budget)
                 elif args.command == 'compare':

@@ -50,3 +50,34 @@ Historical local paths in the protocol identify the recorded training sources;
 they are provenance, not installation paths. The raw teacher recordings remain
 separate local evidence and are not included in this small inference bundle.
 This notice does not assign a licence to Palimpsest's own code or new parameters.
+
+## Curated anatomical pair
+
+The bundled `data/assets/specimens/dnge104-v1/` contains two separately sourced
+right-side DNge104 skeletons; it is not an anatomically registered dataset.
+MaleCNS body **12781** is the unchanged v1.0 SWC, under the MaleCNS **CC BY 4.0**
+terms and attribution above. Its declared coordinates are 8 nm units.
+
+FlyWire root **720575940640723315** was retrieved from the public
+[FlyWire CATMAID mirror](https://fafb-flywire.catmaid.org/) on 2 October 2026.
+Its source/edits/annotations retain the **CC BY-NC 4.0** terms stated in
+[FlyWire's terms](https://flywire.ai/tos). Attribution: FlyWire Consortium;
+Schlegel et al. (2024), Dorkenwald et al. (2024), Matsliah et al. (2024), and
+Berg et al. (2026). The annotation identity is from the
+[v3.1.0 release](https://github.com/flyconnectome/flywire_annotations/releases/tag/v3.1.0),
+pinned at `8587524c1748ce5ef2080822a2fc890fc03bf597`.
+
+Modification: the CATMAID compact node table was sorted by original node ID and
+converted to SWC, preserving IDs, parents, coordinates and radii. Null parents
+became -1; SWC type is 0 (unspecified); user IDs/confidence were omitted. No
+resampling or coordinate transform was applied to the distributed SWC. The
+renderer converts declared spatial units to micrometres for display only.
+The public mirror is mutable: retained hashes pin this acquisition, not an
+immutable server version or equivalence to a separate Zenodo skeleton release.
+
+The [pair manifest](data/assets/specimens/dnge104-v1/pair.json) carries each
+source's distinct terms and attribution; [provenance](data/assets/specimens/dnge104-v1/provenance.json)
+retains annotation rows, source URLs, hashes, conversion and uncertainty.
+Preserve these notices, licence links, attribution and change descriptions on
+redistribution. The curated cell-type match does not establish node-level
+homology, equivalent coverage or population-wide sex differences.
