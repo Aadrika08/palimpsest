@@ -327,6 +327,55 @@ def _ids(value):
     return result
 
 
+def selection_for_condition(condition, m, trigger, *, u=None, history=None, gold_target_ids=None, limit=1):
+    """Pure shared targeting baseline; caller owns fitting and evaluator scoring.
+
+    Only retrieval receives E and only oracle receives evaluator gold. No-event
+    bypasses selection; accepted resources still undergo ordinary validation.
+    """
+    if condition not in CONDITIONS:
+        raise ValueError('Unknown targeting condition')
+    _integer(limit, memory.MAX_TARGETS)
+    artifact_condition = condition in ('own', 'swapped', 'sham', 'no-U', 'hand-authored')
+    if (artifact_condition != (u is not None) or (condition == 'retrieval') != (history is not None)
+            or (condition == 'oracle') != (gold_target_ids is not None)):
+        raise ValueError('Targeting condition received missing or unsupported resources')
+    m = memory.validate_m(m)
+    if trigger is not None:
+        trigger = memory.validate_trigger(trigger)
+    if u is not None:
+        u = memory.validate_u(u)
+        if condition == 'no-U' and u['payload']['rules']:
+            raise ValueError('No-U requires empty rules')
+        if condition == 'hand-authored' and u['payload']['rules'] != [{'trigger': 'cue_changed', 'relation': 'local_cue'}]:
+            raise ValueError('Hand-authored baseline requires its fixed local rule')
+    if history is not None:
+        history = memory.validate_e(history)
+    if gold_target_ids is not None:
+        memory._list(gold_target_ids, memory.MAX_FACTS)
+        for fact_id in gold_target_ids:
+            memory._id(fact_id)
+        if len(set(gold_target_ids)) != len(gold_target_ids) or not set(gold_target_ids).issubset({f['id'] for f in m['facts']}):
+            raise ValueError('Duplicate or dangling evaluator gold')
+    if trigger is None:
+        selection = {'event_id': None, 'target_ids': [], 'reason': 'no_rule'}
+    elif artifact_condition:
+        selection = memory.select(m, trigger, u, limit=limit)
+    else:
+        if condition == 'history-independent':
+            targets = [fact['id'] for fact in m['facts']]
+        elif condition == 'traversal':
+            targets = _relation_targets(m, trigger)
+        elif condition == 'retrieval':
+            relation = _retrieved_relation(history, trigger)
+            targets = [] if relation is None else _relation_targets(m, trigger, relation)
+        else:
+            targets = sorted(gold_target_ids)
+        selection = {'event_id': trigger['id'], 'target_ids': targets[:limit],
+            'reason': 'no_match' if not targets else 'budget' if len(targets) > limit else 'matched'}
+    return memory.validate_selection(selection, m, trigger)
+
+
 def compare_conditions(fixture, own_e, swapped_e, truth, *, limit=1):
     """Evaluator wrapper; oracle/scoring alone use truth, fitting takes E only."""
     fixture, own_e, swapped_e = validate_fixture(fixture), memory.validate_e(own_e), memory.validate_e(swapped_e)
@@ -347,23 +396,10 @@ def compare_conditions(fixture, own_e, swapped_e, truth, *, limit=1):
             runtime['e'] = own_e
         elif condition == 'oracle':
             runtime['gold_target_ids'] = truth['gold_target_ids']
-        if trigger is None:
-            selection = {'event_id': None, 'target_ids': [], 'reason': 'no_rule'}
-        elif condition in artifacts:
-            selection = memory.select(m, trigger, artifacts[condition], limit=limit)
-        else:
-            if condition == 'history-independent':
-                targets = [fact['id'] for fact in m['facts']]
-            elif condition == 'traversal':
-                targets = _relation_targets(m, trigger)
-            elif condition == 'retrieval':
-                relation = _retrieved_relation(own_e, trigger)
-                targets = [] if relation is None else _relation_targets(m, trigger, relation)
-            else:
-                targets = sorted(gold)
-            selection = {'event_id': trigger['id'], 'target_ids': targets[:limit],
-                         'reason': 'no_match' if not targets else 'budget' if len(targets) > limit else 'matched'}
-        selection = memory.validate_selection(selection, m, trigger)
+        resources = {'u': artifacts[condition]} if condition in artifacts else (
+            {'history': own_e} if condition == 'retrieval' else
+            {'gold_target_ids': truth['gold_target_ids']} if condition == 'oracle' else {})
+        selection = selection_for_condition(condition, m, trigger, limit=limit, **resources)
         targets = set(selection['target_ids'])
         u = artifacts.get(condition)
         behavior = copy.deepcopy(runtime)
