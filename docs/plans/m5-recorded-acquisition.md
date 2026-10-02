@@ -76,7 +76,7 @@ Frames are not treated as independent experimental samples.
 
 ## Bounds and pending actual acquisition
 
-Fixed engineering ceilings: 16 input runs, 256 MiB aggregate manifest/event/chunk
+Fixed engineering ceilings: 16 input runs, 512 MiB aggregate manifest/event/chunk
 bytes, the existing 1024 historical episodes/4 MiB E cap, and an 8 MiB whole-bundle
 cap. Complete banks are limited by the existing inspector to 16 facts and eight
 associations per fact; any truncation rejects collection. Ambiguous relation/subject
@@ -84,12 +84,15 @@ mapping also rejects it. Every ceiling fails explicitly; there is no silent trun
 Protocol and collector-source hashes identify these choices. These limits are not
 scientific success thresholds and may make a large camera-rich run ineligible.
 
-Actual acquisition has not run. A reviewed development acquisition schedule needs
-independent visits that visibly inspect both passages before and after a witnessed
-cue event, with empty U and recorded actions/controller provenance. The current
-ten-tick development event delay and common-goal route do not demonstrate that
-coverage; use real recorded gaps/abstention until a suitable schedule is implemented.
-The authored gate schedule itself is not evidence about an observed passage.
+A separate [manual development pilot](m5-runtime-cases.md) recorded one actual
+acquisition with visible pre/post evidence. Its collected E has one observed check
+per relation and fitted U abstains under the fixed four-support threshold. The
+[bounded batch protocol](m5-acquisition-batch.md) prepares four fresh acquisitions
+per regime without reusing that pilot. The 512 MiB aggregate cap replaces 256 MiB
+because four measured 84.3 MB camera-rich pilot-size recordings would exceed the
+old cap. This engineering cap is bound in the collector protocol hash and still
+rejects explicitly; it does not change E bounds or fitting thresholds. Missing
+samples remain gaps. The authored gate schedule itself is not observed evidence.
 
 Current recordings already provide the required fields for this bounded collector.
 Older/truncated records are rejected. Supporting broader acquisition would require
@@ -118,4 +121,5 @@ the final fingerprint guard and passes afterward. The final focused run passed
 39 tests (2.120 s, no skips), including 11 collector checks. Retained local index:
 `runs/m5-history-collector-20261002/report.json`, SHA256
 `7702e6c96c9fd990d4a9393c4c6c920437be9c9ae2de5127a8e14e3e77de0a10`.
-No actual acquisition or held-out result follows.
+That historical fixture check establishes no actual acquisition or held-out result.
+The separate pilot and planned batch are described in their linked protocols.

@@ -205,6 +205,18 @@ class HistoryTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, 'visible|goal'):
             self.collect([run])
 
+    def test_aggregate_camera_budget_is_bound_and_rejects_before_reading(self):
+        from palimpsest import memory_history
+        self.assertEqual(memory_history.MAX_INPUT_BYTES, 512 * 1024**2)
+        self.assertEqual(memory_history.PROTOCOL['max_input_bytes'], memory_history.MAX_INPUT_BYTES)
+        self.assertEqual(memory_history.PROTOCOL_SHA256, memory.sha256(memory_history.PROTOCOL))
+        run = self.recording()
+        with patch.object(memory_history, 'MAX_INPUT_BYTES', 1), \
+             patch.object(artifacts, '_load') as reader:
+            with self.assertRaisesRegex(ValueError, 'byte limit'):
+                self.collect([run])
+            reader.assert_not_called()
+
     def test_outer_tick_and_all_event_run_ids_bind_recording_lineage(self):
         for defect in ('outer_tick', 'opened_run', 'world_run'):
             run = self.recording(episodes=2)

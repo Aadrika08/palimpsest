@@ -13,7 +13,7 @@ from . import artifacts, memory, memory_task
 
 
 MAX_RUNS = 16
-MAX_INPUT_BYTES = 256 * 1024 * 1024
+MAX_INPUT_BYTES = 512 * 1024 * 1024
 MAX_RESULT_BYTES = 8 * 1024 * 1024
 PROTOCOL = {'version': 1, 'max_runs': MAX_RUNS, 'max_input_bytes': MAX_INPUT_BYTES,
     'max_result_bytes': MAX_RESULT_BYTES, 'max_triggers_per_episode': 1,
