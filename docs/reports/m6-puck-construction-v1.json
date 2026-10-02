@@ -1,0 +1,99 @@
+{
+  "audit_script": {
+    "bytes": 3754,
+    "path": "runs/m6-puck-construction-prepared/audit-v1.py",
+    "sha256": "6c721d2a73e6dceb1f97d76f3dbbda8aa8432b7d8c22134be0e1224b2003c06d"
+  },
+  "cause": {
+    "inner_lease": "scripts/verify_puck_construction.py:190",
+    "outer_lease": "runs/m6-puck-construction-prepared/launch.py:35",
+    "per_user_nonreentrant_guard": "src/palimpsest/storage.py:150-168"
+  },
+  "cleanup": {
+    "argv_matching_processes": [],
+    "exact_child_pid_receipts": [],
+    "limitation": "No child PID/PGID receipts exist because no native owner started; no retrospective exact-PID claim."
+  },
+  "control_ticks": 0,
+  "independent_audit": {
+    "bytes": 2425,
+    "path": "runs/m6-puck-construction-prepared/audit-v1.json",
+    "sha256": "cee17c6b36d53c8033600598379b2cbb9bed20ac425e894d2944978c8167d7a2"
+  },
+  "launch": {
+    "bytes": 9182,
+    "path": "runs/m6-puck-construction-v1-20261002/launch.json",
+    "sha256": "da34f2588780e02551d240aaae4307770740e7b7fe7f2c127dff467e83d0bc1d"
+  },
+  "launcher": {
+    "bytes": 3005,
+    "path": "runs/m6-puck-construction-prepared/launch.py",
+    "sha256": "c073f08c8efe94035b0749f5e1fb3d8e0967ab23be913cd6f853cd41a811b283"
+  },
+  "native_owners_started": 0,
+  "next_action": "Separate reviewed v2 launcher; remove only redundant outer lease. No retry authorized by this report.",
+  "outer_elapsed_seconds": 0.1711566260055406,
+  "outer_returncode": 1,
+  "physics_steps": 0,
+  "planned_owners": [
+    {
+      "basis": "audit-derived; failure at pre-owner lease acquisition",
+      "id": "fresh-one",
+      "status": "not_started"
+    },
+    {
+      "basis": "audit-derived; failure at pre-owner lease acquisition",
+      "id": "fresh-two",
+      "status": "not_started"
+    }
+  ],
+  "prepared_plan": {
+    "bytes": 9195,
+    "path": "runs/m6-puck-construction-prepared/plan.json",
+    "sha256": "03da9856c208660558d26bff1512a6dab6b460da2be70e56f8fe22a98b48becd"
+  },
+  "primary_report": {
+    "bytes": 9762,
+    "path": "runs/m6-puck-construction-v1-20261002/launch-result.json",
+    "sha256": "f148e57158e239ba1b9b48bdc5bf83c99b3af5a010ec656435bc484c0100cc6a"
+  },
+  "protocol": {
+    "bytes": 1925,
+    "path": "docs/plans/m6-puck-construction.json",
+    "sha256": "0f3fabdba277c60c4efccb219d376c944a3bfa19d30591e54b5d9b7626ad55bc"
+  },
+  "qualification_claims": [],
+  "retained_inventory": {
+    "runs/m6-puck-construction-v1-20261002/launch-result.json": {
+      "bytes": 9762,
+      "sha256": "f148e57158e239ba1b9b48bdc5bf83c99b3af5a010ec656435bc484c0100cc6a"
+    },
+    "runs/m6-puck-construction-v1-20261002/launch.json": {
+      "bytes": 9182,
+      "sha256": "da34f2588780e02551d240aaae4307770740e7b7fe7f2c127dff467e83d0bc1d"
+    },
+    "runs/m6-puck-construction-v1-20261002/outer/stderr.log": {
+      "bytes": 1226,
+      "sha256": "637b7a67e3108e54c1c2d2b9e879f3f6feb761488c25afe3df47f2d4ebcab9d3"
+    },
+    "runs/m6-puck-construction-v1-20261002/outer/stdout.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "runs/m6-puck-construction-v1-20261002/outer/supervisor.json": {
+      "bytes": 304,
+      "sha256": "fa742e9f9aa4a68f7d24cc365c20ebf018f6817911816886ba32c3066d378fa0"
+    }
+  },
+  "retained_primary_bytes": 20474,
+  "script": {
+    "bytes": 14793,
+    "path": "scripts/verify_puck_construction.py",
+    "sha256": "d6eee11f511ef8043b7734698a4f43f3da55cc09d2241d320fbffcdd060d5077"
+  },
+  "source_commit": "11ae7d6aaf62ce77fa19ed9b475027dabce90a99",
+  "source_files_checked": 74,
+  "sources_unchanged": true,
+  "status": "failed_before_native_admission",
+  "version": 1
+}
