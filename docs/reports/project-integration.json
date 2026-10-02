@@ -400,5 +400,571 @@
         "sha256": "e2365208bcf4128b4e84d22a37d05d66a781b8e111c9501e10c9eab578fdb5e1"
       }
     ]
+  },
+  "artwork_body_regression": {
+    "attempts": [
+      {
+        "commit": "39320340569fbcb8dd7e94a8f0c5958bc97e9f9c",
+        "supervision": {
+          "schema_version": 1,
+          "status": "failed",
+          "timeout_seconds": 300,
+          "started_utc": "2026-10-02T14:45:17.240128+00:00",
+          "output": "/home/utkarsh/Work/shraddha/brain/.worktrees/project-integration/runs/integration-artwork-body-20261002/suite",
+          "returncode": 1,
+          "elapsed_seconds": 61.2537666299977
+        },
+        "sources_unchanged": true,
+        "all_runtime_gates_enabled": true,
+        "tests": 395,
+        "passed": 394,
+        "errors": 1,
+        "skipped": 0,
+        "suite_seconds": 58.927,
+        "male_mechanism_status": "passed",
+        "summary": [
+          "Ran 395 tests in 58.927s",
+          "FAILED (errors=1)"
+        ],
+        "files": [
+          {
+            "path": "runs/integration-artwork-body-20261002/male-evidence/148b2877902344c091c83f4955b24cb1/recording/chunks/000000.npz",
+            "bytes": 594234,
+            "sha256": "2c6b6a6bb50f8fd015b39e25e8a7aaa38044e9cdb555fc731fb70e0c01001b1b"
+          },
+          {
+            "path": "runs/integration-artwork-body-20261002/male-evidence/148b2877902344c091c83f4955b24cb1/recording/events.jsonl",
+            "bytes": 25977,
+            "sha256": "16198c6f8293b5aaf7d189e2d74eba91a5abe0f7119b9ac5ffffd93642c15af3"
+          },
+          {
+            "path": "runs/integration-artwork-body-20261002/male-evidence/148b2877902344c091c83f4955b24cb1/recording/manifest.json",
+            "bytes": 4415,
+            "sha256": "497a700db25b15ef66a26949a8737a18185e34961dcb1a4db5fe380e58df5125"
+          },
+          {
+            "path": "runs/integration-artwork-body-20261002/male-evidence/148b2877902344c091c83f4955b24cb1/replay-report.json",
+            "bytes": 1923,
+            "sha256": "2da66148faf0b06f2b18cc1257136555fa9c7d76356d7b3e6114c462adda8855"
+          },
+          {
+            "path": "runs/integration-artwork-body-20261002/male-evidence/148b2877902344c091c83f4955b24cb1/snapshots/index.json",
+            "bytes": 1527,
+            "sha256": "819b5d211826e73fec51e5655eb391a12a73ea734716f195558faf78bab70752"
+          },
+          {
+            "path": "runs/integration-artwork-body-20261002/male-evidence/148b2877902344c091c83f4955b24cb1/snapshots/initial.snp",
+            "bytes": 531778,
+            "sha256": "6cf824170f0cd039f16762c4ac225b0dd8c641847a78bbcdb6d98760795eccea"
+          },
+          {
+            "path": "runs/integration-artwork-body-20261002/male-evidence/4b0ea74aaba941a09b95a32daaed781b/recording/chunks/000000.npz",
+            "bytes": 201820,
+            "sha256": "579f284a99638367d0f2ccd233e50a0f33a892b4484a497b0b8427838df73cbb"
+          },
+          {
+            "path": "runs/integration-artwork-body-20261002/male-evidence/4b0ea74aaba941a09b95a32daaed781b/recording/chunks/000001.npz",
+            "bytes": 399110,
+            "sha256": "258a1c5cc07d046df831c0f0bf73c7b4129081981ee8d54e29a639b43cef933b"
+          },
+          {
+            "path": "runs/integration-artwork-body-20261002/male-evidence/4b0ea74aaba941a09b95a32daaed781b/recording/events.jsonl",
+            "bytes": 24149,
+            "sha256": "8c94c78137ffaaa72bbca1e928f658219f5f994401bafafbdd02ef46e88077ea"
+          },
+          {
+            "path": "runs/integration-artwork-body-20261002/male-evidence/4b0ea74aaba941a09b95a32daaed781b/recording/manifest.json",
+            "bytes": 4035,
+            "sha256": "4c4ff4f46aa43298b3a2beb32a0db20ea811e99831bcffc60adaede325038f08"
+          },
+          {
+            "path": "runs/integration-artwork-body-20261002/male-evidence/4b0ea74aaba941a09b95a32daaed781b/snapshots/index.json",
+            "bytes": 1523,
+            "sha256": "af7fcc42beda70cec11e9f721215400e46eb20bb12b10da2299c1ee49d0c26b3"
+          },
+          {
+            "path": "runs/integration-artwork-body-20261002/male-evidence/4b0ea74aaba941a09b95a32daaed781b/snapshots/initial.snp",
+            "bytes": 531765,
+            "sha256": "e3eb2241a4133a6675e8ed8bfffc2dee65b9af20cea11f0743dfd662e2c16841"
+          },
+          {
+            "path": "runs/integration-artwork-body-20261002/male-evidence/506ab6cfcaed449b8886f8a7fe9e53ec/recording/chunks/000000.npz",
+            "bytes": 594234,
+            "sha256": "f7e732082ffb817e273afa94c4f6a1975f0da6468f4b9625fc0c181827bcafe8"
+          },
+          {
+            "path": "runs/integration-artwork-body-20261002/male-evidence/506ab6cfcaed449b8886f8a7fe9e53ec/recording/events.jsonl",
+            "bytes": 25967,
+            "sha256": "3f1098b12a9df65950bf207113c81b56749907e0bc8a6e0e98eded02cd20c3c2"
+          },
+          {
+            "path": "runs/integration-artwork-body-20261002/male-evidence/506ab6cfcaed449b8886f8a7fe9e53ec/recording/manifest.json",
+            "bytes": 4414,
+            "sha256": "87bd8d8f934e474009803b073a8eb967c34459d669ac3abc667787fc629912b8"
+          },
+          {
+            "path": "runs/integration-artwork-body-20261002/male-evidence/506ab6cfcaed449b8886f8a7fe9e53ec/replay-report.json",
+            "bytes": 1923,
+            "sha256": "0ecd87976e121ba874dafe30cf54a63471b43cb8c608fa68eb3e6743ec1d72e6"
+          },
+          {
+            "path": "runs/integration-artwork-body-20261002/male-evidence/506ab6cfcaed449b8886f8a7fe9e53ec/snapshots/index.json",
+            "bytes": 1523,
+            "sha256": "83e5ec72a2432787cd985e43779936885afc89c0c9eddc51c2ea331197c7ce2d"
+          },
+          {
+            "path": "runs/integration-artwork-body-20261002/male-evidence/506ab6cfcaed449b8886f8a7fe9e53ec/snapshots/initial.snp",
+            "bytes": 531768,
+            "sha256": "122b058874728f52121ea0d1e36bcca01d0edd719a0b8f654abc49af5eeb4820"
+          },
+          {
+            "path": "runs/integration-artwork-body-20261002/male-evidence/7dffe1ca5f824b87b207eb207fa383fa/recording/chunks/000000.npz",
+            "bytes": 201820,
+            "sha256": "6e65257761ce5c3bdccf55abc602c3706ca3383ab4599c653315e2e938a32b93"
+          },
+          {
+            "path": "runs/integration-artwork-body-20261002/male-evidence/7dffe1ca5f824b87b207eb207fa383fa/recording/chunks/000001.npz",
+            "bytes": 399110,
+            "sha256": "1f130a03037a8d8abdfc48b7e6fd8daa90a7ec00b8e6579160eb209f3f19058b"
+          },
+          {
+            "path": "runs/integration-artwork-body-20261002/male-evidence/7dffe1ca5f824b87b207eb207fa383fa/recording/events.jsonl",
+            "bytes": 24159,
+            "sha256": "9c65633bd4f89f814dc49047ef23dfcfcc658f4174d14fc81d48ae7e287a3193"
+          },
+          {
+            "path": "runs/integration-artwork-body-20261002/male-evidence/7dffe1ca5f824b87b207eb207fa383fa/recording/manifest.json",
+            "bytes": 4036,
+            "sha256": "cf6ae350f6bc48d43391af7f920bc7e5bb494be0e5ba9795a5e5888b1ad6a6a2"
+          },
+          {
+            "path": "runs/integration-artwork-body-20261002/male-evidence/7dffe1ca5f824b87b207eb207fa383fa/snapshots/index.json",
+            "bytes": 1527,
+            "sha256": "01e7978683be75a7121aa619bdb14f07a3f3d551eb61a9d60d1ede8a8f564a62"
+          },
+          {
+            "path": "runs/integration-artwork-body-20261002/male-evidence/7dffe1ca5f824b87b207eb207fa383fa/snapshots/initial.snp",
+            "bytes": 531775,
+            "sha256": "f45106718ba509dcb822ee82eee915f17a4c02700c87ad9747b97715a513ccd5"
+          },
+          {
+            "path": "runs/integration-artwork-body-20261002/male-evidence/8a1256f6dd0a4e54b5ec7ecfa3c990fd/recording/chunks/000000.npz",
+            "bytes": 399110,
+            "sha256": "c918fc23ec66f737e79f48d2a06b206125102cd519b187aae8760ca2a30be330"
+          },
+          {
+            "path": "runs/integration-artwork-body-20261002/male-evidence/8a1256f6dd0a4e54b5ec7ecfa3c990fd/recording/events.jsonl",
+            "bytes": 23325,
+            "sha256": "b610e27717a1c6ec839abf734accf286101f73ff567e0dbc0b9fd5c4e6df4b4c"
+          },
+          {
+            "path": "runs/integration-artwork-body-20261002/male-evidence/8a1256f6dd0a4e54b5ec7ecfa3c990fd/recording/manifest.json",
+            "bytes": 4201,
+            "sha256": "d1fb95445991413079efd383b68f41a7b4d2d78797a75966e8614563198dfbfe"
+          },
+          {
+            "path": "runs/integration-artwork-body-20261002/male-evidence/953fb2d0ae8b42b1830bf52d629e42c6/recording/chunks/000000.npz",
+            "bytes": 596400,
+            "sha256": "6b91cdb4d3ffe722c01eca40ad217e62e3afb6a9374f87762547ea2ff561a2b5"
+          },
+          {
+            "path": "runs/integration-artwork-body-20261002/male-evidence/953fb2d0ae8b42b1830bf52d629e42c6/recording/events.jsonl",
+            "bytes": 25905,
+            "sha256": "f9d52d0e856321d64103a78f2d85341dfe27d2c3d2277db201a4ab25d007f7de"
+          },
+          {
+            "path": "runs/integration-artwork-body-20261002/male-evidence/953fb2d0ae8b42b1830bf52d629e42c6/recording/manifest.json",
+            "bytes": 4411,
+            "sha256": "f186be2d00b17dea2ad684e573fa2b020e5afc1097a500ac5d8aeb7b418dde6c"
+          },
+          {
+            "path": "runs/integration-artwork-body-20261002/male-evidence/953fb2d0ae8b42b1830bf52d629e42c6/replay-report.json",
+            "bytes": 1650,
+            "sha256": "015c3606d6364a5ec5980a4aaf3891fc609bb856f9d223618bfb0b935fbd1b49"
+          },
+          {
+            "path": "runs/integration-artwork-body-20261002/male-evidence/953fb2d0ae8b42b1830bf52d629e42c6/snapshots/index.json",
+            "bytes": 1527,
+            "sha256": "56ab0098310f526aa0be294328a7ccf2f4e17c459bca41c9848ba527d3e2dc45"
+          },
+          {
+            "path": "runs/integration-artwork-body-20261002/male-evidence/953fb2d0ae8b42b1830bf52d629e42c6/snapshots/initial.snp",
+            "bytes": 531777,
+            "sha256": "02980f621f7d6644f443439e16c4992c39c770159a5432167fa2e487961cf036"
+          },
+          {
+            "path": "runs/integration-artwork-body-20261002/male-evidence/bc4315384a8d4d97886391dee55a4b7d/recording/chunks/000000.npz",
+            "bytes": 399110,
+            "sha256": "aedb3136b594ad1c31e72deeab67953db96af5dc75cbab7d658449488f2a86f3"
+          },
+          {
+            "path": "runs/integration-artwork-body-20261002/male-evidence/bc4315384a8d4d97886391dee55a4b7d/recording/events.jsonl",
+            "bytes": 23337,
+            "sha256": "aa14f2005619c358513887fb683b4a13a332abac30866dea7ec1cfecbb8efee3"
+          },
+          {
+            "path": "runs/integration-artwork-body-20261002/male-evidence/bc4315384a8d4d97886391dee55a4b7d/recording/manifest.json",
+            "bytes": 4204,
+            "sha256": "968aa59303693b54217231403b369c8fb7179da382c15e0d2b6f8f4c52d0a34d"
+          },
+          {
+            "path": "runs/integration-artwork-body-20261002/male-evidence/d56c1e1a0aaa40339754a896b4a8dcb6/recording/chunks/000000.npz",
+            "bytes": 201820,
+            "sha256": "daa9c8c9a60c03821162f345635c76fef25b7c5dc45d086a123ba48bb7a7937f"
+          },
+          {
+            "path": "runs/integration-artwork-body-20261002/male-evidence/d56c1e1a0aaa40339754a896b4a8dcb6/recording/events.jsonl",
+            "bytes": 22844,
+            "sha256": "23fc7fa9464920ad47d052bc1d88202c86f5f5163032f6f791987f136dd5f550"
+          },
+          {
+            "path": "runs/integration-artwork-body-20261002/male-evidence/d56c1e1a0aaa40339754a896b4a8dcb6/recording/manifest.json",
+            "bytes": 4204,
+            "sha256": "8dd20d21cd03b58f795f3fa424179410db792e942efce2930c1b94408341698f"
+          },
+          {
+            "path": "runs/integration-artwork-body-20261002/male-evidence/d959a9636b4844349d10f27f706460ff/recording/chunks/000000.npz",
+            "bytes": 596400,
+            "sha256": "c8c024db3aa3b09f40e1c9402c8954df2f42d3bc0b217f865d4bff9d2a39bf9b"
+          },
+          {
+            "path": "runs/integration-artwork-body-20261002/male-evidence/d959a9636b4844349d10f27f706460ff/recording/events.jsonl",
+            "bytes": 25895,
+            "sha256": "d5972d925b32300c0e8c1752c42368d707bb9b58e3f06f57f8c9aca0171030ce"
+          },
+          {
+            "path": "runs/integration-artwork-body-20261002/male-evidence/d959a9636b4844349d10f27f706460ff/recording/manifest.json",
+            "bytes": 4410,
+            "sha256": "80bee7146b9d2f6e82036bd2a17cde49c275979b86916468c9da300f3f83abac"
+          },
+          {
+            "path": "runs/integration-artwork-body-20261002/male-evidence/d959a9636b4844349d10f27f706460ff/replay-report.json",
+            "bytes": 1650,
+            "sha256": "1cdea967db236a32464d01d2d3676c784246057f36ad8e5e7c2fe85f1158a3fd"
+          },
+          {
+            "path": "runs/integration-artwork-body-20261002/male-evidence/d959a9636b4844349d10f27f706460ff/snapshots/index.json",
+            "bytes": 1523,
+            "sha256": "4fd5d5814802bebedc8e25f4a6627846b54ecfb25732e01b6a9c356e5ce7ae2a"
+          },
+          {
+            "path": "runs/integration-artwork-body-20261002/male-evidence/d959a9636b4844349d10f27f706460ff/snapshots/initial.snp",
+            "bytes": 531767,
+            "sha256": "9e7928e868c4d0d7145e12c71419de283fb126646f2ce9f19a0bd9ffc4bc9224"
+          },
+          {
+            "path": "runs/integration-artwork-body-20261002/male-evidence/report.json",
+            "bytes": 11514,
+            "sha256": "86fe2cbd29bafb8967d92837699734e539494202941a191a509c338bc4a14a52"
+          },
+          {
+            "path": "runs/integration-artwork-body-20261002/report.json",
+            "bytes": 18441,
+            "sha256": "b65cd71856723480f41c6b7c616bccd0aa96baf9523e731f9f4d8c2d33488947"
+          },
+          {
+            "path": "runs/integration-artwork-body-20261002/suite/stderr.log",
+            "bytes": 80778,
+            "sha256": "47fe70a6b195de7041bce36c58dbdb77797b5cc3bec06088e68e80c2f819aa60"
+          },
+          {
+            "path": "runs/integration-artwork-body-20261002/suite/stdout.log",
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          {
+            "path": "runs/integration-artwork-body-20261002/suite/supervisor.json",
+            "bytes": 310,
+            "sha256": "6b9c6b803edcb84b245bbd806291b226d887bc80cafbb30ce94e52aacabf84eb"
+          }
+        ],
+        "qualification_claims": []
+      },
+      {
+        "commit": "68a8f19097b0d14b318c8871f521fa427331b877",
+        "supervision": {
+          "schema_version": 1,
+          "status": "completed",
+          "timeout_seconds": 300,
+          "started_utc": "2026-10-02T14:47:56.391742+00:00",
+          "output": "/home/utkarsh/Work/shraddha/brain/.worktrees/project-integration/runs/integration-artwork-body-v2-20261002/suite",
+          "returncode": 0,
+          "elapsed_seconds": 58.87450252400595
+        },
+        "sources_unchanged": true,
+        "all_runtime_gates_enabled": true,
+        "tests": 395,
+        "passed": 395,
+        "errors": 0,
+        "skipped": 0,
+        "suite_seconds": 56.706,
+        "male_mechanism_status": "passed",
+        "summary": [
+          "Ran 395 tests in 56.706s",
+          "OK"
+        ],
+        "files": [
+          {
+            "path": "runs/integration-artwork-body-v2-20261002/male-evidence/311079dc43ed460fa7d84820cbde8202/recording/chunks/000000.npz",
+            "bytes": 594234,
+            "sha256": "3c38b31f7d5035bb46138c6c7d6febddf3f3afcc0582c8adfae84f402263a1c0"
+          },
+          {
+            "path": "runs/integration-artwork-body-v2-20261002/male-evidence/311079dc43ed460fa7d84820cbde8202/recording/events.jsonl",
+            "bytes": 25967,
+            "sha256": "a8d01f04b63c6fd8834e500819eeaf7c5ba950574198589b5b8026fb07270057"
+          },
+          {
+            "path": "runs/integration-artwork-body-v2-20261002/male-evidence/311079dc43ed460fa7d84820cbde8202/recording/manifest.json",
+            "bytes": 4414,
+            "sha256": "a2698bfc55c8845ede763bb194a17b6ecbd1bb33b0d34d522c200194f1018075"
+          },
+          {
+            "path": "runs/integration-artwork-body-v2-20261002/male-evidence/311079dc43ed460fa7d84820cbde8202/replay-report.json",
+            "bytes": 1923,
+            "sha256": "6dd0fa748b8490e25252ac1d483a7094775b5f8bfcf59d2b89ab681f05651796"
+          },
+          {
+            "path": "runs/integration-artwork-body-v2-20261002/male-evidence/311079dc43ed460fa7d84820cbde8202/snapshots/index.json",
+            "bytes": 1523,
+            "sha256": "da3bc6abae78e24eafcbf84956d459016efda5d973e6abd2e189a2e435cb87ee"
+          },
+          {
+            "path": "runs/integration-artwork-body-v2-20261002/male-evidence/311079dc43ed460fa7d84820cbde8202/snapshots/initial.snp",
+            "bytes": 531768,
+            "sha256": "e575fdccd2b2a8f369fa88f8b2f5f5f4064c9f18fae7b4a7ff00dced44902042"
+          },
+          {
+            "path": "runs/integration-artwork-body-v2-20261002/male-evidence/416f1f52cb964d4189bd26cf218c780c/recording/chunks/000000.npz",
+            "bytes": 201820,
+            "sha256": "c143ffb244c9e1e2999f267a3679496154bef2df047670413800f7703e9868f8"
+          },
+          {
+            "path": "runs/integration-artwork-body-v2-20261002/male-evidence/416f1f52cb964d4189bd26cf218c780c/recording/events.jsonl",
+            "bytes": 22844,
+            "sha256": "ab25cc2582172b3bcbbab035619f311c417249c7bd2f3800d530f6ea22c6bae1"
+          },
+          {
+            "path": "runs/integration-artwork-body-v2-20261002/male-evidence/416f1f52cb964d4189bd26cf218c780c/recording/manifest.json",
+            "bytes": 4204,
+            "sha256": "c43709e2a332472c3bbae677eef7f349328fb08fc20b2a54ec10011d9dae346f"
+          },
+          {
+            "path": "runs/integration-artwork-body-v2-20261002/male-evidence/764dcf9a94394cf28051a3d452eeae29/recording/chunks/000000.npz",
+            "bytes": 399110,
+            "sha256": "5dc3d93457dd9937053185de866666646350024612fb744835748ce6d7afaa6a"
+          },
+          {
+            "path": "runs/integration-artwork-body-v2-20261002/male-evidence/764dcf9a94394cf28051a3d452eeae29/recording/events.jsonl",
+            "bytes": 23325,
+            "sha256": "5d6353defc7f5eebd6cb17204b59b0507f010d0ba9e645bb1e5c6046556ec296"
+          },
+          {
+            "path": "runs/integration-artwork-body-v2-20261002/male-evidence/764dcf9a94394cf28051a3d452eeae29/recording/manifest.json",
+            "bytes": 4201,
+            "sha256": "127bf4cf17ea0bf6c46d6ed776992599b5972c16c13b7a7afa1d2a5fc9dfd237"
+          },
+          {
+            "path": "runs/integration-artwork-body-v2-20261002/male-evidence/84c80846973745c492cfa6ecd4f5cd6c/recording/chunks/000000.npz",
+            "bytes": 201820,
+            "sha256": "64f34621842abfc12ff427b5978de98a323f90518af5d45231e6b5309b1376ee"
+          },
+          {
+            "path": "runs/integration-artwork-body-v2-20261002/male-evidence/84c80846973745c492cfa6ecd4f5cd6c/recording/chunks/000001.npz",
+            "bytes": 399110,
+            "sha256": "328fd6ea2c14c988b7f7246a4de5bc58d7037d4aabf633177395c902cca2051d"
+          },
+          {
+            "path": "runs/integration-artwork-body-v2-20261002/male-evidence/84c80846973745c492cfa6ecd4f5cd6c/recording/events.jsonl",
+            "bytes": 24149,
+            "sha256": "fb9b6882973d58f49df869699752e014cb62154dcb01e3c98cde274debc3f4a2"
+          },
+          {
+            "path": "runs/integration-artwork-body-v2-20261002/male-evidence/84c80846973745c492cfa6ecd4f5cd6c/recording/manifest.json",
+            "bytes": 4035,
+            "sha256": "ae2a1da294c6fd296dcc0b9c2a6499977251020e3d8e08b4414ee9938d63f6ca"
+          },
+          {
+            "path": "runs/integration-artwork-body-v2-20261002/male-evidence/84c80846973745c492cfa6ecd4f5cd6c/snapshots/index.json",
+            "bytes": 1523,
+            "sha256": "53cb283cb72c91b33ec29a17fba70aa2410e081e8cb358f7e9bdaeed26d0a31d"
+          },
+          {
+            "path": "runs/integration-artwork-body-v2-20261002/male-evidence/84c80846973745c492cfa6ecd4f5cd6c/snapshots/initial.snp",
+            "bytes": 531765,
+            "sha256": "dde9989e498e1542217b782c02b61db1c433ade7741eaa027c021ba303c60908"
+          },
+          {
+            "path": "runs/integration-artwork-body-v2-20261002/male-evidence/9204b9ebfcc741838b0d2c293c80b780/recording/chunks/000000.npz",
+            "bytes": 399110,
+            "sha256": "6e6d1a8088feda3d7e2c5d0f7a6a96fed8edf1f4db964bf56f3d9b9aa6491ab0"
+          },
+          {
+            "path": "runs/integration-artwork-body-v2-20261002/male-evidence/9204b9ebfcc741838b0d2c293c80b780/recording/events.jsonl",
+            "bytes": 23337,
+            "sha256": "3948d1c90866dbafe179aa4a84310ca3a0885f127c51240d7ec1c43ddc929fe9"
+          },
+          {
+            "path": "runs/integration-artwork-body-v2-20261002/male-evidence/9204b9ebfcc741838b0d2c293c80b780/recording/manifest.json",
+            "bytes": 4204,
+            "sha256": "a7346333a968990a90e6ed0fba08077171a0b5ffaa41fff637af1328ad640174"
+          },
+          {
+            "path": "runs/integration-artwork-body-v2-20261002/male-evidence/a9b544e54e154f8ea5b1bb2e11af80fb/recording/chunks/000000.npz",
+            "bytes": 201820,
+            "sha256": "2a0ca7b2093b3edb0dee4712be00709ca0b0c857f35b08df31da5cd2dd1c2dee"
+          },
+          {
+            "path": "runs/integration-artwork-body-v2-20261002/male-evidence/a9b544e54e154f8ea5b1bb2e11af80fb/recording/chunks/000001.npz",
+            "bytes": 399110,
+            "sha256": "81cc7fe933e38405b52239e5bb804c9a2715cdc5eebfcae01c4d833f0c87185c"
+          },
+          {
+            "path": "runs/integration-artwork-body-v2-20261002/male-evidence/a9b544e54e154f8ea5b1bb2e11af80fb/recording/events.jsonl",
+            "bytes": 24159,
+            "sha256": "66a8d57eaa8bd93828a3042e38b0c097e91b4bc8674b2f1aedd7397cca7a226b"
+          },
+          {
+            "path": "runs/integration-artwork-body-v2-20261002/male-evidence/a9b544e54e154f8ea5b1bb2e11af80fb/recording/manifest.json",
+            "bytes": 4036,
+            "sha256": "2499919f401644a94869af44b6d039b5ce0a6f36cf473b82016a9301c19f6965"
+          },
+          {
+            "path": "runs/integration-artwork-body-v2-20261002/male-evidence/a9b544e54e154f8ea5b1bb2e11af80fb/snapshots/index.json",
+            "bytes": 1527,
+            "sha256": "2c7bf6371ca297b0de783e2b0c2a3dbddde973386024e73d18c8b2d39d337583"
+          },
+          {
+            "path": "runs/integration-artwork-body-v2-20261002/male-evidence/a9b544e54e154f8ea5b1bb2e11af80fb/snapshots/initial.snp",
+            "bytes": 531775,
+            "sha256": "c30639cbae9e57feee96584bb7b5a6a31002c3c48b56ff8b3d215cf043664e7f"
+          },
+          {
+            "path": "runs/integration-artwork-body-v2-20261002/male-evidence/b2939e0a30a64d92a233eb10356d1b75/recording/chunks/000000.npz",
+            "bytes": 596400,
+            "sha256": "2a93b71b066484073f1501c525a29d20919cd56c8b8438a1a47347fa9e56b84b"
+          },
+          {
+            "path": "runs/integration-artwork-body-v2-20261002/male-evidence/b2939e0a30a64d92a233eb10356d1b75/recording/events.jsonl",
+            "bytes": 25895,
+            "sha256": "8ce2aec91d0c145720c1cc578d574df945808db2e3c86f828a7c6653b87dc8d8"
+          },
+          {
+            "path": "runs/integration-artwork-body-v2-20261002/male-evidence/b2939e0a30a64d92a233eb10356d1b75/recording/manifest.json",
+            "bytes": 4410,
+            "sha256": "f582e435f1c0d05dca84de184af502e33594e8758ff01b8f0da7b046db1572e2"
+          },
+          {
+            "path": "runs/integration-artwork-body-v2-20261002/male-evidence/b2939e0a30a64d92a233eb10356d1b75/replay-report.json",
+            "bytes": 1650,
+            "sha256": "040a308e7e0a0f0d940c3d21ed9c46190192a57273a4e82ccb0922d7b944f679"
+          },
+          {
+            "path": "runs/integration-artwork-body-v2-20261002/male-evidence/b2939e0a30a64d92a233eb10356d1b75/snapshots/index.json",
+            "bytes": 1523,
+            "sha256": "9506633542f91d17bbb2acd700f4d760829602c85b516d6ff2f40034b819bbce"
+          },
+          {
+            "path": "runs/integration-artwork-body-v2-20261002/male-evidence/b2939e0a30a64d92a233eb10356d1b75/snapshots/initial.snp",
+            "bytes": 531767,
+            "sha256": "07b35c2ee7dab85b0de466c9ee3a6118f69efe3d28e484a3e2163c07f01a9ec6"
+          },
+          {
+            "path": "runs/integration-artwork-body-v2-20261002/male-evidence/b5892801a0bc4e5f815bd28b4ba55c3d/recording/chunks/000000.npz",
+            "bytes": 594234,
+            "sha256": "7cc126349c28fea3c8f0cac3bf8a6f0d6b82894c47c3c3056d6113787533678c"
+          },
+          {
+            "path": "runs/integration-artwork-body-v2-20261002/male-evidence/b5892801a0bc4e5f815bd28b4ba55c3d/recording/events.jsonl",
+            "bytes": 25977,
+            "sha256": "08b4d4bd750d2a1c97a8e0d82b9d3829821b171263cf0f507c35952cf85d4d87"
+          },
+          {
+            "path": "runs/integration-artwork-body-v2-20261002/male-evidence/b5892801a0bc4e5f815bd28b4ba55c3d/recording/manifest.json",
+            "bytes": 4415,
+            "sha256": "d49d21cd6925ae0f75e5949b08eb9fe8ce3cf4f4bd0f53d886f3ce6271eaf78d"
+          },
+          {
+            "path": "runs/integration-artwork-body-v2-20261002/male-evidence/b5892801a0bc4e5f815bd28b4ba55c3d/replay-report.json",
+            "bytes": 1923,
+            "sha256": "3ba8977504543dc3f25d07dae3d5cecaba03c4cc5c2f46dba4c36d2d66e9b93f"
+          },
+          {
+            "path": "runs/integration-artwork-body-v2-20261002/male-evidence/b5892801a0bc4e5f815bd28b4ba55c3d/snapshots/index.json",
+            "bytes": 1527,
+            "sha256": "a140f3f3d3d567988c42f6cc8fb023326aabe7d912068c90320e8ca65c33dbc8"
+          },
+          {
+            "path": "runs/integration-artwork-body-v2-20261002/male-evidence/b5892801a0bc4e5f815bd28b4ba55c3d/snapshots/initial.snp",
+            "bytes": 531778,
+            "sha256": "b25a2b0c758da46ce032a63c794d47616c20c695f7ac9f04802c28765d8fe664"
+          },
+          {
+            "path": "runs/integration-artwork-body-v2-20261002/male-evidence/bb64623921004aae8b9bbdaf5aee190e/recording/chunks/000000.npz",
+            "bytes": 596400,
+            "sha256": "97db02088bd480569a87c4a7af8af9c75ef6e44b0873bb25da1dc9370d972fe1"
+          },
+          {
+            "path": "runs/integration-artwork-body-v2-20261002/male-evidence/bb64623921004aae8b9bbdaf5aee190e/recording/events.jsonl",
+            "bytes": 25905,
+            "sha256": "35671840d2198706d1e9c0d0a834b4fc225b41ad20fae437f97ea3eee05f07ff"
+          },
+          {
+            "path": "runs/integration-artwork-body-v2-20261002/male-evidence/bb64623921004aae8b9bbdaf5aee190e/recording/manifest.json",
+            "bytes": 4411,
+            "sha256": "75dcc44f2bc08912825da4755807060ca02a570e7fc00db42833701f936ddc14"
+          },
+          {
+            "path": "runs/integration-artwork-body-v2-20261002/male-evidence/bb64623921004aae8b9bbdaf5aee190e/replay-report.json",
+            "bytes": 1650,
+            "sha256": "99667196af9bec6515cd4ecc1aab6933fb35e31254757ecf64ecb25d1cc24693"
+          },
+          {
+            "path": "runs/integration-artwork-body-v2-20261002/male-evidence/bb64623921004aae8b9bbdaf5aee190e/snapshots/index.json",
+            "bytes": 1527,
+            "sha256": "9a3cb3eb012549b3d79244faaec6fe2dfa8bc85fa072fc0fc246c92d725ebb7a"
+          },
+          {
+            "path": "runs/integration-artwork-body-v2-20261002/male-evidence/bb64623921004aae8b9bbdaf5aee190e/snapshots/initial.snp",
+            "bytes": 531777,
+            "sha256": "bfd1841758a72058ce45280c4a78f3b5d0b303eadf96c5c33dc0b86e11cffd77"
+          },
+          {
+            "path": "runs/integration-artwork-body-v2-20261002/male-evidence/report.json",
+            "bytes": 11513,
+            "sha256": "cde06de0a02f00384074cb60015c0b5725135ff9c20dd827f86a0e52502879e5"
+          },
+          {
+            "path": "runs/integration-artwork-body-v2-20261002/report.json",
+            "bytes": 18525,
+            "sha256": "0d29789dbe4ca722f17125dbe5df70c134becde4d8c51a91ce56bc48029e2d70"
+          },
+          {
+            "path": "runs/integration-artwork-body-v2-20261002/suite/stderr.log",
+            "bytes": 79746,
+            "sha256": "3475366b66f7d7d06c9ee481e191d22bacacacfe94c493501a76a758f03cafef"
+          },
+          {
+            "path": "runs/integration-artwork-body-v2-20261002/suite/stdout.log",
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          {
+            "path": "runs/integration-artwork-body-v2-20261002/suite/supervisor.json",
+            "bytes": 317,
+            "sha256": "dfbcc312c1466bf4a26a12f7c5a4835efef188d2ce1cb6435379f5bb056dcd31"
+          }
+        ],
+        "qualification_claims": []
+      }
+    ],
+    "correction": {
+      "commit": "68a8f19097b0d14b318c8871f521fa427331b877",
+      "file": "tests/test_profiles.py",
+      "reason": "Select the reproduction snapshot by scenario identity instead of the first listed scenario; the newly first body profile correctly disallows replacement by teacher."
+    },
+    "limitations": [
+      "Regression coverage with actual simulation/male gates enabled; historical task, endurance, held-out and physical qualification are not rerun."
+    ]
   }
 }

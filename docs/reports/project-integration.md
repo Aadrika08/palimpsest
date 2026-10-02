@@ -44,3 +44,17 @@ and native/replay gates enabled. The 300-second supervisor exits zero in
 The actual male mechanism check uses this checkout's tracked inference assets.
 This regression preserves the negative task outcomes in their separate reports;
 it does not establish useful navigation, memory transfer or online adaptation.
+
+At `68a8f19`, loaded body compensation, goal-handoff memory v4, Afterimage and
+anatomical pairs are integrated. All **395 tests pass, no skips**, in 56.706
+seconds with actual EGL, male Torch, native continuation and replay gates enabled.
+The 300-second supervisor exits zero in 58.875 seconds. Runtime/test/lock hashes
+remain unchanged, and the separate actual male mechanism report passes.
+
+The first combined attempt at `3932034` ran 395 tests in 58.927 seconds with one
+fixture error. Its scenario loop saved the first profile as a reproduction
+snapshot; the newly first manual-only body profile correctly rejected a teacher
+replacement. The one-line test fix selects `reproduction` by identity. Product
+controller restrictions are unchanged. Both attempts and their hashes are retained
+in the evidence index. This regression does not qualify historical task outcomes,
+online adaptation, exhibition operation, or physical hardware.
