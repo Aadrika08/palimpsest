@@ -15,6 +15,7 @@ class ProfileTests(unittest.TestCase):
         self.assertEqual(validate('sparse-navigation', 'checker', 'teacher')['n_obstacles'], 5)
         self.assertEqual(validate('texture-variation', 'realistic', 'flynn')['texture'], 'realistic')
         for args in [('reproduction', 'realistic', 'flynn'), ('unknown', 'checker', 'manual'),
+                     ('memory-passages', 'checker', 'teacher'),
                      ('reproduction', 'checker', 'replacement'), ('reproduction', 'unknown', 'manual')]:
             with self.assertRaises(ValueError):
                 validate(*args)

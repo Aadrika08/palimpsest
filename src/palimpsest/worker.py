@@ -92,15 +92,22 @@ def _sample(engine, run_id, trace, started, timing=None):
                 cameras[name].fill(0)
         raw = engine.observation["sensors"]
         sensors = [float(raw["collision"]), 0. if raw["collision_angle"] is None else float(raw["collision_angle"]),
-                   *map(float, raw["wind_direction"])]
+                   *(map(float, raw["wind_direction"]) if engine.memory is None else (None, None))]
         episode, tick, stage = state["episode"], state["episode_step"], "next"
+        if engine.memory is not None:
+            stage = 'pending-memory'
         projected = None
+    memory_view = None
+    if engine.memory is not None:
+        from .memory_task import inspect as inspect_memory
+        memory_view = inspect_memory(engine.memory)
     return {"version": 1, "type": "sample", "run_id": run_id, "mode": "live", "state": state,
             "world": engine.world(), "inputs": {"episode": episode, "tick": tick, "stage": stage,
                 "cam_left": image_data_url(cameras["cam_left"]), "cam_right": image_data_url(cameras["cam_right"]),
                 "sensors": sensors.tolist() if hasattr(sensors, "tolist") else sensors, "eyes": eyes},
             "transition": projected, "trace": copy.deepcopy(trace[-601:]), "wall_elapsed": time.monotonic() - started,
-            "performance": timing.view() if timing else None}
+            "performance": timing.view() if timing else None,
+            "memory": memory_view}
 
 
 class Conflict(ValueError):
@@ -346,7 +353,10 @@ def _own(config, commands, replies, display, disconnected, stop, progress, final
             if hashlib.sha256(snp_path.read_bytes()).hexdigest() != config["snapshot_sha256"]:
                 raise ValueError("Registered snapshot hash differs")
             snapshot = read_snapshot(snp_path)
-            engine.restore_branch(snapshot, replace_controller=config.get("replace_controller", False))
+            if 'memory_u' in config:
+                engine.restore_memory_branch(snapshot, config['memory_u'])
+            else:
+                engine.restore_branch(snapshot, replace_controller=config.get("replace_controller", False))
             trace = _trace(Path(config["source_run_path"]), snapshot["application"])
             engine.writer.event("branch_created", run_id=run_id, parent_snapshot_id=config["snapshot_id"],
                                 controller_replaced=config.get("replace_controller", False))

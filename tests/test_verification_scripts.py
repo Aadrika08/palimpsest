@@ -19,6 +19,23 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 class VerificationScriptTests(unittest.TestCase):
+    def test_memory_gate_retains_startup_failure_without_runtime(self):
+        with patch.object(sys, 'path', [str(ROOT / 'scripts'), *sys.path]):
+            spec = importlib.util.spec_from_file_location('memory_gate', ROOT / 'scripts/verify_memory.py')
+            module = importlib.util.module_from_spec(spec)
+            spec.loader.exec_module(module)
+        with tempfile.TemporaryDirectory() as temporary:
+            output = Path(temporary) / 'evidence'
+            args = SimpleNamespace(repo=ROOT, assets=Path(temporary), output=output, controller='manual')
+            with patch.object(module, 'create_app', side_effect=OSError('startup fixture')):
+                result = module.verify(args)
+            self.assertEqual(result['status'], 'failed')
+            self.assertEqual(result['error'], {'type': 'OSError', 'message': 'startup fixture'})
+            self.assertEqual(result, json.loads((output / 'report.json').read_text()))
+            self.assertNotIn('supervisor_shutdown_completed', result)
+            self.assertEqual(result['branches'], {})
+            self.assertEqual(len(result['script_sha256']), 64)
+
     def test_endurance_requires_completed_cycle_per_controller(self):
         # Verifier-boundary fixture only; no server, renderer or policy is launched.
         spec = importlib.util.spec_from_file_location('endurance_coverage', ROOT / 'scripts/verify_endurance.py')

@@ -11,6 +11,7 @@ SCENARIOS = {
     'target-relocation': ('Target relocation', 'Move the target while preserving its declared bearing cue.', 20),
     'vision-ablation': ('Vision ablation', 'Disable either eye or both; goal and contact cues remain available.', 20),
     'texture-variation': ('Texture variation', 'Compare upstream checker and realistic textures; an out-of-distribution test.', 20),
+    'memory-passages': ('Memory passages (development)', 'Authored two-passage scene with declared symbolic sensing and evidence-based reinspection; transfer is not yet qualified.', 20),
 }
 TEXTURES = ('checker', 'realistic')
 CONTROLLERS = ('manual', 'teacher', 'flynn')
@@ -22,13 +23,20 @@ def validate(scenario, texture, controller):
         raise ValueError('Unknown scenario, controller or texture')
     if scenario != 'texture-variation' and texture != 'checker':
         raise ValueError('Realistic textures require the texture-variation scenario')
+    if scenario == 'memory-passages' and controller == 'teacher':
+        raise ValueError('Memory passages requires manual or FLYNN control through the declared task cue')
     label, description, count = SCENARIOS[scenario]
-    return {'id': scenario, 'version': 1, 'label': label, 'description': description,
+    profile = {'id': scenario, 'version': 1, 'label': label, 'description': description,
             'texture': texture, 'n_obstacles': count, 'width': 128, 'height': 128,
             'arena': 7., 'max_steps': 600, 'control_interval_seconds': .02,
             'observation_profile': 'two-rgb-eyes-contact-relative-goal-bearing-v1',
             'controller': controller, 'teacher_privileged': controller == 'teacher',
             'task': 'navigation', 'logging': 'lossless-inputs-actions-world-v1'}
+    if scenario == 'memory-passages':
+        from .memory_world import PROFILE_SHA256
+        profile.update(task='memory-reinspection-development', world_protocol_sha256=PROFILE_SHA256,
+                       observation_profile='two-rgb-eyes-contact-visible-landmark-bearing-v1')
+    return profile
 
 
 def list_profiles(root, assets):
