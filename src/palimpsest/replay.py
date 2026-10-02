@@ -252,6 +252,11 @@ def replay_run(source_run_path, destination_run_path, *, mode, repo_root, asset_
         profile = manifest.get("scenario")
         if not isinstance(profile, dict) or not isinstance(profile.get("id"), str):
             raise ValueError("replay requires a recorded scenario configuration")
+        if profile['id'] == 'calibrated-wheel-compensation':
+            from .body_profile import TICK_FIELDS
+            report['comparison']['runtime_source_keys'] += list(_BODY_RUNTIME)
+            if mode == 'actions':
+                report['comparison']['fields'] = sorted(_PHYSICAL | TICK_FIELDS)
         memory_case = manifest.get('memory_case')
         if memory_case is not None:
             from .memory import sha256
