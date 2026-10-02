@@ -1469,5 +1469,33 @@
       "Regression includes mocked atomic memory admission checks; full CPU FLYNN memory continuation experiment remains unexecuted.",
       "Actual male checks use production v1 assets. No historical task, held-out, endurance or physical qualification rerun."
     ]
+  },
+  "adaptive_puck_regression": {
+    "source_commit": "54ef2001423c611240f7b6db856737473d909e96",
+    "tests": 483,
+    "passed": 483,
+    "skipped": 0,
+    "suite_seconds": 114.812,
+    "supervisor": {
+      "elapsed_seconds": 117.19197126100335,
+      "output": "/home/utkarsh/Work/shraddha/brain/.worktrees/project-integration/runs/integration-adaptive-puck-54ef200-20261002/supervisor",
+      "returncode": 0,
+      "schema_version": 1,
+      "started_utc": "2026-10-02T18:18:51.357957+00:00",
+      "status": "completed",
+      "timeout_seconds": 300
+    },
+    "all_runtime_gates_enabled": true,
+    "sources_unchanged": true,
+    "assets_unchanged": true,
+    "model_identities_unchanged": true,
+    "retained_files_rehashed": 50,
+    "report": "runs/integration-adaptive-puck-54ef200-20261002/report.json",
+    "report_sha256": "f199d0e28f0a882c5f769ae0ecc5174169f1550a0b858df8993a3c39041a01e1",
+    "limitations": [
+      "Actual male checks use production v1 assets. No historical task, held-out, endurance or physical qualification rerun.",
+      "New puck installation/reset checks use array-only fixtures; native disk construction remains a separate gate.",
+      "Adaptive development and fixed-FLYNN memory/replay experiments retain their separately frozen source and evidence."
+    ]
   }
 }

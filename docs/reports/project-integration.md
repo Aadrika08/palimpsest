@@ -104,3 +104,11 @@ At `d2a07eb`, the fixed thin-puck protocol and pure task primitives are integrat
 All 46 focused puck/task/body checks pass without skips in 0.494 seconds. This
 covers XML derivation and task arithmetic only; native model construction, contact
 dynamics, runtime integration and learned manipulation remain untested.
+
+## Adaptive calibration and staged puck regression
+
+Frozen combined source `54ef2001423c611240f7b6db856737473d909e96` passes all **483 tests without skips** in 114.812 seconds. The 300-second supervisor exits zero in 117.192 seconds. Simulation, male Torch and native/replay gates are enabled with the verified shared assets and unchanged production v1 models. Source/asset inventories remain unchanged; all 50 retained files were independently rehashed. Report `runs/integration-adaptive-puck-54ef200-20261002/report.json` has SHA256 `f199d0e28f0a882c5f769ae0ecc5174169f1550a0b858df8993a3c39041a01e1`.
+
+The combined source includes bounded executable memory replay, the adaptive verifier correction, and staged fixed-puck installation/reset. The preceding 55 focused puck/task/body checks pass in 0.633 seconds; an initial invocation omitted `tests` from `PYTHONPATH` and failed one module import before the corrected command. Puck fixtures check atomic ownership and rollback; native construction remains a separate gate.
+
+The separate [adaptive v2 gate](m6-body-adaptation-v2.md) now passes on its frozen source, and both own-source fixed-FLYNN executable replays pass. Those results supersede the earlier pending-work notes above without changing the historical regression scope. This combined suite does not repeat task, held-out, endurance, exhibition or physical qualification.
