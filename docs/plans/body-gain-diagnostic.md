@@ -1,9 +1,22 @@
 # Fixed wheel-response development diagnostic
 
-Preparation only: no actual collection has run for this protocol. This diagnostic
+Protocol v2 preparation only: no actual collection has run for this version. This diagnostic
 does not change Engine, task profiles, odometry, physical wheel dimensions, or
 controls. Acceptance is a prerequisite for reviewing any compensation proposal;
 it does not authorize integration.
+
+Protocol v1 ran once at `27b9990` and was **rejected** in 30.3621 seconds:
+[`report.json`](../../runs/m6-body-gain-diagnostic-20261002/report.json), SHA256
+`7f8c14fd1d68ecfd484b9ac4744b3be6f6af2de505e4d24147d0cef9e3a5b523`.
+All eight trials retained one settling interval, each with ten complete timed
+callback packets and cleanup, and exited 1. The global contact rule rejected
+4,800 floor–obstacle support pairs across 80 stages; there were no unexpected
+rover contacts in those packets. Thus there is no accepted fit or gain contrast.
+The obstacle bodies have three soft-limited slide joints, including z; observed
+support distances change during the interval, so they are not exactly stationary.
+V2 corrects the structural scope to **unexpected robot-incident contacts** while
+retaining every world-only contact. It does not change commands, scene, settling,
+trial count, or fit limits. The original rejection and all packets remain immutable.
 
 [`verify_body_gains.py`](../../scripts/verify_body_gains.py) declares eight fresh
 manual CPU trials: baseline and left-motor scalar gear multiplied by `0.8`, each
@@ -53,11 +66,26 @@ local header hashes are retained. Model/data native addresses must match each
 callback. Every interval must have ten packets at `start + i*.002`, invariant
 finite actual controls, and an end time `start+.02`.
 
-Each packet copies only contact geom IDs/names and finite signed distances, never
-contact forces or contact/control mutations. The sole support allowlist is floor
+Ownership is derived from the native model's complete body ancestry below `base`,
+with cycle/address bounds, not geom-name prefixes. The exact pinned five robot
+bodies and seven robot geoms (including caster fork and camera markers) are
+required. Every model geometry is recorded with ID/name, body ID/name, and
+robot/world ownership, bound to the immutable model digest. A missing/detached
+robot descendant or robot name outside the subtree rejects setup. Thus no robot
+geometry can enter the world-only exclusion.
+
+Each packet copies contact geom IDs/names, finite signed distances, and its
+classification, never contact forces or contact/control mutations. The sole rover
+support allowlist is floor
 paired with `left_wheel_geom`, `right_wheel_geom`, or `caster_wheel_geom`, resolved
-to known model IDs. Base, fork, wall, obstacle, self, unknown, or other pairs reject
-the trial, including during settling. At most 128 contacts are accepted per
+to known model IDs and verified ownership. Every other robot-incident pair,
+including base/fork-floor, robot-wall/obstacle, and self-contact, rejects the
+trial, including during settling. Unnamed/unknown contact geometry rejects
+coverage. Known pairs with neither geometry owned by the robot are retained as
+`world_only`, including moving soft-constrained obstacle support. They do not
+set the fit contact flag. This measures wheel response absent unexpected rover
+contact, not a static world or a whole-world no-contact state.
+At most 128 contacts are accepted per
 packet. All observed stages of a rejected interval are retained. Missing packets
 or instrumentation errors reject coverage; they never imply contact-free motion.
 
@@ -78,6 +106,9 @@ for the observed pipeline, not an independently rebuilt MuJoCo binary.
 Pure checks exercise gain support/contact/residual rejection, existing callback
 preservation, stage coverage, cached endpoint labeling, enum/pointer mismatch,
 finite distance guards, cleanup, and exact float64 manual action representation.
+V2 checks additionally retain world-only pairs, reject contact involving every
+robot geom and self-contact, and reject detachment that could otherwise move a
+robot geometry into the exclusion.
 They use small boundary fixtures and do not prove actual physics behavior.
 
 ```sh
@@ -87,7 +118,7 @@ PYTHONPATH=src ../lab-hardening/.venv/bin/python -m unittest discover -s tests -
 Only after review, frozen source, and an exclusive runtime window:
 
 ```sh
-PYTHONPATH=src MUJOCO_GL=egl OMP_NUM_THREADS=2 ../lab-hardening/.venv/bin/python scripts/verify_body_gains.py --assets /home/utkarsh/Work/shraddha/brain/.worktrees/r0-reproduction/data/assets/flynn --output runs/m6-body-gain-diagnostic-20261002
+PYTHONPATH=src MUJOCO_GL=egl OMP_NUM_THREADS=2 ../lab-hardening/.venv/bin/python scripts/verify_body_gains.py --assets /home/utkarsh/Work/shraddha/brain/.worktrees/r0-reproduction/data/assets/flynn --output runs/m6-body-gain-diagnostic-v2-20261002
 ```
 
 The output is exclusive. Protocol/source/harness hashes precede collection and

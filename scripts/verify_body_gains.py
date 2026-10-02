@@ -18,8 +18,11 @@ FIT_BOUNDS = {'max_samples': 400, 'min_samples': 100, 'min_excitation': 1.,
               'dt_bounds_s': [.02 - 1e-9, .02 + 1e-9], 'max_rate_rad_s': 100.,
               'max_residual_rad_s': 2., 'max_relative_rmse': .2}
 GROUND_SUPPORT = ['left_wheel_geom', 'right_wheel_geom', 'caster_wheel_geom']
+ROBOT_BODIES = {'base', 'left_wheel', 'right_wheel', 'front_caster_mount', 'caster_wheel'}
+ROBOT_GEOMS = {'base_geom', 'left_wheel_geom', 'right_wheel_geom', 'caster_fork',
+               'caster_wheel_geom', 'cam_left_marker', 'cam_right_marker'}
 PROTOCOL = {
-    'version': 1, 'claim': 'standalone development gain diagnostic; no runtime integration',
+    'version': 2, 'claim': 'standalone development gain diagnostic; no runtime integration',
     'trials': TRIALS, 'seed': 0, 'ticks': 120, 'settling_ticks': 20, 'fit_ticks': 100,
     'child_timeout_seconds': 120, 'recording_max_bytes': 64 * 1024**2,
     'start_pose': [-3.5, 0., 0.], 'goal_xy': [-3.5, 3.],
@@ -32,9 +35,11 @@ PROTOCOL = {
     'pipeline': {'mujoco_version': '3.3.6', 'integrator': 'Euler', 'physics_dt_s': .002,
                  'frame_skip': 10, 'control_dt_s': .02, 'max_contacts_per_stage': 128},
     'contact_allowlist': [['floor', name] for name in GROUND_SUPPORT],
+    'contact_scope': 'unexpected robot-incident contacts only; all world-only pairs retained and classified separately',
+    'robot_ownership': 'all descendants of pinned base body; exact robot body/geom names required',
     'contact_coverage': 'all ten pre-control position/velocity stages plus final cached pairs; '
                         'end pairs refer to last pre-integration stage, not a fresh endpoint evaluation',
-    'rejection': 'any non-allowlisted contact in any interval including settling, callback/pipeline '
+    'rejection': 'any unknown or non-allowlisted robot-incident contact in any interval including settling, callback/pipeline '
                  'mismatch, early termination, incomplete support, fit bounds or gain disagreement',
     'threshold_scope': 'predeclared DEVELOPMENT rejection limits; not physical safety/sensor limits',
 }
@@ -61,6 +66,43 @@ def fixed_action_matches(action, trial):
     return action == np.asarray(trial['action'], dtype=np.float64).tolist()
 
 
+def contact_ownership(mj, model):
+    """Partition every known geometry by the actual pinned base-body ancestry."""
+    if not 1 < model.nbody <= 128 or not 1 <= model.ngeom <= 128:
+        raise ValueError('Body/geometry count outside bounded ownership protocol')
+    root = mj.mj_name2id(model, mj.mjtObj.mjOBJ_BODY, 'base')
+    if not 0 < root < model.nbody:
+        raise ValueError('Missing pinned robot base body')
+    owned = set()
+    for body in range(model.nbody):
+        current, seen = body, set()
+        while current != 0:
+            if not 0 <= current < model.nbody or current in seen:
+                raise ValueError('Invalid body ownership tree')
+            seen.add(current)
+            if current == root:
+                owned.add(body)
+            current = int(model.body_parentid[current])
+    bodies = [{'body_id': body, 'name': mj.mj_id2name(model, mj.mjtObj.mjOBJ_BODY, body),
+               'parent_id': int(model.body_parentid[body])} for body in sorted(owned)]
+    if {entry['name'] for entry in bodies} != ROBOT_BODIES or len(bodies) != len(ROBOT_BODIES):
+        raise ValueError('Pinned robot descendant body set changed')
+    geometries = []
+    for geom in range(model.ngeom):
+        body = int(model.geom_bodyid[geom])
+        if not 0 <= body < model.nbody:
+            raise ValueError('Geometry references unknown body')
+        geometries.append({'geom_id': geom, 'name': mj.mj_id2name(model, mj.mjtObj.mjOBJ_GEOM, geom),
+                           'body_id': body, 'body_name': mj.mj_id2name(model, mj.mjtObj.mjOBJ_BODY, body),
+                           'owner': 'robot' if body in owned else 'world'})
+    robot = [entry for entry in geometries if entry['owner'] == 'robot']
+    if {entry['name'] for entry in robot} != ROBOT_GEOMS or len(robot) != len(ROBOT_GEOMS):
+        raise ValueError('Pinned robot descendant geometry set changed')
+    if any(entry['name'] in ROBOT_GEOMS for entry in geometries if entry['owner'] == 'world'):
+        raise ValueError('Robot geometry cannot be excluded as world-only')
+    return {'base_body_id': root, 'robot_bodies': bodies, 'geometries': geometries}
+
+
 class ContactProbe:
     """Read only the derived contact pairs; never contact forces or controls.
 
@@ -76,11 +118,15 @@ class ContactProbe:
         self.stages = []
         self.model_address, self.data_address = env.model._address, env.data._address
         self._check_pipeline()
+        self.ownership = contact_ownership(mujoco, env.model)
+        self.robot_geom_ids = {entry['geom_id'] for entry in self.ownership['geometries'] if entry['owner'] == 'robot'}
         names = ['floor', *GROUND_SUPPORT]
         identifiers = [self.mj.mj_name2id(env.model, self.mj.mjtObj.mjOBJ_GEOM, name) for name in names]
         if len(set(identifiers)) != len(names) or any(not 0 <= gid < env.model.ngeom for gid in identifiers):
             raise ValueError('Pinned named ground/support geometries required')
         self.support_pairs = {frozenset((identifiers[0], gid)) for gid in identifiers[1:]}
+        if identifiers[0] in self.robot_geom_ids or any(gid not in self.robot_geom_ids for gid in identifiers[1:]):
+            raise ValueError('Ground support ownership mismatch')
 
     def _check_pipeline(self):
         option = self.env.model.opt
@@ -127,14 +173,20 @@ class ContactProbe:
             if any(not 0 <= gid < model.ngeom for gid in ids):
                 raise ValueError('Contact references unknown geometry')
             names = [self.mj.mj_id2name(model, self.mj.mjtObj.mjOBJ_GEOM, gid) for gid in ids]
+            if any(type(name) is not str or not name for name in names):
+                raise ValueError('Contact references unnamed/unknown geometry')
             allowed = (frozenset(ids) in self.support_pairs and
                        (names[0] == 'floor' and names[1] in GROUND_SUPPORT or
                         names[1] == 'floor' and names[0] in GROUND_SUPPORT))
             distance = float(contact.dist)
             if not math.isfinite(distance):
                 raise ValueError('Nonfinite contact distance')
+            incident = any(gid in self.robot_geom_ids for gid in ids)
+            classification = ('rover_ground_support' if allowed else
+                              'unexpected_robot_contact' if incident else 'world_only')
             pairs.append({'geom_ids': ids, 'geom_names': names, 'distance_m': distance,
-                          'allowed_ground_support': allowed})
+                          'allowed_ground_support': allowed, 'classification': classification,
+                          'rejects_fit': incident and not allowed})
         return pairs
 
     def _capture(self, model, data):
@@ -178,7 +230,7 @@ class ContactProbe:
             errors.append(str(error))
         if self.stages and end['pairs'] != self.stages[-1]['pairs']:
             errors.append('End contacts differ from last pre-integration cache')
-        contact = any(not pair['allowed_ground_support']
+        contact = any(pair['rejects_fit']
                       for packet in [*self.stages, end] for pair in packet['pairs'])
         return {'tick': self.tick, 'start_time_s': self.start, 'callback_count': self.count,
                 'stages': self.stages, 'end': end, 'contact': contact,
@@ -280,15 +332,19 @@ def worker(config):
         override_hash = hashlib.sha256(json.dumps(override, sort_keys=True, separators=(',', ':'), allow_nan=False).encode()).hexdigest()
         result.update(actual_initial_world=world, actual_initial_sample=sample(env), physical_calibration=calibration,
                       model_override=override, world_override_sha256=override_hash)
+        probe = ContactProbe(mujoco, env)
+        result['contact_ownership'] = {**probe.ownership, 'model_sha256': override['actual_model_sha256']}
         engine.writer.manifest.update(gain_protocol=PROTOCOL, gain_trial=trial, gain_protocol_sha256=PROTOCOL_SHA256,
                                       standalone_calibration=True, initial_world=world,
-                                      gain_world_override=override, gain_world_override_sha256=override_hash)
+                                      gain_world_override=override, gain_world_override_sha256=override_hash,
+                                      gain_contact_ownership=result['contact_ownership'])
         engine.writer.event('gain_world_authored', protocol=PROTOCOL, trial=trial,
                             protocol_sha256=PROTOCOL_SHA256, override=override, revision=engine.revision,
+                            contact_ownership=result['contact_ownership'],
                             script_sha256=digest(__file__), harness_sha256=harness_hashes())
         _register_initial(engine, run)
         result['initial_snapshot_sha256'] = digest(run / 'snapshots/initial.snp')
-        probe = ContactProbe(mujoco, env); probe.install()
+        probe.install()
         command(engine, 'fixed-action', 'set_action', {'action': trial['action']})
         for tick in range(120):
             before = sample(env)
@@ -366,6 +422,7 @@ def verify(args):
         report['status'] = 'passed' if report['fit']['accepted'] else 'rejected'
         report['limitations'] = ['Empirical settled torque-control/shaft response; no universal velocity model.',
                                 'Pre-control contact stages only; cached end contacts, no continuous collision claim.',
+                                'World-only contacts remain recorded and may move; no static-world/no-world-contact claim.',
                                 'Standalone authored/model override; no ordinary playback or snapshot restore qualification.',
                                 'No compensation, online truth correction, held-out, learned or physical safety claim.']
     except Exception as error:
