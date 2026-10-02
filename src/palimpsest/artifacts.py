@@ -330,14 +330,18 @@ def playback(run_path, episode=0, tick=0):
             "transition": transition, "trace": copy.deepcopy(item["trace"][:offset + 2]), "wall_elapsed": None,
             "memory": next((copy.deepcopy(event['memory']) for event in reversed(data['events'])
                             if event['kind'] == 'memory_inspected' and event.get('episode') == episode
-                            and event.get('episode_step') == tick), None)}
+                            and event.get('episode_step') == tick), None),
+            "task": next((copy.deepcopy(event['task']) for event in reversed(data['events'])
+                          if event['kind'] == 'task_inspected' and event.get('episode') == episode
+                          and event.get('episode_step') == tick), None)}
 
 
 def _provenance(data):
     manifest = data["manifest"]
     keys = ("controller", "profile", "scenario", "texture", "seed", "requested_device", "teacher_privileged", "initial_world",
             "observation_profile", "control_interval_seconds", "continuation_contract", "parent_run_id",
-            "parent_event_prefix", "source_snapshot_id", "snapshot_id", "controller_replacement", "replay_mode", "initial_memory")
+            "parent_event_prefix", "source_snapshot_id", "snapshot_id", "controller_replacement", "replay_mode", "initial_memory",
+            "task_protocol", "task_calibration", "task_profile_sha256")
     result = {key: manifest.get(key) for key in keys}
     result["environment"] = [{key: value for key, value in event.items() if key not in {"sequence", "run_id"}}
                              for event in data["events"] if event["kind"] == "environment"]

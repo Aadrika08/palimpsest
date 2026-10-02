@@ -1,5 +1,8 @@
 # M6 pure mechanism slice
 
+Subsequent development wiring is documented in [exploration and homing](m6-exploration-homing.md).
+The scope and synthetic evidence below describe the original pure slice.
+
 Base: `4cf9674`; upstream source inspected read-only at pinned
 `8d964599119b420de67ee259434d273651a1a76d` in the `lab-hardening` worktree.
 The new `task-profiles` worktree does not initialize or download that submodule.

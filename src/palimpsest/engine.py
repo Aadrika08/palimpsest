@@ -97,6 +97,9 @@ class Engine:
         self.controller, self.policy, self.teacher = controller, policy, teacher
         self.scenario, self.texture = scenario, texture
         self.memory = self.world_task_state = None
+        self.task_state = None
+        if scenario in ('exploration-landmarks', 'encoder-homing') and controller == 'teacher':
+            raise ValueError('Declared tasks cannot use the privileged geometry teacher')
         self.revision = 0
         self.eyes = {"left": True, "right": True}
         self.last_transition = None
@@ -232,6 +235,12 @@ class Engine:
             else:
                 self.memory = memory_task.reset(self.memory, episode_id=episode_id)
             self.observation = self.env._get_obs()
+        if self.scenario in ('exploration-landmarks', 'encoder-homing'):
+            from . import task_profiles
+            task_profiles.configure_world(self.env)
+            self.task_state = task_profiles.initialize(self.scenario, f'episode-{self.episode}',
+                task_profiles.encoder_angles(self.env), task_profiles.body_calibration(self.env))
+            self.observation = self.env._get_obs()
         if type(self.env.model).__module__.startswith("mujoco"):
             from .profiles import validate_world
             validate_world(self.env, require_route=self.scenario == 'sparse-navigation')
@@ -251,10 +260,17 @@ class Engine:
             from .memory import sha256
             self.writer.manifest['initial_memory'] = {
                 key: sha256(self.memory[key]) for key in ('m', 'e', 'u')}
+        if self.task_state is not None:
+            from .task_profiles import PROTOCOL
+            self.writer.manifest['task_protocol'] = copy.deepcopy(PROTOCOL)
+            self.writer.manifest['task_calibration'] = copy.deepcopy(self.task_state['odometry']['calibration'])
+            self.writer.manifest['task_profile_sha256'] = self.task_state['profile_sha256']
         self._event("episode_started", seed=self.seed, goal=self.env._goal_xy.tolist(),
                     obstacles=self.env._obstacle_xy.tolist(), initial_qpos=self.env.data.qpos.tolist(),
                     initial_qvel=self.env.data.qvel.tolist(),
-                    reset_protocol=("authored memory development layout; initial M, retained E/U, fresh episodic state"
+                    reset_protocol=("authored declared task layout; fresh local encoder, supervisor and controller state"
+                                    if self.task_state is not None else
+                                    "authored memory development layout; initial M, retained E/U, fresh episodic state"
                                     if self.memory is not None else "fresh physics and controller episode state; upstream seeded layout"),
                     world=self.world(), revision=self.revision, eyes=self.eyes)
 
@@ -371,6 +387,8 @@ class Engine:
         elif kind == "stop":
             self.phase = "stopped"
             self.manual_action[:] = 0.
+            if self.task_state is not None:
+                self.env.data.ctrl[:] = 0.
             self._end_episode("user_stop")
         elif kind == "reset":
             self._end_episode("reset")
@@ -407,6 +425,8 @@ class Engine:
         self.phase = "failed"
         self.revision += 1
         self.manual_action[:] = 0.
+        if self.task_state is not None:
+            self.env.data.ctrl[:] = 0.
         self.last_outcome = {"reason": "runtime_failure", "episode": self.episode,
                              "steps": self.episode_step, "type": type(error).__name__,
                              "message": str(error), "policy_diagnostics": getattr(self.policy, "failure_diagnostics", None)}
@@ -426,6 +446,19 @@ class Engine:
         from .evaluate import outcome
 
         obs = self.observation
+        task_hold = False
+        if self.task_state is not None:
+            from . import task_profiles
+            packet = task_profiles.capture(self.env, self.task_state, self.episode_step)
+            self._event('task_sensed', packet=packet)
+            self.task_state, bearing, task_hold, decisions = task_profiles.advance(self.task_state, packet)
+            for decision in decisions:
+                self._event('task_decision', detail=decision)
+            self._event('task_cue', bearing=bearing, hold=task_hold)
+            self._event('task_inspected', task=copy.deepcopy(self.task_state))
+            obs = {**obs, 'sensors': {**obs['sensors'], 'wind_direction': bearing}}
+            if bool(obs['sensors']['collision']):
+                raise ValueError('Declared task contact: control halted before physics step')
         if self.memory is not None:
             from . import memory_task, memory_world
             self.world_task_state, changes = memory_world.advance_world(self.env, self.world_task_state, self.episode_step)
@@ -475,6 +508,10 @@ class Engine:
         else:
             action = self.manual_action
         action = _action(action, manual=self.controller == "manual")
+        if task_hold:
+            if action_override is not None and np.any(action != 0.):
+                raise ValueError('Recorded action violates stopped-dwell hold')
+            action = np.zeros(2, dtype=action.dtype)
         latency = time.perf_counter() - started
         started = time.perf_counter()
         next_obs, reward, terminated, truncated, info = self.env.step(action)
@@ -500,7 +537,15 @@ class Engine:
         self.metrics["reward"] += float(reward)
         self.metrics["contact_ticks"] += int(bool(sensors["collision"]))
         self.metrics["path_length"] += float(np.linalg.norm(next_pose[:2] - pose[:2]))
-        if self.memory is not None and (self.memory['active'] is not None or self.memory['requests']):
+        if self.task_state is not None:
+            # Goal distance/reward remain evaluator data, never a task cue or
+            # completion criterion. No hidden true-pose speed establishes dwell.
+            reason = ('collision' if next_obs['sensors']['collision'] else
+                      'stalled' if info.get('stalled') else
+                      'task_completed' if self.task_state['phase'] == 'complete' else
+                      'time_limit' if truncated else None)
+            terminated = reason in ('collision', 'stalled', 'task_completed')
+        elif self.memory is not None and (self.memory['active'] is not None or self.memory['requests']):
             # Reaching the common goal does not complete a pending inspection.
             reason = ('stalled' if info.get('stalled') else
                       'collision' if self.env.end_on_collision and next_obs['sensors']['collision'] else
@@ -511,7 +556,19 @@ class Engine:
         if reason:
             self.phase = "terminated" if terminated else "truncated"
             self.revision += 1
-            self._end_episode(reason, final_distance=float(info["dist_to_goal"]))
+            if self.task_state is not None:
+                self.env.data.ctrl[:] = 0.
+                details = {'upstream_goal_distance_m': float(info['dist_to_goal']),
+                           'task_phase': self.task_state['phase'],
+                           'completed_inspection_ids': self.task_state['completed_ids']}
+                if self.scenario == 'encoder-homing':
+                    from .memory_world import START_POSE
+                    odometry = self.task_state['odometry']
+                    details.update(evaluator_actual_home_distance_m=math.dist(next_pose[:2], START_POSE[:2]),
+                        estimated_home_distance_m=math.hypot(odometry['x_m'], odometry['y_m']))
+                self._end_episode(reason, **details)
+            else:
+                self._end_episode(reason, final_distance=float(info["dist_to_goal"]))
 
     def advance(self, action_override=None):
         self._active()
@@ -551,6 +608,7 @@ class Engine:
                               "episode": self.episode, "episode_step": self.episode_step,
                               "total_tick": self.total_tick, "pending_commands": len(self._pending),
                               "metrics": self.metrics, "last_outcome": self.last_outcome,
+                              "task": self.task_state,
                               "closed": self._closed})
 
     @property
@@ -605,6 +663,8 @@ class Engine:
         """Owner-only safety boundary, independent of ordinary command capacity."""
         self._active()
         self.manual_action[:] = 0.
+        if self.task_state is not None:
+            self.env.data.ctrl[:] = 0.
         if self._recording_failed:
             return self.public_state()
         try:
@@ -634,9 +694,10 @@ class Engine:
                 size += len(data)
                 count += data.count(b"\n")
         from .snapshots import controller_hashes
-        return copy.deepcopy({"schema_version": 3, "source_run_id": self.run_id,
+        return copy.deepcopy({"schema_version": 4, "source_run_id": self.run_id,
             "execution_mode": self.writer.manifest.get('execution_mode', 'live'),
             "memory": self.memory, "world_task_state": self.world_task_state,
+            "task_state": self.task_state,
             "controller_tensors": controller_hashes(self.policy) if self.memory is not None else None,
             "revision": self.revision, "eyes": self.eyes, "scenario": self.scenario, "texture": self.texture,
             "event_prefix": {"sha256": digest.hexdigest(), "size_bytes": size, "event_count": count},
@@ -658,12 +719,15 @@ class Engine:
                 and not {'memory', 'world_task_state', 'controller_tensors', 'execution_mode'} & state.keys()):
             # Legacy application snapshots have no artificial-memory state.
             state.update(schema_version=3, memory=None, world_task_state=None, controller_tensors=None, execution_mode='live')
+        if (type(state) is dict and state.get('schema_version') == 3
+                and self.scenario not in ('exploration-landmarks', 'encoder-homing') and 'task_state' not in state):
+            state.update(schema_version=4, task_state=None)
         expected = {"schema_version", "source_run_id", "event_prefix", "teacher_reset_identity", "controller", "episode", "total_tick",
                     "revision", "eyes", "scenario", "texture",
                     "episode_step", "phase", "manual_action", "metrics", "last_outcome", "seed",
                     "episode_finished", "pending_commands", "session_exhausted", "recording_failed",
-                    "receipts", "original_commands", "memory", "world_task_state", "controller_tensors", "execution_mode"}
-        if not isinstance(state, dict) or set(state) != expected or type(state["schema_version"]) is not int or state["schema_version"] != 3 or state["controller"] != self.controller or state["phase"] != "paused":
+                    "receipts", "original_commands", "memory", "world_task_state", "controller_tensors", "execution_mode", "task_state"}
+        if not isinstance(state, dict) or set(state) != expected or type(state["schema_version"]) is not int or state["schema_version"] != 4 or state["controller"] != self.controller or state["phase"] != "paused":
             raise ValueError("incompatible application state or non-paused snapshot")
         if state["teacher_reset_identity"] != self._teacher_reset_identity:
             raise ValueError("teacher reset baseline identity differs")
@@ -697,6 +761,17 @@ class Engine:
                 raise ValueError('Actual graph buffers or learned parameters differ')
         elif any(state[key] is not None for key in ('memory', 'world_task_state', 'controller_tensors')):
             raise ValueError('Memory state requires the memory task profile')
+        if self.task_state is not None:
+            from .task_profiles import validate_state
+            state['task_state'] = validate_state(state['task_state'])
+            task = state['task_state']
+            if (task['scenario'] != self.scenario or task['profile_sha256'] != self.task_state['profile_sha256']
+                    or task['episode_id'] != f"episode-{state['episode']}"
+                    or task['last_tick'] != (state['episode_step'] - 1 if state['episode_step'] else None)
+                    or task['phase'] == 'complete'):
+                raise ValueError('Task identity/cursor differs from paused application boundary')
+        elif state['task_state'] is not None:
+            raise ValueError('Task state requires a declared exploration/homing profile')
         if not isinstance(state["source_run_id"], str) or not state["source_run_id"] or state["source_run_id"] == self.run_id or type(state["episode_finished"]) is not bool:
             raise ValueError("invalid source identity or episode flag")
         if state["session_exhausted"] is not False or state["recording_failed"] is not False:
@@ -726,7 +801,7 @@ class Engine:
         state = self.validate_application(state)
         self.parent_run_id = state["source_run_id"]
         self.parent_event_prefix = state["event_prefix"]
-        for name in ("episode", "total_tick", "episode_step", "phase", "metrics", "last_outcome", "seed", "revision", "eyes", "memory", "world_task_state"):
+        for name in ("episode", "total_tick", "episode_step", "phase", "metrics", "last_outcome", "seed", "revision", "eyes", "memory", "world_task_state", "task_state"):
             setattr(self, name, state[name])
         self.manual_action = _action(state["manual_action"], manual=True)
         self._episode_finished = state["episode_finished"]

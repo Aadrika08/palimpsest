@@ -92,10 +92,12 @@ def _sample(engine, run_id, trace, started, timing=None):
                 cameras[name].fill(0)
         raw = engine.observation["sensors"]
         sensors = [float(raw["collision"]), 0. if raw["collision_angle"] is None else float(raw["collision_angle"]),
-                   *(map(float, raw["wind_direction"]) if engine.memory is None else (None, None))]
+                   *(map(float, raw["wind_direction"]) if engine.memory is None and engine.task_state is None else (None, None))]
         episode, tick, stage = state["episode"], state["episode_step"], "next"
         if engine.memory is not None:
             stage = 'pending-memory'
+        elif engine.task_state is not None:
+            stage = 'pending-task'
         projected = None
     memory_view = None
     if engine.memory is not None:
@@ -107,7 +109,7 @@ def _sample(engine, run_id, trace, started, timing=None):
                 "sensors": sensors.tolist() if hasattr(sensors, "tolist") else sensors, "eyes": eyes},
             "transition": projected, "trace": copy.deepcopy(trace[-601:]), "wall_elapsed": time.monotonic() - started,
             "performance": timing.view() if timing else None,
-            "memory": memory_view}
+            "memory": memory_view, "task": copy.deepcopy(engine.task_state)}
 
 
 class Conflict(ValueError):

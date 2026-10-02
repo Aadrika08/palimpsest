@@ -664,7 +664,7 @@ def create_app(repo_root, asset_root, runs_root, export_root=None, *, port=8765,
                     raise ValueError('Registered snapshot hash differs')
                 snapshot = read_snapshot(path)
                 application = snapshot['application']
-                if (application.get('schema_version') != 3 or application.get('scenario') != 'memory-passages'
+                if (application.get('schema_version') not in (3, 4) or application.get('scenario') != 'memory-passages'
                         or application.get('source_run_id') != source or application.get('phase') != 'paused'
                         or application.get('execution_mode') not in ('live', 'policy')):
                     raise ValueError('U-only branch requires a complete paused memory snapshot')
