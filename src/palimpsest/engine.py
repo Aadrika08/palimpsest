@@ -121,7 +121,8 @@ class Engine:
 
     @classmethod
     def open(cls, repo_root, asset_root, output, controller="manual", device="cpu", seed=0,
-             max_bytes=2 * 1024**3, scenario="reproduction", texture="checker", run_id=None):
+             max_bytes=2 * 1024**3, scenario="reproduction", texture="checker", run_id=None,
+             storage_budget=None):
         """Create an actual pinned runtime. The caller owns its process watchdog."""
         from .assets import load_manifest, prepare_graph, sha256_file, verify_assets
         from .doctor import diagnose
@@ -150,7 +151,7 @@ class Engine:
                 "integer_and_camera_exact": True,
                 "scope": "matching software/hardware regime; compare before claiming repeatability",
                 "cuda_limit": "upstream CSR inference can vary even with identical inputs and deterministic algorithms enabled"},
-        }, max_bytes=max_bytes)
+        }, max_bytes=max_bytes, storage_budget=storage_budget)
         env = None
         try:
             diagnosis = diagnose(root, assets)

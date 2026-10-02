@@ -138,14 +138,17 @@ def _compatible(source, destination):
         raise ValueError("replay runtime provenance differs (upstream, lock or relevant runtime source)")
 
 
-def _register_initial(engine, destination):
+def _register_initial(engine, destination, storage_budget=None, preflight_bytes=0):
     from .snapshots import capture, save_snapshot
     path = destination / "snapshots"
     path.mkdir(exist_ok=True)
     snapshot = capture(engine.env, engine.observation, policy=engine.policy, teacher=engine.teacher,
                        application=engine.application_state())
     filename = path / "initial.snp"
-    save_snapshot(snapshot, filename)
+    if storage_budget is not None:
+        storage_budget.check_count("snapshots", 0)
+    save_snapshot(snapshot, filename, storage_budget=storage_budget,
+                  preflight_bytes=preflight_bytes if storage_budget is not None else 0)
     with filename.open("rb") as stream:
         digest = hashlib.file_digest(stream, "sha256").hexdigest()
     identifier = uuid.uuid4().hex
@@ -153,19 +156,26 @@ def _register_initial(engine, destination):
         "revision": engine.revision, "episode": engine.episode, "tick": engine.episode_step, "sha256": digest,
         "config": {"scenario": engine.scenario, "texture": engine.texture, "controller": engine.controller,
                    "device": engine.writer.manifest["requested_device"], "seed": engine.seed}}}
-    with (path / "index.json").open("x", encoding="utf-8") as stream:
-        json.dump({"version": 1, "snapshots": registry}, stream, allow_nan=False)
-        stream.write("\n")
+    payload = (json.dumps({"version": 1, "snapshots": registry}, allow_nan=False) + "\n").encode()
+    if storage_budget is not None:
+        storage_budget.check(len(payload), path=path / "index.json")
+    with (path / "index.json").open("xb") as stream:
+        stream.write(payload)
     engine.writer.event("snapshot_registered", run_id=engine.run_id, snapshot_id=identifier, filename="initial.snp",
                         initial=True, sha256=digest, episode=engine.episode, tick=engine.episode_step, revision=engine.revision)
     return identifier
 
 
-def _write_report(destination, report):
+def _write_report(destination, report, storage_budget=None):
     import os
     path = destination / "replay-report.json"
     payload = json.dumps(report, allow_nan=False, indent=2) + "\n"
     temporary = destination / ".replay-report.tmp"
+    if len(payload.encode()) > 1024**2:
+        raise RuntimeError("Replay report exceeds reserved 1 MiB")
+    if storage_budget is not None:
+        from .storage import StorageBudget
+        StorageBudget(storage_budget.roots, storage_budget.limits).check(len(payload.encode()), path=temporary)
     try:
         with temporary.open("x", encoding="utf-8") as stream:
             stream.write(payload)
@@ -176,7 +186,8 @@ def _write_report(destination, report):
         temporary.unlink(missing_ok=True)
 
 
-def replay_run(source_run_path, destination_run_path, *, mode, repo_root, asset_root, progress=None):
+def replay_run(source_run_path, destination_run_path, *, mode, repo_root, asset_root, progress=None,
+               storage_budget=None):
     """Replay a completed source in a fresh owner process supplied by the caller.
 
     Action replay restores the same controller for snapshot compatibility, then
@@ -225,7 +236,8 @@ def replay_run(source_run_path, destination_run_path, *, mode, repo_root, asset_
         from .engine import Engine
         engine = Engine.open(Path(repo_root), Path(asset_root), destination / "recording",
             controller=manifest["controller"], device=manifest["requested_device"], seed=manifest["seed"],
-            scenario=profile["id"], texture=manifest["texture"], run_id=destination.name)
+            scenario=profile["id"], texture=manifest["texture"], run_id=destination.name,
+            storage_budget=storage_budget)
         _compatible(data["events"], _events(destination))
         engine.restore_branch(snapshot)
         del snapshot
@@ -236,7 +248,10 @@ def replay_run(source_run_path, destination_run_path, *, mode, repo_root, asset_
             engine.writer.manifest["population_names"] = []
         engine.writer.event("replay_started", run_id=engine.run_id, mode=mode, source_run_id=manifest["run_id"],
                             source_snapshot_id=registration["snapshot_id"], comparison=report["comparison"])
-        report["initial_snapshot_id"] = _register_initial(engine, destination)
+        estimate = sum(path.stat().st_size for path in data["paths"]) + 1024**2
+        report["storage_preflight"] = {"source_ticks": manifest.get("recorded_ticks"),
+            "recording_bytes_estimate": estimate, "scope": "source recording bytes plus overhead and actual initial snapshot"}
+        report["initial_snapshot_id"] = _register_initial(engine, destination, storage_budget, estimate)
         original_tick, original_event = engine.writer.tick, engine.writer.event
         def collect_tick(episode, tick, **arrays):
             nonlocal actual_tick
@@ -326,6 +341,9 @@ def replay_run(source_run_path, destination_run_path, *, mode, repo_root, asset_
     except Exception as error:
         report["status"] = "failed"
         report["errors"].append({"type": type(error).__name__, "message": str(error)[:4096]})
+        from .storage import StorageLimitError
+        if engine is not None and isinstance(error, StorageLimitError):
+            engine._fail(error)
     finally:
         if tick_iterator is not None:
             tick_iterator.close()
@@ -355,7 +373,7 @@ def replay_run(source_run_path, destination_run_path, *, mode, repo_root, asset_
                     engine.close()
                 except Exception:
                     pass
-        _write_report(destination, report)
+        _write_report(destination, report, storage_budget)
     return report
 
 
@@ -365,8 +383,13 @@ def main(argv=None):
         raise SystemExit("usage: python -m palimpsest.replay '{JSON configuration}'")
     config = json.loads(argv[0])
     required = {"source_run_path", "destination_run_path", "mode", "repo_root", "asset_root"}
-    if not isinstance(config, dict) or set(config) != required:
+    if not isinstance(config, dict) or not required <= set(config) or set(config) - required - {"storage"}:
         raise SystemExit("replay configuration requires exactly source_run_path,destination_run_path,mode,repo_root,asset_root")
+    storage = config.pop("storage", None)
+    if storage is not None:
+        from .storage import StorageBudget, StorageLimits
+        config["storage_budget"] = StorageBudget(tuple(Path(p) for p in storage["roots"]),
+            StorageLimits(**storage["limits"]), headroom_bytes=storage["headroom_bytes"])
     report = replay_run(**config)
     print(json.dumps(report, allow_nan=False))
     return 0 if report["status"] == "passed" else 1

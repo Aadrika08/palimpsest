@@ -3,6 +3,7 @@
 import asyncio
 import contextlib
 import copy
+from dataclasses import asdict
 import json
 import multiprocessing as mp
 import os
@@ -30,9 +31,14 @@ def _id(value):
     return value
 
 
-def _json(path, value):
+def _json(path, value, budget=None):
     temporary = path.with_suffix(".tmp")
-    temporary.write_text(json.dumps(value, allow_nan=False, indent=2) + "\n")
+    payload = (json.dumps(value, allow_nan=False, indent=2) + "\n").encode()
+    if len(payload) > 4 * 1024**2:
+        raise RuntimeError("Supervisor report exceeds 4 MiB")
+    if budget is not None:
+        budget.check(len(payload), path=temporary)
+    temporary.write_bytes(payload)
     temporary.replace(path)
 
 
@@ -46,9 +52,25 @@ class LabSupervisor:
     """Process/IPC boundaries are injectable only for supervision tests."""
     MAX_COMPLETED = 8
     def __init__(self, repo_root, asset_root, runs_root, *, startup_timeout=180., step_timeout=30.,
-                 headless_continue=False, worker_target=run_worker):
+                 headless_continue=False, worker_target=run_worker, export_root=None,
+                 storage_limits=None, log_max_bytes=1024**2):
+        from .storage import StorageBudget, StorageLimits
         self.repo_root, self.asset_root, self.runs_root = (Path(p).resolve() for p in (repo_root, asset_root, runs_root))
+        self.export_root = Path(export_root or self.runs_root / "exports").resolve()
+        for root in (self.runs_root, self.export_root):
+            if root == self.asset_root or root in self.asset_root.parents or self.asset_root in root.parents:
+                raise ValueError("Model assets must be outside managed storage roots")
         self.runs_root.mkdir(parents=True, exist_ok=True)
+        self.export_root.mkdir(parents=True, exist_ok=True)
+        if type(log_max_bytes) is not int or not 1024 <= log_max_bytes <= 64 * 1024**2:
+            raise ValueError("Per-stream log limit must be 1 KiB to 64 MiB")
+        self.log_max_bytes = log_max_bytes
+        roots, limits = (self.runs_root, self.export_root), storage_limits or StorageLimits()
+        self.budget = StorageBudget(roots, limits, headroom_bytes=2 * log_max_bytes + 8 * 1024**2)
+        self.control_budget = StorageBudget(roots, limits)
+        self._storage_lock = self.budget.lock()
+        self._storage_lock.__enter__()
+        self._storage_closed = False
         self.startup_timeout, self.step_timeout = startup_timeout, step_timeout
         self.headless_continue, self.worker_target = headless_continue, worker_target
         self.context = mp.get_context("spawn")
@@ -73,9 +95,15 @@ class LabSupervisor:
                 raise RuntimeError("Previous owner is still closing; wait for process exit")
             identifier = uuid.uuid4().hex
             path = self.runs_root / identifier
+            self.budget.check_count("runs", sum(p.is_dir() and ID.fullmatch(p.name) is not None for p in self.runs_root.iterdir()))
+            self.budget.check(1024**2, path=path)
             path.mkdir()
             config = {**config, "run_id": identifier, "run_path": str(path),
-                      "repo_root": str(self.repo_root), "asset_root": str(self.asset_root)}
+                      "repo_root": str(self.repo_root), "asset_root": str(self.asset_root),
+                      "headless_continue": self.headless_continue,
+                      "log_max_bytes": self.log_max_bytes,
+                      "storage": {"roots": [str(p) for p in self.budget.roots],
+                                  "limits": asdict(self.budget.limits), "headroom_bytes": self.budget.headroom_bytes}}
             commands, replies, display = (self.context.Queue(maxsize=size) for size in (128, 256, 1))
             disconnected, stop = self.context.Event(), self.context.Event()
             progress = self.context.Value("d", time.monotonic())
@@ -89,7 +117,7 @@ class LabSupervisor:
             if config.get("job") == "replay":
                 owner.view.update(job="replay", replay_mode=config["replay_mode"], jobstate="loading", underlying_state=None)
             self.workers[identifier], self.active_run_id = owner, identifier
-            _json(path / "supervisor.json", {key: value for key, value in owner.view.items() if key != "sample"})
+            _json(path / "supervisor.json", {key: value for key, value in owner.view.items() if key != "sample"}, self.control_budget)
             try:
                 process.start()
             except BaseException as error:
@@ -210,7 +238,7 @@ class LabSupervisor:
                 owner.view["state"] = state
             return
         for key in ("status", "state", "receipts", "snapshots", "initial_snapshot_id", "failure", "replay",
-                    "job", "replay_mode", "jobstate", "underlying_state"):
+                    "job", "replay_mode", "jobstate", "underlying_state", "storage_preflight"):
             if key in message:
                 owner.view[key] = message[key]
         self._publish(message)
@@ -220,7 +248,10 @@ class LabSupervisor:
                 owner.done.set()
                 if self.active_run_id == identifier:
                     self.active_run_id = None
-            _json(self.path(identifier) / "supervisor.json", {key: value for key, value in owner.view.items() if key != "sample"})
+            try:
+                _json(self.path(identifier) / "supervisor.json", {key: value for key, value in owner.view.items() if key != "sample"}, self.control_budget)
+            except (OSError, RuntimeError) as error:
+                owner.view.update(status="failed", diagnostic_persistence_error=str(error))
             self._settle(owner, "Owner closed before response")
 
     def _settle(self, owner, reason):
@@ -349,6 +380,21 @@ class LabSupervisor:
         self.thread.join(timeout=2.)
         for owner in self.workers.values():
             self._dispose_queues(owner)
+        if not self._storage_closed:
+            self._storage_lock.__exit__(None, None, None)
+            self._storage_closed = True
+
+    def export(self, identifier, format):
+        from .artifacts import export_run
+        with self.lock:
+            if self.active_run_id is not None or any(o.process.is_alive() for o in self.workers.values()):
+                raise RuntimeError("Close the active owner before exporting")
+            count = sum(p.is_file() and p.suffix in (".svg", ".png", ".zip") for p in self.export_root.iterdir())
+            self.budget.check_count("exports", count)
+            artifact_id = uuid.uuid4().hex
+            path = self.export_root / (artifact_id + {"svg": ".svg", "png": ".png", "bundle": ".zip"}[format])
+            export_run(self.path(identifier), path, format, storage_budget=self.budget)
+            return artifact_id, path
 
 
 class LocalGuard:
@@ -399,15 +445,16 @@ class LocalGuard:
 
 
 def create_app(repo_root, asset_root, runs_root, export_root=None, *, port=8765,
-               startup_timeout=180., step_timeout=30., headless_continue=False):
+               startup_timeout=180., step_timeout=30., headless_continue=False,
+               storage_limits=None, log_max_bytes=1024**2):
     from fastapi import FastAPI, HTTPException, Request, WebSocket, WebSocketDisconnect
     from fastapi.responses import FileResponse
     from fastapi.staticfiles import StaticFiles
     token = secrets.token_urlsafe(32)
     supervisor = LabSupervisor(repo_root, asset_root, runs_root, startup_timeout=startup_timeout,
-        step_timeout=step_timeout, headless_continue=headless_continue)
-    exports = Path(export_root or supervisor.runs_root / "exports").resolve()
-    exports.mkdir(parents=True, exist_ok=True)
+        step_timeout=step_timeout, headless_continue=headless_continue, export_root=export_root,
+        storage_limits=storage_limits, log_max_bytes=log_max_bytes)
+    exports = supervisor.export_root
     artifacts = {}
     @contextlib.asynccontextmanager
     async def lifespan(app):
@@ -462,7 +509,10 @@ def create_app(repo_root, asset_root, runs_root, export_root=None, *, port=8765,
     @app.get("/api/v1/runs")
     def runs():
         from .artifacts import list_runs
-        return {"runs": list_runs(supervisor.runs_root)}
+        with supervisor.lock:
+            idle = supervisor.active_run_id is None and not any(o.process.is_alive() for o in supervisor.workers.values())
+            return {"runs": list_runs(supervisor.runs_root, rebuild_index=idle,
+                                      storage_budget=supervisor.control_budget)}
 
     @app.post("/api/v1/runs", status_code=202)
     async def start(request: Request):
@@ -603,15 +653,11 @@ def create_app(repo_root, asset_root, runs_root, export_root=None, *, port=8765,
         value = await body(request, {"format"}, {"format"})
         if value["format"] not in ("svg", "png", "bundle"):
             raise HTTPException(400, "Unknown export format")
-        from .artifacts import export_run
         try:
-            run = supervisor.path(identifier)
-            artifact_id = uuid.uuid4().hex
-            path = exports / (artifact_id + {"svg": ".svg", "png": ".png", "bundle": ".zip"}[value["format"]])
-            await asyncio.to_thread(export_run, run, path, value["format"])
+            artifact_id, path = await asyncio.to_thread(supervisor.export, identifier, value["format"])
             artifacts[artifact_id] = path
             return {"artifact_id": artifact_id, "download_url": "/api/v1/artifacts/" + artifact_id}
-        except (ValueError, FileNotFoundError) as caught:
+        except (ValueError, FileNotFoundError, RuntimeError) as caught:
             raise error(caught) from caught
 
     @app.get("/api/v1/artifacts/{identifier}")

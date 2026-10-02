@@ -10,6 +10,7 @@ from fastapi.testclient import TestClient
 from starlette.websockets import WebSocketDisconnect
 
 from palimpsest.lab import LabSupervisor, create_app
+from palimpsest.storage import StorageLimits, StorageLimitError
 
 
 REPO = Path(__file__).resolve().parents[1]
@@ -70,6 +71,7 @@ class ApiGuards(unittest.TestCase):
     def test_native_owner_log_limit_is_terminal_and_bounded(self):
         supervisor = self.client.app.state.lab
         supervisor.worker_target = flooding_owner
+        supervisor.log_max_bytes = 4096
         run = supervisor.start({"log_max_bytes": 4096})
         owner = supervisor.workers[run]
         self.assertTrue(owner.done.wait(5.))
@@ -78,6 +80,16 @@ class ApiGuards(unittest.TestCase):
         self.assertEqual(result["failure"]["type"], "LogLimit")
         self.assertEqual((supervisor.path(run) / "stdout.log").stat().st_size, 4096)
         self.assertFalse(owner.process.is_alive())
+
+    def test_active_owner_prevents_export_and_second_service_on_same_roots(self):
+        supervisor = self.client.app.state.lab
+        with self.assertRaises(StorageLimitError):
+            LabSupervisor(REPO, supervisor.asset_root, supervisor.runs_root)
+        supervisor.worker_target = hung_owner
+        identifier = supervisor.start({})
+        with self.assertRaisesRegex(RuntimeError, "Close the active owner"):
+            supervisor.export(identifier, "svg")
+        self.assertEqual(list(supervisor.export_root.glob("*.svg")), [])
 
     def test_host_origin_and_session_guards(self):
         for headers in ({"Host": "evil.example:8765"}, {"Origin": "https://evil.example"},
@@ -209,6 +221,33 @@ class Supervision(unittest.TestCase):
 
 @unittest.skipUnless(os.environ.get("PALIMPSEST_SIMULATION_TESTS") == "1", "opt-in real manual/EGL owner integration")
 class ActualOwner(unittest.TestCase):
+    def test_storage_preflight_and_snapshot_count_stop_before_more_physics(self):
+        for limits, expected_kind in ((StorageLimits(max_bytes=16 * 1024**2, min_free_bytes=0), "preflight"),
+                                      (StorageLimits(max_snapshots=1), "snapshot")):
+            with self.subTest(kind=expected_kind), tempfile.TemporaryDirectory() as tmp:
+                supervisor = LabSupervisor(REPO, Path(tmp) / "assets", Path(tmp) / "runs", storage_limits=limits)
+                try:
+                    run = supervisor.start({"scenario": "sparse-navigation", "texture": "checker",
+                                            "controller": "manual", "device": "cpu", "seed": 0})
+                    deadline = time.monotonic() + 60
+                    while supervisor.describe(run)["status"] == "loading" and time.monotonic() < deadline:
+                        time.sleep(.02)
+                    if expected_kind == "snapshot":
+                        self.assertEqual(supervisor.describe(run)["status"], "ready")
+                        with self.assertRaises(RuntimeError):
+                            supervisor.call(run, "snapshot", {"expected_revision": 0})
+                    self.assertTrue(supervisor.workers[run].done.wait(10.))
+                    view = supervisor.close(run)
+                    self.assertEqual(view["status"], "failed")
+                    self.assertEqual(view["failure"]["type"], "StorageLimitError")
+                    manifest = json.loads((supervisor.path(run) / "recording/manifest.json").read_text())
+                    self.assertEqual(manifest["status"], "failed")
+                    self.assertEqual(manifest["total_tick"], 0)
+                    self.assertEqual(len(list((supervisor.path(run) / "snapshots").glob("*.snp"))),
+                                     0 if expected_kind == "preflight" else 1)
+                finally:
+                    supervisor.shutdown()
+
     def test_actual_spawned_manual_step_snapshot_branch_and_disconnect(self):
         with tempfile.TemporaryDirectory() as tmp:
             supervisor = LabSupervisor(REPO, Path(tmp) / "assets", Path(tmp) / "runs", startup_timeout=60.)

@@ -11,6 +11,7 @@ import time
 import traceback
 import uuid
 import sys
+import threading
 
 
 def authoritative(queue, message, timeout=1.):
@@ -32,9 +33,12 @@ def latest_display(queue, sample):
             pass  # A newer display sample is already pending.
 
 
-def _json(path, value):
+def _json(path, value, budget=None):
     temporary = path.with_suffix(".tmp")
-    temporary.write_text(json.dumps(value, allow_nan=False, indent=2) + "\n")
+    payload = (json.dumps(value, allow_nan=False, indent=2) + "\n").encode()
+    if budget is not None:
+        budget.check(len(payload), path=temporary)
+    temporary.write_bytes(payload)
     temporary.replace(path)
 
 
@@ -105,12 +109,13 @@ class Conflict(ValueError):
 
 class _ReplayTransport:
     """Pause the replay job at callbacks without touching its Engine timeline."""
-    def __init__(self, path, mode, commands, send, disconnected, stop, progress):
+    def __init__(self, path, mode, commands, send, disconnected, stop, progress, budget=None):
         self.path, self.mode, self.commands, self.send = path, mode, commands, send
         self.disconnected, self.stop, self.progress = disconnected, stop, progress
         self.phase, self.revision, self.underlying = "loading", 0, None
         self.receipts, self.originals, self.event_count = {}, {}, 0
         self.last_status = 0.
+        self.budget = budget
         (path / "job-events.jsonl").touch(exist_ok=False)
 
     def view(self):
@@ -130,8 +135,11 @@ class _ReplayTransport:
             raise RuntimeError("Replay transport event limit reached")
         record = {"version": 1, "type": kind, "scope": "replay_transport",
                   "ordinal": self.event_count, "revision": self.revision, **fields}
+        payload = json.dumps(record, allow_nan=False) + "\n"
+        if self.budget is not None:
+            self.budget.check(len(payload.encode()), path=self.path / "job-events.jsonl")
         with (self.path / "job-events.jsonl").open("a") as stream:
-            stream.write(json.dumps(record, allow_nan=False) + "\n")
+            stream.write(payload)
             stream.flush()
             os.fsync(stream.fileno())
         self.event_count += 1
@@ -201,6 +209,9 @@ class _ReplayTransport:
                     value = self.command(request["body"])
                     self.send({"type": "response", "request_id": request["request_id"], "value": value})
                 except (ValueError, RuntimeError, KeyError, TypeError) as error:
+                    from .storage import StorageLimitError
+                    if isinstance(error, StorageLimitError):
+                        raise
                     self.send({"type": "response", "request_id": request["request_id"],
                                "error": {"type": type(error).__name__, "message": str(error)}})
                 if self.phase == "canceled":
@@ -217,21 +228,39 @@ class _ReplayTransport:
         self.send({"type": "closed", "status": "failed" if self.phase == "failed" else "closed", "replay": report, **self.view()})
 
 
-def _snapshot(engine, path, registry, config, initial=False):
+def _episode_preflight(engine, path, budget):
+    cameras = sum(engine.observation[name].nbytes for name in ("cam_left", "cam_right")) * 2
+    neural = 0
+    if engine.policy is not None:
+        neural = (engine.policy.agent.cell.Nin + 2) * engine.policy.hidden.element_size()
+    # Numeric scalars, NPZ headers and chunk/event overhead, not full hidden logging.
+    estimate = 600 * (cameras + neural + 4096) + 1024**2
+    report = {"episode_ticks": 600, "recording_bytes_estimate": estimate,
+              "raw_and_effective_camera_bytes_per_tick": cameras, "neural_bytes_per_tick": neural,
+              "scope": "one episode estimate plus actual initial snapshot; every write and reset remains quota bounded"}
+    if budget is not None:
+        report["admission"] = budget.check(estimate, path=path / "recording")
+    return report
+
+
+def _snapshot(engine, path, registry, config, initial=False, budget=None, preflight_bytes=0):
     from .snapshots import capture, save_snapshot
     if engine.phase != "paused":
         raise Conflict("Snapshots require a paused boundary")
+    if budget is not None:
+        budget.check_count("snapshots", len(registry))
     identifier = uuid.uuid4().hex
     filename = "initial.snp" if initial else identifier + ".snp"
     snapshot = capture(engine.env, engine.observation, policy=engine.policy, teacher=engine.teacher,
                        application=engine.application_state())
     destination = path / "snapshots" / filename
-    save_snapshot(snapshot, destination)
+    save_snapshot(snapshot, destination, storage_budget=budget,
+                  preflight_bytes=preflight_bytes if budget is not None else 0)
     registry[identifier] = {"snapshot_id": identifier, "filename": filename, "initial": initial,
         "revision": engine.revision, "episode": engine.episode, "tick": engine.episode_step,
         "sha256": hashlib.sha256(destination.read_bytes()).hexdigest(),
         "config": {key: config[key] for key in ("scenario", "texture", "controller", "device", "seed")}}
-    _json(path / "snapshots/index.json", {"version": 1, "snapshots": registry})
+    _json(path / "snapshots/index.json", {"version": 1, "snapshots": registry}, budget)
     engine.writer.event("snapshot_registered", run_id=engine.run_id, snapshot_id=identifier,
                         filename=filename, initial=initial, episode=engine.episode, tick=engine.episode_step,
                         revision=engine.revision, sha256=registry[identifier]["sha256"])
@@ -245,7 +274,9 @@ def run_worker(config, commands, replies, display, disconnected, stop, progress)
     os.environ.setdefault("MPLBACKEND", "Agg")
     path = Path(config["run_path"])
     from .evaluate import bounded_logs
+    final_messages, log_failed = [], threading.Event()
     def log_failure(reason):
+        log_failed.set()
         stop.set()
         with contextlib.suppress(Exception):
             authoritative(replies, {"version": 1, "run_id": config["run_id"], "type": "failure",
@@ -259,18 +290,29 @@ def run_worker(config, commands, replies, display, disconnected, stop, progress)
             os.dup2(stderr.fileno(), 2)
             with os.fdopen(os.dup(1), "w", buffering=1) as out, os.fdopen(os.dup(2), "w", buffering=1) as err:
                 with contextlib.redirect_stdout(out), contextlib.redirect_stderr(err):
-                    _own(config, commands, replies, display, disconnected, stop, progress)
+                    _own(config, commands, replies, display, disconnected, stop, progress, final_messages)
         finally:
             for target, original in zip((1, 2), saved):
                 os.dup2(original, target)
                 os.close(original)
+    if not log_failed.is_set():
+        for message in final_messages:
+            authoritative(replies, message)
 
 
-def _own(config, commands, replies, display, disconnected, stop, progress):
+def _own(config, commands, replies, display, disconnected, stop, progress, final_messages=None):
+    from .storage import StorageBudget, StorageLimits, StorageLimitError
+    storage = config.get("storage")
+    budget = StorageBudget(tuple(Path(p) for p in storage["roots"]), StorageLimits(**storage["limits"]),
+                           headroom_bytes=storage["headroom_bytes"]) if storage else None
     engine, failed, replay_transport = None, False, None
     run_id, path, started = config["run_id"], Path(config["run_path"]), time.monotonic()
     def send(message):
-        authoritative(replies, {"version": 1, "run_id": run_id, **message})
+        value = {"version": 1, "run_id": run_id, **message}
+        if message["type"] == "closed" and final_messages is not None:
+            final_messages.append(value)
+        else:
+            authoritative(replies, value)
     def heartbeat(*args, **kwargs):
         progress.value = time.monotonic()
     try:
@@ -278,15 +320,16 @@ def _own(config, commands, replies, display, disconnected, stop, progress):
         if config.get("job") == "replay":
             from .replay import replay_run
             replay_transport = _ReplayTransport(path, config["replay_mode"], commands, send,
-                                               disconnected, stop, progress)
+                                               disconnected, stop, progress, budget)
             report = replay_run(Path(config["source_run_path"]), path, mode=config["replay_mode"],
-                repo_root=Path(config["repo_root"]), asset_root=Path(config["asset_root"]), progress=replay_transport)
+                repo_root=Path(config["repo_root"]), asset_root=Path(config["asset_root"]), progress=replay_transport,
+                storage_budget=budget)
             replay_transport.finish(report)
             return
         from .engine import Engine
         engine = Engine.open(Path(config["repo_root"]), Path(config["asset_root"]), path / "recording",
             controller=config["controller"], device=config["device"], seed=config["seed"],
-            scenario=config["scenario"], texture=config["texture"], run_id=run_id)
+            scenario=config["scenario"], texture=config["texture"], run_id=run_id, storage_budget=budget)
         heartbeat()
         trace = []
         if config.get("snapshot_path"):
@@ -314,10 +357,15 @@ def _own(config, commands, replies, display, disconnected, stop, progress):
             trace = [engine.world()["pose"][:2]]
         (path / "snapshots").mkdir(exist_ok=True)
         registry = {}
-        initial = _snapshot(engine, path, registry, config, initial=True)
+        preflight = _episode_preflight(engine, path, budget)
+        initial = _snapshot(engine, path, registry, config, initial=True, budget=budget,
+                            preflight_bytes=preflight["recording_bytes_estimate"])
+        preflight["initial_snapshot_bytes"] = (path / "snapshots/initial.snp").stat().st_size
+        engine.writer.event("storage_preflight", **preflight, headless_continue=config.get("headless_continue", False))
         def status(kind="status"):
             return {"type": kind, "status": "failed" if engine.phase == "failed" else "ready",
                 "state": engine.public_state(), "receipts": list(engine.receipts.values()),
+                "storage_preflight": preflight,
                 "snapshots": [{k: v for k, v in item.items() if k not in ("filename", "config", "sha256")}
                               for item in registry.values()], "initial_snapshot_id": initial}
         send(status())
@@ -346,13 +394,15 @@ def _own(config, commands, replies, display, disconnected, stop, progress):
                         if type(body.get("expected_revision")) is not int or body["expected_revision"] != engine.revision:
                             raise Conflict("Expected revision is stale")
                         value = engine.preview(body["payload"]) if operation == "preview" else {
-                            "snapshot_id": _snapshot(engine, path, registry, config)}
+                            "snapshot_id": _snapshot(engine, path, registry, config, budget=budget)}
                     elif operation == "state":
                         value = status()
                     else:
                         raise ValueError("Unknown owner operation")
                     send({"type": "response", "request_id": request["request_id"], "value": value})
                 except (ValueError, RuntimeError, KeyError, TypeError) as error:
+                    if isinstance(error, StorageLimitError) or engine.writer._broken:
+                        raise
                     send({"type": "response", "request_id": request["request_id"],
                           "error": {"type": type(error).__name__, "message": str(error)}})
                 heartbeat()
@@ -388,6 +438,9 @@ def _own(config, commands, replies, display, disconnected, stop, progress):
             stop.wait(delay)
     except BaseException as error:
         failed = True
+        if engine is not None and engine.phase != "failed":
+            with contextlib.suppress(Exception):
+                engine._fail(error)
         traceback.print_exc()
         with contextlib.suppress(Exception):
             job = {}
