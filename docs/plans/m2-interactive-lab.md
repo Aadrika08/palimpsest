@@ -79,4 +79,4 @@ Palette: cool paper #edf2f4, white #ffffff, ink #203444, blue #245b84, amber #8b
 - [x] Recorded playback, three-mode distinction, replay first-divergence report, provenance differences, export coordinates/integrity tests.
 - [x] UI build/type check and actual browser workflow: create/run/pause/intervene/snapshot/two sequential branches/compare/export; manual blur clears input.
 - [x] Full fixture suite plus actual manual/teacher workflow and one full-FLYNN CPU sample; retain evidence and limitations.
-- [ ] Commit final implementation/evidence, push Aadrika08, stacked draft PR against feat/execution-recovery; no automatic merge. The scenario increment is already committed/pushed as `3b25f5e`.
+- [x] Commit final implementation/evidence as `78e8228`, push Aadrika08, and open [stacked draft PR #3](https://github.com/Aadrika08/palimpsest/pull/3) against feat/execution-recovery. No automatic merge. The earlier scenario increment is `3b25f5e`.

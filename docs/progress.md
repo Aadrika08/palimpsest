@@ -7,13 +7,13 @@ Working-set binding: `98d42920e321b42d22c6336f938d2c3ba9fd770d8ba24a2a`. Its MCP
 ## Current state
 
 - Implemented: M0/R0 reproduction, M1 execution/recovery and M2 interactive lab. Actual input inspection, all six scenarios, live edits, snapshots, sequential branches, three replay modes, comparison and exports passed their implementation gates. Original PRD remains unchanged.
-- Partial: M0 and M1 are stacked draft PRs #1 and #2 with CI green; M2 on `feat/interactive-lab` is verified and being committed/pushed as a stacked draft PR. M3/R1 release hardening remains incomplete. No automatic merges.
+- Partial: M0 and M1 are stacked draft PRs #1 and #2 with CI green; M2 implementation/evidence is committed and pushed as `78e8228` in [draft PR #3](https://github.com/Aadrika08/palimpsest/pull/3); latest CI is pending verification. M3/R1 release hardening remains incomplete. No automatic merges.
 - Mechanism: unchanged pinned upstream environment/neural model, allowlisted student inputs, raw-output guards, one owner for mutable runtime state, native MuJoCo snapshot caches plus wrapper/controller/RNG/command state. Branch identity binds the durable source event prefix and teacher reset baseline.
 - Missing: M3–M10: release hardening, memory experiments, additional tasks, MaleCNS, rover qualification, artwork modes and handoff.
 - Known limitation: CUDA CSR inference varies on identical input tensors on this host, even with deterministic algorithms enabled. The strict CUDA continuation case failed; tolerances were not relaxed. Full-model CPU continuation passed. Snapshot compatibility metadata is not a universal repeatability guarantee.
 - Unknown: original checkpoint training lineage, full-model Pi performance, viable MaleCNS circuit and physical stopping limits.
 - Blocked tasks: physical procurement/qualification requires selected hardware, reviewed cost, components and an operator. No rover components are available. Simulation work can continue.
-- Next action: commit/push M2 and verify CI, then implement M3 aggregate storage limits, crash recovery, offline setup, display/performance checks and the 60-minute endurance gate.
+- Next action: verify M2 CI and implement M3 on `feat/lab-hardening` in `.worktrees/lab-hardening`: aggregate storage limits, crash recovery, offline setup, display/performance checks and the 60-minute endurance gate.
 
 ## Verification
 
