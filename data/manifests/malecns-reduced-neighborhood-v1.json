@@ -1,0 +1,147 @@
+{
+  "status": "extracted",
+  "protocol": {
+    "version": 1,
+    "dataset": "male-cns:v1.0",
+    "id": "dnge104-strong-input-neighborhood-v1",
+    "endpoint_ids": [
+      12781,
+      556329
+    ],
+    "node_rule": "endpoints plus direct Neuron inputs with total connection weight >= 20",
+    "edge_rule": "induced directed Neuron connections with total weight >= 1",
+    "minimum_input_weight": 20,
+    "max_nodes": 256,
+    "max_edges": 4096,
+    "max_response_bytes": 4194304,
+    "timeout_seconds": 30,
+    "boundary_scope": "Neuron nodes only; non-Neuron segments remain unmeasured",
+    "selection_basis": "lowest threshold in feasibility grid [1,2,5,10,20,50] fitting 256-node cap",
+    "biological_sensor_mapping": null,
+    "training_performed": false
+  },
+  "protocol_sha256": "71e3eb47e7f0a7bb60b504f83245cadfb792e20ec3347971cf17a6c9943bdfda",
+  "script_sha256": "75fd779ed23fcf783c3b72acab503b3130dbe9e8531036dd96b1ab5e23952839",
+  "checked_at_utc": "2026-10-02T10:24:56.443449+00:00",
+  "queries": [
+    {
+      "name": "count",
+      "record_sha256": "8f471a6e5fe8b7f0d1d2bcae98f9445f7e00c8266f262d8b82e36ad0416f8361"
+    },
+    {
+      "name": "inputs",
+      "record_sha256": "c76ffd966978665294fb7d10ba0135e150c16375b70264f574702a78951ef439"
+    },
+    {
+      "name": "edge-count",
+      "record_sha256": "f56f0d4eb5406494b699645d7de9e1465674458f3485dc050193b0ea692165cd"
+    },
+    {
+      "name": "edges",
+      "record_sha256": "3018dd63961e883861ad51150dc2a137e22bce4fc3b81c2ef30ad1e1a03fc7ad"
+    },
+    {
+      "name": "nodes",
+      "record_sha256": "4e8bca78d035c2b42d3ccab6be35100693b43e752e7ae0f73f1dd2d1da80a180"
+    },
+    {
+      "name": "incoming-boundary",
+      "record_sha256": "9595640fc18fa93e56d6b0f3f11c83ed345835c1b09a456197885e2f6fcd6801"
+    },
+    {
+      "name": "outgoing-boundary",
+      "record_sha256": "bcc4310f687e6fb0a5c642dd35371a74c33cacb0cacb16aeb43c0bc5ab606c9f"
+    }
+  ],
+  "nodes": 138,
+  "edges": 1647,
+  "retained_weight": 18787,
+  "graph_sha256": "5aba0fef99afba666b88e40fc535091454e46d9330580d9280b203e8da0abac0",
+  "boundary": {
+    "incoming": {
+      "edges": 57331,
+      "weight": 341520
+    },
+    "outgoing": {
+      "edges": 71933,
+      "weight": 454980
+    }
+  },
+  "biological_sensor_mapping_verified": false,
+  "r3_complete": false,
+  "graph_path": "data/assets/malecns-metadata/reduced-neighborhood-v1b/graph.json",
+  "evidence_root": "data/assets/malecns-metadata/reduced-neighborhood-v1b",
+  "graph_size_bytes": 101560,
+  "license": "CC-BY-4.0",
+  "source": "https://male-cns.janelia.org/download/",
+  "attribution": [
+    "FlyEM (HHMI Janelia)",
+    "University of Cambridge (Dept. of Zoology)",
+    "MRC Laboratory of Molecular Biology",
+    "Google Research"
+  ],
+  "query_contract_source": "https://github.com/connectome-neuprint/neuprint-python/blob/0.6.4/neuprint/queries/connectivity.py",
+  "immutable_api_snapshot_id": null,
+  "endpoint_weight_coverage": {
+    "retained": 7603,
+    "all_neuron_inputs": 21773,
+    "scope": "Neuron-only total connection weights; no physiological efficacy claim"
+  },
+  "records": [
+    {
+      "path": "data/assets/malecns-metadata/reduced-neighborhood-v1b/count.json",
+      "size_bytes": 707,
+      "sha256": "2affd7c6cdec1ae72db0afd9d7e89694696a94bdd9309faf3aadc35c389c8255"
+    },
+    {
+      "path": "data/assets/malecns-metadata/reduced-neighborhood-v1b/edge-count.json",
+      "size_bytes": 4873,
+      "sha256": "232802eb48a23c0604dae79021ab4ab2685fe9e0925017e12f68cdd993255d20"
+    },
+    {
+      "path": "data/assets/malecns-metadata/reduced-neighborhood-v1b/edges.json",
+      "size_bytes": 101521,
+      "sha256": "8a64c74cfacc667ab4e5b0aa156e6590f62917f1ed6bf4d831cfa831ae4fbccb"
+    },
+    {
+      "path": "data/assets/malecns-metadata/reduced-neighborhood-v1b/graph.json",
+      "size_bytes": 101560,
+      "sha256": "5aba0fef99afba666b88e40fc535091454e46d9330580d9280b203e8da0abac0"
+    },
+    {
+      "path": "data/assets/malecns-metadata/reduced-neighborhood-v1b/incoming-boundary.json",
+      "size_bytes": 4962,
+      "sha256": "b0263f891b49893dea062647c93a87bc73ab173fb7e84490f1d7f4a1bb110618"
+    },
+    {
+      "path": "data/assets/malecns-metadata/reduced-neighborhood-v1b/inputs.json",
+      "size_bytes": 4965,
+      "sha256": "c1c72951e322cf0e7f61dc0d741b597c9d7c646fede6a2ed43ae4339f0fed93c"
+    },
+    {
+      "path": "data/assets/malecns-metadata/reduced-neighborhood-v1b/nodes.json",
+      "size_bytes": 17048,
+      "sha256": "ceb1855574b3160d9442fbd52746050ed8da31ebbc572e55053859565e173f66"
+    },
+    {
+      "path": "data/assets/malecns-metadata/reduced-neighborhood-v1b/outgoing-boundary.json",
+      "size_bytes": 4962,
+      "sha256": "294505218ee929b7e0a630695ab9cac86044cc07b1409338c8a0092f85bb468b"
+    },
+    {
+      "path": "data/assets/malecns-metadata/reduced-neighborhood-v1b/report.json",
+      "size_bytes": 2308,
+      "sha256": "627fee4758e76bcd2e0896cfaeb7473a20f8b4ce00a5f6f56e3a246b98d8a0ad"
+    },
+    {
+      "path": "data/assets/malecns-metadata/incoming-count.json",
+      "size_bytes": 1161,
+      "sha256": "f660507d1554262c1e1edc600e6c589bc3d407a95f00146279eafd5328aa59bf"
+    },
+    {
+      "path": "data/assets/malecns-metadata/incoming-threshold-counts.json",
+      "size_bytes": 1670,
+      "sha256": "c54b6025a9fa4e393a7a9189f1b24814acf933360c0d4375d07295089ca5a544"
+    }
+  ]
+}
