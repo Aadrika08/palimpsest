@@ -314,10 +314,11 @@ def check_oracle(job, source_native):
 def validate_job(job):
     memory._fields(job, 'repo assets history_root output root_output run_id cell stage binding protocol_sha256 source_identity history_inputs snapshot_path snapshot_sha256 expected_non_u selector oracle_evidence')
     memory._bounded(job, 128*1024)
+    artifacts._id(job['run_id'])
     if (tuple(job['cell']) not in CELLS or job['stage'] not in STAGES
             or job['protocol_sha256'] != PROTOCOL_SHA256
             or Path(job['repo']) != Path(__file__).resolve().parents[1]
-            or Path(job['output']) != Path(job['root_output'])/'runs'/artifacts._id(job['run_id'])
+            or Path(job['output']) != Path(job['root_output'])/'runs'/job['run_id']
             or memory.canonical_bytes(job['binding']['cell']) != memory.canonical_bytes(job['cell'])
             or memory.canonical_bytes(job['binding']['case']) != memory.canonical_bytes(admission.make_case(tuple(job['cell'])))
             or any(not Path(job[k]).is_absolute() for k in ('repo','assets','history_root','output','root_output','snapshot_path'))):
