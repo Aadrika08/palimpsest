@@ -1497,5 +1497,33 @@
       "New puck installation/reset checks use array-only fixtures; native disk construction remains a separate gate.",
       "Adaptive development and fixed-FLYNN memory/replay experiments retain their separately frozen source and evidence."
     ]
+  },
+  "counterbalance_task_puck_regression": {
+    "source_commit": "60f8e3306f2da11f4a5f81518ef9a7f671b7f0b8",
+    "tests": 506,
+    "passed": 506,
+    "skipped": 0,
+    "suite_seconds": 116.115,
+    "supervisor": {
+      "elapsed_seconds": 117.87209891600651,
+      "output": "/home/utkarsh/Work/shraddha/brain/.worktrees/project-integration/runs/integration-counterbalance-task-puck-60f8e33-20261003/supervisor",
+      "returncode": 0,
+      "schema_version": 1,
+      "started_utc": "2026-10-02T19:46:20.529794+00:00",
+      "status": "completed",
+      "timeout_seconds": 300
+    },
+    "all_runtime_gates_enabled": true,
+    "sources_unchanged": true,
+    "assets_unchanged": true,
+    "model_identities_unchanged": true,
+    "retained_files_rehashed": 50,
+    "report": "runs/integration-counterbalance-task-puck-60f8e33-20261003/report.json",
+    "report_sha256": "559873a8c5642f9d90d8f06517d1457b69e07dee73344d75dff5f3d1509cd41a",
+    "limitations": [
+      "Actual male checks use unchanged production v1 assets; this suite does not repeat historical task, held-out, endurance, exhibition or physical qualification.",
+      "Task-phase, memory admission and zero-step puck construction results retain their separate frozen source identities.",
+      "Stepped puck mechanics, learned manipulation and the four-cell memory comparison remain pending."
+    ]
   }
 }

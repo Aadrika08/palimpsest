@@ -112,3 +112,9 @@ Frozen combined source `54ef2001423c611240f7b6db856737473d909e96` passes all **4
 The combined source includes bounded executable memory replay, the adaptive verifier correction, and staged fixed-puck installation/reset. The preceding 55 focused puck/task/body checks pass in 0.633 seconds; an initial invocation omitted `tests` from `PYTHONPATH` and failed one module import before the corrected command. Puck fixtures check atomic ownership and rollback; native construction remains a separate gate.
 
 The separate [adaptive v2 gate](m6-body-adaptation-v2.md) now passes on its frozen source, and both own-source fixed-FLYNN executable replays pass. Those results supersede the earlier pending-work notes above without changing the historical regression scope. This combined suite does not repeat task, held-out, endurance, exhibition or physical qualification.
+
+## Counterbalance, task phases and defined puck state regression
+
+Frozen combined source `60f8e3306f2da11f4a5f81518ef9a7f671b7f0b8` passes all **506 tests without skips** in 116.115 seconds. The 300-second supervisor exits zero in 117.872 seconds. Actual simulation, male Torch and native/replay checks are enabled with the verified shared assets. Tracked source, assets and production v1 model identities remain unchanged; all 50 retained artifacts were independently rehashed. Report `runs/integration-counterbalance-task-puck-60f8e33-20261003/report.json` has SHA256 `559873a8c5642f9d90d8f06517d1457b69e07dee73344d75dff5f3d1509cd41a`.
+
+This covers the shared subject-ID handoff correction, fixed memory admission, task-phase verifier and defined native-data comparison fixtures. The separate actual task-phase and zero-step puck gates retain their frozen sources. It does not repeat historical experiments or establish held-out, stepped-puck, exhibition or physical qualification.
