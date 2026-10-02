@@ -7,7 +7,14 @@ async function fillEdit(page:Page,kind:'move_goal'|'move_obstacle',xy:number[]){
 async function runId(page:Page){return(await page.locator('.identity').innerText()).replace('Run ','');}
 async function createManual(page:Page){await page.goto('/');await expect(page.getByRole('button',{name:'Create run',exact:true})).toBeEnabled();await page.getByLabel('Scenario',{exact:true}).selectOption('sparse-navigation');await page.getByLabel('Controller',{exact:true}).selectOption('manual');await page.getByRole('button',{name:'Create run',exact:true}).click();await expect(page.getByRole('button',{name:'Step',exact:true})).toBeEnabled({timeout:90_000});return runId(page);}
 
-test.afterEach(async({page})=>{await page.evaluate(async()=>{const id=document.querySelector('.identity')?.textContent?.replace('Run ','');if(!id||! /^[0-9a-f]{32}$/.test(id))return;const token=(await(await fetch('/api/v1/session')).json()).token;await fetch(`/api/v1/runs/${id}/close`,{method:'POST',headers:{'X-Palimpsest-Session':token,'Content-Type':'application/json'},body:'{}'});}).catch(()=>{});});
+test.afterEach(async({page},info)=>{
+  const cleanup=await page.evaluate(async()=>{const id=document.querySelector('.identity')?.textContent?.replace('Run ','');if(!id||! /^[0-9a-f]{32}$/.test(id))return null;const token=(await(await fetch('/api/v1/session')).json()).token;const response=await fetch(`/api/v1/runs/${id}/close`,{method:'POST',headers:{'X-Palimpsest-Session':token,'Content-Type':'application/json'},body:'{}'});return {run_id:id,http_status:response.status,response:await response.json()};});
+  const body=JSON.stringify(cleanup,null,2);await info.attach('owner-close.json',{body,contentType:'application/json'});const {writeFile}=await import('node:fs/promises');await writeFile(info.outputPath('owner-close.json'),body+'\n');
+  expect(cleanup,'Every actual workflow must retain an owner close response').not.toBeNull();if(!cleanup)return;expect(cleanup.http_status).toBe(200);expect(cleanup.response.run_id).toBe(cleanup.run_id);
+  // A successful workflow requires a clean close. Failed tests retain the
+  // already failed owner's authoritative status instead of hiding teardown.
+  if(info.status==='passed')expect(cleanup.response.status).toBe('closed');else expect(['closed','failed']).toContain(cleanup.response.status);
+});
 
 test('actual local manual workflow, snapshots, sequential branches, comparison and export',async({page})=>{
   const browserErrors:string[]=[];page.on('pageerror',error=>browserErrors.push(error.message));
