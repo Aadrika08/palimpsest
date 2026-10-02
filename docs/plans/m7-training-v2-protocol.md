@@ -87,8 +87,9 @@ Use the existing UUID LabSupervisor/Engine owner and validated records; preserve
 exact source/model/graph/protocol/ordered-ID hashes, raw/effective inputs, state,
 initial world/environment RNG and paired initial physical/input checks. Student
 features remain the two actual RGB cameras, contact/angle and relative goal bearing;
-no pose, outcome or privileged teacher state enters the model. Torch stays CPU
-float32, deterministic algorithms and one thread. No simulator/model/ML jobs may run
+no pose, outcome or privileged teacher state enters the model. Student Torch stays CPU
+float32, deterministic algorithms and one thread. The privileged teacher keeps
+the existing Engine setting of two Torch threads. No simulator/model/ML jobs may run
 until source freeze and an explicit runtime slot.
 
 Teacher sources: at most 16 runs/9,600 ticks, 160 MiB per run including initial
@@ -116,3 +117,13 @@ Research loading must retain strict completed-report, ZIP, tensor/graph/lineage
 validation while admitting only the three explicit v2 paired identities. Runtime
 binding of those identities must be reviewed before any Engine/worker/Lab API is
 widened. Existing production IDs continue to resolve their unchanged v1 pins.
+
+## Pre-execution scope clarification
+
+Before any v2 collection, training or evaluation, the protocol explicitly scoped
+`threads: 1` to student training/inference and added `teacher_threads: 2` to match
+the unchanged Engine teacher path. No new outcomes were observed; seeds, models,
+optimizer settings, stopping rules and resource budgets did not change. This is
+a transparent pre-execution clarification of the first protocol commit `38a704c`,
+whose JSON SHA256 was `25327bf82871d7b5453ab63d0a62341d5f545d5dcd747ce620a003eb24d28210`.
+The clarified JSON SHA256 is `8f360289ce286f56e31051c7bcfc6932a8f413dce662b83ddb9817b3e509d69b`.

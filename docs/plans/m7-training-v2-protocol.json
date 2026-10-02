@@ -136,8 +136,10 @@
       1007
     ]
   },
+  "teacher_threads": 2,
   "texture": "checker",
   "threads": 1,
+  "threads_scope": "student training and inference",
   "training_graph": "unchanged pinned 138-node 1647-edge extraction; W[post,pre]; original incoming-strength scalar shared with matched control",
   "training_limits": {
     "all_pair_output_bytes": 201326592,
