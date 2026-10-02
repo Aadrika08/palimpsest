@@ -88,9 +88,11 @@ Replace UUID placeholders with recorded run IDs. A branch can begin at a nonzero
 | Capability | Entry point and current boundary |
 | --- | --- |
 | Memory mechanics | Select **Memory passages** in the lab. Typed M/E/U, visibility-limited sensing, evidence-backed revision and U-only snapshot branches are implemented. [Mechanics evidence](docs/reports/m4-memory-mechanics.md). |
-| Recorded revision histories | [Acquisition protocol](docs/plans/m5-acquisition-batch.md) and `scripts/acquire_memory_history.py`. Eight recorded development episodes fit distinct local/paired rules; embodied and held-out transfer are pending. |
+| Recorded revision histories | [Acquisition protocol](docs/plans/m5-acquisition-batch.md) and `scripts/acquire_memory_history.py`. Eight recorded development episodes fit distinct local/paired rules. [Four-condition embodied development](docs/reports/m5-goal-handoff-v4.md) passes mechanism checks with no own-U task/timing benefit; all-condition and held-out evaluation remain pending. |
 | Exploration and encoder homing | Select the corresponding lab scenario. Use manual or FLYNN control through the declared cue. [Manual homing evidence](docs/reports/m6-homing-driver-v2.md) covers one bounded cue-following driver; it does not establish pretrained FLYNN competence. |
 | Reduced MaleCNS pilot | [Training protocol](docs/plans/m7-training-protocol.md), `scripts/collect_male_teachers.py`, and `scripts/train_male_reduced.py`. Separate artificial input mapping, trained weights and degree-rewired control; recorded-input parity is measured. Two pinned CPU lab controllers, native continuation and executable replay are implemented; the live browser workflow also passes. The [16-run closed-loop evaluation](docs/reports/m7-closed-loop-v2.md) completed with 0/8 original and 1/8 control goals; navigation qualification remains incomplete. |
+| Afterimage portrait | [Authorized local frames, bounded fixed-model inference and offline SVG](docs/artwork-afterimage.md). [Eight-frame mechanism evidence](docs/reports/m9-afterimage-validation.md) passes exact reference alignment; no perception, expressiveness or visitor/exhibition claim. |
+| Anatomical pair | [Curated MaleCNS/FlyWire DNge104 skeletons](docs/artwork-specimens.md), with distinct provenance, separate coordinate spaces and one shared scale. Actual geometry and browser checks pass; no registration or population sex-effect claim. |
 | Recorded artwork | [Fixed sound mapping and offline comparison](docs/artwork-mappings.md): `sonify` renders selected neural telemetry, `compare LEFT RIGHT --output comparison.html` renders labelled route panels. Neither performs inference or modifies source records. |
 | Physical rover | [Procurement proposal](docs/rover-procurement-proposal.md). No physical operation is qualified. |
 
@@ -98,6 +100,8 @@ Run each command with `--help` and retain new output directories. Research runne
 have frozen protocols, explicit source identities and finite resource limits.
 Earlier failures remain part of the evidence. A completed mechanism check is not
 held-out competence or a demonstrated advantage from connectome topology.
+
+Use the [supervised exhibition runbook](docs/exhibition-runbook.md) for mode labels, source retention, pause/recovery and independent-operator acceptance. Physical drawing and declared-duration exhibition qualification remain open.
 
 ## Bounded evaluation
 

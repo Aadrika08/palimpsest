@@ -95,3 +95,15 @@ reuse validated evidence, label authored transformations and retain provenance.
 They do not change sensor inputs. The [rover proposal](rover-procurement-proposal.md)
 has no released physical actuation path; procurement and measured physical gates
 remain separate requirements.
+
+
+## Offline artwork extensions
+
+[Afterimage](artwork-afterimage.md) is a distinct non-physics recording schema:
+explicit local RGB/rights/time input, bounded fixed CPU model execution, then an
+offline response-plane SVG. It reuses the recorder/storage/supervisor and carries
+exact alignment/provenance; its renderer never imports the model or simulator.
+[Anatomical pairs](artwork-specimens.md) instead read two curated local SWCs,
+validate topology/provenance and render native x/z at one shared physical scale.
+Neither renderer adds observations or actions to the live agent. See the
+[supervised runbook](exhibition-runbook.md) for remaining operation/retention gates.
