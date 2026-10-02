@@ -1,0 +1,805 @@
+{
+  "audit_report": {
+    "bytes": 65646,
+    "path": "runs/m6-puck-mechanics-v3-prepared/audit-v2.json",
+    "sha256": "b99ee4ea423284e88158a1c7f20be4228b1896a2a2abcfc7e2ea3f3fbdc195f9"
+  },
+  "audit_script": {
+    "bytes": 16355,
+    "path": "runs/m6-puck-mechanics-v3-prepared/audit-v2.py",
+    "sha256": "44ce6f6670d059ba8ec7b707976b994d7f8352ae51d23df2ba1264c5fa0e73da"
+  },
+  "cleanup": {
+    "forced_signals": [],
+    "observed_owned_processes": [
+      {
+        "pid": 532156,
+        "start_ticks": 7131517
+      },
+      {
+        "pid": 532157,
+        "start_ticks": 7131518
+      },
+      {
+        "pid": 532166,
+        "start_ticks": 7131552
+      },
+      {
+        "pid": 532185,
+        "start_ticks": 7131891
+      },
+      {
+        "pid": 532198,
+        "start_ticks": 7132219
+      },
+      {
+        "pid": 532239,
+        "start_ticks": 7132592
+      }
+    ],
+    "sample_errors": [],
+    "sampler_stopped": true,
+    "scope": {
+      "cleanup_scope": "sampled owned PID/start identities, immediate recheck before TERM/KILL, group signal only for an owned group leader",
+      "cleanup_wait_each_signal_seconds": 2,
+      "copy": "exact source text, only this function, no adaptive imports",
+      "failure_conditions": [
+        "sampler exception",
+        "sampler remains alive",
+        "any forced signal",
+        "any surviving sampled identity"
+      ],
+      "function": "cleanup_observed",
+      "function_sha256": "d308e0ffbe3cdbbdd93fd81865e8cdb96d51539afc38bc294f2e5b3c49b8d3b8",
+      "limitation": "finite .25s descendant sampling; no claim to observe every transient descendant",
+      "max_observed_processes": 128,
+      "original_source": "/home/utkarsh/Work/shraddha/brain/.worktrees/project-integration/scripts/verify_body_adaptation.py",
+      "original_source_commit": "3a0b085ea376d7cedf4bd6d533233e30b1e1b6cc",
+      "original_source_sha256": "197662faf19e7d11b8ab42d67f5ccb0b7d64867bdb0e296f23408daeecb08da3",
+      "outer_supervisor_seconds_unchanged": 680,
+      "sampler_interval_seconds": 0.25,
+      "sampler_join_seconds": 2
+    },
+    "survivors": []
+  },
+  "downstream_execution": false,
+  "finalization_errors": {
+    "inner": [],
+    "outer": []
+  },
+  "first_audit_error": {
+    "correction": "Only manifest[summary][teacher_mode] to manifest[teacher_mode]; standalone audit-v2 output. Raw gate/source unchanged.",
+    "error": "KeyError: 'summary'",
+    "receipt": {
+      "bytes": 422,
+      "path": "runs/m6-puck-mechanics-v3-prepared/audit-failure-v1.json",
+      "sha256": "ca9108cf8fc48850b248efdff19bdd986c53ab3b128ba8ad6751c7574b969823"
+    },
+    "script": {
+      "bytes": 16366,
+      "path": "runs/m6-puck-mechanics-v3-prepared/audit.py",
+      "sha256": "9924b449b7a9837f81c0d76cac52dbbbfd488d3215f16ba8a9c9be1a89b7d6e3"
+    }
+  },
+  "independent_root_audit": {
+    "report": {
+      "bytes": 2323,
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/project-integration/runs/m6-puck-mechanics-root-audit-3b078cb/audit.json",
+      "sha256": "9ded8208fb4dcab6245d080c873c3d2f1bddacc39e33d0878abb2f03cf388a50"
+    },
+    "script": {
+      "bytes": 9064,
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/project-integration/runs/m6-puck-mechanics-root-audit-3b078cb/audit.py",
+      "sha256": "b20080f0dd01385315ee120a1812ed268acae5e5422b77afeaa66045ad60c9b2"
+    }
+  },
+  "inner_elapsed_seconds": 19.970457461997285,
+  "inner_report": {
+    "bytes": 97273,
+    "path": "runs/m6-puck-mechanics-v3-20261003/gate/report.json",
+    "sha256": "069b9c99529b9ef11f744ecc56e86670eca5ab3bc32573e3511a6d9070c1140e"
+  },
+  "inventory_bytes_checked": 119785385,
+  "inventory_files_checked": 73,
+  "launcher": {
+    "bytes": 7523,
+    "path": "runs/m6-puck-mechanics-v3-prepared/launch.py",
+    "sha256": "4c93862502b4fbf8d14b9083fcc9252faf27f316b6ccb35a94eb5d43b947cde7"
+  },
+  "mechanics_protocol": {
+    "bytes": 7459,
+    "path": "docs/plans/m6-puck-mechanics-v3.json",
+    "sha256": "c37c620b7796996d4a00e7d1da0ff6e8d25bfacf663c716ce6fc9ca4150c44d1"
+  },
+  "native_restoration_performed_by_audits": false,
+  "outer_elapsed_seconds": 20.228797507006675,
+  "outer_exitcode": 1,
+  "outer_report": {
+    "bytes": 24295,
+    "path": "runs/m6-puck-mechanics-v3-20261003/launch-result.json",
+    "sha256": "4cd23a2c7395840a91de4d8f53ad10ec60f4fd8043a6453b50552a32fa335ea0"
+  },
+  "owners": [
+    {
+      "callback_restored": true,
+      "case": "zero",
+      "cleanup": {
+        "passed": true,
+        "process_group_absent": true,
+        "same_process_alive": false
+      },
+      "completion": "fixed_mechanics_horizon",
+      "contact_intervals": 0,
+      "final_dwell_ticks": 0,
+      "final_goal_distance_m": 1.2,
+      "final_teacher_mode": "fixed",
+      "first_contact_completed_tick": null,
+      "full_model_sha256": "a118430d27d1909b96d5e7204bef1d406d9de090e8fa4fe85225a1ff207bf9bd",
+      "full_model_unchanged": true,
+      "id": "zero",
+      "kind": "root",
+      "max_contact_penetration_m": 0.0,
+      "max_puck_speed_m_s": 0.0,
+      "max_ticks": 120,
+      "maximum_xy_displacement_m": 0.0,
+      "owner_identity": {
+        "pid": 532166,
+        "process_group": 532166,
+        "start_ticks": 7131552
+      },
+      "owner_returncode": 0,
+      "record_events": {
+        "bytes": 138299,
+        "path": "runs/m6-puck-mechanics-v3-20261003/gate/zero/recording/events.jsonl",
+        "sha256": "8c89720ccb53bb76deb5e3247c1dbeeca881938a054ea8d5db7c9fd248347aab"
+      },
+      "record_manifest": {
+        "bytes": 15116,
+        "path": "runs/m6-puck-mechanics-v3-20261003/gate/zero/recording/manifest.json",
+        "sha256": "596f8774fd6755ba5470a32944607835702f763dc9a3b9d419e35c042e1ddd2d"
+      },
+      "renderer_receipts": [
+        {
+          "closed": true
+        },
+        {
+          "closed": true
+        }
+      ],
+      "result": {
+        "bytes": 3339,
+        "path": "runs/m6-puck-mechanics-v3-20261003/gate/zero/result.json",
+        "sha256": "e1bbb6b7418461c702cd8168435520181d7ce33195704c34342d4f0a81060352"
+      },
+      "seed": 5990,
+      "signed_final_x_displacement_m": 0.0,
+      "snapshots": {
+        "initial": {
+          "bytes": 469322,
+          "sha256": "199334a7d27930022bd88993e79f65c6360f7698cabee3e3512b65abf78a6c2f",
+          "tick": 0
+        }
+      },
+      "sources_unchanged": true,
+      "status": "passed",
+      "supervision_status": "completed",
+      "ticks": 120
+    },
+    {
+      "callback_restored": true,
+      "case": "push-positive",
+      "cleanup": {
+        "passed": true,
+        "process_group_absent": true,
+        "same_process_alive": false
+      },
+      "completion": "fixed_mechanics_horizon",
+      "contact_intervals": 63,
+      "final_dwell_ticks": 0,
+      "final_goal_distance_m": 0.5427050140263694,
+      "final_teacher_mode": "fixed",
+      "first_contact_completed_tick": 46,
+      "full_model_sha256": "a118430d27d1909b96d5e7204bef1d406d9de090e8fa4fe85225a1ff207bf9bd",
+      "full_model_unchanged": true,
+      "id": "push-positive",
+      "kind": "root",
+      "max_contact_penetration_m": 0.00018589103417465243,
+      "max_puck_speed_m_s": 0.46516111562424833,
+      "max_ticks": 120,
+      "maximum_xy_displacement_m": 0.6572950050280792,
+      "owner_identity": {
+        "pid": 532185,
+        "process_group": 532185,
+        "start_ticks": 7131891
+      },
+      "owner_returncode": 0,
+      "record_events": {
+        "bytes": 150623,
+        "path": "runs/m6-puck-mechanics-v3-20261003/gate/push-positive/recording/events.jsonl",
+        "sha256": "c3d35a70b1112a6b16fcb32e747d4cc649e0c04f487e16cbb3245694aa2cb928"
+      },
+      "record_manifest": {
+        "bytes": 15190,
+        "path": "runs/m6-puck-mechanics-v3-20261003/gate/push-positive/recording/manifest.json",
+        "sha256": "c7a1ce8edcdc34da2554133d1f926b0faa26293f1a9608f8b22a5776b4cc9850"
+      },
+      "renderer_receipts": [
+        {
+          "closed": true
+        },
+        {
+          "closed": true
+        }
+      ],
+      "result": {
+        "bytes": 3496,
+        "path": "runs/m6-puck-mechanics-v3-20261003/gate/push-positive/result.json",
+        "sha256": "178d65827ba7e811603b4fea66e2976102874173192fc68f812af94b8847334d"
+      },
+      "seed": 5991,
+      "signed_final_x_displacement_m": 0.6572949964106254,
+      "snapshots": {
+        "initial": {
+          "bytes": 469343,
+          "sha256": "de18988b574a8656556566cdd74d089fbc600aef679863ca87ebc3c30f01a69b",
+          "tick": 0
+        }
+      },
+      "sources_unchanged": true,
+      "status": "passed",
+      "supervision_status": "completed",
+      "ticks": 120
+    },
+    {
+      "callback_restored": true,
+      "case": "push-negative",
+      "cleanup": {
+        "passed": true,
+        "process_group_absent": true,
+        "same_process_alive": false
+      },
+      "completion": "fixed_mechanics_horizon",
+      "contact_intervals": 61,
+      "final_dwell_ticks": 0,
+      "final_goal_distance_m": 0.5428425341152184,
+      "final_teacher_mode": "fixed",
+      "first_contact_completed_tick": 46,
+      "full_model_sha256": "5242415d3600653c62a8468cd9f718b2882d61c2363cb6319c4789c762a363cc",
+      "full_model_unchanged": true,
+      "id": "push-negative",
+      "kind": "root",
+      "max_contact_penetration_m": 0.00018589103417493,
+      "max_puck_speed_m_s": 0.4655835876977069,
+      "max_ticks": 120,
+      "maximum_xy_displacement_m": 0.6571574854338513,
+      "owner_identity": {
+        "pid": 532198,
+        "process_group": 532198,
+        "start_ticks": 7132219
+      },
+      "owner_returncode": 0,
+      "record_events": {
+        "bytes": 150205,
+        "path": "runs/m6-puck-mechanics-v3-20261003/gate/push-negative/recording/events.jsonl",
+        "sha256": "846cbb84f5165a9ea1432227a218fd7121753128162bee108f81bf55200b65d3"
+      },
+      "record_manifest": {
+        "bytes": 15192,
+        "path": "runs/m6-puck-mechanics-v3-20261003/gate/push-negative/recording/manifest.json",
+        "sha256": "a4885b545b6dd066b8e7b18bd5c32872344625eba07719a52006d8cfd613e2c8"
+      },
+      "renderer_receipts": [
+        {
+          "closed": true
+        },
+        {
+          "closed": true
+        }
+      ],
+      "result": {
+        "bytes": 3512,
+        "path": "runs/m6-puck-mechanics-v3-20261003/gate/push-negative/result.json",
+        "sha256": "81e2f0fbde5ff69e54857e2452d8fcd924ae22138619b42008dbda53e47845fa"
+      },
+      "seed": 5992,
+      "signed_final_x_displacement_m": -0.6571574765904626,
+      "snapshots": {
+        "initial": {
+          "bytes": 469339,
+          "sha256": "8d7d65ae236fe79a524ee382ac74ee06bba218e8c9a1ce6897551b13023d0a37",
+          "tick": 0
+        }
+      },
+      "sources_unchanged": true,
+      "status": "passed",
+      "supervision_status": "completed",
+      "ticks": 120
+    },
+    {
+      "callback_restored": true,
+      "case": "teacher-positive",
+      "cleanup": {
+        "passed": true,
+        "process_group_absent": true,
+        "same_process_alive": false
+      },
+      "completion": "time_limit",
+      "contact_intervals": 109,
+      "final_dwell_ticks": 0,
+      "final_goal_distance_m": 0.443812383791124,
+      "final_teacher_mode": "approach",
+      "first_contact_completed_tick": 112,
+      "full_model_sha256": "a118430d27d1909b96d5e7204bef1d406d9de090e8fa4fe85225a1ff207bf9bd",
+      "full_model_unchanged": true,
+      "id": "teacher-positive",
+      "kind": "root",
+      "max_contact_penetration_m": 0.0004352386029819774,
+      "max_puck_speed_m_s": 0.3757298653876617,
+      "max_ticks": 600,
+      "maximum_xy_displacement_m": 0.7583860023707816,
+      "owner_identity": {
+        "pid": 532239,
+        "process_group": 532239,
+        "start_ticks": 7132592
+      },
+      "owner_returncode": 1,
+      "record_events": {
+        "bytes": 754646,
+        "path": "runs/m6-puck-mechanics-v3-20261003/gate/teacher-positive/recording/events.jsonl",
+        "sha256": "308c03f772a729bf80b6b3622d9ea74e6115495f2a154e8b89a84cbafc240ae8"
+      },
+      "record_manifest": {
+        "bytes": 15202,
+        "path": "runs/m6-puck-mechanics-v3-20261003/gate/teacher-positive/recording/manifest.json",
+        "sha256": "b2765f1fe1396a4f555d543855a8163a0f7e2ae3f56af44984762266024a21c2"
+      },
+      "renderer_receipts": [
+        {
+          "closed": true
+        },
+        {
+          "closed": true
+        }
+      ],
+      "result": {
+        "bytes": 39423,
+        "path": "runs/m6-puck-mechanics-v3-20261003/gate/teacher-positive/result.json",
+        "sha256": "849577f6308dc92cca09abb8c1b218b421ab1d2aa05d204dda84f32faf6d27b8"
+      },
+      "seed": 5993,
+      "signed_final_x_displacement_m": 0.7575749569106563,
+      "snapshots": {
+        "contact": {
+          "bytes": 480622,
+          "sha256": "098d1bd20413cdd2660fea9793cc00e3ec0be492a09d9d4fdcd08973236d03ac",
+          "tick": 112
+        },
+        "initial": {
+          "bytes": 469334,
+          "sha256": "2e54c113f18d8c1114b16b9c95ac93607d7047cf4c1bbd5f33d9f5f30e0d1590",
+          "tick": 0
+        },
+        "tick1": {
+          "bytes": 477584,
+          "sha256": "cfff319e1dddb9423cf0b69ddb536649ec4d80a7d680811889d8fcd9d5a00a87",
+          "tick": 1
+        }
+      },
+      "sources_unchanged": true,
+      "status": "failed",
+      "supervision_status": "failed",
+      "ticks": 600
+    },
+    {
+      "case": "teacher-negative",
+      "id": "teacher-negative",
+      "kind": "root",
+      "max_ticks": 600,
+      "seed": 5994,
+      "status": "not_started"
+    },
+    {
+      "case": "teacher-positive",
+      "id": "continue-tick1",
+      "kind": "native-continuation",
+      "max_ticks": 4,
+      "seed": 5993,
+      "status": "not_started"
+    },
+    {
+      "case": "teacher-positive",
+      "id": "continue-contact",
+      "kind": "native-continuation",
+      "max_ticks": 4,
+      "seed": 5993,
+      "status": "not_started"
+    },
+    {
+      "case": "teacher-positive",
+      "id": "continue-dwell",
+      "kind": "native-continuation",
+      "max_ticks": 4,
+      "seed": 5993,
+      "status": "not_started"
+    },
+    {
+      "case": "push-positive",
+      "id": "replay-actions",
+      "kind": "action-replay",
+      "max_ticks": 120,
+      "seed": 5991,
+      "status": "not_started"
+    },
+    {
+      "case": "teacher-positive",
+      "id": "replay-policy",
+      "kind": "policy-replay",
+      "max_ticks": 600,
+      "seed": 5993,
+      "status": "not_started"
+    }
+  ],
+  "plan": {
+    "bytes": 14062,
+    "path": "runs/m6-puck-mechanics-v3-prepared/plan.json",
+    "sha256": "1a0196c40d3868d8c5b25251b7064c93e1e228d097db3400fc22f459e2f1d0c2"
+  },
+  "preflight": {
+    "bytes": 1234,
+    "path": "runs/m6-puck-mechanics-v3-prepared/preparation-check.json",
+    "sha256": "bccb0b55658ed15ad7f0e2d6b8ff6829aa487920abe13bed35c34ede0fa95600"
+  },
+  "qualification_claims": [],
+  "raw_ticks_checked": 960,
+  "signed_reverse_read_only_review": {
+    "candidate": "Approach only: choose forward/reverse target heading with smaller absolute wrapped error, tie forward; existing .12 alignment and .4 heading cap; use signed existing .25 approach magnitude when aligned. Push remains positive .2. Keep two-mode transitions and all task/physics/horizon limits.",
+    "checked_sources": {
+      "src/palimpsest/body_profile.py": {
+        "bytes": 28648,
+        "path": "src/palimpsest/body_profile.py",
+        "sha256": "796df9ab2a109606432c7a97bfbea5f58ab7acc75768e638b5b8731a390cbb54"
+      },
+      "src/palimpsest/puck_profile.py": {
+        "bytes": 33797,
+        "path": "src/palimpsest/puck_profile.py",
+        "sha256": "a6402e5213abcd645da961282251734a132f3eaaea190d6b72fb97014bb87c3c"
+      },
+      "upstream/fly-gym/environment/mujoco_model_random_obstacles.xml": {
+        "bytes": 16971,
+        "path": "upstream/fly-gym/environment/mujoco_model_random_obstacles.xml",
+        "sha256": "3630ec6a202bfb32276a39e21d974228518d4bb93cb4861532467af4ce883484"
+      },
+      "upstream/fly-gym/environment/mujoco_two_cam_env_random_obstacles.py": {
+        "bytes": 33934,
+        "path": "upstream/fly-gym/environment/mujoco_two_cam_env_random_obstacles.py",
+        "sha256": "37612bc4d2cbcda2aa5604d9975c06f2a6d77a64c6c1ebcb4330897d3e2bc751"
+      }
+    },
+    "limitation": "Static command-path and retained geometry evidence only; reverse contact behavior, arrival/alignment cycling and task success are untested. Requires new review/pins; training remains closed.",
+    "mechanism": "Existing converter preserves signed velocity: wheels=2*[v-.5*h,v+.5*h] after float32 conversion; current actuator controls admit [-2,2]. No new dynamics implied.",
+    "status": "candidate_not_implemented_or_executed"
+  },
+  "source_commit": "3b078cb0fc51ae5ea79bcbc7b3de0e1556474f8b",
+  "source_files_checked": 81,
+  "source_or_threshold_changes_after_execution": false,
+  "status": "failed",
+  "task_protocol": {
+    "bytes": 20692,
+    "path": "docs/plans/m6-puck-pushing-protocol-v3.json",
+    "sha256": "7129265b8483e6932a7745f6af77176855139aab398bd229b78430fe8ae87534"
+  },
+  "teacher_diagnosis": {
+    "action_phase_ranges_inclusive": [
+      {
+        "end_tick": 25,
+        "phase": "turn/approach/behind_point",
+        "start_tick": 0
+      },
+      {
+        "end_tick": 71,
+        "phase": "move/approach/behind_point",
+        "start_tick": 26
+      },
+      {
+        "end_tick": 89,
+        "phase": "turn/push/goal_direction",
+        "start_tick": 72
+      },
+      {
+        "end_tick": 160,
+        "phase": "move/push/goal_direction",
+        "start_tick": 90
+      },
+      {
+        "end_tick": 213,
+        "phase": "turn/approach/behind_point",
+        "start_tick": 161
+      },
+      {
+        "end_tick": 266,
+        "phase": "turn/push/goal_direction",
+        "start_tick": 214
+      },
+      {
+        "end_tick": 311,
+        "phase": "turn/approach/behind_point",
+        "start_tick": 267
+      },
+      {
+        "end_tick": 362,
+        "phase": "turn/push/goal_direction",
+        "start_tick": 312
+      },
+      {
+        "end_tick": 412,
+        "phase": "move/push/goal_direction",
+        "start_tick": 363
+      },
+      {
+        "end_tick": 468,
+        "phase": "turn/approach/behind_point",
+        "start_tick": 413
+      },
+      {
+        "end_tick": 511,
+        "phase": "turn/push/goal_direction",
+        "start_tick": 469
+      },
+      {
+        "end_tick": 550,
+        "phase": "turn/approach/behind_point",
+        "start_tick": 512
+      },
+      {
+        "end_tick": 597,
+        "phase": "turn/push/goal_direction",
+        "start_tick": 551
+      },
+      {
+        "end_tick": 599,
+        "phase": "turn/approach/behind_point",
+        "start_tick": 598
+      }
+    ],
+    "final_action": {
+      "axial_m": 0.44638644651183956,
+      "behind_body_xy": [
+        -0.07494540082071625,
+        -0.09424311358084872
+      ],
+      "behind_distance_m": 0.12041003928905003,
+      "behind_reverse_heading_error_rad": 0.8989677738187756,
+      "command": [
+        0.0,
+        -0.4
+      ],
+      "goal_heading_error_rad": 0.36443340792827117,
+      "lateral_m": 0.06134174023572103,
+      "selected_heading_error_rad": -2.2426248797710175,
+      "teacher_mode_after": "approach",
+      "teacher_mode_before": "approach",
+      "tick": 599
+    },
+    "interpretation": "Repeated mode cycle; all recovery approach phases command zero translational velocity. Positional drift reaches arrival before goal alignment; later readiness loss restarts approach. Not evidence that a longer horizon alone resolves task.",
+    "last_moving_action": {
+      "axial_m": 0.4462110313415332,
+      "behind_body_xy": [
+        -0.10361759378573451,
+        -0.05903415624412136
+      ],
+      "behind_distance_m": 0.11925450660415657,
+      "behind_reverse_heading_error_rad": 0.517865477464104,
+      "command": [
+        0.2,
+        0.0029104161637813555
+      ],
+      "goal_heading_error_rad": 0.0029104161637813555,
+      "lateral_m": 0.05873233632516767,
+      "reward_m": 0.006971294740623857,
+      "selected_heading_error_rad": 0.0029104161637813555,
+      "teacher_mode_after": "push",
+      "teacher_mode_before": "push",
+      "tick": 412
+    },
+    "last_positive_reward_m": 4.206008442003695e-05,
+    "last_positive_reward_tick": 591,
+    "mode_counts_after": {
+      "approach": 267,
+      "push": 333
+    },
+    "mode_transitions": [
+      {
+        "axial_m": 0.6253860553540047,
+        "behind_body_xy": [
+          0.07895186045559571,
+          0.005831484560675209
+        ],
+        "behind_distance_m": 0.07916692795341533,
+        "behind_reverse_heading_error_rad": -3.0678652635732258,
+        "command": [
+          0.0,
+          0.38402818435228525
+        ],
+        "goal_heading_error_rad": 0.38402818435228525,
+        "lateral_m": 0.02417323188454944,
+        "selected_heading_error_rad": 0.38402818435228525,
+        "teacher_mode_after": "push",
+        "teacher_mode_before": "approach",
+        "tick": 72
+      },
+      {
+        "axial_m": 0.4458964105219123,
+        "behind_body_xy": [
+          -0.10322454549805798,
+          -0.061950163850354054
+        ],
+        "behind_distance_m": 0.12038741460122133,
+        "behind_reverse_heading_error_rad": 0.5405294514128667,
+        "command": [
+          0.0,
+          -0.4
+        ],
+        "goal_heading_error_rad": 0.014361868368330226,
+        "lateral_m": 0.06046132856747472,
+        "selected_heading_error_rad": -2.6010632021769267,
+        "teacher_mode_after": "approach",
+        "teacher_mode_before": "push",
+        "tick": 161
+      },
+      {
+        "axial_m": 0.4730633973984642,
+        "behind_body_xy": [
+          0.02491723829051725,
+          -0.07593173759202555
+        ],
+        "behind_distance_m": 0.07991556505319003,
+        "behind_reverse_heading_error_rad": 1.8878774866311496,
+        "command": [
+          0.0,
+          0.4
+        ],
+        "goal_heading_error_rad": 1.6139786311022188,
+        "lateral_m": 0.021616121712833038,
+        "selected_heading_error_rad": 1.6139786311022188,
+        "teacher_mode_after": "push",
+        "teacher_mode_before": "approach",
+        "tick": 214
+      },
+      {
+        "axial_m": 0.44819362541050145,
+        "behind_body_xy": [
+          -0.08699620417082664,
+          -0.08034307166142703
+        ],
+        "behind_distance_m": 0.11842022084139749,
+        "behind_reverse_heading_error_rad": 0.74566074846964,
+        "command": [
+          0.0,
+          -0.4
+        ],
+        "goal_heading_error_rad": 0.20955493217484805,
+        "lateral_m": 0.060488104591465336,
+        "selected_heading_error_rad": -2.395931905120153,
+        "teacher_mode_after": "approach",
+        "teacher_mode_before": "push",
+        "tick": 267
+      },
+      {
+        "axial_m": 0.4709861581108832,
+        "behind_body_xy": [
+          -0.002555803721006604,
+          -0.0798287342192087
+        ],
+        "behind_distance_m": 0.07986963715769199,
+        "behind_reverse_heading_error_rad": 1.5387911719554814,
+        "command": [
+          0.0,
+          0.4
+        ],
+        "goal_heading_error_rad": 1.392270928414348,
+        "lateral_m": 0.01166069164428132,
+        "selected_heading_error_rad": 1.392270928414348,
+        "teacher_mode_after": "push",
+        "teacher_mode_before": "approach",
+        "tick": 312
+      },
+      {
+        "axial_m": 0.4460720591706208,
+        "behind_body_xy": [
+          -0.1036390477560798,
+          -0.06061079641099521
+        ],
+        "behind_distance_m": 0.12006132125444105,
+        "behind_reverse_heading_error_rad": 0.5291873285400933,
+        "command": [
+          0.0,
+          -0.4
+        ],
+        "goal_heading_error_rad": 0.004785964638631429,
+        "lateral_m": 0.06011409132913145,
+        "selected_heading_error_rad": -2.6124053250497,
+        "teacher_mode_after": "approach",
+        "teacher_mode_before": "push",
+        "tick": 413
+      },
+      {
+        "axial_m": 0.47748363867511184,
+        "behind_body_xy": [
+          0.045131361427151934,
+          -0.0658334266108586
+        ],
+        "behind_distance_m": 0.07981779152291502,
+        "behind_reverse_heading_error_rad": 2.171750639256717,
+        "command": [
+          0.0,
+          0.4
+        ],
+        "goal_heading_error_rad": 1.740691643677086,
+        "lateral_m": 0.0333505199928546,
+        "selected_heading_error_rad": 1.740691643677086,
+        "teacher_mode_after": "push",
+        "teacher_mode_before": "approach",
+        "tick": 469
+      },
+      {
+        "axial_m": 0.44631911282369,
+        "behind_body_xy": [
+          -0.047516802046783296,
+          -0.11051131429965726
+        ],
+        "behind_distance_m": 0.12029379479005066,
+        "behind_reverse_heading_error_rad": 1.1647216610179743,
+        "command": [
+          0.0,
+          -0.4
+        ],
+        "goal_heading_error_rad": 0.6329246301900121,
+        "lateral_m": 0.06099894014918689,
+        "selected_heading_error_rad": -1.976870992571819,
+        "teacher_mode_after": "approach",
+        "teacher_mode_before": "push",
+        "tick": 512
+      },
+      {
+        "axial_m": 0.47596134960737074,
+        "behind_body_xy": [
+          0.027864783972982646,
+          -0.07321561513334729
+        ],
+        "behind_distance_m": 0.07833883127297359,
+        "behind_reverse_heading_error_rad": 1.9344546500366002,
+        "command": [
+          0.0,
+          0.4
+        ],
+        "goal_heading_error_rad": 1.601583063111685,
+        "lateral_m": 0.025597865794894623,
+        "selected_heading_error_rad": 1.601583063111685,
+        "teacher_mode_after": "push",
+        "teacher_mode_before": "approach",
+        "tick": 551
+      },
+      {
+        "axial_m": 0.4467291564759354,
+        "behind_body_xy": [
+          -0.07250074732820151,
+          -0.09512091880689492
+        ],
+        "behind_distance_m": 0.11960078410201003,
+        "behind_reverse_heading_error_rad": 0.9195356042277265,
+        "command": [
+          0.0,
+          -0.4
+        ],
+        "goal_heading_error_rad": 0.3908344064804802,
+        "lateral_m": 0.06032810651465672,
+        "selected_heading_error_rad": -2.222057049362067,
+        "teacher_mode_after": "approach",
+        "teacher_mode_before": "push",
+        "tick": 598
+      }
+    ],
+    "moving_commands": 167,
+    "turn_only_commands": 433
+  }
+}
