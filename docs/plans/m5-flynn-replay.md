@@ -1,6 +1,7 @@
 # Fixed CPU FLYNN own-branch executable replay v1
 
-Preparation only until separate runtime GO. This adds exactly two fresh owners to
+Completed once at frozen `3bcd311`; see the [source-scoped evidence](../reports/m5-flynn-replay.md).
+The following prospective contract was reviewed before GO. This adds exactly two fresh owners to
 replay the already completed own branch, in order: actions, then policy. It does
 not rerun, replace, tune or extend the twelve-stage experiment, its nine conditions,
 or any earlier manual data. Failure stops immediately and retains the unattempted

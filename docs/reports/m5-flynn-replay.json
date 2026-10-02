@@ -1,0 +1,317 @@
+{
+  "source_commit": "3bcd31147f207eb4488eca774abfea533bbb57e5",
+  "original_commit": "6f355bdd9c0144c278c90cf53b468b429775fb8a",
+  "plan_sha256": "cb6608330f135d50ed795c36e51a8c5f17dfa2c3fa60c63ad0b00bdbbaad3541",
+  "launcher_sha256": "c5a6ca4584a5bda0cd2c8d36089a206f7daa76b7b8b49b6a79e5e45be6183144",
+  "launch_sha256": "eca97263beb0efa96c821f2b55e3c71ff332ca3cc6e51cdcc94a6c0d3e333a02",
+  "gate_report_sha256": "899b5c2b747da6c8c9fd45e87219bd71fbc3b778de85b00bd5e04b9e7b652fbe",
+  "rows": [
+    {
+      "mode": "actions",
+      "run_id": "4147e5bd3ad344c79ac5aa9d55ed273f",
+      "status": "passed",
+      "compared_ticks": 129,
+      "compared_events": 835,
+      "first_divergence": null,
+      "inference_executed": false,
+      "controller_reexecuted": false,
+      "snapshot_sha256": "6d62cd9b68d992c8b7f3ad5269b1d3df2a1b07945d8fea2c75c778162ac60689",
+      "snapshot_bytes": 1153125,
+      "replay_report_sha256": "e148397e144c19a75e55c3b94664ce73f1434c17d09e1311ac2b99be0090c405",
+      "worker_sha256": "ba564b44cbf662c0451e09f024d31dd1edbca15a6c1d620a0376c2349be3dd4d"
+    },
+    {
+      "mode": "policy",
+      "run_id": "7b623b4ce16a442bb45af4a5f4f24e03",
+      "status": "passed",
+      "compared_ticks": 129,
+      "compared_events": 835,
+      "first_divergence": null,
+      "inference_executed": true,
+      "controller_reexecuted": true,
+      "snapshot_sha256": "c1866e3126c7548e1c4c86d1cbd550aacf1bceadc4e96641d42407c81bf562c9",
+      "snapshot_bytes": 1153124,
+      "replay_report_sha256": "132bf3768cf77a679d884d09da22d395c68f973f547a6264c8e002e1bd7cf27d",
+      "worker_sha256": "d429b9da5eff07f4e51ca9cd9bbec0e8ce29458df1718a99dce8be957d8f9b87"
+    }
+  ],
+  "all_identity_files_rehashed": 281,
+  "source_files_rehashed": 10,
+  "required_runtime_files": 12,
+  "recording_files": 14,
+  "recording_bytes": 55354166,
+  "indexed_files": 22,
+  "indexed_bytes": 57666202,
+  "artifact_index": [
+    {
+      "path": "runs/m5-flynn-replay-20261002/runs/4147e5bd3ad344c79ac5aa9d55ed273f/recording/chunks/000000.npz",
+      "bytes": 6299636,
+      "sha256": "a1800fda920bb8b1b240439a2e53159da6f1feab578663907f04096c82a4d37d"
+    },
+    {
+      "path": "runs/m5-flynn-replay-20261002/runs/4147e5bd3ad344c79ac5aa9d55ed273f/recording/chunks/000001.npz",
+      "bytes": 6299636,
+      "sha256": "fa3dd8d060fc02c377d3a1d707fb2f0f6bf020bbeba7ceee1049f8a4c21655cc"
+    },
+    {
+      "path": "runs/m5-flynn-replay-20261002/runs/4147e5bd3ad344c79ac5aa9d55ed273f/recording/chunks/000002.npz",
+      "bytes": 6299636,
+      "sha256": "135ece86e50f8308081f8627502f071864df5a98c1de1db4101db1aef3d64d4b"
+    },
+    {
+      "path": "runs/m5-flynn-replay-20261002/runs/4147e5bd3ad344c79ac5aa9d55ed273f/recording/chunks/000003.npz",
+      "bytes": 6299636,
+      "sha256": "0ddc93fc71d27e03f44f633d35af6d4d051eeeb52a7b6d2dc0db669329ce98a8"
+    },
+    {
+      "path": "runs/m5-flynn-replay-20261002/runs/4147e5bd3ad344c79ac5aa9d55ed273f/recording/chunks/000004.npz",
+      "bytes": 200758,
+      "sha256": "fc0a9ae8cd9f864f407192ad37302e3ac680c455ba7c5677519ae1d1037ea351"
+    },
+    {
+      "path": "runs/m5-flynn-replay-20261002/runs/4147e5bd3ad344c79ac5aa9d55ed273f/recording/events.jsonl",
+      "bytes": 1021784,
+      "sha256": "5dbae250ad0e923a6b5947b437ebb01d89bfc230f3e5e2df0ee55ee0a38c18ca"
+    },
+    {
+      "path": "runs/m5-flynn-replay-20261002/runs/4147e5bd3ad344c79ac5aa9d55ed273f/recording/manifest.json",
+      "bytes": 6080,
+      "sha256": "19069f51eb5a9803e7258f4fc99b54747d062be6f8619ee32ec4c651f997131b"
+    },
+    {
+      "path": "runs/m5-flynn-replay-20261002/runs/4147e5bd3ad344c79ac5aa9d55ed273f/replay-report.json",
+      "bytes": 1770,
+      "sha256": "e148397e144c19a75e55c3b94664ce73f1434c17d09e1311ac2b99be0090c405"
+    },
+    {
+      "path": "runs/m5-flynn-replay-20261002/runs/4147e5bd3ad344c79ac5aa9d55ed273f/snapshots/index.json",
+      "bytes": 402,
+      "sha256": "78630d59115744c2fc455504d76f7f1b83cf7d8690144ca56196fc3016a94fc3"
+    },
+    {
+      "path": "runs/m5-flynn-replay-20261002/runs/4147e5bd3ad344c79ac5aa9d55ed273f/snapshots/initial.snp",
+      "bytes": 1153125,
+      "sha256": "6d62cd9b68d992c8b7f3ad5269b1d3df2a1b07945d8fea2c75c778162ac60689"
+    },
+    {
+      "path": "runs/m5-flynn-replay-20261002/runs/4147e5bd3ad344c79ac5aa9d55ed273f/worker-report.json",
+      "bytes": 859,
+      "sha256": "ba564b44cbf662c0451e09f024d31dd1edbca15a6c1d620a0376c2349be3dd4d"
+    },
+    {
+      "path": "runs/m5-flynn-replay-20261002/runs/7b623b4ce16a442bb45af4a5f4f24e03/recording/chunks/000000.npz",
+      "bytes": 6919538,
+      "sha256": "dc22c43e0078dea23ca70e9e58cfa9c0873136da29364d64563aa559d29c506e"
+    },
+    {
+      "path": "runs/m5-flynn-replay-20261002/runs/7b623b4ce16a442bb45af4a5f4f24e03/recording/chunks/000001.npz",
+      "bytes": 6919538,
+      "sha256": "62f7349b34823b1568bd0fe2fa5a43f7d654ede8bc4cf069911b4187fc9696b3"
+    },
+    {
+      "path": "runs/m5-flynn-replay-20261002/runs/7b623b4ce16a442bb45af4a5f4f24e03/recording/chunks/000002.npz",
+      "bytes": 6919538,
+      "sha256": "49dca950deaf1879a685cf7220eef024d7bffefaf667e0d22e1a36de84449d63"
+    },
+    {
+      "path": "runs/m5-flynn-replay-20261002/runs/7b623b4ce16a442bb45af4a5f4f24e03/recording/chunks/000003.npz",
+      "bytes": 6919538,
+      "sha256": "627de49c846c9069d8523995448bbd493a9e7d50ec6157d2a9dbe98d21d97afa"
+    },
+    {
+      "path": "runs/m5-flynn-replay-20261002/runs/7b623b4ce16a442bb45af4a5f4f24e03/recording/chunks/000004.npz",
+      "bytes": 220624,
+      "sha256": "5ce279a547efd6be0202ae5cb058acf5164032ad16fa3c3c2d92ce0f707a15b8"
+    },
+    {
+      "path": "runs/m5-flynn-replay-20261002/runs/7b623b4ce16a442bb45af4a5f4f24e03/recording/events.jsonl",
+      "bytes": 1022105,
+      "sha256": "e2ab53ddd7db7faedc669eb5a440c63d3b4aa7f373345990f1781be60d66f101"
+    },
+    {
+      "path": "runs/m5-flynn-replay-20261002/runs/7b623b4ce16a442bb45af4a5f4f24e03/recording/manifest.json",
+      "bytes": 6119,
+      "sha256": "13272767b7088ffb3d6b78770c25271a8192ee72e6b9c4a501541777842dc0c3"
+    },
+    {
+      "path": "runs/m5-flynn-replay-20261002/runs/7b623b4ce16a442bb45af4a5f4f24e03/replay-report.json",
+      "bytes": 1497,
+      "sha256": "132bf3768cf77a679d884d09da22d395c68f973f547a6264c8e002e1bd7cf27d"
+    },
+    {
+      "path": "runs/m5-flynn-replay-20261002/runs/7b623b4ce16a442bb45af4a5f4f24e03/snapshots/index.json",
+      "bytes": 402,
+      "sha256": "f5ad09cd55e7ae757285f5f4e3d2178aeed0987388293238444d1fca64f0159a"
+    },
+    {
+      "path": "runs/m5-flynn-replay-20261002/runs/7b623b4ce16a442bb45af4a5f4f24e03/snapshots/initial.snp",
+      "bytes": 1153124,
+      "sha256": "c1866e3126c7548e1c4c86d1cbd550aacf1bceadc4e96641d42407c81bf562c9"
+    },
+    {
+      "path": "runs/m5-flynn-replay-20261002/runs/7b623b4ce16a442bb45af4a5f4f24e03/worker-report.json",
+      "bytes": 857,
+      "sha256": "d429b9da5eff07f4e51ca9cd9bbec0e8ce29458df1718a99dce8be957d8f9b87"
+    }
+  ],
+  "source_unchanged": true,
+  "identities_unchanged": true,
+  "initial_guard_sha256": "402e7fc3a1e7728c157741aed5320132bff8a3140f643d157e939096a26a5c95",
+  "native_sha256": "f56d7a57c2527958932cb444e5f4ba1d84281657ed49d4f1ef21c6ac917221b2",
+  "owner_identities_absent": 4,
+  "survivors": [],
+  "forced_signals": [],
+  "monitor_errors": [],
+  "model_imports": false,
+  "audit_seconds": 4.858073677998618,
+  "scope": "one predeclared completed own-branch executable reproducibility check; no new task/transfer-benefit claim",
+  "original_experiment_report_sha256": "f07a40e8cc6c84f307ef96d1ab2a4358969eb3d080a9e3ea450c629966c92f58",
+  "api_commit": "136f3f3e893e5cbef553d9cd8cd33806eb7aa527",
+  "protocol_sha256": "8efb7bb24d6a90a95d6c5f1b8336901d01550de3e126085288bf22de1ff9160e",
+  "protocol": {
+    "version": 1,
+    "original_commit": "6f355bdd9c0144c278c90cf53b468b429775fb8a",
+    "source_run_id": "12ef7a0db5af408fbdb47ad4de6c69b9",
+    "modes": [
+      "actions",
+      "policy"
+    ],
+    "ticks": 129,
+    "initial_tick": 300,
+    "terminal_tick": 429,
+    "child_timeout_seconds": 160,
+    "callback_wall_seconds": 150,
+    "outer_timeout_seconds": 360,
+    "recording_max_bytes": 201326592,
+    "snapshot_max_bytes_at_ready": 16777216,
+    "aggregate_max_bytes": 536870912,
+    "min_free_bytes": 2147483648,
+    "headroom_bytes": 33554432,
+    "log_max_bytes": 1048576,
+    "ownership_max_bytes": 8388608,
+    "retries": 0,
+    "protocol_document_sha256": "48aaa958308bac06bf2c673e937b0a142b2f2422fcfe6167b87400b211f1c41b"
+  },
+  "source_snapshot_sha256": "c09d4c67786ba354f8e8ad9c088c0867bea9af56f93054a9e44406d3ffb9a540",
+  "source_snapshot_state_sha256": "e6fe1d68a9689e492fb9956c6ab4964f5e6d1878ef180b6e471574763e1bc65a",
+  "source_artifact_index": {
+    "recording/chunks/000000.npz": {
+      "bytes": 6919538,
+      "sha256": "b1bf0736da128a008e62f86bc30922b8167bc5b55d4c0ddbd50b99517b0787cc"
+    },
+    "recording/chunks/000001.npz": {
+      "bytes": 6919538,
+      "sha256": "73ce9e22d95d7010cac376556fd07ba421a020b76b0e27ae65543fb9463eca48"
+    },
+    "recording/chunks/000002.npz": {
+      "bytes": 6919538,
+      "sha256": "cfd00ed429728e8f7f55430229ac233a67030098925ba38ec83165f428633838"
+    },
+    "recording/chunks/000003.npz": {
+      "bytes": 6919538,
+      "sha256": "2c860594497f397a942105912794faab2bd72395dd2b76afa408b8ff3fe9d161"
+    },
+    "recording/chunks/000004.npz": {
+      "bytes": 220624,
+      "sha256": "8ed7291be3dcd509524d5562af639bdabab8039cd9a28771f5f0839d7d41d16e"
+    },
+    "recording/events.jsonl": {
+      "bytes": 1127647,
+      "sha256": "fee1e741a351add50e8bca696794fb614b156df1982425631b8c440836285561"
+    },
+    "recording/manifest.json": {
+      "bytes": 27771,
+      "sha256": "8ceca96cd88d4b177543b3d44968584aa948d0b48df653d3920191b83fc74479"
+    },
+    "snapshots/index.json": {
+      "bytes": 402,
+      "sha256": "492890035a9f9ecc96ad3fd0e2a9f643ad071cac17c0dd18421faf328af42aff"
+    },
+    "snapshots/initial.snp": {
+      "bytes": 1153123,
+      "sha256": "c09d4c67786ba354f8e8ad9c088c0867bea9af56f93054a9e44406d3ffb9a540"
+    },
+    "transfer-worker.json": {
+      "bytes": 13503,
+      "sha256": "2d53b17b2135745309e7b7db8aab799261d68e4cef08e9f80017dc165a9c2fac"
+    }
+  },
+  "outer_supervision": {
+    "schema_version": 1,
+    "status": "completed",
+    "timeout_seconds": 360,
+    "started_utc": "2026-10-02T18:12:00.203039+00:00",
+    "output": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-flynn-continuation/runs/m5-flynn-replay-launch-3bcd311/process",
+    "returncode": 0,
+    "elapsed_seconds": 83.191965289996
+  },
+  "elapsed_seconds_including_cleanup": 85.27827522100415,
+  "owner_supervisions": {
+    "actions": {
+      "schema_version": 1,
+      "status": "completed",
+      "timeout_seconds": 160,
+      "started_utc": "2026-10-02T18:12:00.406323+00:00",
+      "output": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-flynn-continuation/runs/m5-flynn-replay-20261002/actions-process",
+      "returncode": 0,
+      "elapsed_seconds": 39.57721162199596
+    },
+    "policy": {
+      "schema_version": 1,
+      "status": "completed",
+      "timeout_seconds": 160,
+      "started_utc": "2026-10-02T18:12:41.020867+00:00",
+      "output": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-flynn-continuation/runs/m5-flynn-replay-20261002/policy-process",
+      "returncode": 0,
+      "elapsed_seconds": 41.34086830599699
+    }
+  },
+  "operational_pass": true,
+  "all_output_control_files": 44,
+  "all_output_control_bytes": 58027075,
+  "launch_storage_sample": {
+    "used_bytes": 57987414,
+    "files": 42,
+    "remaining_bytes": 478883498,
+    "max_bytes": 536870912,
+    "headroom_bytes": 33554432,
+    "min_free_bytes": 2147483648
+  },
+  "initial_state_exclusions": [
+    "application.source_run_id",
+    "application.event_prefix",
+    "application.execution_mode"
+  ],
+  "source_code_compatibility": "all 12 required replay runtime files, upstream and lock exact; replay.py is not in runtime compatibility set",
+  "scientific_limits": [
+    "one local-cue development change case at seed 16",
+    "original nine-condition correction at 358 and goal at 429 identical: no own-U timing or task benefit",
+    "no paired/counterbalanced/null/no-event or held-out execution",
+    "source acquisition used declared privileged manual pose supervision",
+    "no biological or R2 completion claim"
+  ],
+  "audit_files": {
+    "audit.py": {
+      "path": "runs/m5-flynn-replay-audit-3bcd311/audit.py",
+      "sha256": "12ad3c2a8ffdee8b1da86275144def04041bf5c0005e7a58f0301843e8b51d5b"
+    },
+    "audit.json": {
+      "path": "runs/m5-flynn-replay-audit-3bcd311/audit.json",
+      "sha256": "ad16389f45bbc3d517daae857f354d6eea647e1fbe47f5fd28fc561424d2d6c7"
+    }
+  },
+  "independent_root_audit": {
+    "elapsed_seconds_reported": 0.938,
+    "scope": "32 indexed original-source/destination files, both 129-row comparisons, exact normalized initial state, inference flags and four absent PID/start identities",
+    "files": {
+      "audit.py": {
+        "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/project-integration/runs/m5-flynn-replay-root-audit-3bcd311/audit.py",
+        "sha256": "81f1bb89884a292f4532e5bd9b81aedc6c8760aafc0e4fb696b9e38d8bb4b729"
+      },
+      "audit.json": {
+        "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/project-integration/runs/m5-flynn-replay-root-audit-3bcd311/audit.json",
+        "sha256": "5970ccfbff7f627df9c02966c00f7d56dec87b9f0277fb6b9dfafe73374a9a1b"
+      }
+    }
+  }
+}
