@@ -55,6 +55,14 @@ def unread_commands_owner(config, commands, replies, display, disconnected, stop
     replies.put({"version": 1, "type": "closed", "run_id": config["run_id"], "status": "closed"})
 
 
+def slow_finalizing_owner(config, commands, replies, display, disconnected, stop, progress):
+    os.setsid()
+    stop.wait(5.)
+    replies.put({"version": 1, "type": "closed", "run_id": config["run_id"], "status": "closed"})
+    # A completed FLYNN owner can still be finalizing Python/native state.
+    time.sleep(config.get("finalization_seconds", 1.5))
+
+
 def semaphore_names(owner):
     locks = [owner.progress.get_lock()]
     for queue in (owner.commands, owner.replies, owner.display):
@@ -155,6 +163,27 @@ class ApiGuards(unittest.TestCase):
 
 
 class Supervision(unittest.TestCase):
+    def test_close_allows_normal_finalization_but_reaps_stuck_owner(self):
+        for delay, status in ((1.5, "closed"), (30., "failed")):
+            with self.subTest(delay=delay), tempfile.TemporaryDirectory() as tmp:
+                supervisor = LabSupervisor(REPO, Path(tmp) / "assets", Path(tmp) / "runs",
+                                           worker_target=slow_finalizing_owner)
+                try:
+                    identifier = supervisor.start({"finalization_seconds": delay})
+                    owner = supervisor.workers[identifier]
+                    started = time.monotonic()
+                    result = supervisor.close(identifier)
+                    self.assertEqual(result["status"], status, result.get("failure"))
+                    self.assertFalse(owner.process.is_alive())
+                    self.assertLess(time.monotonic() - started, 12.)
+                    if status == "closed":
+                        self.assertEqual(owner.process.exitcode, 0)
+                    else:
+                        self.assertEqual(result["failure"]["type"], "CloseTimeout")
+                        self.assertLess(owner.process.exitcode, 0)
+                finally:
+                    supervisor.shutdown()
+
     def test_failed_spawn_can_be_closed_and_service_shutdown(self):
         with tempfile.TemporaryDirectory() as tmp:
             supervisor = LabSupervisor(REPO, Path(tmp) / "assets", Path(tmp) / "runs")
