@@ -45,6 +45,9 @@ def bounded_logs(output, max_bytes, on_failure):
                 os.fsync(target.fileno())
         except OSError as error:
             on_failure(f'{path.name}: {error}')
+        finally:
+            with contextlib.suppress(OSError):
+                os.close(fd)
     try:
         for name in ('stdout.log', 'stderr.log'):
             reader, writer = os.pipe()
@@ -52,15 +55,22 @@ def bounded_logs(output, max_bytes, on_failure):
             writers.append(os.fdopen(writer, 'wb', buffering=0))
             thread = threading.Thread(target=drain, args=(reader, Path(output) / name), daemon=True)
             thread.start()
+            readers.remove(reader)  # Started drains own their reader descriptor.
             threads.append(thread)
         yield writers
     finally:
         for writer in writers:
-            writer.close()
+            try:
+                writer.close()
+            except OSError as error:
+                on_failure(f'native log pipe cleanup failed: {error}')
         for thread in threads:
             thread.join(timeout=2.)
+            if thread.is_alive():
+                on_failure('native log drain/final sync timed out')
         for reader in readers:
-            os.close(reader)
+            with contextlib.suppress(OSError):
+                os.close(reader)
 
 
 def bounded_process(command, output, timeout, env=None, *, log_max_bytes=1024**2, storage_budget=None):

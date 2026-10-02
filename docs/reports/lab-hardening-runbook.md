@@ -109,6 +109,12 @@ The drivers terminate only their own server/namespace process groups and
 verified descendants; they never disconnect the host or kill unrelated jobs.
 A startup failure still produces a failed report. Cleanup failures or owned
 survivors make the report fail rather than hiding behind a successful workload.
+Log-drain threads have bounded joins; a blocked drain or final `fsync` makes the
+run fail even if its child exited zero. Python cannot cancel a thread blocked in
+kernel I/O. Its file descriptors remain owned by that thread until the call
+returns or the process exits; the parent does not close and reuse a descriptor
+behind the blocked reader. This is a reporting bound, not a promise to cancel
+an uninterruptible kernel storage operation.
 
 ## Release evidence boundaries
 

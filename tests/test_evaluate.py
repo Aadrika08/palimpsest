@@ -1,7 +1,10 @@
 import json
+import os
 from pathlib import Path
 import sys
 import tempfile
+import threading
+import time
 import unittest
 from types import SimpleNamespace
 from unittest.mock import patch
@@ -12,6 +15,36 @@ from palimpsest.storage import StorageBudget, StorageLimits, StorageLimitError
 
 
 class EvaluationTests(unittest.TestCase):
+    def test_hung_final_log_fsync_is_bounded_and_cannot_report_completed(self):
+        release, both_entered, lock = threading.Event(), threading.Event(), threading.Lock()
+        drains, original_fsync = [], os.fsync
+        def gated_fsync(fd):
+            if threading.current_thread() is threading.main_thread():
+                return original_fsync(fd)
+            with lock:
+                drains.append(threading.current_thread())
+                if len(drains) == 2:
+                    both_entered.set()
+            release.wait(timeout=15.)
+            return original_fsync(fd)
+        with tempfile.TemporaryDirectory() as directory:
+            output = Path(directory) / 'run'
+            with patch('palimpsest.evaluate.os.fsync', side_effect=gated_fsync):
+                try:
+                    started = time.monotonic()
+                    report = bounded_process([sys.executable, '-c', 'pass'], output, 5)
+                    self.assertTrue(both_entered.is_set())
+                    self.assertLess(time.monotonic() - started, 8.)
+                    self.assertEqual(report['returncode'], 0)
+                    self.assertEqual(report['status'], 'failed')
+                    self.assertIn('drain/final sync timed out', report['failure']['message'])
+                    self.assertEqual(json.loads((output / 'supervisor.json').read_text())['status'], 'failed')
+                finally:
+                    release.set()
+                    for thread in drains:
+                        thread.join(timeout=2.)
+                    self.assertTrue(all(not thread.is_alive() for thread in drains))
+
     def args(self, output, **changes):
         return SimpleNamespace(**{'output': output, 'controller': 'teacher', 'device': 'cpu', 'episodes': 1,
             'max_steps': 1, 'seed': 0, 'parity': False, 'max_bytes': 1024**2, 'threads': 1, 'timeout': 2,
