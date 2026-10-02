@@ -1,8 +1,44 @@
-# M3 / R1 hardening evidence — incomplete
+# M3 / R1 hardening evidence — operational gates passed
 
-**R1 is not qualified.** The current 193-test suite and natural-completion manual/teacher benchmark pass within the scopes below. Four current browser workflow assertions, command acknowledgement and clean service shutdown pass. Display cadence is **27.98 Hz**, below the labelled 30 Hz target. Fresh-cached offline setup and short full-FLYNN CPU functionality also pass. A 240-second CPU FLYNN mixed-operation smoke also passes within the small sample limits below. Current-runtime natural throughput, final CLI checks and the 193-test suite pass. The 60-minute mixed-operation gate remains open.
+**M3 operational gates pass under the scoped contract; documentation publication and final R1 release review remain pending.** The fresh mixed gate completed 3600.000099 seconds on unchanged `c43f5df`. Earlier hour/close failures remain retained. Display updates remain 27.98 Hz against the labelled 30 Hz target, and historical browser/offline evidence retains its measured source. No continuous-inference, full-FLYNN real-time or hardware qualification is claimed.
 
-This draft records evidence through final validation source `a24c2379716bf21f1d497896e25a1227f8de5c49` on 2026-10-02, including supervisor cleanup committed as `a0828f5fb4dd1a8a60535e81b47b1a3a4cba0d7b`. Natural performance and browser v1 used `dc911f32c68b7507e3b0c917309f5e31fb00f903`, whose runtime matched implementation `f0638861b4c5cc830a613fe1a8aaf55d19621368`. Later browser instrumentation, storage traversal and shutdown changes are identified separately; their performance is not inferred from earlier runs. [The JSON index](m3-release-hardening.json) records measured runtime hashes, small raw-report hashes, source identities, requirement limits and pending checks.
+This draft records evidence through runtime `c43f5dfb38b0cef0084a1458940aa6ada9f206a9` on 2026-10-02. Earlier integration validation used `a24c2379716bf21f1d497896e25a1227f8de5c49`, including supervisor cleanup committed as `a0828f5fb4dd1a8a60535e81b47b1a3a4cba0d7b`. Natural performance and browser v1 used `dc911f32c68b7507e3b0c917309f5e31fb00f903`, whose runtime matched implementation `f0638861b4c5cc830a613fe1a8aaf55d19621368`. Later browser instrumentation, storage traversal and shutdown changes are identified separately; their performance is not inferred from earlier runs. [The JSON index](m3-release-hardening.json) records measured runtime hashes, small raw-report hashes, source identities, requirement limits and pending checks.
+
+## Hour-gate failure and teardown investigation
+
+The [first hour report](../../runs/m3-endurance-hour-20261002/report.json), unchanged source `58e88b0`, failed after **693.744 seconds**, with five complete cycles (manual two, teacher two, FLYNN one). Branch `c5fb59cb3aab4dab885fcecd6b108bf1` had reported closed before the API raised `CloseTimeout: Owner did not exit after closing`. No hour pass is claimed. Final verifier cleanup found no surviving owned processes; that does not establish that earlier owner termination was graceful. The original supervisor did not retain exact signal escalation details.
+
+An [unsignalled diagnostic restoration](../../runs/m3-close-diagnosis-20261002b/report.json) exited normally with code zero **2.202961 seconds after closed** under the monitor's existing five-second grace. Queue and log feeder threads were already gone at the late samples. The first instrumented attempt was terminated by its SIGUSR1 probe after the handler disappeared; that attempt is excluded from natural-exit timing. This establishes that the API's one-second grace could reject healthy finalization, without identifying the exact native function.
+
+Commit `6e83600` shares the monitor's five-second grace with `close()`. The real spawned regression fails before the fix and passes afterward, including bounded termination of a stuck child. [Validation](../../runs/m3-finalization-validation-20261002/report.json) records **194 tests passed with actual EGL enabled, no skips, in 68.543 seconds**. However, [normal full-model closure validation](../../runs/m3-flynn-close-validation-20261002/report.json) then failed on its first restored branch: close took 5.489 seconds, the child exceeded five seconds after closed, and its observed exit code was −15. The second planned attempt was not launched. No owned PID remained after cleanup. The grace alignment was insufficient by itself; that failed report remains unchanged.
+
+The [native debugger capture](../../runs/m3-native-close-stack-20261002/attempt-0.native-gdb.log) sampled the main thread in `gc_collect_main → finalize_modules → Py_FinalizeEx → Py_Exit`, after worker return. Two unattached restorations exited normally 2.139459 and 0.823785 seconds after closed. Post-closed samples recorded child major-fault increases of 2,978 and 131, with child `VmSwap` remaining zero. This identifies module-finalization GC at the sampled moment; it does not identify a particular object destructor or establish swap causality. The debugger-attached 5.800281-second exit is instrumented and is not a natural timing result.
+
+Commit `c43f5df` retains Engine, renderer, recorder and native-log cleanup, then explicitly closes and joins the outgoing reply/display queues before `os._exit(0)`. It does not cancel those queue joins or truncate frames; the parent retains IPC cleanup ownership. The [durable module-exit validation index](../../runs/m3-module-exit-validation-20261002/report.json) copies and hashes the original logs: the spawned module-finalizer regression **failed before the fix in 5.167 seconds**, six focused IPC/log/semaphore checks **passed in 2.800 seconds**, and the full actual EGL suite **passed 195 tests with no skips in 64.174 seconds**. The logs lack embedded source manifests; source association comes from parent orchestration, with current runtime hashes captured separately.
+
+[Normal full-model closure validation](../../runs/m3-flynn-close-validation-20261002b/report.json) then passed for **two sequential CPU-FLYNN restorations of the original failure snapshot**, using unmodified `LabSupervisor.close()`: close took **0.333401 / 0.189359 seconds**, closed-to-return **0.114582 / 0.094983 seconds**, and both owners exited with code **0**. Each restored tick 8, advanced to tick 9 and paused 15 seconds. Supervisor cleanup completed, no owned PID remained, and retained native/probe logs contain no semaphore warnings or tracebacks. Source hashes remained unchanged at `c43f5df`. This is focused lifecycle evidence; it does not replace the failed hour or establish endurance.
+
+
+## Completed mixed hour gate
+
+The [terminal hour report](../../runs/m3-endurance-hour-20261002b/report.json), SHA-256 `c2285bcee16f5fdc594ef7004bfe83f798fc0e346055412898a4f4d2e7c7f958`, **passes all eight gates** on unchanged `c43f5df` in **3600.000099 seconds**. It completes **29 cycles: manual 10, teacher 10, CPU-FLYNN 9**. Each cycle includes valid preview/edit, eye masking, run/pause/step/reset, snapshot, sequential branch, action replay, policy replay and playback. All **58 executable replays pass**; **116 supervisor/job dispositions are closed/completed**. Independent reading verifies lossless recording integrity for **809 ticks** (16.18 aggregate simulated seconds).
+
+This is a 60-minute browser-independent authenticated HTTP/WebSocket **mixed workload**, with model loading, modest bursts and paused intervals. It is not 3600 seconds of inference. Receipt p95 is **42.808544 ms** (max 63.162388 ms, 242 requests); observed application p95 is separately **119.977511 ms** (max 175.283821 ms, includes polling). Small run-request-to-pause burst RTF is not the separately qualified natural-completion throughput measure.
+
+Across **712 finite resource samples**, peaks are **1,602,048,000 RSS bytes**, **99 FDs**, **16 threads**, **one owner**, and **265,309,143 sampled output bytes**; minimum free disk is **38,392,602,624 bytes**. These meet the unchanged 8 GiB RSS/1024FD/512thread/2GiB output/512MiB free-floor budgets. Late-versus-warm server p95 growth is **20,299,776 RSS bytes**, **zero FDs**, **zero threads**, within 128 MiB/32 FD/16 thread growth limits. Finite sampling is not a universal no-growth or process-liveness proof.
+
+Full-FLYNN categories remain separate:
+
+| Category | Recorded ticks | Policy p95 | Physics/camera p95 | Kernel-only RTF |
+|---|---:|---:|---:|---:|
+| Source CPU-FLYNN | 82 | 15.837672 ms | 6.497164 ms | 1.167994 |
+| Restored branch CPU-FLYNN | 9 | 50.963924 ms | 55.484152 ms | 0.304351 |
+| Policy replay CPU-FLYNN | 82 | 16.846869 ms | 2.577714 ms | 1.293519 |
+| Action replay CPU-FLYNN | 82 | Inference bypassed | 2.681122 ms | 10.808277 |
+
+There are **173 inference-executed FLYNN ticks** and 82 action-replay ticks. These kernel-only rates exclude loading, pauses, IPC, recording and display; pooled kernel RTF 2.584709 includes action replay and other controllers and is not FLYNN throughput. No full-model ≥1× or continuous-inference gate is asserted.
+
+The harness exits **0**. The server exits **−15 (SIGTERM)** with full Uvicorn shutdown/lifespan completion; no SIGKILL server exit or survivors requiring killing is recorded. Native/probe logs contain no semaphore/resource-tracker warnings or tracebacks. All 111 observed PID/start-time identities are absent after cleanup and listener 46443 is gone. Live-source/branch states are closed; replay transport jobs are completed while preserving underlying timeline semantics. The supervisor schema does not persist each owner's exit code, so 116 code-zero owner exits are not claimed. Independent hashing covers 1167 terminal files (ordered inventory digest `9a20fa20f3890c32fae850184f5d9a7d26d3dde4d867744ed416a1085dac9b1a`); later derivative additions are outside that captured inventory. The committed JSON carries terminal report/log/resource/command hashes and scoped category metrics.
 
 ## Retained checks
 
@@ -22,7 +58,9 @@ Three shutdown/IPC regressions pass in this suite: final native-log fsync failur
 
 ## Manual and teacher performance
 
-The [current-runtime natural-completion gate](../../runs/m3-performance-final-20261002/report.json) passed on unchanged `a24c237`: manual **600 ticks / 1.00010826× active RTF**, teacher **653 ticks / 1.00030542×**. Outer rates including request/poll/reset time are **0.99557347× / 0.98877306×**, respectively. Both recordings close cleanly with contiguous 20 ms ticks; the verifier took 38.8159 seconds. These are narrow margins on this host, not general real-time guarantees. The separate historical result below remains unchanged.
+The latest [natural-completion gate](../../runs/m3-performance-after-module-exit-20261002/report.json) **passed on unchanged `c43f5df` in 36.3254 seconds**: manual **600 ticks / 1.000337227× worker-active RTF**, teacher **653 ticks / 1.000342527×**. Outer rates are **0.998503646× / 0.988887495×**, including request, reset and polling time. Manual ends at the time limit; the teacher reaches three goals in 266, 191 and 196 ticks. Both records close cleanly. These narrow margins apply to the measured CPU sparse-navigation/checker workload on this host; they do not qualify full-FLYNN speed, browser frames or universal real-time behavior.
+
+The earlier [natural-completion gate](../../runs/m3-performance-final-20261002/report.json) passed on unchanged `a24c237`: manual **600 ticks / 1.00010826× active RTF**, teacher **653 ticks / 1.00030542×**. Outer rates including request/poll/reset time are **0.99557347× / 0.98877306×**, respectively. Both recordings close cleanly with contiguous 20 ms ticks; the verifier took 38.8159 seconds. These are narrow margins on this host, not general real-time guarantees. The separate historical result below remains unchanged.
 
 [`m3-performance-natural-20261002b/report.json`](../../runs/m3-performance-natural-20261002b/report.json) passes the declared worker-active real-time threshold on its recorded runtime and host. It uses actual spawned owners, CPU manual/teacher controllers, the sparse-navigation/checker profile and EGL. After at least 600 ticks, each controller runs until a natural episode ending; it is not the earlier operator-pause protocol.
 
@@ -131,7 +169,7 @@ The original PRD is unchanged: SHA-256 `4ce71144b2ce3b72b5f7318e0d357ee0f13efb20
 
 The remaining release work is concrete:
 
-- Complete the frozen-runtime 60-minute mixed-operation gate with declared RSS/FD/thread/storage bounds, retained diagnostics and clean process shutdown.
-- Finish the release-status review after the hour gate. Keep the measured 27.98 Hz display limitation and earlier failures/scoped checks visible.
+- Commit/publish the prepared [requirements matrix](../requirements-evidence.md), linked setup/recovery/retention and licence/provenance limits, and this terminal M3 release review. Operational gates have passed under the existing contract; documentation publication remains pending.
+- Keep the measured 27.98 Hz display limitation, CUDA continuation failure, historical source identities and earlier failures/scoped checks visible when finalizing R1 status.
 
-No memory learning, new navigation competence, topology result, original checkpoint training lineage or physical capability follows from these checks. Hardware remains blocked and unqualified; it is not a prerequisite for R1. The [M3 contract](../plans/m3-release-hardening.md) remains open until its final gates have retained evidence.
+No memory learning, new navigation competence, topology result, original checkpoint training lineage or physical capability follows from these checks. Hardware remains blocked and unqualified; it is not a prerequisite for R1. The [M3 contract](../plans/m3-release-hardening.md) now has retained operational evidence; its documentation-publication/release-review gate remains open.

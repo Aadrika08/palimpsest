@@ -1,10 +1,10 @@
 {
   "schema_version": 1,
   "milestone": "M3 / R1 hardening",
-  "status": "incomplete",
+  "status": "operational_gates_passed_publication_pending",
   "r1_qualified": false,
   "as_of_date": "2026-10-02",
-  "as_of_head": "a24c2379716bf21f1d497896e25a1227f8de5c49",
+  "as_of_head": "c43f5dfb38b0cef0084a1458940aa6ada9f206a9",
   "source": {
     "prd": {
       "path": "docs/borrowed-body-prd-v1.md",
@@ -38,9 +38,11 @@
     "later_changes": [
       "821a82b updates the browser measurement protocol; the retained v1 evidence is unchanged.",
       "7778c4e changes storage inventory traversal; no new end-to-end performance pass is claimed.",
-      "a0828f5 commits supervisor resource cleanup and the later never-started-process join guard. The 191-test suite predates only that guard/new test; three retained focused tests cover the final cleanup. No full 192-test pass is claimed."
+      "a0828f5 commits supervisor resource cleanup and the later never-started-process join guard. The 191-test suite predates only that guard/new test; three retained focused tests cover the final cleanup. No full 192-test pass is claimed.",
+      "6e83600 aligns bounded post-closed exit grace; a subsequent normal full-model close still failed and is retained.",
+      "c43f5df drains/joins outgoing reply/display queues after existing runtime/log cleanup, then exits the completed worker without unrelated Python module finalization; new close and natural-throughput evidence is separately indexed."
     ],
-    "current_runtime_matches_final_natural_performance": true,
+    "current_runtime_matches_final_natural_performance": false,
     "current_runtime_sha256": {
       "src/palimpsest/__init__.py": "bb99e30d22e4662c4ded455b1b23f49b77ce811dcfa1b69bf358925487a566d8",
       "src/palimpsest/__main__.py": "935a1c1166b0c1ea35a82256345000bf2c73ded718d77773bc27a71ecce28f7d",
@@ -52,17 +54,18 @@
       "src/palimpsest/evaluate.py": "74a9afb710b36a366ab680462e9440f285730a0360bda704af25ebbcfd74256a",
       "src/palimpsest/flynn.py": "409b7503d76fd6f971a33d053e86c968b529edc226b85f44122e17a649f8f9f4",
       "src/palimpsest/interventions.py": "fd2c1e6f160f7d251ddcf3275b383e8e3e265fc462452d1bc20c0030a6acf9c8",
-      "src/palimpsest/lab.py": "fb9e669d974d8d30723f97b9d0608de37ed16f14ee23ce73daf96be1689a17c2",
+      "src/palimpsest/lab.py": "b5b95efb2522f29ecf10acb2689406646522d9560c4a32ba53db7d9c4ca846e4",
       "src/palimpsest/profiles.py": "808c7636b10667ef8aea70422475e0ca4f8b23d869f6347529cf0957df184db3",
       "src/palimpsest/records.py": "c4be6f1699c1d8550a7f2db2979f7f9f18196ac986eef2aefe3ba665cae99ac3",
       "src/palimpsest/replay.py": "3b7dbcd72ac2b51fd38c405d955b77d0ec1153a9862b570eada5ea72c960bb41",
       "src/palimpsest/snapshots.py": "8fe642da67b6de7769c64cbcaa85c76ba168e7934dceaf626d05269f647ae6c5",
       "src/palimpsest/storage.py": "79664d876834ef20b459cc83963515effdaf75d0256fe5764a9cf8e18cd448c2",
-      "src/palimpsest/worker.py": "d495f89784d593536fffd1095ebde03a352957fba6209338f0ad02512982c6a9",
+      "src/palimpsest/worker.py": "0d43efba7a97974e6a0c78b8fd0fe1573f07e164d952982aa19ed6edea11f800",
       "pyproject.toml": "13435cdf27674955809c67d3d81410c502bf0f258b661e68ed82197842fbc800",
       "uv.lock": "8a7a880d020c1907e221575fda65642241f809fc628a55381f1b6137bff1b732"
     },
-    "current_runtime_matches_natural_performance_scope": "The earlier natural_performance entry remains pre-storage/cleanup; final_natural_performance is the current runtime."
+    "current_runtime_matches_natural_performance_scope": "Historical natural_performance/final_natural_performance identities remain unchanged; current c43f5df matches after_module_exit_performance.",
+    "current_runtime_matches_after_module_exit_performance": true
   },
   "evidence": {
     "natural_performance": {
@@ -817,6 +820,529 @@
         }
       },
       "scope": "Actual spawned CPU manual/teacher sparse-navigation/checker owners, natural episode completion; narrow host-specific active-time margin. Outer RTF remains below one."
+    },
+    "endurance_hour_failed": {
+      "path": "runs/m3-endurance-hour-20261002/report.json",
+      "sha256": "91e0ca6a7aae88fd61a9f7e5479ed714acb27699fbd4bcf13a6baf39b3b68ea2",
+      "size_bytes": 28152,
+      "status": "failed",
+      "scope": "693.744 seconds, five complete cycles; FLYNN branch failed its one-second post-closed process-exit wait. Final verifier cleanup does not negate earlier forced supervisor teardown."
+    },
+    "close_diagnosis": {
+      "path": "runs/m3-close-diagnosis-20261002b/report.json",
+      "sha256": "9c2c8aed1caf2d7ea0a164b203cb9548bd3c7580ff8ef9af6c15d77535fcd646",
+      "size_bytes": 7201,
+      "status": "diagnostic",
+      "scope": "Unsignalled restoration exited normally2.202961seconds after closed under monitor5s grace. Not an API or release qualification; precise late native function was not captured."
+    },
+    "finalization_validation": {
+      "path": "runs/m3-finalization-validation-20261002/report.json",
+      "sha256": "ab468d3f2ac520d936f53d34e5ec85446f2c775c03aa1043a1c86bbc3e926183",
+      "size_bytes": 5286,
+      "status": "passed",
+      "scope": "Regression failed before grace alignment; focused check passed after, including stuck-child termination. Full actual EGL suite194tests/no skips68.543seconds on6e83600."
+    },
+    "flynn_close_validation_failed": {
+      "path": "runs/m3-flynn-close-validation-20261002/report.json",
+      "sha256": "96002e2502588dcbdc3843cf6e22568bbebe14d82d0d296d03d3e702165534ed",
+      "size_bytes": 5578,
+      "status": "failed",
+      "scope": "Historical first normal API close on6e83600 exceeded5s after closed and terminated with exitcode-15; second planned branch was not started. Original failure retained; later c43f5df closure validation is separate."
+    },
+    "module_exit_validation": {
+      "path": "runs/m3-module-exit-validation-20261002/report.json",
+      "sha256": "494ac95cfb2b7c1bcc41109ac61f3c5113c486cf9e8635522277e22bccb86091",
+      "size_bytes": 8142,
+      "status": "passed",
+      "source_commit": "c43f5dfb38b0cef0084a1458940aa6ada9f206a9",
+      "python_tests": 195,
+      "python_skips": 0,
+      "python_test_seconds": 64.174,
+      "scope": "Native GC diagnosis, failed-before regression, six passing IPC/log checks, full EGL suite and two normal restored full-Flynn close passes; not hour qualification."
+    },
+    "native_gc_diagnosis": {
+      "path": "runs/m3-native-close-stack-20261002/attempt-0.native-gdb.log",
+      "sha256": "6251132caf38154f8ee6da3ab4ed0fecb29341d86c739c29d675ca0404a82595",
+      "size_bytes": 1409,
+      "status": "diagnostic",
+      "main_thread": "gc_collect_main -> finalize_modules -> Py_FinalizeEx -> Py_Exit -> handle_system_exit",
+      "scope": "Immediate post-closed gdb attachment; instrumented 5.80028-second exit is not natural timing or qualification. No specific object destructor or swap causality established.",
+      "report": {
+        "path": "runs/m3-native-close-stack-20261002/report.json",
+        "sha256": "04c81f39526e6463698330677b4fca8a61f18e66e633705361b1af99c1beab78",
+        "size_bytes": 8933
+      },
+      "summary": {
+        "path": "runs/m3-native-close-stack-20261002/evidence-summary.json",
+        "sha256": "cd6dae003ae023a96eb4cc7122e8c3045ecd82b3b89100c08d82411d5f3649cf",
+        "size_bytes": 3045
+      }
+    },
+    "flynn_close_validation": {
+      "path": "runs/m3-flynn-close-validation-20261002b/report.json",
+      "sha256": "d505741e204649551274ca6315ddba437903c4237ca59ff51532d485c2a61212",
+      "size_bytes": 5857,
+      "status": "passed",
+      "source_unchanged": true,
+      "probe": {
+        "path": "runs/m3-flynn-close-validation-20261002b/probe.py",
+        "sha256": "663168aa70996b7b677aa442e70d492c368564b41a9c1edac260718aacf9b5e1",
+        "size_bytes": 4883
+      },
+      "invocation": {
+        "path": "runs/m3-flynn-close-validation-20261002b/invocation.json",
+        "sha256": "7208938e12fc95d30e4c413203a8211c55dfe6b2c711d686d725fd7fa1afe29a",
+        "size_bytes": 464
+      },
+      "native_log_index": {
+        "path": "runs/m3-flynn-close-validation-20261002b/native-log-index.json",
+        "sha256": "8f080efcbf18209de693f82befb7f657b1d0bddb8af1e7eceb29795685c6604c",
+        "size_bytes": 984
+      },
+      "branches": [
+        {
+          "run_id": "ddac7cf1b4174c088f3a105b720fec62",
+          "pid": 283362,
+          "pid_start_ticks": 2699681,
+          "close_seconds": 0.3334008960009669,
+          "closed_to_return_seconds": 0.11458212600336992,
+          "exitcode": 0,
+          "status": "closed",
+          "alive_after_close": false
+        },
+        {
+          "run_id": "02b331fa273d482eb7f971fdda8ebda4",
+          "pid": 283515,
+          "pid_start_ticks": 2704262,
+          "close_seconds": 0.18935866500032716,
+          "closed_to_return_seconds": 0.09498253900164855,
+          "exitcode": 0,
+          "status": "closed",
+          "alive_after_close": false
+        }
+      ],
+      "scope": "Two sequential full CPU-Flynn original-snapshot restorations, tick8 to9, paused15 seconds, normal LabSupervisor.close; closed-to-return bounds exit timing, not a separately sampled exit timestamp. No owned survivors or semaphore warnings."
+    },
+    "after_module_exit_performance": {
+      "path": "runs/m3-performance-after-module-exit-20261002/report.json",
+      "sha256": "745cdd26a6fcf09e6d3edaf6d4c194743c38511254f7e9802998a52ac385060c",
+      "size_bytes": 10775,
+      "status": "passed",
+      "source_unchanged": true,
+      "wall_seconds": 36.32540166000035,
+      "protocol": "natural-episode-completion-after-minimum-ticks",
+      "controllers": {
+        "manual": {
+          "recorded_ticks": 600,
+          "worker_active": {
+            "active_wall_seconds": 11.995954636004171,
+            "advanced_simulation_seconds": 11.999999999999833,
+            "rtf": 1.0003372273502535
+          },
+          "outer_rtf": 0.9985036463463591
+        },
+        "teacher": {
+          "recorded_ticks": 653,
+          "worker_active": {
+            "active_wall_seconds": 13.0555281320012,
+            "advanced_simulation_seconds": 13.05999999999981,
+            "rtf": 1.000342526778955
+          },
+          "outer_rtf": 0.9888874946728307
+        }
+      },
+      "scope": "Actual CPU manual/teacher natural completion; narrow host-specific active-time margins, outer RTF below one, no browser or full-Flynn performance claim.",
+      "source_commit": "c43f5dfb38b0cef0084a1458940aa6ada9f206a9"
+    },
+    "endurance_hour": {
+      "path": "runs/m3-endurance-hour-20261002b/report.json",
+      "sha256": "c2285bcee16f5fdc594ef7004bfe83f798fc0e346055412898a4f4d2e7c7f958",
+      "size_bytes": 50798,
+      "status": "passed",
+      "source_commit": "c43f5dfb38b0cef0084a1458940aa6ada9f206a9",
+      "source_unchanged": true,
+      "scope": "actual loopback HTTP + authenticated WebSocket, CPU manual,teacher,flynn; browser-independent",
+      "measured_seconds": 3600.0000987679996,
+      "configuration": {
+        "duration": 3600.0,
+        "cycle_seconds": 120.0,
+        "pause_seconds": 15.0,
+        "sample_seconds": 5.0,
+        "burst_ticks": 5,
+        "controllers": [
+          "manual",
+          "teacher",
+          "flynn"
+        ],
+        "port": 46443,
+        "max_bytes": 2147483648,
+        "min_free_bytes": 536870912,
+        "max_rss_mib": 8192,
+        "max_fds": 1024,
+        "max_threads": 512,
+        "max_server_growth_mib": 128,
+        "max_server_fd_growth": 32,
+        "max_server_thread_growth": 16
+      },
+      "gates": {
+        "duration_completed": true,
+        "mixed_operations_completed": true,
+        "http_receipt_p95_below_150ms": true,
+        "one_owner": true,
+        "resource_budgets": true,
+        "late_server_growth_within_budget": true,
+        "clean_shutdown": true,
+        "runtime_source_unchanged": true
+      },
+      "cycles_per_controller": {
+        "manual": 10,
+        "teacher": 10,
+        "flynn": 9
+      },
+      "live_owners_closed": 58,
+      "replay_jobs_completed": 58,
+      "recorded_ticks": 809,
+      "simulated_seconds": 16.179999999999744,
+      "operations": {
+        "preview": 29,
+        "intervene": 29,
+        "set_eyes": 29,
+        "set_action": 10,
+        "step": 87,
+        "run": 29,
+        "pause": 29,
+        "snapshot": 29,
+        "reset": 29,
+        "branch": 29,
+        "replay_actions": 29,
+        "replay_policy": 29,
+        "playback": 29
+      },
+      "http_receipt_seconds": {
+        "count": 242,
+        "min": 0.01081389199680416,
+        "mean": 0.026192764599133722,
+        "p50": 0.024848216002283152,
+        "p95": 0.04280854399985401,
+        "max": 0.0631623879999097
+      },
+      "observed_application_seconds": {
+        "count": 242,
+        "min": 0.02296870099962689,
+        "mean": 0.073685026888665,
+        "p50": 0.06940767400010373,
+        "p95": 0.11997751099988818,
+        "max": 0.17528382100135786
+      },
+      "resources": {
+        "total_rss_bytes": {
+          "count": 712,
+          "min": 51023872,
+          "mean": 541717268.1348314,
+          "p50": 127152128,
+          "p95": 1404416000,
+          "max": 1602048000
+        },
+        "total_fds": {
+          "count": 712,
+          "min": 13,
+          "mean": 61.985955056179776,
+          "p50": 69,
+          "p95": 93,
+          "max": 99
+        },
+        "total_threads": {
+          "count": 712,
+          "min": 3,
+          "mean": 9.688202247191011,
+          "p50": 10,
+          "p95": 15,
+          "max": 16
+        },
+        "root_bytes": {
+          "count": 712,
+          "min": 3418,
+          "mean": 135587419.4199438,
+          "p50": 133953790,
+          "p95": 257115170,
+          "max": 265309143
+        },
+        "free_disk_bytes": {
+          "count": 712,
+          "min": 38392602624,
+          "mean": 38502348449.07865,
+          "p50": 38524141568,
+          "p95": 38575464448,
+          "max": 38578593792
+        },
+        "owner_count": {
+          "count": 712,
+          "min": 0,
+          "mean": 0.5154494382022472,
+          "p50": 1,
+          "p95": 1,
+          "max": 1
+        }
+      },
+      "server_growth": {
+        "status": "measured",
+        "warm_window": [
+          0.25,
+          0.5
+        ],
+        "late_window": [
+          0.75,
+          1.0
+        ],
+        "scope": "change in server p95 after warm-up; finite observation, not a mathematical growth bound",
+        "p95_changes": {
+          "rss_bytes": 20299776,
+          "fds": 0,
+          "threads": 0
+        }
+      },
+      "cleanup": {
+        "server_exit_code": -15,
+        "owned_survivors_requiring_kill": []
+      },
+      "stream_messages": {
+        "status": 757,
+        "sample": 13667,
+        "closed": 116
+      },
+      "categories": {
+        "flynn/branch": {
+          "runs": 9,
+          "ticks": 9,
+          "policy_seconds": {
+            "count": 9,
+            "p95": 0.0509639240008255,
+            "max": 0.0509639240008255,
+            "mean": 0.02020659400012745
+          },
+          "step_seconds": {
+            "count": 9,
+            "p95": 0.055484152002463816,
+            "max": 0.055484152002463816,
+            "mean": 0.045507050111660244
+          },
+          "kernel_rtf": 0.30435079762092215
+        },
+        "teacher/source": {
+          "runs": 10,
+          "ticks": 94,
+          "policy_seconds": {
+            "count": 94,
+            "p95": 0.006827574001363246,
+            "max": 0.010426823999296175,
+            "mean": 0.004144496404401155
+          },
+          "step_seconds": {
+            "count": 94,
+            "p95": 0.0049683360011840705,
+            "max": 0.006057485003111651,
+            "mean": 0.003101602234002054
+          },
+          "kernel_rtf": 2.760105954672363
+        },
+        "flynn/actions": {
+          "runs": 9,
+          "ticks": 82,
+          "policy_seconds": null,
+          "step_seconds": {
+            "count": 82,
+            "p95": 0.0026811219977389555,
+            "max": 0.0032410130006610416,
+            "mean": 0.0018353845242506017
+          },
+          "kernel_rtf": 10.80827724278885
+        },
+        "flynn/source": {
+          "runs": 9,
+          "ticks": 82,
+          "policy_seconds": {
+            "count": 82,
+            "p95": 0.015837671999179292,
+            "max": 0.05454972499865107,
+            "mean": 0.01348509486573365
+          },
+          "step_seconds": {
+            "count": 82,
+            "p95": 0.00649716400221223,
+            "max": 0.006722514001012314,
+            "mean": 0.00363827698794655
+          },
+          "kernel_rtf": 1.1679942578424791
+        },
+        "manual/actions": {
+          "runs": 10,
+          "ticks": 84,
+          "policy_seconds": null,
+          "step_seconds": {
+            "count": 84,
+            "p95": 0.0038527659999090247,
+            "max": 0.004831401001865743,
+            "mean": 0.0024447129998450344
+          },
+          "kernel_rtf": 8.116446267615386
+        },
+        "teacher/policy": {
+          "runs": 10,
+          "ticks": 94,
+          "policy_seconds": {
+            "count": 94,
+            "p95": 0.004089047997695161,
+            "max": 0.007008595999650424,
+            "mean": 0.0024737767340179454
+          },
+          "step_seconds": {
+            "count": 94,
+            "p95": 0.003391226000530878,
+            "max": 0.003913267002644716,
+            "mean": 0.0019249198936217619
+          },
+          "kernel_rtf": 4.546801403472052
+        },
+        "teacher/branch": {
+          "runs": 10,
+          "ticks": 10,
+          "policy_seconds": {
+            "count": 10,
+            "p95": 0.00451234800129896,
+            "max": 0.00451234800129896,
+            "mean": 0.0031229575000907062
+          },
+          "step_seconds": {
+            "count": 10,
+            "p95": 0.052031923001777614,
+            "max": 0.052031923001777614,
+            "mean": 0.04709686589994817
+          },
+          "kernel_rtf": 0.3982491105292202
+        },
+        "manual/branch": {
+          "runs": 10,
+          "ticks": 10,
+          "policy_seconds": {
+            "count": 10,
+            "p95": 3.724999987753108e-05,
+            "max": 3.724999987753108e-05,
+            "mean": 2.860969980247319e-05
+          },
+          "step_seconds": {
+            "count": 10,
+            "p95": 0.053556415001366986,
+            "max": 0.053556415001366986,
+            "mean": 0.044673379700179795
+          },
+          "kernel_rtf": 0.4474073809343245
+        },
+        "manual/source": {
+          "runs": 10,
+          "ticks": 84,
+          "policy_seconds": {
+            "count": 84,
+            "p95": 5.1726998208323494e-05,
+            "max": 6.441100049414672e-05,
+            "mean": 2.8610488091847703e-05
+          },
+          "step_seconds": {
+            "count": 84,
+            "p95": 0.0036757319976459257,
+            "max": 0.005045101002906449,
+            "mean": 0.0022077873691159766
+          },
+          "kernel_rtf": 8.942952585802551
+        },
+        "manual/policy": {
+          "runs": 10,
+          "ticks": 84,
+          "policy_seconds": {
+            "count": 84,
+            "p95": 3.3382999390596524e-05,
+            "max": 5.1435999921523035e-05,
+            "mean": 1.8044690304599326e-05
+          },
+          "step_seconds": {
+            "count": 84,
+            "p95": 0.0023502709991589654,
+            "max": 0.002632055002322886,
+            "mean": 0.0018013992025121947
+          },
+          "kernel_rtf": 10.992369744931654
+        },
+        "flynn/policy": {
+          "runs": 9,
+          "ticks": 82,
+          "policy_seconds": {
+            "count": 82,
+            "p95": 0.016846868998982245,
+            "max": 0.03225014100098633,
+            "mean": 0.013488872573095539
+          },
+          "step_seconds": {
+            "count": 82,
+            "p95": 0.0025777139999263454,
+            "max": 0.002972827998746652,
+            "mean": 0.0019728311342144633
+          },
+          "kernel_rtf": 1.293518513780883
+        },
+        "teacher/actions": {
+          "runs": 10,
+          "ticks": 94,
+          "policy_seconds": null,
+          "step_seconds": {
+            "count": 94,
+            "p95": 0.004012456000054954,
+            "max": 0.005567557000176748,
+            "mean": 0.002674687425516164
+          },
+          "kernel_rtf": 7.423439316309211
+        }
+      },
+      "timing_scope": "Per-category kernel timings exclude loading/pauses/IPC/recording/display. Action replay bypasses inference; pooled RTF is not Flynn throughput.",
+      "independent_verification": {
+        "resource_samples": 712,
+        "latency_samples": 242,
+        "observed_pid_start_identities": 111,
+        "remaining_observed_processes": [],
+        "file_count": 1167,
+        "file_inventory_sha256": "9a20fa20f3890c32fae850184f5d9a7d26d3dde4d867744ed416a1085dac9b1a",
+        "inventory_scope": "Sorted terminal relative-file paths and SHA256 identities before any later added derivatives; recording integrity separately checked with iter_ticks.",
+        "owner_disposition": "58 live source/branch supervisor states closed,58 replay transport jobs completed/passed; per-owner exit codes are not persisted, so116 code-zero is not claimed.",
+        "server_disposition": "SIGTERM exit-15, complete Uvicorn lifespan shutdown, no survivor kill or SIGKILL server exit, no retained semaphore warning; listener 46443 absent.",
+        "harness_exit_code": 0,
+        "harness_exit_source": "Parent independently polled process session8489."
+      },
+      "files": {
+        "resources.jsonl": {
+          "path": "runs/m3-endurance-hour-20261002b/resources.jsonl",
+          "sha256": "7e19377f640e383cb3767d632e0680105847aa48419825e01d8024204f043b70",
+          "size_bytes": 948814
+        },
+        "commands.jsonl": {
+          "path": "runs/m3-endurance-hour-20261002b/commands.jsonl",
+          "sha256": "f02774fcfe7af83f02e498bdb37e5640697733015dc952119d17efaee2b319de",
+          "size_bytes": 131517
+        },
+        "server.stdout.log": {
+          "path": "runs/m3-endurance-hour-20261002b/server.stdout.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "size_bytes": 0
+        },
+        "server.stderr.log": {
+          "path": "runs/m3-endurance-hour-20261002b/server.stderr.log",
+          "sha256": "67c40b6caa077d233f83f66888bf14a085c3edd0247c2edcabd9818e38be1bfb",
+          "size_bytes": 444
+        }
+      },
+      "limits": [
+        "3600 seconds mixed operation/loading/paused workload; only 809 recorded ticks/16.18 simulated seconds across sources, branches and replays.",
+        "Full Flynn CPU 173 inference ticks versus 82 inference-bypassing action replay ticks; no ≥1 full-Flynn or continuous inference qualification.",
+        "Finite resource sampling, not a universal no-growth/process-liveness proof.",
+        "Historical browser/offline tests retain their measured source identities; display 27.9809 Hz remains below 30 Hz."
+      ]
     }
   },
   "earlier_performance": [
@@ -923,7 +1449,9 @@
       "status": "test-backed",
       "evidence": [
         "python_suite",
-        "final_validation"
+        "final_validation",
+        "module_exit_validation",
+        "endurance_hour"
       ],
       "limits": "Lifecycle, stale commands, idempotency, queue bounds and actual owner checks."
     },
@@ -934,7 +1462,9 @@
         "python_suite",
         "natural_performance",
         "final_validation",
-        "final_natural_performance"
+        "final_natural_performance",
+        "module_exit_validation",
+        "after_module_exit_performance"
       ],
       "limits": "Actual time-limit and goal endings; injected stop/failure and close-time diagnostics remain distinct."
     },
@@ -945,7 +1475,8 @@
         "python_suite",
         "browser_v1",
         "browser_v2",
-        "final_validation"
+        "final_validation",
+        "endurance_hour"
       ],
       "limits": "Queue/revision checks, actual edits and retained browser intervention workflow on recorded sources."
     },
@@ -969,7 +1500,8 @@
         "historic_m2",
         "offline_full",
         "flynn_240s_smoke",
-        "final_validation"
+        "final_validation",
+        "endurance_hour"
       ],
       "limits": "Current offline paths plus240-second full-FLYNN CPU mixed smoke pass; only38 inference-executed ticks, with explicit kernel/burst timing scopes and no real-time claim."
     },
@@ -989,7 +1521,8 @@
         "python_suite",
         "offline_full",
         "flynn_240s_smoke",
-        "final_validation"
+        "final_validation",
+        "endurance_hour"
       ],
       "limits": "Recorded inputs/events/configuration, corruption checks, quotas and durable-prefix recovery; incomplete artifacts are not valid completed replay sources."
     },
@@ -1001,7 +1534,8 @@
         "historic_m2",
         "offline_full",
         "flynn_240s_smoke",
-        "final_validation"
+        "final_validation",
+        "endurance_hour"
       ],
       "limits": "Actual contact/recovery/endings/RNG tests and current full-FLYNN CPU four-tick branch continuation with zero max error; short scope only."
     },
@@ -1015,7 +1549,8 @@
         "browser_v2",
         "offline_full",
         "flynn_240s_smoke",
-        "final_validation"
+        "final_validation",
+        "endurance_hour"
       ],
       "limits": "Actual replay tests and current browser manual replays; offline full-FLYNN actions/policy each pass 8 ticks/22 events. Modes retain distinct neural comparison boundaries."
     },
@@ -1048,16 +1583,21 @@
         "browser_v2",
         "offline_full",
         "flynn_240s_smoke",
-        "final_validation"
+        "final_validation",
+        "module_exit_validation",
+        "flynn_close_validation",
+        "endurance_hour"
       ],
-      "limits": "Recovery and semaphore/feeder tests pass. Browser v2 asserts four closed owners and clean PID-only service SIGTERM without semaphore warning, escalation or matching survivors. Prior v1 warning remains retained."
+      "limits": "Current c43f5df hour mixed gate passes with 116 normal API/job dispositions,58 passed replays, orderly server SIGTERM and no retained semaphore warnings or sampled survivors; per-owner exit codes not persisted. Earlier failed hour/close retained; finite scope only."
     },
     {
       "id": "LAB-015",
       "status": "test-backed",
       "evidence": [
         "python_suite",
-        "final_validation"
+        "final_validation",
+        "module_exit_validation",
+        "endurance_hour"
       ],
       "limits": "NaN/infinity/shape failures before stepping, watchdogs, recorder faults and final native-log fsync failure tested."
     },
@@ -1108,8 +1648,8 @@
     "cuda_repeatability": "Unqualified; retained M1 upstream sparse-CSR variation/strict-continuation failure."
   },
   "pending": [
-    "Frozen-runtime 60-minute mixed manual/teacher/FLYNN endurance with complete cycles per controller, declared RSS/FD/thread/storage bounds and clean child shutdown.",
-    "Final release-status review after the hour gate; keep the unmet27.98Hz display target and historical failures visible."
+    "Commit/publish prepared M3 requirements matrix, setup/recovery/retention/licence limits and terminal release-status review; operational gates now pass under the existing scoped contract.",
+    "Keep measured27.9809Hz display target unmet, CUDA continuation failure, historical source scopes and all prior failures visible."
   ],
   "limits": [
     "This index hashes small reports and runtime files only; it does not rescan large recordings or model assets.",
@@ -1120,7 +1660,7 @@
     "The later five-test metadata result has no retained log and is not counted as qualification evidence here."
   ],
   "measured_performance_runtime_commit": "f0638861b4c5cc830a613fe1a8aaf55d19621368",
-  "current_runtime_commit": "a0828f5fb4dd1a8a60535e81b47b1a3a4cba0d7b",
+  "current_runtime_commit": "c43f5dfb38b0cef0084a1458940aa6ada9f206a9",
   "unmet_measured_targets": [
     {
       "name": "30 Hz display target",
@@ -1129,5 +1669,21 @@
       "status": "unmet and explicitly labelled",
       "limitation": "Callback opportunities are not fresh-data updates or scanout; no 30 Hz pass is claimed."
     }
-  ]
+  ],
+  "running_gate": {
+    "status": "passed",
+    "runtime_commit": "c43f5dfb38b0cef0084a1458940aa6ada9f206a9",
+    "output": "runs/m3-endurance-hour-20261002b",
+    "requested_seconds": 3600,
+    "controllers": [
+      "manual",
+      "teacher",
+      "flynn"
+    ],
+    "cycle_seconds": 120,
+    "pause_seconds": 15,
+    "OMP_NUM_THREADS": "2",
+    "MUJOCO_GL": "egl",
+    "scope": "Terminal measured mixed API workload; no continuous-inference/browser-performance claim. Documentation publication remains pending."
+  }
 }
