@@ -636,8 +636,9 @@ def export_run(run_path, output_path, format, storage_budget=None):
         storage_budget.check(bound, path=output)
     # Reserve exclusively only after validation/preflight. Remove our partial
     # file on error, but never replace an existing artifact.
-    with output.open("xb") as stream:
-        try:
+    stream = output.open("xb")
+    try:
+        with stream:
             if format == "bundle":
                 _bundle(data, metadata, stream, prepared=prepared)
             else:
@@ -645,10 +646,9 @@ def export_run(run_path, output_path, format, storage_budget=None):
                     stream.write(block)
             if _fingerprint(data["paths"]) != data["fingerprint"]:
                 raise ValueError("recording changed during export")
-        except BaseException:
-            stream.close()
-            output.unlink()
-            raise
+    except BaseException:
+        output.unlink()
+        raise
     return output
 
 

@@ -173,16 +173,14 @@ def export_comparison(left_path, right_path, output_path, *, storage_budget=None
         raise ValueError('recording changed before comparison export')
     if storage_budget is not None:
         storage_budget.check(len(payload), path=output)
-    with output.open('xb') as stream:
-        try:
+    stream = output.open('xb')
+    try:
+        with stream:
             stream.write(payload)
             stream.flush()
             if any(artifacts._fingerprint(item['paths']) != item['fingerprint'] for item in data):
                 raise ValueError('recording changed during comparison export')
-        except BaseException:
-            try:
-                stream.close()
-            finally:
-                output.unlink()
-            raise
+    except BaseException:
+        output.unlink()
+        raise
     return output
