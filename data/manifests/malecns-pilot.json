@@ -49,13 +49,223 @@
     "suffix_hex": "4152524f5731"
   },
   "annotation_read": {
-    "status": "blocked",
-    "reader": "pandas.read_feather",
-    "pandas_version": "2.2.3",
-    "exception_type": "ImportError",
-    "message": "Missing optional dependency 'pyarrow'.  Use pip or conda to install pyarrow.",
-    "columns_verified": false,
-    "candidate_rows_verified": false
+    "status": "verified",
+    "reader": "pyarrow.ipc.open_file/read_all",
+    "python_version": "3.11.15",
+    "pyarrow_version": "25.0.1",
+    "asset_sha256": "2177e246113e4cfbf1e7772ec37c6da1955ff22e8063d0b1f833101f99a9a3b2",
+    "asset_size_bytes": 14483314,
+    "row_count": 211577,
+    "column_count": 36,
+    "columns": [
+      {
+        "name": "assignedOlHex1",
+        "type": "double",
+        "null_count": 187857
+      },
+      {
+        "name": "assignedOlHex2",
+        "type": "double",
+        "null_count": 187857
+      },
+      {
+        "name": "bodyId",
+        "type": "int64",
+        "null_count": 0
+      },
+      {
+        "name": "flywireType",
+        "type": "string",
+        "null_count": 68421
+      },
+      {
+        "name": "group",
+        "type": "double",
+        "null_count": 64063
+      },
+      {
+        "name": "instance",
+        "type": "string",
+        "null_count": 50071
+      },
+      {
+        "name": "somaSide",
+        "type": "string",
+        "null_count": 60851
+      },
+      {
+        "name": "statusLabel",
+        "type": "dictionary<values=string, indices=int8, ordered=1>",
+        "null_count": 887
+      },
+      {
+        "name": "superclass",
+        "type": "string",
+        "null_count": 44877
+      },
+      {
+        "name": "type",
+        "type": "string",
+        "null_count": 47071
+      },
+      {
+        "name": "vfbId",
+        "type": "string",
+        "null_count": 44891
+      },
+      {
+        "name": "hemibrainType",
+        "type": "string",
+        "null_count": 178658
+      },
+      {
+        "name": "itoleeHl",
+        "type": "string",
+        "null_count": 173823
+      },
+      {
+        "name": "supertype",
+        "type": "string",
+        "null_count": 177481
+      },
+      {
+        "name": "birthtime",
+        "type": "string",
+        "null_count": 203673
+      },
+      {
+        "name": "mancBodyid",
+        "type": "double",
+        "null_count": 192862
+      },
+      {
+        "name": "mancGroup",
+        "type": "double",
+        "null_count": 197023
+      },
+      {
+        "name": "mancType",
+        "type": "string",
+        "null_count": 188833
+      },
+      {
+        "name": "subclass",
+        "type": "string",
+        "null_count": 189647
+      },
+      {
+        "name": "synonyms",
+        "type": "string",
+        "null_count": 207622
+      },
+      {
+        "name": "class",
+        "type": "string",
+        "null_count": 185064
+      },
+      {
+        "name": "rootSide",
+        "type": "string",
+        "null_count": 193638
+      },
+      {
+        "name": "somaNeuromere",
+        "type": "string",
+        "null_count": 189757
+      },
+      {
+        "name": "trumanHl",
+        "type": "string",
+        "null_count": 191824
+      },
+      {
+        "name": "dimorphism",
+        "type": "string",
+        "null_count": 209209
+      },
+      {
+        "name": "matchingNotes",
+        "type": "string",
+        "null_count": 208152
+      },
+      {
+        "name": "entryNerve",
+        "type": "string",
+        "null_count": 199742
+      },
+      {
+        "name": "mancSerial",
+        "type": "double",
+        "null_count": 206155
+      },
+      {
+        "name": "mcnsSerial",
+        "type": "double",
+        "null_count": 207632
+      },
+      {
+        "name": "serialMotif",
+        "type": "string",
+        "null_count": 210675
+      },
+      {
+        "name": "fruDsx",
+        "type": "string",
+        "null_count": 206565
+      },
+      {
+        "name": "exitNerve",
+        "type": "string",
+        "null_count": 210572
+      },
+      {
+        "name": "receptorType",
+        "type": "string",
+        "null_count": 210825
+      },
+      {
+        "name": "somaLocation",
+        "type": "list<item: int64>",
+        "null_count": 69796
+      },
+      {
+        "name": "tosomaLocation",
+        "type": "list<item: int64>",
+        "null_count": 210582
+      },
+      {
+        "name": "status",
+        "type": "string",
+        "null_count": 5472
+      }
+    ],
+    "candidate_rows": [
+      {
+        "bodyId": 12781,
+        "type": "DNge104",
+        "instance": "DNge104_R",
+        "status": "Traced",
+        "somaSide": "R"
+      },
+      {
+        "bodyId": 556329,
+        "type": "DNge104",
+        "instance": "DNge104_L",
+        "status": "Traced",
+        "somaSide": "L"
+      }
+    ],
+    "candidate_fields_compared": [
+      "bodyId",
+      "type",
+      "instance",
+      "status",
+      "somaSide"
+    ],
+    "candidate_rows_match_api": true,
+    "cropped_column_present": false,
+    "circuit_eligibility_verified": false,
+    "script_sha256": "f44d84b27b60495ffcc95b027ea0da81e6d2b922bde6c010fd882f0a2580c289"
   },
   "connection_asset": {
     "url": "https://storage.googleapis.com/flyem-male-cns/v1.0/connectome-data/flat-connectome/connectome-weights-male-cns-v1.0-minconf-0.5.feather",
@@ -341,7 +551,7 @@
         "PDMN(L)"
       ],
       "annotation_source": "bounded_public_neuprint_query",
-      "raw_feather_row_verified": false,
+      "raw_feather_row_verified": true,
       "circuit_eligible": null,
       "cropping_interpretation": "unknown_property_absent",
       "output_laterality": null,
@@ -409,7 +619,7 @@
         "PDMN(R)"
       ],
       "annotation_source": "bounded_public_neuprint_query",
-      "raw_feather_row_verified": false,
+      "raw_feather_row_verified": true,
       "circuit_eligible": null,
       "cropping_interpretation": "unknown_property_absent",
       "output_laterality": null,
@@ -417,9 +627,83 @@
     }
   ],
   "schema": {
-    "raw_feather_columns": null,
-    "raw_feather_column_types": null,
-    "raw_feather_row_count": null,
+    "raw_feather_columns": [
+      "assignedOlHex1",
+      "assignedOlHex2",
+      "bodyId",
+      "flywireType",
+      "group",
+      "instance",
+      "somaSide",
+      "statusLabel",
+      "superclass",
+      "type",
+      "vfbId",
+      "hemibrainType",
+      "itoleeHl",
+      "supertype",
+      "birthtime",
+      "mancBodyid",
+      "mancGroup",
+      "mancType",
+      "subclass",
+      "synonyms",
+      "class",
+      "rootSide",
+      "somaNeuromere",
+      "trumanHl",
+      "dimorphism",
+      "matchingNotes",
+      "entryNerve",
+      "mancSerial",
+      "mcnsSerial",
+      "serialMotif",
+      "fruDsx",
+      "exitNerve",
+      "receptorType",
+      "somaLocation",
+      "tosomaLocation",
+      "status"
+    ],
+    "raw_feather_column_types": {
+      "assignedOlHex1": "double",
+      "assignedOlHex2": "double",
+      "bodyId": "int64",
+      "flywireType": "string",
+      "group": "double",
+      "instance": "string",
+      "somaSide": "string",
+      "statusLabel": "dictionary<values=string, indices=int8, ordered=1>",
+      "superclass": "string",
+      "type": "string",
+      "vfbId": "string",
+      "hemibrainType": "string",
+      "itoleeHl": "string",
+      "supertype": "string",
+      "birthtime": "string",
+      "mancBodyid": "double",
+      "mancGroup": "double",
+      "mancType": "string",
+      "subclass": "string",
+      "synonyms": "string",
+      "class": "string",
+      "rootSide": "string",
+      "somaNeuromere": "string",
+      "trumanHl": "string",
+      "dimorphism": "string",
+      "matchingNotes": "string",
+      "entryNerve": "string",
+      "mancSerial": "double",
+      "mcnsSerial": "double",
+      "serialMotif": "string",
+      "fruDsx": "string",
+      "exitNerve": "string",
+      "receptorType": "string",
+      "somaLocation": "list<item: int64>",
+      "tosomaLocation": "list<item: int64>",
+      "status": "string"
+    },
+    "raw_feather_row_count": 211577,
     "api_return_columns": [
       "bodyId",
       "type",
@@ -452,12 +736,13 @@
     "exclusive_asset_create": true,
     "asset_ignored_before_download": true,
     "manifest_ignored_by_existing_rule": true,
-    "package_installations": 0,
+    "package_installations": 1,
     "authenticated_queries": 0,
     "credential_searches": 0,
     "connection_body_downloads": 0,
     "adjacency_queries": 0,
-    "model_jobs": 0
+    "model_jobs": 0,
+    "reader_environment": "isolated malecns-pilot/.venv; lab-hardening environment unchanged"
   },
   "proposed_next_boundary": {
     "status": "provisional_not_frozen_not_extracted",
@@ -488,7 +773,6 @@
     "neurotransmitter_mapping": null
   },
   "unresolved": [
-    "raw Feather schema and rows need a supported reader",
     "candidate completeness/truncation is unknown; absent cropped is not false",
     "sensory population needs independent anatomical/functional documentation",
     "connectivity and sensory-to-output reachability not measured",
@@ -498,7 +782,7 @@
   ],
   "claims": {
     "public_candidate_annotation_query_succeeded": true,
-    "raw_annotation_rows_verified": false,
+    "raw_annotation_rows_verified": true,
     "circuit_extracted": false,
     "physically_acquired_evidence": false,
     "biological_sensor_mapping_validated": false,
@@ -525,6 +809,29 @@
       "path": "data/assets/malecns-metadata/neuprint-unauthenticated-probe.json",
       "size_bytes": 1581,
       "sha256": "2efbf5ddd4cb2d00abeb0b62900285a24f7beb6de5a114408ccc0961906469d7"
+    },
+    {
+      "path": "data/assets/malecns-metadata/annotation-read-verified.json",
+      "size_bytes": 4266,
+      "sha256": "ce0d63def7cda50c0bab910f600c4a66fc7b95524b2028eb3a8c344b6c3250ef"
     }
-  ]
+  ],
+  "initial_annotation_read": {
+    "status": "blocked",
+    "reader": "pandas.read_feather",
+    "pandas_version": "2.2.3",
+    "exception_type": "ImportError",
+    "message": "Missing optional dependency 'pyarrow'.  Use pip or conda to install pyarrow.",
+    "columns_verified": false,
+    "candidate_rows_verified": false
+  },
+  "reader_reproduction": {
+    "environment": [
+      "uv venv .venv --python 3.11",
+      "uv pip install --python .venv/bin/python pyarrow==25.0.1"
+    ],
+    "command": ".venv/bin/python scripts/inspect_malecns_annotations.py",
+    "source": "https://arrow.apache.org/docs/python/feather.html",
+    "scope": "No project runtime dependency change; annotation-only read"
+  }
 }

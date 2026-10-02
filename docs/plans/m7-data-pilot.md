@@ -12,7 +12,7 @@ The full connection file was HEAD-only: HTTP 200, **1,051,241,946 bytes**, gener
 
 ## Actual readers and public API
 
-The existing lab-hardening Python 3.11.15 environment has pandas 2.2.3 but no PyArrow, neuprint-python, alternate Feather reader or Rscript. `pandas.read_feather` failed with `ImportError: Missing optional dependency 'pyarrow'.` No package was installed or binary-format parser implemented. The raw annotation table's column names, types, row count and candidate rows remain **unverified**.
+The first read through the existing lab-hardening environment failed because PyArrow was absent; that failed capture remains retained. A separate, ignored `malecns-pilot/.venv` now pins **PyArrow 25.0.1** with Python 3.11.15. The [official Arrow reader](https://arrow.apache.org/docs/python/feather.html) verified **211,577 rows and 36 columns**. The two candidate rows match the API on bodyId/type/instance/status/somaSide. All column types and null counts are retained; `cropped` is absent. The running M3 environment and project lockfile were unchanged.
 
 The official [neuprint-python 0.6.4 client documentation](https://connectome-neuprint.github.io/neuprint-python/docs/client.html) describes JSON custom queries; its [version-pinned implementation](https://github.com/connectome-neuprint/neuprint-python/blob/0.6.4/neuprint/client.py) supplies the HTTP route. Using Python stdlib, no Authorization header and no credential search:
 
@@ -20,7 +20,7 @@ The official [neuprint-python 0.6.4 client documentation](https://connectome-neu
 - GET `/api/version` confirmed 1.9.5. GET `/api/dbmeta/datasets` exceeded the 65,536-byte cap and was deliberately not parsed.
 - POST `/api/custom/custom`, with explicit dataset `male-cns:v1.0`, succeeded: HTTP 200, 1,785 bytes, two rows. This demonstrates public access for this exact bounded query at this time, not guaranteed access to every endpoint or a credentialed client.
 
-The manifest preserves the exact query, response schema, hash and returned property keys. This is a verified API result, **not** a verification of Feather schema. `keys(n)` contained `roiInfo` and predicted neurotransmitter properties, but their values were not requested.
+The manifest preserves the exact query, response schema, hash and returned property keys. The API response and separately verified Feather schema remain distinct records. `keys(n)` contained `roiInfo` and predicted neurotransmitter properties, but their values were not requested.
 
 | bodyId | type | instance | somaSide | status | pre | post |
 | --- | --- | --- | --- | --- | ---: | ---: |
@@ -44,8 +44,10 @@ If this reduced boundary lacks documented sensory input or exceeds the caps, rep
 
 ## Local evidence and checks
 
-`data/assets/malecns-metadata/` contains the annotation asset and four small acquisition/read/API records. All assets remain ignored. The manifest is an explicitly tracked exception to the repository-wide `data/` ignore rule; the rule was not changed and raw assets remain ignored. No graph extraction, model job or authenticated query was performed.
+`data/assets/malecns-metadata/` contains the annotation asset and five small acquisition/read/API records, including the initial failed reader attempt. All assets remain ignored. The manifest is an explicitly tracked exception to the repository-wide `data/` ignore rule; the rule was not changed and raw assets remain ignored. No graph extraction, model job or authenticated query was performed.
 
-Validation is limited to JSON parsing, manifest-to-capture consistency, asset size/SHA-256 and `git diff --check`. Feather row validation is blocked on the missing reader. This bounded pilot is finished; full M7/R3 gates remain open.
+Validation covers JSON parsing, manifest-to-capture consistency, asset size/SHA-256, raw schema/candidate matching and `git diff --check`. Reproduce the raw read with `.venv/bin/python scripts/inspect_malecns_annotations.py` after installing the pinned isolated reader above. This bounded pilot is finished; full M7/R3 gates remain open.
 
-Root review independently parsed the manifest and rechecked the annotation asset size and SHA-256. The reviewed manifest SHA-256 is `4aae4865f533fc6c94880ea8cb5b473d33a191fa78b09cbb8d74ec55927268ff`.
+Root review independently parsed the manifest and rechecked the annotation asset size and SHA-256. The initial pre-reader manifest SHA-256 was `4aae4865f533fc6c94880ea8cb5b473d33a191fa78b09cbb8d74ec55927268ff`.
+
+The reader is [a runnable check](../../scripts/inspect_malecns_annotations.py); it rejects changed asset bytes and raw/API candidate contradictions. Reading annotations does not resolve candidate truncation, sensory mappings or directed circuit eligibility.
