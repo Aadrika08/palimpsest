@@ -443,8 +443,9 @@
       "exploration-landmarks": 1279,
       "encoder-homing": 2103
     },
-    "pid_start_identities_absent": 14,
-    "native_execution": false
+    "pid_start_identities_absent": 15,
+    "native_execution": false,
+    "semantic_scope": "After each registered initial event prefix; initial episode_started excluded as in executable replay report"
   },
   "source_fixture_checks": {
     "new_tests": 6,
@@ -483,6 +484,22 @@
     "runs/m6-task-phase-development-20261003/encoder-homing/actions/result.json": "1f52087090b36a9f000e93cff89091a239f0c66a211e0d6917d9b37101f3feb7",
     "runs/m6-task-phase-development-20261003/encoder-homing/actions/aaca7ec347b04c508c66a9a391e04bcb/replay-report.json": "cceea973d75ede4bf1b376c4611ec3326683f6aa2564714b2c41037a766c7e83",
     "runs/m6-task-phase-development-20261003/encoder-homing/policy/result.json": "35247ed9547d35ad1134198891f5925784f74978abe663f41080f73ea9846f7f",
-    "runs/m6-task-phase-development-20261003/encoder-homing/policy/e008e509116f43ec88f03f5418389bd6/replay-report.json": "ce5da710b4f619954e8ecc8d1d28a81922fce193f0a311d1154a5c16c37a5038"
+    "runs/m6-task-phase-development-20261003/encoder-homing/policy/e008e509116f43ec88f03f5418389bd6/replay-report.json": "ce5da710b4f619954e8ecc8d1d28a81922fce193f0a311d1154a5c16c37a5038",
+    "../project-integration/runs/m6-task-phase-root-audit-8a931cf/audit.py": "6f4475596d3524035ef16a23a7a19e2347057bc8040565783e61dfcd42d6a27a",
+    "../project-integration/runs/m6-task-phase-root-audit-8a931cf/audit.json": "542c6c3c8b96bef563b53a31b5375aed2d462c47268e67ae10858b35fda1c866"
+  },
+  "root_read_only_audit": {
+    "status": "passed",
+    "wall_seconds": 2.377080771999317,
+    "indexed_artifact_hashes": 193,
+    "numeric_ticks": 1470,
+    "snapshot_files": 18,
+    "pid_start_union_absent": 15,
+    "semantic_events_checked_per_replay": {
+      "exploration-landmarks": 1280,
+      "encoder-homing": 2104
+    },
+    "semantic_scope": "Complete normalized semantic streams including initial episode_started; one more event than each post-prefix replay count",
+    "extra_scope": "Full normalized replay initial snapshots, native integration/observation/task equality; no runtime imported"
   }
 }
