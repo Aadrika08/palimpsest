@@ -60,6 +60,8 @@ def main(argv=None):
     commands = parser.add_subparsers(dest='command', required=True)
     doctor = commands.add_parser('doctor', help='inspect setup without downloads')
     doctor.add_argument('--probe-renderer', action='store_true')
+    memory_fit = commands.add_parser('memory-fit', help='fit bounded revision rules from retained historical observations')
+    memory_fit.add_argument('history', type=Path, help='E JSON file; emits the U artifact as JSON')
     assets = commands.add_parser('assets', help='verify, explicitly download, or extract pinned assets')
     assets.add_argument('operation', choices=('verify', 'fetch', 'prepare'))
     evaluate = commands.add_parser('evaluate', help='bounded teacher or FLYNN evaluation')
@@ -98,7 +100,14 @@ def main(argv=None):
     root = args.repo.resolve()
     asset_root = (args.assets or root / 'data/assets/flynn').resolve()
     try:
-        if args.command == 'doctor':
+        if args.command == 'memory-fit':
+            from .memory import MAX_STATE_BYTES, fit
+            with args.history.open('rb') as source:
+                history = source.read(MAX_STATE_BYTES + 1)
+            if len(history) > MAX_STATE_BYTES:
+                raise ValueError('Memory history exceeds 4 MiB')
+            report, ok = fit(json.loads(history)), True
+        elif args.command == 'doctor':
             from .doctor import diagnose
             report = diagnose(root, asset_root, args.probe_renderer)
             ok = report['ready']

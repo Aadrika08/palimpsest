@@ -82,6 +82,8 @@ RevisionEvent = {"fact_id":ID,"event_id":ID|null,"tick":int,
                  "reason":"reconsider"|"direct_observation"|"conflict"}
 ```
 
+Run `palimpsest memory-fit historical-observations.json > rules.json` to fit a validated E file offline. Input is bounded to 4 MiB; stdout contains the U artifact, and invalid input exits nonzero. This command uses no simulator/model or current test bank. Retain the source E with its artifact for audit.
+
 `select` is pure and cannot mutate M. It matches the event's cue ID and the rule's relation; sorts matching fact IDs; returns at most the protocol budget. Use `limit=1` for the initial two-passage task, with the existing proposed maximum eight as a validation ceiling. The same budget applies to every comparison condition. Rule/target sorting is independent of regime and ID assignment is counterbalanced across conditions.
 
 `fit(E)` takes **E only**, with immutable algorithm constants; no callback or optional M/event argument. For each relation, count independently verified episode checks where both before and after are observed; changed means unequal observed values. Count each episode/relation at most once. Require at least four valid episodes **for each relation within each history**. Four independent histories per regime may each contain four or more episodes; histories and episodes are distinct sampling levels. Emit the sole relation having changed/observed >= 3/4 while the other is <= 1/4; use integer cross multiplication. Otherwise emit no rule. Equal rates, insufficient support or ambiguous histories abstain. These conservative toy thresholds are fixed protocol choices, not significance tests. No automatic refitting during a trial.

@@ -1,7 +1,12 @@
 """Pure M/E/U protocol checks; no simulation/model imports or qualification."""
 
 import copy
+import contextlib
 import inspect
+import io
+import json
+from pathlib import Path
+import tempfile
 import unittest
 
 from palimpsest import memory
@@ -48,6 +53,20 @@ def history(count=4, changed='local_cue'):
 
 
 class MemoryProtocol(unittest.TestCase):
+    def test_cli_fits_bounded_history_and_rejects_invalid_input(self):
+        from palimpsest.cli import main
+        with tempfile.TemporaryDirectory() as tmp:
+            source = Path(tmp) / 'history.json'
+            source.write_text(json.dumps(history()))
+            output = io.StringIO()
+            with contextlib.redirect_stdout(output):
+                self.assertEqual(main(['memory-fit', str(source)]), 0)
+            self.assertEqual(json.loads(output.getvalue()), memory.fit(history()))
+            for invalid in ('{"version":1,"episodes":[],"gold":[]}', ' ' * (memory.MAX_STATE_BYTES + 1)):
+                source.write_text(invalid)
+                with contextlib.redirect_stderr(io.StringIO()):
+                    self.assertEqual(main(['memory-fit', str(source)]), 1)
+
     def test_history_fit_transfers_to_new_ids_and_abstains_without_evidence(self):
         e, m, event = history(), bank(), trigger()
         original = copy.deepcopy((e, m, event))
