@@ -294,7 +294,8 @@ class ActualOwner(unittest.TestCase):
             supervisor.disconnect()
             view = wait(branch, lambda v: v["state"]["phase"] == "paused")
             self.assertEqual(view["state"]["pending_commands"], 0)
-            self.assertEqual(supervisor.close(branch)["status"], "closed")
+            closed = supervisor.close(branch)
+            self.assertEqual(closed["status"], "closed", closed.get("failure"))
 
 
 if __name__ == "__main__":

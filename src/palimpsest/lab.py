@@ -111,7 +111,8 @@ class LabSupervisor:
                 args=(config, commands, replies, display, disconnected, stop, progress), name="palimpsest-" + identifier)
             owner = SimpleNamespace(process=process, commands=commands, replies=replies, display=display,
                 disconnected=disconnected, stop=stop, progress=progress, pending={}, exit_seen=None,
-                started=time.monotonic(), config=config, done=threading.Event(), closed_seen=None, ipc_closed=False,
+                started=time.monotonic(), config=config, done=threading.Event(), exited=threading.Event(),
+                closed_seen=None, ipc_closed=False,
                 view={"version": 1, "run_id": identifier, "status": "loading", "state": None,
                       "sample": None, "receipts": [], "snapshots": [], "initial_snapshot_id": None})
             if config.get("job") == "replay":
@@ -120,6 +121,11 @@ class LabSupervisor:
             _json(path / "supervisor.json", {key: value for key, value in owner.view.items() if key != "sample"}, self.control_budget)
             try:
                 process.start()
+                # Only the child produces these queues. CPython Queue retains
+                # both pipe ends; close our unused writers so a child dying
+                # mid-frame produces EOF instead of an unbounded recv_bytes.
+                replies._writer.close()
+                display._writer.close()
             except BaseException as error:
                 self._fail(identifier, "SpawnError", str(error), kill=False)
                 raise
@@ -318,22 +324,30 @@ class LabSupervisor:
                             if owner.process.pid is not None:
                                 owner.process.join(timeout=0.)
                             self._dispose_queues(owner)
+                            owner.exited.set()
+                            continue
                         elif owner.closed_seen is not None and time.monotonic() - owner.closed_seen > 5.:
                             self._fail(identifier, "CloseTimeout", "Owner did not exit after reporting closed")
-                        continue
+                            continue
+                        # Completion can overtake the independent display feeder.
+                        # Drain until exit so normal queue flushing can finish.
                     for _ in range(256):
                         try:
                             self._handle(identifier, owner.replies.get_nowait())
-                        except Empty:
+                        except (Empty, EOFError):
                             break
-                        except (EOFError, OSError) as caught:
+                        except OSError as caught:
                             self._fail(identifier, "OwnerIPCError", str(caught))
                             break
+                    if owner.done.is_set() and not owner.process.is_alive():
+                        continue
                     try:
-                        self._handle(identifier, owner.display.get_nowait())
-                    except Empty:
+                        sample = owner.display.get_nowait()
+                        if not owner.done.is_set():
+                            self._handle(identifier, sample)
+                    except (Empty, EOFError):
                         pass
-                    except (EOFError, OSError) as caught:
+                    except OSError as caught:
                         self._fail(identifier, "OwnerIPCError", str(caught))
                     if owner.done.is_set():
                         continue
@@ -361,10 +375,13 @@ class LabSupervisor:
         if not owner.done.wait(5.):
             with self.lock:
                 self._fail(identifier, "CloseTimeout", "Owner did not close within 5 seconds")
+        # Let the monitor drain the final queues; joining while holding its lock
+        # deadlocks a child whose display feeder still has bytes to write.
+        owner.exited.wait(1.)
         with self.lock:
             if identifier not in self.workers:
                 return self.describe(identifier)
-            owner.process.join(timeout=1.)
+            owner.process.join(timeout=0.)
             if owner.process.is_alive():
                 self._fail(identifier, "CloseTimeout", "Owner did not exit after closing")
             if not owner.process.is_alive():

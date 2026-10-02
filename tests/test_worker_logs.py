@@ -1,13 +1,45 @@
 import errno
+import multiprocessing
 import os
 from pathlib import Path
 import tempfile
 import threading
 import time
+import struct
 import unittest
 from unittest.mock import patch
 
 from palimpsest.lab import LabSupervisor
+
+
+def delayed_final_display_owner(config, commands, replies, display, disconnected, stop, progress):
+    os.setsid()
+    replies.put({"version": 1, "type": "closed", "run_id": config["run_id"], "status": "closed"})
+    # Model a display feeder arriving after the independent reply feeder.
+    # The parent observes completion before requesting close and releasing us.
+    if not stop.wait(5.):
+        raise RuntimeError("close was not requested")
+    display.put({"type": "sample", "pixels": b"x" * (2 * 1024**2)})
+
+
+def truncated_display_owner(config, commands, replies, display, disconnected, stop, progress):
+    os.setsid()
+    # The same length-prefix framing used by multiprocessing.Connection.
+    os.write(display._writer.fileno(), struct.pack("!i", 2 * 1024**2) + b"x" * 1024)
+    os._exit(19)
+
+
+def check_truncated_display(root, result):
+    supervisor = LabSupervisor(Path(__file__).resolve().parents[1], root / "assets", root / "runs",
+                               worker_target=truncated_display_owner)
+    try:
+        identifier = supervisor.start({})
+        if not supervisor.workers[identifier].done.wait(3.):
+            raise RuntimeError("truncated frame blocked the monitor")
+        closed = supervisor.close(identifier)
+        result.put((closed["status"], closed["failure"]["type"]))
+    finally:
+        supervisor.shutdown()
 
 
 def late_log_failure_owner(*args):
@@ -42,6 +74,42 @@ def late_log_failure_owner(*args):
 
 
 class WorkerLogCompletion(unittest.TestCase):
+    def test_truncated_display_cannot_hold_monitor_after_producer_exit(self):
+        context = multiprocessing.get_context("spawn")
+        result = context.Queue()
+        with tempfile.TemporaryDirectory() as temporary:
+            process = context.Process(target=check_truncated_display, args=(Path(temporary), result))
+            try:
+                process.start()
+                process.join(6.)
+                self.assertFalse(process.is_alive(), "dead producer left monitor blocked inside recv_bytes")
+                self.assertEqual(process.exitcode, 0)
+                self.assertEqual(result.get(timeout=1.), ("failed", "OwnerIPCError"))
+            finally:
+                if process.is_alive():
+                    process.terminate()
+                    process.join(2.)
+                process.close()
+                result.close()
+
+    def test_delayed_final_display_is_drained_after_completion(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            supervisor = LabSupervisor(Path(__file__).resolve().parents[1], root / "assets", root / "runs",
+                                       worker_target=delayed_final_display_owner)
+            try:
+                identifier = supervisor.start({})
+                owner = supervisor.workers[identifier]
+                self.assertTrue(owner.done.wait(5.))
+                with supervisor.lock:
+                    pass  # Finish the monitor's original completion iteration.
+                self.assertEqual(supervisor.close(identifier)["status"], "closed")
+                self.assertFalse(owner.process.is_alive())
+                self.assertEqual(owner.process.exitcode, 0)
+                self.assertTrue(supervisor.thread.is_alive())
+            finally:
+                supervisor.shutdown()
+
     def test_late_native_log_fsync_failure_cannot_report_closed(self):
         with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary)
