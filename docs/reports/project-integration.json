@@ -1611,5 +1611,30 @@
       "The standalone puck mechanics pass retains its own frozen source and separate actual evidence.",
       "M7 recovery v2 had not executed at this regression freeze; subsequent collection failed the unchanged contact guard."
     ]
+  },
+  "c4_source_review": {
+    "source_commit": "9393215c7a706810e053b20928aea132b91f495a",
+    "root_focused_tests": 12,
+    "root_focused_seconds": 1.867,
+    "skipped": 0,
+    "historical_c3_actual_boundaries_checked": 40,
+    "compatibility_audit_seconds": 3.486911935993703,
+    "audit": {
+      "path": "runs/c4-c3-compatibility-9393215/audit.json",
+      "bytes": 17940,
+      "sha256": "dfaa00eaf6db16a160645f2a8d4efef9b619f67c2e8c60494f2c5f7773c4b433"
+    },
+    "audit_script": {
+      "path": "runs/c4-c3-compatibility-9393215/audit.py",
+      "bytes": 2660,
+      "sha256": "e138a0d313047c88db5cfa45dac477d3787b8303451db56243edc4a195700795"
+    },
+    "audit_only_corrections": {
+      "path": "runs/c4-c3-compatibility-9393215/audit-revisions.json",
+      "bytes": 464,
+      "sha256": "1849acb785af385df73a5bdf0f98cd8e9b8a693eef7245adc1df2b55bd1b2ac5"
+    },
+    "native_execution": false,
+    "limitation": "C4 runtime controls are being prepared; no C4 result or held-out claim."
   }
 }
