@@ -105,6 +105,17 @@ def main(argv=None):
     atlas.add_argument('--graph-manifest', type=Path, required=True)
     atlas.add_argument('--cut-node', type=int, action='append', default=[], help='bodyId to isolate; repeat up to 32 times; omit for no-op')
     atlas.add_argument('--output', type=Path, required=True, help='new SVG; offline structural analysis, not model execution')
+    afterimage = commands.add_parser('afterimage', help='record an authorized local RGB stimulus or render its offline portrait')
+    phases = afterimage.add_subparsers(dest='phase', required=True)
+    record_portrait = phases.add_parser('record', help='bounded CPU model inference; no capture or simulation')
+    record_portrait.add_argument('stimulus', type=Path, help='explicit JSON rights/time manifest beside uint8 RGB NPY')
+    record_portrait.add_argument('--controller', choices=('male-original', 'male-control'), required=True)
+    record_portrait.add_argument('--output', type=Path, help='new UUID run directory; never overwritten')
+    render_portrait = phases.add_parser('render', help='completed recording to SVG; no model loading')
+    render_portrait.add_argument('source', type=Path)
+    render_portrait.add_argument('--output', type=Path, required=True)
+    _storage_flags(record_portrait)
+    _storage_flags(render_portrait)
     for command in (lab, evaluate, replay, export, sonify, compare, atlas):
         _storage_flags(command)
     args = parser.parse_args(argv)
@@ -170,6 +181,48 @@ def main(argv=None):
                     result = export_run(args.source, output, args.format, storage_budget=budget)
                 report = {'artifact': str(result)}
             ok = True
+        elif args.command == 'afterimage':
+            from . import afterimage
+            from .storage import StorageBudget
+            if args.phase == 'render':
+                output = args.output.absolute()
+                managed = _managed_root(output, asset_root)
+                budget = StorageBudget((managed,), _limits(args))
+                with budget.lock():
+                    budget.check(0, path=output)
+                    count = sum(path.is_file() and path.suffix.lower() in {'.svg', '.png', '.zip', '.wav', '.html'} for path in managed.rglob('*'))
+                    budget.check_count('exports', count)
+                    report = {'artifact': str(afterimage.render(args.source, output, storage_budget=budget))}
+                ok = True
+            else:
+                from dataclasses import asdict
+                from .evaluate import bounded_process
+                from .male_policy import resolve_profile
+                stimulus = afterimage.load_stimulus(args.stimulus)
+                identity, _ = resolve_profile(root, asset_root, args.controller)
+                output = (args.output or root / 'runs/afterimage' / uuid.uuid4().hex).absolute()
+                if uuid.UUID(output.name).hex != output.name:
+                    raise ValueError('Afterimage output directory requires a canonical hexadecimal UUID name')
+                managed = _managed_root(output, asset_root)
+                log_bytes = min(args.log_max_bytes, 1024**2)
+                budget = StorageBudget((managed,), _limits(args), headroom_bytes=2 * log_bytes + 8 * 1024**2)
+                config = {'repo': str(root), 'assets': str(asset_root), 'controller': args.controller,
+                          'stimulus': str(args.stimulus.absolute()), 'output': str(output), 'identity': identity,
+                          'expected_stimulus': stimulus['metadata'], 'expected_sources': afterimage._source_hashes(),
+                          'storage': {'roots': [str(managed)], 'limits': asdict(budget.limits), 'headroom_bytes': budget.headroom_bytes}}
+                env = os.environ.copy()
+                env.update(OMP_NUM_THREADS='1', MKL_NUM_THREADS='1', OPENBLAS_NUM_THREADS='1')
+                with budget.lock():
+                    budget.check(afterimage.MAX_RECORD_BYTES, path=output)
+                    budget.check_count('runs', _run_count(managed))
+                    report = bounded_process([sys.executable, '-m', 'palimpsest.afterimage', json.dumps(config)],
+                        output, afterimage.TIMEOUT_SECONDS, env, storage_budget=budget, log_max_bytes=log_bytes)
+                ok = report['status'] == 'completed'
+                if ok:
+                    from .artifacts import _manifest
+                    manifest = _manifest(output)
+                    ok = manifest.get('status') == 'completed' and manifest.get('kind') == afterimage.KIND
+                    report['recording'] = {'run_id': output.name, 'status': manifest.get('status'), 'frames': manifest.get('recorded_ticks')}
         elif args.mode == 'playback':
             from .artifacts import playback
             if args.output:
