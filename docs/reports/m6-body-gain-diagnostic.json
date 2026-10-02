@@ -1,0 +1,4265 @@
+{
+  "source_commit": "27b9990",
+  "status": "rejected",
+  "qualification_claims": [],
+  "report": {
+    "status": "rejected",
+    "protocol": {
+      "version": 1,
+      "claim": "standalone development gain diagnostic; no runtime integration",
+      "trials": [
+        {
+          "id": "baseline-forward-02",
+          "condition": "baseline",
+          "left_gear_factor": 1.0,
+          "action": [
+            0.2,
+            0.0
+          ]
+        },
+        {
+          "id": "baseline-forward-04",
+          "condition": "baseline",
+          "left_gear_factor": 1.0,
+          "action": [
+            0.4,
+            0.0
+          ]
+        },
+        {
+          "id": "baseline-reverse-02",
+          "condition": "baseline",
+          "left_gear_factor": 1.0,
+          "action": [
+            -0.2,
+            0.0
+          ]
+        },
+        {
+          "id": "baseline-reverse-04",
+          "condition": "baseline",
+          "left_gear_factor": 1.0,
+          "action": [
+            -0.4,
+            0.0
+          ]
+        },
+        {
+          "id": "left-08-forward-02",
+          "condition": "left-08",
+          "left_gear_factor": 0.8,
+          "action": [
+            0.2,
+            0.0
+          ]
+        },
+        {
+          "id": "left-08-forward-04",
+          "condition": "left-08",
+          "left_gear_factor": 0.8,
+          "action": [
+            0.4,
+            0.0
+          ]
+        },
+        {
+          "id": "left-08-reverse-02",
+          "condition": "left-08",
+          "left_gear_factor": 0.8,
+          "action": [
+            -0.2,
+            0.0
+          ]
+        },
+        {
+          "id": "left-08-reverse-04",
+          "condition": "left-08",
+          "left_gear_factor": 0.8,
+          "action": [
+            -0.4,
+            0.0
+          ]
+        }
+      ],
+      "seed": 0,
+      "ticks": 120,
+      "settling_ticks": 20,
+      "fit_ticks": 100,
+      "child_timeout_seconds": 120,
+      "recording_max_bytes": 67108864,
+      "start_pose": [
+        -3.5,
+        0.0,
+        0.0
+      ],
+      "goal_xy": [
+        -3.5,
+        3.0
+      ],
+      "world": "unchanged authored memory_world obstacle layout; explicit start/goal override",
+      "engine_scenario": "reproduction",
+      "world_override": true,
+      "driver_input": "fixed straight action only; no pose, goal, encoder or task feedback",
+      "perturbation": "multiply left_motor scalar gear by .8; right gear/physical radius/track unchanged",
+      "fit": "existing fit_wheel_gains: raw shaft increment / measured dt = gain * actual control",
+      "fit_bounds": {
+        "max_samples": 400,
+        "min_samples": 100,
+        "min_excitation": 1.0,
+        "gain_bounds": [
+          1.0,
+          100.0
+        ],
+        "control_limit": 2.0,
+        "dt_bounds_s": [
+          0.019999999,
+          0.020000001
+        ],
+        "max_rate_rad_s": 100.0,
+        "max_residual_rad_s": 2.0,
+        "max_relative_rmse": 0.2
+      },
+      "between_trial_gain_range_over_mean_max": 0.2,
+      "pipeline": {
+        "mujoco_version": "3.3.6",
+        "integrator": "Euler",
+        "physics_dt_s": 0.002,
+        "frame_skip": 10,
+        "control_dt_s": 0.02,
+        "max_contacts_per_stage": 128
+      },
+      "contact_allowlist": [
+        [
+          "floor",
+          "left_wheel_geom"
+        ],
+        [
+          "floor",
+          "right_wheel_geom"
+        ],
+        [
+          "floor",
+          "caster_wheel_geom"
+        ]
+      ],
+      "contact_coverage": "all ten pre-control position/velocity stages plus final cached pairs; end pairs refer to last pre-integration stage, not a fresh endpoint evaluation",
+      "rejection": "any non-allowlisted contact in any interval including settling, callback/pipeline mismatch, early termination, incomplete support, fit bounds or gain disagreement",
+      "threshold_scope": "predeclared DEVELOPMENT rejection limits; not physical safety/sensor limits"
+    },
+    "protocol_sha256": "647376c83ee6d8ded253aac9f66f93ec8894158ed8c4375fc462bd3994990860",
+    "runtime_source": {
+      "commit": "27b9990aee07ba2f1af995fdb37740e8a3918f1b",
+      "files_sha256": {
+        "src/palimpsest/__init__.py": "bb99e30d22e4662c4ded455b1b23f49b77ce811dcfa1b69bf358925487a566d8",
+        "src/palimpsest/__main__.py": "935a1c1166b0c1ea35a82256345000bf2c73ded718d77773bc27a71ecce28f7d",
+        "src/palimpsest/artifacts.py": "0851fc2435bdd85135f568bebd40b52776ce35b2c9c86335506ce34386f06a31",
+        "src/palimpsest/assets.py": "aa4a38c7403cd9f72bc23027acd7c212202f25574bea6af65053c34664da49e3",
+        "src/palimpsest/cli.py": "3d5bb7bc2135b8534ca2fcfceb7b4fe4e9f24ed140a38003f7b1ded1c3d40a36",
+        "src/palimpsest/doctor.py": "109de62468161f35461eee76af244daabef38f2faa1526c5a6ed268817e6b834",
+        "src/palimpsest/engine.py": "c7a5450b42cebc3e58e90c8fe6ed623da2e37cfddb7fddca18946e172c902074",
+        "src/palimpsest/evaluate.py": "74a9afb710b36a366ab680462e9440f285730a0360bda704af25ebbcfd74256a",
+        "src/palimpsest/flynn.py": "409b7503d76fd6f971a33d053e86c968b529edc226b85f44122e17a649f8f9f4",
+        "src/palimpsest/interventions.py": "fd2c1e6f160f7d251ddcf3275b383e8e3e265fc462452d1bc20c0030a6acf9c8",
+        "src/palimpsest/lab.py": "2f5072d03d33f001120bbaa87dd3e1ba2de8cd15942c3a7e7d4c97b564aa89a7",
+        "src/palimpsest/memory.py": "9641ae3d7d78577e0ea5bc8bcacbe455cae6c548f4f9bd10b8bb593a8fd7c542",
+        "src/palimpsest/memory_task.py": "6562de8c0734e0622529231babc7e035ba146077b39e004b0f52928b3038dcc6",
+        "src/palimpsest/memory_world.py": "e1a1b655f3698b4f238dd6b92b93fbe5c38dce26be4f908c76cc9db25a852eb7",
+        "src/palimpsest/profiles.py": "dcc5255bad98f7ca63d56f344fbf4ebbb85a66f68313aa7d417da3755e6d53d6",
+        "src/palimpsest/records.py": "c4be6f1699c1d8550a7f2db2979f7f9f18196ac986eef2aefe3ba665cae99ac3",
+        "src/palimpsest/replay.py": "04c381ca6a0268af38032cc95b006530f87f7f52c4177883d98c17338d5c28b5",
+        "src/palimpsest/snapshots.py": "14d95bb2f78646260ef931a610c0e7b0a31ba0f75e87413579102aad5c6a35d7",
+        "src/palimpsest/storage.py": "79664d876834ef20b459cc83963515effdaf75d0256fe5764a9cf8e18cd448c2",
+        "src/palimpsest/task_mechanics.py": "cbf698ad3f027f572c4f12655595825f580f155949f6c7c96f2556d14e6d1bb6",
+        "src/palimpsest/task_profiles.py": "14b237ede67949f281977c00b01dcd7a8e8a367d67a7e4e37911e0cb9b1dfa79",
+        "src/palimpsest/worker.py": "303ed1653c3bf50807b66f382225ef1bd226386343a7b4974387b817a226c38a",
+        "pyproject.toml": "13435cdf27674955809c67d3d81410c502bf0f258b661e68ed82197842fbc800",
+        "uv.lock": "8a7a880d020c1907e221575fda65642241f809fc628a55381f1b6137bff1b732"
+      }
+    },
+    "harness_sha256": {
+      "verify_body_gains.py": "32d606564ba48a720b166574221fbec5077c5624cdad1953b99aeda68d65656f",
+      "verify_body_calibration.py": "716d434103a98f9c4c983eb0003a1d4ad782d662c755d799ddab096c9ef00f31",
+      "verify_tasks.py": "ec94a0a95d3e90ed9f9a008025b08d8da72949637144782655273d254948668b",
+      "verify_endurance.py": "6656a726c157a5ccbec10614f50d7a841cc00cf896d44a74dfa6971f5c778803"
+    },
+    "trials": {
+      "baseline-forward-02": {
+        "result": {
+          "status": "failed",
+          "trial": {
+            "id": "baseline-forward-02",
+            "condition": "baseline",
+            "left_gear_factor": 1.0,
+            "action": [
+              0.2,
+              0.0
+            ]
+          },
+          "run": "/home/utkarsh/Work/shraddha/brain/.worktrees/exploration-homing/runs/m6-body-gain-diagnostic-20261002/baseline-forward-02/119ce34eae8b42d3b258d0a26985dc3e",
+          "pipeline_evidence": {
+            "mujoco_version": "3.3.6",
+            "installed_headers_sha256": {
+              "mjmodel.h": "a03572fab4a70e55b957c79cee4fbee02afa0aa91235925d5d7eb488c23b9aba",
+              "mujoco.h": "3190fd17711cf25b6b7605802df353571e4329ca3849485e56643e49925208cd"
+            },
+            "upstream_files_sha256": {
+              "mujoco_two_cam_env_random_obstacles.py": "37612bc4d2cbcda2aa5604d9975c06f2a6d77a64c6c1ebcb4330897d3e2bc751",
+              "mujoco_model_random_obstacles.xml": "3630ec6a202bfb32276a39e21d974228518d4bb93cb4861532467af4ce883484"
+            },
+            "integrator_enum": 0,
+            "physics_dt_s": 0.002,
+            "frame_skip": 10,
+            "disableflags": 0,
+            "model_address": 99727104501696,
+            "data_address": 99727104891712
+          },
+          "actual_initial_world": {
+            "arena": 7.0,
+            "pose": [
+              -3.5,
+              0.0,
+              0.0
+            ],
+            "obstacles": [
+              [
+                0.0,
+                -2.0,
+                0.4
+              ],
+              [
+                0.0,
+                0.0,
+                0.4
+              ],
+              [
+                0.0,
+                2.0,
+                0.4
+              ],
+              [
+                2.5,
+                -1.0,
+                0.4
+              ],
+              [
+                2.5,
+                1.0,
+                0.4
+              ],
+              [
+                3.7,
+                -5.6,
+                0.4
+              ],
+              [
+                3.7,
+                -4.4,
+                0.4
+              ],
+              [
+                3.7,
+                -3.2,
+                0.4
+              ],
+              [
+                3.7,
+                3.2,
+                0.4
+              ],
+              [
+                3.7,
+                4.4,
+                0.4
+              ],
+              [
+                4.9,
+                -5.6,
+                0.4
+              ],
+              [
+                4.9,
+                -4.4,
+                0.4
+              ],
+              [
+                4.9,
+                -3.2,
+                0.4
+              ],
+              [
+                4.9,
+                3.2,
+                0.4
+              ],
+              [
+                4.9,
+                4.4,
+                0.4
+              ],
+              [
+                6.1,
+                -5.6,
+                0.4
+              ],
+              [
+                6.1,
+                -4.4,
+                0.4
+              ],
+              [
+                6.1,
+                -3.2,
+                0.4
+              ],
+              [
+                6.1,
+                3.2,
+                0.4
+              ],
+              [
+                6.1,
+                4.4,
+                0.4
+              ]
+            ],
+            "goal": [
+              -3.5,
+              3.0,
+              0.25
+            ]
+          },
+          "actual_initial_sample": {
+            "pose": [
+              -3.5,
+              0.0,
+              0.0
+            ],
+            "time_s": 0.0,
+            "position_xyz": [
+              -3.5,
+              0.0,
+              0.1
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "shaft_angles_rad": [
+              0.0,
+              0.0
+            ],
+            "contacts": 66
+          },
+          "physical_calibration": {
+            "radius_m": 0.06,
+            "track_m": 0.36,
+            "quantum_rad": 0.001
+          },
+          "model_override": {
+            "original_world": {
+              "arena": 7.0,
+              "pose": [
+                -2.2143425941467285,
+                1.8919436931610107,
+                -1.8880001474933032
+              ],
+              "obstacles": [
+                [
+                  1.7531095977146158,
+                  -2.9467300638224603,
+                  0.4
+                ],
+                [
+                  -5.875538893616708,
+                  -6.188446265234828,
+                  0.4
+                ],
+                [
+                  4.009859061763487,
+                  5.283271389154839,
+                  0.4
+                ],
+                [
+                  1.3649379298199023,
+                  2.93755598059518,
+                  0.4
+                ],
+                [
+                  0.5583998907574124,
+                  5.568927024483434,
+                  0.4
+                ],
+                [
+                  4.042925492755613,
+                  -6.364947197822104,
+                  0.4
+                ],
+                [
+                  2.9395897143032848,
+                  -4.151608056287245,
+                  0.4
+                ],
+                [
+                  4.648690206078548,
+                  0.5307036191883743,
+                  0.4
+                ],
+                [
+                  -2.5636878011214748,
+                  -0.9896035686699722,
+                  0.4
+                ],
+                [
+                  6.364287178101902,
+                  6.154692336335746,
+                  0.4
+                ],
+                [
+                  2.4121181513080323,
+                  -1.4218057730674714,
+                  0.4
+                ],
+                [
+                  -4.670764735713137,
+                  2.8350507544842465,
+                  0.4
+                ],
+                [
+                  0.3245353276892917,
+                  -2.4289039928453677,
+                  0.4
+                ],
+                [
+                  5.555757004239997,
+                  -1.820221482123901,
+                  0.4
+                ],
+                [
+                  -1.3872767932395362,
+                  4.995511705661341,
+                  0.4
+                ],
+                [
+                  -3.49238280277274,
+                  1.5767954519813427,
+                  0.4
+                ],
+                [
+                  -5.324603602145475,
+                  4.257845089963492,
+                  0.4
+                ],
+                [
+                  -2.0977016250155476,
+                  -4.47642282374606,
+                  0.4
+                ],
+                [
+                  -3.447779724880033,
+                  -5.7341273463755575,
+                  0.4
+                ],
+                [
+                  -5.23836101607524,
+                  1.0282545406316883,
+                  0.4
+                ]
+              ],
+              "goal": [
+                4.509548664093018,
+                -5.026264190673828,
+                0.25
+              ]
+            },
+            "authored_world": {
+              "arena": 7.0,
+              "pose": [
+                -3.5,
+                0.0,
+                0.0
+              ],
+              "obstacles": [
+                [
+                  0.0,
+                  -2.0,
+                  0.4
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.4
+                ],
+                [
+                  0.0,
+                  2.0,
+                  0.4
+                ],
+                [
+                  2.5,
+                  -1.0,
+                  0.4
+                ],
+                [
+                  2.5,
+                  1.0,
+                  0.4
+                ],
+                [
+                  3.7,
+                  -5.6,
+                  0.4
+                ],
+                [
+                  3.7,
+                  -4.4,
+                  0.4
+                ],
+                [
+                  3.7,
+                  -3.2,
+                  0.4
+                ],
+                [
+                  3.7,
+                  3.2,
+                  0.4
+                ],
+                [
+                  3.7,
+                  4.4,
+                  0.4
+                ],
+                [
+                  4.9,
+                  -5.6,
+                  0.4
+                ],
+                [
+                  4.9,
+                  -4.4,
+                  0.4
+                ],
+                [
+                  4.9,
+                  -3.2,
+                  0.4
+                ],
+                [
+                  4.9,
+                  3.2,
+                  0.4
+                ],
+                [
+                  4.9,
+                  4.4,
+                  0.4
+                ],
+                [
+                  6.1,
+                  -5.6,
+                  0.4
+                ],
+                [
+                  6.1,
+                  -4.4,
+                  0.4
+                ],
+                [
+                  6.1,
+                  -3.2,
+                  0.4
+                ],
+                [
+                  6.1,
+                  3.2,
+                  0.4
+                ],
+                [
+                  6.1,
+                  4.4,
+                  0.4
+                ]
+              ],
+              "goal": [
+                -3.5,
+                3.0,
+                0.25
+              ]
+            },
+            "world_protocol_sha256": "ed6d7996b1c5dd412621533ebc87c0712ef3ed618031167774f27e313371379c",
+            "original_model_sha256": "c4d30fef8fbe05739e72e762d10d2dc435c1c831993a32d0662560d494b158e5",
+            "actual_model_sha256": "c4d30fef8fbe05739e72e762d10d2dc435c1c831993a32d0662560d494b158e5",
+            "original_actuator_gear": [
+              [
+                3.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ],
+              [
+                3.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ]
+            ],
+            "actual_actuator_gear": [
+              [
+                3.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ],
+              [
+                3.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ]
+            ],
+            "start_pose": [
+              -3.5,
+              0.0,
+              0.0
+            ],
+            "goal_xy": [
+              -3.5,
+              3.0
+            ]
+          },
+          "world_override_sha256": "635019be2057a01563c7d6ba4a3910be650adac4dcede4c23a73d138c4ad7324",
+          "initial_snapshot_sha256": "f840ccf4f97c048ca9d5610415b082fe72fd27169e6124aa5a6a7a0deb730bd3",
+          "error": {
+            "type": "ValueError",
+            "message": "Rejected callback/contact/lifecycle interval; full packet retained"
+          },
+          "callback_violations": [],
+          "callback_restored": true,
+          "final_state": {
+            "run_id": "119ce34eae8b42d3b258d0a26985dc3e",
+            "parent_run_id": null,
+            "controller": "manual",
+            "phase": "paused",
+            "scenario": "reproduction",
+            "texture": "checker",
+            "revision": 2,
+            "eyes": {
+              "left": true,
+              "right": true
+            },
+            "simulation_time": 0.020000000000000004,
+            "episode": 0,
+            "episode_step": 1,
+            "total_tick": 1,
+            "pending_commands": 0,
+            "metrics": {
+              "reward": 0.09000000000000001,
+              "contact_ticks": 0,
+              "path_length": 0.00046515464782714844
+            },
+            "last_outcome": null,
+            "task": null,
+            "closed": false
+          },
+          "engine_closed": true
+        },
+        "supervision": {
+          "schema_version": 1,
+          "status": "failed",
+          "timeout_seconds": 120,
+          "started_utc": "2026-10-02T12:38:11.132127+00:00",
+          "output": "/home/utkarsh/Work/shraddha/brain/.worktrees/exploration-homing/runs/m6-body-gain-diagnostic-20261002/baseline-forward-02",
+          "returncode": 1,
+          "elapsed_seconds": 5.894192075997125
+        },
+        "result_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/exploration-homing/runs/m6-body-gain-diagnostic-20261002/baseline-forward-02/result.json",
+        "result_sha256": "639f829a76d483234a1bceff18afc36485ab1d3a8d896345ff794669046a1768"
+      },
+      "baseline-forward-04": {
+        "result": {
+          "status": "failed",
+          "trial": {
+            "id": "baseline-forward-04",
+            "condition": "baseline",
+            "left_gear_factor": 1.0,
+            "action": [
+              0.4,
+              0.0
+            ]
+          },
+          "run": "/home/utkarsh/Work/shraddha/brain/.worktrees/exploration-homing/runs/m6-body-gain-diagnostic-20261002/baseline-forward-04/8c9dfac2e9284aaf86240843e8f0cf1a",
+          "pipeline_evidence": {
+            "mujoco_version": "3.3.6",
+            "installed_headers_sha256": {
+              "mjmodel.h": "a03572fab4a70e55b957c79cee4fbee02afa0aa91235925d5d7eb488c23b9aba",
+              "mujoco.h": "3190fd17711cf25b6b7605802df353571e4329ca3849485e56643e49925208cd"
+            },
+            "upstream_files_sha256": {
+              "mujoco_two_cam_env_random_obstacles.py": "37612bc4d2cbcda2aa5604d9975c06f2a6d77a64c6c1ebcb4330897d3e2bc751",
+              "mujoco_model_random_obstacles.xml": "3630ec6a202bfb32276a39e21d974228518d4bb93cb4861532467af4ce883484"
+            },
+            "integrator_enum": 0,
+            "physics_dt_s": 0.002,
+            "frame_skip": 10,
+            "disableflags": 0,
+            "model_address": 110328321119040,
+            "data_address": 110328330235008
+          },
+          "actual_initial_world": {
+            "arena": 7.0,
+            "pose": [
+              -3.5,
+              0.0,
+              0.0
+            ],
+            "obstacles": [
+              [
+                0.0,
+                -2.0,
+                0.4
+              ],
+              [
+                0.0,
+                0.0,
+                0.4
+              ],
+              [
+                0.0,
+                2.0,
+                0.4
+              ],
+              [
+                2.5,
+                -1.0,
+                0.4
+              ],
+              [
+                2.5,
+                1.0,
+                0.4
+              ],
+              [
+                3.7,
+                -5.6,
+                0.4
+              ],
+              [
+                3.7,
+                -4.4,
+                0.4
+              ],
+              [
+                3.7,
+                -3.2,
+                0.4
+              ],
+              [
+                3.7,
+                3.2,
+                0.4
+              ],
+              [
+                3.7,
+                4.4,
+                0.4
+              ],
+              [
+                4.9,
+                -5.6,
+                0.4
+              ],
+              [
+                4.9,
+                -4.4,
+                0.4
+              ],
+              [
+                4.9,
+                -3.2,
+                0.4
+              ],
+              [
+                4.9,
+                3.2,
+                0.4
+              ],
+              [
+                4.9,
+                4.4,
+                0.4
+              ],
+              [
+                6.1,
+                -5.6,
+                0.4
+              ],
+              [
+                6.1,
+                -4.4,
+                0.4
+              ],
+              [
+                6.1,
+                -3.2,
+                0.4
+              ],
+              [
+                6.1,
+                3.2,
+                0.4
+              ],
+              [
+                6.1,
+                4.4,
+                0.4
+              ]
+            ],
+            "goal": [
+              -3.5,
+              3.0,
+              0.25
+            ]
+          },
+          "actual_initial_sample": {
+            "pose": [
+              -3.5,
+              0.0,
+              0.0
+            ],
+            "time_s": 0.0,
+            "position_xyz": [
+              -3.5,
+              0.0,
+              0.1
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "shaft_angles_rad": [
+              0.0,
+              0.0
+            ],
+            "contacts": 66
+          },
+          "physical_calibration": {
+            "radius_m": 0.06,
+            "track_m": 0.36,
+            "quantum_rad": 0.001
+          },
+          "model_override": {
+            "original_world": {
+              "arena": 7.0,
+              "pose": [
+                -2.2143425941467285,
+                1.8919436931610107,
+                -1.8880001474933032
+              ],
+              "obstacles": [
+                [
+                  1.7531095977146158,
+                  -2.9467300638224603,
+                  0.4
+                ],
+                [
+                  -5.875538893616708,
+                  -6.188446265234828,
+                  0.4
+                ],
+                [
+                  4.009859061763487,
+                  5.283271389154839,
+                  0.4
+                ],
+                [
+                  1.3649379298199023,
+                  2.93755598059518,
+                  0.4
+                ],
+                [
+                  0.5583998907574124,
+                  5.568927024483434,
+                  0.4
+                ],
+                [
+                  4.042925492755613,
+                  -6.364947197822104,
+                  0.4
+                ],
+                [
+                  2.9395897143032848,
+                  -4.151608056287245,
+                  0.4
+                ],
+                [
+                  4.648690206078548,
+                  0.5307036191883743,
+                  0.4
+                ],
+                [
+                  -2.5636878011214748,
+                  -0.9896035686699722,
+                  0.4
+                ],
+                [
+                  6.364287178101902,
+                  6.154692336335746,
+                  0.4
+                ],
+                [
+                  2.4121181513080323,
+                  -1.4218057730674714,
+                  0.4
+                ],
+                [
+                  -4.670764735713137,
+                  2.8350507544842465,
+                  0.4
+                ],
+                [
+                  0.3245353276892917,
+                  -2.4289039928453677,
+                  0.4
+                ],
+                [
+                  5.555757004239997,
+                  -1.820221482123901,
+                  0.4
+                ],
+                [
+                  -1.3872767932395362,
+                  4.995511705661341,
+                  0.4
+                ],
+                [
+                  -3.49238280277274,
+                  1.5767954519813427,
+                  0.4
+                ],
+                [
+                  -5.324603602145475,
+                  4.257845089963492,
+                  0.4
+                ],
+                [
+                  -2.0977016250155476,
+                  -4.47642282374606,
+                  0.4
+                ],
+                [
+                  -3.447779724880033,
+                  -5.7341273463755575,
+                  0.4
+                ],
+                [
+                  -5.23836101607524,
+                  1.0282545406316883,
+                  0.4
+                ]
+              ],
+              "goal": [
+                4.509548664093018,
+                -5.026264190673828,
+                0.25
+              ]
+            },
+            "authored_world": {
+              "arena": 7.0,
+              "pose": [
+                -3.5,
+                0.0,
+                0.0
+              ],
+              "obstacles": [
+                [
+                  0.0,
+                  -2.0,
+                  0.4
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.4
+                ],
+                [
+                  0.0,
+                  2.0,
+                  0.4
+                ],
+                [
+                  2.5,
+                  -1.0,
+                  0.4
+                ],
+                [
+                  2.5,
+                  1.0,
+                  0.4
+                ],
+                [
+                  3.7,
+                  -5.6,
+                  0.4
+                ],
+                [
+                  3.7,
+                  -4.4,
+                  0.4
+                ],
+                [
+                  3.7,
+                  -3.2,
+                  0.4
+                ],
+                [
+                  3.7,
+                  3.2,
+                  0.4
+                ],
+                [
+                  3.7,
+                  4.4,
+                  0.4
+                ],
+                [
+                  4.9,
+                  -5.6,
+                  0.4
+                ],
+                [
+                  4.9,
+                  -4.4,
+                  0.4
+                ],
+                [
+                  4.9,
+                  -3.2,
+                  0.4
+                ],
+                [
+                  4.9,
+                  3.2,
+                  0.4
+                ],
+                [
+                  4.9,
+                  4.4,
+                  0.4
+                ],
+                [
+                  6.1,
+                  -5.6,
+                  0.4
+                ],
+                [
+                  6.1,
+                  -4.4,
+                  0.4
+                ],
+                [
+                  6.1,
+                  -3.2,
+                  0.4
+                ],
+                [
+                  6.1,
+                  3.2,
+                  0.4
+                ],
+                [
+                  6.1,
+                  4.4,
+                  0.4
+                ]
+              ],
+              "goal": [
+                -3.5,
+                3.0,
+                0.25
+              ]
+            },
+            "world_protocol_sha256": "ed6d7996b1c5dd412621533ebc87c0712ef3ed618031167774f27e313371379c",
+            "original_model_sha256": "c4d30fef8fbe05739e72e762d10d2dc435c1c831993a32d0662560d494b158e5",
+            "actual_model_sha256": "c4d30fef8fbe05739e72e762d10d2dc435c1c831993a32d0662560d494b158e5",
+            "original_actuator_gear": [
+              [
+                3.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ],
+              [
+                3.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ]
+            ],
+            "actual_actuator_gear": [
+              [
+                3.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ],
+              [
+                3.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ]
+            ],
+            "start_pose": [
+              -3.5,
+              0.0,
+              0.0
+            ],
+            "goal_xy": [
+              -3.5,
+              3.0
+            ]
+          },
+          "world_override_sha256": "635019be2057a01563c7d6ba4a3910be650adac4dcede4c23a73d138c4ad7324",
+          "initial_snapshot_sha256": "90aea07182768df93b5e952f5f752bb564c85667474371376613d54120d5973b",
+          "error": {
+            "type": "ValueError",
+            "message": "Rejected callback/contact/lifecycle interval; full packet retained"
+          },
+          "callback_violations": [],
+          "callback_restored": true,
+          "final_state": {
+            "run_id": "8c9dfac2e9284aaf86240843e8f0cf1a",
+            "parent_run_id": null,
+            "controller": "manual",
+            "phase": "paused",
+            "scenario": "reproduction",
+            "texture": "checker",
+            "revision": 2,
+            "eyes": {
+              "left": true,
+              "right": true
+            },
+            "simulation_time": 0.020000000000000004,
+            "episode": 0,
+            "episode_step": 1,
+            "total_tick": 1,
+            "pending_commands": 0,
+            "metrics": {
+              "reward": 0.08999965940202986,
+              "contact_ticks": 0,
+              "path_length": 0.0009088516235351562
+            },
+            "last_outcome": null,
+            "task": null,
+            "closed": false
+          },
+          "engine_closed": true
+        },
+        "supervision": {
+          "schema_version": 1,
+          "status": "failed",
+          "timeout_seconds": 120,
+          "started_utc": "2026-10-02T12:38:17.031882+00:00",
+          "output": "/home/utkarsh/Work/shraddha/brain/.worktrees/exploration-homing/runs/m6-body-gain-diagnostic-20261002/baseline-forward-04",
+          "returncode": 1,
+          "elapsed_seconds": 5.399870848006685
+        },
+        "result_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/exploration-homing/runs/m6-body-gain-diagnostic-20261002/baseline-forward-04/result.json",
+        "result_sha256": "7e5027616e5c1fb20a5dbc98c255cf554cd5af8ad38c7e3567ba6bd308ef9d4c"
+      },
+      "baseline-reverse-02": {
+        "result": {
+          "status": "failed",
+          "trial": {
+            "id": "baseline-reverse-02",
+            "condition": "baseline",
+            "left_gear_factor": 1.0,
+            "action": [
+              -0.2,
+              0.0
+            ]
+          },
+          "run": "/home/utkarsh/Work/shraddha/brain/.worktrees/exploration-homing/runs/m6-body-gain-diagnostic-20261002/baseline-reverse-02/6919b24966844575896d8874a4ffebce",
+          "pipeline_evidence": {
+            "mujoco_version": "3.3.6",
+            "installed_headers_sha256": {
+              "mjmodel.h": "a03572fab4a70e55b957c79cee4fbee02afa0aa91235925d5d7eb488c23b9aba",
+              "mujoco.h": "3190fd17711cf25b6b7605802df353571e4329ca3849485e56643e49925208cd"
+            },
+            "upstream_files_sha256": {
+              "mujoco_two_cam_env_random_obstacles.py": "37612bc4d2cbcda2aa5604d9975c06f2a6d77a64c6c1ebcb4330897d3e2bc751",
+              "mujoco_model_random_obstacles.xml": "3630ec6a202bfb32276a39e21d974228518d4bb93cb4861532467af4ce883484"
+            },
+            "integrator_enum": 0,
+            "physics_dt_s": 0.002,
+            "frame_skip": 10,
+            "disableflags": 0,
+            "model_address": 108678982011968,
+            "data_address": 108678982401920
+          },
+          "actual_initial_world": {
+            "arena": 7.0,
+            "pose": [
+              -3.5,
+              0.0,
+              0.0
+            ],
+            "obstacles": [
+              [
+                0.0,
+                -2.0,
+                0.4
+              ],
+              [
+                0.0,
+                0.0,
+                0.4
+              ],
+              [
+                0.0,
+                2.0,
+                0.4
+              ],
+              [
+                2.5,
+                -1.0,
+                0.4
+              ],
+              [
+                2.5,
+                1.0,
+                0.4
+              ],
+              [
+                3.7,
+                -5.6,
+                0.4
+              ],
+              [
+                3.7,
+                -4.4,
+                0.4
+              ],
+              [
+                3.7,
+                -3.2,
+                0.4
+              ],
+              [
+                3.7,
+                3.2,
+                0.4
+              ],
+              [
+                3.7,
+                4.4,
+                0.4
+              ],
+              [
+                4.9,
+                -5.6,
+                0.4
+              ],
+              [
+                4.9,
+                -4.4,
+                0.4
+              ],
+              [
+                4.9,
+                -3.2,
+                0.4
+              ],
+              [
+                4.9,
+                3.2,
+                0.4
+              ],
+              [
+                4.9,
+                4.4,
+                0.4
+              ],
+              [
+                6.1,
+                -5.6,
+                0.4
+              ],
+              [
+                6.1,
+                -4.4,
+                0.4
+              ],
+              [
+                6.1,
+                -3.2,
+                0.4
+              ],
+              [
+                6.1,
+                3.2,
+                0.4
+              ],
+              [
+                6.1,
+                4.4,
+                0.4
+              ]
+            ],
+            "goal": [
+              -3.5,
+              3.0,
+              0.25
+            ]
+          },
+          "actual_initial_sample": {
+            "pose": [
+              -3.5,
+              0.0,
+              0.0
+            ],
+            "time_s": 0.0,
+            "position_xyz": [
+              -3.5,
+              0.0,
+              0.1
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "shaft_angles_rad": [
+              0.0,
+              0.0
+            ],
+            "contacts": 66
+          },
+          "physical_calibration": {
+            "radius_m": 0.06,
+            "track_m": 0.36,
+            "quantum_rad": 0.001
+          },
+          "model_override": {
+            "original_world": {
+              "arena": 7.0,
+              "pose": [
+                -2.2143425941467285,
+                1.8919436931610107,
+                -1.8880001474933032
+              ],
+              "obstacles": [
+                [
+                  1.7531095977146158,
+                  -2.9467300638224603,
+                  0.4
+                ],
+                [
+                  -5.875538893616708,
+                  -6.188446265234828,
+                  0.4
+                ],
+                [
+                  4.009859061763487,
+                  5.283271389154839,
+                  0.4
+                ],
+                [
+                  1.3649379298199023,
+                  2.93755598059518,
+                  0.4
+                ],
+                [
+                  0.5583998907574124,
+                  5.568927024483434,
+                  0.4
+                ],
+                [
+                  4.042925492755613,
+                  -6.364947197822104,
+                  0.4
+                ],
+                [
+                  2.9395897143032848,
+                  -4.151608056287245,
+                  0.4
+                ],
+                [
+                  4.648690206078548,
+                  0.5307036191883743,
+                  0.4
+                ],
+                [
+                  -2.5636878011214748,
+                  -0.9896035686699722,
+                  0.4
+                ],
+                [
+                  6.364287178101902,
+                  6.154692336335746,
+                  0.4
+                ],
+                [
+                  2.4121181513080323,
+                  -1.4218057730674714,
+                  0.4
+                ],
+                [
+                  -4.670764735713137,
+                  2.8350507544842465,
+                  0.4
+                ],
+                [
+                  0.3245353276892917,
+                  -2.4289039928453677,
+                  0.4
+                ],
+                [
+                  5.555757004239997,
+                  -1.820221482123901,
+                  0.4
+                ],
+                [
+                  -1.3872767932395362,
+                  4.995511705661341,
+                  0.4
+                ],
+                [
+                  -3.49238280277274,
+                  1.5767954519813427,
+                  0.4
+                ],
+                [
+                  -5.324603602145475,
+                  4.257845089963492,
+                  0.4
+                ],
+                [
+                  -2.0977016250155476,
+                  -4.47642282374606,
+                  0.4
+                ],
+                [
+                  -3.447779724880033,
+                  -5.7341273463755575,
+                  0.4
+                ],
+                [
+                  -5.23836101607524,
+                  1.0282545406316883,
+                  0.4
+                ]
+              ],
+              "goal": [
+                4.509548664093018,
+                -5.026264190673828,
+                0.25
+              ]
+            },
+            "authored_world": {
+              "arena": 7.0,
+              "pose": [
+                -3.5,
+                0.0,
+                0.0
+              ],
+              "obstacles": [
+                [
+                  0.0,
+                  -2.0,
+                  0.4
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.4
+                ],
+                [
+                  0.0,
+                  2.0,
+                  0.4
+                ],
+                [
+                  2.5,
+                  -1.0,
+                  0.4
+                ],
+                [
+                  2.5,
+                  1.0,
+                  0.4
+                ],
+                [
+                  3.7,
+                  -5.6,
+                  0.4
+                ],
+                [
+                  3.7,
+                  -4.4,
+                  0.4
+                ],
+                [
+                  3.7,
+                  -3.2,
+                  0.4
+                ],
+                [
+                  3.7,
+                  3.2,
+                  0.4
+                ],
+                [
+                  3.7,
+                  4.4,
+                  0.4
+                ],
+                [
+                  4.9,
+                  -5.6,
+                  0.4
+                ],
+                [
+                  4.9,
+                  -4.4,
+                  0.4
+                ],
+                [
+                  4.9,
+                  -3.2,
+                  0.4
+                ],
+                [
+                  4.9,
+                  3.2,
+                  0.4
+                ],
+                [
+                  4.9,
+                  4.4,
+                  0.4
+                ],
+                [
+                  6.1,
+                  -5.6,
+                  0.4
+                ],
+                [
+                  6.1,
+                  -4.4,
+                  0.4
+                ],
+                [
+                  6.1,
+                  -3.2,
+                  0.4
+                ],
+                [
+                  6.1,
+                  3.2,
+                  0.4
+                ],
+                [
+                  6.1,
+                  4.4,
+                  0.4
+                ]
+              ],
+              "goal": [
+                -3.5,
+                3.0,
+                0.25
+              ]
+            },
+            "world_protocol_sha256": "ed6d7996b1c5dd412621533ebc87c0712ef3ed618031167774f27e313371379c",
+            "original_model_sha256": "c4d30fef8fbe05739e72e762d10d2dc435c1c831993a32d0662560d494b158e5",
+            "actual_model_sha256": "c4d30fef8fbe05739e72e762d10d2dc435c1c831993a32d0662560d494b158e5",
+            "original_actuator_gear": [
+              [
+                3.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ],
+              [
+                3.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ]
+            ],
+            "actual_actuator_gear": [
+              [
+                3.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ],
+              [
+                3.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ]
+            ],
+            "start_pose": [
+              -3.5,
+              0.0,
+              0.0
+            ],
+            "goal_xy": [
+              -3.5,
+              3.0
+            ]
+          },
+          "world_override_sha256": "635019be2057a01563c7d6ba4a3910be650adac4dcede4c23a73d138c4ad7324",
+          "initial_snapshot_sha256": "7ada7a7e92fb36d3ec77ccf1adc94eca838b8e770c2b43208d4712643ea2bf11",
+          "error": {
+            "type": "ValueError",
+            "message": "Rejected callback/contact/lifecycle interval; full packet retained"
+          },
+          "callback_violations": [],
+          "callback_restored": true,
+          "final_state": {
+            "run_id": "6919b24966844575896d8874a4ffebce",
+            "parent_run_id": null,
+            "controller": "manual",
+            "phase": "paused",
+            "scenario": "reproduction",
+            "texture": "checker",
+            "revision": 2,
+            "eyes": {
+              "left": true,
+              "right": true
+            },
+            "simulation_time": 0.020000000000000004,
+            "episode": 0,
+            "episode_step": 1,
+            "total_tick": 1,
+            "pending_commands": 0,
+            "metrics": {
+              "reward": 0.09000000000000001,
+              "contact_ticks": 0,
+              "path_length": 0.0004227161407470703
+            },
+            "last_outcome": null,
+            "task": null,
+            "closed": false
+          },
+          "engine_closed": true
+        },
+        "supervision": {
+          "schema_version": 1,
+          "status": "failed",
+          "timeout_seconds": 120,
+          "started_utc": "2026-10-02T12:38:22.435885+00:00",
+          "output": "/home/utkarsh/Work/shraddha/brain/.worktrees/exploration-homing/runs/m6-body-gain-diagnostic-20261002/baseline-reverse-02",
+          "returncode": 1,
+          "elapsed_seconds": 3.18906110599346
+        },
+        "result_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/exploration-homing/runs/m6-body-gain-diagnostic-20261002/baseline-reverse-02/result.json",
+        "result_sha256": "eb1cdba897a27c5db61dc2f5b889cdc91f5956b1e2396d73dd41c5d2c43c72f2"
+      },
+      "baseline-reverse-04": {
+        "result": {
+          "status": "failed",
+          "trial": {
+            "id": "baseline-reverse-04",
+            "condition": "baseline",
+            "left_gear_factor": 1.0,
+            "action": [
+              -0.4,
+              0.0
+            ]
+          },
+          "run": "/home/utkarsh/Work/shraddha/brain/.worktrees/exploration-homing/runs/m6-body-gain-diagnostic-20261002/baseline-reverse-04/6786d87f7ad94b23b421d643f607ea8d",
+          "pipeline_evidence": {
+            "mujoco_version": "3.3.6",
+            "installed_headers_sha256": {
+              "mjmodel.h": "a03572fab4a70e55b957c79cee4fbee02afa0aa91235925d5d7eb488c23b9aba",
+              "mujoco.h": "3190fd17711cf25b6b7605802df353571e4329ca3849485e56643e49925208cd"
+            },
+            "upstream_files_sha256": {
+              "mujoco_two_cam_env_random_obstacles.py": "37612bc4d2cbcda2aa5604d9975c06f2a6d77a64c6c1ebcb4330897d3e2bc751",
+              "mujoco_model_random_obstacles.xml": "3630ec6a202bfb32276a39e21d974228518d4bb93cb4861532467af4ce883484"
+            },
+            "integrator_enum": 0,
+            "physics_dt_s": 0.002,
+            "frame_skip": 10,
+            "disableflags": 0,
+            "model_address": 97697822298688,
+            "data_address": 97697822688640
+          },
+          "actual_initial_world": {
+            "arena": 7.0,
+            "pose": [
+              -3.5,
+              0.0,
+              0.0
+            ],
+            "obstacles": [
+              [
+                0.0,
+                -2.0,
+                0.4
+              ],
+              [
+                0.0,
+                0.0,
+                0.4
+              ],
+              [
+                0.0,
+                2.0,
+                0.4
+              ],
+              [
+                2.5,
+                -1.0,
+                0.4
+              ],
+              [
+                2.5,
+                1.0,
+                0.4
+              ],
+              [
+                3.7,
+                -5.6,
+                0.4
+              ],
+              [
+                3.7,
+                -4.4,
+                0.4
+              ],
+              [
+                3.7,
+                -3.2,
+                0.4
+              ],
+              [
+                3.7,
+                3.2,
+                0.4
+              ],
+              [
+                3.7,
+                4.4,
+                0.4
+              ],
+              [
+                4.9,
+                -5.6,
+                0.4
+              ],
+              [
+                4.9,
+                -4.4,
+                0.4
+              ],
+              [
+                4.9,
+                -3.2,
+                0.4
+              ],
+              [
+                4.9,
+                3.2,
+                0.4
+              ],
+              [
+                4.9,
+                4.4,
+                0.4
+              ],
+              [
+                6.1,
+                -5.6,
+                0.4
+              ],
+              [
+                6.1,
+                -4.4,
+                0.4
+              ],
+              [
+                6.1,
+                -3.2,
+                0.4
+              ],
+              [
+                6.1,
+                3.2,
+                0.4
+              ],
+              [
+                6.1,
+                4.4,
+                0.4
+              ]
+            ],
+            "goal": [
+              -3.5,
+              3.0,
+              0.25
+            ]
+          },
+          "actual_initial_sample": {
+            "pose": [
+              -3.5,
+              0.0,
+              0.0
+            ],
+            "time_s": 0.0,
+            "position_xyz": [
+              -3.5,
+              0.0,
+              0.1
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "shaft_angles_rad": [
+              0.0,
+              0.0
+            ],
+            "contacts": 66
+          },
+          "physical_calibration": {
+            "radius_m": 0.06,
+            "track_m": 0.36,
+            "quantum_rad": 0.001
+          },
+          "model_override": {
+            "original_world": {
+              "arena": 7.0,
+              "pose": [
+                -2.2143425941467285,
+                1.8919436931610107,
+                -1.8880001474933032
+              ],
+              "obstacles": [
+                [
+                  1.7531095977146158,
+                  -2.9467300638224603,
+                  0.4
+                ],
+                [
+                  -5.875538893616708,
+                  -6.188446265234828,
+                  0.4
+                ],
+                [
+                  4.009859061763487,
+                  5.283271389154839,
+                  0.4
+                ],
+                [
+                  1.3649379298199023,
+                  2.93755598059518,
+                  0.4
+                ],
+                [
+                  0.5583998907574124,
+                  5.568927024483434,
+                  0.4
+                ],
+                [
+                  4.042925492755613,
+                  -6.364947197822104,
+                  0.4
+                ],
+                [
+                  2.9395897143032848,
+                  -4.151608056287245,
+                  0.4
+                ],
+                [
+                  4.648690206078548,
+                  0.5307036191883743,
+                  0.4
+                ],
+                [
+                  -2.5636878011214748,
+                  -0.9896035686699722,
+                  0.4
+                ],
+                [
+                  6.364287178101902,
+                  6.154692336335746,
+                  0.4
+                ],
+                [
+                  2.4121181513080323,
+                  -1.4218057730674714,
+                  0.4
+                ],
+                [
+                  -4.670764735713137,
+                  2.8350507544842465,
+                  0.4
+                ],
+                [
+                  0.3245353276892917,
+                  -2.4289039928453677,
+                  0.4
+                ],
+                [
+                  5.555757004239997,
+                  -1.820221482123901,
+                  0.4
+                ],
+                [
+                  -1.3872767932395362,
+                  4.995511705661341,
+                  0.4
+                ],
+                [
+                  -3.49238280277274,
+                  1.5767954519813427,
+                  0.4
+                ],
+                [
+                  -5.324603602145475,
+                  4.257845089963492,
+                  0.4
+                ],
+                [
+                  -2.0977016250155476,
+                  -4.47642282374606,
+                  0.4
+                ],
+                [
+                  -3.447779724880033,
+                  -5.7341273463755575,
+                  0.4
+                ],
+                [
+                  -5.23836101607524,
+                  1.0282545406316883,
+                  0.4
+                ]
+              ],
+              "goal": [
+                4.509548664093018,
+                -5.026264190673828,
+                0.25
+              ]
+            },
+            "authored_world": {
+              "arena": 7.0,
+              "pose": [
+                -3.5,
+                0.0,
+                0.0
+              ],
+              "obstacles": [
+                [
+                  0.0,
+                  -2.0,
+                  0.4
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.4
+                ],
+                [
+                  0.0,
+                  2.0,
+                  0.4
+                ],
+                [
+                  2.5,
+                  -1.0,
+                  0.4
+                ],
+                [
+                  2.5,
+                  1.0,
+                  0.4
+                ],
+                [
+                  3.7,
+                  -5.6,
+                  0.4
+                ],
+                [
+                  3.7,
+                  -4.4,
+                  0.4
+                ],
+                [
+                  3.7,
+                  -3.2,
+                  0.4
+                ],
+                [
+                  3.7,
+                  3.2,
+                  0.4
+                ],
+                [
+                  3.7,
+                  4.4,
+                  0.4
+                ],
+                [
+                  4.9,
+                  -5.6,
+                  0.4
+                ],
+                [
+                  4.9,
+                  -4.4,
+                  0.4
+                ],
+                [
+                  4.9,
+                  -3.2,
+                  0.4
+                ],
+                [
+                  4.9,
+                  3.2,
+                  0.4
+                ],
+                [
+                  4.9,
+                  4.4,
+                  0.4
+                ],
+                [
+                  6.1,
+                  -5.6,
+                  0.4
+                ],
+                [
+                  6.1,
+                  -4.4,
+                  0.4
+                ],
+                [
+                  6.1,
+                  -3.2,
+                  0.4
+                ],
+                [
+                  6.1,
+                  3.2,
+                  0.4
+                ],
+                [
+                  6.1,
+                  4.4,
+                  0.4
+                ]
+              ],
+              "goal": [
+                -3.5,
+                3.0,
+                0.25
+              ]
+            },
+            "world_protocol_sha256": "ed6d7996b1c5dd412621533ebc87c0712ef3ed618031167774f27e313371379c",
+            "original_model_sha256": "c4d30fef8fbe05739e72e762d10d2dc435c1c831993a32d0662560d494b158e5",
+            "actual_model_sha256": "c4d30fef8fbe05739e72e762d10d2dc435c1c831993a32d0662560d494b158e5",
+            "original_actuator_gear": [
+              [
+                3.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ],
+              [
+                3.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ]
+            ],
+            "actual_actuator_gear": [
+              [
+                3.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ],
+              [
+                3.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ]
+            ],
+            "start_pose": [
+              -3.5,
+              0.0,
+              0.0
+            ],
+            "goal_xy": [
+              -3.5,
+              3.0
+            ]
+          },
+          "world_override_sha256": "635019be2057a01563c7d6ba4a3910be650adac4dcede4c23a73d138c4ad7324",
+          "initial_snapshot_sha256": "d1b4a4842a6ae5ec064b9e2786546721bd0498051fc8ed04fdd5e20d57a4b3ec",
+          "error": {
+            "type": "ValueError",
+            "message": "Rejected callback/contact/lifecycle interval; full packet retained"
+          },
+          "callback_violations": [],
+          "callback_restored": true,
+          "final_state": {
+            "run_id": "6786d87f7ad94b23b421d643f607ea8d",
+            "parent_run_id": null,
+            "controller": "manual",
+            "phase": "paused",
+            "scenario": "reproduction",
+            "texture": "checker",
+            "revision": 2,
+            "eyes": {
+              "left": true,
+              "right": true
+            },
+            "simulation_time": 0.020000000000000004,
+            "episode": 0,
+            "episode_step": 1,
+            "total_tick": 1,
+            "pending_commands": 0,
+            "metrics": {
+              "reward": 0.08999965940202986,
+              "contact_ticks": 0,
+              "path_length": 0.0008571147918701172
+            },
+            "last_outcome": null,
+            "task": null,
+            "closed": false
+          },
+          "engine_closed": true
+        },
+        "supervision": {
+          "schema_version": 1,
+          "status": "failed",
+          "timeout_seconds": 120,
+          "started_utc": "2026-10-02T12:38:25.628783+00:00",
+          "output": "/home/utkarsh/Work/shraddha/brain/.worktrees/exploration-homing/runs/m6-body-gain-diagnostic-20261002/baseline-reverse-04",
+          "returncode": 1,
+          "elapsed_seconds": 3.1897618969960604
+        },
+        "result_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/exploration-homing/runs/m6-body-gain-diagnostic-20261002/baseline-reverse-04/result.json",
+        "result_sha256": "bf33c2d2e9f385f9d78e261430294cbdcdcf1635c3e313c26a9bc2a2b22d2d01"
+      },
+      "left-08-forward-02": {
+        "result": {
+          "status": "failed",
+          "trial": {
+            "id": "left-08-forward-02",
+            "condition": "left-08",
+            "left_gear_factor": 0.8,
+            "action": [
+              0.2,
+              0.0
+            ]
+          },
+          "run": "/home/utkarsh/Work/shraddha/brain/.worktrees/exploration-homing/runs/m6-body-gain-diagnostic-20261002/left-08-forward-02/16c13263e3684d28a00d0dd4c4cb099c",
+          "pipeline_evidence": {
+            "mujoco_version": "3.3.6",
+            "installed_headers_sha256": {
+              "mjmodel.h": "a03572fab4a70e55b957c79cee4fbee02afa0aa91235925d5d7eb488c23b9aba",
+              "mujoco.h": "3190fd17711cf25b6b7605802df353571e4329ca3849485e56643e49925208cd"
+            },
+            "upstream_files_sha256": {
+              "mujoco_two_cam_env_random_obstacles.py": "37612bc4d2cbcda2aa5604d9975c06f2a6d77a64c6c1ebcb4330897d3e2bc751",
+              "mujoco_model_random_obstacles.xml": "3630ec6a202bfb32276a39e21d974228518d4bb93cb4861532467af4ce883484"
+            },
+            "integrator_enum": 0,
+            "physics_dt_s": 0.002,
+            "frame_skip": 10,
+            "disableflags": 0,
+            "model_address": 105405901939456,
+            "data_address": 105405902329472
+          },
+          "actual_initial_world": {
+            "arena": 7.0,
+            "pose": [
+              -3.5,
+              0.0,
+              0.0
+            ],
+            "obstacles": [
+              [
+                0.0,
+                -2.0,
+                0.4
+              ],
+              [
+                0.0,
+                0.0,
+                0.4
+              ],
+              [
+                0.0,
+                2.0,
+                0.4
+              ],
+              [
+                2.5,
+                -1.0,
+                0.4
+              ],
+              [
+                2.5,
+                1.0,
+                0.4
+              ],
+              [
+                3.7,
+                -5.6,
+                0.4
+              ],
+              [
+                3.7,
+                -4.4,
+                0.4
+              ],
+              [
+                3.7,
+                -3.2,
+                0.4
+              ],
+              [
+                3.7,
+                3.2,
+                0.4
+              ],
+              [
+                3.7,
+                4.4,
+                0.4
+              ],
+              [
+                4.9,
+                -5.6,
+                0.4
+              ],
+              [
+                4.9,
+                -4.4,
+                0.4
+              ],
+              [
+                4.9,
+                -3.2,
+                0.4
+              ],
+              [
+                4.9,
+                3.2,
+                0.4
+              ],
+              [
+                4.9,
+                4.4,
+                0.4
+              ],
+              [
+                6.1,
+                -5.6,
+                0.4
+              ],
+              [
+                6.1,
+                -4.4,
+                0.4
+              ],
+              [
+                6.1,
+                -3.2,
+                0.4
+              ],
+              [
+                6.1,
+                3.2,
+                0.4
+              ],
+              [
+                6.1,
+                4.4,
+                0.4
+              ]
+            ],
+            "goal": [
+              -3.5,
+              3.0,
+              0.25
+            ]
+          },
+          "actual_initial_sample": {
+            "pose": [
+              -3.5,
+              0.0,
+              0.0
+            ],
+            "time_s": 0.0,
+            "position_xyz": [
+              -3.5,
+              0.0,
+              0.1
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "shaft_angles_rad": [
+              0.0,
+              0.0
+            ],
+            "contacts": 66
+          },
+          "physical_calibration": {
+            "radius_m": 0.06,
+            "track_m": 0.36,
+            "quantum_rad": 0.001
+          },
+          "model_override": {
+            "original_world": {
+              "arena": 7.0,
+              "pose": [
+                -2.2143425941467285,
+                1.8919436931610107,
+                -1.8880001474933032
+              ],
+              "obstacles": [
+                [
+                  1.7531095977146158,
+                  -2.9467300638224603,
+                  0.4
+                ],
+                [
+                  -5.875538893616708,
+                  -6.188446265234828,
+                  0.4
+                ],
+                [
+                  4.009859061763487,
+                  5.283271389154839,
+                  0.4
+                ],
+                [
+                  1.3649379298199023,
+                  2.93755598059518,
+                  0.4
+                ],
+                [
+                  0.5583998907574124,
+                  5.568927024483434,
+                  0.4
+                ],
+                [
+                  4.042925492755613,
+                  -6.364947197822104,
+                  0.4
+                ],
+                [
+                  2.9395897143032848,
+                  -4.151608056287245,
+                  0.4
+                ],
+                [
+                  4.648690206078548,
+                  0.5307036191883743,
+                  0.4
+                ],
+                [
+                  -2.5636878011214748,
+                  -0.9896035686699722,
+                  0.4
+                ],
+                [
+                  6.364287178101902,
+                  6.154692336335746,
+                  0.4
+                ],
+                [
+                  2.4121181513080323,
+                  -1.4218057730674714,
+                  0.4
+                ],
+                [
+                  -4.670764735713137,
+                  2.8350507544842465,
+                  0.4
+                ],
+                [
+                  0.3245353276892917,
+                  -2.4289039928453677,
+                  0.4
+                ],
+                [
+                  5.555757004239997,
+                  -1.820221482123901,
+                  0.4
+                ],
+                [
+                  -1.3872767932395362,
+                  4.995511705661341,
+                  0.4
+                ],
+                [
+                  -3.49238280277274,
+                  1.5767954519813427,
+                  0.4
+                ],
+                [
+                  -5.324603602145475,
+                  4.257845089963492,
+                  0.4
+                ],
+                [
+                  -2.0977016250155476,
+                  -4.47642282374606,
+                  0.4
+                ],
+                [
+                  -3.447779724880033,
+                  -5.7341273463755575,
+                  0.4
+                ],
+                [
+                  -5.23836101607524,
+                  1.0282545406316883,
+                  0.4
+                ]
+              ],
+              "goal": [
+                4.509548664093018,
+                -5.026264190673828,
+                0.25
+              ]
+            },
+            "authored_world": {
+              "arena": 7.0,
+              "pose": [
+                -3.5,
+                0.0,
+                0.0
+              ],
+              "obstacles": [
+                [
+                  0.0,
+                  -2.0,
+                  0.4
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.4
+                ],
+                [
+                  0.0,
+                  2.0,
+                  0.4
+                ],
+                [
+                  2.5,
+                  -1.0,
+                  0.4
+                ],
+                [
+                  2.5,
+                  1.0,
+                  0.4
+                ],
+                [
+                  3.7,
+                  -5.6,
+                  0.4
+                ],
+                [
+                  3.7,
+                  -4.4,
+                  0.4
+                ],
+                [
+                  3.7,
+                  -3.2,
+                  0.4
+                ],
+                [
+                  3.7,
+                  3.2,
+                  0.4
+                ],
+                [
+                  3.7,
+                  4.4,
+                  0.4
+                ],
+                [
+                  4.9,
+                  -5.6,
+                  0.4
+                ],
+                [
+                  4.9,
+                  -4.4,
+                  0.4
+                ],
+                [
+                  4.9,
+                  -3.2,
+                  0.4
+                ],
+                [
+                  4.9,
+                  3.2,
+                  0.4
+                ],
+                [
+                  4.9,
+                  4.4,
+                  0.4
+                ],
+                [
+                  6.1,
+                  -5.6,
+                  0.4
+                ],
+                [
+                  6.1,
+                  -4.4,
+                  0.4
+                ],
+                [
+                  6.1,
+                  -3.2,
+                  0.4
+                ],
+                [
+                  6.1,
+                  3.2,
+                  0.4
+                ],
+                [
+                  6.1,
+                  4.4,
+                  0.4
+                ]
+              ],
+              "goal": [
+                -3.5,
+                3.0,
+                0.25
+              ]
+            },
+            "world_protocol_sha256": "ed6d7996b1c5dd412621533ebc87c0712ef3ed618031167774f27e313371379c",
+            "original_model_sha256": "c4d30fef8fbe05739e72e762d10d2dc435c1c831993a32d0662560d494b158e5",
+            "actual_model_sha256": "bf3ca4b0d32600444e0f23e658c790da50a7675fb3c26fee8f9b0a16e0839d67",
+            "original_actuator_gear": [
+              [
+                3.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ],
+              [
+                3.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ]
+            ],
+            "actual_actuator_gear": [
+              [
+                2.4000000000000004,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ],
+              [
+                3.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ]
+            ],
+            "start_pose": [
+              -3.5,
+              0.0,
+              0.0
+            ],
+            "goal_xy": [
+              -3.5,
+              3.0
+            ]
+          },
+          "world_override_sha256": "4361b00ffc5d732090c80ddfd41ab576bdda8efb4d7d46b423a4f8341d61824b",
+          "initial_snapshot_sha256": "729c50181b0d6c4352451cab89ee246b68a2eb09d732f97eda93884bfc434650",
+          "error": {
+            "type": "ValueError",
+            "message": "Rejected callback/contact/lifecycle interval; full packet retained"
+          },
+          "callback_violations": [],
+          "callback_restored": true,
+          "final_state": {
+            "run_id": "16c13263e3684d28a00d0dd4c4cb099c",
+            "parent_run_id": null,
+            "controller": "manual",
+            "phase": "paused",
+            "scenario": "reproduction",
+            "texture": "checker",
+            "revision": 2,
+            "eyes": {
+              "left": true,
+              "right": true
+            },
+            "simulation_time": 0.020000000000000004,
+            "episode": 0,
+            "episode_step": 1,
+            "total_tick": 1,
+            "pending_commands": 0,
+            "metrics": {
+              "reward": 0.09001021793910437,
+              "contact_ticks": 0,
+              "path_length": 0.0004206327120243528
+            },
+            "last_outcome": null,
+            "task": null,
+            "closed": false
+          },
+          "engine_closed": true
+        },
+        "supervision": {
+          "schema_version": 1,
+          "status": "failed",
+          "timeout_seconds": 120,
+          "started_utc": "2026-10-02T12:38:28.821718+00:00",
+          "output": "/home/utkarsh/Work/shraddha/brain/.worktrees/exploration-homing/runs/m6-body-gain-diagnostic-20261002/left-08-forward-02",
+          "returncode": 1,
+          "elapsed_seconds": 3.139321604001452
+        },
+        "result_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/exploration-homing/runs/m6-body-gain-diagnostic-20261002/left-08-forward-02/result.json",
+        "result_sha256": "283d30453fe41a6e1a5f2d70c9d62d5916c4245a813dfb7b37fff8c62ea2b891"
+      },
+      "left-08-forward-04": {
+        "result": {
+          "status": "failed",
+          "trial": {
+            "id": "left-08-forward-04",
+            "condition": "left-08",
+            "left_gear_factor": 0.8,
+            "action": [
+              0.4,
+              0.0
+            ]
+          },
+          "run": "/home/utkarsh/Work/shraddha/brain/.worktrees/exploration-homing/runs/m6-body-gain-diagnostic-20261002/left-08-forward-04/9de7bc252c7d4a608752042834982ec6",
+          "pipeline_evidence": {
+            "mujoco_version": "3.3.6",
+            "installed_headers_sha256": {
+              "mjmodel.h": "a03572fab4a70e55b957c79cee4fbee02afa0aa91235925d5d7eb488c23b9aba",
+              "mujoco.h": "3190fd17711cf25b6b7605802df353571e4329ca3849485e56643e49925208cd"
+            },
+            "upstream_files_sha256": {
+              "mujoco_two_cam_env_random_obstacles.py": "37612bc4d2cbcda2aa5604d9975c06f2a6d77a64c6c1ebcb4330897d3e2bc751",
+              "mujoco_model_random_obstacles.xml": "3630ec6a202bfb32276a39e21d974228518d4bb93cb4861532467af4ce883484"
+            },
+            "integrator_enum": 0,
+            "physics_dt_s": 0.002,
+            "frame_skip": 10,
+            "disableflags": 0,
+            "model_address": 96681910347840,
+            "data_address": 96681919642624
+          },
+          "actual_initial_world": {
+            "arena": 7.0,
+            "pose": [
+              -3.5,
+              0.0,
+              0.0
+            ],
+            "obstacles": [
+              [
+                0.0,
+                -2.0,
+                0.4
+              ],
+              [
+                0.0,
+                0.0,
+                0.4
+              ],
+              [
+                0.0,
+                2.0,
+                0.4
+              ],
+              [
+                2.5,
+                -1.0,
+                0.4
+              ],
+              [
+                2.5,
+                1.0,
+                0.4
+              ],
+              [
+                3.7,
+                -5.6,
+                0.4
+              ],
+              [
+                3.7,
+                -4.4,
+                0.4
+              ],
+              [
+                3.7,
+                -3.2,
+                0.4
+              ],
+              [
+                3.7,
+                3.2,
+                0.4
+              ],
+              [
+                3.7,
+                4.4,
+                0.4
+              ],
+              [
+                4.9,
+                -5.6,
+                0.4
+              ],
+              [
+                4.9,
+                -4.4,
+                0.4
+              ],
+              [
+                4.9,
+                -3.2,
+                0.4
+              ],
+              [
+                4.9,
+                3.2,
+                0.4
+              ],
+              [
+                4.9,
+                4.4,
+                0.4
+              ],
+              [
+                6.1,
+                -5.6,
+                0.4
+              ],
+              [
+                6.1,
+                -4.4,
+                0.4
+              ],
+              [
+                6.1,
+                -3.2,
+                0.4
+              ],
+              [
+                6.1,
+                3.2,
+                0.4
+              ],
+              [
+                6.1,
+                4.4,
+                0.4
+              ]
+            ],
+            "goal": [
+              -3.5,
+              3.0,
+              0.25
+            ]
+          },
+          "actual_initial_sample": {
+            "pose": [
+              -3.5,
+              0.0,
+              0.0
+            ],
+            "time_s": 0.0,
+            "position_xyz": [
+              -3.5,
+              0.0,
+              0.1
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "shaft_angles_rad": [
+              0.0,
+              0.0
+            ],
+            "contacts": 66
+          },
+          "physical_calibration": {
+            "radius_m": 0.06,
+            "track_m": 0.36,
+            "quantum_rad": 0.001
+          },
+          "model_override": {
+            "original_world": {
+              "arena": 7.0,
+              "pose": [
+                -2.2143425941467285,
+                1.8919436931610107,
+                -1.8880001474933032
+              ],
+              "obstacles": [
+                [
+                  1.7531095977146158,
+                  -2.9467300638224603,
+                  0.4
+                ],
+                [
+                  -5.875538893616708,
+                  -6.188446265234828,
+                  0.4
+                ],
+                [
+                  4.009859061763487,
+                  5.283271389154839,
+                  0.4
+                ],
+                [
+                  1.3649379298199023,
+                  2.93755598059518,
+                  0.4
+                ],
+                [
+                  0.5583998907574124,
+                  5.568927024483434,
+                  0.4
+                ],
+                [
+                  4.042925492755613,
+                  -6.364947197822104,
+                  0.4
+                ],
+                [
+                  2.9395897143032848,
+                  -4.151608056287245,
+                  0.4
+                ],
+                [
+                  4.648690206078548,
+                  0.5307036191883743,
+                  0.4
+                ],
+                [
+                  -2.5636878011214748,
+                  -0.9896035686699722,
+                  0.4
+                ],
+                [
+                  6.364287178101902,
+                  6.154692336335746,
+                  0.4
+                ],
+                [
+                  2.4121181513080323,
+                  -1.4218057730674714,
+                  0.4
+                ],
+                [
+                  -4.670764735713137,
+                  2.8350507544842465,
+                  0.4
+                ],
+                [
+                  0.3245353276892917,
+                  -2.4289039928453677,
+                  0.4
+                ],
+                [
+                  5.555757004239997,
+                  -1.820221482123901,
+                  0.4
+                ],
+                [
+                  -1.3872767932395362,
+                  4.995511705661341,
+                  0.4
+                ],
+                [
+                  -3.49238280277274,
+                  1.5767954519813427,
+                  0.4
+                ],
+                [
+                  -5.324603602145475,
+                  4.257845089963492,
+                  0.4
+                ],
+                [
+                  -2.0977016250155476,
+                  -4.47642282374606,
+                  0.4
+                ],
+                [
+                  -3.447779724880033,
+                  -5.7341273463755575,
+                  0.4
+                ],
+                [
+                  -5.23836101607524,
+                  1.0282545406316883,
+                  0.4
+                ]
+              ],
+              "goal": [
+                4.509548664093018,
+                -5.026264190673828,
+                0.25
+              ]
+            },
+            "authored_world": {
+              "arena": 7.0,
+              "pose": [
+                -3.5,
+                0.0,
+                0.0
+              ],
+              "obstacles": [
+                [
+                  0.0,
+                  -2.0,
+                  0.4
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.4
+                ],
+                [
+                  0.0,
+                  2.0,
+                  0.4
+                ],
+                [
+                  2.5,
+                  -1.0,
+                  0.4
+                ],
+                [
+                  2.5,
+                  1.0,
+                  0.4
+                ],
+                [
+                  3.7,
+                  -5.6,
+                  0.4
+                ],
+                [
+                  3.7,
+                  -4.4,
+                  0.4
+                ],
+                [
+                  3.7,
+                  -3.2,
+                  0.4
+                ],
+                [
+                  3.7,
+                  3.2,
+                  0.4
+                ],
+                [
+                  3.7,
+                  4.4,
+                  0.4
+                ],
+                [
+                  4.9,
+                  -5.6,
+                  0.4
+                ],
+                [
+                  4.9,
+                  -4.4,
+                  0.4
+                ],
+                [
+                  4.9,
+                  -3.2,
+                  0.4
+                ],
+                [
+                  4.9,
+                  3.2,
+                  0.4
+                ],
+                [
+                  4.9,
+                  4.4,
+                  0.4
+                ],
+                [
+                  6.1,
+                  -5.6,
+                  0.4
+                ],
+                [
+                  6.1,
+                  -4.4,
+                  0.4
+                ],
+                [
+                  6.1,
+                  -3.2,
+                  0.4
+                ],
+                [
+                  6.1,
+                  3.2,
+                  0.4
+                ],
+                [
+                  6.1,
+                  4.4,
+                  0.4
+                ]
+              ],
+              "goal": [
+                -3.5,
+                3.0,
+                0.25
+              ]
+            },
+            "world_protocol_sha256": "ed6d7996b1c5dd412621533ebc87c0712ef3ed618031167774f27e313371379c",
+            "original_model_sha256": "c4d30fef8fbe05739e72e762d10d2dc435c1c831993a32d0662560d494b158e5",
+            "actual_model_sha256": "bf3ca4b0d32600444e0f23e658c790da50a7675fb3c26fee8f9b0a16e0839d67",
+            "original_actuator_gear": [
+              [
+                3.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ],
+              [
+                3.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ]
+            ],
+            "actual_actuator_gear": [
+              [
+                2.4000000000000004,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ],
+              [
+                3.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ]
+            ],
+            "start_pose": [
+              -3.5,
+              0.0,
+              0.0
+            ],
+            "goal_xy": [
+              -3.5,
+              3.0
+            ]
+          },
+          "world_override_sha256": "4361b00ffc5d732090c80ddfd41ab576bdda8efb4d7d46b423a4f8341d61824b",
+          "initial_snapshot_sha256": "535b73ac58343bbf074fa78571e975947ee661d3bdef4a036c6ea7122fc81346",
+          "error": {
+            "type": "ValueError",
+            "message": "Rejected callback/contact/lifecycle interval; full packet retained"
+          },
+          "callback_violations": [],
+          "callback_restored": true,
+          "final_state": {
+            "run_id": "9de7bc252c7d4a608752042834982ec6",
+            "parent_run_id": null,
+            "controller": "manual",
+            "phase": "paused",
+            "scenario": "reproduction",
+            "texture": "checker",
+            "revision": 2,
+            "eyes": {
+              "left": true,
+              "right": true
+            },
+            "simulation_time": 0.020000000000000004,
+            "episode": 0,
+            "episode_step": 1,
+            "total_tick": 1,
+            "pending_commands": 0,
+            "metrics": {
+              "reward": 0.09002145767211915,
+              "contact_ticks": 0,
+              "path_length": 0.0008191090496878413
+            },
+            "last_outcome": null,
+            "task": null,
+            "closed": false
+          },
+          "engine_closed": true
+        },
+        "supervision": {
+          "schema_version": 1,
+          "status": "failed",
+          "timeout_seconds": 120,
+          "started_utc": "2026-10-02T12:38:31.964529+00:00",
+          "output": "/home/utkarsh/Work/shraddha/brain/.worktrees/exploration-homing/runs/m6-body-gain-diagnostic-20261002/left-08-forward-04",
+          "returncode": 1,
+          "elapsed_seconds": 3.139909240999259
+        },
+        "result_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/exploration-homing/runs/m6-body-gain-diagnostic-20261002/left-08-forward-04/result.json",
+        "result_sha256": "cbe214d5c1252fbdcd39301e3a79f0d182e7a88b7d2233f5d5f6dbe4876d1be1"
+      },
+      "left-08-reverse-02": {
+        "result": {
+          "status": "failed",
+          "trial": {
+            "id": "left-08-reverse-02",
+            "condition": "left-08",
+            "left_gear_factor": 0.8,
+            "action": [
+              -0.2,
+              0.0
+            ]
+          },
+          "run": "/home/utkarsh/Work/shraddha/brain/.worktrees/exploration-homing/runs/m6-body-gain-diagnostic-20261002/left-08-reverse-02/bc20ca2b047249f7875011bd39cc6da8",
+          "pipeline_evidence": {
+            "mujoco_version": "3.3.6",
+            "installed_headers_sha256": {
+              "mjmodel.h": "a03572fab4a70e55b957c79cee4fbee02afa0aa91235925d5d7eb488c23b9aba",
+              "mujoco.h": "3190fd17711cf25b6b7605802df353571e4329ca3849485e56643e49925208cd"
+            },
+            "upstream_files_sha256": {
+              "mujoco_two_cam_env_random_obstacles.py": "37612bc4d2cbcda2aa5604d9975c06f2a6d77a64c6c1ebcb4330897d3e2bc751",
+              "mujoco_model_random_obstacles.xml": "3630ec6a202bfb32276a39e21d974228518d4bb93cb4861532467af4ce883484"
+            },
+            "integrator_enum": 0,
+            "physics_dt_s": 0.002,
+            "frame_skip": 10,
+            "disableflags": 0,
+            "model_address": 102070275989184,
+            "data_address": 102070276379136
+          },
+          "actual_initial_world": {
+            "arena": 7.0,
+            "pose": [
+              -3.5,
+              0.0,
+              0.0
+            ],
+            "obstacles": [
+              [
+                0.0,
+                -2.0,
+                0.4
+              ],
+              [
+                0.0,
+                0.0,
+                0.4
+              ],
+              [
+                0.0,
+                2.0,
+                0.4
+              ],
+              [
+                2.5,
+                -1.0,
+                0.4
+              ],
+              [
+                2.5,
+                1.0,
+                0.4
+              ],
+              [
+                3.7,
+                -5.6,
+                0.4
+              ],
+              [
+                3.7,
+                -4.4,
+                0.4
+              ],
+              [
+                3.7,
+                -3.2,
+                0.4
+              ],
+              [
+                3.7,
+                3.2,
+                0.4
+              ],
+              [
+                3.7,
+                4.4,
+                0.4
+              ],
+              [
+                4.9,
+                -5.6,
+                0.4
+              ],
+              [
+                4.9,
+                -4.4,
+                0.4
+              ],
+              [
+                4.9,
+                -3.2,
+                0.4
+              ],
+              [
+                4.9,
+                3.2,
+                0.4
+              ],
+              [
+                4.9,
+                4.4,
+                0.4
+              ],
+              [
+                6.1,
+                -5.6,
+                0.4
+              ],
+              [
+                6.1,
+                -4.4,
+                0.4
+              ],
+              [
+                6.1,
+                -3.2,
+                0.4
+              ],
+              [
+                6.1,
+                3.2,
+                0.4
+              ],
+              [
+                6.1,
+                4.4,
+                0.4
+              ]
+            ],
+            "goal": [
+              -3.5,
+              3.0,
+              0.25
+            ]
+          },
+          "actual_initial_sample": {
+            "pose": [
+              -3.5,
+              0.0,
+              0.0
+            ],
+            "time_s": 0.0,
+            "position_xyz": [
+              -3.5,
+              0.0,
+              0.1
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "shaft_angles_rad": [
+              0.0,
+              0.0
+            ],
+            "contacts": 66
+          },
+          "physical_calibration": {
+            "radius_m": 0.06,
+            "track_m": 0.36,
+            "quantum_rad": 0.001
+          },
+          "model_override": {
+            "original_world": {
+              "arena": 7.0,
+              "pose": [
+                -2.2143425941467285,
+                1.8919436931610107,
+                -1.8880001474933032
+              ],
+              "obstacles": [
+                [
+                  1.7531095977146158,
+                  -2.9467300638224603,
+                  0.4
+                ],
+                [
+                  -5.875538893616708,
+                  -6.188446265234828,
+                  0.4
+                ],
+                [
+                  4.009859061763487,
+                  5.283271389154839,
+                  0.4
+                ],
+                [
+                  1.3649379298199023,
+                  2.93755598059518,
+                  0.4
+                ],
+                [
+                  0.5583998907574124,
+                  5.568927024483434,
+                  0.4
+                ],
+                [
+                  4.042925492755613,
+                  -6.364947197822104,
+                  0.4
+                ],
+                [
+                  2.9395897143032848,
+                  -4.151608056287245,
+                  0.4
+                ],
+                [
+                  4.648690206078548,
+                  0.5307036191883743,
+                  0.4
+                ],
+                [
+                  -2.5636878011214748,
+                  -0.9896035686699722,
+                  0.4
+                ],
+                [
+                  6.364287178101902,
+                  6.154692336335746,
+                  0.4
+                ],
+                [
+                  2.4121181513080323,
+                  -1.4218057730674714,
+                  0.4
+                ],
+                [
+                  -4.670764735713137,
+                  2.8350507544842465,
+                  0.4
+                ],
+                [
+                  0.3245353276892917,
+                  -2.4289039928453677,
+                  0.4
+                ],
+                [
+                  5.555757004239997,
+                  -1.820221482123901,
+                  0.4
+                ],
+                [
+                  -1.3872767932395362,
+                  4.995511705661341,
+                  0.4
+                ],
+                [
+                  -3.49238280277274,
+                  1.5767954519813427,
+                  0.4
+                ],
+                [
+                  -5.324603602145475,
+                  4.257845089963492,
+                  0.4
+                ],
+                [
+                  -2.0977016250155476,
+                  -4.47642282374606,
+                  0.4
+                ],
+                [
+                  -3.447779724880033,
+                  -5.7341273463755575,
+                  0.4
+                ],
+                [
+                  -5.23836101607524,
+                  1.0282545406316883,
+                  0.4
+                ]
+              ],
+              "goal": [
+                4.509548664093018,
+                -5.026264190673828,
+                0.25
+              ]
+            },
+            "authored_world": {
+              "arena": 7.0,
+              "pose": [
+                -3.5,
+                0.0,
+                0.0
+              ],
+              "obstacles": [
+                [
+                  0.0,
+                  -2.0,
+                  0.4
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.4
+                ],
+                [
+                  0.0,
+                  2.0,
+                  0.4
+                ],
+                [
+                  2.5,
+                  -1.0,
+                  0.4
+                ],
+                [
+                  2.5,
+                  1.0,
+                  0.4
+                ],
+                [
+                  3.7,
+                  -5.6,
+                  0.4
+                ],
+                [
+                  3.7,
+                  -4.4,
+                  0.4
+                ],
+                [
+                  3.7,
+                  -3.2,
+                  0.4
+                ],
+                [
+                  3.7,
+                  3.2,
+                  0.4
+                ],
+                [
+                  3.7,
+                  4.4,
+                  0.4
+                ],
+                [
+                  4.9,
+                  -5.6,
+                  0.4
+                ],
+                [
+                  4.9,
+                  -4.4,
+                  0.4
+                ],
+                [
+                  4.9,
+                  -3.2,
+                  0.4
+                ],
+                [
+                  4.9,
+                  3.2,
+                  0.4
+                ],
+                [
+                  4.9,
+                  4.4,
+                  0.4
+                ],
+                [
+                  6.1,
+                  -5.6,
+                  0.4
+                ],
+                [
+                  6.1,
+                  -4.4,
+                  0.4
+                ],
+                [
+                  6.1,
+                  -3.2,
+                  0.4
+                ],
+                [
+                  6.1,
+                  3.2,
+                  0.4
+                ],
+                [
+                  6.1,
+                  4.4,
+                  0.4
+                ]
+              ],
+              "goal": [
+                -3.5,
+                3.0,
+                0.25
+              ]
+            },
+            "world_protocol_sha256": "ed6d7996b1c5dd412621533ebc87c0712ef3ed618031167774f27e313371379c",
+            "original_model_sha256": "c4d30fef8fbe05739e72e762d10d2dc435c1c831993a32d0662560d494b158e5",
+            "actual_model_sha256": "bf3ca4b0d32600444e0f23e658c790da50a7675fb3c26fee8f9b0a16e0839d67",
+            "original_actuator_gear": [
+              [
+                3.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ],
+              [
+                3.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ]
+            ],
+            "actual_actuator_gear": [
+              [
+                2.4000000000000004,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ],
+              [
+                3.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ]
+            ],
+            "start_pose": [
+              -3.5,
+              0.0,
+              0.0
+            ],
+            "goal_xy": [
+              -3.5,
+              3.0
+            ]
+          },
+          "world_override_sha256": "4361b00ffc5d732090c80ddfd41ab576bdda8efb4d7d46b423a4f8341d61824b",
+          "initial_snapshot_sha256": "298d9588cdbd6afa8d8d09e04b101da7801abf288cedbcdbc16c32972dfc4f46",
+          "error": {
+            "type": "ValueError",
+            "message": "Rejected callback/contact/lifecycle interval; full packet retained"
+          },
+          "callback_violations": [],
+          "callback_restored": true,
+          "final_state": {
+            "run_id": "bc20ca2b047249f7875011bd39cc6da8",
+            "parent_run_id": null,
+            "controller": "manual",
+            "phase": "paused",
+            "scenario": "reproduction",
+            "texture": "checker",
+            "revision": 2,
+            "eyes": {
+              "left": true,
+              "right": true
+            },
+            "simulation_time": 0.020000000000000004,
+            "episode": 0,
+            "episode_step": 1,
+            "total_tick": 1,
+            "pending_commands": 0,
+            "metrics": {
+              "reward": 0.08998978206089565,
+              "contact_ticks": 0,
+              "path_length": 0.0003781996523108034
+            },
+            "last_outcome": null,
+            "task": null,
+            "closed": false
+          },
+          "engine_closed": true
+        },
+        "supervision": {
+          "schema_version": 1,
+          "status": "failed",
+          "timeout_seconds": 120,
+          "started_utc": "2026-10-02T12:38:35.108791+00:00",
+          "output": "/home/utkarsh/Work/shraddha/brain/.worktrees/exploration-homing/runs/m6-body-gain-diagnostic-20261002/left-08-reverse-02",
+          "returncode": 1,
+          "elapsed_seconds": 3.1897457750019385
+        },
+        "result_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/exploration-homing/runs/m6-body-gain-diagnostic-20261002/left-08-reverse-02/result.json",
+        "result_sha256": "71a5153d2a8229cde81aa2a9886267ac7948261536191f1924ff48e4cdadd652"
+      },
+      "left-08-reverse-04": {
+        "result": {
+          "status": "failed",
+          "trial": {
+            "id": "left-08-reverse-04",
+            "condition": "left-08",
+            "left_gear_factor": 0.8,
+            "action": [
+              -0.4,
+              0.0
+            ]
+          },
+          "run": "/home/utkarsh/Work/shraddha/brain/.worktrees/exploration-homing/runs/m6-body-gain-diagnostic-20261002/left-08-reverse-04/f1c5955e3d104b99bd50af69cdc4abc7",
+          "pipeline_evidence": {
+            "mujoco_version": "3.3.6",
+            "installed_headers_sha256": {
+              "mjmodel.h": "a03572fab4a70e55b957c79cee4fbee02afa0aa91235925d5d7eb488c23b9aba",
+              "mujoco.h": "3190fd17711cf25b6b7605802df353571e4329ca3849485e56643e49925208cd"
+            },
+            "upstream_files_sha256": {
+              "mujoco_two_cam_env_random_obstacles.py": "37612bc4d2cbcda2aa5604d9975c06f2a6d77a64c6c1ebcb4330897d3e2bc751",
+              "mujoco_model_random_obstacles.xml": "3630ec6a202bfb32276a39e21d974228518d4bb93cb4861532467af4ce883484"
+            },
+            "integrator_enum": 0,
+            "physics_dt_s": 0.002,
+            "frame_skip": 10,
+            "disableflags": 0,
+            "model_address": 94170379365568,
+            "data_address": 94170388664768
+          },
+          "actual_initial_world": {
+            "arena": 7.0,
+            "pose": [
+              -3.5,
+              0.0,
+              0.0
+            ],
+            "obstacles": [
+              [
+                0.0,
+                -2.0,
+                0.4
+              ],
+              [
+                0.0,
+                0.0,
+                0.4
+              ],
+              [
+                0.0,
+                2.0,
+                0.4
+              ],
+              [
+                2.5,
+                -1.0,
+                0.4
+              ],
+              [
+                2.5,
+                1.0,
+                0.4
+              ],
+              [
+                3.7,
+                -5.6,
+                0.4
+              ],
+              [
+                3.7,
+                -4.4,
+                0.4
+              ],
+              [
+                3.7,
+                -3.2,
+                0.4
+              ],
+              [
+                3.7,
+                3.2,
+                0.4
+              ],
+              [
+                3.7,
+                4.4,
+                0.4
+              ],
+              [
+                4.9,
+                -5.6,
+                0.4
+              ],
+              [
+                4.9,
+                -4.4,
+                0.4
+              ],
+              [
+                4.9,
+                -3.2,
+                0.4
+              ],
+              [
+                4.9,
+                3.2,
+                0.4
+              ],
+              [
+                4.9,
+                4.4,
+                0.4
+              ],
+              [
+                6.1,
+                -5.6,
+                0.4
+              ],
+              [
+                6.1,
+                -4.4,
+                0.4
+              ],
+              [
+                6.1,
+                -3.2,
+                0.4
+              ],
+              [
+                6.1,
+                3.2,
+                0.4
+              ],
+              [
+                6.1,
+                4.4,
+                0.4
+              ]
+            ],
+            "goal": [
+              -3.5,
+              3.0,
+              0.25
+            ]
+          },
+          "actual_initial_sample": {
+            "pose": [
+              -3.5,
+              0.0,
+              0.0
+            ],
+            "time_s": 0.0,
+            "position_xyz": [
+              -3.5,
+              0.0,
+              0.1
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "shaft_angles_rad": [
+              0.0,
+              0.0
+            ],
+            "contacts": 66
+          },
+          "physical_calibration": {
+            "radius_m": 0.06,
+            "track_m": 0.36,
+            "quantum_rad": 0.001
+          },
+          "model_override": {
+            "original_world": {
+              "arena": 7.0,
+              "pose": [
+                -2.2143425941467285,
+                1.8919436931610107,
+                -1.8880001474933032
+              ],
+              "obstacles": [
+                [
+                  1.7531095977146158,
+                  -2.9467300638224603,
+                  0.4
+                ],
+                [
+                  -5.875538893616708,
+                  -6.188446265234828,
+                  0.4
+                ],
+                [
+                  4.009859061763487,
+                  5.283271389154839,
+                  0.4
+                ],
+                [
+                  1.3649379298199023,
+                  2.93755598059518,
+                  0.4
+                ],
+                [
+                  0.5583998907574124,
+                  5.568927024483434,
+                  0.4
+                ],
+                [
+                  4.042925492755613,
+                  -6.364947197822104,
+                  0.4
+                ],
+                [
+                  2.9395897143032848,
+                  -4.151608056287245,
+                  0.4
+                ],
+                [
+                  4.648690206078548,
+                  0.5307036191883743,
+                  0.4
+                ],
+                [
+                  -2.5636878011214748,
+                  -0.9896035686699722,
+                  0.4
+                ],
+                [
+                  6.364287178101902,
+                  6.154692336335746,
+                  0.4
+                ],
+                [
+                  2.4121181513080323,
+                  -1.4218057730674714,
+                  0.4
+                ],
+                [
+                  -4.670764735713137,
+                  2.8350507544842465,
+                  0.4
+                ],
+                [
+                  0.3245353276892917,
+                  -2.4289039928453677,
+                  0.4
+                ],
+                [
+                  5.555757004239997,
+                  -1.820221482123901,
+                  0.4
+                ],
+                [
+                  -1.3872767932395362,
+                  4.995511705661341,
+                  0.4
+                ],
+                [
+                  -3.49238280277274,
+                  1.5767954519813427,
+                  0.4
+                ],
+                [
+                  -5.324603602145475,
+                  4.257845089963492,
+                  0.4
+                ],
+                [
+                  -2.0977016250155476,
+                  -4.47642282374606,
+                  0.4
+                ],
+                [
+                  -3.447779724880033,
+                  -5.7341273463755575,
+                  0.4
+                ],
+                [
+                  -5.23836101607524,
+                  1.0282545406316883,
+                  0.4
+                ]
+              ],
+              "goal": [
+                4.509548664093018,
+                -5.026264190673828,
+                0.25
+              ]
+            },
+            "authored_world": {
+              "arena": 7.0,
+              "pose": [
+                -3.5,
+                0.0,
+                0.0
+              ],
+              "obstacles": [
+                [
+                  0.0,
+                  -2.0,
+                  0.4
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.4
+                ],
+                [
+                  0.0,
+                  2.0,
+                  0.4
+                ],
+                [
+                  2.5,
+                  -1.0,
+                  0.4
+                ],
+                [
+                  2.5,
+                  1.0,
+                  0.4
+                ],
+                [
+                  3.7,
+                  -5.6,
+                  0.4
+                ],
+                [
+                  3.7,
+                  -4.4,
+                  0.4
+                ],
+                [
+                  3.7,
+                  -3.2,
+                  0.4
+                ],
+                [
+                  3.7,
+                  3.2,
+                  0.4
+                ],
+                [
+                  3.7,
+                  4.4,
+                  0.4
+                ],
+                [
+                  4.9,
+                  -5.6,
+                  0.4
+                ],
+                [
+                  4.9,
+                  -4.4,
+                  0.4
+                ],
+                [
+                  4.9,
+                  -3.2,
+                  0.4
+                ],
+                [
+                  4.9,
+                  3.2,
+                  0.4
+                ],
+                [
+                  4.9,
+                  4.4,
+                  0.4
+                ],
+                [
+                  6.1,
+                  -5.6,
+                  0.4
+                ],
+                [
+                  6.1,
+                  -4.4,
+                  0.4
+                ],
+                [
+                  6.1,
+                  -3.2,
+                  0.4
+                ],
+                [
+                  6.1,
+                  3.2,
+                  0.4
+                ],
+                [
+                  6.1,
+                  4.4,
+                  0.4
+                ]
+              ],
+              "goal": [
+                -3.5,
+                3.0,
+                0.25
+              ]
+            },
+            "world_protocol_sha256": "ed6d7996b1c5dd412621533ebc87c0712ef3ed618031167774f27e313371379c",
+            "original_model_sha256": "c4d30fef8fbe05739e72e762d10d2dc435c1c831993a32d0662560d494b158e5",
+            "actual_model_sha256": "bf3ca4b0d32600444e0f23e658c790da50a7675fb3c26fee8f9b0a16e0839d67",
+            "original_actuator_gear": [
+              [
+                3.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ],
+              [
+                3.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ]
+            ],
+            "actual_actuator_gear": [
+              [
+                2.4000000000000004,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ],
+              [
+                3.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ]
+            ],
+            "start_pose": [
+              -3.5,
+              0.0,
+              0.0
+            ],
+            "goal_xy": [
+              -3.5,
+              3.0
+            ]
+          },
+          "world_override_sha256": "4361b00ffc5d732090c80ddfd41ab576bdda8efb4d7d46b423a4f8341d61824b",
+          "initial_snapshot_sha256": "d8a804ed72cf17b8b45dbc209fa1f0ac481d9bd3b20d2d71eba804bb15ff42b3",
+          "error": {
+            "type": "ValueError",
+            "message": "Rejected callback/contact/lifecycle interval; full packet retained"
+          },
+          "callback_violations": [],
+          "callback_restored": true,
+          "final_state": {
+            "run_id": "f1c5955e3d104b99bd50af69cdc4abc7",
+            "parent_run_id": null,
+            "controller": "manual",
+            "phase": "paused",
+            "scenario": "reproduction",
+            "texture": "checker",
+            "revision": 2,
+            "eyes": {
+              "left": true,
+              "right": true
+            },
+            "simulation_time": 0.020000000000000004,
+            "episode": 0,
+            "episode_step": 1,
+            "total_tick": 1,
+            "pending_commands": 0,
+            "metrics": {
+              "reward": 0.0899833106994629,
+              "contact_ticks": 0,
+              "path_length": 0.0007701787868616926
+            },
+            "last_outcome": null,
+            "task": null,
+            "closed": false
+          },
+          "engine_closed": true
+        },
+        "supervision": {
+          "schema_version": 1,
+          "status": "failed",
+          "timeout_seconds": 120,
+          "started_utc": "2026-10-02T12:38:38.302003+00:00",
+          "output": "/home/utkarsh/Work/shraddha/brain/.worktrees/exploration-homing/runs/m6-body-gain-diagnostic-20261002/left-08-reverse-04",
+          "returncode": 1,
+          "elapsed_seconds": 3.188074081997911
+        },
+        "result_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/exploration-homing/runs/m6-body-gain-diagnostic-20261002/left-08-reverse-04/result.json",
+        "result_sha256": "5aab3d703e129cc90e9a6ddb4ca62b0fabfd09781cbe7f3daa16d7d8ca51c5d6"
+      }
+    },
+    "physical_calibration": {
+      "radius_m": 0.06,
+      "track_m": 0.36,
+      "quantum_rad": 0.001
+    },
+    "fit": {
+      "accepted": false,
+      "per_trial": {},
+      "conditions": {},
+      "accepted_gains": null,
+      "reason": "baseline-forward-02: incomplete or rejected interval support"
+    },
+    "limitations": [
+      "Empirical settled torque-control/shaft response; no universal velocity model.",
+      "Pre-control contact stages only; cached end contacts, no continuous collision claim.",
+      "Standalone authored/model override; no ordinary playback or snapshot restore qualification.",
+      "No compensation, online truth correction, held-out, learned or physical safety claim."
+    ],
+    "wall_seconds": 30.362065918001463,
+    "runtime_source_at_end": {
+      "commit": "27b9990aee07ba2f1af995fdb37740e8a3918f1b",
+      "files_sha256": {
+        "src/palimpsest/__init__.py": "bb99e30d22e4662c4ded455b1b23f49b77ce811dcfa1b69bf358925487a566d8",
+        "src/palimpsest/__main__.py": "935a1c1166b0c1ea35a82256345000bf2c73ded718d77773bc27a71ecce28f7d",
+        "src/palimpsest/artifacts.py": "0851fc2435bdd85135f568bebd40b52776ce35b2c9c86335506ce34386f06a31",
+        "src/palimpsest/assets.py": "aa4a38c7403cd9f72bc23027acd7c212202f25574bea6af65053c34664da49e3",
+        "src/palimpsest/cli.py": "3d5bb7bc2135b8534ca2fcfceb7b4fe4e9f24ed140a38003f7b1ded1c3d40a36",
+        "src/palimpsest/doctor.py": "109de62468161f35461eee76af244daabef38f2faa1526c5a6ed268817e6b834",
+        "src/palimpsest/engine.py": "c7a5450b42cebc3e58e90c8fe6ed623da2e37cfddb7fddca18946e172c902074",
+        "src/palimpsest/evaluate.py": "74a9afb710b36a366ab680462e9440f285730a0360bda704af25ebbcfd74256a",
+        "src/palimpsest/flynn.py": "409b7503d76fd6f971a33d053e86c968b529edc226b85f44122e17a649f8f9f4",
+        "src/palimpsest/interventions.py": "fd2c1e6f160f7d251ddcf3275b383e8e3e265fc462452d1bc20c0030a6acf9c8",
+        "src/palimpsest/lab.py": "2f5072d03d33f001120bbaa87dd3e1ba2de8cd15942c3a7e7d4c97b564aa89a7",
+        "src/palimpsest/memory.py": "9641ae3d7d78577e0ea5bc8bcacbe455cae6c548f4f9bd10b8bb593a8fd7c542",
+        "src/palimpsest/memory_task.py": "6562de8c0734e0622529231babc7e035ba146077b39e004b0f52928b3038dcc6",
+        "src/palimpsest/memory_world.py": "e1a1b655f3698b4f238dd6b92b93fbe5c38dce26be4f908c76cc9db25a852eb7",
+        "src/palimpsest/profiles.py": "dcc5255bad98f7ca63d56f344fbf4ebbb85a66f68313aa7d417da3755e6d53d6",
+        "src/palimpsest/records.py": "c4be6f1699c1d8550a7f2db2979f7f9f18196ac986eef2aefe3ba665cae99ac3",
+        "src/palimpsest/replay.py": "04c381ca6a0268af38032cc95b006530f87f7f52c4177883d98c17338d5c28b5",
+        "src/palimpsest/snapshots.py": "14d95bb2f78646260ef931a610c0e7b0a31ba0f75e87413579102aad5c6a35d7",
+        "src/palimpsest/storage.py": "79664d876834ef20b459cc83963515effdaf75d0256fe5764a9cf8e18cd448c2",
+        "src/palimpsest/task_mechanics.py": "cbf698ad3f027f572c4f12655595825f580f155949f6c7c96f2556d14e6d1bb6",
+        "src/palimpsest/task_profiles.py": "14b237ede67949f281977c00b01dcd7a8e8a367d67a7e4e37911e0cb9b1dfa79",
+        "src/palimpsest/worker.py": "303ed1653c3bf50807b66f382225ef1bd226386343a7b4974387b817a226c38a",
+        "pyproject.toml": "13435cdf27674955809c67d3d81410c502bf0f258b661e68ed82197842fbc800",
+        "uv.lock": "8a7a880d020c1907e221575fda65642241f809fc628a55381f1b6137bff1b732"
+      }
+    },
+    "harness_sha256_at_end": {
+      "verify_body_gains.py": "32d606564ba48a720b166574221fbec5077c5624cdad1953b99aeda68d65656f",
+      "verify_body_calibration.py": "716d434103a98f9c4c983eb0003a1d4ad782d662c755d799ddab096c9ef00f31",
+      "verify_tasks.py": "ec94a0a95d3e90ed9f9a008025b08d8da72949637144782655273d254948668b",
+      "verify_endurance.py": "6656a726c157a5ccbec10614f50d7a841cc00cf896d44a74dfa6971f5c778803"
+    },
+    "source_unchanged": true
+  },
+  "report_file": {
+    "path": "runs/m6-body-gain-diagnostic-20261002/report.json",
+    "sha256": "7f8c14fd1d68ecfd484b9ac4744b3be6f6af2de505e4d24147d0cef9e3a5b523"
+  },
+  "finding": "Global allowlist rejected authored floor-obstacle support before fit support accumulated; this is a diagnostic classification failure, not a measured wheel response.",
+  "scope_correction": "Obstacle joints are soft-limited, not exactly static. A future robot-incident contact classification must not invent an immobility threshold."
+}
