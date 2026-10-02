@@ -106,6 +106,14 @@ class InterventionTests(unittest.TestCase):
         self.assertEqual(self.teacher.planner.prev_steering_dir, .2)
         self.assertEqual(self.teacher.planner.prev_path_dir, .3)
 
+    def test_preview_validates_geometry_and_leaves_all_state_unchanged(self):
+        before = pickle.dumps((self.env, self.teacher))
+        change = {'kind': 'move_obstacle', 'index': 0, 'xy': [-3, 3]}
+        preview = apply_intervention(self.env, change, self.teacher, dry_run=True)
+        self.assertEqual(pickle.dumps((self.env, self.teacher)), before)
+        self.forward.assert_not_called()
+        self.assertEqual(apply_intervention(self.env, change, self.teacher), preview)
+
     def test_clearance_uses_current_qpos_not_stale_world_or_cached_positions(self):
         self.env.data.qpos[:2] = [3, 3]
         with self.assertRaisesRegex(ValueError, 'rover'):

@@ -25,7 +25,7 @@ def _xy(value):
     return result
 
 
-def apply_intervention(env, intervention: dict, teacher=None) -> dict:
+def apply_intervention(env, intervention: dict, teacher=None, *, dry_run=False) -> dict:
     """Return JSON old/new details, or raise ValueError before changing any state."""
     if not isinstance(intervention, dict):
         raise ValueError('Intervention must be an object')
@@ -84,6 +84,8 @@ def apply_intervention(env, intervention: dict, teacher=None) -> dict:
     event = {'kind': kind, 'old': {'xy': old}, 'new': {'xy': xy}, 'simulation_time': time}
     if kind == 'move_obstacle':
         event['index'] = index
+    if dry_run:
+        return event
     # Resolve the runtime dependency before mutation; missing MuJoCo cannot leave a partial edit.
     forward = importlib.import_module('mujoco').mj_forward
     if kind == 'move_obstacle':

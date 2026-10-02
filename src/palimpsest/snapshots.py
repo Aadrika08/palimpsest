@@ -343,14 +343,23 @@ def _bindings(env, model):
     return result
 
 
-def restore(snapshot, env, *, policy=None, teacher=None):
+def restore(snapshot, env, *, policy=None, teacher=None, replace_controller=False):
     """Validate/stage before replacing source state; return independent rawobs/app."""
     import mujoco
     import numpy as np
     snp = _copy(snapshot)
     if type(snp) is not dict or set(snp) != SNAPSHOT_KEYS or type(snp.get("schema_version")) is not int or snp["schema_version"] != SCHEMA_VERSION:
         raise ValueError("Unsupported snapshot schema version")
-    if snp.get("identity") != _identity(env, policy, teacher):
+    expected_identity, actual_identity = snp.get('identity'), _identity(env, policy, teacher)
+    if replace_controller:
+        # Explicit controller replacement keeps world state, not controller/Torch state.
+        expected_identity = {k: v for k, v in expected_identity.items() if k not in ('policy', 'teacher', 'torch')}
+        actual_identity = {k: v for k, v in actual_identity.items() if k not in ('policy', 'teacher', 'torch')}
+        snp['policy'] = snp['teacher'] = None
+        current_rng = _rng(env)
+        for name in ('torch_cpu', 'torch_cuda'):
+            snp['rng'][name] = current_rng[name]
+    if expected_identity != actual_identity:
         raise ValueError("Snapshot model/runtime/profile identity differs")
     native = snp["native_data"]
     if type(native) is not bytes or not native or len(native) > MAX_BYTES or _sha(native) != snp["native_sha256"]:
@@ -377,9 +386,9 @@ def restore(snapshot, env, *, policy=None, teacher=None):
         visited = state["values"]["visited"]
         if type(visited) is not set or any(type(item) is not tuple or len(item) != 2 or any(not isinstance(x, (int, np.integer)) for x in item) for item in visited):
             raise ValueError("Invalid environment visited bins")
-    policy_state = _stage_policy(snp["policy"], policy)
+    policy_state = _stage_policy(snp["policy"], None if replace_controller else policy)
     teacher_state = snp["teacher"]
-    if teacher is not None:
+    if teacher is not None and not replace_controller:
         teacher_state = {"state": _validate_fields(teacher_state["state"], TEACHER_STATE),
                          "pid": _validate_fields(teacher_state["pid"], ("integral", "last_error")),
                          "planner": _validate_fields(teacher_state["planner"], VFH_STATE)}
@@ -456,13 +465,13 @@ def restore(snapshot, env, *, policy=None, teacher=None):
     if hasattr(env, "planner"):
         for name in ASTAR_CACHE:
             setattr(env.planner, name, None)
-    if policy is not None:
+    if policy is not None and not replace_controller:
         policy._restore(policy_state[0])
         policy.failure_diagnostics = policy_state[1]
         policy._current_raw_output = None
         policy.agent.cell._cached_alphas = None
         policy.agent.cell._alphas_dirty = True
-    if teacher is not None:
+    if teacher is not None and not replace_controller:
         _apply_fields(teacher, teacher_state["state"])
         _apply_fields(teacher.pid_state, teacher_state["pid"])
         _apply_fields(teacher.planner, teacher_state["planner"])

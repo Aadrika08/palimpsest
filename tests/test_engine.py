@@ -20,9 +20,12 @@ from palimpsest.records import RunWriter, iter_ticks
 
 class SmallEnv:
     def __init__(self, terminate_at=None, truncate_at=None):
-        self.model = SimpleNamespace(opt=SimpleNamespace(timestep=.002))
+        self.model = SimpleNamespace(opt=SimpleNamespace(timestep=.002), geom_size=np.array([[.2, .2, .2]]),
+                                     site_size=np.array([[.25, .25, .25]]))
+        self.obstacle_ids, self.goal_site_id = [0], 0
         self.frame_skip, self.arena, self.goal_radius = 10, 7., .8
-        self.data = SimpleNamespace(qpos=np.zeros(3), qvel=np.zeros(3), ctrl=np.zeros(2), time=0.)
+        self.data = SimpleNamespace(qpos=np.zeros(3), qvel=np.zeros(3), ctrl=np.zeros(2), time=0.,
+                                    geom_xpos=np.array([[2., 2., 0.]]))
         self._goal_xy, self._obstacle_xy = np.array([5., 0.]), np.array([[2., 2.]])
         self.terminate_at, self.truncate_at = terminate_at, truncate_at
         self.calls = 0
@@ -191,6 +194,25 @@ class EngineTests(unittest.TestCase):
         self.assertEqual(manifest["status"], "failed")
         self.assertEqual(len(list(iter_ticks(self.root / "run"))), 1)
 
+    def test_recorded_actions_bypass_inference_and_reject_invalid_values(self):
+        policy = SmallPolicy()
+        engine = self.engine(controller='flynn', policy=policy)
+        engine.submit(self.command(engine, 'replay', 'step'))
+        engine.advance(action_override=[.7, -.1])
+        self.assertIsNone(policy.seen)
+        np.testing.assert_array_equal(engine.env.data.ctrl, np.array([.7, -.1], np.float32))
+        engine.submit(self.command(engine, 'invalid', 'step'))
+        self.assertEqual(engine.advance(action_override=[float('nan'), 0.])['phase'], 'failed')
+        self.assertEqual(engine.total_tick, 1)
+        engine.close()
+        row = next(iter_ticks(self.root / 'run'))
+        self.assertNotIn('raw_output', row)
+        self.assertNotIn('encoded_input', row)
+        self.assertEqual(row['population_stats'].shape, (0, 4))
+        manifest = json.loads((self.root / 'run/manifest.json').read_text())
+        self.assertFalse(manifest['inference_executed'])
+        self.assertEqual(manifest['execution_mode'], 'actions')
+
     def test_rejects_bad_commands_and_cross_thread_access(self):
         engine = self.engine()
         for command in ({**self.command(engine, "x", "step"), "extra": 1},
@@ -336,6 +358,46 @@ class EngineTests(unittest.TestCase):
                     engine.submit(command)
         self.assertEqual(engine.public_state()["pending_commands"], 0)
         self.assertEqual(engine.application_state()["original_commands"], {})
+
+    def test_eye_mask_is_policy_input_and_recorded_without_destroying_raw_camera(self):
+        policy = SmallPolicy()
+        engine = self.engine(controller='flynn', policy=policy)
+        engine.observation['cam_left'].fill(137)
+        engine.observation['cam_right'].fill(39)
+        mask = {**self.command(engine, 'mask', 'set_eyes', {'left': False, 'right': True}), 'expected_revision': 0}
+        engine.submit(mask)
+        engine.advance()
+        stale = {**self.command(engine, 'stale-step', 'step'), 'expected_revision': 0}
+        engine.submit(stale)
+        self.assertEqual(engine.advance()['episode_step'], 0)
+        self.assertEqual(engine.submit(stale)['status'], 'rejected')
+        engine.submit({**self.command(engine, 'step', 'step'), 'expected_revision': 1})
+        engine.advance()
+        self.assertTrue((policy.seen['cam_left'] == 0).all())
+        self.assertTrue((policy.seen['cam_right'] == 39).all())
+        self.assertEqual(set(policy.seen['sensors']), {'collision', 'collision_angle', 'wind_direction'})
+        self.assertEqual(engine.last_transition['tick'], 0)
+        state = engine.application_state()
+        self.assertEqual(state['eyes'], {'left': False, 'right': True})
+        engine.close()
+        row = list(iter_ticks(self.root / 'run'))[0]
+        self.assertTrue((row['raw_cam_left'] == 137).all())
+        self.assertTrue((row['cam_left'] == 0).all())
+        np.testing.assert_array_equal(row['eyes'], [False, True])
+
+    def test_disconnect_cancels_full_queue_and_clears_manual_intent_without_stepping(self):
+        engine = self.engine()
+        engine.submit(self.command(engine, 'intent', 'set_action', {'action': [1., .2]}))
+        engine.advance()
+        for index in range(engine.MAX_QUEUE):
+            engine.submit(self.command(engine, f'waiting-{index}', 'step'))
+        engine.pause_for_disconnect()
+        self.assertEqual(engine.phase, 'paused')
+        self.assertEqual(engine.total_tick, 0)
+        np.testing.assert_array_equal(engine.manual_action, [0., 0.])
+        self.assertEqual(engine.public_state()['pending_commands'], 0)
+        self.assertTrue(all(value['status'] == 'rejected' for key, value in engine.receipts.items() if key.startswith('waiting')))
+        self.assertEqual(engine.advance()['total_tick'], 0)
 
 
 if __name__ == "__main__":
