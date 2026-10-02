@@ -14,7 +14,7 @@ import sys
 import time
 import uuid
 
-from palimpsest import artifacts, memory, memory_experiment as experiment, memory_history, memory_world
+from palimpsest import artifacts, memory, memory_experiment as experiment, memory_history, memory_task, memory_world
 from palimpsest.evaluate import bounded_process
 from palimpsest.records import iter_ticks
 from palimpsest.replay import _initial_snapshot, _register_initial, _same_tick, Divergence
@@ -27,7 +27,16 @@ HISTORY_INPUTS = {
         '64628e37cc6e861194f810baa92926eba8f57260047cdd8ad320a4601023d213')}
 CONDITIONS = ('own', 'swapped', 'sham', 'no-U')
 STAGES = ('source', 'anchor', *CONDITIONS)
-PROTOCOL = {'version': 1, 'claim': 'single-development-case-mechanism-check',
+SOURCE_PREPARATION = {'version': 2, 'name': 'fixed-visible-boundary-source-v2',
+    'access': 'privileged-manual-pose-supervision', 'uses_u': False,
+    'uses_regime': False, 'uses_gold': False, 'start_tick': 200, 'stop_tick': 300,
+    'velocity': 0., 'target_yaw_rad': math.pi/20, 'max_heading_rad': .35,
+    'base_acquisition_protocol_sha256': experiment.make_world_case(
+        8, 'local_cue', 'development-test', acquisition=True)['acquisition_protocol_sha256']}
+SOURCE_PREPARATION_SHA256 = memory.sha256(SOURCE_PREPARATION)
+ACQUISITION_OVERRIDE = {'first_tick': 200, 'last_tick': 299,
+    'replacement': 'fixed-source-orientation-only', 'source_preparation_sha256': SOURCE_PREPARATION_SHA256}
+PROTOCOL = {'version': 2, 'claim': 'single-development-case-mechanism-check',
     'seed': 8, 'regime': 'local_cue', 'kind': 'change', 'split': 'development-test',
     'source_prefix_ticks': 300, 'remaining_ticks': 300, 'target_limit': 1,
     'controller': 'manual', 'device': 'cpu', 'velocity': .65,
@@ -35,6 +44,8 @@ PROTOCOL = {'version': 1, 'claim': 'single-development-case-mechanism-check',
     'timeout_seconds': 160, 'internal_wall_seconds': 150,
     'recording_max_bytes': 192 * 1024**2, 'log_max_bytes': 1024**2,
     'retries': 0, 'history_inputs': {role: list(value) for role, value in HISTORY_INPUTS.items()},
+    'source_preparation': SOURCE_PREPARATION, 'source_preparation_sha256': SOURCE_PREPARATION_SHA256,
+    'acquisition_schedule_override': ACQUISITION_OVERRIDE,
     'case_producer_sha256': experiment.SOURCE_SHA256,
     'memory_protocol_sha256': memory.PROTOCOL_SHA256}
 PROTOCOL_SHA256 = memory.sha256(PROTOCOL)
@@ -84,6 +95,96 @@ def cue_action(bearing):
             or not math.isclose(sum(x*x for x in bearing), 1., rel_tol=0., abs_tol=1e-6)):
         raise ValueError('Driver requires a finite declared unit bearing')
     return [.65, max(-math.pi, min(math.pi, math.atan2(bearing[1], bearing[0])))]
+
+
+def source_action(schedule, pose, tick):
+    """Fixed public source schedule + explicitly privileged pose; never U/gold."""
+    memory._int(tick)
+    if tick >= 300 or memory.sha256(schedule)!=SOURCE_PREPARATION['base_acquisition_protocol_sha256']:
+        raise ValueError('Unsupported source preparation tick or base schedule')
+    if tick < SOURCE_PREPARATION['start_tick']:
+        return experiment.acquisition_action(schedule,pose,tick)
+    _,_,yaw=memory_world._numbers(pose,3)
+    error=math.remainder(SOURCE_PREPARATION['target_yaw_rad']-yaw,2*math.pi)
+    bound=SOURCE_PREPARATION['max_heading_rad']
+    return [0.,max(-bound,min(bound,error))]
+
+
+def preparation_packet(events, case, state, tick):
+    """Admit actual recorded visibility, not an ideal or recaptured pose."""
+    if type(tick) is not int or tick not in (299,300):
+        raise ValueError('Unsupported visibility admission boundary')
+    found=[e for e in events if e['kind']=='memory_sensed' and e.get('episode_step')==tick]
+    if (len(found)!=1 or type(found[0].get('tick')) is not int or found[0]['tick']!=tick
+            or type(found[0].get('episode')) is not int or found[0]['episode']!=0):
+        raise ValueError('Missing or inconsistent recorded visibility packet')
+    packet=found[0]['packet']
+    memory_task._validate_packet(packet,state)
+    landmarks={case['common_goal_id'],*[f['inspection_landmark_id'] for f in case['facts']]}
+    cues=packet['cues']
+    if (packet['tick']!=tick or packet['common_goal_id']!=case['common_goal_id']
+            or not landmarks.issubset({v['id'] for v in packet['landmarks']})
+            or len(cues)!=1 or cues[0]['id']!=case['cue_id'] or cues[0]['state']!=int(tick==300)
+            or next(v['passability'] for v in packet['passages']
+                    if v['subject_id']==case['subjects_by_side'][0])!='unobserved'):
+        raise ValueError('Source preparation visibility or unobserved lower passage is inadmissible')
+    return copy.deepcopy(packet)
+
+
+def evidence_backed_source(m, events, episode_id):
+    m=memory.validate_m(m)
+    samples=[v for e in events if e['kind']=='memory_sensed' for v in e['packet']['passages']]
+    for fact in m['facts']:
+        evidence=fact['evidence']
+        if (fact['status']!='observed' or evidence is None or evidence['episode_id']!=episode_id
+                or evidence['tick']>299):
+            raise ValueError('Source facts lack retained observed evidence')
+        matches=[v for v in samples if all(v.get(k)==evidence[k] for k in ('id','episode_id','tick'))
+                 and v['subject_id']==fact['subject_id'] and v['passability']==fact['estimate']]
+        if len(matches)!=1:
+            raise ValueError('Source fact evidence differs from recorded declared observations')
+
+
+def packet_cursor(packet, state):
+    """Bind committed task cursor/detector exactly to its declared packet."""
+    goal=packet['common_goal_id'] if state['active'] is None else next(
+        f['inspection_landmark_id'] for f in state['m']['facts'] if f['id']==state['active']['fact_id'])
+    angle=next(v['bearing_rad'] for v in packet['landmarks'] if v['id']==goal)
+    cursor={'episode_id':packet['episode_id'],'tick':packet['tick'],'packet_sha256':memory.sha256(packet),
+        'common_goal_id':packet['common_goal_id'],'bearing':[math.cos(angle),math.sin(angle)]}
+    detector={'tick':packet['tick'],'cues':[{'id':c['id'],'state':c['state'],
+        'observation_id':memory_task._sensor_id(packet['episode_id'],packet['tick'],'cue',c['id'])}
+        for c in sorted(packet['cues'],key=lambda c:c['id'])]}
+    if (memory.canonical_bytes(state['cursor'])!=memory.canonical_bytes(cursor)
+            or memory.canonical_bytes(state['detector'])!=memory.canonical_bytes(detector)):
+        raise ValueError('Committed task cursor/detector differs from its actual recorded packet')
+    return {'cursor':cursor,'detector':detector}
+
+
+def source_controls(data, case):
+    """Bind the explicit override to the actual recorded pose and manual action."""
+    import numpy as np
+    inputs=[e for e in data['events'] if e['kind']=='source_preparation_input']
+    if [e.get('episode_step') for e in inputs]!=list(range(200,300)):
+        raise ValueError('Source override lacks its exact recorded control range')
+    by_tick={e['episode_step']:e for e in inputs}
+    for row in data['rows']:
+        tick=row['tick']
+        expected=np.asarray(source_action(case['acquisition_schedule'],row['pose'].tolist(),tick),np.float64)
+        if row['action'].dtype!=expected.dtype or not np.array_equal(row['action'],expected):
+            raise ValueError('Recorded source action differs from the declared schedule/override')
+        if tick>=200:
+            event=by_tick[tick]
+            if (type(event.get('tick')) is not int or event['tick']!=tick
+                    or type(event.get('episode')) is not int or event['episode']!=0
+                    or event.get('source_preparation_sha256')!=SOURCE_PREPARATION_SHA256
+                    or not np.array_equal(row['pose'],np.asarray(event.get('pose'),np.float64))
+                    or not np.array_equal(expected,np.asarray(event.get('action'),np.float64))):
+                raise ValueError('Source privileged preparation input differs from the actual row')
+    lower=case['subjects_by_side'][0]
+    if any(v['passability']!='unobserved' for e in data['events'] if e['kind']=='memory_sensed'
+           and 200<=e['episode_step']<=299 for v in e['packet']['passages'] if v['subject_id']==lower):
+        raise ValueError('Lower occupancy was newly observed during preparation')
 
 
 def occupancy(case, circles):
@@ -219,7 +320,11 @@ def worker(raw):
         engine=Engine.open(job['repo'],job['assets'],run/'recording',controller='manual',device='cpu',
             scenario='memory-passages',seed=8,run_id=job['run_id'],max_bytes=PROTOCOL['recording_max_bytes'],memory_case=case)
         engine.writer.manifest.update(transfer_protocol=PROTOCOL,transfer_protocol_sha256=PROTOCOL_SHA256,
-            transfer_driver_sha256=job['source_identity']['driver_sha256'],transfer_stage=stage)
+            transfer_driver_sha256=job['source_identity']['driver_sha256'],transfer_stage=stage,
+            source_preparation_protocol=SOURCE_PREPARATION,source_preparation_sha256=SOURCE_PREPARATION_SHA256,
+            acquisition_schedule_override=ACQUISITION_OVERRIDE)
+        engine._event('source_preparation_declared',protocol=SOURCE_PREPARATION,
+            source_preparation_sha256=SOURCE_PREPARATION_SHA256,override=ACQUISITION_OVERRIDE)
         if stage != 'source':
             path=Path(job['snapshot_path'])
             if _hash(path) != job['snapshot_sha256']:
@@ -244,12 +349,20 @@ def worker(raw):
                 if time.monotonic()-started >150:
                     raise TimeoutError('Source internal wall bound')
                 pose=[*map(float,engine.env._base_xy()),float(engine.env._base_yaw())]
-                action=experiment.acquisition_action(case['acquisition_schedule'],pose,tick)
+                action=source_action(case['acquisition_schedule'],pose,tick)
+                if tick>=200:
+                    engine._event('source_preparation_input',pose=pose,action=action,
+                        source_preparation_sha256=SOURCE_PREPARATION_SHA256)
                 state=_command_step(engine,action,f'prefix-{tick}')
                 if state['phase']!='paused':
                     raise ValueError('Source terminated before pre-event capture')
             if not all(f['status']=='observed' for f in engine.memory['m']['facts']):
                 raise ValueError('Source facts were not actually observed')
+            events=artifacts._events(run)
+            packet=preparation_packet(events,case,engine.memory,299)
+            evidence_backed_source(engine.memory['m'],events,engine.memory['episode_id'])
+            report['visibility_admission']={'299':memory.sha256(packet)}
+            report['boundary_memory']={'299':packet_cursor(packet,engine.memory)}
         if stage in ('source','anchor'):
             report['before_circles']=memory_world.sensing_inputs(engine.env,engine.world_task_state)[2]
             _register_initial(engine,run)
@@ -271,6 +384,9 @@ def worker(raw):
                 state=_command_step(engine,action,f'cue-{tick}')
                 if tick==300:
                     report['after_circles']=memory_world.sensing_inputs(engine.env,engine.world_task_state)[2]
+                    packet=preparation_packet(artifacts._events(run),case,engine.memory,300)
+                    report['visibility_admission']={'300':memory.sha256(packet)}
+                    report['boundary_memory']={'300':packet_cursor(packet,engine.memory)}
                 if state['phase']!='paused':
                     break
             report['status']='recorded'
@@ -300,7 +416,9 @@ def validate_stage(job, supervised):
     report=artifacts._json(artifacts._read(run/'transfer-worker.json',1024**2))
     expected={'memory_case':job['case'],'memory_case_sha256':memory.sha256(job['case']),
         'transfer_protocol':PROTOCOL,'transfer_protocol_sha256':PROTOCOL_SHA256,
-        'transfer_driver_sha256':job['source_identity']['driver_sha256'],'transfer_stage':job['stage']}
+        'transfer_driver_sha256':job['source_identity']['driver_sha256'],'transfer_stage':job['stage'],
+        'source_preparation_protocol':SOURCE_PREPARATION,'source_preparation_sha256':SOURCE_PREPARATION_SHA256,
+        'acquisition_schedule_override':ACQUISITION_OVERRIDE}
     if any(memory.canonical_bytes(manifest.get(k))!=memory.canonical_bytes(v) for k,v in expected.items()):
         raise ValueError('Recorded case/protocol/driver identity differs')
     environments=[e for e in events if e['kind']=='environment']
@@ -319,6 +437,14 @@ def validate_stage(job, supervised):
         raise ValueError('Terminal recording and worker outcome differ')
     native,entry,_=_initial_snapshot(data)
     hashes=invariant_hashes(native)
+    declarations=[e for e in events if e['kind']=='source_preparation_declared']
+    if (len(declarations)!=1
+            or memory.canonical_bytes(declarations[0].get('protocol'))!=memory.canonical_bytes(SOURCE_PREPARATION)
+            or declarations[0].get('source_preparation_sha256')!=SOURCE_PREPARATION_SHA256
+            or memory.canonical_bytes(declarations[0].get('override'))!=memory.canonical_bytes(ACQUISITION_OVERRIDE)
+            or type(declarations[0].get('sequence')) is not int
+            or declarations[0]['sequence']>=native['application']['event_prefix']['event_count']):
+        raise ValueError('Native event prefix lacks the declared source preparation protocol')
     if memory.canonical_bytes(native['application']['world_task_state'].get('case'))!=memory.canonical_bytes(job['case']):
         raise ValueError('Native snapshot case identity differs')
     histories=load_histories(job['repo'])
@@ -326,12 +452,17 @@ def validate_stage(job, supervised):
         histories['swapped']['u'] if job['stage']=='swapped' else histories['own']['u'])
     if memory.canonical_bytes(native['application']['memory']['u'])!=memory.canonical_bytes(expected_u):
         raise ValueError('Registered native U differs from its declared condition')
+    cursor=native['application']['memory']['cursor']
+    if (type(cursor.get('tick')) is not int or cursor['tick']!=299
+            or cursor.get('episode_id')!='episode-0' or cursor.get('common_goal_id')!=job['case']['common_goal_id']):
+        raise ValueError('Native source/anchor cursor is not the admitted pre-event boundary')
     if job['stage'] in ('source','anchor') and (report['final_phase']!='paused' or manifest.get('final_phase')!='paused'):
         raise ValueError('Source/anchor did not finish paused')
     if job['stage']=='source':
         if (report['steps']!=300 or manifest.get('total_tick')!=300 or manifest['status']!='completed'
                 or [r['tick'] for r in data['rows']]!=list(range(300))):
             raise ValueError('Source did not complete its exact pre-event prefix')
+        source_controls(data,job['case'])
         # Existing collector admission checks all public samples/banks/empty U;
         # do not call fit on this current test source.
         prefix,source=memory_history._source(run,memory_history.MAX_INPUT_BYTES)
@@ -340,6 +471,12 @@ def validate_stage(job, supervised):
             raise ValueError('Source witnessed an event before capture')
         app=native['application']
         state=app['memory']
+        packet=preparation_packet(events,job['case'],state,299)
+        evidence_backed_source(state['m'],events,state['episode_id'])
+        if report.get('visibility_admission')!={'299':memory.sha256(packet)}:
+            raise ValueError('Source visibility admission report differs from actual packet')
+        if report.get('boundary_memory')!={'299':packet_cursor(packet,state)}:
+            raise ValueError('Source native cursor report differs from its recorded packet')
         if (app['episode_step']!=300 or state['cursor']['tick']!=299 or app['world_task_state']['applied']
                 or not all(f['status']=='observed' for f in state['m']['facts'])
                 or state['e']['episodes'] or state['u']['payload']['rules']):
@@ -357,6 +494,17 @@ def validate_stage(job, supervised):
         rows=data['rows']
         if not rows or [r['tick'] for r in rows]!=list(range(300,300+len(rows))) or len(rows)>300:
             raise ValueError('Branch has missing or invalid continuation ticks')
+        packet=preparation_packet(events,job['case'],native['application']['memory'],300)
+        if report.get('visibility_admission')!={'300':memory.sha256(packet)}:
+            raise ValueError('Continuation visibility admission report differs from actual packet')
+        inspected=[e['memory'] for e in events if e['kind']=='memory_inspected' and e.get('episode_step')==300]
+        cues300=[e['bearing'] for e in events if e['kind']=='memory_cue' and e.get('episode_step')==300]
+        proof=report.get('boundary_memory',{}).get('300',{})
+        if len(inspected)!=1 or len(cues300)!=1 or inspected[0].get('facts_truncated')!=0:
+            raise ValueError('First branch packet lacks its complete recorded task state')
+        current={**proof,'active':inspected[0]['active'],'m':{'facts':inspected[0]['facts']}}
+        if packet_cursor(packet,current)!=proof or proof['cursor']['bearing']!=cues300[0]:
+            raise ValueError('First branch committed cursor differs from its recorded published bearing')
         outcome=report.get('outcome') or {}
         if manifest['status']=='failed' and not (report['final_phase']=='failed' and outcome.get('type')=='CueUnavailable'
                 and outcome.get('message','').startswith('goal_cue_unavailable:')
