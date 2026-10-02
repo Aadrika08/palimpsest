@@ -5,6 +5,7 @@ import tempfile
 import time
 from types import SimpleNamespace
 import unittest
+from unittest.mock import patch
 
 from fastapi.testclient import TestClient
 from starlette.websockets import WebSocketDisconnect
@@ -46,6 +47,23 @@ def completed_owner(config, commands, replies, display, disconnected, stop, prog
     os.setsid()
     replies.put({"version": 1, "type": "closed", "run_id": config["run_id"], "status": "closed",
                  "state": {"phase": "stopped", "episode": 0, "total_tick": 0}, "receipts": []})
+
+
+def unread_commands_owner(config, commands, replies, display, disconnected, stop, progress):
+    os.setsid()
+    stop.wait(5.)
+    replies.put({"version": 1, "type": "closed", "run_id": config["run_id"], "status": "closed"})
+
+
+def semaphore_names(owner):
+    locks = [owner.progress.get_lock()]
+    for queue in (owner.commands, owner.replies, owner.display):
+        locks.extend((queue._rlock, queue._wlock, queue._sem))
+    for event in (owner.disconnected, owner.stop):
+        condition = event._cond
+        locks.extend((condition._lock, condition._sleeping_count, condition._woken_count,
+                      condition._wait_semaphore, event._flag))
+    return {lock._semlock.name for lock in locks}
 
 
 def flooding_owner(*args):
@@ -137,6 +155,61 @@ class ApiGuards(unittest.TestCase):
 
 
 class Supervision(unittest.TestCase):
+    def test_failed_spawn_can_be_closed_and_service_shutdown(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            supervisor = LabSupervisor(REPO, Path(tmp) / "assets", Path(tmp) / "runs")
+            self.addCleanup(supervisor.shutdown)
+            with patch('multiprocessing.process.BaseProcess.start', side_effect=OSError('injected spawn failure')):
+                with self.assertRaisesRegex(OSError, 'injected spawn failure'):
+                    supervisor.start({})
+            identifier = next(iter(supervisor.workers))
+            result = supervisor.close(identifier)
+            self.assertEqual(result['status'], 'failed')
+            self.assertEqual(result['failure']['type'], 'SpawnError')
+            supervisor.shutdown()
+            self.assertEqual(supervisor.workers, {})
+
+    def test_shutdown_releases_cached_process_and_semaphores_before_interpreter_exit(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            supervisor = LabSupervisor(REPO, Path(tmp) / "assets", Path(tmp) / "runs",
+                                       worker_target=completed_owner)
+            self.addCleanup(supervisor.shutdown)
+            identifier = supervisor.start({})
+            self.assertTrue(supervisor.workers[identifier].done.wait(5.))
+            self.assertEqual(supervisor.close(identifier)["status"], "closed")
+            names = semaphore_names(supervisor.workers[identifier])
+            process = supervisor.workers[identifier].process
+            self.assertEqual(len(names), 20)
+            supervisor.shutdown()
+            self.assertEqual(supervisor.workers, {})
+            self.assertTrue(process._closed)
+            self.assertEqual([name for name in names if Path('/dev/shm/sem.' + name.lstrip('/')).exists()], [])
+            self.assertEqual(supervisor.describe(identifier)["status"], "closed")
+            with self.assertRaisesRegex(RuntimeError, "shut down"):
+                supervisor.start({})
+
+    def test_shutdown_releases_feeder_with_unread_commands(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            supervisor = LabSupervisor(REPO, Path(tmp) / "assets", Path(tmp) / "runs",
+                                       worker_target=unread_commands_owner)
+            queue = None
+            try:
+                identifier = supervisor.start({})
+                queue = supervisor.workers[identifier].commands
+                for _ in range(16):
+                    queue.put({"payload": "x" * 16384})
+                self.assertEqual(supervisor.close(identifier)["status"], "closed")
+                supervisor.shutdown()
+                self.assertFalse(queue._thread.is_alive())
+                self.assertTrue(queue._reader.closed)
+                self.assertTrue(queue._writer.closed)
+            finally:
+                supervisor.shutdown()
+                if queue is not None:
+                    queue._reader.close()
+                    queue._thread.join(1.)
+                    queue._writer.close()
+
     def test_completed_owner_cache_is_bounded_and_evicted_ids_remain_readable(self):
         with tempfile.TemporaryDirectory() as tmp:
             supervisor = LabSupervisor(REPO, Path(tmp) / "assets", Path(tmp) / "runs",

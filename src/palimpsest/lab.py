@@ -89,6 +89,8 @@ class LabSupervisor:
 
     def start(self, config):
         with self.lock:
+            if self.stopping.is_set():
+                raise RuntimeError("Lab has shut down")
             if self.active_run_id is not None:
                 raise RuntimeError("Close the active run before creating another")
             if any(owner.process.is_alive() for owner in self.workers.values()):
@@ -105,6 +107,9 @@ class LabSupervisor:
                       "storage": {"roots": [str(p) for p in self.budget.roots],
                                   "limits": asdict(self.budget.limits), "headroom_bytes": self.budget.headroom_bytes}}
             commands, replies, display = (self.context.Queue(maxsize=size) for size in (128, 256, 1))
+            # A dead owner makes outstanding requests uncertain; _settle reports
+            # that failure. Its abandoned command pipe need not print EPIPEs.
+            commands._ignore_epipe = True
             disconnected, stop = self.context.Event(), self.context.Event()
             progress = self.context.Value("d", time.monotonic())
             process = self.context.Process(target=self.worker_target,
@@ -126,6 +131,7 @@ class LabSupervisor:
                 # mid-frame produces EOF instead of an unbounded recv_bytes.
                 replies._writer.close()
                 display._writer.close()
+                commands._reader.close()
             except BaseException as error:
                 self._fail(identifier, "SpawnError", str(error), kill=False)
                 raise
@@ -271,6 +277,9 @@ class LabSupervisor:
             for queue in (owner.commands, owner.replies, owner.display):
                 queue.cancel_join_thread()
                 queue.close()
+                queue._reader.close()
+                if queue._thread is None:
+                    queue._writer.close()
             owner.ipc_closed = True
 
     def _evict_completed(self):
@@ -381,7 +390,8 @@ class LabSupervisor:
         with self.lock:
             if identifier not in self.workers:
                 return self.describe(identifier)
-            owner.process.join(timeout=0.)
+            if owner.process.pid is not None:
+                owner.process.join(timeout=0.)
             if owner.process.is_alive():
                 self._fail(identifier, "CloseTimeout", "Owner did not exit after closing")
             if not owner.process.is_alive():
@@ -395,8 +405,25 @@ class LabSupervisor:
             self.close(identifier)
         self.stopping.set()
         self.thread.join(timeout=2.)
+        if self.thread.is_alive():
+            raise RuntimeError("Supervisor monitor did not exit")
         for owner in self.workers.values():
             self._dispose_queues(owner)
+            feeder = owner.commands._thread
+            if feeder is not None:
+                feeder.join(timeout=1.)
+                if feeder.is_alive():
+                    raise RuntimeError("Command feeder did not exit")
+            owner.commands._writer.close()
+            if owner.process.pid is not None:
+                owner.process.join(timeout=0.)
+            owner.process.close()
+        self.workers.clear()
+        self.subscribers.clear()
+        self.active_run_id = None
+        # Drop the last loop reference before uvicorn re-raises SIGTERM. SemLock
+        # finalizers must run now, not depend on interpreter atexit cleanup.
+        owner = None
         if not self._storage_closed:
             self._storage_lock.__exit__(None, None, None)
             self._storage_closed = True
