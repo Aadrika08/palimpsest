@@ -1,6 +1,8 @@
 # Fixed CPU FLYNN development comparison v1
 
-Preparation only. This separately versioned protocol does not revise the completed
+Frozen protocol, completed once at6f355bd; see the
+[source-scoped evidence](../reports/m5-flynn-memory-transfer.md). This separately
+versioned protocol does not revise the completed
 22-stage manual comparison or its v1–v4 predecessors. It addresses the PRD §14.5
 requirement that the bridge choose the cue while the fixed neural controller
 produces motors. No actual neural memory result, R2 completion or held-out claim
