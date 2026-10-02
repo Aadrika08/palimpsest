@@ -50,9 +50,14 @@ def digest(path):
     return hashlib.sha256(Path(path).read_bytes()).hexdigest()
 
 
-def write_json(path, data):
+def write_json(path, data, *, max_bytes=None, storage_budget=None):
+    payload = (json.dumps(data, indent=2, allow_nan=False) + '\n').encode()
+    if max_bytes is not None and len(payload) > max_bytes:
+        raise ValueError('Diagnostic JSON exceeds declared size bound')
     temporary = path.with_suffix('.tmp')
-    temporary.write_text(json.dumps(data, indent=2, allow_nan=False) + '\n')
+    if storage_budget is not None:
+        storage_budget.check(len(payload), path=temporary)
+    temporary.write_bytes(payload)
     temporary.replace(path)
 
 
@@ -273,7 +278,9 @@ def fit_trials(trials):
     return result
 
 
-def worker(config):
+def collect_trial(config, protocol, protocol_sha256, *, command_plan=None, harness=None,
+                  storage_budget=None, result_max_bytes=None):
+    """Shared fixed-action owner; optional prevalidated nominal/applied plan."""
     from palimpsest.engine import Engine
     from palimpsest import memory_world, task_profiles
     from palimpsest.profiles import validate_world
@@ -286,13 +293,15 @@ def worker(config):
     stage, run = Path(config['stage']), Path(config['run'])
     trial = config['trial']; rows = []; engine = probe = None
     result = {'status': 'running', 'trial': trial, 'run': str(run), 'rows': rows}
+    applied_action = trial['action'] if command_plan is None else command_plan['applied_action']
     try:
         if mujoco.get_mjcb_control() is not None:
             raise ValueError('Refusing existing global control callback before environment construction')
         run.mkdir(exist_ok=False)
         engine = Engine.open(Path(config['repo']), Path(config['assets']), run / 'recording',
-                             controller='manual', device='cpu', seed=0, scenario='reproduction',
-                             texture='checker', run_id=run.name, max_bytes=PROTOCOL['recording_max_bytes'])
+                             controller='manual', device='cpu', seed=protocol['seed'], scenario='reproduction',
+                             texture='checker', run_id=run.name, max_bytes=protocol['recording_max_bytes'],
+                             **({'storage_budget': storage_budget} if storage_budget is not None else {}))
         env = engine.env
         if engine.task_state is not None or engine.memory is not None:
             raise ValueError('Diagnostic requires no task/memory supervisor')
@@ -305,9 +314,9 @@ def worker(config):
         if original_gear.tolist() != [[3., 0., 0., 0., 0., 0.], [3., 0., 0., 0., 0., 0.]]:
             raise ValueError('Pinned scalar motor gears required')
         memory_world.configure(env, memory_world.initial_state(close_subject_id=None))
-        env._goal_xy[:] = PROTOCOL['goal_xy']
-        env.model.site_pos[env.goal_site_id, :2] = PROTOCOL['goal_xy']
-        env.place_robot(*PROTOCOL['start_pose'], env.data.qpos.copy(), env.data.qvel.copy())
+        env._goal_xy[:] = protocol['goal_xy']
+        env.model.site_pos[env.goal_site_id, :2] = protocol['goal_xy']
+        env.place_robot(*protocol['start_pose'], env.data.qpos.copy(), env.data.qvel.copy())
         env.model.actuator_gear[left, 0] *= trial['left_gear_factor']
         mujoco.mj_forward(env.model, env.data)
         env._prev_xy = env._base_xy().copy()
@@ -319,7 +328,7 @@ def worker(config):
                     'world_protocol_sha256': memory_world.PROFILE_SHA256,
                     'original_model_sha256': old_model, 'actual_model_sha256': _model_digest(env.model),
                     'original_actuator_gear': original_gear.tolist(), 'actual_actuator_gear': env.model.actuator_gear.tolist(),
-                    'start_pose': PROTOCOL['start_pose'], 'goal_xy': PROTOCOL['goal_xy']}
+                    'start_pose': protocol['start_pose'], 'goal_xy': protocol['goal_xy']}
         headers = Path(mujoco.__file__).parent / 'include/mujoco'
         result['pipeline_evidence'] = {
             'mujoco_version': mujoco.__version__,
@@ -334,33 +343,45 @@ def worker(config):
                       model_override=override, world_override_sha256=override_hash)
         probe = ContactProbe(mujoco, env)
         result['contact_ownership'] = {**probe.ownership, 'model_sha256': override['actual_model_sha256']}
-        engine.writer.manifest.update(gain_protocol=PROTOCOL, gain_trial=trial, gain_protocol_sha256=PROTOCOL_SHA256,
+        if command_plan is not None:
+            if float(env._action_scale) != 2.:
+                raise ValueError('Pinned control scale 2 required for inverse')
+            result['command_plan'] = command_plan
+            engine.writer.manifest['fixed_command_plan'] = command_plan
+            engine.writer.event('fixed_command_declared', command_plan=command_plan)
+        engine.writer.manifest.update(gain_protocol=protocol, gain_trial=trial, gain_protocol_sha256=protocol_sha256,
                                       standalone_calibration=True, initial_world=world,
                                       gain_world_override=override, gain_world_override_sha256=override_hash,
                                       gain_contact_ownership=result['contact_ownership'])
-        engine.writer.event('gain_world_authored', protocol=PROTOCOL, trial=trial,
-                            protocol_sha256=PROTOCOL_SHA256, override=override, revision=engine.revision,
+        engine.writer.event('gain_world_authored', protocol=protocol, trial=trial,
+                            protocol_sha256=protocol_sha256, override=override, revision=engine.revision,
                             contact_ownership=result['contact_ownership'],
-                            script_sha256=digest(__file__), harness_sha256=harness_hashes())
-        _register_initial(engine, run)
+                            script_sha256=digest(__file__), harness_sha256=harness if harness is not None else harness_hashes())
+        _register_initial(engine, run, **({'storage_budget': storage_budget} if storage_budget is not None else {}))
         result['initial_snapshot_sha256'] = digest(run / 'snapshots/initial.snp')
         probe.install()
-        command(engine, 'fixed-action', 'set_action', {'action': trial['action']})
-        for tick in range(120):
+        command(engine, 'fixed-action', 'set_action', {'action': applied_action})
+        for tick in range(protocol['ticks']):
             before = sample(env)
             probe.begin(tick)
             command(engine, f'step-{tick}', 'step')
             interval = probe.end()
             after = sample(env)
-            rows.append({'tick': tick, 'fit_interval': tick >= 20, 'before': before, 'after': after,
+            rows.append({'tick': tick, 'fit_interval': tick >= protocol['settling_ticks'], 'before': before, 'after': after,
                          'increments_rad': [b - a for a, b in zip(before['shaft_angles_rad'], after['shaft_angles_rad'])],
                          'dt_s': after['time_s'] - before['time_s'], 'control': env.data.ctrl.tolist(),
                          'action': engine.last_transition['action'].tolist(), 'contact': interval['contact'],
                          'coverage_passed': interval['coverage_passed'], 'interval_contacts': interval})
-            if not fixed_action_matches(rows[-1]['action'], trial):
+            if not fixed_action_matches(rows[-1]['action'], {'action': applied_action}):
                 raise ValueError('Fixed effective action changed')
             if env.data.ctrl.tolist() != engine.last_transition['control'].tolist():
                 raise ValueError('Recorded control differs from actual control')
+            if command_plan is not None:
+                rows[-1].update(nominal_action=command_plan['nominal_action'],
+                                applied_action=rows[-1]['action'], nominal_control=command_plan['nominal_control'],
+                                applied_control_target=command_plan['applied_control_float32'])
+                if rows[-1]['control'] != command_plan['applied_control_float32']:
+                    raise ValueError('Inverse failed exact float32 effective-control roundtrip')
             if not interval['coverage_passed'] or interval['contact'] or engine.phase != 'paused':
                 raise ValueError('Rejected callback/contact/lifecycle interval; full packet retained')
         result['final_model_sha256'] = _model_digest(env.model)
@@ -388,8 +409,12 @@ def worker(config):
                     engine.close(); result['engine_closed'] = True
                 except Exception as error:
                     result.update(status='failed', cleanup_error={'type': type(error).__name__, 'message': str(error)[:2048]})
-        write_json(stage / 'result.json', result)
+        write_json(stage / 'result.json', result, max_bytes=result_max_bytes, storage_budget=storage_budget)
     return result['status'] == 'passed'
+
+
+def worker(config):
+    return collect_trial(config, PROTOCOL, PROTOCOL_SHA256)
 
 
 def verify(args):
