@@ -137,6 +137,83 @@ class RecoveryContracts(unittest.TestCase):
                         with self.assertRaisesRegex(ValueError, 'binding differs'): recovery.bind_action(tick, changed, active)
                 active = selected
 
+    def test_earliest_event_boundary_rejects_early_late_or_replaced_cycle(self):
+        teacher, env = teacher_fixture(); rows = []; prefix = True
+        for tick in range(53):
+            env.contact = tick == 3
+            query = recovery.query_teacher(teacher, env)
+            prefix = recovery.prefix_for_query(tick, prefix, query['contact']['bad'])
+            rows.append({**query, 'tick': tick, 'stage0_intended_contact': 3 <= tick <= 49,
+                         'prefix': prefix, 'action': recovery.executed_action(tick, query['expert_action'], prefix)})
+        self.assertEqual(recovery.score_coverage(rows)['coverage_complete_tick'], 50)
+        state = {'phase': 'paused', 'last_outcome': None}
+        recovery.validate_collection(rows[:51], 'coverage_complete', state)
+        for phase, reason in (('terminated', 'runtime_failure'), ('truncated', 'goal'),
+                              ('terminated', None), ('truncated', None)):
+            with self.assertRaisesRegex(ValueError, 'outcome'):
+                recovery.validate_collection(rows[:51], 'coverage_complete',
+                                             {'phase': phase, 'last_outcome': {'reason': reason}})
+        for phase, reason in (('terminated', 'goal'), ('truncated', 'time_limit')):
+            recovery.validate_collection(rows[:51], 'coverage_complete',
+                                         {'phase': phase, 'last_outcome': {'reason': reason}})
+        for truncated in (rows[:50], rows[:52]):
+            with self.assertRaisesRegex(ValueError, 'boundary'):
+                recovery.validate_collection(truncated, 'coverage_complete', state)
+        with self.assertRaisesRegex(ValueError, 'boundary'):
+            recovery.validate_collection(rows[:51], 'natural_outcome', state)
+        # A legitimate early natural outcome is retained without claiming coverage.
+        recovery.validate_collection(rows[:40], 'natural_outcome',
+                                     {'phase': 'terminated', 'last_outcome': {'reason': 'collision'}})
+        with self.assertRaisesRegex(ValueError, 'boundary'):
+            recovery.validate_collection(rows[:40], 'source_limit', state)
+        no_reverse = copy.deepcopy(rows)
+        for row in no_reverse: row['action'] = [.7, 0.]
+        self.assertIsNone(recovery.score_coverage(no_reverse)['coverage_complete_tick'])
+        # Actual completion/restart overwrites the final old-cycle label.
+        teacher, env = teacher_fixture(); replaced = []
+        for tick in range(46):
+            env.contact = True
+            if tick == 44: teacher._prev_bad_contact = False
+            query = recovery.query_teacher(teacher, env)
+            replaced.append({**query, 'tick': tick, 'stage0_intended_contact': True,
+                             'prefix': False, 'action': query['expert_action']})
+        # The deliberate teacher mutation is not a valid source history.
+        with self.assertRaisesRegex(ValueError, 'discontinuity'):
+            recovery.score_coverage(replaced)
+
+    def test_raw_contact_boundary_uses_counts_ownership_and_all_stage_admission(self):
+        ownership = {'geometries': [{'geom_id': 0, 'name': 'floor', 'owner': 'world'},
+                     {'geom_id': 1, 'name': 'base_geom', 'owner': 'robot'},
+                     {'geom_id': 2, 'name': 'obstacle1', 'owner': 'world'}]}
+        pair = {'classification': 'unexpected_robot_contact', 'geom_names': ['base_geom', 'obstacle1'],
+                'geom_ids': [1, 2], 'distance_m': -.001}
+        interval = {'coverage_passed': True, 'callback_count': 10,
+                    'stages': [{'pairs': [pair]} for _ in range(10)], 'end': {'pairs': [pair]}}
+        raw = recovery.body.contact_arrays({**interval,
+            'stages': [{**p, 'time_s': .002*i, 'control': [0., 0.]} for i, p in enumerate(interval['stages'])],
+            'end': {**interval['end'], 'contact_cache_time_s': .018, 'data_time_s': .02}})
+        self.assertTrue(recovery.raw_stage0_contact(raw, ownership))
+        clear = copy.deepcopy(raw)
+        clear['body_contact_counts'][:] = 0
+        for key in ('body_contact_ids', 'body_contact_distances', 'body_contact_classes'): clear[key][:] = 0
+        self.assertFalse(recovery.raw_stage0_contact(clear, ownership))
+        changed = copy.deepcopy(raw)
+        changed['body_contact_ids'][7, 0] = [0, 1]  # Later-stage floor/base must still reject.
+        with self.assertRaisesRegex(ValueError, 'contact'): recovery.raw_stage0_contact(changed, ownership)
+        changed = copy.deepcopy(raw); changed['body_contact_classes'][0, 0] = 1
+        with self.assertRaisesRegex(ValueError, 'Misclassified'): recovery.raw_stage0_contact(changed, ownership)
+        raw['sensors'] = np.array([0., 0., 1., 0.])
+        row = {'contact': {'bad': False, 'angle': None}, 'stage0_intended_contact': True}
+        self.assertTrue(recovery.bind_clearance(raw, row, ownership)['stage0_intended_contact'])
+        # Prefix/actions may be valid, but a forged clear flag cannot end collection.
+        for forged in ({**row, 'stage0_intended_contact': False},
+                       {**row, 'contact': {'bad': True, 'angle': .1}}):
+            with self.assertRaisesRegex(ValueError, 'clearance binding'):
+                recovery.bind_clearance(raw, forged, ownership)
+        clear['body_contact_ids'][0, 0] = [1, 2]  # Hidden nonzero padding cannot count as clearance.
+        with self.assertRaisesRegex(ValueError, 'padding'):
+            recovery.raw_stage0_contact(clear, ownership)
+
     def test_pure_initial_clearance_rejects_and_resource_plan_is_bounded(self):
         self.assertEqual(set(recovery.geometry_preflight()), {case['id'] for case in recovery.CASES})
         from palimpsest.memory_world import validate_layout
