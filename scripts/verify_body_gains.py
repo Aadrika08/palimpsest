@@ -110,7 +110,7 @@ def fit_trials(trials):
 
 
 def collect_trial(config, protocol, protocol_sha256, *, command_plan=None, harness=None,
-                  storage_budget=None, result_max_bytes=None):
+                  storage_budget=None, result_max_bytes=None, initial_guard=None, record_body_arrays=False):
     """Shared fixed-action owner; optional prevalidated nominal/applied plan."""
     from palimpsest.engine import Engine
     from palimpsest import memory_world, task_profiles
@@ -190,6 +190,20 @@ def collect_trial(config, protocol, protocol_sha256, *, command_plan=None, harne
                             script_sha256=digest(__file__), harness_sha256=harness if harness is not None else harness_hashes())
         _register_initial(engine, run, **({'storage_budget': storage_budget} if storage_budget is not None else {}))
         result['initial_snapshot_sha256'] = digest(run / 'snapshots/initial.snp')
+        if initial_guard is not None:
+            result['matched_initial_state'] = initial_guard(engine)
+        pending = []
+        original_tick = engine.writer.tick
+        if record_body_arrays:
+            # Hold exactly one interval until its callback packet is complete.
+            # Never publish a partial or silently truncated numeric packet.
+            def defer_tick(episode, tick, **arrays):
+                if pending:
+                    raise ValueError('Diagnostic numeric interval already pending')
+                pending.append((episode, tick, arrays))
+            engine.writer.tick = defer_tick
+            engine.writer.manifest.update(body_profile_identity={'standalone': True, 'protocol_sha256': protocol_sha256},
+                                          body_contact_ownership=result['contact_ownership'])
         probe.install()
         command(engine, 'fixed-action', 'set_action', {'action': applied_action})
         for tick in range(protocol['ticks']):
@@ -203,6 +217,19 @@ def collect_trial(config, protocol, protocol_sha256, *, command_plan=None, harne
                          'dt_s': after['time_s'] - before['time_s'], 'control': env.data.ctrl.tolist(),
                          'action': engine.last_transition['action'].tolist(), 'contact': interval['contact'],
                          'coverage_passed': interval['coverage_passed'], 'interval_contacts': interval})
+            if record_body_arrays:
+                import numpy as np
+                from palimpsest.body_profile import contact_arrays, effective_control
+                if len(pending) != 1 or pending[0][:2] != (engine.episode, tick):
+                    raise ValueError('Diagnostic numeric interval missing or mismatched')
+                episode, recorded_tick, arrays = pending.pop()
+                nominal = trial['action'] if command_plan is None else command_plan['nominal_action']
+                arrays.update(contact_arrays(interval), body_encoder_before=np.asarray(before['shaft_angles_rad'], np.float64),
+                    body_encoder_after=np.asarray(after['shaft_angles_rad'], np.float64),
+                    body_encoder_increment=np.asarray(after['shaft_angles_rad'], np.float64)-np.asarray(before['shaft_angles_rad'], np.float64),
+                    body_dt=np.array(after['time_s']-before['time_s'], np.float64),
+                    body_nominal_action=np.asarray(nominal, np.float64), body_nominal_control=np.asarray(effective_control(nominal), np.float32))
+                original_tick(episode, recorded_tick, **arrays)
             if not fixed_action_matches(rows[-1]['action'], {'action': applied_action}):
                 raise ValueError('Fixed effective action changed')
             if env.data.ctrl.tolist() != engine.last_transition['control'].tolist():
@@ -222,6 +249,11 @@ def collect_trial(config, protocol, protocol_sha256, *, command_plan=None, harne
     except Exception as error:
         result.update(status='failed', error={'type': type(error).__name__, 'message': str(error)[:2048]})
     finally:
+        if record_body_arrays and engine is not None and 'original_tick' in locals():
+            engine.writer.tick = original_tick
+            if pending:
+                result['unpublished_numeric_interval'] = {'episode':pending[0][0], 'tick':pending[0][1]}
+                result['status'] = 'failed'
         if probe is not None:
             result['callback_violations'] = probe.violations
             if probe.active:
