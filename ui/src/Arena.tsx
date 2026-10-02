@@ -1,5 +1,6 @@
 import type {World,Intervention} from './protocol';
-export default function Arena({world,trace=[],other,preview,emptyText,showTrajectory=true}:{world?:World;trace?:number[][];other?:number[][];preview?:Intervention;emptyText?:string;showTrajectory?:boolean}) {
+import type {MemoryAnnotation} from './memory-events';
+export default function Arena({world,trace=[],other,preview,emptyText,showTrajectory=true,annotations=[]}:{world?:World;trace?:number[][];other?:number[][];preview?:Intervention;emptyText?:string;showTrajectory?:boolean;annotations?:MemoryAnnotation[]}) {
   if(!world) return <div className="arena-empty">{emptyText?<p>{emptyText}</p>:<><p>The arena will appear when the worker has loaded.</p><p>Create a run or open recorded playback.</p></>}</div>;
   const a=world.arena, view=a*2, path=(points:number[][])=>points.map(p=>`${p[0]},${-p[1]}`).join(' ');
   return <figure className="arena"><svg role="img" aria-label={`Top-down arena with actual rover position, obstacles and goal${showTrajectory?' and recorded route':''}`} viewBox={`${-a} ${-a} ${view} ${view}`}>
@@ -11,7 +12,8 @@ export default function Arena({world,trace=[],other,preview,emptyText,showTrajec
     <path d={`M ${world.goal[0]-.16} ${-world.goal[1]} h .32 M ${world.goal[0]} ${-world.goal[1]-.16} v .32`} stroke="#8b5b12" strokeWidth=".04"/>
     {showTrajectory&&<polyline data-overlay="trajectory" points={path(trace)} fill="none" stroke="#245b84" strokeWidth=".06" strokeLinejoin="round"/>}
     {showTrajectory&&other && <polyline data-overlay="trajectory" points={path(other)} fill="none" stroke="#9a4265" strokeWidth=".06" strokeDasharray=".18 .12"/>}
+    {showTrajectory&&annotations.map(item=><a key={item.sequence} href={item.href} aria-label={`${item.label}, episode ${item.episode}, transition ${item.tick}; evidence event ${item.sequence}`}><title>{item.label} · transition {item.tick} · event {item.sequence}</title><path data-overlay="memory" transform={`translate(${item.xy[0]} ${-item.xy[1]})`} d="M 0 -.4 L .4 0 L 0 .4 L -.4 0 Z" fill="none" stroke="#9a4265" strokeWidth=".05"/></a>)}
     <g transform={`translate(${world.pose[0]} ${-world.pose[1]}) rotate(${-world.pose[2]*180/Math.PI})`}><circle r=".3" fill="white" stroke="#245b84" strokeWidth=".05"/><path d="M -.14 -.15 L .3 0 L -.14 .15 Z" fill="#245b84"/></g>
     {preview && <g><circle cx={preview.xy[0]} cy={-preview.xy[1]} r=".35" fill="none" stroke="#9a4265" strokeWidth=".055" strokeDasharray=".12 .08"/><path d={`M ${preview.xy[0]-.2} ${-preview.xy[1]} h .4 M ${preview.xy[0]} ${-preview.xy[1]-.2} v .4`} stroke="#9a4265" strokeWidth=".04"/></g>}
-  </svg><figcaption>World coordinates (m) · {showTrajectory?'solid blue: recorded route':'trajectory overlays hidden'}{showTrajectory&&other?' · dashed berry: comparison route':''}{preview?' · dotted marker: advisory edit preview':''}</figcaption></figure>;
+  </svg><figcaption>World coordinates (m) · {showTrajectory?'solid blue: recorded route':'trajectory overlays hidden'}{showTrajectory&&other?' · dashed berry: comparison route':''}{showTrajectory&&annotations.length?' · diamonds: memory events, linked to evidence (latest 32 loaded)':''}{preview?' · dotted marker: advisory edit preview':''}</figcaption></figure>;
 }

@@ -154,3 +154,7 @@ M4 symbolic inputs are labelled fixtures until an actual world/sensor acquisitio
 ## 5. Smallest meaningful checks before integration
 
 One focused memory test module can cover: fit only from verified paired E, held-out IDs, insufficient/equal/conflicted support abstention, no labels from `unobserved`, input immutability, traversal control, payload/cap/unknown-field rejection, stale/future/duplicate/conflicting evidence, all-condition direct assimilation, hidden-state changes leaving declared packets unchanged, and fixed bridge bearing/timeout behaviour. Add focused existing-engine tests for full memory snapshot continuation, no-op self-swap, U-only invariant equality/rollback, replay first divergence and inspector consistency. Run asset-backed closed-loop validation separately in M5; synthetic tests cannot qualify embodied performance or R1.
+
+## Integration review clarifications
+
+Application v3 also binds execution mode (`live`, `policy`, `actions`). Restore preserves it; executable replay explicitly selects its requested mode. U-only and ordinary live branches reject action-replay snapshots, whose recorded action stream is not part of a live branch. Initial M/E/U hashes and U-replacement artifact/payload hashes plus equal-state evidence are included in comparison provenance. A sham can then be distinguished from changed guidance without interpreting trace differences as causal proof.

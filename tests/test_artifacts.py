@@ -164,6 +164,28 @@ class ArtifactTests(unittest.TestCase):
         result["left"]["provenance"]["runtime"][0]["detail"]["version"] = "mutated caller copy"
         self.assertEqual(artifacts.compare_runs(left, right)["left"]["provenance"]["runtime"][0]["detail"]["version"], "3.11.10")
 
+    def test_u_only_changes_are_visible_comparison_provenance(self):
+        from palimpsest.memory import artifact, sha256
+        left, right = self.run_fixture(), self.run_fixture()
+        old = artifact(method='empty-v1')
+        for run, relation in ((left, 'local_cue'), (right, 'paired_cue')):
+            new = artifact(relation)
+            path = run / 'recording/events.jsonl'
+            events = [json.loads(line) for line in path.read_text().splitlines()]
+            events.append({'sequence': len(events), 'kind': 'memory_u_replaced',
+                'old_u': old, 'new_u': new, 'invariant_hashes': {'M': 'same', 'E': 'same', 'physics': 'same'}})
+            path.write_text(''.join(json.dumps(event) + '\n' for event in events))
+            path = run / 'recording/manifest.json'
+            manifest = json.loads(path.read_text())
+            manifest.update(recorded_events=len(events), initial_memory={'m': 'same', 'e': 'same', 'u': sha256(new)})
+            path.write_text(json.dumps(manifest))
+        result = artifacts.compare_runs(left, right)
+        self.assertEqual([entry['field'] for entry in result['differences']], ['initial_memory', 'memory_swaps'])
+        swaps = [result[side]['provenance']['memory_swaps'][0] for side in ('left', 'right')]
+        self.assertEqual(swaps[0]['old_u_sha256'], swaps[1]['old_u_sha256'])
+        self.assertEqual(swaps[0]['invariant_hashes'], swaps[1]['invariant_hashes'])
+        self.assertNotEqual(swaps[0]['new_payload_sha256'], swaps[1]['new_payload_sha256'])
+
     def test_svg_png_fixed_projection_and_exclusive_exports(self):
         run = self.run_fixture()
         svg = artifacts.export_run(run, self.root / "trace.svg", "svg")

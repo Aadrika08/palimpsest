@@ -12,6 +12,7 @@
     "typecheck": "tsc --noEmit",
     "test:browser": "playwright test",
     "test:measurement": "node tests/measurement.check.ts",
+    "test:memory": "node tests/memory-events.check.ts",
     "test:performance": "PALIMPSEST_MEASURE_UI=1 playwright test --grep 'measured browser'"
   },
   "dependencies": {

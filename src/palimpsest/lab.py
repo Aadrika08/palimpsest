@@ -619,6 +619,11 @@ def create_app(repo_root, asset_root, runs_root, export_root=None, *, port=8765,
         try:
             source = _id(value["source_run_id"])
             snapshot_path, item = supervisor.snapshot(source, value["snapshot_id"])
+            from .snapshots import read_snapshot
+            source_snapshot = await asyncio.to_thread(read_snapshot, snapshot_path)
+            if source_snapshot['application'].get('execution_mode') == 'actions':
+                raise ValueError('Action-replay snapshots require their recorded action stream; use replay')
+            del source_snapshot
             config = dict(item["config"])
             previous = config["controller"]
             config["controller"] = value.get("controller", previous)
@@ -633,6 +638,45 @@ def create_app(repo_root, asset_root, runs_root, export_root=None, *, port=8765,
                 config["intervention"] = value["intervention"]
             identifier = supervisor.start(config)
             return {"run_id": identifier, "status": "loading"}
+        except (ValueError, RuntimeError, FileNotFoundError) as caught:
+            raise error(caught) from caught
+
+    @app.post("/api/v1/memory/branches", status_code=202)
+    async def memory_branch(request: Request):
+        value = await body(request, {'source_run_id', 'snapshot_id', 'u'}, {'source_run_id', 'snapshot_id', 'u'})
+        def create():
+            import hashlib
+            from .memory import validate_u
+            from .memory_task import validate_state as validate_memory
+            from .memory_world import validate_state as validate_world_state
+            from .snapshots import read_snapshot
+            u = validate_u(value['u'])
+            source, snapshot_id = _id(value['source_run_id']), _id(value['snapshot_id'])
+            # Admission and source validation are atomic; failed requests never
+            # close a live source or allocate a destination.
+            with supervisor.lock:
+                if supervisor.active_run_id is not None or any(o.process.is_alive() for o in supervisor.workers.values()):
+                    raise RuntimeError('Release the active owner before a U-only branch')
+                if supervisor.describe(source)['status'] != 'closed':
+                    raise ValueError('U-only branch requires a cleanly closed source')
+                path, item = supervisor.snapshot(source, snapshot_id)
+                if hashlib.sha256(path.read_bytes()).hexdigest() != item['sha256']:
+                    raise ValueError('Registered snapshot hash differs')
+                snapshot = read_snapshot(path)
+                application = snapshot['application']
+                if (application.get('schema_version') != 3 or application.get('scenario') != 'memory-passages'
+                        or application.get('source_run_id') != source or application.get('phase') != 'paused'
+                        or application.get('execution_mode') not in ('live', 'policy')):
+                    raise ValueError('U-only branch requires a complete paused memory snapshot')
+                validate_memory(application.get('memory'))
+                validate_world_state(application.get('world_task_state'))
+                config = configuration(dict(item['config']))
+                config.update(snapshot_path=str(path), snapshot_sha256=item['sha256'], snapshot_id=snapshot_id,
+                              source_run_path=str(supervisor.path(source)), memory_u=u)
+                return supervisor.start(config)
+        try:
+            identifier = await asyncio.to_thread(create)
+            return {'run_id': identifier, 'status': 'loading'}
         except (ValueError, RuntimeError, FileNotFoundError) as caught:
             raise error(caught) from caught
 

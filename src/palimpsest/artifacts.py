@@ -39,7 +39,8 @@ _SECRET_KEYS = {"password", "authorization", "access_token", "refresh_token", "a
                 "token", "secret", "session_token", "cookie", "credentials"}
 _VISIBLE_EVENTS = {"episode_started", "application_restored", "intervention", "eyes_changed",
                    "episode_finished", "command_applied", "command_rejected", "engine_failed",
-                   "controller_replaced", "replay_finished", "replay_divergence", "branch_created", "snapshot_registered"}
+                   "controller_replaced", "replay_finished", "replay_divergence", "branch_created", "snapshot_registered",
+                   "memory_world_changed", "memory_sensed", "memory_decision", "memory_cue", "memory_u_replaced", "memory_inspected"}
 
 
 def _json(data):
@@ -326,19 +327,23 @@ def playback(run_path, episode=0, tick=0):
             "world": world, "inputs": {"episode": episode, "tick": tick, "stage": "used",
                 "cam_left": image_data_url(row.get("cam_left")), "cam_right": image_data_url(row.get("cam_right")),
                 "sensors": _vector(row["sensors"], 4, "sensors"), "eyes": {"left": bool(eyes[0]), "right": bool(eyes[1])}},
-            "transition": transition, "trace": copy.deepcopy(item["trace"][:offset + 2]), "wall_elapsed": None}
+            "transition": transition, "trace": copy.deepcopy(item["trace"][:offset + 2]), "wall_elapsed": None,
+            "memory": next((copy.deepcopy(event['memory']) for event in reversed(data['events'])
+                            if event['kind'] == 'memory_inspected' and event.get('episode') == episode
+                            and event.get('episode_step') == tick), None)}
 
 
 def _provenance(data):
     manifest = data["manifest"]
     keys = ("controller", "profile", "scenario", "texture", "seed", "requested_device", "teacher_privileged", "initial_world",
             "observation_profile", "control_interval_seconds", "continuation_contract", "parent_run_id",
-            "parent_event_prefix", "source_snapshot_id", "snapshot_id", "controller_replacement", "replay_mode")
+            "parent_event_prefix", "source_snapshot_id", "snapshot_id", "controller_replacement", "replay_mode", "initial_memory")
     result = {key: manifest.get(key) for key in keys}
     result["environment"] = [{key: value for key, value in event.items() if key not in {"sequence", "run_id"}}
                              for event in data["events"] if event["kind"] == "environment"]
     result["policy"] = [event.get("provenance") for event in data["events"] if event["kind"] == "policy_loaded"]
     result["runtime"] = []
+    result['memory_swaps'] = []
     for event in data["events"]:
         if event["kind"] == "diagnostics":
             report = event.get("report")
@@ -358,6 +363,12 @@ def _provenance(data):
         elif event["kind"] == "branch_created":
             result["source_snapshot_id"] = event.get("parent_snapshot_id")
             result["controller_replacement"] = event.get("controller_replaced")
+        elif event['kind'] == 'memory_u_replaced':
+            from .memory import sha256, validate_u
+            old, new = validate_u(event['old_u']), validate_u(event['new_u'])
+            result['memory_swaps'].append({'old_u_sha256': sha256(old), 'new_u_sha256': sha256(new),
+                'old_payload_sha256': old['payload_sha256'], 'new_payload_sha256': new['payload_sha256'],
+                'invariant_hashes': event['invariant_hashes']})
     result["interventions"] = [{key: event.get(key) for key in ("kind", "episode", "episode_step", "change", "eyes")}
                                for event in data["events"] if event["kind"] in {"intervention", "eyes_changed", "controller_replaced"}]
     return copy.deepcopy(result)

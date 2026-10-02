@@ -47,6 +47,67 @@ def _sha(value):
     return hashlib.sha256(value).hexdigest()
 
 
+def state_digest(value):
+    """Exact typed-state hash; dictionary/set order is not scientific state."""
+    import numpy as np
+
+    def digest(item, depth=0):
+        if depth > 64:
+            raise ValueError("Snapshot nesting exceeds limit")
+        parts = [type(item).__name__.encode()]
+        if isinstance(item, (np.ndarray, np.generic)):
+            array = _array(np.asarray(item))
+            parts += [array.dtype.str.encode(), json.dumps(array.shape).encode(), array.tobytes()]
+        elif type(item) is bytes:
+            if len(item) > MAX_BYTES:
+                raise ValueError("Snapshot bytes exceed limit")
+            parts.append(item)
+        elif type(item) is dict:
+            if any(type(key) is not str for key in item):
+                raise TypeError("Snapshot dictionary keys must be strings")
+            for key in sorted(item):
+                parts += [key.encode(), digest(item[key], depth + 1)]
+        elif type(item) in (list, tuple, set):
+            children = [digest(child, depth + 1) for child in item]
+            parts += sorted(children) if type(item) is set else children
+        elif item is None or type(item) in (bool, int, float, str):
+            parts.append(json.dumps(item, allow_nan=False, separators=(",", ":")).encode())
+        else:
+            raise TypeError("Unsupported scientific state value")
+        result = hashlib.sha256()
+        for part in parts:
+            result.update(len(part).to_bytes(8, "big"))
+            result.update(part)
+        return result.digest()
+
+    return digest(value).hex()
+
+
+def invariant_hashes(snapshot):
+    """U-only comparison excludes U and declared destination recorder identities."""
+    if type(snapshot) is not dict or set(snapshot) != SNAPSHOT_KEYS:
+        raise ValueError("Incomplete scientific snapshot")
+    application = dict(snapshot["application"])
+    memory = dict(application.pop("memory"))
+    memory.pop("u")
+    # These identify the destination recording, not the restored computation.
+    application.pop("source_run_id")
+    application.pop("event_prefix")
+    components = {key: value for key, value in snapshot.items() if key != "application"}
+    components.update(M=memory.pop("m"), E=memory.pop("e"),
+                      memory_supervisor=memory, application=application)
+    return {key: state_digest(value) for key, value in components.items()}
+
+
+def controller_hashes(policy):
+    """Hash actual immutable tensors, separately from declared checkpoint lineage."""
+    if policy is None:
+        return None
+    return {kind: state_digest({name: tensor.detach().cpu().numpy() for name, tensor in values})
+            for kind, values in (("graph_buffers", policy.agent.named_buffers()),
+                                 ("parameters", policy.agent.named_parameters()))}
+
+
 def _class(value):
     return f"{type(value).__module__}.{type(value).__qualname__}"
 

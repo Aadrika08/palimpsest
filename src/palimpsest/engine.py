@@ -96,6 +96,7 @@ class Engine:
         self.env, self.writer = env, writer
         self.controller, self.policy, self.teacher = controller, policy, teacher
         self.scenario, self.texture = scenario, texture
+        self.memory = self.world_task_state = None
         self.revision = 0
         self.eyes = {"left": True, "right": True}
         self.last_transition = None
@@ -143,7 +144,7 @@ class Engine:
             "population_columns": ["count", "mean", "min", "max"], "population_scale": [-1., 1.],
             "controller": controller, "seed": seed, "requested_device": device,
             "teacher_privileged": controller == "teacher",
-            "observation_profile": "two-rgb-eyes-contact-relative-goal-bearing-v1",
+            "observation_profile": profile['observation_profile'],
             "tick_contract": "input and pose before step; control, next_pose, reward and time after step",
             "sensor_order": ["collision", "collision_angle", "wind_cos", "wind_sin"],
             "control_interval_seconds": .02,
@@ -220,6 +221,17 @@ class Engine:
             import mujoco
             mujoco.mj_resetData(self.env.model, self.env.data)
         self.observation, _ = self.env.reset(seed=self.seed)
+        if self.scenario == 'memory-passages':
+            from . import memory, memory_task, memory_world
+            self.world_task_state = memory_world.configure(self.env, memory_world.initial_state())
+            episode_id = f'episode-{self.episode}'
+            if self.memory is None:
+                self.memory = memory_task.initialize(
+                    memory.seed_m(memory_world.initial_facts(), []), {'version': 1, 'episodes': []},
+                    memory.artifact(method='empty-v1'), episode_id=episode_id)
+            else:
+                self.memory = memory_task.reset(self.memory, episode_id=episode_id)
+            self.observation = self.env._get_obs()
         if type(self.env.model).__module__.startswith("mujoco"):
             from .profiles import validate_world
             validate_world(self.env, require_route=self.scenario == 'sparse-navigation')
@@ -235,10 +247,15 @@ class Engine:
     def _episode_started(self):
         if "initial_world" not in self.writer.manifest:
             self.writer.manifest["initial_world"] = self.world()
+        if self.memory is not None and 'initial_memory' not in self.writer.manifest:
+            from .memory import sha256
+            self.writer.manifest['initial_memory'] = {
+                key: sha256(self.memory[key]) for key in ('m', 'e', 'u')}
         self._event("episode_started", seed=self.seed, goal=self.env._goal_xy.tolist(),
                     obstacles=self.env._obstacle_xy.tolist(), initial_qpos=self.env.data.qpos.tolist(),
                     initial_qvel=self.env.data.qvel.tolist(),
-                    reset_protocol="fresh physics and controller episode state; upstream seeded layout",
+                    reset_protocol=("authored memory development layout; initial M, retained E/U, fresh episodic state"
+                                    if self.memory is not None else "fresh physics and controller episode state; upstream seeded layout"),
                     world=self.world(), revision=self.revision, eyes=self.eyes)
 
     def _end_episode(self, reason, **details):
@@ -409,6 +426,29 @@ class Engine:
         from .evaluate import outcome
 
         obs = self.observation
+        if self.memory is not None:
+            from . import memory_task, memory_world
+            self.world_task_state, changes = memory_world.advance_world(self.env, self.world_task_state, self.episode_step)
+            if changes:
+                self.revision += 1
+            for change in changes:
+                self._event('memory_world_changed', detail=change)
+                if change['kind'] == 'memory_gate_applied':
+                    self._event('intervention', change=change['intervention'], origin='memory_world_schedule')
+            if changes:
+                obs = self.observation = self.env._get_obs()
+            world, pose, occluders = memory_world.sensing_inputs(self.env, self.world_task_state)
+            packet = memory_task.capture_symbolic(world, pose, occluders,
+                episode_id=self.memory['episode_id'], tick=self.episode_step)
+            self._event('memory_sensed', packet=packet)
+            self.memory, bearing, decisions = memory_task.advance_memory(self.memory, packet)
+            for decision in decisions:
+                self._event('memory_decision', detail=decision,
+                            route_anchor={'stage': 'pre-control', 'xy': pose[:2]})
+            self._event('memory_cue', bearing=bearing,
+                        raw_upstream_bearing=list(map(float, obs['sensors']['wind_direction'])))
+            self._event('memory_inspected', memory=memory_task.inspect(self.memory))
+            obs = {**obs, 'sensors': {**obs['sensors'], 'wind_direction': bearing}}
         sensors = obs["sensors"]
         sensor_vector = np.array([float(sensors["collision"]),
                                  0. if sensors["collision_angle"] is None else float(sensors["collision_angle"]),
@@ -460,7 +500,14 @@ class Engine:
         self.metrics["reward"] += float(reward)
         self.metrics["contact_ticks"] += int(bool(sensors["collision"]))
         self.metrics["path_length"] += float(np.linalg.norm(next_pose[:2] - pose[:2]))
-        reason = outcome(terminated, truncated, info, self.env.goal_radius)
+        if self.memory is not None and (self.memory['active'] is not None or self.memory['requests']):
+            # Reaching the common goal does not complete a pending inspection.
+            reason = ('stalled' if info.get('stalled') else
+                      'collision' if self.env.end_on_collision and next_obs['sensors']['collision'] else
+                      'time_limit' if truncated else None)
+            terminated = reason in ('stalled', 'collision')
+        else:
+            reason = outcome(terminated, truncated, info, self.env.goal_radius)
         if reason:
             self.phase = "terminated" if terminated else "truncated"
             self.revision += 1
@@ -586,7 +633,11 @@ class Engine:
                 digest.update(data)
                 size += len(data)
                 count += data.count(b"\n")
-        return copy.deepcopy({"schema_version": 2, "source_run_id": self.run_id,
+        from .snapshots import controller_hashes
+        return copy.deepcopy({"schema_version": 3, "source_run_id": self.run_id,
+            "execution_mode": self.writer.manifest.get('execution_mode', 'live'),
+            "memory": self.memory, "world_task_state": self.world_task_state,
+            "controller_tensors": controller_hashes(self.policy) if self.memory is not None else None,
             "revision": self.revision, "eyes": self.eyes, "scenario": self.scenario, "texture": self.texture,
             "event_prefix": {"sha256": digest.hexdigest(), "size_bytes": size, "event_count": count},
             "teacher_reset_identity": self._teacher_reset_identity,
@@ -603,15 +654,21 @@ class Engine:
         if self.phase != "paused" or self.total_tick or self.episode or self._originals or self._restored:
             raise ValueError("application restore requires a fresh paused destination")
         state = copy.deepcopy(state)
+        if (type(state) is dict and state.get('schema_version') == 2 and self.scenario != 'memory-passages'
+                and not {'memory', 'world_task_state', 'controller_tensors', 'execution_mode'} & state.keys()):
+            # Legacy application snapshots have no artificial-memory state.
+            state.update(schema_version=3, memory=None, world_task_state=None, controller_tensors=None, execution_mode='live')
         expected = {"schema_version", "source_run_id", "event_prefix", "teacher_reset_identity", "controller", "episode", "total_tick",
                     "revision", "eyes", "scenario", "texture",
                     "episode_step", "phase", "manual_action", "metrics", "last_outcome", "seed",
                     "episode_finished", "pending_commands", "session_exhausted", "recording_failed",
-                    "receipts", "original_commands"}
-        if not isinstance(state, dict) or set(state) != expected or type(state["schema_version"]) is not int or state["schema_version"] != 2 or state["controller"] != self.controller or state["phase"] != "paused":
+                    "receipts", "original_commands", "memory", "world_task_state", "controller_tensors", "execution_mode"}
+        if not isinstance(state, dict) or set(state) != expected or type(state["schema_version"]) is not int or state["schema_version"] != 3 or state["controller"] != self.controller or state["phase"] != "paused":
             raise ValueError("incompatible application state or non-paused snapshot")
         if state["teacher_reset_identity"] != self._teacher_reset_identity:
             raise ValueError("teacher reset baseline identity differs")
+        if state['execution_mode'] not in ('live', 'policy', 'actions'):
+            raise ValueError('Unknown snapshot execution mode')
         try:
             json.dumps(state, allow_nan=False)
         except (ValueError, TypeError) as error:
@@ -625,6 +682,21 @@ class Engine:
             raise ValueError('Invalid snapshot eye settings')
         if state["episode_step"] > state["total_tick"] or state["episode_step"] > 600:
             raise ValueError("invalid episode step count")
+        if self.scenario == 'memory-passages':
+            from . import memory_task, memory_world
+            from .snapshots import controller_hashes
+            state['memory'] = memory_task.validate_state(state['memory'])
+            state['world_task_state'] = memory_world.validate_state(state['world_task_state'])
+            cursor = state['memory']['cursor']
+            previous = state['episode_step'] - 1 if state['episode_step'] else None
+            if (state['memory']['episode_id'] != f"episode-{state['episode']}" or
+                    (None if cursor is None else cursor['tick']) != previous or
+                    state['world_task_state']['last_tick'] != previous):
+                raise ValueError('Memory/world cursor differs from paused application boundary')
+            if state['controller_tensors'] != controller_hashes(self.policy):
+                raise ValueError('Actual graph buffers or learned parameters differ')
+        elif any(state[key] is not None for key in ('memory', 'world_task_state', 'controller_tensors')):
+            raise ValueError('Memory state requires the memory task profile')
         if not isinstance(state["source_run_id"], str) or not state["source_run_id"] or state["source_run_id"] == self.run_id or type(state["episode_finished"]) is not bool:
             raise ValueError("invalid source identity or episode flag")
         if state["session_exhausted"] is not False or state["recording_failed"] is not False:
@@ -654,12 +726,16 @@ class Engine:
         state = self.validate_application(state)
         self.parent_run_id = state["source_run_id"]
         self.parent_event_prefix = state["event_prefix"]
-        for name in ("episode", "total_tick", "episode_step", "phase", "metrics", "last_outcome", "seed", "revision", "eyes"):
+        for name in ("episode", "total_tick", "episode_step", "phase", "metrics", "last_outcome", "seed", "revision", "eyes", "memory", "world_task_state"):
             setattr(self, name, state[name])
         self.manual_action = _action(state["manual_action"], manual=True)
         self._episode_finished = state["episode_finished"]
         self._pending = deque(state["pending_commands"])
         self.writer.manifest['initial_world'] = self.world()
+        self.writer.manifest['execution_mode'] = state['execution_mode']
+        if self.memory is not None:
+            from .memory import sha256
+            self.writer.manifest['initial_memory'] = {key: sha256(self.memory[key]) for key in ('m', 'e', 'u')}
         self._receipts, self._originals = state["receipts"], state["original_commands"]
         self._restored = True
         try:
@@ -679,6 +755,9 @@ class Engine:
         if replace_controller:
             state.update(controller=self.controller, teacher_reset_identity=self._teacher_reset_identity,
                          pending_commands=[], receipts={}, original_commands={}, manual_action=[0., 0.])
+            if self.memory is not None:
+                from .snapshots import controller_hashes
+                state['controller_tensors'] = controller_hashes(self.policy)
         self.validate_application(state)
         observation, _ = restore(snapshot, self.env, policy=self.policy, teacher=self.teacher,
                                  replace_controller=replace_controller)
@@ -691,6 +770,32 @@ class Engine:
                         cancelled_source_commands=cancelled, revision=self.revision,
                         fresh_state=['controller', 'torch_rng', 'manual_intent', 'command_history'],
                         retained_state=['world', 'environment', 'python_numpy_environment_rng', 'eyes'])
+        return self.public_state()
+
+    def restore_memory_branch(self, snapshot, u):
+        """Restore a fresh destination, replace U only, verify before publication."""
+        from .memory import validate_u
+        from .snapshots import capture, invariant_hashes
+        u = validate_u(u)
+        if self.scenario != 'memory-passages' or snapshot['application'].get('memory') is None:
+            raise ValueError('U-only branches require a complete memory snapshot')
+        if snapshot['application'].get('execution_mode') == 'actions':
+            raise ValueError('U-only branches cannot continue an action-replay stream')
+        expected = invariant_hashes(snapshot)
+        self.restore_branch(snapshot)
+        def current():
+            return invariant_hashes(capture(self.env, self.observation, policy=self.policy,
+                teacher=self.teacher, application=self.application_state()))
+        if current() != expected:
+            raise ValueError('Restored scientific state differs before U replacement')
+        previous = self.memory['u']
+        self.memory['u'] = u
+        if current() != expected:
+            raise ValueError('Scientific state changed outside U replacement')
+        from .memory import sha256
+        self.writer.manifest['initial_memory'] = {
+            key: sha256(self.memory[key]) for key in ('m', 'e', 'u')}
+        self._event('memory_u_replaced', old_u=previous, new_u=u, invariant_hashes=expected)
         return self.public_state()
 
     def close(self):

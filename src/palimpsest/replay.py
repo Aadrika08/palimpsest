@@ -15,9 +15,11 @@ from .records import iter_ticks
 
 ATOL = RTOL = 1e-6
 _RUNTIME = tuple(f"src/palimpsest/{name}.py" for name in
-                 ("engine", "profiles", "interventions", "flynn", "snapshots", "records", "evaluate", "assets", "doctor"))
+                 ("engine", "profiles", "interventions", "flynn", "snapshots", "records", "evaluate", "assets", "doctor",
+                  "memory", "memory_task", "memory_world"))
 _EVENTS = {"command_received", "command_applied", "command_rejected", "episode_started",
-           "episode_finished", "intervention", "eyes_changed", "browser_disconnected", "runtime_failure"}
+           "episode_finished", "intervention", "eyes_changed", "browser_disconnected", "runtime_failure",
+           "memory_world_changed", "memory_sensed", "memory_decision", "memory_cue", "memory_inspected"}
 _IGNORED_EVENT_KEYS = {"sequence", "run_id", "received_run_id", "applied_run_id"}
 _PHYSICAL = {"cam_left", "cam_right", "raw_cam_left", "raw_cam_right", "sensors", "action",
              "control", "pose", "next_pose", "reward", "simulation_time", "eyes", "revision"}
