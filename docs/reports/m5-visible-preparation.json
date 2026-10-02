@@ -1,0 +1,486 @@
+{
+  "schema_version": 1,
+  "date": "2026-10-02",
+  "claim": "single-development-case-negative-evidence",
+  "source_commit": "b17d006a8a45db15c02c957647bbf9e890f7a2da",
+  "retained_directory": "runs/m5-memory-visible-preparation-20261002",
+  "terminal_status": "mechanism_unverified",
+  "task_pass": false,
+  "r2_complete": false,
+  "held_out_executed": false,
+  "replayed_or_rerun_for_audit": false,
+  "protocol_sha256": "e9031a5e2fba8c7cd0ec66c712b369ce190f4394af2deda53cc953269e85cea1",
+  "source_preparation_sha256": "900f3ff299163177d275d8f971b8069ca2df1b505ee8cbef37389f29dbf8c34d",
+  "case_sha256": "02e99c315631db532ed86bfde2905e231a3ff4eecd926553ccc5e480ac788b9f",
+  "case_initial_goal_xy": [
+    -1.3,
+    2.5
+  ],
+  "source_access": "privileged-manual-pose-supervision; source-only ticks200..299 velocity0,targetyaw9degrees; actual pose drift retained",
+  "continuation_access": "previous-published-declared-bearing-only, velocity0.65; no pose/map/private goal/search fallback",
+  "primary_artifacts": {
+    "transfer-plan.json": "53753016e39cf164d5efdeba6804ac7ef0533169d25ea56bfd1d495548f921ec",
+    "transfer-report.json": "bc22336c26725e840569c63255a5362a84ec1cf4552545275ddfdbab49379b7e"
+  },
+  "outer_supervisor": {
+    "origin": "root terminal execution report",
+    "returncode": 1,
+    "elapsed_seconds": 39.225659174
+  },
+  "first_failure": {
+    "type": "ValueError",
+    "message": "Transfer child failed; no retry or replacement is allowed"
+  },
+  "audit": {
+    "source_identity_sha256": "8920a1f1a8abddd73df034d7c3589124e2e39f0e08ff15f24f0a891d2bcbbc3b",
+    "source_identity_matches_current": true,
+    "histories": [
+      {
+        "role": "own",
+        "bundle_sha256": "016c5b5e9472b116d065fb922b32d64089db6e27839aec09d751238f8ce7ffc1",
+        "e_sha256": "b6c92a7638af926ed625069b0f1e23fc804db08e621b3bcdf2d5bae8cc1a0457",
+        "u_sha256": "032d40d14192eadc66588a2b63339bb990750a1f70aef036a54453f8746ed9bb"
+      },
+      {
+        "role": "swapped",
+        "bundle_sha256": "64628e37cc6e861194f810baa92926eba8f57260047cdd8ad320a4601023d213",
+        "e_sha256": "35588d3fdfde95f339aa99bd2eb3b7b63b46f135d79ac14688f7951dc0129f34",
+        "u_sha256": "aa37a394fee509275adddb06355388c23e5ef9e8d31c3306327ac29d54800700"
+      }
+    ],
+    "stages": [
+      {
+        "stage": "source",
+        "run_id": "eb3b3327a1304cf8a2b37d349e002d33",
+        "rows": 300,
+        "recording_bytes": 61742463,
+        "recording_status": "completed",
+        "final_phase": "paused",
+        "steps": 300,
+        "close_reason": "operator_closed",
+        "gate_result": "pending",
+        "cleanup_error": null,
+        "task_pass": false,
+        "snapshot_sha256": "d0c63a90ba25da89c9e00765553d3587b904f47dd1e41d2e26ca780e57797697",
+        "worker_report_sha256": "03193ba853024328b2c1b4e456ecd97c40cfc5f7fd9f744aad5bd32a4d4b94c8",
+        "supervisor": {
+          "schema_version": 1,
+          "status": "completed",
+          "timeout_seconds": 160,
+          "returncode": 0,
+          "elapsed_seconds": 22.03303697999945
+        },
+        "initial_u_sha256": "70575d969610e9392033501a21f594e4a7a60d04f83bdc73e510fd5c32019fed",
+        "initial_non_u_sha256": "dcf6d096c86202079ab262b75232e2e9297729bb595f34b5e45bda63f9dc93ea",
+        "recording_files": [
+          {
+            "path": "recording/manifest.json",
+            "bytes": 7905,
+            "sha256": "8008bf323b1cf9ac259fa259c8d6518d26e0d9c162bbcd64f39783e5a3b072f7"
+          },
+          {
+            "path": "recording/events.jsonl",
+            "bytes": 2670558,
+            "sha256": "32a41b7f3d519c51f1607d536636cae8e23a18772b5b3a02a29ae52df2d4e2c4"
+          },
+          {
+            "path": "recording/chunks/000000.npz",
+            "bytes": 6299892,
+            "sha256": "ace482d719c8436c74de9c40357ce83ac18336bd67e254ed2ef403bba0eafca0"
+          },
+          {
+            "path": "recording/chunks/000001.npz",
+            "bytes": 6299892,
+            "sha256": "f578074374e325b1856690408d37695f35a9aa81540220f7b4ba89c46fa588c8"
+          },
+          {
+            "path": "recording/chunks/000002.npz",
+            "bytes": 6299892,
+            "sha256": "7626f21a8a2bf0284c7a5e1335b87471aa76d24b47b831b8066e175603d38bca"
+          },
+          {
+            "path": "recording/chunks/000003.npz",
+            "bytes": 6299892,
+            "sha256": "9891e91f148d37aaad1ea8acdec892c2d9599fb4e225f3b54139075fde3faba5"
+          },
+          {
+            "path": "recording/chunks/000004.npz",
+            "bytes": 6299892,
+            "sha256": "50f4ae5ace913cc469fd2702ecdc223572d9c6e934fd296d5b59de09664518b0"
+          },
+          {
+            "path": "recording/chunks/000005.npz",
+            "bytes": 6299892,
+            "sha256": "3da002946ff30bea5ef5c25a8cd09fa1c2802979edcc44d6ccad7146e2dbb7cd"
+          },
+          {
+            "path": "recording/chunks/000006.npz",
+            "bytes": 6299892,
+            "sha256": "554ba45da7422540b01d63c9f012759387ff4f80074e6cd517a5566d1a20622c"
+          },
+          {
+            "path": "recording/chunks/000007.npz",
+            "bytes": 6299892,
+            "sha256": "e6851c8919dc95cfccb2c9dc54b7eb9a22082628fdfbcbb5bf0c63384f304a3e"
+          },
+          {
+            "path": "recording/chunks/000008.npz",
+            "bytes": 6299892,
+            "sha256": "5dda26382df15556d4d09461cf476a4ff4f73ac2c5b4c2f0ac4207a3b0ce33f6"
+          },
+          {
+            "path": "recording/chunks/000009.npz",
+            "bytes": 2364972,
+            "sha256": "1956e5cc59929372d731a32236c7c54b9cc5638de83fac6e817d6cbed3ccbf23"
+          }
+        ]
+      },
+      {
+        "stage": "anchor",
+        "run_id": "0a6d507fd7234d3b89d7f09f3e1481a5",
+        "rows": 0,
+        "recording_bytes": 21537,
+        "recording_status": "completed",
+        "final_phase": "paused",
+        "steps": 300,
+        "close_reason": "operator_closed",
+        "gate_result": "pending",
+        "cleanup_error": null,
+        "task_pass": false,
+        "snapshot_sha256": "7f8bb32e2298b4f150bed93f527374f05d9402e39f0e4cd7e38719f79ad60796",
+        "worker_report_sha256": "92731b93a8877141999a4cd6722016fa5c748026f02650bc3b253bc666575f60",
+        "supervisor": {
+          "schema_version": 1,
+          "status": "completed",
+          "timeout_seconds": 160,
+          "returncode": 0,
+          "elapsed_seconds": 6.602575747005176
+        },
+        "initial_u_sha256": "032d40d14192eadc66588a2b63339bb990750a1f70aef036a54453f8746ed9bb",
+        "initial_non_u_sha256": "dcf6d096c86202079ab262b75232e2e9297729bb595f34b5e45bda63f9dc93ea",
+        "recording_files": [
+          {
+            "path": "recording/manifest.json",
+            "bytes": 8014,
+            "sha256": "c6cfaca5bb7abf98cc7b92138feb5638a96a2a1b3955cbf3608d3f58f0ab86a6"
+          },
+          {
+            "path": "recording/events.jsonl",
+            "bytes": 13523,
+            "sha256": "fef0ca64fcda3c4e713bddf74cc4f475ed60dfa3797c72a8880b1f527010230f"
+          }
+        ]
+      },
+      {
+        "stage": "own",
+        "run_id": "181b660c01994c7a80c588ad76c15697",
+        "rows": 54,
+        "recording_bytes": 11128829,
+        "recording_status": "failed",
+        "final_phase": "failed",
+        "steps": 354,
+        "close_reason": "operator_closed",
+        "gate_result": "closed",
+        "cleanup_error": null,
+        "task_pass": false,
+        "snapshot_sha256": "f9255013f2015fef1800a70f7a5cef655efe9a028ca04adfc178e4303b5a40f7",
+        "worker_report_sha256": "84aee62f7294eaa0c613f50b235099b55effe1d959cc859c140b77ac17576a83",
+        "supervisor": {
+          "schema_version": 1,
+          "status": "failed",
+          "timeout_seconds": 160,
+          "returncode": 1,
+          "elapsed_seconds": 8.050996718004171
+        },
+        "initial_u_sha256": "032d40d14192eadc66588a2b63339bb990750a1f70aef036a54453f8746ed9bb",
+        "initial_non_u_sha256": "dcf6d096c86202079ab262b75232e2e9297729bb595f34b5e45bda63f9dc93ea",
+        "recording_files": [
+          {
+            "path": "recording/manifest.json",
+            "bytes": 8256,
+            "sha256": "fb2a2028628199a59f9a31310faf9d2b542f15a330494082d0726c9cb12a9eef"
+          },
+          {
+            "path": "recording/events.jsonl",
+            "bytes": 488249,
+            "sha256": "8100c94b57829de72d529e8098b55dbdb14821d562172af1cca36128bd629102"
+          },
+          {
+            "path": "recording/chunks/000000.npz",
+            "bytes": 6299892,
+            "sha256": "013906105dcc3fb6cd5424a1b9c4da813b19f8953d17c9d3172475e359e52a69"
+          },
+          {
+            "path": "recording/chunks/000001.npz",
+            "bytes": 4332432,
+            "sha256": "64072470755d52cc28e2f7ecd7d53c0793acdb5cdab9b8c831eec573cac0fe8f"
+          }
+        ]
+      }
+    ]
+  },
+  "unattempted_stages": [
+    {
+      "stage": "swapped",
+      "run_id": "080681e644ff49c2a5e4932312003ae3",
+      "reason": "first own child exit1 stopped verifier; no retry/replacement"
+    },
+    {
+      "stage": "sham",
+      "run_id": "c296ebfe3bac44208fa2c33a3ed72db6",
+      "reason": "first own child exit1 stopped verifier; no retry/replacement"
+    },
+    {
+      "stage": "no-U",
+      "run_id": "dda5fbb328e04bf28016c41b8cc2ae4f",
+      "reason": "first own child exit1 stopped verifier; no retry/replacement"
+    }
+  ],
+  "totals": {
+    "attempted_stages": 3,
+    "unattempted_stages": 3,
+    "numeric_ticks": 354,
+    "recording_bytes": 72892829,
+    "recording_bytes_scope": "all manifest/events/chunks from three attempted terminal recordings; excludes snapshots,worker reports,logs"
+  },
+  "checks": {
+    "recording_hashes_and_terminal_counts": true,
+    "source_and_anchor_paused_boundary300": true,
+    "history_bundle_pins_and_exact_E_only_refits": true,
+    "source_anchor_own_native_non_U_invariants_equal": true,
+    "source_empty_U_anchor_and_own_exact_own_U": true,
+    "exact_source_float64_actions_300": true,
+    "exact_override_events_100": true,
+    "sensor299_and300_common_cue_goal_and_both_inspection_landmarks_visible": true,
+    "native299_and_committed300_cursor_detector_bound_to_actual_packets": true,
+    "lower_occupancy_not_newly_observed_during_preparation": true,
+    "both_pre_M_facts_backed_by_actual_recorded_evidence": true,
+    "exact_continuation_float64_actions_54": true,
+    "one_extra_failed_attempted_input354_no_numeric_transition": true,
+    "no_committed_memory_events354": true,
+    "raw_sources_unchanged": true
+  },
+  "pre_M": {
+    "version": 1,
+    "facts": [
+      {
+        "id": "live-development-test-00000008-fact-a",
+        "subject_id": "live-development-test-00000008-subject-a",
+        "kind": "passability",
+        "estimate": "open",
+        "status": "observed",
+        "associations": [
+          {
+            "cue_id": "live-development-test-00000008-cue",
+            "relation": "local_cue"
+          }
+        ],
+        "inspection_landmark_id": "live-development-test-00000008-subject-a-inspection",
+        "evidence": {
+          "id": "sensor-282cc45e107407a9dd860df3198a43cd425dc2ae3bcc043977c603fc21307dd8",
+          "episode_id": "episode-0",
+          "tick": 29
+        },
+        "revision": 1,
+        "origin": "observed"
+      },
+      {
+        "id": "live-development-test-00000008-fact-z",
+        "subject_id": "live-development-test-00000008-subject-z",
+        "kind": "passability",
+        "estimate": "open",
+        "status": "observed",
+        "associations": [
+          {
+            "cue_id": "live-development-test-00000008-cue",
+            "relation": "paired_cue"
+          }
+        ],
+        "inspection_landmark_id": "live-development-test-00000008-subject-z-inspection",
+        "evidence": {
+          "id": "sensor-fec6fa08b50cd1b471dc9c67c6ffa13f3272af4c2294a05a2d0caa718fe34f12",
+          "episode_id": "episode-0",
+          "tick": 299
+        },
+        "revision": 1,
+        "origin": "observed"
+      }
+    ]
+  },
+  "visibility_packets": {
+    "299": {
+      "sha256": "fcbc111a9fe583da084205f3e8d2c0a34723a100e0036d1268886344d9f21fa3",
+      "cue_state": 0,
+      "common_goal_visible": true,
+      "both_inspection_landmarks_visible": true,
+      "lower_passability": "unobserved"
+    },
+    "300": {
+      "sha256": "6bd71204c8a84ac99fd1816ed1984c2e714a9bd30a2601f243659b78ca4e8328",
+      "cue_state": 1,
+      "common_goal_visible": true,
+      "both_inspection_landmarks_visible": true,
+      "lower_passability": "unobserved"
+    },
+    "354": {
+      "sha256": "a52d71e74d02503b7d671a6c7ec705544641b951bb33aee981296b34604d2852",
+      "common_goal_visible": false,
+      "lower_inspection_landmark_visible": true,
+      "lower_passability": "blocked",
+      "observation_id": "sensor-98ae51f0171c8df505a887a9dcdb5e654a73d316248a3109429c52c1767b54fd",
+      "sensor_sequence": 524,
+      "committed_revision": false
+    }
+  },
+  "timeline": [
+    {
+      "tick": 300,
+      "event": "cue flip and real gate closure; ownU selects lower gold fact; reconsideration committed (open/uncertain); request started,deadline500"
+    },
+    {
+      "tick": 306,
+      "event": "last common-goal visibility"
+    },
+    {
+      "tick": 307,
+      "event": "common goal absent; declared lower inspection guidance remains eligible"
+    },
+    {
+      "tick": 354,
+      "event": "first actual lower blocked observation; lower landmark visible; goal unavailable after local inspection resolution; CueUnavailable before state return/Engine assignment"
+    }
+  ],
+  "final_own": {
+    "phase": "failed",
+    "outcome": {
+      "reason": "runtime_failure",
+      "episode": 0,
+      "steps": 354,
+      "type": "CueUnavailable",
+      "message": "goal_cue_unavailable: live-development-test-00000008-common-goal",
+      "policy_diagnostics": null
+    },
+    "gate_result": "closed",
+    "m": {
+      "version": 1,
+      "facts": [
+        {
+          "id": "live-development-test-00000008-fact-a",
+          "subject_id": "live-development-test-00000008-subject-a",
+          "kind": "passability",
+          "estimate": "open",
+          "status": "uncertain",
+          "associations": [
+            {
+              "cue_id": "live-development-test-00000008-cue",
+              "relation": "local_cue"
+            }
+          ],
+          "inspection_landmark_id": "live-development-test-00000008-subject-a-inspection",
+          "evidence": {
+            "id": "sensor-282cc45e107407a9dd860df3198a43cd425dc2ae3bcc043977c603fc21307dd8",
+            "episode_id": "episode-0",
+            "tick": 29
+          },
+          "revision": 2,
+          "origin": "observed"
+        },
+        {
+          "id": "live-development-test-00000008-fact-z",
+          "subject_id": "live-development-test-00000008-subject-z",
+          "kind": "passability",
+          "estimate": "open",
+          "status": "observed",
+          "associations": [
+            {
+              "cue_id": "live-development-test-00000008-cue",
+              "relation": "paired_cue"
+            }
+          ],
+          "inspection_landmark_id": "live-development-test-00000008-subject-z-inspection",
+          "evidence": {
+            "id": "sensor-3bee1c7df56c5f250976b199c3e090caea83588384d4bf934692c9fab83af4ac",
+            "episode_id": "episode-0",
+            "tick": 314
+          },
+          "revision": 1,
+          "origin": "observed"
+        }
+      ]
+    },
+    "e": {
+      "version": 1,
+      "episodes": []
+    },
+    "u_sha256": "032d40d14192eadc66588a2b63339bb990750a1f70aef036a54453f8746ed9bb",
+    "cursor_tick": 353,
+    "detector_tick": 353,
+    "active": {
+      "event_id": "sensor-d3b44e437ca0d3b053127ae36a039a9cdf507542e48af059054f5d53ab831bae",
+      "fact_id": "live-development-test-00000008-fact-a",
+      "requested_tick": 300,
+      "started_tick": 300,
+      "deadline_tick": 500
+    },
+    "requests": [],
+    "task_pass": false
+  },
+  "diagnosis": "advance_memory validates a copied state and computes occupancy assimilation plus inspection resolution, then requires a visible common-goal bearing. CueUnavailable prevents return and Engine assignment, so actual blocked sample354 is retained but revision/resolution is not committed. No accepted mechanism/task pass; own/sham comparison and four-branch transfer remain unmeasured.",
+  "next_protocol_feasibility": {
+    "status": "pure geometry and read-only existing command-contract assessment only; no v3 runtime",
+    "candidate": {
+      "candidate_goal_xy": [
+        -0.5,
+        -2.7
+      ],
+      "check_type": "pure projection of retained poses; not a runtime result",
+      "clearance_pass": true,
+      "all_own_boundary_poses_visible": true,
+      "initial_source_goal_visible": false,
+      "segments": [
+        {
+          "segment": "source",
+          "poses": 300,
+          "bearing_range_rad": [
+            -2.912768958842239,
+            -1.4898711788735934
+          ],
+          "distance_range_m": [
+            1.7888543393502203,
+            3.5268384583801504
+          ],
+          "visible_tick_count": 45,
+          "absent_tick_count": 255,
+          "absent_tick_range": [
+            0,
+            254
+          ]
+        },
+        {
+          "segment": "own",
+          "poses": 55,
+          "bearing_range_rad": [
+            -1.5212565042148762,
+            0.16471194019455715
+          ],
+          "distance_range_m": [
+            2.462177600579747,
+            3.3861101655586006
+          ],
+          "visible_tick_count": 55,
+          "absent_tick_count": 0,
+          "absent_tick_range": null
+        }
+      ]
+    },
+    "static_replacement_admissible_with_unchanged_source": false,
+    "minimum_separate_preparation": "existing paused Engine intervene/move_goal at boundary300 after unchanged acquisition/orientation and before shared native capture; initial case goal unchanged; goal[-0.5,-2.7] explicitly declared; distinct post-intervention actual visibility probe without memory advance; all U-only forks share relocated world",
+    "contract_findings": [
+      "paused intervene does not step physics or advance memory",
+      "validates effective float32 placement clearance, changes _goal_xy/site_pos, refreshes _get_obs, records intervention/receipt",
+      "native snapshots cover goal,site_pos,observation,application prefix; sensing uses actual env goal",
+      "retain cursor299 and unchanged M/E/U; first action uses previous299 bearing"
+    ],
+    "limits": "Retained-path projection cannot demonstrate future trajectory or goal attainment. This is development fixture repair, not invisible-goal navigation. A bounded search controller would require separately declared state/action/time budgets and failure semantics; no private-bearing fallback."
+  }
+}
