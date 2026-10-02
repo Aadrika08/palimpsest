@@ -1,9 +1,9 @@
-# Fixed puck mechanics v3 — source preparation, not executed
+# Fixed puck mechanics v4 — source preparation, not executed
 
 This verifier implements the mechanics stage of the prospective
-[puck plan](m6-puck-pushing.md) and [v3 task protocol](m6-puck-pushing-protocol-v3.json).
-The [v3 mechanics contract](m6-puck-mechanics-v3.json) pins the explicit recovery
-mode, standalone record/application schemas and unchanged finite resources.
+[puck plan](m6-puck-pushing.md) and [v4 task protocol](m6-puck-pushing-protocol-v4.json).
+The [v4 mechanics contract](m6-puck-mechanics-v4.json) pins signed approach
+selection, unchanged explicit modes and unchanged finite resources.
 The [v4 construction result](../reports/m6-puck-construction-v4.md) qualifies only
 its historical zero-step construction. There is no successful complete mechanics,
 continuation, replay or learned-control gate yet.
@@ -14,24 +14,30 @@ supervised subprocesses directly own the existing fixed-profile environment.
 There is no Engine, worker, REST, UI, registry or production snapshot change.
 No Torch, training, external camera, network or physical hardware is involved.
 
-The [v1 failure](../reports/m6-puck-mechanics-v1.md) at `0560886` and
-[v2 failure](../reports/m6-puck-mechanics-v2.md) at `d65d5fe` retain their original
-protocol JSON, source history, snapshots, records and audits. V2 lost useful
-pushing at action 161 when lateral error crossed .06 m, then reversed its turn
-at 188 when the corridor became ready before recovery reached its behind point.
-V3 is a prospective correction of that observed incomplete recovery, not a
-prediction that the unchanged 600-tick task will succeed.
+The [v1 failure](../reports/m6-puck-mechanics-v1.md),
+[v2 failure](../reports/m6-puck-mechanics-v2.md) and
+[v3 failure](../reports/m6-puck-mechanics-v3.md) retain their original protocol
+JSON, source history, snapshots, records and audits. V3 still cycled between
+approach turning and push alignment, completing 600 ticks at .443812 m goal
+distance. All recovery approach commands had zero translational velocity. V4 is
+a prospective orientation-selection correction, not a success prediction or
+reason to extend the unchanged horizon.
 
-The teacher now takes an explicit `approach` or `push` argument and returns one
+The teacher retains an explicit `approach` or `push` argument and returns one
 command plus its next mode. Fresh teacher episodes start in `approach`; no mode
 is global or implicitly reset. Stop distance ≤.18 retains first priority and
 returns zero action with mode unchanged. Otherwise, `approach` enters `push`
 only when **both** behind-point distance ≤.08 and the existing corridor
 (.35≤axial≤.63, lateral≤.06) hold. `push` exits to `approach` on readiness loss.
-Approach always aims at the puck minus .55 times the goal direction; corridor
-re-entry alone does not interrupt this recovery. Push aims in the goal direction.
-The .12 rad heading gate and .4 rad cap precede motion; approach/push use their
-existing .25/.2 velocities. Geometry, physics, task/success thresholds, fixed
+The approach target stays at the puck minus .55 times the goal direction;
+corridor re-entry alone does not interrupt recovery. In approach only, compare
+forward target orientation `atan2(ay,ax)` and reverse orientation
+`atan2(-ay,-ax)`, each minus yaw and wrapped by `math.remainder(error,tau)`.
+Choose reverse only when its absolute error is strictly smaller; exact ties
+stay forward. The existing .12 rad heading gate and .4 rad cap precede motion.
+Once aligned, use the existing .25 approach magnitude with the selected sign.
+Push still aims in the goal direction and always uses positive .2. No new mode,
+state, threshold or gain is introduced. Geometry, physics, task/success thresholds, fixed
 commands, layouts, triggers and all budgets remain unchanged. These are already
 inspected development scenes, with no unseen or held-out claim.
 
@@ -40,13 +46,13 @@ reviewed. The teacher is used only by this standalone verifier and pure tests.
 XML derivation, installation, authored reset, native snapshot implementation,
 contact interpretation and task transition logic are unchanged. Protocol hashes
 bind the current task/profile; standalone application version **2** additionally
-binds `teacher_mode`. V1/v2 task/gate pins, old application versions, missing or
+binds `teacher_mode`. V1/v2/v3 task/gate pins, old application versions, missing or
 case-incompatible modes are rejected before native restore. Initial teacher
 snapshots require approach; later snapshots preserve the prior decision's mode,
 which need not already satisfy readiness in the post-step world. Each next
 teacher decision evaluates that world exactly once.
 
-Numeric schema **`puck-mechanics-v2`** adds scalar uint8 `teacher_mode_before`
+Unchanged numeric schema **`puck-mechanics-v2`** retains scalar uint8 `teacher_mode_before`
 and `teacher_mode_after`: fixed=0, approach=1, push=2. Fixed-action roots and the
 fixed-action replay use only `fixed`, never a fabricated teacher state. Events
 retain the corresponding mode names; the completed-state digest also binds the
@@ -57,13 +63,13 @@ The production snapshot container/schema is unchanged.
 
 The prior eight-input stateless learner proposal is **closed pending re-review**:
 privileged teacher mode can produce different action labels for identical
-declared observations. V3 adds neither a learner input nor an architecture or
+declared observations. V4 adds neither a learner input nor an architecture or
 training change. Teacher collection and all training/evaluation stages stay
 closed pending a separately reviewed learning contract and mechanics outcome.
 
 The historical construction verifier keeps its old module pin and rejects this
 checkout; reproduce it at its committed source. Unchanged XML bytes and expected
-native hashes do not automatically transfer construction qualification to v3.
+native hashes do not automatically transfer construction qualification to v4.
 Each future owner must still admit, construct and check the fixed model before
 its own mechanics conditions are assessed.
 
@@ -177,7 +183,7 @@ hash-pinned launcher/plan before any execution:
 ```sh
 PYTHONPATH=src ../lab-hardening/.venv/bin/python scripts/verify_puck_mechanics.py \
   --repo "$PWD" --expected-commit FROZEN_HEAD \
-  --output runs/m6-puck-mechanics-v3-YYYYMMDD/gate --retention-root runs
+  --output runs/m6-puck-mechanics-v4-YYYYMMDD/gate --retention-root runs
 ```
 
 The actual invocation must use the reviewed outer launcher, not this unbounded
@@ -187,13 +193,15 @@ source/model identity, exact selected boundary/successors, outcomes and cleanup.
 No downstream teacher collection, learning or physical qualification follows
 automatically from this gate.
 
-V3 verification remains pure fixture evidence until a separately approved native
-gate. Fixtures cover the actual v2 action-161/188 states and reflection, conjunctive
-arrival/corridor admission, stop/alignment/cap behavior, invalid and restored
-modes, fixed-action replay without teacher execution, scalar numeric mode
-round-trips, exact continuation/policy decision parity, and old schema/pin
-rejection. The full native suite and a v3 launcher/run have not been executed.
+V4 verification remains pure fixture evidence until a separately approved native
+gate. Literal expected actions cover retained tick-161 reverse-orientation
+selection (still turn-only), aligned reverse velocity, exact forward tie,
+near-wrap angles, reflection, stop priority and misalignment. Generic application
+serialization and exact recorded-mode/action comparisons include reverse motion
+in the authored continuation/policy fixture. These are numerical fixtures, not
+reverse-contact or task-completion evidence. The app and numeric schemas remain
+version2 because their fields are unchanged; historical protocol pins still
+reject old snapshots before restore. Training remains closed.
 
-Source preparation validation: **87 focused pure checks passed in 0.898 s**,
-with no skips. These checks import no native model or run physics. The full
-native suite and v3 mechanics outcome remain pending separate approval.
+V4 source preparation: **88 focused pure checks passed in 0.964 s**, no skips.
+No v4 controls or native run were prepared/executed in this source slice.

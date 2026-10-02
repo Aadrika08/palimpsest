@@ -23,8 +23,8 @@ from verify_afterimage import digest, write_json, process_identity, cleanup_chec
 from palimpsest import puck_profile as puck
 from palimpsest.snapshots import state_digest
 
-PROTOCOL_FILE = 'docs/plans/m6-puck-mechanics-v3.json'
-PROTOCOL_SHA256 = 'c37c620b7796996d4a00e7d1da0ff6e8d25bfacf663c716ce6fc9ca4150c44d1'
+PROTOCOL_FILE = 'docs/plans/m6-puck-mechanics-v4.json'
+PROTOCOL_SHA256 = 'e24a60ef1e2ddc74cf04e9d640e537fdeb157f7f0c781707a9d092bed421ddc7'
 MiB = 1024**2
 
 

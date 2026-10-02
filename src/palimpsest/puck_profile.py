@@ -16,8 +16,8 @@ from .body_profile import GROUND_SUPPORT, ROBOT_GEOMS
 from .task_mechanics import _fields, _identifier, _integer, _number, _pair, _version
 
 SCENARIO = 'puck-pushing-development'
-PROTOCOL_SHA256 = '7129265b8483e6932a7745f6af77176855139aab398bd229b78430fe8ae87534'
-PROTOCOL_PATH = 'docs/plans/m6-puck-pushing-protocol-v3.json'
+PROTOCOL_SHA256 = 'edf868c868922a3d7a946e705553c7144509a2a6af7f208e399f63346d2b20b9'
+PROTOCOL_PATH = 'docs/plans/m6-puck-pushing-protocol-v4.json'
 WORLD_GEOMS = {'floor', 'wall_n', 'wall_s', 'wall_e', 'wall_w',
                *[f'obstacle{i}' for i in range(20)]}
 CONTACT_FIELDS = ('tick', 'time_s', 'source_start_time_s', 'contact_cache_time_s',
@@ -397,10 +397,15 @@ def demonstrate(world, mode):
     if mode == 'push':
         ax, ay = dx, dy
     error = math.remainder(math.atan2(ay, ax)-yaw, math.tau)
+    velocity = .2 if mode == 'push' else .25
+    if mode == 'approach':
+        reverse_error = math.remainder(math.atan2(-ay, -ax)-yaw, math.tau)
+        if abs(reverse_error) < abs(error):  # Exact ties retain forward approach.
+            error, velocity = reverse_error, -.25
     heading = max(-.4, min(.4, error))
     if abs(error) > .12:
         return [0., heading], mode
-    return [.2 if mode == 'push' else .25, heading], mode
+    return [velocity, heading], mode
 
 
 def _fixed_bindings(env, model):

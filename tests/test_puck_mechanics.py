@@ -88,7 +88,7 @@ class MechanicsFixtures(unittest.TestCase):
         for version in (1,True,3):
             bad=copy.deepcopy(app);bad['version']=version;variants.append(bad)
         bad=copy.deepcopy(app);del bad['teacher_mode'];variants.append(bad)
-        for filename in ('m6-puck-mechanics-v1.json','m6-puck-mechanics-v2.json'):
+        for filename in ('m6-puck-mechanics-v1.json','m6-puck-mechanics-v2.json','m6-puck-mechanics-v3.json'):
             import hashlib
             path=ROOT/'docs/plans'/filename;old=json.loads(path.read_text())
             for target,value in (('gate',hashlib.sha256(path.read_bytes()).hexdigest()),
@@ -109,6 +109,9 @@ class MechanicsFixtures(unittest.TestCase):
         for key in ('limits','environment_kwargs','runtime','owner_order','boundary_rules','watchdog'):
             self.assertEqual(new[key],old[key])
         self.assertNotEqual(new['pushing_protocol_sha256'],old['pushing_protocol_sha256'])
+        v3=json.loads((ROOT/'docs/plans/m6-puck-mechanics-v3.json').read_text())
+        self.assertEqual(new['recording'],v3['recording'])
+        self.assertEqual(new['snapshot'],v3['snapshot'])
 
     def test_application_dwell_is_not_command_zero(self):
         # The frozen dwell predicate can be valid at distance .19, outside teacher stop .18.
@@ -168,7 +171,7 @@ class MechanicsFixtures(unittest.TestCase):
         gate.validate_application(restored,'teacher-positive',1,state_digest(app))
         for kind in ('native-continuation','policy-replay'):
             self.assertEqual(gate.action_for({'kind':kind,'case':'teacher-positive'},
-                             restored['world'],restored['teacher_mode']),([0.,-.4],'approach'))
+                             restored['world'],restored['teacher_mode']),([0.,.16876197027012038],'approach'))
         for mode in ('fixed',None,True,1,[], 'recover'):
             bad=copy.deepcopy(app);bad['teacher_mode']=mode
             with self.assertRaises(ValueError): gate.validate_application(bad,'teacher-positive',1,state_digest(bad))
@@ -188,12 +191,13 @@ class MechanicsFixtures(unittest.TestCase):
         app=application(0);app['case']=app['state']['episode_id']='teacher-positive'
         app['teacher_mode']='approach'
         worlds=[]
-        for tick,pose in enumerate(([-.8,0.,0.],[-.55,0.,0.],[-.45,.07,0.],[-.45,.055,0.],[-.45,.055,0.])):
+        for tick,pose in enumerate(([-.8,0.,0.],[-.55,0.,0.],[-.45,.07,0.],[-.4,0.,0.],[-.42,0.,0.])):
             value=copy.deepcopy(app['world']);value.update(time_s=tick*.02,rover_pose=pose);worlds.append(value)
         env=SimpleNamespace(data=SimpleNamespace(qpos=np.zeros(71),qvel=np.zeros(70),ctrl=np.zeros(2),
                             qfrc_applied=np.zeros(70),xfrc_applied=np.zeros((26,6))))
         observation={key:np.zeros((128,128,3),np.uint8) for key in ('cam_left','cam_right')}
-        actions=([.25,0.],[.2,0.],[0.,-.4],[0.,-.4])
+        # atan2(-0, positive) retains negative zero in the aligned reverse heading.
+        actions=([.25,0.],[.2,0.],[0.,.4],[-.25,-0.])
         modes=('approach','approach','push','approach','approach')
         state=app['state'];contact=app['contact'];source=[];cursors=[]
         for tick in range(4):

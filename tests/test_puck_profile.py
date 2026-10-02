@@ -87,24 +87,24 @@ class PuckProfileTests(unittest.TestCase):
         a['goal_xy'][0] = 999
         self.assertEqual(self.p.layout(ROOT, 6000, 'train')['goal_xy'], [.6, -.3])
 
-    def test_v3_preserves_v1_v2_protocols_and_numeric_task_contract(self):
-        original=ROOT/'docs/plans/m6-puck-pushing-protocol.json'
-        previous=ROOT/'docs/plans/m6-puck-pushing-protocol-v2.json'
-        self.assertEqual(hashlib.sha256(original.read_bytes()).hexdigest(),
-                         '8a7f14ee69fe386fe1150b644e71737a5e39ab3c8c4987d7cdf61277796f3bac')
-        self.assertEqual(hashlib.sha256(previous.read_bytes()).hexdigest(),
-                         'fd8dbcea35d226bed522d02f27f7bc11149ac77f72ca49838493489e330eb88c')
-        old=json.loads(previous.read_text());new=self.p.load_protocol(ROOT)
-        self.assertEqual(new['id'],'m6-puck-pushing-plan-v3')
-        self.assertEqual(new['demonstrator']['mode']['initial'],'approach')
-        new['id']=old['id']
-        for key in ('id','aim_selection'): new['demonstrator'][key]=old['demonstrator'][key]
-        del new['demonstrator']['mode'];del new['learning_admission']
+    def test_v4_preserves_historical_protocols_and_numeric_task_contract(self):
+        pins={'m6-puck-pushing-protocol.json':'8a7f14ee69fe386fe1150b644e71737a5e39ab3c8c4987d7cdf61277796f3bac',
+              'm6-puck-pushing-protocol-v2.json':'fd8dbcea35d226bed522d02f27f7bc11149ac77f72ca49838493489e330eb88c',
+              'm6-puck-pushing-protocol-v3.json':'7129265b8483e6932a7745f6af77176855139aab398bd229b78430fe8ae87534'}
+        for name,sha in pins.items():
+            self.assertEqual(hashlib.sha256((ROOT/'docs/plans'/name).read_bytes()).hexdigest(),sha)
+        old=json.loads((ROOT/'docs/plans/m6-puck-pushing-protocol-v3.json').read_text())
+        new=self.p.load_protocol(ROOT)
+        self.assertEqual(new['id'],'m6-puck-pushing-plan-v4')
+        new['id']=old['id'];new['demonstrator']['id']=old['demonstrator']['id']
+        new['demonstrator']['mode']['velocity']=old['demonstrator']['mode']['velocity']
+        del new['demonstrator']['approach_direction'];new['learning_admission']=old['learning_admission']
         self.assertEqual(new,old)
 
-    def test_historical_task_cursors_not_reinterpreted_as_v3(self):
+    def test_historical_task_cursors_not_reinterpreted_as_v4(self):
         for old in ('8a7f14ee69fe386fe1150b644e71737a5e39ab3c8c4987d7cdf61277796f3bac',
-                    'fd8dbcea35d226bed522d02f27f7bc11149ac77f72ca49838493489e330eb88c'):
+                    'fd8dbcea35d226bed522d02f27f7bc11149ac77f72ca49838493489e330eb88c',
+                    '7129265b8483e6932a7745f6af77176855139aab398bd229b78430fe8ae87534'):
             state=self.p.initialize(world(),'old-episode');state['protocol_sha256']=old
             with self.assertRaisesRegex(ValueError,'Incompatible'):
                 self.p.advance(state,world(1),self.contacts(1),[0.,0.])
@@ -387,14 +387,33 @@ class PuckProfileTests(unittest.TestCase):
         arrived=world(puck=(.55,0.,.062),rover=(.08,0.,0.))
         outside=world(puck=(.55,0.,.062),rover=(.080001,0.,0.))
         self.assertEqual(self.p.demonstrate(arrived,'approach'),([.2,0.],'push'))
-        self.assertEqual(self.p.demonstrate(outside,'approach'),([0.,.4],'approach'))
+        self.assertEqual(self.p.demonstrate(outside,'approach'),([-.25,0.],'approach'))
         self.assertEqual(self.p.demonstrate(outside,'push'),([.2,0.],'push'))
         for mode in (None, True, 1, 'fixed', '', [], 'recover'):
             with self.subTest(mode=mode), self.assertRaises(ValueError):
                 self.p.demonstrate(world(),mode)
         with self.assertRaises(TypeError): self.p.demonstrate(world())
 
-    def test_v3_retained_lateral_exit_recovery_and_reflection(self):
+    def test_signed_approach_alignment_tie_wrap_and_stop(self):
+        # A behind point directly rearward requires reverse, not a pi-radian turn.
+        cases=[(world(rover=(-.4,0.,0.)),[-.25,0.]),
+               (world(rover=(.4,0.,math.pi),goal=(-1.,0.)),[-.25,0.]),
+               (world(rover=(-.4,0.,.12)),[-.25,-.12]),
+               (world(rover=(-.4,0.,.120001)),[0.,-.120001]),
+               # Exactly equal absolute +/-pi/2 errors choose forward (negative turn).
+               (world(puck=(.55,0.,.062),goal=(1.55,0.),rover=(0.,1.,0.)),[0.,-.4]),
+               (world(rover=(.45,0.,math.pi-.01)),[.25,.01]),
+               (world(rover=(.45,0.,-math.pi+.01)),[.25,-.01]),
+               (world(rover=(-.4,0.,0.),goal=(.18,0.)),[0.,0.])]
+        for value,expected in cases:
+            with self.subTest(value=value):
+                action,mode=self.p.demonstrate(value,'approach')
+                np.testing.assert_allclose(action,expected,rtol=0,atol=1e-12)
+                self.assertEqual(mode,'approach')
+        # Existing push travel remains positive at the same rear-target geometry.
+        self.assertEqual(self.p.demonstrate(world(rover=(-.4,0.,0.)),'push'),([.2,0.],'push'))
+
+    def test_v4_retained_reverse_choice_is_turn_only_and_reflected(self):
         # Exact v2 action161/188 worlds, retained audit b2b0cf7c...ca39421.
         first=world(161,rover=(-.10557864384951335,.025780470462970276,.012211822488032919),
                     puck=(.3417668301639983,-.02281179279051964,.060402737920408796),
@@ -410,9 +429,9 @@ class PuckProfileTests(unittest.TestCase):
                     for key in ('rover_pose','puck_xyz','goal_xy','puck_velocity_xy'):
                         value[key][:2]=[-v for v in value[key][:2]]
                     value['rover_pose'][2]+=math.pi
-            self.assertEqual(self.p.demonstrate(a,'push'),([0.,-.4],'approach'))
-            # Corridor re-entry alone must not reverse the recovery yaw command.
-            self.assertEqual(self.p.demonstrate(b,'approach'),([0.,-.4],'approach'))
+            self.assertEqual(self.p.demonstrate(a,'push'),([0.,.4],'approach'))
+            # Corridor re-entry alone must not change the carried recovery mode.
+            self.assertEqual(self.p.demonstrate(b,'approach'),([0.,.4],'approach'))
             self.assertEqual(self.p.demonstrate(b,'push'),([0.,.4],'push'))
 
     def test_retained_v1_tick109_keeps_goal_aim_only_in_push_mode(self):
@@ -422,7 +441,9 @@ class PuckProfileTests(unittest.TestCase):
             action,mode=self.p.demonstrate(value,'push')
             np.testing.assert_allclose(action,[.2,-yaw],rtol=0,atol=1e-12)
             self.assertEqual(mode,'push')
-            self.assertEqual(self.p.demonstrate(value,'approach'),([0.,-.4],'approach'))
+            action,mode=self.p.demonstrate(value,'approach')
+            np.testing.assert_allclose(action,[0.,.16876197027012038],rtol=0,atol=1e-12)
+            self.assertEqual(mode,'approach')
 
     def test_import_and_pure_use_never_imports_torch_or_mujoco(self):
         code = ('import sys; from palimpsest.puck_profile import load_protocol; '
