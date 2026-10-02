@@ -12,6 +12,8 @@ SCENARIOS = {
     'vision-ablation': ('Vision ablation', 'Disable either eye or both; goal and contact cues remain available.', 20),
     'texture-variation': ('Texture variation', 'Compare upstream checker and realistic textures; an out-of-distribution test.', 20),
     'memory-passages': ('Memory passages (development)', 'Authored two-passage scene with declared symbolic sensing and evidence-based reinspection; transfer is not yet qualified.', 20),
+    'exploration-landmarks': ('Visible landmark exploration (development)', 'Retained visible targets and declared local proximity with stopped encoder dwell; functional performance is unqualified.', 20),
+    'encoder-homing': ('Encoder-only homing (development)', 'Explicit outbound/home phases using a quantized local encoder estimate; slip and actual return accuracy are unqualified.', 20),
 }
 TEXTURES = ('checker', 'realistic')
 CONTROLLERS = ('manual', 'teacher', 'flynn')
@@ -25,6 +27,8 @@ def validate(scenario, texture, controller):
         raise ValueError('Realistic textures require the texture-variation scenario')
     if scenario == 'memory-passages' and controller == 'teacher':
         raise ValueError('Memory passages requires manual or FLYNN control through the declared task cue')
+    if scenario in ('exploration-landmarks', 'encoder-homing') and controller == 'teacher':
+        raise ValueError('Declared exploration/homing excludes the privileged geometry teacher')
     label, description, count = SCENARIOS[scenario]
     profile = {'id': scenario, 'version': 1, 'label': label, 'description': description,
             'texture': texture, 'n_obstacles': count, 'width': 128, 'height': 128,
@@ -36,6 +40,14 @@ def validate(scenario, texture, controller):
         from .memory_world import PROFILE_SHA256
         profile.update(task='memory-reinspection-development', world_protocol_sha256=PROFILE_SHA256,
                        observation_profile='two-rgb-eyes-contact-visible-landmark-bearing-v1')
+    if scenario in ('exploration-landmarks', 'encoder-homing'):
+        from .task_profiles import PROTOCOL_SHA256
+        profile.update(task=scenario + '-development', task_protocol_sha256=PROTOCOL_SHA256,
+            observation_profile=('two-rgb-eyes-contact-visible-id-bearing-proximity-encoders-v1'
+                                 if scenario == 'exploration-landmarks' else
+                                 'two-rgb-eyes-contact-encoder-estimated-local-home-bearing-v1'),
+            objective=('inspect both visible landmarks with stopped dwell' if scenario == 'exploration-landmarks'
+                       else 'depart estimated local origin then return with stopped dwell'))
     return profile
 
 

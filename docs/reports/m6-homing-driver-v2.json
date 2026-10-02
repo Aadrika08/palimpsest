@@ -1,0 +1,344 @@
+{
+  "schema_version": 1,
+  "status": "manual_development_actual_homing_gate_passed",
+  "raw_report": {
+    "path": "runs/m6-homing-driver-v2-development/report.json",
+    "sha256": "a6c90d137c2c714abd454a9f67e4caf6e818ce3bcd5f4c34c654571498f7a703",
+    "status": "passed",
+    "wall_seconds": 63.05225889600115
+  },
+  "invocation": "PYTHONPATH=src MUJOCO_GL=egl OMP_NUM_THREADS=2 ../lab-hardening/.venv/bin/python scripts/verify_tasks.py --assets /home/utkarsh/Work/shraddha/brain/.worktrees/r0-reproduction/data/assets/flynn --output runs/m6-homing-driver-v2-development --scenarios encoder-homing --driver v2",
+  "invocation_exit_code": 0,
+  "stdout_log": {
+    "path": "/tmp/palimpsest-m6-homing-driver-v2-development.log",
+    "sha256": "599c4c9449f10523f0c8d0be0ee4af849bc3a747bb8dbc948a2da4755fa455e7"
+  },
+  "runtime_source": {
+    "commit": "2cfaa2097d10dd098bde675bd4ac37c4949572b4",
+    "files_sha256": {
+      "src/palimpsest/__init__.py": "bb99e30d22e4662c4ded455b1b23f49b77ce811dcfa1b69bf358925487a566d8",
+      "src/palimpsest/__main__.py": "935a1c1166b0c1ea35a82256345000bf2c73ded718d77773bc27a71ecce28f7d",
+      "src/palimpsest/artifacts.py": "0851fc2435bdd85135f568bebd40b52776ce35b2c9c86335506ce34386f06a31",
+      "src/palimpsest/assets.py": "aa4a38c7403cd9f72bc23027acd7c212202f25574bea6af65053c34664da49e3",
+      "src/palimpsest/cli.py": "3d5bb7bc2135b8534ca2fcfceb7b4fe4e9f24ed140a38003f7b1ded1c3d40a36",
+      "src/palimpsest/doctor.py": "109de62468161f35461eee76af244daabef38f2faa1526c5a6ed268817e6b834",
+      "src/palimpsest/engine.py": "c7a5450b42cebc3e58e90c8fe6ed623da2e37cfddb7fddca18946e172c902074",
+      "src/palimpsest/evaluate.py": "74a9afb710b36a366ab680462e9440f285730a0360bda704af25ebbcfd74256a",
+      "src/palimpsest/flynn.py": "409b7503d76fd6f971a33d053e86c968b529edc226b85f44122e17a649f8f9f4",
+      "src/palimpsest/interventions.py": "fd2c1e6f160f7d251ddcf3275b383e8e3e265fc462452d1bc20c0030a6acf9c8",
+      "src/palimpsest/lab.py": "2f5072d03d33f001120bbaa87dd3e1ba2de8cd15942c3a7e7d4c97b564aa89a7",
+      "src/palimpsest/memory.py": "9641ae3d7d78577e0ea5bc8bcacbe455cae6c548f4f9bd10b8bb593a8fd7c542",
+      "src/palimpsest/memory_task.py": "6562de8c0734e0622529231babc7e035ba146077b39e004b0f52928b3038dcc6",
+      "src/palimpsest/memory_world.py": "e1a1b655f3698b4f238dd6b92b93fbe5c38dce26be4f908c76cc9db25a852eb7",
+      "src/palimpsest/profiles.py": "dcc5255bad98f7ca63d56f344fbf4ebbb85a66f68313aa7d417da3755e6d53d6",
+      "src/palimpsest/records.py": "c4be6f1699c1d8550a7f2db2979f7f9f18196ac986eef2aefe3ba665cae99ac3",
+      "src/palimpsest/replay.py": "04c381ca6a0268af38032cc95b006530f87f7f52c4177883d98c17338d5c28b5",
+      "src/palimpsest/snapshots.py": "14d95bb2f78646260ef931a610c0e7b0a31ba0f75e87413579102aad5c6a35d7",
+      "src/palimpsest/storage.py": "79664d876834ef20b459cc83963515effdaf75d0256fe5764a9cf8e18cd448c2",
+      "src/palimpsest/task_mechanics.py": "cbf698ad3f027f572c4f12655595825f580f155949f6c7c96f2556d14e6d1bb6",
+      "src/palimpsest/task_profiles.py": "14b237ede67949f281977c00b01dcd7a8e8a367d67a7e4e37911e0cb9b1dfa79",
+      "src/palimpsest/worker.py": "303ed1653c3bf50807b66f382225ef1bd226386343a7b4974387b817a226c38a",
+      "pyproject.toml": "13435cdf27674955809c67d3d81410c502bf0f258b661e68ed82197842fbc800",
+      "uv.lock": "8a7a880d020c1907e221575fda65642241f809fc628a55381f1b6137bff1b732"
+    }
+  },
+  "runtime_source_unchanged": true,
+  "script_sha256": "ec94a0a95d3e90ed9f9a008025b08d8da72949637144782655273d254948668b",
+  "script_unchanged": true,
+  "driver": {
+    "version": 2,
+    "kind": "artificial-manual-cue-following-fixture",
+    "input": "previous recorded effective sensors[2:4] only; no pose/goal/task-state input",
+    "initial_action": [
+      0.0,
+      0.0
+    ],
+    "forward_max": 0.4,
+    "heading_gain": 1.0,
+    "rule": "if abs(atan2(sin,cos))>.1: v=0, heading=clip(angle,-.4,.4); else v=.4, heading=angle; neutral cue gives zero",
+    "max_ticks": 600,
+    "snapshot_tick": 8,
+    "continuation_ticks": 4,
+    "claim": "development manual fixture in independently measured command range; no transient/mixed generalization guarantee",
+    "heading_turn_cap_rad": 0.4,
+    "align_threshold_rad": 0.1,
+    "actual_home_max_distance_m": 0.25,
+    "actual_home_gate": "task_completed plus isolated evaluator true home distance<=.25m; no truth feedback"
+  },
+  "source": {
+    "ticks": 300,
+    "task_completed": true,
+    "actual_home_closure": {
+      "distance_m": 0.15244903275510924,
+      "threshold_m": 0.25,
+      "passed": true,
+      "evaluator_only": true
+    },
+    "final_outcome": {
+      "reason": "task_completed",
+      "episode": 0,
+      "steps": 300,
+      "upstream_goal_distance_m": 1.4600279331207275,
+      "task_phase": "complete",
+      "completed_inspection_ids": [],
+      "evaluator_actual_home_distance_m": 0.15244903275510924,
+      "estimated_home_distance_m": 0.1075681766207124
+    },
+    "motion": {
+      "loaded_body_calibration": {
+        "radius_m": 0.06,
+        "track_m": 0.36,
+        "quantum_rad": 0.001
+      },
+      "straight_forward_intervals": 147,
+      "measured_straight_shaft_delta_rad": [
+        31.97011986809163,
+        31.899197480283775
+      ],
+      "measured_straight_body_forward_m": 1.9062127916071123,
+      "positive_shaft_and_forward_direction_observed": true,
+      "max_encoder_vs_true_local_error_m": 0.1622430462924606,
+      "dwell_intervals": 15,
+      "max_dwell_true_displacement_m": 4.109925301962725e-05,
+      "max_dwell_true_yaw_change_rad": 3.961852894640572e-06,
+      "scope": "isolated evaluator measurements; no correction/input to driver. Quantized shaft rest does not prove body rest, slip-free travel or physical stopping."
+    },
+    "source_unchanged": true
+  },
+  "native_continuation": {
+    "status": "passed",
+    "ticks": 4,
+    "task_state": "matched",
+    "float_atol": 1e-06,
+    "float_rtol": 1e-06,
+    "cameras_and_integers": "exact"
+  },
+  "snapshot": {
+    "tick": 8,
+    "phase": "outbound",
+    "sha256": "d6b60c320ad8482e9abd4793d9c6dd6e03efd1485bb85349f820f3d028a5018a"
+  },
+  "replays": {
+    "actions": {
+      "status": "passed",
+      "compared_ticks": 300
+    },
+    "policy": {
+      "status": "passed",
+      "compared_ticks": 300
+    }
+  },
+  "owners": {
+    "source": {
+      "schema_version": 1,
+      "status": "completed",
+      "timeout_seconds": 180,
+      "started_utc": "2026-10-02T11:55:42.958124+00:00",
+      "output": "/home/utkarsh/Work/shraddha/brain/.worktrees/exploration-homing/runs/m6-homing-driver-v2-development/encoder-homing/source",
+      "returncode": 0,
+      "elapsed_seconds": 16.922000311999
+    },
+    "restored": {
+      "schema_version": 1,
+      "status": "completed",
+      "timeout_seconds": 180,
+      "started_utc": "2026-10-02T11:55:59.990596+00:00",
+      "output": "/home/utkarsh/Work/shraddha/brain/.worktrees/exploration-homing/runs/m6-homing-driver-v2-development/encoder-homing/restored",
+      "returncode": 0,
+      "elapsed_seconds": 6.146906032998231
+    },
+    "actions": {
+      "schema_version": 1,
+      "status": "completed",
+      "timeout_seconds": 180,
+      "started_utc": "2026-10-02T11:56:06.552636+00:00",
+      "output": "/home/utkarsh/Work/shraddha/brain/.worktrees/exploration-homing/runs/m6-homing-driver-v2-development/encoder-homing/actions",
+      "returncode": 0,
+      "elapsed_seconds": 21.227454791005584
+    },
+    "policy": {
+      "schema_version": 1,
+      "status": "completed",
+      "timeout_seconds": 180,
+      "started_utc": "2026-10-02T11:56:27.781516+00:00",
+      "output": "/home/utkarsh/Work/shraddha/brain/.worktrees/exploration-homing/runs/m6-homing-driver-v2-development/encoder-homing/policy",
+      "returncode": 0,
+      "elapsed_seconds": 18.1127136300056
+    }
+  },
+  "cleanup": {
+    "all_recording_manifests": "completed",
+    "all_owner_returncodes": 0,
+    "remaining_scoped_worker_cmdlines": 0,
+    "semaphore_warnings": 0,
+    "tracebacks": 0,
+    "native_warning": "Same Torch TF32 API UserWarning in each stderr log.",
+    "limitation": "Supervisor files lack persisted PID/start-time identities; finite scoped command-line observation is not universal descendant proof."
+  },
+  "historical_failure": {
+    "path": "runs/m6-tasks-development-20261002/report.json",
+    "sha256": "cc0d263d04d28d737ef9241c2ad7a1d39fc9d7332ec5e8ad0dc9e57a8314d53b",
+    "source_commit": "05d788b7485a216e3592ef71d74ebb2d23118c96",
+    "actual_home_distance_m": 1.5006286671196978,
+    "retained_unchanged": true
+  },
+  "calibration_reference": {
+    "path": "runs/m6-body-calibration-20261002/report.json",
+    "sha256": "cb17f4479d2c3b3fabe3e97f965f3c780ee65da901d59122ef31229c7d019496",
+    "scope": "Independent fixed low-amplitude trials; excluded first20 settling intervals."
+  },
+  "limitations": [
+    "Artificial manual previous-bearing cue fixture on one declared development path, not learned or held-out competence.",
+    "Physical radius/track and original nominal odometry unchanged; no fitted coefficients or true pose used online.",
+    "One outbound progress snapshot at tick8/four continuation ticks; home-turn/arrival/dwell and exploration-target/dwell snapshots remain pending.",
+    "Quantized shaft rest does not prove body rest; maximum counted-dwell translation was 0.00004109925301962725m/tick.",
+    "Calibration steady fixed-trial support does not prove mixed/transient generalization.",
+    "Default v1 behavior and earlier failed actual-home evidence remain retained."
+  ],
+  "artifacts": {
+    "runs/m6-homing-driver-v2-development/encoder-homing/actions/6771a42d63ea4a288ea8e702c02dbef0/recording/events.jsonl": {
+      "sha256": "7d7e1de3864c2d31f8b70bbff9f0369c683ad52ba1e9763c68bf0745495f5511",
+      "bytes": 972312
+    },
+    "runs/m6-homing-driver-v2-development/encoder-homing/actions/6771a42d63ea4a288ea8e702c02dbef0/recording/manifest.json": {
+      "sha256": "4a0a848aee6bd6d552b7e57775c767268c99c8d062932a218c59868d26b2d87c",
+      "bytes": 4468
+    },
+    "runs/m6-homing-driver-v2-development/encoder-homing/actions/6771a42d63ea4a288ea8e702c02dbef0/replay-report.json": {
+      "sha256": "9c5dee3cd9cfb94b721f8df469f0cfcb10ed79f2a7e0afb9ecf1025669557ef2",
+      "bytes": 1854
+    },
+    "runs/m6-homing-driver-v2-development/encoder-homing/actions/6771a42d63ea4a288ea8e702c02dbef0/snapshots/index.json": {
+      "sha256": "a25ee8bdc78d51fef401ad091b33fc1463c47284d457013d16c7b98d011a8d4c",
+      "bytes": 397
+    },
+    "runs/m6-homing-driver-v2-development/encoder-homing/actions/6771a42d63ea4a288ea8e702c02dbef0/snapshots/initial.snp": {
+      "sha256": "a9a7458d1d1ae5d618b108b933a9a911da8a3e2a7efd0502381002e32f3dc993",
+      "bytes": 523723
+    },
+    "runs/m6-homing-driver-v2-development/encoder-homing/actions/result.json": {
+      "sha256": "fc14901ca69179ad21992f0fa5c632a714c63542a2f2ba662a4bdb3281311759",
+      "bytes": 410
+    },
+    "runs/m6-homing-driver-v2-development/encoder-homing/actions/stderr.log": {
+      "sha256": "4ad0f1c3fe69bc9cdb7a9292640501f7da85a560e7584a6dd6f7559610a75e00",
+      "bytes": 698
+    },
+    "runs/m6-homing-driver-v2-development/encoder-homing/actions/stdout.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "runs/m6-homing-driver-v2-development/encoder-homing/actions/supervisor.json": {
+      "sha256": "c42e885b12f03e763132e0c2061f78bb6e9ead7be4dd4878c2afbf8f03febc97",
+      "bytes": 329
+    },
+    "runs/m6-homing-driver-v2-development/encoder-homing/policy/75fd3cbb1a6b433597f16a1277910f46/recording/events.jsonl": {
+      "sha256": "8b2631f5cea3e37dbde0e8e4e801f03f12cd87f3245b315899c375c60483ac6d",
+      "bytes": 972143
+    },
+    "runs/m6-homing-driver-v2-development/encoder-homing/policy/75fd3cbb1a6b433597f16a1277910f46/recording/manifest.json": {
+      "sha256": "b1d7000860041afd44a4ddf9172924f7dd38b15e7bf2c129a5c4fd9b5b3171b0",
+      "bytes": 4465
+    },
+    "runs/m6-homing-driver-v2-development/encoder-homing/policy/75fd3cbb1a6b433597f16a1277910f46/replay-report.json": {
+      "sha256": "94eb150697907d65a4058c4e2ad5a1612b4d03b1a2e05efc6f83e3b3b615b4ab",
+      "bytes": 1582
+    },
+    "runs/m6-homing-driver-v2-development/encoder-homing/policy/75fd3cbb1a6b433597f16a1277910f46/snapshots/index.json": {
+      "sha256": "ce7a203c4865d6c2f2d5d3f4276180d2d9c2a03d0e7523b5dd63f5e9cbaed44b",
+      "bytes": 397
+    },
+    "runs/m6-homing-driver-v2-development/encoder-homing/policy/75fd3cbb1a6b433597f16a1277910f46/snapshots/initial.snp": {
+      "sha256": "570ab18ffc38ac80b250972325f21f32b0ca15e448716aa214d0617f1dce5a82",
+      "bytes": 523722
+    },
+    "runs/m6-homing-driver-v2-development/encoder-homing/policy/result.json": {
+      "sha256": "de8af9a796ce455be543bc602c5f944a0fc8db9bd6358cc53ad993d5b2048bbb",
+      "bytes": 408
+    },
+    "runs/m6-homing-driver-v2-development/encoder-homing/policy/stderr.log": {
+      "sha256": "4ad0f1c3fe69bc9cdb7a9292640501f7da85a560e7584a6dd6f7559610a75e00",
+      "bytes": 698
+    },
+    "runs/m6-homing-driver-v2-development/encoder-homing/policy/stdout.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "runs/m6-homing-driver-v2-development/encoder-homing/policy/supervisor.json": {
+      "sha256": "66ce05ead18b68f00bbdfb13db5d6fc3288bec9c85a6b6616f0f1f43127d1913",
+      "bytes": 326
+    },
+    "runs/m6-homing-driver-v2-development/encoder-homing/restored/f72c194f0c754e64ae53746b4486421f/recording/events.jsonl": {
+      "sha256": "90eaba38ccf864ef254585469338e5c25cbc1a89c4860502203d12f464844215",
+      "bytes": 23866
+    },
+    "runs/m6-homing-driver-v2-development/encoder-homing/restored/f72c194f0c754e64ae53746b4486421f/recording/manifest.json": {
+      "sha256": "7d0e8fd94e237c02f1bb765b0c414f55fe7113ef71436e07a1be8d0fc1f5fdaf",
+      "bytes": 4045
+    },
+    "runs/m6-homing-driver-v2-development/encoder-homing/restored/result.json": {
+      "sha256": "ea20984551ac4fa04436a80b71054cdca874abe3d6efdd61237a335d787c7961",
+      "bytes": 2652
+    },
+    "runs/m6-homing-driver-v2-development/encoder-homing/restored/stderr.log": {
+      "sha256": "4ad0f1c3fe69bc9cdb7a9292640501f7da85a560e7584a6dd6f7559610a75e00",
+      "bytes": 698
+    },
+    "runs/m6-homing-driver-v2-development/encoder-homing/restored/stdout.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "runs/m6-homing-driver-v2-development/encoder-homing/restored/supervisor.json": {
+      "sha256": "04866c7b328b60e6be13026d6dfac7c5df6687dec6792c152ab1d0f5499ccbe9",
+      "bytes": 329
+    },
+    "runs/m6-homing-driver-v2-development/encoder-homing/restored/task-states.json": {
+      "sha256": "68aff8738d306fb1753e5e37ef652b9d95934c597f278604f764933f641cc7c9",
+      "bytes": 3347
+    },
+    "runs/m6-homing-driver-v2-development/encoder-homing/source/2500c762e52441078df62af2c6bad2e2/recording/events.jsonl": {
+      "sha256": "1214c891ebbaa8ab4dca5ca2cfe80afb58f0594151cf43b6fab9b101b64d8bfd",
+      "bytes": 971906
+    },
+    "runs/m6-homing-driver-v2-development/encoder-homing/source/2500c762e52441078df62af2c6bad2e2/recording/manifest.json": {
+      "sha256": "4b4eb6498c5fd98467a266e927123c38bf41caba217d43572e06fa28685c3a32",
+      "bytes": 4092
+    },
+    "runs/m6-homing-driver-v2-development/encoder-homing/source/2500c762e52441078df62af2c6bad2e2/snapshots/index.json": {
+      "sha256": "0c86e819f6dba9fa542cf2262a50f5d9b6e2f9975c4a825d2f72489618cf4233",
+      "bytes": 397
+    },
+    "runs/m6-homing-driver-v2-development/encoder-homing/source/2500c762e52441078df62af2c6bad2e2/snapshots/initial.snp": {
+      "sha256": "81b590b8acde7df934d9fac0c61a489c9c56dd47427c865414f068651843a4a6",
+      "bytes": 523719
+    },
+    "runs/m6-homing-driver-v2-development/encoder-homing/source/continuation.json": {
+      "sha256": "88394028ba68bdc5bb86bb7d77b5243bbfe989154644200da1a0bb2619c6d53f",
+      "bytes": 3981
+    },
+    "runs/m6-homing-driver-v2-development/encoder-homing/source/evaluator.json": {
+      "sha256": "d27d12c162d5b4cd0301bf00010fb90d5829663f6d8abfd704a149299c0d86c2",
+      "bytes": 288208
+    },
+    "runs/m6-homing-driver-v2-development/encoder-homing/source/progress.snp": {
+      "sha256": "d6b60c320ad8482e9abd4793d9c6dd6e03efd1485bb85349f820f3d028a5018a",
+      "bytes": 594503
+    },
+    "runs/m6-homing-driver-v2-development/encoder-homing/source/result.json": {
+      "sha256": "480765bc7980a7a299c252b374f8fe520f09b765dd730cd73494a6ed9e8d25a5",
+      "bytes": 4895
+    },
+    "runs/m6-homing-driver-v2-development/encoder-homing/source/stderr.log": {
+      "sha256": "4ad0f1c3fe69bc9cdb7a9292640501f7da85a560e7584a6dd6f7559610a75e00",
+      "bytes": 698
+    },
+    "runs/m6-homing-driver-v2-development/encoder-homing/source/stdout.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "runs/m6-homing-driver-v2-development/encoder-homing/source/supervisor.json": {
+      "sha256": "a0d911c9d8b8956634c83257d3cea28fcc06cc0c58aecb6b5186b0a1b02d80bd",
+      "bytes": 325
+    }
+  }
+}
