@@ -33,6 +33,102 @@ class VerifierBoundaries(unittest.TestCase):
         with patch.object(self.runner, 'load_histories', return_value=self.histories):
             return self.runner.make_plan(self.repo, self.root/'assets', output or self.root/'comparison')
 
+    def test_fixed_source_override_is_bounded_and_keeps_continuation_separate(self):
+        case = experiment.make_world_case(8, 'local_cue', 'development-test', acquisition=True)
+        other = experiment.make_world_case(9, 'paired_cue', 'development-test', acquisition=True)
+        pose = [-1.3, .626, math.pi/2]
+        schedule = case['acquisition_schedule']
+        self.assertEqual(self.runner.source_action(schedule, pose, 199), experiment.acquisition_action(schedule, pose, 199))
+        for tick in (200, 299):
+            action = self.runner.source_action(schedule, pose, tick)
+            self.assertEqual(action, [0., -.35])
+            self.assertEqual(action, self.runner.source_action(other['acquisition_schedule'], pose, tick))
+        self.assertEqual(self.runner.source_action(schedule, [-1.3,.626,math.pi/20], 299), [0.,0.])
+        for tick in (True, -1, 300):
+            with self.assertRaises(ValueError):
+                self.runner.source_action(schedule, pose, tick)
+        self.assertEqual(self.runner.cue_action([1.,0.]), [.65,0.])
+        self.assertEqual(self.runner.PROTOCOL['version'], 2)
+        self.assertEqual(self.runner.SOURCE_PREPARATION['access'], 'privileged-manual-pose-supervision')
+        self.assertFalse(self.runner.SOURCE_PREPARATION['uses_u'])
+
+    def test_visibility_admission_requires_recorded_cues_landmarks_and_evidence(self):
+        from palimpsest import memory_task
+        case = experiment.make_world_case(8, 'local_cue', 'development-test', acquisition=True)
+        world = {'cues':[{'id':case['cue_id'],'xy':case['cue_xy'],'state':0}],
+            'landmarks':[{'id':case['common_goal_id'],'xy':case['goal_xy']}] +
+                [{'id':f['inspection_landmark_id'],'xy':case['inspection_xy'][i]} for i,f in enumerate(case['facts'])],
+            'passages':[{'subject_id':f['subject_id'],'inspection_landmark_id':f['inspection_landmark_id'],
+                'passability':'open'} for f in case['facts']], 'common_goal_id':case['common_goal_id']}
+        packets = [memory_task.capture_symbolic(world,pose,[],episode_id='episode-0',tick=tick)
+            for tick,pose in [(29,[-1.3,-1.1,math.pi/2]),(199,[-1.3,.626,math.pi/2]),
+                              (299,[-1.3,.626,math.pi/20])]]
+        m = memory.seed_m(case['facts'], [])
+        for packet in packets[:2]:
+            m = memory.revise(m, None, {'event_id':None,'target_ids':[],'reason':'no_rule'},
+                packet['passages'],episode_id='episode-0',tick=packet['tick'])[0]
+        state = {'m':m,'episode_id':'episode-0'}
+        events = [{'kind':'memory_sensed','episode':0,'episode_step':p['tick'],'tick':p['tick'],'packet':p} for p in packets]
+        admitted = self.runner.preparation_packet(events,case,state,299)
+        self.assertEqual(admitted,packets[-1])
+        self.runner.evidence_backed_source(m,events,'episode-0')
+        angle=next(v['bearing_rad'] for v in packets[-1]['landmarks'] if v['id']==case['common_goal_id'])
+        state.update(active=None,cursor={'episode_id':'episode-0','tick':299,
+            'packet_sha256':memory.sha256(packets[-1]),'common_goal_id':case['common_goal_id'],
+            'bearing':[math.cos(angle),math.sin(angle)]}, detector={'tick':299,'cues':[{
+                'id':case['cue_id'],'state':0,'observation_id':memory_task._sensor_id('episode-0',299,'cue',case['cue_id'])}]})
+        self.runner.packet_cursor(packets[-1],state)
+        for section,key,value in [('cursor','packet_sha256','0'*64),('cursor','bearing',[1.,0.]),
+                                  ('detector','tick',298)]:
+            bad=copy.deepcopy(state)
+            bad[section][key]=value
+            with self.assertRaises(ValueError):
+                self.runner.packet_cursor(packets[-1],bad)
+        for mutate in (
+            lambda p:p['landmarks'].pop(0),
+            lambda p:p['cues'].clear(),
+            lambda p:p['passages'][0].__setitem__('passability','open'),
+            lambda p:p.__setitem__('tick',298)):
+            bad = copy.deepcopy(events)
+            mutate(bad[-1]['packet'])
+            with self.assertRaises(ValueError):
+                self.runner.preparation_packet(bad,case,state,299)
+        bad_m = copy.deepcopy(m)
+        bad_m['facts'][0]['evidence']['id']='fabricated-evidence'
+        with self.assertRaises(ValueError):
+            self.runner.evidence_backed_source(bad_m,events,'episode-0')
+
+    def test_source_override_controls_and_declaration_cannot_be_relabelled(self):
+        case = experiment.make_world_case(8,'local_cue','development-test',acquisition=True)
+        pose=np.array([-1.3,.626,math.pi/2],np.float64)
+        rows=[{'tick':t,'pose':pose.copy(),'action':np.array([0.,-.35],np.float64)} for t in range(200,300)]
+        events=[{'kind':'source_preparation_input','episode':0,'episode_step':t,'tick':t,
+            'pose':pose.tolist(),'action':[0.,-.35], 'source_preparation_sha256':self.runner.SOURCE_PREPARATION_SHA256}
+            for t in range(200,300)]
+        data={'rows':rows,'events':events}
+        self.runner.source_controls(data,case)
+        for mutate in (
+            lambda d:d['events'].pop(),
+            lambda d:d['rows'][0]['action'].__setitem__(0,.65),
+            lambda d:d['events'][0]['pose'].__setitem__(2,0.),
+            lambda d:d['events'][0].__setitem__('source_preparation_sha256','0'*64)):
+            bad=copy.deepcopy(data)
+            mutate(bad)
+            with self.assertRaises(ValueError):
+                self.runner.source_controls(bad,case)
+        fixture=self.fixture('anchor')
+        self.admit(fixture)
+        for mutate in (
+            lambda f:f[1]['manifest'].__setitem__('source_preparation_sha256','0'*64),
+            lambda f:next(e for e in f[1]['events'] if e['kind']=='source_preparation_declared')
+                ['protocol'].__setitem__('uses_u',0),
+            lambda f:next(e for e in f[1]['events'] if e['kind']=='source_preparation_declared')
+                .__setitem__('sequence',1000)):
+            bad=copy.deepcopy(fixture)
+            mutate(bad)
+            with self.assertRaises(ValueError):
+                self.admit(bad)
+
     def fixture(self, stage='own', *, failed=False):
         job = next(j for j in self.plan()['jobs'] if j['stage']==stage)
         job['expected_non_u'] = {'native': 'fixture-hash'}
@@ -40,8 +136,10 @@ class VerifierBoundaries(unittest.TestCase):
         run.mkdir(parents=True)
         u = (memory.artifact(method='empty-v1') if stage in ('source', 'no-U') else
              self.histories['swapped' if stage=='swapped' else 'own']['u'])
-        native = {'application': {'world_task_state': {'case': job['case']},
-            'memory': {'u': u, 'cursor': {'bearing': [1., 0.]}}}}
+        native = {'application': {'world_task_state': {'case': job['case']}, 'event_prefix':{'event_count':1000},
+            'memory': {'u': u, 'cursor': {'bearing': [1., 0.],'tick':299,'episode_id':'episode-0',
+                'packet_sha256':'0'*64,'common_goal_id':job['case']['common_goal_id']}, 'episode_id':'episode-0',
+                       'm':memory.seed_m(job['case']['facts'],[])}}}
         outcome = ({'type': 'CueUnavailable', 'reason': 'runtime_failure',
             'message': 'goal_cue_unavailable: fixture', 'episode': 0, 'steps': 301} if failed else None)
         report = {'status': 'recorded', 'stage': stage, 'run_path': str(run),
@@ -51,6 +149,9 @@ class VerifierBoundaries(unittest.TestCase):
         manifest = {'memory_case': job['case'], 'memory_case_sha256': memory.sha256(job['case']),
             'transfer_protocol': self.runner.PROTOCOL, 'transfer_protocol_sha256': self.runner.PROTOCOL_SHA256,
             'transfer_driver_sha256': job['source_identity']['driver_sha256'], 'transfer_stage': stage,
+            'source_preparation_protocol':self.runner.SOURCE_PREPARATION,
+            'source_preparation_sha256':self.runner.SOURCE_PREPARATION_SHA256,
+            'acquisition_schedule_override':self.runner.ACQUISITION_OVERRIDE,
             'controller': 'manual', 'requested_device': 'cpu', 'seed': 8,
             'recording_max_bytes': self.runner.PROTOCOL['recording_max_bytes'],
             'close_reason': 'operator_closed', 'status': 'failed' if failed else 'completed',
@@ -67,6 +168,36 @@ class VerifierBoundaries(unittest.TestCase):
                     {'kind': 'transfer_driver_input', 'episode': 0, 'episode_step': 301,
                      'bearing_tick': 300, 'bearing': [1., 0.], 'action': [.65, 0.]},
                     {'kind': 'runtime_failure', 'episode': 0, 'episode_step': 301, 'error': outcome}]
+        events.append({'kind':'source_preparation_declared','sequence':0,
+            'protocol':self.runner.SOURCE_PREPARATION,'source_preparation_sha256':self.runner.SOURCE_PREPARATION_SHA256,
+            'override':self.runner.ACQUISITION_OVERRIDE})
+        if stage not in ('source','anchor'):
+            from palimpsest import memory_task
+            case=job['case']
+            world={'cues':[{'id':case['cue_id'],'xy':case['cue_xy'],'state':1}],
+                'landmarks':[{'id':case['common_goal_id'],'xy':case['goal_xy']}]+
+                    [{'id':f['inspection_landmark_id'],'xy':case['inspection_xy'][i]} for i,f in enumerate(case['facts'])],
+                'passages':[{'subject_id':f['subject_id'],'inspection_landmark_id':f['inspection_landmark_id'],
+                             'passability':'open'} for f in case['facts']], 'common_goal_id':case['common_goal_id']}
+            packet=memory_task.capture_symbolic(world,[-1.3,.626,math.pi/20],[],episode_id='episode-0',tick=300)
+            events.append({'kind':'memory_sensed','episode':0,'episode_step':300,'tick':300,'packet':packet})
+            report['visibility_admission']={'300':memory.sha256(packet)}
+            angle=next(v['bearing_rad'] for v in packet['landmarks'] if v['id']==case['common_goal_id'])
+            bearing=[math.cos(angle),math.sin(angle)]
+            state={'m':{'facts':case['facts']},'active':None,
+                'cursor':{'episode_id':'episode-0','tick':300,'packet_sha256':memory.sha256(packet),
+                          'common_goal_id':case['common_goal_id'],'bearing':bearing},
+                'detector':{'tick':300,'cues':[{'id':case['cue_id'],'state':1,
+                    'observation_id':memory_task._sensor_id('episode-0',300,'cue',case['cue_id'])}]}}
+            report['boundary_memory']={'300':self.runner.packet_cursor(packet,state)}
+            events.append({'kind':'memory_inspected','episode_step':300,
+                'memory':{'active':None,'facts':case['facts'],'facts_truncated':0}})
+            if failed:
+                next(e for e in events if e['kind']=='memory_cue')['bearing']=bearing
+                events[3]['bearing']=bearing
+                events[3]['action']=self.runner.cue_action(bearing)
+            else:
+                events.append({'kind':'memory_cue','episode_step':300,'bearing':bearing})
         data = {'run': run, 'manifest': manifest, 'events': events, 'rows': rows}
         return job, data, report, native
 
@@ -90,6 +221,7 @@ class VerifierBoundaries(unittest.TestCase):
             lambda f: f[1]['rows'][0]['action'].__setitem__(0, .66),
             lambda f: f[1]['rows'][0].__setitem__('action', np.array([.65, 0.], np.float32)),
             lambda f: f[1]['events'][1].__setitem__('episode_step', 301),
+            lambda f: f[2]['boundary_memory']['300']['cursor'].__setitem__('packet_sha256','0'*64),
             lambda f: f[3]['application']['memory'].__setitem__('u', self.histories['swapped']['u']),
             lambda f: f[1]['manifest'].__setitem__('last_outcome', {'type': 'forged'})):
             bad = copy.deepcopy(good)
@@ -101,7 +233,7 @@ class VerifierBoundaries(unittest.TestCase):
         for mutate in (
             lambda f: f[1]['events'].pop(3),  # missing last attempted driver tick
             lambda f: f[1]['events'].insert(4, copy.deepcopy(f[1]['events'][3])),
-            lambda f: f[1]['events'][-1].__setitem__('episode_step', 302),
+            lambda f: next(e for e in f[1]['events'] if e['kind']=='runtime_failure').__setitem__('episode_step', 302),
             lambda f: f[1]['manifest'].__setitem__('close_reason', 'forced_cleanup')):
             bad = copy.deepcopy(failed)
             mutate(bad)
@@ -114,6 +246,7 @@ class VerifierBoundaries(unittest.TestCase):
         for mutate in (
             lambda f: f[2].__setitem__('steps', 299),
             lambda f: f[2].__setitem__('final_phase', 'terminated'),
+            lambda f: f[3]['application']['memory']['cursor'].__setitem__('tick',298),
             lambda f: f[3]['application']['memory'].__setitem__('u', memory.artifact(method='empty-v1'))):
             bad = copy.deepcopy(anchor)
             mutate(bad)
