@@ -1525,5 +1525,33 @@
       "Task-phase, memory admission and zero-step puck construction results retain their separate frozen source identities.",
       "Stepped puck mechanics, learned manipulation and the four-cell memory comparison remain pending."
     ]
+  },
+  "starts_mechanics_comparison_regression": {
+    "source_commit": "3a0b085ea376d7cedf4bd6d533233e30b1e1b6cc",
+    "tests": 534,
+    "passed": 534,
+    "skipped": 0,
+    "suite_seconds": 117.106,
+    "supervisor": {
+      "elapsed_seconds": 119.98458461499831,
+      "output": "/home/utkarsh/Work/shraddha/brain/.worktrees/project-integration/runs/integration-starts-mechanics-comparison-3a0b085-20261003/supervisor",
+      "returncode": 0,
+      "schema_version": 1,
+      "started_utc": "2026-10-02T20:41:26.076832+00:00",
+      "status": "completed",
+      "timeout_seconds": 300
+    },
+    "all_runtime_gates_enabled": true,
+    "sources_unchanged": true,
+    "assets_unchanged": true,
+    "model_identities_unchanged": true,
+    "retained_files_rehashed": 50,
+    "report": "runs/integration-starts-mechanics-comparison-3a0b085-20261003/report.json",
+    "report_sha256": "eea74d702e234887e71b8662a2fde1f4bab61c6bff5778d5bed9d0d5ba590e90",
+    "limitations": [
+      "Enabled model checks use unchanged production v1 assets; this suite does not qualify the failed new MaleCNS candidates.",
+      "This regression checks the newly integrated verifier fixtures, not actual success of their separate experiments.",
+      "Puck mechanics naturally failed at the first teacher; Stage C memory comparison is unexecuted. Held-out task-start evidence retains its separate frozen source."
+    ]
   }
 }
