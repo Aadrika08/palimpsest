@@ -50,7 +50,7 @@ evidence; [measured wheel response](reports/m6-body-gains-v2.md) and [fixed-gain
 The reduced MaleCNS pilot has separate training and recorded-input held-out
 scores, with a guarded CPU wrapper, native/replay integration and [actual live browser workflow](reports/m7-live-lab.md); it does not establish closed-loop navigation,
 biological sensing, topology benefit or population-wide sex differences. The [16-run closed-loop evaluation](reports/m7-closed-loop-v2.md) completed with only 0/8 original and 1/8 control goals; R3 remains incomplete.
-The [combined regression](reports/project-integration.md) passes 363 tests without skips at `8c74181`, including actual EGL/male continuation and replay. M10 handoff remains partial while the task, model, artwork and physical gates remain open.
+The [combined regression](reports/project-integration.md) passes 395 tests without skips at `68a8f19`, including actual EGL/male continuation and replay. M10 handoff remains partial while the task, model, artwork and physical gates remain open.
 
 ## Runnable checks and operating instructions
 
