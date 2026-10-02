@@ -529,6 +529,35 @@ class PuckInstallationTests(unittest.TestCase):
         np.testing.assert_array_equal(self.env.model.geom_contype[NAMES.index('obstacle1'):NAMES.index('obstacle19')+1], 0)
         with self.assertRaises(ValueError): self.p.install_fixed_model(self.env, ROOT)
 
+    def test_constructor_goal_outside_task_domain_is_admitted_before_authored_reset(self):
+        # The pinned arena=7 reset samples each goal coordinate in [-5.5, 5.5].
+        goal = [5.25, -5.25]
+        self.env._goal_xy[:] = goal
+        self.old.site_pos[self.env.goal_site_id, :2] = goal
+        with self.assertRaisesRegex(ValueError, 'Goal outside fixed arena'):
+            self.p.native_state(self.env.data, base_qpos_adr=60,
+                puck_qpos_adrs=[0, 1, 2], puck_dof_adrs=[0, 1, 2], goal_xy=goal)
+        self.p.install_fixed_model(self.env, ROOT)
+        state = self.p.authored_reset(self.env, ROOT, 5990, 'mechanics', 'construction-only')
+        self.assertEqual(state['tick'], 0)
+        np.testing.assert_array_equal(self.env._goal_xy, np.asarray([1.2, 0.], np.float32))
+
+    def test_constructor_goal_outside_pinned_reset_domain_is_rejected_before_compile(self):
+        for goal in ([5.5001, 0.], [0., -5.5001]):
+            self.env._goal_xy[:] = goal
+            self.old.site_pos[self.env.goal_site_id, :2] = self.env._goal_xy
+            with self.subTest(goal=goal), self.assertRaisesRegex(ValueError, 'constructor reset domain'):
+                self.p.install_fixed_model(self.env, ROOT)
+        self.assertIs(self.env.model, self.old)
+        self.assertEqual(self.renderers, [])
+
+    def test_constructor_admission_still_rejects_nonunit_native_quaternion(self):
+        self.env.data.qpos[63:67] = [2., 0., 0., 0.]
+        with self.assertRaisesRegex(ValueError, 'Unit base quaternion'):
+            self.p.install_fixed_model(self.env, ROOT)
+        self.assertIs(self.env.model, self.old)
+        self.assertEqual(self.renderers, [])
+
     def test_install_rejects_live_wrong_settings_or_stale_ids_before_compile(self):
         original = vars(self.env).copy()
         for key, value in [('W', 84), ('n_obstacles', 2), ('_t', 1), ('window', object()),

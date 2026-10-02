@@ -17,8 +17,8 @@ import time
 
 from verify_afterimage import digest, write_json, process_identity, cleanup_check
 
-PROTOCOL_FILE = 'docs/plans/m6-puck-construction.json'
-PROTOCOL_SHA256 = '0f3fabdba277c60c4efccb219d376c944a3bfa19d30591e54b5d9b7626ad55bc'
+PROTOCOL_FILE = 'docs/plans/m6-puck-construction-v3.json'
+PROTOCOL_SHA256 = 'd515e9a234b6bffa551e0083c1fd8e3dde940a425cbbcd7a8ed336b437c36754'
 
 
 def protocol(root):
