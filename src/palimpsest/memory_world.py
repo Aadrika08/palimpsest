@@ -58,30 +58,56 @@ def _numbers(value, width):
     return result
 
 
-def initial_state(*, close_subject_id='passage-a', change_tick=10):
+def initial_state(*, close_subject_id='passage-a', change_tick=10, case=None):
+    extra = {}
+    gate_result = 'pending'
+    if case is not None:
+        from .memory_experiment import validate_world_case
+        case = validate_world_case(case)
+        if close_subject_id != 'passage-a' or change_tick != 10:
+            raise ValueError('Runtime case owns its gate and schedule parameters')
+        close_subject_id = case['closure_subject_id']
+        change_tick = None if case['kind'] == 'no-event' else case['change_tick']
+        gate_result = 'not_requested' if case['kind'] == 'no-event' else 'pending'
+        extra['case'] = case
     return validate_state({'version': 1, 'profile_sha256': PROFILE_SHA256,
         'cue_state': 0, 'change_tick': change_tick, 'close_subject_id': close_subject_id,
-        'applied': False, 'gate_result': 'pending', 'last_tick': None})
+        'applied': False, 'gate_result': gate_result, 'last_tick': None, **extra})
 
 
 def validate_state(state):
-    if type(state) is not dict or set(state) != {'version', 'profile_sha256', 'cue_state',
-            'change_tick', 'close_subject_id', 'applied', 'gate_result', 'last_tick'}:
+    fields = {'version', 'profile_sha256', 'cue_state', 'change_tick', 'close_subject_id', 'applied', 'gate_result', 'last_tick'}
+    if type(state) is not dict or set(state) not in (fields, fields | {'case'}):
         raise ValueError('Missing or unknown memory world state fields')
     if len(canonical_bytes(state)) > 8192:
         raise ValueError('Memory world state exceeds byte limit')
     if type(state['version']) is not int or state['version'] != 1 or state['profile_sha256'] != PROFILE_SHA256:
         raise ValueError('Incompatible development world profile')
-    _tick(state['change_tick'])
+    case = state.get('case')
+    if case is not None:
+        from .memory_experiment import validate_world_case
+        case = validate_world_case(case)
+        if state['close_subject_id'] != case['closure_subject_id'] or state['change_tick'] != (None if case['kind'] == 'no-event' else case['change_tick']):
+            raise ValueError('World schedule contradicts its runtime case mechanism')
+    elif 'case' in state:
+        raise ValueError('Runtime case cannot be null')
+    if state['change_tick'] is not None:
+        _tick(state['change_tick'])
+    elif case is None or case['kind'] != 'no-event':
+        raise ValueError('Missing world event schedule')
     if state['last_tick'] is not None:
         _tick(state['last_tick'])
-    if state['close_subject_id'] is not None and state['close_subject_id'] not in SUBJECTS:
+    subjects = SUBJECTS if case is None else case['subjects_by_side']
+    if state['close_subject_id'] is not None and state['close_subject_id'] not in subjects:
         raise ValueError('Unknown gate subject')
     if type(state['applied']) is not bool or type(state['cue_state']) is not int or state['cue_state'] != int(state['applied']):
         raise ValueError('Inconsistent cue schedule state')
     if state['gate_result'] not in ('pending', 'closed', 'not_requested', 'rejected'):
         raise ValueError('Unknown gate result')
-    if state['applied']:
+    if state['change_tick'] is None:
+        if state['applied'] or state['cue_state'] != 0 or state['gate_result'] != 'not_requested':
+            raise ValueError('No-event case contains a scheduled change')
+    elif state['applied']:
         if state['last_tick'] is None or state['last_tick'] < state['change_tick'] or state['gate_result'] == 'pending':
             raise ValueError('Applied schedule needs its recorded boundary/result')
         if (state['close_subject_id'] is None) != (state['gate_result'] == 'not_requested'):
@@ -91,7 +117,11 @@ def validate_state(state):
     return copy.deepcopy(state)
 
 
-def initial_facts():
+def initial_facts(state=None):
+    if state is not None:
+        state = validate_state(state)
+        if 'case' in state:
+            return validate_m({'version': 1, 'facts': state['case']['facts']})['facts']
     facts = []
     for subject, relation in zip(SUBJECTS, ('local_cue', 'paired_cue')):
         facts.append({'id': f'fact-{subject}', 'subject_id': subject, 'kind': 'passability',
@@ -101,13 +131,15 @@ def initial_facts():
     return validate_m({'version': 1, 'facts': facts})['facts']
 
 
-def validate_layout(positions=None):
+def validate_layout(positions=None, *, start_pose=None, goal_xy=None):
     """Pure clearance check for authored initialization (not a runtime claim)."""
     positions = copy.deepcopy(POSTS + PARKED_GATES + PARKED_OTHERS) if positions is None else positions
     if type(positions) is not list or len(positions) != 20:
         raise ValueError('Development world requires exactly twenty cylinders')
     positions = [_numbers(point, 2) for point in positions]
-    centers, radii = positions + [START_POSE[:2], GOAL_XY], [OBSTACLE_RADIUS] * 20 + [ROVER_RADIUS, .25]
+    start = _numbers(START_POSE if start_pose is None else start_pose, 3)
+    goal = _numbers(GOAL_XY if goal_xy is None else goal_xy, 2)
+    centers, radii = positions + [start[:2], goal], [OBSTACLE_RADIUS] * 20 + [ROVER_RADIUS, .25]
     for index, (center, radius) in enumerate(zip(centers, radii)):
         if max(map(abs, center)) + radius >= 7. - WALL_INSET:
             raise ValueError('Development placement crosses arena clearance')
@@ -161,13 +193,22 @@ def _occluders(env):
              float(env.model.geom_size[gid][0])] for gid in env.obstacle_ids]
 
 
+def _labels(state, circles):
+    labels = passage_status(circles)
+    subjects = state['case']['subjects_by_side'] if 'case' in state else SUBJECTS
+    return {subject: labels[physical] for subject, physical in zip(subjects, SUBJECTS)}
+
+
 def configure(env, state):
     """Author the initial development scene after env.reset, without stepping."""
     state = validate_state(state)
     if state['applied'] or state['last_tick'] is not None:
         raise ValueError('configure requires initial schedule state; restore uses snapshots')
     _validate_env(env)
-    positions = validate_layout()
+    case = state.get('case')
+    start = START_POSE if case is None else case['start_pose']
+    goal = GOAL_XY if case is None else case['goal_xy']
+    positions = validate_layout(start_pose=start, goal_xy=goal)
     joints = []
     for index, xy in enumerate(positions):
         for joint, coordinate in zip((env.obstacle_x_joint_ids[index], env.obstacle_y_joint_ids[index]), xy):
@@ -177,14 +218,14 @@ def configure(env, state):
             joints.append((joint, coordinate, width))
     # Resolve the dependency before mutation; this function is not a pure fixture.
     forward = importlib.import_module('mujoco').mj_forward
-    env.place_robot(*START_POSE, env.data.qpos.copy(), env.data.qvel.copy())
+    env.place_robot(*start, env.data.qpos.copy(), env.data.qvel.copy())
     for joint, coordinate, width in joints:
         env.data.qpos[env.model.jnt_qposadr[joint]] = coordinate
         env.data.qvel[env.model.jnt_dofadr[joint]] = 0.
         env.model.jnt_range[joint, :] = [coordinate - width, coordinate + width]
     env._obstacle_xy[:, :] = positions
-    env._goal_xy[:] = GOAL_XY
-    env.model.site_pos[env.goal_site_id, :2] = GOAL_XY
+    env._goal_xy[:] = goal
+    env.model.site_pos[env.goal_site_id, :2] = goal
     forward(env.model, env.data)
     env._prev_xy = env._base_xy().copy()
     env._speed, env._stall_steps = 0., 0
@@ -208,15 +249,16 @@ def advance_world(env, state, tick):
         raise ValueError('Memory world requires consecutive control ticks')
     state['last_tick'] = tick
     events = []
-    if not state['applied'] and tick == state['change_tick']:
-        before = passage_status(_occluders(env))
+    if not state['applied'] and state['change_tick'] is not None and tick == state['change_tick']:
+        before = _labels(state, _occluders(env))
         state['applied'], state['cue_state'] = True, 1
-        events.append({'kind': 'memory_cue_changed', 'tick': tick, 'cue_id': 'warning-cue', 'before': 0, 'after': 1})
+        cue_id = state['case']['cue_id'] if 'case' in state else 'warning-cue'
+        events.append({'kind': 'memory_cue_changed', 'tick': tick, 'cue_id': cue_id, 'before': 0, 'after': 1})
         subject = state['close_subject_id']
         if subject is None:
             state['gate_result'] = 'not_requested'
         else:
-            index = SUBJECTS.index(subject)
+            index = (state['case']['subjects_by_side'] if 'case' in state else SUBJECTS).index(subject)
             try:
                 edit = apply_intervention(env, {'kind': 'move_obstacle', 'index': index + 3, 'xy': CLOSED_GATES[index]})
             except ValueError as error:
@@ -225,7 +267,7 @@ def advance_world(env, state, tick):
             else:
                 state['gate_result'] = 'closed'
                 events.append({'kind': 'memory_gate_applied', 'tick': tick, 'subject_id': subject, 'intervention': edit})
-        after = passage_status(_occluders(env))
+        after = _labels(state, _occluders(env))
         events.append({'kind': 'memory_passage_geometry', 'tick': tick, 'before': before, 'after': after})
     return validate_state(state), events
 
@@ -234,12 +276,19 @@ def sensing_inputs(env, state):
     """Return geometry only to capture_symbolic, never to selectors/the bridge."""
     state = validate_state(state)
     circles = _occluders(env)
-    labels = passage_status(circles)
-    world = {'cues': [{'id': 'warning-cue', 'xy': [-1.2, 0.], 'state': state['cue_state']}],
-        'landmarks': [{'id': 'common-goal', 'xy': list(map(float, env._goal_xy))},
-                      *[{'id': f'inspect-{subject}', 'xy': copy.deepcopy(xy)} for subject, xy in zip(SUBJECTS, PROFILE['inspection_xy'])]],
-        'passages': [{'subject_id': subject, 'inspection_landmark_id': f'inspect-{subject}', 'passability': labels[subject]} for subject in SUBJECTS],
-        'common_goal_id': 'common-goal'}
+    labels = _labels(state, circles)
+    case = state.get('case')
+    subjects = SUBJECTS if case is None else case['subjects_by_side']
+    facts = {fact['subject_id']: fact for fact in initial_facts(state)}
+    cue_id = 'warning-cue' if case is None else case['cue_id']
+    goal_id = 'common-goal' if case is None else case['common_goal_id']
+    cue_xy = PROFILE['cue_xy'] if case is None else case['cue_xy']
+    inspection_xy = PROFILE['inspection_xy'] if case is None else case['inspection_xy']
+    world = {'cues': [{'id': cue_id, 'xy': copy.deepcopy(cue_xy), 'state': state['cue_state']}],
+        'landmarks': [{'id': goal_id, 'xy': list(map(float, env._goal_xy))},
+                      *[{'id': facts[subject]['inspection_landmark_id'], 'xy': copy.deepcopy(xy)} for subject, xy in zip(subjects, inspection_xy)]],
+        'passages': [{'subject_id': subject, 'inspection_landmark_id': facts[subject]['inspection_landmark_id'], 'passability': labels[subject]} for subject in subjects],
+        'common_goal_id': goal_id}
     pose = [*map(float, env._base_xy()), float(env._base_yaw())]
     _numbers(pose, 3)
     return world, pose, circles

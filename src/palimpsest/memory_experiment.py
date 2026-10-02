@@ -8,6 +8,7 @@ Held-out splits are deliberately unavailable until a separate protocol freeze.
 
 import copy
 import hashlib
+import math
 from pathlib import Path
 
 from . import memory, memory_world
@@ -68,6 +69,83 @@ def _trigger(case_id, kind):
         'episode_id': case_id, 'tick': 2, 'kind': 'cue_changed', 'cue_id': f'{case_id}-cue',
         'before': 0, 'after': 1, 'before_observation_id': f'{case_id}-cue-observation-1',
         'observation_id': f'{case_id}-cue-observation-2'}
+
+
+def _acquisition_schedule(change_tick):
+    _integer(change_tick, 500)
+    if change_tick < 40:
+        raise ValueError('Acquisition reference tick leaves no declared pre-event window')
+    return {'version': 1, 'protocol': 'manual-acquisition-lane-development-v1',
+        'access': 'privileged-manual-pose-supervision', 'uses_u': False,
+        'lower_xy': [-1.3, -1.1], 'upper_xy': [-1.3, .6], 'heading_rad': math.pi / 2,
+        'first_departure_tick': 20, 'reference_tick': change_tick, 'return_tick': change_tick + 30,
+        'max_ticks': 600, 'proximity_m': .05, 'velocity_command': .65}
+
+
+def make_world_case(seed, regime, split, *, kind='change', acquisition=False, change_tick=None):
+    """Author development world parameters, never synthetic known M or E."""
+    _integer(seed, 2**32 - 1)
+    if regime not in memory.RELATIONS or split not in SPLITS or kind not in KINDS or type(acquisition) is not bool:
+        raise ValueError('Unknown runtime development case; held-out is not enabled')
+    change_tick = (300 if acquisition else 10) if change_tick is None else change_tick
+    _integer(change_tick, 599)
+    base_id, relations, letters, subjects, _, _ = _layout(seed, regime, split, kind)
+    case_id = 'live-' + base_id
+    subjects = [subject.replace(base_id, case_id, 1) for subject in subjects]
+    cue_id = case_id + '-cue'
+    facts = [{'id': f'{case_id}-fact-{letters[side]}', 'subject_id': subject,
+        'kind': 'passability', 'estimate': None, 'status': 'unknown',
+        'associations': [{'cue_id': cue_id, 'relation': relations[side]}],
+        'inspection_landmark_id': subject + '-inspection', 'evidence': None,
+        'revision': 0, 'origin': 'initial_unknown'} for side, subject in enumerate(subjects)]
+    schedule = _acquisition_schedule(change_tick) if acquisition else None
+    start = [-1.3, -1.1, math.pi / 2] if acquisition else copy.deepcopy(memory_world.START_POSE)
+    goal = [-1.3, 2.5] if acquisition else copy.deepcopy(memory_world.GOAL_XY)
+    cue_xy = [-.8, 1.5] if acquisition else copy.deepcopy(memory_world.PROFILE['cue_xy'])
+    memory_world.validate_layout(start_pose=start, goal_xy=goal)
+    case = {'version': 1, 'claim': 'development-runtime-configuration',
+        'case_id': case_id, 'seed': seed, 'regime': regime, 'split': split, 'kind': kind,
+        'closure_subject_id': subjects[relations.index(regime)] if kind == 'change' else None,
+        'event_enabled': kind != 'no-event',
+        'acquisition': acquisition, 'change_tick': change_tick,
+        'protocol_sha256': PROTOCOL_SHA256, 'source_sha256': SOURCE_SHA256,
+        'subjects_by_side': subjects, 'facts': memory.seed_m(facts, [])['facts'],
+        'cue_id': cue_id, 'common_goal_id': case_id + '-common-goal',
+        'start_pose': start, 'goal_xy': goal, 'cue_xy': cue_xy,
+        'inspection_xy': copy.deepcopy(memory_world.PROFILE['inspection_xy']),
+        'acquisition_schedule': schedule,
+        'acquisition_protocol_sha256': None if schedule is None else memory.sha256(schedule)}
+    case['case_sha256'] = memory.sha256(case)
+    memory._bounded(case, MAX_CASE_BYTES)
+    return case
+
+
+def validate_world_case(case):
+    _fields(case, 'version claim case_id seed regime split kind closure_subject_id event_enabled acquisition change_tick protocol_sha256 source_sha256 subjects_by_side facts cue_id common_goal_id start_pose goal_xy cue_xy inspection_xy acquisition_schedule acquisition_protocol_sha256 case_sha256')
+    expected = make_world_case(case['seed'], case['regime'], case['split'], kind=case['kind'],
+        acquisition=case['acquisition'], change_tick=case['change_tick'])
+    if memory.canonical_bytes(case) != memory.canonical_bytes(expected):
+        raise ValueError('Runtime case contradicts its deterministic generator/unknown seed bank')
+    return copy.deepcopy(case)
+
+
+def acquisition_action(schedule, pose, tick):
+    """Proposed external manual supervision; pose access is explicitly privileged.
+
+    Commands are not calibrated velocities. Coverage must be checked from actual
+    packets, not waypoint proximity or this helper's planned schedule.
+    """
+    _fields(schedule, 'version protocol access uses_u lower_xy upper_xy heading_rad first_departure_tick reference_tick return_tick max_ticks proximity_m velocity_command')
+    if memory.canonical_bytes(schedule) != memory.canonical_bytes(_acquisition_schedule(schedule['reference_tick'])):
+        raise ValueError('Incompatible public acquisition schedule')
+    _integer(tick, schedule['max_ticks'] - 1)
+    x, y, yaw = memory_world._numbers(pose, 3)
+    target = schedule['lower_xy'] if tick < schedule['first_departure_tick'] or tick >= schedule['return_tick'] else schedule['upper_xy']
+    if abs(x - target[0]) > .15:
+        raise ValueError('Acquisition pose left the declared west inspection lane')
+    heading = (schedule['heading_rad'] - yaw + math.pi) % (2 * math.pi) - math.pi
+    velocity = 0. if abs(y - target[1]) <= schedule['proximity_m'] or abs(heading) > .25 else math.copysign(schedule['velocity_command'], target[1] - y)
+    return [velocity, heading]
 
 
 def gold_target_ids(m, before_occupancy, after_occupancy, trigger):

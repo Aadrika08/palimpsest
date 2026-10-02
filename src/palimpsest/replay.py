@@ -235,11 +235,24 @@ def replay_run(source_run_path, destination_run_path, *, mode, repo_root, asset_
         profile = manifest.get("scenario")
         if not isinstance(profile, dict) or not isinstance(profile.get("id"), str):
             raise ValueError("replay requires a recorded scenario configuration")
+        memory_case = manifest.get('memory_case')
+        if memory_case is not None:
+            from .memory import sha256
+            from .memory_experiment import validate_world_case
+            memory_case = validate_world_case(memory_case)
+            if manifest.get('memory_case_sha256') != sha256(memory_case) or manifest.get('acquisition_protocol_sha256') != memory_case['acquisition_protocol_sha256']:
+                raise ValueError('Recorded runtime case/acquisition identity differs')
+        elif manifest.get('memory_case_sha256') is not None or manifest.get('acquisition_protocol_sha256') is not None:
+            raise ValueError('Recorded runtime case identity lacks its configuration')
+        snapshot_world = snapshot['application'].get('world_task_state')
+        snapshot_case = snapshot_world.get('case') if isinstance(snapshot_world, dict) else None
+        if snapshot_case != memory_case:
+            raise ValueError('Recorded runtime case differs from initial application snapshot')
         from .engine import Engine
         engine = Engine.open(Path(repo_root), Path(asset_root), destination / "recording",
             controller=manifest["controller"], device=manifest["requested_device"], seed=manifest["seed"],
             scenario=profile["id"], texture=manifest["texture"], run_id=destination.name,
-            storage_budget=storage_budget)
+            storage_budget=storage_budget, memory_case=memory_case)
         _compatible(data["events"], _events(destination))
         engine.restore_branch(snapshot)
         del snapshot
