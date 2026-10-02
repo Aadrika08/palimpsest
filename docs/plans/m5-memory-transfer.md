@@ -1,10 +1,10 @@
 # M5 first development transfer mechanism check
 
-Preparation only. This protocol fixes one fresh `development-test` instance:
+Executed at `8420247`; see the [negative development result](../reports/m5-recorded-transfer.md). This protocol fixes one fresh `development-test` instance:
 seed 8, local_cue, change, acquisition layout, cue/gate event tick 300. It enables
 no held-out split and makes no R2, FLYNN, biological or generalization claim.
-There is no actual result yet. A development case can reveal a targeting rule
-and still fail to inspect its target; that outcome must remain visible.
+The mechanism gate completes, while all four combined task outcomes fail. Correct
+targeting does not ensure reinspection; those failed outcomes remain visible.
 
 The only production extraction is the pure
 `memory_experiment.selection_for_condition(condition, m, trigger, *, u=None,
@@ -117,4 +117,4 @@ PYTHONPATH=src ../lab-hardening/.venv/bin/python scripts/verify_memory_transfer.
 
 Adding `--plan-only` reads/pins histories and emits the fixed plan without
 creating output directories or starting runtime. The first plan-only check
-completed successfully; actual acquisition/branch behavior remains pending.
+completed successfully; the fixed actual case now has retained source-scoped results.
