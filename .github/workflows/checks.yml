@@ -43,3 +43,6 @@ jobs:
       - name: Type check and production build
         working-directory: ui
         run: npm run build
+      - name: Check full-window browser measurements
+        working-directory: ui
+        run: npm run test:measurement
