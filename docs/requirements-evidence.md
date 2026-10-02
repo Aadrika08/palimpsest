@@ -113,4 +113,4 @@ The documentation matrix, linked operating instructions and licence/provenance l
 
 [hour]: ../runs/m3-endurance-hour-20261002b/report.json
 
-The [fixed CPU FLYNN own-branch executable replays](reports/m5-flynn-replay.md) pass both actions and policy modes (129 transitions and 835 events each) with unchanged initial state/source and normal cleanup. The original nine-condition own-U task/timing benefit remains absent; counterbalance, null/no-event controls and held-out R2 evaluation remain open.
+The [fixed CPU FLYNN own-branch executable replays](reports/m5-flynn-replay.md) pass both actions and policy modes (129 transitions and 835 events each) with unchanged initial state/source and normal cleanup. The original nine-condition own-U task/timing benefit remains absent. The separate [eight-cell admission gate](reports/m5-counterbalance-stage-b.md) passes all 24 owners/2,408 ticks with independently audited actual policy bindings, null/no-event controls and normal cleanup. It scores one-tick admission only; the full condition comparison and held-out R2 evaluation remain open.
