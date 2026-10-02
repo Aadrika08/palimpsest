@@ -43,7 +43,10 @@ class VerifierBoundaries(unittest.TestCase):
         engine=Engine(env,RunWriter(run/'recording',{'run_id':run.name}),scenario='sparse-navigation')
         env._goal_xy=np.asarray(case['goal_xy'],np.float32)
         env.model.site_pos=np.asarray([case['goal_xy']+[0.]],np.float64)
+        env.model.jnt_range=np.zeros((1,2));env.model.geom_rgba=np.ones((1,4))
         env.data.qpos[:]=[-1.2342,.6054,math.pi/20]
+        env.cached_xy=env.data.qpos[:2].astype(np.float32)+np.array([1e-6,-1e-6],np.float32)
+        env._base_xy=lambda:env.cached_xy.copy()
         engine.episode_step=engine.total_tick=300
         engine.memory={'m':memory.seed_m(case['facts'],[]),'e':{'version':1,'episodes':[]},
             'u':memory.artifact(method='empty-v1'),'cursor':{'tick':299},'episode_id':'episode-0'}
@@ -53,6 +56,7 @@ class VerifierBoundaries(unittest.TestCase):
             self.assertEqual(payload,{'kind':'move_goal','xy':[-.5,-2.7]})
             old=actual._goal_xy.tolist();actual._goal_xy[:]=payload['xy']
             actual.model.site_pos[0,:2]=actual._goal_xy
+            actual.cached_xy=actual.data.qpos[:2].astype(np.float32)
             return {'kind':'move_goal','old':{'xy':old},'new':{'xy':actual._goal_xy.tolist()},'simulation_time':actual.data.time}
         def sensing(actual,state):
             world={'cues':[{'id':case['cue_id'],'xy':case['cue_xy'],'state':0}],
@@ -60,10 +64,11 @@ class VerifierBoundaries(unittest.TestCase):
                   [{'id':f['inspection_landmark_id'],'xy':xy} for f,xy in zip(case['facts'],case['inspection_xy'])],
                 'passages':[{'subject_id':f['subject_id'],'inspection_landmark_id':f['inspection_landmark_id'],
                     'passability':'open'} for f in case['facts']], 'common_goal_id':case['common_goal_id']}
-            return world,actual.data.qpos.tolist(),[]
+            return world,[*actual._base_xy().tolist(),float(actual._base_yaw())],[]
         try:
             with patch('palimpsest.interventions.apply_intervention',side_effect=change), \
-                 patch.object(self.runner.memory_world,'sensing_inputs',side_effect=sensing):
+                 patch.object(self.runner.memory_world,'sensing_inputs',side_effect=sensing), \
+                 patch.object(self.runner,'integration_digest',return_value=(self.runner.state_digest(np.array([1.])),123)):
                 proof=self.runner.apply_goal_handoff(engine,case)
             self.assertEqual(engine.memory,before)
             self.assertEqual((engine.total_tick,engine.episode_step,env.calls),(300,300,0))
@@ -72,26 +77,83 @@ class VerifierBoundaries(unittest.TestCase):
             events=self.runner.artifacts._events(run)
             self.assertFalse(any(e['kind']=='memory_sensed' for e in events))
             self.assertEqual(len([e for e in events if e['kind']=='goal_handoff_probe']),1)
-            self.assertEqual(self.runner.PROTOCOL['version'],3)
-            native={'environment':{'_goal_xy':env._goal_xy.copy()},'application':{
+            self.assertEqual(self.runner.PROTOCOL['version'],4)
+            self.assertNotEqual(proof['before_world']['pose'],proof['world']['pose'])
+            self.assertEqual(proof['authoritative_before_sha256'],proof['authoritative_after_sha256'])
+            native={'environment':{'values':{'_goal_xy':env._goal_xy.copy()},'absent':[]},
+                'integration':np.array([1.]),'integration_enum':123,'application':{
                 'original_commands':copy.deepcopy(engine._originals),'receipts':engine.receipts,
                 'memory':copy.deepcopy(engine.memory),'event_prefix':{'event_count':len(events)}}}
-            data={'events':events,'rows':[{'next_pose':env.data.qpos.copy()}]}
+            data={'events':events,'rows':[{'next_pose':np.asarray(proof['before_world']['pose'])}]}
             self.runner.validate_goal_handoff(data,native,case,'source')
             for mutate in (
                 lambda d,n:d['events'][-1]['proof'].__setitem__('memory_before_sha256','0'*64),
                 lambda d,n:d['events'][-1]['proof']['packet']['landmarks'].pop(0),
-                lambda d,n:n['environment']['_goal_xy'].__setitem__(1,2.7),
+                lambda d,n:n['environment']['values']['_goal_xy'].__setitem__(1,2.7),
                 lambda d,n:n['application']['receipts'][self.runner.GOAL_HANDOFF['command_id']].__setitem__('applied_tick',299),
                 lambda d,n:n['application']['receipts'][self.runner.GOAL_HANDOFF['command_id']].__setitem__('applied_episode',False),
                 lambda d,n:n['application']['event_prefix'].__setitem__('event_count',0),
-                lambda d,n:d['rows'][-1]['next_pose'].__setitem__(0,0.)):
+                lambda d,n:d['rows'][-1]['next_pose'].__setitem__(0,0.),
+                lambda d,n:n['integration'].__setitem__(0,2.),
+                lambda d,n:d['events'][-1]['proof'].__setitem__('authoritative_after_sha256','0'*64)):
                 bad_data,bad_native=copy.deepcopy((data,native))
                 mutate(bad_data,bad_native)
                 with self.assertRaises(ValueError):
                     self.runner.validate_goal_handoff(bad_data,bad_native,case,'source')
         finally:
             engine.close()
+
+        # A real authoritative position change cannot pass as a cache refresh.
+        bad_run=self.root/uuid.uuid4().hex
+        bad_env=SmallEnv();bad_env.model.site_pos=np.zeros((1,3))
+        bad_env.model.jnt_range=np.zeros((1,2));bad_env.model.geom_rgba=np.ones((1,4))
+        bad_engine=Engine(bad_env,RunWriter(bad_run/'recording',{'run_id':bad_run.name}),scenario='sparse-navigation')
+        bad_engine.episode_step=bad_engine.total_tick=300
+        bad_engine.memory=copy.deepcopy(before)
+        def moved(actual,payload,teacher=None):
+            actual.data.qpos[0]+=1e-6;actual._goal_xy=np.asarray(payload['xy'],np.float32)
+            actual.model.site_pos[0,:2]=actual._goal_xy
+            return {'kind':'move_goal','old':{'xy':[5.,0.]},'new':{'xy':actual._goal_xy.tolist()},'simulation_time':0.}
+        try:
+            with patch('palimpsest.interventions.apply_intervention',side_effect=moved), \
+                 patch.object(self.runner,'integration_digest',return_value=('not-captured',123)):
+                with self.assertRaisesRegex(ValueError,'changed memory/physics'):
+                    self.runner.apply_goal_handoff(bad_engine,case)
+            failed_events=self.runner.artifacts._events(bad_run)
+            state=next(e['proof'] for e in failed_events if e['kind']=='goal_handoff_state')
+            self.assertNotEqual(state['authoritative_before_sha256'],state['authoritative_after_sha256'])
+            self.assertFalse(any(e['kind']=='goal_handoff_probe' for e in failed_events))
+        finally:
+            bad_engine.close()
+
+    def test_authoritative_guard_covers_optional_inputs_and_integration_representation(self):
+        from types import SimpleNamespace
+        import sys
+        from test_engine import SmallEnv
+        env=SmallEnv();env.model.site_pos=np.ones((2,3));env.model.jnt_range=np.zeros((1,2));env.model.geom_rgba=np.ones((1,4))
+        for name in ('act','mocap_pos','mocap_quat','qfrc_applied','xfrc_applied','eq_active'):
+            setattr(env.data,name,np.zeros(2))
+        base=self.runner.authoritative_digest(env)
+        env.model.site_pos[0,:2]=[-.5,-2.7]
+        self.assertEqual(self.runner.authoritative_digest(env),base)
+        for owner,name in [(env.data,n) for n in ('qpos','qvel','ctrl','act','mocap_pos','mocap_quat',
+                'qfrc_applied','xfrc_applied','eq_active')]+[(env.model,n) for n in ('jnt_range','geom_rgba','geom_size')]:
+            old=getattr(owner,name).copy();getattr(owner,name).flat[0]+=1e-6
+            self.assertNotEqual(self.runner.authoritative_digest(env),base,name)
+            setattr(owner,name,old)
+        env.model.site_pos[0,2]+=1e-6
+        self.assertNotEqual(self.runner.authoritative_digest(env),base,'goal z cannot change')
+        env.model.site_pos[0,2]-=1e-6
+        env.model.site_pos[1,0]+=1e-6
+        self.assertNotEqual(self.runner.authoritative_digest(env),base,'other site cannot change')
+        env.model.site_pos[1,0]-=1e-6
+        env.data.time=1e-6
+        self.assertNotEqual(self.runner.authoritative_digest(env),base,'time cannot advance')
+        def get(model,data,out,kind):out[:]=[1.,2.,3.]
+        module=SimpleNamespace(mjtState=SimpleNamespace(mjSTATE_INTEGRATION=123),
+            mj_stateSize=lambda model,kind:3,mj_getState=get)
+        with patch.dict(sys.modules,{'mujoco':module}):
+            self.assertEqual(self.runner.integration_digest(env),(self.runner.state_digest(np.array([1.,2.,3.])),123))
 
     def test_fixed_source_override_is_bounded_and_keeps_continuation_separate(self):
         case = experiment.make_world_case(8, 'local_cue', 'development-test', acquisition=True)
@@ -108,7 +170,7 @@ class VerifierBoundaries(unittest.TestCase):
             with self.assertRaises(ValueError):
                 self.runner.source_action(schedule, pose, tick)
         self.assertEqual(self.runner.cue_action([1.,0.]), [.65,0.])
-        self.assertEqual(self.runner.PROTOCOL['version'], 3)
+        self.assertEqual(self.runner.PROTOCOL['version'], 4)
         self.assertEqual(self.runner.SOURCE_PREPARATION['access'], 'privileged-manual-pose-supervision')
         self.assertFalse(self.runner.SOURCE_PREPARATION['uses_u'])
 
@@ -201,7 +263,7 @@ class VerifierBoundaries(unittest.TestCase):
                 'packet_sha256':'0'*64,'common_goal_id':job['case']['common_goal_id']}, 'episode_id':'episode-0',
                        'm':memory.seed_m(job['case']['facts'],[])}}}
         identifier=self.runner.GOAL_HANDOFF['command_id']
-        native['environment']={'_goal_xy':np.asarray(self.runner.GOAL_HANDOFF['xy'],np.float32)}
+        native['environment']={'values':{'_goal_xy':np.asarray(self.runner.GOAL_HANDOFF['xy'],np.float32)},'absent':[]}
         native['application']['original_commands']={identifier:{'id':identifier,'kind':'intervene',
             'expected_state':'paused','expected_episode':0,'expected_revision':7,
             'payload':{'kind':'move_goal','xy':self.runner.GOAL_HANDOFF['xy']}}}
@@ -295,7 +357,7 @@ class VerifierBoundaries(unittest.TestCase):
             lambda f: f[1]['events'][1].__setitem__('episode_step', 301),
             lambda f: f[2]['boundary_memory']['300']['cursor'].__setitem__('packet_sha256','0'*64),
             lambda f: f[3]['application']['memory'].__setitem__('u', self.histories['swapped']['u']),
-            lambda f: f[3]['environment']['_goal_xy'].__setitem__(1,2.7),
+            lambda f: f[3]['environment']['values']['_goal_xy'].__setitem__(1,2.7),
             lambda f: f[3]['application']['receipts'][self.runner.GOAL_HANDOFF['command_id']].__setitem__('applied_episode',False),
             lambda f: next(e for e in f[1]['events'] if e['kind']=='application_restored')['world']['goal'].__setitem__(1,2.7),
             lambda f: next(e for e in f[1]['events'] if e['kind']=='memory_sensed')['packet']['landmarks'][0].__setitem__('bearing_rad',0.),
