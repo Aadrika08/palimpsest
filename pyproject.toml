@@ -27,12 +27,20 @@ simulation = [
   "python-louvain==0.16",
   "py7zr>=1.0,<2",
 ]
+lab = [
+    "fastapi==0.142.2",
+    "uvicorn==0.54.0",
+    "websockets==17.1",
+]
 
 [project.scripts]
 palimpsest = "palimpsest.cli:main"
 
 [dependency-groups]
-dev = ["pytest>=8.3,<9"]
+dev = [
+    "httpx==0.28.1",
+    "pytest>=8.3,<9",
+]
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/palimpsest"]

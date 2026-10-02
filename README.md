@@ -1,8 +1,8 @@
 # Palimpsest
 
-A local, inspectable lab for embodied neural controllers. Implemented: the **M0 / R0 reproduction harness** and **M1 execution/recovery API**, with manual/teacher/FLYNN control, bounded commands, world edits, lossless recording and complete state snapshots.
+A local, inspectable lab for embodied neural controllers. Includes the **M0 / R0 reproduction harness**, **M1 execution/recovery**, and the **M2 interactive lab** with actual sensor inputs, world edits, snapshots, sequential branches and recorded artifacts.
 
-The interactive lab, replay command, memory learning, additional task controllers, MaleCNS and hardware control remain unimplemented. See the [R0 evidence](docs/reports/r0-reproduction.md), [M1 evidence and CUDA limitation](docs/reports/m1-execution.md), [implementation plan](docs/implementation-plan.md), [current progress](docs/progress.md), and preserved [Borrowed Body PRD](docs/borrowed-body-prd-v1.md). A completed evaluation means the bounded experiment finished; inspect its outcomes before making a navigation or performance claim.
+Release endurance, memory learning, additional task controllers, MaleCNS and hardware control remain incomplete. See the [R0 evidence](docs/reports/r0-reproduction.md), [M1 evidence and CUDA limitation](docs/reports/m1-execution.md), [M2 interactive lab evidence](docs/reports/m2-interactive-lab.md), [implementation plan](docs/implementation-plan.md), [current progress](docs/progress.md), and preserved [Borrowed Body PRD](docs/borrowed-body-prd-v1.md). A completed evaluation means the bounded experiment finished; inspect its outcomes before making a navigation or performance claim.
 
 ## Setup
 
@@ -12,13 +12,13 @@ Use Linux, Git, and [uv](https://docs.astral.sh/uv/getting-started/installation/
 git clone --recurse-submodules https://github.com/Aadrika08/palimpsest.git
 cd palimpsest
 uv python install 3.11
-uv sync --locked --extra simulation
+uv sync --locked --extra simulation --extra lab
 uv run --no-sync palimpsest doctor
 ```
 
 For an existing checkout, initialize the pinned submodule with `git submodule update --init upstream/fly-gym`. Keep it unchanged at `8d964599119b420de67ee259434d273651a1a76d`. The locked Linux environment includes the selected PyTorch/CUDA distribution; installing it can download several GiB even when inference uses CPU.
 
-Commands use [`uv run --no-sync`](https://docs.astral.sh/uv/concepts/projects/sync/) to keep the explicitly prepared environment. When intentionally syncing again, include `--locked --extra simulation`. `doctor` is read-only and exits nonzero for missing requirements, including model assets; the teacher can run without those assets. Rendering still requires a working OpenGL backend: evaluation defaults to `MUJOCO_GL=egl`; test it explicitly with:
+Commands use [`uv run --no-sync`](https://docs.astral.sh/uv/concepts/projects/sync/) to keep the explicitly prepared environment. When intentionally syncing again, include `--locked --extra simulation --extra lab`. `doctor` is read-only and exits nonzero for missing requirements, including model assets; the teacher can run without those assets. Rendering still requires a working OpenGL backend: evaluation defaults to `MUJOCO_GL=egl`; test it explicitly with:
 
 ```sh
 uv run --no-sync palimpsest doctor --probe-renderer
@@ -37,6 +37,34 @@ uv run --no-sync palimpsest assets prepare
 `fetch` explicitly downloads the two pinned files into `data/assets/flynn/`, validating temporary downloads before publication. `verify` performs no downloads. `prepare` performs no downloads and extracts only a verified archive into its dedicated graph directory. It verifies the extracted edge list and preserves the archived mapping CSVs unchanged; their CRLF bytes and the upstream Git LF copies have separately pinned identities and must match after CRLF-to-LF conversion. Verified files establish present file identity; the legacy checkpoint does not establish its original training graph or neuron ordering.
 
 Global options precede the command, for example `uv run --no-sync palimpsest --assets /path/to/assets assets verify`. Once dependencies and assets are cached, these commands require no model-hosting service during execution.
+
+## Interactive lab
+
+Use Node 24 (exact version in `ui/.node-version`) to prepare the local UI once:
+
+```sh
+npm --prefix ui ci
+npm --prefix ui run build
+uv run --no-sync palimpsest lab
+```
+
+Open `http://127.0.0.1:8765`. The service binds to loopback and authenticates browser requests with a process-local session token. Manual and teacher controllers need no model download. FLYNN requires verified assets and an explicit CPU/CUDA choice; it never silently substitutes another controller or device.
+
+Create a run, start or step it, then pause to capture a snapshot. World edits have a validated preview and are rechecked at the application boundary. An eye mask changes the actual policy input; the inspector distinguishes the input/action tick from the resulting world boundary. Focus the manual drive control for arrow keys; losing focus clears held input. Closing the browser pauses at the next boundary. Only the explicit `--headless-continue` option changes disconnect behavior.
+
+Branches run sequentially in fresh workers. Preserving the controller restores its state; choosing a different controller retains the world but starts fresh controller state and records that distinction. Compare provenance before interpreting route overlays. Loading, replay, failure, termination and time limits retain explicit labels. CPU full-model continuation is qualified only for the measured profile; CUDA has the known strict-continuation limitation described below.
+
+The lab stores UUID-named directories under `runs/lab/`. Playback reads recorded values without simulation or inference. Action replay advances physics using recorded actions and skips inference. Policy replay recomputes the recorded controller. Both executable replays check compatible source provenance, snapshots and numeric records, then report agreement or the first divergence under fixed tolerances; completion alone is not agreement.
+
+```sh
+uv run --no-sync palimpsest replay runs/lab/SOURCE_UUID --mode playback --tick 0
+uv run --no-sync palimpsest replay runs/lab/SOURCE_UUID --mode actions
+uv run --no-sync palimpsest replay runs/lab/SOURCE_UUID --mode policy
+uv run --no-sync palimpsest compare runs/lab/LEFT_UUID runs/lab/RIGHT_UUID
+uv run --no-sync palimpsest export runs/lab/SOURCE_UUID --format svg --output route.svg
+```
+
+Replace UUID placeholders with recorded run IDs. A branch can begin at a nonzero episode/tick; select its first recorded transition. Exports also support `png` and `bundle`, never overwrite existing files, and exclude session credentials. Executable replay uses a bounded child process (`--timeout 900` by default); replay job pause/resume controls affect transport only, preserving the recorded engine timeline. Old runs without registered snapshot hashes cannot be replayed as compatible evidence.
 
 ## Bounded evaluation
 

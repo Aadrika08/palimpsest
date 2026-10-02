@@ -37,6 +37,14 @@ def worker(config):
 
     try:
         if config['mode'] == 'source':
+            if config.get('mask_left'):
+                command('mask-left', 'set_eyes', 'paused', {'left': False, 'right': True})
+                if engine.policy:
+                    before = engine.policy._state()
+                    projected = {**engine.effective_cameras(), 'sensors': engine.observation['sensors']}
+                    parity = engine.policy.act(projected, check_parity=True)['parity']
+                    engine.policy._restore(before)
+                    (output / 'input-parity.json').write_text(json.dumps(parity, allow_nan=False))
             goal = engine.env._goal_xy.copy()
             goal[0] += .1  # Seeded goals begin with ample wall/obstacle clearance.
             command('edit-before-snapshot', 'intervene', 'paused',
@@ -158,6 +166,9 @@ def compare(output, config):
         raise ValueError('Source event prefix changed after snapshot')
     errors, divergences = {}, []
     for expected, actual in zip(source, restored):
+        if config.get('mask_left') and (expected['cam_left'].any() or actual['cam_left'].any() or
+                                       not np.array_equal(actual['eyes'], [False, True])):
+            raise ValueError('Masked input or restored eye configuration differs')
         if set(expected) != set(actual):
             raise ValueError('Continuation schema mismatch')
         for key in expected:
@@ -183,6 +194,11 @@ def compare(output, config):
               'source_event_prefix_unchanged': True, 'branch_identity_distinct': True,
               'random_draws_match': True, 'queued_command_idempotency': True,
               'atol': 1e-6, 'rtol': 1e-6, 'scope': 'Fresh-process simulation continuation on this numeric/rendering regime'}
+    result['mask_left'] = bool(config.get('mask_left'))
+    if result['mask_left'] and config['controller'] == 'flynn':
+        result['masked_input_parity'] = json.loads((output / 'source/input-parity.json').read_text())
+        if not result['masked_input_parity'].get('ok'):
+            raise ValueError('Masked upstream preprocessing parity failed')
     (output / 'verification.json').write_text(json.dumps(result, indent=2, allow_nan=False) + '\n')
     return result
 
@@ -200,6 +216,7 @@ if __name__ == '__main__':
         parser.add_argument('--prefix', type=int, default=8)
         parser.add_argument('--continuation', type=int, default=12)
         parser.add_argument('--timeout', type=int, default=180)
+        parser.add_argument('--mask-left', action='store_true', help='verify masked preprocessing and continuation')
         parser.add_argument('--output', type=Path, required=True)
         args = parser.parse_args()
         if not 1 <= args.prefix <= 100 or not 1 <= args.continuation <= 100 or not 1 <= args.timeout <= 3600:

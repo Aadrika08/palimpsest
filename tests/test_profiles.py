@@ -56,6 +56,7 @@ class ActualScenarios(unittest.TestCase):
             try:
                 branch.restore_branch(snapshot, replace_controller=True)
                 np.testing.assert_array_equal(branch.world()['pose'], world['pose'])
+                self.assertEqual(branch.writer.manifest['initial_world'], world)
                 self.assertEqual(branch.eyes, {'left': False, 'right': True})
                 self.assertEqual(branch.env.np_random.bit_generator.state, rng)
                 self.assertIsNone(branch.teacher._rec_phase)

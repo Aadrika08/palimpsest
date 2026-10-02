@@ -2,8 +2,10 @@
 
 import argparse
 import json
+import os
 from pathlib import Path
 import sys
+import uuid
 
 
 def _bounded_int(low, high):
@@ -35,6 +37,25 @@ def main(argv=None):
     evaluate.add_argument('--threads', type=_bounded_int(1, 16), default=2)
     evaluate.add_argument('--parity', action='store_true', help='compare every FLYNN tick with upstream preprocessing')
     evaluate.add_argument('--output', type=Path, help='new run directory; never overwritten')
+    lab = commands.add_parser('lab', help='launch the local interactive lab')
+    lab.add_argument('--port', type=_bounded_int(1, 65535), default=8765)
+    lab.add_argument('--runs', type=Path, help='registered run root (default: REPO/runs/lab)')
+    lab.add_argument('--exports', type=Path, help='export root (default: REPO/exports)')
+    lab.add_argument('--headless-continue', action='store_true', help='explicitly continue when the browser disconnects')
+    replay = commands.add_parser('replay', help='recorded playback or bounded action/policy replay')
+    replay.add_argument('source', type=Path)
+    replay.add_argument('--mode', choices=('playback', 'actions', 'policy'), required=True)
+    replay.add_argument('--episode', type=_bounded_int(0, 100000), default=0)
+    replay.add_argument('--tick', type=_bounded_int(0, 599), default=0)
+    replay.add_argument('--timeout', type=_bounded_int(1, 86400), default=900)
+    replay.add_argument('--output', type=Path, help='new UUID-named run directory (actions/policy only)')
+    compare = commands.add_parser('compare', help='compare completed runs and provenance')
+    compare.add_argument('left', type=Path)
+    compare.add_argument('right', type=Path)
+    export = commands.add_parser('export', help='export a completed run without inference')
+    export.add_argument('source', type=Path)
+    export.add_argument('--format', choices=('svg', 'png', 'bundle'), required=True)
+    export.add_argument('--output', type=Path, required=True, help='new artifact path; never overwritten')
     args = parser.parse_args(argv)
     root = args.repo.resolve()
     asset_root = (args.assets or root / 'data/assets/flynn').resolve()
@@ -50,10 +71,48 @@ def main(argv=None):
             else:
                 report = (fetch_assets if args.operation == 'fetch' else verify_assets)(root, asset_root)
             ok = report['ok']
-        else:
+        elif args.command == 'evaluate':
             from .evaluate import evaluate
             report = evaluate(root, asset_root, args)
             ok = report['status'] == 'completed'
+        elif args.command == 'lab':
+            from .lab import create_app
+            import uvicorn
+            if not (root / 'ui/dist/index.html').is_file():
+                raise ValueError('Build the UI first: cd ui && npm ci && npm run build')
+            app = create_app(root, asset_root, (args.runs or root / 'runs/lab').resolve(),
+                             (args.exports or root / 'exports').resolve(), port=args.port,
+                             headless_continue=args.headless_continue)
+            uvicorn.run(app, host='127.0.0.1', port=args.port, access_log=False, ws_max_size=16384)
+            return 0
+        elif args.command == 'compare':
+            from .artifacts import compare_runs
+            report, ok = compare_runs(args.left, args.right), True
+        elif args.command == 'export':
+            from .artifacts import export_run
+            report = {'artifact': str(export_run(args.source, args.output, args.format))}
+            ok = True
+        elif args.mode == 'playback':
+            from .artifacts import playback
+            if args.output:
+                raise ValueError('Playback emits recorded JSON; --output is for action/policy replay')
+            report, ok = playback(args.source, args.episode, args.tick), True
+        else:
+            from .evaluate import bounded_process
+            output = (args.output or root / 'runs/lab' / uuid.uuid4().hex).resolve()
+            if uuid.UUID(output.name).hex != output.name:
+                raise ValueError('Replay output directory must have a canonical hexadecimal UUID name')
+            config = dict(source_run_path=str(args.source.resolve()), destination_run_path=str(output),
+                          mode=args.mode, repo_root=str(root), asset_root=str(asset_root))
+            env = os.environ.copy()
+            env.setdefault('MUJOCO_GL', 'egl')
+            env.update(OMP_NUM_THREADS='2', MPLBACKEND='Agg')
+            report = bounded_process([sys.executable, '-m', 'palimpsest.replay', json.dumps(config)],
+                                     output, args.timeout, env)
+            result = output / 'replay-report.json'
+            if result.is_file():
+                report['replay'] = json.loads(result.read_text())
+            ok = report['status'] == 'completed' and report.get('replay', {}).get('status') == 'passed'
         print(json.dumps(report, indent=2, allow_nan=False))
         return 0 if ok else 1
     except (OSError, ValueError, RuntimeError, ImportError) as error:

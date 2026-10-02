@@ -212,6 +212,12 @@ class EngineTests(unittest.TestCase):
         manifest = json.loads((self.root / 'run/manifest.json').read_text())
         self.assertFalse(manifest['inference_executed'])
         self.assertEqual(manifest['execution_mode'], 'actions')
+        missing = self.engine('missing-action', controller='flynn', policy=SmallPolicy())
+        missing.writer.manifest['execution_mode'] = 'actions'
+        missing.submit(self.command(missing, 'missing', 'step'))
+        self.assertEqual(missing.advance()['phase'], 'failed')
+        self.assertEqual(missing.total_tick, 0)
+        self.assertIsNone(missing.policy.seen)
 
     def test_rejects_bad_commands_and_cross_thread_access(self):
         engine = self.engine()

@@ -486,6 +486,8 @@ class Engine:
                 if single_step:
                     break
             if single_step or self.phase == "running":
+                if self.writer.manifest.get('execution_mode') == 'actions' and action_override is None:
+                    raise ValueError('Action replay requires a recorded action before stepping')
                 self._step(action_override)
         except Exception as error:
             self._fail(error, active_command)
@@ -656,6 +658,7 @@ class Engine:
         self.manual_action = _action(state["manual_action"], manual=True)
         self._episode_finished = state["episode_finished"]
         self._pending = deque(state["pending_commands"])
+        self.writer.manifest['initial_world'] = self.world()
         self._receipts, self._originals = state["receipts"], state["original_commands"]
         self._restored = True
         try:
