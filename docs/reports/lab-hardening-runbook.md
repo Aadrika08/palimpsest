@@ -89,6 +89,16 @@ PYTHONPATH=src .venv/bin/python scripts/verify_endurance.py \
 # Run only after the runtime/storage freeze and explicit hour-gate scheduling.
 PYTHONPATH=src .venv/bin/python scripts/verify_endurance.py \
   --output runs/endurance-hour
+
+# First verify the four model loads and resource budgets in one CPU Flynn cycle.
+PYTHONPATH=src .venv/bin/python scripts/verify_endurance.py \
+  --output runs/endurance-flynn-smoke --controllers flynn --duration 240 \
+  --cycle-seconds 120 --pause-seconds 0
+
+# Schedule only after the representative smoke and frozen-runtime approval.
+PYTHONPATH=src .venv/bin/python scripts/verify_endurance.py \
+  --output runs/endurance-mixed-hour --controllers manual teacher flynn \
+  --cycle-seconds 120
 ```
 
 The default duration is 3600 seconds. This is a browser-independent mixed
@@ -99,6 +109,16 @@ It checks the functional operation set, completed duration, one owner,
 configured resource budgets, and clean shutdown. The hour gate additionally
 compares server RSS/FD/thread p95 in the 25–50% and 75–100% windows. These are
 finite observed growth limits, not a mathematical guarantee about future runs.
+
+Manual and teacher remain the defaults. Optional `--controllers flynn` selects
+the actual full policy on CPU for the same mask/edit/step/reset/snapshot/branch
+and exact action/policy replay flow. Each cycle loads a source, branch and two
+replay owners sequentially. The 180-second per-owner wait remains bounded;
+the proposed 240-second smoke must demonstrate that this host fits it and the
+unchanged 8 GiB RSS / 2 GiB storage budgets. A 55-second manual/teacher smoke is
+not full-policy evidence. Controller RTF and latency are measurements here;
+this mixed gate imposes no RTF ≥ 1 threshold on CPU Flynn and qualifies neither
+CUDA nor browser performance.
 
 Periodic `resources.jsonl` samples cover the server and its descendants' RSS,
 FDs, threads, run/export root bytes, and free disk. `commands.jsonl` retains

@@ -5,7 +5,8 @@ Example smoke: PYTHONPATH=src .venv/bin/python scripts/verify_endurance.py \
     --pause-seconds 0 --controllers manual
 
 The default is 3600 seconds. This is a browser-independent client workload:
-browser responsiveness, display FPS and full-FLYNN qualification are separate.
+browser responsiveness and display FPS are separate. Optional CPU Flynn uses
+the same mixed operations; its measured latency does not have a real-time gate.
 """
 
 import argparse
@@ -403,7 +404,7 @@ def main():
     parser.add_argument('--pause-seconds', type=float, default=15.)
     parser.add_argument('--sample-seconds', type=float, default=5.)
     parser.add_argument('--burst-ticks', type=int, default=5)
-    parser.add_argument('--controllers', nargs='+', choices=('manual', 'teacher'), default=['manual', 'teacher'])
+    parser.add_argument('--controllers', nargs='+', choices=('manual', 'teacher', 'flynn'), default=['manual', 'teacher'])
     parser.add_argument('--port', type=int, default=0)
     parser.add_argument('--max-bytes', type=int, default=2 * 1024**3)
     parser.add_argument('--min-free-bytes', type=int, default=512 * 1024**2)
@@ -438,7 +439,9 @@ def main():
                '--storage-max-bytes', str(args.max_bytes), '--min-free-bytes', str(args.min_free_bytes)]
     report = {'version': 1, 'status': 'running', 'qualification': 'endurance' if args.duration >= 3600 else 'short-smoke',
               'scope': 'actual loopback HTTP + authenticated WebSocket, CPU ' + ','.join(args.controllers) + '; browser-independent',
-              'limitations': ['No browser FPS or sustained browser responsiveness claim', 'No full-FLYNN endurance claim',
+              'limitations': ['No browser FPS or sustained browser responsiveness claim',
+                              'CPU Flynn only; no CUDA or full-model real-time qualification' if 'flynn' in args.controllers
+                              else 'No full-FLYNN endurance claim',
                               'Observed application latency includes polling; receipt latency is measured separately'],
               'configuration': {key: value for key, value in vars(args).items() if not isinstance(value, Path)},
               'repo': str(root), 'cycles': [], 'source_sha256': hashlib.sha256(Path(__file__).read_bytes()).hexdigest()}

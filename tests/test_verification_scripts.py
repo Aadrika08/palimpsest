@@ -1,7 +1,9 @@
 """Bounded verification startup failures without running a renderer or model."""
 
 import importlib.util
+import contextlib
 import copy
+import io
 import json
 import os
 from pathlib import Path
@@ -17,6 +19,26 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 class VerificationScriptTests(unittest.TestCase):
+    def test_optional_cpu_flynn_report_scope_without_launching_runtime(self):
+        spec = importlib.util.spec_from_file_location('endurance_selection', ROOT / 'scripts/verify_endurance.py')
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+        with tempfile.TemporaryDirectory() as temporary:
+            output = Path(temporary) / 'evidence'
+            argv = ['verify_endurance.py', '--output', str(output), '--duration', '1', '--controllers', 'flynn']
+            with patch.object(sys, 'argv', argv), patch.object(module.subprocess, 'Popen', side_effect=OSError('startup fixture')):
+                with contextlib.redirect_stdout(io.StringIO()):
+                    code = module.main()
+            report = json.loads((output / 'report.json').read_text())
+            self.assertEqual(code, 1)
+            self.assertEqual(report['qualification'], 'short-smoke')
+            self.assertEqual(report['configuration']['controllers'], ['flynn'])
+            self.assertIn('CPU flynn', report['scope'])
+            self.assertIn('CPU Flynn only; no CUDA or full-model real-time qualification', report['limitations'])
+            self.assertNotIn('No full-FLYNN endurance claim', report['limitations'])
+            self.assertFalse(any('rtf' in name or 'real_time' in name for name in report['gates']))
+            self.assertEqual(report['cleanup']['owned_survivors_requiring_kill'], [])
+
     def test_explicit_natural_completion_does_not_request_operator_pause(self):
         # Supervisor-boundary fixture verifies verifier control flow only.
         # Its synthetic timing/rows are not simulation or performance evidence.
