@@ -1,0 +1,63 @@
+{
+  "schema_version": 1,
+  "status": "passed_with_explicit_skips",
+  "source_commit": "0a783af",
+  "suite": {
+    "run": 319,
+    "passed": 316,
+    "skipped": 3,
+    "unittest_seconds": 66.66,
+    "child_returncode": 0,
+    "watchdog_seconds": 70.23962729499908,
+    "limit_seconds": 240,
+    "source_unchanged": true,
+    "test_sources_unchanged": true
+  },
+  "skip_reasons": [
+    "Two opt-in MaleCNS Torch checks require a separately enabled window",
+    "Pinned raw male graph absent in this new checkout"
+  ],
+  "wrapper_exit_code": 1,
+  "wrapper_error": "The one-off wrapper checked nonexistent exit_code rather than bounded_process.returncode. Actual suite child exited0. Original wrapper and raw report retained; no suite rerun or tolerance change.",
+  "ui": {
+    "offline_npm_ci": "passed",
+    "production_build": "passed",
+    "measurement_checks": 7,
+    "memory_annotations": "passed"
+  },
+  "limitations": [
+    "Merged current completed branches only; pending male lab and recorded transfer source not included",
+    "Historical source-scoped performance/endurance evidence is not rerun here",
+    "No full-model, held-out or physical qualification from this suite"
+  ],
+  "artifacts": {
+    "runs/integration-egl-0a783af/check.py": {
+      "sha256": "796dbf334c4c8f356b59ae3ab19c36dc31ad2081d94606580714a1f52e4c4578",
+      "bytes": 1142
+    },
+    "runs/integration-egl-0a783af/report.json": {
+      "sha256": "fcb937c98d0a2ee32e1bdb24349f2df9c47d7d3f1c5e17f681fb223fc54b45f8",
+      "bytes": 10736
+    },
+    "runs/integration-egl-0a783af/suite/supervisor.json": {
+      "sha256": "2276d5e76c4428c6ea7f449050bb9b43c9e12b20805935a4a71086679fc67d9f",
+      "bytes": 304
+    },
+    "runs/integration-egl-0a783af/suite/stdout.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "runs/integration-egl-0a783af/suite/stderr.log": {
+      "sha256": "fe9417552d4e42571185427ce93876b5570e9e12310931512c1c51442e66832b",
+      "bytes": 67283
+    },
+    "runs/integration-egl-0a783af/ui-install.log": {
+      "sha256": "e22dd2ced22b56e4008b063533640bf21ee274377b3b0c118328dc433fcb1c3c",
+      "bytes": 140
+    },
+    "runs/integration-egl-0a783af/ui-build.log": {
+      "sha256": "1e56e5120f69db45191e847cede5e1dfb25f8ef48b9ababc8b6a3557131cb81d",
+      "bytes": 408
+    }
+  }
+}
