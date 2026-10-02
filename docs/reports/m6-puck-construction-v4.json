@@ -1,0 +1,279 @@
+{
+  "audit_script": {
+    "bytes": 6349,
+    "path": "runs/m6-puck-construction-v4-prepared/audit.py",
+    "sha256": "909fca751b864de5d82ceaff31bfa1239bb7c2c2140f8585c55825b53c7719c8"
+  },
+  "cameras_checked": 4,
+  "checked_source_files": 76,
+  "cleanup": [
+    {
+      "id": "fresh-one",
+      "identity": {
+        "pid": 498637,
+        "process_group": 498637,
+        "start_ticks": 6278229
+      },
+      "process_group_absent": true,
+      "renderer_receipts": [
+        {
+          "closed": true,
+          "resource": "retired"
+        },
+        {
+          "closed": true,
+          "resource": "current"
+        }
+      ],
+      "same_process_alive": false
+    },
+    {
+      "id": "fresh-two",
+      "identity": {
+        "pid": 498645,
+        "process_group": 498645,
+        "start_ticks": 6278423
+      },
+      "process_group_absent": true,
+      "renderer_receipts": [
+        {
+          "closed": true,
+          "resource": "retired"
+        },
+        {
+          "closed": true,
+          "resource": "current"
+        }
+      ],
+      "same_process_alive": false
+    }
+  ],
+  "comparison": {
+    "compared_bytes": 346537,
+    "defined_bytes_sha256": "1e78dcbab047899f3af791c670a8cba0a7f5fe9b24af32ea66cd9a919ae8f340",
+    "defined_native_bytes_equal": true,
+    "different_excluded_bytes": 443,
+    "excluded_bytes": 1344,
+    "exclusions": [
+      {
+        "different_bytes": 0,
+        "end": 279979,
+        "reason": "timer.duration",
+        "start": 279971
+      },
+      {
+        "different_bytes": 6,
+        "end": 279995,
+        "reason": "timer.duration",
+        "start": 279987
+      },
+      {
+        "different_bytes": 0,
+        "end": 280011,
+        "reason": "timer.duration",
+        "start": 280003
+      },
+      {
+        "different_bytes": 6,
+        "end": 280027,
+        "reason": "timer.duration",
+        "start": 280019
+      },
+      {
+        "different_bytes": 6,
+        "end": 280043,
+        "reason": "timer.duration",
+        "start": 280035
+      },
+      {
+        "different_bytes": 5,
+        "end": 280059,
+        "reason": "timer.duration",
+        "start": 280051
+      },
+      {
+        "different_bytes": 6,
+        "end": 280075,
+        "reason": "timer.duration",
+        "start": 280067
+      },
+      {
+        "different_bytes": 0,
+        "end": 280091,
+        "reason": "timer.duration",
+        "start": 280083
+      },
+      {
+        "different_bytes": 5,
+        "end": 280107,
+        "reason": "timer.duration",
+        "start": 280099
+      },
+      {
+        "different_bytes": 4,
+        "end": 280123,
+        "reason": "timer.duration",
+        "start": 280115
+      },
+      {
+        "different_bytes": 7,
+        "end": 280139,
+        "reason": "timer.duration",
+        "start": 280131
+      },
+      {
+        "different_bytes": 7,
+        "end": 280155,
+        "reason": "timer.duration",
+        "start": 280147
+      },
+      {
+        "different_bytes": 5,
+        "end": 280171,
+        "reason": "timer.duration",
+        "start": 280163
+      },
+      {
+        "different_bytes": 7,
+        "end": 280187,
+        "reason": "timer.duration",
+        "start": 280179
+      },
+      {
+        "different_bytes": 5,
+        "end": 280203,
+        "reason": "timer.duration",
+        "start": 280195
+      },
+      {
+        "different_bytes": 4,
+        "end": 331701,
+        "reason": "contact.tail_padding",
+        "start": 331697
+      },
+      {
+        "different_bytes": 4,
+        "end": 332277,
+        "reason": "contact.tail_padding",
+        "start": 332273
+      },
+      {
+        "different_bytes": 4,
+        "end": 332853,
+        "reason": "contact.tail_padding",
+        "start": 332849
+      },
+      {
+        "different_bytes": 4,
+        "end": 333429,
+        "reason": "contact.tail_padding",
+        "start": 333425
+      },
+      {
+        "different_bytes": 4,
+        "end": 334005,
+        "reason": "contact.tail_padding",
+        "start": 334001
+      },
+      {
+        "different_bytes": 4,
+        "end": 334581,
+        "reason": "contact.tail_padding",
+        "start": 334577
+      },
+      {
+        "different_bytes": 80,
+        "end": 341729,
+        "reason": "iM_colind.unused_tail",
+        "start": 341489
+      },
+      {
+        "different_bytes": 160,
+        "end": 342617,
+        "reason": "iM.unused_tail",
+        "start": 342137
+      },
+      {
+        "different_bytes": 110,
+        "end": 343505,
+        "reason": "iLD.unused_tail",
+        "start": 343025
+      }
+    ],
+    "kind": "mujoco-3.3.6-puck-5990-v4",
+    "raw_native_bytes_equal": false,
+    "raw_sha256": [
+      "65ab54c08a407d527a3fcca819feafa2edd8fbb3e97b3a5e22de3d9c671e82d3",
+      "e782801e304fd46cdee25b7fd7cbba460fb32c720404c0c4641c4596f1540f01"
+    ]
+  },
+  "control_ticks": 0,
+  "finalization_errors": [],
+  "independent_audit": {
+    "bytes": 9998,
+    "path": "runs/m6-puck-construction-v4-prepared/audit.json",
+    "sha256": "d72cfa8754b667c3cde986470397a2c28df8a297dcc89666ed40ece66ee7a146"
+  },
+  "inner_elapsed_seconds": 3.5659345140011283,
+  "launcher": {
+    "bytes": 3017,
+    "path": "runs/m6-puck-construction-v4-prepared/launch.py",
+    "sha256": "802726174da3845088a92c2b8942abeec816b5a4fdb233374aea8964a2e6d65b"
+  },
+  "native_runtime_imported": false,
+  "outer_elapsed_seconds": 3.729542819004564,
+  "outer_report": {
+    "bytes": 10051,
+    "path": "runs/m6-puck-construction-v4-20261003/launch-result.json",
+    "sha256": "e1e252dee1d1b3bd3d1a074fda204362bd3443c0c1ef1dde6c2aa439ba5dfe37"
+  },
+  "outer_returncode": 0,
+  "owners": [
+    {
+      "id": "fresh-one",
+      "returncode": 0,
+      "status": "passed"
+    },
+    {
+      "id": "fresh-two",
+      "returncode": 0,
+      "status": "passed"
+    }
+  ],
+  "physics_steps": 0,
+  "prepared_plan": {
+    "bytes": 10732,
+    "path": "runs/m6-puck-construction-v4-prepared/plan.json",
+    "sha256": "44b517768a2edd0b9b5fad42c1789c0fa92dc3be3d5da8d94854a2aac992ecf0"
+  },
+  "primary_report": {
+    "bytes": 41010,
+    "path": "runs/m6-puck-construction-v4-20261003/gate/report.json",
+    "sha256": "348e346cb9b256cad65a0de37ca36363b0a117f4f5e55f82bfb16a93ab269851"
+  },
+  "primary_report_sha256": "348e346cb9b256cad65a0de37ca36363b0a117f4f5e55f82bfb16a93ab269851",
+  "protocol": {
+    "bytes": 11224,
+    "path": "docs/plans/m6-puck-construction-v4.json",
+    "sha256": "c11d31fb0892c036bcbbe908ee1463859b49392958de290a2ef3b31fa4d6694d"
+  },
+  "qualification_claims": [
+    "fixed zero-step native construction under v4 comparison only"
+  ],
+  "retained_bytes": 1198404,
+  "root_audit": {
+    "bytes": 384,
+    "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/project-integration/runs/m6-puck-v4-root-audit-3e1e2b8/audit.json",
+    "sha256": "89d3bf51de2d7e6cb2398345fdd600d443b7404fb649fd80c246b7b151d43fd5"
+  },
+  "root_audit_script": {
+    "bytes": 3732,
+    "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/project-integration/runs/m6-puck-v4-root-audit-3e1e2b8/audit.py",
+    "sha256": "764e469f2d2c714f000ec69386f592f1831570f750721319c8ca6165f7cd7582"
+  },
+  "source_commit": "3e1e2b8b3dbe6fb1b5b1e7e32277f29bc562c7f5",
+  "source_reviewed_map_sha256": "3e4882fd8b8f9f24519b2ce02b29aab65160ebe002747b018febea657552857d",
+  "sources_unchanged": true,
+  "status": "passed_fixed_zero_step_construction_v4",
+  "version": 1
+}
