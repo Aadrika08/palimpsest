@@ -183,6 +183,9 @@ def validate_collection(rows, boundary, state):
     coverage = score_coverage(rows)
     complete_tick = coverage['coverage_complete_tick']
     reason = (state.get('last_outcome') or {}).get('reason')
+    if (state['phase'] == 'terminated' and reason not in ('collision', 'stalled', 'goal') or
+            state['phase'] == 'truncated' and reason != 'time_limit'):
+        raise ValueError('Unsupported natural outcome independently of collection boundary')
     natural = (state['phase'] == 'terminated' and reason in ('collision', 'stalled', 'goal') or
                state['phase'] == 'truncated' and reason == 'time_limit')
     expected = ('coverage_complete' if complete_tick is not None else

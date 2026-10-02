@@ -148,6 +148,14 @@ class RecoveryContracts(unittest.TestCase):
         self.assertEqual(recovery.score_coverage(rows)['coverage_complete_tick'], 50)
         state = {'phase': 'paused', 'last_outcome': None}
         recovery.validate_collection(rows[:51], 'coverage_complete', state)
+        for phase, reason in (('terminated', 'runtime_failure'), ('truncated', 'goal'),
+                              ('terminated', None), ('truncated', None)):
+            with self.assertRaisesRegex(ValueError, 'outcome'):
+                recovery.validate_collection(rows[:51], 'coverage_complete',
+                                             {'phase': phase, 'last_outcome': {'reason': reason}})
+        for phase, reason in (('terminated', 'goal'), ('truncated', 'time_limit')):
+            recovery.validate_collection(rows[:51], 'coverage_complete',
+                                         {'phase': phase, 'last_outcome': {'reason': reason}})
         for truncated in (rows[:50], rows[:52]):
             with self.assertRaisesRegex(ValueError, 'boundary'):
                 recovery.validate_collection(truncated, 'coverage_complete', state)
