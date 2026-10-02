@@ -53,12 +53,13 @@ class RecoveryContracts(unittest.TestCase):
         self.assertFalse({'path_to_draw', 'target_to_draw'} & {node.attr for node in ast.walk(camera) if isinstance(node, ast.Attribute)})
         self.assertEqual([node.func.attr for node in ast.walk(camera) if isinstance(node, ast.Call) and isinstance(node.func, ast.Attribute)],
                          ['update_scene', 'render'])
-        teacher, env = teacher_fixture(); rows = []
+        teacher, env = teacher_fixture(); rows = []; prefix = True
         for tick in range(47):
             env.contact = tick == 0
             query = recovery.query_teacher(teacher, env)
+            prefix = recovery.prefix_for_query(tick, prefix, query['contact']['bad'])
             rows.append({**query, 'tick': tick, 'stage0_intended_contact': tick == 0,
-                         'action': recovery.executed_action(tick, query['expert_action'])})
+                         'prefix': prefix, 'action': recovery.executed_action(tick, query['expert_action'], prefix)})
         self.assertEqual(rows[0]['after']['count'], 1)
         self.assertTrue(rows[1]['before']['previous_bad_contact'])
         self.assertFalse(rows[1]['contact']['bad'])
@@ -69,9 +70,14 @@ class RecoveryContracts(unittest.TestCase):
             self.assertEqual(row['expert_action'], np.array([-.35, -.1], np.float32).tolist())
         result = recovery.score_coverage(rows)
         self.assertTrue(result['passed']); self.assertEqual(result['first_cycle']['queries'], 45)
+        self.assertTrue(result['actual_post_prefix_reverse']); self.assertFalse(rows[0]['prefix'])
+        self.assertLess(next(row['tick'] for row in rows if row['action'][0] < 0), 32)
         no_reverse = copy.deepcopy(rows)
         for row in no_reverse: row['action'] = [.7, 0.]
         self.assertFalse(recovery.score_coverage(no_reverse)['actual_post_prefix_reverse'])
+        invalid_prefix = copy.deepcopy(rows)
+        for row in invalid_prefix: row['prefix'] = True
+        self.assertFalse(recovery.score_coverage(invalid_prefix)['actual_post_prefix_reverse'])
         # Independent sensor sample every query; teacher samples only inactive/final queries.
         self.assertEqual(env.calls, 47 + 4)
 
@@ -93,17 +99,17 @@ class RecoveryContracts(unittest.TestCase):
         self.assertEqual(row['expert_action'], np.array([-.35, -.1], np.float32).tolist())
 
     def test_incomplete_cycle_cannot_be_scored_complete_and_labels_are_separate(self):
-        teacher, env = teacher_fixture(); rows = []
+        teacher, env = teacher_fixture(); rows = []; prefix = True
         for tick in range(44):
             row = recovery.query_teacher(teacher, env)
+            prefix = recovery.prefix_for_query(tick, prefix, row['contact']['bad'])
             rows.append({**row, 'tick': tick, 'stage0_intended_contact': True,
-                         'action': recovery.executed_action(tick, row['expert_action'])})
-            expected = np.array([.7, 0.], np.float32).tolist() if tick < 32 else row['expert_action']
-            self.assertEqual(recovery.executed_action(tick, row['expert_action']), expected)
+                         'prefix': prefix, 'action': recovery.executed_action(tick, row['expert_action'], prefix)})
+            self.assertEqual(recovery.executed_action(tick, row['expert_action'], prefix), row['expert_action'])
         self.assertFalse(recovery.score_coverage(rows)['passed'])
         from palimpsest.engine import _action
-        self.assertEqual(recovery.executed_action(0, rows[0]['expert_action']), _action([.7, 0.], manual=False).tolist())
-        self.assertNotEqual(recovery.executed_action(0, rows[0]['expert_action']), rows[0]['expert_action'])
+        self.assertEqual(recovery.executed_action(0, rows[0]['expert_action'], True), _action([.7, 0.], manual=False).tolist())
+        self.assertNotEqual(recovery.executed_action(0, rows[0]['expert_action'], True), rows[0]['expert_action'])
         broken = copy.deepcopy(rows[0]); broken['after']['count'] = 2
         with self.assertRaises(ValueError): recovery.validate_query(broken)
         completed = {'status': 'failed-functional', 'protocol_status': 'completed', 'owners_completed': 2,
@@ -112,6 +118,24 @@ class RecoveryContracts(unittest.TestCase):
         self.assertTrue(recovery.supervision_matches(completed, supervision))
         self.assertFalse(recovery.supervision_matches(completed, {**supervision, 'failure': 'LogLimit'}))
         self.assertFalse(recovery.supervision_matches({**completed, 'owners_completed': 1}, supervision))
+        expert = np.array([-.35, .1], np.float32).tolist()
+        for contact_tick in (None, 0, 21):
+            active = True
+            for tick in range(40):
+                bad = contact_tick is not None and contact_tick <= tick < contact_tick+3
+                selected = recovery.prefix_for_query(tick, active, bad)
+                expected_prefix = tick < (32 if contact_tick is None else contact_tick)
+                self.assertEqual(selected, expected_prefix)
+                raw = {'sensors': np.array([bad, 0., 1., 0.]), 'recovery_prefix': np.array(selected),
+                       'action': np.array(recovery.executed_action(tick, expert, selected), np.float32),
+                       'recovery_expert_action': np.array(expert, np.float32)}
+                self.assertEqual(recovery.bind_action(tick, raw, active), selected)
+                if contact_tick == 21 and tick == 21:
+                    for changed in ({**raw, 'recovery_prefix': np.array(True)},
+                                    {**raw, 'sensors': np.array([0., 0., 1., 0.])},
+                                    {**raw, 'action': np.array([.7, 0.], np.float32)}):
+                        with self.assertRaisesRegex(ValueError, 'binding differs'): recovery.bind_action(tick, changed, active)
+                active = selected
 
     def test_pure_initial_clearance_rejects_and_resource_plan_is_bounded(self):
         self.assertEqual(set(recovery.geometry_preflight()), {case['id'] for case in recovery.CASES})
@@ -121,7 +145,7 @@ class RecoveryContracts(unittest.TestCase):
         estimate = recovery.admission(observation)
         self.assertLess(estimate['aggregate_bytes'], 1024**3)
         self.assertEqual(estimate['allowances']['snapshot_bytes'], 2 * 16 * 1024**2)
-        with self.assertRaises(ValueError): recovery.executed_action(120, [.7, 0.])
+        with self.assertRaises(ValueError): recovery.executed_action(120, [.7, 0.], True)
         teacher = SimpleNamespace(_rec_phase=None, _rec_step_count=0, _rec_turn_dir=1., _prev_bad_contact=False,
             recovery_back_steps=40, recovery_turn_steps=5, _xy_prev=None, _path=None,
             pid_state={'integral': 0.}, planner=SimpleNamespace(cache=None))

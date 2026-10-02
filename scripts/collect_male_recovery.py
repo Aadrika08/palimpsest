@@ -22,14 +22,15 @@ from verify_endurance import source_identity, descendants
 from verify_tasks import file_hashes
 
 MiB = 1024**2
-PROFILE = 'teacher-recovery-development-v1'
+PROFILE = 'teacher-recovery-development-v2'
 TEACHER_SHA256 = '5edca9a587dea0a2996856e42a96013aab1b1b0a277eacb74b7fc4270c55c586'
 CASES = [{'id': 'recovery-north-2100', 'seed': 2100, 'start_pose': [-.95, .12, 0.]},
          {'id': 'recovery-south-2101', 'seed': 2101, 'start_pose': [-.95, -.12, 0.]}]
-PROTOCOL = {'id': 'M7-REC-COVER-1', 'version': 1, 'profile': PROFILE, 'cases': CASES,
+PROTOCOL = {'id': 'M7-REC-COVER-1', 'version': 2, 'profile': PROFILE, 'cases': CASES,
     'goal_xy': [2., 0.], 'scenario': 'reproduction', 'texture': 'checker', 'controller': 'teacher', 'device': 'cpu',
     'teacher_sha256': TEACHER_SHA256, 'upstream_commit': '8d964599119b420de67ee259434d273651a1a76d',
-    'prefix_ticks': 32, 'prefix_action': [.7, 0.], 'source_max_ticks': 120,
+    'prefix_max_ticks': 32, 'prefix_action': [.7, 0.], 'source_max_ticks': 120,
+    'prefix_handoff': 'Permanent before-action handoff to same expert on first independently sampled bad contact or 32-interval cap; no reactivation',
     'expert': 'Exactly one unchanged teacher.act before every interval, including prefix; no teacher reset at handoff',
     'labels': 'expert_action is separate from recorded actual action; post-prefix equality exact; old training loader rejects profile',
     'numeric_columns': {'recovery_teacher_before': ['count', 'direction', 'previous_bad_contact'],
@@ -129,12 +130,28 @@ def query_teacher(teacher, env):
     return row
 
 
-def executed_action(tick, expert):
+def prefix_for_query(tick, active, bad):
+    if type(tick) is not int or not 0 <= tick < 120 or type(active) is not bool or type(bad) is not bool:
+        raise ValueError('Exact bounded tick and boolean prefix/contact state required')
+    return active and tick < 32 and not bad
+
+
+def executed_action(tick, expert, prefix):
     import numpy as np
-    if type(tick) is not int or not 0 <= tick < 120:
+    if type(tick) is not int or not 0 <= tick < 120 or type(prefix) is not bool:
         raise ValueError('Exact bounded recovery tick required')
     # Engine._action(..., manual=False) applies exactly this float32 conversion.
-    return np.asarray(PROTOCOL['prefix_action'] if tick < 32 else expert, np.float32).tolist()
+    return np.asarray(PROTOCOL['prefix_action'] if prefix else expert, np.float32).tolist()
+
+
+def bind_action(tick, raw, active):
+    sensor = float(raw['sensors'][0])
+    if sensor not in (0., 1.): raise ValueError('Invalid raw contact selector')
+    active = prefix_for_query(tick, active, bool(sensor))
+    if (bool(raw['recovery_prefix']) != active or
+            raw['action'].tolist() != executed_action(tick, raw['recovery_expert_action'].tolist(), active)):
+        raise ValueError('Raw sensor/persistent prefix/actual action binding differs')
+    return active
 
 
 def score_coverage(rows):
@@ -148,7 +165,7 @@ def score_coverage(rows):
     complete = (len(window) == 45 and window[-1]['transition']['completed'] and
                 not window[-1]['transition']['old_label_replaced'])
     start_contact = bool(window and window[0]['contact']['bad'] and window[0]['stage0_intended_contact'])
-    actual_reverse = any(row['tick'] >= 32 and row['action'][0] < 0 for row in window)
+    actual_reverse = any(row['prefix'] is False and row['action'][0] < 0 for row in window)
     clearance = bool(complete and any(not row['contact']['bad'] and not row['stage0_intended_contact'] for row in rows[first+45:]))
     return {'passed': complete and start_contact and actual_reverse and clearance,
         'first_cycle': {'start_tick': first, 'queries': len(window), 'completed': complete,
@@ -264,19 +281,20 @@ def worker(config):
         def defer_tick(episode, tick, **arrays):
             if pending: raise ValueError('More than one unpublished interval')
             pending.append((episode, tick, arrays))
-        engine.writer.tick = defer_tick; probe.install()
+        engine.writer.tick = defer_tick; probe.install(); prefix = True
         for tick in range(120):
             before = sample(engine.env); row = query_teacher(engine.teacher, engine.env)
-            row.update(tick=tick, prefix=tick < 32, before_sample=before)
+            prefix = prefix_for_query(tick, prefix, row['contact']['bad'])
+            row.update(tick=tick, prefix=prefix, before_sample=before)
             result['first_failure_packet'] = row  # Replaced/cleared only after a fully admitted interval.
-            actual = executed_action(tick, row['expert_action']); probe.begin(tick)
+            actual = executed_action(tick, row['expert_action'], prefix); probe.begin(tick)
             step_override(engine, tick, actual); interval = probe.end()
             row.update(action=engine.last_transition['action'].tolist(), after_sample=sample(engine.env), interval_contacts=interval)
             # Complete callback packets are published before unexpected-pair rejection.
             if len(pending) != 1 or pending[0][:2] != (0, tick): raise ValueError('Missing numeric interval')
             episode, recorded_tick, arrays = pending.pop()
             arrays.update(body.contact_arrays(interval), recovery_expert_action=np.asarray(row['expert_action'], np.float32),
-                recovery_prefix=np.array(tick < 32), recovery_teacher_before=np.array([row['before']['count'], row['before']['direction'], row['before']['previous_bad_contact']], np.float64),
+                recovery_prefix=np.array(prefix), recovery_teacher_before=np.array([row['before']['count'], row['before']['direction'], row['before']['previous_bad_contact']], np.float64),
                 recovery_teacher_after=np.array([row['after']['count'], row['after']['direction'], row['after']['previous_bad_contact']], np.float64),
                 recovery_transitions=np.array([row['transition'][name] for name in ('started', 'completed', 'old_label_replaced')], bool),
                 recovery_expert_latency=np.array(row['expert_latency_seconds']))
@@ -353,14 +371,16 @@ def gate(config):
             rows = list(iter_ticks(run/'recording')); manifest = read_json(run/'recording/manifest.json')
             if manifest['status'] != 'completed' or manifest['profile'] != PROFILE or not 1 <= len(rows) <= 120 or len(rows) != len(result['rows']):
                 raise ValueError('Incomplete or incorrectly admitted standalone recording')
+            prefix = True
             for tick, (raw, row) in enumerate(zip(rows, result['rows'])):
+                prefix = bind_action(tick, raw, prefix)
                 if (int(raw['episode']) != 0 or int(raw['tick']) != tick or raw['action'].tolist() != row['action'] or
-                        raw['recovery_expert_action'].tolist() != row['expert_action'] or bool(raw['recovery_prefix']) != (tick < 32) or
+                        raw['recovery_expert_action'].tolist() != row['expert_action'] or bool(raw['recovery_prefix']) != row['prefix'] or
                         raw['body_contact_counts'].tolist() != row['contact_counts'] or row['callback_count'] != 10 or
                         raw['recovery_teacher_before'].tolist() != [row['before'][key] for key in ('count', 'direction', 'previous_bad_contact')] or
                         raw['recovery_teacher_after'].tolist() != [row['after'][key] for key in ('count', 'direction', 'previous_bad_contact')] or
                         raw['recovery_transitions'].tolist() != [row['transition'][key] for key in ('started', 'completed', 'old_label_replaced')] or
-                        row['action'] != executed_action(tick, row['expert_action'])): raise ValueError('Expert/executed label/cursor binding differs')
+                        row['action'] != executed_action(tick, row['expert_action'], prefix)): raise ValueError('Expert/executed label/cursor binding differs')
                 validate_query(row)
             item['status'] = 'completed-recording'; report['owners_completed'] += 1; report['numeric_ticks'] += len(rows)
             item['coverage'] = score_coverage(result['rows'])
