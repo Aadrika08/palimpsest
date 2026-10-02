@@ -247,6 +247,28 @@ class CounterbalanceComparison(unittest.TestCase):
             self.assertEqual(len(result['unattempted_stages']),39)
             self.assertEqual(result['unattempted_stages'][0]['run_id'],plan['jobs'][1]['run_id'])
 
+    def test_real_job_validator_accepts_canonical_id_and_rejects_bad_id_or_path(self):
+        r = self.runner; cell = r.CELLS[0]; histories = self.fixture(cell)[-1]
+        for h in histories.values(): h['path']='fixture-history.json'
+        with tempfile.TemporaryDirectory() as root, patch.object(r.common,'load_histories',return_value=histories):
+            root = Path(root); run_id = '12345678123456781234567812345678'
+            job = {'repo':str(self.repo),'assets':str(root/'assets'),'history_root':str(root/'history'),
+                'root_output':str(root/'out'),'output':str(root/'out/runs'/run_id),'run_id':run_id,
+                'cell':list(cell),'stage':'anchor','binding':{'cell':list(cell),'case':r.admission.make_case(cell)},
+                'protocol_sha256':r.PROTOCOL_SHA256,'source_identity':{'fixture':True},
+                'history_inputs':r.history_pins(root/'history',histories),
+                'snapshot_path':str(root/'initial.snp'),'snapshot_sha256':'a'*64,'expected_non_u':{'fixture':True},
+                'selector':r.selector_config('anchor',histories),'oracle_evidence':None}
+            original = copy.deepcopy(job)
+            self.assertEqual(r.validate_job(job),job)  # Real validator and artifacts._id; no recording dependency.
+            self.assertEqual(job,original)
+            changed = copy.deepcopy(job); changed['run_id']='not-a-uuid'
+            with self.assertRaisesRegex(ValueError,'UUID'): r.validate_job(changed)
+            changed = copy.deepcopy(job); changed['output']=str(root/'other/runs'/run_id)
+            with self.assertRaisesRegex(ValueError,'comparison job'): r.validate_job(changed)
+            changed = copy.deepcopy(job); changed['output']=str(root/'out/runs'/'87654321876543218765432187654321')
+            with self.assertRaisesRegex(ValueError,'comparison job'): r.validate_job(changed)
+
 
 if __name__ == '__main__':
     unittest.main()
