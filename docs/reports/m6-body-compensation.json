@@ -1,0 +1,577 @@
+{
+  "schema_version": 1,
+  "status": "passed",
+  "scope": "fixed-artifact development compensation comparison only",
+  "qualification_claims": [],
+  "source_commit": "7154d843fb4c62b67b40af27b8ed41f4607d7ae2",
+  "source_identity": {
+    "commit": "7154d843fb4c62b67b40af27b8ed41f4607d7ae2",
+    "files_sha256": {
+      "src/palimpsest/__init__.py": "bb99e30d22e4662c4ded455b1b23f49b77ce811dcfa1b69bf358925487a566d8",
+      "src/palimpsest/__main__.py": "935a1c1166b0c1ea35a82256345000bf2c73ded718d77773bc27a71ecce28f7d",
+      "src/palimpsest/artifacts.py": "0851fc2435bdd85135f568bebd40b52776ce35b2c9c86335506ce34386f06a31",
+      "src/palimpsest/assets.py": "aa4a38c7403cd9f72bc23027acd7c212202f25574bea6af65053c34664da49e3",
+      "src/palimpsest/cli.py": "3d5bb7bc2135b8534ca2fcfceb7b4fe4e9f24ed140a38003f7b1ded1c3d40a36",
+      "src/palimpsest/doctor.py": "109de62468161f35461eee76af244daabef38f2faa1526c5a6ed268817e6b834",
+      "src/palimpsest/engine.py": "c7a5450b42cebc3e58e90c8fe6ed623da2e37cfddb7fddca18946e172c902074",
+      "src/palimpsest/evaluate.py": "74a9afb710b36a366ab680462e9440f285730a0360bda704af25ebbcfd74256a",
+      "src/palimpsest/flynn.py": "409b7503d76fd6f971a33d053e86c968b529edc226b85f44122e17a649f8f9f4",
+      "src/palimpsest/interventions.py": "fd2c1e6f160f7d251ddcf3275b383e8e3e265fc462452d1bc20c0030a6acf9c8",
+      "src/palimpsest/lab.py": "2f5072d03d33f001120bbaa87dd3e1ba2de8cd15942c3a7e7d4c97b564aa89a7",
+      "src/palimpsest/memory.py": "9641ae3d7d78577e0ea5bc8bcacbe455cae6c548f4f9bd10b8bb593a8fd7c542",
+      "src/palimpsest/memory_task.py": "6562de8c0734e0622529231babc7e035ba146077b39e004b0f52928b3038dcc6",
+      "src/palimpsest/memory_world.py": "e1a1b655f3698b4f238dd6b92b93fbe5c38dce26be4f908c76cc9db25a852eb7",
+      "src/palimpsest/profiles.py": "dcc5255bad98f7ca63d56f344fbf4ebbb85a66f68313aa7d417da3755e6d53d6",
+      "src/palimpsest/records.py": "c4be6f1699c1d8550a7f2db2979f7f9f18196ac986eef2aefe3ba665cae99ac3",
+      "src/palimpsest/replay.py": "04c381ca6a0268af38032cc95b006530f87f7f52c4177883d98c17338d5c28b5",
+      "src/palimpsest/snapshots.py": "14d95bb2f78646260ef931a610c0e7b0a31ba0f75e87413579102aad5c6a35d7",
+      "src/palimpsest/storage.py": "79664d876834ef20b459cc83963515effdaf75d0256fe5764a9cf8e18cd448c2",
+      "src/palimpsest/task_mechanics.py": "cbf698ad3f027f572c4f12655595825f580f155949f6c7c96f2556d14e6d1bb6",
+      "src/palimpsest/task_profiles.py": "14b237ede67949f281977c00b01dcd7a8e8a367d67a7e4e37911e0cb9b1dfa79",
+      "src/palimpsest/worker.py": "303ed1653c3bf50807b66f382225ef1bd226386343a7b4974387b817a226c38a",
+      "pyproject.toml": "13435cdf27674955809c67d3d81410c502bf0f258b661e68ed82197842fbc800",
+      "uv.lock": "8a7a880d020c1907e221575fda65642241f809fc628a55381f1b6137bff1b732"
+    }
+  },
+  "source_unchanged": true,
+  "harness_sha256": {
+    "verify_body_gains.py": "3db967db31e24f312aada5e69ad215be2eef6307e896119cd45579374a9f8163",
+    "verify_body_calibration.py": "716d434103a98f9c4c983eb0003a1d4ad782d662c755d799ddab096c9ef00f31",
+    "verify_tasks.py": "ec94a0a95d3e90ed9f9a008025b08d8da72949637144782655273d254948668b",
+    "verify_endurance.py": "6656a726c157a5ccbec10614f50d7a841cc00cf896d44a74dfa6971f5c778803",
+    "verify_body_compensation.py": "d5aa31fda5dc9bbcb300710dc73938f3472f99f21b9584727c5f6f9cba0166fa"
+  },
+  "protocol_sha256": "3b8cbed61e7a21bde8c246f61ebb987ee5a5cd7fdb1b07ef00aba1d8fc2da5cb",
+  "raw_report": "runs/m6-body-compensation-development-20261002/report.json",
+  "raw_report_sha256": "f5a5d617ceb4dbddf32e7e589748f6245c041312f60dbb4147ac985b170d6856",
+  "seconds": {
+    "inner": 66.739048594005,
+    "outer": 67.05880972700106
+  },
+  "gain_artifact": {
+    "sha256": "9d2cd4729d32f84b490db3a6726764111989fcc80be74c7a2ba44a97cb419331",
+    "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/exploration-homing/runs/m6-body-gain-diagnostic-v2-20261002/report.json",
+    "source_commit": "796854c8d20df44f2704d5c916c01594aec2b315",
+    "protocol_sha256": "bf883b89156201ccd35659fa7971fda507876e357c733356ed3eec59bac760f0"
+  },
+  "nominal_gains_rad_s_per_control": [
+    14.878897911022118,
+    14.878897948225164
+  ],
+  "measured_gains_rad_s_per_control": [
+    11.851776561760323,
+    14.374415787256368
+  ],
+  "command_plans": {
+    "baseline-forward": {
+      "nominal_action": [
+        0.3,
+        0.0
+      ],
+      "nominal_control": [
+        0.6000000238418579,
+        0.6000000238418579
+      ],
+      "applied_action": [
+        0.3,
+        0.0
+      ],
+      "proposed_control_float64": [
+        0.6000000238418579,
+        0.6000000238418579
+      ],
+      "applied_control_float32": [
+        0.6000000238418579,
+        0.6000000238418579
+      ],
+      "float32_rounding_delta": [
+        0.0,
+        0.0
+      ],
+      "compensation": null,
+      "gain_artifact": {
+        "sha256": "9d2cd4729d32f84b490db3a6726764111989fcc80be74c7a2ba44a97cb419331",
+        "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/exploration-homing/runs/m6-body-gain-diagnostic-v2-20261002/report.json",
+        "source_commit": "796854c8d20df44f2704d5c916c01594aec2b315",
+        "protocol_sha256": "bf883b89156201ccd35659fa7971fda507876e357c733356ed3eec59bac760f0"
+      }
+    },
+    "baseline-reverse": {
+      "nominal_action": [
+        -0.3,
+        0.0
+      ],
+      "nominal_control": [
+        -0.6000000238418579,
+        -0.6000000238418579
+      ],
+      "applied_action": [
+        -0.3,
+        0.0
+      ],
+      "proposed_control_float64": [
+        -0.6000000238418579,
+        -0.6000000238418579
+      ],
+      "applied_control_float32": [
+        -0.6000000238418579,
+        -0.6000000238418579
+      ],
+      "float32_rounding_delta": [
+        0.0,
+        0.0
+      ],
+      "compensation": null,
+      "gain_artifact": {
+        "sha256": "9d2cd4729d32f84b490db3a6726764111989fcc80be74c7a2ba44a97cb419331",
+        "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/exploration-homing/runs/m6-body-gain-diagnostic-v2-20261002/report.json",
+        "source_commit": "796854c8d20df44f2704d5c916c01594aec2b315",
+        "protocol_sha256": "bf883b89156201ccd35659fa7971fda507876e357c733356ed3eec59bac760f0"
+      }
+    },
+    "uncompensated-forward": {
+      "nominal_action": [
+        0.3,
+        0.0
+      ],
+      "nominal_control": [
+        0.6000000238418579,
+        0.6000000238418579
+      ],
+      "applied_action": [
+        0.3,
+        0.0
+      ],
+      "proposed_control_float64": [
+        0.6000000238418579,
+        0.6000000238418579
+      ],
+      "applied_control_float32": [
+        0.6000000238418579,
+        0.6000000238418579
+      ],
+      "float32_rounding_delta": [
+        0.0,
+        0.0
+      ],
+      "compensation": null,
+      "gain_artifact": {
+        "sha256": "9d2cd4729d32f84b490db3a6726764111989fcc80be74c7a2ba44a97cb419331",
+        "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/exploration-homing/runs/m6-body-gain-diagnostic-v2-20261002/report.json",
+        "source_commit": "796854c8d20df44f2704d5c916c01594aec2b315",
+        "protocol_sha256": "bf883b89156201ccd35659fa7971fda507876e357c733356ed3eec59bac760f0"
+      }
+    },
+    "uncompensated-reverse": {
+      "nominal_action": [
+        -0.3,
+        0.0
+      ],
+      "nominal_control": [
+        -0.6000000238418579,
+        -0.6000000238418579
+      ],
+      "applied_action": [
+        -0.3,
+        0.0
+      ],
+      "proposed_control_float64": [
+        -0.6000000238418579,
+        -0.6000000238418579
+      ],
+      "applied_control_float32": [
+        -0.6000000238418579,
+        -0.6000000238418579
+      ],
+      "float32_rounding_delta": [
+        0.0,
+        0.0
+      ],
+      "compensation": null,
+      "gain_artifact": {
+        "sha256": "9d2cd4729d32f84b490db3a6726764111989fcc80be74c7a2ba44a97cb419331",
+        "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/exploration-homing/runs/m6-body-gain-diagnostic-v2-20261002/report.json",
+        "source_commit": "796854c8d20df44f2704d5c916c01594aec2b315",
+        "protocol_sha256": "bf883b89156201ccd35659fa7971fda507876e357c733356ed3eec59bac760f0"
+      }
+    },
+    "compensated-forward": {
+      "nominal_action": [
+        0.3,
+        0.0
+      ],
+      "nominal_control": [
+        0.6000000238418579,
+        0.6000000238418579
+      ],
+      "applied_action": [
+        0.3435766398906708,
+        -0.06609576940536499
+      ],
+      "proposed_control_float64": [
+        0.7532490217675755,
+        0.6210575271928754
+      ],
+      "applied_control_float32": [
+        0.7532490491867065,
+        0.6210575103759766
+      ],
+      "float32_rounding_delta": [
+        2.741913107673355e-08,
+        -1.6816898873450725e-08
+      ],
+      "compensation": {
+        "control": [
+          0.7532490217675755,
+          0.6210575271928754
+        ],
+        "gain_ratio": [
+          1.2554149863935828,
+          1.0350958375237793
+        ],
+        "saturated": false
+      },
+      "gain_artifact": {
+        "sha256": "9d2cd4729d32f84b490db3a6726764111989fcc80be74c7a2ba44a97cb419331",
+        "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/exploration-homing/runs/m6-body-gain-diagnostic-v2-20261002/report.json",
+        "source_commit": "796854c8d20df44f2704d5c916c01594aec2b315",
+        "protocol_sha256": "bf883b89156201ccd35659fa7971fda507876e357c733356ed3eec59bac760f0"
+      }
+    },
+    "compensated-reverse": {
+      "nominal_action": [
+        -0.3,
+        0.0
+      ],
+      "nominal_control": [
+        -0.6000000238418579,
+        -0.6000000238418579
+      ],
+      "applied_action": [
+        -0.3435766398906708,
+        0.06609576940536499
+      ],
+      "proposed_control_float64": [
+        -0.7532490217675755,
+        -0.6210575271928754
+      ],
+      "applied_control_float32": [
+        -0.7532490491867065,
+        -0.6210575103759766
+      ],
+      "float32_rounding_delta": [
+        -2.741913107673355e-08,
+        1.6816898873450725e-08
+      ],
+      "compensation": {
+        "control": [
+          -0.7532490217675755,
+          -0.6210575271928754
+        ],
+        "gain_ratio": [
+          1.2554149863935828,
+          1.0350958375237793
+        ],
+        "saturated": false
+      },
+      "gain_artifact": {
+        "sha256": "9d2cd4729d32f84b490db3a6726764111989fcc80be74c7a2ba44a97cb419331",
+        "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/exploration-homing/runs/m6-body-gain-diagnostic-v2-20261002/report.json",
+        "source_commit": "796854c8d20df44f2704d5c916c01594aec2b315",
+        "protocol_sha256": "bf883b89156201ccd35659fa7971fda507876e357c733356ed3eec59bac760f0"
+      }
+    }
+  },
+  "independently_recomputed_metrics": {
+    "forward": {
+      "baseline": {
+        "raw_yaw_rad": 2.582709853701637e-16,
+        "raw_lateral_m": 1.1419504800055262e-16
+      },
+      "comparisons": {
+        "uncompensated": {
+          "wheel_rate_rmse": 1.0811333688822278,
+          "yaw_error": 0.4017823611210318,
+          "lateral_error": 0.25759694911539543,
+          "raw_yaw_rad": 0.40178236112103205,
+          "raw_lateral_m": 0.25759694911539555
+        },
+        "compensated": {
+          "wheel_rate_rmse": 0.20013552317027922,
+          "yaw_error": 0.06148493584497203,
+          "lateral_error": 0.04450962017290283,
+          "raw_yaw_rad": 0.061484935844972284,
+          "raw_lateral_m": 0.04450962017290294
+        }
+      },
+      "improved": {
+        "wheel_rate_rmse": true,
+        "yaw_error": true,
+        "lateral_error": true
+      },
+      "accepted": true
+    },
+    "reverse": {
+      "baseline": {
+        "raw_yaw_rad": -1.3820638212666792e-10,
+        "raw_lateral_m": 1.421531855552822e-13
+      },
+      "comparisons": {
+        "uncompensated": {
+          "wheel_rate_rmse": 1.631649161696984,
+          "yaw_error": 0.6155525831892482,
+          "lateral_error": 0.20763813634388834,
+          "raw_yaw_rad": -0.6155525833274545,
+          "raw_lateral_m": 0.2076381363440305
+        },
+        "compensated": {
+          "wheel_rate_rmse": 0.5535414169457161,
+          "yaw_error": 0.1239077490844187,
+          "lateral_error": 0.023801910167236474,
+          "raw_yaw_rad": -0.12390774922262508,
+          "raw_lateral_m": -0.02380191016709432
+        }
+      },
+      "improved": {
+        "wheel_rate_rmse": true,
+        "yaw_error": true,
+        "lateral_error": true
+      },
+      "accepted": true
+    }
+  },
+  "contact_audit": {
+    "ticks": 720,
+    "timed_stages": 7200,
+    "cached_end_packets": 720,
+    "pairs": {
+      "world_only": 475200,
+      "rover_ground_support": 45468
+    },
+    "max_stage_time_error_s": 1.9845236565174673e-15,
+    "unexpected_robot_contacts": 0,
+    "no_continuous_collision_claim": true,
+    "world_only_may_move": true
+  },
+  "physical_calibration": {
+    "radius_m": 0.06,
+    "track_m": 0.36,
+    "quantum_rad": 0.001
+  },
+  "lifecycle": [
+    {
+      "trial": "baseline-forward",
+      "run_id": "5f88562efc8c43a6ab34b8c8c0067f72",
+      "ticks": 120,
+      "supervisor_status": "completed",
+      "returncode": 0,
+      "callback_restored": true,
+      "engine_closed": true,
+      "manifest_status": "completed",
+      "model_sha256": "c4d30fef8fbe05739e72e762d10d2dc435c1c831993a32d0662560d494b158e5"
+    },
+    {
+      "trial": "baseline-reverse",
+      "run_id": "c0e79978d0b24c19b833a6e33d57525f",
+      "ticks": 120,
+      "supervisor_status": "completed",
+      "returncode": 0,
+      "callback_restored": true,
+      "engine_closed": true,
+      "manifest_status": "completed",
+      "model_sha256": "c4d30fef8fbe05739e72e762d10d2dc435c1c831993a32d0662560d494b158e5"
+    },
+    {
+      "trial": "uncompensated-forward",
+      "run_id": "b593500907c3452390a54883e16f2c9f",
+      "ticks": 120,
+      "supervisor_status": "completed",
+      "returncode": 0,
+      "callback_restored": true,
+      "engine_closed": true,
+      "manifest_status": "completed",
+      "model_sha256": "bf3ca4b0d32600444e0f23e658c790da50a7675fb3c26fee8f9b0a16e0839d67"
+    },
+    {
+      "trial": "uncompensated-reverse",
+      "run_id": "7253e9bb43384aef9a41fe90e3528b6a",
+      "ticks": 120,
+      "supervisor_status": "completed",
+      "returncode": 0,
+      "callback_restored": true,
+      "engine_closed": true,
+      "manifest_status": "completed",
+      "model_sha256": "bf3ca4b0d32600444e0f23e658c790da50a7675fb3c26fee8f9b0a16e0839d67"
+    },
+    {
+      "trial": "compensated-forward",
+      "run_id": "582c969e5c7844b5a659be699306a98d",
+      "ticks": 120,
+      "supervisor_status": "completed",
+      "returncode": 0,
+      "callback_restored": true,
+      "engine_closed": true,
+      "manifest_status": "completed",
+      "model_sha256": "bf3ca4b0d32600444e0f23e658c790da50a7675fb3c26fee8f9b0a16e0839d67"
+    },
+    {
+      "trial": "compensated-reverse",
+      "run_id": "02802a92c7da4cc4bd31fde2fce11a0d",
+      "ticks": 120,
+      "supervisor_status": "completed",
+      "returncode": 0,
+      "callback_restored": true,
+      "engine_closed": true,
+      "manifest_status": "completed",
+      "model_sha256": "bf3ca4b0d32600444e0f23e658c790da50a7675fb3c26fee8f9b0a16e0839d67"
+    }
+  ],
+  "outer_supervision": {
+    "schema_version": 1,
+    "status": "completed",
+    "timeout_seconds": 780,
+    "started_utc": "2026-10-02T13:15:47.259663+00:00",
+    "output": "/home/utkarsh/Work/shraddha/brain/.worktrees/exploration-homing/runs/m6-compensation-launch-7154d84",
+    "returncode": 0,
+    "elapsed_seconds": 67.05880972700106
+  },
+  "log_substring_counts": {
+    "semaphore": 0,
+    "resource_tracker": 0,
+    "Traceback": 0,
+    "TF32": 18
+  },
+  "matching_script_processes_at_audit": [],
+  "assets": [
+    {
+      "id": "graph_archive",
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/r0-reproduction/data/assets/flynn/drosophila adult connectome.7z",
+      "sha256": "49d19491c1df4b8f02af0e285b71dc171f47488a93ee5b91be8ee4e280bee9f1",
+      "size_bytes": 45111367,
+      "verified_at_all_six_startups_and_current_audit": true
+    },
+    {
+      "id": "checkpoint",
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/r0-reproduction/data/assets/flynn/connectome_rnn_dagger_princeton_full_vision.pt",
+      "sha256": "fde5327c1531f15340385b7a572b5c7a785e1ce29cde622976bee6e398e9d8d6",
+      "size_bytes": 108220841,
+      "verified_at_all_six_startups_and_current_audit": true
+    }
+  ],
+  "current_output_bytes": 367442435,
+  "storage_limits": {
+    "roots": [
+      "/home/utkarsh/Work/shraddha/brain/.worktrees/exploration-homing/runs/m6-body-compensation-development-20261002"
+    ],
+    "limits": {
+      "max_bytes": 1073741824,
+      "min_free_bytes": 1073741824,
+      "max_runs": 6,
+      "max_snapshots": 1,
+      "max_exports": 1
+    },
+    "headroom_bytes": 4194304
+  },
+  "native_continuation": null,
+  "actions_replay": null,
+  "policy_replay": null,
+  "product_integration": null,
+  "limitations": [
+    "Fixed fitted gains, new command amplitudes, one development seed/world; not held-out generalization.",
+    "Manual compensation via upstream converter only; no Engine/task-profile or odometry integration.",
+    "Pose caches evaluator-only; no online true-pose correction, learned or physical hardware claim.",
+    "Discrete robot-contact stages only; world-only contacts may move and remain recorded.",
+    "Standalone authored/model override; ordinary playback/native restore not qualified.",
+    "Observed startup/current hashes and process sampling are finite checks, not universal mutation/process proofs.",
+    "Manual float32 control conversion and evaluator pose-cache timing retained; no zero-drift or physical motion qualification."
+  ],
+  "artifacts_sha256": {
+    "runs/m6-body-compensation-development-20261002/baseline-forward/5f88562efc8c43a6ab34b8c8c0067f72/recording/chunks/000000.npz": "9c6c1249de453238b16b3ff6f7768931c1a19fcea51c80cba52e86dd956b64eb",
+    "runs/m6-body-compensation-development-20261002/baseline-forward/5f88562efc8c43a6ab34b8c8c0067f72/recording/chunks/000001.npz": "642e9dd16e5d7379a6d901cecfdfd11a693f2284778d1b9d4963de3b9091a984",
+    "runs/m6-body-compensation-development-20261002/baseline-forward/5f88562efc8c43a6ab34b8c8c0067f72/recording/chunks/000002.npz": "29c4b50531099f26836d29eff2bf6aa8a8dbf6dcb209ab63f8676228a36455f9",
+    "runs/m6-body-compensation-development-20261002/baseline-forward/5f88562efc8c43a6ab34b8c8c0067f72/recording/chunks/000003.npz": "b64cb181dcd0cd5064fa816b7be6938fce114f1118d4ef9b73c18ec8ce7810b7",
+    "runs/m6-body-compensation-development-20261002/baseline-forward/5f88562efc8c43a6ab34b8c8c0067f72/recording/events.jsonl": "594e1d56dfe241280dbbad3b76af0fce4e219f2c11957df64087aadc96e124e6",
+    "runs/m6-body-compensation-development-20261002/baseline-forward/5f88562efc8c43a6ab34b8c8c0067f72/recording/manifest.json": "7de44af40aa2b9e02c290a9dfdd062604d371ef78fc4417f5f4c01f9d11736a4",
+    "runs/m6-body-compensation-development-20261002/baseline-forward/5f88562efc8c43a6ab34b8c8c0067f72/snapshots/index.json": "a29a44a8e18e2abd8c7d9aa41721f20f9ba52c9db5623cc9c51e6fa856d99517",
+    "runs/m6-body-compensation-development-20261002/baseline-forward/5f88562efc8c43a6ab34b8c8c0067f72/snapshots/initial.snp": "b39e7a84d4e3350c2ba0e98ec472479c4532c5269cd44cd1d0237555f107699a",
+    "runs/m6-body-compensation-development-20261002/baseline-forward/result.json": "54310b1c07def72139b9b850bdba09a21d5fad1393558c02f6644845de33b83e",
+    "runs/m6-body-compensation-development-20261002/baseline-forward/stderr.log": "4ad0f1c3fe69bc9cdb7a9292640501f7da85a560e7584a6dd6f7559610a75e00",
+    "runs/m6-body-compensation-development-20261002/baseline-forward/stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "runs/m6-body-compensation-development-20261002/baseline-forward/supervisor.json": "4651c9b1d0458e87f603381d10183b47a0764a859638641854464d3d7307ac7d",
+    "runs/m6-body-compensation-development-20261002/baseline-reverse/c0e79978d0b24c19b833a6e33d57525f/recording/chunks/000000.npz": "3fbf104daff177b8e8f4e3f2b9dc3988c5e29069a66860abaa8985a5e87a7329",
+    "runs/m6-body-compensation-development-20261002/baseline-reverse/c0e79978d0b24c19b833a6e33d57525f/recording/chunks/000001.npz": "5536bc059c8e792c4e12f0f45c0358f4cac831a8b22ba93fcf67fbd198f92a79",
+    "runs/m6-body-compensation-development-20261002/baseline-reverse/c0e79978d0b24c19b833a6e33d57525f/recording/chunks/000002.npz": "2418f9e342521dbdf0c306c9c37029c6eb958600b509d28fcc1e829e79bc1d22",
+    "runs/m6-body-compensation-development-20261002/baseline-reverse/c0e79978d0b24c19b833a6e33d57525f/recording/chunks/000003.npz": "e506fc85362b37ded3e7f5d71aac28af163e91e8f0e748712393142594030952",
+    "runs/m6-body-compensation-development-20261002/baseline-reverse/c0e79978d0b24c19b833a6e33d57525f/recording/events.jsonl": "44dc976bb47c079ae8681b1e3bccb5165d0b9b6de1010b6268664eca8b8464c3",
+    "runs/m6-body-compensation-development-20261002/baseline-reverse/c0e79978d0b24c19b833a6e33d57525f/recording/manifest.json": "1c16df2e35ea274f88c84cbdecae09926c737e263633aa9529e6c3a9e78b7db8",
+    "runs/m6-body-compensation-development-20261002/baseline-reverse/c0e79978d0b24c19b833a6e33d57525f/snapshots/index.json": "24dca8186cb041bbfe206fc0c756d49e6680ec710e4207d5322c9e0d9b6ed41e",
+    "runs/m6-body-compensation-development-20261002/baseline-reverse/c0e79978d0b24c19b833a6e33d57525f/snapshots/initial.snp": "483242fcc57fe05c3adcb3d5f2f4c34453439cd96881813c9813988d6849bd22",
+    "runs/m6-body-compensation-development-20261002/baseline-reverse/result.json": "879261a9ed56968c7fed23cc541a7da711d777c16d2f523f3f1944da98737694",
+    "runs/m6-body-compensation-development-20261002/baseline-reverse/stderr.log": "4ad0f1c3fe69bc9cdb7a9292640501f7da85a560e7584a6dd6f7559610a75e00",
+    "runs/m6-body-compensation-development-20261002/baseline-reverse/stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "runs/m6-body-compensation-development-20261002/baseline-reverse/supervisor.json": "ef2cf3408b27c45d4920b2f565233a3b4889ba0ae41ac78afdf058b8e29ef8ba",
+    "runs/m6-body-compensation-development-20261002/compensated-forward/582c969e5c7844b5a659be699306a98d/recording/chunks/000000.npz": "44c32950149b58822b239593da463f4b19f312eec08b1dd22f2bfd427e213fd8",
+    "runs/m6-body-compensation-development-20261002/compensated-forward/582c969e5c7844b5a659be699306a98d/recording/chunks/000001.npz": "1a651851943fbc7dd5f536e810b1d21819aac1e2db1cb9c8f0ee4a1a5885a66d",
+    "runs/m6-body-compensation-development-20261002/compensated-forward/582c969e5c7844b5a659be699306a98d/recording/chunks/000002.npz": "dbeac0ea0a5de92cf98da22450436591bc4634d7e74b56b647a730d52d92dd07",
+    "runs/m6-body-compensation-development-20261002/compensated-forward/582c969e5c7844b5a659be699306a98d/recording/chunks/000003.npz": "ef14891170ef9eeb2e126557f2ff4a16c6a3b8d739df39587c85f0916a6fc988",
+    "runs/m6-body-compensation-development-20261002/compensated-forward/582c969e5c7844b5a659be699306a98d/recording/events.jsonl": "8e904f757602e9a5782ff651a4b2eacccd990f92a03491642c36719fb94ab5db",
+    "runs/m6-body-compensation-development-20261002/compensated-forward/582c969e5c7844b5a659be699306a98d/recording/manifest.json": "4a64caae7db5aed28cf9910034bdddfecf256521bf92a2649d900e0bfa808c96",
+    "runs/m6-body-compensation-development-20261002/compensated-forward/582c969e5c7844b5a659be699306a98d/snapshots/index.json": "14bb508d861da6ec83ff79e870c9af647945f7426e0da7ee920dfe2b73f0ac97",
+    "runs/m6-body-compensation-development-20261002/compensated-forward/582c969e5c7844b5a659be699306a98d/snapshots/initial.snp": "8de7a4f2fa0c517beb0ea715910d32a2be4f522c0e0171a857107c68d18cf766",
+    "runs/m6-body-compensation-development-20261002/compensated-forward/result.json": "4806fa3743dabfcc953f454ac98f42e1b54efd96d1731cda2e60878cd3596d7d",
+    "runs/m6-body-compensation-development-20261002/compensated-forward/stderr.log": "4ad0f1c3fe69bc9cdb7a9292640501f7da85a560e7584a6dd6f7559610a75e00",
+    "runs/m6-body-compensation-development-20261002/compensated-forward/stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "runs/m6-body-compensation-development-20261002/compensated-forward/supervisor.json": "19c49b567522f4654e7cda3b6b761cf2072f493752ae173c52fc7d0f512a5b47",
+    "runs/m6-body-compensation-development-20261002/compensated-reverse/02802a92c7da4cc4bd31fde2fce11a0d/recording/chunks/000000.npz": "d468a962aaef36bd68be09f2f99f761270320fc6bac86698b150029dea0403bb",
+    "runs/m6-body-compensation-development-20261002/compensated-reverse/02802a92c7da4cc4bd31fde2fce11a0d/recording/chunks/000001.npz": "a55b852f54fce92b23ad2119043d7635ebc6b81da40a937319a8b7fc43427ad6",
+    "runs/m6-body-compensation-development-20261002/compensated-reverse/02802a92c7da4cc4bd31fde2fce11a0d/recording/chunks/000002.npz": "083796078baa00e9dd7b4b84b72e174b7a14d587897096443d46364d889d807f",
+    "runs/m6-body-compensation-development-20261002/compensated-reverse/02802a92c7da4cc4bd31fde2fce11a0d/recording/chunks/000003.npz": "bc990a4afed1b4cd9b3e5c7c1a8e02fc8f6461ae3e676380d36df1a4d83e5161",
+    "runs/m6-body-compensation-development-20261002/compensated-reverse/02802a92c7da4cc4bd31fde2fce11a0d/recording/events.jsonl": "3a5b8c43b6bc41e07f10136ba1dc096d314500cf72f67ab044892f2dd885866a",
+    "runs/m6-body-compensation-development-20261002/compensated-reverse/02802a92c7da4cc4bd31fde2fce11a0d/recording/manifest.json": "2f64dc9419da108c4ad45fc87a552a4f8032d3de06aea06669498a4f132e1610",
+    "runs/m6-body-compensation-development-20261002/compensated-reverse/02802a92c7da4cc4bd31fde2fce11a0d/snapshots/index.json": "cfb68efaca4d5be54c6af82d78e5a36892234149becf5d91a77a054a88ff9a88",
+    "runs/m6-body-compensation-development-20261002/compensated-reverse/02802a92c7da4cc4bd31fde2fce11a0d/snapshots/initial.snp": "8fd2dee84b148373e46efa4e477dbb760c825480355e03261d99c060ce145815",
+    "runs/m6-body-compensation-development-20261002/compensated-reverse/result.json": "4dcc2863c69c278ce7adf9acf40ab48cfaf58a53cf717076cce3f02b32619638",
+    "runs/m6-body-compensation-development-20261002/compensated-reverse/stderr.log": "4ad0f1c3fe69bc9cdb7a9292640501f7da85a560e7584a6dd6f7559610a75e00",
+    "runs/m6-body-compensation-development-20261002/compensated-reverse/stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "runs/m6-body-compensation-development-20261002/compensated-reverse/supervisor.json": "847a04d950da52e3791d4ea8965b588a40b8c6c304bbf7bf9562d5e3468a36ff",
+    "runs/m6-body-compensation-development-20261002/protocol.json": "c6f2c7379fb56e2eed85aa925dcabef8bceb93c593f8362d9fbd5497bae35e00",
+    "runs/m6-body-compensation-development-20261002/report.json": "f5a5d617ceb4dbddf32e7e589748f6245c041312f60dbb4147ac985b170d6856",
+    "runs/m6-body-compensation-development-20261002/uncompensated-forward/b593500907c3452390a54883e16f2c9f/recording/chunks/000000.npz": "a8a18fa9bf784148fac86dfac0fe6882dc8e842d1e0de72d2e6b3a86c1baed25",
+    "runs/m6-body-compensation-development-20261002/uncompensated-forward/b593500907c3452390a54883e16f2c9f/recording/chunks/000001.npz": "59be809e5ca97533896cf09b0cc0823b118d5e30eebd4c63d0a8b97c5e9bab26",
+    "runs/m6-body-compensation-development-20261002/uncompensated-forward/b593500907c3452390a54883e16f2c9f/recording/chunks/000002.npz": "6bf9ad99cef3badfe9cbedc2fa1b1f075128b763af8f9e47619c9cf6982c02a4",
+    "runs/m6-body-compensation-development-20261002/uncompensated-forward/b593500907c3452390a54883e16f2c9f/recording/chunks/000003.npz": "9bde4578db4dce42393c3aa2f24c7296a6f8ba30a76de8250508f6a6af07693a",
+    "runs/m6-body-compensation-development-20261002/uncompensated-forward/b593500907c3452390a54883e16f2c9f/recording/events.jsonl": "4b778017441bfd773fb37bfee09a0b5b2a649381ef8a2278b91662d5c27454eb",
+    "runs/m6-body-compensation-development-20261002/uncompensated-forward/b593500907c3452390a54883e16f2c9f/recording/manifest.json": "7dfe1558fa7516a4f56e6244deb32c06777232d95f9922f16dd931c524a3789e",
+    "runs/m6-body-compensation-development-20261002/uncompensated-forward/b593500907c3452390a54883e16f2c9f/snapshots/index.json": "972d4e3c5ab769d9ff71ba6b66ab108739a733fca1273421ca966c9bb8e9d84f",
+    "runs/m6-body-compensation-development-20261002/uncompensated-forward/b593500907c3452390a54883e16f2c9f/snapshots/initial.snp": "d3a30258462d3cefe61f0389f254df8808d016b470fc5d00d359d467c7f5f497",
+    "runs/m6-body-compensation-development-20261002/uncompensated-forward/result.json": "3ec6ee98898fd3cd336b03a57c56f9dec8970abf1876e43807a6e5bc63de685f",
+    "runs/m6-body-compensation-development-20261002/uncompensated-forward/stderr.log": "4ad0f1c3fe69bc9cdb7a9292640501f7da85a560e7584a6dd6f7559610a75e00",
+    "runs/m6-body-compensation-development-20261002/uncompensated-forward/stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "runs/m6-body-compensation-development-20261002/uncompensated-forward/supervisor.json": "91f0070541d57b5ce28b80d931f56101265205a34e74520710eaa505848f6197",
+    "runs/m6-body-compensation-development-20261002/uncompensated-reverse/7253e9bb43384aef9a41fe90e3528b6a/recording/chunks/000000.npz": "c76cce949bbbb92e8a50f3c321d45201ef5d8f5e54d14e625632d8dc02bd360e",
+    "runs/m6-body-compensation-development-20261002/uncompensated-reverse/7253e9bb43384aef9a41fe90e3528b6a/recording/chunks/000001.npz": "00f0ac57da201572b8dee63ce5f54592f46e26bb4d45dd4613899077d32928f4",
+    "runs/m6-body-compensation-development-20261002/uncompensated-reverse/7253e9bb43384aef9a41fe90e3528b6a/recording/chunks/000002.npz": "4dca3587fc4cf1e434ffa6a2def2db0cc1cd50c53e4910d2bbc4acdd94859ace",
+    "runs/m6-body-compensation-development-20261002/uncompensated-reverse/7253e9bb43384aef9a41fe90e3528b6a/recording/chunks/000003.npz": "0003bbf559480c91f52bc7b24a5a8735ba726db9e76f88be5d2b611e6824e6ae",
+    "runs/m6-body-compensation-development-20261002/uncompensated-reverse/7253e9bb43384aef9a41fe90e3528b6a/recording/events.jsonl": "aaa1569d26c29d273de689186c32fa1072b8f2e6dbf469320d9d77148d69240b",
+    "runs/m6-body-compensation-development-20261002/uncompensated-reverse/7253e9bb43384aef9a41fe90e3528b6a/recording/manifest.json": "8ed0cf9fdacce4f7664bdeaa396c15ba1123b28fc5460b509846f7bbe381d2be",
+    "runs/m6-body-compensation-development-20261002/uncompensated-reverse/7253e9bb43384aef9a41fe90e3528b6a/snapshots/index.json": "f369746638a198481cfb18b1baf66aa71be5350119ed33e0d950174b28b9c7de",
+    "runs/m6-body-compensation-development-20261002/uncompensated-reverse/7253e9bb43384aef9a41fe90e3528b6a/snapshots/initial.snp": "a50fbf0debe6eb2fba5091f75884b89c74cdf0c14db4e7decb96824e6012448e",
+    "runs/m6-body-compensation-development-20261002/uncompensated-reverse/result.json": "8e32a9e578189b323c389b69dd108f1f485c4c518d33545dbaf944ed06653b69",
+    "runs/m6-body-compensation-development-20261002/uncompensated-reverse/stderr.log": "4ad0f1c3fe69bc9cdb7a9292640501f7da85a560e7584a6dd6f7559610a75e00",
+    "runs/m6-body-compensation-development-20261002/uncompensated-reverse/stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "runs/m6-body-compensation-development-20261002/uncompensated-reverse/supervisor.json": "5a401923d8b66ed2dabe0749f5d5b783bf5d5cdd0c9e7aacf01ee518ce1d5db3",
+    "runs/m6-compensation-launch-7154d84/launch.json": "b78d937b3c0ed776a6fd819d486b0055cce2ebb022c028bb57698cf5fbe20cfd",
+    "runs/m6-compensation-launch-7154d84/stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "runs/m6-compensation-launch-7154d84/stdout.log": "7eaa48e79912765e551c32a39f47f2b0c9c48cfd8fee42d0e7eacd41612ab10d",
+    "runs/m6-compensation-launch-7154d84/supervisor.json": "cf40bbe42fb84722467737e78c382aed069c19ae50abe5dafcfcda87930b53c1"
+  },
+  "independent_control_math_audit": {
+    "all_six_plans_exact": true,
+    "method": "stdlib binary32 rounding; fixed gain ratios and inverse algebra recomputed without script helpers",
+    "no_upstream_normalization_branch": true
+  },
+  "model_digest_by_condition": {
+    "baseline": "c4d30fef8fbe05739e72e762d10d2dc435c1c831993a32d0662560d494b158e5",
+    "left_08": "bf3ca4b0d32600444e0f23e658c790da50a7675fb3c26fee8f9b0a16e0839d67"
+  }
+}
