@@ -47,3 +47,7 @@ PYTHONPATH=src MUJOCO_GL=egl OMP_NUM_THREADS=2 \
 ```
 
 The invocation acquires the existing storage lease and uses the existing `bounded_process` around its entire 2,280 s gate; each owner is independently supervised. Root must review the frozen launcher/source inventories and grant the exclusive actual runtime slot before executing it. Current qualification is **source/fixture only**. The separately proposed body-command interpolation and held-out start/layout/body/task gates are outside this slice.
+
+## Observed single development gate
+
+The frozen `8a931cf` invocation subsequently [passed](../reports/m6-task-phases.md): 12 normal owner exits, 1,470 numeric ticks, 18 native files, all six four-step continuations and all four complete executable replays. Capture boundaries were exploration 3/76/168 and homing 8/78/279. Every actual window remained paused; early terminal shortening remains fixture-only evidence. Dwell counters reset in the captured dwell windows, as retained in the report. Homing actual closure was 0.152449 m under the unchanged 0.25 m gate. All 193 indexed hashes and before/after tracked/upstream/asset inventories matched; finite cleanup observed no surviving PID/start identity or explicit forced containment. The [evidence index](../reports/m6-task-phases.json) preserves exact sources, metrics and limits. The prospective protocol above describes the original authorization; its prior unexecuted statement is historical, and no second invocation is authorized by this observation.
