@@ -1,0 +1,84 @@
+{
+  "version": 1,
+  "scope": "offline pinned MaleCNS structural atlas; no controller inference",
+  "status": "passed",
+  "fixture_and_cli_tests": 11,
+  "fixture_test_log": "runs/m9-atlas-browser-20261002/fixture-checks.log",
+  "structural_check": "Independent forward traversal per input exactly matched reverse reachability for node 12781 isolation and no-op.",
+  "observations": {
+    "nodes": 138,
+    "edges_before": 1647,
+    "cut_node_ids": [
+      12781
+    ],
+    "edges_after": 1512,
+    "lost_pairs": 137,
+    "lost_by_endpoint": {
+      "12781": 136,
+      "556329": 1
+    },
+    "no_op_lost_pairs": 0
+  },
+  "audit_correction": "An initial root audit assumed endpoint isolation would lose exactly 136 pairs; that assertion failed. Independent traversal confirmed 137 because one input also loses its path to the other endpoint. No source change or retry altered the result.",
+  "visual": "Actual Chromium screenshot inspected; both panels and labels visible, no text overflow, external requests or browser errors.",
+  "exhibition_qualified": false,
+  "artifacts": {
+    "runs/m9-atlas-exports-20261002/atlas-dnge104-right.svg": {
+      "sha256": "1e1886971c31ff87436950f66ad1b73687a51dbe9b14640fb06cf8529a22ac47",
+      "bytes": 592586
+    },
+    "runs/m9-atlas-exports-20261002/atlas-no-op.svg": {
+      "sha256": "68c42ca49383310ad36715a9b03179e7431d34c15f94d6af7bbdaf68fe751f07",
+      "bytes": 588035
+    },
+    "runs/m9-atlas-browser-20261002/desktop.png": {
+      "sha256": "38a3400b4b32d02e46e8baa330bc35f1ef6e176c4066cd6251ce9036d9307b23",
+      "bytes": 699918
+    },
+    "runs/m9-atlas-browser-20261002/report.json": {
+      "sha256": "96ce13f9a576ab15f8746c863518fa9874026cd8e6abbbfcafa53d7efbb1723d",
+      "bytes": 299
+    },
+    "runs/m9-atlas-browser-20261002/check.mjs": {
+      "sha256": "60c2e327cadd858ea45783a3560cfec5dd4a552cea0fabd36c1354caa7e64a2f",
+      "bytes": 1933
+    },
+    "runs/m9-atlas-browser-20261002/fixture-checks.log": {
+      "sha256": "4335e8acb67ab1d65d6fa9f1e9de43cc6afd8055fc3205376e5c0e60257da1f3",
+      "bytes": 1569
+    },
+    "runs/m9-atlas-final-20261002/atlas-dnge104-right.svg": {
+      "sha256": "33f749f00a11c3815782edd239282734fb26cc071ab83470e1bd3a2fa81e2489",
+      "bytes": 592586
+    },
+    "runs/m9-atlas-final-20261002/atlas-no-op.svg": {
+      "sha256": "68c3cbf6303a8e62226c51ca40181164513c9456a708f504634b48c03d5bb201",
+      "bytes": 588035
+    },
+    "runs/m9-atlas-browser-20261002/fixture-checks-after-close-fix.log": {
+      "sha256": "f809bc177428b4d902bff9bafceeee68054beeb116b0529c8bfc0732e3c53db3",
+      "bytes": 1569
+    }
+  },
+  "historical_sources_before_close_fix": {
+    "src/palimpsest/atlas.py": "1140afed40fca0248da942a875468b7a99371adc232917e5f2f35f16d9f330a0",
+    "src/palimpsest/cli.py": "3b690f1af2b1cfe7e72350728f6f3e34cc3ba6e387158f6db52e56cb418af7c4",
+    "src/palimpsest/male_model.py": "f5c29d5f6f0cec66d2b8ea847704fae82aacb345a4c763229048122df9cb2ff6",
+    "tests/test_atlas.py": "fecf323b87c70e38c4d9833245b760c87d6edc982e062d1138e896e069e60557",
+    "data/manifests/malecns-reduced-neighborhood-v1.json": "7a205342b4ada8ab8b78d6ca866c61735003e601531c65a1c1b6c819df00026f"
+  },
+  "final_sources": {
+    "src/palimpsest/atlas.py": "4c7b0752aaf0065648fb9f970b17a95098e7ed91b10e4da1e8e4a9ca6720f23f",
+    "src/palimpsest/cli.py": "3b690f1af2b1cfe7e72350728f6f3e34cc3ba6e387158f6db52e56cb418af7c4",
+    "src/palimpsest/male_model.py": "f5c29d5f6f0cec66d2b8ea847704fae82aacb345a4c763229048122df9cb2ff6",
+    "tests/test_atlas.py": "95aaceb73263f6bf19fd5aa2cc8ae13825e359725a28795209478625e9babaab",
+    "data/manifests/malecns-reduced-neighborhood-v1.json": "7a205342b4ada8ab8b78d6ca866c61735003e601531c65a1c1b6c819df00026f"
+  },
+  "post_review": {
+    "fix": "Exclusive output close is inside exception cleanup; a deferred-close regression proves partial output removal.",
+    "tests": 11,
+    "seconds": 0.209,
+    "final_export_visual_bytes_identical": true,
+    "final_export_scope": "Actual CLI export of the pinned graph with final renderer; exact non-metadata bytes equal browser-inspected prior exports."
+  }
+}

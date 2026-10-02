@@ -100,7 +100,12 @@ def main(argv=None):
     sonify.add_argument('--population', choices=('visual_left', 'visual_right', 'descending'), action='append', required=True)
     sonify.add_argument('--episode', type=_bounded_int(0, 100000), default=0)
     sonify.add_argument('--output', type=Path, required=True, help='new WAV path with embedded provenance; never overwritten')
-    for command in (lab, evaluate, replay, export, sonify, compare):
+    atlas = commands.add_parser('atlas', help='export pinned MaleCNS connectivity and node-isolation reachability')
+    atlas.add_argument('--graph', type=Path, required=True)
+    atlas.add_argument('--graph-manifest', type=Path, required=True)
+    atlas.add_argument('--cut-node', type=int, action='append', default=[], help='bodyId to isolate; repeat up to 32 times; omit for no-op')
+    atlas.add_argument('--output', type=Path, required=True, help='new SVG; offline structural analysis, not model execution')
+    for command in (lab, evaluate, replay, export, sonify, compare, atlas):
         _storage_flags(command)
     args = parser.parse_args(argv)
     root = args.repo.resolve()
@@ -142,7 +147,7 @@ def main(argv=None):
         elif args.command == 'compare' and args.output is None:
             from .artifacts import compare_runs
             report, ok = compare_runs(args.left, args.right), True
-        elif args.command in {'export', 'sonify', 'compare'}:
+        elif args.command in {'export', 'sonify', 'compare', 'atlas'}:
             from .artifacts import export_run
             from .storage import StorageBudget
             output = args.output.absolute()
@@ -152,7 +157,10 @@ def main(argv=None):
                 budget.check(0, path=output)
                 count = sum(path.is_file() and path.suffix.lower() in {'.svg', '.png', '.zip', '.wav', '.html'} for path in managed.rglob('*'))
                 budget.check_count('exports', count)
-                if args.command == 'compare':
+                if args.command == 'atlas':
+                    from .atlas import export_atlas
+                    result = export_atlas(args.graph, args.graph_manifest, output, cut_nodes=args.cut_node, storage_budget=budget)
+                elif args.command == 'compare':
                     from .comparison import export_comparison
                     result = export_comparison(args.left, args.right, output, storage_budget=budget)
                 elif args.command == 'sonify':
