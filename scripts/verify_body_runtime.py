@@ -185,10 +185,10 @@ def worker(config):
     return result['status']=='passed'
 
 
-def audit_ticks(ticks, manifest):
+def audit_ticks(ticks, manifest, *, identity=None, planner=None):
     """Recheck every numeric contact/encoder slot; never infer unrecorded contact."""
     import numpy as np
-    if manifest.get('body_profile_identity')!=body.profile_identity():
+    if manifest.get('body_profile_identity')!=(body.profile_identity() if identity is None else identity):
         raise ValueError('Recorded body identity differs')
     geometries = {item['geom_id']:item for item in manifest['body_contact_ownership']['geometries']}
     stages = pairs = 0
@@ -196,7 +196,7 @@ def audit_ticks(ticks, manifest):
     for row in ticks:
         if not body.TICK_FIELDS <= row.keys():
             raise ValueError('Missing raw body fields')
-        plan = body.plan_action(row['body_nominal_action'])
+        plan = body.plan_action(row['body_nominal_action']) if planner is None else planner(row)
         if (not np.array_equal(row['action'],np.array(plan['applied_action'],np.float64)) or
                 not np.array_equal(row['control'],np.array(plan['applied_control'],np.float64)) or
                 not np.array_equal(row['body_nominal_control'],np.array(plan['nominal_control'],np.float32))):

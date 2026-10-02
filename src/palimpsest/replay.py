@@ -205,12 +205,14 @@ def _write_report(destination, report, storage_budget=None):
 
 
 def replay_run(source_run_path, destination_run_path, *, mode, repo_root, asset_root, progress=None,
-               storage_budget=None):
+               storage_budget=None, recording_max_bytes=None):
     """Replay a completed source in a fresh owner process supplied by the caller.
 
     Action replay restores the same controller for snapshot compatibility, then
     bypasses inference. Policy replay executes it. Neither is recorded playback.
     ``progress`` may block at boundaries or raise InterruptedError to cancel.
+    Optional ``recording_max_bytes`` uses the existing Engine/RunWriter admission;
+    omission preserves the normal Engine recording limit.
     """
     if mode not in {"actions", "policy"}:
         raise ValueError("replay mode must be actions or policy")
@@ -281,7 +283,7 @@ def replay_run(source_run_path, destination_run_path, *, mode, repo_root, asset_
             controller=manifest["controller"], device=manifest["requested_device"], seed=manifest["seed"],
             scenario=profile["id"], texture=manifest["texture"], run_id=destination.name,
             storage_budget=storage_budget, memory_case=memory_case, expected_policy_identity=identity,
-            **restoration)
+            **restoration, **({} if recording_max_bytes is None else {"max_bytes": recording_max_bytes}))
         _compatible(data["events"], _events(destination), manifest['controller'], manifest['scenario']['id'])
         if not atomic_memory:
             engine.restore_branch(snapshot)

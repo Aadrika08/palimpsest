@@ -36,6 +36,28 @@ class ReplayValidation(unittest.TestCase):
                 self.assertEqual(report, json.loads((destination / "replay-report.json").read_text()))
                 self.assertFalse((destination / "recording").exists())
 
+    def test_optional_recording_limit_forwarded_and_default_call_unchanged(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root=Path(temporary);source=root/uuid.uuid4().hex;source.mkdir()
+            manifest={'controller':'manual','scenario':{'id':'reproduction'},
+                      'requested_device':'cpu','seed':1,'texture':'checker'}
+            calls=[]
+            for limit in (None,256*1024**2):
+                destination=root/uuid.uuid4().hex;destination.mkdir()
+                with patch('palimpsest.replay._load',return_value={'manifest':manifest}), \
+                     patch('palimpsest.replay._initial_snapshot',return_value=(
+                         {'application':{}},{'snapshot_id':'fixture','sha256':'a'*64},[])), \
+                     patch('palimpsest.engine.Engine.open',side_effect=RuntimeError('fixture stop before allocation')) as opened:
+                    report=replay_run(source,destination,mode='actions',repo_root=REPO,asset_root=root,
+                                      recording_max_bytes=limit)
+                self.assertEqual(report['status'],'failed')
+                calls.append(opened.call_args.kwargs)
+            self.assertNotIn('max_bytes',calls[0])
+            self.assertEqual(calls[1].pop('max_bytes'),256*1024**2)
+            # Destination ID changes; every other pre-existing keyword stays identical.
+            calls[0].pop('run_id');calls[1].pop('run_id')
+            self.assertEqual(calls[0],calls[1])
+
     def test_report_lists_checked_body_fields_and_runtime_sources(self):
         from palimpsest.replay import _RUNTIME, _BODY_RUNTIME, _ADAPTIVE_RUNTIME, _MALE_RUNTIME, _PHYSICAL
         from palimpsest.body_profile import TICK_FIELDS
