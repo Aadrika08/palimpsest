@@ -1,8 +1,9 @@
 # Artwork mappings
 
-This is a bounded M9 implementation slice of **counterfactual choir**, not completion
-of PRD §20 or ART-003. It creates an offline WAV from completed, validated recorded
-FLYNN population summaries. Verification includes synthetic recording fixtures and two short offline derivatives of
+These are bounded M9 implementation slices of **counterfactual choir** and
+**one map, many possible lives**, not completion of PRD §20 or ART-003. They export
+recorded population means as WAV and recorded route comparisons as standalone HTML.
+Sonification verification includes synthetic recording fixtures and two short offline derivatives of
 previously recorded actual CPU FLYNN telemetry. No new inference, listening study, or
 exhibition was run for this slice.
 
@@ -83,12 +84,59 @@ timing boundaries, and a SHA-256 of the PCM bytes. Ordinary WAV readers can igno
 that chunk; preserve the original file when sharing because audio editors may strip
 unknown metadata. There is no sidecar that could become separated during publication.
 
-## Other five modes: separate, unfinished work
+## One map, many possible lives: implemented offline comparison
+
+```sh
+palimpsest compare runs/lab/<run-a> runs/lab/<run-b> --output exports/comparison.html
+```
+
+Without `--output`, `compare` retains its existing JSON interface. With `--output`,
+it creates one exclusive, self-contained HTML document using the existing validated
+comparison and route-export data. No server, script, remote font/asset, new simulation,
+policy rerun, or browser session is started. The document explicitly identifies an
+offline recorded comparison, not live inference.
+
+Source conditions and a list of expandable provenance differences precede the route
+overlay. Both run IDs, controllers, profiles, scenarios, recorded eye-mask intervals,
+initial memory hashes, U-swap records, parent/source-snapshot references, and final
+phases remain inspectable. Mask intervals come from the actual `eyes` arrays: true
+means enabled, false means masked, and null means unrecorded. No enabled-state default
+is invented for older recordings. Source identities, file hashes, aggregate recording
+hashes, complete comparison data, and the renderer's projection are embedded as
+escaped JSON in the document's final expandable provenance section.
+
+The two sources must have the same fixed arena projection. The overlay uses recorded
+world coordinates unchanged, with y increasing upward, an 800 × 800 view box, and
+40-pixel padding. A is solid blue with a circle at each episode's recorded start;
+B is dashed amber with a square at each episode's start. Separate episodes are never
+joined. Both paths and start markers survive exact coincidence or stationary routes;
+no jitter, offsets, smoothing, or independent scaling creates an artificial difference.
+Paths outside the fixed arena are rejected rather than silently clipped. Each source's
+last recorded world per episode is shown below on the same scale, explicitly labelled
+as final geometry rather than the obstacle/goal geometry at every earlier tick.
+
+Exact equality of the recorded route arrays is displayed descriptively, including
+episode/start-tick alignment. It is not a statistical null-effect test. Unequal routes
+do not establish a causal memory effect; starts, durations, masks, controller state,
+and other conditions can differ. Shared recorded parent/snapshot IDs are references,
+not independent certification of a matched U-only intervention. The page does not
+silently reclassify a general comparison as a controlled experiment.
+
+The existing recording-reader input limits and checksum/count validation apply.
+Metadata is capped at 4 MiB and the complete HTML at 16 MiB. The CLI applies the
+existing managed-storage byte/free-space/export-count limits and per-user writer
+lease; `.html` joins the counted export formats. Existing outputs are never replaced,
+source fingerprints are rechecked around publication, and a write failure removes
+only the newly created partial file. Authoritative `recording/` directories cannot
+be output destinations. Native expandable details, labelled tables, SVG titles and
+descriptions, line patterns, and keyboard focus styles provide the accessibility
+baseline without JavaScript.
+
+## Other four modes: separate, unfinished work
 
 | Mode | Existing basis and work still required |
 | --- | --- |
 | **afterimage** | Not implemented. Requires an explicit consented stimulus-acquisition path, recorded stimulus/controller alignment, and a documented response-to-line mapping. It must label an authored model portrait, not fly perception. |
-| **one map, many possible lives** | Run comparisons exist; this curated presentation is unfinished. Requires selected matched conditions, a visible provenance diff, fixed route scales, and distinct labels for U-only versus controller/anatomy changes. Preserve null differences. |
 | **borrowed body** | Recorded simulated route export exists. A complete physical drawing work remains unfinished: calibrated rover/pen, independent safety gates, measured coordinates, and substrate provenance; visible pen marks require a new closed-loop scenario if they affect camera input. |
 | **atlas of what disappears** | Not implemented. Requires a versioned graph-intervention/analysis path, named structural metrics, and validated visual mappings; disconnected structure is not automatically lost memory or impaired behaviour. |
 | **the space between two flies** | Not implemented. Requires curated anatomical correspondences with dataset/version/units and correspondence uncertainty; specimen differences do not establish population-wide sex effects. |
@@ -106,6 +154,14 @@ resource bounds, exclusive output, partial-write cleanup, and the actual CLI dis
 These checks verify the derivative/export mechanism, not biological fidelity,
 perceptual quality, actual FLYNN activity, a research effect, or exhibition readiness.
 
+`PYTHONPATH=src:tests python -m unittest test_comparison -v` checks synthetic
+completed-run fixtures for fixed projection and unmodified points, coincident and
+stationary routes, actual mask intervals, U/parent provenance, HTML text escaping,
+source integrity, bounds, exclusive publication, and unchanged JSON/working HTML CLI
+dispatch. These are structural/fixture checks. Actual browser layout, keyboard and
+screen-reader behavior, mobile/print appearance, and exhibition usability remain
+pending visual/manual validation; no browser was started for this slice.
+
 Root verification passed all nine sonification fixture tests (no skips). It also
 rendered two prior actual CPU FLYNN recordings (8 and 4 ticks, 0.16 and 0.08 s),
 validated embedded source/parent lineage and independently verified PCM hashes.
@@ -115,3 +171,13 @@ perceptual quality. Evidence is retained locally in
 `5879b2d7ea30ec05359d5fe0f6eb31da3f7aeb7bb9e7fb1ec60cf869d2afb88b`).
 The pure export function was used for existing records while M3 owned the global
 writer lease; CLI dispatch was exercised only by the isolated fixture check.
+
+Root checked 17 comparison/sonification fixture tests (0.350 s, no skips) and
+exported a comparison of two retained actual CPU FLYNN branches. Their route
+arrays match exactly; both source identities and three SVG views remain present.
+This is a compatibility and null-route presentation check, with visual browser
+validation still pending. The retained local index is
+`runs/m9-recorded-comparison-20261002/report.json`, SHA256
+`de3b32b7a216bdef49cd0a8fc9b59ddbddf890455974a67512b79f08ce5aba7c`.
+These unchanged tested files were moved to the separate `feat/artwork-comparison`
+branch for review; the original evidence keeps its observed output path.

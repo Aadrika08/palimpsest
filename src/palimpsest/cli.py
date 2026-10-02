@@ -90,6 +90,7 @@ def main(argv=None):
     compare = commands.add_parser('compare', help='compare completed runs and provenance')
     compare.add_argument('left', type=Path)
     compare.add_argument('right', type=Path)
+    compare.add_argument('--output', type=Path, help='optional new standalone HTML comparison; default prints recorded JSON')
     export = commands.add_parser('export', help='export a completed run without inference')
     export.add_argument('source', type=Path)
     export.add_argument('--format', choices=('svg', 'png', 'bundle'), required=True)
@@ -99,7 +100,7 @@ def main(argv=None):
     sonify.add_argument('--population', choices=('visual_left', 'visual_right', 'descending'), action='append', required=True)
     sonify.add_argument('--episode', type=_bounded_int(0, 100000), default=0)
     sonify.add_argument('--output', type=Path, required=True, help='new WAV path with embedded provenance; never overwritten')
-    for command in (lab, evaluate, replay, export, sonify):
+    for command in (lab, evaluate, replay, export, sonify, compare):
         _storage_flags(command)
     args = parser.parse_args(argv)
     root = args.repo.resolve()
@@ -138,10 +139,10 @@ def main(argv=None):
                              log_max_bytes=args.log_max_bytes)
             uvicorn.run(app, host='127.0.0.1', port=args.port, access_log=False, ws_max_size=16384)
             return 0
-        elif args.command == 'compare':
+        elif args.command == 'compare' and args.output is None:
             from .artifacts import compare_runs
             report, ok = compare_runs(args.left, args.right), True
-        elif args.command in {'export', 'sonify'}:
+        elif args.command in {'export', 'sonify', 'compare'}:
             from .artifacts import export_run
             from .storage import StorageBudget
             output = args.output.absolute()
@@ -149,9 +150,12 @@ def main(argv=None):
             budget = StorageBudget((managed,), _limits(args))
             with budget.lock():
                 budget.check(0, path=output)
-                count = sum(path.is_file() and path.suffix.lower() in {'.svg', '.png', '.zip', '.wav'} for path in managed.rglob('*'))
+                count = sum(path.is_file() and path.suffix.lower() in {'.svg', '.png', '.zip', '.wav', '.html'} for path in managed.rglob('*'))
                 budget.check_count('exports', count)
-                if args.command == 'sonify':
+                if args.command == 'compare':
+                    from .comparison import export_comparison
+                    result = export_comparison(args.left, args.right, output, storage_budget=budget)
+                elif args.command == 'sonify':
                     from .sonification import sonify
                     result = sonify(args.source, output, populations=args.population, episode=args.episode, storage_budget=budget)
                 else:
