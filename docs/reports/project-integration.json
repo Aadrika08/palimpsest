@@ -59,5 +59,74 @@
       "sha256": "1e56e5120f69db45191e847cede5e1dfb25f8ef48b9ababc8b6a3557131cb81d",
       "bytes": 408
     }
+  },
+  "male_integrated_regression": {
+    "source_commit": "77e69da7e69a95e34abf25898ea56c4ae3e1180d",
+    "suite_tests": 330,
+    "passed": 330,
+    "skipped": 0,
+    "suite_seconds": 84.558,
+    "supervision": {
+      "schema_version": 1,
+      "status": "completed",
+      "timeout_seconds": 300,
+      "started_utc": "2026-10-02T12:33:46.603569+00:00",
+      "output": "/home/utkarsh/Work/shraddha/brain/.worktrees/project-integration/runs/integration-male-20261002/suite",
+      "returncode": 0,
+      "elapsed_seconds": 88.0445839669992
+    },
+    "source_unchanged": true,
+    "test_sources_unchanged": true,
+    "files": [
+      {
+        "path": "runs/integration-male-20261002/check.py",
+        "size_bytes": 1360,
+        "sha256": "c1e60c253686b10fe9cffd943b7ed9045333dafae62efe0febf5ebb552b48dbd"
+      },
+      {
+        "path": "runs/integration-male-20261002/report.json",
+        "size_bytes": 11336,
+        "sha256": "feb340f3c10d49615ddc319c72e8184b596ed5843d0e72b8e68a0ef4e920a65a"
+      },
+      {
+        "path": "runs/integration-male-20261002/suite/supervisor.json",
+        "size_bytes": 305,
+        "sha256": "9ca32fa7570d61ddd3342aabf7b7aa7bb77b64965ad5d452939bb8a114d7ee70"
+      },
+      {
+        "path": "runs/integration-male-20261002/suite/stdout.log",
+        "size_bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "runs/integration-male-20261002/suite/stderr.log",
+        "size_bytes": 69012,
+        "sha256": "554be60d905948dffbcaeb9953112deed99c9a6eef5a0829a579f2470a624465"
+      },
+      {
+        "path": "runs/integration-male-20261002/male-evidence/report.json",
+        "size_bytes": 10885,
+        "sha256": "324d1dba8da601a1d36e61ca9085384e8d58085413599097fecd57f0cc9630c2"
+      },
+      {
+        "path": "runs/integration-egl-0a783af/ui-build-after-male.log",
+        "size_bytes": 408,
+        "sha256": "56af932913369392c0ecdc089cadb655d175fe73ad374d1945f92db4c6b2ce12"
+      },
+      {
+        "path": "runs/integration-egl-0a783af/ui-measurement-after-male.log",
+        "size_bytes": 142,
+        "sha256": "6643c1146616068941d18724b8e655d50ddec659a9ca9c83d5311155d9a81434"
+      },
+      {
+        "path": "runs/integration-egl-0a783af/ui-memory-after-male.log",
+        "size_bytes": 183,
+        "sha256": "b96446be93328987993fbd96afb85050c4bbab993396b950d3af88ce3fe02ebe"
+      }
+    ],
+    "limitations": [
+      "Actual simulation and male mechanism gates are enabled; this is regression coverage, not a repeat of historical task/held-out/endurance qualification.",
+      "Full source/test identities remain in the retained report."
+    ]
   }
 }

@@ -23,3 +23,10 @@ original source. Unified qualification and remaining M5–M10 gates remain open.
 After the atlas and export-close cleanup merges, 48 focused export/CLI tests
 passed at `0693a2f` in 2.755 seconds with no skips. The merged atlas CLI also
 exported the pinned actual graph; full task and endurance gates were not rerun.
+
+At `77e69da`, the male controllers are integrated with the acquisition/task
+branches. All **330 tests pass, no skips**, in 84.558 seconds with actual EGL,
+MaleCNS Torch and native/replay gates enabled. The 300-second supervisor exits
+zero in 88.045 seconds; runtime/test hashes remain unchanged. The merged UI
+build, seven measurement checks and memory annotations also pass. This regression
+does not repeat historical held-out or endurance qualification.
