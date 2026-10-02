@@ -22,11 +22,11 @@ from verify_endurance import source_identity, descendants
 from verify_tasks import file_hashes
 
 MiB = 1024**2
-PROFILE = 'teacher-recovery-development-v2'
+PROFILE = 'teacher-recovery-development-v3'
 TEACHER_SHA256 = '5edca9a587dea0a2996856e42a96013aab1b1b0a277eacb74b7fc4270c55c586'
 CASES = [{'id': 'recovery-north-2100', 'seed': 2100, 'start_pose': [-.95, .12, 0.]},
          {'id': 'recovery-south-2101', 'seed': 2101, 'start_pose': [-.95, -.12, 0.]}]
-PROTOCOL = {'id': 'M7-REC-COVER-1', 'version': 2, 'profile': PROFILE, 'cases': CASES,
+PROTOCOL = {'id': 'M7-REC-COVER-1', 'version': 3, 'profile': PROFILE, 'cases': CASES,
     'goal_xy': [2., 0.], 'scenario': 'reproduction', 'texture': 'checker', 'controller': 'teacher', 'device': 'cpu',
     'teacher_sha256': TEACHER_SHA256, 'upstream_commit': '8d964599119b420de67ee259434d273651a1a76d',
     'prefix_max_ticks': 32, 'prefix_action': [.7, 0.], 'source_max_ticks': 120,
@@ -44,9 +44,10 @@ PROTOCOL = {'id': 'M7-REC-COVER-1', 'version': 2, 'profile': PROFILE, 'cases': C
     'output_max_bytes': 1024*MiB, 'min_free_bytes': 1024*MiB,
     'result_max_bytes': 4*MiB, 'report_max_bytes': 4*MiB, 'log_max_bytes': MiB, 'headroom_bytes': 8*MiB,
     'child_timeout_seconds': 180, 'inner_timeout_seconds': 420, 'outer_timeout_seconds': 480,
-    'outcomes': 'collect both valid natural/capped sources before scoring; infrastructure/invariant/storage stops remaining not_started',
+    'collection_boundary': 'Earliest first 45-returned-label cycle without replacement plus later fully admitted recorded interval with cached and stage-zero intended-contact clearance; publish before stopping; no hardcoded tick',
+    'outcomes': 'coverage_complete is collection-only, not natural termination; otherwise natural outcome or 120 cap; collect both valid sources before scoring; infrastructure/invariant/storage stops remaining not_started',
     'pipeline': body.PROTOCOL['pipeline'], 'student': 'unchanged 388 RGB/contact/bearing features; privileged teacher/private history not student inputs',
-    'scope': 'two mirrored development contact/reverse sources only; no training, held-out reads, learned/general/task/body/physical qualification'}
+    'scope': 'two mirrored first-cycle development sources; event boundary deliberately censors later driving, does not cure or reclassify v1/v2 failures; no training, held-out reads, learned/general/task/body/physical qualification'}
 PROTOCOL_SHA256 = hashlib.sha256(json.dumps(PROTOCOL, sort_keys=True, separators=(',', ':'), allow_nan=False).encode()).hexdigest()
 
 
@@ -166,14 +167,79 @@ def score_coverage(rows):
                 not window[-1]['transition']['old_label_replaced'])
     start_contact = bool(window and window[0]['contact']['bad'] and window[0]['stage0_intended_contact'])
     actual_reverse = any(row['prefix'] is False and row['action'][0] < 0 for row in window)
-    clearance = bool(complete and any(not row['contact']['bad'] and not row['stage0_intended_contact'] for row in rows[first+45:]))
-    return {'passed': complete and start_contact and actual_reverse and clearance,
+    clear_tick = next((row['tick'] for row in rows[first+45:]
+                       if not row['contact']['bad'] and not row['stage0_intended_contact']), None) if complete else None
+    passed = complete and start_contact and actual_reverse and clear_tick is not None
+    return {'passed': passed, 'coverage_complete_tick': clear_tick if passed else None,
         'first_cycle': {'start_tick': first, 'queries': len(window), 'completed': complete,
                         'emitted_old_cycle_targets': len(window)-int(bool(window and window[-1]['transition']['old_label_replaced'])),
                         'old_label_replaced': bool(window and window[-1]['transition']['old_label_replaced'])},
-        'start_contact': start_contact, 'actual_post_prefix_reverse': actual_reverse, 'subsequent_clearance': clearance,
+        'start_contact': start_contact, 'actual_post_prefix_reverse': actual_reverse, 'subsequent_clearance': clear_tick is not None,
         'sensor_contact_rows': sum(row['contact']['bad'] for row in rows),
         'stage0_contact_rows': sum(row['stage0_intended_contact'] for row in rows)}
+
+
+def validate_collection(rows, boundary, state):
+    coverage = score_coverage(rows)
+    complete_tick = coverage['coverage_complete_tick']
+    reason = (state.get('last_outcome') or {}).get('reason')
+    natural = (state['phase'] == 'terminated' and reason in ('collision', 'stalled', 'goal') or
+               state['phase'] == 'truncated' and reason == 'time_limit')
+    expected = ('coverage_complete' if complete_tick is not None else
+                'natural_outcome' if natural else 'source_limit')
+    if (not rows or boundary != expected or
+            complete_tick is not None and complete_tick != rows[-1]['tick'] or
+            complete_tick is None and not natural and (state['phase'] != 'paused' or len(rows) != 120) or
+            state['phase'] not in ('paused', 'terminated', 'truncated')):
+        raise ValueError('Recording does not end at its earliest valid collection boundary')
+    return coverage
+
+
+def raw_stage0_contact(raw, ownership):
+    """Recheck every recorded contact packet; clearance uses actual stage-zero slots."""
+    import numpy as np
+    shapes = {'body_contact_ids': ((11, 128, 2), np.int16), 'body_contact_counts': ((11,), np.int16),
+              'body_contact_classes': ((11, 128), np.uint8), 'body_contact_distances': ((11, 128), np.float64)}
+    for key, (shape, dtype) in shapes.items():
+        if raw[key].shape != shape or raw[key].dtype != dtype or not np.isfinite(raw[key]).all():
+            raise ValueError('Invalid raw contact shape/dtype/distance')
+    geometries = {entry['geom_id']: entry for entry in ownership['geometries']}
+    counts = raw['body_contact_counts']; ids = raw['body_contact_ids']
+    classes = raw['body_contact_classes']; distances = raw['body_contact_distances']
+    if np.any(counts < 0) or np.any(counts > 128): raise ValueError('Raw contact count overflow')
+    packets = []
+    for stage, count in enumerate(counts):
+        if any(np.any(array[stage, int(count):] != 0) for array in (ids, classes, distances)):
+            raise ValueError('Nonzero raw contact padding')
+        pairs = []
+        for column in range(int(count)):
+            entries = [geometries.get(int(gid)) for gid in ids[stage, column]]
+            if any(entry is None for entry in entries): raise ValueError('Unknown raw contact geometry')
+            names = [entry['name'] for entry in entries]
+            support = 'floor' in names and any(name in body.GROUND_SUPPORT for name in names)
+            incident = any(entry['owner'] == 'robot' for entry in entries)
+            code = 2 if support else 3 if incident else 1
+            if classes[stage, column] != code: raise ValueError('Misclassified raw contact')
+            pairs.append({'geom_names': names, 'classification':
+                          'rover_ground_support' if support else 'unexpected_robot_contact' if incident else 'world_only'})
+        packets.append({'pairs': pairs})
+    if counts[9] != counts[10] or any(not np.array_equal(array[9], array[10]) for array in (ids, classes, distances)):
+        raise ValueError('Last stage/end raw contact cache differs')
+    return contact_admission({'coverage_passed': True, 'callback_count': 10,
+                              'stages': packets[:10], 'end': packets[10]},
+                             {entry['name'] for entry in geometries.values() if entry['owner'] == 'robot'})
+
+
+def bind_clearance(raw, row, ownership):
+    bad = float(raw['sensors'][0]); angle = float(raw['sensors'][1])
+    stage0 = raw_stage0_contact(raw, ownership)
+    import numpy as np
+    if (bad not in (0., 1.) or bool(bad) != row['contact']['bad'] or
+            angle != float(np.float32(row['contact']['angle'] or 0.)) or
+            stage0 != row['stage0_intended_contact']):
+        raise ValueError('Raw contact sensor/stage-zero clearance binding differs')
+    return {**row, 'contact': {'bad': bool(bad), 'angle': angle if bad else None},
+            'stage0_intended_contact': stage0}
 
 
 def contact_admission(interval, robot_names):
@@ -281,7 +347,7 @@ def worker(config):
         def defer_tick(episode, tick, **arrays):
             if pending: raise ValueError('More than one unpublished interval')
             pending.append((episode, tick, arrays))
-        engine.writer.tick = defer_tick; probe.install(); prefix = True
+        engine.writer.tick = defer_tick; probe.install(); prefix = True; boundary = 'source_limit'
         for tick in range(120):
             before = sample(engine.env); row = query_teacher(engine.teacher, engine.env)
             prefix = prefix_for_query(tick, prefix, row['contact']['bad'])
@@ -308,15 +374,17 @@ def worker(config):
             row.update(contact_counts=arrays['body_contact_counts'].tolist(), callback_count=interval['callback_count'])
             row.pop('interval_contacts')  # Full successful packets are in the lossless numeric arrays.
             result.pop('first_failure_packet', None)
-            if engine.phase != 'paused': break
+            if score_coverage(result['rows'])['coverage_complete_tick'] is not None:
+                boundary = 'coverage_complete'; break
+            if engine.phase != 'paused':
+                boundary = 'natural_outcome'; break
         result.update(status='completed-recording', recorded_ticks=len(result['rows']), final_state=engine.public_state(),
-            coverage=score_coverage(result['rows']), model_unchanged=_model_digest(engine.env.model) == result['override']['actual_model_sha256'])
-        reason = (engine.last_outcome or {}).get('reason')
-        if ((engine.phase == 'paused' and len(result['rows']) != 120) or
-                (engine.phase == 'terminated' and reason not in ('collision', 'stalled', 'goal')) or
-                (engine.phase == 'truncated' and reason != 'time_limit') or
-                engine.phase not in ('paused', 'terminated', 'truncated') or not result['model_unchanged']):
-            raise ValueError('Invalid outcome/model mutation')
+            collection_boundary=boundary,
+            coverage=validate_collection(result['rows'], boundary, engine.public_state()), model_unchanged=_model_digest(engine.env.model) == result['override']['actual_model_sha256'])
+        if not result['model_unchanged']: raise ValueError('Invalid model mutation')
+        engine.writer.manifest['recovery_collection_boundary'] = boundary
+        engine.writer.event('recovery_collection_boundary', boundary=boundary, tick=result['rows'][-1]['tick'],
+                            coverage=result['coverage'], natural_outcome=engine.last_outcome)
     except Exception as error:
         result.update(status='failed-infrastructure', error={'type': type(error).__name__, 'message': str(error)[:1024]})
     finally:
@@ -371,7 +439,9 @@ def gate(config):
             rows = list(iter_ticks(run/'recording')); manifest = read_json(run/'recording/manifest.json')
             if manifest['status'] != 'completed' or manifest['profile'] != PROFILE or not 1 <= len(rows) <= 120 or len(rows) != len(result['rows']):
                 raise ValueError('Incomplete or incorrectly admitted standalone recording')
-            prefix = True
+            if manifest['recovery_contact_ownership'] != result['contact_ownership']:
+                raise ValueError('Recorded contact geometry ownership differs')
+            prefix = True; reconstructed = []
             for tick, (raw, row) in enumerate(zip(rows, result['rows'])):
                 prefix = bind_action(tick, raw, prefix)
                 if (int(raw['episode']) != 0 or int(raw['tick']) != tick or raw['action'].tolist() != row['action'] or
@@ -382,8 +452,13 @@ def gate(config):
                         raw['recovery_transitions'].tolist() != [row['transition'][key] for key in ('started', 'completed', 'old_label_replaced')] or
                         row['action'] != executed_action(tick, row['expert_action'], prefix)): raise ValueError('Expert/executed label/cursor binding differs')
                 validate_query(row)
+                reconstructed.append(bind_clearance(raw, row, result['contact_ownership']))
+            coverage = validate_collection(reconstructed, result['collection_boundary'], result['final_state'])
+            if coverage != result['coverage'] or manifest.get('recovery_collection_boundary') != result['collection_boundary']:
+                raise ValueError('Recorded collection boundary/coverage differs')
             item['status'] = 'completed-recording'; report['owners_completed'] += 1; report['numeric_ticks'] += len(rows)
-            item['coverage'] = score_coverage(result['rows'])
+            item['coverage'] = coverage
+            item['collection_boundary'] = result['collection_boundary']
             initial_ready(run, 'ready')
         if len(list(output.rglob('*.snp'))) != 2 or report['numeric_ticks'] > 240: raise ValueError('Frozen count limits differ')
         report.update(protocol_status='completed', snapshot_files=2,
