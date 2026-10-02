@@ -33,6 +33,66 @@ class VerifierBoundaries(unittest.TestCase):
         with patch.object(self.runner, 'load_histories', return_value=self.histories):
             return self.runner.make_plan(self.repo, self.root/'assets', output or self.root/'comparison')
 
+    def test_goal_handoff_uses_paused_command_without_memory_or_physics_advance(self):
+        from palimpsest.engine import Engine
+        from palimpsest.records import RunWriter
+        from test_engine import SmallEnv
+        case=experiment.make_world_case(8,'local_cue','development-test',acquisition=True)
+        run=self.root/uuid.uuid4().hex
+        env=SmallEnv()
+        engine=Engine(env,RunWriter(run/'recording',{'run_id':run.name}),scenario='sparse-navigation')
+        env._goal_xy=np.asarray(case['goal_xy'],np.float32)
+        env.model.site_pos=np.asarray([case['goal_xy']+[0.]],np.float64)
+        env.data.qpos[:]=[-1.2342,.6054,math.pi/20]
+        engine.episode_step=engine.total_tick=300
+        engine.memory={'m':memory.seed_m(case['facts'],[]),'e':{'version':1,'episodes':[]},
+            'u':memory.artifact(method='empty-v1'),'cursor':{'tick':299},'episode_id':'episode-0'}
+        engine.world_task_state={}
+        before=copy.deepcopy(engine.memory)
+        def change(actual,payload,teacher=None):
+            self.assertEqual(payload,{'kind':'move_goal','xy':[-.5,-2.7]})
+            old=actual._goal_xy.tolist();actual._goal_xy[:]=payload['xy']
+            actual.model.site_pos[0,:2]=actual._goal_xy
+            return {'kind':'move_goal','old':{'xy':old},'new':{'xy':actual._goal_xy.tolist()},'simulation_time':actual.data.time}
+        def sensing(actual,state):
+            world={'cues':[{'id':case['cue_id'],'xy':case['cue_xy'],'state':0}],
+                'landmarks':[{'id':case['common_goal_id'],'xy':actual._goal_xy.tolist()}]+
+                  [{'id':f['inspection_landmark_id'],'xy':xy} for f,xy in zip(case['facts'],case['inspection_xy'])],
+                'passages':[{'subject_id':f['subject_id'],'inspection_landmark_id':f['inspection_landmark_id'],
+                    'passability':'open'} for f in case['facts']], 'common_goal_id':case['common_goal_id']}
+            return world,actual.data.qpos.tolist(),[]
+        try:
+            with patch('palimpsest.interventions.apply_intervention',side_effect=change), \
+                 patch.object(self.runner.memory_world,'sensing_inputs',side_effect=sensing):
+                proof=self.runner.apply_goal_handoff(engine,case)
+            self.assertEqual(engine.memory,before)
+            self.assertEqual((engine.total_tick,engine.episode_step,env.calls),(300,300,0))
+            self.assertEqual(proof['receipt']['status'],'applied')
+            self.assertEqual(proof['effective_goal_xy'],np.asarray([-.5,-2.7],np.float32).astype(float).tolist())
+            events=self.runner.artifacts._events(run)
+            self.assertFalse(any(e['kind']=='memory_sensed' for e in events))
+            self.assertEqual(len([e for e in events if e['kind']=='goal_handoff_probe']),1)
+            self.assertEqual(self.runner.PROTOCOL['version'],3)
+            native={'environment':{'_goal_xy':env._goal_xy.copy()},'application':{
+                'original_commands':copy.deepcopy(engine._originals),'receipts':engine.receipts,
+                'memory':copy.deepcopy(engine.memory),'event_prefix':{'event_count':len(events)}}}
+            data={'events':events,'rows':[{'next_pose':env.data.qpos.copy()}]}
+            self.runner.validate_goal_handoff(data,native,case,'source')
+            for mutate in (
+                lambda d,n:d['events'][-1]['proof'].__setitem__('memory_before_sha256','0'*64),
+                lambda d,n:d['events'][-1]['proof']['packet']['landmarks'].pop(0),
+                lambda d,n:n['environment']['_goal_xy'].__setitem__(1,2.7),
+                lambda d,n:n['application']['receipts'][self.runner.GOAL_HANDOFF['command_id']].__setitem__('applied_tick',299),
+                lambda d,n:n['application']['receipts'][self.runner.GOAL_HANDOFF['command_id']].__setitem__('applied_episode',False),
+                lambda d,n:n['application']['event_prefix'].__setitem__('event_count',0),
+                lambda d,n:d['rows'][-1]['next_pose'].__setitem__(0,0.)):
+                bad_data,bad_native=copy.deepcopy((data,native))
+                mutate(bad_data,bad_native)
+                with self.assertRaises(ValueError):
+                    self.runner.validate_goal_handoff(bad_data,bad_native,case,'source')
+        finally:
+            engine.close()
+
     def test_fixed_source_override_is_bounded_and_keeps_continuation_separate(self):
         case = experiment.make_world_case(8, 'local_cue', 'development-test', acquisition=True)
         other = experiment.make_world_case(9, 'paired_cue', 'development-test', acquisition=True)
@@ -48,7 +108,7 @@ class VerifierBoundaries(unittest.TestCase):
             with self.assertRaises(ValueError):
                 self.runner.source_action(schedule, pose, tick)
         self.assertEqual(self.runner.cue_action([1.,0.]), [.65,0.])
-        self.assertEqual(self.runner.PROTOCOL['version'], 2)
+        self.assertEqual(self.runner.PROTOCOL['version'], 3)
         self.assertEqual(self.runner.SOURCE_PREPARATION['access'], 'privileged-manual-pose-supervision')
         self.assertFalse(self.runner.SOURCE_PREPARATION['uses_u'])
 
@@ -140,6 +200,14 @@ class VerifierBoundaries(unittest.TestCase):
             'memory': {'u': u, 'cursor': {'bearing': [1., 0.],'tick':299,'episode_id':'episode-0',
                 'packet_sha256':'0'*64,'common_goal_id':job['case']['common_goal_id']}, 'episode_id':'episode-0',
                        'm':memory.seed_m(job['case']['facts'],[])}}}
+        identifier=self.runner.GOAL_HANDOFF['command_id']
+        native['environment']={'_goal_xy':np.asarray(self.runner.GOAL_HANDOFF['xy'],np.float32)}
+        native['application']['original_commands']={identifier:{'id':identifier,'kind':'intervene',
+            'expected_state':'paused','expected_episode':0,'expected_revision':7,
+            'payload':{'kind':'move_goal','xy':self.runner.GOAL_HANDOFF['xy']}}}
+        native['application']['receipts']={identifier:{'id':identifier,'kind':'intervene','status':'applied',
+            'received_tick':300,'applied_tick':300,'received_episode':0,'applied_episode':0,'applied_revision':8,
+            'received_run_id':'source-fixture','applied_run_id':'source-fixture'}}
         outcome = ({'type': 'CueUnavailable', 'reason': 'runtime_failure',
             'message': 'goal_cue_unavailable: fixture', 'episode': 0, 'steps': 301} if failed else None)
         report = {'status': 'recorded', 'stage': stage, 'run_path': str(run),
@@ -152,6 +220,7 @@ class VerifierBoundaries(unittest.TestCase):
             'source_preparation_protocol':self.runner.SOURCE_PREPARATION,
             'source_preparation_sha256':self.runner.SOURCE_PREPARATION_SHA256,
             'acquisition_schedule_override':self.runner.ACQUISITION_OVERRIDE,
+            'goal_handoff_protocol':self.runner.GOAL_HANDOFF,'goal_handoff_sha256':self.runner.GOAL_HANDOFF_SHA256,
             'controller': 'manual', 'requested_device': 'cpu', 'seed': 8,
             'recording_max_bytes': self.runner.PROTOCOL['recording_max_bytes'],
             'close_reason': 'operator_closed', 'status': 'failed' if failed else 'completed',
@@ -159,7 +228,7 @@ class VerifierBoundaries(unittest.TestCase):
         events = [{'kind': 'environment', **{k: job['source_identity'][k]
             for k in ('source_sha256', 'lock_sha256', 'upstream_commit')}}]
         rows = [] if stage=='anchor' else [{'episode': 0, 'tick': 300,
-            'action': np.array([.65, 0.], dtype=np.float64)}]
+            'action': np.array([.65, 0.], dtype=np.float64),'pose':np.asarray([-1.3,.626,math.pi/20])}]
         if stage not in ('source', 'anchor'):
             events.append({'kind': 'transfer_driver_input', 'episode': 0, 'episode_step': 300,
                 'bearing_tick': 299, 'bearing': [1., 0.], 'action': [.65, 0.]})
@@ -175,7 +244,7 @@ class VerifierBoundaries(unittest.TestCase):
             from palimpsest import memory_task
             case=job['case']
             world={'cues':[{'id':case['cue_id'],'xy':case['cue_xy'],'state':1}],
-                'landmarks':[{'id':case['common_goal_id'],'xy':case['goal_xy']}]+
+                'landmarks':[{'id':case['common_goal_id'],'xy':self.runner.effective_goal()}]+
                     [{'id':f['inspection_landmark_id'],'xy':case['inspection_xy'][i]} for i,f in enumerate(case['facts'])],
                 'passages':[{'subject_id':f['subject_id'],'inspection_landmark_id':f['inspection_landmark_id'],
                              'passability':'open'} for f in case['facts']], 'common_goal_id':case['common_goal_id']}
@@ -198,6 +267,9 @@ class VerifierBoundaries(unittest.TestCase):
                 events[3]['action']=self.runner.cue_action(bearing)
             else:
                 events.append({'kind':'memory_cue','episode_step':300,'bearing':bearing})
+            events.append({'kind':'application_restored','episode':0,'episode_step':300,'world':{
+                'arena':7.,'pose':[-1.3,.626,math.pi/20],'obstacles':[],
+                'goal':self.runner.effective_goal()+[.25]}})
         data = {'run': run, 'manifest': manifest, 'events': events, 'rows': rows}
         return job, data, report, native
 
@@ -223,6 +295,10 @@ class VerifierBoundaries(unittest.TestCase):
             lambda f: f[1]['events'][1].__setitem__('episode_step', 301),
             lambda f: f[2]['boundary_memory']['300']['cursor'].__setitem__('packet_sha256','0'*64),
             lambda f: f[3]['application']['memory'].__setitem__('u', self.histories['swapped']['u']),
+            lambda f: f[3]['environment']['_goal_xy'].__setitem__(1,2.7),
+            lambda f: f[3]['application']['receipts'][self.runner.GOAL_HANDOFF['command_id']].__setitem__('applied_episode',False),
+            lambda f: next(e for e in f[1]['events'] if e['kind']=='application_restored')['world']['goal'].__setitem__(1,2.7),
+            lambda f: next(e for e in f[1]['events'] if e['kind']=='memory_sensed')['packet']['landmarks'][0].__setitem__('bearing_rad',0.),
             lambda f: f[1]['manifest'].__setitem__('last_outcome', {'type': 'forged'})):
             bad = copy.deepcopy(good)
             mutate(bad)
@@ -291,6 +367,7 @@ class VerifierBoundaries(unittest.TestCase):
         self.assertEqual(child.call_count, 1)
         self.assertEqual(result['status'], 'mechanism_unverified')
         self.assertEqual(result['runs'][0]['stage'], 'source')
+        self.assertEqual([s['stage'] for s in result['unattempted_stages']],list(self.runner.STAGES)[1:])
         self.assertIn('no retry', result['first_failure']['message'])
         self.assertEqual(json.loads((Path(plan['output'])/'transfer-report.json').read_text()), result)
         for bearing in ([0., 0.], [True, 0.], [float('nan'), 0.], [1., 0., 99], {'pose': [0, 0, 0]}):
