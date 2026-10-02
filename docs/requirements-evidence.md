@@ -46,7 +46,7 @@ R2–R5 qualification. Full later release gates remain in the
 
 Additional M6 task, M7 model and M9 artwork gates are broader than these IDs.
 Exploration and homing have manual development demonstrations with native/replay
-evidence; [measured wheel response](reports/m6-body-gains-v2.md) and [fixed-gain compensation](reports/m6-body-compensation.md) pass their standalone development gates. Loaded runtime compensation, online adaptation and learned puck manipulation remain unfinished.
+evidence; [measured wheel response](reports/m6-body-gains-v2.md) and [fixed-gain compensation](reports/m6-body-compensation.md) pass their standalone development gates. [Loaded runtime compensation](reports/m6-body-runtime-v2.md) passes its bounded actual source/reset/native/replay gate; its UI check remains pending. Online adaptation and learned puck manipulation remain unfinished.
 The reduced MaleCNS pilot has separate training and recorded-input held-out
 scores, with a guarded CPU wrapper, native/replay integration and [actual live browser workflow](reports/m7-live-lab.md); it does not establish closed-loop navigation,
 biological sensing, topology benefit or population-wide sex differences. The [16-run closed-loop evaluation](reports/m7-closed-loop-v2.md) completed with only 0/8 original and 1/8 control goals; R3 remains incomplete.
