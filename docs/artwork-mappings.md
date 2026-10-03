@@ -164,9 +164,10 @@ perceptual quality, actual FLYNN activity, a research effect, or exhibition read
 completed-run fixtures for fixed projection and unmodified points, coincident and
 stationary routes, actual mask intervals, U/parent provenance, HTML text escaping,
 source integrity, bounds, exclusive publication, and unchanged JSON/working HTML CLI
-dispatch. These are structural/fixture checks. Actual browser layout, keyboard and
-screen-reader behavior, mobile/print appearance, and exhibition usability remain
-pending visual/manual validation; no browser was started for this slice.
+dispatch. These were structural/fixture checks; no browser was started for that
+source slice. The later [recorded comparison browser check](#recorded-comparison-browser-evidence)
+covered desktop/mobile layout, keyboard disclosure and print output. Screen-reader
+validation and independent exhibition usability remain open.
 
 Root verification passed all nine sonification fixture tests (no skips). It also
 rendered two prior actual CPU FLYNN recordings (8 and 4 ticks, 0.16 and 0.08 s),
@@ -181,8 +182,8 @@ writer lease; CLI dispatch was exercised only by the isolated fixture check.
 Root checked 17 comparison/sonification fixture tests (0.350 s, no skips) and
 exported a comparison of two retained actual CPU FLYNN branches. Their route
 arrays match exactly; both source identities and three SVG views remain present.
-This is a compatibility and null-route presentation check, with visual browser
-validation still pending. The retained local index is
+This was a compatibility and null-route presentation check; browser validation was
+pending at that stage and is recorded in the later section below. The retained local index is
 `runs/m9-recorded-comparison-20261002/report.json`, SHA256
 `de3b32b7a216bdef49cd0a8fc9b59ddbddf890455974a67512b79f08ce5aba7c`.
 These unchanged tested files were moved to the separate `feat/artwork-comparison`
@@ -193,3 +194,9 @@ branch for review; the original evidence keeps its observed output path.
 On 2 October 2026, Chromium opened the unchanged prior actual-branch comparison HTML (SHA-256 `2857dc2118578af71950a7d29f1de9d57b8310747bb15349b7823da7b0523bb1`). Desktop and 390px mobile layouts have no page overflow; the bounded source table scrolls horizontally on narrow screens. Keyboard disclosure, all three SVG views and PDF print generation passed, with zero page exceptions or external requests. Desktop/mobile screenshots were inspected. This verifies a short recorded comparison presentation, not exhibition duration or a causal memory effect.
 
 Retained report: `runs/m9-browser-comparison-20261002/report.json`, SHA-256 `f2357d45889f39077f55a516dfa6b8eeefe12cca285b552d65a6cb719a729f55`. The source HTML stayed unchanged; full M9 qualification remains open.
+
+The [fixed six-mode handoff plan](plans/m9-offline-handoff.md) and
+[source manifest](artwork-handoff.json) select a small portable input folder for a
+one-pass offline export smoke. Its driver is fixture-checked; actual curated CLI
+execution still requires separate approval. Agent-operated exports do not supply
+independent operation, physical drawing or exhibition-duration qualification.

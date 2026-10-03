@@ -1,0 +1,266 @@
+{
+  "status": "passed",
+  "review_status": "root_reviewed",
+  "producer_commit": "9f57977265c5f29f3e6d953f6e282ad705d83cca",
+  "date": "2026-10-03",
+  "actual_export_invocations": 1,
+  "export_commands_completed": 6,
+  "agent_operated": true,
+  "qualification_claims": [],
+  "command": "../lab-hardening/.venv/bin/python runs/artwork-handoff-v2-prepared/enclose.py",
+  "cwd": "/home/utkarsh/Work/shraddha/brain/.worktrees/artwork-handoff",
+  "input_root": "/home/utkarsh/Work/shraddha/brain/.worktrees/artwork-handoff/runs/artwork-handoff-v1-inputs",
+  "output_root": "/home/utkarsh/Work/shraddha/brain/.worktrees/artwork-handoff/runs/artwork-handoff-v1-20261003",
+  "source_inventory": {
+    "driver_scope": "Selected offline implementation files and lock metadata; not the whole tracked source tree or Python runtime.",
+    "outer_scope": "499 tracked regular files (12046899 bytes), exact gitlink, pinned Python executable/version and NumPy version; controls separately pinned.",
+    "files": 499,
+    "bytes": 12046899,
+    "input_files": 19,
+    "input_bytes": 4852480,
+    "original_and_relocated_unchanged": true,
+    "copied_runs": "Derivative subsets preserving original internal producer/provenance; no native continuation or action/policy replay support."
+  },
+  "checks": {
+    "source_tests": {
+      "passed": 7,
+      "skipped": 0,
+      "reported_seconds": 0.25,
+      "root_repeat_seconds": 0.325
+    },
+    "control_fixtures": {
+      "passed": 7,
+      "seconds": 0.02171581200673245,
+      "root_repeat_seconds": 0.018549749001977034
+    },
+    "preflight_seconds": 0.42978964699432254,
+    "root_preflight_seconds": 0.6607659129949752,
+    "root_artifact_audit_seconds": 0.5011083949939348,
+    "root_readback": {
+      "recorded_route_intervals": 8,
+      "coincident_route_points_each": 5,
+      "afterimage_frames_verified": 8,
+      "choir_pcm_frames_exactly_reconstructed": 3840,
+      "specimen_segments_recounted": 37007,
+      "atlas_retained_structural_counts": [
+        135,
+        137
+      ],
+      "qualification_claims": []
+    }
+  },
+  "timing": {
+    "child_supervisor": {
+      "elapsed_seconds": 1.0734500300022773,
+      "output": "/home/utkarsh/Work/shraddha/brain/.worktrees/artwork-handoff/runs/artwork-handoff-v1-20261003/supervisor",
+      "returncode": 0,
+      "schema_version": 1,
+      "started_utc": "2026-10-03T10:39:15.807595+00:00",
+      "status": "completed",
+      "timeout_seconds": 120
+    },
+    "enclosing_supervisor": {
+      "elapsed_seconds": 1.3228951530036284,
+      "output": "/home/utkarsh/Work/shraddha/brain/.worktrees/artwork-handoff/runs/artwork-handoff-v2-prepared/enclosing/supervisor",
+      "returncode": 0,
+      "schema_version": 1,
+      "started_utc": "2026-10-03T10:39:15.705442+00:00",
+      "status": "completed",
+      "timeout_seconds": 175.82475403200078
+    },
+    "driver_return_elapsed_seconds": 1.5019103709928459,
+    "enclosing_elapsed_seconds_before_publication": 1.6810288929991657,
+    "enclosing_exec_exit_code": 0,
+    "enclosing_exec_session": 20310,
+    "scope": "Child/supervisor durations are measured; prepublication elapsed is not the full process-return wall duration."
+  },
+  "limits": {
+    "control_bytes": 8388608,
+    "cumulative_processes": 128,
+    "failure_cleanup_acceptance_seconds": 12,
+    "input_bytes": 8388608,
+    "kill_deadline_seconds": 173,
+    "log_bytes_per_stream": 262144,
+    "min_free_bytes": 1073741824,
+    "normal_acceptance_seconds": 150,
+    "output_bytes": 67108864,
+    "proc_entries": 8192,
+    "sample_processes": 64,
+    "sample_seconds": 0.25,
+    "supervisor_fallback_seconds": 176,
+    "term_deadline_seconds": 170
+  },
+  "storage_enforcement": "Before/after recounts and 0.25-second nominal samples, not an atomic filesystem quota.",
+  "output_summary": [
+    {
+      "file": "afterimage.svg",
+      "bytes": 9563,
+      "status": "passed"
+    },
+    {
+      "file": "borrowed-body.svg",
+      "bytes": 20090,
+      "status": "passed"
+    },
+    {
+      "file": "one-map-many-lives.html",
+      "bytes": 63908,
+      "status": "passed"
+    },
+    {
+      "file": "counterfactual-choir.wav",
+      "bytes": 18222,
+      "status": "passed"
+    },
+    {
+      "file": "atlas.svg",
+      "bytes": 592586,
+      "status": "passed"
+    },
+    {
+      "file": "space-between-two-flies.svg",
+      "bytes": 1742443,
+      "status": "passed"
+    }
+  ],
+  "artifact_bytes": 2446812,
+  "retained_output_files": 12,
+  "retained_output_bytes": 2509822,
+  "cleanup": {
+    "sampled_identities_absent": 3,
+    "sampler_stopped": true,
+    "forced_signals": [],
+    "survivors": [],
+    "sample_errors": [],
+    "writer_lease_verified_free": true,
+    "limitation": "Finite samples do not prove absence of an unsampled detached process."
+  },
+  "retained_failure": {
+    "phase": "v1 read-only control preflight",
+    "actual_export_calls": 0,
+    "cause": "Generic 16 MiB source/control hash bound was incorrectly applied to the already-pinned 21662864-byte Python executable.",
+    "correction": "Fresh v2 family uses that exact pinned executable size for its runtime hash only. All product sources, data, non-runtime bounds and deadlines remain unchanged.",
+    "preserved_family_files": 21,
+    "product_source_unchanged": true
+  },
+  "ledger_note": "The frozen ready ledger and terminal retained inventory contain drained hashes. The preparation preflight receipt checked its own then-live log prefix; it is not a final-log hash claim.",
+  "declarations": {
+    "operator": null,
+    "custodian": null,
+    "intended_audience": null,
+    "approved_sharing": null,
+    "retention_review_date": null,
+    "disposition_record": null
+  },
+  "limitations": [
+    "No new inference, capture, native stepping, model loading, browser or audio playback in this pass.",
+    "Independent audit is an agent artifact/code check, not an independent human operator acceptance.",
+    "No intended-machine exhibition duration, physical rover/pen, consent/licence expansion, R5 or artistic expressiveness qualification.",
+    "Original source terms/attribution are retained; blank human and retention fields remain unfilled.",
+    "Raw local inputs and outputs are not uploaded or included in a fresh clone."
+  ],
+  "references": [
+    {
+      "role": "source_manifest",
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/artwork-handoff/docs/artwork-handoff.json",
+      "size_bytes": 8273,
+      "sha256": "9766f285b7f4008f894845cc12d51e34a14dafc5eaf88fba6e13bdec36944982"
+    },
+    {
+      "role": "source_fixture_log",
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/artwork-handoff/runs/artwork-handoff-source-checks/child-bound-fixed.log",
+      "size_bytes": 1167,
+      "sha256": "0b7a79033c873a230a1d3ddb6a19710589a249b5064e425497c5af6ba0467eb9"
+    },
+    {
+      "role": "root_source_review",
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/project-integration/runs/artwork-handoff-source-root-review-9f57977/audit.json",
+      "size_bytes": 822,
+      "sha256": "09eb4c6481689a3e3524d6b400cb10cb66ace05297e91013f0b66e23b52870ec"
+    },
+    {
+      "role": "control_plan_full_tracked_inventory",
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/artwork-handoff/runs/artwork-handoff-v2-prepared/plan.json",
+      "size_bytes": 90968,
+      "sha256": "2cd94d988e0faa3c15f0a3682e53daf55864f3188719e820659d22c5a39cc3a4"
+    },
+    {
+      "role": "frozen_control_ledger",
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/artwork-handoff/runs/artwork-handoff-v2-prepared/ready.json",
+      "size_bytes": 3438,
+      "sha256": "a6e0a235bd1ad30f9a727072447fd4b7af7388b1ce39a725aaee4755136c4af4"
+    },
+    {
+      "role": "control_fixture_receipt",
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/artwork-handoff/runs/artwork-handoff-v2-prepared/fixtures.json",
+      "size_bytes": 1855,
+      "sha256": "89c8283a074ea9eeb5bc133a4fea5c281601c4d6ec818d7d58f6ee1ea920f7d7"
+    },
+    {
+      "role": "source_input_preflight",
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/artwork-handoff/runs/artwork-handoff-v2-prepared/preflight.json",
+      "size_bytes": 7495,
+      "sha256": "b12f7e898dde03ccb355821560d87170c7ff8aa009fcadcbe6745afa000163b2"
+    },
+    {
+      "role": "byte_preserving_copy",
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/artwork-handoff/runs/artwork-handoff-v2-prepared/copy-receipt.json",
+      "size_bytes": 7108,
+      "sha256": "8106f2fe044a11c89f99864fa2df428d4e6a8e406ca63639d2e00a7acbed0006"
+    },
+    {
+      "role": "guarded_import_admission",
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/artwork-handoff/runs/artwork-handoff-v2-prepared/import-receipt.json",
+      "size_bytes": 5015,
+      "sha256": "9dc508aac2ad8849e5940f0dbbbfa8cf8e28ba154ddb273529f67b65a5cee065"
+    },
+    {
+      "role": "preserved_v1_family_inventory",
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/artwork-handoff/runs/artwork-handoff-v2-prepared/retained-v1-family.json",
+      "size_bytes": 3250,
+      "sha256": "aa1a325487169f440f191f6c5e5d19d6f9a8fb413555140c8795e310cd95957f"
+    },
+    {
+      "role": "v1_failed_read_only_preflight",
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/artwork-handoff/runs/artwork-handoff-v1-prepared/preflight.log",
+      "size_bytes": 896,
+      "sha256": "2a2091d7594f08a71e8556cb288be97987395e59c9ccea434d0b9cb36dbacbd2"
+    },
+    {
+      "role": "enclosing_terminal_and_drained_inventory",
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/artwork-handoff/runs/artwork-handoff-v2-prepared/enclosing/report.json",
+      "size_bytes": 26636,
+      "sha256": "be4fe697c327c7e91f35f09e2ab714233f6a3bf27b5084b8693c359281ec1185"
+    },
+    {
+      "role": "driver_terminal_and_six_rows",
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/artwork-handoff/runs/artwork-handoff-v1-20261003/report.json",
+      "size_bytes": 41826,
+      "sha256": "e8547afbf5920fdfb6069b7f7c734460ef4c2502db4e9c2e4c5d8d64b65278a9"
+    },
+    {
+      "role": "root_control_review",
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/project-integration/runs/artwork-handoff-control-root-review-9f57977/audit.json",
+      "size_bytes": 3188,
+      "sha256": "1197c88b424d82b9dfa6a828266e54b51e00cb5959e63e13bde134d6a8084d05"
+    },
+    {
+      "role": "root_artifact_auditor",
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/project-integration/runs/artwork-handoff-root-audit-9f57977/audit.py",
+      "size_bytes": 4089,
+      "sha256": "20ea7c12120f2829b999cfae013b47dfb67d0c0d8959666d4de36b189ef0ae5c"
+    },
+    {
+      "role": "root_artifact_readback",
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/project-integration/runs/artwork-handoff-root-audit-9f57977/readback.py",
+      "size_bytes": 5176,
+      "sha256": "240f022e1d49c339545569f2279e26a59c3cbe65a8b519466bd5b2f2b20b52f4"
+    },
+    {
+      "role": "root_artifact_audit_and_output_ledger",
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/project-integration/runs/artwork-handoff-root-audit-9f57977/audit.json",
+      "size_bytes": 5711,
+      "sha256": "d1796fe3aa35178af38c38346409cc3e5c37813d845fe334563c8c1b1906f48e"
+    }
+  ]
+}

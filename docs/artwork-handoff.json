@@ -1,0 +1,184 @@
+{
+  "version": 1,
+  "id": "six-mode-offline-handoff-v1",
+  "scope": "Agent-operated one-pass offline derivative export smoke; no independent operator, exhibition duration or R5 qualification.",
+  "qualification_claims": [],
+  "subset_limit": "Derivative source subsets only. No native continuation, action/policy replay, parent snapshot restoration or new inference. Original internal provenance is unchanged.",
+  "run_ids": {
+    "left": "90323804f1e94f13ad710d561f557590",
+    "right": "b1012576189c4385be6eee4180a2e99c",
+    "afterimage": "98bfc18865194759987879b7444f48b1"
+  },
+  "source_bytes": 4852480,
+  "files": [
+    {
+      "path": "runs/90323804f1e94f13ad710d561f557590/recording/manifest.json",
+      "size_bytes": 3096,
+      "sha256": "a11e1ee9c83a9fd3b6ec425d15ae3b527ad73f6639f8b0beea1bb6f85c173f2f",
+      "original_source": "lab-hardening/runs/m3-offline-full-20261002/full-flynn/runs/90323804f1e94f13ad710d561f557590/recording/manifest.json"
+    },
+    {
+      "path": "runs/90323804f1e94f13ad710d561f557590/recording/events.jsonl",
+      "size_bytes": 19293,
+      "sha256": "509a36c20c994090d97e9bf42317d1b66de76cdc784043950e7c6fdf32874a1a",
+      "original_source": "lab-hardening/runs/m3-offline-full-20261002/full-flynn/runs/90323804f1e94f13ad710d561f557590/recording/events.jsonl"
+    },
+    {
+      "path": "runs/90323804f1e94f13ad710d561f557590/recording/chunks/000000.npz",
+      "size_bytes": 868906,
+      "sha256": "fc06e4de218795b01f86abecdc1290770d2b3f952b01566f153f9a63af1bdd6b",
+      "original_source": "lab-hardening/runs/m3-offline-full-20261002/full-flynn/runs/90323804f1e94f13ad710d561f557590/recording/chunks/000000.npz"
+    },
+    {
+      "path": "runs/b1012576189c4385be6eee4180a2e99c/recording/manifest.json",
+      "size_bytes": 3096,
+      "sha256": "7db030ba55db33c6fcf441529b7d59d7ebc7aaa19ac666216e20c61f28f527ca",
+      "original_source": "lab-hardening/runs/m3-offline-full-20261002/full-flynn/runs/b1012576189c4385be6eee4180a2e99c/recording/manifest.json"
+    },
+    {
+      "path": "runs/b1012576189c4385be6eee4180a2e99c/recording/events.jsonl",
+      "size_bytes": 19730,
+      "sha256": "3a2cdc016089a589b12a8c27806793ede3e90dc862a24e9ee8169dbb30d8a6c7",
+      "original_source": "lab-hardening/runs/m3-offline-full-20261002/full-flynn/runs/b1012576189c4385be6eee4180a2e99c/recording/events.jsonl"
+    },
+    {
+      "path": "runs/b1012576189c4385be6eee4180a2e99c/recording/chunks/000000.npz",
+      "size_bytes": 868906,
+      "sha256": "d8760cc8c36a714dcdeb105cff286f82451410cc36b8a036ea1676b12ef5b1c6",
+      "original_source": "lab-hardening/runs/m3-offline-full-20261002/full-flynn/runs/b1012576189c4385be6eee4180a2e99c/recording/chunks/000000.npz"
+    },
+    {
+      "path": "runs/98bfc18865194759987879b7444f48b1/recording/manifest.json",
+      "size_bytes": 4135,
+      "sha256": "aac8da5e82573f93dc907c8d274d1b114bc34550aedc38c58ae6495780af535a",
+      "original_source": "artwork-afterimage/runs/afterimage-geometric-v1-20261002/98bfc18865194759987879b7444f48b1/recording/manifest.json"
+    },
+    {
+      "path": "runs/98bfc18865194759987879b7444f48b1/recording/events.jsonl",
+      "size_bytes": 703,
+      "sha256": "c9b65d09d05effeb47239d7eeea3cfb27bd2e3cd8ef3e36caafc4166e068d537",
+      "original_source": "artwork-afterimage/runs/afterimage-geometric-v1-20261002/98bfc18865194759987879b7444f48b1/recording/events.jsonl"
+    },
+    {
+      "path": "runs/98bfc18865194759987879b7444f48b1/recording/chunks/000000.npz",
+      "size_bytes": 793908,
+      "sha256": "07ea5ca341b8f77f6567aff45527010a744d4c0547b9ca0f1faed2ae4acd61a9",
+      "original_source": "artwork-afterimage/runs/afterimage-geometric-v1-20261002/98bfc18865194759987879b7444f48b1/recording/chunks/000000.npz"
+    },
+    {
+      "path": "runs/98bfc18865194759987879b7444f48b1/supervisor.json",
+      "size_bytes": 339,
+      "sha256": "16496feb4b3b340dadcfb456913a6318afd6eecce0e61544111b42d44a071f5b",
+      "original_source": "artwork-afterimage/runs/afterimage-geometric-v1-20261002/98bfc18865194759987879b7444f48b1/supervisor.json"
+    },
+    {
+      "path": "stimulus/afterimage/stimulus.json",
+      "size_bytes": 767,
+      "sha256": "bbed979ac3e8bcd8adeb9edb0ee5a64892c004e3236b53076f5b64926469276f",
+      "original_source": "artwork-afterimage/runs/afterimage-geometric-v1-20261002/stimulus/stimulus.json"
+    },
+    {
+      "path": "stimulus/afterimage/frames.npy",
+      "size_bytes": 393344,
+      "sha256": "b5c4dbb082d50f0bec73225fb7529e24e0a410250b3fd92cbe52cc5b91b222e1",
+      "original_source": "artwork-afterimage/runs/afterimage-geometric-v1-20261002/stimulus/frames.npy"
+    },
+    {
+      "path": "graph/source-graph.json",
+      "size_bytes": 101560,
+      "sha256": "5aba0fef99afba666b88e40fc535091454e46d9330580d9280b203e8da0abac0",
+      "original_source": "repository/data/assets/flynn/male-reduced-v1/source-graph.json"
+    },
+    {
+      "path": "graph/extraction.json",
+      "size_bytes": 5364,
+      "sha256": "7a205342b4ada8ab8b78d6ca866c61735003e601531c65a1c1b6c819df00026f",
+      "original_source": "repository/data/manifests/malecns-reduced-neighborhood-v1.json"
+    },
+    {
+      "path": "specimens/pair.json",
+      "size_bytes": 2374,
+      "sha256": "4651c8d7f0e891e059b8b21fb74369088c4b454b78a7e0981fc4b85967248f68",
+      "original_source": "repository/data/assets/specimens/dnge104-v1/pair.json"
+    },
+    {
+      "path": "specimens/male-12781.swc",
+      "size_bytes": 552929,
+      "sha256": "84f14c2f8b98da664db2c322c6f3f47f83b61c412207bddfa67e2315b86fc699",
+      "original_source": "repository/data/assets/specimens/dnge104-v1/male-12781.swc"
+    },
+    {
+      "path": "specimens/female-720575940640723315.swc",
+      "size_bytes": 1202717,
+      "sha256": "999ab8934af1b912a6dc5d9f411913b264cb1f49dc6c9512f7cf2f15bda2847a",
+      "original_source": "repository/data/assets/specimens/dnge104-v1/female-720575940640723315.swc"
+    },
+    {
+      "path": "specimens/provenance.json",
+      "size_bytes": 4632,
+      "sha256": "c2e507891165f92d0681b5e3960dedf49912f4b913cf95f2658b13b4cec9e765",
+      "original_source": "repository/data/assets/specimens/dnge104-v1/provenance.json"
+    },
+    {
+      "path": "THIRD_PARTY_NOTICES.md",
+      "size_bytes": 6681,
+      "sha256": "436aa6169cfda0e793f3742e3c8642ba21d7038bf0413a2f9cfad2c92a24f280",
+      "original_source": "repository/THIRD_PARTY_NOTICES.md"
+    }
+  ],
+  "limits": {
+    "input_bytes": 8388608,
+    "output_bytes": 67108864,
+    "min_free_bytes": 1073741824,
+    "log_bytes_per_stream": 262144,
+    "child_seconds": 120,
+    "normal_total_seconds": 150
+  },
+  "declarations": {
+    "operator": null,
+    "custodian": null,
+    "intended_audience": null,
+    "approved_sharing": null,
+    "retention_review_date": null,
+    "disposition_record": null
+  },
+  "evidence": {
+    "choir": {
+      "original_source": "artwork-mappings/runs/m9-recorded-sonification-20261002/report.json",
+      "sha256": "5879b2d7ea30ec05359d5fe0f6eb31da3f7aeb7bb9e7fb1ec60cf869d2afb88b"
+    },
+    "comparison": {
+      "original_source": "artwork-comparison/runs/m9-recorded-comparison-20261002/report.json",
+      "sha256": "de3b32b7a216bdef49cd0a8fc9b59ddbddf890455974a67512b79f08ce5aba7c"
+    },
+    "afterimage": "docs/reports/m9-afterimage-validation.json",
+    "atlas": "docs/reports/m9-atlas.json",
+    "specimens": "docs/reports/m9-specimens.json"
+  },
+  "outputs": [
+    {
+      "file": "afterimage.svg",
+      "label": "Authored model response portrait; offline inference record, not fly perception."
+    },
+    {
+      "file": "borrowed-body.svg",
+      "label": "Recorded simulated route; not physical pen marks."
+    },
+    {
+      "file": "one-map-many-lives.html",
+      "label": "Two recorded coincident routes; no causal memory or null-effect inference."
+    },
+    {
+      "file": "counterfactual-choir.wav",
+      "label": "Composed model population mapping; not biological audio; 0.08 seconds, no autoplay."
+    },
+    {
+      "file": "atlas.svg",
+      "label": "Reduced graph structural reachability; not impaired behaviour or anatomical positions."
+    },
+    {
+      "file": "space-between-two-flies.svg",
+      "label": "Unregistered anatomical specimens with unequal coverage; no population sex inference."
+    }
+  ]
+}
