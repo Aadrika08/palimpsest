@@ -1,0 +1,264 @@
+{
+  "actual": {
+    "cases": {
+      "recovery-north-2100": {
+        "callback_restored": true,
+        "collection_boundary": "coverage_complete",
+        "coverage": {
+          "actual_post_prefix_reverse": true,
+          "coverage_complete_tick": 66,
+          "first_cycle": {
+            "completed": true,
+            "emitted_old_cycle_targets": 45,
+            "old_label_replaced": false,
+            "queries": 45,
+            "start_tick": 21
+          },
+          "passed": true,
+          "sensor_contact_rows": 3,
+          "stage0_contact_rows": 3,
+          "start_contact": true,
+          "subsequent_clearance": true
+        },
+        "direction": 1.0,
+        "engine_closed": true,
+        "final_phase": "paused",
+        "natural_outcome": null,
+        "numeric_rows": 67,
+        "seed": 2100,
+        "supervision": {
+          "elapsed_seconds": 7.343494216998806,
+          "output": "/home/utkarsh/Work/shraddha/brain/.worktrees/task-phases/runs/m7-recovery-coverage-development-v3-20261003/recovery-north-2100",
+          "returncode": 0,
+          "schema_version": 1,
+          "started_utc": "2026-10-02T23:55:37.738530+00:00",
+          "status": "completed",
+          "timeout_seconds": 180
+        }
+      },
+      "recovery-south-2101": {
+        "callback_restored": true,
+        "collection_boundary": "coverage_complete",
+        "coverage": {
+          "actual_post_prefix_reverse": true,
+          "coverage_complete_tick": 66,
+          "first_cycle": {
+            "completed": true,
+            "emitted_old_cycle_targets": 45,
+            "old_label_replaced": false,
+            "queries": 45,
+            "start_tick": 21
+          },
+          "passed": true,
+          "sensor_contact_rows": 3,
+          "stage0_contact_rows": 3,
+          "start_contact": true,
+          "subsequent_clearance": true
+        },
+        "direction": -1.0,
+        "engine_closed": true,
+        "final_phase": "paused",
+        "natural_outcome": null,
+        "numeric_rows": 67,
+        "seed": 2101,
+        "supervision": {
+          "elapsed_seconds": 5.234330993989715,
+          "output": "/home/utkarsh/Work/shraddha/brain/.worktrees/task-phases/runs/m7-recovery-coverage-development-v3-20261003/recovery-south-2101",
+          "returncode": 0,
+          "schema_version": 1,
+          "started_utc": "2026-10-02T23:55:45.467103+00:00",
+          "status": "completed",
+          "timeout_seconds": 180
+        }
+      }
+    },
+    "end_caches": 134,
+    "initial_snapshots": 2,
+    "numeric_rows": 134,
+    "outer_supervision": {
+      "elapsed_seconds": 14.203306690993486,
+      "output": "/home/utkarsh/Work/shraddha/brain/.worktrees/task-phases/runs/m7-recovery-control-c382c86/outer-launch",
+      "returncode": 0,
+      "schema_version": 1,
+      "started_utc": "2026-10-02T23:55:36.959170+00:00",
+      "status": "completed",
+      "timeout_seconds": 480
+    },
+    "owners_completed": 2,
+    "pre_control_stages": 1340,
+    "retry_count": 0,
+    "wall_seconds": 15.565205004997551
+  },
+  "audits": {
+    "own": {
+      "scope": "486 identities,25 indexed hashes,134 raw rows/2 SNP, independent teacher counter/selector/control/contact math, earliest boundary, numeric/JSON and event bindings,finite unit/continuous samples,4 PID/start absent; no native deserialization/imports",
+      "seconds": 1.8479671070090262,
+      "status": "passed-retained-collection-audit"
+    },
+    "root": {
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/project-integration/runs/m7-recovery-root-audit-c382c86",
+      "scope": "independent first execution;486 identities/25 refs/134 rows/2 SNP,all ten+end caches/controls/times/padding/contacts,phase/counter/actions/quaternions,earliest boundary66 and reason bindings,4 PID/start absent; no native/model imports",
+      "seconds": 1.979841554,
+      "status": "passed"
+    }
+  },
+  "cleanup": {
+    "forced_signals": [],
+    "observed_owned_processes": [
+      {
+        "pid": 599195,
+        "start_ticks": 7899023
+      },
+      {
+        "pid": 599200,
+        "start_ticks": 7899051
+      },
+      {
+        "pid": 599203,
+        "start_ticks": 7899101
+      },
+      {
+        "pid": 599227,
+        "start_ticks": 7899873
+      }
+    ],
+    "sample_errors": [],
+    "sampler_stopped": true,
+    "scope": "finite .25 s sampling, PID/start recheck before owned containment; not universal transient-process proof",
+    "survivors": []
+  },
+  "evidence": {
+    "after": {
+      "bytes": 77821,
+      "path": "runs/m7-recovery-control-c382c86/after.json",
+      "sha256": "616efc8fd795cf36e7408e8e7add055e44776371913c03ec7869e847067e446b"
+    },
+    "audit_result": {
+      "bytes": 1630,
+      "path": "runs/m7-recovery-control-c382c86/audit.json",
+      "sha256": "75cd0d69c54732a259e3d1073d464f7797479ea435fb206f7c3a33b07f56b635"
+    },
+    "audit_script": {
+      "bytes": 11359,
+      "path": "runs/m7-recovery-control-c382c86/audit.py",
+      "sha256": "04e87988a4b78c22607c11d3bbbe546c13f8a210ecdc9f7881d65c96ea99be1c"
+    },
+    "before": {
+      "bytes": 77821,
+      "path": "runs/m7-recovery-control-c382c86/before.json",
+      "sha256": "616efc8fd795cf36e7408e8e7add055e44776371913c03ec7869e847067e446b"
+    },
+    "final_launcher_console": {
+      "bytes": 452,
+      "path": "runs/m7-recovery-control-c382c86/launcher-console.log",
+      "sha256": "78cf30eb53578700e31c18e9f17a0a5798f05b7771c285f2a7fba1c556a9d57b"
+    },
+    "inventory_script": {
+      "bytes": 5187,
+      "path": "runs/m7-recovery-control-c382c86/inventory.py",
+      "sha256": "dbf767c62eef13170c083d524239ea2408d5b3819b71c0c715e10d498513a784"
+    },
+    "invocation": {
+      "bytes": 2992,
+      "path": "runs/m7-recovery-control-c382c86/invocation.json",
+      "sha256": "85306258ed70137a4af1de64fae580f29b2e1bea746a7f5ffe11b50c9ee6a8bc"
+    },
+    "launcher": {
+      "bytes": 6909,
+      "path": "runs/m7-recovery-control-c382c86/launch.py",
+      "sha256": "93bf72ed490b739b501c7f4434154fcea8fe3f3c3d896efb7143c5d1e413d223"
+    },
+    "recovery-north-2100_initial_snapshot": {
+      "bytes": 526467,
+      "path": "runs/m7-recovery-coverage-development-v3-20261003/recovery-north-2100/005da65868a9400281b05aa7a3cba658/snapshots/initial.snp",
+      "sha256": "2f5b65730ffca62ec60477342e8d337334e1547e73ef9f3c64cf09e95991f62b"
+    },
+    "recovery-north-2100_result": {
+      "bytes": 160665,
+      "path": "runs/m7-recovery-coverage-development-v3-20261003/recovery-north-2100/result.json",
+      "sha256": "c4ae2384160239c28f20bd4c16636d82a1b2c219b7a1fe660652666eafb7c811"
+    },
+    "recovery-south-2101_initial_snapshot": {
+      "bytes": 526449,
+      "path": "runs/m7-recovery-coverage-development-v3-20261003/recovery-south-2101/2a24577348cc4d259fc80f48e3286beb/snapshots/initial.snp",
+      "sha256": "66251160336c96ef70112e6a1af7e351a7c17a1402c2d79d0817252ac23a7aa9"
+    },
+    "recovery-south-2101_result": {
+      "bytes": 161249,
+      "path": "runs/m7-recovery-coverage-development-v3-20261003/recovery-south-2101/result.json",
+      "sha256": "97b81e93ad513fb67a2edbc85d18c0fb6bd2ac952868b85f4073608e778e53b3"
+    },
+    "report": {
+      "bytes": 61846,
+      "path": "runs/m7-recovery-coverage-development-v3-20261003/report.json",
+      "sha256": "01251434e3c387cb6f382afc20e937a9fcc4631915b1ce0ba373a2fd3e070ad3"
+    },
+    "root_audit_result": {
+      "bytes": 1531,
+      "path": "runs/m7-recovery-control-c382c86/root-audit.json",
+      "sha256": "fe11c948e9c4887d51baa01a3a49a4d1669a5e09a70c06d2555a5d2daf6ec39e"
+    },
+    "root_audit_script": {
+      "bytes": 9066,
+      "path": "runs/m7-recovery-control-c382c86/root-audit.py",
+      "sha256": "3bcaa6c0c762bd46ebd35369f8031531c63b39b1d577718ed15b2db58937f469"
+    },
+    "terminal": {
+      "bytes": 3569,
+      "path": "runs/m7-recovery-control-c382c86/terminal.json",
+      "sha256": "b3e70554eb2c431bd7025cb6032d929ef317b61a505d0cd8c2a14859752ddc92"
+    }
+  },
+  "identity": {
+    "assets": 20,
+    "before_after_equal": true,
+    "frozen_entries": 486,
+    "indexed_artifacts_checked": 25,
+    "tracked_files": 344,
+    "upstream_files": 122
+  },
+  "limitations": [
+    "First-cycle collection only; both sources end paused at coverage_complete, not natural task success.",
+    "V3 deliberately censors subsequent driving; neither retained v1/v2 failure is cured, relabelled or admitted.",
+    "Current strict production loader rejects this standalone profile; no training,held-out reads,checkpoint,optimizer or label substitution occurred.",
+    "Expert and executed actions remain separately recorded; teacher private state/true pose remain privileged and evaluator-only.",
+    "No standalone partial-snapshot continuation or generic executable replay qualification; local prefix is not a native/replay application contract.",
+    "Two fixed mirrored development sources are not learned/general/task/body/physical qualification.",
+    "Discrete contacts and finite PID/start sampling do not establish continuous collision coverage or universal transient-process absence.",
+    "Ignored raw artifacts retained locally; tracked report is a compact hash index."
+  ],
+  "limits": {
+    "child_timeout_seconds": 180,
+    "inner_timeout_seconds": 420,
+    "maximum_numeric_ticks": 240,
+    "min_free_bytes": 1073741824,
+    "outer_timeout_seconds": 480,
+    "output_max_bytes": 1073741824,
+    "owners": 2,
+    "recording_max_bytes": 150994944,
+    "recording_plus_snapshot_max_bytes": 167772160,
+    "snapshot_files": 2,
+    "snapshot_max_bytes": 16777216
+  },
+  "log_scan": {
+    "matching_retained_native_log_lines": 0,
+    "patterns": [
+      "resource_tracker",
+      "leaked semaphore",
+      "Traceback",
+      "SIGKILL",
+      "timed out"
+    ]
+  },
+  "next_action": "Review separate learning-data/training proposal grounded in actual admitted collection; no loader widening or model execution authorized",
+  "protocol_id": "M7-REC-COVER-1",
+  "protocol_sha256": "e41ebb10ca58351b2fe00c858a62c42260c6110da1a0047ad3a62c8f832f92cc",
+  "protocol_version": 3,
+  "qualification_claims": [],
+  "schema_version": 1,
+  "source_commit": "c382c86781a7a5d6651af721119789729cc890ae",
+  "source_script_sha256": "17d948322bbf124c7eeee3d55e4034e12c4b3436d933dab1df4245f278c46f60",
+  "status": "passed-first-cycle-collection",
+  "teacher_sha256": "5edca9a587dea0a2996856e42a96013aab1b1b0a277eacb74b7fc4270c55c586",
+  "upstream_commit": "8d964599119b420de67ee259434d273651a1a76d"
+}
