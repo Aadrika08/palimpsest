@@ -486,3 +486,12 @@ plus the launcher are absent and the writer lease is free. Comparison coverage i
 sixteen of 48 development cells. In the paired lower change all nine conditions
 correct at358; own/sham goal431 versus no-U430 establishes no own-U advantage.
 Null false targeting and both zero-selector no-event controls are retained.
+
+The first actual body composition attempt uses V3 operational controls on frozen
+`0fd38ef` and stops before any owner: both verifier storage admissions omit the
+required `path` keyword. All four owners remain `not_started`, with zero numeric
+intervals. Root failure audit passes in 1.708 s, confirming unchanged inventories,
+three absent sampled process identities, free writer lease and no forced cleanup.
+The earlier 711-test pass did not exercise this actual harness path. The failed
+attempt is retained; the minimal verifier correction needs a regression and fresh
+controls before another invocation. No task capability is inferred from cleanup.

@@ -2386,5 +2386,20 @@
         "sha256": "bbcf6bfb30abec68d5921fe9effedff3abe1e5faf13db054b9f86be24a402199"
       }
     ]
+  },
+  "body_homing_first_attempt": {
+    "producer_commit": "0fd38efcbf1a8c59c0a78a64f488fc0b99d8b7ab",
+    "operational_control_version": 3,
+    "status": "failed-infrastructure",
+    "owners_started": 0,
+    "numeric_ticks": 0,
+    "failure": "StorageBudget.check() missing required keyword-only path in both verifier admissions",
+    "root_failure_audit_seconds": 1.7076307499955874,
+    "observed_pid_start_pairs_absent": 3,
+    "writer_lease_available": true,
+    "receipt": {
+      "path": "runs/body-homing-failure-root-audit-0fd38ef/audit.json",
+      "sha256": "80df9e49a06c666b803c86c3cfeaa90424d2d1ced731e30dea65f634d88feeff"
+    }
   }
 }
