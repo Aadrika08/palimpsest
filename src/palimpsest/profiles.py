@@ -68,6 +68,20 @@ def validate(scenario, texture, controller):
     return profile
 
 
+def validate_reference(scenario, texture, controller):
+    """Fixed headless modes; ordinary profiles/UI never list or admit these."""
+    from .memory_reference import validate_mode, PROTOCOL_SHA256
+    validate_mode(scenario, controller)
+    if texture != 'checker':
+        raise ValueError('Controller references require checker texture')
+    profile = validate('memory-passages', texture, 'manual')
+    profile.update(id=scenario, label='Memory controller reference (development)',
+        controller=controller, teacher_privileged=controller == 'teacher',
+        task='memory-controller-reference-development', reference_protocol_sha256=PROTOCOL_SHA256,
+        observation_profile=scenario + '-v1', memory_role='frozen-unused-audit-state')
+    return profile
+
+
 def list_profiles(root, assets):
     from .assets import verify_assets
     runtime = all(importlib.util.find_spec(name) is not None for name in ('numpy', 'mujoco', 'torch', 'gymnasium'))

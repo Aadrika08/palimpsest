@@ -103,8 +103,11 @@ class Engine:
         self.env, self.writer = env, writer
         self.controller, self.policy, self.teacher = controller, policy, teacher
         self.scenario, self.texture = scenario, texture
+        from .memory_reference import REFERENCES
+        self.reference_mode = scenario if scenario in REFERENCES else None
         self.memory_case, restore_snapshot, memory_u = self._memory_restore(
-            memory_case, scenario, controller, str(getattr(policy, 'device', '')),
+            memory_case, scenario, controller,
+            str(getattr(policy or teacher, 'device', 'cpu' if self.reference_mode else '')),
             restore_snapshot, replace_controller, memory_u)
         if self.memory_case is not None:
             from .memory import sha256
@@ -155,8 +158,15 @@ class Engine:
                 'case_sha256': sha256(self.memory_case),
                 'replace_controller': replace_controller,
                 'memory_u_sha256': None if memory_u is None else sha256(memory_u)}
-            self.writer.manifest['memory_continuation_admission'] = admission
-            self._event('memory_continuation_admitted', admission=admission)
+            if self.reference_mode:
+                from .memory_reference import PROTOCOL, PROTOCOL_SHA256
+                admission.update(mode=self.reference_mode, protocol_sha256=PROTOCOL_SHA256,
+                                 source_scenario=restore_snapshot['application']['scenario'])
+                self.writer.manifest.update(memory_reference_admission=admission, memory_reference_protocol=PROTOCOL)
+                self._event('memory_reference_admitted', admission=admission)
+            else:
+                self.writer.manifest['memory_continuation_admission'] = admission
+                self._event('memory_continuation_admitted', admission=admission)
             if memory_u is not None:
                 self.restore_memory_branch(restore_snapshot, memory_u)
             else:
@@ -178,14 +188,16 @@ class Engine:
         """One narrow atomic continuation exception; ordinary admission is unchanged."""
         if type(replace_controller) is not bool:
             raise ValueError('Controller replacement must be an explicit boolean')
+        from .memory_reference import REFERENCES, validate_source
+        reference = scenario in REFERENCES
         if snapshot is None:
-            if replace_controller or u is not None:
+            if reference or replace_controller or u is not None:
                 raise ValueError('Memory continuation requires its source snapshot')
             return cls._validate_memory_case(value, scenario, controller), None, None
         from . import memory, memory_experiment, memory_task, memory_world
         from .snapshots import MAX_BYTES, MAX_METADATA, SCHEMA_VERSION, SNAPSHOT_KEYS
         case = memory_experiment.validate_world_case(value)
-        if scenario != 'memory-passages' or controller != 'flynn' or device != 'cpu' or not case['acquisition']:
+        if not case['acquisition'] or not reference and (scenario != 'memory-passages' or controller != 'flynn' or device != 'cpu'):
             raise ValueError('Atomic memory continuation requires an acquisition case and CPU FLYNN')
         if replace_controller and u is not None:
             raise ValueError('Controller and U replacement must be separate boundaries')
@@ -202,6 +214,12 @@ class Engine:
         encoded = json.dumps(state, allow_nan=False, sort_keys=True, separators=(',', ':')).encode()
         if len(encoded) > MAX_METADATA:
             raise ValueError('Continuation application exceeds snapshot metadata bound')
+        if reference:
+            validate_source(snapshot, scenario, controller, device, replace_controller, u)
+            world = memory_world.validate_state(state.get('world_task_state'))
+            if memory.canonical_bytes(world.get('case')) != memory.canonical_bytes(case) or _seed(state.get('seed')) != case['seed']:
+                raise ValueError('Reference case/seed differs from source')
+            return case, copy.deepcopy(snapshot), None
         expected_controller = 'manual' if replace_controller else 'flynn'
         if (state.get('controller') != expected_controller or state.get('phase') != 'paused' or
                 state.get('scenario') != scenario or state.get('execution_mode') not in ('live', 'policy', 'actions') or
@@ -235,7 +253,12 @@ class Engine:
         if controller not in MALE_CONTROLLERS and expected_policy_identity is not None:
             raise ValueError('Male policy identity requires a male controller')
         seed = _seed(seed)
-        profile = validate(scenario, texture, controller)
+        from .memory_reference import REFERENCES
+        if scenario in REFERENCES:
+            from .profiles import validate_reference
+            profile = validate_reference(scenario, texture, controller)
+        else:
+            profile = validate(scenario, texture, controller)
         if scenario in ('calibrated-wheel-compensation','adaptive-wheel-calibration') and device != 'cpu':
             raise ValueError('Wheel calibration profiles require CPU')
         if scenario == 'adaptive-wheel-calibration' and seed != 1:
@@ -359,7 +382,7 @@ class Engine:
             import mujoco
             mujoco.mj_resetData(self.env.model, self.env.data)
         self.observation, _ = self.env.reset(seed=self.seed)
-        if self.scenario == 'memory-passages':
+        if self.scenario == 'memory-passages' or self.reference_mode:
             from . import memory, memory_task, memory_world
             self.world_task_state = memory_world.configure(self.env, memory_world.initial_state(case=self.memory_case))
             episode_id = f'episode-{self.episode}'
@@ -543,6 +566,8 @@ class Engine:
         if kind != "reset" and self.phase not in {"paused", "running"}:
             raise CommandRejected("terminal episode requires an explicit reset")
         adaptive = self.scenario == 'adaptive-wheel-calibration'
+        if self.reference_mode and kind not in ('run', 'pause', 'step', 'stop'):
+            raise CommandRejected('Fixed reference permits only run, pause, step and stop')
         if kind == 'calibration-next' and not adaptive:
             raise CommandRejected('calibration-next requires measured calibration profile')
         if adaptive and kind in ('run','step') and self.body_state['phase'] not in ('collecting','fitted'):
@@ -658,7 +683,48 @@ class Engine:
             obs = {**obs, 'sensors': {**obs['sensors'], 'wind_direction': bearing}}
             if bool(obs['sensors']['collision']):
                 raise ValueError('Declared task contact: control halted before physics step')
-        if self.memory is not None:
+        reference_inputs = None
+        if self.reference_mode:
+            from . import memory, memory_reference, memory_task, memory_world
+            if (memory.sha256(self.memory) != self._reference_memory_sha256
+                    or action_override is not None and self.writer.manifest.get('execution_mode') != 'actions'):
+                raise ValueError('Reference memory changed or undeclared action override')
+            self.world_task_state, changes = memory_world.advance_world(self.env, self.world_task_state, self.episode_step)
+            if changes:
+                self.revision += 1
+            for change in changes:
+                self._event('memory_world_changed', detail=change)
+                if change['kind'] == 'memory_gate_applied':
+                    self._event('intervention', change=change['intervention'], origin='memory_world_schedule')
+                    if self.teacher is not None:
+                        from .interventions import invalidate_geometry
+                        retained = memory_reference.teacher_control_hash(self.teacher)
+                        invalidate_geometry(self.env, self.teacher)
+                        if memory_reference.teacher_control_hash(self.teacher) != retained:
+                            raise ValueError('Teacher invalidation changed retained control state')
+                        self._event('memory_reference_teacher_invalidated',
+                            cleared=['environment-map-cache', 'drawing', 'teacher-path'],
+                            retained=['PID', 'reverse-recovery', 'VFH-hysteresis'], retained_state_sha256=retained)
+            if changes:
+                obs = self.observation = self.env._get_obs()
+            world, pose, occluders = memory_world.sensing_inputs(self.env, self.world_task_state)
+            packet = memory_task.capture_symbolic(world, pose, occluders, episode_id='episode-0', tick=self.episode_step)
+            self._event('memory_reference_sensed', packet=packet, role='audit-only-no-memory-advance',
+                        frozen_memory_sha256=self._reference_memory_sha256)
+            if self.reference_mode == 'memory-reference-sensor-only':
+                reference_inputs = memory_reference.sensor_input(packet, bool(obs['sensors']['collision']))
+                self._event('memory_reference_input', inputs=reference_inputs)
+                obs = {**obs, 'sensors': {**obs['sensors'], 'wind_direction': reference_inputs['bearing']}}
+            elif self.reference_mode == 'memory-reference-original-flynn':
+                self._event('memory_reference_input', inputs={'collision': bool(obs['sensors']['collision']),
+                    'collision_angle': None if obs['sensors']['collision_angle'] is None else float(obs['sensors']['collision_angle']),
+                    'wind_direction': list(map(float, obs['sensors']['wind_direction']))}, cameras='recorded-rgb-eyes',
+                    unequal_information='upstream-bearing-derived-from-true-pose-and-goal')
+            else:
+                self._event('memory_reference_input', inputs={'pose': pose,
+                    'goal_xy': list(map(float, self.env._goal_xy)),
+                    'obstacles_xy': self.env._obstacle_xy.tolist()}, privileged=True)
+        elif self.memory is not None:
             from . import memory_task, memory_world
             self.world_task_state, changes = memory_world.advance_world(self.env, self.world_task_state, self.episode_step)
             if changes:
@@ -696,6 +762,9 @@ class Engine:
         neural = {}
         if action_override is not None:
             action = action_override
+        elif self.reference_mode == 'memory-reference-sensor-only':
+            from .memory_reference import sensor_action
+            action = sensor_action(reference_inputs)
         elif self.controller in {"flynn", *MALE_CONTROLLERS}:
             projected = {**cameras, "sensors": {name: copy.deepcopy(sensors[name])
                          for name in ("collision", "collision_angle", "wind_direction")}}
@@ -998,7 +1067,7 @@ class Engine:
                 from .body_profile import validate_state
                 state['body_state'] = validate_state(state['body_state'], self.env._body_profile_identity,
                     episode=state['episode'], episode_step=state['episode_step'])
-        if self.scenario == 'memory-passages':
+        if self.scenario == 'memory-passages' or self.reference_mode:
             from . import memory_task, memory_world
             from .snapshots import controller_hashes
             state['memory'] = memory_task.validate_state(state['memory'])
@@ -1009,8 +1078,15 @@ class Engine:
                 raise ValueError('Snapshot initial factual bank differs from its runtime case')
             cursor = state['memory']['cursor']
             previous = state['episode_step'] - 1 if state['episode_step'] else None
+            memory_previous = previous
+            if self.reference_mode:
+                from .memory_reference import validate_memory
+                validate_memory(state['memory'])
+                if state['episode'] != 0 or state['total_tick'] != state['episode_step'] or not 300 <= state['episode_step'] <= 600:
+                    raise ValueError('Reference requires its single bounded source episode')
+                memory_previous = 299
             if (state['memory']['episode_id'] != f"episode-{state['episode']}" or
-                    (None if cursor is None else cursor['tick']) != previous or
+                    (None if cursor is None else cursor['tick']) != memory_previous or
                     state['world_task_state']['last_tick'] != previous):
                 raise ValueError('Memory/world cursor differs from paused application boundary')
             if state['controller_tensors'] != controller_hashes(self.policy):
@@ -1094,6 +1170,9 @@ class Engine:
         from .snapshots import restore
         state = copy.deepcopy(snapshot['application'])
         previous = state['controller']
+        reference_transaction = self.reference_mode and state['scenario'] == 'memory-passages'
+        if reference_transaction:
+            state['scenario'] = self.scenario
         cancelled = [command['id'] for command in state['pending_commands']]
         if replace_controller:
             state.update(controller=self.controller, teacher_reset_identity=self._teacher_reset_identity,
@@ -1113,6 +1192,22 @@ class Engine:
                         cancelled_source_commands=cancelled, revision=self.revision,
                         fresh_state=['controller', 'torch_rng', 'manual_intent', 'command_history'],
                         retained_state=['world', 'environment', 'python_numpy_environment_rng', 'eyes'])
+        if self.reference_mode:
+            from . import memory, memory_reference, snapshots
+            self._reference_memory_sha256 = memory.sha256(self.memory)
+            if reference_transaction:
+                if not replace_controller:
+                    self.revision += 1
+                current = snapshots.capture(self.env, self.observation, policy=self.policy, teacher=self.teacher,
+                                            application=self.application_state())
+                expected = memory_reference.preservation_hash(snapshot, replace_controller)
+                actual = memory_reference.preservation_hash(current, replace_controller)
+                if (expected != actual or self.revision != snapshot['application']['revision'] + 1
+                        or self.memory != snapshot['application']['memory']):
+                    raise ValueError('Reference profile transaction changed an invariant state')
+                self._event('memory_reference_profile_changed', old='memory-passages', new=self.scenario,
+                    preserved_sha256=actual, replaced_controller=replace_controller,
+                    frozen_memory_sha256=self._reference_memory_sha256)
         return self.public_state()
 
     def restore_memory_branch(self, snapshot, u):

@@ -21,9 +21,11 @@ _RUNTIME = tuple(f"src/palimpsest/{name}.py" for name in
 _BODY_RUNTIME = ('src/palimpsest/body_profile.py',)
 _ADAPTIVE_RUNTIME = _BODY_RUNTIME + ('src/palimpsest/body_adaptation.py',)
 _MALE_RUNTIME = ('src/palimpsest/male_policy.py', 'src/palimpsest/male_model.py')
+_REFERENCE_RUNTIME = ('src/palimpsest/memory_reference.py',)
 _EVENTS = {"command_received", "command_applied", "command_rejected", "episode_started",
            "episode_finished", "intervention", "eyes_changed", "browser_disconnected", "runtime_failure",
            "memory_world_changed", "memory_sensed", "memory_decision", "memory_cue", "memory_inspected",
+           "memory_reference_sensed", "memory_reference_input", "memory_reference_teacher_invalidated",
            "body_loaded", "body_measured", "body_failed", "body_calibration_started", "body_calibration_boundary", "task_sensed", "task_decision", "task_cue", "task_inspected"}
 _IGNORED_EVENT_KEYS = {"sequence", "run_id", "received_run_id", "applied_run_id"}
 _PHYSICAL = {"cam_left", "cam_right", "raw_cam_left", "raw_cam_right", "sensors", "action",
@@ -135,6 +137,9 @@ def _initial_snapshot(data):
 
 def _compatible(source, destination, controller=None, scenario=None):
     runtime = _RUNTIME + (_MALE_RUNTIME if controller in MALE_CONTROLLERS else ())
+    from .memory_reference import REFERENCES
+    if scenario in REFERENCES:
+        runtime += _REFERENCE_RUNTIME
     if scenario == 'calibrated-wheel-compensation':
         runtime += _BODY_RUNTIME
     if scenario == 'adaptive-wheel-calibration':
@@ -278,14 +283,21 @@ def replay_run(source_run_path, destination_run_path, *, mode, repo_root, asset_
         from .engine import Engine
         atomic_memory = (memory_case is not None and memory_case['acquisition'] and
             profile['id'] == 'memory-passages' and manifest['controller'] == 'flynn')
-        restoration = {'restore_snapshot': snapshot} if atomic_memory else {}
+        from .memory_reference import REFERENCES, PROTOCOL_SHA256
+        reference = profile['id'] in REFERENCES
+        if reference:
+            admission = manifest.get('memory_reference_admission')
+            if (type(admission) is not dict or admission.get('mode') != profile['id']
+                    or admission.get('protocol_sha256') != PROTOCOL_SHA256):
+                raise ValueError('Reference replay lacks its declared admission protocol')
+        restoration = {'restore_snapshot': snapshot} if atomic_memory or reference else {}
         engine = Engine.open(Path(repo_root), Path(asset_root), destination / "recording",
             controller=manifest["controller"], device=manifest["requested_device"], seed=manifest["seed"],
             scenario=profile["id"], texture=manifest["texture"], run_id=destination.name,
             storage_budget=storage_budget, memory_case=memory_case, expected_policy_identity=identity,
             **restoration, **({} if recording_max_bytes is None else {"max_bytes": recording_max_bytes}))
         _compatible(data["events"], _events(destination), manifest['controller'], manifest['scenario']['id'])
-        if not atomic_memory:
+        if not atomic_memory and not reference:
             engine.restore_branch(snapshot)
         del snapshot
         engine.writer.manifest.update(execution_mode=mode, inference_executed=report["inference_executed"],
