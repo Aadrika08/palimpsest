@@ -12,7 +12,7 @@ brings audited development coverage to **24/48 cells**. All forty owners complet
 outcome audits pass first in 15.064 / 8.859 s. Goals and correction timing show no
 own-U benefit. Root publication review rehashes 424 published references plus two
 historical input histories (426 files, 1,091,832,514 bytes). Cleanup is complete.
-Remaining-05 admission completed once on frozen `746c67b` in session `90487`: twelve owners, 1,204 rows and four neural calls. Root retained audit passes first in 10.086 s, verifying 116 raw pins and clean shutdown. Focused evidence publication and comparison controls are next; coverage stays 24/48.
+The [remaining-05 admission](reports/m5-remaining-05-admission.md), evidence `ad2eff7`, completed once on frozen `746c67b` in session `90487`: twelve owners, 1,204 rows and four neural calls. Root retained audit passes first in 10.086 s, verifying 116 raw pins and clean shutdown. All 139 publication references rehash (262,922,772 bytes). Comparison controls are being prepared; coverage stays 24/48.
 
 The preceding [remaining-04 admission](reports/m5-remaining-04-admission.md),
 `6f72b9b`, passes twelve owners, 1,204 rows and twelve snapshots; root raw audit
@@ -104,7 +104,7 @@ remains ineligible.
 - Mechanism: pinned upstream model/environment; allowlisted controller inputs; one mutable-runtime owner; complete native, policy, application and RNG snapshots. Recorded E fitting and U-only swaps preserve declared invariant hashes. Male controllers use separately trained fixed CPU assets and an authored sensor mapping.
 - Missing: M5 counterbalanced/held-out transfer; remaining M6 skills and learned results; M7 closed-loop qualification; M8 physical work; remaining M9 modes/operation; final M10 handoff.
 - Unknown: original checkpoint training lineage, full-model Pi performance, physical stopping limits and account quota (telemetry unavailable).
-- Next action: publish the audited navigation collection failure and review a separate prospective protocol correction; no retry or guard change is admitted. The separate cross-corpus preparer and all fitting/dev/held-out stages remain pending. Publish remaining-05 admission evidence and review its comparison controls before an actual launch. Memory coverage is 24/48 with a current paired readout. Implement the fixed standalone new-body verifier using existing helpers. Both puck development evaluations remain negative; automatic retraining stops and held-out stays locked. Physical qualification and independent exhibition operation remain open.
+- Next action: publish the audited navigation collection failure and review a separate prospective protocol correction; no retry or guard change is admitted. The separate cross-corpus preparer and all fitting/dev/held-out stages remain pending. Review the prepared remaining-05 comparison controls before an actual launch. Memory coverage is 24/48 with a current paired readout. Implement the fixed standalone new-body verifier using existing helpers. Both puck development evaluations remain negative; automatic retraining stops and held-out stays locked. Physical qualification and independent exhibition operation remain open.
 
 The [prospective held-out outline](plans/m5-heldout-proposal.md) specifies the
 reserved 64–71 matrix without opening it. Source/profile freeze and all 48 audited
