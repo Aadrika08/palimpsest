@@ -19,7 +19,7 @@ from palimpsest.storage import StorageBudget, StorageLimits
 SOURCE_FILES = ('scripts/train_puck.py', 'src/palimpsest/puck_model.py',
     'src/palimpsest/puck_learning.py', 'src/palimpsest/puck_profile.py',
     'src/palimpsest/artifacts.py', 'src/palimpsest/records.py', 'src/palimpsest/storage.py',
-    puck_learning.PROTOCOL_PATH, 'docs/plans/m6-puck-pushing-protocol-v4.json')
+    puck_learning.PROTOCOL_PATH, 'docs/plans/m6-puck-pushing-protocol-v5.json')
 
 
 def file_sha(path):
