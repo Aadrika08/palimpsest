@@ -2054,5 +2054,38 @@
         "sha256": "be021c4347c38d7a7d5c88133d471bef7b1601b4e7b8b65fc8d993963b13940a"
       }
     ]
+  },
+  "recovery_admission_regression": {
+    "source_commit": "1d97787eeeb4c2f7d8a87d8d44d5328f44dae5c0",
+    "tests": 646,
+    "passed": 646,
+    "skipped": 0,
+    "unittest_seconds": 129.798,
+    "supervised_seconds": 133.0167950130126,
+    "wall_seconds": 133.02071922399045,
+    "returncode": 0,
+    "report": {
+      "path": "runs/integration-recovery-admission-1d97787-20261003/report.json",
+      "bytes": 121278,
+      "sha256": "1766cd923feb0f84cd4405c907c7cca986dfd1427c384b6a0e814e3357bad619"
+    },
+    "launcher": {
+      "path": "runs/integration-recovery-admission-1d97787-launch.py",
+      "bytes": 4192,
+      "sha256": "d8e8fd78829230f66743ee4aea00d9db3ec6dffcade7c0fbb4ca449206f03044"
+    },
+    "console": {
+      "path": "runs/integration-recovery-admission-1d97787-console.log",
+      "bytes": 491,
+      "sha256": "cfd0d5175974c70030bbf9e1156dc7c7516f7522382f10435ced444bbc345cbb"
+    },
+    "retained_files_rehashed": 50,
+    "source_files": 451,
+    "all_four_runtime_flags_enabled": true,
+    "sources_assets_models_unchanged": true,
+    "recovery_admission_source": "e63ef7ed70dc43c99cf43f6bf30dc9decd801abf",
+    "fixture_isolation": "228232c50d5fddcaad1fb72f65bcb89ad2a896c7",
+    "scope": "Combined actual regression, including production male CPU/native/replay and puck CPU models; recovery candidate closed-loop development and student native mechanism remain separate gates. Earlier failed integration is retained.",
+    "qualification_claims": []
   }
 }

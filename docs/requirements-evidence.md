@@ -130,7 +130,9 @@ The [puck learning contract](plans/m6-puck-learning.md) at `0fd589c` passes nine
 The combined source at `c7b4436` passes **579 enabled tests without skips**, including simulation, production male Torch/native/replay and the new puck CPU model fixtures. [The fixed puck trainer/model mechanism](reports/m6-puck-model-mechanism.md) passes all four checks; actual demonstration training and learned manipulation remain pending. [Recovery v3](reports/m7-recovery-coverage-v3.md) passes its changed first-cycle collection estimand on both sources (134 rows), with later driving censored and no natural task outcome. This preserves prior failures and does not admit the sources to the existing production loader. [C4](reports/m5-counterbalance-stage-c4.md) passes forty owners/4,689 intervals with sixteen strict core forks and no own-U correction/goal advantage; combined C3/C4 covers eight selected cells, not the full matrix or held-out R2 evaluation.
 
 
-Current integration `7123270` passes **628 enabled tests without skips**. The
+Current integration `1d97787` passes **646 enabled tests without skips**; the
+earlier two historical-reader fixture errors remain retained, with actual
+admission pins unchanged. The
 [fixed controller references](plans/m5-controller-references.md) add exact
 physical restoration with frozen unused memory; their six-owner native gate
 passes all navigation goals across 744 intervals (260 actual neural, 484

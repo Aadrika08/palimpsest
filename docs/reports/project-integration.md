@@ -1,15 +1,16 @@
 # Combined checkout verification
 
-Latest combined source `7123270` passes **628 tests without skips** in
-125.643 seconds (128.177 seconds supervised; 128.183 seconds including the
-wrapper). Simulation, production male Torch/native/replay and puck CPU model
-checks are all enabled. All 427 source files, shared assets and production model
-identities remain unchanged; all fifty retained artifact references rehash.
-This includes the six-owner reference verifier, prospective puck stop correction
-and fixed recovery research trainer. The trainer reuses the existing fitter;
-its separate 24 root checks pass in 1.583 seconds. Actual task/data outcomes retain
-their own source-scoped reports. This regression establishes no learned, held-out
-or physical capability.
+Latest combined source `1d97787` passes **646 tests without skips** in
+129.798 seconds (133.017 seconds supervised; 133.021 including the wrapper).
+Simulation, production male Torch/native/replay and puck CPU model checks are
+enabled. All 451 source files, shared assets and production model identities
+remain unchanged; all fifty retained artifact references rehash. This includes
+named recovery admission and the shared tensor-loader/Engine changes. The first
+`480acfa` run and its two historical-reader fixture errors remain retained;
+fixture-only `228232c` preserves actual admission pins. Recovery candidate
+closed-loop development and student native qualification remain separate gates.
+The previous `7123270` run passed 628 tests in 125.643 seconds. This regression
+establishes no new learned, held-out or physical capability.
 
 The preceding source checks passed 60 memory/reference fixtures in 11.469 s,
 96 puck fixtures in 5.164 s and 99 combined puck/model-reader fixtures in 5.745 s,
@@ -396,3 +397,8 @@ Real hashing, fsync/error handling and late adapter-drift detection remain activ
 no historical adapter/protocol/index/data bytes changed. The focused five-module
 suite passes 51 tests with one explicit Torch opt-in skip in 2.854 seconds.
 A fresh fully enabled combined regression is pending.
+
+The fresh `1d97787` attempt passes all 646 enabled tests with no skips in
+129.798 seconds. Supervisor exit 0 takes 133.017 seconds; source, assets and
+production models are unchanged and all fifty retained artifacts rehash. Report
+SHA256: `1766cd923feb0f84cd4405c907c7cca986dfd1427c384b6a0e814e3357bad619`.
