@@ -1,5 +1,15 @@
 # Supervised artwork operation
 
+For a finite offline software handoff, use the [six-mode plan](plans/m9-offline-handoff.md)
+and its [19-file source manifest](artwork-handoff.json). The source folder must be
+provided explicitly; a fresh clone does not include the local recording subsets.
+The fixed driver, `scripts/verify_artwork_handoff.py --inputs INPUT --output NEWDIR`,
+is for a separately supervised agent-operated export smoke. It neither captures
+new imagery nor restores a model. The copied runs are derivative subsets without
+native continuation or action/policy replay. Its operator/retention declarations
+remain blank, and it does not complete the independent acceptance below. Actual
+curated CLI execution has not yet been qualified by this source-only slice.
+
 This is an operator handoff for the implemented software modes, not an exhibition
 qualification. Start with offline derivatives. A named operator must remain
 present for any live lab or physical work. Physical rover/pen operation is not
