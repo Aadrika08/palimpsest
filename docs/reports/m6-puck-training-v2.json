@@ -1,0 +1,977 @@
+{
+  "audit": {
+    "epochs_checked": 90,
+    "final_output_files": 24,
+    "inventory_scope": "Outer final ledger is authoritative for final drained artifacts; three inner inventory entries record prepublication bytes, not final bytes. Every outer control entry matches; no enclosing console file existed.",
+    "local_seconds": 11.9047875010001,
+    "native_or_torch_imported": false,
+    "root_scoped_entries_rehashed": 416,
+    "root_seconds": 1.3684223919990472,
+    "root_unique_teacher_data_files_rehashed": 267,
+    "source_count": 81,
+    "stage_prepublication_differences": {
+      "outer/stdout.log": {
+        "before": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "final": {
+          "bytes": 3051,
+          "sha256": "6cf239d278c3de79953650c637da34922b49a6f71e7f52119a5ce5f8b185f03a"
+        }
+      },
+      "outer/supervisor.json": {
+        "before": {
+          "bytes": 242,
+          "sha256": "45e5cf15b9d0ea79187a9624d82b71b1a8f99b14ada73c1dcc14540a246f8ed4"
+        },
+        "final": {
+          "bytes": 303,
+          "sha256": "c59b3cebb8713a1cfa645f4c431447ea26e029bdb51189924f75c9b11857a24c"
+        }
+      },
+      "stage-report.json": {
+        "before": {
+          "bytes": 18533,
+          "sha256": "ed52a244c75a58b86028522b6a21c1a2a39b4b13ad9e851366778899b7cf0e96"
+        },
+        "final": {
+          "bytes": 23534,
+          "sha256": "cefcb69acaa75b754db2eb36a2aca7e4ae4c14f4c7d3eed84aa069ccd1d810bf"
+        }
+      }
+    }
+  },
+  "collection_report_sha256": "3cf5044ac12fa80ebfed9aa044d0e983a94fcddb4e177da779a4684b944b518b",
+  "date": "2026-10-03",
+  "development_rollouts_performed": false,
+  "held_out_used": false,
+  "learning_protocol_sha256": "bfdd047c1763af3d0b254c55df9137e179b65ce99e7eb870ca76f41332a83354",
+  "limits": {
+    "aggregate_controls_plus_outputs_bytes": 67108864,
+    "checkpoint_bytes": 1048576,
+    "checkpoint_uncompressed_bytes": 2097152,
+    "concurrent_headroom_bytes": 4194304,
+    "kill_grace_seconds": 15,
+    "log_bytes_each": 1048576,
+    "max_report_bytes": 4194304,
+    "min_free_bytes": 1073741824,
+    "outer_final_wall_acceptance_seconds": 680,
+    "outer_supervised_seconds": 680,
+    "planned_train_and_log_allowance_bytes": 58720256,
+    "stage_total_including_finalization_seconds": 660,
+    "term_seconds": 660
+  },
+  "models": [
+    {
+      "files": {
+        "checkpoint.npz": {
+          "bytes": 7266,
+          "sha256": "e5284de291a94276b5f9dafcd8ab52abb3566741b72d4666aef3a3ac916de680"
+        },
+        "protocol.json": {
+          "bytes": 35280,
+          "sha256": "59ac7eda8828a458c46a55791dbefb122cb71e456265407d4db2ade985a87f65"
+        },
+        "report.json": {
+          "bytes": 3934,
+          "sha256": "70683df96f286c54311ed678d61beef7c929744d43d0116be792656e99f30205"
+        }
+      },
+      "fit_and_finalize_seconds": 7.966011249998701,
+      "history": [
+        {
+          "dev_loss": 0.06816209765597872,
+          "dev_ticks": 1314,
+          "epoch": 1,
+          "train_loss": 0.1092618192956051,
+          "train_ticks": 5710
+        },
+        {
+          "dev_loss": 0.0650365316491086,
+          "dev_ticks": 1314,
+          "epoch": 2,
+          "train_loss": 0.10439104737570357,
+          "train_ticks": 5710
+        },
+        {
+          "dev_loss": 0.06092194899117644,
+          "dev_ticks": 1314,
+          "epoch": 3,
+          "train_loss": 0.10049128781427072,
+          "train_ticks": 5710
+        },
+        {
+          "dev_loss": 0.05620201591866102,
+          "dev_ticks": 1314,
+          "epoch": 4,
+          "train_loss": 0.09467910883681653,
+          "train_ticks": 5710
+        },
+        {
+          "dev_loss": 0.055570257155025324,
+          "dev_ticks": 1314,
+          "epoch": 5,
+          "train_loss": 0.08883754687568517,
+          "train_ticks": 5710
+        },
+        {
+          "dev_loss": 0.054859554623896134,
+          "dev_ticks": 1314,
+          "epoch": 6,
+          "train_loss": 0.08587050137273594,
+          "train_ticks": 5710
+        },
+        {
+          "dev_loss": 0.05457676701750347,
+          "dev_ticks": 1314,
+          "epoch": 7,
+          "train_loss": 0.0851135666261715,
+          "train_ticks": 5710
+        },
+        {
+          "dev_loss": 0.05455619716654742,
+          "dev_ticks": 1314,
+          "epoch": 8,
+          "train_loss": 0.08447595649667358,
+          "train_ticks": 5710
+        },
+        {
+          "dev_loss": 0.05463810314127846,
+          "dev_ticks": 1314,
+          "epoch": 9,
+          "train_loss": 0.08414011956616577,
+          "train_ticks": 5710
+        },
+        {
+          "dev_loss": 0.056036065414182094,
+          "dev_ticks": 1314,
+          "epoch": 10,
+          "train_loss": 0.08395340466774005,
+          "train_ticks": 5710
+        },
+        {
+          "dev_loss": 0.05484858877217546,
+          "dev_ticks": 1314,
+          "epoch": 11,
+          "train_loss": 0.08329038570633483,
+          "train_ticks": 5710
+        },
+        {
+          "dev_loss": 0.05459386215919577,
+          "dev_ticks": 1314,
+          "epoch": 12,
+          "train_loss": 0.08332989486703797,
+          "train_ticks": 5710
+        },
+        {
+          "dev_loss": 0.054445217261190636,
+          "dev_ticks": 1314,
+          "epoch": 13,
+          "train_loss": 0.08298928241262842,
+          "train_ticks": 5710
+        },
+        {
+          "dev_loss": 0.05429138294017433,
+          "dev_ticks": 1314,
+          "epoch": 14,
+          "train_loss": 0.08280543314328623,
+          "train_ticks": 5710
+        },
+        {
+          "dev_loss": 0.05426193504326546,
+          "dev_ticks": 1314,
+          "epoch": 15,
+          "train_loss": 0.08268838022927201,
+          "train_ticks": 5710
+        },
+        {
+          "dev_loss": 0.05448851000189329,
+          "dev_ticks": 1314,
+          "epoch": 16,
+          "train_loss": 0.08272109083480172,
+          "train_ticks": 5710
+        },
+        {
+          "dev_loss": 0.0550878426849337,
+          "dev_ticks": 1314,
+          "epoch": 17,
+          "train_loss": 0.08222188516722373,
+          "train_ticks": 5710
+        },
+        {
+          "dev_loss": 0.05386624517043712,
+          "dev_ticks": 1314,
+          "epoch": 18,
+          "train_loss": 0.08208383096696635,
+          "train_ticks": 5710
+        },
+        {
+          "dev_loss": 0.05540111228393569,
+          "dev_ticks": 1314,
+          "epoch": 19,
+          "train_loss": 0.0824588893624919,
+          "train_ticks": 5710
+        },
+        {
+          "dev_loss": 0.053747969916102416,
+          "dev_ticks": 1314,
+          "epoch": 20,
+          "train_loss": 0.0818356282100482,
+          "train_ticks": 5710
+        },
+        {
+          "dev_loss": 0.054128106195719464,
+          "dev_ticks": 1314,
+          "epoch": 21,
+          "train_loss": 0.08175143707091226,
+          "train_ticks": 5710
+        },
+        {
+          "dev_loss": 0.054179248387148944,
+          "dev_ticks": 1314,
+          "epoch": 22,
+          "train_loss": 0.0814678624439506,
+          "train_ticks": 5710
+        },
+        {
+          "dev_loss": 0.05392170163809979,
+          "dev_ticks": 1314,
+          "epoch": 23,
+          "train_loss": 0.08128532028386204,
+          "train_ticks": 5710
+        },
+        {
+          "dev_loss": 0.05402189078910237,
+          "dev_ticks": 1314,
+          "epoch": 24,
+          "train_loss": 0.0811289758303642,
+          "train_ticks": 5710
+        },
+        {
+          "dev_loss": 0.05420591758463437,
+          "dev_ticks": 1314,
+          "epoch": 25,
+          "train_loss": 0.08103967482087494,
+          "train_ticks": 5710
+        },
+        {
+          "dev_loss": 0.05345033769438526,
+          "dev_ticks": 1314,
+          "epoch": 26,
+          "train_loss": 0.0809388993295325,
+          "train_ticks": 5710
+        },
+        {
+          "dev_loss": 0.05369781104051979,
+          "dev_ticks": 1314,
+          "epoch": 27,
+          "train_loss": 0.08053029252223097,
+          "train_ticks": 5710
+        },
+        {
+          "dev_loss": 0.05365405946406134,
+          "dev_ticks": 1314,
+          "epoch": 28,
+          "train_loss": 0.08056844295906467,
+          "train_ticks": 5710
+        },
+        {
+          "dev_loss": 0.05410274767169772,
+          "dev_ticks": 1314,
+          "epoch": 29,
+          "train_loss": 0.08017487870928951,
+          "train_ticks": 5710
+        },
+        {
+          "dev_loss": 0.05303843069523647,
+          "dev_ticks": 1314,
+          "epoch": 30,
+          "train_loss": 0.07996493258613797,
+          "train_ticks": 5710
+        }
+      ],
+      "identity": {
+        "checkpoint_sha256": "e5284de291a94276b5f9dafcd8ab52abb3566741b72d4666aef3a3ac916de680",
+        "learning_protocol_sha256": "bfdd047c1763af3d0b254c55df9137e179b65ce99e7eb870ca76f41332a83354",
+        "protocol_sha256": "59ac7eda8828a458c46a55791dbefb122cb71e456265407d4db2ade985a87f65",
+        "supervisor_source_sha256": "fe0350b1f7becf263ffbe19b8c906651a4f7655306dc60407927dcc20244f88d",
+        "training_report_sha256": "70683df96f286c54311ed678d61beef7c929744d43d0116be792656e99f30205",
+        "training_seed": 21
+      },
+      "seed": 21,
+      "selected_dev_loss": 0.05303843069523647,
+      "selected_epoch": 30,
+      "supervised_seconds": 17.071748335001757
+    },
+    {
+      "files": {
+        "checkpoint.npz": {
+          "bytes": 7266,
+          "sha256": "d6a17a528e80a2d4fb97a93790b404092a3761e8c485f06f535dca0cf06e6684"
+        },
+        "protocol.json": {
+          "bytes": 35280,
+          "sha256": "8bab9d45eb94c98bfc9f89c6fbb25b05be87af5f89a57ad69c82e4e7e2596adc"
+        },
+        "report.json": {
+          "bytes": 3942,
+          "sha256": "956106fe819d3c0da7115141223b1af328f5ca524932e2b8775c0bf86c6fdc0a"
+        }
+      },
+      "fit_and_finalize_seconds": 7.0872023300034925,
+      "history": [
+        {
+          "dev_loss": 0.06946054314251365,
+          "dev_ticks": 1314,
+          "epoch": 1,
+          "train_loss": 0.1186925656184727,
+          "train_ticks": 5710
+        },
+        {
+          "dev_loss": 0.0674414785507811,
+          "dev_ticks": 1314,
+          "epoch": 2,
+          "train_loss": 0.10566265647131502,
+          "train_ticks": 5710
+        },
+        {
+          "dev_loss": 0.06351228341936742,
+          "dev_ticks": 1314,
+          "epoch": 3,
+          "train_loss": 0.10307455737045118,
+          "train_ticks": 5710
+        },
+        {
+          "dev_loss": 0.059706916761501104,
+          "dev_ticks": 1314,
+          "epoch": 4,
+          "train_loss": 0.09896621180389813,
+          "train_ticks": 5710
+        },
+        {
+          "dev_loss": 0.05637081425213554,
+          "dev_ticks": 1314,
+          "epoch": 5,
+          "train_loss": 0.0938741415920009,
+          "train_ticks": 5710
+        },
+        {
+          "dev_loss": 0.054852099500911175,
+          "dev_ticks": 1314,
+          "epoch": 6,
+          "train_loss": 0.0896661718202925,
+          "train_ticks": 5710
+        },
+        {
+          "dev_loss": 0.054050153948271236,
+          "dev_ticks": 1314,
+          "epoch": 7,
+          "train_loss": 0.08630001693766666,
+          "train_ticks": 5710
+        },
+        {
+          "dev_loss": 0.054406646139736316,
+          "dev_ticks": 1314,
+          "epoch": 8,
+          "train_loss": 0.08473370344559977,
+          "train_ticks": 5710
+        },
+        {
+          "dev_loss": 0.054316804981994565,
+          "dev_ticks": 1314,
+          "epoch": 9,
+          "train_loss": 0.08403446969584982,
+          "train_ticks": 5710
+        },
+        {
+          "dev_loss": 0.05431215373128707,
+          "dev_ticks": 1314,
+          "epoch": 10,
+          "train_loss": 0.08355492247356587,
+          "train_ticks": 5710
+        },
+        {
+          "dev_loss": 0.05466034316392576,
+          "dev_ticks": 1314,
+          "epoch": 11,
+          "train_loss": 0.08313984253207939,
+          "train_ticks": 5710
+        },
+        {
+          "dev_loss": 0.05445972135277624,
+          "dev_ticks": 1314,
+          "epoch": 12,
+          "train_loss": 0.08286586015071916,
+          "train_ticks": 5710
+        },
+        {
+          "dev_loss": 0.054371214890631896,
+          "dev_ticks": 1314,
+          "epoch": 13,
+          "train_loss": 0.08283376472164737,
+          "train_ticks": 5710
+        },
+        {
+          "dev_loss": 0.05437690133626693,
+          "dev_ticks": 1314,
+          "epoch": 14,
+          "train_loss": 0.08273252663991555,
+          "train_ticks": 5710
+        },
+        {
+          "dev_loss": 0.05495679910983257,
+          "dev_ticks": 1314,
+          "epoch": 15,
+          "train_loss": 0.08231571487297047,
+          "train_ticks": 5710
+        },
+        {
+          "dev_loss": 0.0538941727603055,
+          "dev_ticks": 1314,
+          "epoch": 16,
+          "train_loss": 0.08269489486476746,
+          "train_ticks": 5710
+        },
+        {
+          "dev_loss": 0.05370835150132736,
+          "dev_ticks": 1314,
+          "epoch": 17,
+          "train_loss": 0.08215439006082884,
+          "train_ticks": 5710
+        },
+        {
+          "dev_loss": 0.054390368337848376,
+          "dev_ticks": 1314,
+          "epoch": 18,
+          "train_loss": 0.08197277560156066,
+          "train_ticks": 5710
+        },
+        {
+          "dev_loss": 0.053877915543999906,
+          "dev_ticks": 1314,
+          "epoch": 19,
+          "train_loss": 0.08185030406816587,
+          "train_ticks": 5710
+        },
+        {
+          "dev_loss": 0.054160288216289564,
+          "dev_ticks": 1314,
+          "epoch": 20,
+          "train_loss": 0.08199240684782651,
+          "train_ticks": 5710
+        },
+        {
+          "dev_loss": 0.05357691639466479,
+          "dev_ticks": 1314,
+          "epoch": 21,
+          "train_loss": 0.08170714844696753,
+          "train_ticks": 5710
+        },
+        {
+          "dev_loss": 0.05503117991407867,
+          "dev_ticks": 1314,
+          "epoch": 22,
+          "train_loss": 0.08150610574896462,
+          "train_ticks": 5710
+        },
+        {
+          "dev_loss": 0.05401799779591915,
+          "dev_ticks": 1314,
+          "epoch": 23,
+          "train_loss": 0.08142331450380406,
+          "train_ticks": 5710
+        },
+        {
+          "dev_loss": 0.0538902627299082,
+          "dev_ticks": 1314,
+          "epoch": 24,
+          "train_loss": 0.08154435067226952,
+          "train_ticks": 5710
+        },
+        {
+          "dev_loss": 0.054554913556261374,
+          "dev_ticks": 1314,
+          "epoch": 25,
+          "train_loss": 0.08118008430955236,
+          "train_ticks": 5710
+        },
+        {
+          "dev_loss": 0.05415355148458683,
+          "dev_ticks": 1314,
+          "epoch": 26,
+          "train_loss": 0.08098753829127353,
+          "train_ticks": 5710
+        },
+        {
+          "dev_loss": 0.05333465722333698,
+          "dev_ticks": 1314,
+          "epoch": 27,
+          "train_loss": 0.08150099673002965,
+          "train_ticks": 5710
+        },
+        {
+          "dev_loss": 0.054263119919993975,
+          "dev_ticks": 1314,
+          "epoch": 28,
+          "train_loss": 0.0807330594033954,
+          "train_ticks": 5710
+        },
+        {
+          "dev_loss": 0.05367554161947867,
+          "dev_ticks": 1314,
+          "epoch": 29,
+          "train_loss": 0.08070947383852042,
+          "train_ticks": 5710
+        },
+        {
+          "dev_loss": 0.053880807162112174,
+          "dev_ticks": 1314,
+          "epoch": 30,
+          "train_loss": 0.08051721536764544,
+          "train_ticks": 5710
+        }
+      ],
+      "identity": {
+        "checkpoint_sha256": "d6a17a528e80a2d4fb97a93790b404092a3761e8c485f06f535dca0cf06e6684",
+        "learning_protocol_sha256": "bfdd047c1763af3d0b254c55df9137e179b65ce99e7eb870ca76f41332a83354",
+        "protocol_sha256": "8bab9d45eb94c98bfc9f89c6fbb25b05be87af5f89a57ad69c82e4e7e2596adc",
+        "supervisor_source_sha256": "fe0350b1f7becf263ffbe19b8c906651a4f7655306dc60407927dcc20244f88d",
+        "training_report_sha256": "956106fe819d3c0da7115141223b1af328f5ca524932e2b8775c0bf86c6fdc0a",
+        "training_seed": 22
+      },
+      "seed": 22,
+      "selected_dev_loss": 0.05333465722333698,
+      "selected_epoch": 27,
+      "supervised_seconds": 12.709538025999791
+    },
+    {
+      "files": {
+        "checkpoint.npz": {
+          "bytes": 7266,
+          "sha256": "afda5c0cd948b09f9f08c130f2ecb24243b135820affab840bc67633c0288d3b"
+        },
+        "protocol.json": {
+          "bytes": 35280,
+          "sha256": "eeca104ce573a15b01a370750f1c153bd9bd9b804c6e3ac9983344e4ccceb576"
+        },
+        "report.json": {
+          "bytes": 3933,
+          "sha256": "3db238c42b635b20ae4c0eba66f6d5048007851076070072c5bca0fabd7ed924"
+        }
+      },
+      "fit_and_finalize_seconds": 6.903457458989578,
+      "history": [
+        {
+          "dev_loss": 0.06802403538487911,
+          "dev_ticks": 1314,
+          "epoch": 1,
+          "train_loss": 0.11783463917204645,
+          "train_ticks": 5710
+        },
+        {
+          "dev_loss": 0.06578939484836199,
+          "dev_ticks": 1314,
+          "epoch": 2,
+          "train_loss": 0.10539098288655413,
+          "train_ticks": 5710
+        },
+        {
+          "dev_loss": 0.06389959411674882,
+          "dev_ticks": 1314,
+          "epoch": 3,
+          "train_loss": 0.10296377112161077,
+          "train_ticks": 5710
+        },
+        {
+          "dev_loss": 0.0598770090994926,
+          "dev_ticks": 1314,
+          "epoch": 4,
+          "train_loss": 0.09963031469319276,
+          "train_ticks": 5710
+        },
+        {
+          "dev_loss": 0.05641626031779328,
+          "dev_ticks": 1314,
+          "epoch": 5,
+          "train_loss": 0.09484034103707924,
+          "train_ticks": 5710
+        },
+        {
+          "dev_loss": 0.053945447448203905,
+          "dev_ticks": 1314,
+          "epoch": 6,
+          "train_loss": 0.09012646167404857,
+          "train_ticks": 5710
+        },
+        {
+          "dev_loss": 0.0545914252374604,
+          "dev_ticks": 1314,
+          "epoch": 7,
+          "train_loss": 0.08641322940698105,
+          "train_ticks": 5710
+        },
+        {
+          "dev_loss": 0.055331440339831346,
+          "dev_ticks": 1314,
+          "epoch": 8,
+          "train_loss": 0.08480747612610803,
+          "train_ticks": 5710
+        },
+        {
+          "dev_loss": 0.054793836413426326,
+          "dev_ticks": 1314,
+          "epoch": 9,
+          "train_loss": 0.08431902786089376,
+          "train_ticks": 5710
+        },
+        {
+          "dev_loss": 0.05464410503215208,
+          "dev_ticks": 1314,
+          "epoch": 10,
+          "train_loss": 0.08371738179667378,
+          "train_ticks": 5710
+        },
+        {
+          "dev_loss": 0.0558117208490953,
+          "dev_ticks": 1314,
+          "epoch": 11,
+          "train_loss": 0.08345081474338144,
+          "train_ticks": 5710
+        },
+        {
+          "dev_loss": 0.0553343939072532,
+          "dev_ticks": 1314,
+          "epoch": 12,
+          "train_loss": 0.0835188607360409,
+          "train_ticks": 5710
+        },
+        {
+          "dev_loss": 0.05463634791744624,
+          "dev_ticks": 1314,
+          "epoch": 13,
+          "train_loss": 0.08302807312226583,
+          "train_ticks": 5710
+        },
+        {
+          "dev_loss": 0.05506013957855089,
+          "dev_ticks": 1314,
+          "epoch": 14,
+          "train_loss": 0.0827654596346732,
+          "train_ticks": 5710
+        },
+        {
+          "dev_loss": 0.0547006985998475,
+          "dev_ticks": 1314,
+          "epoch": 15,
+          "train_loss": 0.08270430890300134,
+          "train_ticks": 5710
+        },
+        {
+          "dev_loss": 0.05467136207685062,
+          "dev_ticks": 1314,
+          "epoch": 16,
+          "train_loss": 0.08254216010845834,
+          "train_ticks": 5710
+        },
+        {
+          "dev_loss": 0.05547177348346426,
+          "dev_ticks": 1314,
+          "epoch": 17,
+          "train_loss": 0.08268270943471105,
+          "train_ticks": 5710
+        },
+        {
+          "dev_loss": 0.05430503616241226,
+          "dev_ticks": 1314,
+          "epoch": 18,
+          "train_loss": 0.08227858692143429,
+          "train_ticks": 5710
+        },
+        {
+          "dev_loss": 0.054661339716766164,
+          "dev_ticks": 1314,
+          "epoch": 19,
+          "train_loss": 0.08206512599125702,
+          "train_ticks": 5710
+        },
+        {
+          "dev_loss": 0.05471776005585067,
+          "dev_ticks": 1314,
+          "epoch": 20,
+          "train_loss": 0.0821702736809501,
+          "train_ticks": 5710
+        },
+        {
+          "dev_loss": 0.05441931606546003,
+          "dev_ticks": 1314,
+          "epoch": 21,
+          "train_loss": 0.08188295189203906,
+          "train_ticks": 5710
+        },
+        {
+          "dev_loss": 0.054677419719113066,
+          "dev_ticks": 1314,
+          "epoch": 22,
+          "train_loss": 0.08138518710568249,
+          "train_ticks": 5710
+        },
+        {
+          "dev_loss": 0.05412567403641914,
+          "dev_ticks": 1314,
+          "epoch": 23,
+          "train_loss": 0.08142141496215143,
+          "train_ticks": 5710
+        },
+        {
+          "dev_loss": 0.05390132368355595,
+          "dev_ticks": 1314,
+          "epoch": 24,
+          "train_loss": 0.08114202055141452,
+          "train_ticks": 5710
+        },
+        {
+          "dev_loss": 0.05501243556650672,
+          "dev_ticks": 1314,
+          "epoch": 25,
+          "train_loss": 0.08121227111812716,
+          "train_ticks": 5710
+        },
+        {
+          "dev_loss": 0.05388683384742532,
+          "dev_ticks": 1314,
+          "epoch": 26,
+          "train_loss": 0.0810285000082952,
+          "train_ticks": 5710
+        },
+        {
+          "dev_loss": 0.05453298170386224,
+          "dev_ticks": 1314,
+          "epoch": 27,
+          "train_loss": 0.08059408449518292,
+          "train_ticks": 5710
+        },
+        {
+          "dev_loss": 0.05484496356764114,
+          "dev_ticks": 1314,
+          "epoch": 28,
+          "train_loss": 0.08055411422384422,
+          "train_ticks": 5710
+        },
+        {
+          "dev_loss": 0.05488700507300855,
+          "dev_ticks": 1314,
+          "epoch": 29,
+          "train_loss": 0.08033971592350388,
+          "train_ticks": 5710
+        },
+        {
+          "dev_loss": 0.054207015146237755,
+          "dev_ticks": 1314,
+          "epoch": 30,
+          "train_loss": 0.08021332957684982,
+          "train_ticks": 5710
+        }
+      ],
+      "identity": {
+        "checkpoint_sha256": "afda5c0cd948b09f9f08c130f2ecb24243b135820affab840bc67633c0288d3b",
+        "learning_protocol_sha256": "bfdd047c1763af3d0b254c55df9137e179b65ce99e7eb870ca76f41332a83354",
+        "protocol_sha256": "eeca104ce573a15b01a370750f1c153bd9bd9b804c6e3ac9983344e4ccceb576",
+        "supervisor_source_sha256": "fe0350b1f7becf263ffbe19b8c906651a4f7655306dc60407927dcc20244f88d",
+        "training_report_sha256": "3db238c42b635b20ae4c0eba66f6d5048007851076070072c5bca0fabd7ed924",
+        "training_seed": 23
+      },
+      "seed": 23,
+      "selected_dev_loss": 0.05388683384742532,
+      "selected_epoch": 26,
+      "supervised_seconds": 12.465234903997043
+    }
+  ],
+  "outer_seconds": 59.81978900899412,
+  "preparation_note": "Before GO, pure preflight initially hashed a trailing newline after the copied cleanup function, unlike its existing AST-segment hash. Auditor slicing alone was corrected; exact function text was unchanged. Six mocked control checks then passed. Actual training and both retained-artifact audits passed their first invocation.",
+  "process_cleanup": {
+    "all_absent": true,
+    "finalization_errors": [],
+    "forced_signals": [],
+    "observed_outer_identities": [
+      {
+        "pid": 662755,
+        "start_ticks": 8738656
+      },
+      {
+        "pid": 662756,
+        "start_ticks": 8738656
+      },
+      {
+        "pid": 662767,
+        "start_ticks": 8738983
+      },
+      {
+        "pid": 662768,
+        "start_ticks": 8738983
+      },
+      {
+        "pid": 662841,
+        "start_ticks": 8741055
+      },
+      {
+        "pid": 662842,
+        "start_ticks": 8741055
+      },
+      {
+        "pid": 662882,
+        "start_ticks": 8742603
+      },
+      {
+        "pid": 662883,
+        "start_ticks": 8742604
+      }
+    ],
+    "sample_errors": []
+  },
+  "producer_commit": "82e2bd97b37832c2a7f84f6eda6a3eca98e02362",
+  "qualification_claims": [],
+  "references": [
+    {
+      "bytes": 14550,
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-training-v2/runs/puck-training-v2-20261003/launch-result.json",
+      "sha256": "3e7c7e35d96f19022dd83f95dd7be0a2c6dc4e5b3a34a474ab88004e105c6059"
+    },
+    {
+      "bytes": 23534,
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-training-v2/runs/puck-training-v2-20261003/stage-report.json",
+      "sha256": "cefcb69acaa75b754db2eb36a2aca7e4ae4c14f4c7d3eed84aa069ccd1d810bf"
+    },
+    {
+      "bytes": 16224,
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-training-v2/runs/puck-training-v2-prepared/launch.py",
+      "sha256": "bb94eaf126037d474238ef3df090fcf22cb76cee3f12020bd19d91e815f9be8c"
+    },
+    {
+      "bytes": 19652,
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-training-v2/runs/puck-training-v2-prepared/plan.json",
+      "sha256": "c26d75c2171259d48a028777ca56fd109e2e8da3313e9999d65d9d8605fd1dc8"
+    },
+    {
+      "bytes": 5784,
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-training-v2/runs/puck-training-v2-prepared/preflight.py",
+      "sha256": "26b6b18f9a632891f28621bd2fbff473519d8551a1d7e4db6896e1a9aeca9c86"
+    },
+    {
+      "bytes": 1356,
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-training-v2/runs/puck-training-v2-prepared/preflight.json",
+      "sha256": "184c53f282fff8d42508432ff0a5dcf73403fc7f58c402b0a300b4707edc142b"
+    },
+    {
+      "bytes": 6029,
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-training-v2/runs/puck-training-v2-audit-82e2bd9/audit.py",
+      "sha256": "4e10ef9439b35d45a5926b548d15c6a317f68a50722915da1c992c6157af6e5c"
+    },
+    {
+      "bytes": 26940,
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-training-v2/runs/puck-training-v2-audit-82e2bd9/audit.json",
+      "sha256": "609f5f1b8a4c0850ee655cac93029010d4517c92c345b9b260bc1dcbc881e9c5"
+    },
+    {
+      "bytes": 740,
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/project-integration/runs/puck-training-root-control-review-82e2bd9/report.json",
+      "sha256": "10a0e7887b94c813069a257d23101831a62e324882a44ecd7048f59512803ff9"
+    },
+    {
+      "bytes": 5849,
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/project-integration/runs/puck-training-root-audit-82e2bd9/audit.py",
+      "sha256": "ca121d5f762a4fe94d03970d3a3a48b8a0dc1933294a05152a036b305bbbab2a"
+    },
+    {
+      "bytes": 113713,
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/project-integration/runs/puck-training-root-audit-82e2bd9/audit.json",
+      "sha256": "161d6052c6bf426f3528bea59e915143a3799f89ebc2971691df9bec58caf20b"
+    },
+    {
+      "bytes": 1256,
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/project-integration/runs/puck-training-root-audit-82e2bd9/console.log",
+      "sha256": "e4a6661ead7827394134c56123d6dedd20b33155c8c27b36fccc1243031c7c57"
+    },
+    {
+      "bytes": 557,
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-training-v2/runs/puck-training-v2-prepare-82e2bd9/launch-result.json",
+      "sha256": "b083f4d9112ef9eba710070c7984e6791c96a691c114a7ee9da065c1d6c8433a"
+    },
+    {
+      "bytes": 37047,
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-training-v2/runs/puck-training-v2-prepare-82e2bd9/supervised/stdout.log",
+      "sha256": "56affdda5748a0ebbd1dc149fab67fc807db3d3644a9ac323c47c86436613f99"
+    },
+    {
+      "bytes": 205583,
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-stop-boundary/runs/m6-puck-teacher-collection-v2-20261003/gate/report.json",
+      "sha256": "3cf5044ac12fa80ebfed9aa044d0e983a94fcddb4e177da779a4684b944b518b"
+    },
+    {
+      "bytes": 35280,
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-training-v2/runs/puck-training-v2-20261003/seed-21/protocol.json",
+      "sha256": "59ac7eda8828a458c46a55791dbefb122cb71e456265407d4db2ade985a87f65"
+    },
+    {
+      "bytes": 7266,
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-training-v2/runs/puck-training-v2-20261003/seed-21/checkpoint.npz",
+      "sha256": "e5284de291a94276b5f9dafcd8ab52abb3566741b72d4666aef3a3ac916de680"
+    },
+    {
+      "bytes": 3934,
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-training-v2/runs/puck-training-v2-20261003/seed-21/report.json",
+      "sha256": "70683df96f286c54311ed678d61beef7c929744d43d0116be792656e99f30205"
+    },
+    {
+      "bytes": 35280,
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-training-v2/runs/puck-training-v2-20261003/seed-22/protocol.json",
+      "sha256": "8bab9d45eb94c98bfc9f89c6fbb25b05be87af5f89a57ad69c82e4e7e2596adc"
+    },
+    {
+      "bytes": 7266,
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-training-v2/runs/puck-training-v2-20261003/seed-22/checkpoint.npz",
+      "sha256": "d6a17a528e80a2d4fb97a93790b404092a3761e8c485f06f535dca0cf06e6684"
+    },
+    {
+      "bytes": 3942,
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-training-v2/runs/puck-training-v2-20261003/seed-22/report.json",
+      "sha256": "956106fe819d3c0da7115141223b1af328f5ca524932e2b8775c0bf86c6fdc0a"
+    },
+    {
+      "bytes": 35280,
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-training-v2/runs/puck-training-v2-20261003/seed-23/protocol.json",
+      "sha256": "eeca104ce573a15b01a370750f1c153bd9bd9b804c6e3ac9983344e4ccceb576"
+    },
+    {
+      "bytes": 7266,
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-training-v2/runs/puck-training-v2-20261003/seed-23/checkpoint.npz",
+      "sha256": "afda5c0cd948b09f9f08c130f2ecb24243b135820affab840bc67633c0288d3b"
+    },
+    {
+      "bytes": 3933,
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-training-v2/runs/puck-training-v2-20261003/seed-23/report.json",
+      "sha256": "3db238c42b635b20ae4c0eba66f6d5048007851076070072c5bca0fabd7ed924"
+    }
+  ],
+  "runtime": {
+    "numpy": "2.2.5",
+    "python": "3.11.15",
+    "torch_distribution": "2.9.0"
+  },
+  "schema": "puck-three-seed-fitting-evidence-v1",
+  "scope": "Three fixed-seed imitation fits on admitted recorded train/development inputs; no winning-seed selection, student native execution, closed-loop task result, held-out or physical qualification.",
+  "split_arrays": {
+    "recorded_dev": {
+      "inputs_sha256": "b502f4b6c8dd7fa56927c2f83fb936993a4b7b8f322a44e117e90b701196ef54",
+      "targets_sha256": "4bcf8d8302a70d2dd25b4db77343ea300d4b8a432b7b843702de1542ff4cf98b",
+      "ticks": 1314
+    },
+    "train": {
+      "inputs_sha256": "4a679026d062947a694753becc0e3990c39749e3bc17fc7888a476cc5b3e1b45",
+      "targets_sha256": "f46827ed652373e860dfe449bf82b97c2abc9d76b4bdad034fe310859d7ed91e",
+      "ticks": 5710
+    }
+  },
+  "stage_seconds": 55.178901456994936,
+  "status": "passed_recorded_input_fitting"
+}
