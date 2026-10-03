@@ -7,6 +7,12 @@ registry or UI integration is included. The [four-owner native/replay mechanism]
 passed on `6f1fda9`. The subsequent [fixed development gate](../reports/m6-puck-student-development.md)
 failed on `77f4d49`: all three models scored 0/4. Held-out evaluation remains locked.
 
+The [read-only diagnosis](../reports/m6-puck-student-diagnosis.md) and one bounded
+NumPy residual audit found poor turn-only fit even on the original teacher
+support, alongside limited recovery-state coverage. No runtime/model source or
+weights changed. A possible regime-balanced training objective remains subject
+to a separately frozen protocol and review; no further fitting or rollout is approved.
+
 The [model manifest](m6-puck-student-models-v1.json) pins all three reports,
 protocols and numeric checkpoints from producer `82e2bd9`. The
 [mechanism protocol](m6-puck-student-mechanism-v1.json) selects model 21 and the
