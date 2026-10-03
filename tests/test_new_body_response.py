@@ -49,8 +49,36 @@ def interval(tick=0, rejected=False):
 
 class NewBodyChecks(unittest.TestCase):
     def test_exact_protocol_and_old_sources(self):
-        self.assertEqual(study.read_protocol(ROOT), study.PROTOCOL)
+        self.assertEqual(study.digest(ROOT / study.PROTOCOL_PATH), study.PROTOCOL_SHA256)
         self.assertEqual(study.LIMITS['whole_study_admission_bytes'], 644317184)
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            source = root / 'fixture.py'; source.write_bytes(b'protected fixture')
+            protocol = copy.deepcopy(study.PROTOCOL)
+            protocol['protected_sources_sha256'] = {'fixture.py': study.digest(source)}
+            path = root / study.PROTOCOL_PATH; path.parent.mkdir(parents=True)
+            path.write_text(json.dumps(protocol))
+            with patch.object(study, 'PROTOCOL_SHA256', study.digest(path)):
+                self.assertEqual(study.read_protocol(root), protocol)
+                source.write_bytes(b'changed fixture')
+                with self.assertRaisesRegex(ValueError, 'Protected study source differs: fixture.py'):
+                    study.read_protocol(root)
+                path.write_text('{}')
+                with self.assertRaisesRegex(ValueError, 'Fixed study protocol differs'):
+                    study.read_protocol(root)
+
+    def test_actual_entries_require_source_admission_before_creating_output(self):
+        with tempfile.TemporaryDirectory() as temp, \
+                patch.object(study, 'read_protocol', side_effect=ValueError('source pin rejected')) as guard, \
+                patch.object(study, 'validate_config') as config:
+            output = Path(temp) / 'uncreated'
+            with self.assertRaisesRegex(ValueError, 'source pin rejected'):
+                study.worker({})
+            config.assert_not_called()
+            with self.assertRaisesRegex(ValueError, 'source pin rejected'):
+                study.verify(types.SimpleNamespace(output=output, assets=Path(temp)))
+            self.assertEqual(guard.call_count, 2)
+            self.assertFalse(output.exists())
 
     def test_fit_exact_order_and_all_four_trials(self):
         fitted = study.fit_samples(samples())
