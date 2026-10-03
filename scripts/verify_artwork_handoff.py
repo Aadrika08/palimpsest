@@ -30,6 +30,7 @@ OUTPUTS = ('afterimage.svg', 'borrowed-body.svg', 'one-map-many-lives.html',
 SOURCE_NAMES = ('__init__', '__main__', 'cli', 'artifacts', 'records', 'afterimage',
                 'comparison', 'sonification', 'atlas', 'specimens', 'male_model',
                 'male_policy', 'storage', 'evaluate')
+SOURCE_SCOPE = 'Selected offline implementation files and lock metadata; not the whole tracked source tree or Python runtime.'
 
 
 def require(condition, reason):
@@ -162,6 +163,7 @@ def worker(inputs, output, manifest, budget):
     started = time.monotonic()
     calls = commands(inputs, output, manifest)
     report = {'id': manifest['id'], 'agent_operated': True, 'qualification_claims': [],
+              'source_inventory_scope': SOURCE_SCOPE,
               'status': 'failed', 'declarations': manifest['declarations'],
               'rows': [{'output': name, 'label': spec['label'], 'argv': argv, 'status': 'not_started'}
                        for name, spec, argv in zip(OUTPUTS, manifest['outputs'], calls)]}
@@ -220,6 +222,7 @@ def main():
         return 0 if worker(inputs, output, manifest, budget)['status'] == 'passed' else 1
     output.mkdir(parents=True, exist_ok=False)
     report = {'id': manifest['id'], 'manifest_sha256': MANIFEST_SHA256, 'agent_operated': True,
+              'source_inventory_scope': SOURCE_SCOPE,
               'qualification_claims': [], 'status': 'failed', 'python': sys.version,
               'rows': [{'output': name, 'status': 'not_started'} for name in OUTPUTS],
               'storage_enforcement': 'preflight and final recounts; not an atomic filesystem quota'}
@@ -235,7 +238,9 @@ def main():
         report['worker'] = child
         report['rows'] = child['rows']
         report['cleanup'] = cleanup_check(child['process'])
+        elapsed = report['supervisor'].get('elapsed_seconds')
         require(report['supervisor']['status'] == 'completed' and report['supervisor']['returncode'] == 0
+                and type(elapsed) in (int, float) and 0 <= elapsed <= limits['child_seconds']
                 and child['status'] == 'passed' and report['cleanup']['passed'], 'child/export/cleanup failed')
         require(child['sources_before'] == child['sources_after'] == report['sources_before']
                 and child['inputs_before'] == child['inputs_after'] == report['inputs_before'], 'worker admission differs')

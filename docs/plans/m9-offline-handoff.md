@@ -137,6 +137,8 @@ failure-cleanup invocation during controls review before any actual run; it must
 terminate the complete driver and account for its owned child, not merely reject
 late success. No additional supervisor implementation is in this product slice.
 These are proposed finite caps, not measured throughput or exhibition duration.
+Parent acceptance explicitly requires completed exit zero **and** the supervised
+child's finite elapsed time within 120 s; a late zero exit is a failure.
 
 Storage is **not an atomic 64 MiB quota**. The driver recounts before commands and
 at finalization; each existing CLI separately preflights its complete payload.
@@ -191,6 +193,13 @@ do not call a prepublication timestamp complete process-return time. Do not inde
 an open log prefix as a final drained file. No duration-loop or generic session
 declaration framework is needed.
 
+The driver's source inventory is explicitly a **selected-file** inventory: the
+offline CLI/readers/renderers, direct project helpers, this driver and manifests/
+lock metadata. It is not a whole-source-tree or Python-library integrity claim.
+The separately reviewed actual controls bind the full tracked source tree and
+runtime identity independently; imported stdlib/NumPy implementation bytes are
+not represented by the driver's selected-file hashes.
+
 ## Existing evidence and documentation correction
 
 Source verification: `PYTHONPATH=src:tests ../lab-hardening/.venv/bin/python -m unittest test_artwork_handoff -v`
@@ -201,6 +210,9 @@ fixed command order, stop-on-first-failure, independent failure rehash, exclusiv
 destination, runtime-import refusal and late publication are covered. No external
 raw recording or global writer lease is used. The initial missing-driver red and
 missing failure-rehash result remain in local `runs/artwork-handoff-source-checks/`.
+Root's follow-up child-bound check first reproduced acceptance of a completed
+120.001 s receipt; the explicit elapsed guard then passed all seven checks in
+0.250 s. Both `late-child-red.log` and `child-bound-fixed.log` are retained there.
 
 Current passive read-only admission on this base completed in 0.296 s: both FLYNN
 records through `artifacts._load` (left lineage also checked), completed Afterimage

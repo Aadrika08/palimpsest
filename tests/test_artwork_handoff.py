@@ -155,6 +155,17 @@ class HandoffTests(unittest.TestCase):
                 late = json.loads((output / 'report.json').read_text())
                 self.assertEqual(late['status'], 'failed')
                 self.assertIn('during publication', late['error'])
+                # A completed zero exit is insufficient when the bounded
+                # child receipt itself exceeds its 120-second normal limit.
+                output = self.root / 'late-child'
+                def late_zero(command, directory, timeout, **kwargs):
+                    return {**supervise(command, directory, timeout, **kwargs), 'elapsed_seconds': 120.001}
+                with patch.object(sys, 'argv', ['handoff','--inputs',str(self.inputs),'--output',str(output)]), \
+                        patch.object(self.h, 'bounded_process', side_effect=late_zero):
+                    self.assertEqual(self.h.main(), 1)
+                child_late = json.loads((output / 'report.json').read_text())
+                self.assertEqual(child_late['status'], 'failed')
+                self.assertIn('child/export/cleanup', child_late['error'])
 
     def test_offline_import_guard_rejects_without_importing(self):
         with self.assertRaisesRegex(RuntimeError, 'forbids'):
