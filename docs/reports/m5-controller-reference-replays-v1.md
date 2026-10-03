@@ -1,0 +1,19 @@
+# M5 controller-reference replay v1: zero-row infrastructure failure
+
+The one frozen six-owner attempt at source `5d293bf` failed in its first original-checkpoint **actions** replay, before any numeric tick or lifecycle event comparison. The other five exact planned owners remain unattempted. All raw records, logs, source/SNP pins and review receipts are preserved in the [JSON evidence index](m5-controller-reference-replays-v1.json). This establishes no executable replay qualification, neural inference result, memory benefit or R2 completion.
+
+| Reference | Actions replay | Policy replay |
+| --- | --- | --- |
+| Original checkpoint | Failed at ready boundary 300; 0 rows compared | Unattempted |
+| Visible-goal/contact script | Unattempted | Unattempted |
+| Privileged teacher | Unattempted | Unattempted |
+
+The failed owner is `eeab6fac04a2437ea6cf383dbf0c0e88`. Its destination initial SNP was durably registered and matched the source under the full typed invariant guard, excluding only recorder identity, event prefix and execution mode. The recorder closed normally with status `completed`, phase `paused`, tick 300 and zero rows; the authoritative executable replay report is **failed**. Normal recorder cleanup does not convert the replay failure into success. No scheduled gate edit, sensor step, action, policy inference or new acquisition occurred.
+
+A retained NumPy-only audit reproduced the exact exception through the real `ready_guard`: `scripts/verify_memory_reference_replays.py:187` passed the JSON source path string directly into `artifacts._events`; `src/palimpsest/artifacts.py:108` joins a `Path` with `recording/events.jsonl` and raised `TypeError: unsupported operand type(s) for /: 'str' and 'str'`. Earlier ready checks passed. Reading the identical source with an explicit `Path` succeeds. Other traced helper callers already normalize paths or pass `Path`; the proposed fix is confined to this verifier call site, with no production API relaxation. Any future attempt requires separately frozen source and fresh controls/IDs; this failed output is not retried or rewritten.
+
+The local retained audit passed on its first execution in 6.187008828 seconds, rehashing all 557 scoped tracked/upstream/asset/source identity entries, original inputs, the registered SNP and exact initial preservation, failed/unattempted disposition, zero-row recording and three absent PID/start identities. No native/model import or replay occurred in that audit. Root independently verified failure disposition; its receipt SHA256 is `a6d8db6287c15487d03ccdb1642cbc15120595e5cd126ff58931dff512dfc375`. Root's initial control review incorrectly used a whitespace-sensitive elapsed assertion; its corrected AST review passed before GO with unchanged controls. Both review receipts are indexed. Neither review is a passed native replay audit.
+
+Outer supervision exited 1 after 41.035322045 seconds including 0.158477225 seconds cleanup. Before/after inventories are byte-identical, all three sampled non-launcher PID/start identities are absent, and there were no survivors, forced signals, watchdog messages or monitor errors. No retry, rescue, threshold change or held-out access occurred. The 742-row prospective cap included only 129 possible neural inference rows; **actual replayed and neural inference rows are both zero**.
+
+Immutable aggregate report SHA256: `d8d42735f60d8070d53978fcc7778445b096d54a3872aa4428a899e58f904bcb`. Outer report: `4f7f90619d77d8a2abb9943d4b1e19dae5f2366bddbb8634beebc3fabfd14b43`. Failed replay report: `e0bf9562449ee45622aaa1aa6e6fc2545cc015dc857a707b8a80f4ced2af6770`. Registered destination SNP: `04f52f63183fcf192010d05a64b84e313ff49fe165f237672ca1bf3db6185efa`. Separate count scopes are retained in JSON: thirteen complete output files / 1,466,628 bytes versus the broader source/control/review/audit evidence index. Earlier own-U null/negative outcomes and unequal reference information remain unchanged.

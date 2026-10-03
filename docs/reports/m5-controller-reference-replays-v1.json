@@ -1,0 +1,538 @@
+{
+  "version": 1,
+  "claim": "failed-six-reference-replay-attempt-before-first-comparison",
+  "source_commit": "5d293bf1356e46182676de407b6beaa3c961ae7d",
+  "producer_commit": "169e0c8ac75be713d9cda0bdd852b926ec1261cc",
+  "source_branch": "feat/memory-reference-replay",
+  "status": "reference_replay_unverified",
+  "operational_pass": false,
+  "qualification_claims": [],
+  "terminal_report": {
+    "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-reference-replay/runs/m5-controller-reference-replays-20261003/reference-replay-report.json",
+    "bytes": 41437,
+    "sha256": "d8d42735f60d8070d53978fcc7778445b096d54a3872aa4428a899e58f904bcb"
+  },
+  "outer_report": {
+    "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-reference-replay/runs/m5-reference-replay-launch-5d293bf/launch.json",
+    "bytes": 2020,
+    "sha256": "4f7f90619d77d8a2abb9943d4b1e19dae5f2366bddbb8634beebc3fabfd14b43"
+  },
+  "local_audit": {
+    "script": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-reference-replay/runs/m5-reference-replay-failure-audit-5d293bf/audit.py",
+      "bytes": 4649,
+      "sha256": "61f9e5a99ec2a744795d89208d9a5196062697d2a16167b4aa3a417ecc851f77"
+    },
+    "result": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-reference-replay/runs/m5-reference-replay-failure-audit-5d293bf/audit.json",
+      "bytes": 2073,
+      "sha256": "1af7f272bc0dec66356e68a6695aaa12e9f86a376024a2ad72aaaacd5c9b19f1"
+    },
+    "seconds": 6.187008827997488,
+    "status": "zero-row-failure-disposition-and-cause-confirmed",
+    "scope": "failure disposition and actual guard reproduction, no executable replay pass"
+  },
+  "root_review": {
+    "initial_failure": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/project-integration/runs/m5-reference-replay-root-control-review-5d293bf/initial-check-failure.json",
+      "bytes": 257,
+      "sha256": "7a20284531da576558fe253b4c9c697704564311f581c50622d4ed113b3c5ce0"
+    },
+    "corrected_review": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/project-integration/runs/m5-reference-replay-root-control-review-5d293bf/report.json",
+      "bytes": 878,
+      "sha256": "bbb06dc9c137978168a955058c280428d32db77b685012aa3ae72cbcefd588fe"
+    },
+    "failure_disposition": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/project-integration/runs/m5-reference-replay-root-control-review-5d293bf/failure-disposition.json",
+      "bytes": 1716,
+      "sha256": "a6d8db6287c15487d03ccdb1642cbc15120595e5cd126ff58931dff512dfc375"
+    },
+    "scope": "control review and failure disposition only; no passed native replay audit"
+  },
+  "counts": {
+    "planned_owners": 6,
+    "attempted_failed_owners": 1,
+    "unattempted_owners": 5,
+    "numeric_rows": 0,
+    "compared_ticks": 0,
+    "compared_events": 0,
+    "registered_initial_snapshots": 1,
+    "replayed_rows_prospective_cap": 742,
+    "neural_inference_rows_prospective_cap": 129,
+    "actual_neural_inference_rows": 0,
+    "frozen_identity_entries": 557,
+    "sampled_nonlauncher_pid_start_absent": 3,
+    "all_output_files": 13,
+    "all_output_bytes": 1466628,
+    "indexed_files": 64,
+    "indexed_bytes": 81571180
+  },
+  "runs": [
+    {
+      "run_id": "eeab6fac04a2437ea6cf383dbf0c0e88",
+      "reference_mode": "memory-reference-original-flynn",
+      "stage": "actions",
+      "status": "failed",
+      "supervisor": {
+        "schema_version": 1,
+        "status": "failed",
+        "timeout_seconds": 160,
+        "started_utc": "2026-10-03T02:07:10.014132+00:00",
+        "output": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-reference-replay/runs/m5-controller-reference-replays-20261003/runs/eeab6fac04a2437ea6cf383dbf0c0e88",
+        "returncode": 1,
+        "elapsed_seconds": 32.406883846997516
+      }
+    },
+    {
+      "run_id": "c577e243a712417d8942f495f2467aa3",
+      "reference_mode": "memory-reference-original-flynn",
+      "stage": "policy",
+      "status": "unattempted"
+    },
+    {
+      "run_id": "3f24ec3dfd7f406695f6ef15b8c9abcc",
+      "reference_mode": "memory-reference-sensor-only",
+      "stage": "actions",
+      "status": "unattempted"
+    },
+    {
+      "run_id": "475927fe4cdf476798c27a9737c1612c",
+      "reference_mode": "memory-reference-sensor-only",
+      "stage": "policy",
+      "status": "unattempted"
+    },
+    {
+      "run_id": "13101e8504b4496d84eb6905a347f233",
+      "reference_mode": "memory-reference-teacher",
+      "stage": "actions",
+      "status": "unattempted"
+    },
+    {
+      "run_id": "9dd01849e7f84f9089c929afdd0c8335",
+      "reference_mode": "memory-reference-teacher",
+      "stage": "policy",
+      "status": "unattempted"
+    }
+  ],
+  "source_unchanged": true,
+  "outer": {
+    "commit": "5d293bf1356e46182676de407b6beaa3c961ae7d",
+    "plan_sha256": "e688e6daa5d82b4b71532353708a660f2dd7cbcf58db91bcc3dfc3fd6baeafce",
+    "supervision": {
+      "schema_version": 1,
+      "status": "failed",
+      "timeout_seconds": 1055,
+      "started_utc": "2026-10-03T02:07:06.811946+00:00",
+      "output": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-reference-replay/runs/m5-reference-replay-launch-5d293bf/process",
+      "returncode": 1,
+      "elapsed_seconds": 38.175948938005604
+    },
+    "identities_unchanged": true,
+    "report_sha256": "d8d42735f60d8070d53978fcc7778445b096d54a3872aa4428a899e58f904bcb",
+    "result_status": "reference_replay_unverified",
+    "error": null,
+    "wall_seconds_including_cleanup": 41.03532204500516,
+    "aggregate_elapsed_pass": true,
+    "cleanup_seconds": 0.15847722500620876,
+    "observed_owner_count": 4,
+    "terminal_pid_start_checks": [
+      {
+        "pid": 660600,
+        "start_ticks": 8688008,
+        "pgid": 660599,
+        "role": "outer-verifier",
+        "run_id": null,
+        "start_identity_present": false
+      },
+      {
+        "pid": 660599,
+        "start_ticks": 8688008,
+        "pgid": 660599,
+        "role": "observed-descendant",
+        "run_id": null,
+        "start_identity_present": false
+      },
+      {
+        "pid": 660613,
+        "start_ticks": 8688328,
+        "pgid": 660613,
+        "role": "plan-bound-worker",
+        "run_id": "eeab6fac04a2437ea6cf383dbf0c0e88",
+        "start_identity_present": false
+      }
+    ],
+    "final_owned_processes": [],
+    "forced_signals": [],
+    "watchdog_signal_messages": [],
+    "monitor_errors": [],
+    "timeout_or_external_failure": true,
+    "storage_usage": {
+      "used_bytes": 2100586,
+      "files": 27,
+      "remaining_bytes": 2145383062,
+      "max_bytes": 2147483648,
+      "headroom_bytes": 67108864,
+      "min_free_bytes": 2147483648
+    },
+    "control_usage": {
+      "used_bytes": 633958,
+      "files": 14,
+      "remaining_bytes": 66474906,
+      "max_bytes": 67108864,
+      "headroom_bytes": 0,
+      "min_free_bytes": 2147483648
+    },
+    "operational_pass": false
+  },
+  "cause": {
+    "confirmed_by": "real retained ready_guard and artifacts._events, NumPy/read-only only",
+    "exception_type": "TypeError",
+    "message": "unsupported operand type(s) for /: 'str' and 'str'",
+    "call_site": "scripts/verify_memory_reference_replays.py:187",
+    "callee": "src/palimpsest/artifacts.py:108",
+    "source_path_type": "str",
+    "normalized_initial_snapshot_exact": true,
+    "initial_snapshot_sha256": "04f52f63183fcf192010d05a64b84e313ff49fe165f237672ca1bf3db6185efa",
+    "traceback": "Traceback (most recent call last):\n  File \"/home/utkarsh/Work/shraddha/brain/.worktrees/memory-reference-replay/runs/m5-reference-replay-failure-audit-5d293bf/audit.py\", line 29, in <module>\n    try:m.runner.ready_guard(run,job)\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/utkarsh/Work/shraddha/brain/.worktrees/memory-reference-replay/scripts/verify_memory_reference_replays.py\", line 187, in ready_guard\n    _compatible(artifacts._events(source['path']), events, reference.REFERENCES[job['reference_mode']][0], job['reference_mode'])\n                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/utkarsh/Work/shraddha/brain/.worktrees/memory-reference-replay/src/palimpsest/artifacts.py\", line 108, in _events\n    data = _read(run / \"recording/events.jsonl\", MAX_EVENTS)\n                 ~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~\nTypeError: unsupported operand type(s) for /: 'str' and 'str'\n",
+    "narrow_next_fix": "Wrap source path in Path at ready_guard _events call; preserve helper API"
+  },
+  "recording_vs_replay": {
+    "recording_status": "completed",
+    "recording_phase": "paused",
+    "recording_boundary": 300,
+    "replay_status": "failed",
+    "world_advance_events": 0,
+    "interpretation": "normal zero-row recorder cleanup is not replay qualification"
+  },
+  "limits": {
+    "r2_complete": false,
+    "held_out_generated_or_read": false,
+    "new_acquisition": false,
+    "retry": false,
+    "own_u_benefit": "prior negative/null results unchanged",
+    "unequal_reference_information": "unchanged"
+  },
+  "files": [
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-controller-references/runs/m5-controller-references-20261003/reference-report.json",
+      "bytes": 59704,
+      "sha256": "982c287ea591f3906b0218a0e52263fd38b75aa35148500b6078bd4d728ccb05"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-controller-references/runs/m5-controller-references-20261003/runs/54608f3879704eb4aa6eb794af4a0a48/recording/chunks/000000.npz",
+      "bytes": 6299892,
+      "sha256": "fecbedcd48f805986b842acb56f7b38ee6c2fdd5677fc12b065e5d7f270b23da"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-controller-references/runs/m5-controller-references-20261003/runs/54608f3879704eb4aa6eb794af4a0a48/recording/chunks/000001.npz",
+      "bytes": 6299892,
+      "sha256": "185fd69dc30670f9e8156929bc3881bdef75e3deb0f87a01cccbde79ae66045d"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-controller-references/runs/m5-controller-references-20261003/runs/54608f3879704eb4aa6eb794af4a0a48/recording/chunks/000002.npz",
+      "bytes": 6299892,
+      "sha256": "426a9ef85ed710ca44ee071b3889104e218818f57d23530797f6f0e703307c0f"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-controller-references/runs/m5-controller-references-20261003/runs/54608f3879704eb4aa6eb794af4a0a48/recording/chunks/000003.npz",
+      "bytes": 5512908,
+      "sha256": "f73d7aea30d89717adc30d8041ae1049dff24805227a1f1b3f6d89a085b39c45"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-controller-references/runs/m5-controller-references-20261003/runs/54608f3879704eb4aa6eb794af4a0a48/recording/events.jsonl",
+      "bytes": 300401,
+      "sha256": "8963a4d4fcb6bcc70f18a262c70e01add68f5d2b967bec3f9dd03b5d1d3b7974"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-controller-references/runs/m5-controller-references-20261003/runs/54608f3879704eb4aa6eb794af4a0a48/recording/manifest.json",
+      "bytes": 43553,
+      "sha256": "fc97cd9522459390015d738c1a4b341fc2d08efbde7969aa0df70880a1f1ec48"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-controller-references/runs/m5-controller-references-20261003/runs/54608f3879704eb4aa6eb794af4a0a48/reference-worker.json",
+      "bytes": 10883,
+      "sha256": "9834af417e9dd806365528a47f156e6257e58007deac275ccf06f580026f1318"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-controller-references/runs/m5-controller-references-20261003/runs/54608f3879704eb4aa6eb794af4a0a48/snapshots/index.json",
+      "bytes": 416,
+      "sha256": "46cfe179cae21c2e220d60352649f247a9448c914b200f9bee8f22aea5e22a12"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-controller-references/runs/m5-controller-references-20261003/runs/54608f3879704eb4aa6eb794af4a0a48/snapshots/initial.snp",
+      "bytes": 594768,
+      "sha256": "e182973a62bead2034e1023b6010fefba9f7f1d5b798c716a11ec27fbf64d420"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-controller-references/runs/m5-controller-references-20261003/runs/cc6b99347a864452b158a21437a3a029/recording/chunks/000000.npz",
+      "bytes": 6299636,
+      "sha256": "ca65020f3574fbc72403b55888b58f36658e20a86528c8ba7d77dea9ec1d8c28"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-controller-references/runs/m5-controller-references-20261003/runs/cc6b99347a864452b158a21437a3a029/recording/chunks/000001.npz",
+      "bytes": 6299636,
+      "sha256": "6db761d940addddb97bfa37bffc6256edef48bf0623ebd533db5b49491b7eccb"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-controller-references/runs/m5-controller-references-20261003/runs/cc6b99347a864452b158a21437a3a029/recording/chunks/000002.npz",
+      "bytes": 6299636,
+      "sha256": "3b44625519d39391d609ce60e7a335b4c431d1009593f8f0a14f9f8785f1c9e4"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-controller-references/runs/m5-controller-references-20261003/runs/cc6b99347a864452b158a21437a3a029/recording/chunks/000003.npz",
+      "bytes": 4332256,
+      "sha256": "ac6f43e521d56c8d7af0d58fd97c5691c820ed3c40b466608d33a19c6bb7692c"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-controller-references/runs/m5-controller-references-20261003/runs/cc6b99347a864452b158a21437a3a029/recording/events.jsonl",
+      "bytes": 413489,
+      "sha256": "a71a34e18948f0f76b87f2f3db5433cbd34123a5ccc9faad3072a928df71f02f"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-controller-references/runs/m5-controller-references-20261003/runs/cc6b99347a864452b158a21437a3a029/recording/manifest.json",
+      "bytes": 43539,
+      "sha256": "1633fe0b59ae3e7bf2f20b5f76bde3c0835fd9b520981c5f68f3eb5b2c4e14a3"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-controller-references/runs/m5-controller-references-20261003/runs/cc6b99347a864452b158a21437a3a029/reference-worker.json",
+      "bytes": 10880,
+      "sha256": "4bedc89889f1ceeb2374be1849212f946d954784feb2060b1e0eb7fc47ed5c30"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-controller-references/runs/m5-controller-references-20261003/runs/cc6b99347a864452b158a21437a3a029/snapshots/index.json",
+      "bytes": 413,
+      "sha256": "6589de64258109b0f61db8820ccc12f461ae5a402b0ccdf29e8e940a1c084d34"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-controller-references/runs/m5-controller-references-20261003/runs/cc6b99347a864452b158a21437a3a029/snapshots/initial.snp",
+      "bytes": 598183,
+      "sha256": "0e1dca845f5747ad1596ca6b071c9bc8a151002b5412553c81b8e07957171be1"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-controller-references/runs/m5-controller-references-20261003/runs/f1cefefc5e994f41a35ada0e8a5c2b18/recording/chunks/000000.npz",
+      "bytes": 6919538,
+      "sha256": "c3b9c43c8ad61e11914c79cf403fc70f7e41612a5e84516d92f3b4e68698619c"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-controller-references/runs/m5-controller-references-20261003/runs/f1cefefc5e994f41a35ada0e8a5c2b18/recording/chunks/000001.npz",
+      "bytes": 6919538,
+      "sha256": "397a8d06f2e4e00e46f14528283f4f4ff6fe2cbf0b7f76432764f9217ce834f2"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-controller-references/runs/m5-controller-references-20261003/runs/f1cefefc5e994f41a35ada0e8a5c2b18/recording/chunks/000002.npz",
+      "bytes": 6919538,
+      "sha256": "e0a84370e2a734474c8da9ea3fa21a7db3248554df2a7fbf60d15955708df454"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-controller-references/runs/m5-controller-references-20261003/runs/f1cefefc5e994f41a35ada0e8a5c2b18/recording/chunks/000003.npz",
+      "bytes": 6919538,
+      "sha256": "a94c9c8208428ac335e894ed654542ea00b43c5d473cf6f92f57bb8dce078284"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-controller-references/runs/m5-controller-references-20261003/runs/f1cefefc5e994f41a35ada0e8a5c2b18/recording/chunks/000004.npz",
+      "bytes": 220624,
+      "sha256": "472efaab94e67b6588eb70f20f03afaa5023be4930d2df01647b7f7e06d6fece"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-controller-references/runs/m5-controller-references-20261003/runs/f1cefefc5e994f41a35ada0e8a5c2b18/recording/events.jsonl",
+      "bytes": 441567,
+      "sha256": "17375df5a1414b34670acf2ba1feba0a8f2ccfd642cd8842535afb3c5bbc73e3"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-controller-references/runs/m5-controller-references-20261003/runs/f1cefefc5e994f41a35ada0e8a5c2b18/recording/manifest.json",
+      "bytes": 43606,
+      "sha256": "0301c90cd056e25dec71c85a7d43db5c458ed5429c39c0e9b649e85de2a020f2"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-controller-references/runs/m5-controller-references-20261003/runs/f1cefefc5e994f41a35ada0e8a5c2b18/reference-worker.json",
+      "bytes": 10885,
+      "sha256": "fc81eaadf78b0c525011033c5295f89e92a5e303c1609282d0b8d2758ab9c6e9"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-controller-references/runs/m5-controller-references-20261003/runs/f1cefefc5e994f41a35ada0e8a5c2b18/snapshots/index.json",
+      "bytes": 418,
+      "sha256": "b04f061507aabf5cde55e56f4a2e9079f406b3e04ba6099c66a705e931122f98"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-controller-references/runs/m5-controller-references-20261003/runs/f1cefefc5e994f41a35ada0e8a5c2b18/snapshots/initial.snp",
+      "bytes": 1152747,
+      "sha256": "50836512b963bed188a17d133367893d9f589204d9beec33d59f32b3ca87cd0b"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-reference-replay/runs/m5-controller-reference-replays-20261003/.palimpsest-storage.lock",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-reference-replay/runs/m5-controller-reference-replays-20261003/eeab6fac04a2437ea6cf383dbf0c0e88-job.json",
+      "bytes": 27526,
+      "sha256": "95695e70833b9817a96ac281f5994771ae5bf65148a84702aff313367edef5ce"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-reference-replay/runs/m5-controller-reference-replays-20261003/reference-replay-report.json",
+      "bytes": 41437,
+      "sha256": "d8d42735f60d8070d53978fcc7778445b096d54a3872aa4428a899e58f904bcb"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-reference-replay/runs/m5-controller-reference-replays-20261003/replay-plan.json",
+      "bytes": 215583,
+      "sha256": "e688e6daa5d82b4b71532353708a660f2dd7cbcf58db91bcc3dfc3fd6baeafce"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-reference-replay/runs/m5-controller-reference-replays-20261003/runs/eeab6fac04a2437ea6cf383dbf0c0e88/recording/events.jsonl",
+      "bytes": 16603,
+      "sha256": "116b09eb7e1b6f2f710e22601262287bf9b3952a075dd66bac16ba964b7ab0d4"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-reference-replay/runs/m5-controller-reference-replays-20261003/runs/eeab6fac04a2437ea6cf383dbf0c0e88/recording/manifest.json",
+      "bytes": 7252,
+      "sha256": "b3b60b9e72316c5769da28204f20852d4482ce097f81f5f9e0fe7e5087adbd02"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-reference-replay/runs/m5-controller-reference-replays-20261003/runs/eeab6fac04a2437ea6cf383dbf0c0e88/replay-report.json",
+      "bytes": 1961,
+      "sha256": "e0bf9562449ee45622aaa1aa6e6fc2545cc015dc857a707b8a80f4ced2af6770"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-reference-replay/runs/m5-controller-reference-replays-20261003/runs/eeab6fac04a2437ea6cf383dbf0c0e88/snapshots/index.json",
+      "bytes": 418,
+      "sha256": "55556197b5944e511476f1464ee12443304aef8cebff3de666028a907832fef8"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-reference-replay/runs/m5-controller-reference-replays-20261003/runs/eeab6fac04a2437ea6cf383dbf0c0e88/snapshots/initial.snp",
+      "bytes": 1152750,
+      "sha256": "04f52f63183fcf192010d05a64b84e313ff49fe165f237672ca1bf3db6185efa"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-reference-replay/runs/m5-controller-reference-replays-20261003/runs/eeab6fac04a2437ea6cf383dbf0c0e88/stderr.log",
+      "bytes": 1486,
+      "sha256": "cdb8daef16ed244e735f02b9eada1bf0fe17a8447caa7635146bd1566312ade6"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-reference-replay/runs/m5-controller-reference-replays-20261003/runs/eeab6fac04a2437ea6cf383dbf0c0e88/stdout.log",
+      "bytes": 927,
+      "sha256": "9a63746cfd03e7fe95a44285a3c5bd8a35c193bb9f3d38be6c8277c0894f0295"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-reference-replay/runs/m5-controller-reference-replays-20261003/runs/eeab6fac04a2437ea6cf383dbf0c0e88/supervisor.json",
+      "bytes": 355,
+      "sha256": "955e82293011fb85d7fc7963bd165be2dcc0edac8f532a1d0db4d560c8fc61b3"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-reference-replay/runs/m5-controller-reference-replays-20261003/runs/eeab6fac04a2437ea6cf383dbf0c0e88/worker-report.json",
+      "bytes": 330,
+      "sha256": "fc819a6aee039e4df8febac31219e01a78cd9687b60d412ea8bb6c6dc7e6d06e"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-reference-replay/runs/m5-reference-replay-failure-audit-5d293bf/audit.json",
+      "bytes": 2073,
+      "sha256": "1af7f272bc0dec66356e68a6695aaa12e9f86a376024a2ad72aaaacd5c9b19f1"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-reference-replay/runs/m5-reference-replay-failure-audit-5d293bf/audit.py",
+      "bytes": 4649,
+      "sha256": "61f9e5a99ec2a744795d89208d9a5196062697d2a16167b4aa3a417ecc851f77"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-reference-replay/runs/m5-reference-replay-launch-5d293bf/identity-after.json",
+      "bytes": 110615,
+      "sha256": "58370930ff47f3d80759ef4236efbd5ed47e144dbc48b6ec3e51099cfdf61d26"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-reference-replay/runs/m5-reference-replay-launch-5d293bf/identity-before.json",
+      "bytes": 110615,
+      "sha256": "58370930ff47f3d80759ef4236efbd5ed47e144dbc48b6ec3e51099cfdf61d26"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-reference-replay/runs/m5-reference-replay-launch-5d293bf/identity-prepared.json",
+      "bytes": 110615,
+      "sha256": "58370930ff47f3d80759ef4236efbd5ed47e144dbc48b6ec3e51099cfdf61d26"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-reference-replay/runs/m5-reference-replay-launch-5d293bf/launch-start.json",
+      "bytes": 1037,
+      "sha256": "d86057570a85e41f524ad7201c4fe83aa8c106e3ad2b87d6e8f2b50d1d071ec1"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-reference-replay/runs/m5-reference-replay-launch-5d293bf/launch.json",
+      "bytes": 2020,
+      "sha256": "4f7f90619d77d8a2abb9943d4b1e19dae5f2366bddbb8634beebc3fabfd14b43"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-reference-replay/runs/m5-reference-replay-launch-5d293bf/launch.py",
+      "bytes": 15189,
+      "sha256": "18aff66b59294a6aeec80c8aa7f3eb22a1ca0ba47047865291b08ec8e5f6a2e8"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-reference-replay/runs/m5-reference-replay-launch-5d293bf/launcher-console.log",
+      "bytes": 2020,
+      "sha256": "4f7f90619d77d8a2abb9943d4b1e19dae5f2366bddbb8634beebc3fabfd14b43"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-reference-replay/runs/m5-reference-replay-launch-5d293bf/ownership-samples.jsonl",
+      "bytes": 32370,
+      "sha256": "e0dbf5de0c92b75581b86dccc257a798461938073570364a656a16d12ed57c1b"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-reference-replay/runs/m5-reference-replay-launch-5d293bf/prepared-plan.json",
+      "bytes": 215583,
+      "sha256": "e688e6daa5d82b4b71532353708a660f2dd7cbcf58db91bcc3dfc3fd6baeafce"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-reference-replay/runs/m5-reference-replay-launch-5d293bf/prepared-v1.json",
+      "bytes": 2259,
+      "sha256": "1a873be6683b2d9667508060807cf3f4aa7e6c9fa2c6cb386c7b3676374f08b7"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-reference-replay/runs/m5-reference-replay-launch-5d293bf/prepared.json",
+      "bytes": 2259,
+      "sha256": "aa6efcc9a4247130afba0a40bd6f34c1f123d66d2955f805787fe4ea19e75036"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-reference-replay/runs/m5-reference-replay-launch-5d293bf/process/stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-reference-replay/runs/m5-reference-replay-launch-5d293bf/process/stdout.log",
+      "bytes": 145,
+      "sha256": "e18611d014bd10ad2f3ce6957054b931c5347640b326d9c974561c607dee300f"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-reference-replay/runs/m5-reference-replay-launch-5d293bf/process/supervisor.json",
+      "bytes": 320,
+      "sha256": "8d6e8477295ca2d28e70321272f06611bc4481c96d6fc95f4989a9451868a9c4"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-reference-replay/runs/m5-reference-replay-preparation-5d293bf/control-preflight.json",
+      "bytes": 1131,
+      "sha256": "892431386e4bb584f91e1d43c47b0b085f018393c503ac4177236bfe8c2eefa3"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-reference-replay/runs/m5-reference-replay-preparation-5d293bf/control-preflight.py",
+      "bytes": 5242,
+      "sha256": "e30b22a8c07b9c7c00d4ec329c28bc99fbd1ba9db3a44fd276b73868c4e453d5"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-reference-replay/runs/m5-reference-replay-preparation-5d293bf/prepared-plan.json",
+      "bytes": 215583,
+      "sha256": "e688e6daa5d82b4b71532353708a660f2dd7cbcf58db91bcc3dfc3fd6baeafce"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/project-integration/runs/m5-reference-replay-root-control-review-5d293bf/failure-disposition.json",
+      "bytes": 1716,
+      "sha256": "a6d8db6287c15487d03ccdb1642cbc15120595e5cd126ff58931dff512dfc375"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/project-integration/runs/m5-reference-replay-root-control-review-5d293bf/initial-check-failure.json",
+      "bytes": 257,
+      "sha256": "7a20284531da576558fe253b4c9c697704564311f581c50622d4ed113b3c5ce0"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/project-integration/runs/m5-reference-replay-root-control-review-5d293bf/report.json",
+      "bytes": 878,
+      "sha256": "bbb06dc9c137978168a955058c280428d32db77b685012aa3ae72cbcefd588fe"
+    }
+  ]
+}

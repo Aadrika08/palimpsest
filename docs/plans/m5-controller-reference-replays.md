@@ -1,9 +1,11 @@
 # M5: six fixed s24 controller-reference executable replays
 
-Status: source/control preparation only. No replay owner or held-out case is
-authorized by this document. The completed six-reference producer gate and all
-prior memory results remain immutable. This checks replay compatibility; it
-does not create new navigation trials, memory benefit evidence or R2 completion.
+Status: the one frozen v1 attempt at `5d293bf` failed in the first ready guard
+before any comparison; five owners remain unattempted. See the [retained failure
+evidence](../reports/m5-controller-reference-replays-v1.md). The original protocol
+below is historical; it authorizes no retry, later replay gate or held-out access.
+The completed reference producer and earlier null/negative own-U results remain
+unchanged. Replay compatibility and R2 completion are not established.
 
 Use the three successful s24/local_cue/change recordings from producer
 `169e0c8ac75be713d9cda0bdd852b926ec1261cc`, under the unchanged physical
