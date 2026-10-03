@@ -16,8 +16,8 @@ exit0 with all six fits complete; independent checkpoint auditing passes first.
 The [six-model publication](reports/m7-navigation-training-v2.md), `041434d`,
 and exact development index are integrated after publication review.
 Remaining-09 controls pass independent review on `cb13db9`; its separately bounded
-admission drains session `81740` exit0 with twelve completed owners; retained
-verification remains pending. R3 stays open.
+admission drains session `81740` exit0 with twelve completed owners; independent
+retained verification passes after a receipt-schema checker correction. R3 stays open.
 
 Remaining-06 comparison completes once on frozen `016948b`, bringing independently
 audited development coverage to **32/48 cells**: forty owners, 4,687 neural rows,
@@ -221,7 +221,7 @@ remains ineligible.
 - Mechanism: pinned upstream model/environment; allowlisted controller inputs; one mutable-runtime owner; complete native, policy, application and RNG snapshots. Recorded E fitting and U-only swaps preserve declared invariant hashes. Male controllers use separately trained fixed CPU assets and an authored sensor mapping.
 - Missing: M5 counterbalanced/held-out transfer; learned M6 puck success and held-out evaluation; M7 closed-loop qualification; M8 physical work; independent M9 operation, exhibition duration and physical artwork; final M10 handoff.
 - Unknown: original checkpoint training lineage, full-model Pi performance, physical stopping limits and account quota (telemetry unavailable).
-- Next action: implement and review the frozen fresh-development admission/runner using the six published, independently audited navigation models. Training session `70035` drains exit0; retained audit passes first. The earlier zero-model startup refusal remains unchanged, and held-out stays locked. Remaining-09 controls pass eight root fixtures and full preflight; its twelve-owner admission has drained exit0; audit retained outcomes before comparison. Memory coverage is 36/48; failed 07 is neither retried nor given longer deadlines. The existing paired readout covers its historical 24-cell subset. Scoped exploration, homing and measured adaptation are met; learned puck keeps M6 open, automatic retraining stops after both negative development studies, and held-out stays locked. Physical qualification and independent exhibition operation remain open.
+- Next action: implement and review the frozen fresh-development admission/runner using the six published, independently audited navigation models. Training session `70035` drains exit0; retained audit passes first. The earlier zero-model startup refusal remains unchanged, and held-out stays locked. Remaining-09 controls pass eight root fixtures and full preflight; its twelve-owner admission and retained audit pass; publish those results before separate comparison controls. Memory coverage is 36/48; failed 07 is neither retried nor given longer deadlines. The existing paired readout covers its historical 24-cell subset. Scoped exploration, homing and measured adaptation are met; learned puck keeps M6 open, automatic retraining stops after both negative development studies, and held-out stays locked. Physical qualification and independent exhibition operation remain open.
 
 The [prospective held-out outline](plans/m5-heldout-proposal.md) specifies the
 reserved 64–71 matrix without opening it. Source/profile freeze and all 48 audited
@@ -314,7 +314,18 @@ SHA `b8bc3335b4c4699a20146b37809202fba558b238a0fbe76fcf071cdffce86b63`.
 The fixed launcher AST substitutions and unchanged encloser match accepted 08;
 failed 07 identities remain reserved. Fresh startup readmission passes with
 26,019,684,352 free bytes, unchanged 603 identities and absent output/start paths;
-actual admission starts once in session `81740`, with outcomes pending.
+actual admission starts once in session `81740` and drains exit0: twelve normal
+owners, 1,204 actual rows, four neural calls and twelve snapshots. Normal enclosing
+time is 346.458 s; full enclosing drain/inventory is 349.566 s. Fourteen sampled
+nonlauncher identities plus the launcher are absent; the HOME lease is free.
+Root retained verification checks 116 pins and independently reconstructs all
+four one-tick readouts, passing in 10.484 s (10.898 s supervised). Its prepared
+checker initially assumed previous-batch terminal receipt field names; the first
+script/audit/process and the three-field correction are retained. The study and
+terminal receipt ran once and remain unchanged. Corrected receipt:
+`runs/memory-remaining-09-root-audit-cb13db9/audit.json`,
+SHA `f3bf3f6adcd3e44c0fa978d54764a4242ca784f23c039e3ba25bb94fc9a5fd32`.
+Publication precedes separate comparison controls; accepted coverage remains 36/48.
 
 Paired navigation trainer `6feade9` is integrated after eleven independent root
 pure checks pass first in 1.698 s. It adds only the named trainer/test, preserving
