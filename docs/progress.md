@@ -27,7 +27,8 @@ eighteen synthetic checks pass; its first syntax failure remains retained. The
 combined regression passes all 802 enabled tests without skips. Remaining-10
 admission drains session `71492` exit0; independent retained and publication
 reviews pass first and evidence `9e0d406` is integrated. Its forty-owner comparison
-is being prepared. Navigation metadata admission v1 stops before candidate loading
+passes independent controls and startup admission; its one frozen invocation is
+active in session `51199`. Navigation metadata admission v1 stops before candidate loading
 on this worktree's uninitialized pinned upstream submodule; the refusal is retained.
 Exact dependency setup and fresh v2 admission pass for all six fixed models, with
 independent evidence review. Development launch controls are being prepared; no
