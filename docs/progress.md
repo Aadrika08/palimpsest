@@ -241,7 +241,7 @@ remains ineligible.
 - Mechanism: pinned upstream model/environment; allowlisted controller inputs; one mutable-runtime owner; complete native, policy, application and RNG snapshots. Recorded E fitting and U-only swaps preserve declared invariant hashes. Male controllers use separately trained fixed CPU assets and an authored sensor mapping.
 - Missing: M5 counterbalanced/held-out transfer; learned M6 puck success and held-out evaluation; M7 closed-loop qualification; M8 physical work; independent M9 operation, exhibition duration and physical artwork; final M10 handoff.
 - Unknown: original checkpoint training lineage, full-model Pi performance, physical stopping limits and account quota (telemetry unavailable).
-- Next action: readmit all six frozen navigation bundles and review separate development controls. Binding `29aa8f8` and runner `e3f9a47` are integrated; eighteen synthetic checks and the 802-test enabled combined regression pass. The initial runner syntax failure is retained. Training session `70035` drains exit0; retained audit passes first. The earlier zero-model startup refusal remains unchanged, and held-out stays locked. Remaining-09 controls pass eight root fixtures and full preflight; its twelve-owner admission, retained audit and publication review pass. Separate comparison controls and the one fixed invocation pass, with first-pass raw/outcome audits; its publication review passes first and `a704ba9` is integrated. Remaining-10 admission and both retained/publication reviews pass first; `9e0d406` is integrated. Prepare its separate forty-owner comparison controls; no actual comparison yet. Memory coverage is 40/48; failed 07 is neither retried nor given longer deadlines. The existing paired readout covers its historical 24-cell subset. Scoped exploration, homing and measured adaptation are met; learned puck keeps M6 open, automatic retraining stops after both negative development studies, and held-out stays locked. Physical qualification and independent exhibition operation remain open.
+- Next action: readmit all six frozen navigation bundles and review separate development controls. Binding `29aa8f8` and runner `e3f9a47` are integrated; eighteen synthetic checks and the 802-test enabled combined regression pass. The initial runner syntax failure is retained. Training session `70035` drains exit0; retained audit passes first. The earlier zero-model startup refusal remains unchanged, and held-out stays locked. Remaining-09 controls pass eight root fixtures and full preflight; its twelve-owner admission, retained audit and publication review pass. Separate comparison controls and the one fixed invocation pass, with first-pass raw/outcome audits; its publication review passes first and `a704ba9` is integrated. Remaining-10 admission and both retained/publication reviews pass first; `9e0d406` is integrated. Its separate forty-owner comparison passes independent controls and startup admission; the one frozen invocation is active in session `51199`. No comparison result is yet admitted. Memory coverage is 40/48; failed 07 is neither retried nor given longer deadlines. The existing paired readout covers its historical 24-cell subset. Scoped exploration, homing and measured adaptation are met; learned puck keeps M6 open, automatic retraining stops after both negative development studies, and held-out stays locked. Physical qualification and independent exhibition operation remain open.
 
 The [single completion proposal](plans/m5-remaining-07-completion-proposal.md)
 has a read-only peer review and is pending an explicit user amendment to the
@@ -451,7 +451,25 @@ The paired-change lower gate is blocked but unobserved at tick300, so its stale
 open expectation remains; empty-U misses it. Null abstains and no-event has zero
 selector activity. These are admission readouts, not task/goal qualification.
 Comparison coverage remains 40/48 while its final originally planned comparison
-is prepared. Failed 07 and held-out remain open.
+is running. Failed 07 and held-out remain open.
+
+Remaining-10 comparison preparation on clean `9e0d406` passes all eight producer
+fixtures and one preflight. Root preparation retains two mistakes: an assumed
+non-null historical failure map, then an absent replacement target; the latter
+was followed by an attempted missing checker file (return2). Neither ran a fixture,
+preflight or runtime owner. After narrow checker-only corrections, all eight root
+fixtures pass in 6.377 s and full preflight in 8.740 s (15.271 s supervised).
+Launcher AST matches accepted09 after declared fixed substitutions; the encloser
+is byte-identical. All 609 identities and 120 inputs match; forty fresh owner IDs
+are disjoint from 818 prior, including every failed07 planned ID. Receipt:
+`runs/memory-remaining-10-comparison-control-root-review-9e0d406/audit.json`, SHA-256
+`dd0b45b206c2496e864086e8de4ed8e041d178766ea6ba605327c87effed4f7f`.
+Fresh startup admission passes in 2.518 s with unchanged controls/identities,
+fresh output paths, 25,460,350,976 free bytes and the existing HOME writer fd
+available/released. Startup receipt SHA-256
+`076e40e71fc025f0e51acebe72c9b5f147735779e19826b8cf4245c1a10e02b9`.
+The single frozen comparison invocation is active in session `51199`; no result,
+cleanup or qualification is claimed before its actual drain and raw review.
 
 The teacher-free navigation evaluator `e3f9a47` adds exactly the runner and its
 synthetic tests. Eighteen focused checks pass in 1.366 s without skips after a
