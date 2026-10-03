@@ -1,10 +1,11 @@
-# Headless puck student: prospective native mechanism slice
+# Headless puck student: mechanism and development status
 
 This source slice reuses the admitted learning-v2 inputs and the
 [three audited fits](../reports/m6-puck-training-v2.md). It implements a fixed
 research student in the existing standalone owner. No Engine, worker, controller
-registry or UI integration is included. The four-owner native mechanism gate,
-closed-loop development and held-out evaluation have not run.
+registry or UI integration is included. The [four-owner native/replay mechanism](../reports/m6-puck-student-mechanism.md)
+passed on `6f1fda9`. The subsequent [fixed development gate](../reports/m6-puck-student-development.md)
+failed on `77f4d49`: all three models scored 0/4. Held-out evaluation remains locked.
 
 The [model manifest](m6-puck-student-models-v1.json) pins all three reports,
 protocols and numeric checkpoints from producer `82e2bd9`. The
@@ -86,12 +87,13 @@ before restore. A separate fixture calls the real `snapshots.restore` and
 RNG staging before a fake native-allocation sentinel. It is not native restore
 qualification. The preexisting teacher/mechanics paths retain their fixtures.
 
-After source review, the four-owner actual mechanism gate must be separately
-reviewed and audited. Only then may a development runner be proposed for the
-unchanged **6100–6103 × models 21/22/23** plan: twelve matched-start owners,
+The reviewed mechanism was followed by the unchanged
+**6100–6103 × models 21/22/23** development plan: twelve matched-start owners,
 one natural episode ≤600 ticks, **at least 3/4 goals for every model**, all results
 reported, no winning-seed selection, tuning or replacement. Existing bounds remain
 1200 s internal / TERM 1260+15 / 1280 s supervisor, 3 GiB stage and 160 MiB per owner.
+All twelve development episodes ended at their 600-tick time limit with no goals;
+this failed admission does not authorize another run or weaken the gate.
 Held-out 6200–6207 remains locked. Public task/UI integration is explicit remaining
 project work after successful fixed development, not supplied by this headless slice.
 
