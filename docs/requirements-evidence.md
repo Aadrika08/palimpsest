@@ -180,7 +180,9 @@ transition boundary, with that failure preserved. Fixed development, UI and
 learned manipulation remain unqualified.
 
 The [frozen-observation diagnostic](plans/m5-frozen-observation-diagnostic.md)
-is integrated at `9707cf6`; all 45 focused root checks pass in 10.613 s. A
+is integrated with the bounded atomic terminal-report correction at `5d1b2b8`;
+all 46 focused root checks pass in 10.616 s. The first real-file control fixtures
+exposed create-only late report updates; the failure and narrow fix are retained. A
 read-only source audit reconstructs 1,039 historical intervals without inference
 or native execution. This is source/fixture evidence; actual diagnostic and
 held-out R2 outcomes remain pending.
