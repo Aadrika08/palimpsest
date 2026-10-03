@@ -1,0 +1,65 @@
+{
+  "before_after_inventory_sha256": "422aba8586643dbd8efca9a7228f3dfd2bd83ce95cbb0d93cf115d31406c6d9e",
+  "data_manifest": {
+    "path": "runs/m7-recovery-learning-data-development-7d5fc1f-20261003/data-manifest.json",
+    "sha256": "402d2676668e88bb998457ba0a9ea92f8a4c2a27b92a19d67ad76b80e3a67014"
+  },
+  "id": "male-recovery-executed-target-development-v1",
+  "model_inputs": {
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/task-phases/data/assets/flynn/male-reduced-v1/source-graph.json": "5aba0fef99afba666b88e40fc535091454e46d9330580d9280b203e8da0abac0",
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/task-phases/data/manifests/malecns-reduced-neighborhood-v1.json": "7a205342b4ada8ab8b78d6ca866c61735003e601531c65a1c1b6c819df00026f",
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/task-phases/upstream/fly-gym/models/connectome_rnn_model.py": "707cba79e7bf92923618ccc596e3d7a2d779edc02a970b0949f6dd3c0d28ae80"
+  },
+  "pairs": [
+    {
+      "directory": "runs/m7-recovery-learning-training-development-19d275d-20261003/bundles/seed-10",
+      "report_sha256": "60ae08b60e938fc9a2de600de785911e4c988ea98059f0f9ab3b1d59f525d47e",
+      "training_seed": 10
+    },
+    {
+      "directory": "runs/m7-recovery-learning-training-development-19d275d-20261003/bundles/seed-11",
+      "report_sha256": "3dd18f811b2459a314491d20c1644a19f5b6b649be55f95004778b11b8be6151",
+      "training_seed": 11
+    },
+    {
+      "directory": "runs/m7-recovery-learning-training-development-19d275d-20261003/bundles/seed-12",
+      "report_sha256": "08fea1c20ae301cca839c3babe97b6617a5d919bf617865f2e028866a35c15e0",
+      "training_seed": 12
+    }
+  ],
+  "producer_root": "../task-phases",
+  "qualification_claims": [],
+  "runtime": {
+    "numpy": "2.2.5",
+    "python": "3.11.15",
+    "torch_distribution": "2.9.0"
+  },
+  "training_source_code": {
+    "reader": {
+      "adapter_sha256": "2b5c7b78e84a782838cf51b5b4682ea6c3ab4bbb5c11180984ccdc8f03cc06ca",
+      "current_reader_sources": {
+        "scripts/collect_male_recovery.py": "17d948322bbf124c7eeee3d55e4034e12c4b3436d933dab1df4245f278c46f60",
+        "src/palimpsest/artifacts.py": "7a5f4a1080abffe82f8296468c6d8ca3a2b975277b96925fdf75bb9ac1ed034a",
+        "src/palimpsest/body_profile.py": "796df9ab2a109606432c7a97bfbea5f58ab7acc75768e638b5b8731a390cbb54",
+        "src/palimpsest/male_model.py": "9327bca1db3cbeda7aab8b222ccfa59daef4e01f3f1b4689f83009955d970cad",
+        "src/palimpsest/male_research.py": "a3fb8f64937c509351cc7cbd120bf86c0b543fd4e6531d957a7204a6da1df8ce",
+        "src/palimpsest/records.py": "c4be6f1699c1d8550a7f2db2979f7f9f18196ac986eef2aefe3ba665cae99ac3"
+      }
+    },
+    "trainer": {
+      "scripts/train_male_recovery.py": "1b828d68daf4db6186d5ccc0804d35ce6a8918279cb74834d16291f6d5679877",
+      "scripts/train_male_reduced.py": "75d3fc1fd71bab6b749c158a58fe9d802fc10253f4416d1c8f5739a2bdf4ff4a",
+      "uv.lock": "8a7a880d020c1907e221575fda65642241f809fc628a55381f1b6137bff1b732"
+    }
+  },
+  "training_source_commit": "19d275d7ba3d8c7da642a4b41d3a6a8f2d5c720f",
+  "training_supervisor": {
+    "path": "runs/m7-recovery-training-control-19d275d/outer-supervisor/supervisor.json",
+    "sha256": "48d393bb43be2e5f03adaf22409d01a349c1fa230792a1c314d1c09134492bd3"
+  },
+  "training_terminal": {
+    "path": "runs/m7-recovery-training-control-19d275d/terminal.json",
+    "sha256": "2acf7119732c11a30f4a3e86784f169a53402a3ca7b378e5219bd3fc30a544b6"
+  },
+  "version": 1
+}

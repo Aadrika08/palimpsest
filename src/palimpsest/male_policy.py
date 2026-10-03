@@ -210,6 +210,13 @@ def load_policy(directory, variant, *, expected_report_sha256, graph_path, graph
     if device != 'cpu' or type(seed) is not int or not 0 <= seed < 2**31:
         raise ValueError('male policy requires explicit CPU and a bounded integer seed')
     graph, payload, provenance = _bundle(directory, variant, expected_report_sha256, graph_path, graph_manifest, research_seed=research_seed)
+    return _load_checked_policy(graph, payload, provenance, cell_path, device=device, seed=seed)
+
+
+def _load_checked_policy(graph, payload, provenance, cell_path, *, device='cpu', seed=0):
+    """Shared tensor admission only; caller must already validate its bundle."""
+    if device != 'cpu' or type(seed) is not int or not 0 <= seed < 2**31:
+        raise ValueError('male policy requires explicit CPU and a bounded integer seed')
     _check_archive(payload)
     model = make_model(graph, cell_path, seed)
     import torch

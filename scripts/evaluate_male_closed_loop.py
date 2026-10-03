@@ -241,12 +241,24 @@ def inventory(run):
 
 
 def evaluate(args):
+    return _evaluate(args)
+
+
+def evaluate_recovery(args):
+    """Named trusted recovery entrypoint; no held-out route or public profile flag."""
+    if getattr(args, 'research_stage', None) != 'dev':
+        raise ValueError('Recovery research development only; held-out remains locked')
+    from palimpsest import male_recovery_research
+    return _evaluate(args, male_recovery_research)
+
+
+def _evaluate(args, research=None):
     root, assets, output = args.repo.resolve(), args.assets.resolve(), artifacts._safe_path(args.output)
     stage = getattr(args, 'research_stage', None)
     settings = dict(PROTOCOL)
-    research = None
     if stage is not None:
-        from palimpsest import male_research as research
+        if research is None:
+            from palimpsest import male_research as research
         frozen = research.protocol(root)
         if stage not in ('dev', 'held_out') or not args.research_manifest or not args.research_manifest_sha256:
             raise ValueError('research evaluation requires explicit stage and frozen model manifest')
