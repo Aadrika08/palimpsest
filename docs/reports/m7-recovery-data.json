@@ -1,0 +1,363 @@
+{
+  "adapter_sha256": "2b5c7b78e84a782838cf51b5b4682ea6c3ab4bbb5c11180984ccdc8f03cc06ca",
+  "bounds": {
+    "aggregate_bytes": 16777216,
+    "control_sources_bytes": 65536,
+    "failure_bytes": 4194304,
+    "import_record_bytes": 65536,
+    "inventory_bytes_each": 1048576,
+    "invocation_bytes": 65536,
+    "launcher_console_bytes": 65536,
+    "manifest_or_pending_bytes": 4194304,
+    "min_free_bytes": 1073741824,
+    "native_log_bytes_each": 1048576,
+    "preflight_reserved_bytes": 15990784,
+    "terminal_bytes": 1048576
+  },
+  "cleanup": {
+    "forced_signals": [],
+    "observed_owned_processes": [
+      {
+        "pid": 639219,
+        "start_ticks": 8244442
+      }
+    ],
+    "sample_errors": [],
+    "sampler_stopped": true,
+    "scope": "finite .25 s sampling, PID/start recheck before owned containment; not universal transient-process proof",
+    "survivors": []
+  },
+  "counts": {
+    "dev": 1228,
+    "held_out": 0,
+    "train": 2117
+  },
+  "evidence": {
+    "after": {
+      "bytes": 127458,
+      "path": "runs/m7-recovery-data-control-7d5fc1f/after.json",
+      "sha256": "9839697a7b5e0916b847b3028635d872056d6550c5d538614725341673d787b0"
+    },
+    "before": {
+      "bytes": 127458,
+      "path": "runs/m7-recovery-data-control-7d5fc1f/before.json",
+      "sha256": "9839697a7b5e0916b847b3028635d872056d6550c5d538614725341673d787b0"
+    },
+    "final_launcher_console": {
+      "bytes": 491,
+      "path": "runs/m7-recovery-data-control-7d5fc1f/launcher-console.log",
+      "sha256": "a7c1bdf69bf5210e430ff90ab0e6ae4a57b446c16c4ba74c6104b6c93b6828fa"
+    },
+    "guard": {
+      "bytes": 2961,
+      "path": "runs/m7-recovery-data-control-7d5fc1f/guarded_prepare.py",
+      "sha256": "ee11e30eb62f06ac535727abdc0b9d299f1b92633ea221b7ff1496e814a6cd12"
+    },
+    "import_check": {
+      "bytes": 248,
+      "path": "runs/m7-recovery-learning-data-development-7d5fc1f-20261003/import-check.json",
+      "sha256": "9e053eab55ce5481ff62b34dd6cbcd16ef021abb82f8321d179a4920328ffc1d"
+    },
+    "inventory": {
+      "bytes": 6064,
+      "path": "runs/m7-recovery-data-control-7d5fc1f/inventory.py",
+      "sha256": "ec0a88ec1a439054d9e0af824f4e5e2225c8d1e1c137abc5a9c3c39def05cf45"
+    },
+    "invocation": {
+      "bytes": 2111,
+      "path": "runs/m7-recovery-data-control-7d5fc1f/invocation.json",
+      "sha256": "fa366f9ac2ca6259b85df03b4abdbedb63530967fce53b5605b013e63bc96014"
+    },
+    "launcher": {
+      "bytes": 8546,
+      "path": "runs/m7-recovery-data-control-7d5fc1f/launch.py",
+      "sha256": "aca4bba62b4dd00bab5a678bad9ffbe857cb1a275581685020635df8c12d04a0"
+    },
+    "manifest": {
+      "bytes": 101377,
+      "path": "runs/m7-recovery-learning-data-development-7d5fc1f-20261003/data-manifest.json",
+      "sha256": "402d2676668e88bb998457ba0a9ea92f8a4c2a27b92a19d67ad76b80e3a67014"
+    },
+    "own_audit": {
+      "bytes": 3977,
+      "path": "runs/m7-recovery-data-control-7d5fc1f/audit.json",
+      "sha256": "85e0f9fdf656d37bd7b4687ab6b96b543d226f62cbd54c44c70fe31233a6d99a"
+    },
+    "own_audit_script": {
+      "bytes": 5400,
+      "path": "runs/m7-recovery-data-control-7d5fc1f/audit.py",
+      "sha256": "90ee192079efc09370a73a6d8cce870e422ccbb543be03d50fbca235e042959e"
+    },
+    "root_audit": {
+      "bytes": 4435,
+      "path": "runs/m7-recovery-data-control-7d5fc1f/root-audit.json",
+      "sha256": "f55c9f5e11417470716e1e4f96aee34b78bdb3c4e28098e549b46813100f91ae"
+    },
+    "root_audit_script": {
+      "bytes": 6079,
+      "path": "runs/m7-recovery-data-control-7d5fc1f/root-audit.py",
+      "sha256": "eefcc3a5e55d35dbae6009feb475f626be3c8a346fd1aebee59d53b89fbd11e2"
+    },
+    "root_launch_review": {
+      "bytes": 805,
+      "path": "runs/m7-recovery-data-control-7d5fc1f/root-review.json",
+      "sha256": "54cf55192773defc11843ffe4ed2799769d08d5095c7988646ff7a50cad262ef"
+    },
+    "stderr": {
+      "bytes": 0,
+      "path": "runs/m7-recovery-data-control-7d5fc1f/outer-launch/stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "stdout": {
+      "bytes": 0,
+      "path": "runs/m7-recovery-data-control-7d5fc1f/outer-launch/stdout.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "supervisor": {
+      "bytes": 313,
+      "path": "runs/m7-recovery-data-control-7d5fc1f/outer-launch/supervisor.json",
+      "sha256": "68ec03f8ecf8dad48dc5de6764525455335fb83a88dafa7c2e22c519527e0d2b"
+    },
+    "terminal": {
+      "bytes": 3492,
+      "path": "runs/m7-recovery-data-control-7d5fc1f/terminal.json",
+      "sha256": "1fed68193ac9977f60b05665a9f7e0f3529388a0f055ad50df3375a204640424"
+    }
+  },
+  "import_check": {
+    "denied_attempts": [],
+    "guard_sha256": "ee11e30eb62f06ac535727abdc0b9d299f1b92633ea221b7ff1496e814a6cd12",
+    "imported_forbidden": [],
+    "scope": "Fresh interpreter; guard remains active through publication; no Torch/MuJoCo module imports"
+  },
+  "inventories": {
+    "after_sha256": "9839697a7b5e0916b847b3028635d872056d6550c5d538614725341673d787b0",
+    "before_sha256": "9839697a7b5e0916b847b3028635d872056d6550c5d538614725341673d787b0",
+    "raw": 180,
+    "tracked": 350,
+    "unchanged": true,
+    "upstream": 122
+  },
+  "limitations": [
+    "Data preparation only; no fitting, learned capability or causal improvement established.",
+    "Right-censored paused sources preserve all actual prefix targets; expert targets differ in42 total rows.",
+    "Hidden32/32/3 carry is a preregistered trainer contract, not executed training evidence.",
+    "V1/V2 recovery failures remain failed; later driving is deliberately censored.",
+    "Held-out data unopened; existing v2/production loaders unchanged.",
+    "PID/start sampling finite; no universal transient-process coverage."
+  ],
+  "manifest_sha256": "402d2676668e88bb998457ba0a9ea92f8a4c2a27b92a19d67ad76b80e3a67014",
+  "own_audit": {
+    "numeric_rows": 3345,
+    "raw_files": 180,
+    "scope": "Own audit rehashes raw evidence and checks all actual targets/cursors/prefixes. Root independent audit separately reconstructs every RGB/sensor feature and full feature-target digest; no fitting/Torch/native imports.",
+    "seconds": 3.8624829329928616,
+    "status": "passed"
+  },
+  "protocol_sha256": "091c4e98bf8bc4124383673783a21f5687112946ffeaa54c8a70c41e968f2b28",
+  "qualification_claims": [],
+  "recoveries": [
+    {
+      "actual_reverse_targets": 45,
+      "ending": "right_censored_coverage_complete",
+      "expert_action_differences": 21,
+      "run_id": "005da65868a9400281b05aa7a3cba658",
+      "ticks": 67,
+      "windows": [
+        32,
+        32,
+        3
+      ]
+    },
+    {
+      "actual_reverse_targets": 45,
+      "ending": "right_censored_coverage_complete",
+      "expert_action_differences": 21,
+      "run_id": "2a24577348cc4d259fc80f48e3286beb",
+      "ticks": 67,
+      "windows": [
+        32,
+        32,
+        3
+      ]
+    }
+  ],
+  "root_audit": {
+    "checks": [
+      {
+        "feature_target_sha256": "2a52118624ce9031c18a3f546eb1ea75045e428b14f35cec961ed5dd8b1cc764",
+        "run_id": "af159322f4054a4f8929bc51f936a23a",
+        "split": "train",
+        "ticks": 277
+      },
+      {
+        "feature_target_sha256": "09b19ddd3d0221ecbd3b9194fe94142c903368cadc6261238f62285c754ab142",
+        "run_id": "94049f618c9b438190339242e42b6394",
+        "split": "train",
+        "ticks": 182
+      },
+      {
+        "feature_target_sha256": "a3ec1fbe9d918e0316e63b0a8526b8b8c5d056d91499b744bd09ee56e9fc7dae",
+        "run_id": "226c734f06da4cb08c7c56545b998402",
+        "split": "train",
+        "ticks": 315
+      },
+      {
+        "feature_target_sha256": "49ae19865667f51eda68a90b97e2e103dc0daffef56a45ce3791ea36b549b826",
+        "run_id": "7ea32277f1d74cd39ee51132f8a168f1",
+        "split": "train",
+        "ticks": 245
+      },
+      {
+        "feature_target_sha256": "5580ce1ec6733d2808abf091a643a931bbf39542b0635091004275bdd6e8a7a2",
+        "run_id": "86545ca2510740afb6d4bf9214681d19",
+        "split": "train",
+        "ticks": 199
+      },
+      {
+        "feature_target_sha256": "612d601aa1523e9ab14a42bc66a976ec57c8a739d2a331439d6abe1e59917b98",
+        "run_id": "27ac855f78084953bbed3a2d4c007447",
+        "split": "train",
+        "ticks": 265
+      },
+      {
+        "feature_target_sha256": "5674bdd916e7f302edbf6dfdee90b8e005228bb6780f8291353e64defc6adecc",
+        "run_id": "0c9b563cbe144d0d89b1d50872476c98",
+        "split": "train",
+        "ticks": 243
+      },
+      {
+        "feature_target_sha256": "881edfc68ac43e9478c13f9c5c9a25be386b9c3ef5085a9a9646456f107cd2ee",
+        "run_id": "32547bb3e6f0470aaac636a51384d7bc",
+        "split": "train",
+        "ticks": 257
+      },
+      {
+        "actual_targets_preserved": true,
+        "ending": "right_censored_coverage_complete",
+        "expert_target_differences": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20
+        ],
+        "feature_target_sha256": "d9e492fa218a1da5cd16077fa1ead4b4dc02c46d1e9e5d2622064caf7ad32037",
+        "run_id": "005da65868a9400281b05aa7a3cba658",
+        "split": "train",
+        "ticks": 67,
+        "windows": [
+          32,
+          32,
+          3
+        ]
+      },
+      {
+        "actual_targets_preserved": true,
+        "ending": "right_censored_coverage_complete",
+        "expert_target_differences": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20
+        ],
+        "feature_target_sha256": "0681246f5d2524cb95e10eb13133bc7a846728351e16110a14ee4cd87a8dc513",
+        "run_id": "2a24577348cc4d259fc80f48e3286beb",
+        "split": "train",
+        "ticks": 67,
+        "windows": [
+          32,
+          32,
+          3
+        ]
+      },
+      {
+        "feature_target_sha256": "a421488bf8de1906704ad687476a7af1b6f83134fbaefeda0f3a0871a5bfdf83",
+        "run_id": "1624ef1853e74eaba50b07d11fe06cbf",
+        "split": "dev",
+        "ticks": 189
+      },
+      {
+        "feature_target_sha256": "450d8860be9861941d4c626d6eaef889508fa606230b9254b17baa1921ba2a25",
+        "run_id": "a16bf1619171400d82dc7116240f6aa2",
+        "split": "dev",
+        "ticks": 338
+      },
+      {
+        "feature_target_sha256": "8318d3c3cdd82c5070e7571b85d7cbae86dc33e005514d7fe3a0b903d0319fa1",
+        "run_id": "80f8e7c3e5594aa79375b2784e1a1b9e",
+        "split": "dev",
+        "ticks": 319
+      },
+      {
+        "feature_target_sha256": "2b7f379cbaf6a625fe0a308d34f12fe292a92f371832f83f7020eb6c7952f7a9",
+        "run_id": "76a8641291a144e5977a5826932e943c",
+        "split": "dev",
+        "ticks": 382
+      }
+    ],
+    "scope": "Independent documented block-sum feature and executed-target reconstruction; existing strict NPZ reader only; no adapter, training or native execution",
+    "seconds": 9.870288097998127,
+    "status": "passed"
+  },
+  "schema_version": 1,
+  "source_bytes": 672149369,
+  "source_commit": "7d5fc1f4ecd1bbd6a5a139bde3585fb2255ce2fe",
+  "source_counts": {
+    "dev": 4,
+    "held_out": 0,
+    "train": 10
+  },
+  "status": "passed-research-data-preparation",
+  "supervision": {
+    "elapsed_seconds": 11.905553887001588,
+    "output": "/home/utkarsh/Work/shraddha/brain/.worktrees/task-phases/runs/m7-recovery-data-control-7d5fc1f/outer-launch",
+    "returncode": 0,
+    "schema_version": 1,
+    "started_utc": "2026-10-03T00:53:11.150263+00:00",
+    "status": "completed",
+    "timeout_seconds": 240
+  },
+  "terminal_usage_before_terminal_publication": {
+    "files": 14,
+    "headroom_bytes": 0,
+    "max_bytes": 16777216,
+    "min_free_bytes": 1073741824,
+    "remaining_bytes": 16379799,
+    "used_bytes": 397417
+  },
+  "wall_seconds": 13.701212461004616
+}
