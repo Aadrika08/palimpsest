@@ -151,9 +151,10 @@ puck CPU checks. All 524 source entries, twenty shared assets, production model
 identities and fifty retained references stay unchanged. This includes balanced
 puck development routing and the narrow body verifier storage-path correction.
 Node24 production build and UI fixtures pass at `f78f087`; UI bytes are unchanged
-and the separate new-profile browser gate now passes on `a447d76`. Hosted CI at `f78f087` did
-not start because of the account billing/spending-limit block; no newer hosted
-pass is claimed. Earlier evidence and failures stay retained.
+and the separate new-profile browser gate now passes on `a447d76`. Hosted fixture and frontend jobs now pass on trainer `6feade9` and combined
+`cece7fb` ([combined run](https://github.com/Aadrika08/palimpsest/actions/runs/37137793789)).
+The earlier billing-blocked `f78f087` attempts remain retained; hosted fixtures do
+not replace the separately enabled local simulation suite. Earlier evidence and failures stay retained.
 The six-owner reference gate passes 744 intervals and all six navigation goals,
 with memory deliberately frozen and no memory-task qualification.
 The [new puck mechanics gate](reports/m6-puck-learning-v2-mechanics-v1.md) passes
