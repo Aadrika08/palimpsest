@@ -31,7 +31,8 @@ passes independent controls and startup admission; its one frozen invocation is
 active in session `51199`. Navigation metadata admission v1 stops before candidate loading
 on this worktree's uninitialized pinned upstream submodule; the refusal is retained.
 Exact dependency setup and fresh v2 admission pass for all six fixed models, with
-independent evidence review. Development launch controls are being prepared; no
+independent evidence review. Development launch controls pass source review; their eleven declared synthetic
+fixtures and full preflight remain unexecuted until the memory slot releases. No
 navigation episode has run. R3 stays open.
 
 Remaining-06 comparison completes once on frozen `016948b`, bringing independently
@@ -510,8 +511,18 @@ graph and provenance entries with the fixed index and checks the small retained
 file hashes. Receipt `runs/m7-navigation-readmission-v2-root-review-e3f9a47/audit.json`,
 SHA-256 `c05afb626dd3ae9395ab91cd90d1f2be14d9c44fc3a08c678c2e00c2374ad44e`.
 Readmission SHA is `cb25b404044ebce489f74e80caa9eb774613caa395fc2e48da8bd72b606f71d8`.
-Fresh development controls and their separate runtime GO remain next; held-out
-stays locked. This admits model artifacts, not useful navigation.
+Fresh development controls pass source review. The retained original draft could
+reject model/runtime drift before preserving obtainable after identities. Its narrow
+correction observes the hash-admitted before roster and actual runtime versions
+before separate strict refusal; both actual callers bind the original invocation
+hash. The standalone inventory CLI now exposes only its supported before mode.
+Eleven synthetic fixtures are declared, including changed-byte/runtime retention,
+startup refusal, sampled identity reuse, missing terminal and late return/publication.
+None has run yet; full preflight and runtime GO await the memory I/O slot. Root
+source-only receipt `runs/m7-navigation-development-controls-source-root-review-e3f9a47/review.json`,
+SHA-256 `f299685141543770f87a3b5c4c1c2b1c31a84ccc8b5d9077968afd4f5d777ced`.
+Held-out stays locked. This admits model artifacts and reviews control source,
+not useful navigation.
 
 Paired navigation trainer `6feade9` is integrated after eleven independent root
 pure checks pass first in 1.698 s. It adds only the named trainer/test, preserving
