@@ -1,0 +1,406 @@
+{
+  "status": "completed-collection",
+  "publication": "retained local evidence",
+  "study": "M7-NAV-AGG-1 contact v2",
+  "producer_commit": "736e0cf0a71f6d700bd67836ee5f83911ceff90a",
+  "protocol_sha256": "29039e944f49dc1458d918dcd738a32ee5fbf5bfdbbee8fff2cd969e4703bab0",
+  "contact_profile_sha256": "1593421ae2cc1a12b0d9aeae6646fda77da1d11a885ffac3406e52dc6af12186",
+  "qualification_claims": [],
+  "coverage": {
+    "owners_completed": 12,
+    "published_and_admitted_rows": 5080,
+    "initial_SNP": 12,
+    "pre_control_cache_samples": 50800,
+    "end_cache_samples": 5080,
+    "events": 10408,
+    "matched_scene_groups": 4,
+    "producer_indexed_files": 260,
+    "producer_indexed_bytes": 1136687023,
+    "total_output_files": 263,
+    "total_output_bytes": 1136890290,
+    "outcomes": {
+      "time_limit": 5,
+      "goal": 1,
+      "stalled": 6
+    },
+    "advice_executed_differences": 5080,
+    "cases": [
+      {
+        "case": "learner-3100-seed-10",
+        "intervals": 600,
+        "outcome": "time_limit",
+        "advice_executed_difference_rows": 600,
+        "engine_closed": true,
+        "callback_restored": true
+      },
+      {
+        "case": "learner-3100-seed-11",
+        "intervals": 485,
+        "outcome": "goal",
+        "advice_executed_difference_rows": 485,
+        "engine_closed": true,
+        "callback_restored": true
+      },
+      {
+        "case": "learner-3100-seed-12",
+        "intervals": 496,
+        "outcome": "stalled",
+        "advice_executed_difference_rows": 496,
+        "engine_closed": true,
+        "callback_restored": true
+      },
+      {
+        "case": "learner-3101-seed-10",
+        "intervals": 600,
+        "outcome": "time_limit",
+        "advice_executed_difference_rows": 600,
+        "engine_closed": true,
+        "callback_restored": true
+      },
+      {
+        "case": "learner-3101-seed-11",
+        "intervals": 196,
+        "outcome": "stalled",
+        "advice_executed_difference_rows": 196,
+        "engine_closed": true,
+        "callback_restored": true
+      },
+      {
+        "case": "learner-3101-seed-12",
+        "intervals": 600,
+        "outcome": "time_limit",
+        "advice_executed_difference_rows": 600,
+        "engine_closed": true,
+        "callback_restored": true
+      },
+      {
+        "case": "learner-3102-seed-10",
+        "intervals": 600,
+        "outcome": "time_limit",
+        "advice_executed_difference_rows": 600,
+        "engine_closed": true,
+        "callback_restored": true
+      },
+      {
+        "case": "learner-3102-seed-11",
+        "intervals": 243,
+        "outcome": "stalled",
+        "advice_executed_difference_rows": 243,
+        "engine_closed": true,
+        "callback_restored": true
+      },
+      {
+        "case": "learner-3102-seed-12",
+        "intervals": 198,
+        "outcome": "stalled",
+        "advice_executed_difference_rows": 198,
+        "engine_closed": true,
+        "callback_restored": true
+      },
+      {
+        "case": "learner-3103-seed-10",
+        "intervals": 600,
+        "outcome": "time_limit",
+        "advice_executed_difference_rows": 600,
+        "engine_closed": true,
+        "callback_restored": true
+      },
+      {
+        "case": "learner-3103-seed-11",
+        "intervals": 276,
+        "outcome": "stalled",
+        "advice_executed_difference_rows": 276,
+        "engine_closed": true,
+        "callback_restored": true
+      },
+      {
+        "case": "learner-3103-seed-12",
+        "intervals": 186,
+        "outcome": "stalled",
+        "advice_executed_difference_rows": 186,
+        "engine_closed": true,
+        "callback_restored": true
+      }
+    ]
+  },
+  "contact_incidence": {
+    "scope": "fully admitted prefix, pair instances summed over ten pre-control caches and one end cache; repeated contacts are not unique collision events",
+    "pair_instances_by_type": {
+      "wheel_floor_support": 291257,
+      "non_wheel_floor": 2,
+      "robot_obstacle": 8479,
+      "robot_wall": 0,
+      "world_only": 3352800
+    },
+    "full_type_stage_and_125_pair_counts": "Per-owner result.json and root raw audit retain exact arrays; no duplicate full ledger here",
+    "raw_classes": "three wheel-floor support pairs remain class2; other declared robot-world pairs class3; world-only class1; self/marker/unknown/incomplete/nonfinite still refused",
+    "floor_sensor_limitation": "native collision sensor ignores floor; two admitted non-wheel floor instances do not introduce a sensor or advice signal"
+  },
+  "disposition": {
+    "exec_session": 41460,
+    "exec_exit": 0,
+    "collector_supervisor_seconds": 514.343341483007,
+    "launcher_supervisor_seconds": 543.0221461890033,
+    "launcher_wall_seconds": 542.658043568008,
+    "enclosing_prepublication_seconds": 544.6225718700007,
+    "normal_through_return_limit_seconds": 2210,
+    "forced_signals": [],
+    "survivors": [],
+    "sampler_errors": [],
+    "union_sampled_identities": 15,
+    "identities_absent": true,
+    "root_independent_lease_free": true,
+    "inventories_and_controls_unchanged": true,
+    "aggregate_final_usage_bytes": 1137431650,
+    "aggregate_limit_bytes": 3221225472,
+    "startup_free_bytes": 26508693504,
+    "startup_full_study_reservation_bytes": 17783848960,
+    "free_bytes_after_drained_exec": 26380738560
+  },
+  "audits": {
+    "root_raw": {
+      "first_execution_passed": true,
+      "seconds": 43.100431075989036,
+      "receipt_sha256": "459cae6c8627c18bfc9402475e42c43123e8f4d372c7373e63e6cd83f2e0b795",
+      "scope": "Shared source/label/initial/contact validators plus independent raw contact incidence, finite arrays, row/event/hash counts and cleanup; no inference or physics recomputation; no useful-navigation qualification"
+    },
+    "local_raw": {
+      "first_auditor_execution_passed": true,
+      "seconds": 32.040387839006144,
+      "receipt_sha256": "b7d40ca3b939a85b23bfb6fe8b378e1952a5df2e128cdb81eaa8bac15e65fa6e",
+      "scope": "reused frozen per-owner admission plus independent feature/advice/action counts; root separate auditor independently reconstructs full contacts",
+      "inspection_correction": "Prior schema inspection requested missing result.contacts instead of per-row contacts/result.contact_ownership; no validator or raw bytes changed"
+    },
+    "root_controls": {
+      "first_invocation_passed": false,
+      "receipt_sha256": "ddf32c28ec0d780b7e757096ad8ba4ae716e0e449200fe33130ab63f1a988583",
+      "correction": "First root invocation omitted exact frozen environment; identity correctly refused it after fixtures. Second checker invocation fixes only environment and fixture output path; all controls unchanged"
+    },
+    "control_preparation": "Initial relative donor copy failed before any fixture; retained separately, corrected absolute path only"
+  },
+  "warnings": {
+    "retained": "Sparse CSR beta support and TF32 API deprecation",
+    "bounded_log_scan": "No semaphore/resource_tracker/traceback/NaN instability warning found; not universal proof"
+  },
+  "limitations": [
+    "Collector-only admission; data preparation, scene/payload/complete feature-target duplicate rejection and training manifest pending",
+    "All executed and advice action vectors differ across5080rows; targets must remain explicit returned teacher advice, never learner action substitution",
+    "Query-driven45-label private recovery may advance while learner ignores advice; labels are not proved expert-correct",
+    "Train3100 consumed by failedv1; v2 repeats fixed train roster under separately frozen contact regime, not unseen evaluation",
+    "Old failedv1data excluded; legacy14pins/contact guards unchanged",
+    "No new training/development/heldout/promotion/topology/biology/hardware/physical stability/mechanical/safety/generic replay qualification",
+    "Finite sampled PID/start containment is not universal transient-process proof"
+  ],
+  "artifact_refs": [
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/male-navigation-contact-v2/runs/m7-navigation-collection-v2-736e0cf-20261003/report.json",
+      "bytes": 131533,
+      "sha256": "28a855d9fc6b4e711833f3b12f091fd1bbc63bcd0af1d7d97202710a0473a8ff"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/male-navigation-contact-v2/runs/m7-navigation-collection-v2-control-736e0cf/terminal.json",
+      "bytes": 11896,
+      "sha256": "83b20c047cad47245f3a1ca030567e09e7252ce6b88233527867c69cf16f1165"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/male-navigation-contact-v2/runs/m7-navigation-collection-v2-control-736e0cf/enclosing.json",
+      "bytes": 3521,
+      "sha256": "9475f53d53d5584a7ee19605b2dc92ae83d620429b3d0483e02bb7141e9dcb14"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/male-navigation-contact-v2/runs/m7-navigation-collection-v2-control-736e0cf/invocation.json",
+      "bytes": 5547,
+      "sha256": "9ee11996886e1105ba53f609af833e8e7917555fdd7bc900fa756e04c5bb837e"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/male-navigation-contact-v2/runs/m7-navigation-collection-v2-control-736e0cf/ready.json",
+      "bytes": 7131,
+      "sha256": "c2a8e7f8263130e20160ee78ad0de11aef5cff785357677adc19f3ee4dc11077"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/male-navigation-contact-v2/runs/m7-navigation-collection-v2-control-736e0cf/before.json",
+      "bytes": 183738,
+      "sha256": "3cc8bbf3a64c1345161203724e9e3e038d5e459580fcfefe2a35abaaed169623"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/male-navigation-contact-v2/runs/m7-navigation-collection-v2-control-736e0cf/after.json",
+      "bytes": 183738,
+      "sha256": "3cc8bbf3a64c1345161203724e9e3e038d5e459580fcfefe2a35abaaed169623"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/male-navigation-contact-v2/runs/m7-navigation-collection-v2-control-736e0cf/outer-after.json",
+      "bytes": 183738,
+      "sha256": "c82472039e4bdd7378640e291ee2b47dcc6b0134039b7ab23c1e376aaccf5df7"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/male-navigation-contact-v2/runs/m7-navigation-collection-v2-control-736e0cf/actual-startup.json",
+      "bytes": 259,
+      "sha256": "e610974bdb09844d5d8dbb32b8eaef7835619ae947086ffa828617c9e17f0ad8"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/male-navigation-contact-v2/runs/m7-navigation-collection-v2-control-736e0cf/exec-terminal-observation.json",
+      "bytes": 781,
+      "sha256": "3afe7451bf81748f302f1dce7a2d7bcaab2929956ca408cf60ae48a95b1b7c2f"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/male-navigation-contact-v2/runs/m7-navigation-collection-v2-control-736e0cf/checks-index.json",
+      "bytes": 3683,
+      "sha256": "6810515ff47efff15043fb636e396b1410c96b9cc06f7eb84132393e1367fa5c"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/male-navigation-contact-v2/runs/m7-navigation-collection-v2-control-736e0cf/preflight.json",
+      "bytes": 2517,
+      "sha256": "7207f8f4f03097d9aaa04024bc88a3b102e0437ef344ae9dda643393d0a08c95"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/male-navigation-contact-v2/runs/m7-navigation-collection-v2-control-736e0cf/pre-execution-clarification.json",
+      "bytes": 556,
+      "sha256": "3eddb136d7d2a4c56b9b3977cda683f7ac677af59068f38e7e941e8bdf29ca9b"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/male-navigation-contact-v2/runs/m7-navigation-collection-v2-control-736e0cf/donor.diff",
+      "bytes": 20984,
+      "sha256": "0f704f93fc4714dcb649f7e95a5df2e5adcc4b3c84da77300d37483177de0557"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/male-navigation-contact-v2/runs/m7-navigation-collection-v2-control-736e0cf/copy-preparation-failure.json",
+      "bytes": 718,
+      "sha256": "7ed5473635bc29772e7196ab9ffc9bcbc25f7ab083b45b859b87d53e9477f44f"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/male-navigation-contact-v2/runs/m7-navigation-collection-v2-control-736e0cf/inventory.py",
+      "bytes": 11486,
+      "sha256": "1e2bf9659fcab1c9db8e518a9446bdeafc4139344ddc62baa95d01a11aa82e1e"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/male-navigation-contact-v2/runs/m7-navigation-collection-v2-control-736e0cf/launch.py",
+      "bytes": 12804,
+      "sha256": "e04e4a8b2fd95486f59bd4ef020bcf0c2e0701f25e02a872fa490082b7b87d24"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/male-navigation-contact-v2/runs/m7-navigation-collection-v2-control-736e0cf/supervise.py",
+      "bytes": 8118,
+      "sha256": "5b1eecc352dcb430df12853866a385ee6665a25378e670ad9c871829d537d5ef"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/male-navigation-contact-v2/runs/m7-navigation-collection-v2-control-736e0cf/checks.py",
+      "bytes": 12850,
+      "sha256": "f4732e72b84a42ed6400035ac0fda26311a8a7fb1aec1e4e07a50c0594592238"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/male-navigation-contact-v2/runs/m7-navigation-collection-v2-control-736e0cf/README.md",
+      "bytes": 5766,
+      "sha256": "2b70ecf28f0ba963bf048f516ca804f545bfc2e43171fb9c4c137b8df1a44842"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/male-navigation-contact-v2/runs/m7-navigation-collection-v2-control-736e0cf/checks-final.log",
+      "bytes": 1937,
+      "sha256": "fa55739bad7c86b3ef1dd0db49127f8618b2eb255d428520e14ecdf97e35c21c"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/male-navigation-contact-v2/runs/m7-navigation-collection-v2-control-736e0cf/launcher-console.log",
+      "bytes": 166,
+      "sha256": "8d3eaa15fd2db354d130c6691f771b38361f4976e4fdaa903f7cc034de04b097"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/male-navigation-contact-v2/runs/m7-navigation-collection-v2-control-736e0cf/outer-launch/stdout.log",
+      "bytes": 82,
+      "sha256": "ef71f06ffef60f280d47397d7a1573f65ab711f41c94da3b00dc7fbb147c98c5"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/male-navigation-contact-v2/runs/m7-navigation-collection-v2-control-736e0cf/outer-launch/stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/male-navigation-contact-v2/runs/m7-navigation-collection-v2-control-736e0cf/outer-launch/supervisor.json",
+      "bytes": 338,
+      "sha256": "dd5364492276aeffdcbec8992db6a79234026d279540fa650c0628aa6d550993"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/male-navigation-contact-v2/runs/m7-navigation-collection-v2-control-736e0cf/outer-supervisor/stdout.log",
+      "bytes": 295,
+      "sha256": "da99f360dbd3d9d1f2ca9d6dd3f1178d503f28208de42cb37b09baed5e12c65e"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/male-navigation-contact-v2/runs/m7-navigation-collection-v2-control-736e0cf/outer-supervisor/stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/male-navigation-contact-v2/runs/m7-navigation-collection-v2-control-736e0cf/outer-supervisor/supervisor.json",
+      "bytes": 343,
+      "sha256": "251dbdce5bfc4a1a7beb0af53d112121216758dfe842bc508a723d279b4884e8"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/male-navigation-contact-v2/runs/m7-navigation-collection-v2-local-audit-736e0cf/audit.py",
+      "bytes": 3865,
+      "sha256": "b8cdc596288766653cba9cfeeab163053e6cb93969c73288c81e9f5a3e92d1e6"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/male-navigation-contact-v2/runs/m7-navigation-collection-v2-local-audit-736e0cf/audit.json",
+      "bytes": 4828,
+      "sha256": "b7d40ca3b939a85b23bfb6fe8b378e1952a5df2e128cdb81eaa8bac15e65fa6e"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/male-navigation-contact-v2/runs/m7-navigation-collection-v2-local-audit-736e0cf/audit.log",
+      "bytes": 500,
+      "sha256": "40ed3c851a8beef8104b1fc587ec9b2ba6e091490af7c99d7a917454992bfb9f"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/male-navigation-contact-v2/runs/m7-navigation-collection-v2-local-audit-736e0cf/schema-inspection-correction.json",
+      "bytes": 338,
+      "sha256": "42e15a5922ef94b3a3d40ad37b99e8373f63a623598133c9adc0420c00e83aa4"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/project-integration/runs/m7-navigation-collection-v2-root-audit-736e0cf/audit.py",
+      "bytes": 8300,
+      "sha256": "03efb4fcb6821adaf55dbcaeb7451ae326bae05f1bf8b404ae78d72e053b2e3e"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/project-integration/runs/m7-navigation-collection-v2-root-audit-736e0cf/audit.json",
+      "bytes": 116316,
+      "sha256": "459cae6c8627c18bfc9402475e42c43123e8f4d372c7373e63e6cd83f2e0b795"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/project-integration/runs/m7-navigation-collection-v2-control-root-review-736e0cf/audit.py",
+      "bytes": 4943,
+      "sha256": "36bbe548c5afee4e7884706427522d95ef11e0a7ad9a2469bdf923174f5f766b"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/project-integration/runs/m7-navigation-collection-v2-control-root-review-736e0cf/audit.log",
+      "bytes": 842,
+      "sha256": "98fa40bcd96979558eceeb0dcfabc341c606028521f727481c6b90d8e842322b"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/project-integration/runs/m7-navigation-collection-v2-control-root-review-736e0cf/first-checker-failure.json",
+      "bytes": 455,
+      "sha256": "3e2cd37be7e959aa217777e114492b5bf81609d89990bb62a43b73fff0f31d6b"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/project-integration/runs/m7-navigation-collection-v2-control-root-review-736e0cf/audit-v2.py",
+      "bytes": 5058,
+      "sha256": "4eddfea8e2832ebe9206550d7b4a3532c8f6cf989a3b51f2d267e48467fe354f"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/project-integration/runs/m7-navigation-collection-v2-control-root-review-736e0cf/audit-v2.log",
+      "bytes": 252,
+      "sha256": "9e32eaca42377308d3d7e9815798939a2e015ec47e0567204407e8a49e17c716"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/project-integration/runs/m7-navigation-collection-v2-control-root-review-736e0cf/audit.json",
+      "bytes": 1564,
+      "sha256": "ddf32c28ec0d780b7e757096ad8ba4ae716e0e449200fe33130ab63f1a988583"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/male-navigation-contact-v2/docs/reports/m7-navigation-collection-v1.json",
+      "bytes": 13311,
+      "sha256": "664f8be5667820a2120c500a082b4d3e9920848cd6e9455f972552fed6a47dcb"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/male-navigation-contact-v2/docs/plans/m7-navigation-contact-v2-protocol.json",
+      "bytes": 28516,
+      "sha256": "29039e944f49dc1458d918dcd738a32ee5fbf5bfdbbee8fff2cd969e4703bab0"
+    }
+  ]
+}
