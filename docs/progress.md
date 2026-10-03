@@ -16,11 +16,11 @@ is431 versus no-U/swapped430; null/no-event goals are430. There is no own-U bene
 The actual session `57385` drained exit0 after 1,798.225 s normal / 1,802.586 s full;
 42 sampled nonlauncher PID/start identities and the launcher are absent, with
 unchanged inventories and an independently free lease after shutdown. The [focused publication](reports/m5-remaining-06-comparison.md), `0b30585`, is
-integrated after all446 published references, the543-file root raw ledger and
-two histories rehash (570unique references /1,106,074,167bytes). Sixteen
+integrated after all 446 published references, the 543-file root raw ledger and
+two histories rehash (570 unique references  / 1,106,074,167 bytes). Sixteen
 development cells and held-out remain open. Remaining-07 admission now runs once
-in session `10262` on frozen `0b30585`: twelve fresh IDs disjoint from650,
-595 identities unchanged and28,237,762,560bytes free at startup.
+in session `10262` on frozen `0b30585`: twelve fresh IDs disjoint from 650,
+595 identities unchanged and 28,237,762,560 bytes free at startup.
 The [remaining-06 admission](reports/m5-remaining-06-admission.md), `016948b`,
 retains its twelve owners/1,204 rows and all 150 rehashed publication references;
 the initial root copied-index error and corrected audit are both retained.
@@ -36,8 +36,9 @@ and control inventories match, and the post-drain writer lease is free. Root
 retained-failure audit passes after correcting its expected initialization-event
 name; both checker attempts remain retained. A pure arithmetic reproduction
 shows the verifier reconstructs float64 native ranges from rounded float32
-cached coordinates. Failure publication and a narrow caller correction are
-underway; strict native equality and task criteria remain unchanged.
+cached coordinates. The [failure publication](reports/m6-new-body-response-v1.md), `c048586`, is
+integrated after all 65 published/control/raw references rehash. A narrow caller
+correction is underway; strict native equality and task criteria remain unchanged.
 
 The [remaining-05 admission](reports/m5-remaining-05-admission.md), evidence
 `ad2eff7`, completed once on frozen `746c67b` in session `90487`: twelve owners,
@@ -141,7 +142,7 @@ remains ineligible.
 - Mechanism: pinned upstream model/environment; allowlisted controller inputs; one mutable-runtime owner; complete native, policy, application and RNG snapshots. Recorded E fitting and U-only swaps preserve declared invariant hashes. Male controllers use separately trained fixed CPU assets and an authored sensor mapping.
 - Missing: M5 counterbalanced/held-out transfer; remaining M6 skills and learned results; M7 closed-loop qualification; M8 physical work; remaining M9 modes/operation; final M10 handoff.
 - Unknown: original checkpoint training lineage, full-model Pi performance, physical stopping limits and account quota (telemetry unavailable).
-- Next action: review the named training-data preparer implementation against the integrated frozen plan for navigation v2; v1 remains failed. The separate cross-corpus preparer and all fitting/dev/held-out stages remain pending. Complete and independently audit remaining-07 admission. Memory coverage is 32/48; the existing paired readout covers its historical 24-cell subset. Review the new-body failure publication and narrow verifier caller correction; no corrected actual run is admitted yet. Both puck development evaluations remain negative; automatic retraining stops and held-out stays locked. Physical qualification and independent exhibition operation remain open.
+- Next action: review the named training-data preparer implementation against the integrated frozen plan for navigation v2; v1 remains failed. The separate cross-corpus preparer and all fitting/dev/held-out stages remain pending. Complete and independently audit remaining-07 admission. Memory coverage is 32/48; the existing paired readout covers its historical 24-cell subset. Review the narrow new-body verifier caller correction; no corrected actual run is admitted yet. Both puck development evaluations remain negative; automatic retraining stops and held-out stays locked. Physical qualification and independent exhibition operation remain open.
 
 The [prospective held-out outline](plans/m5-heldout-proposal.md) specifies the
 reserved 64–71 matrix without opening it. Source/profile freeze and all 48 audited
@@ -153,18 +154,23 @@ or moved and no held-out implementation/execution is unlocked.
 
 ## Verification
 
-Remaining-07 admission controls pass eight root fixtures in4.917s and full
-preflight in1.556s, first attempt:595identities,12fresh IDs disjoint from650,
-full launcher AST equal to06 after fixed substitutions, and identical encloser.
+New-body failure publication passes first in 0.017 s: 65 unique references,
+1,178,061 bytes. Receipt:
+`runs/m6-new-body-failure-publication-root-review-c048586/audit.json`, SHA-256
+`e7b07a7e6dbea59fcf81f20e452deca7b07ece0e1c04d5c83fa9f3fdb9366dba`.
+
+Remaining-07 admission controls pass eight root fixtures in 4.917 s and full
+preflight in 1.556 s, first attempt:595 identities, 12 fresh IDs disjoint from 650,
+full launcher AST equal to 06 after fixed substitutions, and identical encloser.
 Root receipt: `runs/memory-remaining-07-admission-control-root-review-0b30585/control-review.json`,
 SHA-256 `4621c4b1091a32ee70be96802663fe28ec3b05c5bca52165b559ff71a3f6453f`.
 
-Remaining-06 publication review passes first in1.882s; all570unique publication,
+Remaining-06 publication review passes first in 1.882 s; all570 unique publication,
 raw-ledger and history references rehash. Receipt:
 `runs/memory-remaining-06-publication-root-review-0b30585/audit.json`, SHA-256
 `9cf18f2197defd9e1fae19e4e51a918c5acf000a48b3bcc653e319c1435e668c`.
 
-New-body v1 failure audit passes in2.479s after a checker-only correction from
+New-body v1 failure audit passes in 2.479 s after a checker-only correction from
 `source_revision` to the actual `environment` initialization event. One attempted
 owner, zero accepted/executed ticks, zero SNPs, one unstarted dependent and normal
 cleanup are independently checked; the recorded failure remains infrastructure.
