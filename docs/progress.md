@@ -63,6 +63,7 @@ first execution in 76.972 s, verifying all 885 files, matched initials and clean
 The experiment is complete; no useful-navigation threshold or R3 promotion follows.
 The user confirmed on 3 October that R3 stays open for a new navigation study,
 requiring a prospective capability threshold and a fresh held-out reserve.
+The [new study plan](plans/m7-navigation-study.md), `45c4c17`, is now frozen: one advice-label aggregation round, paired original-graph data arms, all-seed 3/4 development then 6/8 held-out criteria, and sixteen fresh reserved scene IDs. Source-only checks pass; no new scenes, models or geometry have been opened. Collector/admission implementation is next. The 16.5625 GiB additional disk reservation is prospective and may block after retained memory growth.
 Its [focused evidence](reports/m7-recovery-heldout-closed-loop.md), `8d3a9d0`, is integrated after all 36 references rehash. Puck trainer source `82e2bd9` now binds task v5; 24 focused root checks
 pass in 1.973 s after correcting a test-command module typo. Rejected v1 data
 remains ineligible.
@@ -85,7 +86,7 @@ remains ineligible.
 - Mechanism: pinned upstream model/environment; allowlisted controller inputs; one mutable-runtime owner; complete native, policy, application and RNG snapshots. Recorded E fitting and U-only swaps preserve declared invariant hashes. Male controllers use separately trained fixed CPU assets and an authored sensor mapping.
 - Missing: M5 counterbalanced/held-out transfer; remaining M6 skills and learned results; M7 closed-loop qualification; M8 physical work; remaining M9 modes/operation; final M10 handoff.
 - Unknown: original checkpoint training lineage, full-model Pi performance, physical stopping limits and account quota (telemetry unavailable).
-- Next action: audit the running remaining-04 memory admission before its fixed comparison. Freeze and implement the new R3 navigation study prospectively. Body/UI and six-mode offline artwork handoff evidence are integrated. Memory coverage remains 20/48; the sixteen-cell aggregate is a retained historical snapshot. Both puck development evaluations remain negative and held-out stays locked. Physical qualification and independent exhibition operation remain open.
+- Next action: audit the running remaining-04 memory admission before its fixed comparison. Implement the reviewed source-only collector/admission slice for the new R3 study; the prospective protocol is frozen. Body/UI and six-mode offline artwork handoff evidence are integrated. Memory coverage remains 20/48; the sixteen-cell aggregate is a retained historical snapshot. Both puck development evaluations remain negative and held-out stays locked. Physical qualification and independent exhibition operation remain open.
 
 ## Verification
 

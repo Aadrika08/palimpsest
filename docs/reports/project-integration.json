@@ -2605,5 +2605,19 @@
     "qualification_claims": [],
     "r5_complete": false,
     "full_regression_predates_this_source": true
+  },
+  "navigation_study_plan": {
+    "status": "reviewed_source_only_plan",
+    "commit": "45c4c17",
+    "protocol_sha256": "a3612cdc23510fa2b866482e1d13ece123940911ccc2a186c74216c83177e47f",
+    "root_audit": {
+      "path": "runs/m7-navigation-plan-root-review-45c4c17/audit.json",
+      "sha256": "6610490c71806420be6cb10ca18879ff7a2f28c72ac8743c57878bece330d15b"
+    },
+    "actual_stages_executed": false,
+    "new_geometry_generated": false,
+    "held_out_opened": false,
+    "r3_complete": false,
+    "qualification_claims": []
   }
 }
