@@ -26,8 +26,8 @@ identities and the launcher are absent. Root retained audit passes first in
 `0e32482`, is integrated after all 141 references (262,936,165 bytes) rehash.
 Comparison-07 controls pass eight independent root fixtures and full preflight
 (14.795 s total): 597 source identities, 120 inputs and forty fresh IDs disjoint
-from all 662 prior owners. One bounded comparison is authorized; coverage remains
-32/48 until its outcomes are audited.
+from all 662 prior owners. The one bounded comparison is running in session `30311` on frozen `0e32482`;
+coverage remains 32/48 until its outcomes are audited.
 The [remaining-06 admission](reports/m5-remaining-06-admission.md), `016948b`,
 retains its twelve owners/1,204 rows and all 150 rehashed publication references;
 the initial root copied-index error and corrected audit are both retained.
@@ -58,7 +58,9 @@ all 400 fit samples and task/control states in 1.636 s. Root raw/contact/source
 audit passes in 7.335 s after two retained checker corrections: the initial
 invocation omitted frozen environment variables, then an overly strict cache
 timestamp assertion was corrected to the protocol 1e-9 tolerance. The study ran
-once; its focused publication is pending. This remains one standalone simulated
+once; its [focused publication](reports/m6-new-body-response-v2.md), `0b1af16`,
+is integrated after all 143 unique direct/raw/control references rehash
+(171,627,789 bytes). This remains one standalone simulated
 body, without study-state restore or generic replay qualification.
 
 The [remaining-05 admission](reports/m5-remaining-05-admission.md), evidence
@@ -161,9 +163,9 @@ remains ineligible.
 - Partial M9: sonification and comparison export actual recorded data with embedded provenance. [Atlas](artwork-atlas.md), `af2ee7b` / draft PR #18, isolates named nodes in the pinned graph and measures directed reachability; actual graph, independent traversal and browser checks pass. Deferred final-close cleanup is fixed for all five existing export formats at `a299546` / draft PR #19. [Curated anatomical comparison](artwork-specimens.md) is implemented at `6fdab2f`, with actual geometry/conversion and compatible browser checks recorded at `f509463` / draft PR #30. All 37,007 segments and four roots are preserved at one physical scale. Physical drawing and exhibition-duration/independent-operation gates remain open. The [supervised operator runbook](exhibition-runbook.md) declares those missing acceptance records. The approved Afterimage slice is frozen at `2ed2c10`; its bounded eight-frame actual inference/reference/render gate passed in 5.688 s outer with exact reference outputs, deterministic offline SVGs and unchanged sources/assets/stimulus. Independent retained-evidence audit and compatible browser review pass; evidence `9b4db47` / draft PR #31 is integrated. The fixed axes preserve the fixture's very small response variation.
 - Partial M10: unified source and requirements matrix exist. The earlier combined suite at `28ad7c5` passes all 682 tests with no skips in 129.311 s (131.139 s supervised), including actual simulation, production male Torch/native/replay and the new puck CPU model checks using the verified shared assets. The previous artwork/body suite at `68a8f19` passed 395 tests in 56.706 s (58.875 s outer). Sources and environment locks remain unchanged. The earlier suite at `77e69da` passed 330 tests. The earlier suite at `0a783af` ran 319 tests: 316 passed and three explicit MaleCNS checks skipped; [integration report](reports/project-integration.md) records the separate outer-reporting error. Build and UI fixture checks pass. After atlas/cleanup merges, 48 focused export/CLI tests pass at `0693a2f` (2.755 s, no skips). After memory-transfer and wheel-diagnostic integration, 62 focused checks pass at `7a51346` in 3.083 s with no skips. These checks do not rerun historical task or endurance qualification. The [architecture guide](architecture.md) and exact reduced-model distribution are added; local links and real asset resolver checks pass. The expanded regression and audited task evidence are integrated. After adding anatomical pairs and Afterimage, 47 focused artwork/CLI/export tests pass without skips in 1.212 s at the combined merge `f8da3c1`; the subsequent full 395-test run covers the combined artwork/body source. Its first attempt retained one fixture-ordering error; the correction selects the reproduction scenario explicitly and leaves product restrictions intact.
 - Mechanism: pinned upstream model/environment; allowlisted controller inputs; one mutable-runtime owner; complete native, policy, application and RNG snapshots. Recorded E fitting and U-only swaps preserve declared invariant hashes. Male controllers use separately trained fixed CPU assets and an authored sensor mapping.
-- Missing: M5 counterbalanced/held-out transfer; remaining M6 skills and learned results; M7 closed-loop qualification; M8 physical work; remaining M9 modes/operation; final M10 handoff.
+- Missing: M5 counterbalanced/held-out transfer; learned M6 puck success and held-out evaluation; M7 closed-loop qualification; M8 physical work; remaining M9 modes/operation; final M10 handoff.
 - Unknown: original checkpoint training lineage, full-model Pi performance, physical stopping limits and account quota (telemetry unavailable).
-- Next action: review the navigation v2 preparer launch controls on frozen `4ecb354`; eleven root source checks pass. Actual cross-corpus preparation and all fitting/dev/held-out stages remain pending; collection v1 remains failed. Drain and independently audit the authorized remaining-07 comparison; its admission publication is integrated. Memory coverage is 32/48; the existing paired readout covers its historical 24-cell subset. Review the new-body v2 focused publication; its actual result and retained raw/outcome audits pass. Both puck development evaluations remain negative; automatic retraining stops and held-out stays locked. Physical qualification and independent exhibition operation remain open.
+- Next action: review the navigation v2 preparer launch controls on frozen `4ecb354`; eleven root source checks pass. Actual cross-corpus preparation and all fitting/dev/held-out stages remain pending; collection v1 remains failed. Drain and independently audit the authorized remaining-07 comparison; its admission publication is integrated. Memory coverage is 32/48; the existing paired readout covers its historical 24-cell subset. The audited new-body v2 publication is integrated. Scoped exploration, homing and measured-adaptation subgates are met; learned puck keeps M6 open. Both puck development evaluations remain negative; automatic retraining stops and held-out stays locked. Physical qualification and independent exhibition operation remain open.
 
 The [prospective held-out outline](plans/m5-heldout-proposal.md) specifies the
 reserved 64–71 matrix without opening it. Source/profile freeze and all 48 audited
@@ -174,6 +176,12 @@ planning check; an artifact storage path is pending user input. No data is delet
 or moved and no held-out implementation/execution is unlocked.
 
 ## Verification
+
+New-body v2 publication review passes first in 0.299 s: 32 direct references,
+48 raw files, current controls and all 45 unchanged v1 files combine into
+143 unique references / 171,627,789 bytes. Receipt:
+`runs/m6-new-body-publication-root-review-0b1af16/audit.json`, SHA-256
+`10f9ebe4dd4cfe2d3b5d6466c568498797b1410b61336b9bf7e5ff820f66caa7`.
 
 Navigation data preparer `4ecb354` passes eleven root synthetic/source checks
 first in 2.224 s (2.676 s supervised, 2.738 s total). Exact old/new count/order,
