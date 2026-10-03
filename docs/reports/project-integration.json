@@ -1680,5 +1680,70 @@
     "puck_torch_enabled": true,
     "sources_assets_models_unchanged": true,
     "scope": "Combined source regression and authored puck model fixtures; historical actual task gates keep separate frozen evidence. No actual demonstration training, held-out or physical qualification."
+  },
+  "collector_recovery_data_regression": {
+    "attempts": [
+      {
+        "source_commit": "b76d2b311c2b410003e70f424491409b3fff3706",
+        "status": "failed",
+        "tests": 600,
+        "passed": 599,
+        "failures": 1,
+        "skipped": 0,
+        "unittest_seconds": 124.478,
+        "supervised_seconds": 127.8304996650113,
+        "wall_seconds": 127.83493393800745,
+        "returncode": 1,
+        "report": {
+          "path": "runs/integration-collector-recovery-data-b76d2b3-20261003/report.json",
+          "bytes": 111944,
+          "sha256": "bbd479713db9293fa966aca8b073a0226aeed9999a401c47bc1f24a0ab5a4380"
+        },
+        "launcher": {
+          "path": "runs/integration-collector-recovery-data-b76d2b3-launch.py",
+          "bytes": 4186,
+          "sha256": "77c450a2b2d317094ddb3e3b0ff1033536bf37eaf24fd85e44193790581b19b1"
+        },
+        "retained_files_rehashed": 50,
+        "source_files": 411,
+        "all_four_runtime_flags_enabled": true,
+        "sources_assets_models_unchanged": true
+      },
+      {
+        "source_commit": "32879109e6e1de59557fcff401de53ede53058d5",
+        "status": "passed",
+        "tests": 600,
+        "passed": 600,
+        "failures": 0,
+        "skipped": 0,
+        "unittest_seconds": 127.405,
+        "supervised_seconds": 130.22702372499043,
+        "wall_seconds": 130.23102616700635,
+        "returncode": 0,
+        "report": {
+          "path": "runs/integration-collector-recovery-data-3287910-20261003/report.json",
+          "bytes": 111984,
+          "sha256": "acfa0d79a3eabcb79f20e3d520e3386ef745c962a996dc800fbc80b649e30a9c"
+        },
+        "launcher": {
+          "path": "runs/integration-collector-recovery-data-3287910-launch.py",
+          "bytes": 4222,
+          "sha256": "4bf4b591c517912bdbea7f76d5f47d876f487672cefacd3b878cdf48be74b8ba"
+        },
+        "retained_files_rehashed": 50,
+        "source_files": 411,
+        "all_four_runtime_flags_enabled": true,
+        "sources_assets_models_unchanged": true
+      }
+    ],
+    "fix_commit": "7d5fc1f4ecd1bbd6a5a139bde3585fb2255ce2fe",
+    "fixture_failure": "Lazy-import assertion inspected whole-suite sys.modules after explicit runtime tests loaded Torch and MuJoCo. Fresh bounded subprocess now checks adapter import behavior without touching parent state.",
+    "focused_marker_check": {
+      "tests": 17,
+      "seconds": 1.105,
+      "passed": true,
+      "parent_module_objects_preserved": true
+    },
+    "scope": "Combined actual regression; no admission of failed puck teacher batch, new actual model fitting, held-out or physical qualification."
   }
 }

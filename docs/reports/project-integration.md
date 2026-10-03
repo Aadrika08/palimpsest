@@ -220,3 +220,43 @@ counts at 2,117/1,228, and leaves old production/v2 admission unchanged. Actual
 corpus preparation and six-model fitting remain pending. Output/corpus overlap,
 source drift, failed sync and late publication are rejected before an admissible
 manifest can be published.
+
+
+## Collector and recovery-data regression
+
+Frozen integration `32879109e6e1de59557fcff401de53ede53058d5` passes **600 tests,
+no skips**, in 127.405 seconds (130.227 seconds supervised, exit 0 under 300
+seconds). All four actual simulation/MaleCNS/puck model flags are enabled. Root
+rehashes all fifty retained artifacts; all 411 source identities, shared assets,
+production model identities and tracked checkout remain unchanged. Report SHA256:
+`acfa0d79a3eabcb79f20e3d520e3386ef745c962a996dc800fbc80b649e30a9c`;
+launcher SHA256 `4bf4b591c517912bdbea7f76d5f47d876f487672cefacd3b878cdf48be74b8ba`.
+
+The preceding `b76d2b3` run remains a failure: 599/600 passed, one fixture failed,
+no skips, 124.478 seconds (127.830 seconds supervised). The recovery adapter's
+lazy-import assertion incorrectly examined whole-suite module state after actual
+runtime tests had loaded Torch/MuJoCo. Fixture-only `7d5fc1f` checks the import in
+a fresh bounded process; seventeen focused root checks pass in 1.105 seconds with
+both parent-module markers preserved. No adapter, protocol or runtime code was
+changed. Both failed and passed reports and launchers remain indexed.
+
+Both CI workflows also passed on fixture-runtime correction `ab2873b` (runs
+37082258747 and 37082254523). Those historical CI passes precede the latest
+recovery-data import correction; the earlier `3652aea` and `b76d2b3` failures
+remain failures.
+
+
+The fixed twenty-owner teacher collection on `b7db16a` completes 7,070 intervals
+and twenty natural goals, but its unchanged batch admission **fails**. Train
+seed 6004 has 113 contact intervals and zero final stop labels, below the fixed
+ten-label minimum. Its final puck distance is 0.19417256244312925 m, inside the
+task's 0.20 m dwell radius but outside the teacher's 0.18 m stop radius. No source
+is replaced, relabelled or padded, and the batch is excluded from training.
+
+Root independently audits every numeric row, twenty initial snapshots, 86 source
+hashes, 395 outer/389 inner indexed artifacts and 22 absent PID/start identities
+in 13.498 seconds. The first audit omitted the learning cursor from its copied
+mechanics digest shape; that failed audit is retained separately and corrected
+to the actual packet contract without changing product or run data. Successful
+audit SHA256 `5a4e49fba0ba4ed99078f8c59525264c96ea4647e7454f38dfc7a4defce0d644`;
+script `d721c12a86281132378ef01802eec3f44cef4577a338a988612d8cfbfcf3101c`.
