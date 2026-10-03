@@ -6,9 +6,10 @@ Working-set binding: `98d42920e321b42d22c6336f938d2c3ba9fd770d8ba24a2a`. Its MCP
 
 ## Current state
 
-Accepted memory comparison coverage is now **36/48 development cells** after
-[remaining-08](reports/m5-remaining-08-comparison.md), `cb13db9`; the failed-07
-four-cell hole remains open. The paired navigation trainer has passed independent
+Accepted memory comparison coverage is now **40/48 development cells** after
+remaining-09 completes forty owners and both independent raw/outcome audits pass
+first. Its focused publication is being prepared; the failed-07 four-cell hole
+remains open. The paired navigation trainer has passed independent
 control and input admission; its first invocation `77512` is retained as a
 zero-model startup refusal. Fresh corrected controls pass fourteen independent
 checks and full input admission on unchanged `6feade9`. Session `70035` drains
@@ -18,8 +19,8 @@ and exact development index are integrated after publication review.
 Remaining-09 controls pass independent review on `cb13db9`; its separately bounded
 admission drains session `81740` exit0 with twelve completed owners; independent
 retained verification passes after a receipt-schema checker correction. Its comparison
-controls pass independent review and the single comparison is running in session
-`23234` on frozen `eb55d3a`. Navigation binding `29aa8f8` is integrated after two source reviews and
+controls pass independent review and the single comparison drains session `23234`
+exit0 on frozen `eb55d3a`; retained audits pass first. Navigation binding `29aa8f8` is integrated after two source reviews and
 nine synthetic checks; the teacher-free evaluation runner is in progress. R3 stays open.
 
 Remaining-06 comparison completes once on frozen `016948b`, bringing independently
@@ -224,7 +225,7 @@ remains ineligible.
 - Mechanism: pinned upstream model/environment; allowlisted controller inputs; one mutable-runtime owner; complete native, policy, application and RNG snapshots. Recorded E fitting and U-only swaps preserve declared invariant hashes. Male controllers use separately trained fixed CPU assets and an authored sensor mapping.
 - Missing: M5 counterbalanced/held-out transfer; learned M6 puck success and held-out evaluation; M7 closed-loop qualification; M8 physical work; independent M9 operation, exhibition duration and physical artwork; final M10 handoff.
 - Unknown: original checkpoint training lineage, full-model Pi performance, physical stopping limits and account quota (telemetry unavailable).
-- Next action: finish and review the teacher-free navigation runner; its all-six admission/Engine binding is integrated at `29aa8f8` after nine synthetic checks. Training session `70035` drains exit0; retained audit passes first. The earlier zero-model startup refusal remains unchanged, and held-out stays locked. Remaining-09 controls pass eight root fixtures and full preflight; its twelve-owner admission, retained audit and publication review pass. Separate comparison controls also pass independent review; the one fixed invocation is running in session `23234`. Memory coverage is 36/48; failed 07 is neither retried nor given longer deadlines. The existing paired readout covers its historical 24-cell subset. Scoped exploration, homing and measured adaptation are met; learned puck keeps M6 open, automatic retraining stops after both negative development studies, and held-out stays locked. Physical qualification and independent exhibition operation remain open.
+- Next action: finish and review the teacher-free navigation runner; its all-six admission/Engine binding is integrated at `29aa8f8` after nine synthetic checks. Training session `70035` drains exit0; retained audit passes first. The earlier zero-model startup refusal remains unchanged, and held-out stays locked. Remaining-09 controls pass eight root fixtures and full preflight; its twelve-owner admission, retained audit and publication review pass. Separate comparison controls and the one fixed invocation pass, with first-pass raw/outcome audits; publish and review the evidence before remaining-10 preparation. Memory coverage is 40/48; failed 07 is neither retried nor given longer deadlines. The existing paired readout covers its historical 24-cell subset. Scoped exploration, homing and measured adaptation are met; learned puck keeps M6 open, automatic retraining stops after both negative development studies, and held-out stays locked. Physical qualification and independent exhibition operation remain open.
 
 The [single completion proposal](plans/m5-remaining-07-completion-proposal.md)
 has a read-only peer review and is pending an explicit user amendment to the
@@ -375,8 +376,25 @@ Fresh startup readmission passes in 2.493 s with 25,889,443,840 bytes free,
 unchanged pins/identities/inputs and an existing HOME descriptor lease probe.
 Startup receipt SHA-256:
 `ef01121eb5c703705f7dbe313f780ddd123691f3555a694fea897b3503e97e0c`.
-The one comparison is running in session `23234`; completion is not yet established
-and accepted coverage remains 36/48.
+The one comparison drains session `23234` exit0: forty normal owners, 4,680
+actual numeric rows and no unattempted owner. Normal enclosing time is 1,804.636 s;
+full drain/inventory time is 1,808.076 s. All 42 sampled nonlauncher PID/start
+identities plus the launcher are absent; the HOME lease is free and inventories,
+controls and clean `eb55d3a` remain unchanged. The producer retained a corrected
+aggregate-display list lookup; it did not change raw data or rerun an owner.
+Independent raw and outcome audits pass first in 16.350 / 4.489 s (16.763 /
+4.693 s supervised), checking 543 files / 1,102,948,896 bytes, forty snapshots,
+sixteen strict U-only forks, 605 identities and 120 input pins. Receipts:
+`runs/memory-remaining-09-comparison-root-audit-eb55d3a/audit.json`, SHA-256
+`910cf3452259e61e50f111742409320dcac02183a94881b438b29fac17791dab`, and
+`outcomes.json`, SHA-256
+`0fc404dc1487dff6272e9dca4ba1e978d0f05cd67f421fbb056118e243e44841`.
+All 36 task checks pass. Every condition reaches the goal at 430 for s30 paired
+change, 429 for its null/no-event cells and 432 for s31 local change. Both changed
+upper facts are passively corrected at 300; no own-U timing benefit is observed.
+No-event invokes no selector and contributes zero behavior bytes. Accepted
+coverage is 40/48; publication and remaining-10 preparation are next. Failed 07
+and held-out remain open.
 
 Paired navigation trainer `6feade9` is integrated after eleven independent root
 pure checks pass first in 1.698 s. It adds only the named trainer/test, preserving
