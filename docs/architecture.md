@@ -99,7 +99,11 @@ their censored endings. It leaves production model admission unchanged. The
 separate [puck learning interface](plans/m6-puck-learning.md) uses eight sensors
 plus its own previous mode; training requires every fixed demonstration to pass
 coverage admission. The retained first batch fails that gate despite twenty
-natural goals and remains excluded from the trainer.
+natural goals and remains excluded from the trainer. The separately corrected
+[twenty-owner collection](reports/m6-puck-teacher-collection-v2.md) passes unchanged
+admission. [Three fixed CPU fits](reports/m6-puck-training-v2.md) now have audited
+NPZ weights and all thirty epochs retained; student execution, replay and
+closed-loop development still need qualification.
 
 Research scripts freeze source identities, protocols and output bounds before
 execution. Their reports distinguish collection, cleanup, validation and task

@@ -349,3 +349,22 @@ Eighteen adjacent pure checks pass at integration `aede57b` in 7.052 seconds
 without skips. Actual replay remains pending separately reviewed controls.
 Both CI workflows passed on preceding `b49a414` (37087942054 / 37087939541);
 this is not a claim about the later replay-verifier source.
+
+
+## Puck fitting and reference replay correction
+
+The [three puck fits](m6-puck-training-v2.md), evidence `05902a6`, are integrated
+after all 24 references rehash. Source `82e2bd9` completes all ninety fixed
+epoch records in 59.820 seconds outer, with three finite six-array checkpoints.
+Root's independent NumPy audit passes first in 1.368 seconds, rehashing 416
+scoped entries including 267 unique teacher-data files. Every final outer output
+entry matches. The report preserves three earlier stage-inventory entries as
+pre-publication observations. No student native/dev/held-out result follows.
+
+[Reference replay v1](m5-controller-reference-replays-v1.md), evidence `c7f757b`,
+retains its zero-comparison Path-type failure, five unattempted owners and normal
+cleanup. All 64 evidence references rehash. Fix `9dd805d` changes one verifier
+call site and adds a real file/snapshot regression; no production API changes.
+Nineteen focused root tests pass without skips in 5.278 seconds at `110e9e6`.
+Fresh v2 controls pass separate root review and the actual six-owner attempt is
+in progress; this section makes no aggregate replay success claim.

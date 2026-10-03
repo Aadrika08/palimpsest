@@ -1904,5 +1904,41 @@
       37087942054,
       37087939541
     ]
+  },
+  "puck_fits_and_reference_path_fix": {
+    "puck_training_source": "82e2bd97b37832c2a7f84f6eda6a3eca98e02362",
+    "puck_training_evidence": "05902a64c1c64ca416895860463e098b4183fcb9",
+    "puck_models": 3,
+    "epochs_each": 30,
+    "outer_seconds": 59.819789009,
+    "root_audit_seconds": 1.368422392,
+    "root_scoped_entries_rehashed": 416,
+    "unique_data_files_rehashed": 267,
+    "evidence_references_rehashed": 24,
+    "reference_failure_evidence": "c7f757b209af23dc23be3317239cbd976b414a9a",
+    "failure_refs_rehashed": 64,
+    "reference_path_fix": "9dd805deb14bc6e1e19a00d80875cfb1aaa63e6b",
+    "focused_root_tests": 19,
+    "focused_root_seconds": 5.278,
+    "focused_root_skipped": 0,
+    "actual_reference_v2_status": "running_unqualified",
+    "qualification_claims": [],
+    "root_audit_artifacts": {
+      "audit.py": {
+        "path": "runs/puck-training-root-audit-82e2bd9/audit.py",
+        "bytes": 5849,
+        "sha256": "ca121d5f762a4fe94d03970d3a3a48b8a0dc1933294a05152a036b305bbbab2a"
+      },
+      "audit.json": {
+        "path": "runs/puck-training-root-audit-82e2bd9/audit.json",
+        "bytes": 113713,
+        "sha256": "161d6052c6bf426f3528bea59e915143a3799f89ebc2971691df9bec58caf20b"
+      },
+      "console.log": {
+        "path": "runs/puck-training-root-audit-82e2bd9/console.log",
+        "bytes": 1256,
+        "sha256": "e4a6661ead7827394134c56123d6dedd20b33155c8c27b36fccc1243031c7c57"
+      }
+    }
   }
 }

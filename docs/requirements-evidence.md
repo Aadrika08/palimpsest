@@ -149,5 +149,9 @@ including 1,569 intervals, thirteen snapshots and exact native/replay checks.
 The [fresh twenty-owner collection](reports/m6-puck-teacher-collection-v2.md)
 passes unchanged admission over 7,024 rows, including seventeen actual terminal
 zero labels for seed 6004. The old v1 batch remains excluded. Active task v5
-trainer binding passes twenty-four focused checks; trained task capability
-remains a separate gate.
+trainer binding passes twenty-four focused checks. [All three prescribed
+fits](reports/m6-puck-training-v2.md) then complete thirty epochs each, with all
+ninety histories and finite numeric artifacts audited. Student execution and
+closed-loop task capability remain separate gates. [Reference replay v1](reports/m5-controller-reference-replays-v1.md)
+failed before its first comparison; the isolated Path correction passes nineteen
+focused checks and its new six-owner native attempt is not yet qualified.
