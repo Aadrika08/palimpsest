@@ -1,0 +1,39 @@
+{
+  "schema_version": 1,
+  "profile": "male-reduced-artificial-interface-v1",
+  "controllers": {
+    "male-original": "original",
+    "male-control": "degree_rewired"
+  },
+  "qualification_claims": [],
+  "files": {
+    "report.json": {
+      "sha256": "594d4d330624ed1040ae2b3ffe2dedfbfacd6a2d360a29dcfcc6584d76b80e28",
+      "size_bytes": 5165
+    },
+    "protocol.json": {
+      "sha256": "477885033bf30f5857293e0f09fc75b4d850d9eb564f2cd7ec36355110ff5d42",
+      "size_bytes": 57700
+    },
+    "original-graph.json": {
+      "sha256": "baa5c1302d3eb62aa6c29b4f7781100a7c2d0c16c328e7537855eec2b0be5d81",
+      "size_bytes": 32864
+    },
+    "original.pt": {
+      "sha256": "0e1418e7f9adf8b1a908c2e12f61def835d6ca11c41fd0d272e7d71b68572da4",
+      "size_bytes": 303341
+    },
+    "degree_rewired-graph.json": {
+      "sha256": "cca9a6bbb803f7717bf7a360f3b1f1d4ffd9b355fc875a1b815108e31d31c566",
+      "size_bytes": 32864
+    },
+    "degree_rewired.pt": {
+      "sha256": "7d455316344efd91042efc2e0c511f3774e3c5e0f5f4e6342c41573d86b385a5",
+      "size_bytes": 303341
+    },
+    "source-graph.json": {
+      "sha256": "5aba0fef99afba666b88e40fc535091454e46d9330580d9280b203e8da0abac0",
+      "size_bytes": 101560
+    }
+  }
+}

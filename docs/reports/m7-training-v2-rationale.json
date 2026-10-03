@@ -1,0 +1,188 @@
+{
+  "elapsed_seconds": 0.9618320349982241,
+  "held_out_rows_read": false,
+  "mujoco_imported": false,
+  "protocol_sha256": "477885033bf30f5857293e0f09fc75b4d850d9eb564f2cd7ec36355110ff5d42",
+  "splits": {
+    "dev": {
+      "contact_ticks": 0,
+      "episodes": 4,
+      "heading": {
+        "abs_gt_0_5": 85,
+        "abs_gt_1": 64,
+        "abs_quantiles": [
+          4.618213722551445e-07,
+          0.001895453198812902,
+          0.02503109537065029,
+          0.10392219759523869,
+          1.1332258462905886,
+          1.989758825302123,
+          2.788867235183716
+        ],
+        "max": 2.788867235183716,
+        "mean": 0.22057188738589573,
+        "min": -0.3220384418964386,
+        "near_straight_abs_lt_0_1": 444,
+        "std": 0.6250991214919842
+      },
+      "runs": [
+        {
+          "contacts": 0,
+          "initial_distance": 5.133324658625929,
+          "last_distance": 1.9956823738247358,
+          "outcome": null,
+          "phase": "paused",
+          "seed": 108,
+          "ticks": 150
+        },
+        {
+          "contacts": 0,
+          "initial_distance": 7.129415074576108,
+          "last_distance": 3.674152113421803,
+          "outcome": null,
+          "phase": "paused",
+          "seed": 109,
+          "ticks": 150
+        },
+        {
+          "contacts": 0,
+          "initial_distance": 10.0417251325109,
+          "last_distance": 6.816131557172933,
+          "outcome": null,
+          "phase": "paused",
+          "seed": 110,
+          "ticks": 150
+        },
+        {
+          "contacts": 0,
+          "initial_distance": 4.91998306799565,
+          "last_distance": 1.8747026694038678,
+          "outcome": null,
+          "phase": "paused",
+          "seed": 111,
+          "ticks": 150
+        }
+      ],
+      "teacher_heading_minus_declared_bearing_wrapped_MAE": 0.06960792933578393,
+      "ticks": 600,
+      "velocity": {
+        "max": 0.699999988079071,
+        "mean": 0.699999988079071,
+        "min": 0.699999988079071,
+        "std": 0.0,
+        "unique": [
+          0.699999988079071
+        ]
+      }
+    },
+    "train": {
+      "contact_ticks": 0,
+      "episodes": 8,
+      "heading": {
+        "abs_gt_0_5": 115,
+        "abs_gt_1": 65,
+        "abs_quantiles": [
+          7.827879926480819e-07,
+          0.01320864143781364,
+          0.04495122283697128,
+          0.12576419115066528,
+          0.4350568711757669,
+          1.023420989513397,
+          2.1760640144348145
+        ],
+        "max": 2.1760640144348145,
+        "mean": 0.06247078774809239,
+        "min": -1.163744330406189,
+        "near_straight_abs_lt_0_1": 850,
+        "std": 0.385999275058876
+      },
+      "runs": [
+        {
+          "contacts": 0,
+          "initial_distance": 5.509002200749584,
+          "last_distance": 1.9740007264301107,
+          "outcome": null,
+          "phase": "paused",
+          "seed": 100,
+          "ticks": 150
+        },
+        {
+          "contacts": 0,
+          "initial_distance": 10.920245748993915,
+          "last_distance": 7.461146741264237,
+          "outcome": null,
+          "phase": "paused",
+          "seed": 101,
+          "ticks": 150
+        },
+        {
+          "contacts": 0,
+          "initial_distance": 6.469553457724802,
+          "last_distance": 3.434027319852855,
+          "outcome": null,
+          "phase": "paused",
+          "seed": 102,
+          "ticks": 150
+        },
+        {
+          "contacts": 0,
+          "initial_distance": 4.84387024692653,
+          "last_distance": 1.3502011724435812,
+          "outcome": null,
+          "phase": "paused",
+          "seed": 103,
+          "ticks": 150
+        },
+        {
+          "contacts": 0,
+          "initial_distance": 6.219825716768114,
+          "last_distance": 2.992630185282612,
+          "outcome": null,
+          "phase": "paused",
+          "seed": 104,
+          "ticks": 150
+        },
+        {
+          "contacts": 0,
+          "initial_distance": 6.594767110200027,
+          "last_distance": 3.2118609028579486,
+          "outcome": null,
+          "phase": "paused",
+          "seed": 105,
+          "ticks": 150
+        },
+        {
+          "contacts": 0,
+          "initial_distance": 8.37099320156756,
+          "last_distance": 4.805766288284393,
+          "outcome": null,
+          "phase": "paused",
+          "seed": 106,
+          "ticks": 150
+        },
+        {
+          "contacts": 0,
+          "initial_distance": 6.25170165689745,
+          "last_distance": 2.9591738112240966,
+          "outcome": null,
+          "phase": "paused",
+          "seed": 107,
+          "ticks": 150
+        }
+      ],
+      "teacher_heading_minus_declared_bearing_wrapped_MAE": 0.13352683011380917,
+      "ticks": 1200,
+      "velocity": {
+        "max": 0.699999988079071,
+        "mean": 0.699999988079071,
+        "min": 0.699999988079071,
+        "std": 0.0,
+        "unique": [
+          0.699999988079071
+        ]
+      }
+    }
+  },
+  "status": "completed_read_only_train_dev_audit",
+  "torch_imported": false
+}

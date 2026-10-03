@@ -1,0 +1,95 @@
+{
+  "derivatives": [
+    {
+      "boundary": "tick1",
+      "id": "student-continue-tick1",
+      "kind": "native-continuation",
+      "max_ticks": 4
+    },
+    {
+      "boundary": "initial",
+      "id": "student-replay-actions",
+      "kind": "action-replay",
+      "max_ticks": 120
+    },
+    {
+      "boundary": "initial",
+      "id": "student-replay-policy",
+      "kind": "policy-replay",
+      "max_ticks": 120
+    }
+  ],
+  "development": {
+    "bytes": 3221225472,
+    "goals_each_required": 3,
+    "inner_seconds": 1200,
+    "kill_grace_seconds": 15,
+    "max_ticks": 600,
+    "models": [
+      21,
+      22,
+      23
+    ],
+    "owners": 12,
+    "scenes": [
+      6100,
+      6101,
+      6102,
+      6103
+    ],
+    "status": "not_implemented_or_authorized",
+    "supervised_seconds": 1280,
+    "term_seconds": 1260
+  },
+  "held_out": "6200-6207 locked pending all-model fixed dev acceptance, independent audit and separate GO",
+  "id": "puck-student-mechanism-v1",
+  "layout_seed": 6000,
+  "layout_split": "train",
+  "learning_protocol_sha256": "bfdd047c1763af3d0b254c55df9137e179b65ce99e7eb870ca76f41332a83354",
+  "limits": {
+    "bytes": 1073741824,
+    "continuation_bytes": 33554432,
+    "inner_seconds": 600,
+    "kill_grace_seconds": 15,
+    "log_bytes_each": 1048576,
+    "min_free_bytes": 1073741824,
+    "owner_seconds": 180,
+    "owners": 4,
+    "progress_seconds": 30,
+    "root_and_replay_bytes": 67108864,
+    "snapshot_bytes": 8388608,
+    "startup_seconds": 60,
+    "supervised_seconds": 680,
+    "term_seconds": 660,
+    "total_retained_bytes": 17179869184
+  },
+  "minimum_source_ticks": 5,
+  "model_seed": 21,
+  "models_manifest": {
+    "path": "docs/plans/m6-puck-student-models-v1.json",
+    "sha256": "d8a2daf24943e5e8a2abf5062458910a1034dd003f8aa5153c32f0f83567502f"
+  },
+  "native_mechanics_protocol": {
+    "path": "docs/plans/m6-puck-mechanics-v5.json",
+    "sha256": "feb593223a3f8119cfba33018d26c90ccef7e8018c51eaf200cb4face137b384"
+  },
+  "native_state": "Validate distinct application schema/digest, exact source/task/feature/supervisor/model/bundle identities and own cursor before restore; retain full raw native bytes; no historical mechanics/teacher snapshot admission.",
+  "own_state": "Reset approach/tick0 once; append own BEFORE mode; stage prepare, exactly one existing MLP prediction, finite float64 action; commit only after completed native interval and row/event staging.",
+  "qualification_claims": [],
+  "replay": "Every owner constructs the same pinned CPU MLP before native capture/restore, preserving exact Torch profile/RNG. Native continuation restores own cursor. Action replay validates recorded sensors/own modes and applies recorded float64 action with zero MLP predictions. Policy replay predicts once per recorded interval. No teacher fields, analytic action fallback or controller-replacement exception.",
+  "runtime": {
+    "backend": "egl",
+    "cpu_threads": 1,
+    "mujoco": "3.3.6",
+    "numpy": "2.2.5",
+    "python": "3.11.15",
+    "torch": "2.9.0"
+  },
+  "scope": "Headless research student only; prospective native/replay mechanism gate, no task success or UI qualification.",
+  "source_snapshots": [
+    "initial",
+    "tick1"
+  ],
+  "source_ticks_max": 120,
+  "version": 1
+}

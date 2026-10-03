@@ -1,0 +1,622 @@
+{
+  "version": 1,
+  "status": "reference_replay_checked",
+  "executor_source_commit": "9dd805deb14bc6e1e19a00d80875cfb1aaa63e6b",
+  "producer_source_commit": "169e0c8ac75be713d9cda0bdd852b926ec1261cc",
+  "protocol_sha256": "2866f914723c839376b3705d93ca03b95d79ad2660e5c80382fd5ef3e6f085a8",
+  "references": {
+    "aggregate": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-reference-replay-v2/runs/m5-controller-reference-replays-v2-20261003/reference-replay-report.json",
+      "bytes": 56307,
+      "sha256": "3f36f4a00b89325e08ae050a4f26db2c2603ccebc48ff6f9b2868c31a1bc6465"
+    },
+    "outer": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-reference-replay-v2/runs/m5-reference-replay-v2-launch-9dd805d/launch.json",
+      "bytes": 3084,
+      "sha256": "027d96e8d2b6398486849e841fa29609fbf05195141336020dbfe123f174b3a3"
+    },
+    "launcher": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-reference-replay-v2/runs/m5-reference-replay-v2-launch-9dd805d/launch.py",
+      "bytes": 15201,
+      "sha256": "c6c3207379b8605a4520271cf1b532758aeb2d940c40d11e656548f93e2c434d"
+    },
+    "plan": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-reference-replay-v2/runs/m5-reference-replay-v2-launch-9dd805d/prepared-plan.json",
+      "bytes": 215679,
+      "sha256": "516f35c784cbb1268cc8b9f4bdd46d8c5f3c34b64ef39f216e90d77c7edeaced"
+    },
+    "prepared": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-reference-replay-v2/runs/m5-reference-replay-v2-launch-9dd805d/prepared.json",
+      "bytes": 2274,
+      "sha256": "e3a7dfe6ed4ea30338e371b8095880280c8bb9344bab1bfcfa63d1b96aff1773"
+    },
+    "identity_prepared": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-reference-replay-v2/runs/m5-reference-replay-v2-launch-9dd805d/identity-prepared.json",
+      "bytes": 111129,
+      "sha256": "8739030274b8fb50a61f2336fcca2d7dada719dbcbe5f7e7668d216dd9dbc509"
+    },
+    "identity_before": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-reference-replay-v2/runs/m5-reference-replay-v2-launch-9dd805d/identity-before.json",
+      "bytes": 111129,
+      "sha256": "8739030274b8fb50a61f2336fcca2d7dada719dbcbe5f7e7668d216dd9dbc509"
+    },
+    "identity_after": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-reference-replay-v2/runs/m5-reference-replay-v2-launch-9dd805d/identity-after.json",
+      "bytes": 111129,
+      "sha256": "8739030274b8fb50a61f2336fcca2d7dada719dbcbe5f7e7668d216dd9dbc509"
+    },
+    "local_audit_script": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-reference-replay-v2/runs/m5-reference-replay-v2-audit-9dd805d/audit.py",
+      "bytes": 5415,
+      "sha256": "69faab150c36136c4191f3375bf37f96e91092111747e2375bcaff51186a3f17"
+    },
+    "local_audit": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-reference-replay-v2/runs/m5-reference-replay-v2-audit-9dd805d/audit.json",
+      "bytes": 23508,
+      "sha256": "f4819c4c2630c34d51ea53db6a1b083465ee895c2c5ea950722bfa487543305a"
+    },
+    "root_receipt": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/project-integration/runs/m5-reference-replay-v2-root-audit-9dd805d/receipt.json",
+      "bytes": 1297,
+      "sha256": "210c212237cecf8881cbaea66384cf314a2164ea8223939cf7f7838656ac1eef"
+    },
+    "root_audit_script": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/project-integration/runs/m5-reference-replay-v2-root-audit-9dd805d/audit.py",
+      "bytes": 6458,
+      "sha256": "778b949a30db3b515a2cb1825eb245d6530bb44e6f833834fd21a9bfda75ae79"
+    },
+    "root_audit": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/project-integration/runs/m5-reference-replay-v2-root-audit-9dd805d/audit.json",
+      "bytes": 160763,
+      "sha256": "f696eaa0909f58fbbda333b20a73f51885fe4d7e828282b7ba1947755e3a6323"
+    },
+    "root_audit_console": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/project-integration/runs/m5-reference-replay-v2-root-audit-9dd805d/console.log",
+      "bytes": 1514,
+      "sha256": "2cc45d6f0241f6f13586773dc5e8ded2188767fdaa69b9f1439ca02b540a1854"
+    },
+    "root_control_review": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/project-integration/runs/m5-reference-replay-v2-root-review-9dd805d/report.json",
+      "bytes": 914,
+      "sha256": "4ec783742ac10e0f1477365325f50225083b98484e09ae31f2d4fe9eec7039e7"
+    },
+    "control_preflight": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-reference-replay-v2/runs/m5-reference-replay-v2-preparation-9dd805d/control-preflight.json",
+      "bytes": 1269,
+      "sha256": "8c43de50d509c416fb25d7de4496db28f916409b1daf116dd9de766978c848f4"
+    }
+  },
+  "rows": [
+    {
+      "run_id": "82d02e1acf964577b572175ac2d746e6",
+      "reference_mode": "memory-reference-original-flynn",
+      "mode": "actions",
+      "rows": 129,
+      "compared_events": 521,
+      "initial_snp_sha256": "2d1750ecdf1ce35657dbcac78524a884d7d9d99f0997d637e94981ced9438e67",
+      "source_snp_sha256": "50836512b963bed188a17d133367893d9f589204d9beec33d59f32b3ca87cd0b",
+      "normalized_initial_exact": true,
+      "inference_executed": false,
+      "final_boundary": 429
+    },
+    {
+      "run_id": "30f321c4bfb14f8bba86c48633fb3863",
+      "reference_mode": "memory-reference-original-flynn",
+      "mode": "policy",
+      "rows": 129,
+      "compared_events": 521,
+      "initial_snp_sha256": "5aba6a39bc6a4353f6ab2b4800a9311978163547edfdcc319054dc91ac8ebe36",
+      "source_snp_sha256": "50836512b963bed188a17d133367893d9f589204d9beec33d59f32b3ca87cd0b",
+      "normalized_initial_exact": true,
+      "inference_executed": true,
+      "final_boundary": 429
+    },
+    {
+      "run_id": "f4589a52de7b4ecc925b6d01addf2c64",
+      "reference_mode": "memory-reference-sensor-only",
+      "mode": "actions",
+      "rows": 124,
+      "compared_events": 501,
+      "initial_snp_sha256": "b33c33f8e2ce3d763ddb61a77dc0c38450987141c7ad3fe00d35ca7afdb44553",
+      "source_snp_sha256": "e182973a62bead2034e1023b6010fefba9f7f1d5b798c716a11ec27fbf64d420",
+      "normalized_initial_exact": true,
+      "inference_executed": false,
+      "final_boundary": 424
+    },
+    {
+      "run_id": "19c76d85db5f43148bb0176d5430f7c4",
+      "reference_mode": "memory-reference-sensor-only",
+      "mode": "policy",
+      "rows": 124,
+      "compared_events": 501,
+      "initial_snp_sha256": "3b8f4a951b10a72ea47a403a1871cb22a8ce8fc6e0675a23c0dfe2496abd9fb2",
+      "source_snp_sha256": "e182973a62bead2034e1023b6010fefba9f7f1d5b798c716a11ec27fbf64d420",
+      "normalized_initial_exact": true,
+      "inference_executed": false,
+      "final_boundary": 424
+    },
+    {
+      "run_id": "3f539fefbc3c4c2f873e3ad690ea12d2",
+      "reference_mode": "memory-reference-teacher",
+      "mode": "actions",
+      "rows": 118,
+      "compared_events": 478,
+      "initial_snp_sha256": "4692508b1ed9d242eab7cdb6f427b3604acb967e2fcf8c33320107f7c1247dea",
+      "source_snp_sha256": "0e1dca845f5747ad1596ca6b071c9bc8a151002b5412553c81b8e07957171be1",
+      "normalized_initial_exact": true,
+      "inference_executed": false,
+      "final_boundary": 418
+    },
+    {
+      "run_id": "e801ac5c026f42878e2df248898c774f",
+      "reference_mode": "memory-reference-teacher",
+      "mode": "policy",
+      "rows": 118,
+      "compared_events": 478,
+      "initial_snp_sha256": "df81a21a4b3c40db4ea02bef061c53ab8f24e52f81a3ce08dfacb6e31d74a6dc",
+      "source_snp_sha256": "0e1dca845f5747ad1596ca6b071c9bc8a151002b5412553c81b8e07957171be1",
+      "normalized_initial_exact": true,
+      "inference_executed": false,
+      "final_boundary": 418
+    }
+  ],
+  "counts": {
+    "rows": 742,
+    "policy_neural_rows": 129,
+    "policy_nonneural_rows": 242,
+    "saved_action_rows": 371,
+    "recording_refs": 38
+  },
+  "count_scopes": {
+    "frozen_input_identity_entries": 560,
+    "destination_recording_refs": 38,
+    "indexed_destination_files": 62,
+    "indexed_destination_bytes": 155359889,
+    "all_output_files": 89,
+    "all_output_bytes": 155805585,
+    "root_scoped_entries": 622,
+    "root_scoped_entries_definition": "560 frozen inputs plus 62 destination files",
+    "evidence_index_files": 78,
+    "evidence_index_bytes": 156186959
+  },
+  "initial_snapshot_equality": {
+    "source_snapshots": 3,
+    "destination_snapshots": 6,
+    "excluded_fields": [
+      "application.source_run_id",
+      "event_prefix",
+      "execution_mode"
+    ],
+    "remaining_typed_state_exact": true
+  },
+  "local_audit": {
+    "first_invocation": true,
+    "seconds": 11.406070181998075,
+    "native_model_imports": [],
+    "neural_recomputation": false
+  },
+  "root_audit": {
+    "first_invocation": true,
+    "seconds": 3.322777538007358,
+    "max_absolute_numeric_error": 0,
+    "native_model_imported": false,
+    "scope": "Independent numeric/native-initial/hash/cleanup checks. Lifecycle event comparisons are bound runner evidence, not independently recomputed here."
+  },
+  "outer": {
+    "operational_pass": true,
+    "exitcode": 0,
+    "wall_seconds_including_cleanup": 153.54690817798837,
+    "cleanup_seconds": 0.1228157809964614,
+    "eight_sampled_nonlauncher_pid_start_absent": true,
+    "forced_signals": [],
+    "monitor_errors": [],
+    "source_inventory_bytes_equal": true,
+    "slot_released": true
+  },
+  "claims": {
+    "executable_reference_replay_qualified": true,
+    "new_acquisition": false,
+    "new_independent_task_trials": false,
+    "memory_benefit": false,
+    "r2_complete": false,
+    "heldout_access": false
+  },
+  "limitations": [
+    "Only original-checkpoint policy replay executes neural inference: 129 rows; saved-action replays execute no inference.",
+    "Reference information differs: original upstream true-pose goal bearing, visible-goal/contact sensor script, privileged current-map teacher.",
+    "Lifecycle comparisons are bound runner evidence, not independently recomputed by root audit.",
+    "Prior zero-row v1 failure and own-U null/negative outcomes remain unchanged."
+  ],
+  "files": [
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-reference-replay-v2/runs/m5-controller-reference-replays-v2-20261003/runs/82d02e1acf964577b572175ac2d746e6/recording/manifest.json",
+      "bytes": 7336,
+      "sha256": "709bf7685b16341087c62670eb8cf82a43fd445066824b4f7f58dcc4ae777da8"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-reference-replay-v2/runs/m5-controller-reference-replays-v2-20261003/runs/82d02e1acf964577b572175ac2d746e6/recording/events.jsonl",
+      "bytes": 334497,
+      "sha256": "541f7349c76d4185c0c0df6d072edcd3762d95a5dc9d105176671353badebafc"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-reference-replay-v2/runs/m5-controller-reference-replays-v2-20261003/runs/82d02e1acf964577b572175ac2d746e6/recording/chunks/000000.npz",
+      "bytes": 6299636,
+      "sha256": "a0af820d53d7ea7a84de072bb8f00e30e46845c1bd2e51ff9fd5380decf97d94"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-reference-replay-v2/runs/m5-controller-reference-replays-v2-20261003/runs/82d02e1acf964577b572175ac2d746e6/recording/chunks/000001.npz",
+      "bytes": 6299636,
+      "sha256": "49cc164c0012f92eabc438af885170b59f9686571e629832684dd5a53a509e50"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-reference-replay-v2/runs/m5-controller-reference-replays-v2-20261003/runs/82d02e1acf964577b572175ac2d746e6/recording/chunks/000002.npz",
+      "bytes": 6299636,
+      "sha256": "7e273c9cb7494b529ac71e9bb7783cfd1b8eb142fe64afa6817bc0e24e6a923d"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-reference-replay-v2/runs/m5-controller-reference-replays-v2-20261003/runs/82d02e1acf964577b572175ac2d746e6/recording/chunks/000003.npz",
+      "bytes": 6299636,
+      "sha256": "9793605805b28241464053939270940902bd09b32a8eae506e2a75bcebab8154"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-reference-replay-v2/runs/m5-controller-reference-replays-v2-20261003/runs/82d02e1acf964577b572175ac2d746e6/recording/chunks/000004.npz",
+      "bytes": 200758,
+      "sha256": "4e9b14ac98c37c69e27176117071c9b4d5991d2daecf11287c58f78a00ee9926"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-reference-replay-v2/runs/m5-controller-reference-replays-v2-20261003/runs/82d02e1acf964577b572175ac2d746e6/snapshots/initial.snp",
+      "bytes": 1152750,
+      "sha256": "2d1750ecdf1ce35657dbcac78524a884d7d9d99f0997d637e94981ced9438e67"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-reference-replay-v2/runs/m5-controller-reference-replays-v2-20261003/runs/82d02e1acf964577b572175ac2d746e6/snapshots/index.json",
+      "bytes": 418,
+      "sha256": "5ec7e6d506057162f8b0d1970dcace0f28a2669c3f3e6a1e7dac957a50af185d"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-reference-replay-v2/runs/m5-controller-reference-replays-v2-20261003/runs/82d02e1acf964577b572175ac2d746e6/replay-report.json",
+      "bytes": 1853,
+      "sha256": "626508eb20684cc96195c8eeaf677a59d3d0276e8dd49d525854733f4f52bc29"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-reference-replay-v2/runs/m5-controller-reference-replays-v2-20261003/runs/82d02e1acf964577b572175ac2d746e6/worker-report.json",
+      "bytes": 659,
+      "sha256": "8a865e33d2a737fc923b60b9ed692c1552f7585f6d0f9f1ace4f971e4fe543b5"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-reference-replay-v2/runs/m5-controller-reference-replays-v2-20261003/runs/30f321c4bfb14f8bba86c48633fb3863/recording/manifest.json",
+      "bytes": 7375,
+      "sha256": "4ad088d9e7f27e1229f5bccccb01fe064fd74175d2bf8f4dbdb843ab36452d4e"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-reference-replay-v2/runs/m5-controller-reference-replays-v2-20261003/runs/30f321c4bfb14f8bba86c48633fb3863/recording/events.jsonl",
+      "bytes": 334818,
+      "sha256": "f8c777289574cabc12391c4db4c26f4838db5f61be5be61337d864fe9f3b7904"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-reference-replay-v2/runs/m5-controller-reference-replays-v2-20261003/runs/30f321c4bfb14f8bba86c48633fb3863/recording/chunks/000000.npz",
+      "bytes": 6919538,
+      "sha256": "39c7c336b2825e4dada886144999b7c46db3cf2a996b89b7cc2d28c10230d720"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-reference-replay-v2/runs/m5-controller-reference-replays-v2-20261003/runs/30f321c4bfb14f8bba86c48633fb3863/recording/chunks/000001.npz",
+      "bytes": 6919538,
+      "sha256": "39338cbe114628d48abbfe21f7c79c04d0753b13979784f21e3b9356552151c5"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-reference-replay-v2/runs/m5-controller-reference-replays-v2-20261003/runs/30f321c4bfb14f8bba86c48633fb3863/recording/chunks/000002.npz",
+      "bytes": 6919538,
+      "sha256": "ef23d5d6faf23651e7232291c60a464d68a2e671a292df372fd1de4e9980e938"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-reference-replay-v2/runs/m5-controller-reference-replays-v2-20261003/runs/30f321c4bfb14f8bba86c48633fb3863/recording/chunks/000003.npz",
+      "bytes": 6919538,
+      "sha256": "d8c508776c19c1bb177bb490e672e6b49be212753ff4b3890488db0e79018988"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-reference-replay-v2/runs/m5-controller-reference-replays-v2-20261003/runs/30f321c4bfb14f8bba86c48633fb3863/recording/chunks/000004.npz",
+      "bytes": 220624,
+      "sha256": "b1951cc0dc9de1139a7c4d4f9e607604b2ec494d9789bb70068ff685a360236f"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-reference-replay-v2/runs/m5-controller-reference-replays-v2-20261003/runs/30f321c4bfb14f8bba86c48633fb3863/snapshots/initial.snp",
+      "bytes": 1152749,
+      "sha256": "5aba6a39bc6a4353f6ab2b4800a9311978163547edfdcc319054dc91ac8ebe36"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-reference-replay-v2/runs/m5-controller-reference-replays-v2-20261003/runs/30f321c4bfb14f8bba86c48633fb3863/snapshots/index.json",
+      "bytes": 418,
+      "sha256": "15a65fec82eeba1b9966a1a5c092cc402302c42b4969c451b7d9f613e5241ed7"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-reference-replay-v2/runs/m5-controller-reference-replays-v2-20261003/runs/30f321c4bfb14f8bba86c48633fb3863/replay-report.json",
+      "bytes": 1580,
+      "sha256": "951b4e103d2a428449cff69d6ed1170fb951562aee0656831dcf05aa7f582911"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-reference-replay-v2/runs/m5-controller-reference-replays-v2-20261003/runs/30f321c4bfb14f8bba86c48633fb3863/worker-report.json",
+      "bytes": 658,
+      "sha256": "ab9009a70cd774179ed7528479e8d901f402bbf1985d2822552d62bc33e26452"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-reference-replay-v2/runs/m5-controller-reference-replays-v2-20261003/runs/f4589a52de7b4ecc925b6d01addf2c64/recording/manifest.json",
+      "bytes": 7325,
+      "sha256": "3b4e889197d3fdfcd78be56ca7ebe00694285d5978be0d5e350cdd49a7ef6fb7"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-reference-replay-v2/runs/m5-controller-reference-replays-v2-20261003/runs/f4589a52de7b4ecc925b6d01addf2c64/recording/events.jsonl",
+      "bytes": 300998,
+      "sha256": "b9ee9b74f26c836a61f92119b2befec23f577de9c0eaebe03f8ab68737bc9a97"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-reference-replay-v2/runs/m5-controller-reference-replays-v2-20261003/runs/f4589a52de7b4ecc925b6d01addf2c64/recording/chunks/000000.npz",
+      "bytes": 6299892,
+      "sha256": "6da47aec434453e3e052eb9665fa9b49d3346c4fa2862ba334ab2883c011efa1"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-reference-replay-v2/runs/m5-controller-reference-replays-v2-20261003/runs/f4589a52de7b4ecc925b6d01addf2c64/recording/chunks/000001.npz",
+      "bytes": 6299892,
+      "sha256": "3892f2404042d8f705f6748ed84f9fb7bdbd9b5bf2e2ea578dae9b3a3168dcd6"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-reference-replay-v2/runs/m5-controller-reference-replays-v2-20261003/runs/f4589a52de7b4ecc925b6d01addf2c64/recording/chunks/000002.npz",
+      "bytes": 6299892,
+      "sha256": "097e661435d03e2d032930ad1bb175f9dc2cd837d64093046ac0f622d6dd45b5"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-reference-replay-v2/runs/m5-controller-reference-replays-v2-20261003/runs/f4589a52de7b4ecc925b6d01addf2c64/recording/chunks/000003.npz",
+      "bytes": 5512908,
+      "sha256": "2d97ac9d9f95025576174dd2270e1937a603ac0e1b32ea16f41daa5355fa09a9"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-reference-replay-v2/runs/m5-controller-reference-replays-v2-20261003/runs/f4589a52de7b4ecc925b6d01addf2c64/snapshots/initial.snp",
+      "bytes": 594771,
+      "sha256": "b33c33f8e2ce3d763ddb61a77dc0c38450987141c7ad3fe00d35ca7afdb44553"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-reference-replay-v2/runs/m5-controller-reference-replays-v2-20261003/runs/f4589a52de7b4ecc925b6d01addf2c64/snapshots/index.json",
+      "bytes": 416,
+      "sha256": "e852167b600bc67abbda6903d51da952d72baf0b568ad9d893fa72de4007dc89"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-reference-replay-v2/runs/m5-controller-reference-replays-v2-20261003/runs/f4589a52de7b4ecc925b6d01addf2c64/replay-report.json",
+      "bytes": 1853,
+      "sha256": "17cce8d7af4412b79e5afee5db745be7fca49501a04271a2fb4500a0a3450188"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-reference-replay-v2/runs/m5-controller-reference-replays-v2-20261003/runs/f4589a52de7b4ecc925b6d01addf2c64/worker-report.json",
+      "bytes": 656,
+      "sha256": "e4607a9c522a0e91a8906f9b2ebd92af1c04832bf9126c410053985e70c4e5af"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-reference-replay-v2/runs/m5-controller-reference-replays-v2-20261003/runs/19c76d85db5f43148bb0176d5430f7c4/recording/manifest.json",
+      "bytes": 7322,
+      "sha256": "02ef1799e7c7ae8d41b820be76835b822ddb27f0fe165b164cd42f0ba64452da"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-reference-replay-v2/runs/m5-controller-reference-replays-v2-20261003/runs/19c76d85db5f43148bb0176d5430f7c4/recording/events.jsonl",
+      "bytes": 300829,
+      "sha256": "6b5ff2590313ec3cfc44e80e70509856e0f1f528d5cd7581b5a42c869025148c"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-reference-replay-v2/runs/m5-controller-reference-replays-v2-20261003/runs/19c76d85db5f43148bb0176d5430f7c4/recording/chunks/000000.npz",
+      "bytes": 6299892,
+      "sha256": "0041ac8c44c3c74bf81ddc8829975abec28203f73236b65262fdd2f12f91455d"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-reference-replay-v2/runs/m5-controller-reference-replays-v2-20261003/runs/19c76d85db5f43148bb0176d5430f7c4/recording/chunks/000001.npz",
+      "bytes": 6299892,
+      "sha256": "5539088e3d87dea1e0abf9d4eab6ecd2e5d20695358798731292f1f3455accfc"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-reference-replay-v2/runs/m5-controller-reference-replays-v2-20261003/runs/19c76d85db5f43148bb0176d5430f7c4/recording/chunks/000002.npz",
+      "bytes": 6299892,
+      "sha256": "c8b734128f940bf4683160328459743bb185d98259c792111404d705ed2f2e67"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-reference-replay-v2/runs/m5-controller-reference-replays-v2-20261003/runs/19c76d85db5f43148bb0176d5430f7c4/recording/chunks/000003.npz",
+      "bytes": 5512908,
+      "sha256": "cfb62be15aabca608772096be83fbe91db5bc18817d41bf0e6f507c89e276db4"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-reference-replay-v2/runs/m5-controller-reference-replays-v2-20261003/runs/19c76d85db5f43148bb0176d5430f7c4/snapshots/initial.snp",
+      "bytes": 594770,
+      "sha256": "3b8f4a951b10a72ea47a403a1871cb22a8ce8fc6e0675a23c0dfe2496abd9fb2"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-reference-replay-v2/runs/m5-controller-reference-replays-v2-20261003/runs/19c76d85db5f43148bb0176d5430f7c4/snapshots/index.json",
+      "bytes": 416,
+      "sha256": "18dfde7ead9bb48f8da789b0d8ec1b7394b52b8aab6634501d1c94b83f6d768d"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-reference-replay-v2/runs/m5-controller-reference-replays-v2-20261003/runs/19c76d85db5f43148bb0176d5430f7c4/replay-report.json",
+      "bytes": 1581,
+      "sha256": "8ab40b9226dd9d715d320d73d582817d13a8bcd8d92fbbb1fdc9410e4c10d267"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-reference-replay-v2/runs/m5-controller-reference-replays-v2-20261003/runs/19c76d85db5f43148bb0176d5430f7c4/worker-report.json",
+      "bytes": 654,
+      "sha256": "ec7b60d8b775e31fa56767edb0a35f811917fb08c5e8ef1e03100d82d44ac786"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-reference-replay-v2/runs/m5-controller-reference-replays-v2-20261003/runs/3f539fefbc3c4c2f873e3ad690ea12d2/recording/manifest.json",
+      "bytes": 7308,
+      "sha256": "e676e88985a0b1f8261fd5e3d2ad3ae3059ac8610d45790658bca66e68519e63"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-reference-replay-v2/runs/m5-controller-reference-replays-v2-20261003/runs/3f539fefbc3c4c2f873e3ad690ea12d2/recording/events.jsonl",
+      "bytes": 375618,
+      "sha256": "f8cabb57b12c8a835b20ece3550d8203fe1d7678e9e5559aa8633137f6f00ff1"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-reference-replay-v2/runs/m5-controller-reference-replays-v2-20261003/runs/3f539fefbc3c4c2f873e3ad690ea12d2/recording/chunks/000000.npz",
+      "bytes": 6299636,
+      "sha256": "43454b4c448e0dba4145cb5681b9b6423faac8edbffcbb19d9ece9078bf92c20"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-reference-replay-v2/runs/m5-controller-reference-replays-v2-20261003/runs/3f539fefbc3c4c2f873e3ad690ea12d2/recording/chunks/000001.npz",
+      "bytes": 6299636,
+      "sha256": "cb33fa8ab3364182c0ea0a6b5678c34ed8fbde9eb329c6befb5f6987c8553bbd"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-reference-replay-v2/runs/m5-controller-reference-replays-v2-20261003/runs/3f539fefbc3c4c2f873e3ad690ea12d2/recording/chunks/000002.npz",
+      "bytes": 6299636,
+      "sha256": "0c2ba827cef66efff3cd6d14f0b42c5d4c7b9eb9c3d48f0fcaea217445dd35ff"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-reference-replay-v2/runs/m5-controller-reference-replays-v2-20261003/runs/3f539fefbc3c4c2f873e3ad690ea12d2/recording/chunks/000003.npz",
+      "bytes": 4332256,
+      "sha256": "38f3b1ca48e57c78b769105b1b02f329020629f73db4eda20f90e7567b5f2b59"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-reference-replay-v2/runs/m5-controller-reference-replays-v2-20261003/runs/3f539fefbc3c4c2f873e3ad690ea12d2/snapshots/initial.snp",
+      "bytes": 598186,
+      "sha256": "4692508b1ed9d242eab7cdb6f427b3604acb967e2fcf8c33320107f7c1247dea"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-reference-replay-v2/runs/m5-controller-reference-replays-v2-20261003/runs/3f539fefbc3c4c2f873e3ad690ea12d2/snapshots/index.json",
+      "bytes": 413,
+      "sha256": "8516383056f797e5a62411f85afc8a13ca057d1969bedae3e3c5f8eb67f7f0fc"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-reference-replay-v2/runs/m5-controller-reference-replays-v2-20261003/runs/3f539fefbc3c4c2f873e3ad690ea12d2/replay-report.json",
+      "bytes": 1853,
+      "sha256": "d2e1a484c74aed5bce93508558135672db8d4c0e1a3229f8cbc5f1ac0d2bdb52"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-reference-replay-v2/runs/m5-controller-reference-replays-v2-20261003/runs/3f539fefbc3c4c2f873e3ad690ea12d2/worker-report.json",
+      "bytes": 651,
+      "sha256": "2012243083a8d360c97920f30684362d114df07fe9ea9d0b665cd67d3d257c40"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-reference-replay-v2/runs/m5-controller-reference-replays-v2-20261003/runs/e801ac5c026f42878e2df248898c774f/recording/manifest.json",
+      "bytes": 7305,
+      "sha256": "17663ba92469bff5a54cd888c202eaae6d1ea358d86ca19903110777aa26bcc0"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-reference-replay-v2/runs/m5-controller-reference-replays-v2-20261003/runs/e801ac5c026f42878e2df248898c774f/recording/events.jsonl",
+      "bytes": 375449,
+      "sha256": "7355179e0ef73e07779a0bf5861a10ad9e4ebd9c98f964749ad563270b2a5285"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-reference-replay-v2/runs/m5-controller-reference-replays-v2-20261003/runs/e801ac5c026f42878e2df248898c774f/recording/chunks/000000.npz",
+      "bytes": 6299636,
+      "sha256": "e9970cc0294da8751669f8419703ab7a275f9f9b763fc0d2f1a1a8d5c2a20bd1"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-reference-replay-v2/runs/m5-controller-reference-replays-v2-20261003/runs/e801ac5c026f42878e2df248898c774f/recording/chunks/000001.npz",
+      "bytes": 6299636,
+      "sha256": "0ae720b120e7bae211a60dbd1e82f4772beef1face3446398399245af49b11f3"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-reference-replay-v2/runs/m5-controller-reference-replays-v2-20261003/runs/e801ac5c026f42878e2df248898c774f/recording/chunks/000002.npz",
+      "bytes": 6299636,
+      "sha256": "e230eb2fa712e32c11e845a92f30b2647422e3859e64ce9a4af2361ffd938e8d"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-reference-replay-v2/runs/m5-controller-reference-replays-v2-20261003/runs/e801ac5c026f42878e2df248898c774f/recording/chunks/000003.npz",
+      "bytes": 4332256,
+      "sha256": "300a1f514c8600bb3239a194e2d9113ce0188a3c0bd592ca8a1a177f11f21392"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-reference-replay-v2/runs/m5-controller-reference-replays-v2-20261003/runs/e801ac5c026f42878e2df248898c774f/snapshots/initial.snp",
+      "bytes": 598185,
+      "sha256": "df81a21a4b3c40db4ea02bef061c53ab8f24e52f81a3ce08dfacb6e31d74a6dc"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-reference-replay-v2/runs/m5-controller-reference-replays-v2-20261003/runs/e801ac5c026f42878e2df248898c774f/snapshots/index.json",
+      "bytes": 413,
+      "sha256": "187b67b108960b14a4f4b944d81b0671bcdbe3e77896078e1ee4d25c34c4a53e"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-reference-replay-v2/runs/m5-controller-reference-replays-v2-20261003/runs/e801ac5c026f42878e2df248898c774f/replay-report.json",
+      "bytes": 1581,
+      "sha256": "027d109f255242e68e8d9c0d7218c91ccba81e02e78775cffe37e95b55f87d91"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-reference-replay-v2/runs/m5-controller-reference-replays-v2-20261003/runs/e801ac5c026f42878e2df248898c774f/worker-report.json",
+      "bytes": 651,
+      "sha256": "bd13271f27098ac6ea116d4213df15d3282807bdb9ac8d7d3903061248a49a75"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-reference-replay-v2/runs/m5-controller-reference-replays-v2-20261003/reference-replay-report.json",
+      "bytes": 56307,
+      "sha256": "3f36f4a00b89325e08ae050a4f26db2c2603ccebc48ff6f9b2868c31a1bc6465"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-reference-replay-v2/runs/m5-reference-replay-v2-launch-9dd805d/launch.json",
+      "bytes": 3084,
+      "sha256": "027d96e8d2b6398486849e841fa29609fbf05195141336020dbfe123f174b3a3"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-reference-replay-v2/runs/m5-reference-replay-v2-launch-9dd805d/launch.py",
+      "bytes": 15201,
+      "sha256": "c6c3207379b8605a4520271cf1b532758aeb2d940c40d11e656548f93e2c434d"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-reference-replay-v2/runs/m5-reference-replay-v2-launch-9dd805d/prepared-plan.json",
+      "bytes": 215679,
+      "sha256": "516f35c784cbb1268cc8b9f4bdd46d8c5f3c34b64ef39f216e90d77c7edeaced"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-reference-replay-v2/runs/m5-reference-replay-v2-launch-9dd805d/prepared.json",
+      "bytes": 2274,
+      "sha256": "e3a7dfe6ed4ea30338e371b8095880280c8bb9344bab1bfcfa63d1b96aff1773"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-reference-replay-v2/runs/m5-reference-replay-v2-launch-9dd805d/identity-prepared.json",
+      "bytes": 111129,
+      "sha256": "8739030274b8fb50a61f2336fcca2d7dada719dbcbe5f7e7668d216dd9dbc509"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-reference-replay-v2/runs/m5-reference-replay-v2-launch-9dd805d/identity-before.json",
+      "bytes": 111129,
+      "sha256": "8739030274b8fb50a61f2336fcca2d7dada719dbcbe5f7e7668d216dd9dbc509"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-reference-replay-v2/runs/m5-reference-replay-v2-launch-9dd805d/identity-after.json",
+      "bytes": 111129,
+      "sha256": "8739030274b8fb50a61f2336fcca2d7dada719dbcbe5f7e7668d216dd9dbc509"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-reference-replay-v2/runs/m5-reference-replay-v2-audit-9dd805d/audit.py",
+      "bytes": 5415,
+      "sha256": "69faab150c36136c4191f3375bf37f96e91092111747e2375bcaff51186a3f17"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-reference-replay-v2/runs/m5-reference-replay-v2-audit-9dd805d/audit.json",
+      "bytes": 23508,
+      "sha256": "f4819c4c2630c34d51ea53db6a1b083465ee895c2c5ea950722bfa487543305a"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/project-integration/runs/m5-reference-replay-v2-root-audit-9dd805d/receipt.json",
+      "bytes": 1297,
+      "sha256": "210c212237cecf8881cbaea66384cf314a2164ea8223939cf7f7838656ac1eef"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/project-integration/runs/m5-reference-replay-v2-root-audit-9dd805d/audit.py",
+      "bytes": 6458,
+      "sha256": "778b949a30db3b515a2cb1825eb245d6530bb44e6f833834fd21a9bfda75ae79"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/project-integration/runs/m5-reference-replay-v2-root-audit-9dd805d/audit.json",
+      "bytes": 160763,
+      "sha256": "f696eaa0909f58fbbda333b20a73f51885fe4d7e828282b7ba1947755e3a6323"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/project-integration/runs/m5-reference-replay-v2-root-audit-9dd805d/console.log",
+      "bytes": 1514,
+      "sha256": "2cc45d6f0241f6f13586773dc5e8ded2188767fdaa69b9f1439ca02b540a1854"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/project-integration/runs/m5-reference-replay-v2-root-review-9dd805d/report.json",
+      "bytes": 914,
+      "sha256": "4ec783742ac10e0f1477365325f50225083b98484e09ae31f2d4fe9eec7039e7"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-reference-replay-v2/runs/m5-reference-replay-v2-preparation-9dd805d/control-preflight.json",
+      "bytes": 1269,
+      "sha256": "8c43de50d509c416fb25d7de4496db28f916409b1daf116dd9de766978c848f4"
+    }
+  ]
+}

@@ -1,0 +1,333 @@
+{
+  "actual_gate_count": 1,
+  "actual_recording_run_id": "98bfc18865194759987879b7444f48b1",
+  "assets_unchanged": true,
+  "browser": {
+    "report": {
+      "biological_limit": true,
+      "clipped": [],
+      "errors": [],
+      "external": [],
+      "images": 0,
+      "points": 8,
+      "role": "img",
+      "source_sha256": "a39b8e5465ef0d3979958a0e8033c122b21da9c2de7864490898a5bdc1ae9f62",
+      "source_unchanged": true,
+      "status": "passed"
+    },
+    "supervisor": {
+      "elapsed_seconds": 1.5742673040003865,
+      "output": "/home/utkarsh/Work/shraddha/brain/.worktrees/artwork-afterimage/runs/afterimage-browser-2ed2c10-20261002",
+      "returncode": 0,
+      "schema_version": 1,
+      "started_utc": "2026-10-02T14:19:56.473893+00:00",
+      "status": "completed",
+      "timeout_seconds": 40
+    },
+    "visual_review": "Root visually inspected portrait.png; fixed axes retain an actual small-extent response trace, largely visible as the start marker. No autoscale or artistic expressiveness claim."
+  },
+  "checkout": "/home/utkarsh/Work/shraddha/brain/.worktrees/artwork-afterimage",
+  "controller": "male-original",
+  "deterministic_svg_sha256": "a39b8e5465ef0d3979958a0e8033c122b21da9c2de7864490898a5bdc1ae9f62",
+  "finalization_errors": [],
+  "fixed_axis_extent": {
+    "full_axis_width": 720,
+    "x_max": 75.395987033844,
+    "x_min": 74.98447895050049,
+    "y_max": -41.03739187317532,
+    "y_min": -43.34387503890234
+  },
+  "frames_compared": 8,
+  "fresh_render_import_checks": {
+    "render_one": {
+      "mujoco_imported": false,
+      "status": "passed",
+      "svg_sha256": "a39b8e5465ef0d3979958a0e8033c122b21da9c2de7864490898a5bdc1ae9f62",
+      "torch_imported": false
+    },
+    "render_two": {
+      "mujoco_imported": false,
+      "status": "passed",
+      "svg_sha256": "a39b8e5465ef0d3979958a0e8033c122b21da9c2de7864490898a5bdc1ae9f62",
+      "torch_imported": false
+    }
+  },
+  "harness_sha256": "02b8e6accd8e3217ade97fdbcd6857cf297a742903de85381f91c676f490a680",
+  "independent_audit": {
+    "all_four_processes_and_groups_absent": true,
+    "artifacts_verified": 27,
+    "audit_script_sha256": "34be90263d353ade69e88e2773a291407ac5a3c7aca853f7566bbe226dba7f6e",
+    "checkpoint_sha256": "0e1418e7f9adf8b1a908c2e12f61def835d6ca11c41fd0d272e7d71b68572da4",
+    "elapsed_seconds": 0.11562341799435671,
+    "frames_verified": 8,
+    "inference_wall_seconds": {
+      "max": 0.017833108999184333,
+      "min": 0.0010064250018331222,
+      "sum": 0.02537716499500675
+    },
+    "inner_elapsed_seconds": 5.54677049699967,
+    "limitations": [
+      "eight authored nonhuman frames, one fixed male-original model",
+      "reference parity is retained measured evidence, not independently rerun inference",
+      "not perception, biological activity, generalization or visitor/exhibition evidence",
+      "actual SVG visual inspection pending"
+    ],
+    "model_span_seconds": 0.16,
+    "mujoco_imported": false,
+    "outer_elapsed_seconds": 5.687695690001419,
+    "outer_supervisor_sha256": "75b41a4e40caf03b61a4a61245a88859302f2f2ecdcc1770ee995793a9fdc516",
+    "recording_manifest_sha256": "aac8da5e82573f93dc907c8d274d1b114bc34550aedc38c58ae6495780af535a",
+    "report_sha256": "2558bd5405ad2a3adc2163e7d41b7089da4ab96e49f5086b4363fbbf0eea9c8f",
+    "scope": "independent retained artifact/hash/alignment/cleanup audit; no new inference or render",
+    "source_commit": "2ed2c10836751b6dd11cfc2b4fda929e5a50b331",
+    "source_manifest_sha256": "bbed979ac3e8bcd8adeb9edb0ee5a64892c004e3236b53076f5b64926469276f",
+    "source_npy_sha256": "b5c4dbb082d50f0bec73225fb7529e24e0a410250b3fd92cbe52cc5b91b222e1",
+    "source_span_seconds": 0.5,
+    "sources_verified": 36,
+    "status": "passed",
+    "svg_sha256": "a39b8e5465ef0d3979958a0e8033c122b21da9c2de7864490898a5bdc1ae9f62",
+    "torch_imported": false,
+    "training_report_sha256": "594d4d330624ed1040ae2b3ffe2dedfbfacd6a2d360a29dcfcc6584d76b80e28"
+  },
+  "inference_wall_seconds": {
+    "max": 0.017833108999184333,
+    "min": 0.0010064250018331222,
+    "sum": 0.02537716499500675
+  },
+  "inner_elapsed_seconds": 5.54677049699967,
+  "limitations": [
+    "eight script-authored nonhuman geometric frames, one fixed male-original model",
+    "actual CPU mechanism parity only; no biological perception, activity, memory causality or generalization claim",
+    "not visitor consent, real visitor input, public exhibition permission or exhibition validation",
+    "independent audit checked retained parity evidence without rerunning inference",
+    "small observed response extent preserved on fixed axes; no artistic expressiveness claim",
+    "wall timing is not a real-time performance qualification"
+  ],
+  "max_absolute_differences": {
+    "action": 0.0,
+    "encoded_input": 0.0,
+    "raw_output": 0.0
+  },
+  "model_span_seconds": 0.16,
+  "outer_supervisor": {
+    "elapsed_seconds": 5.687695690001419,
+    "output": "/home/utkarsh/Work/shraddha/brain/.worktrees/artwork-afterimage/runs/afterimage-geometric-launch-2ed2c10-20261002",
+    "returncode": 0,
+    "schema_version": 1,
+    "started_utc": "2026-10-02T14:17:04.053070+00:00",
+    "status": "completed",
+    "timeout_seconds": 330
+  },
+  "phases": {
+    "record": {
+      "cleanup": {
+        "passed": true,
+        "process_group_absent": true,
+        "same_process_alive": false
+      },
+      "elapsed_seconds": 3.527347151997674,
+      "process": {
+        "pid": 372417,
+        "process_group": 372417,
+        "start_ticks": 4427750
+      },
+      "returncode": 0,
+      "status": "passed",
+      "timeout_seconds": 120
+    },
+    "reference": {
+      "cleanup": {
+        "passed": true,
+        "process_group_absent": true,
+        "same_process_alive": false
+      },
+      "elapsed_seconds": 1.6328884280010243,
+      "process": {
+        "pid": 372428,
+        "process_group": 372428,
+        "start_ticks": 4428103
+      },
+      "returncode": 0,
+      "status": "passed",
+      "timeout_seconds": 120
+    },
+    "render_one": {
+      "cleanup": {
+        "passed": true,
+        "process_group_absent": true,
+        "same_process_alive": false
+      },
+      "elapsed_seconds": 0.11897764600144001,
+      "process": {
+        "pid": 372434,
+        "process_group": 372434,
+        "start_ticks": 4428267
+      },
+      "returncode": 0,
+      "status": "passed",
+      "timeout_seconds": 15
+    },
+    "render_two": {
+      "cleanup": {
+        "passed": true,
+        "process_group_absent": true,
+        "same_process_alive": false
+      },
+      "elapsed_seconds": 0.11957803700352088,
+      "process": {
+        "pid": 372437,
+        "process_group": 372437,
+        "start_ticks": 4428279
+      },
+      "returncode": 0,
+      "status": "passed",
+      "timeout_seconds": 15
+    }
+  },
+  "policy_identity": {
+    "cell_source_sha256": "707cba79e7bf92923618ccc596e3d7a2d779edc02a970b0949f6dd3c0d28ae80",
+    "checkpoint_sha256": "0e1418e7f9adf8b1a908c2e12f61def835d6ca11c41fd0d272e7d71b68572da4",
+    "controller": "male-original",
+    "feature_protocol_sha256": "78dc3adf6ca08555aec9a1f05eb89e331d101b95afb4b689b180bf06aaa379dd",
+    "graph_manifest_sha256": "7a205342b4ada8ab8b78d6ca866c61735003e601531c65a1c1b6c819df00026f",
+    "graph_sha256": "baa5c1302d3eb62aa6c29b4f7781100a7c2d0c16c328e7537855eec2b0be5d81",
+    "model_manifest_sha256": "7140fc4bb72cb08ffc7a2168421746304e353e5b21ab232b521fd54bd6b65dd6",
+    "ordered_ids_sha256": "afd114fcd1dc666b0fbb7b1d5d686ef86ca4390831bfea355e4a9c97270d15b1",
+    "profile": "male-reduced-artificial-interface-v1",
+    "protocol_sha256": "477885033bf30f5857293e0f09fc75b4d850d9eb564f2cd7ec36355110ff5d42",
+    "source_graph_sha256": "5aba0fef99afba666b88e40fc535091454e46d9330580d9280b203e8da0abac0",
+    "topology_sha256": "39b804d9a4cd0ad4368b1d827cd0b485222d10c56adea622834b648fba7f3c79",
+    "training_report_sha256": "594d4d330624ed1040ae2b3ffe2dedfbfacd6a2d360a29dcfcc6584d76b80e28",
+    "variant": "original"
+  },
+  "preparation_note": "The first launcher-write command failed because runs/ did not exist; no gate/model process started. Output parent was then created, that error retained, and the single actual invocation passed. No product or harness edits or actual retries.",
+  "protocol": {
+    "atol": 1e-06,
+    "claim": "actual model mechanism on authored verification fixture, not perception or exhibition",
+    "controller": "male-original",
+    "frames": 8,
+    "id": "afterimage-geometric-mechanism-v1",
+    "min_free_bytes": 1073741824,
+    "model_dt_seconds": 0.02,
+    "outer_seconds": 330,
+    "recorder_timeout_seconds": 120,
+    "reference": "fresh fixed CPU model, reset once, one carried-state forward per frame",
+    "reference_timeout_seconds": 120,
+    "render_timeout_seconds": 15,
+    "rtol": 1e-06,
+    "seed": 0,
+    "source_times_seconds": [
+      0.0,
+      0.04,
+      0.08,
+      0.12,
+      0.2,
+      0.28,
+      0.36,
+      0.5
+    ],
+    "stimulus": "nonhuman authored geometric RGB; no camera or external media",
+    "storage_bytes": 268435456,
+    "total_seconds": 300
+  },
+  "qualification_claims": [],
+  "recorded_svg_points": [
+    [
+      75.395987033844,
+      -41.03739187317532
+    ],
+    [
+      75.3023886680603,
+      -41.533034795581045
+    ],
+    [
+      75.1530647277832,
+      -42.321470852232295
+    ],
+    [
+      75.05518198013306,
+      -42.864768004477206
+    ],
+    [
+      75.00575065612793,
+      -43.18643576343896
+    ],
+    [
+      74.98447895050049,
+      -43.34387503890234
+    ],
+    [
+      75.02857446670532,
+      -43.175872875887535
+    ],
+    [
+      75.17520904541016,
+      -42.48261550532041
+    ]
+  ],
+  "reference_forward_calls": 8,
+  "reference_sequence_resets": 1,
+  "retained_evidence_sha256": {
+    "runs/afterimage-browser-2ed2c10-20261002/portrait.png": "bffe489a2c9e42af846b6818cfa31f3012f1008bea3ab4c41d6dd35b9c63c2e9",
+    "runs/afterimage-browser-2ed2c10-20261002/report.json": "4cbc5bb682c0fccd74da2eeca5d6245407575051aee63a80b13bbe09b027fdd3",
+    "runs/afterimage-browser-2ed2c10-20261002/supervisor.json": "85213a0d866419fb5aa81c0f3fcc9e0d2d690d02237bbcfdeac730c9b29ace57",
+    "runs/afterimage-browser-2ed2c10.mjs": "ae01f68e67bb3a3bad90e4e989563c0a85a1635afcca00dacaf553a2e6c88e9a",
+    "runs/afterimage-geometric-audit-2ed2c10-20261002.json": "4752dce4316888a9cb0073d0d80612913a437905427184a4bae1d4c603411d12",
+    "runs/afterimage-geometric-audit-2ed2c10-20261002.py": "34be90263d353ade69e88e2773a291407ac5a3c7aca853f7566bbe226dba7f6e",
+    "runs/afterimage-geometric-launch-2ed2c10-20261002-input.json": "3262e6f7ad0b51081666b187dbe202e18aed9d59b6972a5c7ec11ee88b21fe85",
+    "runs/afterimage-geometric-launch-2ed2c10-20261002-preparation.json": "0366dc8df241fc046f6e4a0fe275a9b8a1be9b4f30a56ea58dca66ac9aec3f79",
+    "runs/afterimage-geometric-launch-2ed2c10-20261002.py": "fa3a09a050fabb2e6ea470788600062c955d9c524625744609922e757c296f4b",
+    "runs/afterimage-geometric-launch-2ed2c10-20261002/supervisor.json": "75b41a4e40caf03b61a4a61245a88859302f2f2ecdcc1770ee995793a9fdc516",
+    "runs/afterimage-geometric-v1-20261002/report.json": "2558bd5405ad2a3adc2163e7d41b7089da4ab96e49f5086b4363fbbf0eea9c8f"
+  },
+  "schema_version": 1,
+  "source_commit": "2ed2c10836751b6dd11cfc2b4fda929e5a50b331",
+  "source_sha256": {
+    "data/manifests/male-reduced-policy-v1.json": "7140fc4bb72cb08ffc7a2168421746304e353e5b21ab232b521fd54bd6b65dd6",
+    "data/manifests/malecns-reduced-neighborhood-v1.json": "7a205342b4ada8ab8b78d6ca866c61735003e601531c65a1c1b6c819df00026f",
+    "pyproject.toml": "13435cdf27674955809c67d3d81410c502bf0f258b661e68ed82197842fbc800",
+    "scripts/verify_afterimage.py": "02b8e6accd8e3217ade97fdbcd6857cf297a742903de85381f91c676f490a680",
+    "src/palimpsest/__init__.py": "bb99e30d22e4662c4ded455b1b23f49b77ce811dcfa1b69bf358925487a566d8",
+    "src/palimpsest/__main__.py": "935a1c1166b0c1ea35a82256345000bf2c73ded718d77773bc27a71ecce28f7d",
+    "src/palimpsest/afterimage.py": "0a4385d7c1e9e103d6154c3d83ab7851d4729c90fb64ab908279f2c36fd9af72",
+    "src/palimpsest/artifacts.py": "7a5f4a1080abffe82f8296468c6d8ca3a2b975277b96925fdf75bb9ac1ed034a",
+    "src/palimpsest/assets.py": "aa4a38c7403cd9f72bc23027acd7c212202f25574bea6af65053c34664da49e3",
+    "src/palimpsest/atlas.py": "4c7b0752aaf0065648fb9f970b17a95098e7ed91b10e4da1e8e4a9ca6720f23f",
+    "src/palimpsest/cli.py": "64d32a309d92c0ef8b82ea2736ed0e3545ebfc0ed36af779844c571f1cf49f89",
+    "src/palimpsest/comparison.py": "8e1e2e4cff083d4745cf80dda165ddab4a2edcda040fbc34f62c6c6d8e9b69d6",
+    "src/palimpsest/doctor.py": "109de62468161f35461eee76af244daabef38f2faa1526c5a6ed268817e6b834",
+    "src/palimpsest/engine.py": "7af004a23d94d44b5cd778244aa7d700baea1eafba2de072c667ed70331e2ad5",
+    "src/palimpsest/evaluate.py": "74a9afb710b36a366ab680462e9440f285730a0360bda704af25ebbcfd74256a",
+    "src/palimpsest/flynn.py": "409b7503d76fd6f971a33d053e86c968b529edc226b85f44122e17a649f8f9f4",
+    "src/palimpsest/interventions.py": "fd2c1e6f160f7d251ddcf3275b383e8e3e265fc462452d1bc20c0030a6acf9c8",
+    "src/palimpsest/lab.py": "668b59262a154aebe52e8f1a3671d097aaa75ddcb110d989bd8978f223fbf08b",
+    "src/palimpsest/male_model.py": "4caeabb6c61dcd4f17ceb23455c18cda4ca2bab6b98ac3f51da0eadde259e5fa",
+    "src/palimpsest/male_policy.py": "25396a4b165f1ea76a06671e654f42ba6d1eed1463197dbb131150d1c84b40b3",
+    "src/palimpsest/memory.py": "9641ae3d7d78577e0ea5bc8bcacbe455cae6c548f4f9bd10b8bb593a8fd7c542",
+    "src/palimpsest/memory_experiment.py": "873d5f6ab2ee57c560e8f4bb2a0cf20144264f25ea2312b7e7fe8d295ab8f9f8",
+    "src/palimpsest/memory_history.py": "7dbfac529717698ea2848ec6318a8812e876c04bf26711775f316dd1a631438c",
+    "src/palimpsest/memory_task.py": "6562de8c0734e0622529231babc7e035ba146077b39e004b0f52928b3038dcc6",
+    "src/palimpsest/memory_world.py": "508d7c53cf78e8a26a2c459e2b6e2a02c8c0823535005a19668a31717f0dbb12",
+    "src/palimpsest/profiles.py": "39173b7b248d4768f160b540acde532ec6b1c1e2bcfc04eb449c152b88423216",
+    "src/palimpsest/records.py": "c4be6f1699c1d8550a7f2db2979f7f9f18196ac986eef2aefe3ba665cae99ac3",
+    "src/palimpsest/replay.py": "df5f805f268fc4894a68adfa30cfa6fc446d989be474c2907ae7c0d62d12e99b",
+    "src/palimpsest/snapshots.py": "a8f521c117e70009f95d3cef0cb4cdfd2a711ee842b3cc85ea2a3782d16ef3a9",
+    "src/palimpsest/sonification.py": "7112584f9b18be761861d432dfb043eb8dd8b3a7e66f6d3ec53668c29dfc1949",
+    "src/palimpsest/storage.py": "79664d876834ef20b459cc83963515effdaf75d0256fe5764a9cf8e18cd448c2",
+    "src/palimpsest/task_mechanics.py": "cbf698ad3f027f572c4f12655595825f580f155949f6c7c96f2556d14e6d1bb6",
+    "src/palimpsest/task_profiles.py": "14b237ede67949f281977c00b01dcd7a8e8a367d67a7e4e37911e0cb9b1dfa79",
+    "src/palimpsest/worker.py": "d6937dc350c3f5008ef645b7fedcaf1ea656eeeb82934bd52b7c0cbb2086d9bd",
+    "upstream/fly-gym/models/connectome_rnn_model.py": "707cba79e7bf92923618ccc596e3d7a2d779edc02a970b0949f6dd3c0d28ae80",
+    "uv.lock": "8a7a880d020c1907e221575fda65642241f809fc628a55381f1b6137bff1b732"
+  },
+  "source_span_seconds": 0.5,
+  "sources_unchanged": true,
+  "status": "passed",
+  "stimulus_frames": 8,
+  "stimulus_unchanged": true,
+  "tracked_preview": {
+    "path": "docs/reports/m9-afterimage-preview.png",
+    "sha256": "bffe489a2c9e42af846b6818cfa31f3012f1008bea3ab4c41d6dd35b9c63c2e9",
+    "source": "runs/afterimage-browser-2ed2c10-20261002/portrait.png"
+  }
+}

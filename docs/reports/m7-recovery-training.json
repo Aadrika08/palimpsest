@@ -1,0 +1,502 @@
+{
+  "artifact_refs": [
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/task-phases/runs/m7-recovery-learning-training-development-19d275d-20261003/bundles/.palimpsest-storage.lock",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/task-phases/runs/m7-recovery-learning-training-development-19d275d-20261003/bundles/seed-10/degree_rewired-graph.json",
+      "sha256": "03fd1f51469f63c6513cb6d6c3cc01550ae847e84fc1a55252901046e9027644",
+      "size_bytes": 32864
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/task-phases/runs/m7-recovery-learning-training-development-19d275d-20261003/bundles/seed-10/degree_rewired.pt",
+      "sha256": "245379593af769ab5c11b48276393e322e6f78377d45241f40876d176cac4ee3",
+      "size_bytes": 303341
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/task-phases/runs/m7-recovery-learning-training-development-19d275d-20261003/bundles/seed-10/original-graph.json",
+      "sha256": "baa5c1302d3eb62aa6c29b4f7781100a7c2d0c16c328e7537855eec2b0be5d81",
+      "size_bytes": 32864
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/task-phases/runs/m7-recovery-learning-training-development-19d275d-20261003/bundles/seed-10/original.pt",
+      "sha256": "94b3b7e792cbe8fd00d8f77b3099b0bd853b0dfe28bdb25ba63d8730807a9fa0",
+      "size_bytes": 303341
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/task-phases/runs/m7-recovery-learning-training-development-19d275d-20261003/bundles/seed-10/protocol.json",
+      "sha256": "ba44faa6d664a8c78686ab1547e9ff7f07f10f97627a9d18a7660a480575265e",
+      "size_bytes": 70818
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/task-phases/runs/m7-recovery-learning-training-development-19d275d-20261003/bundles/seed-10/report.json",
+      "sha256": "60ae08b60e938fc9a2de600de785911e4c988ea98059f0f9ab3b1d59f525d47e",
+      "size_bytes": 13492
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/task-phases/runs/m7-recovery-learning-training-development-19d275d-20261003/bundles/seed-11/degree_rewired-graph.json",
+      "sha256": "4e9600823d24b54775ed27f1218806abce53c8dd75964dbcf8796d472ab41605",
+      "size_bytes": 32864
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/task-phases/runs/m7-recovery-learning-training-development-19d275d-20261003/bundles/seed-11/degree_rewired.pt",
+      "sha256": "3d5eccbf0999a1c0c5193c6cfbca195b138928cdd693f51134cba371229c04ea",
+      "size_bytes": 303341
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/task-phases/runs/m7-recovery-learning-training-development-19d275d-20261003/bundles/seed-11/original-graph.json",
+      "sha256": "baa5c1302d3eb62aa6c29b4f7781100a7c2d0c16c328e7537855eec2b0be5d81",
+      "size_bytes": 32864
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/task-phases/runs/m7-recovery-learning-training-development-19d275d-20261003/bundles/seed-11/original.pt",
+      "sha256": "c2a9c7658281e97248fbe2bae9e5d1bc929e55ddca8f087f2a7edde04f931e86",
+      "size_bytes": 303341
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/task-phases/runs/m7-recovery-learning-training-development-19d275d-20261003/bundles/seed-11/protocol.json",
+      "sha256": "73f8ceffe6a4382e4f81820c373654a061f4dddee4c65c087588824611dc46e6",
+      "size_bytes": 70818
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/task-phases/runs/m7-recovery-learning-training-development-19d275d-20261003/bundles/seed-11/report.json",
+      "sha256": "3dd18f811b2459a314491d20c1644a19f5b6b649be55f95004778b11b8be6151",
+      "size_bytes": 13478
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/task-phases/runs/m7-recovery-learning-training-development-19d275d-20261003/bundles/seed-12/degree_rewired-graph.json",
+      "sha256": "f79b1d8d966ed49ceaf97c1ace71698ae944bd49d9e4f191f36ae07c60d77968",
+      "size_bytes": 32864
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/task-phases/runs/m7-recovery-learning-training-development-19d275d-20261003/bundles/seed-12/degree_rewired.pt",
+      "sha256": "e629bfa37bae02a4951c642fdec6f18f46dea8afecc6e013b129eb1dc4edc09b",
+      "size_bytes": 303341
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/task-phases/runs/m7-recovery-learning-training-development-19d275d-20261003/bundles/seed-12/original-graph.json",
+      "sha256": "baa5c1302d3eb62aa6c29b4f7781100a7c2d0c16c328e7537855eec2b0be5d81",
+      "size_bytes": 32864
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/task-phases/runs/m7-recovery-learning-training-development-19d275d-20261003/bundles/seed-12/original.pt",
+      "sha256": "d8259007a2307aaa7ba5c340455e6e5c171c8fcef8a015b6f71047f9fecae95a",
+      "size_bytes": 303341
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/task-phases/runs/m7-recovery-learning-training-development-19d275d-20261003/bundles/seed-12/protocol.json",
+      "sha256": "fe9272f28f8d26d11dde8a0e7d8fcd0a9f3800038781ddeb9cf3d81d8d30b345",
+      "size_bytes": 70818
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/task-phases/runs/m7-recovery-learning-training-development-19d275d-20261003/bundles/seed-12/report.json",
+      "sha256": "08fea1c20ae301cca839c3babe97b6617a5d919bf617865f2e028866a35c15e0",
+      "size_bytes": 13483
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/task-phases/runs/m7-recovery-training-control-19d275d/after.json",
+      "sha256": "422aba8586643dbd8efca9a7228f3dfd2bd83ce95cbb0d93cf115d31406c6d9e",
+      "size_bytes": 134438
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/task-phases/runs/m7-recovery-training-control-19d275d/audit-decoder-failure.json",
+      "sha256": "5893db65532280da0007d91e6063148a937e9441ab909e23e839c272aace0744",
+      "size_bytes": 425
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/task-phases/runs/m7-recovery-training-control-19d275d/audit-decoder-initial.py",
+      "sha256": "1adbe77b7f947d6bca0c7bcc08469dc59de36afd4831d9271d0e426efd75d350",
+      "size_bytes": 10211
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/task-phases/runs/m7-recovery-training-control-19d275d/audit.json",
+      "sha256": "a38d083166cd0d9a702ef3dad3c9ea92f2f2844ae28d0e41393e672f0583163b",
+      "size_bytes": 4635
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/task-phases/runs/m7-recovery-training-control-19d275d/audit.py",
+      "sha256": "bbc67d148e7a8c8c1547f1cb07bcf2e078c862f5aaed5c9b43a2d66b17833f5c",
+      "size_bytes": 7727
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/task-phases/runs/m7-recovery-training-control-19d275d/before.json",
+      "sha256": "422aba8586643dbd8efca9a7228f3dfd2bd83ce95cbb0d93cf115d31406c6d9e",
+      "size_bytes": 134438
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/task-phases/runs/m7-recovery-training-control-19d275d/guarded_train.py",
+      "sha256": "b9419a5900dc3e5fb0923c57318fcad8afd1a6014d6df9cacdbeb8ca95de147e",
+      "size_bytes": 5636
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/task-phases/runs/m7-recovery-training-control-19d275d/inventory.py",
+      "sha256": "1973bff429017ecffa1d828dfbb7e893412419a0d129b92cc82f2a9bf0d181ae",
+      "size_bytes": 8685
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/task-phases/runs/m7-recovery-training-control-19d275d/invocation.json",
+      "sha256": "0723ff4c23594b60514647f1a29b9fe936099a674305e744fa9d53dafaf86a4d",
+      "size_bytes": 6026
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/task-phases/runs/m7-recovery-training-control-19d275d/launch.py",
+      "sha256": "0bafec35594fdd5aa3e96cc4306e03cd5392d37c0a45946f497a8c94400c0308",
+      "size_bytes": 12822
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/task-phases/runs/m7-recovery-training-control-19d275d/launcher-console.log",
+      "sha256": "9ccb7c2ce5d21968199c6c67420331b4712ceec239a619c23dd8856e3b89d537",
+      "size_bytes": 207
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/task-phases/runs/m7-recovery-training-control-19d275d/launcher-versus-preparation.diff",
+      "sha256": "aac0c249f1c50504ad74cd2b8e1bc318db66cc462fc2649ad0ec4fbf7c13fbf2",
+      "size_bytes": 17151
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/task-phases/runs/m7-recovery-training-control-19d275d/outer-supervisor/stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/task-phases/runs/m7-recovery-training-control-19d275d/outer-supervisor/stdout.log",
+      "sha256": "55f45a01d32d3af008ce987ffa2d83a9e7a179157e73b24fc063eec4105dced8",
+      "size_bytes": 489
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/task-phases/runs/m7-recovery-training-control-19d275d/outer-supervisor/supervisor.json",
+      "sha256": "48d393bb43be2e5f03adaf22409d01a349c1fa230792a1c314d1c09134492bd3",
+      "size_bytes": 317
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/task-phases/runs/m7-recovery-training-control-19d275d/plan.md",
+      "sha256": "b26bf35f7078efd62f1ebc808cdd8d68d4b98554a939f0cb55b677bd01a614e1",
+      "size_bytes": 5429
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/task-phases/runs/m7-recovery-training-control-19d275d/preparation-review.json",
+      "sha256": "4ba7c339e71f4cc99d87303821b9f5789f257ce5c5280bf4b2496813d2d4fd1f",
+      "size_bytes": 1902
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/task-phases/runs/m7-recovery-training-control-19d275d/progress.json",
+      "sha256": "ccef7ee811e772c1b2feca58e7112776a4c0c95bea4fd6b208be7685d85c1173",
+      "size_bytes": 69572
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/task-phases/runs/m7-recovery-training-control-19d275d/root-audit/audit-first-failed.py",
+      "sha256": "58f1638a3325a9bf0994804dccf1cc3fa469cc87e2a2c31c32ae223d4d0f434b",
+      "size_bytes": 7333
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/task-phases/runs/m7-recovery-training-control-19d275d/root-audit/audit.json",
+      "sha256": "7619223178524a12c0dec9b1e649ec7083201502c4fc7cfd6337783ef10a0f2b",
+      "size_bytes": 176916
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/task-phases/runs/m7-recovery-training-control-19d275d/root-audit/audit.py",
+      "sha256": "ee4111c3297b401f3b258a0a0196d24ae08fd5a0c89f4141516823decf2aa3e6",
+      "size_bytes": 7414
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/task-phases/runs/m7-recovery-training-control-19d275d/root-audit/console.log",
+      "sha256": "11f59ae83516aa32f779a58d294e5ad92f45e0f202c8aafbe4081ce4b271f98f",
+      "size_bytes": 1424
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/task-phases/runs/m7-recovery-training-control-19d275d/root-audit/first-failure.json",
+      "sha256": "ff370b524e187a628273407daa0eb003a14e41d0b0512145242ddb513b592220",
+      "size_bytes": 378
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/task-phases/runs/m7-recovery-training-control-19d275d/root-audit/first-failure.log",
+      "sha256": "482c7e1e728dec8a4dd0405f0cd6c74600c746550403cd19510af8f5403b75e3",
+      "size_bytes": 428
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/task-phases/runs/m7-recovery-training-control-19d275d/root-controls-review.json",
+      "sha256": "159ee0315bb2da1e917ec62d34bbe098f16efb7e486d638d0d2c8dfab6ec4c07",
+      "size_bytes": 938
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/task-phases/runs/m7-recovery-training-control-19d275d/seed-10-runtime.json",
+      "sha256": "93d83da47ebff2c775f96c98b628fe2ecb8d986d3db755e4239f06ef28e50339",
+      "size_bytes": 7061
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/task-phases/runs/m7-recovery-training-control-19d275d/seed-10-supervisor/stderr.log",
+      "sha256": "d01490cb04e1c8b0ac7d780bf76b73ecfa4aebb590191606353b36c30347a751",
+      "size_bytes": 407
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/task-phases/runs/m7-recovery-training-control-19d275d/seed-10-supervisor/stdout.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/task-phases/runs/m7-recovery-training-control-19d275d/seed-10-supervisor/supervisor.json",
+      "sha256": "0024a12fcf2e266d6591468910201975d829043b6c4a64a5fe21684b5825b69f",
+      "size_bytes": 322
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/task-phases/runs/m7-recovery-training-control-19d275d/seed-11-runtime.json",
+      "sha256": "0878b65cd4f88e5baf0196b5f151db21c74d5be6fe7c0ca684593c6d17de4d9c",
+      "size_bytes": 7061
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/task-phases/runs/m7-recovery-training-control-19d275d/seed-11-supervisor/stderr.log",
+      "sha256": "d01490cb04e1c8b0ac7d780bf76b73ecfa4aebb590191606353b36c30347a751",
+      "size_bytes": 407
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/task-phases/runs/m7-recovery-training-control-19d275d/seed-11-supervisor/stdout.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/task-phases/runs/m7-recovery-training-control-19d275d/seed-11-supervisor/supervisor.json",
+      "sha256": "6abf41f6c3da8bb14811b53f24cb0c58bd862bf149b8376fe55dc6f9d0266193",
+      "size_bytes": 322
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/task-phases/runs/m7-recovery-training-control-19d275d/seed-12-runtime.json",
+      "sha256": "8cde105dbc61bb2af0767f77679382b0b617978f63c49c999c91ed49da9d1bff",
+      "size_bytes": 7061
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/task-phases/runs/m7-recovery-training-control-19d275d/seed-12-supervisor/stderr.log",
+      "sha256": "d01490cb04e1c8b0ac7d780bf76b73ecfa4aebb590191606353b36c30347a751",
+      "size_bytes": 407
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/task-phases/runs/m7-recovery-training-control-19d275d/seed-12-supervisor/stdout.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/task-phases/runs/m7-recovery-training-control-19d275d/seed-12-supervisor/supervisor.json",
+      "sha256": "32132c3cab3c061249a4f5ddd1ef2ef576c2ac0b1868d3c33fd903584a92e598",
+      "size_bytes": 323
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/task-phases/runs/m7-recovery-training-control-19d275d/supervise.py",
+      "sha256": "e9294175742f0140d055dd6ebbc7d396f50c779d508a95cf37e363faee49284c",
+      "size_bytes": 1756
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/task-phases/runs/m7-recovery-training-control-19d275d/terminal.json",
+      "sha256": "2acf7119732c11a30f4a3e86784f169a53402a3ca7b378e5219bd3fc30a544b6",
+      "size_bytes": 71479
+    }
+  ],
+  "audits": {
+    "own": {
+      "first_attempt": "Failed duplicate restricted archive decoder; abandoned without product/artifact changes; failure/script indexed",
+      "seconds": 1.2765696470014518,
+      "sha256": "a38d083166cd0d9a702ef3dad3c9ea92f2f2844ae28d0e41393e672f0583163b",
+      "status": "passed-retained-audit"
+    },
+    "root": {
+      "first_attempt": "Wrong JSON ordered-ID serialization assumption; corrected only auditor to pinned newline-decimal contract; all versions indexed",
+      "scope": "699 identity/bundle entries; all120 epoch rows and six weights_only CPU checkpoints18 finite tensors each; exact seven graph buffers and fixed recurrent scaled adjacency; no model/forward/native",
+      "seconds": 4.40829734900035,
+      "sha256": "7619223178524a12c0dec9b1e649ec7083201502c4fc7cfd6337783ef10a0f2b",
+      "status": "passed_after_auditor_id_serialization_correction"
+    }
+  },
+  "before_after_inventory_sha256": "422aba8586643dbd8efca9a7228f3dfd2bd83ce95cbb0d93cf115d31406c6d9e",
+  "cleanup": {
+    "forced_signals": [],
+    "observed_owned_processes": [
+      {
+        "pid": 654708,
+        "start_ticks": 8549733
+      },
+      {
+        "pid": 654949,
+        "start_ticks": 8556476
+      },
+      {
+        "pid": 655242,
+        "start_ticks": 8562786
+      }
+    ],
+    "sample_errors": [],
+    "sampler_stopped": true,
+    "scope": "finite .25 s sampling, PID/start recheck before owned containment; not universal transient-process proof",
+    "survivors": []
+  },
+  "counts_per_epoch": {
+    "dev": 1228,
+    "held_out": 0,
+    "train": 2117
+  },
+  "data_manifest_sha256": "402d2676668e88bb998457ba0a9ea92f8a4c2a27b92a19d67ad76b80e3a67014",
+  "development_native_evaluation": "not_started",
+  "epochs": 120,
+  "held_out_status": "locked_unopened",
+  "limits": {
+    "aggregate_bytes": 201326592,
+    "min_free_bytes": 1073741824,
+    "pair_bytes": 67108864,
+    "pair_internal_seconds": 600,
+    "pair_supervised_seconds": 660,
+    "preflight_bytes": 172359680,
+    "stage_internal_seconds": 2100,
+    "stage_supervised_seconds": 2160
+  },
+  "models": [
+    {
+      "checkpoint_sha256": "94b3b7e792cbe8fd00d8f77b3099b0bd853b0dfe28bdb25ba63d8730807a9fa0",
+      "edges": 1647,
+      "guard_attested_state_arrays": 18,
+      "nodes": 138,
+      "parameter_count_from_attested_shapes": 61872,
+      "seed": 10,
+      "selected_dev": {
+        "interpretation": "recorded-input teacher imitation; not closed-loop navigation success",
+        "loss": 0.025643583981726767,
+        "ticks": 1228,
+        "velocity_mae": 0.0924240241027422,
+        "wrapped_heading_mae_radians": 0.19284638874111423
+      },
+      "selected_epoch": 20,
+      "variant": "original"
+    },
+    {
+      "checkpoint_sha256": "245379593af769ab5c11b48276393e322e6f78377d45241f40876d176cac4ee3",
+      "edges": 1647,
+      "guard_attested_state_arrays": 18,
+      "nodes": 138,
+      "parameter_count_from_attested_shapes": 61872,
+      "seed": 10,
+      "selected_dev": {
+        "interpretation": "recorded-input teacher imitation; not closed-loop navigation success",
+        "loss": 0.026338911794295917,
+        "ticks": 1228,
+        "velocity_mae": 0.0765801300249193,
+        "wrapped_heading_mae_radians": 0.16255007470663674
+      },
+      "selected_epoch": 19,
+      "variant": "degree_rewired"
+    },
+    {
+      "checkpoint_sha256": "c2a9c7658281e97248fbe2bae9e5d1bc929e55ddca8f087f2a7edde04f931e86",
+      "edges": 1647,
+      "guard_attested_state_arrays": 18,
+      "nodes": 138,
+      "parameter_count_from_attested_shapes": 61872,
+      "seed": 11,
+      "selected_dev": {
+        "interpretation": "recorded-input teacher imitation; not closed-loop navigation success",
+        "loss": 0.02962370051817319,
+        "ticks": 1228,
+        "velocity_mae": 0.040360304256992156,
+        "wrapped_heading_mae_radians": 0.14042418251111374
+      },
+      "selected_epoch": 16,
+      "variant": "original"
+    },
+    {
+      "checkpoint_sha256": "3d5eccbf0999a1c0c5193c6cfbca195b138928cdd693f51134cba371229c04ea",
+      "edges": 1647,
+      "guard_attested_state_arrays": 18,
+      "nodes": 138,
+      "parameter_count_from_attested_shapes": 61872,
+      "seed": 11,
+      "selected_dev": {
+        "interpretation": "recorded-input teacher imitation; not closed-loop navigation success",
+        "loss": 0.030216107296633023,
+        "ticks": 1228,
+        "velocity_mae": 0.13258203592284884,
+        "wrapped_heading_mae_radians": 0.13779227258425195
+      },
+      "selected_epoch": 20,
+      "variant": "degree_rewired"
+    },
+    {
+      "checkpoint_sha256": "d8259007a2307aaa7ba5c340455e6e5c171c8fcef8a015b6f71047f9fecae95a",
+      "edges": 1647,
+      "guard_attested_state_arrays": 18,
+      "nodes": 138,
+      "parameter_count_from_attested_shapes": 61872,
+      "seed": 12,
+      "selected_dev": {
+        "interpretation": "recorded-input teacher imitation; not closed-loop navigation success",
+        "loss": 0.023544041700782527,
+        "ticks": 1228,
+        "velocity_mae": 0.057253033311048626,
+        "wrapped_heading_mae_radians": 0.17155102482641946
+      },
+      "selected_epoch": 17,
+      "variant": "original"
+    },
+    {
+      "checkpoint_sha256": "e629bfa37bae02a4951c642fdec6f18f46dea8afecc6e013b129eb1dc4edc09b",
+      "edges": 1647,
+      "guard_attested_state_arrays": 18,
+      "nodes": 138,
+      "parameter_count_from_attested_shapes": 61872,
+      "seed": 12,
+      "selected_dev": {
+        "interpretation": "recorded-input teacher imitation; not closed-loop navigation success",
+        "loss": 0.025414894016441383,
+        "ticks": 1228,
+        "velocity_mae": 0.045730889523068155,
+        "wrapped_heading_mae_radians": 0.1846013184187855
+      },
+      "selected_epoch": 20,
+      "variant": "degree_rewired"
+    }
+  ],
+  "outer_supervision": {
+    "elapsed_seconds": 194.681182884,
+    "output": "/home/utkarsh/Work/shraddha/brain/.worktrees/task-phases/runs/m7-recovery-training-control-19d275d/outer-supervisor",
+    "returncode": 0,
+    "schema_version": 1,
+    "started_utc": "2026-10-03T01:44:00.876563+00:00",
+    "status": "completed",
+    "timeout_seconds": 2160
+  },
+  "qualification_claims": [],
+  "runtime": {
+    "cuda_initialized": false,
+    "device": "cpu",
+    "dtype": "float32",
+    "inter_threads": 1,
+    "intra_threads": 1,
+    "numpy": "2.2.5",
+    "python": "3.11.15",
+    "torch_build": "2.9.0+cu128",
+    "torch_distribution": "2.9.0"
+  },
+  "scope": "Six fixed recorded-input research fits; no closed-loop goals, topology advantage, generalization, biological mapping or production promotion",
+  "scoped_identity_counts": {
+    "model_and_production": 16,
+    "raw_documents_and_files": 181,
+    "runtime_files": 7,
+    "tracked": 355,
+    "upstream": 122
+  },
+  "source_commit": "19d275d7ba3d8c7da642a4b41d3a6a8f2d5c720f",
+  "stage_seconds": 194.36721954900713,
+  "status": "passed-research-training",
+  "terminal_sha256": "2acf7119732c11a30f4a3e86784f169a53402a3ca7b378e5219bd3fc30a544b6",
+  "terminal_usage_before_post_terminal_audits": {
+    "files": 48,
+    "headroom_bytes": 0,
+    "max_bytes": 201326592,
+    "min_free_bytes": 1073741824,
+    "remaining_bytes": 198591526,
+    "used_bytes": 2735066
+  },
+  "version": 1,
+  "warnings": {
+    "kind": "PyTorch Sparse CSR beta UserWarning at pinned upstream cell line98",
+    "outer_stderr_bytes": 0,
+    "pair_stderr_bytes_each": 407,
+    "semaphore_warning_observed": false
+  }
+}

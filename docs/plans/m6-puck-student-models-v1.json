@@ -1,0 +1,35 @@
+{
+  "learning_protocol_sha256": "bfdd047c1763af3d0b254c55df9137e179b65ce99e7eb870ca76f41332a83354",
+  "models": [
+    {
+      "directory": "seed-21",
+      "files": {
+        "checkpoint.npz": "e5284de291a94276b5f9dafcd8ab52abb3566741b72d4666aef3a3ac916de680",
+        "protocol.json": "59ac7eda8828a458c46a55791dbefb122cb71e456265407d4db2ade985a87f65",
+        "report.json": "70683df96f286c54311ed678d61beef7c929744d43d0116be792656e99f30205"
+      },
+      "seed": 21
+    },
+    {
+      "directory": "seed-22",
+      "files": {
+        "checkpoint.npz": "d6a17a528e80a2d4fb97a93790b404092a3761e8c485f06f535dca0cf06e6684",
+        "protocol.json": "8bab9d45eb94c98bfc9f89c6fbb25b05be87af5f89a57ad69c82e4e7e2596adc",
+        "report.json": "956106fe819d3c0da7115141223b1af328f5ca524932e2b8775c0bf86c6fdc0a"
+      },
+      "seed": 22
+    },
+    {
+      "directory": "seed-23",
+      "files": {
+        "checkpoint.npz": "afda5c0cd948b09f9f08c130f2ecb24243b135820affab840bc67633c0288d3b",
+        "protocol.json": "eeca104ce573a15b01a370750f1c153bd9bd9b804c6e3ac9983344e4ccceb576",
+        "report.json": "3db238c42b635b20ae4c0eba66f6d5048007851076070072c5bca0fabd7ed924"
+      },
+      "seed": 23
+    }
+  ],
+  "producer_commit": "82e2bd97b37832c2a7f84f6eda6a3eca98e02362",
+  "qualification_claims": [],
+  "schema": "puck-student-models-v1"
+}

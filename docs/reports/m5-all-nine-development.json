@@ -1,0 +1,5932 @@
+{
+  "after_identity_sha256": "93cc543524a095e1d9e1a9d94df975d72d0f569fdddb9a6d107c2c367057135c",
+  "allowed_initial_branch_differences": [
+    "U",
+    "declared selector configuration/resources",
+    "task version normalization"
+  ],
+  "audit_checks": [
+    "recording terminal/chunk/count/hash/lineage",
+    "native U/config/provenance identity",
+    "exact normalized scientific state",
+    "paused goal handoff authoritative and integration/memory bindings",
+    "source/public bearing action binding",
+    "actual donor geometry/gold and consecutive cue evidence",
+    "all nine targeting and observed/committed timings",
+    "exact own/sham numeric parity",
+    "normal close and no owned survivors"
+  ],
+  "audit_runtime_or_replay": false,
+  "before_after_identities_equal": true,
+  "before_identity_sha256": "93cc543524a095e1d9e1a9d94df975d72d0f569fdddb9a6d107c2c367057135c",
+  "claim": "two-development-block-all-nine-recorded-selector-check",
+  "comparisons": [
+    {
+      "after_occupancy": {
+        "live-development-test-00000008-subject-a": "blocked",
+        "live-development-test-00000008-subject-z": "open"
+      },
+      "before_occupancy": {
+        "live-development-test-00000008-subject-a": "open",
+        "live-development-test-00000008-subject-z": "open"
+      },
+      "block": "local-8",
+      "gold_target_ids": [
+        "live-development-test-00000008-fact-a"
+      ],
+      "held_out_executed": false,
+      "operator_blindness_verified": false,
+      "oracle_evidence": {
+        "after_circles": [
+          [
+            0.0,
+            -2.0,
+            0.4
+          ],
+          [
+            0.0,
+            0.0,
+            0.4
+          ],
+          [
+            0.0,
+            2.0,
+            0.4
+          ],
+          [
+            0.0,
+            -1.0,
+            0.4
+          ],
+          [
+            2.5,
+            1.0,
+            0.4
+          ],
+          [
+            3.7,
+            -5.6,
+            0.4
+          ],
+          [
+            3.7,
+            -4.4,
+            0.4
+          ],
+          [
+            3.7,
+            -3.2,
+            0.4
+          ],
+          [
+            3.7,
+            3.2,
+            0.4
+          ],
+          [
+            3.7,
+            4.4,
+            0.4
+          ],
+          [
+            4.9,
+            -5.6,
+            0.4
+          ],
+          [
+            4.9,
+            -4.4,
+            0.4
+          ],
+          [
+            4.9,
+            -3.2,
+            0.4
+          ],
+          [
+            4.9,
+            3.2,
+            0.4
+          ],
+          [
+            4.9,
+            4.4,
+            0.4
+          ],
+          [
+            6.1,
+            -5.6,
+            0.4
+          ],
+          [
+            6.1,
+            -4.4,
+            0.4
+          ],
+          [
+            6.1,
+            -3.2,
+            0.4
+          ],
+          [
+            6.1,
+            3.2,
+            0.4
+          ],
+          [
+            6.1,
+            4.4,
+            0.4
+          ]
+        ],
+        "before_circles": [
+          [
+            0.0,
+            -2.0,
+            0.4
+          ],
+          [
+            0.0,
+            0.0,
+            0.4
+          ],
+          [
+            0.0,
+            2.0,
+            0.4
+          ],
+          [
+            2.5,
+            -1.0,
+            0.4
+          ],
+          [
+            2.5,
+            1.0,
+            0.4
+          ],
+          [
+            3.7,
+            -5.6,
+            0.4
+          ],
+          [
+            3.7,
+            -4.4,
+            0.4
+          ],
+          [
+            3.7,
+            -3.2,
+            0.4
+          ],
+          [
+            3.7,
+            3.2,
+            0.4
+          ],
+          [
+            3.7,
+            4.4,
+            0.4
+          ],
+          [
+            4.9,
+            -5.6,
+            0.4
+          ],
+          [
+            4.9,
+            -4.4,
+            0.4
+          ],
+          [
+            4.9,
+            -3.2,
+            0.4
+          ],
+          [
+            4.9,
+            3.2,
+            0.4
+          ],
+          [
+            4.9,
+            4.4,
+            0.4
+          ],
+          [
+            6.1,
+            -5.6,
+            0.4
+          ],
+          [
+            6.1,
+            -4.4,
+            0.4
+          ],
+          [
+            6.1,
+            -3.2,
+            0.4
+          ],
+          [
+            6.1,
+            3.2,
+            0.4
+          ],
+          [
+            6.1,
+            4.4,
+            0.4
+          ]
+        ],
+        "gold_target_ids": [
+          "live-development-test-00000008-fact-a"
+        ],
+        "post_recording_sha256": "3598f175ef5dc2e332822754002e07d4c68f9c922807f796dc8381c1af83d640",
+        "post_run_id": "47c5def5ad2e40f9977113a7a8dcbd6b",
+        "post_worker_sha256": "befe19f5e0afc4196ada50f1380dcb3b2501005429850b3cb42dfe9db2e53ef7",
+        "pre_m_sha256": "948eaeaeb4cd59e5746820e38c973334e2b5156aff3b6eff535172fa912e25e1",
+        "source_recording_sha256": "22ed59ebdc6c597b435b67949f0cd3943c6869de7130c370b28e076ac073d22c",
+        "source_run_id": "f96c83dbeb61488588e58c03cc914a5a",
+        "source_snapshot_sha256": "465d1b37e213e2bb8a2867318a9bc7863a7218cefffccb9685b84d30293e2d90",
+        "source_worker_sha256": "981b590abbcd21d7210e22f06b2fa00c1c0e5cdcb3db1c160cf78525a82b8c55",
+        "trigger": {
+          "after": 1,
+          "before": 0,
+          "before_observation_id": "sensor-4f39408d2d6e1d94b5c4b10781c470fffeed1226421574744960a7ce6ea38c30",
+          "cue_id": "live-development-test-00000008-cue",
+          "episode_id": "episode-0",
+          "id": "sensor-d3b44e437ca0d3b053127ae36a039a9cdf507542e48af059054f5d53ab831bae",
+          "kind": "cue_changed",
+          "observation_id": "sensor-90ad37a357021f436b87e17eacef2cc619197189b559ec6d6306750e80709e1b",
+          "tick": 300
+        },
+        "version": 1
+      },
+      "oracle_evidence_sha256": "e0c0af841af3aca76f89024ef4b4b416594fee4dbea4b5e337a7cb9a55929d75",
+      "pre_m_sha256": "948eaeaeb4cd59e5746820e38c973334e2b5156aff3b6eff535172fa912e25e1",
+      "r2_complete": false,
+      "runtime": [
+        {
+          "condition": "own",
+          "final_phase": "terminated",
+          "fresh_correct_fact_ids": [
+            "live-development-test-00000008-fact-a",
+            "live-development-test-00000008-fact-z"
+          ],
+          "inspection_not_started": false,
+          "navigation_pass": true,
+          "outcome": {
+            "episode": 0,
+            "final_distance": 0.7899753451347351,
+            "reason": "goal",
+            "steps": 426
+          },
+          "provenance_sha256": "016c5b5e9472b116d065fb922b32d64089db6e27839aec09d751238f8ce7ffc1",
+          "recording_status": "completed",
+          "requested": 1,
+          "resolved": 1,
+          "resource_sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+          "revision_pass": true,
+          "selector_configuration_sha256": "4fc18c9e1179a352193221429675b8d95c9d63d73708e123d5558b3d4c355b2e",
+          "started": 1,
+          "task_pass": true,
+          "terminal_control_boundary": 426,
+          "timeouts": 0,
+          "timing": [
+            {
+              "fact_id": "live-development-test-00000008-fact-a",
+              "first_correct_committed_tick": 354,
+              "first_correct_observed_tick": 354,
+              "gold": true,
+              "uncertainty_intervals": [
+                {
+                  "censored": false,
+                  "duration_ticks": 54,
+                  "end_tick": 354,
+                  "start_tick": 300
+                }
+              ]
+            },
+            {
+              "fact_id": "live-development-test-00000008-fact-z",
+              "first_correct_committed_tick": 300,
+              "first_correct_observed_tick": 300,
+              "gold": false,
+              "uncertainty_intervals": []
+            }
+          ],
+          "unresolved_fact_ids": [],
+          "worker_task_pass": false
+        },
+        {
+          "condition": "swapped",
+          "final_phase": "terminated",
+          "fresh_correct_fact_ids": [
+            "live-development-test-00000008-fact-a",
+            "live-development-test-00000008-fact-z"
+          ],
+          "inspection_not_started": false,
+          "navigation_pass": true,
+          "outcome": {
+            "episode": 0,
+            "final_distance": 0.7895011901855469,
+            "reason": "goal",
+            "steps": 426
+          },
+          "provenance_sha256": "64628e37cc6e861194f810baa92926eba8f57260047cdd8ad320a4601023d213",
+          "recording_status": "completed",
+          "requested": 0,
+          "resolved": 0,
+          "resource_sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+          "revision_pass": true,
+          "selector_configuration_sha256": "ab4ecff0bde2fef1b22223c79887f3798b00448e1be49e021450abe6047aa207",
+          "started": 0,
+          "task_pass": true,
+          "terminal_control_boundary": 426,
+          "timeouts": 0,
+          "timing": [
+            {
+              "fact_id": "live-development-test-00000008-fact-a",
+              "first_correct_committed_tick": 354,
+              "first_correct_observed_tick": 354,
+              "gold": true,
+              "uncertainty_intervals": []
+            },
+            {
+              "fact_id": "live-development-test-00000008-fact-z",
+              "first_correct_committed_tick": 300,
+              "first_correct_observed_tick": 300,
+              "gold": false,
+              "uncertainty_intervals": [
+                {
+                  "censored": false,
+                  "duration_ticks": 0,
+                  "end_tick": 300,
+                  "start_tick": 300
+                }
+              ]
+            }
+          ],
+          "unresolved_fact_ids": [],
+          "worker_task_pass": false
+        },
+        {
+          "condition": "sham",
+          "final_phase": "terminated",
+          "fresh_correct_fact_ids": [
+            "live-development-test-00000008-fact-a",
+            "live-development-test-00000008-fact-z"
+          ],
+          "inspection_not_started": false,
+          "navigation_pass": true,
+          "outcome": {
+            "episode": 0,
+            "final_distance": 0.7899753451347351,
+            "reason": "goal",
+            "steps": 426
+          },
+          "provenance_sha256": "016c5b5e9472b116d065fb922b32d64089db6e27839aec09d751238f8ce7ffc1",
+          "recording_status": "completed",
+          "requested": 1,
+          "resolved": 1,
+          "resource_sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+          "revision_pass": true,
+          "selector_configuration_sha256": "e7f35880b346992c0065622c7d2b1e39af305cbb8d2fa3af701f084bf5a67225",
+          "started": 1,
+          "task_pass": true,
+          "terminal_control_boundary": 426,
+          "timeouts": 0,
+          "timing": [
+            {
+              "fact_id": "live-development-test-00000008-fact-a",
+              "first_correct_committed_tick": 354,
+              "first_correct_observed_tick": 354,
+              "gold": true,
+              "uncertainty_intervals": [
+                {
+                  "censored": false,
+                  "duration_ticks": 54,
+                  "end_tick": 354,
+                  "start_tick": 300
+                }
+              ]
+            },
+            {
+              "fact_id": "live-development-test-00000008-fact-z",
+              "first_correct_committed_tick": 300,
+              "first_correct_observed_tick": 300,
+              "gold": false,
+              "uncertainty_intervals": []
+            }
+          ],
+          "unresolved_fact_ids": [],
+          "worker_task_pass": false
+        },
+        {
+          "condition": "no-U",
+          "final_phase": "terminated",
+          "fresh_correct_fact_ids": [
+            "live-development-test-00000008-fact-a",
+            "live-development-test-00000008-fact-z"
+          ],
+          "inspection_not_started": false,
+          "navigation_pass": true,
+          "outcome": {
+            "episode": 0,
+            "final_distance": 0.7895011901855469,
+            "reason": "goal",
+            "steps": 426
+          },
+          "provenance_sha256": "7081b05e550ff15e17170c89375b5807378471446c33982251ea1e2107c4e5ed",
+          "recording_status": "completed",
+          "requested": 0,
+          "resolved": 0,
+          "resource_sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+          "revision_pass": true,
+          "selector_configuration_sha256": "964e74fa9949f5ee7f7def81a71deda2db6c2159882a9096e6807fafdb5747c6",
+          "started": 0,
+          "task_pass": true,
+          "terminal_control_boundary": 426,
+          "timeouts": 0,
+          "timing": [
+            {
+              "fact_id": "live-development-test-00000008-fact-a",
+              "first_correct_committed_tick": 354,
+              "first_correct_observed_tick": 354,
+              "gold": true,
+              "uncertainty_intervals": []
+            },
+            {
+              "fact_id": "live-development-test-00000008-fact-z",
+              "first_correct_committed_tick": 300,
+              "first_correct_observed_tick": 300,
+              "gold": false,
+              "uncertainty_intervals": []
+            }
+          ],
+          "unresolved_fact_ids": [],
+          "worker_task_pass": false
+        },
+        {
+          "condition": "hand-authored",
+          "final_phase": "terminated",
+          "fresh_correct_fact_ids": [
+            "live-development-test-00000008-fact-a",
+            "live-development-test-00000008-fact-z"
+          ],
+          "inspection_not_started": false,
+          "navigation_pass": true,
+          "outcome": {
+            "episode": 0,
+            "final_distance": 0.7899753451347351,
+            "reason": "goal",
+            "steps": 426
+          },
+          "provenance_sha256": "7081b05e550ff15e17170c89375b5807378471446c33982251ea1e2107c4e5ed",
+          "recording_status": "completed",
+          "requested": 1,
+          "resolved": 1,
+          "resource_sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+          "revision_pass": true,
+          "selector_configuration_sha256": "6e3fbab6dbcbbd06ef169a60ebb79755518adc82d4ae15c8b310f45e3d884a7d",
+          "started": 1,
+          "task_pass": true,
+          "terminal_control_boundary": 426,
+          "timeouts": 0,
+          "timing": [
+            {
+              "fact_id": "live-development-test-00000008-fact-a",
+              "first_correct_committed_tick": 354,
+              "first_correct_observed_tick": 354,
+              "gold": true,
+              "uncertainty_intervals": [
+                {
+                  "censored": false,
+                  "duration_ticks": 54,
+                  "end_tick": 354,
+                  "start_tick": 300
+                }
+              ]
+            },
+            {
+              "fact_id": "live-development-test-00000008-fact-z",
+              "first_correct_committed_tick": 300,
+              "first_correct_observed_tick": 300,
+              "gold": false,
+              "uncertainty_intervals": []
+            }
+          ],
+          "unresolved_fact_ids": [],
+          "worker_task_pass": false
+        },
+        {
+          "condition": "history-independent",
+          "final_phase": "terminated",
+          "fresh_correct_fact_ids": [
+            "live-development-test-00000008-fact-a",
+            "live-development-test-00000008-fact-z"
+          ],
+          "inspection_not_started": false,
+          "navigation_pass": true,
+          "outcome": {
+            "episode": 0,
+            "final_distance": 0.7899753451347351,
+            "reason": "goal",
+            "steps": 426
+          },
+          "provenance_sha256": "7081b05e550ff15e17170c89375b5807378471446c33982251ea1e2107c4e5ed",
+          "recording_status": "completed",
+          "requested": 1,
+          "resolved": 1,
+          "resource_sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+          "revision_pass": true,
+          "selector_configuration_sha256": "064669fbe8d6e2615d72e7a54277797f38fc8f2b83587842895a6903f631c5a8",
+          "started": 1,
+          "task_pass": true,
+          "terminal_control_boundary": 426,
+          "timeouts": 0,
+          "timing": [
+            {
+              "fact_id": "live-development-test-00000008-fact-a",
+              "first_correct_committed_tick": 354,
+              "first_correct_observed_tick": 354,
+              "gold": true,
+              "uncertainty_intervals": [
+                {
+                  "censored": false,
+                  "duration_ticks": 54,
+                  "end_tick": 354,
+                  "start_tick": 300
+                }
+              ]
+            },
+            {
+              "fact_id": "live-development-test-00000008-fact-z",
+              "first_correct_committed_tick": 300,
+              "first_correct_observed_tick": 300,
+              "gold": false,
+              "uncertainty_intervals": []
+            }
+          ],
+          "unresolved_fact_ids": [],
+          "worker_task_pass": false
+        },
+        {
+          "condition": "traversal",
+          "final_phase": "terminated",
+          "fresh_correct_fact_ids": [
+            "live-development-test-00000008-fact-a",
+            "live-development-test-00000008-fact-z"
+          ],
+          "inspection_not_started": false,
+          "navigation_pass": true,
+          "outcome": {
+            "episode": 0,
+            "final_distance": 0.7899753451347351,
+            "reason": "goal",
+            "steps": 426
+          },
+          "provenance_sha256": "7081b05e550ff15e17170c89375b5807378471446c33982251ea1e2107c4e5ed",
+          "recording_status": "completed",
+          "requested": 1,
+          "resolved": 1,
+          "resource_sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+          "revision_pass": true,
+          "selector_configuration_sha256": "5a20ad6ffa764eae1c93b40de44ed56a77352cca2332c1ba59f1ac7e1125c53c",
+          "started": 1,
+          "task_pass": true,
+          "terminal_control_boundary": 426,
+          "timeouts": 0,
+          "timing": [
+            {
+              "fact_id": "live-development-test-00000008-fact-a",
+              "first_correct_committed_tick": 354,
+              "first_correct_observed_tick": 354,
+              "gold": true,
+              "uncertainty_intervals": [
+                {
+                  "censored": false,
+                  "duration_ticks": 54,
+                  "end_tick": 354,
+                  "start_tick": 300
+                }
+              ]
+            },
+            {
+              "fact_id": "live-development-test-00000008-fact-z",
+              "first_correct_committed_tick": 300,
+              "first_correct_observed_tick": 300,
+              "gold": false,
+              "uncertainty_intervals": []
+            }
+          ],
+          "unresolved_fact_ids": [],
+          "worker_task_pass": false
+        },
+        {
+          "condition": "retrieval",
+          "final_phase": "terminated",
+          "fresh_correct_fact_ids": [
+            "live-development-test-00000008-fact-a",
+            "live-development-test-00000008-fact-z"
+          ],
+          "inspection_not_started": false,
+          "navigation_pass": true,
+          "outcome": {
+            "episode": 0,
+            "final_distance": 0.7899753451347351,
+            "reason": "goal",
+            "steps": 426
+          },
+          "provenance_sha256": "016c5b5e9472b116d065fb922b32d64089db6e27839aec09d751238f8ce7ffc1",
+          "recording_status": "completed",
+          "requested": 1,
+          "resolved": 1,
+          "resource_sha256": "b6c92a7638af926ed625069b0f1e23fc804db08e621b3bcdf2d5bae8cc1a0457",
+          "revision_pass": true,
+          "selector_configuration_sha256": "9cdcdb99ee4d3263d63ffc7afbf60a5e58b199dccc7de8615013368eccda17f3",
+          "started": 1,
+          "task_pass": true,
+          "terminal_control_boundary": 426,
+          "timeouts": 0,
+          "timing": [
+            {
+              "fact_id": "live-development-test-00000008-fact-a",
+              "first_correct_committed_tick": 354,
+              "first_correct_observed_tick": 354,
+              "gold": true,
+              "uncertainty_intervals": [
+                {
+                  "censored": false,
+                  "duration_ticks": 54,
+                  "end_tick": 354,
+                  "start_tick": 300
+                }
+              ]
+            },
+            {
+              "fact_id": "live-development-test-00000008-fact-z",
+              "first_correct_committed_tick": 300,
+              "first_correct_observed_tick": 300,
+              "gold": false,
+              "uncertainty_intervals": []
+            }
+          ],
+          "unresolved_fact_ids": [],
+          "worker_task_pass": false
+        },
+        {
+          "condition": "oracle",
+          "final_phase": "terminated",
+          "fresh_correct_fact_ids": [
+            "live-development-test-00000008-fact-a",
+            "live-development-test-00000008-fact-z"
+          ],
+          "inspection_not_started": false,
+          "navigation_pass": true,
+          "outcome": {
+            "episode": 0,
+            "final_distance": 0.7899753451347351,
+            "reason": "goal",
+            "steps": 426
+          },
+          "provenance_sha256": "e0c0af841af3aca76f89024ef4b4b416594fee4dbea4b5e337a7cb9a55929d75",
+          "recording_status": "completed",
+          "requested": 1,
+          "resolved": 1,
+          "resource_sha256": "5cc639b114b0ac9bf4224a0101421ea3090022f941ec5759e1c60df0010f679a",
+          "revision_pass": true,
+          "selector_configuration_sha256": "8d2685c8c8197e4799e42ac1dfde90b6800cd8068e18db908cd41d41950ae85f",
+          "started": 1,
+          "task_pass": true,
+          "terminal_control_boundary": 426,
+          "timeouts": 0,
+          "timing": [
+            {
+              "fact_id": "live-development-test-00000008-fact-a",
+              "first_correct_committed_tick": 354,
+              "first_correct_observed_tick": 354,
+              "gold": true,
+              "uncertainty_intervals": [
+                {
+                  "censored": false,
+                  "duration_ticks": 54,
+                  "end_tick": 354,
+                  "start_tick": 300
+                }
+              ]
+            },
+            {
+              "fact_id": "live-development-test-00000008-fact-z",
+              "first_correct_committed_tick": 300,
+              "first_correct_observed_tick": 300,
+              "gold": false,
+              "uncertainty_intervals": []
+            }
+          ],
+          "unresolved_fact_ids": [],
+          "worker_task_pass": false
+        }
+      ],
+      "targeting": [
+        {
+          "abstained": false,
+          "behavior_access": [
+            "m",
+            "trigger",
+            "u.payload"
+          ],
+          "behavior_input_bytes": 1534,
+          "condition": "own",
+          "correct_abstention": false,
+          "envelope_bytes": 590,
+          "exact_set": true,
+          "false_targets": 0,
+          "missed_targets": 0,
+          "payload_bytes": 108,
+          "precision": 1.0,
+          "privileged": false,
+          "recall": 1.0,
+          "runtime_access": [
+            "m",
+            "trigger",
+            "u"
+          ],
+          "runtime_history_bytes": 0,
+          "selection": {
+            "event_id": "sensor-d3b44e437ca0d3b053127ae36a039a9cdf507542e48af059054f5d53ab831bae",
+            "reason": "matched",
+            "target_ids": [
+              "live-development-test-00000008-fact-a"
+            ]
+          },
+          "target_limit": 1,
+          "validation_access": [
+            "m",
+            "trigger",
+            "u"
+          ],
+          "validation_input_bytes": 2008
+        },
+        {
+          "abstained": false,
+          "behavior_access": [
+            "m",
+            "trigger",
+            "u.payload"
+          ],
+          "behavior_input_bytes": 1535,
+          "condition": "swapped",
+          "correct_abstention": false,
+          "envelope_bytes": 591,
+          "exact_set": false,
+          "false_targets": 1,
+          "missed_targets": 1,
+          "payload_bytes": 109,
+          "precision": 0.0,
+          "privileged": false,
+          "recall": 0.0,
+          "runtime_access": [
+            "m",
+            "trigger",
+            "u"
+          ],
+          "runtime_history_bytes": 0,
+          "selection": {
+            "event_id": "sensor-d3b44e437ca0d3b053127ae36a039a9cdf507542e48af059054f5d53ab831bae",
+            "reason": "matched",
+            "target_ids": [
+              "live-development-test-00000008-fact-z"
+            ]
+          },
+          "target_limit": 1,
+          "validation_access": [
+            "m",
+            "trigger",
+            "u"
+          ],
+          "validation_input_bytes": 2009
+        },
+        {
+          "abstained": false,
+          "behavior_access": [
+            "m",
+            "trigger",
+            "u.payload"
+          ],
+          "behavior_input_bytes": 1534,
+          "condition": "sham",
+          "correct_abstention": false,
+          "envelope_bytes": 590,
+          "exact_set": true,
+          "false_targets": 0,
+          "missed_targets": 0,
+          "payload_bytes": 108,
+          "precision": 1.0,
+          "privileged": false,
+          "recall": 1.0,
+          "runtime_access": [
+            "m",
+            "trigger",
+            "u"
+          ],
+          "runtime_history_bytes": 0,
+          "selection": {
+            "event_id": "sensor-d3b44e437ca0d3b053127ae36a039a9cdf507542e48af059054f5d53ab831bae",
+            "reason": "matched",
+            "target_ids": [
+              "live-development-test-00000008-fact-a"
+            ]
+          },
+          "target_limit": 1,
+          "validation_access": [
+            "m",
+            "trigger",
+            "u"
+          ],
+          "validation_input_bytes": 2008
+        },
+        {
+          "abstained": true,
+          "behavior_access": [
+            "m",
+            "trigger",
+            "u.payload"
+          ],
+          "behavior_input_bytes": 1486,
+          "condition": "no-U",
+          "correct_abstention": false,
+          "envelope_bytes": 474,
+          "exact_set": false,
+          "false_targets": 0,
+          "missed_targets": 1,
+          "payload_bytes": 60,
+          "precision": null,
+          "privileged": false,
+          "recall": 0.0,
+          "runtime_access": [
+            "m",
+            "trigger",
+            "u"
+          ],
+          "runtime_history_bytes": 0,
+          "selection": {
+            "event_id": "sensor-d3b44e437ca0d3b053127ae36a039a9cdf507542e48af059054f5d53ab831bae",
+            "reason": "no_rule",
+            "target_ids": []
+          },
+          "target_limit": 1,
+          "validation_access": [
+            "m",
+            "trigger",
+            "u"
+          ],
+          "validation_input_bytes": 1892
+        },
+        {
+          "abstained": false,
+          "behavior_access": [
+            "m",
+            "trigger",
+            "u.payload"
+          ],
+          "behavior_input_bytes": 1534,
+          "condition": "hand-authored",
+          "correct_abstention": false,
+          "envelope_bytes": 530,
+          "exact_set": true,
+          "false_targets": 0,
+          "missed_targets": 0,
+          "payload_bytes": 108,
+          "precision": 1.0,
+          "privileged": false,
+          "recall": 1.0,
+          "runtime_access": [
+            "m",
+            "trigger",
+            "u"
+          ],
+          "runtime_history_bytes": 0,
+          "selection": {
+            "event_id": "sensor-d3b44e437ca0d3b053127ae36a039a9cdf507542e48af059054f5d53ab831bae",
+            "reason": "matched",
+            "target_ids": [
+              "live-development-test-00000008-fact-a"
+            ]
+          },
+          "target_limit": 1,
+          "validation_access": [
+            "m",
+            "trigger",
+            "u"
+          ],
+          "validation_input_bytes": 1948
+        },
+        {
+          "abstained": false,
+          "behavior_access": [
+            "m",
+            "trigger"
+          ],
+          "behavior_input_bytes": 1413,
+          "condition": "history-independent",
+          "correct_abstention": false,
+          "envelope_bytes": 0,
+          "exact_set": true,
+          "false_targets": 0,
+          "missed_targets": 0,
+          "payload_bytes": 0,
+          "precision": 1.0,
+          "privileged": false,
+          "recall": 1.0,
+          "runtime_access": [
+            "m",
+            "trigger"
+          ],
+          "runtime_history_bytes": 0,
+          "selection": {
+            "event_id": "sensor-d3b44e437ca0d3b053127ae36a039a9cdf507542e48af059054f5d53ab831bae",
+            "reason": "budget",
+            "target_ids": [
+              "live-development-test-00000008-fact-a"
+            ]
+          },
+          "target_limit": 1,
+          "validation_access": [
+            "m",
+            "trigger"
+          ],
+          "validation_input_bytes": 1413
+        },
+        {
+          "abstained": false,
+          "behavior_access": [
+            "m",
+            "trigger"
+          ],
+          "behavior_input_bytes": 1413,
+          "condition": "traversal",
+          "correct_abstention": false,
+          "envelope_bytes": 0,
+          "exact_set": true,
+          "false_targets": 0,
+          "missed_targets": 0,
+          "payload_bytes": 0,
+          "precision": 1.0,
+          "privileged": false,
+          "recall": 1.0,
+          "runtime_access": [
+            "m",
+            "trigger"
+          ],
+          "runtime_history_bytes": 0,
+          "selection": {
+            "event_id": "sensor-d3b44e437ca0d3b053127ae36a039a9cdf507542e48af059054f5d53ab831bae",
+            "reason": "budget",
+            "target_ids": [
+              "live-development-test-00000008-fact-a"
+            ]
+          },
+          "target_limit": 1,
+          "validation_access": [
+            "m",
+            "trigger"
+          ],
+          "validation_input_bytes": 1413
+        },
+        {
+          "abstained": false,
+          "behavior_access": [
+            "m",
+            "trigger",
+            "history"
+          ],
+          "behavior_input_bytes": 9034,
+          "condition": "retrieval",
+          "correct_abstention": false,
+          "envelope_bytes": 0,
+          "exact_set": true,
+          "false_targets": 0,
+          "missed_targets": 0,
+          "payload_bytes": 0,
+          "precision": 1.0,
+          "privileged": false,
+          "recall": 1.0,
+          "runtime_access": [
+            "m",
+            "trigger",
+            "history"
+          ],
+          "runtime_history_bytes": 7610,
+          "selection": {
+            "event_id": "sensor-d3b44e437ca0d3b053127ae36a039a9cdf507542e48af059054f5d53ab831bae",
+            "reason": "matched",
+            "target_ids": [
+              "live-development-test-00000008-fact-a"
+            ]
+          },
+          "target_limit": 1,
+          "validation_access": [
+            "m",
+            "trigger",
+            "history"
+          ],
+          "validation_input_bytes": 9034
+        },
+        {
+          "abstained": false,
+          "behavior_access": [
+            "m",
+            "trigger",
+            "gold_target_ids"
+          ],
+          "behavior_input_bytes": 1473,
+          "condition": "oracle",
+          "correct_abstention": false,
+          "envelope_bytes": 0,
+          "exact_set": true,
+          "false_targets": 0,
+          "missed_targets": 0,
+          "payload_bytes": 0,
+          "precision": 1.0,
+          "privileged": true,
+          "recall": 1.0,
+          "runtime_access": [
+            "m",
+            "trigger",
+            "gold_target_ids"
+          ],
+          "runtime_history_bytes": 0,
+          "selection": {
+            "event_id": "sensor-d3b44e437ca0d3b053127ae36a039a9cdf507542e48af059054f5d53ab831bae",
+            "reason": "matched",
+            "target_ids": [
+              "live-development-test-00000008-fact-a"
+            ]
+          },
+          "target_limit": 1,
+          "validation_access": [
+            "m",
+            "trigger",
+            "gold_target_ids"
+          ],
+          "validation_input_bytes": 1473
+        }
+      ],
+      "trajectory_comparisons": [
+        {
+          "condition": "swapped",
+          "first_divergence": {
+            "actual": 0.062011729925870895,
+            "episode": 0,
+            "expected": 0.10741478949785233,
+            "field": "sensors",
+            "global_tick": 300,
+            "index": [
+              2
+            ],
+            "max_abs_error": 0.04540305957198143,
+            "reason": "numeric replay divergence",
+            "tick": 300
+          },
+          "reference": "own",
+          "same_length": true,
+          "scope": "existing replay tolerances; frames are not independent samples",
+          "shared_ticks": 126
+        },
+        {
+          "condition": "sham",
+          "first_divergence": null,
+          "reference": "own",
+          "same_length": true,
+          "scope": "existing replay tolerances; frames are not independent samples",
+          "shared_ticks": 126
+        },
+        {
+          "condition": "no-U",
+          "first_divergence": {
+            "actual": 0.062011729925870895,
+            "episode": 0,
+            "expected": 0.10741478949785233,
+            "field": "sensors",
+            "global_tick": 300,
+            "index": [
+              2
+            ],
+            "max_abs_error": 0.04540305957198143,
+            "reason": "numeric replay divergence",
+            "tick": 300
+          },
+          "reference": "own",
+          "same_length": true,
+          "scope": "existing replay tolerances; frames are not independent samples",
+          "shared_ticks": 126
+        },
+        {
+          "condition": "hand-authored",
+          "first_divergence": null,
+          "reference": "own",
+          "same_length": true,
+          "scope": "existing replay tolerances; frames are not independent samples",
+          "shared_ticks": 126
+        },
+        {
+          "condition": "history-independent",
+          "first_divergence": null,
+          "reference": "own",
+          "same_length": true,
+          "scope": "existing replay tolerances; frames are not independent samples",
+          "shared_ticks": 126
+        },
+        {
+          "condition": "traversal",
+          "first_divergence": null,
+          "reference": "own",
+          "same_length": true,
+          "scope": "existing replay tolerances; frames are not independent samples",
+          "shared_ticks": 126
+        },
+        {
+          "condition": "retrieval",
+          "first_divergence": null,
+          "reference": "own",
+          "same_length": true,
+          "scope": "existing replay tolerances; frames are not independent samples",
+          "shared_ticks": 126
+        },
+        {
+          "condition": "oracle",
+          "first_divergence": null,
+          "reference": "own",
+          "same_length": true,
+          "scope": "existing replay tolerances; frames are not independent samples",
+          "shared_ticks": 126
+        }
+      ],
+      "trigger": {
+        "after": 1,
+        "before": 0,
+        "before_observation_id": "sensor-4f39408d2d6e1d94b5c4b10781c470fffeed1226421574744960a7ce6ea38c30",
+        "cue_id": "live-development-test-00000008-cue",
+        "episode_id": "episode-0",
+        "id": "sensor-d3b44e437ca0d3b053127ae36a039a9cdf507542e48af059054f5d53ab831bae",
+        "kind": "cue_changed",
+        "observation_id": "sensor-90ad37a357021f436b87e17eacef2cc619197189b559ec6d6306750e80709e1b",
+        "tick": 300
+      }
+    },
+    {
+      "after_occupancy": {
+        "live-development-test-00000009-subject-a": "blocked",
+        "live-development-test-00000009-subject-z": "open"
+      },
+      "before_occupancy": {
+        "live-development-test-00000009-subject-a": "open",
+        "live-development-test-00000009-subject-z": "open"
+      },
+      "block": "paired-9",
+      "gold_target_ids": [
+        "live-development-test-00000009-fact-a"
+      ],
+      "held_out_executed": false,
+      "operator_blindness_verified": false,
+      "oracle_evidence": {
+        "after_circles": [
+          [
+            0.0,
+            -2.0,
+            0.4
+          ],
+          [
+            0.0,
+            0.0,
+            0.4
+          ],
+          [
+            0.0,
+            2.0,
+            0.4
+          ],
+          [
+            0.0,
+            -1.0,
+            0.4
+          ],
+          [
+            2.5,
+            1.0,
+            0.4
+          ],
+          [
+            3.7,
+            -5.6,
+            0.4
+          ],
+          [
+            3.7,
+            -4.4,
+            0.4
+          ],
+          [
+            3.7,
+            -3.2,
+            0.4
+          ],
+          [
+            3.7,
+            3.2,
+            0.4
+          ],
+          [
+            3.7,
+            4.4,
+            0.4
+          ],
+          [
+            4.9,
+            -5.6,
+            0.4
+          ],
+          [
+            4.9,
+            -4.4,
+            0.4
+          ],
+          [
+            4.9,
+            -3.2,
+            0.4
+          ],
+          [
+            4.9,
+            3.2,
+            0.4
+          ],
+          [
+            4.9,
+            4.4,
+            0.4
+          ],
+          [
+            6.1,
+            -5.6,
+            0.4
+          ],
+          [
+            6.1,
+            -4.4,
+            0.4
+          ],
+          [
+            6.1,
+            -3.2,
+            0.4
+          ],
+          [
+            6.1,
+            3.2,
+            0.4
+          ],
+          [
+            6.1,
+            4.4,
+            0.4
+          ]
+        ],
+        "before_circles": [
+          [
+            0.0,
+            -2.0,
+            0.4
+          ],
+          [
+            0.0,
+            0.0,
+            0.4
+          ],
+          [
+            0.0,
+            2.0,
+            0.4
+          ],
+          [
+            2.5,
+            -1.0,
+            0.4
+          ],
+          [
+            2.5,
+            1.0,
+            0.4
+          ],
+          [
+            3.7,
+            -5.6,
+            0.4
+          ],
+          [
+            3.7,
+            -4.4,
+            0.4
+          ],
+          [
+            3.7,
+            -3.2,
+            0.4
+          ],
+          [
+            3.7,
+            3.2,
+            0.4
+          ],
+          [
+            3.7,
+            4.4,
+            0.4
+          ],
+          [
+            4.9,
+            -5.6,
+            0.4
+          ],
+          [
+            4.9,
+            -4.4,
+            0.4
+          ],
+          [
+            4.9,
+            -3.2,
+            0.4
+          ],
+          [
+            4.9,
+            3.2,
+            0.4
+          ],
+          [
+            4.9,
+            4.4,
+            0.4
+          ],
+          [
+            6.1,
+            -5.6,
+            0.4
+          ],
+          [
+            6.1,
+            -4.4,
+            0.4
+          ],
+          [
+            6.1,
+            -3.2,
+            0.4
+          ],
+          [
+            6.1,
+            3.2,
+            0.4
+          ],
+          [
+            6.1,
+            4.4,
+            0.4
+          ]
+        ],
+        "gold_target_ids": [
+          "live-development-test-00000009-fact-a"
+        ],
+        "post_recording_sha256": "70d7e0205bf051465b5c7b281f4e96f7a7071121c960c11648856b45a6ff4edc",
+        "post_run_id": "7150d1aa8d7346bab0066decb58b74fa",
+        "post_worker_sha256": "a665dba1b06104d695b7472dd95072a72dd07c5d251d36319359c9c24157000e",
+        "pre_m_sha256": "56057dec79ab57408cd2e45095aa50d2d5e814593d80ccc87cb7b89c3924d18d",
+        "source_recording_sha256": "d1fe34a5649840c4147364894443aead8b6b9df91c7eee3e95cef4a627827a85",
+        "source_run_id": "54ca910016174286b4e8113068e6f6cf",
+        "source_snapshot_sha256": "da063395cd0db4ac9d6cfdaadee25511df788f668941054d5ec2d1ed99f47c36",
+        "source_worker_sha256": "26ae210479e74ef29d28471a9264cb645c968890b2039ebd2018258b2a216606",
+        "trigger": {
+          "after": 1,
+          "before": 0,
+          "before_observation_id": "sensor-896f8bed7fb47997c8f94c410ad36873b150d2ba784db48256704ddd7e666876",
+          "cue_id": "live-development-test-00000009-cue",
+          "episode_id": "episode-0",
+          "id": "sensor-612ff6e81ec7388ca7426b9e22303a7f09f36bfb1c257739d1e5f38c855ab381",
+          "kind": "cue_changed",
+          "observation_id": "sensor-fcd1c7fe47d2bb6a9bbf4df9f71c53c79685bf2a2cdcf32884fccc8071ffc968",
+          "tick": 300
+        },
+        "version": 1
+      },
+      "oracle_evidence_sha256": "37b31053f2a8aaacdfbfb9d7a4dae52e80e7912f23892d2dd1e2f41cf131d2a0",
+      "pre_m_sha256": "56057dec79ab57408cd2e45095aa50d2d5e814593d80ccc87cb7b89c3924d18d",
+      "r2_complete": false,
+      "runtime": [
+        {
+          "condition": "own",
+          "final_phase": "terminated",
+          "fresh_correct_fact_ids": [
+            "live-development-test-00000009-fact-a",
+            "live-development-test-00000009-fact-z"
+          ],
+          "inspection_not_started": false,
+          "navigation_pass": true,
+          "outcome": {
+            "episode": 0,
+            "final_distance": 0.7899753451347351,
+            "reason": "goal",
+            "steps": 426
+          },
+          "provenance_sha256": "64628e37cc6e861194f810baa92926eba8f57260047cdd8ad320a4601023d213",
+          "recording_status": "completed",
+          "requested": 1,
+          "resolved": 1,
+          "resource_sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+          "revision_pass": true,
+          "selector_configuration_sha256": "3159a0b4924006095d2d0611ccff1979d0b24b20233ee1aafebcdd809d0f297f",
+          "started": 1,
+          "task_pass": true,
+          "terminal_control_boundary": 426,
+          "timeouts": 0,
+          "timing": [
+            {
+              "fact_id": "live-development-test-00000009-fact-a",
+              "first_correct_committed_tick": 354,
+              "first_correct_observed_tick": 354,
+              "gold": true,
+              "uncertainty_intervals": [
+                {
+                  "censored": false,
+                  "duration_ticks": 54,
+                  "end_tick": 354,
+                  "start_tick": 300
+                }
+              ]
+            },
+            {
+              "fact_id": "live-development-test-00000009-fact-z",
+              "first_correct_committed_tick": 300,
+              "first_correct_observed_tick": 300,
+              "gold": false,
+              "uncertainty_intervals": []
+            }
+          ],
+          "unresolved_fact_ids": [],
+          "worker_task_pass": false
+        },
+        {
+          "condition": "swapped",
+          "final_phase": "terminated",
+          "fresh_correct_fact_ids": [
+            "live-development-test-00000009-fact-a",
+            "live-development-test-00000009-fact-z"
+          ],
+          "inspection_not_started": false,
+          "navigation_pass": true,
+          "outcome": {
+            "episode": 0,
+            "final_distance": 0.7895011901855469,
+            "reason": "goal",
+            "steps": 426
+          },
+          "provenance_sha256": "016c5b5e9472b116d065fb922b32d64089db6e27839aec09d751238f8ce7ffc1",
+          "recording_status": "completed",
+          "requested": 0,
+          "resolved": 0,
+          "resource_sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+          "revision_pass": true,
+          "selector_configuration_sha256": "f6c7d1d02618742123b74308f4b15a8e7cfe0db4428407d717928a52177748b5",
+          "started": 0,
+          "task_pass": true,
+          "terminal_control_boundary": 426,
+          "timeouts": 0,
+          "timing": [
+            {
+              "fact_id": "live-development-test-00000009-fact-a",
+              "first_correct_committed_tick": 354,
+              "first_correct_observed_tick": 354,
+              "gold": true,
+              "uncertainty_intervals": []
+            },
+            {
+              "fact_id": "live-development-test-00000009-fact-z",
+              "first_correct_committed_tick": 300,
+              "first_correct_observed_tick": 300,
+              "gold": false,
+              "uncertainty_intervals": [
+                {
+                  "censored": false,
+                  "duration_ticks": 0,
+                  "end_tick": 300,
+                  "start_tick": 300
+                }
+              ]
+            }
+          ],
+          "unresolved_fact_ids": [],
+          "worker_task_pass": false
+        },
+        {
+          "condition": "sham",
+          "final_phase": "terminated",
+          "fresh_correct_fact_ids": [
+            "live-development-test-00000009-fact-a",
+            "live-development-test-00000009-fact-z"
+          ],
+          "inspection_not_started": false,
+          "navigation_pass": true,
+          "outcome": {
+            "episode": 0,
+            "final_distance": 0.7899753451347351,
+            "reason": "goal",
+            "steps": 426
+          },
+          "provenance_sha256": "64628e37cc6e861194f810baa92926eba8f57260047cdd8ad320a4601023d213",
+          "recording_status": "completed",
+          "requested": 1,
+          "resolved": 1,
+          "resource_sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+          "revision_pass": true,
+          "selector_configuration_sha256": "ebbdc650dfe638fc3478a4a6570e67efe1e381d3d5ee44c4bcab29a5e7ecd490",
+          "started": 1,
+          "task_pass": true,
+          "terminal_control_boundary": 426,
+          "timeouts": 0,
+          "timing": [
+            {
+              "fact_id": "live-development-test-00000009-fact-a",
+              "first_correct_committed_tick": 354,
+              "first_correct_observed_tick": 354,
+              "gold": true,
+              "uncertainty_intervals": [
+                {
+                  "censored": false,
+                  "duration_ticks": 54,
+                  "end_tick": 354,
+                  "start_tick": 300
+                }
+              ]
+            },
+            {
+              "fact_id": "live-development-test-00000009-fact-z",
+              "first_correct_committed_tick": 300,
+              "first_correct_observed_tick": 300,
+              "gold": false,
+              "uncertainty_intervals": []
+            }
+          ],
+          "unresolved_fact_ids": [],
+          "worker_task_pass": false
+        },
+        {
+          "condition": "no-U",
+          "final_phase": "terminated",
+          "fresh_correct_fact_ids": [
+            "live-development-test-00000009-fact-a",
+            "live-development-test-00000009-fact-z"
+          ],
+          "inspection_not_started": false,
+          "navigation_pass": true,
+          "outcome": {
+            "episode": 0,
+            "final_distance": 0.7895011901855469,
+            "reason": "goal",
+            "steps": 426
+          },
+          "provenance_sha256": "7081b05e550ff15e17170c89375b5807378471446c33982251ea1e2107c4e5ed",
+          "recording_status": "completed",
+          "requested": 0,
+          "resolved": 0,
+          "resource_sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+          "revision_pass": true,
+          "selector_configuration_sha256": "964e74fa9949f5ee7f7def81a71deda2db6c2159882a9096e6807fafdb5747c6",
+          "started": 0,
+          "task_pass": true,
+          "terminal_control_boundary": 426,
+          "timeouts": 0,
+          "timing": [
+            {
+              "fact_id": "live-development-test-00000009-fact-a",
+              "first_correct_committed_tick": 354,
+              "first_correct_observed_tick": 354,
+              "gold": true,
+              "uncertainty_intervals": []
+            },
+            {
+              "fact_id": "live-development-test-00000009-fact-z",
+              "first_correct_committed_tick": 300,
+              "first_correct_observed_tick": 300,
+              "gold": false,
+              "uncertainty_intervals": []
+            }
+          ],
+          "unresolved_fact_ids": [],
+          "worker_task_pass": false
+        },
+        {
+          "condition": "hand-authored",
+          "final_phase": "terminated",
+          "fresh_correct_fact_ids": [
+            "live-development-test-00000009-fact-a",
+            "live-development-test-00000009-fact-z"
+          ],
+          "inspection_not_started": false,
+          "navigation_pass": true,
+          "outcome": {
+            "episode": 0,
+            "final_distance": 0.7895011901855469,
+            "reason": "goal",
+            "steps": 426
+          },
+          "provenance_sha256": "7081b05e550ff15e17170c89375b5807378471446c33982251ea1e2107c4e5ed",
+          "recording_status": "completed",
+          "requested": 0,
+          "resolved": 0,
+          "resource_sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+          "revision_pass": true,
+          "selector_configuration_sha256": "6e3fbab6dbcbbd06ef169a60ebb79755518adc82d4ae15c8b310f45e3d884a7d",
+          "started": 0,
+          "task_pass": true,
+          "terminal_control_boundary": 426,
+          "timeouts": 0,
+          "timing": [
+            {
+              "fact_id": "live-development-test-00000009-fact-a",
+              "first_correct_committed_tick": 354,
+              "first_correct_observed_tick": 354,
+              "gold": true,
+              "uncertainty_intervals": []
+            },
+            {
+              "fact_id": "live-development-test-00000009-fact-z",
+              "first_correct_committed_tick": 300,
+              "first_correct_observed_tick": 300,
+              "gold": false,
+              "uncertainty_intervals": [
+                {
+                  "censored": false,
+                  "duration_ticks": 0,
+                  "end_tick": 300,
+                  "start_tick": 300
+                }
+              ]
+            }
+          ],
+          "unresolved_fact_ids": [],
+          "worker_task_pass": false
+        },
+        {
+          "condition": "history-independent",
+          "final_phase": "terminated",
+          "fresh_correct_fact_ids": [
+            "live-development-test-00000009-fact-a",
+            "live-development-test-00000009-fact-z"
+          ],
+          "inspection_not_started": false,
+          "navigation_pass": true,
+          "outcome": {
+            "episode": 0,
+            "final_distance": 0.7899753451347351,
+            "reason": "goal",
+            "steps": 426
+          },
+          "provenance_sha256": "7081b05e550ff15e17170c89375b5807378471446c33982251ea1e2107c4e5ed",
+          "recording_status": "completed",
+          "requested": 1,
+          "resolved": 1,
+          "resource_sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+          "revision_pass": true,
+          "selector_configuration_sha256": "064669fbe8d6e2615d72e7a54277797f38fc8f2b83587842895a6903f631c5a8",
+          "started": 1,
+          "task_pass": true,
+          "terminal_control_boundary": 426,
+          "timeouts": 0,
+          "timing": [
+            {
+              "fact_id": "live-development-test-00000009-fact-a",
+              "first_correct_committed_tick": 354,
+              "first_correct_observed_tick": 354,
+              "gold": true,
+              "uncertainty_intervals": [
+                {
+                  "censored": false,
+                  "duration_ticks": 54,
+                  "end_tick": 354,
+                  "start_tick": 300
+                }
+              ]
+            },
+            {
+              "fact_id": "live-development-test-00000009-fact-z",
+              "first_correct_committed_tick": 300,
+              "first_correct_observed_tick": 300,
+              "gold": false,
+              "uncertainty_intervals": []
+            }
+          ],
+          "unresolved_fact_ids": [],
+          "worker_task_pass": false
+        },
+        {
+          "condition": "traversal",
+          "final_phase": "terminated",
+          "fresh_correct_fact_ids": [
+            "live-development-test-00000009-fact-a",
+            "live-development-test-00000009-fact-z"
+          ],
+          "inspection_not_started": false,
+          "navigation_pass": true,
+          "outcome": {
+            "episode": 0,
+            "final_distance": 0.7899753451347351,
+            "reason": "goal",
+            "steps": 426
+          },
+          "provenance_sha256": "7081b05e550ff15e17170c89375b5807378471446c33982251ea1e2107c4e5ed",
+          "recording_status": "completed",
+          "requested": 1,
+          "resolved": 1,
+          "resource_sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+          "revision_pass": true,
+          "selector_configuration_sha256": "5a20ad6ffa764eae1c93b40de44ed56a77352cca2332c1ba59f1ac7e1125c53c",
+          "started": 1,
+          "task_pass": true,
+          "terminal_control_boundary": 426,
+          "timeouts": 0,
+          "timing": [
+            {
+              "fact_id": "live-development-test-00000009-fact-a",
+              "first_correct_committed_tick": 354,
+              "first_correct_observed_tick": 354,
+              "gold": true,
+              "uncertainty_intervals": [
+                {
+                  "censored": false,
+                  "duration_ticks": 54,
+                  "end_tick": 354,
+                  "start_tick": 300
+                }
+              ]
+            },
+            {
+              "fact_id": "live-development-test-00000009-fact-z",
+              "first_correct_committed_tick": 300,
+              "first_correct_observed_tick": 300,
+              "gold": false,
+              "uncertainty_intervals": []
+            }
+          ],
+          "unresolved_fact_ids": [],
+          "worker_task_pass": false
+        },
+        {
+          "condition": "retrieval",
+          "final_phase": "terminated",
+          "fresh_correct_fact_ids": [
+            "live-development-test-00000009-fact-a",
+            "live-development-test-00000009-fact-z"
+          ],
+          "inspection_not_started": false,
+          "navigation_pass": true,
+          "outcome": {
+            "episode": 0,
+            "final_distance": 0.7899753451347351,
+            "reason": "goal",
+            "steps": 426
+          },
+          "provenance_sha256": "64628e37cc6e861194f810baa92926eba8f57260047cdd8ad320a4601023d213",
+          "recording_status": "completed",
+          "requested": 1,
+          "resolved": 1,
+          "resource_sha256": "35588d3fdfde95f339aa99bd2eb3b7b63b46f135d79ac14688f7951dc0129f34",
+          "revision_pass": true,
+          "selector_configuration_sha256": "f73838e65037926a4924eef4d5d9a411f976d4bc773c398b5254886dc6da3afe",
+          "started": 1,
+          "task_pass": true,
+          "terminal_control_boundary": 426,
+          "timeouts": 0,
+          "timing": [
+            {
+              "fact_id": "live-development-test-00000009-fact-a",
+              "first_correct_committed_tick": 354,
+              "first_correct_observed_tick": 354,
+              "gold": true,
+              "uncertainty_intervals": [
+                {
+                  "censored": false,
+                  "duration_ticks": 54,
+                  "end_tick": 354,
+                  "start_tick": 300
+                }
+              ]
+            },
+            {
+              "fact_id": "live-development-test-00000009-fact-z",
+              "first_correct_committed_tick": 300,
+              "first_correct_observed_tick": 300,
+              "gold": false,
+              "uncertainty_intervals": []
+            }
+          ],
+          "unresolved_fact_ids": [],
+          "worker_task_pass": false
+        },
+        {
+          "condition": "oracle",
+          "final_phase": "terminated",
+          "fresh_correct_fact_ids": [
+            "live-development-test-00000009-fact-a",
+            "live-development-test-00000009-fact-z"
+          ],
+          "inspection_not_started": false,
+          "navigation_pass": true,
+          "outcome": {
+            "episode": 0,
+            "final_distance": 0.7899753451347351,
+            "reason": "goal",
+            "steps": 426
+          },
+          "provenance_sha256": "37b31053f2a8aaacdfbfb9d7a4dae52e80e7912f23892d2dd1e2f41cf131d2a0",
+          "recording_status": "completed",
+          "requested": 1,
+          "resolved": 1,
+          "resource_sha256": "c3896c72ddc37bbc8196a8e6dd5fc29b158aaea00b8e92aa663e3c6da670b9c6",
+          "revision_pass": true,
+          "selector_configuration_sha256": "74f3c325b9b080b1d6e759f26fa71b25ea9196cbd68a41d84c1110cec643b966",
+          "started": 1,
+          "task_pass": true,
+          "terminal_control_boundary": 426,
+          "timeouts": 0,
+          "timing": [
+            {
+              "fact_id": "live-development-test-00000009-fact-a",
+              "first_correct_committed_tick": 354,
+              "first_correct_observed_tick": 354,
+              "gold": true,
+              "uncertainty_intervals": [
+                {
+                  "censored": false,
+                  "duration_ticks": 54,
+                  "end_tick": 354,
+                  "start_tick": 300
+                }
+              ]
+            },
+            {
+              "fact_id": "live-development-test-00000009-fact-z",
+              "first_correct_committed_tick": 300,
+              "first_correct_observed_tick": 300,
+              "gold": false,
+              "uncertainty_intervals": []
+            }
+          ],
+          "unresolved_fact_ids": [],
+          "worker_task_pass": false
+        }
+      ],
+      "targeting": [
+        {
+          "abstained": false,
+          "behavior_access": [
+            "m",
+            "trigger",
+            "u.payload"
+          ],
+          "behavior_input_bytes": 1535,
+          "condition": "own",
+          "correct_abstention": false,
+          "envelope_bytes": 591,
+          "exact_set": true,
+          "false_targets": 0,
+          "missed_targets": 0,
+          "payload_bytes": 109,
+          "precision": 1.0,
+          "privileged": false,
+          "recall": 1.0,
+          "runtime_access": [
+            "m",
+            "trigger",
+            "u"
+          ],
+          "runtime_history_bytes": 0,
+          "selection": {
+            "event_id": "sensor-612ff6e81ec7388ca7426b9e22303a7f09f36bfb1c257739d1e5f38c855ab381",
+            "reason": "matched",
+            "target_ids": [
+              "live-development-test-00000009-fact-a"
+            ]
+          },
+          "target_limit": 1,
+          "validation_access": [
+            "m",
+            "trigger",
+            "u"
+          ],
+          "validation_input_bytes": 2009
+        },
+        {
+          "abstained": false,
+          "behavior_access": [
+            "m",
+            "trigger",
+            "u.payload"
+          ],
+          "behavior_input_bytes": 1534,
+          "condition": "swapped",
+          "correct_abstention": false,
+          "envelope_bytes": 590,
+          "exact_set": false,
+          "false_targets": 1,
+          "missed_targets": 1,
+          "payload_bytes": 108,
+          "precision": 0.0,
+          "privileged": false,
+          "recall": 0.0,
+          "runtime_access": [
+            "m",
+            "trigger",
+            "u"
+          ],
+          "runtime_history_bytes": 0,
+          "selection": {
+            "event_id": "sensor-612ff6e81ec7388ca7426b9e22303a7f09f36bfb1c257739d1e5f38c855ab381",
+            "reason": "matched",
+            "target_ids": [
+              "live-development-test-00000009-fact-z"
+            ]
+          },
+          "target_limit": 1,
+          "validation_access": [
+            "m",
+            "trigger",
+            "u"
+          ],
+          "validation_input_bytes": 2008
+        },
+        {
+          "abstained": false,
+          "behavior_access": [
+            "m",
+            "trigger",
+            "u.payload"
+          ],
+          "behavior_input_bytes": 1535,
+          "condition": "sham",
+          "correct_abstention": false,
+          "envelope_bytes": 591,
+          "exact_set": true,
+          "false_targets": 0,
+          "missed_targets": 0,
+          "payload_bytes": 109,
+          "precision": 1.0,
+          "privileged": false,
+          "recall": 1.0,
+          "runtime_access": [
+            "m",
+            "trigger",
+            "u"
+          ],
+          "runtime_history_bytes": 0,
+          "selection": {
+            "event_id": "sensor-612ff6e81ec7388ca7426b9e22303a7f09f36bfb1c257739d1e5f38c855ab381",
+            "reason": "matched",
+            "target_ids": [
+              "live-development-test-00000009-fact-a"
+            ]
+          },
+          "target_limit": 1,
+          "validation_access": [
+            "m",
+            "trigger",
+            "u"
+          ],
+          "validation_input_bytes": 2009
+        },
+        {
+          "abstained": true,
+          "behavior_access": [
+            "m",
+            "trigger",
+            "u.payload"
+          ],
+          "behavior_input_bytes": 1486,
+          "condition": "no-U",
+          "correct_abstention": false,
+          "envelope_bytes": 474,
+          "exact_set": false,
+          "false_targets": 0,
+          "missed_targets": 1,
+          "payload_bytes": 60,
+          "precision": null,
+          "privileged": false,
+          "recall": 0.0,
+          "runtime_access": [
+            "m",
+            "trigger",
+            "u"
+          ],
+          "runtime_history_bytes": 0,
+          "selection": {
+            "event_id": "sensor-612ff6e81ec7388ca7426b9e22303a7f09f36bfb1c257739d1e5f38c855ab381",
+            "reason": "no_rule",
+            "target_ids": []
+          },
+          "target_limit": 1,
+          "validation_access": [
+            "m",
+            "trigger",
+            "u"
+          ],
+          "validation_input_bytes": 1892
+        },
+        {
+          "abstained": false,
+          "behavior_access": [
+            "m",
+            "trigger",
+            "u.payload"
+          ],
+          "behavior_input_bytes": 1534,
+          "condition": "hand-authored",
+          "correct_abstention": false,
+          "envelope_bytes": 530,
+          "exact_set": false,
+          "false_targets": 1,
+          "missed_targets": 1,
+          "payload_bytes": 108,
+          "precision": 0.0,
+          "privileged": false,
+          "recall": 0.0,
+          "runtime_access": [
+            "m",
+            "trigger",
+            "u"
+          ],
+          "runtime_history_bytes": 0,
+          "selection": {
+            "event_id": "sensor-612ff6e81ec7388ca7426b9e22303a7f09f36bfb1c257739d1e5f38c855ab381",
+            "reason": "matched",
+            "target_ids": [
+              "live-development-test-00000009-fact-z"
+            ]
+          },
+          "target_limit": 1,
+          "validation_access": [
+            "m",
+            "trigger",
+            "u"
+          ],
+          "validation_input_bytes": 1948
+        },
+        {
+          "abstained": false,
+          "behavior_access": [
+            "m",
+            "trigger"
+          ],
+          "behavior_input_bytes": 1413,
+          "condition": "history-independent",
+          "correct_abstention": false,
+          "envelope_bytes": 0,
+          "exact_set": true,
+          "false_targets": 0,
+          "missed_targets": 0,
+          "payload_bytes": 0,
+          "precision": 1.0,
+          "privileged": false,
+          "recall": 1.0,
+          "runtime_access": [
+            "m",
+            "trigger"
+          ],
+          "runtime_history_bytes": 0,
+          "selection": {
+            "event_id": "sensor-612ff6e81ec7388ca7426b9e22303a7f09f36bfb1c257739d1e5f38c855ab381",
+            "reason": "budget",
+            "target_ids": [
+              "live-development-test-00000009-fact-a"
+            ]
+          },
+          "target_limit": 1,
+          "validation_access": [
+            "m",
+            "trigger"
+          ],
+          "validation_input_bytes": 1413
+        },
+        {
+          "abstained": false,
+          "behavior_access": [
+            "m",
+            "trigger"
+          ],
+          "behavior_input_bytes": 1413,
+          "condition": "traversal",
+          "correct_abstention": false,
+          "envelope_bytes": 0,
+          "exact_set": true,
+          "false_targets": 0,
+          "missed_targets": 0,
+          "payload_bytes": 0,
+          "precision": 1.0,
+          "privileged": false,
+          "recall": 1.0,
+          "runtime_access": [
+            "m",
+            "trigger"
+          ],
+          "runtime_history_bytes": 0,
+          "selection": {
+            "event_id": "sensor-612ff6e81ec7388ca7426b9e22303a7f09f36bfb1c257739d1e5f38c855ab381",
+            "reason": "budget",
+            "target_ids": [
+              "live-development-test-00000009-fact-a"
+            ]
+          },
+          "target_limit": 1,
+          "validation_access": [
+            "m",
+            "trigger"
+          ],
+          "validation_input_bytes": 1413
+        },
+        {
+          "abstained": false,
+          "behavior_access": [
+            "m",
+            "trigger",
+            "history"
+          ],
+          "behavior_input_bytes": 9034,
+          "condition": "retrieval",
+          "correct_abstention": false,
+          "envelope_bytes": 0,
+          "exact_set": true,
+          "false_targets": 0,
+          "missed_targets": 0,
+          "payload_bytes": 0,
+          "precision": 1.0,
+          "privileged": false,
+          "recall": 1.0,
+          "runtime_access": [
+            "m",
+            "trigger",
+            "history"
+          ],
+          "runtime_history_bytes": 7610,
+          "selection": {
+            "event_id": "sensor-612ff6e81ec7388ca7426b9e22303a7f09f36bfb1c257739d1e5f38c855ab381",
+            "reason": "matched",
+            "target_ids": [
+              "live-development-test-00000009-fact-a"
+            ]
+          },
+          "target_limit": 1,
+          "validation_access": [
+            "m",
+            "trigger",
+            "history"
+          ],
+          "validation_input_bytes": 9034
+        },
+        {
+          "abstained": false,
+          "behavior_access": [
+            "m",
+            "trigger",
+            "gold_target_ids"
+          ],
+          "behavior_input_bytes": 1473,
+          "condition": "oracle",
+          "correct_abstention": false,
+          "envelope_bytes": 0,
+          "exact_set": true,
+          "false_targets": 0,
+          "missed_targets": 0,
+          "payload_bytes": 0,
+          "precision": 1.0,
+          "privileged": true,
+          "recall": 1.0,
+          "runtime_access": [
+            "m",
+            "trigger",
+            "gold_target_ids"
+          ],
+          "runtime_history_bytes": 0,
+          "selection": {
+            "event_id": "sensor-612ff6e81ec7388ca7426b9e22303a7f09f36bfb1c257739d1e5f38c855ab381",
+            "reason": "matched",
+            "target_ids": [
+              "live-development-test-00000009-fact-a"
+            ]
+          },
+          "target_limit": 1,
+          "validation_access": [
+            "m",
+            "trigger",
+            "gold_target_ids"
+          ],
+          "validation_input_bytes": 1473
+        }
+      ],
+      "trajectory_comparisons": [
+        {
+          "condition": "swapped",
+          "first_divergence": {
+            "actual": 0.062011729925870895,
+            "episode": 0,
+            "expected": 0.10741478949785233,
+            "field": "sensors",
+            "global_tick": 300,
+            "index": [
+              2
+            ],
+            "max_abs_error": 0.04540305957198143,
+            "reason": "numeric replay divergence",
+            "tick": 300
+          },
+          "reference": "own",
+          "same_length": true,
+          "scope": "existing replay tolerances; frames are not independent samples",
+          "shared_ticks": 126
+        },
+        {
+          "condition": "sham",
+          "first_divergence": null,
+          "reference": "own",
+          "same_length": true,
+          "scope": "existing replay tolerances; frames are not independent samples",
+          "shared_ticks": 126
+        },
+        {
+          "condition": "no-U",
+          "first_divergence": {
+            "actual": 0.062011729925870895,
+            "episode": 0,
+            "expected": 0.10741478949785233,
+            "field": "sensors",
+            "global_tick": 300,
+            "index": [
+              2
+            ],
+            "max_abs_error": 0.04540305957198143,
+            "reason": "numeric replay divergence",
+            "tick": 300
+          },
+          "reference": "own",
+          "same_length": true,
+          "scope": "existing replay tolerances; frames are not independent samples",
+          "shared_ticks": 126
+        },
+        {
+          "condition": "hand-authored",
+          "first_divergence": {
+            "actual": 0.062011729925870895,
+            "episode": 0,
+            "expected": 0.10741478949785233,
+            "field": "sensors",
+            "global_tick": 300,
+            "index": [
+              2
+            ],
+            "max_abs_error": 0.04540305957198143,
+            "reason": "numeric replay divergence",
+            "tick": 300
+          },
+          "reference": "own",
+          "same_length": true,
+          "scope": "existing replay tolerances; frames are not independent samples",
+          "shared_ticks": 126
+        },
+        {
+          "condition": "history-independent",
+          "first_divergence": null,
+          "reference": "own",
+          "same_length": true,
+          "scope": "existing replay tolerances; frames are not independent samples",
+          "shared_ticks": 126
+        },
+        {
+          "condition": "traversal",
+          "first_divergence": null,
+          "reference": "own",
+          "same_length": true,
+          "scope": "existing replay tolerances; frames are not independent samples",
+          "shared_ticks": 126
+        },
+        {
+          "condition": "retrieval",
+          "first_divergence": null,
+          "reference": "own",
+          "same_length": true,
+          "scope": "existing replay tolerances; frames are not independent samples",
+          "shared_ticks": 126
+        },
+        {
+          "condition": "oracle",
+          "first_divergence": null,
+          "reference": "own",
+          "same_length": true,
+          "scope": "existing replay tolerances; frames are not independent samples",
+          "shared_ticks": 126
+        }
+      ],
+      "trigger": {
+        "after": 1,
+        "before": 0,
+        "before_observation_id": "sensor-896f8bed7fb47997c8f94c410ad36873b150d2ba784db48256704ddd7e666876",
+        "cue_id": "live-development-test-00000009-cue",
+        "episode_id": "episode-0",
+        "id": "sensor-612ff6e81ec7388ca7426b9e22303a7f09f36bfb1c257739d1e5f38c855ab381",
+        "kind": "cue_changed",
+        "observation_id": "sensor-fcd1c7fe47d2bb6a9bbf4df9f71c53c79685bf2a2cdcf32884fccc8071ffc968",
+        "tick": 300
+      }
+    }
+  ],
+  "controller": "manual",
+  "date": "2026-10-02",
+  "exact_parity": [
+    {
+      "block": "local-8",
+      "compared_fields": [
+        "action",
+        "cam_left",
+        "cam_right",
+        "control",
+        "episode",
+        "eyes",
+        "next_pose",
+        "population_stats",
+        "pose",
+        "raw_cam_left",
+        "raw_cam_right",
+        "revision",
+        "reward",
+        "sensors",
+        "simulation_time",
+        "tick"
+      ],
+      "condition": "own",
+      "exact_all_numeric_fields": true,
+      "excluded_fields": [
+        "latency",
+        "step_latency"
+      ],
+      "numeric_ticks": 126,
+      "reference": "own"
+    },
+    {
+      "block": "local-8",
+      "compared_fields": [
+        "action",
+        "cam_left",
+        "cam_right",
+        "control",
+        "episode",
+        "eyes",
+        "next_pose",
+        "population_stats",
+        "pose",
+        "raw_cam_left",
+        "raw_cam_right",
+        "revision",
+        "reward",
+        "sensors",
+        "simulation_time",
+        "tick"
+      ],
+      "condition": "swapped",
+      "exact_all_numeric_fields": false,
+      "excluded_fields": [
+        "latency",
+        "step_latency"
+      ],
+      "numeric_ticks": 126,
+      "reference": "own"
+    },
+    {
+      "block": "local-8",
+      "compared_fields": [
+        "action",
+        "cam_left",
+        "cam_right",
+        "control",
+        "episode",
+        "eyes",
+        "next_pose",
+        "population_stats",
+        "pose",
+        "raw_cam_left",
+        "raw_cam_right",
+        "revision",
+        "reward",
+        "sensors",
+        "simulation_time",
+        "tick"
+      ],
+      "condition": "sham",
+      "exact_all_numeric_fields": true,
+      "excluded_fields": [
+        "latency",
+        "step_latency"
+      ],
+      "numeric_ticks": 126,
+      "reference": "own"
+    },
+    {
+      "block": "local-8",
+      "compared_fields": [
+        "action",
+        "cam_left",
+        "cam_right",
+        "control",
+        "episode",
+        "eyes",
+        "next_pose",
+        "population_stats",
+        "pose",
+        "raw_cam_left",
+        "raw_cam_right",
+        "revision",
+        "reward",
+        "sensors",
+        "simulation_time",
+        "tick"
+      ],
+      "condition": "no-U",
+      "exact_all_numeric_fields": false,
+      "excluded_fields": [
+        "latency",
+        "step_latency"
+      ],
+      "numeric_ticks": 126,
+      "reference": "own"
+    },
+    {
+      "block": "local-8",
+      "compared_fields": [
+        "action",
+        "cam_left",
+        "cam_right",
+        "control",
+        "episode",
+        "eyes",
+        "next_pose",
+        "population_stats",
+        "pose",
+        "raw_cam_left",
+        "raw_cam_right",
+        "revision",
+        "reward",
+        "sensors",
+        "simulation_time",
+        "tick"
+      ],
+      "condition": "hand-authored",
+      "exact_all_numeric_fields": true,
+      "excluded_fields": [
+        "latency",
+        "step_latency"
+      ],
+      "numeric_ticks": 126,
+      "reference": "own"
+    },
+    {
+      "block": "local-8",
+      "compared_fields": [
+        "action",
+        "cam_left",
+        "cam_right",
+        "control",
+        "episode",
+        "eyes",
+        "next_pose",
+        "population_stats",
+        "pose",
+        "raw_cam_left",
+        "raw_cam_right",
+        "revision",
+        "reward",
+        "sensors",
+        "simulation_time",
+        "tick"
+      ],
+      "condition": "history-independent",
+      "exact_all_numeric_fields": true,
+      "excluded_fields": [
+        "latency",
+        "step_latency"
+      ],
+      "numeric_ticks": 126,
+      "reference": "own"
+    },
+    {
+      "block": "local-8",
+      "compared_fields": [
+        "action",
+        "cam_left",
+        "cam_right",
+        "control",
+        "episode",
+        "eyes",
+        "next_pose",
+        "population_stats",
+        "pose",
+        "raw_cam_left",
+        "raw_cam_right",
+        "revision",
+        "reward",
+        "sensors",
+        "simulation_time",
+        "tick"
+      ],
+      "condition": "traversal",
+      "exact_all_numeric_fields": true,
+      "excluded_fields": [
+        "latency",
+        "step_latency"
+      ],
+      "numeric_ticks": 126,
+      "reference": "own"
+    },
+    {
+      "block": "local-8",
+      "compared_fields": [
+        "action",
+        "cam_left",
+        "cam_right",
+        "control",
+        "episode",
+        "eyes",
+        "next_pose",
+        "population_stats",
+        "pose",
+        "raw_cam_left",
+        "raw_cam_right",
+        "revision",
+        "reward",
+        "sensors",
+        "simulation_time",
+        "tick"
+      ],
+      "condition": "retrieval",
+      "exact_all_numeric_fields": true,
+      "excluded_fields": [
+        "latency",
+        "step_latency"
+      ],
+      "numeric_ticks": 126,
+      "reference": "own"
+    },
+    {
+      "block": "local-8",
+      "compared_fields": [
+        "action",
+        "cam_left",
+        "cam_right",
+        "control",
+        "episode",
+        "eyes",
+        "next_pose",
+        "population_stats",
+        "pose",
+        "raw_cam_left",
+        "raw_cam_right",
+        "revision",
+        "reward",
+        "sensors",
+        "simulation_time",
+        "tick"
+      ],
+      "condition": "oracle",
+      "exact_all_numeric_fields": true,
+      "excluded_fields": [
+        "latency",
+        "step_latency"
+      ],
+      "numeric_ticks": 126,
+      "reference": "own"
+    },
+    {
+      "block": "paired-9",
+      "compared_fields": [
+        "action",
+        "cam_left",
+        "cam_right",
+        "control",
+        "episode",
+        "eyes",
+        "next_pose",
+        "population_stats",
+        "pose",
+        "raw_cam_left",
+        "raw_cam_right",
+        "revision",
+        "reward",
+        "sensors",
+        "simulation_time",
+        "tick"
+      ],
+      "condition": "own",
+      "exact_all_numeric_fields": true,
+      "excluded_fields": [
+        "latency",
+        "step_latency"
+      ],
+      "numeric_ticks": 126,
+      "reference": "own"
+    },
+    {
+      "block": "paired-9",
+      "compared_fields": [
+        "action",
+        "cam_left",
+        "cam_right",
+        "control",
+        "episode",
+        "eyes",
+        "next_pose",
+        "population_stats",
+        "pose",
+        "raw_cam_left",
+        "raw_cam_right",
+        "revision",
+        "reward",
+        "sensors",
+        "simulation_time",
+        "tick"
+      ],
+      "condition": "swapped",
+      "exact_all_numeric_fields": false,
+      "excluded_fields": [
+        "latency",
+        "step_latency"
+      ],
+      "numeric_ticks": 126,
+      "reference": "own"
+    },
+    {
+      "block": "paired-9",
+      "compared_fields": [
+        "action",
+        "cam_left",
+        "cam_right",
+        "control",
+        "episode",
+        "eyes",
+        "next_pose",
+        "population_stats",
+        "pose",
+        "raw_cam_left",
+        "raw_cam_right",
+        "revision",
+        "reward",
+        "sensors",
+        "simulation_time",
+        "tick"
+      ],
+      "condition": "sham",
+      "exact_all_numeric_fields": true,
+      "excluded_fields": [
+        "latency",
+        "step_latency"
+      ],
+      "numeric_ticks": 126,
+      "reference": "own"
+    },
+    {
+      "block": "paired-9",
+      "compared_fields": [
+        "action",
+        "cam_left",
+        "cam_right",
+        "control",
+        "episode",
+        "eyes",
+        "next_pose",
+        "population_stats",
+        "pose",
+        "raw_cam_left",
+        "raw_cam_right",
+        "revision",
+        "reward",
+        "sensors",
+        "simulation_time",
+        "tick"
+      ],
+      "condition": "no-U",
+      "exact_all_numeric_fields": false,
+      "excluded_fields": [
+        "latency",
+        "step_latency"
+      ],
+      "numeric_ticks": 126,
+      "reference": "own"
+    },
+    {
+      "block": "paired-9",
+      "compared_fields": [
+        "action",
+        "cam_left",
+        "cam_right",
+        "control",
+        "episode",
+        "eyes",
+        "next_pose",
+        "population_stats",
+        "pose",
+        "raw_cam_left",
+        "raw_cam_right",
+        "revision",
+        "reward",
+        "sensors",
+        "simulation_time",
+        "tick"
+      ],
+      "condition": "hand-authored",
+      "exact_all_numeric_fields": false,
+      "excluded_fields": [
+        "latency",
+        "step_latency"
+      ],
+      "numeric_ticks": 126,
+      "reference": "own"
+    },
+    {
+      "block": "paired-9",
+      "compared_fields": [
+        "action",
+        "cam_left",
+        "cam_right",
+        "control",
+        "episode",
+        "eyes",
+        "next_pose",
+        "population_stats",
+        "pose",
+        "raw_cam_left",
+        "raw_cam_right",
+        "revision",
+        "reward",
+        "sensors",
+        "simulation_time",
+        "tick"
+      ],
+      "condition": "history-independent",
+      "exact_all_numeric_fields": true,
+      "excluded_fields": [
+        "latency",
+        "step_latency"
+      ],
+      "numeric_ticks": 126,
+      "reference": "own"
+    },
+    {
+      "block": "paired-9",
+      "compared_fields": [
+        "action",
+        "cam_left",
+        "cam_right",
+        "control",
+        "episode",
+        "eyes",
+        "next_pose",
+        "population_stats",
+        "pose",
+        "raw_cam_left",
+        "raw_cam_right",
+        "revision",
+        "reward",
+        "sensors",
+        "simulation_time",
+        "tick"
+      ],
+      "condition": "traversal",
+      "exact_all_numeric_fields": true,
+      "excluded_fields": [
+        "latency",
+        "step_latency"
+      ],
+      "numeric_ticks": 126,
+      "reference": "own"
+    },
+    {
+      "block": "paired-9",
+      "compared_fields": [
+        "action",
+        "cam_left",
+        "cam_right",
+        "control",
+        "episode",
+        "eyes",
+        "next_pose",
+        "population_stats",
+        "pose",
+        "raw_cam_left",
+        "raw_cam_right",
+        "revision",
+        "reward",
+        "sensors",
+        "simulation_time",
+        "tick"
+      ],
+      "condition": "retrieval",
+      "exact_all_numeric_fields": true,
+      "excluded_fields": [
+        "latency",
+        "step_latency"
+      ],
+      "numeric_ticks": 126,
+      "reference": "own"
+    },
+    {
+      "block": "paired-9",
+      "compared_fields": [
+        "action",
+        "cam_left",
+        "cam_right",
+        "control",
+        "episode",
+        "eyes",
+        "next_pose",
+        "population_stats",
+        "pose",
+        "raw_cam_left",
+        "raw_cam_right",
+        "revision",
+        "reward",
+        "sensors",
+        "simulation_time",
+        "tick"
+      ],
+      "condition": "oracle",
+      "exact_all_numeric_fields": true,
+      "excluded_fields": [
+        "latency",
+        "step_latency"
+      ],
+      "numeric_ticks": 126,
+      "reference": "own"
+    }
+  ],
+  "file_accounting": {
+    "all_stage_bytes": 611535140,
+    "all_stage_files": 268,
+    "excluded_scope": "top-level plan/report and all outer launch/control/audit files",
+    "recording_manifest_event_chunk_bytes": 590817762,
+    "recording_manifest_event_chunk_files": 136,
+    "secondary_scope": "worker reports, snapshots/indexes, per-child supervisors/stdout/stderr; excluded from recording total",
+    "secondary_stage_bytes": 20717378,
+    "secondary_stage_files": 132
+  },
+  "held_out_executed": false,
+  "history_inputs": {
+    "own": {
+      "E_only_refit_exact": true,
+      "E_sha256": "b6c92a7638af926ed625069b0f1e23fc804db08e621b3bcdf2d5bae8cc1a0457",
+      "U_sha256": "032d40d14192eadc66588a2b63339bb990750a1f70aef036a54453f8746ed9bb",
+      "path": "runs/m5-acquisition-batch-20261002/local_cue-history.json",
+      "sha256": "016c5b5e9472b116d065fb922b32d64089db6e27839aec09d751238f8ce7ffc1"
+    },
+    "swapped": {
+      "E_only_refit_exact": true,
+      "E_sha256": "35588d3fdfde95f339aa99bd2eb3b7b63b46f135d79ac14688f7951dc0129f34",
+      "U_sha256": "aa37a394fee509275adddb06355388c23e5ef9e8d31c3306327ac29d54800700",
+      "path": "runs/m5-acquisition-batch-20261002/paired_cue-history.json",
+      "sha256": "64628e37cc6e861194f810baa92926eba8f57260047cdd8ad320a4601023d213"
+    }
+  },
+  "neural_motor_inference": false,
+  "numeric_ticks": 2868,
+  "operator_blindness_verified": false,
+  "outer_directory": "runs/m5-all-nine-launch-0a05233",
+  "outer_launch_sha256": "a09881fd5951f471ae0d160afc39f4c910209d1580f948db04799ae32664e152",
+  "outer_supervision": {
+    "elapsed_seconds": 367.6110264070012,
+    "output": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-experiments/runs/m5-all-nine-launch-0a05233/process",
+    "returncode": 0,
+    "schema_version": 1,
+    "started_utc": "2026-10-02T15:12:12.787965+00:00",
+    "status": "completed",
+    "timeout_seconds": 3580
+  },
+  "ownership": {
+    "cleanup_performed": false,
+    "elapsed_seconds": 232.2883757180025,
+    "final_owned_processes": [],
+    "owner_pid": 396038,
+    "owner_start_ticks": 4758516,
+    "schema_version": 1,
+    "scope": "exact plan-bound worker argv plus PID/start/PGID; no parent-group assumption"
+  },
+  "primary_directory": "runs/m5-all-nine-development-20261002",
+  "primary_plan_sha256": "6ab48e1e0fd447cd436888e7b04cedbc56be9f5c9b16bf61de4875db2563d33c",
+  "primary_report_sha256": "2a5fd2fc90454ad872be0b400c0a322cd687cefcb03ea9b497d50b63ce19ca96",
+  "protocol_sha256": "7081b05e550ff15e17170c89375b5807378471446c33982251ea1e2107c4e5ed",
+  "r2_complete": false,
+  "retained_independent_audit": {
+    "path": "runs/m5-all-nine-launch-0a05233/independent-audit.json",
+    "sha256": "e872799ce787b7ae0697646cb00ac1d2c85a2eb0f40ae5e7a32245dee5b3720e"
+  },
+  "schema_version": 1,
+  "source_commit": "0a05233eefb3c1e55323224f2600120bda251fe4",
+  "source_handoffs": [
+    {
+      "block": "local-8",
+      "goal_handoff": {
+        "authoritative_after_sha256": "5670d66db79cb4e2932b199b31382d21187ec10ea00330e627556730051135ae",
+        "authoritative_before_sha256": "5670d66db79cb4e2932b199b31382d21187ec10ea00330e627556730051135ae",
+        "before_world": {
+          "arena": 7.0,
+          "goal": [
+            -1.2999999523162842,
+            2.5,
+            0.25
+          ],
+          "obstacles": [
+            [
+              0.0,
+              -2.0,
+              0.4
+            ],
+            [
+              0.0,
+              0.0,
+              0.4
+            ],
+            [
+              0.0,
+              2.0,
+              0.4
+            ],
+            [
+              2.5,
+              -1.0,
+              0.4
+            ],
+            [
+              2.5,
+              1.0,
+              0.4
+            ],
+            [
+              3.7,
+              -5.6,
+              0.4
+            ],
+            [
+              3.7,
+              -4.4,
+              0.4
+            ],
+            [
+              3.7,
+              -3.2,
+              0.4
+            ],
+            [
+              3.7,
+              3.2,
+              0.4
+            ],
+            [
+              3.7,
+              4.4,
+              0.4
+            ],
+            [
+              4.9,
+              -5.6,
+              0.4
+            ],
+            [
+              4.9,
+              -4.4,
+              0.4
+            ],
+            [
+              4.9,
+              -3.2,
+              0.4
+            ],
+            [
+              4.9,
+              3.2,
+              0.4
+            ],
+            [
+              4.9,
+              4.4,
+              0.4
+            ],
+            [
+              6.1,
+              -5.6,
+              0.4
+            ],
+            [
+              6.1,
+              -4.4,
+              0.4
+            ],
+            [
+              6.1,
+              -3.2,
+              0.4
+            ],
+            [
+              6.1,
+              3.2,
+              0.4
+            ],
+            [
+              6.1,
+              4.4,
+              0.4
+            ]
+          ],
+          "pose": [
+            -1.2341991662979126,
+            0.6053884029388428,
+            0.15652213684807542
+          ]
+        },
+        "before_world_stage": "cached-before-forward",
+        "command": {
+          "expected_episode": 0,
+          "expected_revision": 300,
+          "expected_state": "paused",
+          "id": "source-goal-handoff-v4",
+          "kind": "intervene",
+          "payload": {
+            "kind": "move_goal",
+            "xy": [
+              -0.5,
+              -2.7
+            ]
+          }
+        },
+        "derived_pose_delta": [
+          -1.3113021850585938e-06,
+          6.556510925292969e-07,
+          0.0
+        ],
+        "effective_goal_xy": [
+          -0.5,
+          -2.700000047683716
+        ],
+        "integration_after_sha256": "09edd1c9d8cc22676ff1a4c77ea63ce72b6a5bc36c0b1e2b7db42568ce326672",
+        "integration_enum": 8191,
+        "memory_after_sha256": "e846b25569bef2e9b9d7de5b6a81580189283f21d618b558c958520f286d13fc",
+        "memory_before_sha256": "e846b25569bef2e9b9d7de5b6a81580189283f21d618b558c958520f286d13fc",
+        "packet": {
+          "common_goal_id": "live-development-test-00000008-common-goal",
+          "cues": [
+            {
+              "bearing_rad": 0.9624141624381837,
+              "id": "live-development-test-00000008-cue",
+              "state": 0
+            }
+          ],
+          "episode_id": "episode-0",
+          "id": "sensor-4588003f00ea5c240007cb28c629f6c735e8aa252815ede6aeee195fc41f46cd",
+          "landmarks": [
+            {
+              "bearing_rad": -1.508744783918457,
+              "id": "live-development-test-00000008-common-goal"
+            },
+            {
+              "bearing_rad": -1.4631738985988367,
+              "id": "live-development-test-00000008-subject-a-inspection"
+            },
+            {
+              "bearing_rad": 0.5811456664340486,
+              "id": "live-development-test-00000008-subject-z-inspection"
+            }
+          ],
+          "passages": [
+            {
+              "episode_id": "episode-0",
+              "id": "sensor-3aba2ea116e3e557a2abe9ba90a16cb6ddc772e5e64304e7618b2566116ddb04",
+              "passability": "unobserved",
+              "subject_id": "live-development-test-00000008-subject-a",
+              "tick": 300
+            },
+            {
+              "episode_id": "episode-0",
+              "id": "sensor-93dc4cfd8b2a91bca3bb4e8f47d77e340a959651318f6dabd26318e3836f8b73",
+              "passability": "open",
+              "subject_id": "live-development-test-00000008-subject-z",
+              "tick": 300
+            }
+          ],
+          "tick": 300,
+          "version": 1
+        },
+        "packet_sha256": "4b7c3def5813064d87eef28f4a3938756f59a4c501972862c22d6360f0d95197",
+        "protocol_sha256": "cd95786316dc1e1df28761659dabfd7018f1b83c20e23200ab7a167247038bb8",
+        "receipt": {
+          "applied_episode": 0,
+          "applied_revision": 301,
+          "applied_run_id": "f96c83dbeb61488588e58c03cc914a5a",
+          "applied_tick": 300,
+          "id": "source-goal-handoff-v4",
+          "kind": "intervene",
+          "received_episode": 0,
+          "received_run_id": "f96c83dbeb61488588e58c03cc914a5a",
+          "received_tick": 300,
+          "status": "applied"
+        },
+        "simulation_time": 5.999999999999561,
+        "world": {
+          "arena": 7.0,
+          "goal": [
+            -0.5,
+            -2.700000047683716,
+            0.25
+          ],
+          "obstacles": [
+            [
+              0.0,
+              -2.0,
+              0.4
+            ],
+            [
+              0.0,
+              0.0,
+              0.4
+            ],
+            [
+              0.0,
+              2.0,
+              0.4
+            ],
+            [
+              2.5,
+              -1.0,
+              0.4
+            ],
+            [
+              2.5,
+              1.0,
+              0.4
+            ],
+            [
+              3.7,
+              -5.6,
+              0.4
+            ],
+            [
+              3.7,
+              -4.4,
+              0.4
+            ],
+            [
+              3.7,
+              -3.2,
+              0.4
+            ],
+            [
+              3.7,
+              3.2,
+              0.4
+            ],
+            [
+              3.7,
+              4.4,
+              0.4
+            ],
+            [
+              4.9,
+              -5.6,
+              0.4
+            ],
+            [
+              4.9,
+              -4.4,
+              0.4
+            ],
+            [
+              4.9,
+              -3.2,
+              0.4
+            ],
+            [
+              4.9,
+              3.2,
+              0.4
+            ],
+            [
+              4.9,
+              4.4,
+              0.4
+            ],
+            [
+              6.1,
+              -5.6,
+              0.4
+            ],
+            [
+              6.1,
+              -4.4,
+              0.4
+            ],
+            [
+              6.1,
+              -3.2,
+              0.4
+            ],
+            [
+              6.1,
+              3.2,
+              0.4
+            ],
+            [
+              6.1,
+              4.4,
+              0.4
+            ]
+          ],
+          "pose": [
+            -1.2342004776000977,
+            0.6053890585899353,
+            0.15652213684807542
+          ]
+        },
+        "world_stage": "refreshed-after-forward"
+      },
+      "initial_case": {
+        "canonical_case_sha256": "dc4a8b61273e803e4195aa74708157c181fe0310189a4795ccd7872031e05c68",
+        "generator_case_sha256": "b8d345630a2e90b8b5d64be9d4413555934db8148ea6843b0c92d80c2147f22a",
+        "semantic_case_sha256": "3750fa458baf335552ac168e0ad9a3c1cf39f76004d800baf7391e3b93c82635"
+      },
+      "visibility_admission": {
+        "299": "fcbc111a9fe583da084205f3e8d2c0a34723a100e0036d1268886344d9f21fa3"
+      }
+    },
+    {
+      "block": "paired-9",
+      "goal_handoff": {
+        "authoritative_after_sha256": "e45d41c2ac0b4b3945e1b2b874ccf2544a4dca4434d4178d3d5f206922c26017",
+        "authoritative_before_sha256": "e45d41c2ac0b4b3945e1b2b874ccf2544a4dca4434d4178d3d5f206922c26017",
+        "before_world": {
+          "arena": 7.0,
+          "goal": [
+            -1.2999999523162842,
+            2.5,
+            0.25
+          ],
+          "obstacles": [
+            [
+              0.0,
+              -2.0,
+              0.4
+            ],
+            [
+              0.0,
+              0.0,
+              0.4
+            ],
+            [
+              0.0,
+              2.0,
+              0.4
+            ],
+            [
+              2.5,
+              -1.0,
+              0.4
+            ],
+            [
+              2.5,
+              1.0,
+              0.4
+            ],
+            [
+              3.7,
+              -5.6,
+              0.4
+            ],
+            [
+              3.7,
+              -4.4,
+              0.4
+            ],
+            [
+              3.7,
+              -3.2,
+              0.4
+            ],
+            [
+              3.7,
+              3.2,
+              0.4
+            ],
+            [
+              3.7,
+              4.4,
+              0.4
+            ],
+            [
+              4.9,
+              -5.6,
+              0.4
+            ],
+            [
+              4.9,
+              -4.4,
+              0.4
+            ],
+            [
+              4.9,
+              -3.2,
+              0.4
+            ],
+            [
+              4.9,
+              3.2,
+              0.4
+            ],
+            [
+              4.9,
+              4.4,
+              0.4
+            ],
+            [
+              6.1,
+              -5.6,
+              0.4
+            ],
+            [
+              6.1,
+              -4.4,
+              0.4
+            ],
+            [
+              6.1,
+              -3.2,
+              0.4
+            ],
+            [
+              6.1,
+              3.2,
+              0.4
+            ],
+            [
+              6.1,
+              4.4,
+              0.4
+            ]
+          ],
+          "pose": [
+            -1.2341991662979126,
+            0.6053884029388428,
+            0.15652213684807542
+          ]
+        },
+        "before_world_stage": "cached-before-forward",
+        "command": {
+          "expected_episode": 0,
+          "expected_revision": 300,
+          "expected_state": "paused",
+          "id": "source-goal-handoff-v4",
+          "kind": "intervene",
+          "payload": {
+            "kind": "move_goal",
+            "xy": [
+              -0.5,
+              -2.7
+            ]
+          }
+        },
+        "derived_pose_delta": [
+          -1.3113021850585938e-06,
+          6.556510925292969e-07,
+          0.0
+        ],
+        "effective_goal_xy": [
+          -0.5,
+          -2.700000047683716
+        ],
+        "integration_after_sha256": "09edd1c9d8cc22676ff1a4c77ea63ce72b6a5bc36c0b1e2b7db42568ce326672",
+        "integration_enum": 8191,
+        "memory_after_sha256": "1bf4230530b51e407b67d85bb88f2b122f3fba669cc674806197cc39153bd9a9",
+        "memory_before_sha256": "1bf4230530b51e407b67d85bb88f2b122f3fba669cc674806197cc39153bd9a9",
+        "packet": {
+          "common_goal_id": "live-development-test-00000009-common-goal",
+          "cues": [
+            {
+              "bearing_rad": 0.9624141624381837,
+              "id": "live-development-test-00000009-cue",
+              "state": 0
+            }
+          ],
+          "episode_id": "episode-0",
+          "id": "sensor-4588003f00ea5c240007cb28c629f6c735e8aa252815ede6aeee195fc41f46cd",
+          "landmarks": [
+            {
+              "bearing_rad": -1.508744783918457,
+              "id": "live-development-test-00000009-common-goal"
+            },
+            {
+              "bearing_rad": -1.4631738985988367,
+              "id": "live-development-test-00000009-subject-a-inspection"
+            },
+            {
+              "bearing_rad": 0.5811456664340486,
+              "id": "live-development-test-00000009-subject-z-inspection"
+            }
+          ],
+          "passages": [
+            {
+              "episode_id": "episode-0",
+              "id": "sensor-b668edfcb95547a95ed8869ed483de59499a8bcedfaf625437b02e589d223980",
+              "passability": "unobserved",
+              "subject_id": "live-development-test-00000009-subject-a",
+              "tick": 300
+            },
+            {
+              "episode_id": "episode-0",
+              "id": "sensor-6cdbb0cc88049373bb80b75567ed8b506688a0da590cc94fb098d5ef1bfc1507",
+              "passability": "open",
+              "subject_id": "live-development-test-00000009-subject-z",
+              "tick": 300
+            }
+          ],
+          "tick": 300,
+          "version": 1
+        },
+        "packet_sha256": "f4b442ee48fc727c39b6ff9d0e2e37782966e7eaf5ad13ccd9b25da400a43456",
+        "protocol_sha256": "cd95786316dc1e1df28761659dabfd7018f1b83c20e23200ab7a167247038bb8",
+        "receipt": {
+          "applied_episode": 0,
+          "applied_revision": 301,
+          "applied_run_id": "54ca910016174286b4e8113068e6f6cf",
+          "applied_tick": 300,
+          "id": "source-goal-handoff-v4",
+          "kind": "intervene",
+          "received_episode": 0,
+          "received_run_id": "54ca910016174286b4e8113068e6f6cf",
+          "received_tick": 300,
+          "status": "applied"
+        },
+        "simulation_time": 5.999999999999561,
+        "world": {
+          "arena": 7.0,
+          "goal": [
+            -0.5,
+            -2.700000047683716,
+            0.25
+          ],
+          "obstacles": [
+            [
+              0.0,
+              -2.0,
+              0.4
+            ],
+            [
+              0.0,
+              0.0,
+              0.4
+            ],
+            [
+              0.0,
+              2.0,
+              0.4
+            ],
+            [
+              2.5,
+              -1.0,
+              0.4
+            ],
+            [
+              2.5,
+              1.0,
+              0.4
+            ],
+            [
+              3.7,
+              -5.6,
+              0.4
+            ],
+            [
+              3.7,
+              -4.4,
+              0.4
+            ],
+            [
+              3.7,
+              -3.2,
+              0.4
+            ],
+            [
+              3.7,
+              3.2,
+              0.4
+            ],
+            [
+              3.7,
+              4.4,
+              0.4
+            ],
+            [
+              4.9,
+              -5.6,
+              0.4
+            ],
+            [
+              4.9,
+              -4.4,
+              0.4
+            ],
+            [
+              4.9,
+              -3.2,
+              0.4
+            ],
+            [
+              4.9,
+              3.2,
+              0.4
+            ],
+            [
+              4.9,
+              4.4,
+              0.4
+            ],
+            [
+              6.1,
+              -5.6,
+              0.4
+            ],
+            [
+              6.1,
+              -4.4,
+              0.4
+            ],
+            [
+              6.1,
+              -3.2,
+              0.4
+            ],
+            [
+              6.1,
+              3.2,
+              0.4
+            ],
+            [
+              6.1,
+              4.4,
+              0.4
+            ]
+          ],
+          "pose": [
+            -1.2342004776000977,
+            0.6053890585899353,
+            0.15652213684807542
+          ]
+        },
+        "world_stage": "refreshed-after-forward"
+      },
+      "initial_case": {
+        "canonical_case_sha256": "9b34862e623f3398d8020e0c1e04518ce424cfa9a4d38d6dd76d61f024effc8d",
+        "generator_case_sha256": "11f532a9a72ecfab1f2662cf2f0f0149f3d19d5cdde216368df5b7fca5edd568",
+        "semantic_case_sha256": "d47f632b856a768632b0d9988e0847d41ac47eac18714d88dc724a842583fa61"
+      },
+      "visibility_admission": {
+        "299": "0a636b88539575d76538b7182496d2fa01c4290a5ab4c079e88368a483121416"
+      }
+    }
+  ],
+  "source_identity": {
+    "driver_sha256": "323465404c9b87efdec42d1a025a88cfa4ca7236aa8774eba1e621747ebab25b",
+    "lock_sha256": "8a7a880d020c1907e221575fda65642241f809fc628a55381f1b6137bff1b732",
+    "source_sha256": {
+      "src/palimpsest/__init__.py": "bb99e30d22e4662c4ded455b1b23f49b77ce811dcfa1b69bf358925487a566d8",
+      "src/palimpsest/__main__.py": "935a1c1166b0c1ea35a82256345000bf2c73ded718d77773bc27a71ecce28f7d",
+      "src/palimpsest/artifacts.py": "55223cb24359de16cf5f62b833b4e3cca3a21d3f25c8442f6436d53c4f120741",
+      "src/palimpsest/assets.py": "aa4a38c7403cd9f72bc23027acd7c212202f25574bea6af65053c34664da49e3",
+      "src/palimpsest/cli.py": "3d5bb7bc2135b8534ca2fcfceb7b4fe4e9f24ed140a38003f7b1ded1c3d40a36",
+      "src/palimpsest/doctor.py": "109de62468161f35461eee76af244daabef38f2faa1526c5a6ed268817e6b834",
+      "src/palimpsest/engine.py": "cd10db94f19c526f03d92caa1f63f1082044af3a72cef0bb310147455d1af24e",
+      "src/palimpsest/evaluate.py": "74a9afb710b36a366ab680462e9440f285730a0360bda704af25ebbcfd74256a",
+      "src/palimpsest/flynn.py": "409b7503d76fd6f971a33d053e86c968b529edc226b85f44122e17a649f8f9f4",
+      "src/palimpsest/interventions.py": "fd2c1e6f160f7d251ddcf3275b383e8e3e265fc462452d1bc20c0030a6acf9c8",
+      "src/palimpsest/lab.py": "1b944fe42ba7634896fa6f7c00380edf6cd90a255c03dae3d8e7904a2b56a4ab",
+      "src/palimpsest/memory.py": "9641ae3d7d78577e0ea5bc8bcacbe455cae6c548f4f9bd10b8bb593a8fd7c542",
+      "src/palimpsest/memory_experiment.py": "873d5f6ab2ee57c560e8f4bb2a0cf20144264f25ea2312b7e7fe8d295ab8f9f8",
+      "src/palimpsest/memory_history.py": "7dbfac529717698ea2848ec6318a8812e876c04bf26711775f316dd1a631438c",
+      "src/palimpsest/memory_task.py": "b3987e0f9fb81d67e7b6f2235607d05efe175cd3d750681a1cff9a430060d682",
+      "src/palimpsest/memory_world.py": "508d7c53cf78e8a26a2c459e2b6e2a02c8c0823535005a19668a31717f0dbb12",
+      "src/palimpsest/profiles.py": "d3ebc6317c8799fe98ba043b9c9bfee1f3d1b5b7292ffd8f3be1c8164505c5f6",
+      "src/palimpsest/records.py": "c4be6f1699c1d8550a7f2db2979f7f9f18196ac986eef2aefe3ba665cae99ac3",
+      "src/palimpsest/replay.py": "248b89ccd80fa773e8709a5fbf050ad00bb24122614f9e6787547eba6eaed684",
+      "src/palimpsest/snapshots.py": "14d95bb2f78646260ef931a610c0e7b0a31ba0f75e87413579102aad5c6a35d7",
+      "src/palimpsest/storage.py": "79664d876834ef20b459cc83963515effdaf75d0256fe5764a9cf8e18cd448c2",
+      "src/palimpsest/worker.py": "da0a88a2165d11f348cb52795fcef11a5941d8e404eebbe7792447105f5f37b1"
+    },
+    "upstream_commit": "8d964599119b420de67ee259434d273651a1a76d"
+  },
+  "stages": [
+    {
+      "block": "local-8",
+      "close_reason": "operator_closed",
+      "gate_result": "pending",
+      "initial_M_sha256": "948eaeaeb4cd59e5746820e38c973334e2b5156aff3b6eff535172fa912e25e1",
+      "initial_U_sha256": "70575d969610e9392033501a21f594e4a7a60d04f83bdc73e510fd5c32019fed",
+      "live_E_sha256": "c95abb75984d8b4c0a1771181548e2b413bd66374b5e2d62b32d95cb62eb4b56",
+      "normalized_scientific_sha256": "c6082be5671a4d9e3c7ffb48edc9793af1c154d90d7511215a35a0147a4c4ea4",
+      "numeric_ticks": 300,
+      "outcome": null,
+      "phase": "paused",
+      "recording_files": [
+        {
+          "bytes": 9841,
+          "path": "recording/manifest.json",
+          "sha256": "774e018b0b2b3b972bc54546f7eea5f3e2af294aa9def1c8ff07c92f66c1ac61"
+        },
+        {
+          "bytes": 2678083,
+          "path": "recording/events.jsonl",
+          "sha256": "474f82cf4475d39053d7c1f5e2a78ba45347196d2e6de27af2fa10f426604e0c"
+        },
+        {
+          "bytes": 6299892,
+          "path": "recording/chunks/000000.npz",
+          "sha256": "6cf5127a7639f1d67f4c9ad6107fbc7728d9d854a50dc15e08f7fc58c252c640"
+        },
+        {
+          "bytes": 6299892,
+          "path": "recording/chunks/000001.npz",
+          "sha256": "7d4468d1b0d9592521e14b84e31d6bb206dffa5ef3ce459bbfc7e73e3ab406ab"
+        },
+        {
+          "bytes": 6299892,
+          "path": "recording/chunks/000002.npz",
+          "sha256": "d4dbe1c468252482909913e7e55b09ae9f9ce116aecb0533b0b220f6ddec0578"
+        },
+        {
+          "bytes": 6299892,
+          "path": "recording/chunks/000003.npz",
+          "sha256": "6707a2470168714e3aeb0b322be14f58a1da405080c8b13f1b5d5bce95cb3855"
+        },
+        {
+          "bytes": 6299892,
+          "path": "recording/chunks/000004.npz",
+          "sha256": "44b990e1d812e5c161be4ac66d96802788f2a50ec2b4e2ccfa9ef507b944506f"
+        },
+        {
+          "bytes": 6299892,
+          "path": "recording/chunks/000005.npz",
+          "sha256": "b79dd665c56c32b4f9d44cb02cc880be1973eed87807ee5f8140ea2540a0bbdc"
+        },
+        {
+          "bytes": 6299892,
+          "path": "recording/chunks/000006.npz",
+          "sha256": "12d61f52405af5dc40f2ceb65f264325ea6f3dedd9770e97499acb08578c749e"
+        },
+        {
+          "bytes": 6299892,
+          "path": "recording/chunks/000007.npz",
+          "sha256": "ecee193b484861d1b49f591e88c7bb8918bea741e3fc04a011ef933bf58f2b01"
+        },
+        {
+          "bytes": 6299892,
+          "path": "recording/chunks/000008.npz",
+          "sha256": "0d0e274900c20967227d464a2a2ee35649d15cf60d5c4f05b2affbb24c650d69"
+        },
+        {
+          "bytes": 2364972,
+          "path": "recording/chunks/000009.npz",
+          "sha256": "d5e014353668015d223fd778aec460d1737fb73d277f719011c0a27ba95aca66"
+        }
+      ],
+      "run_id": "f96c83dbeb61488588e58c03cc914a5a",
+      "secondary_files": [
+        {
+          "bytes": 402,
+          "path": "snapshots/index.json",
+          "sha256": "be74058e40ac55202bfaa4bf13eea3cb0ec13423b0465d1af0ae0d777b5af8ca"
+        },
+        {
+          "bytes": 926380,
+          "path": "snapshots/initial.snp",
+          "sha256": "465d1b37e213e2bb8a2867318a9bc7863a7218cefffccb9685b84d30293e2d90"
+        },
+        {
+          "bytes": 698,
+          "path": "stderr.log",
+          "sha256": "4ad0f1c3fe69bc9cdb7a9292640501f7da85a560e7584a6dd6f7559610a75e00"
+        },
+        {
+          "bytes": 0,
+          "path": "stdout.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 345,
+          "path": "supervisor.json",
+          "sha256": "d61caec686792677beadc98b7f8267da6e33b54d015f16dc5f4719d8f202dabd"
+        },
+        {
+          "bytes": 18247,
+          "path": "transfer-worker.json",
+          "sha256": "981b590abbcd21d7210e22f06b2fa00c1c0e5cdcb3db1c160cf78525a82b8c55"
+        }
+      ],
+      "selector": null,
+      "snapshot_sha256": "465d1b37e213e2bb8a2867318a9bc7863a7218cefffccb9685b84d30293e2d90",
+      "stage": "source",
+      "steps": 300,
+      "supervisor": {
+        "elapsed_seconds": 24.680783665004128,
+        "output": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-experiments/runs/m5-all-nine-development-20261002/runs/f96c83dbeb61488588e58c03cc914a5a",
+        "returncode": 0,
+        "schema_version": 1,
+        "started_utc": "2026-10-02T15:12:13.038085+00:00",
+        "status": "completed",
+        "timeout_seconds": 160
+      },
+      "worker_report_sha256": "981b590abbcd21d7210e22f06b2fa00c1c0e5cdcb3db1c160cf78525a82b8c55",
+      "worker_task_pass": false
+    },
+    {
+      "block": "local-8",
+      "close_reason": "operator_closed",
+      "gate_result": "pending",
+      "initial_M_sha256": "948eaeaeb4cd59e5746820e38c973334e2b5156aff3b6eff535172fa912e25e1",
+      "initial_U_sha256": "032d40d14192eadc66588a2b63339bb990750a1f70aef036a54453f8746ed9bb",
+      "live_E_sha256": "c95abb75984d8b4c0a1771181548e2b413bd66374b5e2d62b32d95cb62eb4b56",
+      "normalized_scientific_sha256": "c6082be5671a4d9e3c7ffb48edc9793af1c154d90d7511215a35a0147a4c4ea4",
+      "numeric_ticks": 0,
+      "outcome": null,
+      "phase": "paused",
+      "recording_files": [
+        {
+          "bytes": 10186,
+          "path": "recording/manifest.json",
+          "sha256": "c047e0b789a965f5e5d69bfaa66f3b8cc5cdc3b493ac9bf1a5351273b23bb8a6"
+        },
+        {
+          "bytes": 14015,
+          "path": "recording/events.jsonl",
+          "sha256": "1636db9cf42ac0c438e38fff0a7fdd3b7b7fdce585d137d231a69e3964440d2d"
+        }
+      ],
+      "run_id": "22460fab072a4cb1b2f567eb6af252c9",
+      "secondary_files": [
+        {
+          "bytes": 402,
+          "path": "snapshots/index.json",
+          "sha256": "05a27439f92085ca1ebb56bfd4f723422b4a8123649a5507c19364966f26a474"
+        },
+        {
+          "bytes": 926798,
+          "path": "snapshots/initial.snp",
+          "sha256": "ea456844096020cb8d93fcbc348009b1117a148bc5860adb79c2ee5f917b73c1"
+        },
+        {
+          "bytes": 698,
+          "path": "stderr.log",
+          "sha256": "4ad0f1c3fe69bc9cdb7a9292640501f7da85a560e7584a6dd6f7559610a75e00"
+        },
+        {
+          "bytes": 0,
+          "path": "stdout.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 344,
+          "path": "supervisor.json",
+          "sha256": "ac97119afc0fcc88d9b09b06ee10808c0be5135370d5f246d686db7be7e45dec"
+        },
+        {
+          "bytes": 12952,
+          "path": "transfer-worker.json",
+          "sha256": "6ae5c95ef95454ddb74aea578e0571f1518d97a23e5c6d3660762c884295062c"
+        }
+      ],
+      "selector": {
+        "condition": "own",
+        "limit": 1,
+        "provenance_sha256": "016c5b5e9472b116d065fb922b32d64089db6e27839aec09d751238f8ce7ffc1",
+        "resource": null,
+        "resource_sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+        "version": 1
+      },
+      "snapshot_sha256": "ea456844096020cb8d93fcbc348009b1117a148bc5860adb79c2ee5f917b73c1",
+      "stage": "anchor",
+      "steps": 300,
+      "supervisor": {
+        "elapsed_seconds": 7.351768410997465,
+        "output": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-experiments/runs/m5-all-nine-development-20261002/runs/22460fab072a4cb1b2f567eb6af252c9",
+        "returncode": 0,
+        "schema_version": 1,
+        "started_utc": "2026-10-02T15:12:39.694354+00:00",
+        "status": "completed",
+        "timeout_seconds": 160
+      },
+      "worker_report_sha256": "6ae5c95ef95454ddb74aea578e0571f1518d97a23e5c6d3660762c884295062c",
+      "worker_task_pass": false
+    },
+    {
+      "block": "local-8",
+      "close_reason": "operator_closed",
+      "gate_result": "closed",
+      "initial_M_sha256": "948eaeaeb4cd59e5746820e38c973334e2b5156aff3b6eff535172fa912e25e1",
+      "initial_U_sha256": "032d40d14192eadc66588a2b63339bb990750a1f70aef036a54453f8746ed9bb",
+      "live_E_sha256": "c95abb75984d8b4c0a1771181548e2b413bd66374b5e2d62b32d95cb62eb4b56",
+      "normalized_scientific_sha256": "c6082be5671a4d9e3c7ffb48edc9793af1c154d90d7511215a35a0147a4c4ea4",
+      "numeric_ticks": 126,
+      "outcome": {
+        "episode": 0,
+        "final_distance": 0.7899753451347351,
+        "reason": "goal",
+        "steps": 426
+      },
+      "phase": "terminated",
+      "recording_files": [
+        {
+          "bytes": 10329,
+          "path": "recording/manifest.json",
+          "sha256": "8bc15363d1eba1b96b5085ab606a5d276b1372199fe62f7f69712454acbd20e1"
+        },
+        {
+          "bytes": 1153997,
+          "path": "recording/events.jsonl",
+          "sha256": "c43fb56726ed59b651de48325359355548fa5424f402c5f57d8a46b0a4c56e65"
+        },
+        {
+          "bytes": 6299892,
+          "path": "recording/chunks/000000.npz",
+          "sha256": "63e9fab77cc565f1649bf049cea4eac279e6cf40a622df8108f5ffeb82cdf0f9"
+        },
+        {
+          "bytes": 6299892,
+          "path": "recording/chunks/000001.npz",
+          "sha256": "e01970516f4cce24f2200a5591b759050af0caf44d90d8be5a6fa519fd32a9b9"
+        },
+        {
+          "bytes": 6299892,
+          "path": "recording/chunks/000002.npz",
+          "sha256": "88326cd71978c59ad7803888541aae6c28f1d1c582a5dc04d8021e2e0fbcebb8"
+        },
+        {
+          "bytes": 5906400,
+          "path": "recording/chunks/000003.npz",
+          "sha256": "f1f29cdada94fa6c62d019b2eb146235a4a847ad0ba7996d2eabda22b42f0594"
+        }
+      ],
+      "run_id": "47c5def5ad2e40f9977113a7a8dcbd6b",
+      "secondary_files": [
+        {
+          "bytes": 402,
+          "path": "snapshots/index.json",
+          "sha256": "d5990826b1666ded799593a61036327dd7e5732e889c45e5087fdfc25c36accb"
+        },
+        {
+          "bytes": 926798,
+          "path": "snapshots/initial.snp",
+          "sha256": "36cf13b58f3981b129566a2c7f5160ef646fce7f6f9db1ed83b72c4f89740f90"
+        },
+        {
+          "bytes": 698,
+          "path": "stderr.log",
+          "sha256": "4ad0f1c3fe69bc9cdb7a9292640501f7da85a560e7584a6dd6f7559610a75e00"
+        },
+        {
+          "bytes": 0,
+          "path": "stdout.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 345,
+          "path": "supervisor.json",
+          "sha256": "919bf0d54ab3ee446375f505df8c7f818c6f0492c962c78392f3b6465ec0b968"
+        },
+        {
+          "bytes": 10964,
+          "path": "transfer-worker.json",
+          "sha256": "befe19f5e0afc4196ada50f1380dcb3b2501005429850b3cb42dfe9db2e53ef7"
+        }
+      ],
+      "selector": {
+        "condition": "own",
+        "limit": 1,
+        "provenance_sha256": "016c5b5e9472b116d065fb922b32d64089db6e27839aec09d751238f8ce7ffc1",
+        "resource": null,
+        "resource_sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+        "version": 1
+      },
+      "snapshot_sha256": "36cf13b58f3981b129566a2c7f5160ef646fce7f6f9db1ed83b72c4f89740f90",
+      "stage": "own",
+      "steps": 426,
+      "supervisor": {
+        "elapsed_seconds": 17.127882729000703,
+        "output": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-experiments/runs/m5-all-nine-development-20261002/runs/47c5def5ad2e40f9977113a7a8dcbd6b",
+        "returncode": 0,
+        "schema_version": 1,
+        "started_utc": "2026-10-02T15:12:47.340561+00:00",
+        "status": "completed",
+        "timeout_seconds": 160
+      },
+      "worker_report_sha256": "befe19f5e0afc4196ada50f1380dcb3b2501005429850b3cb42dfe9db2e53ef7",
+      "worker_task_pass": false
+    },
+    {
+      "block": "local-8",
+      "close_reason": "operator_closed",
+      "gate_result": "closed",
+      "initial_M_sha256": "948eaeaeb4cd59e5746820e38c973334e2b5156aff3b6eff535172fa912e25e1",
+      "initial_U_sha256": "aa37a394fee509275adddb06355388c23e5ef9e8d31c3306327ac29d54800700",
+      "live_E_sha256": "c95abb75984d8b4c0a1771181548e2b413bd66374b5e2d62b32d95cb62eb4b56",
+      "normalized_scientific_sha256": "c6082be5671a4d9e3c7ffb48edc9793af1c154d90d7511215a35a0147a4c4ea4",
+      "numeric_ticks": 126,
+      "outcome": {
+        "episode": 0,
+        "final_distance": 0.7895011901855469,
+        "reason": "goal",
+        "steps": 426
+      },
+      "phase": "terminated",
+      "recording_files": [
+        {
+          "bytes": 10338,
+          "path": "recording/manifest.json",
+          "sha256": "ff24557c8f1f3f4fd2538945517cc3f1923aafacaaaf4bdaec27d71c4f358b80"
+        },
+        {
+          "bytes": 1138532,
+          "path": "recording/events.jsonl",
+          "sha256": "3c26994ea5ab063579be1e53bd3ad03f45159cf46f9c0debca21c56045f67a2f"
+        },
+        {
+          "bytes": 6299892,
+          "path": "recording/chunks/000000.npz",
+          "sha256": "df10fac88f905741da67ba343c8f1f468f8119d142c9cc97de5d9efbeb930f37"
+        },
+        {
+          "bytes": 6299892,
+          "path": "recording/chunks/000001.npz",
+          "sha256": "1dd084bd75d433ece8fa28c74f70a4a72e8c3f237ee8686b90c928d31a078ed2"
+        },
+        {
+          "bytes": 6299892,
+          "path": "recording/chunks/000002.npz",
+          "sha256": "9756df208717da23017ca3c685f292ddb76e25c51f7dff6cf18a51083e529168"
+        },
+        {
+          "bytes": 5906400,
+          "path": "recording/chunks/000003.npz",
+          "sha256": "d08cb570956ea1d1773fbf3f827db82c3fa76e795e34b5a0c8c8870718c6ce25"
+        }
+      ],
+      "run_id": "ff2742d6139f447abd0a911145f972a3",
+      "secondary_files": [
+        {
+          "bytes": 402,
+          "path": "snapshots/index.json",
+          "sha256": "dbd1ec1ae5b68fd563049ed6749ad24c7ae612dae3e972cea8bb3022f8d00445"
+        },
+        {
+          "bytes": 926803,
+          "path": "snapshots/initial.snp",
+          "sha256": "0ad63b81835f14f0eb1d84aeb7cb0587d1b2fed0ddd96c44862a52d55c36344c"
+        },
+        {
+          "bytes": 698,
+          "path": "stderr.log",
+          "sha256": "4ad0f1c3fe69bc9cdb7a9292640501f7da85a560e7584a6dd6f7559610a75e00"
+        },
+        {
+          "bytes": 0,
+          "path": "stdout.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 345,
+          "path": "supervisor.json",
+          "sha256": "6ef819b48030f92291fc300d57f6c43f9186940d6299972ac6bd73f858e7c233"
+        },
+        {
+          "bytes": 10981,
+          "path": "transfer-worker.json",
+          "sha256": "6adf98331ea63efe0fa2d3edaeebae87e2783dc73f5a0e1df611834907d84de7"
+        }
+      ],
+      "selector": {
+        "condition": "swapped",
+        "limit": 1,
+        "provenance_sha256": "64628e37cc6e861194f810baa92926eba8f57260047cdd8ad320a4601023d213",
+        "resource": null,
+        "resource_sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+        "version": 1
+      },
+      "snapshot_sha256": "0ad63b81835f14f0eb1d84aeb7cb0587d1b2fed0ddd96c44862a52d55c36344c",
+      "stage": "swapped",
+      "steps": 426,
+      "supervisor": {
+        "elapsed_seconds": 16.123379276003106,
+        "output": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-experiments/runs/m5-all-nine-development-20261002/runs/ff2742d6139f447abd0a911145f972a3",
+        "returncode": 0,
+        "schema_version": 1,
+        "started_utc": "2026-10-02T15:13:05.015308+00:00",
+        "status": "completed",
+        "timeout_seconds": 160
+      },
+      "worker_report_sha256": "6adf98331ea63efe0fa2d3edaeebae87e2783dc73f5a0e1df611834907d84de7",
+      "worker_task_pass": false
+    },
+    {
+      "block": "local-8",
+      "close_reason": "operator_closed",
+      "gate_result": "closed",
+      "initial_M_sha256": "948eaeaeb4cd59e5746820e38c973334e2b5156aff3b6eff535172fa912e25e1",
+      "initial_U_sha256": "032d40d14192eadc66588a2b63339bb990750a1f70aef036a54453f8746ed9bb",
+      "live_E_sha256": "c95abb75984d8b4c0a1771181548e2b413bd66374b5e2d62b32d95cb62eb4b56",
+      "normalized_scientific_sha256": "c6082be5671a4d9e3c7ffb48edc9793af1c154d90d7511215a35a0147a4c4ea4",
+      "numeric_ticks": 126,
+      "outcome": {
+        "episode": 0,
+        "final_distance": 0.7899753451347351,
+        "reason": "goal",
+        "steps": 426
+      },
+      "phase": "terminated",
+      "recording_files": [
+        {
+          "bytes": 10331,
+          "path": "recording/manifest.json",
+          "sha256": "7381c7196f354a94674e77fea83da7c0e3dc2c7a66be1fc30725e43eda77d97c"
+        },
+        {
+          "bytes": 1154124,
+          "path": "recording/events.jsonl",
+          "sha256": "87eb061911c98e865938ebdcbb6b3be30a2b55264d0ccf8f75421e1915979b85"
+        },
+        {
+          "bytes": 6299892,
+          "path": "recording/chunks/000000.npz",
+          "sha256": "f80021cfe707e0c80f288e4368582b0e3db4da466b902d5eaf94a59b30e4f9d2"
+        },
+        {
+          "bytes": 6299892,
+          "path": "recording/chunks/000001.npz",
+          "sha256": "cd62bd013b3d2712e83b411f522e37f488e4a2c2cab5818f83cbf555a1f309a8"
+        },
+        {
+          "bytes": 6299892,
+          "path": "recording/chunks/000002.npz",
+          "sha256": "43d612e3ac58e7125eb07e00e1188a88e7b5a6299577ad05bb74339c10367ea4"
+        },
+        {
+          "bytes": 5906400,
+          "path": "recording/chunks/000003.npz",
+          "sha256": "fe37025d3ca37905d7f9c554787b571fdcedbf7e467a5d41d207b22371bc851f"
+        }
+      ],
+      "run_id": "f0281b2f32af42ea965059603bdf591d",
+      "secondary_files": [
+        {
+          "bytes": 402,
+          "path": "snapshots/index.json",
+          "sha256": "ef82a74c8cb1598231c60df7fefc1c3f7a4e464f507191af6d63c6014b5579af"
+        },
+        {
+          "bytes": 926799,
+          "path": "snapshots/initial.snp",
+          "sha256": "6911ee9efeb08d2b47cc817ae10ce2caa2ad5295a0b6df1c0b0c4bde390514fc"
+        },
+        {
+          "bytes": 698,
+          "path": "stderr.log",
+          "sha256": "4ad0f1c3fe69bc9cdb7a9292640501f7da85a560e7584a6dd6f7559610a75e00"
+        },
+        {
+          "bytes": 0,
+          "path": "stdout.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 345,
+          "path": "supervisor.json",
+          "sha256": "43ec3685992e2f1e880cfa5532be7bbd63a98beae4346154b7ad7bf1e99f05b6"
+        },
+        {
+          "bytes": 10967,
+          "path": "transfer-worker.json",
+          "sha256": "76e652c1dc1fa478d98795fb17c17db4703e7a4d0518713024e22e195a941c45"
+        }
+      ],
+      "selector": {
+        "condition": "sham",
+        "limit": 1,
+        "provenance_sha256": "016c5b5e9472b116d065fb922b32d64089db6e27839aec09d751238f8ce7ffc1",
+        "resource": null,
+        "resource_sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+        "version": 1
+      },
+      "snapshot_sha256": "6911ee9efeb08d2b47cc817ae10ce2caa2ad5295a0b6df1c0b0c4bde390514fc",
+      "stage": "sham",
+      "steps": 426,
+      "supervisor": {
+        "elapsed_seconds": 15.976872439001454,
+        "output": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-experiments/runs/m5-all-nine-development-20261002/runs/f0281b2f32af42ea965059603bdf591d",
+        "returncode": 0,
+        "schema_version": 1,
+        "started_utc": "2026-10-02T15:13:21.704426+00:00",
+        "status": "completed",
+        "timeout_seconds": 160
+      },
+      "worker_report_sha256": "76e652c1dc1fa478d98795fb17c17db4703e7a4d0518713024e22e195a941c45",
+      "worker_task_pass": false
+    },
+    {
+      "block": "local-8",
+      "close_reason": "operator_closed",
+      "gate_result": "closed",
+      "initial_M_sha256": "948eaeaeb4cd59e5746820e38c973334e2b5156aff3b6eff535172fa912e25e1",
+      "initial_U_sha256": "70575d969610e9392033501a21f594e4a7a60d04f83bdc73e510fd5c32019fed",
+      "live_E_sha256": "c95abb75984d8b4c0a1771181548e2b413bd66374b5e2d62b32d95cb62eb4b56",
+      "normalized_scientific_sha256": "c6082be5671a4d9e3c7ffb48edc9793af1c154d90d7511215a35a0147a4c4ea4",
+      "numeric_ticks": 126,
+      "outcome": {
+        "episode": 0,
+        "final_distance": 0.7895011901855469,
+        "reason": "goal",
+        "steps": 426
+      },
+      "phase": "terminated",
+      "recording_files": [
+        {
+          "bytes": 10332,
+          "path": "recording/manifest.json",
+          "sha256": "337d06b4073006b6e2d63ef69ec9967d7c669edd752f52e4e2b62d2ca77dfe8d"
+        },
+        {
+          "bytes": 1120964,
+          "path": "recording/events.jsonl",
+          "sha256": "31cbf94c047b9cebab1443a8c56bd06b1fd7d8664768c81a8dc113e519447ee6"
+        },
+        {
+          "bytes": 6299892,
+          "path": "recording/chunks/000000.npz",
+          "sha256": "8d8c38961b589c40dbbb743760129d4911fdd29fe4e762e6f42fe8d82a843d78"
+        },
+        {
+          "bytes": 6299892,
+          "path": "recording/chunks/000001.npz",
+          "sha256": "9a5ecac389be291b23f212332bc3e2cc5bb769623aec8ff8c9b30ce826083de5"
+        },
+        {
+          "bytes": 6299892,
+          "path": "recording/chunks/000002.npz",
+          "sha256": "0965a5cf6f332ac060a192735ddf2bb077ea32df25cdf1d62b6f4ea6ab882dd0"
+        },
+        {
+          "bytes": 5906400,
+          "path": "recording/chunks/000003.npz",
+          "sha256": "357b23b0d7fbc864671ae521196bf7d2ac39c7e5f1047e537e4e67b51c9e5f9c"
+        }
+      ],
+      "run_id": "4209afbeee9a48bbb9e7f1d6973baed2",
+      "secondary_files": [
+        {
+          "bytes": 402,
+          "path": "snapshots/index.json",
+          "sha256": "d79f7fdb897fbe28a4186a16d95a9887f670a978bfa8b83f4be0cb8703062e4d"
+        },
+        {
+          "bytes": 926655,
+          "path": "snapshots/initial.snp",
+          "sha256": "8903ef8c8fb655607bfae2fe57390480599f19a018da5db58a39e7802815c380"
+        },
+        {
+          "bytes": 698,
+          "path": "stderr.log",
+          "sha256": "4ad0f1c3fe69bc9cdb7a9292640501f7da85a560e7584a6dd6f7559610a75e00"
+        },
+        {
+          "bytes": 0,
+          "path": "stdout.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 345,
+          "path": "supervisor.json",
+          "sha256": "16126658dcc39374d821052bca6a1c6deb18793255afa13331f0871c0ad4ce94"
+        },
+        {
+          "bytes": 10799,
+          "path": "transfer-worker.json",
+          "sha256": "aac1077b0dbea45e5b9994fa835bafc21840b73840bfeaed1f232a79cd27a267"
+        }
+      ],
+      "selector": {
+        "condition": "no-U",
+        "limit": 1,
+        "provenance_sha256": "7081b05e550ff15e17170c89375b5807378471446c33982251ea1e2107c4e5ed",
+        "resource": null,
+        "resource_sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+        "version": 1
+      },
+      "snapshot_sha256": "8903ef8c8fb655607bfae2fe57390480599f19a018da5db58a39e7802815c380",
+      "stage": "no-U",
+      "steps": 426,
+      "supervisor": {
+        "elapsed_seconds": 14.867365844002052,
+        "output": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-experiments/runs/m5-all-nine-development-20261002/runs/4209afbeee9a48bbb9e7f1d6973baed2",
+        "returncode": 0,
+        "schema_version": 1,
+        "started_utc": "2026-10-02T15:13:38.260526+00:00",
+        "status": "completed",
+        "timeout_seconds": 160
+      },
+      "worker_report_sha256": "aac1077b0dbea45e5b9994fa835bafc21840b73840bfeaed1f232a79cd27a267",
+      "worker_task_pass": false
+    },
+    {
+      "block": "local-8",
+      "close_reason": "operator_closed",
+      "gate_result": "closed",
+      "initial_M_sha256": "948eaeaeb4cd59e5746820e38c973334e2b5156aff3b6eff535172fa912e25e1",
+      "initial_U_sha256": "9cca21e7480ae28288b263de4f5ce71f88f6a685aa4a2713b814dc0b44abb307",
+      "live_E_sha256": "c95abb75984d8b4c0a1771181548e2b413bd66374b5e2d62b32d95cb62eb4b56",
+      "normalized_scientific_sha256": "c6082be5671a4d9e3c7ffb48edc9793af1c154d90d7511215a35a0147a4c4ea4",
+      "numeric_ticks": 126,
+      "outcome": {
+        "episode": 0,
+        "final_distance": 0.7899753451347351,
+        "reason": "goal",
+        "steps": 426
+      },
+      "phase": "terminated",
+      "recording_files": [
+        {
+          "bytes": 10349,
+          "path": "recording/manifest.json",
+          "sha256": "523ca3780ac3f6d7d6b89f75abeae55b2128eb2872803bb3b83a355f840ec7c4"
+        },
+        {
+          "bytes": 1147647,
+          "path": "recording/events.jsonl",
+          "sha256": "8801c6a08542c2351300b0d857f36eab4dfe9bfb9a2b786eecc244f40959493e"
+        },
+        {
+          "bytes": 6299892,
+          "path": "recording/chunks/000000.npz",
+          "sha256": "f079a08ac6c9b3a1446d9303e41efadb38cb3c89311b50fc4fc75544b4095769"
+        },
+        {
+          "bytes": 6299892,
+          "path": "recording/chunks/000001.npz",
+          "sha256": "740640fe57de86f9d070b5487b298d1b666439111bf7f354b3834a71777fdecd"
+        },
+        {
+          "bytes": 6299892,
+          "path": "recording/chunks/000002.npz",
+          "sha256": "2f48ea70c7b77bb04c7133c1879f5146a403b0f1fae1f43eb005ad3542d8a266"
+        },
+        {
+          "bytes": 5906400,
+          "path": "recording/chunks/000003.npz",
+          "sha256": "e843a4890bd6e6cf7965516054e76d35e02836e92e7ee7eb911f76a904f14718"
+        }
+      ],
+      "run_id": "3b5209d27f154000b0326a336eae500a",
+      "secondary_files": [
+        {
+          "bytes": 402,
+          "path": "snapshots/index.json",
+          "sha256": "5a2d23cfda59830802864adf9dcc2c55cc7ce9eb0679c1bc3eb6da34d7452c90"
+        },
+        {
+          "bytes": 926748,
+          "path": "snapshots/initial.snp",
+          "sha256": "03c9605e920d6c40abe02635fadb34fb21f8fd51e20f0957a77ec33acdc52f20"
+        },
+        {
+          "bytes": 698,
+          "path": "stderr.log",
+          "sha256": "4ad0f1c3fe69bc9cdb7a9292640501f7da85a560e7584a6dd6f7559610a75e00"
+        },
+        {
+          "bytes": 0,
+          "path": "stdout.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 344,
+          "path": "supervisor.json",
+          "sha256": "501c5a2962afa161b0edc6f07b69a6cf52ebf2db0d9cfbce44e22959f4cb09d5"
+        },
+        {
+          "bytes": 10925,
+          "path": "transfer-worker.json",
+          "sha256": "3aee840f97d94d5dc32d28d5a163b3c64f43c8e8244133689a39670a9acb3c1d"
+        }
+      ],
+      "selector": {
+        "condition": "hand-authored",
+        "limit": 1,
+        "provenance_sha256": "7081b05e550ff15e17170c89375b5807378471446c33982251ea1e2107c4e5ed",
+        "resource": null,
+        "resource_sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+        "version": 1
+      },
+      "snapshot_sha256": "03c9605e920d6c40abe02635fadb34fb21f8fd51e20f0957a77ec33acdc52f20",
+      "stage": "hand-authored",
+      "steps": 426,
+      "supervisor": {
+        "elapsed_seconds": 16.37932361500134,
+        "output": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-experiments/runs/m5-all-nine-development-20261002/runs/3b5209d27f154000b0326a336eae500a",
+        "returncode": 0,
+        "schema_version": 1,
+        "started_utc": "2026-10-02T15:13:53.679797+00:00",
+        "status": "completed",
+        "timeout_seconds": 160
+      },
+      "worker_report_sha256": "3aee840f97d94d5dc32d28d5a163b3c64f43c8e8244133689a39670a9acb3c1d",
+      "worker_task_pass": false
+    },
+    {
+      "block": "local-8",
+      "close_reason": "operator_closed",
+      "gate_result": "closed",
+      "initial_M_sha256": "948eaeaeb4cd59e5746820e38c973334e2b5156aff3b6eff535172fa912e25e1",
+      "initial_U_sha256": "70575d969610e9392033501a21f594e4a7a60d04f83bdc73e510fd5c32019fed",
+      "live_E_sha256": "c95abb75984d8b4c0a1771181548e2b413bd66374b5e2d62b32d95cb62eb4b56",
+      "normalized_scientific_sha256": "c6082be5671a4d9e3c7ffb48edc9793af1c154d90d7511215a35a0147a4c4ea4",
+      "numeric_ticks": 126,
+      "outcome": {
+        "episode": 0,
+        "final_distance": 0.7899753451347351,
+        "reason": "goal",
+        "steps": 426
+      },
+      "phase": "terminated",
+      "recording_files": [
+        {
+          "bytes": 10361,
+          "path": "recording/manifest.json",
+          "sha256": "92839bce974111508647439282499c1d6283d552b0a0e96b597289dcbc19db68"
+        },
+        {
+          "bytes": 1140913,
+          "path": "recording/events.jsonl",
+          "sha256": "1ff3f3e0c1b58df4f9a2d6ffbd4ca079a4411abe57fa7292328b4cb9bbbf8d9b"
+        },
+        {
+          "bytes": 6299892,
+          "path": "recording/chunks/000000.npz",
+          "sha256": "0e3782ea2090f6511eb2990819a50c7662f2232c2c92e62e7b7f694bc3210ae5"
+        },
+        {
+          "bytes": 6299892,
+          "path": "recording/chunks/000001.npz",
+          "sha256": "d85181ca664748cad345c72aef41e8f12c75e962fc7df23c9b4779e54240d788"
+        },
+        {
+          "bytes": 6299892,
+          "path": "recording/chunks/000002.npz",
+          "sha256": "d52cfdb5a6e57b1e87d5c84662ca49acbc5f7c90b122ffec97d6089fa7e85aa5"
+        },
+        {
+          "bytes": 5906400,
+          "path": "recording/chunks/000003.npz",
+          "sha256": "4bb47ede36c1028b5496d61dff4ff5d29884159480d1269a28e8127cfd0b3be3"
+        }
+      ],
+      "run_id": "b33f0c2b3cc14261ae26d4ac461b3f26",
+      "secondary_files": [
+        {
+          "bytes": 402,
+          "path": "snapshots/index.json",
+          "sha256": "9873bd726fdc669f76a30e5e7298a7939583f33229ed7f3e22535b2230aa85fc"
+        },
+        {
+          "bytes": 926670,
+          "path": "snapshots/initial.snp",
+          "sha256": "a231ac4d83ffe513fdddbc501e1f613a5f3dc35980f6e716c7cdb88ef394a696"
+        },
+        {
+          "bytes": 698,
+          "path": "stderr.log",
+          "sha256": "4ad0f1c3fe69bc9cdb7a9292640501f7da85a560e7584a6dd6f7559610a75e00"
+        },
+        {
+          "bytes": 0,
+          "path": "stdout.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 345,
+          "path": "supervisor.json",
+          "sha256": "787dd51d8cde0ce791c6dd00f0ed490cbeecb0ff9a94e4e4fa3daf49f63670e2"
+        },
+        {
+          "bytes": 10822,
+          "path": "transfer-worker.json",
+          "sha256": "7594f0d4f4e09e732c3762ebfc1674fd7272388ff1a9b17ddd672599c590b371"
+        }
+      ],
+      "selector": {
+        "condition": "history-independent",
+        "limit": 1,
+        "provenance_sha256": "7081b05e550ff15e17170c89375b5807378471446c33982251ea1e2107c4e5ed",
+        "resource": null,
+        "resource_sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+        "version": 1
+      },
+      "snapshot_sha256": "a231ac4d83ffe513fdddbc501e1f613a5f3dc35980f6e716c7cdb88ef394a696",
+      "stage": "history-independent",
+      "steps": 426,
+      "supervisor": {
+        "elapsed_seconds": 16.325066508994496,
+        "output": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-experiments/runs/m5-all-nine-development-20261002/runs/b33f0c2b3cc14261ae26d4ac461b3f26",
+        "returncode": 0,
+        "schema_version": 1,
+        "started_utc": "2026-10-02T15:14:10.649435+00:00",
+        "status": "completed",
+        "timeout_seconds": 160
+      },
+      "worker_report_sha256": "7594f0d4f4e09e732c3762ebfc1674fd7272388ff1a9b17ddd672599c590b371",
+      "worker_task_pass": false
+    },
+    {
+      "block": "local-8",
+      "close_reason": "operator_closed",
+      "gate_result": "closed",
+      "initial_M_sha256": "948eaeaeb4cd59e5746820e38c973334e2b5156aff3b6eff535172fa912e25e1",
+      "initial_U_sha256": "70575d969610e9392033501a21f594e4a7a60d04f83bdc73e510fd5c32019fed",
+      "live_E_sha256": "c95abb75984d8b4c0a1771181548e2b413bd66374b5e2d62b32d95cb62eb4b56",
+      "normalized_scientific_sha256": "c6082be5671a4d9e3c7ffb48edc9793af1c154d90d7511215a35a0147a4c4ea4",
+      "numeric_ticks": 126,
+      "outcome": {
+        "episode": 0,
+        "final_distance": 0.7899753451347351,
+        "reason": "goal",
+        "steps": 426
+      },
+      "phase": "terminated",
+      "recording_files": [
+        {
+          "bytes": 10341,
+          "path": "recording/manifest.json",
+          "sha256": "4e347b3a13b91d8759feea3495432ec8df8203b7b913f50dfd3bfc3f3b4bf865"
+        },
+        {
+          "bytes": 1139643,
+          "path": "recording/events.jsonl",
+          "sha256": "7b468f5303cb11326486a11530acdb32ce64b109797626a07c8516553d19a077"
+        },
+        {
+          "bytes": 6299892,
+          "path": "recording/chunks/000000.npz",
+          "sha256": "1e2924e61d1d1a106e01643be109da3b17b1fbb47eec991c7a2a8e7f122e6093"
+        },
+        {
+          "bytes": 6299892,
+          "path": "recording/chunks/000001.npz",
+          "sha256": "2291b48b456182b1f9ce4042bb9cf448992708193b140acdc5a87758b1a003a6"
+        },
+        {
+          "bytes": 6299892,
+          "path": "recording/chunks/000002.npz",
+          "sha256": "c52bc537ba9c6cf04c70c1a9a97fb1433cae67db050cfb7df8cdb0c4b985bbbe"
+        },
+        {
+          "bytes": 5906400,
+          "path": "recording/chunks/000003.npz",
+          "sha256": "c69f4651b30a667198f0c039c9ecb4f4984690d1e98a43be926552213dd52491"
+        }
+      ],
+      "run_id": "70b3146fa8834b7ba42cf7f9cfa8b8f8",
+      "secondary_files": [
+        {
+          "bytes": 402,
+          "path": "snapshots/index.json",
+          "sha256": "24a7ba6725ccc82ffff92279974850b90ac4059aa66d65cbb621bf2c95264817"
+        },
+        {
+          "bytes": 926660,
+          "path": "snapshots/initial.snp",
+          "sha256": "4ce493fec698714b97ff64419512381196134edf168592aa6ec46bedc9d0b629"
+        },
+        {
+          "bytes": 698,
+          "path": "stderr.log",
+          "sha256": "4ad0f1c3fe69bc9cdb7a9292640501f7da85a560e7584a6dd6f7559610a75e00"
+        },
+        {
+          "bytes": 0,
+          "path": "stdout.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 344,
+          "path": "supervisor.json",
+          "sha256": "7787e9c540174703f888bb58f83dcebe796ed5b99c3633e48b52efd8b2c8588a"
+        },
+        {
+          "bytes": 10802,
+          "path": "transfer-worker.json",
+          "sha256": "828cde1d940dda9b9b2c7f875fef5be85b53907f0eda21f9979b012fab4b827d"
+        }
+      ],
+      "selector": {
+        "condition": "traversal",
+        "limit": 1,
+        "provenance_sha256": "7081b05e550ff15e17170c89375b5807378471446c33982251ea1e2107c4e5ed",
+        "resource": null,
+        "resource_sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+        "version": 1
+      },
+      "snapshot_sha256": "4ce493fec698714b97ff64419512381196134edf168592aa6ec46bedc9d0b629",
+      "stage": "traversal",
+      "steps": 426,
+      "supervisor": {
+        "elapsed_seconds": 16.55107228599809,
+        "output": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-experiments/runs/m5-all-nine-development-20261002/runs/70b3146fa8834b7ba42cf7f9cfa8b8f8",
+        "returncode": 0,
+        "schema_version": 1,
+        "started_utc": "2026-10-02T15:14:27.451710+00:00",
+        "status": "completed",
+        "timeout_seconds": 160
+      },
+      "worker_report_sha256": "828cde1d940dda9b9b2c7f875fef5be85b53907f0eda21f9979b012fab4b827d",
+      "worker_task_pass": false
+    },
+    {
+      "block": "local-8",
+      "close_reason": "operator_closed",
+      "gate_result": "closed",
+      "initial_M_sha256": "948eaeaeb4cd59e5746820e38c973334e2b5156aff3b6eff535172fa912e25e1",
+      "initial_U_sha256": "70575d969610e9392033501a21f594e4a7a60d04f83bdc73e510fd5c32019fed",
+      "live_E_sha256": "c95abb75984d8b4c0a1771181548e2b413bd66374b5e2d62b32d95cb62eb4b56",
+      "normalized_scientific_sha256": "c6082be5671a4d9e3c7ffb48edc9793af1c154d90d7511215a35a0147a4c4ea4",
+      "numeric_ticks": 126,
+      "outcome": {
+        "episode": 0,
+        "final_distance": 0.7899753451347351,
+        "reason": "goal",
+        "steps": 426
+      },
+      "phase": "terminated",
+      "recording_files": [
+        {
+          "bytes": 18245,
+          "path": "recording/manifest.json",
+          "sha256": "fa142b8d1e1cef919bd93d31ef58a873c1b7146d3078ae5a094c9dcfc2e95862"
+        },
+        {
+          "bytes": 1147928,
+          "path": "recording/events.jsonl",
+          "sha256": "e9d134de13c1196cc90be2bc37b98b809b69047899256c9ade77b4b53d1f31a6"
+        },
+        {
+          "bytes": 6299892,
+          "path": "recording/chunks/000000.npz",
+          "sha256": "1197f424a7436a8c31052c559f683b8e82d731ad7f4d0161b58a799d8af3f0cc"
+        },
+        {
+          "bytes": 6299892,
+          "path": "recording/chunks/000001.npz",
+          "sha256": "69bd89ab5db59a91df9533350e2778e500f1e0ac15351101908a57f3235f8afe"
+        },
+        {
+          "bytes": 6299892,
+          "path": "recording/chunks/000002.npz",
+          "sha256": "43aaabb5480f6da57eb395472f8b4f3b4f851487789d0fc5a99ff9825b61d61a"
+        },
+        {
+          "bytes": 5906400,
+          "path": "recording/chunks/000003.npz",
+          "sha256": "4f15c0dc81b96b94d349d57d0298616b1de8ae9e05dd83740d46e5f616cc253d"
+        }
+      ],
+      "run_id": "2f417d023f284f15bf0e198b27822db6",
+      "secondary_files": [
+        {
+          "bytes": 402,
+          "path": "snapshots/index.json",
+          "sha256": "e0a9bbda2ec3b4b067bd2a78b849fc344ecaa152eaef8fc1dbe19f0cb2265669"
+        },
+        {
+          "bytes": 935502,
+          "path": "snapshots/initial.snp",
+          "sha256": "7bc962012c78d10d08d7111189cc0b71caf2e3b145e231dd69fd55f1e09c4ed4"
+        },
+        {
+          "bytes": 698,
+          "path": "stderr.log",
+          "sha256": "4ad0f1c3fe69bc9cdb7a9292640501f7da85a560e7584a6dd6f7559610a75e00"
+        },
+        {
+          "bytes": 0,
+          "path": "stdout.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 344,
+          "path": "supervisor.json",
+          "sha256": "b475c36c156e0d25502dfdb2382a8a2e3cc9b98a60a642fee39c8248d61fb10b"
+        },
+        {
+          "bytes": 22068,
+          "path": "transfer-worker.json",
+          "sha256": "42e409ca2042e81cfec542e45c9d7df148de9c8a002b20b715af4b0f6e45d7cf"
+        }
+      ],
+      "selector": {
+        "condition": "retrieval",
+        "limit": 1,
+        "provenance_sha256": "016c5b5e9472b116d065fb922b32d64089db6e27839aec09d751238f8ce7ffc1",
+        "resource_sha256": "b6c92a7638af926ed625069b0f1e23fc804db08e621b3bcdf2d5bae8cc1a0457",
+        "version": 1
+      },
+      "snapshot_sha256": "7bc962012c78d10d08d7111189cc0b71caf2e3b145e231dd69fd55f1e09c4ed4",
+      "stage": "retrieval",
+      "steps": 426,
+      "supervisor": {
+        "elapsed_seconds": 16.72623742900032,
+        "output": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-experiments/runs/m5-all-nine-development-20261002/runs/2f417d023f284f15bf0e198b27822db6",
+        "returncode": 0,
+        "schema_version": 1,
+        "started_utc": "2026-10-02T15:14:44.641931+00:00",
+        "status": "completed",
+        "timeout_seconds": 160
+      },
+      "worker_report_sha256": "42e409ca2042e81cfec542e45c9d7df148de9c8a002b20b715af4b0f6e45d7cf",
+      "worker_task_pass": false
+    },
+    {
+      "block": "local-8",
+      "close_reason": "operator_closed",
+      "gate_result": "closed",
+      "initial_M_sha256": "948eaeaeb4cd59e5746820e38c973334e2b5156aff3b6eff535172fa912e25e1",
+      "initial_U_sha256": "70575d969610e9392033501a21f594e4a7a60d04f83bdc73e510fd5c32019fed",
+      "live_E_sha256": "c95abb75984d8b4c0a1771181548e2b413bd66374b5e2d62b32d95cb62eb4b56",
+      "normalized_scientific_sha256": "c6082be5671a4d9e3c7ffb48edc9793af1c154d90d7511215a35a0147a4c4ea4",
+      "numeric_ticks": 126,
+      "outcome": {
+        "episode": 0,
+        "final_distance": 0.7899753451347351,
+        "reason": "goal",
+        "steps": 426
+      },
+      "phase": "terminated",
+      "recording_files": [
+        {
+          "bytes": 12260,
+          "path": "recording/manifest.json",
+          "sha256": "0807f814f02fb5125ab9ffd90d8d0d69fc5302d46f91901cd16e3be751cbfe49"
+        },
+        {
+          "bytes": 1139428,
+          "path": "recording/events.jsonl",
+          "sha256": "abed2a2e870e1c1ef7e39773e62473ead90f94faf57179069033970936ec928d"
+        },
+        {
+          "bytes": 6299892,
+          "path": "recording/chunks/000000.npz",
+          "sha256": "a2aa75f720cf84d0472471b7a7d8eb86a8d3cc51969a656d9074ca2a8f135806"
+        },
+        {
+          "bytes": 6299892,
+          "path": "recording/chunks/000001.npz",
+          "sha256": "cdb14de11d6f379757a1f222f42fcd331897fa99feca087fba1318b5e9a73f85"
+        },
+        {
+          "bytes": 6299892,
+          "path": "recording/chunks/000002.npz",
+          "sha256": "ae05e72b2e0cd9218f363fc0be82717effea7a7596688f9715a4eee5bb377bfd"
+        },
+        {
+          "bytes": 5906400,
+          "path": "recording/chunks/000003.npz",
+          "sha256": "25bbcef7afc553787f8f87e47ea019551afe2b909838d57d2d83a43448c3e594"
+        }
+      ],
+      "run_id": "077e724b37c64c7c860c2c4cb57a7139",
+      "secondary_files": [
+        {
+          "bytes": 402,
+          "path": "snapshots/index.json",
+          "sha256": "898873a28347854c42715e99097a52f56ba927cbf1829d8e4ed9891745703994"
+        },
+        {
+          "bytes": 926718,
+          "path": "snapshots/initial.snp",
+          "sha256": "cfd53d817ace29ee6fd82f37cc91dc53904583557bdbb260de9395baa0493345"
+        },
+        {
+          "bytes": 698,
+          "path": "stderr.log",
+          "sha256": "4ad0f1c3fe69bc9cdb7a9292640501f7da85a560e7584a6dd6f7559610a75e00"
+        },
+        {
+          "bytes": 0,
+          "path": "stdout.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 345,
+          "path": "supervisor.json",
+          "sha256": "d134d427b37b7b71bb6a1dbe1978297c4566272d7239dcd84193405c893cd7fe"
+        },
+        {
+          "bytes": 10849,
+          "path": "transfer-worker.json",
+          "sha256": "250191b25646dad6bab1be82c2f109fa3284d01ff935190740835b2e4bd5da44"
+        }
+      ],
+      "selector": {
+        "condition": "oracle",
+        "limit": 1,
+        "provenance_sha256": "e0c0af841af3aca76f89024ef4b4b416594fee4dbea4b5e337a7cb9a55929d75",
+        "resource": [
+          "live-development-test-00000008-fact-a"
+        ],
+        "resource_sha256": "5cc639b114b0ac9bf4224a0101421ea3090022f941ec5759e1c60df0010f679a",
+        "version": 1
+      },
+      "snapshot_sha256": "cfd53d817ace29ee6fd82f37cc91dc53904583557bdbb260de9395baa0493345",
+      "stage": "oracle",
+      "steps": 426,
+      "supervisor": {
+        "elapsed_seconds": 14.569790148998436,
+        "output": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-experiments/runs/m5-all-nine-development-20261002/runs/077e724b37c64c7c860c2c4cb57a7139",
+        "returncode": 0,
+        "schema_version": 1,
+        "started_utc": "2026-10-02T15:15:02.079809+00:00",
+        "status": "completed",
+        "timeout_seconds": 160
+      },
+      "worker_report_sha256": "250191b25646dad6bab1be82c2f109fa3284d01ff935190740835b2e4bd5da44",
+      "worker_task_pass": false
+    },
+    {
+      "block": "paired-9",
+      "close_reason": "operator_closed",
+      "gate_result": "pending",
+      "initial_M_sha256": "56057dec79ab57408cd2e45095aa50d2d5e814593d80ccc87cb7b89c3924d18d",
+      "initial_U_sha256": "70575d969610e9392033501a21f594e4a7a60d04f83bdc73e510fd5c32019fed",
+      "live_E_sha256": "c95abb75984d8b4c0a1771181548e2b413bd66374b5e2d62b32d95cb62eb4b56",
+      "normalized_scientific_sha256": "a8cdf5cc8c6d39e9ba6c19f2d3bc7bcb0f84e7929dbffe7ee6afed0833e89cda",
+      "numeric_ticks": 300,
+      "outcome": null,
+      "phase": "paused",
+      "recording_files": [
+        {
+          "bytes": 9843,
+          "path": "recording/manifest.json",
+          "sha256": "e2477a7729de7a2d5ed11d828c67fe63329addecbf3ec9d966fc19fec2a34941"
+        },
+        {
+          "bytes": 2677729,
+          "path": "recording/events.jsonl",
+          "sha256": "d5389c47e3ddcb7e880ddd10199a2c15e5639d1e1e04692c7eb9ab8a4a9677da"
+        },
+        {
+          "bytes": 6299892,
+          "path": "recording/chunks/000000.npz",
+          "sha256": "a54b454a166cc04b941539501ee004b1cf4e7506f611edafacc95ef73486582b"
+        },
+        {
+          "bytes": 6299892,
+          "path": "recording/chunks/000001.npz",
+          "sha256": "76ec5648da88e038381b74163602b23527ecf8fa825709b1d0e2cbc4024ce9c9"
+        },
+        {
+          "bytes": 6299892,
+          "path": "recording/chunks/000002.npz",
+          "sha256": "be44fd6c2152835762f64516b850b2bdff78cbce8e4190a58f702307137a219e"
+        },
+        {
+          "bytes": 6299892,
+          "path": "recording/chunks/000003.npz",
+          "sha256": "b03073e04d8336fafc0e2d4bcfeda6c2a62aed5cef3d784e9b4279ab131e385e"
+        },
+        {
+          "bytes": 6299892,
+          "path": "recording/chunks/000004.npz",
+          "sha256": "d4c9cee66a2c67299b97e287a2e334113ddc12d5836637e7370fa09d93935ee6"
+        },
+        {
+          "bytes": 6299892,
+          "path": "recording/chunks/000005.npz",
+          "sha256": "502cfa8820e653c81ee115adc6a0d2cd979c05ae82d13423071b79cbabf9b7dc"
+        },
+        {
+          "bytes": 6299892,
+          "path": "recording/chunks/000006.npz",
+          "sha256": "bedccd89f9fc4776c1116ba3023c33faf40923cd8fc74033df145c6165b9b8de"
+        },
+        {
+          "bytes": 6299892,
+          "path": "recording/chunks/000007.npz",
+          "sha256": "c1970696079f361abb9de60ac7f31d3d1bec24599d1b10e2f1e0aed61f74c8b3"
+        },
+        {
+          "bytes": 6299892,
+          "path": "recording/chunks/000008.npz",
+          "sha256": "4aabd5924cda24fbf7f1a7d72f65f21b7b3da646ae81e4cab03f1b362b9ecf32"
+        },
+        {
+          "bytes": 2364972,
+          "path": "recording/chunks/000009.npz",
+          "sha256": "1e930726bb18d2e7cf5b4428ee7fa00446474537e148eea6b34a82cbf1d4620b"
+        }
+      ],
+      "run_id": "54ca910016174286b4e8113068e6f6cf",
+      "secondary_files": [
+        {
+          "bytes": 402,
+          "path": "snapshots/index.json",
+          "sha256": "3656800b1ba58957d8c445b1027c151a873d40a01f99bee17133c530877bd3a2"
+        },
+        {
+          "bytes": 926358,
+          "path": "snapshots/initial.snp",
+          "sha256": "da063395cd0db4ac9d6cfdaadee25511df788f668941054d5ec2d1ed99f47c36"
+        },
+        {
+          "bytes": 698,
+          "path": "stderr.log",
+          "sha256": "4ad0f1c3fe69bc9cdb7a9292640501f7da85a560e7584a6dd6f7559610a75e00"
+        },
+        {
+          "bytes": 0,
+          "path": "stdout.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 345,
+          "path": "supervisor.json",
+          "sha256": "4e8d785e4a7a1c10c74304f2ec033d0aa2576b02b028d88aa816830cee3ff858"
+        },
+        {
+          "bytes": 18247,
+          "path": "transfer-worker.json",
+          "sha256": "26ae210479e74ef29d28471a9264cb645c968890b2039ebd2018258b2a216606"
+        }
+      ],
+      "selector": null,
+      "snapshot_sha256": "da063395cd0db4ac9d6cfdaadee25511df788f668941054d5ec2d1ed99f47c36",
+      "stage": "source",
+      "steps": 300,
+      "supervisor": {
+        "elapsed_seconds": 28.871642605998204,
+        "output": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-experiments/runs/m5-all-nine-development-20261002/runs/54ca910016174286b4e8113068e6f6cf",
+        "returncode": 0,
+        "schema_version": 1,
+        "started_utc": "2026-10-02T15:15:17.748435+00:00",
+        "status": "completed",
+        "timeout_seconds": 160
+      },
+      "worker_report_sha256": "26ae210479e74ef29d28471a9264cb645c968890b2039ebd2018258b2a216606",
+      "worker_task_pass": false
+    },
+    {
+      "block": "paired-9",
+      "close_reason": "operator_closed",
+      "gate_result": "pending",
+      "initial_M_sha256": "56057dec79ab57408cd2e45095aa50d2d5e814593d80ccc87cb7b89c3924d18d",
+      "initial_U_sha256": "aa37a394fee509275adddb06355388c23e5ef9e8d31c3306327ac29d54800700",
+      "live_E_sha256": "c95abb75984d8b4c0a1771181548e2b413bd66374b5e2d62b32d95cb62eb4b56",
+      "normalized_scientific_sha256": "a8cdf5cc8c6d39e9ba6c19f2d3bc7bcb0f84e7929dbffe7ee6afed0833e89cda",
+      "numeric_ticks": 0,
+      "outcome": null,
+      "phase": "paused",
+      "recording_files": [
+        {
+          "bytes": 10188,
+          "path": "recording/manifest.json",
+          "sha256": "68f2708ace69d42d12094ef50066bddc5fa64923b49c31e5bf6a81e7814c30ec"
+        },
+        {
+          "bytes": 14016,
+          "path": "recording/events.jsonl",
+          "sha256": "1b2cf23f7889cb9bf9b1065ca082a3398c38c57de04f0b1d07dd873c1cbea4e1"
+        }
+      ],
+      "run_id": "924fdddb637c46c3b19baa79db471d4c",
+      "secondary_files": [
+        {
+          "bytes": 402,
+          "path": "snapshots/index.json",
+          "sha256": "d73b40e167036fff3231ccfd57e5ce0ab18f6d95be970d6ae69387d59e80167f"
+        },
+        {
+          "bytes": 926777,
+          "path": "snapshots/initial.snp",
+          "sha256": "11ca250ee93e35b24bb579e09cc2d26d59822b3119f277983e90ce4e79c3b7e5"
+        },
+        {
+          "bytes": 698,
+          "path": "stderr.log",
+          "sha256": "4ad0f1c3fe69bc9cdb7a9292640501f7da85a560e7584a6dd6f7559610a75e00"
+        },
+        {
+          "bytes": 0,
+          "path": "stdout.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 344,
+          "path": "supervisor.json",
+          "sha256": "f1a640e5d68fbd5c99397144a1e6fd2406b9bb2d1fd6b2db3e78c9b752022eeb"
+        },
+        {
+          "bytes": 12954,
+          "path": "transfer-worker.json",
+          "sha256": "2a180f73baf661c3494875bfee5a9ce83beacc543aeddd8aa4118e41ace4f214"
+        }
+      ],
+      "selector": {
+        "condition": "own",
+        "limit": 1,
+        "provenance_sha256": "64628e37cc6e861194f810baa92926eba8f57260047cdd8ad320a4601023d213",
+        "resource": null,
+        "resource_sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+        "version": 1
+      },
+      "snapshot_sha256": "11ca250ee93e35b24bb579e09cc2d26d59822b3119f277983e90ce4e79c3b7e5",
+      "stage": "anchor",
+      "steps": 300,
+      "supervisor": {
+        "elapsed_seconds": 7.702745732996846,
+        "output": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-experiments/runs/m5-all-nine-development-20261002/runs/924fdddb637c46c3b19baa79db471d4c",
+        "returncode": 0,
+        "schema_version": 1,
+        "started_utc": "2026-10-02T15:15:48.323020+00:00",
+        "status": "completed",
+        "timeout_seconds": 160
+      },
+      "worker_report_sha256": "2a180f73baf661c3494875bfee5a9ce83beacc543aeddd8aa4118e41ace4f214",
+      "worker_task_pass": false
+    },
+    {
+      "block": "paired-9",
+      "close_reason": "operator_closed",
+      "gate_result": "closed",
+      "initial_M_sha256": "56057dec79ab57408cd2e45095aa50d2d5e814593d80ccc87cb7b89c3924d18d",
+      "initial_U_sha256": "aa37a394fee509275adddb06355388c23e5ef9e8d31c3306327ac29d54800700",
+      "live_E_sha256": "c95abb75984d8b4c0a1771181548e2b413bd66374b5e2d62b32d95cb62eb4b56",
+      "normalized_scientific_sha256": "a8cdf5cc8c6d39e9ba6c19f2d3bc7bcb0f84e7929dbffe7ee6afed0833e89cda",
+      "numeric_ticks": 126,
+      "outcome": {
+        "episode": 0,
+        "final_distance": 0.7899753451347351,
+        "reason": "goal",
+        "steps": 426
+      },
+      "phase": "terminated",
+      "recording_files": [
+        {
+          "bytes": 10331,
+          "path": "recording/manifest.json",
+          "sha256": "0bf478740dd14cb4b0872306def897a2314b695fbafa18241710df5caa066e1d"
+        },
+        {
+          "bytes": 1154161,
+          "path": "recording/events.jsonl",
+          "sha256": "a5194bbdfd56958651328ce8f80a16a11816eddb2d85fffe1511f41e8b7ce3d5"
+        },
+        {
+          "bytes": 6299892,
+          "path": "recording/chunks/000000.npz",
+          "sha256": "1311eeb34f63d07cc19fb93e8c1d4e23619ca640d619c56c7951402c1bbcce17"
+        },
+        {
+          "bytes": 6299892,
+          "path": "recording/chunks/000001.npz",
+          "sha256": "ee6dd3a678e2f7227994c1317bd2d400537aebe02c3b20b15575751d6dd5e583"
+        },
+        {
+          "bytes": 6299892,
+          "path": "recording/chunks/000002.npz",
+          "sha256": "41551d48e90fbdeb22dcf280443b8e0bf2017ac0618ebd426a9ca2706eb2c5d3"
+        },
+        {
+          "bytes": 5906400,
+          "path": "recording/chunks/000003.npz",
+          "sha256": "400954c2ccc1e247a9c54bc526bdd64be67ee223973211e4067d7b159c90de69"
+        }
+      ],
+      "run_id": "7150d1aa8d7346bab0066decb58b74fa",
+      "secondary_files": [
+        {
+          "bytes": 402,
+          "path": "snapshots/index.json",
+          "sha256": "2f23026d899ff7000cc2ac470f38629f4e7bf99f9ae589c3c0d0ad33326051b5"
+        },
+        {
+          "bytes": 926777,
+          "path": "snapshots/initial.snp",
+          "sha256": "9dafa6e1c9dbcde5969d5e865472ccfe0038f68f1fb1463d0ac29f862d9b7c45"
+        },
+        {
+          "bytes": 698,
+          "path": "stderr.log",
+          "sha256": "4ad0f1c3fe69bc9cdb7a9292640501f7da85a560e7584a6dd6f7559610a75e00"
+        },
+        {
+          "bytes": 0,
+          "path": "stdout.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 345,
+          "path": "supervisor.json",
+          "sha256": "0a8ed081298c77e67e2e989a42e5e968ddd05385f321ae1aab1e366f78418c0a"
+        },
+        {
+          "bytes": 10967,
+          "path": "transfer-worker.json",
+          "sha256": "a665dba1b06104d695b7472dd95072a72dd07c5d251d36319359c9c24157000e"
+        }
+      ],
+      "selector": {
+        "condition": "own",
+        "limit": 1,
+        "provenance_sha256": "64628e37cc6e861194f810baa92926eba8f57260047cdd8ad320a4601023d213",
+        "resource": null,
+        "resource_sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+        "version": 1
+      },
+      "snapshot_sha256": "9dafa6e1c9dbcde5969d5e865472ccfe0038f68f1fb1463d0ac29f862d9b7c45",
+      "stage": "own",
+      "steps": 426,
+      "supervisor": {
+        "elapsed_seconds": 11.908861333999084,
+        "output": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-experiments/runs/m5-all-nine-development-20261002/runs/7150d1aa8d7346bab0066decb58b74fa",
+        "returncode": 0,
+        "schema_version": 1,
+        "started_utc": "2026-10-02T15:15:56.448672+00:00",
+        "status": "completed",
+        "timeout_seconds": 160
+      },
+      "worker_report_sha256": "a665dba1b06104d695b7472dd95072a72dd07c5d251d36319359c9c24157000e",
+      "worker_task_pass": false
+    },
+    {
+      "block": "paired-9",
+      "close_reason": "operator_closed",
+      "gate_result": "closed",
+      "initial_M_sha256": "56057dec79ab57408cd2e45095aa50d2d5e814593d80ccc87cb7b89c3924d18d",
+      "initial_U_sha256": "032d40d14192eadc66588a2b63339bb990750a1f70aef036a54453f8746ed9bb",
+      "live_E_sha256": "c95abb75984d8b4c0a1771181548e2b413bd66374b5e2d62b32d95cb62eb4b56",
+      "normalized_scientific_sha256": "a8cdf5cc8c6d39e9ba6c19f2d3bc7bcb0f84e7929dbffe7ee6afed0833e89cda",
+      "numeric_ticks": 126,
+      "outcome": {
+        "episode": 0,
+        "final_distance": 0.7895011901855469,
+        "reason": "goal",
+        "steps": 426
+      },
+      "phase": "terminated",
+      "recording_files": [
+        {
+          "bytes": 10340,
+          "path": "recording/manifest.json",
+          "sha256": "f0dbce9538bf168c7436892c76e82ee43a5f664588b0e51f79b4a7d41307fc9e"
+        },
+        {
+          "bytes": 1138438,
+          "path": "recording/events.jsonl",
+          "sha256": "1e1abaae193ecf8d08825d0b3b4a5187cb23e66e8b0932f1760086c7ddc5cd0f"
+        },
+        {
+          "bytes": 6299892,
+          "path": "recording/chunks/000000.npz",
+          "sha256": "e832d5505bff62dac91cd253237d028231bf17dfd5bdbc46834fbe4888254149"
+        },
+        {
+          "bytes": 6299892,
+          "path": "recording/chunks/000001.npz",
+          "sha256": "b9943e02f3e054f4b810d092202dc127243f1edc04aed1bebf90d0f3318ea0da"
+        },
+        {
+          "bytes": 6299892,
+          "path": "recording/chunks/000002.npz",
+          "sha256": "90d2ead50353e296acdf7670bba7156ed44d33f21a4f58b13062c24dce4ba0a8"
+        },
+        {
+          "bytes": 5906400,
+          "path": "recording/chunks/000003.npz",
+          "sha256": "c4ba77cc25d460867719c4546844d9d5e35a9e5a0e205d74bd3983ef2c31a8a4"
+        }
+      ],
+      "run_id": "e8acc6687def47a0b4fab3ca35c76dfb",
+      "secondary_files": [
+        {
+          "bytes": 402,
+          "path": "snapshots/index.json",
+          "sha256": "8e58668bc626ecd3c65771d6beef002e94603608dccd48ed0195d8db070dbd60"
+        },
+        {
+          "bytes": 926780,
+          "path": "snapshots/initial.snp",
+          "sha256": "9a9a63c9eddabf199209e5b2445332cb59441b70e72808b23d67e2b799060e1e"
+        },
+        {
+          "bytes": 698,
+          "path": "stderr.log",
+          "sha256": "4ad0f1c3fe69bc9cdb7a9292640501f7da85a560e7584a6dd6f7559610a75e00"
+        },
+        {
+          "bytes": 0,
+          "path": "stdout.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 345,
+          "path": "supervisor.json",
+          "sha256": "2067e54d88b6acc12e0648c6ea634dd3aba0519d14a514d0d54161f217cb0d0a"
+        },
+        {
+          "bytes": 10981,
+          "path": "transfer-worker.json",
+          "sha256": "0c0f960713ab11c124f20fbc25a0bfbcf3cfe876ca26d98988df72d8e1820697"
+        }
+      ],
+      "selector": {
+        "condition": "swapped",
+        "limit": 1,
+        "provenance_sha256": "016c5b5e9472b116d065fb922b32d64089db6e27839aec09d751238f8ce7ffc1",
+        "resource": null,
+        "resource_sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+        "version": 1
+      },
+      "snapshot_sha256": "9a9a63c9eddabf199209e5b2445332cb59441b70e72808b23d67e2b799060e1e",
+      "stage": "swapped",
+      "steps": 426,
+      "supervisor": {
+        "elapsed_seconds": 16.224233411994646,
+        "output": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-experiments/runs/m5-all-nine-development-20261002/runs/e8acc6687def47a0b4fab3ca35c76dfb",
+        "returncode": 0,
+        "schema_version": 1,
+        "started_utc": "2026-10-02T15:16:08.891334+00:00",
+        "status": "completed",
+        "timeout_seconds": 160
+      },
+      "worker_report_sha256": "0c0f960713ab11c124f20fbc25a0bfbcf3cfe876ca26d98988df72d8e1820697",
+      "worker_task_pass": false
+    },
+    {
+      "block": "paired-9",
+      "close_reason": "operator_closed",
+      "gate_result": "closed",
+      "initial_M_sha256": "56057dec79ab57408cd2e45095aa50d2d5e814593d80ccc87cb7b89c3924d18d",
+      "initial_U_sha256": "aa37a394fee509275adddb06355388c23e5ef9e8d31c3306327ac29d54800700",
+      "live_E_sha256": "c95abb75984d8b4c0a1771181548e2b413bd66374b5e2d62b32d95cb62eb4b56",
+      "normalized_scientific_sha256": "a8cdf5cc8c6d39e9ba6c19f2d3bc7bcb0f84e7929dbffe7ee6afed0833e89cda",
+      "numeric_ticks": 126,
+      "outcome": {
+        "episode": 0,
+        "final_distance": 0.7899753451347351,
+        "reason": "goal",
+        "steps": 426
+      },
+      "phase": "terminated",
+      "recording_files": [
+        {
+          "bytes": 10333,
+          "path": "recording/manifest.json",
+          "sha256": "5d735038b3c40bcbc756853fe6a6cec1f4cce8fd22c7e050a74629039d8b3bda"
+        },
+        {
+          "bytes": 1154288,
+          "path": "recording/events.jsonl",
+          "sha256": "0bfd0c318a5d10711edda22599fb7c3578e52226a768ce41ecefa64cdd1faf54"
+        },
+        {
+          "bytes": 6299892,
+          "path": "recording/chunks/000000.npz",
+          "sha256": "d1f7c44b7fda978f5d2edc4d61890b36b004d2c0b0fa62127b88a81c901fd7a3"
+        },
+        {
+          "bytes": 6299892,
+          "path": "recording/chunks/000001.npz",
+          "sha256": "f3cf8dca97c536cd7ad606404caaa00c0deb902ffae5aa149d5cbcf944da87fc"
+        },
+        {
+          "bytes": 6299892,
+          "path": "recording/chunks/000002.npz",
+          "sha256": "1f6572d2e78d61e42a28eb973b8dea2abadd2751af05211843f40fb61b613877"
+        },
+        {
+          "bytes": 5906400,
+          "path": "recording/chunks/000003.npz",
+          "sha256": "89dfda38bbf0f523449c72cd334a61614d7680777c75f71866139002d9800b70"
+        }
+      ],
+      "run_id": "f2d7a8d416f34771a0913af0e18bd51f",
+      "secondary_files": [
+        {
+          "bytes": 402,
+          "path": "snapshots/index.json",
+          "sha256": "80330db67e05d7546e0ce8dd7464b9414945d19d048d92bb2217aecf90547707"
+        },
+        {
+          "bytes": 926778,
+          "path": "snapshots/initial.snp",
+          "sha256": "8c595e51cc4964357f9ca20d4cc722af63b7131c63732bb2d2537d11614b43fd"
+        },
+        {
+          "bytes": 698,
+          "path": "stderr.log",
+          "sha256": "4ad0f1c3fe69bc9cdb7a9292640501f7da85a560e7584a6dd6f7559610a75e00"
+        },
+        {
+          "bytes": 0,
+          "path": "stdout.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 345,
+          "path": "supervisor.json",
+          "sha256": "fc472819630610459f3ef4e79c1f25babf1b7a86156fe1756521ba5bfd696d34"
+        },
+        {
+          "bytes": 10969,
+          "path": "transfer-worker.json",
+          "sha256": "293c05d2342fa85cc291acbc8c852a85c7aba4bd185de6c11ad8a221f84be6da"
+        }
+      ],
+      "selector": {
+        "condition": "sham",
+        "limit": 1,
+        "provenance_sha256": "64628e37cc6e861194f810baa92926eba8f57260047cdd8ad320a4601023d213",
+        "resource": null,
+        "resource_sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+        "version": 1
+      },
+      "snapshot_sha256": "8c595e51cc4964357f9ca20d4cc722af63b7131c63732bb2d2537d11614b43fd",
+      "stage": "sham",
+      "steps": 426,
+      "supervisor": {
+        "elapsed_seconds": 14.016885065997485,
+        "output": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-experiments/runs/m5-all-nine-development-20261002/runs/f2d7a8d416f34771a0913af0e18bd51f",
+        "returncode": 0,
+        "schema_version": 1,
+        "started_utc": "2026-10-02T15:16:25.801994+00:00",
+        "status": "completed",
+        "timeout_seconds": 160
+      },
+      "worker_report_sha256": "293c05d2342fa85cc291acbc8c852a85c7aba4bd185de6c11ad8a221f84be6da",
+      "worker_task_pass": false
+    },
+    {
+      "block": "paired-9",
+      "close_reason": "operator_closed",
+      "gate_result": "closed",
+      "initial_M_sha256": "56057dec79ab57408cd2e45095aa50d2d5e814593d80ccc87cb7b89c3924d18d",
+      "initial_U_sha256": "70575d969610e9392033501a21f594e4a7a60d04f83bdc73e510fd5c32019fed",
+      "live_E_sha256": "c95abb75984d8b4c0a1771181548e2b413bd66374b5e2d62b32d95cb62eb4b56",
+      "normalized_scientific_sha256": "a8cdf5cc8c6d39e9ba6c19f2d3bc7bcb0f84e7929dbffe7ee6afed0833e89cda",
+      "numeric_ticks": 126,
+      "outcome": {
+        "episode": 0,
+        "final_distance": 0.7895011901855469,
+        "reason": "goal",
+        "steps": 426
+      },
+      "phase": "terminated",
+      "recording_files": [
+        {
+          "bytes": 10334,
+          "path": "recording/manifest.json",
+          "sha256": "6a2d0879e638282db2fafec623e3aa02c16f267c988f43298316a7693615c87d"
+        },
+        {
+          "bytes": 1120999,
+          "path": "recording/events.jsonl",
+          "sha256": "d52e914b71ccf7d052ba687bf675f2b304ed9cd6da958b29dc6c3fb9a22f968a"
+        },
+        {
+          "bytes": 6299892,
+          "path": "recording/chunks/000000.npz",
+          "sha256": "a1d47745f23fa531ba97cced88fd1f7ec0d9b64159e30170c734ea9f3e95c52d"
+        },
+        {
+          "bytes": 6299892,
+          "path": "recording/chunks/000001.npz",
+          "sha256": "05a1ea149d5528478519ea2974a02501bb71bb7ee86f7a4e06212a505d203e4f"
+        },
+        {
+          "bytes": 6299892,
+          "path": "recording/chunks/000002.npz",
+          "sha256": "8c94e771c996148cbb9105a11d463ae4e9c773c15402a4342a302b1dff25c531"
+        },
+        {
+          "bytes": 5906400,
+          "path": "recording/chunks/000003.npz",
+          "sha256": "d13bbe2dfd5a916819313d1b1abf1ddd9e485a68dc8caedc1e2147e85feff6b5"
+        }
+      ],
+      "run_id": "7034af5c5f7c42a0ae28149ea1732205",
+      "secondary_files": [
+        {
+          "bytes": 402,
+          "path": "snapshots/index.json",
+          "sha256": "da6707975854825ec3f05bb55b2fbab8c5f7c1ee6ec4a889f493ab1039281e24"
+        },
+        {
+          "bytes": 926633,
+          "path": "snapshots/initial.snp",
+          "sha256": "38ea51b5c896336f1b1e044aa5493bec3d3e5977bd405f4ef43febf2bb829531"
+        },
+        {
+          "bytes": 698,
+          "path": "stderr.log",
+          "sha256": "4ad0f1c3fe69bc9cdb7a9292640501f7da85a560e7584a6dd6f7559610a75e00"
+        },
+        {
+          "bytes": 0,
+          "path": "stdout.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 345,
+          "path": "supervisor.json",
+          "sha256": "bb2fa21a348790eb675c6a3ef1abc87ab34680cc80eece63a4153787bb881247"
+        },
+        {
+          "bytes": 10800,
+          "path": "transfer-worker.json",
+          "sha256": "73f01f6569c7e3dd093e377f0825c1a33b39ff1be3a1f250b21c78491ac6b78f"
+        }
+      ],
+      "selector": {
+        "condition": "no-U",
+        "limit": 1,
+        "provenance_sha256": "7081b05e550ff15e17170c89375b5807378471446c33982251ea1e2107c4e5ed",
+        "resource": null,
+        "resource_sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+        "version": 1
+      },
+      "snapshot_sha256": "38ea51b5c896336f1b1e044aa5493bec3d3e5977bd405f4ef43febf2bb829531",
+      "stage": "no-U",
+      "steps": 426,
+      "supervisor": {
+        "elapsed_seconds": 15.368523297998763,
+        "output": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-experiments/runs/m5-all-nine-development-20261002/runs/7034af5c5f7c42a0ae28149ea1732205",
+        "returncode": 0,
+        "schema_version": 1,
+        "started_utc": "2026-10-02T15:16:40.430441+00:00",
+        "status": "completed",
+        "timeout_seconds": 160
+      },
+      "worker_report_sha256": "73f01f6569c7e3dd093e377f0825c1a33b39ff1be3a1f250b21c78491ac6b78f",
+      "worker_task_pass": false
+    },
+    {
+      "block": "paired-9",
+      "close_reason": "operator_closed",
+      "gate_result": "closed",
+      "initial_M_sha256": "56057dec79ab57408cd2e45095aa50d2d5e814593d80ccc87cb7b89c3924d18d",
+      "initial_U_sha256": "9cca21e7480ae28288b263de4f5ce71f88f6a685aa4a2713b814dc0b44abb307",
+      "live_E_sha256": "c95abb75984d8b4c0a1771181548e2b413bd66374b5e2d62b32d95cb62eb4b56",
+      "normalized_scientific_sha256": "a8cdf5cc8c6d39e9ba6c19f2d3bc7bcb0f84e7929dbffe7ee6afed0833e89cda",
+      "numeric_ticks": 126,
+      "outcome": {
+        "episode": 0,
+        "final_distance": 0.7895011901855469,
+        "reason": "goal",
+        "steps": 426
+      },
+      "phase": "terminated",
+      "recording_files": [
+        {
+          "bytes": 10352,
+          "path": "recording/manifest.json",
+          "sha256": "ef5fa5e42766098f0edbfa85d9f8c95ca66a382d03530a779ac08bcebddf1903"
+        },
+        {
+          "bytes": 1131580,
+          "path": "recording/events.jsonl",
+          "sha256": "1b13b47d39804a86f280d9de050b20780a20ddc221c787055d199732dd21c8b5"
+        },
+        {
+          "bytes": 6299892,
+          "path": "recording/chunks/000000.npz",
+          "sha256": "5e89707d9c701a045d33bbbb2f747ccfb78fd33a1d5a6cad03864cdaa827030c"
+        },
+        {
+          "bytes": 6299892,
+          "path": "recording/chunks/000001.npz",
+          "sha256": "c41f49afea39c519608f9958f9d773b999fdea07518b00d4492943888f2daac3"
+        },
+        {
+          "bytes": 6299892,
+          "path": "recording/chunks/000002.npz",
+          "sha256": "20904fa945fc13760156652f0d49ce933dc43cb4602d37582f9014d4d9ebb6ac"
+        },
+        {
+          "bytes": 5906400,
+          "path": "recording/chunks/000003.npz",
+          "sha256": "d9515105f00ab0bc622a371ed9c324ede5dcd94c5043444eee42ecca94a8c0da"
+        }
+      ],
+      "run_id": "4d1ac4e920d643588ad9e27c47671bc5",
+      "secondary_files": [
+        {
+          "bytes": 402,
+          "path": "snapshots/index.json",
+          "sha256": "ac059d5c3c0e52ad29ded46b7f470a57bf51b9a3c5faf1ce726b83bda5edb25e"
+        },
+        {
+          "bytes": 926726,
+          "path": "snapshots/initial.snp",
+          "sha256": "2dea7aa2fbf349d1a73e84edfa52e3b80ce417ea24f7bd0e84974b97007ca231"
+        },
+        {
+          "bytes": 698,
+          "path": "stderr.log",
+          "sha256": "4ad0f1c3fe69bc9cdb7a9292640501f7da85a560e7584a6dd6f7559610a75e00"
+        },
+        {
+          "bytes": 0,
+          "path": "stdout.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 345,
+          "path": "supervisor.json",
+          "sha256": "ab34716809c9429eda02c4251477c0d1484db83b060d0fb883c6897e56715381"
+        },
+        {
+          "bytes": 10933,
+          "path": "transfer-worker.json",
+          "sha256": "78cf4501dd3ae4fe5ed4da55095910e36c3d98995c6a2e81d91379efdd55dbe7"
+        }
+      ],
+      "selector": {
+        "condition": "hand-authored",
+        "limit": 1,
+        "provenance_sha256": "7081b05e550ff15e17170c89375b5807378471446c33982251ea1e2107c4e5ed",
+        "resource": null,
+        "resource_sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+        "version": 1
+      },
+      "snapshot_sha256": "2dea7aa2fbf349d1a73e84edfa52e3b80ce417ea24f7bd0e84974b97007ca231",
+      "stage": "hand-authored",
+      "steps": 426,
+      "supervisor": {
+        "elapsed_seconds": 14.153625509999983,
+        "output": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-experiments/runs/m5-all-nine-development-20261002/runs/4d1ac4e920d643588ad9e27c47671bc5",
+        "returncode": 0,
+        "schema_version": 1,
+        "started_utc": "2026-10-02T15:16:56.350270+00:00",
+        "status": "completed",
+        "timeout_seconds": 160
+      },
+      "worker_report_sha256": "78cf4501dd3ae4fe5ed4da55095910e36c3d98995c6a2e81d91379efdd55dbe7",
+      "worker_task_pass": false
+    },
+    {
+      "block": "paired-9",
+      "close_reason": "operator_closed",
+      "gate_result": "closed",
+      "initial_M_sha256": "56057dec79ab57408cd2e45095aa50d2d5e814593d80ccc87cb7b89c3924d18d",
+      "initial_U_sha256": "70575d969610e9392033501a21f594e4a7a60d04f83bdc73e510fd5c32019fed",
+      "live_E_sha256": "c95abb75984d8b4c0a1771181548e2b413bd66374b5e2d62b32d95cb62eb4b56",
+      "normalized_scientific_sha256": "a8cdf5cc8c6d39e9ba6c19f2d3bc7bcb0f84e7929dbffe7ee6afed0833e89cda",
+      "numeric_ticks": 126,
+      "outcome": {
+        "episode": 0,
+        "final_distance": 0.7899753451347351,
+        "reason": "goal",
+        "steps": 426
+      },
+      "phase": "terminated",
+      "recording_files": [
+        {
+          "bytes": 10363,
+          "path": "recording/manifest.json",
+          "sha256": "f6085f28e22ef1ae7b9adc97376fa1aafa124e8f37ea36413adee1e430b02181"
+        },
+        {
+          "bytes": 1140950,
+          "path": "recording/events.jsonl",
+          "sha256": "57671f7ab0231390c42031aac1b14687ae0c599a5826a2948fa2205540b528eb"
+        },
+        {
+          "bytes": 6299892,
+          "path": "recording/chunks/000000.npz",
+          "sha256": "1a074f0cbfe83de2db8ff5d9f743f6ae9cbfefb45980c964987309e3393f48c9"
+        },
+        {
+          "bytes": 6299892,
+          "path": "recording/chunks/000001.npz",
+          "sha256": "c601c86f7f2b187d40fcb60945416ef1cb8ff507eeb1abe8e9792aaf560c6974"
+        },
+        {
+          "bytes": 6299892,
+          "path": "recording/chunks/000002.npz",
+          "sha256": "e919ae2bf4d9f0d639db3249bc52fdb248846a2bf0839d04623140c3c4852aaf"
+        },
+        {
+          "bytes": 5906400,
+          "path": "recording/chunks/000003.npz",
+          "sha256": "3ec43d24153914c341ea01b5f43ab61f5189ba3d95ce9a9970a1e00e896db242"
+        }
+      ],
+      "run_id": "3161112ee60d48799dd17c6428e19f06",
+      "secondary_files": [
+        {
+          "bytes": 402,
+          "path": "snapshots/index.json",
+          "sha256": "9ceed1dea2ed5054ea3fbd2d73ce9074a15d193eb887d93091ad658e4b6f6151"
+        },
+        {
+          "bytes": 926648,
+          "path": "snapshots/initial.snp",
+          "sha256": "4d245852e4ca5f5e5a2b7324c20f5c09446637d96ff2704758d4e63336426dff"
+        },
+        {
+          "bytes": 698,
+          "path": "stderr.log",
+          "sha256": "4ad0f1c3fe69bc9cdb7a9292640501f7da85a560e7584a6dd6f7559610a75e00"
+        },
+        {
+          "bytes": 0,
+          "path": "stdout.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 345,
+          "path": "supervisor.json",
+          "sha256": "08b255cf0d287ee23c35307ab94cfdf3db104b7180bec40193cfaaee384ed8d6"
+        },
+        {
+          "bytes": 10823,
+          "path": "transfer-worker.json",
+          "sha256": "e498592061faaad361de293029e6f03a6d3feca6c4d94b3a1e6a2f539115a08e"
+        }
+      ],
+      "selector": {
+        "condition": "history-independent",
+        "limit": 1,
+        "provenance_sha256": "7081b05e550ff15e17170c89375b5807378471446c33982251ea1e2107c4e5ed",
+        "resource": null,
+        "resource_sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+        "version": 1
+      },
+      "snapshot_sha256": "4d245852e4ca5f5e5a2b7324c20f5c09446637d96ff2704758d4e63336426dff",
+      "stage": "history-independent",
+      "steps": 426,
+      "supervisor": {
+        "elapsed_seconds": 15.326100243000838,
+        "output": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-experiments/runs/m5-all-nine-development-20261002/runs/3161112ee60d48799dd17c6428e19f06",
+        "returncode": 0,
+        "schema_version": 1,
+        "started_utc": "2026-10-02T15:17:11.034944+00:00",
+        "status": "completed",
+        "timeout_seconds": 160
+      },
+      "worker_report_sha256": "e498592061faaad361de293029e6f03a6d3feca6c4d94b3a1e6a2f539115a08e",
+      "worker_task_pass": false
+    },
+    {
+      "block": "paired-9",
+      "close_reason": "operator_closed",
+      "gate_result": "closed",
+      "initial_M_sha256": "56057dec79ab57408cd2e45095aa50d2d5e814593d80ccc87cb7b89c3924d18d",
+      "initial_U_sha256": "70575d969610e9392033501a21f594e4a7a60d04f83bdc73e510fd5c32019fed",
+      "live_E_sha256": "c95abb75984d8b4c0a1771181548e2b413bd66374b5e2d62b32d95cb62eb4b56",
+      "normalized_scientific_sha256": "a8cdf5cc8c6d39e9ba6c19f2d3bc7bcb0f84e7929dbffe7ee6afed0833e89cda",
+      "numeric_ticks": 126,
+      "outcome": {
+        "episode": 0,
+        "final_distance": 0.7899753451347351,
+        "reason": "goal",
+        "steps": 426
+      },
+      "phase": "terminated",
+      "recording_files": [
+        {
+          "bytes": 10343,
+          "path": "recording/manifest.json",
+          "sha256": "6d34e0dbe245079a12559936cc8101ff65644ec47bf0d938bbfe1519c6934693"
+        },
+        {
+          "bytes": 1139680,
+          "path": "recording/events.jsonl",
+          "sha256": "aa261cf6b6c15894879f6d82057324d56f21f06d3c23891d716f30d62fe6cdf9"
+        },
+        {
+          "bytes": 6299892,
+          "path": "recording/chunks/000000.npz",
+          "sha256": "adb2ccdd9a1e672c4e5a02f2f2b5dc5f218826dac1adb36f563af3b1b3405a6f"
+        },
+        {
+          "bytes": 6299892,
+          "path": "recording/chunks/000001.npz",
+          "sha256": "e46cb88d7182bf9d72058a3a5d3818a53843e579168663b6e921eb93f69fc195"
+        },
+        {
+          "bytes": 6299892,
+          "path": "recording/chunks/000002.npz",
+          "sha256": "8cd21f96f59260e52c8e01694d2477dad2b4b862b54512d3736b3d7d2fd4881f"
+        },
+        {
+          "bytes": 5906400,
+          "path": "recording/chunks/000003.npz",
+          "sha256": "df04698630d8ce2d78f67252d2ac71c0079befa8133bd71383c5685031beaeca"
+        }
+      ],
+      "run_id": "e09d05f0120a4240baa5252af3ad0798",
+      "secondary_files": [
+        {
+          "bytes": 402,
+          "path": "snapshots/index.json",
+          "sha256": "d381f734eb162fde135cd3742025aa0db49c717683afe57d91bb2a73137afb4a"
+        },
+        {
+          "bytes": 926638,
+          "path": "snapshots/initial.snp",
+          "sha256": "596070ab69f13da853253836664c69fef60934ed8f52b35409f4bd3b773d60ac"
+        },
+        {
+          "bytes": 698,
+          "path": "stderr.log",
+          "sha256": "4ad0f1c3fe69bc9cdb7a9292640501f7da85a560e7584a6dd6f7559610a75e00"
+        },
+        {
+          "bytes": 0,
+          "path": "stdout.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 345,
+          "path": "supervisor.json",
+          "sha256": "114a7f94c5dce2502d4f55f4682067031b4153736754bef99e63b95d5c7f2d44"
+        },
+        {
+          "bytes": 10803,
+          "path": "transfer-worker.json",
+          "sha256": "e8622cffe8b96435534494162afd027a79d1f412c98c02a2374e8c60edd2fa48"
+        }
+      ],
+      "selector": {
+        "condition": "traversal",
+        "limit": 1,
+        "provenance_sha256": "7081b05e550ff15e17170c89375b5807378471446c33982251ea1e2107c4e5ed",
+        "resource": null,
+        "resource_sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+        "version": 1
+      },
+      "snapshot_sha256": "596070ab69f13da853253836664c69fef60934ed8f52b35409f4bd3b773d60ac",
+      "stage": "traversal",
+      "steps": 426,
+      "supervisor": {
+        "elapsed_seconds": 16.071959073997277,
+        "output": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-experiments/runs/m5-all-nine-development-20261002/runs/e09d05f0120a4240baa5252af3ad0798",
+        "returncode": 0,
+        "schema_version": 1,
+        "started_utc": "2026-10-02T15:17:26.917458+00:00",
+        "status": "completed",
+        "timeout_seconds": 160
+      },
+      "worker_report_sha256": "e8622cffe8b96435534494162afd027a79d1f412c98c02a2374e8c60edd2fa48",
+      "worker_task_pass": false
+    },
+    {
+      "block": "paired-9",
+      "close_reason": "operator_closed",
+      "gate_result": "closed",
+      "initial_M_sha256": "56057dec79ab57408cd2e45095aa50d2d5e814593d80ccc87cb7b89c3924d18d",
+      "initial_U_sha256": "70575d969610e9392033501a21f594e4a7a60d04f83bdc73e510fd5c32019fed",
+      "live_E_sha256": "c95abb75984d8b4c0a1771181548e2b413bd66374b5e2d62b32d95cb62eb4b56",
+      "normalized_scientific_sha256": "a8cdf5cc8c6d39e9ba6c19f2d3bc7bcb0f84e7929dbffe7ee6afed0833e89cda",
+      "numeric_ticks": 126,
+      "outcome": {
+        "episode": 0,
+        "final_distance": 0.7899753451347351,
+        "reason": "goal",
+        "steps": 426
+      },
+      "phase": "terminated",
+      "recording_files": [
+        {
+          "bytes": 18247,
+          "path": "recording/manifest.json",
+          "sha256": "10baab06a2903fcf4ff047c6eb583fb9b63ac3dcb2330b8b0de468febef94ead"
+        },
+        {
+          "bytes": 1147965,
+          "path": "recording/events.jsonl",
+          "sha256": "f410167078b7045c5578279bc0407227a40d501a97c8f2b4fa80f03fdc5a0605"
+        },
+        {
+          "bytes": 6299892,
+          "path": "recording/chunks/000000.npz",
+          "sha256": "bf95276162ca7202f6dd9e2200515059a367a64f05a134a33a91b868af313673"
+        },
+        {
+          "bytes": 6299892,
+          "path": "recording/chunks/000001.npz",
+          "sha256": "194cb2a4c55109a96b62a5c78e889e41629657b78597a1163be34bc9644306a0"
+        },
+        {
+          "bytes": 6299892,
+          "path": "recording/chunks/000002.npz",
+          "sha256": "5d7e561579746fd39b35c3a5ce8e1c9468688e4ffdf15076162197cbcb649b4e"
+        },
+        {
+          "bytes": 5906400,
+          "path": "recording/chunks/000003.npz",
+          "sha256": "e5f9fe33e53cdb756baed7f49af7c0299dba012b6cee1252eeeeed8dcf6234c7"
+        }
+      ],
+      "run_id": "ae2f5f1ccd89491c88e832b33a9a5f08",
+      "secondary_files": [
+        {
+          "bytes": 402,
+          "path": "snapshots/index.json",
+          "sha256": "0c7cbe3fdcc81cbdafafa189a656f4d453c6530447b536ad161e8e0b2b38af74"
+        },
+        {
+          "bytes": 935480,
+          "path": "snapshots/initial.snp",
+          "sha256": "2ea91a8399a56806a70b5c68bfc9f7db3c5c3867cd689fb36e5e131b56d883e7"
+        },
+        {
+          "bytes": 698,
+          "path": "stderr.log",
+          "sha256": "4ad0f1c3fe69bc9cdb7a9292640501f7da85a560e7584a6dd6f7559610a75e00"
+        },
+        {
+          "bytes": 0,
+          "path": "stdout.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 345,
+          "path": "supervisor.json",
+          "sha256": "680a28475efa3efab109b563764b0d208ea59dcc7b4fb4a0532c463b75bcc9dc"
+        },
+        {
+          "bytes": 22069,
+          "path": "transfer-worker.json",
+          "sha256": "f42977d80fd7f15d4efcbb7d9e62744aacd02a91a4a7f1ca4bb7f1ceab93c51b"
+        }
+      ],
+      "selector": {
+        "condition": "retrieval",
+        "limit": 1,
+        "provenance_sha256": "64628e37cc6e861194f810baa92926eba8f57260047cdd8ad320a4601023d213",
+        "resource_sha256": "35588d3fdfde95f339aa99bd2eb3b7b63b46f135d79ac14688f7951dc0129f34",
+        "version": 1
+      },
+      "snapshot_sha256": "2ea91a8399a56806a70b5c68bfc9f7db3c5c3867cd689fb36e5e131b56d883e7",
+      "stage": "retrieval",
+      "steps": 426,
+      "supervisor": {
+        "elapsed_seconds": 16.363892205998127,
+        "output": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-experiments/runs/m5-all-nine-development-20261002/runs/ae2f5f1ccd89491c88e832b33a9a5f08",
+        "returncode": 0,
+        "schema_version": 1,
+        "started_utc": "2026-10-02T15:17:43.707831+00:00",
+        "status": "completed",
+        "timeout_seconds": 160
+      },
+      "worker_report_sha256": "f42977d80fd7f15d4efcbb7d9e62744aacd02a91a4a7f1ca4bb7f1ceab93c51b",
+      "worker_task_pass": false
+    },
+    {
+      "block": "paired-9",
+      "close_reason": "operator_closed",
+      "gate_result": "closed",
+      "initial_M_sha256": "56057dec79ab57408cd2e45095aa50d2d5e814593d80ccc87cb7b89c3924d18d",
+      "initial_U_sha256": "70575d969610e9392033501a21f594e4a7a60d04f83bdc73e510fd5c32019fed",
+      "live_E_sha256": "c95abb75984d8b4c0a1771181548e2b413bd66374b5e2d62b32d95cb62eb4b56",
+      "normalized_scientific_sha256": "a8cdf5cc8c6d39e9ba6c19f2d3bc7bcb0f84e7929dbffe7ee6afed0833e89cda",
+      "numeric_ticks": 126,
+      "outcome": {
+        "episode": 0,
+        "final_distance": 0.7899753451347351,
+        "reason": "goal",
+        "steps": 426
+      },
+      "phase": "terminated",
+      "recording_files": [
+        {
+          "bytes": 12262,
+          "path": "recording/manifest.json",
+          "sha256": "7624521e819de206d65fee54161f3249c133257dfe33441683d511e6b8509db1"
+        },
+        {
+          "bytes": 1139465,
+          "path": "recording/events.jsonl",
+          "sha256": "82e800effa487820ec1480f9f649d47a918843a612f497b826c83525103a824a"
+        },
+        {
+          "bytes": 6299892,
+          "path": "recording/chunks/000000.npz",
+          "sha256": "4178c3d8dfcd034f2515b774eb30b845b1d6c50c8f8651df7b86195d5bd074e4"
+        },
+        {
+          "bytes": 6299892,
+          "path": "recording/chunks/000001.npz",
+          "sha256": "3fd23f4cb0c6ba2f99337746bfdd32d897101ba05bdc3c33cdf4559dfe4de523"
+        },
+        {
+          "bytes": 6299892,
+          "path": "recording/chunks/000002.npz",
+          "sha256": "1582cddfd943ab867d7d2ff401874aba7536767c8d9bb56686c83c87680ea56a"
+        },
+        {
+          "bytes": 5906400,
+          "path": "recording/chunks/000003.npz",
+          "sha256": "94347a131947e32b76e7778096c54d2d7a7f66dd65dbfa27f86cb30b7a6eef17"
+        }
+      ],
+      "run_id": "07737e9fe1a64ee3b414580ae5aab02d",
+      "secondary_files": [
+        {
+          "bytes": 402,
+          "path": "snapshots/index.json",
+          "sha256": "efd7b375d7445e6a3f6c62a40152ca9e5ca44690b802a93f560380d40f28ba79"
+        },
+        {
+          "bytes": 926696,
+          "path": "snapshots/initial.snp",
+          "sha256": "3560b8d62e56e9efe77fcc2f81e49e88dd2fe163740b5f05b7c06a6f199c9156"
+        },
+        {
+          "bytes": 698,
+          "path": "stderr.log",
+          "sha256": "4ad0f1c3fe69bc9cdb7a9292640501f7da85a560e7584a6dd6f7559610a75e00"
+        },
+        {
+          "bytes": 0,
+          "path": "stdout.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 345,
+          "path": "supervisor.json",
+          "sha256": "4189c5059393c6223c6ad1453f756dd02405bd460909649b3f145b0ba5fdd65a"
+        },
+        {
+          "bytes": 10849,
+          "path": "transfer-worker.json",
+          "sha256": "0edb696d79a108d95e4edcc62e08e7ba337d19fc106bf1069b8fb0c832b435bc"
+        }
+      ],
+      "selector": {
+        "condition": "oracle",
+        "limit": 1,
+        "provenance_sha256": "37b31053f2a8aaacdfbfb9d7a4dae52e80e7912f23892d2dd1e2f41cf131d2a0",
+        "resource": [
+          "live-development-test-00000009-fact-a"
+        ],
+        "resource_sha256": "c3896c72ddc37bbc8196a8e6dd5fc29b158aaea00b8e92aa663e3c6da670b9c6",
+        "version": 1
+      },
+      "snapshot_sha256": "3560b8d62e56e9efe77fcc2f81e49e88dd2fe163740b5f05b7c06a6f199c9156",
+      "stage": "oracle",
+      "steps": 426,
+      "supervisor": {
+        "elapsed_seconds": 18.033133748998807,
+        "output": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-experiments/runs/m5-all-nine-development-20261002/runs/07737e9fe1a64ee3b414580ae5aab02d",
+        "returncode": 0,
+        "schema_version": 1,
+        "started_utc": "2026-10-02T15:18:00.767111+00:00",
+        "status": "completed",
+        "timeout_seconds": 160
+      },
+      "worker_report_sha256": "0edb696d79a108d95e4edcc62e08e7ba337d19fc106bf1069b8fb0c832b435bc",
+      "worker_task_pass": false
+    }
+  ],
+  "stages_completed": 22,
+  "terminal_status": "mechanism_checked",
+  "unattempted_stages": [],
+  "verification_scope": {
+    "integration_fixture_fix": {
+      "commit": "d906d2c",
+      "feature_cherry_pick": "a1cb6b0",
+      "integrated_checks": 63,
+      "scope": "test context only; bind existing mocked histories; no runtime change or rerun",
+      "seconds": 3.548,
+      "skips": 0
+    },
+    "source_focused_checks": {
+      "count": 63,
+      "retained_data_worktree": true,
+      "seconds": 4.983,
+      "skips": 0
+    }
+  }
+}

@@ -1,0 +1,362 @@
+{
+  "version": 2,
+  "status": "passed-scoped-software-development",
+  "publication": "retained local evidence",
+  "source_commit": "a447d7637621d496aaf285e81203e550079c6d54",
+  "scenario": "adaptive-encoder-homing",
+  "scientific_protocol_sha256": "e9cbcd51a17b0ac41056c96a1c93ec6e392757158988016a3d1b899c656078f8",
+  "harness_sha256": {
+    "verify_body_homing.py": "1cf79893d38f70bd1ab9acbee2aac9cc66dc85c91183dc95d17c7de74d951709",
+    "verify_body_turns.py": "3d53eac9ea0adf278d9a0b2fd9d2515c24420f0bf443e3a5783a6cec320df529",
+    "verify_body_adaptation.py": "197662faf19e7d11b8ab42d67f5ccb0b7d64867bdb0e296f23408daeecb08da3",
+    "verify_body_runtime.py": "07912e536a85c621919a2d22f4c1f516ffa63a47b2f45d0659a60af946d906b2",
+    "verify_body_gains.py": "eb4b9e8f7d4b940438ad381b771d035dc49e1bcf90f7b0d54a08d8f9d99987c5",
+    "verify_body_compensation.py": "bdca512c55175c31cd23f8616eae59ba094bc9e51569400189f964c68fe56377",
+    "verify_body_calibration.py": "716d434103a98f9c4c983eb0003a1d4ad782d662c755d799ddab096c9ef00f31",
+    "verify_task_phases.py": "d4614765a745e751a367183bc54220668a227a1d565bc890678b6030994384e5",
+    "verify_tasks.py": "ec94a0a95d3e90ed9f9a008025b08d8da72949637144782655273d254948668b",
+    "verify_endurance.py": "6656a726c157a5ccbec10614f50d7a841cc00cf896d44a74dfa6971f5c778803"
+  },
+  "body_mechanism": {
+    "exec_session": 24311,
+    "exec_exit": 0,
+    "owners": 4,
+    "row_counts": {
+      "source": 283,
+      "native": 4,
+      "actions": 283,
+      "policy": 283
+    },
+    "total_rows": 853,
+    "snapshots": 5,
+    "actual_home": {
+      "reason": "task_completed",
+      "episode": 4,
+      "steps": 282,
+      "upstream_goal_distance_m": 3.1127569675445557,
+      "task_phase": "complete",
+      "completed_inspection_ids": [],
+      "evaluator_actual_home_distance_m": 0.1196427162116971,
+      "estimated_home_distance_m": 0.10904164708950673
+    },
+    "evaluator_threshold_m": 0.25,
+    "native_continuation_rows": 4,
+    "malformed_restores_rejected_before_mutation": 2,
+    "reset_cleared": true,
+    "verifier_wall_seconds": 356.9667240840063,
+    "enclosing": {
+      "status": "passed",
+      "supervised_seconds": 361.4122780119942,
+      "prepublication_wall_seconds": 363.05014747600944
+    },
+    "observed_pid_start_pairs_absent": 7,
+    "root_audit_first_execution": true,
+    "root_audit_seconds": 19.634214739,
+    "own_audit_first_execution": false
+  },
+  "fresh_calibration_ui": {
+    "exec_session": 79859,
+    "exec_exit": 0,
+    "owners": 2,
+    "source_rows": 491,
+    "actions_replay_rows": 491,
+    "total_rows": 982,
+    "snapshots": 3,
+    "episode_rows": {
+      "0": 120,
+      "1": 120,
+      "2": 120,
+      "3": 120,
+      "4": 10,
+      "5": 1
+    },
+    "calibration_samples": 400,
+    "explicit_http_200_closed_responses": 2,
+    "full_semantic_events": 580,
+    "replay_compared_events": 577,
+    "validated_initial_prefix_events": 3,
+    "browser_supervised_seconds": 79.29143271500652,
+    "runner_wall_seconds": 85.87241998899844,
+    "enclosing": {
+      "status": "passed",
+      "supervised_seconds": 86.28850132599473,
+      "prepublication_wall_seconds": 88.22163310700853
+    },
+    "server_returncode": -15,
+    "server_kill_escalation": false,
+    "observed_pid_start_pairs_absent": 18,
+    "root_audit_first_execution": false,
+    "corrected_root_audit_seconds": 4.969250575,
+    "own_numeric_event_audit_first_execution": true,
+    "own_numeric_event_audit_seconds": 3.0084345130017027,
+    "inherited_build_source": "f78f0877d58510222039ff24c8df1480f11ac6c8",
+    "inherited_ui_source_bytes_equal": 24
+  },
+  "cleanup": {
+    "both_top_commands_exit_zero": true,
+    "forced_signals": 0,
+    "sampled_survivors": 0,
+    "listener_remaining": false,
+    "post_drain_writer_lease_available": true,
+    "source_upstream_assets_controls_unchanged": true
+  },
+  "limits": {
+    "body_owners": 4,
+    "body_rows": 1807,
+    "body_snapshots": 5,
+    "body_normal_seconds": 830,
+    "ui_owners": 2,
+    "ui_passing_source_rows": 600,
+    "ui_absolute_source_rows": 1081,
+    "ui_total_rows": 2162,
+    "ui_snapshots": 4,
+    "ui_browser_seconds": 180,
+    "ui_normal_seconds": 240,
+    "aggregate_bytes": 2147483648,
+    "free_floor_bytes": 1073741824
+  },
+  "audit_corrections": [
+    "Local body auditor used pre-step local XY, then an assumed qpos field; corrected reader only to recorded next_pose.",
+    "Local UI post-exit auditor initially lacked scripts import path and failed before process/lease checks; corrected reader only.",
+    "Root UI auditor compared replay577 to full580; corrected reader to exact validated initial prefix3, retaining original failed auditor files."
+  ],
+  "limitations": [
+    "One fixed simulator body/world/seed and admitted historical fit; no unseen-body/task, physical or hardware evidence.",
+    "Body gate proves functional encoder-homing composition, not task-level compensation benefit versus a nominal arm.",
+    "UI gate proves fresh four-probe calibration/lifecycle/reset/action replay, not successful homing, native continuation or policy replay.",
+    "Fitted viewport screenshot shows lower-page snapshot/command area; DOM checks establish fit visibility, not full-panel visual proof.",
+    "UI aggregate bound uses admission, sampled refusal and final check, not atomic cross-process accounting; finite process sampling does not cover every possible transient.",
+    "Termination targets and failure-only waits exclude measured file publication and uninterruptible kernel I/O.",
+    "Prior zero-owner admission failure and unexecuted control revisions remain unchanged."
+  ],
+  "artifact_refs": {
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/body-homing/docs/reports/m6-body-homing-composition-v1.json": {
+      "bytes": 7408,
+      "sha256": "538087f665373e1c8753812d2f0dd16f385589c4d65328afd43fc7b1e23844f6"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/body-homing/docs/reports/m6-body-homing-admission-fix.json": {
+      "bytes": 3080,
+      "sha256": "a8bb11e7ecece034d39da9ec24ba2ead7015c56f6623ba9b5789560063669cec"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/body-homing/docs/plans/m6-body-homing-composition.md": {
+      "bytes": 18607,
+      "sha256": "b52982f6d9d8827a08965ebf46484c60e5fee38bb3c6c0fcf8452b980b24986e"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/body-homing/runs/m6-body-homing-development-v2-a447d76-20261003/report.json": {
+      "bytes": 32021,
+      "sha256": "a7acc3edca17fde5e3754e1ed39f4f0288bd4d7e2ac2b0c087a660ea25c38808"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/body-homing/runs/m6-body-homing-ui-development-v2-a447d76-20261003/report.json": {
+      "bytes": 8592,
+      "sha256": "4f43ae8bd4f925676bde14ef4b36bf42e65c7fde5df184d2d3ce160874b680c8"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/body-homing/runs/m6-body-homing-control-a447d76/invocation.json": {
+      "bytes": 4510,
+      "sha256": "1b328a49744480978361348f83eb0e9fe3cff935c1c2570bafe0c6c073a803fe"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/body-homing/runs/m6-body-homing-control-a447d76/before.json": {
+      "bytes": 104789,
+      "sha256": "7e6b2aac85e05b4d40af2ff1eb5e55e5c484ba74f0bb877b2a2fea2f368368fd"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/body-homing/runs/m6-body-homing-control-a447d76/after.json": {
+      "bytes": 104789,
+      "sha256": "7e6b2aac85e05b4d40af2ff1eb5e55e5c484ba74f0bb877b2a2fea2f368368fd"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/body-homing/runs/m6-body-homing-control-a447d76/outer-after.json": {
+      "bytes": 104789,
+      "sha256": "0f5658b53f255132817161aadca2e07ca827bfae6dca171e973944199c94dc78"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/body-homing/runs/m6-body-homing-control-a447d76/enclosing.json": {
+      "bytes": 2826,
+      "sha256": "37dbbfe2cf76ee20b1f570b1d863e5aa16a08c7713afbefb8a5d5da98007e48b"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/body-homing/runs/m6-body-homing-control-a447d76/post-exit-cleanup.json": {
+      "bytes": 5037,
+      "sha256": "279a404ebab4b198d96c193569a7d6311687dccb748e4b8ab3604e1aa56cc3d0"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/body-homing/runs/m6-body-homing-control-a447d76/pre-execution-erratum.json": {
+      "bytes": 4209,
+      "sha256": "e5def0211dbac7aabdd4c17aea40ddb4a71f041d7c67ef6d31ab299f14927c76"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/body-homing/runs/m6-body-homing-control-a447d76/checks-index.json": {
+      "bytes": 1835,
+      "sha256": "4cdea0a1cc4115aa7aa1779a827c06e33b6e6c4071620413c7e5009e58ddaf8d"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/body-homing/runs/m6-body-homing-control-a447d76/preflight.json": {
+      "bytes": 1393,
+      "sha256": "3d2d7a4e76a790745f442079254541f7d317e75a0ff3972704f9b3780c443f14"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/body-homing/runs/m6-body-homing-control-a447d76/launcher-console.log": {
+      "bytes": 151,
+      "sha256": "3e189b499e7dd44d9605a0ebe28a70f8fcae8dfe486f6469279ee3d5401d6fb8"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/body-homing/runs/m6-body-homing-control-a447d76/outer-supervisor/stdout.log": {
+      "bytes": 279,
+      "sha256": "21a829fd5db8519fb0923f56554e8842d56ff9d9441f3168a3536fbce81ac405"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/body-homing/runs/m6-body-homing-control-a447d76/outer-supervisor/stderr.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/body-homing/runs/m6-body-homing-control-a447d76/outer-supervisor/supervisor.json": {
+      "bytes": 314,
+      "sha256": "2ad09c872f686509868c3ded004336461cc6313c4b1a40e9198a39a99397b47d"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/body-homing/runs/m6-body-homing-ui-control-v2-a447d76/invocation.json": {
+      "bytes": 3341,
+      "sha256": "fd48df59c5665961d4bb20d05569be0871a0c696abdc0917c70098872f2bd678"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/body-homing/runs/m6-body-homing-ui-control-v2-a447d76/before.json": {
+      "bytes": 108257,
+      "sha256": "c083f7f4bf823bf083a7528ae4433a9c3f4e1b898be142dd6209bb1c9eacfa76"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/body-homing/runs/m6-body-homing-ui-control-v2-a447d76/after.json": {
+      "bytes": 108257,
+      "sha256": "3dc0108ac13e9f7bcb230adc1eb989a14ea75be0d87e6f88842fe5eebd36c565"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/body-homing/runs/m6-body-homing-ui-control-v2-a447d76/outer-after.json": {
+      "bytes": 108257,
+      "sha256": "3dc0108ac13e9f7bcb230adc1eb989a14ea75be0d87e6f88842fe5eebd36c565"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/body-homing/runs/m6-body-homing-ui-control-v2-a447d76/enclosing.json": {
+      "bytes": 3968,
+      "sha256": "6ae1cb604d20bd4277970aff37a08b561f37472c8895a6d067666120fffd6c3d"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/body-homing/runs/m6-body-homing-ui-control-v2-a447d76/post-exit-cleanup.json": {
+      "bytes": 1758,
+      "sha256": "74fb7b7f22646f6baa6412acdddac5f28056486efe0b8d5dd851a54fccd12e0a"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/body-homing/runs/m6-body-homing-ui-control-v2-a447d76/pre-execution-erratum.json": {
+      "bytes": 1733,
+      "sha256": "999d002c650f83cd2f35936bb4295936ac3044fe449281d2fc8ca17bc40ac424"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/body-homing/runs/m6-body-homing-ui-control-v2-a447d76/checks-index.json": {
+      "bytes": 2558,
+      "sha256": "72ac9bc4873da881336797fb483761fd62400cad380e0eab304820abce1a364a"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/body-homing/runs/m6-body-homing-ui-control-v2-a447d76/preflight.json": {
+      "bytes": 526,
+      "sha256": "d71a59e7d1f83b0e3db5621134d1d1af095d4bf585c78f4f23abebea2c9d3c02"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/body-homing/runs/m6-body-homing-ui-control-v2-a447d76/launcher-console.log": {
+      "bytes": 152,
+      "sha256": "52742b0d2f7ca594851f5abaf6b3edfc369e4f17adf480d295478c33f84344c5"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/body-homing/runs/m6-body-homing-ui-control-v2-a447d76/outer-supervisor/stdout.log": {
+      "bytes": 106,
+      "sha256": "701bce25f3fab3b738184b5b0ee809f498ae4f08550df448e4c553a1fd6f6f32"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/body-homing/runs/m6-body-homing-ui-control-v2-a447d76/outer-supervisor/stderr.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/body-homing/runs/m6-body-homing-ui-control-v2-a447d76/outer-supervisor/supervisor.json": {
+      "bytes": 320,
+      "sha256": "74057f0df0b1408a8021d9c3107727116e6656a91ae79c6d7319d6d72e06d1e9"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/body-homing/runs/m6-body-homing-control-a447d76/terminal.json": {
+      "bytes": 8065,
+      "sha256": "d63797864edfff98557d5e9a7b31a7feabec033e29c7dc049646071d49d27cae"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/body-homing/runs/m6-body-homing-own-audit-a447d76/audit.json": {
+      "bytes": 885,
+      "sha256": "de2220b199ff6cae4a63f226b341329f5cee7bbcd657edda2d604b316fa1e662"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/body-homing/runs/m6-body-homing-ui-own-audit-a447d76/audit.py": {
+      "bytes": 2006,
+      "sha256": "cd251448520a203c87c98e91563c6d4f774e4319b59cc72a51e6812c00d6a750"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/body-homing/runs/m6-body-homing-ui-own-audit-a447d76/audit.json": {
+      "bytes": 666,
+      "sha256": "609b912931a7a06452d55d0b7fd0ff9d898fd9b6e840bbc23b73f4d0b36d8544"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/body-homing/runs/m6-body-homing-ui-own-audit-a447d76/audit.log": {
+      "bytes": 612,
+      "sha256": "f96083924975b6b392c3695c81b1e32ec015064cb2b67d17dd1fdbec4d91515a"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/body-homing/runs/m6-body-homing-ui-control-v2-a447d76/post-exit-cleanup-initial-error.log": {
+      "bytes": 302,
+      "sha256": "145e4dc9c1483f281486867ebcfd2842a80565cec23dcee33928ff6c57283df2"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/body-homing/runs/m6-body-homing-ui-control-v2-a447d76/inherited-ui.json": {
+      "bytes": 3855,
+      "sha256": "686f71cfbc2a064db14e27e8e170f1688c244696ffa0c3f26cb4861d3d4450c9"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/project-integration/runs/body-homing-root-audit-a447d76/audit.py": {
+      "bytes": 11713,
+      "sha256": "be80501ad38557c369aa99dab1123188e8f78d491c194cf8a45b45da17054a01"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/project-integration/runs/body-homing-root-audit-a447d76/audit.json": {
+      "bytes": 1052,
+      "sha256": "c0c5260bf1959374fad9f1f8467bdcdb46715412764a156c72d6999df55729c8"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/project-integration/runs/body-homing-root-audit-a447d76/audit.log": {
+      "bytes": 1052,
+      "sha256": "c0c5260bf1959374fad9f1f8467bdcdb46715412764a156c72d6999df55729c8"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/project-integration/runs/body-homing-ui-root-audit-v2-a447d76/audit.py": {
+      "bytes": 7483,
+      "sha256": "8c8306a5f21ab8312d7f97de9f2777eed29034443b5d6cd5ca5deb5bb63f70a0"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/project-integration/runs/body-homing-ui-root-audit-v2-a447d76/audit.json": {
+      "bytes": 369,
+      "sha256": "c66dae5dcf9b0ee7e5dd0bd7f42d961ad0313523de46d1be3907512cbc6b8dd7"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/project-integration/runs/body-homing-ui-root-audit-v2-a447d76/audit.log": {
+      "bytes": 674,
+      "sha256": "f5785e7c1ea40cbdb50fdc5330ea624802e3159fb2a335df30ed43b6d686c02c"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/project-integration/runs/body-homing-ui-root-audit-v2-a447d76/correction.json": {
+      "bytes": 743,
+      "sha256": "0533904eb381cf4dd7adc8307759670d5f31d692657c239b6badf47f5dd83753"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/project-integration/runs/body-homing-ui-root-audit-v2-a447d76/audit-v2.py": {
+      "bytes": 8019,
+      "sha256": "b6838629b8731395f2b2f1537551b8277b877a0996816f74d9ee781dc4d75bcf"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/project-integration/runs/body-homing-ui-root-audit-v2-a447d76/audit-v2.json": {
+      "bytes": 13607,
+      "sha256": "3a0c5678064a3929fc869e0cb73855642bcaaef763fe57954eaa624b8896c899"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/project-integration/runs/body-homing-ui-root-audit-v2-a447d76/audit-v2.log": {
+      "bytes": 984,
+      "sha256": "a2c356f5d54691f40db40e83cb435137206332e488afd8619844e109a2e975d9"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/project-integration/runs/body-homing-control-v3-root-review-0fd38ef/audit.json": {
+      "bytes": 1359,
+      "sha256": "1031ed22340c9ba201a15327561f50484b3a15bddd216d656a4fd2cda85e4a8a"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/project-integration/runs/body-homing-control-root-review-a447d76/audit.json": {
+      "bytes": 1360,
+      "sha256": "e0ce90dad0a12fb3d7e4869b8fd62035bff476e886380457a658856e54cbb28b"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/project-integration/runs/body-homing-ui-control-root-review-v2-a447d76/audit.json": {
+      "bytes": 496,
+      "sha256": "56d147504187252dfaebe9167b4ef3eded59033b0efcfaab964860e935bafed7"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/body-homing/runs/m6-body-homing-ui-development-v2-a447d76-20261003/browser-results/adaptive-lab-actual-adapti-00994-ive-reset-and-action-replay/adaptive-lab-report.json": {
+      "bytes": 93347,
+      "sha256": "fe03d4cfa1aa25507e7639b644c8ee585ef67306075f764c7d781d73bd819fa5"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/body-homing/runs/m6-body-homing-ui-development-v2-a447d76-20261003/browser-results/adaptive-lab-actual-adapti-00994-ive-reset-and-action-replay/adaptive-fitted.png": {
+      "bytes": 132501,
+      "sha256": "5ec8a903dd72939d015f46d9c32d15f34be3ef725ff4da1abac3709d71f12680"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/body-homing/runs/m6-body-homing-ui-development-v2-a447d76-20261003/browser-results/adaptive-lab-actual-adapti-00994-ive-reset-and-action-replay/adaptive-reset.png": {
+      "bytes": 118734,
+      "sha256": "45a6244e4b920da502bc9a85ed9f5ba02a1d5de0bc9791dc99f9f07a6cc6a79a"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/body-homing/runs/m6-body-homing-ui-development-v2-a447d76-20261003/browser/stdout.log": {
+      "bytes": 187,
+      "sha256": "a0d014c7f1beadec5a9149c7d086cc9aecaf516c897d4548fe8024eccd3f7bfb"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/body-homing/runs/m6-body-homing-ui-development-v2-a447d76-20261003/browser/stderr.log": {
+      "bytes": 165,
+      "sha256": "d93eb51cc33a011ef132e42d5df48d9b9233746b500f8d5419ca876649bb23c9"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/body-homing/runs/m6-body-homing-ui-development-v2-a447d76-20261003/browser/supervisor.json": {
+      "bytes": 324,
+      "sha256": "0331afdceb001d5e0285494e7dea5d9e841c793f19c7a87e7d7601af4859195c"
+    }
+  }
+}

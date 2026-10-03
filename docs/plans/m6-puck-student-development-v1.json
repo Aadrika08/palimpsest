@@ -1,0 +1,88 @@
+{
+  "application_schema": "puck-student-development-application-v1",
+  "completion": "Complete every natural task outcome across all12 rows. Protocol/infra failure stops remaining rows not_started. Process success means complete clean collection; goal admission is separate and requires at least3/4 for each model. Held-out remains locked even after passed admission until independent review and explicit GO.",
+  "fresh_only": "Initial snapshot only. Reject native continuation/replay/restore/source-window fields and all unlisted scenes/models before construction. Same existing MLP decide/contact/task/record loop; one prediction per executed interval, no fallback or teacher fields.",
+  "goals_each_model_required": 3,
+  "held_out": "6200-6207 locked; no held-out path admitted by this protocol",
+  "id": "puck-student-development-v1",
+  "initialization": {
+    "exclusions": [
+      "model-specific checkpoint/report identity is separately pinned",
+      "Torch CPU/CUDA RNG retained in raw snapshots but not a paired-start equality criterion",
+      "raw native allocation/diagnostic bytes retained but not compared across constructors"
+    ],
+    "global_rng": "Dev-only random.seed(scene) and numpy.random.seed(scene) before native construction/reset. Model loading retains its existing seeded fork_rng and immutable weights.",
+    "integration_enum": 8191,
+    "integration_shape": [
+      440
+    ],
+    "matched_fields": [
+      "full native model and runtime identity",
+      "mjSTATE_INTEGRATION enum8191 finite float64[440]",
+      "authored task/world/contact excluding episode identifier",
+      "declared float32[8] sensors and float32[9] BEFORE inputs",
+      "approach/tick0 own cursor",
+      "Python/NumPy global RNG, environment RNG/seed and space RNG"
+    ],
+    "rule": "Model21 initial is baseline for its scene. Every later model validates the same-gate completed baseline result/initial snapshot and exact source/model/scene pins, then compares scientific fingerprint before prediction1; mismatch saves its own initial SNP and failed receipt and stops the batch."
+  },
+  "layout_split": "closed_loop_dev",
+  "learning_protocol_sha256": "bfdd047c1763af3d0b254c55df9137e179b65ce99e7eb870ca76f41332a83354",
+  "limits": {
+    "bytes": 3221225472,
+    "inner_seconds": 1200,
+    "kill_grace_seconds": 15,
+    "log_bytes_each": 1048576,
+    "min_free_bytes": 1073741824,
+    "owner_bytes": 167772160,
+    "owner_seconds": 180,
+    "progress_seconds": 30,
+    "report_bytes": 4194304,
+    "snapshot_bytes": 8388608,
+    "startup_seconds": 60,
+    "supervised_seconds": 1280,
+    "term_seconds": 1260,
+    "total_retained_bytes": 17179869184
+  },
+  "max_ticks": 600,
+  "mechanism_prerequisite": {
+    "evidence": "docs/reports/m6-puck-student-mechanism.json",
+    "inner_report_sha256": "f81b10d57d826c8a329d8724f22caaa0c4b1809ce9887a37940e8816be4309db",
+    "outer_report_sha256": "e907037aa4e9dc2798e2916c518896df27a562e8ee5815f378bcb25ba9863a9f",
+    "source_commit": "6f1fda99659dde74a88c1f36b4781550372220d2"
+  },
+  "model_order": [
+    21,
+    22,
+    23
+  ],
+  "models_manifest": {
+    "path": "docs/plans/m6-puck-student-models-v1.json",
+    "sha256": "d8a2daf24943e5e8a2abf5062458910a1034dd003f8aa5153c32f0f83567502f"
+  },
+  "owner_order": "scene-major, model21 then22 then23; no replacement, retry or winning-seed selection",
+  "owners": 12,
+  "qualification_claims": [],
+  "record_schema": "puck-student-development-v1",
+  "runtime": {
+    "backend": "egl",
+    "cpu_threads": 1,
+    "mujoco": "3.3.6",
+    "numpy": "2.2.5",
+    "python": "3.11.15",
+    "torch": "2.9.0"
+  },
+  "scene_order": [
+    6100,
+    6101,
+    6102,
+    6103
+  ],
+  "scope": "Prospective headless hybrid student development, all three frozen models; no training, held-out, Engine or UI promotion.",
+  "student_contract": {
+    "path": "docs/plans/m6-puck-student-mechanism-v1.json",
+    "sha256": "72a2d8c3c496e7f9c9bfe21f68c581795dd00795507c7b7660a1156b7df5c968",
+    "source_sha256": "d944395f1b9303415d5e5311f589ef26c226718d76bd226fde7449b051795df8"
+  },
+  "version": 1
+}

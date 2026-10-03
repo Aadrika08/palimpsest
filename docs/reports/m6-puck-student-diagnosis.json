@@ -1,0 +1,359 @@
+{
+  "audit_source_head": "9001dac1400c4d4eceb17f61b0a912fd085ba8f9",
+  "development_goal_admission": "failed_0_of_4_each_model",
+  "development_producer": "77f4d49a6030aa2862b25b4510d7112ac2364694",
+  "held_out_used": false,
+  "inventory_scope": "Full 374-entry input/control/source ledger retained once in residuals.json; outer report pins drained logs and residual receipt. Original record ledgers remain in existing reports.",
+  "limitations": [
+    "NumPy arithmetic reproduces selected aggregate loss but is not bitwise Torch equivalence.",
+    "Residual/support associations do not establish a unique causal explanation of failed rollouts.",
+    "Weight balancing cannot create missing recovery states.",
+    "Development and original recorded-dev have been inspected; held-out remains locked."
+  ],
+  "limits": {
+    "aggregate_bytes": 4194304,
+    "log_bytes_per_stream": 262144,
+    "report_bytes": 2097152,
+    "supervisor_seconds": 60,
+    "writer_lease_acquired": false
+  },
+  "models": [
+    {
+      "numpy_report_loss_difference": 7.880096714041329e-10,
+      "seed": 21,
+      "selected_epoch": 30,
+      "splits": {
+        "recorded_dev": {
+          "aggregate_normalized_mse": 0.05303843148324614,
+          "approach_turn_only": {
+            "bias_v_heading": [
+              0.2165200476938823,
+              0.0021019926690068057
+            ],
+            "count": 106,
+            "mae_v_heading": [
+              0.2165200476938823,
+              0.28564557936432444
+            ],
+            "max_abs_v_heading": [
+              0.27249510288238527,
+              0.3762897628112558
+            ],
+            "normalized_mse": 0.41481256394122856,
+            "rmse_v_heading": [
+              0.2206630370830519,
+              0.28991006282376053
+            ],
+            "zero_target_velocity": {
+              "above_001": 106,
+              "above_005": 106,
+              "count": 106,
+              "max_abs_prediction": 0.27249510288238527,
+              "mean_abs_prediction": 0.21652004769388236
+            }
+          },
+          "push_positive_normalized_mse": 0.005306313884590574,
+          "total_rows": 1314
+        },
+        "train": {
+          "aggregate_normalized_mse": 0.07945803393936479,
+          "approach_turn_only": {
+            "bias_v_heading": [
+              0.08879651825191866,
+              -0.014693017254547346
+            ],
+            "count": 578,
+            "mae_v_heading": [
+              0.11396238972693945,
+              0.3086863705634794
+            ],
+            "max_abs_v_heading": [
+              0.2505216598510742,
+              0.49905354976654054
+            ],
+            "normalized_mse": 0.3790846756811735,
+            "rmse_v_heading": [
+              0.13921741866652032,
+              0.3192578997578703
+            ],
+            "zero_target_velocity": {
+              "above_001": 543,
+              "above_005": 411,
+              "count": 578,
+              "max_abs_prediction": 0.2505216598510742,
+              "mean_abs_prediction": 0.1139623897269394
+            }
+          },
+          "push_positive_normalized_mse": 0.011194435655051217,
+          "total_rows": 5710
+        }
+      }
+    },
+    {
+      "numpy_report_loss_difference": 2.3757613237807007e-10,
+      "seed": 22,
+      "selected_epoch": 27,
+      "splits": {
+        "recorded_dev": {
+          "aggregate_normalized_mse": 0.053334657460913114,
+          "approach_turn_only": {
+            "bias_v_heading": [
+              0.2046672259861568,
+              -0.0009198760853208545
+            ],
+            "count": 106,
+            "mae_v_heading": [
+              0.2046672259861568,
+              0.28706055036542816
+            ],
+            "max_abs_v_heading": [
+              0.25867528915405275,
+              0.37321430023152863
+            ],
+            "normalized_mse": 0.40143744824488703,
+            "rmse_v_heading": [
+              0.20869887926700603,
+              0.29138421582347174
+            ],
+            "zero_target_velocity": {
+              "above_001": 106,
+              "above_005": 106,
+              "count": 106,
+              "max_abs_prediction": 0.25867528915405275,
+              "mean_abs_prediction": 0.20466722598615683
+            }
+          },
+          "push_positive_normalized_mse": 0.005460575215946887,
+          "total_rows": 1314
+        },
+        "train": {
+          "aggregate_normalized_mse": 0.08053841535351927,
+          "approach_turn_only": {
+            "bias_v_heading": [
+              0.07836061356453046,
+              -0.015236244764157346
+            ],
+            "count": 578,
+            "mae_v_heading": [
+              0.11056379020052143,
+              0.3094909230410465
+            ],
+            "max_abs_v_heading": [
+              0.23760733604431153,
+              0.4974250316619873
+            ],
+            "normalized_mse": 0.3754167454654872,
+            "rmse_v_heading": [
+              0.13282041048477353,
+              0.32014386938939215
+            ],
+            "zero_target_velocity": {
+              "above_001": 538,
+              "above_005": 421,
+              "count": 578,
+              "max_abs_prediction": 0.23760733604431153,
+              "mean_abs_prediction": 0.11056379020052147
+            }
+          },
+          "push_positive_normalized_mse": 0.011439141115459236,
+          "total_rows": 5710
+        }
+      }
+    },
+    {
+      "numpy_report_loss_difference": 1.7289697173961116e-09,
+      "seed": 23,
+      "selected_epoch": 26,
+      "splits": {
+        "recorded_dev": {
+          "aggregate_normalized_mse": 0.05388683557639504,
+          "approach_turn_only": {
+            "bias_v_heading": [
+              0.20523929106739336,
+              -0.0026450465811089325
+            ],
+            "count": 106,
+            "mae_v_heading": [
+              0.20523929106739336,
+              0.28935589086267677
+            ],
+            "max_abs_v_heading": [
+              0.258746862411499,
+              0.37549068059165513
+            ],
+            "normalized_mse": 0.4062195031907094,
+            "rmse_v_heading": [
+              0.2091901510791533,
+              0.2936489770329671
+            ],
+            "zero_target_velocity": {
+              "above_001": 106,
+              "above_005": 106,
+              "count": 106,
+              "max_abs_prediction": 0.258746862411499,
+              "mean_abs_prediction": 0.20523929106739333
+            }
+          },
+          "push_positive_normalized_mse": 0.004921872650078677,
+          "total_rows": 1314
+        },
+        "train": {
+          "aggregate_normalized_mse": 0.08025882998203945,
+          "approach_turn_only": {
+            "bias_v_heading": [
+              0.08126037497843602,
+              -0.013819870757106728
+            ],
+            "count": 578,
+            "mae_v_heading": [
+              0.11039230146277754,
+              0.31225221396196506
+            ],
+            "max_abs_v_heading": [
+              0.23827614784240725,
+              0.48881455659866335
+            ],
+            "normalized_mse": 0.38083367077284946,
+            "rmse_v_heading": [
+              0.13304758038667233,
+              0.32274620989341407
+            ],
+            "zero_target_velocity": {
+              "above_001": 536,
+              "above_005": 418,
+              "count": 578,
+              "max_abs_prediction": 0.23827614784240725,
+              "mean_abs_prediction": 0.11039230146277762
+            }
+          },
+          "push_positive_normalized_mse": 0.0099199289492031,
+          "total_rows": 5710
+        }
+      }
+    }
+  ],
+  "prospective_status": "Balanced-loss pilot is proposed only; no implementation/training/rollout authorized by this evidence.",
+  "qualification_claims": [],
+  "references": [
+    {
+      "bytes": 6940,
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-development/runs/puck-development-diagnosis-77f4d49/diagnose.py",
+      "role": "geometry_auditor",
+      "sha256": "70ba47794246a6e43d9afec1c73506a2db40cb84648e6268a685048d062f1632"
+    },
+    {
+      "bytes": 89909,
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-development/runs/puck-development-diagnosis-77f4d49/diagnosis.json",
+      "role": "geometry_receipt",
+      "sha256": "e15b8a75bc36b5d09687a9cd61188be5337e5d7421ad89aa087bcbd7ca1d6e49"
+    },
+    {
+      "bytes": 1999,
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-development/runs/puck-development-diagnosis-77f4d49/support.py",
+      "role": "support_auditor",
+      "sha256": "1ad572564ec30bfada727d5fb6eab5abb3466ceb180e07fd167910c9dc7c529c"
+    },
+    {
+      "bytes": 955,
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-development/runs/puck-development-diagnosis-77f4d49/support.json",
+      "role": "support_receipt",
+      "sha256": "35c565829589da3ef48485a8ff6e4cc0cf398573a72d6cb89618fc59ddaffe44"
+    },
+    {
+      "bytes": 12991,
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-development/runs/puck-residual-v1-prepared/plan.json",
+      "role": "residual_plan",
+      "sha256": "de83354f314bcba6b0fab61e61bc5f29a587a81bdea66456d0bff2f3d66d4905"
+    },
+    {
+      "bytes": 6958,
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-development/runs/puck-residual-v1-prepared/audit.py",
+      "role": "residual_auditor",
+      "sha256": "606994e60cccb03c9954220e30111747e32a49876bb8f3ae8d5cbf4c320a280a"
+    },
+    {
+      "bytes": 2239,
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-development/runs/puck-residual-v1-prepared/launch.py",
+      "role": "residual_launcher",
+      "sha256": "f2221e3cf4c98c116fe0d9cf3096ff2b63c9d57074e891a8f61e193bfe1b84be"
+    },
+    {
+      "bytes": 156805,
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-development/runs/puck-residual-v1-20261003/residuals.json",
+      "role": "residual_receipt",
+      "sha256": "512c1f822fa63d949a181595c90c8a02dd4d61a5d9664b6d247be88e332b3c87"
+    },
+    {
+      "bytes": 1752,
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-development/runs/puck-residual-v1-20261003/launch-result.json",
+      "role": "residual_launch_receipt",
+      "sha256": "a84701ab8a84dff6f3ece78d9fc195a6b916b39080ab9e74ae7e9bad5065022c"
+    },
+    {
+      "bytes": 297,
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-development/runs/puck-residual-v1-20261003/supervisor.json",
+      "role": "residual_supervisor",
+      "sha256": "7ccf82b0341881f453ce55e1f3e5fab01bf25f556f4b85b62b8ee74666aa8fd2"
+    },
+    {
+      "bytes": 371,
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-development/runs/puck-residual-v1-20261003/stdout.log",
+      "role": "residual_stdout",
+      "sha256": "6aa4977ada6504c8bb7d2e9407b5566ba968519eefe6d718a6877927e99281ac"
+    },
+    {
+      "bytes": 1178,
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/project-integration/runs/puck-residual-root-review-9001dac/audit.json",
+      "role": "root_residual_review",
+      "sha256": "e3174451afb2e1d7c720bd28e4e77c8fed5d4e5d5a58918e18f38bda44220c67"
+    },
+    {
+      "bytes": 5385,
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/project-integration/runs/puck-development-root-audit-77f4d49/audit.json",
+      "role": "development_root_audit",
+      "sha256": "af58a7c844987350e53c437b09536a7216223c0fc895d3661a3ce6e48dcf38db"
+    },
+    {
+      "bytes": 205583,
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-stop-boundary/runs/m6-puck-teacher-collection-v2-20261003/gate/report.json",
+      "role": "teacher_collection",
+      "sha256": "3cf5044ac12fa80ebfed9aa044d0e983a94fcddb4e177da779a4684b944b518b"
+    },
+    {
+      "bytes": 1341,
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-development/docs/plans/m6-puck-student-models-v1.json",
+      "role": "model_manifest",
+      "sha256": "d8a2daf24943e5e8a2abf5062458910a1034dd003f8aa5153c32f0f83567502f"
+    }
+  ],
+  "residual_audit": {
+    "attempts": 1,
+    "inputs_unchanged": true,
+    "rehash_entries": 374,
+    "root_review_seconds": 1.189689,
+    "seconds": 7.298418724996736,
+    "status": "passed",
+    "supervisor": {
+      "elapsed_seconds": 7.4945185920078075,
+      "output": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-development/runs/puck-residual-v1-20261003",
+      "returncode": 0,
+      "schema_version": 1,
+      "started_utc": "2026-10-03T05:30:24.336366+00:00",
+      "status": "completed",
+      "timeout_seconds": 60
+    }
+  },
+  "schema": "puck-development-diagnosis-evidence-v1",
+  "source_findings": {
+    "closest_arrival_range_m": [
+      0.09700355087564629,
+      0.15814559179671528
+    ],
+    "demonstrated_implementation_defect": null,
+    "student_rows": 7200,
+    "supported": "Poor action fit on original teacher inputs, including all recorded-dev approach turn-only rows; sparse recovery-state support in teacher data.",
+    "transition_condition_met_student_rows": 0
+  },
+  "status": "completed",
+  "torch_native_runtime_or_fitting": false
+}

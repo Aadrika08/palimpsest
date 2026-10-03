@@ -1,0 +1,1071 @@
+{
+  "schema_version": 1,
+  "date": "2026-10-02",
+  "scope": "M1 measured same-host simulation execution and recovery; no cross-device or physical claim",
+  "tests": {
+    "command": "PALIMPSEST_SIMULATION_TESTS=1 MUJOCO_GL=egl .venv/bin/python -m pytest -q",
+    "passed": 98,
+    "skipped": 0
+  },
+  "comparison_contract": {
+    "float_atol": 1e-06,
+    "float_rtol": 1e-06,
+    "integer_camera_exact": true
+  },
+  "cases": [
+    {
+      "local_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/execution-recovery/runs/manual-continuation-qualified",
+      "verification_sha256": "44bf012eaf1794ce73eea736fa6d77655b1f6984692effdce6b9a03d717e7a3c",
+      "result": {
+        "schema_version": 1,
+        "status": "passed",
+        "first_divergence": null,
+        "divergences": [],
+        "controller": "manual",
+        "device": "cpu",
+        "runtime": {
+          "source_sha256": {
+            "src/palimpsest/__init__.py": "bb99e30d22e4662c4ded455b1b23f49b77ce811dcfa1b69bf358925487a566d8",
+            "src/palimpsest/__main__.py": "935a1c1166b0c1ea35a82256345000bf2c73ded718d77773bc27a71ecce28f7d",
+            "src/palimpsest/assets.py": "aa4a38c7403cd9f72bc23027acd7c212202f25574bea6af65053c34664da49e3",
+            "src/palimpsest/cli.py": "3da629c51d4339f7bd16ab034a59dfc8fa67dfe19c1c7d013e9bf5d520f048b1",
+            "src/palimpsest/doctor.py": "109de62468161f35461eee76af244daabef38f2faa1526c5a6ed268817e6b834",
+            "src/palimpsest/engine.py": "df1309b25b112a26b3e09cae755647c0b6715928124e1703c475eb2cafed7ec8",
+            "src/palimpsest/evaluate.py": "6929e54412b25bd39d786dec481111fc834f0bbcbb2ea29d34a81b7806c3a9ae",
+            "src/palimpsest/flynn.py": "409b7503d76fd6f971a33d053e86c968b529edc226b85f44122e17a649f8f9f4",
+            "src/palimpsest/interventions.py": "1de2d65994fb784f44142edcbec3bcedd5cd00b0dcb72c918d99adc64ee98f74",
+            "src/palimpsest/records.py": "e66fe717842d719265416d95f202199cf94d08c48a72d6433d02a1b98398adca",
+            "src/palimpsest/snapshots.py": "afbbd3e4f709a5dc612898b1f2d6095230deb4b1911939c9cd388d4008f17a41"
+          },
+          "lock_sha256": "64b20c38f457aa71d3f8284c1929a1bdfe2a38e9cf1bdb55a3e0b94a7df023c9",
+          "upstream_commit": "8d964599119b420de67ee259434d273651a1a76d"
+        },
+        "fixture": "goal edit, nonzero controller/physics state and pending run command",
+        "prefix_ticks": 8,
+        "continuation_ticks": 12,
+        "snapshot_sha256": "d0540da141987dd73900897e372365e63c7d51039b17e073b6ea85baa03ee9a8",
+        "max_abs_errors": {
+          "episode": 0.0,
+          "tick": 0.0,
+          "action": 0.0,
+          "cam_left": 0.0,
+          "cam_right": 0.0,
+          "control": 0.0,
+          "next_pose": 0.0,
+          "pose": 0.0,
+          "reward": 0.0,
+          "sensors": 0.0,
+          "simulation_time": 0.0,
+          "final_integration": 0.0,
+          "final_xpos": 0.0,
+          "final_geom_xpos": 0.0,
+          "final_contacts": 0.0,
+          "final_jnt_range": 0.0,
+          "final_geom_rgba": 0.0,
+          "final_site_pos": 0.0,
+          "final__obstacle_xy": 0.0,
+          "final__goal_xy": 0.0,
+          "final__prev_xy": 0.0,
+          "final__speed": 0.0,
+          "final__t": 0.0,
+          "final__last_action": 0.0,
+          "final__stall_steps": 0.0,
+          "final_final_cam_left": 0.0,
+          "final_final_cam_right": 0.0
+        },
+        "source_event_prefix_unchanged": true,
+        "branch_identity_distinct": true,
+        "random_draws_match": true,
+        "queued_command_idempotency": true,
+        "atol": 1e-06,
+        "rtol": 1e-06,
+        "scope": "Fresh-process simulation continuation on this numeric/rendering regime"
+      },
+      "workers": {
+        "source": {
+          "supervisor": {
+            "schema_version": 1,
+            "status": "completed",
+            "timeout_seconds": 180,
+            "started_utc": "2026-10-02T05:32:47.277745+00:00",
+            "output": "/home/utkarsh/Work/shraddha/brain/.worktrees/execution-recovery/runs/manual-continuation-qualified/source",
+            "returncode": 0,
+            "elapsed_seconds": 5.529297360000783
+          },
+          "manifest_sha256": "0423dec0f82243336255d3502164ee502e71325482cadf603d10705bf62ff9f1",
+          "events_sha256": "f7a7981ffa6f907ba1cf4c43047b0fb24f77f8483dc24834921959aa1c033927"
+        },
+        "restored": {
+          "supervisor": {
+            "schema_version": 1,
+            "status": "completed",
+            "timeout_seconds": 180,
+            "started_utc": "2026-10-02T05:32:52.808183+00:00",
+            "output": "/home/utkarsh/Work/shraddha/brain/.worktrees/execution-recovery/runs/manual-continuation-qualified/restored",
+            "returncode": 0,
+            "elapsed_seconds": 4.676895713999329
+          },
+          "manifest_sha256": "2c7cd88bac271e7867d337e7d9020a0197a7f182db6878df4e10472167974a94",
+          "events_sha256": "a076fe14a02d93e64e421048b0eb5b5ded24fb2f6102db3bc829472a68bc5358"
+        }
+      }
+    },
+    {
+      "local_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/execution-recovery/runs/teacher-continuation-qualified",
+      "verification_sha256": "9cb2d9263fea57fdf5e5abd8d6e21d3533e62cb445ecaffafe62b75ce1a772d3",
+      "result": {
+        "schema_version": 1,
+        "status": "passed",
+        "first_divergence": null,
+        "divergences": [],
+        "controller": "teacher",
+        "device": "cpu",
+        "runtime": {
+          "source_sha256": {
+            "src/palimpsest/__init__.py": "bb99e30d22e4662c4ded455b1b23f49b77ce811dcfa1b69bf358925487a566d8",
+            "src/palimpsest/__main__.py": "935a1c1166b0c1ea35a82256345000bf2c73ded718d77773bc27a71ecce28f7d",
+            "src/palimpsest/assets.py": "aa4a38c7403cd9f72bc23027acd7c212202f25574bea6af65053c34664da49e3",
+            "src/palimpsest/cli.py": "3da629c51d4339f7bd16ab034a59dfc8fa67dfe19c1c7d013e9bf5d520f048b1",
+            "src/palimpsest/doctor.py": "109de62468161f35461eee76af244daabef38f2faa1526c5a6ed268817e6b834",
+            "src/palimpsest/engine.py": "df1309b25b112a26b3e09cae755647c0b6715928124e1703c475eb2cafed7ec8",
+            "src/palimpsest/evaluate.py": "6929e54412b25bd39d786dec481111fc834f0bbcbb2ea29d34a81b7806c3a9ae",
+            "src/palimpsest/flynn.py": "409b7503d76fd6f971a33d053e86c968b529edc226b85f44122e17a649f8f9f4",
+            "src/palimpsest/interventions.py": "1de2d65994fb784f44142edcbec3bcedd5cd00b0dcb72c918d99adc64ee98f74",
+            "src/palimpsest/records.py": "e66fe717842d719265416d95f202199cf94d08c48a72d6433d02a1b98398adca",
+            "src/palimpsest/snapshots.py": "afbbd3e4f709a5dc612898b1f2d6095230deb4b1911939c9cd388d4008f17a41"
+          },
+          "lock_sha256": "64b20c38f457aa71d3f8284c1929a1bdfe2a38e9cf1bdb55a3e0b94a7df023c9",
+          "upstream_commit": "8d964599119b420de67ee259434d273651a1a76d"
+        },
+        "fixture": "goal edit, nonzero controller/physics state and pending run command",
+        "prefix_ticks": 8,
+        "continuation_ticks": 12,
+        "snapshot_sha256": "6757b8d64798c46f6af8ab729f9d8020abc8f0ac929e39d67512df3d93aa7b15",
+        "max_abs_errors": {
+          "episode": 0.0,
+          "tick": 0.0,
+          "action": 0.0,
+          "cam_left": 0.0,
+          "cam_right": 0.0,
+          "control": 0.0,
+          "next_pose": 0.0,
+          "pose": 0.0,
+          "reward": 0.0,
+          "sensors": 0.0,
+          "simulation_time": 0.0,
+          "final_integration": 0.0,
+          "final_xpos": 0.0,
+          "final_geom_xpos": 0.0,
+          "final_contacts": 0.0,
+          "final_jnt_range": 0.0,
+          "final_geom_rgba": 0.0,
+          "final_site_pos": 0.0,
+          "final__obstacle_xy": 0.0,
+          "final__goal_xy": 0.0,
+          "final__prev_xy": 0.0,
+          "final__speed": 0.0,
+          "final__t": 0.0,
+          "final__last_action": 0.0,
+          "final__stall_steps": 0.0,
+          "final_final_cam_left": 0.0,
+          "final_final_cam_right": 0.0
+        },
+        "source_event_prefix_unchanged": true,
+        "branch_identity_distinct": true,
+        "random_draws_match": true,
+        "queued_command_idempotency": true,
+        "atol": 1e-06,
+        "rtol": 1e-06,
+        "scope": "Fresh-process simulation continuation on this numeric/rendering regime"
+      },
+      "workers": {
+        "source": {
+          "supervisor": {
+            "schema_version": 1,
+            "status": "completed",
+            "timeout_seconds": 180,
+            "started_utc": "2026-10-02T05:32:57.670395+00:00",
+            "output": "/home/utkarsh/Work/shraddha/brain/.worktrees/execution-recovery/runs/teacher-continuation-qualified/source",
+            "returncode": 0,
+            "elapsed_seconds": 3.224352798999462
+          },
+          "manifest_sha256": "20466b38786058beaa6d5e269765020252176e11caf046e497361045a406d8f9",
+          "events_sha256": "926d5bc1f63fb85a5d554fe7a5de87d7c094b8273dd47cc872d7cf3a4c3c4ee2"
+        },
+        "restored": {
+          "supervisor": {
+            "schema_version": 1,
+            "status": "completed",
+            "timeout_seconds": 180,
+            "started_utc": "2026-10-02T05:33:00.895748+00:00",
+            "output": "/home/utkarsh/Work/shraddha/brain/.worktrees/execution-recovery/runs/teacher-continuation-qualified/restored",
+            "returncode": 0,
+            "elapsed_seconds": 3.323546673000237
+          },
+          "manifest_sha256": "4bc61cd0d847bf8a2bf1ba16643de0603021d717ac8eae009c8e4b50fddb8109",
+          "events_sha256": "e0b1d83e6f1d8063393e46931e33a1149b7bffa4880ec81273b773aa66140bee"
+        }
+      }
+    },
+    {
+      "local_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/execution-recovery/runs/flynn-cpu-continuation-stable",
+      "verification_sha256": "f1d63bcccd0e5e3e48b9a445bf8d8514d2c3239e75341e3dc5bcb4367477ac21",
+      "result": {
+        "schema_version": 1,
+        "status": "passed",
+        "first_divergence": null,
+        "divergences": [],
+        "controller": "flynn",
+        "device": "cpu",
+        "runtime": {
+          "source_sha256": {
+            "src/palimpsest/__init__.py": "bb99e30d22e4662c4ded455b1b23f49b77ce811dcfa1b69bf358925487a566d8",
+            "src/palimpsest/__main__.py": "935a1c1166b0c1ea35a82256345000bf2c73ded718d77773bc27a71ecce28f7d",
+            "src/palimpsest/assets.py": "aa4a38c7403cd9f72bc23027acd7c212202f25574bea6af65053c34664da49e3",
+            "src/palimpsest/cli.py": "3da629c51d4339f7bd16ab034a59dfc8fa67dfe19c1c7d013e9bf5d520f048b1",
+            "src/palimpsest/doctor.py": "109de62468161f35461eee76af244daabef38f2faa1526c5a6ed268817e6b834",
+            "src/palimpsest/engine.py": "c308231e5272b0f6a9a823dfd187f0e6a1eefa263b40848fdaffe3b4c80fda3f",
+            "src/palimpsest/evaluate.py": "6929e54412b25bd39d786dec481111fc834f0bbcbb2ea29d34a81b7806c3a9ae",
+            "src/palimpsest/flynn.py": "409b7503d76fd6f971a33d053e86c968b529edc226b85f44122e17a649f8f9f4",
+            "src/palimpsest/interventions.py": "1de2d65994fb784f44142edcbec3bcedd5cd00b0dcb72c918d99adc64ee98f74",
+            "src/palimpsest/records.py": "e66fe717842d719265416d95f202199cf94d08c48a72d6433d02a1b98398adca",
+            "src/palimpsest/snapshots.py": "afbbd3e4f709a5dc612898b1f2d6095230deb4b1911939c9cd388d4008f17a41"
+          },
+          "lock_sha256": "64b20c38f457aa71d3f8284c1929a1bdfe2a38e9cf1bdb55a3e0b94a7df023c9",
+          "upstream_commit": "8d964599119b420de67ee259434d273651a1a76d"
+        },
+        "fixture": "goal edit, nonzero controller/physics state and pending run command",
+        "prefix_ticks": 8,
+        "continuation_ticks": 100,
+        "snapshot_sha256": "912f1ce0d37707b85c50ceb62e6bfd404eae942605d85d957e2aac34b4c77fe7",
+        "max_abs_errors": {
+          "episode": 0.0,
+          "tick": 0.0,
+          "action": 0.0,
+          "cam_left": 0.0,
+          "cam_right": 0.0,
+          "control": 0.0,
+          "encoded_input": 0.0,
+          "next_pose": 0.0,
+          "pose": 0.0,
+          "raw_output": 0.0,
+          "reward": 0.0,
+          "sensors": 0.0,
+          "simulation_time": 0.0,
+          "final_integration": 0.0,
+          "final_xpos": 0.0,
+          "final_geom_xpos": 0.0,
+          "final_contacts": 0.0,
+          "final_jnt_range": 0.0,
+          "final_geom_rgba": 0.0,
+          "final_site_pos": 0.0,
+          "final__obstacle_xy": 0.0,
+          "final__goal_xy": 0.0,
+          "final__prev_xy": 0.0,
+          "final__speed": 0.0,
+          "final__t": 0.0,
+          "final__last_action": 0.0,
+          "final__stall_steps": 0.0,
+          "final_final_cam_left": 0.0,
+          "final_final_cam_right": 0.0,
+          "final_hidden": 0.0,
+          "final_left_L1": 0.0,
+          "final_left_L2": 0.0,
+          "final_left_L3": 0.0,
+          "final_right_L1": 0.0,
+          "final_right_L2": 0.0,
+          "final_right_L3": 0.0
+        },
+        "source_event_prefix_unchanged": true,
+        "branch_identity_distinct": true,
+        "random_draws_match": true,
+        "queued_command_idempotency": true,
+        "atol": 1e-06,
+        "rtol": 1e-06,
+        "scope": "Fresh-process simulation continuation on this numeric/rendering regime"
+      },
+      "workers": {
+        "source": {
+          "supervisor": {
+            "schema_version": 1,
+            "status": "completed",
+            "timeout_seconds": 180,
+            "started_utc": "2026-10-02T05:34:23.783762+00:00",
+            "output": "/home/utkarsh/Work/shraddha/brain/.worktrees/execution-recovery/runs/flynn-cpu-continuation-stable/source",
+            "returncode": 0,
+            "elapsed_seconds": 32.30342848700093
+          },
+          "manifest_sha256": "864bf91dc83ccc9a243d681740f349fcac0298ce4776273b0aa3b218e6fe3778",
+          "events_sha256": "a8fa0cd8f1478057ad6967025329f54838c9722496a711734aff103fba1ae282"
+        },
+        "restored": {
+          "supervisor": {
+            "schema_version": 1,
+            "status": "completed",
+            "timeout_seconds": 180,
+            "started_utc": "2026-10-02T05:34:56.088315+00:00",
+            "output": "/home/utkarsh/Work/shraddha/brain/.worktrees/execution-recovery/runs/flynn-cpu-continuation-stable/restored",
+            "returncode": 0,
+            "elapsed_seconds": 26.690279130998533
+          },
+          "manifest_sha256": "014b2eca6bb8e0980d8451b223aace3bafd53ef667b4701666c1c86058587fb7",
+          "events_sha256": "e43c0e3530950bac56344d924420de97fb8033b57182bae4e84a942047061371"
+        }
+      }
+    },
+    {
+      "local_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/execution-recovery/runs/flynn-continuation-final",
+      "verification_sha256": "3b7322c5a2e44796c2faf57458ce27956f4c8a3bfa84cfaf4c32cb718f538d4e",
+      "result": {
+        "schema_version": 1,
+        "status": "failed",
+        "first_divergence": {
+          "tick": 10,
+          "component": "cam_right",
+          "max_abs_error": 1.0,
+          "different_values": 2
+        },
+        "divergences": [
+          {
+            "tick": 10,
+            "component": "cam_right",
+            "max_abs_error": 1.0,
+            "different_values": 2
+          },
+          {
+            "tick": 10,
+            "component": "encoded_input",
+            "max_abs_error": 9.945034980773926e-05,
+            "different_values": 99
+          },
+          {
+            "tick": 11,
+            "component": "encoded_input",
+            "max_abs_error": 4.893355071544647e-05,
+            "different_values": 12
+          },
+          {
+            "tick": 12,
+            "component": "encoded_input",
+            "max_abs_error": 2.2023916244506836e-05,
+            "different_values": 12
+          },
+          {
+            "tick": 13,
+            "component": "encoded_input",
+            "max_abs_error": 1.0371208190917969e-05,
+            "different_values": 12
+          },
+          {
+            "tick": 14,
+            "component": "encoded_input",
+            "max_abs_error": 4.880130290985107e-06,
+            "different_values": 12
+          },
+          {
+            "tick": 15,
+            "component": "encoded_input",
+            "max_abs_error": 2.3096799850463867e-06,
+            "different_values": 10
+          },
+          {
+            "tick": 19,
+            "component": "cam_left",
+            "max_abs_error": 1.0,
+            "different_values": 4
+          },
+          {
+            "tick": 19,
+            "component": "cam_right",
+            "max_abs_error": 1.0,
+            "different_values": 14
+          },
+          {
+            "tick": 19,
+            "component": "encoded_input",
+            "max_abs_error": 0.00012822449207305908,
+            "different_values": 46
+          },
+          {
+            "tick": null,
+            "component": "final_hidden",
+            "max_abs_error": 2.696644514799118e-05,
+            "different_values": 8431
+          },
+          {
+            "tick": null,
+            "component": "final_left_L1",
+            "max_abs_error": 9.593367576599121e-05,
+            "different_values": 6
+          },
+          {
+            "tick": null,
+            "component": "final_left_L2",
+            "max_abs_error": 9.614229202270508e-05,
+            "different_values": 6
+          },
+          {
+            "tick": null,
+            "component": "final_left_L3",
+            "max_abs_error": 8.213520050048828e-05,
+            "different_values": 6
+          },
+          {
+            "tick": null,
+            "component": "final_right_L1",
+            "max_abs_error": 0.00017601251602172852,
+            "different_values": 10
+          },
+          {
+            "tick": null,
+            "component": "final_right_L2",
+            "max_abs_error": 0.00017640739679336548,
+            "different_values": 10
+          },
+          {
+            "tick": null,
+            "component": "final_right_L3",
+            "max_abs_error": 6.854534149169922e-05,
+            "different_values": 8
+          }
+        ],
+        "controller": "flynn",
+        "device": "cuda",
+        "runtime": {
+          "source_sha256": {
+            "src/palimpsest/__init__.py": "bb99e30d22e4662c4ded455b1b23f49b77ce811dcfa1b69bf358925487a566d8",
+            "src/palimpsest/__main__.py": "935a1c1166b0c1ea35a82256345000bf2c73ded718d77773bc27a71ecce28f7d",
+            "src/palimpsest/assets.py": "aa4a38c7403cd9f72bc23027acd7c212202f25574bea6af65053c34664da49e3",
+            "src/palimpsest/cli.py": "3da629c51d4339f7bd16ab034a59dfc8fa67dfe19c1c7d013e9bf5d520f048b1",
+            "src/palimpsest/doctor.py": "109de62468161f35461eee76af244daabef38f2faa1526c5a6ed268817e6b834",
+            "src/palimpsest/engine.py": "9ac7892bb276318c1201ca21b7704716fc5879ca34c17d071cd2e50afaf8e994",
+            "src/palimpsest/evaluate.py": "6929e54412b25bd39d786dec481111fc834f0bbcbb2ea29d34a81b7806c3a9ae",
+            "src/palimpsest/flynn.py": "409b7503d76fd6f971a33d053e86c968b529edc226b85f44122e17a649f8f9f4",
+            "src/palimpsest/interventions.py": "1de2d65994fb784f44142edcbec3bcedd5cd00b0dcb72c918d99adc64ee98f74",
+            "src/palimpsest/records.py": "e66fe717842d719265416d95f202199cf94d08c48a72d6433d02a1b98398adca",
+            "src/palimpsest/snapshots.py": "8241e24ce0875c2daa15c41b2e758fa65409d7d173f2917519a98543eaf23825"
+          },
+          "lock_sha256": "64b20c38f457aa71d3f8284c1929a1bdfe2a38e9cf1bdb55a3e0b94a7df023c9",
+          "upstream_commit": "8d964599119b420de67ee259434d273651a1a76d"
+        },
+        "fixture": "goal edit, nonzero controller/physics state and pending run command",
+        "prefix_ticks": 8,
+        "continuation_ticks": 12,
+        "snapshot_sha256": "201149454189092842ec3424b33e7e9d651df932ac4e5055aa7681277bd0d3e7",
+        "max_abs_errors": {
+          "episode": 0.0,
+          "tick": 0.0,
+          "action": 1.1920928955078125e-07,
+          "cam_left": 1.0,
+          "cam_right": 1.0,
+          "control": 2.384185791015625e-07,
+          "encoded_input": 0.00012822449207305908,
+          "next_pose": 2.0587940685601325e-08,
+          "pose": 1.9269527085086224e-08,
+          "raw_output": 2.9802322387695312e-08,
+          "reward": 1.192092891413865e-10,
+          "sensors": 5.960464477539063e-08,
+          "simulation_time": 0.0,
+          "final_integration": 4.752722059464531e-06,
+          "final_xpos": 5.179378259612122e-09,
+          "final_geom_xpos": 4.779650009112402e-09,
+          "final_contacts": 4.194596003870288e-09,
+          "final_jnt_range": 0.0,
+          "final_geom_rgba": 0.0,
+          "final_site_pos": 0.0,
+          "final__obstacle_xy": 0.0,
+          "final__goal_xy": 0.0,
+          "final__prev_xy": 0.0,
+          "final__speed": 0.0,
+          "final__t": 0.0,
+          "final__last_action": 5.960464477539063e-08,
+          "final__stall_steps": 0.0,
+          "final_final_cam_left": 0.0,
+          "final_final_cam_right": 0.0,
+          "final_hidden": 2.696644514799118e-05,
+          "final_left_L1": 9.593367576599121e-05,
+          "final_left_L2": 9.614229202270508e-05,
+          "final_left_L3": 8.213520050048828e-05,
+          "final_right_L1": 0.00017601251602172852,
+          "final_right_L2": 0.00017640739679336548,
+          "final_right_L3": 6.854534149169922e-05
+        },
+        "source_event_prefix_unchanged": true,
+        "branch_identity_distinct": true,
+        "random_draws_match": true,
+        "queued_command_idempotency": true,
+        "atol": 1e-06,
+        "rtol": 1e-06,
+        "scope": "Fresh-process simulation continuation on this numeric/rendering regime"
+      },
+      "workers": {
+        "source": {
+          "supervisor": {
+            "schema_version": 1,
+            "status": "completed",
+            "timeout_seconds": 180,
+            "started_utc": "2026-10-02T05:20:39.275022+00:00",
+            "output": "/home/utkarsh/Work/shraddha/brain/.worktrees/execution-recovery/runs/flynn-continuation-final/source",
+            "returncode": 0,
+            "elapsed_seconds": 19.018785342999763
+          },
+          "manifest_sha256": "75ede932276fe4399b8fba7b3cdf64fcae454d6cd632ed8f43b0d52db254466a",
+          "events_sha256": "89b349044390e497aaa9b5dccea325e6c883496ead59fd647af60fe88b2a8cd6"
+        },
+        "restored": {
+          "supervisor": {
+            "schema_version": 1,
+            "status": "completed",
+            "timeout_seconds": 180,
+            "started_utc": "2026-10-02T05:20:58.294849+00:00",
+            "output": "/home/utkarsh/Work/shraddha/brain/.worktrees/execution-recovery/runs/flynn-continuation-final/restored",
+            "returncode": 0,
+            "elapsed_seconds": 19.015228430000207
+          },
+          "manifest_sha256": "fffc200b87d1e932b9ee98c0738f7a9220e3ea5f92c331797907a951cee65ff6",
+          "events_sha256": "5637e5f49263f7e4bee5e15b51a3ba24880cb64b478837520c4a7c46f69f8b41"
+        }
+      }
+    }
+  ],
+  "cuda_kernel_probe": {
+    "local_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/execution-recovery/runs/cuda-kernel-repeatability",
+    "probe_sha256": "11586a19c08b99fcdda195c18e962a059d1b95eae58281761d35014ee63db8aa",
+    "supervisor": {
+      "schema_version": 1,
+      "status": "completed",
+      "timeout_seconds": 180,
+      "started_utc": "2026-10-02T05:35:28.225511+00:00",
+      "output": "/home/utkarsh/Work/shraddha/brain/.worktrees/execution-recovery/runs/cuda-kernel-repeatability",
+      "returncode": 0,
+      "elapsed_seconds": 22.930201818999194
+    },
+    "report": {
+      "schema_version": 1,
+      "status": "completed",
+      "configuration": {
+        "repo": "/home/utkarsh/Work/shraddha/brain/.worktrees/execution-recovery",
+        "assets": "/home/utkarsh/Work/shraddha/brain/.worktrees/r0-reproduction/data/assets/flynn",
+        "output": "/home/utkarsh/Work/shraddha/brain/.worktrees/execution-recovery/runs/cuda-kernel-repeatability",
+        "seed": 0,
+        "timeout": 180
+      },
+      "scope": "Repeated kernels in one process with identical frozen inputs; not a full-policy continuation test",
+      "prefix_ticks": 8,
+      "cublas_workspace_config": ":4096:8",
+      "prefix_deterministic_algorithms": false,
+      "frozen_inputs": {
+        "hidden": {
+          "shape": [
+            1,
+            138584
+          ],
+          "dtype": "torch.float32",
+          "device": "cuda:0",
+          "sha256": "7eae3c6a89dd00028351222ad82750a23b284bea126e859cba4a2806e7768b8d"
+        },
+        "encoded_input": {
+          "shape": [
+            1,
+            4813
+          ],
+          "dtype": "torch.float32",
+          "device": "cuda:0",
+          "sha256": "f08283aa2d4c41bc1530c09999dbbf698290f10381b027f484d78a6cf6e57cb0"
+        },
+        "pre_with_bias": {
+          "shape": [
+            1,
+            138584
+          ],
+          "dtype": "torch.float32",
+          "device": "cuda:0",
+          "sha256": "6d9f4dc7e6fffb57e17c5412be7f5e5f237aab09ab64b7d7e635822eb7caad5b"
+        },
+        "input_nodes": {
+          "shape": [
+            4813
+          ],
+          "dtype": "torch.int64",
+          "device": "cuda:0",
+          "sha256": "b8654d6037597e6312d0960fd01b4cafcba94fad56224fa7d900d0a1adbae6eb"
+        }
+      },
+      "measurements": [
+        {
+          "operation": "sparse_mm",
+          "deterministic": false,
+          "flags": {
+            "version": "2.9.0+cu128",
+            "threads": 2,
+            "interop_threads": 8,
+            "deterministic": false,
+            "deterministic_warn_only": false,
+            "matmul_precision": "highest",
+            "matmul_tf32": false,
+            "cudnn_tf32": true,
+            "cudnn_benchmark": false,
+            "cudnn_deterministic": false,
+            "cuda_runtime": "12.8",
+            "cudnn_version": 91002,
+            "CUBLAS_WORKSPACE_CONFIG": ":4096:8",
+            "CUDA_VISIBLE_DEVICES": null,
+            "NVIDIA_TF32_OVERRIDE": null,
+            "initialized_cuda_devices": [
+              {
+                "index": 0,
+                "name": "NVIDIA GeForce RTX 4050 Laptop GPU",
+                "capability": [
+                  8,
+                  9
+                ]
+              }
+            ]
+          },
+          "trials_requested": 30,
+          "trials": 30,
+          "identical_trials": 1,
+          "max_abs_delta": 8.940696716308594e-08,
+          "reference": "first trial; identical_trials includes that first trial",
+          "status": "completed"
+        },
+        {
+          "operation": "index_add",
+          "deterministic": false,
+          "flags": {
+            "version": "2.9.0+cu128",
+            "threads": 2,
+            "interop_threads": 8,
+            "deterministic": false,
+            "deterministic_warn_only": false,
+            "matmul_precision": "highest",
+            "matmul_tf32": false,
+            "cudnn_tf32": true,
+            "cudnn_benchmark": false,
+            "cudnn_deterministic": false,
+            "cuda_runtime": "12.8",
+            "cudnn_version": 91002,
+            "CUBLAS_WORKSPACE_CONFIG": ":4096:8",
+            "CUDA_VISIBLE_DEVICES": null,
+            "NVIDIA_TF32_OVERRIDE": null,
+            "initialized_cuda_devices": [
+              {
+                "index": 0,
+                "name": "NVIDIA GeForce RTX 4050 Laptop GPU",
+                "capability": [
+                  8,
+                  9
+                ]
+              }
+            ]
+          },
+          "trials_requested": 30,
+          "trials": 30,
+          "identical_trials": 30,
+          "max_abs_delta": 0.0,
+          "reference": "first trial; identical_trials includes that first trial",
+          "status": "completed"
+        },
+        {
+          "operation": "sparse_mm",
+          "deterministic": true,
+          "flags": {
+            "version": "2.9.0+cu128",
+            "threads": 2,
+            "interop_threads": 8,
+            "deterministic": true,
+            "deterministic_warn_only": false,
+            "matmul_precision": "highest",
+            "matmul_tf32": false,
+            "cudnn_tf32": true,
+            "cudnn_benchmark": false,
+            "cudnn_deterministic": false,
+            "cuda_runtime": "12.8",
+            "cudnn_version": 91002,
+            "CUBLAS_WORKSPACE_CONFIG": ":4096:8",
+            "CUDA_VISIBLE_DEVICES": null,
+            "NVIDIA_TF32_OVERRIDE": null,
+            "initialized_cuda_devices": [
+              {
+                "index": 0,
+                "name": "NVIDIA GeForce RTX 4050 Laptop GPU",
+                "capability": [
+                  8,
+                  9
+                ]
+              }
+            ]
+          },
+          "trials_requested": 30,
+          "trials": 30,
+          "identical_trials": 1,
+          "max_abs_delta": 5.960464477539063e-08,
+          "reference": "first trial; identical_trials includes that first trial",
+          "status": "completed"
+        },
+        {
+          "operation": "index_add",
+          "deterministic": true,
+          "flags": {
+            "version": "2.9.0+cu128",
+            "threads": 2,
+            "interop_threads": 8,
+            "deterministic": true,
+            "deterministic_warn_only": false,
+            "matmul_precision": "highest",
+            "matmul_tf32": false,
+            "cudnn_tf32": true,
+            "cudnn_benchmark": false,
+            "cudnn_deterministic": false,
+            "cuda_runtime": "12.8",
+            "cudnn_version": 91002,
+            "CUBLAS_WORKSPACE_CONFIG": ":4096:8",
+            "CUDA_VISIBLE_DEVICES": null,
+            "NVIDIA_TF32_OVERRIDE": null,
+            "initialized_cuda_devices": [
+              {
+                "index": 0,
+                "name": "NVIDIA GeForce RTX 4050 Laptop GPU",
+                "capability": [
+                  8,
+                  9
+                ]
+              }
+            ]
+          },
+          "trials_requested": 30,
+          "trials": 30,
+          "identical_trials": 30,
+          "max_abs_delta": 0.0,
+          "reference": "first trial; identical_trials includes that first trial",
+          "status": "completed"
+        }
+      ],
+      "all_operations_completed": true,
+      "versions": {
+        "python": "3.11.15",
+        "torch": "2.9.0+cu128",
+        "torch_cuda": "12.8",
+        "cudnn": 91002,
+        "numpy": "2.2.5",
+        "mujoco": "3.3.6",
+        "platform": "Linux-7.2.5-3-omarchy-x86_64-with-glibc2.44"
+      },
+      "device": {
+        "name": "NVIDIA GeForce RTX 4050 Laptop GPU",
+        "capability": [
+          8,
+          9
+        ]
+      },
+      "diagnostics": {
+        "checks": [
+          {
+            "detail": {
+              "executable": "/home/utkarsh/Work/shraddha/brain/.worktrees/execution-recovery/.venv/bin/python",
+              "required": "Python 3.11; uv sync --extra simulation",
+              "version": "3.11.15"
+            },
+            "name": "python",
+            "status": "ok"
+          },
+          {
+            "detail": {
+              "machine": "x86_64",
+              "platform": "Linux-7.2.5-3-omarchy-x86_64-with-glibc2.44"
+            },
+            "name": "platform",
+            "status": "info"
+          },
+          {
+            "detail": "0.1.0.dev0",
+            "name": "dependency:palimpsest",
+            "status": "ok"
+          },
+          {
+            "detail": "2.9.0",
+            "name": "dependency:torch",
+            "status": "ok"
+          },
+          {
+            "detail": "0.24.0",
+            "name": "dependency:torchvision",
+            "status": "ok"
+          },
+          {
+            "detail": "2.2.5",
+            "name": "dependency:numpy",
+            "status": "ok"
+          },
+          {
+            "detail": "1.15.2",
+            "name": "dependency:scipy",
+            "status": "ok"
+          },
+          {
+            "detail": "2.2.3",
+            "name": "dependency:pandas",
+            "status": "ok"
+          },
+          {
+            "detail": "1.8.0",
+            "name": "dependency:scikit-learn",
+            "status": "ok"
+          },
+          {
+            "detail": "3.3.6",
+            "name": "dependency:mujoco",
+            "status": "ok"
+          },
+          {
+            "detail": "1.2.1",
+            "name": "dependency:gymnasium",
+            "status": "ok"
+          },
+          {
+            "detail": "2.10.0",
+            "name": "dependency:glfw",
+            "status": "ok"
+          },
+          {
+            "detail": "4.12.0.88",
+            "name": "dependency:opencv-python",
+            "status": "ok"
+          },
+          {
+            "detail": "3.10.1",
+            "name": "dependency:matplotlib",
+            "status": "ok"
+          },
+          {
+            "detail": "0.13.2",
+            "name": "dependency:seaborn",
+            "status": "ok"
+          },
+          {
+            "detail": "3.4.2",
+            "name": "dependency:networkx",
+            "status": "ok"
+          },
+          {
+            "detail": "0.16",
+            "name": "dependency:python-louvain",
+            "status": "ok"
+          },
+          {
+            "detail": "1.1.3",
+            "name": "dependency:py7zr",
+            "status": "ok"
+          },
+          {
+            "detail": {
+              "changes": [],
+              "commit": "8d964599119b420de67ee259434d273651a1a76d",
+              "dirty": false,
+              "expected_commit": "8d964599119b420de67ee259434d273651a1a76d",
+              "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/execution-recovery/upstream/fly-gym"
+            },
+            "name": "upstream",
+            "status": "ok"
+          },
+          {
+            "detail": {
+              "available_bytes": 6296227840,
+              "total_bytes": 16023781376
+            },
+            "name": "ram",
+            "status": "ok"
+          },
+          {
+            "detail": {
+              "free_bytes": 39426473984,
+              "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/r0-reproduction/data/assets/flynn",
+              "total_bytes": 509943480320
+            },
+            "name": "disk",
+            "status": "ok"
+          },
+          {
+            "detail": {
+              "devices": [
+                {
+                  "driver_version": "610.57.04",
+                  "memory_free_mib": 5796,
+                  "memory_total_mib": 6141,
+                  "name": "NVIDIA GeForce RTX 4050 Laptop GPU"
+                }
+              ],
+              "source": "nvidia-smi"
+            },
+            "name": "gpu",
+            "status": "ok"
+          },
+          {
+            "detail": {
+              "acquisition": "palimpsest assets fetch",
+              "root": "/home/utkarsh/Work/shraddha/brain/.worktrees/r0-reproduction/data/assets/flynn",
+              "verification": {
+                "files": [
+                  {
+                    "id": "graph_archive",
+                    "license": "CC-BY-NC-4.0",
+                    "path": "drosophila adult connectome.7z",
+                    "sha256": "49d19491c1df4b8f02af0e285b71dc171f47488a93ee5b91be8ee4e280bee9f1",
+                    "size_bytes": 45111367,
+                    "status": "verified",
+                    "url": "https://huggingface.co/datasets/benquan1/fly-gym-trained-policies/resolve/507bef22433c83db3581abd1ab393b25c3aa4989/drosophila%20adult%20connectome.7z"
+                  },
+                  {
+                    "id": "checkpoint",
+                    "license": "CC-BY-NC-4.0",
+                    "path": "connectome_rnn_dagger_princeton_full_vision.pt",
+                    "sha256": "fde5327c1531f15340385b7a572b5c7a785e1ce29cde622976bee6e398e9d8d6",
+                    "size_bytes": 108220841,
+                    "status": "verified",
+                    "url": "https://huggingface.co/datasets/benquan1/fly-gym-trained-policies/resolve/507bef22433c83db3581abd1ab393b25c3aa4989/connectome_rnn_dagger_princeton_full_vision.pt"
+                  }
+                ],
+                "ok": true,
+                "profile_id": "flynn-full-vision",
+                "provenance_limit": "Pins distributed archive/checkpoint identities and mapping CSVs from the pinned upstream commit. The legacy checkpoint has no embedded source-graph or neuron-order provenance; these identities do not prove its original training graph or mapping pairing."
+              }
+            },
+            "name": "assets",
+            "status": "ok"
+          },
+          {
+            "detail": {
+              "backend_selection": "explicit MUJOCO_GL",
+              "command": "palimpsest doctor --probe-renderer",
+              "probed": false,
+              "requested_backend": "egl"
+            },
+            "name": "renderer",
+            "status": "info"
+          },
+          {
+            "detail": "Physical hardware has not been assessed; simulation setup does not qualify a rover",
+            "name": "hardware",
+            "status": "info"
+          }
+        ],
+        "ready": true,
+        "schema_version": 1
+      },
+      "source_sha256": {
+        "scripts/probe_cuda_repeatability.py": "7610242831c0bdf9a5edade9d5862d5f794e7b64b264d91658e5bd7d3f11f7ef",
+        "uv.lock": "64b20c38f457aa71d3f8284c1929a1bdfe2a38e9cf1bdb55a3e0b94a7df023c9",
+        "model_manifests/flynn-full-vision.json": "e319bb18e12110dbc096d62d3d6e9550c7b37434bf5e18e410c5410c21bb97e5",
+        "upstream/fly-gym/models/connectome_rnn_model.py": "707cba79e7bf92923618ccc596e3d7a2d779edc02a970b0949f6dd3c0d28ae80",
+        "src/palimpsest/__init__.py": "bb99e30d22e4662c4ded455b1b23f49b77ce811dcfa1b69bf358925487a566d8",
+        "src/palimpsest/__main__.py": "935a1c1166b0c1ea35a82256345000bf2c73ded718d77773bc27a71ecce28f7d",
+        "src/palimpsest/assets.py": "aa4a38c7403cd9f72bc23027acd7c212202f25574bea6af65053c34664da49e3",
+        "src/palimpsest/cli.py": "3da629c51d4339f7bd16ab034a59dfc8fa67dfe19c1c7d013e9bf5d520f048b1",
+        "src/palimpsest/doctor.py": "109de62468161f35461eee76af244daabef38f2faa1526c5a6ed268817e6b834",
+        "src/palimpsest/engine.py": "c308231e5272b0f6a9a823dfd187f0e6a1eefa263b40848fdaffe3b4c80fda3f",
+        "src/palimpsest/evaluate.py": "6929e54412b25bd39d786dec481111fc834f0bbcbb2ea29d34a81b7806c3a9ae",
+        "src/palimpsest/flynn.py": "409b7503d76fd6f971a33d053e86c968b529edc226b85f44122e17a649f8f9f4",
+        "src/palimpsest/interventions.py": "1de2d65994fb784f44142edcbec3bcedd5cd00b0dcb72c918d99adc64ee98f74",
+        "src/palimpsest/records.py": "e66fe717842d719265416d95f202199cf94d08c48a72d6433d02a1b98398adca",
+        "src/palimpsest/snapshots.py": "afbbd3e4f709a5dc612898b1f2d6095230deb4b1911939c9cd388d4008f17a41"
+      },
+      "provenance": {
+        "upstream_commit": "8d964599119b420de67ee259434d273651a1a76d",
+        "seed": 0,
+        "requested_device": "cuda",
+        "device": "cuda:0",
+        "dtype": "torch.float32",
+        "edge_sha256": "70b8f9adeb8c4917bf20686db96275d733928a7c0b63b81db5e0b16a886cf01f",
+        "checkpoint_sha256": "fde5327c1531f15340385b7a572b5c7a785e1ce29cde622976bee6e398e9d8d6",
+        "neuron_count": 138584,
+        "ordered_neuron_ids_sha256": "719ee4899cf005efc4b5e772e484a59a0df1f964d906265027118eca264e5806",
+        "ordered_neuron_ids_encoding": "decimal ID followed by LF, ascending tensor index",
+        "mapping_ids_not_in_graph": {
+          "visual_column_L1_L2_L3_rear_view_left.csv": {
+            "count": 0,
+            "ids_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "sample": []
+          },
+          "visual_column_L1_L2_L3_rear_view_right.csv": {
+            "count": 0,
+            "ids_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "sample": []
+          },
+          "head_bristles_left.csv": {
+            "count": 0,
+            "ids_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "sample": []
+          },
+          "head_bristles_right.csv": {
+            "count": 0,
+            "ids_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "sample": []
+          },
+          "descending_neurons.csv": {
+            "count": 15,
+            "ids_sha256": "46dc327a2df88a76ea5fda716559caa9ecb18a58e5be4c04d40dcfdbd593c343",
+            "sample": [
+              720575940606756309,
+              720575940612429743,
+              720575940617035449,
+              720575940617873201,
+              720575940618548244,
+              720575940618863553,
+              720575940619434587,
+              720575940621082111,
+              720575940621294218,
+              720575940622681864
+            ]
+          },
+          "consolidated_cell_types.csv": {
+            "count": 560,
+            "ids_sha256": "3b6fee36b16485a8a75dfd8d5ab19df3279a3e9b3cd2583717dc0d28cf19041b",
+            "sample": [
+              720575940604705481,
+              720575940604810668,
+              720575940605400032,
+              720575940605634220,
+              720575940606007280,
+              720575940606022128,
+              720575940606180896,
+              720575940606292326,
+              720575940606292582,
+              720575940606630590
+            ]
+          },
+          "JO-C_and_JO-E.csv": {
+            "count": 4,
+            "ids_sha256": "24511aefd850062f4c7a529fdf939fd031f92687a8762febc3add194bc82e4ab",
+            "sample": [
+              720575940612841330,
+              720575940621032513,
+              720575940623325993,
+              720575940631406944
+            ]
+          }
+        },
+        "unknown_cell_type_count": 1467,
+        "checkpoint_structural_buffers": [
+          "grid_L1_left",
+          "grid_L2_left",
+          "grid_L3_left",
+          "grid_L1_right",
+          "grid_L2_right",
+          "grid_L3_right",
+          "cell.W_crow_indices",
+          "cell.W_col_indices",
+          "cell.W_size",
+          "cell.W_coo_rows",
+          "cell.input_nodes",
+          "cell.output_nodes",
+          "cell.neuron_type_ids"
+        ],
+        "provenance_limit": "Buffers bind graph structure and mappings; legacy checkpoint contains no original training neuron IDs or training lineage."
+      },
+      "run_id": "694d8c87bda84cf7954545ef491a2515"
+    }
+  },
+  "excluded_runs": {
+    "runs/flynn-cpu-continuation-qualified": "An engine metadata edit changed source hashes between workers; repeatability verifier now rejects this case."
+  }
+}

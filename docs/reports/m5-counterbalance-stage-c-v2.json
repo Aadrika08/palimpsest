@@ -1,0 +1,2733 @@
+{
+  "version": 1,
+  "claim": "incomplete development comparison; operational monitor failure; partial descriptive readouts only",
+  "source_commit": "c626f3c510999b6f04f03eb20c189a1a004b7e51",
+  "protocol_sha256": "bedda73b18ac5525b3ea4e667aa505d22d47decefac016947b190024337db134",
+  "output": "runs/m5-counterbalance-stage-c-v2-20261003",
+  "control": "runs/m5-counterbalance-stage-c-v2-launch-c626f3c",
+  "prepared_plan": {
+    "path": "runs/m5-counterbalance-stage-c-v2-launch-c626f3c/prepared-plan.json",
+    "bytes": 90912,
+    "sha256": "9cdbd1b3f45bb3e01f5fa959243b793b2c54dd0be64875b190620a93a2773cbc"
+  },
+  "launcher": {
+    "path": "runs/m5-counterbalance-stage-c-v2-launch-c626f3c/launch.py",
+    "bytes": 13990,
+    "sha256": "9db2234c5151884390a04638366d98e88ed7bc956d4c7606f9e3ee51398146c1"
+  },
+  "launch_report": {
+    "path": "runs/m5-counterbalance-stage-c-v2-launch-c626f3c/launch.json",
+    "bytes": 5335,
+    "sha256": "7dbd56e00d6c4c5b7a003fb4f2a2b1e74bbbbfafa77883541ae0e665c56de30e"
+  },
+  "operational_pass": false,
+  "aggregate_completed": false,
+  "aggregate_report_present": false,
+  "terminal_recording_owners": 14,
+  "finalized_supervisors": 13,
+  "unfinished_supervisor_owners": 1,
+  "numeric_ticks": 1561,
+  "owners": [
+    {
+      "cell": "s24/local_cue/change",
+      "stage": "anchor",
+      "run_id": "62875c51fdac4d53885cb53b05fc206c",
+      "supervisor": {
+        "schema_version": 1,
+        "status": "completed",
+        "timeout_seconds": 160,
+        "started_utc": "2026-10-02T21:21:23.057376+00:00",
+        "output": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-flynn-continuation/runs/m5-counterbalance-stage-c-v2-20261003/runs/62875c51fdac4d53885cb53b05fc206c",
+        "returncode": 0,
+        "elapsed_seconds": 30.71196047500416
+      },
+      "supervisor_admitted": true,
+      "recording_status": "completed",
+      "rows": 0,
+      "final_phase": "paused",
+      "terminal_control_boundary": 300,
+      "snapshot_sha256": "5855cb20a7d937bf241545fbf86d5d5d825470408dbe00159e54e4d4bd2339f3"
+    },
+    {
+      "cell": "s24/local_cue/change",
+      "stage": "own",
+      "run_id": "6ace57fa66df414091ace73f1e5fd348",
+      "supervisor": {
+        "schema_version": 1,
+        "status": "completed",
+        "timeout_seconds": 160,
+        "started_utc": "2026-10-02T21:21:54.110690+00:00",
+        "output": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-flynn-continuation/runs/m5-counterbalance-stage-c-v2-20261003/runs/6ace57fa66df414091ace73f1e5fd348",
+        "returncode": 0,
+        "elapsed_seconds": 42.99182363600994
+      },
+      "supervisor_admitted": true,
+      "recording_status": "completed",
+      "rows": 130,
+      "final_phase": "terminated",
+      "terminal_control_boundary": 430,
+      "snapshot_sha256": "4ff500ba70ab4295813e732e056e0a457900211cbe06fa1d981c8ecbe0dcc88e"
+    },
+    {
+      "cell": "s24/local_cue/change",
+      "stage": "swapped",
+      "run_id": "253eb2a7198f4e9ea63bf6f56aed80c6",
+      "supervisor": {
+        "schema_version": 1,
+        "status": "completed",
+        "timeout_seconds": 160,
+        "started_utc": "2026-10-02T21:22:38.227665+00:00",
+        "output": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-flynn-continuation/runs/m5-counterbalance-stage-c-v2-20261003/runs/253eb2a7198f4e9ea63bf6f56aed80c6",
+        "returncode": 0,
+        "elapsed_seconds": 43.18045785400318
+      },
+      "supervisor_admitted": true,
+      "recording_status": "completed",
+      "rows": 129,
+      "final_phase": "terminated",
+      "terminal_control_boundary": 429,
+      "snapshot_sha256": "a996bb6769e4b99d97ef3c573134e9020f6a18a03252a51afa15f420abe6f3ec"
+    },
+    {
+      "cell": "s24/local_cue/change",
+      "stage": "sham",
+      "run_id": "71e5fc774aa94c9b8cfb37ff50087938",
+      "supervisor": {
+        "schema_version": 1,
+        "status": "completed",
+        "timeout_seconds": 160,
+        "started_utc": "2026-10-02T21:23:22.506097+00:00",
+        "output": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-flynn-continuation/runs/m5-counterbalance-stage-c-v2-20261003/runs/71e5fc774aa94c9b8cfb37ff50087938",
+        "returncode": 0,
+        "elapsed_seconds": 41.93976809900778
+      },
+      "supervisor_admitted": true,
+      "recording_status": "completed",
+      "rows": 130,
+      "final_phase": "terminated",
+      "terminal_control_boundary": 430,
+      "snapshot_sha256": "e09889869051a41e70da992a38c08ae16224d3181f214adf416c8ca124984ff1"
+    },
+    {
+      "cell": "s24/local_cue/change",
+      "stage": "no-U",
+      "run_id": "6ba1c18ed27544859696b40e4a17a411",
+      "supervisor": {
+        "schema_version": 1,
+        "status": "completed",
+        "timeout_seconds": 160,
+        "started_utc": "2026-10-02T21:24:05.530262+00:00",
+        "output": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-flynn-continuation/runs/m5-counterbalance-stage-c-v2-20261003/runs/6ba1c18ed27544859696b40e4a17a411",
+        "returncode": 0,
+        "elapsed_seconds": 47.4523622179986
+      },
+      "supervisor_admitted": true,
+      "recording_status": "completed",
+      "rows": 129,
+      "final_phase": "terminated",
+      "terminal_control_boundary": 429,
+      "snapshot_sha256": "bb3c16e5ee46e369d078c287f898c5ff8a30d86c236b26dbf7745a54e29301d9"
+    },
+    {
+      "cell": "s24/local_cue/change",
+      "stage": "hand-authored",
+      "run_id": "b6e0f04786b744049b95c8c318aa33b5",
+      "supervisor": {
+        "schema_version": 1,
+        "status": "completed",
+        "timeout_seconds": 160,
+        "started_utc": "2026-10-02T21:24:54.087706+00:00",
+        "output": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-flynn-continuation/runs/m5-counterbalance-stage-c-v2-20261003/runs/b6e0f04786b744049b95c8c318aa33b5",
+        "returncode": 0,
+        "elapsed_seconds": 46.50801873199816
+      },
+      "supervisor_admitted": true,
+      "recording_status": "completed",
+      "rows": 130,
+      "final_phase": "terminated",
+      "terminal_control_boundary": 430,
+      "snapshot_sha256": "e08c994f20c871e4e54326ddc7a31a0ef43151f3c239359c8ffbe94537a1579f"
+    },
+    {
+      "cell": "s24/local_cue/change",
+      "stage": "history-independent",
+      "run_id": "9c446c256740441b8d36890603484d12",
+      "supervisor": {
+        "schema_version": 1,
+        "status": "completed",
+        "timeout_seconds": 160,
+        "started_utc": "2026-10-02T21:25:41.781599+00:00",
+        "output": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-flynn-continuation/runs/m5-counterbalance-stage-c-v2-20261003/runs/9c446c256740441b8d36890603484d12",
+        "returncode": 0,
+        "elapsed_seconds": 41.641997022001306
+      },
+      "supervisor_admitted": true,
+      "recording_status": "completed",
+      "rows": 130,
+      "final_phase": "terminated",
+      "terminal_control_boundary": 430,
+      "snapshot_sha256": "413c233626ed1481f7fc5d6c94589519e94a616a953063622643d9f38c82d1a3"
+    },
+    {
+      "cell": "s24/local_cue/change",
+      "stage": "traversal",
+      "run_id": "4b51280ac8be45d2a70c2764715feb4c",
+      "supervisor": {
+        "schema_version": 1,
+        "status": "completed",
+        "timeout_seconds": 160,
+        "started_utc": "2026-10-02T21:26:24.517739+00:00",
+        "output": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-flynn-continuation/runs/m5-counterbalance-stage-c-v2-20261003/runs/4b51280ac8be45d2a70c2764715feb4c",
+        "returncode": 0,
+        "elapsed_seconds": 42.34488742999383
+      },
+      "supervisor_admitted": true,
+      "recording_status": "completed",
+      "rows": 130,
+      "final_phase": "terminated",
+      "terminal_control_boundary": 430,
+      "snapshot_sha256": "edc4291c11f7aeff11cf33c883b64b5f99dcd25ce922078a199a3549b7dd585c"
+    },
+    {
+      "cell": "s24/local_cue/change",
+      "stage": "retrieval",
+      "run_id": "6227b2e06ae643939dc5d682e47b4331",
+      "supervisor": {
+        "schema_version": 1,
+        "status": "completed",
+        "timeout_seconds": 160,
+        "started_utc": "2026-10-02T21:27:07.865381+00:00",
+        "output": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-flynn-continuation/runs/m5-counterbalance-stage-c-v2-20261003/runs/6227b2e06ae643939dc5d682e47b4331",
+        "returncode": 0,
+        "elapsed_seconds": 43.089784800002235
+      },
+      "supervisor_admitted": true,
+      "recording_status": "completed",
+      "rows": 130,
+      "final_phase": "terminated",
+      "terminal_control_boundary": 430,
+      "snapshot_sha256": "fa2c840cc735451ebb5086eef8f0e6d99ff7cb4acf69a8b0eaf72f5408506ebb"
+    },
+    {
+      "cell": "s24/local_cue/change",
+      "stage": "oracle",
+      "run_id": "67346fa0fed74ff582eeac59f39ce43b",
+      "supervisor": {
+        "schema_version": 1,
+        "status": "completed",
+        "timeout_seconds": 160,
+        "started_utc": "2026-10-02T21:27:51.887920+00:00",
+        "output": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-flynn-continuation/runs/m5-counterbalance-stage-c-v2-20261003/runs/67346fa0fed74ff582eeac59f39ce43b",
+        "returncode": 0,
+        "elapsed_seconds": 43.998351820002426
+      },
+      "supervisor_admitted": true,
+      "recording_status": "completed",
+      "rows": 130,
+      "final_phase": "terminated",
+      "terminal_control_boundary": 430,
+      "snapshot_sha256": "53dff828fcaaf268bc34fcebaa1a8114e241289ab0c2c6085f0c8ea8467b1445"
+    },
+    {
+      "cell": "s29/paired_cue/change",
+      "stage": "anchor",
+      "run_id": "9ac6527c28764bbb8864c3e1356f7b5a",
+      "supervisor": {
+        "schema_version": 1,
+        "status": "completed",
+        "timeout_seconds": 160,
+        "started_utc": "2026-10-02T21:28:37.425495+00:00",
+        "output": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-flynn-continuation/runs/m5-counterbalance-stage-c-v2-20261003/runs/9ac6527c28764bbb8864c3e1356f7b5a",
+        "returncode": 0,
+        "elapsed_seconds": 30.658102379995398
+      },
+      "supervisor_admitted": true,
+      "recording_status": "completed",
+      "rows": 0,
+      "final_phase": "paused",
+      "terminal_control_boundary": 300,
+      "snapshot_sha256": "13d85fd273d236d2a2004fe2c05b15797078ef94b8a268f3741f7427ea184fa9"
+    },
+    {
+      "cell": "s29/paired_cue/change",
+      "stage": "own",
+      "run_id": "f82ae86dc75e438d9144d93cadbc544f",
+      "supervisor": {
+        "schema_version": 1,
+        "status": "completed",
+        "timeout_seconds": 160,
+        "started_utc": "2026-10-02T21:29:08.410891+00:00",
+        "output": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-flynn-continuation/runs/m5-counterbalance-stage-c-v2-20261003/runs/f82ae86dc75e438d9144d93cadbc544f",
+        "returncode": 0,
+        "elapsed_seconds": 41.13846627199382
+      },
+      "supervisor_admitted": true,
+      "recording_status": "completed",
+      "rows": 131,
+      "final_phase": "terminated",
+      "terminal_control_boundary": 431,
+      "snapshot_sha256": "d0b9aec7fef818e0f3a0f002f39694430046d480eaa658990442054f0ccb4ab8"
+    },
+    {
+      "cell": "s29/paired_cue/change",
+      "stage": "swapped",
+      "run_id": "af2446f4d3944c52a35063d3f472ebf0",
+      "supervisor": {
+        "schema_version": 1,
+        "status": "completed",
+        "timeout_seconds": 160,
+        "started_utc": "2026-10-02T21:29:50.457504+00:00",
+        "output": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-flynn-continuation/runs/m5-counterbalance-stage-c-v2-20261003/runs/af2446f4d3944c52a35063d3f472ebf0",
+        "returncode": 0,
+        "elapsed_seconds": 43.0416151190002
+      },
+      "supervisor_admitted": true,
+      "recording_status": "completed",
+      "rows": 131,
+      "final_phase": "terminated",
+      "terminal_control_boundary": 431,
+      "snapshot_sha256": "633f084343a2162fa2f78d5708862cb189618dd66025e7ad46ca9f077b5cd156"
+    },
+    {
+      "cell": "s29/paired_cue/change",
+      "stage": "sham",
+      "run_id": "2ab1ad62605f4e6a943818e1d51508ab",
+      "supervisor": {
+        "schema_version": 1,
+        "status": "running",
+        "timeout_seconds": 160,
+        "started_utc": "2026-10-02T21:30:34.619859+00:00",
+        "output": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-flynn-continuation/runs/m5-counterbalance-stage-c-v2-20261003/runs/2ab1ad62605f4e6a943818e1d51508ab"
+      },
+      "supervisor_admitted": false,
+      "recording_status": "completed",
+      "rows": 131,
+      "final_phase": "terminated",
+      "terminal_control_boundary": 431,
+      "snapshot_sha256": "55196322961a10669fabefad77975d6a269d53ccbab3040ad237b9bd1dd03b1d"
+    }
+  ],
+  "unstarted": [
+    {
+      "cell": [
+        29,
+        "paired_cue",
+        "change"
+      ],
+      "stage": "no-U",
+      "run_id": "370e42c4c1e04194ab6a0714ca573f84"
+    },
+    {
+      "cell": [
+        29,
+        "paired_cue",
+        "change"
+      ],
+      "stage": "hand-authored",
+      "run_id": "75530798797c4680b565106da7176b35"
+    },
+    {
+      "cell": [
+        29,
+        "paired_cue",
+        "change"
+      ],
+      "stage": "history-independent",
+      "run_id": "99bb828db6724b1caaa1616abadb58ab"
+    },
+    {
+      "cell": [
+        29,
+        "paired_cue",
+        "change"
+      ],
+      "stage": "traversal",
+      "run_id": "8346b71242994e3f940044439b83c6a9"
+    },
+    {
+      "cell": [
+        29,
+        "paired_cue",
+        "change"
+      ],
+      "stage": "retrieval",
+      "run_id": "b83b8f049e11436eb48396a82c70e6b2"
+    },
+    {
+      "cell": [
+        29,
+        "paired_cue",
+        "change"
+      ],
+      "stage": "oracle",
+      "run_id": "38d6fd1e6df8466a8fe63db7d8a01f16"
+    },
+    {
+      "cell": [
+        30,
+        "local_cue",
+        "null"
+      ],
+      "stage": "anchor",
+      "run_id": "3db7927e7215433193ef3b6486bb19cd"
+    },
+    {
+      "cell": [
+        30,
+        "local_cue",
+        "null"
+      ],
+      "stage": "own",
+      "run_id": "33a1b9104eb849df9fc1d99fb58e3f86"
+    },
+    {
+      "cell": [
+        30,
+        "local_cue",
+        "null"
+      ],
+      "stage": "swapped",
+      "run_id": "9abae0abb1f84c968518676c0826d797"
+    },
+    {
+      "cell": [
+        30,
+        "local_cue",
+        "null"
+      ],
+      "stage": "sham",
+      "run_id": "1ad5679f3ed846fe8d43f7c10aa162f7"
+    },
+    {
+      "cell": [
+        30,
+        "local_cue",
+        "null"
+      ],
+      "stage": "no-U",
+      "run_id": "6803cc14daaa4806ae1bd28e54c92687"
+    },
+    {
+      "cell": [
+        30,
+        "local_cue",
+        "null"
+      ],
+      "stage": "hand-authored",
+      "run_id": "6f2a53a7be414130839fa2f1ec31e40d"
+    },
+    {
+      "cell": [
+        30,
+        "local_cue",
+        "null"
+      ],
+      "stage": "history-independent",
+      "run_id": "d1080ec1d2134970a8392711ba566cb3"
+    },
+    {
+      "cell": [
+        30,
+        "local_cue",
+        "null"
+      ],
+      "stage": "traversal",
+      "run_id": "5afac9f9a08b4f2b926fa7e29805d643"
+    },
+    {
+      "cell": [
+        30,
+        "local_cue",
+        "null"
+      ],
+      "stage": "retrieval",
+      "run_id": "74f4a736502e48f7b6a33938d4d256f2"
+    },
+    {
+      "cell": [
+        30,
+        "local_cue",
+        "null"
+      ],
+      "stage": "oracle",
+      "run_id": "5746a85413684404ae08b4fa96e9022f"
+    },
+    {
+      "cell": [
+        27,
+        "paired_cue",
+        "no-event"
+      ],
+      "stage": "anchor",
+      "run_id": "30cb7174cb7842ab9e034703ceebb268"
+    },
+    {
+      "cell": [
+        27,
+        "paired_cue",
+        "no-event"
+      ],
+      "stage": "own",
+      "run_id": "bda39297a76c40228d20648aa802238f"
+    },
+    {
+      "cell": [
+        27,
+        "paired_cue",
+        "no-event"
+      ],
+      "stage": "swapped",
+      "run_id": "a7a1f16270c74c8b81f16208e41b4f1f"
+    },
+    {
+      "cell": [
+        27,
+        "paired_cue",
+        "no-event"
+      ],
+      "stage": "sham",
+      "run_id": "ddcf150c436c4fe69e4fcb9de5a385cb"
+    },
+    {
+      "cell": [
+        27,
+        "paired_cue",
+        "no-event"
+      ],
+      "stage": "no-U",
+      "run_id": "d4d604b3202d4cfc94127c58345b1be7"
+    },
+    {
+      "cell": [
+        27,
+        "paired_cue",
+        "no-event"
+      ],
+      "stage": "hand-authored",
+      "run_id": "9bb931ac794f4e71ae8a9ac88fa8461b"
+    },
+    {
+      "cell": [
+        27,
+        "paired_cue",
+        "no-event"
+      ],
+      "stage": "history-independent",
+      "run_id": "8503c6acb4c84d89840a44c424658d7c"
+    },
+    {
+      "cell": [
+        27,
+        "paired_cue",
+        "no-event"
+      ],
+      "stage": "traversal",
+      "run_id": "a7a2445a48804b7ca5b0174cdd6ad9aa"
+    },
+    {
+      "cell": [
+        27,
+        "paired_cue",
+        "no-event"
+      ],
+      "stage": "retrieval",
+      "run_id": "61777b85162041c9b39bfd24fb5cf29f"
+    },
+    {
+      "cell": [
+        27,
+        "paired_cue",
+        "no-event"
+      ],
+      "stage": "oracle",
+      "run_id": "93c6fbd4bb934457848000c20a2d9cb1"
+    }
+  ],
+  "partial_descriptive_readouts": [
+    {
+      "cell": "s24/local_cue/change",
+      "scope": "read-only posthoc completed first cell; interrupted aggregate is not a completed protocol",
+      "gold_target_ids": [
+        "live-development-test-00000018-fact-a"
+      ],
+      "before_occupancy": {
+        "live-development-test-00000018-subject-a": "open",
+        "live-development-test-00000018-subject-z": "open"
+      },
+      "after_occupancy": {
+        "live-development-test-00000018-subject-a": "blocked",
+        "live-development-test-00000018-subject-z": "open"
+      },
+      "pre_m_sha256": "d8743862fbeebb7c1ed813e842fb33986f6adfc8e31b2c7e64cb38a73b098819",
+      "oracle_evidence_sha256": "6e10a5ddf329452348997327f7bca0c595a438c53d0b2c9bc6b14da574f01341",
+      "trajectory_comparisons": [
+        {
+          "reference": "own",
+          "condition": "swapped",
+          "shared_ticks": 129,
+          "same_length": false,
+          "first_divergence": {
+            "field": "encoded_input",
+            "reason": "numeric replay divergence",
+            "episode": 0,
+            "tick": 300,
+            "global_tick": 300,
+            "index": [
+              4595
+            ],
+            "expected": -0.46473488211631775,
+            "actual": -0.4897514879703522,
+            "max_abs_error": 0.03600132465362549
+          },
+          "scope": "existing replay tolerances; frames are not independent samples"
+        },
+        {
+          "reference": "own",
+          "condition": "sham",
+          "shared_ticks": 130,
+          "same_length": true,
+          "first_divergence": null,
+          "scope": "existing replay tolerances; frames are not independent samples"
+        },
+        {
+          "reference": "own",
+          "condition": "no-U",
+          "shared_ticks": 129,
+          "same_length": false,
+          "first_divergence": {
+            "field": "encoded_input",
+            "reason": "numeric replay divergence",
+            "episode": 0,
+            "tick": 300,
+            "global_tick": 300,
+            "index": [
+              4595
+            ],
+            "expected": -0.46473488211631775,
+            "actual": -0.4897514879703522,
+            "max_abs_error": 0.03600132465362549
+          },
+          "scope": "existing replay tolerances; frames are not independent samples"
+        },
+        {
+          "reference": "own",
+          "condition": "hand-authored",
+          "shared_ticks": 130,
+          "same_length": true,
+          "first_divergence": null,
+          "scope": "existing replay tolerances; frames are not independent samples"
+        },
+        {
+          "reference": "own",
+          "condition": "history-independent",
+          "shared_ticks": 130,
+          "same_length": true,
+          "first_divergence": null,
+          "scope": "existing replay tolerances; frames are not independent samples"
+        },
+        {
+          "reference": "own",
+          "condition": "traversal",
+          "shared_ticks": 130,
+          "same_length": true,
+          "first_divergence": null,
+          "scope": "existing replay tolerances; frames are not independent samples"
+        },
+        {
+          "reference": "own",
+          "condition": "retrieval",
+          "shared_ticks": 130,
+          "same_length": true,
+          "first_divergence": null,
+          "scope": "existing replay tolerances; frames are not independent samples"
+        },
+        {
+          "reference": "own",
+          "condition": "oracle",
+          "shared_ticks": 130,
+          "same_length": true,
+          "first_divergence": null,
+          "scope": "existing replay tolerances; frames are not independent samples"
+        }
+      ],
+      "condition_readouts": [
+        {
+          "condition": "own",
+          "selector_invocations": 1,
+          "selector_behavior_bytes": 1534,
+          "target_ids": [
+            "live-development-test-00000018-fact-a"
+          ],
+          "recording_status": "completed",
+          "final_phase": "terminated",
+          "requested": 1,
+          "started": 1,
+          "resolved": 1,
+          "timeouts": 0,
+          "unresolved_fact_ids": [],
+          "navigation_pass": true,
+          "goal_tick": 430,
+          "terminal_control_boundary": 430,
+          "timing": [
+            {
+              "fact_id": "live-development-test-00000018-fact-a",
+              "stale_value_changed": true,
+              "first_correct_observed_tick": 358,
+              "first_correct_committed_tick": 358,
+              "first_stale_value_correction_tick": 358,
+              "first_confirmation_tick": null,
+              "uncertainty_intervals": [
+                {
+                  "start_tick": 300,
+                  "end_tick": 358,
+                  "duration_ticks": 58,
+                  "censored": false
+                }
+              ]
+            },
+            {
+              "fact_id": "live-development-test-00000018-fact-z",
+              "stale_value_changed": false,
+              "first_correct_observed_tick": 300,
+              "first_correct_committed_tick": 300,
+              "first_stale_value_correction_tick": null,
+              "first_confirmation_tick": 300,
+              "uncertainty_intervals": []
+            }
+          ],
+          "worker_task_pass": null,
+          "revision_pass": true,
+          "task_pass": true,
+          "selector_configuration_sha256": "4fc18c9e1179a352193221429675b8d95c9d63d73708e123d5558b3d4c355b2e",
+          "resource_sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+          "provenance_sha256": "016c5b5e9472b116d065fb922b32d64089db6e27839aec09d751238f8ce7ffc1",
+          "target_score": {
+            "condition": "own",
+            "selection": {
+              "event_id": "sensor-197fedb952190aa05faead17f55b42dff005e03991e2ae2e3431995002db0e17",
+              "target_ids": [
+                "live-development-test-00000018-fact-a"
+              ],
+              "reason": "matched"
+            },
+            "target_limit": 1,
+            "exact_set": true,
+            "false_targets": 0,
+            "missed_targets": 0,
+            "abstained": false,
+            "correct_abstention": false,
+            "precision": 1.0,
+            "recall": 1.0,
+            "privileged": false,
+            "runtime_access": [
+              "m",
+              "trigger",
+              "u"
+            ],
+            "validation_access": [
+              "m",
+              "trigger",
+              "u"
+            ],
+            "behavior_access": [
+              "m",
+              "trigger",
+              "u.payload"
+            ],
+            "validation_input_bytes": 2008,
+            "behavior_input_bytes": 1534,
+            "payload_bytes": 108,
+            "envelope_bytes": 590,
+            "runtime_history_bytes": 0
+          }
+        },
+        {
+          "condition": "swapped",
+          "selector_invocations": 1,
+          "selector_behavior_bytes": 1535,
+          "target_ids": [
+            "live-development-test-00000018-fact-z"
+          ],
+          "recording_status": "completed",
+          "final_phase": "terminated",
+          "requested": 0,
+          "started": 0,
+          "resolved": 0,
+          "timeouts": 0,
+          "unresolved_fact_ids": [],
+          "navigation_pass": true,
+          "goal_tick": 429,
+          "terminal_control_boundary": 429,
+          "timing": [
+            {
+              "fact_id": "live-development-test-00000018-fact-a",
+              "stale_value_changed": true,
+              "first_correct_observed_tick": 358,
+              "first_correct_committed_tick": 358,
+              "first_stale_value_correction_tick": 358,
+              "first_confirmation_tick": null,
+              "uncertainty_intervals": []
+            },
+            {
+              "fact_id": "live-development-test-00000018-fact-z",
+              "stale_value_changed": false,
+              "first_correct_observed_tick": 300,
+              "first_correct_committed_tick": 300,
+              "first_stale_value_correction_tick": null,
+              "first_confirmation_tick": 300,
+              "uncertainty_intervals": [
+                {
+                  "start_tick": 300,
+                  "end_tick": 300,
+                  "duration_ticks": 0,
+                  "censored": false
+                }
+              ]
+            }
+          ],
+          "worker_task_pass": null,
+          "revision_pass": true,
+          "task_pass": true,
+          "selector_configuration_sha256": "ab4ecff0bde2fef1b22223c79887f3798b00448e1be49e021450abe6047aa207",
+          "resource_sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+          "provenance_sha256": "64628e37cc6e861194f810baa92926eba8f57260047cdd8ad320a4601023d213",
+          "target_score": {
+            "condition": "swapped",
+            "selection": {
+              "event_id": "sensor-197fedb952190aa05faead17f55b42dff005e03991e2ae2e3431995002db0e17",
+              "target_ids": [
+                "live-development-test-00000018-fact-z"
+              ],
+              "reason": "matched"
+            },
+            "target_limit": 1,
+            "exact_set": false,
+            "false_targets": 1,
+            "missed_targets": 1,
+            "abstained": false,
+            "correct_abstention": false,
+            "precision": 0.0,
+            "recall": 0.0,
+            "privileged": false,
+            "runtime_access": [
+              "m",
+              "trigger",
+              "u"
+            ],
+            "validation_access": [
+              "m",
+              "trigger",
+              "u"
+            ],
+            "behavior_access": [
+              "m",
+              "trigger",
+              "u.payload"
+            ],
+            "validation_input_bytes": 2009,
+            "behavior_input_bytes": 1535,
+            "payload_bytes": 109,
+            "envelope_bytes": 591,
+            "runtime_history_bytes": 0
+          }
+        },
+        {
+          "condition": "sham",
+          "selector_invocations": 1,
+          "selector_behavior_bytes": 1534,
+          "target_ids": [
+            "live-development-test-00000018-fact-a"
+          ],
+          "recording_status": "completed",
+          "final_phase": "terminated",
+          "requested": 1,
+          "started": 1,
+          "resolved": 1,
+          "timeouts": 0,
+          "unresolved_fact_ids": [],
+          "navigation_pass": true,
+          "goal_tick": 430,
+          "terminal_control_boundary": 430,
+          "timing": [
+            {
+              "fact_id": "live-development-test-00000018-fact-a",
+              "stale_value_changed": true,
+              "first_correct_observed_tick": 358,
+              "first_correct_committed_tick": 358,
+              "first_stale_value_correction_tick": 358,
+              "first_confirmation_tick": null,
+              "uncertainty_intervals": [
+                {
+                  "start_tick": 300,
+                  "end_tick": 358,
+                  "duration_ticks": 58,
+                  "censored": false
+                }
+              ]
+            },
+            {
+              "fact_id": "live-development-test-00000018-fact-z",
+              "stale_value_changed": false,
+              "first_correct_observed_tick": 300,
+              "first_correct_committed_tick": 300,
+              "first_stale_value_correction_tick": null,
+              "first_confirmation_tick": 300,
+              "uncertainty_intervals": []
+            }
+          ],
+          "worker_task_pass": null,
+          "revision_pass": true,
+          "task_pass": true,
+          "selector_configuration_sha256": "e7f35880b346992c0065622c7d2b1e39af305cbb8d2fa3af701f084bf5a67225",
+          "resource_sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+          "provenance_sha256": "016c5b5e9472b116d065fb922b32d64089db6e27839aec09d751238f8ce7ffc1",
+          "target_score": {
+            "condition": "sham",
+            "selection": {
+              "event_id": "sensor-197fedb952190aa05faead17f55b42dff005e03991e2ae2e3431995002db0e17",
+              "target_ids": [
+                "live-development-test-00000018-fact-a"
+              ],
+              "reason": "matched"
+            },
+            "target_limit": 1,
+            "exact_set": true,
+            "false_targets": 0,
+            "missed_targets": 0,
+            "abstained": false,
+            "correct_abstention": false,
+            "precision": 1.0,
+            "recall": 1.0,
+            "privileged": false,
+            "runtime_access": [
+              "m",
+              "trigger",
+              "u"
+            ],
+            "validation_access": [
+              "m",
+              "trigger",
+              "u"
+            ],
+            "behavior_access": [
+              "m",
+              "trigger",
+              "u.payload"
+            ],
+            "validation_input_bytes": 2008,
+            "behavior_input_bytes": 1534,
+            "payload_bytes": 108,
+            "envelope_bytes": 590,
+            "runtime_history_bytes": 0
+          }
+        },
+        {
+          "condition": "no-U",
+          "selector_invocations": 1,
+          "selector_behavior_bytes": 1486,
+          "target_ids": [],
+          "recording_status": "completed",
+          "final_phase": "terminated",
+          "requested": 0,
+          "started": 0,
+          "resolved": 0,
+          "timeouts": 0,
+          "unresolved_fact_ids": [],
+          "navigation_pass": true,
+          "goal_tick": 429,
+          "terminal_control_boundary": 429,
+          "timing": [
+            {
+              "fact_id": "live-development-test-00000018-fact-a",
+              "stale_value_changed": true,
+              "first_correct_observed_tick": 358,
+              "first_correct_committed_tick": 358,
+              "first_stale_value_correction_tick": 358,
+              "first_confirmation_tick": null,
+              "uncertainty_intervals": []
+            },
+            {
+              "fact_id": "live-development-test-00000018-fact-z",
+              "stale_value_changed": false,
+              "first_correct_observed_tick": 300,
+              "first_correct_committed_tick": 300,
+              "first_stale_value_correction_tick": null,
+              "first_confirmation_tick": 300,
+              "uncertainty_intervals": []
+            }
+          ],
+          "worker_task_pass": null,
+          "revision_pass": true,
+          "task_pass": true,
+          "selector_configuration_sha256": "555750000458b868687519e25f05763f981df5d326ff5e52b7bd94ce6420c6e2",
+          "resource_sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+          "provenance_sha256": "bedda73b18ac5525b3ea4e667aa505d22d47decefac016947b190024337db134",
+          "target_score": {
+            "condition": "no-U",
+            "selection": {
+              "event_id": "sensor-197fedb952190aa05faead17f55b42dff005e03991e2ae2e3431995002db0e17",
+              "target_ids": [],
+              "reason": "no_rule"
+            },
+            "target_limit": 1,
+            "exact_set": false,
+            "false_targets": 0,
+            "missed_targets": 1,
+            "abstained": true,
+            "correct_abstention": false,
+            "precision": null,
+            "recall": 0.0,
+            "privileged": false,
+            "runtime_access": [
+              "m",
+              "trigger",
+              "u"
+            ],
+            "validation_access": [
+              "m",
+              "trigger",
+              "u"
+            ],
+            "behavior_access": [
+              "m",
+              "trigger",
+              "u.payload"
+            ],
+            "validation_input_bytes": 1892,
+            "behavior_input_bytes": 1486,
+            "payload_bytes": 60,
+            "envelope_bytes": 474,
+            "runtime_history_bytes": 0
+          }
+        },
+        {
+          "condition": "hand-authored",
+          "selector_invocations": 1,
+          "selector_behavior_bytes": 1534,
+          "target_ids": [
+            "live-development-test-00000018-fact-a"
+          ],
+          "recording_status": "completed",
+          "final_phase": "terminated",
+          "requested": 1,
+          "started": 1,
+          "resolved": 1,
+          "timeouts": 0,
+          "unresolved_fact_ids": [],
+          "navigation_pass": true,
+          "goal_tick": 430,
+          "terminal_control_boundary": 430,
+          "timing": [
+            {
+              "fact_id": "live-development-test-00000018-fact-a",
+              "stale_value_changed": true,
+              "first_correct_observed_tick": 358,
+              "first_correct_committed_tick": 358,
+              "first_stale_value_correction_tick": 358,
+              "first_confirmation_tick": null,
+              "uncertainty_intervals": [
+                {
+                  "start_tick": 300,
+                  "end_tick": 358,
+                  "duration_ticks": 58,
+                  "censored": false
+                }
+              ]
+            },
+            {
+              "fact_id": "live-development-test-00000018-fact-z",
+              "stale_value_changed": false,
+              "first_correct_observed_tick": 300,
+              "first_correct_committed_tick": 300,
+              "first_stale_value_correction_tick": null,
+              "first_confirmation_tick": 300,
+              "uncertainty_intervals": []
+            }
+          ],
+          "worker_task_pass": null,
+          "revision_pass": true,
+          "task_pass": true,
+          "selector_configuration_sha256": "b40fdaa1e06f93569462ab93cc5a71cb4cf64561dcb9b6077e2f63154d7fbbbb",
+          "resource_sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+          "provenance_sha256": "bedda73b18ac5525b3ea4e667aa505d22d47decefac016947b190024337db134",
+          "target_score": {
+            "condition": "hand-authored",
+            "selection": {
+              "event_id": "sensor-197fedb952190aa05faead17f55b42dff005e03991e2ae2e3431995002db0e17",
+              "target_ids": [
+                "live-development-test-00000018-fact-a"
+              ],
+              "reason": "matched"
+            },
+            "target_limit": 1,
+            "exact_set": true,
+            "false_targets": 0,
+            "missed_targets": 0,
+            "abstained": false,
+            "correct_abstention": false,
+            "precision": 1.0,
+            "recall": 1.0,
+            "privileged": false,
+            "runtime_access": [
+              "m",
+              "trigger",
+              "u"
+            ],
+            "validation_access": [
+              "m",
+              "trigger",
+              "u"
+            ],
+            "behavior_access": [
+              "m",
+              "trigger",
+              "u.payload"
+            ],
+            "validation_input_bytes": 1948,
+            "behavior_input_bytes": 1534,
+            "payload_bytes": 108,
+            "envelope_bytes": 530,
+            "runtime_history_bytes": 0
+          }
+        },
+        {
+          "condition": "history-independent",
+          "selector_invocations": 1,
+          "selector_behavior_bytes": 1413,
+          "target_ids": [
+            "live-development-test-00000018-fact-a"
+          ],
+          "recording_status": "completed",
+          "final_phase": "terminated",
+          "requested": 1,
+          "started": 1,
+          "resolved": 1,
+          "timeouts": 0,
+          "unresolved_fact_ids": [],
+          "navigation_pass": true,
+          "goal_tick": 430,
+          "terminal_control_boundary": 430,
+          "timing": [
+            {
+              "fact_id": "live-development-test-00000018-fact-a",
+              "stale_value_changed": true,
+              "first_correct_observed_tick": 358,
+              "first_correct_committed_tick": 358,
+              "first_stale_value_correction_tick": 358,
+              "first_confirmation_tick": null,
+              "uncertainty_intervals": [
+                {
+                  "start_tick": 300,
+                  "end_tick": 358,
+                  "duration_ticks": 58,
+                  "censored": false
+                }
+              ]
+            },
+            {
+              "fact_id": "live-development-test-00000018-fact-z",
+              "stale_value_changed": false,
+              "first_correct_observed_tick": 300,
+              "first_correct_committed_tick": 300,
+              "first_stale_value_correction_tick": null,
+              "first_confirmation_tick": 300,
+              "uncertainty_intervals": []
+            }
+          ],
+          "worker_task_pass": null,
+          "revision_pass": true,
+          "task_pass": true,
+          "selector_configuration_sha256": "b031824cd21ed5dd5c0142c9fd98273619ef699acb126bd4eb15d52e7395b6ee",
+          "resource_sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+          "provenance_sha256": "bedda73b18ac5525b3ea4e667aa505d22d47decefac016947b190024337db134",
+          "target_score": {
+            "condition": "history-independent",
+            "selection": {
+              "event_id": "sensor-197fedb952190aa05faead17f55b42dff005e03991e2ae2e3431995002db0e17",
+              "target_ids": [
+                "live-development-test-00000018-fact-a"
+              ],
+              "reason": "budget"
+            },
+            "target_limit": 1,
+            "exact_set": true,
+            "false_targets": 0,
+            "missed_targets": 0,
+            "abstained": false,
+            "correct_abstention": false,
+            "precision": 1.0,
+            "recall": 1.0,
+            "privileged": false,
+            "runtime_access": [
+              "m",
+              "trigger"
+            ],
+            "validation_access": [
+              "m",
+              "trigger"
+            ],
+            "behavior_access": [
+              "m",
+              "trigger"
+            ],
+            "validation_input_bytes": 1413,
+            "behavior_input_bytes": 1413,
+            "payload_bytes": 0,
+            "envelope_bytes": 0,
+            "runtime_history_bytes": 0
+          }
+        },
+        {
+          "condition": "traversal",
+          "selector_invocations": 1,
+          "selector_behavior_bytes": 1413,
+          "target_ids": [
+            "live-development-test-00000018-fact-a"
+          ],
+          "recording_status": "completed",
+          "final_phase": "terminated",
+          "requested": 1,
+          "started": 1,
+          "resolved": 1,
+          "timeouts": 0,
+          "unresolved_fact_ids": [],
+          "navigation_pass": true,
+          "goal_tick": 430,
+          "terminal_control_boundary": 430,
+          "timing": [
+            {
+              "fact_id": "live-development-test-00000018-fact-a",
+              "stale_value_changed": true,
+              "first_correct_observed_tick": 358,
+              "first_correct_committed_tick": 358,
+              "first_stale_value_correction_tick": 358,
+              "first_confirmation_tick": null,
+              "uncertainty_intervals": [
+                {
+                  "start_tick": 300,
+                  "end_tick": 358,
+                  "duration_ticks": 58,
+                  "censored": false
+                }
+              ]
+            },
+            {
+              "fact_id": "live-development-test-00000018-fact-z",
+              "stale_value_changed": false,
+              "first_correct_observed_tick": 300,
+              "first_correct_committed_tick": 300,
+              "first_stale_value_correction_tick": null,
+              "first_confirmation_tick": 300,
+              "uncertainty_intervals": []
+            }
+          ],
+          "worker_task_pass": null,
+          "revision_pass": true,
+          "task_pass": true,
+          "selector_configuration_sha256": "83f850dda0c797016e02e09632c4edf6b940f76a6c77da71e8a0512b9bfdc1ee",
+          "resource_sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+          "provenance_sha256": "bedda73b18ac5525b3ea4e667aa505d22d47decefac016947b190024337db134",
+          "target_score": {
+            "condition": "traversal",
+            "selection": {
+              "event_id": "sensor-197fedb952190aa05faead17f55b42dff005e03991e2ae2e3431995002db0e17",
+              "target_ids": [
+                "live-development-test-00000018-fact-a"
+              ],
+              "reason": "budget"
+            },
+            "target_limit": 1,
+            "exact_set": true,
+            "false_targets": 0,
+            "missed_targets": 0,
+            "abstained": false,
+            "correct_abstention": false,
+            "precision": 1.0,
+            "recall": 1.0,
+            "privileged": false,
+            "runtime_access": [
+              "m",
+              "trigger"
+            ],
+            "validation_access": [
+              "m",
+              "trigger"
+            ],
+            "behavior_access": [
+              "m",
+              "trigger"
+            ],
+            "validation_input_bytes": 1413,
+            "behavior_input_bytes": 1413,
+            "payload_bytes": 0,
+            "envelope_bytes": 0,
+            "runtime_history_bytes": 0
+          }
+        },
+        {
+          "condition": "retrieval",
+          "selector_invocations": 1,
+          "selector_behavior_bytes": 9034,
+          "target_ids": [
+            "live-development-test-00000018-fact-a"
+          ],
+          "recording_status": "completed",
+          "final_phase": "terminated",
+          "requested": 1,
+          "started": 1,
+          "resolved": 1,
+          "timeouts": 0,
+          "unresolved_fact_ids": [],
+          "navigation_pass": true,
+          "goal_tick": 430,
+          "terminal_control_boundary": 430,
+          "timing": [
+            {
+              "fact_id": "live-development-test-00000018-fact-a",
+              "stale_value_changed": true,
+              "first_correct_observed_tick": 358,
+              "first_correct_committed_tick": 358,
+              "first_stale_value_correction_tick": 358,
+              "first_confirmation_tick": null,
+              "uncertainty_intervals": [
+                {
+                  "start_tick": 300,
+                  "end_tick": 358,
+                  "duration_ticks": 58,
+                  "censored": false
+                }
+              ]
+            },
+            {
+              "fact_id": "live-development-test-00000018-fact-z",
+              "stale_value_changed": false,
+              "first_correct_observed_tick": 300,
+              "first_correct_committed_tick": 300,
+              "first_stale_value_correction_tick": null,
+              "first_confirmation_tick": 300,
+              "uncertainty_intervals": []
+            }
+          ],
+          "worker_task_pass": null,
+          "revision_pass": true,
+          "task_pass": true,
+          "selector_configuration_sha256": "9cdcdb99ee4d3263d63ffc7afbf60a5e58b199dccc7de8615013368eccda17f3",
+          "resource_sha256": "b6c92a7638af926ed625069b0f1e23fc804db08e621b3bcdf2d5bae8cc1a0457",
+          "provenance_sha256": "016c5b5e9472b116d065fb922b32d64089db6e27839aec09d751238f8ce7ffc1",
+          "target_score": {
+            "condition": "retrieval",
+            "selection": {
+              "event_id": "sensor-197fedb952190aa05faead17f55b42dff005e03991e2ae2e3431995002db0e17",
+              "target_ids": [
+                "live-development-test-00000018-fact-a"
+              ],
+              "reason": "matched"
+            },
+            "target_limit": 1,
+            "exact_set": true,
+            "false_targets": 0,
+            "missed_targets": 0,
+            "abstained": false,
+            "correct_abstention": false,
+            "precision": 1.0,
+            "recall": 1.0,
+            "privileged": false,
+            "runtime_access": [
+              "m",
+              "trigger",
+              "history"
+            ],
+            "validation_access": [
+              "m",
+              "trigger",
+              "history"
+            ],
+            "behavior_access": [
+              "m",
+              "trigger",
+              "history"
+            ],
+            "validation_input_bytes": 9034,
+            "behavior_input_bytes": 9034,
+            "payload_bytes": 0,
+            "envelope_bytes": 0,
+            "runtime_history_bytes": 7610
+          }
+        },
+        {
+          "condition": "oracle",
+          "selector_invocations": 1,
+          "selector_behavior_bytes": 1473,
+          "target_ids": [
+            "live-development-test-00000018-fact-a"
+          ],
+          "recording_status": "completed",
+          "final_phase": "terminated",
+          "requested": 1,
+          "started": 1,
+          "resolved": 1,
+          "timeouts": 0,
+          "unresolved_fact_ids": [],
+          "navigation_pass": true,
+          "goal_tick": 430,
+          "terminal_control_boundary": 430,
+          "timing": [
+            {
+              "fact_id": "live-development-test-00000018-fact-a",
+              "stale_value_changed": true,
+              "first_correct_observed_tick": 358,
+              "first_correct_committed_tick": 358,
+              "first_stale_value_correction_tick": 358,
+              "first_confirmation_tick": null,
+              "uncertainty_intervals": [
+                {
+                  "start_tick": 300,
+                  "end_tick": 358,
+                  "duration_ticks": 58,
+                  "censored": false
+                }
+              ]
+            },
+            {
+              "fact_id": "live-development-test-00000018-fact-z",
+              "stale_value_changed": false,
+              "first_correct_observed_tick": 300,
+              "first_correct_committed_tick": 300,
+              "first_stale_value_correction_tick": null,
+              "first_confirmation_tick": 300,
+              "uncertainty_intervals": []
+            }
+          ],
+          "worker_task_pass": null,
+          "revision_pass": true,
+          "task_pass": true,
+          "selector_configuration_sha256": "9ce9d541004ea16b6b060b940bba9ce41266a4fdf3eaa9d0389a5bddcf7829af",
+          "resource_sha256": "e90da7eef09496e7e29cafe05082ea74b8309baca953e7071907145cf00946aa",
+          "provenance_sha256": "6e10a5ddf329452348997327f7bca0c595a438c53d0b2c9bc6b14da574f01341",
+          "target_score": {
+            "condition": "oracle",
+            "selection": {
+              "event_id": "sensor-197fedb952190aa05faead17f55b42dff005e03991e2ae2e3431995002db0e17",
+              "target_ids": [
+                "live-development-test-00000018-fact-a"
+              ],
+              "reason": "matched"
+            },
+            "target_limit": 1,
+            "exact_set": true,
+            "false_targets": 0,
+            "missed_targets": 0,
+            "abstained": false,
+            "correct_abstention": false,
+            "precision": 1.0,
+            "recall": 1.0,
+            "privileged": true,
+            "runtime_access": [
+              "m",
+              "trigger",
+              "gold_target_ids"
+            ],
+            "validation_access": [
+              "m",
+              "trigger",
+              "gold_target_ids"
+            ],
+            "behavior_access": [
+              "m",
+              "trigger",
+              "gold_target_ids"
+            ],
+            "validation_input_bytes": 1473,
+            "behavior_input_bytes": 1473,
+            "payload_bytes": 0,
+            "envelope_bytes": 0,
+            "runtime_history_bytes": 0
+          }
+        }
+      ]
+    },
+    {
+      "cell": "s29/paired_cue/change",
+      "scope": "three recorded branches; sham supervisor unfinished; no complete paired comparison",
+      "gold_target_ids": [
+        "live-development-test-0000001d-fact-a"
+      ],
+      "condition_readouts": [
+        {
+          "condition": "own",
+          "selector_invocations": 1,
+          "selector_behavior_bytes": 1535,
+          "target_ids": [
+            "live-development-test-0000001d-fact-a"
+          ],
+          "recording_status": "completed",
+          "final_phase": "terminated",
+          "requested": 1,
+          "started": 1,
+          "resolved": 1,
+          "timeouts": 0,
+          "unresolved_fact_ids": [],
+          "navigation_pass": true,
+          "goal_tick": 431,
+          "terminal_control_boundary": 431,
+          "timing": [
+            {
+              "fact_id": "live-development-test-0000001d-fact-a",
+              "stale_value_changed": true,
+              "first_correct_observed_tick": 358,
+              "first_correct_committed_tick": 358,
+              "first_stale_value_correction_tick": 358,
+              "first_confirmation_tick": null,
+              "uncertainty_intervals": [
+                {
+                  "start_tick": 300,
+                  "end_tick": 358,
+                  "duration_ticks": 58,
+                  "censored": false
+                }
+              ]
+            },
+            {
+              "fact_id": "live-development-test-0000001d-fact-z",
+              "stale_value_changed": false,
+              "first_correct_observed_tick": 300,
+              "first_correct_committed_tick": 300,
+              "first_stale_value_correction_tick": null,
+              "first_confirmation_tick": 300,
+              "uncertainty_intervals": []
+            }
+          ],
+          "worker_task_pass": null,
+          "selector_configuration_sha256": "3159a0b4924006095d2d0611ccff1979d0b24b20233ee1aafebcdd809d0f297f",
+          "resource_sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+          "provenance_sha256": "64628e37cc6e861194f810baa92926eba8f57260047cdd8ad320a4601023d213"
+        },
+        {
+          "condition": "swapped",
+          "selector_invocations": 1,
+          "selector_behavior_bytes": 1534,
+          "target_ids": [
+            "live-development-test-0000001d-fact-z"
+          ],
+          "recording_status": "completed",
+          "final_phase": "terminated",
+          "requested": 0,
+          "started": 0,
+          "resolved": 0,
+          "timeouts": 0,
+          "unresolved_fact_ids": [],
+          "navigation_pass": true,
+          "goal_tick": 431,
+          "terminal_control_boundary": 431,
+          "timing": [
+            {
+              "fact_id": "live-development-test-0000001d-fact-a",
+              "stale_value_changed": true,
+              "first_correct_observed_tick": 358,
+              "first_correct_committed_tick": 358,
+              "first_stale_value_correction_tick": 358,
+              "first_confirmation_tick": null,
+              "uncertainty_intervals": []
+            },
+            {
+              "fact_id": "live-development-test-0000001d-fact-z",
+              "stale_value_changed": false,
+              "first_correct_observed_tick": 300,
+              "first_correct_committed_tick": 300,
+              "first_stale_value_correction_tick": null,
+              "first_confirmation_tick": 300,
+              "uncertainty_intervals": [
+                {
+                  "start_tick": 300,
+                  "end_tick": 300,
+                  "duration_ticks": 0,
+                  "censored": false
+                }
+              ]
+            }
+          ],
+          "worker_task_pass": null,
+          "selector_configuration_sha256": "f6c7d1d02618742123b74308f4b15a8e7cfe0db4428407d717928a52177748b5",
+          "resource_sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+          "provenance_sha256": "016c5b5e9472b116d065fb922b32d64089db6e27839aec09d751238f8ce7ffc1"
+        },
+        {
+          "condition": "sham",
+          "selector_invocations": 1,
+          "selector_behavior_bytes": 1535,
+          "target_ids": [
+            "live-development-test-0000001d-fact-a"
+          ],
+          "recording_status": "completed",
+          "final_phase": "terminated",
+          "requested": 1,
+          "started": 1,
+          "resolved": 1,
+          "timeouts": 0,
+          "unresolved_fact_ids": [],
+          "navigation_pass": true,
+          "goal_tick": 431,
+          "terminal_control_boundary": 431,
+          "timing": [
+            {
+              "fact_id": "live-development-test-0000001d-fact-a",
+              "stale_value_changed": true,
+              "first_correct_observed_tick": 358,
+              "first_correct_committed_tick": 358,
+              "first_stale_value_correction_tick": 358,
+              "first_confirmation_tick": null,
+              "uncertainty_intervals": [
+                {
+                  "start_tick": 300,
+                  "end_tick": 358,
+                  "duration_ticks": 58,
+                  "censored": false
+                }
+              ]
+            },
+            {
+              "fact_id": "live-development-test-0000001d-fact-z",
+              "stale_value_changed": false,
+              "first_correct_observed_tick": 300,
+              "first_correct_committed_tick": 300,
+              "first_stale_value_correction_tick": null,
+              "first_confirmation_tick": 300,
+              "uncertainty_intervals": []
+            }
+          ],
+          "worker_task_pass": null,
+          "selector_configuration_sha256": "ebbdc650dfe638fc3478a4a6570e67efe1e381d3d5ee44c4bcab29a5e7ecd490",
+          "resource_sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+          "provenance_sha256": "64628e37cc6e861194f810baa92926eba8f57260047cdd8ad320a4601023d213"
+        }
+      ]
+    }
+  ],
+  "supervision": {
+    "schema_version": 1,
+    "status": "failed",
+    "timeout_seconds": 6495,
+    "started_utc": "2026-10-02T21:21:15.793632+00:00",
+    "output": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-flynn-continuation/runs/m5-counterbalance-stage-c-v2-launch-c626f3c/process",
+    "returncode": -15,
+    "elapsed_seconds": 601.9643251139933
+  },
+  "wall_seconds_including_cleanup": 603.7993754960044,
+  "cleanup_seconds": 0.154528480998124,
+  "cleanup": {
+    "observed_owner_count": 17,
+    "terminal_pid_start_checks": [
+      {
+        "pid": 526319,
+        "start_ticks": 6972907,
+        "pgid": 526318,
+        "role": "outer-verifier",
+        "run_id": null,
+        "start_identity_present": false
+      },
+      {
+        "pid": 526318,
+        "start_ticks": 6972906,
+        "pgid": 526318,
+        "role": "observed-descendant",
+        "run_id": null,
+        "start_identity_present": false
+      },
+      {
+        "pid": 526362,
+        "start_ticks": 6973633,
+        "pgid": 526362,
+        "role": "plan-bound-worker",
+        "run_id": "62875c51fdac4d53885cb53b05fc206c",
+        "start_identity_present": false
+      },
+      {
+        "pid": 526444,
+        "start_ticks": 6976738,
+        "pgid": 526444,
+        "role": "plan-bound-worker",
+        "run_id": "6ace57fa66df414091ace73f1e5fd348",
+        "start_identity_present": false
+      },
+      {
+        "pid": 526554,
+        "start_ticks": 6981150,
+        "pgid": 526554,
+        "role": "plan-bound-worker",
+        "run_id": "253eb2a7198f4e9ea63bf6f56aed80c6",
+        "start_identity_present": false
+      },
+      {
+        "pid": 526756,
+        "start_ticks": 6985578,
+        "pgid": 526756,
+        "role": "plan-bound-worker",
+        "run_id": "71e5fc774aa94c9b8cfb37ff50087938",
+        "start_identity_present": false
+      },
+      {
+        "pid": 526918,
+        "start_ticks": 6989880,
+        "pgid": 526918,
+        "role": "plan-bound-worker",
+        "run_id": "6ba1c18ed27544859696b40e4a17a411",
+        "start_identity_present": false
+      },
+      {
+        "pid": 527124,
+        "start_ticks": 6994736,
+        "pgid": 527124,
+        "role": "plan-bound-worker",
+        "run_id": "b6e0f04786b744049b95c8c318aa33b5",
+        "start_identity_present": false
+      },
+      {
+        "pid": 527291,
+        "start_ticks": 6999505,
+        "pgid": 527291,
+        "role": "plan-bound-worker",
+        "run_id": "9c446c256740441b8d36890603484d12",
+        "start_identity_present": false
+      },
+      {
+        "pid": 527494,
+        "start_ticks": 7003779,
+        "pgid": 527494,
+        "role": "plan-bound-worker",
+        "run_id": "4b51280ac8be45d2a70c2764715feb4c",
+        "start_identity_present": false
+      },
+      {
+        "pid": 527614,
+        "start_ticks": 7008113,
+        "pgid": 527614,
+        "role": "plan-bound-worker",
+        "run_id": "6227b2e06ae643939dc5d682e47b4331",
+        "start_identity_present": false
+      },
+      {
+        "pid": 527775,
+        "start_ticks": 7012516,
+        "pgid": 527775,
+        "role": "plan-bound-worker",
+        "run_id": "67346fa0fed74ff582eeac59f39ce43b",
+        "start_identity_present": false
+      },
+      {
+        "pid": 527890,
+        "start_ticks": 7017069,
+        "pgid": 527890,
+        "role": "plan-bound-worker",
+        "run_id": "9ac6527c28764bbb8864c3e1356f7b5a",
+        "start_identity_present": false
+      },
+      {
+        "pid": 528004,
+        "start_ticks": 7020168,
+        "pgid": 528004,
+        "role": "plan-bound-worker",
+        "run_id": "f82ae86dc75e438d9144d93cadbc544f",
+        "start_identity_present": false
+      },
+      {
+        "pid": 528144,
+        "start_ticks": 7024373,
+        "pgid": 528144,
+        "role": "plan-bound-worker",
+        "run_id": "af2446f4d3944c52a35063d3f472ebf0",
+        "start_identity_present": false
+      },
+      {
+        "pid": 528350,
+        "start_ticks": 7028789,
+        "pgid": 528350,
+        "role": "plan-bound-worker",
+        "run_id": "2ab1ad62605f4e6a943818e1d51508ab",
+        "start_identity_present": false
+      }
+    ],
+    "final_owned_processes": [],
+    "forced_signals": [
+      {
+        "signal": 15,
+        "pgid": 526318,
+        "verified_owned_members": [
+          {
+            "pid": 526318,
+            "state": "S",
+            "ppid": 526280,
+            "pgid": 526318,
+            "session": 526318,
+            "start_ticks": 6972906
+          },
+          {
+            "pid": 526319,
+            "state": "S",
+            "ppid": 526318,
+            "pgid": 526318,
+            "session": 526318,
+            "start_ticks": 6972907
+          }
+        ]
+      }
+    ],
+    "watchdog_signal_messages": [
+      "timeout: sending signal TERM to command \u2018/home/utkarsh/Work/shraddha/brain/.worktrees/memory-flynn-continuation/../lab-hardening/.venv/bin/python\u2019"
+    ],
+    "monitor_errors": [
+      "IndexError: list index out of range"
+    ],
+    "timeout_or_external_failure": true
+  },
+  "frozen_identity_files": 293,
+  "identity_components": {
+    "tracked": 151,
+    "upstream": 122,
+    "assets": 20
+  },
+  "before_after_inventory_sha256": "e51e01ede92a1116906d80248933c106f40ab668645665e589dc9d57c175f90f",
+  "inventories_unchanged": true,
+  "diagnosis": {
+    "retained_error": "IndexError: list index out of range",
+    "candidate_location": "ignored launcher Owners.sample second cmdline read, raw[3]",
+    "causal_status": "plausible process-exit race; exact failing second-read bytes and traceback not retained",
+    "interruption": "monitor exception caused start-verified SIGTERM to verifier/timeout group; no elapsed 6460-second timeout evidenced",
+    "proposed_fix": "compare second-read argv hash with already captured argv_sha256; recheck exact PID/start/state on mismatch and skip only proven vanished/reused/zombie; live mismatch remains failure"
+  },
+  "retained_audit": {
+    "status": "retained-partial-audit-pass",
+    "seconds": 8.281197278003674,
+    "script": {
+      "path": "runs/m5-counterbalance-c2-audit-c626f3c/audit.py",
+      "bytes": 5814,
+      "sha256": "441e0f6164c7ce95226c2adf0cb2251a3ea9ec920a6e7f67b851fd5bc4a733b8"
+    },
+    "result": {
+      "path": "runs/m5-counterbalance-c2-audit-c626f3c/audit.json",
+      "bytes": 103739,
+      "sha256": "c1eff0b44750c9e24504c72c4802df169783b3c1dcf07206ced30997455c9481"
+    },
+    "indexed_files": 158,
+    "indexed_bytes": 368570124,
+    "scope": "recording manifest/events/chunks, native SNP/index, worker report, job and child supervisor files; excludes outer controls and other extras"
+  },
+  "root_independent_audits": [
+    {
+      "scope": "m5-counterbalance-c1-root-audit-a181576",
+      "files": [
+        {
+          "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/project-integration/runs/m5-counterbalance-c1-root-audit-a181576/audit.py",
+          "bytes": 4026,
+          "sha256": "4607034b4a6585ed8f1fa42136ac05937b3f4faab759cc90159a479e9c4b3df6"
+        },
+        {
+          "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/project-integration/runs/m5-counterbalance-c1-root-audit-a181576/audit.json",
+          "bytes": 833,
+          "sha256": "56e55645f222a3620d56e845e30ba661458d564a57bffa141c7f1546efa459d4"
+        }
+      ]
+    },
+    {
+      "scope": "m5-counterbalance-c2-root-audit-c626f3c",
+      "files": [
+        {
+          "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/project-integration/runs/m5-counterbalance-c2-root-audit-c626f3c/audit.py",
+          "bytes": 7205,
+          "sha256": "4a38a36f863bfada1aa5608390af8b29ee643b7179184e3b281419ee739ce53f"
+        },
+        {
+          "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/project-integration/runs/m5-counterbalance-c2-root-audit-c626f3c/audit.json",
+          "bytes": 43804,
+          "sha256": "696eef7fa0cde2cedf958a2118b97ad1e6ff3d0311a7cc5bd924b25713ed56c7"
+        },
+        {
+          "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/project-integration/runs/m5-counterbalance-c2-root-audit-c626f3c/audit-v1.py",
+          "bytes": 7215,
+          "sha256": "680ad76d880f947cbadf447d83007c05cfa52f2f8c4a844901d6327ccaacd4d0"
+        }
+      ]
+    }
+  ],
+  "root_audit_notes": {
+    "c1": "PASS 0.899916464 s; 291 frozen files; zero owners, forty unattempted, two PID/start identities absent",
+    "c2": "PASS 4.997816591 s; 293 frozen files, 188 retained artifacts, 14 SNP/recordings, 13 finalized supervisors, 1561 rows, 26 unstarted, 16 PID/start identities absent",
+    "c2_initial_attempt": "audit-v1.py failed before writing output because it compared raw-byte SHA instead of existing state_digest; only audit hash formulation corrected, no experiment change"
+  },
+  "files": [
+    {
+      "path": "runs/m5-counterbalance-stage-c-v2-20261003/runs/62875c51fdac4d53885cb53b05fc206c/recording/manifest.json",
+      "bytes": 37419,
+      "sha256": "75c3f1095565abaa1a169447738c234fc8590c4ee1d313c5a49e425fb7712791"
+    },
+    {
+      "path": "runs/m5-counterbalance-stage-c-v2-20261003/runs/62875c51fdac4d53885cb53b05fc206c/recording/events.jsonl",
+      "bytes": 16380,
+      "sha256": "38f1f717f7d11974e3b71afb256d5dc78fb2f02f96a171b7686b2b2b0938fe54"
+    },
+    {
+      "path": "runs/m5-counterbalance-stage-c-v2-20261003/runs/62875c51fdac4d53885cb53b05fc206c/snapshots/initial.snp",
+      "bytes": 1153134,
+      "sha256": "5855cb20a7d937bf241545fbf86d5d5d825470408dbe00159e54e4d4bd2339f3"
+    },
+    {
+      "path": "runs/m5-counterbalance-stage-c-v2-20261003/runs/62875c51fdac4d53885cb53b05fc206c/snapshots/index.json",
+      "bytes": 402,
+      "sha256": "2dcb45fcf395851dc7f334cf31b6d37c63560d5c72fd009f2544c22c9b1d36ef"
+    },
+    {
+      "path": "runs/m5-counterbalance-stage-c-v2-20261003/runs/62875c51fdac4d53885cb53b05fc206c/comparison-worker.json",
+      "bytes": 13606,
+      "sha256": "f507978dea4ca1725b7f31b5a5ea1095f06fe77a3ba129bdbb85dbfa758c2c73"
+    },
+    {
+      "path": "runs/m5-counterbalance-stage-c-v2-20261003/runs/62875c51fdac4d53885cb53b05fc206c/supervisor.json",
+      "bytes": 356,
+      "sha256": "7a8828b86f6af30a921e3a21e96b9cb7fa01577eb7b173d23198560c7049a544"
+    },
+    {
+      "path": "runs/m5-counterbalance-stage-c-v2-20261003/62875c51fdac4d53885cb53b05fc206c-job.json",
+      "bytes": 36350,
+      "sha256": "02520190065abdf0f4a81f4816000c726882a8c0ac35b34bdea1fea0695ea323"
+    },
+    {
+      "path": "runs/m5-counterbalance-stage-c-v2-20261003/runs/6ace57fa66df414091ace73f1e5fd348/recording/manifest.json",
+      "bytes": 37501,
+      "sha256": "6d8a5c71b1304cd728c8de4ac2513b8403bc7f98715b2afefe7fa8ca9dc11da8"
+    },
+    {
+      "path": "runs/m5-counterbalance-stage-c-v2-20261003/runs/6ace57fa66df414091ace73f1e5fd348/recording/events.jsonl",
+      "bytes": 1134657,
+      "sha256": "e7a00666d4af19bbbf88af1506dc5d1e909e355133f0425e47acc0eca2915fad"
+    },
+    {
+      "path": "runs/m5-counterbalance-stage-c-v2-20261003/runs/6ace57fa66df414091ace73f1e5fd348/recording/chunks/000000.npz",
+      "bytes": 6919538,
+      "sha256": "ff2ce7dfef902b6f155da0a48bae90c2a461748f603a9a433d9b6462fcba95c7"
+    },
+    {
+      "path": "runs/m5-counterbalance-stage-c-v2-20261003/runs/6ace57fa66df414091ace73f1e5fd348/recording/chunks/000001.npz",
+      "bytes": 6919538,
+      "sha256": "5723c3955bde5ce65fa5e65556421ab5b1607e8dd5c94cc8b4dd991bc0a471f7"
+    },
+    {
+      "path": "runs/m5-counterbalance-stage-c-v2-20261003/runs/6ace57fa66df414091ace73f1e5fd348/recording/chunks/000002.npz",
+      "bytes": 6919538,
+      "sha256": "3e077cb0fa25c2f648159e72cb38c21dc84a2d91d11f8b9fd762f7a4b08b27ef"
+    },
+    {
+      "path": "runs/m5-counterbalance-stage-c-v2-20261003/runs/6ace57fa66df414091ace73f1e5fd348/recording/chunks/000003.npz",
+      "bytes": 6919538,
+      "sha256": "68412021f831945cd9288fd0d07dacc6605c052530f0a88c3f86c4a9e1716dc3"
+    },
+    {
+      "path": "runs/m5-counterbalance-stage-c-v2-20261003/runs/6ace57fa66df414091ace73f1e5fd348/recording/chunks/000004.npz",
+      "bytes": 436718,
+      "sha256": "32e4ec707b334c5bf9dd1fe412cb52902c55b25daba494a0e800381c21e45ff1"
+    },
+    {
+      "path": "runs/m5-counterbalance-stage-c-v2-20261003/runs/6ace57fa66df414091ace73f1e5fd348/snapshots/initial.snp",
+      "bytes": 1153134,
+      "sha256": "4ff500ba70ab4295813e732e056e0a457900211cbe06fa1d981c8ecbe0dcc88e"
+    },
+    {
+      "path": "runs/m5-counterbalance-stage-c-v2-20261003/runs/6ace57fa66df414091ace73f1e5fd348/snapshots/index.json",
+      "bytes": 402,
+      "sha256": "049515230c1f583a3bd697662aad87a5800c12634a1f964ed0c02697d22b743d"
+    },
+    {
+      "path": "runs/m5-counterbalance-stage-c-v2-20261003/runs/6ace57fa66df414091ace73f1e5fd348/comparison-worker.json",
+      "bytes": 15392,
+      "sha256": "0a6cee32ef9647c20c46fe20b58afaa3be68662acd1dd7692f6f884afffbfeef"
+    },
+    {
+      "path": "runs/m5-counterbalance-stage-c-v2-20261003/runs/6ace57fa66df414091ace73f1e5fd348/supervisor.json",
+      "bytes": 356,
+      "sha256": "de59669152a964aefa2cf66cb4713fefab80824ccb4d2fdddca58c6d1e4d80fb"
+    },
+    {
+      "path": "runs/m5-counterbalance-stage-c-v2-20261003/6ace57fa66df414091ace73f1e5fd348-job.json",
+      "bytes": 36350,
+      "sha256": "7e8b2b71fef40a106ff0e28346ed1cb4190ea0799198cdb455ae4d698d8e9eee"
+    },
+    {
+      "path": "runs/m5-counterbalance-stage-c-v2-20261003/runs/253eb2a7198f4e9ea63bf6f56aed80c6/recording/manifest.json",
+      "bytes": 37509,
+      "sha256": "4d2ab658d8d4e2c475ad0f4e97fe947297c112248a3fd3576e2f59b68bfdba79"
+    },
+    {
+      "path": "runs/m5-counterbalance-stage-c-v2-20261003/runs/253eb2a7198f4e9ea63bf6f56aed80c6/recording/events.jsonl",
+      "bytes": 1110596,
+      "sha256": "c85f5ff594d6589b154c43105ade75a057f7459878101fbf4e5f714c84aabdef"
+    },
+    {
+      "path": "runs/m5-counterbalance-stage-c-v2-20261003/runs/253eb2a7198f4e9ea63bf6f56aed80c6/recording/chunks/000000.npz",
+      "bytes": 6919538,
+      "sha256": "3cf0726bd77d6b8c115d0ce098acf83a8e4bd0ae2f27c1e6f46ea022e088d702"
+    },
+    {
+      "path": "runs/m5-counterbalance-stage-c-v2-20261003/runs/253eb2a7198f4e9ea63bf6f56aed80c6/recording/chunks/000001.npz",
+      "bytes": 6919538,
+      "sha256": "899798072d3fc424571a9f8e45b16c910859f27c621bf9c994329577b1af7beb"
+    },
+    {
+      "path": "runs/m5-counterbalance-stage-c-v2-20261003/runs/253eb2a7198f4e9ea63bf6f56aed80c6/recording/chunks/000002.npz",
+      "bytes": 6919538,
+      "sha256": "25dde9b6c9e87f04f590a098dde1450a85d2e25239f36de9a21cade0d140d47b"
+    },
+    {
+      "path": "runs/m5-counterbalance-stage-c-v2-20261003/runs/253eb2a7198f4e9ea63bf6f56aed80c6/recording/chunks/000003.npz",
+      "bytes": 6919538,
+      "sha256": "0281d55052474af02bea77827c64ee8216a8f6224c140e712f7a3eb68aaca057"
+    },
+    {
+      "path": "runs/m5-counterbalance-stage-c-v2-20261003/runs/253eb2a7198f4e9ea63bf6f56aed80c6/recording/chunks/000004.npz",
+      "bytes": 220624,
+      "sha256": "b15a60b04caff0eb77bcb19e5d2728a66c5c338c3a8f11e642541cd64aaf8591"
+    },
+    {
+      "path": "runs/m5-counterbalance-stage-c-v2-20261003/runs/253eb2a7198f4e9ea63bf6f56aed80c6/snapshots/initial.snp",
+      "bytes": 1153139,
+      "sha256": "a996bb6769e4b99d97ef3c573134e9020f6a18a03252a51afa15f420abe6f3ec"
+    },
+    {
+      "path": "runs/m5-counterbalance-stage-c-v2-20261003/runs/253eb2a7198f4e9ea63bf6f56aed80c6/snapshots/index.json",
+      "bytes": 402,
+      "sha256": "26eefceb2857941d37616301412fd32dddd3fdfb277cba66783365fd53cef2cf"
+    },
+    {
+      "path": "runs/m5-counterbalance-stage-c-v2-20261003/runs/253eb2a7198f4e9ea63bf6f56aed80c6/comparison-worker.json",
+      "bytes": 15394,
+      "sha256": "947bda6311742831856f5c84ee876e37c63a51572b527e3130e7d703226ff08b"
+    },
+    {
+      "path": "runs/m5-counterbalance-stage-c-v2-20261003/runs/253eb2a7198f4e9ea63bf6f56aed80c6/supervisor.json",
+      "bytes": 356,
+      "sha256": "eaf8edc04c0beafd1e1ee72e3f9bbaa4e66189f0b6dc8a938b3821efde9de052"
+    },
+    {
+      "path": "runs/m5-counterbalance-stage-c-v2-20261003/253eb2a7198f4e9ea63bf6f56aed80c6-job.json",
+      "bytes": 36358,
+      "sha256": "5a81d2bceb473824cb5e7f881c264d12f22e7ff9a3db7cb49ee72c0107d0415d"
+    },
+    {
+      "path": "runs/m5-counterbalance-stage-c-v2-20261003/runs/71e5fc774aa94c9b8cfb37ff50087938/recording/manifest.json",
+      "bytes": 37503,
+      "sha256": "bf9183c83e18626d37df83d9b783624a1069c34946fd97f8a6e7df5af04bf34a"
+    },
+    {
+      "path": "runs/m5-counterbalance-stage-c-v2-20261003/runs/71e5fc774aa94c9b8cfb37ff50087938/recording/events.jsonl",
+      "bytes": 1134788,
+      "sha256": "7cf1b9c91e690a8807e9b5b6820ae708877a2cf88561ef68e3b8514b77ab9cd3"
+    },
+    {
+      "path": "runs/m5-counterbalance-stage-c-v2-20261003/runs/71e5fc774aa94c9b8cfb37ff50087938/recording/chunks/000000.npz",
+      "bytes": 6919538,
+      "sha256": "fd31cb710158c9de58cbb4a43a883d27f53ad3ef5a6472c1e8887bfe09ffe3a9"
+    },
+    {
+      "path": "runs/m5-counterbalance-stage-c-v2-20261003/runs/71e5fc774aa94c9b8cfb37ff50087938/recording/chunks/000001.npz",
+      "bytes": 6919538,
+      "sha256": "417d6df75867bcc9665ad6aa2bcea39baa62fcbfff911275fe5f07321ed647d4"
+    },
+    {
+      "path": "runs/m5-counterbalance-stage-c-v2-20261003/runs/71e5fc774aa94c9b8cfb37ff50087938/recording/chunks/000002.npz",
+      "bytes": 6919538,
+      "sha256": "1de15fb12474d3c0d18a103559dc8fde7969b32c10d329fb26d10270e3838890"
+    },
+    {
+      "path": "runs/m5-counterbalance-stage-c-v2-20261003/runs/71e5fc774aa94c9b8cfb37ff50087938/recording/chunks/000003.npz",
+      "bytes": 6919538,
+      "sha256": "c4c04921cb5d837face165e6bf9184e88d943c32b8b7b59f9770f2fffa6731d7"
+    },
+    {
+      "path": "runs/m5-counterbalance-stage-c-v2-20261003/runs/71e5fc774aa94c9b8cfb37ff50087938/recording/chunks/000004.npz",
+      "bytes": 436718,
+      "sha256": "9da86491ca8e445ca66fd9a005f67e8aef1e0f748f2becff0c92f98a5faab7ab"
+    },
+    {
+      "path": "runs/m5-counterbalance-stage-c-v2-20261003/runs/71e5fc774aa94c9b8cfb37ff50087938/snapshots/initial.snp",
+      "bytes": 1153135,
+      "sha256": "e09889869051a41e70da992a38c08ae16224d3181f214adf416c8ca124984ff1"
+    },
+    {
+      "path": "runs/m5-counterbalance-stage-c-v2-20261003/runs/71e5fc774aa94c9b8cfb37ff50087938/snapshots/index.json",
+      "bytes": 402,
+      "sha256": "d367047e98f17885d6f9935689708f66b1affc7bc44672b114c2392bfb0572f2"
+    },
+    {
+      "path": "runs/m5-counterbalance-stage-c-v2-20261003/runs/71e5fc774aa94c9b8cfb37ff50087938/comparison-worker.json",
+      "bytes": 15394,
+      "sha256": "aa8cc71a0a9cc87622b58d21c72799d903efb1549e9e05847a81458e45b3c63d"
+    },
+    {
+      "path": "runs/m5-counterbalance-stage-c-v2-20261003/runs/71e5fc774aa94c9b8cfb37ff50087938/supervisor.json",
+      "bytes": 356,
+      "sha256": "034fc1fe709113c8bb1bdd8c2575820fd5f98f2a1b77d13228d27f4a895d6dce"
+    },
+    {
+      "path": "runs/m5-counterbalance-stage-c-v2-20261003/71e5fc774aa94c9b8cfb37ff50087938-job.json",
+      "bytes": 36352,
+      "sha256": "8b9e951f82b01282de657875cee775581c99694db789e5fc3400099fc2ef9e51"
+    },
+    {
+      "path": "runs/m5-counterbalance-stage-c-v2-20261003/runs/6ba1c18ed27544859696b40e4a17a411/recording/manifest.json",
+      "bytes": 37503,
+      "sha256": "12cc100991dd818167f1b4fd100afdaf8b7edf992ef2cfd18596792e0009aed2"
+    },
+    {
+      "path": "runs/m5-counterbalance-stage-c-v2-20261003/runs/6ba1c18ed27544859696b40e4a17a411/recording/events.jsonl",
+      "bytes": 1092660,
+      "sha256": "4008df186a515d2fd91ebe79593c8396de66747dc65e4c1ec6d9368c01d00819"
+    },
+    {
+      "path": "runs/m5-counterbalance-stage-c-v2-20261003/runs/6ba1c18ed27544859696b40e4a17a411/recording/chunks/000000.npz",
+      "bytes": 6919538,
+      "sha256": "8d67603490ce172c85740e04b0f8f1629dc786df254b365bacc8c22c45c38a81"
+    },
+    {
+      "path": "runs/m5-counterbalance-stage-c-v2-20261003/runs/6ba1c18ed27544859696b40e4a17a411/recording/chunks/000001.npz",
+      "bytes": 6919538,
+      "sha256": "82561f99360782bf03661172e42a9909e17644ab6f6f29bcf022975f35fc0307"
+    },
+    {
+      "path": "runs/m5-counterbalance-stage-c-v2-20261003/runs/6ba1c18ed27544859696b40e4a17a411/recording/chunks/000002.npz",
+      "bytes": 6919538,
+      "sha256": "fbbe88d5e248737caa127f814db47b824e3566b4d09f0fb3c08a6ec7eccb453d"
+    },
+    {
+      "path": "runs/m5-counterbalance-stage-c-v2-20261003/runs/6ba1c18ed27544859696b40e4a17a411/recording/chunks/000003.npz",
+      "bytes": 6919538,
+      "sha256": "b1637b51e309610d5b75e025512b1d89238c4d30dcd9df9f7780d3dfa51a5932"
+    },
+    {
+      "path": "runs/m5-counterbalance-stage-c-v2-20261003/runs/6ba1c18ed27544859696b40e4a17a411/recording/chunks/000004.npz",
+      "bytes": 220624,
+      "sha256": "83db377074720a40c0f2934a82854dc08eafce45f47246bdb9515e8a03453fb0"
+    },
+    {
+      "path": "runs/m5-counterbalance-stage-c-v2-20261003/runs/6ba1c18ed27544859696b40e4a17a411/snapshots/initial.snp",
+      "bytes": 1152991,
+      "sha256": "bb3c16e5ee46e369d078c287f898c5ff8a30d86c236b26dbf7745a54e29301d9"
+    },
+    {
+      "path": "runs/m5-counterbalance-stage-c-v2-20261003/runs/6ba1c18ed27544859696b40e4a17a411/snapshots/index.json",
+      "bytes": 402,
+      "sha256": "f0e55df2a77c2be25c96b7934384bd39fc62bf8935c5422bd637d7b135a9a3be"
+    },
+    {
+      "path": "runs/m5-counterbalance-stage-c-v2-20261003/runs/6ba1c18ed27544859696b40e4a17a411/comparison-worker.json",
+      "bytes": 15211,
+      "sha256": "4d31406c0945e4680f7f7004c5ceeb7629411357512076598adca09d4e46c713"
+    },
+    {
+      "path": "runs/m5-counterbalance-stage-c-v2-20261003/runs/6ba1c18ed27544859696b40e4a17a411/supervisor.json",
+      "bytes": 355,
+      "sha256": "1e4c8f9a41c9f0727bbaffcc2a5f83cbe3096b811f79292810f7196e54b79fc8"
+    },
+    {
+      "path": "runs/m5-counterbalance-stage-c-v2-20261003/6ba1c18ed27544859696b40e4a17a411-job.json",
+      "bytes": 36352,
+      "sha256": "bff5c06dbec33700867bfe745f8a2c186fcaaaa085b32d5e13b80e3689f02cf7"
+    },
+    {
+      "path": "runs/m5-counterbalance-stage-c-v2-20261003/runs/b6e0f04786b744049b95c8c318aa33b5/recording/manifest.json",
+      "bytes": 37521,
+      "sha256": "9d257c9924fdc3f8fec23202774f1aac54749e0daf988f49bd6a139d67a6ae0d"
+    },
+    {
+      "path": "runs/m5-counterbalance-stage-c-v2-20261003/runs/b6e0f04786b744049b95c8c318aa33b5/recording/events.jsonl",
+      "bytes": 1128107,
+      "sha256": "b39aa91ef343fa8e7b75887b793c552c4f819be1318a9dc858c11bfabeaf8b41"
+    },
+    {
+      "path": "runs/m5-counterbalance-stage-c-v2-20261003/runs/b6e0f04786b744049b95c8c318aa33b5/recording/chunks/000000.npz",
+      "bytes": 6919538,
+      "sha256": "40ea0137ff436d29f1c4b397abc0e3057a8d68281f26674386e87b68f80ee0c6"
+    },
+    {
+      "path": "runs/m5-counterbalance-stage-c-v2-20261003/runs/b6e0f04786b744049b95c8c318aa33b5/recording/chunks/000001.npz",
+      "bytes": 6919538,
+      "sha256": "0448bc6b869bb8060aeedd2d7e422f9020e3f60c9716c4fd238e3d2f30630883"
+    },
+    {
+      "path": "runs/m5-counterbalance-stage-c-v2-20261003/runs/b6e0f04786b744049b95c8c318aa33b5/recording/chunks/000002.npz",
+      "bytes": 6919538,
+      "sha256": "04121d6599d4fdf3e4e789f7477840f038d9354e395e1cec1aff4b8f4c80f9c2"
+    },
+    {
+      "path": "runs/m5-counterbalance-stage-c-v2-20261003/runs/b6e0f04786b744049b95c8c318aa33b5/recording/chunks/000003.npz",
+      "bytes": 6919538,
+      "sha256": "890d6b6d7f47c1c2dd3511df52fc1fbaa946e0b7a7392b7676da68e6cf7b88e8"
+    },
+    {
+      "path": "runs/m5-counterbalance-stage-c-v2-20261003/runs/b6e0f04786b744049b95c8c318aa33b5/recording/chunks/000004.npz",
+      "bytes": 436718,
+      "sha256": "fb9b2e52cdbe3e0f8b5854a02d6c4fc43314968e5d525b8a54cc0facf476ea7c"
+    },
+    {
+      "path": "runs/m5-counterbalance-stage-c-v2-20261003/runs/b6e0f04786b744049b95c8c318aa33b5/snapshots/initial.snp",
+      "bytes": 1153084,
+      "sha256": "e08c994f20c871e4e54326ddc7a31a0ef43151f3c239359c8ffbe94537a1579f"
+    },
+    {
+      "path": "runs/m5-counterbalance-stage-c-v2-20261003/runs/b6e0f04786b744049b95c8c318aa33b5/snapshots/index.json",
+      "bytes": 402,
+      "sha256": "867abe0cf4728ca1876cc8f2677fad8843783ebfccb1321a2cf969d22ddbdf65"
+    },
+    {
+      "path": "runs/m5-counterbalance-stage-c-v2-20261003/runs/b6e0f04786b744049b95c8c318aa33b5/comparison-worker.json",
+      "bytes": 15352,
+      "sha256": "1337a2b585a7291ac486c7a30565082916a42812c08257e30e188c0e15093f56"
+    },
+    {
+      "path": "runs/m5-counterbalance-stage-c-v2-20261003/runs/b6e0f04786b744049b95c8c318aa33b5/supervisor.json",
+      "bytes": 356,
+      "sha256": "f10a62ecd4706508da34b16e91645db160b057ef284af34d492262531bac8d4f"
+    },
+    {
+      "path": "runs/m5-counterbalance-stage-c-v2-20261003/b6e0f04786b744049b95c8c318aa33b5-job.json",
+      "bytes": 36370,
+      "sha256": "d5966e32a5f32c89a292591745a5a487e357272eeaa3c0e1c68102c05fd05006"
+    },
+    {
+      "path": "runs/m5-counterbalance-stage-c-v2-20261003/runs/9c446c256740441b8d36890603484d12/recording/manifest.json",
+      "bytes": 37533,
+      "sha256": "8b8f761e0430ab74c313ff5660b6150b29b1e820f5f42deb5a003b684955d1c4"
+    },
+    {
+      "path": "runs/m5-counterbalance-stage-c-v2-20261003/runs/9c446c256740441b8d36890603484d12/recording/events.jsonl",
+      "bytes": 1121161,
+      "sha256": "4a8b2d60930bfc28b5c5e2a49e00d693ee052fe843ca5f03cf5721ccd676a21b"
+    },
+    {
+      "path": "runs/m5-counterbalance-stage-c-v2-20261003/runs/9c446c256740441b8d36890603484d12/recording/chunks/000000.npz",
+      "bytes": 6919538,
+      "sha256": "da4c3260e054c33cdab7b375077461081710b18ccb0dfa849387205421b48c23"
+    },
+    {
+      "path": "runs/m5-counterbalance-stage-c-v2-20261003/runs/9c446c256740441b8d36890603484d12/recording/chunks/000001.npz",
+      "bytes": 6919538,
+      "sha256": "ab50ecbd87d8c439e5dc3ba475649720a243580806505b527a673a40d6f011ec"
+    },
+    {
+      "path": "runs/m5-counterbalance-stage-c-v2-20261003/runs/9c446c256740441b8d36890603484d12/recording/chunks/000002.npz",
+      "bytes": 6919538,
+      "sha256": "5e939808941aa12097bfc2dd3d2966eef93d96ddac2290134f7d80a88fd186a1"
+    },
+    {
+      "path": "runs/m5-counterbalance-stage-c-v2-20261003/runs/9c446c256740441b8d36890603484d12/recording/chunks/000003.npz",
+      "bytes": 6919538,
+      "sha256": "90eb3ddf77e91864bfd2049d40c01949554f4731ebbcf01453cbc92bc7a19c41"
+    },
+    {
+      "path": "runs/m5-counterbalance-stage-c-v2-20261003/runs/9c446c256740441b8d36890603484d12/recording/chunks/000004.npz",
+      "bytes": 436718,
+      "sha256": "f97443e30297ffd38a0530526b4d096b3522b907ec49231bd0171237e4108ae3"
+    },
+    {
+      "path": "runs/m5-counterbalance-stage-c-v2-20261003/runs/9c446c256740441b8d36890603484d12/snapshots/initial.snp",
+      "bytes": 1153006,
+      "sha256": "413c233626ed1481f7fc5d6c94589519e94a616a953063622643d9f38c82d1a3"
+    },
+    {
+      "path": "runs/m5-counterbalance-stage-c-v2-20261003/runs/9c446c256740441b8d36890603484d12/snapshots/index.json",
+      "bytes": 402,
+      "sha256": "cda694391585ebf0a673b1258ea60e959ec7910c14e912e45f47917c8dc7abfa"
+    },
+    {
+      "path": "runs/m5-counterbalance-stage-c-v2-20261003/runs/9c446c256740441b8d36890603484d12/comparison-worker.json",
+      "bytes": 15249,
+      "sha256": "735a61b52c667496c86bb55148173331869527ad57f1294f9e86f6edae23bbd9"
+    },
+    {
+      "path": "runs/m5-counterbalance-stage-c-v2-20261003/runs/9c446c256740441b8d36890603484d12/supervisor.json",
+      "bytes": 357,
+      "sha256": "e9cec4f2db1d24123237fbd0f49bfaa1ee9788a8428e464bf1bb9a54f1d06f76"
+    },
+    {
+      "path": "runs/m5-counterbalance-stage-c-v2-20261003/9c446c256740441b8d36890603484d12-job.json",
+      "bytes": 36382,
+      "sha256": "28d56c894d3215db740e27f4075a7a9238333b78e567f7d2b76073c4450afe50"
+    },
+    {
+      "path": "runs/m5-counterbalance-stage-c-v2-20261003/runs/4b51280ac8be45d2a70c2764715feb4c/recording/manifest.json",
+      "bytes": 37513,
+      "sha256": "7bed8028cd2e3eedfcc6f077a64542b7ae4bbad90c4d3577caa9b5d865c4551d"
+    },
+    {
+      "path": "runs/m5-counterbalance-stage-c-v2-20261003/runs/4b51280ac8be45d2a70c2764715feb4c/recording/events.jsonl",
+      "bytes": 1119851,
+      "sha256": "8849091e849b17f130fe2df38229ba9c4f226d1fe44ab0a5acdb21598eb8ef84"
+    },
+    {
+      "path": "runs/m5-counterbalance-stage-c-v2-20261003/runs/4b51280ac8be45d2a70c2764715feb4c/recording/chunks/000000.npz",
+      "bytes": 6919538,
+      "sha256": "25c8c9c34eca5566a5f0e283a56372a690f82aa1a5cc076112e53ac407fea973"
+    },
+    {
+      "path": "runs/m5-counterbalance-stage-c-v2-20261003/runs/4b51280ac8be45d2a70c2764715feb4c/recording/chunks/000001.npz",
+      "bytes": 6919538,
+      "sha256": "ee2373288290834133226fcabe95e55459d4b62cc8c097168d729f63663596f4"
+    },
+    {
+      "path": "runs/m5-counterbalance-stage-c-v2-20261003/runs/4b51280ac8be45d2a70c2764715feb4c/recording/chunks/000002.npz",
+      "bytes": 6919538,
+      "sha256": "29f099aa65f66936850010cbe2a2ffaf44cb9f6fbb84e9bcbc65f46ed3679da6"
+    },
+    {
+      "path": "runs/m5-counterbalance-stage-c-v2-20261003/runs/4b51280ac8be45d2a70c2764715feb4c/recording/chunks/000003.npz",
+      "bytes": 6919538,
+      "sha256": "408c061af9a59920626c2cac5aef60766219c637dc7c083e82c093301d5b9c37"
+    },
+    {
+      "path": "runs/m5-counterbalance-stage-c-v2-20261003/runs/4b51280ac8be45d2a70c2764715feb4c/recording/chunks/000004.npz",
+      "bytes": 436718,
+      "sha256": "765dc92ebf1ebae849d1a638d8d68592bcbcd038139649975e2780b1cb0efe7f"
+    },
+    {
+      "path": "runs/m5-counterbalance-stage-c-v2-20261003/runs/4b51280ac8be45d2a70c2764715feb4c/snapshots/initial.snp",
+      "bytes": 1152996,
+      "sha256": "edc4291c11f7aeff11cf33c883b64b5f99dcd25ce922078a199a3549b7dd585c"
+    },
+    {
+      "path": "runs/m5-counterbalance-stage-c-v2-20261003/runs/4b51280ac8be45d2a70c2764715feb4c/snapshots/index.json",
+      "bytes": 402,
+      "sha256": "769e2c7a1cc2489e1e683de66f3578c9b7967c92081fa58b04e6b404ec965241"
+    },
+    {
+      "path": "runs/m5-counterbalance-stage-c-v2-20261003/runs/4b51280ac8be45d2a70c2764715feb4c/comparison-worker.json",
+      "bytes": 15229,
+      "sha256": "55731a0857420c2a1ff1034046b3e50aae8d879be15cac65fc7f07ccaba715e1"
+    },
+    {
+      "path": "runs/m5-counterbalance-stage-c-v2-20261003/runs/4b51280ac8be45d2a70c2764715feb4c/supervisor.json",
+      "bytes": 356,
+      "sha256": "5cb573d78b135d4215831b1e98d54ec4968ac04eef216ac75cca08059f88b4a6"
+    },
+    {
+      "path": "runs/m5-counterbalance-stage-c-v2-20261003/4b51280ac8be45d2a70c2764715feb4c-job.json",
+      "bytes": 36362,
+      "sha256": "e138994a823509b89b3ed56b0f1335f3a00b4e72a40d438db625f1b1e0852305"
+    },
+    {
+      "path": "runs/m5-counterbalance-stage-c-v2-20261003/runs/6227b2e06ae643939dc5d682e47b4331/recording/manifest.json",
+      "bytes": 45417,
+      "sha256": "173c20cdc003b4a613695c8a7e898267023ce884a2fa8f7c574dbdc053c36df3"
+    },
+    {
+      "path": "runs/m5-counterbalance-stage-c-v2-20261003/runs/6227b2e06ae643939dc5d682e47b4331/recording/events.jsonl",
+      "bytes": 1128148,
+      "sha256": "c05f382a356012501b9021bfdbf4582958042caf098c4b7ade9e8959de874c40"
+    },
+    {
+      "path": "runs/m5-counterbalance-stage-c-v2-20261003/runs/6227b2e06ae643939dc5d682e47b4331/recording/chunks/000000.npz",
+      "bytes": 6919538,
+      "sha256": "1a07bed23d1cc858ea6ebda1ba264e0edcc34aac5f0611de1caec847f2fc7a4b"
+    },
+    {
+      "path": "runs/m5-counterbalance-stage-c-v2-20261003/runs/6227b2e06ae643939dc5d682e47b4331/recording/chunks/000001.npz",
+      "bytes": 6919538,
+      "sha256": "d78774ee12e5d8c1f1f46e140e48e76601f19ca9a31fcbe9ef424dd9b383da77"
+    },
+    {
+      "path": "runs/m5-counterbalance-stage-c-v2-20261003/runs/6227b2e06ae643939dc5d682e47b4331/recording/chunks/000002.npz",
+      "bytes": 6919538,
+      "sha256": "66e8e172cdebd08beed6062b8be86131d1726076f3adf49f07ac6acadcb22337"
+    },
+    {
+      "path": "runs/m5-counterbalance-stage-c-v2-20261003/runs/6227b2e06ae643939dc5d682e47b4331/recording/chunks/000003.npz",
+      "bytes": 6919538,
+      "sha256": "b8a29666fcc2b6f5d598c0df3c999df8525fd7be076cc04ecd30513e19f94033"
+    },
+    {
+      "path": "runs/m5-counterbalance-stage-c-v2-20261003/runs/6227b2e06ae643939dc5d682e47b4331/recording/chunks/000004.npz",
+      "bytes": 436718,
+      "sha256": "472d91b3c474f02d3930e52982a3a9e4b478a9376df49bae3fd8c3d542c582a4"
+    },
+    {
+      "path": "runs/m5-counterbalance-stage-c-v2-20261003/runs/6227b2e06ae643939dc5d682e47b4331/snapshots/initial.snp",
+      "bytes": 1161838,
+      "sha256": "fa2c840cc735451ebb5086eef8f0e6d99ff7cb4acf69a8b0eaf72f5408506ebb"
+    },
+    {
+      "path": "runs/m5-counterbalance-stage-c-v2-20261003/runs/6227b2e06ae643939dc5d682e47b4331/snapshots/index.json",
+      "bytes": 402,
+      "sha256": "09b3a50814552485ed44b1d0cc601a1cac687cacd2c8c2037abb9cea77d35c1e"
+    },
+    {
+      "path": "runs/m5-counterbalance-stage-c-v2-20261003/runs/6227b2e06ae643939dc5d682e47b4331/comparison-worker.json",
+      "bytes": 26496,
+      "sha256": "a1edc602745f6dfae39019fb6a90fad8f78497778a22fb227f08e2c508dd1776"
+    },
+    {
+      "path": "runs/m5-counterbalance-stage-c-v2-20261003/runs/6227b2e06ae643939dc5d682e47b4331/supervisor.json",
+      "bytes": 357,
+      "sha256": "3e0cbd14fc696d83bc97d685028eb4f389be5d881ec4041306b17f802fc5af8b"
+    },
+    {
+      "path": "runs/m5-counterbalance-stage-c-v2-20261003/6227b2e06ae643939dc5d682e47b4331-job.json",
+      "bytes": 47204,
+      "sha256": "79ab7b706be08dbf91e532db45652f183bf5bb865dcb9ff5cc9ef1d344639a2d"
+    },
+    {
+      "path": "runs/m5-counterbalance-stage-c-v2-20261003/runs/67346fa0fed74ff582eeac59f39ce43b/recording/manifest.json",
+      "bytes": 39278,
+      "sha256": "75b22ec1da7a153f125a040684c1b2cddac97959f2d8cf27575316eda28ef73c"
+    },
+    {
+      "path": "runs/m5-counterbalance-stage-c-v2-20261003/runs/67346fa0fed74ff582eeac59f39ce43b/recording/events.jsonl",
+      "bytes": 1119628,
+      "sha256": "b3fd90051d31598b797c3ab6ce2000e854a4205342ec85f34aae7e29a85b54a8"
+    },
+    {
+      "path": "runs/m5-counterbalance-stage-c-v2-20261003/runs/67346fa0fed74ff582eeac59f39ce43b/recording/chunks/000000.npz",
+      "bytes": 6919538,
+      "sha256": "bacb5e8273758dd700b077bc970ed656ef83955c495225c8523a3d935ccfaa68"
+    },
+    {
+      "path": "runs/m5-counterbalance-stage-c-v2-20261003/runs/67346fa0fed74ff582eeac59f39ce43b/recording/chunks/000001.npz",
+      "bytes": 6919538,
+      "sha256": "918d9b75ed31f8dac47e7fca43bb8292607077a4800517b6b5162a48b641bb9a"
+    },
+    {
+      "path": "runs/m5-counterbalance-stage-c-v2-20261003/runs/67346fa0fed74ff582eeac59f39ce43b/recording/chunks/000002.npz",
+      "bytes": 6919538,
+      "sha256": "909dcad02b15dc6ddfb7b4bd7fe4600d718370f4edac217bf081ac49960408da"
+    },
+    {
+      "path": "runs/m5-counterbalance-stage-c-v2-20261003/runs/67346fa0fed74ff582eeac59f39ce43b/recording/chunks/000003.npz",
+      "bytes": 6919538,
+      "sha256": "c41f9d0b3b0a9d1a6076766c9a710923dfe737133ffe53794ae9496d09586d03"
+    },
+    {
+      "path": "runs/m5-counterbalance-stage-c-v2-20261003/runs/67346fa0fed74ff582eeac59f39ce43b/recording/chunks/000004.npz",
+      "bytes": 436718,
+      "sha256": "08b70d771a5b1c06c777e98e4898e485365c1b2629cd19dce81455366256eed7"
+    },
+    {
+      "path": "runs/m5-counterbalance-stage-c-v2-20261003/runs/67346fa0fed74ff582eeac59f39ce43b/snapshots/initial.snp",
+      "bytes": 1153054,
+      "sha256": "53dff828fcaaf268bc34fcebaa1a8114e241289ab0c2c6085f0c8ea8467b1445"
+    },
+    {
+      "path": "runs/m5-counterbalance-stage-c-v2-20261003/runs/67346fa0fed74ff582eeac59f39ce43b/snapshots/index.json",
+      "bytes": 402,
+      "sha256": "1ff0605180d46afb93b202e2f4bc10b1faa39f70653c45997a36290b2edb1fbc"
+    },
+    {
+      "path": "runs/m5-counterbalance-stage-c-v2-20261003/runs/67346fa0fed74ff582eeac59f39ce43b/comparison-worker.json",
+      "bytes": 15275,
+      "sha256": "0fd3ab905039189dc425cbdefbbc1a1abdadeb3b171d4e3668d169217d86c037"
+    },
+    {
+      "path": "runs/m5-counterbalance-stage-c-v2-20261003/runs/67346fa0fed74ff582eeac59f39ce43b/supervisor.json",
+      "bytes": 357,
+      "sha256": "9fa7d1cb938ee1c2f1e5024975aa36fdd53cea27db5cefe7f40813ef9584e99e"
+    },
+    {
+      "path": "runs/m5-counterbalance-stage-c-v2-20261003/67346fa0fed74ff582eeac59f39ce43b-job.json",
+      "bytes": 39791,
+      "sha256": "d5c96e47e96af1e3a314a0959b83751083181eae09b4251f25bfaebfc2781f18"
+    },
+    {
+      "path": "runs/m5-counterbalance-stage-c-v2-20261003/runs/9ac6527c28764bbb8864c3e1356f7b5a/recording/manifest.json",
+      "bytes": 37423,
+      "sha256": "1242f2c9ffcd1de76ce7b4bbb3b200750167f36331f9fbf6b761b160a5356689"
+    },
+    {
+      "path": "runs/m5-counterbalance-stage-c-v2-20261003/runs/9ac6527c28764bbb8864c3e1356f7b5a/recording/events.jsonl",
+      "bytes": 16381,
+      "sha256": "eca406e4d826375779fa79b9b27a5b68df82c9266b677b99ca6ccb4c3c10b826"
+    },
+    {
+      "path": "runs/m5-counterbalance-stage-c-v2-20261003/runs/9ac6527c28764bbb8864c3e1356f7b5a/snapshots/initial.snp",
+      "bytes": 1153118,
+      "sha256": "13d85fd273d236d2a2004fe2c05b15797078ef94b8a268f3741f7427ea184fa9"
+    },
+    {
+      "path": "runs/m5-counterbalance-stage-c-v2-20261003/runs/9ac6527c28764bbb8864c3e1356f7b5a/snapshots/index.json",
+      "bytes": 402,
+      "sha256": "9c0141689892ff7d13f1556770b14fcbb4fab07f61eaa217fb8e0acfd4086a5a"
+    },
+    {
+      "path": "runs/m5-counterbalance-stage-c-v2-20261003/runs/9ac6527c28764bbb8864c3e1356f7b5a/comparison-worker.json",
+      "bytes": 13607,
+      "sha256": "814650be80d0f2a00ab04001e7ecb818f38c7f99658b317acad80e87bd43745b"
+    },
+    {
+      "path": "runs/m5-counterbalance-stage-c-v2-20261003/runs/9ac6527c28764bbb8864c3e1356f7b5a/supervisor.json",
+      "bytes": 357,
+      "sha256": "bfc850bea231465c12fb833a9178fadc0ae490fb797d7c0503f16a589214aef9"
+    },
+    {
+      "path": "runs/m5-counterbalance-stage-c-v2-20261003/9ac6527c28764bbb8864c3e1356f7b5a-job.json",
+      "bytes": 36353,
+      "sha256": "819cf838126aeca6f165260bd07c06f05c1bd3c2a55ede89fc8c4785f497d133"
+    },
+    {
+      "path": "runs/m5-counterbalance-stage-c-v2-20261003/runs/f82ae86dc75e438d9144d93cadbc544f/recording/manifest.json",
+      "bytes": 37506,
+      "sha256": "12ca7105386393f6f557d5e512e6ac9e5259f46345e1f595475bc7176e9fbed5"
+    },
+    {
+      "path": "runs/m5-counterbalance-stage-c-v2-20261003/runs/f82ae86dc75e438d9144d93cadbc544f/recording/events.jsonl",
+      "bytes": 1142260,
+      "sha256": "0f7321cdd91b9313ad102d1f1e772e4dc4d06b29032a355f280d40f124f8b9ae"
+    },
+    {
+      "path": "runs/m5-counterbalance-stage-c-v2-20261003/runs/f82ae86dc75e438d9144d93cadbc544f/recording/chunks/000000.npz",
+      "bytes": 6919538,
+      "sha256": "de77039c1fa351574e3a076b437500f0d4133a08fd9e6365455be3cfb264b74d"
+    },
+    {
+      "path": "runs/m5-counterbalance-stage-c-v2-20261003/runs/f82ae86dc75e438d9144d93cadbc544f/recording/chunks/000001.npz",
+      "bytes": 6919538,
+      "sha256": "35b83e42655392e103346cf570eb6a7c86e6632c420ae790ca72af8febaf2b35"
+    },
+    {
+      "path": "runs/m5-counterbalance-stage-c-v2-20261003/runs/f82ae86dc75e438d9144d93cadbc544f/recording/chunks/000002.npz",
+      "bytes": 6919538,
+      "sha256": "bea827c3b63d530a7c7fd1c3cf77caf2f15123c2a723d5a1bd099319d03de238"
+    },
+    {
+      "path": "runs/m5-counterbalance-stage-c-v2-20261003/runs/f82ae86dc75e438d9144d93cadbc544f/recording/chunks/000003.npz",
+      "bytes": 6919538,
+      "sha256": "9e0fcb819e96fd48114a9d1e6deb422f4b0e74aa788190bafe14d7af578b72e0"
+    },
+    {
+      "path": "runs/m5-counterbalance-stage-c-v2-20261003/runs/f82ae86dc75e438d9144d93cadbc544f/recording/chunks/000004.npz",
+      "bytes": 652812,
+      "sha256": "a9ed27793795514d57b9be9517970cda4c96566fdd68b6b4e2abfe8028bdb0f6"
+    },
+    {
+      "path": "runs/m5-counterbalance-stage-c-v2-20261003/runs/f82ae86dc75e438d9144d93cadbc544f/snapshots/initial.snp",
+      "bytes": 1153118,
+      "sha256": "d0b9aec7fef818e0f3a0f002f39694430046d480eaa658990442054f0ccb4ab8"
+    },
+    {
+      "path": "runs/m5-counterbalance-stage-c-v2-20261003/runs/f82ae86dc75e438d9144d93cadbc544f/snapshots/index.json",
+      "bytes": 402,
+      "sha256": "0ee1ef308a5d15f9ffb423f87b3a284983a57307f63d47413f997e69ff77cdd6"
+    },
+    {
+      "path": "runs/m5-counterbalance-stage-c-v2-20261003/runs/f82ae86dc75e438d9144d93cadbc544f/comparison-worker.json",
+      "bytes": 15389,
+      "sha256": "6f33dc6b00dfdcb6af1d9c512aadde1254c40bae8613cd642c75061662012c3c"
+    },
+    {
+      "path": "runs/m5-counterbalance-stage-c-v2-20261003/runs/f82ae86dc75e438d9144d93cadbc544f/supervisor.json",
+      "bytes": 356,
+      "sha256": "c99d4eb071b625e97696485589d90867580bc1956384f608034717162961fa53"
+    },
+    {
+      "path": "runs/m5-counterbalance-stage-c-v2-20261003/f82ae86dc75e438d9144d93cadbc544f-job.json",
+      "bytes": 36353,
+      "sha256": "7f09ce6f1a6421a5d5a981d680353b936c8b3fa9e14dc4396c99718815e23ede"
+    },
+    {
+      "path": "runs/m5-counterbalance-stage-c-v2-20261003/runs/af2446f4d3944c52a35063d3f472ebf0/recording/manifest.json",
+      "bytes": 37512,
+      "sha256": "84767a8d6fc1b55574e7b60092e94329abdedb6a2317d280186e1a8634caf3f3"
+    },
+    {
+      "path": "runs/m5-counterbalance-stage-c-v2-20261003/runs/af2446f4d3944c52a35063d3f472ebf0/recording/events.jsonl",
+      "bytes": 1125721,
+      "sha256": "0abb4d947792e70d0d68412c737f6a1a013e97c781deb74f834b1d76fb28ab07"
+    },
+    {
+      "path": "runs/m5-counterbalance-stage-c-v2-20261003/runs/af2446f4d3944c52a35063d3f472ebf0/recording/chunks/000000.npz",
+      "bytes": 6919538,
+      "sha256": "1ddb1737b7361ad0802016a99688bc3e40b77e45defb8f9b07a3c64864a4e478"
+    },
+    {
+      "path": "runs/m5-counterbalance-stage-c-v2-20261003/runs/af2446f4d3944c52a35063d3f472ebf0/recording/chunks/000001.npz",
+      "bytes": 6919538,
+      "sha256": "d352c967bd51800091f3eafac13a4577814e6a93b815889973c929c30dfb19d7"
+    },
+    {
+      "path": "runs/m5-counterbalance-stage-c-v2-20261003/runs/af2446f4d3944c52a35063d3f472ebf0/recording/chunks/000002.npz",
+      "bytes": 6919538,
+      "sha256": "1fdb5724cf7d177fafc14a140467531fc796c4162794595fc9715116863df5f5"
+    },
+    {
+      "path": "runs/m5-counterbalance-stage-c-v2-20261003/runs/af2446f4d3944c52a35063d3f472ebf0/recording/chunks/000003.npz",
+      "bytes": 6919538,
+      "sha256": "f4a7da3703f0769ad280749db4f7739163e3ee8726660423582dd0a831487422"
+    },
+    {
+      "path": "runs/m5-counterbalance-stage-c-v2-20261003/runs/af2446f4d3944c52a35063d3f472ebf0/recording/chunks/000004.npz",
+      "bytes": 652812,
+      "sha256": "f9327dd751d17fd83c6bb8436a0b872e19d7b21d6e9e6363471dd15e0940bea7"
+    },
+    {
+      "path": "runs/m5-counterbalance-stage-c-v2-20261003/runs/af2446f4d3944c52a35063d3f472ebf0/snapshots/initial.snp",
+      "bytes": 1153121,
+      "sha256": "633f084343a2162fa2f78d5708862cb189618dd66025e7ad46ca9f077b5cd156"
+    },
+    {
+      "path": "runs/m5-counterbalance-stage-c-v2-20261003/runs/af2446f4d3944c52a35063d3f472ebf0/snapshots/index.json",
+      "bytes": 402,
+      "sha256": "b7635c5b901d0899cb3173369da75854634a9dfcc0393bb5af43e1bf9496c263"
+    },
+    {
+      "path": "runs/m5-counterbalance-stage-c-v2-20261003/runs/af2446f4d3944c52a35063d3f472ebf0/comparison-worker.json",
+      "bytes": 15396,
+      "sha256": "3aaece540b6a0e672b7526ae755bd93a868735ec50796750ba493cb26253c214"
+    },
+    {
+      "path": "runs/m5-counterbalance-stage-c-v2-20261003/runs/af2446f4d3944c52a35063d3f472ebf0/supervisor.json",
+      "bytes": 355,
+      "sha256": "a3f6e51e0efd752831202ce98b2369aa62533768f2962277a182f9d7b3ef7e65"
+    },
+    {
+      "path": "runs/m5-counterbalance-stage-c-v2-20261003/af2446f4d3944c52a35063d3f472ebf0-job.json",
+      "bytes": 36361,
+      "sha256": "7c4925aa09b0cd583e76419321ae3ad38d094b3ccddc2acc67c0056ac3682502"
+    },
+    {
+      "path": "runs/m5-counterbalance-stage-c-v2-20261003/runs/2ab1ad62605f4e6a943818e1d51508ab/recording/manifest.json",
+      "bytes": 37508,
+      "sha256": "119dca248bce9f0927ffef72685a7af7522a1b45d1706911fda31ca1bd32c693"
+    },
+    {
+      "path": "runs/m5-counterbalance-stage-c-v2-20261003/runs/2ab1ad62605f4e6a943818e1d51508ab/recording/events.jsonl",
+      "bytes": 1142392,
+      "sha256": "e0fc1fe2e3820256a6db5600c185d9cf57ab8f7f11c6811ad9aa384a75f0f694"
+    },
+    {
+      "path": "runs/m5-counterbalance-stage-c-v2-20261003/runs/2ab1ad62605f4e6a943818e1d51508ab/recording/chunks/000000.npz",
+      "bytes": 6919538,
+      "sha256": "e65f398bccb944abfb3136970d1539ffcdfa8d0af1ac25363590f98c37651f71"
+    },
+    {
+      "path": "runs/m5-counterbalance-stage-c-v2-20261003/runs/2ab1ad62605f4e6a943818e1d51508ab/recording/chunks/000001.npz",
+      "bytes": 6919538,
+      "sha256": "ee2164e3cca55fe16b8e4ffadeeecb97a0aea63b50c04d9e8fb167f6cfaae61e"
+    },
+    {
+      "path": "runs/m5-counterbalance-stage-c-v2-20261003/runs/2ab1ad62605f4e6a943818e1d51508ab/recording/chunks/000002.npz",
+      "bytes": 6919538,
+      "sha256": "777ed9f2a7fe87e84825f774f656493bbd64067234c87018e0f930e366fbdecc"
+    },
+    {
+      "path": "runs/m5-counterbalance-stage-c-v2-20261003/runs/2ab1ad62605f4e6a943818e1d51508ab/recording/chunks/000003.npz",
+      "bytes": 6919538,
+      "sha256": "418718e7a6c435ac52bcbc5a0316317b99834cde5013fe8638675c483f897c95"
+    },
+    {
+      "path": "runs/m5-counterbalance-stage-c-v2-20261003/runs/2ab1ad62605f4e6a943818e1d51508ab/recording/chunks/000004.npz",
+      "bytes": 652812,
+      "sha256": "19de1f82b836226a6109ef44d2a4224f3f98df57b17368b1215aa760f30c56b6"
+    },
+    {
+      "path": "runs/m5-counterbalance-stage-c-v2-20261003/runs/2ab1ad62605f4e6a943818e1d51508ab/snapshots/initial.snp",
+      "bytes": 1153119,
+      "sha256": "55196322961a10669fabefad77975d6a269d53ccbab3040ad237b9bd1dd03b1d"
+    },
+    {
+      "path": "runs/m5-counterbalance-stage-c-v2-20261003/runs/2ab1ad62605f4e6a943818e1d51508ab/snapshots/index.json",
+      "bytes": 402,
+      "sha256": "2d0bf18d3cfed3b1d70342d1a3b22c9d3bf5bc67824c1f00611f6edd84163f13"
+    },
+    {
+      "path": "runs/m5-counterbalance-stage-c-v2-20261003/runs/2ab1ad62605f4e6a943818e1d51508ab/comparison-worker.json",
+      "bytes": 15391,
+      "sha256": "0a9d0d1b81bc72bb03c6e614a5cef62e82bb11e814b53c57a32d03347d5477eb"
+    },
+    {
+      "path": "runs/m5-counterbalance-stage-c-v2-20261003/runs/2ab1ad62605f4e6a943818e1d51508ab/supervisor.json",
+      "bytes": 295,
+      "sha256": "5988203b0651ad22f4deca5b69901fc744a4574739d6e55525b090df3b171217"
+    },
+    {
+      "path": "runs/m5-counterbalance-stage-c-v2-20261003/2ab1ad62605f4e6a943818e1d51508ab-job.json",
+      "bytes": 36355,
+      "sha256": "318ee15085230582f05c2795fbe4905c27720b08bcd7892a2feb9430708acf15"
+    },
+    {
+      "path": "runs/m5-counterbalance-stage-c-v2-launch-c626f3c/identity-after.json",
+      "bytes": 63296,
+      "sha256": "e51e01ede92a1116906d80248933c106f40ab668645665e589dc9d57c175f90f"
+    },
+    {
+      "path": "runs/m5-counterbalance-stage-c-v2-launch-c626f3c/identity-before.json",
+      "bytes": 63296,
+      "sha256": "e51e01ede92a1116906d80248933c106f40ab668645665e589dc9d57c175f90f"
+    },
+    {
+      "path": "runs/m5-counterbalance-stage-c-v2-launch-c626f3c/identity-prepared.json",
+      "bytes": 63296,
+      "sha256": "e51e01ede92a1116906d80248933c106f40ab668645665e589dc9d57c175f90f"
+    },
+    {
+      "path": "runs/m5-counterbalance-stage-c-v2-launch-c626f3c/launch-start.json",
+      "bytes": 1059,
+      "sha256": "27a0e44fc6025ed659f99b2813056613eff0e9094985d809df7a091d846094c3"
+    },
+    {
+      "path": "runs/m5-counterbalance-stage-c-v2-launch-c626f3c/launch.json",
+      "bytes": 5335,
+      "sha256": "7dbd56e00d6c4c5b7a003fb4f2a2b1e74bbbbfafa77883541ae0e665c56de30e"
+    },
+    {
+      "path": "runs/m5-counterbalance-stage-c-v2-launch-c626f3c/launch.py",
+      "bytes": 13990,
+      "sha256": "9db2234c5151884390a04638366d98e88ed7bc956d4c7606f9e3ee51398146c1"
+    },
+    {
+      "path": "runs/m5-counterbalance-stage-c-v2-launch-c626f3c/ownership-samples.jsonl",
+      "bytes": 533737,
+      "sha256": "4c6cd1e7a04f210970fbab95a43bb8db8ea004a586d98030acbac42dcc3d0e9f"
+    },
+    {
+      "path": "runs/m5-counterbalance-stage-c-v2-launch-c626f3c/prepared-plan.json",
+      "bytes": 90912,
+      "sha256": "9cdbd1b3f45bb3e01f5fa959243b793b2c54dd0be64875b190620a93a2773cbc"
+    },
+    {
+      "path": "runs/m5-counterbalance-stage-c-v2-launch-c626f3c/prepared.json",
+      "bytes": 8061,
+      "sha256": "43f372b955676725b5d705c62b1be0d4826ee03c4d241d8413062677db8fa0cf"
+    },
+    {
+      "path": "runs/m5-counterbalance-stage-c-v2-launch-c626f3c/process/stderr.log",
+      "bytes": 151,
+      "sha256": "b7a60db28e4d02db743de914018115d4d4a8fe2d47d54399c417fb9e7ad0e9ad"
+    },
+    {
+      "path": "runs/m5-counterbalance-stage-c-v2-launch-c626f3c/process/stdout.log",
+      "bytes": 1392,
+      "sha256": "a8397cff663812ee95ccdca1a7e82054db37f1456798b1d30bcfcb441d7f339b"
+    },
+    {
+      "path": "runs/m5-counterbalance-stage-c-v2-launch-c626f3c/process/supervisor.json",
+      "bytes": 332,
+      "sha256": "5d31853778363ec78013b7dd9e5abcef8cd38bb0376d42ed9c9818dba1671f98"
+    },
+    {
+      "path": "runs/m5-counterbalance-stage-c-v2-20261003/comparison-plan.json",
+      "bytes": 90912,
+      "sha256": "9cdbd1b3f45bb3e01f5fa959243b793b2c54dd0be64875b190620a93a2773cbc"
+    }
+  ],
+  "indexed_files": 171,
+  "indexed_bytes": 369505893,
+  "index_scope": "local audit-selected owner files plus outer control files and retained comparison plan; not all output extras; separate from root 188-artifact scope",
+  "limits": {
+    "owners": 40,
+    "max_ticks": 10800,
+    "recording_bytes_per_owner": 201326592,
+    "snapshot_bytes_per_owner": 16777216,
+    "aggregate_bytes": 10737418240,
+    "free_floor_bytes": 2147483648,
+    "owner_seconds": 160,
+    "term_seconds": 6460,
+    "kill_grace_seconds": 15,
+    "supervisor_seconds": 6495
+  },
+  "own_u_timing_benefit_observed": false,
+  "held_out_executed": false,
+  "r2_complete": false,
+  "retry_executed": false,
+  "null_or_no_event_outcomes_observed": false
+}

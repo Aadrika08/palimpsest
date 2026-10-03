@@ -1,0 +1,62 @@
+{
+  "status": "passed-source-regression",
+  "scope": "two verifier API call corrections only; corrected actual gate pending separate freeze/GO",
+  "preceding_failed_attempt": "m6-body-homing-composition-v1.json",
+  "failure_evidence_commit": "1411c3b",
+  "changes": [
+    "verify parent admission: path=output",
+    "worker admission: path=run"
+  ],
+  "regression": {
+    "red": "one test failed before fix: mocked process boundary not reached because parent check lacks path",
+    "green_tests": 29,
+    "green_seconds": 7.575,
+    "skips": 0,
+    "admission_paths_tested": [
+      "parent output",
+      "source worker run",
+      "native worker run"
+    ],
+    "real_StorageBudget_check": true,
+    "process_native_boundaries_stubbed": true,
+    "writer_lease_acquired": false
+  },
+  "historical_admission": {
+    "status": "passed-pure-admission",
+    "seconds": 0.42865544800588395,
+    "historical_paths": {
+      "calibration_report": "/home/utkarsh/Work/shraddha/brain/.worktrees/body-adaptation/runs/m6-body-adaptation-development-v2-20261002/report.json",
+      "fitted_snapshot": "/home/utkarsh/Work/shraddha/brain/.worktrees/body-adaptation/runs/m6-body-adaptation-development-v2-20261002/source/fitted.snp"
+    },
+    "historical_sha256": {
+      "report": "231956442698655fc8f511018067a9515797b2baa7dd5e9f7d1a174374546121",
+      "snapshot": "af42213e0bc0440906371a53fe23902b02c692e806c64b609621fed2feb63ca4"
+    },
+    "normalized_derivation_sha256": "95e33f595ac3e2726b47a701963048aa98e38982f9779171ea3f71409738f638",
+    "current_verifier_sha256": "1cf79893d38f70bd1ab9acbee2aac9cc66dc85c91183dc95d17c7de74d951709",
+    "protocol_sha256": "e9cbcd51a17b0ac41056c96a1c93ec6e392757158988016a3d1b899c656078f8",
+    "protected_modules_sha256": {
+      "src/palimpsest/body_adaptation.py": "7ecc71cce4da915225952c3ea31666b54895f5ff93de32d87149aac368d32f81",
+      "src/palimpsest/body_profile.py": "796df9ab2a109606432c7a97bfbea5f58ab7acc75768e638b5b8731a390cbb54",
+      "src/palimpsest/task_profiles.py": "14b237ede67949f281977c00b01dcd7a8e8a367d67a7e4e37911e0cb9b1dfa79"
+    },
+    "scope": "actual retained SNP/report read with NumPy; no model/native/lease"
+  },
+  "sibling_review": "Exactly two missing calls in verify_body_homing.py; existing body-turn/body-adaptation callers already bind paths.",
+  "artifact_refs": {
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/body-homing/runs/m6-body-homing-path-fix/red.log": {
+      "bytes": 1000,
+      "sha256": "ecc704db5fbe8e48d62793db78c0dd07ec628943bd599f87f47a1b2b45d83dd0"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/body-homing/runs/m6-body-homing-path-fix/focused.log": {
+      "bytes": 128,
+      "sha256": "e6b39c85cf9f7c2a6e4996c1ab9193c76b625b6f06378045a8d9dd4d11b2a722"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/body-homing/runs/m6-body-homing-path-fix/historical-admission.json": {
+      "bytes": 1326,
+      "sha256": "2013714bed376c9e94aebd0c27ac1dfc849c6398cf3446605fd9f82f88931af3"
+    }
+  },
+  "limits_numerics_protocol_unchanged": true,
+  "actual_retry_run": false
+}

@@ -1,0 +1,163 @@
+{
+  "actual_attempts": 1,
+  "audit": {
+    "control_files_rehashed": 9,
+    "elapsed_seconds": 1.019924695006921,
+    "exact_all_fields_replay": true,
+    "inner_files": 47,
+    "maximum_numpy_action_error": 2.9802322387695312e-08,
+    "numeric_rows": 364,
+    "numpy_action_tolerance": 1e-06,
+    "outer_files": 53,
+    "owned_process_exits": 8,
+    "snapshots": 5,
+    "source_files": 97,
+    "status": "passed",
+    "writer_lease_available": true
+  },
+  "cleanup_errors": [],
+  "command": "../lab-hardening/.venv/bin/python runs/puck-balanced-student-mechanism-v1-prepared/enclose.py",
+  "controls_source_bundles_unchanged": true,
+  "development_executed": false,
+  "elapsed_seconds": {
+    "enclosing_before_publication": 20.900525182005367,
+    "enclosing_observed_launcher_return_and_log_drain": 20.898629870003788,
+    "inner_before_publication": 18.92720110299706,
+    "launcher_before_publication": 20.76187700299488
+  },
+  "exact_derivative_rows": 244,
+  "forced_signals": [],
+  "held_out_opened": false,
+  "limitations": [
+    "Observed layout6000/model21 mechanism only; all final task reasons are null.",
+    "Negative balanced residual diagnostics and historical0/4 goals per model remain unchanged.",
+    "Actual producer is818e7ea; no claim that integrated dependencies have identical source inventories.",
+    "Descendant monitoring is finite, not universal transient-process observation.",
+    "Inner and outer timings are launcher-reported prepublication intervals, not enclosing process-return durations.",
+    "Original ledgers retain their scope: inner excludes its own report; outer retained_inventory is fully drained, while control_inventory may include a live enclosing-log prefix. Enclosing drained logs/report are separate final artifacts.",
+    "Tool terminal stdout was retained by exec; no separate outer console file was created."
+  ],
+  "owners": [
+    {
+      "completion": "fixed_mechanics_horizon",
+      "id": "student-6000-seed21",
+      "model_calls": 120,
+      "status": "passed",
+      "ticks": 120
+    },
+    {
+      "completion": "continuation_window_complete",
+      "id": "student-continue-tick1",
+      "model_calls": 4,
+      "status": "passed",
+      "ticks": 4
+    },
+    {
+      "completion": "fixed_mechanics_horizon",
+      "id": "student-replay-actions",
+      "model_calls": 0,
+      "status": "passed",
+      "ticks": 120
+    },
+    {
+      "completion": "fixed_mechanics_horizon",
+      "id": "student-replay-policy",
+      "model_calls": 120,
+      "status": "passed",
+      "ticks": 120
+    }
+  ],
+  "producer_commit": "818e7ea34b34d7e96c47206e3e3ae35771ddf70a",
+  "qualification_claims": [],
+  "references": [
+    {
+      "bytes": 2298,
+      "id": "controls_ready",
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-balanced-student/runs/puck-balanced-student-mechanism-v1-prepared/ready.json",
+      "sha256": "c3e81e764e4f6ab043bab694c1c351edc18c20965f3325063efcf2457d41e8e0"
+    },
+    {
+      "bytes": 6454,
+      "id": "pure_controls",
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-balanced-student/runs/puck-balanced-student-mechanism-v1-prepared/preflight.json",
+      "sha256": "272042ef0bf5f37b61ce1c99392347c5145b4aeaee2e762a724d87e9e1785097"
+    },
+    {
+      "bytes": 1289,
+      "id": "pure_enclosure",
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-balanced-student/runs/puck-balanced-student-mechanism-v1-prepared/enclose-preflight.json",
+      "sha256": "d8d502a353e24bfcf6873def618500af31000f43577730820cfc4fedacaa2410"
+    },
+    {
+      "bytes": 4205,
+      "id": "enclosing",
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-balanced-student/runs/puck-balanced-student-mechanism-v1-prepared/enclosing/report.json",
+      "sha256": "806f9ddc4f12f3039eea0b24eaf6313c5a3648b7ffe9699089f9816ade4c7e65"
+    },
+    {
+      "bytes": 25348,
+      "id": "outer",
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-balanced-student/runs/puck-balanced-student-mechanism-v1-20261003/launch-result.json",
+      "sha256": "5f5c2e5f4a9fdb9d4e41f5c04c13445dd3938b871fdb76b89bd0e75076222298"
+    },
+    {
+      "bytes": 58616,
+      "id": "inner",
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-balanced-student/runs/puck-balanced-student-mechanism-v1-20261003/gate/report.json",
+      "sha256": "277c4ff814118fedc4f636f432f21595b514775bd8d46f1b74c099ea13750815"
+    },
+    {
+      "bytes": 2039,
+      "id": "terminal_cleanup",
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-balanced-student/runs/puck-balanced-student-terminal-818e7ea/terminal.json",
+      "sha256": "72e0c1fbb385dae1b366b540e94d219d49bab1a809778e184435853771e3001c"
+    },
+    {
+      "bytes": 9800,
+      "id": "root_auditor",
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/project-integration/runs/puck-balanced-student-mechanism-root-audit-818e7ea/audit.py",
+      "sha256": "9df1df37248d126ec5b957f9f24038cb29a6a0ea525747bcf42103dd2925952d"
+    },
+    {
+      "bytes": 1511,
+      "id": "root_audit",
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/project-integration/runs/puck-balanced-student-mechanism-root-audit-818e7ea/audit.json",
+      "sha256": "1e35a90d48afe4d6ecc501e2926af38de9bcbabecdf3a6ae77d652a4a45ec5a7"
+    },
+    {
+      "bytes": 2501,
+      "id": "root_control_review",
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/project-integration/runs/puck-balanced-student-control-root-review-818e7ea/audit.json",
+      "sha256": "d08adff41a14784c92085f7a66d7443675a7f13dcaa4b8684925b44ad7e1aea6"
+    },
+    {
+      "bytes": 2716,
+      "id": "root_source_review",
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/project-integration/runs/puck-balanced-student-root-checks-818e7ea/audit.json",
+      "sha256": "07a08add5155adbe98d36a98ff7b96b40e89962e1444993b35807224493eed12"
+    },
+    {
+      "bytes": 4084,
+      "id": "mechanism_protocol",
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-balanced-student/docs/plans/m6-puck-balanced-student-mechanism-v1.json",
+      "sha256": "b4dbc303ee757287a827ce4783c1090288792247d340e47ad0a5fc55fed47afb"
+    },
+    {
+      "bytes": 1449,
+      "id": "model_manifest",
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-balanced-student/docs/plans/m6-puck-balanced-student-models-v1.json",
+      "sha256": "dac7171366a33a07dc146787338b6dfeee0090f680f78c75dcdbd29607806919"
+    }
+  ],
+  "review_status": "root_reviewed",
+  "same_model_constructed_in_all_owners": true,
+  "saved_action_replay_predictions": 0,
+  "schema": "puck-balanced-student-mechanism-evidence-v1",
+  "scope": "Fixed balanced-model mechanism reproducibility; no task capability or improvement claim.",
+  "status": "passed",
+  "survivors": [],
+  "tool_exit_code": 0,
+  "tool_session": 29016,
+  "working_directory": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-balanced-student",
+  "writer_lease_checked_free": true
+}

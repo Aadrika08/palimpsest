@@ -1,0 +1,1005 @@
+{
+  "schema_version": 1,
+  "milestone": "M2",
+  "scope": "Interactive lab implementation gates; M3 release hardening remains incomplete",
+  "observed_date": "2026-10-02",
+  "python_tests": {
+    "command": "PALIMPSEST_SIMULATION_TESTS=1 MUJOCO_GL=egl OMP_NUM_THREADS=2 .venv/bin/python -m pytest -q",
+    "passed": 145,
+    "skipped": 0,
+    "warnings": 39,
+    "wall_seconds": 28.14,
+    "raw_log": "/tmp/palimpsest-m2-final-suite.log",
+    "raw_log_sha256": "c0f07fa8ec7aab00122f26099854e826abd428539d59243f248a0728b7626757"
+  },
+  "owner_gates": [
+    {
+      "status": "passed",
+      "controller": "manual",
+      "device": "cpu",
+      "prefix_ticks": 4,
+      "continuation_ticks": 4,
+      "source_run_id": "22a569ed2baf474899da90942fbe92d8",
+      "snapshot_id": "fe78b5c849b04a08b068e3dc92890cfd",
+      "snapshot_sha256": "f72afb1dc0589097e3541517d2cd0e0dd68644c124a6b61d93ffd8a696f4af4a",
+      "branch_run_id": "b0d65387c3824c53826e9919eb5be7f0",
+      "continuation": {
+        "status": "passed",
+        "max_abs_errors": {
+          "episode": 0.0,
+          "tick": 0.0,
+          "action": 0.0,
+          "cam_left": 0.0,
+          "cam_right": 0.0,
+          "control": 0.0,
+          "eyes": 0.0,
+          "next_pose": 0.0,
+          "population_stats": 0.0,
+          "pose": 0.0,
+          "raw_cam_left": 0.0,
+          "raw_cam_right": 0.0,
+          "revision": 0.0,
+          "reward": 0.0,
+          "sensors": 0.0,
+          "simulation_time": 0.0
+        },
+        "divergences": []
+      },
+      "playback": {
+        "mode": "playback",
+        "first_tick": 4
+      },
+      "replays": {
+        "actions": {
+          "run_id": "3b145c1b3df24e5eb682549a703373be",
+          "report": {
+            "schema_version": 1,
+            "source_run_id": "22a569ed2baf474899da90942fbe92d8",
+            "run_id": "3b145c1b3df24e5eb682549a703373be",
+            "mode": "actions",
+            "status": "passed",
+            "compared_ticks": 8,
+            "compared_events": 24,
+            "first_divergence": null,
+            "comparison": {
+              "float_atol": 1e-06,
+              "float_rtol": 1e-06,
+              "integer_and_camera_exact": true,
+              "excluded": [
+                "latency",
+                "step_latency"
+              ],
+              "runtime_source_keys": [
+                "src/palimpsest/engine.py",
+                "src/palimpsest/profiles.py",
+                "src/palimpsest/interventions.py",
+                "src/palimpsest/flynn.py",
+                "src/palimpsest/snapshots.py",
+                "src/palimpsest/evaluate.py",
+                "src/palimpsest/assets.py",
+                "src/palimpsest/doctor.py"
+              ],
+              "upstream_and_lock_exact": true,
+              "snapshot_identity_exact": true
+            },
+            "inference_executed": false,
+            "errors": [],
+            "initial_snapshot_id": "fa9ed8e6c110425db83c567fdfeb40fd"
+          }
+        },
+        "policy": {
+          "run_id": "33405e0923a94af497e4bab823e4e515",
+          "report": {
+            "schema_version": 1,
+            "source_run_id": "22a569ed2baf474899da90942fbe92d8",
+            "run_id": "33405e0923a94af497e4bab823e4e515",
+            "mode": "policy",
+            "status": "passed",
+            "compared_ticks": 8,
+            "compared_events": 24,
+            "first_divergence": null,
+            "comparison": {
+              "float_atol": 1e-06,
+              "float_rtol": 1e-06,
+              "integer_and_camera_exact": true,
+              "excluded": [
+                "latency",
+                "step_latency"
+              ],
+              "runtime_source_keys": [
+                "src/palimpsest/engine.py",
+                "src/palimpsest/profiles.py",
+                "src/palimpsest/interventions.py",
+                "src/palimpsest/flynn.py",
+                "src/palimpsest/snapshots.py",
+                "src/palimpsest/evaluate.py",
+                "src/palimpsest/assets.py",
+                "src/palimpsest/doctor.py"
+              ],
+              "upstream_and_lock_exact": true,
+              "snapshot_identity_exact": true
+            },
+            "inference_executed": true,
+            "errors": [],
+            "initial_snapshot_id": "779f6ea2b46f441c9c8e8fe3a1a6fc8d"
+          }
+        }
+      },
+      "exports": {
+        "svg": {
+          "path": "route.svg",
+          "sha256": "b10dcea77981d56065b0d7d5acd8578445d1aebd6d034b889c9481cecbad3901",
+          "size_bytes": 17325
+        },
+        "png": {
+          "path": "route.png",
+          "sha256": "a24075f23319530ba07aee2cf2c395759fa8b6f34e592477736e879edbcec075",
+          "size_bytes": 38925
+        },
+        "bundle": {
+          "path": "route.zip",
+          "sha256": "67d45410f75d04948857d04e84b4408b85670574b6515b8265eacd62ed71f35d",
+          "size_bytes": 1405470
+        }
+      },
+      "wall_seconds": 20.819096998999157,
+      "raw_path": "runs/m2-lab-manual/verification.json",
+      "raw_sha256": "1d3c91847f3c463f28d235a47c998ceede00a4711eb3604282aacc143922084f",
+      "runtime": [
+        {
+          "kind": "environment",
+          "lock_sha256": "8a7a880d020c1907e221575fda65642241f809fc628a55381f1b6137bff1b732",
+          "source_sha256": {
+            "src/palimpsest/__init__.py": "bb99e30d22e4662c4ded455b1b23f49b77ce811dcfa1b69bf358925487a566d8",
+            "src/palimpsest/__main__.py": "935a1c1166b0c1ea35a82256345000bf2c73ded718d77773bc27a71ecce28f7d",
+            "src/palimpsest/artifacts.py": "3e098e67b6c7b7564a683d04bc08884913b9a2a917412e0667b7a9b7ddd20aec",
+            "src/palimpsest/assets.py": "aa4a38c7403cd9f72bc23027acd7c212202f25574bea6af65053c34664da49e3",
+            "src/palimpsest/cli.py": "94cdc191c43af8d90d28a1477038696ff5e7a58e620f2c011e06af09279f182c",
+            "src/palimpsest/doctor.py": "109de62468161f35461eee76af244daabef38f2faa1526c5a6ed268817e6b834",
+            "src/palimpsest/engine.py": "b1e0a4c7edc09e0f935944b0429fc3fd4e631b7f8cfe16edceac2609fb20099f",
+            "src/palimpsest/evaluate.py": "6929e54412b25bd39d786dec481111fc834f0bbcbb2ea29d34a81b7806c3a9ae",
+            "src/palimpsest/flynn.py": "409b7503d76fd6f971a33d053e86c968b529edc226b85f44122e17a649f8f9f4",
+            "src/palimpsest/interventions.py": "fd2c1e6f160f7d251ddcf3275b383e8e3e265fc462452d1bc20c0030a6acf9c8",
+            "src/palimpsest/lab.py": "9261e840906cc9cbbf9cbc5a8dc3b9720537207199b2a5a47e22727c419d0c0c",
+            "src/palimpsest/profiles.py": "808c7636b10667ef8aea70422475e0ca4f8b23d869f6347529cf0957df184db3",
+            "src/palimpsest/records.py": "e66fe717842d719265416d95f202199cf94d08c48a72d6433d02a1b98398adca",
+            "src/palimpsest/replay.py": "1f3844032210f57486db3102f0be86894f5d8eda10ad6586e7ada2bc6e946ac7",
+            "src/palimpsest/snapshots.py": "9a5630ebc6385739a24402a75a7bcac6b522469652173242535037943b63a797",
+            "src/palimpsest/worker.py": "7c180a890892fc51c85289b9581f0fdd5e5985829e2d661693f9db9243ca2915"
+          },
+          "upstream_commit": "8d964599119b420de67ee259434d273651a1a76d"
+        }
+      ]
+    },
+    {
+      "status": "passed",
+      "controller": "teacher",
+      "device": "cpu",
+      "prefix_ticks": 4,
+      "continuation_ticks": 4,
+      "source_run_id": "1507ac8c38a34daa819043858a7349b5",
+      "snapshot_id": "14ae71ebdd634e3d82c0adc6eb636f9c",
+      "snapshot_sha256": "312b2247fb79931af5716d5d50e7562e125944d4150a626e77b6b255290d8bb4",
+      "branch_run_id": "f00023ef633b4a00a7bfb76cf74a48ba",
+      "continuation": {
+        "status": "passed",
+        "max_abs_errors": {
+          "episode": 0.0,
+          "tick": 0.0,
+          "action": 0.0,
+          "cam_left": 0.0,
+          "cam_right": 0.0,
+          "control": 0.0,
+          "eyes": 0.0,
+          "next_pose": 0.0,
+          "population_stats": 0.0,
+          "pose": 0.0,
+          "raw_cam_left": 0.0,
+          "raw_cam_right": 0.0,
+          "revision": 0.0,
+          "reward": 0.0,
+          "sensors": 0.0,
+          "simulation_time": 0.0
+        },
+        "divergences": []
+      },
+      "playback": {
+        "mode": "playback",
+        "first_tick": 4
+      },
+      "replays": {
+        "actions": {
+          "run_id": "c5d3f1c9ae5e462dbb78555c62ff4b94",
+          "report": {
+            "schema_version": 1,
+            "source_run_id": "1507ac8c38a34daa819043858a7349b5",
+            "run_id": "c5d3f1c9ae5e462dbb78555c62ff4b94",
+            "mode": "actions",
+            "status": "passed",
+            "compared_ticks": 8,
+            "compared_events": 22,
+            "first_divergence": null,
+            "comparison": {
+              "float_atol": 1e-06,
+              "float_rtol": 1e-06,
+              "integer_and_camera_exact": true,
+              "excluded": [
+                "latency",
+                "step_latency"
+              ],
+              "runtime_source_keys": [
+                "src/palimpsest/engine.py",
+                "src/palimpsest/profiles.py",
+                "src/palimpsest/interventions.py",
+                "src/palimpsest/flynn.py",
+                "src/palimpsest/snapshots.py",
+                "src/palimpsest/evaluate.py",
+                "src/palimpsest/assets.py",
+                "src/palimpsest/doctor.py"
+              ],
+              "upstream_and_lock_exact": true,
+              "snapshot_identity_exact": true
+            },
+            "inference_executed": false,
+            "errors": [],
+            "initial_snapshot_id": "6f14ebd6654a4f3eb49a0d11b594fecf"
+          }
+        },
+        "policy": {
+          "run_id": "96203a1e3aae40db8ecc427d096839e3",
+          "report": {
+            "schema_version": 1,
+            "source_run_id": "1507ac8c38a34daa819043858a7349b5",
+            "run_id": "96203a1e3aae40db8ecc427d096839e3",
+            "mode": "policy",
+            "status": "passed",
+            "compared_ticks": 8,
+            "compared_events": 22,
+            "first_divergence": null,
+            "comparison": {
+              "float_atol": 1e-06,
+              "float_rtol": 1e-06,
+              "integer_and_camera_exact": true,
+              "excluded": [
+                "latency",
+                "step_latency"
+              ],
+              "runtime_source_keys": [
+                "src/palimpsest/engine.py",
+                "src/palimpsest/profiles.py",
+                "src/palimpsest/interventions.py",
+                "src/palimpsest/flynn.py",
+                "src/palimpsest/snapshots.py",
+                "src/palimpsest/evaluate.py",
+                "src/palimpsest/assets.py",
+                "src/palimpsest/doctor.py"
+              ],
+              "upstream_and_lock_exact": true,
+              "snapshot_identity_exact": true
+            },
+            "inference_executed": true,
+            "errors": [],
+            "initial_snapshot_id": "be6ffb767dca424ba2b1e4383a492830"
+          }
+        }
+      },
+      "exports": {
+        "svg": {
+          "path": "route.svg",
+          "sha256": "3169808bf1edfa88abb91a3f8f2e2bf9beae44fae33da4fa423c9d196badebfe",
+          "size_bytes": 17313
+        },
+        "png": {
+          "path": "route.png",
+          "sha256": "409682214a2f128a33d74c97440bf9ba7274f9d5ab28b539c5bff2f7f85a6cf5",
+          "size_bytes": 38884
+        },
+        "bundle": {
+          "path": "route.zip",
+          "sha256": "dedeabfa01b6c83ccda0069d366891d30db4746a60e41561d3ec9c63d7e2a26f",
+          "size_bytes": 1415897
+        }
+      },
+      "wall_seconds": 21.018557415000032,
+      "raw_path": "runs/m2-lab-teacher/verification.json",
+      "raw_sha256": "403315e172aeb4e7342fdb45e75c66bd998cd0886c862b006e57914c8084fe93",
+      "runtime": [
+        {
+          "kind": "environment",
+          "lock_sha256": "8a7a880d020c1907e221575fda65642241f809fc628a55381f1b6137bff1b732",
+          "source_sha256": {
+            "src/palimpsest/__init__.py": "bb99e30d22e4662c4ded455b1b23f49b77ce811dcfa1b69bf358925487a566d8",
+            "src/palimpsest/__main__.py": "935a1c1166b0c1ea35a82256345000bf2c73ded718d77773bc27a71ecce28f7d",
+            "src/palimpsest/artifacts.py": "3e098e67b6c7b7564a683d04bc08884913b9a2a917412e0667b7a9b7ddd20aec",
+            "src/palimpsest/assets.py": "aa4a38c7403cd9f72bc23027acd7c212202f25574bea6af65053c34664da49e3",
+            "src/palimpsest/cli.py": "94cdc191c43af8d90d28a1477038696ff5e7a58e620f2c011e06af09279f182c",
+            "src/palimpsest/doctor.py": "109de62468161f35461eee76af244daabef38f2faa1526c5a6ed268817e6b834",
+            "src/palimpsest/engine.py": "b1e0a4c7edc09e0f935944b0429fc3fd4e631b7f8cfe16edceac2609fb20099f",
+            "src/palimpsest/evaluate.py": "6929e54412b25bd39d786dec481111fc834f0bbcbb2ea29d34a81b7806c3a9ae",
+            "src/palimpsest/flynn.py": "409b7503d76fd6f971a33d053e86c968b529edc226b85f44122e17a649f8f9f4",
+            "src/palimpsest/interventions.py": "fd2c1e6f160f7d251ddcf3275b383e8e3e265fc462452d1bc20c0030a6acf9c8",
+            "src/palimpsest/lab.py": "9261e840906cc9cbbf9cbc5a8dc3b9720537207199b2a5a47e22727c419d0c0c",
+            "src/palimpsest/profiles.py": "808c7636b10667ef8aea70422475e0ca4f8b23d869f6347529cf0957df184db3",
+            "src/palimpsest/records.py": "e66fe717842d719265416d95f202199cf94d08c48a72d6433d02a1b98398adca",
+            "src/palimpsest/replay.py": "475bc66c607522f74e653f42955bab8f828a4bfdd0ad9e564d03dc38917d8728",
+            "src/palimpsest/snapshots.py": "9a5630ebc6385739a24402a75a7bcac6b522469652173242535037943b63a797",
+            "src/palimpsest/worker.py": "7c180a890892fc51c85289b9581f0fdd5e5985829e2d661693f9db9243ca2915"
+          },
+          "upstream_commit": "8d964599119b420de67ee259434d273651a1a76d"
+        }
+      ]
+    },
+    {
+      "status": "passed",
+      "controller": "flynn",
+      "device": "cpu",
+      "prefix_ticks": 4,
+      "continuation_ticks": 4,
+      "source_run_id": "9dd30ee8a466426da06981d2e893f2b6",
+      "snapshot_id": "ed940d6eb61a427e836a3f7838b4d723",
+      "snapshot_sha256": "c2b24521b21a9b9571e89a2cc3ba112e8db27d15c13ac5d7282369182d4536f6",
+      "branch_run_id": "4beb87f433e840999c0386710f028dfb",
+      "continuation": {
+        "status": "passed",
+        "max_abs_errors": {
+          "episode": 0.0,
+          "tick": 0.0,
+          "action": 0.0,
+          "cam_left": 0.0,
+          "cam_right": 0.0,
+          "control": 0.0,
+          "encoded_input": 0.0,
+          "eyes": 0.0,
+          "next_pose": 0.0,
+          "population_stats": 0.0,
+          "pose": 0.0,
+          "raw_cam_left": 0.0,
+          "raw_cam_right": 0.0,
+          "raw_output": 0.0,
+          "revision": 0.0,
+          "reward": 0.0,
+          "sensors": 0.0,
+          "simulation_time": 0.0
+        },
+        "divergences": []
+      },
+      "playback": {
+        "mode": "playback",
+        "first_tick": 4
+      },
+      "replays": {
+        "actions": {
+          "run_id": "d1cf2bebcbcb4bcdbcba51a60eea8ca7",
+          "report": {
+            "schema_version": 1,
+            "source_run_id": "9dd30ee8a466426da06981d2e893f2b6",
+            "run_id": "d1cf2bebcbcb4bcdbcba51a60eea8ca7",
+            "mode": "actions",
+            "status": "passed",
+            "compared_ticks": 8,
+            "compared_events": 22,
+            "first_divergence": null,
+            "comparison": {
+              "float_atol": 1e-06,
+              "float_rtol": 1e-06,
+              "integer_and_camera_exact": true,
+              "excluded": [
+                "encoded_input",
+                "latency",
+                "population_stats",
+                "raw_output",
+                "step_latency"
+              ],
+              "fields": [
+                "action",
+                "cam_left",
+                "cam_right",
+                "control",
+                "eyes",
+                "next_pose",
+                "pose",
+                "raw_cam_left",
+                "raw_cam_right",
+                "revision",
+                "reward",
+                "sensors",
+                "simulation_time"
+              ],
+              "runtime_source_keys": [
+                "src/palimpsest/engine.py",
+                "src/palimpsest/profiles.py",
+                "src/palimpsest/interventions.py",
+                "src/palimpsest/flynn.py",
+                "src/palimpsest/snapshots.py",
+                "src/palimpsest/records.py",
+                "src/palimpsest/evaluate.py",
+                "src/palimpsest/assets.py",
+                "src/palimpsest/doctor.py"
+              ],
+              "upstream_and_lock_exact": true,
+              "snapshot_identity_exact": true
+            },
+            "controller_reexecuted": false,
+            "inference_executed": false,
+            "errors": [],
+            "source_snapshot_id": "94d1d2795b8a485d858a93a271044eaa",
+            "source_snapshot_sha256": "e72cb654e8bbe6db4b1082caca4646d586e2e897b9128b44fa38899dc1a7eb8f",
+            "initial_snapshot_id": "f6aead2dce4e46c0b90dc508a2a8564c"
+          }
+        },
+        "policy": {
+          "run_id": "19a3f49e4d9b4f4b805f98b237851f21",
+          "report": {
+            "schema_version": 1,
+            "source_run_id": "9dd30ee8a466426da06981d2e893f2b6",
+            "run_id": "19a3f49e4d9b4f4b805f98b237851f21",
+            "mode": "policy",
+            "status": "passed",
+            "compared_ticks": 8,
+            "compared_events": 22,
+            "first_divergence": null,
+            "comparison": {
+              "float_atol": 1e-06,
+              "float_rtol": 1e-06,
+              "integer_and_camera_exact": true,
+              "excluded": [
+                "latency",
+                "step_latency"
+              ],
+              "fields": "all recorded fields except wall latencies",
+              "runtime_source_keys": [
+                "src/palimpsest/engine.py",
+                "src/palimpsest/profiles.py",
+                "src/palimpsest/interventions.py",
+                "src/palimpsest/flynn.py",
+                "src/palimpsest/snapshots.py",
+                "src/palimpsest/records.py",
+                "src/palimpsest/evaluate.py",
+                "src/palimpsest/assets.py",
+                "src/palimpsest/doctor.py"
+              ],
+              "upstream_and_lock_exact": true,
+              "snapshot_identity_exact": true
+            },
+            "controller_reexecuted": true,
+            "inference_executed": true,
+            "errors": [],
+            "source_snapshot_id": "94d1d2795b8a485d858a93a271044eaa",
+            "source_snapshot_sha256": "e72cb654e8bbe6db4b1082caca4646d586e2e897b9128b44fa38899dc1a7eb8f",
+            "initial_snapshot_id": "23ed731a83f747cda1aab5031ac4f694"
+          }
+        }
+      },
+      "exports": {
+        "svg": {
+          "path": "route.svg",
+          "sha256": "3ea389511364fe8f997b2a12f25b361b9f1c3b26bfecf04e2b02306eec1106b3",
+          "size_bytes": 19682
+        },
+        "png": {
+          "path": "route.png",
+          "sha256": "7fbe91dc51f93a0b71bb21d21eb5b87e76d43a00226d4b53abbac0759c8bc38a",
+          "size_bytes": 41377
+        },
+        "bundle": {
+          "path": "route.zip",
+          "sha256": "1bc59949f1032f0db74d5d2caccf4879c2df1fd82130746094a6fc0081db8df9",
+          "size_bytes": 2076762
+        }
+      },
+      "wall_seconds": 143.9167834589971,
+      "raw_path": "runs/m2-lab-flynn-final/verification.json",
+      "raw_sha256": "c8be1964ea09c6c29d3529b3aba3ffc3a68b866f716c8af48557de24b32ddb86",
+      "runtime": [
+        {
+          "kind": "environment",
+          "lock_sha256": "8a7a880d020c1907e221575fda65642241f809fc628a55381f1b6137bff1b732",
+          "source_sha256": {
+            "src/palimpsest/__init__.py": "bb99e30d22e4662c4ded455b1b23f49b77ce811dcfa1b69bf358925487a566d8",
+            "src/palimpsest/__main__.py": "935a1c1166b0c1ea35a82256345000bf2c73ded718d77773bc27a71ecce28f7d",
+            "src/palimpsest/artifacts.py": "3e098e67b6c7b7564a683d04bc08884913b9a2a917412e0667b7a9b7ddd20aec",
+            "src/palimpsest/assets.py": "aa4a38c7403cd9f72bc23027acd7c212202f25574bea6af65053c34664da49e3",
+            "src/palimpsest/cli.py": "94cdc191c43af8d90d28a1477038696ff5e7a58e620f2c011e06af09279f182c",
+            "src/palimpsest/doctor.py": "109de62468161f35461eee76af244daabef38f2faa1526c5a6ed268817e6b834",
+            "src/palimpsest/engine.py": "b1e0a4c7edc09e0f935944b0429fc3fd4e631b7f8cfe16edceac2609fb20099f",
+            "src/palimpsest/evaluate.py": "6929e54412b25bd39d786dec481111fc834f0bbcbb2ea29d34a81b7806c3a9ae",
+            "src/palimpsest/flynn.py": "409b7503d76fd6f971a33d053e86c968b529edc226b85f44122e17a649f8f9f4",
+            "src/palimpsest/interventions.py": "fd2c1e6f160f7d251ddcf3275b383e8e3e265fc462452d1bc20c0030a6acf9c8",
+            "src/palimpsest/lab.py": "3e1cb362e4a2eb735c63fe697e5e99c7414dee412de0f18a6ae51fc516652f79",
+            "src/palimpsest/profiles.py": "808c7636b10667ef8aea70422475e0ca4f8b23d869f6347529cf0957df184db3",
+            "src/palimpsest/records.py": "e66fe717842d719265416d95f202199cf94d08c48a72d6433d02a1b98398adca",
+            "src/palimpsest/replay.py": "ab6ef4402c9be441344137218f662a7364aa45e72ad251d04499650f158dc1e1",
+            "src/palimpsest/snapshots.py": "9a5630ebc6385739a24402a75a7bcac6b522469652173242535037943b63a797",
+            "src/palimpsest/worker.py": "7c180a890892fc51c85289b9581f0fdd5e5985829e2d661693f9db9243ca2915"
+          },
+          "upstream_commit": "8d964599119b420de67ee259434d273651a1a76d"
+        }
+      ],
+      "live_interruption": {
+        "run_id": "c36074dc953c4606b4b9e55217ed9111",
+        "command": {
+          "kind": "move_obstacle",
+          "index": 0,
+          "xy": [
+            2.0531095977146157,
+            -2.9467300638224603
+          ]
+        },
+        "receipt": {
+          "id": "live-obstacle-edit",
+          "kind": "intervene",
+          "status": "applied",
+          "received_run_id": "c36074dc953c4606b4b9e55217ed9111",
+          "received_episode": 0,
+          "received_tick": 6,
+          "applied_run_id": "c36074dc953c4606b4b9e55217ed9111",
+          "applied_episode": 0,
+          "applied_tick": 6,
+          "applied_revision": 8
+        },
+        "scope": "Exploratory world intervention; no required direction or size of behavioral effect"
+      }
+    }
+  ],
+  "masked_fresh_process_gate": {
+    "raw_path": "runs/m2-flynn-masked-continuation/verification.json",
+    "raw_sha256": "cfecace52e0ebe328bcbb29fc92b600bb2e9a5db1a8b9dc4aa4e27f352709910",
+    "report": {
+      "schema_version": 1,
+      "status": "passed",
+      "first_divergence": null,
+      "divergences": [],
+      "controller": "flynn",
+      "device": "cpu",
+      "runtime": {
+        "source_sha256": {
+          "src/palimpsest/__init__.py": "bb99e30d22e4662c4ded455b1b23f49b77ce811dcfa1b69bf358925487a566d8",
+          "src/palimpsest/__main__.py": "935a1c1166b0c1ea35a82256345000bf2c73ded718d77773bc27a71ecce28f7d",
+          "src/palimpsest/artifacts.py": "5912dc0713e4d42fb8083c4278348e72c49a5f140ff9145eeb7aa77d4ef5ab42",
+          "src/palimpsest/assets.py": "aa4a38c7403cd9f72bc23027acd7c212202f25574bea6af65053c34664da49e3",
+          "src/palimpsest/cli.py": "cd5d6c8236462ba144df3ed3ccfffbf391c71c350591d585432cda4f4ad9d67f",
+          "src/palimpsest/doctor.py": "109de62468161f35461eee76af244daabef38f2faa1526c5a6ed268817e6b834",
+          "src/palimpsest/engine.py": "8b56fd2558e0b640ca0d41a3fc571322d04a7d018888fe294f9850da58e622d8",
+          "src/palimpsest/evaluate.py": "6929e54412b25bd39d786dec481111fc834f0bbcbb2ea29d34a81b7806c3a9ae",
+          "src/palimpsest/flynn.py": "409b7503d76fd6f971a33d053e86c968b529edc226b85f44122e17a649f8f9f4",
+          "src/palimpsest/interventions.py": "fd2c1e6f160f7d251ddcf3275b383e8e3e265fc462452d1bc20c0030a6acf9c8",
+          "src/palimpsest/lab.py": "0cdd6961e65cf1f729939ba56d23e2e22dcce0ed10811f372d38171c800a25d0",
+          "src/palimpsest/profiles.py": "808c7636b10667ef8aea70422475e0ca4f8b23d869f6347529cf0957df184db3",
+          "src/palimpsest/records.py": "e66fe717842d719265416d95f202199cf94d08c48a72d6433d02a1b98398adca",
+          "src/palimpsest/snapshots.py": "9a5630ebc6385739a24402a75a7bcac6b522469652173242535037943b63a797",
+          "src/palimpsest/worker.py": "7c180a890892fc51c85289b9581f0fdd5e5985829e2d661693f9db9243ca2915"
+        },
+        "lock_sha256": "8a7a880d020c1907e221575fda65642241f809fc628a55381f1b6137bff1b732",
+        "upstream_commit": "8d964599119b420de67ee259434d273651a1a76d"
+      },
+      "fixture": "goal edit, nonzero controller/physics state and pending run command",
+      "prefix_ticks": 8,
+      "continuation_ticks": 30,
+      "snapshot_sha256": "39b519591f719bc220dd62e8311c643dfe09da038312ae0df4dc88d39df6206c",
+      "max_abs_errors": {
+        "episode": 0.0,
+        "tick": 0.0,
+        "action": 0.0,
+        "cam_left": 0.0,
+        "cam_right": 0.0,
+        "control": 0.0,
+        "encoded_input": 0.0,
+        "eyes": 0.0,
+        "next_pose": 0.0,
+        "population_stats": 0.0,
+        "pose": 0.0,
+        "raw_cam_left": 0.0,
+        "raw_cam_right": 0.0,
+        "raw_output": 0.0,
+        "revision": 0.0,
+        "reward": 0.0,
+        "sensors": 0.0,
+        "simulation_time": 0.0,
+        "final_integration": 0.0,
+        "final_xpos": 0.0,
+        "final_geom_xpos": 0.0,
+        "final_contacts": 0.0,
+        "final_jnt_range": 0.0,
+        "final_geom_rgba": 0.0,
+        "final_site_pos": 0.0,
+        "final__obstacle_xy": 0.0,
+        "final__goal_xy": 0.0,
+        "final__prev_xy": 0.0,
+        "final__speed": 0.0,
+        "final__t": 0.0,
+        "final__last_action": 0.0,
+        "final__stall_steps": 0.0,
+        "final_final_cam_left": 0.0,
+        "final_final_cam_right": 0.0,
+        "final_hidden": 0.0,
+        "final_left_L1": 0.0,
+        "final_left_L2": 0.0,
+        "final_left_L3": 0.0,
+        "final_right_L1": 0.0,
+        "final_right_L2": 0.0,
+        "final_right_L3": 0.0
+      },
+      "source_event_prefix_unchanged": true,
+      "branch_identity_distinct": true,
+      "random_draws_match": true,
+      "queued_command_idempotency": true,
+      "atol": 1e-06,
+      "rtol": 1e-06,
+      "scope": "Fresh-process simulation continuation on this numeric/rendering regime",
+      "mask_left": true,
+      "masked_input_parity": {
+        "checked": true,
+        "ok": true,
+        "max_abs_errors": {
+          "hidden": 0.0,
+          "action": 0.0,
+          "encoded_input": 0.0,
+          "raw_output": 0.0,
+          "cam_left": 0.0,
+          "cam_right": 0.0,
+          "left_retina/L1": 0.0,
+          "left_retina/L2": 0.0,
+          "left_retina/L3": 0.0,
+          "right_retina/L1": 0.0,
+          "right_retina/L2": 0.0,
+          "right_retina/L3": 0.0
+        },
+        "atol": 1e-06,
+        "rtol": 1e-06
+      }
+    }
+  },
+  "limitations": [
+    "Only the final FLYNN lab gate runtime hashes match the frozen final M2 Python runtime; earlier gates retain their captured identities.",
+    "Manual and teacher lab gates preceded addition of the second live-interruption branch; final FLYNN and browser gates cover that path.",
+    "Development run dirty flags are preserved. Captured hashes, not an unrecorded clean Git claim, identify the measured runtime.",
+    "CUDA strict repeatability is unqualified; see M1 evidence.",
+    "No 60-minute endurance, release performance, learned memory, MaleCNS, hardware, or new navigation-competence claim.",
+    "Original checkpoint training graph and neuron ordering remain unproven."
+  ],
+  "browser_gate": {
+    "raw_path": "runs/m2-ui-evidence/final-verification.json",
+    "raw_sha256": "20d63d3debf5bdd9f09eff729f9feaf243dbbd4495cbc578b9b166ccc0b0513f",
+    "report": {
+      "schema_version": 1,
+      "verified_at_utc": "2026-10-02T06:46:17.394660+00:00",
+      "base_git_head": "3b25f5ed244b2dd1367e6e40b48005e0b8fea9ad",
+      "scope": "actual local sparse-navigation/manual/CPU/EGL browser workflow; no FLYNN/GPU claim",
+      "commands": {
+        "build": {
+          "cwd": "/home/utkarsh/Work/shraddha/brain/.worktrees/interactive-lab",
+          "command": "mise exec node@24 -- npm --prefix ui run build",
+          "exit_code": 0,
+          "typecheck_passed": true,
+          "vite_elapsed_ms": 250,
+          "timing_scope": "Vite build phase only"
+        },
+        "browser": {
+          "cwd": "/home/utkarsh/Work/shraddha/brain/.worktrees/interactive-lab/ui",
+          "command": "PALIMPSEST_LAB_URL=http://127.0.0.1:8766 mise exec node@24 -- npm run test:browser",
+          "exit_code": 0,
+          "tests_passed": 2,
+          "reporter_total_elapsed": "1.0m",
+          "tests": [
+            {
+              "name": "actual local manual workflow, snapshots, sequential branches, comparison and export",
+              "elapsed_seconds": 24.5,
+              "status": "passed"
+            },
+            {
+              "name": "actual replay jobs recover without samples and expose controls, reports and authenticated bundle",
+              "elapsed_seconds": 33.8,
+              "status": "passed"
+            }
+          ]
+        }
+      },
+      "replay_source_run_id": "48b64cc4b33b4ddab1386646f65131ac",
+      "replays": [
+        {
+          "run_id": "556dac14f77a4fa9998adbb90a01f04b",
+          "source_run_id": "48b64cc4b33b4ddab1386646f65131ac",
+          "mode": "actions",
+          "status": "cancelled",
+          "compared_ticks": 0,
+          "compared_events": 1,
+          "first_divergence": null,
+          "controller_reexecuted": false,
+          "inference_executed": false
+        },
+        {
+          "run_id": "e98d818c519c469c93625d0b1d9b41ce",
+          "source_run_id": "48b64cc4b33b4ddab1386646f65131ac",
+          "mode": "policy",
+          "status": "passed",
+          "compared_ticks": 225,
+          "compared_events": 6,
+          "first_divergence": null,
+          "controller_reexecuted": true,
+          "inference_executed": false
+        },
+        {
+          "run_id": "e75c1856460147078327a8c4850edf87",
+          "source_run_id": "48b64cc4b33b4ddab1386646f65131ac",
+          "mode": "actions",
+          "status": "passed",
+          "compared_ticks": 225,
+          "compared_events": 6,
+          "first_divergence": null,
+          "controller_reexecuted": false,
+          "inference_executed": false
+        }
+      ],
+      "recent_recording_manifests": [
+        {
+          "run_id": "556dac14f77a4fa9998adbb90a01f04b",
+          "recorded_ticks": 1,
+          "execution_mode": "actions",
+          "replay_source_run_id": "48b64cc4b33b4ddab1386646f65131ac",
+          "parent_run_id": "48b64cc4b33b4ddab1386646f65131ac",
+          "status": "completed",
+          "scenario": {
+            "arena": 7.0,
+            "control_interval_seconds": 0.02,
+            "controller": "manual",
+            "description": "Five seeded obstacles and a validated free route; pretrained success is not guaranteed.",
+            "height": 128,
+            "id": "sparse-navigation",
+            "label": "Sparse navigation",
+            "logging": "lossless-inputs-actions-world-v1",
+            "max_steps": 600,
+            "n_obstacles": 5,
+            "observation_profile": "two-rgb-eyes-contact-relative-goal-bearing-v1",
+            "task": "navigation",
+            "teacher_privileged": false,
+            "texture": "checker",
+            "version": 1,
+            "width": 128
+          },
+          "texture": "checker",
+          "controller": "manual",
+          "seed": 0
+        },
+        {
+          "run_id": "e98d818c519c469c93625d0b1d9b41ce",
+          "recorded_ticks": 225,
+          "execution_mode": "policy",
+          "replay_source_run_id": "48b64cc4b33b4ddab1386646f65131ac",
+          "parent_run_id": "48b64cc4b33b4ddab1386646f65131ac",
+          "status": "completed",
+          "scenario": {
+            "arena": 7.0,
+            "control_interval_seconds": 0.02,
+            "controller": "manual",
+            "description": "Five seeded obstacles and a validated free route; pretrained success is not guaranteed.",
+            "height": 128,
+            "id": "sparse-navigation",
+            "label": "Sparse navigation",
+            "logging": "lossless-inputs-actions-world-v1",
+            "max_steps": 600,
+            "n_obstacles": 5,
+            "observation_profile": "two-rgb-eyes-contact-relative-goal-bearing-v1",
+            "task": "navigation",
+            "teacher_privileged": false,
+            "texture": "checker",
+            "version": 1,
+            "width": 128
+          },
+          "texture": "checker",
+          "controller": "manual",
+          "seed": 0
+        },
+        {
+          "run_id": "e75c1856460147078327a8c4850edf87",
+          "recorded_ticks": 225,
+          "execution_mode": "actions",
+          "replay_source_run_id": "48b64cc4b33b4ddab1386646f65131ac",
+          "parent_run_id": "48b64cc4b33b4ddab1386646f65131ac",
+          "status": "completed",
+          "scenario": {
+            "arena": 7.0,
+            "control_interval_seconds": 0.02,
+            "controller": "manual",
+            "description": "Five seeded obstacles and a validated free route; pretrained success is not guaranteed.",
+            "height": 128,
+            "id": "sparse-navigation",
+            "label": "Sparse navigation",
+            "logging": "lossless-inputs-actions-world-v1",
+            "max_steps": 600,
+            "n_obstacles": 5,
+            "observation_profile": "two-rgb-eyes-contact-relative-goal-bearing-v1",
+            "task": "navigation",
+            "teacher_privileged": false,
+            "texture": "checker",
+            "version": 1,
+            "width": 128
+          },
+          "texture": "checker",
+          "controller": "manual",
+          "seed": 0
+        },
+        {
+          "run_id": "48b64cc4b33b4ddab1386646f65131ac",
+          "recorded_ticks": 225,
+          "execution_mode": null,
+          "replay_source_run_id": null,
+          "parent_run_id": null,
+          "status": "completed",
+          "scenario": {
+            "arena": 7.0,
+            "control_interval_seconds": 0.02,
+            "controller": "manual",
+            "description": "Five seeded obstacles and a validated free route; pretrained success is not guaranteed.",
+            "height": 128,
+            "id": "sparse-navigation",
+            "label": "Sparse navigation",
+            "logging": "lossless-inputs-actions-world-v1",
+            "max_steps": 600,
+            "n_obstacles": 5,
+            "observation_profile": "two-rgb-eyes-contact-relative-goal-bearing-v1",
+            "task": "navigation",
+            "teacher_privileged": false,
+            "texture": "checker",
+            "version": 1,
+            "width": 128
+          },
+          "texture": "checker",
+          "controller": "manual",
+          "seed": 0
+        },
+        {
+          "run_id": "82afd9513d0640dcab9fb7c8670b79bf",
+          "recorded_ticks": 3,
+          "execution_mode": null,
+          "replay_source_run_id": null,
+          "parent_run_id": "84c7607c15b8498fb610c4088b752258",
+          "status": "completed",
+          "scenario": {
+            "arena": 7.0,
+            "control_interval_seconds": 0.02,
+            "controller": "manual",
+            "description": "Five seeded obstacles and a validated free route; pretrained success is not guaranteed.",
+            "height": 128,
+            "id": "sparse-navigation",
+            "label": "Sparse navigation",
+            "logging": "lossless-inputs-actions-world-v1",
+            "max_steps": 600,
+            "n_obstacles": 5,
+            "observation_profile": "two-rgb-eyes-contact-relative-goal-bearing-v1",
+            "task": "navigation",
+            "teacher_privileged": false,
+            "texture": "checker",
+            "version": 1,
+            "width": 128
+          },
+          "texture": "checker",
+          "controller": "manual",
+          "seed": 0
+        },
+        {
+          "run_id": "f86c9bd56e4940be83aa067200475a85",
+          "recorded_ticks": 3,
+          "execution_mode": null,
+          "replay_source_run_id": null,
+          "parent_run_id": "84c7607c15b8498fb610c4088b752258",
+          "status": "completed",
+          "scenario": {
+            "arena": 7.0,
+            "control_interval_seconds": 0.02,
+            "controller": "manual",
+            "description": "Five seeded obstacles and a validated free route; pretrained success is not guaranteed.",
+            "height": 128,
+            "id": "sparse-navigation",
+            "label": "Sparse navigation",
+            "logging": "lossless-inputs-actions-world-v1",
+            "max_steps": 600,
+            "n_obstacles": 5,
+            "observation_profile": "two-rgb-eyes-contact-relative-goal-bearing-v1",
+            "task": "navigation",
+            "teacher_privileged": false,
+            "texture": "checker",
+            "version": 1,
+            "width": 128
+          },
+          "texture": "checker",
+          "controller": "manual",
+          "seed": 0
+        },
+        {
+          "run_id": "84c7607c15b8498fb610c4088b752258",
+          "recorded_ticks": 34,
+          "execution_mode": null,
+          "replay_source_run_id": null,
+          "parent_run_id": null,
+          "status": "completed",
+          "scenario": {
+            "arena": 7.0,
+            "control_interval_seconds": 0.02,
+            "controller": "manual",
+            "description": "Five seeded obstacles and a validated free route; pretrained success is not guaranteed.",
+            "height": 128,
+            "id": "sparse-navigation",
+            "label": "Sparse navigation",
+            "logging": "lossless-inputs-actions-world-v1",
+            "max_steps": 600,
+            "n_obstacles": 5,
+            "observation_profile": "two-rgb-eyes-contact-relative-goal-bearing-v1",
+            "task": "navigation",
+            "teacher_privileged": false,
+            "texture": "checker",
+            "version": 1,
+            "width": 128
+          },
+          "texture": "checker",
+          "controller": "manual",
+          "seed": 0
+        }
+      ],
+      "checks": [
+        "live obstacle relocation while running applies exactly once",
+        "snapshots disabled while running",
+        "second branch carries declared goal edit; comparison geometry and intervention events differ",
+        "actual masked RGB input pixels are zero",
+        "manual held-input blur clearing and source reload recovery",
+        "action/policy replay mode, passed report and exact compared tick count",
+        "real WebSocket disconnect pauses; reconnect and reload stay paused until explicit Start",
+        "replay live mutations disabled and no fake display sample",
+        "transport Stop produces canceled job and cancelled report",
+        "authenticated replay bundle includes job events/report and all listed member hashes match",
+        "no visible UI error at completed replay screenshot",
+        "desktop/mobile layout and browser page-error checks"
+      ],
+      "screenshots": [
+        {
+          "path": "runs/m2-ui-evidence/20261002T064617Z-actual-lab-desktop.png",
+          "sha256": "e587cfffcb70c8c662bf2d995def3aaf64a3dfbc0109d5f569cf9e03d2d2117c"
+        },
+        {
+          "path": "runs/m2-ui-evidence/20261002T064617Z-actual-lab-mobile.png",
+          "sha256": "e4f0c909aa4c7e589f7fab19567ad97cc8a25ce97ff81ac0c1131e610239f0bb"
+        },
+        {
+          "path": "runs/m2-ui-evidence/20261002T064617Z-actual-replay-paused.png",
+          "sha256": "b63fce978d529bc5f4fa1bba89052650d3b956e01fc2b848565692106d0052e4"
+        },
+        {
+          "path": "runs/m2-ui-evidence/20261002T064617Z-actual-replay-completed.png",
+          "sha256": "9e32d3460ae581094b2739322225f38bf673283a37d1a7d9f16dcdc1ed9ecbeb"
+        }
+      ],
+      "ui_source_hashes": {
+        "ui/src/App.tsx": "ec65fd88a1391da0127b6ef48785dd0d4c828210a1612e3738e60d3e5bee03ce",
+        "ui/src/protocol.ts": "d73294c2d6f02446d9beb3c32ce92f6d0ce16cfb1db5302303d6b697b2de74bf",
+        "ui/src/api.ts": "5d5583b8d52a8a1ed97faa72849b1d6655764d5d93d9d4dfb5176abd824726d1",
+        "ui/src/Arena.tsx": "1f2d5af0928acd4857e8028d6b3b0c550da36e537ad3abc18aeb89ab5e1752c9",
+        "ui/src/style.css": "787fe37a3323473b824df6c374a31f95aa539c5e8472cc20509ac99de52f9275",
+        "ui/tests/lab.spec.ts": "6197ac9730d0cb416fa7757ea896098bd29894e1bed5204c2ff24674aeb37daf",
+        "ui/tests/serve_lab.py": "f326bef7611ff20f4f387b0f951a434237880eaf54aedfb3cf6f57ed0c87d3f5",
+        "ui/playwright.config.ts": "675ab610fd86561c343d2048793372f36cbfee2cdd7f1bf2964e1d7513b45e39",
+        "ui/package.json": "7fefb1c8433337a02dcc223a559501c9c3ed6f0b674aba026d8f50e694508535",
+        "ui/package-lock.json": "772176aaaaffaca340d4c91e22c6243d20d0339c17f5973e4295f79b4ca481b0",
+        "ui/.node-version": "73fb1b615e2043a933be1c0895cde4358036acc28d785692509b822aa53c761f"
+      },
+      "screenshot_inspection": {
+        "status": "passed",
+        "method": "view_image inspection of all four final captures",
+        "observed": [
+          "desktop and mobile world/inputs/comparison remain readable with no horizontal overflow",
+          "actual left input is visibly masked; right eye retains rendered input",
+          "paused replay identifies action mode with live edit/snapshot/manual controls disabled and no fabricated sample",
+          "completed replay identifies policy mode and passed verification result with the actual sparse-navigation scenario",
+          "no request-failed banner in any final capture"
+        ]
+      },
+      "service_stopped": true
+    }
+  },
+  "cli_gate": {
+    "playback_report": "/tmp/palimpsest-m2-playback.json",
+    "comparison_report": "/tmp/palimpsest-m2-compare.json",
+    "action_replay_report": "/tmp/palimpsest-m2-cli-replay.json",
+    "bundle": "runs/m2-cli/checked-replay.zip",
+    "bundle_members_checked": 5,
+    "status": "passed"
+  }
+}

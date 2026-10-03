@@ -1,0 +1,965 @@
+{
+  "version": 1,
+  "id": "m6-puck-pushing-plan-v1",
+  "status": "proposed_for_root_review_no_execution",
+  "base_commit": "fb778e83fb635bb45da3a983bf03841d5b6e0fc0",
+  "upstream_commit": "8d964599119b420de67ee259434d273651a1a76d",
+  "xml": {
+    "source_path": "upstream/fly-gym/environment/mujoco_model_random_obstacles.xml",
+    "source_sha256": "3630ec6a202bfb32276a39e21d974228518d4bb93cb4861532467af4ce883484",
+    "edits": [
+      {
+        "selector": "./worldbody/body[@name='obstacle0_body']",
+        "attributes": {
+          "pos": "0 0 0.062"
+        }
+      },
+      {
+        "selector": "./worldbody/body[@name='obstacle0_body']/inertial",
+        "attributes": {
+          "mass": "0.25",
+          "diaginertia": "0.00420625 0.00420625 0.0078125"
+        }
+      },
+      {
+        "selector": "./worldbody/body[@name='obstacle0_body']/joint[@name='obstacle0_x']",
+        "attributes": {
+          "range": "-5.5 5.5"
+        }
+      },
+      {
+        "selector": "./worldbody/body[@name='obstacle0_body']/joint[@name='obstacle0_y']",
+        "attributes": {
+          "range": "-5.5 5.5"
+        }
+      },
+      {
+        "selector": "./worldbody/body[@name='obstacle0_body']/joint[@name='obstacle0_z']",
+        "attributes": {
+          "range": "-0.002 0.002"
+        }
+      },
+      {
+        "selector": "./worldbody/body[@name='obstacle0_body']/geom[@name='obstacle0']",
+        "attributes": {
+          "size": "0.25 0.06 0",
+          "friction": "0.25 0.005 0.0001",
+          "priority": "1",
+          "condim": "3",
+          "solref": "0.004 1",
+          "solimp": "0.95 0.99 0.001 0.5 2",
+          "rgba": "0.9 0.7 0.1 1"
+        }
+      },
+      {
+        "selector": "./worldbody/site[@name='goal_site']",
+        "attributes": {
+          "type": "cylinder",
+          "pos": "0 0 0.001",
+          "size": "0.45 0.001",
+          "rgba": "0.2 0.85 0.2 0.5"
+        }
+      }
+    ],
+    "serialization": "ElementTree.fromstring default parser; apply listed attributes in insertion order; tostring utf-8 xml_declaration=True; no indent",
+    "derived_sha256": "f6a781836d21c5fd8ffb6b1e35f7ca47586772e11e2b1329695a6965ea5fb06a",
+    "derived_bytes": 16778,
+    "max_bytes": 131072,
+    "native_model_hash": "unmeasured; pin only after approved compile gate"
+  },
+  "profile": {
+    "scenario": "puck-pushing-development",
+    "controllers": [
+      "manual",
+      "puck-teacher",
+      "puck-mlp"
+    ],
+    "device": "cpu",
+    "texture": "checker",
+    "n_obstacles": 1,
+    "physics_dt_s": 0.002,
+    "frame_skip": 10,
+    "control_dt_s": 0.02,
+    "max_ticks": 600,
+    "episodes_per_run": 1,
+    "resets": 0,
+    "retries": 0,
+    "manual_scope": "fixed physics verification only, never learned qualification",
+    "teacher_cpu_threads": 2,
+    "record_admission_ticks": "trusted fixed physics case uses120 or600; short continuations4; ordinary task episodes600"
+  },
+  "observation": {
+    "id": "virtual-egocentric-puck-goal-velocity-contact-v1",
+    "features": [
+      "puck_x_body/14",
+      "puck_y_body/14",
+      "goal_x_body/14",
+      "goal_y_body/14",
+      "puck_vx_body/2",
+      "puck_vy_body/2",
+      "previous_interval_rover_puck_contact",
+      "previous_interval_other_robot_contact"
+    ],
+    "positions": "current native qpos and fixed body transform, in rover yaw frame",
+    "velocity": "current puck slide qvel in rover yaw frame, not rover-relative velocity",
+    "contacts": "previous ten pre-integration caches; initial forwarded cache explicitly marked",
+    "camera_input": false,
+    "clipping": false
+  },
+  "objective": {
+    "puck_center_goal_max_m": 0.2,
+    "puck_speed_max_m_s": 0.03,
+    "dwell_ticks": 10,
+    "prior_rover_puck_contact": true,
+    "minimum_puck_displacement_m": 0.5,
+    "reward": "old puck-goal distance minus new distance, metres",
+    "success_reason": "puck_goal"
+  },
+  "failure_bounds": {
+    "xy_abs_max_m": 5.0,
+    "puck_z_deviation_max_m": 0.02,
+    "puck_speed_max_m_s": 2.0,
+    "stall_ticks": 100,
+    "stall_step_m": 0.002,
+    "stall_command_abs_velocity_min": 0.05,
+    "unexpected_contact": "all rover contacts except named wheel-floor support and rover-puck; puck-wall also fails",
+    "rover_puck_penetration_max_m": 0.02
+  },
+  "demonstrator": {
+    "id": "analytic-puck-behind-align-push-v1",
+    "privileged": true,
+    "behind_m": 0.55,
+    "behind_arrival_m": 0.08,
+    "lateral_alignment_m": 0.06,
+    "heading_alignment_rad": 0.12,
+    "heading_cap_rad": 0.4,
+    "approach_velocity": 0.25,
+    "push_velocity": 0.2,
+    "stop_distance_m": 0.18,
+    "ready_axial_interval_m": [
+      0.35,
+      0.63
+    ]
+  },
+  "learning": {
+    "architecture": [
+      8,
+      32,
+      32,
+      2
+    ],
+    "activation": "tanh",
+    "outputs": ".4*tanh for velocity and heading",
+    "training_seeds": [
+      21,
+      22,
+      23
+    ],
+    "epochs": 30,
+    "batch_size": 64,
+    "optimizer": "Adam",
+    "learning_rate": 0.001,
+    "weight_decay": 0.0,
+    "gradient_norm_cap": 1.0,
+    "cpu_threads": 1,
+    "dtype": "float32",
+    "shuffle": "seeded training-only permutation each epoch",
+    "loss": "mean(((prediction-target)/[.4,.4])**2)",
+    "selection": "earliest minimum recorded-dev loss; report all3; no winning-seed selection",
+    "max_train_ticks": 9600,
+    "max_recorded_dev_ticks": 2400
+  },
+  "layouts": [
+    {
+      "seed": 6000,
+      "split": "train",
+      "puck_xy": [
+        -0.4,
+        -0.3
+      ],
+      "goal_xy": [
+        0.6,
+        -0.3
+      ],
+      "rover_pose": [
+        -1.3,
+        -0.6,
+        0.3
+      ],
+      "initial_qvel": "all zeros"
+    },
+    {
+      "seed": 6001,
+      "split": "train",
+      "puck_xy": [
+        -0.4,
+        -0.3
+      ],
+      "goal_xy": [
+        0.85,
+        -0.3
+      ],
+      "rover_pose": [
+        -1.4,
+        -0.4,
+        -0.3
+      ],
+      "initial_qvel": "all zeros"
+    },
+    {
+      "seed": 6002,
+      "split": "train",
+      "puck_xy": [
+        -0.4,
+        0.3
+      ],
+      "goal_xy": [
+        1.1,
+        0.3
+      ],
+      "rover_pose": [
+        -1.5,
+        0.4,
+        0.45
+      ],
+      "initial_qvel": "all zeros"
+    },
+    {
+      "seed": 6003,
+      "split": "train",
+      "puck_xy": [
+        -0.4,
+        0.3
+      ],
+      "goal_xy": [
+        1.35,
+        0.3
+      ],
+      "rover_pose": [
+        -1.6,
+        0.6,
+        -0.45
+      ],
+      "initial_qvel": "all zeros"
+    },
+    {
+      "seed": 6004,
+      "split": "train",
+      "puck_xy": [
+        0.4,
+        -0.3
+      ],
+      "goal_xy": [
+        0.4,
+        0.7
+      ],
+      "rover_pose": [
+        0.7,
+        -1.2,
+        1.870796326795
+      ],
+      "initial_qvel": "all zeros"
+    },
+    {
+      "seed": 6005,
+      "split": "train",
+      "puck_xy": [
+        0.4,
+        -0.3
+      ],
+      "goal_xy": [
+        0.4,
+        0.95
+      ],
+      "rover_pose": [
+        0.5,
+        -1.3,
+        1.270796326795
+      ],
+      "initial_qvel": "all zeros"
+    },
+    {
+      "seed": 6006,
+      "split": "train",
+      "puck_xy": [
+        0.4,
+        0.3
+      ],
+      "goal_xy": [
+        0.4,
+        1.8
+      ],
+      "rover_pose": [
+        0.3,
+        -0.8,
+        2.020796326795
+      ],
+      "initial_qvel": "all zeros"
+    },
+    {
+      "seed": 6007,
+      "split": "train",
+      "puck_xy": [
+        0.4,
+        0.3
+      ],
+      "goal_xy": [
+        0.4,
+        2.05
+      ],
+      "rover_pose": [
+        0.1,
+        -0.9,
+        1.120796326795
+      ],
+      "initial_qvel": "all zeros"
+    },
+    {
+      "seed": 6008,
+      "split": "train",
+      "puck_xy": [
+        -0.4,
+        -0.3
+      ],
+      "goal_xy": [
+        -1.4,
+        -0.3
+      ],
+      "rover_pose": [
+        0.5,
+        -0.0,
+        -2.84159265359
+      ],
+      "initial_qvel": "all zeros"
+    },
+    {
+      "seed": 6009,
+      "split": "train",
+      "puck_xy": [
+        -0.4,
+        -0.3
+      ],
+      "goal_xy": [
+        -1.65,
+        -0.3
+      ],
+      "rover_pose": [
+        0.6,
+        -0.2,
+        2.84159265359
+      ],
+      "initial_qvel": "all zeros"
+    },
+    {
+      "seed": 6010,
+      "split": "train",
+      "puck_xy": [
+        -0.4,
+        0.3
+      ],
+      "goal_xy": [
+        -1.9,
+        0.3
+      ],
+      "rover_pose": [
+        0.7,
+        0.2,
+        -2.69159265359
+      ],
+      "initial_qvel": "all zeros"
+    },
+    {
+      "seed": 6011,
+      "split": "train",
+      "puck_xy": [
+        -0.4,
+        0.3
+      ],
+      "goal_xy": [
+        -2.15,
+        0.3
+      ],
+      "rover_pose": [
+        0.8,
+        -0.0,
+        2.69159265359
+      ],
+      "initial_qvel": "all zeros"
+    },
+    {
+      "seed": 6012,
+      "split": "train",
+      "puck_xy": [
+        0.4,
+        -0.3
+      ],
+      "goal_xy": [
+        0.4,
+        -1.3
+      ],
+      "rover_pose": [
+        0.1,
+        0.6,
+        -1.270796326795
+      ],
+      "initial_qvel": "all zeros"
+    },
+    {
+      "seed": 6013,
+      "split": "train",
+      "puck_xy": [
+        0.4,
+        -0.3
+      ],
+      "goal_xy": [
+        0.4,
+        -1.55
+      ],
+      "rover_pose": [
+        0.3,
+        0.7,
+        -1.870796326795
+      ],
+      "initial_qvel": "all zeros"
+    },
+    {
+      "seed": 6014,
+      "split": "train",
+      "puck_xy": [
+        0.4,
+        0.3
+      ],
+      "goal_xy": [
+        0.4,
+        -1.2
+      ],
+      "rover_pose": [
+        0.5,
+        1.4,
+        -1.120796326795
+      ],
+      "initial_qvel": "all zeros"
+    },
+    {
+      "seed": 6015,
+      "split": "train",
+      "puck_xy": [
+        0.4,
+        0.3
+      ],
+      "goal_xy": [
+        0.4,
+        -1.45
+      ],
+      "rover_pose": [
+        0.7,
+        1.5,
+        -2.020796326795
+      ],
+      "initial_qvel": "all zeros"
+    },
+    {
+      "seed": 6016,
+      "split": "recorded_dev",
+      "puck_xy": [
+        0.2,
+        -0.4
+      ],
+      "goal_xy": [
+        0.977817459,
+        0.377817459
+      ],
+      "rover_pose": [
+        -0.401040764,
+        -1.283883476,
+        0.435398163397
+      ],
+      "initial_qvel": "all zeros"
+    },
+    {
+      "seed": 6017,
+      "split": "recorded_dev",
+      "puck_xy": [
+        -0.2,
+        -0.4
+      ],
+      "goal_xy": [
+        -1.154594155,
+        0.554594155
+      ],
+      "rover_pose": [
+        0.401040764,
+        -1.283883476,
+        2.706194490192
+      ],
+      "initial_qvel": "all zeros"
+    },
+    {
+      "seed": 6018,
+      "split": "recorded_dev",
+      "puck_xy": [
+        0.2,
+        -0.4
+      ],
+      "goal_xy": [
+        -0.93137085,
+        -1.53137085
+      ],
+      "rover_pose": [
+        0.765685425,
+        0.519238816,
+        -2.606194490192
+      ],
+      "initial_qvel": "all zeros"
+    },
+    {
+      "seed": 6019,
+      "split": "recorded_dev",
+      "puck_xy": [
+        -0.2,
+        -0.4
+      ],
+      "goal_xy": [
+        1.108147545,
+        -1.708147545
+      ],
+      "rover_pose": [
+        -0.765685425,
+        0.519238816,
+        -0.535398163397
+      ],
+      "initial_qvel": "all zeros"
+    },
+    {
+      "seed": 6100,
+      "split": "closed_loop_dev",
+      "puck_xy": [
+        -0.35,
+        0.25
+      ],
+      "goal_xy": [
+        0.498528137,
+        1.098528137
+      ],
+      "rover_pose": [
+        -0.844974747,
+        -0.598528137,
+        1.135398163397
+      ],
+      "initial_qvel": "all zeros"
+    },
+    {
+      "seed": 6101,
+      "split": "closed_loop_dev",
+      "puck_xy": [
+        -0.35,
+        -0.25
+      ],
+      "goal_xy": [
+        -1.339949494,
+        0.739949494
+      ],
+      "rover_pose": [
+        0.144974747,
+        -1.098528137,
+        2.006194490192
+      ],
+      "initial_qvel": "all zeros"
+    },
+    {
+      "seed": 6102,
+      "split": "closed_loop_dev",
+      "puck_xy": [
+        -0.35,
+        0.25
+      ],
+      "goal_xy": [
+        -1.48137085,
+        -0.88137085
+      ],
+      "rover_pose": [
+        0.180330086,
+        1.063172798,
+        -2.106194490192
+      ],
+      "initial_qvel": "all zeros"
+    },
+    {
+      "seed": 6103,
+      "split": "closed_loop_dev",
+      "puck_xy": [
+        -0.35,
+        -0.25
+      ],
+      "goal_xy": [
+        0.922792206,
+        -1.522792206
+      ],
+      "rover_pose": [
+        -0.880330086,
+        0.563172798,
+        -1.035398163397
+      ],
+      "initial_qvel": "all zeros"
+    },
+    {
+      "seed": 6200,
+      "split": "held_out",
+      "puck_xy": [
+        -0.25,
+        0.45
+      ],
+      "goal_xy": [
+        0.766267486,
+        0.870951776
+      ],
+      "rover_pose": [
+        -1.032014698,
+        -0.144519144,
+        0.592699081699
+      ],
+      "initial_qvel": "all zeros"
+    },
+    {
+      "seed": 6201,
+      "split": "held_out",
+      "puck_xy": [
+        0.25,
+        0.45
+      ],
+      "goal_xy": [
+        0.747488462,
+        1.651043392
+      ],
+      "rover_pose": [
+        -0.382787487,
+        -0.424402651,
+        0.978097245096
+      ],
+      "initial_qvel": "all zeros"
+    },
+    {
+      "seed": 6202,
+      "split": "held_out",
+      "puck_xy": [
+        -0.25,
+        -0.45
+      ],
+      "goal_xy": [
+        -0.862293492,
+        1.028207252
+      ],
+      "rover_pose": [
+        0.436907097,
+        -1.193746355,
+        2.363495408494
+      ],
+      "initial_qvel": "all zeros"
+    },
+    {
+      "seed": 6203,
+      "split": "held_out",
+      "puck_xy": [
+        0.25,
+        -0.45
+      ],
+      "goal_xy": [
+        -1.505371112,
+        0.277098521
+      ],
+      "rover_pose": [
+        1.086134308,
+        -1.17517544,
+        2.348893571891
+      ],
+      "initial_qvel": "all zeros"
+    },
+    {
+      "seed": 6204,
+      "split": "held_out",
+      "puck_xy": [
+        -0.25,
+        0.45
+      ],
+      "goal_xy": [
+        -1.266267486,
+        0.029048224
+      ],
+      "rover_pose": [
+        0.570283041,
+        0.952131191,
+        -2.948893571891
+      ],
+      "initial_qvel": "all zeros"
+    },
+    {
+      "seed": 6205,
+      "split": "held_out",
+      "puck_xy": [
+        0.25,
+        0.45
+      ],
+      "goal_xy": [
+        -0.247488462,
+        -0.751043392
+      ],
+      "rover_pose": [
+        0.790399534,
+        1.362670994,
+        -1.763495408494
+      ],
+      "initial_qvel": "all zeros"
+    },
+    {
+      "seed": 6206,
+      "split": "held_out",
+      "puck_xy": [
+        -0.25,
+        -0.45
+      ],
+      "goal_xy": [
+        0.362293492,
+        -1.928207252
+      ],
+      "rover_pose": [
+        -0.890713121,
+        0.312880526,
+        -1.578097245096
+      ],
+      "initial_qvel": "all zeros"
+    },
+    {
+      "seed": 6207,
+      "split": "held_out",
+      "puck_xy": [
+        0.25,
+        -0.45
+      ],
+      "goal_xy": [
+        2.005371112,
+        -1.177098521
+      ],
+      "rover_pose": [
+        -0.605268479,
+        0.228981464,
+        0.007300918301
+      ],
+      "initial_qvel": "all zeros"
+    }
+  ],
+  "admission": {
+    "teacher_all_goals": 20,
+    "min_train_ticks_each": 32,
+    "min_train_puck_contact_ticks_each": 10,
+    "min_train_terminal_stop_labels_each": 10,
+    "dev_owners": 12,
+    "dev_each_model_goals": 3,
+    "dev_scenes_each": 4,
+    "held_out_owners": 24,
+    "held_out_each_model_goals": 6,
+    "held_out_scenes_each": 8,
+    "held_out_requires": "pinned all3-model manifest, exact passed dev receipt, independent audit, root GO",
+    "all_planned_rows_retained": true,
+    "natural_teacher_failure": "complete plan; reject training admission; no replacement",
+    "infrastructure_failure": "stop first, retain not_started rows"
+  },
+  "limits": {
+    "owner_seconds": 180,
+    "startup_seconds": 60,
+    "progress_seconds": 30,
+    "per_600_tick_record_and_snapshot_bytes": 167772160,
+    "per_120_tick_record_and_snapshot_bytes": 67108864,
+    "per_short_branch_bytes": 33554432,
+    "log_bytes_each": 1048576,
+    "report_bytes": 4194304,
+    "min_free_bytes": 1073741824,
+    "total_retained_bytes": 17179869184,
+    "checkpoint_bytes": 1048576,
+    "checkpoint_uncompressed_bytes": 2097152,
+    "physics": {
+      "inner_seconds": 600,
+      "term_seconds": 660,
+      "kill_grace_seconds": 15,
+      "supervised_seconds": 680,
+      "bytes": 1073741824,
+      "max_owners": 10,
+      "planned_record_allowance_bytes": 872415232,
+      "remaining_control_allowance_bytes": 201326592
+    },
+    "teacher": {
+      "inner_seconds": 1500,
+      "term_seconds": 1560,
+      "kill_grace_seconds": 15,
+      "supervised_seconds": 1580,
+      "bytes": 4294967296,
+      "owners": 20
+    },
+    "training_per_seed": {
+      "inner_seconds": 120,
+      "term_seconds": 180,
+      "kill_grace_seconds": 15,
+      "supervised_seconds": 200,
+      "bytes": 16777216
+    },
+    "all_training_bytes": 67108864,
+    "dev": {
+      "inner_seconds": 1200,
+      "term_seconds": 1260,
+      "kill_grace_seconds": 15,
+      "supervised_seconds": 1280,
+      "bytes": 3221225472,
+      "owners": 12
+    },
+    "held_out": {
+      "inner_seconds": 1800,
+      "term_seconds": 1860,
+      "kill_grace_seconds": 15,
+      "supervised_seconds": 1880,
+      "bytes": 4294967296,
+      "owners": 24
+    },
+    "snapshot_max_bytes": 8388608
+  },
+  "qualification_claims": [],
+  "physics_cases": [
+    {
+      "id": "zero",
+      "seed": 5990,
+      "ticks": 120,
+      "rover_pose": [
+        -0.8,
+        0,
+        0
+      ],
+      "puck_xy": [
+        0,
+        0
+      ],
+      "goal_xy": [
+        1.2,
+        0
+      ],
+      "action": [
+        0,
+        0
+      ],
+      "check": "puck XY displacement<=.001m, no rover-puck contact"
+    },
+    {
+      "id": "push-positive",
+      "seed": 5991,
+      "ticks": 120,
+      "rover_pose": [
+        -0.8,
+        0,
+        0
+      ],
+      "puck_xy": [
+        0,
+        0
+      ],
+      "goal_xy": [
+        1.2,
+        0
+      ],
+      "action": [
+        0.25,
+        0
+      ],
+      "check": "actual native contact plus puck x displacement>=.1m"
+    },
+    {
+      "id": "push-negative",
+      "seed": 5992,
+      "ticks": 120,
+      "rover_pose": [
+        0.8,
+        0,
+        3.141592653589793
+      ],
+      "puck_xy": [
+        0,
+        0
+      ],
+      "goal_xy": [
+        -1.2,
+        0
+      ],
+      "action": [
+        0.25,
+        0
+      ],
+      "check": "actual native contact plus puck negative-x displacement>=.1m"
+    },
+    {
+      "id": "teacher-positive",
+      "seed": 5993,
+      "ticks": 600,
+      "rover_pose": [
+        -0.95,
+        0.2,
+        0.3
+      ],
+      "puck_xy": [
+        0,
+        0
+      ],
+      "goal_xy": [
+        1.2,
+        0
+      ],
+      "controller": "puck-teacher",
+      "check": "task success under exact dwell rule"
+    },
+    {
+      "id": "teacher-negative",
+      "seed": 5994,
+      "ticks": 600,
+      "rover_pose": [
+        0.95,
+        -0.2,
+        3.441592653589793
+      ],
+      "puck_xy": [
+        0,
+        0
+      ],
+      "goal_xy": [
+        -1.2,
+        0
+      ],
+      "controller": "puck-teacher",
+      "check": "task success under exact dwell rule"
+    }
+  ],
+  "physics_derivatives": [
+    {
+      "source": "teacher-positive",
+      "kind": "native-continuation",
+      "boundary": "tick1",
+      "ticks": 4
+    },
+    {
+      "source": "teacher-positive",
+      "kind": "native-continuation",
+      "boundary": "first rover-puck contact boundary",
+      "ticks": 4
+    },
+    {
+      "source": "teacher-positive",
+      "kind": "native-continuation",
+      "boundary": "first success-dwell tick while paused",
+      "ticks": 4
+    },
+    {
+      "source": "push-positive",
+      "kind": "action-replay",
+      "ticks": 120
+    },
+    {
+      "source": "teacher-positive",
+      "kind": "policy-replay",
+      "ticks": "exact recorded natural episode, <=600"
+    }
+  ]
+}

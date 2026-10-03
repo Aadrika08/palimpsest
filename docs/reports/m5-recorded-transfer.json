@@ -1,0 +1,992 @@
+{
+  "source_commit": "8420247",
+  "status": "mechanism_checked",
+  "qualification_claims": [],
+  "report": {
+    "version": 1,
+    "claim": "single-development-case-mechanism-check",
+    "protocol_sha256": "494880950b46c78c87f5f401aa4baf8211f2bf0ee50ddd30bc83f22dd05ee8c8",
+    "status": "mechanism_checked",
+    "runs": [
+      {
+        "stage": "source",
+        "run_id": "12f3211e524a43c6a73f3da0ae07460b",
+        "run_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-experiments/runs/m5-memory-transfer-20261002/runs/12f3211e524a43c6a73f3da0ae07460b",
+        "supervisor": {
+          "schema_version": 1,
+          "status": "completed",
+          "timeout_seconds": 160,
+          "started_utc": "2026-10-02T12:35:56.946890+00:00",
+          "output": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-experiments/runs/m5-memory-transfer-20261002/runs/12f3211e524a43c6a73f3da0ae07460b",
+          "returncode": 0,
+          "elapsed_seconds": 25.81315783500031
+        },
+        "recording_status": "completed",
+        "final_phase": "paused",
+        "worker_report_sha256": "ffdef30b424feeb7646a0b2fbba335582c72795de77d40d24184b4116fe44e44",
+        "snapshot_sha256": "5d818f747fd3d488400e1fa118ecdcda3cd41cc5acd1899b648d14e9550f898e",
+        "initial_non_u": {
+          "schema_version": "830117280eda66c37c0ce7c6b2f12dc2d7ce6cf63d038885da59b18feba9bee3",
+          "identity": "b11274e6090a2635a9f996817b33c778d6748c130c750d5d23747645b50f83af",
+          "native_data": "ebd53795604e408c7b6ea105eda1c3fb1ad7010a92dd23a2b58b7c64e3560c67",
+          "native_sha256": "f929a8cf34cf3203c95296e3f2c2fef4f8dba34e2ebe1ef5b2d13e3baf9abd19",
+          "integration_enum": "24eb60f6f4f8c68f1b619579ad51bf124d61b7504a5bfd836298dd9af6ea6bf8",
+          "integration": "75cc5392d4817af6609fca31a7fa61dffa13d2acad5e1261fcae83086941664c",
+          "environment": "e35ae4ea43a0b7ed79390a2e1a0e9cf52d797a5322b43fcb9d1432a5dd5b5e65",
+          "policy": "5a95d8fed83f34f23577f09dd47cf96d801d43bf50e6b4578d8b815138d9e02f",
+          "teacher": "5a95d8fed83f34f23577f09dd47cf96d801d43bf50e6b4578d8b815138d9e02f",
+          "rng": "4ad8fe7d87a98835249b078ec914ee6da546f9bb87ab5aff150fd0f3007ac9fb",
+          "observation": "8f45ba0abf9095b3f2ad81d5fead262e837cebfa47c31bd8c14650a3bbfc810e",
+          "M": "77b9430077a7f168de9ec22eaa5c9d9410a173c8b68ced2eb78c59fe36e02e7e",
+          "E": "58ad09da6c0ee3c89c79f22964fead473cd2e82567a719631f51a6c152f67423",
+          "memory_supervisor": "863ff984d19ccc21e3f4726630ca6147376de9b364f599c55456af90c09b2b24",
+          "application": "3dcb4d7c88ea5fc5249f19698266204dd0d2b20d1cb07fffb147bf0a775d69a7"
+        },
+        "files": [
+          {
+            "path": "recording/manifest.json",
+            "bytes": 6444,
+            "sha256": "ed05fa9a172138cd86fa18ecf18fecef44bdd35f4c98ce6ee8559f4b19709798"
+          },
+          {
+            "path": "recording/events.jsonl",
+            "bytes": 2620103,
+            "sha256": "5fb16ef370c3af9bf7646796d391f9e3a33f9d991094b73c481f1c2753e496c6"
+          },
+          {
+            "path": "recording/chunks/000000.npz",
+            "bytes": 6299892,
+            "sha256": "ac2f8166a91a6a058d08074634f1babcd3a278141d81efdc86a6f8038406d71e"
+          },
+          {
+            "path": "recording/chunks/000001.npz",
+            "bytes": 6299892,
+            "sha256": "74c9f01bcd1f23bf2599826cdeb07a85bcd5dfda6ad25c00d0e4860bf9003307"
+          },
+          {
+            "path": "recording/chunks/000002.npz",
+            "bytes": 6299892,
+            "sha256": "23aa02ae97fa248404a28a734906373ebd44d02dfe5ac499c97ab83176e6966c"
+          },
+          {
+            "path": "recording/chunks/000003.npz",
+            "bytes": 6299892,
+            "sha256": "c039c7aabdd0f4852fc19478f41b056bd0f978e1226cec135771a9fa1f426e4a"
+          },
+          {
+            "path": "recording/chunks/000004.npz",
+            "bytes": 6299892,
+            "sha256": "e913d8c7b066ce5309054715f4ba792033d96b962dfe5a0cb5fcac1406034b9e"
+          },
+          {
+            "path": "recording/chunks/000005.npz",
+            "bytes": 6299892,
+            "sha256": "4e4eb48e2b6b6d501771a56b5e558eb6654fe0e43aaef493472e76d7e3f73f31"
+          },
+          {
+            "path": "recording/chunks/000006.npz",
+            "bytes": 6299892,
+            "sha256": "72d95a280263c55cc79a9115b0388fa18d96c63f18d89f87991f6d4c99de7659"
+          },
+          {
+            "path": "recording/chunks/000007.npz",
+            "bytes": 6299892,
+            "sha256": "72e70a28c987167ce17f6b808ffd3ff2e4f43b427ff559a0963f6d5654ff326a"
+          },
+          {
+            "path": "recording/chunks/000008.npz",
+            "bytes": 6299892,
+            "sha256": "04c7c743e3947447a8d5e7450d1544d359a790133384266b1d705eed96a724cc"
+          },
+          {
+            "path": "recording/chunks/000009.npz",
+            "bytes": 2364972,
+            "sha256": "e3cf630df8645cab27fda0d0c132b4f588d6dc83ea071c0182f5184278c0785d"
+          }
+        ]
+      },
+      {
+        "stage": "anchor",
+        "run_id": "9309853cb78a4fcc8bd4d3dff7d148c1",
+        "run_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-experiments/runs/m5-memory-transfer-20261002/runs/9309853cb78a4fcc8bd4d3dff7d148c1",
+        "supervisor": {
+          "schema_version": 1,
+          "status": "completed",
+          "timeout_seconds": 160,
+          "started_utc": "2026-10-02T12:36:24.599935+00:00",
+          "output": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-experiments/runs/m5-memory-transfer-20261002/runs/9309853cb78a4fcc8bd4d3dff7d148c1",
+          "returncode": 0,
+          "elapsed_seconds": 5.996446967998054
+        },
+        "recording_status": "completed",
+        "final_phase": "paused",
+        "worker_report_sha256": "354416f893d4fc9578c1ad9c0ab94ec17032141ba6c93745426c54d1706e5e7c",
+        "snapshot_sha256": "6ad03ee8655607eb84742ca2a6398b87d4f78f97229451f3570c16b55e08f858",
+        "initial_non_u": {
+          "schema_version": "830117280eda66c37c0ce7c6b2f12dc2d7ce6cf63d038885da59b18feba9bee3",
+          "identity": "b11274e6090a2635a9f996817b33c778d6748c130c750d5d23747645b50f83af",
+          "native_data": "ebd53795604e408c7b6ea105eda1c3fb1ad7010a92dd23a2b58b7c64e3560c67",
+          "native_sha256": "f929a8cf34cf3203c95296e3f2c2fef4f8dba34e2ebe1ef5b2d13e3baf9abd19",
+          "integration_enum": "24eb60f6f4f8c68f1b619579ad51bf124d61b7504a5bfd836298dd9af6ea6bf8",
+          "integration": "75cc5392d4817af6609fca31a7fa61dffa13d2acad5e1261fcae83086941664c",
+          "environment": "e35ae4ea43a0b7ed79390a2e1a0e9cf52d797a5322b43fcb9d1432a5dd5b5e65",
+          "policy": "5a95d8fed83f34f23577f09dd47cf96d801d43bf50e6b4578d8b815138d9e02f",
+          "teacher": "5a95d8fed83f34f23577f09dd47cf96d801d43bf50e6b4578d8b815138d9e02f",
+          "rng": "4ad8fe7d87a98835249b078ec914ee6da546f9bb87ab5aff150fd0f3007ac9fb",
+          "observation": "8f45ba0abf9095b3f2ad81d5fead262e837cebfa47c31bd8c14650a3bbfc810e",
+          "M": "77b9430077a7f168de9ec22eaa5c9d9410a173c8b68ced2eb78c59fe36e02e7e",
+          "E": "58ad09da6c0ee3c89c79f22964fead473cd2e82567a719631f51a6c152f67423",
+          "memory_supervisor": "863ff984d19ccc21e3f4726630ca6147376de9b364f599c55456af90c09b2b24",
+          "application": "3dcb4d7c88ea5fc5249f19698266204dd0d2b20d1cb07fffb147bf0a775d69a7"
+        },
+        "files": [
+          {
+            "path": "recording/manifest.json",
+            "bytes": 6551,
+            "sha256": "cde42878e81d8b6f77897dd0d69a00d793038bf4112d40b26c7044cfee8ee61a"
+          },
+          {
+            "path": "recording/events.jsonl",
+            "bytes": 12682,
+            "sha256": "8e34b701dde47c6ab8eac7ce19a0be677505d2da923b7bedcc3d7ffa5de0af60"
+          }
+        ]
+      },
+      {
+        "stage": "own",
+        "run_id": "2b1892f991a846ff8700a287b7986ff7",
+        "run_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-experiments/runs/m5-memory-transfer-20261002/runs/2b1892f991a846ff8700a287b7986ff7",
+        "supervisor": {
+          "schema_version": 1,
+          "status": "completed",
+          "timeout_seconds": 160,
+          "started_utc": "2026-10-02T12:36:30.819567+00:00",
+          "output": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-experiments/runs/m5-memory-transfer-20261002/runs/2b1892f991a846ff8700a287b7986ff7",
+          "returncode": 0,
+          "elapsed_seconds": 9.95249211400369
+        },
+        "recording_status": "failed",
+        "final_phase": "failed",
+        "worker_report_sha256": "e7b27a937e25edca2a97b1b83e88a5982e7f28c9a9c1176293a823da72de302c",
+        "snapshot_sha256": "e1b93776d44a00dd49e80f77e83e322f11ea4a86e413521b484dbdfa85bda5b0",
+        "initial_non_u": {
+          "schema_version": "830117280eda66c37c0ce7c6b2f12dc2d7ce6cf63d038885da59b18feba9bee3",
+          "identity": "b11274e6090a2635a9f996817b33c778d6748c130c750d5d23747645b50f83af",
+          "native_data": "ebd53795604e408c7b6ea105eda1c3fb1ad7010a92dd23a2b58b7c64e3560c67",
+          "native_sha256": "f929a8cf34cf3203c95296e3f2c2fef4f8dba34e2ebe1ef5b2d13e3baf9abd19",
+          "integration_enum": "24eb60f6f4f8c68f1b619579ad51bf124d61b7504a5bfd836298dd9af6ea6bf8",
+          "integration": "75cc5392d4817af6609fca31a7fa61dffa13d2acad5e1261fcae83086941664c",
+          "environment": "e35ae4ea43a0b7ed79390a2e1a0e9cf52d797a5322b43fcb9d1432a5dd5b5e65",
+          "policy": "5a95d8fed83f34f23577f09dd47cf96d801d43bf50e6b4578d8b815138d9e02f",
+          "teacher": "5a95d8fed83f34f23577f09dd47cf96d801d43bf50e6b4578d8b815138d9e02f",
+          "rng": "4ad8fe7d87a98835249b078ec914ee6da546f9bb87ab5aff150fd0f3007ac9fb",
+          "observation": "8f45ba0abf9095b3f2ad81d5fead262e837cebfa47c31bd8c14650a3bbfc810e",
+          "M": "77b9430077a7f168de9ec22eaa5c9d9410a173c8b68ced2eb78c59fe36e02e7e",
+          "E": "58ad09da6c0ee3c89c79f22964fead473cd2e82567a719631f51a6c152f67423",
+          "memory_supervisor": "863ff984d19ccc21e3f4726630ca6147376de9b364f599c55456af90c09b2b24",
+          "application": "3dcb4d7c88ea5fc5249f19698266204dd0d2b20d1cb07fffb147bf0a775d69a7"
+        },
+        "files": [
+          {
+            "path": "recording/manifest.json",
+            "bytes": 6793,
+            "sha256": "8f3bdba536303eda1abdba281dbcf920ce2742ea841854d9cdc499ba3109a122"
+          },
+          {
+            "path": "recording/events.jsonl",
+            "bytes": 736566,
+            "sha256": "2d90525400206a401fd124a194727fb4f6f04abb059d480dfa088106edaeb0ce"
+          },
+          {
+            "path": "recording/chunks/000000.npz",
+            "bytes": 6299892,
+            "sha256": "f182d4e2d1cec7d9c2d285f92dfc6558e85ddeb5f6c6cb1f061994b8768565e9"
+          },
+          {
+            "path": "recording/chunks/000001.npz",
+            "bytes": 6299892,
+            "sha256": "c030df6b017cdcddfc554d13bfbb0177071f5595d1788761cac76c1e66b8e5e3"
+          },
+          {
+            "path": "recording/chunks/000002.npz",
+            "bytes": 4529178,
+            "sha256": "2255967ee9bc5c4aa3728b72609e98c50160d6e5119ba627428d43c1dd0787ec"
+          }
+        ]
+      },
+      {
+        "stage": "swapped",
+        "run_id": "c849c2b7f2b640229a9061023af6011c",
+        "run_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-experiments/runs/m5-memory-transfer-20261002/runs/c849c2b7f2b640229a9061023af6011c",
+        "supervisor": {
+          "schema_version": 1,
+          "status": "completed",
+          "timeout_seconds": 160,
+          "started_utc": "2026-10-02T12:36:41.150123+00:00",
+          "output": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-experiments/runs/m5-memory-transfer-20261002/runs/c849c2b7f2b640229a9061023af6011c",
+          "returncode": 0,
+          "elapsed_seconds": 9.907066168998426
+        },
+        "recording_status": "completed",
+        "final_phase": "terminated",
+        "worker_report_sha256": "86e4d87cd79e62388ed8283317223be022288e55eaeebd7681673822108ad6fe",
+        "snapshot_sha256": "fbe2a6471e638f7ff9be5fbdec0b0520a5707e12565022568f1721109a280f18",
+        "initial_non_u": {
+          "schema_version": "830117280eda66c37c0ce7c6b2f12dc2d7ce6cf63d038885da59b18feba9bee3",
+          "identity": "b11274e6090a2635a9f996817b33c778d6748c130c750d5d23747645b50f83af",
+          "native_data": "ebd53795604e408c7b6ea105eda1c3fb1ad7010a92dd23a2b58b7c64e3560c67",
+          "native_sha256": "f929a8cf34cf3203c95296e3f2c2fef4f8dba34e2ebe1ef5b2d13e3baf9abd19",
+          "integration_enum": "24eb60f6f4f8c68f1b619579ad51bf124d61b7504a5bfd836298dd9af6ea6bf8",
+          "integration": "75cc5392d4817af6609fca31a7fa61dffa13d2acad5e1261fcae83086941664c",
+          "environment": "e35ae4ea43a0b7ed79390a2e1a0e9cf52d797a5322b43fcb9d1432a5dd5b5e65",
+          "policy": "5a95d8fed83f34f23577f09dd47cf96d801d43bf50e6b4578d8b815138d9e02f",
+          "teacher": "5a95d8fed83f34f23577f09dd47cf96d801d43bf50e6b4578d8b815138d9e02f",
+          "rng": "4ad8fe7d87a98835249b078ec914ee6da546f9bb87ab5aff150fd0f3007ac9fb",
+          "observation": "8f45ba0abf9095b3f2ad81d5fead262e837cebfa47c31bd8c14650a3bbfc810e",
+          "M": "77b9430077a7f168de9ec22eaa5c9d9410a173c8b68ced2eb78c59fe36e02e7e",
+          "E": "58ad09da6c0ee3c89c79f22964fead473cd2e82567a719631f51a6c152f67423",
+          "memory_supervisor": "863ff984d19ccc21e3f4726630ca6147376de9b364f599c55456af90c09b2b24",
+          "application": "3dcb4d7c88ea5fc5249f19698266204dd0d2b20d1cb07fffb147bf0a775d69a7"
+        },
+        "files": [
+          {
+            "path": "recording/manifest.json",
+            "bytes": 6699,
+            "sha256": "190f2964264e404c44d653a1726bda44dc13f4b2e12c0786e4aa8eb04c669a40"
+          },
+          {
+            "path": "recording/events.jsonl",
+            "bytes": 468792,
+            "sha256": "4840a49eba6e2d69e9af19075e6a9d5d06fc0005df93d2c04011ca7460a22bc8"
+          },
+          {
+            "path": "recording/chunks/000000.npz",
+            "bytes": 6299892,
+            "sha256": "0e03f25b5a32c7f1e60e2d3a77f9f7e0be942edc7fc97cea77f8c77e7f5c087d"
+          },
+          {
+            "path": "recording/chunks/000001.npz",
+            "bytes": 4135686,
+            "sha256": "0074bdecdaa879305da641e6cabc50b38c224a2331117fad9f410e4dbe7546de"
+          }
+        ]
+      },
+      {
+        "stage": "sham",
+        "run_id": "0c0697530a76470a926b0e78d196a491",
+        "run_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-experiments/runs/m5-memory-transfer-20261002/runs/0c0697530a76470a926b0e78d196a491",
+        "supervisor": {
+          "schema_version": 1,
+          "status": "completed",
+          "timeout_seconds": 160,
+          "started_utc": "2026-10-02T12:36:51.340383+00:00",
+          "output": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-experiments/runs/m5-memory-transfer-20261002/runs/0c0697530a76470a926b0e78d196a491",
+          "returncode": 0,
+          "elapsed_seconds": 16.258367864997126
+        },
+        "recording_status": "failed",
+        "final_phase": "failed",
+        "worker_report_sha256": "7b301d37b278e6cb8df9bf3f299289f2b1f1350dea9c91a9268d023ea313b1a7",
+        "snapshot_sha256": "cf5a907f51fcae868d321682b7b5beb2e2a8e7e49295674a8b36ce6c4d5c659e",
+        "initial_non_u": {
+          "schema_version": "830117280eda66c37c0ce7c6b2f12dc2d7ce6cf63d038885da59b18feba9bee3",
+          "identity": "b11274e6090a2635a9f996817b33c778d6748c130c750d5d23747645b50f83af",
+          "native_data": "ebd53795604e408c7b6ea105eda1c3fb1ad7010a92dd23a2b58b7c64e3560c67",
+          "native_sha256": "f929a8cf34cf3203c95296e3f2c2fef4f8dba34e2ebe1ef5b2d13e3baf9abd19",
+          "integration_enum": "24eb60f6f4f8c68f1b619579ad51bf124d61b7504a5bfd836298dd9af6ea6bf8",
+          "integration": "75cc5392d4817af6609fca31a7fa61dffa13d2acad5e1261fcae83086941664c",
+          "environment": "e35ae4ea43a0b7ed79390a2e1a0e9cf52d797a5322b43fcb9d1432a5dd5b5e65",
+          "policy": "5a95d8fed83f34f23577f09dd47cf96d801d43bf50e6b4578d8b815138d9e02f",
+          "teacher": "5a95d8fed83f34f23577f09dd47cf96d801d43bf50e6b4578d8b815138d9e02f",
+          "rng": "4ad8fe7d87a98835249b078ec914ee6da546f9bb87ab5aff150fd0f3007ac9fb",
+          "observation": "8f45ba0abf9095b3f2ad81d5fead262e837cebfa47c31bd8c14650a3bbfc810e",
+          "M": "77b9430077a7f168de9ec22eaa5c9d9410a173c8b68ced2eb78c59fe36e02e7e",
+          "E": "58ad09da6c0ee3c89c79f22964fead473cd2e82567a719631f51a6c152f67423",
+          "memory_supervisor": "863ff984d19ccc21e3f4726630ca6147376de9b364f599c55456af90c09b2b24",
+          "application": "3dcb4d7c88ea5fc5249f19698266204dd0d2b20d1cb07fffb147bf0a775d69a7"
+        },
+        "files": [
+          {
+            "path": "recording/manifest.json",
+            "bytes": 6794,
+            "sha256": "5e431d79c0cb88dbac3bbec68eec03471cd1b96fbe5479d27f58c6a094b69537"
+          },
+          {
+            "path": "recording/events.jsonl",
+            "bytes": 736566,
+            "sha256": "e95bc50a7520da5030d00da259a934eab11c97777a1da1f54a01aebc828066eb"
+          },
+          {
+            "path": "recording/chunks/000000.npz",
+            "bytes": 6299892,
+            "sha256": "35049beaa4374b38752b5b06356c01eaa2e93d015ae3b720387998ddd833d282"
+          },
+          {
+            "path": "recording/chunks/000001.npz",
+            "bytes": 6299892,
+            "sha256": "319ed2d11a78431b761dbf804cbc83d31a1f6b1a63b091964c9d14c742229047"
+          },
+          {
+            "path": "recording/chunks/000002.npz",
+            "bytes": 4529178,
+            "sha256": "f39ea479b927630af4266972e10d17a46f46d9e6e63b15d829682e4b173f34e3"
+          }
+        ]
+      },
+      {
+        "stage": "no-U",
+        "run_id": "a7ac30db229c4a2dbd323f1de8d094a9",
+        "run_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-experiments/runs/m5-memory-transfer-20261002/runs/a7ac30db229c4a2dbd323f1de8d094a9",
+        "supervisor": {
+          "schema_version": 1,
+          "status": "completed",
+          "timeout_seconds": 160,
+          "started_utc": "2026-10-02T12:37:08.004110+00:00",
+          "output": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-experiments/runs/m5-memory-transfer-20261002/runs/a7ac30db229c4a2dbd323f1de8d094a9",
+          "returncode": 0,
+          "elapsed_seconds": 9.191825627000071
+        },
+        "recording_status": "completed",
+        "final_phase": "terminated",
+        "worker_report_sha256": "d9e0df13b0a16356fadc01ee80ef0d40d0a622e68f22db9e7f6c0b60f1d9afd1",
+        "snapshot_sha256": "e8bdb9c9a9db9e7b4c372371f7eff957ff8ec8367077362b0c29717d5e14ddb2",
+        "initial_non_u": {
+          "schema_version": "830117280eda66c37c0ce7c6b2f12dc2d7ce6cf63d038885da59b18feba9bee3",
+          "identity": "b11274e6090a2635a9f996817b33c778d6748c130c750d5d23747645b50f83af",
+          "native_data": "ebd53795604e408c7b6ea105eda1c3fb1ad7010a92dd23a2b58b7c64e3560c67",
+          "native_sha256": "f929a8cf34cf3203c95296e3f2c2fef4f8dba34e2ebe1ef5b2d13e3baf9abd19",
+          "integration_enum": "24eb60f6f4f8c68f1b619579ad51bf124d61b7504a5bfd836298dd9af6ea6bf8",
+          "integration": "75cc5392d4817af6609fca31a7fa61dffa13d2acad5e1261fcae83086941664c",
+          "environment": "e35ae4ea43a0b7ed79390a2e1a0e9cf52d797a5322b43fcb9d1432a5dd5b5e65",
+          "policy": "5a95d8fed83f34f23577f09dd47cf96d801d43bf50e6b4578d8b815138d9e02f",
+          "teacher": "5a95d8fed83f34f23577f09dd47cf96d801d43bf50e6b4578d8b815138d9e02f",
+          "rng": "4ad8fe7d87a98835249b078ec914ee6da546f9bb87ab5aff150fd0f3007ac9fb",
+          "observation": "8f45ba0abf9095b3f2ad81d5fead262e837cebfa47c31bd8c14650a3bbfc810e",
+          "M": "77b9430077a7f168de9ec22eaa5c9d9410a173c8b68ced2eb78c59fe36e02e7e",
+          "E": "58ad09da6c0ee3c89c79f22964fead473cd2e82567a719631f51a6c152f67423",
+          "memory_supervisor": "863ff984d19ccc21e3f4726630ca6147376de9b364f599c55456af90c09b2b24",
+          "application": "3dcb4d7c88ea5fc5249f19698266204dd0d2b20d1cb07fffb147bf0a775d69a7"
+        },
+        "files": [
+          {
+            "path": "recording/manifest.json",
+            "bytes": 6696,
+            "sha256": "09124e0eeef8892fcc8aeeb5f7b69783e95028e607fa1d93cf71e6bf2a6881ba"
+          },
+          {
+            "path": "recording/events.jsonl",
+            "bytes": 460367,
+            "sha256": "160acfd9a28cfa0da7b7d8e93c03d890e43649a6fedc852bc30432a27ee0cc39"
+          },
+          {
+            "path": "recording/chunks/000000.npz",
+            "bytes": 6299892,
+            "sha256": "d1e068d351a65e15f81349533b553d890194b328efab240415e7debbabf78b92"
+          },
+          {
+            "path": "recording/chunks/000001.npz",
+            "bytes": 4135686,
+            "sha256": "4927cf1cad30ea9e2a6f3489c4693218296924d8f4bbb11002d135f46d5a51fe"
+          }
+        ]
+      }
+    ],
+    "history_inputs": {
+      "own": {
+        "path": "runs/m5-acquisition-batch-20261002/local_cue-history.json",
+        "sha256": "016c5b5e9472b116d065fb922b32d64089db6e27839aec09d751238f8ce7ffc1"
+      },
+      "swapped": {
+        "path": "runs/m5-acquisition-batch-20261002/paired_cue-history.json",
+        "sha256": "64628e37cc6e861194f810baa92926eba8f57260047cdd8ad320a4601023d213"
+      }
+    },
+    "r2_complete": false,
+    "comparison": {
+      "pre_m_sha256": "948eaeaeb4cd59e5746820e38c973334e2b5156aff3b6eff535172fa912e25e1",
+      "trigger": {
+        "after": 1,
+        "before": 0,
+        "before_observation_id": "sensor-4f39408d2d6e1d94b5c4b10781c470fffeed1226421574744960a7ce6ea38c30",
+        "cue_id": "live-development-test-00000008-cue",
+        "episode_id": "episode-0",
+        "id": "sensor-d3b44e437ca0d3b053127ae36a039a9cdf507542e48af059054f5d53ab831bae",
+        "kind": "cue_changed",
+        "observation_id": "sensor-90ad37a357021f436b87e17eacef2cc619197189b559ec6d6306750e80709e1b",
+        "tick": 300
+      },
+      "before_occupancy": {
+        "live-development-test-00000008-subject-a": "open",
+        "live-development-test-00000008-subject-z": "open"
+      },
+      "after_occupancy": {
+        "live-development-test-00000008-subject-a": "blocked",
+        "live-development-test-00000008-subject-z": "open"
+      },
+      "gold_target_ids": [
+        "live-development-test-00000008-fact-a"
+      ],
+      "targeting": [
+        {
+          "condition": "own",
+          "selection": {
+            "event_id": "sensor-d3b44e437ca0d3b053127ae36a039a9cdf507542e48af059054f5d53ab831bae",
+            "target_ids": [
+              "live-development-test-00000008-fact-a"
+            ],
+            "reason": "matched"
+          },
+          "target_limit": 1,
+          "exact_set": true,
+          "false_targets": 0,
+          "missed_targets": 0,
+          "abstained": false,
+          "correct_abstention": false,
+          "precision": 1.0,
+          "recall": 1.0,
+          "privileged": false,
+          "runtime_access": [
+            "m",
+            "trigger",
+            "u"
+          ],
+          "validation_access": [
+            "m",
+            "trigger",
+            "u"
+          ],
+          "behavior_access": [
+            "m",
+            "trigger",
+            "u.payload"
+          ],
+          "validation_input_bytes": 2008,
+          "behavior_input_bytes": 1534,
+          "payload_bytes": 108,
+          "envelope_bytes": 590,
+          "runtime_history_bytes": 0
+        },
+        {
+          "condition": "swapped",
+          "selection": {
+            "event_id": "sensor-d3b44e437ca0d3b053127ae36a039a9cdf507542e48af059054f5d53ab831bae",
+            "target_ids": [
+              "live-development-test-00000008-fact-z"
+            ],
+            "reason": "matched"
+          },
+          "target_limit": 1,
+          "exact_set": false,
+          "false_targets": 1,
+          "missed_targets": 1,
+          "abstained": false,
+          "correct_abstention": false,
+          "precision": 0.0,
+          "recall": 0.0,
+          "privileged": false,
+          "runtime_access": [
+            "m",
+            "trigger",
+            "u"
+          ],
+          "validation_access": [
+            "m",
+            "trigger",
+            "u"
+          ],
+          "behavior_access": [
+            "m",
+            "trigger",
+            "u.payload"
+          ],
+          "validation_input_bytes": 2009,
+          "behavior_input_bytes": 1535,
+          "payload_bytes": 109,
+          "envelope_bytes": 591,
+          "runtime_history_bytes": 0
+        },
+        {
+          "condition": "sham",
+          "selection": {
+            "event_id": "sensor-d3b44e437ca0d3b053127ae36a039a9cdf507542e48af059054f5d53ab831bae",
+            "target_ids": [
+              "live-development-test-00000008-fact-a"
+            ],
+            "reason": "matched"
+          },
+          "target_limit": 1,
+          "exact_set": true,
+          "false_targets": 0,
+          "missed_targets": 0,
+          "abstained": false,
+          "correct_abstention": false,
+          "precision": 1.0,
+          "recall": 1.0,
+          "privileged": false,
+          "runtime_access": [
+            "m",
+            "trigger",
+            "u"
+          ],
+          "validation_access": [
+            "m",
+            "trigger",
+            "u"
+          ],
+          "behavior_access": [
+            "m",
+            "trigger",
+            "u.payload"
+          ],
+          "validation_input_bytes": 2008,
+          "behavior_input_bytes": 1534,
+          "payload_bytes": 108,
+          "envelope_bytes": 590,
+          "runtime_history_bytes": 0
+        },
+        {
+          "condition": "no-U",
+          "selection": {
+            "event_id": "sensor-d3b44e437ca0d3b053127ae36a039a9cdf507542e48af059054f5d53ab831bae",
+            "target_ids": [],
+            "reason": "no_rule"
+          },
+          "target_limit": 1,
+          "exact_set": false,
+          "false_targets": 0,
+          "missed_targets": 1,
+          "abstained": true,
+          "correct_abstention": false,
+          "precision": null,
+          "recall": 0.0,
+          "privileged": false,
+          "runtime_access": [
+            "m",
+            "trigger",
+            "u"
+          ],
+          "validation_access": [
+            "m",
+            "trigger",
+            "u"
+          ],
+          "behavior_access": [
+            "m",
+            "trigger",
+            "u.payload"
+          ],
+          "validation_input_bytes": 1892,
+          "behavior_input_bytes": 1486,
+          "payload_bytes": 60,
+          "envelope_bytes": 474,
+          "runtime_history_bytes": 0
+        },
+        {
+          "condition": "hand-authored",
+          "selection": {
+            "event_id": "sensor-d3b44e437ca0d3b053127ae36a039a9cdf507542e48af059054f5d53ab831bae",
+            "target_ids": [
+              "live-development-test-00000008-fact-a"
+            ],
+            "reason": "matched"
+          },
+          "target_limit": 1,
+          "exact_set": true,
+          "false_targets": 0,
+          "missed_targets": 0,
+          "abstained": false,
+          "correct_abstention": false,
+          "precision": 1.0,
+          "recall": 1.0,
+          "privileged": false,
+          "runtime_access": [
+            "m",
+            "trigger",
+            "u"
+          ],
+          "validation_access": [
+            "m",
+            "trigger",
+            "u"
+          ],
+          "behavior_access": [
+            "m",
+            "trigger",
+            "u.payload"
+          ],
+          "validation_input_bytes": 1948,
+          "behavior_input_bytes": 1534,
+          "payload_bytes": 108,
+          "envelope_bytes": 530,
+          "runtime_history_bytes": 0
+        },
+        {
+          "condition": "history-independent",
+          "selection": {
+            "event_id": "sensor-d3b44e437ca0d3b053127ae36a039a9cdf507542e48af059054f5d53ab831bae",
+            "target_ids": [
+              "live-development-test-00000008-fact-a"
+            ],
+            "reason": "budget"
+          },
+          "target_limit": 1,
+          "exact_set": true,
+          "false_targets": 0,
+          "missed_targets": 0,
+          "abstained": false,
+          "correct_abstention": false,
+          "precision": 1.0,
+          "recall": 1.0,
+          "privileged": false,
+          "runtime_access": [
+            "m",
+            "trigger"
+          ],
+          "validation_access": [
+            "m",
+            "trigger"
+          ],
+          "behavior_access": [
+            "m",
+            "trigger"
+          ],
+          "validation_input_bytes": 1413,
+          "behavior_input_bytes": 1413,
+          "payload_bytes": 0,
+          "envelope_bytes": 0,
+          "runtime_history_bytes": 0
+        },
+        {
+          "condition": "traversal",
+          "selection": {
+            "event_id": "sensor-d3b44e437ca0d3b053127ae36a039a9cdf507542e48af059054f5d53ab831bae",
+            "target_ids": [
+              "live-development-test-00000008-fact-a"
+            ],
+            "reason": "budget"
+          },
+          "target_limit": 1,
+          "exact_set": true,
+          "false_targets": 0,
+          "missed_targets": 0,
+          "abstained": false,
+          "correct_abstention": false,
+          "precision": 1.0,
+          "recall": 1.0,
+          "privileged": false,
+          "runtime_access": [
+            "m",
+            "trigger"
+          ],
+          "validation_access": [
+            "m",
+            "trigger"
+          ],
+          "behavior_access": [
+            "m",
+            "trigger"
+          ],
+          "validation_input_bytes": 1413,
+          "behavior_input_bytes": 1413,
+          "payload_bytes": 0,
+          "envelope_bytes": 0,
+          "runtime_history_bytes": 0
+        },
+        {
+          "condition": "retrieval",
+          "selection": {
+            "event_id": "sensor-d3b44e437ca0d3b053127ae36a039a9cdf507542e48af059054f5d53ab831bae",
+            "target_ids": [
+              "live-development-test-00000008-fact-a"
+            ],
+            "reason": "matched"
+          },
+          "target_limit": 1,
+          "exact_set": true,
+          "false_targets": 0,
+          "missed_targets": 0,
+          "abstained": false,
+          "correct_abstention": false,
+          "precision": 1.0,
+          "recall": 1.0,
+          "privileged": false,
+          "runtime_access": [
+            "m",
+            "trigger",
+            "history"
+          ],
+          "validation_access": [
+            "m",
+            "trigger",
+            "history"
+          ],
+          "behavior_access": [
+            "m",
+            "trigger",
+            "history"
+          ],
+          "validation_input_bytes": 9034,
+          "behavior_input_bytes": 9034,
+          "payload_bytes": 0,
+          "envelope_bytes": 0,
+          "runtime_history_bytes": 7610
+        },
+        {
+          "condition": "oracle",
+          "selection": {
+            "event_id": "sensor-d3b44e437ca0d3b053127ae36a039a9cdf507542e48af059054f5d53ab831bae",
+            "target_ids": [
+              "live-development-test-00000008-fact-a"
+            ],
+            "reason": "matched"
+          },
+          "target_limit": 1,
+          "exact_set": true,
+          "false_targets": 0,
+          "missed_targets": 0,
+          "abstained": false,
+          "correct_abstention": false,
+          "precision": 1.0,
+          "recall": 1.0,
+          "privileged": true,
+          "runtime_access": [
+            "m",
+            "trigger",
+            "gold_target_ids"
+          ],
+          "validation_access": [
+            "m",
+            "trigger",
+            "gold_target_ids"
+          ],
+          "behavior_access": [
+            "m",
+            "trigger",
+            "gold_target_ids"
+          ],
+          "validation_input_bytes": 1473,
+          "behavior_input_bytes": 1473,
+          "payload_bytes": 0,
+          "envelope_bytes": 0,
+          "runtime_history_bytes": 0
+        }
+      ],
+      "runtime": [
+        {
+          "condition": "own",
+          "recording_status": "failed",
+          "final_phase": "failed",
+          "outcome": {
+            "reason": "runtime_failure",
+            "episode": 0,
+            "steps": 387,
+            "type": "CueUnavailable",
+            "message": "goal_cue_unavailable: live-development-test-00000008-common-goal",
+            "policy_diagnostics": null
+          },
+          "requested": 1,
+          "started": 0,
+          "resolved": 0,
+          "timeouts": 0,
+          "unresolved_fact_ids": [
+            "live-development-test-00000008-fact-a"
+          ],
+          "inspection_not_started": true,
+          "fresh_correct_fact_ids": [
+            "live-development-test-00000008-fact-z"
+          ],
+          "navigation_pass": false,
+          "revision_pass": false,
+          "task_pass": false
+        },
+        {
+          "condition": "swapped",
+          "recording_status": "completed",
+          "final_phase": "terminated",
+          "outcome": {
+            "reason": "goal",
+            "episode": 0,
+            "steps": 353,
+            "final_distance": 0.7875292301177979
+          },
+          "requested": 0,
+          "started": 0,
+          "resolved": 0,
+          "timeouts": 0,
+          "unresolved_fact_ids": [],
+          "inspection_not_started": false,
+          "fresh_correct_fact_ids": [
+            "live-development-test-00000008-fact-z"
+          ],
+          "navigation_pass": true,
+          "revision_pass": false,
+          "task_pass": false
+        },
+        {
+          "condition": "sham",
+          "recording_status": "failed",
+          "final_phase": "failed",
+          "outcome": {
+            "reason": "runtime_failure",
+            "episode": 0,
+            "steps": 387,
+            "type": "CueUnavailable",
+            "message": "goal_cue_unavailable: live-development-test-00000008-common-goal",
+            "policy_diagnostics": null
+          },
+          "requested": 1,
+          "started": 0,
+          "resolved": 0,
+          "timeouts": 0,
+          "unresolved_fact_ids": [
+            "live-development-test-00000008-fact-a"
+          ],
+          "inspection_not_started": true,
+          "fresh_correct_fact_ids": [
+            "live-development-test-00000008-fact-z"
+          ],
+          "navigation_pass": false,
+          "revision_pass": false,
+          "task_pass": false
+        },
+        {
+          "condition": "no-U",
+          "recording_status": "completed",
+          "final_phase": "terminated",
+          "outcome": {
+            "reason": "goal",
+            "episode": 0,
+            "steps": 353,
+            "final_distance": 0.7875292301177979
+          },
+          "requested": 0,
+          "started": 0,
+          "resolved": 0,
+          "timeouts": 0,
+          "unresolved_fact_ids": [],
+          "inspection_not_started": false,
+          "fresh_correct_fact_ids": [
+            "live-development-test-00000008-fact-z"
+          ],
+          "navigation_pass": true,
+          "revision_pass": false,
+          "task_pass": false
+        }
+      ],
+      "trajectory_comparisons": [
+        {
+          "reference": "own",
+          "condition": "swapped",
+          "shared_ticks": 53,
+          "same_length": false,
+          "first_divergence": null,
+          "scope": "existing replay tolerances; frames are not independent samples"
+        },
+        {
+          "reference": "own",
+          "condition": "sham",
+          "shared_ticks": 87,
+          "same_length": true,
+          "first_divergence": null,
+          "scope": "existing replay tolerances; frames are not independent samples"
+        },
+        {
+          "reference": "own",
+          "condition": "no-U",
+          "shared_ticks": 53,
+          "same_length": false,
+          "first_divergence": null,
+          "scope": "existing replay tolerances; frames are not independent samples"
+        }
+      ],
+      "r2_complete": false,
+      "held_out_executed": false,
+      "operator_blindness_verified": false
+    },
+    "source_identity": {
+      "source_sha256": {
+        "src/palimpsest/__init__.py": "bb99e30d22e4662c4ded455b1b23f49b77ce811dcfa1b69bf358925487a566d8",
+        "src/palimpsest/__main__.py": "935a1c1166b0c1ea35a82256345000bf2c73ded718d77773bc27a71ecce28f7d",
+        "src/palimpsest/artifacts.py": "55223cb24359de16cf5f62b833b4e3cca3a21d3f25c8442f6436d53c4f120741",
+        "src/palimpsest/assets.py": "aa4a38c7403cd9f72bc23027acd7c212202f25574bea6af65053c34664da49e3",
+        "src/palimpsest/cli.py": "3d5bb7bc2135b8534ca2fcfceb7b4fe4e9f24ed140a38003f7b1ded1c3d40a36",
+        "src/palimpsest/doctor.py": "109de62468161f35461eee76af244daabef38f2faa1526c5a6ed268817e6b834",
+        "src/palimpsest/engine.py": "cd10db94f19c526f03d92caa1f63f1082044af3a72cef0bb310147455d1af24e",
+        "src/palimpsest/evaluate.py": "74a9afb710b36a366ab680462e9440f285730a0360bda704af25ebbcfd74256a",
+        "src/palimpsest/flynn.py": "409b7503d76fd6f971a33d053e86c968b529edc226b85f44122e17a649f8f9f4",
+        "src/palimpsest/interventions.py": "fd2c1e6f160f7d251ddcf3275b383e8e3e265fc462452d1bc20c0030a6acf9c8",
+        "src/palimpsest/lab.py": "1b944fe42ba7634896fa6f7c00380edf6cd90a255c03dae3d8e7904a2b56a4ab",
+        "src/palimpsest/memory.py": "9641ae3d7d78577e0ea5bc8bcacbe455cae6c548f4f9bd10b8bb593a8fd7c542",
+        "src/palimpsest/memory_experiment.py": "873d5f6ab2ee57c560e8f4bb2a0cf20144264f25ea2312b7e7fe8d295ab8f9f8",
+        "src/palimpsest/memory_history.py": "7dbfac529717698ea2848ec6318a8812e876c04bf26711775f316dd1a631438c",
+        "src/palimpsest/memory_task.py": "6562de8c0734e0622529231babc7e035ba146077b39e004b0f52928b3038dcc6",
+        "src/palimpsest/memory_world.py": "508d7c53cf78e8a26a2c459e2b6e2a02c8c0823535005a19668a31717f0dbb12",
+        "src/palimpsest/profiles.py": "d3ebc6317c8799fe98ba043b9c9bfee1f3d1b5b7292ffd8f3be1c8164505c5f6",
+        "src/palimpsest/records.py": "c4be6f1699c1d8550a7f2db2979f7f9f18196ac986eef2aefe3ba665cae99ac3",
+        "src/palimpsest/replay.py": "248b89ccd80fa773e8709a5fbf050ad00bb24122614f9e6787547eba6eaed684",
+        "src/palimpsest/snapshots.py": "14d95bb2f78646260ef931a610c0e7b0a31ba0f75e87413579102aad5c6a35d7",
+        "src/palimpsest/storage.py": "79664d876834ef20b459cc83963515effdaf75d0256fe5764a9cf8e18cd448c2",
+        "src/palimpsest/worker.py": "da0a88a2165d11f348cb52795fcef11a5941d8e404eebbe7792447105f5f37b1"
+      },
+      "lock_sha256": "8a7a880d020c1907e221575fda65642241f809fc628a55381f1b6137bff1b732",
+      "upstream_commit": "8d964599119b420de67ee259434d273651a1a76d",
+      "driver_sha256": "6f46c861d8d4aeee535f3a3fe82174afcf006435f809dccc7a3a6004dd2b4a09"
+    },
+    "final_source_identity": {
+      "source_sha256": {
+        "src/palimpsest/__init__.py": "bb99e30d22e4662c4ded455b1b23f49b77ce811dcfa1b69bf358925487a566d8",
+        "src/palimpsest/__main__.py": "935a1c1166b0c1ea35a82256345000bf2c73ded718d77773bc27a71ecce28f7d",
+        "src/palimpsest/artifacts.py": "55223cb24359de16cf5f62b833b4e3cca3a21d3f25c8442f6436d53c4f120741",
+        "src/palimpsest/assets.py": "aa4a38c7403cd9f72bc23027acd7c212202f25574bea6af65053c34664da49e3",
+        "src/palimpsest/cli.py": "3d5bb7bc2135b8534ca2fcfceb7b4fe4e9f24ed140a38003f7b1ded1c3d40a36",
+        "src/palimpsest/doctor.py": "109de62468161f35461eee76af244daabef38f2faa1526c5a6ed268817e6b834",
+        "src/palimpsest/engine.py": "cd10db94f19c526f03d92caa1f63f1082044af3a72cef0bb310147455d1af24e",
+        "src/palimpsest/evaluate.py": "74a9afb710b36a366ab680462e9440f285730a0360bda704af25ebbcfd74256a",
+        "src/palimpsest/flynn.py": "409b7503d76fd6f971a33d053e86c968b529edc226b85f44122e17a649f8f9f4",
+        "src/palimpsest/interventions.py": "fd2c1e6f160f7d251ddcf3275b383e8e3e265fc462452d1bc20c0030a6acf9c8",
+        "src/palimpsest/lab.py": "1b944fe42ba7634896fa6f7c00380edf6cd90a255c03dae3d8e7904a2b56a4ab",
+        "src/palimpsest/memory.py": "9641ae3d7d78577e0ea5bc8bcacbe455cae6c548f4f9bd10b8bb593a8fd7c542",
+        "src/palimpsest/memory_experiment.py": "873d5f6ab2ee57c560e8f4bb2a0cf20144264f25ea2312b7e7fe8d295ab8f9f8",
+        "src/palimpsest/memory_history.py": "7dbfac529717698ea2848ec6318a8812e876c04bf26711775f316dd1a631438c",
+        "src/palimpsest/memory_task.py": "6562de8c0734e0622529231babc7e035ba146077b39e004b0f52928b3038dcc6",
+        "src/palimpsest/memory_world.py": "508d7c53cf78e8a26a2c459e2b6e2a02c8c0823535005a19668a31717f0dbb12",
+        "src/palimpsest/profiles.py": "d3ebc6317c8799fe98ba043b9c9bfee1f3d1b5b7292ffd8f3be1c8164505c5f6",
+        "src/palimpsest/records.py": "c4be6f1699c1d8550a7f2db2979f7f9f18196ac986eef2aefe3ba665cae99ac3",
+        "src/palimpsest/replay.py": "248b89ccd80fa773e8709a5fbf050ad00bb24122614f9e6787547eba6eaed684",
+        "src/palimpsest/snapshots.py": "14d95bb2f78646260ef931a610c0e7b0a31ba0f75e87413579102aad5c6a35d7",
+        "src/palimpsest/storage.py": "79664d876834ef20b459cc83963515effdaf75d0256fe5764a9cf8e18cd448c2",
+        "src/palimpsest/worker.py": "da0a88a2165d11f348cb52795fcef11a5941d8e404eebbe7792447105f5f37b1"
+      },
+      "lock_sha256": "8a7a880d020c1907e221575fda65642241f809fc628a55381f1b6137bff1b732",
+      "upstream_commit": "8d964599119b420de67ee259434d273651a1a76d",
+      "driver_sha256": "6f46c861d8d4aeee535f3a3fe82174afcf006435f809dccc7a3a6004dd2b4a09"
+    },
+    "source_unchanged": true
+  },
+  "index_files": [
+    {
+      "path": "runs/m5-memory-transfer-20261002/transfer-report.json",
+      "bytes": 39300,
+      "sha256": "5d3cfc220fb50b78490c541d18df9c5538074b274de5be780d90216bb6555ee6"
+    },
+    {
+      "path": "runs/m5-memory-transfer-20261002/transfer-plan.json",
+      "bytes": 44229,
+      "sha256": "d16c393574d60330ea91919d223a2f0b887353f4f0d33127aa278227894f0346"
+    }
+  ],
+  "root_verification": {
+    "recorded_files": 32,
+    "recorded_bytes": 119268133,
+    "child_seconds": 77.11935657799768,
+    "all_six_supervisor_returncodes": 0,
+    "worker_snapshot_recording_hashes": "verified",
+    "all_four_task_pass": false
+  },
+  "limitations": [
+    "One development seed/regime/change case; no held-out inference.",
+    "Only four U-only branches are embodied; five other baselines are pure targeting scores.",
+    "Source acquisition is explicitly privileged; continuation uses previous declared cue only.",
+    "Correct targeting did not produce successful reinspection; negative task results retained."
+  ]
+}

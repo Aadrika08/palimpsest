@@ -1,0 +1,1110 @@
+# Palimpsest recovery brief
+
+Objective: implement the approved [full plan](implementation-plan.md), R0–R5 and all listed task/art profiles.
+
+Working-set binding: `98d42920e321b42d22c6336f938d2c3ba9fd770d8ba24a2a`. Its MCP tools are not exposed in this session; this file is the recovery fallback, not a claim that the binding was updated.
+
+## Current state
+
+Accepted memory comparison coverage is **44/48 development cells**. The final
+originally planned batch, [remaining-10](reports/m5-remaining-10-comparison.md),
+completes forty owners / 4,684 rows in session `51199`, fully drained exit0.
+Independent raw, outcome and publication audits pass first. Publication `d45549a`
+is integrated at `fabfedc`; the failed-07 four-cell hole remains ineligible.
+The [44-cell paired readout](reports/m5-development-readout-44.md) passes first:
+396 condition readouts, 352 task ties, 340 goal ties and twelve goals one tick
+later for own U. All 120 applicable correction pairs tie. R2 stays open; the
+separate failed-07 repeat amendment is still pending.
+
+Navigation training and its six-model publication are integrated. The teacher-free
+evaluator `e3f9a47` passes eighteen focused checks and the combined 802-test
+regression; its initial syntax failure remains retained. Metadata readmission
+v1 refused before candidate loading on an uninitialized pinned upstream checkout;
+exact local dependency setup and fresh v2 admission pass. Producer preparation
+and independent root controls checks now pass all eleven fixtures and full
+source/input/runtime/capacity admission. The one navigation invocation drains session `15391` exit0 with all 24 owners /
+10,822 intervals. Root retained-data auditing passes first in 110.117 s. Old-corpus
+goals are 2/4, 1/4 and 1/4; augmented goals are 0/4 each. The unchanged development
+gate fails. Held-out remains locked, no second aggregation/refit is admitted,
+and R3 stays open. Hosted frontend/fixture jobs also pass at `ce3fdf5`
+([run](https://github.com/Aadrika08/palimpsest/actions/runs/37152227430)); this is
+separate from the already recorded 802-test enabled local suite. The [focused evidence](reports/m7-navigation-development-v2.md), `e4eb6d6`,
+is integrated after first-pass publication review. It retains all natural outcomes,
+source/preparation history and clean shutdown.
+
+Remaining-06 comparison completes once on frozen `016948b`, bringing independently
+audited development coverage to **32/48 cells**: forty owners, 4,687 neural rows,
+forty snapshots, sixteen strict U-only core forks and all 36 evaluator task passes.
+Root raw and outcome audits pass first in 16.461 / 8.729 s, checking 543 retained
+files (1,104,697,652 bytes), 593 source/upstream/asset identities and 120 input pins.
+The changed lower fact is corrected at358 for all nine conditions. Own/sham goal
+is431 versus no-U/swapped430; null/no-event goals are430. There is no own-U benefit.
+The actual session `57385` drained exit0 after 1,798.225 s normal / 1,802.586 s full;
+42 sampled nonlauncher PID/start identities and the launcher are absent, with
+unchanged inventories and an independently free lease after shutdown. The [focused publication](reports/m5-remaining-06-comparison.md), `0b30585`, is
+integrated after all 446 published references, the 543-file root raw ledger and
+two histories rehash (570 unique references  / 1,106,074,167 bytes). Sixteen
+development cells and held-out remain open. Remaining-07 admission completes once in session `10262` on frozen `0b30585`:
+twelve owners, 1,204 rows, four neural calls and twelve snapshots. The session
+drains exit0 after 368.718 s normal / 371.671 s full; fourteen nonlauncher
+identities and the launcher are absent. Root retained audit passes first in
+9.098 s with 116 exact file pins and a free writer lease. Its [focused admission publication](reports/m5-remaining-07-admission.md),
+`0e32482`, is integrated after all 141 references (262,936,165 bytes) rehash.
+Comparison-07 controls pass eight independent root fixtures and full preflight
+(14.795 s total): 597 source identities, 120 inputs and forty fresh IDs disjoint
+from all 662 prior owners. The one bounded comparison drains session `30311`
+exit 1 on frozen `0e32482`. Thirty-eight owners complete normally; owner 39
+(s29/local_cue/no-event retrieval) hits its 150-second internal wall bound after
+90 rows, then the 160-second parent returns −15 with a log-drain/final-sync
+timeout. The oracle remains unattempted. The root retained-failure audit passes
+first in 20.898 s: 4,528 rows, 39 snapshots, sixteen strict forks, 597 identities,
+120 input pins and 41 nonlauncher identities plus the launcher absent; the
+writer lease is free. A separate 6.518-second readout checks 27 condition outcomes
+across the three completed cells without promoting the incomplete batch.
+Coverage remains 32/48. Source and controls stay frozen; no retry, deadline
+relaxation or root-cause claim follows. Post-failure I/O pressure was elevated,
+but no in-run receipt isolates the cause. The [focused failure publication](reports/m5-remaining-07-comparison-failure.md),
+`80d7e1d`, is integrated after all 595 unique references (1,071,249,237 bytes)
+rehash. Both prewritten success auditors remain unused. The separate remaining-08 admission completes once on frozen `80d7e1d` in
+session `50069`, exit 0: twelve owners, 1,204 rows, four policy calls and twelve
+snapshots. Normal enclosing time is 393.563 s; full drain/inventory time is
+396.826 s. Root retained audit passes first in 10.871 s with 116 file pins,
+599 identities, unchanged inventories, fourteen nonlauncher identities plus
+the launcher absent, and a free lease. Its control review passed eight fixtures
+and full preflight, excluding all 702 prior IDs including the unattempted 07
+oracle. Its [focused admission publication](reports/m5-remaining-08-admission.md),
+`ba48305`, is integrated after all 162 references / 263,624,032 bytes rehash.
+Comparison-08 controls pass eight independent root fixtures and full preflight
+(6.035 / 8.394 s), binding 601 identities, 120 inputs and forty fresh IDs
+disjoint from all 714 prior owners. The unchanged historical E/U files are reused.
+The first constructor failed before publishing the plan because its writer call
+omitted storage; that draft/log remains retained beside the corrected controls.
+Startup readmission passes on clean `ba48305`, including unchanged source/input
+inventories, absent output/start paths and a free writer lease. The one actual
+comparison drains session `29960` with exit 0: forty owners, 4,671 numeric rows,
+forty snapshots and all 36 evaluator task passes. Independent raw/outcome audits
+pass first in 16.794 / 8.944 s, with sixteen strict forks, 601 identities, 120 input
+pins and 42 nonlauncher identities plus the launcher absent; the lease is free.
+All nine conditions correct the changed lower fact at 358 and reach the goal
+at 430; the s30 no-event goal is 429. Both no-event cells have zero selector
+invocations and behavior bytes. No own-U timing benefit is observed.
+The [comparison publication](reports/m5-remaining-08-comparison.md), `cb13db9`,
+is integrated after all 600 references / 1,104,028,939 bytes rehash. The first
+publication count check exposed two omitted history references in the displayed
+totals; the narrow MD/JSON correction and first failed check remain retained.
+Raw/outcome audits remain first-pass. Accepted coverage is 36/48; twelve cells
+and held-out remain open. This does not replace or retry failed 07.
+Root control receipt: `runs/memory-remaining-08-comparison-control-root-review-ba48305/audit.json`,
+SHA-256 `0b7250ef275eaec46814747f2bfcae98834c3c5ce30c4b179974c418c45690a3`.
+The [remaining-06 admission](reports/m5-remaining-06-admission.md), `016948b`,
+retains its twelve owners/1,204 rows and all 150 rehashed publication references;
+the initial root copied-index error and corrected audit are both retained.
+
+New-body controls pass twelve root mocked checks and exact preflight. Its final
+startup preflight first refused because MUJOCO_GL/OMP were missing from that
+check invocation; no owner/output was started. The unchanged check passes with
+the exact frozen environment in 2.353 s, with all source/control pins unchanged.
+The one-shot actual command on frozen `4c4bca2` drains session `7624` exit1.
+Its first calibration owner rejects `jnt_range` before any numeric tick or SNP;
+homing stays unstarted. All four sampled process identities are absent, source
+and control inventories match, and the post-drain writer lease is free. Root
+retained-failure audit passes after correcting its expected initialization-event
+name; both checker attempts remain retained. A pure arithmetic reproduction
+shows the verifier reconstructs float64 native ranges from rounded float32
+cached coordinates. The [failure publication](reports/m6-new-body-response-v1.md), `c048586`, is
+integrated after all 65 published/control/raw references rehash. The narrow caller correction `1e904c0` is integrated after eighteen root pure
+checks pass in 0.213 s: it uses the authored Python-float layout for native ranges
+and separately validates the exact float32 cache. The caller regression fails on
+the old code and rejects cache/native drift. Strict native equality, protocol
+and all seventeen protected sources remain unchanged. Fresh v2 controls pass all twelve root mocked checks and exact preflight
+in 3.582 s total; all forty-five v1 control files remain unchanged. The corrected
+actual invocation completes once on frozen `1e904c0`: 480 calibration rows plus
+283 homing rows, five raw initial snapshots, and actual home error 0.091607 m
+within the unchanged 0.25 m gate. All five sampled process identities are absent
+and the post-drain writer lease is independently free. Root outcomes recompute
+all 400 fit samples and task/control states in 1.636 s. Root raw/contact/source
+audit passes in 7.335 s after two retained checker corrections: the initial
+invocation omitted frozen environment variables, then an overly strict cache
+timestamp assertion was corrected to the protocol 1e-9 tolerance. The study ran
+once; its [focused publication](reports/m6-new-body-response-v2.md), `0b1af16`,
+is integrated after all 143 unique direct/raw/control references rehash
+(171,627,789 bytes). This remains one standalone simulated
+body, without study-state restore or generic replay qualification.
+
+The [remaining-05 admission](reports/m5-remaining-05-admission.md), evidence
+`ad2eff7`, completed once on frozen `746c67b` in session `90487`: twelve owners,
+1,204 rows and four neural calls. Its raw audit passes first in 10.086 s and all
+139 publication references rehash. The preceding [remaining-04 comparison](reports/m5-remaining-04-comparison.md)
+remains a separately retained four-cell result; its 24-cell paired readout is a
+historical snapshot, not an analysis of all 28 current cells.
+
+The preceding [remaining-04 admission](reports/m5-remaining-04-admission.md),
+`6f72b9b`, passes twelve owners, 1,204 rows and twelve snapshots; root raw audit
+first passes in 9.673 s and all 137 published references rehash.
+
+The [puck next-study review](reports/m6-puck-next-study-review.md) retains both
+failed development gates and finds no uniquely supported next corrective arm.
+Further automatic fitting stops; M6 learned puck capability remains open and
+held-out layouts stay locked. Balanced models entered push mode in two of twelve
+runs, so the original batch's never-transitioned diagnosis does not cover both.
+
+The [fresh body/homing browser gate](reports/m6-body-homing-composition-v2.md) also passes on `a447d76`: 491 source and 491
+actions-replay rows, three snapshots, four probes, a 400-sample fit and Reset.
+Independent audit passes after correcting its initial-prefix event-count scope;
+both checker attempts are retained. This checks UI mechanisms, not successful homing.
+
+The [six-mode offline artwork handoff](reports/m9-offline-handoff.md), `d6f7f91`,
+is integrated. All six exports pass from nineteen pinned source files without
+new inference. Root independently verifies the raw route/frame mappings,
+reconstructs all 3,840 audio frames exactly and recounts 37,007 SWC segments.
+Seven focused checks also pass on the merged source. Independent human operation,
+exhibition duration and physical artwork remain open; this is not R5 qualification.
+
+The [24-cell paired readout](reports/m5-development-readout-24.md) passes its first
+retained-data invocation in 0.617 s: 216 condition readouts and 192 pairs. All task
+pairs tie; own reaches the goal one tick later in five pairs and ties in 187.
+All 72 applicable correction pairs tie. Twenty-four cells remain. Eight shared
+namespaces and historical/strict strata remain explicit; no model/native work or
+new raw audit occurs. The [sixteen-cell snapshot](reports/m5-development-readout-16.md)
+and its seven historical combined checks remain unchanged.
+
+The [standalone new-body plan](plans/m6-new-body-response.md), `6b9d78d`, is
+reviewed and integrated. It fixes one new left-wheel gear value (2.1), four probes
+and a fresh homing owner under unchanged fit and home thresholds. The standalone
+verifier `4c4bca2` is integrated after seventeen independent focused checks pass
+without skips in 0.227 s (0.578 s supervised), without Torch/MuJoCo or a writer
+lease. All seventeen protected sources remain unchanged. Root receipt
+`runs/m6-new-body-source-root-review-4c4bca2/audit.json` has SHA-256
+`69bbbf02ecbd73136601cea8c71c32593dd6931fe49ecde9c718b67dbcc0d7db`.
+That source-only prerequisite was followed by the retained failed v1 and successful v2 actual gates described above.
+
+Combined checkout: `feat/project-integration` joins the reviewed lab, memory, task,
+MaleCNS training/wrapper, artwork exporters and rover proposal branches. `main`
+remains unchanged. Historical evidence below retains its original source identity.
+
+Latest full regression at `c636635` passes **802 enabled tests without skips**
+in 160.484 s (162.653 s supervised). All 610 source entries, twenty assets and
+production model identities remain unchanged. The source stays clean throughout.
+This includes the new navigation binding/evaluator and historical body import fix.
+Receipt: `runs/integration-navigation-evaluator-c636635-20261004/report.json`,
+SHA-256 `07586671b73c6683cd68408efaa69ec101d94976431338aaf15bfff8d3ffc143`.
+The previous full regression at `db59a56` passed **717 enabled tests without skips**
+in 167.509 s (172.765 s supervised), including actual EGL/male native/replay and
+puck CPU checks. All 524 source entries, twenty shared assets, production model
+identities and fifty retained references stay unchanged. This includes balanced
+puck development routing and the narrow body verifier storage-path correction.
+Node24 production build and UI fixtures pass at `f78f087`; UI bytes are unchanged
+and the separate new-profile browser gate now passes on `a447d76`. Hosted fixture and frontend jobs now pass on trainer `6feade9` and combined
+`cece7fb` ([combined run](https://github.com/Aadrika08/palimpsest/actions/runs/37137793789)).
+The earlier billing-blocked `f78f087` attempts remain retained; hosted fixtures do
+not replace the separately enabled local simulation suite. Earlier evidence and failures stay retained.
+The six-owner reference gate passes 744 intervals and all six navigation goals,
+with memory deliberately frozen and no memory-task qualification.
+The [new puck mechanics gate](reports/m6-puck-learning-v2-mechanics-v1.md) passes
+ten owners/1,569 intervals/thirteen snapshots with independent audits. The [fresh twenty-owner collection](reports/m6-puck-teacher-collection-v2.md)
+passes unchanged admission with 7,024 rows (5,710 train / 1,314 recorded dev).
+All six recovery models completed twenty epochs; root independently checked
+all checkpoint buffers and frozen graph weights. The fixed 24-owner closed-loop
+development evaluation passes on frozen `228232c`: 8,552 intervals, original
+goals 2/4, 2/4 and 3/4, controls 3/4, 1/4 and 3/4. Root independently audits
+all raw records and initial states. Four held-out teacher recordings now complete
+1,154 goal-ending ticks. The [recorded-input evaluation](reports/m7-recovery-heldout-recorded.md)
+completes all six fixed candidates and 6,924 model-row evaluations; its independently
+audited identities and finite runner-reported metrics do not qualify navigation.
+The frozen 48-owner held-out stage completed on `177982e`: 21,461 intervals,
+original goals 1/8, 4/8 and 0/8, controls 3/8, 3/8 and 2/8. Root raw audit passes
+first execution in 76.972 s, verifying all 885 files, matched initials and cleanup.
+The experiment is complete; no useful-navigation threshold or R3 promotion follows.
+The user confirmed on 3 October that R3 stays open for a new navigation study,
+requiring a prospective capability threshold and a fresh held-out reserve.
+The [new study plan](plans/m7-navigation-study.md), `45c4c17`, is now frozen: one advice-label aggregation round, paired original-graph data arms, all-seed 3/4 development then 6/8 held-out criteria, and sixteen fresh reserved scene IDs. Source-only checks pass. Collector/admission source `13a1afe` is integrated after root review. Ten synthetic checks pass in 0.194 s, plus ten preloaded-module checks in 0.244 s; direct helpers and all fourteen frozen reusable identities match the tested producer. Root independently passes nine control fixtures and unchanged read-only prerequisites (0.567 / 3.382 s supervised/preflight). The [one-shot collection](reports/m7-navigation-collection-v1.md) on frozen `13a1afe` in session `57884` stopped at the first owner after twelve retained intervals: an unexpected rover contact failed its guard, and all eleven later owners remained unstarted. Session57884 drained exit1 with no reported surviving sampled identities; independent retained-failure audit passes first in 3.787 s, with all twelve row bindings, the exact floor/base rejection, one initial snapshot, unchanged inventories and four sampled process identities absent. The writer lease is independently free after cleanup. All 37 focused publication references rehash (4,543,024 bytes), and evidence `7941870` is integrated. The separate [v2 contact plan](plans/m7-navigation-contact-v2.md), `d2f7358`, passes independent document/source review and is integrated. It fixes 125 robot-world pairs, preserves v1 as failed, and leaves success thresholds and resource ceilings unchanged. The narrow v2 collector/validator, `736e0cf`, is now integrated after eighteen focused and eighteen preloaded-module root checks pass. V1 collector bytes and all fourteen legacy pins remain unchanged. V2 control review passes nine fixtures and full inventory checks (0.567 / 3.393 s); its first root invocation omitted the frozen environment and failed the runtime-identity guard, with that checker failure retained. The exact corrected invocation passes. The one-shot collection completes on frozen `736e0cf` in session `41460`: twelve owners, 5,080 intervals and twelve snapshots, with one goal, six stalls and five time limits. Root raw audit passes first in 43.100 s, checking all 263 raw files (1,136,890,290 bytes), all independently reconstructed contact incidence, four matched scene groups, fifteen absent sampled process identities and a free writer lease. The [focused collection evidence](reports/m7-navigation-collection-v2.md), `c56a9b4`, is integrated after all 42 published references and 263 root raw-ledger entries rehash (304 unique files, 1,137,742,370 bytes). The separately reviewed [training-data plan](plans/m7-navigation-data-v2.md), `b3cbb67`, is integrated. Its named preparer `4ecb354` is integrated after eleven independent source fixtures pass without skips. The one-shot cross-corpus preparation on frozen `4ecb354` completes in session `14610`, exit 0: 2,117 old train rows plus 5,080 advice rows give 7,197 augmented train rows, with the unchanged 1,228-row recorded-development set. Thirteen root control checks and full preflight pass first; the separately retained first control preflight failed because it applied a corpus file-size cap to the declared graph asset, corrected only for that exact asset identity. Root terminal/source audit passes first in 5.350 s and the independent data reconstruction passes first in 22.451 s: all 26 sources, 8,425 rows, 28 byte-exact old transfer arrays, geometry separation and four matched scene groups. The preparation has zero model/native/lease operations; fitting and new development/held-out remain pending. The [focused data preparation publication](reports/m7-navigation-data-v2.md), `2d4a7b8`, is integrated after 652 unique references / 1,819,916,320 bytes rehash in 3.141 s. Data admission does not qualify navigation. Launch-time available disk exceeded the full-study reservation. The outer normal deadline is 2,210 s; 2,220 s is the watchdog KILL target, with separate failure-only cleanup. Source and controls stay frozen. Full cross-corpus disjointness now passes the separate preparer and independent raw audit. The 16.5625 GiB additional disk reservation is prospective and may block after retained memory growth.
+Its [focused evidence](reports/m7-recovery-heldout-closed-loop.md), `8d3a9d0`, is integrated after all 36 references rehash. Puck trainer source `82e2bd9` now binds task v5; 24 focused root checks
+pass in 1.973 s after correcting a test-command module typo. Rejected v1 data
+remains ineligible.
+
+| Active lane | Latest verified state | Next action / limitation |
+| --- | --- | --- |
+| M5 memory | [C3](reports/m5-counterbalance-stage-c-v3.md) and [C4](reports/m5-counterbalance-stage-c4.md) complete the eight selected development cells: 80 owners, 9,349 neural intervals and 72 evaluator task checks. Independent raw audits pass. C4 alone validates sixteen strict U-only core forks, all 4,689 intervals, forty snapshots and clean shutdown. | No own-U correction/goal/task benefit. Both null cells have seven false-targeting selectors; no-event has zero invocations/behavior bytes. Upper changes are passively corrected at the event boundary. Three fixed reference admissions (`e82d602`) and the six-owner runner (`169e0c8`) are integrated; 60 root checks pass. [Six reference owners](reports/m5-controller-references.md) pass all navigation goals over 744 intervals: 260 actual FLYNN and 484 non-neural. Memory stays frozen and reference information differs. [Replay v1](reports/m5-controller-reference-replays-v1.md) failed on a verifier string/Path mismatch before any comparison; five owners stayed unattempted and cleanup passed. The isolated [v2 fix](plans/m5-controller-reference-replays-v2.md), `9dd805d`, passes nineteen root checks in 5.278 s. [Fresh v2 replays](reports/m5-controller-reference-replays-v2.md) pass all six destinations and 742 comparisons: 371 saved-action, 129 actual neural-policy and 242 non-neural-policy rows. Root independently verifies every numeric row, six normalized native initials, 622 scoped file entries and eight sampled process exits in 3.323 s; numeric difference is zero. Lifecycle comparison remains bound runner evidence. The [frozen-observation diagnostic](plans/m5-frozen-observation-diagnostic.md), `5229298`, is integrated. Real-file control fixtures subsequently exposed create-only terminal-report updates; narrow source fix `b858bfc` and fixture portability correction `ef6b652` retain that failure and preserve frozen job/plan writes. All 46 focused root checks pass in 10.616 s at `5d1b2b8`. Its historical NumPy-only audit checks all 1,039 source intervals without model/native calls. Wave A on `ef6b652` completes all sixteen owners/2,084 policy responses with zero physics rows in 623.188 s including cleanup. All eighteen sampled PID/start pairs and the outer launcher are absent; the writer lease is free. Root shared-validator raw revalidation first passes in 20.827 s, including all derivatives, unchanged inputs and own/sham parity. [Wave A evidence](reports/m5-frozen-observation-wave-a.md), `751533d`, is integrated after rehashing all 216 references. Own/no-U and own/sham actions are bit-identical; swapped U changes cue/input at300 and actions at301 in both change contexts and the null context. No-event responses remain identical. B controls pass four pure fixtures (18.096 s) and independent root readmission (8.661 s): 901 identities, twenty fresh IDs disjoint from 244 prior, four zero-call selector preparations and sixteen streams. Its one-shot run on frozen `751533d` completes twenty instances and 2,072 policy calls with no censoring or unattempted owner in 737.300 s including cleanup. All twenty-two sampled identities plus the outer launcher are absent and the writer lease is independently free. Root shared-validator revalidation first passes in 23.668 s, including every derivative and exact same-cell preparation binding; the independent raw audit also passes. B own/no-U actions differ from tick301 in both change contexts and null, while A own/no-U actions were identical. Correction timing is unchanged and no physical task result follows. [Wave B evidence](reports/m5-frozen-observation-wave-b.md) is integrated after all 258 references rehash. The full matrix and held-out qualification remain open; R2 is incomplete. Draft PRs #42, #45 and #49. |
+| M6 body / tasks | The [retained-fit turn gate](reports/m6-body-turn-transfer.md), `1c87b273`, passes six owners/720 intervals and all six paired metric improvements, independently audited. The [two-start task gate](reports/m6-task-heldout-starts.md) passes all four task criteria and actions replays: eight owners/1,980 ticks, both home errors 0.162834 m. | Turn-command transfer uses one existing fit/body/lane/seed; task starts cover one layout. New-body and physical qualification remain open. The [fitted body/homing composition protocol](plans/m6-body-homing-composition.md), `eea3a53`, fixes one source, native continuation and two replays with the unchanged 0.25 m criterion. Source `0fd38ef` is integrated at `f78f087`: 28 focused guards, the 711-test enabled regression and UI build/checks pass. V3 controls pass independent review, but the actual attempt fails before any owner because two verifier storage checks omit their required path. Cleanup and the zero-owner failure are independently audited; the separate two-call correction `a447d76` is integrated at `db59a56`, with eight focused root tests and the full 717-test regression passing. The corrected actual attempt passes 853 numeric intervals, five snapshots, native continuation and both replays under independent root audit; actual home error is 0.119643 m against 0.25 m. The separate [new-profile browser gate](reports/m6-body-homing-composition-v2.md) passes 982 source/replay rows and three snapshots under independent audit. Draft PRs #41 and #43. |
+| M6 puck | The [prospective .2 m stopping correction](plans/m6-puck-learning-v2.md) passes [fresh mechanics](reports/m6-puck-learning-v2-mechanics-v1.md): ten owners/1,569 intervals/thirteen snapshots. The [fresh full collection](reports/m6-puck-teacher-collection-v2.md) passes all twenty goals and unchanged admission over 7,024 rows. Seed 6004 supplies seventeen terminal zero labels against the minimum ten. | The old [v1 batch](reports/m6-puck-teacher-collection-v1.md), 7,070 rows with zero terminal labels for 6004, remains rejected. Root independently audits the new rows/snapshots; both versions of its split-label audit correction are retained. Trainer v5 binding `82e2bd9` passes 24 pure checks and bounded NumPy-only actual-data preparation. [All three fixed fits](reports/m6-puck-training-v2.md) complete thirty epochs each in 59.820 s outer; all ninety history rows and finite numeric bundles pass independent audits. The [headless student mechanism](plans/m6-puck-student.md), `aff643c` plus fixture-only `6f1fda9`, is integrated. All 103 root pure checks pass in 7.198 s, and pre/post teacher-data and three-bundle admission are identical apart from elapsed time. All four prospective owners load the same pinned MLP for exact Torch/RNG restoration; action replay makes zero predictions. The fixed four-owner controls pass an independent pure root audit in 0.477 s, including monitor-fault interruption and late-publication rejection. The first one-shot invocation failed before any owner because the retained stage runner did not create its report directory. Root verifies the failure, five indexed files, unchanged inputs and two absent sampled process identities in 0.283 s. All four owners remain unstarted; the separately frozen v2 adds only the missing directory creation. Root control/real-filesystem fixtures pass in 0.835 s. The [fresh four-owner mechanism](reports/m6-puck-student-mechanism.md) passes 364 intervals and five snapshots with 27.407 s launcher-reported elapsed; all 244 continuation/replay rows match exactly and all six sampled owned identities exit. Root independently audits the rows, full native snapshots, inputs, task transitions and NPZ model actions in 1.144 s. Its first checker ndarray/list mismatch is retained; only the checker changed. The [fixed development source](plans/m6-puck-student-development.md), `77f4d49`, is integrated at `225941c`; 109 root pure checks pass in 4.267 s with no skips. It fixes twelve roots (four scenes × three models), checks shared scientific initial states before the first action, and separates clean completion from the required 3/4 goals per model. Frozen development controls pass root readmission in 1.727 s (94 source pins, three bundles and twelve rows); all twelve native owners now finish at their natural 600-tick time limit (7,200 ticks), with all three models scoring 0/4 goals. Both raw audits pass; root reconstructs all actions within 1e-6, all four same-scene initial fingerprints match, fourteen sampled process identities are absent and the writer lease is free. [Negative development evidence](reports/m6-puck-student-development.md), `9001dac`, is integrated after all thirteen references rehash. Operational completion does not pass goal admission; held-out remains locked. The [retained diagnosis](reports/m6-puck-student-diagnosis.md) finds no concrete mapping defect, but every model predicts abs(v)>0.05 on all 106 original recorded-dev turn-only examples where teacher v=0. A single NumPy residual audit reproduces selected recorded-dev loss within 1.73e-9; root rehashes 374 entries and recomposes all stratum totals. The [separately frozen balanced-loss pilot](plans/m6-puck-balanced-loss.md), `ec7a113`, is integrated at `f15dad2`. All 24 root pure checks pass in 1.621 s (2.019 s supervised); bounded original-data preparation passes in 6.883 s including process exit, with exact six counts, mean weight one and all three historical default bundles unchanged. Torch/fit fixtures pass in the new 697-test regression; the separately frozen actual three-seed training invocation completes once under `ec7a113`: thirty epochs each, selected epochs 22/24/15 by the unchanged unweighted dev minimum. Root independently verifies all ninety history rows, three numeric checkpoints and 438 source/artifact entries in 1.476 s. [The fixed residual comparison](reports/m6-puck-balanced-residual-v1.md) is complete: all three aggregate and approach-turn joint losses worsen, and 104–105 of 106 recorded-dev turn-only rows still exceed abs(v) .05. Root verifies all 372 input/control entries and recomposes the aggregate metrics without repeating dense predictions. The [balanced student binding](plans/m6-puck-balanced-student.md), `818e7ea`, is integrated at `f18ff48`; 49 focused integration checks pass and real-data admission preserves all six bundle identities. Its one-shot four-owner native mechanism passes 364 intervals and five snapshots; root independently verifies all 244 continuation/replay rows exactly and reconstructs model actions within 2.99e-8. The [fixed balanced development binding](plans/m6-puck-balanced-development.md), `d4efa26`, is integrated at `ba0ae45`; all 54 focused merged checks pass. Its twelve-owner evaluation completes all 7,200 intervals, with each model scoring 0/4 goals. Root independently verifies all rows, twelve snapshots and all actions within 7.16e-8, under the unchanged 1e-6 tolerance; held-out remains locked. There is no objective rescue or new task claim. Engine/UI integration and unseen/physical manipulation remain open; production assets are unchanged. Draft PRs #46, #47 and #51. |
+| M7 model | [Recovery v3](reports/m7-recovery-coverage-v3.md) passes two owners/134 intervals/two snapshots. Each actual teacher executes 45 reverse commands at queries 21–65, then stops at the earliest admitted clearance interval 66. Root audits all rows, 486 identities and four observed process exits. | This qualifies first-cycle collection only: both final phases remain paused and later driving is deliberately censored. V1/v2 failures remain unchanged. The [separate research adapter](plans/m7-recovery-learning.md), `f953376`, preserves all actual targets and censored endings; seventeen root checks pass, including fixture isolation `7d5fc1f`. [Actual preparation](reports/m7-recovery-data.md) passes on `7d5fc1f`: 2,117 train/1,228 dev rows, fourteen ordered sources, unchanged raw inputs and clean exit. Root independently reconstructs all feature/target hashes; no held-out data opened. The fixed six-model trainer binding `19d275d` is integrated; 24 root checks pass. All six models completed twenty epochs in 194.681 s outer with clean exits and unchanged inputs/production assets. Root retained-checkpoint audit passes in 4.408 s after preserving an ordered-ID serialization mistake in its first auditor. All seven integer buffers and frozen graph weights match exactly. [Training evidence](reports/m7-recovery-training.md) is published at `217cbee`; [Fixed recovery development admission](plans/m7-recovery-development.md), `e63ef7e`, is integrated after review. Its pure actual-data preflight resolves all six model identities and checks the fourteen-source corpus in 2.985 s supervised without Torch/native imports. The combined 646-test enabled regression passes. Root independently admitted all frozen controls, six model identities, 410 tracked files, 122 upstream files, 20 assets, 171 corpus entries, 18 model files and seven runtime files in 4.134 s. The [fixed 24-owner development gate](reports/m7-recovery-development.md) passes on `228232c` in 833.704 s enclosing supervision: 8,552 intervals; original goals 2/4, 2/4, 3/4; rewired goals 3/4, 1/4, 3/4. Root independently audits 374 recording/SNP files (1,710,948,058 bytes), 24 initial states and all outcomes in 29.589 s. All 28 sampled owned identities are absent and the writer lease is free. Both variants total 7/12 goals; no topology advantage follows. The [separate held-out evaluator source](plans/m7-recovery-heldout.md), `6a5cb7e`, is integrated at `f1b6da7`: 74 root checks pass in 2.586 s, with one explicit Torch opt-in skipped. Its bounded read-only prerequisite check passes in 8.036 s, resolving all six identities and rehashing the 24 development ledgers and fourteen-source corpus without Torch/MuJoCo or held-out reads. First-stage teacher controls pass root readmission in 12.203 s (1,133 identity entries, 89 fixture references and all six prerequisites). All four held-out teachers complete goals in 378/284/274/218 ticks (1,154 total), with four snapshots and clean exit in 127.057 s enclosing time. Root independently verifies all 53 raw artifacts (230,556,878 bytes), 2,373 events, exact features/targets and source disjointness in 20.748 s. [Teacher evidence](reports/m7-recovery-heldout-teachers.md), `e401408`, is integrated after all thirty-five references rehash. Recorded controls on `e401408` pass eight check groups and independent root admission in 15.952 s (1,193 identities, 91 fixture references and all 1,154 teacher rows). Root review catches incorrect controller labels and integer-key JSON comparison in the unexecuted draft; corrections preserve that failure and pass exact-boundary fixtures. [Recorded held-out evaluation](reports/m7-recovery-heldout-recorded.md), `177982e`, is integrated after all thirty-three references rehash. All six candidates evaluate 1,154 rows each (6,924 total) in 46.692 s enclosing time; root independently verifies all 1,193 identities, exact disjointness/model order and cleanup in 16.951 s. Neural losses remain runner-reported, not independently recomputed. The 48-owner closed-loop stage completes once on `177982e` in 2303.544 s enclosing, with 21,461 ticks and all natural outcomes retained. Originals score 1/8, 4/8 and 0/8; controls 3/8, 3/8 and 2/8. Root independently audits all 885 raw files/48 snapshots, eight matched scene initials and 54 sampled process exits in 76.972 s; the writer lease is free. Completed evaluation does not establish useful navigation, topology advantage or R3 qualification. [Focused held-out evidence](reports/m7-recovery-heldout-closed-loop.md), `8d3a9d0`, is integrated after all 36 index references rehash. Draft PRs #44, #48 and #50. |
+| Physical / exhibition | Software protocols and supervised artwork controls exist. | Equipment and independent-operator evidence are still required. |
+
+- Implemented: M0 reproduction, M1 recovery, M2 lab, scoped M3/R1 hardening and M4 memory mechanics. See the reports and requirements matrix; 27.9809 Hz display remains below the 30 Hz target and exact CUDA continuation remains unqualified.
+- Partial M5: eight actual development acquisition runs completed 3,280 ticks. Two four-episode E histories fit their observed local/paired rules independently. [Recorded-history evidence](reports/m5-recorded-history.md) is committed at `839a1e1`. Nine selectors exist; first native embodied transfer verifier is committed at `8420247` on `feat/memory-transfer`, with 55 focused checks passing. Its fixed six-stage case completed mechanism checks with unchanged sources; [negative embodied evidence](reports/m5-recorded-transfer.md) is committed at `2e41cfc`. Own/sham select correctly but inspection never starts and cue loss occurs at boundary 387; swapped/no-U reach the goal at 353 with a stale changed fact. All four combined tasks fail. No held-out result. [Visible-preparation v2](reports/m5-visible-preparation.md), `b17d006`, passes source/first-branch visibility but fails own-U at boundary 354: blocked occupancy is sensed, while loss of the common goal prevents revision from committing. Three later conditions are unattempted. Evidence `91f7f8d`. [Goal-handoff v3](reports/m5-goal-handoff-v3.md) fails its overbroad source-state guard after the goal command; no continuation is attempted. The separately frozen [v4 state guards](reports/m5-goal-handoff-v4.md), `03ac888`, pass all six stages and preserve authoritative state. All four continuations repair the lower fact at boundary 354 and reach the goal at 426; no own-U task or timing advantage is established. Evidence `64c8ccb`. [All-nine development](reports/m5-all-nine-development.md) at `0a05233` completes 22 stages / 2,868 ticks in 367.611 s outer; evidence `c0ffbb4` is integrated. All 18 continuations repair at354/reach goal426, with no own-U task/timing benefit. Only retrieval receives historical E as behavior input and only oracle receives gold; branch differences include U and declared selector resources. Both cases retain side/lexical/goal-route confounds. This historical result uses manual controllers; the subsequent fixed-FLYNN result is recorded below. Counterbalanced/null/no-event development and held-out evaluation remain open. The [atomic CPU FLYNN continuation prerequisite](plans/m5-flynn-continuation-admission.md) at `8722a18` is integrated at `a15b07c` and published in draft PR #37. Exact acquired snapshots complete existing restoration before Engine returns; ordinary fresh admission and all native/tensor/RNG guards remain. The separate [12-stage neural verifier](plans/m5-flynn-memory-transfer.md) is frozen at `6f355bd` and integrated at `f4addb3`; 108 focused tests pass without skips in 7.795 s. The [actual neural gate](reports/m5-flynn-memory-transfer.md) completes all 12 stages and 1,461 numeric ticks on `6f355bd` in 482.156 s outer, with unchanged sources/assets and no surviving owners. All nine conditions correct at tick 358 and reach the goal at 429; no own-U correction/navigation/task benefit. Independent root audit checks all 278 source/upstream/asset files, 79 recording files and actual policy bindings. Evidence `6de187e` is integrated at `d5af4d8`; [Actions and policy replay](reports/m5-flynn-replay.md) each pass 129 transitions and 835 events at `3bcd311`, with audited evidence `78e4ba8` integrated. Counterbalanced/held-out work remains open.
+- Partial M6: exploration completes in the bounded manual gate. Failed homing v1 remains retained (true error 1.500629 m). Independent low-amplitude calibration passes eight trials without changing nominal dimensions. [Manual homing v2](reports/m6-homing-driver-v2.md) passes one 300-tick development run with true error 0.152449 m under the 0.25 m gate, native continuation and both replays; evidence `2f0b583`. [Wheel-response v2](reports/m6-body-gains-v2.md) passes eight fixed trials and 9,600 timed contact stages at `796854c` (88.869 s), with unchanged dimensions and explicit direction dependence. Its v1 contact-classification rejection remains retained. [Fixed-gain compensation](reports/m6-body-compensation.md) passes all six predeclared metric comparisons in six actual trials at `7154d84` (67.059 s outer), with residual drift and unchanged sources; evidence `663fe29`. [Loaded-calibration runtime v1](reports/m6-body-runtime-v1.md), `fd2d70d`, retains its zero-tick stale source-pin rejection. The separately frozen [v2](reports/m6-body-runtime-v2.md), `5dcd125`, passes source/reset, fresh native continuation, malformed restore rejection and both 36-tick replays in 19.614 s outer; all 112 numeric ticks are independently audited. Evidence `0de3870` / draft PR #32 is integrated. UI build/browser verification passes as detailed below; the [bounded measured-calibration session](plans/m6-body-adaptation.md) is integrated at `03fb551` with adaptive-only schema 6, four fixed probes, explicit next-trial resets and ordinary Reset clearing. UI build/typecheck and fixture checks pass. Its [12-owner actual verifier](plans/m6-body-adaptation.md) is frozen at `2abc9da` and integrated at `81dd5f2`; 73 focused calibration, replay, memory and male checks pass without skips in 21.007 s. Its first supervised actual gate at `2abc9da` passes source 516 ticks, two four-tick native continuations and both 516-tick replays (1,556 total), then stops before baseline physics because its verifier compares a flat environment field map to the snapshot field envelope. Retained fitted/baseline envelopes are identical. Six later owners remain unstarted; source/assets are unchanged and cleanup is normal. The [failed v1 evidence](reports/m6-body-adaptation-v1.md) is committed at `b4efe31` and integrated at `6f02a32`; an independent root audit checks all 115 retained hashes and replay/native arrays. The exact profile-envelope correction `5f22c1c` passes nine focused checks. The separately frozen [v2 gate](reports/m6-body-adaptation-v2.md) passes all 12 owners in 251.698 s: 2,276 numeric intervals, both 516-tick replays, both four-tick native continuations, all six paired improvements and one separately verified rejected interval. An independent root NumPy-only audit rehashes all 187 artifacts and recomputes the 400-sample fit and all six metrics directly from numeric arrays; all 13 recorded PID/start identities are absent. Evidence `66df299` is integrated. The [adaptive browser gate](reports/m6-body-adaptation-ui.md) passes at `d6108e6` in 73.340 s outer: 492 source ticks, 492 action-replay ticks, four probes/Next transitions, measured fitted drive, native capture, Reset clearing and normal owner/server close. Audited evidence `7587a53` is integrated. Both in-flight indexes captured the empty outer log before its final append; the final 446-byte log hash is retained separately, while all fixed artifacts match. Held-out body/task and physical qualification remain open. The [thin-puck protocol](plans/m6-puck-pushing.md) and pure task core are integrated at `d2a07eb` from `c1fdc82` (draft PR #38); 46 focused checks pass without skips in 0.494 s. Staged model installation and authored reset `8dceb6e` are integrated at `54ef200`; 55 focused checks pass in 0.633 s, including staged renderer cleanup and reset rollback. Native disk construction, runtime wiring, demonstrations, separate training and held-out manipulation remain open, alongside the other learned/held-out task gates. [Actual body UI](reports/m6-body-ui.md) passes at `cbe1a3d`: 26 source ticks and 26 checked action-replay ticks, snapshot/reset, bounded keyboard controls and normal closes. The failed option-matcher attempt and real closed-owner stop-command failure are retained; the shared cleanup guard fixes the latter without hiding errors. Replay metadata now lists the already-checked body sources/arrays (`7f3b279`, draft PR #33); historical reports are unchanged.
+- Partial M7: pinned MaleCNS extraction is 138 nodes/1,647 edges. Sixteen teacher scenes provide 2,400 recorded ticks; both original and degree-rewired pilots complete five epochs and frozen recorded-input evaluation. The control has slightly lower loss in this one seed; no topology benefit is claimed. [Wrapper validation](reports/m7-wrapper-validation.md) passes 600 recorded ticks per variant at 1e-6 tolerances. Engine/native/replay integration passes the bounded actual gate at `1f07644` (17.577 s, nine completed recording manifests); build and UI fixtures pass. The merged regression also passes. [Live owner/browser gate](reports/m7-live-lab.md) passes four sequential owners on `c383b95`; navigation qualification remains pending. The [first closed-loop batch](reports/m7-closed-loop-v1.md) was rejected by evaluator dtype/cleanup defects, now fixed. Separately frozen v2 at `fefd064` completed all 16 runs in 545.627 s outer with unchanged sources and exact paired starts: original 0/8 goals, rewired control 1/8. [Independent evidence audit](reports/m7-closed-loop-v2.md) is complete at `57c4b10`; weak navigation and no topology/generalization claim remain explicit. The exact seven-file inference bundle is committed at `43c66ec` for fresh checkouts. The [separate frozen three-seed, 20-epoch development pilot](reports/m7-training-v2-stage-a.md) at `cc1cea9` passes 395 enabled tests without skips (79.658 s; 82.323 s supervised); its twelve train/dev teacher scenes completed 3,211 ticks with twelve natural goal endings in 277.697 s outer. Source/assets stayed unchanged, and independent record/native/split audits pass; held-out remains unopened. Evidence `01523cf` is integrated. [All six candidates completed 20 training epochs](reports/m7-training-v2-stage-b.md) under the frozen protocol; source/data/manifest audits and exact earliest-dev-minimum selection pass. Three supervised pairs took 61.079 / 62.516 / 69.141 s. Evidence `26483f8` is integrated. The frozen `26483f8` development gate completed all 24 owners / 7,668 ticks in 685.771 s outer with normal exits and unchanged sources/assets/models. Original goal counts for seeds 10/11/12 are 2/4, 1/4 and 3/4; controls reach 1/4 each. The exact per-original-seed threshold fails, so held-out stages remain locked and production model pins remain unchanged. Root independently rehashed all 429 retained files and verified identical starts across all six models per scene. [Negative admission evidence](reports/m7-training-v2-stage-c.md) at `f27a357` is integrated; the audit-only cleanup-count correction and its first failure remain retained. [Recorded failure diagnosis](reports/m7-training-v2-diagnosis.md) at `ea2bf12` finds exact input/action/stall behavior and a training coverage gap: 1,983 constant-speed targets, no contact examples. It does not establish causation or authorize threshold changes.
+- Partial M8: [rover proposal](rover-procurement-proposal.md) is draft PR #5; no purchase, components or physical qualification. Hardware/operator availability blocks physical tests, not simulation work.
+- Partial M9: sonification and comparison export actual recorded data with embedded provenance. [Atlas](artwork-atlas.md), `af2ee7b` / draft PR #18, isolates named nodes in the pinned graph and measures directed reachability; actual graph, independent traversal and browser checks pass. Deferred final-close cleanup is fixed for all five existing export formats at `a299546` / draft PR #19. [Curated anatomical comparison](artwork-specimens.md) is implemented at `6fdab2f`, with actual geometry/conversion and compatible browser checks recorded at `f509463` / draft PR #30. All 37,007 segments and four roots are preserved at one physical scale. Physical drawing and exhibition-duration/independent-operation gates remain open. The [supervised operator runbook](exhibition-runbook.md) declares those missing acceptance records. The approved Afterimage slice is frozen at `2ed2c10`; its bounded eight-frame actual inference/reference/render gate passed in 5.688 s outer with exact reference outputs, deterministic offline SVGs and unchanged sources/assets/stimulus. Independent retained-evidence audit and compatible browser review pass; evidence `9b4db47` / draft PR #31 is integrated. The fixed axes preserve the fixture's very small response variation.
+- Partial M10: unified source and requirements matrix exist. The earlier combined suite at `28ad7c5` passes all 682 tests with no skips in 129.311 s (131.139 s supervised), including actual simulation, production male Torch/native/replay and the new puck CPU model checks using the verified shared assets. The previous artwork/body suite at `68a8f19` passed 395 tests in 56.706 s (58.875 s outer). Sources and environment locks remain unchanged. The earlier suite at `77e69da` passed 330 tests. The earlier suite at `0a783af` ran 319 tests: 316 passed and three explicit MaleCNS checks skipped; [integration report](reports/project-integration.md) records the separate outer-reporting error. Build and UI fixture checks pass. After atlas/cleanup merges, 48 focused export/CLI tests pass at `0693a2f` (2.755 s, no skips). After memory-transfer and wheel-diagnostic integration, 62 focused checks pass at `7a51346` in 3.083 s with no skips. These checks do not rerun historical task or endurance qualification. The [architecture guide](architecture.md) and exact reduced-model distribution are added; local links and real asset resolver checks pass. The expanded regression and audited task evidence are integrated. After adding anatomical pairs and Afterimage, 47 focused artwork/CLI/export tests pass without skips in 1.212 s at the combined merge `f8da3c1`; the subsequent full 395-test run covers the combined artwork/body source. Its first attempt retained one fixture-ordering error; the correction selects the reproduction scenario explicitly and leaves product restrictions intact.
+- Mechanism: pinned upstream model/environment; allowlisted controller inputs; one mutable-runtime owner; complete native, policy, application and RNG snapshots. Recorded E fitting and U-only swaps preserve declared invariant hashes. Male controllers use separately trained fixed CPU assets and an authored sensor mapping.
+- Missing: M5 counterbalanced/held-out transfer; learned M6 puck success and held-out evaluation; M7 closed-loop qualification; M8 physical work; independent M9 operation, exhibition duration and physical artwork; final M10 handoff.
+- Unknown: original checkpoint training lineage, full-model Pi performance, physical stopping limits and account quota (telemetry unavailable).
+- Next action: resolve the pending failed-07 repeat amendment before any additional memory execution; then complete the remaining four cells and separately review held-out admission. Navigation's single aggregation round and both puck development arms fail their fixed capability gates, so automatic fitting stops and held-out stays locked. Any further learning study needs a separate prospective plan. Physical qualification and independent exhibition operation require their outstanding hardware/operator evidence; R2/R3/R4/R5 and final handoff remain open.
+
+The [single completion proposal](plans/m5-remaining-07-completion-proposal.md)
+has a read-only peer review and is pending an explicit user amendment to the
+frozen no-retry rule. It proposes one complete forty-owner attempt after 09/10,
+unchanged scientific/resource limits and bounded phase timings, preserving the
+original failure. It authorizes no implementation or execution while unanswered.
+
+The [prospective held-out outline](plans/m5-heldout-proposal.md) specifies the
+reserved 64–71 matrix without opening it. Source/profile freeze and all 48 audited
+development cells must precede execution. Its estimated 16.3 GB of additional
+retention exceeds what can safely be promised alongside pending development and
+navigation work. The only mounted data filesystem has about 27 GiB free at this
+planning check; an artifact storage path is pending user input. No data is deleted
+or moved and no held-out implementation/execution is unlocked.
+
+## Verification
+
+Hosted checks on navigation-integrated `cbff953` first fail during pytest collection:
+the historical new-body verifier checks protected Engine bytes at import time.
+The narrow correction `aff2be9` keeps the exact protocol bytes pinned during import
+and enforces all historical source pins at both actual parent and worker entry
+points before output/native work. Synthetic fixtures now check authored source
+and protocol drift plus both entry guards. The frozen body protocol, historical
+study branch and evidence remain unchanged. After root/peer source review,
+[hosted fixture and frontend jobs](https://github.com/Aadrika08/palimpsest/actions/runs/37144336303)
+pass on `aff2be9`; the failed log and final run receipt are retained under
+`runs/historical-body-import-ci-cbff953/`. This is hosted fixture validation;
+a new fully enabled local combined regression remains pending the active runtime.
+
+Remaining-08 comparison raw/outcome audits pass first in 16.794 / 8.944 s.
+Receipts under `runs/memory-remaining-08-comparison-root-audit-ba48305/`:
+`audit.json` SHA `d04b9eca5445ba9a72d6032e86a1adcb497e87d5aa6d2749a0a97af3cd6e78c2`;
+`outcomes.json` SHA `dd198d4cbeae227d2da1744041f55f75fc973163348d6d86fc8a5780e822b8f0`.
+Publication review passes after the two-history-reference total correction in
+1.917 s: `runs/memory-remaining-08-comparison-publication-root-review/audit.json`,
+SHA `b45537c4178e9fdef66a027a8adb7a4fe9b793b50764f45a6d9fc8d825a2ba6a`.
+
+Navigation training controls pass thirteen independent pure/temp-file checks and
+full inventory admission in 4.893 s. Receipt:
+`runs/m7-navigation-training-v2-control-root-review-6feade9/audit.json`,
+SHA `4eade0b4c69fa6726aa577ed282868ac6540ca5c4ddf9cc4a67b6b98921ececc`.
+The audit checks 524 tracked/122 upstream/20 assets, 95 named readers plus 2 added
+sources, 70 historical files, 399 pinned inputs and 7 runtime files. It independently
+identifies the additional monitor AST donor omitted from the producer diff-donor
+list. Output is absent and the writer lease is free/released. Controls enforce
+finite pair elapsed time, 600/660-second pair bounds, 2150-second normal enclosing
+return, 2160-second KILL target and the inherited 256 MiB ledger, including remaining
+control-write reservation. Earlier fixture failures and the first preflight's
+resolved-interpreter import failure remain retained; the corrected lexical-venv
+preflight passes in 4.635 s without installing dependencies. No real fit is covered
+by these checks. Startup readmission passes in 0.039 s; the fixed invocation
+was launched once in session `77512`. Startup receipt:
+`runs/m7-navigation-training-v2-control-6feade9/startup-readmission.json`,
+SHA `fe43460c09f4d83436214c68a01a0e1dc004e4d767152d490b03796d7b421a88`.
+The session then drains exit1 before any sampler/child/training: the startup
+caller used `StorageBudget.lock`, which creates every configured root, after
+checking output freshness. The enclosing supervisor correctly rejects the new
+output directory, containing only an empty `.palimpsest-storage.lock`. All six
+models remain `not_started`; source/controls/inputs remain unchanged. Root
+retained-failure audit passes first in 4.120 s:
+`runs/m7-navigation-training-v2-failure-root-audit-6feade9/audit.json`,
+SHA `e73b6745dd6c28c1c28f493443f9d2db6bec882eef28e7f2af7a996c40d52d48`.
+The home writer lease is independently free/released. No outer PID/start was
+retained before refusal; that limitation remains explicit. A fresh v2 control
+family uses only the existing home lock for startup probing and rechecks
+output absence after releasing it. Failed controls/output remain untouched.
+
+Fresh v2 controls pass thirteen copied checks, one startup check and the unchanged
+full inventory in the first independent review, 5.482 s. All 42 earlier control
+files and the empty failed-output lock remain unchanged. Receipt:
+`runs/m7-navigation-training-v2-control-v2-root-review-6feade9/audit.json`,
+SHA `317585d8355afec3204329919b59888ee8214dfd2b8ec610f739f4efc043bf8f`.
+The corrected startup passes once, confirms output absence after releasing the
+existing HOME lease, and launches the frozen outer command in session `70035`.
+Startup receipt:
+`runs/m7-navigation-training-v2-control-v2-6feade9/startup-readmission.json`,
+SHA `ce9a4ee14fa4c3239942e825303a2b74dd9caef70016c8a7beaa09681c73f716`.
+The session drains exit0 after all three pairs complete in 145.165 / 139.991 /
+138.497 s. Normal enclosing pre-publication time is 431.905 s. The independent
+retained-results audit passes first in 6.288 s (6.946 s supervised), checking 1,180
+unique source/runtime/input/bundle entries, all six weights-only CPU checkpoints,
+eighteen finite tensors each, seven exact integer graph buffers and unchanged
+frozen recurrent weights. All 120 epoch rows and earliest recorded-dev minima
+validate; seven sampled/receipt PID-start identities are absent and the HOME
+lease is independently free/released. No model construction, forward pass or
+native simulation ran in the audit. Receipt:
+`runs/m7-navigation-training-v2-root-audit-6feade9/audit.json`,
+SHA `6f393359bf7ccf4d573a23c6a04708d2a1e1ca33723f7bd98f91596f0f48bb90`.
+All three augmented recorded-dev losses exceed the paired old-corpus losses;
+selected augmented epochs are 1, 1 and 7. Fresh navigation outcomes remain unknown.
+The [focused publication](reports/m7-navigation-training-v2.md), `041434d`, and
+exact six-model index are integrated. Root publication review verifies all 154
+focused references / 5,354,654 bytes and matches the copied 1,180-entry ledger
+exactly to the prior independent audit, without a redundant full corpus sweep.
+The first checker removed the descriptive interpretation field from only one
+side of a metric comparison; the original script/failure and narrow correction
+are retained. Corrected review passes in 0.065 s:
+`runs/m7-navigation-training-v2-publication-root-review/audit.json`,
+SHA `b870cb857ea2a71122527b7a7a1021f3db49ca25d8d54cadfda37102bde2c5f0`.
+Publication and trained results were unchanged. The exact three-file admission/Engine
+binding, `29aa8f8`, is integrated after root and peer source reviews find no
+material issue. Its first focused invocation passes nine synthetic checks without
+skips in 1.056 s. Frozen module SHA-256:
+`eac674912f64d02da45152a6cae9329da512c92bd8205a322b7018d0f99e5f32`.
+Retained producer check log:
+`male-navigation-development-v2/runs/navigation-binding-source-check-v1/result.log`,
+SHA-256 `0a5c9c5677e260168bc76d89df42511acae59cdc880e10176716e1566f23a885`.
+Actual six-bundle readmission and development execution have not run. The separately
+scoped teacher-free runner is being implemented without changing the fixed index.
+Remaining-09 admission preparation passes eight producer fixtures and one full
+preflight (7.627 / 2.420 s): 603 identities and twelve fresh IDs disjoint from
+754 prior IDs. Independent review also passes first: eight fixtures in 8.265 s
+and full preflight in 2.770 s, 11.086 s total. Receipt:
+`runs/memory-remaining-09-admission-control-root-review-cb13db9/control-review.json`,
+SHA `b8bc3335b4c4699a20146b37809202fba558b238a0fbe76fcf071cdffce86b63`.
+The fixed launcher AST substitutions and unchanged encloser match accepted 08;
+failed 07 identities remain reserved. Fresh startup readmission passes with
+26,019,684,352 free bytes, unchanged 603 identities and absent output/start paths;
+actual admission starts once in session `81740` and drains exit0: twelve normal
+owners, 1,204 actual rows, four neural calls and twelve snapshots. Normal enclosing
+time is 346.458 s; full enclosing drain/inventory is 349.566 s. Fourteen sampled
+nonlauncher identities plus the launcher are absent; the HOME lease is free.
+Root retained verification checks 116 pins and independently reconstructs all
+four one-tick readouts, passing in 10.484 s (10.898 s supervised). Its prepared
+checker initially assumed previous-batch terminal receipt field names; the first
+script/audit/process and the three-field correction are retained. The study and
+terminal receipt ran once and remain unchanged. Corrected receipt:
+`runs/memory-remaining-09-root-audit-cb13db9/audit.json`,
+SHA `f3bf3f6adcd3e44c0fa978d54764a4242ca784f23c039e3ba25bb94fc9a5fd32`.
+The [admission publication](reports/m5-remaining-09-admission.md), `eb55d3a`, is
+integrated after all 177 unique references / 263,617,210 bytes rehash in the first
+publication review (0.526 s); all four readouts match root. Receipt:
+`runs/memory-remaining-09-publication-root-review-eb55d3a/audit.json`,
+SHA `f677c2f67d3693a808a897393d0f901bd610cbac27624846c1cf984ed39d543d`.
+Separate comparison controls on frozen `eb55d3a` pass eight root fixtures in
+6.292 s and full preflight in 8.756 s (15.140 s total; 15.274 s supervised).
+They bind 605 source/upstream/asset identities, 120 input pins and forty fresh IDs
+disjoint from all 766 prior owners. Histories, failed-07 reservations and all
+resource/scientific limits remain unchanged; free space at review is
+25,893,036,032 bytes. The first root invocation transcribed the inventory filename
+as `identity-inventory.json` instead of `identity-prepared.json` and stopped before
+fixtures or preflight; its inputs/logs and correction are retained. Only that
+checker input changed, with the same frozen inventory hash and audit source.
+Corrected receipt:
+`runs/memory-remaining-09-comparison-control-root-review-eb55d3a/audit.json`,
+SHA-256 `b562b4362a398f15266da81d21de9770040456569ff60cc7090cba8447c49e15`.
+Fresh startup readmission passes in 2.493 s with 25,889,443,840 bytes free,
+unchanged pins/identities/inputs and an existing HOME descriptor lease probe.
+Startup receipt SHA-256:
+`ef01121eb5c703705f7dbe313f780ddd123691f3555a694fea897b3503e97e0c`.
+The one comparison drains session `23234` exit0: forty normal owners, 4,680
+actual numeric rows and no unattempted owner. Normal enclosing time is 1,804.636 s;
+full drain/inventory time is 1,808.076 s. All 42 sampled nonlauncher PID/start
+identities plus the launcher are absent; the HOME lease is free and inventories,
+controls and clean `eb55d3a` remain unchanged. The producer retained a corrected
+aggregate-display list lookup; it did not change raw data or rerun an owner.
+Independent raw and outcome audits pass first in 16.350 / 4.489 s (16.763 /
+4.693 s supervised), checking 543 files / 1,102,948,896 bytes, forty snapshots,
+sixteen strict U-only forks, 605 identities and 120 input pins. Receipts:
+`runs/memory-remaining-09-comparison-root-audit-eb55d3a/audit.json`, SHA-256
+`910cf3452259e61e50f111742409320dcac02183a94881b438b29fac17791dab`, and
+`outcomes.json`, SHA-256
+`0fc404dc1487dff6272e9dca4ba1e978d0f05cd67f421fbb056118e243e44841`.
+All 36 task checks pass. Every condition reaches the goal at 430 for s30 paired
+change, 429 for its null/no-event cells and 432 for s31 local change. Both changed
+upper facts are passively corrected at 300; no own-U timing benefit is observed.
+No-event invokes no selector and contributes zero behavior bytes. Accepted
+coverage is 40/48. The [focused publication](reports/m5-remaining-09-comparison.md),
+`a704ba9`, is integrated after first-pass publication review in 0.079 s (0.165 s
+wrapper). All 76 direct/history references rehash; the copied 543-file raw ledger
+exactly matches the independently pinned audit, with fresh size checks for all
+618 unique references / 1,106,010,307 bytes. Raw-only files are not redundantly
+rehashed. Publication receipt:
+`runs/memory-remaining-09-comparison-publication-root-review/audit.json`, SHA-256
+`9019ea601850953fa1194786192d7e1b5bb075ff401edce873600f17fb17b521`.
+Remaining-10 admission controls on frozen `a704ba9` pass independent review first
+in 11.129 s (11.208 s supervised): eight fixtures take 8.219 s; exact preflight
+takes 2.832 s. The launcher AST matches accepted09 after fixed substitutions and
+the encloser is byte-identical. All 607 identities match; twelve fresh IDs are
+disjoint from 806 prior owners, including all forty failed07 planned IDs and its
+unstarted oracle. No history/U or future snapshot state enters admission. Free
+capacity is 25,569,865,728 bytes. Receipt:
+`runs/memory-remaining-10-admission-control-root-review-a704ba9/control-review.json`,
+SHA-256 `18f8caf7f87f15a2ecc2c4df97cbb49b32681696c11a3973bdc8f42948f62360`.
+Immediate startup readmission passes first in 1.987 s with unchanged six pins,
+607 matching identities, fresh output/start paths, 25,569,705,984 free bytes and
+the existing HOME writer-fd probe available/released. Receipt
+`../memory-full-development/runs/m5-remaining-10-admission-launch-a704ba9/startup-readmission.json`,
+SHA-256 `db922fe2885fa0d0e07efd7002bccfca1ac31e26abf4819503921b0c6115b7f7`.
+The one frozen invocation drains session `71492` exit0: twelve normal owners,
+1,204 actual recorded intervals (1,200 manual and four CPU FLYNN), twelve SNPs
+and no unattempted stage. Enclosing supervision takes 349.942 s; full drain and
+inventory 353.026 s. Fourteen sampled nonlauncher PID/start pairs plus the launcher
+are absent, the writer lease is independently free, controls and all four identity
+inventories match, and frozen source stays clean. No forced signal, monitor error
+or survivor occurs. Root retained audit passes first in 10.636 s (11.055 s supervised),
+checking all 116 pins and independently recomputing four probe readouts. Receipt:
+`runs/memory-remaining-10-root-audit-a704ba9/audit.json`, SHA-256
+`b5a5baabe32ae85900b8afabfa28c90ae8d0658c10610963fd70cc181edf38f3`.
+The [admission publication](reports/m5-remaining-10-admission.md), `9e0d406`, is
+integrated after first publication review in 0.113 s (0.215 s wrapper): 58 direct
+receipts rehash; all 116 independently audited raw pins and fresh file sizes match,
+with 174 unique references / 263,616,661 bytes. Receipt:
+`runs/memory-remaining-10-publication-root-review-9e0d406/audit.json`, SHA-256
+`0830e19ce036a77f35b0cf0b3668ba296a37e44b90ed211d0b31ad5353d142a7`.
+The paired-change lower gate is blocked but unobserved at tick300, so its stale
+open expectation remains; empty-U misses it. Null abstains and no-event has zero
+selector activity. These are admission readouts, not task/goal qualification.
+Admission alone leaves comparison coverage at its historical 40/48; the subsequent
+comparison below brings it to 44/48. Failed 07 and held-out remain open.
+
+Remaining-10 comparison preparation on clean `9e0d406` passes all eight producer
+fixtures and one preflight. Root preparation retains two mistakes: an assumed
+non-null historical failure map, then an absent replacement target; the latter
+was followed by an attempted missing checker file (return2). Neither ran a fixture,
+preflight or runtime owner. After narrow checker-only corrections, all eight root
+fixtures pass in 6.377 s and full preflight in 8.740 s (15.271 s supervised).
+Launcher AST matches accepted09 after declared fixed substitutions; the encloser
+is byte-identical. All 609 identities and 120 inputs match; forty fresh owner IDs
+are disjoint from 818 prior, including every failed07 planned ID. Receipt:
+`runs/memory-remaining-10-comparison-control-root-review-9e0d406/audit.json`, SHA-256
+`dd0b45b206c2496e864086e8de4ed8e041d178766ea6ba605327c87effed4f7f`.
+Fresh startup admission passes in 2.518 s with unchanged controls/identities,
+fresh output paths, 25,460,350,976 free bytes and the existing HOME writer fd
+available/released. Startup receipt SHA-256
+`076e40e71fc025f0e51acebe72c9b5f147735779e19826b8cf4245c1a10e02b9`.
+The single comparison drains session `51199` exit0: forty owners, 4,684 rows,
+forty snapshots, sixteen strict forks and all 36 evaluator task checks pass.
+Full drain/inventory takes 1,801.516 s; all 42 nonlauncher identities plus the
+launcher are absent and the lease is free. Root raw and outcome audits pass first
+in 16.422 / 4.245 s, binding 543 raw files / 1,103,872,810 bytes. Publication
+`d45549a` preserves both root preparation failures and the publication-only
+missing-scope KeyError; no raw/control/experimental result changed. Root publication
+review passes first in 0.062 s (0.178 s supervised), reconciling 618 references /
+1,106,939,774 bytes with the exact independent raw ledger and 76 rehashed direct
+or historical inputs. Receipt
+`runs/memory-remaining-10-comparison-publication-root-review/audit.json`, SHA-256
+`20d9fe6ce3803459257fd34a8d78db455c23256a004093d6ff418154c5f33040`.
+The final 44-cell report-only analysis passes first in 0.683 s supervised, with
+396 readouts / 352 pairs and no observed own-U benefit. Failed07 remains excluded.
+
+The teacher-free navigation evaluator `e3f9a47` adds exactly the runner and its
+synthetic tests. Eighteen focused checks pass in 1.366 s without skips after a
+first import-time syntax error; the only subsequent source correction adds one
+closing parenthesis. Both source/log versions remain retained. The fixtures
+check real recording roundtrip, exactly one prediction, complete packet retention
+before contact refusal, incomplete packet preservation, original-error retention,
+wrapper restoration, negative versus infrastructure outcomes and exact pretty
+serialization of a realistic 600-row result under the one-MiB parent cap.
+Root verifies producer and integrated hashes plus that narrow correction; source
+review receipt `runs/m7-navigation-evaluator-source-root-review-e3f9a47/audit.json`,
+SHA-256 `27f1a58e228f44cb268e949df1c462669ef4f8da98243fab790dfcfe5d4ffa2d`.
+The [separate draft PR65](https://github.com/Aadrika08/palimpsest/pull/65) preserves
+the earlier binding PR64. Source and synthetic checks alone do not qualify navigation.
+
+The first actual six-model metadata admission stops in 0.724 s supervised,
+before candidate loading, because the isolated navigation worktree lacks its
+pinned upstream checkout. This is a retained prerequisite refusal, not a consumed
+navigation episode. Root verifies the failure and exact missing gitlink state;
+receipt `runs/m7-navigation-readmission-v1-failure-root-review-e3f9a47/audit.json`,
+SHA-256 `a2415910affd3ce3a5e0b8820f11d912e32791ee99a668add9aafe22c69c189b`.
+The exact upstream commit `8d964599119b420de67ee259434d273651a1a76d` is then initialized
+from the already pinned local checkout without fetching; submodule and parent
+remain clean. Fresh v2 controls change only the output path, preserving v1.
+The initial command's relative interpreter spelling was corrected before any
+invocation to the absolute lexical virtualenv path; no symlink resolution or
+source/limit relaxation follows.
+
+The v2 metadata invocation drains session `73020` exit0: all six ordered seed
+10/11/12 × old-corpus/augmented identities pass on frozen `e3f9a47`. Worker time
+is 2.223 s, supervised 2.377 s, launcher before-publication 2.405 s. Every arm
+retains `male-original` / original graph and separate research provenance.
+Current/historical source, index and model-input identities match before/after.
+No Torch/MuJoCo import, checkpoint deserialization, model construction, native
+owner, corpus audit or writer lease occurs. Root reconciles all six checkpoint,
+graph and provenance entries with the fixed index and checks the small retained
+file hashes. Receipt `runs/m7-navigation-readmission-v2-root-review-e3f9a47/audit.json`,
+SHA-256 `c05afb626dd3ae9395ab91cd90d1f2be14d9c44fc3a08c678c2e00c2374ad44e`.
+Readmission SHA is `cb25b404044ebce489f74e80caa9eb774613caa395fc2e48da8bd72b606f71d8`.
+Fresh development controls pass source review. The retained original draft could
+reject model/runtime drift before preserving obtainable after identities. Its narrow
+correction observes the hash-admitted before roster and actual runtime versions
+before separate strict refusal; both actual callers bind the original invocation
+hash. The standalone inventory CLI now exposes only its supported before mode.
+Eleven synthetic fixtures are declared, including changed-byte/runtime retention,
+startup refusal, sampled identity reuse, missing terminal and late return/publication.
+The source review predates execution. Root
+source-only receipt `runs/m7-navigation-development-controls-source-root-review-e3f9a47/review.json`,
+SHA-256 `f299685141543770f87a3b5c4c1c2b1c31a84ccc8b5d9077968afd4f5d777ced`.
+Producer preparation subsequently passes all eleven fixtures and full preflight
+first, with true host exit/drain retained separately (session28062 exit0).
+Independent root review passes eleven fixtures in 0.874 s and complete metadata/
+capacity admission in 4.303 s (4.478 s supervised), session27718 fully drained0.
+All 574 tracked, 122 upstream, twenty assets, fixed inputs/runtime files and six
+identities match; free capacity is 25,105,874,944 bytes. Root receipt
+`runs/m7-navigation-development-controls-root-review-e3f9a47/audit.json`, SHA-256
+`638c20189a8f363071728934545da4c3908417cb0afa66ef9c15bf1407dec975`.
+Fresh startup passes first with unchanged frozen controls, clean `e3f9a47` and
+upstream, absent output/terminal paths, and 25,083,748,352 free bytes. The existing
+owned regular HOME lease fd is acquired/released without creating any managed
+output directory. Startup receipt SHA-256
+`e454c899e79812a5e0f18a42c535134cbe2f6dd42e526ae8a46b1dcd94294b81`.
+The exact one development invocation drains session `15391` exit0: 24 owners,
+10,822 intervals, four goals, twelve stalls and eight time limits. Old-corpus
+seeds10/11/12 reach 2/4, 1/4 and 1/4; augmented seeds each reach 0/4, failing the
+unchanged 3/4 per-seed threshold. Runner supervision is 861.498 s, launcher
+supervision 944.932 s, and enclosing prepublication 946.312 s. The separately
+retained conservative pre-invocation-to-post-drain interval is 988.524 s; it
+includes scheduling/observation delay and is not exact process runtime. A separate
+monitor-only nonexistent-interpreter command returns127 before Python starts;
+no actual command, source, control or experimental attempt changes.
+
+Root host-receipt cross-check passes first, verifying true session drain and
+30 absent PID/start identities. The unchanged raw auditor then passes first in
+110.117 s (110.443 s supervised), session31073 fully drained0: 542 raw files /
+2,382,058,832 bytes, 24 snapshots, 22,159 events and four matched scene groups.
+It checks every recorded row, raw contact incidence, finite arrays, source/input
+identities and original-graph model binding. All 29 sampler identities plus the
+enclosing process are absent, the existing HOME lease is free, and source/control
+inventories match. Root receipt
+`runs/m7-navigation-development-v2-root-audit-e3f9a47/audit.json`, SHA-256
+`5dfe731fa3b22659869cf0927970c9ed845e36d866f02efa345fe7190ffb37b9`.
+Host cross-check SHA-256
+`e8274aedde2ee8a48949d8ecb70b610176b55c4377e3f7000dec54aa81e29694`.
+Publication `e4eb6d6` is integrated after first-pass root review in 0.047 s
+(0.233 s supervised). All 24 outcomes and the copied 542-file ledger match the
+pinned raw audit; 83 small direct references rehash. The unique union contains
+624 references / 2,383,934,489 bytes. Receipt
+`runs/m7-navigation-development-v2-publication-root-review/audit.json`, SHA-256
+`8f103fa8faab988b1b77d6fc44ce8c80d84385003b82c11db6eaa89d760c67a1`.
+The development gate fails on valid retained evidence; held-out remains locked,
+the one aggregation round is exhausted, and no automatic refitting follows.
+
+Paired navigation trainer `6feade9` is integrated after eleven independent root
+pure checks pass first in 1.698 s. It adds only the named trainer/test, preserving
+all 95 admitted reader files and six helper/lock pins. The producer's first run
+had one synthetic fixture error; its correction and both logs remain retained.
+The trainer uses unchanged fitting/publication helpers, original graph in both
+arms, exact counts and earliest strict development minimum, retained after hashes
+and a nonmutating final CPU runtime check. No real fit, corpus extraction, native
+owner or writer lease ran. Receipt:
+`runs/m7-navigation-training-v2-source-root-review-6feade9/audit.json`, SHA-256
+`0d78fafe76f04ade41ef67debcb2e24fe39006eb83542e82076c3f29830c437a`.
+The first actual invocation was refused before training; these source checks do
+not qualify an actual fit.
+
+Remaining-08 admission publication review passes first in 0.640 s: all 162
+unique references rehash and all four published probe readouts match root.
+Receipt: `runs/memory-remaining-08-publication-root-review-ba48305/audit.json`,
+SHA-256 `ef25dda892123540ad348f0ab1e21a5725d98ceb3e57be614546499cbfb3057d`.
+
+Remaining-08 retained admission audit passes first in 10.871 s:
+`runs/memory-remaining-08-root-audit-80d7e1d/audit.json`, SHA-256
+`f858f51dbdb4f3ea08b6926637e5438b2fa5838f9901f9336f78c45cea878c13`.
+The [paired navigation trainer contract](plans/m7-navigation-training-v2.md),
+`8c57f78`, passes its first source/metadata review in 0.031 s: eleven metadata
+pins, all 95 named Python sources, six direct code/lock pins, inherited numerical
+settings and bounds, and eleven output pins matched to the admitted data audit.
+The unchanged source lengths imply 72 old versus 236 augmented windows per epoch.
+Receipt: `runs/m7-navigation-training-v2-plan-root-review-8c57f78/audit.json`,
+SHA-256 `9918a48e6c1904fe55765832fce55e9656dcd89c9d0e1d13f99fe848d3bd1072`.
+No corpus arrays, model, native runtime or lease were opened by that review.
+
+Remaining-08 control review passes first in 10.828 s; the full launcher AST
+matches reviewed 07 after fixed path/profile/plan substitutions, with an unchanged
+encloser. Receipt:
+`runs/memory-remaining-08-admission-control-root-review-80d7e1d/control-review.json`,
+SHA-256 `ef49f4f8e3d681428bb0485a3e7679e31d4aafe4fddda7ddb74faabc9283fb51`.
+Navigation data publication review passes first in 3.141 s, including all 47
+control/output files, 581 reconstructed input references and twenty unchanged
+files in the failed first control family. Receipt:
+`runs/m7-navigation-data-v2-publication-root-review-2d4a7b8/audit.json`, SHA-256
+`9011aca1831f18209888afba20f86cd2f0f130de476b58e6c18a5fadbd6d2f37`.
+
+Navigation preparation passes once with normal shutdown: launcher 76.822 s,
+enclosing pre-publication 79.460 s, and exit 0 through the frozen 230-second
+return guard. Exact final elapsed is not retained in the positive terminal.
+Root control review passes thirteen fixtures plus full inventory in 5.335 s:
+`runs/m7-navigation-data-v2-control-root-review-4ecb354/audit.json`, SHA-256
+`269a72968fb60fc87b46531862ca219fe1127e777c9899b2e64843766c6634f0`.
+Root terminal/source audit checks 47 control/output files, unchanged inventories,
+five sampled identities absent and a free lease:
+`runs/m7-navigation-data-v2-root-audit-4ecb354/audit.json`, SHA-256
+`59b68f587dc7d933d29cc266d7fa3e51ad03977d69ca23842eb45cf49c224a1b`.
+Independent raw data reconstruction checks 581 unique inputs and eleven output
+files, including every advice label and the byte-exact historical transfer:
+`runs/m7-navigation-data-v2-root-outcomes-4ecb354/audit.json`, SHA-256
+`70e29552fb971d6c7ae058afc2c2c77dbb7b16c4809bce4573cbbd8fc261325d`.
+These are data-admission checks; they do not establish expert quality or navigation.
+
+Remaining-07 comparison retention audits pass first, while the actual batch
+remains unverified. Root raw receipt
+`runs/memory-remaining-07-comparison-root-audit-0e32482/failure-audit.json`
+has SHA-256 `380b125316691e7027e133f1bb3498bddef998d8c95ec847be6a53dfbd193c95`;
+it checks 38 normal owners and the 90-row failed prefix. The 27-condition partial
+readout receipt `partial-outcomes.json` has SHA-256
+`13a84884db5580574ab2d0b835c4ed4e8fa4358f2371633470a3bbea38ebf22f`.
+Both audit sessions drain exit 0; the original experiment session 30311 drains
+exit 1. No rerun, native/model execution or coverage promotion occurred.
+Publication review passes first in 2.138 s; its receipt is
+`runs/memory-remaining-07-failure-publication-root-review-80d7e1d/audit.json`,
+SHA-256 `9115850ee98e2e9b6bb953676b16e7cbc831d866c38d17cb53888ce1106dba40`.
+
+New-body v2 publication review passes first in 0.299 s: 32 direct references,
+48 raw files, current controls and all 45 unchanged v1 files combine into
+143 unique references / 171,627,789 bytes. Receipt:
+`runs/m6-new-body-publication-root-review-0b1af16/audit.json`, SHA-256
+`10f9ebe4dd4cfe2d3b5d6466c568498797b1410b61336b9bf7e5ff820f66caa7`.
+
+Navigation data preparer `4ecb354` passes eleven root synthetic/source checks
+first in 2.224 s (2.676 s supervised, 2.738 s total). Exact old/new count/order,
+advice-only labels, geometry/duplicate checks, historical-child isolation, safe
+transfer and retained drift/late-publication failures are covered; all seventy
+historical Python sources remain unchanged. No actual corpus preparation, model
+call or writer lease occurs. Receipt:
+`runs/m7-navigation-data-v2-source-root-review-4ecb354/audit.json`, SHA-256
+`73a9bf256ed67838b6c3ad397214f6d9a74cc944185ad1ff2415a884a057e79f`.
+
+New-body v2 retained outcomes pass first in 1.636 s; raw/source/contact/cleanup
+audit passes in 7.335 s after both retained checker-only failures. Receipts:
+`runs/m6-new-body-root-audit-1e904c0/outcomes.json`, SHA-256
+`5068ee746737c186522eabdf5e542d482f03d652ac2d211207fe92f984511502`, and
+`runs/m6-new-body-root-audit-1e904c0/audit.json`, SHA-256
+`66bbdcc45911d33825312b7b5fef08115d5871ea8a5a7cc0b88e10c1f9f566a2`.
+The 503,580 world-only and 46,712 support incidences include ten sampled stages
+plus repeated end caches; they are not unique physical contacts. No unexpected
+robot contacts are present.
+
+Remaining-07 comparison controls pass first: eight root fixtures in 6.258 s and
+full preflight in 8.493 s (14.795 s total), with unchanged limits and inputs.
+Receipt: `runs/memory-remaining-07-comparison-control-root-review-0e32482/audit.json`,
+SHA-256 `758f15b1a252eb5ed8beca5e184d8ed5afee13b3e539aa3123eb64ae5a31a8c4`.
+
+New-body v2 control review passes first: twelve mocked checks (0.730 s supervised),
+exact preflight 2.357 s, total 3.582 s. All five scripts match v1 after only the
+declared path/source-pin substitutions; all 45 v1 files remain unchanged. Receipt:
+`runs/m6-new-body-control-root-review-1e904c0/audit.json`, SHA-256
+`421d70401e41ac80b8c8586c72dfd9edcf1fdd1a8f380d3bf0403d127bb2c2c2`.
+
+Remaining-07 admission publication passes first in 0.233 s, checking 141 references
+(262,936,165 bytes). Receipt:
+`runs/memory-remaining-07-publication-root-review-0e32482/audit.json`, SHA-256
+`a31c9dbf0b3a20f719df5ea816777b0c04f9b05859d6b2f2d48eeb8fdede2658`.
+
+The new-body caller fix `1e904c0` passes eighteen root pure checks in 0.213 s
+(0.579 s supervised), first attempt. Only `author_episode` changes; its native
+guard, protocol and seventeen protected pins remain unchanged. Receipt:
+`runs/m6-new-body-source-root-review-1e904c0/audit.json`, SHA-256
+`4a7dc9aea3215d842cd926685ee183ef80125916f7d16c0c5f19be3e335f3687`.
+
+Remaining-07 retained admission audit passes first in 9.098 s: twelve owners,
+1,204 rows, four calls, twelve snapshots and 116 raw pins. Receipt:
+`runs/memory-remaining-07-root-audit-0b30585/audit.json`, SHA-256
+`5da5f63cd3a240b2ebac945fa55a8fd1f2fd1dea11487a20417de8fc6d41e43d`.
+
+New-body failure publication passes first in 0.017 s: 65 unique references,
+1,178,061 bytes. Receipt:
+`runs/m6-new-body-failure-publication-root-review-c048586/audit.json`, SHA-256
+`e7b07a7e6dbea59fcf81f20e452deca7b07ece0e1c04d5c83fa9f3fdb9366dba`.
+
+Remaining-07 admission controls pass eight root fixtures in 4.917 s and full
+preflight in 1.556 s, first attempt:595 identities, 12 fresh IDs disjoint from 650,
+full launcher AST equal to 06 after fixed substitutions, and identical encloser.
+Root receipt: `runs/memory-remaining-07-admission-control-root-review-0b30585/control-review.json`,
+SHA-256 `4621c4b1091a32ee70be96802663fe28ec3b05c5bca52165b559ff71a3f6453f`.
+
+Remaining-06 publication review passes first in 1.882 s; all570 unique publication,
+raw-ledger and history references rehash. Receipt:
+`runs/memory-remaining-06-publication-root-review-0b30585/audit.json`, SHA-256
+`9cf18f2197defd9e1fae19e4e51a918c5acf000a48b3bcc653e319c1435e668c`.
+
+New-body v1 failure audit passes in 2.479 s after a checker-only correction from
+`source_revision` to the actual `environment` initialization event. One attempted
+owner, zero accepted/executed ticks, zero SNPs, one unstarted dependent and normal
+cleanup are independently checked; the recorded failure remains infrastructure.
+Receipt: `runs/m6-new-body-failure-root-audit-4c4bca2/audit.json`, SHA-256
+`6062d7d3a437efd5ee9ac24fb8f8d47ed1e89f584e819bb1df8cfa858a6cd59e`.
+Original/corrected checker files, logs and correction metadata are retained.
+
+Remaining-06 raw and independent outcome audits pass first in 16.461 / 8.729 s.
+Receipts: `runs/memory-remaining-06-comparison-root-audit-016948b/audit.json`,
+SHA-256 `d50dd75c50a7739135a5e3af6eb16f65e63100ac42273ce905581f02dba3d021`,
+and `outcomes.json`, SHA-256
+`801c6f121f9a9bac5baf4bb1b7e9e0d6537e6f4ec51271303c5f56b288e902e8`.
+Both root sessions drained exit0 before body execution began.
+
+Navigation data plan `b3cbb67` passes root metadata/source admission first in
+0.036 s: 21 named references, the unchanged historical seven reader pins and
+all seventy historical tracked Python files. Exact geometry rules, isolated
+historical imports and the disclosed 230 s normal / 240 s KILL target / 263 s
+nominal failure envelope are frozen. Source-only implementation is admitted;
+actual corpus preparation, training and held-out execution remain pending.
+Receipt: `runs/m7-navigation-data-v2-plan-root-review-b3cbb67/audit.json`,
+SHA-256 `a4bc69e69036b18904d113e81d67fec8a6c262244ce5d616743f54170867fa4d`.
+
+New-body controls pass twelve root mocked checks in 0.171 s (0.572 s supervised)
+and exact read-only preflight in 2.280 s, first attempt. The 523 producer files,
+122 upstream files, twenty assets and seventeen protected pins match. The outer
+fallback/failure cleanup use absolute entry +846/+856 s deadlines. Root receipt:
+`runs/m6-new-body-control-root-review-4c4bca2/audit.json`, SHA-256
+`5a7e649be271b66f137223cc627abe536ee0b7b1a15fe62c3e98cbd133d7da7d`.
+No native owner or writer-lease probe ran in these reviews. The later body startup
+preflight failure and exact-environment correction are both retained; actual
+execution is tracked separately above.
+
+Remaining-06 admission controls pass eight root fixtures in 8.201 s and full
+read-only preflight in 2.749 s: 591 identities, twelve fresh IDs disjoint from598,
+fresh output/start and 26,578,796,544 free bytes. Full launcher AST equals
+successful05 after fixed substitutions; encloser bytes match. Receipt:
+`runs/memory-remaining-06-admission-control-root-review-0a6bb4c/control-review.json`,
+SHA-256 `988e07c9bd773d27b1e706eebf80987193eae7e7b931059de81153dda56bb5a6`.
+Root fixture/preflight copies preserve producer receipts. Startup separately
+reports 26,583,203,840 free bytes; no new lease/model work ran in root review.
+
+Remaining-05 comparison raw/outcome audits pass first in 16.292 / 8.140 s:
+`runs/memory-remaining-05-comparison-root-audit-ad2eff7/audit.json`
+SHA-256 `7a8882af8e0856430806e9bb2c9e66eb65cb9b6fc8e6f23c8cd217003c1bdfd2`,
+and `outcomes.json` SHA-256
+`6a76282f681289982697a1a0f02797f0a44f117a392e34165b11748e2b0623ec`.
+All 417 publication/history references rehash in 1.832 s; the initial inline
+publication checker stopped before hashing because it assumed absolute paths.
+Its correction resolves producer-relative paths and the path-keyed file index;
+source, raw data and publication index are unchanged. Receipt:
+`runs/memory-remaining-05-publication-root-review-0a6bb4c/audit.json`,
+SHA-256 `a13930eeac6fde54fde6277e746ea4b5be0cb3bd2c0eed339fff4a15e624aa48`.
+
+Navigation v2 source `736e0cf` passes eighteen root focused tests in 0.930 s
+(1.482 s supervised) and eighteen preloaded-module tests in 0.946 s (1.511 s
+supervised). The fourteen legacy pins, frozen v1 collector, unchanged raw
+label/control binding AST and nine retained source-check references match.
+Receipt: `runs/m7-navigation-contact-v2-source-root-review-736e0cf/audit.json`,
+SHA-256 `cd4919b3fdd0c7c97ecc0c428128eb729a7881146e3f0e3714175d9de9fd76d1`.
+Compiled-native proof and actual collection remain pending.
+
+Navigation v2 plan root review passes using stdlib-only checks: exact two-document
+diff, profile/pair hashes, 125 = 103 + 22 pairs, unchanged three support pairs,
+eight pinned upstream sources, XML 32-geometric-object/26-body ownership, tree
+and mask contract, and unchanged data/learning/evaluation/resource fields. This
+is source evidence; compiled-model validation remains pending. Receipt:
+`runs/m7-navigation-contact-v2-plan-root-review-d2f7358/audit.json`,
+SHA-256 `1c91b321c82a8061fed0c01976269e6d69d22bdba4d57a6a7df1e312c84532c1`.
+No native/model/checkpoint/corpus/lease job ran in this review.
+
+Remaining-05 comparison controls pass eight root fixtures in 4.243 s and full
+read-only preflight in 7.647 s: 589 identities, 120 actual input pins, forty fresh
+IDs disjoint from 558 prior, and 28,016,795,648 free bytes. The launcher AST equals
+successful04 after fixed substitutions; the encloser is byte-identical. Receipt:
+`runs/memory-remaining-05-comparison-control-root-review-ad2eff7/audit.json`,
+SHA-256 `7c4d6aea7c9ba5e8c82bd7f6db83e38ecb8ab0347b4417cede55557bb7289428`.
+Root-local fixture/preflight copies preserve producer receipts; no actual job or
+writer lease was launched by the review itself.
+
+Remaining-05 retained admission root audit:
+`runs/memory-remaining-05-root-audit-746c67b/audit.json`,
+SHA-256 `c00600e221348f4cd0ad8aab66ba5fcde5e50f29bba853bca2391925f697864b`.
+Twelve owners, 1,204 rows, four neural calls, twelve initial snapshots and 116
+raw input pins pass in 10.086 s; source/input inventories are unchanged and the
+writer lease is independently free. This checks retained data, not new inference.
+
+Remaining-05 admission controls pass eight root fixtures in 8.146 s and read-only
+preflight in 2.777 s: 587 identities, twelve fresh IDs disjoint from 546 prior,
+and 28,114,046,976 free bytes. The complete launcher AST matches successful04
+under declared fixed substitutions; the encloser is byte-identical. Receipt:
+`runs/memory-remaining-05-admission-control-root-review-746c67b/control-review.json`,
+SHA-256 `d175559a48336391d66d26b3d1c0079c00cda5e76cd1b6dd07221dff66840671`.
+The checker is reconstructed from the historical receipt; root-local fixture/
+preflight copies change only the launcher lookup/output destination and preserve
+producer outputs. No model/native runtime or lease was used for this review.
+
+Navigation retained-failure audit:
+`runs/m7-navigation-collection-failure-root-audit-13a1afe/audit.json`,
+SHA-256 `e09df41b94ca7341bf0f001ee2bc287ad0c64a0135db031628f5791c56b29562`.
+The valid floor/base contact at tick11, stage6, 0.232 s has signed distance
+-0.00003873235167558761 m. Its rejection follows the frozen protocol. Twelve
+published rows are retained negative evidence, not an admitted collection;
+eleven later owners remain unstarted. No neural/native recomputation occurred.
+
+Navigation control root receipt:
+`runs/m7-navigation-collection-control-root-review-13a1afe/audit.json`,
+SHA-256 `d7f711b47c8e86f50a64655677d17fe23c6bf6423f9e73b13b0c75b56034f96e`.
+Nine fixtures pass in 0.131 s (0.567 s supervised); the current inventory matches
+in 3.382 s. The first root checker stopped before fixtures because it used
+unsupported `bounded_process` keywords; its script/log remain, and v2 uses the
+existing positional API. Frozen controls were not changed. The control review
+itself launched no model/native owner or writer lease.
+
+New-body plan root receipt:
+`runs/m6-new-body-plan-root-review-6b9d78d/audit.json`,
+SHA-256 `155e1fddf7bd81f8deab4acd0603b925e82054a01d49f1d33deff967a116efe6`.
+This is a prospective two-owner plan, not runtime evidence.
+
+
+Navigation collector source receipt:
+`runs/m7-navigation-collector-root-review-13a1afe/audit.json`,
+SHA-256 `ff5f160f468cf5ffbe4833b6ab8b078376374417c37f0bcd09af54eb0c87a3bd`.
+The two root synthetic runs took 0.668 / 0.721 s under supervision and imported no
+actual model/native runtime. The additional ten tests are not a newer full-suite count.
+
+
+The [remaining-02 memory comparison](reports/m5-remaining-02-comparison.md), evidence `b04060e`, completes once on frozen `7a956b0`: forty
+owners, 4,650 neural intervals and all 36 evaluator task checks. All sixteen core
+forks preserve strict U-only boundaries. Root raw audit first passes in 16.232 s
+(577 identities, 120 retained input pins, forty snapshots); independent outcome
+recomputation passes in 8.176 s. All 42 sampled non-launcher identities plus the
+launcher are absent and the writer lease is free. Development comparison coverage
+reached sixteen of 48 cells at that stage; remaining-03 brought it to twenty; remaining-04 above now brings it to twenty-four. Held-out and R2 qualification remain open. In the
+paired lower-change cell every condition corrects at358; own/sham reach the goal
+at431 while no-U reaches it at430. Own/sham trajectories match; both no-event
+cells have zero selector calls/behavior bytes, and the null cell retains seven
+false-targeting selectors. No own-U correction/task/timing benefit follows.
+Root receipts: `a422935c310ad7676adbb1ea5542d355da2cd27f2c861894865ea2e4bc0d1356`
+(raw) and `bbcf6bfb30abec68d5921fe9effedff3abe1e5faf13db054b9f86be24a402199`
+(outcomes). All 432 publication references rehash. The prior eight-fixture control review is retained unchanged.
+
+Body/homing control v1 is withheld before any actual owner: the outer wrapper
+could terminate its launcher without independently draining separately grouped
+children. A retained v2 control correction adds independent finite PID/start
+containment. Normal acceptance remains 830 s; TERM at830 and KILL at840 are
+launcher targets, with explicitly separate failure-only cleanup/publication.
+The frozen scientific source, fit, four-owner plan and home criterion are unchanged. V2 was
+also withheld before execution: a late final print could retain a positive or
+functional-negative receipt after its deadline. V3 checks elapsed time
+unconditionally after that print. Nine independent root control checks and full
+source/historical-input preflight pass, without native execution. V1/V2 failures
+and the pure reproducer remain retained; V3 review receipt is
+`1031ed22340c9ba201a15327561f50484b3a15bddd216d656a4fd2cda85e4a8a`.
+
+
+The actual body V3 attempt on frozen `0fd38ef` exits1 before any owner or numeric
+interval: `StorageBudget.check()` requires keyword-only `path`, omitted by both
+the parent and worker admissions in `verify_body_homing.py`. The 711-test pass did
+not exercise this harness path. Four owners remain explicitly `not_started`.
+Root failure audit first passes in 1.708 s: full inventories unchanged, all three
+sampled identities absent, writer lease free, no forced cleanup. Failure report
+SHA-256 is `fb5b3a7cdf5307cd2ed6c834c685afb4440031cc7d8788972cfc43a462789e0b`;
+root failure audit is `80df9e49a06c666b803c86c3cfeaa90424d2d1ced731e30dea65f634d88feeff`.
+The attempt is retained; a separate minimal verifier correction and regression
+must precede new frozen controls. No body/task capability result exists yet.
+
+The corrected body composition completes once on frozen `a447d76`: source283
+(282 natural homing intervals +one reset probe), native4, actions283 and policy283,
+853 total rows and five snapshots. Actual home error is 0.1196427162 m against the
+unchanged 0.25 m gate; encoder estimate is 0.1090416471 m. Root retained audit
+first passes in 19.634 s: full normalized initials, all measured-encoder task
+transitions, previous-bearing driver, nominal/compensated controls, shaft/contact
+slots, native/replay rows, 2,267 semantic events per replay and all 75 artifact pins
+twice. All seven sampled identities are absent and the writer lease is free.
+Primary report SHA-256: `a7acc3edca17fde5e3754e1ed39f4f0288bd4d7e2ac2b0c087a660ea25c38808`;
+root audit: `c0c5260bf1959374fad9f1f8467bdcdb46715412764a156c72d6999df55729c8`.
+This is one fixed fitted simulator case, not a task-level compensation-benefit,
+new-body, held-out or physical claim. The new-profile browser gate is separate.
+
+The new full enabled regression at `db59a56` passes 717 tests without skips in
+167.509 s (172.765 s supervised). All 524 source entries, twenty assets and fifty
+retained references rehash, model identities stay unchanged, and the writer lease
+is free after exec exit0. Primary report SHA-256:
+`276a81e1c634a7b4ef1c8b735e9109d4d8d86486b3e255e36a7b960ce1c1cc77`;
+root audit: `f02e2833fa76eeb1c295775a26a856e0644141999570bd87108f2fd67004521a`.
+This supersedes the earlier integration test count below, while preserving its
+original source identity. The corrected body actual experiment remains separate.
+
+The full enabled regression on `f78f087` passes **711 tests, no skips**, in
+159.950 s (163.231 s supervised, exit 0), including actual simulation, production
+MaleCNS Torch/native/replay and puck CPU checks. All 513 source entries, twenty
+assets and fifty retained references rehash; model identities are unchanged and
+the writer lease is free. Report SHA-256
+`0cfeea443722bf8a5122442e547d5ce4c9c645a38da3742394e0a81bf54c9b27`.
+Node24.21.0 production typecheck/build, seven browser-measurement arithmetic
+checks and memory annotation checks pass. This did not run a new browser workflow.
+
+The later balanced-development merge at `ba0ae45` passes 54 focused checks in
+9.382 s and original-data/bundle readmission in 10.227 s. Its 104 actual owner
+dependencies and scientific ASTs are checked. The first inherited producer-only
+check rejects `snapshots.py`, which intentionally changed for body/homing. Both
+failed helper logs remain; the corrected checker pins that exact approved `f78f087`
+snapshot source and all other fourteen producer entries unchanged. No experiment
+pin or tolerance changed. Receipt SHA-256
+`c0155b07ed3de5b72870b8142007d338cf6b87dac24f0803532d83af1efb8eb4`.
+The 711-test result predates this routing-only adapter merge.
+
+The [remaining-02 admission](reports/m5-remaining-02-admission.md) completes all
+twelve owners, 1,204 rows and four actual neural calls on frozen `559b64a`.
+Root raw audit first passes in 10.992 s; all 135 publication references rehash.
+The paired lower stale fact is still unobserved at300; null confirmations and
+both zero-selector no-event probes remain distinct. Task/goal/correction completion
+fields stay null. All sampled identities exit and the lease is available.
+Receipt SHA-256 `1c7a16ec766eb5757ca1cd4061f4f153ee21988c9c933ea4e82a8487351bbc72`.
+
+Hosted workflows for `f78f087` (37108906322 / 37108903857) also never start:
+all four jobs execute zero steps and repeat GitHub's account payment/spending-limit
+annotation. No retry or billing change was made.
+
+Balanced-student actual mechanics runs once on frozen `818e7ea`, with all four
+owners completing normally in 20.901 s enclosing: 120 source, four native,
+120 actions-replay and 120 policy-replay rows; actions replay makes zero predictions.
+Root retained audit first passes in 1.020 s: five full native snapshots, 244 exact
+continuation/replay rows, independently reconstructed NPZ actions within
+2.98023223877e-8 against 1e-6 tolerance, unchanged inputs/controls and eight
+absent sampled process identities. Home writer lease is free. Receipt SHA-256
+`1e35a90d48afe4d6ecc501e2926af38de9bcbabecdf3a6ae77d652a4a45ec5a7`.
+This is mechanism evidence; the balanced models have no development task result yet.
+
+Balanced puck binding `818e7ea` passes 49 root pure checks in 3.317 s and
+shared-validator real-data admission in 8.255 s. The merged `f18ff48` checkout
+has newer Engine/MaleCNS dependencies, so it was checked directly: all 49 pass
+without skips in 5.650 s; real-data admission takes 6.287 s. All twenty teacher
+sources, 5,710/1,314 train/dev rows, three original and three balanced bundles,
+fifteen protected source hashes and the actual 99-entry owner inventory pass.
+No Torch/native/lease execution occurred. Integration receipt SHA-256
+`b9d43143518cb81b15400ac68a68b6ff579c6df91d68ae1e21ce6cd4868e092b`.
+The first receipt assembly assumed the source branch's 97-entry inventory;
+its correction note retains that bookkeeping error. Tests/readmission passed
+first and were not repeated for that correction. The actual mechanism now passes its separate raw audit below; full
+combined enabled regression remains pending.
+
+
+Remaining-01 comparison control review passes eight pure fixtures in 5.718 s
+and independent readmission in 8.566 s: 573 tracked/upstream/asset entries,
+120 admission/history input pins, forty fresh IDs disjoint from 350 prior IDs.
+Root receipt SHA-256
+`c6b75130fd62f02c79fa65edb09cbf22e486b01995057043402705a17b279e29`.
+The exact frozen command started once with 31,439,282,176 free bytes and an
+available writer lease. The terminal comparison completes all forty owners and 4,626 actual numeric
+rows. All 36 evaluator task checks pass; worker task flags remain null. Root raw
+audit passes in 16.217 s and independent outcome reconstruction in 3.498 s.
+All nine conditions reach goals at428 in each null/no-event cell and430 in the
+paired-change cell. The stale upper fact is passively corrected at300 in every
+condition; own-U gives no timing benefit. Null false selections/confirmations
+and zero no-event invocations remain explicit. All sampled identities exit and
+the writer lease is free. Raw audit SHA-256
+`58d443952d0142b4e00933b0935813ce4ef67974c7d3e8c53708e58e151d6646`;
+outcome receipt `fd7becb4abe62d5866d2a1a5986a00b374595418c4857f2a5353df04deffa45b`.
+
+
+Root retained puck-training audit first passes in 1.476 s: all ninety history
+rows, three finite 1,442-parameter checkpoints, unchanged unweighted selection,
+438 source/artifact references and normal enclosing cleanup. Receipt SHA-256
+`9885dbf31e4aaeebe5d4fe0f220c89e89bb64e2f48c0220facaf7f655c2e2524`.
+This checks fitting/provenance, not task performance.
+
+Remaining-01 memory controls pass eight root fixtures in 7.842 s and independent
+readmission in 2.277 s: 571 identities and twelve fresh IDs disjoint from 338
+prior declarations. Root caught a draft `wall_seconds`/actual `elapsed_seconds`
+supervisor-field mismatch before execution; the corrected controls and matching
+fixture are frozen, and prior drafts remain retained. Receipt SHA-256
+`2d17499e21e83c2953078673a5707e1dddf36e20416925918d8b3273d68c5506`.
+The [one-shot admission](reports/m5-remaining-01-admission.md) completes on unchanged
+`568cc54`: twelve owners, 1,204 rows, four actual neural calls and twelve snapshots.
+Root audit first passes in 10.917 s and all 134 publication references rehash.
+Task/correction/goal completion remains censored in that admission. The subsequent forty-owner comparison completes separately on frozen `6bf0890`, as audited above. Root
+receipt SHA-256 `c6dcef431362616faa5cc4c1ec765d5200ea7aee8e71f2e8fdab17eca42f7b92`.
+All sampled process identities are absent and the global writer lease is free.
+Both fixture workflows passed on integration `a8af066` (37104317315 / 37104314840).
+The newer `65573dd` jobs (37104781244 / 37104778123) never started: GitHub reports
+failed account payments or a spending limit. No billing change or retry was made.
+
+[Balanced puck residual evidence](reports/m6-puck-balanced-residual-v1.md),
+`808baef`, is integrated after all ten references rehash. The one-shot NumPy
+calculation takes 11.461 s supervised and reproduces selected unweighted dev
+losses within 5.33e-10. Root independently verifies row identities/counts and
+recomposes the six aggregate MSEs; it does not repeat dense predictions. Root
+receipt SHA-256 `29bddd36edf4d067cd7d4034a4d7079ec1d3d00f53fdf928e8de59e66725640c`.
+That residual audit performs no new fitting, selection or rollout; the subsequent
+fixed balanced-student mechanism now passes independently.
+
+The held-out raw root receipt is
+`runs/m7-heldout-closed-loop-root-audit-177982e/audit.json`, SHA-256
+`816ab24e3359d07ab61f9c64b197aca3ce27000cbdbadd9b91086113de41d77d`.
+It first passes in 76.972 s with no Torch/MuJoCo import or policy/physics rerun.
+Puck training controls independently pass eleven launcher and two enclosing
+fixtures; root receipt SHA-256
+`473a48752ad081352a9d7b6240d0032f487eaa07afe9f21b40358cfec1d7f3a9`.
+Those fixtures performed no actual training or writer-lease acquisition.
+
+Remaining-profile source `568cc54` is integrated at `78a0b6`. Root ran 24
+new/adjacent tests: 23 passed, one errored because the legacy previous-owner
+completion fixture attempted the actual global writer lease while recovery was
+active. The lease correctly refused it before any model/native owner started.
+All six new profile tests pass; this is a scheduling error, not a production
+failure or a passed suite. Original report/log remain unchanged under
+`runs/memory-full-development-root-checks-568cc54/`; its correction note is
+`scheduling-note.json`. The subsequent 697-test enabled regression passes this fixture after recovery
+cleanup. No fixture or runtime guard was weakened.
+
+Balanced-loss root pure/data receipt: `runs/puck-balanced-root-checks-ec7a113/root-checks.json`,
+SHA-256 `a37417083fe4888c5842771437849812f9c64349a1082329b89f96ee1b1d505e`. No model construction,
+prediction, physics or writer lease occurred in those checks. The fully enabled
+682-test result below remains historical. The new fully enabled `5175b14` run
+passes 697 tests without skips in 161.294 s (164.601 s supervised), with all 491
+source entries, twenty assets and production models unchanged. All fifty retained
+artifacts rehash; the global writer lease is free after that run. Report SHA-256
+`0f847d0c217a52b47a2249bccfc7f82ac8bec741c1f8e81a5af078c5738d3238`.
+
+Both fixture workflows pass on `5f72bac` (37102399987 / 37102396765), including
+the watchdog assertion fix. The closed-loop root control receipt is
+`runs/m7-heldout-closed-loop-control-root-review-177982e/audit.json`, SHA-256
+`aa0a90648e4d95d1fa48dd4f2ed175e40f8d06fbbda25f768aab6b01f9a1013b`.
+This is source/control admission, not an experiment outcome.
+
+CI on `3fc463b` has one passing fixture workflow (37100438705) and one retained failure
+(37100437065: 664 passed, seventeen opt-in skips, one error). The watchdog child
+was reaped between `Path.exists()` and reading `/proc/<pid>/stat`; the fixture now
+reads once and accepts only disappearance or zombie state. Production code is
+unchanged. The existing spawned watchdog test passes in 2.44 s. Retained failed
+CI log SHA-256 `f0efe080aee3e13f3e2d79f0071c8d27c700037560e0cbb232aae0449831e664`;
+focused result SHA-256 `94c4eff96154ecd2a33e952f2560e597a15cbc15c0ca4515b03ad9c7c9a1772a`.
+
+Latest evidence integration rehashes all 258 memory B references (71,621,464 bytes)
+and all 33 recovery recorded-input references (915,757 bytes). The recorded-input
+root audit passes first execution in 16.951 s; receipt SHA-256
+`3d7ffb2fb83d2540384d1f9a4e2031867a367d87bd9aecd2c76956a3789761eb`.
+It verifies all 1,193 unchanged identities, teacher disjointness, six fixed model
+identities, normal cleanup and the available home writer lease. Reported losses
+were not independently recomputed.
+
+Teacher root audit: `runs/m7-heldout-teacher-root-audit-6a5cb7e/audit.json`,
+SHA-256 `4d3642336f384b8008299a75d77e55c0bda1c3a8d9ba83019118ec24d352e973`.
+Puck development root audit: `runs/puck-development-root-audit-77f4d49/audit.json`,
+SHA-256 `af58a7c844987350e53c437b09536a7216223c0fc895d3661a3ce6e48dcf38db`.
+Both pass on their first invocation, without Torch/MuJoCo execution. Puck's maximum
+independent NumPy action error is 9.536743164617612e-08 against the fixed 1e-6
+bound; its goal admission remains failed. All twelve runs retain contact and puck
+motion but never enter their own push mode; this is descriptive, not a cause.
+Both GitHub fixture workflows pass on `77d10b8` (37099064271 / 37099062063).
+
+Recovery retained-data root audit first passes in 29.589 s, without Torch/MuJoCo,
+model inference or physics. Its receipt is
+`runs/m7-recovery-development-root-audit-228232c/audit.json`, SHA-256
+`cda837ffbb128ba14a2981512421501fff61359d8090c9ca18553474d3711f09`.
+The experiment passes development only; independent held-out capability and R3
+qualification remain open.
+
+Both GitHub fixture workflows passed on `28ad7c5` (runs 37097154684 and
+37097152117). The fully enabled local regression at that source passes all 682
+tests without skips in 129.311 s, covering the later memory, held-out-source and
+puck-development merges. Its report SHA-256 is
+`b304319f6f64cbcc9a2030b0155ea4c9ed141cc68676a75d0b9ca3f3e9f202aa`.
+
+Pure control reviews are retained under the integration checkout's `runs/`:
+`m7-recovery-development-root-review-228232c/audit.json`
+(SHA-256 `431bd30e5240d1a632ebff59cee4ae4320b5c36abe97d4283c305f282ac335a2`)
+and `puck-student-control-root-review-6f1fda9/audit.json`
+(`3f070bae51a0eaccee9c6eb9955c4cc8e4805698380d41b2b5c494b68e2f15d8`).
+Neither audit imported Torch/MuJoCo, constructed a model, launched an owner or
+acquired a writer lease. Actual outcomes require their separate runtime reports.
+
+The retained failed attempt `480acfa` ran 646 enabled tests in 131.167 s: 644 passed, two historical-reader publication fixtures errored, no skips. All fifty retained files rehash; source/assets/production models are unchanged. The fixture-only correction `228232c` is integrated; 51 focused tests pass with one explicit Torch opt-in skip. A fresh fully enabled run at `1d97787` passes all 646 tests in 129.798 s; runtime admission pins stay fixed. The corrected full-suite result is recorded below.
+
+Earlier full regression at `1d97787` passes all **646 enabled tests without skips** in 129.798 s (133.017 s supervised). The earlier `7123270` suite passed 628 tests. The preceding `b76d2b3` run retains its one fixture failure; `7d5fc1f` isolates the lazy-import check without changing the adapter or runtime. All 50 retained artifacts rehash correctly; source, assets and production model identities are unchanged. This covers new verifier fixtures separately from their actual outcomes. See [integration evidence](reports/project-integration.md).
+
+M2: 145 Python tests passed with actual EGL enabled and no skips. UI build/typecheck and both actual browser workflows passed (24.5 s and 33.8 s). Manual/teacher/full FLYNN CPU owner gates passed; final FLYNN gate covers four identical continuation ticks, a live obstacle edit, both exact executable replays and all three export formats. Separate 30-tick masked full-model continuation passed across fresh processes. All final FLYNN runtime hashes match the final Python files; earlier run identities remain recorded. See [M2 evidence](reports/m2-interactive-lab.md). These checks do not establish release endurance or performance.
+
+Earlier M3 integration at `a24c237`: 193 tests passed with actual EGL enabled and no skips (59.444 s), covering storage/recovery, delayed and truncated IPC, semaphore/feeder cleanup, failed-spawn close and complete-cycle controller coverage. Teacher CLI evaluation completed 30 ticks; UI build and seven measurement checks passed. The durable validation index retains 69 unchanged source/test/configuration hashes and confirms no remaining owned jobs or listener changes. The original PRD hash and pinned upstream are unchanged. See the scoped [M3 evidence draft](reports/m3-release-hardening.md).
+
+M3 / R1 is complete under the scoped contract with documented limits. Earlier natural throughput passed at `a24c237`: manual 600 ticks at 1.00010826× active RTF and teacher 653 at 1.00030542×; outer rates remain 0.99557347× and 0.98877306×. Earlier natural-completion throughput passed on `dc911f3`: manual 600 ticks at 1.000869x active RTF and teacher 653 at 1.000590x, with clean exits. Earlier failed and incomplete performance reports remain retained; the operator-pause protocol is distinct. Recorded-source `ec1d2e6` browser evidence passes four workflows (including overlay isolation and keyboard recovery), all four close responses and clean PID-only SIGTERM without semaphore warnings. Acknowledgement p95 is 43.4 ms; application p95 is 53.8 ms. Full-window display updates are 27.9809 Hz, below the 30 Hz target. Profiling tied recurring gaps to synchronous publication; inventory traversal was improved without caching or weakening durability. The original 927.6 ms browser acknowledgement outlier did not recur and its precise cause remains unproven.
+
+The complete offline gate passed at `ec1d2e6` in 213.994 s: fresh cached Python/Node setup, five recorded full-FLYNN CPU runs with exact continuation and both executable replays, and three CLI/API/WebSocket smoke cycles. It ran inside an isolated network namespace without changing host networking; no owned survivors or semaphore warnings remained. The 240-second CPU FLYNN smoke at `19787f7` completed two full cycles and four successful replays, with 1.421 GiB sampled peak RSS, one sampled owner and clean shutdown. Its short-burst RTF was 0.707–0.718; no full-model real-time claim is made. The hour gate failed during FLYNN branch shutdown; the subsequent normal five-second close also failed. Both reports remain unchanged. Native debugger evidence then identified module-finalization GC at the sampled moment. The `c43f5df` worker-exit fix passes its spawned regression, six IPC/log checks (2.800 seconds), and the full actual EGL suite (195 tests, no skips, 64.174 seconds). Two normal restored full-model closes exit zero in 0.333401 / 0.189359 seconds. Latest natural throughput passes on unchanged `c43f5df` in 36.3254 seconds: manual 600 ticks at 1.000337227× active RTF, teacher 653 at 1.000342527×; outer rates 0.998503646× / 0.988887495× remain below one. See the [durable fix evidence](reports/m3-release-hardening.md#hour-gate-failure-and-teardown-investigation). The [fresh hour gate](reports/m3-release-hardening.md#completed-mixed-hour-gate) passes all eight gates in 3600.000099 seconds on unchanged `c43f5df`:29 complete cycles (manual 10/teacher 10/Flynn 9),58 passed replays,116 closed/completed dispositions and 809 lossless ticks. Receipt p95 is 42.808544 ms; observed application p95 separately 119.977511 ms.712 finite samples peak at 1,602,048,000 RSS bytes/99 FDs/16 threads/one owner; late server p95 grows 20,299,776 bytes/zero FDs/zero threads. Server exits −15 with orderly shutdown, no recorded survivor killing/semaphore warnings and no observed PID/listener remaining. This is 3600 seconds of mixed loading/pause/operations, not continuous inference or full-FLYNN real-time qualification. M3 / R1 evidence and final review are complete under the contract and PRD §21.3, with documented limitations.
+
+M1: 98 tests passed with actual EGL checks enabled and no skips. Fresh-process manual and teacher continuation passed for 12 ticks; full FLYNN CPU passed for 100 ticks, all compared values identical. CUDA failed first at right-camera values on tick 10 under exact image comparison. A frozen-input CUDA probe isolated varying CSR multiplication while index addition matched across all 30 repetitions. See [M1 evidence](reports/m1-execution.md).
+
+M0: 63 tests passed; CI passed for `0e60603`. Teacher 30/30 goals; FLYNN 28/30 goals, two time limits. All 30 initial states/inputs matched. Reference parity passed on 375 ticks. See [R0 evidence](reports/r0-reproduction.md). These are simulation development results only.
+
+## Git and environment
+
+Repository-local author/committer: Aadrika Maurya <aadrikamaurya@gmail.com>. Local fetch and push URLs use `github.com-shraddha`, whose existing SSH key was verified as Aadrika08. This resolves the OAuth token's missing workflow scope without changing global Git/gh identity. GitHub CI uses CPU fixtures only; real GPU runs are local and separately indexed.
+
+Raw run bundles are ignored by Git under each milestone worktree's `runs/`. Shared model assets remain in `.worktrees/r0-reproduction/data/assets/flynn/`; M1 uses that path explicitly. Python 3.11 environment is in `.venv`; use `uv run --no-sync` or explicitly include `--locked --extra simulation` when syncing. One full model/job at a time.

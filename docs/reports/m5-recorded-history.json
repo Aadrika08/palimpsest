@@ -1,0 +1,201 @@
+{
+  "schema_version": 1,
+  "date": "2026-10-02",
+  "claim": "development-simulation-recorded-history-fit",
+  "source_commit": "1cb70a3df6619083e4abbc080566971b91a10a19",
+  "batch_path": "runs/m5-acquisition-batch-20261002",
+  "batch_report_sha256": "561f502b12ffc0069c1b5ba64084dcc4bc453324c88e29fa8a2e48721daff4b7",
+  "batch_plan_sha256": "c27f963407b0446c2a8cd78af46a687ac385cb0d5f61b6c5547caf95de30380c",
+  "batch_protocol_sha256": "077c558062f9c55416ebe0e46ae8e05d3887e2cef8cc94b89cbd756f1fdebdde",
+  "source_identity_sha256": "ae4ddc8ad65a0288ceb3aed2aa26ce2b45780e6c33b128e402628b8c9246421a",
+  "driver_sha256": "c20aa70d33f2b2249fc1c19f837c43c7ede0f9cbc23d394c7b4cef2133680b4f",
+  "source_unchanged": true,
+  "completed_runs": 8,
+  "total_ticks": 3280,
+  "recording_bytes": 674361116,
+  "gaps": false,
+  "fitting_inputs": "validated E only; no regime, geometry, gold, test bank or acquisition metadata",
+  "acquisition_access": "privileged-manual-pose-supervision",
+  "engine_u_guidance_used": false,
+  "live_e_u_empty_during_acquisition": true,
+  "operator_blindness_verified": false,
+  "source_authenticity_verified": false,
+  "held_out_executed": false,
+  "r2_complete": false,
+  "runs": [
+    {
+      "run_id": "441e251772d94a8bb4a0f0b4126c4ef1",
+      "seed": 0,
+      "regime": "local_cue",
+      "status": "completed",
+      "ticks": 410,
+      "recording_bytes": 84294997,
+      "recording_sha256": "bd9a4250412e5acc5effef9facf1418d7402f77fd520100c5f80b64e00b7e0a3",
+      "acquisition_report_sha256": "f089a8de473bd981c596eeb10c5c5e104e827fa3d74be440acafd686c1c14271",
+      "wall_seconds": 29.345365752997168,
+      "gate_result": "closed",
+      "cleanup": "operator_closed; no cleanup_error",
+      "stderr_bytes": 0
+    },
+    {
+      "run_id": "5441030b80c04bceb8681b76b1e621b9",
+      "seed": 1,
+      "regime": "local_cue",
+      "status": "completed",
+      "ticks": 410,
+      "recording_bytes": 84295281,
+      "recording_sha256": "84d87b8be46a3b909dd46a291d02c8ba83ff55f4aa7803466d1d9f528a6f25cb",
+      "acquisition_report_sha256": "196c3b9ed247f3e91c5699b32ef94e2e4f393e4ce3a1bf9ff47dc5b91dc2b2ba",
+      "wall_seconds": 35.7674197180022,
+      "gate_result": "closed",
+      "cleanup": "operator_closed; no cleanup_error",
+      "stderr_bytes": 0
+    },
+    {
+      "run_id": "91b06081c7894fcbad28acdaf69ff783",
+      "seed": 2,
+      "regime": "local_cue",
+      "status": "completed",
+      "ticks": 410,
+      "recording_bytes": 84294997,
+      "recording_sha256": "3828466557a1f424e5b93dd094eb37a750a4a533fce0cd68af62a2183feb5142",
+      "acquisition_report_sha256": "c840086f5efed77423a959c7e06c82f7b36d7c84f32cd4b155a2c830443f1944",
+      "wall_seconds": 30.043573688002652,
+      "gate_result": "closed",
+      "cleanup": "operator_closed; no cleanup_error",
+      "stderr_bytes": 0
+    },
+    {
+      "run_id": "c2392b84586e4b6792c9c29cabf2e6fb",
+      "seed": 3,
+      "regime": "local_cue",
+      "status": "completed",
+      "ticks": 410,
+      "recording_bytes": 84295281,
+      "recording_sha256": "2dfc78fa7fd0db3b5fec032977ed2be978f1bc439d3c2f79572238cc7003410d",
+      "acquisition_report_sha256": "dcf45e62c3334cb3fbc3a7b8d2ea4dd7a8f429bb92bd44a07c90996aa4b32e62",
+      "wall_seconds": 35.667445642997336,
+      "gate_result": "closed",
+      "cleanup": "operator_closed; no cleanup_error",
+      "stderr_bytes": 0
+    },
+    {
+      "run_id": "f21f229f461548c3a986d337c491c157",
+      "seed": 0,
+      "regime": "paired_cue",
+      "status": "completed",
+      "ticks": 410,
+      "recording_bytes": 84295726,
+      "recording_sha256": "a9ab7a8aecf241244b25a4d7bf1e33e3cee7b861f6f2582a7944ecbc91256f09",
+      "acquisition_report_sha256": "0efc9c68541a4c1a99ef353a9a1b45a876ea395bfd9f4c36579616476e280d82",
+      "wall_seconds": 33.20747127100185,
+      "gate_result": "closed",
+      "cleanup": "operator_closed; no cleanup_error",
+      "stderr_bytes": 0
+    },
+    {
+      "run_id": "3550bdadf5c74704b385dc8c3a51810f",
+      "seed": 1,
+      "regime": "paired_cue",
+      "status": "completed",
+      "ticks": 410,
+      "recording_bytes": 84294554,
+      "recording_sha256": "2cb963b962ce16b3541c3c81dd18566896e8a6361fbaa6dc7d73fffe2794e374",
+      "acquisition_report_sha256": "d23a9062a4636923a1f6790a45f2cdac498e189985ae2539a3d9c113c4908d49",
+      "wall_seconds": 33.810132856000564,
+      "gate_result": "closed",
+      "cleanup": "operator_closed; no cleanup_error",
+      "stderr_bytes": 0
+    },
+    {
+      "run_id": "2c7dd9db4b324df48cf9cc5396973547",
+      "seed": 2,
+      "regime": "paired_cue",
+      "status": "completed",
+      "ticks": 410,
+      "recording_bytes": 84295726,
+      "recording_sha256": "01f77b05c70139ecb635fcb0a5919236b9b667dbc9ba514861102a1380e6707b",
+      "acquisition_report_sha256": "a473dc7da0496ca42a52edf962cba53e8677b3ee339c778a7f5c7f2f4e63335b",
+      "wall_seconds": 31.25015879899729,
+      "gate_result": "closed",
+      "cleanup": "operator_closed; no cleanup_error",
+      "stderr_bytes": 0
+    },
+    {
+      "run_id": "f5ff4931ab9a495a8a81b7ce0e429e68",
+      "seed": 3,
+      "regime": "paired_cue",
+      "status": "completed",
+      "ticks": 410,
+      "recording_bytes": 84294554,
+      "recording_sha256": "581623e36aa92428fa357ab8fd8254b987fd39d6e21b5dc6688c2a92cba86ce6",
+      "acquisition_report_sha256": "1d9ef61e256a50d1ff324939d65ed097f6542c8ba86fb59c5fc92b13c89b61b6",
+      "wall_seconds": 33.60617223099689,
+      "gate_result": "closed",
+      "cleanup": "operator_closed; no cleanup_error",
+      "stderr_bytes": 0
+    }
+  ],
+  "histories": [
+    {
+      "regime": "local_cue",
+      "path": "runs/m5-acquisition-batch-20261002/local_cue-history.json",
+      "sha256": "016c5b5e9472b116d065fb922b32d64089db6e27839aec09d751238f8ce7ffc1",
+      "history_sha256": "b6c92a7638af926ed625069b0f1e23fc804db08e621b3bcdf2d5bae8cc1a0457",
+      "history_bytes": 7610,
+      "source_input_bytes": 337180556,
+      "episodes": 4,
+      "gaps": false,
+      "support": {
+        "local_cue": {
+          "observed": 4,
+          "changed": 4
+        },
+        "paired_cue": {
+          "observed": 4,
+          "changed": 0
+        }
+      },
+      "rules": [
+        {
+          "trigger": "cue_changed",
+          "relation": "local_cue"
+        }
+      ],
+      "u_payload_sha256": "e4c8283a0d2a6403bc778bee31defb831365506a311d2df12e3e2c832f5b7579",
+      "u_sha256": "032d40d14192eadc66588a2b63339bb990750a1f70aef036a54453f8746ed9bb",
+      "u_payload_bytes": 108,
+      "u_envelope_bytes": 590
+    },
+    {
+      "regime": "paired_cue",
+      "path": "runs/m5-acquisition-batch-20261002/paired_cue-history.json",
+      "sha256": "64628e37cc6e861194f810baa92926eba8f57260047cdd8ad320a4601023d213",
+      "history_sha256": "35588d3fdfde95f339aa99bd2eb3b7b63b46f135d79ac14688f7951dc0129f34",
+      "history_bytes": 7610,
+      "source_input_bytes": 337180560,
+      "episodes": 4,
+      "gaps": false,
+      "support": {
+        "local_cue": {
+          "observed": 4,
+          "changed": 0
+        },
+        "paired_cue": {
+          "observed": 4,
+          "changed": 4
+        }
+      },
+      "rules": [
+        {
+          "trigger": "cue_changed",
+          "relation": "paired_cue"
+        }
+      ],
+      "u_payload_sha256": "b742a9358a261a13d3446979c314f3cdfc4d6f5a565cf8e2763271d00ca6286e",
+      "u_sha256": "aa37a394fee509275adddb06355388c23e5ef9e8d31c3306327ac29d54800700",
+      "u_payload_bytes": 109,
+      "u_envelope_bytes": 591
+    }
+  ]
+}

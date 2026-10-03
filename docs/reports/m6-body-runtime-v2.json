@@ -1,0 +1,403 @@
+{
+  "version": 1,
+  "status": "passed-development-runtime",
+  "publication": "reviewed evidence",
+  "source_commit": "5dcd125d78fc228afacdc582f54ac612a8e59aa8",
+  "scope": "Loaded fixed calibration, manual CPU actual MuJoCo/EGL; no online adaptation or policy learning",
+  "primary_report_sha256": "7a02137402ba64c8235e252a808c9690691d19c13118dc31463703b2c9f9059f",
+  "invocation": {
+    "argv": [
+      "/home/utkarsh/Work/shraddha/brain/.worktrees/body-runtime/../lab-hardening/.venv/bin/python",
+      "/home/utkarsh/Work/shraddha/brain/.worktrees/body-runtime/scripts/verify_body_runtime.py",
+      "--assets",
+      "/home/utkarsh/Work/shraddha/brain/.worktrees/r0-reproduction/data/assets/flynn",
+      "--output",
+      "/home/utkarsh/Work/shraddha/brain/.worktrees/body-runtime/runs/m6-body-runtime-development-v2-20261002"
+    ],
+    "environment": {
+      "PYTHONPATH": "/home/utkarsh/Work/shraddha/brain/.worktrees/body-runtime/src",
+      "MUJOCO_GL": "egl",
+      "MPLBACKEND": "Agg",
+      "OMP_NUM_THREADS": "2",
+      "OPENBLAS_NUM_THREADS": null,
+      "MKL_NUM_THREADS": null
+    },
+    "outer_timeout_seconds": 780,
+    "log_max_bytes": 1048576,
+    "source_commit": "5dcd125d78fc228afacdc582f54ac612a8e59aa8",
+    "launch_script_sha256": "1a69701110a3002e4388ebfcc505c7cd8a5d8f6437cfae807b35226bdd0a0af0",
+    "supervision": {
+      "schema_version": 1,
+      "status": "completed",
+      "timeout_seconds": 780,
+      "started_utc": "2026-10-02T14:34:20.263924+00:00",
+      "output": "/home/utkarsh/Work/shraddha/brain/.worktrees/body-runtime/runs/m6-body-runtime-launch-5dcd125",
+      "returncode": 0,
+      "elapsed_seconds": 19.614429357003246
+    },
+    "verifier_sha256": "69fa132701a9972f0d1071090dc665a933e353b4fc8667ff4d881a14ec8ffca8"
+  },
+  "inner_seconds": 19.27954671900079,
+  "workers": {
+    "source": {
+      "ticks": 36,
+      "status": "passed",
+      "returncode": 0,
+      "elapsed_seconds": 7.1836912439976,
+      "engine_closed": true,
+      "callback_restored": true
+    },
+    "restored": {
+      "ticks": 4,
+      "status": "passed",
+      "returncode": 0,
+      "elapsed_seconds": 3.187230470997747,
+      "engine_closed": true,
+      "callback_restored": true
+    },
+    "actions": {
+      "ticks": 36,
+      "status": "passed",
+      "returncode": 0,
+      "elapsed_seconds": 4.178051896997204,
+      "engine_closed": true,
+      "callback_restored": true
+    },
+    "policy": {
+      "ticks": 36,
+      "status": "passed",
+      "returncode": 0,
+      "elapsed_seconds": 4.28004708699882,
+      "engine_closed": true,
+      "callback_restored": true
+    }
+  },
+  "profile_identity": {
+    "version": 1,
+    "profile_sha256": "e4d16329c12fbd91b09e6eb98894b2c9d86b4b086b34409054d5a134b0bd2751",
+    "artifact_sha256": "9d2cd4729d32f84b490db3a6726764111989fcc80be74c7a2ba44a97cb419331",
+    "model_sha256": "bf3ca4b0d32600444e0f23e658c790da50a7675fb3c26fee8f9b0a16e0839d67"
+  },
+  "native_continuation": {
+    "status": "passed",
+    "ticks": 4,
+    "body_state": "matched",
+    "raw_arrays": "matched",
+    "float_atol": 1e-06,
+    "float_rtol": 1e-06,
+    "cameras_and_integers": "exact"
+  },
+  "malformed_restore": [
+    {
+      "case": "typed_encoder",
+      "rejected_before_mutation": true,
+      "reason": "body raw encoders: finite number required",
+      "state_sha256": "568a6f57ec6edf7daf56bfb7fd04816f4061592b5f9354f24323acdf517154d2"
+    },
+    {
+      "case": "native_encoder_mismatch",
+      "rejected_before_mutation": true,
+      "reason": "Body raw encoder/time state differs from native data",
+      "state_sha256": "568a6f57ec6edf7daf56bfb7fd04816f4061592b5f9354f24323acdf517154d2"
+    }
+  ],
+  "independent_raw_audit": {
+    "status": "passed",
+    "method": "independent raw iter_ticks scan; no harness audit/comparator helper",
+    "artifact_hashes_checked": 45,
+    "statistics": {
+      "source": {
+        "ticks": 36,
+        "pre_control_stages": 360,
+        "end_caches": 36,
+        "pairs": 26136,
+        "world_only": 23760,
+        "rover_support": 2376,
+        "unexpected_robot": 0,
+        "encoder_rate_abs_max": 9.111286209647798,
+        "controls": [
+          [
+            0.7532490491867065,
+            0.6210575103759766
+          ],
+          [
+            -0.7532490491867065,
+            -0.6210575103759766
+          ]
+        ]
+      },
+      "restored": {
+        "ticks": 4,
+        "pre_control_stages": 40,
+        "end_caches": 4,
+        "pairs": 2904,
+        "world_only": 2640,
+        "rover_support": 264,
+        "unexpected_robot": 0,
+        "encoder_rate_abs_max": 9.111286209647798,
+        "controls": [
+          [
+            0.7532490491867065,
+            0.6210575103759766
+          ]
+        ]
+      },
+      "actions": {
+        "ticks": 36,
+        "pre_control_stages": 360,
+        "end_caches": 36,
+        "pairs": 26136,
+        "world_only": 23760,
+        "rover_support": 2376,
+        "unexpected_robot": 0,
+        "encoder_rate_abs_max": 9.111286209647798,
+        "controls": [
+          [
+            0.7532490491867065,
+            0.6210575103759766
+          ],
+          [
+            -0.7532490491867065,
+            -0.6210575103759766
+          ]
+        ]
+      },
+      "policy": {
+        "ticks": 36,
+        "pre_control_stages": 360,
+        "end_caches": 36,
+        "pairs": 26136,
+        "world_only": 23760,
+        "rover_support": 2376,
+        "unexpected_robot": 0,
+        "encoder_rate_abs_max": 9.111286209647798,
+        "controls": [
+          [
+            0.7532490491867065,
+            0.6210575103759766
+          ],
+          [
+            -0.7532490491867065,
+            -0.6210575103759766
+          ]
+        ]
+      }
+    },
+    "comparisons": {
+      "restored": {
+        "ticks": 4,
+        "all_selected_arrays_exact": true,
+        "maximum_absolute_float_difference": 0.0
+      },
+      "actions": {
+        "ticks": 36,
+        "all_selected_arrays_exact": true,
+        "maximum_absolute_float_difference": 0.0
+      },
+      "policy": {
+        "ticks": 36,
+        "all_selected_arrays_exact": true,
+        "maximum_absolute_float_difference": 0.0
+      }
+    },
+    "sampled_pid_start_identities_gone": true
+  },
+  "source_unchanged": true,
+  "assets_unchanged": true,
+  "progress_snapshot_unchanged": true,
+  "cleanup": {
+    "observed_owned_processes": [
+      {
+        "pid": 378963,
+        "start_ticks": 4531379
+      },
+      {
+        "pid": 379004,
+        "start_ticks": 4532112
+      },
+      {
+        "pid": 379023,
+        "start_ticks": 4532432
+      },
+      {
+        "pid": 379056,
+        "start_ticks": 4532859
+      }
+    ],
+    "survivors": [],
+    "sampler_stopped": true,
+    "sample_errors": [],
+    "scope": "finite .25s descendant sampling plus final PID/start-time check; no claim to observe every transient process; no server/listener created; existing bounded_process sends TERM/KILL to its owned groups after leader exit"
+  },
+  "warnings": "Four existing PyTorch TF32 API deprecation warnings, one per child; no semaphore/resource_tracker/Traceback/Error match in retained inner or outer native logs.",
+  "retained_v1_failure": {
+    "source_commit": "fd2d70dea9557971f7d5570fe4a24698dfa2a355",
+    "report_sha256": "be2315c573db6a89846bf6999a1479f74a14016df4a61c0003226241d4c7bad6",
+    "documentation": "docs/reports/m6-body-runtime-v1.md",
+    "scope": "Zero-tick stale authored-world identity startup rejection; restored/actions/policy not run. V2 separates historical source-inclusive calibration identity from current authoring source/semantic geometry; replay source guards remain strict."
+  },
+  "limitations": [
+    "UI build/browser verification pending.",
+    "Discrete pre-control contact caches plus repeated final cache; no continuous collision or endpoint coverage claim.",
+    "Finite .25-second process sampling and final observed PID/start-time checks; not proof about every transient descendant. Existing bounded_process performs TERM/KILL group cleanup after leader exit; no stronger signal-disposition claim.",
+    "Fixed loaded fits and constructed gear perturbation; no online calibration, learning, odometry update, new task qualification, transient/combined-action performance qualification or physical rover claim."
+  ],
+  "artifact_sha256": {
+    "runs/m6-body-runtime-development-v2-20261002/report.json": "7a02137402ba64c8235e252a808c9690691d19c13118dc31463703b2c9f9059f",
+    "runs/m6-body-runtime-development-v2-20261002/independent-audit.json": "74fa05ea50d944ce899e6f12c5740240d5ba31d0bdb2abc9c8c59e8a58e5c4df",
+    "runs/m6-body-runtime-development-v2-20261002/independent-audit.py": "bb75eeba5a93f3a55018ba65db362c62cede44be4a8c9ab988f893678265bf68",
+    "runs/m6-body-runtime-launch-5dcd125/invocation.json": "a191a0e70d439bc1ce28abcc464bdf4aa85f091559e06222b7c6ccb4fc196bf6",
+    "runs/m6-body-runtime-launch-5dcd125/supervisor.json": "04786e5e50e96b02a587d20b1c57b3936516f0b16ccf82aed9705288dcfa7db8"
+  },
+  "runtime_files_reverified_after_run": 32,
+  "current_world_provenance": {
+    "authoring_source_sha256": "508d7c53cf78e8a26a2c459e2b6e2a02c8c0823535005a19668a31717f0dbb12",
+    "profile": {
+      "apertures": [
+        [
+          -2.0,
+          0.0
+        ],
+        [
+          0.0,
+          2.0
+        ]
+      ],
+      "arena": 7.0,
+      "claim": "development-fixture",
+      "closed_gates": [
+        [
+          0.0,
+          -1.0
+        ],
+        [
+          0.0,
+          1.0
+        ]
+      ],
+      "crossing_x": [
+        -1.0,
+        1.0
+      ],
+      "cue_xy": [
+        -1.2,
+        0.0
+      ],
+      "default_change_tick": 10,
+      "goal_xy": [
+        -1.0,
+        0.0
+      ],
+      "id": "memory-passages-development-v1",
+      "inspection_xy": [
+        [
+          -0.8,
+          -1.0
+        ],
+        [
+          -0.8,
+          1.0
+        ]
+      ],
+      "memory_source_sha256": "9641ae3d7d78577e0ea5bc8bcacbe455cae6c548f4f9bd10b8bb593a8fd7c542",
+      "obstacle_radius": 0.4,
+      "parked_gates": [
+        [
+          2.5,
+          -1.0
+        ],
+        [
+          2.5,
+          1.0
+        ]
+      ],
+      "parked_others": [
+        [
+          3.7,
+          -5.6
+        ],
+        [
+          3.7,
+          -4.4
+        ],
+        [
+          3.7,
+          -3.2
+        ],
+        [
+          3.7,
+          3.2
+        ],
+        [
+          3.7,
+          4.4
+        ],
+        [
+          4.9,
+          -5.6
+        ],
+        [
+          4.9,
+          -4.4
+        ],
+        [
+          4.9,
+          -3.2
+        ],
+        [
+          4.9,
+          3.2
+        ],
+        [
+          4.9,
+          4.4
+        ],
+        [
+          6.1,
+          -5.6
+        ],
+        [
+          6.1,
+          -4.4
+        ],
+        [
+          6.1,
+          -3.2
+        ],
+        [
+          6.1,
+          3.2
+        ],
+        [
+          6.1,
+          4.4
+        ]
+      ],
+      "posts": [
+        [
+          0.0,
+          -2.0
+        ],
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          2.0
+        ]
+      ],
+      "rover_radius": 0.3,
+      "sensor_bridge_source_sha256": "6562de8c0734e0622529231babc7e035ba146077b39e004b0f52928b3038dcc6",
+      "start_pose": [
+        -2.5,
+        0.0,
+        0.0
+      ],
+      "version": 1,
+      "world_source_sha256": "508d7c53cf78e8a26a2c459e2b6e2a02c8c0823535005a19668a31717f0dbb12"
+    },
+    "profile_sha256": "73923fa4ac16f76a4bffd598ca5d2a455806a50275d2bc8441fc743faa09311c",
+    "semantic_profile_sha256": "cbc3f2cfbcf0ef25efb260f21771fe0ac52f4bd0b1a78b8e0dfd64378febe753"
+  }
+}

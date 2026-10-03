@@ -1,0 +1,108 @@
+{
+  "source_commit": "6fdab2f14277046cfabdbd5eb8632e6357c3baa7",
+  "status": "passed",
+  "scope": "actual pinned anatomical data; no model or simulator",
+  "source_sha256": {
+    "data/assets/specimens/dnge104-v1/pair.json": "4651c8d7f0e891e059b8b21fb74369088c4b454b78a7e0981fc4b85967248f68",
+    "data/assets/specimens/dnge104-v1/male-12781.swc": "84f14c2f8b98da664db2c322c6f3f47f83b61c412207bddfa67e2315b86fc699",
+    "data/assets/specimens/dnge104-v1/female-720575940640723315.swc": "999ab8934af1b912a6dc5d9f411913b264cb1f49dc6c9512f7cf2f15bda2847a"
+  },
+  "svg_sha256": "88b0dd69d23ced240199aede489dc29014ae5b7cb46d79f4617615c82ae61949",
+  "svg_bytes": 1742443,
+  "renderer_sha256": "db0973a5cf700ccf2f8a8bf9e5adb2a35c561b36aab550892473e02a671a0b41",
+  "structures": [
+    {
+      "bounds_um": [
+        [
+          350.208,
+          504.32
+        ],
+        [
+          286.208,
+          550.4
+        ],
+        [
+          167.936,
+          1001.984
+        ]
+      ],
+      "edges": 15942,
+      "nodes": 15945,
+      "roots": [
+        1,
+        3934,
+        15926
+      ]
+    },
+    {
+      "bounds_um": [
+        [
+          453.44328,
+          583.4381999999999
+        ],
+        [
+          301.38066,
+          377.40816
+        ],
+        [
+          101.03235000000001,
+          251.53900000000002
+        ]
+      ],
+      "edges": 21065,
+      "nodes": 21066,
+      "roots": [
+        840456876
+      ]
+    }
+  ],
+  "projection": {
+    "axes": [
+      "native x",
+      "native z"
+    ],
+    "centering": "each native x/z bounding-box center; minimum viewport span 1um",
+    "radii_rendered": false,
+    "registration": "none",
+    "shared_pixels_per_um": 0.5515270104358502,
+    "smoothing": false,
+    "units": "um"
+  },
+  "exact_segment_order_and_geometry": true,
+  "exact_root_identity": true,
+  "female_conversion_independently_checked": true,
+  "deterministic_second_render": true,
+  "sources_unchanged": true,
+  "qualification_claims": [],
+  "browser": {
+    "result": {
+      "lines": 37007,
+      "roots": 4,
+      "clipped": [],
+      "metadata": true,
+      "errors": [],
+      "external": []
+    },
+    "source_svg_sha256": "88b0dd69d23ced240199aede489dc29014ae5b7cb46d79f4617615c82ae61949",
+    "screenshot_sha256": "5e04d267d337966bed17861fb9110fa7080a897a1f270193dfcac9605ddfe3f2",
+    "script_sha256": "4109c23decbe825fcf10518332b2f484b37f284a6e95e992d903395099727ab0",
+    "scope": "compatible previously installed Playwright/Chromium; preparation SVG bytes equal frozen-source SVG",
+    "image_visually_reviewed": true,
+    "prior_attempts": [
+      "Default latest Playwright browser was not installed; no browser launched.",
+      "Latest Playwright with system Chromium reached DOM checks but screenshot timed out at 30 seconds; repeated after path batching.",
+      "Previously verified playwright-core with system Chromium and viewport screenshot passed in 0.803s. Screenshot compatibility cause not isolated."
+    ]
+  },
+  "fixture_verification": {
+    "tests": 4,
+    "skipped": 0,
+    "result": "passed",
+    "seconds": 0.03
+  },
+  "artifact_sha256": {
+    "runs/m9-specimens-6fdab2f-20261002/report.json": "3b0972bc4893b1f368b3491bb88af2f64cf82baf11afaafbd5ab144e6eb8cdba",
+    "runs/m9-specimens-preparation-20261002/browser-paths-report.json": "5082c77dcfdd37526a3b5d6a5d5aa8bcde8c7e680d7a508934c8cc57d6b3bf38",
+    "runs/m9-specimens-preparation-20261002/browser.mjs": "4109c23decbe825fcf10518332b2f484b37f284a6e95e992d903395099727ab0"
+  }
+}

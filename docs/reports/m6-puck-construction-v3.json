@@ -1,0 +1,149 @@
+{
+  "audit_script": {
+    "bytes": 4993,
+    "path": "runs/m6-puck-construction-v3-prepared/audit.py",
+    "sha256": "7de64e0c37c07a43907c9572b9c334b27f68e1ee8b83d2210dc288bb2353ffdc"
+  },
+  "cameras_checked": 4,
+  "checked_source_files": 74,
+  "cleanup": [
+    {
+      "id": "fresh-one",
+      "identity": {
+        "pid": 491029,
+        "process_group": 491029,
+        "start_ticks": 6077683
+      },
+      "process_group_absent": true,
+      "renderer_receipts": [
+        {
+          "closed": true,
+          "resource": "retired"
+        },
+        {
+          "closed": true,
+          "resource": "current"
+        }
+      ],
+      "same_process_alive": false
+    },
+    {
+      "id": "fresh-two",
+      "identity": {
+        "pid": 491039,
+        "process_group": 491039,
+        "start_ticks": 6077836
+      },
+      "process_group_absent": true,
+      "renderer_receipts": [
+        {
+          "closed": true,
+          "resource": "retired"
+        },
+        {
+          "closed": true,
+          "resource": "current"
+        }
+      ],
+      "same_process_alive": false
+    }
+  ],
+  "control_ticks": 0,
+  "equality": {
+    "cameras": true,
+    "control_ticks": true,
+    "full_native_data": false,
+    "full_native_model": true,
+    "physics_steps": true,
+    "profile_identity": true,
+    "qpos_qvel_ctrl_forces_sha256": true,
+    "task_state": true,
+    "time_s": true
+  },
+  "error": {
+    "message": "Fresh-owner equality failed: full_native_data",
+    "type": "ValueError"
+  },
+  "finalization_errors": [],
+  "independent_audit": {
+    "bytes": 10082,
+    "path": "runs/m6-puck-construction-v3-prepared/audit.json",
+    "sha256": "5675c0533fb7eb74a3b4e6ddc7cf4123dd67b9570eded1b792262b919bdf0b03"
+  },
+  "inner_elapsed_seconds": 3.1467671930004144,
+  "launcher": {
+    "bytes": 3017,
+    "path": "runs/m6-puck-construction-v3-prepared/launch.py",
+    "sha256": "5782403fe6efcfbb9798797615ab9994f6cc229cca00696aa8deb3698bfd7c4b"
+  },
+  "native_containers": [
+    {
+      "full_native_data": {
+        "bytes": 347881,
+        "sha256": "7a434d49e1688a5e1dd033ef456afc3d2a93c8c7ed17a3ee424b373e14284199"
+      },
+      "full_native_model": {
+        "bytes": 119898,
+        "sha256": "a118430d27d1909b96d5e7204bef1d406d9de090e8fa4fe85225a1ff207bf9bd"
+      }
+    },
+    {
+      "full_native_data": {
+        "bytes": 347881,
+        "sha256": "bf87cb12f5f0637eb6d5e1306090154c18cb4986fe4cd9278b87349f0c20d792"
+      },
+      "full_native_model": {
+        "bytes": 119898,
+        "sha256": "a118430d27d1909b96d5e7204bef1d406d9de090e8fa4fe85225a1ff207bf9bd"
+      }
+    }
+  ],
+  "native_data_difference": {
+    "bytes_each": 347881,
+    "different_bytes": 986,
+    "interpretation": "Unresolved serialized-native-data inequality; no native loading, byte normalization or accepted criterion substitution."
+  },
+  "next_action": "Read-only exact byte/serialization-source investigation; no criterion change, native deserialization, rerun or runtime integration authorized.",
+  "outer_elapsed_seconds": 3.33193008100352,
+  "outer_report": {
+    "bytes": 9828,
+    "path": "runs/m6-puck-construction-v3-20261003/launch-result.json",
+    "sha256": "f7991c95eb9b74f5a2e6462c1a7f0577d0dd58dbaa7d91f4249771606b381d17"
+  },
+  "outer_returncode": 1,
+  "owners": [
+    {
+      "id": "fresh-one",
+      "returncode": 0,
+      "status": "passed"
+    },
+    {
+      "id": "fresh-two",
+      "returncode": 0,
+      "status": "passed"
+    }
+  ],
+  "physics_steps": 0,
+  "prepared_plan": {
+    "bytes": 10295,
+    "path": "runs/m6-puck-construction-v3-prepared/plan.json",
+    "sha256": "012eae7d219c37062cce1f24fcabdddb527a0f077cb96840078effdba6559e1f"
+  },
+  "primary_report": {
+    "bytes": 20606,
+    "path": "runs/m6-puck-construction-v3-20261003/gate/report.json",
+    "sha256": "1469c05864efcd15836ee2d8a6e253e5c51c089dff5272618946ad44089534e4"
+  },
+  "primary_report_sha256": "1469c05864efcd15836ee2d8a6e253e5c51c089dff5272618946ad44089534e4",
+  "protocol": {
+    "bytes": 1993,
+    "path": "docs/plans/m6-puck-construction-v3.json",
+    "sha256": "d515e9a234b6bffa551e0083c1fd8e3dde940a425cbbcd7a8ed336b437c36754"
+  },
+  "qualification_claims": [],
+  "retained_bytes": 1177555,
+  "source_commit": "b28ad05b62a4885b3d744450d7c214da35cd4201",
+  "sources_unchanged": true,
+  "status": "failed_full_native_data_equality",
+  "version": 1
+}

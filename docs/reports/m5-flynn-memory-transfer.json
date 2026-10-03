@@ -1,0 +1,2152 @@
+{
+  "source_commit": "6f355bdd9c0144c278c90cf53b468b429775fb8a",
+  "report_sha256": "f07a40e8cc6c84f307ef96d1ab2a4358969eb3d080a9e3ea450c629966c92f58",
+  "launch_sha256": "15a17cc372655e7ae9a31327e1f69fa1095db740b2db9e3ec2e88d4931f7672c",
+  "stage_rows": [
+    {
+      "stage": "source",
+      "run_id": "5105edbfb5a5463f82f4388815d02527",
+      "ticks": 300,
+      "terminal_boundary": 300,
+      "final_phase": "paused",
+      "worker_sha256": "c7463be2fe0a90552f406bf762cc79f5960df657fe564ec1835ddc2048e099ac",
+      "snapshot_sha256": "39b001d163c2a2f0280465414e24a5b130ba07008946ff0af136eefe77bb3579",
+      "model_identity_sha256": "b11274e6090a2635a9f996817b33c778d6748c130c750d5d23747645b50f83af",
+      "policy_state_sha256": "5a95d8fed83f34f23577f09dd47cf96d801d43bf50e6b4578d8b815138d9e02f",
+      "rng_sha256": "51a98b1973ccc83c50bfab45faf041909643fc0b31b062214de89ce6c5353262"
+    },
+    {
+      "stage": "policy-anchor",
+      "run_id": "c641fd11641f4dbe8fc01ac5976c2a94",
+      "ticks": 0,
+      "terminal_boundary": 300,
+      "final_phase": "paused",
+      "worker_sha256": "ee3810fce6628d9f6e6b670f463fab16a8a57d8127daf1b6218197ec6377f26e",
+      "snapshot_sha256": "5ca9f3c26d071c2d62afafd2620046ff79eaccca8057ced15226ff545f8451de",
+      "model_identity_sha256": "631febec44c978d96287f16dd32346f593c76a27b9bb446d503a8d2177c5bc4a",
+      "policy_state_sha256": "602d05a7965dc607e733f7a9b77d96cadee13d7d8140793795f89867486960b0",
+      "rng_sha256": "6de39ace8c7808086f3f09f61fb64148a6f7b6e5b8e41fbc1039ea550869b2e3"
+    },
+    {
+      "stage": "anchor",
+      "run_id": "22e256cb10db440aa603e53824cc7dda",
+      "ticks": 0,
+      "terminal_boundary": 300,
+      "final_phase": "paused",
+      "worker_sha256": "4d294613886e83e5855e265ee7a02a53efa429f5390386ed4a0c7f6e1ffad20a",
+      "snapshot_sha256": "4f96d89ff03d252a30a7f22da3f09ea3166b25ea04d5ca530330a4f9c26de86c",
+      "model_identity_sha256": "631febec44c978d96287f16dd32346f593c76a27b9bb446d503a8d2177c5bc4a",
+      "policy_state_sha256": "602d05a7965dc607e733f7a9b77d96cadee13d7d8140793795f89867486960b0",
+      "rng_sha256": "6de39ace8c7808086f3f09f61fb64148a6f7b6e5b8e41fbc1039ea550869b2e3"
+    },
+    {
+      "stage": "own",
+      "run_id": "12ef7a0db5af408fbdb47ad4de6c69b9",
+      "ticks": 129,
+      "terminal_boundary": 429,
+      "final_phase": "terminated",
+      "worker_sha256": "2d53b17b2135745309e7b7db8aab799261d68e4cef08e9f80017dc165a9c2fac",
+      "snapshot_sha256": "c09d4c67786ba354f8e8ad9c088c0867bea9af56f93054a9e44406d3ffb9a540",
+      "model_identity_sha256": "631febec44c978d96287f16dd32346f593c76a27b9bb446d503a8d2177c5bc4a",
+      "policy_state_sha256": "602d05a7965dc607e733f7a9b77d96cadee13d7d8140793795f89867486960b0",
+      "rng_sha256": "6de39ace8c7808086f3f09f61fb64148a6f7b6e5b8e41fbc1039ea550869b2e3"
+    },
+    {
+      "stage": "swapped",
+      "run_id": "49eea4014fba415da595ae55b232fa58",
+      "ticks": 129,
+      "terminal_boundary": 429,
+      "final_phase": "terminated",
+      "worker_sha256": "093ff49353ad21b3928986d7d7da35ab8f2db56d8db16e1cfb77fe268ee4dd44",
+      "snapshot_sha256": "8a9e4c0e789ad9e463b409d37ae7e82be0e6c81cbab880c8bc18a71bd8eed1a1",
+      "model_identity_sha256": "631febec44c978d96287f16dd32346f593c76a27b9bb446d503a8d2177c5bc4a",
+      "policy_state_sha256": "602d05a7965dc607e733f7a9b77d96cadee13d7d8140793795f89867486960b0",
+      "rng_sha256": "6de39ace8c7808086f3f09f61fb64148a6f7b6e5b8e41fbc1039ea550869b2e3"
+    },
+    {
+      "stage": "sham",
+      "run_id": "8fc7997fc8114d3ca406afd0ff5dab56",
+      "ticks": 129,
+      "terminal_boundary": 429,
+      "final_phase": "terminated",
+      "worker_sha256": "da6ee1675950fc5924933d3cf48d055f4484049cc18f82289f1190f10211e378",
+      "snapshot_sha256": "67c0d3b060a7df1a58b89d9099fc63d04464154ae7cd321ae6a94fe961bc00a8",
+      "model_identity_sha256": "631febec44c978d96287f16dd32346f593c76a27b9bb446d503a8d2177c5bc4a",
+      "policy_state_sha256": "602d05a7965dc607e733f7a9b77d96cadee13d7d8140793795f89867486960b0",
+      "rng_sha256": "6de39ace8c7808086f3f09f61fb64148a6f7b6e5b8e41fbc1039ea550869b2e3"
+    },
+    {
+      "stage": "no-U",
+      "run_id": "757917427a91407fa30f7ed45cf7e602",
+      "ticks": 129,
+      "terminal_boundary": 429,
+      "final_phase": "terminated",
+      "worker_sha256": "1edbfdde325593d44def3683895a83ff50318001f8c079b1623d81ea22e2ce57",
+      "snapshot_sha256": "8d4e0981d5729dbe5235f50ef6e416bae1b54ec327fa4ecbde36192efa350c05",
+      "model_identity_sha256": "631febec44c978d96287f16dd32346f593c76a27b9bb446d503a8d2177c5bc4a",
+      "policy_state_sha256": "602d05a7965dc607e733f7a9b77d96cadee13d7d8140793795f89867486960b0",
+      "rng_sha256": "6de39ace8c7808086f3f09f61fb64148a6f7b6e5b8e41fbc1039ea550869b2e3"
+    },
+    {
+      "stage": "hand-authored",
+      "run_id": "422545245c5e4a479481d630333ce33a",
+      "ticks": 129,
+      "terminal_boundary": 429,
+      "final_phase": "terminated",
+      "worker_sha256": "c395852a5c4ecf00081cde07a4a7440cf7736cc1afda1e1384356b90e1140a76",
+      "snapshot_sha256": "d5f7604dc33a9f915bc3ba140c7751dc618635849f8924dc2d7e15bc424e05fd",
+      "model_identity_sha256": "631febec44c978d96287f16dd32346f593c76a27b9bb446d503a8d2177c5bc4a",
+      "policy_state_sha256": "602d05a7965dc607e733f7a9b77d96cadee13d7d8140793795f89867486960b0",
+      "rng_sha256": "6de39ace8c7808086f3f09f61fb64148a6f7b6e5b8e41fbc1039ea550869b2e3"
+    },
+    {
+      "stage": "history-independent",
+      "run_id": "e4e06d016a61499ea7286bf83639e72f",
+      "ticks": 129,
+      "terminal_boundary": 429,
+      "final_phase": "terminated",
+      "worker_sha256": "e2e9858a7ed04466631bc4feb0e990429b10747c5bfe6497f0f9546c9accac85",
+      "snapshot_sha256": "5a953e5c6265965ed7e6dcf3fadb4a353996ff8ad55ff41c33aa0e67908d1512",
+      "model_identity_sha256": "631febec44c978d96287f16dd32346f593c76a27b9bb446d503a8d2177c5bc4a",
+      "policy_state_sha256": "602d05a7965dc607e733f7a9b77d96cadee13d7d8140793795f89867486960b0",
+      "rng_sha256": "6de39ace8c7808086f3f09f61fb64148a6f7b6e5b8e41fbc1039ea550869b2e3"
+    },
+    {
+      "stage": "traversal",
+      "run_id": "5aa6bbd28a5d45a9ab6e2c0ffbe53c11",
+      "ticks": 129,
+      "terminal_boundary": 429,
+      "final_phase": "terminated",
+      "worker_sha256": "79bca54db31db3e99af6c57c3c54063a2ec2cc8064965b4cc414f9aa44151562",
+      "snapshot_sha256": "f3713511d05d7a92c2883443fe901645a0523b149549e4b8ec04d78be26f81d6",
+      "model_identity_sha256": "631febec44c978d96287f16dd32346f593c76a27b9bb446d503a8d2177c5bc4a",
+      "policy_state_sha256": "602d05a7965dc607e733f7a9b77d96cadee13d7d8140793795f89867486960b0",
+      "rng_sha256": "6de39ace8c7808086f3f09f61fb64148a6f7b6e5b8e41fbc1039ea550869b2e3"
+    },
+    {
+      "stage": "retrieval",
+      "run_id": "558039a6df684ef2b4b8534cf2d1a9b4",
+      "ticks": 129,
+      "terminal_boundary": 429,
+      "final_phase": "terminated",
+      "worker_sha256": "c01b4f5d2be839b2a60a895f462eab1e4b3dce6098718f20e569d53ac4c315de",
+      "snapshot_sha256": "4368afcc9e340a9ea170defb15a53809ccf062a9c62a74a802f07a463021cda3",
+      "model_identity_sha256": "631febec44c978d96287f16dd32346f593c76a27b9bb446d503a8d2177c5bc4a",
+      "policy_state_sha256": "602d05a7965dc607e733f7a9b77d96cadee13d7d8140793795f89867486960b0",
+      "rng_sha256": "6de39ace8c7808086f3f09f61fb64148a6f7b6e5b8e41fbc1039ea550869b2e3"
+    },
+    {
+      "stage": "oracle",
+      "run_id": "53fdc99f001e49a8a38f5deb96551241",
+      "ticks": 129,
+      "terminal_boundary": 429,
+      "final_phase": "terminated",
+      "worker_sha256": "9ab62c2f3c11b0b747ebeeb1125d0d474cf3e198acf93d816cf8807fabc71f50",
+      "snapshot_sha256": "151d7baa2d733ddbfda501009edbf09352dc642383dfec931b2cc9937b4b131b",
+      "model_identity_sha256": "631febec44c978d96287f16dd32346f593c76a27b9bb446d503a8d2177c5bc4a",
+      "policy_state_sha256": "602d05a7965dc607e733f7a9b77d96cadee13d7d8140793795f89867486960b0",
+      "rng_sha256": "6de39ace8c7808086f3f09f61fb64148a6f7b6e5b8e41fbc1039ea550869b2e3"
+    }
+  ],
+  "index": [
+    {
+      "path": "runs/m5-flynn-memory-transfer-20261002/runs/5105edbfb5a5463f82f4388815d02527/recording/manifest.json",
+      "bytes": 26730,
+      "sha256": "accf2c361cb8bdce2fed3f3c9f5f0189ec7db2c4b25eb71aa71a8ac08adaaa89",
+      "stage": "source"
+    },
+    {
+      "path": "runs/m5-flynn-memory-transfer-20261002/runs/5105edbfb5a5463f82f4388815d02527/recording/events.jsonl",
+      "bytes": 2678091,
+      "sha256": "1fe0babb0b4ee70f4b07c857a09e8262a85378cf0ae7c3ab5c7113490f12df3f",
+      "stage": "source"
+    },
+    {
+      "path": "runs/m5-flynn-memory-transfer-20261002/runs/5105edbfb5a5463f82f4388815d02527/recording/chunks/000000.npz",
+      "bytes": 6299892,
+      "sha256": "0f1d224472add6c918fe9dd917bf5f31755ad8d23912e81519eb0e9dcee18703",
+      "stage": "source"
+    },
+    {
+      "path": "runs/m5-flynn-memory-transfer-20261002/runs/5105edbfb5a5463f82f4388815d02527/recording/chunks/000001.npz",
+      "bytes": 6299892,
+      "sha256": "2b33a3ab9f909718a7bc58bcf6cc513559b5c97acfd07d9ec9e19d5aebd71791",
+      "stage": "source"
+    },
+    {
+      "path": "runs/m5-flynn-memory-transfer-20261002/runs/5105edbfb5a5463f82f4388815d02527/recording/chunks/000002.npz",
+      "bytes": 6299892,
+      "sha256": "f56e9f23c99734f0af06345f7c973b17fdcc58c5284c6bc7743008cc0ae3dcd7",
+      "stage": "source"
+    },
+    {
+      "path": "runs/m5-flynn-memory-transfer-20261002/runs/5105edbfb5a5463f82f4388815d02527/recording/chunks/000003.npz",
+      "bytes": 6299892,
+      "sha256": "5d22b0a6aeb58e0ba629e74fbe30ca5e2ef0149e4ede6749fd7e50116709b749",
+      "stage": "source"
+    },
+    {
+      "path": "runs/m5-flynn-memory-transfer-20261002/runs/5105edbfb5a5463f82f4388815d02527/recording/chunks/000004.npz",
+      "bytes": 6299892,
+      "sha256": "5bc1c909ed8700b21f648f104f8024067cb25871b484ce9850badc0ff8cd8b5d",
+      "stage": "source"
+    },
+    {
+      "path": "runs/m5-flynn-memory-transfer-20261002/runs/5105edbfb5a5463f82f4388815d02527/recording/chunks/000005.npz",
+      "bytes": 6299892,
+      "sha256": "07614e96dc9cb97e3b2a275868f82a51b2b9353f985c278d6e94880eb3aca6df",
+      "stage": "source"
+    },
+    {
+      "path": "runs/m5-flynn-memory-transfer-20261002/runs/5105edbfb5a5463f82f4388815d02527/recording/chunks/000006.npz",
+      "bytes": 6299892,
+      "sha256": "27230d5f12a3a6bdcd3ac558cceca8e07c3826e5c12f870aa8e6da4c592dbc75",
+      "stage": "source"
+    },
+    {
+      "path": "runs/m5-flynn-memory-transfer-20261002/runs/5105edbfb5a5463f82f4388815d02527/recording/chunks/000007.npz",
+      "bytes": 6299892,
+      "sha256": "eb029d1bc1f99906a814d3b526c5f672f38591ee8cfa20ad23910d6cc0e8dbd2",
+      "stage": "source"
+    },
+    {
+      "path": "runs/m5-flynn-memory-transfer-20261002/runs/5105edbfb5a5463f82f4388815d02527/recording/chunks/000008.npz",
+      "bytes": 6299892,
+      "sha256": "78500e1840fa48a03dbc53c5f4268412f01092b735ef8be81aeb623d8b9a0842",
+      "stage": "source"
+    },
+    {
+      "path": "runs/m5-flynn-memory-transfer-20261002/runs/5105edbfb5a5463f82f4388815d02527/recording/chunks/000009.npz",
+      "bytes": 2364972,
+      "sha256": "2afd8dadd6a92c34e812722288960b26d2d55bfac17ed09bfdb513f203364e5f",
+      "stage": "source"
+    },
+    {
+      "path": "runs/m5-flynn-memory-transfer-20261002/runs/5105edbfb5a5463f82f4388815d02527/snapshots/initial.snp",
+      "bytes": 926368,
+      "sha256": "39b001d163c2a2f0280465414e24a5b130ba07008946ff0af136eefe77bb3579",
+      "stage": "source"
+    },
+    {
+      "path": "runs/m5-flynn-memory-transfer-20261002/runs/5105edbfb5a5463f82f4388815d02527/snapshots/index.json",
+      "bytes": 403,
+      "sha256": "f1d5984ddc932f3e79103fcc8cdb84f8e5b0e06ad1920bef2cc82f58121bf768",
+      "stage": "source"
+    },
+    {
+      "path": "runs/m5-flynn-memory-transfer-20261002/runs/c641fd11641f4dbe8fc01ac5976c2a94/recording/manifest.json",
+      "bytes": 27320,
+      "sha256": "946f311365a2ef497f058a349c6b1493350e7fdcd2d89df352b7df9dd1dc877d",
+      "stage": "policy-anchor"
+    },
+    {
+      "path": "runs/m5-flynn-memory-transfer-20261002/runs/c641fd11641f4dbe8fc01ac5976c2a94/recording/events.jsonl",
+      "bytes": 14535,
+      "sha256": "38b645b8cbe0333a998eb184b083f9cb4505fd6adb5316de5a8cdca9ad11a6ef",
+      "stage": "policy-anchor"
+    },
+    {
+      "path": "runs/m5-flynn-memory-transfer-20261002/runs/c641fd11641f4dbe8fc01ac5976c2a94/snapshots/initial.snp",
+      "bytes": 1152699,
+      "sha256": "5ca9f3c26d071c2d62afafd2620046ff79eaccca8057ced15226ff545f8451de",
+      "stage": "policy-anchor"
+    },
+    {
+      "path": "runs/m5-flynn-memory-transfer-20261002/runs/c641fd11641f4dbe8fc01ac5976c2a94/snapshots/index.json",
+      "bytes": 402,
+      "sha256": "b9420e7d58c94f041305a07a1fc336f5047a7130cb644ab04b5001075c257fa3",
+      "stage": "policy-anchor"
+    },
+    {
+      "path": "runs/m5-flynn-memory-transfer-20261002/runs/22e256cb10db440aa603e53824cc7dda/recording/manifest.json",
+      "bytes": 27606,
+      "sha256": "a88e13d1b11f56f6590fa11e82f8f26d87977815c2fc8d8d1b493475398a47ab",
+      "stage": "anchor"
+    },
+    {
+      "path": "runs/m5-flynn-memory-transfer-20261002/runs/22e256cb10db440aa603e53824cc7dda/recording/events.jsonl",
+      "bytes": 17224,
+      "sha256": "745e38f17f83003ee4d366b7a0a3ad7721bab05c10550e22b8f2a58a9d728baf",
+      "stage": "anchor"
+    },
+    {
+      "path": "runs/m5-flynn-memory-transfer-20261002/runs/22e256cb10db440aa603e53824cc7dda/snapshots/initial.snp",
+      "bytes": 1153123,
+      "sha256": "4f96d89ff03d252a30a7f22da3f09ea3166b25ea04d5ca530330a4f9c26de86c",
+      "stage": "anchor"
+    },
+    {
+      "path": "runs/m5-flynn-memory-transfer-20261002/runs/22e256cb10db440aa603e53824cc7dda/snapshots/index.json",
+      "bytes": 402,
+      "sha256": "a9648ea45715aadf747113b3645a3ac470e037afe7399de24db51fbf3a01ac84",
+      "stage": "anchor"
+    },
+    {
+      "path": "runs/m5-flynn-memory-transfer-20261002/runs/12ef7a0db5af408fbdb47ad4de6c69b9/recording/manifest.json",
+      "bytes": 27771,
+      "sha256": "8ceca96cd88d4b177543b3d44968584aa948d0b48df653d3920191b83fc74479",
+      "stage": "own"
+    },
+    {
+      "path": "runs/m5-flynn-memory-transfer-20261002/runs/12ef7a0db5af408fbdb47ad4de6c69b9/recording/events.jsonl",
+      "bytes": 1127647,
+      "sha256": "fee1e741a351add50e8bca696794fb614b156df1982425631b8c440836285561",
+      "stage": "own"
+    },
+    {
+      "path": "runs/m5-flynn-memory-transfer-20261002/runs/12ef7a0db5af408fbdb47ad4de6c69b9/recording/chunks/000000.npz",
+      "bytes": 6919538,
+      "sha256": "b1bf0736da128a008e62f86bc30922b8167bc5b55d4c0ddbd50b99517b0787cc",
+      "stage": "own"
+    },
+    {
+      "path": "runs/m5-flynn-memory-transfer-20261002/runs/12ef7a0db5af408fbdb47ad4de6c69b9/recording/chunks/000001.npz",
+      "bytes": 6919538,
+      "sha256": "73ce9e22d95d7010cac376556fd07ba421a020b76b0e27ae65543fb9463eca48",
+      "stage": "own"
+    },
+    {
+      "path": "runs/m5-flynn-memory-transfer-20261002/runs/12ef7a0db5af408fbdb47ad4de6c69b9/recording/chunks/000002.npz",
+      "bytes": 6919538,
+      "sha256": "cfd00ed429728e8f7f55430229ac233a67030098925ba38ec83165f428633838",
+      "stage": "own"
+    },
+    {
+      "path": "runs/m5-flynn-memory-transfer-20261002/runs/12ef7a0db5af408fbdb47ad4de6c69b9/recording/chunks/000003.npz",
+      "bytes": 6919538,
+      "sha256": "2c860594497f397a942105912794faab2bd72395dd2b76afa408b8ff3fe9d161",
+      "stage": "own"
+    },
+    {
+      "path": "runs/m5-flynn-memory-transfer-20261002/runs/12ef7a0db5af408fbdb47ad4de6c69b9/recording/chunks/000004.npz",
+      "bytes": 220624,
+      "sha256": "8ed7291be3dcd509524d5562af639bdabab8039cd9a28771f5f0839d7d41d16e",
+      "stage": "own"
+    },
+    {
+      "path": "runs/m5-flynn-memory-transfer-20261002/runs/12ef7a0db5af408fbdb47ad4de6c69b9/snapshots/initial.snp",
+      "bytes": 1153123,
+      "sha256": "c09d4c67786ba354f8e8ad9c088c0867bea9af56f93054a9e44406d3ffb9a540",
+      "stage": "own"
+    },
+    {
+      "path": "runs/m5-flynn-memory-transfer-20261002/runs/12ef7a0db5af408fbdb47ad4de6c69b9/snapshots/index.json",
+      "bytes": 402,
+      "sha256": "492890035a9f9ecc96ad3fd0e2a9f643ad071cac17c0dd18421faf328af42aff",
+      "stage": "own"
+    },
+    {
+      "path": "runs/m5-flynn-memory-transfer-20261002/runs/49eea4014fba415da595ae55b232fa58/recording/manifest.json",
+      "bytes": 27778,
+      "sha256": "c121d86b3ede4720b36ea3206ae2e67f0f7d4dd01be4ffafa71c809874e86221",
+      "stage": "swapped"
+    },
+    {
+      "path": "runs/m5-flynn-memory-transfer-20261002/runs/49eea4014fba415da595ae55b232fa58/recording/events.jsonl",
+      "bytes": 1111331,
+      "sha256": "caae027f39bd8ed45c0df34180a39ce0bbbf3ce17f0f8f189822d1475e811b59",
+      "stage": "swapped"
+    },
+    {
+      "path": "runs/m5-flynn-memory-transfer-20261002/runs/49eea4014fba415da595ae55b232fa58/recording/chunks/000000.npz",
+      "bytes": 6919538,
+      "sha256": "b4c38b3499b9a33e3c63b5c011f10fbd673fe9daaa471fcbe58e85a5429ecadc",
+      "stage": "swapped"
+    },
+    {
+      "path": "runs/m5-flynn-memory-transfer-20261002/runs/49eea4014fba415da595ae55b232fa58/recording/chunks/000001.npz",
+      "bytes": 6919538,
+      "sha256": "340a9a81f88b09bad5bbf74b8a439b98f6673085a6307fb5736fb2691a4c0825",
+      "stage": "swapped"
+    },
+    {
+      "path": "runs/m5-flynn-memory-transfer-20261002/runs/49eea4014fba415da595ae55b232fa58/recording/chunks/000002.npz",
+      "bytes": 6919538,
+      "sha256": "ca95fac29f6f5841d949d7c3e973b6a3f26af4fc455217ea319538014ff1fa23",
+      "stage": "swapped"
+    },
+    {
+      "path": "runs/m5-flynn-memory-transfer-20261002/runs/49eea4014fba415da595ae55b232fa58/recording/chunks/000003.npz",
+      "bytes": 6919538,
+      "sha256": "71a101bd6551c0eb63c651bbb9776dd2ddfcc90f267f74f98a73ff95353300ab",
+      "stage": "swapped"
+    },
+    {
+      "path": "runs/m5-flynn-memory-transfer-20261002/runs/49eea4014fba415da595ae55b232fa58/recording/chunks/000004.npz",
+      "bytes": 220624,
+      "sha256": "efe2c31d597b36372164080d867412609db74e55bf0648f991d1da40fc7fbecf",
+      "stage": "swapped"
+    },
+    {
+      "path": "runs/m5-flynn-memory-transfer-20261002/runs/49eea4014fba415da595ae55b232fa58/snapshots/initial.snp",
+      "bytes": 1153128,
+      "sha256": "8a9e4c0e789ad9e463b409d37ae7e82be0e6c81cbab880c8bc18a71bd8eed1a1",
+      "stage": "swapped"
+    },
+    {
+      "path": "runs/m5-flynn-memory-transfer-20261002/runs/49eea4014fba415da595ae55b232fa58/snapshots/index.json",
+      "bytes": 402,
+      "sha256": "b67303bf0442d2c216e2387ac1fc7a48aa631f8bc41fffb3dc88d9e4bc9965b1",
+      "stage": "swapped"
+    },
+    {
+      "path": "runs/m5-flynn-memory-transfer-20261002/runs/8fc7997fc8114d3ca406afd0ff5dab56/recording/manifest.json",
+      "bytes": 27773,
+      "sha256": "6db99a08f28992a1636f1c786b6e725e1d184d007e5a314cdc5cbb13f4063789",
+      "stage": "sham"
+    },
+    {
+      "path": "runs/m5-flynn-memory-transfer-20261002/runs/8fc7997fc8114d3ca406afd0ff5dab56/recording/events.jsonl",
+      "bytes": 1127777,
+      "sha256": "57c7dd2cdc9b7361342ae823a6959104241c902b33f8620322683acf4bca8dd2",
+      "stage": "sham"
+    },
+    {
+      "path": "runs/m5-flynn-memory-transfer-20261002/runs/8fc7997fc8114d3ca406afd0ff5dab56/recording/chunks/000000.npz",
+      "bytes": 6919538,
+      "sha256": "f831e26a343d17d3511cc7fee3eb63453f6320b63fa4f2bbec916052a1dc646e",
+      "stage": "sham"
+    },
+    {
+      "path": "runs/m5-flynn-memory-transfer-20261002/runs/8fc7997fc8114d3ca406afd0ff5dab56/recording/chunks/000001.npz",
+      "bytes": 6919538,
+      "sha256": "91f31aa7556f8739773680a4274812c93875d0f336e2e914ca1fd68982e1bede",
+      "stage": "sham"
+    },
+    {
+      "path": "runs/m5-flynn-memory-transfer-20261002/runs/8fc7997fc8114d3ca406afd0ff5dab56/recording/chunks/000002.npz",
+      "bytes": 6919538,
+      "sha256": "9a6a23da9a838048d390661283e8998cc338208503b6618bcf5d65eeff6737b7",
+      "stage": "sham"
+    },
+    {
+      "path": "runs/m5-flynn-memory-transfer-20261002/runs/8fc7997fc8114d3ca406afd0ff5dab56/recording/chunks/000003.npz",
+      "bytes": 6919538,
+      "sha256": "6f31ad12ee269905495f78b7392aaf59223ec8ba27155d4e8aab82ca17e0556d",
+      "stage": "sham"
+    },
+    {
+      "path": "runs/m5-flynn-memory-transfer-20261002/runs/8fc7997fc8114d3ca406afd0ff5dab56/recording/chunks/000004.npz",
+      "bytes": 220624,
+      "sha256": "80966dd31d8fb4cdf49158c553f237f7342d20c844c12e7bf1891996367aff99",
+      "stage": "sham"
+    },
+    {
+      "path": "runs/m5-flynn-memory-transfer-20261002/runs/8fc7997fc8114d3ca406afd0ff5dab56/snapshots/initial.snp",
+      "bytes": 1153124,
+      "sha256": "67c0d3b060a7df1a58b89d9099fc63d04464154ae7cd321ae6a94fe961bc00a8",
+      "stage": "sham"
+    },
+    {
+      "path": "runs/m5-flynn-memory-transfer-20261002/runs/8fc7997fc8114d3ca406afd0ff5dab56/snapshots/index.json",
+      "bytes": 402,
+      "sha256": "bc2933c848c999c80a2937a7919b6fd5d14c551c91f0d8ed8b96bd4a68df9f4e",
+      "stage": "sham"
+    },
+    {
+      "path": "runs/m5-flynn-memory-transfer-20261002/runs/757917427a91407fa30f7ed45cf7e602/recording/manifest.json",
+      "bytes": 27772,
+      "sha256": "1cc14ae27b59531df5191e7d04920a0408a44fddb8435045204e89fb47ef13f3",
+      "stage": "no-U"
+    },
+    {
+      "path": "runs/m5-flynn-memory-transfer-20261002/runs/757917427a91407fa30f7ed45cf7e602/recording/events.jsonl",
+      "bytes": 1093395,
+      "sha256": "c03ea581e9114632c7e0f2a16c93b54afb97726d63f91cc369dc5bd4d719b454",
+      "stage": "no-U"
+    },
+    {
+      "path": "runs/m5-flynn-memory-transfer-20261002/runs/757917427a91407fa30f7ed45cf7e602/recording/chunks/000000.npz",
+      "bytes": 6919538,
+      "sha256": "c893af6fc0c1df1d2eec50182d9bf92808cc4cca0d15d700bc30c5928ff0ea57",
+      "stage": "no-U"
+    },
+    {
+      "path": "runs/m5-flynn-memory-transfer-20261002/runs/757917427a91407fa30f7ed45cf7e602/recording/chunks/000001.npz",
+      "bytes": 6919538,
+      "sha256": "ce62e8d15e6adae7f2d36a034b903e0f55807b5dec37434122d80000e9a0c528",
+      "stage": "no-U"
+    },
+    {
+      "path": "runs/m5-flynn-memory-transfer-20261002/runs/757917427a91407fa30f7ed45cf7e602/recording/chunks/000002.npz",
+      "bytes": 6919538,
+      "sha256": "fed077d5c12b9389c86299efee9dcd46dfea166ed98bbbb42dfdd4e33713b5d0",
+      "stage": "no-U"
+    },
+    {
+      "path": "runs/m5-flynn-memory-transfer-20261002/runs/757917427a91407fa30f7ed45cf7e602/recording/chunks/000003.npz",
+      "bytes": 6919538,
+      "sha256": "1651ba63bc61e9d781066c176f2a32f9c6d824206ffb37d045ab9eb8f13ae941",
+      "stage": "no-U"
+    },
+    {
+      "path": "runs/m5-flynn-memory-transfer-20261002/runs/757917427a91407fa30f7ed45cf7e602/recording/chunks/000004.npz",
+      "bytes": 220624,
+      "sha256": "d14a0b856ad9d30158e0bf4c61f58dcbefa5d5a1c500a4a0a11bd2f3629302d3",
+      "stage": "no-U"
+    },
+    {
+      "path": "runs/m5-flynn-memory-transfer-20261002/runs/757917427a91407fa30f7ed45cf7e602/snapshots/initial.snp",
+      "bytes": 1152980,
+      "sha256": "8d4e0981d5729dbe5235f50ef6e416bae1b54ec327fa4ecbde36192efa350c05",
+      "stage": "no-U"
+    },
+    {
+      "path": "runs/m5-flynn-memory-transfer-20261002/runs/757917427a91407fa30f7ed45cf7e602/snapshots/index.json",
+      "bytes": 402,
+      "sha256": "45aae3a242e63c7c24c98623539cfb6f65a7360d361ff1b0276e401adc55f228",
+      "stage": "no-U"
+    },
+    {
+      "path": "runs/m5-flynn-memory-transfer-20261002/runs/422545245c5e4a479481d630333ce33a/recording/manifest.json",
+      "bytes": 27791,
+      "sha256": "2cee8d465969e1f6b11827371bfca981c4c759d39525e8253ec23e3cd06406ba",
+      "stage": "hand-authored"
+    },
+    {
+      "path": "runs/m5-flynn-memory-transfer-20261002/runs/422545245c5e4a479481d630333ce33a/recording/events.jsonl",
+      "bytes": 1121147,
+      "sha256": "ec14e6c3472dcea81180890139a111cd63114ee79c3d94a6be462d9c0ece7079",
+      "stage": "hand-authored"
+    },
+    {
+      "path": "runs/m5-flynn-memory-transfer-20261002/runs/422545245c5e4a479481d630333ce33a/recording/chunks/000000.npz",
+      "bytes": 6919538,
+      "sha256": "d0a8f75f78725f35b1add4b3699aa895022581c13c9df1d778e0818523bfc89b",
+      "stage": "hand-authored"
+    },
+    {
+      "path": "runs/m5-flynn-memory-transfer-20261002/runs/422545245c5e4a479481d630333ce33a/recording/chunks/000001.npz",
+      "bytes": 6919538,
+      "sha256": "0fd8190d0b94a61f086c8b9b232747d7fe9f568194f2a45b5cebd3d70d5227cd",
+      "stage": "hand-authored"
+    },
+    {
+      "path": "runs/m5-flynn-memory-transfer-20261002/runs/422545245c5e4a479481d630333ce33a/recording/chunks/000002.npz",
+      "bytes": 6919538,
+      "sha256": "8f61063897075cec037791839a3061d88663d5ce0e67091a2854c502327297e4",
+      "stage": "hand-authored"
+    },
+    {
+      "path": "runs/m5-flynn-memory-transfer-20261002/runs/422545245c5e4a479481d630333ce33a/recording/chunks/000003.npz",
+      "bytes": 6919538,
+      "sha256": "f94e6d3b571bfdf2717cbc333f664b92e533da3f9e6595e4136e080ce44142b8",
+      "stage": "hand-authored"
+    },
+    {
+      "path": "runs/m5-flynn-memory-transfer-20261002/runs/422545245c5e4a479481d630333ce33a/recording/chunks/000004.npz",
+      "bytes": 220624,
+      "sha256": "06338bdfc3e78cdbfb6b415990c8168597163c8e96a6261f79cae5074b2330c0",
+      "stage": "hand-authored"
+    },
+    {
+      "path": "runs/m5-flynn-memory-transfer-20261002/runs/422545245c5e4a479481d630333ce33a/snapshots/initial.snp",
+      "bytes": 1153073,
+      "sha256": "d5f7604dc33a9f915bc3ba140c7751dc618635849f8924dc2d7e15bc424e05fd",
+      "stage": "hand-authored"
+    },
+    {
+      "path": "runs/m5-flynn-memory-transfer-20261002/runs/422545245c5e4a479481d630333ce33a/snapshots/index.json",
+      "bytes": 402,
+      "sha256": "3aa17cca4479bffc4b68ea3ed75502706bf90403cc5baa3d09d79cefcd87c916",
+      "stage": "hand-authored"
+    },
+    {
+      "path": "runs/m5-flynn-memory-transfer-20261002/runs/e4e06d016a61499ea7286bf83639e72f/recording/manifest.json",
+      "bytes": 27803,
+      "sha256": "5bdb99d50a09e5b1951a845b42fb43cf97bfce568d8ff1622414f321a54c1366",
+      "stage": "history-independent"
+    },
+    {
+      "path": "runs/m5-flynn-memory-transfer-20261002/runs/e4e06d016a61499ea7286bf83639e72f/recording/events.jsonl",
+      "bytes": 1114254,
+      "sha256": "df7b2dcde1216e22fdca03bb0faef271318e87c3b8783998a5f3a18ab6541767",
+      "stage": "history-independent"
+    },
+    {
+      "path": "runs/m5-flynn-memory-transfer-20261002/runs/e4e06d016a61499ea7286bf83639e72f/recording/chunks/000000.npz",
+      "bytes": 6919538,
+      "sha256": "1b41a9452e4ab7f41c4ce8e25ae0d89a251864acd8e4c348110637b948f67e08",
+      "stage": "history-independent"
+    },
+    {
+      "path": "runs/m5-flynn-memory-transfer-20261002/runs/e4e06d016a61499ea7286bf83639e72f/recording/chunks/000001.npz",
+      "bytes": 6919538,
+      "sha256": "876f7bf593c5afe2115ba9ce8e1b783429adfb78f3b7337da776126cfc24508d",
+      "stage": "history-independent"
+    },
+    {
+      "path": "runs/m5-flynn-memory-transfer-20261002/runs/e4e06d016a61499ea7286bf83639e72f/recording/chunks/000002.npz",
+      "bytes": 6919538,
+      "sha256": "b7d7aaab848154fe1333090d636add878e3e05ea562399617c45a566d497551b",
+      "stage": "history-independent"
+    },
+    {
+      "path": "runs/m5-flynn-memory-transfer-20261002/runs/e4e06d016a61499ea7286bf83639e72f/recording/chunks/000003.npz",
+      "bytes": 6919538,
+      "sha256": "367d3ca7ec7ecadb36a0f360c7b4e1749c2523e0e1b403dc2ca861e155eaa447",
+      "stage": "history-independent"
+    },
+    {
+      "path": "runs/m5-flynn-memory-transfer-20261002/runs/e4e06d016a61499ea7286bf83639e72f/recording/chunks/000004.npz",
+      "bytes": 220624,
+      "sha256": "0e3495543c2adc92bc3daee10eee36847483d0962b24bb5b17ae081b8cad7658",
+      "stage": "history-independent"
+    },
+    {
+      "path": "runs/m5-flynn-memory-transfer-20261002/runs/e4e06d016a61499ea7286bf83639e72f/snapshots/initial.snp",
+      "bytes": 1152995,
+      "sha256": "5a953e5c6265965ed7e6dcf3fadb4a353996ff8ad55ff41c33aa0e67908d1512",
+      "stage": "history-independent"
+    },
+    {
+      "path": "runs/m5-flynn-memory-transfer-20261002/runs/e4e06d016a61499ea7286bf83639e72f/snapshots/index.json",
+      "bytes": 402,
+      "sha256": "7f4d6894c809393089c643aec430818984c98cc0998c516405b7219f3e05df7b",
+      "stage": "history-independent"
+    },
+    {
+      "path": "runs/m5-flynn-memory-transfer-20261002/runs/5aa6bbd28a5d45a9ab6e2c0ffbe53c11/recording/manifest.json",
+      "bytes": 27783,
+      "sha256": "01717300c11d34f9ea135a4373d4f28ade015c34dd2ed608d53c842dc6d6b11a",
+      "stage": "traversal"
+    },
+    {
+      "path": "runs/m5-flynn-memory-transfer-20261002/runs/5aa6bbd28a5d45a9ab6e2c0ffbe53c11/recording/events.jsonl",
+      "bytes": 1112954,
+      "sha256": "b6c0e0f67f748c5012c73fa333e401a64b47a75b93bde105885be903ea571bd3",
+      "stage": "traversal"
+    },
+    {
+      "path": "runs/m5-flynn-memory-transfer-20261002/runs/5aa6bbd28a5d45a9ab6e2c0ffbe53c11/recording/chunks/000000.npz",
+      "bytes": 6919538,
+      "sha256": "dd8b598f7efcfd91f343a10de8ebcc44fe0b51575d0dc600a63697a37581fb2d",
+      "stage": "traversal"
+    },
+    {
+      "path": "runs/m5-flynn-memory-transfer-20261002/runs/5aa6bbd28a5d45a9ab6e2c0ffbe53c11/recording/chunks/000001.npz",
+      "bytes": 6919538,
+      "sha256": "ba2432c6dda16b6314d2acdaf21486262f473d39771a4278c14679b428572a56",
+      "stage": "traversal"
+    },
+    {
+      "path": "runs/m5-flynn-memory-transfer-20261002/runs/5aa6bbd28a5d45a9ab6e2c0ffbe53c11/recording/chunks/000002.npz",
+      "bytes": 6919538,
+      "sha256": "3961b9eefc5dde04b1befc7ce0f0568b7d85b3dd5aee5fa4cc6033d43bb93552",
+      "stage": "traversal"
+    },
+    {
+      "path": "runs/m5-flynn-memory-transfer-20261002/runs/5aa6bbd28a5d45a9ab6e2c0ffbe53c11/recording/chunks/000003.npz",
+      "bytes": 6919538,
+      "sha256": "529f5dc30b87b5fecad26590134190d987e4a7a51a38d7f12fb6b51245b245d0",
+      "stage": "traversal"
+    },
+    {
+      "path": "runs/m5-flynn-memory-transfer-20261002/runs/5aa6bbd28a5d45a9ab6e2c0ffbe53c11/recording/chunks/000004.npz",
+      "bytes": 220624,
+      "sha256": "2c80fc2e65ec821a63dffcc14a679c56c5dde76d7fb663329a93b37a8b191e3a",
+      "stage": "traversal"
+    },
+    {
+      "path": "runs/m5-flynn-memory-transfer-20261002/runs/5aa6bbd28a5d45a9ab6e2c0ffbe53c11/snapshots/initial.snp",
+      "bytes": 1152985,
+      "sha256": "f3713511d05d7a92c2883443fe901645a0523b149549e4b8ec04d78be26f81d6",
+      "stage": "traversal"
+    },
+    {
+      "path": "runs/m5-flynn-memory-transfer-20261002/runs/5aa6bbd28a5d45a9ab6e2c0ffbe53c11/snapshots/index.json",
+      "bytes": 402,
+      "sha256": "ab22a7478eca6b3955bfd0d29fe735b277c353abfbfff8f5fb3e313b5cdb0f1f",
+      "stage": "traversal"
+    },
+    {
+      "path": "runs/m5-flynn-memory-transfer-20261002/runs/558039a6df684ef2b4b8534cf2d1a9b4/recording/manifest.json",
+      "bytes": 35687,
+      "sha256": "f30dc1c8124487f4621951bd1f3c94128ce8c3424406787b05a52ffd9461e500",
+      "stage": "retrieval"
+    },
+    {
+      "path": "runs/m5-flynn-memory-transfer-20261002/runs/558039a6df684ef2b4b8534cf2d1a9b4/recording/events.jsonl",
+      "bytes": 1121248,
+      "sha256": "bc4162fa8b5d251344e085d2c0ecddd9d384f7bca337592090546673d92a9c31",
+      "stage": "retrieval"
+    },
+    {
+      "path": "runs/m5-flynn-memory-transfer-20261002/runs/558039a6df684ef2b4b8534cf2d1a9b4/recording/chunks/000000.npz",
+      "bytes": 6919538,
+      "sha256": "56715e0a5b48c60de1d31c4175a0c60cea3afdd00a04b8dd9808c04c869bea44",
+      "stage": "retrieval"
+    },
+    {
+      "path": "runs/m5-flynn-memory-transfer-20261002/runs/558039a6df684ef2b4b8534cf2d1a9b4/recording/chunks/000001.npz",
+      "bytes": 6919538,
+      "sha256": "e6e0e7751383dee14d758aa812dea157806f54d7ca8d59e41ed386619f8aedac",
+      "stage": "retrieval"
+    },
+    {
+      "path": "runs/m5-flynn-memory-transfer-20261002/runs/558039a6df684ef2b4b8534cf2d1a9b4/recording/chunks/000002.npz",
+      "bytes": 6919538,
+      "sha256": "041f61793d55b042c96e136122decfb9c20b2fc37808ab184e9ebd376f7b5d4a",
+      "stage": "retrieval"
+    },
+    {
+      "path": "runs/m5-flynn-memory-transfer-20261002/runs/558039a6df684ef2b4b8534cf2d1a9b4/recording/chunks/000003.npz",
+      "bytes": 6919538,
+      "sha256": "8ae41c9591730c667920f50b818169bcda015e0891586def5bdca50d80258535",
+      "stage": "retrieval"
+    },
+    {
+      "path": "runs/m5-flynn-memory-transfer-20261002/runs/558039a6df684ef2b4b8534cf2d1a9b4/recording/chunks/000004.npz",
+      "bytes": 220624,
+      "sha256": "9ee18eb74b121e4e85c6238c1d3a94edea9ceb730d3eab484034687a8447cdb5",
+      "stage": "retrieval"
+    },
+    {
+      "path": "runs/m5-flynn-memory-transfer-20261002/runs/558039a6df684ef2b4b8534cf2d1a9b4/snapshots/initial.snp",
+      "bytes": 1161827,
+      "sha256": "4368afcc9e340a9ea170defb15a53809ccf062a9c62a74a802f07a463021cda3",
+      "stage": "retrieval"
+    },
+    {
+      "path": "runs/m5-flynn-memory-transfer-20261002/runs/558039a6df684ef2b4b8534cf2d1a9b4/snapshots/index.json",
+      "bytes": 402,
+      "sha256": "a2e84aeea13119ce5e8d1fd3707dac0c19aac325e281bb4d73101289bb6b5b8d",
+      "stage": "retrieval"
+    },
+    {
+      "path": "runs/m5-flynn-memory-transfer-20261002/runs/53fdc99f001e49a8a38f5deb96551241/recording/manifest.json",
+      "bytes": 29702,
+      "sha256": "5dce82ae9a39094206f2aae0d0c7f0d88bc5eea5be9dec69a98f0b114cc1c3ca",
+      "stage": "oracle"
+    },
+    {
+      "path": "runs/m5-flynn-memory-transfer-20261002/runs/53fdc99f001e49a8a38f5deb96551241/recording/events.jsonl",
+      "bytes": 1112733,
+      "sha256": "1308471e03dc0100d899bfd2d656b0f10e1f80e948259059113533f51c683100",
+      "stage": "oracle"
+    },
+    {
+      "path": "runs/m5-flynn-memory-transfer-20261002/runs/53fdc99f001e49a8a38f5deb96551241/recording/chunks/000000.npz",
+      "bytes": 6919538,
+      "sha256": "a3c5e1e95953714b91fb343c62b542061fdde7202bdc8db611dd75678ee3a7c2",
+      "stage": "oracle"
+    },
+    {
+      "path": "runs/m5-flynn-memory-transfer-20261002/runs/53fdc99f001e49a8a38f5deb96551241/recording/chunks/000001.npz",
+      "bytes": 6919538,
+      "sha256": "e09d95fcf5a65439c5fed5bdae551ce4207a19036fa5319a835b2832fb9b5f25",
+      "stage": "oracle"
+    },
+    {
+      "path": "runs/m5-flynn-memory-transfer-20261002/runs/53fdc99f001e49a8a38f5deb96551241/recording/chunks/000002.npz",
+      "bytes": 6919538,
+      "sha256": "276590d34615dcb726b5e013d3efd237c12a022750e4e01af051e9b01317c027",
+      "stage": "oracle"
+    },
+    {
+      "path": "runs/m5-flynn-memory-transfer-20261002/runs/53fdc99f001e49a8a38f5deb96551241/recording/chunks/000003.npz",
+      "bytes": 6919538,
+      "sha256": "ed97a4d3ca3439f380ba5395369f0234acd8d388d0dc9492408e691be6315ff7",
+      "stage": "oracle"
+    },
+    {
+      "path": "runs/m5-flynn-memory-transfer-20261002/runs/53fdc99f001e49a8a38f5deb96551241/recording/chunks/000004.npz",
+      "bytes": 220624,
+      "sha256": "5b5deb4c7892aaf1dc88354e50df27c87259b9e6136f454ee6291fa7c4afe91d",
+      "stage": "oracle"
+    },
+    {
+      "path": "runs/m5-flynn-memory-transfer-20261002/runs/53fdc99f001e49a8a38f5deb96551241/snapshots/initial.snp",
+      "bytes": 1153043,
+      "sha256": "151d7baa2d733ddbfda501009edbf09352dc642383dfec931b2cc9937b4b131b",
+      "stage": "oracle"
+    },
+    {
+      "path": "runs/m5-flynn-memory-transfer-20261002/runs/53fdc99f001e49a8a38f5deb96551241/snapshots/index.json",
+      "bytes": 402,
+      "sha256": "8d24969958c205b946bbb026cca72690b2a1533effaf6379db5d024e750e4ae6",
+      "stage": "oracle"
+    }
+  ],
+  "indexed_files": 103,
+  "indexed_bytes": 336870129,
+  "all_retained_files": 178,
+  "all_retained_bytes": 338653556,
+  "total_ticks": 1461,
+  "comparison": {
+    "pre_m_sha256": "db20226d9fd34fd572da655bcb0a1f8eef792d450d0cef8c4f1476664c92f250",
+    "trigger": {
+      "id": "sensor-abdb1e0baf84dd16595013724c6356664af4de00161dd656d759a432fe4c5196",
+      "episode_id": "episode-0",
+      "tick": 300,
+      "kind": "cue_changed",
+      "cue_id": "live-development-test-00000010-cue",
+      "before": 0,
+      "after": 1,
+      "before_observation_id": "sensor-43bed30488dbd86699b40ebbcbc348e3c6fb0a7be4baaf7f32847f6daada462d",
+      "observation_id": "sensor-4a8bb52069211519d479238857a49324b229be22311222c1c4bb01bb83f5f8e6"
+    },
+    "before_occupancy": {
+      "live-development-test-00000010-subject-a": "open",
+      "live-development-test-00000010-subject-z": "open"
+    },
+    "after_occupancy": {
+      "live-development-test-00000010-subject-a": "blocked",
+      "live-development-test-00000010-subject-z": "open"
+    },
+    "gold_target_ids": [
+      "live-development-test-00000010-fact-a"
+    ],
+    "oracle_evidence": {
+      "version": 1,
+      "source_run_id": "5105edbfb5a5463f82f4388815d02527",
+      "source_snapshot_sha256": "39b001d163c2a2f0280465414e24a5b130ba07008946ff0af136eefe77bb3579",
+      "source_recording_sha256": "f61d2ff6d29a5bf7b3c968b8b53e6f980293182a369f1e6841eb94954d7353c6",
+      "source_worker_sha256": "c7463be2fe0a90552f406bf762cc79f5960df657fe564ec1835ddc2048e099ac",
+      "post_run_id": "12ef7a0db5af408fbdb47ad4de6c69b9",
+      "post_recording_sha256": "78395617e8f40b429eb07c70b236ca5a202c8b71972710b760c66892b50fed57",
+      "post_worker_sha256": "2d53b17b2135745309e7b7db8aab799261d68e4cef08e9f80017dc165a9c2fac",
+      "pre_m_sha256": "db20226d9fd34fd572da655bcb0a1f8eef792d450d0cef8c4f1476664c92f250",
+      "before_circles": [
+        [
+          0.0,
+          -2.0,
+          0.4
+        ],
+        [
+          0.0,
+          0.0,
+          0.4
+        ],
+        [
+          0.0,
+          2.0,
+          0.4
+        ],
+        [
+          2.5,
+          -1.0,
+          0.4
+        ],
+        [
+          2.5,
+          1.0,
+          0.4
+        ],
+        [
+          3.7,
+          -5.6,
+          0.4
+        ],
+        [
+          3.7,
+          -4.4,
+          0.4
+        ],
+        [
+          3.7,
+          -3.2,
+          0.4
+        ],
+        [
+          3.7,
+          3.2,
+          0.4
+        ],
+        [
+          3.7,
+          4.4,
+          0.4
+        ],
+        [
+          4.9,
+          -5.6,
+          0.4
+        ],
+        [
+          4.9,
+          -4.4,
+          0.4
+        ],
+        [
+          4.9,
+          -3.2,
+          0.4
+        ],
+        [
+          4.9,
+          3.2,
+          0.4
+        ],
+        [
+          4.9,
+          4.4,
+          0.4
+        ],
+        [
+          6.1,
+          -5.6,
+          0.4
+        ],
+        [
+          6.1,
+          -4.4,
+          0.4
+        ],
+        [
+          6.1,
+          -3.2,
+          0.4
+        ],
+        [
+          6.1,
+          3.2,
+          0.4
+        ],
+        [
+          6.1,
+          4.4,
+          0.4
+        ]
+      ],
+      "after_circles": [
+        [
+          0.0,
+          -2.0,
+          0.4
+        ],
+        [
+          0.0,
+          0.0,
+          0.4
+        ],
+        [
+          0.0,
+          2.0,
+          0.4
+        ],
+        [
+          0.0,
+          -1.0,
+          0.4
+        ],
+        [
+          2.5,
+          1.0,
+          0.4
+        ],
+        [
+          3.7,
+          -5.6,
+          0.4
+        ],
+        [
+          3.7,
+          -4.4,
+          0.4
+        ],
+        [
+          3.7,
+          -3.2,
+          0.4
+        ],
+        [
+          3.7,
+          3.2,
+          0.4
+        ],
+        [
+          3.7,
+          4.4,
+          0.4
+        ],
+        [
+          4.9,
+          -5.6,
+          0.4
+        ],
+        [
+          4.9,
+          -4.4,
+          0.4
+        ],
+        [
+          4.9,
+          -3.2,
+          0.4
+        ],
+        [
+          4.9,
+          3.2,
+          0.4
+        ],
+        [
+          4.9,
+          4.4,
+          0.4
+        ],
+        [
+          6.1,
+          -5.6,
+          0.4
+        ],
+        [
+          6.1,
+          -4.4,
+          0.4
+        ],
+        [
+          6.1,
+          -3.2,
+          0.4
+        ],
+        [
+          6.1,
+          3.2,
+          0.4
+        ],
+        [
+          6.1,
+          4.4,
+          0.4
+        ]
+      ],
+      "trigger": {
+        "id": "sensor-abdb1e0baf84dd16595013724c6356664af4de00161dd656d759a432fe4c5196",
+        "episode_id": "episode-0",
+        "tick": 300,
+        "kind": "cue_changed",
+        "cue_id": "live-development-test-00000010-cue",
+        "before": 0,
+        "after": 1,
+        "before_observation_id": "sensor-43bed30488dbd86699b40ebbcbc348e3c6fb0a7be4baaf7f32847f6daada462d",
+        "observation_id": "sensor-4a8bb52069211519d479238857a49324b229be22311222c1c4bb01bb83f5f8e6"
+      },
+      "gold_target_ids": [
+        "live-development-test-00000010-fact-a"
+      ]
+    },
+    "oracle_evidence_sha256": "dabf76a9ce705b4b59dfb10e394ec37350ca2f25e93562bb3ad6fa32f7d3dd15",
+    "targeting": [
+      {
+        "condition": "own",
+        "selection": {
+          "event_id": "sensor-abdb1e0baf84dd16595013724c6356664af4de00161dd656d759a432fe4c5196",
+          "target_ids": [
+            "live-development-test-00000010-fact-a"
+          ],
+          "reason": "matched"
+        },
+        "target_limit": 1,
+        "exact_set": true,
+        "false_targets": 0,
+        "missed_targets": 0,
+        "abstained": false,
+        "correct_abstention": false,
+        "precision": 1.0,
+        "recall": 1.0,
+        "privileged": false,
+        "runtime_access": [
+          "m",
+          "trigger",
+          "u"
+        ],
+        "validation_access": [
+          "m",
+          "trigger",
+          "u"
+        ],
+        "behavior_access": [
+          "m",
+          "trigger",
+          "u.payload"
+        ],
+        "validation_input_bytes": 2008,
+        "behavior_input_bytes": 1534,
+        "payload_bytes": 108,
+        "envelope_bytes": 590,
+        "runtime_history_bytes": 0
+      },
+      {
+        "condition": "swapped",
+        "selection": {
+          "event_id": "sensor-abdb1e0baf84dd16595013724c6356664af4de00161dd656d759a432fe4c5196",
+          "target_ids": [
+            "live-development-test-00000010-fact-z"
+          ],
+          "reason": "matched"
+        },
+        "target_limit": 1,
+        "exact_set": false,
+        "false_targets": 1,
+        "missed_targets": 1,
+        "abstained": false,
+        "correct_abstention": false,
+        "precision": 0.0,
+        "recall": 0.0,
+        "privileged": false,
+        "runtime_access": [
+          "m",
+          "trigger",
+          "u"
+        ],
+        "validation_access": [
+          "m",
+          "trigger",
+          "u"
+        ],
+        "behavior_access": [
+          "m",
+          "trigger",
+          "u.payload"
+        ],
+        "validation_input_bytes": 2009,
+        "behavior_input_bytes": 1535,
+        "payload_bytes": 109,
+        "envelope_bytes": 591,
+        "runtime_history_bytes": 0
+      },
+      {
+        "condition": "sham",
+        "selection": {
+          "event_id": "sensor-abdb1e0baf84dd16595013724c6356664af4de00161dd656d759a432fe4c5196",
+          "target_ids": [
+            "live-development-test-00000010-fact-a"
+          ],
+          "reason": "matched"
+        },
+        "target_limit": 1,
+        "exact_set": true,
+        "false_targets": 0,
+        "missed_targets": 0,
+        "abstained": false,
+        "correct_abstention": false,
+        "precision": 1.0,
+        "recall": 1.0,
+        "privileged": false,
+        "runtime_access": [
+          "m",
+          "trigger",
+          "u"
+        ],
+        "validation_access": [
+          "m",
+          "trigger",
+          "u"
+        ],
+        "behavior_access": [
+          "m",
+          "trigger",
+          "u.payload"
+        ],
+        "validation_input_bytes": 2008,
+        "behavior_input_bytes": 1534,
+        "payload_bytes": 108,
+        "envelope_bytes": 590,
+        "runtime_history_bytes": 0
+      },
+      {
+        "condition": "no-U",
+        "selection": {
+          "event_id": "sensor-abdb1e0baf84dd16595013724c6356664af4de00161dd656d759a432fe4c5196",
+          "target_ids": [],
+          "reason": "no_rule"
+        },
+        "target_limit": 1,
+        "exact_set": false,
+        "false_targets": 0,
+        "missed_targets": 1,
+        "abstained": true,
+        "correct_abstention": false,
+        "precision": null,
+        "recall": 0.0,
+        "privileged": false,
+        "runtime_access": [
+          "m",
+          "trigger",
+          "u"
+        ],
+        "validation_access": [
+          "m",
+          "trigger",
+          "u"
+        ],
+        "behavior_access": [
+          "m",
+          "trigger",
+          "u.payload"
+        ],
+        "validation_input_bytes": 1892,
+        "behavior_input_bytes": 1486,
+        "payload_bytes": 60,
+        "envelope_bytes": 474,
+        "runtime_history_bytes": 0
+      },
+      {
+        "condition": "hand-authored",
+        "selection": {
+          "event_id": "sensor-abdb1e0baf84dd16595013724c6356664af4de00161dd656d759a432fe4c5196",
+          "target_ids": [
+            "live-development-test-00000010-fact-a"
+          ],
+          "reason": "matched"
+        },
+        "target_limit": 1,
+        "exact_set": true,
+        "false_targets": 0,
+        "missed_targets": 0,
+        "abstained": false,
+        "correct_abstention": false,
+        "precision": 1.0,
+        "recall": 1.0,
+        "privileged": false,
+        "runtime_access": [
+          "m",
+          "trigger",
+          "u"
+        ],
+        "validation_access": [
+          "m",
+          "trigger",
+          "u"
+        ],
+        "behavior_access": [
+          "m",
+          "trigger",
+          "u.payload"
+        ],
+        "validation_input_bytes": 1948,
+        "behavior_input_bytes": 1534,
+        "payload_bytes": 108,
+        "envelope_bytes": 530,
+        "runtime_history_bytes": 0
+      },
+      {
+        "condition": "history-independent",
+        "selection": {
+          "event_id": "sensor-abdb1e0baf84dd16595013724c6356664af4de00161dd656d759a432fe4c5196",
+          "target_ids": [
+            "live-development-test-00000010-fact-a"
+          ],
+          "reason": "budget"
+        },
+        "target_limit": 1,
+        "exact_set": true,
+        "false_targets": 0,
+        "missed_targets": 0,
+        "abstained": false,
+        "correct_abstention": false,
+        "precision": 1.0,
+        "recall": 1.0,
+        "privileged": false,
+        "runtime_access": [
+          "m",
+          "trigger"
+        ],
+        "validation_access": [
+          "m",
+          "trigger"
+        ],
+        "behavior_access": [
+          "m",
+          "trigger"
+        ],
+        "validation_input_bytes": 1413,
+        "behavior_input_bytes": 1413,
+        "payload_bytes": 0,
+        "envelope_bytes": 0,
+        "runtime_history_bytes": 0
+      },
+      {
+        "condition": "traversal",
+        "selection": {
+          "event_id": "sensor-abdb1e0baf84dd16595013724c6356664af4de00161dd656d759a432fe4c5196",
+          "target_ids": [
+            "live-development-test-00000010-fact-a"
+          ],
+          "reason": "budget"
+        },
+        "target_limit": 1,
+        "exact_set": true,
+        "false_targets": 0,
+        "missed_targets": 0,
+        "abstained": false,
+        "correct_abstention": false,
+        "precision": 1.0,
+        "recall": 1.0,
+        "privileged": false,
+        "runtime_access": [
+          "m",
+          "trigger"
+        ],
+        "validation_access": [
+          "m",
+          "trigger"
+        ],
+        "behavior_access": [
+          "m",
+          "trigger"
+        ],
+        "validation_input_bytes": 1413,
+        "behavior_input_bytes": 1413,
+        "payload_bytes": 0,
+        "envelope_bytes": 0,
+        "runtime_history_bytes": 0
+      },
+      {
+        "condition": "retrieval",
+        "selection": {
+          "event_id": "sensor-abdb1e0baf84dd16595013724c6356664af4de00161dd656d759a432fe4c5196",
+          "target_ids": [
+            "live-development-test-00000010-fact-a"
+          ],
+          "reason": "matched"
+        },
+        "target_limit": 1,
+        "exact_set": true,
+        "false_targets": 0,
+        "missed_targets": 0,
+        "abstained": false,
+        "correct_abstention": false,
+        "precision": 1.0,
+        "recall": 1.0,
+        "privileged": false,
+        "runtime_access": [
+          "m",
+          "trigger",
+          "history"
+        ],
+        "validation_access": [
+          "m",
+          "trigger",
+          "history"
+        ],
+        "behavior_access": [
+          "m",
+          "trigger",
+          "history"
+        ],
+        "validation_input_bytes": 9034,
+        "behavior_input_bytes": 9034,
+        "payload_bytes": 0,
+        "envelope_bytes": 0,
+        "runtime_history_bytes": 7610
+      },
+      {
+        "condition": "oracle",
+        "selection": {
+          "event_id": "sensor-abdb1e0baf84dd16595013724c6356664af4de00161dd656d759a432fe4c5196",
+          "target_ids": [
+            "live-development-test-00000010-fact-a"
+          ],
+          "reason": "matched"
+        },
+        "target_limit": 1,
+        "exact_set": true,
+        "false_targets": 0,
+        "missed_targets": 0,
+        "abstained": false,
+        "correct_abstention": false,
+        "precision": 1.0,
+        "recall": 1.0,
+        "privileged": true,
+        "runtime_access": [
+          "m",
+          "trigger",
+          "gold_target_ids"
+        ],
+        "validation_access": [
+          "m",
+          "trigger",
+          "gold_target_ids"
+        ],
+        "behavior_access": [
+          "m",
+          "trigger",
+          "gold_target_ids"
+        ],
+        "validation_input_bytes": 1473,
+        "behavior_input_bytes": 1473,
+        "payload_bytes": 0,
+        "envelope_bytes": 0,
+        "runtime_history_bytes": 0
+      }
+    ],
+    "runtime": [
+      {
+        "condition": "own",
+        "recording_status": "completed",
+        "final_phase": "terminated",
+        "outcome": {
+          "reason": "goal",
+          "episode": 0,
+          "steps": 429,
+          "final_distance": 0.7962582111358643
+        },
+        "requested": 1,
+        "started": 1,
+        "resolved": 1,
+        "timeouts": 0,
+        "unresolved_fact_ids": [],
+        "inspection_not_started": false,
+        "fresh_correct_fact_ids": [
+          "live-development-test-00000010-fact-a",
+          "live-development-test-00000010-fact-z"
+        ],
+        "navigation_pass": true,
+        "revision_pass": true,
+        "task_pass": true,
+        "worker_task_pass": false,
+        "terminal_control_boundary": 429,
+        "timing": [
+          {
+            "fact_id": "live-development-test-00000010-fact-a",
+            "gold": true,
+            "first_correct_observed_tick": 358,
+            "first_correct_committed_tick": 358,
+            "uncertainty_intervals": [
+              {
+                "start_tick": 300,
+                "end_tick": 358,
+                "duration_ticks": 58,
+                "censored": false
+              }
+            ]
+          },
+          {
+            "fact_id": "live-development-test-00000010-fact-z",
+            "gold": false,
+            "first_correct_observed_tick": 300,
+            "first_correct_committed_tick": 300,
+            "uncertainty_intervals": []
+          }
+        ],
+        "selector_configuration_sha256": "4fc18c9e1179a352193221429675b8d95c9d63d73708e123d5558b3d4c355b2e",
+        "resource_sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+        "provenance_sha256": "016c5b5e9472b116d065fb922b32d64089db6e27839aec09d751238f8ce7ffc1"
+      },
+      {
+        "condition": "swapped",
+        "recording_status": "completed",
+        "final_phase": "terminated",
+        "outcome": {
+          "reason": "goal",
+          "episode": 0,
+          "steps": 429,
+          "final_distance": 0.7863208651542664
+        },
+        "requested": 0,
+        "started": 0,
+        "resolved": 0,
+        "timeouts": 0,
+        "unresolved_fact_ids": [],
+        "inspection_not_started": false,
+        "fresh_correct_fact_ids": [
+          "live-development-test-00000010-fact-a",
+          "live-development-test-00000010-fact-z"
+        ],
+        "navigation_pass": true,
+        "revision_pass": true,
+        "task_pass": true,
+        "worker_task_pass": false,
+        "terminal_control_boundary": 429,
+        "timing": [
+          {
+            "fact_id": "live-development-test-00000010-fact-a",
+            "gold": true,
+            "first_correct_observed_tick": 358,
+            "first_correct_committed_tick": 358,
+            "uncertainty_intervals": []
+          },
+          {
+            "fact_id": "live-development-test-00000010-fact-z",
+            "gold": false,
+            "first_correct_observed_tick": 300,
+            "first_correct_committed_tick": 300,
+            "uncertainty_intervals": [
+              {
+                "start_tick": 300,
+                "end_tick": 300,
+                "duration_ticks": 0,
+                "censored": false
+              }
+            ]
+          }
+        ],
+        "selector_configuration_sha256": "ab4ecff0bde2fef1b22223c79887f3798b00448e1be49e021450abe6047aa207",
+        "resource_sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+        "provenance_sha256": "64628e37cc6e861194f810baa92926eba8f57260047cdd8ad320a4601023d213"
+      },
+      {
+        "condition": "sham",
+        "recording_status": "completed",
+        "final_phase": "terminated",
+        "outcome": {
+          "reason": "goal",
+          "episode": 0,
+          "steps": 429,
+          "final_distance": 0.7962582111358643
+        },
+        "requested": 1,
+        "started": 1,
+        "resolved": 1,
+        "timeouts": 0,
+        "unresolved_fact_ids": [],
+        "inspection_not_started": false,
+        "fresh_correct_fact_ids": [
+          "live-development-test-00000010-fact-a",
+          "live-development-test-00000010-fact-z"
+        ],
+        "navigation_pass": true,
+        "revision_pass": true,
+        "task_pass": true,
+        "worker_task_pass": false,
+        "terminal_control_boundary": 429,
+        "timing": [
+          {
+            "fact_id": "live-development-test-00000010-fact-a",
+            "gold": true,
+            "first_correct_observed_tick": 358,
+            "first_correct_committed_tick": 358,
+            "uncertainty_intervals": [
+              {
+                "start_tick": 300,
+                "end_tick": 358,
+                "duration_ticks": 58,
+                "censored": false
+              }
+            ]
+          },
+          {
+            "fact_id": "live-development-test-00000010-fact-z",
+            "gold": false,
+            "first_correct_observed_tick": 300,
+            "first_correct_committed_tick": 300,
+            "uncertainty_intervals": []
+          }
+        ],
+        "selector_configuration_sha256": "e7f35880b346992c0065622c7d2b1e39af305cbb8d2fa3af701f084bf5a67225",
+        "resource_sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+        "provenance_sha256": "016c5b5e9472b116d065fb922b32d64089db6e27839aec09d751238f8ce7ffc1"
+      },
+      {
+        "condition": "no-U",
+        "recording_status": "completed",
+        "final_phase": "terminated",
+        "outcome": {
+          "reason": "goal",
+          "episode": 0,
+          "steps": 429,
+          "final_distance": 0.7863208651542664
+        },
+        "requested": 0,
+        "started": 0,
+        "resolved": 0,
+        "timeouts": 0,
+        "unresolved_fact_ids": [],
+        "inspection_not_started": false,
+        "fresh_correct_fact_ids": [
+          "live-development-test-00000010-fact-a",
+          "live-development-test-00000010-fact-z"
+        ],
+        "navigation_pass": true,
+        "revision_pass": true,
+        "task_pass": true,
+        "worker_task_pass": false,
+        "terminal_control_boundary": 429,
+        "timing": [
+          {
+            "fact_id": "live-development-test-00000010-fact-a",
+            "gold": true,
+            "first_correct_observed_tick": 358,
+            "first_correct_committed_tick": 358,
+            "uncertainty_intervals": []
+          },
+          {
+            "fact_id": "live-development-test-00000010-fact-z",
+            "gold": false,
+            "first_correct_observed_tick": 300,
+            "first_correct_committed_tick": 300,
+            "uncertainty_intervals": []
+          }
+        ],
+        "selector_configuration_sha256": "455a77a8441d142947623d9ece194808d6c5d8916e2515ddb6779946987eefea",
+        "resource_sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+        "provenance_sha256": "2316059b8b498985606c553b47f53837131f2d966beb8536a84286d8a3d50a7f"
+      },
+      {
+        "condition": "hand-authored",
+        "recording_status": "completed",
+        "final_phase": "terminated",
+        "outcome": {
+          "reason": "goal",
+          "episode": 0,
+          "steps": 429,
+          "final_distance": 0.7962582111358643
+        },
+        "requested": 1,
+        "started": 1,
+        "resolved": 1,
+        "timeouts": 0,
+        "unresolved_fact_ids": [],
+        "inspection_not_started": false,
+        "fresh_correct_fact_ids": [
+          "live-development-test-00000010-fact-a",
+          "live-development-test-00000010-fact-z"
+        ],
+        "navigation_pass": true,
+        "revision_pass": true,
+        "task_pass": true,
+        "worker_task_pass": false,
+        "terminal_control_boundary": 429,
+        "timing": [
+          {
+            "fact_id": "live-development-test-00000010-fact-a",
+            "gold": true,
+            "first_correct_observed_tick": 358,
+            "first_correct_committed_tick": 358,
+            "uncertainty_intervals": [
+              {
+                "start_tick": 300,
+                "end_tick": 358,
+                "duration_ticks": 58,
+                "censored": false
+              }
+            ]
+          },
+          {
+            "fact_id": "live-development-test-00000010-fact-z",
+            "gold": false,
+            "first_correct_observed_tick": 300,
+            "first_correct_committed_tick": 300,
+            "uncertainty_intervals": []
+          }
+        ],
+        "selector_configuration_sha256": "312b3981c313a0d15c2bc02a959baa2dbc372debb56285663ebea545f53447ba",
+        "resource_sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+        "provenance_sha256": "2316059b8b498985606c553b47f53837131f2d966beb8536a84286d8a3d50a7f"
+      },
+      {
+        "condition": "history-independent",
+        "recording_status": "completed",
+        "final_phase": "terminated",
+        "outcome": {
+          "reason": "goal",
+          "episode": 0,
+          "steps": 429,
+          "final_distance": 0.7962582111358643
+        },
+        "requested": 1,
+        "started": 1,
+        "resolved": 1,
+        "timeouts": 0,
+        "unresolved_fact_ids": [],
+        "inspection_not_started": false,
+        "fresh_correct_fact_ids": [
+          "live-development-test-00000010-fact-a",
+          "live-development-test-00000010-fact-z"
+        ],
+        "navigation_pass": true,
+        "revision_pass": true,
+        "task_pass": true,
+        "worker_task_pass": false,
+        "terminal_control_boundary": 429,
+        "timing": [
+          {
+            "fact_id": "live-development-test-00000010-fact-a",
+            "gold": true,
+            "first_correct_observed_tick": 358,
+            "first_correct_committed_tick": 358,
+            "uncertainty_intervals": [
+              {
+                "start_tick": 300,
+                "end_tick": 358,
+                "duration_ticks": 58,
+                "censored": false
+              }
+            ]
+          },
+          {
+            "fact_id": "live-development-test-00000010-fact-z",
+            "gold": false,
+            "first_correct_observed_tick": 300,
+            "first_correct_committed_tick": 300,
+            "uncertainty_intervals": []
+          }
+        ],
+        "selector_configuration_sha256": "2fe90c30709bd820804198af79b3684475523f29bac9366b905f5eb688c8ff54",
+        "resource_sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+        "provenance_sha256": "2316059b8b498985606c553b47f53837131f2d966beb8536a84286d8a3d50a7f"
+      },
+      {
+        "condition": "traversal",
+        "recording_status": "completed",
+        "final_phase": "terminated",
+        "outcome": {
+          "reason": "goal",
+          "episode": 0,
+          "steps": 429,
+          "final_distance": 0.7962582111358643
+        },
+        "requested": 1,
+        "started": 1,
+        "resolved": 1,
+        "timeouts": 0,
+        "unresolved_fact_ids": [],
+        "inspection_not_started": false,
+        "fresh_correct_fact_ids": [
+          "live-development-test-00000010-fact-a",
+          "live-development-test-00000010-fact-z"
+        ],
+        "navigation_pass": true,
+        "revision_pass": true,
+        "task_pass": true,
+        "worker_task_pass": false,
+        "terminal_control_boundary": 429,
+        "timing": [
+          {
+            "fact_id": "live-development-test-00000010-fact-a",
+            "gold": true,
+            "first_correct_observed_tick": 358,
+            "first_correct_committed_tick": 358,
+            "uncertainty_intervals": [
+              {
+                "start_tick": 300,
+                "end_tick": 358,
+                "duration_ticks": 58,
+                "censored": false
+              }
+            ]
+          },
+          {
+            "fact_id": "live-development-test-00000010-fact-z",
+            "gold": false,
+            "first_correct_observed_tick": 300,
+            "first_correct_committed_tick": 300,
+            "uncertainty_intervals": []
+          }
+        ],
+        "selector_configuration_sha256": "e55b3ae2463673485d7f6e3fb66de7a7dbfd8924ca48a2f288c2ac104391a056",
+        "resource_sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+        "provenance_sha256": "2316059b8b498985606c553b47f53837131f2d966beb8536a84286d8a3d50a7f"
+      },
+      {
+        "condition": "retrieval",
+        "recording_status": "completed",
+        "final_phase": "terminated",
+        "outcome": {
+          "reason": "goal",
+          "episode": 0,
+          "steps": 429,
+          "final_distance": 0.7962582111358643
+        },
+        "requested": 1,
+        "started": 1,
+        "resolved": 1,
+        "timeouts": 0,
+        "unresolved_fact_ids": [],
+        "inspection_not_started": false,
+        "fresh_correct_fact_ids": [
+          "live-development-test-00000010-fact-a",
+          "live-development-test-00000010-fact-z"
+        ],
+        "navigation_pass": true,
+        "revision_pass": true,
+        "task_pass": true,
+        "worker_task_pass": false,
+        "terminal_control_boundary": 429,
+        "timing": [
+          {
+            "fact_id": "live-development-test-00000010-fact-a",
+            "gold": true,
+            "first_correct_observed_tick": 358,
+            "first_correct_committed_tick": 358,
+            "uncertainty_intervals": [
+              {
+                "start_tick": 300,
+                "end_tick": 358,
+                "duration_ticks": 58,
+                "censored": false
+              }
+            ]
+          },
+          {
+            "fact_id": "live-development-test-00000010-fact-z",
+            "gold": false,
+            "first_correct_observed_tick": 300,
+            "first_correct_committed_tick": 300,
+            "uncertainty_intervals": []
+          }
+        ],
+        "selector_configuration_sha256": "9cdcdb99ee4d3263d63ffc7afbf60a5e58b199dccc7de8615013368eccda17f3",
+        "resource_sha256": "b6c92a7638af926ed625069b0f1e23fc804db08e621b3bcdf2d5bae8cc1a0457",
+        "provenance_sha256": "016c5b5e9472b116d065fb922b32d64089db6e27839aec09d751238f8ce7ffc1"
+      },
+      {
+        "condition": "oracle",
+        "recording_status": "completed",
+        "final_phase": "terminated",
+        "outcome": {
+          "reason": "goal",
+          "episode": 0,
+          "steps": 429,
+          "final_distance": 0.7962582111358643
+        },
+        "requested": 1,
+        "started": 1,
+        "resolved": 1,
+        "timeouts": 0,
+        "unresolved_fact_ids": [],
+        "inspection_not_started": false,
+        "fresh_correct_fact_ids": [
+          "live-development-test-00000010-fact-a",
+          "live-development-test-00000010-fact-z"
+        ],
+        "navigation_pass": true,
+        "revision_pass": true,
+        "task_pass": true,
+        "worker_task_pass": false,
+        "terminal_control_boundary": 429,
+        "timing": [
+          {
+            "fact_id": "live-development-test-00000010-fact-a",
+            "gold": true,
+            "first_correct_observed_tick": 358,
+            "first_correct_committed_tick": 358,
+            "uncertainty_intervals": [
+              {
+                "start_tick": 300,
+                "end_tick": 358,
+                "duration_ticks": 58,
+                "censored": false
+              }
+            ]
+          },
+          {
+            "fact_id": "live-development-test-00000010-fact-z",
+            "gold": false,
+            "first_correct_observed_tick": 300,
+            "first_correct_committed_tick": 300,
+            "uncertainty_intervals": []
+          }
+        ],
+        "selector_configuration_sha256": "8288f3c9db75217f6e4cf2422f7dcf096643c98bc04e4f945abcd185c2edc048",
+        "resource_sha256": "04de092705b308fa3e32e47465e8dd04281ff3c004289dee0f25db3c17670eaa",
+        "provenance_sha256": "dabf76a9ce705b4b59dfb10e394ec37350ca2f25e93562bb3ad6fa32f7d3dd15"
+      }
+    ],
+    "trajectory_comparisons": [
+      {
+        "reference": "own",
+        "condition": "swapped",
+        "shared_ticks": 129,
+        "same_length": true,
+        "first_divergence": {
+          "field": "encoded_input",
+          "reason": "numeric replay divergence",
+          "episode": 0,
+          "tick": 300,
+          "global_tick": 300,
+          "index": [
+            4595
+          ],
+          "expected": -0.46473488211631775,
+          "actual": -0.4897514879703522,
+          "max_abs_error": 0.03600132465362549
+        },
+        "scope": "existing replay tolerances; frames are not independent samples"
+      },
+      {
+        "reference": "own",
+        "condition": "sham",
+        "shared_ticks": 129,
+        "same_length": true,
+        "first_divergence": null,
+        "scope": "existing replay tolerances; frames are not independent samples"
+      },
+      {
+        "reference": "own",
+        "condition": "no-U",
+        "shared_ticks": 129,
+        "same_length": true,
+        "first_divergence": {
+          "field": "encoded_input",
+          "reason": "numeric replay divergence",
+          "episode": 0,
+          "tick": 300,
+          "global_tick": 300,
+          "index": [
+            4595
+          ],
+          "expected": -0.46473488211631775,
+          "actual": -0.4897514879703522,
+          "max_abs_error": 0.03600132465362549
+        },
+        "scope": "existing replay tolerances; frames are not independent samples"
+      },
+      {
+        "reference": "own",
+        "condition": "hand-authored",
+        "shared_ticks": 129,
+        "same_length": true,
+        "first_divergence": null,
+        "scope": "existing replay tolerances; frames are not independent samples"
+      },
+      {
+        "reference": "own",
+        "condition": "history-independent",
+        "shared_ticks": 129,
+        "same_length": true,
+        "first_divergence": null,
+        "scope": "existing replay tolerances; frames are not independent samples"
+      },
+      {
+        "reference": "own",
+        "condition": "traversal",
+        "shared_ticks": 129,
+        "same_length": true,
+        "first_divergence": null,
+        "scope": "existing replay tolerances; frames are not independent samples"
+      },
+      {
+        "reference": "own",
+        "condition": "retrieval",
+        "shared_ticks": 129,
+        "same_length": true,
+        "first_divergence": null,
+        "scope": "existing replay tolerances; frames are not independent samples"
+      },
+      {
+        "reference": "own",
+        "condition": "oracle",
+        "shared_ticks": 129,
+        "same_length": true,
+        "first_divergence": null,
+        "scope": "existing replay tolerances; frames are not independent samples"
+      }
+    ],
+    "r2_complete": false,
+    "held_out_executed": false,
+    "operator_blindness_verified": false
+  },
+  "first_exact_changed_fields": {
+    "sham": [],
+    "swapped": [
+      {
+        "tick": 300,
+        "field": "sensors"
+      }
+    ],
+    "no-U": [
+      {
+        "tick": 300,
+        "field": "sensors"
+      }
+    ]
+  },
+  "checks": {
+    "twelve_stage_revalidation": true,
+    "independent_comparison_refit": true,
+    "source_replacement_preserved": true,
+    "all_post_anchor_non_u_invariants": true,
+    "complete_history_pins_and_E_only_refit": true,
+    "all_worker_native_recording_hashes": true,
+    "source_assets_before_after_identity": true,
+    "normal_owner_cleanup": true
+  },
+  "r2_complete": false,
+  "held_out_executed": false,
+  "replay_executed": false,
+  "exact_policy_and_motion_changes": {
+    "sham": {
+      "sensors": null,
+      "encoded_input": null,
+      "raw_output": null,
+      "action": null,
+      "pose": null,
+      "next_pose": null
+    },
+    "swapped": {
+      "sensors": {
+        "first_exact_changed_tick": 300,
+        "max_abs_difference": 0.04540305957198143
+      },
+      "encoded_input": {
+        "first_exact_changed_tick": 300,
+        "max_abs_difference": 0.03600132465362549
+      },
+      "raw_output": {
+        "first_exact_changed_tick": 301,
+        "max_abs_difference": 8.29845666885376e-05
+      },
+      "action": {
+        "first_exact_changed_tick": 301,
+        "max_abs_difference": 0.00025835633277893066
+      },
+      "pose": {
+        "first_exact_changed_tick": 302,
+        "max_abs_difference": 1.9364271788280263e-06
+      },
+      "next_pose": {
+        "first_exact_changed_tick": 301,
+        "max_abs_difference": 1.9364271788280263e-06
+      }
+    },
+    "no-U": {
+      "sensors": {
+        "first_exact_changed_tick": 300,
+        "max_abs_difference": 0.04540305957198143
+      },
+      "encoded_input": {
+        "first_exact_changed_tick": 300,
+        "max_abs_difference": 0.03600132465362549
+      },
+      "raw_output": {
+        "first_exact_changed_tick": 301,
+        "max_abs_difference": 8.29845666885376e-05
+      },
+      "action": {
+        "first_exact_changed_tick": 301,
+        "max_abs_difference": 0.00025835633277893066
+      },
+      "pose": {
+        "first_exact_changed_tick": 302,
+        "max_abs_difference": 1.9364271788280263e-06
+      },
+      "next_pose": {
+        "first_exact_changed_tick": 301,
+        "max_abs_difference": 1.9364271788280263e-06
+      }
+    }
+  },
+  "indexed_scope": "79 validated recording files plus 24 registered SNP/index files; excludes worker/supervisor/log/parent/control files",
+  "all_retained_scope": "full recursive output+control inventory after launch.json publication; includes zero-byte storage lease file",
+  "gold_fact": "live-development-test-00000010-fact-a",
+  "controller_scope": "fixed CPU FLYNN for all nine scored continuations; privileged manual acquisition and explicit controller replacement precede anchors",
+  "version": 1,
+  "claim": "one fixed CPU FLYNN development case with null task/timing benefit",
+  "protocol_sha256": "2316059b8b498985606c553b47f53837131f2d966beb8536a84286d8a3d50a7f",
+  "case_sha256": "9f73ed2972c06786bbae6694a87027bac447a72f85869b19912dc8e872916c23",
+  "semantic_case_sha256": "1b0572a2ede94a971580f38e7afa5eda19e33736248849e8e4079854ce6a4ede",
+  "primary_report": {
+    "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-flynn-continuation/runs/m5-flynn-memory-transfer-20261002/transfer-report.json",
+    "bytes": 112517,
+    "sha256": "f07a40e8cc6c84f307ef96d1ab2a4358969eb3d080a9e3ea450c629966c92f58"
+  },
+  "outer_report": {
+    "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-flynn-continuation/runs/m5-flynn-launch-6f355bd/launch.json",
+    "bytes": 1007,
+    "sha256": "15a17cc372655e7ae9a31327e1f69fa1095db740b2db9e3ec2e88d4931f7672c"
+  },
+  "prepared_plan": {
+    "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-flynn-continuation/runs/m5-flynn-launch-6f355bd/prepared-plan.json",
+    "bytes": 308795,
+    "sha256": "f45b4464fe782a99d962f2031997fd2e4eae95ae252f68bf3bf5208319bd10e3"
+  },
+  "launcher": {
+    "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-flynn-continuation/runs/m5-flynn-launch-6f355bd/launch.py",
+    "bytes": 14010,
+    "sha256": "20c4bd3d441429b9144e543f3aa081840536ea767729280d98ec9720384215cd"
+  },
+  "launch": {
+    "commit": "6f355bdd9c0144c278c90cf53b468b429775fb8a",
+    "plan_sha256": "f45b4464fe782a99d962f2031997fd2e4eae95ae252f68bf3bf5208319bd10e3",
+    "supervision": {
+      "schema_version": 1,
+      "status": "completed",
+      "timeout_seconds": 1980,
+      "started_utc": "2026-10-02T17:28:00.148052+00:00",
+      "output": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-flynn-continuation/runs/m5-flynn-launch-6f355bd/process",
+      "returncode": 0,
+      "elapsed_seconds": 482.15564136899775
+    },
+    "identities_unchanged": true,
+    "report_sha256": "f07a40e8cc6c84f307ef96d1ab2a4358969eb3d080a9e3ea450c629966c92f58",
+    "result_status": "mechanism_checked",
+    "error": null,
+    "observed_owner_count": 14,
+    "final_owned_processes": [],
+    "forced_signals": [],
+    "monitor_errors": [],
+    "storage_usage": {
+      "used_bytes": 338652549,
+      "files": 177,
+      "remaining_bytes": 3956314747,
+      "max_bytes": 4294967296,
+      "headroom_bytes": 67108864,
+      "min_free_bytes": 2147483648
+    },
+    "operational_pass": true
+  },
+  "history_inputs": {
+    "own": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-experiments/runs/m5-acquisition-batch-20261002/local_cue-history.json",
+      "sha256": "016c5b5e9472b116d065fb922b32d64089db6e27839aec09d751238f8ce7ffc1",
+      "e_sha256": "b6c92a7638af926ed625069b0f1e23fc804db08e621b3bcdf2d5bae8cc1a0457",
+      "u_sha256": "032d40d14192eadc66588a2b63339bb990750a1f70aef036a54453f8746ed9bb"
+    },
+    "swapped": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-experiments/runs/m5-acquisition-batch-20261002/paired_cue-history.json",
+      "sha256": "64628e37cc6e861194f810baa92926eba8f57260047cdd8ad320a4601023d213",
+      "e_sha256": "35588d3fdfde95f339aa99bd2eb3b7b63b46f135d79ac14688f7951dc0129f34",
+      "u_sha256": "aa37a394fee509275adddb06355388c23e5ef9e8d31c3306327ac29d54800700"
+    }
+  },
+  "root_independent_audit": {
+    "script": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/project-integration/runs/m5-flynn-root-audit-6f355bd/audit.py",
+      "bytes": 4546,
+      "sha256": "9d007eaccfd2f07d89aa44fe0e5f3333a07bf04566ba4d4f8cbb9cc8eb7bbbf3"
+    },
+    "report": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/project-integration/runs/m5-flynn-root-audit-6f355bd/audit.json",
+      "bytes": 594,
+      "sha256": "ef5c600eb83a4c1673241dad346c27cc7c0f072158ffac425c840fa1566578f9"
+    },
+    "result": {
+      "source_commit": "6f355bdd9c0144c278c90cf53b468b429775fb8a",
+      "report_sha256": "f07a40e8cc6c84f307ef96d1ab2a4358969eb3d080a9e3ea450c629966c92f58",
+      "identity_files_rehashed": 278,
+      "record_files_rehashed": 79,
+      "record_bytes": 323246836,
+      "numeric_ticks": 1461,
+      "neural_policy_ticks": 1161,
+      "stages": 12,
+      "observed_identities_absent": 14,
+      "own_sham_compared_ticks": 129,
+      "all_correction_tick": 358,
+      "all_goal_boundary": 429,
+      "scope": "NumPy-only retained-record audit; no new runtime, replay, held-out or transfer-benefit claim",
+      "elapsed_seconds": 4.574815078995016
+    }
+  },
+  "recording_files": 79,
+  "recording_bytes": 323246836,
+  "neural_policy_ticks": 1161,
+  "limits": {
+    "fixed_seed": 16,
+    "fixed_regime": "local_cue",
+    "fixed_kind": "change",
+    "counterbalanced": false,
+    "held_out": false,
+    "actual_replay": false,
+    "invisible_goal_capability": false,
+    "operator_blindness_verified": false,
+    "biological_sensor_mapping": false
+  },
+  "findings": {
+    "own_targeting_correct": true,
+    "swapped_targeting_wrong": true,
+    "no_u_abstained_on_nonempty_gold": true,
+    "all_evaluator_tasks_pass": true,
+    "all_worker_task_pass_placeholders_false": true,
+    "all_gold_observed_and_committed_tick": 358,
+    "all_goal_tick": 429,
+    "own_u_correction_timing_benefit": false,
+    "own_u_navigation_timing_benefit": false,
+    "own_u_task_benefit": false,
+    "own_sham_exact_policy_and_motion_rows": true,
+    "neural_inputs_changed_tick": 300,
+    "first_actual_motor_change_tick": 301
+  }
+}

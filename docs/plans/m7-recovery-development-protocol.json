@@ -1,0 +1,55 @@
+{
+  "baseline_protocol_sha256": "8f360289ce286f56e31051c7bcfc6932a8f413dce662b83ddb9817b3e509d69b",
+  "closed_loop_scene_seeds": {
+    "dev": [
+      1100,
+      1101,
+      1102,
+      1103
+    ]
+  },
+  "dev_goals_required_per_original_seed": 2,
+  "evaluation_limits": {
+    "dev_bytes": 4294967296,
+    "dev_outer_seconds": 1860,
+    "dev_seconds": 1800,
+    "owner_seconds": 180,
+    "progress_seconds": 30,
+    "run_bytes": 167772160,
+    "startup_seconds": 60
+  },
+  "held_out": {
+    "enabled": false,
+    "paths": []
+  },
+  "id": "male-recovery-executed-target-development-v1",
+  "max_ticks_per_run": 600,
+  "model_pairs": [
+    {
+      "rewiring_seed": 10,
+      "training_seed": 10
+    },
+    {
+      "rewiring_seed": 11,
+      "training_seed": 11
+    },
+    {
+      "rewiring_seed": 12,
+      "training_seed": 12
+    }
+  ],
+  "natural_endings": [
+    "goal",
+    "collision",
+    "stalled",
+    "time_limit"
+  ],
+  "qualification_claims": [],
+  "scope": "24 fresh fixed research development owners; all six frozen executed-target models; no held-out route, production promotion, topology advantage or generalization claim",
+  "training_index_sha256": "cf50fd2f6a96cfb1afd43e23eae05b76522116abdcf544ef41735033dc52b6b5",
+  "variants": [
+    "original",
+    "degree_rewired"
+  ],
+  "version": 1
+}

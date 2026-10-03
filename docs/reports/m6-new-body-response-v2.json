@@ -1,0 +1,271 @@
+{
+  "actual_attempts_this_version": 1,
+  "artifact_refs": {
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/new-body-response/runs/m6-new-body-raw-audit-1e904c0/audit-v2.json": {
+      "bytes": 3885,
+      "sha256": "54cbd140dc8e7bd6bd70c16eb0d11215e9d46492395086ecec416cd289cc9296"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/new-body-response/runs/m6-new-body-raw-audit-1e904c0/audit-v2.py": {
+      "bytes": 14293,
+      "sha256": "3d47f4615e9ae87d4aa226f59bf4f7e4905be9233b34d561bacc2f1d8d667ce4"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/new-body-response/runs/m6-new-body-raw-audit-1e904c0/audit.json": {
+      "bytes": 189,
+      "sha256": "7fd5ea21ad1f0bd8283cfd0dcedd96d1fe2d36e3b87ace880336ee13943c5b4f"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/new-body-response/runs/m6-new-body-raw-audit-1e904c0/audit.py": {
+      "bytes": 14101,
+      "sha256": "d3c4662858339dabc75acdd9e00da37aa1c6fa3b0102ccc39c7ad9261cd3c25e"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/new-body-response/runs/m6-new-body-raw-audit-1e904c0/console-v2.log": {
+      "bytes": 225,
+      "sha256": "97eed74ccea3947f888b903be312cc6b67a1c91310551f5d04782e19ac398629"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/new-body-response/runs/m6-new-body-raw-audit-1e904c0/console.log": {
+      "bytes": 222,
+      "sha256": "17064a0d12f722ef05603aba1e028cd8503759b186bc1a24455787d3a96b41dd"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/new-body-response/runs/m6-new-body-raw-audit-1e904c0/first-checker-failure.json": {
+      "bytes": 664,
+      "sha256": "42cf389505f794c8a4463b8216fb2a74411785e03653b0af6f825917bb5662e5"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/new-body-response/runs/m6-new-body-response-v2-20261003/calibration/3569143e4b7847c6887c6e6ce76f3d00/fit.json": {
+      "bytes": 116900,
+      "sha256": "eb4ef5630ce6d94e1a54dc7c68b5437a0e9ee8590578d96a6f38ab833dddd19f"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/new-body-response/runs/m6-new-body-response-v2-20261003/report.json": {
+      "bytes": 54324,
+      "sha256": "8753997b389aba2f56eb7321ad39778c2efae73c90d60fff9b429ff85c988013"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/new-body-response/runs/m6-new-body-response-v2-prepared/actual-console.log": {
+      "bytes": 151,
+      "sha256": "43f6aabd3dca4013a19f3e82900cacb2da87f93749b1b7c5f511af9212881554"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/new-body-response/runs/m6-new-body-response-v2-prepared/checks.log": {
+      "bytes": 2736,
+      "sha256": "5e3ac329ded131094b48f395f88631d1aab4647c55821e6de74eb498338733b1"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/new-body-response/runs/m6-new-body-response-v2-prepared/enclosing.json": {
+      "bytes": 7625,
+      "sha256": "0987eb6d5a8e77c35a730c221bf637cf4128bfcff5a030c259e52760c383fa1a"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/new-body-response/runs/m6-new-body-response-v2-prepared/invocation.json": {
+      "bytes": 5625,
+      "sha256": "d44f318fb172ea25bd88eec05479e3956f6b0a27fe07770f326a40e536f3d477"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/new-body-response/runs/m6-new-body-response-v2-prepared/lease-before.json": {
+      "bytes": 145,
+      "sha256": "2d0c21bf36e776dbf148616d5f0f111b4fac18c1dfdd04a6b05b43104565ae37"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/new-body-response/runs/m6-new-body-response-v2-prepared/post-drain.json": {
+      "bytes": 2016,
+      "sha256": "bc02dfdbe3e60deba0951e2509004010307feb7b838b7aa487fa2502123039c9"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/new-body-response/runs/m6-new-body-response-v2-prepared/preflight-go.json": {
+      "bytes": 3330,
+      "sha256": "0477d92e00ffcbf2af8ec356e36dd57eddf732485f0e51a041e1b654c0e21e19"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/new-body-response/runs/m6-new-body-response-v2-prepared/preflight.json": {
+      "bytes": 3330,
+      "sha256": "1904eb2bd972615ec220c57fc503b550f9485cb9fd50be9845a71827349a2786"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/new-body-response/runs/m6-new-body-response-v2-prepared/prior-v1-tree.json": {
+      "bytes": 6577,
+      "sha256": "0e902c06681c073f172783490e138a4a41988e2262aff936d793312b5453371b"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/new-body-response/runs/m6-new-body-response-v2-prepared/ready.json": {
+      "bytes": 2672,
+      "sha256": "b81b491b7a4123259c34fb362ade21c473b5d2fa850127573afeb9e2b816295a"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/new-body-response/runs/m6-new-body-response-v2-prepared/terminal.json": {
+      "bytes": 39872,
+      "sha256": "0d6bed503854f4fd65dcaf88f706851c1b01b46e1dd7bf1f694b2bab8bda823f"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/project-integration/runs/m6-new-body-control-root-review-1e904c0/audit.json": {
+      "bytes": 3843,
+      "sha256": "421d70401e41ac80b8c8586c72dfd9edcf1fdd1a8f380d3bf0403d127bb2c2c2"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/project-integration/runs/m6-new-body-root-audit-1e904c0/audit-v2.log": {
+      "bytes": 253,
+      "sha256": "dd9ce703270f7e5fe52fd2d6228d28b0807eb9fb5374b69049b56f7bfe0f9e05"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/project-integration/runs/m6-new-body-root-audit-1e904c0/audit-v2.py": {
+      "bytes": 9411,
+      "sha256": "a22c3b86b7764088a04270f1045df5ede8f1f2734514f53a083c5fd42badca7f"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/project-integration/runs/m6-new-body-root-audit-1e904c0/audit-v3.log": {
+      "bytes": 831,
+      "sha256": "6bfc00b7fdfffab17c34fdb156119128c01596fc3cdecbf6b291f5a97a5d5a68"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/project-integration/runs/m6-new-body-root-audit-1e904c0/audit.json": {
+      "bytes": 11871,
+      "sha256": "66bbdcc45911d33825312b7b5fef08115d5871ea8a5a7cc0b88e10c1f9f566a2"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/project-integration/runs/m6-new-body-root-audit-1e904c0/audit.log": {
+      "bytes": 741,
+      "sha256": "6b891573fa18e440c0ac753ca60010b1be89780b2c820a07867d032083949237"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/project-integration/runs/m6-new-body-root-audit-1e904c0/audit.py": {
+      "bytes": 9182,
+      "sha256": "ec6496613a3690a7363a2484c5622aa6ba15df3af38b19c866a9786e59784083"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/project-integration/runs/m6-new-body-root-audit-1e904c0/first-checker-failure.json": {
+      "bytes": 563,
+      "sha256": "ff7821229735c18d847019c270309318f464e1ec32b167c2b300be7879f10977"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/project-integration/runs/m6-new-body-root-audit-1e904c0/outcomes.json": {
+      "bytes": 3631,
+      "sha256": "5068ee746737c186522eabdf5e542d482f03d652ac2d211207fe92f984511502"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/project-integration/runs/m6-new-body-root-audit-1e904c0/outcomes.log": {
+      "bytes": 702,
+      "sha256": "86846a8dc73083ff74df2aea9d5d9b4d8825cf42dc9ecff36357fe44019e3531"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/project-integration/runs/m6-new-body-root-audit-1e904c0/outcomes.py": {
+      "bytes": 7169,
+      "sha256": "9602ed6c1a34dc428b8b8739ba38a536a6303a63d84ac9529ccea13a54e9477b"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/project-integration/runs/m6-new-body-root-audit-1e904c0/second-checker-failure.json": {
+      "bytes": 613,
+      "sha256": "23ad5c6d617d0779a7455ed3b805b9486df5a0f9f72349a2d57fc09537efb8f4"
+    }
+  },
+  "body": {
+    "actual_canonical_model_sha256": "c51df5c2a01c50c1b60fd99b41c76fc14189ac0cd2d06afcafced4d7746f57d4",
+    "actual_full_model_sha256": "c0e95ecc76b40cb1cbd098b1b3a84605f153abd9e041a74d73729522f9fd17c2",
+    "left_gear": 2.1,
+    "model_hash_scope": "Producer-captured digests, identity-consistent across five initials/results. Audit did not deserialize model bytes.",
+    "right_gear": 3.0
+  },
+  "calibration": {
+    "fit_samples": 400,
+    "fit_sha256": "2d3bb5aded6df44fce83ad5e483070297105c8e719e3de56bcf27d9467e5d8cc",
+    "gain_range_over_mean": [
+      0.15490922428588738,
+      0.029231145316704035
+    ],
+    "pooled": {
+      "control_limit": 2.0,
+      "excitation": [
+        160.0000047683716,
+        160.0000047683716
+      ],
+      "gain_bounds": [
+        1.0,
+        100.0
+      ],
+      "gains_rad_s_per_control": [
+        10.476334451141394,
+        14.271515571724802
+      ],
+      "relative_rmse": [
+        0.0713028359451348,
+        0.041036536408817034
+      ],
+      "rmse_rad_s": [
+        0.47364501765137706,
+        0.3707121153145836
+      ],
+      "sample_count": 400,
+      "version": 1
+    },
+    "same_frozen_fit_in_homing": true,
+    "samples_sha256": "accb1d619881d3552f2e8bbd385c295c112c335385cf02940c5a4a18fc861d2c"
+  },
+  "checks": {
+    "entire_v1_control_tree_unchanged_files": 45,
+    "focused_source": 18,
+    "local_raw_audit_seconds": 2.238283729995601,
+    "mocked_control": 12,
+    "root_outcome_audit_seconds": 1.636240224,
+    "root_raw_audit_seconds": 7.335370275,
+    "source_counts": {
+      "assets": 20,
+      "protected": 17,
+      "tracked": 525,
+      "upstream": 122
+    }
+  },
+  "contact_stage_cache_incidences": {
+    "ground_support": 46712,
+    "unexpected_robot": 0,
+    "unique_physical_contact_claim": false,
+    "world_only": 503580
+  },
+  "exec": {
+    "postdrain_observed_identities_absent": 5,
+    "returncode": 0,
+    "session_id": 24620,
+    "writer_lease_acquired_then_released_free": true
+  },
+  "homing": {
+    "engine_outcome": null,
+    "evaluator_actual_home_distance_m": 0.09160701467631648,
+    "evaluator_only": true,
+    "passed": true,
+    "study_outcome": "task_completed",
+    "ticks": 283
+  },
+  "limitations": [
+    "One separately calibrated new actuator body and one fixed development route; no population, zero-shot, comparative task-benefit or physical claim.",
+    "Five raw initial SNPs only; no native restoration, generic replay or private task/fit state restoration qualification.",
+    "No learned-puck capability or broader M6 completion claim.",
+    "Full-model hashes are bound producer observations, not offline model deserialization.",
+    "Contact incidences count repeated discrete stages/end-cache records, not unique contacts or continuous physical contact proof."
+  ],
+  "owners": [
+    {
+      "accepted_ticks": 480,
+      "executed_ticks": 480,
+      "id": "calibration",
+      "raw_initial_snapshots": 4,
+      "run_id": "3569143e4b7847c6887c6e6ce76f3d00",
+      "status": "completed",
+      "supervised_seconds": 30.579449595010374
+    },
+    {
+      "accepted_ticks": 283,
+      "executed_ticks": 283,
+      "id": "homing",
+      "raw_initial_snapshots": 1,
+      "run_id": "d03994e5626a43de8038b59e0f86e006",
+      "status": "completed",
+      "supervised_seconds": 22.495597925997572
+    }
+  ],
+  "prior_failure": "m6-new-body-response-v1.json",
+  "producer_commit": "1e904c0ec471fb0cb8467217aaf13bc74bf43a09",
+  "protocol_sha256": "8ea826bf4981d3db70bada1ea88db9a0d8707a3a9433e7c247e4254ec7f24672",
+  "retained_checker_failures": [
+    {
+      "auditor": "local",
+      "cause": "Snapshot sensors are an upstream dictionary, not a four-vector. Corrected only exact Engine collision/angle/wind float32 projection plus fresh output."
+    },
+    {
+      "auditor": "root",
+      "cause": "First invocation omitted pinned MUJOCO_GL and OMP environment; reran identical checker in exact environment."
+    },
+    {
+      "auditor": "root",
+      "cause": "Second invocation compared computed cache timestamp to accumulated stage9 time with exact equality; corrected to declared 1e-9 tolerance and added exact last-stage cache array parity."
+    }
+  ],
+  "status": "passed-scoped-simulated-new-body-response",
+  "storage_reported_bytes": 170063490,
+  "task_state": {
+    "controller_access": "previous float32 study cue derived solely from quantized encoders; upstream goal sensors/native pose/evaluator closure excluded",
+    "encoder_estimate_xy_m": [
+      0.10956338207580964,
+      0.0007726290736336397
+    ],
+    "outbound_reached": true,
+    "quantized_stationary_dwell_ticks": 5,
+    "terminal_phase": "complete",
+    "travel_m": 2.467800000000006
+  },
+  "timing_seconds": {
+    "enclosing_child_supervised": 57.06143673999759,
+    "enclosing_prepublication": 59.383576541004004,
+    "study_reported": 53.66065625099873
+  }
+}

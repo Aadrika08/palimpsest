@@ -1,0 +1,1050 @@
+{
+  "version": 1,
+  "claim": "development-one-tick-admission-only",
+  "source_commit": "85064076412905ba9da287b83ee0124b9618f527",
+  "shared_audit_fix_commit": "009c9500105863778f64efe531f1dc08d8e50d26",
+  "status": "admission_checked",
+  "protocol_sha256": "85f6ec028aefa4d02a4c61701452f2a5275f57744786adf8670ec238960ee214",
+  "artifacts": {
+    "primary_report": {
+      "path": "runs/m5-counterbalance-stage-b-20261003/admission-report.json",
+      "bytes": 168126,
+      "sha256": "2eaba8d84f4d206c0f415362088ba7cec3139b77e10829b6cdc84b055624ea1f"
+    },
+    "frozen_plan": {
+      "path": "runs/m5-counterbalance-stage-b-launch-8506407/prepared-plan.json",
+      "bytes": 586017,
+      "sha256": "ecaedc5c9341063eaa619635da69bda2149dd66e46ed1d01a7ffe13834515131"
+    },
+    "launcher": {
+      "path": "runs/m5-counterbalance-stage-b-launch-8506407/launch.py",
+      "bytes": 11372,
+      "sha256": "407c7b7bbe18428c0f4c1238c0ae0da01c89990671a6527f6a89bbb97e6c8f86"
+    },
+    "launch_report": {
+      "path": "runs/m5-counterbalance-stage-b-launch-8506407/launch.json",
+      "bytes": 6844,
+      "sha256": "9adac7a3f5a9ca1b793436b1b9c6b3b6368f96025eeb6fcdc355abae42dd1cc6"
+    },
+    "prepared_metadata": {
+      "path": "runs/m5-counterbalance-stage-b-launch-8506407/prepared.json",
+      "bytes": 5390,
+      "sha256": "5d32560d8e5b5a406decdc206e1743e4c809dc3d0b0850b38e3cf823189ec0e9"
+    },
+    "identity_before": {
+      "path": "runs/m5-counterbalance-stage-b-launch-8506407/identity-before.json",
+      "bytes": 62132,
+      "sha256": "380769cbbbfa44462171eeab6db52747e3dcccb048955bb61e80e291a268d939"
+    },
+    "identity_after": {
+      "path": "runs/m5-counterbalance-stage-b-launch-8506407/identity-after.json",
+      "bytes": 62132,
+      "sha256": "380769cbbbfa44462171eeab6db52747e3dcccb048955bb61e80e291a268d939"
+    },
+    "local_audit_script": {
+      "path": "runs/m5-counterbalance-audit-8506407/audit.py",
+      "bytes": 6705,
+      "sha256": "ec2f5853a93f4db74b69dfe8ed0c00847d879ec85dbc5fe935970765984165e7"
+    },
+    "local_audit_report": {
+      "path": "runs/m5-counterbalance-audit-8506407/audit.json",
+      "bytes": 89480,
+      "sha256": "b509b2b6388c372ae20735f4765fcd3cd0c3dd40ab8d3da6dff8233c32754713"
+    },
+    "root_audit_script": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/project-integration/runs/m5-counterbalance-root-audit-8506407/audit.py",
+      "bytes": 8597,
+      "sha256": "5d9bd3e83a0e0e0dbb32c42632045c2bacf025dbc5f995adfb3046e1a22d02ba"
+    },
+    "root_audit_report": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/project-integration/runs/m5-counterbalance-root-audit-8506407/audit.json",
+      "bytes": 2371,
+      "sha256": "eff5590b9401cac602c644a5a9c120a26d72db70d84c49cd62429ea5fe399cf3"
+    }
+  },
+  "owners_completed": 24,
+  "unattempted": 0,
+  "numeric_rows": 2408,
+  "actual_neural_calls": 8,
+  "source_acquisition": "privileged-manual-pose-supervision; recorded declared sensor evidence; unknown initial M",
+  "continuation": "fixed CPU FLYNN policy.act; no-U; one tick per cell; step-only",
+  "history_access": "E empty throughout; no fitting or historical U installed in this gate",
+  "world": "fixed initial acquisition geometry, source orientation, public paused goal relocation; physical gate changes",
+  "outcomes": {
+    "admission_pass_cells": 8,
+    "task_pass": null,
+    "own_u_benefit_evaluated": false,
+    "full_comparison_executed": false,
+    "held_out_executed": false,
+    "r2_complete": false,
+    "first_failure": null,
+    "null_cells_correct_abstention": 2,
+    "no_event_cells_zero_selector_invocations": 2,
+    "upper_changed_observation_and_passive_commit_tick": 300,
+    "lower_changed_observation_at_300": false
+  },
+  "cleanup": {
+    "outer_returncode": 0,
+    "supervised_seconds": 728.3475032030037,
+    "seconds_including_cleanup": 729.3386725699966,
+    "cleanup_seconds": 0.07432807899749605,
+    "non_launcher_pid_start_identities_absent": 26,
+    "forced_signals": [],
+    "watchdog_signal_messages": [],
+    "survivors": [],
+    "monitor_errors": [],
+    "operational_pass": true,
+    "actual_slot_released": true
+  },
+  "audit_scope": {
+    "recording_files": 136,
+    "recording_bytes": 496664000,
+    "indexed_files": 208,
+    "indexed_bytes": 522904958,
+    "all_output_files": 307,
+    "all_output_bytes": 524242270,
+    "all_control_files": 13,
+    "all_control_bytes": 1475221,
+    "identity_files_rehashed": 286,
+    "audit_seconds": 10.332966835994739
+  },
+  "indexed_definition": "136 recording manifest/event/chunk files + 24 each initial SNP/index/worker =208; other jobs/supervisors/control files excluded",
+  "root_audit": {
+    "status": "passed",
+    "seconds": 4.43733564500144,
+    "recording_files_checked": 136,
+    "snapshots_checked": 24,
+    "frozen_identity_files_checked": 286,
+    "numeric_rows": 2408,
+    "non_launcher_pid_start_identities_absent": 26
+  },
+  "limitations": [
+    "Eight predeclared cells cover factor bits, not the 48-cell factorial; schedule/lexical factors are incomplete.",
+    "Fixed lower goal and source pose create unequal local observation opportunities; upper closures are already visible at the event.",
+    "Case seed changes initialization across cells; future comparisons require exact within-cell native/controller/RNG anchors.",
+    "Single-tick paused probes do not measure goal completion, correction latency, memory benefit or held-out transfer.",
+    "No biological learning or mapping claim; raw local simulator recordings remain ignored and immutable."
+  ],
+  "cells": [
+    {
+      "cell": "s24/local_cue/change",
+      "case_id": "live-development-test-00000018",
+      "case_sha256": "ca0ee89255fc132d1b0291d3e53f9bd67b38e8d9edd537cb8586391c1a00d1c8",
+      "raw_case_envelope_sha256": "ad28b06c152c8972d506b49ea92e784044f7c7dcee5f603027789a3a7eabd8ef",
+      "kind": "change",
+      "regime": "local_cue",
+      "closure_side": "lower",
+      "runs": [
+        {
+          "stage": "source",
+          "run_id": "b3cbd532336d4b86a5d2c6545dff91b8",
+          "recording_files": 12,
+          "recording_bytes": 61767988,
+          "worker": {
+            "path": "runs/m5-counterbalance-stage-b-20261003/runs/b3cbd532336d4b86a5d2c6545dff91b8/admission-worker.json",
+            "bytes": 19508,
+            "sha256": "0498e49e6ae099c4ad4bcece0464b8e5f6ab082ffe2bb637b33c19d9d753e071"
+          },
+          "snapshot": {
+            "path": "runs/m5-counterbalance-stage-b-20261003/runs/b3cbd532336d4b86a5d2c6545dff91b8/snapshots/initial.snp",
+            "bytes": 926380,
+            "sha256": "6b4ce1a9d846bf67060f98ead95dec8462c54c9a9068f2f84bba104b6d119857"
+          },
+          "snapshot_index": {
+            "path": "runs/m5-counterbalance-stage-b-20261003/runs/b3cbd532336d4b86a5d2c6545dff91b8/snapshots/index.json",
+            "bytes": 403,
+            "sha256": "cb2a92131354e9eb13bf95545b036f4b08237eec2f746c8f19af4a4f0d33e36e"
+          },
+          "numeric_ticks": 300,
+          "final_phase": "paused",
+          "admission_pass": true,
+          "task_pass": null
+        },
+        {
+          "stage": "policy-anchor",
+          "run_id": "ba309a22cb374001a180ba7d20f8bb1b",
+          "recording_files": 2,
+          "recording_bytes": 41082,
+          "worker": {
+            "path": "runs/m5-counterbalance-stage-b-20261003/runs/ba309a22cb374001a180ba7d20f8bb1b/admission-worker.json",
+            "bytes": 13132,
+            "sha256": "6ae7ef6b5481eadae1b92421addbad075c71b14eabbff69056963b073bb31041"
+          },
+          "snapshot": {
+            "path": "runs/m5-counterbalance-stage-b-20261003/runs/ba309a22cb374001a180ba7d20f8bb1b/snapshots/initial.snp",
+            "bytes": 1152711,
+            "sha256": "be6b1b3a21e3e3966d553db742667c1764c9871cc04eefc1f075daaf4af2330e"
+          },
+          "snapshot_index": {
+            "path": "runs/m5-counterbalance-stage-b-20261003/runs/ba309a22cb374001a180ba7d20f8bb1b/snapshots/index.json",
+            "bytes": 402,
+            "sha256": "c12ddd86a88592be9dd27329d7048826420953cbc4f54295ac7a1a83d83ce256"
+          },
+          "numeric_ticks": 0,
+          "final_phase": "paused",
+          "admission_pass": true,
+          "task_pass": null
+        },
+        {
+          "stage": "probe",
+          "run_id": "0c98e6ff6280435795b3dacd4a578f13",
+          "recording_files": 3,
+          "recording_bytes": 274981,
+          "worker": {
+            "path": "runs/m5-counterbalance-stage-b-20261003/runs/0c98e6ff6280435795b3dacd4a578f13/admission-worker.json",
+            "bytes": 14429,
+            "sha256": "26b67c6d196d713374ac87fc4963c3e6dcaa893e3957a233494663b65c486c97"
+          },
+          "snapshot": {
+            "path": "runs/m5-counterbalance-stage-b-20261003/runs/0c98e6ff6280435795b3dacd4a578f13/snapshots/initial.snp",
+            "bytes": 1152991,
+            "sha256": "df6a49a9ceccdf1927c352198c8106e907e56c0ff09ba6696880e23bac75e034"
+          },
+          "snapshot_index": {
+            "path": "runs/m5-counterbalance-stage-b-20261003/runs/0c98e6ff6280435795b3dacd4a578f13/snapshots/index.json",
+            "bytes": 402,
+            "sha256": "52f101aaf0f50da88aa59783e73e06bb1632290652d5f65f45aee2c3b84738be"
+          },
+          "numeric_ticks": 1,
+          "final_phase": "paused",
+          "admission_pass": true,
+          "task_pass": null
+        }
+      ],
+      "gold_target_ids": [
+        "live-development-test-00000018-fact-a"
+      ],
+      "target_ids": [],
+      "selector_invocations": 1,
+      "selector_behavior_bytes": 1486,
+      "correct_abstention": false,
+      "missed_targets": 1,
+      "false_targets": 0,
+      "precision": null,
+      "recall": 0.0,
+      "actual_confirmed_subjects": [
+        "live-development-test-00000018-subject-z"
+      ],
+      "actual_changed_observed_subjects": [],
+      "recorded_revisions": [
+        {
+          "fact_id": "live-development-test-00000018-fact-z",
+          "tick": 300,
+          "reason": "direct_observation",
+          "before": "open",
+          "after": "open",
+          "evidence_ids": [
+            "sensor-c32fdbb7520fae98b6d4a4289279bc4430ea2754c31289a614eec8b448bd94d9"
+          ]
+        }
+      ],
+      "task_pass": null,
+      "correction_completion_tick": null,
+      "goal_tick": null
+    },
+    {
+      "cell": "s25/local_cue/change",
+      "case_id": "live-development-test-00000019",
+      "case_sha256": "cc237223a2f2ed271cf64487b389d21c1adb5175b475f252aaa2005216eecb00",
+      "raw_case_envelope_sha256": "1da629b5ca510fe0def8b0ae6ce751dc1563a6ac66f4846de28e9141a260b1dd",
+      "kind": "change",
+      "regime": "local_cue",
+      "closure_side": "upper",
+      "runs": [
+        {
+          "stage": "source",
+          "run_id": "fff91d6a5a40470c963469b5a02960ca",
+          "recording_files": 12,
+          "recording_bytes": 61767634,
+          "worker": {
+            "path": "runs/m5-counterbalance-stage-b-20261003/runs/fff91d6a5a40470c963469b5a02960ca/admission-worker.json",
+            "bytes": 19507,
+            "sha256": "f4db43ce24d2fe4125d186328dd14068d43b8629ecd8d7e49b96bd5641ff7f85"
+          },
+          "snapshot": {
+            "path": "runs/m5-counterbalance-stage-b-20261003/runs/fff91d6a5a40470c963469b5a02960ca/snapshots/initial.snp",
+            "bytes": 926353,
+            "sha256": "4b195989a7d00db1e755463bd93188e5381bd07883127de46f099ed5face8c03"
+          },
+          "snapshot_index": {
+            "path": "runs/m5-counterbalance-stage-b-20261003/runs/fff91d6a5a40470c963469b5a02960ca/snapshots/index.json",
+            "bytes": 403,
+            "sha256": "3499dd0c9baa43b985e362ffb264e387e8094d2e206388ca95f4159bab6c7ae1"
+          },
+          "numeric_ticks": 300,
+          "final_phase": "paused",
+          "admission_pass": true,
+          "task_pass": null
+        },
+        {
+          "stage": "policy-anchor",
+          "run_id": "d8028dc1dd2a45658cd299a087ec48fe",
+          "recording_files": 2,
+          "recording_bytes": 41082,
+          "worker": {
+            "path": "runs/m5-counterbalance-stage-b-20261003/runs/d8028dc1dd2a45658cd299a087ec48fe/admission-worker.json",
+            "bytes": 13131,
+            "sha256": "a78a94e97b80a25e17a8fc6732930202fe86c3aae5663682cf441710af712035"
+          },
+          "snapshot": {
+            "path": "runs/m5-counterbalance-stage-b-20261003/runs/d8028dc1dd2a45658cd299a087ec48fe/snapshots/initial.snp",
+            "bytes": 1152684,
+            "sha256": "aadf3d4eb6b40bb157790527a6a3edc2d81a577d1c3a0b6f1e084a77d8d1f1b1"
+          },
+          "snapshot_index": {
+            "path": "runs/m5-counterbalance-stage-b-20261003/runs/d8028dc1dd2a45658cd299a087ec48fe/snapshots/index.json",
+            "bytes": 402,
+            "sha256": "65062334a9863f62daf4218be17f7048d59ae3beae5ced35fe702767ccd37410"
+          },
+          "numeric_ticks": 0,
+          "final_phase": "paused",
+          "admission_pass": true,
+          "task_pass": null
+        },
+        {
+          "stage": "probe",
+          "run_id": "22afca39e626414085caa639b260a83b",
+          "recording_files": 3,
+          "recording_bytes": 274984,
+          "worker": {
+            "path": "runs/m5-counterbalance-stage-b-20261003/runs/22afca39e626414085caa639b260a83b/admission-worker.json",
+            "bytes": 14432,
+            "sha256": "9bc52a071df3045741d6ffbf6cfc750c9176a4e5ee349b91b477129714bb5b31"
+          },
+          "snapshot": {
+            "path": "runs/m5-counterbalance-stage-b-20261003/runs/22afca39e626414085caa639b260a83b/snapshots/initial.snp",
+            "bytes": 1152964,
+            "sha256": "ff6366d48cdd338396fb82a12f6e1444ab3b6c4ad959746492010da2eaaf709c"
+          },
+          "snapshot_index": {
+            "path": "runs/m5-counterbalance-stage-b-20261003/runs/22afca39e626414085caa639b260a83b/snapshots/index.json",
+            "bytes": 402,
+            "sha256": "e2f2eaf850bd100ff411521f7bc5744562a4eec1fde5c5b3aab5152de8b7554f"
+          },
+          "numeric_ticks": 1,
+          "final_phase": "paused",
+          "admission_pass": true,
+          "task_pass": null
+        }
+      ],
+      "gold_target_ids": [
+        "live-development-test-00000019-fact-z"
+      ],
+      "target_ids": [],
+      "selector_invocations": 1,
+      "selector_behavior_bytes": 1486,
+      "correct_abstention": false,
+      "missed_targets": 1,
+      "false_targets": 0,
+      "precision": null,
+      "recall": 0.0,
+      "actual_confirmed_subjects": [],
+      "actual_changed_observed_subjects": [
+        "live-development-test-00000019-subject-z"
+      ],
+      "recorded_revisions": [
+        {
+          "fact_id": "live-development-test-00000019-fact-z",
+          "tick": 300,
+          "reason": "direct_observation",
+          "before": "open",
+          "after": "blocked",
+          "evidence_ids": [
+            "sensor-e93b7c623a9c6789f8b5d23950b94a8b5ba06110975607e02db98f0cce66860b"
+          ]
+        }
+      ],
+      "task_pass": null,
+      "correction_completion_tick": null,
+      "goal_tick": null
+    },
+    {
+      "cell": "s26/paired_cue/null",
+      "case_id": "live-development-test-0000001a",
+      "case_sha256": "725853dac9d5cd2adc899b64a3943addb166f51638caca33297b1a2398fe340d",
+      "raw_case_envelope_sha256": "450a6f7e72da8d81f0e50e6333cf67c23d51102eeeac1593b7f6ebe75d7cec18",
+      "kind": "null",
+      "regime": "paired_cue",
+      "closure_side": null,
+      "runs": [
+        {
+          "stage": "source",
+          "run_id": "2b29549c42e647518102f8e0511b087d",
+          "recording_files": 12,
+          "recording_bytes": 61767948,
+          "worker": {
+            "path": "runs/m5-counterbalance-stage-b-20261003/runs/2b29549c42e647518102f8e0511b087d/admission-worker.json",
+            "bytes": 19430,
+            "sha256": "713c099ca275812202dee545550d5b708ea14dd7df8b61175cb4ee640070ed05"
+          },
+          "snapshot": {
+            "path": "runs/m5-counterbalance-stage-b-20261003/runs/2b29549c42e647518102f8e0511b087d/snapshots/initial.snp",
+            "bytes": 926302,
+            "sha256": "c91055bec73305ebd8019a8d3ad81b628f0a1d9ca66a7d2ffd27098d3adbcf56"
+          },
+          "snapshot_index": {
+            "path": "runs/m5-counterbalance-stage-b-20261003/runs/2b29549c42e647518102f8e0511b087d/snapshots/index.json",
+            "bytes": 403,
+            "sha256": "fd63ace57129180776f69a91ac15732910692493957463b661af4e4a9fe1b8ca"
+          },
+          "numeric_ticks": 300,
+          "final_phase": "paused",
+          "admission_pass": true,
+          "task_pass": null
+        },
+        {
+          "stage": "policy-anchor",
+          "run_id": "1f29205a25664bb78dff5d46a89b4652",
+          "recording_files": 2,
+          "recording_bytes": 41042,
+          "worker": {
+            "path": "runs/m5-counterbalance-stage-b-20261003/runs/1f29205a25664bb78dff5d46a89b4652/admission-worker.json",
+            "bytes": 13054,
+            "sha256": "555591a2b421b20f27304b68edffa20e18434f345158ff94db1bcaea8088d294"
+          },
+          "snapshot": {
+            "path": "runs/m5-counterbalance-stage-b-20261003/runs/1f29205a25664bb78dff5d46a89b4652/snapshots/initial.snp",
+            "bytes": 1152633,
+            "sha256": "7e834eb7fc05d1dd456b33ae4581d792d8009b09a8773ffc8f237c8e15136a94"
+          },
+          "snapshot_index": {
+            "path": "runs/m5-counterbalance-stage-b-20261003/runs/1f29205a25664bb78dff5d46a89b4652/snapshots/index.json",
+            "bytes": 402,
+            "sha256": "32f7d157e2712766ab0c023c19590771971550407540eabbfbf82303221fe1c4"
+          },
+          "numeric_ticks": 0,
+          "final_phase": "paused",
+          "admission_pass": true,
+          "task_pass": null
+        },
+        {
+          "stage": "probe",
+          "run_id": "a1b15dc6b2914f8e88d2b7d2297d726e",
+          "recording_files": 3,
+          "recording_bytes": 274219,
+          "worker": {
+            "path": "runs/m5-counterbalance-stage-b-20261003/runs/a1b15dc6b2914f8e88d2b7d2297d726e/admission-worker.json",
+            "bytes": 14366,
+            "sha256": "3e0b9783b3cc63a0ef57916261933fe6bbd193eab772499b5e1ded2f426c9081"
+          },
+          "snapshot": {
+            "path": "runs/m5-counterbalance-stage-b-20261003/runs/a1b15dc6b2914f8e88d2b7d2297d726e/snapshots/initial.snp",
+            "bytes": 1152913,
+            "sha256": "d5b32d30fb9c297a109b997f15dd39b2b21e4aac4fe7fafdabb95929f4c8d051"
+          },
+          "snapshot_index": {
+            "path": "runs/m5-counterbalance-stage-b-20261003/runs/a1b15dc6b2914f8e88d2b7d2297d726e/snapshots/index.json",
+            "bytes": 402,
+            "sha256": "c07402f3f7d17982c6af090bb167036a0c5ca4029a5c0b20072b4b033fd41185"
+          },
+          "numeric_ticks": 1,
+          "final_phase": "paused",
+          "admission_pass": true,
+          "task_pass": null
+        }
+      ],
+      "gold_target_ids": [],
+      "target_ids": [],
+      "selector_invocations": 1,
+      "selector_behavior_bytes": 1486,
+      "correct_abstention": true,
+      "missed_targets": 0,
+      "false_targets": 0,
+      "precision": null,
+      "recall": null,
+      "actual_confirmed_subjects": [
+        "live-development-test-0000001a-subject-z"
+      ],
+      "actual_changed_observed_subjects": [],
+      "recorded_revisions": [
+        {
+          "fact_id": "live-development-test-0000001a-fact-a",
+          "tick": 300,
+          "reason": "direct_observation",
+          "before": "open",
+          "after": "open",
+          "evidence_ids": [
+            "sensor-d660b35664fd971e9c16a9d518b3da5cc2df4c27f8e2b189b8da37f0bd996636"
+          ]
+        }
+      ],
+      "task_pass": null,
+      "correction_completion_tick": null,
+      "goal_tick": null
+    },
+    {
+      "cell": "s27/paired_cue/no-event",
+      "case_id": "live-development-test-0000001b",
+      "case_sha256": "5ffc00ff5132b2a05e587ebd805bc5ec4ee4bc99d89576d8b196c9e626772495",
+      "raw_case_envelope_sha256": "14d81ad7fce6a729c55363d87be2d9ae6c7d0075c73a9bbf61f3813c054f3f69",
+      "kind": "no-event",
+      "regime": "paired_cue",
+      "closure_side": null,
+      "runs": [
+        {
+          "stage": "source",
+          "run_id": "19d59574a0e242f08060753c37694b4e",
+          "recording_files": 12,
+          "recording_bytes": 61767603,
+          "worker": {
+            "path": "runs/m5-counterbalance-stage-b-20261003/runs/19d59574a0e242f08060753c37694b4e/admission-worker.json",
+            "bytes": 19449,
+            "sha256": "281e3a0b52d38e204312f717082314746df6e3fc3c71d90b6ff56dddb04fbc07"
+          },
+          "snapshot": {
+            "path": "runs/m5-counterbalance-stage-b-20261003/runs/19d59574a0e242f08060753c37694b4e/snapshots/initial.snp",
+            "bytes": 926300,
+            "sha256": "ac93bab9eb443bfeefd31d015bc69af23b8bc9839a629e808f3c2a0a7a95c6f5"
+          },
+          "snapshot_index": {
+            "path": "runs/m5-counterbalance-stage-b-20261003/runs/19d59574a0e242f08060753c37694b4e/snapshots/index.json",
+            "bytes": 403,
+            "sha256": "3b4229b25767e25c52c232db84493a5a71e39cf5562c65e4d0b0d91e32ae2d3d"
+          },
+          "numeric_ticks": 300,
+          "final_phase": "paused",
+          "admission_pass": true,
+          "task_pass": null
+        },
+        {
+          "stage": "policy-anchor",
+          "run_id": "881e9078ad38428c9e0e172873302b30",
+          "recording_files": 2,
+          "recording_bytes": 41051,
+          "worker": {
+            "path": "runs/m5-counterbalance-stage-b-20261003/runs/881e9078ad38428c9e0e172873302b30/admission-worker.json",
+            "bytes": 13072,
+            "sha256": "934f76274f01f2239f90de8508b9e1407e116926789d32fdb4debf9046d02fc8"
+          },
+          "snapshot": {
+            "path": "runs/m5-counterbalance-stage-b-20261003/runs/881e9078ad38428c9e0e172873302b30/snapshots/initial.snp",
+            "bytes": 1152631,
+            "sha256": "10c4fc80ecb9c8c0ad5854936f071a09f8583249761989a7b3eb834165a45245"
+          },
+          "snapshot_index": {
+            "path": "runs/m5-counterbalance-stage-b-20261003/runs/881e9078ad38428c9e0e172873302b30/snapshots/index.json",
+            "bytes": 402,
+            "sha256": "a9fdae7ec04c6efff872f5b90801acad4de51a9cfd1c51f4169a85e30c1b51a6"
+          },
+          "numeric_ticks": 0,
+          "final_phase": "paused",
+          "admission_pass": true,
+          "task_pass": null
+        },
+        {
+          "stage": "probe",
+          "run_id": "b78286d80c56445da2eb3272c8deb432",
+          "recording_files": 3,
+          "recording_bytes": 272386,
+          "worker": {
+            "path": "runs/m5-counterbalance-stage-b-20261003/runs/b78286d80c56445da2eb3272c8deb432/admission-worker.json",
+            "bytes": 14393,
+            "sha256": "12d1dfdcda01203a6e7e69d04b4693e9db026ad153974bdc59f46d58496f2f31"
+          },
+          "snapshot": {
+            "path": "runs/m5-counterbalance-stage-b-20261003/runs/b78286d80c56445da2eb3272c8deb432/snapshots/initial.snp",
+            "bytes": 1152911,
+            "sha256": "a2a8a92bc0ba9c67e91cd300172292fb4e71697c3d58b40c1368bf7f65a80686"
+          },
+          "snapshot_index": {
+            "path": "runs/m5-counterbalance-stage-b-20261003/runs/b78286d80c56445da2eb3272c8deb432/snapshots/index.json",
+            "bytes": 402,
+            "sha256": "d0ba71e3f89922f31a9430c26e5fcbed5382084c0f15b1277acda50b2e0dc8d2"
+          },
+          "numeric_ticks": 1,
+          "final_phase": "paused",
+          "admission_pass": true,
+          "task_pass": null
+        }
+      ],
+      "gold_target_ids": [],
+      "target_ids": [],
+      "selector_invocations": 0,
+      "selector_behavior_bytes": 0,
+      "correct_abstention": true,
+      "missed_targets": 0,
+      "false_targets": 0,
+      "precision": null,
+      "recall": null,
+      "actual_confirmed_subjects": [
+        "live-development-test-0000001b-subject-z"
+      ],
+      "actual_changed_observed_subjects": [],
+      "recorded_revisions": [
+        {
+          "fact_id": "live-development-test-0000001b-fact-a",
+          "tick": 300,
+          "reason": "direct_observation",
+          "before": "open",
+          "after": "open",
+          "evidence_ids": [
+            "sensor-8296e83fd749229b6070fa0ef2ae777ed15fc2cff508f4ac3861317c09949c16"
+          ]
+        }
+      ],
+      "task_pass": null,
+      "correction_completion_tick": null,
+      "goal_tick": null
+    },
+    {
+      "cell": "s28/paired_cue/change",
+      "case_id": "live-development-test-0000001c",
+      "case_sha256": "acadc9f476c524b2cde41dcadea36c160af343eface3381a9eda8adf61d48701",
+      "raw_case_envelope_sha256": "efedff5122976f392c95e1f6824c08c074093760d92269b4427c954e426640d1",
+      "kind": "change",
+      "regime": "paired_cue",
+      "closure_side": "upper",
+      "runs": [
+        {
+          "stage": "source",
+          "run_id": "dbc07665346a4fdb89b6040387612bf8",
+          "recording_files": 12,
+          "recording_bytes": 61767990,
+          "worker": {
+            "path": "runs/m5-counterbalance-stage-b-20261003/runs/dbc07665346a4fdb89b6040387612bf8/admission-worker.json",
+            "bytes": 19509,
+            "sha256": "0b685a12e19cbe6e943e241f1e4f4385225b392c8e923da80eb5c9b43b94d02e"
+          },
+          "snapshot": {
+            "path": "runs/m5-counterbalance-stage-b-20261003/runs/dbc07665346a4fdb89b6040387612bf8/snapshots/initial.snp",
+            "bytes": 926364,
+            "sha256": "36d49dec32639add6704cefa8f1181d8c95348b35d451a6c62d93ce27fcce702"
+          },
+          "snapshot_index": {
+            "path": "runs/m5-counterbalance-stage-b-20261003/runs/dbc07665346a4fdb89b6040387612bf8/snapshots/index.json",
+            "bytes": 403,
+            "sha256": "a002d4ad0ff9b12181e175a4a9ab57509b4f8243283845eb2fa350cea5d6967f"
+          },
+          "numeric_ticks": 300,
+          "final_phase": "paused",
+          "admission_pass": true,
+          "task_pass": null
+        },
+        {
+          "stage": "policy-anchor",
+          "run_id": "eef0d4869a9940a88204e2de727eac20",
+          "recording_files": 2,
+          "recording_bytes": 41084,
+          "worker": {
+            "path": "runs/m5-counterbalance-stage-b-20261003/runs/eef0d4869a9940a88204e2de727eac20/admission-worker.json",
+            "bytes": 13133,
+            "sha256": "a7e827e7c5ef0da18651b64bf082a20956c25bfdf549a870d386f62221672101"
+          },
+          "snapshot": {
+            "path": "runs/m5-counterbalance-stage-b-20261003/runs/eef0d4869a9940a88204e2de727eac20/snapshots/initial.snp",
+            "bytes": 1152695,
+            "sha256": "37fff7641db417be58ed51e0d0250d8b415651f81ed8423a0f9dece69f550180"
+          },
+          "snapshot_index": {
+            "path": "runs/m5-counterbalance-stage-b-20261003/runs/eef0d4869a9940a88204e2de727eac20/snapshots/index.json",
+            "bytes": 402,
+            "sha256": "595f4865b453ca49daf9e88691708879b9a565e6d7469fbcebe28739a95bb25d"
+          },
+          "numeric_ticks": 0,
+          "final_phase": "paused",
+          "admission_pass": true,
+          "task_pass": null
+        },
+        {
+          "stage": "probe",
+          "run_id": "f96b989d9b8b44a2857ce2716c53cbce",
+          "recording_files": 3,
+          "recording_bytes": 274988,
+          "worker": {
+            "path": "runs/m5-counterbalance-stage-b-20261003/runs/f96b989d9b8b44a2857ce2716c53cbce/admission-worker.json",
+            "bytes": 14433,
+            "sha256": "7737c1a10813c92cdb49b3fcf2b56961b918965bc788bfc4bbd021ce9b7443da"
+          },
+          "snapshot": {
+            "path": "runs/m5-counterbalance-stage-b-20261003/runs/f96b989d9b8b44a2857ce2716c53cbce/snapshots/initial.snp",
+            "bytes": 1152975,
+            "sha256": "5e60d7bd1acc155e66bf41b8d6f986fed0d51bc913e6fac09c38919d459c42a2"
+          },
+          "snapshot_index": {
+            "path": "runs/m5-counterbalance-stage-b-20261003/runs/f96b989d9b8b44a2857ce2716c53cbce/snapshots/index.json",
+            "bytes": 402,
+            "sha256": "fc65095b099502555b88b0e12bf62f448b6cd8de8a88a0fa098d3d0b0d9cebc6"
+          },
+          "numeric_ticks": 1,
+          "final_phase": "paused",
+          "admission_pass": true,
+          "task_pass": null
+        }
+      ],
+      "gold_target_ids": [
+        "live-development-test-0000001c-fact-z"
+      ],
+      "target_ids": [],
+      "selector_invocations": 1,
+      "selector_behavior_bytes": 1486,
+      "correct_abstention": false,
+      "missed_targets": 1,
+      "false_targets": 0,
+      "precision": null,
+      "recall": 0.0,
+      "actual_confirmed_subjects": [],
+      "actual_changed_observed_subjects": [
+        "live-development-test-0000001c-subject-a"
+      ],
+      "recorded_revisions": [
+        {
+          "fact_id": "live-development-test-0000001c-fact-z",
+          "tick": 300,
+          "reason": "direct_observation",
+          "before": "open",
+          "after": "blocked",
+          "evidence_ids": [
+            "sensor-4d4137feb59c7bfe00ed8263e750873b54b1e6eb1bf5dd3a88eb632054c049ac"
+          ]
+        }
+      ],
+      "task_pass": null,
+      "correction_completion_tick": null,
+      "goal_tick": null
+    },
+    {
+      "cell": "s29/paired_cue/change",
+      "case_id": "live-development-test-0000001d",
+      "case_sha256": "15454fa808a30f632dae2f0097a69810a32bd90a8ade5d50ce1930418be89bcb",
+      "raw_case_envelope_sha256": "328465bd1f2ee1a2309e2e64c4ac20204b1c92384946742b551d4c300cbdf32c",
+      "kind": "change",
+      "regime": "paired_cue",
+      "closure_side": "lower",
+      "runs": [
+        {
+          "stage": "source",
+          "run_id": "5c2d61f814e24b1590dd0ae3b71a1f52",
+          "recording_files": 12,
+          "recording_bytes": 61767636,
+          "worker": {
+            "path": "runs/m5-counterbalance-stage-b-20261003/runs/5c2d61f814e24b1590dd0ae3b71a1f52/admission-worker.json",
+            "bytes": 19508,
+            "sha256": "8ee71379d0634354285eb7369161d47d737fe11f5ac92652217c9f2e80deadd6"
+          },
+          "snapshot": {
+            "path": "runs/m5-counterbalance-stage-b-20261003/runs/5c2d61f814e24b1590dd0ae3b71a1f52/snapshots/initial.snp",
+            "bytes": 926363,
+            "sha256": "309f67e352d425edb03defb064a6f48e346369731d8bccae15ab581e8b9e45a2"
+          },
+          "snapshot_index": {
+            "path": "runs/m5-counterbalance-stage-b-20261003/runs/5c2d61f814e24b1590dd0ae3b71a1f52/snapshots/index.json",
+            "bytes": 403,
+            "sha256": "8e37a4ebb0a859991c97425b3e5e8b525bea6ae5194760c95a11194a49e15c56"
+          },
+          "numeric_ticks": 300,
+          "final_phase": "paused",
+          "admission_pass": true,
+          "task_pass": null
+        },
+        {
+          "stage": "policy-anchor",
+          "run_id": "80b95e4d84e84d0a91c36197c11165aa",
+          "recording_files": 2,
+          "recording_bytes": 41084,
+          "worker": {
+            "path": "runs/m5-counterbalance-stage-b-20261003/runs/80b95e4d84e84d0a91c36197c11165aa/admission-worker.json",
+            "bytes": 13133,
+            "sha256": "3391097593cc6041c91f9e3c926079b87ec5fb80416b82f591b8eabfc221bf1e"
+          },
+          "snapshot": {
+            "path": "runs/m5-counterbalance-stage-b-20261003/runs/80b95e4d84e84d0a91c36197c11165aa/snapshots/initial.snp",
+            "bytes": 1152694,
+            "sha256": "7c50440748907e4b3bbf4b2081323ad5df47d4946f1fc32e4393336a09048747"
+          },
+          "snapshot_index": {
+            "path": "runs/m5-counterbalance-stage-b-20261003/runs/80b95e4d84e84d0a91c36197c11165aa/snapshots/index.json",
+            "bytes": 402,
+            "sha256": "6554b025bc78e2abe6612ef4dda46918368386773bf5b9f816a22333e0bab9a0"
+          },
+          "numeric_ticks": 0,
+          "final_phase": "paused",
+          "admission_pass": true,
+          "task_pass": null
+        },
+        {
+          "stage": "probe",
+          "run_id": "aed1cc64bb1b4ea49209198279e8436b",
+          "recording_files": 3,
+          "recording_bytes": 274981,
+          "worker": {
+            "path": "runs/m5-counterbalance-stage-b-20261003/runs/aed1cc64bb1b4ea49209198279e8436b/admission-worker.json",
+            "bytes": 14430,
+            "sha256": "d06a53c44e306305f03c146005ec3da0a30088020e29d6410f266222e0faeeb2"
+          },
+          "snapshot": {
+            "path": "runs/m5-counterbalance-stage-b-20261003/runs/aed1cc64bb1b4ea49209198279e8436b/snapshots/initial.snp",
+            "bytes": 1152974,
+            "sha256": "3bd7a41bb8460e9a4c40034d2f4c79999b753dd30bf3769a3f87d92ac34778eb"
+          },
+          "snapshot_index": {
+            "path": "runs/m5-counterbalance-stage-b-20261003/runs/aed1cc64bb1b4ea49209198279e8436b/snapshots/index.json",
+            "bytes": 402,
+            "sha256": "acd282243c7ac11274038ea19176f1d08e2ef53995b6165a634cc5d047f8ab1e"
+          },
+          "numeric_ticks": 1,
+          "final_phase": "paused",
+          "admission_pass": true,
+          "task_pass": null
+        }
+      ],
+      "gold_target_ids": [
+        "live-development-test-0000001d-fact-a"
+      ],
+      "target_ids": [],
+      "selector_invocations": 1,
+      "selector_behavior_bytes": 1486,
+      "correct_abstention": false,
+      "missed_targets": 1,
+      "false_targets": 0,
+      "precision": null,
+      "recall": 0.0,
+      "actual_confirmed_subjects": [
+        "live-development-test-0000001d-subject-a"
+      ],
+      "actual_changed_observed_subjects": [],
+      "recorded_revisions": [
+        {
+          "fact_id": "live-development-test-0000001d-fact-z",
+          "tick": 300,
+          "reason": "direct_observation",
+          "before": "open",
+          "after": "open",
+          "evidence_ids": [
+            "sensor-cff68e0c83a1c9c74ee15b37fd587b8b375d2ca8b7f057999e6dd70bdd916fbe"
+          ]
+        }
+      ],
+      "task_pass": null,
+      "correction_completion_tick": null,
+      "goal_tick": null
+    },
+    {
+      "cell": "s30/local_cue/null",
+      "case_id": "live-development-test-0000001e",
+      "case_sha256": "a5c7ff961327dea1351380406266bdafb34011faef0287f3c808485095c8850d",
+      "raw_case_envelope_sha256": "6554e6b5cfffc556df5bb92bf70a5ec32ccdf19794b64d9268cd2dbf0e4acac9",
+      "kind": "null",
+      "regime": "local_cue",
+      "closure_side": null,
+      "runs": [
+        {
+          "stage": "source",
+          "run_id": "e41be252316046a88f81dc593c4a51d8",
+          "recording_files": 12,
+          "recording_bytes": 61767946,
+          "worker": {
+            "path": "runs/m5-counterbalance-stage-b-20261003/runs/e41be252316046a88f81dc593c4a51d8/admission-worker.json",
+            "bytes": 19429,
+            "sha256": "392d4d21d48de76d1167fe97e059ab02cde155ec5642559994045eaff79ec46f"
+          },
+          "snapshot": {
+            "path": "runs/m5-counterbalance-stage-b-20261003/runs/e41be252316046a88f81dc593c4a51d8/snapshots/initial.snp",
+            "bytes": 926286,
+            "sha256": "c01a777a580429714adbe095ad497f17a97aec6d4be18c8734206295c5a094d6"
+          },
+          "snapshot_index": {
+            "path": "runs/m5-counterbalance-stage-b-20261003/runs/e41be252316046a88f81dc593c4a51d8/snapshots/index.json",
+            "bytes": 403,
+            "sha256": "a75881962530241cfe88ffc7ea879564c6b00a42d7b514ccfc27c02a6124a9f9"
+          },
+          "numeric_ticks": 300,
+          "final_phase": "paused",
+          "admission_pass": true,
+          "task_pass": null
+        },
+        {
+          "stage": "policy-anchor",
+          "run_id": "bda16c15d1d349c19a154cd453e25442",
+          "recording_files": 2,
+          "recording_bytes": 41040,
+          "worker": {
+            "path": "runs/m5-counterbalance-stage-b-20261003/runs/bda16c15d1d349c19a154cd453e25442/admission-worker.json",
+            "bytes": 13054,
+            "sha256": "acff346e069278e24a6f4e33c6c3d04069a01bace955b695c9f28c229ec58a4f"
+          },
+          "snapshot": {
+            "path": "runs/m5-counterbalance-stage-b-20261003/runs/bda16c15d1d349c19a154cd453e25442/snapshots/initial.snp",
+            "bytes": 1152617,
+            "sha256": "4883f8529c2a8ecc810500853fb55265c8a4ebe4a617c7c64095421abd353147"
+          },
+          "snapshot_index": {
+            "path": "runs/m5-counterbalance-stage-b-20261003/runs/bda16c15d1d349c19a154cd453e25442/snapshots/index.json",
+            "bytes": 402,
+            "sha256": "ee0aca96d0cd3ef12be5df39a10bbd5bf1be756d4db1ed6a297ddb15dfa603b8"
+          },
+          "numeric_ticks": 0,
+          "final_phase": "paused",
+          "admission_pass": true,
+          "task_pass": null
+        },
+        {
+          "stage": "probe",
+          "run_id": "357f6d9af3414230b94f186a2ea693b9",
+          "recording_files": 3,
+          "recording_bytes": 274217,
+          "worker": {
+            "path": "runs/m5-counterbalance-stage-b-20261003/runs/357f6d9af3414230b94f186a2ea693b9/admission-worker.json",
+            "bytes": 14365,
+            "sha256": "d1475d33de5f39425090fa60a2d498053b659edd190db70723dd987c1d7e232f"
+          },
+          "snapshot": {
+            "path": "runs/m5-counterbalance-stage-b-20261003/runs/357f6d9af3414230b94f186a2ea693b9/snapshots/initial.snp",
+            "bytes": 1152897,
+            "sha256": "a573a745f2add290c04478ebd443d85dc2c74029edb08f7aecc2ffc3a099911f"
+          },
+          "snapshot_index": {
+            "path": "runs/m5-counterbalance-stage-b-20261003/runs/357f6d9af3414230b94f186a2ea693b9/snapshots/index.json",
+            "bytes": 402,
+            "sha256": "fed694bbf20067ef24c6d8a1c2f9edd036cf4ff44526294c8f10760513851edd"
+          },
+          "numeric_ticks": 1,
+          "final_phase": "paused",
+          "admission_pass": true,
+          "task_pass": null
+        }
+      ],
+      "gold_target_ids": [],
+      "target_ids": [],
+      "selector_invocations": 1,
+      "selector_behavior_bytes": 1486,
+      "correct_abstention": true,
+      "missed_targets": 0,
+      "false_targets": 0,
+      "precision": null,
+      "recall": null,
+      "actual_confirmed_subjects": [
+        "live-development-test-0000001e-subject-a"
+      ],
+      "actual_changed_observed_subjects": [],
+      "recorded_revisions": [
+        {
+          "fact_id": "live-development-test-0000001e-fact-a",
+          "tick": 300,
+          "reason": "direct_observation",
+          "before": "open",
+          "after": "open",
+          "evidence_ids": [
+            "sensor-55c0f730daf26d36e3b2e371765574ec0e499d1fbf6c65adddcb1f23d4b56e46"
+          ]
+        }
+      ],
+      "task_pass": null,
+      "correction_completion_tick": null,
+      "goal_tick": null
+    },
+    {
+      "cell": "s31/local_cue/no-event",
+      "case_id": "live-development-test-0000001f",
+      "case_sha256": "17baf2552198c1b438c92569bd1c8c3cd5f29df8aba0ce478ec8a70613d19e28",
+      "raw_case_envelope_sha256": "4834a91efc124e62074c8df9f3f54b20591edc5a8f7b3f118c61d8c91646599b",
+      "kind": "no-event",
+      "regime": "local_cue",
+      "closure_side": null,
+      "runs": [
+        {
+          "stage": "source",
+          "run_id": "44cfe6e3628a4958bfe8b4fc146d7349",
+          "recording_files": 12,
+          "recording_bytes": 61767601,
+          "worker": {
+            "path": "runs/m5-counterbalance-stage-b-20261003/runs/44cfe6e3628a4958bfe8b4fc146d7349/admission-worker.json",
+            "bytes": 19448,
+            "sha256": "20395fb9eb89d398fe7204e48d2364bd1e10f73583013d52f4d343f0ed0d8450"
+          },
+          "snapshot": {
+            "path": "runs/m5-counterbalance-stage-b-20261003/runs/44cfe6e3628a4958bfe8b4fc146d7349/snapshots/initial.snp",
+            "bytes": 926304,
+            "sha256": "ef3d838c71f00df80735afdb74d39075e24fd52c986a0822f65befd87fb7b4c9"
+          },
+          "snapshot_index": {
+            "path": "runs/m5-counterbalance-stage-b-20261003/runs/44cfe6e3628a4958bfe8b4fc146d7349/snapshots/index.json",
+            "bytes": 403,
+            "sha256": "bf07a8806cf22489f21f7118466166b3bffbfb1277c9093928eed7ccc2689009"
+          },
+          "numeric_ticks": 300,
+          "final_phase": "paused",
+          "admission_pass": true,
+          "task_pass": null
+        },
+        {
+          "stage": "policy-anchor",
+          "run_id": "88ee6eb04dde4e1d9d294fa0541b8840",
+          "recording_files": 2,
+          "recording_bytes": 41049,
+          "worker": {
+            "path": "runs/m5-counterbalance-stage-b-20261003/runs/88ee6eb04dde4e1d9d294fa0541b8840/admission-worker.json",
+            "bytes": 13072,
+            "sha256": "2badaa97fdb7492d7d1b8444101aad85e3fe077fed596e0a270585add1fe76b6"
+          },
+          "snapshot": {
+            "path": "runs/m5-counterbalance-stage-b-20261003/runs/88ee6eb04dde4e1d9d294fa0541b8840/snapshots/initial.snp",
+            "bytes": 1152635,
+            "sha256": "9bd12f16d32b1b793ef8516b57c94af50edb490fdf44e23788c5eef9d28dd6f0"
+          },
+          "snapshot_index": {
+            "path": "runs/m5-counterbalance-stage-b-20261003/runs/88ee6eb04dde4e1d9d294fa0541b8840/snapshots/index.json",
+            "bytes": 402,
+            "sha256": "542d8269319095cba3a27b7774041dfd70066517453911597a24b39e65aad3c8"
+          },
+          "numeric_ticks": 0,
+          "final_phase": "paused",
+          "admission_pass": true,
+          "task_pass": null
+        },
+        {
+          "stage": "probe",
+          "run_id": "baef9736aab0487992367243188e0123",
+          "recording_files": 3,
+          "recording_bytes": 272384,
+          "worker": {
+            "path": "runs/m5-counterbalance-stage-b-20261003/runs/baef9736aab0487992367243188e0123/admission-worker.json",
+            "bytes": 14393,
+            "sha256": "7d7d042999fbd2df0a4ce39e9d39939b8081b9c2da9115ea3deaf48df7f1fcaf"
+          },
+          "snapshot": {
+            "path": "runs/m5-counterbalance-stage-b-20261003/runs/baef9736aab0487992367243188e0123/snapshots/initial.snp",
+            "bytes": 1152915,
+            "sha256": "c6fff156651a919837d5abb30141e7118518f3211064fd44a03a8cc5a0126226"
+          },
+          "snapshot_index": {
+            "path": "runs/m5-counterbalance-stage-b-20261003/runs/baef9736aab0487992367243188e0123/snapshots/index.json",
+            "bytes": 402,
+            "sha256": "4e5739e0ae370baddf1872d9c30189a0d85fcbbddd58f5f8d2b20e231ec1908d"
+          },
+          "numeric_ticks": 1,
+          "final_phase": "paused",
+          "admission_pass": true,
+          "task_pass": null
+        }
+      ],
+      "gold_target_ids": [],
+      "target_ids": [],
+      "selector_invocations": 0,
+      "selector_behavior_bytes": 0,
+      "correct_abstention": true,
+      "missed_targets": 0,
+      "false_targets": 0,
+      "precision": null,
+      "recall": null,
+      "actual_confirmed_subjects": [
+        "live-development-test-0000001f-subject-a"
+      ],
+      "actual_changed_observed_subjects": [],
+      "recorded_revisions": [
+        {
+          "fact_id": "live-development-test-0000001f-fact-a",
+          "tick": 300,
+          "reason": "direct_observation",
+          "before": "open",
+          "after": "open",
+          "evidence_ids": [
+            "sensor-1f8b05e0311444c45ea39b365a63bbe882e38bbf16d3c7dcbbdef0017d95e838"
+          ]
+        }
+      ],
+      "task_pass": null,
+      "correction_completion_tick": null,
+      "goal_tick": null
+    }
+  ]
+}

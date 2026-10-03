@@ -1,0 +1,113 @@
+{
+  "action_arithmetic": {
+    "mechanics_guard": "Historical Python-float abs(action)<=0.4 guard and float32 wheel converter remain unchanged.",
+    "normalized_output": "finite float32[2] tanh values within [-1,1], reject invalid shape/dtype/range",
+    "parameters_hidden_logits_tanh_dtype": "float32",
+    "recorded_target_dtype": "float64, no reader downcast",
+    "scaling": "Promote normalized tanh values to float64 BEFORE multiplying by float64 0.4; retain/apply float64[2] action. No clipping or fallback. Saturated normalized +/-1 becomes exact Python +/-0.4.",
+    "training": "Identical differentiable promotion and float64 scaling; unchanged mean(((prediction-target)/[.4,.4])**2) in float64 against preserved float64 labels; float32 parameters/optimizer remain unchanged."
+  },
+  "admission": {
+    "sensor_teacher_mode_agreement": "Every row before and after; independent cursor starts at reset, never copied from teacher. Any discrepancy rejects all training admission."
+  },
+  "base_commit": "bc1279017a65bae641927fb9bcc3110786b7b01c",
+  "id": "m6-puck-hybrid-learning-v2",
+  "learning": {
+    "architecture": [
+      9,
+      32,
+      32,
+      2
+    ]
+  },
+  "learning_feature_id": "virtual-puck-eight-plus-own-before-mode-v2",
+  "mechanics_evidence": "docs/reports/m6-puck-mechanics-v5.json",
+  "native_contract": {
+    "action_replay": "Use recorded actions; never call teacher/model. Independently recompute own cursor from recorded sensors and require exact before/after fields and application digest; commit with completed native interval.",
+    "application_schema": "puck-hybrid-application-v1, pending runtime implementation",
+    "policy_replay": "Restore own cursor and stateless model identity; use same actual sensor packet once per model invocation; compare exact outputs, before/after cursor, observations and native records. No extra resets or fallback.",
+    "required_bindings": [
+      "learning_protocol_sha256",
+      "task_protocol_sha256",
+      "supervisor_id",
+      "feature_id",
+      "checkpoint_sha256",
+      "layout_seed",
+      "split",
+      "completed_tick",
+      "own_supervisor_cursor",
+      "native_model_sha256",
+      "supervisor_source_sha256",
+      "task_source_sha256"
+    ],
+    "reset": "Only initial explicit reset sets own cursor to approach/tick0; native restore stages strict own cursor with matching protocol and completed tick before publication.",
+    "source_binding": "Bind the actual puck_learning.py SHA256 from the reviewed launch source inventory, plus the existing pinned puck_profile.py/task protocol hashes that define eight-sensor normalization. Validate these exact identities before native restore/replay; no new registry or arbitrary source path."
+  },
+  "record": {
+    "episode": 0,
+    "events": "One episode_start binds seed/episode0/teacher approach/own initial cursor. Every puck_interval binds completed tick, contact summary, task outcome/dwell and teacher/own before/after mode names; numeric modes must agree.",
+    "label": "action float64[2], actual privileged teacher command, both finite abs<=.4; preserve float64 through admission and loss",
+    "manifest_fields": [
+      "learning_protocol_sha256",
+      "pushing_protocol_sha256",
+      "teacher_source_sha256",
+      "teacher_id",
+      "seed",
+      "split",
+      "episodes",
+      "outcome",
+      "initial_supervisor",
+      "learning_feature_id",
+      "supervisor_source_sha256"
+    ],
+    "max_ticks": 600,
+    "mode_discrepancy": "Reject fixed batch; preserve every source row and planned status. No dropping, replacement or teacher-mode seeding.",
+    "modes": "teacher_mode_before/after uint8 scalar codes1/2; supervisor_mode_before/after uint8 scalar codes0/1; all independently checked from reset",
+    "schema": "puck-demonstration-v1",
+    "sensors": "inputs float32[8], unchanged virtual sensor contract",
+    "student_input": "student_inputs float32[9], last component independently reconstructed BEFORE-mode"
+  },
+  "scope": "Hybrid fixed phase-memory supervisor plus learned continuous velocity and heading; phase transitions are not learned. New teacher/supervisor stop boundary only; production Engine/models and numerical physics/task/admission limits unchanged. No collection/training/held-out execution authorized by this source commit.",
+  "status": "source_frozen_execution_requires_separate_gate",
+  "supervisor": {
+    "arithmetic": "Validate float32[8], cast first four components to float64 before multiplying by 14. Compute body-frame goal-minus-puck and math.hypot distance. Stop distance <=.2 returns current mode BEFORE unit-vector division, including coincident goal. Otherwise use scalar float64 products/sums for axial, absolute cross product for lateral, and math.hypot(puck-.55*unit_goal) for arrival. No rounding, clipping or privileged state.",
+    "arrival_m": 0.08,
+    "behind_m": 0.55,
+    "commit": "Stage from current sensors/cursor. Only replace cursor after one completed interval with exact next tick. Failed inference/action admission/step cannot commit candidate state. No teacher/private-world access at student inference.",
+    "id": "sensor-only-puck-phase-v2",
+    "initial_mode": "approach",
+    "input_nine": "own carried mode BEFORE this decision, float32 0 or 1",
+    "mode_codes": {
+      "approach": 0,
+      "push": 1
+    },
+    "ready_axial_m": [
+      0.35,
+      0.63
+    ],
+    "ready_lateral_m": 0.06,
+    "stop_distance_m": 0.2,
+    "teacher_record_codes": {
+      "approach": 1,
+      "push": 2
+    },
+    "transitions": "approach -> push only on ready AND arrival<=.08; push -> approach only when not ready; otherwise carry; equality included"
+  },
+  "task_protocol": {
+    "path": "docs/plans/m6-puck-pushing-protocol-v5.json",
+    "sha256": "77ce33fa593247715abe99ff2ba0eca399edbac44b29a580d4f92410b8013c30"
+  },
+  "teacher_cpu_threads": 2,
+  "teacher_id": "analytic-puck-behind-align-push-v5",
+  "teacher_source_sha256": "585d41691d275313b276d49213249427ac645f7aa85fee544a05c37d2e652e2d",
+  "unchanged_task_contract": "Resolve layouts, limits and eight-sensor observation directly from the pinned task protocol. Resolve learning hyperparameters and admission thresholds from that same file, with only the explicit architecture and sensor_teacher_mode_agreement additions here. All 32 IDs/splits, three training seeds, epochs/optimizer/thresholds/bounds remain identical.",
+  "version": 1,
+  "version_notes": {
+    "previous_learning_protocol_sha256": "513c7f5045b919241d7fdc6fa6ab058bd94134f8d168661b6453fadfb3b6b158",
+    "rejected_teacher_collection_report_sha256": "7e2d34a134b920113e97f4b9768b23c26cf7cab14f7bd736f8d55af8b93f688f",
+    "change": "Teacher and own sensor-only supervisor stop at existing task radius .2 instead of .18 and retain carried mode. All other transitions/actions, 32 layouts/splits, training budgets and admission remain unchanged. Strict float32 reconstruction may still disagree with privileged geometry; reject, never round or seed from teacher.",
+    "execution": "A future approved attempt must collect all 20 fresh owners. V1 data remains rejected; no retroactive relabeling, padding, replacement or post-terminal steps. Historical mechanics/CPU evidence does not qualify this source.",
+    "feasibility": "Source evaluation of retained worlds only; changed actions change trajectories. Ten executed terminal zero labels remain mandatory for every training owner; new admission success is unproved.",
+    "schema": "Record/cursor/application fields are unchanged, so schema versions remain1; new exact protocol and source identities reject historical records/cursors before admission or restore."
+  }
+}

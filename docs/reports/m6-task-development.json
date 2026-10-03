@@ -1,0 +1,535 @@
+{
+  "schema_version": 1,
+  "status": "declared_mechanisms_passed_actual_homing_failed",
+  "runtime_source": {
+    "commit": "05d788b7485a216e3592ef71d74ebb2d23118c96",
+    "files_sha256": {
+      "src/palimpsest/__init__.py": "bb99e30d22e4662c4ded455b1b23f49b77ce811dcfa1b69bf358925487a566d8",
+      "src/palimpsest/__main__.py": "935a1c1166b0c1ea35a82256345000bf2c73ded718d77773bc27a71ecce28f7d",
+      "src/palimpsest/artifacts.py": "0851fc2435bdd85135f568bebd40b52776ce35b2c9c86335506ce34386f06a31",
+      "src/palimpsest/assets.py": "aa4a38c7403cd9f72bc23027acd7c212202f25574bea6af65053c34664da49e3",
+      "src/palimpsest/cli.py": "3d5bb7bc2135b8534ca2fcfceb7b4fe4e9f24ed140a38003f7b1ded1c3d40a36",
+      "src/palimpsest/doctor.py": "109de62468161f35461eee76af244daabef38f2faa1526c5a6ed268817e6b834",
+      "src/palimpsest/engine.py": "c7a5450b42cebc3e58e90c8fe6ed623da2e37cfddb7fddca18946e172c902074",
+      "src/palimpsest/evaluate.py": "74a9afb710b36a366ab680462e9440f285730a0360bda704af25ebbcfd74256a",
+      "src/palimpsest/flynn.py": "409b7503d76fd6f971a33d053e86c968b529edc226b85f44122e17a649f8f9f4",
+      "src/palimpsest/interventions.py": "fd2c1e6f160f7d251ddcf3275b383e8e3e265fc462452d1bc20c0030a6acf9c8",
+      "src/palimpsest/lab.py": "2f5072d03d33f001120bbaa87dd3e1ba2de8cd15942c3a7e7d4c97b564aa89a7",
+      "src/palimpsest/memory.py": "9641ae3d7d78577e0ea5bc8bcacbe455cae6c548f4f9bd10b8bb593a8fd7c542",
+      "src/palimpsest/memory_task.py": "6562de8c0734e0622529231babc7e035ba146077b39e004b0f52928b3038dcc6",
+      "src/palimpsest/memory_world.py": "e1a1b655f3698b4f238dd6b92b93fbe5c38dce26be4f908c76cc9db25a852eb7",
+      "src/palimpsest/profiles.py": "dcc5255bad98f7ca63d56f344fbf4ebbb85a66f68313aa7d417da3755e6d53d6",
+      "src/palimpsest/records.py": "c4be6f1699c1d8550a7f2db2979f7f9f18196ac986eef2aefe3ba665cae99ac3",
+      "src/palimpsest/replay.py": "04c381ca6a0268af38032cc95b006530f87f7f52c4177883d98c17338d5c28b5",
+      "src/palimpsest/snapshots.py": "14d95bb2f78646260ef931a610c0e7b0a31ba0f75e87413579102aad5c6a35d7",
+      "src/palimpsest/storage.py": "79664d876834ef20b459cc83963515effdaf75d0256fe5764a9cf8e18cd448c2",
+      "src/palimpsest/task_mechanics.py": "cbf698ad3f027f572c4f12655595825f580f155949f6c7c96f2556d14e6d1bb6",
+      "src/palimpsest/task_profiles.py": "14b237ede67949f281977c00b01dcd7a8e8a367d67a7e4e37911e0cb9b1dfa79",
+      "src/palimpsest/worker.py": "303ed1653c3bf50807b66f382225ef1bd226386343a7b4974387b817a226c38a",
+      "pyproject.toml": "13435cdf27674955809c67d3d81410c502bf0f258b661e68ed82197842fbc800",
+      "uv.lock": "8a7a880d020c1907e221575fda65642241f809fc628a55381f1b6137bff1b732"
+    }
+  },
+  "runtime_source_unchanged": true,
+  "script_sha256": "77b647f96da6248402986098a9d1f0076712a10d5f0013ca1459f8ccecfd208e",
+  "script_unchanged": true,
+  "raw_report": {
+    "path": "runs/m6-tasks-development-20261002/report.json",
+    "sha256": "cc0d263d04d28d737ef9241c2ad7a1d39fc9d7332ec5e8ad0dc9e57a8314d53b",
+    "status": "passed",
+    "wall_seconds": 101.51357179700426,
+    "unchanged": true
+  },
+  "invocation": "PYTHONPATH=src MUJOCO_GL=egl OMP_NUM_THREADS=2 ../lab-hardening/.venv/bin/python scripts/verify_tasks.py --assets /home/utkarsh/Work/shraddha/brain/.worktrees/r0-reproduction/data/assets/flynn --output runs/m6-tasks-development-20261002",
+  "invocation_exit_code": 0,
+  "invocation_stdout_log": {
+    "path": "/tmp/palimpsest-m6-tasks-development-20261002.log",
+    "sha256": "ce3b36f7fa025bf5da74eaa851da0c86ec79e49cf09c9ed00cf2cfa2c7c5ad77"
+  },
+  "driver": {
+    "version": 1,
+    "kind": "artificial-manual-cue-following-fixture",
+    "input": "previous recorded effective sensors[2:4] only; no pose/goal/task-state input",
+    "initial_action": [
+      0.0,
+      0.0
+    ],
+    "forward_max": 0.5,
+    "heading_gain": 1.0,
+    "rule": "v=.5*clip(cos,0,1); heading=atan2(sin,cos); neutral cue gives zero",
+    "max_ticks": 600,
+    "snapshot_tick": 8,
+    "continuation_ticks": 4,
+    "claim": "development fixture; no training, tuning, held-out or learned-policy result"
+  },
+  "profiles": {
+    "exploration-landmarks": {
+      "declared_mechanism_status": "passed",
+      "task_completed_event": true,
+      "source_ticks": 182,
+      "source_unchanged": true,
+      "motion": {
+        "loaded_body_calibration": {
+          "radius_m": 0.06,
+          "track_m": 0.36,
+          "quantum_rad": 0.001
+        },
+        "straight_forward_intervals": 76,
+        "measured_straight_shaft_delta_rad": [
+          19.025524815285692,
+          19.025524815285692
+        ],
+        "measured_straight_body_forward_m": 1.1336082220077515,
+        "positive_shaft_and_forward_direction_observed": true,
+        "max_encoder_vs_true_local_error_m": 0.019713592605592023,
+        "dwell_intervals": 20,
+        "max_dwell_true_displacement_m": 3.814697265625e-05,
+        "max_dwell_true_yaw_change_rad": 2.0427890983823444e-19,
+        "scope": "isolated evaluator measurements; no correction/input to driver. Quantized shaft rest does not prove body rest, slip-free travel or physical stopping."
+      },
+      "final_outcome": {
+        "reason": "task_completed",
+        "episode": 0,
+        "steps": 182,
+        "upstream_goal_distance_m": 0.11920344829559326,
+        "task_phase": "complete",
+        "completed_inspection_ids": [
+          "inspect-a",
+          "inspect-b"
+        ]
+      },
+      "native_continuation": {
+        "status": "passed",
+        "ticks": 4,
+        "task_state": "matched",
+        "float_atol": 1e-06,
+        "float_rtol": 1e-06,
+        "cameras_and_integers": "exact"
+      },
+      "replays": {
+        "actions": {
+          "status": "passed",
+          "compared_ticks": 182
+        },
+        "policy": {
+          "status": "passed",
+          "compared_ticks": 182
+        }
+      },
+      "owners": {
+        "source": {
+          "status": "completed",
+          "returncode": 0,
+          "elapsed_seconds": 12.403818687998864
+        },
+        "restored": {
+          "status": "completed",
+          "returncode": 0,
+          "elapsed_seconds": 5.645641114002501
+        },
+        "actions": {
+          "status": "completed",
+          "returncode": 0,
+          "elapsed_seconds": 12.21071776899771
+        },
+        "policy": {
+          "status": "completed",
+          "returncode": 0,
+          "elapsed_seconds": 13.312578860997746
+        }
+      }
+    },
+    "encoder-homing": {
+      "declared_mechanism_status": "passed",
+      "task_completed_event": true,
+      "source_ticks": 197,
+      "source_unchanged": true,
+      "motion": {
+        "loaded_body_calibration": {
+          "radius_m": 0.06,
+          "track_m": 0.36,
+          "quantum_rad": 0.001
+        },
+        "straight_forward_intervals": 84,
+        "measured_straight_shaft_delta_rad": [
+          23.145206716153595,
+          22.81015548867819
+        ],
+        "measured_straight_body_forward_m": 1.371983431198414,
+        "positive_shaft_and_forward_direction_observed": true,
+        "max_encoder_vs_true_local_error_m": 1.4457104178367326,
+        "dwell_intervals": 11,
+        "max_dwell_true_displacement_m": 1.7047345216363777e-05,
+        "max_dwell_true_yaw_change_rad": 1.0529335947584428e-06,
+        "scope": "isolated evaluator measurements; no correction/input to driver. Quantized shaft rest does not prove body rest, slip-free travel or physical stopping."
+      },
+      "final_outcome": {
+        "reason": "task_completed",
+        "episode": 0,
+        "steps": 197,
+        "upstream_goal_distance_m": 1.1163579225540161,
+        "task_phase": "complete",
+        "completed_inspection_ids": [],
+        "evaluator_actual_home_distance_m": 1.5006286671196978,
+        "estimated_home_distance_m": 0.08976176086770836
+      },
+      "native_continuation": {
+        "status": "passed",
+        "ticks": 4,
+        "task_state": "matched",
+        "float_atol": 1e-06,
+        "float_rtol": 1e-06,
+        "cameras_and_integers": "exact"
+      },
+      "replays": {
+        "actions": {
+          "status": "passed",
+          "compared_ticks": 197
+        },
+        "policy": {
+          "status": "passed",
+          "compared_ticks": 197
+        }
+      },
+      "owners": {
+        "source": {
+          "status": "completed",
+          "returncode": 0,
+          "elapsed_seconds": 16.26940285100136
+        },
+        "restored": {
+          "status": "completed",
+          "returncode": 0,
+          "elapsed_seconds": 6.097210013002041
+        },
+        "actions": {
+          "status": "completed",
+          "returncode": 0,
+          "elapsed_seconds": 16.625739364004403
+        },
+        "policy": {
+          "status": "completed",
+          "returncode": 0,
+          "elapsed_seconds": 18.12593073300377
+        }
+      }
+    }
+  },
+  "homing_audit": {
+    "schema_version": 1,
+    "scope": "read-only existing raw rows/packets; no runtime/retry or parameter fit qualification",
+    "source_recording": "/home/utkarsh/Work/shraddha/brain/.worktrees/exploration-homing/runs/m6-tasks-development-20261002/encoder-homing/source/756aa976371b4422a516a494d1313590/recording",
+    "source_evaluator_sha256": "a67e71b743f11bf1a49463f93a9403126f770a3d37c9e8126ef78ddf8bfbcd4d",
+    "rows": 197,
+    "packet_angle_max_abs_error_rad": 0.0,
+    "reconstructed_vs_evaluator_max_abs_error": 0.0,
+    "reconstructed_vs_task_inspected_max_abs_error": 0.0,
+    "cumulative_raw_encoder_predicted_yaw_rad": -3.02802664241422,
+    "cumulative_true_yaw_rad": -1.5659316359675362,
+    "pure_turn_ticks": [
+      64,
+      65,
+      66,
+      67,
+      68,
+      69,
+      70,
+      71,
+      72,
+      73,
+      74,
+      75,
+      76,
+      77,
+      78
+    ],
+    "pure_turn_shaft_delta_rad": [
+      7.309246643327466,
+      -4.263577383060497
+    ],
+    "pure_turn_predicted_yaw_rad": -1.9288040043979937,
+    "pure_turn_true_yaw_rad": -0.761539821927437,
+    "tick74": {
+      "tick": 74,
+      "effective_action": [
+        0.0,
+        -2.241326772287837
+      ],
+      "measured_step_shaft_delta_rad": [
+        0.5458085471516512,
+        -0.4526114079475292
+      ],
+      "true_step_yaw_change_rad": -0.06596148651547246,
+      "true_step_displacement_m": 0.011182912257701792
+    },
+    "interpretation": "Raw acquisition, quantization and stdlib integration agree exactly. High-amplitude turning violates the no-slip differential-drive yaw estimate; current records do not isolate wheel slip versus other 3D contact/dynamic effects. No sign reversal detected; no corrective code or fitted constant applied."
+  },
+  "cleanup": {
+    "completed_owners": 8,
+    "owner_exit_codes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "completed_recording_manifests": 8,
+    "scoped_worker_cmdlines_remaining_after_run": 0,
+    "semaphore_warnings": 0,
+    "native_warning": "All eight stderr logs contain only the same Torch TF32 API UserWarning.",
+    "limitation": "Supervisor files do not retain PID/start-time identities; process wait returncode and a finite scoped command-line check do not prove every possible transient descendant."
+  },
+  "limitations": [
+    "Artificial manual cue-following fixture only; no learned checkpoint or held-out qualification.",
+    "Raw status passed is its declared estimated-state/mechanism gate, not independent true home closure.",
+    "Actual homing closure failed: true distance 1.5006286671196978m vs estimated 0.08976176086770836m.",
+    "One paused progress snapshot per task at tick8; dwell and both homing phase snapshots remain pending.",
+    "Quantized apparent shaft rest does not establish actual body rest; evaluator does not correct inputs.",
+    "No retry, runtime changes or fitted parameters applied after this run."
+  ],
+  "artifacts": {
+    "runs/m6-tasks-development-20261002/encoder-homing/actions/98450c22ca2b4b3c94e2188a521de4d4/recording/events.jsonl": {
+      "sha256": "ade1e641149040d9b31057a656cdbe68a7197c051178bd7e11c9307c4dd08816",
+      "bytes": 641389
+    },
+    "runs/m6-tasks-development-20261002/encoder-homing/actions/98450c22ca2b4b3c94e2188a521de4d4/recording/manifest.json": {
+      "sha256": "62ef95085538e726f2927d19d8ab85a9edf495fba00e3bc628faad5306414f62",
+      "bytes": 4467
+    },
+    "runs/m6-tasks-development-20261002/encoder-homing/actions/98450c22ca2b4b3c94e2188a521de4d4/replay-report.json": {
+      "sha256": "7c16924ac83597b28cce6f43fbc842dc54187c8420fb85f3f670ffa416700004",
+      "bytes": 1854
+    },
+    "runs/m6-tasks-development-20261002/encoder-homing/actions/result.json": {
+      "sha256": "71f880b81ec88b7556c652e789a9bce13ca81626e6c5086b3f22709398f39fa3",
+      "bytes": 406
+    },
+    "runs/m6-tasks-development-20261002/encoder-homing/actions/stderr.log": {
+      "sha256": "4ad0f1c3fe69bc9cdb7a9292640501f7da85a560e7584a6dd6f7559610a75e00",
+      "bytes": 698
+    },
+    "runs/m6-tasks-development-20261002/encoder-homing/actions/stdout.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "runs/m6-tasks-development-20261002/encoder-homing/actions/supervisor.json": {
+      "sha256": "df9dac5abf3b0f57bc8fb8e0b8f11dd56e2d665ab2690affd44aa597d4d4b9c7",
+      "bytes": 327
+    },
+    "runs/m6-tasks-development-20261002/encoder-homing/policy/4bd272d9ffa9435cba5429937142a308/recording/events.jsonl": {
+      "sha256": "589cb58c851ccd302e4a5c40fcfc4903ca94018b075349cc4721e4ca73bfefd7",
+      "bytes": 641220
+    },
+    "runs/m6-tasks-development-20261002/encoder-homing/policy/4bd272d9ffa9435cba5429937142a308/recording/manifest.json": {
+      "sha256": "8938aa42b3d2ed3e561769f1fb97cd9be02b1e4d4482201a5fc41c886ea8cd46",
+      "bytes": 4464
+    },
+    "runs/m6-tasks-development-20261002/encoder-homing/policy/4bd272d9ffa9435cba5429937142a308/replay-report.json": {
+      "sha256": "7a66f5f9a846f91ce041eda678b30f154efd4a30df73358b28397deb65c370ef",
+      "bytes": 1582
+    },
+    "runs/m6-tasks-development-20261002/encoder-homing/policy/result.json": {
+      "sha256": "42efe582a74cca10eb09dbd5d3c010208b3f732c05b56a5287d6731158bc8000",
+      "bytes": 404
+    },
+    "runs/m6-tasks-development-20261002/encoder-homing/policy/stderr.log": {
+      "sha256": "4ad0f1c3fe69bc9cdb7a9292640501f7da85a560e7584a6dd6f7559610a75e00",
+      "bytes": 698
+    },
+    "runs/m6-tasks-development-20261002/encoder-homing/policy/stdout.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "runs/m6-tasks-development-20261002/encoder-homing/policy/supervisor.json": {
+      "sha256": "835af830645d851b5d6c9404b24511943fb4dade3f995b67be514666e3675ed8",
+      "bytes": 325
+    },
+    "runs/m6-tasks-development-20261002/encoder-homing/restored/fcd4df03519d4ec2af6ba38ecc4d5cc2/recording/events.jsonl": {
+      "sha256": "39e6a28c327f993622e0d1c9c7927cb584126c588c2381898cba7fcc5e5278d3",
+      "bytes": 23592
+    },
+    "runs/m6-tasks-development-20261002/encoder-homing/restored/fcd4df03519d4ec2af6ba38ecc4d5cc2/recording/manifest.json": {
+      "sha256": "5c9d0c495f044feb8c17eca343dec90eb2994d3ae2a712b64cb025ac7a14fcf5",
+      "bytes": 4039
+    },
+    "runs/m6-tasks-development-20261002/encoder-homing/restored/result.json": {
+      "sha256": "1623110a95e8cfa80b3c01c942375ea6ad32316cd5b21ff39dc41512ae905860",
+      "bytes": 2340
+    },
+    "runs/m6-tasks-development-20261002/encoder-homing/restored/stderr.log": {
+      "sha256": "4ad0f1c3fe69bc9cdb7a9292640501f7da85a560e7584a6dd6f7559610a75e00",
+      "bytes": 698
+    },
+    "runs/m6-tasks-development-20261002/encoder-homing/restored/stdout.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "runs/m6-tasks-development-20261002/encoder-homing/restored/supervisor.json": {
+      "sha256": "f0a04d30fd041e6248421dbba3accd4fe07236aaa051df1fa73dc4dee523673c",
+      "bytes": 327
+    },
+    "runs/m6-tasks-development-20261002/encoder-homing/restored/task-states.json": {
+      "sha256": "5d8bdd00b83405034e7ce9fb7038057ac89dccf9e6149b6bb09ae2959654bd98",
+      "bytes": 3349
+    },
+    "runs/m6-tasks-development-20261002/encoder-homing/source/756aa976371b4422a516a494d1313590/recording/events.jsonl": {
+      "sha256": "1047beb236465b4900a87522bd07082fece9470b85a8350f4dc1a9dab1ddf942",
+      "bytes": 639755
+    },
+    "runs/m6-tasks-development-20261002/encoder-homing/source/756aa976371b4422a516a494d1313590/recording/manifest.json": {
+      "sha256": "10844a32c27a4320b7053a86e1d9f1929f39dcf93e1b27e9296afeba64482b8c",
+      "bytes": 4091
+    },
+    "runs/m6-tasks-development-20261002/encoder-homing/source/continuation.json": {
+      "sha256": "d29ef6fba34d059928fefbb9d13685a589357af3ef6f427c084b610c5a8981f0",
+      "bytes": 3983
+    },
+    "runs/m6-tasks-development-20261002/encoder-homing/source/evaluator.json": {
+      "sha256": "a67e71b743f11bf1a49463f93a9403126f770a3d37c9e8126ef78ddf8bfbcd4d",
+      "bytes": 188190
+    },
+    "runs/m6-tasks-development-20261002/encoder-homing/source/progress.snp": {
+      "sha256": "cebee2e0ca8d0662aeb204f3bf0d0710b174965d9e0ad7e60813543803a64a44",
+      "bytes": 590135
+    },
+    "runs/m6-tasks-development-20261002/encoder-homing/source/result.json": {
+      "sha256": "046718fc5b25230896e4d42ed0895ff656acfb83b5cc98dbd77bf1463b811e44",
+      "bytes": 4437
+    },
+    "runs/m6-tasks-development-20261002/encoder-homing/source/stderr.log": {
+      "sha256": "4ad0f1c3fe69bc9cdb7a9292640501f7da85a560e7584a6dd6f7559610a75e00",
+      "bytes": 698
+    },
+    "runs/m6-tasks-development-20261002/encoder-homing/source/stdout.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "runs/m6-tasks-development-20261002/encoder-homing/source/supervisor.json": {
+      "sha256": "ce456c8b6c0ea047efb117c23cb5a4a55c4fb08f658cc651335a6a98518fd2a2",
+      "bytes": 325
+    },
+    "runs/m6-tasks-development-20261002/exploration-landmarks/actions/500188f4343746089770fd8c8265e825/recording/events.jsonl": {
+      "sha256": "64b74ca476b7a739bc86857f8d75049add5ca95878b514a8b9e0cc362a6c3fbb",
+      "bytes": 637966
+    },
+    "runs/m6-tasks-development-20261002/exploration-landmarks/actions/500188f4343746089770fd8c8265e825/recording/manifest.json": {
+      "sha256": "bd77e08b2ee0ecf134f39b3fa5415a7593ee365734f1ea8516e2c5afb349214a",
+      "bytes": 4399
+    },
+    "runs/m6-tasks-development-20261002/exploration-landmarks/actions/500188f4343746089770fd8c8265e825/replay-report.json": {
+      "sha256": "a3d35e465373a227a3a2e44582d2d61338386b14c3c131bf6f5058ccbb959388",
+      "bytes": 1854
+    },
+    "runs/m6-tasks-development-20261002/exploration-landmarks/actions/result.json": {
+      "sha256": "0d7157797565e400864f887c3d683976d583d6c3402bfbe5adeeae2fbb871617",
+      "bytes": 420
+    },
+    "runs/m6-tasks-development-20261002/exploration-landmarks/actions/stderr.log": {
+      "sha256": "4ad0f1c3fe69bc9cdb7a9292640501f7da85a560e7584a6dd6f7559610a75e00",
+      "bytes": 698
+    },
+    "runs/m6-tasks-development-20261002/exploration-landmarks/actions/stdout.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "runs/m6-tasks-development-20261002/exploration-landmarks/actions/supervisor.json": {
+      "sha256": "15e24db9a3311575ab2c848f068b9384c21a2de77ff348dc58eb78a39a0438d0",
+      "bytes": 333
+    },
+    "runs/m6-tasks-development-20261002/exploration-landmarks/policy/88f9b988c0b74625a18fa984334e58a3/recording/events.jsonl": {
+      "sha256": "4f771c9d05921cd16c390c1fd58066038b3f155bb7d905c14e9aa55390eb51af",
+      "bytes": 637797
+    },
+    "runs/m6-tasks-development-20261002/exploration-landmarks/policy/88f9b988c0b74625a18fa984334e58a3/recording/manifest.json": {
+      "sha256": "16092eda14f8ef7b4820defd50c425c1cc57d95daafd413f5f863576f19c34fb",
+      "bytes": 4396
+    },
+    "runs/m6-tasks-development-20261002/exploration-landmarks/policy/88f9b988c0b74625a18fa984334e58a3/replay-report.json": {
+      "sha256": "22e903e61ed7aad761b8128e4014e10fc08c927911de1b8f1c16ec98b723d10c",
+      "bytes": 1582
+    },
+    "runs/m6-tasks-development-20261002/exploration-landmarks/policy/result.json": {
+      "sha256": "9bea4416a0550ff4e6c51c7be955f03b8c6152deee5c84d6e529da843603fa76",
+      "bytes": 418
+    },
+    "runs/m6-tasks-development-20261002/exploration-landmarks/policy/stderr.log": {
+      "sha256": "4ad0f1c3fe69bc9cdb7a9292640501f7da85a560e7584a6dd6f7559610a75e00",
+      "bytes": 698
+    },
+    "runs/m6-tasks-development-20261002/exploration-landmarks/policy/stdout.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "runs/m6-tasks-development-20261002/exploration-landmarks/policy/supervisor.json": {
+      "sha256": "ff96df6cafcb29dbdd43d7cefa4e481744853afb434dbff36136c09bcea1f46e",
+      "bytes": 333
+    },
+    "runs/m6-tasks-development-20261002/exploration-landmarks/restored/7e2579e7aaf1478a8935df9266829e7d/recording/events.jsonl": {
+      "sha256": "f0dd55607566a23eee921b291f1ddcc7db9e70d1e7e1990eb79865752fa5d8fc",
+      "bytes": 24808
+    },
+    "runs/m6-tasks-development-20261002/exploration-landmarks/restored/7e2579e7aaf1478a8935df9266829e7d/recording/manifest.json": {
+      "sha256": "e43ec3726a3a855488bd505c1a5fbf9e4276a203f0d601c144a991a9b1074459",
+      "bytes": 4053
+    },
+    "runs/m6-tasks-development-20261002/exploration-landmarks/restored/result.json": {
+      "sha256": "1221c7088737829cbbbd892a9f945098ab5fa2b6cdae0d27fc89f366e29d1e9a",
+      "bytes": 2554
+    },
+    "runs/m6-tasks-development-20261002/exploration-landmarks/restored/stderr.log": {
+      "sha256": "4ad0f1c3fe69bc9cdb7a9292640501f7da85a560e7584a6dd6f7559610a75e00",
+      "bytes": 698
+    },
+    "runs/m6-tasks-development-20261002/exploration-landmarks/restored/stdout.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "runs/m6-tasks-development-20261002/exploration-landmarks/restored/supervisor.json": {
+      "sha256": "fad62aafb04bf8d38e70e7641e91d498bcaf6b238b3de7e718a54dcf4a828328",
+      "bytes": 334
+    },
+    "runs/m6-tasks-development-20261002/exploration-landmarks/restored/task-states.json": {
+      "sha256": "683e2c142f5fbf833b4d12e8001775e62a332ec8189bb1de8b02f6b55a02273d",
+      "bytes": 4077
+    },
+    "runs/m6-tasks-development-20261002/exploration-landmarks/source/7b99b67e45fb4283b2beb9da57ea1378/recording/events.jsonl": {
+      "sha256": "dcf4888bfb7023bbfa5c522ce38ddb028d117b4fb42fbc37066653daa7c050b9",
+      "bytes": 637284
+    },
+    "runs/m6-tasks-development-20261002/exploration-landmarks/source/7b99b67e45fb4283b2beb9da57ea1378/recording/manifest.json": {
+      "sha256": "ee350be6c55956c3cbfcbdebc19193a51b5769140570b0e61a68b52900b94886",
+      "bytes": 4023
+    },
+    "runs/m6-tasks-development-20261002/exploration-landmarks/source/continuation.json": {
+      "sha256": "0d2c45f954a30469944be455340976778b3c6d0585dc207d1a78e721070f2d60",
+      "bytes": 4849
+    },
+    "runs/m6-tasks-development-20261002/exploration-landmarks/source/evaluator.json": {
+      "sha256": "4bb6d5da43691ed8fbb4ec39f4257d2a06ca996442f9ec85c120542951263fee",
+      "bytes": 170662
+    },
+    "runs/m6-tasks-development-20261002/exploration-landmarks/source/progress.snp": {
+      "sha256": "43b027ec6c06a690a4ac9d5dca6cb2db84c56746840f123029ab4e9684c39eae",
+      "bytes": 590435
+    },
+    "runs/m6-tasks-development-20261002/exploration-landmarks/source/result.json": {
+      "sha256": "caec7778457e265fb3127f8b941462cf8f5d4b0102d7fd8351c5743caa128139",
+      "bytes": 4797
+    },
+    "runs/m6-tasks-development-20261002/exploration-landmarks/source/stderr.log": {
+      "sha256": "4ad0f1c3fe69bc9cdb7a9292640501f7da85a560e7584a6dd6f7559610a75e00",
+      "bytes": 698
+    },
+    "runs/m6-tasks-development-20261002/exploration-landmarks/source/stdout.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "runs/m6-tasks-development-20261002/exploration-landmarks/source/supervisor.json": {
+      "sha256": "e626b42647b97712fa5a42bf80e4b5f22e5e74618dfc624282baa2d94da3c1ae",
+      "bytes": 333
+    }
+  }
+}

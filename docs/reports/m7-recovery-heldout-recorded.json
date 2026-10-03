@@ -1,0 +1,341 @@
+{
+  "version": 1,
+  "publication": "retained local evidence",
+  "scope": "completed held-out recorded-input evaluation of six frozen candidates; runner-reported imitation metrics only",
+  "source_commit": "e4014081faff07c498fbba526da730599c1d5195",
+  "upstream_commit": "8d964599119b420de67ee259434d273651a1a76d",
+  "protocol_sha256": "097321aaf71baaf27bedf6eb3225b17b6345fb667548d19cb4810d08f87bdbed",
+  "teacher_collection_sha256": "5610a488f7c6b5563d08f0cafa8fe7742d5bdd4d0cdd9ab59c524c3e0e25b002",
+  "models_completed": 6,
+  "teachers": 4,
+  "teacher_rows_per_model": 1154,
+  "model_row_evaluations": 6924,
+  "new_native_owners": 0,
+  "new_physics_ticks": 0,
+  "metrics": [
+    {
+      "training_seed": 10,
+      "controller": "male-original",
+      "metrics": {
+        "interpretation": "recorded-input teacher imitation; not closed-loop navigation success",
+        "loss": 0.02226912404573563,
+        "ticks": 1154,
+        "velocity_mae": 0.08149378613748005,
+        "wrapped_heading_mae_radians": 0.1659276463749917
+      }
+    },
+    {
+      "training_seed": 10,
+      "controller": "male-control",
+      "metrics": {
+        "interpretation": "recorded-input teacher imitation; not closed-loop navigation success",
+        "loss": 0.020624771481783388,
+        "ticks": 1154,
+        "velocity_mae": 0.08657564003298146,
+        "wrapped_heading_mae_radians": 0.15587572518419765
+      }
+    },
+    {
+      "training_seed": 11,
+      "controller": "male-original",
+      "metrics": {
+        "interpretation": "recorded-input teacher imitation; not closed-loop navigation success",
+        "loss": 0.017864021183713056,
+        "ticks": 1154,
+        "velocity_mae": 0.03798905335224687,
+        "wrapped_heading_mae_radians": 0.12416169080928459
+      }
+    },
+    {
+      "training_seed": 11,
+      "controller": "male-control",
+      "metrics": {
+        "interpretation": "recorded-input teacher imitation; not closed-loop navigation success",
+        "loss": 0.01891279551144076,
+        "ticks": 1154,
+        "velocity_mae": 0.09232863117545274,
+        "wrapped_heading_mae_radians": 0.129404641080977
+      }
+    },
+    {
+      "training_seed": 12,
+      "controller": "male-original",
+      "metrics": {
+        "interpretation": "recorded-input teacher imitation; not closed-loop navigation success",
+        "loss": 0.021443221969868944,
+        "ticks": 1154,
+        "velocity_mae": 0.05236866925576737,
+        "wrapped_heading_mae_radians": 0.1590241692973175
+      }
+    },
+    {
+      "training_seed": 12,
+      "controller": "male-control",
+      "metrics": {
+        "interpretation": "recorded-input teacher imitation; not closed-loop navigation success",
+        "loss": 0.02281312375899204,
+        "ticks": 1154,
+        "velocity_mae": 0.04914218528225269,
+        "wrapped_heading_mae_radians": 0.17589598387944635
+      }
+    }
+  ],
+  "timings_seconds": {
+    "evaluator_reported": 12.49268127999676,
+    "child": 22.2806403410068,
+    "launcher_pre_publication": 46.36678458300594,
+    "enclosing_through_exit": 46.69234763398708
+  },
+  "limits_seconds": {
+    "internal": 120,
+    "child_hard": 150,
+    "full_normal_admission": 170,
+    "enclosing_hard": 180
+  },
+  "storage": {
+    "stage_bytes_limit": 67108864,
+    "min_free_bytes": 1073741824,
+    "combined_free_reservation_bytes": 10015997952,
+    "terminal_usage": {
+      "used_bytes": 961326,
+      "files": 195,
+      "remaining_bytes": 66147538,
+      "max_bytes": 67108864,
+      "headroom_bytes": 0,
+      "min_free_bytes": 1073741824
+    }
+  },
+  "inventories": {
+    "before_after_sha256": "618c2d69d771cea6cc2556523b30f95e6c6c267fe86861629362340d58b16be4",
+    "entries": 1193,
+    "tracked": 419,
+    "upstream_tracked": 122,
+    "shared_assets": 20,
+    "retained_corpus": 171,
+    "model_bundle_files": 18,
+    "development_records": 374,
+    "development_documents": 4,
+    "teacher_records": 53,
+    "teacher_documents": 5,
+    "runtime_files": 7
+  },
+  "runtime": {
+    "python": "3.11.15",
+    "numpy": "2.2.5",
+    "torch_build": "2.9.0+cu128",
+    "device": "cpu",
+    "dtype": "float32",
+    "threads": 1,
+    "cuda_visible_devices": ""
+  },
+  "cleanup": {
+    "top_command_exit": 0,
+    "child_exit": 0,
+    "enclosing_exit": 0,
+    "sampled_pid_start_pairs": 1,
+    "all_sampled_absent": true,
+    "sampler_stopped": true,
+    "forced_signals": [],
+    "survivors": [],
+    "sample_errors": [],
+    "conflicting_owned_identities": [],
+    "home_writer_lease_available": true,
+    "scope": "finite .25 s sampling, not universal transient-process coverage"
+  },
+  "audits": {
+    "own": {
+      "status": "passed after path-decoding correction",
+      "seconds": 3.5638870770053472,
+      "source_hashes": 600,
+      "independent_neural_metric_recomputation": false
+    },
+    "root": {
+      "status": "first-pass",
+      "seconds": 16.950931363,
+      "input_identities": 1193,
+      "independent_neural_metric_recomputation": false
+    },
+    "control_review": {
+      "status": "first-pass",
+      "seconds": 15.951719092
+    }
+  },
+  "retained_failures": [
+    "First fixed-six control fixture used incorrect variant names; draft/check/log retained before canonical constant and JSON integer-key corrections.",
+    "First own retained audit treated recovery_input namespace as a literal path; failed script/log retained, only auditor decoding corrected."
+  ],
+  "warning": "417-byte existing upstream PyTorch sparse CSR beta-support warning; no semaphore warning",
+  "qualification_claims": [],
+  "limitations": [
+    "No closed-loop held-out outcomes yet.",
+    "No new fitting, checkpoint/epoch/seed selection, production promotion, causal training-benefit or topology-advantage claim.",
+    "No useful-navigation held-out threshold is supplied; R3 and physical-hardware claims remain unqualified."
+  ],
+  "artifact_refs": [
+    {
+      "path": "runs/m7-recovery-heldout-recorded-e401408-20261003/evaluation/evaluation.json",
+      "bytes": 197752,
+      "sha256": "a618f193995b4a1ea1c22e66f3cee26166d5be04e36d65fc6274e40b76197290"
+    },
+    {
+      "path": "runs/m7-recovery-heldout-recorded-control-e401408/terminal.json",
+      "bytes": 20410,
+      "sha256": "ff28faf2e02793cf63f53dd9840cd869e171a2685b5a1658a775a3427c7f7626"
+    },
+    {
+      "path": "runs/m7-recovery-heldout-recorded-control-e401408/enclosing.json",
+      "bytes": 867,
+      "sha256": "c5e34f78bb3e7824b8a7e9ce779336966adc3389cd30ed793306c76f6bd53d36"
+    },
+    {
+      "path": "runs/m7-recovery-heldout-recorded-control-e401408/terminal-check.json",
+      "bytes": 5374,
+      "sha256": "81a733ecd46367f5d867e76587ecc187c77ab0e03e9ae90dbce91d127730f51d"
+    },
+    {
+      "path": "runs/m7-recovery-heldout-recorded-control-e401408/before.json",
+      "bytes": 277691,
+      "sha256": "618c2d69d771cea6cc2556523b30f95e6c6c267fe86861629362340d58b16be4"
+    },
+    {
+      "path": "runs/m7-recovery-heldout-recorded-control-e401408/after.json",
+      "bytes": 277691,
+      "sha256": "618c2d69d771cea6cc2556523b30f95e6c6c267fe86861629362340d58b16be4"
+    },
+    {
+      "path": "runs/m7-recovery-heldout-recorded-control-e401408/invocation.json",
+      "bytes": 7101,
+      "sha256": "f8fcb1c95982deb2ea002d27042ce02c875956f92890684a6abb7bcb295b7145"
+    },
+    {
+      "path": "runs/m7-recovery-heldout-recorded-control-e401408/launch.py",
+      "bytes": 13526,
+      "sha256": "ff4135d42f3cdd8a39839a338b4e0606b9c40e07e6f07194c3834f3f4ab0ccf0"
+    },
+    {
+      "path": "runs/m7-recovery-heldout-recorded-control-e401408/supervise.py",
+      "bytes": 2742,
+      "sha256": "a32e4c3b1b4fb59f52974051b5711b98710c150f37eba37cf690d30773eb4061"
+    },
+    {
+      "path": "runs/m7-recovery-heldout-recorded-control-e401408/inventory.py",
+      "bytes": 10855,
+      "sha256": "92119fb1b3c547f41fdd3fb613c40162948f9f182d645c3f79294f9ce7a57986"
+    },
+    {
+      "path": "runs/m7-recovery-heldout-recorded-control-e401408/checks.py",
+      "bytes": 11965,
+      "sha256": "30475a6a64b2ff7b1e750f9b27b9cdeb1850b44376c69d2f71e6e8831817367b"
+    },
+    {
+      "path": "runs/m7-recovery-heldout-recorded-control-e401408/checks.json",
+      "bytes": 26260,
+      "sha256": "bf80723e8a7a91a77b9a586daf86bb67527e6fc185725f4709555e0b00d0cc9a"
+    },
+    {
+      "path": "runs/m7-recovery-heldout-recorded-control-e401408/preflight.json",
+      "bytes": 8806,
+      "sha256": "071904d6a72d9bde7feff665c26ef31467ae2d4f706a6c302a95b5888dc92490"
+    },
+    {
+      "path": "runs/m7-recovery-heldout-recorded-control-e401408/checks-console.log",
+      "bytes": 554,
+      "sha256": "6b322356c00dc58400edb3295eb8dde8497320a593245c3a25a49f9a4ecd141d"
+    },
+    {
+      "path": "runs/m7-recovery-heldout-recorded-control-e401408/checks-v2-console.log",
+      "bytes": 310,
+      "sha256": "5ee7932f9140bb74d6a74c8190881f0ccf1047528c40f3f4e60113663559c1f0"
+    },
+    {
+      "path": "runs/m7-recovery-heldout-recorded-control-e401408/draft-v1-launch.py",
+      "bytes": 13468,
+      "sha256": "5a7d485abd2d0396f15d9d8c75d1872d5276655ca2145f4d464c4eda253381d1"
+    },
+    {
+      "path": "runs/m7-recovery-heldout-recorded-control-e401408/draft-v1-checks.py",
+      "bytes": 11642,
+      "sha256": "254bfa3f20a9f1457b5afe92922625284ebd0ce45adb69a435c61f6d05ca4b5f"
+    },
+    {
+      "path": "runs/m7-recovery-heldout-recorded-control-e401408/own-audit-v1-failed.py",
+      "bytes": 3738,
+      "sha256": "0a15fc0c1fcb83b5e07cbb0201483d47214ce5ce91406216ca29195fb3e10b59"
+    },
+    {
+      "path": "runs/m7-recovery-heldout-recorded-control-e401408/own-audit-v1-failed-console.log",
+      "bytes": 1316,
+      "sha256": "c583b4d92eb892adaf35851528d2fd30b5952f471c5ab90ab667d93eaeb2479d"
+    },
+    {
+      "path": "runs/m7-recovery-heldout-recorded-control-e401408/own-audit.py",
+      "bytes": 3882,
+      "sha256": "e9da784466feae2e449eaeef13cd6872e504adddfe7df0a0fca10fea26d86d4c"
+    },
+    {
+      "path": "runs/m7-recovery-heldout-recorded-control-e401408/own-audit.json",
+      "bytes": 4107,
+      "sha256": "6ec78c67806dc35883028b7f39df190ebd0330d8abf73c7eb3a679a85c06718f"
+    },
+    {
+      "path": "runs/m7-recovery-heldout-recorded-control-e401408/own-audit-v2-console.log",
+      "bytes": 190,
+      "sha256": "294eda56ae7f26a962367fd2fcd505181c271cd3b15fe1ef53e85edb50a9d720"
+    },
+    {
+      "path": "runs/m7-recovery-heldout-recorded-control-e401408/launcher-console.log",
+      "bytes": 821,
+      "sha256": "b83e67edc6f1869d111cf718abeede69f7c5a3c12359ac08aea992d939041ece"
+    },
+    {
+      "path": "runs/m7-recovery-heldout-recorded-control-e401408/outer-launch/stdout.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "runs/m7-recovery-heldout-recorded-control-e401408/outer-launch/stderr.log",
+      "bytes": 417,
+      "sha256": "4b76455ce77be2b3bb171b7908cf6c68342bb752d97b74629b3a2eb494da0dc4"
+    },
+    {
+      "path": "runs/m7-recovery-heldout-recorded-control-e401408/outer-launch/supervisor.json",
+      "bytes": 333,
+      "sha256": "f93ffbf64eb6c9a9d0af4a7a823380e657dbcc0f4e5a4a0b4bfbae711d606666"
+    },
+    {
+      "path": "runs/m7-recovery-heldout-recorded-control-e401408/outer-supervisor/stdout.log",
+      "bytes": 489,
+      "sha256": "b25b0b15e01cc0442958a5cd81be4be18b04df98cf56910fccbf9c1b58e2ca25"
+    },
+    {
+      "path": "runs/m7-recovery-heldout-recorded-control-e401408/outer-supervisor/stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "runs/m7-recovery-heldout-recorded-control-e401408/outer-supervisor/supervisor.json",
+      "bytes": 338,
+      "sha256": "af95699c5eae0a2d9184e94ba1038ce618ce961003ad7ef982878c374a99a79b"
+    },
+    {
+      "path": "../project-integration/runs/m7-heldout-recorded-root-audit-e401408/audit.py",
+      "bytes": 4397,
+      "sha256": "cbbfdcad722305ea9ce6e06db1f0ad58255350fd420379934bfed8d23cf8dc8e"
+    },
+    {
+      "path": "../project-integration/runs/m7-heldout-recorded-root-audit-e401408/audit.json",
+      "bytes": 3352,
+      "sha256": "3d7ffb2fb83d2540384d1f9a4e2031867a367d87bd9aecd2c76956a3789761eb"
+    },
+    {
+      "path": "../project-integration/runs/m7-heldout-recorded-control-root-review-e401408/audit.py",
+      "bytes": 4570,
+      "sha256": "2d37f2fe625411bc1eba5b61febccf3bff6a04fa48e2e1be57cfcc3c26c756ca"
+    },
+    {
+      "path": "../project-integration/runs/m7-heldout-recorded-control-root-review-e401408/audit.json",
+      "bytes": 793,
+      "sha256": "1a854fd44dd77bf07bb9dc9e6585deac79285707ab3cec339e1b598da06ced13"
+    }
+  ]
+}

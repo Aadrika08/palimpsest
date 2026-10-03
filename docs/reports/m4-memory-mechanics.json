@@ -1,0 +1,100 @@
+{
+  "version": 1,
+  "milestone": "M4 memory mechanics",
+  "status": "complete",
+  "runtime_commit": "23d5847e9cc6fd3bd5ff53c6ea1783d33d91b70b",
+  "evidence": {
+    "full_flynn": {
+      "path": "runs/m4-full-memory-gate/report.json",
+      "sha256": "04d2050fafe4d246d9f50e5790d8a56908b5ea30f94944dc89788892bcd4106d",
+      "size_bytes": 52483
+    },
+    "actual_suite": {
+      "path": "runs/m4-actual-suite-20261002/report.json",
+      "sha256": "5d48e629b4b0db7b1c68def144aaad9471599255925d477af23bcf8d2134e132",
+      "size_bytes": 6860
+    },
+    "browser": {
+      "path": "runs/m4-browser-20261002b/report.json",
+      "sha256": "1b92187da55be6ccb0663c959ddb15d31ac1fcb6e997ea32e23116b45d851ad3",
+      "size_bytes": 4269
+    },
+    "earlier_browser_failure": {
+      "path": "runs/m4-browser-20261002/report.json",
+      "sha256": "43b95f2ff8861fc7ddab8978a3ee288bb1410c595402f44ae7bafa5774db9678",
+      "size_bytes": 4267
+    },
+    "ui_build": {
+      "path": "runs/m4-final-validation-20261002/ui-build.log",
+      "sha256": "b3404bc2b353f281d8c013d12ff7ff3bfc123d78f61c49f0665bbde227fb56f3",
+      "size_bytes": 408
+    },
+    "earlier_pure": {
+      "path": "runs/m4-pure-integration-20261002/report.json",
+      "sha256": "b4b6c8d8863fdb701a5666146e4e187b4c719872759e8ef4e824716898b95e74",
+      "size_bytes": 7843
+    }
+  },
+  "actual_suite": {
+    "tests": 218,
+    "skipped": 0,
+    "unittest_seconds": 67.757
+  },
+  "full_flynn": {
+    "seconds": 200.164173940997,
+    "closed_owners": 6,
+    "invariant_branches": [
+      "sham",
+      "local",
+      "paired"
+    ],
+    "sham_max_abs_error": 0.0,
+    "replay_ticks_each": 4,
+    "replay_events_each": 33
+  },
+  "browser": {
+    "passed": 4,
+    "skipped": 1,
+    "skipped_scope": "Opt-in cadence benchmark; no new cadence measurement",
+    "closed_owners": [
+      {
+        "run_id": "ead967f9a367432cacfdb1dec2e3afee",
+        "http_status": 200,
+        "status": "closed",
+        "path": "runs/m4-browser-20261002b/test-results/lab-actual-local-manual-wo-b6c0e-nches-comparison-and-export/owner-close.json",
+        "sha256": "f6402a1561407f072f547b8b3eb57075bc8a36db4dd499982813b3be281a5d42"
+      },
+      {
+        "run_id": "0fefdca7f7dd4434ad8402b77cbec02a",
+        "http_status": 200,
+        "status": "closed",
+        "path": "runs/m4-browser-20261002b/test-results/lab-actual-memory-inspecto-8936b-ce-linked-route-annotations/owner-close.json",
+        "sha256": "1716a5e92b791ec92c845c2fd9f316c91c399df3b8d92fd02e0ea93db0b30c2b"
+      },
+      {
+        "run_id": "6ab8a67436e5476b82aca176da76ed2b",
+        "http_status": 200,
+        "status": "closed",
+        "path": "runs/m4-browser-20261002b/test-results/lab-actual-replay-jobs-rec-b4b54-ts-and-authenticated-bundle/owner-close.json",
+        "sha256": "39aa39d57289d7129c922c2e48d4e1aaf72a455246e395e2509227b5019afaae"
+      },
+      {
+        "run_id": "1f594c62ed374f50b48380e6624db09b",
+        "http_status": 200,
+        "status": "closed",
+        "path": "runs/m4-browser-20261002b/test-results/lab-actual-trajectory-over-4f282-and-keyboard-error-recovery/owner-close.json",
+        "sha256": "416c2033df1bc3a8674521b1fd47959aea1ca8bd45aad5e1c2e7e89eb4c15b3d"
+      }
+    ],
+    "desktop_mobile_viewed": true,
+    "source_unchanged": true,
+    "listener_absent": true
+  },
+  "limits": [
+    "Default authored development world and declared symbolic sensing only",
+    "Authored U and empty sham, no learned-history transfer or R2 qualification",
+    "Manual browser; CPU FLYNN owner/API; no CUDA/physical claim",
+    "Four-tick continuations are bounded numerical evidence, not arbitrary-duration repeatability"
+  ],
+  "runtime_files_unchanged_since_full_flynn": true
+}

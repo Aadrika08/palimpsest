@@ -1,0 +1,205 @@
+{
+  "version": 1,
+  "status": "partial-development-readout",
+  "source_commit": "fabfedc70b305a88ced4ca943a8dea47eea73602",
+  "analyzer_sha256": "7759d7fe70479489ab2c90f3f16de8a097099f3c750325c33548e708d4b2b3f0",
+  "completed_cells": 44,
+  "expected_cells": 48,
+  "condition_readouts": 396,
+  "paired_readouts": 352,
+  "namespace_blocks": 8,
+  "seed_blocks": {
+    "24": 6,
+    "25": 6,
+    "26": 6,
+    "27": 6,
+    "28": 5,
+    "29": 3,
+    "30": 6,
+    "31": 6
+  },
+  "broader_core_cells": 4,
+  "strict_core_cells": 40,
+  "task_pass_differences": {
+    "zero": 352
+  },
+  "goal_tick_differences_own_minus_reference": {
+    "zero": 340,
+    "one": 12
+  },
+  "stale_correction_differences": {
+    "zero": 120,
+    "not_applicable": 232
+  },
+  "first_execution": true,
+  "supervision": {
+    "schema_version": 1,
+    "status": "completed",
+    "timeout_seconds": 30,
+    "started_utc": "2026-10-03T20:30:25.492958+00:00",
+    "output": "/home/utkarsh/Work/shraddha/brain/.worktrees/project-integration/runs/m5-matrix-readout-44-fabfedc/process",
+    "returncode": 0,
+    "elapsed_seconds": 0.6828771799919195
+  },
+  "raw_events_reaudited": false,
+  "held_out_executed": false,
+  "r2_complete": false,
+  "qualification_claims": [],
+  "inputs": [
+    {
+      "document": "/home/utkarsh/Work/shraddha/brain/.worktrees/project-integration/docs/reports/m5-counterbalance-stage-c-v3.json",
+      "document_sha256": "94328a19597be6e9846851c3042c8f8606d75cf9ab8cb3bccc1f0c509270a067",
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-flynn-continuation/runs/m5-counterbalance-stage-c-v3-20261003/comparison-report.json",
+      "sha256": "c8ba721b0b861cb554811d78791a5f90a5bb2b7d2f2f4ff32e691db106aa376d"
+    },
+    {
+      "document": "/home/utkarsh/Work/shraddha/brain/.worktrees/project-integration/docs/reports/m5-counterbalance-stage-c4.json",
+      "document_sha256": "365a0c1edcec0f0eb453fa6ddf4357f2bcda934c916bca6ef784a8fa5aae408c",
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-flynn-continuation/runs/m5-counterbalance-stage-c4-20261003/comparison-report.json",
+      "sha256": "91aa2aa30ae5a25daf0286f880b4372d66eca9eb98ee0b29fb4b8a54f5aefaf1"
+    },
+    {
+      "document": "/home/utkarsh/Work/shraddha/brain/.worktrees/project-integration/docs/reports/m5-remaining-01-comparison.json",
+      "document_sha256": "64bb96eecbe56b64479370de9edb5317a5f447d14d78ee280a250fed73e2315c",
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-full-development/runs/m5-remaining-01-comparison-20261003/comparison-report.json",
+      "sha256": "b12e2a39b3781f21a466444c53e1282bda7c2f98c47c0cf6b3c38f40d044b89b"
+    },
+    {
+      "document": "/home/utkarsh/Work/shraddha/brain/.worktrees/project-integration/docs/reports/m5-remaining-02-comparison.json",
+      "document_sha256": "c0827d38a630d376b5722d9bcd976ef739abf90df7655735c09d768ce08449ed",
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-full-development/runs/m5-remaining-02-comparison-20261003/comparison-report.json",
+      "sha256": "844f6aa82cd583f40b500902b4d166b499208c8272995f08d2d38bce1d0f2603"
+    },
+    {
+      "document": "/home/utkarsh/Work/shraddha/brain/.worktrees/project-integration/docs/reports/m5-remaining-03-comparison.json",
+      "document_sha256": "678f4d9f1b85d317c9008258308ade703ab65e1ad9106f553c1246194929a4cd",
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-full-development/runs/m5-remaining-03-comparison-20261003/comparison-report.json",
+      "sha256": "263da7111725ed967c5f110d5e4dc921d1a2d6779aa9db7feea0d74e71693ddb"
+    },
+    {
+      "document": "/home/utkarsh/Work/shraddha/brain/.worktrees/project-integration/docs/reports/m5-remaining-04-comparison.json",
+      "document_sha256": "837119b7d9500f21e9eba0e75acc3fcaa6945bf5a709eede928293b182f4d7e1",
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-full-development/runs/m5-remaining-04-comparison-20261003/comparison-report.json",
+      "sha256": "dbe2212adc0888ed2c005dde79f902a8583aacb2d8a17ad65ab5e5988374dd57"
+    },
+    {
+      "document": "/home/utkarsh/Work/shraddha/brain/.worktrees/project-integration/docs/reports/m5-remaining-05-comparison.json",
+      "document_sha256": "a7e9f3de35f95f133ba2fe2729f9a9a29adec51b0661a6931a5cbb85d5c4dbbd",
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-full-development/runs/m5-remaining-05-comparison-20261003/comparison-report.json",
+      "sha256": "33267b3c3ebf1df90a6bccab9e11c5f694c09930313e55956c770fcbb5ce3ee6"
+    },
+    {
+      "document": "/home/utkarsh/Work/shraddha/brain/.worktrees/project-integration/docs/reports/m5-remaining-06-comparison.json",
+      "document_sha256": "24e735d85fdffcd2fe68cf2f6f4ea2e7747edfb7dc5a3338fbf02dff784f3dc0",
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-full-development/runs/m5-remaining-06-comparison-20261003/comparison-report.json",
+      "sha256": "303b8fa5668bd6a90339ad06a55582a6f22c5bb52aa6556c760c930ad4f0936f"
+    },
+    {
+      "document": "/home/utkarsh/Work/shraddha/brain/.worktrees/project-integration/docs/reports/m5-remaining-08-comparison.json",
+      "document_sha256": "5d45fc1152e8bfe948b8e3462704bed788fcc258f1cdc6a98a299ca1e0d336af",
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-full-development/runs/m5-remaining-08-comparison-20261003/comparison-report.json",
+      "sha256": "7a84ec37ebb44a58cb2ec83fc7bbc567603ea48dc3646ed79e1f3238d5761630"
+    },
+    {
+      "document": "/home/utkarsh/Work/shraddha/brain/.worktrees/project-integration/docs/reports/m5-remaining-09-comparison.json",
+      "document_sha256": "7b8aa12a877be7636c9689c64ac7b65a3e059ce7f2f780a7b11126d8188e8571",
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-full-development/runs/m5-remaining-09-comparison-20261003/comparison-report.json",
+      "sha256": "2dd312cd23730cca0cdba16029570e54e740a1230bf8dd58c08080aa17021f45"
+    },
+    {
+      "document": "/home/utkarsh/Work/shraddha/brain/.worktrees/project-integration/docs/reports/m5-remaining-10-comparison.json",
+      "document_sha256": "89808b0bf7b51c0e37d35685ad1ea5fad6826df1b601fd58a0af27e8f635a40d",
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-full-development/runs/m5-remaining-10-comparison-20261004/comparison-report.json",
+      "sha256": "446871571cc8b44cbd9e823ada4e16acfc1f8c783fa58386988b774582657da5"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "runs/m5-matrix-readout-44-fabfedc/inputs.json",
+      "bytes": 8181,
+      "sha256": "b993a3cc97c83c5a8f940ffa60c3a56730e3170c21671fef245cb01cca672d8c"
+    },
+    {
+      "path": "runs/m5-matrix-readout-44-fabfedc/supervision.json",
+      "bytes": 311,
+      "sha256": "93b62854675fca68c1f2710e262822fd8f472dc2062d7f9e0b44437a3e1f680d"
+    },
+    {
+      "path": "runs/m5-matrix-readout-44-fabfedc/summary.json",
+      "bytes": 804,
+      "sha256": "66c0a8b5b6c3b416b3249b579d52938d57c08b5c0559980e3cc3ef89cf6ded8d"
+    },
+    {
+      "path": "runs/m5-matrix-readout-44-fabfedc/process/stdout.log",
+      "bytes": 905760,
+      "sha256": "987996212a4af69a05d80b68788df51cf1d9897d7c27a006d3cc363fc21b0959"
+    },
+    {
+      "path": "runs/m5-matrix-readout-44-fabfedc/process/stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "runs/m5-matrix-readout-44-fabfedc/process/supervisor.json",
+      "bytes": 311,
+      "sha256": "93b62854675fca68c1f2710e262822fd8f472dc2062d7f9e0b44437a3e1f680d"
+    },
+    {
+      "path": "runs/memory-remaining-10-comparison-publication-root-review/audit.json",
+      "bytes": 803,
+      "sha256": "20d9fe6ce3803459257fd34a8d78db455c23256a004093d6ff418154c5f33040"
+    }
+  ],
+  "limits": [
+    "Descriptive pinned report readouts, not a new raw audit",
+    "Eight shared seed namespaces, fixed lower-route geometry",
+    "C3 broader core kept separate; no inferred independent-sample significance",
+    "No imputed goal/correction boundary; null confirmations are not corrections"
+  ],
+  "checks": "Existing unchanged analyzer and its seven historical combined checks; no new suite run for this input-only readout",
+  "missing_cells": [
+    "s28/paired_cue/no-event",
+    "s29/local_cue/change",
+    "s29/local_cue/no-event",
+    "s29/local_cue/null"
+  ],
+  "argv": [
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/lab-hardening/.venv/bin/python",
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/project-integration/scripts/analyze_memory_matrix.py",
+    "--report",
+    "c8ba721b0b861cb554811d78791a5f90a5bb2b7d2f2f4ff32e691db106aa376d",
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-flynn-continuation/runs/m5-counterbalance-stage-c-v3-20261003/comparison-report.json",
+    "--report",
+    "91aa2aa30ae5a25daf0286f880b4372d66eca9eb98ee0b29fb4b8a54f5aefaf1",
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-flynn-continuation/runs/m5-counterbalance-stage-c4-20261003/comparison-report.json",
+    "--report",
+    "b12e2a39b3781f21a466444c53e1282bda7c2f98c47c0cf6b3c38f40d044b89b",
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-full-development/runs/m5-remaining-01-comparison-20261003/comparison-report.json",
+    "--report",
+    "844f6aa82cd583f40b500902b4d166b499208c8272995f08d2d38bce1d0f2603",
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-full-development/runs/m5-remaining-02-comparison-20261003/comparison-report.json",
+    "--report",
+    "263da7111725ed967c5f110d5e4dc921d1a2d6779aa9db7feea0d74e71693ddb",
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-full-development/runs/m5-remaining-03-comparison-20261003/comparison-report.json",
+    "--report",
+    "dbe2212adc0888ed2c005dde79f902a8583aacb2d8a17ad65ab5e5988374dd57",
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-full-development/runs/m5-remaining-04-comparison-20261003/comparison-report.json",
+    "--report",
+    "33267b3c3ebf1df90a6bccab9e11c5f694c09930313e55956c770fcbb5ce3ee6",
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-full-development/runs/m5-remaining-05-comparison-20261003/comparison-report.json",
+    "--report",
+    "303b8fa5668bd6a90339ad06a55582a6f22c5bb52aa6556c760c930ad4f0936f",
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-full-development/runs/m5-remaining-06-comparison-20261003/comparison-report.json",
+    "--report",
+    "7a84ec37ebb44a58cb2ec83fc7bbc567603ea48dc3646ed79e1f3238d5761630",
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-full-development/runs/m5-remaining-08-comparison-20261003/comparison-report.json",
+    "--report",
+    "2dd312cd23730cca0cdba16029570e54e740a1230bf8dd58c08080aa17021f45",
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-full-development/runs/m5-remaining-09-comparison-20261003/comparison-report.json",
+    "--report",
+    "446871571cc8b44cbd9e823ada4e16acfc1f8c783fa58386988b774582657da5",
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-full-development/runs/m5-remaining-10-comparison-20261004/comparison-report.json"
+  ],
+  "log_max_bytes": 4194304,
+  "failed07_excluded": true
+}

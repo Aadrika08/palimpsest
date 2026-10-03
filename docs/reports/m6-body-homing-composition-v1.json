@@ -1,0 +1,149 @@
+{
+  "version": 1,
+  "status": "failed-infrastructure",
+  "publication": "retained local evidence",
+  "source_commit": "0fd38efcbf1a8c59c0a78a64f488fc0b99d8b7ab",
+  "scientific_protocol_sha256": "e9cbcd51a17b0ac41056c96a1c93ec6e392757158988016a3d1b899c656078f8",
+  "actual_attempts": 1,
+  "control_version": 3,
+  "exec_session": 76732,
+  "exec_exit": 1,
+  "supervision_seconds": 4.84303068400186,
+  "verifier_supervision_seconds": 1.1844252370065078,
+  "owners_started": 0,
+  "numeric_ticks": 0,
+  "planned_not_started": [
+    "source",
+    "native",
+    "actions",
+    "policy"
+  ],
+  "failure": {
+    "type": "TypeError",
+    "message": "StorageBudget.check() missing 1 required keyword-only argument: 'path'",
+    "observed_call": "scripts/verify_body_homing.py:249",
+    "same_source_latent_worker_call": "scripts/verify_body_homing.py:127"
+  },
+  "cleanup": {
+    "observed_pid_start_pairs_absent": 3,
+    "forced_signals": 0,
+    "survivors": 0,
+    "sample_errors": 0,
+    "writer_lease_available": true,
+    "inventories_unchanged": true
+  },
+  "root_audit": {
+    "status": "passed-failure-audit",
+    "first_invocation": true,
+    "seconds": 1.7076307499955874,
+    "receipt": "/home/utkarsh/Work/shraddha/brain/.worktrees/project-integration/runs/body-homing-failure-root-audit-0fd38ef/audit.json"
+  },
+  "limits": {
+    "owners": 4,
+    "rows": 1807,
+    "snapshots": 5,
+    "per_owner_seconds": 180,
+    "verifier_seconds": 780,
+    "normal_seconds": 830,
+    "launcher_TERM_seconds": 830,
+    "KILL_target_seconds": 840,
+    "fallback_wait_seconds": 845,
+    "nominal_failure_wait_envelope_seconds": 865,
+    "aggregate_bytes": 2147483648,
+    "free_floor_bytes": 1073741824
+  },
+  "limitations": [
+    "No actual body/task/native/continuation/replay capability result; gate never created an owner.",
+    "V1 and V2 were unexecuted control revisions; only V3 made this actual invocation.",
+    "840 seconds is a launcher termination target; nominal failure waits exclude measured file publication and uninterruptible I/O.",
+    "Finite sampled PID/start checks do not prove every transient process was observed.",
+    "Earlier local cleanup command used system Python lacking httpx, before any lease probe; corrected only interpreter, as retained in post-exit-cleanup.json.",
+    "No numerical Engine/body/task/protocol change, retry, threshold relaxation, physical or generalization claim."
+  ],
+  "artifact_refs": {
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/body-homing/runs/m6-body-homing-development-v3-0fd38ef-20261003/report.json": {
+      "bytes": 17712,
+      "sha256": "fb5b3a7cdf5307cd2ed6c834c685afb4440031cc7d8788972cfc43a462789e0b"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/body-homing/runs/m6-body-homing-control-v3-0fd38ef/enclosing.json": {
+      "bytes": 2569,
+      "sha256": "4970ecfd20a66f35e18ff5fd6c8aeff4c974b31209aa534c05ab3f34adc6ad7e"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/body-homing/runs/m6-body-homing-control-v3-0fd38ef/terminal.json": {
+      "bytes": 3056,
+      "sha256": "6f4a09964131badacacb7a6d41e17e637e76f60bf0a5aba57664700f49e3a872"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/body-homing/runs/m6-body-homing-control-v3-0fd38ef/post-exit-cleanup.json": {
+      "bytes": 3919,
+      "sha256": "eb10578cb21b2f80b427f0aab6439d13327652a32ee32ae0be3ee8e9f1387431"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/body-homing/runs/m6-body-homing-control-v3-0fd38ef/invocation.json": {
+      "bytes": 4422,
+      "sha256": "8f216c68c35f882d6089a13bf3522c58f4fd4fcf7f13b737f1fe4bee9b221060"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/body-homing/runs/m6-body-homing-control-v3-0fd38ef/before.json": {
+      "bytes": 104279,
+      "sha256": "016ee38bbc66db929582694aaaa92036bf36cf435669f640c309a90150bb5d82"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/body-homing/runs/m6-body-homing-control-v3-0fd38ef/after.json": {
+      "bytes": 104279,
+      "sha256": "016ee38bbc66db929582694aaaa92036bf36cf435669f640c309a90150bb5d82"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/body-homing/runs/m6-body-homing-control-v3-0fd38ef/outer-after.json": {
+      "bytes": 104279,
+      "sha256": "ac67714dc6a37306ebd157a2ebc2bde1a6e44adad41fa0982fb3f57a62a7626f"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/body-homing/runs/m6-body-homing-control-v3-0fd38ef/launcher-console.log": {
+      "bytes": 166,
+      "sha256": "0cdb8324b980dae415d94db7617cb478c2599054203045b32d2163c4d7fa2c9d"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/body-homing/runs/m6-body-homing-control-v3-0fd38ef/outer-launch/stdout.log": {
+      "bytes": 173,
+      "sha256": "b3e08820a5c2a7629a0428d332333d04a38ad08d9debd0e03852eefd32fc9a24"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/body-homing/runs/m6-body-homing-control-v3-0fd38ef/outer-launch/stderr.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/body-homing/runs/m6-body-homing-control-v3-0fd38ef/outer-launch/supervisor.json": {
+      "bytes": 311,
+      "sha256": "7f1ea38f12adfdc89fd4f5a325c4c3452a9853ef4e96f811a415b58975689c26"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/body-homing/runs/m6-body-homing-control-v3-0fd38ef/outer-supervisor/stdout.log": {
+      "bytes": 298,
+      "sha256": "b65bd5c53a97371b3ce1f4f2eeab98d68b7c5bd3c26be5b7ad5b0ce8ed4855af"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/body-homing/runs/m6-body-homing-control-v3-0fd38ef/outer-supervisor/stderr.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/body-homing/runs/m6-body-homing-control-v3-0fd38ef/outer-supervisor/supervisor.json": {
+      "bytes": 313,
+      "sha256": "9136fe162c4b2368a131167ebf37eb5e8360434f59d8809ba70f3b5bc0fd6173"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/body-homing/runs/m6-body-homing-control-v3-0fd38ef/pre-execution-erratum.json": {
+      "bytes": 2659,
+      "sha256": "005e29faceb90ad8f6ecca6552f655cda57d6576ceb4be331bc1292aeadb283e"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/body-homing/runs/m6-body-homing-control-v3-0fd38ef/checks-index.json": {
+      "bytes": 1924,
+      "sha256": "abca3051bb7323a43d33e55d70549a4bebf793f3930e8ebb3adff59712f1d360"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/project-integration/runs/body-homing-failure-root-audit-0fd38ef/audit.py": {
+      "bytes": 3864,
+      "sha256": "218694a25083e377e7d5c083c219b137eb5964592303d900c301decdc874ec5a"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/project-integration/runs/body-homing-failure-root-audit-0fd38ef/audit.json": {
+      "bytes": 8283,
+      "sha256": "80df9e49a06c666b803c86c3cfeaa90424d2d1ced731e30dea65f634d88feeff"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/body-homing/runs/m6-body-homing-control-0fd38ef/invocation.json": {
+      "bytes": 3266,
+      "sha256": "9bdaa253aefa4a1b8d275d8fb98f15d6c0661834d5fbc6cb108374b18780b18e"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/body-homing/runs/m6-body-homing-control-v2-0fd38ef/invocation.json": {
+      "bytes": 4422,
+      "sha256": "00833c847b087aa18726869213a47932941b8dce544b4c3576dc67d58e56bedf"
+    }
+  }
+}

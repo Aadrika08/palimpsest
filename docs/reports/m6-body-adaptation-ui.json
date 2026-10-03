@@ -1,0 +1,241 @@
+{
+  "version": 1,
+  "status": "passed-development-ui",
+  "source_commit": "d6108e6b74fa327671d9a9c8551e2ff909f4b4d5",
+  "test_sha256": "67d97f2be6182e0e532745cd34445d9d7ff498eacf9f1ae6ef35240f12df73f2",
+  "scope": "Actual manual measured-calibration UI mechanisms; one authored simulator fixture, no held-out task, neural learning or physical qualification.",
+  "outer": {
+    "schema_version": 1,
+    "status": "completed",
+    "timeout_seconds": 240,
+    "started_utc": "2026-10-02T18:28:51.160168+00:00",
+    "output": "/home/utkarsh/Work/shraddha/brain/.worktrees/body-adaptation/runs/m6-body-adaptation-ui-development-20261002/outer",
+    "returncode": 0,
+    "elapsed_seconds": 73.34019483900192
+  },
+  "browser": {
+    "schema_version": 1,
+    "status": "completed",
+    "timeout_seconds": 180,
+    "started_utc": "2026-10-02T18:28:52.574447+00:00",
+    "output": "/home/utkarsh/Work/shraddha/brain/.worktrees/body-adaptation/runs/m6-body-adaptation-ui-development-20261002/browser",
+    "returncode": 0,
+    "elapsed_seconds": 70.98572630499984
+  },
+  "build": {
+    "schema_version": 1,
+    "status": "completed",
+    "timeout_seconds": 60,
+    "started_utc": "2026-10-02T18:23:58.456247+00:00",
+    "output": "/home/utkarsh/Work/shraddha/brain/.worktrees/body-adaptation/runs/m6-body-adaptation-ui-development-20261002/build",
+    "returncode": 0,
+    "elapsed_seconds": 1.275760825999896
+  },
+  "protocol": {
+    "scenario": "adaptive-wheel-calibration",
+    "maximum_passing_source_ticks": 600,
+    "maximum_actual_source_ticks": 1081,
+    "maximum_numeric_intervals_including_replay": 2162,
+    "owners": 2,
+    "probe_ticks": 480,
+    "fitted_episode_max_steps": 600,
+    "reset_steps": 1,
+    "managed_storage_bytes": 2147483648,
+    "recording_default_max_bytes": 2147483648,
+    "max_runs": 2,
+    "max_snapshots_per_run": 2,
+    "log_max_bytes": 1048576
+  },
+  "source_ticks": 492,
+  "episode_counts": [
+    120,
+    120,
+    120,
+    120,
+    11,
+    1
+  ],
+  "fit_sha256": "4d738e670b89cad1ca5db18dbb64d4465cc8f22663503d3c663fc6a6000a4428",
+  "samples_sha256": "8dcc254855a32bf41870fa4fb8660f6e96e4fbb3411077f816802985b4d4284c",
+  "expected_fitted_control": [
+    0.7532490491867065,
+    0.6210575103759766
+  ],
+  "fitted_keyboard_control_ticks": 5,
+  "snapshot_id": "b972b8104d5a40f081092e3b47438447",
+  "replay": {
+    "mode": "actions",
+    "status": "passed",
+    "compared_ticks": 492,
+    "compared_events": 543,
+    "inference_executed": false
+  },
+  "observable_closes": [
+    {
+      "run_id": "04f8e6705e864b90baa335245ff024ed",
+      "http_status": 200,
+      "status": "closed"
+    },
+    {
+      "run_id": "b450ed08da46462b97e9569277d4bd0f",
+      "http_status": 200,
+      "status": "closed"
+    }
+  ],
+  "cleanup_closes": [
+    {
+      "run_id": "b450ed08da46462b97e9569277d4bd0f",
+      "http_status": 200,
+      "status": "closed"
+    },
+    {
+      "run_id": "04f8e6705e864b90baa335245ff024ed",
+      "http_status": 200,
+      "status": "closed"
+    }
+  ],
+  "server_cleanup": {
+    "server_returncode": -15,
+    "server_kill_escalation": false,
+    "server_stop_signal": "SIGTERM to owned leader",
+    "listener_remaining": false,
+    "survivors": [],
+    "sample_errors": [],
+    "log_errors": [],
+    "observed_owned_processes": [
+      {
+        "pid": 486244,
+        "start_ticks": 5939064
+      },
+      {
+        "pid": 486245,
+        "start_ticks": 5939065
+      },
+      {
+        "pid": 486381,
+        "start_ticks": 5942373
+      }
+    ]
+  },
+  "source_unchanged": true,
+  "assets_unchanged": true,
+  "build_dist_sha256": {
+    "assets/index-DqphGYnC.js": "2fc2e6574a1eb668ac64e0b9f20ec66a1d1f5beabfd0bc08d85302445d111a34",
+    "assets/index-YXzjLjgu.css": "7312ee5d53d71af957b6317764d2d4010a8a8663808758effba70dcd516f3d87",
+    "index.html": "b77d1cbab8fbbb51ded5df218bb74dbaab15a3c353921f4a62951eec1ae4a3f2"
+  },
+  "browser_errors": [],
+  "retained_audit": {
+    "report_sha256": "514be3594c5b8a8c4b5585bec435ddb128152dfdac9cdf1a12841041d9b09f96",
+    "source_ticks": 492,
+    "actions_ticks": 492,
+    "episode_counts": [
+      120,
+      120,
+      120,
+      120,
+      11,
+      1
+    ],
+    "raw_contact_stages": 9840,
+    "raw_cached_ends": 984,
+    "captured_fit_samples": 400,
+    "fitted_keyboard_control_ticks": 5,
+    "normal_http_closes": 2,
+    "fixed_inner_hashes": 76,
+    "fixed_terminal_hashes": 79,
+    "index_timing_mismatches": {
+      "inner": {
+        "launch.log": {
+          "indexed": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "final": "accb763becf2164fbb0fae49ccc79b78806c62395a35a4ffa2e1bc002f36f494"
+        }
+      },
+      "terminal": {
+        "launch.log": {
+          "indexed": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "final": "accb763becf2164fbb0fae49ccc79b78806c62395a35a4ffa2e1bc002f36f494"
+        }
+      }
+    },
+    "final_launch_log_sha256": "accb763becf2164fbb0fae49ccc79b78806c62395a35a4ffa2e1bc002f36f494",
+    "elapsed_seconds": 2.7237192210013745,
+    "scope": "NumPy-only retained post-exit audit; no new browser or native runtime"
+  },
+  "root_independent_audit": {
+    "source_commit": "d6108e6b74fa327671d9a9c8551e2ff909f4b4d5",
+    "report_sha256": "514be3594c5b8a8c4b5585bec435ddb128152dfdac9cdf1a12841041d9b09f96",
+    "fixed_inner_artifact_hashes_checked": 76,
+    "fixed_terminal_artifact_hashes_checked": 79,
+    "mutable_log_index_limitation": {
+      "path": "launch.log",
+      "indexed_empty_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "final_sha256": "accb763becf2164fbb0fae49ccc79b78806c62395a35a4ffa2e1bc002f36f494",
+      "final_bytes": 446
+    },
+    "source_ticks": 492,
+    "actions_replay_ticks": 492,
+    "episode_tick_counts": {
+      "0": 120,
+      "1": 120,
+      "2": 120,
+      "3": 120,
+      "4": 11,
+      "5": 1
+    },
+    "fitted_snapshot_samples": 400,
+    "expected_fitted_control_ticks": [
+      4,
+      5,
+      6,
+      7,
+      8
+    ],
+    "normal_http_closes": 2,
+    "replay_events": 543,
+    "source_assets_unchanged": true,
+    "server_and_sampled_identities_absent": true,
+    "elapsed_seconds": 2.5388782510053716,
+    "visual_scope": "Both saved viewport screenshots inspected; fitted screenshot shows capture controls, not full calibration panel.",
+    "scope": "NumPy-only retained UI audit; no new runtime or browser"
+  },
+  "evidence_sha256": {
+    "runs/m6-body-adaptation-ui-development-20261002/report.json": "514be3594c5b8a8c4b5585bec435ddb128152dfdac9cdf1a12841041d9b09f96",
+    "runs/m6-body-adaptation-ui-development-20261002/before.json": "5859910b33fbbe930de7612b41e8fecc520c8fd25dd858b14b2d5265828cce76",
+    "runs/m6-body-adaptation-ui-development-20261002/after.json": "5859910b33fbbe930de7612b41e8fecc520c8fd25dd858b14b2d5265828cce76",
+    "runs/m6-body-adaptation-ui-development-20261002/invocation.json": "3e942779773ece17a58fc01d90ef389bbf5ea9ab016febde805d623aafc2f7b1",
+    "runs/m6-body-adaptation-ui-development-20261002/inventory.py": "8fcfd8497f350688b8fb85be060db97ef7f4bfcfacdbe0e42adb09c2d5ded1f4",
+    "runs/m6-body-adaptation-ui-development-20261002/runner.py": "aa85ce8fe68e8ac564d165b37b2a38d1ff29f4b22e7a50390e895583113c9d1a",
+    "runs/m6-body-adaptation-ui-development-20261002/launch.py": "d8a6ab3581eaed5132055a5f3557637f019c040c13ffe8afdf43629091ad65d8",
+    "runs/m6-body-adaptation-ui-development-20261002/launch.log": "accb763becf2164fbb0fae49ccc79b78806c62395a35a4ffa2e1bc002f36f494",
+    "runs/m6-body-adaptation-ui-development-20261002/terminal-index.json": "bd356ab50df6dc2794b8a500b9a58da67f3366bb8165be33cd9bc49bdf6120de",
+    "runs/m6-body-adaptation-ui-development-20261002/retained-audit.py": "c2088f20173d4f5653f91303a5f2e61af96e98d7e2abb781e6298d422cd72904",
+    "runs/m6-body-adaptation-ui-development-20261002/retained-audit.json": "09486e0e10b98355a5343dbc37f39f79d25489930a6bdd33d6cd511748fed1d4",
+    "runs/m6-body-adaptation-ui-development-20261002/build/supervisor.json": "3eb091e75e3417648f09a112e7509a452a7402c0148500e655de88a30e82be97",
+    "runs/m6-body-adaptation-ui-development-20261002/browser/supervisor.json": "c9c7cacbf226e75b3ea2ebb007473a551d8e13c69c4db85a4ab92eeb3c5bda81",
+    "../project-integration/runs/m6-adaptive-ui-root-audit-d6108e6/audit.json": "db86d910cd794d916b87179424fd13a9aa536477ea0a8e10892b5856fade111a",
+    "../project-integration/runs/m6-adaptive-ui-root-audit-d6108e6/audit.py": "cb25c6ae35ad4b70361498f7191381edea67633f573feb7fa63c38ee778ddc75",
+    "runs/m6-body-adaptation-ui-development-20261002/browser-results/adaptive-lab-actual-adapti-00994-ive-reset-and-action-replay/adaptive-fitted.png": "e2a0ac547d0a5d0768dc2b5de06a675f9e0dc1d323161b487af8ff3cdd20c382",
+    "runs/m6-body-adaptation-ui-development-20261002/browser-results/adaptive-lab-actual-adapti-00994-ive-reset-and-action-replay/adaptive-reset.png": "6ae353e32139c5130918eaf1558108a7b0826240f921ec1d5de1341117ffd2ee",
+    "runs/m6-body-adaptation-ui-development-20261002/event-audit.py": "da1015f23a1c9ec4c127a6083b6667cab4b367a5cdd07f0f614cf1a1e15e1d5a",
+    "runs/m6-body-adaptation-ui-development-20261002/event-audit.json": "9948d659225fdb0b6a0f8e99f16cf5eb324d41a2ec332e4ed5ff4eb9da5e7821"
+  },
+  "limitations": [
+    "One manual CPU/checker/seed1 authored development profile",
+    "UI evidence is separate from runtime v2 and does not complete M6 held-out/task qualification",
+    "Discrete cache contact evidence, not continuous collision proof",
+    "Finite sampled PID/start observations, not universal transient proof",
+    "Runtime report and terminal index captured launch.log while empty; only that live-log hash differs, final SHA pinned here",
+    "Existing retain-on-failure removes successful Playwright trace; no universal independent HTTP/network trace claim",
+    "Viewport screenshots do not show the complete calibration panel; DOM assertions establish displayed fit workflow",
+    "No physical hardware, neural learning or real-time performance qualification"
+  ],
+  "separate_semantic_event_audit": {
+    "semantic_events_compared": 543,
+    "status": "passed",
+    "elapsed_seconds": 0.24721466699702432,
+    "method": "registered initial prefixes, _EVENTS filter and _same_event; separate from numeric/hash audit",
+    "scope": "Retained source/destination events only; no native runtime or browser"
+  },
+  "root_independent_audit_scope": "2.538878s numeric/hash/snapshot/visual audit verifies reported543event count; root separately compared543semantic events in1.728s. The separately indexed local event audit compares all543 directly."
+}

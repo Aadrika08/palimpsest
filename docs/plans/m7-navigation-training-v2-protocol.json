@@ -1,0 +1,253 @@
+{
+  "id": "M7-NAV-TRAIN-V2-1",
+  "version": 1,
+  "state": "prospective source-only trainer contract; no fitting admitted",
+  "base_commit": "2d4a7b86ade24b9a05cb1735fd7489453495cce0",
+  "parent_study": {
+    "path": "docs/plans/m7-navigation-contact-v2-protocol.json",
+    "bytes": 28516,
+    "sha256": "29039e944f49dc1458d918dcd738a32ee5fbf5bfdbbee8fff2cd969e4703bab0"
+  },
+  "inherit": "Exact parent learning, loss, generator, reserves, contact regime, closed-loop criteria and limits; this slice only binds admitted data and fixed trainer reuse.",
+  "immutable_prerequisites": {
+    "data_manifest": {
+      "path": "../male-navigation-data-v2/runs/m7-navigation-data-v2-4ecb354-20261003/data-manifest.json",
+      "bytes": 80969,
+      "sha256": "47c4523c40e485ba4839cc80c9db891761791b801cc777755028122a1dbacb41"
+    },
+    "evidence_index": {
+      "path": "docs/reports/m7-navigation-data-v2.json",
+      "bytes": 31395,
+      "sha256": "859460464dedcca184fae628cc4a4a53060e4b3430ec914e0ebab9c52344270f"
+    },
+    "evidence_report": {
+      "path": "docs/reports/m7-navigation-data-v2.md",
+      "bytes": 5739,
+      "sha256": "cd5dba04bfd7bb1d9d6e0d9a5e3ef270ae1a3adde8ede0485735958d0680c20d"
+    },
+    "terminal": {
+      "path": "../male-navigation-data-v2/runs/m7-navigation-data-v2-control-v2-4ecb354/terminal.json",
+      "bytes": 2936,
+      "sha256": "383cf4a08d8630c9f52fe36d419cdd7fe9161a13d66584158e830d41e9fe411d"
+    },
+    "enclosing": {
+      "path": "../male-navigation-data-v2/runs/m7-navigation-data-v2-control-v2-4ecb354/enclosing.json",
+      "bytes": 2853,
+      "sha256": "002520ae9d78a02508a751af71861e0ff995edcb3cf81d36bf52fd67841c3696"
+    },
+    "end_session": {
+      "path": "../male-navigation-data-v2/runs/m7-navigation-data-v2-control-v2-4ecb354/end-session.json",
+      "bytes": 2904,
+      "sha256": "8b3594d891ca736700c3f1955446093f90599d05e510c62207eb818ced587532"
+    },
+    "root_control_audit": {
+      "path": "../project-integration/runs/m7-navigation-data-v2-control-root-review-4ecb354/audit.json",
+      "bytes": 2257,
+      "sha256": "269a72968fb60fc87b46531862ca219fe1127e777c9899b2e64843766c6634f0"
+    },
+    "root_terminal_source_audit": {
+      "path": "../project-integration/runs/m7-navigation-data-v2-root-audit-4ecb354/audit.json",
+      "bytes": 10083,
+      "sha256": "59b68f587dc7d933d29cc266d7fa3e51ad03977d69ca23842eb45cf49c224a1b"
+    },
+    "root_independent_data_audit": {
+      "path": "../project-integration/runs/m7-navigation-data-v2-root-outcomes-4ecb354/audit.json",
+      "bytes": 199876,
+      "sha256": "70e29552fb971d6c7ae058afc2c2c77dbb7b16c4809bce4573cbbd8fc261325d"
+    },
+    "root_publication_audit": {
+      "path": "../project-integration/runs/m7-navigation-data-v2-publication-root-review-2d4a7b8/audit.json",
+      "bytes": 182330,
+      "sha256": "9011aca1831f18209888afba20f86cd2f0f130de476b58e6c18a5fadbd6d2f37"
+    }
+  },
+  "prepared_output_files": [
+    {
+      "path": "../male-navigation-data-v2/runs/m7-navigation-data-v2-4ecb354-20261003/after-admission.json",
+      "bytes": 71625,
+      "sha256": "f69f4aa7b9921039f86e61555ba634257f232d1322b86e7be240f96838b26968"
+    },
+    {
+      "path": "../male-navigation-data-v2/runs/m7-navigation-data-v2-4ecb354-20261003/after-final-sync.json",
+      "bytes": 71625,
+      "sha256": "f69f4aa7b9921039f86e61555ba634257f232d1322b86e7be240f96838b26968"
+    },
+    {
+      "path": "../male-navigation-data-v2/runs/m7-navigation-data-v2-4ecb354-20261003/data-manifest.json",
+      "bytes": 80969,
+      "sha256": "47c4523c40e485ba4839cc80c9db891761791b801cc777755028122a1dbacb41"
+    },
+    {
+      "path": "../male-navigation-data-v2/runs/m7-navigation-data-v2-4ecb354-20261003/historical-after-arrays.json",
+      "bytes": 11078,
+      "sha256": "4107185e8a87e414aa836186fb70b46646d605c93c69133745b1a9cf8cc4d0f6"
+    },
+    {
+      "path": "../male-navigation-data-v2/runs/m7-navigation-data-v2-4ecb354-20261003/historical-after-result.json",
+      "bytes": 11078,
+      "sha256": "4107185e8a87e414aa836186fb70b46646d605c93c69133745b1a9cf8cc4d0f6"
+    },
+    {
+      "path": "../male-navigation-data-v2/runs/m7-navigation-data-v2-4ecb354-20261003/historical-arrays.npz",
+      "bytes": 5225698,
+      "sha256": "a15f4b9267de04a2f952c19e6ddc65b8338696977b764e7418f044b25e6a5271"
+    },
+    {
+      "path": "../male-navigation-data-v2/runs/m7-navigation-data-v2-4ecb354-20261003/historical-context.json",
+      "bytes": 7430,
+      "sha256": "1eed2a0065cb2ca8eacffbaac842b609715e65bb41c396537741eb17b09f6169"
+    },
+    {
+      "path": "../male-navigation-data-v2/runs/m7-navigation-data-v2-4ecb354-20261003/historical-result.json",
+      "bytes": 75043,
+      "sha256": "363445d80f13814804768a791bdff859e644f75dc39923daf762884fed70b2db"
+    },
+    {
+      "path": "../male-navigation-data-v2/runs/m7-navigation-data-v2-4ecb354-20261003/historical-supervision/stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "../male-navigation-data-v2/runs/m7-navigation-data-v2-4ecb354-20261003/historical-supervision/stdout.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "../male-navigation-data-v2/runs/m7-navigation-data-v2-4ecb354-20261003/historical-supervision/supervisor.json",
+      "bytes": 341,
+      "sha256": "88d63422ed231751d27c6733716d8df431c4f2d0898a63b0ee377537db754efe"
+    }
+  ],
+  "data_contract": {
+    "counts": {
+      "augmented_train_rows": 7197,
+      "combined_rows": 8425,
+      "combined_unique_sources": 26,
+      "held_out_rows": 0,
+      "held_out_sources": 0,
+      "new_advice_train_rows": 5080,
+      "new_sources": 12,
+      "old_sources": 14,
+      "old_train_rows": 2117,
+      "recorded_dev_rows": 1228
+    },
+    "old_manifest_sha256": "402d2676668e88bb998457ba0a9ea92f8a4c2a27b92a19d67ad76b80e3a67014",
+    "new_target": "nav_advice_action float32, never raw action",
+    "old_target": "unchanged executed targets",
+    "source_order": "Manifest arms.old and arms.augmented exactly; augmented is old train then all twelve new sources; shared unchanged dev.",
+    "held_out": "Empty source lists; no held-out arguments or reads",
+    "loader": "Reuse read_old_transfer with pinned historical-result.json/28-array NPZ, old published manifest and historical identity; reconstruct twelve advice_arrays from admitted rows, compare complete source/features/targets to exact manifest; do not call historical_child or prepare again.",
+    "named_reader_sources": {
+      "count": 95,
+      "map_location": "data_manifest.current_reader_sources",
+      "rule": "Hash each of these exact named paths; require byte equality. Do not call reader_identity or compare a newly expanded all-Python map to 95. Preserve historical identity independently."
+    },
+    "new_trainer_identity": "Bind planned scripts/train_male_navigation_v2.py and tests/test_train_male_navigation_v2.py separately at source freeze; record its own loaded bytes and recheck at final publication. No ROOT/sys.modules mutation."
+  },
+  "unchanged_code_sha256": {
+    "scripts/prepare_male_navigation_v2.py": "ef32434826c04398c5c98e9b8debbe0b9d90adea2f9ac558a05ec00ce5eff333",
+    "scripts/train_male_reduced.py": "75d3fc1fd71bab6b749c158a58fe9d802fc10253f4416d1c8f5739a2bdf4ff4a",
+    "scripts/train_male_recovery.py": "1b828d68daf4db6186d5ccc0804d35ce6a8918279cb74834d16291f6d5679877",
+    "src/palimpsest/male_model.py": "9327bca1db3cbeda7aab8b222ccfa59daef4e01f3f1b4689f83009955d970cad",
+    "src/palimpsest/storage.py": "79664d876834ef20b459cc83963515effdaf75d0256fe5764a9cf8e18cd448c2",
+    "uv.lock": "8a7a880d020c1907e221575fda65642241f809fc628a55381f1b6137bff1b732"
+  },
+  "reuse": {
+    "numerics": [
+      "train_male_reduced.fit",
+      "train_male_reduced.evaluate",
+      "male_model.make_model"
+    ],
+    "publication": [
+      "train_male_recovery.write_artifact",
+      "train_male_recovery.stage_report",
+      "train_male_recovery.publish_report"
+    ],
+    "graph": "Same pinned original graph in both arms, fresh same-seed models; no rewire call/checkpoint reuse",
+    "source_checks": "Bind all 95 admitted named sources, own added trainer source, graph/manifest/cell/lock/runtime and all 26 raw source inventories before/after; obtain after evidence before refusal."
+  },
+  "pair_order": [
+    {
+      "seed": 10,
+      "arms": [
+        "old-corpus",
+        "augmented"
+      ]
+    },
+    {
+      "seed": 11,
+      "arms": [
+        "old-corpus",
+        "augmented"
+      ]
+    },
+    {
+      "seed": 12,
+      "arms": [
+        "old-corpus",
+        "augmented"
+      ]
+    }
+  ],
+  "training_inherited": {
+    "epochs": 20,
+    "optimizer": "Adam",
+    "learning_rate": 0.001,
+    "gradient_norm_cap": 1.0,
+    "device": "cpu",
+    "threads": 1,
+    "window": 32,
+    "selection": "Earliest strict minimum over unchanged 1,228-row recorded-dev loss; no seed/arm/held-out selection",
+    "sequence": "Zero hidden per source; carry/detach 32-row windows, no cross-source carry/padding; old 67-row sources retain 32/32/3",
+    "runtime": {
+      "python": "3.11.15",
+      "numpy": "2.2.5",
+      "torch_distribution": "2.9.0",
+      "torch_build": "2.9.0+cu128",
+      "compute": "CPU one-thread; CUDA hidden/uninitialized"
+    },
+    "graph_sha256": "5aba0fef99afba666b88e40fc535091454e46d9330580d9280b203e8da0abac0",
+    "cell_sha256": "707cba79e7bf92923618ccc596e3d7a2d779edc02a970b0949f6dd3c0d28ae80"
+  },
+  "optimizer_update_confound": {
+    "old_windows_per_epoch": 72,
+    "augmented_windows_per_epoch": 236,
+    "old_updates_20epochs": 1440,
+    "augmented_updates_20epochs": 4720,
+    "interpretation": "Augmentation changes optimizer-update count and advice/learner-state coverage jointly; no isolated causal mechanism claim."
+  },
+  "limits": {
+    "pair_internal_seconds": 600,
+    "pair_outer_seconds": 660,
+    "all_internal_seconds": 2100,
+    "all_enclosing_target_seconds": 2160,
+    "aggregate_bytes": 268435456,
+    "pair_payload_bytes": 67108864,
+    "pairs": 3,
+    "models": 6,
+    "logs_each_bytes": 1048576,
+    "min_free_bytes": 1073741824,
+    "allowances": {
+      "published_pair_payloads": 201326592,
+      "atomic_staging": 33554432,
+      "logs": 8388608,
+      "controls": 16777216,
+      "headroom": 8388608
+    },
+    "scope": "Internal timers include input admission/publication. Enclosing termination and failure drain details need separate frozen controls review; not a universal I/O wall guarantee."
+  },
+  "publication_contract": "Fresh outside all input/producer trees; no resume/overwrite. Finish/fsync payloads and report.pending, successfully release pair lease/resources, then recheck source/data/deadline/final absence and publish last using unchanged helper. Failed pending/failure bytes retained, no report admission without normal child exit, full 20-epoch result/earliest selection and enclosing/artifact/source checks. First infrastructure failure keeps later planned arms/pairs not_started. All six frozen before any new dev.",
+  "planned_source_files": [
+    "scripts/train_male_navigation_v2.py",
+    "tests/test_train_male_navigation_v2.py"
+  ],
+  "pure_check_contract": [
+    "fixed seeds/arms/count/order/targets and named 95-source plus own-source admission",
+    "same original graph/fresh pair seed and no rewire dispatch using mocked fitter boundaries",
+    "20-epoch counts/finite losses/earliest strict minimum for each arm",
+    "failed/late/fsync/source drift publication remains pending and unadmitted",
+    "first failure retains all planned/not_started dispositions; existing old/recovery source unchanged"
+  ],
+  "next_stage_lock": "Source approval and actual training GO remain separate; development 24 requires each augmented seed >=3/4, then held-out 48 requires each >=6/8 exactly as parent. No fresh scene/payload creation now.",
+  "qualification_claims": []
+}

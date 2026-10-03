@@ -1,0 +1,275 @@
+{
+  "audit": {
+    "history_rows": 90,
+    "scoped_entries": 438,
+    "seconds": 1.475516853010049,
+    "status": "passed_first_invocation",
+    "torch_native_or_model_imported": false,
+    "unique_data_files": 267
+  },
+  "cleanup": {
+    "conflicting_owned_identities": [],
+    "forced_signals": [],
+    "observed_owned_processes": [
+      {
+        "pid": 741465,
+        "start_ticks": 10377698
+      },
+      {
+        "pid": 741466,
+        "start_ticks": 10377698
+      },
+      {
+        "pid": 741472,
+        "start_ticks": 10377885
+      },
+      {
+        "pid": 741473,
+        "start_ticks": 10377885
+      },
+      {
+        "pid": 741513,
+        "start_ticks": 10378194
+      },
+      {
+        "pid": 741514,
+        "start_ticks": 10378194
+      },
+      {
+        "pid": 741593,
+        "start_ticks": 10380141
+      },
+      {
+        "pid": 741594,
+        "start_ticks": 10380141
+      },
+      {
+        "pid": 741742,
+        "start_ticks": 10381697
+      },
+      {
+        "pid": 741743,
+        "start_ticks": 10381697
+      }
+    ],
+    "sample_errors": [],
+    "sampler_stopped": true,
+    "survivors": []
+  },
+  "command_exit": 0,
+  "data": {
+    "collection_report_sha256": "3cf5044ac12fa80ebfed9aa044d0e983a94fcddb4e177da779a4684b944b518b",
+    "recorded_dev_layouts": [
+      6016,
+      6019
+    ],
+    "recorded_dev_ticks": 1314,
+    "train_layouts": [
+      6000,
+      6015
+    ],
+    "train_ticks": 5710
+  },
+  "date": "2026-10-03",
+  "held_out_used": false,
+  "history_train_key": "weighted_train_loss",
+  "inventory_scope": "Original stage/launcher inventories are retained at their own publication stages. Stage self-entry and live enclosing logs are prefixes; enclosing drained supervisor inventory and root audit bind their final bytes. No duplicate full ledger is reproduced here.",
+  "models": [
+    {
+      "directory": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-balanced-loss/runs/puck-balanced-training-v1-20261003/seed-21",
+      "dtype": "float32",
+      "epochs_completed": 30,
+      "history_location": "report.json/history; all 30 records retained",
+      "identity": {
+        "checkpoint_sha256": "bb04b05fd3cf76c287859e4962e1f2356686cc2351b9107ec2c07f079e144174",
+        "learning_protocol_sha256": "bfdd047c1763af3d0b254c55df9137e179b65ce99e7eb870ca76f41332a83354",
+        "protocol_sha256": "6cf62bd7e9b5db6626128c713400b9dfba50b11e06bf3f703adf67d24f8bc228",
+        "training_objective_sha256": "e21431626c59b2430d4eb0583d6f62f54dd9b2e9c3847c8bea06255528b34828",
+        "training_report_sha256": "933966111ae22e450670e748909ee1f604a3d6c51ac9f4e1ee4d489bbc514f05",
+        "training_seed": 21
+      },
+      "parameter_arrays": 6,
+      "parameters": 1442,
+      "seed": 21,
+      "selected_epoch": 22,
+      "selected_unweighted_dev_loss": 0.06030484144030176,
+      "status": "completed",
+      "supervised_seconds": 17.314972802007105
+    },
+    {
+      "directory": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-balanced-loss/runs/puck-balanced-training-v1-20261003/seed-22",
+      "dtype": "float32",
+      "epochs_completed": 30,
+      "history_location": "report.json/history; all 30 records retained",
+      "identity": {
+        "checkpoint_sha256": "01524711c0767977d6a0be8ea8dff678bce84f6ba13c69cc35b457c190991489",
+        "learning_protocol_sha256": "bfdd047c1763af3d0b254c55df9137e179b65ce99e7eb870ca76f41332a83354",
+        "protocol_sha256": "3183f29581fb078ee0538995e6f34a758a8c07db92644f2595d739eafd887103",
+        "training_objective_sha256": "e21431626c59b2430d4eb0583d6f62f54dd9b2e9c3847c8bea06255528b34828",
+        "training_report_sha256": "49e93d775cd2c39da37a2d0a35df0e154982ee279f9d41209ba5dbdc01bcc8fe",
+        "training_seed": 22
+      },
+      "parameter_arrays": 6,
+      "parameters": 1442,
+      "seed": 22,
+      "selected_epoch": 24,
+      "selected_unweighted_dev_loss": 0.06008515803120118,
+      "status": "completed",
+      "supervised_seconds": 12.756833203005954
+    },
+    {
+      "directory": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-balanced-loss/runs/puck-balanced-training-v1-20261003/seed-23",
+      "dtype": "float32",
+      "epochs_completed": 30,
+      "history_location": "report.json/history; all 30 records retained",
+      "identity": {
+        "checkpoint_sha256": "6dc66fa3804b61f3f0a174ee145b7f94652954cbdff49680d9f903801d9186e6",
+        "learning_protocol_sha256": "bfdd047c1763af3d0b254c55df9137e179b65ce99e7eb870ca76f41332a83354",
+        "protocol_sha256": "afb76160f1cce3e9698ef873567b4feef2c66cbf2c67b01254124df716add73e",
+        "training_objective_sha256": "e21431626c59b2430d4eb0583d6f62f54dd9b2e9c3847c8bea06255528b34828",
+        "training_report_sha256": "fc0b7239fc1c0cb0fae97ab7f512dc7b4e142f9c3f67df8404f449418ff8264f",
+        "training_seed": 23
+      },
+      "parameter_arrays": 6,
+      "parameters": 1442,
+      "seed": 23,
+      "selected_epoch": 15,
+      "selected_unweighted_dev_loss": 0.06074273400721579,
+      "status": "completed",
+      "supervised_seconds": 12.514639086002717
+    }
+  ],
+  "preparation_failure": "Draft monitor startup block was misplaced in finalize; real-main fixture failed before any child. Exact draft files/log remain pinned by draft-failure.json. Corrected 11 launcher + 2 enclosing fixtures passed; actual fit invoked once.",
+  "producer_commit": "ec7a11322ca9f4d94b3cbe7ad8f5bae42603d08c",
+  "qualification_claims": [],
+  "references": [
+    {
+      "bytes": 23209,
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-balanced-loss/runs/puck-balanced-training-v1-prepared/plan.json",
+      "sha256": "d89b1050b51afc1ba3987cdf5e33646bd271bcc8b583eec8107956d8236e8906"
+    },
+    {
+      "bytes": 21317,
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-balanced-loss/runs/puck-balanced-training-v1-prepared/launch.py",
+      "sha256": "0662e52cc623cddaedf6daa8a7d787cc76e1fc2708afe34085141379e7d7dbaa"
+    },
+    {
+      "bytes": 7144,
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-balanced-loss/runs/puck-balanced-training-v1-prepared/enclose.py",
+      "sha256": "58cd248ee52a9cbed888af3b32cc0da368d739b1b5117afc0f20fee9b5693947"
+    },
+    {
+      "bytes": 3164,
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-balanced-loss/runs/puck-balanced-training-v1-prepared/preflight.json",
+      "sha256": "46b43bfbec844b1bd1f9126153b7b1d6220e28db1323dbd7ee70180047ec8f62"
+    },
+    {
+      "bytes": 1194,
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-balanced-loss/runs/puck-balanced-training-v1-prepared/enclose-preflight.json",
+      "sha256": "7751724d23509294bd4eb4b71b66eef9ec7e3d875f1c0c5d1cede9de52e8211f"
+    },
+    {
+      "bytes": 808,
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-balanced-loss/runs/puck-balanced-training-v1-prepared/draft-failure.json",
+      "sha256": "76b128435aa5ab809c028efac836ed0eb810998fabb422b33868baeb0aeba5b8"
+    },
+    {
+      "bytes": 4142,
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-balanced-loss/runs/puck-balanced-training-v1-prepared/enclosing/report.json",
+      "sha256": "c736489e85e79adbf6a6f21654572fa60f4260bae812afce248657d34b9f21c9"
+    },
+    {
+      "bytes": 18078,
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-balanced-loss/runs/puck-balanced-training-v1-20261003/launch-result.json",
+      "sha256": "e4f3327c3c51fd9f32fc4bce1d96504a318d510de424b5b02dea460a36374466"
+    },
+    {
+      "bytes": 27201,
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-balanced-loss/runs/puck-balanced-training-v1-20261003/stage-report.json",
+      "sha256": "90e64c33d95e207de9db99f66ae54f1bcbaf0c1a6454470db2cf47cacc3b1f61"
+    },
+    {
+      "bytes": 7450,
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/project-integration/runs/puck-balanced-training-root-audit-ec7a113/audit.py",
+      "sha256": "ce48210b532097f479c8e743c933b8223bf30bab0636ea04dcdd0932158da434"
+    },
+    {
+      "bytes": 119736,
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/project-integration/runs/puck-balanced-training-root-audit-ec7a113/audit.json",
+      "sha256": "9885dbf31e4aaeebe5d4fe0f220c89e89bb64e2f48c0220facaf7f655c2e2524"
+    },
+    {
+      "bytes": 1906,
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/project-integration/runs/puck-balanced-training-control-root-review-ec7a113/audit.json",
+      "sha256": "473a48752ad081352a9d7b6240d0032f487eaa07afe9f21b40358cfec1d7f3a9"
+    },
+    {
+      "bytes": 36426,
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-balanced-loss/runs/puck-balanced-training-v1-20261003/seed-21/protocol.json",
+      "sha256": "6cf62bd7e9b5db6626128c713400b9dfba50b11e06bf3f703adf67d24f8bc228"
+    },
+    {
+      "bytes": 4293,
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-balanced-loss/runs/puck-balanced-training-v1-20261003/seed-21/report.json",
+      "sha256": "933966111ae22e450670e748909ee1f604a3d6c51ac9f4e1ee4d489bbc514f05"
+    },
+    {
+      "bytes": 7266,
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-balanced-loss/runs/puck-balanced-training-v1-20261003/seed-21/checkpoint.npz",
+      "sha256": "bb04b05fd3cf76c287859e4962e1f2356686cc2351b9107ec2c07f079e144174"
+    },
+    {
+      "bytes": 36426,
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-balanced-loss/runs/puck-balanced-training-v1-20261003/seed-22/protocol.json",
+      "sha256": "3183f29581fb078ee0538995e6f34a758a8c07db92644f2595d739eafd887103"
+    },
+    {
+      "bytes": 4290,
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-balanced-loss/runs/puck-balanced-training-v1-20261003/seed-22/report.json",
+      "sha256": "49e93d775cd2c39da37a2d0a35df0e154982ee279f9d41209ba5dbdc01bcc8fe"
+    },
+    {
+      "bytes": 7266,
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-balanced-loss/runs/puck-balanced-training-v1-20261003/seed-22/checkpoint.npz",
+      "sha256": "01524711c0767977d6a0be8ea8dff678bce84f6ba13c69cc35b457c190991489"
+    },
+    {
+      "bytes": 36426,
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-balanced-loss/runs/puck-balanced-training-v1-20261003/seed-23/protocol.json",
+      "sha256": "afb76160f1cce3e9698ef873567b4feef2c66cbf2c67b01254124df716add73e"
+    },
+    {
+      "bytes": 4291,
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-balanced-loss/runs/puck-balanced-training-v1-20261003/seed-23/report.json",
+      "sha256": "fc0b7239fc1c0cb0fae97ab7f512dc7b4e142f9c3f67df8404f449418ff8264f"
+    },
+    {
+      "bytes": 7266,
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-balanced-loss/runs/puck-balanced-training-v1-20261003/seed-23/checkpoint.npz",
+      "sha256": "6dc66fa3804b61f3f0a174ee145b7f94652954cbdff49680d9f903801d9186e6"
+    }
+  ],
+  "review_status": "root_audited",
+  "schema": "puck-balanced-training-evidence-v1",
+  "scope": "One fixed balanced-objective fit for every seed; no closed-loop, held-out or physical qualification.",
+  "selection": "earliest strict unweighted recorded-dev minimum; all three retained",
+  "source_controls_data_original_bundles_unchanged": true,
+  "status": "passed_recorded_input_fitting",
+  "student_or_development_rollouts_performed": false,
+  "termination": {
+    "aggregate_max_bytes": 67108864,
+    "cleanup_acceptance_seconds": 12,
+    "kill_deadline_seconds": 715,
+    "min_free_bytes": 1073741824,
+    "normal_acceptance_seconds": 680,
+    "supervisor_fallback_seconds": 718,
+    "term_deadline_seconds": 700
+  },
+  "times": {
+    "enclosing_before_publication_seconds": 58.937195873004384,
+    "enclosing_supervisor_process_return_seconds": 58.88440100499429,
+    "launcher_before_report_publication_seconds": 58.5391728800023,
+    "stage_before_report_publication_seconds": 53.81839840700559
+  },
+  "training_objective_sha256": "e21431626c59b2430d4eb0583d6f62f54dd9b2e9c3847c8bea06255528b34828"
+}

@@ -1,0 +1,2623 @@
+{
+  "schema_version": 1,
+  "status": "passed_with_explicit_skips",
+  "source_commit": "0a783af",
+  "suite": {
+    "run": 319,
+    "passed": 316,
+    "skipped": 3,
+    "unittest_seconds": 66.66,
+    "child_returncode": 0,
+    "watchdog_seconds": 70.23962729499908,
+    "limit_seconds": 240,
+    "source_unchanged": true,
+    "test_sources_unchanged": true
+  },
+  "skip_reasons": [
+    "Two opt-in MaleCNS Torch checks require a separately enabled window",
+    "Pinned raw male graph absent in this new checkout"
+  ],
+  "wrapper_exit_code": 1,
+  "wrapper_error": "The one-off wrapper checked nonexistent exit_code rather than bounded_process.returncode. Actual suite child exited0. Original wrapper and raw report retained; no suite rerun or tolerance change.",
+  "ui": {
+    "offline_npm_ci": "passed",
+    "production_build": "passed",
+    "measurement_checks": 7,
+    "memory_annotations": "passed"
+  },
+  "limitations": [
+    "Merged current completed branches only; pending male lab and recorded transfer source not included",
+    "Historical source-scoped performance/endurance evidence is not rerun here",
+    "No full-model, held-out or physical qualification from this suite"
+  ],
+  "artifacts": {
+    "runs/integration-egl-0a783af/check.py": {
+      "sha256": "796dbf334c4c8f356b59ae3ab19c36dc31ad2081d94606580714a1f52e4c4578",
+      "bytes": 1142
+    },
+    "runs/integration-egl-0a783af/report.json": {
+      "sha256": "fcb937c98d0a2ee32e1bdb24349f2df9c47d7d3f1c5e17f681fb223fc54b45f8",
+      "bytes": 10736
+    },
+    "runs/integration-egl-0a783af/suite/supervisor.json": {
+      "sha256": "2276d5e76c4428c6ea7f449050bb9b43c9e12b20805935a4a71086679fc67d9f",
+      "bytes": 304
+    },
+    "runs/integration-egl-0a783af/suite/stdout.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "runs/integration-egl-0a783af/suite/stderr.log": {
+      "sha256": "fe9417552d4e42571185427ce93876b5570e9e12310931512c1c51442e66832b",
+      "bytes": 67283
+    },
+    "runs/integration-egl-0a783af/ui-install.log": {
+      "sha256": "e22dd2ced22b56e4008b063533640bf21ee274377b3b0c118328dc433fcb1c3c",
+      "bytes": 140
+    },
+    "runs/integration-egl-0a783af/ui-build.log": {
+      "sha256": "1e56e5120f69db45191e847cede5e1dfb25f8ef48b9ababc8b6a3557131cb81d",
+      "bytes": 408
+    }
+  },
+  "male_integrated_regression": {
+    "source_commit": "77e69da7e69a95e34abf25898ea56c4ae3e1180d",
+    "suite_tests": 330,
+    "passed": 330,
+    "skipped": 0,
+    "suite_seconds": 84.558,
+    "supervision": {
+      "schema_version": 1,
+      "status": "completed",
+      "timeout_seconds": 300,
+      "started_utc": "2026-10-02T12:33:46.603569+00:00",
+      "output": "/home/utkarsh/Work/shraddha/brain/.worktrees/project-integration/runs/integration-male-20261002/suite",
+      "returncode": 0,
+      "elapsed_seconds": 88.0445839669992
+    },
+    "source_unchanged": true,
+    "test_sources_unchanged": true,
+    "files": [
+      {
+        "path": "runs/integration-male-20261002/check.py",
+        "size_bytes": 1360,
+        "sha256": "c1e60c253686b10fe9cffd943b7ed9045333dafae62efe0febf5ebb552b48dbd"
+      },
+      {
+        "path": "runs/integration-male-20261002/report.json",
+        "size_bytes": 11336,
+        "sha256": "feb340f3c10d49615ddc319c72e8184b596ed5843d0e72b8e68a0ef4e920a65a"
+      },
+      {
+        "path": "runs/integration-male-20261002/suite/supervisor.json",
+        "size_bytes": 305,
+        "sha256": "9ca32fa7570d61ddd3342aabf7b7aa7bb77b64965ad5d452939bb8a114d7ee70"
+      },
+      {
+        "path": "runs/integration-male-20261002/suite/stdout.log",
+        "size_bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "runs/integration-male-20261002/suite/stderr.log",
+        "size_bytes": 69012,
+        "sha256": "554be60d905948dffbcaeb9953112deed99c9a6eef5a0829a579f2470a624465"
+      },
+      {
+        "path": "runs/integration-male-20261002/male-evidence/report.json",
+        "size_bytes": 10885,
+        "sha256": "324d1dba8da601a1d36e61ca9085384e8d58085413599097fecd57f0cc9630c2"
+      },
+      {
+        "path": "runs/integration-egl-0a783af/ui-build-after-male.log",
+        "size_bytes": 408,
+        "sha256": "56af932913369392c0ecdc089cadb655d175fe73ad374d1945f92db4c6b2ce12"
+      },
+      {
+        "path": "runs/integration-egl-0a783af/ui-measurement-after-male.log",
+        "size_bytes": 142,
+        "sha256": "6643c1146616068941d18724b8e655d50ddec659a9ca9c83d5311155d9a81434"
+      },
+      {
+        "path": "runs/integration-egl-0a783af/ui-memory-after-male.log",
+        "size_bytes": 183,
+        "sha256": "b96446be93328987993fbd96afb85050c4bbab993396b950d3af88ce3fe02ebe"
+      }
+    ],
+    "limitations": [
+      "Actual simulation and male mechanism gates are enabled; this is regression coverage, not a repeat of historical task/held-out/endurance qualification.",
+      "Full source/test identities remain in the retained report."
+    ]
+  },
+  "expanded_regression": {
+    "commit": "8c74181ee62a7a5dc5ec153199e3ac293ae5fbdf",
+    "supervision": {
+      "schema_version": 1,
+      "status": "completed",
+      "timeout_seconds": 300,
+      "started_utc": "2026-10-02T13:36:19.790340+00:00",
+      "output": "/home/utkarsh/Work/shraddha/brain/.worktrees/project-integration/runs/integration-expanded-20261002/suite",
+      "returncode": 0,
+      "elapsed_seconds": 61.36304471200128
+    },
+    "all_runtime_gates_enabled": true,
+    "asset_root": "/home/utkarsh/Work/shraddha/brain/.worktrees/project-integration/data/assets/flynn",
+    "sources_unchanged": true,
+    "tests": 363,
+    "passed": 363,
+    "skipped": 0,
+    "suite_seconds": 58.919,
+    "qualification_claims": [],
+    "files": [
+      {
+        "path": "runs/integration-expanded-20261002/male-evidence/1ea7d9473e944b388be80cce795674e4/recording/chunks/000000.npz",
+        "bytes": 201820,
+        "sha256": "3ff8dd3393a0054aa037987bc580035b531efc51aa81f995b3c158131f63c232"
+      },
+      {
+        "path": "runs/integration-expanded-20261002/male-evidence/1ea7d9473e944b388be80cce795674e4/recording/chunks/000001.npz",
+        "bytes": 399110,
+        "sha256": "7b6a8c000724bfb85f201f87d6b36bf083bff936c4889571b12794bb51bbb142"
+      },
+      {
+        "path": "runs/integration-expanded-20261002/male-evidence/1ea7d9473e944b388be80cce795674e4/recording/events.jsonl",
+        "bytes": 23858,
+        "sha256": "a5fe94c558adb9ffc5e19223f86b3159d431d27e978b51c0ac4f9ef1148254fe"
+      },
+      {
+        "path": "runs/integration-expanded-20261002/male-evidence/1ea7d9473e944b388be80cce795674e4/recording/manifest.json",
+        "bytes": 4036,
+        "sha256": "80e6d5172c4e4861f54c2caacff688f9fb686a4996587581cd44c9738b6d3630"
+      },
+      {
+        "path": "runs/integration-expanded-20261002/male-evidence/1ea7d9473e944b388be80cce795674e4/snapshots/index.json",
+        "bytes": 1527,
+        "sha256": "dae318880ee666ad347007a142c6c6cb4595baedf586cdf3ec80d9316e266dde"
+      },
+      {
+        "path": "runs/integration-expanded-20261002/male-evidence/1ea7d9473e944b388be80cce795674e4/snapshots/initial.snp",
+        "bytes": 531775,
+        "sha256": "f56bb2f60140cf711e6fe1cf0533785da546e92a7a93dba109519f13291ac674"
+      },
+      {
+        "path": "runs/integration-expanded-20261002/male-evidence/2110b677a21d44b4a2b6bb97502bb934/recording/chunks/000000.npz",
+        "bytes": 596400,
+        "sha256": "9a439c13cb8ab94fa8c9f6d8fb19d5eae1fa1bc568284e661a40dac6a873ec98"
+      },
+      {
+        "path": "runs/integration-expanded-20261002/male-evidence/2110b677a21d44b4a2b6bb97502bb934/recording/events.jsonl",
+        "bytes": 25604,
+        "sha256": "52f0c824bb1abe908372bbe1af48deead3a939d6bb2b8eecb606d752a0d7268e"
+      },
+      {
+        "path": "runs/integration-expanded-20261002/male-evidence/2110b677a21d44b4a2b6bb97502bb934/recording/manifest.json",
+        "bytes": 4411,
+        "sha256": "a6fe88090bffa8162ee1e6660bd6b241a789cea9d101348c87beb8a38a736ab6"
+      },
+      {
+        "path": "runs/integration-expanded-20261002/male-evidence/2110b677a21d44b4a2b6bb97502bb934/replay-report.json",
+        "bytes": 1650,
+        "sha256": "11c906dc744a42d739ca852a146a205f36bfc52f2b8f8dc5aa92d07eb25e7e0f"
+      },
+      {
+        "path": "runs/integration-expanded-20261002/male-evidence/2110b677a21d44b4a2b6bb97502bb934/snapshots/index.json",
+        "bytes": 1527,
+        "sha256": "b7ffd50c0f66e5bb0eb6d665152f4a240e72722c747418a28cc0363a75a1e245"
+      },
+      {
+        "path": "runs/integration-expanded-20261002/male-evidence/2110b677a21d44b4a2b6bb97502bb934/snapshots/initial.snp",
+        "bytes": 531777,
+        "sha256": "4595a8937277c4a77266cc01288335c142be5d606fe8e41c748135b2d0550167"
+      },
+      {
+        "path": "runs/integration-expanded-20261002/male-evidence/3512874268094d4fbba9bb274e2f0221/recording/chunks/000000.npz",
+        "bytes": 399110,
+        "sha256": "4220287935f00bec4cb269dc5c8ce808c297da1b6e3ba55444abdd7e38dc14a3"
+      },
+      {
+        "path": "runs/integration-expanded-20261002/male-evidence/3512874268094d4fbba9bb274e2f0221/recording/events.jsonl",
+        "bytes": 23036,
+        "sha256": "19baec0bb47438e3c04c3b5759242f478c91df6b208259f6a3db743d39527f03"
+      },
+      {
+        "path": "runs/integration-expanded-20261002/male-evidence/3512874268094d4fbba9bb274e2f0221/recording/manifest.json",
+        "bytes": 4204,
+        "sha256": "db1abdc0d97a5bf72ad329a8988b3edd3667ca2f8c5b85a5d79924d68e3f28d7"
+      },
+      {
+        "path": "runs/integration-expanded-20261002/male-evidence/4a69d3426b2c424885777ee098f91c71/recording/chunks/000000.npz",
+        "bytes": 399110,
+        "sha256": "3d422061f114fea39d4973e734dc8b803f953c3a08f611c79e5df654b435d838"
+      },
+      {
+        "path": "runs/integration-expanded-20261002/male-evidence/4a69d3426b2c424885777ee098f91c71/recording/events.jsonl",
+        "bytes": 23024,
+        "sha256": "a681f160223121539c18eed3736fe5c6febffd72429e0a7b8cd9af34118a3f88"
+      },
+      {
+        "path": "runs/integration-expanded-20261002/male-evidence/4a69d3426b2c424885777ee098f91c71/recording/manifest.json",
+        "bytes": 4201,
+        "sha256": "c6832f66831652428b22d1adb2b970aaedb8144a09fc3dc02d087c011755b0b8"
+      },
+      {
+        "path": "runs/integration-expanded-20261002/male-evidence/81d1980b86b0438791015cd5c15e4a32/recording/chunks/000000.npz",
+        "bytes": 594234,
+        "sha256": "8c084094deea846ea48841f3a41e58b223c6623914de4cbd9c23fd9e8793b398"
+      },
+      {
+        "path": "runs/integration-expanded-20261002/male-evidence/81d1980b86b0438791015cd5c15e4a32/recording/events.jsonl",
+        "bytes": 25676,
+        "sha256": "f56a552b2ff24354f28fce088459ad94ea4dec26f8fc8117bc018cfa927c0d8c"
+      },
+      {
+        "path": "runs/integration-expanded-20261002/male-evidence/81d1980b86b0438791015cd5c15e4a32/recording/manifest.json",
+        "bytes": 4415,
+        "sha256": "5ccaf8de600343106ecfbcfe84d2ec918b7ea5aad9dc22e1dd31bee4e4579b96"
+      },
+      {
+        "path": "runs/integration-expanded-20261002/male-evidence/81d1980b86b0438791015cd5c15e4a32/replay-report.json",
+        "bytes": 1923,
+        "sha256": "a973917301ba2e520bf18125eae80b0cf183ca2690505d91a91287f85c6600c5"
+      },
+      {
+        "path": "runs/integration-expanded-20261002/male-evidence/81d1980b86b0438791015cd5c15e4a32/snapshots/index.json",
+        "bytes": 1527,
+        "sha256": "ce82d051115be5185e14cecfd8bfb1c89c6746d31f37b0ffd8bb3e15646232a7"
+      },
+      {
+        "path": "runs/integration-expanded-20261002/male-evidence/81d1980b86b0438791015cd5c15e4a32/snapshots/initial.snp",
+        "bytes": 531778,
+        "sha256": "e840f37e70ed38020d07998dadadccc3291029faa2ddb5e748365fdebc84e929"
+      },
+      {
+        "path": "runs/integration-expanded-20261002/male-evidence/afeed879600c43f5bb54bf3ab9b447bc/recording/chunks/000000.npz",
+        "bytes": 594234,
+        "sha256": "815b54a64b9abd83b60d91f643c8b83e3e695bc6cb033f5750c4259dba35893d"
+      },
+      {
+        "path": "runs/integration-expanded-20261002/male-evidence/afeed879600c43f5bb54bf3ab9b447bc/recording/events.jsonl",
+        "bytes": 25666,
+        "sha256": "64763a11f1101e5d1dd019ae3f351d5bcc8dbe538c68cbf870146d24700304b6"
+      },
+      {
+        "path": "runs/integration-expanded-20261002/male-evidence/afeed879600c43f5bb54bf3ab9b447bc/recording/manifest.json",
+        "bytes": 4414,
+        "sha256": "65644f9a59e8248d06a1a3847b5a164cfe4279d641f4268a1fcab7bf8ea370d7"
+      },
+      {
+        "path": "runs/integration-expanded-20261002/male-evidence/afeed879600c43f5bb54bf3ab9b447bc/replay-report.json",
+        "bytes": 1923,
+        "sha256": "52fb9a61c97e737f162907e60920020861750c15479535d822e85686ad04658a"
+      },
+      {
+        "path": "runs/integration-expanded-20261002/male-evidence/afeed879600c43f5bb54bf3ab9b447bc/snapshots/index.json",
+        "bytes": 1523,
+        "sha256": "bc5375978e907c1a9bc99f952d2b163d8a052464fd6acc70df6244ae490509ed"
+      },
+      {
+        "path": "runs/integration-expanded-20261002/male-evidence/afeed879600c43f5bb54bf3ab9b447bc/snapshots/initial.snp",
+        "bytes": 531768,
+        "sha256": "d398a9d22502f3a2b0dcf6c5a913ad782b280ff28077cd2e28986d906e7d215c"
+      },
+      {
+        "path": "runs/integration-expanded-20261002/male-evidence/e2a7be640e624e2189aa96bc8fdd52f9/recording/chunks/000000.npz",
+        "bytes": 596400,
+        "sha256": "6643e1d61a2c2b4589b67feca6b34a9f884b0170d0a15046abcf28bf58c961a5"
+      },
+      {
+        "path": "runs/integration-expanded-20261002/male-evidence/e2a7be640e624e2189aa96bc8fdd52f9/recording/events.jsonl",
+        "bytes": 25594,
+        "sha256": "e105641303c93864a96fb90ae6c61ade6be9bffa5807e7c6434c0167dc032ab3"
+      },
+      {
+        "path": "runs/integration-expanded-20261002/male-evidence/e2a7be640e624e2189aa96bc8fdd52f9/recording/manifest.json",
+        "bytes": 4410,
+        "sha256": "e5765458a7598c6857b97bc6261c2e1dc4c246c64f4ff10ea60cc6ec0dd0ef80"
+      },
+      {
+        "path": "runs/integration-expanded-20261002/male-evidence/e2a7be640e624e2189aa96bc8fdd52f9/replay-report.json",
+        "bytes": 1650,
+        "sha256": "af8fabe248e8593c6dd170dea5c540f81ed9e8a78fc5e757cf89ba879c56a134"
+      },
+      {
+        "path": "runs/integration-expanded-20261002/male-evidence/e2a7be640e624e2189aa96bc8fdd52f9/snapshots/index.json",
+        "bytes": 1523,
+        "sha256": "7ce294770c625b31436f7d105b4fb328c8fe9a984ae6b5a92ab1c20a480f26ab"
+      },
+      {
+        "path": "runs/integration-expanded-20261002/male-evidence/e2a7be640e624e2189aa96bc8fdd52f9/snapshots/initial.snp",
+        "bytes": 531767,
+        "sha256": "a6111f5a1ff36dda7edda533b214ec74866a9ee742bfa165d654e295f1824fbf"
+      },
+      {
+        "path": "runs/integration-expanded-20261002/male-evidence/e8b7ee94aada425099979d6f29816b93/recording/chunks/000000.npz",
+        "bytes": 201820,
+        "sha256": "0da6f150a659acc8542283a0ed65b6e1c274c79fdf3decb466eb108795ec21f5"
+      },
+      {
+        "path": "runs/integration-expanded-20261002/male-evidence/e8b7ee94aada425099979d6f29816b93/recording/events.jsonl",
+        "bytes": 22543,
+        "sha256": "713ce623a501e59413c091acef9f9cf940577e4ae47c6ec0991d9c98cb5fba4a"
+      },
+      {
+        "path": "runs/integration-expanded-20261002/male-evidence/e8b7ee94aada425099979d6f29816b93/recording/manifest.json",
+        "bytes": 4204,
+        "sha256": "7ef111c7add2396d96f4558f2c020ae96fcb668dd1f9e0545b03a797d22a6b8a"
+      },
+      {
+        "path": "runs/integration-expanded-20261002/male-evidence/f07216398513465f8ae6c417ae1215ef/recording/chunks/000000.npz",
+        "bytes": 201820,
+        "sha256": "c977e124c99dc1263008aec9ed3069527ab95054ca6228cff12f885430586087"
+      },
+      {
+        "path": "runs/integration-expanded-20261002/male-evidence/f07216398513465f8ae6c417ae1215ef/recording/chunks/000001.npz",
+        "bytes": 399110,
+        "sha256": "5da5113508fd8a8a433e052be2361111db8746dff4bd8420a52d2b69c155097f"
+      },
+      {
+        "path": "runs/integration-expanded-20261002/male-evidence/f07216398513465f8ae6c417ae1215ef/recording/events.jsonl",
+        "bytes": 23848,
+        "sha256": "eafd6bcadcd791c295ba74322bfbc45c5caba43dedbb9a7d01ee6743a7ba237a"
+      },
+      {
+        "path": "runs/integration-expanded-20261002/male-evidence/f07216398513465f8ae6c417ae1215ef/recording/manifest.json",
+        "bytes": 4035,
+        "sha256": "8e370976cafd5c7c1673a37dc433f78fdbe433615f97c21823802856b7a4dee0"
+      },
+      {
+        "path": "runs/integration-expanded-20261002/male-evidence/f07216398513465f8ae6c417ae1215ef/snapshots/index.json",
+        "bytes": 1523,
+        "sha256": "772f7d66e78f38c6fc96542c3d9ecb927a2b97ef3fab69de6ee07ebe850962fd"
+      },
+      {
+        "path": "runs/integration-expanded-20261002/male-evidence/f07216398513465f8ae6c417ae1215ef/snapshots/initial.snp",
+        "bytes": 531765,
+        "sha256": "bb70cc063e613711601be85e719e4f3d2b038c5c98657d9c92628c1c0381bc2a"
+      },
+      {
+        "path": "runs/integration-expanded-20261002/male-evidence/report.json",
+        "bytes": 10888,
+        "sha256": "90123009dada9881476c64f7a157fbae03572322b96a4362d1e1f8a36fcce728"
+      },
+      {
+        "path": "runs/integration-expanded-20261002/report.json",
+        "bytes": 16317,
+        "sha256": "35b769aef9131744a4ced6ac473f75d8c2faf975d3711b98c4660e530b9e0687"
+      },
+      {
+        "path": "runs/integration-expanded-20261002/suite/stderr.log",
+        "bytes": 74722,
+        "sha256": "bfb8ace821109fc51722f4a6fb9db6c8780b2399ade2e5bcb95360b9f5223c4d"
+      },
+      {
+        "path": "runs/integration-expanded-20261002/suite/stdout.log",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "runs/integration-expanded-20261002/suite/supervisor.json",
+        "bytes": 310,
+        "sha256": "e2365208bcf4128b4e84d22a37d05d66a781b8e111c9501e10c9eab578fdb5e1"
+      }
+    ]
+  },
+  "artwork_body_regression": {
+    "attempts": [
+      {
+        "commit": "39320340569fbcb8dd7e94a8f0c5958bc97e9f9c",
+        "supervision": {
+          "schema_version": 1,
+          "status": "failed",
+          "timeout_seconds": 300,
+          "started_utc": "2026-10-02T14:45:17.240128+00:00",
+          "output": "/home/utkarsh/Work/shraddha/brain/.worktrees/project-integration/runs/integration-artwork-body-20261002/suite",
+          "returncode": 1,
+          "elapsed_seconds": 61.2537666299977
+        },
+        "sources_unchanged": true,
+        "all_runtime_gates_enabled": true,
+        "tests": 395,
+        "passed": 394,
+        "errors": 1,
+        "skipped": 0,
+        "suite_seconds": 58.927,
+        "male_mechanism_status": "passed",
+        "summary": [
+          "Ran 395 tests in 58.927s",
+          "FAILED (errors=1)"
+        ],
+        "files": [
+          {
+            "path": "runs/integration-artwork-body-20261002/male-evidence/148b2877902344c091c83f4955b24cb1/recording/chunks/000000.npz",
+            "bytes": 594234,
+            "sha256": "2c6b6a6bb50f8fd015b39e25e8a7aaa38044e9cdb555fc731fb70e0c01001b1b"
+          },
+          {
+            "path": "runs/integration-artwork-body-20261002/male-evidence/148b2877902344c091c83f4955b24cb1/recording/events.jsonl",
+            "bytes": 25977,
+            "sha256": "16198c6f8293b5aaf7d189e2d74eba91a5abe0f7119b9ac5ffffd93642c15af3"
+          },
+          {
+            "path": "runs/integration-artwork-body-20261002/male-evidence/148b2877902344c091c83f4955b24cb1/recording/manifest.json",
+            "bytes": 4415,
+            "sha256": "497a700db25b15ef66a26949a8737a18185e34961dcb1a4db5fe380e58df5125"
+          },
+          {
+            "path": "runs/integration-artwork-body-20261002/male-evidence/148b2877902344c091c83f4955b24cb1/replay-report.json",
+            "bytes": 1923,
+            "sha256": "2da66148faf0b06f2b18cc1257136555fa9c7d76356d7b3e6114c462adda8855"
+          },
+          {
+            "path": "runs/integration-artwork-body-20261002/male-evidence/148b2877902344c091c83f4955b24cb1/snapshots/index.json",
+            "bytes": 1527,
+            "sha256": "819b5d211826e73fec51e5655eb391a12a73ea734716f195558faf78bab70752"
+          },
+          {
+            "path": "runs/integration-artwork-body-20261002/male-evidence/148b2877902344c091c83f4955b24cb1/snapshots/initial.snp",
+            "bytes": 531778,
+            "sha256": "6cf824170f0cd039f16762c4ac225b0dd8c641847a78bbcdb6d98760795eccea"
+          },
+          {
+            "path": "runs/integration-artwork-body-20261002/male-evidence/4b0ea74aaba941a09b95a32daaed781b/recording/chunks/000000.npz",
+            "bytes": 201820,
+            "sha256": "579f284a99638367d0f2ccd233e50a0f33a892b4484a497b0b8427838df73cbb"
+          },
+          {
+            "path": "runs/integration-artwork-body-20261002/male-evidence/4b0ea74aaba941a09b95a32daaed781b/recording/chunks/000001.npz",
+            "bytes": 399110,
+            "sha256": "258a1c5cc07d046df831c0f0bf73c7b4129081981ee8d54e29a639b43cef933b"
+          },
+          {
+            "path": "runs/integration-artwork-body-20261002/male-evidence/4b0ea74aaba941a09b95a32daaed781b/recording/events.jsonl",
+            "bytes": 24149,
+            "sha256": "8c94c78137ffaaa72bbca1e928f658219f5f994401bafafbdd02ef46e88077ea"
+          },
+          {
+            "path": "runs/integration-artwork-body-20261002/male-evidence/4b0ea74aaba941a09b95a32daaed781b/recording/manifest.json",
+            "bytes": 4035,
+            "sha256": "4c4ff4f46aa43298b3a2beb32a0db20ea811e99831bcffc60adaede325038f08"
+          },
+          {
+            "path": "runs/integration-artwork-body-20261002/male-evidence/4b0ea74aaba941a09b95a32daaed781b/snapshots/index.json",
+            "bytes": 1523,
+            "sha256": "af7fcc42beda70cec11e9f721215400e46eb20bb12b10da2299c1ee49d0c26b3"
+          },
+          {
+            "path": "runs/integration-artwork-body-20261002/male-evidence/4b0ea74aaba941a09b95a32daaed781b/snapshots/initial.snp",
+            "bytes": 531765,
+            "sha256": "e3eb2241a4133a6675e8ed8bfffc2dee65b9af20cea11f0743dfd662e2c16841"
+          },
+          {
+            "path": "runs/integration-artwork-body-20261002/male-evidence/506ab6cfcaed449b8886f8a7fe9e53ec/recording/chunks/000000.npz",
+            "bytes": 594234,
+            "sha256": "f7e732082ffb817e273afa94c4f6a1975f0da6468f4b9625fc0c181827bcafe8"
+          },
+          {
+            "path": "runs/integration-artwork-body-20261002/male-evidence/506ab6cfcaed449b8886f8a7fe9e53ec/recording/events.jsonl",
+            "bytes": 25967,
+            "sha256": "3f1098b12a9df65950bf207113c81b56749907e0bc8a6e0e98eded02cd20c3c2"
+          },
+          {
+            "path": "runs/integration-artwork-body-20261002/male-evidence/506ab6cfcaed449b8886f8a7fe9e53ec/recording/manifest.json",
+            "bytes": 4414,
+            "sha256": "87bd8d8f934e474009803b073a8eb967c34459d669ac3abc667787fc629912b8"
+          },
+          {
+            "path": "runs/integration-artwork-body-20261002/male-evidence/506ab6cfcaed449b8886f8a7fe9e53ec/replay-report.json",
+            "bytes": 1923,
+            "sha256": "0ecd87976e121ba874dafe30cf54a63471b43cb8c608fa68eb3e6743ec1d72e6"
+          },
+          {
+            "path": "runs/integration-artwork-body-20261002/male-evidence/506ab6cfcaed449b8886f8a7fe9e53ec/snapshots/index.json",
+            "bytes": 1523,
+            "sha256": "83e5ec72a2432787cd985e43779936885afc89c0c9eddc51c2ea331197c7ce2d"
+          },
+          {
+            "path": "runs/integration-artwork-body-20261002/male-evidence/506ab6cfcaed449b8886f8a7fe9e53ec/snapshots/initial.snp",
+            "bytes": 531768,
+            "sha256": "122b058874728f52121ea0d1e36bcca01d0edd719a0b8f654abc49af5eeb4820"
+          },
+          {
+            "path": "runs/integration-artwork-body-20261002/male-evidence/7dffe1ca5f824b87b207eb207fa383fa/recording/chunks/000000.npz",
+            "bytes": 201820,
+            "sha256": "6e65257761ce5c3bdccf55abc602c3706ca3383ab4599c653315e2e938a32b93"
+          },
+          {
+            "path": "runs/integration-artwork-body-20261002/male-evidence/7dffe1ca5f824b87b207eb207fa383fa/recording/chunks/000001.npz",
+            "bytes": 399110,
+            "sha256": "1f130a03037a8d8abdfc48b7e6fd8daa90a7ec00b8e6579160eb209f3f19058b"
+          },
+          {
+            "path": "runs/integration-artwork-body-20261002/male-evidence/7dffe1ca5f824b87b207eb207fa383fa/recording/events.jsonl",
+            "bytes": 24159,
+            "sha256": "9c65633bd4f89f814dc49047ef23dfcfcc658f4174d14fc81d48ae7e287a3193"
+          },
+          {
+            "path": "runs/integration-artwork-body-20261002/male-evidence/7dffe1ca5f824b87b207eb207fa383fa/recording/manifest.json",
+            "bytes": 4036,
+            "sha256": "cf6ae350f6bc48d43391af7f920bc7e5bb494be0e5ba9795a5e5888b1ad6a6a2"
+          },
+          {
+            "path": "runs/integration-artwork-body-20261002/male-evidence/7dffe1ca5f824b87b207eb207fa383fa/snapshots/index.json",
+            "bytes": 1527,
+            "sha256": "01e7978683be75a7121aa619bdb14f07a3f3d551eb61a9d60d1ede8a8f564a62"
+          },
+          {
+            "path": "runs/integration-artwork-body-20261002/male-evidence/7dffe1ca5f824b87b207eb207fa383fa/snapshots/initial.snp",
+            "bytes": 531775,
+            "sha256": "f45106718ba509dcb822ee82eee915f17a4c02700c87ad9747b97715a513ccd5"
+          },
+          {
+            "path": "runs/integration-artwork-body-20261002/male-evidence/8a1256f6dd0a4e54b5ec7ecfa3c990fd/recording/chunks/000000.npz",
+            "bytes": 399110,
+            "sha256": "c918fc23ec66f737e79f48d2a06b206125102cd519b187aae8760ca2a30be330"
+          },
+          {
+            "path": "runs/integration-artwork-body-20261002/male-evidence/8a1256f6dd0a4e54b5ec7ecfa3c990fd/recording/events.jsonl",
+            "bytes": 23325,
+            "sha256": "b610e27717a1c6ec839abf734accf286101f73ff567e0dbc0b9fd5c4e6df4b4c"
+          },
+          {
+            "path": "runs/integration-artwork-body-20261002/male-evidence/8a1256f6dd0a4e54b5ec7ecfa3c990fd/recording/manifest.json",
+            "bytes": 4201,
+            "sha256": "d1fb95445991413079efd383b68f41a7b4d2d78797a75966e8614563198dfbfe"
+          },
+          {
+            "path": "runs/integration-artwork-body-20261002/male-evidence/953fb2d0ae8b42b1830bf52d629e42c6/recording/chunks/000000.npz",
+            "bytes": 596400,
+            "sha256": "6b91cdb4d3ffe722c01eca40ad217e62e3afb6a9374f87762547ea2ff561a2b5"
+          },
+          {
+            "path": "runs/integration-artwork-body-20261002/male-evidence/953fb2d0ae8b42b1830bf52d629e42c6/recording/events.jsonl",
+            "bytes": 25905,
+            "sha256": "f9d52d0e856321d64103a78f2d85341dfe27d2c3d2277db201a4ab25d007f7de"
+          },
+          {
+            "path": "runs/integration-artwork-body-20261002/male-evidence/953fb2d0ae8b42b1830bf52d629e42c6/recording/manifest.json",
+            "bytes": 4411,
+            "sha256": "f186be2d00b17dea2ad684e573fa2b020e5afc1097a500ac5d8aeb7b418dde6c"
+          },
+          {
+            "path": "runs/integration-artwork-body-20261002/male-evidence/953fb2d0ae8b42b1830bf52d629e42c6/replay-report.json",
+            "bytes": 1650,
+            "sha256": "015c3606d6364a5ec5980a4aaf3891fc609bb856f9d223618bfb0b935fbd1b49"
+          },
+          {
+            "path": "runs/integration-artwork-body-20261002/male-evidence/953fb2d0ae8b42b1830bf52d629e42c6/snapshots/index.json",
+            "bytes": 1527,
+            "sha256": "56ab0098310f526aa0be294328a7ccf2f4e17c459bca41c9848ba527d3e2dc45"
+          },
+          {
+            "path": "runs/integration-artwork-body-20261002/male-evidence/953fb2d0ae8b42b1830bf52d629e42c6/snapshots/initial.snp",
+            "bytes": 531777,
+            "sha256": "02980f621f7d6644f443439e16c4992c39c770159a5432167fa2e487961cf036"
+          },
+          {
+            "path": "runs/integration-artwork-body-20261002/male-evidence/bc4315384a8d4d97886391dee55a4b7d/recording/chunks/000000.npz",
+            "bytes": 399110,
+            "sha256": "aedb3136b594ad1c31e72deeab67953db96af5dc75cbab7d658449488f2a86f3"
+          },
+          {
+            "path": "runs/integration-artwork-body-20261002/male-evidence/bc4315384a8d4d97886391dee55a4b7d/recording/events.jsonl",
+            "bytes": 23337,
+            "sha256": "aa14f2005619c358513887fb683b4a13a332abac30866dea7ec1cfecbb8efee3"
+          },
+          {
+            "path": "runs/integration-artwork-body-20261002/male-evidence/bc4315384a8d4d97886391dee55a4b7d/recording/manifest.json",
+            "bytes": 4204,
+            "sha256": "968aa59303693b54217231403b369c8fb7179da382c15e0d2b6f8f4c52d0a34d"
+          },
+          {
+            "path": "runs/integration-artwork-body-20261002/male-evidence/d56c1e1a0aaa40339754a896b4a8dcb6/recording/chunks/000000.npz",
+            "bytes": 201820,
+            "sha256": "daa9c8c9a60c03821162f345635c76fef25b7c5dc45d086a123ba48bb7a7937f"
+          },
+          {
+            "path": "runs/integration-artwork-body-20261002/male-evidence/d56c1e1a0aaa40339754a896b4a8dcb6/recording/events.jsonl",
+            "bytes": 22844,
+            "sha256": "23fc7fa9464920ad47d052bc1d88202c86f5f5163032f6f791987f136dd5f550"
+          },
+          {
+            "path": "runs/integration-artwork-body-20261002/male-evidence/d56c1e1a0aaa40339754a896b4a8dcb6/recording/manifest.json",
+            "bytes": 4204,
+            "sha256": "8dd20d21cd03b58f795f3fa424179410db792e942efce2930c1b94408341698f"
+          },
+          {
+            "path": "runs/integration-artwork-body-20261002/male-evidence/d959a9636b4844349d10f27f706460ff/recording/chunks/000000.npz",
+            "bytes": 596400,
+            "sha256": "c8c024db3aa3b09f40e1c9402c8954df2f42d3bc0b217f865d4bff9d2a39bf9b"
+          },
+          {
+            "path": "runs/integration-artwork-body-20261002/male-evidence/d959a9636b4844349d10f27f706460ff/recording/events.jsonl",
+            "bytes": 25895,
+            "sha256": "d5972d925b32300c0e8c1752c42368d707bb9b58e3f06f57f8c9aca0171030ce"
+          },
+          {
+            "path": "runs/integration-artwork-body-20261002/male-evidence/d959a9636b4844349d10f27f706460ff/recording/manifest.json",
+            "bytes": 4410,
+            "sha256": "80bee7146b9d2f6e82036bd2a17cde49c275979b86916468c9da300f3f83abac"
+          },
+          {
+            "path": "runs/integration-artwork-body-20261002/male-evidence/d959a9636b4844349d10f27f706460ff/replay-report.json",
+            "bytes": 1650,
+            "sha256": "1cdea967db236a32464d01d2d3676c784246057f36ad8e5e7c2fe85f1158a3fd"
+          },
+          {
+            "path": "runs/integration-artwork-body-20261002/male-evidence/d959a9636b4844349d10f27f706460ff/snapshots/index.json",
+            "bytes": 1523,
+            "sha256": "4fd5d5814802bebedc8e25f4a6627846b54ecfb25732e01b6a9c356e5ce7ae2a"
+          },
+          {
+            "path": "runs/integration-artwork-body-20261002/male-evidence/d959a9636b4844349d10f27f706460ff/snapshots/initial.snp",
+            "bytes": 531767,
+            "sha256": "9e7928e868c4d0d7145e12c71419de283fb126646f2ce9f19a0bd9ffc4bc9224"
+          },
+          {
+            "path": "runs/integration-artwork-body-20261002/male-evidence/report.json",
+            "bytes": 11514,
+            "sha256": "86fe2cbd29bafb8967d92837699734e539494202941a191a509c338bc4a14a52"
+          },
+          {
+            "path": "runs/integration-artwork-body-20261002/report.json",
+            "bytes": 18441,
+            "sha256": "b65cd71856723480f41c6b7c616bccd0aa96baf9523e731f9f4d8c2d33488947"
+          },
+          {
+            "path": "runs/integration-artwork-body-20261002/suite/stderr.log",
+            "bytes": 80778,
+            "sha256": "47fe70a6b195de7041bce36c58dbdb77797b5cc3bec06088e68e80c2f819aa60"
+          },
+          {
+            "path": "runs/integration-artwork-body-20261002/suite/stdout.log",
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          {
+            "path": "runs/integration-artwork-body-20261002/suite/supervisor.json",
+            "bytes": 310,
+            "sha256": "6b9c6b803edcb84b245bbd806291b226d887bc80cafbb30ce94e52aacabf84eb"
+          }
+        ],
+        "qualification_claims": []
+      },
+      {
+        "commit": "68a8f19097b0d14b318c8871f521fa427331b877",
+        "supervision": {
+          "schema_version": 1,
+          "status": "completed",
+          "timeout_seconds": 300,
+          "started_utc": "2026-10-02T14:47:56.391742+00:00",
+          "output": "/home/utkarsh/Work/shraddha/brain/.worktrees/project-integration/runs/integration-artwork-body-v2-20261002/suite",
+          "returncode": 0,
+          "elapsed_seconds": 58.87450252400595
+        },
+        "sources_unchanged": true,
+        "all_runtime_gates_enabled": true,
+        "tests": 395,
+        "passed": 395,
+        "errors": 0,
+        "skipped": 0,
+        "suite_seconds": 56.706,
+        "male_mechanism_status": "passed",
+        "summary": [
+          "Ran 395 tests in 56.706s",
+          "OK"
+        ],
+        "files": [
+          {
+            "path": "runs/integration-artwork-body-v2-20261002/male-evidence/311079dc43ed460fa7d84820cbde8202/recording/chunks/000000.npz",
+            "bytes": 594234,
+            "sha256": "3c38b31f7d5035bb46138c6c7d6febddf3f3afcc0582c8adfae84f402263a1c0"
+          },
+          {
+            "path": "runs/integration-artwork-body-v2-20261002/male-evidence/311079dc43ed460fa7d84820cbde8202/recording/events.jsonl",
+            "bytes": 25967,
+            "sha256": "a8d01f04b63c6fd8834e500819eeaf7c5ba950574198589b5b8026fb07270057"
+          },
+          {
+            "path": "runs/integration-artwork-body-v2-20261002/male-evidence/311079dc43ed460fa7d84820cbde8202/recording/manifest.json",
+            "bytes": 4414,
+            "sha256": "a2698bfc55c8845ede763bb194a17b6ecbd1bb33b0d34d522c200194f1018075"
+          },
+          {
+            "path": "runs/integration-artwork-body-v2-20261002/male-evidence/311079dc43ed460fa7d84820cbde8202/replay-report.json",
+            "bytes": 1923,
+            "sha256": "6dd0fa748b8490e25252ac1d483a7094775b5f8bfcf59d2b89ab681f05651796"
+          },
+          {
+            "path": "runs/integration-artwork-body-v2-20261002/male-evidence/311079dc43ed460fa7d84820cbde8202/snapshots/index.json",
+            "bytes": 1523,
+            "sha256": "da3bc6abae78e24eafcbf84956d459016efda5d973e6abd2e189a2e435cb87ee"
+          },
+          {
+            "path": "runs/integration-artwork-body-v2-20261002/male-evidence/311079dc43ed460fa7d84820cbde8202/snapshots/initial.snp",
+            "bytes": 531768,
+            "sha256": "e575fdccd2b2a8f369fa88f8b2f5f5f4064c9f18fae7b4a7ff00dced44902042"
+          },
+          {
+            "path": "runs/integration-artwork-body-v2-20261002/male-evidence/416f1f52cb964d4189bd26cf218c780c/recording/chunks/000000.npz",
+            "bytes": 201820,
+            "sha256": "c143ffb244c9e1e2999f267a3679496154bef2df047670413800f7703e9868f8"
+          },
+          {
+            "path": "runs/integration-artwork-body-v2-20261002/male-evidence/416f1f52cb964d4189bd26cf218c780c/recording/events.jsonl",
+            "bytes": 22844,
+            "sha256": "ab25cc2582172b3bcbbab035619f311c417249c7bd2f3800d530f6ea22c6bae1"
+          },
+          {
+            "path": "runs/integration-artwork-body-v2-20261002/male-evidence/416f1f52cb964d4189bd26cf218c780c/recording/manifest.json",
+            "bytes": 4204,
+            "sha256": "c43709e2a332472c3bbae677eef7f349328fb08fc20b2a54ec10011d9dae346f"
+          },
+          {
+            "path": "runs/integration-artwork-body-v2-20261002/male-evidence/764dcf9a94394cf28051a3d452eeae29/recording/chunks/000000.npz",
+            "bytes": 399110,
+            "sha256": "5dc3d93457dd9937053185de866666646350024612fb744835748ce6d7afaa6a"
+          },
+          {
+            "path": "runs/integration-artwork-body-v2-20261002/male-evidence/764dcf9a94394cf28051a3d452eeae29/recording/events.jsonl",
+            "bytes": 23325,
+            "sha256": "5d6353defc7f5eebd6cb17204b59b0507f010d0ba9e645bb1e5c6046556ec296"
+          },
+          {
+            "path": "runs/integration-artwork-body-v2-20261002/male-evidence/764dcf9a94394cf28051a3d452eeae29/recording/manifest.json",
+            "bytes": 4201,
+            "sha256": "127bf4cf17ea0bf6c46d6ed776992599b5972c16c13b7a7afa1d2a5fc9dfd237"
+          },
+          {
+            "path": "runs/integration-artwork-body-v2-20261002/male-evidence/84c80846973745c492cfa6ecd4f5cd6c/recording/chunks/000000.npz",
+            "bytes": 201820,
+            "sha256": "64f34621842abfc12ff427b5978de98a323f90518af5d45231e6b5309b1376ee"
+          },
+          {
+            "path": "runs/integration-artwork-body-v2-20261002/male-evidence/84c80846973745c492cfa6ecd4f5cd6c/recording/chunks/000001.npz",
+            "bytes": 399110,
+            "sha256": "328fd6ea2c14c988b7f7246a4de5bc58d7037d4aabf633177395c902cca2051d"
+          },
+          {
+            "path": "runs/integration-artwork-body-v2-20261002/male-evidence/84c80846973745c492cfa6ecd4f5cd6c/recording/events.jsonl",
+            "bytes": 24149,
+            "sha256": "fb9b6882973d58f49df869699752e014cb62154dcb01e3c98cde274debc3f4a2"
+          },
+          {
+            "path": "runs/integration-artwork-body-v2-20261002/male-evidence/84c80846973745c492cfa6ecd4f5cd6c/recording/manifest.json",
+            "bytes": 4035,
+            "sha256": "ae2a1da294c6fd296dcc0b9c2a6499977251020e3d8e08b4414ee9938d63f6ca"
+          },
+          {
+            "path": "runs/integration-artwork-body-v2-20261002/male-evidence/84c80846973745c492cfa6ecd4f5cd6c/snapshots/index.json",
+            "bytes": 1523,
+            "sha256": "53cb283cb72c91b33ec29a17fba70aa2410e081e8cb358f7e9bdaeed26d0a31d"
+          },
+          {
+            "path": "runs/integration-artwork-body-v2-20261002/male-evidence/84c80846973745c492cfa6ecd4f5cd6c/snapshots/initial.snp",
+            "bytes": 531765,
+            "sha256": "dde9989e498e1542217b782c02b61db1c433ade7741eaa027c021ba303c60908"
+          },
+          {
+            "path": "runs/integration-artwork-body-v2-20261002/male-evidence/9204b9ebfcc741838b0d2c293c80b780/recording/chunks/000000.npz",
+            "bytes": 399110,
+            "sha256": "6e6d1a8088feda3d7e2c5d0f7a6a96fed8edf1f4db964bf56f3d9b9aa6491ab0"
+          },
+          {
+            "path": "runs/integration-artwork-body-v2-20261002/male-evidence/9204b9ebfcc741838b0d2c293c80b780/recording/events.jsonl",
+            "bytes": 23337,
+            "sha256": "3948d1c90866dbafe179aa4a84310ca3a0885f127c51240d7ec1c43ddc929fe9"
+          },
+          {
+            "path": "runs/integration-artwork-body-v2-20261002/male-evidence/9204b9ebfcc741838b0d2c293c80b780/recording/manifest.json",
+            "bytes": 4204,
+            "sha256": "a7346333a968990a90e6ed0fba08077171a0b5ffaa41fff637af1328ad640174"
+          },
+          {
+            "path": "runs/integration-artwork-body-v2-20261002/male-evidence/a9b544e54e154f8ea5b1bb2e11af80fb/recording/chunks/000000.npz",
+            "bytes": 201820,
+            "sha256": "2a0ca7b2093b3edb0dee4712be00709ca0b0c857f35b08df31da5cd2dd1c2dee"
+          },
+          {
+            "path": "runs/integration-artwork-body-v2-20261002/male-evidence/a9b544e54e154f8ea5b1bb2e11af80fb/recording/chunks/000001.npz",
+            "bytes": 399110,
+            "sha256": "81cc7fe933e38405b52239e5bb804c9a2715cdc5eebfcae01c4d833f0c87185c"
+          },
+          {
+            "path": "runs/integration-artwork-body-v2-20261002/male-evidence/a9b544e54e154f8ea5b1bb2e11af80fb/recording/events.jsonl",
+            "bytes": 24159,
+            "sha256": "66a8d57eaa8bd93828a3042e38b0c097e91b4bc8674b2f1aedd7397cca7a226b"
+          },
+          {
+            "path": "runs/integration-artwork-body-v2-20261002/male-evidence/a9b544e54e154f8ea5b1bb2e11af80fb/recording/manifest.json",
+            "bytes": 4036,
+            "sha256": "2499919f401644a94869af44b6d039b5ce0a6f36cf473b82016a9301c19f6965"
+          },
+          {
+            "path": "runs/integration-artwork-body-v2-20261002/male-evidence/a9b544e54e154f8ea5b1bb2e11af80fb/snapshots/index.json",
+            "bytes": 1527,
+            "sha256": "2c7bf6371ca297b0de783e2b0c2a3dbddde973386024e73d18c8b2d39d337583"
+          },
+          {
+            "path": "runs/integration-artwork-body-v2-20261002/male-evidence/a9b544e54e154f8ea5b1bb2e11af80fb/snapshots/initial.snp",
+            "bytes": 531775,
+            "sha256": "c30639cbae9e57feee96584bb7b5a6a31002c3c48b56ff8b3d215cf043664e7f"
+          },
+          {
+            "path": "runs/integration-artwork-body-v2-20261002/male-evidence/b2939e0a30a64d92a233eb10356d1b75/recording/chunks/000000.npz",
+            "bytes": 596400,
+            "sha256": "2a93b71b066484073f1501c525a29d20919cd56c8b8438a1a47347fa9e56b84b"
+          },
+          {
+            "path": "runs/integration-artwork-body-v2-20261002/male-evidence/b2939e0a30a64d92a233eb10356d1b75/recording/events.jsonl",
+            "bytes": 25895,
+            "sha256": "8ce2aec91d0c145720c1cc578d574df945808db2e3c86f828a7c6653b87dc8d8"
+          },
+          {
+            "path": "runs/integration-artwork-body-v2-20261002/male-evidence/b2939e0a30a64d92a233eb10356d1b75/recording/manifest.json",
+            "bytes": 4410,
+            "sha256": "f582e435f1c0d05dca84de184af502e33594e8758ff01b8f0da7b046db1572e2"
+          },
+          {
+            "path": "runs/integration-artwork-body-v2-20261002/male-evidence/b2939e0a30a64d92a233eb10356d1b75/replay-report.json",
+            "bytes": 1650,
+            "sha256": "040a308e7e0a0f0d940c3d21ed9c46190192a57273a4e82ccb0922d7b944f679"
+          },
+          {
+            "path": "runs/integration-artwork-body-v2-20261002/male-evidence/b2939e0a30a64d92a233eb10356d1b75/snapshots/index.json",
+            "bytes": 1523,
+            "sha256": "9506633542f91d17bbb2acd700f4d760829602c85b516d6ff2f40034b819bbce"
+          },
+          {
+            "path": "runs/integration-artwork-body-v2-20261002/male-evidence/b2939e0a30a64d92a233eb10356d1b75/snapshots/initial.snp",
+            "bytes": 531767,
+            "sha256": "07b35c2ee7dab85b0de466c9ee3a6118f69efe3d28e484a3e2163c07f01a9ec6"
+          },
+          {
+            "path": "runs/integration-artwork-body-v2-20261002/male-evidence/b5892801a0bc4e5f815bd28b4ba55c3d/recording/chunks/000000.npz",
+            "bytes": 594234,
+            "sha256": "7cc126349c28fea3c8f0cac3bf8a6f0d6b82894c47c3c3056d6113787533678c"
+          },
+          {
+            "path": "runs/integration-artwork-body-v2-20261002/male-evidence/b5892801a0bc4e5f815bd28b4ba55c3d/recording/events.jsonl",
+            "bytes": 25977,
+            "sha256": "08b4d4bd750d2a1c97a8e0d82b9d3829821b171263cf0f507c35952cf85d4d87"
+          },
+          {
+            "path": "runs/integration-artwork-body-v2-20261002/male-evidence/b5892801a0bc4e5f815bd28b4ba55c3d/recording/manifest.json",
+            "bytes": 4415,
+            "sha256": "d49d21cd6925ae0f75e5949b08eb9fe8ce3cf4f4bd0f53d886f3ce6271eaf78d"
+          },
+          {
+            "path": "runs/integration-artwork-body-v2-20261002/male-evidence/b5892801a0bc4e5f815bd28b4ba55c3d/replay-report.json",
+            "bytes": 1923,
+            "sha256": "3ba8977504543dc3f25d07dae3d5cecaba03c4cc5c2f46dba4c36d2d66e9b93f"
+          },
+          {
+            "path": "runs/integration-artwork-body-v2-20261002/male-evidence/b5892801a0bc4e5f815bd28b4ba55c3d/snapshots/index.json",
+            "bytes": 1527,
+            "sha256": "a140f3f3d3d567988c42f6cc8fb023326aabe7d912068c90320e8ca65c33dbc8"
+          },
+          {
+            "path": "runs/integration-artwork-body-v2-20261002/male-evidence/b5892801a0bc4e5f815bd28b4ba55c3d/snapshots/initial.snp",
+            "bytes": 531778,
+            "sha256": "b25a2b0c758da46ce032a63c794d47616c20c695f7ac9f04802c28765d8fe664"
+          },
+          {
+            "path": "runs/integration-artwork-body-v2-20261002/male-evidence/bb64623921004aae8b9bbdaf5aee190e/recording/chunks/000000.npz",
+            "bytes": 596400,
+            "sha256": "97db02088bd480569a87c4a7af8af9c75ef6e44b0873bb25da1dc9370d972fe1"
+          },
+          {
+            "path": "runs/integration-artwork-body-v2-20261002/male-evidence/bb64623921004aae8b9bbdaf5aee190e/recording/events.jsonl",
+            "bytes": 25905,
+            "sha256": "35671840d2198706d1e9c0d0a834b4fc225b41ad20fae437f97ea3eee05f07ff"
+          },
+          {
+            "path": "runs/integration-artwork-body-v2-20261002/male-evidence/bb64623921004aae8b9bbdaf5aee190e/recording/manifest.json",
+            "bytes": 4411,
+            "sha256": "75dcc44f2bc08912825da4755807060ca02a570e7fc00db42833701f936ddc14"
+          },
+          {
+            "path": "runs/integration-artwork-body-v2-20261002/male-evidence/bb64623921004aae8b9bbdaf5aee190e/replay-report.json",
+            "bytes": 1650,
+            "sha256": "99667196af9bec6515cd4ecc1aab6933fb35e31254757ecf64ecb25d1cc24693"
+          },
+          {
+            "path": "runs/integration-artwork-body-v2-20261002/male-evidence/bb64623921004aae8b9bbdaf5aee190e/snapshots/index.json",
+            "bytes": 1527,
+            "sha256": "9a3cb3eb012549b3d79244faaec6fe2dfa8bc85fa072fc0fc246c92d725ebb7a"
+          },
+          {
+            "path": "runs/integration-artwork-body-v2-20261002/male-evidence/bb64623921004aae8b9bbdaf5aee190e/snapshots/initial.snp",
+            "bytes": 531777,
+            "sha256": "bfd1841758a72058ce45280c4a78f3b5d0b303eadf96c5c33dc0b86e11cffd77"
+          },
+          {
+            "path": "runs/integration-artwork-body-v2-20261002/male-evidence/report.json",
+            "bytes": 11513,
+            "sha256": "cde06de0a02f00384074cb60015c0b5725135ff9c20dd827f86a0e52502879e5"
+          },
+          {
+            "path": "runs/integration-artwork-body-v2-20261002/report.json",
+            "bytes": 18525,
+            "sha256": "0d29789dbe4ca722f17125dbe5df70c134becde4d8c51a91ce56bc48029e2d70"
+          },
+          {
+            "path": "runs/integration-artwork-body-v2-20261002/suite/stderr.log",
+            "bytes": 79746,
+            "sha256": "3475366b66f7d7d06c9ee481e191d22bacacacfe94c493501a76a758f03cafef"
+          },
+          {
+            "path": "runs/integration-artwork-body-v2-20261002/suite/stdout.log",
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          {
+            "path": "runs/integration-artwork-body-v2-20261002/suite/supervisor.json",
+            "bytes": 317,
+            "sha256": "dfbcc312c1466bf4a26a12f7c5a4835efef188d2ce1cb6435379f5bb056dcd31"
+          }
+        ],
+        "qualification_claims": []
+      }
+    ],
+    "correction": {
+      "commit": "68a8f19097b0d14b318c8871f521fa427331b877",
+      "file": "tests/test_profiles.py",
+      "reason": "Select the reproduction snapshot by scenario identity instead of the first listed scenario; the newly first body profile correctly disallows replacement by teacher."
+    },
+    "limitations": [
+      "Regression coverage with actual simulation/male gates enabled; historical task, endurance, held-out and physical qualification are not rerun."
+    ]
+  },
+  "memory_research_regression": {
+    "source_commit": "eda9ba319281ae5615bd0dfba50c99d5786ac9a1",
+    "status": "passed",
+    "tests": 414,
+    "passed": 414,
+    "skipped": 0,
+    "suite_seconds": 82.272,
+    "supervision": {
+      "elapsed_seconds": 85.7053821820009,
+      "output": "/home/utkarsh/Work/shraddha/brain/.worktrees/project-integration/runs/integration-memory-research-eda9ba3-20261002/supervisor",
+      "returncode": 0,
+      "schema_version": 1,
+      "started_utc": "2026-10-02T16:00:36.831626+00:00",
+      "status": "completed",
+      "timeout_seconds": 300
+    },
+    "enabled_flags": {
+      "PALIMPSEST_MALE_RUNTIME_TESTS": "1",
+      "PALIMPSEST_MALE_TORCH_CHECKS": "1",
+      "PALIMPSEST_SIMULATION_TESTS": "1"
+    },
+    "asset_root": "/home/utkarsh/Work/shraddha/brain/.worktrees/r0-reproduction/data/assets/flynn",
+    "sources_unchanged": true,
+    "assets_unchanged": true,
+    "model_identities_unchanged": true,
+    "retained_files_independently_rehashed": 50,
+    "primary_report": "runs/integration-memory-research-eda9ba3-20261002/report.json",
+    "primary_report_sha256": "cf719320153a6a8845333d55f5686834642b91dce4393f54205defb469bb82d9",
+    "launcher": "runs/integration-memory-research-eda9ba3-launch.py",
+    "launcher_sha256": "68ef69efaec44ed853471f814790b55c1276b75a63e58a891a7909caa8deca07",
+    "retained_files": {
+      "launch.json": {
+        "sha256": "30b61f17708b2dd2136ddceca089d3f071ab854a24c52443ddad6d7a198e527f",
+        "size_bytes": 38022
+      },
+      "male-runtime/03f7b46462814620ac9cad9b0803d771/recording/chunks/000000.npz": {
+        "sha256": "4beacdb39911da51501817273a47dfdd316aacaf60f4849f53312d53534b8214",
+        "size_bytes": 594234
+      },
+      "male-runtime/03f7b46462814620ac9cad9b0803d771/recording/events.jsonl": {
+        "sha256": "57b6524930b185719303ee0803fa21ad0d767bd595a10e1b05da679cebdded3b",
+        "size_bytes": 26067
+      },
+      "male-runtime/03f7b46462814620ac9cad9b0803d771/recording/manifest.json": {
+        "sha256": "32daaa3310cc490aaf521c37062aca4ed9f7df6bb9c89fbd56de44f59f2e76e9",
+        "size_bytes": 4415
+      },
+      "male-runtime/03f7b46462814620ac9cad9b0803d771/replay-report.json": {
+        "sha256": "69bb36397e5b307cd0f3d10c06ee1f31187607f294f94da1699913672a7ea051",
+        "size_bytes": 1923
+      },
+      "male-runtime/03f7b46462814620ac9cad9b0803d771/snapshots/index.json": {
+        "sha256": "b5385f9bb75a3de5ec0598ec937ff93ff90d3989e0306a913898eea4ddf8f0ea",
+        "size_bytes": 1527
+      },
+      "male-runtime/03f7b46462814620ac9cad9b0803d771/snapshots/initial.snp": {
+        "sha256": "233c572392c1a302471fbbf3e57f625ee7b7708d3bca15f7ae2931fcf3c2a97b",
+        "size_bytes": 531778
+      },
+      "male-runtime/1381b6500bbd40c0abf2c5adc703b971/recording/chunks/000000.npz": {
+        "sha256": "2ce9206d2ab6d42a9a280cf6cd99b0967fd54ab0e805d859dee60943ff52eb25",
+        "size_bytes": 201820
+      },
+      "male-runtime/1381b6500bbd40c0abf2c5adc703b971/recording/chunks/000001.npz": {
+        "sha256": "41349e1016d4741a800c83f7e0907e99d31e459c3a960ef3af16d2ba5dcf80fc",
+        "size_bytes": 399110
+      },
+      "male-runtime/1381b6500bbd40c0abf2c5adc703b971/recording/events.jsonl": {
+        "sha256": "824990c9b6a2913513a7954ea7c4fba3718acc60efc6c2b503adf8687a69f3df",
+        "size_bytes": 24249
+      },
+      "male-runtime/1381b6500bbd40c0abf2c5adc703b971/recording/manifest.json": {
+        "sha256": "ea995977f8518abbcbed1f531510b1a47e076ea4947855193d746bd28269f40f",
+        "size_bytes": 4036
+      },
+      "male-runtime/1381b6500bbd40c0abf2c5adc703b971/snapshots/index.json": {
+        "sha256": "7a92f514608cc7d1906f68c5c6d5a779f7a9816eb23bd5eae2a158166bf8acb3",
+        "size_bytes": 1527
+      },
+      "male-runtime/1381b6500bbd40c0abf2c5adc703b971/snapshots/initial.snp": {
+        "sha256": "ab13176673fbfa68b4c2b64de2df2e2e0f578abf2ad1632316f1ebc0a2cbc03c",
+        "size_bytes": 531775
+      },
+      "male-runtime/1ebfe88684a24cfca60ddfb9d1f34aa2/recording/chunks/000000.npz": {
+        "sha256": "5537ccfaa305193be26c3b8740016e27ac2dafcf3dd1e04ca0488b0df74750c7",
+        "size_bytes": 201820
+      },
+      "male-runtime/1ebfe88684a24cfca60ddfb9d1f34aa2/recording/events.jsonl": {
+        "sha256": "1338c5b6409b175bd76911eec7d0cc1becaf3624507300c22377697da13fc87f",
+        "size_bytes": 22934
+      },
+      "male-runtime/1ebfe88684a24cfca60ddfb9d1f34aa2/recording/manifest.json": {
+        "sha256": "980ca5d0330c0a618fa3d47496f18de8df0337a6aff17db709fce8db202ab721",
+        "size_bytes": 4204
+      },
+      "male-runtime/48294824c8744ff58448060f75f62a45/recording/chunks/000000.npz": {
+        "sha256": "e633cc4bb427ecf27ff488204fba462ec319402d333438bfdb8eb010ef4de3b8",
+        "size_bytes": 201820
+      },
+      "male-runtime/48294824c8744ff58448060f75f62a45/recording/chunks/000001.npz": {
+        "sha256": "84bf3bf5c4b30820625b038507a9ff0195d95a62a11761c1a2fb7c6b4b4e463d",
+        "size_bytes": 399110
+      },
+      "male-runtime/48294824c8744ff58448060f75f62a45/recording/events.jsonl": {
+        "sha256": "1ffb201d36d90cf66eff58df80644ffafe6f635edf005fdcc8a163e15d50f6a8",
+        "size_bytes": 24239
+      },
+      "male-runtime/48294824c8744ff58448060f75f62a45/recording/manifest.json": {
+        "sha256": "9e959cd94a59ca60ce2404a4e237aeef3eaea1c510672db2db194b341fbacad0",
+        "size_bytes": 4035
+      },
+      "male-runtime/48294824c8744ff58448060f75f62a45/snapshots/index.json": {
+        "sha256": "cf7d46e20fd1acb1deb6550ddea584363596aead023c947d204fe3b6f6a42e1d",
+        "size_bytes": 1523
+      },
+      "male-runtime/48294824c8744ff58448060f75f62a45/snapshots/initial.snp": {
+        "sha256": "92557c30f03087842c2660c2689e71777b3604a807cd4231e6c7f765ab08b903",
+        "size_bytes": 531765
+      },
+      "male-runtime/4eacf3610f404eeb8ba04f116d4b9b11/recording/chunks/000000.npz": {
+        "sha256": "208f9c0eb79b32f44df19bcf1e858e8c79db733d7ef765e3743f2be537d114d5",
+        "size_bytes": 594234
+      },
+      "male-runtime/4eacf3610f404eeb8ba04f116d4b9b11/recording/events.jsonl": {
+        "sha256": "6756940703a20dd70e183626892f232696e514d6abf3cd1713b9e3b12b2360fe",
+        "size_bytes": 26057
+      },
+      "male-runtime/4eacf3610f404eeb8ba04f116d4b9b11/recording/manifest.json": {
+        "sha256": "de21c8c32ab7ef1884d3e751c8ef98d7cdf45205282d122988dc163fc468f7e9",
+        "size_bytes": 4414
+      },
+      "male-runtime/4eacf3610f404eeb8ba04f116d4b9b11/replay-report.json": {
+        "sha256": "f9093d91caba24a7392ffba60a69129233fd490d5dfad931f913cbe9c16bf154",
+        "size_bytes": 1923
+      },
+      "male-runtime/4eacf3610f404eeb8ba04f116d4b9b11/snapshots/index.json": {
+        "sha256": "dc39aacf4d850e9aa8b20910e0d683f8cfafea3aedb417a6047d12e57e70ba6d",
+        "size_bytes": 1523
+      },
+      "male-runtime/4eacf3610f404eeb8ba04f116d4b9b11/snapshots/initial.snp": {
+        "sha256": "848c74dd0abd34922fb9d1d94fdda925550414672c08aec94c4f3484ffc4c1eb",
+        "size_bytes": 531768
+      },
+      "male-runtime/5a329d8357434a9d979529d98e464ec1/recording/chunks/000000.npz": {
+        "sha256": "0815feda0383b4d70723d980bf0ccf916a2d6238bd68a8327b219771643ad94a",
+        "size_bytes": 399110
+      },
+      "male-runtime/5a329d8357434a9d979529d98e464ec1/recording/events.jsonl": {
+        "sha256": "8342cd6a01d6804b82a580bfec00595269f389a2bdf783402b7fd5eae06fb283",
+        "size_bytes": 23427
+      },
+      "male-runtime/5a329d8357434a9d979529d98e464ec1/recording/manifest.json": {
+        "sha256": "a59541400ba92ca046231d799d6fa76bd9b034d72e1ce0c6f192bd3bfb366d67",
+        "size_bytes": 4204
+      },
+      "male-runtime/e486667b223043fd9b6cadfdf6f29e2d/recording/chunks/000000.npz": {
+        "sha256": "e6055d5e210f95b53850d7ebe4e4bdb84bee8be96e2c269b13459d38889dd037",
+        "size_bytes": 596400
+      },
+      "male-runtime/e486667b223043fd9b6cadfdf6f29e2d/recording/events.jsonl": {
+        "sha256": "82fcf431da95ef9f67fd45ac5b556d25d19c46baae8fc61797aa92ce72db5717",
+        "size_bytes": 25985
+      },
+      "male-runtime/e486667b223043fd9b6cadfdf6f29e2d/recording/manifest.json": {
+        "sha256": "901fee1095eb7762fdf5456da03f222e5b343bd8f66ccebf234b8e063d6532e1",
+        "size_bytes": 4410
+      },
+      "male-runtime/e486667b223043fd9b6cadfdf6f29e2d/replay-report.json": {
+        "sha256": "ab4986460f05f4ade26a5af6cad29acc658a2854224175c9de2318cc133dae03",
+        "size_bytes": 1650
+      },
+      "male-runtime/e486667b223043fd9b6cadfdf6f29e2d/snapshots/index.json": {
+        "sha256": "6275b9fb9df6dcb26e47fbf24ba2a4905203768629fed8f972c1cb21d94a76ea",
+        "size_bytes": 1523
+      },
+      "male-runtime/e486667b223043fd9b6cadfdf6f29e2d/snapshots/initial.snp": {
+        "sha256": "4ce08101c625a243407e0b3a354ca4cf444259b88789ddf5e4636278417838ef",
+        "size_bytes": 531767
+      },
+      "male-runtime/e6836b07bbec46b19920b22b7f39ac47/recording/chunks/000000.npz": {
+        "sha256": "0929c773b784b431ee84b94101079279c86168f6030c00bc871772a23ab9e2be",
+        "size_bytes": 399110
+      },
+      "male-runtime/e6836b07bbec46b19920b22b7f39ac47/recording/events.jsonl": {
+        "sha256": "d2a038347ec079e68c234fdd72fb92735ee73b168e71cea606142f1e05c6a51b",
+        "size_bytes": 23415
+      },
+      "male-runtime/e6836b07bbec46b19920b22b7f39ac47/recording/manifest.json": {
+        "sha256": "68bc63cbde66113fc4d996a447c329ad8ae4ff8749f95ffd2347ee2f15ea29ba",
+        "size_bytes": 4201
+      },
+      "male-runtime/e9ee84a7d248438b9ef4f03aa8cd8be9/recording/chunks/000000.npz": {
+        "sha256": "7639ed4dcf05805978ed3d01ae28be9017cd2f8d0e3600459a12e1e71b179957",
+        "size_bytes": 596400
+      },
+      "male-runtime/e9ee84a7d248438b9ef4f03aa8cd8be9/recording/events.jsonl": {
+        "sha256": "f3aef11a855643c617cc94a52e1bebed11dc613e09c53f87f7686ff9a5718901",
+        "size_bytes": 25995
+      },
+      "male-runtime/e9ee84a7d248438b9ef4f03aa8cd8be9/recording/manifest.json": {
+        "sha256": "7e496e5c76e3016884ba6e71e7719a8c07bb27eee8b853d56b78b8bde91e0fb4",
+        "size_bytes": 4411
+      },
+      "male-runtime/e9ee84a7d248438b9ef4f03aa8cd8be9/replay-report.json": {
+        "sha256": "ee9da613f44d43a08a0f199d4b2cdd73e0cd24a9417ce737a8c82994e38a50b4",
+        "size_bytes": 1650
+      },
+      "male-runtime/e9ee84a7d248438b9ef4f03aa8cd8be9/snapshots/index.json": {
+        "sha256": "e43c01bd03fa7c87cbf559b074856924068943b29bc88dd859688b5e3b28c8ae",
+        "size_bytes": 1527
+      },
+      "male-runtime/e9ee84a7d248438b9ef4f03aa8cd8be9/snapshots/initial.snp": {
+        "sha256": "6cd83a1af5c99ab4b766ea812f87410838e82c53abb2c275f84e0013ec84811d",
+        "size_bytes": 531777
+      },
+      "male-runtime/report.json": {
+        "sha256": "624f73746eaf35cf47e07a80dcd2621b928f8b1c600aad6d2212d0991c679621",
+        "size_bytes": 11724
+      },
+      "supervisor/stderr.log": {
+        "sha256": "6c561d2ea4d7d606ec76ec02865da3c40ab7e3d70b97ec8402517ca8b2a44251",
+        "size_bytes": 16585
+      },
+      "supervisor/stdout.log": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_bytes": 0
+      },
+      "supervisor/supervisor.json": {
+        "sha256": "ebbb4362827e6c00a5baa2b72f570590fbf17427580a1c96da9943bd62ff321f",
+        "size_bytes": 329
+      }
+    },
+    "limitations": [
+      "Actual male gate uses unchanged production v1 checkpoints; no new research-candidate result.",
+      "No rerun of historical task, endurance, held-out, exhibition or physical qualification.",
+      "Adaptive calibration and atomic fixed-FLYNN acquisition continuation are still separate unintegrated work."
+    ]
+  },
+  "adaptive_regression": {
+    "source_commit": "f233a726c209cb745c85f555f4a2bf22c08f51b4",
+    "status": "passed",
+    "tests": 427,
+    "passed": 427,
+    "skipped": 0,
+    "suite_seconds": 103.927,
+    "supervision": {
+      "elapsed_seconds": 107.15871121700184,
+      "output": "/home/utkarsh/Work/shraddha/brain/.worktrees/project-integration/runs/integration-adaptive-f233a72-20261002/supervisor",
+      "returncode": 0,
+      "schema_version": 1,
+      "started_utc": "2026-10-02T16:22:29.750746+00:00",
+      "status": "completed",
+      "timeout_seconds": 300
+    },
+    "enabled_flags": {
+      "PALIMPSEST_MALE_RUNTIME_TESTS": "1",
+      "PALIMPSEST_MALE_TORCH_CHECKS": "1",
+      "PALIMPSEST_SIMULATION_TESTS": "1"
+    },
+    "asset_root": "/home/utkarsh/Work/shraddha/brain/.worktrees/r0-reproduction/data/assets/flynn",
+    "sources_unchanged": true,
+    "assets_unchanged": true,
+    "model_identities_unchanged": true,
+    "retained_files_independently_rehashed": 50,
+    "primary_report": "runs/integration-adaptive-f233a72-20261002/report.json",
+    "primary_report_sha256": "caa5b50e20f6c932573b6c805ca01a1b086bb9339d049adf82a437e5c37d4de1",
+    "launcher": "runs/integration-adaptive-f233a72-launch.py",
+    "launcher_sha256": "49d195dcd0a6f887f4cbe15fe7522e514192626d2943487744db016f58b29c32",
+    "retained_files": {
+      "launch.json": {
+        "sha256": "704959105d1a068a62a2e0b6acca38b580021e02f1c37a2686369808904347e4",
+        "size_bytes": 38668
+      },
+      "male-runtime/0242fd1f0d234d7ab865e39a03f6bf24/recording/chunks/000000.npz": {
+        "sha256": "0506c38e7ce3f6fb9f53ed1882fcdbbb4a1d3cf52dffb382d60a04f9bb800759",
+        "size_bytes": 201820
+      },
+      "male-runtime/0242fd1f0d234d7ab865e39a03f6bf24/recording/chunks/000001.npz": {
+        "sha256": "9579bb2da9469c4d28322718791ca0c8d847c24f581069e4a227b6d60a380fae",
+        "size_bytes": 399110
+      },
+      "male-runtime/0242fd1f0d234d7ab865e39a03f6bf24/recording/events.jsonl": {
+        "sha256": "d50259c1f65c165c51c37074c31a40bf2f2fcd11b873be591838a2f2180012c5",
+        "size_bytes": 24354
+      },
+      "male-runtime/0242fd1f0d234d7ab865e39a03f6bf24/recording/manifest.json": {
+        "sha256": "ac0e0c2c52240568da6a2215752756e2f516c868875349d679b5fdba6fea847b",
+        "size_bytes": 4036
+      },
+      "male-runtime/0242fd1f0d234d7ab865e39a03f6bf24/snapshots/index.json": {
+        "sha256": "fc80b0698506c19793164482962b23268c217bd1c87c176dbae183657a2de1ba",
+        "size_bytes": 1527
+      },
+      "male-runtime/0242fd1f0d234d7ab865e39a03f6bf24/snapshots/initial.snp": {
+        "sha256": "6a61a34423241d4dca52a4b0eb28d86df72be58b4bebcec08a2b9718ac0312e5",
+        "size_bytes": 531775
+      },
+      "male-runtime/03fdd52626d1490a9860543d3c518157/recording/chunks/000000.npz": {
+        "sha256": "776a98f2fd8ccb2edc161bc0817d8e7cf1e20df13a14a69e351fe661cabb55d0",
+        "size_bytes": 399110
+      },
+      "male-runtime/03fdd52626d1490a9860543d3c518157/recording/events.jsonl": {
+        "sha256": "99867eaaffd10ccaa9477747f7e9056088d86907bd38e2c2d9d574e3a23c35a0",
+        "size_bytes": 23532
+      },
+      "male-runtime/03fdd52626d1490a9860543d3c518157/recording/manifest.json": {
+        "sha256": "6f5c043471a5f967a802113a7d926745512eb0c82bcfe2ad33ae858ef970647b",
+        "size_bytes": 4204
+      },
+      "male-runtime/08a5812405d6431d95d0de57a131aac8/recording/chunks/000000.npz": {
+        "sha256": "97fce30bc5496503e5a1e9cedeec93c6ecb3ab3452e88c8d77a3969bc21d89bb",
+        "size_bytes": 594234
+      },
+      "male-runtime/08a5812405d6431d95d0de57a131aac8/recording/events.jsonl": {
+        "sha256": "3c0e93a0dfdcd204511bfc893afd90bec7d878f8a5342a73f656a39d703d928c",
+        "size_bytes": 26172
+      },
+      "male-runtime/08a5812405d6431d95d0de57a131aac8/recording/manifest.json": {
+        "sha256": "dfd8e9de8676e1c76604eb1700ae24058b72485561d839bba03092c5ce480268",
+        "size_bytes": 4415
+      },
+      "male-runtime/08a5812405d6431d95d0de57a131aac8/replay-report.json": {
+        "sha256": "40f8f63994f4aabe18851f7d5eadea890edb8e3771b31df0fe06bfa7fc0113e1",
+        "size_bytes": 1923
+      },
+      "male-runtime/08a5812405d6431d95d0de57a131aac8/snapshots/index.json": {
+        "sha256": "39b4e4f42894dee277951c6b2408a1492d5fc7511a6f8493fda8aa3f89312cfc",
+        "size_bytes": 1527
+      },
+      "male-runtime/08a5812405d6431d95d0de57a131aac8/snapshots/initial.snp": {
+        "sha256": "d23a7c501d5cf11c4bed1ae2e7f4b139b9c07a51f8033e9e0afbbe18180c7390",
+        "size_bytes": 531778
+      },
+      "male-runtime/37f523a9be9e4128ae669daa93eefea1/recording/chunks/000000.npz": {
+        "sha256": "b6022a870ff9ca5e569ba9d09bf13a70c53f0213c7b607292f7a98f0427acaf0",
+        "size_bytes": 594234
+      },
+      "male-runtime/37f523a9be9e4128ae669daa93eefea1/recording/events.jsonl": {
+        "sha256": "863b4803e94f571d7069429a461c6d9ff59347d8dad011c0d2154054bf5d2c37",
+        "size_bytes": 26162
+      },
+      "male-runtime/37f523a9be9e4128ae669daa93eefea1/recording/manifest.json": {
+        "sha256": "c1d036d9a92e543c25326cd026ec4143f67517bda52a6467b7812485f06736bb",
+        "size_bytes": 4414
+      },
+      "male-runtime/37f523a9be9e4128ae669daa93eefea1/replay-report.json": {
+        "sha256": "8a38501ea7be7592c133b4b13fd7c1ce5acf15ddd3846658c9f2ce721eda197d",
+        "size_bytes": 1923
+      },
+      "male-runtime/37f523a9be9e4128ae669daa93eefea1/snapshots/index.json": {
+        "sha256": "43ea7ab310a732d2a0fa45d215a2e57d898fa8682a9871eff6b0140976531d67",
+        "size_bytes": 1523
+      },
+      "male-runtime/37f523a9be9e4128ae669daa93eefea1/snapshots/initial.snp": {
+        "sha256": "c49192ced208a61599f8c22df1c52b4c31b509c8001ec8a3dcdc4abe69da4724",
+        "size_bytes": 531768
+      },
+      "male-runtime/45a97bd3081647c98de4693bc383f08b/recording/chunks/000000.npz": {
+        "sha256": "6946a9549a144a1c38c6eecae9a323470d9850bb2410332153bfacfb9866009c",
+        "size_bytes": 596400
+      },
+      "male-runtime/45a97bd3081647c98de4693bc383f08b/recording/events.jsonl": {
+        "sha256": "4173838b32d9eaa14432bbfdf043b5945c0507f92e1ce4fadf049dba63ed9a3b",
+        "size_bytes": 26100
+      },
+      "male-runtime/45a97bd3081647c98de4693bc383f08b/recording/manifest.json": {
+        "sha256": "bf2697c69cf8ed45aebe93ff3aaac4eea59888535dadab83cb625d2cbf7d89e8",
+        "size_bytes": 4411
+      },
+      "male-runtime/45a97bd3081647c98de4693bc383f08b/replay-report.json": {
+        "sha256": "a517984b75a2f29a6f15845825ca34d639359fdb86dfc12cc3ec23d5b266c1c8",
+        "size_bytes": 1650
+      },
+      "male-runtime/45a97bd3081647c98de4693bc383f08b/snapshots/index.json": {
+        "sha256": "b89f092911a8e79f544e1f11d52ddff988ec8009bd9279d558b0f44d92246fab",
+        "size_bytes": 1527
+      },
+      "male-runtime/45a97bd3081647c98de4693bc383f08b/snapshots/initial.snp": {
+        "sha256": "d04f747622d6e1de8bf9bfe3ae303b760375b437ecbbfbe6986d4497e387874f",
+        "size_bytes": 531777
+      },
+      "male-runtime/8490c5d9ecde4e3b9f723cbbf9c079d2/recording/chunks/000000.npz": {
+        "sha256": "3049a2a18aef76e2bc237aadb9efc2e1432052328ce08c830a9352f2cdc6317d",
+        "size_bytes": 201820
+      },
+      "male-runtime/8490c5d9ecde4e3b9f723cbbf9c079d2/recording/chunks/000001.npz": {
+        "sha256": "1512d53949b40d27a4741190dce72d4e92c0fa58df66c39a04a5d6a163088215",
+        "size_bytes": 399110
+      },
+      "male-runtime/8490c5d9ecde4e3b9f723cbbf9c079d2/recording/events.jsonl": {
+        "sha256": "09d98d9e9a01c8e5dac92a97bb618b1d7984a2b2565989dbbe75706912a00cc0",
+        "size_bytes": 24344
+      },
+      "male-runtime/8490c5d9ecde4e3b9f723cbbf9c079d2/recording/manifest.json": {
+        "sha256": "ee26a7866df83f5abd76acbbb18049072e5c2cb21e16dafc1c5a0ea257303955",
+        "size_bytes": 4035
+      },
+      "male-runtime/8490c5d9ecde4e3b9f723cbbf9c079d2/snapshots/index.json": {
+        "sha256": "73f480b2cc58c14c3a0eb38cc4212bdbd69604a0a889f9c6a16c786f8d3dc667",
+        "size_bytes": 1523
+      },
+      "male-runtime/8490c5d9ecde4e3b9f723cbbf9c079d2/snapshots/initial.snp": {
+        "sha256": "83ac18dd7b0ff0673a9021c80678274cbc10d2cab534d6ea78ba1aeac3d6a04f",
+        "size_bytes": 531765
+      },
+      "male-runtime/9f2ee151587c4d7bb7f2deb9c1fd652e/recording/chunks/000000.npz": {
+        "sha256": "299ac10b15cf7aedeb6e27da17c7e5c5ff6a5c9c26819b3e7e95daea247f46c9",
+        "size_bytes": 596400
+      },
+      "male-runtime/9f2ee151587c4d7bb7f2deb9c1fd652e/recording/events.jsonl": {
+        "sha256": "14b89533637a412d801d4e01f83338d783c0b5dcf34668bda0721d4982f93d6e",
+        "size_bytes": 26090
+      },
+      "male-runtime/9f2ee151587c4d7bb7f2deb9c1fd652e/recording/manifest.json": {
+        "sha256": "08e9bde04252e9f66ba2e99ece5fd90fbb01d6f549017db116c1ac6b187d1e9d",
+        "size_bytes": 4410
+      },
+      "male-runtime/9f2ee151587c4d7bb7f2deb9c1fd652e/replay-report.json": {
+        "sha256": "260e62efa8e46d2357bbfa4003ebd2835af3d3f8c2c36a2352050357365bbe93",
+        "size_bytes": 1650
+      },
+      "male-runtime/9f2ee151587c4d7bb7f2deb9c1fd652e/snapshots/index.json": {
+        "sha256": "bd21c4d330b608f5f046e183c2650a91fa78a700574dc44b61b7c5d06f32e614",
+        "size_bytes": 1523
+      },
+      "male-runtime/9f2ee151587c4d7bb7f2deb9c1fd652e/snapshots/initial.snp": {
+        "sha256": "27291debe921e8de4fdf90e4472e9949f209f1604a87801dc17f9d1a0fa37202",
+        "size_bytes": 531767
+      },
+      "male-runtime/d882219f78104302b894c0bdf0db5030/recording/chunks/000000.npz": {
+        "sha256": "462a936ff1d3295df532df85da5f882f5ebecb6f0700eba1a859fa96f3d213f1",
+        "size_bytes": 399110
+      },
+      "male-runtime/d882219f78104302b894c0bdf0db5030/recording/events.jsonl": {
+        "sha256": "b7ea1d71b8e4c526e06c747d112360cb18f2da3e57d882d72e4908f930b3ca34",
+        "size_bytes": 23520
+      },
+      "male-runtime/d882219f78104302b894c0bdf0db5030/recording/manifest.json": {
+        "sha256": "6750087ce5c45cbcc224a66b646d4942bf3dbc6eab8c5152af93b1b5f1ebda4a",
+        "size_bytes": 4201
+      },
+      "male-runtime/f73781d568b5424c98ad7901ed3cb4c1/recording/chunks/000000.npz": {
+        "sha256": "c00eb7e17f3f92d37a0353fb3415fdc51a03131ebeee972f4d187aca77cecd47",
+        "size_bytes": 201820
+      },
+      "male-runtime/f73781d568b5424c98ad7901ed3cb4c1/recording/events.jsonl": {
+        "sha256": "30639fcdde8f3a23351a8a8d5973a2fda5c93b6329424d48d783b89c7f967c75",
+        "size_bytes": 23039
+      },
+      "male-runtime/f73781d568b5424c98ad7901ed3cb4c1/recording/manifest.json": {
+        "sha256": "f5e3f7c44c43729acbf769de53dcbb3c61c3c687951087c46828ddd74d69231d",
+        "size_bytes": 4204
+      },
+      "male-runtime/report.json": {
+        "sha256": "ed0eaddc1f002b7d1979626beb59235bad830a4ec7162e9dde598669f7091e14",
+        "size_bytes": 11943
+      },
+      "supervisor/stderr.log": {
+        "sha256": "f5dcb583da26d6647ad073d23ccf733e91bf8e02c8e9b0b914e61e319234a153",
+        "size_bytes": 16586
+      },
+      "supervisor/stdout.log": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_bytes": 0
+      },
+      "supervisor/supervisor.json": {
+        "sha256": "1940799f49b19126f1bb9c3331288df26efea99f7409e4af675fc31b01932c5a",
+        "size_bytes": 324
+      }
+    },
+    "limitations": [
+      "Adaptive actual profile coverage is one step; the full four-probe, native/replay and paired comparison gate remains unexecuted.",
+      "Male runtime checks use production v1 checkpoints, not newly trained research models.",
+      "Historical task, endurance, held-out, exhibition and physical gates were not rerun."
+    ]
+  },
+  "memory_flynn_regression": {
+    "source_commit": "a15b07cb88ec30ecc5e1b9a1b7f9c5fbde55f021",
+    "tests": 435,
+    "passed": 435,
+    "skipped": 0,
+    "suite_seconds": 98.824,
+    "supervisor": {
+      "elapsed_seconds": 101.97528528099792,
+      "output": "/home/utkarsh/Work/shraddha/brain/.worktrees/project-integration/runs/integration-memory-a15b07c-20261002/supervisor",
+      "returncode": 0,
+      "schema_version": 1,
+      "started_utc": "2026-10-02T16:43:32.663154+00:00",
+      "status": "completed",
+      "timeout_seconds": 300
+    },
+    "all_runtime_gates_enabled": true,
+    "sources_unchanged": true,
+    "assets_unchanged": true,
+    "model_identities_unchanged": true,
+    "retained_files_rehashed": 50,
+    "report": "runs/integration-memory-a15b07c-20261002/report.json",
+    "report_sha256": "ae26a7d23472f09891534bf70b864fb8ddadb7673a386d17216b135d5a1cea8b",
+    "limitations": [
+      "Regression includes mocked atomic memory admission checks; full CPU FLYNN memory continuation experiment remains unexecuted.",
+      "Actual male checks use production v1 assets. No historical task, held-out, endurance or physical qualification rerun."
+    ]
+  },
+  "adaptive_puck_regression": {
+    "source_commit": "54ef2001423c611240f7b6db856737473d909e96",
+    "tests": 483,
+    "passed": 483,
+    "skipped": 0,
+    "suite_seconds": 114.812,
+    "supervisor": {
+      "elapsed_seconds": 117.19197126100335,
+      "output": "/home/utkarsh/Work/shraddha/brain/.worktrees/project-integration/runs/integration-adaptive-puck-54ef200-20261002/supervisor",
+      "returncode": 0,
+      "schema_version": 1,
+      "started_utc": "2026-10-02T18:18:51.357957+00:00",
+      "status": "completed",
+      "timeout_seconds": 300
+    },
+    "all_runtime_gates_enabled": true,
+    "sources_unchanged": true,
+    "assets_unchanged": true,
+    "model_identities_unchanged": true,
+    "retained_files_rehashed": 50,
+    "report": "runs/integration-adaptive-puck-54ef200-20261002/report.json",
+    "report_sha256": "f199d0e28f0a882c5f769ae0ecc5174169f1550a0b858df8993a3c39041a01e1",
+    "limitations": [
+      "Actual male checks use production v1 assets. No historical task, held-out, endurance or physical qualification rerun.",
+      "New puck installation/reset checks use array-only fixtures; native disk construction remains a separate gate.",
+      "Adaptive development and fixed-FLYNN memory/replay experiments retain their separately frozen source and evidence."
+    ]
+  },
+  "counterbalance_task_puck_regression": {
+    "source_commit": "60f8e3306f2da11f4a5f81518ef9a7f671b7f0b8",
+    "tests": 506,
+    "passed": 506,
+    "skipped": 0,
+    "suite_seconds": 116.115,
+    "supervisor": {
+      "elapsed_seconds": 117.87209891600651,
+      "output": "/home/utkarsh/Work/shraddha/brain/.worktrees/project-integration/runs/integration-counterbalance-task-puck-60f8e33-20261003/supervisor",
+      "returncode": 0,
+      "schema_version": 1,
+      "started_utc": "2026-10-02T19:46:20.529794+00:00",
+      "status": "completed",
+      "timeout_seconds": 300
+    },
+    "all_runtime_gates_enabled": true,
+    "sources_unchanged": true,
+    "assets_unchanged": true,
+    "model_identities_unchanged": true,
+    "retained_files_rehashed": 50,
+    "report": "runs/integration-counterbalance-task-puck-60f8e33-20261003/report.json",
+    "report_sha256": "559873a8c5642f9d90d8f06517d1457b69e07dee73344d75dff5f3d1509cd41a",
+    "limitations": [
+      "Actual male checks use unchanged production v1 assets; this suite does not repeat historical task, held-out, endurance, exhibition or physical qualification.",
+      "Task-phase, memory admission and zero-step puck construction results retain their separate frozen source identities.",
+      "Stepped puck mechanics, learned manipulation and the four-cell memory comparison remain pending."
+    ]
+  },
+  "starts_mechanics_comparison_regression": {
+    "source_commit": "3a0b085ea376d7cedf4bd6d533233e30b1e1b6cc",
+    "tests": 534,
+    "passed": 534,
+    "skipped": 0,
+    "suite_seconds": 117.106,
+    "supervisor": {
+      "elapsed_seconds": 119.98458461499831,
+      "output": "/home/utkarsh/Work/shraddha/brain/.worktrees/project-integration/runs/integration-starts-mechanics-comparison-3a0b085-20261003/supervisor",
+      "returncode": 0,
+      "schema_version": 1,
+      "started_utc": "2026-10-02T20:41:26.076832+00:00",
+      "status": "completed",
+      "timeout_seconds": 300
+    },
+    "all_runtime_gates_enabled": true,
+    "sources_unchanged": true,
+    "assets_unchanged": true,
+    "model_identities_unchanged": true,
+    "retained_files_rehashed": 50,
+    "report": "runs/integration-starts-mechanics-comparison-3a0b085-20261003/report.json",
+    "report_sha256": "eea74d702e234887e71b8662a2fde1f4bab61c6bff5778d5bed9d0d5ba590e90",
+    "limitations": [
+      "Enabled model checks use unchanged production v1 assets; this suite does not qualify the failed new MaleCNS candidates.",
+      "This regression checks the newly integrated verifier fixtures, not actual success of their separate experiments.",
+      "Puck mechanics naturally failed at the first teacher; Stage C memory comparison is unexecuted. Held-out task-start evidence retains its separate frozen source."
+    ]
+  },
+  "fixes_turns_regression": {
+    "source_commit": "ff0520a5001c7ad2d1a380b7e8b2bbf931506ca5",
+    "tests": 547,
+    "passed": 547,
+    "skipped": 0,
+    "suite_seconds": 122.303,
+    "supervisor": {
+      "elapsed_seconds": 125.25391965699964,
+      "output": "/home/utkarsh/Work/shraddha/brain/.worktrees/project-integration/runs/integration-fixes-turns-ff0520a-20261003/supervisor",
+      "returncode": 0,
+      "schema_version": 1,
+      "started_utc": "2026-10-02T21:13:23.479360+00:00",
+      "status": "completed",
+      "timeout_seconds": 300
+    },
+    "all_runtime_gates_enabled": true,
+    "sources_unchanged": true,
+    "assets_unchanged": true,
+    "model_identities_unchanged": true,
+    "retained_files_rehashed": 50,
+    "report": "runs/integration-fixes-turns-ff0520a-20261003/report.json",
+    "report_sha256": "1ad3e337ceee7c390e48b17da45e0a60338b8bdc7ec01cff5e2e50410f09943c",
+    "launcher_sha256": "bc94ad6bd630b6d37345889cce08df4eff2c52dc007a45160d064e7d41251d87",
+    "limitations": [
+      "Production model assets remain v1; this regression does not qualify failed research models.",
+      "Both puck mechanics attempts failed their positive teacher; memory C1 started zero owners.",
+      "The retained-fit turn verifier has only fixture evidence at this source freeze."
+    ]
+  },
+  "puck_recovery_regression": {
+    "source_commit": "a8f6aa0a1d7f0bbc606057fc133b523d765bf90a",
+    "tests": 557,
+    "passed": 557,
+    "skipped": 0,
+    "suite_seconds": 118.908,
+    "supervisor": {
+      "elapsed_seconds": 121.68320166999183,
+      "output": "/home/utkarsh/Work/shraddha/brain/.worktrees/project-integration/runs/integration-puck-recovery-a8f6aa0-20261003/supervisor",
+      "returncode": 0,
+      "schema_version": 1,
+      "started_utc": "2026-10-02T22:56:03.723877+00:00",
+      "status": "completed",
+      "timeout_seconds": 300
+    },
+    "all_runtime_gates_enabled": true,
+    "sources_unchanged": true,
+    "assets_unchanged": true,
+    "model_identities_unchanged": true,
+    "retained_files_rehashed": 50,
+    "report": "runs/integration-puck-recovery-a8f6aa0-20261003/report.json",
+    "report_sha256": "091f14cc5bff23996ecdc3e71d9d15ede0aa32d00e748bc9c5b56ea145810236",
+    "launcher_sha256": "1f5019363c39093c188e7271625cf4608f33f8e8c97a696936aba25d452860d6",
+    "limitations": [
+      "Production model assets remain v1; this regression does not qualify failed research models or held-out outcomes.",
+      "The standalone puck mechanics pass retains its own frozen source and separate actual evidence.",
+      "M7 recovery v2 had not executed at this regression freeze; subsequent collection failed the unchanged contact guard."
+    ]
+  },
+  "c4_source_review": {
+    "source_commit": "9393215c7a706810e053b20928aea132b91f495a",
+    "root_focused_tests": 12,
+    "root_focused_seconds": 1.867,
+    "skipped": 0,
+    "historical_c3_actual_boundaries_checked": 40,
+    "compatibility_audit_seconds": 3.486911935993703,
+    "audit": {
+      "path": "runs/c4-c3-compatibility-9393215/audit.json",
+      "bytes": 17940,
+      "sha256": "dfaa00eaf6db16a160645f2a8d4efef9b619f67c2e8c60494f2c5f7773c4b433"
+    },
+    "audit_script": {
+      "path": "runs/c4-c3-compatibility-9393215/audit.py",
+      "bytes": 2660,
+      "sha256": "e138a0d313047c88db5cfa45dac477d3787b8303451db56243edc4a195700795"
+    },
+    "audit_only_corrections": {
+      "path": "runs/c4-c3-compatibility-9393215/audit-revisions.json",
+      "bytes": 464,
+      "sha256": "1849acb785af385df73a5bdf0f98cd8e9b8a693eef7245adc1df2b55bd1b2ac5"
+    },
+    "native_execution": false,
+    "limitation": "C4 runtime controls are being prepared; no C4 result or held-out claim."
+  },
+  "puck_learning_source_review": {
+    "source_commit": "0fd589ca346253f2e61bff0b09cbfb802c1cf451",
+    "root_focused_tests": 19,
+    "root_focused_seconds": 1.227,
+    "skipped": 0,
+    "protocol_sha256": "513c7f5045b919241d7fdc6fa6ab058bd94134f8d168661b6453fadfb3b6b158",
+    "native_execution": false,
+    "model_execution": false,
+    "scope": "Pure sensor-only cursor, output arithmetic and record admission; collector and learned control remain pending."
+  },
+  "recovery_v3_source_review": {
+    "source_commit": "c382c86781a7a5d6651af721119789729cc890ae",
+    "root_focused_tests": 8,
+    "root_focused_seconds": 0.043,
+    "skipped": 0,
+    "protocol_sha256": "e41ebb10ca58351b2fe00c858a62c42260c6110da1a0047ad3a62c8f832f92cc",
+    "native_execution": false,
+    "scope": "First-cycle collection only; later driving deliberately censored. Preserves independent terminal-reason validation and historical failures."
+  },
+  "memory_recovery_learning_regression": {
+    "source_commit": "c7b4436c6321199f313a0301aa8e3d78a0e32650",
+    "tests": 579,
+    "skipped": 0,
+    "unittest_seconds": 122.62,
+    "supervised_seconds": 125.74331041099504,
+    "wall_seconds": 125.74802302000171,
+    "returncode": 0,
+    "report": {
+      "path": "runs/integration-memory-recovery-learning-c7b4436-20261003/report.json",
+      "bytes": 109498,
+      "sha256": "aac83187ad52ab8e5039a0430557a79c77801102f9f50bafcd15425eb5420bb7"
+    },
+    "launcher": {
+      "path": "runs/integration-memory-recovery-learning-c7b4436-launch.py",
+      "bytes": 4217,
+      "sha256": "1949e5e5ee082f07334e5c6fdcbfa3beaa631da46ca490417350b7c0d7314172"
+    },
+    "retained_files_rehashed": 50,
+    "simulation_enabled": true,
+    "male_torch_native_enabled": true,
+    "puck_torch_enabled": true,
+    "sources_assets_models_unchanged": true,
+    "scope": "Combined source regression and authored puck model fixtures; historical actual task gates keep separate frozen evidence. No actual demonstration training, held-out or physical qualification."
+  },
+  "collector_recovery_data_regression": {
+    "attempts": [
+      {
+        "source_commit": "b76d2b311c2b410003e70f424491409b3fff3706",
+        "status": "failed",
+        "tests": 600,
+        "passed": 599,
+        "failures": 1,
+        "skipped": 0,
+        "unittest_seconds": 124.478,
+        "supervised_seconds": 127.8304996650113,
+        "wall_seconds": 127.83493393800745,
+        "returncode": 1,
+        "report": {
+          "path": "runs/integration-collector-recovery-data-b76d2b3-20261003/report.json",
+          "bytes": 111944,
+          "sha256": "bbd479713db9293fa966aca8b073a0226aeed9999a401c47bc1f24a0ab5a4380"
+        },
+        "launcher": {
+          "path": "runs/integration-collector-recovery-data-b76d2b3-launch.py",
+          "bytes": 4186,
+          "sha256": "77c450a2b2d317094ddb3e3b0ff1033536bf37eaf24fd85e44193790581b19b1"
+        },
+        "retained_files_rehashed": 50,
+        "source_files": 411,
+        "all_four_runtime_flags_enabled": true,
+        "sources_assets_models_unchanged": true
+      },
+      {
+        "source_commit": "32879109e6e1de59557fcff401de53ede53058d5",
+        "status": "passed",
+        "tests": 600,
+        "passed": 600,
+        "failures": 0,
+        "skipped": 0,
+        "unittest_seconds": 127.405,
+        "supervised_seconds": 130.22702372499043,
+        "wall_seconds": 130.23102616700635,
+        "returncode": 0,
+        "report": {
+          "path": "runs/integration-collector-recovery-data-3287910-20261003/report.json",
+          "bytes": 111984,
+          "sha256": "acfa0d79a3eabcb79f20e3d520e3386ef745c962a996dc800fbc80b649e30a9c"
+        },
+        "launcher": {
+          "path": "runs/integration-collector-recovery-data-3287910-launch.py",
+          "bytes": 4222,
+          "sha256": "4bf4b591c517912bdbea7f76d5f47d876f487672cefacd3b878cdf48be74b8ba"
+        },
+        "retained_files_rehashed": 50,
+        "source_files": 411,
+        "all_four_runtime_flags_enabled": true,
+        "sources_assets_models_unchanged": true
+      }
+    ],
+    "fix_commit": "7d5fc1f4ecd1bbd6a5a139bde3585fb2255ce2fe",
+    "fixture_failure": "Lazy-import assertion inspected whole-suite sys.modules after explicit runtime tests loaded Torch and MuJoCo. Fresh bounded subprocess now checks adapter import behavior without touching parent state.",
+    "focused_marker_check": {
+      "tests": 17,
+      "seconds": 1.105,
+      "passed": true,
+      "parent_module_objects_preserved": true
+    },
+    "scope": "Combined actual regression; no admission of failed puck teacher batch, new actual model fitting, held-out or physical qualification."
+  },
+  "memory_reference_regression": {
+    "source_commit": "c79d7ac4ec49cb999246d1b3d8580382bcb67cbc",
+    "tests": 610,
+    "passed": 610,
+    "skipped": 0,
+    "unittest_seconds": 131.964,
+    "supervised_seconds": 135.10327464400325,
+    "wall_seconds": 135.10794111699215,
+    "returncode": 0,
+    "report": {
+      "path": "runs/integration-memory-references-c79d7ac-20261003/report.json",
+      "bytes": 112611,
+      "sha256": "ccd18c5f0a23e2d54c9d947733edf18619e131806d63430c86afe2f5b79120cc"
+    },
+    "launcher": {
+      "path": "runs/integration-memory-references-c79d7ac-launch.py",
+      "bytes": 4193,
+      "sha256": "c0b396561ce003192d15c21d3c7100d4abb09f18eacd8507305002f79aa2436f"
+    },
+    "retained_files_rehashed": 50,
+    "source_files": 414,
+    "all_four_runtime_flags_enabled": true,
+    "sources_assets_models_unchanged": true,
+    "reference_source": "e82d60255be1773692bfa8cebd86810917a1cb24",
+    "focused_root_checks": {
+      "passed": 43,
+      "seconds": 7.233,
+      "skipped": 0
+    },
+    "scope": "Shared Engine/intervention/replay regression plus pure reference fixtures. Actual reference native/replay qualification and held-out remain pending."
+  },
+  "reference_runner_puck_stop_source": {
+    "source_commit": "4c6641ca8d4c2f051bbbca78d1e902cb21f8da7e",
+    "reference_source": "169e0c8ac75be713d9cda0bdd852b926ec1261cc",
+    "reference_merge": "8d37bb67c20f5f267be7886136ae3bcfed13ea48",
+    "puck_source": "f5d9ba1897dc2dab815c3a6713adb077ff3564f7",
+    "root_checks": [
+      {
+        "scope": "memory verifier and reference fixtures",
+        "passed": 60,
+        "seconds": 11.469,
+        "skipped": 0
+      },
+      {
+        "scope": "puck source fixtures",
+        "passed": 96,
+        "seconds": 5.164,
+        "skipped": 0
+      },
+      {
+        "scope": "combined puck and existing model reader fixtures",
+        "passed": 99,
+        "seconds": 5.745,
+        "skipped": 0
+      }
+    ],
+    "native_executed": false,
+    "training_executed": false,
+    "held_out_executed": false,
+    "historical_failures_retained": true,
+    "qualification_claims": []
+  },
+  "reference_puck_recovery_regression": {
+    "source_commit": "712327086e8a1c2a54d662d88ab5e1c2f22f3bbd",
+    "tests": 628,
+    "passed": 628,
+    "skipped": 0,
+    "unittest_seconds": 125.643,
+    "supervised_seconds": 128.17675080298795,
+    "wall_seconds": 128.183481347005,
+    "returncode": 0,
+    "report": {
+      "path": "runs/integration-reference-puck-recovery-7123270-20261003/report.json",
+      "bytes": 115525,
+      "sha256": "82dd9014bf547210a3124da7ce779b77bb5112e3b32137b682d0e183e8e006f2"
+    },
+    "launcher": {
+      "path": "runs/integration-reference-puck-recovery-7123270-launch.py",
+      "bytes": 4175,
+      "sha256": "a0538916470a1d4420b97195360f76fa6a963ddb1346bf53e2d6f0d854c4ca93"
+    },
+    "retained_files_rehashed": 50,
+    "source_files": 427,
+    "all_four_runtime_flags_enabled": true,
+    "sources_assets_models_unchanged": true,
+    "recovery_trainer_source": "19d275d7ba3d8c7da642a4b41d3a6a8f2d5c720f",
+    "recovery_trainer_focused_root_checks": {
+      "passed": 24,
+      "seconds": 1.583,
+      "skipped": 0
+    },
+    "scope": "Combined actual regression and pure verifier/trainer checks. Source-scoped native reference and puck mechanics results are separately audited; no new data training, held-out or physical qualification from this suite."
+  },
+  "admitted_collection_and_recovery_training": {
+    "integration_source": "e9aa77a",
+    "memory_reference_evidence_commit": "042cc26548e6695bc19d6ee052e9723ab9c07f3c",
+    "puck_collection_evidence_commit": "3ebf4c72cc564848b60e7d50766fca066d867aa5",
+    "puck_trainer_source_commit": "82e2bd97b37832c2a7f84f6eda6a3eca98e02362",
+    "focused_pure_tests": 24,
+    "focused_pure_seconds": 1.973,
+    "focused_initial_invocation_error": "Requested nonexistent test_puck_records; corrected to discovered test_records without product changes.",
+    "puck_rows": {
+      "train": 5710,
+      "recorded_dev": 1314
+    },
+    "recovery_models": 6,
+    "recovery_epochs_each": 20,
+    "recovery_outer_seconds": 194.681182884,
+    "recovery_root_audit_seconds": 4.408297349,
+    "recovery_audit_initial_error": "Auditor assumed JSON for ordered-ID hash; corrected to existing newline-decimal contract. Both versions retained.",
+    "references": {
+      "audit.py": {
+        "path": "runs/m7-recovery-training-root-audit-19d275d/audit.py",
+        "bytes": 7414,
+        "sha256": "ee4111c3297b401f3b258a0a0196d24ae08fd5a0c89f4141516823decf2aa3e6"
+      },
+      "audit.json": {
+        "path": "runs/m7-recovery-training-root-audit-19d275d/audit.json",
+        "bytes": 176916,
+        "sha256": "7619223178524a12c0dec9b1e649ec7083201502c4fc7cfd6337783ef10a0f2b"
+      },
+      "audit-first-failed.py": {
+        "path": "runs/m7-recovery-training-root-audit-19d275d/audit-first-failed.py",
+        "bytes": 7333,
+        "sha256": "58f1638a3325a9bf0994804dccf1cc3fa469cc87e2a2c31c32ae223d4d0f434b"
+      },
+      "first-failure.log": {
+        "path": "runs/m7-recovery-training-root-audit-19d275d/first-failure.log",
+        "bytes": 428,
+        "sha256": "482c7e1e728dec8a4dd0405f0cd6c74600c746550403cd19510af8f5403b75e3"
+      },
+      "first-failure.json": {
+        "path": "runs/m7-recovery-training-root-audit-19d275d/first-failure.json",
+        "bytes": 378,
+        "sha256": "ff370b524e187a628273407daa0eb003a14e41d0b0512145242ddb513b592220"
+      },
+      "console.log": {
+        "path": "runs/m7-recovery-training-root-audit-19d275d/console.log",
+        "bytes": 1424,
+        "sha256": "11f59ae83516aa32f779a58d294e5ad92f45e0f202c8aafbe4081ce4b271f98f"
+      }
+    }
+  },
+  "reference_replay_source": {
+    "source_commit": "5d293bf1356e46182676de407b6beaa3c961ae7d",
+    "integration_commit": "aede57b",
+    "tests": 18,
+    "seconds": 7.052,
+    "skipped": 0,
+    "actual_executed": false,
+    "production_files_changed": false,
+    "recovery_training_evidence_commit": "217cbee8399dcb25045a079af012beecbbdae29e",
+    "recovery_evidence_artifacts_rehashed": 58,
+    "ci_verified_head": "b49a41467d34c6834ae1d7b5254f59bc1e7698d9",
+    "ci_passed_runs": [
+      37087942054,
+      37087939541
+    ]
+  },
+  "puck_fits_and_reference_path_fix": {
+    "puck_training_source": "82e2bd97b37832c2a7f84f6eda6a3eca98e02362",
+    "puck_training_evidence": "05902a64c1c64ca416895860463e098b4183fcb9",
+    "puck_models": 3,
+    "epochs_each": 30,
+    "outer_seconds": 59.819789009,
+    "root_audit_seconds": 1.368422392,
+    "root_scoped_entries_rehashed": 416,
+    "unique_data_files_rehashed": 267,
+    "evidence_references_rehashed": 24,
+    "reference_failure_evidence": "c7f757b209af23dc23be3317239cbd976b414a9a",
+    "failure_refs_rehashed": 64,
+    "reference_path_fix": "9dd805deb14bc6e1e19a00d80875cfb1aaa63e6b",
+    "focused_root_tests": 19,
+    "focused_root_seconds": 5.278,
+    "focused_root_skipped": 0,
+    "actual_reference_v2_status": "running_unqualified",
+    "qualification_claims": [],
+    "root_audit_artifacts": {
+      "audit.py": {
+        "path": "runs/puck-training-root-audit-82e2bd9/audit.py",
+        "bytes": 5849,
+        "sha256": "ca121d5f762a4fe94d03970d3a3a48b8a0dc1933294a05152a036b305bbbab2a"
+      },
+      "audit.json": {
+        "path": "runs/puck-training-root-audit-82e2bd9/audit.json",
+        "bytes": 113713,
+        "sha256": "161d6052c6bf426f3528bea59e915143a3799f89ebc2971691df9bec58caf20b"
+      },
+      "console.log": {
+        "path": "runs/puck-training-root-audit-82e2bd9/console.log",
+        "bytes": 1256,
+        "sha256": "e4a6661ead7827394134c56123d6dedd20b33155c8c27b36fccc1243031c7c57"
+      }
+    }
+  },
+  "reference_replay_v2_audit": {
+    "source_commit": "9dd805deb14bc6e1e19a00d80875cfb1aaa63e6b",
+    "status": "passed_fixed_reference_replay",
+    "destinations": 6,
+    "comparisons": 742,
+    "saved_action_rows": 371,
+    "neural_policy_rows": 129,
+    "non_neural_policy_rows": 242,
+    "maximum_absolute_numeric_error": 0.0,
+    "root_audit_seconds": 3.322777538007358,
+    "root_audit_status": "passed_first_invocation",
+    "initial_snapshots_checked": 6,
+    "scoped_file_entries_rehashed": 622,
+    "sampled_exits_checked": 8,
+    "scope": "Independent numeric/native-initial/hash/cleanup checks. Lifecycle event comparisons are bound runner evidence, not independently recomputed here.",
+    "qualification_claims": [],
+    "artifacts": [
+      {
+        "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/project-integration/runs/m5-reference-replay-v2-root-audit-9dd805d/audit.py",
+        "bytes": 6458,
+        "sha256": "778b949a30db3b515a2cb1825eb245d6530bb44e6f833834fd21a9bfda75ae79"
+      },
+      {
+        "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/project-integration/runs/m5-reference-replay-v2-root-audit-9dd805d/audit.json",
+        "bytes": 160763,
+        "sha256": "f696eaa0909f58fbbda333b20a73f51885fe4d7e828282b7ba1947755e3a6323"
+      },
+      {
+        "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/project-integration/runs/m5-reference-replay-v2-root-audit-9dd805d/console.log",
+        "bytes": 1514,
+        "sha256": "2cc45d6f0241f6f13586773dc5e8ded2188767fdaa69b9f1439ca02b540a1854"
+      },
+      {
+        "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/project-integration/runs/m5-reference-replay-v2-root-audit-9dd805d/receipt.json",
+        "bytes": 1297,
+        "sha256": "210c212237cecf8881cbaea66384cf314a2164ea8223939cf7f7838656ac1eef"
+      }
+    ],
+    "prior_failed_attempt": "docs/reports/m5-controller-reference-replays-v1.md",
+    "remaining": "Full counterbalance, frozen-observation U-only diagnostic and held-out R2 qualification remain open."
+  },
+  "recovery_development_source": {
+    "source_commit": "e63ef7ed70dc43c99cf43f6bf30dc9decd801abf",
+    "merge_commit": "9c37c181bb5adfff47140b815214e1dd0a4b6148",
+    "status": "source_review_and_pure_actual_data_admission_passed",
+    "focused_tests": 43,
+    "focused_passed": 42,
+    "focused_skipped": 1,
+    "skip_reason": "explicit Torch opt-in remains disabled for pure source checks",
+    "focused_seconds": 2.039,
+    "pure_admission_child_seconds": 2.7579995679989224,
+    "pure_admission_supervisor_seconds": 2.985,
+    "models": 6,
+    "corpus_sources": 14,
+    "corpus_pins": 171,
+    "no_torch_or_native_import": true,
+    "sources_unchanged": true,
+    "preflight": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/male-recovery-development/runs/m7-recovery-admission-preflight-e63ef7e/preflight.json",
+      "bytes": 247344,
+      "sha256": "149c7666e89ebb7d4599f4b64a73352ae9dbb92d924301397649a4a600d8605f"
+    },
+    "qualification_claims": [],
+    "remaining": "Combined actual regression and fixed 24-owner development; no held-out route."
+  },
+  "recovery_admission_regression_failed": {
+    "source_commit": "480acfabcde4aa1f2a139d10025e9a0e98d58f03",
+    "status": "failed",
+    "tests": 646,
+    "errors": 2,
+    "skipped": 0,
+    "unittest_seconds": 131.167,
+    "supervisor_seconds": 133.84149167200667,
+    "wrapper_seconds": 133.8455524029996,
+    "sources_unchanged": true,
+    "assets_unchanged": true,
+    "model_identities_unchanged": true,
+    "error": "Two publication/drift fixtures call historical reader_identity against current changed male_research.py. Production reader pins are preserved; fixture isolation pending.",
+    "report": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/project-integration/runs/integration-recovery-admission-480acfa-20261003/report.json",
+      "sha256": "0deebf7bd59ef34e95d4a7842f3bc55acf8f4585e585d1bdb838dbdaf21d5bd2"
+    },
+    "root_audit": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/project-integration/runs/integration-recovery-admission-480acfa-root-audit.json",
+      "sha256": "3f37d02c50f86b4b7070dd17ecf85712c3b4c00fae346a3a520225873ef81601"
+    },
+    "retained_files_checked": 50,
+    "qualification_claims": [],
+    "fixture_fix": "228232c",
+    "focused_tests": {
+      "total": 52,
+      "passed": 51,
+      "skipped": 1,
+      "seconds": 2.854,
+      "skip": "explicit Torch opt-in disabled for source checks"
+    },
+    "artifacts": [
+      {
+        "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/project-integration/runs/integration-recovery-admission-480acfa-launch.py",
+        "bytes": 4192,
+        "sha256": "1358d4472e6c1fe7484d850cd501c31975b1961ab2adecddd24d2b87eac44139"
+      },
+      {
+        "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/project-integration/runs/integration-recovery-admission-480acfa-console.log",
+        "bytes": 489,
+        "sha256": "bc11ba948ab008f8671d4e4f6262b8d289d7b2390158b10ed270dc24a88e1567"
+      },
+      {
+        "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/project-integration/runs/integration-recovery-admission-480acfa-20261003/supervisor/stderr.log",
+        "bytes": 18475,
+        "sha256": "be021c4347c38d7a7d5c88133d471bef7b1601b4e7b8b65fc8d993963b13940a"
+      }
+    ]
+  },
+  "recovery_admission_regression": {
+    "source_commit": "1d97787eeeb4c2f7d8a87d8d44d5328f44dae5c0",
+    "tests": 646,
+    "passed": 646,
+    "skipped": 0,
+    "unittest_seconds": 129.798,
+    "supervised_seconds": 133.0167950130126,
+    "wall_seconds": 133.02071922399045,
+    "returncode": 0,
+    "report": {
+      "path": "runs/integration-recovery-admission-1d97787-20261003/report.json",
+      "bytes": 121278,
+      "sha256": "1766cd923feb0f84cd4405c907c7cca986dfd1427c384b6a0e814e3357bad619"
+    },
+    "launcher": {
+      "path": "runs/integration-recovery-admission-1d97787-launch.py",
+      "bytes": 4192,
+      "sha256": "d8e8fd78829230f66743ee4aea00d9db3ec6dffcade7c0fbb4ca449206f03044"
+    },
+    "console": {
+      "path": "runs/integration-recovery-admission-1d97787-console.log",
+      "bytes": 491,
+      "sha256": "cfd0d5175974c70030bbf9e1156dc7c7516f7522382f10435ced444bbc345cbb"
+    },
+    "retained_files_rehashed": 50,
+    "source_files": 451,
+    "all_four_runtime_flags_enabled": true,
+    "sources_assets_models_unchanged": true,
+    "recovery_admission_source": "e63ef7ed70dc43c99cf43f6bf30dc9decd801abf",
+    "fixture_isolation": "228232c50d5fddcaad1fb72f65bcb89ad2a896c7",
+    "scope": "Combined actual regression, including production male CPU/native/replay and puck CPU models; recovery candidate closed-loop development and student native mechanism remain separate gates. Earlier failed integration is retained.",
+    "qualification_claims": []
+  },
+  "puck_student_source": {
+    "merge_commit": "3f6a2fdc78353a7f4a0a81b15a7cb654dced2ba6",
+    "product_source": "aff643c",
+    "fixture_isolation": "6f1fda9",
+    "status": "source_and_pure_checks_passed",
+    "root_tests": 103,
+    "root_skips": 0,
+    "root_seconds": 7.198,
+    "teacher_sources": 20,
+    "train_ticks": 5710,
+    "recorded_dev_ticks": 1314,
+    "frozen_models": 3,
+    "pre_post_admission_difference": [
+      "seconds"
+    ],
+    "artifacts": [
+      {
+        "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/project-integration/runs/puck-student-root-source-check-3f6a2fd/result.log",
+        "bytes": 99,
+        "sha256": "fa2b6edd0ece6a8d8a85546812be0631691519cad2dff2d0390778b38ae7a9ae"
+      },
+      {
+        "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-student/runs/puck-student-source-prep/admission.py",
+        "bytes": 1214,
+        "sha256": "78f4922e93d0ee6df93b9f00c65ec26f74fb7b56b4d7bf96fef6f0ac66560ba9"
+      },
+      {
+        "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-student/runs/puck-student-source-prep/before.json",
+        "bytes": 2555,
+        "sha256": "7449eaca8b3286e36dbd1f66b8719af4a9011b0fe7e593d72b213269ed724b65"
+      },
+      {
+        "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-student/runs/puck-student-source-prep/after.json",
+        "bytes": 2555,
+        "sha256": "0ec40c82dff3503011570c3d490e5722a51e7b33744ced3d51b5b1989fd63abb"
+      }
+    ],
+    "qualification_claims": [],
+    "remaining": "Actual four-owner native mechanism, fixed all-model development and public Engine/UI integration."
+  },
+  "memory_heldout_puck_regression": {
+    "source_commit": "28ad7c5b12549955bb568a98bb1ed6e752839042",
+    "tests": 682,
+    "passed": 682,
+    "skipped": 0,
+    "unittest_seconds": 129.311,
+    "supervised_seconds": 131.13879179900687,
+    "wall_seconds": 131.14303727100196,
+    "returncode": 0,
+    "report": {
+      "path": "runs/integration-memory-heldout-puck-28ad7c5-20261003/report.json",
+      "bytes": 126288,
+      "sha256": "b304319f6f64cbcc9a2030b0155ea4c9ed141cc68676a75d0b9ca3f3e9f202aa"
+    },
+    "launcher": {
+      "path": "runs/integration-memory-heldout-puck-28ad7c5-launch.py",
+      "bytes": 4174,
+      "sha256": "1d8af8a403e50403a4a425eddccc6d3fd67af79548d609fe2989b27d7676fbaa"
+    },
+    "console": {
+      "path": "runs/integration-memory-heldout-puck-28ad7c5-launch-console.log",
+      "bytes": 493,
+      "sha256": "7792b7b0d46310274c0a7980eb2ddeea99e1c781ed49a7d5dc653f02a213c0f3"
+    },
+    "retained_files_rehashed": 50,
+    "source_files": 473,
+    "all_four_runtime_flags_enabled": true,
+    "sources_assets_models_unchanged": true,
+    "scope": "Combined actual regression after frozen-observation diagnostic, recovery held-out binding and fixed puck development integration. Candidate held-out/task qualification remains separate.",
+    "qualification_claims": []
+  },
+  "memory_full_puck_balanced_regression": {
+    "source_commit": "5175b14b45ae87d2d5d3233c0c7ab6b80a735f1f",
+    "tests": 697,
+    "passed": 697,
+    "skipped": 0,
+    "unittest_seconds": 161.294,
+    "supervised_seconds": 164.60086231700552,
+    "wall_seconds": 164.60475925500214,
+    "returncode": 0,
+    "report": {
+      "path": "runs/integration-memory-full-puck-balanced-5175b14-20261003/report.json",
+      "bytes": 130495,
+      "sha256": "0f847d0c217a52b47a2249bccfc7f82ac8bec741c1f8e81a5af078c5738d3238"
+    },
+    "root_audit": {
+      "path": "runs/integration-memory-full-puck-balanced-5175b14-20261003/validation-audit.json",
+      "bytes": 685,
+      "sha256": "d0c6ac4a370d5194a929d3709c6fcee7312359f441e1d71af4ca63f0d3e0e7e2"
+    },
+    "launcher": {
+      "path": "runs/integration-memory-full-puck-balanced-5175b14-launch.py",
+      "bytes": 4155,
+      "sha256": "5715cb9157b4798ed619bfeee43675840443088710ad5b4408fb6f25b6a30f07"
+    },
+    "console": {
+      "path": "runs/integration-memory-full-puck-balanced-5175b14-launch-console.log",
+      "bytes": 499,
+      "sha256": "1766f87a738b078207ff0652bd90e4021805f69d927a2aa1200a63328efb97e8"
+    },
+    "retained_files_rehashed": 50,
+    "source_files": 491,
+    "all_four_runtime_flags_enabled": true,
+    "sources_assets_models_unchanged": true,
+    "writer_lease_available": true,
+    "scope": "Combined actual regression after fixed remaining memory profiles and explicit balanced-loss source integration. Includes authored weighted-fit fixtures, not candidate fitting or remaining memory execution. Covers the legacy lease fixture deferred during the prior active held-out run.",
+    "qualification_claims": []
+  },
+  "balanced_student_source_validation": {
+    "status": "passed",
+    "integration_commit": "f18ff48f4d949fb62a11f8474136d987e999267b",
+    "tests": 49,
+    "test_seconds": 5.65,
+    "skips": 0,
+    "actual_data_readmission_seconds": 6.286939191995771,
+    "teacher_sources": 20,
+    "train_rows": 5710,
+    "recorded_dev_rows": 1314,
+    "original_bundles": 3,
+    "balanced_bundles": 3,
+    "protected_hashes_unchanged": 15,
+    "actual_owner_inventory": 99,
+    "native_model_or_lease_execution": false,
+    "references": {
+      "fixtures.log": "887c9385fd0e541a563e0cda0338a2b38a5f7ee1add838a89fdd00174a64a80f",
+      "after.py": "6bc1133b86e2b15d79f6d2f77367684565f57ae57e858da37a94cd2f150cc906",
+      "after.json": "ed276f19bd4355b349d4e36c7b7bba3191c1f9a6271c6f0090711436e7cd0dc4",
+      "after.log": "b0c4385699a926bffaa89c5d21c04b74396d0a0a2dcced992074ae94b8cea533",
+      "receipt-assembly-note.json": "1dd1d61b57108702579a95d2d9a680407f80159219c5431039354356eafe7bff"
+    },
+    "scope": "Actual merged checkout pure/fake-owner fixtures and shared-validator real-data/bundle admission; full enabled regression and actual native/model mechanics remain separate.",
+    "receipt": {
+      "path": "runs/puck-balanced-student-integration-checks/audit.json",
+      "sha256": "b9d43143518cb81b15400ac68a68b6ff579c6df91d68ae1e21ce6cd4868e092b"
+    },
+    "full_enabled_regression_repeated": false
+  },
+  "remaining_01_comparison_audit": {
+    "status": "passed",
+    "producer_commit": "6bf08907bdf7ff8acd0f99a1ab2c20c88aa180fb",
+    "owners": 40,
+    "numeric_rows": 4626,
+    "evaluator_task_checks_passed": 36,
+    "worker_task_pass": null,
+    "raw_audit_seconds": 16.217190206007217,
+    "outcomes_audit_seconds": 3.4976365260081366,
+    "strict_u_only_core_boundaries": 16,
+    "source_upstream_asset_files_rehashed": 573,
+    "admission_history_inputs_rehashed": 120,
+    "own_u_timing_benefit_observed": false,
+    "scope": "Four remaining development cells; passive paired correction and null false targeting retained. Not full matrix, held-out or R2 qualification.",
+    "receipts": [
+      {
+        "path": "runs/memory-remaining-01-comparison-root-audit-6bf0890/audit.json",
+        "sha256": "58d443952d0142b4e00933b0935813ce4ef67974c7d3e8c53708e58e151d6646"
+      },
+      {
+        "path": "runs/memory-remaining-01-comparison-root-audit-6bf0890/outcomes.json",
+        "sha256": "fd7becb4abe62d5866d2a1a5986a00b374595418c4857f2a5353df04deffa45b"
+      }
+    ]
+  },
+  "balanced_student_mechanism_audit": {
+    "status": "passed",
+    "producer_commit": "818e7ea34b34d7e96c47206e3e3ae35771ddf70a",
+    "owners": 4,
+    "numeric_rows": 364,
+    "snapshots": 5,
+    "exact_continuation_and_replay_rows": 244,
+    "prediction_counts": [
+      120,
+      4,
+      0,
+      120
+    ],
+    "enclosing_seconds": 20.900525182005367,
+    "raw_audit_seconds": 1.019924695006921,
+    "maximum_numpy_action_error": 2.9802322387695312e-08,
+    "numpy_action_tolerance": 1e-06,
+    "observed_pid_start_pairs_absent": 8,
+    "writer_lease_available": true,
+    "receipt": {
+      "path": "runs/puck-balanced-student-mechanism-root-audit-818e7ea/audit.json",
+      "sha256": "1e35a90d48afe4d6ecc501e2926af38de9bcbabecdf3a6ae77d652a4a45ec5a7"
+    },
+    "scope": "Single training scene and model seed21; replay/restore mechanism only. Development task admission and held-out remain pending."
+  },
+  "balanced_student_body_homing_regression": {
+    "status": "passed",
+    "tests": 711,
+    "skipped": 0,
+    "suite_seconds": 159.95,
+    "supervisor": {
+      "elapsed_seconds": 163.23128565198567,
+      "output": "/home/utkarsh/Work/shraddha/brain/.worktrees/project-integration/runs/integration-balanced-student-body-homing-f78f087-20261003/supervisor",
+      "returncode": 0,
+      "schema_version": 1,
+      "started_utc": "2026-10-03T08:18:41.807081+00:00",
+      "status": "completed",
+      "timeout_seconds": 300
+    },
+    "source_files_rehashed": 513,
+    "assets_rehashed": 20,
+    "retained_files_rehashed": 50,
+    "source_assets_models_unchanged": true,
+    "writer_lease_available": true,
+    "report_sha256": "0cfeea443722bf8a5122442e547d5ce4c9c645a38da3742394e0a81bf54c9b27",
+    "launcher_sha256": "5f09acca86dd370053248680308740e39773062e08c4fb392c19a007960c31f3",
+    "scope": "All four actual-runtime flags enabled; local combined regression, not body homing experiment or later balanced-development adapter qualification.",
+    "source_commit": "f78f0877d58510222039ff24c8df1480f11ac6c8",
+    "primary_report": {
+      "path": "runs/integration-balanced-student-body-homing-f78f087-20261003/report.json",
+      "sha256": "0cfeea443722bf8a5122442e547d5ce4c9c645a38da3742394e0a81bf54c9b27"
+    },
+    "root_audit": {
+      "path": "runs/integration-balanced-student-body-homing-f78f087-20261003/root-audit.json",
+      "sha256": "d4d5ea536f1a4360615d2dc68ab8139779885644c680d40c94aacb45f1ae3a0a"
+    },
+    "launcher": {
+      "path": "runs/integration-balanced-student-body-homing-f78f087-launch.py",
+      "sha256": "5f09acca86dd370053248680308740e39773062e08c4fb392c19a007960c31f3"
+    },
+    "ui": {
+      "path": "runs/integration-ui-body-homing-f78f087/audit.json",
+      "sha256": "175339df22f02b739f81fd60d980acbaa56c8fbb266e325e14c801daf01afcd3"
+    },
+    "hosted_ci": {
+      "path": "runs/hosted-ci-f78f087.json",
+      "sha256": "c50016c2e885a79776638cc59285641a8d57f2ad3c1cb164f8a0147c811a3ebc"
+    }
+  },
+  "body_homing_source_validation": {
+    "producer_commit": "0fd38efcbf1a8c59c0a78a64f488fc0b99d8b7ab",
+    "integration_commit": "f78f0877d58510222039ff24c8df1480f11ac6c8",
+    "tests": 28,
+    "test_seconds": 5.284,
+    "historical_admission_seconds": 0.2662800979887834,
+    "receipt": {
+      "path": "runs/body-homing-integration-source-checks/audit.json",
+      "sha256": "4b061abee336731a17dfedc674e0583566368aaae90229f73b66eded0a4efb9e"
+    },
+    "native_composition_executed": false
+  },
+  "balanced_development_source_validation": {
+    "producer_commit": "d4efa2630e3d69eb8a9b3e45fd62a47557937724",
+    "integration_commit": "ba0ae45777de7dd07d439fc9ce7018cd0167914b",
+    "tests": 54,
+    "test_seconds": 9.382,
+    "readmission_seconds": 10.226580005997675,
+    "owner_inventory": 104,
+    "receipt": {
+      "path": "runs/puck-balanced-development-integration-checks-v2/audit.json",
+      "sha256": "c0155b07ed3de5b72870b8142007d338cf6b87dac24f0803532d83af1efb8eb4"
+    },
+    "first_checker_rejection_retained": true,
+    "actual_development_executed": false,
+    "full_enabled_suite_predates_this_merge": true
+  },
+  "remaining_02_admission_validation": {
+    "producer_commit": "559b64a1b5308efa05a78e3501aa1c93fc01814d",
+    "owners": 12,
+    "rows": 1204,
+    "neural_calls": 4,
+    "root_audit_seconds": 10.992460747002042,
+    "published_references_rehashed": 135,
+    "task_pass": null,
+    "comparison_executed": false,
+    "receipt": {
+      "path": "runs/memory-remaining-02-root-audit-559b64a/audit.json",
+      "sha256": "1c7a16ec766eb5757ca1cd4061f4f153ee21988c9c933ea4e82a8487351bbc72"
+    }
+  },
+  "remaining_02_comparison_audit": {
+    "status": "passed",
+    "producer_commit": "7a956b0975afacb82c6de77b490c73476633f75e",
+    "owners": 40,
+    "numeric_rows": 4650,
+    "evaluator_task_checks_passed": 36,
+    "worker_task_pass": null,
+    "raw_audit_seconds": 16.231533985992428,
+    "outcomes_audit_seconds": 8.176251707991469,
+    "strict_u_only_core_boundaries": 16,
+    "source_upstream_asset_files_rehashed": 577,
+    "admission_history_inputs_rehashed": 120,
+    "own_u_timing_benefit_observed": false,
+    "development_cells_compared": 16,
+    "development_cells_planned": 48,
+    "scope": "Four remaining development cells; all paired lower-change conditions correct at358, own/sham goal431 versus no-U430. Null false targeting and no-event controls retained. Not held-out or R2 qualification.",
+    "receipts": [
+      {
+        "path": "runs/memory-remaining-02-comparison-root-audit-7a956b0/audit.json",
+        "sha256": "a422935c310ad7676adbb1ea5542d355da2cd27f2c861894865ea2e4bc0d1356"
+      },
+      {
+        "path": "runs/memory-remaining-02-comparison-root-audit-7a956b0/outcomes.json",
+        "sha256": "bbcf6bfb30abec68d5921fe9effedff3abe1e5faf13db054b9f86be24a402199"
+      }
+    ]
+  },
+  "body_homing_first_attempt": {
+    "producer_commit": "0fd38efcbf1a8c59c0a78a64f488fc0b99d8b7ab",
+    "operational_control_version": 3,
+    "status": "failed-infrastructure",
+    "owners_started": 0,
+    "numeric_ticks": 0,
+    "failure": "StorageBudget.check() missing required keyword-only path in both verifier admissions",
+    "root_failure_audit_seconds": 1.7076307499955874,
+    "observed_pid_start_pairs_absent": 3,
+    "writer_lease_available": true,
+    "receipt": {
+      "path": "runs/body-homing-failure-root-audit-0fd38ef/audit.json",
+      "sha256": "80df9e49a06c666b803c86c3cfeaa90424d2d1ced731e30dea65f634d88feeff"
+    }
+  },
+  "body_storage_admission_regression": {
+    "status": "passed",
+    "source_commit": "db59a56312472222c922353e8697482dafa9cf6d",
+    "tests": 717,
+    "test_seconds": 167.509,
+    "skips": 0,
+    "supervised_seconds": 172.76464440400014,
+    "sources_rehashed": 524,
+    "assets_rehashed": 20,
+    "retained_references_rehashed": 50,
+    "writer_lease_free": true,
+    "model_identities_unchanged": true,
+    "report_sha256": "276a81e1c634a7b4ef1c8b735e9109d4d8d86486b3e255e36a7b960ce1c1cc77",
+    "launcher_sha256": "fb02face18d5cee409106975b76dd02672d6238b87e2ed756f7f7dadf8d81387",
+    "scope": "Full enabled actual regression after balanced development adapter and body admission fix; UI bytes/build unchanged from f78; does not replace separate task experiments.",
+    "supervisor": {
+      "elapsed_seconds": 172.76464440400014,
+      "output": "/home/utkarsh/Work/shraddha/brain/.worktrees/project-integration/runs/integration-body-admission-fix-db59a56-20261003/supervisor",
+      "returncode": 0,
+      "schema_version": 1,
+      "started_utc": "2026-10-03T09:22:02.193267+00:00",
+      "status": "completed",
+      "timeout_seconds": 300
+    },
+    "root_audit": {
+      "path": "runs/integration-body-admission-fix-db59a56-20261003/root-audit.json",
+      "sha256": "f02e2833fa76eeb1c295775a26a856e0644141999570bd87108f2fd67004521a"
+    },
+    "primary_report": {
+      "path": "runs/integration-body-admission-fix-db59a56-20261003/report.json",
+      "sha256": "276a81e1c634a7b4ef1c8b735e9109d4d8d86486b3e255e36a7b960ce1c1cc77"
+    },
+    "launcher": {
+      "path": "runs/integration-body-admission-fix-db59a56-launch.py",
+      "sha256": "fb02face18d5cee409106975b76dd02672d6238b87e2ed756f7f7dadf8d81387"
+    },
+    "focused_harness_tests": {
+      "tests": 8,
+      "seconds": 8.74,
+      "skips": 0
+    }
+  },
+  "body_homing_composition_audit": {
+    "status": "passed",
+    "experiment_status": "passed",
+    "source_commit": "a447d7637621d496aaf285e81203e550079c6d54",
+    "report_sha256": "a7acc3edca17fde5e3754e1ed39f4f0288bd4d7e2ac2b0c087a660ea25c38808",
+    "terminal_sha256": "d63797864edfff98557d5e9a7b31a7feabec033e29c7dc049646071d49d27cae",
+    "enclosing_sha256": "37dbbfe2cf76ee20b1f570b1d863e5aa16a08c7713afbefb8a5d5da98007e48b",
+    "numeric_ticks": 853,
+    "owners": {
+      "source": 283,
+      "native": 4,
+      "actions": 283,
+      "policy": 283
+    },
+    "snapshots": 5,
+    "actual_home_distance_m": 0.1196427162116971,
+    "completion_passed": true,
+    "replay_semantic_events_each": 2267,
+    "artifact_files_rehashed_twice": 75,
+    "observed_pid_start_pairs_absent": 7,
+    "writer_lease_available": true,
+    "elapsed_seconds": 19.63421473900962,
+    "scope": "Retained full initial states, previous-sensor driver, fit controls, discrete contacts, shafts, outcome, native/replay rows and events, hashes and sampled cleanup. No new physics, task-level compensation effect, new body or physical qualification.",
+    "root_audit": {
+      "path": "runs/body-homing-root-audit-a447d76/audit.json",
+      "sha256": "c0c5260bf1959374fad9f1f8467bdcdb46715412764a156c72d6999df55729c8"
+    }
+  },
+  "balanced_puck_development_audit": {
+    "status": "passed",
+    "head": "d4efa2630e3d69eb8a9b3e45fd62a47557937724",
+    "numeric_rows": 7200,
+    "snapshots": 12,
+    "matched_scene_initials": 4,
+    "maximum_numpy_action_error": 7.152557374157098e-08,
+    "numpy_action_tolerance": 1e-06,
+    "admission": {
+      "goals_each_model": {
+        "21": 0,
+        "22": 0,
+        "23": 0
+      },
+      "held_out": "locked_pending_independent_review_and_explicit_GO",
+      "required_each_model": 3,
+      "status": "failed"
+    },
+    "elapsed_seconds": 23.125775617998443,
+    "writer_lease_free": true,
+    "owned_process_exits": 16,
+    "root_audit": {
+      "path": "runs/puck-balanced-development-root-audit-d4efa26/audit.json",
+      "sha256": "7926e4bc3fb6832915a6f54c57f7d19845cb5ada73b005d018cee9502a38daba"
+    }
+  },
+  "memory_development_analysis": {
+    "source_commit": "4229820126694a42bd4c421df8efa7a347a92dc1",
+    "evidence_commit": "af99748",
+    "report": "docs/reports/m5-development-readout-16.json",
+    "report_sha256": "344d34b06d8db5c3be53710e42944649e7189d74c0c68607e07b57397c6b57b1",
+    "completed_cells": 16,
+    "expected_cells": 48,
+    "paired_readouts": 128,
+    "focused_and_profile_tests": 7,
+    "test_seconds": 17.987,
+    "actual_readout_supervised_seconds": 0.2732084669987671,
+    "raw_events_reaudited": false,
+    "native_or_model_execution": false,
+    "r2_complete": false,
+    "qualification_claims": []
+  },
+  "remaining_03_comparison_audit": {
+    "status": "passed",
+    "producer_commit": "76a25ec9235c7465c18d6cdf724cc519736cbd2a",
+    "evidence_commit": "d8a672e98aab26833de74b9c262542a63c8b7563",
+    "owners": 40,
+    "numeric_rows": 4626,
+    "evaluator_task_checks_passed": 36,
+    "strict_u_only_core_boundaries": 16,
+    "raw_audit_seconds": 11.447032587006106,
+    "outcomes_audit_seconds": 8.446792697999626,
+    "published_references_rehashed": 424,
+    "published_reference_bytes": 1091908710,
+    "development_cells_compared": 20,
+    "development_cells_planned": 48,
+    "own_u_timing_benefit_observed": false,
+    "full_matrix_executed": false,
+    "held_out_executed": false,
+    "r2_complete": false,
+    "receipts": {
+      "raw": {
+        "path": "runs/memory-remaining-03-comparison-root-audit-76a25ec/audit.json",
+        "sha256": "7f591118f83ff44a62d72fac749c1fb032a7921b1979ae81eba78dcd7f0e25b4"
+      },
+      "outcomes": {
+        "path": "runs/memory-remaining-03-comparison-root-audit-76a25ec/outcomes.json",
+        "sha256": "a8ba7ef3233cdd370d473f99358293aa68dec2d956c78cb9faf0b029789cb8d5"
+      }
+    }
+  },
+  "body_homing_ui_audit": {
+    "status": "passed",
+    "scope": "Retained raw UI calibration/lifecycle/actions records; no successful-homing, new inference, physics, browser or physical qualification.",
+    "source_commit": "a447d7637621d496aaf285e81203e550079c6d54",
+    "report_sha256": "4f43ae8bd4f925676bde14ef4b36bf42e65c7fde5df184d2d3ce160874b680c8",
+    "enclosing_sha256": "6ae1cb604d20bd4277970aff37a08b561f37472c8895a6d067666120fffd6c3d",
+    "source_ticks": 491,
+    "actions_replay_ticks": 491,
+    "episode_tick_counts": {
+      "0": 120,
+      "1": 120,
+      "2": 120,
+      "3": 120,
+      "4": 10,
+      "5": 1
+    },
+    "snapshots": 3,
+    "calibration_samples": 400,
+    "compensated_control_ticks": [
+      4,
+      5,
+      6,
+      7
+    ],
+    "full_ledger_semantic_events": 580,
+    "replay_semantic_events": 577,
+    "initial_prefix_semantic_events": 3,
+    "observed_pid_start_pairs_absent": 18,
+    "writer_lease_available": true,
+    "source_controls_unchanged": true,
+    "qualification_claims": [],
+    "elapsed_seconds": 4.969250574999023,
+    "auditor_sha256": "b6838629b8731395f2b2f1537551b8277b877a0996816f74d9ee781dc4d75bcf",
+    "root_audit": {
+      "path": "runs/body-homing-ui-root-audit-v2-a447d76/audit-v2.json",
+      "sha256": "3a0c5678064a3929fc869e0cb73855642bcaaef763fe57954eaa624b8896c899"
+    },
+    "first_checker_failure_retained": "audit.json: full580 ledger events were incorrectly equated with577 post-initial-prefix replay events; corrected only checker and kept all580 pairwise event comparisons",
+    "evidence_commit": "dd9001aabb0e049c88d8c262163d4befc7f02c83",
+    "published_references_rehashed": 57
+  },
+  "artwork_offline_handoff": {
+    "status": "passed",
+    "producer_commit": "9f57977265c5f29f3e6d953f6e282ad705d83cca",
+    "evidence_commit": "d6f7f91629e42fbf7284f4ba16f640c60c8fd03b",
+    "report": "docs/reports/m9-offline-handoff.json",
+    "report_sha256": "5ad48cfc3ec14098abf709c2e245b18eec6997d11b95ff58096ecad05e017b9f",
+    "exports": 6,
+    "input_files": 19,
+    "root_readback_seconds": 0.5011083949939348,
+    "published_references_rehashed": 17,
+    "merged_source_commit": "dddc24a99746ebe89d72a4b347c31bae473122e7",
+    "merged_source_tests": 7,
+    "merged_test_seconds": 0.451,
+    "merged_test_log_sha256": "d4a6984e364c5f35d8741caf9a6eab2a51cdffe1a1ab549c9cb5703e4e40cc74",
+    "root_audit": {
+      "path": "runs/artwork-handoff-root-audit-9f57977/audit.json",
+      "sha256": "d1796fe3aa35178af38c38346409cc3e5c37813d845fe334563c8c1b1906f48e"
+    },
+    "qualification_claims": [],
+    "r5_complete": false,
+    "full_regression_predates_this_source": true
+  },
+  "navigation_study_plan": {
+    "status": "reviewed_source_only_plan",
+    "commit": "45c4c17",
+    "protocol_sha256": "a3612cdc23510fa2b866482e1d13ece123940911ccc2a186c74216c83177e47f",
+    "root_audit": {
+      "path": "runs/m7-navigation-plan-root-review-45c4c17/audit.json",
+      "sha256": "6610490c71806420be6cb10ca18879ff7a2f28c72ac8743c57878bece330d15b"
+    },
+    "actual_stages_executed": false,
+    "new_geometry_generated": false,
+    "held_out_opened": false,
+    "r3_complete": false,
+    "qualification_claims": []
+  }
+}

@@ -1,0 +1,505 @@
+{
+  "version": 1,
+  "status": "passed-development-native-task-phases",
+  "source_commit": "8a931cf132b78e8f6c042b27be503ef90ecc45d9",
+  "protocol_sha256": "58fe97194186037d17531692b41281c7373bf748f7b5a5c5e5f0f4ea03f8da89",
+  "script_sha256": "d4614765a745e751a367183bc54220668a227a1d565bc890678b6030994384e5",
+  "scope": "Two fixed authored task/manual driver development fixtures; six native phase restorations; no held-out, learned-policy, body/task composition or physical qualification.",
+  "actual_launcher": {
+    "schema_version": 1,
+    "status": "completed",
+    "timeout_seconds": 2340,
+    "started_utc": "2026-10-02T19:26:37.041141+00:00",
+    "output": "/home/utkarsh/Work/shraddha/brain/.worktrees/task-phases/runs/m6-task-phase-control-8a931cf/outer-launch",
+    "returncode": 0,
+    "elapsed_seconds": 170.26844316499773
+  },
+  "launcher_wall_seconds": 171.08830291699996,
+  "whole_gate_wall_seconds": 169.45981005199428,
+  "child_gate_wall_seconds": 169.02972129800037,
+  "native_owners": 12,
+  "numeric_ticks": 1470,
+  "maximum_numeric_ticks": 3624,
+  "snapshot_files": 18,
+  "sources": {
+    "exploration-landmarks": {
+      "ticks": 182,
+      "outcome": {
+        "reason": "task_completed",
+        "episode": 0,
+        "steps": 182,
+        "upstream_goal_distance_m": 0.11920344829559326,
+        "task_phase": "complete",
+        "completed_inspection_ids": [
+          "inspect-a",
+          "inspect-b"
+        ]
+      },
+      "max_encoder_true_error_m": 0.019713592605592023,
+      "motion": {
+        "loaded_body_calibration": {
+          "radius_m": 0.06,
+          "track_m": 0.36,
+          "quantum_rad": 0.001
+        },
+        "straight_forward_intervals": 76,
+        "measured_straight_shaft_delta_rad": [
+          19.025524815285692,
+          19.025524815285692
+        ],
+        "measured_straight_body_forward_m": 1.1336082220077515,
+        "positive_shaft_and_forward_direction_observed": true,
+        "max_encoder_vs_true_local_error_m": 0.019713592605592023,
+        "dwell_intervals": 20,
+        "max_dwell_true_displacement_m": 3.814697265625e-05,
+        "max_dwell_true_yaw_change_rad": 2.0427890983823444e-19,
+        "scope": "isolated evaluator measurements; no correction/input to driver. Quantized shaft rest does not prove body rest, slip-free travel or physical stopping."
+      }
+    },
+    "encoder-homing": {
+      "ticks": 300,
+      "outcome": {
+        "reason": "task_completed",
+        "episode": 0,
+        "steps": 300,
+        "upstream_goal_distance_m": 1.4600279331207275,
+        "task_phase": "complete",
+        "completed_inspection_ids": [],
+        "evaluator_actual_home_distance_m": 0.15244903275510924,
+        "estimated_home_distance_m": 0.1075681766207124
+      },
+      "max_encoder_true_error_m": 0.1622430462924606,
+      "motion": {
+        "loaded_body_calibration": {
+          "radius_m": 0.06,
+          "track_m": 0.36,
+          "quantum_rad": 0.001
+        },
+        "straight_forward_intervals": 147,
+        "measured_straight_shaft_delta_rad": [
+          31.97011986809163,
+          31.899197480283775
+        ],
+        "measured_straight_body_forward_m": 1.9062127916071123,
+        "positive_shaft_and_forward_direction_observed": true,
+        "max_encoder_vs_true_local_error_m": 0.1622430462924606,
+        "dwell_intervals": 15,
+        "max_dwell_true_displacement_m": 4.109925301962725e-05,
+        "max_dwell_true_yaw_change_rad": 3.961852894640572e-06,
+        "scope": "isolated evaluator measurements; no correction/input to driver. Quantized shaft rest does not prove body rest, slip-free travel or physical stopping."
+      }
+    }
+  },
+  "phase_windows": {
+    "exploration-landmarks/selected": {
+      "capture_tick": 3,
+      "dwell_ticks": 0,
+      "successor_ticks": 4,
+      "dwell_sequence": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "terminal_crossing_observed": false,
+      "maximum_true_step_displacement_m": 0.009900331497192383,
+      "maximum_true_step_yaw_change_rad": 2.3099177251450264e-18
+    },
+    "exploration-landmarks/first-dwell": {
+      "capture_tick": 76,
+      "dwell_ticks": 1,
+      "successor_ticks": 4,
+      "dwell_sequence": [
+        0,
+        1,
+        0,
+        1
+      ],
+      "terminal_crossing_observed": false,
+      "maximum_true_step_displacement_m": 2.753734588623047e-05,
+      "maximum_true_step_yaw_change_rad": 7.922057425187661e-20
+    },
+    "exploration-landmarks/second-dwell": {
+      "capture_tick": 168,
+      "dwell_ticks": 1,
+      "successor_ticks": 4,
+      "dwell_sequence": [
+        0,
+        1,
+        0,
+        1
+      ],
+      "terminal_crossing_observed": false,
+      "maximum_true_step_displacement_m": 3.24249267578125e-05,
+      "maximum_true_step_yaw_change_rad": 1.4311285572916588e-19
+    },
+    "encoder-homing/outbound": {
+      "capture_tick": 8,
+      "dwell_ticks": 0,
+      "successor_ticks": 4,
+      "dwell_sequence": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "terminal_crossing_observed": false,
+      "maximum_true_step_displacement_m": 0.01158761978149414,
+      "maximum_true_step_yaw_change_rad": 4.783530899930379e-18
+    },
+    "encoder-homing/home-turn": {
+      "capture_tick": 78,
+      "dwell_ticks": 0,
+      "successor_ticks": 4,
+      "dwell_sequence": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "terminal_crossing_observed": false,
+      "maximum_true_step_displacement_m": 0.013655939323427922,
+      "maximum_true_step_yaw_change_rad": 0.00576355680546167
+    },
+    "encoder-homing/home-dwell": {
+      "capture_tick": 279,
+      "dwell_ticks": 1,
+      "successor_ticks": 4,
+      "dwell_sequence": [
+        0,
+        0,
+        1,
+        0
+      ],
+      "terminal_crossing_observed": false,
+      "maximum_true_step_displacement_m": 3.505328648230219e-05,
+      "maximum_true_step_yaw_change_rad": 3.366224484047109e-06
+    }
+  },
+  "replays": {
+    "exploration-landmarks/actions": {
+      "numeric_ticks": 182,
+      "semantic_events": 1279,
+      "inference_executed": false
+    },
+    "exploration-landmarks/policy": {
+      "numeric_ticks": 182,
+      "semantic_events": 1279,
+      "inference_executed": false
+    },
+    "encoder-homing/actions": {
+      "numeric_ticks": 300,
+      "semantic_events": 2103,
+      "inference_executed": false
+    },
+    "encoder-homing/policy": {
+      "numeric_ticks": 300,
+      "semantic_events": 2103,
+      "inference_executed": false
+    }
+  },
+  "continuation_comparison": {
+    "raw_task_packets": "matched",
+    "full_task_outcome_evaluator": "matched",
+    "numeric_arrays": "matched",
+    "camera_and_integer": "exact",
+    "float_atol": 1e-06,
+    "float_rtol": 1e-06
+  },
+  "early_completion": {
+    "fixture_handling_passed": true,
+    "actual_window_terminal_crossings": 0,
+    "all_actual_windows_successor_ticks": 4
+  },
+  "source_assets_unchanged": true,
+  "before_after_inventory_sha256": "e137138c3ec635a4778c7afeee73fe449f0313b424286e031c49134cc846b13e",
+  "inventories": {
+    "tracked_files": 297,
+    "upstream_tracked_files": 122,
+    "shared_asset_files": 20,
+    "upstream_commit": "8d964599119b420de67ee259434d273651a1a76d"
+  },
+  "supervisor_dispositions": {
+    "exploration-landmarks/source": {
+      "status": "completed",
+      "returncode": 0,
+      "elapsed_seconds": 16.118770474000485
+    },
+    "exploration-landmarks/selected": {
+      "status": "completed",
+      "returncode": 0,
+      "elapsed_seconds": 6.549214896993362
+    },
+    "exploration-landmarks/first-dwell": {
+      "status": "completed",
+      "returncode": 0,
+      "elapsed_seconds": 4.891446941997856
+    },
+    "exploration-landmarks/second-dwell": {
+      "status": "completed",
+      "returncode": 0,
+      "elapsed_seconds": 3.8637387650014716
+    },
+    "exploration-landmarks/actions": {
+      "status": "completed",
+      "returncode": 0,
+      "elapsed_seconds": 13.360040056002617
+    },
+    "exploration-landmarks/policy": {
+      "status": "completed",
+      "returncode": 0,
+      "elapsed_seconds": 16.069092340003408
+    },
+    "encoder-homing/source": {
+      "status": "completed",
+      "returncode": 0,
+      "elapsed_seconds": 26.04496035000193
+    },
+    "encoder-homing/outbound": {
+      "status": "completed",
+      "returncode": 0,
+      "elapsed_seconds": 6.547318060998805
+    },
+    "encoder-homing/home-turn": {
+      "status": "completed",
+      "returncode": 0,
+      "elapsed_seconds": 6.696902255003806
+    },
+    "encoder-homing/home-dwell": {
+      "status": "completed",
+      "returncode": 0,
+      "elapsed_seconds": 6.795784555994032
+    },
+    "encoder-homing/actions": {
+      "status": "completed",
+      "returncode": 0,
+      "elapsed_seconds": 28.15219248199719
+    },
+    "encoder-homing/policy": {
+      "status": "completed",
+      "returncode": 0,
+      "elapsed_seconds": 30.305494770000223
+    }
+  },
+  "inner_cleanup": {
+    "forced_signals": [],
+    "survivors": [],
+    "sample_errors": [],
+    "sampler_stopped": true,
+    "observed_owned_processes": [
+      {
+        "pid": 498822,
+        "start_ticks": 6285057
+      },
+      {
+        "pid": 498825,
+        "start_ticks": 6285110
+      },
+      {
+        "pid": 498879,
+        "start_ticks": 6286756
+      },
+      {
+        "pid": 498905,
+        "start_ticks": 6287424
+      },
+      {
+        "pid": 498937,
+        "start_ticks": 6287920
+      },
+      {
+        "pid": 498958,
+        "start_ticks": 6288312
+      },
+      {
+        "pid": 499046,
+        "start_ticks": 6289677
+      },
+      {
+        "pid": 499095,
+        "start_ticks": 6291309
+      },
+      {
+        "pid": 499119,
+        "start_ticks": 6291686
+      },
+      {
+        "pid": 499198,
+        "start_ticks": 6293957
+      },
+      {
+        "pid": 499230,
+        "start_ticks": 6294633
+      },
+      {
+        "pid": 499276,
+        "start_ticks": 6295322
+      },
+      {
+        "pid": 499296,
+        "start_ticks": 6296018
+      },
+      {
+        "pid": 499409,
+        "start_ticks": 6298883
+      }
+    ],
+    "scope": "finite .25s descendant sampling; only PID/start-matching owned cleanup; no universal transient-process proof"
+  },
+  "outer_cleanup": {
+    "forced_signals": [],
+    "survivors": [],
+    "sampler_stopped": true,
+    "sample_errors": [],
+    "observed_owned_processes": [
+      {
+        "pid": 498815,
+        "start_ticks": 6285031
+      },
+      {
+        "pid": 498822,
+        "start_ticks": 6285057
+      },
+      {
+        "pid": 498825,
+        "start_ticks": 6285110
+      },
+      {
+        "pid": 498879,
+        "start_ticks": 6286756
+      },
+      {
+        "pid": 498905,
+        "start_ticks": 6287424
+      },
+      {
+        "pid": 498937,
+        "start_ticks": 6287920
+      },
+      {
+        "pid": 498958,
+        "start_ticks": 6288312
+      },
+      {
+        "pid": 499046,
+        "start_ticks": 6289677
+      },
+      {
+        "pid": 499095,
+        "start_ticks": 6291309
+      },
+      {
+        "pid": 499198,
+        "start_ticks": 6293957
+      },
+      {
+        "pid": 499230,
+        "start_ticks": 6294633
+      },
+      {
+        "pid": 499276,
+        "start_ticks": 6295322
+      },
+      {
+        "pid": 499296,
+        "start_ticks": 6296018
+      },
+      {
+        "pid": 499409,
+        "start_ticks": 6298883
+      }
+    ],
+    "scope": "finite .25s sampling, PID/start recheck immediately before owned containment; not universal transient-process proof"
+  },
+  "native_warning_matches": [],
+  "storage": {
+    "admission_estimate_bytes": 2052915200,
+    "managed_max_bytes": 2147483648,
+    "free_disk_floor_bytes": 1073741824,
+    "inner_sampled_usage": {
+      "used_bytes": 308728873,
+      "files": 195,
+      "remaining_bytes": 1838754775,
+      "max_bytes": 2147483648,
+      "headroom_bytes": 8388608,
+      "min_free_bytes": 1073741824
+    },
+    "outer_terminal_usage": {
+      "used_bytes": 308924978,
+      "files": 205,
+      "remaining_bytes": 1838558670,
+      "max_bytes": 2147483648,
+      "headroom_bytes": 0,
+      "min_free_bytes": 1073741824
+    },
+    "initial_snapshot_guard": "Immediate after publication under aggregate quota; replay ready callback before numeric stepping"
+  },
+  "read_only_audit": {
+    "status": "passed",
+    "wall_seconds": 1.8216359660000307,
+    "indexed_artifact_hashes": 193,
+    "numeric_ticks": 1470,
+    "semantic_events_checked_per_replay": {
+      "exploration-landmarks": 1279,
+      "encoder-homing": 2103
+    },
+    "pid_start_identities_absent": 15,
+    "native_execution": false,
+    "semantic_scope": "After each registered initial event prefix; initial episode_started excluded as in executable replay report"
+  },
+  "source_fixture_checks": {
+    "new_tests": 6,
+    "existing_verify_tasks_tests": 8,
+    "all_passed": true,
+    "native_gate_before_checks": false
+  },
+  "limits": [
+    "Every actual native continuation remained paused for all four steps; early task completion shortening was tested only in fixtures.",
+    "First dwell counters reset in all three captured dwell windows; this is retained evidence, not uninterrupted dwell or terminal-crossing proof.",
+    "Quantized encoder dwell does not prove exact true body rest, slip-free tracking or physical stopping.",
+    "Finite descendant sampling and final PID/start checks are not universal transient-process proof.",
+    "bounded_process sends best-effort process-group TERM/KILL after leader exit; it does not log signal delivery. Explicit sampled containment recorded no forced signals.",
+    "No task/controller threshold changes, retries, held-out starts/layouts, new body parameters, learned policies, adaptive-body/task combination, browser or hardware qualification."
+  ],
+  "artifacts_sha256": {
+    "runs/m6-task-phase-development-20261003/report.json": "2849953f4c3befd671b7894c2ea3f82d4f620a6b65a9e08c465c223328075d1b",
+    "runs/m6-task-phase-control-8a931cf/terminal.json": "45db24f09056ed66b2deab2b5912219248d252b820a79e4fec2339fc68bcfbe0",
+    "runs/m6-task-phase-control-8a931cf/before.json": "e137138c3ec635a4778c7afeee73fe449f0313b424286e031c49134cc846b13e",
+    "runs/m6-task-phase-control-8a931cf/after.json": "e137138c3ec635a4778c7afeee73fe449f0313b424286e031c49134cc846b13e",
+    "runs/m6-task-phase-control-8a931cf/inventory.py": "cd7217fb3762c39314b70ae21163f6557bf3a43008bda1fef67b86c07a41623a",
+    "runs/m6-task-phase-control-8a931cf/launch.py": "9b4a58ff06e50b480b0510c7b6557d17b2564125e7d569d80be6fa011395ad76",
+    "runs/m6-task-phase-control-8a931cf/invocation.json": "f706caa67be4549c9aeb44cbe7e28bc8c8677d386c4d940c53a54cdcc6d5d079",
+    "runs/m6-task-phase-control-8a931cf/launcher-console.log": "31ea1b9ce0a6d7acebf8ba78b0b96ded13ad8560615a7b8332f674603a800082",
+    "runs/m6-task-phase-control-8a931cf/retained-audit.py": "6a0e26ce253e7f4c7208836d91e948f2205ff0c5ff9d9882797225125855b25b",
+    "runs/m6-task-phase-control-8a931cf/retained-audit.json": "3beb73b8b4e423b726c689312652530abce9ee23177b33918f9fe401635519df",
+    "runs/m6-task-phase-control-8a931cf/outer-launch/stdout.log": "97811687195f255c7c0dde775699c1f399077295b3d023b632d3eed12ab3804e",
+    "runs/m6-task-phase-control-8a931cf/outer-launch/stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "runs/m6-task-phase-control-8a931cf/outer-launch/supervisor.json": "7a119c3c6cc37c343b543b4dfe1fd4da19e3ec79d8fa9a594a4fa40d2c3bf17a",
+    "runs/m6-task-phase-development-20261003/exploration-landmarks/source/result.json": "e8403def5a9bb26cb4324bd16c1f760e3e8386c59fff772a4de65d478416edc4",
+    "runs/m6-task-phase-development-20261003/exploration-landmarks/actions/result.json": "fb0fa04b75f62fc8d16fa446b6d63fb3b2392e1c516e8df35560fcca63d68ddd",
+    "runs/m6-task-phase-development-20261003/exploration-landmarks/actions/2f7a548561c9491abaf19f417bbf9fdb/replay-report.json": "443afa03666508f00e90d44749231b0afa95783314061379621588e9fef0f286",
+    "runs/m6-task-phase-development-20261003/exploration-landmarks/policy/result.json": "ad7f477a48955b3da6e50d6fc8d97a992f8e30819782d84167f5c47486ede678",
+    "runs/m6-task-phase-development-20261003/exploration-landmarks/policy/587b0f86650349cb887657e1a93de0ce/replay-report.json": "65bec26e30ae906c347cc61821b563a1eacd87a0002676f5c3cc87111e72dd8b",
+    "runs/m6-task-phase-development-20261003/encoder-homing/source/result.json": "4a77e21f93372557e4635e375741a804096707c6ec9275da184de283bebdcf68",
+    "runs/m6-task-phase-development-20261003/encoder-homing/actions/result.json": "1f52087090b36a9f000e93cff89091a239f0c66a211e0d6917d9b37101f3feb7",
+    "runs/m6-task-phase-development-20261003/encoder-homing/actions/aaca7ec347b04c508c66a9a391e04bcb/replay-report.json": "cceea973d75ede4bf1b376c4611ec3326683f6aa2564714b2c41037a766c7e83",
+    "runs/m6-task-phase-development-20261003/encoder-homing/policy/result.json": "35247ed9547d35ad1134198891f5925784f74978abe663f41080f73ea9846f7f",
+    "runs/m6-task-phase-development-20261003/encoder-homing/policy/e008e509116f43ec88f03f5418389bd6/replay-report.json": "ce5da710b4f619954e8ecc8d1d28a81922fce193f0a311d1154a5c16c37a5038",
+    "../project-integration/runs/m6-task-phase-root-audit-8a931cf/audit.py": "6f4475596d3524035ef16a23a7a19e2347057bc8040565783e61dfcd42d6a27a",
+    "../project-integration/runs/m6-task-phase-root-audit-8a931cf/audit.json": "542c6c3c8b96bef563b53a31b5375aed2d462c47268e67ae10858b35fda1c866"
+  },
+  "root_read_only_audit": {
+    "status": "passed",
+    "wall_seconds": 2.377080771999317,
+    "indexed_artifact_hashes": 193,
+    "numeric_ticks": 1470,
+    "snapshot_files": 18,
+    "pid_start_union_absent": 15,
+    "semantic_events_checked_per_replay": {
+      "exploration-landmarks": 1280,
+      "encoder-homing": 2104
+    },
+    "semantic_scope": "Complete normalized semantic streams including initial episode_started; one more event than each post-prefix replay count",
+    "extra_scope": "Full normalized replay initial snapshots, native integration/observation/task equality; no runtime imported"
+  }
+}

@@ -1,0 +1,95 @@
+{
+  "audit_script": {
+    "bytes": 3250,
+    "path": "runs/m6-puck-construction-v2-prepared/audit.py",
+    "sha256": "f99e510afcfd265a091c180e25d9a2f60ab90df1d29dd81a3a34231e62270e0a"
+  },
+  "baseline_constructor": "completed native baseline construction/reset before installer admission; this is not derived-model evidence",
+  "cause": {
+    "actual_sampled_goal": "not retained; no rerun to recover it",
+    "admission": "src/palimpsest/puck_profile.py:438",
+    "authored_domain": "src/palimpsest/puck_profile.py:96",
+    "authored_task_goal_bound": 5.0,
+    "constructor_goal_bound": 5.5,
+    "upstream_sampler": "upstream/fly-gym/environment/mujoco_two_cam_env_random_obstacles.py:246"
+  },
+  "checked_source_files": 74,
+  "cleanup": {
+    "identity": {
+      "pid": 487473,
+      "process_group": 487473,
+      "start_ticks": 5972556
+    },
+    "process_group_absent": true,
+    "renderer_receipts": [
+      {
+        "closed": true,
+        "resource": "retired"
+      }
+    ],
+    "same_process_alive": false
+  },
+  "control_ticks": 0,
+  "derived_model_artifacts": 0,
+  "independent_audit": {
+    "bytes": 3192,
+    "path": "runs/m6-puck-construction-v2-prepared/audit.json",
+    "sha256": "d585d7f0a2a3851b0e620d2ef79aaba6d1a631b83da6eafac2e650b6c5132b60"
+  },
+  "inner_elapsed_seconds": 1.396989189001033,
+  "launcher": {
+    "bytes": 3017,
+    "path": "runs/m6-puck-construction-v2-prepared/launch.py",
+    "sha256": "bf3a37acb33b4bf5d1a6627c268ae8dc398a3d6c6d1fd27af5d68819b940cee7"
+  },
+  "next_action": "Separate source-only admission correction and reviewed frozen construction gate; no execution authorized by this evidence.",
+  "outer_elapsed_seconds": 1.5751484419961344,
+  "outer_report": {
+    "bytes": 9825,
+    "path": "runs/m6-puck-construction-v2-20261003/launch-result.json",
+    "sha256": "004a9984be15c497acc2d83f3fbb60c3148a9f8c78f45d207795c04f06592dd3"
+  },
+  "outer_returncode": 1,
+  "owners": [
+    {
+      "error": {
+        "message": "Goal outside fixed arena",
+        "type": "ValueError"
+      },
+      "id": "fresh-one",
+      "status": "failed"
+    },
+    {
+      "id": "fresh-two",
+      "status": "not_started"
+    }
+  ],
+  "physics_steps": 0,
+  "prepared_plan": {
+    "bytes": 9479,
+    "path": "runs/m6-puck-construction-v2-prepared/plan.json",
+    "sha256": "7e966df22f237b851f8e7fb953ec7fc844fcb431c6b80c92ff11ec425ecf8e58"
+  },
+  "primary_report": {
+    "bytes": 13321,
+    "path": "runs/m6-puck-construction-v2-20261003/gate/report.json",
+    "sha256": "e5229ee53f854630abdceaa9449281294ffa6e519fdc59bec9fdfcb7df0f2825"
+  },
+  "protocol": {
+    "bytes": 1925,
+    "path": "docs/plans/m6-puck-construction.json",
+    "sha256": "0f3fabdba277c60c4efccb219d376c944a3bfa19d30591e54b5d9b7626ad55bc"
+  },
+  "qualification_claims": [],
+  "retained_bytes": 33450,
+  "retained_camera_artifacts": 0,
+  "script": {
+    "bytes": 14793,
+    "path": "scripts/verify_puck_construction.py",
+    "sha256": "d6eee11f511ef8043b7734698a4f43f3da55cc09d2241d320fbffcdd060d5077"
+  },
+  "source_commit": "1828d2fd72ce5bf702db9f034dd56bb17cdf35ea",
+  "sources_unchanged": true,
+  "status": "failed_before_derived_model_installation",
+  "version": 1
+}

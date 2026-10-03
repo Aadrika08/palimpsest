@@ -1,0 +1,276 @@
+{
+  "status": "failed-infrastructure",
+  "publication": "retained local evidence",
+  "study": "M7-NAV-AGG-1",
+  "producer_commit": "13a1afe90131e61cf3320b83af82a7aa98b62e4f",
+  "protocol_sha256": "a3612cdc23510fa2b866482e1d13ece123940911ccc2a186c74216c83177e47f",
+  "qualification_claims": [],
+  "coverage": {
+    "attempted_case": {
+      "scene_seed": 3100,
+      "learner_seed": 10
+    },
+    "published_numeric_rows": 12,
+    "admitted_owners": 0,
+    "admitted_rows": 0,
+    "not_started_owners": 11,
+    "initial_SNP": 1,
+    "events": 31,
+    "producer_indexed_files": 10,
+    "total_output_files": 13
+  },
+  "rejection": {
+    "reason": "Unexpected rover contact outside fixed study set",
+    "tick": 11,
+    "stage": 6,
+    "time_s": 0.23200000000000018,
+    "geom_ids": [
+      0,
+      25
+    ],
+    "geoms": [
+      "floor",
+      "base_geom"
+    ],
+    "body_ids": [
+      0,
+      21
+    ],
+    "body_names": [
+      "world",
+      "base"
+    ],
+    "distance_m": -3.873235167558761e-05,
+    "end_cache_floor_base_cleared": true,
+    "interpretation": "Collision-enabled pinned-model floor/base contact, intentionally excluded from study admission; causal dynamic instability not established"
+  },
+  "disposition": {
+    "outer_command_exit": 1,
+    "enclosing_status": "failed-infrastructure",
+    "launcher_process_seconds": 13.561794989000191,
+    "enclosing_prepublication_seconds": 15.161060839003767,
+    "engine_closed": true,
+    "callback_restored": true,
+    "forced_signals": [],
+    "survivors": [],
+    "sampler_errors": [],
+    "union_observed_identities": 4,
+    "identities_absent": true,
+    "source_controls_and_inputs_unchanged": true,
+    "free_bytes_terminal": 28118581248
+  },
+  "audits": {
+    "root_raw": {
+      "first_execution_passed": true,
+      "seconds": 3.786764605,
+      "receipt_sha256": "e09df41b94ca7341bf0f001ee2bc287ad0c64a0135db031628f5791c56b29562"
+    },
+    "own_raw": {
+      "seconds": 1.647823976003565,
+      "receipt_sha256": "b0a44313f3069660a26e8c7b08e55579fd1ff971b542f8dc4ea2b8f024fc9623",
+      "corrections": [
+        "Schema-discovery probe requested nonexistent records.iter_events; corrected reader uses existing artifacts._events",
+        "Auditor initially conflated thirteen total output files with ten producer-indexed files; corrected only count scope, retained failed script/log"
+      ]
+    },
+    "root_control": {
+      "receipt_sha256": "d7f711b47c8e86f50a64655677d17fe23c6bf6423f9e73b13b0c75b56034f96e",
+      "correction": "First root control checker used wrong bounded_process keyword before fixtures; corrected checker uses positional API, controls unchanged"
+    }
+  },
+  "limitations": [
+    "No completed/admitted new source or data/training manifest",
+    "No training/development/held-out job or fresh capability outcome",
+    "Train scene3100 has now been consumed; it is not an unseen case",
+    "Floor contacts are excluded by native collision sensor; no sensor or advice replacement",
+    "Discrete contact caches are not continuous collision coverage",
+    "No physical stability/safety/hardware/biology/topology/R3 qualification"
+  ],
+  "artifact_refs": [
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/male-navigation-study/docs/plans/m7-navigation-study-protocol.json",
+      "bytes": 18275,
+      "sha256": "a3612cdc23510fa2b866482e1d13ece123940911ccc2a186c74216c83177e47f"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/male-navigation-study/runs/m7-navigation-collection-control-13a1afe/ready.json",
+      "bytes": 7766,
+      "sha256": "7e2902c1ad6c8259465eda4365b684d5b5f474d0515012a0f703fd8a96fe1d4d"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/male-navigation-study/runs/m7-navigation-collection-control-13a1afe/invocation.json",
+      "bytes": 4225,
+      "sha256": "58a827edd747b24f00b91d422bbe88a16563ad76027dcacf805a56a8aa1f6262"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/male-navigation-study/runs/m7-navigation-collection-control-13a1afe/before.json",
+      "bytes": 172318,
+      "sha256": "a8a608d7beaaaa7eaaa9da066aebd67fc1085dba1fa4797aad28b3ecff217a9c"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/male-navigation-study/runs/m7-navigation-collection-control-13a1afe/after.json",
+      "bytes": 172318,
+      "sha256": "a8a608d7beaaaa7eaaa9da066aebd67fc1085dba1fa4797aad28b3ecff217a9c"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/male-navigation-study/runs/m7-navigation-collection-control-13a1afe/outer-after.json",
+      "bytes": 172318,
+      "sha256": "3941588f19c3d69e16d2fcef4c4cd7358b1176087a8ace2cf02f71c85fa0e5d2"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/male-navigation-study/runs/m7-navigation-collection-control-13a1afe/pre-execution-clarification.json",
+      "bytes": 556,
+      "sha256": "55faa9ab276e16880e2b2f1789ce603ec19df47db6f87972adafaa8e83efcb71"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/male-navigation-study/runs/m7-navigation-collection-control-13a1afe/terminal.json",
+      "bytes": 8886,
+      "sha256": "a488d6af2a70d313340be3d404bdb788374d556d1b61656f758b00bf87184e78"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/male-navigation-study/runs/m7-navigation-collection-control-13a1afe/enclosing.json",
+      "bytes": 2714,
+      "sha256": "68965adc7f643153ef12981177fc1d511454cb32cea6f270f38ccb5cac97f01e"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/male-navigation-study/runs/m7-navigation-collection-control-13a1afe/launcher-console.log",
+      "bytes": 166,
+      "sha256": "706a3d7d3ae2c19ca2160030f4270ba2ba030680f6728575d0741118c35300ed"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/male-navigation-study/runs/m7-navigation-collection-control-13a1afe/outer-launch/supervisor.json",
+      "bytes": 328,
+      "sha256": "78e61ce8ec58b06d08a5d02fbb70acd55b7cce6b0545c0ce5815e8c3ff5bdf04"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/male-navigation-study/runs/m7-navigation-collection-control-13a1afe/outer-launch/stdout.log",
+      "bytes": 79,
+      "sha256": "978336a5d36b8ff92d48acb23feb62f7cc89efc4867bb8e25731b6f7aff31f65"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/male-navigation-study/runs/m7-navigation-collection-control-13a1afe/outer-launch/stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/male-navigation-study/runs/m7-navigation-collection-control-13a1afe/outer-supervisor/supervisor.json",
+      "bytes": 333,
+      "sha256": "e603dbef5976fe5128cea2c4161d470939de49bb1ad92f66704645643569a755"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/male-navigation-study/runs/m7-navigation-collection-control-13a1afe/outer-supervisor/stdout.log",
+      "bytes": 292,
+      "sha256": "e44ce6f90a0c3c110fab96a5985ab560be4cb6a3ff719971ee1f2477cc2c542e"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/male-navigation-study/runs/m7-navigation-collection-control-13a1afe/outer-supervisor/stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/male-navigation-study/runs/m7-navigation-collection-13a1afe-20261003/failure.json",
+      "bytes": 27957,
+      "sha256": "6e4fa49b6a8ed9e6d32b2dc239c630c03576a2fb230158458d7389940ecf6e4b"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/male-navigation-study/runs/m7-navigation-collection-13a1afe-20261003/learner-3100-seed-10/result.json",
+      "bytes": 628231,
+      "sha256": "639f33d67028dca19ba52d07e99b4cadcf0f52c091f665bebfb0e6234ec9cb8b"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/male-navigation-study/runs/m7-navigation-collection-13a1afe-20261003/learner-3100-seed-10/failure-cameras.npz",
+      "bytes": 98824,
+      "sha256": "982d96eac035f61847bfca9c8a42ff0ecb8ffbe14255bdb739e3b7eecef165e1"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/male-navigation-study/runs/m7-navigation-collection-13a1afe-20261003/learner-3100-seed-10/81580ca014354d16852aa3b216a89e95/recording/manifest.json",
+      "bytes": 10194,
+      "sha256": "59260955d3fb8b099837a984244f52743070bf52554a67616261b771be2a20ee"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/male-navigation-study/runs/m7-navigation-collection-13a1afe-20261003/learner-3100-seed-10/81580ca014354d16852aa3b216a89e95/recording/events.jsonl",
+      "bytes": 37110,
+      "sha256": "c524f91cea3d0a23802e41f304f8c7b1537d60d8804ea10054671c6826831092"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/male-navigation-study/runs/m7-navigation-collection-13a1afe-20261003/learner-3100-seed-10/81580ca014354d16852aa3b216a89e95/recording/chunks/000000.npz",
+      "bytes": 2606230,
+      "sha256": "09d361f713c4cf0954c7ddd01c20bbe89aee6173343e26691f78e6f4df9a37c3"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/male-navigation-study/runs/m7-navigation-collection-13a1afe-20261003/learner-3100-seed-10/81580ca014354d16852aa3b216a89e95/snapshots/initial.snp",
+      "bytes": 535346,
+      "sha256": "b165ca771e07e88a122f8abfc5e45fbd0074471ab1223751afeb6647bc1b72b8"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/male-navigation-study/runs/m7-navigation-collection-control-13a1afe/retained-probe-v1.json",
+      "bytes": 382,
+      "sha256": "f5f24958c0df321b53a3d29142dd4c81bd4abe83ef60b067cefe578ef2feea5c"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/male-navigation-study/runs/m7-navigation-collection-control-13a1afe/retained-audit-v1.py",
+      "bytes": 5433,
+      "sha256": "01ffa32626a7d012f073d9244fddd2c1085671f97e6a64b4a1828afc3c1d696d"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/male-navigation-study/runs/m7-navigation-collection-control-13a1afe/retained-audit-v1.log",
+      "bytes": 332,
+      "sha256": "bd15a812e3c623c85641c0c6ce591a0a787b1e17d823b37f69982cd17b74db5c"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/male-navigation-study/runs/m7-navigation-collection-control-13a1afe/retained-audit.py",
+      "bytes": 5611,
+      "sha256": "37bd2e71e36f718b04ab32ea9ee055c644b30b62d7e6e53f41d9aecbad93f646"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/male-navigation-study/runs/m7-navigation-collection-control-13a1afe/retained-audit.log",
+      "bytes": 2923,
+      "sha256": "ed50803aaf6064fbd86cf50868385c2c740ff28d12ac7e936fb1248b7a47214c"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/male-navigation-study/runs/m7-navigation-collection-control-13a1afe/retained-audit.json",
+      "bytes": 3075,
+      "sha256": "b0a44313f3069660a26e8c7b08e55579fd1ff971b542f8dc4ea2b8f024fc9623"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/project-integration/runs/m7-navigation-collection-control-root-review-13a1afe/audit.py",
+      "bytes": 3655,
+      "sha256": "91db2a650a3b34bee3eb7ef343267592cfc7a72dcd45b24e77a7574c3abe0bc1"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/project-integration/runs/m7-navigation-collection-control-root-review-13a1afe/console.log",
+      "bytes": 440,
+      "sha256": "cee3880916098a5bb4a4a7bbc2c926685b80dfd551cc35e011e24ed65b4f126a"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/project-integration/runs/m7-navigation-collection-control-root-review-13a1afe/audit-v2.py",
+      "bytes": 3784,
+      "sha256": "81af87cc9b73279d7b0b38be132d4facbc08fae769c232da89f08a82b5dc22af"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/project-integration/runs/m7-navigation-collection-control-root-review-13a1afe/console-v2.log",
+      "bytes": 252,
+      "sha256": "1bf4602cad7a3d04935768699c94cf61836e0d637d483a511dd6a28da5e98d87"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/project-integration/runs/m7-navigation-collection-control-root-review-13a1afe/audit.json",
+      "bytes": 1471,
+      "sha256": "d7f711b47c8e86f50a64655677d17fe23c6bf6423f9e73b13b0c75b56034f96e"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/project-integration/runs/m7-navigation-collection-failure-root-audit-13a1afe/audit.py",
+      "bytes": 7293,
+      "sha256": "52744a23831ced036af5eb56b411a97865b9a1e3a34c15b35e957566b6a34bdc"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/project-integration/runs/m7-navigation-collection-failure-root-audit-13a1afe/console.log",
+      "bytes": 166,
+      "sha256": "20f3db30adce81a80fc432b63d5dfffb81b012b85c6747a55a5b0ec38c77e9e7"
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/project-integration/runs/m7-navigation-collection-failure-root-audit-13a1afe/audit.json",
+      "bytes": 3741,
+      "sha256": "e09df41b94ca7341bf0f001ee2bc287ad0c64a0135db031628f5791c56b29562"
+    }
+  ]
+}
