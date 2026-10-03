@@ -63,6 +63,16 @@ def teacher_sources(root):
     return dict(sorted(result.items()))
 
 
+def student_sources(root):
+    from palimpsest import puck_student, puck_learning
+    result=sources(root)
+    for name in (puck_student.PROTOCOL_PATH, puck_learning.PROTOCOL_PATH,
+                 puck_student.protocol(root)['models_manifest']['path'],
+                 'src/palimpsest/puck_student.py', 'tests/test_puck_student.py'):
+        result[name]=digest(root/name)
+    return dict(sorted(result.items()))
+
+
 def plan(task):
     limits = task['limits']
     rows = [{'id':case['id'], 'kind':'root', 'case':case['id'], 'seed':case['seed'],
@@ -291,10 +301,22 @@ def world_array(world):
 
 
 def packet(env, observation, before, after, inputs, action, state, contact, interval, reward, upstream,
-           teacher_mode_before, teacher_mode_after, case, *, learning_pending=None):
+           teacher_mode_before, teacher_mode_after, case, *, learning_pending=None, student_pending=None):
     import numpy as np
     from palimpsest.body_profile import contact_arrays
-    task_state={'state':state,'world':after,'contact':contact,'teacher_mode':teacher_mode_after}
+    if student_pending is not None:
+        from palimpsest import puck_learning
+        if learning_pending is not None or teacher_mode_before is not None or teacher_mode_after is not None:
+            raise ValueError('Student packet cannot carry teacher state')
+        next_cursor=puck_learning.commit(student_pending['before'],student_pending,state['tick'])
+        if inputs.tobytes()!=student_pending['inputs'][:8].tobytes():
+            raise ValueError('Student packet input differs before publication')
+        task_state={'state':state,'world':after,'contact':contact,'own_supervisor_cursor':next_cursor}
+        mode_arrays={}
+    else:
+        task_state={'state':state,'world':after,'contact':contact,'teacher_mode':teacher_mode_after}
+        mode_arrays={'teacher_mode_before':np.array(mode_code(teacher_mode_before,case,learning_teacher=learning_pending is not None),np.uint8),
+                     'teacher_mode_after':np.array(mode_code(teacher_mode_after,case,learning_teacher=learning_pending is not None),np.uint8)}
     if learning_pending is not None:
         from palimpsest import puck_learning
         next_cursor=puck_learning.commit(learning_pending['before'],learning_pending,state['tick'])
@@ -303,16 +325,16 @@ def packet(env, observation, before, after, inputs, action, state, contact, inte
             raise ValueError('Learning record mode/input differs before publication')
         task_state['own_supervisor_cursor']=next_cursor
     arrays={'inputs':inputs, 'action':np.asarray(action,np.float64),
-        'teacher_mode_before':np.array(mode_code(teacher_mode_before,case,learning_teacher=learning_pending is not None),np.uint8),
-        'teacher_mode_after':np.array(mode_code(teacher_mode_after,case,learning_teacher=learning_pending is not None),np.uint8),
+        **mode_arrays,
         'world_before':world_array(before),'world_after':world_array(after),
         'reward':np.array(reward,np.float64),'upstream_diagnostics':np.asarray(upstream,np.float64),
         'task_sha256':np.frombuffer(bytes.fromhex(state_digest(task_state)),np.uint8),
         **{name:np.asarray(getattr(env.data,name)).copy() for name in
            ('qpos','qvel','ctrl','qfrc_applied','xfrc_applied')},**contact_arrays(interval)}
-    if learning_pending is not None:
-        arrays.update(student_inputs=learning_pending['inputs'],
-            supervisor_mode_before=np.array(puck_learning.MODES[learning_pending['before']['mode']],np.uint8),
+    cursor_pending=student_pending if student_pending is not None else learning_pending
+    if cursor_pending is not None:
+        arrays.update(student_inputs=cursor_pending['inputs'],
+            supervisor_mode_before=np.array(puck_learning.MODES[cursor_pending['before']['mode']],np.uint8),
             supervisor_mode_after=np.array(puck_learning.MODES[next_cursor['mode']],np.uint8))
     for name in ('cam_left','cam_right'):
         value=observation[name]
@@ -327,8 +349,9 @@ def owner(config):
     root, output, row=Path(config['repo']),Path(config['output']),config['row']
     spec=protocol(root); task=puck.load_protocol(root)
     learning_teacher='learning_teacher' in config
-    source_inventory=teacher_sources if learning_teacher else sources
-    own=None
+    learning_student='learning_student' in config
+    source_inventory=student_sources if learning_student else teacher_sources if learning_teacher else sources
+    own=student_model=student_identity=None
     budget=StorageBudget((output,),StorageLimits(max_bytes=row['max_bytes'],min_free_bytes=1024**3),headroom_bytes=8*MiB)
     identity=process_identity(); start_tick=config.get('start_tick',0)
     def progress(tick,phase='ready'):
@@ -339,6 +362,14 @@ def owner(config):
     env=writer=probe=model_hash=None; renderers=[]; started=time.monotonic()
     try:
         if source_inventory(root)!=config['sources']: raise ValueError('Sources changed before owner admission')
+        if learning_student:
+            from palimpsest import puck_student, puck_learning
+            case=puck_student.admit_config(config,root)
+            own=puck_learning.initial_cursor()
+            _,student_identity=puck_student.admit_bundle(root,config['bundle_root'],row['model_seed'])
+            result.pop('controller_calls')
+            result.update(model_calls=0,ticks=0,completed_control_tick=0,physics_steps_this_owner=0,
+                          own_supervisor_cursor=own,student_identity=puck_student.identity(root,student_identity))
         if learning_teacher:
             from palimpsest import puck_teacher, puck_learning
             case=puck_teacher.admit_config(config,root)
@@ -351,14 +382,24 @@ def owner(config):
         from palimpsest.records import RunWriter, iter_ticks
         from palimpsest.snapshots import capture, restore, save_snapshot
         versions={'python':platform.python_version(),'numpy':np.__version__,'mujoco':mj.__version__,'backend':os.environ.get('MUJOCO_GL')}
-        if versions!=spec['runtime'] or 'torch' in sys.modules: raise ValueError('Unreviewed native/model runtime')
-        if not learning_teacher: case=next(c for c in task['physics_cases'] if c['id']==row['case'])
+        if versions!=spec['runtime'] or 'torch' in sys.modules and not learning_student:
+            raise ValueError('Unreviewed native/model runtime')
+        if learning_student:
+            student_runtime=puck_student.protocol(root)['runtime']
+            import importlib.metadata
+            if importlib.metadata.version('torch')!=student_runtime['torch']:
+                raise ValueError('Student requires pinned CPU Torch runtime')
+            # All owners establish the identical Torch runtime before capture/restore.
+            # Action replay still performs zero model predictions.
+            student_model,loaded=puck_student.load(root,config['bundle_root'],row['model_seed'])
+            if loaded!=student_identity:raise ValueError('Student model changed before native construction')
+        if not learning_teacher and not learning_student: case=next(c for c in task['physics_cases'] if c['id']==row['case'])
         cls=import_upstream(root,'environment.mujoco_two_cam_env_random_obstacles').MuJoCoTwoCamEnv
         env=cls(**{**spec['environment_kwargs'],'seed':row['seed']})
         renderers.append(env.renderer)
         identity_profile=puck.install_fixed_model(env,root)
         if identity_profile!=spec['profile_identity']: raise ValueError('Pinned fixed native profile identity differs')
-        state=puck.authored_reset(env,root,row['seed'],row['split'] if learning_teacher else 'mechanics',case['id'])
+        state=puck.authored_reset(env,root,row['seed'],row['split'] if learning_teacher or learning_student else 'mechanics',case['id'])
         probe=ContactProbe(mj,env)
         world=world_from(env,case['goal_xy'])
         contact=puck.classify_contacts({'kind':'initial_forwarded','time_s':0.,'pairs':probe._pairs(env.model,env.data)},
@@ -367,11 +408,20 @@ def owner(config):
         model_hash=hashlib.sha256(env.model.__getstate__()).hexdigest()
         expected_rows=None
         if row['kind']=='root':
-            teacher_mode='fixed' if 'action' in case else 'approach'
+            teacher_mode=None if learning_student else 'fixed' if 'action' in case else 'approach'
         else:
             source=Path(config['source_output']); receipt=config['source_snapshot']
             snapshot=read_bounded_snapshot(source/receipt['file'],receipt['sha256'])
-            validate_application(snapshot['application'],case['id'],start_tick,receipt['application_sha256'])
+            if learning_student:
+                source_count=puck_student.admit_source(read_json(source/'recording/manifest.json'),root,row,config['sources'],student_identity)
+                if row['kind'] in ('action-replay','policy-replay') and config['ticks']!=source_count:
+                    raise ValueError('Student replay must retain every source interval')
+                puck_student.validate_application(snapshot['application'],root,row,config['sources'],identity_profile,
+                    model_hash,student_identity,start_tick,receipt['application_sha256'])
+                if (state_digest(snapshot['application']['world'])!=state_digest(receipt['world']) or
+                        state_digest(snapshot['application']['contact'])!=state_digest(receipt['contact'])):
+                    raise ValueError('Student snapshot receipt world/contact differs')
+            else: validate_application(snapshot['application'],case['id'],start_tick,receipt['application_sha256'])
             app=snapshot['application']
             if app['profile_identity']!=identity_profile or app['model_sha256']!=model_hash:
                 raise ValueError('Source puck identity/full model differs from fixed authored destination')
@@ -383,13 +433,25 @@ def owner(config):
             if hashlib.sha256(env.model.__getstate__()).hexdigest()!=model_hash:
                 raise ValueError('Restore changed fixed full model')
             state,world,contact=app['state'],app['world'],app['contact']
-            teacher_mode=app['teacher_mode']
+            if learning_student:
+                own=copy.deepcopy(app['own_supervisor_cursor']);teacher_mode=None
+                result.update(own_supervisor_cursor=own,completed_control_tick=start_tick)
+            else: teacher_mode=app['teacher_mode']
             if world_from(env,case['goal_xy'])!=world or env._t!=start_tick: raise ValueError('Restored current qpos/cursor differs')
             probe=ContactProbe(mj,env)
-            source_rows=list(iter_ticks(source/'recording'))
+            if learning_student:
+                source_rows=[]
+                for numeric in iter_ticks(source/'recording'):
+                    if len(source_rows)>=source_count:raise ValueError('Student source exceeds declared bounded tick count')
+                    source_rows.append(numeric)
+                if len(source_rows)!=source_count:raise ValueError('Student source tick count differs')
+            else: source_rows=list(iter_ticks(source/'recording'))
             expected_rows=window(source_rows,start_tick,config['ticks'])
             result['source_snapshot']=receipt
         def application():
+            if learning_student:
+                return puck_student.application(root,row,config['sources'],identity_profile,model_hash,student_identity,
+                                                state,world,contact,own)
             if learning_teacher:
                 return puck_teacher.initial_application(root,row,config['sources'],identity_profile,model_hash,
                                                          state,world,contact,own)
@@ -403,6 +465,9 @@ def owner(config):
             if learning_teacher:
                 if name!='initial': raise ValueError('Learning teacher admits initial-only snapshots')
                 puck_teacher.validate_initial(app,root,row,config['sources'],identity_profile,model_hash,app_hash)
+            elif learning_student:
+                puck_student.validate_application(app,root,row,config['sources'],identity_profile,model_hash,
+                                                  student_identity,state['tick'],app_hash)
             else: validate_application(app,case['id'],state['tick'],app_hash)
             if mj.get_mjcb_control() is not None: raise ValueError('Snapshot while global callback active')
             snap=capture(env,observation,application=app)
@@ -421,11 +486,17 @@ def owner(config):
                             split=row['split'],episodes=1,initial_supervisor=own,
                             record_contract=puck_learning.load_protocol(root)['record'])
             start_event['supervisor_cursor']=own
+        if learning_student:
+            manifest.update(schema='puck-student-v1',protocol_sha256=puck_student.PROTOCOL_SHA256,
+                            **puck_student.identity(root,student_identity),
+                            seed=row['seed'],split=row['split'],episodes=1,initial_supervisor=copy.deepcopy(own),
+                            record_contract='Student numeric v1: float32 sensors8/features9; float64 actions; own BEFORE/AFTER modes; no teacher fields')
+            start_event.pop('teacher_mode');start_event['own_supervisor_cursor']=copy.deepcopy(own)
         writer=RunWriter(output/'recording',manifest,max_bytes=row['max_bytes'],storage_budget=budget)
         writer.event('episode_start',**start_event)
         snapshot_at('initial')
         count=config.get('ticks',row['max_ticks'])
-        estimate=record_estimate(count,4 if case['id']=='teacher-positive' and row['kind']=='root' else 1)
+        estimate=record_estimate(count,4 if row['kind']=='root' and (case['id']=='teacher-positive' or learning_student) else 1)
         budget.check(estimate,path=output/'recording')
         result['record_admission_estimate_bytes']=estimate
         progress(state['tick'])
@@ -436,7 +507,12 @@ def owner(config):
             reference=None if expected_rows is None else expected_rows[index]
             mode_before=teacher_mode
             pending=None
-            if learning_teacher:
+            if learning_student:
+                if row['kind']!='action-replay':result['model_calls']+=1
+                predicted,pending=puck_student.decide(inputs,own,student_model,
+                                      reference if row['kind']=='action-replay' else None)
+                action=predicted.tolist();next_mode=None
+            elif learning_teacher:
                 result['controller_calls']+=1
                 try: action,next_mode,pending=puck_teacher.decide(inputs,before,mode_before,own)
                 except puck_teacher.SensorModeDisagreement as error:
@@ -446,12 +522,12 @@ def owner(config):
             else: action,next_mode=action_for({**row,**case},before,mode_before,reference)
             if len(action)!=2 or any(type(v) not in (int,float) or not math.isfinite(v) or abs(v)>.4 for v in action):
                 raise ValueError('Command exceeds frozen task bounds before control')
-            if not learning_teacher and row['kind']!='action-replay' and 'action' not in case: result['controller_calls']+=1
+            if not learning_teacher and not learning_student and row['kind']!='action-replay' and 'action' not in case: result['controller_calls']+=1
             control=effective_control(action)
             probe.install();probe.begin(state['tick'])
             try:
                 next_observation,nav_reward,nav_done,nav_truncated,nav_info=env.step(action)
-                if learning_teacher:
+                if learning_teacher or learning_student:
                     result.update(last_native_completed_tick=env._t,data_time_s=float(env.data.time))
                 interval=probe.end()
             finally: probe.close()
@@ -461,30 +537,35 @@ def owner(config):
             env._obstacle_xy[0]=np.asarray(world['puck_xyz'][:2],np.float32)
             contact=puck.classify_contacts(interval,probe.ownership,tick=state['tick']+1,time_s=world['time_s'])
             state,reward=puck.advance(state,world,contact,action)
-            if not learning_teacher: teacher_mode=next_mode
+            if not learning_teacher and not learning_student: teacher_mode=next_mode
             arrays=packet(env,observation,before,world,inputs,action,state,contact,interval,reward,
                           [nav_reward,bool(nav_done),bool(nav_truncated),nav_info['dist_to_goal'],bool(nav_info['stalled'])],
-                          mode_before,next_mode,case['id'],learning_pending=pending)
+                          mode_before,next_mode,case['id'],learning_pending=pending if learning_teacher else None,
+                          student_pending=pending if learning_student else None)
             if sum(a.nbytes for a in arrays.values())>128*1024:
                 raise ValueError('Numeric row exceeds preflight allowance')
             event={'state':state,'world':world,'contact':contact,'reward':reward,
                    'teacher_mode_before':mode_before,'teacher_mode_after':next_mode}
-            if learning_teacher:
+            if learning_teacher or learning_student:
                 next_own=puck_learning.commit(own,pending,state['tick'])
                 event.update(supervisor_mode_before=own['mode'],supervisor_mode_after=next_own['mode'])
+                if learning_student:
+                    event.pop('teacher_mode_before');event.pop('teacher_mode_after')
             if len(json.dumps(event,allow_nan=False).encode())>16*1024:
                 raise ValueError('Interval event exceeds preflight allowance')
             writer.tick(0,state['tick']-1,**arrays)
             writer.event('puck_interval',**event)
-            if learning_teacher:
+            if learning_teacher or learning_student:
                 own=next_own;teacher_mode=next_mode
-                result.update(ticks=state['tick'],completed_control_tick=state['tick'],
-                              physics_steps_this_owner=state['tick']*10,own_supervisor_cursor=own)
+                result.update(ticks=state['tick']-start_tick,completed_control_tick=state['tick'],
+                              physics_steps_this_owner=(state['tick']-start_tick)*10,own_supervisor_cursor=own)
             observation=next_observation
             max_displacement=max(max_displacement,math.dist(world['puck_xyz'][:2],origin))
             if reference is not None: same_row(reference,{'episode':0,'tick':state['tick']-1,**arrays})
             if row['kind']=='root' and case['id']=='teacher-positive' and state['reason'] is None:
                 for name in boundaries(state,contact,result['snapshots']): snapshot_at(name)
+            if learning_student and row['kind']=='root' and state['tick']==1 and state['reason'] is None:
+                snapshot_at('tick1')
             progress(state['tick'])
         ticks=state['tick']-start_tick
         result.update(ticks=ticks,final_state=state,final_world=world,final_teacher_mode=teacher_mode,max_puck_displacement_m=max_displacement,
@@ -493,8 +574,19 @@ def owner(config):
                       physics_steps_this_owner=ticks*10)
         completion=state['reason'] or ('continuation_window_complete' if row['kind']=='native-continuation' else 'fixed_mechanics_horizon')
         result['completion']=completion
-        writer.finish({'outcome':state['reason'],'completion':completion,'final_state':state,'teacher_mode':teacher_mode,'ticks':ticks})
-        if learning_teacher:
+        final_record={'outcome':state['reason'],'completion':completion,'final_state':state,'teacher_mode':teacher_mode,'ticks':ticks}
+        if learning_student:
+            result.pop('final_teacher_mode');final_record.pop('teacher_mode')
+            final_record['own_supervisor_cursor']=copy.deepcopy(own)
+        writer.finish(final_record)
+        if learning_student:
+            if result['model_calls']!=(0 if row['kind']=='action-replay' else ticks):
+                raise ValueError('Student model call count differs')
+            if row['kind']=='root':
+                if not 5<=ticks<=120 or set(result['snapshots'])!={'initial','tick1'}:
+                    raise ValueError('Student source lacks fixed mechanism successor coverage')
+            elif ticks!=count:raise ValueError('Student replay/continuation stopped before exact source window')
+        elif learning_teacher:
             if state['reason'] is None: raise ValueError('Teacher stopped without natural task outcome')
         elif row['kind']=='root':
             accept_root(case,ticks,state,max_displacement,state['had_contact'],[world['puck_xyz'][i]-origin[i] for i in range(2)])
@@ -502,7 +594,8 @@ def owner(config):
                 if set(result['snapshots'])!={'initial','tick1','contact','dwell'}: raise ValueError('Required first snapshot boundary absent')
                 for name in ('tick1','contact','dwell'): window(list(iter_ticks(output/'recording')),result['snapshots'][name]['tick'],4)
         elif ticks!=count: raise ValueError('Replay/continuation stopped before exact source window')
-        if 'torch' in sys.modules: raise ValueError('Unexpected model import')
+        if 'torch' in sys.modules and not learning_student:
+            raise ValueError('Unexpected model import')
         result['status']='passed'
     except Exception as error:
         result.update(status='failed',error={'type':type(error).__name__,'message':str(error)[:4096]})
@@ -540,6 +633,14 @@ def owner(config):
                 env.close()
                 if env.window is not None or env._view_ctx is not None: raise ValueError('Unexpected native view resource')
             except Exception as error: result['finalization_errors'].append('environment: '+str(error)[:1024])
+        if learning_student and student_identity is not None:
+            try:
+                _,actual=puck_student.admit_bundle(root,config['bundle_root'],row['model_seed'])
+                if actual!=student_identity:raise ValueError('Student bundle changed during owner')
+                if student_model is not None:
+                    puck_student.check_parameters(student_model,root,config['bundle_root'],row['model_seed'])
+                result['student_bundle_unchanged']=True
+            except Exception as error:result['finalization_errors'].append('student bundle: '+str(error)[:1024])
         try:
             result['sources_unchanged']=source_inventory(root)==config['sources']
             if not result['sources_unchanged']: raise ValueError('Frozen sources changed')
