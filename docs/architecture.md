@@ -119,7 +119,9 @@ NPZ weights and all thirty epochs retained. The [headless student](plans/m6-puck
 uses those fixed bundles, eight sensors and its own mode through the existing
 owner/recorder. All four proposed native/replay owners construct the same model
 for exact Torch state restoration; action replay makes zero predictions. Its
-actual native gate, closed-loop development and public UI still need qualification.
+four-owner native gate now passes 364 intervals, five snapshots and exact
+continuation/action/policy replay. Fixed closed-loop development and public UI
+still need qualification.
 
 Research scripts freeze source identities, protocols and output bounds before
 execution. Their reports distinguish collection, cleanup, validation and task
