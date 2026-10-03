@@ -2497,5 +2497,21 @@
       "path": "runs/puck-balanced-development-root-audit-d4efa26/audit.json",
       "sha256": "7926e4bc3fb6832915a6f54c57f7d19845cb5ada73b005d018cee9502a38daba"
     }
+  },
+  "memory_development_analysis": {
+    "source_commit": "4229820126694a42bd4c421df8efa7a347a92dc1",
+    "evidence_commit": "af99748",
+    "report": "docs/reports/m5-development-readout-16.json",
+    "report_sha256": "344d34b06d8db5c3be53710e42944649e7189d74c0c68607e07b57397c6b57b1",
+    "completed_cells": 16,
+    "expected_cells": 48,
+    "paired_readouts": 128,
+    "focused_and_profile_tests": 7,
+    "test_seconds": 17.987,
+    "actual_readout_supervised_seconds": 0.2732084669987671,
+    "raw_events_reaudited": false,
+    "native_or_model_execution": false,
+    "r2_complete": false,
+    "qualification_claims": []
   }
 }

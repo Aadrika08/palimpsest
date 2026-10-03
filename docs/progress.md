@@ -6,6 +6,13 @@ Working-set binding: `98d42920e321b42d22c6336f938d2c3ba9fd770d8ba24a2a`. Its MCP
 
 ## Current state
 
+[Partial paired memory analysis](reports/m5-development-readout-16.md) is integrated
+from `af99748`, draft PR #57: 16/48 cells, 144 condition readouts and 128 pairs.
+All task pairs tie; own reaches the goal one tick later in five pairs and ties in
+123. All 48 applicable correction pairs tie. Seven pure combined analysis/profile
+checks pass in 17.987 s. The new tool has no model/native execution; the historical
+717-test full regression below predates this additional analysis check.
+
 Combined checkout: `feat/project-integration` joins the reviewed lab, memory, task,
 MaleCNS training/wrapper, artwork exporters and rover proposal branches. `main`
 remains unchanged. Historical evidence below retains its original source identity.
@@ -60,7 +67,7 @@ remains ineligible.
 - Mechanism: pinned upstream model/environment; allowlisted controller inputs; one mutable-runtime owner; complete native, policy, application and RNG snapshots. Recorded E fitting and U-only swaps preserve declared invariant hashes. Male controllers use separately trained fixed CPU assets and an authored sensor mapping.
 - Missing: M5 counterbalanced/held-out transfer; remaining M6 skills and learned results; M7 closed-loop qualification; M8 physical work; remaining M9 modes/operation; final M10 handoff.
 - Unknown: original checkpoint training lineage, full-model Pi performance, physical stopping limits and account quota (telemetry unavailable).
-- Next action: finish and audit the running remaining-03 memory admission, then the separate body UI gate if its controls are ready, one actual runtime at a time. The corrected fitted-body homing experiment and independent audit pass; UI controls are being prepared. Balanced puck development completes all twelve owners/7,200 rows but each model scores 0/4 goals; root raw audit passes and held-out remains locked. The second memory comparison passes forty owners/4,650 rows and all 36 evaluator task checks; fixed development coverage is now sixteen of 48 cells. Body/homing source and balanced development routing are integrated. Full enabled regression passes 717 tests at `db59a56`, including the routing-only adapter and verifier storage correction. The user chose to keep R3 open for a new navigation study; physical qualification and independent exhibition operation also remain open.
+- Next action: audit the running remaining-03 memory comparison, then run the separately reviewed body UI v2 gate after runtime release. The third admission is complete and independently audited (12 owners / 1,204 intervals). The paired-analysis tool now summarizes the sixteen completed development cells across eight shared namespaces; all 128 task pairs tie, with no correction-timing benefit. Its seven combined profile checks pass. Body/homing composition passes 853 audited rows and 0.119643 m home error. Both puck development evaluations remain negative and held-out stays locked. The user chose a new R3 navigation study; physical qualification and independent exhibition operation remain open.
 
 ## Verification
 
