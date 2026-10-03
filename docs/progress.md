@@ -37,8 +37,11 @@ writer lease is free. A separate 6.518-second readout checks 27 condition outcom
 across the three completed cells without promoting the incomplete batch.
 Coverage remains 32/48. Source and controls stay frozen; no retry, deadline
 relaxation or root-cause claim follows. Post-failure I/O pressure was elevated,
-but no in-run receipt isolates the cause. A focused failure publication is being
-prepared; both prewritten success auditors remain unused.
+but no in-run receipt isolates the cause. The [focused failure publication](reports/m5-remaining-07-comparison-failure.md),
+`80d7e1d`, is integrated after all 595 unique references (1,071,249,237 bytes)
+rehash. Both prewritten success auditors remain unused. Controls for the separate,
+already-frozen remaining-08 admission are being prepared; they do not replace or
+retry failed 07, and its coverage gap remains explicit.
 The [remaining-06 admission](reports/m5-remaining-06-admission.md), `016948b`,
 retains its twelve owners/1,204 rows and all 150 rehashed publication references;
 the initial root copied-index error and corrected audit are both retained.
@@ -176,7 +179,7 @@ remains ineligible.
 - Mechanism: pinned upstream model/environment; allowlisted controller inputs; one mutable-runtime owner; complete native, policy, application and RNG snapshots. Recorded E fitting and U-only swaps preserve declared invariant hashes. Male controllers use separately trained fixed CPU assets and an authored sensor mapping.
 - Missing: M5 counterbalanced/held-out transfer; learned M6 puck success and held-out evaluation; M7 closed-loop qualification; M8 physical work; remaining M9 modes/operation; final M10 handoff.
 - Unknown: original checkpoint training lineage, full-model Pi performance, physical stopping limits and account quota (telemetry unavailable).
-- Next action: review the navigation v2 preparer launch controls on frozen `4ecb354`; eleven root source checks pass. Actual cross-corpus preparation and all fitting/dev/held-out stages remain pending; collection v1 remains failed. Integrate the audited remaining-07 comparison failure publication; no retry or increased deadlines are authorized. Serialize bulk data audits with native jobs after the unexplained internal wall timeout. Memory coverage is 32/48; the existing paired readout covers its historical 24-cell subset. The audited new-body v2 publication is integrated. Scoped exploration, homing and measured-adaptation subgates are met; learned puck keeps M6 open. Both puck development evaluations remain negative; automatic retraining stops and held-out stays locked. Physical qualification and independent exhibition operation remain open.
+- Next action: review the navigation v2 preparer launch controls on frozen `4ecb354`; eleven root source checks pass. Actual cross-corpus preparation and all fitting/dev/held-out stages remain pending; collection v1 remains failed. The audited remaining-07 failure publication is integrated; prepare independent remaining-08 controls without retrying07 or increasing deadlines. Serialize bulk data audits with native jobs after the unexplained internal wall timeout. Memory coverage is 32/48; the existing paired readout covers its historical 24-cell subset. The audited new-body v2 publication is integrated. Scoped exploration, homing and measured-adaptation subgates are met; learned puck keeps M6 open. Both puck development evaluations remain negative; automatic retraining stops and held-out stays locked. Physical qualification and independent exhibition operation remain open.
 
 The [prospective held-out outline](plans/m5-heldout-proposal.md) specifies the
 reserved 64–71 matrix without opening it. Source/profile freeze and all 48 audited
@@ -197,6 +200,9 @@ readout receipt `partial-outcomes.json` has SHA-256
 `13a84884db5580574ab2d0b835c4ed4e8fa4358f2371633470a3bbea38ebf22f`.
 Both audit sessions drain exit 0; the original experiment session 30311 drains
 exit 1. No rerun, native/model execution or coverage promotion occurred.
+Publication review passes first in 2.138 s; its receipt is
+`runs/memory-remaining-07-failure-publication-root-review-80d7e1d/audit.json`,
+SHA-256 `9115850ee98e2e9b6bb953676b16e7cbc831d866c38d17cb53888ce1106dba40`.
 
 New-body v2 publication review passes first in 0.299 s: 32 direct references,
 48 raw files, current controls and all 45 unchanged v1 files combine into
