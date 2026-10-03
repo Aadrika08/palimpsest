@@ -16,8 +16,10 @@ There is no own-U task or timing benefit. Root publication review rehashes all
 1,089,878,909 bytes), after correcting its relative-path reader assumption.
 The comparison session `16395` drained exit0; all 44 sampled nonlauncher
 identities and the launcher are absent, inventories are unchanged and the lease
-is free. Remaining-06 admission controls are being prepared; no next runtime is
-admitted. Twenty development cells and the separate held-out study remain open.
+was free after shutdown. Remaining-06 admission now runs once on frozen `0a6bb4c`
+in session `77168`, after independent control review and fresh startup checks.
+Coverage remains 28/48 until its separate comparison and audits. Twenty
+development cells and the held-out study remain open.
 
 The [remaining-05 admission](reports/m5-remaining-05-admission.md), evidence
 `ad2eff7`, completed once on frozen `746c67b` in session `90487`: twelve owners,
@@ -116,7 +118,7 @@ remains ineligible.
 - Mechanism: pinned upstream model/environment; allowlisted controller inputs; one mutable-runtime owner; complete native, policy, application and RNG snapshots. Recorded E fitting and U-only swaps preserve declared invariant hashes. Male controllers use separately trained fixed CPU assets and an authored sensor mapping.
 - Missing: M5 counterbalanced/held-out transfer; remaining M6 skills and learned results; M7 closed-loop qualification; M8 physical work; remaining M9 modes/operation; final M10 handoff.
 - Unknown: original checkpoint training lineage, full-model Pi performance, physical stopping limits and account quota (telemetry unavailable).
-- Next action: review separately prepared launch controls for the integrated navigation v2 collector; v1 remains failed and no new runtime is admitted. The separate cross-corpus preparer and all fitting/dev/held-out stages remain pending. Review the next remaining-06 admission controls. Memory coverage is 28/48; the existing paired readout covers its historical 24-cell subset. Implement the fixed standalone new-body verifier using existing helpers. Both puck development evaluations remain negative; automatic retraining stops and held-out stays locked. Physical qualification and independent exhibition operation remain open.
+- Next action: review separately prepared launch controls for the integrated navigation v2 collector; v1 remains failed and no new runtime is admitted. The separate cross-corpus preparer and all fitting/dev/held-out stages remain pending. Finish and independently audit the active remaining-06 admission. Memory coverage is 28/48; the existing paired readout covers its historical 24-cell subset. Implement the fixed standalone new-body verifier using existing helpers. Both puck development evaluations remain negative; automatic retraining stops and held-out stays locked. Physical qualification and independent exhibition operation remain open.
 
 The [prospective held-out outline](plans/m5-heldout-proposal.md) specifies the
 reserved 64–71 matrix without opening it. Source/profile freeze and all 48 audited
@@ -127,6 +129,15 @@ planning check; an artifact storage path is pending user input. No data is delet
 or moved and no held-out implementation/execution is unlocked.
 
 ## Verification
+
+Remaining-06 admission controls pass eight root fixtures in 8.201 s and full
+read-only preflight in 2.749 s: 591 identities, twelve fresh IDs disjoint from598,
+fresh output/start and 26,578,796,544 free bytes. Full launcher AST equals
+successful05 after fixed substitutions; encloser bytes match. Receipt:
+`runs/memory-remaining-06-admission-control-root-review-0a6bb4c/control-review.json`,
+SHA-256 `988e07c9bd773d27b1e706eebf80987193eae7e7b931059de81153dda56bb5a6`.
+Root fixture/preflight copies preserve producer receipts. Startup separately
+reports 26,583,203,840 free bytes; no new lease/model work ran in root review.
 
 Remaining-05 comparison raw/outcome audits pass first in 16.292 / 8.140 s:
 `runs/memory-remaining-05-comparison-root-audit-ad2eff7/audit.json`
