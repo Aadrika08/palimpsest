@@ -2274,5 +2274,90 @@
       "sha256": "1e35a90d48afe4d6ecc501e2926af38de9bcbabecdf3a6ae77d652a4a45ec5a7"
     },
     "scope": "Single training scene and model seed21; replay/restore mechanism only. Development task admission and held-out remain pending."
+  },
+  "balanced_student_body_homing_regression": {
+    "status": "passed",
+    "tests": 711,
+    "skipped": 0,
+    "suite_seconds": 159.95,
+    "supervisor": {
+      "elapsed_seconds": 163.23128565198567,
+      "output": "/home/utkarsh/Work/shraddha/brain/.worktrees/project-integration/runs/integration-balanced-student-body-homing-f78f087-20261003/supervisor",
+      "returncode": 0,
+      "schema_version": 1,
+      "started_utc": "2026-10-03T08:18:41.807081+00:00",
+      "status": "completed",
+      "timeout_seconds": 300
+    },
+    "source_files_rehashed": 513,
+    "assets_rehashed": 20,
+    "retained_files_rehashed": 50,
+    "source_assets_models_unchanged": true,
+    "writer_lease_available": true,
+    "report_sha256": "0cfeea443722bf8a5122442e547d5ce4c9c645a38da3742394e0a81bf54c9b27",
+    "launcher_sha256": "5f09acca86dd370053248680308740e39773062e08c4fb392c19a007960c31f3",
+    "scope": "All four actual-runtime flags enabled; local combined regression, not body homing experiment or later balanced-development adapter qualification.",
+    "source_commit": "f78f0877d58510222039ff24c8df1480f11ac6c8",
+    "primary_report": {
+      "path": "runs/integration-balanced-student-body-homing-f78f087-20261003/report.json",
+      "sha256": "0cfeea443722bf8a5122442e547d5ce4c9c645a38da3742394e0a81bf54c9b27"
+    },
+    "root_audit": {
+      "path": "runs/integration-balanced-student-body-homing-f78f087-20261003/root-audit.json",
+      "sha256": "d4d5ea536f1a4360615d2dc68ab8139779885644c680d40c94aacb45f1ae3a0a"
+    },
+    "launcher": {
+      "path": "runs/integration-balanced-student-body-homing-f78f087-launch.py",
+      "sha256": "5f09acca86dd370053248680308740e39773062e08c4fb392c19a007960c31f3"
+    },
+    "ui": {
+      "path": "runs/integration-ui-body-homing-f78f087/audit.json",
+      "sha256": "175339df22f02b739f81fd60d980acbaa56c8fbb266e325e14c801daf01afcd3"
+    },
+    "hosted_ci": {
+      "path": "runs/hosted-ci-f78f087.json",
+      "sha256": "c50016c2e885a79776638cc59285641a8d57f2ad3c1cb164f8a0147c811a3ebc"
+    }
+  },
+  "body_homing_source_validation": {
+    "producer_commit": "0fd38efcbf1a8c59c0a78a64f488fc0b99d8b7ab",
+    "integration_commit": "f78f0877d58510222039ff24c8df1480f11ac6c8",
+    "tests": 28,
+    "test_seconds": 5.284,
+    "historical_admission_seconds": 0.2662800979887834,
+    "receipt": {
+      "path": "runs/body-homing-integration-source-checks/audit.json",
+      "sha256": "4b061abee336731a17dfedc674e0583566368aaae90229f73b66eded0a4efb9e"
+    },
+    "native_composition_executed": false
+  },
+  "balanced_development_source_validation": {
+    "producer_commit": "d4efa2630e3d69eb8a9b3e45fd62a47557937724",
+    "integration_commit": "ba0ae45777de7dd07d439fc9ce7018cd0167914b",
+    "tests": 54,
+    "test_seconds": 9.382,
+    "readmission_seconds": 10.226580005997675,
+    "owner_inventory": 104,
+    "receipt": {
+      "path": "runs/puck-balanced-development-integration-checks-v2/audit.json",
+      "sha256": "c0155b07ed3de5b72870b8142007d338cf6b87dac24f0803532d83af1efb8eb4"
+    },
+    "first_checker_rejection_retained": true,
+    "actual_development_executed": false,
+    "full_enabled_suite_predates_this_merge": true
+  },
+  "remaining_02_admission_validation": {
+    "producer_commit": "559b64a1b5308efa05a78e3501aa1c93fc01814d",
+    "owners": 12,
+    "rows": 1204,
+    "neural_calls": 4,
+    "root_audit_seconds": 10.992460747002042,
+    "published_references_rehashed": 135,
+    "task_pass": null,
+    "comparison_executed": false,
+    "receipt": {
+      "path": "runs/memory-remaining-02-root-audit-559b64a/audit.json",
+      "sha256": "1c7a16ec766eb5757ca1cd4061f4f153ee21988c9c933ea4e82a8487351bbc72"
+    }
   }
 }

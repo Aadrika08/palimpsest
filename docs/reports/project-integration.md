@@ -446,3 +446,27 @@ in 20.901 s enclosing. Root independently checks all five full snapshots and
 absent and the global writer lease is free. Receipt SHA-256
 `1e35a90d48afe4d6ecc501e2926af38de9bcbabecdf3a6ae77d652a4a45ec5a7`.
 This is replay/restore evidence, not development task success. No held-out run occurred.
+
+## Fitted-body homing integration and current verification
+
+The composition source `0fd38ef` is integrated at `f78f087`. All 711 enabled
+Python tests pass without skips in 159.950 s (163.231 s supervised), with actual
+simulation, production MaleCNS and puck CPU checks enabled. Root rehashes all
+513 source entries, twenty assets and fifty retained files; identities remain
+unchanged and the writer lease is free. The JSON index binds the primary report,
+root audit and launcher. Node24.21.0 typecheck/build, seven measurement arithmetic
+checks and memory annotation checks also pass; no new browser workflow ran.
+Hosted jobs still execute zero steps due to GitHub account billing/spending limits.
+
+The later balanced-development adapter at `ba0ae45` passes 54 focused merged
+checks in 9.382 s and original-data/bundle readmission in 10.227 s. Its first
+producer-pin check rejects the deliberately changed body/homing snapshot dispatch.
+The retained corrected helper verifies exactly that approved `f78f087` file and
+the other fourteen unchanged entries; scientific ASTs, data, bundles and experiment
+pins stay unchanged. It checks 104 current owner dependencies. The prior 711-test
+result predates this routing-only adapter merge. Neither source slice yet has its
+separate body-homing/learned-development task result.
+
+Remaining-02 admission completes twelve owners/1,204 rows/four neural calls, with
+root retained audit passing in 10.992 s and all 135 publication references rehashed.
+Task/timing completion stays null; its nine-condition comparison is not yet run.
