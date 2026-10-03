@@ -27,12 +27,18 @@ def file_sha(path):
         return hashlib.file_digest(stream, 'sha256').hexdigest()
 
 
-def prepare(root, collection_path, expected_sha256, seed):
+def prepare(root, collection_path, expected_sha256, seed, *, balanced=False):
     import numpy as np
-    if type(seed) is not int or seed not in puck_model.SEEDS:
+    if type(seed) is not int or seed not in puck_model.SEEDS or type(balanced) is not bool:
         raise ValueError('Only the three frozen training seeds are allowed')
     root, collection_path = artifacts._safe_path(root), artifacts._safe_path(collection_path)
     spec = puck_learning.load_protocol(root)
+    objective = None
+    if balanced:
+        from palimpsest import puck_balanced
+        objective = puck_balanced.load_protocol(root)
+        if expected_sha256 != objective['collection_report_sha256']:
+            raise ValueError('Balanced pilot requires the exact admitted collection')
     raw = artifacts._read(collection_path, spec['limits']['report_bytes'])
     if puck_model.sha(raw) != expected_sha256:
         raise ValueError('Collection report hash differs')
@@ -66,6 +72,13 @@ def prepare(root, collection_path, expected_sha256, seed):
                     'torch_distribution': importlib.metadata.version('torch')},
         'held_out_used': False, 'qualification_claims': [],
         'scope': 'Hybrid fixed phase memory plus learned continuous actions; recorded-input imitation only.'}
+    if balanced:
+        puck_balanced.row_weights(*data['train'])
+        protocol.update(schema=puck_balanced.SCHEMA,
+            balanced_objective={'path': puck_balanced.PROTOCOL_PATH, 'sha256': puck_balanced.PROTOCOL_SHA256},
+            training_objective=objective['objective'], strata=objective['strata'])
+        protocol['source_hashes'].update({name: file_sha(root/name) for name in puck_balanced.SOURCE_FILES})
+        puck_balanced.validate_protocol(protocol, root)
     check_sources(root, protocol)
     return data, protocol
 
@@ -83,20 +96,35 @@ def check_sources(root, protocol):
                 raise ValueError('Teacher source changed after admission')
 
 
-def loss(actions, targets):
+def loss(actions, targets, *, weights=None):
     import torch
     if (targets.dtype != torch.float64 or targets.device.type != 'cpu' or targets.shape != actions.shape or
             not torch.isfinite(targets).all() or torch.any(targets.abs() > .4)):
         raise ValueError('Finite float64 teacher targets required')
-    return ((actions-targets)/.4).square().mean()
+    squared = ((actions-targets)/.4).square()
+    if weights is None:
+        return squared.mean()
+    if (weights.dtype != torch.float64 or weights.device.type != 'cpu' or
+            weights.shape != (len(targets),) or not torch.isfinite(weights).all() or torch.any(weights <= 0)):
+        raise ValueError('Finite positive float64 row weights required')
+    from palimpsest.puck_balanced import batch_mean
+    return batch_mean(squared.mean(dim=1), weights)
 
 
-def fit(data, seed, deadline):
+def fit(data, seed, deadline, *, row_weights=None):
     """Frozen 30-epoch procedure; no epoch/hyperparameter override or held-out path."""
+    if row_weights is not None:
+        import numpy as np
+        from palimpsest import puck_balanced
+        expected = puck_balanced.row_weights(*data['train'])
+        if (not isinstance(row_weights, np.ndarray) or row_weights.dtype != np.float64 or
+                row_weights.shape != expected.shape or not np.array_equal(row_weights, expected)):
+            raise ValueError('Exact fixed train-only row weights required')
     import torch
     model = puck_model.make_model(seed)
     train_x, train_y = map(torch.from_numpy, data['train'])
     dev_x, dev_y = map(torch.from_numpy, data['recorded_dev'])
+    train_weights = torch.from_numpy(row_weights) if row_weights is not None else None
     optimizer = torch.optim.Adam(model.parameters(), lr=.001, weight_decay=0.)
     generator = torch.Generator(device='cpu').manual_seed(seed)
     history, best, selected, saved = [], math.inf, None, None
@@ -108,7 +136,8 @@ def fit(data, seed, deadline):
         order = torch.randperm(len(train_x), generator=generator)
         for indices in order.split(64):
             deadline_check(); optimizer.zero_grad(set_to_none=True)
-            value = loss(puck_model.actions(model, train_x[indices]), train_y[indices])
+            arguments = {} if train_weights is None else {'weights': train_weights[indices]}
+            value = loss(puck_model.actions(model, train_x[indices]), train_y[indices], **arguments)
             if not torch.isfinite(value):
                 raise ValueError('Nonfinite puck training loss')
             value.backward()
@@ -126,7 +155,8 @@ def fit(data, seed, deadline):
                     raise ValueError('Nonfinite recorded-dev loss')
                 dev_total += float(value) * len(dev_x[start:start+64])
         dev_loss = dev_total / len(dev_x)
-        history.append({'epoch': epoch, 'train_ticks': len(train_x), 'train_loss': total/len(train_x),
+        train_key = 'train_loss' if train_weights is None else 'weighted_train_loss'
+        history.append({'epoch': epoch, 'train_ticks': len(train_x), train_key: total/len(train_x),
                         'dev_ticks': len(dev_x), 'dev_loss': dev_loss})
         if dev_loss < best:
             best, selected = dev_loss, epoch
@@ -158,6 +188,11 @@ def train(root, output, data, protocol):
             any(output.is_relative_to(Path(s['path']).parent) or Path(s['path']).is_relative_to(output)
                 for s in protocol['sources'])):
         raise ValueError('Exclusive runs/.../seed-N output outside teacher owners required')
+    weights = None
+    if protocol['schema'] != 'puck-training-v1':
+        from palimpsest import puck_balanced
+        puck_balanced.validate_protocol(protocol, root)
+        weights = puck_balanced.row_weights(*data['train'])
     limits = protocol['limits']; maximum = limits['per_seed']['bytes']
     budget = StorageBudget((output.parent,), StorageLimits(max_bytes=limits['all_training_bytes'],
                            min_free_bytes=limits['min_free_bytes']))
@@ -177,11 +212,14 @@ def train(root, output, data, protocol):
         report = {'status': 'failed', 'training_completed': False, 'training_seed': protocol['training_seed'],
                   'protocol_sha256': puck_model.sha(puck_model.canonical(protocol)),
                   'held_out_used': False, 'qualification_claims': [], 'finalization_errors': []}
+        if weights is not None:
+            report['training_objective_sha256'] = puck_balanced.PROTOCOL_SHA256
         started = time.monotonic()
         try:
             check_sources(root, protocol)
             write('protocol.json', puck_model.canonical(protocol))
-            arrays, result = fit(data, protocol['training_seed'], started+120)
+            arguments = {} if weights is None else {'row_weights': weights}
+            arrays, result = fit(data, protocol['training_seed'], started+120, **arguments)
             payload = puck_model.checkpoint_bytes(arrays)
             puck_model.read_checkpoint(payload)
             write('checkpoint.npz', payload)
@@ -209,12 +247,14 @@ def main(argv=None):
     parser.add_argument('--collection-sha256', required=True)
     parser.add_argument('--seed', type=int, choices=puck_model.SEEDS, required=True)
     parser.add_argument('--prepare-only', action='store_true')
+    parser.add_argument('--balanced-loss', action='store_true', help='Only the separately pinned balanced-loss pilot')
     parser.add_argument('--output', type=Path)
     args = parser.parse_args(argv)
     if not args.prepare_only and args.output is None:
         parser.error('Actual training requires an exclusive --output')
     try:
-        data, protocol = prepare(args.repo, args.collection_report, args.collection_sha256, args.seed)
+        arguments = {'balanced': True} if args.balanced_loss else {}
+        data, protocol = prepare(args.repo, args.collection_report, args.collection_sha256, args.seed, **arguments)
         report = ({'status': 'prepared', 'training_performed': False, 'protocol': protocol,
                    'protocol_sha256': puck_model.sha(puck_model.canonical(protocol))} if args.prepare_only else
                   train(args.repo, args.output, data, protocol))
