@@ -1,10 +1,12 @@
 """Admission/orchestration guards without a native owner or ignored-data dependency."""
 import copy
+from contextlib import nullcontext
 import json
 from pathlib import Path
 import sys
 import tempfile
 import unittest
+from types import SimpleNamespace
 from unittest.mock import patch
 
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]/'scripts'))
@@ -78,5 +80,44 @@ class GateGuards(unittest.TestCase):
         with patch.object(adaptive,'configure',side_effect=fixtures.configure):gate.command(engine,'clear','reset')
         self.assertIsNone(engine.task_state);self.assertEqual(engine.body_state['samples'],[])
         self.assertEqual(engine.composition,homing.context())
+
+    def test_real_storage_api_admits_parent_and_worker_destinations(self):
+        from palimpsest.engine import Engine
+        from palimpsest.storage import StorageBudget, StorageLimits
+        from dataclasses import asdict
+        original_check=StorageBudget.check
+        admitted=[]
+        def checked(budget, additional_bytes, *, path):
+            result=original_check(budget,additional_bytes,path=path)
+            admitted.append((additional_bytes,Path(path)))
+            return result
+        with tempfile.TemporaryDirectory() as folder:
+            root=Path(folder);inputs=root/'inputs';inputs.mkdir();stage=root/'worker';stage.mkdir()
+            args=SimpleNamespace(repo=Path(__file__).resolve().parents[1],assets=root/'assets',
+                calibration_report=inputs/'report.json',fitted_snapshot=inputs/'fitted.snp',output=root/'parent')
+            input_state=(None,None,None,{'report':'fixture','snapshot':'fixture'})
+            with patch.object(gate,'source_identity',return_value={'fixture':True}),\
+                patch.object(gate,'harness_hashes',return_value={'fixture':True}),\
+                patch.object(gate,'admitted_inputs',return_value=input_state),\
+                patch('palimpsest.assets.verify_assets',return_value={'ok':True}),\
+                patch.object(StorageBudget,'check',checked),patch.object(StorageBudget,'lock',return_value=nullcontext()),\
+                patch('palimpsest.evaluate.bounded_process',side_effect=RuntimeError('stop after real parent admission')) as child:
+                report=gate.verify(args)
+                child.assert_called_once()  # No process is created by this mocked boundary.
+                self.assertIn((gate.admission()['aggregate_bytes'],args.output),admitted)
+                self.assertEqual(report['error']['message'],'stop after real parent admission')
+                for mode in ('source','native'):
+                    run=stage/mode
+                    config={'repo':str(args.repo),'assets':str(args.assets),'mode':mode,'stage':str(stage),'run':str(run),
+                        'runtime_source':{'fixture':True},'harness_sha256':{'fixture':True},
+                        'storage':{'roots':[str(stage)],'limits':asdict(StorageLimits(max_bytes=2*1024**3,min_free_bytes=1024**3)),
+                            'headroom_bytes':8*1024**2}}
+                    with patch.dict(sys.modules,mujoco=SimpleNamespace(get_mjcb_control=lambda:None)),\
+                        patch.object(Engine,'open',side_effect=RuntimeError('stop after real worker admission')) as native:
+                        self.assertFalse(gate.worker(config));native.assert_called_once()
+                    amount=gate.admission()['aggregate_bytes'] if mode=='source' else gate.admission()['per_recording_bytes']+16*gate.MiB
+                    self.assertIn((amount,run),admitted)
+                    result=json.loads((stage/'result.json').read_text())
+                    self.assertEqual(result['error']['message'],'stop after real worker admission')
 
 if __name__=='__main__':unittest.main()

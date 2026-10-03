@@ -124,7 +124,7 @@ def worker(config):
             raise ValueError('Frozen source/harness changed')
         historical, fit_report, derived, input_hashes = admitted_inputs(config)
         result['input_hashes'] = input_hashes
-        budget.check(admission()['aggregate_bytes'] if mode == 'source' else admission()['per_recording_bytes']+16*MiB)
+        budget.check(admission()['aggregate_bytes'] if mode == 'source' else admission()['per_recording_bytes']+16*MiB,path=run)
         if mode in ('actions', 'policy'):
             run.mkdir(exist_ok=False)
             replay = replay_run(Path(config['source_run']), run, mode=mode,
@@ -246,7 +246,7 @@ def verify(args):
         try:
             admitted_inputs(config);report['assets_before']=verify_assets(root,assets)
             if not report['assets_before']['ok']:raise ValueError('Required assets absent')
-            budget.check(admission()['aggregate_bytes'])
+            budget.check(admission()['aggregate_bytes'],path=output)
             env={**os.environ,'PYTHONPATH':str(root/'src'),'MUJOCO_GL':'egl','OMP_NUM_THREADS':'2','MPLBACKEND':'Agg'}
             source_hashes=None
             for mode in OWNERS:
