@@ -73,6 +73,14 @@ def student_sources(root):
     return dict(sorted(result.items()))
 
 
+def development_sources(root):
+    from palimpsest import puck_development
+    result=student_sources(root)
+    for name in (puck_development.PROTOCOL_PATH,'scripts/evaluate_puck_development.py','tests/test_puck_development.py'):
+        result[name]=digest(root/name)
+    return dict(sorted(result.items()))
+
+
 def plan(task):
     limits = task['limits']
     rows = [{'id':case['id'], 'kind':'root', 'case':case['id'], 'seed':case['seed'],
@@ -349,8 +357,9 @@ def owner(config):
     root, output, row=Path(config['repo']),Path(config['output']),config['row']
     spec=protocol(root); task=puck.load_protocol(root)
     learning_teacher='learning_teacher' in config
-    learning_student='learning_student' in config
-    source_inventory=student_sources if learning_student else teacher_sources if learning_teacher else sources
+    development='learning_student_development' in config
+    learning_student='learning_student' in config or development
+    source_inventory=development_sources if development else student_sources if learning_student else teacher_sources if learning_teacher else sources
     own=student_model=student_identity=None
     budget=StorageBudget((output,),StorageLimits(max_bytes=row['max_bytes'],min_free_bytes=1024**3),headroom_bytes=8*MiB)
     identity=process_identity(); start_tick=config.get('start_tick',0)
@@ -364,7 +373,10 @@ def owner(config):
         if source_inventory(root)!=config['sources']: raise ValueError('Sources changed before owner admission')
         if learning_student:
             from palimpsest import puck_student, puck_learning
-            case=puck_student.admit_config(config,root)
+            if development:
+                from palimpsest import puck_development
+                case=puck_development.admit_config(config,root)
+            else:case=puck_student.admit_config(config,root)
             own=puck_learning.initial_cursor()
             _,student_identity=puck_student.admit_bundle(root,config['bundle_root'],row['model_seed'])
             result.pop('controller_calls')
@@ -394,6 +406,9 @@ def owner(config):
             student_model,loaded=puck_student.load(root,config['bundle_root'],row['model_seed'])
             if loaded!=student_identity:raise ValueError('Student model changed before native construction')
         if not learning_teacher and not learning_student: case=next(c for c in task['physics_cases'] if c['id']==row['case'])
+        if development:
+            import random
+            random.seed(row['seed']);np.random.seed(row['seed'])
         cls=import_upstream(root,'environment.mujoco_two_cam_env_random_obstacles').MuJoCoTwoCamEnv
         env=cls(**{**spec['environment_kwargs'],'seed':row['seed']})
         renderers.append(env.renderer)
@@ -449,6 +464,9 @@ def owner(config):
             expected_rows=window(source_rows,start_tick,config['ticks'])
             result['source_snapshot']=receipt
         def application():
+            if development:
+                return puck_development.application(root,row,config['sources'],identity_profile,model_hash,student_identity,
+                                                    state,world,contact,own)
             if learning_student:
                 return puck_student.application(root,row,config['sources'],identity_profile,model_hash,student_identity,
                                                 state,world,contact,own)
@@ -462,7 +480,10 @@ def owner(config):
         def snapshot_at(name):
             writer.flush()
             app=application(); app_hash=state_digest(app)
-            if learning_teacher:
+            if development:
+                if name!='initial':raise ValueError('Development admits initial-only snapshots')
+                puck_development.validate_initial(app,root,row,config['sources'],identity_profile,model_hash,student_identity)
+            elif learning_teacher:
                 if name!='initial': raise ValueError('Learning teacher admits initial-only snapshots')
                 puck_teacher.validate_initial(app,root,row,config['sources'],identity_profile,model_hash,app_hash)
             elif learning_student:
@@ -476,6 +497,11 @@ def owner(config):
             result['snapshots'][name]={'file':path.name,'sha256':digest(path),'bytes':size,'tick':state['tick'],
                 'application_sha256':app_hash,'world':world,'contact':contact}
             writer.event('paused_snapshot',name=name,**result['snapshots'][name])
+            if development:
+                result['initial_match']={'status':'failed','reference':config['initial_reference']}
+                result['initial_match']=puck_development.initial_match(snap,config,root,student_identity)
+                writer.event('development_initial_match',**result['initial_match'])
+                if result['initial_match']['status']!='passed':raise ValueError('Development scientific initialization mismatch before action1')
         manifest={'schema':'puck-mechanics-v2','protocol_sha256':PROTOCOL_SHA256,
             'pushing_protocol_sha256':puck.PROTOCOL_SHA256,'row':row,'source':config.get('source_snapshot'),
             'source_hashes':config['sources'],'profile_identity':identity_profile,'full_model_sha256':model_hash,
@@ -492,11 +518,14 @@ def owner(config):
                             seed=row['seed'],split=row['split'],episodes=1,initial_supervisor=copy.deepcopy(own),
                             record_contract='Student numeric v1: float32 sensors8/features9; float64 actions; own BEFORE/AFTER modes; no teacher fields')
             start_event.pop('teacher_mode');start_event['own_supervisor_cursor']=copy.deepcopy(own)
+        if development:
+            manifest.update(schema='puck-student-development-v1',development_protocol_sha256=puck_development.PROTOCOL_SHA256,
+                            initial_reference=config['initial_reference'])
         writer=RunWriter(output/'recording',manifest,max_bytes=row['max_bytes'],storage_budget=budget)
         writer.event('episode_start',**start_event)
         snapshot_at('initial')
         count=config.get('ticks',row['max_ticks'])
-        estimate=record_estimate(count,4 if row['kind']=='root' and (case['id']=='teacher-positive' or learning_student) else 1)
+        estimate=record_estimate(count,4 if not development and row['kind']=='root' and (case['id']=='teacher-positive' or learning_student) else 1)
         budget.check(estimate,path=output/'recording')
         result['record_admission_estimate_bytes']=estimate
         progress(state['tick'])
@@ -564,7 +593,7 @@ def owner(config):
             if reference is not None: same_row(reference,{'episode':0,'tick':state['tick']-1,**arrays})
             if row['kind']=='root' and case['id']=='teacher-positive' and state['reason'] is None:
                 for name in boundaries(state,contact,result['snapshots']): snapshot_at(name)
-            if learning_student and row['kind']=='root' and state['tick']==1 and state['reason'] is None:
+            if learning_student and not development and row['kind']=='root' and state['tick']==1 and state['reason'] is None:
                 snapshot_at('tick1')
             progress(state['tick'])
         ticks=state['tick']-start_tick
@@ -582,7 +611,10 @@ def owner(config):
         if learning_student:
             if result['model_calls']!=(0 if row['kind']=='action-replay' else ticks):
                 raise ValueError('Student model call count differs')
-            if row['kind']=='root':
+            if development:
+                if not 1<=ticks<=600 or state['reason'] is None or set(result['snapshots'])!={'initial'}:
+                    raise ValueError('Development must finish one natural task outcome with initial-only snapshot')
+            elif row['kind']=='root':
                 if not 5<=ticks<=120 or set(result['snapshots'])!={'initial','tick1'}:
                     raise ValueError('Student source lacks fixed mechanism successor coverage')
             elif ticks!=count:raise ValueError('Student replay/continuation stopped before exact source window')
