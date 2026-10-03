@@ -1807,5 +1807,36 @@
     "held_out_executed": false,
     "historical_failures_retained": true,
     "qualification_claims": []
+  },
+  "reference_puck_recovery_regression": {
+    "source_commit": "712327086e8a1c2a54d662d88ab5e1c2f22f3bbd",
+    "tests": 628,
+    "passed": 628,
+    "skipped": 0,
+    "unittest_seconds": 125.643,
+    "supervised_seconds": 128.17675080298795,
+    "wall_seconds": 128.183481347005,
+    "returncode": 0,
+    "report": {
+      "path": "runs/integration-reference-puck-recovery-7123270-20261003/report.json",
+      "bytes": 115525,
+      "sha256": "82dd9014bf547210a3124da7ce779b77bb5112e3b32137b682d0e183e8e006f2"
+    },
+    "launcher": {
+      "path": "runs/integration-reference-puck-recovery-7123270-launch.py",
+      "bytes": 4175,
+      "sha256": "a0538916470a1d4420b97195360f76fa6a963ddb1346bf53e2d6f0d854c4ca93"
+    },
+    "retained_files_rehashed": 50,
+    "source_files": 427,
+    "all_four_runtime_flags_enabled": true,
+    "sources_assets_models_unchanged": true,
+    "recovery_trainer_source": "19d275d7ba3d8c7da642a4b41d3a6a8f2d5c720f",
+    "recovery_trainer_focused_root_checks": {
+      "passed": 24,
+      "seconds": 1.583,
+      "skipped": 0
+    },
+    "scope": "Combined actual regression and pure verifier/trainer checks. Source-scoped native reference and puck mechanics results are separately audited; no new data training, held-out or physical qualification from this suite."
   }
 }

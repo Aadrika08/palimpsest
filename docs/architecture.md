@@ -76,8 +76,10 @@ restore one exact acquired physical state and freeze memory as unused audit
 state. Original FLYNN retains its upstream true-goal-derived bearing; the sensor
 script uses only the visible common-goal bearing/contact; the analytical teacher
 uses privileged geometry. These information differences remain explicit. The
-references have separate admission and conditional replay routes; native
-qualification is still pending.
+references have separate admission and conditional replay routes. Their six-owner
+native development gate passes 744 intervals: 260 actual FLYNN policy intervals
+and 484 sensor-script/teacher intervals, with all six navigation goals. Memory
+remains frozen; reference replay and held-out qualification remain pending.
 
 [task_profiles.py](../src/palimpsest/task_profiles.py) supplies visible-landmark
 exploration and encoder-odometry homing. [task_mechanics.py](../src/palimpsest/task_mechanics.py)

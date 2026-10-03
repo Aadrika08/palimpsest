@@ -36,7 +36,7 @@ rehashed 146 retained files totaling 197,307,021 bytes and checked all 1569 rows
 raw contacts/stages, native poses, independent teacher/mode/task arithmetic,
 snapshot payloads and exact continuation/replay dtype, shape and bytes. A separate
 root audit also passed first in 3.815330632 s, checking 146 outer and 140 inner
-references. Neither audit imported MuJoCo/Torch or deserialized native data.
+references. Neither audit imported MuJoCo/Torch or constructed a native runtime.
 Hashes, original report inventories and both audit scripts are bound in the
 [compact evidence index](m6-puck-learning-v2-mechanics-v1.json).
 
