@@ -2513,5 +2513,73 @@
     "native_or_model_execution": false,
     "r2_complete": false,
     "qualification_claims": []
+  },
+  "remaining_03_comparison_audit": {
+    "status": "passed",
+    "producer_commit": "76a25ec9235c7465c18d6cdf724cc519736cbd2a",
+    "evidence_commit": "d8a672e98aab26833de74b9c262542a63c8b7563",
+    "owners": 40,
+    "numeric_rows": 4626,
+    "evaluator_task_checks_passed": 36,
+    "strict_u_only_core_boundaries": 16,
+    "raw_audit_seconds": 11.447032587006106,
+    "outcomes_audit_seconds": 8.446792697999626,
+    "published_references_rehashed": 424,
+    "published_reference_bytes": 1091908710,
+    "development_cells_compared": 20,
+    "development_cells_planned": 48,
+    "own_u_timing_benefit_observed": false,
+    "full_matrix_executed": false,
+    "held_out_executed": false,
+    "r2_complete": false,
+    "receipts": {
+      "raw": {
+        "path": "runs/memory-remaining-03-comparison-root-audit-76a25ec/audit.json",
+        "sha256": "7f591118f83ff44a62d72fac749c1fb032a7921b1979ae81eba78dcd7f0e25b4"
+      },
+      "outcomes": {
+        "path": "runs/memory-remaining-03-comparison-root-audit-76a25ec/outcomes.json",
+        "sha256": "a8ba7ef3233cdd370d473f99358293aa68dec2d956c78cb9faf0b029789cb8d5"
+      }
+    }
+  },
+  "body_homing_ui_audit": {
+    "status": "passed",
+    "scope": "Retained raw UI calibration/lifecycle/actions records; no successful-homing, new inference, physics, browser or physical qualification.",
+    "source_commit": "a447d7637621d496aaf285e81203e550079c6d54",
+    "report_sha256": "4f43ae8bd4f925676bde14ef4b36bf42e65c7fde5df184d2d3ce160874b680c8",
+    "enclosing_sha256": "6ae1cb604d20bd4277970aff37a08b561f37472c8895a6d067666120fffd6c3d",
+    "source_ticks": 491,
+    "actions_replay_ticks": 491,
+    "episode_tick_counts": {
+      "0": 120,
+      "1": 120,
+      "2": 120,
+      "3": 120,
+      "4": 10,
+      "5": 1
+    },
+    "snapshots": 3,
+    "calibration_samples": 400,
+    "compensated_control_ticks": [
+      4,
+      5,
+      6,
+      7
+    ],
+    "full_ledger_semantic_events": 580,
+    "replay_semantic_events": 577,
+    "initial_prefix_semantic_events": 3,
+    "observed_pid_start_pairs_absent": 18,
+    "writer_lease_available": true,
+    "source_controls_unchanged": true,
+    "qualification_claims": [],
+    "elapsed_seconds": 4.969250574999023,
+    "auditor_sha256": "b6838629b8731395f2b2f1537551b8277b877a0996816f74d9ee781dc4d75bcf",
+    "root_audit": {
+      "path": "runs/body-homing-ui-root-audit-v2-a447d76/audit-v2.json",
+      "sha256": "3a0c5678064a3929fc869e0cb73855642bcaaef763fe57954eaa624b8896c899"
+    },
+    "first_checker_failure_retained": "audit.json: full580 ledger events were incorrectly equated with577 post-initial-prefix replay events; corrected only checker and kept all580 pairwise event comparisons"
   }
 }

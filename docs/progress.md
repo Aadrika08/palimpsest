@@ -6,6 +6,17 @@ Working-set binding: `98d42920e321b42d22c6336f938d2c3ba9fd770d8ba24a2a`. Its MCP
 
 ## Current state
 
+The [remaining-03 comparison](reports/m5-remaining-03-comparison.md), `d8a672e`,
+adds four audited cells: **20/48 development cells** now compared. All forty
+owners finish, with 4,626 neural intervals and 36 evaluator task passes. Goals
+and correction timing show no own-U benefit. All 424 published references rehash.
+The sixteen-cell aggregate below remains its earlier fixed analysis snapshot.
+
+The fresh body/homing browser gate also passes on `a447d76`: 491 source and 491
+actions-replay rows, three snapshots, four probes, a 400-sample fit and Reset.
+Independent audit passes after correcting its initial-prefix event-count scope;
+both checker attempts are retained. This checks UI mechanisms, not successful homing.
+
 [Partial paired memory analysis](reports/m5-development-readout-16.md) is integrated
 from `af99748`, draft PR #57: 16/48 cells, 144 condition readouts and 128 pairs.
 All task pairs tie; own reaches the goal one tick later in five pairs and ties in
@@ -67,7 +78,7 @@ remains ineligible.
 - Mechanism: pinned upstream model/environment; allowlisted controller inputs; one mutable-runtime owner; complete native, policy, application and RNG snapshots. Recorded E fitting and U-only swaps preserve declared invariant hashes. Male controllers use separately trained fixed CPU assets and an authored sensor mapping.
 - Missing: M5 counterbalanced/held-out transfer; remaining M6 skills and learned results; M7 closed-loop qualification; M8 physical work; remaining M9 modes/operation; final M10 handoff.
 - Unknown: original checkpoint training lineage, full-model Pi performance, physical stopping limits and account quota (telemetry unavailable).
-- Next action: audit the running remaining-03 memory comparison, then run the separately reviewed body UI v2 gate after runtime release. The third admission is complete and independently audited (12 owners / 1,204 intervals). The paired-analysis tool now summarizes the sixteen completed development cells across eight shared namespaces; all 128 task pairs tie, with no correction-timing benefit. Its seven combined profile checks pass. Body/homing composition passes 853 audited rows and 0.119643 m home error. Both puck development evaluations remain negative and held-out stays locked. The user chose a new R3 navigation study; physical qualification and independent exhibition operation remain open.
+- Next action: finish the running artwork offline export check and independent readback; admit remaining-04 memory controls before the next native stage. Publish the completed body/UI evidence and freeze the new R3 navigation study before implementation. Memory coverage is 20/48, with the historical sixteen-cell aggregate retained. Both puck development evaluations remain negative and held-out stays locked. Physical qualification and independent exhibition operation remain open.
 
 ## Verification
 
@@ -77,7 +88,7 @@ forks preserve strict U-only boundaries. Root raw audit first passes in 16.232 s
 (577 identities, 120 retained input pins, forty snapshots); independent outcome
 recomputation passes in 8.176 s. All 42 sampled non-launcher identities plus the
 launcher are absent and the writer lease is free. Development comparison coverage
-is now sixteen of 48 cells; held-out and R2 qualification remain open. In the
+reached sixteen of 48 cells at that stage; remaining-03 above brings it to twenty. Held-out and R2 qualification remain open. In the
 paired lower-change cell every condition corrects at358; own/sham reach the goal
 at431 while no-U reaches it at430. Own/sham trajectories match; both no-event
 cells have zero selector calls/behavior bytes, and the null cell retains seven
