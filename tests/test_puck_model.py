@@ -4,6 +4,7 @@ import io
 import json
 import os
 from pathlib import Path
+import shutil
 import sys
 import tempfile
 import time
@@ -86,6 +87,10 @@ class PuckCheckpointTests(unittest.TestCase):
             self.assertEqual(data['train'][0].shape, (512, 9))
             self.assertEqual(data['recorded_dev'][1].dtype, np.float64)
             self.assertEqual(len(protocol['sources']), 20)
+            task = puck_learning.load_protocol(ROOT)['task_protocol']
+            self.assertIn(task['path'], protocol['source_hashes'])
+            self.assertEqual(protocol['source_hashes'][task['path']], task['sha256'])
+            self.assertNotIn('docs/plans/m6-puck-pushing-protocol-v4.json', protocol['source_hashes'])
             bundle = Path(tmp)/'seed-21'; bundle.mkdir()
             raw = puck_model.canonical(protocol); (bundle/'protocol.json').write_bytes(raw)
             checkpoint = puck_model.checkpoint_bytes({n: np.zeros(s, np.float32) for n, s in puck_model.SHAPES.items()})
@@ -108,6 +113,26 @@ class PuckCheckpointTests(unittest.TestCase):
                 changed = report | mutation
                 with self.assertRaises(ValueError): puck_model.read_bundle(bundle, write_report(changed), ROOT, 21)
             with self.assertRaises(ValueError): puck_model.read_bundle(bundle, '0'*64, ROOT, 21)
+            # Both final training revalidation and pure loading bind the active task file.
+            copied = Path(tmp)/'repo'
+            for name in protocol['source_hashes']:
+                target = copied/name; target.parent.mkdir(parents=True, exist_ok=True)
+                shutil.copyfile(ROOT/name, target)
+            report_sha = write_report(report)
+            train_puck.check_sources(copied, protocol)
+            puck_model.read_bundle(bundle, report_sha, copied, 21)
+            task_path = copied/task['path']; task_path.write_bytes(task_path.read_bytes()+b' ')
+            with self.assertRaisesRegex(ValueError, 'Training code/protocol changed'):
+                train_puck.check_sources(copied, protocol)
+            with self.assertRaisesRegex(ValueError, 'Frozen task/teacher source differs'):
+                puck_model.read_bundle(bundle, report_sha, copied, 21)
+            original_collection = collection.read_bytes()
+            for change in ({'status':'failed'}, {'learning_protocol_sha256':
+                    '513c7f5045b919241d7fdc6fa6ab058bd94134f8d168661b6453fadfb3b6b158'}):
+                collection.write_text(json.dumps(json.loads(original_collection)|change))
+                with self.assertRaisesRegex(ValueError, 'Passed frozen teacher collection/admission required'):
+                    train_puck.prepare(ROOT, collection, train_puck.file_sha(collection), 21)
+            collection.write_bytes(original_collection)
             with self.assertRaises(ValueError): train_puck.prepare(ROOT, collection, train_puck.file_sha(collection), 22.0)
             with self.assertRaisesRegex(ValueError, 'output'):
                 train_puck.train(ROOT, Path(tmp)/'wrong-output', data, protocol)
