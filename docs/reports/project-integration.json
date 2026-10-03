@@ -2580,6 +2580,30 @@
       "path": "runs/body-homing-ui-root-audit-v2-a447d76/audit-v2.json",
       "sha256": "3a0c5678064a3929fc869e0cb73855642bcaaef763fe57954eaa624b8896c899"
     },
-    "first_checker_failure_retained": "audit.json: full580 ledger events were incorrectly equated with577 post-initial-prefix replay events; corrected only checker and kept all580 pairwise event comparisons"
+    "first_checker_failure_retained": "audit.json: full580 ledger events were incorrectly equated with577 post-initial-prefix replay events; corrected only checker and kept all580 pairwise event comparisons",
+    "evidence_commit": "dd9001aabb0e049c88d8c262163d4befc7f02c83",
+    "published_references_rehashed": 57
+  },
+  "artwork_offline_handoff": {
+    "status": "passed",
+    "producer_commit": "9f57977265c5f29f3e6d953f6e282ad705d83cca",
+    "evidence_commit": "d6f7f91629e42fbf7284f4ba16f640c60c8fd03b",
+    "report": "docs/reports/m9-offline-handoff.json",
+    "report_sha256": "5ad48cfc3ec14098abf709c2e245b18eec6997d11b95ff58096ecad05e017b9f",
+    "exports": 6,
+    "input_files": 19,
+    "root_readback_seconds": 0.5011083949939348,
+    "published_references_rehashed": 17,
+    "merged_source_commit": "dddc24a99746ebe89d72a4b347c31bae473122e7",
+    "merged_source_tests": 7,
+    "merged_test_seconds": 0.451,
+    "merged_test_log_sha256": "d4a6984e364c5f35d8741caf9a6eab2a51cdffe1a1ab549c9cb5703e4e40cc74",
+    "root_audit": {
+      "path": "runs/artwork-handoff-root-audit-9f57977/audit.json",
+      "sha256": "d1796fe3aa35178af38c38346409cc3e5c37813d845fe334563c8c1b1906f48e"
+    },
+    "qualification_claims": [],
+    "r5_complete": false,
+    "full_regression_predates_this_source": true
   }
 }
