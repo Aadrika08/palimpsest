@@ -57,9 +57,19 @@ remains ineligible.
 - Mechanism: pinned upstream model/environment; allowlisted controller inputs; one mutable-runtime owner; complete native, policy, application and RNG snapshots. Recorded E fitting and U-only swaps preserve declared invariant hashes. Male controllers use separately trained fixed CPU assets and an authored sensor mapping.
 - Missing: M5 counterbalanced/held-out transfer; remaining M6 skills and learned results; M7 closed-loop qualification; M8 physical work; remaining M9 modes/operation; final M10 handoff.
 - Unknown: original checkpoint training lineage, full-model Pi performance, physical stopping limits and account quota (telemetry unavailable).
-- Next action: review remaining-01 comparison controls, then execute its fixed forty owners once under exclusive runtime supervision. Its twelve-owner admission and both retained audits pass. Review the minimal balanced-model student binding separately; original-data residual diagnostics are complete and negative, and no new student or held-out run follows from fitting. MaleCNS evaluation is complete, with useful-navigation/R3 acceptance unresolved and consumed held-out data unavailable for tuning. Physical and independent-operator gates remain external.
+- Next action: drain and audit the active remaining-01 comparison before any later memory chunk. It started once on frozen `6bf0890` with forty owners after independent control review. Its twelve-owner admission and both retained audits pass. Review the minimal balanced-model student binding separately; original-data residual diagnostics are complete and negative, and no new student or held-out run follows from fitting. MaleCNS evaluation is complete, with useful-navigation/R3 acceptance unresolved and consumed held-out data unavailable for tuning. Physical and independent-operator gates remain external.
 
 ## Verification
+
+Remaining-01 comparison control review passes eight pure fixtures in 5.718 s
+and independent readmission in 8.566 s: 573 tracked/upstream/asset entries,
+120 admission/history input pins, forty fresh IDs disjoint from 350 prior IDs.
+Root receipt SHA-256
+`c6b75130fd62f02c79fa65edb09cbf22e486b01995057043402705a17b279e29`.
+The exact frozen command started once with 31,439,282,176 free bytes and an
+available writer lease. Forty owners and 10,800 numeric intervals are ceilings,
+not observed results; task outcomes remain pending terminal drain and audit.
+
 
 Root retained puck-training audit first passes in 1.476 s: all ninety history
 rows, three finite 1,442-parameter checkpoints, unchanged unweighted selection,
@@ -76,7 +86,7 @@ fixture are frozen, and prior drafts remain retained. Receipt SHA-256
 The [one-shot admission](reports/m5-remaining-01-admission.md) completes on unchanged
 `568cc54`: twelve owners, 1,204 rows, four actual neural calls and twelve snapshots.
 Root audit first passes in 10.917 s and all 134 publication references rehash.
-Task/correction/goal completion remains censored; comparison is unstarted. Root
+Task/correction/goal completion remains censored in that admission. The subsequent forty-owner comparison is now running separately on frozen `6bf0890`. Root
 receipt SHA-256 `c6dcef431362616faa5cc4c1ec765d5200ea7aee8e71f2e8fdab17eca42f7b92`.
 All sampled process identities are absent and the global writer lease is free.
 Both fixture workflows passed on integration `a8af066` (37104317315 / 37104314840).
