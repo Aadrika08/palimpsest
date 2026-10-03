@@ -14,7 +14,7 @@ R3 scope confirmed on 3 October 2026: keep MaleCNS open for a new navigation stu
 
 The [puck review](reports/m6-puck-next-study-review.md) retains two failed development arms and no demonstrated mapping defect. Do not infer another training intervention from those failures; learned puck capability stays open, further automatic fitting stops, and held-out layouts remain locked.
 
-The [new-body response plan](plans/m6-new-body-response.md) freezes a standalone two-owner calibration/homing study with left gear 2.1, unchanged fit/task criteria and raw initial snapshots only. Its source-only verifier is being implemented; this does not promote a new public profile or claim capability.
+The [new-body response plan](plans/m6-new-body-response.md) freezes a standalone two-owner calibration/homing study with left gear 2.1, unchanged fit/task criteria and raw initial snapshots only. Verifier `4c4bca2` is integrated after seventeen independent focused checks pass without skips; all seventeen protected sources remain unchanged. Outer controls are being prepared for the bounded simulation gate; no new public profile or capability is claimed.
 
 ## Architecture and contracts
 

@@ -16,9 +16,12 @@ There is no own-U task or timing benefit. Root publication review rehashes all
 1,089,878,909 bytes), after correcting its relative-path reader assumption.
 The comparison session `16395` drained exit0; all 44 sampled nonlauncher
 identities and the launcher are absent, inventories are unchanged and the lease
-was free after shutdown. Remaining-06 admission now runs once on frozen `0a6bb4c`
-in session `77168`, after independent control review and fresh startup checks.
-Coverage remains 28/48 until its separate comparison and audits. Twenty
+was free after shutdown. Remaining-06 admission completes once on frozen `0a6bb4c`
+in session `77168`: twelve owners, 1,204 rows and four neural calls. Normal/full
+elapsed is 368.221/371.317 s; the session drained exit0. Root retained audit
+passes in 8.055 s after correcting its copied checker index from remaining-05
+to remaining-06. Both checker attempts remain retained; source and raw data are
+unchanged. Coverage remains 28/48 until its separate comparison and audits. Twenty
 development cells and the held-out study remain open.
 
 The [remaining-05 admission](reports/m5-remaining-05-admission.md), evidence
@@ -60,8 +63,13 @@ and its seven historical combined checks remain unchanged.
 
 The [standalone new-body plan](plans/m6-new-body-response.md), `6b9d78d`, is
 reviewed and integrated. It fixes one new left-wheel gear value (2.1), four probes
-and a fresh homing owner under unchanged fit and home thresholds. Source-only
-implementation is in progress; no new-body native run or success is claimed.
+and a fresh homing owner under unchanged fit and home thresholds. The standalone
+verifier `4c4bca2` is integrated after seventeen independent focused checks pass
+without skips in 0.227 s (0.578 s supervised), without Torch/MuJoCo or a writer
+lease. All seventeen protected sources remain unchanged. Root receipt
+`runs/m6-new-body-source-root-review-4c4bca2/audit.json` has SHA-256
+`69bbbf02ecbd73136601cea8c71c32593dd6931fe49ecde9c718b67dbcc0d7db`.
+New outer controls are being prepared; no native run or success is claimed.
 
 Combined checkout: `feat/project-integration` joins the reviewed lab, memory, task,
 MaleCNS training/wrapper, artwork exporters and rover proposal branches. `main`
@@ -118,7 +126,7 @@ remains ineligible.
 - Mechanism: pinned upstream model/environment; allowlisted controller inputs; one mutable-runtime owner; complete native, policy, application and RNG snapshots. Recorded E fitting and U-only swaps preserve declared invariant hashes. Male controllers use separately trained fixed CPU assets and an authored sensor mapping.
 - Missing: M5 counterbalanced/held-out transfer; remaining M6 skills and learned results; M7 closed-loop qualification; M8 physical work; remaining M9 modes/operation; final M10 handoff.
 - Unknown: original checkpoint training lineage, full-model Pi performance, physical stopping limits and account quota (telemetry unavailable).
-- Next action: review separately prepared launch controls for the integrated navigation v2 collector; v1 remains failed and no new runtime is admitted. The separate cross-corpus preparer and all fitting/dev/held-out stages remain pending. Finish and independently audit the active remaining-06 admission. Memory coverage is 28/48; the existing paired readout covers its historical 24-cell subset. Implement the fixed standalone new-body verifier using existing helpers. Both puck development evaluations remain negative; automatic retraining stops and held-out stays locked. Physical qualification and independent exhibition operation remain open.
+- Next action: review separately prepared launch controls for the integrated navigation v2 collector; v1 remains failed and no new runtime is admitted. The separate cross-corpus preparer and all fitting/dev/held-out stages remain pending. Publish the independently audited remaining-06 admission and review separate comparison controls. Memory coverage is 28/48; the existing paired readout covers its historical 24-cell subset. Review the fixed standalone new-body launch controls before its bounded simulation gate. Both puck development evaluations remain negative; automatic retraining stops and held-out stays locked. Physical qualification and independent exhibition operation remain open.
 
 The [prospective held-out outline](plans/m5-heldout-proposal.md) specifies the
 reserved 64–71 matrix without opening it. Source/profile freeze and all 48 audited
