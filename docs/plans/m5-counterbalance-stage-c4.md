@@ -1,8 +1,11 @@
 # M5 C4: remaining four development cells
 
-Status: prospective source implementation and pure fixtures only. No runtime
-plan, UUID list, launcher, native execution or held-out split is frozen by this
-document. Root review and a separately frozen actual gate remain required.
+Status: the one reviewed, frozen C4 launch completed all forty owners and 4,689
+CPU FLYNN rows. Local and independent root retained audits passed; all thirty-six
+continuations pass the evaluator, with no own-U timing or goal benefit. See the
+[actual evidence](../reports/m5-counterbalance-stage-c4.md) and its hash index.
+The preparation and bounds below describe that completed gate. No additional
+native execution, full matrix or held-out split is authorized by this document.
 
 The existing comparison runner supports exactly two fixed profiles. Its default
 C3 interpretation, four cells, protocol version 1 and broader selector/resource
@@ -16,7 +19,7 @@ is unchanged. The explicit `c4` profile uses protocol version 2 and these cells:
 | s26/paired_cue/null | Witnessed cue flip, unchanged physical occupancy, empty stale-value gold |
 | s31/local_cue/no-event | No cue flip or geometry change; zero trigger/selector invocation |
 
-Together C3 and an executed C4 would cover the eight selected B cells, not all 48 development
+Together audited C3 and C4 cover the eight selected B cells, not all 48 development
 cells. The eight namespaces, lexical/controller-seed dependence, asymmetric
 source observation opportunities and fixed lower goal/route remain. Upper
 passive revisions may precede any effect of an inspection request; this is a
