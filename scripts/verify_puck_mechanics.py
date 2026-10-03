@@ -73,6 +73,16 @@ def student_sources(root):
     return dict(sorted(result.items()))
 
 
+def balanced_student_sources(root):
+    from palimpsest import puck_balanced_student as student, puck_balanced
+    result=student_sources(root)
+    for name in (student.PROTOCOL_PATH, student.protocol(root)['models_manifest']['path'],
+                 puck_balanced.PROTOCOL_PATH, 'src/palimpsest/puck_balanced.py',
+                 'src/palimpsest/puck_balanced_student.py', 'tests/test_puck_balanced_student.py'):
+        result[name]=digest(root/name)
+    return dict(sorted(result.items()))
+
+
 def development_sources(root):
     from palimpsest import puck_development
     result=student_sources(root)
@@ -358,8 +368,9 @@ def owner(config):
     spec=protocol(root); task=puck.load_protocol(root)
     learning_teacher='learning_teacher' in config
     development='learning_student_development' in config
-    learning_student='learning_student' in config or development
-    source_inventory=development_sources if development else student_sources if learning_student else teacher_sources if learning_teacher else sources
+    balanced_student='learning_student_balanced' in config
+    learning_student='learning_student' in config or development or balanced_student
+    source_inventory=balanced_student_sources if balanced_student else development_sources if development else student_sources if learning_student else teacher_sources if learning_teacher else sources
     own=student_model=student_identity=None
     budget=StorageBudget((output,),StorageLimits(max_bytes=row['max_bytes'],min_free_bytes=1024**3),headroom_bytes=8*MiB)
     identity=process_identity(); start_tick=config.get('start_tick',0)
@@ -372,7 +383,13 @@ def owner(config):
     try:
         if source_inventory(root)!=config['sources']: raise ValueError('Sources changed before owner admission')
         if learning_student:
-            from palimpsest import puck_student, puck_learning
+            from palimpsest import puck_learning
+            if balanced_student:
+                from palimpsest import puck_balanced_student as puck_student
+                if development or learning_teacher or 'learning_student' in config:
+                    raise ValueError('Balanced mechanism cannot mix controller envelopes')
+            else:
+                from palimpsest import puck_student
             if development:
                 from palimpsest import puck_development
                 case=puck_development.admit_config(config,root)
@@ -513,7 +530,7 @@ def owner(config):
                             record_contract=puck_learning.load_protocol(root)['record'])
             start_event['supervisor_cursor']=own
         if learning_student:
-            manifest.update(schema='puck-student-v1',protocol_sha256=puck_student.PROTOCOL_SHA256,
+            manifest.update(schema='puck-balanced-student-v1' if balanced_student else 'puck-student-v1',protocol_sha256=puck_student.PROTOCOL_SHA256,
                             **puck_student.identity(root,student_identity),
                             seed=row['seed'],split=row['split'],episodes=1,initial_supervisor=copy.deepcopy(own),
                             record_contract='Student numeric v1: float32 sensors8/features9; float64 actions; own BEFORE/AFTER modes; no teacher fields')
