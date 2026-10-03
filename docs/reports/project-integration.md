@@ -260,3 +260,26 @@ mechanics digest shape; that failed audit is retained separately and corrected
 to the actual packet contract without changing product or run data. Successful
 audit SHA256 `5a4e49fba0ba4ed99078f8c59525264c96ea4647e7454f38dfc7a4defce0d644`;
 script `d721c12a86281132378ef01802eec3f44cef4577a338a988612d8cfbfcf3101c`.
+
+
+## Fixed memory reference integration
+
+Source `e82d602` adds three headless controller references: original CPU FLYNN,
+a visible-goal/contact script and the privileged analytical teacher. Exact
+boundary-300 restoration preserves the physical source and freezes unused
+memory. The original reference retains its upstream true-goal-derived bearing;
+this information difference is explicit. Scheduled teacher geometry edits use
+the existing cache/path invalidation while retaining PID/recovery/hysteresis.
+Forty-three focused root checks pass without skips in 7.233 seconds.
+
+Frozen integration `c79d7ac4ec49cb999246d1b3d8580382bcb67cbc` then passes **610
+enabled tests, no skips**, in 131.964 seconds (135.103 seconds supervised).
+All fifty retained artifacts rehash correctly; all 414 source identities,
+shared assets, production model identities and tracked checkout remain unchanged.
+Report SHA256 `ccd18c5f0a23e2d54c9d947733edf18619e131806d63430c86afe2f5b79120cc`;
+launcher `c0b396561ce003192d15c21d3c7100d4abb09f18eacd8507305002f79aa2436f`.
+The six-owner reference protocol still needs actual qualification; pure fixture
+and regression success are not native-reference or held-out evidence.
+
+Both CI workflows passed on `c5423fd` (37083379078 and 37083374585), preceding
+this reference source merge. Main remains unchanged.

@@ -1745,5 +1745,36 @@
       "parent_module_objects_preserved": true
     },
     "scope": "Combined actual regression; no admission of failed puck teacher batch, new actual model fitting, held-out or physical qualification."
+  },
+  "memory_reference_regression": {
+    "source_commit": "c79d7ac4ec49cb999246d1b3d8580382bcb67cbc",
+    "tests": 610,
+    "passed": 610,
+    "skipped": 0,
+    "unittest_seconds": 131.964,
+    "supervised_seconds": 135.10327464400325,
+    "wall_seconds": 135.10794111699215,
+    "returncode": 0,
+    "report": {
+      "path": "runs/integration-memory-references-c79d7ac-20261003/report.json",
+      "bytes": 112611,
+      "sha256": "ccd18c5f0a23e2d54c9d947733edf18619e131806d63430c86afe2f5b79120cc"
+    },
+    "launcher": {
+      "path": "runs/integration-memory-references-c79d7ac-launch.py",
+      "bytes": 4193,
+      "sha256": "c0b396561ce003192d15c21d3c7100d4abb09f18eacd8507305002f79aa2436f"
+    },
+    "retained_files_rehashed": 50,
+    "source_files": 414,
+    "all_four_runtime_flags_enabled": true,
+    "sources_assets_models_unchanged": true,
+    "reference_source": "e82d60255be1773692bfa8cebd86810917a1cb24",
+    "focused_root_checks": {
+      "passed": 43,
+      "seconds": 7.233,
+      "skipped": 0
+    },
+    "scope": "Shared Engine/intervention/replay regression plus pure reference fixtures. Actual reference native/replay qualification and held-out remain pending."
   }
 }
