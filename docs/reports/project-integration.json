@@ -1776,5 +1776,36 @@
       "skipped": 0
     },
     "scope": "Shared Engine/intervention/replay regression plus pure reference fixtures. Actual reference native/replay qualification and held-out remain pending."
+  },
+  "reference_runner_puck_stop_source": {
+    "source_commit": "4c6641ca8d4c2f051bbbca78d1e902cb21f8da7e",
+    "reference_source": "169e0c8ac75be713d9cda0bdd852b926ec1261cc",
+    "reference_merge": "8d37bb67c20f5f267be7886136ae3bcfed13ea48",
+    "puck_source": "f5d9ba1897dc2dab815c3a6713adb077ff3564f7",
+    "root_checks": [
+      {
+        "scope": "memory verifier and reference fixtures",
+        "passed": 60,
+        "seconds": 11.469,
+        "skipped": 0
+      },
+      {
+        "scope": "puck source fixtures",
+        "passed": 96,
+        "seconds": 5.164,
+        "skipped": 0
+      },
+      {
+        "scope": "combined puck and existing model reader fixtures",
+        "passed": 99,
+        "seconds": 5.745,
+        "skipped": 0
+      }
+    ],
+    "native_executed": false,
+    "training_executed": false,
+    "held_out_executed": false,
+    "historical_failures_retained": true,
+    "qualification_claims": []
   }
 }

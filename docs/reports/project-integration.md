@@ -1,5 +1,14 @@
 # Combined checkout verification
 
+Latest source `4c6641c` adds the six-owner memory reference verifier and the
+separately versioned puck stop correction. Root verifies 60 memory/reference
+fixtures in 11.469 s and 96 puck fixtures in 5.164 s, then 99 combined puck and
+existing model-reader fixtures in 5.745 s; all pass without skips. Only the two
+puck stop comparisons change executable task behavior (.18 to .2); protocol
+identities change prospectively and historical admission remains closed. These
+are fixture results. The last full actual suite is the 610-test `c79d7ac` run
+below, and no new native/reference/training result is claimed by this merge.
+
 The integrated checkout at `0a783af` combines the completed lab/memory mechanics,
 recorded memory acquisition, exploration/homing, MaleCNS training/wrapper,
 sonification/comparison and rover proposal branches. It does not include the
