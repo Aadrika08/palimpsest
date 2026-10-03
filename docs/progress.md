@@ -18,9 +18,12 @@ The actual session `57385` drained exit0 after 1,798.225 s normal / 1,802.586 s 
 unchanged inventories and an independently free lease after shutdown. The [focused publication](reports/m5-remaining-06-comparison.md), `0b30585`, is
 integrated after all 446 published references, the 543-file root raw ledger and
 two histories rehash (570 unique references  / 1,106,074,167 bytes). Sixteen
-development cells and held-out remain open. Remaining-07 admission now runs once
-in session `10262` on frozen `0b30585`: twelve fresh IDs disjoint from 650,
-595 identities unchanged and 28,237,762,560 bytes free at startup.
+development cells and held-out remain open. Remaining-07 admission completes once in session `10262` on frozen `0b30585`:
+twelve owners, 1,204 rows, four neural calls and twelve snapshots. The session
+drains exit0 after 368.718 s normal / 371.671 s full; fourteen nonlauncher
+identities and the launcher are absent. Root retained audit passes first in
+9.098 s with 116 exact file pins and a free writer lease. Its focused admission
+publication is pending; comparison coverage remains 32/48.
 The [remaining-06 admission](reports/m5-remaining-06-admission.md), `016948b`,
 retains its twelve owners/1,204 rows and all 150 rehashed publication references;
 the initial root copied-index error and corrected audit are both retained.
@@ -37,8 +40,12 @@ retained-failure audit passes after correcting its expected initialization-event
 name; both checker attempts remain retained. A pure arithmetic reproduction
 shows the verifier reconstructs float64 native ranges from rounded float32
 cached coordinates. The [failure publication](reports/m6-new-body-response-v1.md), `c048586`, is
-integrated after all 65 published/control/raw references rehash. A narrow caller
-correction is underway; strict native equality and task criteria remain unchanged.
+integrated after all 65 published/control/raw references rehash. The narrow caller correction `1e904c0` is integrated after eighteen root pure
+checks pass in 0.213 s: it uses the authored Python-float layout for native ranges
+and separately validates the exact float32 cache. The caller regression fails on
+the old code and rejects cache/native drift. Strict native equality, protocol
+and all seventeen protected sources remain unchanged. Fresh v2 controls are
+being prepared; no corrected actual attempt is admitted yet.
 
 The [remaining-05 admission](reports/m5-remaining-05-admission.md), evidence
 `ad2eff7`, completed once on frozen `746c67b` in session `90487`: twelve owners,
@@ -142,7 +149,7 @@ remains ineligible.
 - Mechanism: pinned upstream model/environment; allowlisted controller inputs; one mutable-runtime owner; complete native, policy, application and RNG snapshots. Recorded E fitting and U-only swaps preserve declared invariant hashes. Male controllers use separately trained fixed CPU assets and an authored sensor mapping.
 - Missing: M5 counterbalanced/held-out transfer; remaining M6 skills and learned results; M7 closed-loop qualification; M8 physical work; remaining M9 modes/operation; final M10 handoff.
 - Unknown: original checkpoint training lineage, full-model Pi performance, physical stopping limits and account quota (telemetry unavailable).
-- Next action: review the named training-data preparer implementation against the integrated frozen plan for navigation v2; v1 remains failed. The separate cross-corpus preparer and all fitting/dev/held-out stages remain pending. Complete and independently audit remaining-07 admission. Memory coverage is 32/48; the existing paired readout covers its historical 24-cell subset. Review the narrow new-body verifier caller correction; no corrected actual run is admitted yet. Both puck development evaluations remain negative; automatic retraining stops and held-out stays locked. Physical qualification and independent exhibition operation remain open.
+- Next action: review the named training-data preparer implementation against the integrated frozen plan for navigation v2; v1 remains failed. The separate cross-corpus preparer and all fitting/dev/held-out stages remain pending. Integrate the audited remaining-07 admission publication, then review its separate comparison controls. Memory coverage is 32/48; the existing paired readout covers its historical 24-cell subset. Review fresh new-body v2 launch controls; no corrected actual run is admitted yet. Both puck development evaluations remain negative; automatic retraining stops and held-out stays locked. Physical qualification and independent exhibition operation remain open.
 
 The [prospective held-out outline](plans/m5-heldout-proposal.md) specifies the
 reserved 64–71 matrix without opening it. Source/profile freeze and all 48 audited
@@ -153,6 +160,17 @@ planning check; an artifact storage path is pending user input. No data is delet
 or moved and no held-out implementation/execution is unlocked.
 
 ## Verification
+
+The new-body caller fix `1e904c0` passes eighteen root pure checks in 0.213 s
+(0.579 s supervised), first attempt. Only `author_episode` changes; its native
+guard, protocol and seventeen protected pins remain unchanged. Receipt:
+`runs/m6-new-body-source-root-review-1e904c0/audit.json`, SHA-256
+`4a7dc9aea3215d842cd926685ee183ef80125916f7d16c0c5f19be3e335f3687`.
+
+Remaining-07 retained admission audit passes first in 9.098 s: twelve owners,
+1,204 rows, four calls, twelve snapshots and 116 raw pins. Receipt:
+`runs/memory-remaining-07-root-audit-0b30585/audit.json`, SHA-256
+`5da5f63cd3a240b2ebac945fa55a8fd1f2fd1dea11487a20417de8fc6d41e43d`.
 
 New-body failure publication passes first in 0.017 s: 65 unique references,
 1,178,061 bytes. Receipt:
