@@ -22,7 +22,10 @@ admission drains session `81740` exit0 with twelve completed owners; independent
 retained verification passes after a receipt-schema checker correction. Its comparison
 controls pass independent review and the single comparison drains session `23234`
 exit0 on frozen `eb55d3a`; retained audits pass first. Navigation binding `29aa8f8` is integrated after two source reviews and
-nine synthetic checks; the teacher-free evaluation runner is in progress. R3 stays open.
+nine synthetic checks. The teacher-free evaluator `e3f9a47` is integrated after
+eighteen synthetic checks pass; its first syntax failure remains retained. The
+combined regression passes all 802 enabled tests without skips. Actual six-model
+readmission and separately controlled development remain next. R3 stays open.
 
 Remaining-06 comparison completes once on frozen `016948b`, bringing independently
 audited development coverage to **32/48 cells**: forty owners, 4,687 neural rows,
@@ -174,7 +177,13 @@ Combined checkout: `feat/project-integration` joins the reviewed lab, memory, ta
 MaleCNS training/wrapper, artwork exporters and rover proposal branches. `main`
 remains unchanged. Historical evidence below retains its original source identity.
 
-Latest full regression at `db59a56` passes all **717 enabled tests without skips**
+Latest full regression at `c636635` passes **802 enabled tests without skips**
+in 160.484 s (162.653 s supervised). All 610 source entries, twenty assets and
+production model identities remain unchanged. The source stays clean throughout.
+This includes the new navigation binding/evaluator and historical body import fix.
+Receipt: `runs/integration-navigation-evaluator-c636635-20261004/report.json`,
+SHA-256 `07586671b73c6683cd68408efaa69ec101d94976431338aaf15bfff8d3ffc143`.
+The previous full regression at `db59a56` passed **717 enabled tests without skips**
 in 167.509 s (172.765 s supervised), including actual EGL/male native/replay and
 puck CPU checks. All 524 source entries, twenty shared assets, production model
 identities and fifty retained references stay unchanged. This includes balanced
@@ -226,7 +235,7 @@ remains ineligible.
 - Mechanism: pinned upstream model/environment; allowlisted controller inputs; one mutable-runtime owner; complete native, policy, application and RNG snapshots. Recorded E fitting and U-only swaps preserve declared invariant hashes. Male controllers use separately trained fixed CPU assets and an authored sensor mapping.
 - Missing: M5 counterbalanced/held-out transfer; learned M6 puck success and held-out evaluation; M7 closed-loop qualification; M8 physical work; independent M9 operation, exhibition duration and physical artwork; final M10 handoff.
 - Unknown: original checkpoint training lineage, full-model Pi performance, physical stopping limits and account quota (telemetry unavailable).
-- Next action: finish and review the teacher-free navigation runner; its all-six admission/Engine binding is integrated at `29aa8f8` after nine synthetic checks. Training session `70035` drains exit0; retained audit passes first. The earlier zero-model startup refusal remains unchanged, and held-out stays locked. Remaining-09 controls pass eight root fixtures and full preflight; its twelve-owner admission, retained audit and publication review pass. Separate comparison controls and the one fixed invocation pass, with first-pass raw/outcome audits; its publication review passes first and `a704ba9` is integrated. Prepare remaining-10 admission next; actual execution needs its separate reviewed controls. Memory coverage is 40/48; failed 07 is neither retried nor given longer deadlines. The existing paired readout covers its historical 24-cell subset. Scoped exploration, homing and measured adaptation are met; learned puck keeps M6 open, automatic retraining stops after both negative development studies, and held-out stays locked. Physical qualification and independent exhibition operation remain open.
+- Next action: readmit all six frozen navigation bundles and review separate development controls. Binding `29aa8f8` and runner `e3f9a47` are integrated; eighteen synthetic checks and the 802-test enabled combined regression pass. The initial runner syntax failure is retained. Training session `70035` drains exit0; retained audit passes first. The earlier zero-model startup refusal remains unchanged, and held-out stays locked. Remaining-09 controls pass eight root fixtures and full preflight; its twelve-owner admission, retained audit and publication review pass. Separate comparison controls and the one fixed invocation pass, with first-pass raw/outcome audits; its publication review passes first and `a704ba9` is integrated. Remaining-10 admission controls now pass eight independent fixtures and full preflight; actual execution waits for the exclusive slot and startup readmission. Memory coverage is 40/48; failed 07 is neither retried nor given longer deadlines. The existing paired readout covers its historical 24-cell subset. Scoped exploration, homing and measured adaptation are met; learned puck keeps M6 open, automatic retraining stops after both negative development studies, and held-out stays locked. Physical qualification and independent exhibition operation remain open.
 
 The [single completion proposal](plans/m5-remaining-07-completion-proposal.md)
 has a read-only peer review and is pending an explicit user amendment to the
@@ -402,8 +411,31 @@ exactly matches the independently pinned audit, with fresh size checks for all
 rehashed. Publication receipt:
 `runs/memory-remaining-09-comparison-publication-root-review/audit.json`, SHA-256
 `9019ea601850953fa1194786192d7e1b5bb075ff401edce873600f17fb17b521`.
-Remaining-10 admission preparation is authorized; no actual owner run yet.
-Failed 07 and held-out remain open.
+Remaining-10 admission controls on frozen `a704ba9` pass independent review first
+in 11.129 s (11.208 s supervised): eight fixtures take 8.219 s; exact preflight
+takes 2.832 s. The launcher AST matches accepted09 after fixed substitutions and
+the encloser is byte-identical. All 607 identities match; twelve fresh IDs are
+disjoint from 806 prior owners, including all forty failed07 planned IDs and its
+unstarted oracle. No history/U or future snapshot state enters admission. Free
+capacity is 25,569,865,728 bytes. Receipt:
+`runs/memory-remaining-10-admission-control-root-review-a704ba9/control-review.json`,
+SHA-256 `18f8caf7f87f15a2ecc2c4df97cbb49b32681696c11a3973bdc8f42948f62360`.
+No actual owner run yet. Failed 07 and held-out remain open.
+
+The teacher-free navigation evaluator `e3f9a47` adds exactly the runner and its
+synthetic tests. Eighteen focused checks pass in 1.366 s without skips after a
+first import-time syntax error; the only subsequent source correction adds one
+closing parenthesis. Both source/log versions remain retained. The fixtures
+check real recording roundtrip, exactly one prediction, complete packet retention
+before contact refusal, incomplete packet preservation, original-error retention,
+wrapper restoration, negative versus infrastructure outcomes and exact pretty
+serialization of a realistic 600-row result under the one-MiB parent cap.
+Root verifies producer and integrated hashes plus that narrow correction; source
+review receipt `runs/m7-navigation-evaluator-source-root-review-e3f9a47/audit.json`,
+SHA-256 `27f1a58e228f44cb268e949df1c462669ef4f8da98243fab790dfcfe5d4ffa2d`.
+The [separate draft PR65](https://github.com/Aadrika08/palimpsest/pull/65) preserves
+the earlier binding PR64. Actual bundle readmission, fresh development and held-out
+remain separate; source and synthetic checks alone do not qualify navigation.
 
 Paired navigation trainer `6feade9` is integrated after eleven independent root
 pure checks pass first in 1.698 s. It adds only the named trainer/test, preserving

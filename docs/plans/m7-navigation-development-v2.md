@@ -26,7 +26,11 @@ isolated causal-mechanism comparison.
 
 Binding slice `29aa8f8` is integrated after root and peer source review and nine
 synthetic checks (first invocation, 1.056 s, no skips). Actual bundle readmission
-and development execution remain separate gates. The runner slice below is next.
+and development execution remain separate gates. Runner `e3f9a47` is now integrated
+after eighteen synthetic checks pass in 1.366 s without skips; its first syntax
+failure and one-parenthesis correction remain retained. The enabled combined
+regression at `c636635` passes 802 tests without skips. These checks do not
+authorize fresh owner execution; exact bundle and control admission remain next.
 
 ## Minimum planned source and checks
 
