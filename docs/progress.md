@@ -6,13 +6,25 @@ Working-set binding: `98d42920e321b42d22c6336f938d2c3ba9fd770d8ba24a2a`. Its MCP
 
 ## Current state
 
-The [remaining-04 comparison](reports/m5-remaining-04-comparison.md), `746c67b`,
-brings audited development coverage to **24/48 cells**. All forty owners complete
-4,626 neural intervals and 36 evaluator task passes. Root raw and independent
-outcome audits pass first in 15.064 / 8.859 s. Goals and correction timing show no
-own-U benefit. Root publication review rehashes 424 published references plus two
-historical input histories (426 files, 1,091,832,514 bytes). Cleanup is complete.
-The [remaining-05 admission](reports/m5-remaining-05-admission.md), evidence `ad2eff7`, completed once on frozen `746c67b` in session `90487`: twelve owners, 1,204 rows and four neural calls. Root retained audit passes first in 10.086 s, verifying 116 raw pins and clean shutdown. All 139 publication references rehash (262,922,772 bytes). Its fixed forty-owner comparison has started once on frozen `ad2eff7` in session `16395` after independent control review; coverage stays 24/48 until terminal and raw/outcome audits.
+The [remaining-05 comparison](reports/m5-remaining-05-comparison.md), `0a6bb4c`,
+brings audited development coverage to **28/48 cells**. All forty owners complete
+4,617 neural intervals and 36 evaluator task passes. Root raw and independent
+outcome audits pass first in 16.292 / 8.140 s. All nine conditions correct the
+changed lower fact at 358 and reach its goal at 429; null/no-event goals are 428.
+There is no own-U task or timing benefit. Root publication review rehashes all
+415 published references plus two historical input histories (417 files,
+1,089,878,909 bytes), after correcting its relative-path reader assumption.
+The comparison session `16395` drained exit0; all 44 sampled nonlauncher
+identities and the launcher are absent, inventories are unchanged and the lease
+is free. Remaining-06 admission controls are being prepared; no next runtime is
+admitted. Twenty development cells and the separate held-out study remain open.
+
+The [remaining-05 admission](reports/m5-remaining-05-admission.md), evidence
+`ad2eff7`, completed once on frozen `746c67b` in session `90487`: twelve owners,
+1,204 rows and four neural calls. Its raw audit passes first in 10.086 s and all
+139 publication references rehash. The preceding [remaining-04 comparison](reports/m5-remaining-04-comparison.md)
+remains a separately retained four-cell result; its 24-cell paired readout is a
+historical snapshot, not an analysis of all 28 current cells.
 
 The preceding [remaining-04 admission](reports/m5-remaining-04-admission.md),
 `6f72b9b`, passes twelve owners, 1,204 rows and twelve snapshots; root raw audit
@@ -104,7 +116,7 @@ remains ineligible.
 - Mechanism: pinned upstream model/environment; allowlisted controller inputs; one mutable-runtime owner; complete native, policy, application and RNG snapshots. Recorded E fitting and U-only swaps preserve declared invariant hashes. Male controllers use separately trained fixed CPU assets and an authored sensor mapping.
 - Missing: M5 counterbalanced/held-out transfer; remaining M6 skills and learned results; M7 closed-loop qualification; M8 physical work; remaining M9 modes/operation; final M10 handoff.
 - Unknown: original checkpoint training lineage, full-model Pi performance, physical stopping limits and account quota (telemetry unavailable).
-- Next action: review separately prepared launch controls for the integrated navigation v2 collector; v1 remains failed and no new runtime is admitted. The separate cross-corpus preparer and all fitting/dev/held-out stages remain pending. Finish and independently audit the active remaining-05 comparison. Memory coverage is 24/48 with a current paired readout. Implement the fixed standalone new-body verifier using existing helpers. Both puck development evaluations remain negative; automatic retraining stops and held-out stays locked. Physical qualification and independent exhibition operation remain open.
+- Next action: review separately prepared launch controls for the integrated navigation v2 collector; v1 remains failed and no new runtime is admitted. The separate cross-corpus preparer and all fitting/dev/held-out stages remain pending. Review the next remaining-06 admission controls. Memory coverage is 28/48; the existing paired readout covers its historical 24-cell subset. Implement the fixed standalone new-body verifier using existing helpers. Both puck development evaluations remain negative; automatic retraining stops and held-out stays locked. Physical qualification and independent exhibition operation remain open.
 
 The [prospective held-out outline](plans/m5-heldout-proposal.md) specifies the
 reserved 64–71 matrix without opening it. Source/profile freeze and all 48 audited
@@ -115,6 +127,18 @@ planning check; an artifact storage path is pending user input. No data is delet
 or moved and no held-out implementation/execution is unlocked.
 
 ## Verification
+
+Remaining-05 comparison raw/outcome audits pass first in 16.292 / 8.140 s:
+`runs/memory-remaining-05-comparison-root-audit-ad2eff7/audit.json`
+SHA-256 `7a8882af8e0856430806e9bb2c9e66eb65cb9b6fc8e6f23c8cd217003c1bdfd2`,
+and `outcomes.json` SHA-256
+`6a76282f681289982697a1a0f02797f0a44f117a392e34165b11748e2b0623ec`.
+All 417 publication/history references rehash in 1.832 s; the initial inline
+publication checker stopped before hashing because it assumed absolute paths.
+Its correction resolves producer-relative paths and the path-keyed file index;
+source, raw data and publication index are unchanged. Receipt:
+`runs/memory-remaining-05-publication-root-review-0a6bb4c/audit.json`,
+SHA-256 `a13930eeac6fde54fde6277e746ea4b5be0cb3bd2c0eed339fff4a15e624aa48`.
 
 Navigation v2 source `736e0cf` passes eighteen root focused tests in 0.930 s
 (1.482 s supervised) and eighteen preloaded-module tests in 0.946 s (1.511 s
