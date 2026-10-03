@@ -46,8 +46,10 @@ snapshots. Normal enclosing time is 393.563 s; full drain/inventory time is
 599 identities, unchanged inventories, fourteen nonlauncher identities plus
 the launcher absent, and a free lease. Its control review passed eight fixtures
 and full preflight, excluding all 702 prior IDs including the unattempted 07
-oracle. Publication is pending; no comparison-08 run is authorized yet.
-Comparison coverage remains 32/48; this does not replace or retry failed 07.
+oracle. Its [focused admission publication](reports/m5-remaining-08-admission.md),
+`ba48305`, is integrated after all 162 references / 263,624,032 bytes rehash.
+Comparison-08 controls are being prepared; no actual comparison is authorized
+yet. Coverage remains 32/48; this does not replace or retry failed 07.
 The [remaining-06 admission](reports/m5-remaining-06-admission.md), `016948b`,
 retains its twelve owners/1,204 rows and all 150 rehashed publication references;
 the initial root copied-index error and corrected audit are both retained.
@@ -185,7 +187,7 @@ remains ineligible.
 - Mechanism: pinned upstream model/environment; allowlisted controller inputs; one mutable-runtime owner; complete native, policy, application and RNG snapshots. Recorded E fitting and U-only swaps preserve declared invariant hashes. Male controllers use separately trained fixed CPU assets and an authored sensor mapping.
 - Missing: M5 counterbalanced/held-out transfer; learned M6 puck success and held-out evaluation; M7 closed-loop qualification; M8 physical work; independent M9 operation, exhibition duration and physical artwork; final M10 handoff.
 - Unknown: original checkpoint training lineage, full-model Pi performance, physical stopping limits and account quota (telemetry unavailable).
-- Next action: implement and review the two-file paired original-graph trainer under integrated contract `8c57f78`, following audited data preparation `2d4a7b8`. All fitting/dev/held-out stages remain pending; collection v1 remains failed. The audited remaining-07 failure publication is integrated; publish the audited remaining-08 admission before separate comparison preparation, without retrying 07 or increasing deadlines. Serialize bulk data audits with native jobs after the unexplained internal wall timeout. Memory coverage is 32/48; the existing paired readout covers its historical 24-cell subset. The audited new-body v2 publication is integrated. Scoped exploration, homing and measured-adaptation subgates are met; learned puck keeps M6 open. Both puck development evaluations remain negative; automatic retraining stops and held-out stays locked. Physical qualification and independent exhibition operation remain open.
+- Next action: implement and review the two-file paired original-graph trainer under integrated contract `8c57f78`, following audited data preparation `2d4a7b8`. All fitting/dev/held-out stages remain pending; collection v1 remains failed. The audited remaining-07 failure publication is integrated; prepare remaining-08 comparison controls from integrated admission `ba48305`, without retrying 07 or increasing deadlines. Serialize bulk data audits with native jobs after the unexplained internal wall timeout. Memory coverage is 32/48; the existing paired readout covers its historical 24-cell subset. The audited new-body v2 publication is integrated. Scoped exploration, homing and measured-adaptation subgates are met; learned puck keeps M6 open. Both puck development evaluations remain negative; automatic retraining stops and held-out stays locked. Physical qualification and independent exhibition operation remain open.
 
 The [prospective held-out outline](plans/m5-heldout-proposal.md) specifies the
 reserved 64–71 matrix without opening it. Source/profile freeze and all 48 audited
@@ -196,6 +198,11 @@ planning check; an artifact storage path is pending user input. No data is delet
 or moved and no held-out implementation/execution is unlocked.
 
 ## Verification
+
+Remaining-08 admission publication review passes first in 0.640 s: all 162
+unique references rehash and all four published probe readouts match root.
+Receipt: `runs/memory-remaining-08-publication-root-review-ba48305/audit.json`,
+SHA-256 `ef25dda892123540ad348f0ab1e21a5725d98ceb3e57be614546499cbfb3057d`.
 
 Remaining-08 retained admission audit passes first in 10.871 s:
 `runs/memory-remaining-08-root-audit-80d7e1d/audit.json`, SHA-256
