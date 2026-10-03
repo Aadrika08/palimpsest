@@ -91,6 +91,15 @@ def development_sources(root):
     return dict(sorted(result.items()))
 
 
+def balanced_development_sources(root):
+    from palimpsest import puck_balanced_development
+    result=balanced_student_sources(root)
+    for name in (puck_balanced_development.PROTOCOL_PATH,'src/palimpsest/puck_balanced_development.py',
+                 'scripts/evaluate_puck_development.py','tests/test_puck_balanced_development.py'):
+        result[name]=digest(root/name)
+    return dict(sorted(result.items()))
+
+
 def plan(task):
     limits = task['limits']
     rows = [{'id':case['id'], 'kind':'root', 'case':case['id'], 'seed':case['seed'],
@@ -367,10 +376,11 @@ def owner(config):
     root, output, row=Path(config['repo']),Path(config['output']),config['row']
     spec=protocol(root); task=puck.load_protocol(root)
     learning_teacher='learning_teacher' in config
-    development='learning_student_development' in config
-    balanced_student='learning_student_balanced' in config
+    balanced_development='learning_student_balanced_development' in config
+    development='learning_student_development' in config or balanced_development
+    balanced_student='learning_student_balanced' in config or balanced_development
     learning_student='learning_student' in config or development or balanced_student
-    source_inventory=balanced_student_sources if balanced_student else development_sources if development else student_sources if learning_student else teacher_sources if learning_teacher else sources
+    source_inventory=balanced_development_sources if balanced_development else balanced_student_sources if balanced_student else development_sources if development else student_sources if learning_student else teacher_sources if learning_teacher else sources
     own=student_model=student_identity=None
     budget=StorageBudget((output,),StorageLimits(max_bytes=row['max_bytes'],min_free_bytes=1024**3),headroom_bytes=8*MiB)
     identity=process_identity(); start_tick=config.get('start_tick',0)
@@ -386,12 +396,17 @@ def owner(config):
             from palimpsest import puck_learning
             if balanced_student:
                 from palimpsest import puck_balanced_student as puck_student
-                if development or learning_teacher or 'learning_student' in config:
-                    raise ValueError('Balanced mechanism cannot mix controller envelopes')
+                selected='learning_student_balanced_development' if balanced_development else 'learning_student_balanced'
+                if set(config)&{'learning_student','learning_teacher','learning_student_development',
+                               'learning_student_balanced','learning_student_balanced_development'}!={selected}:
+                    raise ValueError('Balanced student cannot mix controller envelopes')
             else:
                 from palimpsest import puck_student
             if development:
-                from palimpsest import puck_development
+                if balanced_development:
+                    from palimpsest import puck_balanced_development as puck_development
+                else:
+                    from palimpsest import puck_development
                 case=puck_development.admit_config(config,root)
             else:case=puck_student.admit_config(config,root)
             own=puck_learning.initial_cursor()
@@ -536,7 +551,7 @@ def owner(config):
                             record_contract='Student numeric v1: float32 sensors8/features9; float64 actions; own BEFORE/AFTER modes; no teacher fields')
             start_event.pop('teacher_mode');start_event['own_supervisor_cursor']=copy.deepcopy(own)
         if development:
-            manifest.update(schema='puck-student-development-v1',development_protocol_sha256=puck_development.PROTOCOL_SHA256,
+            manifest.update(schema='puck-balanced-student-development-v1' if balanced_development else 'puck-student-development-v1',development_protocol_sha256=puck_development.PROTOCOL_SHA256,
                             initial_reference=config['initial_reference'])
         writer=RunWriter(output/'recording',manifest,max_bytes=row['max_bytes'],storage_budget=budget)
         writer.event('episode_start',**start_event)

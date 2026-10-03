@@ -44,3 +44,15 @@ negative admission, and failure retention. Actual original teacher-data and all
 six original/balanced bundles will be re-admitted using NumPy only before and
 after edits. No Torch/native/model/global lease/build/browser runs are part of
 this slice. Native development needs separately reviewed source, controls and GO.
+
+The source slice is implemented and pure-checked: 54 focused tests passed on the
+first invocation in 8.495 s with no skips. Retained AST checks prove that the
+evaluator body is identical after its three named routing substitutions, and that
+the native interval, packet, snapshot, supervision, scientific matching, plan and
+goal-admission bodies are unchanged. Actual teacher/bundle readmission passed
+before and after edits in 4.956315547 s / 10.251825200 s: all 20 sources, 5710 train
+and 1314 recorded-dev rows, all three original and three balanced bundles, and 15
+protected source/protocol hashes. The two receipts match apart from elapsed time.
+The new owner inventory has 101 entries. Local receipts and the exact AST checker
+are retained in `runs/puck-balanced-development-source-checks/`. These are pure
+source/data checks; no development control or rollout has been prepared or run.

@@ -19,8 +19,18 @@ from verify_puck_mechanics import (MiB,digest,write_json,read_json,protocol,
                                   development_sources,inventory,supervised_owner)
 
 
+def bindings(balanced):
+    if type(balanced) is not bool:raise ValueError('Fixed balanced selector must be boolean')
+    if balanced:
+        from palimpsest import puck_balanced_development, puck_balanced_student
+        from verify_puck_mechanics import balanced_development_sources
+        return puck_balanced_development,puck_balanced_student,balanced_development_sources,'learning_student_balanced_development'
+    return development,student,development_sources,'learning_student_development'
+
+
 def main(args):
     started=time.monotonic()
+    development,student,development_sources,envelope=bindings(getattr(args,'balanced',False))
     root,output,retained=args.repo.resolve(),_safe_path(args.output),_safe_path(args.retention_root)
     if Path(__file__).resolve()!=root/'scripts/evaluate_puck_development.py':raise ValueError('Wrong evaluator checkout')
     if output.exists() or not output.is_relative_to(retained):raise ValueError('Fresh output inside retention root required')
@@ -60,7 +70,7 @@ def main(args):
                     reference={'owner_id':base['id'],'result_sha256':base['result_sha256'],
                                'snapshot_sha256':base['result']['snapshots']['initial']['sha256']}
                 config={'repo':str(root),'output':str(destination),'row':row,'sources':frozen,
-                        'learning_student_development':development.PROTOCOL_SHA256,'bundle_root':str(args.bundle_root.resolve()),
+                        envelope:development.PROTOCOL_SHA256,'bundle_root':str(args.bundle_root.resolve()),
                         'initial_reference':reference}
                 command=[sys.executable,str(root/'scripts/verify_puck_mechanics.py'),'--child',json.dumps(config,separators=(',',':'))]
                 item.update(status='running',output=str(destination));write_json(output/'report.json',report,budget)
@@ -81,7 +91,7 @@ def main(args):
                     if numeric['episode']!=0 or numeric['tick']!=observed or observed>=count or any(k.startswith('teacher') for k in numeric):
                         raise ValueError('Development recording episode/tick/schema differs')
                     observed+=1
-                if (manifest.get('schema')!='puck-student-development-v1' or manifest.get('development_protocol_sha256')!=development.PROTOCOL_SHA256 or
+                if (manifest.get('schema')!=spec['record_schema'] or manifest.get('development_protocol_sha256')!=development.PROTOCOL_SHA256 or
                         manifest.get('status')!='completed' or state_digest(manifest.get('row'))!=state_digest(row) or
                         state_digest(manifest.get('source_hashes'))!=state_digest(frozen) or manifest.get('initial_reference')!=reference or
                         any(state_digest(manifest.get(k))!=state_digest(v) for k,v in student.identity(root,models[str(row['model_seed'])]).items()) or
@@ -136,4 +146,5 @@ if __name__=='__main__':
     parser.add_argument('--output',type=Path,required=True)
     parser.add_argument('--retention-root',type=Path,required=True)
     parser.add_argument('--bundle-root',type=Path,required=True)
+    parser.add_argument('--balanced',action='store_true',help='Use only the fixed balanced-development protocol and bundles')
     raise SystemExit(main(parser.parse_args()))
