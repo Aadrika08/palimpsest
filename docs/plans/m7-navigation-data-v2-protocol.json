@@ -113,12 +113,22 @@
         "src/palimpsest/male_model.py": "9327bca1db3cbeda7aab8b222ccfa59daef4e01f3f1b4689f83009955d970cad",
         "src/palimpsest/male_research.py": "a3fb8f64937c509351cc7cbd120bf86c0b543fd4e6531d957a7204a6da1df8ce",
         "src/palimpsest/records.py": "c4be6f1699c1d8550a7f2db2979f7f9f18196ac986eef2aefe3ba665cae99ac3"
+      },
+      "head": "217cbee8399dcb25045a079af012beecbbdae29e",
+      "all_tracked_project_python_inventory": {
+        "roots": [
+          "src",
+          "scripts"
+        ],
+        "count": 70,
+        "canonical_map_sha256": "ef29698a7b0ddb6af62560277bf34db059eb42fc7c52e81552dfae814b006f6f",
+        "serialization": "relative POSIX path -> lowercase SHA256, sorted-key compact UTF8 JSON, no newline; only tracked .py files under src/scripts; require full equality before/after"
       }
     },
     "navigation_producer_commit": "736e0cf0a71f6d700bd67836ee5f83911ceff90a",
     "producer_pins": "Exact accepted source_pins equals final_source_pins; matched assets/model identities and initial ownership/profile/model. Historical producer bytes remain distinct from current reader code.",
     "reader_checkout": "New named preparer pins its own bytes and every directly imported helper before/after and immediately before publication; no hidden live worktree dependency or pin normalization.",
-    "reuse_boundary": "Reuse unchanged historical prepare() through its fixed admitted source root/reader identity; do not make old reader_identity compare current male_research bytes. If unchanged-helper loading cannot preserve actual imported dependency pins, stop for source review before adapting."
+    "reuse_boundary": "Fresh bounded historical child isolation described below; unchanged old prepare()/reader identity and strict current navigation row admission. No sys.modules rewriting, source-map patch or ROOT/global mutation."
   },
   "admission": {
     "prerequisites": "Twelve normal owners, 5,080 rows, twelve initial SNPs; exact report and normal terminal/enclosing/exec-drain pins; source, control, model and asset identities unchanged.",
@@ -126,7 +136,7 @@
     "old_recording": "Reuse unchanged prepare_male_recovery_data.prepare; require exact published source/file/feature/target fingerprints and 2,117 / 1,228 counts.",
     "splits": "Reuse validate_splits(check_counts=False) separately for old and augmented arms, then exact explicit counts; old arm is intentionally subset of augmented, not treated as contamination across arms.",
     "duplicates": "Reject identical complete new feature+target streams against any earlier new or old source. Reject raw recording/episode payload duplication across new/old corpora or splits, duplicate run IDs/UUIDs and replay/branch lineage. No selective source removal/replacement on failure.",
-    "scenes": "Reuse artifacts._world for canonical initial world/layout geometry and the existing recorded initial-state metadata. Compare all 26 sources. The three matched learners of each new training scene are intentional replication; refuse duplicates between distinct new scene IDs and any new-to-old train/dev scene or payload overlap. Define exact seed/provenance-independent geometry serialization before implementation review; no native reconstruction.",
+    "scenes": "Use the exact geometry_canonicalization in this protocol for all26sources. Both layout and full_scene digests are retained; refusal and same-new-scene exception are fixed before any actual preparation.",
     "held_out": "No held-out path argument/read/generator or unused case opening; dev 3110..3113 and held-out 3120..3127 stay unopened. Seed-only disjointness is not geometric proof.",
     "prior_failure": "Exclude all v1 failed rows/sources; retain consumed 3100 and explicit new-version training repetition, with no unseen claim."
   },
@@ -147,8 +157,15 @@
     "log_bytes_each": 1048576,
     "free_floor_bytes": 1073741824,
     "internal_seconds_from_entry": 180,
-    "external_normal_through_exit_seconds": 240,
-    "failure_termination_cleanup_envelope": "Later frozen controls disclose TERM/KILL, log drain and publication waits; 240 s is the normal through-return criterion, not a universal kernel-I/O bound."
+    "external_normal_through_exit_seconds": 230,
+    "failure_termination_cleanup_envelope": "Parent preparation_enclosing_hard240 remains the KILL target. Normal completed publication/exit<=230; TERM237/KILL-after3target240/fallback243. Observed-identity failure cleanup<=10s (sampler join2+TERM wait2+KILL wait2+one PID-reuse second identity drain4), plus existing bounded_process failure waits<=6 and log joins<=4: nominal263s. File publication and uninterruptible kernel I/O excluded; not a universal whole-call bound. Any late return, forced cleanup, missing terminal or monitor fault is infrastructure failure.",
+    "enclosing_TERM_seconds": 237,
+    "enclosing_KILL_target_seconds": 240,
+    "enclosing_fallback_wait_seconds": 243,
+    "failure_cleanup_wait_seconds": 10,
+    "bounded_process_failure_wait_seconds": 6,
+    "bounded_log_join_seconds": 4,
+    "nominal_failure_envelope_seconds": 263
   },
   "publication": "Fresh output outside old/new corpus and historical producer/control trees; reject overlap before mkdir. Check all inputs, reader code and adapter bytes before/after and immediately before publication. Stage and fsync pending bytes, recheck source/deadline/final absence, then atomic rename last. Retain failed pending/receipt; no admitted manifest on failure or late exit. Publish obtained-after inventory before mismatch refusal. Future outer admission also requires normal exit 0 and immutable pins.",
   "checks_to_implement_later": [
@@ -163,5 +180,24 @@
     "Actual cross-corpus geometry/payload duplicate checks remain pending. Any refusal ends admission; no source removal or replacement.",
     "Privileged teacher advice and query-driven recovery are not proved expert-correct when ignored; student observability limitation remains.",
     "These documents authorize no preparation, training, evaluation, held-out or production change."
-  ]
+  ],
+  "geometry_canonicalization": {
+    "input": "artifacts._world(recorded initial world) validates exactly arena/pose/obstacles/goal, finite numeric values and positive radii; use its float64/Python float values. No native state reconstruction.",
+    "number": "Normalize any value numerically equal to0.0 to positive0.0; otherwise preserve exact returned finite binary64 value. Encode every number as Python float.hex() string after normalization. No rounding/tolerance.",
+    "heading": "Only initial pose[2]: h=math.fmod(theta,math.tau); if h<0 add math.tau; if h==math.tau set0.0; normalize signed zero afterward. Exact binary64 modulo rule, no tolerance; not approximate or rotational-equivalence qualification.",
+    "obstacle_order": "Sort normalized numeric obstacle(x,y,r) triples lexicographically; preserve multiplicity. Serialize their float.hex strings in that order.",
+    "layout_payload": "{\"arena\":hex(arena),\"obstacles\":[[hex(x),hex(y),hex(r)],...]}",
+    "full_scene_payload": "Same layout plus \"goal\":[hex(x),hex(y),hex(radius)] and \"pose\":[hex(x),hex(y),hex(normalized_heading)]",
+    "digest": "SHA256 of UTF8 json.dumps(payload,sort_keys=True,separators=(',', ':'),ensure_ascii=True,allow_nan=False), no trailing newline; separate layout/full_scene digests. Seed/run/controller/provenance fields not included.",
+    "refusal": "Either layout OR full_scene equality rejects new-to-any-old and distinct-new-scene equality. Same new scene is allowed only across exactly the declared learner seeds10/11/12, requiring both digests and existing full scientific initial fingerprint equality. Preserve old same-split sources; reject oldtrain vs olddev equality in either digest. Cross-arm shared old sources are intentional, not split contamination."
+  },
+  "historical_import_child": {
+    "command": "Pinned shared Python -I <new named preparer script> --historical-old-data-child <exclusive output/context path>; fixed named mode, no arbitrary callable/module/root argument. Exact script/context pins checked at startup.",
+    "import_paths": "Child mode dispatch occurs before any project imports (wrapper top level is stdlib only). Fresh -I ignores PYTHONPATH/cwd/user-site. Prepend only pinned historical task-phases/src and task-phases/scripts; installed pinned NumPy/stdlib remain. No current/new project directory in sys.path.",
+    "admission": "Parent hashes historical HEAD, all tracked src/scripts Python inventory, adapter and six dependency pins before launch. Child repeats these, imports unchanged prepare_male_recovery_data, calls unchanged prepare() with the two exact historical baseline/recovery documents and shared absolute deadline. Assert Torch/MuJoCo absent before/after; no model/native/lease.",
+    "import_attestation": "Return sorted imported project module names, resolved __file__ paths and SHA256; every path must lie in fixed historical src/scripts and match pinned inventory. Required adapter+six dependencies must be actually imported. Parent validates all paths/hashes against the before inventory and rechecks historical bytes after drain.",
+    "arrays": "One uncompressed safe NPZ in new64MiB output, allow_pickle=False on parent read; exactly28 arrays named source000_features/source000_targets through source013_features/source013_targets in old manifest source order; float32 finite shapes(rows,388)/(rows,2), exact source row counts. Data bytes3345*390*4=5218200; NPZ cap8MiB, no object arrays/pickle/extras.",
+    "metadata": "Bounded4MiB JSON records exact old derived manifest, array mapping and per-source features+target/source-file hashes and imported-helper attestation; parent compares derived manifest/fingerprints exactly to published old402d2676manifest and ordered sources. No altered labels or missing sources.",
+    "time": "One child, no retry; hard child deadline<=min(120s,parent remaining180s). Parent fixed180s timer starts at entry before admission/child setup; child/output/log limits included in64MiB aggregate. Existing bounded_process cleanup and outer independently observed PID/start drain will be reviewed before execution."
+  }
 }
