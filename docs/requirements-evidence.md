@@ -50,7 +50,7 @@ evidence; [measured wheel response](reports/m6-body-gains-v2.md) and [fixed-gain
 The reduced MaleCNS pilot has separate training and recorded-input held-out
 scores, with a guarded CPU wrapper, native/replay integration and [actual live browser workflow](reports/m7-live-lab.md); it does not establish closed-loop navigation,
 biological sensing, topology benefit or population-wide sex differences. The [16-run closed-loop evaluation](reports/m7-closed-loop-v2.md) completed with only 0/8 original and 1/8 control goals; The [three-seed v2 development gate](reports/m7-training-v2-stage-c.md) completes all 24 runs, but original seed 11 reaches only 1/4 goals, failing the frozen per-seed admission threshold. That failed protocol remains locked. The separate [recovery development](reports/m7-recovery-development.md) completes 24 owners with original goals 2/4, 2/4, 3/4 and control goals 3/4, 1/4, 3/4. Its held-out evaluator is source-checked and only teacher controls are being prepared; no held-out result or R3 qualification follows.
-The [combined regression](reports/project-integration.md) passes 646 enabled tests without skips at `1d97787`, including actual EGL/male continuation/replay and puck CPU checks. Later memory, held-out-source and puck-development merges have focused checks; the full suite has not been rerun on them. M10 handoff remains partial while the task, model, artwork and physical gates remain open.
+The [combined regression](reports/project-integration.md) passes 682 enabled tests without skips at `28ad7c5`, including actual EGL/male continuation/replay and puck CPU checks after the memory, held-out-source and puck-development merges. Sources, assets and production model identities remain unchanged. M10 handoff remains partial while the task, model, artwork and physical gates remain open.
 
 ## Runnable checks and operating instructions
 
@@ -130,7 +130,7 @@ The [puck learning contract](plans/m6-puck-learning.md) at `0fd589c` passes nine
 The combined source at `c7b4436` passes **579 enabled tests without skips**, including simulation, production male Torch/native/replay and the new puck CPU model fixtures. [The fixed puck trainer/model mechanism](reports/m6-puck-model-mechanism.md) passes all four checks; actual demonstration training and learned manipulation remain pending. [Recovery v3](reports/m7-recovery-coverage-v3.md) passes its changed first-cycle collection estimand on both sources (134 rows), with later driving censored and no natural task outcome. This preserves prior failures and does not admit the sources to the existing production loader. [C4](reports/m5-counterbalance-stage-c4.md) passes forty owners/4,689 intervals with sixteen strict core forks and no own-U correction/goal advantage; combined C3/C4 covers eight selected cells, not the full matrix or held-out R2 evaluation.
 
 
-The last full enabled regression at `1d97787` passes **646 tests without skips**; the
+The earlier full enabled regression at `1d97787` passes **646 tests without skips**; the
 earlier two historical-reader fixture errors remain retained, with actual
 admission pins unchanged. The
 [fixed controller references](plans/m5-controller-references.md) add exact

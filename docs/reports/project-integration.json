@@ -2127,5 +2127,36 @@
     ],
     "qualification_claims": [],
     "remaining": "Actual four-owner native mechanism, fixed all-model development and public Engine/UI integration."
+  },
+  "memory_heldout_puck_regression": {
+    "source_commit": "28ad7c5b12549955bb568a98bb1ed6e752839042",
+    "tests": 682,
+    "passed": 682,
+    "skipped": 0,
+    "unittest_seconds": 129.311,
+    "supervised_seconds": 131.13879179900687,
+    "wall_seconds": 131.14303727100196,
+    "returncode": 0,
+    "report": {
+      "path": "runs/integration-memory-heldout-puck-28ad7c5-20261003/report.json",
+      "bytes": 126288,
+      "sha256": "b304319f6f64cbcc9a2030b0155ea4c9ed141cc68676a75d0b9ca3f3e9f202aa"
+    },
+    "launcher": {
+      "path": "runs/integration-memory-heldout-puck-28ad7c5-launch.py",
+      "bytes": 4174,
+      "sha256": "1d8af8a403e50403a4a425eddccc6d3fd67af79548d609fe2989b27d7676fbaa"
+    },
+    "console": {
+      "path": "runs/integration-memory-heldout-puck-28ad7c5-launch-console.log",
+      "bytes": 493,
+      "sha256": "7792b7b0d46310274c0a7980eb2ddeea99e1c781ed49a7d5dc653f02a213c0f3"
+    },
+    "retained_files_rehashed": 50,
+    "source_files": 473,
+    "all_four_runtime_flags_enabled": true,
+    "sources_assets_models_unchanged": true,
+    "scope": "Combined actual regression after frozen-observation diagnostic, recovery held-out binding and fixed puck development integration. Candidate held-out/task qualification remains separate.",
+    "qualification_claims": []
   }
 }

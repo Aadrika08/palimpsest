@@ -1,16 +1,18 @@
 # Combined checkout verification
 
-Latest combined source `1d97787` passes **646 tests without skips** in
-129.798 seconds (133.017 seconds supervised; 133.021 including the wrapper).
-Simulation, production male Torch/native/replay and puck CPU model checks are
-enabled. All 451 source files, shared assets and production model identities
-remain unchanged; all fifty retained artifact references rehash. This includes
-named recovery admission and the shared tensor-loader/Engine changes. The first
-`480acfa` run and its two historical-reader fixture errors remain retained;
-fixture-only `228232c` preserves actual admission pins. Recovery candidate
-closed-loop development and student native qualification remain separate gates.
-The previous `7123270` run passed 628 tests in 125.643 seconds. This regression
-establishes no new learned, held-out or physical capability.
+Latest combined source `28ad7c5` passes **682 tests without skips** in
+129.311 seconds (131.139 seconds supervised). Simulation, production male
+Torch/native/replay and puck CPU model checks are enabled. All 473 source
+entries, twenty shared assets and production model identities stay unchanged;
+all fifty retained artifact references rehash. The writer lease is free after
+completion. This covers the frozen-observation diagnostic, recovery held-out
+binding and fixed puck development integrations. It does not execute candidate
+held-out evaluation or establish learned, physical or exhibition capability.
+
+The previous `1d97787` run passed 646 tests in 129.798 seconds. The `480acfa`
+run and its two historical-reader fixture errors remain retained; fixture-only
+`228232c` preserved actual admission pins. Every actual task/model report keeps
+its own frozen runtime source identity.
 
 The preceding source checks passed 60 memory/reference fixtures in 11.469 s,
 96 puck fixtures in 5.164 s and 99 combined puck/model-reader fixtures in 5.745 s,
