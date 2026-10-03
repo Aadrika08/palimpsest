@@ -7,6 +7,14 @@ executes one natural episode of at most 600 control ticks. The [single audited r
 completed all twelve episodes on `77f4d49`; every model scored 0/4, so the fixed
 goal gate failed. Held-out layouts 6200–6207 remain locked.
 
+The subsequent [retained-data diagnosis and frozen residual audit](../reports/m6-puck-student-diagnosis.md)
+found that no rollout reached the required approach-arrival geometry. It also
+found substantial turn-only action errors on the original teacher train/dev
+inputs for all three checkpoints. No concrete sensor/cursor/scaling defect was
+identified; loss imbalance and missing recovery support remain hypotheses.
+A training-weight change is only a proposal for separate review. It does not
+authorize fitting, another development run, threshold changes or held-out access.
+
 The existing standalone owner loads each immutable bundle through the unchanged
 strict reader and uses the existing nine-input MLP decision, float64 action,
 contact classification, task dwell and record loop. Its own BEFORE-mode is the
