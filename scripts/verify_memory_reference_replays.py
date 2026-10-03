@@ -184,7 +184,7 @@ def ready_guard(destination, job):
             or native['application']['source_run_id'] != job['run_id']
             or native['application']['execution_mode'] != job['stage']):
         raise ValueError('Replay initial state changed outside the three recorder fields')
-    _compatible(artifacts._events(source['path']), events, reference.REFERENCES[job['reference_mode']][0], job['reference_mode'])
+    _compatible(artifacts._events(Path(source['path'])), events, reference.REFERENCES[job['reference_mode']][0], job['reference_mode'])
     return {'snapshot_sha256': entries[0]['sha256'], 'snapshot_bytes': path.stat().st_size,
         'initial_guard_sha256': normalized_snapshot(native), 'native_sha256': native['native_sha256']}
 

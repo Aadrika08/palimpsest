@@ -1,6 +1,7 @@
 """Pure replay admission/invariant/deadline checks; no retained data or native jobs."""
 import copy
 from contextlib import contextmanager
+import hashlib
 import importlib.util
 import json
 from pathlib import Path
@@ -73,6 +74,36 @@ class ReferenceReplays(unittest.TestCase):
             changed = copy.deepcopy(destination); changed[category][field] = value
             self.assertNotEqual(runner.normalized_snapshot(changed), expected)
         self.assertEqual(source['application']['execution_mode'], 'live')
+
+    def test_real_ready_guard_reads_string_source_path_without_relaxing_events_api(self):
+        """Real bounded snapshot/event files; synthetic state, no native decode/model."""
+        from palimpsest.snapshots import save_snapshot
+        job = copy.deepcopy(self.plan['jobs'][0]); destination = Path(job['output'])
+        source = self.root/uuid.uuid4().hex
+        (source/'recording').mkdir(parents=True)
+        (destination/'recording').mkdir(parents=True); (destination/'snapshots').mkdir()
+        native = {'application': {'source_run_id': job['run_id'], 'event_prefix': {},
+            'execution_mode': job['stage'], 'memory': {'cursor': 299, 'fixture': True}},
+            'native_sha256': hashlib.sha256(b'synthetic-native-not-decoded').hexdigest(),
+            'policy': {'hidden': np.array([1.], np.float32)}}
+        path = destination/'snapshots/initial.snp'; save_snapshot(native, path)
+        job['source'].update(path=str(source), initial_guard_sha256=runner.normalized_snapshot(native))
+        from palimpsest.replay import _RUNTIME, _REFERENCE_RUNTIME
+        environment = {'sequence': 0, 'kind': 'environment', 'upstream_commit': 'fixture',
+            'lock_sha256': 'a'*64, 'source_sha256': {k: 'b'*64 for k in _RUNTIME+_REFERENCE_RUNTIME}}
+        (source/'recording/events.jsonl').write_text(json.dumps(environment)+'\n')
+        digest = hashlib.sha256(path.read_bytes()).hexdigest()
+        registration = {'sequence': 1, 'kind': 'snapshot_registered', 'run_id': job['run_id'],
+            'snapshot_id': uuid.uuid4().hex, 'initial': True, 'sha256': digest, 'filename': 'initial.snp'}
+        (destination/'recording/events.jsonl').write_text(json.dumps(environment)+'\n'+json.dumps(registration)+'\n')
+        (destination/'recording/manifest.json').write_text(json.dumps({'run_id': job['run_id'], 'recording_format': 'palimpsest-npz-v1'}))
+        result = runner.ready_guard(destination, job)
+        self.assertEqual(result['snapshot_sha256'], digest)
+        self.assertEqual(result['initial_guard_sha256'], runner.normalized_snapshot(native))
+        self.assertIs(type(job['source']['path']), str)
+        with self.assertRaises(TypeError): runner.artifacts._events(str(source))
+        altered = copy.deepcopy(job); altered['source']['initial_guard_sha256'] = '0'*64
+        with self.assertRaises(ValueError): runner.ready_guard(destination, altered)
 
     def test_final_close_and_source_recheck_deadline_cannot_admit_worker_pass(self):
         job = self.plan['jobs'][0]; run = Path(job['output']); run.mkdir(parents=True)
