@@ -1,0 +1,330 @@
+{
+  "artifact_refs": [
+    {
+      "bytes": 12378,
+      "path": "runs/m7-recovery-heldout-teachers-control-6a5cb7e/launch.py",
+      "sha256": "009e83b6d92081cf35cde5a075cd258a3ed29b514aaa6c60b673a0eddd093cd4"
+    },
+    {
+      "bytes": 2690,
+      "path": "runs/m7-recovery-heldout-teachers-control-6a5cb7e/supervise.py",
+      "sha256": "6c0f3603be7a47c29c1454a80685c3a6eee359267e9693519fa4ce69f49bbfba"
+    },
+    {
+      "bytes": 9024,
+      "path": "runs/m7-recovery-heldout-teachers-control-6a5cb7e/inventory.py",
+      "sha256": "bad89ef3c085cc36b5348c52d2ab77dd85bfb04ead318059de768cbcf5dad144"
+    },
+    {
+      "bytes": 259932,
+      "path": "runs/m7-recovery-heldout-teachers-control-6a5cb7e/before.json",
+      "sha256": "7039030441bcc78dfd1c00fb5e8968c46b96f8d6982c5af66c26f89bb40eac61"
+    },
+    {
+      "bytes": 259932,
+      "path": "runs/m7-recovery-heldout-teachers-control-6a5cb7e/after.json",
+      "sha256": "7039030441bcc78dfd1c00fb5e8968c46b96f8d6982c5af66c26f89bb40eac61"
+    },
+    {
+      "bytes": 5480,
+      "path": "runs/m7-recovery-heldout-teachers-control-6a5cb7e/invocation.json",
+      "sha256": "8700882767f3a25378111afa5ebc5abbc99333a591ca650fb4a9e825d141cece"
+    },
+    {
+      "bytes": 26084,
+      "path": "runs/m7-recovery-heldout-teachers-control-6a5cb7e/checks.json",
+      "sha256": "f7613305638acf892615f65e41cca52f1374f967bf733c2fe0baa073c8e18caa"
+    },
+    {
+      "bytes": 9755,
+      "path": "runs/m7-recovery-heldout-teachers-control-6a5cb7e/checks.py",
+      "sha256": "16f4f64f1dd40325760ba1f7d366dedb1dab9a5bb08352eaed47d2562d119d0c"
+    },
+    {
+      "bytes": 7735,
+      "path": "runs/m7-recovery-heldout-teachers-control-6a5cb7e/freeze.py",
+      "sha256": "6ca39932d84dddb94ffcbb8e7423bda70467cc59e34bf8c8344f032d9fd015d4"
+    },
+    {
+      "bytes": 974,
+      "path": "runs/m7-recovery-heldout-teachers-control-6a5cb7e/checks-console.log",
+      "sha256": "8136255691b153c23feec02d9b2610da57ad4554c404a126bae8f658b8a9f24d"
+    },
+    {
+      "bytes": 287,
+      "path": "runs/m7-recovery-heldout-teachers-control-6a5cb7e/checks-v2-console.log",
+      "sha256": "891116f87e324ef79cb7327b776df92a42143463673b4063a51ab2d2e705016b"
+    },
+    {
+      "bytes": 287,
+      "path": "runs/m7-recovery-heldout-teachers-control-6a5cb7e/checks-v3-console.log",
+      "sha256": "891116f87e324ef79cb7327b776df92a42143463673b4063a51ab2d2e705016b"
+    },
+    {
+      "bytes": 9270,
+      "path": "runs/m7-recovery-heldout-teachers-control-6a5cb7e/checks-draft-v1.py",
+      "sha256": "e8e87920470336a987ba023c65458d2a907530011d7d398aaa1988f631240ae5"
+    },
+    {
+      "bytes": 10996,
+      "path": "runs/m7-recovery-heldout-teachers-control-6a5cb7e/launch-draft-v1.py",
+      "sha256": "3aad33169e210f35fc7d08c700e560acce81509cd5575b5374935277c0a49b33"
+    },
+    {
+      "bytes": 9277,
+      "path": "runs/m7-recovery-heldout-teachers-control-6a5cb7e/checks-draft-v2.py",
+      "sha256": "cacc596a2608f5b08d3933aaa5efc8fd7afda7b4ff01e36d7b95f641a6de383a"
+    },
+    {
+      "bytes": 8314,
+      "path": "runs/m7-recovery-heldout-teachers-control-6a5cb7e/own-audit.py",
+      "sha256": "a925a6bb54fad8bb91dc430a690c927fead4fa61af7cbe209b3e7839d4b765d1"
+    },
+    {
+      "bytes": 23599,
+      "path": "runs/m7-recovery-heldout-teachers-control-6a5cb7e/own-audit.json",
+      "sha256": "627b13e2a14c42e4318f072e6a7fd036f29a4a84a29686a2edce6d7fa2b70db1"
+    },
+    {
+      "bytes": 155,
+      "path": "runs/m7-recovery-heldout-teachers-control-6a5cb7e/own-audit-console.log",
+      "sha256": "addb44bfa6f240bd856abad83d0ff31f2421e90270151acd5e54831fcfde1fc6"
+    },
+    {
+      "bytes": 464,
+      "path": "runs/m7-recovery-heldout-teachers-control-6a5cb7e/postcheck-syntax-erratum.json",
+      "sha256": "7df2e1b3428be75ae9b05dfc1b32f9d21135f95e9f27ca5f64ee46f51b3fb028"
+    },
+    {
+      "bytes": 12700,
+      "path": "runs/m7-recovery-heldout-teachers-control-6a5cb7e/terminal.json",
+      "sha256": "a32df8dab538bff1c9bf2748fb3cb2c705b2f7e738b1da858238563a02efdd3f"
+    },
+    {
+      "bytes": 835,
+      "path": "runs/m7-recovery-heldout-teachers-control-6a5cb7e/enclosing.json",
+      "sha256": "272f44325a8c8d138a876621b26d35becd1be744f6ce8a5eb5d193986452b8f9"
+    },
+    {
+      "bytes": 789,
+      "path": "runs/m7-recovery-heldout-teachers-control-6a5cb7e/launcher-console.log",
+      "sha256": "946f81497a666edfa440a27689f350b33c592f24c0c05d95444f5eae68ae1fea"
+    },
+    {
+      "bytes": 292,
+      "path": "runs/m7-recovery-heldout-teachers-control-6a5cb7e/outer-launch/stdout.log",
+      "sha256": "111fd9406d43a989bf5a7d1eed3d0c6ba3206525f7676c9498e0afcc46c42d2d"
+    },
+    {
+      "bytes": 0,
+      "path": "runs/m7-recovery-heldout-teachers-control-6a5cb7e/outer-launch/stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 335,
+      "path": "runs/m7-recovery-heldout-teachers-control-6a5cb7e/outer-launch/supervisor.json",
+      "sha256": "ab37ec543f266d2f5858a4f69794389fe5c94d5a01338c1d57586a1f965f96e1"
+    },
+    {
+      "bytes": 488,
+      "path": "runs/m7-recovery-heldout-teachers-control-6a5cb7e/outer-supervisor/stdout.log",
+      "sha256": "49090e6c47c4d88fa10252f5a853785352692a12c1f8cc647570f0ce20e2e545"
+    },
+    {
+      "bytes": 0,
+      "path": "runs/m7-recovery-heldout-teachers-control-6a5cb7e/outer-supervisor/stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 339,
+      "path": "runs/m7-recovery-heldout-teachers-control-6a5cb7e/outer-supervisor/supervisor.json",
+      "sha256": "d8394ff52cdda8fb4da3474db90eac49529ba5b65def40408be921517ace55ce"
+    },
+    {
+      "bytes": 179514,
+      "path": "runs/m7-recovery-heldout-teachers-6a5cb7e-20261003/collection.json",
+      "sha256": "5610a488f7c6b5563d08f0cafa8fe7742d5bdd4d0cdd9ab59c524c3e0e25b002"
+    },
+    {
+      "bytes": 6029,
+      "path": "runs/m7-recovery-heldout-teachers-6a5cb7e-20261003/protocol.json",
+      "sha256": "097321aaf71baaf27bedf6eb3225b17b6345fb667548d19cb4810d08f87bdbed"
+    },
+    {
+      "bytes": 13076,
+      "path": "runs/m7-recovery-heldout-teachers-6a5cb7e-20261003/collector.py",
+      "sha256": "30f4fb19faa9cd3a3cca24eb183767c6ffcddcb634b9cf77467f69abee8922e7"
+    },
+    {
+      "bytes": 6112,
+      "path": "../project-integration/runs/m7-heldout-teacher-root-audit-6a5cb7e/audit.py",
+      "sha256": "a468c5252330a0b46ad87d77621edcafee67a1b7764504a115d223d796242662"
+    },
+    {
+      "bytes": 1650,
+      "path": "../project-integration/runs/m7-heldout-teacher-root-audit-6a5cb7e/audit.json",
+      "sha256": "4d3642336f384b8008299a75d77e55c0bda1c3a8d9ba83019118ec24d352e973"
+    },
+    {
+      "bytes": 3295,
+      "path": "../project-integration/runs/m7-heldout-teacher-control-root-review-6a5cb7e/audit.py",
+      "sha256": "496c119c78fd42bc9d11829bb5cd183acbf4a42d14b5a1079dc5d5d43fd049cb"
+    },
+    {
+      "bytes": 429,
+      "path": "../project-integration/runs/m7-heldout-teacher-control-root-review-6a5cb7e/audit.json",
+      "sha256": "30648f2a9df1e9c60dda1ee978683e029e399f2f345b1115897b52feeede8309"
+    }
+  ],
+  "audits": {
+    "own": {
+      "first_execution_pass": true,
+      "receipt_sha256": "627b13e2a14c42e4318f072e6a7fd036f29a4a84a29686a2edce6d7fa2b70db1",
+      "seconds": 1.2677519120043144
+    },
+    "root": {
+      "first_execution_pass": true,
+      "receipt_sha256": "4d3642336f384b8008299a75d77e55c0bda1c3a8d9ba83019118ec24d352e973",
+      "seconds": 20.747734702003072
+    }
+  },
+  "cleanup": {
+    "conflicting_owned_identities": [],
+    "forced_signals": [],
+    "observed_owned_processes": [
+      {
+        "pid": 708251,
+        "start_ticks": 9693360
+      },
+      {
+        "pid": 708323,
+        "start_ticks": 9694469
+      },
+      {
+        "pid": 708324,
+        "start_ticks": 9694470
+      },
+      {
+        "pid": 708436,
+        "start_ticks": 9697473
+      },
+      {
+        "pid": 708508,
+        "start_ticks": 9699773
+      },
+      {
+        "pid": 708566,
+        "start_ticks": 9701888
+      }
+    ],
+    "sample_errors": [],
+    "sampler_stopped": true,
+    "scope": "finite .25 s sampling; 8192 process entries, 64 descendants/sample, 256 cumulative identities plus one failure-only PID-reuse receipt; PID/start rechecked before owned containment; not universal transient-process proof",
+    "survivors": []
+  },
+  "collection_sha256": "5610a488f7c6b5563d08f0cafa8fe7742d5bdd4d0cdd9ab59c524c3e0e25b002",
+  "managed_usage_at_terminal": {
+    "files": 265,
+    "headroom_bytes": 0,
+    "max_bytes": 1073741824,
+    "min_free_bytes": 1073741824,
+    "remaining_bytes": 841830596,
+    "used_bytes": 231911228
+  },
+  "native_initial_snapshots": 4,
+  "numeric_ticks": 1154,
+  "protocol_sha256": "097321aaf71baaf27bedf6eb3225b17b6345fb667548d19cb4810d08f87bdbed",
+  "publication": "retained local evidence",
+  "qualification_claims": [],
+  "raw_ledger": {
+    "bytes": 230556878,
+    "files": 53,
+    "path": "runs/m7-recovery-heldout-teachers-6a5cb7e-20261003/collection.json",
+    "sha256": "5610a488f7c6b5563d08f0cafa8fe7742d5bdd4d0cdd9ab59c524c3e0e25b002"
+  },
+  "runs": [
+    {
+      "close_status": "closed",
+      "final_phase": "terminated",
+      "last_outcome": {
+        "episode": 0,
+        "final_distance": 0.7842820882797241,
+        "reason": "goal",
+        "steps": 378
+      },
+      "owner_alive": false,
+      "owner_exitcode": 0,
+      "recording_and_snapshot_bytes": 75351534,
+      "run_id": "f0513f37d67b48899f841d9a1f9d4c41",
+      "seed": 1012,
+      "ticks": 378
+    },
+    {
+      "close_status": "closed",
+      "final_phase": "terminated",
+      "last_outcome": {
+        "episode": 0,
+        "final_distance": 0.7800789475440979,
+        "reason": "goal",
+        "steps": 284
+      },
+      "owner_alive": false,
+      "owner_exitcode": 0,
+      "recording_and_snapshot_bytes": 56748097,
+      "run_id": "3e4454652ac94fc5bfbd45e042f8a7d2",
+      "seed": 1013,
+      "ticks": 284
+    },
+    {
+      "close_status": "closed",
+      "final_phase": "terminated",
+      "last_outcome": {
+        "episode": 0,
+        "final_distance": 0.7854385375976562,
+        "reason": "goal",
+        "steps": 274
+      },
+      "owner_alive": false,
+      "owner_exitcode": 0,
+      "recording_and_snapshot_bytes": 54770603,
+      "run_id": "92b2a0af042041e1befbd1621c722d2e",
+      "seed": 1014,
+      "ticks": 274
+    },
+    {
+      "close_status": "closed",
+      "final_phase": "terminated",
+      "last_outcome": {
+        "episode": 0,
+        "final_distance": 0.7839037775993347,
+        "reason": "goal",
+        "steps": 218
+      },
+      "owner_alive": false,
+      "owner_exitcode": 0,
+      "recording_and_snapshot_bytes": 43686644,
+      "run_id": "de03e57348fb43e6855132bceddf2275",
+      "seed": 1015,
+      "ticks": 218
+    }
+  ],
+  "scope": "four fixed privileged analytic-teacher recordings only; student recorded/closed-loop evaluation pending; no qualification or promotion",
+  "semantic_events": 2373,
+  "source_commit": "6a5cb7e174593d54387ab3d75ffe7889a577bae3",
+  "status": "completed-held-out-teacher-collection",
+  "time_seconds": {
+    "collector_child_through_exit": 108.35672677800176,
+    "collector_reported": 97.19875014400168,
+    "enclosing_through_launcher_exit": 127.05687501000648,
+    "launcher_pre_publication": 126.71072896200349
+  },
+  "upstream_commit": "8d964599119b420de67ee259434d273651a1a76d",
+  "version": 1,
+  "warnings": {
+    "kind": "existing Torch TF32 API deprecation warning",
+    "native_stderr_each_bytes": 698,
+    "native_stderr_each_sha256": "4ad0f1c3fe69bc9cdb7a9292640501f7da85a560e7584a6dd6f7559610a75e00",
+    "outer_stderr_empty": true,
+    "semaphore_warning": false
+  }
+}
