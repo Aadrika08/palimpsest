@@ -1,5 +1,6 @@
 """Research admission fixtures; no Torch, native decoder, or simulation."""
 import copy
+import hashlib
 import os
 from pathlib import Path
 import subprocess
@@ -58,6 +59,14 @@ def fixture():
         'final_state': {'phase': 'paused', 'last_outcome': None},
         'coverage': recovery.score_coverage(rows)}
     return raw_rows, result
+
+
+def publication_protocol():
+    """Publication tests pin their reader bytes; historical admission pins stay unchanged."""
+    value=data.protocol()
+    value['source_code_sha256']={name:hashlib.sha256(data.artifacts._read(ROOT/name,data.MAX_JSON)).hexdigest()
+        for name in value['source_code_sha256']}
+    return value
 
 
 class RecoveryData(unittest.TestCase):
@@ -131,8 +140,9 @@ class RecoveryData(unittest.TestCase):
             validate_collection({'splits': {'train': [source], 'dev': [], 'held_out': []}}, 'development')
 
     def test_publication_fsync_deadline_failure_retains_pending_only_and_no_overwrite(self):
+        frozen=publication_protocol()
         for failure in ('fsync', 'deadline', None):
-            with tempfile.TemporaryDirectory() as directory:
+            with tempfile.TemporaryDirectory() as directory, patch.object(data,'protocol',return_value=frozen):
                 root = Path(directory)
                 manifest = {'status': 'fixture', **data.reader_identity()}
                 if failure == 'fsync':
@@ -161,7 +171,7 @@ class RecoveryData(unittest.TestCase):
             self.assertEqual(data.output_path(root/'fresh', baseline, recovery_report), root/'fresh')
 
     def test_reader_and_adapter_late_drift_cannot_publish(self):
-        with tempfile.TemporaryDirectory() as directory:
+        with tempfile.TemporaryDirectory() as directory, patch.object(data,'protocol',return_value=publication_protocol()):
             root = Path(directory); manifest = {'status': 'fixture', **data.reader_identity()}
             original = data.artifacts._read
             drift = False
