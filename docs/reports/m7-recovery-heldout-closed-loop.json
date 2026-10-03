@@ -1,0 +1,386 @@
+{
+  "version": 1,
+  "publication": "retained local evidence",
+  "experiment_status": "completed-held-out-closed-loop-evaluation",
+  "scope": "completed fixed48 held-out evaluation only; no prospective useful-navigation criterion supplied, no R3 or topology advantage",
+  "source_commit": "177982e583bd7457a6da2be47021fa799b801cf9",
+  "upstream_commit": "8d964599119b420de67ee259434d273651a1a76d",
+  "protocol_sha256": "097321aaf71baaf27bedf6eb3225b17b6345fb667548d19cb4810d08f87bdbed",
+  "owners": 48,
+  "numeric_rows": 21461,
+  "initial_snapshots": 48,
+  "paired_initial_comparisons": 24,
+  "matched_scene_seeds": [
+    1200,
+    1201,
+    1202,
+    1203,
+    1204,
+    1205,
+    1206,
+    1207
+  ],
+  "model_seeds": [
+    10,
+    11,
+    12
+  ],
+  "summary": {
+    "10:male-original": {
+      "episodes": 8,
+      "outcomes": {
+        "stalled": 4,
+        "time_limit": 3,
+        "goal": 1
+      },
+      "goal_count": 1
+    },
+    "10:male-control": {
+      "episodes": 8,
+      "outcomes": {
+        "stalled": 4,
+        "goal": 3,
+        "time_limit": 1
+      },
+      "goal_count": 3
+    },
+    "11:male-original": {
+      "episodes": 8,
+      "outcomes": {
+        "time_limit": 2,
+        "stalled": 2,
+        "goal": 4
+      },
+      "goal_count": 4
+    },
+    "11:male-control": {
+      "episodes": 8,
+      "outcomes": {
+        "stalled": 5,
+        "goal": 3
+      },
+      "goal_count": 3
+    },
+    "12:male-original": {
+      "episodes": 8,
+      "outcomes": {
+        "time_limit": 5,
+        "stalled": 3
+      },
+      "goal_count": 0
+    },
+    "12:male-control": {
+      "episodes": 8,
+      "outcomes": {
+        "stalled": 5,
+        "time_limit": 1,
+        "goal": 2
+      },
+      "goal_count": 2
+    }
+  },
+  "original_goals_by_seed": [
+    1,
+    4,
+    0
+  ],
+  "control_goals_by_seed": [
+    3,
+    3,
+    2
+  ],
+  "original_goals_total": 5,
+  "control_goals_total": 8,
+  "episodes_per_topology": 24,
+  "useful_navigation_threshold": null,
+  "raw_ledger": {
+    "source": "evaluation.json runs[].files; not duplicated here",
+    "files": 885,
+    "bytes": 4286694743
+  },
+  "timings_seconds": {
+    "evaluator_reported": 2279.451365282992,
+    "supervised_child": 2286.7504436000017,
+    "launcher_pre_publication": 2303.203327066003,
+    "enclosing_through_exit": 2303.5444223950035,
+    "max_owner_reported": 80.5146144140017
+  },
+  "limits": {
+    "owners": 48,
+    "ticks": 28800,
+    "initial_snapshots": 48,
+    "ticks_per_run": 600,
+    "internal_seconds": 3600,
+    "child_hard_seconds": 3630,
+    "normal_whole_seconds": 3650,
+    "enclosing_hard_seconds": 3660,
+    "owner_seconds": 180,
+    "recording_and_snapshot_bytes_per_owner": 167772160,
+    "stage_bytes": 8589934592,
+    "min_free_bytes": 1073741824,
+    "log_bytes_each": 1048576,
+    "combined_free_reservation_bytes": 10015997952
+  },
+  "terminal_prepublication_usage": {
+    "used_bytes": 4296178786,
+    "files": 1144,
+    "remaining_bytes": 4293755806,
+    "max_bytes": 8589934592,
+    "headroom_bytes": 0,
+    "min_free_bytes": 1073741824
+  },
+  "runtime": {
+    "python": "3.11.15",
+    "numpy": "2.2.5",
+    "torch_build": "2.9.0+cu128",
+    "device": "cpu",
+    "dtype": "float32",
+    "threads": 1,
+    "renderer": "EGL",
+    "runtime_and_all_production_asset_bytes_unchanged": true
+  },
+  "inventories": {
+    "entries": 1211,
+    "before_after_sha256": "66204f7ac46ed7e0347d9a4036f1fe005e80050cd67216bdcd32d035409d0f74",
+    "evaluator_source_entries": 636,
+    "scope": "tracked/upstream/assets/corpus/development/model/runtime plus completed teacher+recorded prerequisites/controls/final drained logs"
+  },
+  "cleanup": {
+    "top_command_exit": 0,
+    "child_exit": 0,
+    "enclosing_exit": 0,
+    "all48_owner_exits": 0,
+    "sampled_pid_start_pairs": 54,
+    "sampled_identities_absent": true,
+    "home_writer_lease_available": true,
+    "forced_signals": [],
+    "survivors": [],
+    "sampler_errors": [],
+    "pid_conflicts": [],
+    "scope": "finite .25 s observation; not universal transient-process coverage"
+  },
+  "logs": {
+    "native_streams": 96,
+    "native_stdout_bytes": 0,
+    "native_stderr_bytes": 53520,
+    "native_stderr_bytes_each": 1115,
+    "upstream_CSR_warning_mentions": 48,
+    "semaphore_mentions": 0,
+    "hashes_final_after_enclosing_exit": true
+  },
+  "audits": {
+    "own": {
+      "first_execution": "passed",
+      "seconds": 9.690337132997229,
+      "raw_files": 885,
+      "rows": 21461,
+      "independent_control_equation": true,
+      "native_initial_scope": "reported scientific fingerprint equality, not independent native decoding",
+      "neural_forward_or_physics": false
+    },
+    "root": {
+      "first_execution": "passed",
+      "seconds": 76.97162339900387,
+      "raw_files": 885,
+      "rows": 21461,
+      "native_initials": 48,
+      "source_entries": 636,
+      "neural_forward_or_physics": false
+    },
+    "control_review": {
+      "first_execution": "passed",
+      "seconds": 12.974542
+    }
+  },
+  "qualification_claims": [],
+  "limitations": [
+    "Eight scenes and three frozen model seeds; scenes/model seeds are units, not 21,461 independent trials.",
+    "No held-out useful-navigation threshold was supplied; no new criterion or winner selection after observing results.",
+    "Original5/24 and control8/24 goals are descriptive, not proof of topology advantage or robust useful navigation.",
+    "No refitting, new seed/epoch/checkpoint selection, causal training-coverage claim, biological mapping or production promotion.",
+    "Right-censored recovery source does not qualify later-driving recovery; prior failures remain failures.",
+    "No physical hardware qualification or R3 claim."
+  ],
+  "artifact_refs": [
+    {
+      "path": "runs/m7-recovery-heldout-closed-loop-177982e-20261003/evaluation.json",
+      "bytes": 545895,
+      "sha256": "3491c7ca36fc4fcfcb088ea538d211f8d7aec9423cb66727c44801f5cf003c59"
+    },
+    {
+      "path": "runs/m7-recovery-heldout-closed-loop-177982e-20261003/protocol.json",
+      "bytes": 1509,
+      "sha256": "f4c2804eac1f72dba347a993437a454712bd31959bb7316f220658e4f728a71c"
+    },
+    {
+      "path": "runs/m7-recovery-heldout-closed-loop-177982e-20261003/evaluator.py",
+      "bytes": 29718,
+      "sha256": "18999707fbb187418f7cfaf69dbe85e42388a16dfe75d247674b8cfee104aaed"
+    },
+    {
+      "path": "runs/m7-recovery-heldout-closed-loop-control-177982e/terminal.json",
+      "bytes": 363445,
+      "sha256": "44b657e4886167171b164643797b290fcd45351780e7c02aa28a00751dcd0125"
+    },
+    {
+      "path": "runs/m7-recovery-heldout-closed-loop-control-177982e/enclosing.json",
+      "bytes": 913,
+      "sha256": "0cdc98cb110638a2bc83430fa1b5302dedbc8e9625cf093662702e41d621213f"
+    },
+    {
+      "path": "runs/m7-recovery-heldout-closed-loop-control-177982e/terminal-check.json",
+      "bytes": 10021,
+      "sha256": "d7b2202ff75b9bc24ce56edd3640dd7fd152f656c34fa132a273e674bd15510f"
+    },
+    {
+      "path": "runs/m7-recovery-heldout-closed-loop-control-177982e/before.json",
+      "bytes": 282235,
+      "sha256": "66204f7ac46ed7e0347d9a4036f1fe005e80050cd67216bdcd32d035409d0f74"
+    },
+    {
+      "path": "runs/m7-recovery-heldout-closed-loop-control-177982e/after.json",
+      "bytes": 282235,
+      "sha256": "66204f7ac46ed7e0347d9a4036f1fe005e80050cd67216bdcd32d035409d0f74"
+    },
+    {
+      "path": "runs/m7-recovery-heldout-closed-loop-control-177982e/launch.py",
+      "bytes": 14524,
+      "sha256": "7c2fb061688f19dde3682fab7213a888ae6691b18e86d136df58508d59fe45c3"
+    },
+    {
+      "path": "runs/m7-recovery-heldout-closed-loop-control-177982e/supervise.py",
+      "bytes": 2806,
+      "sha256": "4a5eb8584dfdc454118e2cca3b8d94f2ba238f4d744219f12ed5269ad4b786c3"
+    },
+    {
+      "path": "runs/m7-recovery-heldout-closed-loop-control-177982e/inventory.py",
+      "bytes": 14305,
+      "sha256": "c95b4f0c2377e60e467129cfe020d492d8430b09ecdec247220fbac2c63d5b62"
+    },
+    {
+      "path": "runs/m7-recovery-heldout-closed-loop-control-177982e/invocation.json",
+      "bytes": 20033,
+      "sha256": "d119a94668f9c78bb3ea351e76bb4dd1576206c93e95d16e77e7dcf2aed39c28"
+    },
+    {
+      "path": "runs/m7-recovery-heldout-closed-loop-control-177982e/checks.py",
+      "bytes": 12769,
+      "sha256": "82e46acee84957ed87d7f2e1da643919744fdfebe0819e8b8f31420f389cf170"
+    },
+    {
+      "path": "runs/m7-recovery-heldout-closed-loop-control-177982e/checks.json",
+      "bytes": 25228,
+      "sha256": "abf97dbdde44447c5d38e83a64f2c2e86eaec68d0dd6f1e18db369280709b69d"
+    },
+    {
+      "path": "runs/m7-recovery-heldout-closed-loop-control-177982e/checks-console.log",
+      "bytes": 308,
+      "sha256": "13784caaeb43f6cc96393731a3183fc9f197880b92c4f4f5698d95367adcb93b"
+    },
+    {
+      "path": "runs/m7-recovery-heldout-closed-loop-control-177982e/preflight.py",
+      "bytes": 2476,
+      "sha256": "178c032449f8e53b2da7b8df7d0b1499f827b8f73adebb231f651d979036168e"
+    },
+    {
+      "path": "runs/m7-recovery-heldout-closed-loop-control-177982e/preflight.json",
+      "bytes": 15704,
+      "sha256": "94d9568a3fdacb4c39743cee4f9397d59f3284dcca00bfc3df9622ad92814c6b"
+    },
+    {
+      "path": "runs/m7-recovery-heldout-closed-loop-control-177982e/preflight-console.log",
+      "bytes": 236,
+      "sha256": "4aabe6bbe7c7edcbfb3e2dad31bc4a4b90428a5eb883138f74e80cfa6ab8bca8"
+    },
+    {
+      "path": "runs/m7-recovery-heldout-closed-loop-control-177982e/freeze.py",
+      "bytes": 6443,
+      "sha256": "83c83789e31c4507e03ecfd0fef2b31a6fb5de3e20e50262bee77f68ae9b012a"
+    },
+    {
+      "path": "runs/m7-recovery-heldout-closed-loop-control-177982e/freeze-console.log",
+      "bytes": 591,
+      "sha256": "43b3a78612d0c4333cca63d80496f2c74b935c36c81876e6fa8d0aab1467546b"
+    },
+    {
+      "path": "runs/m7-recovery-heldout-closed-loop-control-177982e/recorded-control.diff",
+      "bytes": 22327,
+      "sha256": "9608f6c3bd4558e9d8df8509f99465a27a883337bb6e8859e93e926209cfb677"
+    },
+    {
+      "path": "runs/m7-recovery-heldout-closed-loop-control-177982e/retained-audit.py",
+      "bytes": 4593,
+      "sha256": "2014c2d66a0d6ba793c240b5cd2dd5414a440d8640f3e017101cbe9e7b20952e"
+    },
+    {
+      "path": "runs/m7-recovery-heldout-closed-loop-control-177982e/retained-audit.json",
+      "bytes": 57884,
+      "sha256": "d7657063b15a192803ef307d3155ea17ae192a823acc0adaf872c79b5127700c"
+    },
+    {
+      "path": "runs/m7-recovery-heldout-closed-loop-control-177982e/retained-audit-console.log",
+      "bytes": 555,
+      "sha256": "0a55630a7f8af3c752effd619fee37fda5b0c8b314ce88839303f203fdc3de79"
+    },
+    {
+      "path": "runs/m7-recovery-heldout-closed-loop-control-177982e/launcher-console.log",
+      "bytes": 867,
+      "sha256": "6bbee086293028caf0d58c1a2338e20d7f4968c221922b528ace4000ca6a531b"
+    },
+    {
+      "path": "runs/m7-recovery-heldout-closed-loop-control-177982e/outer-launch/stdout.log",
+      "bytes": 7221,
+      "sha256": "7504776bac5afdc5f2cb11cfebc754f3e1cc1451b9656d8f3d3265e8a59d9480"
+    },
+    {
+      "path": "runs/m7-recovery-heldout-closed-loop-control-177982e/outer-launch/stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "runs/m7-recovery-heldout-closed-loop-control-177982e/outer-launch/supervisor.json",
+      "bytes": 339,
+      "sha256": "cc61bb5ac5313f9c3bf5d0677063dd452f2b299ef4fa2d2d3f8967c1546bb63c"
+    },
+    {
+      "path": "runs/m7-recovery-heldout-closed-loop-control-177982e/outer-supervisor/stdout.log",
+      "bytes": 493,
+      "sha256": "8e61c0703f2903d276e5eb144790846e4c1193b24a9c774671f13660a6fc6307"
+    },
+    {
+      "path": "runs/m7-recovery-heldout-closed-loop-control-177982e/outer-supervisor/stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "runs/m7-recovery-heldout-closed-loop-control-177982e/outer-supervisor/supervisor.json",
+      "bytes": 343,
+      "sha256": "bda7b4b003a7531b400a4e6628109f6183cdeda952f3bc414a94150c6a548546"
+    },
+    {
+      "path": "../project-integration/runs/m7-heldout-closed-loop-root-audit-177982e/audit.py",
+      "bytes": 6453,
+      "sha256": "6d7664caf754f37991e2718f854c05f2359b80be652588dda3c4cdd911eae080"
+    },
+    {
+      "path": "../project-integration/runs/m7-heldout-closed-loop-root-audit-177982e/audit.json",
+      "bytes": 10431,
+      "sha256": "816ab24e3359d07ab61f9c64b197aca3ce27000cbdbadd9b91086113de41d77d"
+    },
+    {
+      "path": "../project-integration/runs/m7-heldout-closed-loop-control-root-review-177982e/audit.py",
+      "bytes": 4934,
+      "sha256": "54442d87e5fe56cefa2aec38b101d40eef6374a7002bbcef3e87907c7ca023a3"
+    },
+    {
+      "path": "../project-integration/runs/m7-heldout-closed-loop-control-root-review-177982e/audit.json",
+      "bytes": 935,
+      "sha256": "aa0a90648e4d95d1fa48dd4f2ed175e40f8d06fbbda25f768aab6b01f9a1013b"
+    },
+    {
+      "path": "../project-integration/runs/m7-heldout-closed-loop-root-audit-177982e/audit.log",
+      "bytes": 962,
+      "sha256": "1b89cca7d8c753d1cc092c9fea47915974c32d1ad52a7846170f657b340ade6a"
+    }
+  ]
+}
