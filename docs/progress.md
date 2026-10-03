@@ -221,7 +221,13 @@ remains ineligible.
 - Mechanism: pinned upstream model/environment; allowlisted controller inputs; one mutable-runtime owner; complete native, policy, application and RNG snapshots. Recorded E fitting and U-only swaps preserve declared invariant hashes. Male controllers use separately trained fixed CPU assets and an authored sensor mapping.
 - Missing: M5 counterbalanced/held-out transfer; learned M6 puck success and held-out evaluation; M7 closed-loop qualification; M8 physical work; independent M9 operation, exhibition duration and physical artwork; final M10 handoff.
 - Unknown: original checkpoint training lineage, full-model Pi performance, physical stopping limits and account quota (telemetry unavailable).
-- Next action: implement and review the frozen fresh-development admission/runner using the six published, independently audited navigation models. Training session `70035` drains exit0; retained audit passes first. The earlier zero-model startup refusal remains unchanged, and held-out stays locked. Remaining-09 controls pass eight root fixtures and full preflight; its twelve-owner admission and retained audit pass; publish those results before separate comparison controls. Memory coverage is 36/48; failed 07 is neither retried nor given longer deadlines. The existing paired readout covers its historical 24-cell subset. Scoped exploration, homing and measured adaptation are met; learned puck keeps M6 open, automatic retraining stops after both negative development studies, and held-out stays locked. Physical qualification and independent exhibition operation remain open.
+- Next action: implement and review the frozen fresh-development admission/runner using the six published, independently audited navigation models. Training session `70035` drains exit0; retained audit passes first. The earlier zero-model startup refusal remains unchanged, and held-out stays locked. Remaining-09 controls pass eight root fixtures and full preflight; its twelve-owner admission, retained audit and publication review pass; prepare and review separate comparison controls. Memory coverage is 36/48; failed 07 is neither retried nor given longer deadlines. The existing paired readout covers its historical 24-cell subset. Scoped exploration, homing and measured adaptation are met; learned puck keeps M6 open, automatic retraining stops after both negative development studies, and held-out stays locked. Physical qualification and independent exhibition operation remain open.
+
+The [single completion proposal](plans/m5-remaining-07-completion-proposal.md)
+has a read-only peer review and is pending an explicit user amendment to the
+frozen no-retry rule. It proposes one complete forty-owner attempt after 09/10,
+unchanged scientific/resource limits and bounded phase timings, preserving the
+original failure. It authorizes no implementation or execution while unanswered.
 
 The [prospective held-out outline](plans/m5-heldout-proposal.md) specifies the
 reserved 64–71 matrix without opening it. Source/profile freeze and all 48 audited
@@ -325,7 +331,13 @@ script/audit/process and the three-field correction are retained. The study and
 terminal receipt ran once and remain unchanged. Corrected receipt:
 `runs/memory-remaining-09-root-audit-cb13db9/audit.json`,
 SHA `f3bf3f6adcd3e44c0fa978d54764a4242ca784f23c039e3ba25bb94fc9a5fd32`.
-Publication precedes separate comparison controls; accepted coverage remains 36/48.
+The [admission publication](reports/m5-remaining-09-admission.md), `eb55d3a`, is
+integrated after all 177 unique references / 263,617,210 bytes rehash in the first
+publication review (0.526 s); all four readouts match root. Receipt:
+`runs/memory-remaining-09-publication-root-review-eb55d3a/audit.json`,
+SHA `f677c2f67d3693a808a897393d0f901bd610cbac27624846c1cf984ed39d543d`.
+Comparison-control preparation is authorized separately; actual comparison has
+not started and accepted coverage remains 36/48.
 
 Paired navigation trainer `6feade9` is integrated after eleven independent root
 pure checks pass first in 1.698 s. It adds only the named trainer/test, preserving
