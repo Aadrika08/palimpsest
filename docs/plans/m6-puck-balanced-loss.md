@@ -91,3 +91,49 @@ Scenes 6100–6103 are already seen development evidence, with the unchanged
 requirement of ≥3/4 goals for EACH of all three models and no seed selection.
 Held-out 6200–6207 stays locked. Any later independent generalization claim needs
 the original untouched held-out boundary and separate authorization.
+
+## Source preparation and deferred checks
+
+The numerical model, learning/supervisor and task modules remain byte-identical
+to `0f5de8b`. `puck_balanced.py` supplies the fixed partition/weights and a separate
+strict balanced-bundle reader; the historical/default reader is unchanged and
+rejects the new training schema. `train_puck.py --balanced-loss` reuses the same
+strict teacher admission, fit loop, storage/finalization and unweighted dev
+selection. Only that explicit option supplies row weights. Its histories use
+`weighted_train_loss`; ordinary histories retain `train_loss`.
+
+Pure validation command:
+
+```sh
+PYTHONPATH=src:tests:scripts ../lab-hardening/.venv/bin/python -m unittest \
+  test_puck_balanced.PuckBalancedTests test_puck_model.PuckCheckpointTests \
+  test_puck_learning -v
+```
+
+All 24 checks passed in 2.051 s, without skips or Torch/native execution. They
+cover exact seven-way partition and six nonempty counts, equal stratum weight
+mass, ordinary weighted batch arithmetic, invalid-weight refusal before Torch,
+strict options/seeds, source/protocol mutation, new/default reader separation,
+weighted history labels and earliest unweighted dev minimum. The initial baseline
+invocation omitted `PYTHONPATH` and failed at import before loading tests; its
+receipt is retained. Corrected baseline and subsequent focused runs passed.
+
+The 30-second-bounded NumPy-only preparation check passed in 9.743730 s. It
+re-admitted all 20 actual teacher sources, reproduced the exact ordered
+feature/target/source identities of all three original training protocols,
+obtained counts `[381,578,944,170,478,3159,0]` with weight mean 1, and loaded all
+three historical bundles through the unchanged default reader. Sources were
+revalidated after preparation. Receipts are under
+`runs/puck-balanced-source-checks/`; there were no predictions, training, native
+calls or held-out reads.
+
+Proposed next **separately authorized** check: one existing `bounded_process`
+invocation capped at 90 s, 1 MiB per log and a fresh retained output, running
+`test_puck_balanced.PuckBalancedTorchTests` with `PALIMPSEST_TEST_PUCK_TORCH=1`
+and the same `PYTHONPATH`/shared interpreter. It tests the actual weighted loss
+and gradient against literal float64 arithmetic, unchanged default loss,
+invalid weight guards, two deterministic seed-21/30-epoch fits on authored
+arrays with exactly the frozen counts, weighted histories/unweighted selection,
+and numeric checkpoint reload. It neither reads the demonstration data nor
+trains a candidate policy for task evaluation. Those fixture fits and every
+subsequent actual training stage remain unexecuted pending an assigned slot.
