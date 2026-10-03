@@ -45,6 +45,7 @@ def report(profile):
 class MatrixAnalysis(unittest.TestCase):
     def test_paired_analysis_censoring_coverage_and_refusal(self):
         c3, c4 = report('c3'), report('c4')
+        next(r for r in c4['comparisons'][0]['runtime'] if r['condition'] == 'swapped')['goal_tick'] = 429
         missed = next(r for r in c4['comparisons'][0]['runtime'] if r['condition'] == 'no-U')
         missed.update(task_pass=False, navigation_pass=False, goal_tick=None, outcome={'reason': 'time_limit'})
         for timing in missed['timing']:
@@ -60,6 +61,8 @@ class MatrixAnalysis(unittest.TestCase):
         self.assertEqual(pair['task_pass_difference'], 1)
         self.assertIsNone(pair['goal_boundary']['own_minus_reference'])
         self.assertEqual(pair['stale_correction_boundary']['missing'], 'reference')
+        earlier = next(p for p in result['paired_readouts'] if p['cell'] == pair['cell'] and p['reference'] == 'swapped')
+        self.assertEqual(earlier['goal_boundary']['own_minus_reference'], 1)
         self.assertTrue(all(p['stale_correction_boundary']['missing'] == 'not-applicable'
                             for p in result['paired_readouts'] if p['kind'] != 'change'))
         self.assertTrue(all(p['core_contract'] == 'historical-broader-core'
