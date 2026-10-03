@@ -285,6 +285,11 @@ class Engine:
             if not admitted:
                 from .male_recovery_heldout import Binding as RecoveryHeldoutBinding
                 admitted = type(research_binding) is RecoveryHeldoutBinding
+            if not admitted:
+                from .male_navigation_research import Binding as NavigationBinding
+                admitted = type(research_binding) is NavigationBinding
+                if admitted and (restore_snapshot is not None or replace_controller or memory_u is not None):
+                    raise ValueError('Navigation research permits only fresh roots')
             if not admitted or controller not in MALE_CONTROLLERS or memory_case is not None:
                 raise ValueError('unsupported trusted research binding')
             identity, research_arguments = research_binding.resolve(root, assets, controller, device, scenario, texture, expected_policy_identity)
