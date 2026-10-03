@@ -424,8 +424,25 @@ admission passes in 6.287 s. Twenty teacher sources, 5,710/1,314 train/dev rows,
 three original plus three balanced bundles, fifteen protected source hashes and
 all 99 current owner dependency entries are checked. This used no Torch/native
 execution, predictions or global writer lease. The prior 697-test full enabled
-result remains historical; new native mechanics and combined regression are pending.
+result remains historical; new native mechanics passes below and combined regression remains pending.
 Receipt: `runs/puck-balanced-student-integration-checks/audit.json`, SHA-256
 `b9d43143518cb81b15400ac68a68b6ff579c6df91d68ae1e21ce6cd4868e092b`.
 The first receipt assembly used the source branch's 97-entry inventory count;
 its retained correction note distinguishes that error from the passing tests.
+
+## Remaining-01 comparison and balanced student mechanism
+
+The fixed remaining-01 memory comparison completes all forty owners and 4,626
+rows on `6bf0890`. Root independently checks raw records in 16.217 s and all
+36 outcome readouts in 3.498 s. All goals pass, but own-U gives no timing benefit.
+The paired stale upper fact is passively corrected at300 in every condition;
+null false targeting and zero no-event behavior are retained. Four cells do not
+complete the development matrix or qualify R2. The JSON report binds both receipts.
+
+The balanced student mechanism on `818e7ea` completes four owners and 364 rows
+in 20.901 s enclosing. Root independently checks all five full snapshots and
+244 exact continuation/replay rows in 1.020 s, reconstructing NPZ actions within
+2.98023223877e-8 against 1e-6 tolerance. Eight sampled process identities are
+absent and the global writer lease is free. Receipt SHA-256
+`1e35a90d48afe4d6ecc501e2926af38de9bcbabecdf3a6ae77d652a4a45ec5a7`.
+This is replay/restore evidence, not development task success. No held-out run occurred.

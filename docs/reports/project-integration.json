@@ -2224,5 +2224,55 @@
       "sha256": "b9d43143518cb81b15400ac68a68b6ff579c6df91d68ae1e21ce6cd4868e092b"
     },
     "full_enabled_regression_repeated": false
+  },
+  "remaining_01_comparison_audit": {
+    "status": "passed",
+    "producer_commit": "6bf08907bdf7ff8acd0f99a1ab2c20c88aa180fb",
+    "owners": 40,
+    "numeric_rows": 4626,
+    "evaluator_task_checks_passed": 36,
+    "worker_task_pass": null,
+    "raw_audit_seconds": 16.217190206007217,
+    "outcomes_audit_seconds": 3.4976365260081366,
+    "strict_u_only_core_boundaries": 16,
+    "source_upstream_asset_files_rehashed": 573,
+    "admission_history_inputs_rehashed": 120,
+    "own_u_timing_benefit_observed": false,
+    "scope": "Four remaining development cells; passive paired correction and null false targeting retained. Not full matrix, held-out or R2 qualification.",
+    "receipts": [
+      {
+        "path": "runs/memory-remaining-01-comparison-root-audit-6bf0890/audit.json",
+        "sha256": "58d443952d0142b4e00933b0935813ce4ef67974c7d3e8c53708e58e151d6646"
+      },
+      {
+        "path": "runs/memory-remaining-01-comparison-root-audit-6bf0890/outcomes.json",
+        "sha256": "fd7becb4abe62d5866d2a1a5986a00b374595418c4857f2a5353df04deffa45b"
+      }
+    ]
+  },
+  "balanced_student_mechanism_audit": {
+    "status": "passed",
+    "producer_commit": "818e7ea34b34d7e96c47206e3e3ae35771ddf70a",
+    "owners": 4,
+    "numeric_rows": 364,
+    "snapshots": 5,
+    "exact_continuation_and_replay_rows": 244,
+    "prediction_counts": [
+      120,
+      4,
+      0,
+      120
+    ],
+    "enclosing_seconds": 20.900525182005367,
+    "raw_audit_seconds": 1.019924695006921,
+    "maximum_numpy_action_error": 2.9802322387695312e-08,
+    "numpy_action_tolerance": 1e-06,
+    "observed_pid_start_pairs_absent": 8,
+    "writer_lease_available": true,
+    "receipt": {
+      "path": "runs/puck-balanced-student-mechanism-root-audit-818e7ea/audit.json",
+      "sha256": "1e35a90d48afe4d6ecc501e2926af38de9bcbabecdf3a6ae77d652a4a45ec5a7"
+    },
+    "scope": "Single training scene and model seed21; replay/restore mechanism only. Development task admission and held-out remain pending."
   }
 }
