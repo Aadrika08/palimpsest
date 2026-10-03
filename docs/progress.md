@@ -22,8 +22,9 @@ development cells and held-out remain open. Remaining-07 admission completes onc
 twelve owners, 1,204 rows, four neural calls and twelve snapshots. The session
 drains exit0 after 368.718 s normal / 371.671 s full; fourteen nonlauncher
 identities and the launcher are absent. Root retained audit passes first in
-9.098 s with 116 exact file pins and a free writer lease. Its focused admission
-publication is pending; comparison coverage remains 32/48.
+9.098 s with 116 exact file pins and a free writer lease. Its [focused admission publication](reports/m5-remaining-07-admission.md),
+`0e32482`, is integrated after all 141 references (262,936,165 bytes) rehash.
+Comparison-07 controls are being prepared; coverage remains 32/48.
 The [remaining-06 admission](reports/m5-remaining-06-admission.md), `016948b`,
 retains its twelve owners/1,204 rows and all 150 rehashed publication references;
 the initial root copied-index error and corrected audit are both retained.
@@ -44,8 +45,9 @@ integrated after all 65 published/control/raw references rehash. The narrow call
 checks pass in 0.213 s: it uses the authored Python-float layout for native ranges
 and separately validates the exact float32 cache. The caller regression fails on
 the old code and rejects cache/native drift. Strict native equality, protocol
-and all seventeen protected sources remain unchanged. Fresh v2 controls are
-being prepared; no corrected actual attempt is admitted yet.
+and all seventeen protected sources remain unchanged. Fresh v2 controls pass all twelve root mocked checks and exact preflight
+in 3.582 s total; all forty-five v1 control files remain unchanged. One corrected
+bounded actual invocation is authorized on frozen `1e904c0`; its outcome is pending.
 
 The [remaining-05 admission](reports/m5-remaining-05-admission.md), evidence
 `ad2eff7`, completed once on frozen `746c67b` in session `90487`: twelve owners,
@@ -149,7 +151,7 @@ remains ineligible.
 - Mechanism: pinned upstream model/environment; allowlisted controller inputs; one mutable-runtime owner; complete native, policy, application and RNG snapshots. Recorded E fitting and U-only swaps preserve declared invariant hashes. Male controllers use separately trained fixed CPU assets and an authored sensor mapping.
 - Missing: M5 counterbalanced/held-out transfer; remaining M6 skills and learned results; M7 closed-loop qualification; M8 physical work; remaining M9 modes/operation; final M10 handoff.
 - Unknown: original checkpoint training lineage, full-model Pi performance, physical stopping limits and account quota (telemetry unavailable).
-- Next action: review the named training-data preparer implementation against the integrated frozen plan for navigation v2; v1 remains failed. The separate cross-corpus preparer and all fitting/dev/held-out stages remain pending. Integrate the audited remaining-07 admission publication, then review its separate comparison controls. Memory coverage is 32/48; the existing paired readout covers its historical 24-cell subset. Review fresh new-body v2 launch controls; no corrected actual run is admitted yet. Both puck development evaluations remain negative; automatic retraining stops and held-out stays locked. Physical qualification and independent exhibition operation remain open.
+- Next action: review the named training-data preparer implementation against the integrated frozen plan for navigation v2; v1 remains failed. The separate cross-corpus preparer and all fitting/dev/held-out stages remain pending. Review separate remaining-07 comparison controls; its audited admission publication is integrated. Memory coverage is 32/48; the existing paired readout covers its historical 24-cell subset. Drain and independently audit the authorized new-body v2 simulation. Both puck development evaluations remain negative; automatic retraining stops and held-out stays locked. Physical qualification and independent exhibition operation remain open.
 
 The [prospective held-out outline](plans/m5-heldout-proposal.md) specifies the
 reserved 64–71 matrix without opening it. Source/profile freeze and all 48 audited
@@ -160,6 +162,17 @@ planning check; an artifact storage path is pending user input. No data is delet
 or moved and no held-out implementation/execution is unlocked.
 
 ## Verification
+
+New-body v2 control review passes first: twelve mocked checks (0.730 s supervised),
+exact preflight 2.357 s, total 3.582 s. All five scripts match v1 after only the
+declared path/source-pin substitutions; all 45 v1 files remain unchanged. Receipt:
+`runs/m6-new-body-control-root-review-1e904c0/audit.json`, SHA-256
+`421d70401e41ac80b8c8586c72dfd9edcf1fdd1a8f380d3bf0403d127bb2c2c2`.
+
+Remaining-07 admission publication passes first in 0.233 s, checking 141 references
+(262,936,165 bytes). Receipt:
+`runs/memory-remaining-07-publication-root-review-0e32482/audit.json`, SHA-256
+`a31c9dbf0b3a20f719df5ea816777b0c04f9b05859d6b2f2d48eeb8fdede2658`.
 
 The new-body caller fix `1e904c0` passes eighteen root pure checks in 0.213 s
 (0.579 s supervised), first attempt. Only `author_episode` changes; its native
