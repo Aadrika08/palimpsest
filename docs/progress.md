@@ -15,7 +15,7 @@ checks and full input admission on unchanged `6feade9`. Session `70035` drains
 exit0 with all six fits complete; independent checkpoint auditing passes first.
 The exact six-model publication is being prepared before fresh navigation work.
 Remaining-09 controls pass independent review on `cb13db9`; its separately bounded
-admission is authorized next. R3 stays open.
+admission is active in session `81740`. R3 stays open.
 
 Remaining-06 comparison completes once on frozen `016948b`, bringing independently
 audited development coverage to **32/48 cells**: forty owners, 4,687 neural rows,
@@ -299,7 +299,9 @@ and full preflight in 2.770 s, 11.086 s total. Receipt:
 `runs/memory-remaining-09-admission-control-root-review-cb13db9/control-review.json`,
 SHA `b8bc3335b4c4699a20146b37809202fba558b238a0fbe76fcf071cdffce86b63`.
 The fixed launcher AST substitutions and unchanged encloser match accepted 08;
-failed 07 identities remain reserved. Actual admission is separately authorized.
+failed 07 identities remain reserved. Fresh startup readmission passes with
+26,019,684,352 free bytes, unchanged 603 identities and absent output/start paths;
+actual admission starts once in session `81740`, with outcomes pending.
 
 Paired navigation trainer `6feade9` is integrated after eleven independent root
 pure checks pass first in 1.698 s. It adds only the named trainer/test, preserving
