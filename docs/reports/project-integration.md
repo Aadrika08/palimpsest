@@ -477,4 +477,12 @@ separate body-homing/learned-development task result.
 
 Remaining-02 admission completes twelve owners/1,204 rows/four neural calls, with
 root retained audit passing in 10.992 s and all 135 publication references rehashed.
-Task/timing completion stays null; its nine-condition comparison is not yet run.
+Admission task/timing completion stays null. Its separate nine-condition comparison
+now completes forty owners/4,650 neural intervals and all 36 evaluator task checks
+on frozen `7a956b0`. Root raw audit first passes in 16.232 s and independent event/
+outcome recomputation in 8.176 s: 577 identities, 120 input pins, sixteen strict
+U-only core boundaries and forty snapshots. All 42 sampled non-launcher identities
+plus the launcher are absent and the writer lease is free. Comparison coverage is
+sixteen of 48 development cells. In the paired lower change all nine conditions
+correct at358; own/sham goal431 versus no-U430 establishes no own-U advantage.
+Null false targeting and both zero-selector no-event controls are retained.

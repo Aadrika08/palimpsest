@@ -2359,5 +2359,32 @@
       "path": "runs/memory-remaining-02-root-audit-559b64a/audit.json",
       "sha256": "1c7a16ec766eb5757ca1cd4061f4f153ee21988c9c933ea4e82a8487351bbc72"
     }
+  },
+  "remaining_02_comparison_audit": {
+    "status": "passed",
+    "producer_commit": "7a956b0975afacb82c6de77b490c73476633f75e",
+    "owners": 40,
+    "numeric_rows": 4650,
+    "evaluator_task_checks_passed": 36,
+    "worker_task_pass": null,
+    "raw_audit_seconds": 16.231533985992428,
+    "outcomes_audit_seconds": 8.176251707991469,
+    "strict_u_only_core_boundaries": 16,
+    "source_upstream_asset_files_rehashed": 577,
+    "admission_history_inputs_rehashed": 120,
+    "own_u_timing_benefit_observed": false,
+    "development_cells_compared": 16,
+    "development_cells_planned": 48,
+    "scope": "Four remaining development cells; all paired lower-change conditions correct at358, own/sham goal431 versus no-U430. Null false targeting and no-event controls retained. Not held-out or R2 qualification.",
+    "receipts": [
+      {
+        "path": "runs/memory-remaining-02-comparison-root-audit-7a956b0/audit.json",
+        "sha256": "a422935c310ad7676adbb1ea5542d355da2cd27f2c861894865ea2e4bc0d1356"
+      },
+      {
+        "path": "runs/memory-remaining-02-comparison-root-audit-7a956b0/outcomes.json",
+        "sha256": "bbcf6bfb30abec68d5921fe9effedff3abe1e5faf13db054b9f86be24a402199"
+      }
+    ]
   }
 }
