@@ -1,0 +1,82 @@
+{
+  "approved_draft_sha256": "2170fe1c203cca062ba39f87c100fca38143a6dd4dae49bff4c5d05f0022de53",
+  "base_learning_protocol": {
+    "path": "docs/plans/m6-puck-learning-v2.json",
+    "sha256": "bfdd047c1763af3d0b254c55df9137e179b65ce99e7eb870ca76f41332a83354"
+  },
+  "collection_report_sha256": "3cf5044ac12fa80ebfed9aa044d0e983a94fcddb4e177da779a4684b944b518b",
+  "id": "puck-balanced-loss-v1",
+  "inherit": "All architecture, numerical action arithmetic, optimizer, epochs, shuffle, storage/time/resource limits and data admission from the exact base learning/task protocols. Only training-row loss weights change.",
+  "objective": {
+    "batch_loss": "mean_rows(weight * row_loss); ordinary original shuffled batches; no minibatch renormalization",
+    "history_field": "weighted_train_loss",
+    "id": "train-only-equal-phase-action-mass-v1",
+    "row_loss": "mean_components(((prediction-target)/0.4)**2)",
+    "weight": "N / (K * n_stratum), N=5710, K=6; fixed train counts; dataset mean one",
+    "weight_dtype": "float64"
+  },
+  "recorded_dev_ids": [
+    6016,
+    6017,
+    6018,
+    6019
+  ],
+  "recorded_dev_ticks": 1314,
+  "schema": "puck-balanced-objective-v1",
+  "selection": {
+    "loss": "unchanged unweighted recorded-dev mean normalized MSE",
+    "report_all_seeds": true,
+    "tie": "earliest strict minimum"
+  },
+  "status": "source_implementation_only; no actual training or rollout authorization",
+  "strata": {
+    "nonempty": 6,
+    "order": [
+      "stop",
+      "approach_turn_only",
+      "approach_positive_velocity",
+      "approach_negative_velocity",
+      "push_turn_only",
+      "push_positive_velocity",
+      "push_negative_velocity"
+    ],
+    "partition": "Exact float64 actual target labels: both actions zero gives stop; otherwise BEFORE mode crossed with velocity ==0, >0, <0. Empty strata remain empty.",
+    "train_counts": [
+      381,
+      578,
+      944,
+      170,
+      478,
+      3159,
+      0
+    ]
+  },
+  "task_protocol": {
+    "path": "docs/plans/m6-puck-pushing-protocol-v5.json",
+    "sha256": "77ce33fa593247715abe99ff2ba0eca399edbac44b29a580d4f92410b8013c30"
+  },
+  "train_ids": [
+    6000,
+    6001,
+    6002,
+    6003,
+    6004,
+    6005,
+    6006,
+    6007,
+    6008,
+    6009,
+    6010,
+    6011,
+    6012,
+    6013,
+    6014,
+    6015
+  ],
+  "train_ticks": 5710,
+  "training_seeds": [
+    21,
+    22,
+    23
+  ]
+}
