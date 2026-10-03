@@ -12,6 +12,18 @@ owners finish, with 4,626 neural intervals and 36 evaluator task passes. Goals
 and correction timing show no own-U benefit. All 424 published references rehash.
 The sixteen-cell aggregate below remains its earlier fixed analysis snapshot.
 
+The [remaining-04 admission](reports/m5-remaining-04-admission.md), `6f72b9b`,
+passes twelve owners, 1,204 rows and twelve snapshots; root raw audit first passes
+in 9.673 s and all 137 published references rehash. Its fixed forty-owner
+comparison started once on `6f72b9b` after independent controls review. It remains
+in progress; coverage stays 20/48 until terminal cleanup and raw/outcome audits.
+
+The [puck next-study review](reports/m6-puck-next-study-review.md) retains both
+failed development gates and finds no uniquely supported next corrective arm.
+Further automatic fitting stops; M6 learned puck capability remains open and
+held-out layouts stay locked. Balanced models entered push mode in two of twelve
+runs, so the original batch's never-transitioned diagnosis does not cover both.
+
 The [fresh body/homing browser gate](reports/m6-body-homing-composition-v2.md) also passes on `a447d76`: 491 source and 491
 actions-replay rows, three snapshots, four probes, a 400-sample fit and Reset.
 Independent audit passes after correcting its initial-prefix event-count scope;
@@ -86,7 +98,7 @@ remains ineligible.
 - Mechanism: pinned upstream model/environment; allowlisted controller inputs; one mutable-runtime owner; complete native, policy, application and RNG snapshots. Recorded E fitting and U-only swaps preserve declared invariant hashes. Male controllers use separately trained fixed CPU assets and an authored sensor mapping.
 - Missing: M5 counterbalanced/held-out transfer; remaining M6 skills and learned results; M7 closed-loop qualification; M8 physical work; remaining M9 modes/operation; final M10 handoff.
 - Unknown: original checkpoint training lineage, full-model Pi performance, physical stopping limits and account quota (telemetry unavailable).
-- Next action: audit the running remaining-04 memory admission before its fixed comparison. Implement the reviewed source-only collector/admission slice for the new R3 study; the prospective protocol is frozen. Body/UI and six-mode offline artwork handoff evidence are integrated. Memory coverage remains 20/48; the sixteen-cell aggregate is a retained historical snapshot. Both puck development evaluations remain negative and held-out stays locked. Physical qualification and independent exhibition operation remain open.
+- Next action: finish and audit the running remaining-04 memory comparison. Review the source-only collector/admission slice for the new R3 study; the prospective protocol is frozen. Body/UI and six-mode offline artwork handoff evidence are integrated. Memory coverage remains 20/48; the sixteen-cell aggregate is a retained historical snapshot. Both puck development evaluations remain negative; automatic retraining stops and held-out stays locked. Physical qualification and independent exhibition operation remain open.
 
 ## Verification
 

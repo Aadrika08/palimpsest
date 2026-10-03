@@ -12,6 +12,8 @@ Mandatory LLM integration, multiple robots, and unattended day-long operation ar
 
 R3 scope confirmed on 3 October 2026: keep MaleCNS open for a new navigation study. The completed recovery held-out evaluation (originals 5/24 goals; controls 8/24) does not qualify navigation. The [new prospective study](plans/m7-navigation-study.md) and [fixed protocol](plans/m7-navigation-study-protocol.json) now declare one learner-state advice-label aggregation round, paired old/augmented original-graph models, and disjoint reserved scene IDs. Every augmented seed must reach 3/4 fresh development goals before held-out opens, then 6/8 held-out goals. Only the plan is frozen; collector implementation and every actual stage remain pending separate internal review. Preserve the consumed evaluation and its outcomes.
 
+The [puck review](reports/m6-puck-next-study-review.md) retains two failed development arms and no demonstrated mapping defect. Do not infer another training intervention from those failures; learned puck capability stays open, further automatic fitting stops, and held-out layouts remain locked.
+
 ## Architecture and contracts
 
 Use Python 3.11 with uv, MuJoCo/Gymnasium, PyTorch, a local FastAPI service, and React/TypeScript/Vite with Node 24 LTS. Pin the upstream FLYNN submodule at `8d964599119b420de67ee259434d273651a1a76d`; retain its effective preprocessing, control interval, and action conversion. Freeze the working environment in uv.lock after reference checks.
