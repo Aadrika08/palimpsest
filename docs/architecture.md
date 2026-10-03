@@ -71,6 +71,14 @@ uses visibility-limited declared packets and evidence-based revisions. A U-only
 branch validates all declared non-U invariant hashes. Missing observations are
 explicitly unobserved, never treated as evidence of unchanged occupancy.
 
+The three headless [controller references](plans/m5-controller-references.md)
+restore one exact acquired physical state and freeze memory as unused audit
+state. Original FLYNN retains its upstream true-goal-derived bearing; the sensor
+script uses only the visible common-goal bearing/contact; the analytical teacher
+uses privileged geometry. These information differences remain explicit. The
+references have separate admission and conditional replay routes; native
+qualification is still pending.
+
 [task_profiles.py](../src/palimpsest/task_profiles.py) supplies visible-landmark
 exploration and encoder-odometry homing. [task_mechanics.py](../src/palimpsest/task_mechanics.py)
 contains bounded selection, odometry, wheel fitting and compensation helpers.
@@ -82,6 +90,14 @@ Its hidden state and artificial encoder are distinct from the legacy FLYNN
 retina/population state. The [training report](reports/m7-training-pilot.md)
 describes the reduced graph and one-seed pilot; it is not a biological mapping
 or a topology-benefit result.
+
+The [recovery research adapter](plans/m7-recovery-learning.md) admits the fixed
+baseline plus two complete first-cycle segments, preserving executed actions and
+their censored endings. It leaves production model admission unchanged. The
+separate [puck learning interface](plans/m6-puck-learning.md) uses eight sensors
+plus its own previous mode; training requires every fixed demonstration to pass
+coverage admission. The retained first batch fails that gate despite twenty
+natural goals and remains excluded from the trainer.
 
 Research scripts freeze source identities, protocols and output bounds before
 execution. Their reports distinguish collection, cleanup, validation and task

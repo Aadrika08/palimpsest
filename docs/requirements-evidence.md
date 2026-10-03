@@ -128,3 +128,16 @@ The [third puck mechanics attempt](reports/m6-puck-mechanics-v3.md) preserves ex
 The [puck learning contract](plans/m6-puck-learning.md) at `0fd589c` passes nineteen pure learning/record checks; sensor-only phase memory, ninth input and float64 output scaling are implemented. Demonstrations, learned control and runtime integration remain pending. The [recovery v3 collector](plans/m7-recovery-coverage.md) at `c382c86` passes eight source checks but has not executed; it measures the earliest complete-cycle-plus-clearance collection boundary and deliberately excludes later driving. Earlier failed rollouts retain their original outcomes.
 
 The combined source at `c7b4436` passes **579 enabled tests without skips**, including simulation, production male Torch/native/replay and the new puck CPU model fixtures. [The fixed puck trainer/model mechanism](reports/m6-puck-model-mechanism.md) passes all four checks; actual demonstration training and learned manipulation remain pending. [Recovery v3](reports/m7-recovery-coverage-v3.md) passes its changed first-cycle collection estimand on both sources (134 rows), with later driving censored and no natural task outcome. This preserves prior failures and does not admit the sources to the existing production loader. [C4](reports/m5-counterbalance-stage-c4.md) passes forty owners/4,689 intervals with sixteen strict core forks and no own-U correction/goal advantage; combined C3/C4 covers eight selected cells, not the full matrix or held-out R2 evaluation.
+
+
+Current integration `c79d7ac` passes **610 enabled tests without skips**. The
+[fixed controller references](plans/m5-controller-references.md) add exact
+physical restoration with frozen unused memory; their six-owner native gate is
+pending. The [twenty-layout puck collection](reports/m6-puck-teacher-collection-v1.md)
+completes all goals and 7,070 intervals, but seed 6004 fails the unchanged
+terminal-stop coverage requirement. Both independent raw audits confirm the
+failure, and the entire batch remains excluded from training. The separate
+[recovery adapter](plans/m7-recovery-learning.md) prepares 2,117 training and
+1,228 development rows with no held-out sources; independent feature/action
+reconstruction passes. This preparation result does not qualify a newly trained
+model or later-driving recovery.
