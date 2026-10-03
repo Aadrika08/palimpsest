@@ -10,8 +10,10 @@ Accepted memory comparison coverage is now **36/48 development cells** after
 [remaining-08](reports/m5-remaining-08-comparison.md), `cb13db9`; the failed-07
 four-cell hole remains open. The paired navigation trainer has passed independent
 control and input admission; its first invocation `77512` is retained as a
-zero-model startup refusal. Fresh corrected controls are being prepared on
-unchanged `6feade9`. R3 stays open.
+zero-model startup refusal. Fresh corrected controls pass fourteen independent
+checks and full input admission on unchanged `6feade9`; their actual run is active
+in session `70035`. Outcomes remain pending. Remaining-09 admission is prepared
+on `cb13db9` and awaits root review after the training slot is released. R3 stays open.
 
 Remaining-06 comparison completes once on frozen `016948b`, bringing independently
 audited development coverage to **32/48 cells**: forty owners, 4,687 neural rows,
@@ -215,7 +217,7 @@ remains ineligible.
 - Mechanism: pinned upstream model/environment; allowlisted controller inputs; one mutable-runtime owner; complete native, policy, application and RNG snapshots. Recorded E fitting and U-only swaps preserve declared invariant hashes. Male controllers use separately trained fixed CPU assets and an authored sensor mapping.
 - Missing: M5 counterbalanced/held-out transfer; learned M6 puck success and held-out evaluation; M7 closed-loop qualification; M8 physical work; independent M9 operation, exhibition duration and physical artwork; final M10 handoff.
 - Unknown: original checkpoint training lineage, full-model Pi performance, physical stopping limits and account quota (telemetry unavailable).
-- Next action: review fresh navigation training controls on clean `6feade9` after the retained zero-model startup refusal, following contract `8c57f78` and audited data `2d4a7b8`, then independently audit retained checkpoints before any fresh development. Thirteen root control checks and full inventory pass, but the subsequent startup probe created the output root before freshness admission; no model started. Actual fitting outcomes remain pending and held-out stays locked. Prepare remaining-09 admission controls while serializing all bulk inventory/audits with training and native jobs. Memory coverage is 36/48; failed 07 is neither retried nor given longer deadlines. The existing paired readout covers its historical 24-cell subset. Scoped exploration, homing and measured adaptation are met; learned puck keeps M6 open, automatic retraining stops after both negative development studies, and held-out stays locked. Physical qualification and independent exhibition operation remain open.
+- Next action: drain navigation training session `70035`, then independently audit retained checkpoints before any fresh development. Corrected v2 controls pass fourteen root checks and full inventory admission; the existing HOME lease probe preserves output absence. The earlier zero-model startup refusal remains unchanged. Actual fitting outcomes remain pending and held-out stays locked. Review prepared remaining-09 admission controls after training and its retained-results audit release the bulk slot. Memory coverage is 36/48; failed 07 is neither retried nor given longer deadlines. The existing paired readout covers its historical 24-cell subset. Scoped exploration, homing and measured adaptation are met; learned puck keeps M6 open, automatic retraining stops after both negative development studies, and held-out stays locked. Physical qualification and independent exhibition operation remain open.
 
 The [prospective held-out outline](plans/m5-heldout-proposal.md) specifies the
 reserved 64–71 matrix without opening it. Source/profile freeze and all 48 audited
@@ -262,8 +264,25 @@ retained-failure audit passes first in 4.120 s:
 SHA `e73b6745dd6c28c1c28f493443f9d2db6bec882eef28e7f2af7a996c40d52d48`.
 The home writer lease is independently free/released. No outer PID/start was
 retained before refusal; that limitation remains explicit. A fresh v2 control
-family will use only the existing home lock for startup probing and recheck
+family uses only the existing home lock for startup probing and rechecks
 output absence after releasing it. Failed controls/output remain untouched.
+
+Fresh v2 controls pass thirteen copied checks, one startup check and the unchanged
+full inventory in the first independent review, 5.482 s. All 42 earlier control
+files and the empty failed-output lock remain unchanged. Receipt:
+`runs/m7-navigation-training-v2-control-v2-root-review-6feade9/audit.json`,
+SHA `317585d8355afec3204329919b59888ee8214dfd2b8ec610f739f4efc043bf8f`.
+The corrected startup passes once, confirms output absence after releasing the
+existing HOME lease, and launches the frozen outer command in session `70035`.
+Startup receipt:
+`runs/m7-navigation-training-v2-control-v2-6feade9/startup-readmission.json`,
+SHA `ce9a4ee14fa4c3239942e825303a2b74dd9caef70016c8a7beaa09681c73f716`.
+The session is active; completed training and checkpoint validation are not yet
+claimed. The six-model retained-results auditor is prepared but unexecuted.
+Remaining-09 admission preparation passes eight producer fixtures and one full
+preflight (7.627 / 2.420 s): 603 identities and twelve fresh IDs disjoint from
+754 prior IDs. Its independent reviewer is prepared but unexecuted; no actual
+remaining-09 owner has started.
 
 Paired navigation trainer `6feade9` is integrated after eleven independent root
 pure checks pass first in 1.698 s. It adds only the named trainer/test, preserving
