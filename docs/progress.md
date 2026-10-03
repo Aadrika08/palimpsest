@@ -70,10 +70,10 @@ recovery cleanup. No fixture or runtime guard was weakened.
 Balanced-loss root pure/data receipt: `runs/puck-balanced-root-checks-ec7a113/root-checks.json`,
 SHA-256 `a37417083fe4888c5842771437849812f9c64349a1082329b89f96ee1b1d505e`. No model construction,
 prediction, physics or writer lease occurred in those checks. The fully enabled
-682-test result below remains historical; a new full regression is pending
-integration of the remaining memory profile source.
+682-test result below remains historical. Both new source changes are integrated;
+a new fully enabled regression is queued after the active recovery evaluation drains.
 
-Both fixture workflows pass on `ce81b1e` (37100989676 / 37100986762), including
+Both fixture workflows pass on `5f72bac` (37102399987 / 37102396765), including
 the watchdog assertion fix. The closed-loop root control receipt is
 `runs/m7-heldout-closed-loop-control-root-review-177982e/audit.json`, SHA-256
 `aa0a90648e4d95d1fa48dd4f2ed175e40f8d06fbbda25f768aab6b01f9a1013b`.
