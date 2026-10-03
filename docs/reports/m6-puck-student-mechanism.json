@@ -1,0 +1,214 @@
+{
+  "attempts": [
+    {
+      "all_four_unstarted": true,
+      "attempt": "v1",
+      "outer_reference": "v1_outer",
+      "owners_started": 0,
+      "reason": "Missing gate directory before first report and finalizer",
+      "status": "failed"
+    },
+    {
+      "attempt": "v2",
+      "exact_derivative_rows": 244,
+      "inner_reference": "v2_inner",
+      "inner_seconds": 26.37957973999437,
+      "launcher_reported_elapsed_seconds": 27.406611629994586,
+      "numeric_rows": 364,
+      "outer_reference": "v2_outer",
+      "owners": [
+        {
+          "completion": "fixed_mechanics_horizon",
+          "id": "student-6000-seed21",
+          "kind": "root",
+          "model_calls": 120,
+          "status": "passed",
+          "ticks": 120
+        },
+        {
+          "completion": "continuation_window_complete",
+          "id": "student-continue-tick1",
+          "kind": "native-continuation",
+          "model_calls": 4,
+          "status": "passed",
+          "ticks": 4
+        },
+        {
+          "completion": "fixed_mechanics_horizon",
+          "id": "student-replay-actions",
+          "kind": "action-replay",
+          "model_calls": 0,
+          "status": "passed",
+          "ticks": 120
+        },
+        {
+          "completion": "fixed_mechanics_horizon",
+          "id": "student-replay-policy",
+          "kind": "policy-replay",
+          "model_calls": 120,
+          "status": "passed",
+          "ticks": 120
+        }
+      ],
+      "sampled_process_identities_absent": 6,
+      "snapshots": 5,
+      "status": "passed",
+      "supervised_seconds": 26.76188896599342
+    }
+  ],
+  "audit_scope": "Local retained arithmetic/task/parity/native-blob/RNG audit; root additionally NumPy MLP reconstruction. No native/Torch audit execution.",
+  "development_opened": false,
+  "failures_retained": [
+    "v1 mechanism launch failed before any owner",
+    "v2 pure fixture initially placed temporary output outside retention root, corrected location only",
+    "root v2 auditor initially passed ndarray to JSON-list boundary; corrected .tolist() only"
+  ],
+  "held_out_opened": false,
+  "inventory_scope": "Original outer/inner retained inventories are authoritative; controls console entries are live prefixes, final drained consoles separately pinned.",
+  "mechanism_protocol_sha256": "72a2d8c3c496e7f9c9bfe21f68c581795dd00795507c7b7660a1156b7df5c968",
+  "models_manifest_sha256": "d8a2daf24943e5e8a2abf5062458910a1034dd003f8aa5153c32f0f83567502f",
+  "public_ui_integrated": false,
+  "references": {
+    "v1_console": {
+      "bytes": 382,
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-student/runs/puck-student-mechanism-v1-prepared/console.log",
+      "sha256": "5217a1ff8a86ddd6cc791284e982f28866f790b1d2da881143a0f62118a22313"
+    },
+    "v1_launch": {
+      "bytes": 11922,
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-student/runs/puck-student-mechanism-v1-prepared/launch.py",
+      "sha256": "a7d1c788d1e77946ab4da7bd575c4b61daac7512dfa0a1e341211f6526b83ac9"
+    },
+    "v1_outer": {
+      "bytes": 15358,
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-student/runs/puck-student-mechanism-v1-20261003/launch-result.json",
+      "sha256": "47d1e925470a51576447739d6681bf05d792d79ad199762d59c81ccc1355ab72"
+    },
+    "v1_plan": {
+      "bytes": 19273,
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-student/runs/puck-student-mechanism-v1-prepared/plan.json",
+      "sha256": "06da93a089dbb041d3b6d27587d9ea6e1db85b0966407c11a06d15bbeb202bf4"
+    },
+    "v1_root_audit": {
+      "bytes": 764,
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/project-integration/runs/puck-student-mechanism-v1-failure-root-audit/audit.json",
+      "sha256": "120f059bfffe2df83d632f813a0028bbf7d629c27614dcea878a48b0de88e0ab"
+    },
+    "v1_root_auditor": {
+      "bytes": 2704,
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/project-integration/runs/puck-student-mechanism-v1-failure-root-audit/audit.py",
+      "sha256": "7eb52ba2cb22594c591d9d70f418fa26895308462a4713b3e94a17b425766273"
+    },
+    "v1_stage": {
+      "bytes": 7179,
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-student/runs/puck-student-mechanism-v1-prepared/stage.py",
+      "sha256": "8faf8782baa37cbc94c5d85b3bc52716af4036b73bfde734ff5d878afa3daa9f"
+    },
+    "v2_console": {
+      "bytes": 446,
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-student/runs/puck-student-mechanism-v2-prepared/console.log",
+      "sha256": "bcae382014074a90e952d52f0feb012d8a1be68a88755d1e48938ce869dac8d2"
+    },
+    "v2_control_root_audit": {
+      "bytes": 2071,
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/project-integration/runs/puck-student-control-root-review-v2-6f1fda9/audit.json",
+      "sha256": "709469ee49ddce63c1a7d77ffd62d90f1ca37ab99e5a5b47406f3407716a37cf"
+    },
+    "v2_control_root_auditor": {
+      "bytes": 3828,
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/project-integration/runs/puck-student-control-root-review-v2-6f1fda9/audit.py",
+      "sha256": "830ad2ad650f1f1d260a42c3c7b15efdab8911bd80540309ff806bf923fa8c2b"
+    },
+    "v2_fixture_diagnosis": {
+      "bytes": 13361,
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-student/runs/puck-student-mechanism-v2-prepared/stage-fixture-diagnostic.json",
+      "sha256": "2ddd8441ae300866abf767df94826a9efd5f23162b36933bb5bd3494d33e8b9a"
+    },
+    "v2_fixture_first_failure": {
+      "bytes": 1683,
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-student/runs/puck-student-mechanism-v2-prepared/preflight-first-failed.json",
+      "sha256": "6b5b399058ad4bb329cab2f5333a126ab0aa42e74442277f835ab2d5d6d1d591"
+    },
+    "v2_inner": {
+      "bytes": 55990,
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-student/runs/puck-student-mechanism-v2-20261003/gate/report.json",
+      "sha256": "f81b10d57d826c8a329d8724f22caaa0c4b1809ce9887a37940e8816be4309db"
+    },
+    "v2_launch": {
+      "bytes": 11922,
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-student/runs/puck-student-mechanism-v2-prepared/launch.py",
+      "sha256": "1340e5135965220b60e3addbf2a372096097784d12192bd2564276c3f6becc56"
+    },
+    "v2_local_audit": {
+      "bytes": 1403,
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-student/runs/puck-student-mechanism-v2-audit-6f1fda9/audit.json",
+      "sha256": "9fa39dde8a5d34c3dcdf518a0558ddfd1b3bda3d0f59af3ee614c569dc06d54f"
+    },
+    "v2_local_auditor": {
+      "bytes": 8317,
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-student/runs/puck-student-mechanism-v2-audit-6f1fda9/audit.py",
+      "sha256": "375191754cdc1818689791c93c251ab95ed3ec986f075781139011a82ffd303a"
+    },
+    "v2_negative_regression": {
+      "bytes": 456,
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-student/runs/puck-student-mechanism-v2-prepared/regression.json",
+      "sha256": "32d244fa8caacac05e7b4e21e6b5027eae4a88fa3893bc716baa3a17f77c316a"
+    },
+    "v2_outer": {
+      "bytes": 24993,
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-student/runs/puck-student-mechanism-v2-20261003/launch-result.json",
+      "sha256": "e907037aa4e9dc2798e2916c518896df27a562e8ee5815f378bcb25ba9863a9f"
+    },
+    "v2_plan": {
+      "bytes": 21099,
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-student/runs/puck-student-mechanism-v2-prepared/plan.json",
+      "sha256": "3a091383012117050af470f360f38873a56bd78a56a30a25a893b0c1afebce60"
+    },
+    "v2_preflight_pass": {
+      "bytes": 1976,
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-student/runs/puck-student-mechanism-v2-prepared/preflight-corrected.json",
+      "sha256": "6b420924b8f810405a6040c8bb5bd347e66c3a5b5449cc78d2b009e30f3abf5a"
+    },
+    "v2_root_audit": {
+      "bytes": 1306,
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/project-integration/runs/puck-student-mechanism-v2-root-audit-corrected-6f1fda9/audit.json",
+      "sha256": "9e13bdef8cc86308249ecc536805bff269736dd2f02774667bf55097b38c5453"
+    },
+    "v2_root_audit_first_console": {
+      "bytes": 1252,
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/project-integration/runs/puck-student-mechanism-v2-root-audit-6f1fda9/console.log",
+      "sha256": "2380119fa98f90ed8e21535378dd4a8697b80a2b715d9b1467860bfab8863e4b"
+    },
+    "v2_root_audit_first_failure": {
+      "bytes": 363,
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/project-integration/runs/puck-student-mechanism-v2-root-audit-6f1fda9/audit.json",
+      "sha256": "1b3f978ae480699f1950b9ffc22d0630b43315ec901a96fd1ee9b2ad8ac0dd80"
+    },
+    "v2_root_auditor": {
+      "bytes": 8086,
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/project-integration/runs/puck-student-mechanism-v2-root-audit-corrected-6f1fda9/audit.py",
+      "sha256": "c51d526ec91e779b4b3d3888c8523732c9543b115749dab3851cdb80617bd140"
+    },
+    "v2_root_auditor_first_failure": {
+      "bytes": 8077,
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/project-integration/runs/puck-student-mechanism-v2-root-audit-6f1fda9/audit.py",
+      "sha256": "1fe4b358c155eccf822f66acba01ade0e7ee1c5f30e92f453e5f19bb874cc169"
+    },
+    "v2_stage": {
+      "bytes": 7216,
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-student/runs/puck-student-mechanism-v2-prepared/stage.py",
+      "sha256": "e5c3d407c120b78c39fcfdc5bc6efac1b96aecca023a0d783d61a4684e585c22"
+    },
+    "v2_stage_fixture": {
+      "bytes": 3359,
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-student/runs/puck-student-mechanism-v2-prepared/stage_fixture.py",
+      "sha256": "0f5ad05f980bad1d650107c4ec3dd75e6371b5b8476f297554f22cc88f95e133"
+    }
+  },
+  "review_status": "root_reviewed",
+  "root_numpy_model_maximum_action_error": 2.9802322387695312e-08,
+  "root_numpy_model_tolerance": 1e-06,
+  "scope": "headless native continuation and replay mechanism only",
+  "source_commit": "6f1fda99659dde74a88c1f36b4781550372220d2",
+  "task_success_qualified": false
+}
