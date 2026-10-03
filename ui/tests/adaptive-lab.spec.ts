@@ -3,13 +3,17 @@ import {readFileSync} from 'node:fs';
 import {writeFile} from 'node:fs/promises';
 import {createHash} from 'node:crypto';
 
+const scenario = process.env.PALIMPSEST_ADAPTIVE_SCENARIO ?? 'adaptive-wheel-calibration';
+if (!['adaptive-wheel-calibration', 'adaptive-encoder-homing'].includes(scenario)) throw new Error('Unknown adaptive browser fixture scenario');
+
+
 // Existing body-lab transport/cleanup pattern; every owner uses actual CPU/EGL physics.
 test('actual adaptive calibration probes, fitted manual drive, reset and action replay', async ({page}, info) => {
   test.skip(process.env.PALIMPSEST_ADAPTIVE_LAB_TESTS !== '1', 'Opt-in actual CPU/EGL calibration and browser gate.');
   const owners: string[] = [], closes: any[] = [], observations: any[] = [], browserErrors: string[] = [];
   const report: any = {version: 1, status: 'running', owners, closes, observations, browser_errors: browserErrors,
     test_sha256: createHash('sha256').update(readFileSync(new URL(import.meta.url))).digest('hex'),
-    protocol: {owners: 2, scenario: 'adaptive-wheel-calibration', seed: 1, probes: 4, ticks_per_probe: 120,
+    protocol: {owners: 2, scenario, seed: 1, probes: 4, ticks_per_probe: 120,
       next_commands: 4, fit_samples: 400, keyboard_velocity: .3, maximum_source_ticks: 600,
       maximum_fitted_ticks: 60, absolute_source_interval_ceiling: 1081,
       replay: 'actions', timeout_seconds: 180},
@@ -35,8 +39,8 @@ test('actual adaptive calibration probes, fitted manual drive, reset and action 
   try {
     await page.goto('/'); await expect(page.getByRole('button', {name: 'Create run', exact: true})).toBeEnabled();
     expect((await get('/runs')).runs).toEqual([]);
-    await page.getByLabel('Scenario', {exact: true}).selectOption('adaptive-wheel-calibration');
-    await expect(page.getByLabel('Scenario', {exact: true}).locator('option:checked')).toHaveText('Measured wheel calibration (development)');
+    await page.getByLabel('Scenario', {exact: true}).selectOption(scenario);
+    await expect(page.getByLabel('Scenario', {exact: true}).locator('option:checked')).toHaveText(scenario==='adaptive-wheel-calibration'?'Measured wheel calibration (development)':'Calibrated encoder homing (development)');
     for (const [label, value] of [['Controller', 'manual'], ['Inference device', 'cpu'], ['Texture', 'checker']]) {
       await expect(page.getByLabel(label, {exact: true})).toHaveValue(value);
     }

@@ -117,7 +117,8 @@ class Engine:
         self.memory = self.world_task_state = None
         self.task_state = None
         self.body_state = None
-        if scenario in ("calibrated-wheel-compensation", "adaptive-wheel-calibration"):
+        self.composition = None
+        if scenario in ("calibrated-wheel-compensation", "adaptive-wheel-calibration", "adaptive-encoder-homing"):
             from .profiles import validate
             validate(scenario, texture, controller)
         if scenario in ('exploration-landmarks', 'encoder-homing') and controller == 'teacher':
@@ -128,7 +129,7 @@ class Engine:
         self._initial_teacher = copy.deepcopy(teacher) if controller == "teacher" else None
         self._teacher_reset_identity = _teacher_fingerprint(self._initial_teacher)
         self.seed = _seed(seed)
-        if scenario == 'adaptive-wheel-calibration' and self.seed != 1:
+        if scenario in ('adaptive-wheel-calibration', 'adaptive-encoder-homing') and self.seed != 1:
             raise ValueError('Measured calibration requires its declared seed 1')
         if restore_snapshot is not None and self.seed != self.memory_case['seed']:
             raise ValueError('Continuation seed differs from its exact acquisition case')
@@ -259,9 +260,9 @@ class Engine:
             profile = validate_reference(scenario, texture, controller)
         else:
             profile = validate(scenario, texture, controller)
-        if scenario in ('calibrated-wheel-compensation','adaptive-wheel-calibration') and device != 'cpu':
+        if scenario in ('calibrated-wheel-compensation','adaptive-wheel-calibration','adaptive-encoder-homing') and device != 'cpu':
             raise ValueError('Wheel calibration profiles require CPU')
-        if scenario == 'adaptive-wheel-calibration' and seed != 1:
+        if scenario in ('adaptive-wheel-calibration', 'adaptive-encoder-homing') and seed != 1:
             raise ValueError('Measured calibration requires its declared seed 1')
         memory_case, restore_snapshot, memory_u = cls._memory_restore(
             memory_case, scenario, controller, device, restore_snapshot, replace_controller, memory_u)
@@ -409,10 +410,14 @@ class Engine:
             from . import body_profile
             self.body_state = body_profile.configure(self.env, f'episode-{self.episode}')
             self.observation = self.env._get_obs()
-        if self.scenario == 'adaptive-wheel-calibration':
+        if self.scenario in ('adaptive-wheel-calibration', 'adaptive-encoder-homing'):
             from . import body_adaptation
             self.body_state = body_adaptation.configure(self.env,episode=self.episode,session=calibration_session)
             self.observation = self.env._get_obs()
+        if self.scenario == 'adaptive-encoder-homing':
+            from . import body_homing
+            self.task_state = body_homing.initial_task(self.body_state)
+            self.composition = body_homing.context()
         if type(self.env.model).__module__.startswith("mujoco"):
             from .profiles import validate_world
             validate_world(self.env, require_route=self.scenario == 'sparse-navigation')
@@ -438,7 +443,7 @@ class Engine:
             self.writer.manifest['task_calibration'] = copy.deepcopy(self.task_state['odometry']['calibration'])
             self.writer.manifest['task_profile_sha256'] = self.task_state['profile_sha256']
         if self.body_state is not None:
-            if self.scenario == 'adaptive-wheel-calibration':
+            if self.scenario in ('adaptive-wheel-calibration', 'adaptive-encoder-homing'):
                 from .body_adaptation import PROTOCOL, IDENTITY, inspect
                 identity, body_view, event_kind = copy.deepcopy(IDENTITY), inspect(self.body_state), 'body_calibration_started'
             else:
@@ -452,11 +457,16 @@ class Engine:
             self._event(event_kind, identity=identity, state=body_view,
                         contact_ownership=self.env._body_contact_ownership,
                         actuator_gear=self.env.model.actuator_gear.tolist(), world=self.world())
+        if self.scenario == 'adaptive-encoder-homing':
+            from .body_homing import provenance
+            self.writer.manifest['composition_provenance'] = provenance(self.env, self.world())
+            self._event('body_homing_started', detail=self.writer.manifest['composition_provenance'],
+                        derivation=self.composition['derivation'])
         self._event("episode_started", seed=self.seed, goal=self.env._goal_xy.tolist(),
                     obstacles=self.env._obstacle_xy.tolist(), initial_qpos=self.env.data.qpos.tolist(),
                     initial_qvel=self.env.data.qvel.tolist(),
                     reset_protocol=("authored measured calibration lane; fixed left gear .8, explicit probe/fitted reset, fresh encoders/controller"
-                                    if self.scenario == 'adaptive-wheel-calibration' else
+                                    if self.scenario in ('adaptive-wheel-calibration', 'adaptive-encoder-homing') else
                                     "authored calibrated development lane; fixed left gear .8, loaded gains, fresh encoders/controller"
                                     if self.body_state is not None else
                                     "authored declared task layout; fresh local encoder, supervisor and controller state"
@@ -514,7 +524,7 @@ class Engine:
             if set(payload) != {"action"}:
                 raise ValueError("set_action requires only an action vector")
             _action(payload["action"], manual=True)
-            if self.body_state is not None and self.scenario != 'adaptive-wheel-calibration':
+            if self.body_state is not None and self.scenario not in ('adaptive-wheel-calibration', 'adaptive-encoder-homing'):
                 from .body_profile import plan_action
                 plan_action(payload['action'])
         elif kind == "reset":
@@ -571,7 +581,7 @@ class Engine:
             raise CommandRejected('stale expected revision')
         if kind != "reset" and self.phase not in {"paused", "running"}:
             raise CommandRejected("terminal episode requires an explicit reset")
-        adaptive = self.scenario == 'adaptive-wheel-calibration'
+        adaptive = self.scenario in ('adaptive-wheel-calibration', 'adaptive-encoder-homing')
         if self.reference_mode and kind not in ('run', 'pause', 'step', 'stop'):
             raise CommandRejected('Fixed reference permits only run, pause, step and stop')
         if kind == 'calibration-next' and not adaptive:
@@ -680,6 +690,8 @@ class Engine:
         if self.task_state is not None:
             from . import task_profiles
             packet = task_profiles.capture(self.env, self.task_state, self.episode_step)
+            if self.scenario == 'adaptive-encoder-homing':
+                self.composition['encoder_packet'] = {key: copy.deepcopy(packet[key]) for key in ('tick', 'time_s', 'angles_rad')}
             self._event('task_sensed', packet=packet)
             self.task_state, bearing, task_hold, decisions = task_profiles.advance(self.task_state, packet)
             for decision in decisions:
@@ -793,17 +805,19 @@ class Engine:
             from . import body_profile
             try:
                 body_step = body_profile.step
-                if self.scenario == 'adaptive-wheel-calibration':
+                if self.scenario in ('adaptive-wheel-calibration', 'adaptive-encoder-homing'):
                     from .body_adaptation import step as body_step
                 result, state, packet, body_arrays = body_step(self.env, self.body_state,
-                    self.manual_action, self.episode_step, action_override=action_override)
+                    (np.zeros(2, dtype=np.float64) if task_hold else self.manual_action)
+                    if self.scenario == 'adaptive-encoder-homing' else self.manual_action,
+                    self.episode_step, action_override=action_override)
             except body_profile.BodyFailure as error:
                 self._event('body_failed', detail=error.packet, reason=str(error))
                 raise
             self.body_state = state
             action = np.asarray(packet['command']['applied_action'], np.float64)
             body_view = state
-            if self.scenario == 'adaptive-wheel-calibration':
+            if self.scenario in ('adaptive-wheel-calibration', 'adaptive-encoder-homing'):
                 from .body_adaptation import inspect
                 body_view = inspect(state)
             self._event('body_measured', detail=body_profile.measurement_event(packet), state=body_view)
@@ -848,7 +862,7 @@ class Engine:
             terminated = reason in ('stalled', 'collision')
         else:
             reason = outcome(terminated, truncated, info, self.env.goal_radius)
-        if self.scenario == 'adaptive-wheel-calibration' and not reason:
+        if self.scenario in ('adaptive-wheel-calibration', 'adaptive-encoder-homing') and not reason:
             if self.body_state['phase'] in ('trial_complete','fit_complete','rejected'):
                 self.phase = 'paused'
                 self.revision += 1
@@ -862,10 +876,15 @@ class Engine:
                 details = {'upstream_goal_distance_m': float(info['dist_to_goal']),
                            'task_phase': self.task_state['phase'],
                            'completed_inspection_ids': self.task_state['completed_ids']}
-                if self.scenario == 'encoder-homing':
+                if self.scenario in ('encoder-homing','adaptive-encoder-homing'):
                     from .memory_world import START_POSE
+                    body_homing_origin = None
+                    if self.scenario == 'adaptive-encoder-homing':
+                        from .body_homing import PROTOCOL as homing_protocol
+                        body_homing_origin = homing_protocol['body_protocol']['start_pose'][:2]
                     odometry = self.task_state['odometry']
-                    details.update(evaluator_actual_home_distance_m=math.dist(next_pose[:2], START_POSE[:2]),
+                    details.update(evaluator_actual_home_distance_m=math.dist(next_pose[:2],
+                        body_homing_origin if self.scenario == 'adaptive-encoder-homing' else START_POSE[:2]),
                         estimated_home_distance_m=math.hypot(odometry['x_m'], odometry['y_m']))
                 self._end_episode(reason, **details)
             else:
@@ -902,7 +921,7 @@ class Engine:
     def public_state(self):
         self._owner_only()
         body_view = self.body_state
-        if self.scenario == 'adaptive-wheel-calibration':
+        if self.scenario in ('adaptive-wheel-calibration', 'adaptive-encoder-homing'):
             from .body_adaptation import inspect
             body_view = inspect(self.body_state)
         return copy.deepcopy({"run_id": self.run_id, "parent_run_id": self.parent_run_id,
@@ -962,7 +981,7 @@ class Engine:
 
     def preview(self, payload):
         self._active()
-        if self.scenario == 'adaptive-wheel-calibration':
+        if self.scenario in ('adaptive-wheel-calibration', 'adaptive-encoder-homing'):
             raise ValueError('Measured calibration retains its declared authored world')
         if self.phase not in {'paused', 'running'}:
             raise ValueError('Preview requires an active episode')
@@ -1004,7 +1023,8 @@ class Engine:
                 size += len(data)
                 count += data.count(b"\n")
         from .snapshots import controller_hashes
-        return copy.deepcopy({"schema_version": 6 if self.scenario == 'adaptive-wheel-calibration' else 5 if self.body_state is not None else 4,
+        return copy.deepcopy({"schema_version": 7 if self.scenario == 'adaptive-encoder-homing' else 6 if self.scenario == 'adaptive-wheel-calibration' else 5 if self.body_state is not None else 4,
+            **({"composition": self.composition} if self.scenario == 'adaptive-encoder-homing' else {}),
             **({"body_state": self.body_state} if self.body_state is not None else {}), "source_run_id": self.run_id,
             "execution_mode": self.writer.manifest.get('execution_mode', 'live'),
             "memory": self.memory, "world_task_state": self.world_task_state,
@@ -1040,8 +1060,10 @@ class Engine:
                     "receipts", "original_commands", "memory", "world_task_state", "controller_tensors", "execution_mode", "task_state"}
         schema = 4
         if self.body_state is not None:
-            schema = 6 if self.scenario == 'adaptive-wheel-calibration' else 5
+            schema = 7 if self.scenario == 'adaptive-encoder-homing' else 6 if self.scenario == 'adaptive-wheel-calibration' else 5
             expected.add("body_state")
+            if self.scenario == 'adaptive-encoder-homing':
+                expected.add("composition")
         if not isinstance(state, dict) or set(state) != expected or type(state["schema_version"]) is not int or state["schema_version"] != schema or state["controller"] != self.controller or state["phase"] != "paused":
             raise ValueError("incompatible application state or non-paused snapshot")
         if state["teacher_reset_identity"] != self._teacher_reset_identity:
@@ -1062,7 +1084,7 @@ class Engine:
         if state["episode_step"] > state["total_tick"] or state["episode_step"] > 600:
             raise ValueError("invalid episode step count")
         if self.body_state is not None:
-            if self.scenario == 'adaptive-wheel-calibration':
+            if self.scenario in ('adaptive-wheel-calibration', 'adaptive-encoder-homing'):
                 from .body_adaptation import IDENTITY, validate_session
                 if self.env._body_profile_identity != IDENTITY or state['seed']!=1:
                     raise ValueError('Adaptive profile/seed differs')
@@ -1099,7 +1121,10 @@ class Engine:
                 raise ValueError('Actual graph buffers or learned parameters differ')
         elif any(state[key] is not None for key in ('memory', 'world_task_state', 'controller_tensors')):
             raise ValueError('Memory state requires the memory task profile')
-        if self.task_state is not None:
+        if self.scenario == 'adaptive-encoder-homing':
+            from .body_homing import validate_components
+            validate_components(state)
+        elif self.task_state is not None:
             from .task_profiles import validate_state
             state['task_state'] = validate_state(state['task_state'])
             task = state['task_state']
@@ -1119,7 +1144,7 @@ class Engine:
             raise ValueError("invalid durable event prefix")
         _action(state["manual_action"], manual=True)
         if self.body_state is not None:
-            if self.scenario == 'adaptive-wheel-calibration':
+            if self.scenario in ('adaptive-wheel-calibration', 'adaptive-encoder-homing'):
                 from .body_adaptation import plan_action
                 if state['body_state']['phase']=='fitted':
                     plan_action(state['body_state'],state['manual_action'])
@@ -1153,6 +1178,8 @@ class Engine:
             setattr(self, name, state[name])
         if self.body_state is not None:
             self.body_state = state['body_state']
+        if self.scenario == 'adaptive-encoder-homing':
+            self.composition = copy.deepcopy(state['composition'])
         self.manual_action = _action(state["manual_action"], manual=True)
         self._episode_finished = state["episode_finished"]
         self._pending = deque(state["pending_commands"])
@@ -1215,6 +1242,27 @@ class Engine:
                     preserved_sha256=actual, replaced_controller=replace_controller,
                     frozen_memory_sha256=self._reference_memory_sha256)
         return self.public_state()
+
+    def restore_homing_derivation(self, snapshot, *, snapshot_sha256, report, report_sha256):
+        from .body_homing import SCENARIO, derive_snapshot, normalized_reference
+        if self.scenario != SCENARIO:
+            raise ValueError('Historical fitted derivation requires the homing composition')
+        derived = derive_snapshot(snapshot, snapshot_sha256=snapshot_sha256,
+                                  report=report, report_sha256=report_sha256)
+        reference = normalized_reference(derived)
+        self.restore_branch(derived)
+        from .snapshots import capture
+        actual = capture(self.env, self.observation, application=self.application_state())
+        if normalized_reference(actual) != reference:
+            raise ValueError('Actual homing initial differs from exact derivation reference')
+        from .body_homing import provenance
+        from .task_profiles import PROTOCOL
+        self.writer.manifest.update(composition_provenance=provenance(self.env,self.world()),
+            task_protocol=copy.deepcopy(PROTOCOL), task_profile_sha256=self.task_state['profile_sha256'],
+            task_calibration=copy.deepcopy(self.task_state['odometry']['calibration']))
+        self._event('body_homing_derived', reference_sha256=reference,
+                    derivation=self.composition['derivation'])
+        return reference
 
     def restore_memory_branch(self, snapshot, u):
         """Restore a fresh destination, replace U only, verify before publication."""

@@ -332,7 +332,9 @@ def capture(env, observation, *, policy=None, teacher=None, application: dict):
     if hasattr(env, '_body_profile_identity'):
         if mujoco.get_mjcb_control() is not None:
             raise ValueError('Body snapshots require no active global control callback')
-        if application.get('scenario') == 'adaptive-wheel-calibration':
+        if application.get('scenario') == 'adaptive-encoder-homing':
+            from .body_homing import validate_snapshot_application
+        elif application.get('scenario') == 'adaptive-wheel-calibration':
             from .body_adaptation import validate_snapshot_application
         else:
             from .body_profile import validate_snapshot_application
@@ -542,7 +544,9 @@ def restore(snapshot, env, *, policy=None, teacher=None, replace_controller=Fals
     if hasattr(env, '_body_profile_identity'):
         if mujoco.get_mjcb_control() is not None:
             raise ValueError('Body snapshots require no active global control callback')
-        if snp['application'].get('scenario') == 'adaptive-wheel-calibration':
+        if snp['application'].get('scenario') == 'adaptive-encoder-homing':
+            from .body_homing import validate_snapshot_application
+        elif snp['application'].get('scenario') == 'adaptive-wheel-calibration':
             from .body_adaptation import validate_snapshot_application
         else:
             from .body_profile import validate_snapshot_application
