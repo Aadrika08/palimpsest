@@ -1,0 +1,293 @@
+{
+  "artifact_refs": [
+    {
+      "bytes": 9550,
+      "path": "runs/m7-recovery-development-control-228232c/launch.py",
+      "sha256": "198ebecbfa0215bba1d8df2707a1a0fc9eae656030c1bde652df19e8e24c2fc7"
+    },
+    {
+      "bytes": 2724,
+      "path": "runs/m7-recovery-development-control-228232c/supervise.py",
+      "sha256": "da5d49109bb403db8da63f5bb802409137974ffd8434461a185b1593e182db4c"
+    },
+    {
+      "bytes": 7593,
+      "path": "runs/m7-recovery-development-control-228232c/inventory.py",
+      "sha256": "18f527912a3c310ffec17f1070d0fb22fa8bca6e9c9ed8c8c5af4201c61b44b0"
+    },
+    {
+      "bytes": 1702,
+      "path": "runs/m7-recovery-development-control-228232c/checks.py",
+      "sha256": "8343736e1d4a384e8e264ac2b60c4fe8833099765c5b126da05f14ef4ec443b9"
+    },
+    {
+      "bytes": 116,
+      "path": "runs/m7-recovery-development-control-228232c/checks.log",
+      "sha256": "8df7187393aeef0332b9dee3caae672fc08e7c82d8fadbde034696d03b13e7f6"
+    },
+    {
+      "bytes": 139785,
+      "path": "runs/m7-recovery-development-control-228232c/before.json",
+      "sha256": "c3269a9162058234076c9d45e692be4722290ca25cc892ecfec662378bbfc009"
+    },
+    {
+      "bytes": 139785,
+      "path": "runs/m7-recovery-development-control-228232c/after.json",
+      "sha256": "c3269a9162058234076c9d45e692be4722290ca25cc892ecfec662378bbfc009"
+    },
+    {
+      "bytes": 2414,
+      "path": "runs/m7-recovery-development-control-228232c/invocation.json",
+      "sha256": "2d47973fc5b7462a1883fa6d12e28fee29fe8dc22f5e132a67c88dabf904596d"
+    },
+    {
+      "bytes": 513,
+      "path": "runs/m7-recovery-development-control-228232c/preparation.json",
+      "sha256": "687766359787e06f46634087bea22a9c7dba6fbfc2f67c2afad396c2756f8feb"
+    },
+    {
+      "bytes": 15554,
+      "path": "runs/m7-recovery-development-control-228232c/terminal.json",
+      "sha256": "16f7b17e22d54fd80ed33961cd512b076278bd9ab74abdf0801e349cab57a5d7"
+    },
+    {
+      "bytes": 747,
+      "path": "runs/m7-recovery-development-control-228232c/enclosing.json",
+      "sha256": "b27fed725758befac4b9ee44235d1d141c82560c87655009a4f85bbc9ca53a54"
+    },
+    {
+      "bytes": 701,
+      "path": "runs/m7-recovery-development-control-228232c/launcher-console.log",
+      "sha256": "ba86a7c06969647cc72e81f66599761cb25b1809bcf893f640c23f54e0bee51f"
+    },
+    {
+      "bytes": 4239,
+      "path": "runs/m7-recovery-development-control-228232c/retained-audit-v1.py",
+      "sha256": "2739ab4534947a4fa2b5771e3bbaa5cf167255a16d92722a8033324e895db68f"
+    },
+    {
+      "bytes": 515,
+      "path": "runs/m7-recovery-development-control-228232c/retained-audit-v1.log",
+      "sha256": "421314be9f2b6add74a02fc6e408c4cd4b83ac39778cc27820889e0db5c878fa"
+    },
+    {
+      "bytes": 4371,
+      "path": "runs/m7-recovery-development-control-228232c/retained-audit.py",
+      "sha256": "70281b5ac69a2e44f3d868d3db88e6d8460181ecefb269bf3b8850b0682aac26"
+    },
+    {
+      "bytes": 477,
+      "path": "runs/m7-recovery-development-control-228232c/retained-audit.log",
+      "sha256": "e5b16ddec3a85c4b0b8fc6b9a4eac363ba9d151cc27a59d2b2873bc8425ed3e8"
+    },
+    {
+      "bytes": 29312,
+      "path": "runs/m7-recovery-development-control-228232c/retained-audit.json",
+      "sha256": "9986e1c9aa0981d2cbcea597e7bc0beb96babaaca14a25101772f93792f041d1"
+    },
+    {
+      "bytes": 3576,
+      "path": "runs/m7-recovery-development-control-228232c/outer-launch/stdout.log",
+      "sha256": "9ed53cda2ddfec91fc2e8c4d2a8842b3af5ce5484aa2e2bc48dc101a403fff3c"
+    },
+    {
+      "bytes": 0,
+      "path": "runs/m7-recovery-development-control-228232c/outer-launch/stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 333,
+      "path": "runs/m7-recovery-development-control-228232c/outer-launch/supervisor.json",
+      "sha256": "2be14c4a79489d4d77ed6850440994b17c47dc14390aed5f3d45ddbec1e07f57"
+    },
+    {
+      "bytes": 469,
+      "path": "runs/m7-recovery-development-control-228232c/outer-supervisor/stdout.log",
+      "sha256": "209d3289ea94e218c398b5c4ec26e253ea56af81ce8d07b3a8b6ae5595e27b9b"
+    },
+    {
+      "bytes": 0,
+      "path": "runs/m7-recovery-development-control-228232c/outer-supervisor/stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 338,
+      "path": "runs/m7-recovery-development-control-228232c/outer-supervisor/supervisor.json",
+      "sha256": "b95320fb36786af49f5e958cdb639ea29b1a367786dfb680ba7ec4276b2611cf"
+    },
+    {
+      "bytes": 238212,
+      "path": "runs/m7-recovery-closed-loop-development-228232c-20261003/evaluation.json",
+      "sha256": "cdcf32103d047f9a9904532f7ca281b8f5f8c6554c2051a93ac6156e744a81a3"
+    },
+    {
+      "bytes": 542,
+      "path": "runs/m7-recovery-closed-loop-development-228232c-20261003/development.json",
+      "sha256": "3328dd6bccf0b65879e8aa208c70707a01b5190e18fa65e47ce4671dbf674f8f"
+    },
+    {
+      "bytes": 1487,
+      "path": "runs/m7-recovery-closed-loop-development-228232c-20261003/protocol.json",
+      "sha256": "8b8b283d05b5cb9976a1bd55f263e432cb021240af6bac93bf0e9b30e7af156f"
+    },
+    {
+      "bytes": 29718,
+      "path": "runs/m7-recovery-closed-loop-development-228232c-20261003/evaluator.py",
+      "sha256": "18999707fbb187418f7cfaf69dbe85e42388a16dfe75d247674b8cfee104aaed"
+    },
+    {
+      "bytes": 6845,
+      "path": "../project-integration/runs/m7-recovery-development-root-audit-228232c/audit.py",
+      "sha256": "b62aaab025f478bd775168c10a8ef5762fe29354c65f2ab70c82bf6941f9b1b3"
+    },
+    {
+      "bytes": 5649,
+      "path": "../project-integration/runs/m7-recovery-development-root-audit-228232c/audit.json",
+      "sha256": "cda837ffbb128ba14a2981512421501fff61359d8090c9ca18553474d3711f09"
+    },
+    {
+      "bytes": 907,
+      "path": "../project-integration/runs/m7-recovery-development-root-audit-228232c/console.log",
+      "sha256": "a9b66bdac87c9e78ad828e7b4d90694d4d1ace59bb69a97d9194607fde7682ba"
+    }
+  ],
+  "cleanup": {
+    "forced_signals": [],
+    "sampled_pid_start_pairs": 28,
+    "sampler_errors": [],
+    "sampler_stopped": true,
+    "scope": "finite .25-second samples, not every possible transient descendant",
+    "survivors": []
+  },
+  "completed_owners": 24,
+  "enclosing_seconds": 833.7042643510067,
+  "goals_per_original_seed": {
+    "10": 2,
+    "11": 2,
+    "12": 3
+  },
+  "initial_snapshots": 24,
+  "inventories_unchanged": true,
+  "limits": [
+    "four fixed development scenes, three paired model seeds; no held-out inputs, retraining, selection or promotion",
+    "original and rewired goals both 7/12; no topology advantage or causal coverage benefit",
+    "later recovery driving/generalization, physical hardware and R3 remain unqualified",
+    "historical v2 protocol reserves held-out execution but defines no useful-navigation held-out acceptance threshold"
+  ],
+  "logs": {
+    "hashes_post_exit": true,
+    "outer_stderr_bytes": 0,
+    "owner_stderr_bytes_each": 1119,
+    "owner_stderr_identical_count": 24,
+    "semaphore_mentions": 0,
+    "warnings": [
+      "Sparse CSR beta",
+      "TF32-settings deprecation"
+    ]
+  },
+  "metrics": {
+    "10:male-control": {
+      "goal_count": 3,
+      "outcomes": {
+        "goal": 3,
+        "stalled": 1
+      },
+      "owner_wall_sum_seconds": 122.96122278198891,
+      "physics_sum_seconds": 8.792670190669014,
+      "policy_sum_seconds": 4.675858645961853,
+      "ticks": 1428
+    },
+    "10:male-original": {
+      "goal_count": 2,
+      "outcomes": {
+        "goal": 2,
+        "stalled": 2
+      },
+      "owner_wall_sum_seconds": 109.94537212199066,
+      "physics_sum_seconds": 7.696200821286766,
+      "policy_sum_seconds": 4.084765406310908,
+      "ticks": 1218
+    },
+    "11:male-control": {
+      "goal_count": 1,
+      "outcomes": {
+        "goal": 1,
+        "stalled": 2,
+        "time_limit": 1
+      },
+      "owner_wall_sum_seconds": 133.44235901499633,
+      "physics_sum_seconds": 8.904314477040316,
+      "policy_sum_seconds": 4.75074207704165,
+      "ticks": 1356
+    },
+    "11:male-original": {
+      "goal_count": 2,
+      "outcomes": {
+        "goal": 2,
+        "stalled": 2
+      },
+      "owner_wall_sum_seconds": 107.76170488199568,
+      "physics_sum_seconds": 7.441901196842082,
+      "policy_sum_seconds": 4.055430444801459,
+      "ticks": 1244
+    },
+    "12:male-control": {
+      "goal_count": 3,
+      "outcomes": {
+        "goal": 3,
+        "stalled": 1
+      },
+      "owner_wall_sum_seconds": 170.9626053529937,
+      "physics_sum_seconds": 10.532597137746052,
+      "policy_sum_seconds": 5.602897353892331,
+      "ticks": 1613
+    },
+    "12:male-original": {
+      "goal_count": 3,
+      "outcomes": {
+        "goal": 3,
+        "time_limit": 1
+      },
+      "owner_wall_sum_seconds": 177.3720270350168,
+      "physics_sum_seconds": 11.371839395564166,
+      "policy_sum_seconds": 5.914843298218329,
+      "ticks": 1693
+    }
+  },
+  "numeric_ticks": 8552,
+  "own_audit": {
+    "elapsed_seconds": 3.8291065329976846,
+    "first_failure": "auditor collapsed upstream two-stage float32 wheel conversion into algebraically equivalent 2v +/- heading; corrected auditor uses exact pinned conversion, clipping and scale; product/report unchanged",
+    "status": "passed-after-auditor-correction"
+  },
+  "paired_initial_states": 12,
+  "planned_owners": 24,
+  "publication": "retained local evidence",
+  "qualification_claims": [],
+  "recording_ledger": {
+    "bytes": 1710948058,
+    "field": "runs[].files",
+    "file_count": 374,
+    "path": "runs/m7-recovery-closed-loop-development-228232c-20261003/evaluation.json"
+  },
+  "research_manifest_sha256": "cf50fd2f6a96cfb1afd43e23eae05b76522116abdcf544ef41735033dc52b6b5",
+  "research_protocol_sha256": "eebc94145507cffe26965704ed33b9be68cb91558bde0f5aa1b1d3cf90fcdcba",
+  "root_audit": {
+    "elapsed_seconds": 29.589011192001635,
+    "scope": "raw rows/files, native scientific initial fingerprints, outcome counts, immutable source/runtime/model identities and sampled cleanup; no Torch/MuJoCo imports",
+    "status": "first-pass"
+  },
+  "schema_version": 1,
+  "source_commit": "228232c50d5fddcaad1fb72f65bcb89ad2a896c7",
+  "status": "passed-development",
+  "terminal_seconds": 833.4164999420027,
+  "terminal_usage": {
+    "files": 471,
+    "headroom_bytes": 0,
+    "max_bytes": 4294967296,
+    "min_free_bytes": 1073741824,
+    "remaining_bytes": 2580150536,
+    "used_bytes": 1714816760
+  },
+  "upstream_commit": "8d964599119b420de67ee259434d273651a1a76d"
+}
