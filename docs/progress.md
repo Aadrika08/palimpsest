@@ -26,8 +26,19 @@ identities and the launcher are absent. Root retained audit passes first in
 `0e32482`, is integrated after all 141 references (262,936,165 bytes) rehash.
 Comparison-07 controls pass eight independent root fixtures and full preflight
 (14.795 s total): 597 source identities, 120 inputs and forty fresh IDs disjoint
-from all 662 prior owners. The one bounded comparison is running in session `30311` on frozen `0e32482`;
-coverage remains 32/48 until its outcomes are audited.
+from all 662 prior owners. The one bounded comparison drains session `30311`
+exit 1 on frozen `0e32482`. Thirty-eight owners complete normally; owner 39
+(s29/local_cue/no-event retrieval) hits its 150-second internal wall bound after
+90 rows, then the 160-second parent returns −15 with a log-drain/final-sync
+timeout. The oracle remains unattempted. The root retained-failure audit passes
+first in 20.898 s: 4,528 rows, 39 snapshots, sixteen strict forks, 597 identities,
+120 input pins and 41 nonlauncher identities plus the launcher absent; the
+writer lease is free. A separate 6.518-second readout checks 27 condition outcomes
+across the three completed cells without promoting the incomplete batch.
+Coverage remains 32/48. Source and controls stay frozen; no retry, deadline
+relaxation or root-cause claim follows. Post-failure I/O pressure was elevated,
+but no in-run receipt isolates the cause. A focused failure publication is being
+prepared; both prewritten success auditors remain unused.
 The [remaining-06 admission](reports/m5-remaining-06-admission.md), `016948b`,
 retains its twelve owners/1,204 rows and all 150 rehashed publication references;
 the initial root copied-index error and corrected audit are both retained.
@@ -165,7 +176,7 @@ remains ineligible.
 - Mechanism: pinned upstream model/environment; allowlisted controller inputs; one mutable-runtime owner; complete native, policy, application and RNG snapshots. Recorded E fitting and U-only swaps preserve declared invariant hashes. Male controllers use separately trained fixed CPU assets and an authored sensor mapping.
 - Missing: M5 counterbalanced/held-out transfer; learned M6 puck success and held-out evaluation; M7 closed-loop qualification; M8 physical work; remaining M9 modes/operation; final M10 handoff.
 - Unknown: original checkpoint training lineage, full-model Pi performance, physical stopping limits and account quota (telemetry unavailable).
-- Next action: review the navigation v2 preparer launch controls on frozen `4ecb354`; eleven root source checks pass. Actual cross-corpus preparation and all fitting/dev/held-out stages remain pending; collection v1 remains failed. Drain and independently audit the authorized remaining-07 comparison; its admission publication is integrated. Memory coverage is 32/48; the existing paired readout covers its historical 24-cell subset. The audited new-body v2 publication is integrated. Scoped exploration, homing and measured-adaptation subgates are met; learned puck keeps M6 open. Both puck development evaluations remain negative; automatic retraining stops and held-out stays locked. Physical qualification and independent exhibition operation remain open.
+- Next action: review the navigation v2 preparer launch controls on frozen `4ecb354`; eleven root source checks pass. Actual cross-corpus preparation and all fitting/dev/held-out stages remain pending; collection v1 remains failed. Integrate the audited remaining-07 comparison failure publication; no retry or increased deadlines are authorized. Serialize bulk data audits with native jobs after the unexplained internal wall timeout. Memory coverage is 32/48; the existing paired readout covers its historical 24-cell subset. The audited new-body v2 publication is integrated. Scoped exploration, homing and measured-adaptation subgates are met; learned puck keeps M6 open. Both puck development evaluations remain negative; automatic retraining stops and held-out stays locked. Physical qualification and independent exhibition operation remain open.
 
 The [prospective held-out outline](plans/m5-heldout-proposal.md) specifies the
 reserved 64–71 matrix without opening it. Source/profile freeze and all 48 audited
@@ -176,6 +187,16 @@ planning check; an artifact storage path is pending user input. No data is delet
 or moved and no held-out implementation/execution is unlocked.
 
 ## Verification
+
+Remaining-07 comparison retention audits pass first, while the actual batch
+remains unverified. Root raw receipt
+`runs/memory-remaining-07-comparison-root-audit-0e32482/failure-audit.json`
+has SHA-256 `380b125316691e7027e133f1bb3498bddef998d8c95ec847be6a53dfbd193c95`;
+it checks 38 normal owners and the 90-row failed prefix. The 27-condition partial
+readout receipt `partial-outcomes.json` has SHA-256
+`13a84884db5580574ab2d0b835c4ed4e8fa4358f2371633470a3bbea38ebf22f`.
+Both audit sessions drain exit 0; the original experiment session 30311 drains
+exit 1. No rerun, native/model execution or coverage promotion occurred.
 
 New-body v2 publication review passes first in 0.299 s: 32 direct references,
 48 raw files, current controls and all 45 unchanged v1 files combine into
