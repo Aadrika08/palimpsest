@@ -10,16 +10,15 @@ Combined checkout: `feat/project-integration` joins the reviewed lab, memory, ta
 MaleCNS training/wrapper, artwork exporters and rover proposal branches. `main`
 remains unchanged. Historical evidence below retains its original source identity.
 
-Latest full regression at `5175b14` passes all **697 enabled tests without skips**
-in 161.294 s (164.601 s supervised), including actual EGL/male native/replay and
-puck CPU/weighted-fit checks. All 491 source entries, twenty shared assets and
-production model identities stay unchanged; fifty retained artifacts rehash and
-the writer lease was free after that run. Subsequent source `818e7ea` adds a
-balanced puck adapter; its merged `f18ff48` checkout passes 49 focused pure tests
-and actual-data admission, but the full enabled regression has not been repeated. GitHub CI at
-`65573dd` could not start because of an account billing/spending-limit block;
-its failed job status is not a test result. Earlier regression evidence remains
-retained.
+Latest full regression at `f78f087` passes all **711 enabled tests without skips**
+in 159.950 s (163.231 s supervised), including actual EGL/male native/replay and
+puck CPU checks. All 513 source entries, twenty shared assets, production model
+identities and fifty retained references stay unchanged. The later routing-only
+balanced-development merge at `ba0ae45` passes 54 focused checks and original-data
+admission; the full suite has not been repeated after that merge. Node24 production
+build and UI fixture checks pass at `f78f087`; no new browser workflow ran.
+GitHub CI at `f78f087` cannot start because of the account billing/spending-limit
+block; its failed job status is not a test result. Earlier evidence stays retained.
 The six-owner reference gate passes 744 intervals and all six navigation goals,
 with memory deliberately frozen and no memory-task qualification.
 The [new puck mechanics gate](reports/m6-puck-learning-v2-mechanics-v1.md) passes

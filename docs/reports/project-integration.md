@@ -1,6 +1,14 @@
 # Combined checkout verification
 
-Latest combined source `5175b14` passes **697 tests without skips** in
+Latest full regression at `f78f087` passes **711 tests without skips** in
+159.950 seconds (163.231 seconds supervised), with all four actual-runtime test
+flags enabled. The 513 source entries, twenty assets and fifty retained references
+are unchanged. Node24 production build and both UI fixture checks pass. The later
+balanced-development merge at `ba0ae45` passes 54 focused checks and original-data
+admission, including the explicitly reviewed body/homing snapshot change. The full
+suite has not been repeated after that merge. See the detailed verification below.
+
+Earlier combined source `5175b14` passes **697 tests without skips** in
 161.294 seconds (164.601 seconds supervised). All simulation, production male
 Torch/native/replay and puck CPU checks are enabled, including the new weighted
 loss/gradient/deterministic-fit fixture and remaining memory profile checks.
