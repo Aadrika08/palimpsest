@@ -173,7 +173,7 @@ checks cover its declared-input, own-cursor, record and replay contracts using
 fixtures. The first runtime launch failed before any owner because the stage
 runner did not create its report directory; its evidence remains retained. The
 separate single-line v2 correction passes real-filesystem fixtures and root
-control review. Its native gate passes four owners, 364 intervals and five
+control review. Its [native gate](reports/m6-puck-student-mechanism.md) passes four owners, 364 intervals and five
 snapshots, including 244 exact continuation/replay rows. Both raw audits pass;
 the root checker first needed an array-to-list conversion at the existing typed
 transition boundary, with that failure preserved. Fixed development, UI and

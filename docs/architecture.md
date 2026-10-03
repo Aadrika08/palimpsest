@@ -119,7 +119,7 @@ NPZ weights and all thirty epochs retained. The [headless student](plans/m6-puck
 uses those fixed bundles, eight sensors and its own mode through the existing
 owner/recorder. All four proposed native/replay owners construct the same model
 for exact Torch state restoration; action replay makes zero predictions. Its
-four-owner native gate now passes 364 intervals, five snapshots and exact
+[four-owner native gate](reports/m6-puck-student-mechanism.md) now passes 364 intervals, five snapshots and exact
 continuation/action/policy replay. Fixed closed-loop development and public UI
 still need qualification.
 
