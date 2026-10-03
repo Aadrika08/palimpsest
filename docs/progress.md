@@ -75,7 +75,7 @@ first execution in 76.972 s, verifying all 885 files, matched initials and clean
 The experiment is complete; no useful-navigation threshold or R3 promotion follows.
 The user confirmed on 3 October that R3 stays open for a new navigation study,
 requiring a prospective capability threshold and a fresh held-out reserve.
-The [new study plan](plans/m7-navigation-study.md), `45c4c17`, is now frozen: one advice-label aggregation round, paired original-graph data arms, all-seed 3/4 development then 6/8 held-out criteria, and sixteen fresh reserved scene IDs. Source-only checks pass; no new scenes, models or geometry have been opened. Collector/admission implementation is next. The 16.5625 GiB additional disk reservation is prospective and may block after retained memory growth.
+The [new study plan](plans/m7-navigation-study.md), `45c4c17`, is now frozen: one advice-label aggregation round, paired original-graph data arms, all-seed 3/4 development then 6/8 held-out criteria, and sixteen fresh reserved scene IDs. Source-only checks pass; no new scenes, models or geometry have been opened. Collector/admission source `13a1afe` is integrated after root review. Ten synthetic checks pass in 0.194 s, plus ten preloaded-module checks in 0.244 s; direct helpers and all fourteen frozen reusable identities match the tested producer. Controls and read-only prerequisites are next, with no actual collection admitted yet. Full cross-corpus disjointness remains a separate preparer gate. The 16.5625 GiB additional disk reservation is prospective and may block after retained memory growth.
 Its [focused evidence](reports/m7-recovery-heldout-closed-loop.md), `8d3a9d0`, is integrated after all 36 references rehash. Puck trainer source `82e2bd9` now binds task v5; 24 focused root checks
 pass in 1.973 s after correcting a test-command module typo. Rejected v1 data
 remains ineligible.
@@ -98,9 +98,16 @@ remains ineligible.
 - Mechanism: pinned upstream model/environment; allowlisted controller inputs; one mutable-runtime owner; complete native, policy, application and RNG snapshots. Recorded E fitting and U-only swaps preserve declared invariant hashes. Male controllers use separately trained fixed CPU assets and an authored sensor mapping.
 - Missing: M5 counterbalanced/held-out transfer; remaining M6 skills and learned results; M7 closed-loop qualification; M8 physical work; remaining M9 modes/operation; final M10 handoff.
 - Unknown: original checkpoint training lineage, full-model Pi performance, physical stopping limits and account quota (telemetry unavailable).
-- Next action: finish and audit the running remaining-04 memory comparison. Review the source-only collector/admission slice for the new R3 study; the prospective protocol is frozen. Body/UI and six-mode offline artwork handoff evidence are integrated. Memory coverage remains 20/48; the sixteen-cell aggregate is a retained historical snapshot. Both puck development evaluations remain negative; automatic retraining stops and held-out stays locked. Physical qualification and independent exhibition operation remain open.
+- Next action: finish and audit the running remaining-04 memory comparison. Review collection controls and read-only prerequisites for the new R3 study; collector source and the prospective protocol are frozen. Body/UI and six-mode offline artwork handoff evidence are integrated. Memory coverage remains 20/48; the sixteen-cell aggregate is a retained historical snapshot. Both puck development evaluations remain negative; automatic retraining stops and held-out stays locked. Physical qualification and independent exhibition operation remain open.
 
 ## Verification
+
+Navigation collector source receipt:
+`runs/m7-navigation-collector-root-review-13a1afe/audit.json`,
+SHA-256 `ff5f160f468cf5ffbe4833b6ab8b078376374417c37f0bcd09af54eb0c87a3bd`.
+The two root synthetic runs took 0.668 / 0.721 s under supervision and imported no
+actual model/native runtime. The additional ten tests are not a newer full-suite count.
+
 
 The [remaining-02 memory comparison](reports/m5-remaining-02-comparison.md), evidence `b04060e`, completes once on frozen `7a956b0`: forty
 owners, 4,650 neural intervals and all 36 evaluator task checks. All sixteen core
