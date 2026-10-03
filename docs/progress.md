@@ -6,34 +6,24 @@ Working-set binding: `98d42920e321b42d22c6336f938d2c3ba9fd770d8ba24a2a`. Its MCP
 
 ## Current state
 
-Accepted memory comparison coverage is now **40/48 development cells** after
-remaining-09 completes forty owners and both independent raw/outcome audits pass
-first. Its [focused publication](reports/m5-remaining-09-comparison.md),
-`a704ba9`, is integrated after first-pass publication review; the failed-07
-four-cell hole remains open. The paired navigation trainer has passed independent
-control and input admission; its first invocation `77512` is retained as a
-zero-model startup refusal. Fresh corrected controls pass fourteen independent
-checks and full input admission on unchanged `6feade9`. Session `70035` drains
-exit0 with all six fits complete; independent checkpoint auditing passes first.
-The [six-model publication](reports/m7-navigation-training-v2.md), `041434d`,
-and exact development index are integrated after publication review.
-Remaining-09 controls pass independent review on `cb13db9`; its separately bounded
-admission drains session `81740` exit0 with twelve completed owners; independent
-retained verification passes after a receipt-schema checker correction. Its comparison
-controls pass independent review and the single comparison drains session `23234`
-exit0 on frozen `eb55d3a`; retained audits pass first. Navigation binding `29aa8f8` is integrated after two source reviews and
-nine synthetic checks. The teacher-free evaluator `e3f9a47` is integrated after
-eighteen synthetic checks pass; its first syntax failure remains retained. The
-combined regression passes all 802 enabled tests without skips. Remaining-10
-admission drains session `71492` exit0; independent retained and publication
-reviews pass first and evidence `9e0d406` is integrated. Its forty-owner comparison
-passes independent controls and startup admission; its one frozen invocation is
-active in session `51199`. Navigation metadata admission v1 stops before candidate loading
-on this worktree's uninitialized pinned upstream submodule; the refusal is retained.
-Exact dependency setup and fresh v2 admission pass for all six fixed models, with
-independent evidence review. Development launch controls pass source review; their eleven declared synthetic
-fixtures and full preflight remain unexecuted until the memory slot releases. No
-navigation episode has run. R3 stays open.
+Accepted memory comparison coverage is **44/48 development cells**. The final
+originally planned batch, [remaining-10](reports/m5-remaining-10-comparison.md),
+completes forty owners / 4,684 rows in session `51199`, fully drained exit0.
+Independent raw, outcome and publication audits pass first. Publication `d45549a`
+is integrated at `fabfedc`; the failed-07 four-cell hole remains ineligible.
+The [44-cell paired readout](reports/m5-development-readout-44.md) passes first:
+396 condition readouts, 352 task ties, 340 goal ties and twelve goals one tick
+later for own U. All 120 applicable correction pairs tie. R2 stays open; the
+separate failed-07 repeat amendment is still pending.
+
+Navigation training and its six-model publication are integrated. The teacher-free
+evaluator `e3f9a47` passes eighteen focused checks and the combined 802-test
+regression; its initial syntax failure remains retained. Metadata readmission
+v1 refused before candidate loading on an uninitialized pinned upstream checkout;
+exact local dependency setup and fresh v2 admission pass. Producer preparation
+and independent root controls checks now pass all eleven fixtures and full
+source/input/runtime/capacity admission. Actual navigation is next; no episode
+result is yet admitted and held-out stays locked. R3 remains open.
 
 Remaining-06 comparison completes once on frozen `016948b`, bringing independently
 audited development coverage to **32/48 cells**: forty owners, 4,687 neural rows,
@@ -243,7 +233,7 @@ remains ineligible.
 - Mechanism: pinned upstream model/environment; allowlisted controller inputs; one mutable-runtime owner; complete native, policy, application and RNG snapshots. Recorded E fitting and U-only swaps preserve declared invariant hashes. Male controllers use separately trained fixed CPU assets and an authored sensor mapping.
 - Missing: M5 counterbalanced/held-out transfer; learned M6 puck success and held-out evaluation; M7 closed-loop qualification; M8 physical work; independent M9 operation, exhibition duration and physical artwork; final M10 handoff.
 - Unknown: original checkpoint training lineage, full-model Pi performance, physical stopping limits and account quota (telemetry unavailable).
-- Next action: readmit all six frozen navigation bundles and review separate development controls. Binding `29aa8f8` and runner `e3f9a47` are integrated; eighteen synthetic checks and the 802-test enabled combined regression pass. The initial runner syntax failure is retained. Training session `70035` drains exit0; retained audit passes first. The earlier zero-model startup refusal remains unchanged, and held-out stays locked. Remaining-09 controls pass eight root fixtures and full preflight; its twelve-owner admission, retained audit and publication review pass. Separate comparison controls and the one fixed invocation pass, with first-pass raw/outcome audits; its publication review passes first and `a704ba9` is integrated. Remaining-10 admission and both retained/publication reviews pass first; `9e0d406` is integrated. Its separate forty-owner comparison passes independent controls and startup admission; the one frozen invocation is active in session `51199`. No comparison result is yet admitted. Memory coverage is 40/48; failed 07 is neither retried nor given longer deadlines. The existing paired readout covers its historical 24-cell subset. Scoped exploration, homing and measured adaptation are met; learned puck keeps M6 open, automatic retraining stops after both negative development studies, and held-out stays locked. Physical qualification and independent exhibition operation remain open.
+- Next action: complete the one fixed 24-case navigation development invocation on `e3f9a47`, then independently audit retained records and publish its natural outcomes. Six models and eleven control fixtures/full preflight are admitted. Memory has 44/48 accepted cells and its paired readout is published; failed 07 needs the pending amendment, and held-out stays locked. Both puck development arms failed their threshold, so automatic fitting remains stopped. Physical qualification and independent exhibition operation remain open.
 
 The [single completion proposal](plans/m5-remaining-07-completion-proposal.md)
 has a read-only peer review and is pending an explicit user amendment to the
@@ -452,8 +442,8 @@ with 174 unique references / 263,616,661 bytes. Receipt:
 The paired-change lower gate is blocked but unobserved at tick300, so its stale
 open expectation remains; empty-U misses it. Null abstains and no-event has zero
 selector activity. These are admission readouts, not task/goal qualification.
-Comparison coverage remains 40/48 while its final originally planned comparison
-is running. Failed 07 and held-out remain open.
+Admission alone leaves comparison coverage at its historical 40/48; the subsequent
+comparison below brings it to 44/48. Failed 07 and held-out remain open.
 
 Remaining-10 comparison preparation on clean `9e0d406` passes all eight producer
 fixtures and one preflight. Root preparation retains two mistakes: an assumed
@@ -470,8 +460,20 @@ Fresh startup admission passes in 2.518 s with unchanged controls/identities,
 fresh output paths, 25,460,350,976 free bytes and the existing HOME writer fd
 available/released. Startup receipt SHA-256
 `076e40e71fc025f0e51acebe72c9b5f147735779e19826b8cf4245c1a10e02b9`.
-The single frozen comparison invocation is active in session `51199`; no result,
-cleanup or qualification is claimed before its actual drain and raw review.
+The single comparison drains session `51199` exit0: forty owners, 4,684 rows,
+forty snapshots, sixteen strict forks and all 36 evaluator task checks pass.
+Full drain/inventory takes 1,801.516 s; all 42 nonlauncher identities plus the
+launcher are absent and the lease is free. Root raw and outcome audits pass first
+in 16.422 / 4.245 s, binding 543 raw files / 1,103,872,810 bytes. Publication
+`d45549a` preserves both root preparation failures and the publication-only
+missing-scope KeyError; no raw/control/experimental result changed. Root publication
+review passes first in 0.062 s (0.178 s supervised), reconciling 618 references /
+1,106,939,774 bytes with the exact independent raw ledger and 76 rehashed direct
+or historical inputs. Receipt
+`runs/memory-remaining-10-comparison-publication-root-review/audit.json`, SHA-256
+`20d9fe6ce3803459257fd34a8d78db455c23256a004093d6ff418154c5f33040`.
+The final 44-cell report-only analysis passes first in 0.683 s supervised, with
+396 readouts / 352 pairs and no observed own-U benefit. Failed07 remains excluded.
 
 The teacher-free navigation evaluator `e3f9a47` adds exactly the runner and its
 synthetic tests. Eighteen focused checks pass in 1.366 s without skips after a
@@ -518,11 +520,19 @@ before separate strict refusal; both actual callers bind the original invocation
 hash. The standalone inventory CLI now exposes only its supported before mode.
 Eleven synthetic fixtures are declared, including changed-byte/runtime retention,
 startup refusal, sampled identity reuse, missing terminal and late return/publication.
-None has run yet; full preflight and runtime GO await the memory I/O slot. Root
+The source review predates execution. Root
 source-only receipt `runs/m7-navigation-development-controls-source-root-review-e3f9a47/review.json`,
 SHA-256 `f299685141543770f87a3b5c4c1c2b1c31a84ccc8b5d9077968afd4f5d777ced`.
-Held-out stays locked. This admits model artifacts and reviews control source,
-not useful navigation.
+Producer preparation subsequently passes all eleven fixtures and full preflight
+first, with true host exit/drain retained separately (session28062 exit0).
+Independent root review passes eleven fixtures in 0.874 s and complete metadata/
+capacity admission in 4.303 s (4.478 s supervised), session27718 fully drained0.
+All 574 tracked, 122 upstream, twenty assets, fixed inputs/runtime files and six
+identities match; free capacity is 25,105,874,944 bytes. Root receipt
+`runs/m7-navigation-development-controls-root-review-e3f9a47/audit.json`, SHA-256
+`638c20189a8f363071728934545da4c3908417cb0afa66ef9c15bf1407dec975`.
+Actual development is next. Held-out stays locked; preparation is not a useful
+navigation result.
 
 Paired navigation trainer `6feade9` is integrated after eleven independent root
 pure checks pass first in 1.698 s. It adds only the named trainer/test, preserving
