@@ -22,8 +22,15 @@ regression; its initial syntax failure remains retained. Metadata readmission
 v1 refused before candidate loading on an uninitialized pinned upstream checkout;
 exact local dependency setup and fresh v2 admission pass. Producer preparation
 and independent root controls checks now pass all eleven fixtures and full
-source/input/runtime/capacity admission. The one actual navigation invocation is active in session `15391` after fresh
-startup admission; no result is yet admitted and held-out stays locked. R3 remains open.
+source/input/runtime/capacity admission. The one navigation invocation drains session `15391` exit0 with all 24 owners /
+10,822 intervals. Root retained-data auditing passes first in 110.117 s. Old-corpus
+goals are 2/4, 1/4 and 1/4; augmented goals are 0/4 each. The unchanged development
+gate fails. Held-out remains locked, no second aggregation/refit is admitted,
+and R3 stays open. Hosted frontend/fixture jobs also pass at `ce3fdf5`
+([run](https://github.com/Aadrika08/palimpsest/actions/runs/37152227430)); this is
+separate from the already recorded 802-test enabled local suite. The [focused evidence](reports/m7-navigation-development-v2.md), `e4eb6d6`,
+is integrated after first-pass publication review. It retains all natural outcomes,
+source/preparation history and clean shutdown.
 
 Remaining-06 comparison completes once on frozen `016948b`, bringing independently
 audited development coverage to **32/48 cells**: forty owners, 4,687 neural rows,
@@ -233,7 +240,7 @@ remains ineligible.
 - Mechanism: pinned upstream model/environment; allowlisted controller inputs; one mutable-runtime owner; complete native, policy, application and RNG snapshots. Recorded E fitting and U-only swaps preserve declared invariant hashes. Male controllers use separately trained fixed CPU assets and an authored sensor mapping.
 - Missing: M5 counterbalanced/held-out transfer; learned M6 puck success and held-out evaluation; M7 closed-loop qualification; M8 physical work; independent M9 operation, exhibition duration and physical artwork; final M10 handoff.
 - Unknown: original checkpoint training lineage, full-model Pi performance, physical stopping limits and account quota (telemetry unavailable).
-- Next action: complete the one fixed 24-case navigation development invocation on `e3f9a47`, then independently audit retained records and publish its natural outcomes. Six models and eleven control fixtures/full preflight are admitted. Memory has 44/48 accepted cells and its paired readout is published; failed 07 needs the pending amendment, and held-out stays locked. Both puck development arms failed their threshold, so automatic fitting remains stopped. Physical qualification and independent exhibition operation remain open.
+- Next action: resolve the pending failed-07 repeat amendment before any additional memory execution; then complete the remaining four cells and separately review held-out admission. Navigation's single aggregation round and both puck development arms fail their fixed capability gates, so automatic fitting stops and held-out stays locked. Any further learning study needs a separate prospective plan. Physical qualification and independent exhibition operation require their outstanding hardware/operator evidence; R2/R3/R4/R5 and final handoff remain open.
 
 The [single completion proposal](plans/m5-remaining-07-completion-proposal.md)
 has a read-only peer review and is pending an explicit user amendment to the
@@ -536,9 +543,36 @@ upstream, absent output/terminal paths, and 25,083,748,352 free bytes. The exist
 owned regular HOME lease fd is acquired/released without creating any managed
 output directory. Startup receipt SHA-256
 `e454c899e79812a5e0f18a42c535134cbe2f6dd42e526ae8a46b1dcd94294b81`.
-The exact one development invocation is active in session `15391`; actual exit,
-cleanup and raw outcomes await drain. Held-out remains locked and no navigation
-qualification follows from startup.
+The exact one development invocation drains session `15391` exit0: 24 owners,
+10,822 intervals, four goals, twelve stalls and eight time limits. Old-corpus
+seeds10/11/12 reach 2/4, 1/4 and 1/4; augmented seeds each reach 0/4, failing the
+unchanged 3/4 per-seed threshold. Runner supervision is 861.498 s, launcher
+supervision 944.932 s, and enclosing prepublication 946.312 s. The separately
+retained conservative pre-invocation-to-post-drain interval is 988.524 s; it
+includes scheduling/observation delay and is not exact process runtime. A separate
+monitor-only nonexistent-interpreter command returns127 before Python starts;
+no actual command, source, control or experimental attempt changes.
+
+Root host-receipt cross-check passes first, verifying true session drain and
+30 absent PID/start identities. The unchanged raw auditor then passes first in
+110.117 s (110.443 s supervised), session31073 fully drained0: 542 raw files /
+2,382,058,832 bytes, 24 snapshots, 22,159 events and four matched scene groups.
+It checks every recorded row, raw contact incidence, finite arrays, source/input
+identities and original-graph model binding. All 29 sampler identities plus the
+enclosing process are absent, the existing HOME lease is free, and source/control
+inventories match. Root receipt
+`runs/m7-navigation-development-v2-root-audit-e3f9a47/audit.json`, SHA-256
+`5dfe731fa3b22659869cf0927970c9ed845e36d866f02efa345fe7190ffb37b9`.
+Host cross-check SHA-256
+`e8274aedde2ee8a48949d8ecb70b610176b55c4377e3f7000dec54aa81e29694`.
+Publication `e4eb6d6` is integrated after first-pass root review in 0.047 s
+(0.233 s supervised). All 24 outcomes and the copied 542-file ledger match the
+pinned raw audit; 83 small direct references rehash. The unique union contains
+624 references / 2,383,934,489 bytes. Receipt
+`runs/m7-navigation-development-v2-publication-root-review/audit.json`, SHA-256
+`8f103fa8faab988b1b77d6fc44ce8c80d84385003b82c11db6eaa89d760c67a1`.
+The development gate fails on valid retained evidence; held-out remains locked,
+the one aggregation round is exhausted, and no automatic refitting follows.
 
 Paired navigation trainer `6feade9` is integrated after eleven independent root
 pure checks pass first in 1.698 s. It adds only the named trainer/test, preserving
