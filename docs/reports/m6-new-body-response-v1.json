@@ -1,0 +1,145 @@
+{
+  "actual_attempts": 1,
+  "actual_exec": {
+    "console": "runs/m6-new-body-response-v1-prepared/actual-console.log",
+    "returncode": 1,
+    "session_id": 7624
+  },
+  "artifact_refs": {
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/new-body-response/runs/m6-new-body-failure-audit-4c4bca2/audit.json": {
+      "bytes": 10061,
+      "sha256": "2ea687cd3b41e0d3ecdfa48d83d244e7b6a5868038896db4b76b064c17854ce2"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/new-body-response/runs/m6-new-body-failure-audit-4c4bca2/audit.py": {
+      "bytes": 10162,
+      "sha256": "48d0f5e7e696c4bb51fa630c775f20eeac4f8116d2f119375f641e040c3a051d"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/new-body-response/runs/m6-new-body-failure-audit-4c4bca2/console.log": {
+      "bytes": 226,
+      "sha256": "58d304c8e2f34d493d7ab4b0ea22f11a292bc33be13c17e596a26d3fd1cc4b87"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/new-body-response/runs/m6-new-body-response-v1-20261003/calibration/a04c6ba0929f4f6a8d6081dead5552cf/result.json": {
+      "bytes": 12720,
+      "sha256": "b7cfb17510c786d2bac6d363a7935872280b9cf40b5dcf3fc8072b034a834e0b"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/new-body-response/runs/m6-new-body-response-v1-20261003/report.json": {
+      "bytes": 15665,
+      "sha256": "b7129776683cc051bb33b4307abf42e1d5a2bcf2e8c03c65aad54537ec05185c"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/new-body-response/runs/m6-new-body-response-v1-prepared/actual-console.log": {
+      "bytes": 166,
+      "sha256": "6976ebeff5f2b3aefb3bb0660bc0486893d73a69f45810afa4a8950f56645151"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/new-body-response/runs/m6-new-body-response-v1-prepared/enclosing.json": {
+      "bytes": 7712,
+      "sha256": "e1c6476e0691a8d2dcb51eea2d90bd10a0e7f91f140897d70193de5b9441e3d3"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/new-body-response/runs/m6-new-body-response-v1-prepared/invocation.json": {
+      "bytes": 4962,
+      "sha256": "e5a2270c10e51bfa1b26f5e6b1b8a7804a19eec5a4487844776baf4bace724f9"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/new-body-response/runs/m6-new-body-response-v1-prepared/preflight-go-v2.json": {
+      "bytes": 3397,
+      "sha256": "981cce3d9f31c2d282c22eed74fe18767b70bad436e5e6c40c620390debb3d4d"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/new-body-response/runs/m6-new-body-response-v1-prepared/preflight-go.json": {
+      "bytes": 194,
+      "sha256": "b2f5d917b8f7b5377f30432a35b19d24d4eabc25f41ba5fd2fe3b90ea6b71201"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/new-body-response/runs/m6-new-body-response-v1-prepared/ready.json": {
+      "bytes": 2740,
+      "sha256": "b417892b74da97f54a8e99c0021d885c3460709514bb7cef422a178bc763c3f5"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/new-body-response/runs/m6-new-body-response-v1-prepared/terminal.json": {
+      "bytes": 8481,
+      "sha256": "8bd41466294575af5c2cc66875136a05ccbf990ec7f32784ff33d9d7406a28f9"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/project-integration/runs/m6-new-body-control-root-review-4c4bca2/audit.json": {
+      "bytes": 3850,
+      "sha256": "5a7e649be271b66f137223cc627abe536ee0b7b1a15fe62c3e98cbd133d7da7d"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/project-integration/runs/m6-new-body-failure-root-audit-4c4bca2/audit-v2.log": {
+      "bytes": 1040,
+      "sha256": "8b0068f86c5c26f85c9de1608aba53b2d494968dc3af499710df446f5ceab15b"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/project-integration/runs/m6-new-body-failure-root-audit-4c4bca2/audit-v2.py": {
+      "bytes": 7048,
+      "sha256": "c5fb590b7d8af5645c11f9a49a099aa6cde1e319a1fcad970b467acabd872242"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/project-integration/runs/m6-new-body-failure-root-audit-4c4bca2/audit.json": {
+      "bytes": 4957,
+      "sha256": "6062d7d3a437efd5ee9ac24fb8f8d47ed1e89f584e819bb1df8cfa858a6cd59e"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/project-integration/runs/m6-new-body-failure-root-audit-4c4bca2/audit.log": {
+      "bytes": 415,
+      "sha256": "5e01a3229847b145d9b66ed1c298a851b9441dc74803552a6a31581055367188"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/project-integration/runs/m6-new-body-failure-root-audit-4c4bca2/audit.py": {
+      "bytes": 7052,
+      "sha256": "a60ae1879a0369d8c494b7b8d22736ed26a541cf791bea76686e62dac4772eab"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/project-integration/runs/m6-new-body-failure-root-audit-4c4bca2/first-checker-failure.json": {
+      "bytes": 545,
+      "sha256": "a50e4ca6ee761886d7e895dd8130e503057f07e96b598d1272c68b0502cf4195"
+    }
+  },
+  "cleanup": {
+    "all_absent": true,
+    "forced_signals": 0,
+    "observed_pid_start_pairs": 4,
+    "sample_errors": 0,
+    "source_controls_unchanged": true,
+    "survivors": 0,
+    "writer_lease_free_by_root_probe": true
+  },
+  "diagnosis": {
+    "correction_not_in_this_evidence_commit": "Use the same declared authored layout as configure while separately validating the exact float32 cache; keep strict native equality.",
+    "scope": "Pinned source plus NumPy literal reproduction; failed admission retained no native model dump or snapshot, so no post-hoc native-state reconstruction is claimed.",
+    "supported": "Guard expected float64 native ranges from float32 obstacle cache, while configure wrote ranges from declared Python-float coordinates. Literal 3.7 becomes 3.700000047683716; exact range comparison rejects this conversion."
+  },
+  "limitations": [
+    "No contact intervals, calibration fit, task execution, closure, custom snapshot or replay result.",
+    "Completed recording manifest means writer closed, not successful study.",
+    "No physical, population generalization or zero-shot claim."
+  ],
+  "outcomes": {
+    "accepted_ticks": 0,
+    "calibration": "failed-infrastructure",
+    "executed_ticks": 0,
+    "first_error": "ValueError: Undeclared native model mutation: jnt_range",
+    "fit_samples": 0,
+    "homing": "not_started",
+    "snapshots": 0
+  },
+  "producer_commit": "4c4bca2dc56be4ff48fa2c6274d3789d4fd6e747",
+  "protocol_sha256": "8ea826bf4981d3db70bada1ea88db9a0d8707a3a9433e7c247e4254ec7f24672",
+  "retained_failures": [
+    {
+      "detail": "Initial read-only preflight omitted MUJOCO_GL=egl and OMP_NUM_THREADS=2; exact-environment admission then passed, no source/control edit or owner retry.",
+      "kind": "preflight_invocation"
+    },
+    {
+      "detail": "First root audit expected source_revision at event index 1; corrected literal environment only, unchanged raw/source; first script/log/failure receipt retained.",
+      "kind": "root_auditor"
+    }
+  ],
+  "review_status": "root_reviewed_failure_and_audits",
+  "status": "failed-infrastructure",
+  "timing_seconds": {
+    "enclosing_before_publication": 8.974802425000235,
+    "enclosing_child_supervised": 7.397053431006498,
+    "launcher_reported": 7.1134840589948,
+    "owner_reported": 4.385624685994117,
+    "owner_supervised": 5.191245713998796,
+    "study_reported": 5.380272933005472
+  },
+  "verification": {
+    "control_checks": 12,
+    "local_audit_seconds": 2.2065470530069433,
+    "local_retained_audit": "passed_first_execution",
+    "no_native_or_model_import_in_audits": true,
+    "root_audit_seconds": 2.479264853,
+    "root_retained_audit": "passed_after_retained_checker_literal_fix",
+    "source_checks": 17
+  }
+}
