@@ -15,8 +15,12 @@ The changed lower fact is corrected at358 for all nine conditions. Own/sham goal
 is431 versus no-U/swapped430; null/no-event goals are430. There is no own-U benefit.
 The actual session `57385` drained exit0 after 1,798.225 s normal / 1,802.586 s full;
 42 sampled nonlauncher PID/start identities and the launcher are absent, with
-unchanged inventories and an independently free lease after shutdown. Focused
-publication is being prepared. Sixteen development cells and held-out remain open.
+unchanged inventories and an independently free lease after shutdown. The [focused publication](reports/m5-remaining-06-comparison.md), `0b30585`, is
+integrated after all446 published references, the543-file root raw ledger and
+two histories rehash (570unique references /1,106,074,167bytes). Sixteen
+development cells and held-out remain open. Remaining-07 admission now runs once
+in session `10262` on frozen `0b30585`: twelve fresh IDs disjoint from650,
+595 identities unchanged and28,237,762,560bytes free at startup.
 The [remaining-06 admission](reports/m5-remaining-06-admission.md), `016948b`,
 retains its twelve owners/1,204 rows and all 150 rehashed publication references;
 the initial root copied-index error and corrected audit are both retained.
@@ -25,8 +29,15 @@ New-body controls pass twelve root mocked checks and exact preflight. Its final
 startup preflight first refused because MUJOCO_GL/OMP were missing from that
 check invocation; no owner/output was started. The unchanged check passes with
 the exact frozen environment in 2.353 s, with all source/control pins unchanged.
-The one-shot actual command now runs in session `7624` on frozen `4c4bca2`, with
-28,288,516,096 bytes free immediately before start. No body result is claimed.
+The one-shot actual command on frozen `4c4bca2` drains session `7624` exit1.
+Its first calibration owner rejects `jnt_range` before any numeric tick or SNP;
+homing stays unstarted. All four sampled process identities are absent, source
+and control inventories match, and the post-drain writer lease is free. Root
+retained-failure audit passes after correcting its expected initialization-event
+name; both checker attempts remain retained. A pure arithmetic reproduction
+shows the verifier reconstructs float64 native ranges from rounded float32
+cached coordinates. Failure publication and a narrow caller correction are
+underway; strict native equality and task criteria remain unchanged.
 
 The [remaining-05 admission](reports/m5-remaining-05-admission.md), evidence
 `ad2eff7`, completed once on frozen `746c67b` in session `90487`: twelve owners,
@@ -130,7 +141,7 @@ remains ineligible.
 - Mechanism: pinned upstream model/environment; allowlisted controller inputs; one mutable-runtime owner; complete native, policy, application and RNG snapshots. Recorded E fitting and U-only swaps preserve declared invariant hashes. Male controllers use separately trained fixed CPU assets and an authored sensor mapping.
 - Missing: M5 counterbalanced/held-out transfer; remaining M6 skills and learned results; M7 closed-loop qualification; M8 physical work; remaining M9 modes/operation; final M10 handoff.
 - Unknown: original checkpoint training lineage, full-model Pi performance, physical stopping limits and account quota (telemetry unavailable).
-- Next action: review the named training-data preparer implementation against the integrated frozen plan for navigation v2; v1 remains failed. The separate cross-corpus preparer and all fitting/dev/held-out stages remain pending. Integrate the independently audited remaining-06 comparison publication, then review remaining-07 controls. Memory coverage is 32/48; the existing paired readout covers its historical 24-cell subset. Complete and independently audit the active new-body gate in session7624. Both puck development evaluations remain negative; automatic retraining stops and held-out stays locked. Physical qualification and independent exhibition operation remain open.
+- Next action: review the named training-data preparer implementation against the integrated frozen plan for navigation v2; v1 remains failed. The separate cross-corpus preparer and all fitting/dev/held-out stages remain pending. Complete and independently audit remaining-07 admission. Memory coverage is 32/48; the existing paired readout covers its historical 24-cell subset. Review the new-body failure publication and narrow verifier caller correction; no corrected actual run is admitted yet. Both puck development evaluations remain negative; automatic retraining stops and held-out stays locked. Physical qualification and independent exhibition operation remain open.
 
 The [prospective held-out outline](plans/m5-heldout-proposal.md) specifies the
 reserved 64–71 matrix without opening it. Source/profile freeze and all 48 audited
@@ -142,12 +153,31 @@ or moved and no held-out implementation/execution is unlocked.
 
 ## Verification
 
+Remaining-07 admission controls pass eight root fixtures in4.917s and full
+preflight in1.556s, first attempt:595identities,12fresh IDs disjoint from650,
+full launcher AST equal to06 after fixed substitutions, and identical encloser.
+Root receipt: `runs/memory-remaining-07-admission-control-root-review-0b30585/control-review.json`,
+SHA-256 `4621c4b1091a32ee70be96802663fe28ec3b05c5bca52165b559ff71a3f6453f`.
+
+Remaining-06 publication review passes first in1.882s; all570unique publication,
+raw-ledger and history references rehash. Receipt:
+`runs/memory-remaining-06-publication-root-review-0b30585/audit.json`, SHA-256
+`9cf18f2197defd9e1fae19e4e51a918c5acf000a48b3bcc653e319c1435e668c`.
+
+New-body v1 failure audit passes in2.479s after a checker-only correction from
+`source_revision` to the actual `environment` initialization event. One attempted
+owner, zero accepted/executed ticks, zero SNPs, one unstarted dependent and normal
+cleanup are independently checked; the recorded failure remains infrastructure.
+Receipt: `runs/m6-new-body-failure-root-audit-4c4bca2/audit.json`, SHA-256
+`6062d7d3a437efd5ee9ac24fb8f8d47ed1e89f584e819bb1df8cfa858a6cd59e`.
+Original/corrected checker files, logs and correction metadata are retained.
+
 Remaining-06 raw and independent outcome audits pass first in 16.461 / 8.729 s.
 Receipts: `runs/memory-remaining-06-comparison-root-audit-016948b/audit.json`,
 SHA-256 `d50dd75c50a7739135a5e3af6eb16f65e63100ac42273ce905581f02dba3d021`,
 and `outcomes.json`, SHA-256
 `801c6f121f9a9bac5baf4bb1b7e9e0d6537e6f4ec51271303c5f56b288e902e8`.
-Both root sessions drained exit0 before the body slot was released.
+Both root sessions drained exit0 before body execution began.
 
 Navigation data plan `b3cbb67` passes root metadata/source admission first in
 0.036 s: 21 named references, the unchanged historical seven reader pins and
