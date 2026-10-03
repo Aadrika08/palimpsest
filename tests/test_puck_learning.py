@@ -27,6 +27,31 @@ class PuckLearningTests(unittest.TestCase):
         expected=copy.deepcopy(old['learning']);expected['architecture'][0]=9
         self.assertEqual(new['learning'],expected)
         for key,value in old['admission'].items():self.assertEqual(new['admission'][key],value)
+        prior_path=ROOT/'docs/plans/m6-puck-learning-v1.json'
+        self.assertEqual(self.sha(prior_path),'513c7f5045b919241d7fdc6fa6ab058bd94134f8d168661b6453fadfb3b6b158')
+        prior=json.loads(prior_path.read_text())
+        self.assertEqual(new['action_arithmetic'],prior['action_arithmetic'])
+        self.assertEqual(new['record'],prior['record'])
+        self.assertEqual(new['native_contract'],prior['native_contract'])
+        self.assertEqual(new['admission']['sensor_teacher_mode_agreement'],prior['admission']['sensor_teacher_mode_agreement'])
+
+    def test_v1_cursor_and_record_identity_cannot_be_readmitted_as_v2(self):
+        prior=json.loads((ROOT/'docs/plans/m6-puck-learning-v1.json').read_text())
+        old_sha='513c7f5045b919241d7fdc6fa6ab058bd94134f8d168661b6453fadfb3b6b158'
+        with self.assertRaises(ValueError):learning.validate_cursor(cursor()|{'protocol_sha256':old_sha})
+        with tempfile.TemporaryDirectory() as tmp:
+            path=Path(tmp)/'recording';self.fixture(path)
+            manifest=path/'manifest.json';original=manifest.read_bytes();current=json.loads(original)
+            for key,value in [('learning_protocol_sha256',old_sha),('pushing_protocol_sha256',prior['task_protocol']['sha256']),
+                              ('teacher_id',prior['teacher_id']),('teacher_source_sha256',prior['teacher_source_sha256']),
+                              ('learning_feature_id',prior['learning_feature_id']),
+                              ('supervisor_source_sha256','eb9dd244cd30b1133db7a2602c7a88f3a95a57299c2f215f483df69ed37e7cfd')]:
+                raw=json.dumps(current|{key:value}).encode();manifest.write_bytes(raw)
+                with self.assertRaisesRegex(ValueError,'provenance'):
+                    learning.admit_record(path,self.sha(manifest),6000,'train',ROOT)
+                self.assertEqual(manifest.read_bytes(),raw)
+            manifest.write_bytes(original)
+            self.assertEqual(learning.admit_record(path,self.sha(manifest),6000,'train',ROOT)['ticks'],32)
 
     def test_prepare_uses_before_mode_and_commit_is_explicit(self):
         current=cursor();original=copy.deepcopy(current);observation=sensors()
@@ -50,10 +75,10 @@ class PuckLearningTests(unittest.TestCase):
             current=cursor(mode,1)
             for observation in (sensors((.55,0.),(.55,0.)),sensors((0.,0.),(0.,0.))):
                 self.assertEqual(learning.prepare(observation,current)['after']['mode'],mode)
-        below=np.array([0.,0.,np.float32(.18/14),0.,0.,0.,0.,0.],np.float32)
-        above=below.copy();above[2]=np.nextafter(below[2],np.float32(np.inf))
-        self.assertEqual(float(below[2])*14.,.17999999970197678)
-        self.assertEqual(float(above[2])*14.,.18000001274049282)
+        above=np.array([0.,0.,np.float32(.2/14),0.,0.,0.,0.,0.],np.float32)
+        below=above.copy();below[2]=np.nextafter(above[2],np.float32(-np.inf))
+        self.assertEqual(float(below[2])*14.,.19999998807907104)
+        self.assertEqual(float(above[2])*14.,.2000000011175871)
         self.assertEqual(learning.prepare(above,cursor('push',1))['after']['mode'],'approach')
         self.assertEqual(learning.prepare(below,cursor('push',1))['after']['mode'],'push')
 
@@ -190,7 +215,18 @@ class PuckLearningTests(unittest.TestCase):
     @staticmethod
     def sha(path):return hashlib.sha256(path.read_bytes()).hexdigest()
 
-    def fixture(self,path,seed=6000,split='train',bad=False):
+    def test_nine_terminal_zero_labels_still_fail_and_ten_pass(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            for stops in (9,10):
+                path=Path(tmp)/str(stops)/'recording';self.fixture(path,stop_labels=stops)
+                if stops==9:
+                    with self.assertRaisesRegex(ValueError,'terminal-stop coverage'):
+                        learning.admit_record(path,self.sha(path/'manifest.json'),6000,'train',ROOT)
+                else:
+                    result=learning.admit_record(path,self.sha(path/'manifest.json'),6000,'train',ROOT)
+                    self.assertEqual(result['terminal_stop_labels'],10)
+
+    def fixture(self,path,seed=6000,split='train',bad=False,stop_labels=10):
         spec=learning.load_protocol(ROOT)
         writer=RunWriter(path,{'schema':'puck-demonstration-v1','learning_protocol_sha256':learning.PROTOCOL_SHA256,
             'pushing_protocol_sha256':spec['task_protocol']['sha256'],'teacher_source_sha256':spec['teacher_source_sha256'],
@@ -205,7 +241,7 @@ class PuckLearningTests(unittest.TestCase):
             pending=learning.prepare(observation,own)
             before=0 if own['mode']=='approach' else 1;after=0 if pending['after']['mode']=='approach' else 1
             writer.tick(0,tick,inputs=observation,student_inputs=pending['inputs'],
-                action=np.array([.2,0.] if tick<22 else [0.,0.],np.float64),
+                action=np.array([.2,0.] if tick<32-stop_labels else [0.,0.],np.float64),
                 teacher_mode_before=np.array(2 if bad and tick==0 else before+1,np.uint8),
                 teacher_mode_after=np.array(after+1,np.uint8),supervisor_mode_before=np.array(before,np.uint8),
                 supervisor_mode_after=np.array(after,np.uint8))

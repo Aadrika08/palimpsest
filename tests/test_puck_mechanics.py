@@ -88,7 +88,8 @@ class MechanicsFixtures(unittest.TestCase):
         for version in (1,True,3):
             bad=copy.deepcopy(app);bad['version']=version;variants.append(bad)
         bad=copy.deepcopy(app);del bad['teacher_mode'];variants.append(bad)
-        for filename in ('m6-puck-mechanics-v1.json','m6-puck-mechanics-v2.json','m6-puck-mechanics-v3.json'):
+        for filename in ('m6-puck-mechanics-v1.json','m6-puck-mechanics-v2.json','m6-puck-mechanics-v3.json',
+                         'm6-puck-mechanics-v4.json'):
             import hashlib
             path=ROOT/'docs/plans'/filename;old=json.loads(path.read_text())
             for target,value in (('gate',hashlib.sha256(path.read_bytes()).hexdigest()),
@@ -113,16 +114,24 @@ class MechanicsFixtures(unittest.TestCase):
         self.assertEqual(new['recording'],v3['recording'])
         self.assertEqual(new['snapshot'],v3['snapshot'])
 
+    def test_v5_mechanics_changes_only_identity_and_version_notes(self):
+        old=json.loads((ROOT/'docs/plans/m6-puck-mechanics-v4.json').read_text())
+        new=gate.protocol(ROOT)
+        for key in ('id','pushing_protocol_sha256','puck_module_sha256','version_notes'):
+            new[key]=old[key]
+        new['profile_identity']['protocol_sha256']=old['profile_identity']['protocol_sha256']
+        self.assertEqual(new,old)
+
     def test_application_dwell_is_not_command_zero(self):
-        # The frozen dwell predicate can be valid at distance .19, outside teacher stop .18.
+        # Dwell remains an observed task predicate, independent of teacher recomputation.
         app = application(20)
         app['world'].update(puck_xyz=[1.01,0.,.062], rover_pose=[.46,0.,0.])
         app['state'].update(previous_puck_xy=[1.01,0.], previous_rover_xy=[.46,0.],
                             previous_distance=.18999999999999995, had_contact=True, dwell_ticks=1)
         app['inputs'] = puck.project(app['world'], app['contact'])
-        self.assertNotEqual(puck.demonstrate(app['world'],'approach')[0], [0.,0.])
-        gate.validate_application(app, 'zero', 20, state_digest(app))
-        self.assertEqual(gate.boundaries(app['state'], app['contact'], {'initial','tick1','contact'}), ['dwell'])
+        with patch.object(puck,'demonstrate',side_effect=AssertionError('dwell must not call teacher')):
+            gate.validate_application(app, 'zero', 20, state_digest(app))
+            self.assertEqual(gate.boundaries(app['state'], app['contact'], {'initial','tick1','contact'}), ['dwell'])
 
     def test_exact_rows_reject_dtype_finite_and_changed_state(self):
         row = {'episode':0, 'tick':0, 'inputs':np.zeros(8,np.float32), 'qpos':np.zeros(71,np.float64)}

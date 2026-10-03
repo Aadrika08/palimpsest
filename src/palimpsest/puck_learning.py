@@ -13,8 +13,8 @@ from .artifacts import _events, _fingerprint, _json, _read, _safe_path
 from .records import iter_ticks
 from .storage import StorageBudget, StorageLimits
 
-PROTOCOL_PATH='docs/plans/m6-puck-learning-v1.json'
-PROTOCOL_SHA256='513c7f5045b919241d7fdc6fa6ab058bd94134f8d168661b6453fadfb3b6b158'
+PROTOCOL_PATH='docs/plans/m6-puck-learning-v2.json'
+PROTOCOL_SHA256='bfdd047c1763af3d0b254c55df9137e179b65ce99e7eb870ca76f41332a83354'
 MODES={'approach':0,'push':1}
 MAX_TICKS=600
 
@@ -74,7 +74,7 @@ def prepare(sensors,cursor):
     distance=math.hypot(dx,dy)
     mode=before['mode']
     # Stop is evaluated before division, including coincident puck and goal.
-    if distance>.18:
+    if distance>.2:
         ux,uy=dx/distance,dy/distance
         axial=px*ux+py*uy
         lateral=abs(px*uy-py*ux)

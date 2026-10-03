@@ -16,8 +16,8 @@ from .body_profile import GROUND_SUPPORT, ROBOT_GEOMS
 from .task_mechanics import _fields, _identifier, _integer, _number, _pair, _version
 
 SCENARIO = 'puck-pushing-development'
-PROTOCOL_SHA256 = 'edf868c868922a3d7a946e705553c7144509a2a6af7f208e399f63346d2b20b9'
-PROTOCOL_PATH = 'docs/plans/m6-puck-pushing-protocol-v4.json'
+PROTOCOL_SHA256 = '77ce33fa593247715abe99ff2ba0eca399edbac44b29a580d4f92410b8013c30'
+PROTOCOL_PATH = 'docs/plans/m6-puck-pushing-protocol-v5.json'
 WORLD_GEOMS = {'floor', 'wall_n', 'wall_s', 'wall_e', 'wall_w',
                *[f'obstacle{i}' for i in range(20)]}
 CONTACT_FIELDS = ('tick', 'time_s', 'source_start_time_s', 'contact_cache_time_s',
@@ -383,7 +383,7 @@ def demonstrate(world, mode):
     px, py = world['puck_xyz'][:2]
     gx, gy = world['goal_xy']
     distance = math.hypot(gx-px, gy-py)
-    if distance <= .18:
+    if distance <= .2:
         return [0., 0.], mode
     dx, dy = (gx-px)/distance, (gy-py)/distance
     x, y, yaw = world['rover_pose']
