@@ -1,0 +1,180 @@
+{
+  "base_commit": "c167421c3049aa7442bfaa09508e000ac1058d2c",
+  "closed_loop_scene_seeds": {
+    "held_out": [
+      1200,
+      1201,
+      1202,
+      1203,
+      1204,
+      1205,
+      1206,
+      1207
+    ]
+  },
+  "collection_bytes": 1073741824,
+  "collection_limits": {
+    "development_seconds": 1200,
+    "held_out_seconds": 480,
+    "outer_grace_seconds": 60,
+    "owner_seconds": 180,
+    "progress_seconds": 30,
+    "startup_seconds": 60
+  },
+  "combined_admission_bytes": 8942256128,
+  "combined_disk_required_bytes": 10015997952,
+  "combined_managed_ceiling_bytes": 9730785280,
+  "control_interval_seconds": 0.02,
+  "dev_goals_required_per_original_seed": 2,
+  "dev_owner_count": 24,
+  "dev_scenes_per_model": 4,
+  "device": "cpu",
+  "dtype": "float32",
+  "episodes_per_run": 1,
+  "epochs": 20,
+  "evaluation_limits": {
+    "dev_bytes": 4294967296,
+    "dev_outer_seconds": 1860,
+    "dev_seconds": 1800,
+    "held_out_bytes": 8589934592,
+    "held_out_outer_seconds": 3660,
+    "held_out_recorded_outer_seconds": 180,
+    "held_out_recorded_seconds": 120,
+    "held_out_seconds": 3600,
+    "owner_seconds": 180,
+    "progress_seconds": 30,
+    "run_bytes": 167772160,
+    "startup_seconds": 60
+  },
+  "external_kill_grace_seconds": 15,
+  "gradient_norm_cap": 1.0,
+  "held_out_capability_threshold": null,
+  "held_out_owner_count": 48,
+  "held_out_scenes_per_model": 8,
+  "held_out_unlock": "exact audited 24-owner recovery development and normal enclosing exit; original goals >=2/4 per seed; strict pinned sources/bundles",
+  "held_out_use": "once-only evaluation of all six already frozen recovery candidates; no fitting/selection/replacement/retry",
+  "hidden_state": "zero at episode start; carry and detach at each 32-tick training-window boundary",
+  "id": "male-recovery-held-out-evaluation-v1",
+  "interface": "unchanged artificial 388-feature encoder and upstream cell/readout; fixed recurrent positive-count weights; no privileged student inputs",
+  "learning_rate": 0.001,
+  "log_bytes_each": 1048576,
+  "loss": "mean(0.5*((velocity_error/3)^2 + 1-cos(heading_error_radians)))",
+  "max_initial_snapshots": 52,
+  "max_native_owners": 52,
+  "max_ticks_per_run": 600,
+  "max_total_native_ticks": 31200,
+  "min_free_bytes": 1073741824,
+  "minimum_training_ticks_per_run": 32,
+  "model_pairs": [
+    {
+      "rewiring_seed": 10,
+      "training_seed": 10
+    },
+    {
+      "rewiring_seed": 11,
+      "training_seed": 11
+    },
+    {
+      "rewiring_seed": 12,
+      "training_seed": 12
+    }
+  ],
+  "native_log_allowance_bytes": 109051904,
+  "natural_endings": [
+    "goal",
+    "collision",
+    "stalled",
+    "time_limit"
+  ],
+  "optimizer": "Adam",
+  "order": "increasing declared scene seed, episode 0, increasing tick; identical across all six models",
+  "prerequisites": {
+    "data_manifest_sha256": "402d2676668e88bb998457ba0a9ea92f8a4c2a27b92a19d67ad76b80e3a67014",
+    "development": {
+      "path": "runs/m7-recovery-closed-loop-development-228232c-20261003/development.json",
+      "sha256": "3328dd6bccf0b65879e8aa208c70707a01b5190e18fa65e47ce4671dbf674f8f"
+    },
+    "enclosing": {
+      "path": "runs/m7-recovery-development-control-228232c/enclosing.json",
+      "sha256": "b27fed725758befac4b9ee44235d1d141c82560c87655009a4f85bbc9ca53a54"
+    },
+    "evaluation": {
+      "path": "runs/m7-recovery-closed-loop-development-228232c-20261003/evaluation.json",
+      "sha256": "cdcf32103d047f9a9904532f7ca281b8f5f8c6554c2051a93ac6156e744a81a3"
+    },
+    "inventory_sha256": "c3269a9162058234076c9d45e692be4722290ca25cc892ecfec662378bbfc009",
+    "producer_root": "../male-recovery-development",
+    "research_manifest_sha256": "cf50fd2f6a96cfb1afd43e23eae05b76522116abdcf544ef41735033dc52b6b5",
+    "source_commit": "228232c50d5fddcaad1fb72f65bcb89ad2a896c7",
+    "terminal": {
+      "path": "runs/m7-recovery-development-control-228232c/terminal.json",
+      "sha256": "16f7b17e22d54fd80ed33961cd512b076278bd9ab74abdf0801e349cab57a5d7"
+    }
+  },
+  "production_asset_pins_unchanged": true,
+  "qualification_claims": [],
+  "recorded_evaluation_bytes": 67108864,
+  "replacement_scene_count": 0,
+  "report_bytes": 4194304,
+  "report_policy": "report all six models, paired per-scene outcomes, every seed and failure; scenes/model seeds are experimental units, not ticks",
+  "reset_count": 0,
+  "retry_count": 0,
+  "rewiring": "existing degree-preserving swaps, count and weight multiset; declared seed only, no reachability screening/retries",
+  "scenario": "reproduction",
+  "scope": "fixed recovery research held-out evaluation only; no useful-navigation acceptance threshold, R3, topology advantage, retraining or production promotion",
+  "selection": "minimum recorded-dev loss over exactly 20 epochs; first epoch wins exact ties; no winning seed or held-out selection",
+  "source_limits": {
+    "max_bytes": 3221225472,
+    "max_run_bytes": 167772160,
+    "max_runs": 16,
+    "max_ticks": 9600
+  },
+  "stop_policy": "first infrastructure/data/source/finite/budget error stops stage; retain all planned rows and not_started rows; failed dev gate leaves both held-out stages unopened",
+  "teacher_collection_stages": {
+    "held_out": [
+      "held_out"
+    ]
+  },
+  "teacher_scene_seeds": {
+    "dev": [
+      1008,
+      1009,
+      1010,
+      1011
+    ],
+    "held_out": [
+      1012,
+      1013,
+      1014,
+      1015
+    ],
+    "train": [
+      1000,
+      1001,
+      1002,
+      1003,
+      1004,
+      1005,
+      1006,
+      1007
+    ]
+  },
+  "teacher_threads": 2,
+  "texture": "checker",
+  "threads": 1,
+  "threads_scope": "student training and inference",
+  "training_graph": "unchanged pinned 138-node 1647-edge extraction; W[post,pre]; original incoming-strength scalar shared with matched control",
+  "training_limits": {
+    "all_pair_output_bytes": 201326592,
+    "file_bytes": 8388608,
+    "pair_outer_seconds": 660,
+    "pair_output_bytes": 67108864,
+    "pair_seconds": 600
+  },
+  "variants": [
+    "original",
+    "degree_rewired"
+  ],
+  "version": 1,
+  "window": 32
+}

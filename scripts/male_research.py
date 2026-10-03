@@ -13,7 +13,7 @@ from palimpsest.male_policy import load_policy
 from palimpsest.storage import StorageBudget, StorageLimits
 
 
-def disjoint_heldout(collection, manifest):
+def disjoint_heldout(collection, manifest, prepared=None):
     """Check retained train/dev arrays' hashes without opening their recordings."""
     ids, payloads = set(), set()
     for pair in manifest['pairs']:
@@ -29,6 +29,10 @@ def disjoint_heldout(collection, manifest):
 
 
 def evaluate_heldout(args):
+    return _evaluate_heldout(args, research)
+
+
+def _evaluate_heldout(args, research, disjoint=disjoint_heldout, *, collection_report=None):
     # Gate before reading held-out paths, making output, or importing Torch.
     receipt = research.require_unlock(args)
     root, assets = args.repo.resolve(), args.assets.resolve()
@@ -43,6 +47,9 @@ def evaluate_heldout(args):
     report = {'status': 'running', 'research_protocol_sha256': research.PROTOCOL_SHA256, 'unlock': receipt,
               'models': rows, 'source_hashes': before, 'qualification_claims': [],
               'scope': 'one recorded-input evaluation of all six frozen checkpoints; no refitting or selection'}
+    collection_report_pin = research.sha(artifacts._read(collection_report, 4 * 1024**2)) if collection_report is not None else None
+    if collection_report_pin is not None:
+        report['heldout_collection_sha256'] = collection_report_pin
     collection, active = None, None
     with budget.lock():
         budget.check(4 * 1024**2, path=output)
@@ -51,7 +58,7 @@ def evaluate_heldout(args):
             data, collection = prepare_splits({'train': [], 'dev': [], 'held_out': args.held_out}, research_stage='held_out')
             report['collection'] = collection
             path, manifest = research._manifest(args.research_manifest, args.research_manifest_sha256)
-            disjoint_heldout(collection, manifest | {'_directory': path.parent})
+            disjoint(collection, manifest | {'_directory': path.parent}, data)
             from train_male_reduced import evaluate
             for row in rows:
                 active = row
@@ -61,7 +68,7 @@ def evaluate_heldout(args):
                 key = f"{row['training_seed']}:{row['controller']}"
                 identity, arguments = research.resolve(root, assets, args.research_manifest, args.research_manifest_sha256,
                     row['training_seed'], row['controller'], receipt['identities'][key])
-                policy = load_policy(**arguments, seed=row['training_seed'])
+                policy = research.Binding(args.research_manifest, args.research_manifest_sha256, row['training_seed']).load_policy(arguments, row['training_seed'])
                 row.update(identity=identity, metrics=evaluate(policy.agent, data['held_out'], deadline, research.training(row['training_seed'])),
                            status='completed')
                 del policy
@@ -83,6 +90,8 @@ def evaluate_heldout(args):
                     report['status'] = 'failed'
                     report['finalization_errors'].append({'check': name, 'type': type(error).__name__, 'message': str(error)[:2048]})
             check('sources_unchanged', lambda: research.research_sources(root) == before)
+            if collection_report is not None:
+                check('heldout_collection_unchanged', lambda: research.sha(artifacts._read(collection_report, 4 * 1024**2)) == collection_report_pin)
             check('recordings_unchanged', lambda: check_sources(collection) if collection is not None else False)
             check('models_unchanged', lambda: all(research.resolve(root, assets, args.research_manifest, args.research_manifest_sha256,
                 int(key.split(':')[0]), key.split(':')[1])[0] == identity for key, identity in receipt['identities'].items()))

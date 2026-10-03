@@ -225,17 +225,8 @@ def _passed_development(report, manifest_sha256, identities, expected_protocol_s
     return goals
 
 
-def unlock(root, assets, manifest_path, manifest_sha256, development_path, development_sha256):
-    """Revalidate a pinned successful dev report and every declared record hash."""
-    from .male_policy import _hash
-    data = artifacts._read(development_path, MAX_JSON)
-    if not _hash(development_sha256) or sha(data) != development_sha256:
-        raise ValueError('explicit development report hash differs')
-    report = artifacts._json(data)
-    identities = {f'{seed}:{controller}': resolve(root, assets, manifest_path, manifest_sha256, seed, controller)[0]
-                  for seed in PAIR_SEEDS for controller in CONTROLLERS}
-    goals = passed_development(report, manifest_sha256, identities)
-    directory = artifacts._safe_path(development_path).parent
+def _check_development_records(directory, report, provenance):
+    """Revalidate the exact authoritative run inventory after a typed dev gate."""
     for row in report['runs']:
         run = directory / 'runs' / artifacts._id(row['run_id']).hex
         manifest = artifacts._manifest(run)
@@ -244,7 +235,7 @@ def unlock(root, assets, manifest_path, manifest_sha256, development_path, devel
         if (manifest.get('status') != 'completed' or manifest.get('policy_identity') != row['model_identity'] or
                 manifest.get('seed') != row['seed'] or manifest.get('recorded_ticks') != row['ticks'] or
                 manifest.get('final_phase') != row['final_phase'] or outcome != row['last_outcome'] or reason != row['outcome'] or
-                manifest.get('research') != Binding(Path(manifest_path), manifest_sha256, row['training_seed']).provenance()):
+                manifest.get('research') != provenance(row['training_seed'])):
             raise ValueError('development authoritative run differs')
         files = row.get('files')
         if not isinstance(files, list) or not files or len(files) > 64:
@@ -260,6 +251,20 @@ def unlock(root, assets, manifest_path, manifest_sha256, development_path, devel
             payload = artifacts._read(run / relative, 160 * 1024**2)
             if len(payload) != entry.get('size_bytes') or sha(payload) != entry.get('sha256'):
                 raise ValueError('development artifact changed')
+
+
+def unlock(root, assets, manifest_path, manifest_sha256, development_path, development_sha256):
+    """Revalidate a pinned successful dev report and every declared record hash."""
+    from .male_policy import _hash
+    data = artifacts._read(development_path, MAX_JSON)
+    if not _hash(development_sha256) or sha(data) != development_sha256:
+        raise ValueError('explicit development report hash differs')
+    report = artifacts._json(data)
+    identities = {f'{seed}:{controller}': resolve(root, assets, manifest_path, manifest_sha256, seed, controller)[0]
+                  for seed in PAIR_SEEDS for controller in CONTROLLERS}
+    goals = passed_development(report, manifest_sha256, identities)
+    _check_development_records(artifacts._safe_path(development_path).parent, report,
+        lambda seed: Binding(Path(manifest_path), manifest_sha256, seed).provenance())
     return {'research_protocol_sha256': PROTOCOL_SHA256, 'research_manifest_sha256': manifest_sha256,
             'development_report_sha256': development_sha256, 'original_goals_by_seed': goals,
             'identities': identities, 'status': 'held_out_unlocked'}
