@@ -12,7 +12,7 @@ brings audited development coverage to **24/48 cells**. All forty owners complet
 outcome audits pass first in 15.064 / 8.859 s. Goals and correction timing show no
 own-U benefit. Root publication review rehashes 424 published references plus two
 historical input histories (426 files, 1,091,832,514 bytes). Cleanup is complete.
-Remaining-05 admission started once on frozen `746c67b` in session `90487` after independent control review. Source and controls stay held through terminal and audit. This does not add comparison coverage.
+Remaining-05 admission completed once on frozen `746c67b` in session `90487`: twelve owners, 1,204 rows and four neural calls. Root retained audit passes first in 10.086 s, verifying 116 raw pins and clean shutdown. Focused evidence publication and comparison controls are next; coverage stays 24/48.
 
 The preceding [remaining-04 admission](reports/m5-remaining-04-admission.md),
 `6f72b9b`, passes twelve owners, 1,204 rows and twelve snapshots; root raw audit
@@ -104,9 +104,24 @@ remains ineligible.
 - Mechanism: pinned upstream model/environment; allowlisted controller inputs; one mutable-runtime owner; complete native, policy, application and RNG snapshots. Recorded E fitting and U-only swaps preserve declared invariant hashes. Male controllers use separately trained fixed CPU assets and an authored sensor mapping.
 - Missing: M5 counterbalanced/held-out transfer; remaining M6 skills and learned results; M7 closed-loop qualification; M8 physical work; remaining M9 modes/operation; final M10 handoff.
 - Unknown: original checkpoint training lineage, full-model Pi performance, physical stopping limits and account quota (telemetry unavailable).
-- Next action: publish the audited navigation collection failure and review a separate prospective protocol correction; no retry or guard change is admitted. The separate cross-corpus preparer and all fitting/dev/held-out stages remain pending. Finish and audit the authorized remaining-05 memory admission before its comparison can be considered. Memory coverage is 24/48 with a current paired readout. Implement the fixed standalone new-body verifier using existing helpers. Both puck development evaluations remain negative; automatic retraining stops and held-out stays locked. Physical qualification and independent exhibition operation remain open.
+- Next action: publish the audited navigation collection failure and review a separate prospective protocol correction; no retry or guard change is admitted. The separate cross-corpus preparer and all fitting/dev/held-out stages remain pending. Publish remaining-05 admission evidence and review its comparison controls before an actual launch. Memory coverage is 24/48 with a current paired readout. Implement the fixed standalone new-body verifier using existing helpers. Both puck development evaluations remain negative; automatic retraining stops and held-out stays locked. Physical qualification and independent exhibition operation remain open.
+
+The [prospective held-out outline](plans/m5-heldout-proposal.md) specifies the
+reserved 64–71 matrix without opening it. Source/profile freeze and all 48 audited
+development cells must precede execution. Its estimated 16.3 GB of additional
+retention exceeds what can safely be promised alongside pending development and
+navigation work. The only mounted data filesystem has about 27 GiB free at this
+planning check; an artifact storage path is pending user input. No data is deleted
+or moved and no held-out implementation/execution is unlocked.
 
 ## Verification
+
+Remaining-05 retained admission root audit:
+`runs/memory-remaining-05-root-audit-746c67b/audit.json`,
+SHA-256 `c00600e221348f4cd0ad8aab66ba5fcde5e50f29bba853bca2391925f697864b`.
+Twelve owners, 1,204 rows, four neural calls, twelve initial snapshots and 116
+raw input pins pass in 10.086 s; source/input inventories are unchanged and the
+writer lease is independently free. This checks retained data, not new inference.
 
 Remaining-05 admission controls pass eight root fixtures in 8.146 s and read-only
 preflight in 2.777 s: 587 identities, twelve fresh IDs disjoint from 546 prior,
