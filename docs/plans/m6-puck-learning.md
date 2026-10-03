@@ -89,17 +89,49 @@ not actual collection, native replay or model validation.
 
 ## Next source slices, each reviewed before execution
 
-1. **One fixed teacher collection adapter.** Reuse the existing mechanics owner's
-   install/reset, interval contact, recording, cleanup and `supervised_owner`
-   implementation. `authored_reset` already supports the pinned learning layouts.
-   Current gaps are concrete: `owner` admits only `physics_cases`, hardcodes the
-   mechanics split/application, and rejects Torch. Propose a narrow explicit
-   teacher/student learning configuration branch in that owner for root review;
-   preserve the existing mechanics default and old snapshot checks. Do not copy
-   its runner or add an arbitrary factory. The collector's small stage loop will
-   retain all 20 planned rows, complete natural teacher outcomes, stop on protocol/
-   infrastructure error, and run independent source/native/data audits. Any mode
-   mismatch closes training admission for the whole fixed batch.
+1. **Fixed teacher collection adapter implemented; native execution pending.**
+   `collect_puck_teachers.py` invokes the existing mechanics owner/watchdog for
+   exactly 6000–6019. Its explicit `learning_teacher` pin admits typed canonical
+   plan rows only: one fresh episode, no restore/replay/source snapshot, reset
+   override, alternate split or tick budget. Installation, authored reset, contact
+   intervals, wheel conversion, recording and terminal cleanup are shared. Default
+   mechanics row/application bytes and historical snapshot admission remain intact;
+   Torch remains forbidden in these native teacher owners. The collection branch
+   does not admit a student or runtime factory.
+
+   `puck_teacher.decide` calls the privileged expert once, independently prepares
+   the sensor-only cursor, and requires agreement before applying control. On
+   disagreement, the result/event retains exact float32 sensor bytes, the original
+   float64 expert action, both before/after modes and `executed_interval: false`.
+   No mode/label is substituted. The own cursor commits only after a completed
+   interval's numeric row and event are staged; if later recording fails, its old
+   cursor remains and any returned native step/time is reported separately.
+
+   The initial-only `puck-teacher-initial-v1` envelope binds learning/task/teacher/
+   supervisor source hashes, declared feature ID, seed/split, profile/full model,
+   world/contact/task state and both reset cursors. It has no checkpoint and is
+   deliberately rejected by the mechanics restore path. Teacher capture alone
+   does not qualify student native restore or replay. Every recorded task digest
+   additionally binds the own after cursor; numeric/event modes remain explicit.
+
+   The small stage loop retains all 20 planned statuses. Natural task outcomes
+   complete the fixed plan; protocol/infrastructure error stops it with remaining
+   rows unstarted. Only all 20 completed owners plus `admit_batch` and unchanged
+   source/evidence/storage checks can publish `status: passed`. An unconditional
+   final elapsed check includes data admission and finalization within 1500 s.
+   The report's `sources` is exactly the ordered `{seed, split, path,
+   manifest_sha256}` entry list; `source_hashes` is the separate code inventory.
+   `learning_protocol_sha256` and `admission.status` bind the trainer handoff.
+   Failed batches remain ineligible; there is no replacement or new manifest.
+
+   Pure fixtures exercise the modified owner with fake native resources and real
+   task/record functions, exact float32 threshold disagreement before any step,
+   record-failure cursor preservation, completed natural failure, all-20 report
+   flow and final-deadline rejection. They are not native evidence. Next gates are
+   separate: first the unchanged ten-owner mechanics compatibility plan on this
+   source, then (only after review) fixed teacher collection under retained
+   TERM1560/+15 and bounded_process1580 with independent descendant containment.
+   Both need fresh pinned controls, exclusive slot GO and independent audits.
 2. **One bounded trainer and fixed research loader.** Reuse the existing record,
    storage, `bounded_process` and checkpoint admission patterns. One invocation
    trains one fixed seed; a retained ordered launcher admits seeds 21, 22, 23.
@@ -132,6 +164,6 @@ not actual collection, native replay or model validation.
 Every episode remains ≤600 control ticks with natural termination, no automatic
 reset/retry/replacement, and no winning-seed selection. Keep owner 180 s,
 startup/progress 60/30 s, logs 1 MiB, report 4 MiB, snapshot 8 MiB, checkpoint
-1 MiB / uncompressed ZIP 2 MiB, 1 GiB free floor and 16 GiB aggregate retention.
+1 MiB / uncompressed parameter-container 2 MiB, 1 GiB free floor and 16 GiB aggregate retention.
 Teacher owners retain two CPU threads; students/training use one. Resource limits
 are frozen ceilings, not measured throughput or guarantees of admission success.
