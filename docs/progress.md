@@ -39,11 +39,15 @@ Coverage remains 32/48. Source and controls stay frozen; no retry, deadline
 relaxation or root-cause claim follows. Post-failure I/O pressure was elevated,
 but no in-run receipt isolates the cause. The [focused failure publication](reports/m5-remaining-07-comparison-failure.md),
 `80d7e1d`, is integrated after all 595 unique references (1,071,249,237 bytes)
-rehash. Both prewritten success auditors remain unused. The separate remaining-08 admission passes its independent control review: eight
-fixtures and full preflight in 10.828 s, 599 identities and twelve fresh IDs
-disjoint from 702 prior IDs, including all forty planned 07 IDs. It is cleared
-for one fixed admission run on `80d7e1d`; no remaining-08 result is claimed yet.
-This does not replace or retry failed 07, whose coverage gap remains explicit.
+rehash. Both prewritten success auditors remain unused. The separate remaining-08 admission completes once on frozen `80d7e1d` in
+session `50069`, exit 0: twelve owners, 1,204 rows, four policy calls and twelve
+snapshots. Normal enclosing time is 393.563 s; full drain/inventory time is
+396.826 s. Root retained audit passes first in 10.871 s with 116 file pins,
+599 identities, unchanged inventories, fourteen nonlauncher identities plus
+the launcher absent, and a free lease. Its control review passed eight fixtures
+and full preflight, excluding all 702 prior IDs including the unattempted 07
+oracle. Publication is pending; no comparison-08 run is authorized yet.
+Comparison coverage remains 32/48; this does not replace or retry failed 07.
 The [remaining-06 admission](reports/m5-remaining-06-admission.md), `016948b`,
 retains its twelve owners/1,204 rows and all 150 rehashed publication references;
 the initial root copied-index error and corrected audit are both retained.
@@ -124,7 +128,7 @@ without skips in 0.227 s (0.578 s supervised), without Torch/MuJoCo or a writer
 lease. All seventeen protected sources remain unchanged. Root receipt
 `runs/m6-new-body-source-root-review-4c4bca2/audit.json` has SHA-256
 `69bbbf02ecbd73136601cea8c71c32593dd6931fe49ecde9c718b67dbcc0d7db`.
-New outer controls are being prepared; no native run or success is claimed.
+That source-only prerequisite was followed by the retained failed v1 and successful v2 actual gates described above.
 
 Combined checkout: `feat/project-integration` joins the reviewed lab, memory, task,
 MaleCNS training/wrapper, artwork exporters and rover proposal branches. `main`
@@ -179,9 +183,9 @@ remains ineligible.
 - Partial M9: sonification and comparison export actual recorded data with embedded provenance. [Atlas](artwork-atlas.md), `af2ee7b` / draft PR #18, isolates named nodes in the pinned graph and measures directed reachability; actual graph, independent traversal and browser checks pass. Deferred final-close cleanup is fixed for all five existing export formats at `a299546` / draft PR #19. [Curated anatomical comparison](artwork-specimens.md) is implemented at `6fdab2f`, with actual geometry/conversion and compatible browser checks recorded at `f509463` / draft PR #30. All 37,007 segments and four roots are preserved at one physical scale. Physical drawing and exhibition-duration/independent-operation gates remain open. The [supervised operator runbook](exhibition-runbook.md) declares those missing acceptance records. The approved Afterimage slice is frozen at `2ed2c10`; its bounded eight-frame actual inference/reference/render gate passed in 5.688 s outer with exact reference outputs, deterministic offline SVGs and unchanged sources/assets/stimulus. Independent retained-evidence audit and compatible browser review pass; evidence `9b4db47` / draft PR #31 is integrated. The fixed axes preserve the fixture's very small response variation.
 - Partial M10: unified source and requirements matrix exist. The earlier combined suite at `28ad7c5` passes all 682 tests with no skips in 129.311 s (131.139 s supervised), including actual simulation, production male Torch/native/replay and the new puck CPU model checks using the verified shared assets. The previous artwork/body suite at `68a8f19` passed 395 tests in 56.706 s (58.875 s outer). Sources and environment locks remain unchanged. The earlier suite at `77e69da` passed 330 tests. The earlier suite at `0a783af` ran 319 tests: 316 passed and three explicit MaleCNS checks skipped; [integration report](reports/project-integration.md) records the separate outer-reporting error. Build and UI fixture checks pass. After atlas/cleanup merges, 48 focused export/CLI tests pass at `0693a2f` (2.755 s, no skips). After memory-transfer and wheel-diagnostic integration, 62 focused checks pass at `7a51346` in 3.083 s with no skips. These checks do not rerun historical task or endurance qualification. The [architecture guide](architecture.md) and exact reduced-model distribution are added; local links and real asset resolver checks pass. The expanded regression and audited task evidence are integrated. After adding anatomical pairs and Afterimage, 47 focused artwork/CLI/export tests pass without skips in 1.212 s at the combined merge `f8da3c1`; the subsequent full 395-test run covers the combined artwork/body source. Its first attempt retained one fixture-ordering error; the correction selects the reproduction scenario explicitly and leaves product restrictions intact.
 - Mechanism: pinned upstream model/environment; allowlisted controller inputs; one mutable-runtime owner; complete native, policy, application and RNG snapshots. Recorded E fitting and U-only swaps preserve declared invariant hashes. Male controllers use separately trained fixed CPU assets and an authored sensor mapping.
-- Missing: M5 counterbalanced/held-out transfer; learned M6 puck success and held-out evaluation; M7 closed-loop qualification; M8 physical work; remaining M9 modes/operation; final M10 handoff.
+- Missing: M5 counterbalanced/held-out transfer; learned M6 puck success and held-out evaluation; M7 closed-loop qualification; M8 physical work; independent M9 operation, exhibition duration and physical artwork; final M10 handoff.
 - Unknown: original checkpoint training lineage, full-model Pi performance, physical stopping limits and account quota (telemetry unavailable).
-- Next action: review the fixed paired original-graph trainer plan/source following integrated data preparation `2d4a7b8`. All fitting/dev/held-out stages remain pending; collection v1 remains failed. The audited remaining-07 failure publication is integrated; execute the independently reviewed remaining-08 admission once without retrying 07 or increasing deadlines. Serialize bulk data audits with native jobs after the unexplained internal wall timeout. Memory coverage is 32/48; the existing paired readout covers its historical 24-cell subset. The audited new-body v2 publication is integrated. Scoped exploration, homing and measured-adaptation subgates are met; learned puck keeps M6 open. Both puck development evaluations remain negative; automatic retraining stops and held-out stays locked. Physical qualification and independent exhibition operation remain open.
+- Next action: implement and review the two-file paired original-graph trainer under integrated contract `8c57f78`, following audited data preparation `2d4a7b8`. All fitting/dev/held-out stages remain pending; collection v1 remains failed. The audited remaining-07 failure publication is integrated; publish the audited remaining-08 admission before separate comparison preparation, without retrying 07 or increasing deadlines. Serialize bulk data audits with native jobs after the unexplained internal wall timeout. Memory coverage is 32/48; the existing paired readout covers its historical 24-cell subset. The audited new-body v2 publication is integrated. Scoped exploration, homing and measured-adaptation subgates are met; learned puck keeps M6 open. Both puck development evaluations remain negative; automatic retraining stops and held-out stays locked. Physical qualification and independent exhibition operation remain open.
 
 The [prospective held-out outline](plans/m5-heldout-proposal.md) specifies the
 reserved 64–71 matrix without opening it. Source/profile freeze and all 48 audited
@@ -192,6 +196,18 @@ planning check; an artifact storage path is pending user input. No data is delet
 or moved and no held-out implementation/execution is unlocked.
 
 ## Verification
+
+Remaining-08 retained admission audit passes first in 10.871 s:
+`runs/memory-remaining-08-root-audit-80d7e1d/audit.json`, SHA-256
+`f858f51dbdb4f3ea08b6926637e5438b2fa5838f9901f9336f78c45cea878c13`.
+The [paired navigation trainer contract](plans/m7-navigation-training-v2.md),
+`8c57f78`, passes its first source/metadata review in 0.031 s: eleven metadata
+pins, all 95 named Python sources, six direct code/lock pins, inherited numerical
+settings and bounds, and eleven output pins matched to the admitted data audit.
+The unchanged source lengths imply 72 old versus 236 augmented windows per epoch.
+Receipt: `runs/m7-navigation-training-v2-plan-root-review-8c57f78/audit.json`,
+SHA-256 `9918a48e6c1904fe55765832fce55e9656dcd89c9d0e1d13f99fe848d3bd1072`.
+No corpus arrays, model, native runtime or lease were opened by that review.
 
 Remaining-08 control review passes first in 10.828 s; the full launcher AST
 matches reviewed 07 after fixed path/profile/plan substitutions, with an unchanged
