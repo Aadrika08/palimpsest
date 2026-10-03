@@ -1,0 +1,327 @@
+{
+  "admission": {
+    "goals_each_model": {
+      "21": 0,
+      "22": 0,
+      "23": 0
+    },
+    "held_out": "locked_pending_independent_review_and_explicit_GO",
+    "required_each_model": 3,
+    "status": "failed"
+  },
+  "audits": {
+    "local": {
+      "first_invocation": true,
+      "scope": "Retained data, independent eight-input/phase arithmetic, pure task transition re-admission, exact declared physical/input/non-Torch RNG start fields across models. No native deserialize or model forward; not independent validation of task-transition implementation or learned capability.",
+      "seconds": 22.862629238006775,
+      "status": "passed"
+    },
+    "root": {
+      "first_invocation": true,
+      "maximum_numpy_action_error": 7.152557374157098e-08,
+      "scope": "retained development rows/events/defined initial fields and NumPy network actions; no native/Torch execution",
+      "seconds": 23.125775617998443,
+      "status": "passed",
+      "tolerance": 1e-06
+    }
+  },
+  "cleanup": {
+    "both_samplers_stopped": true,
+    "forced_signals": [],
+    "observed_pid_start_absent": 16,
+    "runtime_slot_released": true,
+    "sample_errors": [],
+    "survivors": [],
+    "writer_lease_free_root_probe": true
+  },
+  "enclosing_limits": {
+    "failure_cleanup_acceptance_seconds": 12,
+    "kill_deadline_seconds": 1315,
+    "normal_acceptance_seconds": 1280,
+    "scope": "Normal1280 includes entry, admission, child return/drain, cleanup, publication and final return. Later1300/1315/1318 only terminate failure; they never extend experiment acceptance.",
+    "supervisor_fallback_seconds": 1318,
+    "term_deadline_seconds": 1300
+  },
+  "held_out_opened": false,
+  "inventory_scope": "Authoritative outer330 and inner324 file ledgers retained in their reports; 101 producer source pins unchanged. Outer retained_inventory is fully drained. Outer control_inventory may include live enclosing log prefixes; enclosing report pins its final drained supervisor logs separately. Tool session35311 stdout is the terminal enclosing receipt; no separate enclosing console file is claimed.",
+  "limitations": [
+    "Every model failed the unchanged >=3/4 fixed development goal gate; no winning-seed selection or threshold relaxation",
+    "Contact, displacement and own-mode occupancy are descriptive and do not establish successful puck pushing or the cause of failure",
+    "No further experiment, tuning, held-out access, UI promotion or physical hardware qualification"
+  ],
+  "limits": {
+    "bytes": 3221225472,
+    "inner_seconds": 1200,
+    "kill_grace_seconds": 15,
+    "log_bytes_each": 1048576,
+    "min_free_bytes": 1073741824,
+    "owner_bytes": 167772160,
+    "owner_seconds": 180,
+    "progress_seconds": 30,
+    "report_bytes": 4194304,
+    "snapshot_bytes": 8388608,
+    "startup_seconds": 60,
+    "supervised_seconds": 1280,
+    "term_seconds": 1260,
+    "total_retained_bytes": 17179869184
+  },
+  "matched_scene_fingerprints": {
+    "6100": "f718d36e551672f0b3d528e0225f3ebcc158bb0a28e97a6c9f3bc1142d21dde9",
+    "6101": "bcd8b84e6e1298231c994d06542c4878b769ab32e876c15e8e259adf52daa62f",
+    "6102": "a261f434137180ecd77ebbd397b0756efac7b3b6a4469274b978606f61c22760",
+    "6103": "707d68adf0ac378b7de1c6d98902e3faf19688062decf5e893fc8b09da7ce1b8"
+  },
+  "model_manifest_sha256": "dac7171366a33a07dc146787338b6dfeee0090f680f78c75dcdbd29607806919",
+  "numeric_rows": 7200,
+  "operational_status": "completed",
+  "owners": [
+    {
+      "contact_ticks": 0,
+      "final_distance_m": 1.1999999994005757,
+      "id": "student-dev-6100-seed21",
+      "max_puck_displacement_m": 0.0,
+      "model_calls": 600,
+      "model_seed": 21,
+      "moving_ticks_above_001": 187,
+      "outcome": "time_limit",
+      "own_push_ticks": 0,
+      "rows": 600,
+      "scene": 6100,
+      "start": 0
+    },
+    {
+      "contact_ticks": 0,
+      "final_distance_m": 1.1999999994005757,
+      "id": "student-dev-6100-seed22",
+      "max_puck_displacement_m": 0.0,
+      "model_calls": 600,
+      "model_seed": 22,
+      "moving_ticks_above_001": 177,
+      "outcome": "time_limit",
+      "own_push_ticks": 0,
+      "rows": 600,
+      "scene": 6100,
+      "start": 0
+    },
+    {
+      "contact_ticks": 0,
+      "final_distance_m": 1.1999999994005757,
+      "id": "student-dev-6100-seed23",
+      "max_puck_displacement_m": 0.0,
+      "model_calls": 600,
+      "model_seed": 23,
+      "moving_ticks_above_001": 198,
+      "outcome": "time_limit",
+      "own_push_ticks": 0,
+      "rows": 600,
+      "scene": 6100,
+      "start": 0
+    },
+    {
+      "contact_ticks": 37,
+      "final_distance_m": 1.232864737794085,
+      "id": "student-dev-6101-seed21",
+      "max_puck_displacement_m": 0.16730178209062596,
+      "model_calls": 600,
+      "model_seed": 21,
+      "moving_ticks_above_001": 311,
+      "outcome": "time_limit",
+      "own_push_ticks": 0,
+      "rows": 600,
+      "scene": 6101,
+      "start": 0
+    },
+    {
+      "contact_ticks": 56,
+      "final_distance_m": 1.2924008319324813,
+      "id": "student-dev-6101-seed22",
+      "max_puck_displacement_m": 0.1076958779807864,
+      "model_calls": 600,
+      "model_seed": 22,
+      "moving_ticks_above_001": 308,
+      "outcome": "time_limit",
+      "own_push_ticks": 0,
+      "rows": 600,
+      "scene": 6101,
+      "start": 0
+    },
+    {
+      "contact_ticks": 372,
+      "final_distance_m": 0.9562421173946264,
+      "id": "student-dev-6101-seed23",
+      "max_puck_displacement_m": 0.44384901405499416,
+      "model_calls": 600,
+      "model_seed": 23,
+      "moving_ticks_above_001": 597,
+      "outcome": "time_limit",
+      "own_push_ticks": 0,
+      "rows": 600,
+      "scene": 6101,
+      "start": 0
+    },
+    {
+      "contact_ticks": 160,
+      "final_distance_m": 1.2651448617061476,
+      "id": "student-dev-6102-seed21",
+      "max_puck_displacement_m": 0.3348722280223271,
+      "model_calls": 600,
+      "model_seed": 21,
+      "moving_ticks_above_001": 414,
+      "outcome": "time_limit",
+      "own_push_ticks": 0,
+      "rows": 600,
+      "scene": 6102,
+      "start": 0
+    },
+    {
+      "contact_ticks": 140,
+      "final_distance_m": 1.3738775240310495,
+      "id": "student-dev-6102-seed22",
+      "max_puck_displacement_m": 0.22612422187208936,
+      "model_calls": 600,
+      "model_seed": 22,
+      "moving_ticks_above_001": 402,
+      "outcome": "time_limit",
+      "own_push_ticks": 0,
+      "rows": 600,
+      "scene": 6102,
+      "start": 0
+    },
+    {
+      "contact_ticks": 413,
+      "final_distance_m": 0.8895782967704978,
+      "id": "student-dev-6102-seed23",
+      "max_puck_displacement_m": 0.7105193129322211,
+      "model_calls": 600,
+      "model_seed": 23,
+      "moving_ticks_above_001": 385,
+      "outcome": "time_limit",
+      "own_push_ticks": 0,
+      "rows": 600,
+      "scene": 6102,
+      "start": 0
+    },
+    {
+      "contact_ticks": 83,
+      "final_distance_m": 1.216396140853433,
+      "id": "student-dev-6103-seed21",
+      "max_puck_displacement_m": 0.5837134213807569,
+      "model_calls": 600,
+      "model_seed": 21,
+      "moving_ticks_above_001": 587,
+      "outcome": "time_limit",
+      "own_push_ticks": 173,
+      "rows": 600,
+      "scene": 6103,
+      "start": 0
+    },
+    {
+      "contact_ticks": 69,
+      "final_distance_m": 1.3652139885655983,
+      "id": "student-dev-6103-seed22",
+      "max_puck_displacement_m": 0.43490831822604586,
+      "model_calls": 600,
+      "model_seed": 22,
+      "moving_ticks_above_001": 587,
+      "outcome": "time_limit",
+      "own_push_ticks": 175,
+      "rows": 600,
+      "scene": 6103,
+      "start": 0
+    },
+    {
+      "contact_ticks": 455,
+      "final_distance_m": 1.009639734706523,
+      "id": "student-dev-6103-seed23",
+      "max_puck_displacement_m": 0.7904646620766362,
+      "model_calls": 600,
+      "model_seed": 23,
+      "moving_ticks_above_001": 596,
+      "outcome": "time_limit",
+      "own_push_ticks": 0,
+      "rows": 600,
+      "scene": 6103,
+      "start": 0
+    }
+  ],
+  "process_exit": 0,
+  "protocol_sha256": "2c97b116d563f2069f2257f0aade5d01c6532e26f7dd0406981980541f4f18f6",
+  "public_ui_integrated": false,
+  "qualification_claims": [],
+  "references": {
+    "enclosing": {
+      "bytes": 4862,
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-balanced-development/runs/puck-balanced-development-v1-prepared/enclosing/report.json",
+      "sha256": "f6b70ca0d2bbf9c6eb0f948207c1d6d9d3afaf03bcb7161a6ee6ab66dbbdb2e2"
+    },
+    "enclosing_preflight": {
+      "bytes": 1205,
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-balanced-development/runs/puck-balanced-development-v1-prepared/enclose-preflight.json",
+      "sha256": "246b9571cad2def174e9f0f3f3fb6181e429a5edde9188c432238f10467e2267"
+    },
+    "inner": {
+      "bytes": 196506,
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-balanced-development/runs/puck-balanced-development-v1-20261003/gate/report.json",
+      "sha256": "80452887fcd7746bc6b2be8edec9733976b92f8e143acf34338846d5fc5fa558"
+    },
+    "local_audit": {
+      "bytes": 10489,
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-balanced-development/runs/puck-balanced-development-v1-audit-d4efa26/audit.json",
+      "sha256": "ace8642d2c9f46f371690eb9c27143e6c437e000c10373d9438f6f8adb818f72"
+    },
+    "local_auditor": {
+      "bytes": 10991,
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-balanced-development/runs/puck-balanced-development-v1-audit-d4efa26/audit.py",
+      "sha256": "f6f79d56016daf1d3673c473630976bf1d00c2fe0e1a10e55efbd1d34dab27dd"
+    },
+    "outer": {
+      "bytes": 75883,
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-balanced-development/runs/puck-balanced-development-v1-20261003/launch-result.json",
+      "sha256": "14380ad4c4f3603c6cf02ffaf2aeb4a9176756070bfdf586df7b3bfd060d995f"
+    },
+    "preflight": {
+      "bytes": 8362,
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-balanced-development/runs/puck-balanced-development-v1-prepared/preflight.json",
+      "sha256": "85ce41a546c70f9b3ce01fe2eab2c475ecb297652d3803022004a38ca76e7233"
+    },
+    "ready": {
+      "bytes": 10370,
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-balanced-development/runs/puck-balanced-development-v1-prepared/ready.json",
+      "sha256": "d7190273710ca72edabb967de2e9169f9f3b0aa8f734b2f633d734ee21dde8dc"
+    },
+    "root_audit": {
+      "bytes": 5707,
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/project-integration/runs/puck-balanced-development-root-audit-d4efa26/audit.json",
+      "sha256": "7926e4bc3fb6832915a6f54c57f7d19845cb5ada73b005d018cee9502a38daba"
+    },
+    "root_auditor": {
+      "bytes": 10138,
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/project-integration/runs/puck-balanced-development-root-audit-d4efa26/audit.py",
+      "sha256": "3ef8a13a7997d9b90e1e0d30e6b1a8a5fb69a82ee899e2cb6e9cee64cf8e7c52"
+    },
+    "root_control_review": {
+      "bytes": 1557,
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/project-integration/runs/puck-balanced-development-control-root-review-d4efa26/audit.json",
+      "sha256": "b293c238c528d58d88fa088aaf8b04a00be3f043cb9827ba531e0b3a61e22faa"
+    },
+    "root_source_review": {
+      "bytes": 1657,
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/project-integration/runs/puck-balanced-development-root-checks-d4efa26/audit.json",
+      "sha256": "ac6b9d245e3ec83a15609c660722d2fad1c232a983fb2168dc8002df195b01f7"
+    },
+    "terminal": {
+      "bytes": 5310,
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-balanced-development/runs/puck-balanced-development-terminal-d4efa26/terminal.json",
+      "sha256": "46c918d407a82780d53ce6cf43763fc94258242b230286caefd40e214ee8b9d2"
+    }
+  },
+  "schema": "puck-balanced-development-evidence-v1",
+  "snapshots": 12,
+  "source_commit": "d4efa2630e3d69eb8a9b3e45fd62a47557937724",
+  "timing": {
+    "enclosing_elapsed_seconds_before_publication": 182.14526968100108,
+    "enclosing_launcher_return_and_drain_seconds": 182.14054050999403,
+    "inner_seconds": 177.290060120009,
+    "launcher_elapsed_seconds_before_publication": 181.7554673400009
+  }
+}
