@@ -22,8 +22,8 @@ regression; its initial syntax failure remains retained. Metadata readmission
 v1 refused before candidate loading on an uninitialized pinned upstream checkout;
 exact local dependency setup and fresh v2 admission pass. Producer preparation
 and independent root controls checks now pass all eleven fixtures and full
-source/input/runtime/capacity admission. Actual navigation is next; no episode
-result is yet admitted and held-out stays locked. R3 remains open.
+source/input/runtime/capacity admission. The one actual navigation invocation is active in session `15391` after fresh
+startup admission; no result is yet admitted and held-out stays locked. R3 remains open.
 
 Remaining-06 comparison completes once on frozen `016948b`, bringing independently
 audited development coverage to **32/48 cells**: forty owners, 4,687 neural rows,
@@ -531,8 +531,14 @@ All 574 tracked, 122 upstream, twenty assets, fixed inputs/runtime files and six
 identities match; free capacity is 25,105,874,944 bytes. Root receipt
 `runs/m7-navigation-development-controls-root-review-e3f9a47/audit.json`, SHA-256
 `638c20189a8f363071728934545da4c3908417cb0afa66ef9c15bf1407dec975`.
-Actual development is next. Held-out stays locked; preparation is not a useful
-navigation result.
+Fresh startup passes first with unchanged frozen controls, clean `e3f9a47` and
+upstream, absent output/terminal paths, and 25,083,748,352 free bytes. The existing
+owned regular HOME lease fd is acquired/released without creating any managed
+output directory. Startup receipt SHA-256
+`e454c899e79812a5e0f18a42c535134cbe2f6dd42e526ae8a46b1dcd94294b81`.
+The exact one development invocation is active in session `15391`; actual exit,
+cleanup and raw outcomes await drain. Held-out remains locked and no navigation
+qualification follows from startup.
 
 Paired navigation trainer `6feade9` is integrated after eleven independent root
 pure checks pass first in 1.698 s. It adds only the named trainer/test, preserving
