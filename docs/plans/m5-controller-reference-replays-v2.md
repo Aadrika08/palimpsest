@@ -1,7 +1,9 @@
 # M5 controller-reference replay v2: source path admission correction
 
-Status: source-only correction; no fresh native gate is authorized. Preserve
-the [v1 zero-row failure](../reports/m5-controller-reference-replays-v1.md), its
+Status: the separately frozen six-owner v2 gate completed and passed at source
+`9dd805d`; see [audited evidence](../reports/m5-controller-reference-replays-v2.md).
+No further native gate or held-out access is authorized. The preparation sections
+below are historical. Preserve the [v1 zero-row failure](../reports/m5-controller-reference-replays-v1.md), its
 source `5d293bf`, controls, output, five unattempted IDs and all review receipts.
 The v1 producer/executor paths stay unchanged. Author and later execute this
 separately frozen correction in `.worktrees/memory-reference-replay-v2`.
