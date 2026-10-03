@@ -54,5 +54,12 @@ before and after edits in 4.956315547 s / 10.251825200 s: all 20 sources, 5710 t
 and 1314 recorded-dev rows, all three original and three balanced bundles, and 15
 protected source/protocol hashes. The two receipts match apart from elapsed time.
 The new owner inventory has 101 entries. Local receipts and the exact AST checker
-are retained in `runs/puck-balanced-development-source-checks/`. These are pure
-source/data checks; no development control or rollout has been prepared or run.
+are retained in `runs/puck-balanced-development-source-checks/`. At that source
+boundary these were pure source/data checks; development controls and rollout had not yet been run.
+
+The separately authorized fixed development invocation subsequently completed
+cleanly on `d4efa26`, but all three balanced models reached 0/4 goals. The unchanged
+each-model ≥3/4 gate failed; held-out 6200–6207 remains locked. See the
+[negative development evidence](../reports/m6-puck-balanced-development.md) and
+its compact index for all twelve outcomes, source/control bindings and audits.
+No further experiment, tuning or UI promotion is authorized by this result.
