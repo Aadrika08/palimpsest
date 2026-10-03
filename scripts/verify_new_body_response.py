@@ -330,6 +330,8 @@ def author_episode(engine, expected_model):
     if tuple(mujoco.mj_name2id(env.model,mujoco.mjtObj.mjOBJ_ACTUATOR,name) for name in ('left_motor','right_motor'))!=(0,1):
         raise ValueError('Named motor ordering differs')
     before = model_values(env.model); old_world = engine.world()
+    original_model_sha256 = _model_digest(env.model)
+    original_full_model_sha256 = hashlib.sha256(env.model.__getstate__()).hexdigest()
     memory_world.configure(env,memory_world.initial_state(close_subject_id=None))
     env._goal_xy[:] = [-3.5,3.]
     env.model.site_pos[env.goal_site_id,:2] = [-3.5,3.]
@@ -353,6 +355,8 @@ def author_episode(engine, expected_model):
         raise ValueError('Fresh episode model differs from the fixed study body')
     engine.revision += 1
     context = {'protocol_sha256':PROTOCOL_SHA256,'original_world':old_world,'actual_world':engine.world(),
+               'original_world_sha256':body._sha(old_world),'actual_world_sha256':body._sha(engine.world()),
+               'original_model_sha256':original_model_sha256,'original_full_model_sha256':original_full_model_sha256,
                'full_model_sha256':full_model,'model_sha256':_model_digest(env.model),
                'gear':env.model.actuator_gear.tolist(),'calibration':calibration,
                'scope':'standalone override; original Engine sensors/outcome retained; no custom-state restore/replay'}
