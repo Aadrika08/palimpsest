@@ -55,7 +55,11 @@ def read_protocol(root):
     return result
 
 
-PROTOCOL = read_protocol(ROOT)
+# Pure helpers remain importable after later integration changes. Actual parent
+# and worker entry points still require every historical source pin below.
+if digest(ROOT / PROTOCOL_PATH) != PROTOCOL_SHA256:
+    raise ValueError('Fixed study protocol differs')
+PROTOCOL = read_json(ROOT / PROTOCOL_PATH, MiB)
 LIMITS = PROTOCOL['limits']
 
 
@@ -480,6 +484,7 @@ def interval_accounting(run, accepted, executed):
 
 def worker(config):
     started = time.monotonic()
+    read_protocol(ROOT)
     output, run = validate_config(config)
     budget = budget_for(output)
     run.mkdir(parents=True,exist_ok=False)
