@@ -7,8 +7,11 @@ The fixed driver, `scripts/verify_artwork_handoff.py --inputs INPUT --output NEW
 is for a separately supervised agent-operated export smoke. It neither captures
 new imagery nor restores a model. The copied runs are derivative subsets without
 native continuation or action/policy replay. Its operator/retention declarations
-remain blank, and it does not complete the independent acceptance below. Actual
-curated CLI execution has not yet been qualified by this source-only slice.
+remain blank, and it does not complete the independent acceptance below. The
+[2026-10-03 offline handoff](reports/m9-offline-handoff.md) passed all six fixed
+exports from the byte-verified local bundle, with independent agent artifact
+readback and clean shutdown. That short software check provides no independent
+human, declared-duration exhibition or physical qualification.
 
 This is an operator handoff for the implemented software modes, not an exhibition
 qualification. Start with offline derivatives. A named operator must remain
