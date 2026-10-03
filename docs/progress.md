@@ -12,7 +12,7 @@ brings audited development coverage to **24/48 cells**. All forty owners complet
 outcome audits pass first in 15.064 / 8.859 s. Goals and correction timing show no
 own-U benefit. Root publication review rehashes 424 published references plus two
 historical input histories (426 files, 1,091,832,514 bytes). Cleanup is complete.
-Remaining-05 admission controls are prepared; no fifth-batch runtime has started.
+Remaining-05 admission started once on frozen `746c67b` in session `90487` after independent control review. Source and controls stay held through terminal and audit. This does not add comparison coverage.
 
 The preceding [remaining-04 admission](reports/m5-remaining-04-admission.md),
 `6f72b9b`, passes twelve owners, 1,204 rows and twelve snapshots; root raw audit
@@ -81,7 +81,7 @@ first execution in 76.972 s, verifying all 885 files, matched initials and clean
 The experiment is complete; no useful-navigation threshold or R3 promotion follows.
 The user confirmed on 3 October that R3 stays open for a new navigation study,
 requiring a prospective capability threshold and a fresh held-out reserve.
-The [new study plan](plans/m7-navigation-study.md), `45c4c17`, is now frozen: one advice-label aggregation round, paired original-graph data arms, all-seed 3/4 development then 6/8 held-out criteria, and sixteen fresh reserved scene IDs. Source-only checks pass. Collector/admission source `13a1afe` is integrated after root review. Ten synthetic checks pass in 0.194 s, plus ten preloaded-module checks in 0.244 s; direct helpers and all fourteen frozen reusable identities match the tested producer. Root independently passes nine control fixtures and unchanged read-only prerequisites (0.567 / 3.382 s supervised/preflight). The one-shot collection on frozen `13a1afe` in session `57884` stopped at the first owner after twelve retained intervals: an unexpected rover contact failed its guard, and all eleven later owners remained unstarted. Session57884 drained exit1 with no reported surviving sampled identities; independent raw diagnosis/audit is pending, with no retry. Launch-time available disk exceeded the full-study reservation. The outer normal deadline is 2,210 s; 2,220 s is the watchdog KILL target, with separate failure-only cleanup. Source and controls stay frozen. Full cross-corpus disjointness remains a separate preparer gate. The 16.5625 GiB additional disk reservation is prospective and may block after retained memory growth.
+The [new study plan](plans/m7-navigation-study.md), `45c4c17`, is now frozen: one advice-label aggregation round, paired original-graph data arms, all-seed 3/4 development then 6/8 held-out criteria, and sixteen fresh reserved scene IDs. Source-only checks pass. Collector/admission source `13a1afe` is integrated after root review. Ten synthetic checks pass in 0.194 s, plus ten preloaded-module checks in 0.244 s; direct helpers and all fourteen frozen reusable identities match the tested producer. Root independently passes nine control fixtures and unchanged read-only prerequisites (0.567 / 3.382 s supervised/preflight). The one-shot collection on frozen `13a1afe` in session `57884` stopped at the first owner after twelve retained intervals: an unexpected rover contact failed its guard, and all eleven later owners remained unstarted. Session57884 drained exit1 with no reported surviving sampled identities; independent retained-failure audit passes first in 3.787 s, with all twelve row bindings, the exact floor/base rejection, one initial snapshot, unchanged inventories and four sampled process identities absent. The writer lease is independently free after cleanup. No retry is admitted. Launch-time available disk exceeded the full-study reservation. The outer normal deadline is 2,210 s; 2,220 s is the watchdog KILL target, with separate failure-only cleanup. Source and controls stay frozen. Full cross-corpus disjointness remains a separate preparer gate. The 16.5625 GiB additional disk reservation is prospective and may block after retained memory growth.
 Its [focused evidence](reports/m7-recovery-heldout-closed-loop.md), `8d3a9d0`, is integrated after all 36 references rehash. Puck trainer source `82e2bd9` now binds task v5; 24 focused root checks
 pass in 1.973 s after correcting a test-command module typo. Rejected v1 data
 remains ineligible.
@@ -104,9 +104,27 @@ remains ineligible.
 - Mechanism: pinned upstream model/environment; allowlisted controller inputs; one mutable-runtime owner; complete native, policy, application and RNG snapshots. Recorded E fitting and U-only swaps preserve declared invariant hashes. Male controllers use separately trained fixed CPU assets and an authored sensor mapping.
 - Missing: M5 counterbalanced/held-out transfer; remaining M6 skills and learned results; M7 closed-loop qualification; M8 physical work; remaining M9 modes/operation; final M10 handoff.
 - Unknown: original checkpoint training lineage, full-model Pi performance, physical stopping limits and account quota (telemetry unavailable).
-- Next action: independently audit and diagnose the first navigation collection failure; no retry or guard change is admitted. The separate cross-corpus preparer and all fitting/dev/held-out stages remain pending. Review the prepared remaining-05 memory admission for the now-free runtime slot. Memory coverage is 24/48 with a current paired readout. Implement the fixed standalone new-body verifier using existing helpers. Both puck development evaluations remain negative; automatic retraining stops and held-out stays locked. Physical qualification and independent exhibition operation remain open.
+- Next action: publish the audited navigation collection failure and review a separate prospective protocol correction; no retry or guard change is admitted. The separate cross-corpus preparer and all fitting/dev/held-out stages remain pending. Finish and audit the authorized remaining-05 memory admission before its comparison can be considered. Memory coverage is 24/48 with a current paired readout. Implement the fixed standalone new-body verifier using existing helpers. Both puck development evaluations remain negative; automatic retraining stops and held-out stays locked. Physical qualification and independent exhibition operation remain open.
 
 ## Verification
+
+Remaining-05 admission controls pass eight root fixtures in 8.146 s and read-only
+preflight in 2.777 s: 587 identities, twelve fresh IDs disjoint from 546 prior,
+and 28,114,046,976 free bytes. The complete launcher AST matches successful04
+under declared fixed substitutions; the encloser is byte-identical. Receipt:
+`runs/memory-remaining-05-admission-control-root-review-746c67b/control-review.json`,
+SHA-256 `d175559a48336391d66d26b3d1c0079c00cda5e76cd1b6dd07221dff66840671`.
+The checker is reconstructed from the historical receipt; root-local fixture/
+preflight copies change only the launcher lookup/output destination and preserve
+producer outputs. No model/native runtime or lease was used for this review.
+
+Navigation retained-failure audit:
+`runs/m7-navigation-collection-failure-root-audit-13a1afe/audit.json`,
+SHA-256 `e09df41b94ca7341bf0f001ee2bc287ad0c64a0135db031628f5791c56b29562`.
+The valid floor/base contact at tick11, stage6, 0.232 s has signed distance
+-0.00003873235167558761 m. Its rejection follows the frozen protocol. Twelve
+published rows are retained negative evidence, not an admitted collection;
+eleven later owners remain unstarted. No neural/native recomputation occurred.
 
 Navigation control root receipt:
 `runs/m7-navigation-collection-control-root-review-13a1afe/audit.json`,
