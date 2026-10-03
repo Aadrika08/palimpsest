@@ -196,7 +196,7 @@ remains ineligible.
 - Mechanism: pinned upstream model/environment; allowlisted controller inputs; one mutable-runtime owner; complete native, policy, application and RNG snapshots. Recorded E fitting and U-only swaps preserve declared invariant hashes. Male controllers use separately trained fixed CPU assets and an authored sensor mapping.
 - Missing: M5 counterbalanced/held-out transfer; learned M6 puck success and held-out evaluation; M7 closed-loop qualification; M8 physical work; independent M9 operation, exhibition duration and physical artwork; final M10 handoff.
 - Unknown: original checkpoint training lineage, full-model Pi performance, physical stopping limits and account quota (telemetry unavailable).
-- Next action: implement and review the two-file paired original-graph trainer under integrated contract `8c57f78`, following audited data preparation `2d4a7b8`. All fitting/dev/held-out stages remain pending; collection v1 remains failed. The audited remaining-07 failure publication is integrated; prepare remaining-08 comparison controls from integrated admission `ba48305`, without retrying 07 or increasing deadlines. Serialize bulk data audits with native jobs after the unexplained internal wall timeout. Memory coverage is 32/48; the existing paired readout covers its historical 24-cell subset. The audited new-body v2 publication is integrated. Scoped exploration, homing and measured-adaptation subgates are met; learned puck keeps M6 open. Both puck development evaluations remain negative; automatic retraining stops and held-out stays locked. Physical qualification and independent exhibition operation remain open.
+- Next action: prepare and review bounded training controls for integrated two-file trainer `6feade9`, following contract `8c57f78` and audited data `2d4a7b8`. All fitting/dev/held-out stages remain pending; collection v1 remains failed. The remaining-08 comparison is running once in session `29960` on frozen `ba48305`; drain it and audit retained evidence before any coverage change. Failed 07 is neither retried nor given longer deadlines. Serialize bulk data audits with native jobs after the unexplained internal wall timeout. Memory coverage is 32/48; the existing paired readout covers its historical 24-cell subset. The audited new-body v2 publication is integrated. Scoped exploration, homing and measured-adaptation subgates are met; learned puck keeps M6 open. Both puck development evaluations remain negative; automatic retraining stops and held-out stays locked. Physical qualification and independent exhibition operation remain open.
 
 The [prospective held-out outline](plans/m5-heldout-proposal.md) specifies the
 reserved 64–71 matrix without opening it. Source/profile freeze and all 48 audited
@@ -207,6 +207,18 @@ planning check; an artifact storage path is pending user input. No data is delet
 or moved and no held-out implementation/execution is unlocked.
 
 ## Verification
+
+Paired navigation trainer `6feade9` is integrated after eleven independent root
+pure checks pass first in 1.698 s. It adds only the named trainer/test, preserving
+all 95 admitted reader files and six helper/lock pins. The producer's first run
+had one synthetic fixture error; its correction and both logs remain retained.
+The trainer uses unchanged fitting/publication helpers, original graph in both
+arms, exact counts and earliest strict development minimum, retained after hashes
+and a nonmutating final CPU runtime check. No real fit, corpus extraction, native
+owner or writer lease ran. Receipt:
+`runs/m7-navigation-training-v2-source-root-review-6feade9/audit.json`, SHA-256
+`0d78fafe76f04ade41ef67debcb2e24fe39006eb83542e82076c3f29830c437a`.
+Actual training remains pending reviewed controls and the serialized runtime slot.
 
 Remaining-08 admission publication review passes first in 0.640 s: all 162
 unique references rehash and all four published probe readouts match root.
