@@ -1,4 +1,15 @@
-# Counterbalanced development: staged proposal
+# Counterbalanced development: staged plan
+
+Current status: audited [C3](../reports/m5-counterbalance-stage-c-v3.md) and
+[C4](../reports/m5-counterbalance-stage-c4.md) complete eight selected cells / all
+nine conditions. [Frozen-observation A](../reports/m5-frozen-observation-wave-a.md)
+and [B](../reports/m5-frozen-observation-wave-b.md), controller references and
+reference replays are also retained. The full 48-cell development matrix and
+held-out qualification remain open. The final section fixes the remaining-cell
+continuation plan; it authorizes no source implementation, data acquisition,
+held-out access, controls freeze or runtime launch.
+
+## Historical initial A/B/C proposal
 
 Stage A/B source preparation, based on reviewed replay evidence `78e4ba8`.
 The bounded admission runner is prepared; no actual launch is authorized, and
@@ -300,5 +311,109 @@ committed at 300; lower changes remained stale at the one-tick stop. Null gold
 was empty; no-event cases had zero trigger/selector invocation and zero selector
 behavior bytes. Task completion and benefit remain unscored. Exact results,
 immutable hashes and the two retained audits are in
-[the Stage B evidence report](../reports/m5-counterbalance-stage-b.md). Stage C,
-full-matrix and held-out execution still require separate reviewed runtime GO.
+[the Stage B evidence report](../reports/m5-counterbalance-stage-b.md). At that
+historical boundary, Stage C, full-matrix and held-out execution still required
+separate reviewed runtime GO. Later C3/C4 evidence supersedes that status only.
+
+
+## Approved remaining development scope, 3 October 2026
+
+Complete the existing 48-cell design: seeds 24–31 × local_cue/paired_cue ×
+change/null/no-event. Exclude the eight completed C3/C4 cells below; do not repeat
+or relabel them. Forty cells / **360 condition readouts** remain. Every cell keeps
+all nine conditions: own, swapped, sham, no-U, hand-authored,
+history-independent, traversal, retrieval and oracle; target budget stays one.
+Only retrieval receives historical E and only oracle receives evaluator gold.
+
+The fixed chunks enumerate seed, relation, then schedule, omitting completed
+cells. `local` and `paired` below mean local_cue and paired_cue. Each table entry
+is a separate cell, including within-seed reuse; there remain eight namespaces,
+not 48 independent instances.
+
+| Chunk | Exact four remaining cells |
+| --- | --- |
+| 1 | s24/local/null; s24/local/no-event; s24/paired/change; s24/paired/null |
+| 2 | s24/paired/no-event; s25/local/null; s25/local/no-event; s25/paired/change |
+| 3 | s25/paired/null; s25/paired/no-event; s26/local/change; s26/local/null |
+| 4 | s26/local/no-event; s26/paired/change; s26/paired/no-event; s27/local/change |
+| 5 | s27/local/null; s27/local/no-event; s27/paired/change; s27/paired/null |
+| 6 | s28/local/change; s28/local/null; s28/local/no-event; s28/paired/null |
+| 7 | s28/paired/no-event; s29/local/change; s29/local/null; s29/local/no-event |
+| 8 | s29/paired/null; s29/paired/no-event; s30/local/change; s30/local/no-event |
+| 9 | s30/paired/change; s30/paired/null; s30/paired/no-event; s31/local/change |
+| 10 | s31/local/null; s31/paired/change; s31/paired/null; s31/paired/no-event |
+
+Completed, excluded cells are s24/local/change, s25/local/change,
+s26/paired/null, s27/paired/no-event, s28/paired/change, s29/paired/change,
+s30/local/null and s31/local/no-event. Earlier partial C1/C2 failures stay separate
+and do not count as completed cells.
+
+### Prerequisites and finite execution boundary
+
+The current admission validator accepts only historical B's eight cells;
+comparison accepts only C3/C4 and their original B pins. A narrowly versioned
+fixed-cell extension must reuse the existing source, owner supervision, readers,
+selector dispatch, native guards, evaluator and strict C4 core forks. Preserve
+historical profile defaults, protocol hashes, path contracts and records. No
+Engine/schema/sensor/controller change or experiment framework is needed.
+
+Each chunk first requires four fresh unknown-M sources, four empty-U CPU FLYNN
+anchors and four one-tick admission probes: **12 owners**. Actual packets must
+establish both before expectations, visibility and schedule/geometry outcomes.
+Then reuse those exact acquired anchors for four own-U anchors and 36
+continuations: **40 owners**. Total remaining scope is **520 owners**, at most
+120,040 numeric ticks. Freeze source/case/history/native/control identities and
+all fresh UUIDs before each separately reviewed runtime GO. Preserve one parent
+lease, serial owners, 160-second external / 150-second internal bounds, 192 MiB
+recordings, 16 MiB SNPs, 1 MiB streams, target limit one and no retries. Admission
+and comparison remain separate finite gates, retaining the existing 6 GiB and
+10 GiB allowances, 2 GiB free floor and 64 MiB headroom; new exact parent deadlines
+require source review before controls preparation.
+
+New own/swapped/sham/no-U core forks inherit one shared selector and retain full
+non-U invariants. Other five conditions retain explicit resource/configuration
+differences. Historical C3 remains broader; C4 and the new core remain strict.
+Do not pool them as an entirely strict U-only physical matrix. A strict-core
+claim over every development cell would additionally need a separately named
+four-anchor/16-continuation C3 preparation, not reinterpretation or repetition of
+all nine historical conditions. It is not included in these 40 remaining cells.
+
+Gold stays actual clearance plus acquired expectations; null confirmations are
+not stale corrections; no-event requires zero invocation/behavior bytes.
+Natural failures/censoring and null benefit remain outcomes. Infrastructure,
+invariant, quota or source drift stops the gate with exact unattempted IDs.
+
+### Measured cost, storage refusal and interpretation
+
+Retained B admission took 729.3387 seconds / eight cells and used 524,242,270
+output bytes. C3/C4 comparisons took 1881.2165 / 1836.5973 seconds and used
+1,098,312,862 / 1,104,708,610 output bytes, respectively, for four cells each.
+These scopes include output artifacts, unlike the reports' separately indexed
+reference totals. Scaling observed lengths gives approximately **6.2 hours and
+13.6 GB** additional output: about 37 minutes / 1.36 GB per chunk, plus small new
+controls/audits. Longer trajectories or failure retention can increase both;
+this is not a power calculation or guaranteed fit.
+
+The read-only planning check measured 32,104,431,616 free bytes. The unchanged
+recording/SNP caps alone permit 113.4 GB across 520 owners; the worst case cannot
+fit locally. Recheck global free space and full finite allowance/floor/headroom
+before every gate. Refuse the next gate if retention no longer fits; obtain
+explicit retained external storage rather than discard old evidence, shrink
+conditions or relax limits. No automatic ten-chunk launch is authorized.
+
+This completes the **fixed lower-goal-route estimand** if all remaining cells are
+retained and analysed; it does not establish original broader route-independent
+qualification. Preserve acquisition, goal relocation and sensing geometry,
+including upper passive corrections and incidental lower observations. Do not
+change routes to force benefit. Route-independent claims need a separately
+validated profile/protocol; the fixed-route experiment can finish with a null
+result. Existing reference/replay qualifications need no automatic repetition
+for every new cell.
+
+Full48 development alone does not complete M5/R2. The approved implementation
+gate still requires separately frozen held-out splits, budgets, tolerances,
+outcomes, all-condition targeting/closed-loop bundles and paired analysis.
+Reserved held-out IDs 64–71 remain unopened and unfrozen. The PRD's proposed
+30-layout/300-layout counts are planning targets, not an already frozen memory
+suite or power claim. This plan authorizes no held-out generation/access,
+acquisition, source edits, controls preparation or runtime execution.
