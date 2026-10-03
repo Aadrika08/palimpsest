@@ -1,0 +1,299 @@
+{
+  "admission": {
+    "goals_each_model": {
+      "21": 0,
+      "22": 0,
+      "23": 0
+    },
+    "held_out": "locked_pending_independent_review_and_explicit_GO",
+    "required_each_model": 3,
+    "status": "failed"
+  },
+  "audits": {
+    "local": {
+      "scope": "Retained data, independent eight-input/phase arithmetic, pure task transition re-admission, exact declared physical/input/non-Torch RNG start fields across models. No native deserialize or model forward; not independent validation of task-transition implementation or learned capability.",
+      "seconds": 12.548300095004379,
+      "status": "passed"
+    },
+    "root": {
+      "maximum_numpy_action_error": 9.536743164617612e-08,
+      "seconds": 14.110189622006146,
+      "status": "passed",
+      "tolerance": 1e-06
+    }
+  },
+  "cleanup": {
+    "forced_signals": [],
+    "observed_pid_start_absent": 14,
+    "sample_errors": [],
+    "sampler_stopped": true,
+    "survivors": [],
+    "writer_lease_released": true
+  },
+  "held_out_opened": false,
+  "inventory_scope": "Original outer330 and inner324 inventories retained once in their reports; 94 source pins unchanged. Controls console hash in outer inventory is a live prefix; final drained console separately pinned.",
+  "limitations": [
+    "Negative fixed development result; no winning-seed selection or threshold relaxation",
+    "Observed contact/displacement is not successful puck pushing",
+    "No held-out, retraining, UI promotion or physical hardware qualification",
+    "Phase occupancy metrics are descriptive, not a causal diagnosis"
+  ],
+  "matched_scene_fingerprints": {
+    "6100": "f718d36e551672f0b3d528e0225f3ebcc158bb0a28e97a6c9f3bc1142d21dde9",
+    "6101": "bcd8b84e6e1298231c994d06542c4878b769ab32e876c15e8e259adf52daa62f",
+    "6102": "a261f434137180ecd77ebbd397b0756efac7b3b6a4469274b978606f61c22760",
+    "6103": "707d68adf0ac378b7de1c6d98902e3faf19688062decf5e893fc8b09da7ce1b8"
+  },
+  "model_manifest_sha256": "d8a2daf24943e5e8a2abf5062458910a1034dd003f8aa5153c32f0f83567502f",
+  "numeric_rows": 7200,
+  "operational_status": "completed",
+  "owners": [
+    {
+      "contact_ticks": 180,
+      "final_distance_m": 1.1730902110104129,
+      "id": "student-dev-6100-seed21",
+      "max_puck_displacement_m": 0.02691614644453649,
+      "model_calls": 600,
+      "model_seed": 21,
+      "moving_ticks_above_001": 599,
+      "outcome": "time_limit",
+      "own_push_ticks": 0,
+      "rows": 600,
+      "scene": 6100,
+      "start": 0
+    },
+    {
+      "contact_ticks": 376,
+      "final_distance_m": 1.1040569746117876,
+      "id": "student-dev-6100-seed22",
+      "max_puck_displacement_m": 0.09596095077450907,
+      "model_calls": 600,
+      "model_seed": 22,
+      "moving_ticks_above_001": 346,
+      "outcome": "time_limit",
+      "own_push_ticks": 0,
+      "rows": 600,
+      "scene": 6100,
+      "start": 0
+    },
+    {
+      "contact_ticks": 390,
+      "final_distance_m": 1.1186883969282648,
+      "id": "student-dev-6100-seed23",
+      "max_puck_displacement_m": 0.08132987362154856,
+      "model_calls": 600,
+      "model_seed": 23,
+      "moving_ticks_above_001": 317,
+      "outcome": "time_limit",
+      "own_push_ticks": 0,
+      "rows": 600,
+      "scene": 6100,
+      "start": 0
+    },
+    {
+      "contact_ticks": 334,
+      "final_distance_m": 1.1704737521964876,
+      "id": "student-dev-6101-seed21",
+      "max_puck_displacement_m": 0.22963586776699066,
+      "model_calls": 600,
+      "model_seed": 21,
+      "moving_ticks_above_001": 566,
+      "outcome": "time_limit",
+      "own_push_ticks": 0,
+      "rows": 600,
+      "scene": 6101,
+      "start": 0
+    },
+    {
+      "contact_ticks": 392,
+      "final_distance_m": 1.0006970524590297,
+      "id": "student-dev-6101-seed22",
+      "max_puck_displacement_m": 0.39936034504666384,
+      "model_calls": 600,
+      "model_seed": 22,
+      "moving_ticks_above_001": 487,
+      "outcome": "time_limit",
+      "own_push_ticks": 0,
+      "rows": 600,
+      "scene": 6101,
+      "start": 0
+    },
+    {
+      "contact_ticks": 413,
+      "final_distance_m": 0.9626485952031935,
+      "id": "student-dev-6101-seed23",
+      "max_puck_displacement_m": 0.43744705358590863,
+      "model_calls": 600,
+      "model_seed": 23,
+      "moving_ticks_above_001": 440,
+      "outcome": "time_limit",
+      "own_push_ticks": 0,
+      "rows": 600,
+      "scene": 6101,
+      "start": 0
+    },
+    {
+      "contact_ticks": 453,
+      "final_distance_m": 1.473490742951071,
+      "id": "student-dev-6102-seed21",
+      "max_puck_displacement_m": 0.1265131718080641,
+      "model_calls": 600,
+      "model_seed": 21,
+      "moving_ticks_above_001": 222,
+      "outcome": "time_limit",
+      "own_push_ticks": 0,
+      "rows": 600,
+      "scene": 6102,
+      "start": 0
+    },
+    {
+      "contact_ticks": 286,
+      "final_distance_m": 1.0278268907845987,
+      "id": "student-dev-6102-seed22",
+      "max_puck_displacement_m": 0.5722619076088912,
+      "model_calls": 600,
+      "model_seed": 22,
+      "moving_ticks_above_001": 318,
+      "outcome": "time_limit",
+      "own_push_ticks": 0,
+      "rows": 600,
+      "scene": 6102,
+      "start": 0
+    },
+    {
+      "contact_ticks": 476,
+      "final_distance_m": 1.0568696604157992,
+      "id": "student-dev-6102-seed23",
+      "max_puck_displacement_m": 0.5432120531144699,
+      "model_calls": 600,
+      "model_seed": 23,
+      "moving_ticks_above_001": 329,
+      "outcome": "time_limit",
+      "own_push_ticks": 0,
+      "rows": 600,
+      "scene": 6102,
+      "start": 0
+    },
+    {
+      "contact_ticks": 403,
+      "final_distance_m": 1.4141989352514486,
+      "id": "student-dev-6103-seed21",
+      "max_puck_displacement_m": 0.3858906615349336,
+      "model_calls": 600,
+      "model_seed": 21,
+      "moving_ticks_above_001": 301,
+      "outcome": "time_limit",
+      "own_push_ticks": 0,
+      "rows": 600,
+      "scene": 6103,
+      "start": 0
+    },
+    {
+      "contact_ticks": 473,
+      "final_distance_m": 1.1334154035164488,
+      "id": "student-dev-6103-seed22",
+      "max_puck_displacement_m": 0.6665971030475644,
+      "model_calls": 600,
+      "model_seed": 22,
+      "moving_ticks_above_001": 565,
+      "outcome": "time_limit",
+      "own_push_ticks": 0,
+      "rows": 600,
+      "scene": 6103,
+      "start": 0
+    },
+    {
+      "contact_ticks": 469,
+      "final_distance_m": 1.084427379473764,
+      "id": "student-dev-6103-seed23",
+      "max_puck_displacement_m": 0.7156060272144886,
+      "model_calls": 600,
+      "model_seed": 23,
+      "moving_ticks_above_001": 556,
+      "outcome": "time_limit",
+      "own_push_ticks": 0,
+      "rows": 600,
+      "scene": 6103,
+      "start": 0
+    }
+  ],
+  "process_exit": 0,
+  "protocol_sha256": "2857cfc1c5fe18e9d5f34fe30fdc4fc56467110f69424b8efb82bf77b1f2a370",
+  "public_ui_integrated": false,
+  "qualification_claims": [],
+  "references": {
+    "drained_console": {
+      "bytes": 659,
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-development/runs/puck-development-v1-prepared/console.log",
+      "sha256": "d320c4d03b7c58f9bce399472b25a63b74fcd4dd4ca6b4da892b2f8bbba4512a"
+    },
+    "filesystem_fixture": {
+      "bytes": 288,
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-development/runs/puck-development-v1-prepared/stage-fixture.json",
+      "sha256": "607d1a99d912b2d5fdeb7d6dd944107aa83f19cdd9ee6ee72642d16186f31942"
+    },
+    "inner": {
+      "bytes": 192662,
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-development/runs/puck-development-v1-20261003/gate/report.json",
+      "sha256": "71093b1c8d65dce1bea7b949c70c34e3e0b7165dc96cbe3d715fda93a9100656"
+    },
+    "launch": {
+      "bytes": 18060,
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-development/runs/puck-development-v1-prepared/launch.py",
+      "sha256": "ff4157acfd74fe976f15e8107411e12bc70f35e3ff94fd0a0e8029333bac96cc"
+    },
+    "local_audit": {
+      "bytes": 10452,
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-development/runs/puck-development-v1-audit-77f4d49/audit.json",
+      "sha256": "72ac64d16e5e1f5c1980114ed243e6579652cf2e6937c3a5ca6665ac5fecb62e"
+    },
+    "local_auditor": {
+      "bytes": 9665,
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-development/runs/puck-development-v1-audit-77f4d49/audit.py",
+      "sha256": "187afb12ace3281c4c48ed967e1167eff40654e86453dbe35a8e0aaa0b96dda0"
+    },
+    "outer": {
+      "bytes": 76055,
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-development/runs/puck-development-v1-20261003/launch-result.json",
+      "sha256": "835de3ae27b446bbadfa923eb2928751ab3947a15d67ca3cc9fd643a99c78728"
+    },
+    "plan": {
+      "bytes": 24054,
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-development/runs/puck-development-v1-prepared/plan.json",
+      "sha256": "10a2771be396d01a33244b444cf51585549a597dbe72b02a5fea51c66ef46bb3"
+    },
+    "preflight": {
+      "bytes": 2015,
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-development/runs/puck-development-v1-prepared/preflight.json",
+      "sha256": "646b45c0f1724b4b7dfec039f0a7a4c566540d12dd2099f506e115cb6a4df655"
+    },
+    "readiness": {
+      "bytes": 2710,
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-development/runs/puck-development-v1-prepared/readiness.json",
+      "sha256": "6eff3792c2d5512edc750fa9306ac858bbb7ed9d618e4fc5bba25ac8f98a1c89"
+    },
+    "root_audit": {
+      "bytes": 5385,
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/project-integration/runs/puck-development-root-audit-77f4d49/audit.json",
+      "sha256": "af58a7c844987350e53c437b09536a7216223c0fc895d3661a3ce6e48dcf38db"
+    },
+    "root_auditor": {
+      "bytes": 8636,
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/project-integration/runs/puck-development-root-audit-77f4d49/audit.py",
+      "sha256": "c9a4611bcd7011e52003ccbfe34e6ed890f8b7a044986593dde40678b04e3cff"
+    },
+    "root_control_audit": {
+      "bytes": 639,
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/project-integration/runs/puck-development-control-root-review-77f4d49/audit.json",
+      "sha256": "32a01e958139dc10b89cd1e510f2d8105ba9fe99c327786db4287ceceb6feaa6"
+    }
+  },
+  "schema": "puck-student-development-evidence-v1",
+  "snapshots": 12,
+  "source_commit": "77f4d49a6030aa2862b25b4510d7112ac2364694",
+  "timing": {
+    "bounded_supervision_seconds": 189.10589313600212,
+    "inner_seconds": 188.89520437001192,
+    "launcher_reported_elapsed_seconds": 194.75124151199998
+  }
+}

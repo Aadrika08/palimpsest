@@ -1,10 +1,11 @@
-# Fixed puck student development: source preparation
+# Fixed puck student development: contract and result
 
-This prospective headless stage follows the [reviewed four-owner mechanism](../reports/m6-puck-student-mechanism.md).
+This headless stage follows the [reviewed four-owner mechanism](../reports/m6-puck-student-mechanism.md).
 The [fixed protocol](m6-puck-student-development-v1.json) admits exactly layouts
 6100–6103, in that order, with models 21, 22 and 23 for each scene. Each owner
-executes one natural episode of at most 600 control ticks. No development rollout
-has run under this source, and held-out layouts 6200–6207 remain locked.
+executes one natural episode of at most 600 control ticks. The [single audited run](../reports/m6-puck-student-development.md)
+completed all twelve episodes on `77f4d49`; every model scored 0/4, so the fixed
+goal gate failed. Held-out layouts 6200–6207 remain locked.
 
 The existing standalone owner loads each immutable bundle through the unchanged
 strict reader and uses the existing nine-input MLP decision, float64 action,
