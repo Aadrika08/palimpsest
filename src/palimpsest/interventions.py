@@ -98,9 +98,14 @@ def apply_intervention(env, intervention: dict, teacher=None, *, dry_run=False) 
         env._goal_xy[:] = xy
         model.site_pos[env.goal_site_id, :2] = xy
     forward(model, data)
+    invalidate_geometry(env, teacher)
+    return event
+
+
+def invalidate_geometry(env, teacher=None):
+    """Existing edit semantics: invalidate caches/drawing, retaining control state."""
     for name in ('_cached_occ', '_cached_obstacles_hash', '_cached_clearance'):
         setattr(env.planner, name, None)
     env.path_to_draw = env.target_to_draw = None
     if teacher is not None:
         teacher._path = None
-    return event
