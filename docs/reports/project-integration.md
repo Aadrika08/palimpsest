@@ -505,3 +505,19 @@ boundaries stubbed. The full 717-test enabled regression then passes, with all
 model identities stay unchanged and the writer lease is free. Fresh corrected
 controls independently pass nine fixtures and historical-input/source preflight.
 The actual corrected body attempt remains a separate gate.
+
+The corrected body composition passes once on frozen `a447d76`: source283,
+native4 and both283-row replays (853 total), five snapshots, actual home error
+0.1196427162 m under the unchanged 0.25 m criterion. Root retained audit first
+passes in 19.634 s: all raw controls, encoder-driven task transitions and driver
+inputs, discrete contacts, full initials, native/replay rows, 2,267 semantic events
+per replay, seventy-five artifact hashes twice and seven sampled process exits.
+The writer lease is free. This is a one-fit/body/layout simulator result; the
+separate new-profile browser gate, new-body and physical evidence remain open.
+
+The balanced puck development evidence `dac56f9` is integrated after all thirteen
+index references rehash. All twelve fixed runs complete 7,200 intervals, but each
+model reaches0/4 goals. Root audit first passes in23.126 s, reconstructing all
+actions within7.16e-8, checking twelve snapshots/four matched scientific initials,
+101 source pins, 324 inner/330 outer files and sixteen sampled process exits.
+The writer lease is free; held-out and public promotion remain locked.

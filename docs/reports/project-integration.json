@@ -2443,5 +2443,59 @@
       "seconds": 8.74,
       "skips": 0
     }
+  },
+  "body_homing_composition_audit": {
+    "status": "passed",
+    "experiment_status": "passed",
+    "source_commit": "a447d7637621d496aaf285e81203e550079c6d54",
+    "report_sha256": "a7acc3edca17fde5e3754e1ed39f4f0288bd4d7e2ac2b0c087a660ea25c38808",
+    "terminal_sha256": "d63797864edfff98557d5e9a7b31a7feabec033e29c7dc049646071d49d27cae",
+    "enclosing_sha256": "37dbbfe2cf76ee20b1f570b1d863e5aa16a08c7713afbefb8a5d5da98007e48b",
+    "numeric_ticks": 853,
+    "owners": {
+      "source": 283,
+      "native": 4,
+      "actions": 283,
+      "policy": 283
+    },
+    "snapshots": 5,
+    "actual_home_distance_m": 0.1196427162116971,
+    "completion_passed": true,
+    "replay_semantic_events_each": 2267,
+    "artifact_files_rehashed_twice": 75,
+    "observed_pid_start_pairs_absent": 7,
+    "writer_lease_available": true,
+    "elapsed_seconds": 19.63421473900962,
+    "scope": "Retained full initial states, previous-sensor driver, fit controls, discrete contacts, shafts, outcome, native/replay rows and events, hashes and sampled cleanup. No new physics, task-level compensation effect, new body or physical qualification.",
+    "root_audit": {
+      "path": "runs/body-homing-root-audit-a447d76/audit.json",
+      "sha256": "c0c5260bf1959374fad9f1f8467bdcdb46715412764a156c72d6999df55729c8"
+    }
+  },
+  "balanced_puck_development_audit": {
+    "status": "passed",
+    "head": "d4efa2630e3d69eb8a9b3e45fd62a47557937724",
+    "numeric_rows": 7200,
+    "snapshots": 12,
+    "matched_scene_initials": 4,
+    "maximum_numpy_action_error": 7.152557374157098e-08,
+    "numpy_action_tolerance": 1e-06,
+    "admission": {
+      "goals_each_model": {
+        "21": 0,
+        "22": 0,
+        "23": 0
+      },
+      "held_out": "locked_pending_independent_review_and_explicit_GO",
+      "required_each_model": 3,
+      "status": "failed"
+    },
+    "elapsed_seconds": 23.125775617998443,
+    "writer_lease_free": true,
+    "owned_process_exits": 16,
+    "root_audit": {
+      "path": "runs/puck-balanced-development-root-audit-d4efa26/audit.json",
+      "sha256": "7926e4bc3fb6832915a6f54c57f7d19845cb5ada73b005d018cee9502a38daba"
+    }
   }
 }
