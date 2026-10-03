@@ -130,7 +130,7 @@ The [puck learning contract](plans/m6-puck-learning.md) at `0fd589c` passes nine
 The combined source at `c7b4436` passes **579 enabled tests without skips**, including simulation, production male Torch/native/replay and the new puck CPU model fixtures. [The fixed puck trainer/model mechanism](reports/m6-puck-model-mechanism.md) passes all four checks; actual demonstration training and learned manipulation remain pending. [Recovery v3](reports/m7-recovery-coverage-v3.md) passes its changed first-cycle collection estimand on both sources (134 rows), with later driving censored and no natural task outcome. This preserves prior failures and does not admit the sources to the existing production loader. [C4](reports/m5-counterbalance-stage-c4.md) passes forty owners/4,689 intervals with sixteen strict core forks and no own-U correction/goal advantage; combined C3/C4 covers eight selected cells, not the full matrix or held-out R2 evaluation.
 
 
-Current integration `1d97787` passes **646 enabled tests without skips**; the
+The last full enabled regression at `1d97787` passes **646 tests without skips**; the
 earlier two historical-reader fixture errors remain retained, with actual
 admission pins unchanged. The
 [fixed controller references](plans/m5-controller-references.md) add exact
@@ -162,3 +162,10 @@ neural-policy and 242 non-neural-policy rows. Independent numeric/native-initial
 hash/cleanup audit passes with zero numeric difference; lifecycle event agreement
 remains the bound runner result. This closes the fixed reference replay gate,
 not the full matrix, frozen-stream diagnostic or held-out R2 qualification.
+
+The [headless puck student](plans/m6-puck-student.md) is integrated at `3f6a2fd`.
+All 103 focused pure checks pass in 7.198 seconds; before/after actual teacher-data
+and strict trained-bundle admission are unchanged apart from elapsed time. These
+checks cover its declared-input, own-cursor, record and replay contracts using
+fixtures. Native student continuation/replay, development and UI gates remain
+unexecuted; no learned manipulation result follows from source integration.

@@ -109,8 +109,11 @@ coverage admission. The retained first batch fails that gate despite twenty
 natural goals and remains excluded from the trainer. The separately corrected
 [twenty-owner collection](reports/m6-puck-teacher-collection-v2.md) passes unchanged
 admission. [Three fixed CPU fits](reports/m6-puck-training-v2.md) now have audited
-NPZ weights and all thirty epochs retained; student execution, replay and
-closed-loop development still need qualification.
+NPZ weights and all thirty epochs retained. The [headless student](plans/m6-puck-student.md)
+uses those fixed bundles, eight sensors and its own mode through the existing
+owner/recorder. All four proposed native/replay owners construct the same model
+for exact Torch state restoration; action replay makes zero predictions. Its
+actual native gate, closed-loop development and public UI still need qualification.
 
 Research scripts freeze source identities, protocols and output bounds before
 execution. Their reports distinguish collection, cleanup, validation and task

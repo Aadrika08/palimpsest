@@ -2087,5 +2087,45 @@
     "fixture_isolation": "228232c50d5fddcaad1fb72f65bcb89ad2a896c7",
     "scope": "Combined actual regression, including production male CPU/native/replay and puck CPU models; recovery candidate closed-loop development and student native mechanism remain separate gates. Earlier failed integration is retained.",
     "qualification_claims": []
+  },
+  "puck_student_source": {
+    "merge_commit": "3f6a2fdc78353a7f4a0a81b15a7cb654dced2ba6",
+    "product_source": "aff643c",
+    "fixture_isolation": "6f1fda9",
+    "status": "source_and_pure_checks_passed",
+    "root_tests": 103,
+    "root_skips": 0,
+    "root_seconds": 7.198,
+    "teacher_sources": 20,
+    "train_ticks": 5710,
+    "recorded_dev_ticks": 1314,
+    "frozen_models": 3,
+    "pre_post_admission_difference": [
+      "seconds"
+    ],
+    "artifacts": [
+      {
+        "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/project-integration/runs/puck-student-root-source-check-3f6a2fd/result.log",
+        "bytes": 99,
+        "sha256": "fa2b6edd0ece6a8d8a85546812be0631691519cad2dff2d0390778b38ae7a9ae"
+      },
+      {
+        "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-student/runs/puck-student-source-prep/admission.py",
+        "bytes": 1214,
+        "sha256": "78f4922e93d0ee6df93b9f00c65ec26f74fb7b56b4d7bf96fef6f0ac66560ba9"
+      },
+      {
+        "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-student/runs/puck-student-source-prep/before.json",
+        "bytes": 2555,
+        "sha256": "7449eaca8b3286e36dbd1f66b8719af4a9011b0fe7e593d72b213269ed724b65"
+      },
+      {
+        "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-student/runs/puck-student-source-prep/after.json",
+        "bytes": 2555,
+        "sha256": "0ec40c82dff3503011570c3d490e5722a51e7b33744ced3d51b5b1989fd63abb"
+      }
+    ],
+    "qualification_claims": [],
+    "remaining": "Actual four-owner native mechanism, fixed all-model development and public Engine/UI integration."
   }
 }
