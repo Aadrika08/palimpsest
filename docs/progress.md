@@ -24,7 +24,10 @@ drains exit0 after 368.718 s normal / 371.671 s full; fourteen nonlauncher
 identities and the launcher are absent. Root retained audit passes first in
 9.098 s with 116 exact file pins and a free writer lease. Its [focused admission publication](reports/m5-remaining-07-admission.md),
 `0e32482`, is integrated after all 141 references (262,936,165 bytes) rehash.
-Comparison-07 controls are being prepared; coverage remains 32/48.
+Comparison-07 controls pass eight independent root fixtures and full preflight
+(14.795 s total): 597 source identities, 120 inputs and forty fresh IDs disjoint
+from all 662 prior owners. One bounded comparison is authorized; coverage remains
+32/48 until its outcomes are audited.
 The [remaining-06 admission](reports/m5-remaining-06-admission.md), `016948b`,
 retains its twelve owners/1,204 rows and all 150 rehashed publication references;
 the initial root copied-index error and corrected audit are both retained.
@@ -46,8 +49,17 @@ checks pass in 0.213 s: it uses the authored Python-float layout for native rang
 and separately validates the exact float32 cache. The caller regression fails on
 the old code and rejects cache/native drift. Strict native equality, protocol
 and all seventeen protected sources remain unchanged. Fresh v2 controls pass all twelve root mocked checks and exact preflight
-in 3.582 s total; all forty-five v1 control files remain unchanged. One corrected
-bounded actual invocation is authorized on frozen `1e904c0`; its outcome is pending.
+in 3.582 s total; all forty-five v1 control files remain unchanged. The corrected
+actual invocation completes once on frozen `1e904c0`: 480 calibration rows plus
+283 homing rows, five raw initial snapshots, and actual home error 0.091607 m
+within the unchanged 0.25 m gate. All five sampled process identities are absent
+and the post-drain writer lease is independently free. Root outcomes recompute
+all 400 fit samples and task/control states in 1.636 s. Root raw/contact/source
+audit passes in 7.335 s after two retained checker corrections: the initial
+invocation omitted frozen environment variables, then an overly strict cache
+timestamp assertion was corrected to the protocol 1e-9 tolerance. The study ran
+once; its focused publication is pending. This remains one standalone simulated
+body, without study-state restore or generic replay qualification.
 
 The [remaining-05 admission](reports/m5-remaining-05-admission.md), evidence
 `ad2eff7`, completed once on frozen `746c67b` in session `90487`: twelve owners,
@@ -151,7 +163,7 @@ remains ineligible.
 - Mechanism: pinned upstream model/environment; allowlisted controller inputs; one mutable-runtime owner; complete native, policy, application and RNG snapshots. Recorded E fitting and U-only swaps preserve declared invariant hashes. Male controllers use separately trained fixed CPU assets and an authored sensor mapping.
 - Missing: M5 counterbalanced/held-out transfer; remaining M6 skills and learned results; M7 closed-loop qualification; M8 physical work; remaining M9 modes/operation; final M10 handoff.
 - Unknown: original checkpoint training lineage, full-model Pi performance, physical stopping limits and account quota (telemetry unavailable).
-- Next action: review the named training-data preparer implementation against the integrated frozen plan for navigation v2; v1 remains failed. The separate cross-corpus preparer and all fitting/dev/held-out stages remain pending. Review separate remaining-07 comparison controls; its audited admission publication is integrated. Memory coverage is 32/48; the existing paired readout covers its historical 24-cell subset. Drain and independently audit the authorized new-body v2 simulation. Both puck development evaluations remain negative; automatic retraining stops and held-out stays locked. Physical qualification and independent exhibition operation remain open.
+- Next action: review the named training-data preparer implementation against the integrated frozen plan for navigation v2; v1 remains failed. The separate cross-corpus preparer and all fitting/dev/held-out stages remain pending. Drain and independently audit the authorized remaining-07 comparison; its admission publication is integrated. Memory coverage is 32/48; the existing paired readout covers its historical 24-cell subset. Review the new-body v2 focused publication; its actual result and retained raw/outcome audits pass. Both puck development evaluations remain negative; automatic retraining stops and held-out stays locked. Physical qualification and independent exhibition operation remain open.
 
 The [prospective held-out outline](plans/m5-heldout-proposal.md) specifies the
 reserved 64–71 matrix without opening it. Source/profile freeze and all 48 audited
@@ -162,6 +174,21 @@ planning check; an artifact storage path is pending user input. No data is delet
 or moved and no held-out implementation/execution is unlocked.
 
 ## Verification
+
+New-body v2 retained outcomes pass first in 1.636 s; raw/source/contact/cleanup
+audit passes in 7.335 s after both retained checker-only failures. Receipts:
+`runs/m6-new-body-root-audit-1e904c0/outcomes.json`, SHA-256
+`5068ee746737c186522eabdf5e542d482f03d652ac2d211207fe92f984511502`, and
+`runs/m6-new-body-root-audit-1e904c0/audit.json`, SHA-256
+`66bbdcc45911d33825312b7b5fef08115d5871ea8a5a7cc0b88e10c1f9f566a2`.
+The 503,580 world-only and 46,712 support incidences include ten sampled stages
+plus repeated end caches; they are not unique physical contacts. No unexpected
+robot contacts are present.
+
+Remaining-07 comparison controls pass first: eight root fixtures in 6.258 s and
+full preflight in 8.493 s (14.795 s total), with unchanged limits and inputs.
+Receipt: `runs/memory-remaining-07-comparison-control-root-review-0e32482/audit.json`,
+SHA-256 `758f15b1a252eb5ed8beca5e184d8ed5afee13b3e539aa3123eb64ae5a31a8c4`.
 
 New-body v2 control review passes first: twelve mocked checks (0.730 s supervised),
 exact preflight 2.357 s, total 3.582 s. All five scripts match v1 after only the
