@@ -317,3 +317,26 @@ training; source-only counterfactual review motivates a separate stopping
 correction, without changing the old task result or its admission requirement.
 Both CI workflows passed on `4996334` (37083921680 and 37083917875), before these
 documentation-only merges.
+
+
+## Admitted collection and recovery training
+
+Integration `e9aa77a` retains the [six controller references](m5-controller-references.md),
+[twenty admitted puck owners](m6-puck-teacher-collection-v2.md), and the one-line
+trainer task-protocol v5 binding. All 36 puck evidence references/manifests rehash.
+Twenty-four focused pure checks pass in 1.973 seconds. The first root invocation
+requested a nonexistent test module; correcting the command required no code change.
+The preceding complete 628-test source gate remains `7123270`; it was not rerun
+for these evidence documents and the protocol filename correction.
+
+Recovery research training at `19d275d` completes all six fixed models and all
+twenty epochs each in 194.681 seconds outer. Root's 4.408-second retained-only
+audit rehashes 699 source/runtime/data/bundle entries and checks earliest exact
+dev-minimum selection across 120 epoch records. CPU `weights_only` deserialization
+confirms eighteen finite tensors per checkpoint, all seven integer buffers
+against the graph and exact unchanged adjacency weights. No model construction,
+forward pass or native import occurs. The first root auditor incorrectly hashed
+ordered IDs as JSON; the existing contract uses newline-separated decimal IDs.
+Both script versions and the initial traceback are retained in the JSON index.
+These are training/artifact checks; closed-loop development and held-out gates
+remain open, and production model assets are unchanged.

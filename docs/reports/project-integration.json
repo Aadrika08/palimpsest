@@ -1838,5 +1838,55 @@
       "skipped": 0
     },
     "scope": "Combined actual regression and pure verifier/trainer checks. Source-scoped native reference and puck mechanics results are separately audited; no new data training, held-out or physical qualification from this suite."
+  },
+  "admitted_collection_and_recovery_training": {
+    "integration_source": "e9aa77a",
+    "memory_reference_evidence_commit": "042cc26548e6695bc19d6ee052e9723ab9c07f3c",
+    "puck_collection_evidence_commit": "3ebf4c72cc564848b60e7d50766fca066d867aa5",
+    "puck_trainer_source_commit": "82e2bd97b37832c2a7f84f6eda6a3eca98e02362",
+    "focused_pure_tests": 24,
+    "focused_pure_seconds": 1.973,
+    "focused_initial_invocation_error": "Requested nonexistent test_puck_records; corrected to discovered test_records without product changes.",
+    "puck_rows": {
+      "train": 5710,
+      "recorded_dev": 1314
+    },
+    "recovery_models": 6,
+    "recovery_epochs_each": 20,
+    "recovery_outer_seconds": 194.681182884,
+    "recovery_root_audit_seconds": 4.408297349,
+    "recovery_audit_initial_error": "Auditor assumed JSON for ordered-ID hash; corrected to existing newline-decimal contract. Both versions retained.",
+    "references": {
+      "audit.py": {
+        "path": "runs/m7-recovery-training-root-audit-19d275d/audit.py",
+        "bytes": 7414,
+        "sha256": "ee4111c3297b401f3b258a0a0196d24ae08fd5a0c89f4141516823decf2aa3e6"
+      },
+      "audit.json": {
+        "path": "runs/m7-recovery-training-root-audit-19d275d/audit.json",
+        "bytes": 176916,
+        "sha256": "7619223178524a12c0dec9b1e649ec7083201502c4fc7cfd6337783ef10a0f2b"
+      },
+      "audit-first-failed.py": {
+        "path": "runs/m7-recovery-training-root-audit-19d275d/audit-first-failed.py",
+        "bytes": 7333,
+        "sha256": "58f1638a3325a9bf0994804dccf1cc3fa469cc87e2a2c31c32ae223d4d0f434b"
+      },
+      "first-failure.log": {
+        "path": "runs/m7-recovery-training-root-audit-19d275d/first-failure.log",
+        "bytes": 428,
+        "sha256": "482c7e1e728dec8a4dd0405f0cd6c74600c746550403cd19510af8f5403b75e3"
+      },
+      "first-failure.json": {
+        "path": "runs/m7-recovery-training-root-audit-19d275d/first-failure.json",
+        "bytes": 378,
+        "sha256": "ff370b524e187a628273407daa0eb003a14e41d0b0512145242ddb513b592220"
+      },
+      "console.log": {
+        "path": "runs/m7-recovery-training-root-audit-19d275d/console.log",
+        "bytes": 1424,
+        "sha256": "11f59ae83516aa32f779a58d294e5ad92f45e0f202c8aafbe4081ce4b271f98f"
+      }
+    }
   }
 }
