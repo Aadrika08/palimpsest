@@ -342,7 +342,10 @@ def author_episode(engine, expected_model):
     env._reset_exploration()
     engine.observation = env._get_obs()
     joints = list(map(list,zip(env.obstacle_x_joint_ids,env.obstacle_y_joint_ids)))
-    validate_model_change(before,model_values(env.model),joints,env._obstacle_xy.tolist(),env.goal_site_id)
+    authored_positions = memory_world.validate_layout()
+    if env._obstacle_xy.dtype != np.float32 or not np.array_equal(env._obstacle_xy,np.asarray(authored_positions,np.float32)):
+        raise ValueError('Authored obstacle cache differs')
+    validate_model_change(before,model_values(env.model),joints,authored_positions,env.goal_site_id)
     validate_world(env); fresh_state(engine)
     calibration = task.body_calibration(env)
     if (calibration['radius_m']!=.06 or not math.isclose(calibration['track_m'],.36,rel_tol=0.,abs_tol=1e-12)

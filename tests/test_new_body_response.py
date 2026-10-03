@@ -126,6 +126,72 @@ class NewBodyChecks(unittest.TestCase):
             with self.subTest(field=field), self.assertRaises(ValueError):
                 study.validate_model_change(before, bad, joints, positions, 1)
 
+    def test_author_episode_uses_authored_ranges_and_checks_float32_cache(self):
+        from palimpsest import memory_world, profiles, snapshots
+        from unittest.mock import Mock
+
+        class Model(types.SimpleNamespace):
+            def __getstate__(self):
+                return self.jnt_range.tobytes()+self.actuator_gear.tobytes()
+
+        class Env:
+            def __init__(self):
+                self.n_obstacles, self.arena, self.goal_site_id = 20, 7., 0
+                self.obstacle_ids = list(range(20))
+                self.obstacle_x_joint_ids = list(range(0,40,2))
+                self.obstacle_y_joint_ids = list(range(1,40,2))
+                self.model = Model(nu=2, actuator_gear=np.array([[3.,0,0,0,0,0],[3.,0,0,0,0,0]]),
+                    jnt_range=np.tile([-.0001,.0001],(40,1)), jnt_qposadr=np.arange(40),
+                    jnt_dofadr=np.arange(40), geom_rgba=np.ones((20,4)), site_pos=np.zeros((1,3)),
+                    site_size=np.array([[.25,0,0]]), geom_type=np.full(20,5),
+                    geom_size=np.tile([.4,1.,0.],(20,1)))
+                self.data = types.SimpleNamespace(qpos=np.zeros(40),qvel=np.zeros(40),ctrl=np.zeros(2),time=0.)
+                self._obstacle_xy = np.zeros((20,2),np.float32)
+                self._goal_xy = np.zeros(2,np.float32)
+                self._xy = self._prev_xy = np.zeros(2)
+                self._yaw = self._t = self._speed = self._stall_steps = 0
+                self._last_action = np.zeros(2); self._action_scale = 2.
+                self.planner = types.SimpleNamespace()
+            def place_robot(self,x,y,yaw,*unused): self._xy,self._yaw=np.array([x,y]),yaw
+            def _base_xy(self): return self._xy
+            def _base_yaw(self): return self._yaw
+            def _reset_exploration(self): pass
+            def _get_obs(self): return {}
+
+        native = types.SimpleNamespace(get_mjcb_control=lambda:None,mjtObj=types.SimpleNamespace(mjOBJ_ACTUATOR=0),
+            mj_name2id=lambda model,kind,name:('left_motor','right_motor').index(name),mj_forward=lambda *args:None)
+        original_configure = memory_world.configure
+        def values(model):
+            return {'immutable_sha256':study.PROTOCOL['initial_admission']['nominal_authored_model_sha256'],
+                **{k:np.array(getattr(model,k),copy=True) for k in ('actuator_gear','jnt_range','geom_rgba','site_pos')}}
+
+        for corruption in (None,'cache','native'):
+            with self.subTest(corruption=corruption):
+                env = Env()
+                engine = types.SimpleNamespace(env=env,controller='manual',scenario='reproduction',seed=1,phase='paused',
+                    policy=None,teacher=None,body_state=None,task_state=None,memory=None,episode_step=0,_pending=[],
+                    manual_action=np.zeros(2),revision=0,episode=0,writer=types.SimpleNamespace(manifest={},event=Mock()),
+                    world=lambda:{'pose':[*env._base_xy().tolist(),env._base_yaw()]})
+                def configure(*args):
+                    result=original_configure(*args)
+                    if corruption=='cache': env._obstacle_xy[0,0]=np.nextafter(np.float32(0),np.float32(1))
+                    if corruption=='native': env.model.jnt_range[0,0]+=1e-12
+                    return result
+                with patch.dict(sys.modules,{'mujoco':native}),patch.object(memory_world,'configure',side_effect=configure), \
+                        patch.object(study,'model_values',side_effect=values),patch.object(study,'encoder_sample',return_value=[0.,0.]), \
+                        patch.object(snapshots,'_model_digest',return_value='a'*64),patch.object(profiles,'validate_world'), \
+                        patch.object(task,'body_calibration',return_value={'radius_m':.06,'track_m':.36,'quantum_rad':.001}):
+                    if corruption is not None:
+                        with self.assertRaisesRegex(ValueError,'cache' if corruption=='cache' else 'jnt_range'):
+                            study.author_episode(engine,None)
+                        engine.writer.event.assert_not_called()
+                    else:
+                        context=study.author_episode(engine,None)
+                        self.assertEqual(float(env._obstacle_xy[5,0]),3.700000047683716)
+                        np.testing.assert_array_equal(env.model.jnt_range[10],[3.7-.0001,3.7+.0001])
+                        self.assertEqual(context['gear'][0][0],2.1)
+                        engine.writer.event.assert_called_once()
+
     def test_numeric_and_whole_study_quota_refusal(self):
         arrays = {name: np.zeros((128, 128, 3), np.uint8) for name in
                   ('cam_left','cam_right','raw_cam_left','raw_cam_right')}
