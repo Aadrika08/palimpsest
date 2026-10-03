@@ -25,9 +25,9 @@ def contact(tick):
     return puck.classify_contacts(raw_contacts(tick),OWNERSHIP,tick=tick,time_s=tick*.02)
 
 
-def identity():
-    e=student.model_entry(ROOT,21)
-    return {'training_seed':21,'training_report_sha256':e['files']['report.json'],
+def identity(seed=21):
+    e=student.model_entry(ROOT,seed)
+    return {'training_seed':seed,'training_report_sha256':e['files']['report.json'],
             'checkpoint_sha256':e['files']['checkpoint.npz'],'protocol_sha256':e['files']['protocol.json'],
             'learning_protocol_sha256':learning.PROTOCOL_SHA256,
             'supervisor_source_sha256':hashlib.sha256((ROOT/'src/palimpsest/puck_learning.py').read_bytes()).hexdigest()}
@@ -127,12 +127,14 @@ class StudentFixtures(unittest.TestCase):
                 with self.assertRaises(ValueError):student.admit_bundle(ROOT,tmp,21)
                 reader.assert_not_called()
 
-    def run_owner(self, output, *, bad_action=False, event_failure=False, bad_restore=False, derivative=None, source=None):
+    def run_owner(self, output, *, bad_action=False, event_failure=False, bad_restore=False, derivative=None, source=None,
+                  development_row=None, initial_reference=None, rng_mismatch=False):
         import palimpsest.flynn as flynn
         import palimpsest.body_profile as body
         import palimpsest.snapshots as snapshots
         from palimpsest.body_profile import effective_control
-        spec=gate.protocol(ROOT);row=student.plan(ROOT)[derivative if derivative is not None else 1 if bad_restore else 0];pins=identity();model=object()
+        spec=gate.protocol(ROOT);row=development_row or student.plan(ROOT)[derivative if derivative is not None else 1 if bad_restore else 0]
+        pins=identity(row['model_seed']);model=object()
         class Renderer:
             _gl_context=True;_mjr_context=True
             def close(self):self._gl_context=self._mjr_context=None
@@ -156,15 +158,33 @@ class StudentFixtures(unittest.TestCase):
             def begin(self,tick):pass
             def end(self):return raw_contacts(self.env._t,[pair('base_geom','obstacle0')])
             def close(self):pass
-        def current(env,goal):return world(env._t,puck=(1. if env._t else 0.,0.,.062))
+        def current(env,goal):
+            if development_row is not None:
+                from test_puck_development import initial_world
+                value=initial_world(row);value['time_s']=env._t*.02
+                if env._t:value['puck_xyz']=[*value['goal_xy'],.062]
+                return value
+            return world(env._t,puck=(1. if env._t else 0.,0.,.062))
         apps=[]
-        def capture(env,obs,*,application):apps.append(copy.deepcopy(application));return {'fixture':True,'application':application}
+        def capture(env,obs,*,application):
+            apps.append(copy.deepcopy(application))
+            if development_row is not None:
+                from test_puck_development import native_fixture
+                import random
+                snapshot=native_fixture(application,row)
+                snapshot['rng']['python']=random.getstate();snapshot['rng']['numpy']=np.random.get_state()
+                if rng_mismatch:snapshot['rng']['spaces']['action_space']={'fixture':'different'}
+                return snapshot
+            return {'fixture':True,'application':application}
         actual_event=RunWriter.event
         def event(writer,kind,**kwargs):
             if event_failure and kind=='puck_interval':raise OSError('fixture record staging failure')
             return actual_event(writer,kind,**kwargs)
         config={'repo':str(ROOT),'output':str(output),'row':row,'sources':{'fixture':'source'},
                 'learning_student':student.PROTOCOL_SHA256,'bundle_root':str(output.parent/'models')}
+        if development_row is not None:
+            from palimpsest import puck_development as development
+            config.pop('learning_student');config.update(learning_student_development=development.PROTOCOL_SHA256,initial_reference=initial_reference)
         if bad_restore:
             receipt={'file':'tick1.snp','bytes':100,'sha256':'a'*64,'application_sha256':'b'*64,'tick':1,'world':{},'contact':{}}
             config.update(source_output=str(output.parent/row['case']),source_snapshot=receipt,start_tick=1,ticks=4)
@@ -181,20 +201,23 @@ class StudentFixtures(unittest.TestCase):
             return actual_env._get_obs(),app
         output.mkdir();actual_read_json=gate.read_json;actual_version=importlib.metadata.version
         with ExitStack() as stack:
+            import random
+            py_rng,np_rng=random.getstate(),np.random.get_state()
+            stack.callback(random.setstate,py_rng);stack.callback(np.random.set_state,np_rng)
             stack.enter_context(patch.dict(sys.modules,{'mujoco':SimpleNamespace(__version__='3.3.6',get_mjcb_control=lambda:None)}))
             sys.modules.pop('torch',None)
             stack.enter_context(patch.object(gate.platform,'python_version',return_value=spec['runtime']['python']))
             stack.enter_context(patch.object(importlib.metadata,'version',side_effect=lambda name: '2.9.0' if name=='torch' else actual_version(name)))
             stack.enter_context(patch.dict(gate.os.environ,{'MUJOCO_GL':'egl'}))
-            stack.enter_context(patch.object(gate,'student_sources',return_value=config['sources']))
-            stack.enter_context(patch.object(student,'admit_bundle',return_value=(Path(config['bundle_root']),pins)))
+            stack.enter_context(patch.object(gate,'development_sources' if development_row is not None else 'student_sources',return_value=config['sources']))
+            stack.enter_context(patch.object(student,'admit_bundle',side_effect=lambda root,bundle,seed: (Path(bundle),identity(seed))))
             load=stack.enter_context(patch.object(student,'load',return_value=(model,pins)))
             stack.enter_context(patch.object(student,'check_parameters',return_value=pins))
             predict=stack.enter_context(patch.object(puck_model,'predict',return_value=np.array([np.nan if bad_action else .2,0.],np.float64)))
             expert=stack.enter_context(patch.object(puck,'demonstrate',side_effect=AssertionError('Student must not call teacher')))
             stack.enter_context(patch.object(flynn,'import_upstream',return_value=SimpleNamespace(MuJoCoTwoCamEnv=lambda **kw:env)))
             stack.enter_context(patch.object(puck,'install_fixed_model',return_value=spec['profile_identity']))
-            stack.enter_context(patch.object(puck,'authored_reset',return_value=puck.initialize(world(),row['case'])))
+            stack.enter_context(patch.object(puck,'authored_reset',return_value=puck.initialize(current(env,None),row['case'])))
             stack.enter_context(patch.object(gate,'world_from',side_effect=current))
             stack.enter_context(patch.object(body,'ContactProbe',Probe));stack.enter_context(patch.object(snapshots,'capture',side_effect=capture))
             stack.enter_context(patch.object(RunWriter,'event',event));restore=stack.enter_context(patch.object(snapshots,'restore',side_effect=restore_fixture))
@@ -208,7 +231,7 @@ class StudentFixtures(unittest.TestCase):
             code=gate.owner(config);expert.assert_not_called()
             if derivative is None:restore.assert_not_called()
             else:restore.assert_called_once()
-            load.assert_called_once_with(ROOT,config['bundle_root'],21)
+            load.assert_called_once_with(ROOT,config['bundle_root'],row['model_seed'])
         r=json.loads((output/'result.json').read_text())
         self.assertEqual(r['finalization_errors'],[]);self.assertTrue(r['sources_unchanged']);self.assertTrue(r['callback_restored'])
         self.assertTrue(all(x['closed'] for x in r['cleanup']));self.assertEqual(env.data.ctrl.tolist(),[0.,0.])
