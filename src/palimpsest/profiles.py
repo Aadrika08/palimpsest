@@ -6,6 +6,7 @@ from .male_policy import CONTROLLERS as MALE_CONTROLLERS
 
 
 SCENARIOS = {
+    'adaptive-encoder-homing': ('Calibrated encoder homing (development)', 'Manual CPU measured probes followed by encoder-only homing on one fixed body; no generalization or hardware qualification.', 20),
     'adaptive-wheel-calibration': ('Measured wheel calibration (development)', 'Manual CPU with four fixed encoder probes, an explicit next-trial action and a fresh fitted episode; Reset clears the calibration. No neural learning or physical qualification.', 20),
     'calibrated-wheel-compensation': ('Calibrated wheel compensation (development)', 'Manual CPU with loaded wheel calibration and a fixed weaker left motor; no online learning or navigation qualification.', 20),
     'reproduction': ('Upstream reproduction', 'Pinned 20-obstacle paper configuration.', 20),
@@ -28,7 +29,7 @@ def validate(scenario, texture, controller):
         raise ValueError('Unknown scenario, controller or texture')
     if scenario == 'calibrated-wheel-compensation' and controller != 'manual':
         raise ValueError('Calibrated wheel compensation requires manual CPU control')
-    if scenario == 'adaptive-wheel-calibration' and controller != 'manual':
+    if scenario in ('adaptive-wheel-calibration','adaptive-encoder-homing') and controller != 'manual':
         raise ValueError('Measured wheel calibration requires manual CPU control')
     if controller in MALE_CONTROLLERS and (scenario, texture) != ('reproduction', 'checker'):
         raise ValueError('Male pilot controllers require reproduction/checker')
@@ -65,6 +66,10 @@ def validate(scenario, texture, controller):
         from .body_adaptation import IDENTITY, PROTOCOL
         profile.update(task='measured-wheel-calibration-development', body_profile_sha256=IDENTITY['profile_sha256'],
                        baseline_artifact_sha256=PROTOCOL['baseline_report_sha256'], devices=['cpu'], seed=1)
+    if scenario == 'adaptive-encoder-homing':
+        from .body_homing import IDENTITY
+        profile.update(task='adaptive-encoder-homing-development', composition_identity=IDENTITY,
+            devices=['cpu'], seed=1, observation_profile='two-rgb-eyes-contact-encoder-estimated-local-home-bearing-v1')
     return profile
 
 

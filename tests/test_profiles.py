@@ -32,7 +32,7 @@ class ActualScenarios(unittest.TestCase):
             for index, scenario in enumerate(SCENARIOS):
                 texture = 'realistic' if scenario == 'texture-variation' else 'checker'
                 engine = Engine.open(root, root / 'data/assets/flynn', Path(directory) / str(index),
-                                     scenario=scenario, texture=texture, seed=1 if scenario=='adaptive-wheel-calibration' else 0)
+                                     scenario=scenario, texture=texture, seed=validate(scenario, texture, 'manual').get('seed', 0))
                 try:
                     self.assertEqual(len(engine.world()['obstacles']), 5 if scenario == 'sparse-navigation' else 20)
                     if scenario == 'sparse-navigation':
