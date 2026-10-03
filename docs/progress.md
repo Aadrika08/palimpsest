@@ -53,9 +53,19 @@ remains ineligible.
 - Mechanism: pinned upstream model/environment; allowlisted controller inputs; one mutable-runtime owner; complete native, policy, application and RNG snapshots. Recorded E fitting and U-only swaps preserve declared invariant hashes. Male controllers use separately trained fixed CPU assets and an authored sensor mapping.
 - Missing: M5 counterbalanced/held-out transfer; remaining M6 skills and learned results; M7 closed-loop qualification; M8 physical work; remaining M9 modes/operation; final M10 handoff.
 - Unknown: original checkpoint training lineage, full-model Pi performance, physical stopping limits and account quota (telemetry unavailable).
-- Next action: finish and independently audit the active 48-owner recovery held-out closed-loop stage; keep its source HEAD unchanged until all raw evidence is checked. Memory B and all six recorded held-out results are audited and integrated. The failed puck capability has a retained diagnosis and original-data residual audit; its fixed inverse-frequency loss pilot is integrated with passing pure checks and original-data readmission; actual Torch/fit checks await the model slot. The remaining forty memory development cells require a narrow runner-profile extension and finite retained chunks. The enabled 682-test integration regression and memory A evidence are published. Preserve every failed attempt and source identity. Physical and independent-operator gates remain external.
+- Next action: finish and independently audit the active 48-owner recovery held-out closed-loop stage; keep its source HEAD unchanged until all raw evidence is checked. Memory B and all six recorded held-out results are audited and integrated. The failed puck capability has a retained diagnosis and original-data residual audit; its fixed inverse-frequency loss pilot is integrated with passing pure checks and original-data readmission; actual Torch/fit checks await the model slot. The remaining forty-cell runner extension is integrated at `78a0b6`: ten fixed admission/comparison profiles with separate exact lineage and strict core forks. First-chunk controls are preparation only; actual data collection remains queued behind serialized validation. The enabled 682-test integration regression and memory A evidence are published. Preserve every failed attempt and source identity. Physical and independent-operator gates remain external.
 
 ## Verification
+
+Remaining-profile source `568cc54` is integrated at `78a0b6`. Root ran 24
+new/adjacent tests: 23 passed, one errored because the legacy previous-owner
+completion fixture attempted the actual global writer lease while recovery was
+active. The lease correctly refused it before any model/native owner started.
+All six new profile tests pass; this is a scheduling error, not a production
+failure or a passed suite. Original report/log remain unchanged under
+`runs/memory-full-development-root-checks-568cc54/`; its correction note is
+`scheduling-note.json`. The queued fully enabled regression will cover it after
+recovery cleanup. No fixture or runtime guard was weakened.
 
 Balanced-loss root pure/data receipt: `runs/puck-balanced-root-checks-ec7a113/root-checks.json`,
 SHA-256 `a37417083fe4888c5842771437849812f9c64349a1082329b89f96ee1b1d505e`. No model construction,
