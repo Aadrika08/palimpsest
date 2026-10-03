@@ -1,0 +1,337 @@
+{
+  "id": "BGT-NEW-BODY-RESPONSE-1",
+  "version": 1,
+  "status": "prospective-plan-only",
+  "source_base_commit": "ebb7352c99f75fb36be52c9f7294aa0b077b2ff8",
+  "claim": "one unseen actuator-response body, permitted fresh calibration, frozen-fit homing on the known route; no zero-shot, population, compensation-benefit, physical or full-M6 qualification",
+  "entrypoint_contract": {
+    "future_script": "scripts/verify_new_body_response.py",
+    "engine_scenario": "reproduction",
+    "controller": "manual",
+    "device": "cpu",
+    "texture": "checker",
+    "seed": 1,
+    "engine_task_state": null,
+    "engine_body_state": null,
+    "engine_memory_state": null,
+    "old_body_profile_attribute": "must remain absent; never remove one to bypass validation",
+    "restore_replay_resume": "unsupported; reject all such requests",
+    "public_profile_or_ui": "none"
+  },
+  "world": {
+    "authoring": "memory_world.configure(env, memory_world.initial_state(close_subject_id=None)); then declared lane goal/start; never advance memory schedule",
+    "start_pose": [
+      -3.5,
+      0.0,
+      0.0
+    ],
+    "goal_xy": [
+      -3.5,
+      3.0
+    ],
+    "obstacles": 20,
+    "radius_m": 0.06,
+    "track_m": 0.36,
+    "source_semantic_world_sha256": "cbc3f2cfbcf0ef25efb260f21771fe0ac52f4bd0b1a78b8e0dfd64378febe753",
+    "new_left_gear": 2.1,
+    "right_gear": 3.0,
+    "gear_assignment": "exact float64 literal 2.1, not 3*0.7",
+    "calibration_reset": "three explicit ordinary Engine resets between four trials; seed remains 1; re-author and check the same lane/body after each reset",
+    "homing_reset": "fresh second Engine owner; same authored body/lane; consume only admitted fit artifact, never restore calibration snapshot"
+  },
+  "mutation_allowlist": {
+    "repository_and_asset_bytes": [],
+    "native_model_world_authoring": [
+      "named obstacle x/y joint ranges, preserving prior half-widths, only as pinned memory_world.configure",
+      "goal site XY exactly [-3.5,3.0]"
+    ],
+    "native_model_body": [
+      "actuator_gear[left_motor,0]: 3.0 -> 2.1; every other actuator value unchanged"
+    ],
+    "native_data": "explicit fresh reset, named obstacle qpos/zero qvel, declared rover pose, zero controls/encoders/time; ordinary simulation during measured intervals",
+    "environment_caches": "only pinned world authoring and fresh-state pose/planner/exploration caches; observation refreshed after mj_forward before first interval",
+    "prohibited": [
+      "geometry/size/mass/inertia/friction/contact/integrator/dt changes",
+      "engine task/body state injection",
+      "old profile relabelling",
+      "global monkeypatch",
+      "model writes during measured intervals",
+      "runtime callback outside owned ContactProbe",
+      "source/asset edits",
+      "truth-driven action or fit"
+    ]
+  },
+  "initial_admission": {
+    "before_any_action": [
+      "manual paused, no pending commands, no policy or teacher, no task/body/memory state, no old body profile attribute",
+      "model names/dimensions and nominal gear order [left_motor,right_motor] validated",
+      "canonical nominal authored model matches the existing baseline model hash before the first gear write",
+      "after gear write canonical model differs only at the one declared scalar; same resulting model hash at all five episode initials",
+      "time, episode tick, wheel angles, qvel, controls, speed, stall counter and last/manual actions zero",
+      "start pose, goal, declared world, radius/track and zero local task odometry checked",
+      "actual initial observations and separate raw snapshot retained after callback removal; no time advance"
+    ],
+    "nominal_authored_model_sha256": "c4d30fef8fbe05739e72e762d10d2dc435c1c831993a32d0662560d494b158e5",
+    "pose_abs_tolerance": 1e-07,
+    "other_initial_equalities": "exact for model fields, zero arrays, counters, encoder/time and IDs; track tolerance 1e-12 only as existing physical calibration",
+    "snapshots": "five raw episode initials only: four calibration trials and one homing initial; generic Engine application state excludes separate study state; no custom-state continuation/replay claim"
+  },
+  "calibration": {
+    "trials": [
+      {
+        "index": 0,
+        "action": [
+          0.2,
+          0.0
+        ],
+        "ticks": 120,
+        "settling_ticks": 20,
+        "fit_ticks": [
+          20,
+          119
+        ]
+      },
+      {
+        "index": 1,
+        "action": [
+          0.4,
+          0.0
+        ],
+        "ticks": 120,
+        "settling_ticks": 20,
+        "fit_ticks": [
+          20,
+          119
+        ]
+      },
+      {
+        "index": 2,
+        "action": [
+          -0.2,
+          0.0
+        ],
+        "ticks": 120,
+        "settling_ticks": 20,
+        "fit_ticks": [
+          20,
+          119
+        ]
+      },
+      {
+        "index": 3,
+        "action": [
+          -0.4,
+          0.0
+        ],
+        "ticks": 120,
+        "settling_ticks": 20,
+        "fit_ticks": [
+          20,
+          119
+        ]
+      }
+    ],
+    "maximum_executed_ticks": 480,
+    "required_samples": 400,
+    "fit_bounds": {
+      "max_samples": 400,
+      "min_samples": 100,
+      "min_excitation": 1.0,
+      "gain_bounds": [
+        1.0,
+        100.0
+      ],
+      "control_limit": 2.0,
+      "dt_bounds_s": [
+        0.019999999,
+        0.020000001
+      ],
+      "max_rate_rad_s": 100.0,
+      "max_residual_rad_s": 2.0,
+      "max_relative_rmse": 0.2
+    },
+    "between_trial_gain_range_over_mean_max": 0.2,
+    "nominal_gains_rad_s_per_control": [
+      14.878897911022118,
+      14.878897948225164
+    ],
+    "max_compensation_ratio": 1.5,
+    "control_limit": 2.0,
+    "fit_method": "unchanged zero-intercept per-wheel fit_wheel_gains for each contiguous 100-sample trial and all 400; unchanged agreement and compensate_wheels admission",
+    "inputs": [
+      "measured actual controls",
+      "named wheel increments",
+      "measured dt",
+      "contact rejection/coverage"
+    ],
+    "early_termination": "ineligible calibration, no padding/replacement/retry; homing remains not_started",
+    "fit_artifact_max_bytes": 131072,
+    "fit_identity": "bind protocol/source/model, all four recording episode/tick ranges, sample ordering/hash, pooled/per-trial fit/hash and producer run; homing read-only, no mutation/refit"
+  },
+  "homing": {
+    "max_ticks": 600,
+    "encoder_joints": [
+      "left_hinge",
+      "right_hinge"
+    ],
+    "encoder_signs": [
+      1,
+      1
+    ],
+    "encoder_quantum_rad": 0.001,
+    "max_encoder_increment_rad": 6.283185307179586,
+    "max_travel_m": 20.0,
+    "outbound_radius_m": 1.0,
+    "home_arrival_radius_m": 0.2,
+    "dwell_ticks": 5,
+    "stopped_rule": "both quantized encoder increments exactly zero; not physical-rest proof",
+    "initial_task": "task_profiles.initialize encoder-homing at the second owner fresh shaft origin",
+    "driver": "unchanged cue_action v2; initial requested action zero; subsequent request from previous recorded study cue only",
+    "cue_storage": "study cue float32 pair promoted to float64 for driver exactly as historical effective-sensor projection",
+    "current_tick_task": "capture named encoder/time/tick before physics; advance the private study task; current hold overrides requested action to zero before compensation",
+    "driver_access": [
+      "previous quantized-encoder-derived study cue only"
+    ],
+    "driver_forbidden": [
+      "upstream raw true-goal bearing",
+      "Engine observation sensors or cameras",
+      "native pose",
+      "evaluator distance",
+      "privileged task/world state",
+      "calibration residuals"
+    ],
+    "conversion": "effective_control(nominal) float32; compensate_wheels using frozen pooled fit; inverse_control exact float32 target roundtrip; applied action finite float64 through normal manual Engine step; no clipping/fallback/direct ctrl write",
+    "completion": "after publishing the full interval whose pre-control task reaches phase complete, stop the standalone driver; retain original Engine outcome unchanged",
+    "functional_acceptance": "study phase complete, outbound reached, five declared dwell increments, true declared-origin XY distance <=0.25m, <=600 executed intervals, no native/contact/control/provenance/infra failure",
+    "actual_home_limit_m": 0.25,
+    "outcome_separation": "Engine upstream goal/stall/collision/time_limit/user_stop outcomes remain original; study.task_completed is separate; an earlier Engine terminal cannot be suppressed or reset to continue",
+    "evaluator_access": "native poses and declared initial XY are evaluator-only; no feedback into task, driver, fit or compensation"
+  },
+  "pipeline": {
+    "mujoco_version": "3.3.6",
+    "integrator": "Euler",
+    "physics_dt_s": 0.002,
+    "frame_skip": 10,
+    "control_dt_s": 0.02,
+    "max_contacts_per_stage": 128,
+    "contact_scope": "unchanged ContactProbe: all timed pairs, reject unexpected robot incident; allowed rover-floor support and world-only contact separately classified",
+    "contact_timing": "ten pre-control caches plus last unchanged cached contact packet; not continuous collision freedom or fresh endpoint contact"
+  },
+  "recording": {
+    "numeric": "existing Engine rows plus body contact/encoder/control arrays and distinct study cue/task phase/odometry/hold/nominal intent fields; original upstream sensors/actions/outcome fields never relabelled",
+    "publication": "reuse one-pending-tick instance-local writer deferral from verify_body_gains; publish once only after complete contact/control checks; restore writer method and callback in finally; rejected pending packet retained and not counted as accepted numeric interval",
+    "study_state": "external audit metadata, not Engine application state; no replay/restore qualification",
+    "fit_manifest": "one bounded fit artifact produced by calibration and hashed into homing; no historical raw/SNP/checkpoint input",
+    "initial_event": "original reproduction episode_started remains history; append explicit study world/body authoring event and original/actual model/world hashes before first action",
+    "schema_gate": "prove added numeric allowance <=32KiB and each existing recorder chunk limit before actual controls; source-only fixture required"
+  },
+  "rows": [
+    {
+      "id": "calibration",
+      "order": 0,
+      "max_ticks": 480,
+      "episodes": 4,
+      "max_ticks_per_episode": 120,
+      "status_initial": "not_started"
+    },
+    {
+      "id": "homing",
+      "order": 1,
+      "max_ticks": 600,
+      "episodes": 1,
+      "requires": "calibration accepted, exact fit/source/model readmission, unchanged source/whole-study capacity",
+      "status_initial": "not_started"
+    }
+  ],
+  "disposition": {
+    "all_rows_retained": true,
+    "operational_and_functional": "separate fields; clean process exit is never task success",
+    "calibration_rejection": "calibration failed-functional with raw reason and all executed rows; homing not_started dependency_failed; no second body/fit",
+    "homing_natural_failure": "retain complete recording/outcome and failed-functional; no retries or subsequent arms",
+    "protocol_or_infrastructure_failure": "stop first failure; preserve logs/raw pending interval/receipts and remaining not_started rows",
+    "positive_gate": "both rows completed, calibration accepted, homing functional acceptance, normal timing/storage/source/cleanup all admitted"
+  },
+  "limits": {
+    "owners": 2,
+    "maximum_numeric_intervals": 1080,
+    "snapshots": 5,
+    "snapshot_max_bytes": 16777216,
+    "recording_max_bytes_per_owner": 268435456,
+    "owner_result_max_bytes": 67108864,
+    "report_max_bytes": 1048576,
+    "log_max_bytes_per_stream": 1048576,
+    "output_max_bytes": 2147483648,
+    "min_free_bytes": 1073741824,
+    "owner_timeout_seconds": 180,
+    "inner_deadline_seconds": 780,
+    "normal_invocation_through_exit_seconds": 830,
+    "external_term_seconds": 840,
+    "external_kill_seconds": 843,
+    "supervisor_fallback_seconds": 846,
+    "failure_cleanup_max_seconds": 10,
+    "log_drain_seconds_per_stream": 2,
+    "cleanup_scope": "normal acceptance stays 830; termination/failure cleanup may finish later and is never positive evidence or a universal kernel-return guarantee",
+    "monitor_period_seconds": 0.25,
+    "startup_deadline_seconds": 60,
+    "progress_deadline_seconds": 30,
+    "sample_process_limit": 64,
+    "cumulative_pid_start_limit": 128,
+    "proc_scan_limit": 8192,
+    "bytes_per_interval_allowance": 233472,
+    "admission_components_bytes": {
+      "numeric": 252149760,
+      "snapshots": 83886080,
+      "owner_results": 134217728,
+      "logs": 6291456,
+      "controls": 25165824,
+      "staging": 134217728,
+      "headroom": 8388608
+    },
+    "whole_study_admission_bytes": 644317184
+  },
+  "capacity_and_controls": {
+    "before_execution": "mandatory fresh whole-study check after source freeze/control review: exclusive absent output, all two rows/five snapshots/results/logs/staging included, managed quota admission, disk free >= output_max_bytes + min_free_bytes; no stale review-time df substituted",
+    "repeat": "before every owner/reset boundary and final publication; sampled output/inventory and writer checks are not atomic whole-filesystem reservation",
+    "lease": "one existing inner writer lease only; no outer lease",
+    "identity": "full frozen tracked producer/upstream/runtime/asset and control inventories before/after; exact Python3.11.15 and NumPy2.2.5/MuJoCo3.3.6; no source changes while actual jobs run",
+    "supervision": "reuse reviewed finite first-ready sampler, exact PID/start conflict rejection, scoped interruption, bounded_process TERM/KILL/drain and identity-rechecked cleanup; any sampler error/forced cleanup/survivor/late acceptance fails",
+    "actual_controls": "not created or authorized by this protocol; separate source and controls reviews plus exclusive runtime GO required"
+  },
+  "protected_sources_sha256": {
+    "src/palimpsest/engine.py": "bb81e0c23fe8bdbdfe9f499582e9df105a80ad2030a0831c6cd73b995c812417",
+    "src/palimpsest/profiles.py": "1bdfcb0998f57355afaebbe7704219957531711fc1d18f28e2937579da4cd55a",
+    "src/palimpsest/snapshots.py": "9da87e6c5433199186421e2057403fb50b52dfa2901ffe07673fac074b7daaf5",
+    "src/palimpsest/replay.py": "18437f2bdd7e849ff60e6b3244998d4f1834888092deae2b116756651163e82e",
+    "src/palimpsest/body_profile.py": "796df9ab2a109606432c7a97bfbea5f58ab7acc75768e638b5b8731a390cbb54",
+    "src/palimpsest/body_adaptation.py": "7ecc71cce4da915225952c3ea31666b54895f5ff93de32d87149aac368d32f81",
+    "src/palimpsest/body_homing.py": "3e46bbf9d90bf53e536a975f7f4a86bbcaa2b4aa57f9b188bfbe9d221f12f551",
+    "src/palimpsest/task_profiles.py": "14b237ede67949f281977c00b01dcd7a8e8a367d67a7e4e37911e0cb9b1dfa79",
+    "src/palimpsest/task_mechanics.py": "cbf698ad3f027f572c4f12655595825f580f155949f6c7c96f2556d14e6d1bb6",
+    "src/palimpsest/memory_world.py": "508d7c53cf78e8a26a2c459e2b6e2a02c8c0823535005a19668a31717f0dbb12",
+    "src/palimpsest/records.py": "c4be6f1699c1d8550a7f2db2979f7f9f18196ac986eef2aefe3ba665cae99ac3",
+    "src/palimpsest/evaluate.py": "74a9afb710b36a366ab680462e9440f285730a0360bda704af25ebbcfd74256a",
+    "src/palimpsest/storage.py": "79664d876834ef20b459cc83963515effdaf75d0256fe5764a9cf8e18cd448c2",
+    "scripts/verify_body_gains.py": "eb4b9e8f7d4b940438ad381b771d035dc49e1bcf90f7b0d54a08d8f9d99987c5",
+    "scripts/verify_body_adaptation.py": "197662faf19e7d11b8ab42d67f5ccb0b7d64867bdb0e296f23408daeecb08da3",
+    "scripts/verify_tasks.py": "ec94a0a95d3e90ed9f9a008025b08d8da72949637144782655273d254948668b",
+    "scripts/verify_task_starts.py": "ee5b2facae4dd91eb7caf2e041b97db126bcd863ec13ecde54931dd99fda888b"
+  },
+  "implementation_scope": {
+    "create": [
+      "scripts/verify_new_body_response.py",
+      "tests/test_new_body_response.py"
+    ],
+    "edit_existing_source": [],
+    "no_new_engine_profile_or_snapshot_dispatch": true,
+    "required_pure_checks": [
+      "historical protected source hashes unchanged",
+      "fixed configuration/types/body/world mutation allowlist and initial-state failures",
+      "four complete probes, exact sample ordering and rejection with homing not_started",
+      "private encoder cue versus poisoned raw upstream truth; hold before compensation",
+      "bounded pending numeric interval and callback/writer restoration on failure",
+      "separate Engine and study outcomes; raw initials do not contain a restorable custom task",
+      "whole-study byte/time admission and first-failure reducer"
+    ],
+    "review_stop": "if a shared source change, new dispatch, guard bypass, source-state relabelling or greater allowance becomes necessary, stop for root review; no generic factory/registry"
+  }
+}
