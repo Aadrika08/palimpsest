@@ -306,7 +306,12 @@ class Supervision(unittest.TestCase):
                 time.sleep(.02)
             self.assertEqual(supervisor.describe(run)["failure"]["type"], "WorkerTimeout")
             stat = Path(f"/proc/{child}/stat")
-            self.assertTrue(not stat.exists() or stat.read_text().split(") ", 1)[1][0] == "Z")
+            try:
+                state = stat.read_text().split(") ", 1)[1][0]
+            except FileNotFoundError:
+                pass  # Reaping can remove /proc while this assertion runs.
+            else:
+                self.assertEqual(state, "Z")
 
     def test_step_watchdog_stays_active_after_disconnect(self):
         with tempfile.TemporaryDirectory() as tmp:
