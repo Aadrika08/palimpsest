@@ -6,28 +6,27 @@ Working-set binding: `98d42920e321b42d22c6336f938d2c3ba9fd770d8ba24a2a`. Its MCP
 
 ## Current state
 
-The [remaining-05 comparison](reports/m5-remaining-05-comparison.md), `0a6bb4c`,
-brings audited development coverage to **28/48 cells**. All forty owners complete
-4,617 neural intervals and 36 evaluator task passes. Root raw and independent
-outcome audits pass first in 16.292 / 8.140 s. All nine conditions correct the
-changed lower fact at 358 and reach its goal at 429; null/no-event goals are 428.
-There is no own-U task or timing benefit. Root publication review rehashes all
-415 published references plus two historical input histories (417 files,
-1,089,878,909 bytes), after correcting its relative-path reader assumption.
-The comparison session `16395` drained exit0; all 44 sampled nonlauncher
-identities and the launcher are absent, inventories are unchanged and the lease
-was free after shutdown. Remaining-06 admission completes once on frozen `0a6bb4c`
-in session `77168`: twelve owners, 1,204 rows and four neural calls. Normal/full
-elapsed is 368.221/371.317 s; the session drained exit0. Root retained audit
-passes in 8.055 s after correcting its copied checker index from remaining-05
-to remaining-06. Both checker attempts remain retained; source and raw data are
-unchanged. Focused evidence `016948b` is integrated after all 150 references
-rehash (262,960,489 bytes). Coverage remains 28/48 until its separate comparison
-and audits. The remaining-06 comparison is now active once on frozen `016948b`
-in session `57385`, following eight root fixtures and full preflight (4.782/5.132 s).
-Forty fresh IDs are disjoint from 610 prior IDs; startup free space is
-26,375,962,624 bytes. No comparison result is claimed. Twenty
-development cells and the held-out study remain open.
+Remaining-06 comparison completes once on frozen `016948b`, bringing independently
+audited development coverage to **32/48 cells**: forty owners, 4,687 neural rows,
+forty snapshots, sixteen strict U-only core forks and all 36 evaluator task passes.
+Root raw and outcome audits pass first in 16.461 / 8.729 s, checking 543 retained
+files (1,104,697,652 bytes), 593 source/upstream/asset identities and 120 input pins.
+The changed lower fact is corrected at358 for all nine conditions. Own/sham goal
+is431 versus no-U/swapped430; null/no-event goals are430. There is no own-U benefit.
+The actual session `57385` drained exit0 after 1,798.225 s normal / 1,802.586 s full;
+42 sampled nonlauncher PID/start identities and the launcher are absent, with
+unchanged inventories and an independently free lease after shutdown. Focused
+publication is being prepared. Sixteen development cells and held-out remain open.
+The [remaining-06 admission](reports/m5-remaining-06-admission.md), `016948b`,
+retains its twelve owners/1,204 rows and all 150 rehashed publication references;
+the initial root copied-index error and corrected audit are both retained.
+
+New-body controls pass twelve root mocked checks and exact preflight. Its final
+startup preflight first refused because MUJOCO_GL/OMP were missing from that
+check invocation; no owner/output was started. The unchanged check passes with
+the exact frozen environment in 2.353 s, with all source/control pins unchanged.
+The one-shot actual command now runs in session `7624` on frozen `4c4bca2`, with
+28,288,516,096 bytes free immediately before start. No body result is claimed.
 
 The [remaining-05 admission](reports/m5-remaining-05-admission.md), evidence
 `ad2eff7`, completed once on frozen `746c67b` in session `90487`: twelve owners,
@@ -131,7 +130,7 @@ remains ineligible.
 - Mechanism: pinned upstream model/environment; allowlisted controller inputs; one mutable-runtime owner; complete native, policy, application and RNG snapshots. Recorded E fitting and U-only swaps preserve declared invariant hashes. Male controllers use separately trained fixed CPU assets and an authored sensor mapping.
 - Missing: M5 counterbalanced/held-out transfer; remaining M6 skills and learned results; M7 closed-loop qualification; M8 physical work; remaining M9 modes/operation; final M10 handoff.
 - Unknown: original checkpoint training lineage, full-model Pi performance, physical stopping limits and account quota (telemetry unavailable).
-- Next action: review the named training-data preparer implementation against the integrated frozen plan for navigation v2; v1 remains failed. The separate cross-corpus preparer and all fitting/dev/held-out stages remain pending. Finish and independently audit the active remaining-06 comparison. Memory coverage is 28/48; the existing paired readout covers its historical 24-cell subset. New-body launch controls pass twelve root mocked checks and exact preflight; its actual gate waits for the memory comparison to drain and pass root audits. Both puck development evaluations remain negative; automatic retraining stops and held-out stays locked. Physical qualification and independent exhibition operation remain open.
+- Next action: review the named training-data preparer implementation against the integrated frozen plan for navigation v2; v1 remains failed. The separate cross-corpus preparer and all fitting/dev/held-out stages remain pending. Integrate the independently audited remaining-06 comparison publication, then review remaining-07 controls. Memory coverage is 32/48; the existing paired readout covers its historical 24-cell subset. Complete and independently audit the active new-body gate in session7624. Both puck development evaluations remain negative; automatic retraining stops and held-out stays locked. Physical qualification and independent exhibition operation remain open.
 
 The [prospective held-out outline](plans/m5-heldout-proposal.md) specifies the
 reserved 64–71 matrix without opening it. Source/profile freeze and all 48 audited
@@ -142,6 +141,13 @@ planning check; an artifact storage path is pending user input. No data is delet
 or moved and no held-out implementation/execution is unlocked.
 
 ## Verification
+
+Remaining-06 raw and independent outcome audits pass first in 16.461 / 8.729 s.
+Receipts: `runs/memory-remaining-06-comparison-root-audit-016948b/audit.json`,
+SHA-256 `d50dd75c50a7739135a5e3af6eb16f65e63100ac42273ce905581f02dba3d021`,
+and `outcomes.json`, SHA-256
+`801c6f121f9a9bac5baf4bb1b7e9e0d6537e6f4ec51271303c5f56b288e902e8`.
+Both root sessions drained exit0 before the body slot was released.
 
 Navigation data plan `b3cbb67` passes root metadata/source admission first in
 0.036 s: 21 named references, the unchanged historical seven reader pins and
@@ -158,8 +164,9 @@ and exact read-only preflight in 2.280 s, first attempt. The 523 producer files,
 fallback/failure cleanup use absolute entry +846/+856 s deadlines. Root receipt:
 `runs/m6-new-body-control-root-review-4c4bca2/audit.json`, SHA-256
 `5a7e649be271b66f137223cc627abe536ee0b7b1a15fe62c3e98cbd133d7da7d`.
-No native owner or writer-lease probe ran in these reviews. The body gate waits
-for the active memory comparison's terminal drain and audits.
+No native owner or writer-lease probe ran in these reviews. The later body startup
+preflight failure and exact-environment correction are both retained; actual
+execution is tracked separately above.
 
 Remaining-06 admission controls pass eight root fixtures in 8.201 s and full
 read-only preflight in 2.749 s: 591 identities, twelve fresh IDs disjoint from598,
