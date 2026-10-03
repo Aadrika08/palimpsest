@@ -20,14 +20,18 @@ def identity(root):
 
 
 def collect(args):
+    return _collect(args)
+
+
+def _collect(args, research=None):
     root, assets, output = args.repo.resolve(), args.assets.resolve(), args.output.resolve()
-    research = None
     stage = getattr(args, 'research_stage', None)
     protocol_bytes = artifacts._read(args.protocol, 65536)
     protocol = json.loads(protocol_bytes)
     aggregate, seconds = 1024**3, 480
     if stage is not None:
-        from palimpsest import male_research as research
+        if research is None:
+            from palimpsest import male_research as research
         frozen = research.protocol(root)
         if research.sha(protocol_bytes) != research.PROTOCOL_SHA256 or stage not in ('development', 'held_out'):
             raise ValueError('collection requires frozen v2 protocol and stage')
@@ -35,7 +39,7 @@ def collect(args):
             unlock = research.require_unlock(args)
         protocol = {**frozen, 'scene_seeds': {key: frozen['teacher_scene_seeds'][key] for key in frozen['teacher_collection_stages'][stage]},
                     'recording_plus_snapshot_limit_bytes': frozen['source_limits']['max_run_bytes']}
-        aggregate, seconds = frozen['source_limits']['max_bytes'], frozen['collection_limits'][stage + '_seconds']
+        aggregate, seconds = frozen.get('collection_bytes', frozen['source_limits']['max_bytes']), frozen['collection_limits'][stage + '_seconds']
     output.mkdir(parents=True, exist_ok=False)
     (output / 'protocol.json').write_bytes(protocol_bytes)
     shutil.copyfile(__file__, output / 'collector.py')
