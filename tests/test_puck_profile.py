@@ -87,24 +87,26 @@ class PuckProfileTests(unittest.TestCase):
         a['goal_xy'][0] = 999
         self.assertEqual(self.p.layout(ROOT, 6000, 'train')['goal_xy'], [.6, -.3])
 
-    def test_v4_preserves_historical_protocols_and_numeric_task_contract(self):
+    def test_v5_preserves_historical_protocols_and_numeric_task_contract(self):
         pins={'m6-puck-pushing-protocol.json':'8a7f14ee69fe386fe1150b644e71737a5e39ab3c8c4987d7cdf61277796f3bac',
               'm6-puck-pushing-protocol-v2.json':'fd8dbcea35d226bed522d02f27f7bc11149ac77f72ca49838493489e330eb88c',
-              'm6-puck-pushing-protocol-v3.json':'7129265b8483e6932a7745f6af77176855139aab398bd229b78430fe8ae87534'}
+              'm6-puck-pushing-protocol-v3.json':'7129265b8483e6932a7745f6af77176855139aab398bd229b78430fe8ae87534',
+              'm6-puck-pushing-protocol-v4.json':'edf868c868922a3d7a946e705553c7144509a2a6af7f208e399f63346d2b20b9'}
         for name,sha in pins.items():
             self.assertEqual(hashlib.sha256((ROOT/'docs/plans'/name).read_bytes()).hexdigest(),sha)
-        old=json.loads((ROOT/'docs/plans/m6-puck-pushing-protocol-v3.json').read_text())
+        old=json.loads((ROOT/'docs/plans/m6-puck-pushing-protocol-v4.json').read_text())
         new=self.p.load_protocol(ROOT)
-        self.assertEqual(new['id'],'m6-puck-pushing-plan-v4')
+        self.assertEqual(new['id'],'m6-puck-pushing-plan-v5')
         new['id']=old['id'];new['demonstrator']['id']=old['demonstrator']['id']
-        new['demonstrator']['mode']['velocity']=old['demonstrator']['mode']['velocity']
-        del new['demonstrator']['approach_direction'];new['learning_admission']=old['learning_admission']
+        new['demonstrator']['stop_distance_m']=old['demonstrator']['stop_distance_m']
+        new['learning_admission']=old['learning_admission']
         self.assertEqual(new,old)
 
-    def test_historical_task_cursors_not_reinterpreted_as_v4(self):
+    def test_historical_task_cursors_not_reinterpreted_as_v5(self):
         for old in ('8a7f14ee69fe386fe1150b644e71737a5e39ab3c8c4987d7cdf61277796f3bac',
                     'fd8dbcea35d226bed522d02f27f7bc11149ac77f72ca49838493489e330eb88c',
-                    '7129265b8483e6932a7745f6af77176855139aab398bd229b78430fe8ae87534'):
+                    '7129265b8483e6932a7745f6af77176855139aab398bd229b78430fe8ae87534',
+                    'edf868c868922a3d7a946e705553c7144509a2a6af7f208e399f63346d2b20b9'):
             state=self.p.initialize(world(),'old-episode');state['protocol_sha256']=old
             with self.assertRaisesRegex(ValueError,'Incompatible'):
                 self.p.advance(state,world(1),self.contacts(1),[0.,0.])
@@ -412,6 +414,15 @@ class PuckProfileTests(unittest.TestCase):
                 self.assertEqual(mode,'approach')
         # Existing push travel remains positive at the same rear-target geometry.
         self.assertEqual(self.p.demonstrate(world(rover=(-.4,0.,0.)),'push'),([.2,0.],'push'))
+
+    def test_stop_at_task_radius_is_inclusive_and_retains_carried_mode(self):
+        for mode in ('approach', 'push'):
+            for distance in (0., .19, math.nextafter(.2, 0.), .2):
+                # Geometry outside the ready corridor would otherwise change push mode.
+                self.assertEqual(self.p.demonstrate(world(rover=(0.,0.,2.),goal=(distance,0.)),mode),
+                                 ([0.,0.],mode))
+            outside=world(goal=(math.nextafter(.2, math.inf),0.))
+            self.assertEqual(self.p.demonstrate(outside,mode),([.2,0.],'push'))
 
     def test_v4_retained_reverse_choice_is_turn_only_and_reflected(self):
         # Exact v2 action161/188 worlds, retained audit b2b0cf7c...ca39421.

@@ -36,6 +36,32 @@ def packet_arguments():
 
 
 class CollectionFixtures(unittest.TestCase):
+    def test_retained_6004_world_stops_without_changing_mode_or_cursor(self):
+        # V1 decision 316, evaluated as source only. This is not a new rollout.
+        w={'time_s':6.319999999999526,'rover_pose':[.369404271437759,.052153817176093055,1.8182706876955435],
+           'puck_xyz':[.40954627496322576,.5017537418205503,.06005917363382193],
+           'puck_velocity_xy':[-.03514145325144767,.09792467449490712],'goal_xy':[.4,.7]}
+        inputs=np.array([.03043353371322155,-.010646519251167774,.044329602271318436,
+                         -.013454102911055088,.05177471414208412,.005041799508035183,0.,0.],np.float32)
+        own=learning.initial_cursor()|{'tick':316};before=copy.deepcopy(own)
+        action,mode,pending=teacher.decide(inputs,w,'approach',own)
+        self.assertEqual((action,mode),([0.,0.],'approach'));self.assertEqual(own,before)
+        self.assertEqual(pending['after'],before|{'tick':317})
+        self.assertEqual(pending['inputs'][:8].tobytes(),inputs.tobytes())
+        self.assertEqual(pending['inputs'][8],0.)
+
+    def test_stop_quantization_disagreement_retains_zero_expert_label_and_rejects(self):
+        w=world(rover=(0.,0.,0.),goal=(.2,0.));inputs=puck.project(w,contact(0))
+        own=learning.initial_cursor()|{'tick':1,'mode':'push'};before=copy.deepcopy(own)
+        self.assertEqual(float(inputs[2])*14.,.2000000011175871)
+        with self.assertRaises(teacher.SensorModeDisagreement) as caught:
+            teacher.decide(inputs,w,'push',own)
+        evidence=caught.exception.evidence
+        self.assertEqual(own,before);self.assertFalse(evidence['executed_interval'])
+        self.assertEqual((evidence['teacher_mode_after'],evidence['supervisor_mode_after']),('push','approach'))
+        self.assertEqual(bytes.fromhex(evidence['inputs']['bytes_hex']),inputs.tobytes())
+        np.testing.assert_array_equal(np.frombuffer(bytes.fromhex(evidence['expert_action']['bytes_hex']),np.float64),[0.,0.])
+
     def test_plan_only_exact_twenty_fresh_teacher_rows_and_budget(self):
         rows=teacher.plan(ROOT)
         self.assertEqual([r['seed'] for r in rows],list(range(6000,6020)))
