@@ -2401,5 +2401,47 @@
       "path": "runs/body-homing-failure-root-audit-0fd38ef/audit.json",
       "sha256": "80df9e49a06c666b803c86c3cfeaa90424d2d1ced731e30dea65f634d88feeff"
     }
+  },
+  "body_storage_admission_regression": {
+    "status": "passed",
+    "source_commit": "db59a56312472222c922353e8697482dafa9cf6d",
+    "tests": 717,
+    "test_seconds": 167.509,
+    "skips": 0,
+    "supervised_seconds": 172.76464440400014,
+    "sources_rehashed": 524,
+    "assets_rehashed": 20,
+    "retained_references_rehashed": 50,
+    "writer_lease_free": true,
+    "model_identities_unchanged": true,
+    "report_sha256": "276a81e1c634a7b4ef1c8b735e9109d4d8d86486b3e255e36a7b960ce1c1cc77",
+    "launcher_sha256": "fb02face18d5cee409106975b76dd02672d6238b87e2ed756f7f7dadf8d81387",
+    "scope": "Full enabled actual regression after balanced development adapter and body admission fix; UI bytes/build unchanged from f78; does not replace separate task experiments.",
+    "supervisor": {
+      "elapsed_seconds": 172.76464440400014,
+      "output": "/home/utkarsh/Work/shraddha/brain/.worktrees/project-integration/runs/integration-body-admission-fix-db59a56-20261003/supervisor",
+      "returncode": 0,
+      "schema_version": 1,
+      "started_utc": "2026-10-03T09:22:02.193267+00:00",
+      "status": "completed",
+      "timeout_seconds": 300
+    },
+    "root_audit": {
+      "path": "runs/integration-body-admission-fix-db59a56-20261003/root-audit.json",
+      "sha256": "f02e2833fa76eeb1c295775a26a856e0644141999570bd87108f2fd67004521a"
+    },
+    "primary_report": {
+      "path": "runs/integration-body-admission-fix-db59a56-20261003/report.json",
+      "sha256": "276a81e1c634a7b4ef1c8b735e9109d4d8d86486b3e255e36a7b960ce1c1cc77"
+    },
+    "launcher": {
+      "path": "runs/integration-body-admission-fix-db59a56-launch.py",
+      "sha256": "fb02face18d5cee409106975b76dd02672d6238b87e2ed756f7f7dadf8d81387"
+    },
+    "focused_harness_tests": {
+      "tests": 8,
+      "seconds": 8.74,
+      "skips": 0
+    }
   }
 }

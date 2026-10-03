@@ -1,12 +1,13 @@
 # Combined checkout verification
 
-Latest full regression at `f78f087` passes **711 tests without skips** in
-159.950 seconds (163.231 seconds supervised), with all four actual-runtime test
-flags enabled. The 513 source entries, twenty assets and fifty retained references
-are unchanged. Node24 production build and both UI fixture checks pass. The later
-balanced-development merge at `ba0ae45` passes 54 focused checks and original-data
-admission, including the explicitly reviewed body/homing snapshot change. The full
-suite has not been repeated after that merge. See the detailed verification below.
+Latest full regression at `db59a56` passes **717 tests without skips** in
+167.509 s (172.765 s supervised), including actual simulation, production MaleCNS
+and puck CPU gates. Source/assets/model identities remain unchanged. This includes
+balanced development routing and the body verifier storage-path correction.
+Node24 UI build/fixtures remain bound to unchanged UI bytes at `f78f087`; the new
+homing profile's browser workflow is separate and pending. Hosted CI at `f78f087`
+could not start because of account billing/spending limits; no newer hosted pass
+is claimed. Historical results below retain their original identities.
 
 Earlier combined source `5175b14` passes **697 tests without skips** in
 161.294 seconds (164.601 seconds supervised). All simulation, production male
@@ -495,3 +496,12 @@ three absent sampled process identities, free writer lease and no forced cleanup
 The earlier 711-test pass did not exercise this actual harness path. The failed
 attempt is retained; the minimal verifier correction needs a regression and fresh
 controls before another invocation. No task capability is inferred from cleanup.
+
+The corrected verifier source `a447d76` is integrated at `db59a56`. Root eight
+focused checks pass in 8.740 s, including the real StorageBudget API regression
+that exercises parent and source/native worker admissions with native/process
+boundaries stubbed. The full 717-test enabled regression then passes, with all
+524 source entries, twenty assets and fifty retained files independently rehashed;
+model identities stay unchanged and the writer lease is free. Fresh corrected
+controls independently pass nine fixtures and historical-input/source preflight.
+The actual corrected body attempt remains a separate gate.
