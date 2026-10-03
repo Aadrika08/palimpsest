@@ -1,0 +1,333 @@
+{
+  "id": "M7-NAV-AGG-1",
+  "version": 1,
+  "state": "prospective-plan-only; no source execution admitted",
+  "base_commit": "c509b0d30812ecac102155b1af4c8540a443ed6b",
+  "question": "Does one fixed learner-state expert-label aggregation round yield useful navigation for every augmented original-graph seed on new reserved scenes?",
+  "scope": "One reduced MaleCNS simulator/software interface; no topology, biology, hardware or automatic R3 promotion.",
+  "generator": {
+    "upstream_commit": "8d964599119b420de67ee259434d273651a1a76d",
+    "source_sha256": {
+      "run_connectome_rnn_checkpoint.py": "8708e72aed42b2383d66c7efc5e41a81e21bb9d6dfca48e534a0ef300487cd34",
+      "train_connectome_rnn_dagger.py": "b1b0365ba5d85e0b05b18d2124e9948d2f844b31c3aa3b122420b0c917c96807",
+      "shared_config.py": "8eb9a0b3f1f56fe98e056ac3cc7d6b728572e345f1f86df4e3619b2bff6ce001",
+      "environment/mujoco_two_cam_env_random_obstacles.py": "37612bc4d2cbcda2aa5604d9975c06f2a6d77a64c6c1ebcb4330897d3e2bc751",
+      "environment/mujoco_model_random_obstacles.xml": "3630ec6a202bfb32276a39e21d974228518d4bb93cb4861532467af4ce883484",
+      "agents/teacher_analytic_agent.py": "5edca9a587dea0a2996856e42a96013aab1b1b0a277eacb74b7fc4270c55c586",
+      "models/connectome_rnn_model.py": "707cba79e7bf92923618ccc596e3d7a2d779edc02a970b0949f6dd3c0d28ae80",
+      "core/utils.py": "75089c94aa9c88d9cbbcc2c0a21ee82ea1b7bb158323c017813abb98a451a9c4"
+    },
+    "entrypoints": [
+      "palimpsest.engine.Engine.open/reproduction",
+      "run_connectome_rnn_checkpoint._make_env",
+      "MuJoCoTwoCamEnv.reset/place_obstacles"
+    ],
+    "config": {
+      "scenario": "reproduction",
+      "texture": "checker",
+      "width": 128,
+      "height": 128,
+      "obstacles": 20,
+      "arena_half_extent_m": 7.0,
+      "max_episode_steps": 600,
+      "control_dt_s": 0.02,
+      "physics_dt_s": 0.002,
+      "frame_skip": 10,
+      "end_on_collision": false
+    },
+    "held_out_seed_bytes_frozen_now": true,
+    "no_new_geometry_or_held_out_payload_created": true,
+    "future_disjointness": "Before any authorized held-out model run, generate only its reserved cases under these exact bytes; reject canonical scene/initial-observation and complete payload duplicates against all earlier train/dev/evaluation rosters and new train/dev. No replacement seed, repositioning, altered generator or duplicate-dependent selection. Same declared scene across matched arms/seeds must intentionally match; that pairing is not a distinct scene."
+  },
+  "reserves": {
+    "learner_state_train_scene_seeds": [
+      3100,
+      3101,
+      3102,
+      3103
+    ],
+    "closed_loop_dev_scene_seeds": [
+      3110,
+      3111,
+      3112,
+      3113
+    ],
+    "closed_loop_held_out_scene_seeds": [
+      3120,
+      3121,
+      3122,
+      3123,
+      3124,
+      3125,
+      3126,
+      3127
+    ],
+    "model_seeds": [
+      10,
+      11,
+      12
+    ],
+    "id_disjointness_check": "Existing JSON plan/data-manifest seed keys have no overlap; this is not geometric/payload disjointness. Never use these seeds in a toy, smoke or tuning run."
+  },
+  "fixed_source_models": {
+    "index_path": "data/manifests/male-recovery-research-development-v1.json",
+    "index_sha256": "cf50fd2f6a96cfb1afd43e23eae05b76522116abdcf544ef41735033dc52b6b5",
+    "producer_root": "../task-phases",
+    "selected": "Exactly original graph seed10/11/12 from admitted recovery bundles; no control or winning-seed choice",
+    "pair_report_sha256": {
+      "10": "60ae08b60e938fc9a2de600de785911e4c988ea98059f0f9ab3b1d59f525d47e",
+      "11": "3dd18f811b2459a314491d20c1644a19f5b6b649be55f95004778b11b8be6151",
+      "12": "08fea1c20ae301cca839c3babe97b6617a5d919bf617865f2e028866a35c15e0"
+    },
+    "read_or_loaded_in_this_slice": false
+  },
+  "collection": {
+    "order": "scene3100..3103 then frozen learner seed10/11/12",
+    "owners": 12,
+    "maximum_ticks": 7200,
+    "snapshot_files": 12,
+    "initialization": "Fresh seeded episode, zero student hidden, full fresh teacher fingerprint; one immutable source learner per owner. No reset, action blend, prefix, perturbation, teacher takeover or coverage-censoring stop.",
+    "once_per_interval": "Query unchanged teacher exactly once at the pre-action state; record final returned float32 expert action and before/after recovery counters/replacement transitions. Engine then executes the frozen learner normal policy path once; no action_override and no duplicate recurrent advance.",
+    "targets": "New rows target the canonical returned expert action. Actual executed student action/control is independently retained, never relabelled expert. Old134 recovery rows keep their actual executed targets, including prefix differences.",
+    "observations": "Unchanged388 effective RGB/contact/bearing inputs only; same pre-action observation recorded for expert-labelled student feature. Teacher world/planner/PID/pose and diagnostic contact arrays are audit metadata, never student features. Eye rendering excludes teacher drawing overlays.",
+    "boundaries": "Publish every complete admitted interval before guard/outcome stop. Valid goal/collision/stalled/time_limit endings retained at1..600rows without minimum-length selection, crop or replacement. No v3 coverage_complete stop; failed/corrupt/unsafe source stops the stage with remaining not_started.",
+    "teacher_advice_limitation": "Pinned Teacher.act recovery counter advances per query, even though learner ignores returned recovery actions. These are unchanged analytic-teacher advice on learner history, not proved expert-correct labels or executed recovery; extra labels need not cure private-state/observability mismatch.",
+    "query_isolation_guard": "Before admitting each interval, bind pre/post teacher query native state, effective student observation/feature bytes and relevant Python/NumPy/engine/Torch RNG states. All must remain equal; separately record intentional bounded teacher-private transitions and path_to_draw/target_to_draw overlays. Require pinned eye-render overlay isolation plus actual recorded input equality. Never repair by teleport/reset/alternate expert/takeover."
+  },
+  "contacts": {
+    "collision_enabled_robot_geoms": [
+      "base_geom",
+      "left_wheel_geom",
+      "right_wheel_geom",
+      "caster_fork",
+      "caster_wheel_geom"
+    ],
+    "all_robot_geoms": [
+      "base_geom",
+      "left_wheel_geom",
+      "right_wheel_geom",
+      "caster_fork",
+      "caster_wheel_geom",
+      "cam_left_marker",
+      "cam_right_marker"
+    ],
+    "obstacle_geoms": [
+      "obstacle0",
+      "obstacle1",
+      "obstacle2",
+      "obstacle3",
+      "obstacle4",
+      "obstacle5",
+      "obstacle6",
+      "obstacle7",
+      "obstacle8",
+      "obstacle9",
+      "obstacle10",
+      "obstacle11",
+      "obstacle12",
+      "obstacle13",
+      "obstacle14",
+      "obstacle15",
+      "obstacle16",
+      "obstacle17",
+      "obstacle18",
+      "obstacle19"
+    ],
+    "intended_rover_obstacle_pairs": "Exact unordered Cartesian product of five collision-enabled named robot geoms and20named obstacle geoms:100pairs; identities verified against compiled model ownership.",
+    "ground_support_pairs": [
+      [
+        "floor",
+        "left_wheel_geom"
+      ],
+      [
+        "floor",
+        "right_wheel_geom"
+      ],
+      [
+        "floor",
+        "caster_wheel_geom"
+      ]
+    ],
+    "study_admission": "Retain all pairs/distances/classes/times in10pre-control stages plus unchanged end cache. Named intended obstacle contacts remain actual geometric contacts in observations/outcomes; no force/control edit, contact suppression, termination rewrite or renderer change. World-only pairs retained separately and may move. Floor/base, floor/fork, marker, self, wall, unknown/misowned robot pair or incomplete/nonfinite/overflow packet stops infrastructure.",
+    "legacy_guards_unchanged": true,
+    "implementation": "New named study validator consumes unchanged ContactProbe packets. Never broaden old collect_male_recovery.contact_admission or body-profile guards. Same fixed study admission applies to collection/dev/held-out native owners.",
+    "limitation": "Cached contact sensor and stage-zero contact are distinct;10discrete caches are not continuous collision coverage."
+  },
+  "data": {
+    "old_manifest_sha256": "402d2676668e88bb998457ba0a9ea92f8a4c2a27b92a19d67ad76b80e3a67014",
+    "old_train_rows": 2117,
+    "recorded_dev_rows": 1228,
+    "old_sources": 14,
+    "new_sources": 12,
+    "maximum_augmented_train_rows": 9317,
+    "maximum_combined_rows": 10545,
+    "old_arm": "Old2117train/1228recorded-dev unchanged; new fresh fit, not reused checkpoint predictions.",
+    "augmented_arm": "Old2117train followed by all admitted new expert-labelled sources in declared collection order; same unchanged1228recorded-dev. No weighting, balancing, oversampling, sample removal or source filtering.",
+    "sequence": "Zero hidden for each source, carry/detach at32-row windows including final partial window; no padding, terminal bootstrap or cross-source hidden carry. Preserve old67-row censored sources exactly32/32/3; new natural/cap endings labelled distinctly.",
+    "admission": "Separately named immutable research manifest binds source/profile/label kind and actual/expert metadata plus all source/features/targets. Reject duplicate complete new feature-target streams and cross-split/corpus scene/payload contamination before training; no loader fallback or production/v2 loader widening."
+  },
+  "learning": {
+    "arms": [
+      "old-corpus",
+      "augmented"
+    ],
+    "graph_variant": "original only in both arms; no rewire call",
+    "models": 6,
+    "training_seeds": [
+      10,
+      11,
+      12
+    ],
+    "paired_initialization": "Same declared seed and original graph initialization per old/augmented pair; separate fresh models.",
+    "fitter": "scripts/train_male_reduced.fit/evaluate byte-identical; current male_model.make_model unchanged",
+    "feature_count": 388,
+    "epochs": 20,
+    "optimizer": "Adam",
+    "learning_rate": 0.001,
+    "gradient_norm_cap": 1.0,
+    "window": 32,
+    "dtype": "float32",
+    "device": "cpu",
+    "threads": 1,
+    "selection": "Earliest strict minimum unchanged1228-row recorded-dev loss over exactly20epochs; all6checkpoints freeze before new closed-loop dev; no seed/arm/held-out selection.",
+    "loss": "mean(0.5*((velocity_error/3)^2 +1-cos(heading_error_radians)))",
+    "graph_sha256": "5aba0fef99afba666b88e40fc535091454e46d9330580d9280b203e8da0abac0",
+    "cell_sha256": "707cba79e7bf92923618ccc596e3d7a2d779edc02a970b0949f6dd3c0d28ae80",
+    "runtime": {
+      "python": "3.11.15",
+      "numpy": "2.2.5",
+      "torch_distribution": "2.9.0",
+      "torch_build": "2.9.0+cu128",
+      "compute": "CPU one-thread; CUDA hidden/uninitialized"
+    },
+    "confound": "Augmented corpus increases optimizer updates per epoch as well as learner-state/expert-label coverage; this fixed study does not isolate either causal mechanism."
+  },
+  "closed_loop": {
+    "order": "scene increasing, model seed10/11/12, old-corpus then augmented",
+    "dev_owners": 24,
+    "dev_maximum_ticks": 14400,
+    "held_out_owners": 48,
+    "held_out_maximum_ticks": 28800,
+    "snapshot_files": 72,
+    "one_run": "Fresh zero-hidden episode, one checkpoint once per interval, unmasked eyes, no privileged teacher query/input, reset, intervention, action override or rescue; max600ticks.",
+    "success": "Unchanged native last_outcome.reason==goal within600ticks under admitted controls/contact records. All natural non-goal outcomes count as failures; no early/late outcome rewrite.",
+    "dev_unlock": "All24runs complete with normal process/disjointness/source/finite/guard/storage admission AND every augmented seed has>=3goals among4freshdevscenes. Failure keeps held-out geometry/paths/model execution unopened.",
+    "held_out_criterion": "All48runs complete with normal admission AND every augmented seed has>=6goals among8reservedheld-out scenes. Report old-arm counts and paired per-scene differences too; no post-result comparative threshold, pooling, winning seed or topology claim.",
+    "meaning": "Meets only this prospectively declared simulator navigation criterion; R3 status remains an explicit release-review decision, never automatic."
+  },
+  "limits": {
+    "total_native_owners": 84,
+    "total_maximum_numeric_ticks": 50400,
+    "total_initial_snapshots": 84,
+    "per_owner_seconds": 180,
+    "per_recording_bytes": 150994944,
+    "per_snapshot_bytes": 16777216,
+    "per_owner_recording_plus_snapshot_bytes": 167772160,
+    "per_log_bytes": 1048576,
+    "snapshot_count_per_owner": 1,
+    "stage_output_caps_bytes": {
+      "learner_state_collection": 3221225472,
+      "data_preparation": 67108864,
+      "training_three_pairs": 268435456,
+      "development": 4294967296,
+      "held_out": 8589934592,
+      "controls_and_audits": 268435456
+    },
+    "stage_allowances_bytes": {
+      "learner_state_collection": {
+        "recordings_and_initial_snapshots": 2013265920,
+        "results": 50331648,
+        "native_logs": 25165824,
+        "outer_logs": 6291456,
+        "controls": 16777216,
+        "atomic_native_staging": 134217728,
+        "headroom": 8388608
+      },
+      "development": {
+        "recordings_and_initial_snapshots": 4026531840,
+        "results": 25165824,
+        "native_logs": 50331648,
+        "outer_logs": 6291456,
+        "controls": 16777216,
+        "atomic_native_staging": 134217728,
+        "headroom": 8388608,
+        "report": 4194304
+      },
+      "held_out": {
+        "recordings_and_initial_snapshots": 8053063680,
+        "results": 50331648,
+        "native_logs": 100663296,
+        "outer_logs": 6291456,
+        "controls": 16777216,
+        "atomic_native_staging": 134217728,
+        "headroom": 8388608,
+        "report": 4194304
+      },
+      "training_three_pairs": {
+        "published_pair_payloads": 201326592,
+        "atomic_staging": 33554432,
+        "logs": 8388608,
+        "controls": 16777216,
+        "headroom": 8388608
+      }
+    },
+    "allowance_totals_bytes": {
+      "learner_state_collection": 2254438400,
+      "development": 4271898624,
+      "held_out": 8373927936,
+      "training_three_pairs": 268435456
+    },
+    "free_floor_bytes": 1073741824,
+    "combined_incremental_free_reservation_bytes": 17783848960,
+    "camera_contact_numeric_estimate": {
+      "bytes_per_tick": 237568,
+      "recording600ticks_plus4MiB": 146735104,
+      "formula": "Four128x128RGBuint8 cameras +32KiB contact/body arrays +8KiB remaining fields; actual fields must recheck before first numeric step, refuse if insufficient."
+    },
+    "stage_time_limits_seconds": {
+      "collection_internal": 2160,
+      "collection_normal_through_exit": 2210,
+      "collection_enclosing_hard": 2220,
+      "preparation_internal": 180,
+      "preparation_enclosing_hard": 240,
+      "training_pair_internal": 600,
+      "training_pair_outer": 660,
+      "training_all_internal": 2100,
+      "training_all_enclosing_hard": 2160,
+      "dev_internal": 1800,
+      "dev_normal_through_exit": 1850,
+      "dev_enclosing_hard": 1860,
+      "held_out_internal": 3600,
+      "held_out_normal_through_exit": 3650,
+      "held_out_enclosing_hard": 3660
+    },
+    "anticipated_total_wall_minutes": [
+      65,
+      100
+    ],
+    "estimate_not_observed_or_guaranteed": true,
+    "disk_risk": "Previous planning observation~27GiBfree minus~10GiBestimatedremainingmemorymatrix leaves little room versus16.5625GiBadditional reserve; prospective fresh full admission may block. Never delete retained evidence or loosen budgets to run."
+  },
+  "implementation_next": "After plan review only: one named learner-state collector/admission plus thin paired-original trainer and trusted study Binding/evaluation entrypoint using existing helpers. Preserve production/v2/recovery loaders/protocols and immutable old producers; no generic registry or public profile toggle.",
+  "stop_policy": "No retries/replacement/tuning/second round. All fixed natural outcomes retained; functional gate scored only after all stage owners. First infrastructure/source/label/geometry/payload/contact/finite/storage/deadline/cleanup failure stops later work, preserves raw first failure/not_started rows and cannot publish admissible success. Source/data before/after and all final payloads synced/normalprocess before report admission; outer finite PID/start drain, no nested writer leases.",
+  "qualification_claims": [],
+  "held_out_opened": false,
+  "production_assets_unchanged": true,
+  "current_reusable_source_sha256": {
+    "src/palimpsest/engine.py": "bb81e0c23fe8bdbdfe9f499582e9df105a80ad2030a0831c6cd73b995c812417",
+    "src/palimpsest/profiles.py": "1bdfcb0998f57355afaebbe7704219957531711fc1d18f28e2937579da4cd55a",
+    "src/palimpsest/male_model.py": "9327bca1db3cbeda7aab8b222ccfa59daef4e01f3f1b4689f83009955d970cad",
+    "src/palimpsest/male_policy.py": "d2fd1a80781e8bad11b6e4947e1a3a8d61bd4acf46dfcaf6c191ccb6987e7cfe",
+    "scripts/train_male_reduced.py": "75d3fc1fd71bab6b749c158a58fe9d802fc10253f4416d1c8f5739a2bdf4ff4a",
+    "src/palimpsest/male_research.py": "e46ac8d8988a77f75c921666039cb39ea6fc0aeb13df862042af96b69367d232",
+    "src/palimpsest/male_recovery_research.py": "0117701d840ef36db624dbdf2f3fb88668b50761fbc71e7a1a7aed6655d830cf",
+    "scripts/collect_male_recovery.py": "17d948322bbf124c7eeee3d55e4034e12c4b3436d933dab1df4245f278c46f60",
+    "src/palimpsest/body_profile.py": "796df9ab2a109606432c7a97bfbea5f58ab7acc75768e638b5b8731a390cbb54",
+    "scripts/prepare_male_recovery_data.py": "2b5c7b78e84a782838cf51b5b4682ea6c3ab4bbb5c11180984ccdc8f03cc06ca",
+    "data/manifests/male-recovery-research-development-v1.json": "cf50fd2f6a96cfb1afd43e23eae05b76522116abdcf544ef41735033dc52b6b5",
+    "docs/plans/m7-recovery-learning-protocol.json": "091c4e98bf8bc4124383673783a21f5687112946ffeaa54c8a70c41e968f2b28",
+    "docs/plans/m7-training-v2-protocol.json": "8f360289ce286f56e31051c7bcfc6932a8f413dce662b83ddb9817b3e509d69b",
+    "uv.lock": "8a7a880d020c1907e221575fda65642241f809fc628a55381f1b6137bff1b732"
+  },
+  "source_only_check_sha256": "29e6b31c8de02f8868e938bebc02ea6ec7a7c505b81c4a79a9a3fd979b146316"
+}
