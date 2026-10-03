@@ -186,3 +186,9 @@ exposed create-only late report updates; the failure and narrow fix are retained
 read-only source audit reconstructs 1,039 historical intervals without inference
 or native execution. This is source/fixture evidence; actual diagnostic and
 held-out R2 outcomes remain pending.
+
+The [fixed recovery held-out source](plans/m7-recovery-heldout.md), `6a5cb7e`,
+passes 74 root checks with one explicit Torch opt-in skipped (2.586 s). Its
+retained-data admission passes in 8.036 s without inference, native execution or
+held-out reads. This prepares separate teacher/recorded/closed-loop evaluation;
+no held-out result or R3 qualification is claimed.

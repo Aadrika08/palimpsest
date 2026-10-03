@@ -109,6 +109,10 @@ policy provenance retains the small current reader inventory. Production model
 admission remains unchanged. [Recovery development](reports/m7-recovery-development.md)
 passes the fixed 24-owner gate over 8,552 intervals. Both variants total 7/12 goals;
 this establishes neither a topology advantage nor held-out qualification. The
+[named held-out evaluator](plans/m7-recovery-heldout.md) adds an exact trusted
+binding with truthful held-out provenance, reusing the existing collector and
+evaluators. Its admission revalidates development before opening held-out inputs;
+source fixtures and the retained-data preflight pass, with execution pending. The
 separate [puck learning interface](plans/m6-puck-learning.md) uses eight sensors
 plus its own previous mode; training requires every fixed demonstration to pass
 coverage admission. The retained first batch fails that gate despite twenty
