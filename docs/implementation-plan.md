@@ -10,6 +10,8 @@ U learns revision rules from past episodes and transfers them to unfamiliar inst
 
 Mandatory LLM integration, multiple robots, and unattended day-long operation are outside the release gate. Do not rewrite the original PRD.
 
+R3 scope confirmed on 3 October 2026: keep MaleCNS open for a new navigation study. The completed recovery held-out evaluation (originals 5/24 goals; controls 8/24) does not qualify navigation. Freeze a new prospective protocol, capability threshold and unused held-out reserve before that study; preserve the consumed evaluation and its outcomes.
+
 ## Architecture and contracts
 
 Use Python 3.11 with uv, MuJoCo/Gymnasium, PyTorch, a local FastAPI service, and React/TypeScript/Vite with Node 24 LTS. Pin the upstream FLYNN submodule at `8d964599119b420de67ee259434d273651a1a76d`; retain its effective preprocessing, control interval, and action conversion. Freeze the working environment in uv.lock after reference checks.
