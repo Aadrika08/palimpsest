@@ -79,8 +79,8 @@ mistakes, not study failures or experiment retries.
 
 The [JSON index](m5-remaining-08-comparison.json) pins all owners, scores, timings,
 resources, raw ledger, corrected/draft receipts and root code/results. It binds
-598 unique references / 1,103,953,868 bytes; raw-output and outer-control scopes
-are separate. Aggregate SHA is
+600 unique references / 1,104,028,939 bytes, including both historical E/U
+inputs; raw-output and outer-control scopes are separate. Aggregate SHA is
 `7a84ec37ebb44a58cb2ec83fc7bbc567603ea48dc3646ed79e1f3238d5761630`;
 plan SHA is
 `5b90cbd70c012e6924b8a0c51931b55654067044598820db2ec1a32876124d36`.
