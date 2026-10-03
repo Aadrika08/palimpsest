@@ -242,6 +242,18 @@ or moved and no held-out implementation/execution is unlocked.
 
 ## Verification
 
+Hosted checks on navigation-integrated `cbff953` first fail during pytest collection:
+the historical new-body verifier checks protected Engine bytes at import time.
+The narrow correction `aff2be9` keeps the exact protocol bytes pinned during import
+and enforces all historical source pins at both actual parent and worker entry
+points before output/native work. Synthetic fixtures now check authored source
+and protocol drift plus both entry guards. The frozen body protocol, historical
+study branch and evidence remain unchanged. After root/peer source review,
+[hosted fixture and frontend jobs](https://github.com/Aadrika08/palimpsest/actions/runs/37144336303)
+pass on `aff2be9`; the failed log and final run receipt are retained under
+`runs/historical-body-import-ci-cbff953/`. This is hosted fixture validation;
+a new fully enabled local combined regression remains pending the active runtime.
+
 Remaining-08 comparison raw/outcome audits pass first in 16.794 / 8.944 s.
 Receipts under `runs/memory-remaining-08-comparison-root-audit-ba48305/`:
 `audit.json` SHA `d04b9eca5445ba9a72d6032e86a1adcb497e87d5aa6d2749a0a97af3cd6e78c2`;
