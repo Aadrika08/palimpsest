@@ -283,3 +283,21 @@ and regression success are not native-reference or held-out evidence.
 
 Both CI workflows passed on `c5423fd` (37083379078 and 37083374585), preceding
 this reference source merge. Main remains unchanged.
+
+
+The [recovery research preparation](m7-recovery-data.md) on `7d5fc1f` passes in
+11.906 seconds supervised / 13.701 seconds including cleanup. Its manifest
+`402d2676668e88bb998457ba0a9ea92f8a4c2a27b92a19d67ad76b80e3a67014`
+contains 2,117 train/1,228 dev rows and no held-out data. Root reconstructs every
+feature/actual-target digest across fourteen ordered sources and rehashes all
+652 tracked/upstream/raw identities in 9.870 seconds. Both 67-row segments retain
+their 21 prefix actions that differ from expert metadata and their paused,
+censored endings. No Torch/MuJoCo import or model fitting occurs. Evidence
+`90eb17b` is integrated after checking all eighteen indexed references.
+
+The [puck collection evidence](m6-puck-teacher-collection-v1.md), `2ac16ac`, is
+also integrated. Its all-goal but failed-coverage outcome remains excluded from
+training; source-only counterfactual review motivates a separate stopping
+correction, without changing the old task result or its admission requirement.
+Both CI workflows passed on `4996334` (37083921680 and 37083917875), before these
+documentation-only merges.
