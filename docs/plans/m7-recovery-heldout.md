@@ -1,4 +1,4 @@
-# M7 fixed recovery held-out evaluation, source preparation
+# M7 fixed recovery held-out evaluation
 
 This separate named gate evaluates the six frozen executed-target/right-censored research candidates. **Acceptance is completed held-out evaluation only.** Original PRD §10.3 requires separate graph/interface/training evaluation but supplies no useful-navigation held-out threshold. No new threshold, R3 qualification or topology advantage is inferred from development. Production admission, the development-only route and historical v2 protocols remain unchanged.
 
@@ -10,7 +10,9 @@ The byte-pinned [protocol](m7-recovery-heldout-protocol.json) is `097321aaf71baa
 | Recorded inputs | All six frozen models evaluated on those same four completed recordings | 120 / 180 s | 64 MiB |
 | Closed loop | 1200–1207 × seeds 10/11/12 × original/rewired, 48 fresh student owners, max 600 ticks each | 3,600 / 3,660 s | 8 GiB |
 
-Native ceilings are 52 owners, 31,200 intervals and 52 initial snapshots. Owner/startup/progress bounds remain 180/60/30 seconds; combined recording plus initial snapshot remains 160 MiB per owner. Natural goal/collision/stall/time-limit outcomes, including unsuccessful navigation, are valid observations. The first infrastructure/source/finite/admission/deadline failure stops the stage and preserves all remaining `not_started` rows. Every final stage admission additionally needs unchanged ledgers, normal process exit and bounded verified-owned cleanup. Prospective controls must enforce these external/publication/cleanup bounds; they are not prepared or authorized by this source slice.
+Native ceilings are 52 owners, 31,200 intervals and 52 initial snapshots. Owner/startup/progress bounds remain 180/60/30 seconds; combined recording plus initial snapshot remains 160 MiB per owner. Natural goal/collision/stall/time-limit outcomes, including unsuccessful navigation, are valid observations. The first infrastructure/source/finite/admission/deadline failure stops the stage and preserves all remaining `not_started` rows. Every final stage admission additionally needs unchanged ledgers, normal process exit and bounded verified-owned cleanup. Actual controls must enforce these external/publication/cleanup bounds; each stage requires separate review and GO.
+
+The [teacher stage completed once](../reports/m7-recovery-heldout-teachers.md) at frozen source `6a5cb7e174593d54387ab3d75ffe7889a577bae3`: four normal goal endings at 378/284/274/218 intervals, 1,154 rows and four initial snapshots. Normal enclosing exit 0 took 127.056875 seconds. Both NumPy-only retained audits passed, including independent feature/target reconstruction and source/payload disjointness. The byte-pinned collection SHA is `5610a488f7c6b5563d08f0cafa8fe7742d5bdd4d0cdd9ab59c524c3e0e25b002`. Recorded-input and closed-loop student stages remain unexecuted; their controls are pending. This documentation update changes no runtime, protocol, model, source recording or admission threshold.
 
 Separate output trees prevent the teacher allocation being silently counted inside the closed-loop 8 GiB quota. Their combined managed ceilings are **9 GiB + 64 MiB = 9,730,785,280 bytes**. Prospective admission reserves 52 × 160 MiB owner allowances + 52 × 2 MiB bounded native streams + 64 MiB recorded stage + 40 MiB bounded report/control/staging headroom = **8,942,256,128 bytes**. Including the unchanged 1 GiB free-disk floor requires **10,015,997,952 free bytes** before a stage starts; the CLI checks that conservative combined reservation before output creation. Each stage also retains its own exact storage admission. Reviewed actual controls must place the separate roots on the measured filesystem and retain actual usage/free space; the arithmetic is not a measured storage result.
 
@@ -26,7 +28,7 @@ Source fixtures use temporary authored recordings and model/owner boundary stubs
 PYTHONPATH=src:tests ../lab-hardening/.venv/bin/python -m unittest test_male_recovery_heldout
 ```
 
-Prospective commands (not authorized/executed; each actual stage requires reviewed retained supervision and fresh separate outputs):
+General command shapes (teacher collection is now completed; the two student stages remain prospective and require reviewed retained supervision and fresh separate outputs):
 
 ```sh
 PYTHONPATH=src ../lab-hardening/.venv/bin/python scripts/evaluate_male_recovery_heldout.py collect \
@@ -38,4 +40,4 @@ PYTHONPATH=src ../lab-hardening/.venv/bin/python scripts/evaluate_male_recovery_
   --repo "$PWD" --assets /absolute/pinned/assets --output runs/fresh-heldout-closed-loop
 ```
 
-Reports retain every fixed seed/model loss and paired natural outcome, plus qualification claims `[]`. Completion does not establish useful-navigation competence, recovery after the deliberately censored source endpoint, biological sensor mapping, causal training-coverage improvement, physical hardware behavior or R3. The prior failed training-v2 Stage C and recovery collection v1/v2 results remain immutable failures. No held-out source has been opened by this source preparation.
+Reports retain every fixed seed/model loss and paired natural outcome, plus qualification claims `[]`. Completion does not establish useful-navigation competence, recovery after the deliberately censored source endpoint, biological sensor mapping, causal training-coverage improvement, physical hardware behavior or R3. The prior failed training-v2 Stage C and recovery collection v1/v2 results remain immutable failures. The original source preparation opened no held-out inputs; the separately authorized teacher stage subsequently produced and audited its four reserved recordings without student evaluation.
