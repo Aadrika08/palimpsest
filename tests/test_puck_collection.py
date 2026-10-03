@@ -157,6 +157,8 @@ class CollectionFixtures(unittest.TestCase):
             # A real owner is a fresh process. Isolate that import boundary only
             # inside the reversible module patch; never weaken the product guard.
             sys.modules.pop('torch',None)
+            # Fake native resources also carry the frozen runtime metadata.
+            stack.enter_context(patch.object(gate.platform,'python_version',return_value=spec['runtime']['python']))
             stack.enter_context(patch.dict(gate.os.environ,{'MUJOCO_GL':'egl'}))
             stack.enter_context(patch.object(gate,'teacher_sources',return_value=config['sources']))
             stack.enter_context(patch.object(flynn,'import_upstream',return_value=SimpleNamespace(MuJoCoTwoCamEnv=lambda **kwargs:env)))
@@ -209,11 +211,14 @@ class CollectionFixtures(unittest.TestCase):
 
     def test_fake_native_owner_isolates_and_restores_preexisting_torch_module(self):
         marker=SimpleNamespace(fixture='preexisting Torch marker; no Torch imported')
-        with patch.dict(sys.modules,{'torch':marker}):
+        version=gate.platform.python_version()
+        with patch.dict(sys.modules,{'torch':marker}), patch.object(gate.platform,'python_version',return_value='3.11.16'):
             with tempfile.TemporaryDirectory() as tmp:
                 code,report,events,env=self.run_owner_fixture(Path(tmp)/'teacher-6000')
-                self.assertEqual(code,0)
+            self.assertEqual(code,0)
             self.assertIs(sys.modules['torch'],marker)
+            self.assertEqual(gate.platform.python_version(),'3.11.16')
+        self.assertEqual(gate.platform.python_version(),version)
 
     def test_owner_record_failure_does_not_commit_own_mode(self):
         with tempfile.TemporaryDirectory() as tmp:
