@@ -5,11 +5,14 @@ and the [training-v2 contract](m7-navigation-training-v2-protocol.json) without
 changing their numerical, scene, contact, task, resource or qualification criteria.
 Trainer source is frozen at `6feade9770dc40efa567633412baec4347ee33cb`.
 The corrected training invocation completes all six models in session `70035`;
-independent retained checkpoint auditing passes first. Their exact publication
-index remains pending. This document authorizes neither development execution,
-fresh scene inspection nor held-out access.
+independent retained checkpoint auditing passes first. Their [publication](../reports/m7-navigation-training-v2.md)
+and exact index are integrated at `041434d`. The index is
+`data/manifests/male-navigation-research-development-v2.json`, SHA-256
+`f938d9799b45b4c33d65a1d2c5363fea4e7b419ad9051722bff1a3df99ea77cf`.
+This document authorizes neither development execution, fresh scene inspection
+nor held-out access.
 
-Implementation requires a later exact six-model index binding three normally
+Implementation uses that exact six-model index binding three normally
 completed pair reports, terminal receipts, protocols, checkpoints, original graph,
 ordered IDs, feature/cell identities, runtime, admitted data and historical source
 hashes. All six 20-epoch histories and earliest unweighted recorded-dev minima must

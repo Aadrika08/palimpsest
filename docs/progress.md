@@ -13,9 +13,11 @@ control and input admission; its first invocation `77512` is retained as a
 zero-model startup refusal. Fresh corrected controls pass fourteen independent
 checks and full input admission on unchanged `6feade9`. Session `70035` drains
 exit0 with all six fits complete; independent checkpoint auditing passes first.
-The exact six-model publication is being prepared before fresh navigation work.
+The [six-model publication](reports/m7-navigation-training-v2.md), `041434d`,
+and exact development index are integrated after publication review.
 Remaining-09 controls pass independent review on `cb13db9`; its separately bounded
-admission is active in session `81740`. R3 stays open.
+admission drains session `81740` exit0 with twelve completed owners; retained
+verification remains pending. R3 stays open.
 
 Remaining-06 comparison completes once on frozen `016948b`, bringing independently
 audited development coverage to **32/48 cells**: forty owners, 4,687 neural rows,
@@ -219,7 +221,7 @@ remains ineligible.
 - Mechanism: pinned upstream model/environment; allowlisted controller inputs; one mutable-runtime owner; complete native, policy, application and RNG snapshots. Recorded E fitting and U-only swaps preserve declared invariant hashes. Male controllers use separately trained fixed CPU assets and an authored sensor mapping.
 - Missing: M5 counterbalanced/held-out transfer; learned M6 puck success and held-out evaluation; M7 closed-loop qualification; M8 physical work; independent M9 operation, exhibition duration and physical artwork; final M10 handoff.
 - Unknown: original checkpoint training lineage, full-model Pi performance, physical stopping limits and account quota (telemetry unavailable).
-- Next action: publish the six independently audited navigation models and their exact research index, then implement the frozen fresh-development admission/runner. Training session `70035` drains exit0; retained audit passes first. The earlier zero-model startup refusal remains unchanged, and held-out stays locked. Remaining-09 controls pass eight root fixtures and full preflight; execute its separately bounded admission, then audit retained outcomes before comparison. Memory coverage is 36/48; failed 07 is neither retried nor given longer deadlines. The existing paired readout covers its historical 24-cell subset. Scoped exploration, homing and measured adaptation are met; learned puck keeps M6 open, automatic retraining stops after both negative development studies, and held-out stays locked. Physical qualification and independent exhibition operation remain open.
+- Next action: implement and review the frozen fresh-development admission/runner using the six published, independently audited navigation models. Training session `70035` drains exit0; retained audit passes first. The earlier zero-model startup refusal remains unchanged, and held-out stays locked. Remaining-09 controls pass eight root fixtures and full preflight; its twelve-owner admission has drained exit0; audit retained outcomes before comparison. Memory coverage is 36/48; failed 07 is neither retried nor given longer deadlines. The existing paired readout covers its historical 24-cell subset. Scoped exploration, homing and measured adaptation are met; learned puck keeps M6 open, automatic retraining stops after both negative development studies, and held-out stays locked. Physical qualification and independent exhibition operation remain open.
 
 The [prospective held-out outline](plans/m5-heldout-proposal.md) specifies the
 reserved 64–71 matrix without opening it. Source/profile freeze and all 48 audited
@@ -292,6 +294,17 @@ native simulation ran in the audit. Receipt:
 SHA `6f393359bf7ccf4d573a23c6a04708d2a1e1ca33723f7bd98f91596f0f48bb90`.
 All three augmented recorded-dev losses exceed the paired old-corpus losses;
 selected augmented epochs are 1, 1 and 7. Fresh navigation outcomes remain unknown.
+The [focused publication](reports/m7-navigation-training-v2.md), `041434d`, and
+exact six-model index are integrated. Root publication review verifies all 154
+focused references / 5,354,654 bytes and matches the copied 1,180-entry ledger
+exactly to the prior independent audit, without a redundant full corpus sweep.
+The first checker removed the descriptive interpretation field from only one
+side of a metric comparison; the original script/failure and narrow correction
+are retained. Corrected review passes in 0.065 s:
+`runs/m7-navigation-training-v2-publication-root-review/audit.json`,
+SHA `b870cb857ea2a71122527b7a7a1021f3db49ca25d8d54cadfda37102bde2c5f0`.
+Publication and trained results were unchanged. The new admission/Engine-binding
+source is being implemented separately before any development owner.
 Remaining-09 admission preparation passes eight producer fixtures and one full
 preflight (7.627 / 2.420 s): 603 identities and twelve fresh IDs disjoint from
 754 prior IDs. Independent review also passes first: eight fixtures in 8.265 s
