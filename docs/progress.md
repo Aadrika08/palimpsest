@@ -11,9 +11,11 @@ Accepted memory comparison coverage is now **36/48 development cells** after
 four-cell hole remains open. The paired navigation trainer has passed independent
 control and input admission; its first invocation `77512` is retained as a
 zero-model startup refusal. Fresh corrected controls pass fourteen independent
-checks and full input admission on unchanged `6feade9`; their actual run is active
-in session `70035`. Outcomes remain pending. Remaining-09 admission is prepared
-on `cb13db9` and awaits root review after the training slot is released. R3 stays open.
+checks and full input admission on unchanged `6feade9`. Session `70035` drains
+exit0 with all six fits complete; independent checkpoint auditing passes first.
+The exact six-model publication is being prepared before fresh navigation work.
+Remaining-09 controls pass independent review on `cb13db9`; its separately bounded
+admission is authorized next. R3 stays open.
 
 Remaining-06 comparison completes once on frozen `016948b`, bringing independently
 audited development coverage to **32/48 cells**: forty owners, 4,687 neural rows,
@@ -217,7 +219,7 @@ remains ineligible.
 - Mechanism: pinned upstream model/environment; allowlisted controller inputs; one mutable-runtime owner; complete native, policy, application and RNG snapshots. Recorded E fitting and U-only swaps preserve declared invariant hashes. Male controllers use separately trained fixed CPU assets and an authored sensor mapping.
 - Missing: M5 counterbalanced/held-out transfer; learned M6 puck success and held-out evaluation; M7 closed-loop qualification; M8 physical work; independent M9 operation, exhibition duration and physical artwork; final M10 handoff.
 - Unknown: original checkpoint training lineage, full-model Pi performance, physical stopping limits and account quota (telemetry unavailable).
-- Next action: drain navigation training session `70035`, then independently audit retained checkpoints before any fresh development. Corrected v2 controls pass fourteen root checks and full inventory admission; the existing HOME lease probe preserves output absence. The earlier zero-model startup refusal remains unchanged. Actual fitting outcomes remain pending and held-out stays locked. Review prepared remaining-09 admission controls after training and its retained-results audit release the bulk slot. Memory coverage is 36/48; failed 07 is neither retried nor given longer deadlines. The existing paired readout covers its historical 24-cell subset. Scoped exploration, homing and measured adaptation are met; learned puck keeps M6 open, automatic retraining stops after both negative development studies, and held-out stays locked. Physical qualification and independent exhibition operation remain open.
+- Next action: publish the six independently audited navigation models and their exact research index, then implement the frozen fresh-development admission/runner. Training session `70035` drains exit0; retained audit passes first. The earlier zero-model startup refusal remains unchanged, and held-out stays locked. Remaining-09 controls pass eight root fixtures and full preflight; execute its separately bounded admission, then audit retained outcomes before comparison. Memory coverage is 36/48; failed 07 is neither retried nor given longer deadlines. The existing paired readout covers its historical 24-cell subset. Scoped exploration, homing and measured adaptation are met; learned puck keeps M6 open, automatic retraining stops after both negative development studies, and held-out stays locked. Physical qualification and independent exhibition operation remain open.
 
 The [prospective held-out outline](plans/m5-heldout-proposal.md) specifies the
 reserved 64–71 matrix without opening it. Source/profile freeze and all 48 audited
@@ -277,12 +279,27 @@ existing HOME lease, and launches the frozen outer command in session `70035`.
 Startup receipt:
 `runs/m7-navigation-training-v2-control-v2-6feade9/startup-readmission.json`,
 SHA `ce9a4ee14fa4c3239942e825303a2b74dd9caef70016c8a7beaa09681c73f716`.
-The session is active; completed training and checkpoint validation are not yet
-claimed. The six-model retained-results auditor is prepared but unexecuted.
+The session drains exit0 after all three pairs complete in 145.165 / 139.991 /
+138.497 s. Normal enclosing pre-publication time is 431.905 s. The independent
+retained-results audit passes first in 6.288 s (6.946 s supervised), checking 1,180
+unique source/runtime/input/bundle entries, all six weights-only CPU checkpoints,
+eighteen finite tensors each, seven exact integer graph buffers and unchanged
+frozen recurrent weights. All 120 epoch rows and earliest recorded-dev minima
+validate; seven sampled/receipt PID-start identities are absent and the HOME
+lease is independently free/released. No model construction, forward pass or
+native simulation ran in the audit. Receipt:
+`runs/m7-navigation-training-v2-root-audit-6feade9/audit.json`,
+SHA `6f393359bf7ccf4d573a23c6a04708d2a1e1ca33723f7bd98f91596f0f48bb90`.
+All three augmented recorded-dev losses exceed the paired old-corpus losses;
+selected augmented epochs are 1, 1 and 7. Fresh navigation outcomes remain unknown.
 Remaining-09 admission preparation passes eight producer fixtures and one full
 preflight (7.627 / 2.420 s): 603 identities and twelve fresh IDs disjoint from
-754 prior IDs. Its independent reviewer is prepared but unexecuted; no actual
-remaining-09 owner has started.
+754 prior IDs. Independent review also passes first: eight fixtures in 8.265 s
+and full preflight in 2.770 s, 11.086 s total. Receipt:
+`runs/memory-remaining-09-admission-control-root-review-cb13db9/control-review.json`,
+SHA `b8bc3335b4c4699a20146b37809202fba558b238a0fbe76fcf071cdffce86b63`.
+The fixed launcher AST substitutions and unchanged encloser match accepted 08;
+failed 07 identities remain reserved. Actual admission is separately authorized.
 
 Paired navigation trainer `6feade9` is integrated after eleven independent root
 pure checks pass first in 1.698 s. It adds only the named trainer/test, preserving

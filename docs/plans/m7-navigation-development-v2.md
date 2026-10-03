@@ -4,9 +4,10 @@ This handoff inherits [M7-NAV-AGG-1 v2](m7-navigation-contact-v2-protocol.json)
 and the [training-v2 contract](m7-navigation-training-v2-protocol.json) without
 changing their numerical, scene, contact, task, resource or qualification criteria.
 Trainer source is frozen at `6feade9770dc40efa567633412baec4347ee33cb`.
-The corrected training invocation is active in session `70035`; completed models
-and their independent audit remain pending. This document authorizes neither
-development execution, fresh scene inspection nor held-out access.
+The corrected training invocation completes all six models in session `70035`;
+independent retained checkpoint auditing passes first. Their exact publication
+index remains pending. This document authorizes neither development execution,
+fresh scene inspection nor held-out access.
 
 Implementation requires a later exact six-model index binding three normally
 completed pair reports, terminal receipts, protocols, checkpoints, original graph,
