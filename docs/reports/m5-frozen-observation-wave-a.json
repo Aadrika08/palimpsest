@@ -1,0 +1,2251 @@
+{
+  "version": 1,
+  "status": "diagnostic_checked",
+  "wave": "A",
+  "executor_source_commit": "ef6b652028d847f94152b5e265e60de59b607370",
+  "protocol_sha256": "f7e8ee9d1dd9ac7dd8294a3aa8459e90ec92c8822181e11280b8a31e89fa97d9",
+  "references": {
+    "aggregate": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/diagnostic-report.json",
+      "bytes": 64946,
+      "sha256": "02beedbf89bf1ed573313c31df7d12bcebedb096fed547ea87653baf3db12714"
+    },
+    "outer": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-observation-wave-a-launch-ef6b652/launch.json",
+      "bytes": 5200,
+      "sha256": "13c7455d988c08c1af80a7e98737d476658a838981338223df139cc6257c43e9"
+    },
+    "launcher": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-observation-wave-a-launch-ef6b652/launch.py",
+      "bytes": 19302,
+      "sha256": "0bb545ed69d3bf0eaea8ca299ae82bebbcbaf84874db13b804b6f0281b780bed"
+    },
+    "prepared_plan": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-observation-wave-a-launch-ef6b652/prepared-plan.json",
+      "bytes": 818286,
+      "sha256": "e2ee7e52792be467293e4f95e626bee4b66baabdb1981a76b72d4ebedaa8f7d1"
+    },
+    "prepared": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-observation-wave-a-launch-ef6b652/prepared.json",
+      "bytes": 3944,
+      "sha256": "cbea439e676734fda728cf1a813c9107c2744e75e425c22e71a9b3ed1db768b7"
+    },
+    "identity_prepared": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-observation-wave-a-launch-ef6b652/identity-prepared.json",
+      "bytes": 211106,
+      "sha256": "537fee50f6d676b2d505133eae071ebad35f1c3e4911fc8bf3bd4a98e5f6bf36"
+    },
+    "identity_before": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-observation-wave-a-launch-ef6b652/identity-before.json",
+      "bytes": 211106,
+      "sha256": "537fee50f6d676b2d505133eae071ebad35f1c3e4911fc8bf3bd4a98e5f6bf36"
+    },
+    "identity_after": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-observation-wave-a-launch-ef6b652/identity-after.json",
+      "bytes": 211106,
+      "sha256": "537fee50f6d676b2d505133eae071ebad35f1c3e4911fc8bf3bd4a98e5f6bf36"
+    },
+    "bindings": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-observation-wave-a-launch-ef6b652/bindings.json",
+      "bytes": 183600,
+      "sha256": "2a5aca73d040a651830d2f69dc70fc1cddc00fe7109736cda45115cc1354e519"
+    },
+    "u_inputs": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-observation-wave-a-launch-ef6b652/condition-u-pins.json",
+      "bytes": 18073,
+      "sha256": "3485febe570f03ec4ade2235a8e7d3dd093b5f4a214d0b31ea13ae1a496b0bda"
+    },
+    "control_fixtures": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-observation-wave-a-launch-ef6b652/fixtures.json",
+      "bytes": 348,
+      "sha256": "fdc32139cc637e545767a7adddf44a7622a682cea18b9558385f20679623e62b"
+    },
+    "control_preflight": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-observation-wave-a-launch-ef6b652/preflight.json",
+      "bytes": 4811,
+      "sha256": "372e0926ab2534346dc369c277ffd7dee8eefd68314530bd50fe9c5b5bdcfc51"
+    },
+    "terminal_drain": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-observation-wave-a-launch-ef6b652/terminal-drain.json",
+      "bytes": 5209,
+      "sha256": "4d14572448cb911a60276a2a7b3328712cc60958a436bbeb7993c5d08e1fc07d"
+    },
+    "local_auditor": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-observation-wave-a-launch-ef6b652/audit/audit.py",
+      "bytes": 4951,
+      "sha256": "9d28a6f6bcc66d6179772827780d9d5e7bb200292a753a4da12fe4a1fee2cb87"
+    },
+    "local_audit": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-observation-wave-a-launch-ef6b652/audit/audit.json",
+      "bytes": 90909,
+      "sha256": "b6c99aff032f97e74ce153b50db31f82a724f075b0c80a7fa38f5e884fb2758f"
+    },
+    "local_audit_console": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-observation-wave-a-launch-ef6b652/audit/console.log",
+      "bytes": 870,
+      "sha256": "3dc9cdb04fd3542727ffdbe678aac9544804e3d26aae33193ace56906777f34f"
+    },
+    "root_auditor": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/project-integration/runs/memory-wave-a-root-revalidation-ef6b652/audit.py",
+      "bytes": 4645,
+      "sha256": "0f2e8be921302d346cfa1d5ee37e77909741a878a1d5a6e51deb690927341273"
+    },
+    "root_audit": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/project-integration/runs/memory-wave-a-root-revalidation-ef6b652/audit.json",
+      "bytes": 94538,
+      "sha256": "380acf793c00fd408aafcf39015979a5806592936cacc669bdbb56a8b43b6168"
+    },
+    "root_control_audit.json": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/project-integration/runs/memory-wave-a-control-root-audit-ef6b652/audit.json",
+      "bytes": 1332,
+      "sha256": "ab53b771148a5b24e303d0f0cab75099ab175a39d218295aff3f668aca9aa3cb"
+    },
+    "root_control_audit.py": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/project-integration/runs/memory-wave-a-control-root-audit-ef6b652/audit.py",
+      "bytes": 3903,
+      "sha256": "ff657433356e8d8abe4f2bb9483cbf4fd2df38f0312d77dee1cc312a56830094"
+    }
+  },
+  "owners": 16,
+  "policy_calls": 2084,
+  "physical_recorded_rows": 0,
+  "censored_conditions": 0,
+  "unattempted": [],
+  "counts": {
+    "output_files": 179,
+    "output_bytes": 63883973,
+    "evidence_index_files": 216,
+    "evidence_index_bytes": 66570581,
+    "identity_entries": 899,
+    "terminal_nonlauncher_pid_start_checks": 18
+  },
+  "operational": {
+    "pass": true,
+    "inner_wall_seconds": 611.4059163689963,
+    "outer_wall_seconds": 623.1880072200001,
+    "identities_unchanged": true,
+    "forced_signals": [],
+    "monitor_errors": [],
+    "watchdog_signal_messages": [],
+    "writer_lease_free": true
+  },
+  "audits": {
+    "local": {
+      "wall_seconds": 33.165953681003884,
+      "first_pass": true,
+      "scope": "shared validate_stage/compare_treatments revalidation and independent arithmetic on retained traces/numeric arrays; no neural recomputation"
+    },
+    "root": {
+      "wall_seconds": 20.8269831,
+      "first_pass": true,
+      "scope": "shared validate_stage/compare_treatments revalidation; no independent neural inference"
+    }
+  },
+  "cells": [
+    {
+      "cell": "s25/local_cue/change",
+      "source_samples": 131,
+      "conditions": {
+        "own": {
+          "committed_selector_decisions": 1,
+          "committed_target_ids": [
+            "live-development-test-00000019-fact-z"
+          ],
+          "targeting_censored": false,
+          "false_targets": 0,
+          "missed_targets": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "gold_target_ids": [
+            "live-development-test-00000019-fact-z"
+          ],
+          "timing": [
+            {
+              "fact_id": "live-development-test-00000019-fact-a",
+              "stale_value_changed": false,
+              "first_correct_commit_in_supplied_stream": 360,
+              "first_stale_value_correction_tick": null,
+              "first_confirmation_tick": 360
+            },
+            {
+              "fact_id": "live-development-test-00000019-fact-z",
+              "stale_value_changed": true,
+              "first_correct_commit_in_supplied_stream": 300,
+              "first_stale_value_correction_tick": 300,
+              "first_confirmation_tick": null
+            }
+          ],
+          "inspection_counts": {
+            "requested": 0,
+            "started": 0,
+            "resolved": 0,
+            "timeout": 0
+          },
+          "validation_input_bytes": 2008,
+          "behavior_input_bytes_if_witnessed": 1534,
+          "payload_bytes": 108,
+          "envelope_bytes": 590,
+          "runtime_history_bytes": 0,
+          "final_memory_sha256": "2f3522a99bf5634772179211d3110f83d885917bace5770d600113696fbaaba8",
+          "source_context_goal_boundary": 431,
+          "diagnostic_goal_tick": null,
+          "task_success": null
+        },
+        "swapped": {
+          "committed_selector_decisions": 1,
+          "committed_target_ids": [
+            "live-development-test-00000019-fact-a"
+          ],
+          "targeting_censored": false,
+          "false_targets": 1,
+          "missed_targets": 1,
+          "precision": 0.0,
+          "recall": 0.0,
+          "gold_target_ids": [
+            "live-development-test-00000019-fact-z"
+          ],
+          "timing": [
+            {
+              "fact_id": "live-development-test-00000019-fact-a",
+              "stale_value_changed": false,
+              "first_correct_commit_in_supplied_stream": 360,
+              "first_stale_value_correction_tick": null,
+              "first_confirmation_tick": 360
+            },
+            {
+              "fact_id": "live-development-test-00000019-fact-z",
+              "stale_value_changed": true,
+              "first_correct_commit_in_supplied_stream": 300,
+              "first_stale_value_correction_tick": 300,
+              "first_confirmation_tick": null
+            }
+          ],
+          "inspection_counts": {
+            "requested": 1,
+            "started": 1,
+            "resolved": 1,
+            "timeout": 0
+          },
+          "validation_input_bytes": 2009,
+          "behavior_input_bytes_if_witnessed": 1535,
+          "payload_bytes": 109,
+          "envelope_bytes": 591,
+          "runtime_history_bytes": 0,
+          "final_memory_sha256": "ad2bc04321f2476035381e0c82d29cffea72c2f554020e090578005be8a7d4b0",
+          "source_context_goal_boundary": 431,
+          "diagnostic_goal_tick": null,
+          "task_success": null
+        },
+        "sham": {
+          "committed_selector_decisions": 1,
+          "committed_target_ids": [
+            "live-development-test-00000019-fact-z"
+          ],
+          "targeting_censored": false,
+          "false_targets": 0,
+          "missed_targets": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "gold_target_ids": [
+            "live-development-test-00000019-fact-z"
+          ],
+          "timing": [
+            {
+              "fact_id": "live-development-test-00000019-fact-a",
+              "stale_value_changed": false,
+              "first_correct_commit_in_supplied_stream": 360,
+              "first_stale_value_correction_tick": null,
+              "first_confirmation_tick": 360
+            },
+            {
+              "fact_id": "live-development-test-00000019-fact-z",
+              "stale_value_changed": true,
+              "first_correct_commit_in_supplied_stream": 300,
+              "first_stale_value_correction_tick": 300,
+              "first_confirmation_tick": null
+            }
+          ],
+          "inspection_counts": {
+            "requested": 0,
+            "started": 0,
+            "resolved": 0,
+            "timeout": 0
+          },
+          "validation_input_bytes": 2008,
+          "behavior_input_bytes_if_witnessed": 1534,
+          "payload_bytes": 108,
+          "envelope_bytes": 590,
+          "runtime_history_bytes": 0,
+          "final_memory_sha256": "2f3522a99bf5634772179211d3110f83d885917bace5770d600113696fbaaba8",
+          "source_context_goal_boundary": 431,
+          "diagnostic_goal_tick": null,
+          "task_success": null
+        },
+        "no-U": {
+          "committed_selector_decisions": 1,
+          "committed_target_ids": [],
+          "targeting_censored": false,
+          "false_targets": 0,
+          "missed_targets": 1,
+          "precision": null,
+          "recall": 0.0,
+          "gold_target_ids": [
+            "live-development-test-00000019-fact-z"
+          ],
+          "timing": [
+            {
+              "fact_id": "live-development-test-00000019-fact-a",
+              "stale_value_changed": false,
+              "first_correct_commit_in_supplied_stream": 360,
+              "first_stale_value_correction_tick": null,
+              "first_confirmation_tick": 360
+            },
+            {
+              "fact_id": "live-development-test-00000019-fact-z",
+              "stale_value_changed": true,
+              "first_correct_commit_in_supplied_stream": 300,
+              "first_stale_value_correction_tick": 300,
+              "first_confirmation_tick": null
+            }
+          ],
+          "inspection_counts": {
+            "requested": 0,
+            "started": 0,
+            "resolved": 0,
+            "timeout": 0
+          },
+          "validation_input_bytes": 1892,
+          "behavior_input_bytes_if_witnessed": 1486,
+          "payload_bytes": 60,
+          "envelope_bytes": 474,
+          "runtime_history_bytes": 0,
+          "final_memory_sha256": "2bd8dfc224143dbd60d924f45e1e2e16be1276a50fe39933fb7b5857797904b0",
+          "source_context_goal_boundary": 431,
+          "diagnostic_goal_tick": null,
+          "task_success": null
+        }
+      },
+      "comparisons": [
+        {
+          "condition": "swapped",
+          "paired_available_samples": 131,
+          "task_agreement_prefix_samples": 0,
+          "first_task_decision_difference_tick": 300,
+          "first_actual_cue_difference_tick": 300,
+          "numeric": {
+            "encoded_input": {
+              "first_difference_tick_at_recorded_tolerance": 300,
+              "samples_above_tolerance": 60,
+              "maximum_absolute_difference": 0.15338879823684692
+            },
+            "raw_output": {
+              "first_difference_tick_at_recorded_tolerance": 301,
+              "samples_above_tolerance": 130,
+              "maximum_absolute_difference": 0.024372145533561707
+            },
+            "action": {
+              "first_difference_tick_at_recorded_tolerance": 301,
+              "samples_above_tolerance": 130,
+              "maximum_absolute_difference": 0.07539966702461243
+            }
+          }
+        },
+        {
+          "condition": "sham",
+          "paired_available_samples": 131,
+          "task_agreement_prefix_samples": 131,
+          "first_task_decision_difference_tick": null,
+          "first_actual_cue_difference_tick": null,
+          "numeric": {
+            "encoded_input": {
+              "first_difference_tick_at_recorded_tolerance": null,
+              "samples_above_tolerance": 0,
+              "maximum_absolute_difference": 0.0
+            },
+            "raw_output": {
+              "first_difference_tick_at_recorded_tolerance": null,
+              "samples_above_tolerance": 0,
+              "maximum_absolute_difference": 0.0
+            },
+            "action": {
+              "first_difference_tick_at_recorded_tolerance": null,
+              "samples_above_tolerance": 0,
+              "maximum_absolute_difference": 0.0
+            }
+          }
+        },
+        {
+          "condition": "no-U",
+          "paired_available_samples": 131,
+          "task_agreement_prefix_samples": 0,
+          "first_task_decision_difference_tick": 300,
+          "first_actual_cue_difference_tick": null,
+          "numeric": {
+            "encoded_input": {
+              "first_difference_tick_at_recorded_tolerance": null,
+              "samples_above_tolerance": 0,
+              "maximum_absolute_difference": 0.0
+            },
+            "raw_output": {
+              "first_difference_tick_at_recorded_tolerance": null,
+              "samples_above_tolerance": 0,
+              "maximum_absolute_difference": 0.0
+            },
+            "action": {
+              "first_difference_tick_at_recorded_tolerance": null,
+              "samples_above_tolerance": 0,
+              "maximum_absolute_difference": 0.0
+            }
+          }
+        }
+      ]
+    },
+    {
+      "cell": "s28/paired_cue/change",
+      "source_samples": 132,
+      "conditions": {
+        "own": {
+          "committed_selector_decisions": 1,
+          "committed_target_ids": [
+            "live-development-test-0000001c-fact-z"
+          ],
+          "targeting_censored": false,
+          "false_targets": 0,
+          "missed_targets": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "gold_target_ids": [
+            "live-development-test-0000001c-fact-z"
+          ],
+          "timing": [
+            {
+              "fact_id": "live-development-test-0000001c-fact-a",
+              "stale_value_changed": false,
+              "first_correct_commit_in_supplied_stream": 360,
+              "first_stale_value_correction_tick": null,
+              "first_confirmation_tick": 360
+            },
+            {
+              "fact_id": "live-development-test-0000001c-fact-z",
+              "stale_value_changed": true,
+              "first_correct_commit_in_supplied_stream": 300,
+              "first_stale_value_correction_tick": 300,
+              "first_confirmation_tick": null
+            }
+          ],
+          "inspection_counts": {
+            "requested": 0,
+            "started": 0,
+            "resolved": 0,
+            "timeout": 0
+          },
+          "validation_input_bytes": 2009,
+          "behavior_input_bytes_if_witnessed": 1535,
+          "payload_bytes": 109,
+          "envelope_bytes": 591,
+          "runtime_history_bytes": 0,
+          "final_memory_sha256": "d006c1bd4d93ddbbd3bb1d06197b7441a4cd32d69c108a352f6f30e779aa1308",
+          "source_context_goal_boundary": 432,
+          "diagnostic_goal_tick": null,
+          "task_success": null
+        },
+        "swapped": {
+          "committed_selector_decisions": 1,
+          "committed_target_ids": [
+            "live-development-test-0000001c-fact-a"
+          ],
+          "targeting_censored": false,
+          "false_targets": 1,
+          "missed_targets": 1,
+          "precision": 0.0,
+          "recall": 0.0,
+          "gold_target_ids": [
+            "live-development-test-0000001c-fact-z"
+          ],
+          "timing": [
+            {
+              "fact_id": "live-development-test-0000001c-fact-a",
+              "stale_value_changed": false,
+              "first_correct_commit_in_supplied_stream": 360,
+              "first_stale_value_correction_tick": null,
+              "first_confirmation_tick": 360
+            },
+            {
+              "fact_id": "live-development-test-0000001c-fact-z",
+              "stale_value_changed": true,
+              "first_correct_commit_in_supplied_stream": 300,
+              "first_stale_value_correction_tick": 300,
+              "first_confirmation_tick": null
+            }
+          ],
+          "inspection_counts": {
+            "requested": 1,
+            "started": 1,
+            "resolved": 1,
+            "timeout": 0
+          },
+          "validation_input_bytes": 2008,
+          "behavior_input_bytes_if_witnessed": 1534,
+          "payload_bytes": 108,
+          "envelope_bytes": 590,
+          "runtime_history_bytes": 0,
+          "final_memory_sha256": "3789bfe60497ae2876aa833fd965bb8798ab36e353d9c1178925af979c113506",
+          "source_context_goal_boundary": 432,
+          "diagnostic_goal_tick": null,
+          "task_success": null
+        },
+        "sham": {
+          "committed_selector_decisions": 1,
+          "committed_target_ids": [
+            "live-development-test-0000001c-fact-z"
+          ],
+          "targeting_censored": false,
+          "false_targets": 0,
+          "missed_targets": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "gold_target_ids": [
+            "live-development-test-0000001c-fact-z"
+          ],
+          "timing": [
+            {
+              "fact_id": "live-development-test-0000001c-fact-a",
+              "stale_value_changed": false,
+              "first_correct_commit_in_supplied_stream": 360,
+              "first_stale_value_correction_tick": null,
+              "first_confirmation_tick": 360
+            },
+            {
+              "fact_id": "live-development-test-0000001c-fact-z",
+              "stale_value_changed": true,
+              "first_correct_commit_in_supplied_stream": 300,
+              "first_stale_value_correction_tick": 300,
+              "first_confirmation_tick": null
+            }
+          ],
+          "inspection_counts": {
+            "requested": 0,
+            "started": 0,
+            "resolved": 0,
+            "timeout": 0
+          },
+          "validation_input_bytes": 2009,
+          "behavior_input_bytes_if_witnessed": 1535,
+          "payload_bytes": 109,
+          "envelope_bytes": 591,
+          "runtime_history_bytes": 0,
+          "final_memory_sha256": "d006c1bd4d93ddbbd3bb1d06197b7441a4cd32d69c108a352f6f30e779aa1308",
+          "source_context_goal_boundary": 432,
+          "diagnostic_goal_tick": null,
+          "task_success": null
+        },
+        "no-U": {
+          "committed_selector_decisions": 1,
+          "committed_target_ids": [],
+          "targeting_censored": false,
+          "false_targets": 0,
+          "missed_targets": 1,
+          "precision": null,
+          "recall": 0.0,
+          "gold_target_ids": [
+            "live-development-test-0000001c-fact-z"
+          ],
+          "timing": [
+            {
+              "fact_id": "live-development-test-0000001c-fact-a",
+              "stale_value_changed": false,
+              "first_correct_commit_in_supplied_stream": 360,
+              "first_stale_value_correction_tick": null,
+              "first_confirmation_tick": 360
+            },
+            {
+              "fact_id": "live-development-test-0000001c-fact-z",
+              "stale_value_changed": true,
+              "first_correct_commit_in_supplied_stream": 300,
+              "first_stale_value_correction_tick": 300,
+              "first_confirmation_tick": null
+            }
+          ],
+          "inspection_counts": {
+            "requested": 0,
+            "started": 0,
+            "resolved": 0,
+            "timeout": 0
+          },
+          "validation_input_bytes": 1892,
+          "behavior_input_bytes_if_witnessed": 1486,
+          "payload_bytes": 60,
+          "envelope_bytes": 474,
+          "runtime_history_bytes": 0,
+          "final_memory_sha256": "13384ff270f3e14df77045f426ff35dc701d87830a45b7b128e4679a590015de",
+          "source_context_goal_boundary": 432,
+          "diagnostic_goal_tick": null,
+          "task_success": null
+        }
+      },
+      "comparisons": [
+        {
+          "condition": "swapped",
+          "paired_available_samples": 132,
+          "task_agreement_prefix_samples": 0,
+          "first_task_decision_difference_tick": 300,
+          "first_actual_cue_difference_tick": 300,
+          "numeric": {
+            "encoded_input": {
+              "first_difference_tick_at_recorded_tolerance": 300,
+              "samples_above_tolerance": 60,
+              "maximum_absolute_difference": 0.15449610352516174
+            },
+            "raw_output": {
+              "first_difference_tick_at_recorded_tolerance": 301,
+              "samples_above_tolerance": 131,
+              "maximum_absolute_difference": 0.023536205291748047
+            },
+            "action": {
+              "first_difference_tick_at_recorded_tolerance": 301,
+              "samples_above_tolerance": 131,
+              "maximum_absolute_difference": 0.07279464602470398
+            }
+          }
+        },
+        {
+          "condition": "sham",
+          "paired_available_samples": 132,
+          "task_agreement_prefix_samples": 132,
+          "first_task_decision_difference_tick": null,
+          "first_actual_cue_difference_tick": null,
+          "numeric": {
+            "encoded_input": {
+              "first_difference_tick_at_recorded_tolerance": null,
+              "samples_above_tolerance": 0,
+              "maximum_absolute_difference": 0.0
+            },
+            "raw_output": {
+              "first_difference_tick_at_recorded_tolerance": null,
+              "samples_above_tolerance": 0,
+              "maximum_absolute_difference": 0.0
+            },
+            "action": {
+              "first_difference_tick_at_recorded_tolerance": null,
+              "samples_above_tolerance": 0,
+              "maximum_absolute_difference": 0.0
+            }
+          }
+        },
+        {
+          "condition": "no-U",
+          "paired_available_samples": 132,
+          "task_agreement_prefix_samples": 0,
+          "first_task_decision_difference_tick": 300,
+          "first_actual_cue_difference_tick": null,
+          "numeric": {
+            "encoded_input": {
+              "first_difference_tick_at_recorded_tolerance": null,
+              "samples_above_tolerance": 0,
+              "maximum_absolute_difference": 0.0
+            },
+            "raw_output": {
+              "first_difference_tick_at_recorded_tolerance": null,
+              "samples_above_tolerance": 0,
+              "maximum_absolute_difference": 0.0
+            },
+            "action": {
+              "first_difference_tick_at_recorded_tolerance": null,
+              "samples_above_tolerance": 0,
+              "maximum_absolute_difference": 0.0
+            }
+          }
+        }
+      ]
+    },
+    {
+      "cell": "s26/paired_cue/null",
+      "source_samples": 128,
+      "conditions": {
+        "own": {
+          "committed_selector_decisions": 1,
+          "committed_target_ids": [
+            "live-development-test-0000001a-fact-a"
+          ],
+          "targeting_censored": false,
+          "false_targets": 1,
+          "missed_targets": 0,
+          "precision": 0.0,
+          "recall": null,
+          "gold_target_ids": [],
+          "timing": [
+            {
+              "fact_id": "live-development-test-0000001a-fact-a",
+              "stale_value_changed": false,
+              "first_correct_commit_in_supplied_stream": 300,
+              "first_stale_value_correction_tick": null,
+              "first_confirmation_tick": 300
+            },
+            {
+              "fact_id": "live-development-test-0000001a-fact-z",
+              "stale_value_changed": false,
+              "first_correct_commit_in_supplied_stream": 358,
+              "first_stale_value_correction_tick": null,
+              "first_confirmation_tick": 358
+            }
+          ],
+          "inspection_counts": {
+            "requested": 0,
+            "started": 0,
+            "resolved": 0,
+            "timeout": 0
+          },
+          "validation_input_bytes": 2009,
+          "behavior_input_bytes_if_witnessed": 1535,
+          "payload_bytes": 109,
+          "envelope_bytes": 591,
+          "runtime_history_bytes": 0,
+          "final_memory_sha256": "b7e57893c3d43d131d729b96f2253ff976d96b0c5a89ba46fd0495f2620fe3f4",
+          "source_context_goal_boundary": 428,
+          "diagnostic_goal_tick": null,
+          "task_success": null
+        },
+        "swapped": {
+          "committed_selector_decisions": 1,
+          "committed_target_ids": [
+            "live-development-test-0000001a-fact-z"
+          ],
+          "targeting_censored": false,
+          "false_targets": 1,
+          "missed_targets": 0,
+          "precision": 0.0,
+          "recall": null,
+          "gold_target_ids": [],
+          "timing": [
+            {
+              "fact_id": "live-development-test-0000001a-fact-a",
+              "stale_value_changed": false,
+              "first_correct_commit_in_supplied_stream": 300,
+              "first_stale_value_correction_tick": null,
+              "first_confirmation_tick": 300
+            },
+            {
+              "fact_id": "live-development-test-0000001a-fact-z",
+              "stale_value_changed": false,
+              "first_correct_commit_in_supplied_stream": 358,
+              "first_stale_value_correction_tick": null,
+              "first_confirmation_tick": 358
+            }
+          ],
+          "inspection_counts": {
+            "requested": 1,
+            "started": 1,
+            "resolved": 1,
+            "timeout": 0
+          },
+          "validation_input_bytes": 2008,
+          "behavior_input_bytes_if_witnessed": 1534,
+          "payload_bytes": 108,
+          "envelope_bytes": 590,
+          "runtime_history_bytes": 0,
+          "final_memory_sha256": "5a87770543010e79675dca8068221dd97740dc25f6afbef52a5af7a435dfe85a",
+          "source_context_goal_boundary": 428,
+          "diagnostic_goal_tick": null,
+          "task_success": null
+        },
+        "sham": {
+          "committed_selector_decisions": 1,
+          "committed_target_ids": [
+            "live-development-test-0000001a-fact-a"
+          ],
+          "targeting_censored": false,
+          "false_targets": 1,
+          "missed_targets": 0,
+          "precision": 0.0,
+          "recall": null,
+          "gold_target_ids": [],
+          "timing": [
+            {
+              "fact_id": "live-development-test-0000001a-fact-a",
+              "stale_value_changed": false,
+              "first_correct_commit_in_supplied_stream": 300,
+              "first_stale_value_correction_tick": null,
+              "first_confirmation_tick": 300
+            },
+            {
+              "fact_id": "live-development-test-0000001a-fact-z",
+              "stale_value_changed": false,
+              "first_correct_commit_in_supplied_stream": 358,
+              "first_stale_value_correction_tick": null,
+              "first_confirmation_tick": 358
+            }
+          ],
+          "inspection_counts": {
+            "requested": 0,
+            "started": 0,
+            "resolved": 0,
+            "timeout": 0
+          },
+          "validation_input_bytes": 2009,
+          "behavior_input_bytes_if_witnessed": 1535,
+          "payload_bytes": 109,
+          "envelope_bytes": 591,
+          "runtime_history_bytes": 0,
+          "final_memory_sha256": "b7e57893c3d43d131d729b96f2253ff976d96b0c5a89ba46fd0495f2620fe3f4",
+          "source_context_goal_boundary": 428,
+          "diagnostic_goal_tick": null,
+          "task_success": null
+        },
+        "no-U": {
+          "committed_selector_decisions": 1,
+          "committed_target_ids": [],
+          "targeting_censored": false,
+          "false_targets": 0,
+          "missed_targets": 0,
+          "precision": null,
+          "recall": null,
+          "gold_target_ids": [],
+          "timing": [
+            {
+              "fact_id": "live-development-test-0000001a-fact-a",
+              "stale_value_changed": false,
+              "first_correct_commit_in_supplied_stream": 300,
+              "first_stale_value_correction_tick": null,
+              "first_confirmation_tick": 300
+            },
+            {
+              "fact_id": "live-development-test-0000001a-fact-z",
+              "stale_value_changed": false,
+              "first_correct_commit_in_supplied_stream": 358,
+              "first_stale_value_correction_tick": null,
+              "first_confirmation_tick": 358
+            }
+          ],
+          "inspection_counts": {
+            "requested": 0,
+            "started": 0,
+            "resolved": 0,
+            "timeout": 0
+          },
+          "validation_input_bytes": 1892,
+          "behavior_input_bytes_if_witnessed": 1486,
+          "payload_bytes": 60,
+          "envelope_bytes": 474,
+          "runtime_history_bytes": 0,
+          "final_memory_sha256": "d4389477736da7d8db0f11c62a22403809be43981a34c802add86eb2f12501a7",
+          "source_context_goal_boundary": 428,
+          "diagnostic_goal_tick": null,
+          "task_success": null
+        }
+      },
+      "comparisons": [
+        {
+          "condition": "swapped",
+          "paired_available_samples": 128,
+          "task_agreement_prefix_samples": 0,
+          "first_task_decision_difference_tick": 300,
+          "first_actual_cue_difference_tick": 300,
+          "numeric": {
+            "encoded_input": {
+              "first_difference_tick_at_recorded_tolerance": 300,
+              "samples_above_tolerance": 58,
+              "maximum_absolute_difference": 0.09130688011646271
+            },
+            "raw_output": {
+              "first_difference_tick_at_recorded_tolerance": 301,
+              "samples_above_tolerance": 127,
+              "maximum_absolute_difference": 0.01469641923904419
+            },
+            "action": {
+              "first_difference_tick_at_recorded_tolerance": 301,
+              "samples_above_tolerance": 127,
+              "maximum_absolute_difference": 0.04578971862792969
+            }
+          }
+        },
+        {
+          "condition": "sham",
+          "paired_available_samples": 128,
+          "task_agreement_prefix_samples": 128,
+          "first_task_decision_difference_tick": null,
+          "first_actual_cue_difference_tick": null,
+          "numeric": {
+            "encoded_input": {
+              "first_difference_tick_at_recorded_tolerance": null,
+              "samples_above_tolerance": 0,
+              "maximum_absolute_difference": 0.0
+            },
+            "raw_output": {
+              "first_difference_tick_at_recorded_tolerance": null,
+              "samples_above_tolerance": 0,
+              "maximum_absolute_difference": 0.0
+            },
+            "action": {
+              "first_difference_tick_at_recorded_tolerance": null,
+              "samples_above_tolerance": 0,
+              "maximum_absolute_difference": 0.0
+            }
+          }
+        },
+        {
+          "condition": "no-U",
+          "paired_available_samples": 128,
+          "task_agreement_prefix_samples": 0,
+          "first_task_decision_difference_tick": 300,
+          "first_actual_cue_difference_tick": null,
+          "numeric": {
+            "encoded_input": {
+              "first_difference_tick_at_recorded_tolerance": null,
+              "samples_above_tolerance": 0,
+              "maximum_absolute_difference": 0.0
+            },
+            "raw_output": {
+              "first_difference_tick_at_recorded_tolerance": null,
+              "samples_above_tolerance": 0,
+              "maximum_absolute_difference": 0.0
+            },
+            "action": {
+              "first_difference_tick_at_recorded_tolerance": null,
+              "samples_above_tolerance": 0,
+              "maximum_absolute_difference": 0.0
+            }
+          }
+        }
+      ]
+    },
+    {
+      "cell": "s31/local_cue/no-event",
+      "source_samples": 130,
+      "conditions": {
+        "own": {
+          "committed_selector_decisions": 0,
+          "committed_target_ids": [],
+          "targeting_censored": false,
+          "false_targets": 0,
+          "missed_targets": 0,
+          "precision": null,
+          "recall": null,
+          "gold_target_ids": [],
+          "timing": [
+            {
+              "fact_id": "live-development-test-0000001f-fact-a",
+              "stale_value_changed": false,
+              "first_correct_commit_in_supplied_stream": 300,
+              "first_stale_value_correction_tick": null,
+              "first_confirmation_tick": 300
+            },
+            {
+              "fact_id": "live-development-test-0000001f-fact-z",
+              "stale_value_changed": false,
+              "first_correct_commit_in_supplied_stream": 358,
+              "first_stale_value_correction_tick": null,
+              "first_confirmation_tick": 358
+            }
+          ],
+          "inspection_counts": {
+            "requested": 0,
+            "started": 0,
+            "resolved": 0,
+            "timeout": 0
+          },
+          "validation_input_bytes": 1619,
+          "behavior_input_bytes_if_witnessed": 0,
+          "payload_bytes": 108,
+          "envelope_bytes": 590,
+          "runtime_history_bytes": 0,
+          "final_memory_sha256": "a8586ee58f3e414b7e35d47d2e059cc3b54375751203aa9c9d883651e068eae6",
+          "source_context_goal_boundary": 430,
+          "diagnostic_goal_tick": null,
+          "task_success": null
+        },
+        "swapped": {
+          "committed_selector_decisions": 0,
+          "committed_target_ids": [],
+          "targeting_censored": false,
+          "false_targets": 0,
+          "missed_targets": 0,
+          "precision": null,
+          "recall": null,
+          "gold_target_ids": [],
+          "timing": [
+            {
+              "fact_id": "live-development-test-0000001f-fact-a",
+              "stale_value_changed": false,
+              "first_correct_commit_in_supplied_stream": 300,
+              "first_stale_value_correction_tick": null,
+              "first_confirmation_tick": 300
+            },
+            {
+              "fact_id": "live-development-test-0000001f-fact-z",
+              "stale_value_changed": false,
+              "first_correct_commit_in_supplied_stream": 358,
+              "first_stale_value_correction_tick": null,
+              "first_confirmation_tick": 358
+            }
+          ],
+          "inspection_counts": {
+            "requested": 0,
+            "started": 0,
+            "resolved": 0,
+            "timeout": 0
+          },
+          "validation_input_bytes": 1620,
+          "behavior_input_bytes_if_witnessed": 0,
+          "payload_bytes": 109,
+          "envelope_bytes": 591,
+          "runtime_history_bytes": 0,
+          "final_memory_sha256": "289025b49ebc928aa866149f280d87f31aeaf407e48f1b5a3269169ed5854610",
+          "source_context_goal_boundary": 430,
+          "diagnostic_goal_tick": null,
+          "task_success": null
+        },
+        "sham": {
+          "committed_selector_decisions": 0,
+          "committed_target_ids": [],
+          "targeting_censored": false,
+          "false_targets": 0,
+          "missed_targets": 0,
+          "precision": null,
+          "recall": null,
+          "gold_target_ids": [],
+          "timing": [
+            {
+              "fact_id": "live-development-test-0000001f-fact-a",
+              "stale_value_changed": false,
+              "first_correct_commit_in_supplied_stream": 300,
+              "first_stale_value_correction_tick": null,
+              "first_confirmation_tick": 300
+            },
+            {
+              "fact_id": "live-development-test-0000001f-fact-z",
+              "stale_value_changed": false,
+              "first_correct_commit_in_supplied_stream": 358,
+              "first_stale_value_correction_tick": null,
+              "first_confirmation_tick": 358
+            }
+          ],
+          "inspection_counts": {
+            "requested": 0,
+            "started": 0,
+            "resolved": 0,
+            "timeout": 0
+          },
+          "validation_input_bytes": 1619,
+          "behavior_input_bytes_if_witnessed": 0,
+          "payload_bytes": 108,
+          "envelope_bytes": 590,
+          "runtime_history_bytes": 0,
+          "final_memory_sha256": "a8586ee58f3e414b7e35d47d2e059cc3b54375751203aa9c9d883651e068eae6",
+          "source_context_goal_boundary": 430,
+          "diagnostic_goal_tick": null,
+          "task_success": null
+        },
+        "no-U": {
+          "committed_selector_decisions": 0,
+          "committed_target_ids": [],
+          "targeting_censored": false,
+          "false_targets": 0,
+          "missed_targets": 0,
+          "precision": null,
+          "recall": null,
+          "gold_target_ids": [],
+          "timing": [
+            {
+              "fact_id": "live-development-test-0000001f-fact-a",
+              "stale_value_changed": false,
+              "first_correct_commit_in_supplied_stream": 300,
+              "first_stale_value_correction_tick": null,
+              "first_confirmation_tick": 300
+            },
+            {
+              "fact_id": "live-development-test-0000001f-fact-z",
+              "stale_value_changed": false,
+              "first_correct_commit_in_supplied_stream": 358,
+              "first_stale_value_correction_tick": null,
+              "first_confirmation_tick": 358
+            }
+          ],
+          "inspection_counts": {
+            "requested": 0,
+            "started": 0,
+            "resolved": 0,
+            "timeout": 0
+          },
+          "validation_input_bytes": 1503,
+          "behavior_input_bytes_if_witnessed": 0,
+          "payload_bytes": 60,
+          "envelope_bytes": 474,
+          "runtime_history_bytes": 0,
+          "final_memory_sha256": "84ecdbc71d3d7d1e8cffdf5d890f8ab149bc30c86389b75fdd5a7f9c816fecbf",
+          "source_context_goal_boundary": 430,
+          "diagnostic_goal_tick": null,
+          "task_success": null
+        }
+      },
+      "comparisons": [
+        {
+          "condition": "swapped",
+          "paired_available_samples": 130,
+          "task_agreement_prefix_samples": 130,
+          "first_task_decision_difference_tick": null,
+          "first_actual_cue_difference_tick": null,
+          "numeric": {
+            "encoded_input": {
+              "first_difference_tick_at_recorded_tolerance": null,
+              "samples_above_tolerance": 0,
+              "maximum_absolute_difference": 0.0
+            },
+            "raw_output": {
+              "first_difference_tick_at_recorded_tolerance": null,
+              "samples_above_tolerance": 0,
+              "maximum_absolute_difference": 0.0
+            },
+            "action": {
+              "first_difference_tick_at_recorded_tolerance": null,
+              "samples_above_tolerance": 0,
+              "maximum_absolute_difference": 0.0
+            }
+          }
+        },
+        {
+          "condition": "sham",
+          "paired_available_samples": 130,
+          "task_agreement_prefix_samples": 130,
+          "first_task_decision_difference_tick": null,
+          "first_actual_cue_difference_tick": null,
+          "numeric": {
+            "encoded_input": {
+              "first_difference_tick_at_recorded_tolerance": null,
+              "samples_above_tolerance": 0,
+              "maximum_absolute_difference": 0.0
+            },
+            "raw_output": {
+              "first_difference_tick_at_recorded_tolerance": null,
+              "samples_above_tolerance": 0,
+              "maximum_absolute_difference": 0.0
+            },
+            "action": {
+              "first_difference_tick_at_recorded_tolerance": null,
+              "samples_above_tolerance": 0,
+              "maximum_absolute_difference": 0.0
+            }
+          }
+        },
+        {
+          "condition": "no-U",
+          "paired_available_samples": 130,
+          "task_agreement_prefix_samples": 130,
+          "first_task_decision_difference_tick": null,
+          "first_actual_cue_difference_tick": null,
+          "numeric": {
+            "encoded_input": {
+              "first_difference_tick_at_recorded_tolerance": null,
+              "samples_above_tolerance": 0,
+              "maximum_absolute_difference": 0.0
+            },
+            "raw_output": {
+              "first_difference_tick_at_recorded_tolerance": null,
+              "samples_above_tolerance": 0,
+              "maximum_absolute_difference": 0.0
+            },
+            "action": {
+              "first_difference_tick_at_recorded_tolerance": null,
+              "samples_above_tolerance": 0,
+              "maximum_absolute_difference": 0.0
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "comparison_accounting": "runner shared_prefix is paired available sample count; audit agreement_prefix derives first actual task/cue/numeric difference",
+  "index": {
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/.palimpsest-storage.lock": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/.palimpsest-storage.lock",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/00539472de9b48baa043f3cd3b50c57f-job.json": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/00539472de9b48baa043f3cd3b50c57f-job.json",
+      "bytes": 48121,
+      "sha256": "535d4adf914d07bd019461613d83b937310830fee1208d245a13e21179b078d7"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/1596270c568a4552a5f4718aeaec7740-job.json": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/1596270c568a4552a5f4718aeaec7740-job.json",
+      "bytes": 47550,
+      "sha256": "df6337f808355300bd0068ab4f2dbbe404dae4424882293be4d24dcbfdd3a128"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/2eab65a3f02c446d9cc345c8fa54b508-job.json": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/2eab65a3f02c446d9cc345c8fa54b508-job.json",
+      "bytes": 47546,
+      "sha256": "2968702efe7ca6a1e1a255c021d5d8a79e9feb881bd5ace7ce19916aa69e3a8b"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/433590489f0a4f71b8387ce89b79fb1d-job.json": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/433590489f0a4f71b8387ce89b79fb1d-job.json",
+      "bytes": 47547,
+      "sha256": "2229b38b7cce2897576357333fb0a524c89c90ba6630600855658315c56f5a95"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/51c1b9a3e33747bcaf3f479463ed9b6f-job.json": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/51c1b9a3e33747bcaf3f479463ed9b6f-job.json",
+      "bytes": 48122,
+      "sha256": "955501f0cb122ee3ab1f6aaaa9a98060b4153248a9f861f86766ec1dfbfb2184"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/59720638d04e4d9ab037343e2caf3b5a-job.json": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/59720638d04e4d9ab037343e2caf3b5a-job.json",
+      "bytes": 48121,
+      "sha256": "d5ce66a0c99de607e7e73c04a37f968eb899b5a85f68dc95e7f6f0ccb8cbfdb3"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/6371f530faf94a7c9a507df277cd3322-job.json": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/6371f530faf94a7c9a507df277cd3322-job.json",
+      "bytes": 47727,
+      "sha256": "53330a31acca0dbca306f7eec0f107e4f9a7bc79a5cdbe4b124c65d5cc7ee8e9"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/6c71eb7684eb49a8b3759fa9a46b02e8-job.json": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/6c71eb7684eb49a8b3759fa9a46b02e8-job.json",
+      "bytes": 48120,
+      "sha256": "719f6deda719de8b4ce538fb91d3bd7286b479dd2ae1cceb567b7bfc565c6849"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/6d8e718df6cb465dbecc50d55d623654-job.json": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/6d8e718df6cb465dbecc50d55d623654-job.json",
+      "bytes": 48124,
+      "sha256": "bf8c45f7446c9f686eaa7cb5a12a45b9f541165d6548689a8ca43d4ec76eadeb"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/954c6bac4bb34929819bc65faf3e1385-job.json": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/954c6bac4bb34929819bc65faf3e1385-job.json",
+      "bytes": 48123,
+      "sha256": "1de20319f6a661309aaafec36cde033390546ad2fef4b154921646abe46117cf"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/a0999fd9f2064851b974b01c1c5a9065-job.json": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/a0999fd9f2064851b974b01c1c5a9065-job.json",
+      "bytes": 48123,
+      "sha256": "54ac2a7280be180465e046cfbc8c7a9f267a4687e76ec5e5a349dbdea129c264"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/b0014b7b850f447e8562ce00d58a408c-job.json": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/b0014b7b850f447e8562ce00d58a408c-job.json",
+      "bytes": 47727,
+      "sha256": "9f629d8bdc0c5ec5ea76b6fbdf363d010db507c3a2c2d71f36694f16fa48d2e9"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/c082f1d26c8a4bc6a719f3c9d3cf4e9a-job.json": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/c082f1d26c8a4bc6a719f3c9d3cf4e9a-job.json",
+      "bytes": 47726,
+      "sha256": "5f6f5cbee41616d5d334c3ebb79cf6506cece3609430348c6fa771165e4f209a"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/diagnostic-plan.json": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/diagnostic-plan.json",
+      "bytes": 818286,
+      "sha256": "e2ee7e52792be467293e4f95e626bee4b66baabdb1981a76b72d4ebedaa8f7d1"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/diagnostic-report.json": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/diagnostic-report.json",
+      "bytes": 64946,
+      "sha256": "02beedbf89bf1ed573313c31df7d12bcebedb096fed547ea87653baf3db12714"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/e7cfd9f398814fa29649bc5e9a3aa3ab-job.json": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/e7cfd9f398814fa29649bc5e9a3aa3ab-job.json",
+      "bytes": 47730,
+      "sha256": "0e8aa12e9f4d955faf04619ba722a0210f9ba6ff1fe1e85c770b65714aafa82c"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/efd0a5a051f941319f12f18ad5ce1dee-job.json": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/efd0a5a051f941319f12f18ad5ce1dee-job.json",
+      "bytes": 47547,
+      "sha256": "ed115085658ea9612b15ddb088dc9af2c3133173eac04f8555d10e955676c3ab"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/efdb51aa952d430bbc5bc237f6d65637-job.json": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/efdb51aa952d430bbc5bc237f6d65637-job.json",
+      "bytes": 48126,
+      "sha256": "60cea0401fbfe3983181ca06a584a61494d59a93829d67105427c077e2801baa"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/00539472de9b48baa043f3cd3b50c57f/diagnostic-arrays.npz": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/00539472de9b48baa043f3cd3b50c57f/diagnostic-arrays.npz",
+      "bytes": 2524884,
+      "sha256": "a1a7078eff3420273713d5c002d8cf0372f6abef4371f39af2d8fc6bb7166a93"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/00539472de9b48baa043f3cd3b50c57f/diagnostic-trace.jsonl": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/00539472de9b48baa043f3cd3b50c57f/diagnostic-trace.jsonl",
+      "bytes": 186454,
+      "sha256": "6d21416170813f48c2b870c195ada3dc463f21667e742447e0f91c6a945956ae"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/00539472de9b48baa043f3cd3b50c57f/diagnostic-worker.json": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/00539472de9b48baa043f3cd3b50c57f/diagnostic-worker.json",
+      "bytes": 11130,
+      "sha256": "8775e8e4346affdf32f54dac2f05604da396f5f52c2bcd61eb2f8ae46fb80943"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/00539472de9b48baa043f3cd3b50c57f/recording/events.jsonl": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/00539472de9b48baa043f3cd3b50c57f/recording/events.jsonl",
+      "bytes": 18232,
+      "sha256": "c2ae30b7922b246ed7f97e4993e0a176a54c6769c7e0c94691e30b194c6d7c0f"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/00539472de9b48baa043f3cd3b50c57f/recording/manifest.json": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/00539472de9b48baa043f3cd3b50c57f/recording/manifest.json",
+      "bytes": 5890,
+      "sha256": "e23d5783e658e2d34541ffe0652e8476e896995b6a148e5f44ff69a500b13a61"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/00539472de9b48baa043f3cd3b50c57f/snapshots/index.json": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/00539472de9b48baa043f3cd3b50c57f/snapshots/index.json",
+      "bytes": 402,
+      "sha256": "dd1ebfd899294d3ff344926ede9af71f827bd91381db8f2cdbb1e507538f520f"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/00539472de9b48baa043f3cd3b50c57f/snapshots/initial.snp": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/00539472de9b48baa043f3cd3b50c57f/snapshots/initial.snp",
+      "bytes": 1152983,
+      "sha256": "6010528088de60e6f8f5c2d6957a99dc62fb090dbaa3a98223f78d68ee7c2285"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/00539472de9b48baa043f3cd3b50c57f/stderr.log": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/00539472de9b48baa043f3cd3b50c57f/stderr.log",
+      "bytes": 1490,
+      "sha256": "f81bf05c83c125efc4afcdd8ff9b70a34535cb34f34e2f59ff0c2364901dcd3d"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/00539472de9b48baa043f3cd3b50c57f/stdout.log": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/00539472de9b48baa043f3cd3b50c57f/stdout.log",
+      "bytes": 927,
+      "sha256": "6ef82fc4e7d355774982b6e44f513fe888c3d2164edd856ee45519b0c268df14"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/00539472de9b48baa043f3cd3b50c57f/supervisor.json": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/00539472de9b48baa043f3cd3b50c57f/supervisor.json",
+      "bytes": 364,
+      "sha256": "c7bef1b0480faeda85c396447d8d16802d614c068e72a792dbcdfe1de65f8d4f"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/1596270c568a4552a5f4718aeaec7740/diagnostic-arrays.npz": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/1596270c568a4552a5f4718aeaec7740/diagnostic-arrays.npz",
+      "bytes": 2505616,
+      "sha256": "fb5cf19ada44ee624e88a3d2883b94fff9ab55866b25ae03dac1c597ee6fbfc1"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/1596270c568a4552a5f4718aeaec7740/diagnostic-trace.jsonl": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/1596270c568a4552a5f4718aeaec7740/diagnostic-trace.jsonl",
+      "bytes": 184763,
+      "sha256": "b843d1d15f6dce8081c4b76ebbaaa5988d0fd81f00cd0328e1dac5119220d157"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/1596270c568a4552a5f4718aeaec7740/diagnostic-worker.json": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/1596270c568a4552a5f4718aeaec7740/diagnostic-worker.json",
+      "bytes": 11312,
+      "sha256": "4612d97cc1894393891293d1fa34af54ed3dedf185d22317f8f410677e4e4535"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/1596270c568a4552a5f4718aeaec7740/recording/events.jsonl": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/1596270c568a4552a5f4718aeaec7740/recording/events.jsonl",
+      "bytes": 18352,
+      "sha256": "277faf1121a8442b1e9ee82dd74fbc1fafd3471ee9a31e6d869e347a34e661f5"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/1596270c568a4552a5f4718aeaec7740/recording/manifest.json": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/1596270c568a4552a5f4718aeaec7740/recording/manifest.json",
+      "bytes": 5855,
+      "sha256": "567a173ce58014f000e0157ba4a58db5abca05039beb913e8bdf1d3b299ad1e9"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/1596270c568a4552a5f4718aeaec7740/snapshots/index.json": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/1596270c568a4552a5f4718aeaec7740/snapshots/index.json",
+      "bytes": 402,
+      "sha256": "3505cba3aed724554182152165c4b8c533da827fb9462733e29af5f68db3c2ac"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/1596270c568a4552a5f4718aeaec7740/snapshots/initial.snp": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/1596270c568a4552a5f4718aeaec7740/snapshots/initial.snp",
+      "bytes": 1153079,
+      "sha256": "baaccd8e8f9b75a338442a36a49c4d4befd04a51b27b40505524ed32ebf0f019"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/1596270c568a4552a5f4718aeaec7740/stderr.log": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/1596270c568a4552a5f4718aeaec7740/stderr.log",
+      "bytes": 1490,
+      "sha256": "f81bf05c83c125efc4afcdd8ff9b70a34535cb34f34e2f59ff0c2364901dcd3d"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/1596270c568a4552a5f4718aeaec7740/stdout.log": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/1596270c568a4552a5f4718aeaec7740/stdout.log",
+      "bytes": 927,
+      "sha256": "ae327ad7e7167f29c41df7718326200f1994384716abdefd0db617a6f2841a9b"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/1596270c568a4552a5f4718aeaec7740/supervisor.json": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/1596270c568a4552a5f4718aeaec7740/supervisor.json",
+      "bytes": 365,
+      "sha256": "229891fd19557fb33d3e8a9fd495f7d3731d8146e488623c630b1a650ea89178"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/2eab65a3f02c446d9cc345c8fa54b508/diagnostic-arrays.npz": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/2eab65a3f02c446d9cc345c8fa54b508/diagnostic-arrays.npz",
+      "bytes": 2505616,
+      "sha256": "fb5cf19ada44ee624e88a3d2883b94fff9ab55866b25ae03dac1c597ee6fbfc1"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/2eab65a3f02c446d9cc345c8fa54b508/diagnostic-trace.jsonl": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/2eab65a3f02c446d9cc345c8fa54b508/diagnostic-trace.jsonl",
+      "bytes": 184763,
+      "sha256": "ea412af55c855e3207299eb4fd71d86e562f0f20fbd35a6a02187c442302e289"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/2eab65a3f02c446d9cc345c8fa54b508/diagnostic-worker.json": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/2eab65a3f02c446d9cc345c8fa54b508/diagnostic-worker.json",
+      "bytes": 11307,
+      "sha256": "a255f8c9f7bf0d79cfdd909055f44d6430e392618d41ffa14aafadbe73649320"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/2eab65a3f02c446d9cc345c8fa54b508/recording/events.jsonl": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/2eab65a3f02c446d9cc345c8fa54b508/recording/events.jsonl",
+      "bytes": 18351,
+      "sha256": "5f30393c67c68c48b2201e99db2d551be02a7d291532ecd4ef97aed1eb4f3e8d"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/2eab65a3f02c446d9cc345c8fa54b508/recording/manifest.json": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/2eab65a3f02c446d9cc345c8fa54b508/recording/manifest.json",
+      "bytes": 5855,
+      "sha256": "10aa16fc4a4da82ef738c26ef7243d80414af0cb47ea0f63370e3b5257e2f480"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/2eab65a3f02c446d9cc345c8fa54b508/snapshots/index.json": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/2eab65a3f02c446d9cc345c8fa54b508/snapshots/index.json",
+      "bytes": 402,
+      "sha256": "ed16042f923463bb179a0a97da8724755af6df06b7c2a5683baaef1c616c0891"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/2eab65a3f02c446d9cc345c8fa54b508/snapshots/initial.snp": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/2eab65a3f02c446d9cc345c8fa54b508/snapshots/initial.snp",
+      "bytes": 1153078,
+      "sha256": "9b4b1b8ded878d700766b6d5027f0fa07ff87d9e00f449140cb0490cf3b12d29"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/2eab65a3f02c446d9cc345c8fa54b508/stderr.log": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/2eab65a3f02c446d9cc345c8fa54b508/stderr.log",
+      "bytes": 1490,
+      "sha256": "f81bf05c83c125efc4afcdd8ff9b70a34535cb34f34e2f59ff0c2364901dcd3d"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/2eab65a3f02c446d9cc345c8fa54b508/stdout.log": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/2eab65a3f02c446d9cc345c8fa54b508/stdout.log",
+      "bytes": 927,
+      "sha256": "ae327ad7e7167f29c41df7718326200f1994384716abdefd0db617a6f2841a9b"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/2eab65a3f02c446d9cc345c8fa54b508/supervisor.json": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/2eab65a3f02c446d9cc345c8fa54b508/supervisor.json",
+      "bytes": 364,
+      "sha256": "d61944980f594c23282648040e0cd1b44cc7731650306874f813a03185b8b47b"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/433590489f0a4f71b8387ce89b79fb1d/diagnostic-arrays.npz": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/433590489f0a4f71b8387ce89b79fb1d/diagnostic-arrays.npz",
+      "bytes": 2505616,
+      "sha256": "fb5cf19ada44ee624e88a3d2883b94fff9ab55866b25ae03dac1c597ee6fbfc1"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/433590489f0a4f71b8387ce89b79fb1d/diagnostic-trace.jsonl": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/433590489f0a4f71b8387ce89b79fb1d/diagnostic-trace.jsonl",
+      "bytes": 184763,
+      "sha256": "c270445a5a8b186ed9a2b0dc95d3b70fae0603d217d2065aa909efb46b8ec40e"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/433590489f0a4f71b8387ce89b79fb1d/diagnostic-worker.json": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/433590489f0a4f71b8387ce89b79fb1d/diagnostic-worker.json",
+      "bytes": 11132,
+      "sha256": "2f8003835acc572419f0e996382232167d9ed590a955e13c45b9d6472f8a592b"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/433590489f0a4f71b8387ce89b79fb1d/recording/events.jsonl": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/433590489f0a4f71b8387ce89b79fb1d/recording/events.jsonl",
+      "bytes": 18232,
+      "sha256": "8f1f56f94df9fb9762066e37f28bca2e74878b68e42ba78efbed154fcd9cb18f"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/433590489f0a4f71b8387ce89b79fb1d/recording/manifest.json": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/433590489f0a4f71b8387ce89b79fb1d/recording/manifest.json",
+      "bytes": 5855,
+      "sha256": "3c2d55386f40541a46f8bc8b75477f9f28a09028d8ca8f5c8029c9562864fdf3"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/433590489f0a4f71b8387ce89b79fb1d/snapshots/index.json": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/433590489f0a4f71b8387ce89b79fb1d/snapshots/index.json",
+      "bytes": 402,
+      "sha256": "6009c0b44f647d55668b220c2491967c8a29489dde7e3367cfa6ab7b5d51a9fc"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/433590489f0a4f71b8387ce89b79fb1d/snapshots/initial.snp": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/433590489f0a4f71b8387ce89b79fb1d/snapshots/initial.snp",
+      "bytes": 1152934,
+      "sha256": "3600c7731d27dd820c299a240698ec679ade740d3a8b32f4ee8d38ce659dfe34"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/433590489f0a4f71b8387ce89b79fb1d/stderr.log": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/433590489f0a4f71b8387ce89b79fb1d/stderr.log",
+      "bytes": 1490,
+      "sha256": "f81bf05c83c125efc4afcdd8ff9b70a34535cb34f34e2f59ff0c2364901dcd3d"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/433590489f0a4f71b8387ce89b79fb1d/stdout.log": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/433590489f0a4f71b8387ce89b79fb1d/stdout.log",
+      "bytes": 927,
+      "sha256": "ae327ad7e7167f29c41df7718326200f1994384716abdefd0db617a6f2841a9b"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/433590489f0a4f71b8387ce89b79fb1d/supervisor.json": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/433590489f0a4f71b8387ce89b79fb1d/supervisor.json",
+      "bytes": 364,
+      "sha256": "1a53a932891594a1b9d7d67516982fd0bff8d81bf64f07ea5a4c1dd48f3c9b5e"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/51c1b9a3e33747bcaf3f479463ed9b6f/diagnostic-arrays.npz": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/51c1b9a3e33747bcaf3f479463ed9b6f/diagnostic-arrays.npz",
+      "bytes": 2544152,
+      "sha256": "46ac953bf90649ae02994a0df15cf6b681b07f9be5a7dd668567d31f46dde503"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/51c1b9a3e33747bcaf3f479463ed9b6f/diagnostic-trace.jsonl": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/51c1b9a3e33747bcaf3f479463ed9b6f/diagnostic-trace.jsonl",
+      "bytes": 188720,
+      "sha256": "a81ad70ab3b43a0245be228dda6d8f49b24d678daa197a7573bcfcbee710e7df"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/51c1b9a3e33747bcaf3f479463ed9b6f/diagnostic-worker.json": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/51c1b9a3e33747bcaf3f479463ed9b6f/diagnostic-worker.json",
+      "bytes": 11309,
+      "sha256": "68b7088f6f32bf9cb560b0a5349dbd300db26c2d2fbd2fba0969250f829da4b3"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/51c1b9a3e33747bcaf3f479463ed9b6f/recording/events.jsonl": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/51c1b9a3e33747bcaf3f479463ed9b6f/recording/events.jsonl",
+      "bytes": 18353,
+      "sha256": "58c0dcb1b44504e6a3199d4239436d6e95a17b89d1ef3c89544e0d82832725b1"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/51c1b9a3e33747bcaf3f479463ed9b6f/recording/manifest.json": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/51c1b9a3e33747bcaf3f479463ed9b6f/recording/manifest.json",
+      "bytes": 5891,
+      "sha256": "efe014bccb7a5d4fb4c8d95442ad4a34c036b358d31373a2af9080126ceb06e0"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/51c1b9a3e33747bcaf3f479463ed9b6f/snapshots/index.json": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/51c1b9a3e33747bcaf3f479463ed9b6f/snapshots/index.json",
+      "bytes": 402,
+      "sha256": "5fe1a081da2cb675f40054578b22f7a55c36b75ff4b480682c5d4d50a482b16a"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/51c1b9a3e33747bcaf3f479463ed9b6f/snapshots/initial.snp": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/51c1b9a3e33747bcaf3f479463ed9b6f/snapshots/initial.snp",
+      "bytes": 1153139,
+      "sha256": "369dd8988eef234a37dcc8b409dda01b2b9966d99daeb26d5aa58a2c7037ed0c"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/51c1b9a3e33747bcaf3f479463ed9b6f/stderr.log": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/51c1b9a3e33747bcaf3f479463ed9b6f/stderr.log",
+      "bytes": 1490,
+      "sha256": "f81bf05c83c125efc4afcdd8ff9b70a34535cb34f34e2f59ff0c2364901dcd3d"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/51c1b9a3e33747bcaf3f479463ed9b6f/stdout.log": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/51c1b9a3e33747bcaf3f479463ed9b6f/stdout.log",
+      "bytes": 927,
+      "sha256": "9f3feb4be8f3d45c9178f65a1224e0b96209eba5759c0d9c0e7aec5e06105d58"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/51c1b9a3e33747bcaf3f479463ed9b6f/supervisor.json": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/51c1b9a3e33747bcaf3f479463ed9b6f/supervisor.json",
+      "bytes": 364,
+      "sha256": "f3537e74a812d4eb9c03282c9596e52e3f40f6b20ea6aa1dfc8aceb00483129c"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/59720638d04e4d9ab037343e2caf3b5a/diagnostic-arrays.npz": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/59720638d04e4d9ab037343e2caf3b5a/diagnostic-arrays.npz",
+      "bytes": 2524884,
+      "sha256": "a1a7078eff3420273713d5c002d8cf0372f6abef4371f39af2d8fc6bb7166a93"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/59720638d04e4d9ab037343e2caf3b5a/diagnostic-trace.jsonl": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/59720638d04e4d9ab037343e2caf3b5a/diagnostic-trace.jsonl",
+      "bytes": 187802,
+      "sha256": "c783dd7d02a6b17c03fc198d2d48566848b108894b6fe5622e43103c0df80be6"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/59720638d04e4d9ab037343e2caf3b5a/diagnostic-worker.json": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/59720638d04e4d9ab037343e2caf3b5a/diagnostic-worker.json",
+      "bytes": 11306,
+      "sha256": "5d80290362ccf82badc200896ea05e8b9b5649b2a947d9752301d8d8669e6152"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/59720638d04e4d9ab037343e2caf3b5a/recording/events.jsonl": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/59720638d04e4d9ab037343e2caf3b5a/recording/events.jsonl",
+      "bytes": 18351,
+      "sha256": "8f9313d92e4edecfcb8b41b48231d21de756932e04602cdd967fde9dbd6a285a"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/59720638d04e4d9ab037343e2caf3b5a/recording/manifest.json": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/59720638d04e4d9ab037343e2caf3b5a/recording/manifest.json",
+      "bytes": 5890,
+      "sha256": "5097b0ea92ffc3e920453b7112d9925db258a4df6a56d0a4be40bb657e2f6dc8"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/59720638d04e4d9ab037343e2caf3b5a/snapshots/index.json": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/59720638d04e4d9ab037343e2caf3b5a/snapshots/index.json",
+      "bytes": 402,
+      "sha256": "69c316fe861f902e09eeee664214feee9078d9efbf4c5f6d5c3e06bf930126eb"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/59720638d04e4d9ab037343e2caf3b5a/snapshots/initial.snp": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/59720638d04e4d9ab037343e2caf3b5a/snapshots/initial.snp",
+      "bytes": 1153127,
+      "sha256": "327ef25472bbc51f4fcf1f56b954d19c42676b314c00a06100cae3b489546086"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/59720638d04e4d9ab037343e2caf3b5a/stderr.log": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/59720638d04e4d9ab037343e2caf3b5a/stderr.log",
+      "bytes": 1490,
+      "sha256": "f81bf05c83c125efc4afcdd8ff9b70a34535cb34f34e2f59ff0c2364901dcd3d"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/59720638d04e4d9ab037343e2caf3b5a/stdout.log": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/59720638d04e4d9ab037343e2caf3b5a/stdout.log",
+      "bytes": 927,
+      "sha256": "6ef82fc4e7d355774982b6e44f513fe888c3d2164edd856ee45519b0c268df14"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/59720638d04e4d9ab037343e2caf3b5a/supervisor.json": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/59720638d04e4d9ab037343e2caf3b5a/supervisor.json",
+      "bytes": 365,
+      "sha256": "257954ace64251de13fc04e6a426951da94d883a044802e675a0c29f3c1f1d13"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/6371f530faf94a7c9a507df277cd3322/diagnostic-arrays.npz": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/6371f530faf94a7c9a507df277cd3322/diagnostic-arrays.npz",
+      "bytes": 2467080,
+      "sha256": "284ea6397564b96a2bc61d3529598c3992af43dd0e9264aaafd18adc8f0b9172"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/6371f530faf94a7c9a507df277cd3322/diagnostic-trace.jsonl": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/6371f530faf94a7c9a507df277cd3322/diagnostic-trace.jsonl",
+      "bytes": 184867,
+      "sha256": "cdf6b75ae474dcf04511002c3ace5f5f6b37da18fda90282ef438868442f9899"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/6371f530faf94a7c9a507df277cd3322/diagnostic-worker.json": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/6371f530faf94a7c9a507df277cd3322/diagnostic-worker.json",
+      "bytes": 11311,
+      "sha256": "d491918efa90e5e5d39cff1f5ffd24b4af0e56963c6873d06a73939581817f2f"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/6371f530faf94a7c9a507df277cd3322/recording/events.jsonl": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/6371f530faf94a7c9a507df277cd3322/recording/events.jsonl",
+      "bytes": 18353,
+      "sha256": "978a6b803cceacf4c8361b7f7ab13da39a7c21543176ab4f0f8ecdf64e328389"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/6371f530faf94a7c9a507df277cd3322/recording/manifest.json": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/6371f530faf94a7c9a507df277cd3322/recording/manifest.json",
+      "bytes": 5851,
+      "sha256": "b63cfadabbb2ea026b1f89a80aa5884d4d2817c81068c10fd0e5608f6b55afef"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/6371f530faf94a7c9a507df277cd3322/snapshots/index.json": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/6371f530faf94a7c9a507df277cd3322/snapshots/index.json",
+      "bytes": 402,
+      "sha256": "3fcbcf3f92d285d74cd75cdd8d520674e0b5feb6d71a1a7a3f26b117b7d66a50"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/6371f530faf94a7c9a507df277cd3322/snapshots/initial.snp": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/6371f530faf94a7c9a507df277cd3322/snapshots/initial.snp",
+      "bytes": 1153077,
+      "sha256": "5c593caf860b1796cc92da6d9fe45cd1a9f20aa98c852c53b7c5711390c89b1b"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/6371f530faf94a7c9a507df277cd3322/stderr.log": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/6371f530faf94a7c9a507df277cd3322/stderr.log",
+      "bytes": 1490,
+      "sha256": "f81bf05c83c125efc4afcdd8ff9b70a34535cb34f34e2f59ff0c2364901dcd3d"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/6371f530faf94a7c9a507df277cd3322/stdout.log": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/6371f530faf94a7c9a507df277cd3322/stdout.log",
+      "bytes": 927,
+      "sha256": "57c5284d10b2dbc6834bbc9f5eb6e4266b360ed8ab59aeb9de6cbff2febee078"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/6371f530faf94a7c9a507df277cd3322/supervisor.json": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/6371f530faf94a7c9a507df277cd3322/supervisor.json",
+      "bytes": 364,
+      "sha256": "ed92b24706f174c096a984f9eebd525e938febd00fc36ec853d23766c36792d0"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/6c71eb7684eb49a8b3759fa9a46b02e8/diagnostic-arrays.npz": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/6c71eb7684eb49a8b3759fa9a46b02e8/diagnostic-arrays.npz",
+      "bytes": 2524884,
+      "sha256": "a1a7078eff3420273713d5c002d8cf0372f6abef4371f39af2d8fc6bb7166a93"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/6c71eb7684eb49a8b3759fa9a46b02e8/diagnostic-trace.jsonl": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/6c71eb7684eb49a8b3759fa9a46b02e8/diagnostic-trace.jsonl",
+      "bytes": 187802,
+      "sha256": "c783dd7d02a6b17c03fc198d2d48566848b108894b6fe5622e43103c0df80be6"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/6c71eb7684eb49a8b3759fa9a46b02e8/diagnostic-worker.json": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/6c71eb7684eb49a8b3759fa9a46b02e8/diagnostic-worker.json",
+      "bytes": 11304,
+      "sha256": "cccc18bfca6ab579622f4b3ac785bd655f01132331cf2944e1395af260f24472"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/6c71eb7684eb49a8b3759fa9a46b02e8/recording/events.jsonl": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/6c71eb7684eb49a8b3759fa9a46b02e8/recording/events.jsonl",
+      "bytes": 18351,
+      "sha256": "ca1b5e96e669c0e427c07a015330c533bcc013b3b5c843c1dff24509c87e3a92"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/6c71eb7684eb49a8b3759fa9a46b02e8/recording/manifest.json": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/6c71eb7684eb49a8b3759fa9a46b02e8/recording/manifest.json",
+      "bytes": 5890,
+      "sha256": "a90a3ae6bfd3a3bc901c86d9dae6d0ee5de9a2228f19e4204acaa519bcdc9ffe"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/6c71eb7684eb49a8b3759fa9a46b02e8/snapshots/index.json": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/6c71eb7684eb49a8b3759fa9a46b02e8/snapshots/index.json",
+      "bytes": 402,
+      "sha256": "8d1c8ee154cd8cb8bf0d31e9cffdb2c42bce5daa0bc58fc2db7ad592b0c16874"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/6c71eb7684eb49a8b3759fa9a46b02e8/snapshots/initial.snp": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/6c71eb7684eb49a8b3759fa9a46b02e8/snapshots/initial.snp",
+      "bytes": 1153127,
+      "sha256": "556f1b486ba744b5c0e1c5386a3e0e8a53e91211df80a4639ad536d248cac86f"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/6c71eb7684eb49a8b3759fa9a46b02e8/stderr.log": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/6c71eb7684eb49a8b3759fa9a46b02e8/stderr.log",
+      "bytes": 1490,
+      "sha256": "f81bf05c83c125efc4afcdd8ff9b70a34535cb34f34e2f59ff0c2364901dcd3d"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/6c71eb7684eb49a8b3759fa9a46b02e8/stdout.log": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/6c71eb7684eb49a8b3759fa9a46b02e8/stdout.log",
+      "bytes": 927,
+      "sha256": "6ef82fc4e7d355774982b6e44f513fe888c3d2164edd856ee45519b0c268df14"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/6c71eb7684eb49a8b3759fa9a46b02e8/supervisor.json": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/6c71eb7684eb49a8b3759fa9a46b02e8/supervisor.json",
+      "bytes": 364,
+      "sha256": "128b117813855c25ca92e7706bd154cdc3e460bb08324c248b473bc456d5c85d"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/6d8e718df6cb465dbecc50d55d623654/diagnostic-arrays.npz": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/6d8e718df6cb465dbecc50d55d623654/diagnostic-arrays.npz",
+      "bytes": 2524884,
+      "sha256": "631e4ae9d9411697cdd1b6b450df88087cd187a4bf2aba9d146727db2c453659"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/6d8e718df6cb465dbecc50d55d623654/diagnostic-trace.jsonl": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/6d8e718df6cb465dbecc50d55d623654/diagnostic-trace.jsonl",
+      "bytes": 194437,
+      "sha256": "53325b5cf357e1269101b8b1207949dabf7ab7b8a7815554fe3a54ae658f8821"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/6d8e718df6cb465dbecc50d55d623654/diagnostic-worker.json": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/6d8e718df6cb465dbecc50d55d623654/diagnostic-worker.json",
+      "bytes": 11309,
+      "sha256": "48264fe03d0ff40593a3b48c6cee2d0531d76b3eb69d86fc3cbc65a5215697aa"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/6d8e718df6cb465dbecc50d55d623654/recording/events.jsonl": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/6d8e718df6cb465dbecc50d55d623654/recording/events.jsonl",
+      "bytes": 18352,
+      "sha256": "f0dec02b81d73fa5f4997183696a2dabfb5a09a492bed7a6f7beda5846631ab0"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/6d8e718df6cb465dbecc50d55d623654/recording/manifest.json": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/6d8e718df6cb465dbecc50d55d623654/recording/manifest.json",
+      "bytes": 5890,
+      "sha256": "e5d554166e2b6e95b82e355a123a8a555245a4206b738f9532f9cb77b57b9d7c"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/6d8e718df6cb465dbecc50d55d623654/snapshots/index.json": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/6d8e718df6cb465dbecc50d55d623654/snapshots/index.json",
+      "bytes": 402,
+      "sha256": "48a0dd98a6ea00e730b5cba5b24638baecdd2e5d3d59f63510c65015cb7f0088"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/6d8e718df6cb465dbecc50d55d623654/snapshots/initial.snp": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/6d8e718df6cb465dbecc50d55d623654/snapshots/initial.snp",
+      "bytes": 1153128,
+      "sha256": "2f46896bfb274724523ce7b20d4a8bad5d385067419d9e387c3ea4f91d19f772"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/6d8e718df6cb465dbecc50d55d623654/stderr.log": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/6d8e718df6cb465dbecc50d55d623654/stderr.log",
+      "bytes": 1490,
+      "sha256": "f81bf05c83c125efc4afcdd8ff9b70a34535cb34f34e2f59ff0c2364901dcd3d"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/6d8e718df6cb465dbecc50d55d623654/stdout.log": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/6d8e718df6cb465dbecc50d55d623654/stdout.log",
+      "bytes": 927,
+      "sha256": "6ef82fc4e7d355774982b6e44f513fe888c3d2164edd856ee45519b0c268df14"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/6d8e718df6cb465dbecc50d55d623654/supervisor.json": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/6d8e718df6cb465dbecc50d55d623654/supervisor.json",
+      "bytes": 365,
+      "sha256": "d3be24d66c32d7a989d904c35784ab9c3ef23a3f454005409a924f74c5d2d78d"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/954c6bac4bb34929819bc65faf3e1385/diagnostic-arrays.npz": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/954c6bac4bb34929819bc65faf3e1385/diagnostic-arrays.npz",
+      "bytes": 2544152,
+      "sha256": "46ac953bf90649ae02994a0df15cf6b681b07f9be5a7dd668567d31f46dde503"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/954c6bac4bb34929819bc65faf3e1385/diagnostic-trace.jsonl": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/954c6bac4bb34929819bc65faf3e1385/diagnostic-trace.jsonl",
+      "bytes": 188720,
+      "sha256": "a81ad70ab3b43a0245be228dda6d8f49b24d678daa197a7573bcfcbee710e7df"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/954c6bac4bb34929819bc65faf3e1385/diagnostic-worker.json": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/954c6bac4bb34929819bc65faf3e1385/diagnostic-worker.json",
+      "bytes": 11311,
+      "sha256": "c2bd58931a56d5d8974fa9358ed9e40e6324255246f060569ca57b054b1c745c"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/954c6bac4bb34929819bc65faf3e1385/recording/events.jsonl": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/954c6bac4bb34929819bc65faf3e1385/recording/events.jsonl",
+      "bytes": 18353,
+      "sha256": "a101776be79bf3ad15b126e05b58067b34c2bc2cf37fa4a600b14003f4222a51"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/954c6bac4bb34929819bc65faf3e1385/recording/manifest.json": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/954c6bac4bb34929819bc65faf3e1385/recording/manifest.json",
+      "bytes": 5891,
+      "sha256": "a0e495bad4ee940784b51ee45a613556c3b6168c5d62e08792771bd59d5c582e"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/954c6bac4bb34929819bc65faf3e1385/snapshots/index.json": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/954c6bac4bb34929819bc65faf3e1385/snapshots/index.json",
+      "bytes": 402,
+      "sha256": "a48bd424c00e628db5c7f6ed62339a68db6d385151c9a712e83c066371878f02"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/954c6bac4bb34929819bc65faf3e1385/snapshots/initial.snp": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/954c6bac4bb34929819bc65faf3e1385/snapshots/initial.snp",
+      "bytes": 1153139,
+      "sha256": "247aadf859b005c100575e740e775865325e2a58b839a06282b1f32de91a756f"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/954c6bac4bb34929819bc65faf3e1385/stderr.log": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/954c6bac4bb34929819bc65faf3e1385/stderr.log",
+      "bytes": 1490,
+      "sha256": "f81bf05c83c125efc4afcdd8ff9b70a34535cb34f34e2f59ff0c2364901dcd3d"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/954c6bac4bb34929819bc65faf3e1385/stdout.log": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/954c6bac4bb34929819bc65faf3e1385/stdout.log",
+      "bytes": 927,
+      "sha256": "9f3feb4be8f3d45c9178f65a1224e0b96209eba5759c0d9c0e7aec5e06105d58"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/954c6bac4bb34929819bc65faf3e1385/supervisor.json": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/954c6bac4bb34929819bc65faf3e1385/supervisor.json",
+      "bytes": 365,
+      "sha256": "5db5de4f2125f1ca51d21be3c002113ac76210506efe924db5a333af5781d0a5"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/a0999fd9f2064851b974b01c1c5a9065/diagnostic-arrays.npz": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/a0999fd9f2064851b974b01c1c5a9065/diagnostic-arrays.npz",
+      "bytes": 2544152,
+      "sha256": "46ac953bf90649ae02994a0df15cf6b681b07f9be5a7dd668567d31f46dde503"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/a0999fd9f2064851b974b01c1c5a9065/diagnostic-trace.jsonl": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/a0999fd9f2064851b974b01c1c5a9065/diagnostic-trace.jsonl",
+      "bytes": 187370,
+      "sha256": "9d00a49225cec695e2dd0c94bf288e9ec2caccfe09f199864c36d82029e0776b"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/a0999fd9f2064851b974b01c1c5a9065/diagnostic-worker.json": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/a0999fd9f2064851b974b01c1c5a9065/diagnostic-worker.json",
+      "bytes": 11133,
+      "sha256": "42d68fd9b66d6137dbe0b498e6169f98e7727b9b76d6a7a9635b38af27d6090f"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/a0999fd9f2064851b974b01c1c5a9065/recording/events.jsonl": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/a0999fd9f2064851b974b01c1c5a9065/recording/events.jsonl",
+      "bytes": 18233,
+      "sha256": "36bb2f4302a375499c0dba2631992d028e4a5af3c32cd49cddf8a698d1e62af7"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/a0999fd9f2064851b974b01c1c5a9065/recording/manifest.json": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/a0999fd9f2064851b974b01c1c5a9065/recording/manifest.json",
+      "bytes": 5891,
+      "sha256": "cf37fb54f649255987dfe16e5bf5374ee4592b36fbf19c32451012938a0ea325"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/a0999fd9f2064851b974b01c1c5a9065/snapshots/index.json": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/a0999fd9f2064851b974b01c1c5a9065/snapshots/index.json",
+      "bytes": 402,
+      "sha256": "7377e94b8c0e47613234c60960856973e49a6ac50eba4e2a1de2dbd28ae1fc12"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/a0999fd9f2064851b974b01c1c5a9065/snapshots/initial.snp": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/a0999fd9f2064851b974b01c1c5a9065/snapshots/initial.snp",
+      "bytes": 1152994,
+      "sha256": "00a779e9ab9119183fff1814cf6aed89faade8ea22778537a4f8398046859e6b"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/a0999fd9f2064851b974b01c1c5a9065/stderr.log": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/a0999fd9f2064851b974b01c1c5a9065/stderr.log",
+      "bytes": 1490,
+      "sha256": "f81bf05c83c125efc4afcdd8ff9b70a34535cb34f34e2f59ff0c2364901dcd3d"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/a0999fd9f2064851b974b01c1c5a9065/stdout.log": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/a0999fd9f2064851b974b01c1c5a9065/stdout.log",
+      "bytes": 927,
+      "sha256": "9f3feb4be8f3d45c9178f65a1224e0b96209eba5759c0d9c0e7aec5e06105d58"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/a0999fd9f2064851b974b01c1c5a9065/supervisor.json": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/a0999fd9f2064851b974b01c1c5a9065/supervisor.json",
+      "bytes": 364,
+      "sha256": "9ff7d0405dba6595b52d993f0af6b18e7e13eb7cbdcb8fad56d3e0ae13fe4e76"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/b0014b7b850f447e8562ce00d58a408c/diagnostic-arrays.npz": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/b0014b7b850f447e8562ce00d58a408c/diagnostic-arrays.npz",
+      "bytes": 2467080,
+      "sha256": "284ea6397564b96a2bc61d3529598c3992af43dd0e9264aaafd18adc8f0b9172"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/b0014b7b850f447e8562ce00d58a408c/diagnostic-trace.jsonl": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/b0014b7b850f447e8562ce00d58a408c/diagnostic-trace.jsonl",
+      "bytes": 183517,
+      "sha256": "7d8392ab54449f14b0de75de59283a8add9ef6436206e445ce51fa6e632693e1"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/b0014b7b850f447e8562ce00d58a408c/diagnostic-worker.json": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/b0014b7b850f447e8562ce00d58a408c/diagnostic-worker.json",
+      "bytes": 11134,
+      "sha256": "a59f2d2a28295df7df4877a4fceaae4592957ce2edb39e554a1412c49677617c"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/b0014b7b850f447e8562ce00d58a408c/recording/events.jsonl": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/b0014b7b850f447e8562ce00d58a408c/recording/events.jsonl",
+      "bytes": 18233,
+      "sha256": "e43c52cc6e5bcc5ea455fc3006de316f02535872ec46a0522cf5c7683241a594"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/b0014b7b850f447e8562ce00d58a408c/recording/manifest.json": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/b0014b7b850f447e8562ce00d58a408c/recording/manifest.json",
+      "bytes": 5851,
+      "sha256": "b6922c0b093eeaccc9126ea480aa80d544e2a6b9fac873ae7b7445b4eade607b"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/b0014b7b850f447e8562ce00d58a408c/snapshots/index.json": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/b0014b7b850f447e8562ce00d58a408c/snapshots/index.json",
+      "bytes": 402,
+      "sha256": "b8cd75b278096473582c543f1733dc3e2949ffd4115ef9682d54172728300580"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/b0014b7b850f447e8562ce00d58a408c/snapshots/initial.snp": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/b0014b7b850f447e8562ce00d58a408c/snapshots/initial.snp",
+      "bytes": 1152932,
+      "sha256": "488dba6e4f148c2bfb74ad472de6394ccb54e2c3d4f19cd4216a9c8f98fbd80e"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/b0014b7b850f447e8562ce00d58a408c/stderr.log": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/b0014b7b850f447e8562ce00d58a408c/stderr.log",
+      "bytes": 1490,
+      "sha256": "f81bf05c83c125efc4afcdd8ff9b70a34535cb34f34e2f59ff0c2364901dcd3d"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/b0014b7b850f447e8562ce00d58a408c/stdout.log": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/b0014b7b850f447e8562ce00d58a408c/stdout.log",
+      "bytes": 927,
+      "sha256": "57c5284d10b2dbc6834bbc9f5eb6e4266b360ed8ab59aeb9de6cbff2febee078"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/b0014b7b850f447e8562ce00d58a408c/supervisor.json": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/b0014b7b850f447e8562ce00d58a408c/supervisor.json",
+      "bytes": 364,
+      "sha256": "e293041a2b5a46c8efd199a32409d52b62944feb565ca1ce1084c8bcbbca92bc"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/c082f1d26c8a4bc6a719f3c9d3cf4e9a/diagnostic-arrays.npz": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/c082f1d26c8a4bc6a719f3c9d3cf4e9a/diagnostic-arrays.npz",
+      "bytes": 2467080,
+      "sha256": "284ea6397564b96a2bc61d3529598c3992af43dd0e9264aaafd18adc8f0b9172"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/c082f1d26c8a4bc6a719f3c9d3cf4e9a/diagnostic-trace.jsonl": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/c082f1d26c8a4bc6a719f3c9d3cf4e9a/diagnostic-trace.jsonl",
+      "bytes": 184867,
+      "sha256": "cdf6b75ae474dcf04511002c3ace5f5f6b37da18fda90282ef438868442f9899"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/c082f1d26c8a4bc6a719f3c9d3cf4e9a/diagnostic-worker.json": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/c082f1d26c8a4bc6a719f3c9d3cf4e9a/diagnostic-worker.json",
+      "bytes": 11308,
+      "sha256": "72cea459942e3659e1e715d030d7037a0367332b23b3878b5483837739b413c0"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/c082f1d26c8a4bc6a719f3c9d3cf4e9a/recording/events.jsonl": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/c082f1d26c8a4bc6a719f3c9d3cf4e9a/recording/events.jsonl",
+      "bytes": 18353,
+      "sha256": "04ebee3f74194ca624ab8778508f9a686b595f68f02b8eb702fc6c968e5de5ff"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/c082f1d26c8a4bc6a719f3c9d3cf4e9a/recording/manifest.json": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/c082f1d26c8a4bc6a719f3c9d3cf4e9a/recording/manifest.json",
+      "bytes": 5851,
+      "sha256": "cb94c340462b80ed8158ba5c063f056ce6b2fafdf5ff65f4eb9d8bdc65d105dd"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/c082f1d26c8a4bc6a719f3c9d3cf4e9a/snapshots/index.json": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/c082f1d26c8a4bc6a719f3c9d3cf4e9a/snapshots/index.json",
+      "bytes": 402,
+      "sha256": "9d49f27751b36079a76ca292cb5fba6f76d3dfafadebe7f9949fa6b3f9f38488"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/c082f1d26c8a4bc6a719f3c9d3cf4e9a/snapshots/initial.snp": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/c082f1d26c8a4bc6a719f3c9d3cf4e9a/snapshots/initial.snp",
+      "bytes": 1153077,
+      "sha256": "ce06b05f387f56d126f572a982b0558849e9dc7a6306f77d118f3d6b80f050db"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/c082f1d26c8a4bc6a719f3c9d3cf4e9a/stderr.log": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/c082f1d26c8a4bc6a719f3c9d3cf4e9a/stderr.log",
+      "bytes": 1490,
+      "sha256": "f81bf05c83c125efc4afcdd8ff9b70a34535cb34f34e2f59ff0c2364901dcd3d"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/c082f1d26c8a4bc6a719f3c9d3cf4e9a/stdout.log": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/c082f1d26c8a4bc6a719f3c9d3cf4e9a/stdout.log",
+      "bytes": 927,
+      "sha256": "57c5284d10b2dbc6834bbc9f5eb6e4266b360ed8ab59aeb9de6cbff2febee078"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/c082f1d26c8a4bc6a719f3c9d3cf4e9a/supervisor.json": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/c082f1d26c8a4bc6a719f3c9d3cf4e9a/supervisor.json",
+      "bytes": 363,
+      "sha256": "24489ea75a08c3f119028408b04827b8b01c3ca3dcb99288d2b500c23239eb70"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/e7cfd9f398814fa29649bc5e9a3aa3ab/diagnostic-arrays.npz": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/e7cfd9f398814fa29649bc5e9a3aa3ab/diagnostic-arrays.npz",
+      "bytes": 2467080,
+      "sha256": "7b617209bfdc863686c772106fe984ffb7c7b4c6d7f87e248ca59497323fa363"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/e7cfd9f398814fa29649bc5e9a3aa3ab/diagnostic-trace.jsonl": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/e7cfd9f398814fa29649bc5e9a3aa3ab/diagnostic-trace.jsonl",
+      "bytes": 191363,
+      "sha256": "c9cbcf6084b6615d4c1708f97e382ea14442889197d2cf5250bb475a651dcbb4"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/e7cfd9f398814fa29649bc5e9a3aa3ab/diagnostic-worker.json": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/e7cfd9f398814fa29649bc5e9a3aa3ab/diagnostic-worker.json",
+      "bytes": 11312,
+      "sha256": "5688ecd8c5531dafae97f17ce27d9c1d9f08067d27563b3c826d5d3a626f6f03"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/e7cfd9f398814fa29649bc5e9a3aa3ab/recording/events.jsonl": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/e7cfd9f398814fa29649bc5e9a3aa3ab/recording/events.jsonl",
+      "bytes": 18352,
+      "sha256": "8c2382caecad1403a5be5ecad87a9bce9ec15f7e2c0752f531b7edb6f2a3e90d"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/e7cfd9f398814fa29649bc5e9a3aa3ab/recording/manifest.json": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/e7cfd9f398814fa29649bc5e9a3aa3ab/recording/manifest.json",
+      "bytes": 5851,
+      "sha256": "6a0673638a4997742efd6785013cd8534971b130d4a091fd7eacc789f298dd7f"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/e7cfd9f398814fa29649bc5e9a3aa3ab/snapshots/index.json": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/e7cfd9f398814fa29649bc5e9a3aa3ab/snapshots/index.json",
+      "bytes": 402,
+      "sha256": "f1e08c453743035fa4ada04b410c3b0a1fc963cdc6f851a85dd4af832d4ae772"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/e7cfd9f398814fa29649bc5e9a3aa3ab/snapshots/initial.snp": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/e7cfd9f398814fa29649bc5e9a3aa3ab/snapshots/initial.snp",
+      "bytes": 1153076,
+      "sha256": "dc8d1627175ac5a2da96cf2f2473fb0a0e40b4993296cd023c29b8ec28875c43"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/e7cfd9f398814fa29649bc5e9a3aa3ab/stderr.log": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/e7cfd9f398814fa29649bc5e9a3aa3ab/stderr.log",
+      "bytes": 1490,
+      "sha256": "f81bf05c83c125efc4afcdd8ff9b70a34535cb34f34e2f59ff0c2364901dcd3d"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/e7cfd9f398814fa29649bc5e9a3aa3ab/stdout.log": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/e7cfd9f398814fa29649bc5e9a3aa3ab/stdout.log",
+      "bytes": 927,
+      "sha256": "57c5284d10b2dbc6834bbc9f5eb6e4266b360ed8ab59aeb9de6cbff2febee078"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/e7cfd9f398814fa29649bc5e9a3aa3ab/supervisor.json": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/e7cfd9f398814fa29649bc5e9a3aa3ab/supervisor.json",
+      "bytes": 365,
+      "sha256": "e98c451b41279de4e2b81bf8b0377814d049a9596332e62a24b03254305cea6a"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/efd0a5a051f941319f12f18ad5ce1dee/diagnostic-arrays.npz": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/efd0a5a051f941319f12f18ad5ce1dee/diagnostic-arrays.npz",
+      "bytes": 2505616,
+      "sha256": "fb5cf19ada44ee624e88a3d2883b94fff9ab55866b25ae03dac1c597ee6fbfc1"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/efd0a5a051f941319f12f18ad5ce1dee/diagnostic-trace.jsonl": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/efd0a5a051f941319f12f18ad5ce1dee/diagnostic-trace.jsonl",
+      "bytes": 184763,
+      "sha256": "ea412af55c855e3207299eb4fd71d86e562f0f20fbd35a6a02187c442302e289"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/efd0a5a051f941319f12f18ad5ce1dee/diagnostic-worker.json": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/efd0a5a051f941319f12f18ad5ce1dee/diagnostic-worker.json",
+      "bytes": 11308,
+      "sha256": "a2f07a4002301b2be31da3878e27dfdac02b02d5e03fa3b3ae2ec4e637be9b9e"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/efd0a5a051f941319f12f18ad5ce1dee/recording/events.jsonl": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/efd0a5a051f941319f12f18ad5ce1dee/recording/events.jsonl",
+      "bytes": 18351,
+      "sha256": "5644913c17ac0916ab25ab200c2f96e0f80eddf14f5e9c170d2b58af5db3643e"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/efd0a5a051f941319f12f18ad5ce1dee/recording/manifest.json": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/efd0a5a051f941319f12f18ad5ce1dee/recording/manifest.json",
+      "bytes": 5855,
+      "sha256": "6731a402c35cc64f48babf906ba20d08232f4a72dc9276daa567c39dab791219"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/efd0a5a051f941319f12f18ad5ce1dee/snapshots/index.json": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/efd0a5a051f941319f12f18ad5ce1dee/snapshots/index.json",
+      "bytes": 402,
+      "sha256": "f998e0d6d3ebb8dc71b30007760cc80accc9390f22f6d144f0e3c99e473cf38f"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/efd0a5a051f941319f12f18ad5ce1dee/snapshots/initial.snp": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/efd0a5a051f941319f12f18ad5ce1dee/snapshots/initial.snp",
+      "bytes": 1153078,
+      "sha256": "7333988344d6c90a9ef68856d62a9d02eb765fda4e70c9fe0d1f85d282d4f568"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/efd0a5a051f941319f12f18ad5ce1dee/stderr.log": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/efd0a5a051f941319f12f18ad5ce1dee/stderr.log",
+      "bytes": 1490,
+      "sha256": "f81bf05c83c125efc4afcdd8ff9b70a34535cb34f34e2f59ff0c2364901dcd3d"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/efd0a5a051f941319f12f18ad5ce1dee/stdout.log": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/efd0a5a051f941319f12f18ad5ce1dee/stdout.log",
+      "bytes": 927,
+      "sha256": "ae327ad7e7167f29c41df7718326200f1994384716abdefd0db617a6f2841a9b"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/efd0a5a051f941319f12f18ad5ce1dee/supervisor.json": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/efd0a5a051f941319f12f18ad5ce1dee/supervisor.json",
+      "bytes": 364,
+      "sha256": "e88db13eb7d58b57cd99f3e010d40234923f8a89a7d35a37e7412bbe2f6dfef0"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/efdb51aa952d430bbc5bc237f6d65637/diagnostic-arrays.npz": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/efdb51aa952d430bbc5bc237f6d65637/diagnostic-arrays.npz",
+      "bytes": 2544152,
+      "sha256": "2624eeb607f52cffc3b64538fc5042980b1bed73d435b7bbbe740d2d614414a7"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/efdb51aa952d430bbc5bc237f6d65637/diagnostic-trace.jsonl": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/efdb51aa952d430bbc5bc237f6d65637/diagnostic-trace.jsonl",
+      "bytes": 195385,
+      "sha256": "79bcf4bf217433ef6633a0bbb2b029cd03c30e1927ed57ad78ab86f5efca67e1"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/efdb51aa952d430bbc5bc237f6d65637/diagnostic-worker.json": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/efdb51aa952d430bbc5bc237f6d65637/diagnostic-worker.json",
+      "bytes": 11311,
+      "sha256": "fc69b66291a99945458488545a6142a98df2434c89876d25b2a770206e33d50f"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/efdb51aa952d430bbc5bc237f6d65637/recording/events.jsonl": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/efdb51aa952d430bbc5bc237f6d65637/recording/events.jsonl",
+      "bytes": 18352,
+      "sha256": "9ee530d529c51d35f99c19e0f87e4c1d0a95069292b5e212f6b5a0d113a93ac1"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/efdb51aa952d430bbc5bc237f6d65637/recording/manifest.json": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/efdb51aa952d430bbc5bc237f6d65637/recording/manifest.json",
+      "bytes": 5891,
+      "sha256": "05448de3ccd12cee12a89cd998e4b725a89c6951591ead9f06b33e58c13ddc12"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/efdb51aa952d430bbc5bc237f6d65637/snapshots/index.json": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/efdb51aa952d430bbc5bc237f6d65637/snapshots/index.json",
+      "bytes": 402,
+      "sha256": "075764858da5b47d902f775714029b715d80cacb1b5887971418ac5c8238cfcc"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/efdb51aa952d430bbc5bc237f6d65637/snapshots/initial.snp": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/efdb51aa952d430bbc5bc237f6d65637/snapshots/initial.snp",
+      "bytes": 1153138,
+      "sha256": "83288e353cd1c9c7e9257baac8bba3df658ca05e9d3b3b042ed56270346dc4ff"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/efdb51aa952d430bbc5bc237f6d65637/stderr.log": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/efdb51aa952d430bbc5bc237f6d65637/stderr.log",
+      "bytes": 1490,
+      "sha256": "f81bf05c83c125efc4afcdd8ff9b70a34535cb34f34e2f59ff0c2364901dcd3d"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/efdb51aa952d430bbc5bc237f6d65637/stdout.log": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/efdb51aa952d430bbc5bc237f6d65637/stdout.log",
+      "bytes": 927,
+      "sha256": "9f3feb4be8f3d45c9178f65a1224e0b96209eba5759c0d9c0e7aec5e06105d58"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/efdb51aa952d430bbc5bc237f6d65637/supervisor.json": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-frozen-observation-wave-a-ef6b652-20261003/runs/efdb51aa952d430bbc5bc237f6d65637/supervisor.json",
+      "bytes": 364,
+      "sha256": "7597d9a55cb54ef5da0723a86c5b47909cfd6a5020581c5f24f484682ab540f8"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-observation-wave-a-launch-ef6b652/audit/audit.json": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-observation-wave-a-launch-ef6b652/audit/audit.json",
+      "bytes": 90909,
+      "sha256": "b6c99aff032f97e74ce153b50db31f82a724f075b0c80a7fa38f5e884fb2758f"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-observation-wave-a-launch-ef6b652/audit/audit.py": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-observation-wave-a-launch-ef6b652/audit/audit.py",
+      "bytes": 4951,
+      "sha256": "9d28a6f6bcc66d6179772827780d9d5e7bb200292a753a4da12fe4a1fee2cb87"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-observation-wave-a-launch-ef6b652/audit/console.log": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-observation-wave-a-launch-ef6b652/audit/console.log",
+      "bytes": 870,
+      "sha256": "3dc9cdb04fd3542727ffdbe678aac9544804e3d26aae33193ace56906777f34f"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-observation-wave-a-launch-ef6b652/bindings.json": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-observation-wave-a-launch-ef6b652/bindings.json",
+      "bytes": 183600,
+      "sha256": "2a5aca73d040a651830d2f69dc70fc1cddc00fe7109736cda45115cc1354e519"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-observation-wave-a-launch-ef6b652/condition-u-pins.json": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-observation-wave-a-launch-ef6b652/condition-u-pins.json",
+      "bytes": 18073,
+      "sha256": "3485febe570f03ec4ade2235a8e7d3dd093b5f4a214d0b31ea13ae1a496b0bda"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-observation-wave-a-launch-ef6b652/fixtures-console.log": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-observation-wave-a-launch-ef6b652/fixtures-console.log",
+      "bytes": 1255,
+      "sha256": "183993fb7934840acf7f568d0f7b85508df812687876072aa5f803e9daf1c088"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-observation-wave-a-launch-ef6b652/fixtures-console.log.first-reader-mock-error": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-observation-wave-a-launch-ef6b652/fixtures-console.log.first-reader-mock-error",
+      "bytes": 2630,
+      "sha256": "63d86fa24fdee4020a9e4e8498fbe9bdcb1eae8d7fff85043d65511f10f9b04f"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-observation-wave-a-launch-ef6b652/fixtures-console.log.six-fixtures-pass": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-observation-wave-a-launch-ef6b652/fixtures-console.log.six-fixtures-pass",
+      "bytes": 1100,
+      "sha256": "e32526ead389a4025f87bce5b792a3155c1bf01ff2184775a0586f3999f6d754"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-observation-wave-a-launch-ef6b652/fixtures.json": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-observation-wave-a-launch-ef6b652/fixtures.json",
+      "bytes": 348,
+      "sha256": "fdc32139cc637e545767a7adddf44a7622a682cea18b9558385f20679623e62b"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-observation-wave-a-launch-ef6b652/fixtures.json.first-reader-mock-error": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-observation-wave-a-launch-ef6b652/fixtures.json.first-reader-mock-error",
+      "bytes": 348,
+      "sha256": "99257468cae054360c965f03ff29dceff2408a5a670ee0032b6650bdc6e33118"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-observation-wave-a-launch-ef6b652/fixtures.json.six-fixtures-pass": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-observation-wave-a-launch-ef6b652/fixtures.json.six-fixtures-pass",
+      "bytes": 348,
+      "sha256": "4867e82f7fb6d45c9a6d89eca2b0bdd36e7ceeddc7f6210abbce3b3bf98e5a7f"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-observation-wave-a-launch-ef6b652/fixtures.py": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-observation-wave-a-launch-ef6b652/fixtures.py",
+      "bytes": 10060,
+      "sha256": "b42e240c47294adfbc4adb6e4d4e7ae8d61de05595171ad9c7f0ff6b4f4f952e"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-observation-wave-a-launch-ef6b652/identity-after.json": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-observation-wave-a-launch-ef6b652/identity-after.json",
+      "bytes": 211106,
+      "sha256": "537fee50f6d676b2d505133eae071ebad35f1c3e4911fc8bf3bd4a98e5f6bf36"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-observation-wave-a-launch-ef6b652/identity-before.json": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-observation-wave-a-launch-ef6b652/identity-before.json",
+      "bytes": 211106,
+      "sha256": "537fee50f6d676b2d505133eae071ebad35f1c3e4911fc8bf3bd4a98e5f6bf36"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-observation-wave-a-launch-ef6b652/identity-prepared.json": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-observation-wave-a-launch-ef6b652/identity-prepared.json",
+      "bytes": 211106,
+      "sha256": "537fee50f6d676b2d505133eae071ebad35f1c3e4911fc8bf3bd4a98e5f6bf36"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-observation-wave-a-launch-ef6b652/identity-prepared.json.pre-runtime-draft": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-observation-wave-a-launch-ef6b652/identity-prepared.json.pre-runtime-draft",
+      "bytes": 210261,
+      "sha256": "f379647722c4d872ca904321563b2e5c09fe21ddc0e0c76c7a51421c3a93e6c0"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-observation-wave-a-launch-ef6b652/launch-start.json": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-observation-wave-a-launch-ef6b652/launch-start.json",
+      "bytes": 1046,
+      "sha256": "e7c14dcab19680ed9dacc9c8f4eed2573a5d249c479d323e6d0be7b5d8b43983"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-observation-wave-a-launch-ef6b652/launch.json": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-observation-wave-a-launch-ef6b652/launch.json",
+      "bytes": 5200,
+      "sha256": "13c7455d988c08c1af80a7e98737d476658a838981338223df139cc6257c43e9"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-observation-wave-a-launch-ef6b652/launch.py": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-observation-wave-a-launch-ef6b652/launch.py",
+      "bytes": 19302,
+      "sha256": "0bb545ed69d3bf0eaea8ca299ae82bebbcbaf84874db13b804b6f0281b780bed"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-observation-wave-a-launch-ef6b652/launcher-console.log": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-observation-wave-a-launch-ef6b652/launcher-console.log",
+      "bytes": 5200,
+      "sha256": "13c7455d988c08c1af80a7e98737d476658a838981338223df139cc6257c43e9"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-observation-wave-a-launch-ef6b652/ownership-samples.jsonl": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-observation-wave-a-launch-ef6b652/ownership-samples.jsonl",
+      "bytes": 538400,
+      "sha256": "582ac91a129b9a9d0af180c670c850eb35f96e86456801b030f3e3201a31bce4"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-observation-wave-a-launch-ef6b652/preflight-console.log": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-observation-wave-a-launch-ef6b652/preflight-console.log",
+      "bytes": 4811,
+      "sha256": "372e0926ab2534346dc369c277ffd7dee8eefd68314530bd50fe9c5b5bdcfc51"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-observation-wave-a-launch-ef6b652/preflight.json": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-observation-wave-a-launch-ef6b652/preflight.json",
+      "bytes": 4811,
+      "sha256": "372e0926ab2534346dc369c277ffd7dee8eefd68314530bd50fe9c5b5bdcfc51"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-observation-wave-a-launch-ef6b652/preflight.py": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-observation-wave-a-launch-ef6b652/preflight.py",
+      "bytes": 4091,
+      "sha256": "5b3a4841a9b4031dc255e8de8925dd9ffd001505d63c5da382ec8e2ea0cd9595"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-observation-wave-a-launch-ef6b652/preparation-console.log": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-observation-wave-a-launch-ef6b652/preparation-console.log",
+      "bytes": 3944,
+      "sha256": "cbea439e676734fda728cf1a813c9107c2744e75e425c22e71a9b3ed1db768b7"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-observation-wave-a-launch-ef6b652/preparation-console.log.pre-runtime-draft": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-observation-wave-a-launch-ef6b652/preparation-console.log.pre-runtime-draft",
+      "bytes": 3944,
+      "sha256": "48d4aac8a8ab37f8845eec5e7115fe5218d8191f1d26f1354279b6dd58c31d2f"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-observation-wave-a-launch-ef6b652/prepared-plan.json": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-observation-wave-a-launch-ef6b652/prepared-plan.json",
+      "bytes": 818286,
+      "sha256": "e2ee7e52792be467293e4f95e626bee4b66baabdb1981a76b72d4ebedaa8f7d1"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-observation-wave-a-launch-ef6b652/prepared.json": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-observation-wave-a-launch-ef6b652/prepared.json",
+      "bytes": 3944,
+      "sha256": "cbea439e676734fda728cf1a813c9107c2744e75e425c22e71a9b3ed1db768b7"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-observation-wave-a-launch-ef6b652/prepared.json.pre-runtime-draft": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-observation-wave-a-launch-ef6b652/prepared.json.pre-runtime-draft",
+      "bytes": 3944,
+      "sha256": "48d4aac8a8ab37f8845eec5e7115fe5218d8191f1d26f1354279b6dd58c31d2f"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-observation-wave-a-launch-ef6b652/process/stderr.log": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-observation-wave-a-launch-ef6b652/process/stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-observation-wave-a-launch-ef6b652/process/stdout.log": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-observation-wave-a-launch-ef6b652/process/stdout.log",
+      "bytes": 1647,
+      "sha256": "3a838f347601d3267c2c86bc8fd1890aef0cf4052500545e66ca57cdba3fb235"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-observation-wave-a-launch-ef6b652/process/supervisor.json": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-observation-wave-a-launch-ef6b652/process/supervisor.json",
+      "bytes": 340,
+      "sha256": "48546a2dbfa41d6e02b6d831d7a4fe4b67c504832ec55166f7d289ccb70f3901"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-observation-wave-a-launch-ef6b652/terminal-drain.json": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-observation-stream/runs/m5-observation-wave-a-launch-ef6b652/terminal-drain.json",
+      "bytes": 5209,
+      "sha256": "4d14572448cb911a60276a2a7b3328712cc60958a436bbeb7993c5d08e1fc07d"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/project-integration/runs/memory-wave-a-control-root-audit-ef6b652/audit.json": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/project-integration/runs/memory-wave-a-control-root-audit-ef6b652/audit.json",
+      "bytes": 1332,
+      "sha256": "ab53b771148a5b24e303d0f0cab75099ab175a39d218295aff3f668aca9aa3cb"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/project-integration/runs/memory-wave-a-control-root-audit-ef6b652/audit.py": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/project-integration/runs/memory-wave-a-control-root-audit-ef6b652/audit.py",
+      "bytes": 3903,
+      "sha256": "ff657433356e8d8abe4f2bb9483cbf4fd2df38f0312d77dee1cc312a56830094"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/project-integration/runs/memory-wave-a-root-revalidation-ef6b652/audit.json": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/project-integration/runs/memory-wave-a-root-revalidation-ef6b652/audit.json",
+      "bytes": 94538,
+      "sha256": "380acf793c00fd408aafcf39015979a5806592936cacc669bdbb56a8b43b6168"
+    },
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/project-integration/runs/memory-wave-a-root-revalidation-ef6b652/audit.py": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/project-integration/runs/memory-wave-a-root-revalidation-ef6b652/audit.py",
+      "bytes": 4645,
+      "sha256": "0f2e8be921302d346cfa1d5ee37e77909741a878a1d5a6e51deb690927341273"
+    }
+  },
+  "limits": {
+    "wave_B_executed": false,
+    "held_out_executed": false,
+    "full_48_matrix_executed": false,
+    "r2_complete": false,
+    "new_acquisition": false,
+    "new_physically_consistent_trajectory": false,
+    "diagnostic_task_success": null,
+    "own_u_vs_no_u_motor_difference": false,
+    "goal_or_timing_benefit_claimed": false,
+    "biological_sensor_mapping_claimed": false
+  }
+}

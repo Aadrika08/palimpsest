@@ -1,8 +1,12 @@
 # M5 fixed frozen-observation U diagnostic
 
-Status: source-only preparation. No model/native launch, held-out access or new
-acquisition is authorized until source and fresh controls are reviewed and GO is
-given. Use the isolated `memory-observation-stream` checkout based on `480acfa`;
+Status: [wave A completed and audited](../reports/m5-frozen-observation-wave-a.md)
+at frozen source `ef6b652`: 16 owners / 2,084 real policy calls, zero physically
+stepped rows, no own-U-versus-no-U motor benefit. The source/protocol sections below
+remain the prospective frozen design. Wave B controls preparation is authorized;
+no B model/native launch, held-out access or new acquisition is authorized without
+separate reviewed controls and GO. Use the isolated `memory-observation-stream`
+checkout based on `480acfa`;
 keep the producer at `memory-flynn-continuation` / `9393215` unchanged. The existing
 six reference replays passed at `9dd805d`; this is the separate PRD §13.3/§15.2
 sensor-stream diagnostic, not another executable trajectory replay.
