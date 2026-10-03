@@ -162,16 +162,68 @@ class ObservationStream(unittest.TestCase):
                     with self.assertRaises(ValueError):r.validate_stage(job,{'status':'completed','returncode':0})
 
     def test_final_print_boundary_cannot_pass_after_parent_deadline(self):
-        plan={'protocol':r.protocol('A'),'output':'/tmp/synthetic-diagnostic-output'}
-        report={'status':'diagnostic_checked','policy_calls':0};clock={'now':0.};stored=[]
-        with patch.object(r.sys,'argv',['verifier','--prepared-plan','/tmp/synthetic-plan','--prepared-plan-sha256','a'*64]), \
-                patch.object(r.neural,'read_prepared_plan',return_value=plan),patch.object(r,'validate_plan',return_value=plan), \
-                patch.object(r,'run_verifier',return_value=report),patch.object(r.time,'monotonic',side_effect=lambda:clock['now']), \
-                patch('builtins.print',side_effect=lambda *a,**kw:clock.update(now=2620.000001)), \
-                patch.object(r.neural,'write',side_effect=lambda p,v,s:stored.append(copy.deepcopy(v))):
-            self.assertEqual(r.main(),1)
-        self.assertEqual(stored[-1]['status'],'diagnostic_unverified')
-        self.assertTrue(stored[-1]['deadline_exceeded'])
+        with tempfile.TemporaryDirectory(dir=PATH.parents[1]/'runs') as directory:
+            root=Path(directory);plan={'protocol':r.protocol('A'),'output':str(root)}
+            report={'status':'diagnostic_checked','policy_calls':0};clock={'now':0.}
+            r.write_report(root/'diagnostic-report.json',report,r.budget(root,'A'))
+            with patch.object(r.sys,'argv',['verifier','--prepared-plan','/tmp/synthetic-plan','--prepared-plan-sha256','a'*64]), \
+                    patch.object(r.neural,'read_prepared_plan',return_value=plan),patch.object(r,'validate_plan',return_value=plan), \
+                    patch.object(r,'run_verifier',return_value=report),patch.object(r.time,'monotonic',side_effect=lambda:clock['now']), \
+                    patch('builtins.print',side_effect=lambda *a,**kw:clock.update(now=2620.000001)):
+                self.assertEqual(r.main(),1)
+            stored=json.loads((root/'diagnostic-report.json').read_text())
+            self.assertEqual(stored['status'],'diagnostic_unverified');self.assertTrue(stored['deadline_exceeded'])
+            self.assertFalse((root/'diagnostic-report.json.tmp').exists())
+
+    def test_real_worker_parent_and_worker_return_late_updates_keep_bounded_report(self):
+        from palimpsest.snapshots import SNAPSHOT_KEYS,save_snapshot
+        with tempfile.TemporaryDirectory(dir=PATH.parents[1]/'runs') as directory:
+            root=Path(directory);clock={'now':0.};original=r.write_report
+            def delayed_write(path,value,storage):
+                original(path,value,storage)
+                if not value.get('deadline_exceeded'):
+                    clock['now']=150.000001 if Path(path).name=='diagnostic-worker.json' else 2620.000001
+            job={'assets':str(root),'source_identity':{},'root_output':str(root),'wave':'A',
+                'output':str(root/'worker'),'run_id':uuid.uuid4().hex,'stage':'own','cell':'s25/local_cue/change'}
+            Path(job['output']).mkdir()
+            with patch.object(r,'validate_job',return_value=job),patch.object(r,'source_identity',return_value={'fixture':True}), \
+                    patch.object(r,'write_report',side_effect=delayed_write), \
+                    patch.object(r.time,'monotonic',side_effect=lambda:clock['now']):
+                self.assertEqual(r.worker(job),1)
+            stored=json.loads((Path(job['output'])/'diagnostic-worker.json').read_text())
+            self.assertTrue(stored['deadline_exceeded']);self.assertEqual(stored['status'],'failed')
+            # Parent uses its real lease/mkdir/plan/job/report publication with a mocked, unstarted child.
+            native={k:None for k in SNAPSHOT_KEYS};native['application']={'schema_version':3,'scenario':'memory-passages','memory':self.state()}
+            source=root/'source.snp';save_snapshot(native,source);output=root/'nested'/'parent';clock['now']=0.
+            prepared={**job,'output':str(output/'runs'/job['run_id']),'root_output':str(output),
+                'source':{'snapshot_path':str(source),'snapshot_sha256':r.common._hash(source)},
+                'bindings_path':str(root/'unused-bindings'),'bindings_sha256':'a'*64}
+            plan={'protocol':r.protocol('A'),'output':str(output),'source_identity':{'fixture':True},'jobs':[prepared]}
+            with patch.object(r,'validate_plan',return_value=plan),patch.object(r,'validate_job',side_effect=lambda value:value), \
+                    patch.object(r,'source_identity',return_value=plan['source_identity']),patch.object(r,'validate_bindings',return_value={}), \
+                    patch.object(r.neural,'read_prepared_plan',return_value={}), \
+                    patch.object(r,'bounded_process',side_effect=RuntimeError('fixture before child')), \
+                    patch.object(r,'write_report',side_effect=delayed_write), \
+                    patch.object(r.time,'monotonic',side_effect=lambda:clock['now']):
+                result=r.run_verifier(plan)
+            self.assertTrue((output/'runs').is_dir());self.assertEqual(list((output/'runs').iterdir()),[])
+            self.assertEqual(len(result['unattempted']),1);self.assertTrue(result['deadline_exceeded'])
+            stored=json.loads((output/'diagnostic-report.json').read_text())
+            self.assertEqual(stored['status'],'diagnostic_unverified');self.assertTrue(stored['deadline_exceeded'])
+            # main's worker-return guard also updates an already existing real report.
+            clock['now']=0.
+            def finish_worker(value):
+                clock['now']=150.000001;return 0
+            with patch.object(r.sys,'argv',['verifier','--worker',json.dumps(job)]), \
+                    patch.object(r,'worker',side_effect=finish_worker),patch.object(r.time,'monotonic',side_effect=lambda:clock['now']):
+                self.assertEqual(r.main(),1)
+            stored=json.loads((Path(job['output'])/'diagnostic-worker.json').read_text())
+            self.assertTrue(stored['return_wall_seconds']>150);self.assertTrue(stored['deadline_exceeded'])
+            # Existing frozen create-only writer remains exclusive; local report replacement stays bounded.
+            frozen=root/'frozen.json';r.neural.write(frozen,{'first':True},r.budget(root,'A'))
+            with self.assertRaises(FileExistsError):r.neural.write(frozen,{'second':True},r.budget(root,'A'))
+            with self.assertRaises(ValueError):r.write_report(frozen,{'oversized':'x'*(1024*1024)},r.budget(root,'A'))
+            self.assertEqual(json.loads(frozen.read_text()),{'first':True});self.assertFalse(frozen.with_suffix('.json.tmp').exists())
 
     def test_successful_frame_only_replaces_declared_bearing_and_keeps_inputs(self):
         frame=self.frame(0); before=copy.deepcopy(frame);policy=Mock()

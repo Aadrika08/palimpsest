@@ -396,6 +396,11 @@ def publish_derivative(run,traces,results,storage):
         'trace_bytes':len(trace),'arrays_bytes':len(arrays)}
 
 
+def write_report(path,value,storage):
+    temporary=Path(path).with_suffix(Path(path).suffix+'.tmp')
+    neural.write(temporary,value,storage);temporary.replace(path)
+
+
 def worker(raw):
     started=time.monotonic();job=validate_job(raw);run=Path(job['output']);storage=budget(job['root_output'],job['wave'])
     engine=None;results=[];traces=[]
@@ -480,11 +485,11 @@ def worker(raw):
         report['wall_seconds']=time.monotonic()-started
         if report['wall_seconds']>150:raise TimeoutError('Final diagnostic admission exceeds150 seconds')
     except Exception as error:report.update(status='failed',final_error={'type':type(error).__name__,'message':str(error)})
-    neural.write(run/'diagnostic-worker.json',report,storage)
+    write_report(run/'diagnostic-worker.json',report,storage)
     final_elapsed=time.monotonic()-started
     if final_elapsed>150:
         report.update(status='failed',final_wall_seconds=final_elapsed,deadline_exceeded=True)
-        neural.write(run/'diagnostic-worker.json',report,storage)
+        write_report(run/'diagnostic-worker.json',report,storage)
     return 0 if report['status'] in ('diagnostic_checked','diagnostic_censored') else 1
 
 
@@ -671,11 +676,11 @@ def run_verifier(raw,*,started=None):
         result.update(policy_calls=sum(s.get('policy_calls',0) for s in summaries),wall_seconds=time.monotonic()-started,
             ownership_terminal='inner bounded_process completed; outer exact PID/start/group survey required')
         if result['wall_seconds']>p['outer_timeout_seconds']:result.update(status='diagnostic_unverified',deadline_exceeded=True)
-        neural.write(output/'diagnostic-report.json',result,storage)
+        write_report(output/'diagnostic-report.json',result,storage)
     elapsed=time.monotonic()-started
     if elapsed>p['outer_timeout_seconds']:
         result.update(status='diagnostic_unverified',wall_seconds=elapsed,deadline_exceeded=True)
-        neural.write(output/'diagnostic-report.json',result,storage)
+        write_report(output/'diagnostic-report.json',result,storage)
     return result
 
 
@@ -693,7 +698,7 @@ def main():
         if elapsed>150:
             path=Path(job['output'])/'diagnostic-worker.json'
             report=artifacts._json(artifacts._read(path,MiB));report.update(status='failed',return_wall_seconds=elapsed,deadline_exceeded=True)
-            neural.write(path,report,budget(job['root_output'],job['wave']));return 1
+            write_report(path,report,budget(job['root_output'],job['wave']));return 1
         return code
     started=time.monotonic()
     if args.prepared_plan:
@@ -705,7 +710,7 @@ def main():
     elapsed=time.monotonic()-started
     if elapsed>protocol(plan['protocol']['wave'])['outer_timeout_seconds']:
         report.update(status='diagnostic_unverified',return_wall_seconds=elapsed,deadline_exceeded=True)
-        neural.write(Path(plan['output'])/'diagnostic-report.json',report,budget(plan['output'],plan['protocol']['wave']));return 1
+        write_report(Path(plan['output'])/'diagnostic-report.json',report,budget(plan['output'],plan['protocol']['wave']));return 1
     return 0 if report['status']=='diagnostic_checked' else 1
 
 if __name__=='__main__':raise SystemExit(main())
