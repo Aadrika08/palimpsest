@@ -1,0 +1,382 @@
+{
+  "attempts": 1,
+  "bounds": {
+    "bytes": 1073741824,
+    "inner_seconds": 600,
+    "kill_grace_seconds": 15,
+    "max_owners": 10,
+    "planned_record_allowance_bytes": 872415232,
+    "remaining_control_allowance_bytes": 201326592,
+    "supervised_seconds": 680,
+    "term_seconds": 660
+  },
+  "cleanup": {
+    "forced_signals": [],
+    "observed_owned_processes": [
+      {
+        "pid": 647830,
+        "start_ticks": 8437267
+      },
+      {
+        "pid": 647831,
+        "start_ticks": 8437268
+      },
+      {
+        "pid": 647862,
+        "start_ticks": 8437302
+      },
+      {
+        "pid": 647878,
+        "start_ticks": 8437672
+      },
+      {
+        "pid": 647900,
+        "start_ticks": 8438004
+      },
+      {
+        "pid": 647911,
+        "start_ticks": 8438348
+      },
+      {
+        "pid": 647936,
+        "start_ticks": 8439118
+      },
+      {
+        "pid": 647969,
+        "start_ticks": 8439783
+      },
+      {
+        "pid": 647991,
+        "start_ticks": 8440109
+      },
+      {
+        "pid": 648030,
+        "start_ticks": 8440424
+      },
+      {
+        "pid": 648052,
+        "start_ticks": 8440651
+      },
+      {
+        "pid": 648131,
+        "start_ticks": 8441000
+      }
+    ],
+    "sample_errors": [],
+    "sampler_stopped": true,
+    "scope": {
+      "cleanup_scope": "sampled owned PID/start identities, immediate recheck before TERM/KILL, group signal only for an owned group leader",
+      "cleanup_wait_each_signal_seconds": 2,
+      "copy": "exact source text, only this function, no adaptive imports",
+      "failure_conditions": [
+        "sampler exception",
+        "sampler remains alive",
+        "any forced signal",
+        "any surviving sampled identity"
+      ],
+      "function": "cleanup_observed",
+      "function_sha256": "d308e0ffbe3cdbbdd93fd81865e8cdb96d51539afc38bc294f2e5b3c49b8d3b8",
+      "limitation": "finite .25s descendant sampling; no claim to observe every transient descendant",
+      "max_observed_processes": 128,
+      "original_source": "/home/utkarsh/Work/shraddha/brain/.worktrees/project-integration/scripts/verify_body_adaptation.py",
+      "original_source_commit": "3a0b085ea376d7cedf4bd6d533233e30b1e1b6cc",
+      "original_source_sha256": "197662faf19e7d11b8ab42d67f5ccb0b7d64867bdb0e296f23408daeecb08da3",
+      "outer_supervisor_seconds_unchanged": 680,
+      "sampler_interval_seconds": 0.25,
+      "sampler_join_seconds": 2
+    },
+    "survivors": []
+  },
+  "finalization_errors": [],
+  "inner_seconds": 44.67874737200327,
+  "limits": "Exact new-source continuation/replay parity only, no equality to historical trajectories. No actual v2 teacher collection, trained model, unseen-layout or physical capability qualification. V1 failed collection remains ineligible.",
+  "local_audit": {
+    "inventory_bytes": 197307021,
+    "inventory_files": 146,
+    "native_deserialization": false,
+    "native_imports": false,
+    "raw_ticks": 1569,
+    "seconds": 2.224334522994468,
+    "status": "passed_read_only_audit_of_passed_gate"
+  },
+  "outer_returncode": 0,
+  "outer_seconds": 44.946819118995336,
+  "owners": [
+    {
+      "callback_restored": true,
+      "completed_control_tick": 120,
+      "completion": "fixed_mechanics_horizon",
+      "controller_calls": 0,
+      "final_task_reason": null,
+      "full_model_unchanged": true,
+      "id": "zero",
+      "identity": {
+        "pid": 647862,
+        "process_group": 647862,
+        "start_ticks": 8437302
+      },
+      "recorded_intervals": 120,
+      "resources_closed": true,
+      "snapshot_count": 1,
+      "status": "passed"
+    },
+    {
+      "callback_restored": true,
+      "completed_control_tick": 120,
+      "completion": "fixed_mechanics_horizon",
+      "controller_calls": 0,
+      "final_task_reason": null,
+      "full_model_unchanged": true,
+      "id": "push-positive",
+      "identity": {
+        "pid": 647878,
+        "process_group": 647878,
+        "start_ticks": 8437672
+      },
+      "recorded_intervals": 120,
+      "resources_closed": true,
+      "snapshot_count": 1,
+      "status": "passed"
+    },
+    {
+      "callback_restored": true,
+      "completed_control_tick": 120,
+      "completion": "fixed_mechanics_horizon",
+      "controller_calls": 0,
+      "final_task_reason": null,
+      "full_model_unchanged": true,
+      "id": "push-negative",
+      "identity": {
+        "pid": 647900,
+        "process_group": 647900,
+        "start_ticks": 8438004
+      },
+      "recorded_intervals": 120,
+      "resources_closed": true,
+      "snapshot_count": 1,
+      "status": "passed"
+    },
+    {
+      "callback_restored": true,
+      "completed_control_tick": 359,
+      "completion": "puck_goal",
+      "controller_calls": 359,
+      "final_task_reason": "puck_goal",
+      "full_model_unchanged": true,
+      "id": "teacher-positive",
+      "identity": {
+        "pid": 647911,
+        "process_group": 647911,
+        "start_ticks": 8438348
+      },
+      "recorded_intervals": 359,
+      "resources_closed": true,
+      "snapshot_count": 4,
+      "status": "passed"
+    },
+    {
+      "callback_restored": true,
+      "completed_control_tick": 359,
+      "completion": "puck_goal",
+      "controller_calls": 359,
+      "final_task_reason": "puck_goal",
+      "full_model_unchanged": true,
+      "id": "teacher-negative",
+      "identity": {
+        "pid": 647936,
+        "process_group": 647936,
+        "start_ticks": 8439118
+      },
+      "recorded_intervals": 359,
+      "resources_closed": true,
+      "snapshot_count": 1,
+      "status": "passed"
+    },
+    {
+      "callback_restored": true,
+      "completed_control_tick": 5,
+      "completion": "continuation_window_complete",
+      "controller_calls": 4,
+      "final_task_reason": null,
+      "full_model_unchanged": true,
+      "id": "continue-tick1",
+      "identity": {
+        "pid": 647969,
+        "process_group": 647969,
+        "start_ticks": 8439783
+      },
+      "recorded_intervals": 4,
+      "resources_closed": true,
+      "snapshot_count": 1,
+      "status": "passed"
+    },
+    {
+      "callback_restored": true,
+      "completed_control_tick": 116,
+      "completion": "continuation_window_complete",
+      "controller_calls": 4,
+      "final_task_reason": null,
+      "full_model_unchanged": true,
+      "id": "continue-contact",
+      "identity": {
+        "pid": 647991,
+        "process_group": 647991,
+        "start_ticks": 8440109
+      },
+      "recorded_intervals": 4,
+      "resources_closed": true,
+      "snapshot_count": 1,
+      "status": "passed"
+    },
+    {
+      "callback_restored": true,
+      "completed_control_tick": 354,
+      "completion": "continuation_window_complete",
+      "controller_calls": 4,
+      "final_task_reason": null,
+      "full_model_unchanged": true,
+      "id": "continue-dwell",
+      "identity": {
+        "pid": 648030,
+        "process_group": 648030,
+        "start_ticks": 8440424
+      },
+      "recorded_intervals": 4,
+      "resources_closed": true,
+      "snapshot_count": 1,
+      "status": "passed"
+    },
+    {
+      "callback_restored": true,
+      "completed_control_tick": 120,
+      "completion": "fixed_mechanics_horizon",
+      "controller_calls": 0,
+      "final_task_reason": null,
+      "full_model_unchanged": true,
+      "id": "replay-actions",
+      "identity": {
+        "pid": 648052,
+        "process_group": 648052,
+        "start_ticks": 8440651
+      },
+      "recorded_intervals": 120,
+      "resources_closed": true,
+      "snapshot_count": 1,
+      "status": "passed"
+    },
+    {
+      "callback_restored": true,
+      "completed_control_tick": 359,
+      "completion": "puck_goal",
+      "controller_calls": 359,
+      "final_task_reason": "puck_goal",
+      "full_model_unchanged": true,
+      "id": "replay-policy",
+      "identity": {
+        "pid": 648131,
+        "process_group": 648131,
+        "start_ticks": 8441000
+      },
+      "recorded_intervals": 359,
+      "resources_closed": true,
+      "snapshot_count": 1,
+      "status": "passed"
+    }
+  ],
+  "producer_commit": "f5d9ba1897dc2dab815c3a6713adb077ff3564f7",
+  "profile_identity": {
+    "compiled_native_sha256": "98e8a1a3a783ef112085433a9a9921f0e8d76d5995a6525561dee9f84fd58c03",
+    "derived_xml_sha256": "f6a781836d21c5fd8ffb6b1e35f7ca47586772e11e2b1329695a6965ea5fb06a",
+    "model_sha256": "30b4fe74de3ed74513f9a651c453b2142bf98941feb5124467571b9de66bc804",
+    "protocol_sha256": "77ce33fa593247715abe99ff2ba0eca399edbac44b29a580d4f92410b8013c30",
+    "scenario": "puck-pushing-development",
+    "version": 1
+  },
+  "qualification_claims": [],
+  "recorded_intervals": 1569,
+  "references": {
+    "containment": {
+      "bytes": 1997,
+      "path": "runs/m6-puck-learning-v2-mechanics-v1-20261003/containment.json",
+      "sha256": "9dfaa67ddcc53e034f477e33c534b46d06830bec41c3aad654e48eebf4621e6d"
+    },
+    "inner": {
+      "bytes": 111143,
+      "path": "runs/m6-puck-learning-v2-mechanics-v1-20261003/gate/report.json",
+      "sha256": "f6000095a53b93856b1d99daf75dcfc002e62f901b7858e1c34764e38bd312b7"
+    },
+    "launcher": {
+      "bytes": 7541,
+      "path": "runs/m6-puck-learning-v2-mechanics-v1-prepared/launch.py",
+      "sha256": "631bc078c11b291de8dd822dcb3683e04e095eae71a382e16e88c972bc9e331b"
+    },
+    "learning_protocol_source_only": {
+      "bytes": 7667,
+      "path": "docs/plans/m6-puck-learning-v2.json",
+      "sha256": "bfdd047c1763af3d0b254c55df9137e179b65ce99e7eb870ca76f41332a83354"
+    },
+    "local_audit": {
+      "bytes": 27879,
+      "path": "runs/m6-puck-learning-v2-mechanics-v1-prepared/audit.json",
+      "sha256": "4733819c4bf2f87df101b35dee3e48731679b41f730e3d16aea164f450340ee4"
+    },
+    "local_audit_script": {
+      "bytes": 19350,
+      "path": "runs/m6-puck-learning-v2-mechanics-v1-prepared/audit.py",
+      "sha256": "92dae894b12ea4942e50a2504f05a38a4e2fc0d89e89ca04cbcfd9f188ba75f1"
+    },
+    "mechanics_protocol": {
+      "bytes": 7664,
+      "path": "docs/plans/m6-puck-mechanics-v5.json",
+      "sha256": "feb593223a3f8119cfba33018d26c90ccef7e8018c51eaf200cb4face137b384"
+    },
+    "outer": {
+      "bytes": 36704,
+      "path": "runs/m6-puck-learning-v2-mechanics-v1-20261003/launch-result.json",
+      "sha256": "90eb1b895e4964913e05e23b89db11f4b3919a2001599fe1b036a1a4dffe5479"
+    },
+    "plan": {
+      "bytes": 14650,
+      "path": "runs/m6-puck-learning-v2-mechanics-v1-prepared/plan.json",
+      "sha256": "719a86f5a9b214ec9a5e4bd053e99e0e453021c61501988cfbda1fe0fad7afb3"
+    },
+    "preparation": {
+      "bytes": 879,
+      "path": "runs/m6-puck-learning-v2-mechanics-v1-prepared/preparation.json",
+      "sha256": "530d743caed6cab274de197a112b5c672daa45567a031e5866f7b68890eb4265"
+    },
+    "root_audit": {
+      "bytes": 3657,
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/project-integration/runs/m6-puck-stop-root-audit-f5d9ba1/audit.json",
+      "sha256": "a6b4bb54d83b88f08055522aed548a487f9fae14be8a9ade485fa10466b92e9a"
+    },
+    "root_audit_script": {
+      "bytes": 11956,
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/project-integration/runs/m6-puck-stop-root-audit-f5d9ba1/audit.py",
+      "sha256": "139bd4b4455bb1836f9145b9535e9ecbec8cd43af6067d46ff45ea53f36134d3"
+    },
+    "task_protocol": {
+      "bytes": 21223,
+      "path": "docs/plans/m6-puck-pushing-protocol-v5.json",
+      "sha256": "77ce33fa593247715abe99ff2ba0eca399edbac44b29a580d4f92410b8013c30"
+    },
+    "wrapper_diff": {
+      "bytes": 952,
+      "path": "runs/m6-puck-learning-v2-mechanics-v1-prepared/wrapper-compatibility-to-stop.diff",
+      "sha256": "00db47acb940acb3938af2f10a90b7485f33fe8b4b35b2f5c9bf9eefd0eb9e64"
+    }
+  },
+  "root_audit_status": "independent first pass; 1569 rows, 13 snapshots, 83 sources, 146 outer/140 inner references, 12 observed PID/start identities absent",
+  "runtime": {
+    "backend": "egl",
+    "mujoco": "3.3.6",
+    "numpy": "2.2.5",
+    "python": "3.11.15"
+  },
+  "schema": "puck-stop-mechanics-evidence-v1",
+  "scope": "Standalone native teacher/task/continuation/replay mechanics only; sensor-only learning cursor remains fixture-qualified, no v2 collection or training.",
+  "snapshots": 13,
+  "source_files_verified": 83,
+  "sources_unchanged": true,
+  "status": "passed"
+}
