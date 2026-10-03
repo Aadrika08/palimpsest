@@ -17,7 +17,10 @@ The [six-model publication](reports/m7-navigation-training-v2.md), `041434d`,
 and exact development index are integrated after publication review.
 Remaining-09 controls pass independent review on `cb13db9`; its separately bounded
 admission drains session `81740` exit0 with twelve completed owners; independent
-retained verification passes after a receipt-schema checker correction. R3 stays open.
+retained verification passes after a receipt-schema checker correction. Its comparison
+controls pass independent review and the single comparison is running in session
+`23234` on frozen `eb55d3a`. Navigation binding `29aa8f8` is integrated after two source reviews and
+nine synthetic checks; the teacher-free evaluation runner is in progress. R3 stays open.
 
 Remaining-06 comparison completes once on frozen `016948b`, bringing independently
 audited development coverage to **32/48 cells**: forty owners, 4,687 neural rows,
@@ -221,7 +224,7 @@ remains ineligible.
 - Mechanism: pinned upstream model/environment; allowlisted controller inputs; one mutable-runtime owner; complete native, policy, application and RNG snapshots. Recorded E fitting and U-only swaps preserve declared invariant hashes. Male controllers use separately trained fixed CPU assets and an authored sensor mapping.
 - Missing: M5 counterbalanced/held-out transfer; learned M6 puck success and held-out evaluation; M7 closed-loop qualification; M8 physical work; independent M9 operation, exhibition duration and physical artwork; final M10 handoff.
 - Unknown: original checkpoint training lineage, full-model Pi performance, physical stopping limits and account quota (telemetry unavailable).
-- Next action: implement and review the frozen fresh-development admission/runner using the six published, independently audited navigation models. Training session `70035` drains exit0; retained audit passes first. The earlier zero-model startup refusal remains unchanged, and held-out stays locked. Remaining-09 controls pass eight root fixtures and full preflight; its twelve-owner admission, retained audit and publication review pass; prepare and review separate comparison controls. Memory coverage is 36/48; failed 07 is neither retried nor given longer deadlines. The existing paired readout covers its historical 24-cell subset. Scoped exploration, homing and measured adaptation are met; learned puck keeps M6 open, automatic retraining stops after both negative development studies, and held-out stays locked. Physical qualification and independent exhibition operation remain open.
+- Next action: finish and review the teacher-free navigation runner; its all-six admission/Engine binding is integrated at `29aa8f8` after nine synthetic checks. Training session `70035` drains exit0; retained audit passes first. The earlier zero-model startup refusal remains unchanged, and held-out stays locked. Remaining-09 controls pass eight root fixtures and full preflight; its twelve-owner admission, retained audit and publication review pass. Separate comparison controls also pass independent review; the one fixed invocation is running in session `23234`. Memory coverage is 36/48; failed 07 is neither retried nor given longer deadlines. The existing paired readout covers its historical 24-cell subset. Scoped exploration, homing and measured adaptation are met; learned puck keeps M6 open, automatic retraining stops after both negative development studies, and held-out stays locked. Physical qualification and independent exhibition operation remain open.
 
 The [single completion proposal](plans/m5-remaining-07-completion-proposal.md)
 has a read-only peer review and is pending an explicit user amendment to the
@@ -309,8 +312,16 @@ side of a metric comparison; the original script/failure and narrow correction
 are retained. Corrected review passes in 0.065 s:
 `runs/m7-navigation-training-v2-publication-root-review/audit.json`,
 SHA `b870cb857ea2a71122527b7a7a1021f3db49ca25d8d54cadfda37102bde2c5f0`.
-Publication and trained results were unchanged. The new admission/Engine-binding
-source is being implemented separately before any development owner.
+Publication and trained results were unchanged. The exact three-file admission/Engine
+binding, `29aa8f8`, is integrated after root and peer source reviews find no
+material issue. Its first focused invocation passes nine synthetic checks without
+skips in 1.056 s. Frozen module SHA-256:
+`eac674912f64d02da45152a6cae9329da512c92bd8205a322b7018d0f99e5f32`.
+Retained producer check log:
+`male-navigation-development-v2/runs/navigation-binding-source-check-v1/result.log`,
+SHA-256 `0a5c9c5677e260168bc76d89df42511acae59cdc880e10176716e1566f23a885`.
+Actual six-bundle readmission and development execution have not run. The separately
+scoped teacher-free runner is being implemented without changing the fixed index.
 Remaining-09 admission preparation passes eight producer fixtures and one full
 preflight (7.627 / 2.420 s): 603 identities and twelve fresh IDs disjoint from
 754 prior IDs. Independent review also passes first: eight fixtures in 8.265 s
@@ -336,8 +347,24 @@ integrated after all 177 unique references / 263,617,210 bytes rehash in the fir
 publication review (0.526 s); all four readouts match root. Receipt:
 `runs/memory-remaining-09-publication-root-review-eb55d3a/audit.json`,
 SHA `f677c2f67d3693a808a897393d0f901bd610cbac27624846c1cf984ed39d543d`.
-Comparison-control preparation is authorized separately; actual comparison has
-not started and accepted coverage remains 36/48.
+Separate comparison controls on frozen `eb55d3a` pass eight root fixtures in
+6.292 s and full preflight in 8.756 s (15.140 s total; 15.274 s supervised).
+They bind 605 source/upstream/asset identities, 120 input pins and forty fresh IDs
+disjoint from all 766 prior owners. Histories, failed-07 reservations and all
+resource/scientific limits remain unchanged; free space at review is
+25,893,036,032 bytes. The first root invocation transcribed the inventory filename
+as `identity-inventory.json` instead of `identity-prepared.json` and stopped before
+fixtures or preflight; its inputs/logs and correction are retained. Only that
+checker input changed, with the same frozen inventory hash and audit source.
+Corrected receipt:
+`runs/memory-remaining-09-comparison-control-root-review-eb55d3a/audit.json`,
+SHA-256 `b562b4362a398f15266da81d21de9770040456569ff60cc7090cba8447c49e15`.
+Fresh startup readmission passes in 2.493 s with 25,889,443,840 bytes free,
+unchanged pins/identities/inputs and an existing HOME descriptor lease probe.
+Startup receipt SHA-256:
+`ef01121eb5c703705f7dbe313f780ddd123691f3555a694fea897b3503e97e0c`.
+The one comparison is running in session `23234`; completion is not yet established
+and accepted coverage remains 36/48.
 
 Paired navigation trainer `6feade9` is integrated after eleven independent root
 pure checks pass first in 1.698 s. It adds only the named trainer/test, preserving

@@ -24,6 +24,10 @@ research provenance, never a relabeling of `male-control` or a new identity sche
 Coverage and optimizer-update count differ jointly; this is not a topology or
 isolated causal-mechanism comparison.
 
+Binding slice `29aa8f8` is integrated after root and peer source review and nine
+synthetic checks (first invocation, 1.056 s, no skips). Actual bundle readmission
+and development execution remain separate gates. The runner slice below is next.
+
 ## Minimum planned source and checks
 
 - New `src/palimpsest/male_navigation_research.py`: fixed index/report admission
