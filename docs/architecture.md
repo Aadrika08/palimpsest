@@ -124,8 +124,13 @@ uses those fixed bundles, eight sensors and its own mode through the existing
 owner/recorder. All four proposed native/replay owners construct the same model
 for exact Torch state restoration; action replay makes zero predictions. Its
 [four-owner native gate](reports/m6-puck-student-mechanism.md) now passes 364 intervals, five snapshots and exact
-continuation/action/policy replay. Fixed closed-loop development and public UI
-still need qualification.
+continuation/action/policy replay. The [development evaluator](plans/m6-puck-student-development.md)
+reuses that owner for twelve fresh roots and only initial snapshots. For each
+scene, models 22/23 must match model 21 in defined native integration state,
+inputs, task and non-Torch RNG before the first action. Raw snapshots remain
+intact; model identities and Torch RNG are separately recorded. Operational
+completion and each-model goal admission are separate report fields. Runtime
+development, held-out capability and public UI still need qualification.
 
 Research scripts freeze source identities, protocols and output bounds before
 execution. Their reports distinguish collection, cleanup, validation and task

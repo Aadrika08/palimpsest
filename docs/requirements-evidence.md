@@ -192,3 +192,9 @@ passes 74 root checks with one explicit Torch opt-in skipped (2.586 s). Its
 retained-data admission passes in 8.036 s without inference, native execution or
 held-out reads. This prepares separate teacher/recorded/closed-loop evaluation;
 no held-out result or R3 qualification is claimed.
+
+The [fixed puck development source](plans/m6-puck-student-development.md),
+`77f4d49`, is integrated at `225941c`. All 109 selected root pure checks pass in
+4.267 s with no skips, including pre-action initial-state matching, typed fresh
+envelopes, each-model goal admission and late-return failure. The twelve-owner
+native evaluation has not run; fixture completion is not learned task evidence.
