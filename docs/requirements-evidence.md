@@ -145,7 +145,10 @@ failure, and the entire batch remains excluded from training. The separate
 1,228 development rows with no held-out sources; independent feature/action
 reconstruction passes. The [six recovery research fits](reports/m7-recovery-training.md) complete all
 twenty epochs each in 194.681 s outer. Independent artifact/graph/history audits
-pass; closed-loop development and held-out qualification remain open. The separately versioned .2 puck stop correction passes
+pass. [Fixed recovery development](reports/m7-recovery-development.md) passes all
+24 owners and 8,552 intervals: original goals 2/4, 2/4, 3/4; rewired goals
+3/4, 1/4, 3/4. Independent raw audits pass. Both total 7/12; topology benefit
+and held-out qualification remain unestablished. The separately versioned .2 puck stop correction passes
 its [ten-owner mechanics gate](reports/m6-puck-learning-v2-mechanics-v1.md),
 including 1,569 intervals, thirteen snapshots and exact native/replay checks.
 The [fresh twenty-owner collection](reports/m6-puck-teacher-collection-v2.md)
@@ -167,5 +170,14 @@ The [headless puck student](plans/m6-puck-student.md) is integrated at `3f6a2fd`
 All 103 focused pure checks pass in 7.198 seconds; before/after actual teacher-data
 and strict trained-bundle admission are unchanged apart from elapsed time. These
 checks cover its declared-input, own-cursor, record and replay contracts using
-fixtures. Native student continuation/replay, development and UI gates remain
-unexecuted; no learned manipulation result follows from source integration.
+fixtures. The first runtime launch failed before any owner because the stage
+runner did not create its report directory; its evidence remains retained. The
+separate single-line v2 correction passes real-filesystem fixtures and root
+control review. Its native run is in progress; development/UI and learned
+manipulation remain unqualified.
+
+The [frozen-observation diagnostic](plans/m5-frozen-observation-diagnostic.md)
+is integrated at `9707cf6`; all 45 focused root checks pass in 10.613 s. A
+read-only source audit reconstructs 1,039 historical intervals without inference
+or native execution. This is source/fixture evidence; actual diagnostic and
+held-out R2 outcomes remain pending.

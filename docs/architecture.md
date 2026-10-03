@@ -82,7 +82,11 @@ and 484 sensor-script/teacher intervals, with all six navigation goals. Memory
 remains frozen. [Six reference replays](reports/m5-controller-reference-replays-v2.md)
 pass 742 comparisons, including 129 actual neural-policy intervals; saved-action
 replays do not invoke policy inference. Full counterbalance and held-out
-qualification remain pending.
+qualification remain pending. The separate [frozen-observation diagnostic](plans/m5-frozen-observation-diagnostic.md)
+feeds recorded visible packets to the existing memory reviser and FLYNN policy
+while physics stays fixed. Counterfactual actions cannot change these packets;
+its outputs are labelled diagnostic responses, not a new physical trajectory.
+Source and focused fixtures pass; actual execution is pending.
 
 [task_profiles.py](../src/palimpsest/task_profiles.py) supplies visible-landmark
 exploration and encoder-odometry homing. [task_mechanics.py](../src/palimpsest/task_mechanics.py)
@@ -102,7 +106,9 @@ their censored endings. [Named recovery development admission](plans/m7-recovery
 checks the frozen six-model index before reusing the existing tensor loader and
 24-owner evaluator. Bulk corpus hashes are checked before and after evaluation;
 policy provenance retains the small current reader inventory. Production model
-admission remains unchanged. The
+admission remains unchanged. [Recovery development](reports/m7-recovery-development.md)
+passes the fixed 24-owner gate over 8,552 intervals. Both variants total 7/12 goals;
+this establishes neither a topology advantage nor held-out qualification. The
 separate [puck learning interface](plans/m6-puck-learning.md) uses eight sensors
 plus its own previous mode; training requires every fixed demonstration to pass
 coverage admission. The retained first batch fails that gate despite twenty
