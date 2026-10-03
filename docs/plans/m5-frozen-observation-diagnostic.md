@@ -1,11 +1,13 @@
 # M5 fixed frozen-observation U diagnostic
 
-Status: [wave A completed and audited](../reports/m5-frozen-observation-wave-a.md)
-at frozen source `ef6b652`: 16 owners / 2,084 real policy calls, zero physically
-stepped rows, no own-U-versus-no-U motor benefit. The source/protocol sections below
-remain the prospective frozen design. Wave B controls preparation is authorized;
-no B model/native launch, held-out access or new acquisition is authorized without
-separate reviewed controls and GO. Use the isolated `memory-observation-stream`
+Status: [wave A](../reports/m5-frozen-observation-wave-a.md) and
+[wave B](../reports/m5-frozen-observation-wave-b.md) completed and audited:
+36 owners / 4,156 real policy calls, zero physically stepped rows. A has no
+own-U/no-U motor difference; B has motor sensitivity, unchanged correction timing
+and retained null false targets. Four explicitly new B selector preparations
+precede strict U-only forks; historical C3 claims remain unchanged. The sections
+below preserve the frozen design. No further model/native launch, held-out access
+or new acquisition is authorized by these results. Use the isolated `memory-observation-stream`
 checkout based on `480acfa`;
 keep the producer at `memory-flynn-continuation` / `9393215` unchanged. The existing
 six reference replays passed at `9dd805d`; this is the separate PRD §13.3/§15.2
