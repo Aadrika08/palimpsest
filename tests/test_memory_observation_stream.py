@@ -11,6 +11,7 @@ import unittest
 from unittest.mock import Mock, patch
 import numpy as np
 from palimpsest import memory, memory_task
+from palimpsest.storage import GiB
 from test_memory_task import bank, world
 
 PATH=Path(__file__).resolve().parents[1]/'scripts/verify_memory_observation_stream.py'
@@ -162,7 +163,9 @@ class ObservationStream(unittest.TestCase):
                     with self.assertRaises(ValueError):r.validate_stage(job,{'status':'completed','returncode':0})
 
     def test_final_print_boundary_cannot_pass_after_parent_deadline(self):
-        with tempfile.TemporaryDirectory(dir=PATH.parents[1]/'runs') as directory:
+        fixture_parent=PATH.parents[1]/'runs';fixture_parent.mkdir(parents=True,exist_ok=True)
+        with patch('shutil.disk_usage',return_value=SimpleNamespace(total=8*GiB,used=0,free=8*GiB)), \
+                tempfile.TemporaryDirectory(dir=fixture_parent) as directory:
             root=Path(directory);plan={'protocol':r.protocol('A'),'output':str(root)}
             report={'status':'diagnostic_checked','policy_calls':0};clock={'now':0.}
             r.write_report(root/'diagnostic-report.json',report,r.budget(root,'A'))
@@ -177,7 +180,9 @@ class ObservationStream(unittest.TestCase):
 
     def test_real_worker_parent_and_worker_return_late_updates_keep_bounded_report(self):
         from palimpsest.snapshots import SNAPSHOT_KEYS,save_snapshot
-        with tempfile.TemporaryDirectory(dir=PATH.parents[1]/'runs') as directory:
+        fixture_parent=PATH.parents[1]/'runs';fixture_parent.mkdir(parents=True,exist_ok=True)
+        with patch('shutil.disk_usage',return_value=SimpleNamespace(total=8*GiB,used=0,free=8*GiB)), \
+                tempfile.TemporaryDirectory(dir=fixture_parent) as directory:
             root=Path(directory);clock={'now':0.};original=r.write_report
             def delayed_write(path,value,storage):
                 original(path,value,storage)
