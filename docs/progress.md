@@ -48,6 +48,8 @@ remains ineligible.
 
 ## Verification
 
+Latest attempt `480acfa` ran 646 enabled tests in 131.167 s: 644 passed, two historical-reader publication fixtures errored, no skips. All fifty retained files rehash; source/assets/production models are unchanged. The fixture-only correction `228232c` is integrated; 51 focused tests pass with one explicit Torch opt-in skip. A fresh fully enabled regression remains pending; runtime admission pins stay fixed. This attempt does not replace the last green full suite below.
+
 Latest combined source `7123270` passes all **628 enabled tests without skips** in 125.643 s (128.177 s supervised). The preceding `b76d2b3` run retains its one fixture failure; `7d5fc1f` isolates the lazy-import check without changing the adapter or runtime. All 50 retained artifacts rehash correctly; source, assets and production model identities are unchanged. This covers new verifier fixtures separately from their actual outcomes. See [integration evidence](reports/project-integration.md).
 
 M2: 145 Python tests passed with actual EGL enabled and no skips. UI build/typecheck and both actual browser workflows passed (24.5 s and 33.8 s). Manual/teacher/full FLYNN CPU owner gates passed; final FLYNN gate covers four identical continuation ticks, a live obstacle edit, both exact executable replays and all three export formats. Separate 30-tick masked full-model continuation passed across fresh processes. All final FLYNN runtime hashes match the final Python files; earlier run identities remain recorded. See [M2 evidence](reports/m2-interactive-lab.md). These checks do not establish release endurance or performance.

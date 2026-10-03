@@ -380,3 +380,19 @@ agreement remains bound runner evidence rather than an independent recomputation
 The first zero-comparison Path failure remains retained. This closes this fixed
 reference replay gate; the full matrix, frozen-stream diagnostic and held-out
 qualification remain open. This audit does not rerun the full regression suite.
+
+## Recovery admission integration: first attempt
+
+Frozen source `480acfa` ran 646 enabled tests in 131.167 seconds, with two
+publication/drift fixture errors and no skips. Both fixtures incorrectly read the
+frozen historical reader identity from the evolved current checkout. The other
+644 tests passed. Source, assets and production model identities stayed unchanged;
+all fifty retained artifact references rehash. The 300-second supervisor completed
+with exit 1 in 133.841 seconds. Historical adapter/protocol pins remain unchanged;
+a fixture-only isolation is required before a fresh combined attempt.
+
+Fixture-only `228232c` pins test reader bytes for those two publication checks.
+Real hashing, fsync/error handling and late adapter-drift detection remain active;
+no historical adapter/protocol/index/data bytes changed. The focused five-module
+suite passes 51 tests with one explicit Torch opt-in skip in 2.854 seconds.
+A fresh fully enabled combined regression is pending.

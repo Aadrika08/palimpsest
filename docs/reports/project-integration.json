@@ -2005,5 +2005,54 @@
     },
     "qualification_claims": [],
     "remaining": "Combined actual regression and fixed 24-owner development; no held-out route."
+  },
+  "recovery_admission_regression_failed": {
+    "source_commit": "480acfabcde4aa1f2a139d10025e9a0e98d58f03",
+    "status": "failed",
+    "tests": 646,
+    "errors": 2,
+    "skipped": 0,
+    "unittest_seconds": 131.167,
+    "supervisor_seconds": 133.84149167200667,
+    "wrapper_seconds": 133.8455524029996,
+    "sources_unchanged": true,
+    "assets_unchanged": true,
+    "model_identities_unchanged": true,
+    "error": "Two publication/drift fixtures call historical reader_identity against current changed male_research.py. Production reader pins are preserved; fixture isolation pending.",
+    "report": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/project-integration/runs/integration-recovery-admission-480acfa-20261003/report.json",
+      "sha256": "0deebf7bd59ef34e95d4a7842f3bc55acf8f4585e585d1bdb838dbdaf21d5bd2"
+    },
+    "root_audit": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/project-integration/runs/integration-recovery-admission-480acfa-root-audit.json",
+      "sha256": "3f37d02c50f86b4b7070dd17ecf85712c3b4c00fae346a3a520225873ef81601"
+    },
+    "retained_files_checked": 50,
+    "qualification_claims": [],
+    "fixture_fix": "228232c",
+    "focused_tests": {
+      "total": 52,
+      "passed": 51,
+      "skipped": 1,
+      "seconds": 2.854,
+      "skip": "explicit Torch opt-in disabled for source checks"
+    },
+    "artifacts": [
+      {
+        "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/project-integration/runs/integration-recovery-admission-480acfa-launch.py",
+        "bytes": 4192,
+        "sha256": "1358d4472e6c1fe7484d850cd501c31975b1961ab2adecddd24d2b87eac44139"
+      },
+      {
+        "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/project-integration/runs/integration-recovery-admission-480acfa-console.log",
+        "bytes": 489,
+        "sha256": "bc11ba948ab008f8671d4e4f6262b8d289d7b2390158b10ed270dc24a88e1567"
+      },
+      {
+        "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/project-integration/runs/integration-recovery-admission-480acfa-20261003/supervisor/stderr.log",
+        "bytes": 18475,
+        "sha256": "be021c4347c38d7a7d5c88133d471bef7b1601b4e7b8b65fc8d993963b13940a"
+      }
+    ]
   }
 }
