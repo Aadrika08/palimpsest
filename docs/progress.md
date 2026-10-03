@@ -48,8 +48,15 @@ the launcher absent, and a free lease. Its control review passed eight fixtures
 and full preflight, excluding all 702 prior IDs including the unattempted 07
 oracle. Its [focused admission publication](reports/m5-remaining-08-admission.md),
 `ba48305`, is integrated after all 162 references / 263,624,032 bytes rehash.
-Comparison-08 controls are being prepared; no actual comparison is authorized
-yet. Coverage remains 32/48; this does not replace or retry failed 07.
+Comparison-08 controls pass eight independent root fixtures and full preflight
+(6.035 / 8.394 s), binding 601 identities, 120 inputs and forty fresh IDs
+disjoint from all 714 prior owners. The unchanged historical E/U files are reused.
+The first constructor failed before publishing the plan because its writer call
+omitted storage; that draft/log remains retained beside the corrected controls.
+One actual comparison is authorized after startup readmission; no result is yet
+admitted. Coverage remains 32/48; this does not replace or retry failed 07.
+Root control receipt: `runs/memory-remaining-08-comparison-control-root-review-ba48305/audit.json`,
+SHA-256 `0b7250ef275eaec46814747f2bfcae98834c3c5ce30c4b179974c418c45690a3`.
 The [remaining-06 admission](reports/m5-remaining-06-admission.md), `016948b`,
 retains its twelve owners/1,204 rows and all 150 rehashed publication references;
 the initial root copied-index error and corrected audit are both retained.
