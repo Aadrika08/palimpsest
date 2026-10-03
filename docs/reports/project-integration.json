@@ -2195,5 +2195,34 @@
     "writer_lease_available": true,
     "scope": "Combined actual regression after fixed remaining memory profiles and explicit balanced-loss source integration. Includes authored weighted-fit fixtures, not candidate fitting or remaining memory execution. Covers the legacy lease fixture deferred during the prior active held-out run.",
     "qualification_claims": []
+  },
+  "balanced_student_source_validation": {
+    "status": "passed",
+    "integration_commit": "f18ff48f4d949fb62a11f8474136d987e999267b",
+    "tests": 49,
+    "test_seconds": 5.65,
+    "skips": 0,
+    "actual_data_readmission_seconds": 6.286939191995771,
+    "teacher_sources": 20,
+    "train_rows": 5710,
+    "recorded_dev_rows": 1314,
+    "original_bundles": 3,
+    "balanced_bundles": 3,
+    "protected_hashes_unchanged": 15,
+    "actual_owner_inventory": 99,
+    "native_model_or_lease_execution": false,
+    "references": {
+      "fixtures.log": "887c9385fd0e541a563e0cda0338a2b38a5f7ee1add838a89fdd00174a64a80f",
+      "after.py": "6bc1133b86e2b15d79f6d2f77367684565f57ae57e858da37a94cd2f150cc906",
+      "after.json": "ed276f19bd4355b349d4e36c7b7bba3191c1f9a6271c6f0090711436e7cd0dc4",
+      "after.log": "b0c4385699a926bffaa89c5d21c04b74396d0a0a2dcced992074ae94b8cea533",
+      "receipt-assembly-note.json": "1dd1d61b57108702579a95d2d9a680407f80159219c5431039354356eafe7bff"
+    },
+    "scope": "Actual merged checkout pure/fake-owner fixtures and shared-validator real-data/bundle admission; full enabled regression and actual native/model mechanics remain separate.",
+    "receipt": {
+      "path": "runs/puck-balanced-student-integration-checks/audit.json",
+      "sha256": "b9d43143518cb81b15400ac68a68b6ff579c6df91d68ae1e21ce6cd4868e092b"
+    },
+    "full_enabled_regression_repeated": false
   }
 }

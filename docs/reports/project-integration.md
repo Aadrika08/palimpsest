@@ -414,3 +414,18 @@ The fresh `1d97787` attempt passes all 646 enabled tests with no skips in
 129.798 seconds. Supervisor exit 0 takes 133.017 seconds; source, assets and
 production models are unchanged and all fifty retained artifacts rehash. Report
 SHA256: `1766cd923feb0f84cd4405c907c7cca986dfd1427c384b6a0e814e3357bad619`.
+
+
+## Balanced puck binding source validation
+
+The balanced-student adapter `818e7ea` is integrated at `f18ff48`. All 49 focused
+pure integration tests pass without skips in 5.650 s; shared-validator actual-data
+admission passes in 6.287 s. Twenty teacher sources, 5,710/1,314 train/dev rows,
+three original plus three balanced bundles, fifteen protected source hashes and
+all 99 current owner dependency entries are checked. This used no Torch/native
+execution, predictions or global writer lease. The prior 697-test full enabled
+result remains historical; new native mechanics and combined regression are pending.
+Receipt: `runs/puck-balanced-student-integration-checks/audit.json`, SHA-256
+`b9d43143518cb81b15400ac68a68b6ff579c6df91d68ae1e21ce6cd4868e092b`.
+The first receipt assembly used the source branch's 97-entry inventory count;
+its retained correction note distinguishes that error from the passing tests.
