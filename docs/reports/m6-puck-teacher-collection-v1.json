@@ -1,0 +1,1689 @@
+{
+  "admission": {
+    "rows": [
+      {
+        "seed": 6000,
+        "split": "train",
+        "status": "passed",
+        "ticks": 337
+      },
+      {
+        "seed": 6001,
+        "split": "train",
+        "status": "passed",
+        "ticks": 274
+      },
+      {
+        "seed": 6002,
+        "split": "train",
+        "status": "passed",
+        "ticks": 319
+      },
+      {
+        "seed": 6003,
+        "split": "train",
+        "status": "passed",
+        "ticks": 449
+      },
+      {
+        "error": "Teacher lacks fixed contact/terminal-stop coverage",
+        "seed": 6004,
+        "split": "train",
+        "status": "failed"
+      },
+      {
+        "seed": 6005,
+        "split": "train",
+        "status": "passed",
+        "ticks": 274
+      },
+      {
+        "seed": 6006,
+        "split": "train",
+        "status": "passed",
+        "ticks": 319
+      },
+      {
+        "seed": 6007,
+        "split": "train",
+        "status": "passed",
+        "ticks": 528
+      },
+      {
+        "seed": 6008,
+        "split": "train",
+        "status": "passed",
+        "ticks": 337
+      },
+      {
+        "seed": 6009,
+        "split": "train",
+        "status": "passed",
+        "ticks": 274
+      },
+      {
+        "seed": 6010,
+        "split": "train",
+        "status": "passed",
+        "ticks": 318
+      },
+      {
+        "seed": 6011,
+        "split": "train",
+        "status": "passed",
+        "ticks": 528
+      },
+      {
+        "seed": 6012,
+        "split": "train",
+        "status": "passed",
+        "ticks": 337
+      },
+      {
+        "seed": 6013,
+        "split": "train",
+        "status": "passed",
+        "ticks": 275
+      },
+      {
+        "seed": 6014,
+        "split": "train",
+        "status": "passed",
+        "ticks": 318
+      },
+      {
+        "seed": 6015,
+        "split": "train",
+        "status": "passed",
+        "ticks": 525
+      },
+      {
+        "seed": 6016,
+        "split": "recorded_dev",
+        "status": "passed",
+        "ticks": 278
+      },
+      {
+        "seed": 6017,
+        "split": "recorded_dev",
+        "status": "passed",
+        "ticks": 312
+      },
+      {
+        "seed": 6018,
+        "split": "recorded_dev",
+        "status": "passed",
+        "ticks": 351
+      },
+      {
+        "seed": 6019,
+        "split": "recorded_dev",
+        "status": "passed",
+        "ticks": 385
+      }
+    ],
+    "status": "failed"
+  },
+  "audits": {
+    "local_collection_first_pass_seconds": 13.849315618994297,
+    "local_compatibility_first_pass_seconds": 4.7689786680130055,
+    "root_collection_corrected_pass_seconds": 13.498237109000911,
+    "root_compatibility_first_pass_seconds": 5.207421846003854,
+    "root_first_failure": "Copied mechanics digest omitted own_supervisor_cursor; failed script/receipt retained, corrected to actual learning packet contract. No product/source/data/native rerun.",
+    "scope": "Retained NumPy-only checks; no MuJoCo/Torch import or native data deserialization."
+  },
+  "collection": {
+    "all_owner_exit_codes": 0,
+    "finalization_errors": [],
+    "forced_signals": [],
+    "inner_seconds": 172.10818838600244,
+    "native_snapshots": 20,
+    "outcomes": "all20puck_goal",
+    "outer_returncode": 1,
+    "outer_seconds": 172.35572955099633,
+    "owner_status": "all20completed",
+    "owners": 20,
+    "pid_start_pairs_absent": 22,
+    "recorded_dev_ticks": 1326,
+    "retained_bytes": 870797940,
+    "retained_files": 395,
+    "rows": 7070,
+    "source_files": 86,
+    "sources_unchanged": true,
+    "status": "failed",
+    "survivors": [],
+    "train_ticks": 5744
+  },
+  "compatibility": {
+    "historical_v5_numeric_rows_bit_exact": 1575,
+    "inner_seconds": 45.52266019200033,
+    "native_snapshots": 13,
+    "outer_seconds": 45.79262926999945,
+    "owners": 10,
+    "pid_start_pairs_absent": 12,
+    "retained_files": 146,
+    "source_files": 83,
+    "status": "passed",
+    "ticks": 1575
+  },
+  "diagnosis": {
+    "contact_intervals": 113,
+    "exact_last16_geometry_mode_action_rows": "collection_audit_report.seed6004_terminal_trace",
+    "final_action": [
+      -0.25,
+      0.09437987642473056
+    ],
+    "final_distance_m": 0.19417256244312925,
+    "final_dwell_completed_ticks_inclusive": [
+      323,
+      332
+    ],
+    "goal_distance_limit_m": 0.2,
+    "interpretation": "Valid native task goal at stationary puck while teacher remains in recovery; unchanged terminal-zero-label admission fails. No source/recorder/mode discrepancy observed.",
+    "required_terminal_stop_labels": 10,
+    "seed": 6004,
+    "supervisor_mode": "approach",
+    "teacher_mode": "approach",
+    "teacher_stop_distance_m": 0.18,
+    "terminal_stop_labels": 0,
+    "ticks": 332
+  },
+  "held_out_opened": false,
+  "learning_protocol_sha256": "513c7f5045b919241d7fdc6fa6ab058bd94134f8d168661b6453fadfb3b6b158",
+  "owners": [
+    {
+      "admission_status": "passed",
+      "contact_intervals": 137,
+      "feature_sha256": "12772296bc8c86b1c7ab0ea74bec8c562cc7b8b997af2ca0f653fc7a8be9497f",
+      "final_distance_m": 0.13877077194211596,
+      "full_model_sha256": "cf879c302dd4f3c824f1c960a44c77fdc6b9b27e96767eda27210fe778096ffc",
+      "initial_snapshot": {
+        "application_sha256": "74d712be2980814effe0eb0af4cd49fce73dc080903ae8054ecb694659c0d531",
+        "bytes": 479194,
+        "contact": {
+          "contact_cache_time_s": 0.0,
+          "failure": null,
+          "initial_forwarded": true,
+          "other_robot_contact": false,
+          "puck_floor_support": false,
+          "puck_wall_contact": false,
+          "rover_ground_support": true,
+          "rover_puck_contact": false,
+          "rover_puck_max_penetration_m": 0.0,
+          "source_start_time_s": 0.0,
+          "tick": 0,
+          "time_s": 0.0
+        },
+        "file": "initial.snp",
+        "sha256": "5c2bd622d4968eb0c4fc9d6a44a8e9a4888a22782f039d7b4e0282dfc9a9b651",
+        "tick": 0,
+        "world": {
+          "goal_xy": [
+            0.6,
+            -0.3
+          ],
+          "puck_velocity_xy": [
+            0.0,
+            0.0
+          ],
+          "puck_xyz": [
+            -0.4,
+            -0.3,
+            0.062
+          ],
+          "rover_pose": [
+            -1.3,
+            -0.6,
+            0.3
+          ],
+          "time_s": 0.0
+        }
+      },
+      "outcome": "puck_goal",
+      "seed": 6000,
+      "source": {
+        "manifest_sha256": "067015fecae8450aaadb223bada96061d2e2f06944e0cef9d801babb6ccdccd5",
+        "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-learning/runs/m6-puck-teacher-collection-v1-20261003/gate/teacher-6000/recording",
+        "seed": 6000,
+        "split": "train"
+      },
+      "split": "train",
+      "status": "completed",
+      "target_sha256": "63bf622a3bc4c6a56d3b69640b63010ce9b71a5d48f7545b5d75b089260ea293",
+      "terminal_stop_labels": 23,
+      "ticks": 337
+    },
+    {
+      "admission_status": "passed",
+      "contact_intervals": 161,
+      "feature_sha256": "37346a841462555b036d65751e2b029a1d9c05214f64e69575d7e42adc1780d9",
+      "final_distance_m": 0.1382761896746913,
+      "full_model_sha256": "38196fb1ce87d8c7e64f8d64339d5c5231398e4cb3ac3353483d58c2eab465e9",
+      "initial_snapshot": {
+        "application_sha256": "55dbfb4d585c8b229805bbd466c27eaf92636d1eb42dc28a4d511539d225b8e4",
+        "bytes": 479156,
+        "contact": {
+          "contact_cache_time_s": 0.0,
+          "failure": null,
+          "initial_forwarded": true,
+          "other_robot_contact": false,
+          "puck_floor_support": false,
+          "puck_wall_contact": false,
+          "rover_ground_support": true,
+          "rover_puck_contact": false,
+          "rover_puck_max_penetration_m": 0.0,
+          "source_start_time_s": 0.0,
+          "tick": 0,
+          "time_s": 0.0
+        },
+        "file": "initial.snp",
+        "sha256": "abde3f04936330c92791e287fd22b447647b165be30e8b797669cd710bccc9bd",
+        "tick": 0,
+        "world": {
+          "goal_xy": [
+            0.85,
+            -0.3
+          ],
+          "puck_velocity_xy": [
+            0.0,
+            0.0
+          ],
+          "puck_xyz": [
+            -0.4,
+            -0.3,
+            0.062
+          ],
+          "rover_pose": [
+            -1.4,
+            -0.4,
+            -0.3
+          ],
+          "time_s": 0.0
+        }
+      },
+      "outcome": "puck_goal",
+      "seed": 6001,
+      "source": {
+        "manifest_sha256": "e86364e17f42b936cc708c1258e9cb45f3b902e74825d0f3a24ff7676bf7bbf7",
+        "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-learning/runs/m6-puck-teacher-collection-v1-20261003/gate/teacher-6001/recording",
+        "seed": 6001,
+        "split": "train"
+      },
+      "split": "train",
+      "status": "completed",
+      "target_sha256": "1a24bc4a3b75559cdce167672f0d81b5760dd592e4d7fa8d4f36a3c3cdd1a6c0",
+      "terminal_stop_labels": 24,
+      "ticks": 274
+    },
+    {
+      "admission_status": "passed",
+      "contact_intervals": 193,
+      "feature_sha256": "641512eb7910b313dcfcd51dee9c74346c6e86e01921704897ed33b2c55d75b4",
+      "final_distance_m": 0.134012653741847,
+      "full_model_sha256": "5dab3f82030e4401ff184b02a674f06fd46fa94d9e950478b6336229467267ed",
+      "initial_snapshot": {
+        "application_sha256": "4bc04baec03ce91c20d1ea6e582ece9e31897364e9e78ed25e1b061b863aecdf",
+        "bytes": 479168,
+        "contact": {
+          "contact_cache_time_s": 0.0,
+          "failure": null,
+          "initial_forwarded": true,
+          "other_robot_contact": false,
+          "puck_floor_support": false,
+          "puck_wall_contact": false,
+          "rover_ground_support": true,
+          "rover_puck_contact": false,
+          "rover_puck_max_penetration_m": 0.0,
+          "source_start_time_s": 0.0,
+          "tick": 0,
+          "time_s": 0.0
+        },
+        "file": "initial.snp",
+        "sha256": "f4d5166d60eeeb517681adea537b29360a42019e5497e1511afc8580d8b72153",
+        "tick": 0,
+        "world": {
+          "goal_xy": [
+            1.1,
+            0.3
+          ],
+          "puck_velocity_xy": [
+            0.0,
+            0.0
+          ],
+          "puck_xyz": [
+            -0.4,
+            0.3,
+            0.062
+          ],
+          "rover_pose": [
+            -1.5,
+            0.4,
+            0.45
+          ],
+          "time_s": 0.0
+        }
+      },
+      "outcome": "puck_goal",
+      "seed": 6002,
+      "source": {
+        "manifest_sha256": "963b177f6ce361a6dce808c0ad80701f24c6973eb9c499f028de63982d8f5db7",
+        "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-learning/runs/m6-puck-teacher-collection-v1-20261003/gate/teacher-6002/recording",
+        "seed": 6002,
+        "split": "train"
+      },
+      "split": "train",
+      "status": "completed",
+      "target_sha256": "25c6f5e6e0b11c09d70e86a9927e9cb2c24bc9c9dddd7e51db4e58a28c982584",
+      "terminal_stop_labels": 25,
+      "ticks": 319
+    },
+    {
+      "admission_status": "passed",
+      "contact_intervals": 239,
+      "feature_sha256": "57980fb03b992c199e3fa37d02c8da0c04765b9299731f7b3734e6e70d779824",
+      "final_distance_m": 0.13187426430367663,
+      "full_model_sha256": "d4b5b9dc42518ef24b93a19fd4e8c0d7272741880bd90e09fc27dd81bf20c488",
+      "initial_snapshot": {
+        "application_sha256": "697a56246854719b21c79a929a48999be17beda6fa9e801a9082606f6cefb17f",
+        "bytes": 479136,
+        "contact": {
+          "contact_cache_time_s": 0.0,
+          "failure": null,
+          "initial_forwarded": true,
+          "other_robot_contact": false,
+          "puck_floor_support": false,
+          "puck_wall_contact": false,
+          "rover_ground_support": true,
+          "rover_puck_contact": false,
+          "rover_puck_max_penetration_m": 0.0,
+          "source_start_time_s": 0.0,
+          "tick": 0,
+          "time_s": 0.0
+        },
+        "file": "initial.snp",
+        "sha256": "26e2263dba3643e365eb2cbeed6fbd642202b7072a5acfab02ef02529d6cd6ba",
+        "tick": 0,
+        "world": {
+          "goal_xy": [
+            1.35,
+            0.3
+          ],
+          "puck_velocity_xy": [
+            0.0,
+            0.0
+          ],
+          "puck_xyz": [
+            -0.4,
+            0.3,
+            0.062
+          ],
+          "rover_pose": [
+            -1.6,
+            0.6,
+            -0.45
+          ],
+          "time_s": 0.0
+        }
+      },
+      "outcome": "puck_goal",
+      "seed": 6003,
+      "source": {
+        "manifest_sha256": "f3d930a490ab2caa4ca36869292c1210be9f2501c72c9a1e4a6a73d40e2f7c3e",
+        "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-learning/runs/m6-puck-teacher-collection-v1-20261003/gate/teacher-6003/recording",
+        "seed": 6003,
+        "split": "train"
+      },
+      "split": "train",
+      "status": "completed",
+      "target_sha256": "87f60a1e2aeaaf8e2665bb24640dd8dc03e22472e6cb0d945932efdd4ff7c77d",
+      "terminal_stop_labels": 24,
+      "ticks": 449
+    },
+    {
+      "admission_status": "failed",
+      "contact_intervals": 113,
+      "feature_sha256": "1465d6bbae7dda19fcc1626c8fb411addc7045d53a225eacba6f9543f1321b4b",
+      "final_distance_m": 0.19417256244312925,
+      "full_model_sha256": "9bdc7680a96d0e6c66cc3c23933ce1eb3be5c980fcc554c8ba01856075deadef",
+      "initial_snapshot": {
+        "application_sha256": "46b84fcdde4561c21156049e94307f6ae972d5838b73bc0e2ea62df1e3517a53",
+        "bytes": 479195,
+        "contact": {
+          "contact_cache_time_s": 0.0,
+          "failure": null,
+          "initial_forwarded": true,
+          "other_robot_contact": false,
+          "puck_floor_support": false,
+          "puck_wall_contact": false,
+          "rover_ground_support": true,
+          "rover_puck_contact": false,
+          "rover_puck_max_penetration_m": 0.0,
+          "source_start_time_s": 0.0,
+          "tick": 0,
+          "time_s": 0.0
+        },
+        "file": "initial.snp",
+        "sha256": "f1922cf7ebb0b39ebd0fe4fef61d4dd5f82eaab00046372b43e6cdaac0cd1bcb",
+        "tick": 0,
+        "world": {
+          "goal_xy": [
+            0.4,
+            0.7
+          ],
+          "puck_velocity_xy": [
+            0.0,
+            0.0
+          ],
+          "puck_xyz": [
+            0.4,
+            -0.3,
+            0.062
+          ],
+          "rover_pose": [
+            0.7,
+            -1.2,
+            1.870796326795
+          ],
+          "time_s": 0.0
+        }
+      },
+      "outcome": "puck_goal",
+      "seed": 6004,
+      "source": {
+        "manifest_sha256": "9858c54fe9ca416f0d683237b0f44463237e3dea7b710c876787260b55dc329d",
+        "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-learning/runs/m6-puck-teacher-collection-v1-20261003/gate/teacher-6004/recording",
+        "seed": 6004,
+        "split": "train"
+      },
+      "split": "train",
+      "status": "completed",
+      "target_sha256": "b3e06fd33018fd7236b39e6229e52d8ca302312e556c0009301bfd207323b9a2",
+      "terminal_stop_labels": 0,
+      "ticks": 332
+    },
+    {
+      "admission_status": "passed",
+      "contact_intervals": 161,
+      "feature_sha256": "bfdb8b4d380d7029e819fbec5ce8391ac5b7c18ac3142e5e9d3b6af02d932f7c",
+      "final_distance_m": 0.13771417758982377,
+      "full_model_sha256": "bfd0a2be313e6433a13608233a941223290265074d07013733d7458d0a137c85",
+      "initial_snapshot": {
+        "application_sha256": "50aa336f8c61360a92a59a778d445726d80c9b34e798562527d354fa00fc1ec8",
+        "bytes": 479187,
+        "contact": {
+          "contact_cache_time_s": 0.0,
+          "failure": null,
+          "initial_forwarded": true,
+          "other_robot_contact": false,
+          "puck_floor_support": false,
+          "puck_wall_contact": false,
+          "rover_ground_support": true,
+          "rover_puck_contact": false,
+          "rover_puck_max_penetration_m": 0.0,
+          "source_start_time_s": 0.0,
+          "tick": 0,
+          "time_s": 0.0
+        },
+        "file": "initial.snp",
+        "sha256": "3019c3bc9c0619ba06383010a0b87504005d340ea7618599aa1c83716fa48c4d",
+        "tick": 0,
+        "world": {
+          "goal_xy": [
+            0.4,
+            0.95
+          ],
+          "puck_velocity_xy": [
+            0.0,
+            0.0
+          ],
+          "puck_xyz": [
+            0.4,
+            -0.3,
+            0.062
+          ],
+          "rover_pose": [
+            0.5,
+            -1.3,
+            1.270796326795
+          ],
+          "time_s": 0.0
+        }
+      },
+      "outcome": "puck_goal",
+      "seed": 6005,
+      "source": {
+        "manifest_sha256": "956c8fe995d4566fda126f684b990648ba3fb8607f30b6ef20b36acbd098d318",
+        "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-learning/runs/m6-puck-teacher-collection-v1-20261003/gate/teacher-6005/recording",
+        "seed": 6005,
+        "split": "train"
+      },
+      "split": "train",
+      "status": "completed",
+      "target_sha256": "b5522e79be7bef95c0eeed06deb07c8d61407616c1a2d65cb62ed38b2eebc98e",
+      "terminal_stop_labels": 24,
+      "ticks": 274
+    },
+    {
+      "admission_status": "passed",
+      "contact_intervals": 192,
+      "feature_sha256": "d85966aa7fc6569f6e87dafa3bd114f1433311194cd367579e7368c15770cf8e",
+      "final_distance_m": 0.13394740904849506,
+      "full_model_sha256": "d294995f1e87b91eb40081ab648033b5431571dccf5998078c87e737c2a4146f",
+      "initial_snapshot": {
+        "application_sha256": "565b26f3db77271413315ad585120d292390e47635c9b18949653ae53d5b5911",
+        "bytes": 479162,
+        "contact": {
+          "contact_cache_time_s": 0.0,
+          "failure": null,
+          "initial_forwarded": true,
+          "other_robot_contact": false,
+          "puck_floor_support": false,
+          "puck_wall_contact": false,
+          "rover_ground_support": true,
+          "rover_puck_contact": false,
+          "rover_puck_max_penetration_m": 0.0,
+          "source_start_time_s": 0.0,
+          "tick": 0,
+          "time_s": 0.0
+        },
+        "file": "initial.snp",
+        "sha256": "e84d5b0c9ce21593bfd5239c91cd553fdc270faa8ebdae9b07b7d368c55164a7",
+        "tick": 0,
+        "world": {
+          "goal_xy": [
+            0.4,
+            1.8
+          ],
+          "puck_velocity_xy": [
+            0.0,
+            0.0
+          ],
+          "puck_xyz": [
+            0.4,
+            0.3,
+            0.062
+          ],
+          "rover_pose": [
+            0.3,
+            -0.8,
+            2.020796326795
+          ],
+          "time_s": 0.0
+        }
+      },
+      "outcome": "puck_goal",
+      "seed": 6006,
+      "source": {
+        "manifest_sha256": "5e5b8b0cd3e3515a88d5cbeaf8f3de74d4445193210cf019744a67fcb60b0b7f",
+        "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-learning/runs/m6-puck-teacher-collection-v1-20261003/gate/teacher-6006/recording",
+        "seed": 6006,
+        "split": "train"
+      },
+      "split": "train",
+      "status": "completed",
+      "target_sha256": "0eb021d903683bc63d5a7c4bd5fd20f235d746a086e04b417700aede3e30104b",
+      "terminal_stop_labels": 25,
+      "ticks": 319
+    },
+    {
+      "admission_status": "passed",
+      "contact_intervals": 239,
+      "feature_sha256": "11b34611fa585fc974b0993ba73acc270c4dd8c79f9fc2f55e10c3984b2a80e6",
+      "final_distance_m": 0.15101239151572396,
+      "full_model_sha256": "414df4fbd2daeac2622a7afb973a8cee7ac1cf7fbae576f7c5d11110f874e39a",
+      "initial_snapshot": {
+        "application_sha256": "322c4a9b7f5ea1a0c2305a1d18cac19ec8495f96e1235b879b5412313fa5fbc0",
+        "bytes": 479217,
+        "contact": {
+          "contact_cache_time_s": 0.0,
+          "failure": null,
+          "initial_forwarded": true,
+          "other_robot_contact": false,
+          "puck_floor_support": false,
+          "puck_wall_contact": false,
+          "rover_ground_support": true,
+          "rover_puck_contact": false,
+          "rover_puck_max_penetration_m": 0.0,
+          "source_start_time_s": 0.0,
+          "tick": 0,
+          "time_s": 0.0
+        },
+        "file": "initial.snp",
+        "sha256": "9e4d0520a2f9ef0f88e28a117d12f7215f6a081de2e555ca223db98e212f9954",
+        "tick": 0,
+        "world": {
+          "goal_xy": [
+            0.4,
+            2.05
+          ],
+          "puck_velocity_xy": [
+            0.0,
+            0.0
+          ],
+          "puck_xyz": [
+            0.4,
+            0.3,
+            0.062
+          ],
+          "rover_pose": [
+            0.1,
+            -0.9,
+            1.120796326795
+          ],
+          "time_s": 0.0
+        }
+      },
+      "outcome": "puck_goal",
+      "seed": 6007,
+      "source": {
+        "manifest_sha256": "21848efbe51bec20f11268c16c235f49cd727a147eb36501751767b0e99aac2f",
+        "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-learning/runs/m6-puck-teacher-collection-v1-20261003/gate/teacher-6007/recording",
+        "seed": 6007,
+        "split": "train"
+      },
+      "split": "train",
+      "status": "completed",
+      "target_sha256": "59d4ba61f79c795bf56a215492bd64f97432f747bf7fe812fefa7b1a93bbad23",
+      "terminal_stop_labels": 22,
+      "ticks": 528
+    },
+    {
+      "admission_status": "passed",
+      "contact_intervals": 134,
+      "feature_sha256": "38ca21dad57752c4391cc43aba0ce4ac33054b2d2cb27f79c5bed24a9481d93a",
+      "final_distance_m": 0.13881975266484786,
+      "full_model_sha256": "a061614dbf9973f6908d0b092e8d11e16bbebc12755b467cba059c30b1e024cf",
+      "initial_snapshot": {
+        "application_sha256": "362241c1a110ae36e205d2cfb82ce653c02819c46a88d565ff6133975c3aa21f",
+        "bytes": 479196,
+        "contact": {
+          "contact_cache_time_s": 0.0,
+          "failure": null,
+          "initial_forwarded": true,
+          "other_robot_contact": false,
+          "puck_floor_support": false,
+          "puck_wall_contact": false,
+          "rover_ground_support": true,
+          "rover_puck_contact": false,
+          "rover_puck_max_penetration_m": 0.0,
+          "source_start_time_s": 0.0,
+          "tick": 0,
+          "time_s": 0.0
+        },
+        "file": "initial.snp",
+        "sha256": "f5e44cc7af69e68b1b3f8954bd4d0420cad1fbda8fdac319e66546db38f4bf7d",
+        "tick": 0,
+        "world": {
+          "goal_xy": [
+            -1.4,
+            -0.3
+          ],
+          "puck_velocity_xy": [
+            0.0,
+            0.0
+          ],
+          "puck_xyz": [
+            -0.4,
+            -0.3,
+            0.062
+          ],
+          "rover_pose": [
+            0.5,
+            -0.0,
+            -2.84159265359
+          ],
+          "time_s": 0.0
+        }
+      },
+      "outcome": "puck_goal",
+      "seed": 6008,
+      "source": {
+        "manifest_sha256": "cac259965d288d379cf0f8b7254cd21d5e260c70113b22647c6a99e4f6ab6330",
+        "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-learning/runs/m6-puck-teacher-collection-v1-20261003/gate/teacher-6008/recording",
+        "seed": 6008,
+        "split": "train"
+      },
+      "split": "train",
+      "status": "completed",
+      "target_sha256": "9ffa1b25f7c6d16426e16e19d33f6a91aeef8d3eb26f78ca00b467bc8f5104da",
+      "terminal_stop_labels": 24,
+      "ticks": 337
+    },
+    {
+      "admission_status": "passed",
+      "contact_intervals": 164,
+      "feature_sha256": "d9c6892da2954e53db0165dfcae9f2243abec46dbfe476ccd8a8f15f04dcbfc3",
+      "final_distance_m": 0.1378618255334024,
+      "full_model_sha256": "cc58426df14b67e943de4e0e140a5ff39a312667843d91580d92d37cf52c3692",
+      "initial_snapshot": {
+        "application_sha256": "81d51334088f0ccb71f9a71216fa2d546ef265fad71f107cffeaf8bcab15ce93",
+        "bytes": 479178,
+        "contact": {
+          "contact_cache_time_s": 0.0,
+          "failure": null,
+          "initial_forwarded": true,
+          "other_robot_contact": false,
+          "puck_floor_support": false,
+          "puck_wall_contact": false,
+          "rover_ground_support": true,
+          "rover_puck_contact": false,
+          "rover_puck_max_penetration_m": 0.0,
+          "source_start_time_s": 0.0,
+          "tick": 0,
+          "time_s": 0.0
+        },
+        "file": "initial.snp",
+        "sha256": "3914db1ecf5786d1e986796ade3f81fa899e45b11b005c24228704c7f6abe349",
+        "tick": 0,
+        "world": {
+          "goal_xy": [
+            -1.65,
+            -0.3
+          ],
+          "puck_velocity_xy": [
+            0.0,
+            0.0
+          ],
+          "puck_xyz": [
+            -0.4,
+            -0.3,
+            0.062
+          ],
+          "rover_pose": [
+            0.6,
+            -0.2,
+            2.84159265359
+          ],
+          "time_s": 0.0
+        }
+      },
+      "outcome": "puck_goal",
+      "seed": 6009,
+      "source": {
+        "manifest_sha256": "f5aa2cc7841eaa9b511708d91bbbc719f0262bfd6bb7655bb349614bc14ab553",
+        "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-learning/runs/m6-puck-teacher-collection-v1-20261003/gate/teacher-6009/recording",
+        "seed": 6009,
+        "split": "train"
+      },
+      "split": "train",
+      "status": "completed",
+      "target_sha256": "c729c6b40248816370eb47cc6bbc3852f3dbd53411c7bc1c7babf33f0397d0ac",
+      "terminal_stop_labels": 24,
+      "ticks": 274
+    },
+    {
+      "admission_status": "passed",
+      "contact_intervals": 191,
+      "feature_sha256": "0743d77f9679850cc9d4f51de72f00bb47ce40983ca1b24f1785c43bb34892de",
+      "final_distance_m": 0.13471830907536814,
+      "full_model_sha256": "c0f1c1f43bde20a75ba05cdb351505b52e1bd30e5efe4bd59f61b8c6b5f976bc",
+      "initial_snapshot": {
+        "application_sha256": "e9285c7325ee03ee49c3271ad0145dfa1afc360bc43b950488a9dda2ac057e8d",
+        "bytes": 479195,
+        "contact": {
+          "contact_cache_time_s": 0.0,
+          "failure": null,
+          "initial_forwarded": true,
+          "other_robot_contact": false,
+          "puck_floor_support": false,
+          "puck_wall_contact": false,
+          "rover_ground_support": true,
+          "rover_puck_contact": false,
+          "rover_puck_max_penetration_m": 0.0,
+          "source_start_time_s": 0.0,
+          "tick": 0,
+          "time_s": 0.0
+        },
+        "file": "initial.snp",
+        "sha256": "c1788f319e3cd54e9292b336db089893e60d4e25115370a264b6603d9fa1f096",
+        "tick": 0,
+        "world": {
+          "goal_xy": [
+            -1.9,
+            0.3
+          ],
+          "puck_velocity_xy": [
+            0.0,
+            0.0
+          ],
+          "puck_xyz": [
+            -0.4,
+            0.3,
+            0.062
+          ],
+          "rover_pose": [
+            0.7,
+            0.2,
+            -2.69159265359
+          ],
+          "time_s": 0.0
+        }
+      },
+      "outcome": "puck_goal",
+      "seed": 6010,
+      "source": {
+        "manifest_sha256": "50e9f78e4635caf04c5dc7f405bb1b0df86c7ea28d82a69d6791018428cb9732",
+        "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-learning/runs/m6-puck-teacher-collection-v1-20261003/gate/teacher-6010/recording",
+        "seed": 6010,
+        "split": "train"
+      },
+      "split": "train",
+      "status": "completed",
+      "target_sha256": "a66bc532651c60ccaa347bc69bbab7b86c623a38225d2627de73de9d6f725851",
+      "terminal_stop_labels": 24,
+      "ticks": 318
+    },
+    {
+      "admission_status": "passed",
+      "contact_intervals": 251,
+      "feature_sha256": "3f21917a1c6512b820a969beeef0117316c681e97ec1fe6fdb64800e5e0d27a2",
+      "final_distance_m": 0.133738046515321,
+      "full_model_sha256": "689bc3f44b04a105500cc3d55d8dc4ffec81baab6294881f2d0597e23c2a6cf2",
+      "initial_snapshot": {
+        "application_sha256": "98eaf1c33a1d164f01ceded5a7e7980baa0df63bf2bed9be899b825509b8fb33",
+        "bytes": 479170,
+        "contact": {
+          "contact_cache_time_s": 0.0,
+          "failure": null,
+          "initial_forwarded": true,
+          "other_robot_contact": false,
+          "puck_floor_support": false,
+          "puck_wall_contact": false,
+          "rover_ground_support": true,
+          "rover_puck_contact": false,
+          "rover_puck_max_penetration_m": 0.0,
+          "source_start_time_s": 0.0,
+          "tick": 0,
+          "time_s": 0.0
+        },
+        "file": "initial.snp",
+        "sha256": "43a138b252c70c955941a204ab411336a432380aa76ed1aeaca628cb7bf7fa40",
+        "tick": 0,
+        "world": {
+          "goal_xy": [
+            -2.15,
+            0.3
+          ],
+          "puck_velocity_xy": [
+            0.0,
+            0.0
+          ],
+          "puck_xyz": [
+            -0.4,
+            0.3,
+            0.062
+          ],
+          "rover_pose": [
+            0.8,
+            -0.0,
+            2.69159265359
+          ],
+          "time_s": 0.0
+        }
+      },
+      "outcome": "puck_goal",
+      "seed": 6011,
+      "source": {
+        "manifest_sha256": "0c8a187494dc6fb434c248a3078cdaa4e5b5ce1813aee057bad6ee768d78798a",
+        "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-learning/runs/m6-puck-teacher-collection-v1-20261003/gate/teacher-6011/recording",
+        "seed": 6011,
+        "split": "train"
+      },
+      "split": "train",
+      "status": "completed",
+      "target_sha256": "ed67142b9f0e592fbcb7422a00fc26ac6f6ae2ac5f0aedff922fc8aa38624b00",
+      "terminal_stop_labels": 23,
+      "ticks": 528
+    },
+    {
+      "admission_status": "passed",
+      "contact_intervals": 137,
+      "feature_sha256": "20dc3e73f1ab9d566226140d38b530b80c5a3a04519b2bcf4a9e9fcfda5cbc79",
+      "final_distance_m": 0.13225959494001008,
+      "full_model_sha256": "8902f026e33de60d6f45ee94d1ab7ff3aa99f17acc23db7d1d9104021cd08070",
+      "initial_snapshot": {
+        "application_sha256": "13b25ea7089ca0ae6e8ae929eb866430f873a5377771790732e46dc5c587b392",
+        "bytes": 479163,
+        "contact": {
+          "contact_cache_time_s": 0.0,
+          "failure": null,
+          "initial_forwarded": true,
+          "other_robot_contact": false,
+          "puck_floor_support": false,
+          "puck_wall_contact": false,
+          "rover_ground_support": true,
+          "rover_puck_contact": false,
+          "rover_puck_max_penetration_m": 0.0,
+          "source_start_time_s": 0.0,
+          "tick": 0,
+          "time_s": 0.0
+        },
+        "file": "initial.snp",
+        "sha256": "da8963f3d21f4f96946f2e81da950df6ed22258a12c2b26f6c2e537d98dbb0f8",
+        "tick": 0,
+        "world": {
+          "goal_xy": [
+            0.4,
+            -1.3
+          ],
+          "puck_velocity_xy": [
+            0.0,
+            0.0
+          ],
+          "puck_xyz": [
+            0.4,
+            -0.3,
+            0.062
+          ],
+          "rover_pose": [
+            0.1,
+            0.6,
+            -1.270796326795
+          ],
+          "time_s": 0.0
+        }
+      },
+      "outcome": "puck_goal",
+      "seed": 6012,
+      "source": {
+        "manifest_sha256": "6de730072d57259dd40c1bbfe38558ec6c66f8d45e242d5cd0f01d61c0d120a9",
+        "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-learning/runs/m6-puck-teacher-collection-v1-20261003/gate/teacher-6012/recording",
+        "seed": 6012,
+        "split": "train"
+      },
+      "split": "train",
+      "status": "completed",
+      "target_sha256": "5621ec671f5e3dcab283225eba63d36eddc3c7541afe70aec79c9aa5746fc77c",
+      "terminal_stop_labels": 23,
+      "ticks": 337
+    },
+    {
+      "admission_status": "passed",
+      "contact_intervals": 160,
+      "feature_sha256": "3f3daf834dac2b70226c767e8246d0afd547377ba7ab7f046a51fb87c676618f",
+      "final_distance_m": 0.1377430354510309,
+      "full_model_sha256": "2fe6954e679ba44c76b6a19ec0ee1398c16a8a50fb54fb7a86976529b49be7c6",
+      "initial_snapshot": {
+        "application_sha256": "b3c754b1dd971c15d751cd63d8d621b54e5032e191818fe411dda746badb40ec",
+        "bytes": 479185,
+        "contact": {
+          "contact_cache_time_s": 0.0,
+          "failure": null,
+          "initial_forwarded": true,
+          "other_robot_contact": false,
+          "puck_floor_support": false,
+          "puck_wall_contact": false,
+          "rover_ground_support": true,
+          "rover_puck_contact": false,
+          "rover_puck_max_penetration_m": 0.0,
+          "source_start_time_s": 0.0,
+          "tick": 0,
+          "time_s": 0.0
+        },
+        "file": "initial.snp",
+        "sha256": "eec5cca5f942777c8bb0ddd41d2689ee44a68ffa82de0b16e9e75c639390fd8f",
+        "tick": 0,
+        "world": {
+          "goal_xy": [
+            0.4,
+            -1.55
+          ],
+          "puck_velocity_xy": [
+            0.0,
+            0.0
+          ],
+          "puck_xyz": [
+            0.4,
+            -0.3,
+            0.062
+          ],
+          "rover_pose": [
+            0.3,
+            0.7,
+            -1.870796326795
+          ],
+          "time_s": 0.0
+        }
+      },
+      "outcome": "puck_goal",
+      "seed": 6013,
+      "source": {
+        "manifest_sha256": "2e5299b521c11448fa813291cf012864d26d50d93540952ba137cf7f1cde01ee",
+        "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-learning/runs/m6-puck-teacher-collection-v1-20261003/gate/teacher-6013/recording",
+        "seed": 6013,
+        "split": "train"
+      },
+      "split": "train",
+      "status": "completed",
+      "target_sha256": "1a201fd567280bbe25eda52a59b070939fc56383873ba9516a81b9c843d148c3",
+      "terminal_stop_labels": 25,
+      "ticks": 275
+    },
+    {
+      "admission_status": "passed",
+      "contact_intervals": 192,
+      "feature_sha256": "454e36988d4c79246fbb6dd5844da6cea83be70a6eb52d4be1ada19feddfe60c",
+      "final_distance_m": 0.13454737051895072,
+      "full_model_sha256": "49765225953af5e6f0eb03bbff717ada87c746e3511382ecfca646a996a36bb9",
+      "initial_snapshot": {
+        "application_sha256": "ffa743386d7ca96e6588b523ef5657d584b147a0d13f9a5a824079e61ccd1d11",
+        "bytes": 479171,
+        "contact": {
+          "contact_cache_time_s": 0.0,
+          "failure": null,
+          "initial_forwarded": true,
+          "other_robot_contact": false,
+          "puck_floor_support": false,
+          "puck_wall_contact": false,
+          "rover_ground_support": true,
+          "rover_puck_contact": false,
+          "rover_puck_max_penetration_m": 0.0,
+          "source_start_time_s": 0.0,
+          "tick": 0,
+          "time_s": 0.0
+        },
+        "file": "initial.snp",
+        "sha256": "b397312fc1673910a5c40398a225dac9906966a390c6e0df14c59eb124312957",
+        "tick": 0,
+        "world": {
+          "goal_xy": [
+            0.4,
+            -1.2
+          ],
+          "puck_velocity_xy": [
+            0.0,
+            0.0
+          ],
+          "puck_xyz": [
+            0.4,
+            0.3,
+            0.062
+          ],
+          "rover_pose": [
+            0.5,
+            1.4,
+            -1.120796326795
+          ],
+          "time_s": 0.0
+        }
+      },
+      "outcome": "puck_goal",
+      "seed": 6014,
+      "source": {
+        "manifest_sha256": "e9fef3505d59c65f166270804bddb03ee17f2e799d4e5b19e24792b818dc7489",
+        "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-learning/runs/m6-puck-teacher-collection-v1-20261003/gate/teacher-6014/recording",
+        "seed": 6014,
+        "split": "train"
+      },
+      "split": "train",
+      "status": "completed",
+      "target_sha256": "cb36c9b509a4a0c656030f73b9ec7c213efa938104f5cb2ed51f861273569f75",
+      "terminal_stop_labels": 24,
+      "ticks": 318
+    },
+    {
+      "admission_status": "passed",
+      "contact_intervals": 235,
+      "feature_sha256": "1bf63a88d55da50a033eca29fcdae36ab1f89d1896286669fd5d92a44b731918",
+      "final_distance_m": 0.14442248875521205,
+      "full_model_sha256": "fb2224043d4bd327315fc9cc9d2f632f479b573fa69873f0590d871cd1b135dc",
+      "initial_snapshot": {
+        "application_sha256": "06d4893e0099b6b888dc3b7a89b79692d2d2aa4667665bcf2d6216ce1e43926b",
+        "bytes": 479155,
+        "contact": {
+          "contact_cache_time_s": 0.0,
+          "failure": null,
+          "initial_forwarded": true,
+          "other_robot_contact": false,
+          "puck_floor_support": false,
+          "puck_wall_contact": false,
+          "rover_ground_support": true,
+          "rover_puck_contact": false,
+          "rover_puck_max_penetration_m": 0.0,
+          "source_start_time_s": 0.0,
+          "tick": 0,
+          "time_s": 0.0
+        },
+        "file": "initial.snp",
+        "sha256": "93a584b42994a6b95e37e6abdc73782b5cbde3e5bc6e788bf66727b3fc95f512",
+        "tick": 0,
+        "world": {
+          "goal_xy": [
+            0.4,
+            -1.45
+          ],
+          "puck_velocity_xy": [
+            0.0,
+            0.0
+          ],
+          "puck_xyz": [
+            0.4,
+            0.3,
+            0.062
+          ],
+          "rover_pose": [
+            0.7,
+            1.5,
+            -2.020796326795
+          ],
+          "time_s": 0.0
+        }
+      },
+      "outcome": "puck_goal",
+      "seed": 6015,
+      "source": {
+        "manifest_sha256": "bcbb508f0204aad7867097dbe6dfc71ceb66f25e50219db94c8dd212ca9edb4a",
+        "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-learning/runs/m6-puck-teacher-collection-v1-20261003/gate/teacher-6015/recording",
+        "seed": 6015,
+        "split": "train"
+      },
+      "split": "train",
+      "status": "completed",
+      "target_sha256": "450cae08bc41b8fe818f3546afc1414b319f773b53ddd28f7221a11fbb6adbfd",
+      "terminal_stop_labels": 22,
+      "ticks": 525
+    },
+    {
+      "admission_status": "passed",
+      "contact_intervals": 143,
+      "feature_sha256": "e3713d4d6126b3a551a6bacda027b9786a9d7b6515dfc5a5596ada909df59cc0",
+      "final_distance_m": 0.13585816131500333,
+      "full_model_sha256": "ae385f3c7352b1b2399356d4e9dd2f23ba62b3bade34a65e076758bdf86a599c",
+      "initial_snapshot": {
+        "application_sha256": "c138ba76c41348ed910296effc5fbc004b7c0a85fd18812da08f314c61a3e552",
+        "bytes": 479266,
+        "contact": {
+          "contact_cache_time_s": 0.0,
+          "failure": null,
+          "initial_forwarded": true,
+          "other_robot_contact": false,
+          "puck_floor_support": false,
+          "puck_wall_contact": false,
+          "rover_ground_support": true,
+          "rover_puck_contact": false,
+          "rover_puck_max_penetration_m": 0.0,
+          "source_start_time_s": 0.0,
+          "tick": 0,
+          "time_s": 0.0
+        },
+        "file": "initial.snp",
+        "sha256": "42cf6aae615e8c0cda38c751397b8a9af681a46eb635aa7e3ebe00815e63d7bd",
+        "tick": 0,
+        "world": {
+          "goal_xy": [
+            0.977817459,
+            0.377817459
+          ],
+          "puck_velocity_xy": [
+            0.0,
+            0.0
+          ],
+          "puck_xyz": [
+            0.2,
+            -0.4,
+            0.062
+          ],
+          "rover_pose": [
+            -0.401040764,
+            -1.283883476,
+            0.435398163397
+          ],
+          "time_s": 0.0
+        }
+      },
+      "outcome": "puck_goal",
+      "seed": 6016,
+      "source": {
+        "manifest_sha256": "eae4a392d03e440238de556dd74d4fcf6f5fa4a171b7385a804f50e167a2ec80",
+        "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-learning/runs/m6-puck-teacher-collection-v1-20261003/gate/teacher-6016/recording",
+        "seed": 6016,
+        "split": "recorded_dev"
+      },
+      "split": "recorded_dev",
+      "status": "completed",
+      "target_sha256": "cd1040d7c0727b9912fdbecc6677a024158cdb9b121b9a474b2a31dd73005611",
+      "terminal_stop_labels": 26,
+      "ticks": 278
+    },
+    {
+      "admission_status": "passed",
+      "contact_intervals": 180,
+      "feature_sha256": "70904d4bc51cd4825973413163b6f328cf3bc23aeb6ad3d7b1c759e99736ce97",
+      "final_distance_m": 0.13229516809832703,
+      "full_model_sha256": "ead67e63e72bee32602c4902cd9c685434c01c2eb1991f2b340a68007bcad1f1",
+      "initial_snapshot": {
+        "application_sha256": "8a7b0b5e6f7a52b19b89d993fd02f8216837aa113693c3788e6d05c69d1ab80f",
+        "bytes": 479258,
+        "contact": {
+          "contact_cache_time_s": 0.0,
+          "failure": null,
+          "initial_forwarded": true,
+          "other_robot_contact": false,
+          "puck_floor_support": false,
+          "puck_wall_contact": false,
+          "rover_ground_support": true,
+          "rover_puck_contact": false,
+          "rover_puck_max_penetration_m": 0.0,
+          "source_start_time_s": 0.0,
+          "tick": 0,
+          "time_s": 0.0
+        },
+        "file": "initial.snp",
+        "sha256": "e038e70b01ed2133771977786356f3446151ee5f5ff0a75f48bc661dc891d976",
+        "tick": 0,
+        "world": {
+          "goal_xy": [
+            -1.154594155,
+            0.554594155
+          ],
+          "puck_velocity_xy": [
+            0.0,
+            0.0
+          ],
+          "puck_xyz": [
+            -0.2,
+            -0.4,
+            0.062
+          ],
+          "rover_pose": [
+            0.401040764,
+            -1.283883476,
+            2.706194490192
+          ],
+          "time_s": 0.0
+        }
+      },
+      "outcome": "puck_goal",
+      "seed": 6017,
+      "source": {
+        "manifest_sha256": "9dc01a5e4ad54fd3bbe12e9ddecd6c6907c68503d9f0ac75e949a37cee6ad046",
+        "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-learning/runs/m6-puck-teacher-collection-v1-20261003/gate/teacher-6017/recording",
+        "seed": 6017,
+        "split": "recorded_dev"
+      },
+      "split": "recorded_dev",
+      "status": "completed",
+      "target_sha256": "44c693c2afbed60d9794fb9b2425ccd899f5d4d1d425266e300bcf910fd19a49",
+      "terminal_stop_labels": 24,
+      "ticks": 312
+    },
+    {
+      "admission_status": "passed",
+      "contact_intervals": 218,
+      "feature_sha256": "909351a2e31bc99d4ad243c070112844481d9e21cb266168b32ef3e1525a1744",
+      "final_distance_m": 0.1330873002623599,
+      "full_model_sha256": "5e81b1f61345067f3eebaff1f91e113cf0b121821037e519158babad39778167",
+      "initial_snapshot": {
+        "application_sha256": "a97cc873166b7e45cd0db90a0944e414c568444a695dcc7b231b089020c64706",
+        "bytes": 479269,
+        "contact": {
+          "contact_cache_time_s": 0.0,
+          "failure": null,
+          "initial_forwarded": true,
+          "other_robot_contact": false,
+          "puck_floor_support": false,
+          "puck_wall_contact": false,
+          "rover_ground_support": true,
+          "rover_puck_contact": false,
+          "rover_puck_max_penetration_m": 0.0,
+          "source_start_time_s": 0.0,
+          "tick": 0,
+          "time_s": 0.0
+        },
+        "file": "initial.snp",
+        "sha256": "3ad943e52a52cf26956b3aca721c4eeed9cac182327d4064868a875d579367c0",
+        "tick": 0,
+        "world": {
+          "goal_xy": [
+            -0.93137085,
+            -1.53137085
+          ],
+          "puck_velocity_xy": [
+            0.0,
+            0.0
+          ],
+          "puck_xyz": [
+            0.2,
+            -0.4,
+            0.062
+          ],
+          "rover_pose": [
+            0.765685425,
+            0.519238816,
+            -2.606194490192
+          ],
+          "time_s": 0.0
+        }
+      },
+      "outcome": "puck_goal",
+      "seed": 6018,
+      "source": {
+        "manifest_sha256": "c1e39628530b1fd9941bfdc3c937d7caaa22b6b9094a738846d4bfadb6a62aab",
+        "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-learning/runs/m6-puck-teacher-collection-v1-20261003/gate/teacher-6018/recording",
+        "seed": 6018,
+        "split": "recorded_dev"
+      },
+      "split": "recorded_dev",
+      "status": "completed",
+      "target_sha256": "a872c018383ba5d6c11b840a65666115b34641cacb3e4253d60cd497cd16a62b",
+      "terminal_stop_labels": 25,
+      "ticks": 351
+    },
+    {
+      "admission_status": "passed",
+      "contact_intervals": 251,
+      "feature_sha256": "d913e6d358651f52d65fcdb546029df86202376fceebb3264d58e0ab01b4607a",
+      "final_distance_m": 0.13630201609660458,
+      "full_model_sha256": "64fccd84d3fe5e11e1bc39256e382fb2ea6f516cad89a4e56ca2090de7717e38",
+      "initial_snapshot": {
+        "application_sha256": "eca5608d8c62b09c2ee6fa6803409602c950798cef4ebcb979a851eb1f1d053d",
+        "bytes": 479273,
+        "contact": {
+          "contact_cache_time_s": 0.0,
+          "failure": null,
+          "initial_forwarded": true,
+          "other_robot_contact": false,
+          "puck_floor_support": false,
+          "puck_wall_contact": false,
+          "rover_ground_support": true,
+          "rover_puck_contact": false,
+          "rover_puck_max_penetration_m": 0.0,
+          "source_start_time_s": 0.0,
+          "tick": 0,
+          "time_s": 0.0
+        },
+        "file": "initial.snp",
+        "sha256": "bc7419fef1fc43534639cf78e07b0b72646551adafcd283617ce8a70dd2bac72",
+        "tick": 0,
+        "world": {
+          "goal_xy": [
+            1.108147545,
+            -1.708147545
+          ],
+          "puck_velocity_xy": [
+            0.0,
+            0.0
+          ],
+          "puck_xyz": [
+            -0.2,
+            -0.4,
+            0.062
+          ],
+          "rover_pose": [
+            -0.765685425,
+            0.519238816,
+            -0.5353981633969999
+          ],
+          "time_s": 0.0
+        }
+      },
+      "outcome": "puck_goal",
+      "seed": 6019,
+      "source": {
+        "manifest_sha256": "79df77635c771dc07a001f312a2f3f596fa003782b301362f168d3e7d1f5b449",
+        "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-learning/runs/m6-puck-teacher-collection-v1-20261003/gate/teacher-6019/recording",
+        "seed": 6019,
+        "split": "recorded_dev"
+      },
+      "split": "recorded_dev",
+      "status": "completed",
+      "target_sha256": "65d5bb671673f0c62e6f9a900ebac786c3b3ca2cd6ed41bcb61819238cce55cf",
+      "terminal_stop_labels": 24,
+      "ticks": 385
+    }
+  ],
+  "producer_commit": "b7db16a3c2a48d22752af8c1e6d405beedd1a8c3",
+  "qualification_claims": [],
+  "references": {
+    "collection_audit_report": {
+      "bytes": 68800,
+      "path": "runs/m6-puck-teacher-collection-v1-prepared/audit.json",
+      "sha256": "5c4f51adec3b630f3407bbf5d9f51f3e968d3a30d87840a85334354239c2e35b"
+    },
+    "collection_audit_script": {
+      "bytes": 11647,
+      "path": "runs/m6-puck-teacher-collection-v1-prepared/audit.py",
+      "sha256": "20102b51fd53b9068e946783c6d7c71a5642c80805aa2a5d22c9775496e88a0f"
+    },
+    "collection_inner_report": {
+      "bytes": 205655,
+      "path": "runs/m6-puck-teacher-collection-v1-20261003/gate/report.json",
+      "sha256": "7e2d34a134b920113e97f4b9768b23c26cf7cab14f7bd736f8d55af8b93f688f"
+    },
+    "collection_launcher": {
+      "bytes": 8049,
+      "path": "runs/m6-puck-teacher-collection-v1-prepared/launch.py",
+      "sha256": "4d4e3892cab225dbb9761204f9947b4a6a1147ce9ce7e9e5574d0520931a852b"
+    },
+    "collection_outer_report": {
+      "bytes": 78452,
+      "path": "runs/m6-puck-teacher-collection-v1-20261003/launch-result.json",
+      "sha256": "555839af1718971af8a833487b36d453180b52a35f6cb95b7c07094cdd74fa1d"
+    },
+    "collection_plan": {
+      "bytes": 16953,
+      "path": "runs/m6-puck-teacher-collection-v1-prepared/plan.json",
+      "sha256": "2f7158f43d4192351387c3eb444eb1285f02da324c44c9fc45e9f79ebc63441f"
+    },
+    "collection_preparation": {
+      "bytes": 747,
+      "path": "runs/m6-puck-teacher-collection-v1-prepared/preparation.json",
+      "sha256": "ec10375f56a918b665e60bacdd9697f1cfb32c540a7cea4a7e6934f891cfb1db"
+    },
+    "compatibility_audit_report": {
+      "bytes": 27980,
+      "path": "runs/m6-puck-learning-mechanics-compatibility-v1-prepared/audit.json",
+      "sha256": "aeb7bc78ceaef616b3ea1132fc6921b7e63edf9ed6a517ecd946a6a5539f86c9"
+    },
+    "compatibility_audit_script": {
+      "bytes": 19172,
+      "path": "runs/m6-puck-learning-mechanics-compatibility-v1-prepared/audit.py",
+      "sha256": "82452a7c41e1e8da86f29c927a7313326558e62f1a54847f880924d22faaa43e"
+    },
+    "compatibility_inner_report": {
+      "bytes": 111209,
+      "path": "runs/m6-puck-learning-mechanics-compatibility-v1-20261003/gate/report.json",
+      "sha256": "b40bc8e7e33254f7828d0106ffc938f2fe7bfb56b1c27dd8b025440d9a7eecc1"
+    },
+    "compatibility_launcher": {
+      "bytes": 7547,
+      "path": "runs/m6-puck-learning-mechanics-compatibility-v1-prepared/launch.py",
+      "sha256": "6c5ebd102ca8a0332b03f5d649b6acda9fab8e7237fff94592aef48a3f97eef4"
+    },
+    "compatibility_outer_report": {
+      "bytes": 36702,
+      "path": "runs/m6-puck-learning-mechanics-compatibility-v1-20261003/launch-result.json",
+      "sha256": "dbc4ec135e5e18ef6d6efdef2816244b5c1cdcdb7811c882126c7967c60871c6"
+    },
+    "compatibility_plan": {
+      "bytes": 14311,
+      "path": "runs/m6-puck-learning-mechanics-compatibility-v1-prepared/plan.json",
+      "sha256": "8eff99b6ffb38ce1cf04cd00acf9c193c7a92e3b586bbc3384c2feb53e053329"
+    },
+    "compatibility_preparation": {
+      "bytes": 660,
+      "path": "runs/m6-puck-learning-mechanics-compatibility-v1-prepared/preparation.json",
+      "sha256": "4000a72ecbdbb82f16c234ad9d99ffe6b381b3f01b253785c05d867401b21966"
+    },
+    "root_collection_audit_audit-first-failed_py": {
+      "bytes": 10122,
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/project-integration/runs/m6-puck-teacher-root-audit-b7db16a/audit-first-failed.py",
+      "sha256": "cfd64d28a8098f0944b36131c7e4bea508e208aaeda924e9241a39e0b3f80a4d"
+    },
+    "root_collection_audit_audit_json": {
+      "bytes": 5998,
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/project-integration/runs/m6-puck-teacher-root-audit-b7db16a/audit.json",
+      "sha256": "5a4e49fba0ba4ed99078f8c59525264c96ea4647e7454f38dfc7a4defce0d644"
+    },
+    "root_collection_audit_audit_py": {
+      "bytes": 10254,
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/project-integration/runs/m6-puck-teacher-root-audit-b7db16a/audit.py",
+      "sha256": "d721c12a86281132378ef01802eec3f44cef4577a338a988612d8cfbfcf3101c"
+    },
+    "root_collection_audit_first-failure_json": {
+      "bytes": 317,
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/project-integration/runs/m6-puck-teacher-root-audit-b7db16a/first-failure.json",
+      "sha256": "8ab6f4e76fb6328d06286a72f5ab258b0b0e7cfd3ccfd2398bd958f1ad91197b"
+    },
+    "root_collection_launch_review_review_json": {
+      "bytes": 961,
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/project-integration/runs/puck-teacher-launch-review-b7db16a/review.json",
+      "sha256": "35a0923533b458f267be02fafe1455e46407927e5034b412216f3e5949e21fb1"
+    },
+    "root_collection_launch_review_review_py": {
+      "bytes": 3908,
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/project-integration/runs/puck-teacher-launch-review-b7db16a/review.py",
+      "sha256": "584846162b004ebb93c860ffd093c97a8680624fa19115e772536955aeaa6939"
+    },
+    "root_compatibility_audit_audit_json": {
+      "bytes": 3658,
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/project-integration/runs/m6-puck-mechanics-root-audit-b7db16a/audit.json",
+      "sha256": "b2c45c86f2f07b2a1ffa7873c1ba4a206219384ca8bbc17d3db0d74012cb0002"
+    },
+    "root_compatibility_audit_audit_py": {
+      "bytes": 12544,
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/project-integration/runs/m6-puck-mechanics-root-audit-b7db16a/audit.py",
+      "sha256": "0a9a4f38f8737a02e2237fae122beceabbad055b1a0d5ba59a2f3962ac33105a"
+    },
+    "root_compatibility_launch_review_review_json": {
+      "bytes": 718,
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/project-integration/runs/puck-compatibility-launch-review-b7db16a/review.json",
+      "sha256": "86fd22cf63b7e049f56d385537fcc318a5f65d8613facbc81aeab92d72bfe5c0"
+    },
+    "root_compatibility_launch_review_review_py": {
+      "bytes": 3330,
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/project-integration/runs/puck-compatibility-launch-review-b7db16a/review.py",
+      "sha256": "8172d85eef7251bd576c40f64eec021987496b6a81b293a53f94e879833cbf9b"
+    }
+  },
+  "retention_note": "Raw runs remain ignored local evidence. References bind exact retained controls/reports/audits; primary reports index every raw file. Producer/source identities remain b7db16a regardless of later evidence commits.",
+  "retries_or_replacements": 0,
+  "schema": "puck-teacher-collection-evidence-v1",
+  "sources": [
+    {
+      "manifest_sha256": "067015fecae8450aaadb223bada96061d2e2f06944e0cef9d801babb6ccdccd5",
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-learning/runs/m6-puck-teacher-collection-v1-20261003/gate/teacher-6000/recording",
+      "seed": 6000,
+      "split": "train"
+    },
+    {
+      "manifest_sha256": "e86364e17f42b936cc708c1258e9cb45f3b902e74825d0f3a24ff7676bf7bbf7",
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-learning/runs/m6-puck-teacher-collection-v1-20261003/gate/teacher-6001/recording",
+      "seed": 6001,
+      "split": "train"
+    },
+    {
+      "manifest_sha256": "963b177f6ce361a6dce808c0ad80701f24c6973eb9c499f028de63982d8f5db7",
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-learning/runs/m6-puck-teacher-collection-v1-20261003/gate/teacher-6002/recording",
+      "seed": 6002,
+      "split": "train"
+    },
+    {
+      "manifest_sha256": "f3d930a490ab2caa4ca36869292c1210be9f2501c72c9a1e4a6a73d40e2f7c3e",
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-learning/runs/m6-puck-teacher-collection-v1-20261003/gate/teacher-6003/recording",
+      "seed": 6003,
+      "split": "train"
+    },
+    {
+      "manifest_sha256": "9858c54fe9ca416f0d683237b0f44463237e3dea7b710c876787260b55dc329d",
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-learning/runs/m6-puck-teacher-collection-v1-20261003/gate/teacher-6004/recording",
+      "seed": 6004,
+      "split": "train"
+    },
+    {
+      "manifest_sha256": "956c8fe995d4566fda126f684b990648ba3fb8607f30b6ef20b36acbd098d318",
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-learning/runs/m6-puck-teacher-collection-v1-20261003/gate/teacher-6005/recording",
+      "seed": 6005,
+      "split": "train"
+    },
+    {
+      "manifest_sha256": "5e5b8b0cd3e3515a88d5cbeaf8f3de74d4445193210cf019744a67fcb60b0b7f",
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-learning/runs/m6-puck-teacher-collection-v1-20261003/gate/teacher-6006/recording",
+      "seed": 6006,
+      "split": "train"
+    },
+    {
+      "manifest_sha256": "21848efbe51bec20f11268c16c235f49cd727a147eb36501751767b0e99aac2f",
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-learning/runs/m6-puck-teacher-collection-v1-20261003/gate/teacher-6007/recording",
+      "seed": 6007,
+      "split": "train"
+    },
+    {
+      "manifest_sha256": "cac259965d288d379cf0f8b7254cd21d5e260c70113b22647c6a99e4f6ab6330",
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-learning/runs/m6-puck-teacher-collection-v1-20261003/gate/teacher-6008/recording",
+      "seed": 6008,
+      "split": "train"
+    },
+    {
+      "manifest_sha256": "f5aa2cc7841eaa9b511708d91bbbc719f0262bfd6bb7655bb349614bc14ab553",
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-learning/runs/m6-puck-teacher-collection-v1-20261003/gate/teacher-6009/recording",
+      "seed": 6009,
+      "split": "train"
+    },
+    {
+      "manifest_sha256": "50e9f78e4635caf04c5dc7f405bb1b0df86c7ea28d82a69d6791018428cb9732",
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-learning/runs/m6-puck-teacher-collection-v1-20261003/gate/teacher-6010/recording",
+      "seed": 6010,
+      "split": "train"
+    },
+    {
+      "manifest_sha256": "0c8a187494dc6fb434c248a3078cdaa4e5b5ce1813aee057bad6ee768d78798a",
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-learning/runs/m6-puck-teacher-collection-v1-20261003/gate/teacher-6011/recording",
+      "seed": 6011,
+      "split": "train"
+    },
+    {
+      "manifest_sha256": "6de730072d57259dd40c1bbfe38558ec6c66f8d45e242d5cd0f01d61c0d120a9",
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-learning/runs/m6-puck-teacher-collection-v1-20261003/gate/teacher-6012/recording",
+      "seed": 6012,
+      "split": "train"
+    },
+    {
+      "manifest_sha256": "2e5299b521c11448fa813291cf012864d26d50d93540952ba137cf7f1cde01ee",
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-learning/runs/m6-puck-teacher-collection-v1-20261003/gate/teacher-6013/recording",
+      "seed": 6013,
+      "split": "train"
+    },
+    {
+      "manifest_sha256": "e9fef3505d59c65f166270804bddb03ee17f2e799d4e5b19e24792b818dc7489",
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-learning/runs/m6-puck-teacher-collection-v1-20261003/gate/teacher-6014/recording",
+      "seed": 6014,
+      "split": "train"
+    },
+    {
+      "manifest_sha256": "bcbb508f0204aad7867097dbe6dfc71ceb66f25e50219db94c8dd212ca9edb4a",
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-learning/runs/m6-puck-teacher-collection-v1-20261003/gate/teacher-6015/recording",
+      "seed": 6015,
+      "split": "train"
+    },
+    {
+      "manifest_sha256": "eae4a392d03e440238de556dd74d4fcf6f5fa4a171b7385a804f50e167a2ec80",
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-learning/runs/m6-puck-teacher-collection-v1-20261003/gate/teacher-6016/recording",
+      "seed": 6016,
+      "split": "recorded_dev"
+    },
+    {
+      "manifest_sha256": "9dc01a5e4ad54fd3bbe12e9ddecd6c6907c68503d9f0ac75e949a37cee6ad046",
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-learning/runs/m6-puck-teacher-collection-v1-20261003/gate/teacher-6017/recording",
+      "seed": 6017,
+      "split": "recorded_dev"
+    },
+    {
+      "manifest_sha256": "c1e39628530b1fd9941bfdc3c937d7caaa22b6b9094a738846d4bfadb6a62aab",
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-learning/runs/m6-puck-teacher-collection-v1-20261003/gate/teacher-6018/recording",
+      "seed": 6018,
+      "split": "recorded_dev"
+    },
+    {
+      "manifest_sha256": "79df77635c771dc07a001f312a2f3f596fa003782b301362f168d3e7d1f5b449",
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-learning/runs/m6-puck-teacher-collection-v1-20261003/gate/teacher-6019/recording",
+      "seed": 6019,
+      "split": "recorded_dev"
+    }
+  ],
+  "status": "failed_admission",
+  "supervisor_source_sha256": "eb9dd244cd30b1133db7a2602c7a88f3a95a57299c2f215f483df69ed37e7cfd",
+  "task_protocol_sha256": "edf868c868922a3d7a946e705553c7144509a2a6af7f208e399f63346d2b20b9",
+  "teacher_source_sha256": "8264a871b59cd13609955d9213e3712b7a5bf74cc3bb359d851f57bfb571259b",
+  "training_admitted": false
+}
