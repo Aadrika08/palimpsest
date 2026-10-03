@@ -1,0 +1,480 @@
+{
+  "attempts": 1,
+  "bounds": {
+    "bytes": 4294967296,
+    "inner_seconds": 1500,
+    "kill_grace_seconds": 15,
+    "owners": 20,
+    "supervised_seconds": 1580,
+    "term_seconds": 1560
+  },
+  "cleanup": {
+    "absent_observed_pid_start_pairs": 22,
+    "absent_owner_groups": 20,
+    "all_child_returncodes": 0,
+    "callbacks_restored": true,
+    "finalization_errors": [],
+    "forced_signals": [],
+    "native_resources_closed": true,
+    "sampler_errors": [],
+    "survivors": []
+  },
+  "data_admission": "passed",
+  "inner_seconds": 159.36257915000897,
+  "learning_protocol_sha256": "bfdd047c1763af3d0b254c55df9137e179b65ce99e7eb870ca76f41332a83354",
+  "limitations": "Fixed development teacher collection/data admission only. No model fitting, dev rollout, held-out execution or learned/physical capability claim. Rejected v1 remains immutable and ineligible; all20 v2 owners were freshly collected.",
+  "local_audit": {
+    "inner_files": 387,
+    "native_deserialized": false,
+    "native_imported": false,
+    "outer_bytes": 865192450,
+    "outer_files": 393,
+    "seconds": 16.718877355000586,
+    "status": "passed_first_invocation"
+  },
+  "outer_returncode": 0,
+  "outer_seconds": 159.6070453870052,
+  "owners": [
+    {
+      "contact_intervals": 135,
+      "feature_sha256": "5e847251df72ede810ee1faee026ba9d4f0d3ad7be6828e394f4ab8e5e819f32",
+      "final_distance_m": 0.15342720793719908,
+      "outcome": "puck_goal",
+      "seed": 6000,
+      "split": "train",
+      "target_sha256": "b70bc289e2b82f2d7f2b869680cbe340950611af6cb73f38244da23146c1f92e",
+      "terminal_stop_labels": 24,
+      "ticks": 335
+    },
+    {
+      "contact_intervals": 156,
+      "feature_sha256": "cc4e70e1dfd4fc46e4339b2d7abd68b30285a33509b9544fca624756e9af837f",
+      "final_distance_m": 0.1523550111959377,
+      "outcome": "puck_goal",
+      "seed": 6001,
+      "split": "train",
+      "target_sha256": "42087194e348f40be6ecef5e095ca924ec29489485221a135cd11e5ef0591dd9",
+      "terminal_stop_labels": 23,
+      "ticks": 271
+    },
+    {
+      "contact_intervals": 186,
+      "feature_sha256": "02b30ce933c10b1eae5fb0c00fd16ae713debe4e08b6913c555fa1712dd2515e",
+      "final_distance_m": 0.15506983754749679,
+      "outcome": "puck_goal",
+      "seed": 6002,
+      "split": "train",
+      "target_sha256": "91f0dda75cb3ec8ef764d60ed266c20600b136d3ad9b2820f3f12bf42f40f2e0",
+      "terminal_stop_labels": 25,
+      "ticks": 316
+    },
+    {
+      "contact_intervals": 234,
+      "feature_sha256": "8080422b2f4b659814e505105bd4e0f41a7c13fa8bfa59c8cbe241f2790d5178",
+      "final_distance_m": 0.15292092396205978,
+      "outcome": "puck_goal",
+      "seed": 6003,
+      "split": "train",
+      "target_sha256": "d8084ab237f109a4a2e8c4987b0ea8bb75184c352a1be281bfa8e2f3efc5978e",
+      "terminal_stop_labels": 25,
+      "ticks": 447
+    },
+    {
+      "contact_intervals": 124,
+      "feature_sha256": "85ed2eeb30e668c696375f2cc8fb0f5f64208ef6935418bc2441722e4e841bdc",
+      "final_distance_m": 0.19206372897283402,
+      "outcome": "puck_goal",
+      "seed": 6004,
+      "split": "train",
+      "target_sha256": "bb53ec704bcb96e190e01d287c682db5f82e0a056920da46c5fb2cbfc1909d3b",
+      "terminal_stop_labels": 17,
+      "ticks": 333
+    },
+    {
+      "contact_intervals": 161,
+      "feature_sha256": "919049b37e1dff20d04a2391802e91bc5c05e45bef01df2f32f60391dbd32e90",
+      "final_distance_m": 0.1587098595045887,
+      "outcome": "puck_goal",
+      "seed": 6005,
+      "split": "train",
+      "target_sha256": "81c9fa461d01c9a12ed29bfb0482e454d03debec0c918f9a7f6db4144422e86d",
+      "terminal_stop_labels": 25,
+      "ticks": 272
+    },
+    {
+      "contact_intervals": 191,
+      "feature_sha256": "94bbe807451cbc8ef2b80f9b3cff442573e7d8234f4070426fd9d5b2518a1e96",
+      "final_distance_m": 0.15496911812008757,
+      "outcome": "puck_goal",
+      "seed": 6006,
+      "split": "train",
+      "target_sha256": "bdd0ba6b86818308e37973eb4fd1afaea66d120a1353b509942d6ed5af29bde5",
+      "terminal_stop_labels": 24,
+      "ticks": 315
+    },
+    {
+      "contact_intervals": 240,
+      "feature_sha256": "da9e656b4b67f431d847b22c9a961107299787c32a086c9f86e46179aaa271bf",
+      "final_distance_m": 0.1592081315631427,
+      "outcome": "puck_goal",
+      "seed": 6007,
+      "split": "train",
+      "target_sha256": "53fd4118971150ec942b9b30ebc0b045a4b17b74f9fdfd5e513e3a0e2b956040",
+      "terminal_stop_labels": 24,
+      "ticks": 527
+    },
+    {
+      "contact_intervals": 136,
+      "feature_sha256": "4359c88913f34aa10d88991e9b58f28b0a1e7299226ddf2167d156e872ded3fa",
+      "final_distance_m": 0.15264366656345585,
+      "outcome": "puck_goal",
+      "seed": 6008,
+      "split": "train",
+      "target_sha256": "8129b1be64542102ea16bfa0f4d7a5acd5d3f6891eb26a04e9af5713fdd0b4e8",
+      "terminal_stop_labels": 25,
+      "ticks": 336
+    },
+    {
+      "contact_intervals": 160,
+      "feature_sha256": "8fc4fe384827b0f561db0dba8ab2ca44bce80a0762230113551603331b311973",
+      "final_distance_m": 0.15197347243158515,
+      "outcome": "puck_goal",
+      "seed": 6009,
+      "split": "train",
+      "target_sha256": "90346f4f9ba17cd3144d0aeb6f9c5c33ad1bd22a6200870c0895c788a69b842e",
+      "terminal_stop_labels": 24,
+      "ticks": 272
+    },
+    {
+      "contact_intervals": 191,
+      "feature_sha256": "8eb3e0f5376988271ee8c0481e68f101e61475ac4b3d7882b6e30bc4212fcf92",
+      "final_distance_m": 0.15547746631282527,
+      "outcome": "puck_goal",
+      "seed": 6010,
+      "split": "train",
+      "target_sha256": "3ff3b12147a3342a49521de8df3f315330a0fd8d78d935a55f495f24830059ad",
+      "terminal_stop_labels": 25,
+      "ticks": 316
+    },
+    {
+      "contact_intervals": 248,
+      "feature_sha256": "93ca7384fd3d693993ec555642c7914a4a951815feebcd96c601a2116d9b00d9",
+      "final_distance_m": 0.15468201969504633,
+      "outcome": "puck_goal",
+      "seed": 6011,
+      "split": "train",
+      "target_sha256": "d4ac1fa399e86b4de88ee24f2d1e25d9c23b973bdf1adb93d2e927850d87b592",
+      "terminal_stop_labels": 24,
+      "ticks": 526
+    },
+    {
+      "contact_intervals": 137,
+      "feature_sha256": "b7dee57b1395cacf7c49bab28ada797506bb0b667d8b13930e734afc5184feac",
+      "final_distance_m": 0.15312030494784243,
+      "outcome": "puck_goal",
+      "seed": 6012,
+      "split": "train",
+      "target_sha256": "c64316fc4abf5cd243a998aa5c84b64899649946a0b9639f15f008268d0c4c96",
+      "terminal_stop_labels": 25,
+      "ticks": 336
+    },
+    {
+      "contact_intervals": 160,
+      "feature_sha256": "57e2a5d292ca86e28e74f3ad00e989dd9c0a581e8dd4fbb3e62b0689f35777b1",
+      "final_distance_m": 0.15882027032984572,
+      "outcome": "puck_goal",
+      "seed": 6013,
+      "split": "train",
+      "target_sha256": "463db56825adea84e6e611bc550ad13b60ae931cc8ad32f4efa6a433268441ba",
+      "terminal_stop_labels": 25,
+      "ticks": 272
+    },
+    {
+      "contact_intervals": 189,
+      "feature_sha256": "e89e5e4aa42b7e32225ae3791efd38212980ef12e8231466c0c006b9f689b9e5",
+      "final_distance_m": 0.15539600808924997,
+      "outcome": "puck_goal",
+      "seed": 6014,
+      "split": "train",
+      "target_sha256": "c6287d229286d889a54dc24e54051d74ce3858fae3bdfbfdc407a79cbf173dc9",
+      "terminal_stop_labels": 24,
+      "ticks": 315
+    },
+    {
+      "contact_intervals": 230,
+      "feature_sha256": "5788f1e1a680387e1b0c176af8d34716643a7678908b654e1e46120858aaad70",
+      "final_distance_m": 0.16974462318948208,
+      "outcome": "puck_goal",
+      "seed": 6015,
+      "split": "train",
+      "target_sha256": "1eae4c6fd869e6ab9c8e2e757d090140795b045a769b07755629e081780c634f",
+      "terminal_stop_labels": 22,
+      "ticks": 521
+    },
+    {
+      "contact_intervals": 139,
+      "feature_sha256": "b5e7438e9ceb6c763e2f742cc4cbd4637bf22bc27f73cabae2ba503a602ff697",
+      "final_distance_m": 0.15708776428775265,
+      "outcome": "puck_goal",
+      "seed": 6016,
+      "split": "recorded_dev",
+      "target_sha256": "3432e74d93bd2f8848cc368495cab32c8de0b093dfd3b0e56c34e2732a19ec2d",
+      "terminal_stop_labels": 25,
+      "ticks": 274
+    },
+    {
+      "contact_intervals": 178,
+      "feature_sha256": "76ad0241e3c499b66091d8e4a11eded440c45fdd624282076d8bd25b1b24c1b2",
+      "final_distance_m": 0.153342010057975,
+      "outcome": "puck_goal",
+      "seed": 6017,
+      "split": "recorded_dev",
+      "target_sha256": "b9b0f0c8a76e147f8ad49b2105455c4fbe54c896cd6edff3659a01acc43933ad",
+      "terminal_stop_labels": 25,
+      "ticks": 310
+    },
+    {
+      "contact_intervals": 213,
+      "feature_sha256": "fe06a7a80ca65f9a1dcc3266179887f9e6f5e74445829a06ba7168f563545e9c",
+      "final_distance_m": 0.15419999091383949,
+      "outcome": "puck_goal",
+      "seed": 6018,
+      "split": "recorded_dev",
+      "target_sha256": "a404776fd5a102d81ce5b953f861014b3d888baa8fb867014d192a0cd5242672",
+      "terminal_stop_labels": 24,
+      "ticks": 347
+    },
+    {
+      "contact_intervals": 249,
+      "feature_sha256": "24c6f0e10cfcc8f6a89c114ddecbe4fa2bcc8c45a32023028b37ee28c1180716",
+      "final_distance_m": 0.15733895938865428,
+      "outcome": "puck_goal",
+      "seed": 6019,
+      "split": "recorded_dev",
+      "target_sha256": "0723096f8cdd90238e450d678f11bf2dd24b52a2b3a6324e918abbc84b051d53",
+      "terminal_stop_labels": 25,
+      "ticks": 383
+    }
+  ],
+  "previous_owner_evidence_unchanged": true,
+  "producer_commit": "69fd44504f8c7cd836c0f53176cfea881e848912",
+  "qualification_claims": [],
+  "recorded_dev_ticks": 1314,
+  "recorded_intervals": 7024,
+  "references": {
+    "containment": {
+      "bytes": 2628,
+      "path": "runs/m6-puck-teacher-collection-v2-20261003/containment.json",
+      "sha256": "08cc54048646bfaf3265bcb69cb57c4fca63e6ad9fedc7aeedb259b40758f423"
+    },
+    "inner": {
+      "bytes": 205583,
+      "path": "runs/m6-puck-teacher-collection-v2-20261003/gate/report.json",
+      "sha256": "3cf5044ac12fa80ebfed9aa044d0e983a94fcddb4e177da779a4684b944b518b"
+    },
+    "launcher": {
+      "bytes": 8231,
+      "path": "runs/m6-puck-teacher-collection-v2-prepared/launch.py",
+      "sha256": "b23b4c991315077bf82949aedd5b5b61c65f1f60145f47d7d7bcf1ebed33b5ce"
+    },
+    "learning_protocol": {
+      "bytes": 7667,
+      "path": "docs/plans/m6-puck-learning-v2.json",
+      "sha256": "bfdd047c1763af3d0b254c55df9137e179b65ce99e7eb870ca76f41332a83354"
+    },
+    "local_audit": {
+      "bytes": 68676,
+      "path": "runs/m6-puck-teacher-collection-v2-prepared/audit.json",
+      "sha256": "7c7bdf8202a2d6ccb5176146f95dde903c0b622efe183227e4156dd256e2313e"
+    },
+    "local_audit_script": {
+      "bytes": 11975,
+      "path": "runs/m6-puck-teacher-collection-v2-prepared/audit.py",
+      "sha256": "6200ee159474de2c22c192b4cee1602e0318e4c189532b5ae8a29817d655dee1"
+    },
+    "mechanics_evidence": {
+      "bytes": 12225,
+      "path": "docs/reports/m6-puck-learning-v2-mechanics-v1.json",
+      "sha256": "37b6fcf6208ade6bc45c2b4804ea848f22f3c30f2f1c00bbc3f0e936bdc28fa3"
+    },
+    "outer": {
+      "bytes": 78143,
+      "path": "runs/m6-puck-teacher-collection-v2-20261003/launch-result.json",
+      "sha256": "05d0be68ae4b4411802303149b80b7cd82b00921bae296f10560f63dae3bd8d6"
+    },
+    "plan": {
+      "bytes": 17512,
+      "path": "runs/m6-puck-teacher-collection-v2-prepared/plan.json",
+      "sha256": "ab6bce1385eb610238e5f633482472f79b5dd4747622847c6369823906790884"
+    },
+    "preparation": {
+      "bytes": 1395,
+      "path": "runs/m6-puck-teacher-collection-v2-prepared/preparation.json",
+      "sha256": "a1f754f08453736e49abdd4b137a59080652566b891dcdd00b266b0a3c82318d"
+    },
+    "root_audit-first-failed.py": {
+      "bytes": 10209,
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/project-integration/runs/m6-puck-teacher-v2-root-audit-69fd445/audit-first-failed.py",
+      "sha256": "4e95667bdd3b1eaffea37a61e329547861aaaa2eacbe6d8e350471a5eb9b3458"
+    },
+    "root_audit.json": {
+      "bytes": 6023,
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/project-integration/runs/m6-puck-teacher-v2-root-audit-69fd445/audit.json",
+      "sha256": "6d369c3cb47610bd94621d990520fd263fce5c729c2d1d7c68cd2c025da9daed"
+    },
+    "root_audit.py": {
+      "bytes": 10218,
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/project-integration/runs/m6-puck-teacher-v2-root-audit-69fd445/audit.py",
+      "sha256": "bb32b3bac8888833df98bbf4649ece55393404352a3c86e7f4d6fbe404236964"
+    },
+    "root_first-failure.json": {
+      "bytes": 523,
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/project-integration/runs/m6-puck-teacher-v2-root-audit-69fd445/first-failure.json",
+      "sha256": "edaea6d40f185f0a6c0548c543f36e7830b80a763b37b400d03a9a0fd7f788d2"
+    },
+    "task_protocol": {
+      "bytes": 21223,
+      "path": "docs/plans/m6-puck-pushing-protocol-v5.json",
+      "sha256": "77ce33fa593247715abe99ff2ba0eca399edbac44b29a580d4f92410b8013c30"
+    },
+    "wrapper_diff": {
+      "bytes": 2101,
+      "path": "runs/m6-puck-teacher-collection-v2-prepared/wrapper-v1-to-v2.diff",
+      "sha256": "2cc8ff5c04f07477fd16c7a7b105d472e90ac7abaf124faae5874567b2ad0d90"
+    }
+  },
+  "root_audit": {
+    "preserved_failure": "First run completed all 7024 row/20 snapshot checks, then its split-count assertion used dev instead of recorded_dev. Corrected only that auditor literal. Failed script/receipt retained; no data, product source or native run changed.",
+    "seconds": 13.263437835,
+    "status": "passed_after_auditor_literal_correction"
+  },
+  "schema": "puck-teacher-collection-evidence-v2",
+  "snapshots": 20,
+  "source_files_verified": 86,
+  "sources": [
+    {
+      "manifest_sha256": "5cd69103946b0b4149f42d49db17daab1af1b0b209a8eee75a4ae3ebb6ca7385",
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-stop-boundary/runs/m6-puck-teacher-collection-v2-20261003/gate/teacher-6000/recording",
+      "seed": 6000,
+      "split": "train"
+    },
+    {
+      "manifest_sha256": "c7dc2e34b5ac4e021a4b82b5c3cc211cd1310bd099dac322d144507273dc308c",
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-stop-boundary/runs/m6-puck-teacher-collection-v2-20261003/gate/teacher-6001/recording",
+      "seed": 6001,
+      "split": "train"
+    },
+    {
+      "manifest_sha256": "1df4ea999f70643f6cfcea7e1531e9854afc4cd75d53edfae4c9b30680776a0f",
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-stop-boundary/runs/m6-puck-teacher-collection-v2-20261003/gate/teacher-6002/recording",
+      "seed": 6002,
+      "split": "train"
+    },
+    {
+      "manifest_sha256": "35bd2fc38855871f43e1d1342f85cd0a9319e17beb97d0d4e3d9452c6459b7fe",
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-stop-boundary/runs/m6-puck-teacher-collection-v2-20261003/gate/teacher-6003/recording",
+      "seed": 6003,
+      "split": "train"
+    },
+    {
+      "manifest_sha256": "ca63b1009084e6b687aeeedf392cc170c76518e84e790451335fda3ead7e48e9",
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-stop-boundary/runs/m6-puck-teacher-collection-v2-20261003/gate/teacher-6004/recording",
+      "seed": 6004,
+      "split": "train"
+    },
+    {
+      "manifest_sha256": "b2ec3e41c1b43c60b7834365b6fca6039ed7eefdd67bee7a0fef9f7ed3ae2afc",
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-stop-boundary/runs/m6-puck-teacher-collection-v2-20261003/gate/teacher-6005/recording",
+      "seed": 6005,
+      "split": "train"
+    },
+    {
+      "manifest_sha256": "a85daa3d62ca578fcbd3ab6c472bd3aa72e394afcc3be1181dfb1561e0a9c750",
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-stop-boundary/runs/m6-puck-teacher-collection-v2-20261003/gate/teacher-6006/recording",
+      "seed": 6006,
+      "split": "train"
+    },
+    {
+      "manifest_sha256": "589bfbf6f0b3129fda1f400d73306db2ebf5fa19c3d34d9b6376897063ccb945",
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-stop-boundary/runs/m6-puck-teacher-collection-v2-20261003/gate/teacher-6007/recording",
+      "seed": 6007,
+      "split": "train"
+    },
+    {
+      "manifest_sha256": "0f39f5258621197504028af2e98824bdab4b36f717a7cc94c11787b5cb451be3",
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-stop-boundary/runs/m6-puck-teacher-collection-v2-20261003/gate/teacher-6008/recording",
+      "seed": 6008,
+      "split": "train"
+    },
+    {
+      "manifest_sha256": "440471a71dc9e4c83057893a09e09b4dc4da8a008cc02c78ebe0687f558dc7f6",
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-stop-boundary/runs/m6-puck-teacher-collection-v2-20261003/gate/teacher-6009/recording",
+      "seed": 6009,
+      "split": "train"
+    },
+    {
+      "manifest_sha256": "5afee834eea3c970e3831db014ff90a5356cf48fdb4b54c1ab4ed8ae0fd7a2bf",
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-stop-boundary/runs/m6-puck-teacher-collection-v2-20261003/gate/teacher-6010/recording",
+      "seed": 6010,
+      "split": "train"
+    },
+    {
+      "manifest_sha256": "06f4d89c97538ea1dd5929533eaa7f83302599216948f176e2163e329dc69cec",
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-stop-boundary/runs/m6-puck-teacher-collection-v2-20261003/gate/teacher-6011/recording",
+      "seed": 6011,
+      "split": "train"
+    },
+    {
+      "manifest_sha256": "881b67616c482655be4704821f5f8de8e1f997935fefcb8a834c8ef21966eca6",
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-stop-boundary/runs/m6-puck-teacher-collection-v2-20261003/gate/teacher-6012/recording",
+      "seed": 6012,
+      "split": "train"
+    },
+    {
+      "manifest_sha256": "4d8be9750fc410bb8f2ca21aa95785fd959dbec6e72ee516cdc82fda4bf1dbbb",
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-stop-boundary/runs/m6-puck-teacher-collection-v2-20261003/gate/teacher-6013/recording",
+      "seed": 6013,
+      "split": "train"
+    },
+    {
+      "manifest_sha256": "85c137fb395d4cefaa84b3c698490ebf624f0e3bb28e813ebb012adacd39b618",
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-stop-boundary/runs/m6-puck-teacher-collection-v2-20261003/gate/teacher-6014/recording",
+      "seed": 6014,
+      "split": "train"
+    },
+    {
+      "manifest_sha256": "f65782ebe9ef40eb5d6102334b67bd8e00ff37fb5720510864370c53868a4f01",
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-stop-boundary/runs/m6-puck-teacher-collection-v2-20261003/gate/teacher-6015/recording",
+      "seed": 6015,
+      "split": "train"
+    },
+    {
+      "manifest_sha256": "6e3658474f58b223112bcf361cf0bdedfffb51e141738853b29119d342512bf7",
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-stop-boundary/runs/m6-puck-teacher-collection-v2-20261003/gate/teacher-6016/recording",
+      "seed": 6016,
+      "split": "recorded_dev"
+    },
+    {
+      "manifest_sha256": "7924d2a9104ee025ce664089a7697e7712c84f07ba7703a9d5a594bd2f028ac2",
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-stop-boundary/runs/m6-puck-teacher-collection-v2-20261003/gate/teacher-6017/recording",
+      "seed": 6017,
+      "split": "recorded_dev"
+    },
+    {
+      "manifest_sha256": "0cd0e27feb240af7a67400e8f613f6450dae628521cb1959315110d95a9a9ec4",
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-stop-boundary/runs/m6-puck-teacher-collection-v2-20261003/gate/teacher-6018/recording",
+      "seed": 6018,
+      "split": "recorded_dev"
+    },
+    {
+      "manifest_sha256": "32e04453286385fea15f8a7f4a594ace9318f7af208ad631f4bc09768e395761",
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-stop-boundary/runs/m6-puck-teacher-collection-v2-20261003/gate/teacher-6019/recording",
+      "seed": 6019,
+      "split": "recorded_dev"
+    }
+  ],
+  "sources_unchanged": true,
+  "status": "passed",
+  "train_ticks": 5710,
+  "training_executed": false
+}
