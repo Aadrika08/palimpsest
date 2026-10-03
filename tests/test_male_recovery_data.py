@@ -1,6 +1,8 @@
 """Research admission fixtures; no Torch, native decoder, or simulation."""
 import copy
+import os
 from pathlib import Path
+import subprocess
 import sys
 import tempfile
 import time
@@ -91,7 +93,13 @@ class RecoveryData(unittest.TestCase):
         self.assertEqual(p['training']['window'], 32)
         self.assertEqual(p['recovery_windows'], [32, 32, 3])
         self.assertEqual(p['qualification_claims'], [])
-        self.assertFalse({'torch', 'mujoco'} & set(sys.modules))
+        # Enabled runtime suites may already have imported either module. Inspect
+        # adapter imports in a fresh interpreter without changing parent state.
+        completed = subprocess.run([sys.executable, '-c',
+            "import prepare_male_recovery_data, sys; assert not ({'torch', 'mujoco'} & set(sys.modules))"],
+            cwd=ROOT, env={**os.environ, 'PYTHONPATH': os.pathsep.join((str(ROOT/'src'), str(ROOT/'scripts')))},
+            capture_output=True, text=True, timeout=20)
+        self.assertEqual(completed.returncode, 0, completed.stderr[-1024:])
 
     def test_frozen_file_inventory_rejects_changed_missing_and_extra_bytes(self):
         import hashlib
