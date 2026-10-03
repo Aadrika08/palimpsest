@@ -2,6 +2,7 @@
 import copy
 from contextlib import ExitStack
 import hashlib
+import importlib.metadata
 import json
 from pathlib import Path
 import sys
@@ -178,11 +179,12 @@ class StudentFixtures(unittest.TestCase):
             app=copy.deepcopy(snapshot['application']);actual_env._t=app['state']['tick'];actual_env.data.time=app['world']['time_s']
             actual_env.data.ctrl[:]=[.4,.4] if actual_env._t else [0.,0.]
             return actual_env._get_obs(),app
-        output.mkdir();actual_read_json=gate.read_json
+        output.mkdir();actual_read_json=gate.read_json;actual_version=importlib.metadata.version
         with ExitStack() as stack:
             stack.enter_context(patch.dict(sys.modules,{'mujoco':SimpleNamespace(__version__='3.3.6',get_mjcb_control=lambda:None)}))
             sys.modules.pop('torch',None)
             stack.enter_context(patch.object(gate.platform,'python_version',return_value=spec['runtime']['python']))
+            stack.enter_context(patch.object(importlib.metadata,'version',side_effect=lambda name: '2.9.0' if name=='torch' else actual_version(name)))
             stack.enter_context(patch.dict(gate.os.environ,{'MUJOCO_GL':'egl'}))
             stack.enter_context(patch.object(gate,'student_sources',return_value=config['sources']))
             stack.enter_context(patch.object(student,'admit_bundle',return_value=(Path(config['bundle_root']),pins)))
@@ -250,11 +252,13 @@ class StudentFixtures(unittest.TestCase):
 
     def test_fixture_restores_preloaded_torch_and_host_version(self):
         marker=SimpleNamespace(fixture='not actual Torch');version=gate.platform.python_version()
-        with patch.dict(sys.modules,{'torch':marker}),patch.object(gate.platform,'python_version',return_value='3.11.16'):
+        with patch.dict(sys.modules,{'torch':marker}),patch.object(gate.platform,'python_version',return_value='3.11.16'),\
+             patch.object(importlib.metadata,'version',return_value='2.9.0+cpu'):
             with tempfile.TemporaryDirectory() as tmp:
                 code,_,_,_,_=self.run_owner(Path(tmp)/student.plan(ROOT)[0]['id'])
             self.assertEqual(code,0);self.assertIs(sys.modules['torch'],marker)
             self.assertEqual(gate.platform.python_version(),'3.11.16')
+            self.assertEqual(importlib.metadata.version('torch'),'2.9.0+cpu')
         self.assertEqual(gate.platform.python_version(),version)
 
     def test_real_snapshot_restore_requires_matching_torch_profile_and_stages_rng(self):
