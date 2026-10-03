@@ -39,6 +39,39 @@ PROTOCOL={'version':1,'claim':'development-admission-only','cells':[list(c) for 
     'case_producer_sha256':experiment.SOURCE_SHA256,'world_profile_sha256':memory_world.PROFILE_SHA256}
 PROTOCOL_SHA256=memory.sha256(PROTOCOL)
 
+# Only the predeclared forty-cell complement; no arbitrary cells/schedules.
+REMAINING_CHUNKS = (
+ ((24,'local_cue','null'),(24,'local_cue','no-event'),(24,'paired_cue','change'),(24,'paired_cue','null')),
+ ((24,'paired_cue','no-event'),(25,'local_cue','null'),(25,'local_cue','no-event'),(25,'paired_cue','change')),
+ ((25,'paired_cue','null'),(25,'paired_cue','no-event'),(26,'local_cue','change'),(26,'local_cue','null')),
+ ((26,'local_cue','no-event'),(26,'paired_cue','change'),(26,'paired_cue','no-event'),(27,'local_cue','change')),
+ ((27,'local_cue','null'),(27,'local_cue','no-event'),(27,'paired_cue','change'),(27,'paired_cue','null')),
+ ((28,'local_cue','change'),(28,'local_cue','null'),(28,'local_cue','no-event'),(28,'paired_cue','null')),
+ ((28,'paired_cue','no-event'),(29,'local_cue','change'),(29,'local_cue','null'),(29,'local_cue','no-event')),
+ ((29,'paired_cue','null'),(29,'paired_cue','no-event'),(30,'local_cue','change'),(30,'local_cue','no-event')),
+ ((30,'paired_cue','change'),(30,'paired_cue','null'),(30,'paired_cue','no-event'),(31,'local_cue','change')),
+ ((31,'local_cue','null'),(31,'paired_cue','change'),(31,'paired_cue','null'),(31,'paired_cue','no-event')))
+REMAINING_NAMES = tuple(f'remaining-{i:02d}' for i in range(1,11))
+REMAINING_PROTOCOLS = {name: {**copy.deepcopy(PROTOCOL), 'version':2,
+    'claim':'fixed-remaining-development-admission-only','chunk':i,
+    'cells':[list(c) for c in cells],'total_owners':12,'max_numeric_ticks':1204,
+    'outer_timeout_seconds':1980} for i,(name,cells) in enumerate(zip(REMAINING_NAMES,REMAINING_CHUNKS),1)}
+
+
+def profile_digest(name=None):
+    if name is None or name=='b':return PROTOCOL_SHA256
+    if name not in REMAINING_PROTOCOLS:raise ValueError('Unknown fixed admission profile')
+    return memory.sha256(REMAINING_PROTOCOLS[name])
+
+
+def fixed_profile(protocol_sha256=None):
+    if protocol_sha256 is None or protocol_sha256==PROTOCOL_SHA256:
+        return CELLS,copy.deepcopy(PROTOCOL)
+    for name,cells in zip(REMAINING_NAMES,REMAINING_CHUNKS):
+        value=REMAINING_PROTOCOLS[name]
+        if protocol_sha256==memory.sha256(value):return cells,copy.deepcopy(value)
+    raise ValueError('Unknown fixed admission protocol')
+
 
 def cell_key(cell):
     return f's{cell[0]}/{cell[1]}/{cell[2]}'
@@ -74,25 +107,28 @@ def source_identity(repo,assets):
     return result
 
 
-def budget(output):
+def budget(output, *, protocol_sha256=None):
+    _,p=fixed_profile(protocol_sha256)
     return StorageBudget((Path(output),),StorageLimits(max_bytes=6*GiB,min_free_bytes=2*GiB,
-        max_runs=24,max_snapshots=1),headroom_bytes=64*MiB)
+        max_runs=p['total_owners'],max_snapshots=1),headroom_bytes=64*MiB)
 
 
 def write(path,value,storage):
     return neural.write(path,value,storage)
 
 
-def selector():
+def selector(protocol_sha256=None):
+    _,p=fixed_profile(protocol_sha256)
     return {'version':1,'condition':'no-U','limit':1,'resource':None,
-        'resource_sha256':memory.sha256(None),'provenance_sha256':PROTOCOL_SHA256}
+        'resource_sha256':memory.sha256(None),'provenance_sha256':memory.sha256(p)}
 
 
 def validate_job(job,*,prepared=False):
     memory._fields(job,'repo assets output root_output run_id cell stage case protocol_sha256 source_identity snapshot_path snapshot_sha256 expected_non_u replacement_preserved')
     memory._bounded(job,128*1024)
-    if (type(job['cell']) is not list or tuple(job['cell']) not in CELLS or job['stage'] not in STAGES
-            or job['protocol_sha256']!=PROTOCOL_SHA256
+    cells,p=fixed_profile(job['protocol_sha256'])
+    if (type(job['cell']) is not list or tuple(job['cell']) not in cells or job['stage'] not in STAGES
+            or job['protocol_sha256']!=memory.sha256(p)
             or Path(job['repo'])!=Path(__file__).resolve().parents[1]
             or str(artifacts._id(job['run_id']))!=str(artifacts._id(Path(job['output']).name))):
         raise ValueError('Unsupported fixed admission job')
@@ -115,29 +151,31 @@ def validate_job(job,*,prepared=False):
     return copy.deepcopy(job)
 
 
-def make_plan(repo,assets,output):
+def make_plan(repo,assets,output, *, protocol_sha256=None):
+    cells,p=fixed_profile(protocol_sha256);digest=memory.sha256(p)
     repo,assets,output=map(lambda p:artifacts._safe_path(p),(repo,assets,output))
     identity=source_identity(repo,assets);jobs=[]
-    for cell in CELLS:
+    for cell in cells:
         for stage in STAGES:
             run_id=uuid.uuid4().hex
             jobs.append(validate_job({'repo':str(repo),'assets':str(assets),'output':str(output/'runs'/run_id),
                 'root_output':str(output),'run_id':run_id,'cell':list(cell),'stage':stage,'case':make_case(cell),
-                'protocol_sha256':PROTOCOL_SHA256,'source_identity':identity,'snapshot_path':None,
+                'protocol_sha256':digest,'source_identity':identity,'snapshot_path':None,
                 'snapshot_sha256':None,'expected_non_u':None,'replacement_preserved':None},prepared=True))
-    return {'protocol':PROTOCOL,'protocol_sha256':PROTOCOL_SHA256,'source_identity':identity,
+    return {'protocol':p,'protocol_sha256':digest,'source_identity':identity,
         'coverage':coverage(),'jobs':jobs,'output':str(output)}
 
 
 def validate_plan(plan):
     memory._fields(plan,'protocol protocol_sha256 source_identity coverage jobs output')
     memory._bounded(plan,MiB)
-    if memory.canonical_bytes(plan['protocol'])!=memory.canonical_bytes(PROTOCOL) or plan['protocol_sha256']!=PROTOCOL_SHA256:
+    cells,p=fixed_profile(plan['protocol_sha256'])
+    if memory.canonical_bytes(plan['protocol'])!=memory.canonical_bytes(p) or plan['protocol_sha256']!=memory.sha256(p):
         raise ValueError('Frozen admission protocol differs')
-    if memory.canonical_bytes(plan['coverage'])!=memory.canonical_bytes(coverage()) or len(plan['jobs'])!=24:
+    if memory.canonical_bytes(plan['coverage'])!=memory.canonical_bytes(coverage()) or len(plan['jobs'])!=p['total_owners']:
         raise ValueError('Admission design coverage differs')
-    expected=[(list(c),s) for c in CELLS for s in STAGES]
-    if [(j['cell'],j['stage']) for j in plan['jobs']]!=expected or len({j['run_id'] for j in plan['jobs']})!=24:
+    expected=[(list(c),s) for c in cells for s in STAGES]
+    if [(j['cell'],j['stage']) for j in plan['jobs']]!=expected or len({j['run_id'] for j in plan['jobs']})!=p['total_owners']:
         raise ValueError('Admission owner IDs/order differ')
     for job in plan['jobs']:
         validate_job(job,prepared=True)
@@ -224,10 +262,11 @@ def worker(raw):
     """Three fixed stages; only the source reads privileged pose."""
     from palimpsest.engine import Engine
     job=validate_job(raw)
+    _,p=fixed_profile(job['protocol_sha256'])
     if source_identity(job['repo'],job['assets'])!=job['source_identity']:
         raise ValueError('Worker authoring source/assets changed')
     run,stage,case=Path(job['output']),job['stage'],job['case']
-    storage=budget(job['root_output']);storage.check(208*MiB,path=run)
+    storage=budget(job['root_output'],protocol_sha256=job['protocol_sha256']);storage.check(208*MiB,path=run)
     engine=None;started=time.monotonic()
     report={'stage':stage,'status':'failed','task_pass':None,'run_path':str(run)}
     try:
@@ -244,13 +283,13 @@ def worker(raw):
         engine=Engine.open(job['repo'],job['assets'],run/'recording',run_id=job['run_id'],
             controller='manual' if stage=='source' else 'flynn',device='cpu',scenario='memory-passages',
             seed=case['seed'],memory_case=case,max_bytes=192*MiB,storage_budget=storage,**restoration)
-        engine.writer.manifest.update(counterbalance_protocol=PROTOCOL,counterbalance_protocol_sha256=PROTOCOL_SHA256,
+        engine.writer.manifest.update(counterbalance_protocol=p,counterbalance_protocol_sha256=job['protocol_sha256'],
             counterbalance_cell=job['cell'],counterbalance_stage=stage,counterbalance_source_identity=job['source_identity'],
             source_preparation_protocol=common.SOURCE_PREPARATION,source_preparation_sha256=common.SOURCE_PREPARATION_SHA256,
             acquisition_schedule_override=common.ACQUISITION_OVERRIDE,
             goal_handoff_protocol=common.GOAL_HANDOFF,goal_handoff_sha256=common.GOAL_HANDOFF_SHA256,
-            acquisition_access=PROTOCOL['source_access'],continuation_access=PROTOCOL['continuation_access'],
-            selector_configuration=selector() if stage=='probe' else None)
+            acquisition_access=p['source_access'],continuation_access=p['continuation_access'],
+            selector_configuration=selector(job['protocol_sha256']) if stage=='probe' else None)
         engine._event('source_preparation_declared',protocol=common.SOURCE_PREPARATION,
             source_preparation_sha256=common.SOURCE_PREPARATION_SHA256,override=common.ACQUISITION_OVERRIDE)
         if stage=='source':
@@ -275,8 +314,8 @@ def worker(raw):
             else:
                 if common.baseline_invariants(current)!=job['expected_non_u']:
                     raise ValueError('Atomic neural restore changed non-U state')
-                engine.memory=memory_task.configure_selector(engine.memory,selector())
-                engine._event('selector_configured',configuration=selector(),configuration_sha256=memory.sha256(selector()))
+                engine.memory=memory_task.configure_selector(engine.memory,selector(job['protocol_sha256']))
+                engine._event('selector_configured',configuration=selector(job['protocol_sha256']),configuration_sha256=memory.sha256(selector(job['protocol_sha256'])))
                 current=capture(engine.env,engine.observation,policy=engine.policy,application=engine.application_state())
                 if common.baseline_invariants(current)!=job['expected_non_u']:
                     raise ValueError('No-U configuration changed non-selector state')
@@ -334,14 +373,15 @@ def validate_stage(job,supervised):
     data=common.read_run(Path(job['output']));manifest,events=data['manifest'],data['events']
     report=artifacts._json(artifacts._read(data['run']/'admission-worker.json',MiB))
     native,entry,_=_initial_snapshot(data);app=native['application'];state=memory_task.validate_state(app['memory'])
+    _,p=fixed_profile(job['protocol_sha256'])
     stage,case=job['stage'],job['case'];expected_steps=301 if stage=='probe' else 300
-    expected={'memory_case':case,'memory_case_sha256':memory.sha256(case),'counterbalance_protocol':PROTOCOL,
-        'counterbalance_protocol_sha256':PROTOCOL_SHA256,'counterbalance_cell':job['cell'],'counterbalance_stage':stage,
-        'counterbalance_source_identity':job['source_identity'],'selector_configuration':selector() if stage=='probe' else None,
+    expected={'memory_case':case,'memory_case_sha256':memory.sha256(case),'counterbalance_protocol':p,
+        'counterbalance_protocol_sha256':job['protocol_sha256'],'counterbalance_cell':job['cell'],'counterbalance_stage':stage,
+        'counterbalance_source_identity':job['source_identity'],'selector_configuration':selector(job['protocol_sha256']) if stage=='probe' else None,
         'source_preparation_protocol':common.SOURCE_PREPARATION,'source_preparation_sha256':common.SOURCE_PREPARATION_SHA256,
         'acquisition_schedule_override':common.ACQUISITION_OVERRIDE,'goal_handoff_protocol':common.GOAL_HANDOFF,
-        'goal_handoff_sha256':common.GOAL_HANDOFF_SHA256,'acquisition_access':PROTOCOL['source_access'],
-        'continuation_access':PROTOCOL['continuation_access']}
+        'goal_handoff_sha256':common.GOAL_HANDOFF_SHA256,'acquisition_access':p['source_access'],
+        'continuation_access':p['continuation_access']}
     if (any(memory.canonical_bytes(manifest.get(k))!=memory.canonical_bytes(v) for k,v in expected.items())
             or manifest.get('run_id')!=job['run_id'] or manifest.get('controller')!=('manual' if stage=='source' else 'flynn')
             or manifest.get('seed')!=case['seed'] or manifest.get('requested_device')!='cpu'
@@ -417,15 +457,15 @@ def validate_stage(job,supervised):
                     or changes[0]['sequence']>=app['event_prefix']['event_count']
                     or any(app[k] for k in ('pending_commands','receipts','original_commands')) or app['manual_action']!=[0.,0.]):
                 raise ValueError('Replacement changed preserved physical/memory state or fresh intent')
-        elif common.baseline_invariants(native)!=job['expected_non_u'] or state.get('selector')!=selector():
+        elif common.baseline_invariants(native)!=job['expected_non_u'] or state.get('selector')!=selector(job['protocol_sha256']):
             raise ValueError('Probe changed non-selector policy/native/RNG/task state')
         configured=[e for e in events if e['kind']=='selector_configured']
         if stage=='policy-anchor':
             if rows or configured or any(e['kind']=='neural_policy_call' for e in events):
                 raise ValueError('Zero-step empty-U policy anchor stepped/configured')
         else:
-            if rows!=[300] or len(configured)!=1 or configured[0].get('configuration')!=selector() or \
-                    configured[0].get('configuration_sha256')!=memory.sha256(selector()) or \
+            if rows!=[300] or len(configured)!=1 or configured[0].get('configuration')!=selector(job['protocol_sha256']) or \
+                    configured[0].get('configuration_sha256')!=memory.sha256(selector(job['protocol_sha256'])) or \
                     configured[0]['sequence']>=app['event_prefix']['event_count']:
                 raise ValueError('One-tick no-U probe/configuration boundary differs')
             neural.policy_bindings(data)
@@ -461,7 +501,7 @@ def validate_stage(job,supervised):
 
 
 def run_verifier(raw):
-    plan=validate_plan(raw);jobs=plan['jobs'];output=Path(plan['output'])
+    plan=validate_plan(raw);_,p=fixed_profile(plan['protocol_sha256']);jobs=plan['jobs'];output=Path(plan['output'])
     if source_identity(jobs[0]['repo'],jobs[0]['assets'])!=plan['source_identity']:
         raise ValueError('Source/assets changed after planning')
     if output.exists():raise ValueError('Output must be fresh; no retries')
@@ -469,20 +509,20 @@ def run_verifier(raw):
     while not existing.exists():existing=existing.parent
     if shutil.disk_usage(existing).free<8*GiB+64*MiB:
         raise ValueError('Admission requires 6 GiB allowance + 2 GiB floor + headroom')
-    storage=budget(output);summaries=[];retained=[];parents={};started=time.monotonic()
-    result={'version':1,'claim':PROTOCOL['claim'],'protocol_sha256':PROTOCOL_SHA256,
+    storage=budget(output,protocol_sha256=plan['protocol_sha256']);summaries=[];retained=[];parents={};started=time.monotonic()
+    result={'version':1,'claim':p['claim'],'protocol_sha256':plan['protocol_sha256'],
         'status':'admission_unverified','runs':summaries,'r2_complete':False,'held_out_executed':False,
         'full_comparison_executed':False,'coverage':plan['coverage']}
     env={**os.environ,'PYTHONPATH':str(Path(jobs[0]['repo'])/'src'),
         'MUJOCO_GL':'egl','MPLBACKEND':'Agg','OMP_NUM_THREADS':'2'}
     with storage.lock():  # One parent lease; one serialized child is the only payload writer.
-        (output/'runs').mkdir();storage.check_count('runs',0,24)
+        (output/'runs').mkdir();storage.check_count('runs',0,p['total_owners'])
         write(output/'admission-plan.json',plan,storage)
         current_job=None;current_summary=None
         try:
             for raw_job in jobs:
                 current_job=raw_job;current_summary=None
-                if time.monotonic()-started>PROTOCOL['outer_timeout_seconds']-160:
+                if time.monotonic()-started>p['outer_timeout_seconds']-160:
                     raise TimeoutError('No aggregate wall budget for another owner')
                 job=copy.deepcopy(raw_job);key,stage=cell_key(job['cell']),job['stage']
                 if stage!='source':
@@ -536,19 +576,22 @@ def run_verifier(raw):
 
 def main():
     parser=argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--fixed-profile',choices=('b',*REMAINING_NAMES))
     parser.add_argument('--worker');parser.add_argument('--prepared-plan',type=Path)
     parser.add_argument('--prepared-plan-sha256');parser.add_argument('--plan-only',action='store_true')
     for name in ('repo','assets','output'):parser.add_argument('--'+name,type=Path)
     args=parser.parse_args()
-    if args.worker is not None:return worker(json.loads(args.worker))
+    if args.worker is not None:
+        if args.fixed_profile is not None:parser.error('Worker profile comes only from its validated job')
+        return worker(json.loads(args.worker))
     if args.prepared_plan is not None:
-        if args.prepared_plan_sha256 is None or args.plan_only or any(getattr(args,n) is not None for n in ('repo','assets','output')):
+        if args.prepared_plan_sha256 is None or args.plan_only or args.fixed_profile is not None or any(getattr(args,n) is not None for n in ('repo','assets','output')):
             parser.error('Prepared plan requires its hash and no planning arguments')
         plan=neural.read_prepared_plan(args.prepared_plan,args.prepared_plan_sha256)
         return 0 if run_verifier(plan)['status']=='admission_checked' else 1
     if args.prepared_plan_sha256 is not None or not args.plan_only or any(getattr(args,n) is None for n in ('repo','assets','output')):
         parser.error('Only --plan-only --repo --assets --output or a hash-bound prepared plan is supported')
-    print(json.dumps(make_plan(args.repo,args.assets,args.output),indent=2,allow_nan=False));return 0
+    print(json.dumps(make_plan(args.repo,args.assets,args.output,protocol_sha256=profile_digest(args.fixed_profile)),indent=2,allow_nan=False));return 0
 
 
 if __name__=='__main__':

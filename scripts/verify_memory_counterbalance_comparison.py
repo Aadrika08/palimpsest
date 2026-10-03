@@ -26,6 +26,8 @@ CELLS = ((24, 'local_cue', 'change'), (29, 'paired_cue', 'change'),
          (30, 'local_cue', 'null'), (27, 'paired_cue', 'no-event'))
 B_PLAN_SHA256 = 'ecaedc5c9341063eaa619635da69bda2149dd66e46ed1d01a7ffe13834515131'
 B_REPORT_SHA256 = '2eaba8d84f4d206c0f415362088ba7cec3139b77e10829b6cdc84b055624ea1f'
+# Historical protocol pin; current executor helper bytes remain in source_identity.
+LEGACY_ADMISSION_HELPER_SHA256 = 'ffb7fa9d3b84441c6fa05945b893d4c4028481502d80355f8e951e5238d30927'
 
 
 def pinned_json(path, digest, maximum=MiB):
@@ -41,7 +43,9 @@ def pinned_json(path, digest, maximum=MiB):
 def derive_anchor(plan, terminal, cell, *, protocol_sha256=None):
     """Join the declared owner to its completed report; never choose by UUID alone."""
     key = admission.cell_key(cell)
-    cells, _ = fixed_profile(protocol_sha256)
+    cells, protocol = fixed_profile(protocol_sha256)
+    if remaining_profile(protocol_sha256) and plan['protocol_sha256']!=protocol['admission_protocol_sha256']:
+        raise ValueError('Admission plan belongs to another fixed chunk')
     if tuple(cell) not in cells or terminal.get('status') != 'admission_checked' or not all(
             terminal.get(k) is True for k in ('source_unchanged', 'retained_unchanged')):
         raise ValueError('Unsupported cell or incomplete immutable admission')
@@ -87,10 +91,13 @@ def policy_boundary(data, native, case):
     return state
 
 
-def load_bindings(plan_path, report_path, *, protocol_sha256=None):
+def load_bindings(plan_path, report_path, *, protocol_sha256=None, admission_lineage=None):
     """Validate all three original owners per cell, retaining their actual provenance."""
-    plan = admission.validate_plan(pinned_json(plan_path, B_PLAN_SHA256))
-    terminal = pinned_json(report_path, B_REPORT_SHA256)
+    plan_sha,report_sha=admission_pins(protocol_sha256,admission_lineage)
+    if admission_lineage is not None and (str(plan_path)!=admission_lineage['plan_path'] or str(report_path)!=admission_lineage['report_path']):
+        raise ValueError('Admission paths differ from frozen lineage')
+    plan = admission.validate_plan(pinned_json(plan_path, plan_sha))
+    terminal = pinned_json(report_path, report_sha)
     result = {}
     cells, _ = fixed_profile(protocol_sha256)
     for cell in cells:
@@ -136,21 +143,23 @@ def load_bindings(plan_path, report_path, *, protocol_sha256=None):
             'case': lineage['policy-anchor'][0]['case'], 'snapshot_path': report['snapshot_path'],
             'snapshot_sha256': report['snapshot_sha256'], 'non_u': report['non_u'],
             'before_circles': report['before_circles'], 'pins': pins,
-            'plan_path': str(Path(plan_path).resolve()), 'plan_sha256': B_PLAN_SHA256,
-            'report_path': str(Path(report_path).resolve()), 'report_sha256': B_REPORT_SHA256}
+            'plan_path': str(Path(plan_path).resolve()), 'plan_sha256': plan_sha,
+            'report_path': str(Path(report_path).resolve()), 'report_sha256': report_sha}
     return result
 
 
-def verify_binding(binding, *, protocol_sha256=None):
+def verify_binding(binding, *, protocol_sha256=None, admission_lineage=None):
     """Reconcile a supplied binding with pinned plan/report before native restoration."""
-    plan = admission.validate_plan(pinned_json(binding['plan_path'], B_PLAN_SHA256))
-    terminal = pinned_json(binding['report_path'], B_REPORT_SHA256)
+    validate_binding_lineage(binding,protocol_sha256,admission_lineage)
+    plan_sha,report_sha=admission_pins(protocol_sha256,admission_lineage)
+    plan = admission.validate_plan(pinned_json(binding['plan_path'], plan_sha))
+    terminal = pinned_json(binding['report_path'], report_sha)
     joined = derive_anchor(plan, terminal, binding['cell'], protocol_sha256=protocol_sha256)
     job, row = joined['policy-anchor']
     if (binding['run_id'] != job['run_id'] or memory.canonical_bytes(binding['case']) != memory.canonical_bytes(job['case'])
             or binding['snapshot_path'] != str(Path(job['output']) / 'snapshots/initial.snp')
             or binding['snapshot_sha256'] != row['snapshot_sha256'] or binding['non_u'] != row['initial_non_u']
-            or binding['plan_sha256'] != B_PLAN_SHA256 or binding['report_sha256'] != B_REPORT_SHA256):
+            or binding['plan_sha256'] != plan_sha or binding['report_sha256'] != report_sha):
         raise ValueError('Policy binding was replaced by another owner/case/native state')
     expected_paths, reported_hashes = set(), {}
     for prepared, summary in joined.values():
@@ -193,7 +202,7 @@ PROTOCOL = {'version': 1, 'claim': 'four-cell-fixed-cpu-flynn-development-compar
     'aggregate_max_bytes': 10*GiB, 'min_free_bytes': 2*GiB, 'headroom_bytes': 64*MiB,
     'log_max_bytes': MiB, 'initial_snapshots_per_owner': 1,
     'admission_plan_sha256': B_PLAN_SHA256, 'admission_report_sha256': B_REPORT_SHA256,
-    'admission_helper_sha256': common._hash(HELPER),
+    'admission_helper_sha256': LEGACY_ADMISSION_HELPER_SHA256,
     'neural_helper_sha256': common._hash(admission.HELPER),
     'manual_helper_sha256': common._hash(neural.HELPER),
     'resource_reference': neural.PROTOCOL['resource_reference']}
@@ -210,22 +219,91 @@ C4_PROTOCOL = {**copy.deepcopy(PROTOCOL), 'version': 2,
         'core': ['u'], 'other-five': ['u', 'declared-selector-configuration-and-resources']}}
 C4_PROTOCOL_SHA256 = memory.sha256(C4_PROTOCOL)
 
+REMAINING_PROTOCOLS = {name: {**copy.deepcopy(C4_PROTOCOL), 'version':3,
+    'claim':'fixed-remaining-development-comparison','chunk':i,
+    'cells':[list(c) for c in cells],
+    'admission_plan_sha256':None,'admission_report_sha256':None,
+    'admission_protocol_sha256':admission.profile_digest(name),
+    'admission_helper_sha256':common._hash(HELPER),
+    'lineage':'separately-frozen-plan-and-terminal-report'}
+    for i,(name,cells) in enumerate(zip(admission.REMAINING_NAMES,admission.REMAINING_CHUNKS),1)}
+
+
+def remaining_profile(protocol_sha256):
+    return type(protocol_sha256) is str and protocol_sha256 in {
+        memory.sha256(p) for p in REMAINING_PROTOCOLS.values()}
+
+
+def strict_profile(protocol_sha256):
+    return protocol_sha256==C4_PROTOCOL_SHA256 or remaining_profile(protocol_sha256)
+
+
+def profile_digest(name=None):
+    if name is None or name=='c3':return PROTOCOL_SHA256
+    if name=='c4':return C4_PROTOCOL_SHA256
+    if name not in REMAINING_PROTOCOLS:raise ValueError('Unknown fixed comparison profile')
+    return memory.sha256(REMAINING_PROTOCOLS[name])
+
+
+def validate_lineage(value, protocol_sha256):
+    """New chunks require independent plan-level pins; legacy B constants stay exact."""
+    if not remaining_profile(protocol_sha256):
+        if value is not None:raise ValueError('Historical comparison forbids new admission lineage')
+        return None
+    memory._fields(value,'version protocol_sha256 plan_path plan_sha256 report_path report_sha256')
+    memory._version(value['version']);memory._bounded(value,4096)
+    _,protocol=fixed_profile(protocol_sha256)
+    if value['protocol_sha256']!=protocol['admission_protocol_sha256']:
+        raise ValueError('Admission lineage belongs to another fixed chunk')
+    for key in ('plan_sha256','report_sha256'):memory._digest(value[key])
+    for key in ('plan_path','report_path'):
+        if type(value[key]) is not str or not Path(value[key]).is_absolute():
+            raise ValueError('Admission lineage paths must be absolute')
+        artifacts._safe_path(Path(value[key]))
+    if value['plan_path']==value['report_path']:raise ValueError('Distinct admission plan/report required')
+    return copy.deepcopy(value)
+
+
+def validate_executor_provenance(identity, protocol_sha256):
+    if not remaining_profile(protocol_sha256):return
+    _,protocol=fixed_profile(protocol_sha256)
+    if (type(identity) is not dict or identity.get('admission_helper_sha256')!=common._hash(HELPER)
+            or identity.get('admission_helper_sha256')!=protocol['admission_helper_sha256']
+            or identity.get('driver_sha256')!=common._hash(Path(__file__))):
+        raise ValueError('Current executor helper/driver bytes differ from the new chunk protocol')
+
+
+def admission_pins(protocol_sha256, lineage=None):
+    value=validate_lineage(lineage,protocol_sha256)
+    return (B_PLAN_SHA256,B_REPORT_SHA256) if value is None else (value['plan_sha256'],value['report_sha256'])
+
+
+def validate_binding_lineage(binding, protocol_sha256, lineage=None):
+    plan_sha,report_sha=admission_pins(protocol_sha256,lineage)
+    if (binding['plan_sha256']!=plan_sha or binding['report_sha256']!=report_sha
+            or lineage is not None and (binding['plan_path']!=lineage['plan_path']
+                                       or binding['report_path']!=lineage['report_path'])):
+        raise ValueError('Binding differs from separately frozen admission lineage')
+
 
 def fixed_profile(protocol_sha256=None):
-    """Only historical C3 and the separately versioned C4 profile are admissible."""
+    """Only historical C3/C4 and the ten declared remaining profiles are admissible."""
     if protocol_sha256 is None or protocol_sha256 == PROTOCOL_SHA256:
         return CELLS, copy.deepcopy(PROTOCOL)
     if protocol_sha256 == C4_PROTOCOL_SHA256:
         return C4_CELLS, copy.deepcopy(C4_PROTOCOL)
+    for name,cells in zip(admission.REMAINING_NAMES,admission.REMAINING_CHUNKS):
+        protocol=REMAINING_PROTOCOLS[name]
+        if protocol_sha256==memory.sha256(protocol):return cells,copy.deepcopy(protocol)
     raise ValueError('Unknown fixed comparison profile')
 
 
 def strict_core(job):
-    return job['protocol_sha256'] == C4_PROTOCOL_SHA256 and job['stage'] in CORE_CONDITIONS
+    return strict_profile(job['protocol_sha256']) and job['stage'] in CORE_CONDITIONS
 
 
 def branch_invariants(native, job):
-    """Core C4 forks retain the selector/version and all scientific state except U."""
+    """Strict core forks retain selector/version and every scientific state except U."""
     return invariant_hashes(native) if strict_core(job) else common.baseline_invariants(native)
 
 
@@ -253,7 +331,7 @@ def history_pins(root, histories):
 def selector_config(stage, histories, oracle=None, *, protocol_sha256=None):
     _, protocol = fixed_profile(protocol_sha256)
     digest = memory.sha256(protocol)
-    if digest == C4_PROTOCOL_SHA256 and stage in ('anchor', *CORE_CONDITIONS):
+    if strict_profile(digest) and stage in ('anchor', *CORE_CONDITIONS):
         return {'version': 1, 'condition': 'own', 'limit': 1, 'resource': None,
             'resource_sha256': memory.sha256(None), 'provenance_sha256': digest}
     result = common.selector_config(stage, histories, oracle)
@@ -262,24 +340,30 @@ def selector_config(stage, histories, oracle=None, *, protocol_sha256=None):
     return result
 
 
-def make_plan(repo, assets, output, history_root, admission_plan, admission_report, *, protocol_sha256=None):
+def make_plan(repo, assets, output, history_root, admission_plan, admission_report, *, protocol_sha256=None, admission_lineage=None):
     cells, protocol = fixed_profile(protocol_sha256)
     digest = memory.sha256(protocol)
     repo, assets, output, history_root = map(artifacts._safe_path, (repo, assets, output, history_root))
-    bindings = load_bindings(admission_plan, admission_report, protocol_sha256=digest)
+    lineage=validate_lineage(admission_lineage,digest)
+    bindings = load_bindings(admission_plan, admission_report, protocol_sha256=digest,admission_lineage=lineage)
     histories = common.load_histories(history_root)
-    return {'version': 1, 'protocol': protocol, 'protocol_sha256': digest,
+    result = {'version': 1, 'protocol': protocol, 'protocol_sha256': digest,
         'repo': str(repo), 'assets': str(assets), 'output': str(output), 'history_root': str(history_root),
         'source_identity': source_identity(repo, assets), 'history_inputs': history_pins(history_root, histories),
         'bindings': bindings, 'jobs': [{'cell': list(c), 'stage': s, 'run_id': uuid.uuid4().hex}
                                      for c in cells for s in STAGES]}
+    if lineage is not None:result['admission_lineage']=lineage
+    return result
 
 
 def validate_plan(plan):
-    memory._fields(plan, 'version protocol protocol_sha256 repo assets output history_root source_identity history_inputs bindings jobs')
+    memory._fields(plan, 'version protocol protocol_sha256 repo assets output history_root source_identity history_inputs bindings jobs'
+                   + (' admission_lineage' if remaining_profile(plan.get('protocol_sha256')) else ''))
     memory._version(plan['version']); memory._bounded(plan, MiB)
     memory._digest(plan['protocol_sha256'])
     cells, protocol = fixed_profile(plan['protocol_sha256'])
+    lineage=validate_lineage(plan.get('admission_lineage'),plan['protocol_sha256'])
+    validate_executor_provenance(plan['source_identity'],plan['protocol_sha256'])
     if (memory.canonical_bytes(plan['protocol']) != memory.canonical_bytes(protocol)
             or Path(plan['repo']) != Path(__file__).resolve().parents[1]
             or [(j['cell'], j['stage']) for j in plan['jobs']] != [(list(c), s) for c in cells for s in STAGES]
@@ -292,6 +376,7 @@ def validate_plan(plan):
         memory._fields(job, 'cell stage run_id'); artifacts._id(job['run_id'])
     for cell in cells:
         binding = plan['bindings'][admission.cell_key(cell)]
+        if lineage is not None:validate_binding_lineage(binding,plan['protocol_sha256'],lineage)
         if memory.canonical_bytes(binding['cell']) != memory.canonical_bytes(list(cell)) or memory.canonical_bytes(binding['case']) != memory.canonical_bytes(admission.make_case(cell)):
             raise ValueError('Comparison binding has another canonical case')
     return copy.deepcopy(plan)
@@ -351,10 +436,14 @@ def check_oracle(job, source_native):
 
 
 def validate_job(job):
-    memory._fields(job, 'repo assets history_root output root_output run_id cell stage binding protocol_sha256 source_identity history_inputs snapshot_path snapshot_sha256 expected_non_u selector oracle_evidence')
+    memory._fields(job, 'repo assets history_root output root_output run_id cell stage binding protocol_sha256 source_identity history_inputs snapshot_path snapshot_sha256 expected_non_u selector oracle_evidence'
+                   + (' admission_lineage' if remaining_profile(job.get('protocol_sha256')) else ''))
     memory._bounded(job, 128*1024)
     memory._digest(job['protocol_sha256'])
     cells, _ = fixed_profile(job['protocol_sha256'])
+    lineage=validate_lineage(job.get('admission_lineage'),job['protocol_sha256'])
+    validate_executor_provenance(job['source_identity'],job['protocol_sha256'])
+    if lineage is not None:validate_binding_lineage(job['binding'],job['protocol_sha256'],lineage)
     artifacts._id(job['run_id'])
     if (tuple(job['cell']) not in cells or job['stage'] not in STAGES
             or Path(job['repo']) != Path(__file__).resolve().parents[1]
@@ -406,7 +495,7 @@ def validate_selector_boundary(job, native, ancestor, events, histories):
             or configured[0].get('episode_step') != 300
             or configured[0]['sequence'] >= app['event_prefix']['event_count']):
         raise ValueError('Registered selector event prefix differs')
-    if job['protocol_sha256'] == C4_PROTOCOL_SHA256:
+    if strict_profile(job['protocol_sha256']):
         swaps = [e for e in events if e['kind'] == 'memory_u_replaced']
         if (len(swaps) != 1 or swaps[0].get('old_u') != ancestor['application']['memory']['u']
                 or swaps[0].get('new_u') != state['u']
@@ -422,7 +511,7 @@ def worker(raw):
     _, protocol = fixed_profile(job['protocol_sha256'])
     if source_identity(job['repo'], job['assets']) != job['source_identity']:
         raise ValueError('Worker authoring source/assets changed')
-    original = verify_binding(job['binding'], protocol_sha256=job['protocol_sha256'])
+    original = verify_binding(job['binding'], protocol_sha256=job['protocol_sha256'],admission_lineage=job.get('admission_lineage'))
     if common._hash(job['snapshot_path']) != job['snapshot_sha256']:
         raise ValueError('Comparison ancestor snapshot changed')
     ancestor = read_snapshot(job['snapshot_path'])
@@ -446,7 +535,9 @@ def worker(raw):
             comparison_binding=job['binding'],comparison_binding_sha256=memory.sha256(job['binding']),
             selector_configuration=job['selector'],oracle_evidence=job['oracle_evidence'],
             continuation_access=protocol['continuation_access'])
-        if job['protocol_sha256'] == C4_PROTOCOL_SHA256:
+        if remaining_profile(job['protocol_sha256']):
+            engine.writer.manifest.update(comparison_admission_lineage=job['admission_lineage'])
+        if strict_profile(job['protocol_sha256']):
             engine.writer.manifest.update(comparison_history_inputs=job['history_inputs'],
                 comparison_condition_u_sha256=memory.sha256(u),
                 comparison_preservation='u-only' if strict_core(job) else 'declared-u-and-selector')
@@ -507,7 +598,9 @@ def validate_stage(job, supervised):
         'comparison_binding_sha256':memory.sha256(job['binding']),
         'selector_configuration':job['selector'],'oracle_evidence':job['oracle_evidence'],
         'continuation_access':protocol['continuation_access']}
-    if job['protocol_sha256'] == C4_PROTOCOL_SHA256:
+    if remaining_profile(job['protocol_sha256']):
+        expected['comparison_admission_lineage']=job['admission_lineage']
+    if strict_profile(job['protocol_sha256']):
         expected.update(comparison_history_inputs=job['history_inputs'],
             comparison_condition_u_sha256=memory.sha256(common.condition_u(job['stage'], histories)),
             comparison_preservation='u-only' if strict_core(job) else 'declared-u-and-selector')
@@ -683,7 +776,7 @@ def run_verifier(raw):
     _, protocol = fixed_profile(plan['protocol_sha256'])
     first = next(iter(plan['bindings'].values()))
     if memory.canonical_bytes(load_bindings(first['plan_path'],first['report_path'],
-            protocol_sha256=plan['protocol_sha256'])) != memory.canonical_bytes(plan['bindings']):
+            protocol_sha256=plan['protocol_sha256'],admission_lineage=plan.get('admission_lineage'))) != memory.canonical_bytes(plan['bindings']):
         raise ValueError('Prepared policy bindings differ from original admission lineage')
     histories = common.load_histories(plan['history_root'])
     if history_pins(plan['history_root'],histories)!=plan['history_inputs']:
@@ -717,7 +810,7 @@ def run_verifier(raw):
                 key, stage = admission.cell_key(prepared['cell']), prepared['stage']
                 binding = plan['bindings'][key]
                 cell_parents = parents.setdefault(key,{})
-                source = verify_binding(binding,protocol_sha256=plan['protocol_sha256'])
+                source = verify_binding(binding,protocol_sha256=plan['protocol_sha256'],admission_lineage=plan.get('admission_lineage'))
                 ancestor = binding if stage=='anchor' else cell_parents['anchor'][1]
                 mapped = histories_for(prepared['cell'],histories)
                 proof = None if stage!='oracle' else gold_proof(binding,source,*cell_parents['own'][:2])
@@ -726,9 +819,10 @@ def run_verifier(raw):
                     'binding':binding,'protocol_sha256':plan['protocol_sha256'],
                     'snapshot_path':ancestor['snapshot_path'],'snapshot_sha256':ancestor['snapshot_sha256'],
                     'expected_non_u':invariant_hashes(cell_parents['anchor'][2])
-                        if plan['protocol_sha256']==C4_PROTOCOL_SHA256 and stage in CORE_CONDITIONS else binding['non_u'],
+                        if strict_profile(plan['protocol_sha256']) and stage in CORE_CONDITIONS else binding['non_u'],
                     'selector':selector_config(stage,mapped,proof,protocol_sha256=plan['protocol_sha256']),
                     'oracle_evidence':proof}
+                if remaining_profile(plan['protocol_sha256']):job['admission_lineage']=copy.deepcopy(plan['admission_lineage'])
                 validate_job(job); neural.write(output/f"{job['run_id']}-job.json",job,storage)
                 print(json.dumps({'cell':key,'stage':stage,'run_id':job['run_id']}),flush=True)
                 supervised = bounded_process([sys.executable,str(Path(__file__).resolve()),'--worker',json.dumps(job)],
@@ -760,7 +854,7 @@ def run_verifier(raw):
         final = None; changed = False
         try:
             final = source_identity(plan['repo'],plan['assets'])
-            for binding in plan['bindings'].values(): verify_binding(binding,protocol_sha256=plan['protocol_sha256'])
+            for binding in plan['bindings'].values(): verify_binding(binding,protocol_sha256=plan['protocol_sha256'],admission_lineage=plan.get('admission_lineage'))
             common.load_histories(plan['history_root'])
             changed = any(artifacts._fingerprint(d['paths'])!=d['fingerprint'] or
                 common._hash(r['snapshot_path'])!=r['snapshot_sha256'] or
@@ -780,23 +874,32 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--worker'); parser.add_argument('--prepared-plan',type=Path)
     parser.add_argument('--prepared-plan-sha256'); parser.add_argument('--plan-only',action='store_true')
-    parser.add_argument('--fixed-profile',choices=('c3','c4'))
+    parser.add_argument('--fixed-profile',choices=('c3','c4',*admission.REMAINING_NAMES))
+    parser.add_argument('--admission-plan-sha256');parser.add_argument('--admission-report-sha256')
     for name in ('repo','assets','output','history-root','admission-plan','admission-report'):
         parser.add_argument('--'+name,type=Path)
     args = parser.parse_args()
     if args.worker is not None:
-        if args.fixed_profile is not None: parser.error('Worker profile comes only from its validated job')
+        if args.fixed_profile is not None or args.admission_plan_sha256 is not None or args.admission_report_sha256 is not None: parser.error('Worker profile comes only from its validated job')
         return worker(json.loads(args.worker))
     names = ('repo','assets','output','history_root','admission_plan','admission_report')
     if args.prepared_plan is not None:
-        if args.plan_only or args.fixed_profile is not None or any(getattr(args,k) is not None for k in names) or args.prepared_plan_sha256 is None:
+        if args.plan_only or args.fixed_profile is not None or args.admission_plan_sha256 is not None or args.admission_report_sha256 is not None or any(getattr(args,k) is not None for k in names) or args.prepared_plan_sha256 is None:
             parser.error('Prepared execution requires only an immutable plan and its hash')
         plan = neural.read_prepared_plan(args.prepared_plan,args.prepared_plan_sha256)
     else:
         if args.prepared_plan_sha256 is not None or any(getattr(args,k) is None for k in names):
             parser.error('All six planning paths are required')
-        plan = make_plan(*(getattr(args,k) for k in names),
-                         protocol_sha256=C4_PROTOCOL_SHA256 if args.fixed_profile=='c4' else PROTOCOL_SHA256)
+        digest=profile_digest(args.fixed_profile);lineage=None
+        if remaining_profile(digest):
+            if args.admission_plan_sha256 is None or args.admission_report_sha256 is None:
+                parser.error('Remaining comparison requires separately frozen admission plan/report hashes')
+            lineage={'version':1,'protocol_sha256':fixed_profile(digest)[1]['admission_protocol_sha256'],
+                'plan_path':str(args.admission_plan),'plan_sha256':args.admission_plan_sha256,
+                'report_path':str(args.admission_report),'report_sha256':args.admission_report_sha256}
+        elif args.admission_plan_sha256 is not None or args.admission_report_sha256 is not None:
+            parser.error('Historical profiles retain original admission hashes')
+        plan = make_plan(*(getattr(args,k) for k in names),protocol_sha256=digest,admission_lineage=lineage)
     if args.plan_only:
         print(json.dumps(validate_plan(plan),indent=2,allow_nan=False)); return 0
     return 0 if run_verifier(plan)['status']=='comparison_checked' else 1
