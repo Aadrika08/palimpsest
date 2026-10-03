@@ -1,0 +1,132 @@
+{
+  "baseline_collection_sha256": "72da787b534b64c872269b97a5c4248fe620ab3e8c5337f7371fba5c21e78b72",
+  "baseline_protocol_sha256": "8f360289ce286f56e31051c7bcfc6932a8f413dce662b83ddb9817b3e509d69b",
+  "cell_sha256": "707cba79e7bf92923618ccc596e3d7a2d779edc02a970b0949f6dd3c0d28ae80",
+  "counts": {
+    "baseline_train": 1983,
+    "dev": 1228,
+    "held_out": 0,
+    "recovery_train": 134,
+    "train": 2117
+  },
+  "current_reader_identity": "Pinned preparation/feature/record/raw-validator code is separate from immutable historical v3 producer runtime/harness metadata; no equality assumption for unrelated current Engine/profile/replay files.",
+  "excluded": "All v1/v2 recovery failures, new scenes, changed source bytes, held-out data and all expert-substituted targets.",
+  "graph_sha256": "5aba0fef99afba666b88e40fc535091454e46d9330580d9280b203e8da0abac0",
+  "held_out": {
+    "development_gate": "Retain the existing fixed24-owner dev gate and >=2/4 goals per original seed; separate reviewed evaluation required before any held-out unlock; no learned result in this source-only slice.",
+    "read_paths": [],
+    "unlocked": false
+  },
+  "id": "M7-REC-LEARN-1",
+  "models": [
+    {
+      "rewiring_seed": 10,
+      "status": "not_started",
+      "training_seed": 10,
+      "variant": "original"
+    },
+    {
+      "rewiring_seed": 10,
+      "status": "not_started",
+      "training_seed": 10,
+      "variant": "degree_rewired"
+    },
+    {
+      "rewiring_seed": 11,
+      "status": "not_started",
+      "training_seed": 11,
+      "variant": "original"
+    },
+    {
+      "rewiring_seed": 11,
+      "status": "not_started",
+      "training_seed": 11,
+      "variant": "degree_rewired"
+    },
+    {
+      "rewiring_seed": 12,
+      "status": "not_started",
+      "training_seed": 12,
+      "variant": "original"
+    },
+    {
+      "rewiring_seed": 12,
+      "status": "not_started",
+      "training_seed": 12,
+      "variant": "degree_rewired"
+    }
+  ],
+  "ordering": "Baseline training seeds 1000..1007 then recovery 2100,2101; dev 1008..1011 unchanged; episode 0/increasing tick; identical across all six models.",
+  "preparation_limits": {
+    "log_bytes": 1048576,
+    "manifest_bytes": 4194304,
+    "min_free_bytes": 1073741824,
+    "seconds": 180
+  },
+  "production_asset_pins_unchanged": true,
+  "qualification_claims": [],
+  "recorded_dev_only": true,
+  "recovery_protocol_sha256": "e41ebb10ca58351b2fe00c858a62c42260c6110da1a0047ad3a62c8f832f92cc",
+  "recovery_report_sha256": "01251434e3c387cb6f382afc20e937a9fcc4631915b1ce0ba373a2fd3e070ad3",
+  "recovery_source_commit": "c382c86781a7a5d6651af721119789729cc890ae",
+  "recovery_sources": [
+    {
+      "case_id": "recovery-north-2100",
+      "result_sha256": "c4ae2384160239c28f20bd4c16636d82a1b2c219b7a1fe660652666eafb7c811",
+      "run_id": "005da65868a9400281b05aa7a3cba658",
+      "seed": 2100
+    },
+    {
+      "case_id": "recovery-south-2101",
+      "result_sha256": "97b81e93ad513fb67a2edbc85d18c0fb6bd2ac952868b85f4073608e778e53b3",
+      "run_id": "2a24577348cc4d259fc80f48e3286beb",
+      "seed": 2101
+    }
+  ],
+  "recovery_ticks_each": 67,
+  "recovery_windows": [
+    32,
+    32,
+    3
+  ],
+  "right_censoring": "Recovery sources are separate fresh sequences ending paused at coverage_complete, not natural task terminals. Zero hidden at each source start, carry and detach at 32/32/3 boundaries, include all three final rows, then discard final hidden. No padding, terminal bootstrap, cross-source carry or continuation claim.",
+  "scope": "Executed-action imitation on the fixed v2 baseline plus two observed right-censored first-cycle development records; preparation only in this slice. No causal coverage benefit, task success, biological, physical or production qualification.",
+  "source_code_sha256": {
+    "scripts/collect_male_recovery.py": "17d948322bbf124c7eeee3d55e4034e12c4b3436d933dab1df4245f278c46f60",
+    "src/palimpsest/artifacts.py": "7a5f4a1080abffe82f8296468c6d8ca3a2b975277b96925fdf75bb9ac1ed034a",
+    "src/palimpsest/body_profile.py": "796df9ab2a109606432c7a97bfbea5f58ab7acc75768e638b5b8731a390cbb54",
+    "src/palimpsest/male_model.py": "9327bca1db3cbeda7aab8b222ccfa59daef4e01f3f1b4689f83009955d970cad",
+    "src/palimpsest/male_research.py": "a3fb8f64937c509351cc7cbd120bf86c0b543fd4e6531d957a7204a6da1df8ce",
+    "src/palimpsest/records.py": "c4be6f1699c1d8550a7f2db2979f7f9f18196ac986eef2aefe3ba665cae99ac3"
+  },
+  "source_limits": {
+    "max_bytes": 3221225472,
+    "max_run_bytes": 167772160,
+    "max_runs": 14,
+    "max_ticks": 3345
+  },
+  "stop_policy": "Any identity/admission/finite/deadline/storage failure stops preparation without publishing an admissible data manifest. Preserve pending/failure evidence; no retry or fallback.",
+  "targets": "Every recorded actual float32 action, including all 21 prefix actions per recovery source; expert_action is audit metadata only. No replacement, cropping, weighting, balancing or duplicate rows.",
+  "training": {
+    "device": "cpu",
+    "dtype": "float32",
+    "epochs": 20,
+    "gradient_norm_cap": 1.0,
+    "learning_rate": 0.001,
+    "loss": "mean(0.5*((velocity_error/3)^2 + 1-cos(heading_error_radians)))",
+    "optimizer": "Adam",
+    "rewiring": "existing degree-preserving swaps, count and weight multiset; declared seed only, no reachability screening/retries",
+    "selection": "minimum recorded-dev loss over exactly 20 epochs; first epoch wins exact ties; no winning seed or held-out selection",
+    "threads": 1,
+    "training_graph": "unchanged pinned 138-node 1647-edge extraction; W[post,pre]; original incoming-strength scalar shared with matched control",
+    "training_limits": {
+      "all_pair_output_bytes": 201326592,
+      "file_bytes": 8388608,
+      "pair_outer_seconds": 660,
+      "pair_output_bytes": 67108864,
+      "pair_seconds": 600
+    },
+    "window": 32
+  },
+  "version": 1
+}
