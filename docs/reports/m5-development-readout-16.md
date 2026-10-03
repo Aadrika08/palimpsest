@@ -37,7 +37,9 @@ strict strata, timing direction and censoring, missing/duplicate/foreign reports
 wrong gold-side attribution, contradictory targeting metrics and changed input
 hashes. The latest check passed in 0.156 s. Review tightened gold-subject and
 targeting consistency before the first actual readout; no actual-data retry was
-needed. The original experiment reports and failures remain unchanged.
+needed. The combined analysis and existing fixed-profile suite also passes all
+seven tests without skips in 17.987 s. The original experiment reports and failures
+remain unchanged.
 
 The complete stdout JSON SHA is
 `6d474ad8ab69069da723dc92527cc6977ac3ca4d8ce714e986e4457f0c6c40d9`.

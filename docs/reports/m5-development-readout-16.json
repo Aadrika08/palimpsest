@@ -91,6 +91,11 @@
       "path": "runs/m5-matrix-analysis-source/tests-direction.log",
       "bytes": 259,
       "sha256": "74461bcdb167989350fe8a13cba849d23017069c560b730787449fc9928c2fbc"
+    },
+    {
+      "path": "runs/m5-matrix-analysis-source/combined-profile-check.log",
+      "bytes": 1337,
+      "sha256": "2a28f2e4dd6e4684fb693cb1ae4befed24a8df1e5e350272ce31ead646042b64"
     }
   ],
   "limits": [
@@ -98,5 +103,11 @@
     "Eight shared seed namespaces, fixed lower-route geometry",
     "C3 broader core kept separate; no inferred independent-sample significance",
     "No imputed goal/correction boundary; null confirmations are not corrections"
-  ]
+  ],
+  "combined_profile_checks": {
+    "tests": 7,
+    "seconds": 17.987,
+    "skips": 0,
+    "scope": "New analysis plus six existing fixed-profile admission/lineage/strict-core checks; pure fixtures"
+  }
 }
