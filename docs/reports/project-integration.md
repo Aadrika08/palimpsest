@@ -340,3 +340,12 @@ ordered IDs as JSON; the existing contract uses newline-separated decimal IDs.
 Both script versions and the initial traceback are retained in the JSON index.
 These are training/artifact checks; closed-loop development and held-out gates
 remain open, and production model assets are unchanged.
+
+
+The reviewed recovery evidence commit `217cbee` is integrated after all 58
+indexed artifacts rehash. Reference replay verifier `5d293bf` adds only a
+runner, focused tests and a frozen protocol; no Engine/controller changes.
+Eighteen adjacent pure checks pass at integration `aede57b` in 7.052 seconds
+without skips. Actual replay remains pending separately reviewed controls.
+Both CI workflows passed on preceding `b49a414` (37087942054 / 37087939541);
+this is not a claim about the later replay-verifier source.

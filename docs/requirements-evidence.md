@@ -141,8 +141,13 @@ terminal-stop coverage requirement. Both independent raw audits confirm the
 failure, and the entire batch remains excluded from training. The separate
 [recovery adapter](plans/m7-recovery-learning.md) prepares 2,117 training and
 1,228 development rows with no held-out sources; independent feature/action
-reconstruction passes. The fixed six-model research trainer is implemented, with
-actual training pending. The separately versioned .2 puck stop correction passes
+reconstruction passes. The [six recovery research fits](reports/m7-recovery-training.md) complete all
+twenty epochs each in 194.681 s outer. Independent artifact/graph/history audits
+pass; closed-loop development and held-out qualification remain open. The separately versioned .2 puck stop correction passes
 its [ten-owner mechanics gate](reports/m6-puck-learning-v2-mechanics-v1.md),
 including 1,569 intervals, thirteen snapshots and exact native/replay checks.
-Fresh collection admission and trained task capability remain separate gates.
+The [fresh twenty-owner collection](reports/m6-puck-teacher-collection-v2.md)
+passes unchanged admission over 7,024 rows, including seventeen actual terminal
+zero labels for seed 6004. The old v1 batch remains excluded. Active task v5
+trainer binding passes twenty-four focused checks; trained task capability
+remains a separate gate.

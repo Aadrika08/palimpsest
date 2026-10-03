@@ -1888,5 +1888,21 @@
         "sha256": "11f59ae83516aa32f779a58d294e5ad92f45e0f202c8aafbe4081ce4b271f98f"
       }
     }
+  },
+  "reference_replay_source": {
+    "source_commit": "5d293bf1356e46182676de407b6beaa3c961ae7d",
+    "integration_commit": "aede57b",
+    "tests": 18,
+    "seconds": 7.052,
+    "skipped": 0,
+    "actual_executed": false,
+    "production_files_changed": false,
+    "recovery_training_evidence_commit": "217cbee8399dcb25045a079af012beecbbdae29e",
+    "recovery_evidence_artifacts_rehashed": 58,
+    "ci_verified_head": "b49a41467d34c6834ae1d7b5254f59bc1e7698d9",
+    "ci_passed_runs": [
+      37087942054,
+      37087939541
+    ]
   }
 }
