@@ -53,8 +53,10 @@ Comparison-08 controls pass eight independent root fixtures and full preflight
 disjoint from all 714 prior owners. The unchanged historical E/U files are reused.
 The first constructor failed before publishing the plan because its writer call
 omitted storage; that draft/log remains retained beside the corrected controls.
-One actual comparison is authorized after startup readmission; no result is yet
-admitted. Coverage remains 32/48; this does not replace or retry failed 07.
+Startup readmission passes on clean `ba48305`, including unchanged source/input
+inventories, absent output/start paths and a free writer lease. The one actual
+comparison is running in session `29960`; its final disposition and audits remain
+pending. No result is yet admitted. Coverage remains 32/48; this does not replace or retry failed 07.
 Root control receipt: `runs/memory-remaining-08-comparison-control-root-review-ba48305/audit.json`,
 SHA-256 `0b7250ef275eaec46814747f2bfcae98834c3c5ce30c4b179974c418c45690a3`.
 The [remaining-06 admission](reports/m5-remaining-06-admission.md), `016948b`,
