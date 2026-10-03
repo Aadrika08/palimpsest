@@ -28,9 +28,10 @@ combined regression passes all 802 enabled tests without skips. Remaining-10
 admission drains session `71492` exit0; independent retained and publication
 reviews pass first and evidence `9e0d406` is integrated. Its forty-owner comparison
 is being prepared. Navigation metadata admission v1 stops before candidate loading
-on this worktree's uninitialized pinned upstream submodule; the refusal is retained
-and exact dependency setup precedes a fresh check. No navigation episode has run.
-R3 stays open.
+on this worktree's uninitialized pinned upstream submodule; the refusal is retained.
+Exact dependency setup and fresh v2 admission pass for all six fixed models, with
+independent evidence review. Development launch controls are being prepared; no
+navigation episode has run. R3 stays open.
 
 Remaining-06 comparison completes once on frozen `016948b`, bringing independently
 audited development coverage to **32/48 cells**: forty owners, 4,687 neural rows,
@@ -464,8 +465,34 @@ Root verifies producer and integrated hashes plus that narrow correction; source
 review receipt `runs/m7-navigation-evaluator-source-root-review-e3f9a47/audit.json`,
 SHA-256 `27f1a58e228f44cb268e949df1c462669ef4f8da98243fab790dfcfe5d4ffa2d`.
 The [separate draft PR65](https://github.com/Aadrika08/palimpsest/pull/65) preserves
-the earlier binding PR64. Actual bundle readmission, fresh development and held-out
-remain separate; source and synthetic checks alone do not qualify navigation.
+the earlier binding PR64. Source and synthetic checks alone do not qualify navigation.
+
+The first actual six-model metadata admission stops in 0.724 s supervised,
+before candidate loading, because the isolated navigation worktree lacks its
+pinned upstream checkout. This is a retained prerequisite refusal, not a consumed
+navigation episode. Root verifies the failure and exact missing gitlink state;
+receipt `runs/m7-navigation-readmission-v1-failure-root-review-e3f9a47/audit.json`,
+SHA-256 `a2415910affd3ce3a5e0b8820f11d912e32791ee99a668add9aafe22c69c189b`.
+The exact upstream commit `8d964599119b420de67ee259434d273651a1a76d` is then initialized
+from the already pinned local checkout without fetching; submodule and parent
+remain clean. Fresh v2 controls change only the output path, preserving v1.
+The initial command's relative interpreter spelling was corrected before any
+invocation to the absolute lexical virtualenv path; no symlink resolution or
+source/limit relaxation follows.
+
+The v2 metadata invocation drains session `73020` exit0: all six ordered seed
+10/11/12 × old-corpus/augmented identities pass on frozen `e3f9a47`. Worker time
+is 2.223 s, supervised 2.377 s, launcher before-publication 2.405 s. Every arm
+retains `male-original` / original graph and separate research provenance.
+Current/historical source, index and model-input identities match before/after.
+No Torch/MuJoCo import, checkpoint deserialization, model construction, native
+owner, corpus audit or writer lease occurs. Root reconciles all six checkpoint,
+graph and provenance entries with the fixed index and checks the small retained
+file hashes. Receipt `runs/m7-navigation-readmission-v2-root-review-e3f9a47/audit.json`,
+SHA-256 `c05afb626dd3ae9395ab91cd90d1f2be14d9c44fc3a08c678c2e00c2374ad44e`.
+Readmission SHA is `cb25b404044ebce489f74e80caa9eb774613caa395fc2e48da8bd72b606f71d8`.
+Fresh development controls and their separate runtime GO remain next; held-out
+stays locked. This admits model artifacts, not useful navigation.
 
 Paired navigation trainer `6feade9` is integrated after eleven independent root
 pure checks pass first in 1.698 s. It adds only the named trainer/test, preserving
