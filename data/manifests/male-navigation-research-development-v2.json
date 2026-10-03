@@ -1,0 +1,860 @@
+{
+  "after_inventory": {
+    "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/male-navigation-training-v2/runs/m7-navigation-training-v2-control-v2-6feade9/after.json",
+    "sha256": "2f9b23259dfd9f2b8553a38c9a420805de7c82c0a903b2baae38f783b143a609",
+    "size_bytes": 234296
+  },
+  "before_inventory": {
+    "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/male-navigation-training-v2/runs/m7-navigation-training-v2-control-v2-6feade9/before.json",
+    "sha256": "2f9b23259dfd9f2b8553a38c9a420805de7c82c0a903b2baae38f783b143a609",
+    "size_bytes": 234296
+  },
+  "data_manifest": {
+    "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/male-navigation-data-v2/runs/m7-navigation-data-v2-4ecb354-20261003/data-manifest.json",
+    "sha256": "47c4523c40e485ba4839cc80c9db891761791b801cc777755028122a1dbacb41",
+    "size_bytes": 80969
+  },
+  "development_native_evaluation": "not_started",
+  "held_out_status": "locked_unopened",
+  "id": "male-navigation-advice-paired-original-development-v2",
+  "independent_audit": {
+    "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/project-integration/runs/m7-navigation-training-v2-root-audit-6feade9/audit.json",
+    "sha256": "6f393359bf7ccf4d573a23c6a04708d2a1e1ca33723f7bd98f91596f0f48bb90",
+    "size_bytes": 310397
+  },
+  "independent_auditor": {
+    "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/project-integration/runs/m7-navigation-training-v2-root-audit-6feade9/audit.py",
+    "sha256": "18b185302ec4d66f1cb9dcd719bab0aa7a6d66341c028cf33bf209e124821ac8",
+    "size_bytes": 15183
+  },
+  "model_inputs": {
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/male-navigation-training-v2/data/manifests/malecns-reduced-neighborhood-v1.json": "7a205342b4ada8ab8b78d6ca866c61735003e601531c65a1c1b6c819df00026f",
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/male-navigation-training-v2/upstream/fly-gym/models/connectome_rnn_model.py": "707cba79e7bf92923618ccc596e3d7a2d779edc02a970b0949f6dd3c0d28ae80",
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/r0-reproduction/data/assets/flynn/male-reduced-v1/source-graph.json": "5aba0fef99afba666b88e40fc535091454e46d9330580d9280b203e8da0abac0"
+  },
+  "models": [
+    {
+      "arm": "old-corpus",
+      "cell_sha256": "707cba79e7bf92923618ccc596e3d7a2d779edc02a970b0949f6dd3c0d28ae80",
+      "checkpoint": {
+        "path": "runs/m7-navigation-training-v2-v2-6feade9-20261003/bundles/seed-10/old-corpus.pt",
+        "sha256": "bdc2878684c1fe24b01612878b6122fe7b6edb62b9ce6079633e0d98008d39ea",
+        "size_bytes": 303341
+      },
+      "directory": "runs/m7-navigation-training-v2-v2-6feade9-20261003/bundles/seed-10",
+      "feature_protocol": {
+        "action": [
+          "velocity scalar = 3*tanh(raw[0])",
+          "relative heading radians = pi*tanh(raw[1])"
+        ],
+        "biological_sensor_mapping": false,
+        "camera_shape": [
+          128,
+          128,
+          3
+        ],
+        "cameras": [
+          "cam_left",
+          "cam_right"
+        ],
+        "encoder": "learned Linear(388, number_of_artificial_input_nodes), tanh",
+        "feature_count": 388,
+        "id": "artificial-two-eye-boundary-v1",
+        "image_mapping": "uint8 RGB; mean each nonoverlapping 16x16 block; divide by 255; flatten 8x8x3 in C order, left then right",
+        "privileged_inputs": [],
+        "sensors": [
+          "collision",
+          "collision_angle/pi",
+          "wind_cos",
+          "wind_sin"
+        ],
+        "version": 1
+      },
+      "graph": {
+        "path": "runs/m7-navigation-training-v2-v2-6feade9-20261003/bundles/seed-10/original-graph.json",
+        "sha256": "baa5c1302d3eb62aa6c29b4f7781100a7c2d0c16c328e7537855eec2b0be5d81",
+        "size_bytes": 32864
+      },
+      "graph_variant": "original",
+      "ordered_ids_sha256": "afd114fcd1dc666b0fbb7b1d5d686ef86ca4390831bfea355e4a9c97270d15b1",
+      "protocol": {
+        "path": "runs/m7-navigation-training-v2-v2-6feade9-20261003/bundles/seed-10/protocol.json",
+        "sha256": "b6dd3e4143aa7d5e3ab988bae6988e1c68cf680866b5758d897af9ef3b949640",
+        "size_bytes": 13628
+      },
+      "report": {
+        "path": "runs/m7-navigation-training-v2-v2-6feade9-20261003/bundles/seed-10/report.json",
+        "sha256": "8ccee3be54f42910c3a2f34b61bc99e31cd8d7b518f891c3c67e297a495d63d6",
+        "size_bytes": 13624
+      },
+      "runtime": {
+        "compute": "CPU one-thread; CUDA hidden/uninitialized",
+        "numpy": "2.2.5",
+        "python": "3.11.15",
+        "torch_build": "2.9.0+cu128",
+        "torch_distribution": "2.9.0"
+      },
+      "selected_epoch": 20,
+      "selected_recorded_dev": {
+        "interpretation": "recorded-input teacher imitation; not closed-loop navigation success",
+        "loss": 0.025643583981726767,
+        "ticks": 1228,
+        "velocity_mae": 0.0924240241027422,
+        "wrapped_heading_mae_radians": 0.19284638874111423
+      },
+      "source_graph_sha256": "5aba0fef99afba666b88e40fc535091454e46d9330580d9280b203e8da0abac0",
+      "topology_sha256": "39b804d9a4cd0ad4368b1d827cd0b485222d10c56adea622834b648fba7f3c79",
+      "training": {
+        "arm": "old-corpus",
+        "cell_sha256": "707cba79e7bf92923618ccc596e3d7a2d779edc02a970b0949f6dd3c0d28ae80",
+        "data_manifest_sha256": "47c4523c40e485ba4839cc80c9db891761791b801cc777755028122a1dbacb41",
+        "dev_rows": 1228,
+        "device": "cpu",
+        "epochs": 20,
+        "gradient_norm_cap": 1.0,
+        "graph_sha256": "5aba0fef99afba666b88e40fc535091454e46d9330580d9280b203e8da0abac0",
+        "graph_variant": "original",
+        "learning_rate": 0.001,
+        "optimizer": "Adam",
+        "output_limit_bytes": 67108864,
+        "qualification_claims": [],
+        "research_protocol_sha256": "76a502de80b22d2592d8b4eb1e07f96cdaa3602fb64196eade4eb59e962a3928",
+        "runtime": {
+          "compute": "CPU one-thread; CUDA hidden/uninitialized",
+          "numpy": "2.2.5",
+          "python": "3.11.15",
+          "torch_build": "2.9.0+cu128",
+          "torch_distribution": "2.9.0"
+        },
+        "selection": "Earliest strict minimum over unchanged 1,228-row recorded-dev loss; no seed/arm/held-out selection",
+        "sequence": "Zero hidden per source; carry/detach 32-row windows, no cross-source carry/padding; old 67-row sources retain 32/32/3",
+        "threads": 1,
+        "train_rows": 2117,
+        "training_seed": 10,
+        "wall_budget_seconds": 600,
+        "window": 32
+      },
+      "training_seed": 10
+    },
+    {
+      "arm": "augmented",
+      "cell_sha256": "707cba79e7bf92923618ccc596e3d7a2d779edc02a970b0949f6dd3c0d28ae80",
+      "checkpoint": {
+        "path": "runs/m7-navigation-training-v2-v2-6feade9-20261003/bundles/seed-10/augmented.pt",
+        "sha256": "d44149ea0c0885d90ff0505aeb2ba47d33027ac7868fb310b56da033dffd621c",
+        "size_bytes": 303341
+      },
+      "directory": "runs/m7-navigation-training-v2-v2-6feade9-20261003/bundles/seed-10",
+      "feature_protocol": {
+        "action": [
+          "velocity scalar = 3*tanh(raw[0])",
+          "relative heading radians = pi*tanh(raw[1])"
+        ],
+        "biological_sensor_mapping": false,
+        "camera_shape": [
+          128,
+          128,
+          3
+        ],
+        "cameras": [
+          "cam_left",
+          "cam_right"
+        ],
+        "encoder": "learned Linear(388, number_of_artificial_input_nodes), tanh",
+        "feature_count": 388,
+        "id": "artificial-two-eye-boundary-v1",
+        "image_mapping": "uint8 RGB; mean each nonoverlapping 16x16 block; divide by 255; flatten 8x8x3 in C order, left then right",
+        "privileged_inputs": [],
+        "sensors": [
+          "collision",
+          "collision_angle/pi",
+          "wind_cos",
+          "wind_sin"
+        ],
+        "version": 1
+      },
+      "graph": {
+        "path": "runs/m7-navigation-training-v2-v2-6feade9-20261003/bundles/seed-10/original-graph.json",
+        "sha256": "baa5c1302d3eb62aa6c29b4f7781100a7c2d0c16c328e7537855eec2b0be5d81",
+        "size_bytes": 32864
+      },
+      "graph_variant": "original",
+      "ordered_ids_sha256": "afd114fcd1dc666b0fbb7b1d5d686ef86ca4390831bfea355e4a9c97270d15b1",
+      "protocol": {
+        "path": "runs/m7-navigation-training-v2-v2-6feade9-20261003/bundles/seed-10/protocol.json",
+        "sha256": "b6dd3e4143aa7d5e3ab988bae6988e1c68cf680866b5758d897af9ef3b949640",
+        "size_bytes": 13628
+      },
+      "report": {
+        "path": "runs/m7-navigation-training-v2-v2-6feade9-20261003/bundles/seed-10/report.json",
+        "sha256": "8ccee3be54f42910c3a2f34b61bc99e31cd8d7b518f891c3c67e297a495d63d6",
+        "size_bytes": 13624
+      },
+      "runtime": {
+        "compute": "CPU one-thread; CUDA hidden/uninitialized",
+        "numpy": "2.2.5",
+        "python": "3.11.15",
+        "torch_build": "2.9.0+cu128",
+        "torch_distribution": "2.9.0"
+      },
+      "selected_epoch": 1,
+      "selected_recorded_dev": {
+        "interpretation": "recorded-input teacher imitation; not closed-loop navigation success",
+        "loss": 0.05646156711376451,
+        "ticks": 1228,
+        "velocity_mae": 0.3092642649765512,
+        "wrapped_heading_mae_radians": 0.3422568976296664
+      },
+      "source_graph_sha256": "5aba0fef99afba666b88e40fc535091454e46d9330580d9280b203e8da0abac0",
+      "topology_sha256": "39b804d9a4cd0ad4368b1d827cd0b485222d10c56adea622834b648fba7f3c79",
+      "training": {
+        "arm": "augmented",
+        "cell_sha256": "707cba79e7bf92923618ccc596e3d7a2d779edc02a970b0949f6dd3c0d28ae80",
+        "data_manifest_sha256": "47c4523c40e485ba4839cc80c9db891761791b801cc777755028122a1dbacb41",
+        "dev_rows": 1228,
+        "device": "cpu",
+        "epochs": 20,
+        "gradient_norm_cap": 1.0,
+        "graph_sha256": "5aba0fef99afba666b88e40fc535091454e46d9330580d9280b203e8da0abac0",
+        "graph_variant": "original",
+        "learning_rate": 0.001,
+        "optimizer": "Adam",
+        "output_limit_bytes": 67108864,
+        "qualification_claims": [],
+        "research_protocol_sha256": "76a502de80b22d2592d8b4eb1e07f96cdaa3602fb64196eade4eb59e962a3928",
+        "runtime": {
+          "compute": "CPU one-thread; CUDA hidden/uninitialized",
+          "numpy": "2.2.5",
+          "python": "3.11.15",
+          "torch_build": "2.9.0+cu128",
+          "torch_distribution": "2.9.0"
+        },
+        "selection": "Earliest strict minimum over unchanged 1,228-row recorded-dev loss; no seed/arm/held-out selection",
+        "sequence": "Zero hidden per source; carry/detach 32-row windows, no cross-source carry/padding; old 67-row sources retain 32/32/3",
+        "threads": 1,
+        "train_rows": 7197,
+        "training_seed": 10,
+        "wall_budget_seconds": 600,
+        "window": 32
+      },
+      "training_seed": 10
+    },
+    {
+      "arm": "old-corpus",
+      "cell_sha256": "707cba79e7bf92923618ccc596e3d7a2d779edc02a970b0949f6dd3c0d28ae80",
+      "checkpoint": {
+        "path": "runs/m7-navigation-training-v2-v2-6feade9-20261003/bundles/seed-11/old-corpus.pt",
+        "sha256": "b4ba80f5b0ce7d0ee5cb9e5f372c38b35a25fa0fdd46f19960675c16ac64e633",
+        "size_bytes": 303341
+      },
+      "directory": "runs/m7-navigation-training-v2-v2-6feade9-20261003/bundles/seed-11",
+      "feature_protocol": {
+        "action": [
+          "velocity scalar = 3*tanh(raw[0])",
+          "relative heading radians = pi*tanh(raw[1])"
+        ],
+        "biological_sensor_mapping": false,
+        "camera_shape": [
+          128,
+          128,
+          3
+        ],
+        "cameras": [
+          "cam_left",
+          "cam_right"
+        ],
+        "encoder": "learned Linear(388, number_of_artificial_input_nodes), tanh",
+        "feature_count": 388,
+        "id": "artificial-two-eye-boundary-v1",
+        "image_mapping": "uint8 RGB; mean each nonoverlapping 16x16 block; divide by 255; flatten 8x8x3 in C order, left then right",
+        "privileged_inputs": [],
+        "sensors": [
+          "collision",
+          "collision_angle/pi",
+          "wind_cos",
+          "wind_sin"
+        ],
+        "version": 1
+      },
+      "graph": {
+        "path": "runs/m7-navigation-training-v2-v2-6feade9-20261003/bundles/seed-11/original-graph.json",
+        "sha256": "baa5c1302d3eb62aa6c29b4f7781100a7c2d0c16c328e7537855eec2b0be5d81",
+        "size_bytes": 32864
+      },
+      "graph_variant": "original",
+      "ordered_ids_sha256": "afd114fcd1dc666b0fbb7b1d5d686ef86ca4390831bfea355e4a9c97270d15b1",
+      "protocol": {
+        "path": "runs/m7-navigation-training-v2-v2-6feade9-20261003/bundles/seed-11/protocol.json",
+        "sha256": "275675660aa8132271aa2886bbb5f75acc214f46b3fc394117ecdc2949ef21ae",
+        "size_bytes": 13628
+      },
+      "report": {
+        "path": "runs/m7-navigation-training-v2-v2-6feade9-20261003/bundles/seed-11/report.json",
+        "sha256": "12c217942093d763d51e02fc1e03727a13367c4d83fd6e9f5755b320f1adeeb6",
+        "size_bytes": 13618
+      },
+      "runtime": {
+        "compute": "CPU one-thread; CUDA hidden/uninitialized",
+        "numpy": "2.2.5",
+        "python": "3.11.15",
+        "torch_build": "2.9.0+cu128",
+        "torch_distribution": "2.9.0"
+      },
+      "selected_epoch": 16,
+      "selected_recorded_dev": {
+        "interpretation": "recorded-input teacher imitation; not closed-loop navigation success",
+        "loss": 0.02962370051817319,
+        "ticks": 1228,
+        "velocity_mae": 0.040360304256992156,
+        "wrapped_heading_mae_radians": 0.14042418251111374
+      },
+      "source_graph_sha256": "5aba0fef99afba666b88e40fc535091454e46d9330580d9280b203e8da0abac0",
+      "topology_sha256": "39b804d9a4cd0ad4368b1d827cd0b485222d10c56adea622834b648fba7f3c79",
+      "training": {
+        "arm": "old-corpus",
+        "cell_sha256": "707cba79e7bf92923618ccc596e3d7a2d779edc02a970b0949f6dd3c0d28ae80",
+        "data_manifest_sha256": "47c4523c40e485ba4839cc80c9db891761791b801cc777755028122a1dbacb41",
+        "dev_rows": 1228,
+        "device": "cpu",
+        "epochs": 20,
+        "gradient_norm_cap": 1.0,
+        "graph_sha256": "5aba0fef99afba666b88e40fc535091454e46d9330580d9280b203e8da0abac0",
+        "graph_variant": "original",
+        "learning_rate": 0.001,
+        "optimizer": "Adam",
+        "output_limit_bytes": 67108864,
+        "qualification_claims": [],
+        "research_protocol_sha256": "76a502de80b22d2592d8b4eb1e07f96cdaa3602fb64196eade4eb59e962a3928",
+        "runtime": {
+          "compute": "CPU one-thread; CUDA hidden/uninitialized",
+          "numpy": "2.2.5",
+          "python": "3.11.15",
+          "torch_build": "2.9.0+cu128",
+          "torch_distribution": "2.9.0"
+        },
+        "selection": "Earliest strict minimum over unchanged 1,228-row recorded-dev loss; no seed/arm/held-out selection",
+        "sequence": "Zero hidden per source; carry/detach 32-row windows, no cross-source carry/padding; old 67-row sources retain 32/32/3",
+        "threads": 1,
+        "train_rows": 2117,
+        "training_seed": 11,
+        "wall_budget_seconds": 600,
+        "window": 32
+      },
+      "training_seed": 11
+    },
+    {
+      "arm": "augmented",
+      "cell_sha256": "707cba79e7bf92923618ccc596e3d7a2d779edc02a970b0949f6dd3c0d28ae80",
+      "checkpoint": {
+        "path": "runs/m7-navigation-training-v2-v2-6feade9-20261003/bundles/seed-11/augmented.pt",
+        "sha256": "e9c876af78468da0ccc78e147cf31e14bd8e8e85adda3e00fe2efeba162cc44d",
+        "size_bytes": 303341
+      },
+      "directory": "runs/m7-navigation-training-v2-v2-6feade9-20261003/bundles/seed-11",
+      "feature_protocol": {
+        "action": [
+          "velocity scalar = 3*tanh(raw[0])",
+          "relative heading radians = pi*tanh(raw[1])"
+        ],
+        "biological_sensor_mapping": false,
+        "camera_shape": [
+          128,
+          128,
+          3
+        ],
+        "cameras": [
+          "cam_left",
+          "cam_right"
+        ],
+        "encoder": "learned Linear(388, number_of_artificial_input_nodes), tanh",
+        "feature_count": 388,
+        "id": "artificial-two-eye-boundary-v1",
+        "image_mapping": "uint8 RGB; mean each nonoverlapping 16x16 block; divide by 255; flatten 8x8x3 in C order, left then right",
+        "privileged_inputs": [],
+        "sensors": [
+          "collision",
+          "collision_angle/pi",
+          "wind_cos",
+          "wind_sin"
+        ],
+        "version": 1
+      },
+      "graph": {
+        "path": "runs/m7-navigation-training-v2-v2-6feade9-20261003/bundles/seed-11/original-graph.json",
+        "sha256": "baa5c1302d3eb62aa6c29b4f7781100a7c2d0c16c328e7537855eec2b0be5d81",
+        "size_bytes": 32864
+      },
+      "graph_variant": "original",
+      "ordered_ids_sha256": "afd114fcd1dc666b0fbb7b1d5d686ef86ca4390831bfea355e4a9c97270d15b1",
+      "protocol": {
+        "path": "runs/m7-navigation-training-v2-v2-6feade9-20261003/bundles/seed-11/protocol.json",
+        "sha256": "275675660aa8132271aa2886bbb5f75acc214f46b3fc394117ecdc2949ef21ae",
+        "size_bytes": 13628
+      },
+      "report": {
+        "path": "runs/m7-navigation-training-v2-v2-6feade9-20261003/bundles/seed-11/report.json",
+        "sha256": "12c217942093d763d51e02fc1e03727a13367c4d83fd6e9f5755b320f1adeeb6",
+        "size_bytes": 13618
+      },
+      "runtime": {
+        "compute": "CPU one-thread; CUDA hidden/uninitialized",
+        "numpy": "2.2.5",
+        "python": "3.11.15",
+        "torch_build": "2.9.0+cu128",
+        "torch_distribution": "2.9.0"
+      },
+      "selected_epoch": 1,
+      "selected_recorded_dev": {
+        "interpretation": "recorded-input teacher imitation; not closed-loop navigation success",
+        "loss": 0.0604871156646685,
+        "ticks": 1228,
+        "velocity_mae": 0.48690450618632064,
+        "wrapped_heading_mae_radians": 0.22257974297293623
+      },
+      "source_graph_sha256": "5aba0fef99afba666b88e40fc535091454e46d9330580d9280b203e8da0abac0",
+      "topology_sha256": "39b804d9a4cd0ad4368b1d827cd0b485222d10c56adea622834b648fba7f3c79",
+      "training": {
+        "arm": "augmented",
+        "cell_sha256": "707cba79e7bf92923618ccc596e3d7a2d779edc02a970b0949f6dd3c0d28ae80",
+        "data_manifest_sha256": "47c4523c40e485ba4839cc80c9db891761791b801cc777755028122a1dbacb41",
+        "dev_rows": 1228,
+        "device": "cpu",
+        "epochs": 20,
+        "gradient_norm_cap": 1.0,
+        "graph_sha256": "5aba0fef99afba666b88e40fc535091454e46d9330580d9280b203e8da0abac0",
+        "graph_variant": "original",
+        "learning_rate": 0.001,
+        "optimizer": "Adam",
+        "output_limit_bytes": 67108864,
+        "qualification_claims": [],
+        "research_protocol_sha256": "76a502de80b22d2592d8b4eb1e07f96cdaa3602fb64196eade4eb59e962a3928",
+        "runtime": {
+          "compute": "CPU one-thread; CUDA hidden/uninitialized",
+          "numpy": "2.2.5",
+          "python": "3.11.15",
+          "torch_build": "2.9.0+cu128",
+          "torch_distribution": "2.9.0"
+        },
+        "selection": "Earliest strict minimum over unchanged 1,228-row recorded-dev loss; no seed/arm/held-out selection",
+        "sequence": "Zero hidden per source; carry/detach 32-row windows, no cross-source carry/padding; old 67-row sources retain 32/32/3",
+        "threads": 1,
+        "train_rows": 7197,
+        "training_seed": 11,
+        "wall_budget_seconds": 600,
+        "window": 32
+      },
+      "training_seed": 11
+    },
+    {
+      "arm": "old-corpus",
+      "cell_sha256": "707cba79e7bf92923618ccc596e3d7a2d779edc02a970b0949f6dd3c0d28ae80",
+      "checkpoint": {
+        "path": "runs/m7-navigation-training-v2-v2-6feade9-20261003/bundles/seed-12/old-corpus.pt",
+        "sha256": "d004ba5ff517af72b81a57fabdd8be73acdee7bfabb36594682565903af18bbb",
+        "size_bytes": 303341
+      },
+      "directory": "runs/m7-navigation-training-v2-v2-6feade9-20261003/bundles/seed-12",
+      "feature_protocol": {
+        "action": [
+          "velocity scalar = 3*tanh(raw[0])",
+          "relative heading radians = pi*tanh(raw[1])"
+        ],
+        "biological_sensor_mapping": false,
+        "camera_shape": [
+          128,
+          128,
+          3
+        ],
+        "cameras": [
+          "cam_left",
+          "cam_right"
+        ],
+        "encoder": "learned Linear(388, number_of_artificial_input_nodes), tanh",
+        "feature_count": 388,
+        "id": "artificial-two-eye-boundary-v1",
+        "image_mapping": "uint8 RGB; mean each nonoverlapping 16x16 block; divide by 255; flatten 8x8x3 in C order, left then right",
+        "privileged_inputs": [],
+        "sensors": [
+          "collision",
+          "collision_angle/pi",
+          "wind_cos",
+          "wind_sin"
+        ],
+        "version": 1
+      },
+      "graph": {
+        "path": "runs/m7-navigation-training-v2-v2-6feade9-20261003/bundles/seed-12/original-graph.json",
+        "sha256": "baa5c1302d3eb62aa6c29b4f7781100a7c2d0c16c328e7537855eec2b0be5d81",
+        "size_bytes": 32864
+      },
+      "graph_variant": "original",
+      "ordered_ids_sha256": "afd114fcd1dc666b0fbb7b1d5d686ef86ca4390831bfea355e4a9c97270d15b1",
+      "protocol": {
+        "path": "runs/m7-navigation-training-v2-v2-6feade9-20261003/bundles/seed-12/protocol.json",
+        "sha256": "8b68b7b123187d31b749cefe02b070756483894bc5f84b7b240eb8b61a2f7ace",
+        "size_bytes": 13628
+      },
+      "report": {
+        "path": "runs/m7-navigation-training-v2-v2-6feade9-20261003/bundles/seed-12/report.json",
+        "sha256": "5c283107aa2e4beb4980a2c930baf3fe5d988254407b03867874d25069353c4d",
+        "size_bytes": 13620
+      },
+      "runtime": {
+        "compute": "CPU one-thread; CUDA hidden/uninitialized",
+        "numpy": "2.2.5",
+        "python": "3.11.15",
+        "torch_build": "2.9.0+cu128",
+        "torch_distribution": "2.9.0"
+      },
+      "selected_epoch": 17,
+      "selected_recorded_dev": {
+        "interpretation": "recorded-input teacher imitation; not closed-loop navigation success",
+        "loss": 0.023544041700782527,
+        "ticks": 1228,
+        "velocity_mae": 0.057253033311048626,
+        "wrapped_heading_mae_radians": 0.17155102482641946
+      },
+      "source_graph_sha256": "5aba0fef99afba666b88e40fc535091454e46d9330580d9280b203e8da0abac0",
+      "topology_sha256": "39b804d9a4cd0ad4368b1d827cd0b485222d10c56adea622834b648fba7f3c79",
+      "training": {
+        "arm": "old-corpus",
+        "cell_sha256": "707cba79e7bf92923618ccc596e3d7a2d779edc02a970b0949f6dd3c0d28ae80",
+        "data_manifest_sha256": "47c4523c40e485ba4839cc80c9db891761791b801cc777755028122a1dbacb41",
+        "dev_rows": 1228,
+        "device": "cpu",
+        "epochs": 20,
+        "gradient_norm_cap": 1.0,
+        "graph_sha256": "5aba0fef99afba666b88e40fc535091454e46d9330580d9280b203e8da0abac0",
+        "graph_variant": "original",
+        "learning_rate": 0.001,
+        "optimizer": "Adam",
+        "output_limit_bytes": 67108864,
+        "qualification_claims": [],
+        "research_protocol_sha256": "76a502de80b22d2592d8b4eb1e07f96cdaa3602fb64196eade4eb59e962a3928",
+        "runtime": {
+          "compute": "CPU one-thread; CUDA hidden/uninitialized",
+          "numpy": "2.2.5",
+          "python": "3.11.15",
+          "torch_build": "2.9.0+cu128",
+          "torch_distribution": "2.9.0"
+        },
+        "selection": "Earliest strict minimum over unchanged 1,228-row recorded-dev loss; no seed/arm/held-out selection",
+        "sequence": "Zero hidden per source; carry/detach 32-row windows, no cross-source carry/padding; old 67-row sources retain 32/32/3",
+        "threads": 1,
+        "train_rows": 2117,
+        "training_seed": 12,
+        "wall_budget_seconds": 600,
+        "window": 32
+      },
+      "training_seed": 12
+    },
+    {
+      "arm": "augmented",
+      "cell_sha256": "707cba79e7bf92923618ccc596e3d7a2d779edc02a970b0949f6dd3c0d28ae80",
+      "checkpoint": {
+        "path": "runs/m7-navigation-training-v2-v2-6feade9-20261003/bundles/seed-12/augmented.pt",
+        "sha256": "0956d82483f9765de392baa6e2ab581ec86ebae82ac7dfe24aba20ecad8e5b7b",
+        "size_bytes": 303341
+      },
+      "directory": "runs/m7-navigation-training-v2-v2-6feade9-20261003/bundles/seed-12",
+      "feature_protocol": {
+        "action": [
+          "velocity scalar = 3*tanh(raw[0])",
+          "relative heading radians = pi*tanh(raw[1])"
+        ],
+        "biological_sensor_mapping": false,
+        "camera_shape": [
+          128,
+          128,
+          3
+        ],
+        "cameras": [
+          "cam_left",
+          "cam_right"
+        ],
+        "encoder": "learned Linear(388, number_of_artificial_input_nodes), tanh",
+        "feature_count": 388,
+        "id": "artificial-two-eye-boundary-v1",
+        "image_mapping": "uint8 RGB; mean each nonoverlapping 16x16 block; divide by 255; flatten 8x8x3 in C order, left then right",
+        "privileged_inputs": [],
+        "sensors": [
+          "collision",
+          "collision_angle/pi",
+          "wind_cos",
+          "wind_sin"
+        ],
+        "version": 1
+      },
+      "graph": {
+        "path": "runs/m7-navigation-training-v2-v2-6feade9-20261003/bundles/seed-12/original-graph.json",
+        "sha256": "baa5c1302d3eb62aa6c29b4f7781100a7c2d0c16c328e7537855eec2b0be5d81",
+        "size_bytes": 32864
+      },
+      "graph_variant": "original",
+      "ordered_ids_sha256": "afd114fcd1dc666b0fbb7b1d5d686ef86ca4390831bfea355e4a9c97270d15b1",
+      "protocol": {
+        "path": "runs/m7-navigation-training-v2-v2-6feade9-20261003/bundles/seed-12/protocol.json",
+        "sha256": "8b68b7b123187d31b749cefe02b070756483894bc5f84b7b240eb8b61a2f7ace",
+        "size_bytes": 13628
+      },
+      "report": {
+        "path": "runs/m7-navigation-training-v2-v2-6feade9-20261003/bundles/seed-12/report.json",
+        "sha256": "5c283107aa2e4beb4980a2c930baf3fe5d988254407b03867874d25069353c4d",
+        "size_bytes": 13620
+      },
+      "runtime": {
+        "compute": "CPU one-thread; CUDA hidden/uninitialized",
+        "numpy": "2.2.5",
+        "python": "3.11.15",
+        "torch_build": "2.9.0+cu128",
+        "torch_distribution": "2.9.0"
+      },
+      "selected_epoch": 7,
+      "selected_recorded_dev": {
+        "interpretation": "recorded-input teacher imitation; not closed-loop navigation success",
+        "loss": 0.05394940920392543,
+        "ticks": 1228,
+        "velocity_mae": 0.25623947207236525,
+        "wrapped_heading_mae_radians": 0.2594340692125625
+      },
+      "source_graph_sha256": "5aba0fef99afba666b88e40fc535091454e46d9330580d9280b203e8da0abac0",
+      "topology_sha256": "39b804d9a4cd0ad4368b1d827cd0b485222d10c56adea622834b648fba7f3c79",
+      "training": {
+        "arm": "augmented",
+        "cell_sha256": "707cba79e7bf92923618ccc596e3d7a2d779edc02a970b0949f6dd3c0d28ae80",
+        "data_manifest_sha256": "47c4523c40e485ba4839cc80c9db891761791b801cc777755028122a1dbacb41",
+        "dev_rows": 1228,
+        "device": "cpu",
+        "epochs": 20,
+        "gradient_norm_cap": 1.0,
+        "graph_sha256": "5aba0fef99afba666b88e40fc535091454e46d9330580d9280b203e8da0abac0",
+        "graph_variant": "original",
+        "learning_rate": 0.001,
+        "optimizer": "Adam",
+        "output_limit_bytes": 67108864,
+        "qualification_claims": [],
+        "research_protocol_sha256": "76a502de80b22d2592d8b4eb1e07f96cdaa3602fb64196eade4eb59e962a3928",
+        "runtime": {
+          "compute": "CPU one-thread; CUDA hidden/uninitialized",
+          "numpy": "2.2.5",
+          "python": "3.11.15",
+          "torch_build": "2.9.0+cu128",
+          "torch_distribution": "2.9.0"
+        },
+        "selection": "Earliest strict minimum over unchanged 1,228-row recorded-dev loss; no seed/arm/held-out selection",
+        "sequence": "Zero hidden per source; carry/detach 32-row windows, no cross-source carry/padding; old 67-row sources retain 32/32/3",
+        "threads": 1,
+        "train_rows": 7197,
+        "training_seed": 12,
+        "wall_budget_seconds": 600,
+        "window": 32
+      },
+      "training_seed": 12
+    }
+  ],
+  "outer_after_inventory": {
+    "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/male-navigation-training-v2/runs/m7-navigation-training-v2-control-v2-6feade9/outer-after.json",
+    "sha256": "ecb64996e3bd8305f913db9848f295b0b186c5a876aba66b5be62be61a1752ed",
+    "size_bytes": 268160
+  },
+  "pairs": [
+    {
+      "directory": "runs/m7-navigation-training-v2-v2-6feade9-20261003/bundles/seed-10",
+      "graph": {
+        "path": "runs/m7-navigation-training-v2-v2-6feade9-20261003/bundles/seed-10/original-graph.json",
+        "sha256": "baa5c1302d3eb62aa6c29b4f7781100a7c2d0c16c328e7537855eec2b0be5d81",
+        "size_bytes": 32864
+      },
+      "protocol": {
+        "path": "runs/m7-navigation-training-v2-v2-6feade9-20261003/bundles/seed-10/protocol.json",
+        "sha256": "b6dd3e4143aa7d5e3ab988bae6988e1c68cf680866b5758d897af9ef3b949640",
+        "size_bytes": 13628
+      },
+      "report": {
+        "path": "runs/m7-navigation-training-v2-v2-6feade9-20261003/bundles/seed-10/report.json",
+        "sha256": "8ccee3be54f42910c3a2f34b61bc99e31cd8d7b518f891c3c67e297a495d63d6",
+        "size_bytes": 13624
+      },
+      "training_seed": 10
+    },
+    {
+      "directory": "runs/m7-navigation-training-v2-v2-6feade9-20261003/bundles/seed-11",
+      "graph": {
+        "path": "runs/m7-navigation-training-v2-v2-6feade9-20261003/bundles/seed-11/original-graph.json",
+        "sha256": "baa5c1302d3eb62aa6c29b4f7781100a7c2d0c16c328e7537855eec2b0be5d81",
+        "size_bytes": 32864
+      },
+      "protocol": {
+        "path": "runs/m7-navigation-training-v2-v2-6feade9-20261003/bundles/seed-11/protocol.json",
+        "sha256": "275675660aa8132271aa2886bbb5f75acc214f46b3fc394117ecdc2949ef21ae",
+        "size_bytes": 13628
+      },
+      "report": {
+        "path": "runs/m7-navigation-training-v2-v2-6feade9-20261003/bundles/seed-11/report.json",
+        "sha256": "12c217942093d763d51e02fc1e03727a13367c4d83fd6e9f5755b320f1adeeb6",
+        "size_bytes": 13618
+      },
+      "training_seed": 11
+    },
+    {
+      "directory": "runs/m7-navigation-training-v2-v2-6feade9-20261003/bundles/seed-12",
+      "graph": {
+        "path": "runs/m7-navigation-training-v2-v2-6feade9-20261003/bundles/seed-12/original-graph.json",
+        "sha256": "baa5c1302d3eb62aa6c29b4f7781100a7c2d0c16c328e7537855eec2b0be5d81",
+        "size_bytes": 32864
+      },
+      "protocol": {
+        "path": "runs/m7-navigation-training-v2-v2-6feade9-20261003/bundles/seed-12/protocol.json",
+        "sha256": "8b68b7b123187d31b749cefe02b070756483894bc5f84b7b240eb8b61a2f7ace",
+        "size_bytes": 13628
+      },
+      "report": {
+        "path": "runs/m7-navigation-training-v2-v2-6feade9-20261003/bundles/seed-12/report.json",
+        "sha256": "5c283107aa2e4beb4980a2c930baf3fe5d988254407b03867874d25069353c4d",
+        "size_bytes": 13620
+      },
+      "training_seed": 12
+    }
+  ],
+  "producer_root": "../male-navigation-training-v2",
+  "qualification_claims": [],
+  "runtime": {
+    "compute": "CPU one-thread; CUDA hidden/uninitialized",
+    "numpy": "2.2.5",
+    "python": "3.11.15",
+    "torch_build": "2.9.0+cu128",
+    "torch_distribution": "2.9.0"
+  },
+  "scope": "Exact six frozen research models for separately authorized prospective development; artifact index only, no production or navigation qualification admission.",
+  "study_protocol": {
+    "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/male-navigation-training-v2/docs/plans/m7-navigation-training-v2-protocol.json",
+    "sha256": "76a502de80b22d2592d8b4eb1e07f96cdaa3602fb64196eade4eb59e962a3928",
+    "size_bytes": 11960
+  },
+  "training_enclosing": {
+    "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/male-navigation-training-v2/runs/m7-navigation-training-v2-control-v2-6feade9/enclosing.json",
+    "sha256": "1f10e3f3632fba65992718c84cce079d829447da920baa92429d8a09410a8d70",
+    "size_bytes": 3175
+  },
+  "training_end_session": {
+    "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/male-navigation-training-v2/runs/m7-navigation-training-v2-control-v2-6feade9/end-session.json",
+    "sha256": "922139bb937b63972d3980c59ac7adaeb81d9cd5d1c6f001b53347a366b02ce7",
+    "size_bytes": 2799
+  },
+  "training_source_code": {
+    "added_sources": {
+      "scripts/train_male_navigation_v2.py": "808f0e410d37d3dbcb56bb4978d4ad2ac824cb5977dafb05873a02fd9aa74737",
+      "tests/test_train_male_navigation_v2.py": "9c04c628d78bdf0dfa05c4985399a0e0f7849d2bf00652e36125ac485e2a1fcb"
+    },
+    "lock_sha256": "8a7a880d020c1907e221575fda65642241f809fc628a55381f1b6137bff1b732",
+    "named_reader_sources": {
+      "scripts/acquire_memory_history.py": "c20aa70d33f2b2249fc1c19f837c43c7ede0f9cbc23d394c7b4cef2133680b4f",
+      "scripts/analyze_memory_matrix.py": "7759d7fe70479489ab2c90f3f16de8a097099f3c750325c33548e708d4b2b3f0",
+      "scripts/collect_male_navigation.py": "d0decc66112a9f138823ec06414e211299f1ae81527f472e3b6341c33118868f",
+      "scripts/collect_male_navigation_v2.py": "21d2cb104dfe0ea34e52b5d93c835affb9cebeb7bccb85b7314f18404971053f",
+      "scripts/collect_male_recovery.py": "17d948322bbf124c7eeee3d55e4034e12c4b3436d933dab1df4245f278c46f60",
+      "scripts/collect_male_teachers.py": "30f4fb19faa9cd3a3cca24eb183767c6ffcddcb634b9cf77467f69abee8922e7",
+      "scripts/collect_puck_teachers.py": "c021864215c02548992e9dfb2478221945a556fb973f877db930839e2e58b8bd",
+      "scripts/evaluate_male_closed_loop.py": "18999707fbb187418f7cfaf69dbe85e42388a16dfe75d247674b8cfee104aaed",
+      "scripts/evaluate_male_recovery.py": "807c29d46d2aa1d49cc7e11d1c0926ccd96c746199f4488b15f4a17e7e193a3c",
+      "scripts/evaluate_male_recovery_heldout.py": "cfe33672cb5010900b10e98c9419638def6d78b77d8d2f4ea5bac71c9afddbc9",
+      "scripts/evaluate_puck_development.py": "d2abac5dec2acd4de29933d35c9b456582e1ad15bc9135661de1d3f054fd9721",
+      "scripts/extract_malecns_pilot.py": "75fd779ed23fcf783c3b72acab503b3130dbe9e8531036dd96b1ab5e23952839",
+      "scripts/inspect_malecns_annotations.py": "f44d84b27b60495ffcc95b027ea0da81e6d2b922bde6c010fd882f0a2580c289",
+      "scripts/male_research.py": "5ab1bba9a88b04be80f0e231e20402b34f1b3be8a4935fe99936cdb3c3018648",
+      "scripts/prepare_male_navigation_v2.py": "ef32434826c04398c5c98e9b8debbe0b9d90adea2f9ac558a05ec00ce5eff333",
+      "scripts/prepare_male_recovery_data.py": "2b5c7b78e84a782838cf51b5b4682ea6c3ab4bbb5c11180984ccdc8f03cc06ca",
+      "scripts/probe_cuda_repeatability.py": "7610242831c0bdf9a5edade9d5862d5f794e7b64b264d91658e5bd7d3f11f7ef",
+      "scripts/puck_construction_compare.py": "8d3194cb1f0a3c70cd54b49b50caacf9ba5b3cf8ae9798d631bf7b6ff513ebf3",
+      "scripts/train_male_recovery.py": "1b828d68daf4db6186d5ccc0804d35ce6a8918279cb74834d16291f6d5679877",
+      "scripts/train_male_reduced.py": "75d3fc1fd71bab6b749c158a58fe9d802fc10253f4416d1c8f5739a2bdf4ff4a",
+      "scripts/train_puck.py": "a1dfc8c42a04f5b51217c261a0ea3f159b31d547e9ba0ff0b6005a2338be1b1f",
+      "scripts/verify_afterimage.py": "02b8e6accd8e3217ade97fdbcd6857cf297a742903de85381f91c676f490a680",
+      "scripts/verify_body_adaptation.py": "197662faf19e7d11b8ab42d67f5ccb0b7d64867bdb0e296f23408daeecb08da3",
+      "scripts/verify_body_calibration.py": "716d434103a98f9c4c983eb0003a1d4ad782d662c755d799ddab096c9ef00f31",
+      "scripts/verify_body_compensation.py": "bdca512c55175c31cd23f8616eae59ba094bc9e51569400189f964c68fe56377",
+      "scripts/verify_body_gains.py": "eb4b9e8f7d4b940438ad381b771d035dc49e1bcf90f7b0d54a08d8f9d99987c5",
+      "scripts/verify_body_homing.py": "1cf79893d38f70bd1ab9acbee2aac9cc66dc85c91183dc95d17c7de74d951709",
+      "scripts/verify_body_runtime.py": "07912e536a85c621919a2d22f4c1f516ffa63a47b2f45d0659a60af946d906b2",
+      "scripts/verify_body_turns.py": "3d53eac9ea0adf278d9a0b2fd9d2515c24420f0bf443e3a5783a6cec320df529",
+      "scripts/verify_endurance.py": "6656a726c157a5ccbec10614f50d7a841cc00cf896d44a74dfa6971f5c778803",
+      "scripts/verify_execution.py": "c3b968e7310e3ecb539df41559576835c8214b420d36bdb2d62312d6125d1135",
+      "scripts/verify_flynn_memory_transfer.py": "a781931b8b4e5706bfb91db2fb31bc810b8cb5d0fa742d39744a967560721c10",
+      "scripts/verify_lab.py": "d90df0ba31be09238a23b38beffacaa0b201b75a4d00def464f2123f008d3b6f",
+      "scripts/verify_memory.py": "3d9808e980efd098efb6b53715349da59c8efae117e5f507223ef9505ef11817",
+      "scripts/verify_memory_counterbalance.py": "54af4c75ba0535cb3feb39ffe093195fa302b0f4d882a335e65caf05e89fe040",
+      "scripts/verify_memory_counterbalance_comparison.py": "9cea143e1f2b7c26c53242dac0e523534e2e7121b56605c7eb1e50b7d18c9651",
+      "scripts/verify_memory_observation_stream.py": "32c88f164157109172a1375de86314445dde0cde133cd55cab74f798932a131e",
+      "scripts/verify_memory_reference_replays.py": "a780f9d8ac8f8de965a009ba7ea272fae82e873fcb1196ed76c5a32b9c56ae8a",
+      "scripts/verify_memory_references.py": "90457bbd86e420ebf1138ef993333ea10d9ccf870a9137218588274234c3f26a",
+      "scripts/verify_memory_transfer.py": "80902c477f40fdceec8019becc4b83e632346f3a0e130678bb77114b5a1790ce",
+      "scripts/verify_offline.py": "a576294726a97284ad3aed154929c30401db06c9ed1f8ea614dd4bdb1d685bad",
+      "scripts/verify_performance.py": "f7c34f039be12709350ee62acf0d30e77f467d9a8aa72207635179a8f928c338",
+      "scripts/verify_puck_construction.py": "7438ec47f087531be6f611785af8aa756338fb8d3124084417f8f4d2a33f04c2",
+      "scripts/verify_puck_mechanics.py": "302542165d19c27351f336b5d32f848b34fd515d9f976e0a631ffbec1ca1f13c",
+      "scripts/verify_reproduction.py": "8dbfa8100297f055d9ed9228693fad4db5fe7a5b3367295e0601f22c8c7cf4f7",
+      "scripts/verify_task_phases.py": "d4614765a745e751a367183bc54220668a227a1d565bc890678b6030994384e5",
+      "scripts/verify_task_starts.py": "ee5b2facae4dd91eb7caf2e041b97db126bcd863ec13ecde54931dd99fda888b",
+      "scripts/verify_tasks.py": "ec94a0a95d3e90ed9f9a008025b08d8da72949637144782655273d254948668b",
+      "src/palimpsest/__init__.py": "bb99e30d22e4662c4ded455b1b23f49b77ce811dcfa1b69bf358925487a566d8",
+      "src/palimpsest/__main__.py": "935a1c1166b0c1ea35a82256345000bf2c73ded718d77773bc27a71ecce28f7d",
+      "src/palimpsest/afterimage.py": "0a4385d7c1e9e103d6154c3d83ab7851d4729c90fb64ab908279f2c36fd9af72",
+      "src/palimpsest/artifacts.py": "7a5f4a1080abffe82f8296468c6d8ca3a2b975277b96925fdf75bb9ac1ed034a",
+      "src/palimpsest/assets.py": "aa4a38c7403cd9f72bc23027acd7c212202f25574bea6af65053c34664da49e3",
+      "src/palimpsest/atlas.py": "4c7b0752aaf0065648fb9f970b17a95098e7ed91b10e4da1e8e4a9ca6720f23f",
+      "src/palimpsest/body_adaptation.py": "7ecc71cce4da915225952c3ea31666b54895f5ff93de32d87149aac368d32f81",
+      "src/palimpsest/body_homing.py": "3e46bbf9d90bf53e536a975f7f4a86bbcaa2b4aa57f9b188bfbe9d221f12f551",
+      "src/palimpsest/body_profile.py": "796df9ab2a109606432c7a97bfbea5f58ab7acc75768e638b5b8731a390cbb54",
+      "src/palimpsest/cli.py": "14f3ab4447f0b7e9f536d1a16d560910fed43a250c6c137b1087da248e553287",
+      "src/palimpsest/comparison.py": "8e1e2e4cff083d4745cf80dda165ddab4a2edcda040fbc34f62c6c6d8e9b69d6",
+      "src/palimpsest/doctor.py": "109de62468161f35461eee76af244daabef38f2faa1526c5a6ed268817e6b834",
+      "src/palimpsest/engine.py": "bb81e0c23fe8bdbdfe9f499582e9df105a80ad2030a0831c6cd73b995c812417",
+      "src/palimpsest/evaluate.py": "74a9afb710b36a366ab680462e9440f285730a0360bda704af25ebbcfd74256a",
+      "src/palimpsest/flynn.py": "409b7503d76fd6f971a33d053e86c968b529edc226b85f44122e17a649f8f9f4",
+      "src/palimpsest/interventions.py": "f0fb0176ce52d83993c5da882aa67ea5b46a2d5caf6d94e02c23481016eb11fe",
+      "src/palimpsest/lab.py": "668b59262a154aebe52e8f1a3671d097aaa75ddcb110d989bd8978f223fbf08b",
+      "src/palimpsest/male_model.py": "9327bca1db3cbeda7aab8b222ccfa59daef4e01f3f1b4689f83009955d970cad",
+      "src/palimpsest/male_policy.py": "d2fd1a80781e8bad11b6e4947e1a3a8d61bd4acf46dfcaf6c191ccb6987e7cfe",
+      "src/palimpsest/male_recovery_heldout.py": "e625795d44f6943311f15ced27b24fdd1c3062376363c2a294766b283759a977",
+      "src/palimpsest/male_recovery_research.py": "0117701d840ef36db624dbdf2f3fb88668b50761fbc71e7a1a7aed6655d830cf",
+      "src/palimpsest/male_research.py": "e46ac8d8988a77f75c921666039cb39ea6fc0aeb13df862042af96b69367d232",
+      "src/palimpsest/memory.py": "9641ae3d7d78577e0ea5bc8bcacbe455cae6c548f4f9bd10b8bb593a8fd7c542",
+      "src/palimpsest/memory_experiment.py": "873d5f6ab2ee57c560e8f4bb2a0cf20144264f25ea2312b7e7fe8d295ab8f9f8",
+      "src/palimpsest/memory_history.py": "7dbfac529717698ea2848ec6318a8812e876c04bf26711775f316dd1a631438c",
+      "src/palimpsest/memory_reference.py": "2666907a55d8d007cdbc6f9c761c333646b8beb167d47f0c5eba379e9a898661",
+      "src/palimpsest/memory_task.py": "b3987e0f9fb81d67e7b6f2235607d05efe175cd3d750681a1cff9a430060d682",
+      "src/palimpsest/memory_world.py": "508d7c53cf78e8a26a2c459e2b6e2a02c8c0823535005a19668a31717f0dbb12",
+      "src/palimpsest/profiles.py": "1bdfcb0998f57355afaebbe7704219957531711fc1d18f28e2937579da4cd55a",
+      "src/palimpsest/puck_balanced.py": "4db705556e002750c3eec82f1bd8133b40c857284358d5943c27794df853c09c",
+      "src/palimpsest/puck_balanced_development.py": "190176e8a353d9d5efd496afdf10647797d396ce2313bee73321552fe82bd9a8",
+      "src/palimpsest/puck_balanced_student.py": "85eaa5b2d8f6b64b13a654c0414cfcefe9742134a583a46c93c1f82f9a0b052e",
+      "src/palimpsest/puck_development.py": "390049ae6ca3a97182918b8df3f5645a325c3ac3961b50ae8ce6bf0fdb721802",
+      "src/palimpsest/puck_learning.py": "fe0350b1f7becf263ffbe19b8c906651a4f7655306dc60407927dcc20244f88d",
+      "src/palimpsest/puck_model.py": "27f3446c71f59937f49fed4faddc614e5a792413b74328e81b361c72dd7f06d5",
+      "src/palimpsest/puck_profile.py": "585d41691d275313b276d49213249427ac645f7aa85fee544a05c37d2e652e2d",
+      "src/palimpsest/puck_student.py": "d944395f1b9303415d5e5311f589ef26c226718d76bd226fde7449b051795df8",
+      "src/palimpsest/puck_teacher.py": "781262791692202974f7aa39daab8deaf43899ffab7fa64ab366c40996224c82",
+      "src/palimpsest/records.py": "c4be6f1699c1d8550a7f2db2979f7f9f18196ac986eef2aefe3ba665cae99ac3",
+      "src/palimpsest/replay.py": "18437f2bdd7e849ff60e6b3244998d4f1834888092deae2b116756651163e82e",
+      "src/palimpsest/snapshots.py": "9da87e6c5433199186421e2057403fb50b52dfa2901ffe07673fac074b7daaf5",
+      "src/palimpsest/sonification.py": "7112584f9b18be761861d432dfb043eb8dd8b3a7e66f6d3ec53668c29dfc1949",
+      "src/palimpsest/specimens.py": "db0973a5cf700ccf2f8a8bf9e5adb2a35c561b36aab550892473e02a671a0b41",
+      "src/palimpsest/storage.py": "79664d876834ef20b459cc83963515effdaf75d0256fe5764a9cf8e18cd448c2",
+      "src/palimpsest/task_mechanics.py": "cbf698ad3f027f572c4f12655595825f580f155949f6c7c96f2556d14e6d1bb6",
+      "src/palimpsest/task_profiles.py": "14b237ede67949f281977c00b01dcd7a8e8a367d67a7e4e37911e0cb9b1dfa79",
+      "src/palimpsest/worker.py": "a44a15087317d76e3cec921bcc76be37c3c28eb70931bfca7ba0dfb2066989d7"
+    }
+  },
+  "training_source_commit": "6feade9770dc40efa567633412baec4347ee33cb",
+  "training_supervisor": {
+    "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/male-navigation-training-v2/runs/m7-navigation-training-v2-control-v2-6feade9/outer-supervisor/supervisor.json",
+    "sha256": "f85d8ad8601d8adc41ce4744c58653e97a5b51e3853c9440155a0fecd78b0708",
+    "size_bytes": 359
+  },
+  "training_terminal": {
+    "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/male-navigation-training-v2/runs/m7-navigation-training-v2-control-v2-6feade9/terminal.json",
+    "sha256": "b15c8d473afe6670c67ec8c81d9203464d3febb1d05e98d3f5890c7fec96c111",
+    "size_bytes": 73787
+  },
+  "version": 2
+}
