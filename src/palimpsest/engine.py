@@ -277,7 +277,11 @@ class Engine:
         research_manifest = {}
         if research_binding is not None:
             from .male_research import Binding
-            if type(research_binding) is not Binding or controller not in MALE_CONTROLLERS or memory_case is not None:
+            admitted = type(research_binding) is Binding
+            if not admitted:
+                from .male_recovery_research import Binding as RecoveryBinding
+                admitted = type(research_binding) is RecoveryBinding
+            if not admitted or controller not in MALE_CONTROLLERS or memory_case is not None:
                 raise ValueError('unsupported trusted research binding')
             identity, research_arguments = research_binding.resolve(root, assets, controller, device, scenario, texture, expected_policy_identity)
             research_manifest = {'research': research_binding.provenance()}
@@ -337,8 +341,7 @@ class Engine:
                 if research_binding is None:
                     policy = load_pinned_policy(root, assets, controller, seed, identity)
                 else:
-                    from .male_policy import load_policy as load_research_policy
-                    policy = load_research_policy(**research_arguments, seed=seed)
+                    policy = research_binding.load_policy(research_arguments, seed)
                     policy.provenance.update(policy_identity=identity, model_manifest_sha256=identity['model_manifest_sha256'],
                                              research=research_binding.provenance())
                 writer.manifest['policy_identity'] = policy.provenance['policy_identity']

@@ -165,16 +165,20 @@ def publish_manifest(root, assets, output):
 
 
 def passed_development(report, manifest_sha256, identities):
-    """Pure acceptance reducer. It never selects a winning seed or drops failures."""
+    """The unchanged v2 gate; recovery uses the private fixed-plan reducer."""
+    return _passed_development(report, manifest_sha256, identities, PROTOCOL_SHA256, planned('dev'))
+
+
+def _passed_development(report, manifest_sha256, identities, expected_protocol_sha256, plan):
+    """Shared exact 24-owner/paired-start/per-original-seed acceptance math."""
     from .male_policy import validate_identity
     if (not isinstance(report, dict) or report.get('status') != 'completed' or report.get('stage') != 'dev' or
-            report.get('research_protocol_sha256') != PROTOCOL_SHA256 or report.get('research_manifest_sha256') != manifest_sha256 or
+            report.get('research_protocol_sha256') != expected_protocol_sha256 or report.get('research_manifest_sha256') != manifest_sha256 or
             report.get('sources_unchanged') is not True or report.get('model_identities_unchanged') is not True or
             report.get('recording_fingerprints_unchanged') is not True or report.get('supervisor_shutdown') != 'completed' or
             report.get('finalization_errors') != [] or report.get('qualification_claims') != []):
         raise ValueError('completed unchanged development report required')
     rows = report.get('runs')
-    plan = planned('dev')
     if not isinstance(rows, list) or len(rows) != len(plan):
         raise ValueError('development requires all 24 owners')
     goals = {seed: 0 for seed in PAIR_SEEDS}
@@ -275,6 +279,10 @@ class Binding:
         if (device, scenario, texture) != ('cpu', 'reproduction', 'checker') or expected is None:
             raise ValueError('research requires pinned identity and CPU/reproduction/checker')
         return resolve(root, assets, self.manifest, self.manifest_sha256, self.training_seed, controller, expected)
+
+    def load_policy(self, arguments, seed):
+        from .male_policy import load_policy
+        return load_policy(**arguments, seed=seed)
 
     def provenance(self):
         return {'research_protocol_sha256': PROTOCOL_SHA256,
