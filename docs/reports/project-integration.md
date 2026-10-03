@@ -186,3 +186,37 @@ retains exact float64 labels, independent cursor agreement, natural failures and
 all unstarted rows, and rejects a late final admission. Native mechanics
 compatibility and actual collection remain pending. Both CI workflows passed on
 `4403976`, preceding this source merge (runs 37080910212 and 37080907551).
+
+
+The separate mechanics compatibility gate on collector source `b7db16a` passes
+all ten owners, 1,575 intervals and thirteen snapshots in 45.793 seconds supervised.
+Root's independent raw audit passes in 5.207 seconds: 83 source hashes, 146 outer
+and 140 inner indexed artifacts, every teacher action/outcome, native windows,
+full replay arrays and twelve observed process exits. All 1,575 numeric rows and
+fields are also bit-exact to the retained v5 source records. The report SHA is
+`b40bc8e7e33254f7828d0106ffc938f2fe7bfb56b1c27dd8b025440d9a7eecc1`; outer
+SHA `dbc4ec135e5e18ef6d6efdef2816244b5c1cdcdb7811c882126c7967c60871c6`.
+Root audit `runs/m6-puck-mechanics-root-audit-b7db16a/audit.json` SHA
+`b2c45c86f2f07b2a1ffa7873c1ba4a206219384ca8bbc17d3db0d74012cb0002`.
+This establishes compatibility of the existing mechanics path after the collector
+change; it does not establish demonstration coverage or learned pushing.
+
+
+CI on `3652aea` exposed four fake-native collector fixture failures because the
+runner used Python 3.11.16 and the actual native protocol requires 3.11.15. Root
+reproduced the failure with host-version metadata before the fixture-only
+`ab2873b` correction. The scoped mock supplies the frozen version and checks
+restoration; all twelve collector fixtures pass under the 3.11.16 marker in
+3.153 seconds. Actual runtime admission and the `b7db16a` native freeze remain
+unchanged. New CI results are pending; the earlier failure is not a green run.
+
+The separate recovery data adapter `f953376` is integrated with **seventeen**
+root data/collector checks passing without skips in 0.588 seconds. Six current
+reader source pins match and imports load neither Torch nor MuJoCo. The first
+root invocation misspelled the collector test module, causing an import error;
+the corrected discovered module passes. The explicit research contract retains
+all executed actions and two separate censored source starts, fixes training/dev
+counts at 2,117/1,228, and leaves old production/v2 admission unchanged. Actual
+corpus preparation and six-model fitting remain pending. Output/corpus overlap,
+source drift, failed sync and late publication are rejected before an admissible
+manifest can be published.
