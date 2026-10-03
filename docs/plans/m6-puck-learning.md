@@ -1,8 +1,9 @@
 # Puck learning v1 — pure contract and staged implementation
 
-This source slice implements the **own sensor-only phase cursor, ninth BEFORE-mode
-input, output scaling and teacher-record admission**. It implements no model,
-collector, native runtime adapter or training job. The separate
+The pure interface implements the **own sensor-only phase cursor, ninth BEFORE-mode
+input, output scaling and teacher-record admission**. The fixed teacher collector
+and [separate trainer/model](m6-puck-training.md) are also implemented; actual
+demonstration collection, training and student native ownership remain pending. The separate
 [learning protocol](m6-puck-learning-v1.json) pins the immutable
 [v4 task protocol](m6-puck-pushing-protocol-v4.json); `load_protocol` resolves its
 32 layouts, limits, original eight-sensor normalization, hyperparameters and
@@ -132,7 +133,10 @@ not actual collection, native replay or model validation.
    source, then (only after review) fixed teacher collection under retained
    TERM1560/+15 and bounded_process1580 with independent descendant containment.
    Both need fresh pinned controls, exclusive slot GO and independent audits.
-2. **One bounded trainer and fixed research loader.** Reuse the existing record,
+2. **Bounded trainer and fixed research loader implemented.** The
+   [trainer and mechanism report](../reports/m6-puck-model-mechanism.md) records
+   four passing CPU checks on authored fixtures; actual demonstration training
+   remains pending. The implementation reuses the existing record,
    storage, `bounded_process` and checkpoint admission patterns. One invocation
    trains one fixed seed; a retained ordered launcher admits seeds 21, 22, 23.
    Keep 30 epochs, Adam .001, batch 64, no weight decay, norm cap 1, one CPU thread,

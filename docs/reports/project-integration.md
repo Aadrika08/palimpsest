@@ -175,3 +175,14 @@ This includes the strict C4 core forks, first-cycle recovery collector and the s
 Separately, [C4](m5-counterbalance-stage-c4.md) completes forty owners, 4,689 neural intervals and forty snapshots with clean shutdown. Root audits all sixteen strict U-only forks and all thirty-six evaluator outcomes. Upper changes are passively repaired at event tick 300 in every condition; no own-U correction or goal benefit appears. Together with C3 this covers eight selected development cells, with the original route/namespace limitations; it does not close R2 or the held-out gate.
 
 The [recovery v3 actual gate](m7-recovery-coverage-v3.md) passes two 67-row sources and independent raw audit. Both stop at the earliest fully admitted clearance query 66 after 45 reverse labels/actions, retaining paused Engine phases. This is first-cycle collection coverage with later driving deliberately censored. The earlier v1/v2 failures remain failures, and the existing production loader still refuses the standalone profile. No new actual training or held-out evaluation follows from this pass.
+
+
+The fixed twenty-owner puck collector at `b7db16a` is integrated in `3844e6d`.
+All **51 focused root checks pass without skips** in 4.559 seconds. A separate
+preloaded-Torch marker reproduction also passes in 0.073 seconds and restores
+the prior module; the original fixture-order failure was reproduced before the
+fixture-only correction. The actual owner still forbids Torch. The collector
+retains exact float64 labels, independent cursor agreement, natural failures and
+all unstarted rows, and rejects a late final admission. Native mechanics
+compatibility and actual collection remain pending. Both CI workflows passed on
+`4403976`, preceding this source merge (runs 37080910212 and 37080907551).
