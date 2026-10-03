@@ -1655,5 +1655,30 @@
     "protocol_sha256": "e41ebb10ca58351b2fe00c858a62c42260c6110da1a0047ad3a62c8f832f92cc",
     "native_execution": false,
     "scope": "First-cycle collection only; later driving deliberately censored. Preserves independent terminal-reason validation and historical failures."
+  },
+  "memory_recovery_learning_regression": {
+    "source_commit": "c7b4436c6321199f313a0301aa8e3d78a0e32650",
+    "tests": 579,
+    "skipped": 0,
+    "unittest_seconds": 122.62,
+    "supervised_seconds": 125.74331041099504,
+    "wall_seconds": 125.74802302000171,
+    "returncode": 0,
+    "report": {
+      "path": "runs/integration-memory-recovery-learning-c7b4436-20261003/report.json",
+      "bytes": 109498,
+      "sha256": "aac83187ad52ab8e5039a0430557a79c77801102f9f50bafcd15425eb5420bb7"
+    },
+    "launcher": {
+      "path": "runs/integration-memory-recovery-learning-c7b4436-launch.py",
+      "bytes": 4217,
+      "sha256": "1949e5e5ee082f07334e5c6fdcbfa3beaa631da46ca490417350b7c0d7314172"
+    },
+    "retained_files_rehashed": 50,
+    "simulation_enabled": true,
+    "male_torch_native_enabled": true,
+    "puck_torch_enabled": true,
+    "sources_assets_models_unchanged": true,
+    "scope": "Combined source regression and authored puck model fixtures; historical actual task gates keep separate frozen evidence. No actual demonstration training, held-out or physical qualification."
   }
 }
