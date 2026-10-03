@@ -368,3 +368,15 @@ call site and adds a real file/snapshot regression; no production API changes.
 Nineteen focused root tests pass without skips in 5.278 seconds at `110e9e6`.
 Fresh v2 controls pass separate root review and the actual six-owner attempt is
 in progress; this section makes no aggregate replay success claim.
+
+## Corrected reference replay audit
+
+The isolated source `9dd805d` passes all six fixed reference replays and 742
+comparisons: 371 saved-action, 129 actual neural-policy and 242 non-neural-policy
+rows. Root independently checks every numeric row, six normalized native initials,
+622 scoped file entries and eight sampled process exits on its first audit
+invocation in 3.323 seconds. Maximum numeric difference is zero. Lifecycle event
+agreement remains bound runner evidence rather than an independent recomputation.
+The first zero-comparison Path failure remains retained. This closes this fixed
+reference replay gate; the full matrix, frozen-stream diagnostic and held-out
+qualification remain open. This audit does not rerun the full regression suite.

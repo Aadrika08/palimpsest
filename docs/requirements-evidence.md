@@ -154,4 +154,9 @@ fits](reports/m6-puck-training-v2.md) then complete thirty epochs each, with all
 ninety histories and finite numeric artifacts audited. Student execution and
 closed-loop task capability remain separate gates. [Reference replay v1](reports/m5-controller-reference-replays-v1.md)
 failed before its first comparison; the isolated Path correction passes nineteen
-focused checks and its new six-owner native attempt is not yet qualified.
+focused checks. [Fresh v2 replay](reports/m5-controller-reference-replays-v2.md)
+passes all six destinations and 742 comparisons: 371 saved-action, 129 actual
+neural-policy and 242 non-neural-policy rows. Independent numeric/native-initial/
+hash/cleanup audit passes with zero numeric difference; lifecycle event agreement
+remains the bound runner result. This closes the fixed reference replay gate,
+not the full matrix, frozen-stream diagnostic or held-out R2 qualification.

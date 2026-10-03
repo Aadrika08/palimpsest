@@ -1940,5 +1940,70 @@
         "sha256": "e4a6661ead7827394134c56123d6dedd20b33155c8c27b36fccc1243031c7c57"
       }
     }
+  },
+  "reference_replay_v2_audit": {
+    "source_commit": "9dd805deb14bc6e1e19a00d80875cfb1aaa63e6b",
+    "status": "passed_fixed_reference_replay",
+    "destinations": 6,
+    "comparisons": 742,
+    "saved_action_rows": 371,
+    "neural_policy_rows": 129,
+    "non_neural_policy_rows": 242,
+    "maximum_absolute_numeric_error": 0.0,
+    "root_audit_seconds": 3.322777538007358,
+    "root_audit_status": "passed_first_invocation",
+    "initial_snapshots_checked": 6,
+    "scoped_file_entries_rehashed": 622,
+    "sampled_exits_checked": 8,
+    "scope": "Independent numeric/native-initial/hash/cleanup checks. Lifecycle event comparisons are bound runner evidence, not independently recomputed here.",
+    "qualification_claims": [],
+    "artifacts": [
+      {
+        "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/project-integration/runs/m5-reference-replay-v2-root-audit-9dd805d/audit.py",
+        "bytes": 6458,
+        "sha256": "778b949a30db3b515a2cb1825eb245d6530bb44e6f833834fd21a9bfda75ae79"
+      },
+      {
+        "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/project-integration/runs/m5-reference-replay-v2-root-audit-9dd805d/audit.json",
+        "bytes": 160763,
+        "sha256": "f696eaa0909f58fbbda333b20a73f51885fe4d7e828282b7ba1947755e3a6323"
+      },
+      {
+        "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/project-integration/runs/m5-reference-replay-v2-root-audit-9dd805d/console.log",
+        "bytes": 1514,
+        "sha256": "2cc45d6f0241f6f13586773dc5e8ded2188767fdaa69b9f1439ca02b540a1854"
+      },
+      {
+        "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/project-integration/runs/m5-reference-replay-v2-root-audit-9dd805d/receipt.json",
+        "bytes": 1297,
+        "sha256": "210c212237cecf8881cbaea66384cf314a2164ea8223939cf7f7838656ac1eef"
+      }
+    ],
+    "prior_failed_attempt": "docs/reports/m5-controller-reference-replays-v1.md",
+    "remaining": "Full counterbalance, frozen-observation U-only diagnostic and held-out R2 qualification remain open."
+  },
+  "recovery_development_source": {
+    "source_commit": "e63ef7ed70dc43c99cf43f6bf30dc9decd801abf",
+    "merge_commit": "9c37c181bb5adfff47140b815214e1dd0a4b6148",
+    "status": "source_review_and_pure_actual_data_admission_passed",
+    "focused_tests": 43,
+    "focused_passed": 42,
+    "focused_skipped": 1,
+    "skip_reason": "explicit Torch opt-in remains disabled for pure source checks",
+    "focused_seconds": 2.039,
+    "pure_admission_child_seconds": 2.7579995679989224,
+    "pure_admission_supervisor_seconds": 2.985,
+    "models": 6,
+    "corpus_sources": 14,
+    "corpus_pins": 171,
+    "no_torch_or_native_import": true,
+    "sources_unchanged": true,
+    "preflight": {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/male-recovery-development/runs/m7-recovery-admission-preflight-e63ef7e/preflight.json",
+      "bytes": 247344,
+      "sha256": "149c7666e89ebb7d4599f4b64a73352ae9dbb92d924301397649a4a600d8605f"
+    },
+    "qualification_claims": [],
+    "remaining": "Combined actual regression and fixed 24-owner development; no held-out route."
   }
 }

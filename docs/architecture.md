@@ -79,7 +79,10 @@ uses privileged geometry. These information differences remain explicit. The
 references have separate admission and conditional replay routes. Their six-owner
 native development gate passes 744 intervals: 260 actual FLYNN policy intervals
 and 484 sensor-script/teacher intervals, with all six navigation goals. Memory
-remains frozen; reference replay and held-out qualification remain pending.
+remains frozen. [Six reference replays](reports/m5-controller-reference-replays-v2.md)
+pass 742 comparisons, including 129 actual neural-policy intervals; saved-action
+replays do not invoke policy inference. Full counterbalance and held-out
+qualification remain pending.
 
 [task_profiles.py](../src/palimpsest/task_profiles.py) supplies visible-landmark
 exploration and encoder-odometry homing. [task_mechanics.py](../src/palimpsest/task_mechanics.py)
@@ -95,7 +98,11 @@ or a topology-benefit result.
 
 The [recovery research adapter](plans/m7-recovery-learning.md) admits the fixed
 baseline plus two complete first-cycle segments, preserving executed actions and
-their censored endings. It leaves production model admission unchanged. The
+their censored endings. [Named recovery development admission](plans/m7-recovery-development.md)
+checks the frozen six-model index before reusing the existing tensor loader and
+24-owner evaluator. Bulk corpus hashes are checked before and after evaluation;
+policy provenance retains the small current reader inventory. Production model
+admission remains unchanged. The
 separate [puck learning interface](plans/m6-puck-learning.md) uses eight sensors
 plus its own previous mode; training requires every fixed demonstration to pass
 coverage admission. The retained first batch fails that gate despite twenty
