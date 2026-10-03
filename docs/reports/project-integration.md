@@ -1,6 +1,16 @@
 # Combined checkout verification
 
-Latest combined source `28ad7c5` passes **682 tests without skips** in
+Latest combined source `5175b14` passes **697 tests without skips** in
+161.294 seconds (164.601 seconds supervised). All simulation, production male
+Torch/native/replay and puck CPU checks are enabled, including the new weighted
+loss/gradient/deterministic-fit fixture and remaining memory profile checks.
+All 491 source entries, twenty assets and production model identities stay
+unchanged; all fifty retained artifacts rehash and the writer lease is free.
+This also covers the legacy lease fixture previously deferred while held-out
+execution held the writer lease. Authored fixture fits are not candidate training;
+remaining memory collection and task/model qualification remain separate.
+
+Earlier combined source `28ad7c5` passes **682 tests without skips** in
 129.311 seconds (131.139 seconds supervised). Simulation, production male
 Torch/native/replay and puck CPU model checks are enabled. All 473 source
 entries, twenty shared assets and production model identities stay unchanged;

@@ -2158,5 +2158,42 @@
     "sources_assets_models_unchanged": true,
     "scope": "Combined actual regression after frozen-observation diagnostic, recovery held-out binding and fixed puck development integration. Candidate held-out/task qualification remains separate.",
     "qualification_claims": []
+  },
+  "memory_full_puck_balanced_regression": {
+    "source_commit": "5175b14b45ae87d2d5d3233c0c7ab6b80a735f1f",
+    "tests": 697,
+    "passed": 697,
+    "skipped": 0,
+    "unittest_seconds": 161.294,
+    "supervised_seconds": 164.60086231700552,
+    "wall_seconds": 164.60475925500214,
+    "returncode": 0,
+    "report": {
+      "path": "runs/integration-memory-full-puck-balanced-5175b14-20261003/report.json",
+      "bytes": 130495,
+      "sha256": "0f847d0c217a52b47a2249bccfc7f82ac8bec741c1f8e81a5af078c5738d3238"
+    },
+    "root_audit": {
+      "path": "runs/integration-memory-full-puck-balanced-5175b14-20261003/validation-audit.json",
+      "bytes": 685,
+      "sha256": "d0c6ac4a370d5194a929d3709c6fcee7312359f441e1d71af4ca63f0d3e0e7e2"
+    },
+    "launcher": {
+      "path": "runs/integration-memory-full-puck-balanced-5175b14-launch.py",
+      "bytes": 4155,
+      "sha256": "5715cb9157b4798ed619bfeee43675840443088710ad5b4408fb6f25b6a30f07"
+    },
+    "console": {
+      "path": "runs/integration-memory-full-puck-balanced-5175b14-launch-console.log",
+      "bytes": 499,
+      "sha256": "1766f87a738b078207ff0652bd90e4021805f69d927a2aa1200a63328efb97e8"
+    },
+    "retained_files_rehashed": 50,
+    "source_files": 491,
+    "all_four_runtime_flags_enabled": true,
+    "sources_assets_models_unchanged": true,
+    "writer_lease_available": true,
+    "scope": "Combined actual regression after fixed remaining memory profiles and explicit balanced-loss source integration. Includes authored weighted-fit fixtures, not candidate fitting or remaining memory execution. Covers the legacy lease fixture deferred during the prior active held-out run.",
+    "qualification_claims": []
   }
 }
