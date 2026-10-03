@@ -1,0 +1,102 @@
+{
+  "application_schema": "puck-balanced-student-development-application-v1",
+  "completion": "Complete every natural task outcome across all12 rows. Protocol/infra failure stops remaining rows not_started. Process success means complete clean collection; goal admission is separate and requires at least3/4 for each model. Held-out remains locked even after passed admission until independent review and explicit GO.",
+  "fresh_only": "Initial snapshot only. Reject native continuation/replay/restore/source-window fields and all unlisted scenes/models before construction. Same existing MLP decide/contact/task/record loop; one prediction per executed interval, no fallback or teacher fields.",
+  "goals_each_model_required": 3,
+  "held_out": "6200-6207 locked; no held-out path admitted by this protocol",
+  "historical_development": {
+    "path": "docs/plans/m6-puck-student-development-v1.json",
+    "sha256": "2857cfc1c5fe18e9d5f34fe30fdc4fc56467110f69424b8efb82bf77b1f2a370"
+  },
+  "id": "puck-balanced-student-development-v1",
+  "initialization": {
+    "exclusions": [
+      "model-specific checkpoint/report identity is separately pinned",
+      "Torch CPU/CUDA RNG retained in raw snapshots but not a paired-start equality criterion",
+      "raw native allocation/diagnostic bytes retained but not compared across constructors"
+    ],
+    "global_rng": "Dev-only random.seed(scene) and numpy.random.seed(scene) before native construction/reset. Model loading retains its existing seeded fork_rng and immutable weights.",
+    "integration_enum": 8191,
+    "integration_shape": [
+      440
+    ],
+    "matched_fields": [
+      "full native model and runtime identity",
+      "mjSTATE_INTEGRATION enum8191 finite float64[440]",
+      "authored task/world/contact excluding episode identifier",
+      "declared float32[8] sensors and float32[9] BEFORE inputs",
+      "approach/tick0 own cursor",
+      "Python/NumPy global RNG, environment RNG/seed and space RNG"
+    ],
+    "rule": "Model21 initial is baseline for its scene. Every later model validates the same-gate completed baseline result/initial snapshot and exact source/model/scene pins, then compares scientific fingerprint before prediction1; mismatch saves its own initial SNP and failed receipt and stops the batch."
+  },
+  "layout_split": "closed_loop_dev",
+  "learning_protocol_sha256": "bfdd047c1763af3d0b254c55df9137e179b65ce99e7eb870ca76f41332a83354",
+  "limits": {
+    "bytes": 3221225472,
+    "inner_seconds": 1200,
+    "kill_grace_seconds": 15,
+    "log_bytes_each": 1048576,
+    "min_free_bytes": 1073741824,
+    "owner_bytes": 167772160,
+    "owner_seconds": 180,
+    "progress_seconds": 30,
+    "report_bytes": 4194304,
+    "snapshot_bytes": 8388608,
+    "startup_seconds": 60,
+    "supervised_seconds": 1280,
+    "term_seconds": 1260,
+    "total_retained_bytes": 17179869184
+  },
+  "max_ticks": 600,
+  "mechanism_prerequisite": {
+    "enclosing_report_sha256": "806f9ddc4f12f3039eea0b24eaf6313c5a3648b7ffe9699089f9816ade4c7e65",
+    "evidence": "docs/reports/m6-puck-balanced-student-mechanism.json",
+    "inner_report_sha256": "277c4ff814118fedc4f636f432f21595b514775bd8d46f1b74c099ea13750815",
+    "outer_report_sha256": "5f5c2e5f4a9fdb9d4e41f5c04c13445dd3938b871fdb76b89bd0e75076222298",
+    "source_commit": "818e7ea34b34d7e96c47206e3e3ae35771ddf70a"
+  },
+  "model_order": [
+    21,
+    22,
+    23
+  ],
+  "models_manifest": {
+    "path": "docs/plans/m6-puck-balanced-student-models-v1.json",
+    "sha256": "dac7171366a33a07dc146787338b6dfeee0090f680f78c75dcdbd29607806919"
+  },
+  "owner_envelope": "learning_student_balanced_development",
+  "owner_order": "scene-major, model21 then22 then23; no replacement, retry or winning-seed selection",
+  "owners": 12,
+  "qualification_claims": [],
+  "record_schema": "puck-balanced-student-development-v1",
+  "runtime": {
+    "backend": "egl",
+    "cpu_threads": 1,
+    "mujoco": "3.3.6",
+    "numpy": "2.2.5",
+    "python": "3.11.15",
+    "torch": "2.9.0"
+  },
+  "scene_order": [
+    6100,
+    6101,
+    6102,
+    6103
+  ],
+  "scientific_source": {
+    "path": "src/palimpsest/puck_development.py",
+    "sha256": "390049ae6ca3a97182918b8df3f5645a325c3ac3961b50ae8ce6bf0fdb721802"
+  },
+  "scope": "Prospective headless fixed balanced-model development; historical negative residual/task evidence retained. No fitting, best-seed selection, held-out, Engine or UI promotion.",
+  "student_contract": {
+    "path": "docs/plans/m6-puck-balanced-student-mechanism-v1.json",
+    "sha256": "b4dbc303ee757287a827ce4783c1090288792247d340e47ad0a5fc55fed47afb",
+    "source_sha256": "85eaa5b2d8f6b64b13a654c0414cfcefe9742134a583a46c93c1f82f9a0b052e"
+  },
+  "training_objective": {
+    "path": "docs/plans/m6-puck-balanced-loss-v1.json",
+    "sha256": "e21431626c59b2430d4eb0583d6f62f54dd9b2e9c3847c8bea06255528b34828"
+  },
+  "version": 1
+}

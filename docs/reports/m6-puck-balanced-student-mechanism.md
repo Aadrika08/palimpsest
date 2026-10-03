@@ -57,9 +57,9 @@ it was corrected before source freeze, not retried as an actual mechanism run.
 The [compact evidence index](m6-puck-balanced-student-mechanism.json) pins the
 controls, all three primary reports, terminal receipt, root auditor and reviews.
 Original reports carry their complete inventories; the index does not duplicate
-them. The inner inventory excludes its own report. The outer inventory is captured
-before publication and can contain a live enclosing-log prefix; final drained logs
-are indexed by the separate enclosing receipt. Finite descendant sampling does not
+them. The inner inventory excludes its own report. The outer retained inventory is fully drained. Its separate `control_inventory`
+can contain a live enclosing-log prefix; final drained logs are indexed by the
+separate enclosing receipt. Finite descendant sampling does not
 claim to observe every transient process.
 
 This result uses source `818e7ea`; integrated dependency inventories differ and
