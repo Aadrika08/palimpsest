@@ -1,4 +1,5 @@
 import json
+import os
 import tempfile
 import time
 import unittest
@@ -116,6 +117,7 @@ class NavigationLadderTests(unittest.TestCase):
         self.assertAlmostEqual(m['rule_loss'], 0)
         self.assertFalse(ladder.eligible({'teacher_dev': m, 'advice_dev': m}))
 
+    @unittest.skipUnless(os.environ.get('PALIMPSEST_MALE_TORCH_CHECKS') == '1', 'explicit CPU model slot required')
     def test_tiny_actual_upstream_graph_arm_initialization_and_injection(self):
         import torch
         from palimpsest.male_model import make_model
@@ -136,6 +138,7 @@ class NavigationLadderTests(unittest.TestCase):
         h, actions = injection(torch.zeros((4, 1, 388)), injection.reset())
         self.assertEqual(tuple(actions.shape), (4, 1, 2)); self.assertTrue(torch.isfinite(h).all())
 
+    @unittest.skipUnless(os.environ.get('PALIMPSEST_MALE_TORCH_CHECKS') == '1', 'explicit CPU model slot required')
     def test_training_schedule_carries_within_episode_resets_at_start_equal_budget(self):
         import torch
         class Tiny(torch.nn.Module):
@@ -200,6 +203,7 @@ class NavigationLadderTests(unittest.TestCase):
             with self.assertRaises(ValueError): out.write('../c', b'')
             with self.assertRaises(TimeoutError): ladder.check_deadline(time.monotonic()-1)
 
+    @unittest.skipUnless(os.environ.get('PALIMPSEST_MALE_TORCH_CHECKS') == '1', 'explicit CPU model slot required')
     def test_tiny_gru_hidden_carry_and_reset_finite_guard(self):
         import torch
         torch.set_num_threads(1)
