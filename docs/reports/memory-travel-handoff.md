@@ -168,3 +168,17 @@ physical hardware, operator and exhibition acceptance remain open. Main remains
 `ee6bf61ea8faec02d5522c7eee30ab7cf333f29d`. This branch is for a stacked draft PR
 on `research/memory-waypoint-amendment`; no merge is claimed. Repo-local author is
 Aadrika Maurya <aadrikamaurya@gmail.com>; publication uses Aadrika08.
+
+[Draft PR #68](https://github.com/Aadrika08/palimpsest/pull/68) publishes this branch,
+stacked on draft #67, authored through Aadrika08. At publication head `8d4908f`,
+fixtures/frontend checks were marked failed without executing: GitHub annotations
+say recent account payments failed or the spending limit needs increasing.
+[Exact API annotations](memory-travel-evidence/ci-annotations.json) preserve that
+account-level blocker separately from local tests and the ENOSPC native failure.
+No workflow or billing settings were changed.
+
+Final CI-documentation staging on `/home` subsequently failed with
+`fatal: unable to write new index file`. Publication continued from an isolated
+shared clone on `/tmp`; the three documentation files were verified and committed
+with the same repository-local author. This publication recovery did not rerun
+science or alter the interrupted raw outputs.
