@@ -52,7 +52,12 @@ closure state. Freeze graph, lengths, tolerances, and profile before confirmatio
 Keep the existing symbolic visibility rules: at most 4 m distance, ±90° field
 of view, and circular line-of-sight occlusion. Sample passability only when the
 inspection landmark is visible and within .75 m. Bearing packets are the only
-directional input to the controller. A required missing bearing is a declared
+supervisor-provided waypoint-direction channel. FLYNN also retains its unchanged
+left/right RGB cameras and collision/angle inputs; visual gate information can
+therefore precede a symbolic passage sample. Do not describe the intervention as
+the controller's sole information source. Record actual motor paths and require
+the pilot to demonstrate decision opportunity despite those shared inputs.
+A required missing bearing is a declared
 failure (`CueUnavailable`), never repaired using hidden pose or true-goal angle.
 
 The future versioned packet additionally needs an explicit landmark-arrival
@@ -132,10 +137,12 @@ prospective untouched test families. Learn U only from historical training;
 design graph/costs and feasibility thresholds only on development. Preserve
 existing historical evidence instead of relabeling v1 as a v2 training result.
 
-Fork every condition from the same complete application snapshot: physics,
+Fork every condition from the same complete base application snapshot: physics,
 controller neural/retina state, all RNG states, current and initial M, detector,
-selector resources, request queues, inspector state, world schedule, and new
-supervisor state. Include phase, route/edge/waypoint IDs, commitment tick,
+request queues, inspector state, world schedule, and new supervisor state.
+Replace only the declared selector configuration/U/resources for each condition,
+recording the substitution and preserving the rest. Include phase,
+route/edge/waypoint IDs, commitment tick,
 inspection and attempt deadlines, pending requests, and accumulated costs.
 Version and validate this schema; a hidden route cursor outside the snapshot
 would break the paired comparison. Require deterministic prefix/restore checks
