@@ -148,6 +148,12 @@ The prior full software suite remains **915 passed /24 skipped**, bound to uncha
 scientific source; it was not rerun for this documentation/readout-only branch.
 Skipped opt-in checks and unexecuted CI are not green qualifications.
 
+[Final independent review](memory-travel-recovery-evidence/final-review.md) found
+no blocking or important findings. All 88 compact copies were checked against
+their indexed sizes/hashes and Git tracking; no raw NPZ/SNP payload is tracked.
+[Publication integrity check](memory-travel-recovery-evidence/publication-check.json)
+records checks made after scientific close, without adding native measurements.
+
 Compact publication contains immutable inputs, metadata, supervision, worker and
 readout receipts plus measured-path SVGs. Raw NPZ camera/control chunks and SNP
 payloads remain local under `/home/utkarsh/Work/shraddha/brain/.worktrees/research-phase/runs/memory-travel-recovery-20261004T133718Z`.
