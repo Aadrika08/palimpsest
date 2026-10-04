@@ -321,6 +321,7 @@ def main(argv=None):
             readout_started = time.monotonic()
             readout_deadline = min(global_deadline, readout_started+readout_cap)
             receipt.update(readout_started_monotonic=readout_started, readout_deadline_monotonic=readout_deadline)
+            gates = False  # Provisional until all integrity/storage/deadline checks finish.
             try:
                 receipt['cleanup'] = cleanup_owners(root)
                 p.deadline_check(readout_deadline)
@@ -355,8 +356,7 @@ def main(argv=None):
                     gates = complete and receipt['restore_pair_matches'] and all(
                         p.prerequisite_pass(spec['mandatory'], {**by_id[spec['id']]['audit'],
                             'repeat_matches': receipt['restore_pair_matches']}) for spec in expected)
-                    receipt['native_prerequisites_passed'] = bool(gates)
-                    receipt['status'] = 'native-prerequisites-passed' if gates else 'native-prerequisite-failure'
+                    receipt['status'] = 'native-prerequisite-failure'
                 recheck_inputs(registration, readout_deadline)
                 receipt['source_and_prior_evidence_unchanged'] = True
                 receipt['artifact_index'] = [item for item in p.hash_ledger(root, readout_deadline)
@@ -364,12 +364,22 @@ def main(argv=None):
                 receipt['storage_before_close'] = storage.usage()
                 receipt['total_new_controls'] = sum(row.get('raw_rows', 0) for row in rows)
                 p.deadline_check(readout_deadline)
+                if mode == 'qualify' and gates:
+                    receipt.update(status='native-prerequisites-passed', native_prerequisites_passed=True)
             except BaseException as error:
-                receipt.update(status='independent-readout-stop', readout_error={'type': type(error).__name__, 'message': str(error)})
+                receipt.update(status='independent-readout-stop', native_prerequisites_passed=False,
+                    qualification_claims=[], readout_error={'type': type(error).__name__, 'message': str(error)})
             receipt.update(readout_seconds=time.monotonic()-readout_started, total_seconds=time.monotonic()-started)
-            replace_control(root/'execution.json', receipt, storage)
-            if time.monotonic() >= readout_deadline:
-                raise TimeoutError('Scientific close receipt exceeded readout/global deadline')
+            try:
+                p.deadline_check(readout_deadline)
+                replace_control(root/'execution.json', receipt, storage)
+                p.deadline_check(readout_deadline)
+            except BaseException as error:
+                receipt.update(status='independent-readout-stop', native_prerequisites_passed=False,
+                    qualification_claims=[], close_error={'type': type(error).__name__, 'message': str(error)})
+                # Invalidate any success written just before crossing the deadline.
+                # This best-effort failure receipt adds no measurement or qualification.
+                replace_control(root/'execution.json', receipt, storage)
     print(json.dumps({key: receipt.get(key) for key in ('status','mode','total_seconds','readout_seconds',
         'total_new_controls','restore_pair_matches','comparison','native_prerequisites_passed')}, indent=2), flush=True)
     return 0 if receipt['status'] in ('diagnostic-pair-audited','native-prerequisites-passed','native-prerequisite-failure') else 1

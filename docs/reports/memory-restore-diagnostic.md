@@ -84,8 +84,22 @@ offline native field localization and the launcher admission boundary.
 
 Before the invocation, focused checks passed69 tests and the full local suite
 passed930 /skipped24, with39 warnings, in102.70 s. After the launcher fix,
-all16 diagnostic software tests pass; the final delivery full-suite result is
-retained separately. RED/GREEN and full output are in the evidence directory.
+all16 diagnostic software tests passed and the full suite passed931 /skipped24,
+with39 warnings, in98.02 s. Independent review then identified one Important
+software issue in the unexecuted qualification mode: a passing flag could survive
+a failed final provenance check or a deadline crossed during receipt publication.
+Both were reproduced through production `main` with completed-owner software
+fixtures, observed failing, then fixed to invalidate promotion on failed close.
+All18 diagnostic tests pass. The final post-review full suite passed
+**933 /skipped24**, with39 warnings, in101.73 s.
+[Final full-suite log](memory-restore-diagnostic-evidence/reviewed-full-suite.log). [Review regression RED](memory-restore-diagnostic-evidence/readout-red.log),
+[GREEN](memory-restore-diagnostic-evidence/readout-green.log).
+[Independent review](memory-restore-diagnostic-evidence/final-review.md) found
+no other Important findings and no Critical or Minor findings. The exact
+registered driver is preserved as
+[executed-driver.py](memory-restore-diagnostic-evidence/executed-driver.py); delivery
+fixes do not retroactively qualify the refused invocation. RED/GREEN and full output
+are in the evidence directory.
 These are software/fixture checks; they do not establish completed native diagnosis,
 deterministic restore, passing prerequisites, R2 benefit or physical qualification.
 CI remains excluded.
@@ -96,6 +110,8 @@ It was not copied into a diagnostic stage because admission stopped first.
 Raw prior NPZ/SNP payloads remain local. Compact Git metadata are not a replay
 bundle. Post-stop integrity checks and report/publication work add no native
 measurements and do not pretend to extend a scientific readout deadline.
+[Publication integrity](memory-restore-diagnostic-evidence/publication-integrity.json)
+checks all339 prior recovery files and all24 historical abort files unchanged.
 
 ## What remains
 

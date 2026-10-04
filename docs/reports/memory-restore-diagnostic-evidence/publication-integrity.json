@@ -1,0 +1,67 @@
+{
+  "checked_at_utc": "2026-10-04T15:30:50.165425+00:00",
+  "ci": "excluded",
+  "delivery_checked_at_utc": "2026-10-04T15:36:37.970061+00:00",
+  "delivery_driver_changed_after_stopped_attempt": true,
+  "delivery_driver_sha256": "04b5eba7bf5873f7ba1595c7f87f784065785d958a9d334b3a8ca4e107bac019",
+  "delivery_verification": {
+    "diagnostic_tests_passed": 18,
+    "full_passed": 933,
+    "full_seconds": 101.73,
+    "full_skipped": 24,
+    "full_warnings": 39,
+    "native_retries": 0
+  },
+  "executed_driver_matches_registration": true,
+  "executed_driver_sha256": "782bf18dc4b4458f90766038a1e0de21958bf585e0fc1f0d2c7444601a801a6c",
+  "failed_attempt_originals": [
+    {
+      "bytes": 100972,
+      "path": "registration.json",
+      "sha256": "34f084951f80b52959395d118da504d7f5ccff922daa81d9d79dd64b35593609"
+    },
+    {
+      "bytes": 2192,
+      "path": "executed-launcher.py",
+      "sha256": "c24516f216806564db538eca5cd0ae6d684f6ae9dbe672f28e5425d512985c42"
+    },
+    {
+      "bytes": 582,
+      "path": "native-launch.json",
+      "sha256": "2973406cb6284d04009bf2859460d53a3b53400e404cc9cde2a8143bc72be1f8"
+    },
+    {
+      "bytes": 603,
+      "path": "native-invocation.log",
+      "sha256": "ea849af31c892c4f0c27dfa67e72a19dd8f302e89b7bbbd365d05310c05984bf"
+    },
+    {
+      "bytes": 121,
+      "path": "invocation-result.json",
+      "sha256": "4858f9d772dae09f6ef38f14bc916381b0a461d1a6178e99e14676ca06276e9e"
+    },
+    {
+      "bytes": 1243,
+      "path": "admission-stop.json",
+      "sha256": "6f2fc31d41c72fc5c375fd2d25406df1a058f1d48dd4cca732e319fecddd87ea"
+    },
+    {
+      "bytes": 22086,
+      "path": "executed-driver.py",
+      "sha256": "782bf18dc4b4458f90766038a1e0de21958bf585e0fc1f0d2c7444601a801a6c"
+    }
+  ],
+  "historical_abort_files_unchanged": 24,
+  "main_unchanged": "ee6bf61ea8faec02d5522c7eee30ab7cf333f29d",
+  "native_retries_after_delivery_fixes": 0,
+  "prior_recovery_files_unchanged": 339,
+  "qualification_claims": [],
+  "registered_output_absent": true,
+  "retries": 0,
+  "reviewed_head": "77f062eaf2fb23749164e73c38afa2fb0cd17a13",
+  "schema": "memory-restore-publication-integrity-v1",
+  "scientific_source_identity_unchanged_since_registration": true,
+  "scope": "post-stop documentary integrity checks, no native measurements",
+  "source_snapshot_unchanged": true,
+  "tracked_raw_npz_snp_payloads": 0
+}

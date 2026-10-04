@@ -298,3 +298,57 @@ def test_launcher_keeps_checkout_clean_until_child_admission(tmp_path, monkeypat
     with pytest.raises(ValueError, match='clean'):
         module.main()
     assert len(native_calls) == 1
+
+
+@pytest.mark.parametrize('failure', ['source-recheck', 'close-deadline'])
+def test_qualification_readout_failure_cannot_publish_passing_gate(tmp_path, monkeypatch, failure):
+    """Exercise production main; doubles supply completed owners, never launch them."""
+    d = diagnostic(); repo = tmp_path/'repo'; (repo/'scripts').mkdir(parents=True)
+    monkeypatch.setattr(d, '__file__', str(repo/'scripts/memory_restore_diagnostic.py'))
+    output = repo/'runs/qualify'
+    registration = {'schema': 'memory-restore-registration-v1', 'mode': 'qualify',
+        'repo': str(repo), 'profile_sha256': d.PROFILE, 'protocol_sha256': p.TRAVEL_PROTOCOL_SHA256,
+        'seconds_caps': [4300, 600], 'implementation_commit': '0'*40,
+        'assets': str(repo/'assets'), 'history_root': str(repo/'histories'),
+        'source_identity': {}, 'output': str(output)}
+    regfile = tmp_path/'registration.json'; regfile.write_text(json.dumps(registration))
+    def git(command, **kwargs):
+        if 'rev-parse' in command:
+            return '0'*40+'\n'
+        return b''
+    monkeypatch.setattr(d.subprocess, 'check_output', git)
+    checked = []
+    def recheck(reg, deadline):
+        checked.append(True)
+        if len(checked) == 2 and failure == 'source-recheck':
+            raise ValueError('source changed at close')
+    monkeypatch.setattr(d, 'recheck_inputs', recheck)
+    monkeypatch.setattr(p, 'preflight', lambda *args, **kwargs: {'output': str(output/'stage')})
+    from contextlib import nullcontext
+    from palimpsest.storage import StorageBudget
+    monkeypatch.setattr(StorageBudget, 'lock', lambda self: nullcontext())
+    monkeypatch.setattr(p, 'execute_stage', lambda *args, **kwargs: {'attempted': []})
+    monkeypatch.setattr(d, 'cleanup_owners', lambda root: [])
+    audit = {'invariants_preserved': True, 'trace_digest': 'same', 'acquired': True,
+             'goal': True, 'retreat_completed': True}
+    rows = [{'job_id': spec['id'], 'run_id': str(index), 'raw_audit_pass': True,
+             'matching_owner_exited': True, 'retained_post_state_audited': True,
+             'audit': audit, 'raw_rows': 5}
+            for index, spec in enumerate(p.travel_specs('travel-feasibility', d.PROFILE))]
+    monkeypatch.setattr(d, 'audit_owners', lambda *args: rows)
+    monkeypatch.setattr(d, 'audit_post_state', lambda *args: (post_state(), {'old'}))
+    if failure == 'close-deadline':
+        real_time = d.time.monotonic
+        expired = []
+        monkeypatch.setattr(d.time, 'monotonic', lambda: real_time()+(10000 if expired else 0))
+        real_replace = d.replace_control
+        def replace(path, value, storage):
+            real_replace(path, value, storage)
+            if value.get('status') == 'native-prerequisites-passed':
+                expired.append(True)
+        monkeypatch.setattr(d, 'replace_control', replace)
+    assert d.main(['--registration', str(regfile)]) == 1
+    receipt = p.read_json(output/'execution.json')
+    assert receipt['status'] == 'independent-readout-stop'
+    assert receipt['native_prerequisites_passed'] is False
+    assert receipt['qualification_claims'] == []

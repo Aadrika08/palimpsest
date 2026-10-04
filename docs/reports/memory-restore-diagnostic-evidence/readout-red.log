@@ -1,0 +1,264 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+_ test_qualification_readout_failure_cannot_publish_passing_gate[source-recheck] _
+
+tmp_path = PosixPath('/tmp/pytest-of-utkarsh/pytest-49/test_qualification_readout_fai0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7957648f4d90>
+failure = 'source-recheck'
+
+    @pytest.mark.parametrize('failure', ['source-recheck', 'close-deadline'])
+    def test_qualification_readout_failure_cannot_publish_passing_gate(tmp_path, monkeypatch, failure):
+        """Exercise production main; doubles supply completed owners, never launch them."""
+        d = diagnostic(); repo = tmp_path/'repo'; (repo/'scripts').mkdir(parents=True)
+        monkeypatch.setattr(d, '__file__', str(repo/'scripts/memory_restore_diagnostic.py'))
+        output = repo/'runs/qualify'
+        registration = {'schema': 'memory-restore-registration-v1', 'mode': 'qualify',
+            'repo': str(repo), 'profile_sha256': d.PROFILE, 'protocol_sha256': p.TRAVEL_PROTOCOL_SHA256,
+            'seconds_caps': [4300, 600], 'implementation_commit': '0'*40,
+            'assets': str(repo/'assets'), 'history_root': str(repo/'histories'),
+            'source_identity': {}, 'output': str(output)}
+        regfile = tmp_path/'registration.json'; regfile.write_text(json.dumps(registration))
+        def git(command, **kwargs):
+            if 'rev-parse' in command:
+                return '0'*40+'\n'
+            return b''
+        monkeypatch.setattr(d.subprocess, 'check_output', git)
+        checked = []
+        def recheck(reg, deadline):
+            checked.append(True)
+            if len(checked) == 2 and failure == 'source-recheck':
+                raise ValueError('source changed at close')
+        monkeypatch.setattr(d, 'recheck_inputs', recheck)
+        monkeypatch.setattr(p, 'preflight', lambda *args, **kwargs: {'output': str(output/'stage')})
+        from contextlib import nullcontext
+        from palimpsest.storage import StorageBudget
+        monkeypatch.setattr(StorageBudget, 'lock', lambda self: nullcontext())
+        monkeypatch.setattr(p, 'execute_stage', lambda *args, **kwargs: {'attempted': []})
+        monkeypatch.setattr(d, 'cleanup_owners', lambda root: [])
+        audit = {'invariants_preserved': True, 'trace_digest': 'same', 'acquired': True,
+                 'goal': True, 'retreat_completed': True}
+        rows = [{'job_id': spec['id'], 'run_id': str(index), 'raw_audit_pass': True,
+                 'matching_owner_exited': True, 'retained_post_state_audited': True,
+                 'audit': audit, 'raw_rows': 5}
+                for index, spec in enumerate(p.travel_specs('travel-feasibility', d.PROFILE))]
+        monkeypatch.setattr(d, 'audit_owners', lambda *args: rows)
+        monkeypatch.setattr(d, 'audit_post_state', lambda *args: (post_state(), {'old'}))
+        if failure == 'close-deadline':
+            real_time = d.time.monotonic
+            expired = []
+            monkeypatch.setattr(d.time, 'monotonic', lambda: real_time()+(10000 if expired else 0))
+            real_replace = d.replace_control
+            def replace(path, value, storage):
+                real_replace(path, value, storage)
+                if value.get('status') == 'native-prerequisites-passed':
+                    expired.append(True)
+            monkeypatch.setattr(d, 'replace_control', replace)
+        assert d.main(['--registration', str(regfile)]) == 1
+        receipt = p.read_json(output/'execution.json')
+        assert receipt['status'] == 'independent-readout-stop'
+>       assert receipt['native_prerequisites_passed'] is False
+E       assert True is False
+
+tests/test_memory_restore_diagnostic.py:353: AssertionError
+----------------------------- Captured stdout call -----------------------------
+{
+  "status": "independent-readout-stop",
+  "mode": "qualify",
+  "total_seconds": 0.003664841002319008,
+  "readout_seconds": 0.0011858200014103204,
+  "total_new_controls": null,
+  "restore_pair_matches": true,
+  "comparison": {
+    "equal": true,
+    "left_digest": "a84d287da066ba6a222599705a563663be26c8a233f38fc2da623e3830a8db54",
+    "right_digest": "a84d287da066ba6a222599705a563663be26c8a233f38fc2da623e3830a8db54",
+    "differing_components": []
+  },
+  "native_prerequisites_passed": true
+}
+_ test_qualification_readout_failure_cannot_publish_passing_gate[close-deadline] _
+
+tmp_path = PosixPath('/tmp/pytest-of-utkarsh/pytest-49/test_qualification_readout_fai1')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7957647435d0>
+failure = 'close-deadline'
+
+    @pytest.mark.parametrize('failure', ['source-recheck', 'close-deadline'])
+    def test_qualification_readout_failure_cannot_publish_passing_gate(tmp_path, monkeypatch, failure):
+        """Exercise production main; doubles supply completed owners, never launch them."""
+        d = diagnostic(); repo = tmp_path/'repo'; (repo/'scripts').mkdir(parents=True)
+        monkeypatch.setattr(d, '__file__', str(repo/'scripts/memory_restore_diagnostic.py'))
+        output = repo/'runs/qualify'
+        registration = {'schema': 'memory-restore-registration-v1', 'mode': 'qualify',
+            'repo': str(repo), 'profile_sha256': d.PROFILE, 'protocol_sha256': p.TRAVEL_PROTOCOL_SHA256,
+            'seconds_caps': [4300, 600], 'implementation_commit': '0'*40,
+            'assets': str(repo/'assets'), 'history_root': str(repo/'histories'),
+            'source_identity': {}, 'output': str(output)}
+        regfile = tmp_path/'registration.json'; regfile.write_text(json.dumps(registration))
+        def git(command, **kwargs):
+            if 'rev-parse' in command:
+                return '0'*40+'\n'
+            return b''
+        monkeypatch.setattr(d.subprocess, 'check_output', git)
+        checked = []
+        def recheck(reg, deadline):
+            checked.append(True)
+            if len(checked) == 2 and failure == 'source-recheck':
+                raise ValueError('source changed at close')
+        monkeypatch.setattr(d, 'recheck_inputs', recheck)
+        monkeypatch.setattr(p, 'preflight', lambda *args, **kwargs: {'output': str(output/'stage')})
+        from contextlib import nullcontext
+        from palimpsest.storage import StorageBudget
+        monkeypatch.setattr(StorageBudget, 'lock', lambda self: nullcontext())
+        monkeypatch.setattr(p, 'execute_stage', lambda *args, **kwargs: {'attempted': []})
+        monkeypatch.setattr(d, 'cleanup_owners', lambda root: [])
+        audit = {'invariants_preserved': True, 'trace_digest': 'same', 'acquired': True,
+                 'goal': True, 'retreat_completed': True}
+        rows = [{'job_id': spec['id'], 'run_id': str(index), 'raw_audit_pass': True,
+                 'matching_owner_exited': True, 'retained_post_state_audited': True,
+                 'audit': audit, 'raw_rows': 5}
+                for index, spec in enumerate(p.travel_specs('travel-feasibility', d.PROFILE))]
+        monkeypatch.setattr(d, 'audit_owners', lambda *args: rows)
+        monkeypatch.setattr(d, 'audit_post_state', lambda *args: (post_state(), {'old'}))
+        if failure == 'close-deadline':
+            real_time = d.time.monotonic
+            expired = []
+            monkeypatch.setattr(d.time, 'monotonic', lambda: real_time()+(10000 if expired else 0))
+            real_replace = d.replace_control
+            def replace(path, value, storage):
+                real_replace(path, value, storage)
+                if value.get('status') == 'native-prerequisites-passed':
+                    expired.append(True)
+            monkeypatch.setattr(d, 'replace_control', replace)
+>       assert d.main(['--registration', str(regfile)]) == 1
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_memory_restore_diagnostic.py:350: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+argv = ['--registration', '/tmp/pytest-of-utkarsh/pytest-49/test_qualification_readout_fai1/registration.json']
+
+    def main(argv=None):
+        started = time.monotonic()
+        parser = argparse.ArgumentParser(description=__doc__)
+        parser.add_argument('--registration', type=Path, required=True)
+        args = parser.parse_args(argv)
+        registration = p.read_json(args.registration)
+        if registration.get('schema') != 'memory-restore-registration-v1' or registration.get('mode') not in CAPS:
+            raise ValueError('Unknown diagnostic registration')
+        mode = registration['mode']; owner_cap, readout_cap = CAPS[mode]
+        global_deadline = started+owner_cap+readout_cap; owner_deadline = started+owner_cap
+        repo = p.checked_path(registration['repo'])
+        if repo != Path(__file__).resolve().parents[1] or registration['profile_sha256'] != PROFILE:
+            raise ValueError('Registered checkout or fixed profile differs')
+        if registration.get('protocol_sha256') != p.TRAVEL_PROTOCOL_SHA256:
+            raise ValueError('Existing travel protocol differs')
+        if list(registration.get('seconds_caps', [])) != [owner_cap, readout_cap]:
+            raise ValueError('Registered diagnostic allocation differs')
+        if subprocess.check_output(['git', 'status', '--porcelain'], cwd=repo):
+            raise ValueError('Native admission requires a clean implementation checkout')
+        head = subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=repo, text=True).strip()
+        if subprocess.check_output(['git', 'diff', registration['implementation_commit'], head, '--name-only',
+            '--', 'src', 'scripts', 'tests', 'model_manifests', 'uv.lock', 'upstream'], cwd=repo):
+            raise ValueError('Registered implementation differs')
+        root = p.safe_output(registration['output'], p.source_paths(repo, registration['assets'], registration['history_root']))
+        if root.exists():
+            raise ValueError('Registered invocation output already exists; no retry')
+        recheck_inputs(registration, owner_deadline)
+        plan = p.preflight(repo, Path(registration['assets']), Path(registration['history_root']),
+            root/'stage', root, owner_deadline, profile_sha256=PROFILE)
+        plan.update(protocol=p.TRAVEL_PROTOCOL, protocol_sha256=p.TRAVEL_PROTOCOL_SHA256,
+                    selected_profile_sha256=PROFILE)
+        storage = p.phase_budget(root)
+        receipt = {'schema': 'memory-restore-execution-v1', 'mode': mode, 'implementation_head': head,
+            'registration_sha256': p.file_hash(args.registration), 'source_identity': registration['source_identity'],
+            'started_utc': datetime.now(timezone.utc).isoformat(), 'started_monotonic': started,
+            'global_deadline_monotonic': global_deadline, 'owner_deadline_monotonic': owner_deadline,
+            'seconds_caps': [owner_cap, readout_cap], 'output': str(root), 'status': 'running',
+            'attempted': [], 'qualification_claims': [], 'paired_pilot': 'unattempted-by-scope',
+            'held_out_used': False, 'retries': 0, 'native_prerequisites_passed': False}
+        def interrupted(signum, frame):
+            raise RuntimeError('External invocation interruption: '+str(signum))
+        signal.signal(signal.SIGTERM, interrupted)
+        root.mkdir(parents=True, exist_ok=False)
+        with storage.lock():
+            stage = root/'stage'; stage.mkdir()
+            p.write_control(root/'registration.json', registration, storage)
+            p.write_control(stage/'preflight.json', plan, storage)
+            replace_control(root/'execution.json', receipt, storage)
+            try:
+                if mode == 'diagnose':
+                    source = copy_source(registration['source_snapshot'], stage/'source/snapshots/initial.snp', storage)
+                    p.write_control(root/'source-copy.json', source, storage)
+                    def checkpoint(results):
+                        receipt['attempted'] = results
+                        replace_control(root/'execution.json', receipt, storage)
+                    receipt['attempted'] = run_pair(plan, storage, owner_deadline, source, checkpoint)
+                else:
+                    qualification = p.execute_stage('travel-feasibility', plan, storage, owner_deadline,
+                                                    retain_repeat_state=True)
+                    receipt['attempted'] = qualification['attempted']
+                    receipt['qualification'] = qualification
+                p.deadline_check(owner_deadline)
+                receipt['status'] = 'recorded-bounded-attempt'
+            except BaseException as error:
+                receipt.update(status='owner-or-admission-stop', error={'type': type(error).__name__, 'message': str(error)})
+            finally:
+                readout_started = time.monotonic()
+                readout_deadline = min(global_deadline, readout_started+readout_cap)
+                receipt.update(readout_started_monotonic=readout_started, readout_deadline_monotonic=readout_deadline)
+                try:
+                    receipt['cleanup'] = cleanup_owners(root)
+                    p.deadline_check(readout_deadline)
+                    attempted = {row['run_id']: row for row in receipt['attempted']}
+                    rows = audit_owners(stage, attempted, readout_deadline)
+                    receipt['owners'] = rows
+                    expected = (p.travel_specs('travel-feasibility', PROFILE)[-2:] if mode=='diagnose'
+                                else p.travel_specs('travel-feasibility', PROFILE))
+                    by_id = {row['job_id']: row for row in rows}
+                    receipt['unattempted'] = [spec['id'] for spec in expected if spec['id'] not in by_id]
+                    complete = (receipt['status'] == 'recorded-bounded-attempt'
+                        and len(rows) == len(expected) and not receipt['unattempted']
+                        and all(row['raw_audit_pass'] and row.get('matching_owner_exited') for row in rows))
+                    repeats = [by_id[name] for name in ('restore-1', 'restore-2') if name in by_id]
+                    if len(repeats) == 2 and all(row.get('retained_post_state_audited') for row in repeats):
+                        posts = [audit_post_state(stage/'runs'/row['run_id'], row['audit']) for row in repeats]
+                        comparison = compare_states(posts[0][0], posts[1][0], posts[0][1], posts[1][1])
+                        p.write_control(root/'state-comparison.json', comparison, storage)
+                        if 'native_data' in comparison['differing_components']:
+                            p.deadline_check(readout_deadline)
+                            p.write_control(root/'native-field-comparison.json',
+                                compare_native_states(posts[0][0], posts[1][0]), storage)
+                        receipt['comparison'] = {k: comparison[k] for k in ('equal','left_digest','right_digest','differing_components')}
+                        trace_equal = repeats[0]['audit']['trace_digest'] == repeats[1]['audit']['trace_digest']
+                        receipt['restore_pair_matches'] = (comparison['equal'] and trace_equal and
+                            all(row['audit'].get('invariants_preserved') is True for row in repeats))
+                    else:
+                        receipt['restore_pair_matches'] = False
+                    if mode=='diagnose':
+                        receipt['status'] = ('diagnostic-pair-audited' if complete else 'diagnostic-evidence-stop')
+                    else:
+                        gates = complete and receipt['restore_pair_matches'] and all(
+                            p.prerequisite_pass(spec['mandatory'], {**by_id[spec['id']]['audit'],
+                                'repeat_matches': receipt['restore_pair_matches']}) for spec in expected)
+                        receipt['native_prerequisites_passed'] = bool(gates)
+                        receipt['status'] = 'native-prerequisites-passed' if gates else 'native-prerequisite-failure'
+                    recheck_inputs(registration, readout_deadline)
+                    receipt['source_and_prior_evidence_unchanged'] = True
+                    receipt['artifact_index'] = [item for item in p.hash_ledger(root, readout_deadline)
+                                                 if item['path'] != 'execution.json']
+                    receipt['storage_before_close'] = storage.usage()
+                    receipt['total_new_controls'] = sum(row.get('raw_rows', 0) for row in rows)
+                    p.deadline_check(readout_deadline)
+                except BaseException as error:
+                    receipt.update(status='independent-readout-stop', readout_error={'type': type(error).__name__, 'message': str(error)})
+                receipt.update(readout_seconds=time.monotonic()-readout_started, total_seconds=time.monotonic()-started)
+                replace_control(root/'execution.json', receipt, storage)
+                if time.monotonic() >= readout_deadline:
+>                   raise TimeoutError('Scientific close receipt exceeded readout/global deadline')
+E                   TimeoutError: Scientific close receipt exceeded readout/global deadline
+
+scripts/memory_restore_diagnostic.py:372: TimeoutError
+=========================== short test summary info ============================
+FAILED tests/test_memory_restore_diagnostic.py::test_qualification_readout_failure_cannot_publish_passing_gate[source-recheck]
+FAILED tests/test_memory_restore_diagnostic.py::test_qualification_readout_failure_cannot_publish_passing_gate[close-deadline]
+2 failed in 0.19s
