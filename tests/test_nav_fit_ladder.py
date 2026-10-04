@@ -33,17 +33,18 @@ class NavigationLadderTests(unittest.TestCase):
         self.assertEqual((mean[384], scale[384]), (0, 1))
 
     def test_recovery_alignment_preaction_target_negative_only(self):
-        ep = episode(ticks=4)
-        ep['targets'][:, 0] = [-.35, -.35, 0, 0]
-        ep['features'][:, 384] = [1, 1, 0, 0]
-        ep['recovery'] = np.array([True, True, True, False])
-        ep['onset'] = np.array([True, False, False, False])
-        actions = np.zeros((4, 2), np.float32); actions[:, 0] = [-1, 1, -1, -1]
+        ep = episode(ticks=5)
+        ep['targets'][:, 0] = [-.35, -.35, 0, 0, 0]
+        ep['features'][:, 384] = [1, 1, 0, 0, 0]
+        ep['recovery'] = np.array([True, True, True, False, False])
+        ep['onset'] = np.array([True, False, False, False, False])
+        actions = np.zeros((5, 2), np.float32); actions[:, 0] = [-1, 1, -1, -1, 1]
         metrics = ladder.panel_metrics([ep], [actions], np.zeros(2, np.float32))
         self.assertEqual(metrics['onset_negative_count'], 1)
         self.assertEqual(metrics['onset_reverse_recall'], 1)
         self.assertEqual(metrics['false_reverse_count'], 1)
-        self.assertEqual(metrics['false_reverse_rate'], 1)
+        self.assertEqual(metrics['false_reverse_denominator'], 2)
+        self.assertEqual(metrics['false_reverse_rate'], .5)
         ep.pop('recovery')
         self.assertIsNone(ladder.panel_metrics([ep], [actions], np.zeros(2, np.float32))['false_reverse_rate'])
 

@@ -342,13 +342,16 @@ def panel_metrics(episodes, predictions, constant):
         'constant_loss': float(numpy_loss(np.broadcast_to(constant, target.shape), target).mean()),
         'output_std': actions.std(0).tolist(), 'output_range': np.ptp(actions, axis=0).tolist(),
         'onset_negative_count': 0, 'onset_reverse_recall': None,
-        'false_reverse_count': 0, 'false_reverse_rate': None, 'recovery_alignment': 'unknown', 'per_scene': []}
+        'false_reverse_count': 0, 'false_reverse_denominator': 0, 'false_reverse_rate': None,
+        'recovery_alignment': 'unknown', 'per_scene': []}
     if all('recovery' in x and 'onset' in x for x in episodes):
         recovery = np.concatenate([x['recovery'] for x in episodes]); onset = np.concatenate([x['onset'] for x in episodes])
         if recovery.dtype != bool or onset.dtype != bool or recovery.shape != (len(target),) or onset.shape != (len(target),):
             raise ValueError('Aligned boolean recovery/onset required')
         required = onset & (target[:, 0] < 0); outside = (target[:, 0] >= 0) & ~recovery
-        result.update(onset_negative_count=int(required.sum()), false_reverse_count=int(outside.sum()), recovery_alignment='validated pre-action phase')
+        result.update(onset_negative_count=int(required.sum()),
+            false_reverse_count=int((outside & (actions[:, 0] < 0)).sum()),
+            false_reverse_denominator=int(outside.sum()), recovery_alignment='validated pre-action phase')
         if required.any(): result['onset_reverse_recall'] = float((actions[required, 0] < 0).mean())
         if outside.any(): result['false_reverse_rate'] = float((actions[outside, 0] < 0).mean())
     for ep, a in zip(episodes, predictions, strict=True):
