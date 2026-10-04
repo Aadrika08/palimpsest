@@ -1,7 +1,7 @@
 # Memory-v2 integrated software verification
 
-Implementation `253f7f6`; pinned Python3.11.15/Torch2.9.0/NumPy2.2.5 environment.
-The complete default checkout suite passed: **878 passed, 24 skipped** in116.79s.
+Implementation `253f7f6`; pinned Python 3.11.15/Torch 2.9.0/NumPy 2.2.5 environment.
+The complete default checkout suite passed: **878 passed, 24 skipped** in 116.79 s.
 No targeted test partition or exclusions were used. Asset-backed opt-in skips do
 not qualify the new native scene. [Raw output](regression.log).
 
@@ -20,8 +20,8 @@ execution uses the actual user writer lease, without this fixture.
 Independent static integration review and nine pure checks found no important
 remaining issue after correcting snapshot preallocation admission, pilot profile
 metadata, commitment bindings, destination receipt IDs and pre-event failures.
-Runtime-focused verification also passed177 tests with6 opt-in skips. A broader
-agent checkout run failed18 tests and raised14 errors because its upstream files
+Runtime-focused verification also passed 177 tests with 6 opt-in skips. A broader
+agent checkout run failed 18 tests and raised 14 errors because its upstream files
 were absent; the populated integrated checkout above resolves those failures.
 
 One retained real CPU FLYNN SNP was read-only checked for structural compatibility

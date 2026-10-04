@@ -1,0 +1,227 @@
+{
+  "artifact_index": [
+    {
+      "bytes": 0,
+      "path": ".palimpsest-storage.lock",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 567999,
+      "path": "diagnostics/report.json",
+      "sha256": "41fdb0dfef615b267291e12beab9de79f1ed352916eff1340853c8891b59a9b7"
+    },
+    {
+      "bytes": 0,
+      "path": "diagnostics-supervisor/stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 287,
+      "path": "diagnostics-supervisor/stdout.log",
+      "sha256": "8aa820d5d90d1f38f4c7d2f0ef5fda3081ca84d5943b80946cfdd2bb88160c40"
+    },
+    {
+      "bytes": 345,
+      "path": "diagnostics-supervisor/supervisor.json",
+      "sha256": "b03ead42a242e051eaa9ff155656d28828f36838b739e9b35246272618b8f3dd"
+    },
+    {
+      "bytes": 8341,
+      "path": "invocation.py",
+      "sha256": "711d63c2a1258babb14e81475210ef81b7a843ffb73ee00018cf21b5d06ccf61"
+    },
+    {
+      "bytes": 26779,
+      "path": "prerequisites/jobs/f1bc7d409fcd4f34bc8c0e3eb6a1a83a.json",
+      "sha256": "b883add40151974aaf76b46945580d12c05fd07c60560d41dbf444bc1c1e77c7"
+    },
+    {
+      "bytes": 94646,
+      "path": "prerequisites/preflight.json",
+      "sha256": "db32979d92ef21badb461f2a256514291a2fe12f3f8bff0e9f10d60afbf497db"
+    },
+    {
+      "bytes": 141815,
+      "path": "prerequisites/report.json",
+      "sha256": "c8f8caddadc688149d2acd0abf88d0334ff411007ec62d1af16ccbc94c1dd6b1"
+    },
+    {
+      "bytes": 102,
+      "path": "prerequisites/runs/f1bc7d409fcd4f34bc8c0e3eb6a1a83a/owner.json",
+      "sha256": "a98ca924a82a3605b6f2bff3681cb54f4ae07791604e4b69e6ea1413e07c180f"
+    },
+    {
+      "bytes": 6919538,
+      "path": "prerequisites/runs/f1bc7d409fcd4f34bc8c0e3eb6a1a83a/recording/chunks/000000.npz",
+      "sha256": "47f9bfb5e30877ed28ae0d44e7eb1ef1390654c013e4daae47a7cd6df843debf"
+    },
+    {
+      "bytes": 6919538,
+      "path": "prerequisites/runs/f1bc7d409fcd4f34bc8c0e3eb6a1a83a/recording/chunks/000001.npz",
+      "sha256": "4f01824c19962db527f4e13fe909a09f0bdfed7e5b872bdc9a57142d3f4ec179"
+    },
+    {
+      "bytes": 6919538,
+      "path": "prerequisites/runs/f1bc7d409fcd4f34bc8c0e3eb6a1a83a/recording/chunks/000002.npz",
+      "sha256": "6e578e6f493923e62dd55fc94eb9741477dda4a394db0748e008a0ab917a878f"
+    },
+    {
+      "bytes": 1085000,
+      "path": "prerequisites/runs/f1bc7d409fcd4f34bc8c0e3eb6a1a83a/recording/chunks/000003.npz",
+      "sha256": "8bcfdd12a4b408dd957d48a4eea57226357ff1f845f91160d3a796707ae22145"
+    },
+    {
+      "bytes": 878116,
+      "path": "prerequisites/runs/f1bc7d409fcd4f34bc8c0e3eb6a1a83a/recording/events.jsonl",
+      "sha256": "fa71e6887aca9041c691ee0388b268babd001ebbd396b3171e1374b877d8e942"
+    },
+    {
+      "bytes": 31256,
+      "path": "prerequisites/runs/f1bc7d409fcd4f34bc8c0e3eb6a1a83a/recording/manifest.json",
+      "sha256": "60a6932f70ff31f54b40be69bbe2d99d0ed1ccfcd1bb435898792ec321637234"
+    },
+    {
+      "bytes": 99897,
+      "path": "prerequisites/runs/f1bc7d409fcd4f34bc8c0e3eb6a1a83a/worker-report.json",
+      "sha256": "d45d13ea48cf1419c8feb15635401f236f8228a526a67b5d50318d4970d06798"
+    },
+    {
+      "bytes": 1176,
+      "path": "prerequisites/supervision/f1bc7d409fcd4f34bc8c0e3eb6a1a83a/stderr.log",
+      "sha256": "d498f1f441f62e1f6ad4cacba667b21f1970f70679fa3a196d6e7b737fe3fb27"
+    },
+    {
+      "bytes": 927,
+      "path": "prerequisites/supervision/f1bc7d409fcd4f34bc8c0e3eb6a1a83a/stdout.log",
+      "sha256": "ae57d17fce891404c85c7c7eb1facb11a2dedbc378c9adf5a9618432cb3818e8"
+    },
+    {
+      "bytes": 364,
+      "path": "prerequisites/supervision/f1bc7d409fcd4f34bc8c0e3eb6a1a83a/supervisor.json",
+      "sha256": "2c352a91d0279471294b76abcfabea07fe563df01f7acca2b3e750ca9eae7efc"
+    },
+    {
+      "bytes": 0,
+      "path": "prerequisites-supervisor/stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 341,
+      "path": "prerequisites-supervisor/stdout.log",
+      "sha256": "55889b68678fc1d35d32ce5e4736fb60ef47afb202f499aa9b4b733a6ecdab2d"
+    },
+    {
+      "bytes": 345,
+      "path": "prerequisites-supervisor/supervisor.json",
+      "sha256": "c704f15067d1b88a29927cb782add7e34b8b966be79f16c8b93a431529ea8250"
+    }
+  ],
+  "caps": {
+    "diagnostics": 600,
+    "pilot": 4200,
+    "prerequisites": 1800,
+    "readout": 600
+  },
+  "detached_owner_cleanup": [
+    {
+      "owner": {
+        "pgid": 31,
+        "pid": 31,
+        "run_id": "f1bc7d409fcd4f34bc8c0e3eb6a1a83a",
+        "starttime": 1236647
+      },
+      "path": "prerequisites/runs/f1bc7d409fcd4f34bc8c0e3eb6a1a83a/owner.json",
+      "status": "already-exited"
+    }
+  ],
+  "elapsed_seconds": 131.7799124209996,
+  "held_out_used": false,
+  "implementation_head": "5f22585abd3f1acef322b582dc15f8b2b24fc168",
+  "invocation_sha256": "711d63c2a1258babb14e81475210ef81b7a843ffb73ee00018cf21b5d06ccf61",
+  "max_bytes": 8589934592,
+  "max_seconds": 7200,
+  "output": "/home/utkarsh/Work/shraddha/brain/.worktrees/research-phase/runs/memory-v2-feasibility-20261004T093143Z",
+  "qualification_claims": [],
+  "readout_seconds": 0.04576633699980448,
+  "retries": 0,
+  "schema": "memory-v2-phase-execution-v1",
+  "scope": "exploratory feasibility",
+  "stages": {
+    "diagnostics": {
+      "command": [
+        "/home/utkarsh/Work/shraddha/brain/.worktrees/lab-hardening/.venv/bin/python",
+        "/home/utkarsh/Work/shraddha/brain/.worktrees/research-phase/scripts/control_diagnostics_v2.py",
+        "--repo",
+        "/home/utkarsh/Work/shraddha/brain/.worktrees/research-phase",
+        "--output",
+        "/home/utkarsh/Work/shraddha/brain/.worktrees/research-phase/runs/memory-v2-feasibility-20261004T093143Z/diagnostics",
+        "--seconds-cap",
+        "569",
+        "--puck-producer",
+        "/home/utkarsh/Work/shraddha/brain/.worktrees/research-puck-fit",
+        "--nav-producer",
+        "/home/utkarsh/Work/shraddha/brain/.worktrees/male-navigation-training-v2",
+        "--output-limit-bytes",
+        "16777216"
+      ],
+      "report": "/home/utkarsh/Work/shraddha/brain/.worktrees/research-phase/runs/memory-v2-feasibility-20261004T093143Z/diagnostics/report.json",
+      "report_sha256": "41fdb0dfef615b267291e12beab9de79f1ed352916eff1340853c8891b59a9b7",
+      "runner_status": "completed",
+      "supervisor": {
+        "elapsed_seconds": 59.93445651100046,
+        "output": "/home/utkarsh/Work/shraddha/brain/.worktrees/research-phase/runs/memory-v2-feasibility-20261004T093143Z/diagnostics-supervisor",
+        "returncode": 0,
+        "schema_version": 1,
+        "started_utc": "2026-10-04T09:31:43.785782+00:00",
+        "status": "completed",
+        "timeout_seconds": 579.9723452199996
+      }
+    },
+    "pilot": {
+      "reason": "mandatory prerequisites not passed",
+      "status": "unattempted"
+    },
+    "prerequisites": {
+      "command": [
+        "/home/utkarsh/Work/shraddha/brain/.worktrees/lab-hardening/.venv/bin/python",
+        "/home/utkarsh/Work/shraddha/brain/.worktrees/research-phase/scripts/memory_decision_pilot.py",
+        "--repo",
+        "/home/utkarsh/Work/shraddha/brain/.worktrees/research-phase",
+        "--output",
+        "/home/utkarsh/Work/shraddha/brain/.worktrees/research-phase/runs/memory-v2-feasibility-20261004T093143Z/prerequisites",
+        "--seconds-cap",
+        "1769",
+        "--stage",
+        "feasibility",
+        "--assets",
+        "/home/utkarsh/Work/shraddha/brain/.worktrees/r0-reproduction/data/assets/flynn",
+        "--history-root",
+        "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-experiments",
+        "--phase-root",
+        "/home/utkarsh/Work/shraddha/brain/.worktrees/research-phase/runs/memory-v2-feasibility-20261004T093143Z"
+      ],
+      "report": "/home/utkarsh/Work/shraddha/brain/.worktrees/research-phase/runs/memory-v2-feasibility-20261004T093143Z/prerequisites/report.json",
+      "report_sha256": "c8f8caddadc688149d2acd0abf88d0334ff411007ec62d1af16ccbc94c1dd6b1",
+      "runner_status": "failed",
+      "supervisor": {
+        "elapsed_seconds": 71.74671898699853,
+        "output": "/home/utkarsh/Work/shraddha/brain/.worktrees/research-phase/runs/memory-v2-feasibility-20261004T093143Z/prerequisites-supervisor",
+        "returncode": 1,
+        "schema_version": 1,
+        "started_utc": "2026-10-04T09:32:43.734597+00:00",
+        "status": "failed",
+        "timeout_seconds": 1779.9999957719992
+      }
+    }
+  },
+  "started_utc": "20261004T093143Z",
+  "status": "finished-bounded-attempt",
+  "storage": {
+    "files": 24,
+    "headroom_bytes": 67108864,
+    "max_bytes": 8589934592,
+    "min_free_bytes": 2147483648,
+    "remaining_bytes": 8566234063,
+    "used_bytes": 23700529
+  }
+}
