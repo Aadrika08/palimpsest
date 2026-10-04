@@ -91,6 +91,11 @@ skipped and39 warnings**, in84.92 s. [Regression RED](memory-restore-study-v2-ev
 [delivery full suite](memory-restore-study-v2-evidence/delivery-full-suite.log).
 The repaired implementation has not run this study again.
 
+[Independent final review](memory-restore-study-v2-evidence/final-review.md)
+found no Important or Critical issues. One minor report-spacing issue is deferred.
+Review separately ran four software regressions; it did not repeat the full
+suite, extend native readout or perform new native payload analysis.
+
 Exact executed bytes are retained separately:
 [driver](memory-restore-study-v2-evidence/executed-driver.py),
 [pilot helper](memory-restore-study-v2-evidence/executed-pilot-driver.py),
