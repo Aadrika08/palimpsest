@@ -85,8 +85,11 @@ source-overlap, spec, geometry and lineage checks. Default worker admission stil
 refuses existing output. No job fields, CLI or scientific normalization changed.
 A realistic allocated-job fixture reproduced the same exception without mocking
 the validator. After the fix, focused tests passed78, including refusal of worker
-retry and malformed audit jobs. Final full-suite validation follows in the
-delivery evidence. The repaired implementation has not run this study again.
+retry and malformed audit jobs. The final local suite passed **939 tests, with24
+skipped and39 warnings**, in84.92 s. [Regression RED](memory-restore-study-v2-evidence/readout-red.log),
+[GREEN](memory-restore-study-v2-evidence/readout-green.log),
+[delivery full suite](memory-restore-study-v2-evidence/delivery-full-suite.log).
+The repaired implementation has not run this study again.
 
 Exact executed bytes are retained separately:
 [driver](memory-restore-study-v2-evidence/executed-driver.py),

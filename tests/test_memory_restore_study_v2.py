@@ -88,3 +88,50 @@ def test_new_study_rehearses_production_admission_and_exclusive_marker(
     with pytest.raises(FileExistsError):
         launcher.main()
     assert len(calls) == 1
+
+
+def completed_job(tmp_path):
+    stage = tmp_path/'stage'
+    (stage/'jobs').mkdir(parents=True)
+    plan = {'repo':str(Path(p.__file__).resolve().parents[1]),
+        'assets':str(tmp_path/'assets'), 'history_root':str(tmp_path/'histories'),
+        'output':str(stage), 'phase_root':str(tmp_path),
+        'source_identity':{}, 'protocol_sha256':p.TRAVEL_PROTOCOL_SHA256}
+    spec = p.travel_specs('travel-feasibility',d.PROFILE)[0]
+    job = p.make_job('travel-feasibility',spec,plan,'full')
+    run = Path(job['output']); run.mkdir(parents=True)
+    (stage/'jobs'/(job['run_id']+'.json')).write_text(json.dumps(job))
+    (run/'owner.json').write_text(json.dumps({'run_id':job['run_id'],
+        'pid':999,'pgid':999,'starttime':1}))
+    return stage, job
+
+
+def test_readout_validates_completed_output_without_admitting_worker_retry(tmp_path, monkeypatch):
+    stage, job = completed_job(tmp_path)
+    with pytest.raises(ValueError, match='Output must be absent'):
+        p.validate_job(job)
+    # The readout uses real job validation; only the exited owner and raw payload
+    # are fixtures. No owner is started and no retained native state is decoded.
+    monkeypatch.setattr(d, 'owner_exited', lambda owner: True)
+    monkeypatch.setattr(p, 'audit_run', lambda *args: {'fixture':True})
+    monkeypatch.setattr(p, 'read_raw', lambda *args: {'rows':[{}]})
+    rows = d.audit_owners(stage,{},None)
+    assert rows[0]['job_id'] == 'south-no-event'
+    assert rows[0]['raw_audit_pass'] is True
+    assert rows[0]['matching_owner_exited'] is True
+    assert rows[0]['raw_rows'] == 1
+    with pytest.raises(ValueError, match='Output must be absent'):
+        p.validate_job(job)
+
+
+@pytest.mark.parametrize('change', ['source-overlap','case','output'])
+def test_readout_existing_output_cannot_bypass_job_contract(tmp_path, change):
+    stage, job = completed_job(tmp_path)
+    if change == 'source-overlap':
+        job['assets'] = str(stage)
+    elif change == 'case':
+        job['case']['seed'] += 1
+    else:
+        job['output'] = str(tmp_path/'elsewhere')
+    with pytest.raises(ValueError):
+        p.validate_job(job,read_only=True)
