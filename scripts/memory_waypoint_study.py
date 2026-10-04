@@ -175,7 +175,10 @@ def main(argv=None):
         'output':str(output),'implementation_head':subprocess.check_output(['git','rev-parse','HEAD'],cwd=repo,text=True).strip(),
         'protocol':protocol,'protocol_sha256':protocol_hash,
         'source_identity':plan['source_identity'],'stage_caps':protocol['stage_seconds'],
-        'max_seconds':7200,'max_bytes':8*pilot.GiB,'stages':{},'detached_owner_cleanup':[],
+        'max_seconds':7200,'max_bytes':8*pilot.GiB,'stages':{
+            'prerequisites':{'status':'unattempted','reason':'Qualification not started',
+                'attempted':[],'unattempted':[s['id'] for s in pilot.feasibility_specs()]}},
+        'detached_owner_cleanup':[],
         'qualification_claims':[],'held_out_used':False,'paired_pilot':'unattempted-by-scope',
         'r2_complete':False,'retries':0}
     output.mkdir(parents=True,exist_ok=False)
@@ -203,7 +206,7 @@ def main(argv=None):
                 receipt['stages']['prerequisites'] = prerequisites
             else:
                 receipt['stages']['prerequisites'] = {'status':'unattempted','reason':'No independently qualified development candidate',
-                    'unattempted':[s['id'] for s in pilot.feasibility_specs()]}
+                    'attempted':[],'unattempted':[s['id'] for s in pilot.feasibility_specs()]}
             receipt['status'] = 'finished-bounded-attempt'
         except BaseException as error:
             receipt.update(status='execution-failed',error={'type':type(error).__name__,'message':str(error)})
@@ -214,6 +217,11 @@ def main(argv=None):
             receipt['readout_deadline_monotonic'] = readout_deadline
             receipt['detached_owner_cleanup'] = cleanup_owners(output)
             try:
+                # Preserve the published stage even if its final deadline check raised.
+                prerequisite_report = output/'prerequisites/report.json'
+                pilot.deadline_check(readout_deadline)
+                if prerequisite_report.exists():
+                    receipt['stages']['prerequisites'] = pilot.read_json(prerequisite_report)
                 receipt['source_identity_unchanged'] = pilot.source_identity(repo,args.assets) == plan['source_identity']
                 if not receipt['source_identity_unchanged']:
                     raise ValueError('Source or assets changed during study')

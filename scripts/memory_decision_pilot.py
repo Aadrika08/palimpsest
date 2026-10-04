@@ -765,6 +765,8 @@ def audit_prefix_failure(job, supervised, deadline=None):
     if cue_failure and [e['episode_step'] for e in packets] != list(range(total+1)):
         raise ValueError('Terminal sensor-only failure packet is missing')
     replay_memory_audit(job,data,None,report,require_terminal_cue=cue_failure)
+    if job['version'] == 3 and (cue_failure or declared_failure):
+        reason = audit_travel_task_failure(data,report)
     result = {'status':'failed','raw_audit_pass':True,'retained_task_failure':True,
         'acquired':False,'goal':False,'continuation_ticks':0,'total_ticks':total,'capped_ticks':900,
         'packet_count':len(packets),'policy_calls':len(data['rows']),'path_length':path,
@@ -977,7 +979,8 @@ def audit_travel_task_failure(data, report):
         return 'CueUnavailable'  # Exact packet/tick/message replay required by audit_run.
     declared = sup.get('failure_reason')
     if (outcome.get('type')=='ValueError' and sup.get('phase')=='failure'
-            and declared in ('continuation_timeout','waypoint_timeout','inspection_timeout','no_route','attempt_limit')
+            and declared in ('continuation_timeout','waypoint_timeout','inspection_timeout','no_route','attempt_limit',
+                         'acquisition_timeout','acquisition_incomplete','acquisition_blocked')
             and outcome.get('message')=='Memory-v2 supervisor failure: '+declared):
         return declared
     raise ValueError('Unknown travel exception is an infrastructure stop')
