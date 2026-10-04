@@ -98,7 +98,8 @@ The [storage/Git recovery](reports/memory-storage-recovery.md) now passes a boun
 and exact readback through the actual writer/reader. The research checkout's three
 documentation updates are recovered without altering the interrupted study; main
 is unchanged. This is a current filesystem write check, not native route feasibility.
-Actions is enabled, but its historical account billing/spending block is separate.
+Actions is enabled; fresh recovery-head CI jobs still do not execute due to the
+account billing/spending restriction, which requires account-owner resolution.
 A new native invocation requires a separate prospective contract; the frozen plan's
 no-retry rule remains intact.
 

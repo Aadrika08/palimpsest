@@ -104,3 +104,14 @@ prospective execution contract, retains the aborted owner and all earlier failur
 and keeps the frozen geometry and limits unless explicitly amended. No profile
 is selected, all eight native prerequisites remain unattempted, and R2/R3,
 held-out, hardware/operator and exhibition gates remain open.
+
+## Fresh remote result
+
+At recovery head `f24420d`, both push and PR fixtures/frontend jobs again failed
+without executing. [Exact new annotations](memory-storage-recovery-evidence/ci-annotations.json)
+repeat the account failed-payments/spending-limit message. Actions permissions are
+enabled; the annotation does not distinguish a declined payment from a budget cap.
+No automatic CI rerun loop or payment/budget change was attempted. The next CI
+step is for Aadrika08 to resolve that account-level restriction, followed by one
+workflow rerun to observe real execution. New native work remains outside this
+recovery-only execution.
