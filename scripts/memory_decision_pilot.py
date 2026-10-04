@@ -591,13 +591,13 @@ def audit_commitment(detail):
         raise ValueError('Commitment violates shared categorical/public-cost/lexical policy')
 
 
-def replay_memory_audit(job, data, snapshot, report):
+def replay_memory_audit(job, data, snapshot, report, *, require_terminal_cue=False):
     """Reconsume independently reconstructed packets and bind exact M/route decisions."""
     from palimpsest import memory_decision
     state = (copy.deepcopy(snapshot['application']['memory']) if job['snapshot_path'] is not None
              else memory_decision.initialize(job['case']))
-    expected_details, bearing = [], None
-    for event in data['events']:
+    expected_details, bearing, cue_exceptions = [], None, []
+    for index, event in enumerate(data['events']):
         kind = event['kind']
         if kind == 'snapshot_registered':
             if state != snapshot['application']['memory']:
@@ -619,9 +619,10 @@ def replay_memory_audit(job, data, snapshot, report):
                 raise ValueError('Recorded decision details were omitted')
             try:
                 state, bearing, expected_details = memory_decision.advance_memory(state, event['packet'])
-            except memory_decision.CueUnavailable:
+            except memory_decision.CueUnavailable as error:
                 if report.get('final_phase') != 'failed' or (report.get('outcome') or {}).get('type') != 'CueUnavailable':
                     raise ValueError('Unrecorded sensor contract failure')
+                cue_exceptions.append({'tick':event['episode_step'],'message':str(error),'index':index})
                 expected_details = []
         elif kind == 'memory_decision':
             if not expected_details or event['detail'] != expected_details.pop(0):
@@ -631,6 +632,14 @@ def replay_memory_audit(job, data, snapshot, report):
                 raise ValueError('Bearing bridge differs from shared supervisor replay')
     if expected_details:
         raise ValueError('Final supervisor decisions omitted')
+    if require_terminal_cue:
+        if (len(cue_exceptions) != 1 or cue_exceptions[0]['tick'] != report['total_ticks'] or
+                cue_exceptions[0]['message'] != (report.get('outcome') or {}).get('message')):
+            raise ValueError('Terminal CueUnavailable tick/message is not independently reproduced')
+        subsequent = data['events'][cue_exceptions[0]['index']+1:]
+        if any(e['kind'] in ('memory_sensed','memory_decision','memory_cue','neural_policy_call',
+                             'snapshot_registered','memory_selector_configured','memory_decision_armed') for e in subsequent):
+            raise ValueError('Policy or supervisor progress followed terminal CueUnavailable')
     if report['goal']:
         state = memory_decision.mark_goal(state)
     if state != report['final_memory']:
@@ -707,7 +716,9 @@ def audit_prefix_failure(job, supervised, deadline=None):
             gate_result='not_requested'),episode_id='episode-0',tick=tick)
         if event['packet'] != expected:
             raise ValueError('Failed prefix packet differs from actual recorded pose')
-    replay_memory_audit(job,data,None,report)
+    if cue_failure and [e['episode_step'] for e in packets] != list(range(total+1)):
+        raise ValueError('Terminal sensor-only failure packet is missing')
+    replay_memory_audit(job,data,None,report,require_terminal_cue=cue_failure)
     result = {'status':'failed','raw_audit_pass':True,'retained_task_failure':True,
         'acquired':False,'goal':False,'continuation_ticks':0,'total_ticks':total,'capped_ticks':900,
         'packet_count':len(packets),'policy_calls':len(data['rows']),'path_length':path,

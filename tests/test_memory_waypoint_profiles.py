@@ -77,3 +77,29 @@ def test_arrival_analysis_reports_unsafe_headings_without_claiming_native_feasib
     assert report['heading_step_degrees'] == 5
     assert any(x['unsafe_count'] > 0 and x['unsafe_examples'] for x in report['transitions'])
     assert all(x['tested_count'] == x['visible_count']+x['unsafe_count'] for x in report['transitions'])
+
+
+def test_complete_synthetic_candidate_snapshot_restores_only_to_its_exact_profile():
+    from palimpsest.engine import Engine
+    import test_memory_decision_engine as engine_fixtures
+    import test_memory_decision as task_fixtures
+    harness = engine_fixtures.DecisionEngineTests()
+    harness.setUp()
+    try:
+        harness.case = world.make_case(0,'local_cue','change',profile_sha256=world.WAYPOINT_PROFILE_HASHES[0])
+        engine = harness.engine()
+        task = task_fixtures.DecisionTests()
+        task.setUp()
+        task.case = harness.case
+        engine.memory = task.acquired()
+        engine.total_tick = engine.episode_step = task.tick
+        engine.world_task_state['last_tick'] = task.tick-1
+        engine.env.data.qpos[:] = [*task.position,task.yaw]
+        source = harness.snapshot(engine)
+        restored = Engine._memory_restore(harness.case,world.SCENARIO,'flynn','cpu',source,False,None)
+        assert restored[0] == harness.case
+        other = world.make_case(0,'local_cue','change',profile_sha256=world.WAYPOINT_PROFILE_HASHES[1])
+        with pytest.raises(ValueError):
+            Engine._memory_restore(other,world.SCENARIO,'flynn','cpu',source,False,None)
+    finally:
+        harness.doCleanups()

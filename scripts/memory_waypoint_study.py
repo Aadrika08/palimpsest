@@ -15,10 +15,46 @@ import time
 from datetime import datetime, timezone
 
 from scripts import memory_decision_pilot as pilot
+monotonic = time.monotonic
 
 
 def candidate_specs():
     return pilot.waypoint_specs('waypoint-development')
+
+
+def replace_control(path, value, storage):
+    """Mutable progress only; immutable inputs continue to use exclusive writes."""
+    path = pilot.checked_path(path)
+    pending = path.with_name(path.name+'.pending')
+    pilot.write_control(pending,value,storage)
+    pending.replace(path)
+
+
+def run_prerequisites(plan, selected, storage, phase_deadline):
+    from palimpsest import memory_decision_world as world
+    started = monotonic()
+    deadline = min(phase_deadline-600,started+5400)
+    phase_root = Path(plan['phase_root'])
+    pilot.write_control(phase_root/'selected-profile.json',{'profile_sha256':selected,
+        'candidate_ledger_sha256':pilot.file_hash(phase_root/'candidates.json'),
+        'development_report_sha256':pilot.file_hash(phase_root/'development/report.json')},storage)
+    selected_plan = copy.deepcopy(plan)
+    selected_plan.update(output=str(Path(plan['phase_root'])/'prerequisites'),selected_profile_sha256=selected)
+    selected_plan['geometry'] = []
+    for spec in pilot.waypoint_specs('waypoint-feasibility',selected):
+        pilot.deadline_check(deadline)
+        case = world.make_case(spec['seed'],spec['regime'],spec['kind'],spec['mirrored'],profile_sha256=selected)
+        selected_plan['geometry'].append({'id':spec['id'],'case':case,'check':world.geometry_check(case)})
+    selected_plan['geometry_valid'] = all(x['check']['valid'] for x in selected_plan['geometry'])
+    output = Path(selected_plan['output'])
+    output.mkdir()
+    pilot.write_control(output/'preflight.json',selected_plan,storage)
+    prerequisites = pilot.execute_stage('waypoint-feasibility',selected_plan,storage,deadline)
+    prerequisites['status'] = 'passed' if prerequisites['mandatory_pass'] else 'failed'
+    prerequisites['wall_seconds'] = monotonic()-started
+    pilot.write_control(output/'report.json',prerequisites,storage)
+    pilot.deadline_check(deadline)
+    return prerequisites
 
 
 def run_development(plan, storage, deadline, checkpoint=None):
@@ -110,46 +146,35 @@ def main(argv=None):
     plan['geometry_valid'] = all(c['geometry']['valid'] for c in candidates)
     storage = pilot.phase_budget(output)
     receipt = {'schema':'memory-waypoint-execution-v1','started_utc':datetime.now(timezone.utc).isoformat(),
+        'phase_started_monotonic':started,'phase_deadline_monotonic':deadline,
         'output':str(output),'implementation_head':subprocess.check_output(['git','rev-parse','HEAD'],cwd=repo,text=True).strip(),
         'protocol':pilot.WAYPOINT_PROTOCOL,'protocol_sha256':pilot.WAYPOINT_PROTOCOL_SHA256,
         'source_identity':plan['source_identity'],'stage_caps':{'development':1200,'prerequisites':5400,'readout':600},
         'max_seconds':7200,'max_bytes':8*pilot.GiB,'stages':{},'detached_owner_cleanup':[],
         'qualification_claims':[],'held_out_used':False,'paired_pilot':'unattempted-by-scope',
         'r2_complete':False,'retries':0}
+    output.mkdir(parents=True,exist_ok=False)
     with storage.lock():
-        output.mkdir(parents=True,exist_ok=False)
         (output/'development').mkdir()
         pilot.write_control(output/'candidates.json',{'protocol_sha256':pilot.WAYPOINT_PROTOCOL_SHA256,'candidates':candidates},storage)
         pilot.write_control(output/'development/preflight.json',plan,storage)
         def save():
             receipt['elapsed_seconds'] = time.monotonic()-started
-            pilot.write_control(output/'execution.json',receipt,storage)
+            replace_control(output/'execution.json',receipt,storage)
         def checkpoint(report):
             receipt['detached_owner_cleanup'] = cleanup_owners(output)
-            pilot.write_control(output/'development/report.json',report,storage)
+            report['wall_seconds'] = time.monotonic()-started
+            replace_control(output/'development/report.json',report,storage)
             receipt['stages']['development'] = report
             save()
+            pilot.deadline_check(development_deadline)
         save()
         try:
             report = run_development(plan,storage,development_deadline,checkpoint)
             checkpoint(report)
             selected = report['selected_profile_sha256']
             if report['status'] == 'passed':
-                selected_plan = copy.deepcopy(plan)
-                selected_plan.update(output=str(output/'prerequisites'),selected_profile_sha256=selected)
-                selected_plan['geometry'] = []
-                for spec in pilot.waypoint_specs('waypoint-feasibility',selected):
-                    case = world.make_case(spec['seed'],spec['regime'],spec['kind'],spec['mirrored'],profile_sha256=selected)
-                    selected_plan['geometry'].append({'id':spec['id'],'case':case,'check':world.geometry_check(case)})
-                selected_plan['geometry_valid'] = all(x['check']['valid'] for x in selected_plan['geometry'])
-                (output/'prerequisites').mkdir()
-                pilot.write_control(output/'selected-profile.json',{'profile_sha256':selected,
-                    'development_report_sha256':pilot.file_hash(output/'development/report.json')},storage)
-                pilot.write_control(output/'prerequisites/preflight.json',selected_plan,storage)
-                prerequisite_deadline = min(deadline-600,time.monotonic()+5400)
-                prerequisites = pilot.execute_stage('waypoint-feasibility',selected_plan,storage,prerequisite_deadline)
-                prerequisites['status'] = 'passed' if prerequisites['mandatory_pass'] else 'failed'
-                pilot.write_control(output/'prerequisites/report.json',prerequisites,storage)
+                prerequisites = run_prerequisites(plan,selected,storage,deadline)
                 receipt['stages']['prerequisites'] = prerequisites
             else:
                 receipt['stages']['prerequisites'] = {'status':'unattempted','reason':'No independently qualified acquisition candidate',
@@ -158,9 +183,11 @@ def main(argv=None):
         except BaseException as error:
             receipt.update(status='execution-failed',error={'type':type(error).__name__,'message':str(error)})
         finally:
-            receipt['detached_owner_cleanup'] = cleanup_owners(output)
             readout_started = time.monotonic()
             readout_deadline = min(deadline,readout_started+600)
+            receipt['readout_started_monotonic'] = readout_started
+            receipt['readout_deadline_monotonic'] = readout_deadline
+            receipt['detached_owner_cleanup'] = cleanup_owners(output)
             try:
                 receipt['source_identity_unchanged'] = pilot.source_identity(repo,args.assets) == plan['source_identity']
                 if not receipt['source_identity_unchanged']:

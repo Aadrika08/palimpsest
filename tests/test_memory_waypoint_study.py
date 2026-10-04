@@ -104,3 +104,69 @@ def test_nonzero_task_exit_can_be_audited_but_log_or_timeout_failures_cannot(tmp
     for bad in ({**supervised,'status':'timeout'},{**supervised,'failure':{'type':'LogLimit'}}):
         with pytest.raises(ValueError):
             p.admit_prefix_failure(job,bad,report,manifest)
+
+
+def test_actual_phase_can_checkpoint_multiple_failed_candidates_and_finish(tmp_path,monkeypatch):
+    import json
+    from pathlib import Path
+    module = study()
+    repo = Path(module.__file__).resolve().parents[1]
+    identity = {'synthetic-software-fixture':True}
+    def preflight(repo,assets,history,output,phase,deadline):
+        return {'repo':str(repo),'assets':str(assets),'history_root':str(history),
+            'output':str(output),'phase_root':str(phase),'source_identity':identity,
+            'geometry_valid':True}
+    monkeypatch.setattr(module.pilot,'preflight',preflight)
+    monkeypatch.setattr(module.pilot,'source_identity',lambda *a:identity)
+    monkeypatch.setattr(module.pilot,'launch_owner',lambda *a,**kw:dict(
+        status='failed',raw_audit_pass=True,retained_task_failure=True,acquired=False))
+    output = tmp_path/'phase'
+    assert module.main(['--repo',str(repo),'--assets',str(tmp_path/'assets'),
+        '--history-root',str(tmp_path/'history'),'--output',str(output)]) == 0
+    receipt = json.loads((output/'execution.json').read_text())
+    assert receipt['status'] == 'finished-bounded-attempt'
+    assert len(receipt['stages']['development']['attempted']) == 3
+    assert receipt['stages']['prerequisites']['status'] == 'unattempted'
+    assert receipt['paired_pilot'] == 'unattempted-by-scope'
+    assert not list(output.rglob('*.pending'))
+
+
+def test_terminal_sensor_exception_cannot_be_omitted_or_renamed():
+    from palimpsest import memory_decision as decision
+    p = study().pilot
+    case = world.make_case(400,'local_cue','change',profile_sha256=world.WAYPOINT_PROFILE_HASHES[0])
+    packet = decision.capture_symbolic(*world.reconstruct_inputs(case,[-2.5,0.,3.141592653589793],0),episode_id='episode-0',tick=0)
+    state = decision.initialize(case)
+    target = state['supervisor']['waypoint_ids'][0]
+    with pytest.raises(decision.CueUnavailable):
+        decision.advance_memory(state,packet)
+    job = {'case':case,'snapshot_path':None}
+    report = {'goal':False,'final_phase':'failed','final_memory':state,'total_ticks':0,
+        'outcome':{'type':'CueUnavailable','message':'selected_waypoint_unavailable: '+target}}
+    data = {'events':[{'kind':'memory_sensed','episode_step':0,'packet':packet}]}
+    p.replay_memory_audit(job,data,None,report,require_terminal_cue=True)
+    with pytest.raises(ValueError):
+        p.replay_memory_audit(job,{'events':[]},None,report,require_terminal_cue=True)
+    with pytest.raises(ValueError):
+        p.replay_memory_audit(job,data,None,{**report,'outcome':{
+            'type':'CueUnavailable','message':'selected_waypoint_unavailable: other'}},require_terminal_cue=True)
+
+
+def test_prerequisite_accounting_starts_before_geometry_preparation(tmp_path,monkeypatch):
+    module = study()
+    now = [100.]
+    monkeypatch.setattr(module,'monotonic',lambda:now[0])
+    monkeypatch.setattr(module.pilot,'deadline_check',lambda deadline:None)
+    monkeypatch.setattr(module.pilot,'file_hash',lambda path:'0'*64)
+    original = world.make_case
+    def make_case(*a,**kw):
+        now[0] += 20.
+        return original(*a,**kw)
+    monkeypatch.setattr(world,'make_case',make_case)
+    observed = []
+    monkeypatch.setattr(module.pilot,'write_control',lambda *a:None)
+    monkeypatch.setattr(module.pilot,'execute_stage',lambda stage,plan,storage,deadline:
+        observed.append(deadline) or {'mandatory_pass':False})
+    plan = {'output':str(tmp_path/'development'),'phase_root':str(tmp_path),'geometry_valid':True}
+    module.run_prerequisites(plan,world.WAYPOINT_PROFILE_HASHES[0],None,10000.)
+    assert observed == [5500.]
