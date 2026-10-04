@@ -104,9 +104,8 @@ def waypoint_specs(stage, profile_sha256=None):
     return [{**spec, 'profile_sha256': profile_sha256} for spec in feasibility_specs()]
 
 
-def condition_digest(snapshot):
-    """Keep version, supervisor, world/native/controller/RNG and command state."""
-    from palimpsest.snapshots import state_digest
+def condition_state(snapshot):
+    """Existing invariant normalization, retaining every other typed field."""
     value = copy.deepcopy(snapshot)
     app = value['application']
     state = app['memory']
@@ -114,10 +113,16 @@ def condition_digest(snapshot):
         state.pop(key, None)
     for key in ('source_run_id', 'event_prefix'):
         app.pop(key, None)
-    return state_digest(value)
+    return value
 
 
-def repeat_post_digest(snapshot, source_receipt_ids):
+def condition_digest(snapshot):
+    """Keep version, supervisor, world/native/controller/RNG and command state."""
+    from palimpsest.snapshots import state_digest
+    return state_digest(condition_state(snapshot))
+
+
+def repeat_post_state(snapshot, source_receipt_ids):
     """Normalize only destination recorder IDs added by the five new commands."""
     value = copy.deepcopy(snapshot)
     app = value['application']
@@ -130,7 +135,24 @@ def repeat_post_digest(snapshot, source_receipt_ids):
                 if receipt[field] != destination:
                     raise ValueError('New command receipt belongs to a different recorder')
                 receipt[field] = 'destination-recorder'
-    return condition_digest(value)
+    return condition_state(value)
+
+
+def repeat_post_digest(snapshot, source_receipt_ids):
+    from palimpsest.snapshots import state_digest
+    return state_digest(repeat_post_state(snapshot, source_receipt_ids))
+
+
+def publish_repeat_state(snapshot, source_receipt_ids, run, storage):
+    """Retain the original digest input; never capture or mutate an engine here."""
+    from palimpsest.snapshots import save_snapshot, state_digest
+    normalized = repeat_post_state(snapshot, source_receipt_ids)
+    path = Path(run)/'snapshots/post-repeat.snp'
+    save_snapshot(snapshot, path, storage_budget=SnapshotBudget(storage))
+    return {'post_snapshot_path': str(path), 'post_snapshot_sha256': file_hash(path),
+        'repeat_source_receipt_ids': sorted(source_receipt_ids),
+        'post_state_digest': state_digest(normalized),
+        'post_state_components': {key: state_digest(value) for key, value in normalized.items()}}
 
 
 def capped_score(record):
@@ -484,9 +506,11 @@ def capture_engine(engine):
         application=engine.application_state())
 
 
-def worker(raw):
+def worker(raw, *, retain_repeat_state=False):
     started = time.monotonic()
     job = validate_job(raw)  # Must precede model import, allocation and any write.
+    if type(retain_repeat_state) is not bool or (retain_repeat_state and job['operation'] != 'repeat'):
+        raise ValueError('Post-state retention requires a repeat worker')
     internal, _ = owner_allocation(job['stage'],job['operation'],job['protocol_sha256'])
     deadline = started+internal
     if source_identity(job['repo'], job['assets']) != job['source_identity']:
@@ -557,7 +581,11 @@ def worker(raw):
                 policy_step(engine)
             report['continuation_ticks'] = engine.episode_step-start_tick
             if job['operation'] == 'repeat' and engine.phase == 'paused':
-                report['post_state_digest'] = repeat_post_digest(capture_engine(engine), set(initial['application']['receipts']))
+                post = capture_engine(engine)
+                receipt_ids = set(initial['application']['receipts'])
+                report['post_state_digest'] = repeat_post_digest(post, receipt_ids)
+                if retain_repeat_state:
+                    report.update(publish_repeat_state(post, receipt_ids, run, storage))
         report['status'] = 'recorded'
     except Exception as error:
         report['error'] = {'type': type(error).__name__, 'message': str(error)}
@@ -1016,9 +1044,12 @@ def make_job(stage, spec, plan, operation, condition=None, source=None):
         'expected_invariant': None if source is None else source['invariant']}
 
 
-def launch_owner(stage, spec, plan, storage, deadline, *, operation=None, condition=None, source=None):
+def launch_owner(stage, spec, plan, storage, deadline, *, operation=None, condition=None, source=None,
+                 retain_repeat_state=False):
     from palimpsest.evaluate import bounded_process
     operation = operation or spec['operation']
+    if type(retain_repeat_state) is not bool or (retain_repeat_state and operation != 'repeat'):
+        raise ValueError('Post-state retention requires a repeat worker')
     _, outer = owner_allocation(stage,operation,plan.get('protocol_sha256',PROTOCOL_SHA256))
     if not admit_time(time.monotonic(), deadline, outer, PROTOCOL['cleanup_seconds']):
         raise TimeoutError('Remaining stage allocation cannot accommodate owner and cleanup; no time transfer')
@@ -1030,7 +1061,7 @@ def launch_owner(stage, spec, plan, storage, deadline, *, operation=None, condit
         'OMP_NUM_THREADS': '1', 'MKL_NUM_THREADS': '1', 'OPENBLAS_NUM_THREADS': '1',
         'NUMEXPR_NUM_THREADS': '1', 'MUJOCO_GL': 'egl', 'CUDA_VISIBLE_DEVICES': ''}
     supervised = bounded_process([sys.executable, str(Path(__file__).resolve()), '--stage', 'worker',
-        '--worker', canonical(job).decode()], output/'supervision'/job['run_id'], outer,
+        '--worker', canonical(job).decode()]+(['--retain-repeat-state'] if retain_repeat_state else []), output/'supervision'/job['run_id'], outer,
         environment, log_max_bytes=MiB, storage_budget=storage)
     result = {'job_id': spec['id']+('/'+condition if condition else ''), 'run': job['output'],
         'run_id': job['run_id'], 'operation': operation, 'condition': condition, 'goal': False,
@@ -1075,7 +1106,7 @@ def validate_feasibility(path, plan):
     return {'path': str(checked_path(path)), 'sha256': file_hash(path)}
 
 
-def execute_stage(stage, plan, storage, deadline):
+def execute_stage(stage, plan, storage, deadline, *, retain_repeat_state=False):
     specs = (travel_specs(stage,plan.get('selected_profile_sha256')) if stage == 'travel-feasibility' else
              waypoint_specs(stage,plan.get('selected_profile_sha256')) if stage == 'waypoint-feasibility' else
              feasibility_specs() if stage in ('feasibility','waypoint-feasibility','travel-feasibility') else pilot_specs())
@@ -1096,7 +1127,8 @@ def execute_stage(stage, plan, storage, deadline):
             deadline_check(deadline)
             if stage in ('feasibility','waypoint-feasibility','travel-feasibility'):
                 result = launch_owner(stage, spec, plan, storage, deadline,
-                    source=sources.get(spec.get('source')))
+                    source=sources.get(spec.get('source')),
+                    retain_repeat_state=retain_repeat_state and spec['operation']=='repeat')
                 report['attempted'].append(result)
                 next_index = index+1
                 if spec['operation'] == 'repeat':
@@ -1168,11 +1200,14 @@ def main(argv=None):
         parser.add_argument('--'+name, type=Path)
     parser.add_argument('--seconds-cap', type=float)
     parser.add_argument('--worker', help=argparse.SUPPRESS)
+    parser.add_argument('--retain-repeat-state', action='store_true', help=argparse.SUPPRESS)
     args = parser.parse_args(argv)
     if args.stage == 'worker':
         if args.worker is None:
             parser.error('Private worker requires its fixed job JSON')
-        return worker(json.loads(args.worker))
+        return worker(json.loads(args.worker), retain_repeat_state=args.retain_repeat_state)
+    if args.retain_repeat_state:
+        parser.error('Post-state retention is a private repeat-worker option')
     if args.worker is not None or any(getattr(args, key) is None for key in ('repo', 'assets', 'history_root', 'output', 'phase_root')):
         parser.error('Public stages require --repo --assets --history-root --output --phase-root')
     if args.stage == 'pilot' and args.feasibility_report is None:
