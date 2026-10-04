@@ -17,6 +17,49 @@ def episode(run='a', ticks=40, scene=None, owner=None):
 
 
 class NavigationLadderTests(unittest.TestCase):
+    def test_historical_head_mismatch_refuses_before_source_or_bundle_reads(self):
+        args = SimpleNamespace(historical_root=Path('/tmp/synthetic-producer'),
+                               historical_bundles=Path('/tmp/synthetic-bundles'))
+        with patch.object(ladder.subprocess, 'check_output', return_value='unaccepted-head\n'), \
+             patch.object(ladder, 'read_json') as read, patch.object(ladder, 'sha') as hashing:
+            with self.assertRaisesRegex(ValueError, 'producer HEAD differs'):
+                ladder.historical_binding(args, time.monotonic()+10)
+            read.assert_not_called(); hashing.assert_not_called()
+
+    def test_publication_head_acceptance_still_enforces_every_fixture_source_pin(self):
+        publication = '041434dd2b6fab5f19329b003f98407887e49286'
+        training = '6feade9770dc40efa567633412baec4347ee33cb'
+        with tempfile.TemporaryDirectory() as d:
+            root = Path(d)/'producer'; root.mkdir(); bundles = Path(d)/'bundles'; bundles.mkdir()
+            source = root/'reader.py'; source.write_bytes(b'unchanged reader bytes\n')
+            trainer = root/'trainer.py'; trainer.write_bytes(b'unchanged trainer bytes\n')
+            lock = root/'uv.lock'; lock.write_bytes(b'unchanged lock bytes\n')
+            cell = root/'cell.py'; cell.write_bytes(b'unchanged cell bytes\n')
+            source_code = {'named_reader_sources': {'reader.py': ladder.sha(source)},
+                'added_sources': {'trainer.py': ladder.sha(trainer)}, 'lock_sha256': ladder.sha(lock)}
+            pins = {}
+            for seed in ladder.SEEDS:
+                directory = bundles/f'seed-{seed}'; directory.mkdir()
+                protocol = {'seed': seed, 'source_code': source_code, 'model_inputs': {str(cell): ladder.sha(cell)}}
+                report = {'status': 'completed-navigation-research-training', 'models': {}}
+                for arm in ladder.ARMS:
+                    checkpoint = directory/(arm+'.pt'); checkpoint.write_bytes(f'{seed}-{arm}'.encode())
+                    report['models'][arm] = {'checkpoint': {'path': checkpoint.name, 'sha256': ladder.sha(checkpoint)}}
+                for name, value in (('protocol.json', protocol), ('report.json', report)):
+                    (directory/name).write_bytes(ladder.canonical(value))
+                pins[seed] = tuple(ladder.sha(directory/name) for name in ('protocol.json', 'report.json'))
+            args = SimpleNamespace(historical_root=root, historical_bundles=bundles)
+            with patch.object(ladder.subprocess, 'check_output', return_value=publication+'\n'), \
+                 patch.object(ladder, 'BUNDLE_PINS', pins):
+                binding, protocols, reports = ladder.historical_binding(args, time.monotonic()+10)
+                self.assertEqual(binding['head'], publication)
+                self.assertEqual(binding['training_revision'], training)
+                self.assertEqual(set(protocols), set(ladder.SEEDS)); self.assertEqual(set(reports), set(ladder.SEEDS))
+                for path in (source, trainer, lock, cell): self.assertEqual(binding['files'][str(path)], ladder.sha(path))
+                source.write_bytes(b'changed reader bytes\n')
+                with self.assertRaisesRegex(ValueError, 'Historical reader source drift'):
+                    ladder.historical_binding(args, time.monotonic()+10)
+
     def test_groups_keep_all_owners_and_refuse_missing_or_reserved(self):
         new = [episode(f'{scene}-{owner}', scene=scene, owner=owner)
                for scene in (3100, 3101, 3102, 3103) for owner in (10, 11, 12)]
