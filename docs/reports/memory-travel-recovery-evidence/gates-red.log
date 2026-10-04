@@ -1,0 +1,32 @@
+...EE..E.
+======================================================================
+ERROR: test_resource_stop_is_not_mislabeled_as_task_failure (__main__.ReadoutTests.test_resource_stop_is_not_mislabeled_as_task_failure)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/utkarsh/Work/shraddha/brain/.worktrees/research-phase/docs/reports/memory-travel-recovery-evidence/test_readout.py", line 100, in test_resource_stop_is_not_mislabeled_as_task_failure
+    self.assertEqual(self.r.stop_status(rows, [], selection_ok=False),
+                     ^^^^^^^^^^^^^^^^^^
+AttributeError: module 'recovery_readout' has no attribute 'stop_status'
+
+======================================================================
+ERROR: test_restore_cannot_use_historical_or_development_snapshot (__main__.ReadoutTests.test_restore_cannot_use_historical_or_development_snapshot)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/utkarsh/Work/shraddha/brain/.worktrees/research-phase/docs/reports/memory-travel-recovery-evidence/test_readout.py", line 94, in test_restore_cannot_use_historical_or_development_snapshot
+    self.r.verify_restore_source(job, source)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'recovery_readout' has no attribute 'verify_restore_source'
+
+======================================================================
+ERROR: test_selection_cannot_skip_unattempted_candidate_or_missing_retreat (__main__.ReadoutTests.test_selection_cannot_skip_unattempted_candidate_or_missing_retreat)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/utkarsh/Work/shraddha/brain/.worktrees/research-phase/docs/reports/memory-travel-recovery-evidence/test_readout.py", line 82, in test_selection_cannot_skip_unattempted_candidate_or_missing_retreat
+    self.assertFalse(self.r.selection_valid(specs, rows, 'two'))
+                     ^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'recovery_readout' has no attribute 'selection_valid'
+
+----------------------------------------------------------------------
+Ran 9 tests in 0.037s
+
+FAILED (errors=3)
