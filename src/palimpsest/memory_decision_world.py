@@ -52,7 +52,17 @@ def _loop_profile(radius):
 
 _WAYPOINT_PROFILES = [_loop_profile(radius) for radius in (1.4, 1.3, 1.2)]
 WAYPOINT_PROFILE_HASHES = tuple(memory.sha256(profile) for profile in _WAYPOINT_PROFILES)
-_PROFILES = {PROFILE_SHA256: PROFILE, **dict(zip(WAYPOINT_PROFILE_HASHES, _WAYPOINT_PROFILES))}
+def _travel_profile(offset):
+    profile = copy.deepcopy(_WAYPOINT_PROFILES[0])
+    profile.update(travel_amendment='fixed-detour-v1', detour_offset_m=offset,
+                   nonpreferred_detour_xy=[[.6, -(1+offset)], [.6, 1+offset]])
+    return profile
+
+
+_TRAVEL_PROFILES = [_travel_profile(offset) for offset in (.25, .20, .15)]
+TRAVEL_PROFILE_HASHES = tuple(memory.sha256(profile) for profile in _TRAVEL_PROFILES)
+_PROFILES = {PROFILE_SHA256: PROFILE, **dict(zip(WAYPOINT_PROFILE_HASHES, _WAYPOINT_PROFILES)),
+             **dict(zip(TRAVEL_PROFILE_HASHES, _TRAVEL_PROFILES))}
 
 
 def registered_profile(profile_sha256=PROFILE_SHA256):
@@ -81,7 +91,7 @@ def make_case(seed, regime, kind, mirrored=False, *, profile_sha256=PROFILE_SHA2
         markers[subject + '-crossing'] = [0., float(sign)]
         markers[subject + '-exit'] = [1.2, float(sign)]
         if side != preferred:
-            markers[subject + '-detour'] = [.6, sign * 1.35]
+            markers[subject + '-detour'] = profile['nonpreferred_detour_xy'][side].copy()
         for index, (x, y) in enumerate(profile['north_retreat_xy']):
             markers[subject + f'-retreat-{index}'] = [x, sign * y]
     case = {'version': 2, 'claim': 'development-runtime-configuration', 'case_id': cid,
@@ -194,7 +204,7 @@ def geometry_check(case):
         'claim': 'analytic-candidate-geometry-only', 'native_feasibility': 'unvalidated'}
 
 
-def arrival_analysis(case):
+def arrival_analysis(case, *, include_routes=False):
     """Finite evaluator-only survey; headings are not controller guarantees.
 
     Survey a .05 m lattice and 5-degree circle boundary in each arrival disk,
@@ -211,7 +221,14 @@ def arrival_analysis(case):
                  round(.35*math.sin(math.radians(angle)), 12))
                 for angle in range(0, 360, 5)}
     graph = _public_graph(case)
-    pairs = list(dict.fromkeys(zip(graph['acquisition_ids'], graph['acquisition_ids'][1:])))
+    chains = [graph['acquisition_ids']]
+    if type(include_routes) is not bool:
+        raise ValueError('Arrival survey scope must be boolean')
+    if include_routes:
+        for route in graph['routes']:
+            chains.extend(([graph['decision_landmark_id']]+route['waypoint_ids'],
+                           [route['inspection_landmark_id']]+route['retreat_ids']))
+    pairs = list(dict.fromkeys(pair for chain in chains for pair in zip(chain,chain[1:])))
     transitions = []
     boundary = 7.-WALL_INSET-ROVER_RADIUS
     for aid, bid in pairs:

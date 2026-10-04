@@ -1,0 +1,206 @@
+{
+  "aggregate_bytes_before_inventory": 59215427,
+  "aggregate_raw_and_publication_folder_bytes_before_final_inventory_update": 59237241,
+  "copies": [
+    {
+      "bytes": 23610,
+      "path": "execution.json",
+      "sha256": "70e4fe0172be9060c24283ef3451a62936c2b1788cfa221907c230cd601a7f73",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/research-phase/runs/memory-travel-handoff-20261004T125507Z/execution.json"
+    },
+    {
+      "bytes": 28968,
+      "path": "execution.json.pending",
+      "sha256": "5ecbd11e2f600a05dbf6766327a8f2e2f3dd9e363ee08ba05e8ac578c9c93b3f",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/research-phase/runs/memory-travel-handoff-20261004T125507Z/execution.json.pending"
+    },
+    {
+      "bytes": 265904,
+      "path": "candidates.json",
+      "sha256": "469531af9dd0d5464ce5200fc8c3505623252876c3e3ed26c52ad2812f945951",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/research-phase/runs/memory-travel-handoff-20261004T125507Z/candidates.json"
+    },
+    {
+      "bytes": 9232,
+      "path": "readout-completion.json",
+      "sha256": "329f75eb73c89aa3b9282340f9068b0933d057e1b5b3a18d36aee5c8d0571d60",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/research-phase/runs/memory-travel-handoff-20261004T125507Z/readout-completion.json"
+    },
+    {
+      "bytes": 290032,
+      "path": "development/preflight.json",
+      "sha256": "0e3a6810bab987b9bef1ee7b397a4b41474412ca84820146e0937b70cd37475f",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/research-phase/runs/memory-travel-handoff-20261004T125507Z/development/preflight.json"
+    },
+    {
+      "bytes": 706,
+      "path": "development/report.json.pending",
+      "sha256": "9f21ced6c4290c5cec3870537316ed9d059922d278760705f6e28136d4c700aa",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/research-phase/runs/memory-travel-handoff-20261004T125507Z/development/report.json.pending"
+    },
+    {
+      "bytes": 27439,
+      "path": "development/jobs/e168b54332b344028a34dc0e5c4557f3.json",
+      "sha256": "f873f3c8faaf8e82380e760e0d1f1cd59ff184b8385d99d6e033a871c5c0f03e",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/research-phase/runs/memory-travel-handoff-20261004T125507Z/development/jobs/e168b54332b344028a34dc0e5c4557f3.json"
+    },
+    {
+      "bytes": 770,
+      "path": "development/supervision/e168b54332b344028a34dc0e5c4557f3/stderr.log",
+      "sha256": "5e8005f335899d349d3ab3752c5aef5a142f8eb3165f297627c1f36abd92db49",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/research-phase/runs/memory-travel-handoff-20261004T125507Z/development/supervision/e168b54332b344028a34dc0e5c4557f3/stderr.log"
+    },
+    {
+      "bytes": 927,
+      "path": "development/supervision/e168b54332b344028a34dc0e5c4557f3/stdout.log",
+      "sha256": "ae57d17fce891404c85c7c7eb1facb11a2dedbc378c9adf5a9618432cb3818e8",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/research-phase/runs/memory-travel-handoff-20261004T125507Z/development/supervision/e168b54332b344028a34dc0e5c4557f3/stdout.log"
+    },
+    {
+      "bytes": 304,
+      "path": "development/supervision/e168b54332b344028a34dc0e5c4557f3/supervisor.json",
+      "sha256": "943352a6b4da755d7e0d83155536396ac4741777aed6c69ad13ae9cfef327467",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/research-phase/runs/memory-travel-handoff-20261004T125507Z/development/supervision/e168b54332b344028a34dc0e5c4557f3/supervisor.json"
+    },
+    {
+      "bytes": 362,
+      "path": "development/supervision/e168b54332b344028a34dc0e5c4557f3/supervisor.tmp",
+      "sha256": "d68c03593542b30dc30745a3e92c3576fcb8ee89544c91f63d25ef0917bdcd85",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/research-phase/runs/memory-travel-handoff-20261004T125507Z/development/supervision/e168b54332b344028a34dc0e5c4557f3/supervisor.tmp"
+    },
+    {
+      "bytes": 48239,
+      "path": "development/owners/e168b54332b344028a34dc0e5c4557f3/worker-report.json",
+      "sha256": "7b40a4088e3e331be8e6db03a089de5ea4495422dcd5819015c841cefc91bfc7",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/research-phase/runs/memory-travel-handoff-20261004T125507Z/development/runs/e168b54332b344028a34dc0e5c4557f3/worker-report.json"
+    },
+    {
+      "bytes": 110,
+      "path": "development/owners/e168b54332b344028a34dc0e5c4557f3/owner.json",
+      "sha256": "f525bfea126198d9bb573bec7e6b176b8839f1b1bd729ecfaf7debf0b7efa80f",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/research-phase/runs/memory-travel-handoff-20261004T125507Z/development/runs/e168b54332b344028a34dc0e5c4557f3/owner.json"
+    },
+    {
+      "bytes": 5819,
+      "path": "development/owners/e168b54332b344028a34dc0e5c4557f3/recording/manifest.json",
+      "sha256": "0851fba3ef04db0b2dc2f2a217b95dc10b4de03dff3d2315109fb045a29596f5",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/research-phase/runs/memory-travel-handoff-20261004T125507Z/development/runs/e168b54332b344028a34dc0e5c4557f3/recording/manifest.json"
+    },
+    {
+      "bytes": 99,
+      "path": "baseline.log",
+      "sha256": "c57d79bfb4402de4f9ee299928b60afcf599bb7a1431ef189ca15708ee24219e",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/research-phase/.superpowers/sdd/memory-travel-handoff/baseline.log"
+    },
+    {
+      "bytes": 2577,
+      "path": "geometry-red.log",
+      "sha256": "8b264ad4e10ddaf2c5b489c309aa302e965c62e27dbafe2b34717b3cd4a55259",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/research-phase/.superpowers/sdd/memory-travel-handoff/geometry-red.log"
+    },
+    {
+      "bytes": 99,
+      "path": "geometry-green.log",
+      "sha256": "ffe85bdd5b4363d54e9a8bb98e8e128c89efb3aeb89ba9e0ebeef37b968bf4ef",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/research-phase/.superpowers/sdd/memory-travel-handoff/geometry-green.log"
+    },
+    {
+      "bytes": 15832,
+      "path": "runner-red.log",
+      "sha256": "a13b7bdeafb90daf86336f1b674efea50f283919e670e7c1b0480bcbb9596a84",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/research-phase/.superpowers/sdd/memory-travel-handoff/runner-red.log"
+    },
+    {
+      "bytes": 99,
+      "path": "runner-green.log",
+      "sha256": "533b6abe4f0fa95473fcbf3bf90cd58f4f877faac70a28c823618aa3e2244894",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/research-phase/.superpowers/sdd/memory-travel-handoff/runner-green.log"
+    },
+    {
+      "bytes": 33402,
+      "path": "review-red.log",
+      "sha256": "11f2c6105b0ed1ffa5777ab35d4707c83b223e997546fa67e21da6f8ac7896a4",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/research-phase/.superpowers/sdd/memory-travel-handoff/review-red.log"
+    },
+    {
+      "bytes": 38412,
+      "path": "review-red-corrected.log",
+      "sha256": "2f87c26c9aa3aa85c576191c71f37749a87585d06b573b72ca70fd6551fcf884",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/research-phase/.superpowers/sdd/memory-travel-handoff/review-red-corrected.log"
+    },
+    {
+      "bytes": 19957,
+      "path": "review-red-corrected-2.log",
+      "sha256": "fe7bf2bcbd73f37599b79745d0903febd8206dc641767d4ce9b84059e29dc51b",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/research-phase/.superpowers/sdd/memory-travel-handoff/review-red-corrected-2.log"
+    },
+    {
+      "bytes": 100,
+      "path": "review-green.log",
+      "sha256": "f2f6d082fb20ad0cf3189623e5ad7a8d0539e9756309a1df43e9f1dc96c0b15a",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/research-phase/.superpowers/sdd/memory-travel-handoff/review-green.log"
+    },
+    {
+      "bytes": 5963,
+      "path": "regression.log",
+      "sha256": "06a3187d5ac8d8573e056b0e7bd84e176ce4922effc8f3e5e80d3667ae37587d",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/research-phase/.superpowers/sdd/memory-travel-handoff/regression.log"
+    },
+    {
+      "bytes": 6043,
+      "path": "regression-freeze.log",
+      "sha256": "a7ca8303d63f7fdc4dac7fbd94687c77396be11149271a6bc5e3b0f4c64d63a6",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/research-phase/.superpowers/sdd/memory-travel-handoff/regression-freeze.log"
+    },
+    {
+      "bytes": 75,
+      "path": "admission-space.json",
+      "sha256": "dc6f1bec772e50da89b08d89a2f129923060ee56c8f66d4af297ff874d725748",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/research-phase/.superpowers/sdd/memory-travel-handoff/admission-space.json"
+    },
+    {
+      "bytes": 1248,
+      "path": "execution.log",
+      "sha256": "33e0167affc8f42a99dfae2c7ff0dc00d7d9b1a643fc7d1f8751f3e9bc64f498",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/research-phase/.superpowers/sdd/memory-travel-handoff/execution.log"
+    },
+    {
+      "bytes": 3731,
+      "path": "progress.md",
+      "sha256": "986e1cc33238036a04f2faf5b2ba41a0ab70debf31c632986ddd44c2c5a9a484",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/research-phase/.superpowers/sdd/memory-travel-handoff/progress.md"
+    },
+    {
+      "bytes": 3176,
+      "path": "retained-readout.log",
+      "sha256": "4e9e5762547f92e30672b1a7b449b18e616dd5e5cfe9685ed5987a9acd3f86b5",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/research-phase/.superpowers/sdd/memory-travel-handoff/retained-readout.log"
+    },
+    {
+      "bytes": 896,
+      "path": "filesystem-diagnostics.log",
+      "sha256": "3a233331028d040226ca7b1c7ed11497b8ad128dd9e038881c8818fd677e3504",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/research-phase/.superpowers/sdd/memory-travel-handoff/filesystem-diagnostics.log"
+    },
+    {
+      "bytes": 4399,
+      "path": "retained-readout.py",
+      "sha256": "ca484b9105a419a66e45d8ea7c97adce7104ad1d34361f2b896caf05a55738d0",
+      "source": "/tmp/memory-travel-infrastructure-readout.py"
+    }
+  ],
+  "publication_authored_files_outside_copy_inventory": [
+    "validation.md",
+    "publication-inventory.json",
+    "../memory-travel-handoff.md",
+    "../../implementation-plan.md",
+    "ci-annotations.json"
+  ],
+  "publication_bytes_before_inventory": 838530,
+  "publication_folder_bytes_before_final_inventory_update": 860344,
+  "raw_camera_snp_payloads_committed": false,
+  "raw_root": "/home/utkarsh/Work/shraddha/brain/.worktrees/research-phase/runs/memory-travel-handoff-20261004T125507Z",
+  "raw_root_bytes": 58376897,
+  "schema": "memory-travel-publication-v1",
+  "self_contained_raw_replay_bundle": false
+}

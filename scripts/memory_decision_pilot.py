@@ -58,11 +58,33 @@ WAYPOINT_PROTOCOL = {**PROTOCOL, 'version': 2, 'conditions': [],
     'full_internal_seconds': 720, 'full_external_seconds': 730,
     'repeat_internal_seconds': 150, 'repeat_external_seconds': 160}
 WAYPOINT_PROTOCOL_SHA256 = sha(WAYPOINT_PROTOCOL)
+TRAVEL_PROTOCOL = {**WAYPOINT_PROTOCOL, 'version': 3,
+    'scope': 'travel-handoff-and-prerequisites-only', 'candidate_radii_m': [1.4],
+    'candidate_detour_offsets_m': [.25, .20, .15],
+    'stage_seconds': {'development': 2300, 'prerequisites': 4300, 'readout': 600}}
+TRAVEL_PROTOCOL_SHA256 = sha(TRAVEL_PROTOCOL)
+
+
+def travel_specs(stage, profile_sha256=None):
+    from palimpsest.memory_decision_world import TRAVEL_PROFILE_HASHES
+    if stage == 'travel-development':
+        return [{**feasibility_specs()[1], 'id': 'candidate-d'+label, 'profile_sha256': hash_}
+                for label,hash_ in zip(('25','20','15'),TRAVEL_PROFILE_HASHES)]
+    if stage != 'travel-feasibility' or profile_sha256 not in TRAVEL_PROFILE_HASHES:
+        raise ValueError('Unknown frozen travel study/profile')
+    return [{**spec, 'profile_sha256': profile_sha256} for spec in feasibility_specs()]
+
 
 
 def owner_allocation(stage, operation, protocol_sha256):
     if protocol_sha256 == PROTOCOL_SHA256 and stage in ('feasibility', 'pilot'):
         return PROTOCOL[stage+'_internal_seconds'], PROTOCOL[stage+'_external_seconds']
+    if protocol_sha256 == TRAVEL_PROTOCOL_SHA256:
+        if ((stage == 'travel-development' and operation != 'full') or
+                stage not in ('travel-development','travel-feasibility') or
+                operation not in ('prefix','full','repeat')):
+            raise ValueError('Travel amendment admits full development/prerequisites only')
+        return TRAVEL_PROTOCOL[operation+'_internal_seconds'], TRAVEL_PROTOCOL[operation+'_external_seconds']
     if protocol_sha256 != WAYPOINT_PROTOCOL_SHA256:
         raise ValueError('Unknown worker allocation protocol')
     if ((stage == 'waypoint-development' and operation != 'prefix') or
@@ -376,11 +398,12 @@ def validate_job(raw):
     if type(raw) is not dict or set(raw) != JOB_FIELDS or len(canonical(raw)) > 256*1024:
         raise ValueError('Unknown/missing or oversized private worker fields')
     job = copy.deepcopy(raw)
-    amendment = job['protocol_sha256'] == WAYPOINT_PROTOCOL_SHA256
-    if type(job['version']) is not int or job['version'] != (2 if amendment else 1) or (not amendment and job['protocol_sha256'] != PROTOCOL_SHA256):
+    travel = job['protocol_sha256'] == TRAVEL_PROTOCOL_SHA256
+    amendment = job['protocol_sha256'] in (WAYPOINT_PROTOCOL_SHA256,TRAVEL_PROTOCOL_SHA256)
+    if type(job['version']) is not int or job['version'] != (3 if travel else 2 if amendment else 1) or (not amendment and job['protocol_sha256'] != PROTOCOL_SHA256):
         raise ValueError('Worker protocol differs')
     owner_allocation(job['stage'],job['operation'],job['protocol_sha256'])
-    if job['stage'] not in ('feasibility', 'pilot', 'waypoint-development', 'waypoint-feasibility') or job['operation'] not in ('prefix', 'full', 'repeat', 'condition'):
+    if job['stage'] not in ('feasibility', 'pilot', 'waypoint-development', 'waypoint-feasibility','travel-development','travel-feasibility') or job['operation'] not in ('prefix', 'full', 'repeat', 'condition'):
         raise ValueError('Unsupported worker stage/operation')
     if job['condition'] not in (*CONDITIONS, None):
         raise ValueError('Unsupported condition')
@@ -388,11 +411,12 @@ def validate_job(raw):
         raise ValueError('Scored branches require pilot condition')
     if job['operation'] != 'condition' and job['condition'] is not None:
         raise ValueError('Acquisition/prerequisites have no selector condition')
-    specs = (waypoint_specs(job['stage'],job['case'].get('profile_sha256')) if amendment else
+    specs = (travel_specs(job['stage'],job['case'].get('profile_sha256')) if travel else
+             waypoint_specs(job['stage'],job['case'].get('profile_sha256')) if amendment else
              feasibility_specs() if job['stage'] == 'feasibility' else pilot_specs())
     if job['spec'] not in specs:
         raise ValueError('Unfrozen development spec or held-out case')
-    if job['stage'] in ('feasibility','waypoint-development','waypoint-feasibility') and job['operation'] != job['spec']['operation']:
+    if job['stage'] in ('feasibility','waypoint-development','waypoint-feasibility','travel-development','travel-feasibility') and job['operation'] != job['spec']['operation']:
         raise ValueError('Prerequisite operation differs')
     if job['stage'] == 'pilot' and job['operation'] not in ('prefix', 'condition'):
         raise ValueError('Pilot cannot use prerequisite controls')
@@ -669,7 +693,7 @@ def admit_prefix_failure(job, supervised, report, manifest):
         raise ValueError('Unqualified acquisition infrastructure failure')
 
 
-def audit_native_prefix_terminal(data, report):
+def audit_native_prefix_terminal(data, report, *, expected_cap=1200):
     """Reconstruct pinned CPU-world stall/time-limit termination from raw rows."""
     outcome = report.get('outcome') or {}
     reason, total = outcome.get('reason'), report['total_ticks']
@@ -686,7 +710,7 @@ def audit_native_prefix_terminal(data, report):
             stalls.append(index)
     if reason == 'stalled' and stalls != [total-1]:
         raise ValueError('Native stall not independently reproduced at its final motor row')
-    if reason == 'time_limit' and (total != 1200 or stalls):
+    if reason == 'time_limit' and (total != expected_cap or stalls):
         raise ValueError('Native acquisition cap not reached or earlier stall ignored')
     return reason
 
@@ -741,6 +765,8 @@ def audit_prefix_failure(job, supervised, deadline=None):
     if cue_failure and [e['episode_step'] for e in packets] != list(range(total+1)):
         raise ValueError('Terminal sensor-only failure packet is missing')
     replay_memory_audit(job,data,None,report,require_terminal_cue=cue_failure)
+    if job['version'] == 3 and (cue_failure or declared_failure):
+        reason = audit_travel_task_failure(data,report)
     result = {'status':'failed','raw_audit_pass':True,'retained_task_failure':True,
         'acquired':False,'goal':False,'continuation_ticks':0,'total_ticks':total,'capped_ticks':900,
         'packet_count':len(packets),'policy_calls':len(data['rows']),'path_length':path,
@@ -872,7 +898,8 @@ def audit_run(job, supervised, deadline=None):
                 if p['subject_id'] == fact['subject_id'] and p['passability'] == 'open']
             if fact.get('estimate') != 'open' or evidence is None or not candidates:
                 raise ValueError('Acquired belief lacks a real initial open sample')
-    replay_memory_audit(job, data, snapshot, report)
+    replay_memory_audit(job, data, snapshot, report,
+        require_terminal_cue=job['protocol_sha256']==TRAVEL_PROTOCOL_SHA256 and (report.get('outcome') or {}).get('type')=='CueUnavailable')
     details = [e['detail'] for e in data['events'] if e['kind'] == 'memory_decision']
     commits = [d for d in details if d['kind'] == 'memory_commitment']
     graph = world.public_graph(job['case'])
@@ -917,7 +944,46 @@ def audit_run(job, supervised, deadline=None):
     if job['operation'] == 'repeat' and (len(scored) != 5 or not report.get('post_state_digest')):
         raise ValueError('Deterministic restore prerequisite did not complete exactly five real policy ticks')
     result['capped_ticks'] = capped_score(result)
+    if job['protocol_sha256'] == TRAVEL_PROTOCOL_SHA256 and job['operation']=='full' and not report['goal']:
+        result['retained_task_failure_reason'] = audit_travel_task_failure(data,report)
+        result['retained_task_failure'] = True
     return result
+
+
+def audit_travel_task_failure(data, report):
+    """Called only after complete raw/profile/packet/M audit, never by worker."""
+    if report.get('goal') is not False:
+        raise ValueError('A goal cannot be retained as a failed task')
+    outcome = report.get('outcome') or {}
+    reason, total = outcome.get('reason'), report['total_ticks']
+    sup = report['final_memory']['supervisor']
+    if reason in ('stalled','time_limit'):
+        start = sup.get('continuation_start_tick')
+        if type(start) is not int or start<0:
+            raise ValueError('Post-acquisition termination needs declared continuation boundary')
+        return audit_native_prefix_terminal(data,report,expected_cap=min(2100,start+900))
+    failures = [e for e in data['events'] if e['kind']=='runtime_failure']
+    if (reason!='runtime_failure' or report['final_phase']!='failed' or len(failures)!=1
+            or failures[0].get('episode_step')!=total or failures[0].get('error')!=outcome
+            or outcome.get('steps')!=total):
+        raise ValueError('Travel failure lacks matching actual terminal runtime event')
+    sensed = [e for e in data['events'] if e['kind']=='memory_sensed']
+    if not sensed or sensed[-1].get('episode_step')!=total or sensed[-1]['packet'].get('tick')!=total:
+        raise ValueError('Travel failure lacks terminal sensed packet')
+    event_index = data['events'].index(failures[0])
+    if any(e['kind'] in ('memory_sensed','memory_decision','memory_cue','neural_policy_call',
+                        'snapshot_registered','memory_selector_configured','memory_decision_armed')
+           for e in data['events'][event_index+1:]):
+        raise ValueError('Progress followed terminal travel failure')
+    if outcome.get('type')=='CueUnavailable':
+        return 'CueUnavailable'  # Exact packet/tick/message replay required by audit_run.
+    declared = sup.get('failure_reason')
+    if (outcome.get('type')=='ValueError' and sup.get('phase')=='failure'
+            and declared in ('continuation_timeout','waypoint_timeout','inspection_timeout','no_route','attempt_limit',
+                         'acquisition_timeout','acquisition_incomplete','acquisition_blocked')
+            and outcome.get('message')=='Memory-v2 supervisor failure: '+declared):
+        return declared
+    raise ValueError('Unknown travel exception is an infrastructure stop')
 
 
 def hash_ledger(root, deadline=None):
@@ -938,7 +1004,7 @@ def hash_ledger(root, deadline=None):
 def make_job(stage, spec, plan, operation, condition=None, source=None):
     from palimpsest import memory_decision_world as world
     identifier = uuid.uuid4().hex
-    return {'version': 2 if plan.get('protocol_sha256') == WAYPOINT_PROTOCOL_SHA256 else 1, 'repo': plan['repo'], 'assets': plan['assets'], 'history_root': plan['history_root'],
+    return {'version': 3 if plan.get('protocol_sha256') == TRAVEL_PROTOCOL_SHA256 else 2 if plan.get('protocol_sha256') == WAYPOINT_PROTOCOL_SHA256 else 1, 'repo': plan['repo'], 'assets': plan['assets'], 'history_root': plan['history_root'],
         'stage_output': plan['output'], 'phase_root': plan['phase_root'],
         'output': str(Path(plan['output'])/'runs'/identifier), 'run_id': identifier,
         'stage': stage, 'operation': operation, 'condition': condition, 'spec': spec,
@@ -972,7 +1038,7 @@ def launch_owner(stage, spec, plan, storage, deadline, *, operation=None, condit
     try:
         deadline_check(deadline)
         worker_report = read_json(Path(job['output'])/'worker-report.json')
-        if job['version'] == 2 and worker_report.get('acquired') is False:
+        if job['version'] in (2,3) and worker_report.get('acquired') is False:
             result.update(audit_prefix_failure(job,supervised,deadline))
         else:
             result.update(audit_run(job, supervised, deadline))
@@ -1010,15 +1076,16 @@ def validate_feasibility(path, plan):
 
 
 def execute_stage(stage, plan, storage, deadline):
-    specs = (waypoint_specs(stage,plan.get('selected_profile_sha256')) if stage == 'waypoint-feasibility' else
-             feasibility_specs() if stage in ('feasibility','waypoint-feasibility') else pilot_specs())
+    specs = (travel_specs(stage,plan.get('selected_profile_sha256')) if stage == 'travel-feasibility' else
+             waypoint_specs(stage,plan.get('selected_profile_sha256')) if stage == 'waypoint-feasibility' else
+             feasibility_specs() if stage in ('feasibility','waypoint-feasibility','travel-feasibility') else pilot_specs())
     report = {'version': 1, 'stage': stage, 'output': plan['output'], 'phase_root': plan['phase_root'],
         'protocol_sha256': plan.get('protocol_sha256',PROTOCOL_SHA256), 'source_identity': plan['source_identity'],
         'attempted': [], 'unattempted': [], 'errors': [], 'pair_audits': [], 'mandatory_pass': False,
         'qualifier': QUALIFIER, 'r2_complete': False}
     if not plan.get('geometry_valid'):
         report['errors'].append({'type': 'GeometryInvalid', 'message': 'Frozen candidate failed; no native owner or replacement layout'})
-        report['unattempted'] = ([spec['id'] for spec in specs] if stage in ('feasibility','waypoint-feasibility') else
+        report['unattempted'] = ([spec['id'] for spec in specs] if stage in ('feasibility','waypoint-feasibility','travel-feasibility') else
             [spec['id'] for spec in specs]+[spec['id']+'/'+condition for spec in specs for condition in CONDITIONS])
         return report
     sources, repeats = {}, []
@@ -1027,7 +1094,7 @@ def execute_stage(stage, plan, storage, deadline):
         for index, spec in enumerate(specs):
             next_index = index
             deadline_check(deadline)
-            if stage in ('feasibility','waypoint-feasibility'):
+            if stage in ('feasibility','waypoint-feasibility','travel-feasibility'):
                 result = launch_owner(stage, spec, plan, storage, deadline,
                     source=sources.get(spec.get('source')))
                 report['attempted'].append(result)

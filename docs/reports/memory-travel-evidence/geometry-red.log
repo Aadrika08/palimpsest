@@ -1,0 +1,39 @@
+FFF                                                                      [100%]
+=================================== FAILURES ===================================
+__ test_registered_travel_cases_use_physical_side_detours_and_actual_lengths ___
+
+    def test_registered_travel_cases_use_physical_side_detours_and_actual_lengths():
+        old = world.make_case(400,'local_cue','change',profile_sha256=world.WAYPOINT_PROFILE_HASHES[0])
+>       for hash_, offset, cost in zip(world.TRAVEL_PROFILE_HASHES,(.25,.20,.15),
+                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                                      (5.154335509,5.119246573,5.091267197)):
+E                                     AttributeError: module 'palimpsest.memory_decision_world' has no attribute 'TRAVEL_PROFILE_HASHES'
+
+tests/test_memory_travel_profiles.py:9: AttributeError
+______ test_all_chain_arrival_survey_includes_travel_and_retreat_handoffs ______
+
+    def test_all_chain_arrival_survey_includes_travel_and_retreat_handoffs():
+        case = world.make_case(400,'local_cue','change',profile_sha256=world.WAYPOINT_PROFILE_HASHES[0])
+>       report = world.arrival_analysis(case,include_routes=True)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: arrival_analysis() got an unexpected keyword argument 'include_routes'
+
+tests/test_memory_travel_profiles.py:29: TypeError
+________ test_travel_snapshot_admission_binds_profile_before_allocation ________
+
+    def test_travel_snapshot_admission_binds_profile_before_allocation():
+        from palimpsest.engine import Engine
+        import test_memory_decision_engine as ef
+        import test_memory_decision as tf
+        harness=ef.DecisionEngineTests();harness.setUp()
+        try:
+>           harness.case=world.make_case(0,'local_cue','change',profile_sha256=world.TRAVEL_PROFILE_HASHES[0])
+                                                                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           AttributeError: module 'palimpsest.memory_decision_world' has no attribute 'TRAVEL_PROFILE_HASHES'
+
+tests/test_memory_travel_profiles.py:48: AttributeError
+=========================== short test summary info ============================
+FAILED tests/test_memory_travel_profiles.py::test_registered_travel_cases_use_physical_side_detours_and_actual_lengths
+FAILED tests/test_memory_travel_profiles.py::test_all_chain_arrival_survey_includes_travel_and_retreat_handoffs
+FAILED tests/test_memory_travel_profiles.py::test_travel_snapshot_admission_binds_profile_before_allocation
+3 failed in 0.16s

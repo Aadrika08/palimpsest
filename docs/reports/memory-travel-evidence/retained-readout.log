@@ -1,0 +1,88 @@
+{
+  "schema": "memory-travel-infrastructure-readout-v1",
+  "started_monotonic": 24980.053879911,
+  "canonical_execution_receipt_stale": true,
+  "pending_execution_sha256": "5ecbd11e2f600a05dbf6766327a8f2e2f3dd9e363ee08ba05e8ac578c9c93b3f",
+  "status": "infrastructure-stop",
+  "selected_profile_sha256": null,
+  "native_retries": 0,
+  "development_disposition": [
+    {
+      "job_id": "candidate-d25",
+      "status": "started-incomplete-infrastructure-failure"
+    },
+    {
+      "job_id": "candidate-d20",
+      "status": "unattempted"
+    },
+    {
+      "job_id": "candidate-d15",
+      "status": "unattempted"
+    }
+  ],
+  "prerequisite_disposition": {
+    "attempted": [],
+    "unattempted": [
+      "south-no-event",
+      "south-change",
+      "north-no-event",
+      "north-change",
+      "south-prefix",
+      "north-prefix",
+      "restore-1",
+      "restore-2"
+    ]
+  },
+  "raw_audit_pass": false,
+  "scientific_task_failure_admitted": false,
+  "qualification_claims": [],
+  "r2_complete": false,
+  "held_out_used": false,
+  "paired_pilot": "unattempted-by-scope",
+  "owners": [
+    {
+      "run_id": "e168b54332b344028a34dc0e5c4557f3",
+      "job_id": "candidate-d25",
+      "profile_sha256": "7faba0a56d129ea051d5c28a019964034b546923dbe49cedb3a605af84437ec3",
+      "owner": {
+        "pgid": 249816,
+        "pid": 249816,
+        "run_id": "e168b54332b344028a34dc0e5c4557f3",
+        "starttime": 2451530
+      },
+      "matching_owner_exited": true,
+      "supervisor_canonical_status": "running",
+      "supervisor_unpublished_terminal": {
+        "schema_version": 1,
+        "status": "failed",
+        "timeout_seconds": 730,
+        "started_utc": "2026-10-04T12:55:13.594282+00:00",
+        "output": "/home/utkarsh/Work/shraddha/brain/.worktrees/research-phase/runs/memory-travel-handoff-20261004T125507Z/development/supervision/e168b54332b344028a34dc0e5c4557f3",
+        "returncode": 1,
+        "elapsed_seconds": 183.7729987060011
+      },
+      "worker_reported_ticks": 288,
+      "worker_outcome": {
+        "episode": 0,
+        "message": "[Errno 28] No space left on device: '/home/utkarsh/Work/shraddha/brain/.worktrees/research-phase/runs/memory-travel-handoff-20261004T125507Z/development/runs/e168b54332b344028a34dc0e5c4557f3/recording/chunks/000008.tmp' -> '/home/utkarsh/Work/shraddha/brain/.worktrees/research-phase/runs/memory-travel-handoff-20261004T125507Z/development/runs/e168b54332b344028a34dc0e5c4557f3/recording/chunks/000008.npz'",
+        "policy_diagnostics": {},
+        "reason": "runtime_failure",
+        "steps": 288,
+        "type": "OSError"
+      },
+      "recording_manifest_status": "running",
+      "readable_raw_rows": 256,
+      "audit_refusal": {
+        "type": "ValueError",
+        "message": "Unqualified acquisition infrastructure failure"
+      }
+    }
+  ],
+  "mutable_pending_execution_excluded_from_original_hash_match": true,
+  "source_identity_unchanged": true,
+  "output_bytes_before_readout": 58367665,
+  "completed_monotonic": 24981.915406842,
+  "readout_deadline_monotonic": 25299.506257481,
+  "conservative_readout_seconds": 282.40914936099944,
+  "conservative_total_seconds": 473.138210213001
+}
