@@ -103,6 +103,20 @@ def test_inventory_change_is_refused(tmp_path):
     with pytest.raises(ValueError):module.verify_inventory(reference,None)
 
 
+def test_native_decoder_omits_owned_views_of_unpopulated_arena_fields():
+    mujoco=pytest.importorskip('mujoco')
+    model=mujoco.MjModel.from_xml_string('<mujoco><worldbody/></mujoco>')
+    data=mujoco.MjData(model)
+    # Artificial metadata exercises a null arena pointer with a nonzero view
+    # shape. No physics, retained snapshot, or study state is involved.
+    data.nefc=1
+    assert data.efc_AR_rownnz.flags.owndata is True
+    fields,omitted=d.native_fields({'native_data':data.__getstate__()})
+    assert 'efc_AR_rownnz' not in fields
+    assert 'efc_AR_rowadr' not in fields
+    assert any(row['field']=='efc_AR_rownnz' and row.get('reason')=='owned NumPy array is not a view of native storage' for row in omitted)
+
+
 @pytest.mark.parametrize('failure',['recheck','close-deadline'])
 def test_failed_offline_close_cannot_publish_complete_readout(tmp_path,monkeypatch,failure):
     module=offline(); monkeypatch.setattr(module,'__file__',str(tmp_path/'scripts/offline.py'))
