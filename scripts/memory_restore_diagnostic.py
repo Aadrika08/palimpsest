@@ -185,7 +185,7 @@ def audit_owners(stage, attempted, deadline):
     stage = p.checked_path(stage); rows = []
     for path in sorted((stage/'jobs').glob('*.json')):
         p.deadline_check(deadline)
-        job = p.validate_job(p.read_json(path)); run = p.checked_path(job['output'])
+        job = p.validate_job(p.read_json(path), read_only=True); run = p.checked_path(job['output'])
         if run != stage/'runs'/job['run_id'] or path.name != job['run_id']+'.json':
             raise ValueError('Allocated owner path differs')
         row = {'run_id': job['run_id'], 'job_id': job['spec']['id'], 'operation': job['operation'],

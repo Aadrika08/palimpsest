@@ -197,7 +197,7 @@ def test_unscored_started_owner_is_accounted_and_missing_owner_cannot_pass(tmp_p
     run.mkdir(parents=True)
     job = {'run_id': 'a'*32, 'output': str(run), 'operation': 'repeat', 'spec': {'id': 'restore-1'}}
     (stage/'jobs'/('a'*32+'.json')).write_text(json.dumps(job))
-    monkeypatch.setattr(p, 'validate_job', lambda value: value)
+    monkeypatch.setattr(p, 'validate_job', lambda value, **kwargs: value)
     monkeypatch.setattr(p, 'audit_run', lambda *args: (_ for _ in ()).throw(ValueError('partial recording')))
     rows = d.audit_owners(stage, {}, None)
     assert rows[0]['disposition'] == 'allocated-unstarted'

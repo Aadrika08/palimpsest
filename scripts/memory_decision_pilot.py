@@ -416,7 +416,10 @@ def preflight(repo, assets, history_root, output, phase_root, deadline=None, *, 
         'qualifier': QUALIFIER, 'r2_complete': False}
 
 
-def validate_job(raw):
+def validate_job(raw, *, read_only=False):
+    """Validate private jobs; only auditors may inspect already allocated output."""
+    if type(read_only) is not bool:
+        raise ValueError('Read-only job validation requires a boolean')
     if type(raw) is not dict or set(raw) != JOB_FIELDS or len(canonical(raw)) > 256*1024:
         raise ValueError('Unknown/missing or oversized private worker fields')
     job = copy.deepcopy(raw)
@@ -449,7 +452,14 @@ def validate_job(raw):
         raise ValueError('Worker checkout/run identity differs')
     if Path(job['output']) != Path(job['stage_output'])/'runs'/job['run_id'] or not Path(job['stage_output']).is_relative_to(Path(job['phase_root'])):
         raise ValueError('Worker output escapes stage/phase allocation')
-    safe_output(job['output'], source_paths(job['repo'], job['assets'], job['history_root']))
+    sources = source_paths(job['repo'], job['assets'], job['history_root'])
+    if read_only:
+        # Existing directories are evidence to read, never permission to write.
+        # All path, source-overlap, spec, geometry and lineage guards still apply.
+        if any(overlaps(checked_path(job['output']), source) for source in sources):
+            raise ValueError('Output overlaps a source input')
+    else:
+        safe_output(job['output'], sources)
     restore = job['operation'] in ('condition', 'repeat')
     if restore:
         path = checked_path(job['snapshot_path'])
