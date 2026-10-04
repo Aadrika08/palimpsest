@@ -1,0 +1,29 @@
+{
+  "allocated_jobs": 2,
+  "cleanup_statuses": [
+    "already-exited",
+    "already-exited"
+  ],
+  "final_independent_readout": "stopped before owner/raw/post-state re-audit and pair comparison",
+  "held_out_used": false,
+  "native_invocations": 1,
+  "native_prerequisites_passed": false,
+  "native_retries": 0,
+  "new_scientific_readout_after_close": false,
+  "paired_pilot": "unattempted-by-scope",
+  "per_owner_continuation_ticks": [
+    5,
+    5
+  ],
+  "per_owner_raw_audit_pass": [
+    true,
+    true
+  ],
+  "post_stop_software_fix": "read-only validation of existing allocated output; no native rerun",
+  "qualification": "unattempted because diagnostic readout failed",
+  "qualification_claims": [],
+  "schema": "memory-restore-study-v2-disposition-v1",
+  "scientific_status": "independent-readout-stop",
+  "started_owners": 2,
+  "state_defect_repair": "unattempted; no demonstrated same-contract explanation"
+}

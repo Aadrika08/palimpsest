@@ -1,0 +1,159 @@
+{
+  "files": [
+    {
+      "bytes": 0,
+      "path": ".palimpsest-storage.lock",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 170468,
+      "path": "execution.json",
+      "sha256": "e67bee22326aee8dc41cb1ff550d454c794c0614aa86e8f3ebd4110369e31fa6"
+    },
+    {
+      "bytes": 101276,
+      "path": "registration.json",
+      "sha256": "4b9e451ee0a6a49c620086bf931353fb0df730359af20ab7d888ac89ca712b90"
+    },
+    {
+      "bytes": 923,
+      "path": "source-copy.json",
+      "sha256": "ff05c1a3e52ad4b2629a102a9919d634e9972d19fbc4bca1485ade2e972b68ad"
+    },
+    {
+      "bytes": 101721,
+      "path": "stage/preflight.json",
+      "sha256": "5a96cdfdb73dfb2d12c90b1addbf717d6e2762cb8cbdffa2285b85816b413344"
+    },
+    {
+      "bytes": 1559915,
+      "path": "stage/source/snapshots/initial.snp",
+      "sha256": "c839fae1fe3d981cf4b7073970f7eb06d5738f009d6cb23f249408fd227cf6bf"
+    },
+    {
+      "bytes": 27761,
+      "path": "stage/jobs/a622e7d821954286a7595b846baae849.json",
+      "sha256": "6d27de270e0ad0469ee0b515a802699a92295ff1602ef643b9ad46f335dec4d4"
+    },
+    {
+      "bytes": 27761,
+      "path": "stage/jobs/b14d9fc28bef43cbae0a5a417f898ebc.json",
+      "sha256": "cfd8e218ae6745133084237e69824edc27f2845be2dae3e35e164e3e5716ad37"
+    },
+    {
+      "bytes": 1468,
+      "path": "stage/supervision/a622e7d821954286a7595b846baae849/stderr.log",
+      "sha256": "fa730607d71f9271bfd50d55e545ed1f57855beaea14c8d86e0031161a65d4f1"
+    },
+    {
+      "bytes": 927,
+      "path": "stage/supervision/a622e7d821954286a7595b846baae849/stdout.log",
+      "sha256": "ae57d17fce891404c85c7c7eb1facb11a2dedbc378c9adf5a9618432cb3818e8"
+    },
+    {
+      "bytes": 371,
+      "path": "stage/supervision/a622e7d821954286a7595b846baae849/supervisor.json",
+      "sha256": "8e739b068ca3656a8c13e15debb099d817f692b2b9304389e472ae2b1540111c"
+    },
+    {
+      "bytes": 1468,
+      "path": "stage/supervision/b14d9fc28bef43cbae0a5a417f898ebc/stderr.log",
+      "sha256": "fa730607d71f9271bfd50d55e545ed1f57855beaea14c8d86e0031161a65d4f1"
+    },
+    {
+      "bytes": 927,
+      "path": "stage/supervision/b14d9fc28bef43cbae0a5a417f898ebc/stdout.log",
+      "sha256": "ae57d17fce891404c85c7c7eb1facb11a2dedbc378c9adf5a9618432cb3818e8"
+    },
+    {
+      "bytes": 371,
+      "path": "stage/supervision/b14d9fc28bef43cbae0a5a417f898ebc/supervisor.json",
+      "sha256": "bca60fe54415a516c52a6076f68cf377005dc211481946969adc39ef75aee1bc"
+    },
+    {
+      "bytes": 110,
+      "path": "stage/runs/a622e7d821954286a7595b846baae849/owner.json",
+      "sha256": "cfb0a16aa503c55281c1e14bf546231f49c97c22e7621cd9c247fc51431aa5ad"
+    },
+    {
+      "bytes": 62856,
+      "path": "stage/runs/a622e7d821954286a7595b846baae849/worker-report.json",
+      "sha256": "9b28182a14a4155e31238cfc0419577b1b289525596142044941bdb8e75453ed"
+    },
+    {
+      "bytes": 59994,
+      "path": "stage/runs/a622e7d821954286a7595b846baae849/recording/events.jsonl",
+      "sha256": "84717e236d3b258df4b4cffffd014a35598df9c9f624573a86fbd4948930ff01"
+    },
+    {
+      "bytes": 33213,
+      "path": "stage/runs/a622e7d821954286a7595b846baae849/recording/manifest.json",
+      "sha256": "084093247158690417362f779623c7fccc289da0a7ea65017f5c80d1820726cf"
+    },
+    {
+      "bytes": 1085000,
+      "path": "stage/runs/a622e7d821954286a7595b846baae849/recording/chunks/000000.npz",
+      "sha256": "2546cd2411ef931fa6d7a2bf6d15acf0ea34eaca83b0f4666262e4199105f55e"
+    },
+    {
+      "bytes": 406,
+      "path": "stage/runs/a622e7d821954286a7595b846baae849/snapshots/index.json",
+      "sha256": "a9a799b9575727ef28c4b0ef65958c17dfce7bb3ceb9d257e38ae83356b94975"
+    },
+    {
+      "bytes": 1559910,
+      "path": "stage/runs/a622e7d821954286a7595b846baae849/snapshots/initial.snp",
+      "sha256": "3534e3960b8fc2f24ad24bfae167648e27e1a5430277eb459a0dd3f559a65a16"
+    },
+    {
+      "bytes": 1563696,
+      "path": "stage/runs/a622e7d821954286a7595b846baae849/snapshots/post-repeat.snp",
+      "sha256": "e510702ff4c8b74b320600c5e5d81dfd732097282bfebd21a12122a66e36f00e"
+    },
+    {
+      "bytes": 110,
+      "path": "stage/runs/b14d9fc28bef43cbae0a5a417f898ebc/owner.json",
+      "sha256": "6ae0b7be4563c5ff31ec6f3f90f2d4cef31fc3195095325946b16afaa7206ca6"
+    },
+    {
+      "bytes": 62856,
+      "path": "stage/runs/b14d9fc28bef43cbae0a5a417f898ebc/worker-report.json",
+      "sha256": "7d8f94d30846fef1bd0110428bd83bbf1a8669fc7b910ff5d3040b34fbacf068"
+    },
+    {
+      "bytes": 59994,
+      "path": "stage/runs/b14d9fc28bef43cbae0a5a417f898ebc/recording/events.jsonl",
+      "sha256": "6ca638b1f2d6ec268ae3e92a4a1efd0cdda6b5cafbcf5c029a03442874f8bcd9"
+    },
+    {
+      "bytes": 33213,
+      "path": "stage/runs/b14d9fc28bef43cbae0a5a417f898ebc/recording/manifest.json",
+      "sha256": "fd3bce203c97eaf488e34ea93feda117816a5eeb707ebbf876ac70cd07516aac"
+    },
+    {
+      "bytes": 1085000,
+      "path": "stage/runs/b14d9fc28bef43cbae0a5a417f898ebc/recording/chunks/000000.npz",
+      "sha256": "942744eee92bfbb062f6eeb68096f29c61d79147e92c489272c146b070280888"
+    },
+    {
+      "bytes": 406,
+      "path": "stage/runs/b14d9fc28bef43cbae0a5a417f898ebc/snapshots/index.json",
+      "sha256": "4c44d5735c5f0884c91f49a327590fb228431ad939ad5599b6cdc784de58e82a"
+    },
+    {
+      "bytes": 1559910,
+      "path": "stage/runs/b14d9fc28bef43cbae0a5a417f898ebc/snapshots/initial.snp",
+      "sha256": "70145d352e6041c15fd2aa4915d2ffe549e6590a174c012c246f25da688a0abd"
+    },
+    {
+      "bytes": 1563696,
+      "path": "stage/runs/b14d9fc28bef43cbae0a5a417f898ebc/snapshots/post-repeat.snp",
+      "sha256": "bf27779d83c23d0c64106a1916e4583c6144b03587561ddc1c88dd57a18ca30d"
+    }
+  ],
+  "native_owners_started": 0,
+  "purpose": "post-close documentary inventory only; not a replacement raw audit or extended readout",
+  "qualification_claims": [],
+  "root": "/home/utkarsh/Work/shraddha/brain/.worktrees/research-phase/runs/memory-restore-study-v2-diagnose-20261004T155817Z",
+  "schema": "memory-restore-study-v2-retained-inventory-v1"
+}
