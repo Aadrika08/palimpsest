@@ -138,6 +138,14 @@ full local suite passed **950**, with **24 skipped** and 39 warnings, in 87.19 s
 [Delivery full suite](memory-restore-offline-readout-evidence/delivery-full-suite.log).
 These tests start no native worker and are software evidence only. CI is excluded.
 
+[One independent final review](memory-restore-offline-readout-evidence/final-review.md)
+found no Critical, Important or Minor issues. It verified prospective registration
+bytes, all ten published-copy hashes, indexed analysis/registration hashes and
+three archived executed-code files, and passed four software spot checks in
+0.17 s. No native readout or retained-payload decoding was repeated. Its scope
+limits and the executor's rulings, including their costs, are recorded in that
+review; no deferred minor findings or fix pass remain.
+
 The registered inventories remain unchanged: 339 original recovery files,
 24 historical abort files, 25 previous diagnostic evidence files, 30 retained v2
 native files and 26 published v2 evidence files. All 13 bound execution inputs
