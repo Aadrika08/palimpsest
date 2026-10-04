@@ -43,7 +43,11 @@ the common goal. Public graph edges declare landmark IDs, direction, route
 subject, fixed authored length, and allowed retreat edges. They do not expose
 live pose, closure state, ground-truth passability, or a private bearing.
 Refine waypoint positions on development to ensure visible, executable chains,
-including return to the decision node after a rejected crossing. Counterbalance
+including return to the decision node after a rejected crossing. A direct return
+marker can be behind an east-facing rover and outside ±90° visibility; arrival
+tokens do not provide orientation or a backward bearing. Forward-visible retreat
+chains remain an explicit geometry and CPU-controller feasibility uncertainty.
+Counterbalance
 small public route-length differences and ties; never derive a cost from secret
 closure state. Freeze graph, lengths, tolerances, and profile before confirmation.
 
@@ -161,7 +165,10 @@ before any qualification claim.
 Cross learned relation, physical side, lexical subject/landmark identities,
 cheaper or tied preferred route, closure side, and admissible event schedule.
 Within change cases, balance closure of the initially preferred route against
-closure of the alternative. Include cue-change/no-closure nulls and no-event
+closure of the alternative. Closure subjects must obey the declared learned
+regime and cue associations; counterbalance physical side through these mappings
+and preferred-route placement. Do not create an unrestricted regime/closure
+Cartesian product that violates the claimed mechanism. Include cue-change/no-closure nulls and no-event
 controls. Pair conditions within a case family and keep families independent;
 ticks, repeated seeds within a family, and nine condition branches are not
 independent samples. List rejected generated families and reasons, rather than
