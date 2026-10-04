@@ -1,0 +1,184 @@
+.....FFFFFF.                                                             [100%]
+=================================== FAILURES ===================================
+_ test_compare_localizes_typed_components_without_mutating_or_normalizing_more _
+
+    def test_compare_localizes_typed_components_without_mutating_or_normalizing_more():
+>       d = diagnostic(); one = post_state('one'); two = post_state('two')
+            ^^^^^^^^^^^^
+
+tests/test_memory_restore_diagnostic.py:128: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_memory_restore_diagnostic.py:124: in diagnostic
+    return importlib.import_module('scripts.memory_restore_diagnostic')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/importlib/__init__.py:126: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<frozen importlib._bootstrap>:1204: in _gcd_import
+    ???
+<frozen importlib._bootstrap>:1176: in _find_and_load
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = 'scripts.memory_restore_diagnostic'
+import_ = <function _gcd_import at 0x75a5290efd80>
+
+>   ???
+E   ModuleNotFoundError: No module named 'scripts.memory_restore_diagnostic'
+
+<frozen importlib._bootstrap>:1140: ModuleNotFoundError
+_______ test_compare_preserves_native_bytes_and_extra_application_fields _______
+
+    def test_compare_preserves_native_bytes_and_extra_application_fields():
+>       d = diagnostic(); one = post_state('one'); two = post_state('two')
+            ^^^^^^^^^^^^
+
+tests/test_memory_restore_diagnostic.py:143: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_memory_restore_diagnostic.py:124: in diagnostic
+    return importlib.import_module('scripts.memory_restore_diagnostic')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/importlib/__init__.py:126: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<frozen importlib._bootstrap>:1204: in _gcd_import
+    ???
+<frozen importlib._bootstrap>:1176: in _find_and_load
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = 'scripts.memory_restore_diagnostic'
+import_ = <function _gcd_import at 0x75a5290efd80>
+
+>   ???
+E   ModuleNotFoundError: No module named 'scripts.memory_restore_diagnostic'
+
+<frozen importlib._bootstrap>:1140: ModuleNotFoundError
+_____ test_stage_local_source_copy_checks_hash_invariant_and_no_overwrite ______
+
+tmp_path = PosixPath('/tmp/pytest-of-utkarsh/pytest-39/test_stage_local_source_copy_c0')
+
+    def test_stage_local_source_copy_checks_hash_invariant_and_no_overwrite(tmp_path):
+        from palimpsest.snapshots import save_snapshot
+>       d = diagnostic(); source = tmp_path/'source.snp'; save_snapshot(post_state(), source)
+            ^^^^^^^^^^^^
+
+tests/test_memory_restore_diagnostic.py:155: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_memory_restore_diagnostic.py:124: in diagnostic
+    return importlib.import_module('scripts.memory_restore_diagnostic')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/importlib/__init__.py:126: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<frozen importlib._bootstrap>:1204: in _gcd_import
+    ???
+<frozen importlib._bootstrap>:1176: in _find_and_load
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = 'scripts.memory_restore_diagnostic'
+import_ = <function _gcd_import at 0x75a5290efd80>
+
+>   ???
+E   ModuleNotFoundError: No module named 'scripts.memory_restore_diagnostic'
+
+<frozen importlib._bootstrap>:1140: ModuleNotFoundError
+___ test_audit_post_state_refuses_missing_corrupt_or_worker_digest_mismatch ____
+
+tmp_path = PosixPath('/tmp/pytest-of-utkarsh/pytest-39/test_audit_post_state_refuses_0')
+
+    def test_audit_post_state_refuses_missing_corrupt_or_worker_digest_mismatch(tmp_path):
+>       d = diagnostic(); run = tmp_path/'run'; (run/'snapshots').mkdir(parents=True)
+            ^^^^^^^^^^^^
+
+tests/test_memory_restore_diagnostic.py:172: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_memory_restore_diagnostic.py:124: in diagnostic
+    return importlib.import_module('scripts.memory_restore_diagnostic')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/importlib/__init__.py:126: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<frozen importlib._bootstrap>:1204: in _gcd_import
+    ???
+<frozen importlib._bootstrap>:1176: in _find_and_load
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = 'scripts.memory_restore_diagnostic'
+import_ = <function _gcd_import at 0x75a5290efd80>
+
+>   ???
+E   ModuleNotFoundError: No module named 'scripts.memory_restore_diagnostic'
+
+<frozen importlib._bootstrap>:1140: ModuleNotFoundError
+____ test_unscored_started_owner_is_accounted_and_missing_owner_cannot_pass ____
+
+tmp_path = PosixPath('/tmp/pytest-of-utkarsh/pytest-39/test_unscored_started_owner_is0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x75a525393f90>
+
+    def test_unscored_started_owner_is_accounted_and_missing_owner_cannot_pass(tmp_path, monkeypatch):
+>       d = diagnostic()
+            ^^^^^^^^^^^^
+
+tests/test_memory_restore_diagnostic.py:194: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_memory_restore_diagnostic.py:124: in diagnostic
+    return importlib.import_module('scripts.memory_restore_diagnostic')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/importlib/__init__.py:126: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<frozen importlib._bootstrap>:1204: in _gcd_import
+    ???
+<frozen importlib._bootstrap>:1176: in _find_and_load
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = 'scripts.memory_restore_diagnostic'
+import_ = <function _gcd_import at 0x75a5290efd80>
+
+>   ???
+E   ModuleNotFoundError: No module named 'scripts.memory_restore_diagnostic'
+
+<frozen importlib._bootstrap>:1140: ModuleNotFoundError
+____________ test_diagnostic_budget_stops_before_new_job_allocation ____________
+
+tmp_path = PosixPath('/tmp/pytest-of-utkarsh/pytest-39/test_diagnostic_budget_stops_b0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x75a5253c8250>
+
+    def test_diagnostic_budget_stops_before_new_job_allocation(tmp_path, monkeypatch):
+>       d = diagnostic(); plan = {'output': str(tmp_path), 'selected_profile_sha256':
+            ^^^^^^^^^^^^
+            '7faba0a56d129ea051d5c28a019964034b546923dbe49cedb3a605af84437ec3'}
+
+tests/test_memory_restore_diagnostic.py:213: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_memory_restore_diagnostic.py:124: in diagnostic
+    return importlib.import_module('scripts.memory_restore_diagnostic')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/importlib/__init__.py:126: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<frozen importlib._bootstrap>:1204: in _gcd_import
+    ???
+<frozen importlib._bootstrap>:1176: in _find_and_load
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = 'scripts.memory_restore_diagnostic'
+import_ = <function _gcd_import at 0x75a5290efd80>
+
+>   ???
+E   ModuleNotFoundError: No module named 'scripts.memory_restore_diagnostic'
+
+<frozen importlib._bootstrap>:1140: ModuleNotFoundError
+=========================== short test summary info ============================
+FAILED tests/test_memory_restore_diagnostic.py::test_compare_localizes_typed_components_without_mutating_or_normalizing_more
+FAILED tests/test_memory_restore_diagnostic.py::test_compare_preserves_native_bytes_and_extra_application_fields
+FAILED tests/test_memory_restore_diagnostic.py::test_stage_local_source_copy_checks_hash_invariant_and_no_overwrite
+FAILED tests/test_memory_restore_diagnostic.py::test_audit_post_state_refuses_missing_corrupt_or_worker_digest_mismatch
+FAILED tests/test_memory_restore_diagnostic.py::test_unscored_started_owner_is_accounted_and_missing_owner_cannot_pass
+FAILED tests/test_memory_restore_diagnostic.py::test_diagnostic_budget_stops_before_new_job_allocation
+6 failed, 6 passed in 0.22s

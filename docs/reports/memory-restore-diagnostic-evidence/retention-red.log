@@ -1,0 +1,169 @@
+FFFFF                                                                    [100%]
+=================================== FAILURES ===================================
+________ test_retained_state_is_exact_digest_input_and_cannot_overwrite ________
+
+tmp_path = PosixPath('/tmp/pytest-of-utkarsh/pytest-37/test_retained_state_is_exact_d0')
+
+    def test_retained_state_is_exact_digest_input_and_cannot_overwrite(tmp_path):
+        snapshot = post_state(); before = state_digest(snapshot)
+        storage = p.phase_budget(tmp_path)
+        run = tmp_path/'run'; (run/'snapshots').mkdir(parents=True)
+>       receipt = p.publish_repeat_state(snapshot, {'old'}, run, storage)
+                  ^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'scripts.memory_decision_pilot' has no attribute 'publish_repeat_state'
+
+tests/test_memory_restore_diagnostic.py:27: AttributeError
+__ test_component_state_preserves_existing_normalization_and_detects_changes ___
+
+    def test_component_state_preserves_existing_normalization_and_detects_changes():
+        one, two = post_state('one'), post_state('two')
+>       assert state_digest(p.repeat_post_state(one, {'old'})) == p.repeat_post_digest(one, {'old'})
+                            ^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'scripts.memory_decision_pilot' has no attribute 'repeat_post_state'
+
+tests/test_memory_restore_diagnostic.py:40: AttributeError
+_______ test_repeat_retention_refuses_other_operations_before_any_write ________
+
+tmp_path = PosixPath('/tmp/pytest-of-utkarsh/pytest-37/test_repeat_retention_refuses_0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f3e52f63690>
+
+    def test_repeat_retention_refuses_other_operations_before_any_write(tmp_path, monkeypatch):
+        monkeypatch.setattr(p, 'validate_job', lambda raw: raw)
+        with pytest.raises(ValueError, match='repeat'):
+>           p.worker({'operation': 'prefix'}, retain_repeat_state=True)
+E           TypeError: worker() got an unexpected keyword argument 'retain_repeat_state'
+
+tests/test_memory_restore_diagnostic.py:52: TypeError
+____ test_worker_publishes_original_final_capture_only_when_opted_in[False] ____
+
+tmp_path = PosixPath('/tmp/pytest-of-utkarsh/pytest-37/test_worker_publishes_original0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f3e52fe5a50>
+retain = False
+
+    @pytest.mark.parametrize('retain', [False, True])
+    def test_worker_publishes_original_final_capture_only_when_opted_in(tmp_path, monkeypatch, retain):
+        from palimpsest import engine as engine_module, replay, snapshots
+        initial = post_state('source')
+        initial['application']['memory']['supervisor'] = {'phase': 'await_decision'}
+        source = tmp_path/'source.snp'; source.write_bytes(b'source')
+        captures = []
+    
+        class Engine:
+            controller, phase, episode, episode_step = 'flynn', 'paused', 0, 727
+            env, observation, teacher = object(), {}, None
+            policy = SimpleNamespace(act=lambda observation: None)
+            writer = SimpleNamespace(manifest={})
+            memory = copy.deepcopy(initial['application']['memory'])
+            world_task_state, last_outcome = {}, None
+    
+            def arm_memory_decision(self):
+                pass
+    
+            def close(self):
+                self.phase = 'closed'
+    
+        engine = Engine()
+        def capture(value):
+            snapshot = copy.deepcopy(initial)
+            snapshot['application']['source_run_id'] = 'destination'
+            snapshot['integration'][0] = value.episode_step
+            snapshot['application']['receipts'] = {'old': initial['application']['receipts']['old']}
+            captures.append(snapshot)
+            return snapshot
+    
+        initial['integration'][0] = 727
+        job = {'stage': 'feasibility', 'operation': 'repeat', 'condition': None,
+            'repo': str(tmp_path), 'assets': str(tmp_path/'assets'),
+            'history_root': str(tmp_path/'histories'), 'source_identity': {},
+            'output': str(tmp_path/'run'), 'phase_root': str(tmp_path), 'run_id': 'a'*32,
+            'spec': {'id': 'restore-1', 'regime': 'local_cue'}, 'case': {'seed': 400},
+            'snapshot_path': str(source), 'snapshot_sha256': p.file_hash(source),
+            'expected_invariant': p.condition_digest(initial), 'protocol_sha256': p.PROTOCOL_SHA256}
+        monkeypatch.setattr(p, 'validate_job', lambda raw: copy.deepcopy(raw))
+        monkeypatch.setattr(p, 'source_identity', lambda *args: {})
+        monkeypatch.setattr(p, 'common_helpers', lambda: SimpleNamespace(load_histories=lambda root: {}))
+        monkeypatch.setattr(p, 'capture_engine', capture)
+        monkeypatch.setattr(p, 'audit_policy', lambda value: None)
+        monkeypatch.setattr(p, 'policy_step', lambda value: setattr(value, 'episode_step', value.episode_step+1))
+        monkeypatch.setattr(engine_module.Engine, 'open', lambda *args, **kwargs: engine)
+        def register(value, run, storage):
+            (run/'snapshots').mkdir(); (run/'snapshots/initial.snp').write_bytes(b'initial')
+        monkeypatch.setattr(replay, '_register_initial', register)
+        original_read = snapshots.read_snapshot
+        monkeypatch.setattr(snapshots, 'read_snapshot', lambda path: copy.deepcopy(initial)
+                            if Path(path).name != 'post-repeat.snp' else original_read(path))
+>       assert p.worker(job, retain_repeat_state=retain) == 0
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: worker() got an unexpected keyword argument 'retain_repeat_state'
+
+tests/test_memory_restore_diagnostic.py:108: TypeError
+____ test_worker_publishes_original_final_capture_only_when_opted_in[True] _____
+
+tmp_path = PosixPath('/tmp/pytest-of-utkarsh/pytest-37/test_worker_publishes_original1')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f3e52f63f90>
+retain = True
+
+    @pytest.mark.parametrize('retain', [False, True])
+    def test_worker_publishes_original_final_capture_only_when_opted_in(tmp_path, monkeypatch, retain):
+        from palimpsest import engine as engine_module, replay, snapshots
+        initial = post_state('source')
+        initial['application']['memory']['supervisor'] = {'phase': 'await_decision'}
+        source = tmp_path/'source.snp'; source.write_bytes(b'source')
+        captures = []
+    
+        class Engine:
+            controller, phase, episode, episode_step = 'flynn', 'paused', 0, 727
+            env, observation, teacher = object(), {}, None
+            policy = SimpleNamespace(act=lambda observation: None)
+            writer = SimpleNamespace(manifest={})
+            memory = copy.deepcopy(initial['application']['memory'])
+            world_task_state, last_outcome = {}, None
+    
+            def arm_memory_decision(self):
+                pass
+    
+            def close(self):
+                self.phase = 'closed'
+    
+        engine = Engine()
+        def capture(value):
+            snapshot = copy.deepcopy(initial)
+            snapshot['application']['source_run_id'] = 'destination'
+            snapshot['integration'][0] = value.episode_step
+            snapshot['application']['receipts'] = {'old': initial['application']['receipts']['old']}
+            captures.append(snapshot)
+            return snapshot
+    
+        initial['integration'][0] = 727
+        job = {'stage': 'feasibility', 'operation': 'repeat', 'condition': None,
+            'repo': str(tmp_path), 'assets': str(tmp_path/'assets'),
+            'history_root': str(tmp_path/'histories'), 'source_identity': {},
+            'output': str(tmp_path/'run'), 'phase_root': str(tmp_path), 'run_id': 'a'*32,
+            'spec': {'id': 'restore-1', 'regime': 'local_cue'}, 'case': {'seed': 400},
+            'snapshot_path': str(source), 'snapshot_sha256': p.file_hash(source),
+            'expected_invariant': p.condition_digest(initial), 'protocol_sha256': p.PROTOCOL_SHA256}
+        monkeypatch.setattr(p, 'validate_job', lambda raw: copy.deepcopy(raw))
+        monkeypatch.setattr(p, 'source_identity', lambda *args: {})
+        monkeypatch.setattr(p, 'common_helpers', lambda: SimpleNamespace(load_histories=lambda root: {}))
+        monkeypatch.setattr(p, 'capture_engine', capture)
+        monkeypatch.setattr(p, 'audit_policy', lambda value: None)
+        monkeypatch.setattr(p, 'policy_step', lambda value: setattr(value, 'episode_step', value.episode_step+1))
+        monkeypatch.setattr(engine_module.Engine, 'open', lambda *args, **kwargs: engine)
+        def register(value, run, storage):
+            (run/'snapshots').mkdir(); (run/'snapshots/initial.snp').write_bytes(b'initial')
+        monkeypatch.setattr(replay, '_register_initial', register)
+        original_read = snapshots.read_snapshot
+        monkeypatch.setattr(snapshots, 'read_snapshot', lambda path: copy.deepcopy(initial)
+                            if Path(path).name != 'post-repeat.snp' else original_read(path))
+>       assert p.worker(job, retain_repeat_state=retain) == 0
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: worker() got an unexpected keyword argument 'retain_repeat_state'
+
+tests/test_memory_restore_diagnostic.py:108: TypeError
+=========================== short test summary info ============================
+FAILED tests/test_memory_restore_diagnostic.py::test_retained_state_is_exact_digest_input_and_cannot_overwrite
+FAILED tests/test_memory_restore_diagnostic.py::test_component_state_preserves_existing_normalization_and_detects_changes
+FAILED tests/test_memory_restore_diagnostic.py::test_repeat_retention_refuses_other_operations_before_any_write
+FAILED tests/test_memory_restore_diagnostic.py::test_worker_publishes_original_final_capture_only_when_opted_in[False]
+FAILED tests/test_memory_restore_diagnostic.py::test_worker_publishes_original_final_capture_only_when_opted_in[True]
+5 failed in 0.15s
