@@ -84,7 +84,7 @@ def initialize(case, e=None, u=None):
     graph = world.public_graph(case)
     state.update(version=3, graph=graph,
         selector={'version':1,'condition':'no-U','limit':1,'resource':None,
-            'resource_sha256':memory.sha256(None),'provenance_sha256':world.PROFILE_SHA256},
+            'resource_sha256':memory.sha256(None),'provenance_sha256':case['profile_sha256']},
         supervisor={'phase':'acquire','route_id':None,'waypoint_ids':graph['acquisition_ids'].copy(),
             'waypoint_index':0,'waypoint_started_tick':0,'waypoint_deadline_tick':300,
             'inspection_started_tick':None,'inspection_deadline_tick':None,'inspection_subject_id':None,
@@ -97,8 +97,9 @@ def initialize(case, e=None, u=None):
 
 def _validate_graph(graph,m):
     memory._fields(graph,'version routes acquisition_ids decision_landmark_id common_goal_id edges landmark_ids profile_sha256')
-    if graph['version'] != 2 or type(graph['version']) is not int or graph['profile_sha256'] != world.PROFILE_SHA256:
+    if graph['version'] != 2 or type(graph['version']) is not int:
         raise ValueError('Unsupported memory-v2 public graph')
+    world.registered_profile(graph['profile_sha256'])
     ids = graph['landmark_ids']
     memory._list(ids,MAX_LANDMARKS)
     for item in ids:

@@ -105,7 +105,7 @@ class Engine:
         self.scenario, self.texture = scenario, texture
         if scenario == 'memory-decision-v2':
             from .profiles import validate_decision
-            validate_decision(scenario,texture,controller)
+            validate_decision(scenario,texture,controller,profile_sha256=(memory_case or {}).get('profile_sha256'))
         from .memory_reference import REFERENCES
         self.reference_mode = scenario if scenario in REFERENCES else None
         self.memory_case, restore_snapshot, memory_u = self._memory_restore(
@@ -343,7 +343,7 @@ class Engine:
         from .memory_reference import REFERENCES
         if scenario == 'memory-decision-v2':
             from .profiles import validate_decision
-            profile = validate_decision(scenario, texture, controller)
+            profile = validate_decision(scenario, texture, controller, profile_sha256=(memory_case or {}).get('profile_sha256'))
         elif scenario in REFERENCES:
             from .profiles import validate_reference
             profile = validate_reference(scenario, texture, controller)

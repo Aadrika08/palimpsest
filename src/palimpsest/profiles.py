@@ -73,15 +73,17 @@ def validate(scenario, texture, controller):
     return profile
 
 
-def validate_decision(scenario, texture, controller):
+def validate_decision(scenario, texture, controller, *, profile_sha256=None):
     """Private headless admission: absent from the lab scenario catalog."""
-    from .memory_decision_world import SCENARIO, PROFILE_SHA256
+    from .memory_decision_world import SCENARIO, PROFILE_SHA256, registered_profile
+    profile_sha256 = PROFILE_SHA256 if profile_sha256 is None else profile_sha256
+    registered_profile(profile_sha256)
     if (scenario,texture,controller) != (SCENARIO,'checker','flynn'):
         raise ValueError('Memory-v2 requires its private CPU FLYNN/checker profile')
     profile=validate('memory-passages',texture,controller)
     profile.update(id=SCENARIO,version=2,label='Memory decision (development)',
         description='Unvalidated frozen headless memory-v2 candidate.',
-        max_steps=2100,task='memory-decision-development',world_protocol_sha256=PROFILE_SHA256,
+        max_steps=2100,task='memory-decision-development',world_protocol_sha256=profile_sha256,
         observation_profile='two-rgb-eyes-contact-visible-landmark-arrival-bearing-v2',
         devices=['cpu'],controller_threads=1)
     return profile
