@@ -1,0 +1,11 @@
+Edge path:  /home/utkarsh/Work/shraddha/brain/.worktrees/r0-reproduction/data/assets/flynn/graph-49d19491c1df4b8f02af0e285b71dc171f47488a93ee5b91be8ee4e280bee9f1/drosophila adult connectome/connections_princeton.csv
+[edge_list] Loaded 5342446 edges with 138584 unique nodes.
+Built sparse W matrix
+[spectral] scaled W by 0.0002 to target 0.9 (est 3630.1514)
+[Sensory neurons] skipped 4 IDs not present in connectome (kept 218).
+[io] Loaded 218 wind sensing neurons.
+[io] Loading cell types from /home/utkarsh/Work/shraddha/brain/.worktrees/r0-reproduction/data/assets/flynn/graph-49d19491c1df4b8f02af0e285b71dc171f47488a93ee5b91be8ee4e280bee9f1/drosophila adult connectome/consolidated_cell_types.csv...
+[cell_types] Loaded 8541 unique types.
+[cell_types] Assigned types to 137117/138584 neurons. (Rest are 'Unknown')
+[descending_neurons] skipped 15 IDs not present in connectome (kept 1288).
+N=138584 | Nin=4813 | outputs=1288

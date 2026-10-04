@@ -1,0 +1,391 @@
+{
+  "assets": "/home/utkarsh/Work/shraddha/brain/.worktrees/r0-reproduction/data/assets/flynn",
+  "case": {
+    "acquisition": true,
+    "acquisition_protocol_sha256": "7faba0a56d129ea051d5c28a019964034b546923dbe49cedb3a605af84437ec3",
+    "case_id": "memory-v2-00000190-local_cue-change-0",
+    "case_sha256": "ad54db0b5e8476fa0efd9d1097e0c92cc348b3406549bd39e6dd5b4e85e07eef",
+    "claim": "development-runtime-configuration",
+    "closure_subject_id": "memory-v2-00000190-local_cue-change-0-subject-a",
+    "common_goal_id": "memory-v2-00000190-local_cue-change-0-goal",
+    "cue_id": "memory-v2-00000190-local_cue-change-0-cue",
+    "cue_xy": [
+      -1.1,
+      0.0
+    ],
+    "decision_landmark_id": "memory-v2-00000190-local_cue-change-0-decision",
+    "event_enabled": true,
+    "facts": [
+      {
+        "associations": [
+          {
+            "cue_id": "memory-v2-00000190-local_cue-change-0-cue",
+            "relation": "local_cue"
+          }
+        ],
+        "estimate": null,
+        "evidence": null,
+        "id": "memory-v2-00000190-local_cue-change-0-fact-a",
+        "inspection_landmark_id": "memory-v2-00000190-local_cue-change-0-subject-a-inspection",
+        "kind": "passability",
+        "origin": "initial_unknown",
+        "revision": 0,
+        "status": "unknown",
+        "subject_id": "memory-v2-00000190-local_cue-change-0-subject-a"
+      },
+      {
+        "associations": [
+          {
+            "cue_id": "memory-v2-00000190-local_cue-change-0-cue",
+            "relation": "paired_cue"
+          }
+        ],
+        "estimate": null,
+        "evidence": null,
+        "id": "memory-v2-00000190-local_cue-change-0-fact-z",
+        "inspection_landmark_id": "memory-v2-00000190-local_cue-change-0-subject-z-inspection",
+        "kind": "passability",
+        "origin": "initial_unknown",
+        "revision": 0,
+        "status": "unknown",
+        "subject_id": "memory-v2-00000190-local_cue-change-0-subject-z"
+      }
+    ],
+    "goal_xy": [
+      2.5,
+      0.0
+    ],
+    "graph_sha256": "354e5e73df9c620bd376e47e88e3ea53aa73e49d0d86b3d374a8ea1fc7503d15",
+    "kind": "change",
+    "landmarks": {
+      "memory-v2-00000190-local_cue-change-0-decision": [
+        -1.8,
+        0.0
+      ],
+      "memory-v2-00000190-local_cue-change-0-goal": [
+        2.5,
+        0.0
+      ],
+      "memory-v2-00000190-local_cue-change-0-subject-a-crossing": [
+        0.0,
+        -1.0
+      ],
+      "memory-v2-00000190-local_cue-change-0-subject-a-exit": [
+        1.2,
+        -1.0
+      ],
+      "memory-v2-00000190-local_cue-change-0-subject-a-inspection": [
+        -0.8,
+        -1.0
+      ],
+      "memory-v2-00000190-local_cue-change-0-subject-a-retreat-0": [
+        -0.82653819158,
+        -1.880109534206
+      ],
+      "memory-v2-00000190-local_cue-change-0-subject-a-retreat-1": [
+        -1.373278008525,
+        -2.570307071423
+      ],
+      "memory-v2-00000190-local_cue-change-0-subject-a-retreat-2": [
+        -2.223951197296,
+        -2.797578261234
+      ],
+      "memory-v2-00000190-local_cue-change-0-subject-a-retreat-3": [
+        -3.042065702322,
+        -2.472023773508
+      ],
+      "memory-v2-00000190-local_cue-change-0-subject-a-retreat-4": [
+        -3.504008372133,
+        -1.722419853014
+      ],
+      "memory-v2-00000190-local_cue-change-0-subject-a-retreat-5": [
+        -3.427053289686,
+        -0.845279623006
+      ],
+      "memory-v2-00000190-local_cue-change-0-subject-a-retreat-6": [
+        -2.8416407865,
+        -0.187564434702
+      ],
+      "memory-v2-00000190-local_cue-change-0-subject-z-crossing": [
+        0.0,
+        1.0
+      ],
+      "memory-v2-00000190-local_cue-change-0-subject-z-detour": [
+        0.6,
+        1.25
+      ],
+      "memory-v2-00000190-local_cue-change-0-subject-z-exit": [
+        1.2,
+        1.0
+      ],
+      "memory-v2-00000190-local_cue-change-0-subject-z-inspection": [
+        -0.8,
+        1.0
+      ],
+      "memory-v2-00000190-local_cue-change-0-subject-z-retreat-0": [
+        -0.82653819158,
+        1.880109534206
+      ],
+      "memory-v2-00000190-local_cue-change-0-subject-z-retreat-1": [
+        -1.373278008525,
+        2.570307071423
+      ],
+      "memory-v2-00000190-local_cue-change-0-subject-z-retreat-2": [
+        -2.223951197296,
+        2.797578261234
+      ],
+      "memory-v2-00000190-local_cue-change-0-subject-z-retreat-3": [
+        -3.042065702322,
+        2.472023773508
+      ],
+      "memory-v2-00000190-local_cue-change-0-subject-z-retreat-4": [
+        -3.504008372133,
+        1.722419853014
+      ],
+      "memory-v2-00000190-local_cue-change-0-subject-z-retreat-5": [
+        -3.427053289686,
+        0.845279623006
+      ],
+      "memory-v2-00000190-local_cue-change-0-subject-z-retreat-6": [
+        -2.8416407865,
+        0.187564434702
+      ]
+    },
+    "mirrored": false,
+    "profile_sha256": "7faba0a56d129ea051d5c28a019964034b546923dbe49cedb3a605af84437ec3",
+    "regime": "local_cue",
+    "seed": 400,
+    "start_pose": [
+      -2.5,
+      0.0,
+      0.0
+    ],
+    "subjects_by_side": [
+      "memory-v2-00000190-local_cue-change-0-subject-a",
+      "memory-v2-00000190-local_cue-change-0-subject-z"
+    ],
+    "version": 2
+  },
+  "condition": null,
+  "expected_invariant": null,
+  "history_root": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-experiments",
+  "operation": "prefix",
+  "output": "/home/utkarsh/Work/shraddha/brain/.worktrees/research-phase/runs/memory-travel-recovery-20261004T133718Z/prerequisites/runs/2f1ac4fbae794737b174e6e1fc2a7541",
+  "phase_root": "/home/utkarsh/Work/shraddha/brain/.worktrees/research-phase/runs/memory-travel-recovery-20261004T133718Z",
+  "protocol_sha256": "ae7c4014868d5ade9928cfdda2729c3562df38404a32f7c4b7980d4cbb567a5d",
+  "repo": "/home/utkarsh/Work/shraddha/brain/.worktrees/research-phase",
+  "run_id": "2f1ac4fbae794737b174e6e1fc2a7541",
+  "snapshot_path": null,
+  "snapshot_sha256": null,
+  "source_identity": {
+    "asset_sha256": {
+      "connectome_rnn_dagger_princeton_full_vision.pt": "fde5327c1531f15340385b7a572b5c7a785e1ce29cde622976bee6e398e9d8d6",
+      "drosophila adult connectome.7z": "49d19491c1df4b8f02af0e285b71dc171f47488a93ee5b91be8ee4e280bee9f1",
+      "graph-49d19491c1df4b8f02af0e285b71dc171f47488a93ee5b91be8ee4e280bee9f1/drosophila adult connectome/JO-C_and_JO-E.csv": "3c8d81b3c6fc932a541fe3a447a0d950187ef64d021192e517007cd7fea312ce",
+      "graph-49d19491c1df4b8f02af0e285b71dc171f47488a93ee5b91be8ee4e280bee9f1/drosophila adult connectome/connections_princeton.csv": "70b8f9adeb8c4917bf20686db96275d733928a7c0b63b81db5e0b16a886cf01f",
+      "graph-49d19491c1df4b8f02af0e285b71dc171f47488a93ee5b91be8ee4e280bee9f1/drosophila adult connectome/consolidated_cell_types.csv": "775897e98192015be0a23ae87a4e98c4b5d3f64103b014867274af086b33048c",
+      "graph-49d19491c1df4b8f02af0e285b71dc171f47488a93ee5b91be8ee4e280bee9f1/drosophila adult connectome/descending_neurons.csv": "af36947c71ca54cf41c8954de3540382684496b3f54bfea809778742a8870b3b",
+      "graph-49d19491c1df4b8f02af0e285b71dc171f47488a93ee5b91be8ee4e280bee9f1/drosophila adult connectome/head_bristles_left.csv": "29059700338e226bbf7586539f5e92149871aafaa64dba7bcc4a5eef85289825",
+      "graph-49d19491c1df4b8f02af0e285b71dc171f47488a93ee5b91be8ee4e280bee9f1/drosophila adult connectome/head_bristles_right.csv": "9fa26d3c103026ae4f576d13b3cf067c6c7d4ff6f2cefebf1b267ec4be94b439",
+      "graph-49d19491c1df4b8f02af0e285b71dc171f47488a93ee5b91be8ee4e280bee9f1/drosophila adult connectome/visual_column_L1_L2_L3_rear_view_left.csv": "8782a663ddf570e046fa3f23131e1e7f26b04acdf58b4fbcb8b2d34fa3cb6c01",
+      "graph-49d19491c1df4b8f02af0e285b71dc171f47488a93ee5b91be8ee4e280bee9f1/drosophila adult connectome/visual_column_L1_L2_L3_rear_view_right.csv": "03cd06b368f134c4c46e1ce58f9169a740266559d0d283f84e3ac8fc242a1ee3"
+    },
+    "driver_sha256": "a781931b8b4e5706bfb91db2fb31bc810b8cb5d0fa742d39744a967560721c10",
+    "helper_sha256": "80902c477f40fdceec8019becc4b83e632346f3a0e130678bb77114b5a1790ce",
+    "lock_sha256": "8a7a880d020c1907e221575fda65642241f809fc628a55381f1b6137bff1b732",
+    "model_manifest_sha256": "e319bb18e12110dbc096d62d3d6e9550c7b37434bf5e18e410c5410c21bb97e5",
+    "pilot_driver_sha256": "8ce8692aac5dc354f6d0e88d6aafa65b84462bf9548683e8936285c7b6e81bc9",
+    "prepared_metadata_sha256": "c728fc8c77c1c1157b7485a4e1e3c8fc76bc72c57bf802a8767d652c3931745c",
+    "source_sha256": {
+      "src/palimpsest/__init__.py": "bb99e30d22e4662c4ded455b1b23f49b77ce811dcfa1b69bf358925487a566d8",
+      "src/palimpsest/__main__.py": "935a1c1166b0c1ea35a82256345000bf2c73ded718d77773bc27a71ecce28f7d",
+      "src/palimpsest/afterimage.py": "0a4385d7c1e9e103d6154c3d83ab7851d4729c90fb64ab908279f2c36fd9af72",
+      "src/palimpsest/artifacts.py": "7a5f4a1080abffe82f8296468c6d8ca3a2b975277b96925fdf75bb9ac1ed034a",
+      "src/palimpsest/assets.py": "aa4a38c7403cd9f72bc23027acd7c212202f25574bea6af65053c34664da49e3",
+      "src/palimpsest/atlas.py": "4c7b0752aaf0065648fb9f970b17a95098e7ed91b10e4da1e8e4a9ca6720f23f",
+      "src/palimpsest/body_adaptation.py": "7ecc71cce4da915225952c3ea31666b54895f5ff93de32d87149aac368d32f81",
+      "src/palimpsest/body_homing.py": "3e46bbf9d90bf53e536a975f7f4a86bbcaa2b4aa57f9b188bfbe9d221f12f551",
+      "src/palimpsest/body_profile.py": "796df9ab2a109606432c7a97bfbea5f58ab7acc75768e638b5b8731a390cbb54",
+      "src/palimpsest/cli.py": "14f3ab4447f0b7e9f536d1a16d560910fed43a250c6c137b1087da248e553287",
+      "src/palimpsest/comparison.py": "8e1e2e4cff083d4745cf80dda165ddab4a2edcda040fbc34f62c6c6d8e9b69d6",
+      "src/palimpsest/doctor.py": "109de62468161f35461eee76af244daabef38f2faa1526c5a6ed268817e6b834",
+      "src/palimpsest/engine.py": "16b1d3d9c57211ed5f4964ba635dd7a38d0f5cf260cbaa683ce32598c9e2daac",
+      "src/palimpsest/evaluate.py": "74a9afb710b36a366ab680462e9440f285730a0360bda704af25ebbcfd74256a",
+      "src/palimpsest/flynn.py": "409b7503d76fd6f971a33d053e86c968b529edc226b85f44122e17a649f8f9f4",
+      "src/palimpsest/interventions.py": "f0fb0176ce52d83993c5da882aa67ea5b46a2d5caf6d94e02c23481016eb11fe",
+      "src/palimpsest/lab.py": "668b59262a154aebe52e8f1a3671d097aaa75ddcb110d989bd8978f223fbf08b",
+      "src/palimpsest/male_model.py": "9327bca1db3cbeda7aab8b222ccfa59daef4e01f3f1b4689f83009955d970cad",
+      "src/palimpsest/male_navigation_research.py": "eac674912f64d02da45152a6cae9329da512c92bd8205a322b7018d0f99e5f32",
+      "src/palimpsest/male_policy.py": "d2fd1a80781e8bad11b6e4947e1a3a8d61bd4acf46dfcaf6c191ccb6987e7cfe",
+      "src/palimpsest/male_recovery_heldout.py": "e625795d44f6943311f15ced27b24fdd1c3062376363c2a294766b283759a977",
+      "src/palimpsest/male_recovery_research.py": "0117701d840ef36db624dbdf2f3fb88668b50761fbc71e7a1a7aed6655d830cf",
+      "src/palimpsest/male_research.py": "e46ac8d8988a77f75c921666039cb39ea6fc0aeb13df862042af96b69367d232",
+      "src/palimpsest/memory.py": "9641ae3d7d78577e0ea5bc8bcacbe455cae6c548f4f9bd10b8bb593a8fd7c542",
+      "src/palimpsest/memory_decision.py": "74d3dd8478c75efb4be97fabe3f0778b5d79872b2248f974c4347fcfbe14a8c6",
+      "src/palimpsest/memory_decision_world.py": "097db913cba14e5404e1ac8d2b2a382be36d0c13316ff0bddc1ee58484492e19",
+      "src/palimpsest/memory_experiment.py": "873d5f6ab2ee57c560e8f4bb2a0cf20144264f25ea2312b7e7fe8d295ab8f9f8",
+      "src/palimpsest/memory_history.py": "7dbfac529717698ea2848ec6318a8812e876c04bf26711775f316dd1a631438c",
+      "src/palimpsest/memory_reference.py": "2666907a55d8d007cdbc6f9c761c333646b8beb167d47f0c5eba379e9a898661",
+      "src/palimpsest/memory_task.py": "b3987e0f9fb81d67e7b6f2235607d05efe175cd3d750681a1cff9a430060d682",
+      "src/palimpsest/memory_world.py": "508d7c53cf78e8a26a2c459e2b6e2a02c8c0823535005a19668a31717f0dbb12",
+      "src/palimpsest/profiles.py": "9092f6796caa60d67ca5a23f6dcfe754940d865b1c4d8e23a0fd383535f0cf9c",
+      "src/palimpsest/puck_balanced.py": "4db705556e002750c3eec82f1bd8133b40c857284358d5943c27794df853c09c",
+      "src/palimpsest/puck_balanced_development.py": "190176e8a353d9d5efd496afdf10647797d396ce2313bee73321552fe82bd9a8",
+      "src/palimpsest/puck_balanced_student.py": "85eaa5b2d8f6b64b13a654c0414cfcefe9742134a583a46c93c1f82f9a0b052e",
+      "src/palimpsest/puck_development.py": "390049ae6ca3a97182918b8df3f5645a325c3ac3961b50ae8ce6bf0fdb721802",
+      "src/palimpsest/puck_learning.py": "fe0350b1f7becf263ffbe19b8c906651a4f7655306dc60407927dcc20244f88d",
+      "src/palimpsest/puck_model.py": "27f3446c71f59937f49fed4faddc614e5a792413b74328e81b361c72dd7f06d5",
+      "src/palimpsest/puck_profile.py": "585d41691d275313b276d49213249427ac645f7aa85fee544a05c37d2e652e2d",
+      "src/palimpsest/puck_student.py": "d944395f1b9303415d5e5311f589ef26c226718d76bd226fde7449b051795df8",
+      "src/palimpsest/puck_teacher.py": "781262791692202974f7aa39daab8deaf43899ffab7fa64ab366c40996224c82",
+      "src/palimpsest/records.py": "c4be6f1699c1d8550a7f2db2979f7f9f18196ac986eef2aefe3ba665cae99ac3",
+      "src/palimpsest/replay.py": "2f2698437b18c98baeba8c9e70eb3eb6a9b15d016a04a275aa98e6cf0923877c",
+      "src/palimpsest/snapshots.py": "975d432128177f20a91c083742346b1ac928d507439b06e760ae5dc9415ab4d6",
+      "src/palimpsest/sonification.py": "7112584f9b18be761861d432dfb043eb8dd8b3a7e66f6d3ec53668c29dfc1949",
+      "src/palimpsest/specimens.py": "db0973a5cf700ccf2f8a8bf9e5adb2a35c561b36aab550892473e02a671a0b41",
+      "src/palimpsest/storage.py": "6a95b0a9adfa840957e14f58e5c4fe6be7fefc951c6a6bbc9b0c9cdc3a2dde82",
+      "src/palimpsest/task_mechanics.py": "cbf698ad3f027f572c4f12655595825f580f155949f6c7c96f2556d14e6d1bb6",
+      "src/palimpsest/task_profiles.py": "14b237ede67949f281977c00b01dcd7a8e8a367d67a7e4e37911e0cb9b1dfa79",
+      "src/palimpsest/worker.py": "a44a15087317d76e3cec921bcc76be37c3c28eb70931bfca7ba0dfb2066989d7"
+    },
+    "upstream_commit": "8d964599119b420de67ee259434d273651a1a76d",
+    "upstream_files_sha256": {
+      ".gitignore": "19567ab0c51e4b945dae80f54dded6daafd71b82f75f9d020785d2ca8a5ce7d6",
+      "LICENSE": "10764b6b4c73bf08133910416883b42aa70881a2440ddbe54c5c622030ec95f9",
+      "README.md": "c4c99375f590e254574c9c7216ce54088cb64ed63cbca4621432e761df4c6a42",
+      "agents/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "agents/connectome_rnn_agent.py": "4c1018f21032f9e65155141b10282469f6928e0564027fce2b6d95f1c6f80133",
+      "agents/efficientnet_agent.py": "ef702b6461b5dad2d7825a028967a06a90ae2ceb14fe305ef11f323e3701ce67",
+      "agents/mobilenet_agent.py": "6797507c74fb69d8028f2b4ae285b1dd3c0cb549ff206324afff0e5c9e96ca9f",
+      "agents/teacher_analytic_agent.py": "5edca9a587dea0a2996856e42a96013aab1b1b0a277eacb74b7fc4270c55c586",
+      "connectomes/drosophila adult connectome/JO-C_and_JO-E.csv": "93e1ef45d1bd817ee73f949b595b3f1a430ed6055c83158457271ab3d1a9f8df",
+      "connectomes/drosophila adult connectome/consolidated_cell_types.csv": "df6e428c824979a72e3fb1e36cf9f00f88b6d59bb526ff8087b894a8fb2bbe32",
+      "connectomes/drosophila adult connectome/data source.txt": "6aa19fb24f0304620889075b5e93a93bcb4d5bcb8ae25e4fdcc0908c1b35c75d",
+      "connectomes/drosophila adult connectome/descending_neurons.csv": "28d630d66e6bc4766d5d69c3527ff5a75596ac0155b3a565d32c600c415d8935",
+      "connectomes/drosophila adult connectome/head_bristles_left.csv": "b0c642f80af6c4937a333d3099111890e2f943c87efe3cfcf08489456283ea73",
+      "connectomes/drosophila adult connectome/head_bristles_right.csv": "531ca4b81fe3244d759c5c31627ade2b3ad0bb5f4f32bddb9c494590bf40aaf7",
+      "connectomes/drosophila adult connectome/visual_column_L1_L2_L3_rear_view_left.csv": "dc9f28f54efe087180fd6a9c87cfe7943e37200090609943448b21f34fba1348",
+      "connectomes/drosophila adult connectome/visual_column_L1_L2_L3_rear_view_right.csv": "aed0fe89bd3bcd175ab88673954276337c30842d993e578367d3848fb69f8332",
+      "connectomes/ws_small_world/JO-C_and_JO-E.csv": "414d15c86fd78bfe34c79ca68ae935cea4e5b8bfee872f24e1447531f5057d41",
+      "connectomes/ws_small_world/consolidated_cell_types.csv": "52c1b2340c7df1311687584e8642b007eae65001315b7a64a0ff109c238e020e",
+      "connectomes/ws_small_world/descending_neurons.csv": "7e417c6f86988e3797f1ed03ddaf9d5b9d711fa2f39b59960d6ae4cff829e499",
+      "connectomes/ws_small_world/generate_ws_network_new.py": "a22eb4af2ac8b4dcf35e13e6fdd2191e333635a348d9a8b53a1f84bffed46bed",
+      "connectomes/ws_small_world/head_bristles_left.csv": "cb574a375257cd36b93a6cae412d2a6b1e8e668d360acb63a39c1f823863f7b5",
+      "connectomes/ws_small_world/head_bristles_right.csv": "e53be521d051baad75df51d0ed63041ed7aeb2fbc4f23a3f1f6d2a677f5b8411",
+      "connectomes/ws_small_world/visual_column_L1_L2_L3_rear_view_left.csv": "4a6bd91c7cc4b60263f858d0ff039762cc4e85448d085b62a61691ba576ac1ab",
+      "connectomes/ws_small_world/visual_column_L1_L2_L3_rear_view_right.csv": "d322b5786d243207834c80130e946c9d9861a0957e564d9e73f9600f7ea2e8dc",
+      "core/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "core/astar.py": "e000e623a9ae7fae6f2f7b6a03d64a7db84720c516b96d8812711025380e30a1",
+      "core/utils.py": "75089c94aa9c88d9cbbcc2c0a21ee82ea1b7bb158323c017813abb98a451a9c4",
+      "core/vfhplus.py": "8ceb30f0ee1a78fe916b5ebdc49ae37890991d7d344a756a3da0b9fd7c4f96eb",
+      "docs/data/game.json": "409cd9ce3a69fb858babaae133855edacf0d1fd5835f4db958fae45f15c7d1c5",
+      "docs/data/runs/1.bin": "8ae2d0e47c3e84fcf29dffdf2bc7db7ccea73b0315bffb54c441473f26dae055",
+      "docs/data/runs/10.bin": "7f4b30162ac2547c8a06ef7837d2d759ede36618a70200d99b5403c669ecc8a2",
+      "docs/data/runs/11.bin": "6f0289b819ea9fc9eac79ac6a9bbc2801d911fb67be28896809fc531dd82ea85",
+      "docs/data/runs/12.bin": "c1b4577b6437f278810c1d850f4efa37fb60e7be3dc0657d3ed512d2bd3bf717",
+      "docs/data/runs/13.bin": "b1e1e54dc7c45be5710e89c456016d5a6f92209ed7b291bab4e27ca1d24309cc",
+      "docs/data/runs/14.bin": "3efabf396f7bf29c63a72a05467951b361857402530d50085115e8bc1fa042cb",
+      "docs/data/runs/15.bin": "c382657335a33b3b970168892b4cc4c8109b11650375ff3eb61117b61298f8b1",
+      "docs/data/runs/16.bin": "2995ce5f99d9578a974623169e5d3ea074cca5ffe1cbc582728deda8914b2283",
+      "docs/data/runs/17.bin": "944225816c9a0cd995d138fb62666088c1a3d4c819820ef0633875088bed7847",
+      "docs/data/runs/18.bin": "17d59e46da583e47d2f6c918bc931124951ed15ca354210e67602c2be7fd96d0",
+      "docs/data/runs/19.bin": "b9fbe84ec568d49fed5b64cf5412cf301e4e4a3c5a2032ff570f27528af3a664",
+      "docs/data/runs/2.bin": "b850cde1225f00e1462a446a0274f9a9181c2a102c63483c9a03e9151082ea16",
+      "docs/data/runs/20.bin": "3cfb0cad6818ca05e09755607be3f4709b0fc199fc809cdf0bcd0eda1dccce79",
+      "docs/data/runs/21.bin": "359ff2e2ecbb9aa00427c958e90875f08466cda562c78abe31e216dae51cbea0",
+      "docs/data/runs/22.bin": "ba81029ebbb904460d924e0901b0b1f8a91d2e5ac76e3449e38985ea073b4ed0",
+      "docs/data/runs/23.bin": "650adec6b0217294cbf5ed8585bad94f0ce4838f9298bbc902bd174e1f4c5bcb",
+      "docs/data/runs/24.bin": "51655b444a2f8cff6befd5d0dabb74e74e606c6d56eb7a36d0370cbc99e70c2b",
+      "docs/data/runs/25.bin": "74c0033e9f194b0395b685694420169854b49ce429615293db60cce18a627b0a",
+      "docs/data/runs/26.bin": "1ee198bb771f5918162a7cfaf3ffa0bcd848654d687eb9b167ed3d15db641ce3",
+      "docs/data/runs/27.bin": "07dd19b20aab9547668933fb313c2b2f2068563cfba6ad035379c336752ea6a5",
+      "docs/data/runs/28.bin": "ed06ba433ff43af8e4165a160475bc91c75694863aeaf88e88a3b60ebecaf393",
+      "docs/data/runs/29.bin": "3a958adee9f550f4bd3d4d94da0fd664efb992b394574a999cd5c9e835af9e83",
+      "docs/data/runs/3.bin": "55ab19998a67841f87b1f1cd03be91ac1ad897805b55603e3b5814ce2598f378",
+      "docs/data/runs/30.bin": "f600460e8ce4ca288baa1f728c3567fb6bbc4934fb97237b5a08d20cbdbb9b19",
+      "docs/data/runs/31.bin": "a370825093429179478f0265a599b4b1e671d80bb3492d4dbfef173339c6f7b9",
+      "docs/data/runs/32.bin": "36efa0ddec1ee0f6e1a1a8bf159863962095da121c2aef7fedbec79617d00c06",
+      "docs/data/runs/33.bin": "8a578a3ff019adb4ddfd2b87b087bab99b137267fb2540bfe717831a0be19254",
+      "docs/data/runs/34.bin": "3300d36846999cb6adab1edac5fcb4ce9d3cc526864c2c7b2be29c17491eca44",
+      "docs/data/runs/35.bin": "e3ca42156a2131021648576397518282d7443d17c28a353d50f7f4670dbd3b5e",
+      "docs/data/runs/36.bin": "1c0ddde26ca03f5811cc3e80ab8c112ec261e6e5ac6a5575a0cfe86098c8673b",
+      "docs/data/runs/37.bin": "41dabbd8d5276640f3a8572aa39d64cc0298e2c30007bea3caff855fd6b60e7e",
+      "docs/data/runs/38.bin": "9f8831d22ac66c701a48783b8c125ff653333c1aae5c917eeb3fe7e1ec509abc",
+      "docs/data/runs/39.bin": "830bddb75631b02bb6aae8917428af811029fd3c29a7b5b26dab6ac15e961c6f",
+      "docs/data/runs/4.bin": "df1f17e24e1e0b3ef77caa950dd1263f5e7aa3a24595f03e844a7e40e2501af9",
+      "docs/data/runs/40.bin": "f5a06cf3c284abe3d144cf4922c593fabe69ca8a5e06bad1d05ed68827541bd4",
+      "docs/data/runs/41.bin": "2293c94bc3ee34c30acca4c0e93360d7b8bcf1968a1185bb6988f928204579aa",
+      "docs/data/runs/42.bin": "249dcf69403d9b97dbe86b4b3f7aae330a10b4db88ced7ed4d15488a32c258d9",
+      "docs/data/runs/43.bin": "d401ac1115e4b287dca0dc4612e3d344a7740b4a3af96153b04edea890c04a48",
+      "docs/data/runs/44.bin": "7d9d5ca53f75a0124f82a3bbbede165ea2a57c0fa6abd0bcc5477def5bd05697",
+      "docs/data/runs/45.bin": "ad54ba0d525bfed4536a69dcb78619d3ce64fc7e9d78db134b2ec723bbffc66d",
+      "docs/data/runs/46.bin": "00d1fec0da82db02fc41e5a85aae8a8548bef3eee5e58226525892244bc203a9",
+      "docs/data/runs/47.bin": "24774ce2fa1bb2ace64150115d489212b6da2fc4269519e5b05e4d053738f81c",
+      "docs/data/runs/48.bin": "eafd9a1b05ae7e855069244e799ee5fe72cf2c02651aef9458a11d00b2b4e014",
+      "docs/data/runs/49.bin": "dee502e24332d7b63e5fec26587285439e594d85ab2a5b8a74494c205567835e",
+      "docs/data/runs/5.bin": "41950e7f88bd7b7c128bf161a32d34f1c40d11e9be34d18b8293e4ca29ccdde4",
+      "docs/data/runs/50.bin": "7990ec93074f547c22aac39534648cd0e0005beacc21b965938a903437bcda1b",
+      "docs/data/runs/6.bin": "c308160dee70f711fe74680babf0a704d55171df061b2a6b447470ff33ab39e7",
+      "docs/data/runs/7.bin": "32dbcaf30364b3cfdaefce955746663e33546c0769955e48e7d63617445e4e53",
+      "docs/data/runs/8.bin": "7eb1078b18bb988bab544e0d33b28b95055ab733f09162912b790adb4888054f",
+      "docs/data/runs/9.bin": "46142af9661a5b412686174e6d8f26e213ab85e8a93f1a3d26d6fd274010c95f",
+      "docs/game.js": "6b08ce82e61fbf80103716f23f58eaad301b61bbb57493e2fc69ba01187c836f",
+      "docs/index.html": "0d78ab8ce8f0ab6ab6e9392167ab7e5246dfe12c0d7165877a7c2f8133a7107f",
+      "docs/sim.js": "b1154527c54fd7eac609f7a2d9dee7d1088771939a1462a4042431e3e8788a7d",
+      "environment/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "environment/mujoco_model_random_obstacles.xml": "3630ec6a202bfb32276a39e21d974228518d4bb93cb4861532467af4ce883484",
+      "environment/mujoco_model_random_obstacles_realistic.xml": "110941ff620b3a0d537416aea8b3a8ee4edc69a10e22e80818f012fd14c983e1",
+      "environment/mujoco_two_cam_env_random_obstacles.py": "37612bc4d2cbcda2aa5604d9975c06f2a6d77a64c6c1ebcb4330897d3e2bc751",
+      "environment/textures/ground.png": "47ef6e4045a91ba3c4178d60c2dd7ba3c832cafe4de6b50c5b836cf37bf70588",
+      "environment/textures/obstacle.png": "9ba9605c05f77a4abd98807c871269f4899dbd10d043c936bb1001094cec339d",
+      "environment/textures/skybox.png": "0bda7aabb8d943c05a93b0d2fe34568116d0cee52f4c24bb3b70b65178e3b709",
+      "environment/textures/wall.png": "c0db29e31faeb6f1165a6405e27bf9ba857d47ec019a23c272573c223eda498b",
+      "export_web_game.py": "f0bfa52bfac2740f08ff6315b55e3aa446a69add0648402c84703cdd8d712a79",
+      "models/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "models/connectome_rnn_model.py": "707cba79e7bf92923618ccc596e3d7a2d779edc02a970b0949f6dd3c0d28ae80",
+      "models/teacher_analytic_model.py": "1b441217112b913968723d4de761d3b0fd1adabad7c5ce9b754928a40f16e8ab",
+      "play_vs_connectome_rnn.py": "3314e2980d6df6c6ca8e0803bb6985b2673cbb380a103cecfdd23118d1f31434",
+      "requirements.txt": "835f2ff13f91a4bd85f7742b2537a1d04b75e5b4d6468320dc2b511a0d10fcb8",
+      "results/bar_average_speed.png": "8c508e70b15645ebfc594cbfb4b58974a9259bc23dadb03ec464bd3092300c1e",
+      "results/bar_average_spl.png": "4fca1f46b1e8cfc3571611989af74f6c2f4acf59c08dbfb54ec59e1c44ea409f",
+      "results/bar_average_spl_success.png": "411620cfc2fc65c4a4fdc6f73294c9ae1b7a421d659a2b7a311f31ad2bf867b0",
+      "results/bar_collisions.png": "6d2c8a464df32e4180a2fa5d3f9203b626f3f1926c4282b62c4fe58ffe853360",
+      "results/bar_success_rate.png": "c5ce98967449444e4fdccce795f95fbda914bf8922148f86c01b630107238272",
+      "results/bar_time_to_goal.png": "1cbf25912e601877679fa2271d4b1597ff7cc71de0ea6602c99ccbbf0b3ff219",
+      "results/collision_statistics.csv": "f5e6f00fbec7b3384f35cad648c2926b0f43f58711aeed0e1fda33453f24130f",
+      "results/collision_statistics_checker_texture.csv": "d9e30e89a744152af0b00d2236575ddea4c1cc4ad6e41ba05584c68b6af595a8",
+      "results/direction_tuning_plot.png": "7b2c86cc072a397bac6ba2815ca354a0610be0d5f5534268aac16b02aa3e4fa0",
+      "results/spl_accumulated_histograms.png": "1f223821ddad0f25ac0014d71e92b219583e0efc0595a94d15fccc98028bc0bb",
+      "results/spl_histograms.png": "011fd914f1142aa41f507ec22f6451318373a41451152805a45993cd4915a622",
+      "results/spl_violin_plots.png": "adff97879f1696a25afecc7d90623a138451e389cdcc84ef068827980ffaa199",
+      "run_connectome_rnn_checkpoint.py": "8708e72aed42b2383d66c7efc5e41a81e21bb9d6dfca48e534a0ef300487cd34",
+      "run_vision_agent_checkpoint.py": "4203eed57e31c940ebfff0df5f63da160044afa03ecedd7a483960149a8cc336",
+      "shared_config.py": "8eb9a0b3f1f56fe98e056ac3cc7d6b728572e345f1f86df4e3619b2bff6ce001",
+      "tests/debug_rnn_grad.py": "92fc42c20912db7c98aa6ca8634f747ba31bb69baef5cbd3f817f19615871819",
+      "tests/test_vfhplus.py": "d77224237bf0b9d2fd55e3a4af160dc9937f82594c617e527d129f2eb3f37bef",
+      "tests/tune_direction_threshold.py": "a8d2f6ba4e2ba393cf611c839afa09071c22cf5808cfb707fd1aed26ec316fb7",
+      "tools/analysis_pca.py": "988ede02e6abe9908affb24346bcff0b53a95ff22e1985c599c8b689e49a2f9b",
+      "tools/analysis_pca_statistics.py": "2f9d858dc37480d60904cee19678b1cadbd8ac3ed2709a57a2345ec99beeb51a",
+      "tools/collision_statistics.py": "250578753ae183059da7ecac3b554b26b2666a0438b43ab4f8abf7d317319c60",
+      "tools/compare_trajectories.py": "ebcb2b90c67c7d3af8cd1ab1c3ce76576dc6c05e554fb2cbed8e4b0bff015e17",
+      "tools/count_collisions.py": "e10fa6ea99b33974837fa5dd7677f518be53663bb99a007afcc4c50b6485e6fc",
+      "tools/visualize_episodes.py": "60b0c8dde801854f26b8af7dea0a063783230801ef46386aa6c3950e345f0b3d",
+      "train_connectome_rnn_dagger.py": "b1b0365ba5d85e0b05b18d2124e9948d2f844b31c3aa3b122420b0c917c96807",
+      "train_visionnet_dagger.py": "962d8beab7c58fb2055f29019cdd2b8d02058a79ded1ed0fc947f5f361b38dbc"
+    },
+    "waypoint_driver_sha256": "ab659975459f77605f96dc77ca0d56cf4eb03cd15f3b2b74f6d1788b2029d260"
+  },
+  "spec": {
+    "id": "south-prefix",
+    "kind": "change",
+    "mandatory": "prefix",
+    "mirrored": false,
+    "operation": "prefix",
+    "profile_sha256": "7faba0a56d129ea051d5c28a019964034b546923dbe49cedb3a605af84437ec3",
+    "regime": "local_cue",
+    "seed": 400
+  },
+  "stage": "travel-feasibility",
+  "stage_output": "/home/utkarsh/Work/shraddha/brain/.worktrees/research-phase/runs/memory-travel-recovery-20261004T133718Z/prerequisites",
+  "version": 3
+}
