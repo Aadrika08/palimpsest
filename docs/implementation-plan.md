@@ -81,6 +81,18 @@ unattempted under the stopping rules. No paired pilot, new fits, held-out or
 hardware work followed. Another native attempt needs a prospective route/heading
 amendment; R2/R3 and the original failure records remain open/preserved.
 
+The approved [memory travel-handoff amendment](plans/memory-travel-handoff.md) is
+[implemented and software-verified](reports/memory-travel-handoff.md): 915 tests
+passed. Its single native invocation started the first d=.25 m candidate, then
+stopped before acquisition on filesystem ENOSPC while renaming recording and
+receipt files. There is no selected profile or qualified route result. The recovery
+readout preserves the partial owner, stale receipts and unpublished drafts; the
+other two candidates and all eight prerequisites are unattempted. Source/assets
+remained unchanged and the owner exited. No retry, pilot, fit or merge followed.
+Filesystem atomic recording capacity needs qualification before a new prospective
+native execution contract. Earlier measured acquisition/travel failures remain
+preserved; R2/R3 and physical/operator qualification remain open.
+
 ## Architecture and contracts
 
 Use Python 3.11 with uv, MuJoCo/Gymnasium, PyTorch, a local FastAPI service, and React/TypeScript/Vite with Node 24 LTS. Pin the upstream FLYNN submodule at `8d964599119b420de67ee259434d273651a1a76d`; retain its effective preprocessing, control interval, and action conversion. Freeze the working environment in uv.lock after reference checks.
