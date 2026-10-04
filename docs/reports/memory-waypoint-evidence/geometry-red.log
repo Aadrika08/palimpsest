@@ -1,0 +1,45 @@
+.FFFF                                                                    [100%]
+=================================== FAILURES ===================================
+__ test_three_registered_loops_have_visible_separated_successors_and_mirrors ___
+
+    def test_three_registered_loops_have_visible_separated_successors_and_mirrors():
+>       hashes = world.WAYPOINT_PROFILE_HASHES
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'palimpsest.memory_decision_world' has no attribute 'WAYPOINT_PROFILE_HASHES'
+
+tests/test_memory_waypoint_profiles.py:16: AttributeError
+______ test_profile_tampering_is_rejected_at_case_and_snapshot_admission _______
+
+    def test_profile_tampering_is_rejected_at_case_and_snapshot_admission():
+        from palimpsest.engine import Engine
+        from palimpsest.profiles import validate_decision
+>       case = world.make_case(400,'local_cue','change',profile_sha256=world.WAYPOINT_PROFILE_HASHES[0])
+                                                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'palimpsest.memory_decision_world' has no attribute 'WAYPOINT_PROFILE_HASHES'
+
+tests/test_memory_waypoint_profiles.py:43: AttributeError
+_ test_retained_failure_stays_invisible_while_revised_first_return_target_is_visible _
+
+    def test_retained_failure_stays_invisible_while_revised_first_return_target_is_visible():
+        pose = [-.8503412008285522,-1.120007872581482,-.6957413055440772]
+        old = world.make_case(400,'local_cue','no-event')
+        old_target = old['subjects_by_side'][0]+'-retreat-1'
+>       for hash_ in (world.PROFILE_SHA256,*world.WAYPOINT_PROFILE_HASHES):
+                                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'palimpsest.memory_decision_world' has no attribute 'WAYPOINT_PROFILE_HASHES'
+
+tests/test_memory_waypoint_profiles.py:61: AttributeError
+_ test_arrival_analysis_reports_unsafe_headings_without_claiming_native_feasibility _
+
+    def test_arrival_analysis_reports_unsafe_headings_without_claiming_native_feasibility():
+>       case = world.make_case(400,'local_cue','change',profile_sha256=world.WAYPOINT_PROFILE_HASHES[0])
+                                                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'palimpsest.memory_decision_world' has no attribute 'WAYPOINT_PROFILE_HASHES'
+
+tests/test_memory_waypoint_profiles.py:72: AttributeError
+=========================== short test summary info ============================
+FAILED tests/test_memory_waypoint_profiles.py::test_three_registered_loops_have_visible_separated_successors_and_mirrors
+FAILED tests/test_memory_waypoint_profiles.py::test_profile_tampering_is_rejected_at_case_and_snapshot_admission
+FAILED tests/test_memory_waypoint_profiles.py::test_retained_failure_stays_invisible_while_revised_first_return_target_is_visible
+FAILED tests/test_memory_waypoint_profiles.py::test_arrival_analysis_reports_unsafe_headings_without_claiming_native_feasibility
+4 failed, 1 passed in 0.11s

@@ -1,0 +1,20 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+_ test_native_tick_limit_and_stall_require_matching_terminal_event_and_raw_motion _
+
+    def test_native_tick_limit_and_stall_require_matching_terminal_event_and_raw_motion():
+        p = study().pilot
+        def fixture(reason,count,movement):
+            outcome = {'reason':reason,'episode':0,'steps':count}
+            rows = [{'pose':[0.,0.,0.],'next_pose':[movement,0.,0.],'action':[.5,0.]} for _ in range(count)]
+            return {'rows':rows,'events':[{'kind':'episode_finished','outcome':outcome}]}, {
+                'outcome':outcome,'total_ticks':count,'final_phase':'truncated' if reason=='time_limit' else 'terminated'}
+        data, report = fixture('time_limit',1200,.01)
+>       assert p.audit_native_prefix_terminal(data,report) == 'time_limit'
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'scripts.memory_decision_pilot' has no attribute 'audit_native_prefix_terminal'
+
+tests/test_memory_waypoint_study.py:183: AttributeError
+=========================== short test summary info ============================
+FAILED tests/test_memory_waypoint_study.py::test_native_tick_limit_and_stall_require_matching_terminal_event_and_raw_motion
+1 failed in 0.18s
