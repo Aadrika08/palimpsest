@@ -367,7 +367,7 @@ def test_production_worker_uses_cpu_policy_prefix_configures_only_at_boundary(tm
         'assets': str(tmp_path/'assets'), 'history_root': str(tmp_path/'histories'),
         'source_identity': {}, 'output': str(tmp_path/'run'), 'phase_root': str(tmp_path),
         'run_id': 'a'*32, 'spec': {'id': 'synthetic', 'regime': 'local_cue'}, 'case': {'seed': 400},
-        'snapshot_path': None}
+        'snapshot_path': None, 'protocol_sha256':module.PROTOCOL_SHA256}
     monkeypatch.setattr(module, 'validate_job', lambda raw: copy.deepcopy(raw))
     monkeypatch.setattr(module, 'source_identity', lambda *a: {})
     monkeypatch.setattr(module, 'common_helpers', lambda: SimpleNamespace(load_histories=lambda root: {}))
@@ -391,10 +391,13 @@ def test_manifest_uses_actual_full_private_profile_contract():
     if not hasattr(profiles, 'validate_decision'):
         pytest.skip('Runtime integration is validated after the sibling lane is installed')
     module = runner()
-    job = {'run_id': 'b'*32, 'operation': 'condition'}
+    from palimpsest.memory_decision_world import make_case
+    job = {'run_id': 'b'*32, 'operation': 'condition', 'case':make_case(400,'local_cue','change'),
+           'protocol_sha256':module.PROTOCOL_SHA256}
     manifest = {'run_id': job['run_id'], 'controller': 'flynn', 'requested_device': 'cpu',
         'scenario': profiles.validate_decision('memory-decision-v2', 'checker', 'flynn'),
-        'recording_max_bytes': 384*1024**2, 'memory_decision_pilot_job': job}
+        'recording_max_bytes': 384*1024**2, 'memory_decision_pilot_job': job,
+        'memory_case':job['case'],'memory_decision_pilot_protocol_sha256':job['protocol_sha256']}
     assert module.native_manifest_matches(job, manifest)
     assert not module.native_manifest_matches(job, {**manifest, 'scenario': 'memory-decision-v2'})
     assert not module.native_manifest_matches(job, {**manifest, 'recording_max_bytes': 512*1024**2})

@@ -36,7 +36,33 @@ PROFILE = {'version': 2, 'id': SCENARIO, 'claim': 'unvalidated-development-candi
 PROFILE_SHA256 = memory.sha256(PROFILE)
 
 
-def make_case(seed, regime, kind, mirrored=False):
+def _loop_profile(radius):
+    profile = copy.deepcopy(PROFILE)
+    cx = -.8-math.sqrt(2*radius-1)
+    theta = math.asin((radius-1)/radius)
+    south = []
+    for index in range(1, 8):
+        angle = theta-(theta+4*math.pi/3)*index/7
+        south.append([round(cx+radius*math.cos(angle), 12),
+                      round(-radius+radius*math.sin(angle), 12)])
+    profile.update(waypoint_amendment='fixed-loop-v1', loop_radius_m=radius,
+                   north_retreat_xy=[[x, -y] for x, y in south])
+    return profile
+
+
+_WAYPOINT_PROFILES = [_loop_profile(radius) for radius in (1.4, 1.3, 1.2)]
+WAYPOINT_PROFILE_HASHES = tuple(memory.sha256(profile) for profile in _WAYPOINT_PROFILES)
+_PROFILES = {PROFILE_SHA256: PROFILE, **dict(zip(WAYPOINT_PROFILE_HASHES, _WAYPOINT_PROFILES))}
+
+
+def registered_profile(profile_sha256=PROFILE_SHA256):
+    if type(profile_sha256) is not str or profile_sha256 not in _PROFILES:
+        raise ValueError('Unknown frozen memory-v2 waypoint profile')
+    return copy.deepcopy(_PROFILES[profile_sha256])
+
+
+def make_case(seed, regime, kind, mirrored=False, *, profile_sha256=PROFILE_SHA256):
+    profile = registered_profile(profile_sha256)
     if type(seed) is not int or not 0 <= seed < 2**32 or regime not in memory.RELATIONS or kind not in ('change', 'null', 'no-event') or type(mirrored) is not bool:
         raise ValueError('Invalid development memory-v2 case')
     cid = f'memory-v2-{seed:08x}-{regime}-{kind}-{int(mirrored)}'
@@ -56,11 +82,11 @@ def make_case(seed, regime, kind, mirrored=False):
         markers[subject + '-exit'] = [1.2, float(sign)]
         if side != preferred:
             markers[subject + '-detour'] = [.6, sign * 1.35]
-        for index, (x, y) in enumerate(RETREAT_XY):
+        for index, (x, y) in enumerate(profile['north_retreat_xy']):
             markers[subject + f'-retreat-{index}'] = [x, sign * y]
     case = {'version': 2, 'claim': 'development-runtime-configuration', 'case_id': cid,
         'seed': seed, 'regime': regime, 'kind': kind, 'mirrored': mirrored, 'acquisition': True,
-        'profile_sha256': PROFILE_SHA256, 'acquisition_protocol_sha256': PROFILE_SHA256,
+        'profile_sha256': profile_sha256, 'acquisition_protocol_sha256': profile_sha256,
         'subjects_by_side': subjects, 'facts': memory.seed_m(facts, [])['facts'], 'cue_id': cue,
         'common_goal_id': cid + '-goal', 'decision_landmark_id': cid + '-decision',
         'closure_subject_id': subjects[preferred] if kind == 'change' else None,
@@ -75,7 +101,8 @@ def validate_case(case):
     if type(case) is not dict or len(memory.canonical_bytes(case)) > 64 * 1024:
         raise ValueError('Invalid bounded memory-v2 case')
     try:
-        expected = make_case(case['seed'], case['regime'], case['kind'], case['mirrored'])
+        expected = make_case(case['seed'], case['regime'], case['kind'], case['mirrored'],
+                             profile_sha256=case['profile_sha256'])
     except KeyError as error:
         raise ValueError('Incomplete memory-v2 case') from error
     if memory.canonical_bytes(case) != memory.canonical_bytes(expected):
@@ -92,7 +119,7 @@ def _public_graph(case):
         if subject + '-detour' in case['landmarks']:
             waypoints.append(subject + '-detour')
         waypoints += [subject + '-exit', goal]
-        retreat = [subject + f'-retreat-{i}' for i in range(len(RETREAT_XY))] + [decision]
+        retreat = [subject + f'-retreat-{i}' for i in range(len(registered_profile(case['profile_sha256'])['north_retreat_xy']))] + [decision]
         cost = sum(math.dist(case['landmarks'][a], case['landmarks'][b]) for a, b in zip([decision] + waypoints, waypoints))
         route_id = case['case_id'] + ('-route-a' if side == int(case['mirrored']) else '-route-z')
         fact = next(f for f in case['facts'] if f['subject_id'] == subject)
@@ -110,7 +137,7 @@ def _public_graph(case):
         acquisition += [route['inspection_landmark_id']] + route['retreat_ids']
     return {'version': 2, 'routes': sorted(routes, key=lambda r: r['route_id']),
         'acquisition_ids': acquisition, 'decision_landmark_id': decision, 'common_goal_id': goal,
-        'edges': edges, 'landmark_ids': sorted(case['landmarks']), 'profile_sha256': PROFILE_SHA256}
+        'edges': edges, 'landmark_ids': sorted(case['landmarks']), 'profile_sha256': case['profile_sha256']}
 
 
 def public_graph(case):
@@ -163,15 +190,71 @@ def geometry_check(case):
         'no_end_bypass': bool(no_end), 'authored_chains_clear': bool(clear),
         'authored_successors_forward_visible': bool(visible)}
     return {'valid': all(checks.values()), 'checks': checks, 'failures': [k for k, v in checks.items() if not v],
-        'profile_sha256': PROFILE_SHA256, 'case_sha256': case['case_sha256'],
+        'profile_sha256': case['profile_sha256'], 'case_sha256': case['case_sha256'],
         'claim': 'analytic-candidate-geometry-only', 'native_feasibility': 'unvalidated'}
+
+
+def arrival_analysis(case):
+    """Finite evaluator-only survey; headings are not controller guarantees.
+
+    Survey a .05 m lattice and 5-degree circle boundary in each arrival disk,
+    excluding body-colliding poses. For each 5-degree absolute heading retain
+    only poses where the departing landmark is a legitimate visible arrival.
+    Count unavailable successors and retain bounded explicit counterexamples.
+    """
+    case = validate_case(case)
+    obstacles = registered_profile(case['profile_sha256'])['obstacles']
+    offsets = {(round(x*.05, 12), round(y*.05, 12))
+               for x in range(-7, 8) for y in range(-7, 8)
+               if x*x+y*y <= 49}
+    offsets |= {(round(.35*math.cos(math.radians(angle)), 12),
+                 round(.35*math.sin(math.radians(angle)), 12))
+                for angle in range(0, 360, 5)}
+    graph = _public_graph(case)
+    pairs = list(dict.fromkeys(zip(graph['acquisition_ids'], graph['acquisition_ids'][1:])))
+    transitions = []
+    boundary = 7.-WALL_INSET-ROVER_RADIUS
+    for aid, bid in pairs:
+        a, b = case['landmarks'][aid], case['landmarks'][bid]
+        row = {'from': aid, 'to': bid, 'tested_count': 0, 'visible_count': 0,
+               'unsafe_count': 0, 'unsafe_examples': [], 'min_margin_degrees': None}
+        for dx, dy in sorted(offsets):
+            q = [a[0]+dx, a[1]+dy]
+            if max(map(abs, q)) >= boundary or any(math.dist(q, o) <= .7 for o in obstacles):
+                continue
+            if any(_segment_distance(o, q, a) <= .4 for o in obstacles):
+                continue
+            next_range = math.dist(q, b)
+            next_los = all(_segment_distance(o, q, b) > .4 for o in obstacles)
+            for degrees in range(0, 360, 5):
+                yaw = math.radians(degrees)
+                old_angle = 0. if dx == dy == 0 else math.remainder(math.atan2(-dy, -dx)-yaw, 2*math.pi)
+                if abs(old_angle) > math.pi/2:
+                    continue
+                angle = math.degrees(math.remainder(math.atan2(b[1]-q[1], b[0]-q[0])-yaw, 2*math.pi))
+                margin = 90.-abs(angle)
+                row['tested_count'] += 1
+                row['min_margin_degrees'] = margin if row['min_margin_degrees'] is None else min(margin,row['min_margin_degrees'])
+                if next_range <= 4. and margin >= 0 and next_los:
+                    row['visible_count'] += 1
+                else:
+                    row['unsafe_count'] += 1
+                    if len(row['unsafe_examples']) < 8:
+                        row['unsafe_examples'].append({'pose': [*q, yaw], 'successor_bearing_degrees': angle,
+                            'successor_range_m': next_range, 'line_of_sight': next_los})
+        transitions.append(row)
+    return {'profile_sha256': case['profile_sha256'], 'case_sha256': case['case_sha256'],
+            'position_step_m': .05, 'heading_step_degrees': 5, 'arrival_radius_m': .35,
+            'continuous_guarantee': False, 'native_feasibility': 'unvalidated',
+            'heading_assumption': 'all sampled headings with a legitimate departing visible arrival',
+            'unsafe_examples_per_transition_cap': 8, 'transitions': transitions}
 
 
 def initial_state(case):
     case = validate_case(case)
     if not geometry_check(case)['valid']:
         raise ValueError('Mandatory memory-v2 geometry failed')
-    return {'version': 2, 'case': case, 'profile_sha256': PROFILE_SHA256,
+    return {'version': 2, 'case': case, 'profile_sha256': case['profile_sha256'],
         'cue_state': 0, 'event_tick': None, 'decision_tick': None,
         'armed_boundary_tick': None, 'acquired_state_sha256': None,
         'applied': False, 'gate_result': 'pending' if case['event_enabled'] else 'not_requested', 'last_tick': None}
@@ -180,7 +263,7 @@ def initial_state(case):
 def validate_state(state):
     memory._fields(state, 'version case profile_sha256 cue_state event_tick decision_tick armed_boundary_tick acquired_state_sha256 applied gate_result last_tick')
     case = validate_case(state['case'])
-    if type(state['version']) is not int or state['version'] != 2 or state['profile_sha256'] != PROFILE_SHA256 or type(state['applied']) is not bool or type(state['cue_state']) is not int or state['cue_state'] != int(state['applied']):
+    if type(state['version']) is not int or state['version'] != 2 or state['profile_sha256'] != case['profile_sha256'] or type(state['applied']) is not bool or type(state['cue_state']) is not int or state['cue_state'] != int(state['applied']):
         raise ValueError('Invalid memory-v2 world identity/cue')
     for key in ('event_tick', 'decision_tick', 'armed_boundary_tick', 'last_tick'):
         if state[key] is not None:

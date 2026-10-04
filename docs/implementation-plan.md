@@ -71,6 +71,16 @@ Offline puck/navigation diagnostics complete without new fits or promotion.
 Another scene or native attempt requires a separately reviewed prospective
 amendment; no automatic layout change or rescue follows this evidence.
 
+The approved [memory waypoint amendment](plans/memory-waypoint-amendment.md) is
+[implemented and executed](reports/memory-waypoint-amendment.md). Its first fixed
+1.4 m candidate acquired both real open observations and returned in 727 ticks;
+south/no-event reached the goal. South/change completed blocked inspection,
+retreat and replanning, then failed at the north exit outside ±90° visibility at
+tick 1193. Six remaining prerequisites and both smaller-radius probes are
+unattempted under the stopping rules. No paired pilot, new fits, held-out or
+hardware work followed. Another native attempt needs a prospective route/heading
+amendment; R2/R3 and the original failure records remain open/preserved.
+
 ## Architecture and contracts
 
 Use Python 3.11 with uv, MuJoCo/Gymnasium, PyTorch, a local FastAPI service, and React/TypeScript/Vite with Node 24 LTS. Pin the upstream FLYNN submodule at `8d964599119b420de67ee259434d273651a1a76d`; retain its effective preprocessing, control interval, and action conversion. Freeze the working environment in uv.lock after reference checks.
