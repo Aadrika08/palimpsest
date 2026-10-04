@@ -45,7 +45,8 @@ SEEDS = (10, 11, 12)
 ARMS = ('old-corpus', 'augmented')
 MAX_UPDATES = 2000
 GiB = 1024**3
-HISTORICAL_HEAD = '6feade9770dc40efa567633412baec4347ee33cb'
+HISTORICAL_HEAD = '041434dd2b6fab5f19329b003f98407887e49286'
+TRAINING_REVISION = '6feade9770dc40efa567633412baec4347ee33cb'
 BUNDLE_PINS = {
     10: ('b6dd3e4143aa7d5e3ab988bae6988e1c68cf680866b5758d897af9ef3b949640', '8ccee3be54f42910c3a2f34b61bc99e31cd8d7b518f891c3c67e297a495d63d6'),
     11: ('275675660aa8132271aa2886bbb5f75acc214f46b3fc394117ecdc2949ef21ae', '12c217942093d763d51e02fc1e03727a13367c4d83fd6e9f5755b320f1adeeb6'),
@@ -138,7 +139,7 @@ def historical_binding(args, deadline):
     # Pin this runner as well: receipt cannot bless a different implementation.
     pins[str(Path(__file__).resolve())] = sha(__file__)
     binding = {'historical_root': str(root), 'historical_bundles': str(bundles), 'head': HISTORICAL_HEAD,
-               'files': pins, 'qualification_claims': []}
+               'training_revision': TRAINING_REVISION, 'files': pins, 'qualification_claims': []}
     check_binding(binding, deadline)
     return binding, protocols, reports
 
