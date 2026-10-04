@@ -731,3 +731,156 @@ def read_snapshot(path):
         if used != set(names) or type(result) is not dict:
             raise ValueError("Unknown entries or invalid snapshot root")
         return result
+
+
+DECISION_MAX_BYTES = 16 * 1024**2
+
+
+def validate_decision_snapshot(snapshot):
+    """Bound and validate the private CPU FLYNN container before owner allocation.
+
+    This stages only local CPU RNG validators. Model/renderer allocation and
+    destination-specific immutable tensor/model equality remain in restore().
+    The legacy container and its size/admission contracts are unchanged.
+    """
+    import numpy as np
+    from . import memory
+    if type(snapshot) is not dict or set(snapshot)!=SNAPSHOT_KEYS or type(snapshot['schema_version']) is not int or snapshot['schema_version']!=SCHEMA_VERSION:
+        raise ValueError('Unsupported memory-v2 snapshot container')
+    # Count the entire typed payload before deepcopy, JSON encoding or array
+    # conversion. Shared objects count at each occurrence, as in serialization.
+    size=0
+    entries=0
+    def bound(value,depth=0):
+        nonlocal size,entries
+        entries+=1
+        if depth>64 or entries>512*1024:
+            raise ValueError('Memory-v2 snapshot nesting/entry bound exceeded')
+        if isinstance(value,(np.ndarray,np.generic)):
+            array=np.asarray(value)
+            if array.dtype.kind not in 'buif' or array.dtype.fields or array.ndim>8 or array.dtype.itemsize not in (1,2,4,8):
+                raise ValueError('Unsupported memory-v2 snapshot array')
+            size+=array.nbytes+64
+            if size<=DECISION_MAX_BYTES and not np.isfinite(array).all():
+                raise ValueError('Nonfinite memory-v2 snapshot array')
+        elif type(value) in (str,bytes):
+            size+=len(value.encode() if type(value) is str else value)+8
+        elif type(value) is dict:
+            if any(type(k) is not str for k in value):
+                raise ValueError('Memory-v2 snapshot requires string keys')
+            for k,v in value.items():
+                bound(k,depth+1)
+                bound(v,depth+1)
+        elif type(value) in (list,tuple,set):
+            size+=8
+            for item in value:
+                bound(item,depth+1)
+        elif value is None or type(value) in (bool,int,float):
+            if type(value) is float and not math.isfinite(value) or type(value) is int and value.bit_length()>256:
+                raise ValueError('Invalid memory-v2 snapshot scalar')
+            size+=16
+        else:
+            raise ValueError('Unsupported memory-v2 snapshot value')
+        if size>DECISION_MAX_BYTES:
+            raise ValueError('Memory-v2 snapshot exceeds frozen 16 MiB bound')
+    bound(snapshot)
+    native=snapshot['native_data']
+    if type(native) is not bytes or not native or _sha(native)!=snapshot['native_sha256']:
+        raise ValueError('Invalid memory-v2 native bytes/hash')
+    identity=snapshot['identity']
+    required={'mujoco','numpy','python','platform','machine','byteorder','pointer_bits','environment_class',
+              'model_sha256','environment_profile','torch','renderer','policy','teacher'}
+    if type(identity) is not dict or set(identity) not in (required,required|{'environment_planner'}):
+        raise ValueError('Incomplete memory-v2 runtime/model identity')
+    memory._digest(identity['model_sha256'])
+    for key in ('mujoco','numpy','platform','machine','environment_class'):
+        if type(identity[key]) is not str or not identity[key] or len(identity[key])>256:
+            raise ValueError('Invalid bounded memory-v2 runtime identity')
+    if type(identity['python']) is not list or len(identity['python'])!=3 or any(type(v) is not int or v<0 for v in identity['python']) or identity['byteorder'] not in ('little','big') or identity['pointer_bits'] not in (32,64):
+        raise ValueError('Invalid memory-v2 machine identity')
+    profile=_validate_fields(identity['environment_profile'],ENV_PROFILE)
+    if profile['values'].get('max_steps')!=2100 or profile['values'].get('arena')!=7. or profile['values'].get('n_obstacles')!=20:
+        raise ValueError('Memory-v2 environment profile differs')
+    if type(identity['torch']) is not dict or type(identity['torch'].get('threads')) is not int or identity['torch'].get('threads')!=1 or identity['torch'].get('initialized_cuda_devices')!=[]:
+        raise ValueError('Memory-v2 requires the frozen one-thread CPU regime')
+    policy_id=identity['policy']
+    if type(policy_id) is not dict or set(policy_id)!={'class','device','dtype','provenance'} or policy_id['class']!='palimpsest.flynn.FlynnPolicy' or policy_id['device']!='cpu' or type(policy_id['provenance']) is not dict:
+        raise ValueError('Memory-v2 requires complete CPU FLYNN policy identity')
+    neurons=policy_id['provenance'].get('neuron_count')
+    if type(neurons) is not int or not 0<neurons<=1000000 or policy_id['dtype']!='torch.float32':
+        raise ValueError('Invalid memory-v2 policy shape/dtype provenance')
+    if identity['teacher'] is not None or snapshot['teacher'] is not None:
+        raise ValueError('Memory-v2 excludes privileged teacher state')
+    renderer=identity['renderer']
+    if type(renderer) is not dict or set(renderer)!={'height','width','context_class','requested_backend','requested_egl_device'} or renderer['height']!=128 or renderer['width']!=128 or type(renderer['context_class']) is not str:
+        raise ValueError('Incomplete memory-v2 camera renderer identity')
+    integration=snapshot['integration']
+    if type(snapshot['integration_enum']) is not int or snapshot['integration_enum']<=0 or not isinstance(integration,np.ndarray) or integration.dtype!=np.float64 or integration.ndim!=1 or not integration.size or not np.isfinite(integration).all():
+        raise ValueError('Invalid memory-v2 integration audit')
+    state=_validate_fields(snapshot['environment'],ENV_STATE)
+    if state['absent']:
+        raise ValueError('Memory-v2 requires complete environment state')
+    values=state['values']
+    for name,shape in (('_obstacle_xy',(20,2)),('_goal_xy',(2,)),('_prev_xy',(2,)),('_last_action',(2,))):
+        array=values[name]
+        if not isinstance(array,np.ndarray) or array.shape!=shape or array.dtype.kind!='f' or not np.isfinite(array).all():
+            raise ValueError('Invalid memory-v2 environment geometry/action arrays')
+    for name in ('_t','_stall_steps'):
+        if type(values[name]) is not int or values[name]<0:
+            raise ValueError('Invalid memory-v2 environment counter')
+    for name in ('_speed','_action_scale'):
+        _number(values[name],name,minimum=0)
+    if values['_action_scale']==0:
+        raise ValueError('Invalid memory-v2 action scale')
+    _points(values['path_to_draw'],'path_to_draw',2)
+    _points(values['target_to_draw'],'target_to_draw',2,single=True)
+    if type(values['visited']) is not set or any(type(v) is not tuple or len(v)!=2 or any(type(i) is not int and not isinstance(i,np.integer) for i in v) for v in values['visited']):
+        raise ValueError('Invalid memory-v2 visited bins')
+    policy=snapshot['policy']
+    if type(policy) is not dict or set(policy)!={'hidden','left','right','failure_diagnostics'} or type(policy['failure_diagnostics']) is not dict:
+        raise ValueError('Missing memory-v2 controller continuation state')
+    dtype=np.float32
+    hidden=policy['hidden']
+    if not isinstance(hidden,np.ndarray) or hidden.shape!=(1,neurons) or hidden.dtype!=dtype or not np.isfinite(hidden).all():
+        raise ValueError('Invalid memory-v2 controller hidden state')
+    for eye in ('left','right'):
+        if policy[eye] is not None:
+            if type(policy[eye]) is not dict or set(policy[eye])!={'L1','L2','L3'}:
+                raise ValueError('Incomplete memory-v2 retina state')
+            for array in policy[eye].values():
+                if not isinstance(array,np.ndarray) or array.ndim!=2 or array.shape[0]!=1 or array.dtype!=dtype or not np.isfinite(array).all():
+                    raise ValueError('Invalid memory-v2 retina tensor')
+    rng=snapshot['rng']
+    if type(rng) is not dict or set(rng)!={'python','numpy','environment','environment_seed','spaces','torch_cpu','torch_cuda'}:
+        raise ValueError('Missing memory-v2 complete RNG state')
+    random.Random().setstate(rng['python'])
+    np.random.RandomState().set_state(rng['numpy'])
+    if rng['environment'] is None or type(rng['spaces']) is not dict or rng['torch_cuda']!=[]:
+        raise ValueError('Incomplete memory-v2 CPU/environment RNG state')
+    _new_generator(rng['environment'])
+    for generator in rng['spaces'].values():
+        _new_generator(generator)
+    if type(rng['environment_seed']) not in (int,type(None)):
+        raise ValueError('Invalid memory-v2 environment seed')
+    cpu=rng['torch_cpu']
+    if not isinstance(cpu,np.ndarray) or cpu.dtype!=np.uint8 or cpu.ndim!=1 or not 1024<=cpu.size<=16384:
+        raise ValueError('Missing memory-v2 CPU Torch RNG state')
+    torch=sys.modules.get('torch')
+    if torch is not None:
+        torch.Generator(device='cpu').set_state(torch.from_numpy(cpu.copy()))
+    obs=snapshot['observation']
+    if type(obs) is not dict or type(obs.get('sensors')) is not dict:
+        raise ValueError('Incomplete memory-v2 raw observation')
+    for name in ('cam_left','cam_right'):
+        image=obs.get(name)
+        if not isinstance(image,np.ndarray) or image.dtype!=np.uint8 or image.shape!=(128,128,3):
+            raise ValueError('Invalid memory-v2 raw camera state')
+    sensors=obs['sensors']
+    if not {'collision','collision_angle','wind_direction'}.issubset(sensors) or type(sensors['collision']) not in (bool,np.bool_):
+        raise ValueError('Incomplete memory-v2 raw contact/bearing state')
+    if sensors['collision_angle'] is not None:
+        _number(sensors['collision_angle'],'collision_angle')
+    bearing=np.asarray(sensors['wind_direction'])
+    if bearing.shape!=(2,) or bearing.dtype.kind not in 'fiu' or not np.isfinite(bearing).all() or not math.isclose(float(np.linalg.norm(bearing)),1.,abs_tol=1e-5):
+        raise ValueError('Invalid memory-v2 raw bearing state')
+    return size

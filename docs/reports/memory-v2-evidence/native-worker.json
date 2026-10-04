@@ -1,0 +1,2683 @@
+{
+  "acquired": false,
+  "capped_ticks": 900,
+  "case_id": "south-no-event",
+  "condition": null,
+  "continuation_ticks": 0,
+  "error": {
+    "message": "Real CPU FLYNN prefix did not obtain both open observations and return",
+    "type": "ValueError"
+  },
+  "final_memory": {
+    "active": null,
+    "cursor": {
+      "bearing": [
+        0.014553571531890123,
+        -0.9998940911694929
+      ],
+      "common_goal_id": "memory-v2-00000190-local_cue-no-event-0-goal",
+      "episode_id": "episode-0",
+      "packet_sha256": "4d3b27fc196573e0bf871c2ccd9af6c9752a750693118e19dcae81db739f3579",
+      "tick": 100
+    },
+    "detector": {
+      "cues": [],
+      "tick": 100
+    },
+    "e": {
+      "episodes": [],
+      "version": 1
+    },
+    "episode_id": "episode-0",
+    "graph": {
+      "acquisition_ids": [
+        "memory-v2-00000190-local_cue-no-event-0-decision",
+        "memory-v2-00000190-local_cue-no-event-0-subject-a-inspection",
+        "memory-v2-00000190-local_cue-no-event-0-subject-a-retreat-0",
+        "memory-v2-00000190-local_cue-no-event-0-subject-a-retreat-1",
+        "memory-v2-00000190-local_cue-no-event-0-subject-a-retreat-2",
+        "memory-v2-00000190-local_cue-no-event-0-subject-a-retreat-3",
+        "memory-v2-00000190-local_cue-no-event-0-subject-a-retreat-4",
+        "memory-v2-00000190-local_cue-no-event-0-subject-a-retreat-5",
+        "memory-v2-00000190-local_cue-no-event-0-decision",
+        "memory-v2-00000190-local_cue-no-event-0-subject-z-inspection",
+        "memory-v2-00000190-local_cue-no-event-0-subject-z-retreat-0",
+        "memory-v2-00000190-local_cue-no-event-0-subject-z-retreat-1",
+        "memory-v2-00000190-local_cue-no-event-0-subject-z-retreat-2",
+        "memory-v2-00000190-local_cue-no-event-0-subject-z-retreat-3",
+        "memory-v2-00000190-local_cue-no-event-0-subject-z-retreat-4",
+        "memory-v2-00000190-local_cue-no-event-0-subject-z-retreat-5",
+        "memory-v2-00000190-local_cue-no-event-0-decision"
+      ],
+      "common_goal_id": "memory-v2-00000190-local_cue-no-event-0-goal",
+      "decision_landmark_id": "memory-v2-00000190-local_cue-no-event-0-decision",
+      "edges": [
+        {
+          "direction": "forward",
+          "from": "memory-v2-00000190-local_cue-no-event-0-decision",
+          "id": "memory-v2-00000190-local_cue-no-event-0-route-a-crossing-0",
+          "length_m": 1.4142135623730951,
+          "role": "crossing",
+          "subject_id": "memory-v2-00000190-local_cue-no-event-0-subject-a",
+          "to": "memory-v2-00000190-local_cue-no-event-0-subject-a-inspection"
+        },
+        {
+          "direction": "forward",
+          "from": "memory-v2-00000190-local_cue-no-event-0-subject-a-inspection",
+          "id": "memory-v2-00000190-local_cue-no-event-0-route-a-crossing-1",
+          "length_m": 0.8,
+          "role": "crossing",
+          "subject_id": "memory-v2-00000190-local_cue-no-event-0-subject-a",
+          "to": "memory-v2-00000190-local_cue-no-event-0-subject-a-crossing"
+        },
+        {
+          "direction": "forward",
+          "from": "memory-v2-00000190-local_cue-no-event-0-subject-a-crossing",
+          "id": "memory-v2-00000190-local_cue-no-event-0-route-a-crossing-2",
+          "length_m": 1.2,
+          "role": "crossing",
+          "subject_id": "memory-v2-00000190-local_cue-no-event-0-subject-a",
+          "to": "memory-v2-00000190-local_cue-no-event-0-subject-a-exit"
+        },
+        {
+          "direction": "forward",
+          "from": "memory-v2-00000190-local_cue-no-event-0-subject-a-exit",
+          "id": "memory-v2-00000190-local_cue-no-event-0-route-a-crossing-3",
+          "length_m": 1.6401219466856725,
+          "role": "crossing",
+          "subject_id": "memory-v2-00000190-local_cue-no-event-0-subject-a",
+          "to": "memory-v2-00000190-local_cue-no-event-0-goal"
+        },
+        {
+          "direction": "forward",
+          "from": "memory-v2-00000190-local_cue-no-event-0-subject-a-inspection",
+          "id": "memory-v2-00000190-local_cue-no-event-0-route-a-retreat-0",
+          "length_m": 0.3999999999999999,
+          "role": "retreat",
+          "subject_id": "memory-v2-00000190-local_cue-no-event-0-subject-a",
+          "to": "memory-v2-00000190-local_cue-no-event-0-subject-a-retreat-0"
+        },
+        {
+          "direction": "forward",
+          "from": "memory-v2-00000190-local_cue-no-event-0-subject-a-retreat-0",
+          "id": "memory-v2-00000190-local_cue-no-event-0-route-a-retreat-1",
+          "length_m": 0.5590169943749475,
+          "role": "retreat",
+          "subject_id": "memory-v2-00000190-local_cue-no-event-0-subject-a",
+          "to": "memory-v2-00000190-local_cue-no-event-0-subject-a-retreat-1"
+        },
+        {
+          "direction": "forward",
+          "from": "memory-v2-00000190-local_cue-no-event-0-subject-a-retreat-1",
+          "id": "memory-v2-00000190-local_cue-no-event-0-route-a-retreat-2",
+          "length_m": 0.8062257748298549,
+          "role": "retreat",
+          "subject_id": "memory-v2-00000190-local_cue-no-event-0-subject-a",
+          "to": "memory-v2-00000190-local_cue-no-event-0-subject-a-retreat-2"
+        },
+        {
+          "direction": "forward",
+          "from": "memory-v2-00000190-local_cue-no-event-0-subject-a-retreat-2",
+          "id": "memory-v2-00000190-local_cue-no-event-0-route-a-retreat-3",
+          "length_m": 0.6708203932499368,
+          "role": "retreat",
+          "subject_id": "memory-v2-00000190-local_cue-no-event-0-subject-a",
+          "to": "memory-v2-00000190-local_cue-no-event-0-subject-a-retreat-3"
+        },
+        {
+          "direction": "forward",
+          "from": "memory-v2-00000190-local_cue-no-event-0-subject-a-retreat-3",
+          "id": "memory-v2-00000190-local_cue-no-event-0-route-a-retreat-4",
+          "length_m": 0.5,
+          "role": "retreat",
+          "subject_id": "memory-v2-00000190-local_cue-no-event-0-subject-a",
+          "to": "memory-v2-00000190-local_cue-no-event-0-subject-a-retreat-4"
+        },
+        {
+          "direction": "forward",
+          "from": "memory-v2-00000190-local_cue-no-event-0-subject-a-retreat-4",
+          "id": "memory-v2-00000190-local_cue-no-event-0-route-a-retreat-5",
+          "length_m": 0.24999999999999978,
+          "role": "retreat",
+          "subject_id": "memory-v2-00000190-local_cue-no-event-0-subject-a",
+          "to": "memory-v2-00000190-local_cue-no-event-0-subject-a-retreat-5"
+        },
+        {
+          "direction": "forward",
+          "from": "memory-v2-00000190-local_cue-no-event-0-subject-a-retreat-5",
+          "id": "memory-v2-00000190-local_cue-no-event-0-route-a-retreat-6",
+          "length_m": 0.30000000000000004,
+          "role": "retreat",
+          "subject_id": "memory-v2-00000190-local_cue-no-event-0-subject-a",
+          "to": "memory-v2-00000190-local_cue-no-event-0-decision"
+        },
+        {
+          "direction": "forward",
+          "from": "memory-v2-00000190-local_cue-no-event-0-decision",
+          "id": "memory-v2-00000190-local_cue-no-event-0-route-z-crossing-0",
+          "length_m": 1.4142135623730951,
+          "role": "crossing",
+          "subject_id": "memory-v2-00000190-local_cue-no-event-0-subject-z",
+          "to": "memory-v2-00000190-local_cue-no-event-0-subject-z-inspection"
+        },
+        {
+          "direction": "forward",
+          "from": "memory-v2-00000190-local_cue-no-event-0-subject-z-inspection",
+          "id": "memory-v2-00000190-local_cue-no-event-0-route-z-crossing-1",
+          "length_m": 0.8,
+          "role": "crossing",
+          "subject_id": "memory-v2-00000190-local_cue-no-event-0-subject-z",
+          "to": "memory-v2-00000190-local_cue-no-event-0-subject-z-crossing"
+        },
+        {
+          "direction": "forward",
+          "from": "memory-v2-00000190-local_cue-no-event-0-subject-z-crossing",
+          "id": "memory-v2-00000190-local_cue-no-event-0-route-z-crossing-2",
+          "length_m": 0.6946221994724903,
+          "role": "crossing",
+          "subject_id": "memory-v2-00000190-local_cue-no-event-0-subject-z",
+          "to": "memory-v2-00000190-local_cue-no-event-0-subject-z-detour"
+        },
+        {
+          "direction": "forward",
+          "from": "memory-v2-00000190-local_cue-no-event-0-subject-z-detour",
+          "id": "memory-v2-00000190-local_cue-no-event-0-route-z-crossing-3",
+          "length_m": 0.6946221994724903,
+          "role": "crossing",
+          "subject_id": "memory-v2-00000190-local_cue-no-event-0-subject-z",
+          "to": "memory-v2-00000190-local_cue-no-event-0-subject-z-exit"
+        },
+        {
+          "direction": "forward",
+          "from": "memory-v2-00000190-local_cue-no-event-0-subject-z-exit",
+          "id": "memory-v2-00000190-local_cue-no-event-0-route-z-crossing-4",
+          "length_m": 1.6401219466856725,
+          "role": "crossing",
+          "subject_id": "memory-v2-00000190-local_cue-no-event-0-subject-z",
+          "to": "memory-v2-00000190-local_cue-no-event-0-goal"
+        },
+        {
+          "direction": "forward",
+          "from": "memory-v2-00000190-local_cue-no-event-0-subject-z-inspection",
+          "id": "memory-v2-00000190-local_cue-no-event-0-route-z-retreat-0",
+          "length_m": 0.3999999999999999,
+          "role": "retreat",
+          "subject_id": "memory-v2-00000190-local_cue-no-event-0-subject-z",
+          "to": "memory-v2-00000190-local_cue-no-event-0-subject-z-retreat-0"
+        },
+        {
+          "direction": "forward",
+          "from": "memory-v2-00000190-local_cue-no-event-0-subject-z-retreat-0",
+          "id": "memory-v2-00000190-local_cue-no-event-0-route-z-retreat-1",
+          "length_m": 0.5590169943749475,
+          "role": "retreat",
+          "subject_id": "memory-v2-00000190-local_cue-no-event-0-subject-z",
+          "to": "memory-v2-00000190-local_cue-no-event-0-subject-z-retreat-1"
+        },
+        {
+          "direction": "forward",
+          "from": "memory-v2-00000190-local_cue-no-event-0-subject-z-retreat-1",
+          "id": "memory-v2-00000190-local_cue-no-event-0-route-z-retreat-2",
+          "length_m": 0.8062257748298549,
+          "role": "retreat",
+          "subject_id": "memory-v2-00000190-local_cue-no-event-0-subject-z",
+          "to": "memory-v2-00000190-local_cue-no-event-0-subject-z-retreat-2"
+        },
+        {
+          "direction": "forward",
+          "from": "memory-v2-00000190-local_cue-no-event-0-subject-z-retreat-2",
+          "id": "memory-v2-00000190-local_cue-no-event-0-route-z-retreat-3",
+          "length_m": 0.6708203932499368,
+          "role": "retreat",
+          "subject_id": "memory-v2-00000190-local_cue-no-event-0-subject-z",
+          "to": "memory-v2-00000190-local_cue-no-event-0-subject-z-retreat-3"
+        },
+        {
+          "direction": "forward",
+          "from": "memory-v2-00000190-local_cue-no-event-0-subject-z-retreat-3",
+          "id": "memory-v2-00000190-local_cue-no-event-0-route-z-retreat-4",
+          "length_m": 0.5,
+          "role": "retreat",
+          "subject_id": "memory-v2-00000190-local_cue-no-event-0-subject-z",
+          "to": "memory-v2-00000190-local_cue-no-event-0-subject-z-retreat-4"
+        },
+        {
+          "direction": "forward",
+          "from": "memory-v2-00000190-local_cue-no-event-0-subject-z-retreat-4",
+          "id": "memory-v2-00000190-local_cue-no-event-0-route-z-retreat-5",
+          "length_m": 0.24999999999999978,
+          "role": "retreat",
+          "subject_id": "memory-v2-00000190-local_cue-no-event-0-subject-z",
+          "to": "memory-v2-00000190-local_cue-no-event-0-subject-z-retreat-5"
+        },
+        {
+          "direction": "forward",
+          "from": "memory-v2-00000190-local_cue-no-event-0-subject-z-retreat-5",
+          "id": "memory-v2-00000190-local_cue-no-event-0-route-z-retreat-6",
+          "length_m": 0.30000000000000004,
+          "role": "retreat",
+          "subject_id": "memory-v2-00000190-local_cue-no-event-0-subject-z",
+          "to": "memory-v2-00000190-local_cue-no-event-0-decision"
+        }
+      ],
+      "landmark_ids": [
+        "memory-v2-00000190-local_cue-no-event-0-decision",
+        "memory-v2-00000190-local_cue-no-event-0-goal",
+        "memory-v2-00000190-local_cue-no-event-0-subject-a-crossing",
+        "memory-v2-00000190-local_cue-no-event-0-subject-a-exit",
+        "memory-v2-00000190-local_cue-no-event-0-subject-a-inspection",
+        "memory-v2-00000190-local_cue-no-event-0-subject-a-retreat-0",
+        "memory-v2-00000190-local_cue-no-event-0-subject-a-retreat-1",
+        "memory-v2-00000190-local_cue-no-event-0-subject-a-retreat-2",
+        "memory-v2-00000190-local_cue-no-event-0-subject-a-retreat-3",
+        "memory-v2-00000190-local_cue-no-event-0-subject-a-retreat-4",
+        "memory-v2-00000190-local_cue-no-event-0-subject-a-retreat-5",
+        "memory-v2-00000190-local_cue-no-event-0-subject-z-crossing",
+        "memory-v2-00000190-local_cue-no-event-0-subject-z-detour",
+        "memory-v2-00000190-local_cue-no-event-0-subject-z-exit",
+        "memory-v2-00000190-local_cue-no-event-0-subject-z-inspection",
+        "memory-v2-00000190-local_cue-no-event-0-subject-z-retreat-0",
+        "memory-v2-00000190-local_cue-no-event-0-subject-z-retreat-1",
+        "memory-v2-00000190-local_cue-no-event-0-subject-z-retreat-2",
+        "memory-v2-00000190-local_cue-no-event-0-subject-z-retreat-3",
+        "memory-v2-00000190-local_cue-no-event-0-subject-z-retreat-4",
+        "memory-v2-00000190-local_cue-no-event-0-subject-z-retreat-5"
+      ],
+      "profile_sha256": "30bce54fff21ff39910da74bd38f0e2ce4746e29c144e2979c39c0b28d356a5a",
+      "routes": [
+        {
+          "cost": 5.054335509058768,
+          "fact_id": "memory-v2-00000190-local_cue-no-event-0-fact-a",
+          "inspection_landmark_id": "memory-v2-00000190-local_cue-no-event-0-subject-a-inspection",
+          "retreat_ids": [
+            "memory-v2-00000190-local_cue-no-event-0-subject-a-retreat-0",
+            "memory-v2-00000190-local_cue-no-event-0-subject-a-retreat-1",
+            "memory-v2-00000190-local_cue-no-event-0-subject-a-retreat-2",
+            "memory-v2-00000190-local_cue-no-event-0-subject-a-retreat-3",
+            "memory-v2-00000190-local_cue-no-event-0-subject-a-retreat-4",
+            "memory-v2-00000190-local_cue-no-event-0-subject-a-retreat-5",
+            "memory-v2-00000190-local_cue-no-event-0-decision"
+          ],
+          "route_id": "memory-v2-00000190-local_cue-no-event-0-route-a",
+          "subject_id": "memory-v2-00000190-local_cue-no-event-0-subject-a",
+          "waypoint_ids": [
+            "memory-v2-00000190-local_cue-no-event-0-subject-a-inspection",
+            "memory-v2-00000190-local_cue-no-event-0-subject-a-crossing",
+            "memory-v2-00000190-local_cue-no-event-0-subject-a-exit",
+            "memory-v2-00000190-local_cue-no-event-0-goal"
+          ]
+        },
+        {
+          "cost": 5.243579908003748,
+          "fact_id": "memory-v2-00000190-local_cue-no-event-0-fact-z",
+          "inspection_landmark_id": "memory-v2-00000190-local_cue-no-event-0-subject-z-inspection",
+          "retreat_ids": [
+            "memory-v2-00000190-local_cue-no-event-0-subject-z-retreat-0",
+            "memory-v2-00000190-local_cue-no-event-0-subject-z-retreat-1",
+            "memory-v2-00000190-local_cue-no-event-0-subject-z-retreat-2",
+            "memory-v2-00000190-local_cue-no-event-0-subject-z-retreat-3",
+            "memory-v2-00000190-local_cue-no-event-0-subject-z-retreat-4",
+            "memory-v2-00000190-local_cue-no-event-0-subject-z-retreat-5",
+            "memory-v2-00000190-local_cue-no-event-0-decision"
+          ],
+          "route_id": "memory-v2-00000190-local_cue-no-event-0-route-z",
+          "subject_id": "memory-v2-00000190-local_cue-no-event-0-subject-z",
+          "waypoint_ids": [
+            "memory-v2-00000190-local_cue-no-event-0-subject-z-inspection",
+            "memory-v2-00000190-local_cue-no-event-0-subject-z-crossing",
+            "memory-v2-00000190-local_cue-no-event-0-subject-z-detour",
+            "memory-v2-00000190-local_cue-no-event-0-subject-z-exit",
+            "memory-v2-00000190-local_cue-no-event-0-goal"
+          ]
+        }
+      ],
+      "version": 2
+    },
+    "initial_m": {
+      "facts": [
+        {
+          "associations": [
+            {
+              "cue_id": "memory-v2-00000190-local_cue-no-event-0-cue",
+              "relation": "local_cue"
+            }
+          ],
+          "estimate": null,
+          "evidence": null,
+          "id": "memory-v2-00000190-local_cue-no-event-0-fact-a",
+          "inspection_landmark_id": "memory-v2-00000190-local_cue-no-event-0-subject-a-inspection",
+          "kind": "passability",
+          "origin": "initial_unknown",
+          "revision": 0,
+          "status": "unknown",
+          "subject_id": "memory-v2-00000190-local_cue-no-event-0-subject-a"
+        },
+        {
+          "associations": [
+            {
+              "cue_id": "memory-v2-00000190-local_cue-no-event-0-cue",
+              "relation": "paired_cue"
+            }
+          ],
+          "estimate": null,
+          "evidence": null,
+          "id": "memory-v2-00000190-local_cue-no-event-0-fact-z",
+          "inspection_landmark_id": "memory-v2-00000190-local_cue-no-event-0-subject-z-inspection",
+          "kind": "passability",
+          "origin": "initial_unknown",
+          "revision": 0,
+          "status": "unknown",
+          "subject_id": "memory-v2-00000190-local_cue-no-event-0-subject-z"
+        }
+      ],
+      "version": 1
+    },
+    "last_decisions": [
+      {
+        "kind": "memory_revision",
+        "revision": {
+          "after": {
+            "associations": [
+              {
+                "cue_id": "memory-v2-00000190-local_cue-no-event-0-cue",
+                "relation": "local_cue"
+              }
+            ],
+            "estimate": "open",
+            "evidence": {
+              "episode_id": "episode-0",
+              "id": "sensor-35ef426ec14aaf40828a65d39fe8d534bee240d6cdddce261144a130ec6b055b",
+              "tick": 70
+            },
+            "id": "memory-v2-00000190-local_cue-no-event-0-fact-a",
+            "inspection_landmark_id": "memory-v2-00000190-local_cue-no-event-0-subject-a-inspection",
+            "kind": "passability",
+            "origin": "observed",
+            "revision": 1,
+            "status": "observed",
+            "subject_id": "memory-v2-00000190-local_cue-no-event-0-subject-a"
+          },
+          "before": {
+            "associations": [
+              {
+                "cue_id": "memory-v2-00000190-local_cue-no-event-0-cue",
+                "relation": "local_cue"
+              }
+            ],
+            "estimate": "open",
+            "evidence": {
+              "episode_id": "episode-0",
+              "id": "sensor-3783887ab09c71cebf19df6f93716e9300704d50931e546383d278eeaa948452",
+              "tick": 69
+            },
+            "id": "memory-v2-00000190-local_cue-no-event-0-fact-a",
+            "inspection_landmark_id": "memory-v2-00000190-local_cue-no-event-0-subject-a-inspection",
+            "kind": "passability",
+            "origin": "observed",
+            "revision": 1,
+            "status": "observed",
+            "subject_id": "memory-v2-00000190-local_cue-no-event-0-subject-a"
+          },
+          "event_id": null,
+          "evidence_ids": [
+            "sensor-35ef426ec14aaf40828a65d39fe8d534bee240d6cdddce261144a130ec6b055b"
+          ],
+          "fact_id": "memory-v2-00000190-local_cue-no-event-0-fact-a",
+          "reason": "direct_observation",
+          "tick": 70
+        },
+        "tick": 70
+      },
+      {
+        "bearing": [
+          0.9386425726294666,
+          0.3448914624161295
+        ],
+        "kind": "memory_bridge",
+        "landmark_id": "memory-v2-00000190-local_cue-no-event-0-subject-a-inspection",
+        "phase": "acquire",
+        "tick": 70
+      },
+      {
+        "kind": "memory_revision",
+        "revision": {
+          "after": {
+            "associations": [
+              {
+                "cue_id": "memory-v2-00000190-local_cue-no-event-0-cue",
+                "relation": "local_cue"
+              }
+            ],
+            "estimate": "open",
+            "evidence": {
+              "episode_id": "episode-0",
+              "id": "sensor-a797a1602fb35d9f115256f8eaf85f937d7009f9ba64de024eede47983340bee",
+              "tick": 71
+            },
+            "id": "memory-v2-00000190-local_cue-no-event-0-fact-a",
+            "inspection_landmark_id": "memory-v2-00000190-local_cue-no-event-0-subject-a-inspection",
+            "kind": "passability",
+            "origin": "observed",
+            "revision": 1,
+            "status": "observed",
+            "subject_id": "memory-v2-00000190-local_cue-no-event-0-subject-a"
+          },
+          "before": {
+            "associations": [
+              {
+                "cue_id": "memory-v2-00000190-local_cue-no-event-0-cue",
+                "relation": "local_cue"
+              }
+            ],
+            "estimate": "open",
+            "evidence": {
+              "episode_id": "episode-0",
+              "id": "sensor-35ef426ec14aaf40828a65d39fe8d534bee240d6cdddce261144a130ec6b055b",
+              "tick": 70
+            },
+            "id": "memory-v2-00000190-local_cue-no-event-0-fact-a",
+            "inspection_landmark_id": "memory-v2-00000190-local_cue-no-event-0-subject-a-inspection",
+            "kind": "passability",
+            "origin": "observed",
+            "revision": 1,
+            "status": "observed",
+            "subject_id": "memory-v2-00000190-local_cue-no-event-0-subject-a"
+          },
+          "event_id": null,
+          "evidence_ids": [
+            "sensor-a797a1602fb35d9f115256f8eaf85f937d7009f9ba64de024eede47983340bee"
+          ],
+          "fact_id": "memory-v2-00000190-local_cue-no-event-0-fact-a",
+          "reason": "direct_observation",
+          "tick": 71
+        },
+        "tick": 71
+      },
+      {
+        "bearing": [
+          0.9294736148877452,
+          0.3688886000237845
+        ],
+        "kind": "memory_bridge",
+        "landmark_id": "memory-v2-00000190-local_cue-no-event-0-subject-a-inspection",
+        "phase": "acquire",
+        "tick": 71
+      },
+      {
+        "kind": "memory_revision",
+        "revision": {
+          "after": {
+            "associations": [
+              {
+                "cue_id": "memory-v2-00000190-local_cue-no-event-0-cue",
+                "relation": "local_cue"
+              }
+            ],
+            "estimate": "open",
+            "evidence": {
+              "episode_id": "episode-0",
+              "id": "sensor-f122ccf8baf20951d43e0cbf4927bccef46db463619db5c895fd66acca1dfec1",
+              "tick": 72
+            },
+            "id": "memory-v2-00000190-local_cue-no-event-0-fact-a",
+            "inspection_landmark_id": "memory-v2-00000190-local_cue-no-event-0-subject-a-inspection",
+            "kind": "passability",
+            "origin": "observed",
+            "revision": 1,
+            "status": "observed",
+            "subject_id": "memory-v2-00000190-local_cue-no-event-0-subject-a"
+          },
+          "before": {
+            "associations": [
+              {
+                "cue_id": "memory-v2-00000190-local_cue-no-event-0-cue",
+                "relation": "local_cue"
+              }
+            ],
+            "estimate": "open",
+            "evidence": {
+              "episode_id": "episode-0",
+              "id": "sensor-a797a1602fb35d9f115256f8eaf85f937d7009f9ba64de024eede47983340bee",
+              "tick": 71
+            },
+            "id": "memory-v2-00000190-local_cue-no-event-0-fact-a",
+            "inspection_landmark_id": "memory-v2-00000190-local_cue-no-event-0-subject-a-inspection",
+            "kind": "passability",
+            "origin": "observed",
+            "revision": 1,
+            "status": "observed",
+            "subject_id": "memory-v2-00000190-local_cue-no-event-0-subject-a"
+          },
+          "event_id": null,
+          "evidence_ids": [
+            "sensor-f122ccf8baf20951d43e0cbf4927bccef46db463619db5c895fd66acca1dfec1"
+          ],
+          "fact_id": "memory-v2-00000190-local_cue-no-event-0-fact-a",
+          "reason": "direct_observation",
+          "tick": 72
+        },
+        "tick": 72
+      },
+      {
+        "bearing": [
+          0.9206771740548229,
+          0.3903249174398496
+        ],
+        "kind": "memory_bridge",
+        "landmark_id": "memory-v2-00000190-local_cue-no-event-0-subject-a-inspection",
+        "phase": "acquire",
+        "tick": 72
+      },
+      {
+        "kind": "memory_revision",
+        "revision": {
+          "after": {
+            "associations": [
+              {
+                "cue_id": "memory-v2-00000190-local_cue-no-event-0-cue",
+                "relation": "local_cue"
+              }
+            ],
+            "estimate": "open",
+            "evidence": {
+              "episode_id": "episode-0",
+              "id": "sensor-ae14efa8b14042561618c2f985600dc369c086cd3e64e111d1d3880d95925294",
+              "tick": 73
+            },
+            "id": "memory-v2-00000190-local_cue-no-event-0-fact-a",
+            "inspection_landmark_id": "memory-v2-00000190-local_cue-no-event-0-subject-a-inspection",
+            "kind": "passability",
+            "origin": "observed",
+            "revision": 1,
+            "status": "observed",
+            "subject_id": "memory-v2-00000190-local_cue-no-event-0-subject-a"
+          },
+          "before": {
+            "associations": [
+              {
+                "cue_id": "memory-v2-00000190-local_cue-no-event-0-cue",
+                "relation": "local_cue"
+              }
+            ],
+            "estimate": "open",
+            "evidence": {
+              "episode_id": "episode-0",
+              "id": "sensor-f122ccf8baf20951d43e0cbf4927bccef46db463619db5c895fd66acca1dfec1",
+              "tick": 72
+            },
+            "id": "memory-v2-00000190-local_cue-no-event-0-fact-a",
+            "inspection_landmark_id": "memory-v2-00000190-local_cue-no-event-0-subject-a-inspection",
+            "kind": "passability",
+            "origin": "observed",
+            "revision": 1,
+            "status": "observed",
+            "subject_id": "memory-v2-00000190-local_cue-no-event-0-subject-a"
+          },
+          "event_id": null,
+          "evidence_ids": [
+            "sensor-ae14efa8b14042561618c2f985600dc369c086cd3e64e111d1d3880d95925294"
+          ],
+          "fact_id": "memory-v2-00000190-local_cue-no-event-0-fact-a",
+          "reason": "direct_observation",
+          "tick": 73
+        },
+        "tick": 73
+      },
+      {
+        "bearing": [
+          0.912465517749776,
+          0.4091536128615182
+        ],
+        "kind": "memory_bridge",
+        "landmark_id": "memory-v2-00000190-local_cue-no-event-0-subject-a-inspection",
+        "phase": "acquire",
+        "tick": 73
+      },
+      {
+        "kind": "memory_revision",
+        "revision": {
+          "after": {
+            "associations": [
+              {
+                "cue_id": "memory-v2-00000190-local_cue-no-event-0-cue",
+                "relation": "local_cue"
+              }
+            ],
+            "estimate": "open",
+            "evidence": {
+              "episode_id": "episode-0",
+              "id": "sensor-2bcec78dde5eee7214daecf317a1fc8e15267971bd4585f9906615db0fb1dd49",
+              "tick": 74
+            },
+            "id": "memory-v2-00000190-local_cue-no-event-0-fact-a",
+            "inspection_landmark_id": "memory-v2-00000190-local_cue-no-event-0-subject-a-inspection",
+            "kind": "passability",
+            "origin": "observed",
+            "revision": 1,
+            "status": "observed",
+            "subject_id": "memory-v2-00000190-local_cue-no-event-0-subject-a"
+          },
+          "before": {
+            "associations": [
+              {
+                "cue_id": "memory-v2-00000190-local_cue-no-event-0-cue",
+                "relation": "local_cue"
+              }
+            ],
+            "estimate": "open",
+            "evidence": {
+              "episode_id": "episode-0",
+              "id": "sensor-ae14efa8b14042561618c2f985600dc369c086cd3e64e111d1d3880d95925294",
+              "tick": 73
+            },
+            "id": "memory-v2-00000190-local_cue-no-event-0-fact-a",
+            "inspection_landmark_id": "memory-v2-00000190-local_cue-no-event-0-subject-a-inspection",
+            "kind": "passability",
+            "origin": "observed",
+            "revision": 1,
+            "status": "observed",
+            "subject_id": "memory-v2-00000190-local_cue-no-event-0-subject-a"
+          },
+          "event_id": null,
+          "evidence_ids": [
+            "sensor-2bcec78dde5eee7214daecf317a1fc8e15267971bd4585f9906615db0fb1dd49"
+          ],
+          "fact_id": "memory-v2-00000190-local_cue-no-event-0-fact-a",
+          "reason": "direct_observation",
+          "tick": 74
+        },
+        "tick": 74
+      },
+      {
+        "bearing": [
+          0.9049774890231859,
+          0.42545945090136317
+        ],
+        "kind": "memory_bridge",
+        "landmark_id": "memory-v2-00000190-local_cue-no-event-0-subject-a-inspection",
+        "phase": "acquire",
+        "tick": 74
+      },
+      {
+        "kind": "memory_revision",
+        "revision": {
+          "after": {
+            "associations": [
+              {
+                "cue_id": "memory-v2-00000190-local_cue-no-event-0-cue",
+                "relation": "local_cue"
+              }
+            ],
+            "estimate": "open",
+            "evidence": {
+              "episode_id": "episode-0",
+              "id": "sensor-a60ee49704f8acd1ae908c21278a9299a5d053a3043c6bf3827856edd7980d9c",
+              "tick": 75
+            },
+            "id": "memory-v2-00000190-local_cue-no-event-0-fact-a",
+            "inspection_landmark_id": "memory-v2-00000190-local_cue-no-event-0-subject-a-inspection",
+            "kind": "passability",
+            "origin": "observed",
+            "revision": 1,
+            "status": "observed",
+            "subject_id": "memory-v2-00000190-local_cue-no-event-0-subject-a"
+          },
+          "before": {
+            "associations": [
+              {
+                "cue_id": "memory-v2-00000190-local_cue-no-event-0-cue",
+                "relation": "local_cue"
+              }
+            ],
+            "estimate": "open",
+            "evidence": {
+              "episode_id": "episode-0",
+              "id": "sensor-2bcec78dde5eee7214daecf317a1fc8e15267971bd4585f9906615db0fb1dd49",
+              "tick": 74
+            },
+            "id": "memory-v2-00000190-local_cue-no-event-0-fact-a",
+            "inspection_landmark_id": "memory-v2-00000190-local_cue-no-event-0-subject-a-inspection",
+            "kind": "passability",
+            "origin": "observed",
+            "revision": 1,
+            "status": "observed",
+            "subject_id": "memory-v2-00000190-local_cue-no-event-0-subject-a"
+          },
+          "event_id": null,
+          "evidence_ids": [
+            "sensor-a60ee49704f8acd1ae908c21278a9299a5d053a3043c6bf3827856edd7980d9c"
+          ],
+          "fact_id": "memory-v2-00000190-local_cue-no-event-0-fact-a",
+          "reason": "direct_observation",
+          "tick": 75
+        },
+        "tick": 75
+      },
+      {
+        "bearing": [
+          0.898226797940375,
+          0.4395322735155871
+        ],
+        "kind": "memory_bridge",
+        "landmark_id": "memory-v2-00000190-local_cue-no-event-0-subject-a-inspection",
+        "phase": "acquire",
+        "tick": 75
+      },
+      {
+        "kind": "memory_revision",
+        "revision": {
+          "after": {
+            "associations": [
+              {
+                "cue_id": "memory-v2-00000190-local_cue-no-event-0-cue",
+                "relation": "local_cue"
+              }
+            ],
+            "estimate": "open",
+            "evidence": {
+              "episode_id": "episode-0",
+              "id": "sensor-338fc1efc0ae5343954bb51c7ffd0de7c3e849a8803857f9f107daaabd32c370",
+              "tick": 76
+            },
+            "id": "memory-v2-00000190-local_cue-no-event-0-fact-a",
+            "inspection_landmark_id": "memory-v2-00000190-local_cue-no-event-0-subject-a-inspection",
+            "kind": "passability",
+            "origin": "observed",
+            "revision": 1,
+            "status": "observed",
+            "subject_id": "memory-v2-00000190-local_cue-no-event-0-subject-a"
+          },
+          "before": {
+            "associations": [
+              {
+                "cue_id": "memory-v2-00000190-local_cue-no-event-0-cue",
+                "relation": "local_cue"
+              }
+            ],
+            "estimate": "open",
+            "evidence": {
+              "episode_id": "episode-0",
+              "id": "sensor-a60ee49704f8acd1ae908c21278a9299a5d053a3043c6bf3827856edd7980d9c",
+              "tick": 75
+            },
+            "id": "memory-v2-00000190-local_cue-no-event-0-fact-a",
+            "inspection_landmark_id": "memory-v2-00000190-local_cue-no-event-0-subject-a-inspection",
+            "kind": "passability",
+            "origin": "observed",
+            "revision": 1,
+            "status": "observed",
+            "subject_id": "memory-v2-00000190-local_cue-no-event-0-subject-a"
+          },
+          "event_id": null,
+          "evidence_ids": [
+            "sensor-338fc1efc0ae5343954bb51c7ffd0de7c3e849a8803857f9f107daaabd32c370"
+          ],
+          "fact_id": "memory-v2-00000190-local_cue-no-event-0-fact-a",
+          "reason": "direct_observation",
+          "tick": 76
+        },
+        "tick": 76
+      },
+      {
+        "bearing": [
+          0.8921881230614434,
+          0.4516639824782343
+        ],
+        "kind": "memory_bridge",
+        "landmark_id": "memory-v2-00000190-local_cue-no-event-0-subject-a-inspection",
+        "phase": "acquire",
+        "tick": 76
+      },
+      {
+        "kind": "memory_revision",
+        "revision": {
+          "after": {
+            "associations": [
+              {
+                "cue_id": "memory-v2-00000190-local_cue-no-event-0-cue",
+                "relation": "local_cue"
+              }
+            ],
+            "estimate": "open",
+            "evidence": {
+              "episode_id": "episode-0",
+              "id": "sensor-fc1918259967d2f94e702371dc71d57e372eb2666ef342efd30df7a1c054ce1e",
+              "tick": 77
+            },
+            "id": "memory-v2-00000190-local_cue-no-event-0-fact-a",
+            "inspection_landmark_id": "memory-v2-00000190-local_cue-no-event-0-subject-a-inspection",
+            "kind": "passability",
+            "origin": "observed",
+            "revision": 1,
+            "status": "observed",
+            "subject_id": "memory-v2-00000190-local_cue-no-event-0-subject-a"
+          },
+          "before": {
+            "associations": [
+              {
+                "cue_id": "memory-v2-00000190-local_cue-no-event-0-cue",
+                "relation": "local_cue"
+              }
+            ],
+            "estimate": "open",
+            "evidence": {
+              "episode_id": "episode-0",
+              "id": "sensor-338fc1efc0ae5343954bb51c7ffd0de7c3e849a8803857f9f107daaabd32c370",
+              "tick": 76
+            },
+            "id": "memory-v2-00000190-local_cue-no-event-0-fact-a",
+            "inspection_landmark_id": "memory-v2-00000190-local_cue-no-event-0-subject-a-inspection",
+            "kind": "passability",
+            "origin": "observed",
+            "revision": 1,
+            "status": "observed",
+            "subject_id": "memory-v2-00000190-local_cue-no-event-0-subject-a"
+          },
+          "event_id": null,
+          "evidence_ids": [
+            "sensor-fc1918259967d2f94e702371dc71d57e372eb2666ef342efd30df7a1c054ce1e"
+          ],
+          "fact_id": "memory-v2-00000190-local_cue-no-event-0-fact-a",
+          "reason": "direct_observation",
+          "tick": 77
+        },
+        "tick": 77
+      },
+      {
+        "bearing": [
+          0.8868336171289961,
+          0.46208888271619475
+        ],
+        "kind": "memory_bridge",
+        "landmark_id": "memory-v2-00000190-local_cue-no-event-0-subject-a-inspection",
+        "phase": "acquire",
+        "tick": 77
+      },
+      {
+        "kind": "memory_revision",
+        "revision": {
+          "after": {
+            "associations": [
+              {
+                "cue_id": "memory-v2-00000190-local_cue-no-event-0-cue",
+                "relation": "local_cue"
+              }
+            ],
+            "estimate": "open",
+            "evidence": {
+              "episode_id": "episode-0",
+              "id": "sensor-31172d69c23dfc1fdb2de47d05e04a1e1718536ca42edb825016ead520a359cb",
+              "tick": 78
+            },
+            "id": "memory-v2-00000190-local_cue-no-event-0-fact-a",
+            "inspection_landmark_id": "memory-v2-00000190-local_cue-no-event-0-subject-a-inspection",
+            "kind": "passability",
+            "origin": "observed",
+            "revision": 1,
+            "status": "observed",
+            "subject_id": "memory-v2-00000190-local_cue-no-event-0-subject-a"
+          },
+          "before": {
+            "associations": [
+              {
+                "cue_id": "memory-v2-00000190-local_cue-no-event-0-cue",
+                "relation": "local_cue"
+              }
+            ],
+            "estimate": "open",
+            "evidence": {
+              "episode_id": "episode-0",
+              "id": "sensor-fc1918259967d2f94e702371dc71d57e372eb2666ef342efd30df7a1c054ce1e",
+              "tick": 77
+            },
+            "id": "memory-v2-00000190-local_cue-no-event-0-fact-a",
+            "inspection_landmark_id": "memory-v2-00000190-local_cue-no-event-0-subject-a-inspection",
+            "kind": "passability",
+            "origin": "observed",
+            "revision": 1,
+            "status": "observed",
+            "subject_id": "memory-v2-00000190-local_cue-no-event-0-subject-a"
+          },
+          "event_id": null,
+          "evidence_ids": [
+            "sensor-31172d69c23dfc1fdb2de47d05e04a1e1718536ca42edb825016ead520a359cb"
+          ],
+          "fact_id": "memory-v2-00000190-local_cue-no-event-0-fact-a",
+          "reason": "direct_observation",
+          "tick": 78
+        },
+        "tick": 78
+      },
+      {
+        "bearing": [
+          0.8821448950351399,
+          0.4709781143147121
+        ],
+        "kind": "memory_bridge",
+        "landmark_id": "memory-v2-00000190-local_cue-no-event-0-subject-a-inspection",
+        "phase": "acquire",
+        "tick": 78
+      },
+      {
+        "kind": "memory_revision",
+        "revision": {
+          "after": {
+            "associations": [
+              {
+                "cue_id": "memory-v2-00000190-local_cue-no-event-0-cue",
+                "relation": "local_cue"
+              }
+            ],
+            "estimate": "open",
+            "evidence": {
+              "episode_id": "episode-0",
+              "id": "sensor-f84c0fd31573c6b7a72e1f37b2edf9384a8e27b3d80c05b97cc926c7c7c139c5",
+              "tick": 79
+            },
+            "id": "memory-v2-00000190-local_cue-no-event-0-fact-a",
+            "inspection_landmark_id": "memory-v2-00000190-local_cue-no-event-0-subject-a-inspection",
+            "kind": "passability",
+            "origin": "observed",
+            "revision": 1,
+            "status": "observed",
+            "subject_id": "memory-v2-00000190-local_cue-no-event-0-subject-a"
+          },
+          "before": {
+            "associations": [
+              {
+                "cue_id": "memory-v2-00000190-local_cue-no-event-0-cue",
+                "relation": "local_cue"
+              }
+            ],
+            "estimate": "open",
+            "evidence": {
+              "episode_id": "episode-0",
+              "id": "sensor-31172d69c23dfc1fdb2de47d05e04a1e1718536ca42edb825016ead520a359cb",
+              "tick": 78
+            },
+            "id": "memory-v2-00000190-local_cue-no-event-0-fact-a",
+            "inspection_landmark_id": "memory-v2-00000190-local_cue-no-event-0-subject-a-inspection",
+            "kind": "passability",
+            "origin": "observed",
+            "revision": 1,
+            "status": "observed",
+            "subject_id": "memory-v2-00000190-local_cue-no-event-0-subject-a"
+          },
+          "event_id": null,
+          "evidence_ids": [
+            "sensor-f84c0fd31573c6b7a72e1f37b2edf9384a8e27b3d80c05b97cc926c7c7c139c5"
+          ],
+          "fact_id": "memory-v2-00000190-local_cue-no-event-0-fact-a",
+          "reason": "direct_observation",
+          "tick": 79
+        },
+        "tick": 79
+      },
+      {
+        "bearing": [
+          0.8780321798925077,
+          0.47860159953056053
+        ],
+        "kind": "memory_bridge",
+        "landmark_id": "memory-v2-00000190-local_cue-no-event-0-subject-a-inspection",
+        "phase": "acquire",
+        "tick": 79
+      },
+      {
+        "kind": "memory_revision",
+        "revision": {
+          "after": {
+            "associations": [
+              {
+                "cue_id": "memory-v2-00000190-local_cue-no-event-0-cue",
+                "relation": "local_cue"
+              }
+            ],
+            "estimate": "open",
+            "evidence": {
+              "episode_id": "episode-0",
+              "id": "sensor-203e305d304d85624d00b38d16650ae5c89925485eec133b61f7d0b67e983365",
+              "tick": 80
+            },
+            "id": "memory-v2-00000190-local_cue-no-event-0-fact-a",
+            "inspection_landmark_id": "memory-v2-00000190-local_cue-no-event-0-subject-a-inspection",
+            "kind": "passability",
+            "origin": "observed",
+            "revision": 1,
+            "status": "observed",
+            "subject_id": "memory-v2-00000190-local_cue-no-event-0-subject-a"
+          },
+          "before": {
+            "associations": [
+              {
+                "cue_id": "memory-v2-00000190-local_cue-no-event-0-cue",
+                "relation": "local_cue"
+              }
+            ],
+            "estimate": "open",
+            "evidence": {
+              "episode_id": "episode-0",
+              "id": "sensor-f84c0fd31573c6b7a72e1f37b2edf9384a8e27b3d80c05b97cc926c7c7c139c5",
+              "tick": 79
+            },
+            "id": "memory-v2-00000190-local_cue-no-event-0-fact-a",
+            "inspection_landmark_id": "memory-v2-00000190-local_cue-no-event-0-subject-a-inspection",
+            "kind": "passability",
+            "origin": "observed",
+            "revision": 1,
+            "status": "observed",
+            "subject_id": "memory-v2-00000190-local_cue-no-event-0-subject-a"
+          },
+          "event_id": null,
+          "evidence_ids": [
+            "sensor-203e305d304d85624d00b38d16650ae5c89925485eec133b61f7d0b67e983365"
+          ],
+          "fact_id": "memory-v2-00000190-local_cue-no-event-0-fact-a",
+          "reason": "direct_observation",
+          "tick": 80
+        },
+        "tick": 80
+      },
+      {
+        "bearing": [
+          0.8743374092768016,
+          0.48531854975792016
+        ],
+        "kind": "memory_bridge",
+        "landmark_id": "memory-v2-00000190-local_cue-no-event-0-subject-a-inspection",
+        "phase": "acquire",
+        "tick": 80
+      },
+      {
+        "kind": "memory_revision",
+        "revision": {
+          "after": {
+            "associations": [
+              {
+                "cue_id": "memory-v2-00000190-local_cue-no-event-0-cue",
+                "relation": "local_cue"
+              }
+            ],
+            "estimate": "open",
+            "evidence": {
+              "episode_id": "episode-0",
+              "id": "sensor-e3bde8b1e239ad4a4d6e658f6b14eb76cf984292c7f49a4c51d010a0c720065c",
+              "tick": 81
+            },
+            "id": "memory-v2-00000190-local_cue-no-event-0-fact-a",
+            "inspection_landmark_id": "memory-v2-00000190-local_cue-no-event-0-subject-a-inspection",
+            "kind": "passability",
+            "origin": "observed",
+            "revision": 1,
+            "status": "observed",
+            "subject_id": "memory-v2-00000190-local_cue-no-event-0-subject-a"
+          },
+          "before": {
+            "associations": [
+              {
+                "cue_id": "memory-v2-00000190-local_cue-no-event-0-cue",
+                "relation": "local_cue"
+              }
+            ],
+            "estimate": "open",
+            "evidence": {
+              "episode_id": "episode-0",
+              "id": "sensor-203e305d304d85624d00b38d16650ae5c89925485eec133b61f7d0b67e983365",
+              "tick": 80
+            },
+            "id": "memory-v2-00000190-local_cue-no-event-0-fact-a",
+            "inspection_landmark_id": "memory-v2-00000190-local_cue-no-event-0-subject-a-inspection",
+            "kind": "passability",
+            "origin": "observed",
+            "revision": 1,
+            "status": "observed",
+            "subject_id": "memory-v2-00000190-local_cue-no-event-0-subject-a"
+          },
+          "event_id": null,
+          "evidence_ids": [
+            "sensor-e3bde8b1e239ad4a4d6e658f6b14eb76cf984292c7f49a4c51d010a0c720065c"
+          ],
+          "fact_id": "memory-v2-00000190-local_cue-no-event-0-fact-a",
+          "reason": "direct_observation",
+          "tick": 81
+        },
+        "tick": 81
+      },
+      {
+        "bearing": [
+          0.8712158452721291,
+          0.4909001435595323
+        ],
+        "kind": "memory_bridge",
+        "landmark_id": "memory-v2-00000190-local_cue-no-event-0-subject-a-inspection",
+        "phase": "acquire",
+        "tick": 81
+      },
+      {
+        "kind": "memory_revision",
+        "revision": {
+          "after": {
+            "associations": [
+              {
+                "cue_id": "memory-v2-00000190-local_cue-no-event-0-cue",
+                "relation": "local_cue"
+              }
+            ],
+            "estimate": "open",
+            "evidence": {
+              "episode_id": "episode-0",
+              "id": "sensor-99493dd0b5ecc1bcd7984e0c9d557daaeeafae5d5f52c44429df52f20b5d6836",
+              "tick": 82
+            },
+            "id": "memory-v2-00000190-local_cue-no-event-0-fact-a",
+            "inspection_landmark_id": "memory-v2-00000190-local_cue-no-event-0-subject-a-inspection",
+            "kind": "passability",
+            "origin": "observed",
+            "revision": 1,
+            "status": "observed",
+            "subject_id": "memory-v2-00000190-local_cue-no-event-0-subject-a"
+          },
+          "before": {
+            "associations": [
+              {
+                "cue_id": "memory-v2-00000190-local_cue-no-event-0-cue",
+                "relation": "local_cue"
+              }
+            ],
+            "estimate": "open",
+            "evidence": {
+              "episode_id": "episode-0",
+              "id": "sensor-e3bde8b1e239ad4a4d6e658f6b14eb76cf984292c7f49a4c51d010a0c720065c",
+              "tick": 81
+            },
+            "id": "memory-v2-00000190-local_cue-no-event-0-fact-a",
+            "inspection_landmark_id": "memory-v2-00000190-local_cue-no-event-0-subject-a-inspection",
+            "kind": "passability",
+            "origin": "observed",
+            "revision": 1,
+            "status": "observed",
+            "subject_id": "memory-v2-00000190-local_cue-no-event-0-subject-a"
+          },
+          "event_id": null,
+          "evidence_ids": [
+            "sensor-99493dd0b5ecc1bcd7984e0c9d557daaeeafae5d5f52c44429df52f20b5d6836"
+          ],
+          "fact_id": "memory-v2-00000190-local_cue-no-event-0-fact-a",
+          "reason": "direct_observation",
+          "tick": 82
+        },
+        "tick": 82
+      },
+      {
+        "bearing": [
+          0.8681457359470969,
+          0.49630936033574224
+        ],
+        "kind": "memory_bridge",
+        "landmark_id": "memory-v2-00000190-local_cue-no-event-0-subject-a-inspection",
+        "phase": "acquire",
+        "tick": 82
+      },
+      {
+        "kind": "memory_revision",
+        "revision": {
+          "after": {
+            "associations": [
+              {
+                "cue_id": "memory-v2-00000190-local_cue-no-event-0-cue",
+                "relation": "local_cue"
+              }
+            ],
+            "estimate": "open",
+            "evidence": {
+              "episode_id": "episode-0",
+              "id": "sensor-8193ee0849da2b5d853bfaf022cedbd1bdc6975b5ea605d0ced3cc36da6773da",
+              "tick": 83
+            },
+            "id": "memory-v2-00000190-local_cue-no-event-0-fact-a",
+            "inspection_landmark_id": "memory-v2-00000190-local_cue-no-event-0-subject-a-inspection",
+            "kind": "passability",
+            "origin": "observed",
+            "revision": 1,
+            "status": "observed",
+            "subject_id": "memory-v2-00000190-local_cue-no-event-0-subject-a"
+          },
+          "before": {
+            "associations": [
+              {
+                "cue_id": "memory-v2-00000190-local_cue-no-event-0-cue",
+                "relation": "local_cue"
+              }
+            ],
+            "estimate": "open",
+            "evidence": {
+              "episode_id": "episode-0",
+              "id": "sensor-99493dd0b5ecc1bcd7984e0c9d557daaeeafae5d5f52c44429df52f20b5d6836",
+              "tick": 82
+            },
+            "id": "memory-v2-00000190-local_cue-no-event-0-fact-a",
+            "inspection_landmark_id": "memory-v2-00000190-local_cue-no-event-0-subject-a-inspection",
+            "kind": "passability",
+            "origin": "observed",
+            "revision": 1,
+            "status": "observed",
+            "subject_id": "memory-v2-00000190-local_cue-no-event-0-subject-a"
+          },
+          "event_id": null,
+          "evidence_ids": [
+            "sensor-8193ee0849da2b5d853bfaf022cedbd1bdc6975b5ea605d0ced3cc36da6773da"
+          ],
+          "fact_id": "memory-v2-00000190-local_cue-no-event-0-fact-a",
+          "reason": "direct_observation",
+          "tick": 83
+        },
+        "tick": 83
+      },
+      {
+        "bearing": [
+          0.8650341061625056,
+          0.501713060599019
+        ],
+        "kind": "memory_bridge",
+        "landmark_id": "memory-v2-00000190-local_cue-no-event-0-subject-a-inspection",
+        "phase": "acquire",
+        "tick": 83
+      },
+      {
+        "kind": "memory_revision",
+        "revision": {
+          "after": {
+            "associations": [
+              {
+                "cue_id": "memory-v2-00000190-local_cue-no-event-0-cue",
+                "relation": "local_cue"
+              }
+            ],
+            "estimate": "open",
+            "evidence": {
+              "episode_id": "episode-0",
+              "id": "sensor-850504274c0bef8442a1e86fe024c020ba9c1ff5e059cbd289a0968f33c47485",
+              "tick": 84
+            },
+            "id": "memory-v2-00000190-local_cue-no-event-0-fact-a",
+            "inspection_landmark_id": "memory-v2-00000190-local_cue-no-event-0-subject-a-inspection",
+            "kind": "passability",
+            "origin": "observed",
+            "revision": 1,
+            "status": "observed",
+            "subject_id": "memory-v2-00000190-local_cue-no-event-0-subject-a"
+          },
+          "before": {
+            "associations": [
+              {
+                "cue_id": "memory-v2-00000190-local_cue-no-event-0-cue",
+                "relation": "local_cue"
+              }
+            ],
+            "estimate": "open",
+            "evidence": {
+              "episode_id": "episode-0",
+              "id": "sensor-8193ee0849da2b5d853bfaf022cedbd1bdc6975b5ea605d0ced3cc36da6773da",
+              "tick": 83
+            },
+            "id": "memory-v2-00000190-local_cue-no-event-0-fact-a",
+            "inspection_landmark_id": "memory-v2-00000190-local_cue-no-event-0-subject-a-inspection",
+            "kind": "passability",
+            "origin": "observed",
+            "revision": 1,
+            "status": "observed",
+            "subject_id": "memory-v2-00000190-local_cue-no-event-0-subject-a"
+          },
+          "event_id": null,
+          "evidence_ids": [
+            "sensor-850504274c0bef8442a1e86fe024c020ba9c1ff5e059cbd289a0968f33c47485"
+          ],
+          "fact_id": "memory-v2-00000190-local_cue-no-event-0-fact-a",
+          "reason": "direct_observation",
+          "tick": 84
+        },
+        "tick": 84
+      },
+      {
+        "bearing": [
+          0.861854573118679,
+          0.5071554937042678
+        ],
+        "kind": "memory_bridge",
+        "landmark_id": "memory-v2-00000190-local_cue-no-event-0-subject-a-inspection",
+        "phase": "acquire",
+        "tick": 84
+      },
+      {
+        "kind": "memory_revision",
+        "revision": {
+          "after": {
+            "associations": [
+              {
+                "cue_id": "memory-v2-00000190-local_cue-no-event-0-cue",
+                "relation": "local_cue"
+              }
+            ],
+            "estimate": "open",
+            "evidence": {
+              "episode_id": "episode-0",
+              "id": "sensor-4ef0ace1c5ee0810cdede56b1edadb9d34d9086d3c1e8996309017141b719e75",
+              "tick": 85
+            },
+            "id": "memory-v2-00000190-local_cue-no-event-0-fact-a",
+            "inspection_landmark_id": "memory-v2-00000190-local_cue-no-event-0-subject-a-inspection",
+            "kind": "passability",
+            "origin": "observed",
+            "revision": 1,
+            "status": "observed",
+            "subject_id": "memory-v2-00000190-local_cue-no-event-0-subject-a"
+          },
+          "before": {
+            "associations": [
+              {
+                "cue_id": "memory-v2-00000190-local_cue-no-event-0-cue",
+                "relation": "local_cue"
+              }
+            ],
+            "estimate": "open",
+            "evidence": {
+              "episode_id": "episode-0",
+              "id": "sensor-850504274c0bef8442a1e86fe024c020ba9c1ff5e059cbd289a0968f33c47485",
+              "tick": 84
+            },
+            "id": "memory-v2-00000190-local_cue-no-event-0-fact-a",
+            "inspection_landmark_id": "memory-v2-00000190-local_cue-no-event-0-subject-a-inspection",
+            "kind": "passability",
+            "origin": "observed",
+            "revision": 1,
+            "status": "observed",
+            "subject_id": "memory-v2-00000190-local_cue-no-event-0-subject-a"
+          },
+          "event_id": null,
+          "evidence_ids": [
+            "sensor-4ef0ace1c5ee0810cdede56b1edadb9d34d9086d3c1e8996309017141b719e75"
+          ],
+          "fact_id": "memory-v2-00000190-local_cue-no-event-0-fact-a",
+          "reason": "direct_observation",
+          "tick": 85
+        },
+        "tick": 85
+      },
+      {
+        "bearing": [
+          0.8582682705434523,
+          0.513201301419191
+        ],
+        "kind": "memory_bridge",
+        "landmark_id": "memory-v2-00000190-local_cue-no-event-0-subject-a-inspection",
+        "phase": "acquire",
+        "tick": 85
+      },
+      {
+        "kind": "memory_revision",
+        "revision": {
+          "after": {
+            "associations": [
+              {
+                "cue_id": "memory-v2-00000190-local_cue-no-event-0-cue",
+                "relation": "local_cue"
+              }
+            ],
+            "estimate": "open",
+            "evidence": {
+              "episode_id": "episode-0",
+              "id": "sensor-19d8861c20c25ded5a4450dcddb60d8607119ca84f8b0397617c9e9c15a46677",
+              "tick": 86
+            },
+            "id": "memory-v2-00000190-local_cue-no-event-0-fact-a",
+            "inspection_landmark_id": "memory-v2-00000190-local_cue-no-event-0-subject-a-inspection",
+            "kind": "passability",
+            "origin": "observed",
+            "revision": 1,
+            "status": "observed",
+            "subject_id": "memory-v2-00000190-local_cue-no-event-0-subject-a"
+          },
+          "before": {
+            "associations": [
+              {
+                "cue_id": "memory-v2-00000190-local_cue-no-event-0-cue",
+                "relation": "local_cue"
+              }
+            ],
+            "estimate": "open",
+            "evidence": {
+              "episode_id": "episode-0",
+              "id": "sensor-4ef0ace1c5ee0810cdede56b1edadb9d34d9086d3c1e8996309017141b719e75",
+              "tick": 85
+            },
+            "id": "memory-v2-00000190-local_cue-no-event-0-fact-a",
+            "inspection_landmark_id": "memory-v2-00000190-local_cue-no-event-0-subject-a-inspection",
+            "kind": "passability",
+            "origin": "observed",
+            "revision": 1,
+            "status": "observed",
+            "subject_id": "memory-v2-00000190-local_cue-no-event-0-subject-a"
+          },
+          "event_id": null,
+          "evidence_ids": [
+            "sensor-19d8861c20c25ded5a4450dcddb60d8607119ca84f8b0397617c9e9c15a46677"
+          ],
+          "fact_id": "memory-v2-00000190-local_cue-no-event-0-fact-a",
+          "reason": "direct_observation",
+          "tick": 86
+        },
+        "tick": 86
+      },
+      {
+        "bearing": [
+          0.8540202347574145,
+          0.5202397895441011
+        ],
+        "kind": "memory_bridge",
+        "landmark_id": "memory-v2-00000190-local_cue-no-event-0-subject-a-inspection",
+        "phase": "acquire",
+        "tick": 86
+      },
+      {
+        "kind": "memory_revision",
+        "revision": {
+          "after": {
+            "associations": [
+              {
+                "cue_id": "memory-v2-00000190-local_cue-no-event-0-cue",
+                "relation": "local_cue"
+              }
+            ],
+            "estimate": "open",
+            "evidence": {
+              "episode_id": "episode-0",
+              "id": "sensor-815d6d3cea5bc6ce1235ae773c97204d09caa831ccb29bfad22b7cdac2134ac2",
+              "tick": 87
+            },
+            "id": "memory-v2-00000190-local_cue-no-event-0-fact-a",
+            "inspection_landmark_id": "memory-v2-00000190-local_cue-no-event-0-subject-a-inspection",
+            "kind": "passability",
+            "origin": "observed",
+            "revision": 1,
+            "status": "observed",
+            "subject_id": "memory-v2-00000190-local_cue-no-event-0-subject-a"
+          },
+          "before": {
+            "associations": [
+              {
+                "cue_id": "memory-v2-00000190-local_cue-no-event-0-cue",
+                "relation": "local_cue"
+              }
+            ],
+            "estimate": "open",
+            "evidence": {
+              "episode_id": "episode-0",
+              "id": "sensor-19d8861c20c25ded5a4450dcddb60d8607119ca84f8b0397617c9e9c15a46677",
+              "tick": 86
+            },
+            "id": "memory-v2-00000190-local_cue-no-event-0-fact-a",
+            "inspection_landmark_id": "memory-v2-00000190-local_cue-no-event-0-subject-a-inspection",
+            "kind": "passability",
+            "origin": "observed",
+            "revision": 1,
+            "status": "observed",
+            "subject_id": "memory-v2-00000190-local_cue-no-event-0-subject-a"
+          },
+          "event_id": null,
+          "evidence_ids": [
+            "sensor-815d6d3cea5bc6ce1235ae773c97204d09caa831ccb29bfad22b7cdac2134ac2"
+          ],
+          "fact_id": "memory-v2-00000190-local_cue-no-event-0-fact-a",
+          "reason": "direct_observation",
+          "tick": 87
+        },
+        "tick": 87
+      },
+      {
+        "from": "acquire",
+        "kind": "memory_transition",
+        "reason": "required-passage-sample",
+        "route_id": null,
+        "tick": 87,
+        "to": "inspect",
+        "waypoint_index": 1
+      },
+      {
+        "kind": "memory_inspection",
+        "observation_id": "sensor-815d6d3cea5bc6ce1235ae773c97204d09caa831ccb29bfad22b7cdac2134ac2",
+        "passability": "open",
+        "subject_id": "memory-v2-00000190-local_cue-no-event-0-subject-a",
+        "tick": 87
+      },
+      {
+        "from": "inspect",
+        "kind": "memory_transition",
+        "reason": "observed-open",
+        "route_id": null,
+        "tick": 87,
+        "to": "acquire",
+        "waypoint_index": 2
+      },
+      {
+        "bearing": [
+          0.9918537363898343,
+          -0.12738196736400714
+        ],
+        "kind": "memory_bridge",
+        "landmark_id": "memory-v2-00000190-local_cue-no-event-0-subject-a-retreat-0",
+        "phase": "acquire",
+        "tick": 87
+      },
+      {
+        "kind": "memory_revision",
+        "revision": {
+          "after": {
+            "associations": [
+              {
+                "cue_id": "memory-v2-00000190-local_cue-no-event-0-cue",
+                "relation": "local_cue"
+              }
+            ],
+            "estimate": "open",
+            "evidence": {
+              "episode_id": "episode-0",
+              "id": "sensor-c99a1493ea0363c653aa10361691ce85c0e4fda13eec749fdf2eeeeec3e52021",
+              "tick": 88
+            },
+            "id": "memory-v2-00000190-local_cue-no-event-0-fact-a",
+            "inspection_landmark_id": "memory-v2-00000190-local_cue-no-event-0-subject-a-inspection",
+            "kind": "passability",
+            "origin": "observed",
+            "revision": 1,
+            "status": "observed",
+            "subject_id": "memory-v2-00000190-local_cue-no-event-0-subject-a"
+          },
+          "before": {
+            "associations": [
+              {
+                "cue_id": "memory-v2-00000190-local_cue-no-event-0-cue",
+                "relation": "local_cue"
+              }
+            ],
+            "estimate": "open",
+            "evidence": {
+              "episode_id": "episode-0",
+              "id": "sensor-815d6d3cea5bc6ce1235ae773c97204d09caa831ccb29bfad22b7cdac2134ac2",
+              "tick": 87
+            },
+            "id": "memory-v2-00000190-local_cue-no-event-0-fact-a",
+            "inspection_landmark_id": "memory-v2-00000190-local_cue-no-event-0-subject-a-inspection",
+            "kind": "passability",
+            "origin": "observed",
+            "revision": 1,
+            "status": "observed",
+            "subject_id": "memory-v2-00000190-local_cue-no-event-0-subject-a"
+          },
+          "event_id": null,
+          "evidence_ids": [
+            "sensor-c99a1493ea0363c653aa10361691ce85c0e4fda13eec749fdf2eeeeec3e52021"
+          ],
+          "fact_id": "memory-v2-00000190-local_cue-no-event-0-fact-a",
+          "reason": "direct_observation",
+          "tick": 88
+        },
+        "tick": 88
+      },
+      {
+        "bearing": [
+          0.9866191668052682,
+          -0.16304177284511576
+        ],
+        "kind": "memory_bridge",
+        "landmark_id": "memory-v2-00000190-local_cue-no-event-0-subject-a-retreat-0",
+        "phase": "acquire",
+        "tick": 88
+      },
+      {
+        "kind": "memory_revision",
+        "revision": {
+          "after": {
+            "associations": [
+              {
+                "cue_id": "memory-v2-00000190-local_cue-no-event-0-cue",
+                "relation": "local_cue"
+              }
+            ],
+            "estimate": "open",
+            "evidence": {
+              "episode_id": "episode-0",
+              "id": "sensor-5bddb8e86734e49738036cfdb359f53faeb2463db407fe4f9821747193076ff1",
+              "tick": 89
+            },
+            "id": "memory-v2-00000190-local_cue-no-event-0-fact-a",
+            "inspection_landmark_id": "memory-v2-00000190-local_cue-no-event-0-subject-a-inspection",
+            "kind": "passability",
+            "origin": "observed",
+            "revision": 1,
+            "status": "observed",
+            "subject_id": "memory-v2-00000190-local_cue-no-event-0-subject-a"
+          },
+          "before": {
+            "associations": [
+              {
+                "cue_id": "memory-v2-00000190-local_cue-no-event-0-cue",
+                "relation": "local_cue"
+              }
+            ],
+            "estimate": "open",
+            "evidence": {
+              "episode_id": "episode-0",
+              "id": "sensor-c99a1493ea0363c653aa10361691ce85c0e4fda13eec749fdf2eeeeec3e52021",
+              "tick": 88
+            },
+            "id": "memory-v2-00000190-local_cue-no-event-0-fact-a",
+            "inspection_landmark_id": "memory-v2-00000190-local_cue-no-event-0-subject-a-inspection",
+            "kind": "passability",
+            "origin": "observed",
+            "revision": 1,
+            "status": "observed",
+            "subject_id": "memory-v2-00000190-local_cue-no-event-0-subject-a"
+          },
+          "event_id": null,
+          "evidence_ids": [
+            "sensor-5bddb8e86734e49738036cfdb359f53faeb2463db407fe4f9821747193076ff1"
+          ],
+          "fact_id": "memory-v2-00000190-local_cue-no-event-0-fact-a",
+          "reason": "direct_observation",
+          "tick": 89
+        },
+        "tick": 89
+      },
+      {
+        "bearing": [
+          0.979585237821287,
+          -0.2010292561857915
+        ],
+        "kind": "memory_bridge",
+        "landmark_id": "memory-v2-00000190-local_cue-no-event-0-subject-a-retreat-0",
+        "phase": "acquire",
+        "tick": 89
+      },
+      {
+        "kind": "memory_revision",
+        "revision": {
+          "after": {
+            "associations": [
+              {
+                "cue_id": "memory-v2-00000190-local_cue-no-event-0-cue",
+                "relation": "local_cue"
+              }
+            ],
+            "estimate": "open",
+            "evidence": {
+              "episode_id": "episode-0",
+              "id": "sensor-58f30de4b602006b946029120cc3b096beadf6475af49c37fc778e5339b2b806",
+              "tick": 90
+            },
+            "id": "memory-v2-00000190-local_cue-no-event-0-fact-a",
+            "inspection_landmark_id": "memory-v2-00000190-local_cue-no-event-0-subject-a-inspection",
+            "kind": "passability",
+            "origin": "observed",
+            "revision": 1,
+            "status": "observed",
+            "subject_id": "memory-v2-00000190-local_cue-no-event-0-subject-a"
+          },
+          "before": {
+            "associations": [
+              {
+                "cue_id": "memory-v2-00000190-local_cue-no-event-0-cue",
+                "relation": "local_cue"
+              }
+            ],
+            "estimate": "open",
+            "evidence": {
+              "episode_id": "episode-0",
+              "id": "sensor-5bddb8e86734e49738036cfdb359f53faeb2463db407fe4f9821747193076ff1",
+              "tick": 89
+            },
+            "id": "memory-v2-00000190-local_cue-no-event-0-fact-a",
+            "inspection_landmark_id": "memory-v2-00000190-local_cue-no-event-0-subject-a-inspection",
+            "kind": "passability",
+            "origin": "observed",
+            "revision": 1,
+            "status": "observed",
+            "subject_id": "memory-v2-00000190-local_cue-no-event-0-subject-a"
+          },
+          "event_id": null,
+          "evidence_ids": [
+            "sensor-58f30de4b602006b946029120cc3b096beadf6475af49c37fc778e5339b2b806"
+          ],
+          "fact_id": "memory-v2-00000190-local_cue-no-event-0-fact-a",
+          "reason": "direct_observation",
+          "tick": 90
+        },
+        "tick": 90
+      },
+      {
+        "bearing": [
+          0.9705715620746294,
+          -0.2408128794147313
+        ],
+        "kind": "memory_bridge",
+        "landmark_id": "memory-v2-00000190-local_cue-no-event-0-subject-a-retreat-0",
+        "phase": "acquire",
+        "tick": 90
+      },
+      {
+        "kind": "memory_revision",
+        "revision": {
+          "after": {
+            "associations": [
+              {
+                "cue_id": "memory-v2-00000190-local_cue-no-event-0-cue",
+                "relation": "local_cue"
+              }
+            ],
+            "estimate": "open",
+            "evidence": {
+              "episode_id": "episode-0",
+              "id": "sensor-1dbc6afe36f1c3ac9b67c7c900a1df0eeaa4a5eabe8d77ed864a006700589e58",
+              "tick": 91
+            },
+            "id": "memory-v2-00000190-local_cue-no-event-0-fact-a",
+            "inspection_landmark_id": "memory-v2-00000190-local_cue-no-event-0-subject-a-inspection",
+            "kind": "passability",
+            "origin": "observed",
+            "revision": 1,
+            "status": "observed",
+            "subject_id": "memory-v2-00000190-local_cue-no-event-0-subject-a"
+          },
+          "before": {
+            "associations": [
+              {
+                "cue_id": "memory-v2-00000190-local_cue-no-event-0-cue",
+                "relation": "local_cue"
+              }
+            ],
+            "estimate": "open",
+            "evidence": {
+              "episode_id": "episode-0",
+              "id": "sensor-58f30de4b602006b946029120cc3b096beadf6475af49c37fc778e5339b2b806",
+              "tick": 90
+            },
+            "id": "memory-v2-00000190-local_cue-no-event-0-fact-a",
+            "inspection_landmark_id": "memory-v2-00000190-local_cue-no-event-0-subject-a-inspection",
+            "kind": "passability",
+            "origin": "observed",
+            "revision": 1,
+            "status": "observed",
+            "subject_id": "memory-v2-00000190-local_cue-no-event-0-subject-a"
+          },
+          "event_id": null,
+          "evidence_ids": [
+            "sensor-1dbc6afe36f1c3ac9b67c7c900a1df0eeaa4a5eabe8d77ed864a006700589e58"
+          ],
+          "fact_id": "memory-v2-00000190-local_cue-no-event-0-fact-a",
+          "reason": "direct_observation",
+          "tick": 91
+        },
+        "tick": 91
+      },
+      {
+        "bearing": [
+          0.9594228629410408,
+          -0.2819712220529194
+        ],
+        "kind": "memory_bridge",
+        "landmark_id": "memory-v2-00000190-local_cue-no-event-0-subject-a-retreat-0",
+        "phase": "acquire",
+        "tick": 91
+      },
+      {
+        "kind": "memory_revision",
+        "revision": {
+          "after": {
+            "associations": [
+              {
+                "cue_id": "memory-v2-00000190-local_cue-no-event-0-cue",
+                "relation": "local_cue"
+              }
+            ],
+            "estimate": "open",
+            "evidence": {
+              "episode_id": "episode-0",
+              "id": "sensor-9309fee5b2a762e367e45306a877c4fcb49d15271016f53af2a8f3d12e7ddf38",
+              "tick": 92
+            },
+            "id": "memory-v2-00000190-local_cue-no-event-0-fact-a",
+            "inspection_landmark_id": "memory-v2-00000190-local_cue-no-event-0-subject-a-inspection",
+            "kind": "passability",
+            "origin": "observed",
+            "revision": 1,
+            "status": "observed",
+            "subject_id": "memory-v2-00000190-local_cue-no-event-0-subject-a"
+          },
+          "before": {
+            "associations": [
+              {
+                "cue_id": "memory-v2-00000190-local_cue-no-event-0-cue",
+                "relation": "local_cue"
+              }
+            ],
+            "estimate": "open",
+            "evidence": {
+              "episode_id": "episode-0",
+              "id": "sensor-1dbc6afe36f1c3ac9b67c7c900a1df0eeaa4a5eabe8d77ed864a006700589e58",
+              "tick": 91
+            },
+            "id": "memory-v2-00000190-local_cue-no-event-0-fact-a",
+            "inspection_landmark_id": "memory-v2-00000190-local_cue-no-event-0-subject-a-inspection",
+            "kind": "passability",
+            "origin": "observed",
+            "revision": 1,
+            "status": "observed",
+            "subject_id": "memory-v2-00000190-local_cue-no-event-0-subject-a"
+          },
+          "event_id": null,
+          "evidence_ids": [
+            "sensor-9309fee5b2a762e367e45306a877c4fcb49d15271016f53af2a8f3d12e7ddf38"
+          ],
+          "fact_id": "memory-v2-00000190-local_cue-no-event-0-fact-a",
+          "reason": "direct_observation",
+          "tick": 92
+        },
+        "tick": 92
+      },
+      {
+        "bearing": [
+          0.9461644545213178,
+          -0.3236863064764665
+        ],
+        "kind": "memory_bridge",
+        "landmark_id": "memory-v2-00000190-local_cue-no-event-0-subject-a-retreat-0",
+        "phase": "acquire",
+        "tick": 92
+      },
+      {
+        "kind": "memory_revision",
+        "revision": {
+          "after": {
+            "associations": [
+              {
+                "cue_id": "memory-v2-00000190-local_cue-no-event-0-cue",
+                "relation": "local_cue"
+              }
+            ],
+            "estimate": "open",
+            "evidence": {
+              "episode_id": "episode-0",
+              "id": "sensor-df370923ac8ef766ed7b5657d5ee7fc47c021c0e2ddb128f37adab97f6c859a5",
+              "tick": 93
+            },
+            "id": "memory-v2-00000190-local_cue-no-event-0-fact-a",
+            "inspection_landmark_id": "memory-v2-00000190-local_cue-no-event-0-subject-a-inspection",
+            "kind": "passability",
+            "origin": "observed",
+            "revision": 1,
+            "status": "observed",
+            "subject_id": "memory-v2-00000190-local_cue-no-event-0-subject-a"
+          },
+          "before": {
+            "associations": [
+              {
+                "cue_id": "memory-v2-00000190-local_cue-no-event-0-cue",
+                "relation": "local_cue"
+              }
+            ],
+            "estimate": "open",
+            "evidence": {
+              "episode_id": "episode-0",
+              "id": "sensor-9309fee5b2a762e367e45306a877c4fcb49d15271016f53af2a8f3d12e7ddf38",
+              "tick": 92
+            },
+            "id": "memory-v2-00000190-local_cue-no-event-0-fact-a",
+            "inspection_landmark_id": "memory-v2-00000190-local_cue-no-event-0-subject-a-inspection",
+            "kind": "passability",
+            "origin": "observed",
+            "revision": 1,
+            "status": "observed",
+            "subject_id": "memory-v2-00000190-local_cue-no-event-0-subject-a"
+          },
+          "event_id": null,
+          "evidence_ids": [
+            "sensor-df370923ac8ef766ed7b5657d5ee7fc47c021c0e2ddb128f37adab97f6c859a5"
+          ],
+          "fact_id": "memory-v2-00000190-local_cue-no-event-0-fact-a",
+          "reason": "direct_observation",
+          "tick": 93
+        },
+        "tick": 93
+      },
+      {
+        "bearing": [
+          0.9309912742733623,
+          -0.3650414322057994
+        ],
+        "kind": "memory_bridge",
+        "landmark_id": "memory-v2-00000190-local_cue-no-event-0-subject-a-retreat-0",
+        "phase": "acquire",
+        "tick": 93
+      },
+      {
+        "kind": "memory_revision",
+        "revision": {
+          "after": {
+            "associations": [
+              {
+                "cue_id": "memory-v2-00000190-local_cue-no-event-0-cue",
+                "relation": "local_cue"
+              }
+            ],
+            "estimate": "open",
+            "evidence": {
+              "episode_id": "episode-0",
+              "id": "sensor-0a23ed09af569876a6581281cea54b1a7eec9559a608dd417194c43638ec0c25",
+              "tick": 94
+            },
+            "id": "memory-v2-00000190-local_cue-no-event-0-fact-a",
+            "inspection_landmark_id": "memory-v2-00000190-local_cue-no-event-0-subject-a-inspection",
+            "kind": "passability",
+            "origin": "observed",
+            "revision": 1,
+            "status": "observed",
+            "subject_id": "memory-v2-00000190-local_cue-no-event-0-subject-a"
+          },
+          "before": {
+            "associations": [
+              {
+                "cue_id": "memory-v2-00000190-local_cue-no-event-0-cue",
+                "relation": "local_cue"
+              }
+            ],
+            "estimate": "open",
+            "evidence": {
+              "episode_id": "episode-0",
+              "id": "sensor-df370923ac8ef766ed7b5657d5ee7fc47c021c0e2ddb128f37adab97f6c859a5",
+              "tick": 93
+            },
+            "id": "memory-v2-00000190-local_cue-no-event-0-fact-a",
+            "inspection_landmark_id": "memory-v2-00000190-local_cue-no-event-0-subject-a-inspection",
+            "kind": "passability",
+            "origin": "observed",
+            "revision": 1,
+            "status": "observed",
+            "subject_id": "memory-v2-00000190-local_cue-no-event-0-subject-a"
+          },
+          "event_id": null,
+          "evidence_ids": [
+            "sensor-0a23ed09af569876a6581281cea54b1a7eec9559a608dd417194c43638ec0c25"
+          ],
+          "fact_id": "memory-v2-00000190-local_cue-no-event-0-fact-a",
+          "reason": "direct_observation",
+          "tick": 94
+        },
+        "tick": 94
+      },
+      {
+        "bearing": [
+          0.9140957398455303,
+          -0.40549843205153424
+        ],
+        "kind": "memory_bridge",
+        "landmark_id": "memory-v2-00000190-local_cue-no-event-0-subject-a-retreat-0",
+        "phase": "acquire",
+        "tick": 94
+      },
+      {
+        "kind": "memory_revision",
+        "revision": {
+          "after": {
+            "associations": [
+              {
+                "cue_id": "memory-v2-00000190-local_cue-no-event-0-cue",
+                "relation": "local_cue"
+              }
+            ],
+            "estimate": "open",
+            "evidence": {
+              "episode_id": "episode-0",
+              "id": "sensor-6ec0dc5ef6868f62861ea8ead2f085c0f4b0f5591e9cadb3a823d083d5e4494a",
+              "tick": 95
+            },
+            "id": "memory-v2-00000190-local_cue-no-event-0-fact-a",
+            "inspection_landmark_id": "memory-v2-00000190-local_cue-no-event-0-subject-a-inspection",
+            "kind": "passability",
+            "origin": "observed",
+            "revision": 1,
+            "status": "observed",
+            "subject_id": "memory-v2-00000190-local_cue-no-event-0-subject-a"
+          },
+          "before": {
+            "associations": [
+              {
+                "cue_id": "memory-v2-00000190-local_cue-no-event-0-cue",
+                "relation": "local_cue"
+              }
+            ],
+            "estimate": "open",
+            "evidence": {
+              "episode_id": "episode-0",
+              "id": "sensor-0a23ed09af569876a6581281cea54b1a7eec9559a608dd417194c43638ec0c25",
+              "tick": 94
+            },
+            "id": "memory-v2-00000190-local_cue-no-event-0-fact-a",
+            "inspection_landmark_id": "memory-v2-00000190-local_cue-no-event-0-subject-a-inspection",
+            "kind": "passability",
+            "origin": "observed",
+            "revision": 1,
+            "status": "observed",
+            "subject_id": "memory-v2-00000190-local_cue-no-event-0-subject-a"
+          },
+          "event_id": null,
+          "evidence_ids": [
+            "sensor-6ec0dc5ef6868f62861ea8ead2f085c0f4b0f5591e9cadb3a823d083d5e4494a"
+          ],
+          "fact_id": "memory-v2-00000190-local_cue-no-event-0-fact-a",
+          "reason": "direct_observation",
+          "tick": 95
+        },
+        "tick": 95
+      },
+      {
+        "bearing": [
+          0.8957747329242217,
+          -0.4445082989715032
+        ],
+        "kind": "memory_bridge",
+        "landmark_id": "memory-v2-00000190-local_cue-no-event-0-subject-a-retreat-0",
+        "phase": "acquire",
+        "tick": 95
+      },
+      {
+        "kind": "memory_revision",
+        "revision": {
+          "after": {
+            "associations": [
+              {
+                "cue_id": "memory-v2-00000190-local_cue-no-event-0-cue",
+                "relation": "local_cue"
+              }
+            ],
+            "estimate": "open",
+            "evidence": {
+              "episode_id": "episode-0",
+              "id": "sensor-4a38ad4861b15cd8dabe6bbe2489598861b8161380bc975547ab62ad9814fe4b",
+              "tick": 96
+            },
+            "id": "memory-v2-00000190-local_cue-no-event-0-fact-a",
+            "inspection_landmark_id": "memory-v2-00000190-local_cue-no-event-0-subject-a-inspection",
+            "kind": "passability",
+            "origin": "observed",
+            "revision": 1,
+            "status": "observed",
+            "subject_id": "memory-v2-00000190-local_cue-no-event-0-subject-a"
+          },
+          "before": {
+            "associations": [
+              {
+                "cue_id": "memory-v2-00000190-local_cue-no-event-0-cue",
+                "relation": "local_cue"
+              }
+            ],
+            "estimate": "open",
+            "evidence": {
+              "episode_id": "episode-0",
+              "id": "sensor-6ec0dc5ef6868f62861ea8ead2f085c0f4b0f5591e9cadb3a823d083d5e4494a",
+              "tick": 95
+            },
+            "id": "memory-v2-00000190-local_cue-no-event-0-fact-a",
+            "inspection_landmark_id": "memory-v2-00000190-local_cue-no-event-0-subject-a-inspection",
+            "kind": "passability",
+            "origin": "observed",
+            "revision": 1,
+            "status": "observed",
+            "subject_id": "memory-v2-00000190-local_cue-no-event-0-subject-a"
+          },
+          "event_id": null,
+          "evidence_ids": [
+            "sensor-4a38ad4861b15cd8dabe6bbe2489598861b8161380bc975547ab62ad9814fe4b"
+          ],
+          "fact_id": "memory-v2-00000190-local_cue-no-event-0-fact-a",
+          "reason": "direct_observation",
+          "tick": 96
+        },
+        "tick": 96
+      },
+      {
+        "bearing": [
+          0.8762843342074507,
+          -0.48179431879444673
+        ],
+        "kind": "memory_bridge",
+        "landmark_id": "memory-v2-00000190-local_cue-no-event-0-subject-a-retreat-0",
+        "phase": "acquire",
+        "tick": 96
+      },
+      {
+        "kind": "memory_revision",
+        "revision": {
+          "after": {
+            "associations": [
+              {
+                "cue_id": "memory-v2-00000190-local_cue-no-event-0-cue",
+                "relation": "local_cue"
+              }
+            ],
+            "estimate": "open",
+            "evidence": {
+              "episode_id": "episode-0",
+              "id": "sensor-0c8eac092660281f8cca4555f553ec4ca00b6323965de3cd41accd6f38f7eab3",
+              "tick": 97
+            },
+            "id": "memory-v2-00000190-local_cue-no-event-0-fact-a",
+            "inspection_landmark_id": "memory-v2-00000190-local_cue-no-event-0-subject-a-inspection",
+            "kind": "passability",
+            "origin": "observed",
+            "revision": 1,
+            "status": "observed",
+            "subject_id": "memory-v2-00000190-local_cue-no-event-0-subject-a"
+          },
+          "before": {
+            "associations": [
+              {
+                "cue_id": "memory-v2-00000190-local_cue-no-event-0-cue",
+                "relation": "local_cue"
+              }
+            ],
+            "estimate": "open",
+            "evidence": {
+              "episode_id": "episode-0",
+              "id": "sensor-4a38ad4861b15cd8dabe6bbe2489598861b8161380bc975547ab62ad9814fe4b",
+              "tick": 96
+            },
+            "id": "memory-v2-00000190-local_cue-no-event-0-fact-a",
+            "inspection_landmark_id": "memory-v2-00000190-local_cue-no-event-0-subject-a-inspection",
+            "kind": "passability",
+            "origin": "observed",
+            "revision": 1,
+            "status": "observed",
+            "subject_id": "memory-v2-00000190-local_cue-no-event-0-subject-a"
+          },
+          "event_id": null,
+          "evidence_ids": [
+            "sensor-0c8eac092660281f8cca4555f553ec4ca00b6323965de3cd41accd6f38f7eab3"
+          ],
+          "fact_id": "memory-v2-00000190-local_cue-no-event-0-fact-a",
+          "reason": "direct_observation",
+          "tick": 97
+        },
+        "tick": 97
+      },
+      {
+        "bearing": [
+          0.8560652457454215,
+          -0.5168677732523387
+        ],
+        "kind": "memory_bridge",
+        "landmark_id": "memory-v2-00000190-local_cue-no-event-0-subject-a-retreat-0",
+        "phase": "acquire",
+        "tick": 97
+      },
+      {
+        "kind": "memory_revision",
+        "revision": {
+          "after": {
+            "associations": [
+              {
+                "cue_id": "memory-v2-00000190-local_cue-no-event-0-cue",
+                "relation": "local_cue"
+              }
+            ],
+            "estimate": "open",
+            "evidence": {
+              "episode_id": "episode-0",
+              "id": "sensor-a9e5fd3ad45328a9e1903d8c85864db524a4d0ea040c8923eef4686632d04c84",
+              "tick": 98
+            },
+            "id": "memory-v2-00000190-local_cue-no-event-0-fact-a",
+            "inspection_landmark_id": "memory-v2-00000190-local_cue-no-event-0-subject-a-inspection",
+            "kind": "passability",
+            "origin": "observed",
+            "revision": 1,
+            "status": "observed",
+            "subject_id": "memory-v2-00000190-local_cue-no-event-0-subject-a"
+          },
+          "before": {
+            "associations": [
+              {
+                "cue_id": "memory-v2-00000190-local_cue-no-event-0-cue",
+                "relation": "local_cue"
+              }
+            ],
+            "estimate": "open",
+            "evidence": {
+              "episode_id": "episode-0",
+              "id": "sensor-0c8eac092660281f8cca4555f553ec4ca00b6323965de3cd41accd6f38f7eab3",
+              "tick": 97
+            },
+            "id": "memory-v2-00000190-local_cue-no-event-0-fact-a",
+            "inspection_landmark_id": "memory-v2-00000190-local_cue-no-event-0-subject-a-inspection",
+            "kind": "passability",
+            "origin": "observed",
+            "revision": 1,
+            "status": "observed",
+            "subject_id": "memory-v2-00000190-local_cue-no-event-0-subject-a"
+          },
+          "event_id": null,
+          "evidence_ids": [
+            "sensor-a9e5fd3ad45328a9e1903d8c85864db524a4d0ea040c8923eef4686632d04c84"
+          ],
+          "fact_id": "memory-v2-00000190-local_cue-no-event-0-fact-a",
+          "reason": "direct_observation",
+          "tick": 98
+        },
+        "tick": 98
+      },
+      {
+        "bearing": [
+          0.07330267219141337,
+          -0.9973097403763779
+        ],
+        "kind": "memory_bridge",
+        "landmark_id": "memory-v2-00000190-local_cue-no-event-0-subject-a-retreat-1",
+        "phase": "acquire",
+        "tick": 98
+      },
+      {
+        "kind": "memory_revision",
+        "revision": {
+          "after": {
+            "associations": [
+              {
+                "cue_id": "memory-v2-00000190-local_cue-no-event-0-cue",
+                "relation": "local_cue"
+              }
+            ],
+            "estimate": "open",
+            "evidence": {
+              "episode_id": "episode-0",
+              "id": "sensor-66f6ebae39579f1fb577e0d731e210a2b0cc5123d9c4a33d4760709e846a00fc",
+              "tick": 99
+            },
+            "id": "memory-v2-00000190-local_cue-no-event-0-fact-a",
+            "inspection_landmark_id": "memory-v2-00000190-local_cue-no-event-0-subject-a-inspection",
+            "kind": "passability",
+            "origin": "observed",
+            "revision": 1,
+            "status": "observed",
+            "subject_id": "memory-v2-00000190-local_cue-no-event-0-subject-a"
+          },
+          "before": {
+            "associations": [
+              {
+                "cue_id": "memory-v2-00000190-local_cue-no-event-0-cue",
+                "relation": "local_cue"
+              }
+            ],
+            "estimate": "open",
+            "evidence": {
+              "episode_id": "episode-0",
+              "id": "sensor-a9e5fd3ad45328a9e1903d8c85864db524a4d0ea040c8923eef4686632d04c84",
+              "tick": 98
+            },
+            "id": "memory-v2-00000190-local_cue-no-event-0-fact-a",
+            "inspection_landmark_id": "memory-v2-00000190-local_cue-no-event-0-subject-a-inspection",
+            "kind": "passability",
+            "origin": "observed",
+            "revision": 1,
+            "status": "observed",
+            "subject_id": "memory-v2-00000190-local_cue-no-event-0-subject-a"
+          },
+          "event_id": null,
+          "evidence_ids": [
+            "sensor-66f6ebae39579f1fb577e0d731e210a2b0cc5123d9c4a33d4760709e846a00fc"
+          ],
+          "fact_id": "memory-v2-00000190-local_cue-no-event-0-fact-a",
+          "reason": "direct_observation",
+          "tick": 99
+        },
+        "tick": 99
+      },
+      {
+        "bearing": [
+          0.04159335963228201,
+          -0.9991346217775159
+        ],
+        "kind": "memory_bridge",
+        "landmark_id": "memory-v2-00000190-local_cue-no-event-0-subject-a-retreat-1",
+        "phase": "acquire",
+        "tick": 99
+      },
+      {
+        "bearing": [
+          0.014553571531890123,
+          -0.9998940911694929
+        ],
+        "kind": "memory_bridge",
+        "landmark_id": "memory-v2-00000190-local_cue-no-event-0-subject-a-retreat-1",
+        "phase": "acquire",
+        "tick": 100
+      }
+    ],
+    "m": {
+      "facts": [
+        {
+          "associations": [
+            {
+              "cue_id": "memory-v2-00000190-local_cue-no-event-0-cue",
+              "relation": "local_cue"
+            }
+          ],
+          "estimate": "open",
+          "evidence": {
+            "episode_id": "episode-0",
+            "id": "sensor-66f6ebae39579f1fb577e0d731e210a2b0cc5123d9c4a33d4760709e846a00fc",
+            "tick": 99
+          },
+          "id": "memory-v2-00000190-local_cue-no-event-0-fact-a",
+          "inspection_landmark_id": "memory-v2-00000190-local_cue-no-event-0-subject-a-inspection",
+          "kind": "passability",
+          "origin": "observed",
+          "revision": 1,
+          "status": "observed",
+          "subject_id": "memory-v2-00000190-local_cue-no-event-0-subject-a"
+        },
+        {
+          "associations": [
+            {
+              "cue_id": "memory-v2-00000190-local_cue-no-event-0-cue",
+              "relation": "paired_cue"
+            }
+          ],
+          "estimate": null,
+          "evidence": null,
+          "id": "memory-v2-00000190-local_cue-no-event-0-fact-z",
+          "inspection_landmark_id": "memory-v2-00000190-local_cue-no-event-0-subject-z-inspection",
+          "kind": "passability",
+          "origin": "initial_unknown",
+          "revision": 0,
+          "status": "unknown",
+          "subject_id": "memory-v2-00000190-local_cue-no-event-0-subject-z"
+        }
+      ],
+      "version": 1
+    },
+    "requests": [],
+    "selector": {
+      "condition": "no-U",
+      "limit": 1,
+      "provenance_sha256": "30bce54fff21ff39910da74bd38f0e2ce4746e29c144e2979c39c0b28d356a5a",
+      "resource": null,
+      "resource_sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+      "version": 1
+    },
+    "supervisor": {
+      "acquired_evidence": {
+        "memory-v2-00000190-local_cue-no-event-0-subject-a": {
+          "episode_id": "episode-0",
+          "id": "sensor-3783887ab09c71cebf19df6f93716e9300704d50931e546383d278eeaa948452",
+          "passability": "open",
+          "subject_id": "memory-v2-00000190-local_cue-no-event-0-subject-a",
+          "tick": 69
+        }
+      },
+      "acquired_subject_ids": [
+        "memory-v2-00000190-local_cue-no-event-0-subject-a"
+      ],
+      "attempts": 0,
+      "commitment_tick": null,
+      "continuation_start_tick": null,
+      "costs": {
+        "inspection_ticks": 1,
+        "inspections": 1,
+        "replans": 0,
+        "waypoint_arrivals": 3
+      },
+      "decision_tick": null,
+      "failure_reason": null,
+      "inspection_authorized": false,
+      "inspection_deadline_tick": null,
+      "inspection_started_tick": null,
+      "inspection_subject_id": null,
+      "phase": "acquire",
+      "route_id": null,
+      "waypoint_deadline_tick": 398,
+      "waypoint_ids": [
+        "memory-v2-00000190-local_cue-no-event-0-decision",
+        "memory-v2-00000190-local_cue-no-event-0-subject-a-inspection",
+        "memory-v2-00000190-local_cue-no-event-0-subject-a-retreat-0",
+        "memory-v2-00000190-local_cue-no-event-0-subject-a-retreat-1",
+        "memory-v2-00000190-local_cue-no-event-0-subject-a-retreat-2",
+        "memory-v2-00000190-local_cue-no-event-0-subject-a-retreat-3",
+        "memory-v2-00000190-local_cue-no-event-0-subject-a-retreat-4",
+        "memory-v2-00000190-local_cue-no-event-0-subject-a-retreat-5",
+        "memory-v2-00000190-local_cue-no-event-0-decision",
+        "memory-v2-00000190-local_cue-no-event-0-subject-z-inspection",
+        "memory-v2-00000190-local_cue-no-event-0-subject-z-retreat-0",
+        "memory-v2-00000190-local_cue-no-event-0-subject-z-retreat-1",
+        "memory-v2-00000190-local_cue-no-event-0-subject-z-retreat-2",
+        "memory-v2-00000190-local_cue-no-event-0-subject-z-retreat-3",
+        "memory-v2-00000190-local_cue-no-event-0-subject-z-retreat-4",
+        "memory-v2-00000190-local_cue-no-event-0-subject-z-retreat-5",
+        "memory-v2-00000190-local_cue-no-event-0-decision"
+      ],
+      "waypoint_index": 3,
+      "waypoint_started_tick": 98
+    },
+    "u": {
+      "payload": {
+        "rules": [],
+        "version": 1,
+        "vocabulary": "passage-relations-v1"
+      },
+      "payload_sha256": "098db9255b3afe9fad59dd94030c92f92b31dfd4284477e58b644f91b239d8e6",
+      "provenance": {
+        "history_sha256": null,
+        "method": "empty-v1",
+        "producer_sha256": "9641ae3d7d78577e0ea5bc8bcacbe455cae6c548f4f9bd10b8bb593a8fd7c542",
+        "protocol_sha256": "5028174ea086da13e9cc245abfc1a9714980c8f21dfe55bdac02236cf6b93965",
+        "support": {
+          "local_cue": {
+            "changed": 0,
+            "observed": 0
+          },
+          "paired_cue": {
+            "changed": 0,
+            "observed": 0
+          }
+        }
+      }
+    },
+    "version": 3
+  },
+  "final_phase": "failed",
+  "goal": false,
+  "invariants_preserved": false,
+  "operation": "full",
+  "outcome": {
+    "episode": 0,
+    "message": "selected_waypoint_unavailable: memory-v2-00000190-local_cue-no-event-0-subject-a-retreat-1",
+    "policy_diagnostics": {},
+    "reason": "runtime_failure",
+    "steps": 101,
+    "type": "CueUnavailable"
+  },
+  "qualifier": "Exploratory correlated development variants; no inferential independence, R2 benefit, held-out confirmation, biological learning or physical qualification.",
+  "r2_complete": false,
+  "run": "/home/utkarsh/Work/shraddha/brain/.worktrees/research-phase/runs/memory-v2-feasibility-20261004T093143Z/prerequisites/runs/f1bc7d409fcd4f34bc8c0e3eb6a1a83a",
+  "run_id": "f1bc7d409fcd4f34bc8c0e3eb6a1a83a",
+  "status": "failed",
+  "total_ticks": 101,
+  "version": 1,
+  "wall_seconds": 68.58313134999844,
+  "world_state": {
+    "acquired_state_sha256": null,
+    "applied": false,
+    "armed_boundary_tick": null,
+    "case": {
+      "acquisition": true,
+      "acquisition_protocol_sha256": "30bce54fff21ff39910da74bd38f0e2ce4746e29c144e2979c39c0b28d356a5a",
+      "case_id": "memory-v2-00000190-local_cue-no-event-0",
+      "case_sha256": "0b2b81eb671f5474279ab1d80b9ad95110dc2698cd92b07f24ab06abb3efb99a",
+      "claim": "development-runtime-configuration",
+      "closure_subject_id": null,
+      "common_goal_id": "memory-v2-00000190-local_cue-no-event-0-goal",
+      "cue_id": "memory-v2-00000190-local_cue-no-event-0-cue",
+      "cue_xy": [
+        -1.1,
+        0.0
+      ],
+      "decision_landmark_id": "memory-v2-00000190-local_cue-no-event-0-decision",
+      "event_enabled": false,
+      "facts": [
+        {
+          "associations": [
+            {
+              "cue_id": "memory-v2-00000190-local_cue-no-event-0-cue",
+              "relation": "local_cue"
+            }
+          ],
+          "estimate": null,
+          "evidence": null,
+          "id": "memory-v2-00000190-local_cue-no-event-0-fact-a",
+          "inspection_landmark_id": "memory-v2-00000190-local_cue-no-event-0-subject-a-inspection",
+          "kind": "passability",
+          "origin": "initial_unknown",
+          "revision": 0,
+          "status": "unknown",
+          "subject_id": "memory-v2-00000190-local_cue-no-event-0-subject-a"
+        },
+        {
+          "associations": [
+            {
+              "cue_id": "memory-v2-00000190-local_cue-no-event-0-cue",
+              "relation": "paired_cue"
+            }
+          ],
+          "estimate": null,
+          "evidence": null,
+          "id": "memory-v2-00000190-local_cue-no-event-0-fact-z",
+          "inspection_landmark_id": "memory-v2-00000190-local_cue-no-event-0-subject-z-inspection",
+          "kind": "passability",
+          "origin": "initial_unknown",
+          "revision": 0,
+          "status": "unknown",
+          "subject_id": "memory-v2-00000190-local_cue-no-event-0-subject-z"
+        }
+      ],
+      "goal_xy": [
+        2.5,
+        0.0
+      ],
+      "graph_sha256": "79dc957e6e96bcc08b4cac9c7fc9bf0c56cb5c8d53288559346355e2148eb62a",
+      "kind": "no-event",
+      "landmarks": {
+        "memory-v2-00000190-local_cue-no-event-0-decision": [
+          -1.8,
+          0.0
+        ],
+        "memory-v2-00000190-local_cue-no-event-0-goal": [
+          2.5,
+          0.0
+        ],
+        "memory-v2-00000190-local_cue-no-event-0-subject-a-crossing": [
+          0.0,
+          -1.0
+        ],
+        "memory-v2-00000190-local_cue-no-event-0-subject-a-exit": [
+          1.2,
+          -1.0
+        ],
+        "memory-v2-00000190-local_cue-no-event-0-subject-a-inspection": [
+          -0.8,
+          -1.0
+        ],
+        "memory-v2-00000190-local_cue-no-event-0-subject-a-retreat-0": [
+          -0.8,
+          -1.4
+        ],
+        "memory-v2-00000190-local_cue-no-event-0-subject-a-retreat-1": [
+          -1.3,
+          -1.65
+        ],
+        "memory-v2-00000190-local_cue-no-event-0-subject-a-retreat-2": [
+          -2.0,
+          -1.25
+        ],
+        "memory-v2-00000190-local_cue-no-event-0-subject-a-retreat-3": [
+          -2.3,
+          -0.65
+        ],
+        "memory-v2-00000190-local_cue-no-event-0-subject-a-retreat-4": [
+          -2.3,
+          -0.15
+        ],
+        "memory-v2-00000190-local_cue-no-event-0-subject-a-retreat-5": [
+          -2.1,
+          -0.0
+        ],
+        "memory-v2-00000190-local_cue-no-event-0-subject-z-crossing": [
+          0.0,
+          1.0
+        ],
+        "memory-v2-00000190-local_cue-no-event-0-subject-z-detour": [
+          0.6,
+          1.35
+        ],
+        "memory-v2-00000190-local_cue-no-event-0-subject-z-exit": [
+          1.2,
+          1.0
+        ],
+        "memory-v2-00000190-local_cue-no-event-0-subject-z-inspection": [
+          -0.8,
+          1.0
+        ],
+        "memory-v2-00000190-local_cue-no-event-0-subject-z-retreat-0": [
+          -0.8,
+          1.4
+        ],
+        "memory-v2-00000190-local_cue-no-event-0-subject-z-retreat-1": [
+          -1.3,
+          1.65
+        ],
+        "memory-v2-00000190-local_cue-no-event-0-subject-z-retreat-2": [
+          -2.0,
+          1.25
+        ],
+        "memory-v2-00000190-local_cue-no-event-0-subject-z-retreat-3": [
+          -2.3,
+          0.65
+        ],
+        "memory-v2-00000190-local_cue-no-event-0-subject-z-retreat-4": [
+          -2.3,
+          0.15
+        ],
+        "memory-v2-00000190-local_cue-no-event-0-subject-z-retreat-5": [
+          -2.1,
+          0.0
+        ]
+      },
+      "mirrored": false,
+      "profile_sha256": "30bce54fff21ff39910da74bd38f0e2ce4746e29c144e2979c39c0b28d356a5a",
+      "regime": "local_cue",
+      "seed": 400,
+      "start_pose": [
+        -2.5,
+        0.0,
+        0.0
+      ],
+      "subjects_by_side": [
+        "memory-v2-00000190-local_cue-no-event-0-subject-a",
+        "memory-v2-00000190-local_cue-no-event-0-subject-z"
+      ],
+      "version": 2
+    },
+    "cue_state": 0,
+    "decision_tick": null,
+    "event_tick": null,
+    "gate_result": "not_requested",
+    "last_tick": 101,
+    "profile_sha256": "30bce54fff21ff39910da74bd38f0e2ce4746e29c144e2979c39c0b28d356a5a",
+    "version": 2
+  }
+}

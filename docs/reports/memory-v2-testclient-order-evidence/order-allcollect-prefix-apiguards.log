@@ -1,0 +1,236 @@
+Verification cache fixture: owned temporary Path.home; HOME unchanged
+============================= test session starts ==============================
+platform linux -- Python 3.11.15, pytest-8.4.2, pluggy-1.6.0 -- /home/utkarsh/Work/shraddha/brain/.worktrees/lab-hardening/.venv/bin/python
+cachedir: .pytest_cache
+rootdir: /home/utkarsh/Work/shraddha/brain/.worktrees/research-phase
+configfile: pyproject.toml
+testpaths: tests
+plugins: anyio-4.15.1
+collecting ... collected 836 items / 652 deselected / 184 selected
+
+tests/test_afterimage.py::AfterimageTests::test_actual_evidence_requires_successful_supervision PASSED [  0%]
+tests/test_afterimage.py::AfterimageTests::test_cli_record_dispatch_is_bounded_and_separate PASSED [  1%]
+tests/test_afterimage.py::AfterimageTests::test_cli_render_uses_existing_storage_without_model PASSED [  1%]
+tests/test_afterimage.py::AfterimageTests::test_corruption_and_alignment_rejected PASSED [  2%]
+tests/test_afterimage.py::AfterimageTests::test_exact_alignment_and_one_reset_per_sequence PASSED [  2%]
+tests/test_afterimage.py::AfterimageTests::test_exclusive_output_budget_and_partial_cleanup PASSED [  3%]
+tests/test_afterimage.py::AfterimageTests::test_failed_inference_and_changed_source_are_not_renderable PASSED [  3%]
+tests/test_afterimage.py::AfterimageTests::test_final_asset_check_failure_does_not_complete PASSED [  4%]
+tests/test_afterimage.py::AfterimageTests::test_input_dtype_shape_layout_and_extra_payload_rejected PASSED [  4%]
+tests/test_afterimage.py::AfterimageTests::test_input_size_checked_before_load PASSED [  5%]
+tests/test_afterimage.py::AfterimageTests::test_invalid_response_shape_dtype_and_scaling_rejected PASSED [  5%]
+tests/test_afterimage.py::AfterimageTests::test_mapping_coincident_points_determinism_and_accessibility PASSED [  6%]
+tests/test_afterimage.py::AfterimageTests::test_render_in_fresh_process_does_not_import_model_runtime PASSED [  7%]
+tests/test_afterimage.py::AfterimageTests::test_rights_hash_timestamps_and_path_rejected PASSED [  7%]
+tests/test_artifacts.py::ArtifactTests::test_bounded_metadata_and_no_inference_imports PASSED [  8%]
+tests/test_artifacts.py::ArtifactTests::test_budgeted_bundle_partial_cleanup_and_exclusivity PASSED [  8%]
+tests/test_artifacts.py::ArtifactTests::test_bundle_whitelist_checksums_snapshots_and_credential_rejection PASSED [  9%]
+tests/test_artifacts.py::ArtifactTests::test_comparison_provenance_precedes_trace_and_preserves_lineage PASSED [  9%]
+tests/test_artifacts.py::ArtifactTests::test_disposable_index_only_immediate_uuid_matching_manifests PASSED [ 10%]
+tests/test_artifacts.py::ArtifactTests::test_empty_completed_bundle_and_malformed_intervention PASSED [ 10%]
+tests/test_artifacts.py::ArtifactTests::test_exact_playback_geometry_eyes_and_used_transition PASSED [ 11%]
+tests/test_artifacts.py::ArtifactTests::test_export_budget_checks_before_publication_and_exact_image_bytes PASSED [ 11%]
+tests/test_artifacts.py::ArtifactTests::test_first_request_exhausts_integrity_and_cache_does_not_keep_cameras PASSED [ 12%]
+tests/test_artifacts.py::ArtifactTests::test_incomplete_missing_geometry_exact_tick_and_symlink_reject PASSED [ 13%]
+tests/test_artifacts.py::ArtifactTests::test_list_runs_optional_index_and_quota_fallback PASSED [ 13%]
+tests/test_artifacts.py::ArtifactTests::test_registered_snapshots_registry_orphans_missing_and_duplicate PASSED [ 14%]
+tests/test_artifacts.py::ArtifactTests::test_registered_snapshots_reject_internal_valid_mutation_before_decode PASSED [ 14%]
+tests/test_artifacts.py::ArtifactTests::test_replay_outer_artifacts_are_bounded_checked_and_whitelisted PASSED [ 15%]
+tests/test_artifacts.py::ArtifactTests::test_run_summary_normalizes_scenario_without_losing_provenance PASSED [ 15%]
+tests/test_artifacts.py::ArtifactTests::test_svg_png_fixed_projection_and_exclusive_exports PASSED [ 16%]
+tests/test_artifacts.py::ArtifactTests::test_terminal_aggregate_mismatch_rejects_before_first_tick PASSED [ 16%]
+tests/test_artifacts.py::ArtifactTests::test_u_only_changes_are_visible_comparison_provenance PASSED [ 17%]
+tests/test_artifacts.py::ArtifactTests::test_worker_branch_event_and_runtime_are_comparison_provenance PASSED [ 17%]
+tests/test_artwork_handoff.py::HandoffTests::test_corruption_and_extra_symlink_refuse_before_any_command PASSED [ 18%]
+tests/test_artwork_handoff.py::HandoffTests::test_failure_stops_next_commands_and_still_rehashes_inputs PASSED [ 19%]
+tests/test_artwork_handoff.py::HandoffTests::test_manifest_and_relocated_completed_record PASSED [ 19%]
+tests/test_artwork_handoff.py::HandoffTests::test_offline_import_guard_rejects_without_importing PASSED [ 20%]
+tests/test_artwork_handoff.py::HandoffTests::test_real_route_readback_rejects_wrong_source_identity PASSED [ 20%]
+tests/test_artwork_handoff.py::HandoffTests::test_six_fixed_commands_and_restored_runtime_marker PASSED [ 21%]
+tests/test_artwork_handoff.py::HandoffTests::test_supervised_main_uses_real_publication_and_refuses_reuse PASSED [ 21%]
+tests/test_assets.py::AssetsTests::test_fetch_bad_hash_size_and_interruption_leave_no_partial_file PASSED [ 22%]
+tests/test_assets.py::AssetsTests::test_fetch_verifies_before_publication_and_preserves_cached_file PASSED [ 22%]
+tests/test_assets.py::AssetsTests::test_manifest_rejects_unsafe_paths_and_wrong_profile PASSED [ 23%]
+tests/test_assets.py::AssetsTests::test_prepare_preserves_pinned_crlf_mapping_and_requires_upstream_equivalence PASSED [ 23%]
+tests/test_assets.py::AssetsTests::test_prepare_real_archive_adds_all_pinned_mappings PASSED [ 24%]
+tests/test_assets.py::AssetsTests::test_prepare_rejects_archive_traversal_before_extraction PASSED [ 25%]
+tests/test_assets.py::AssetsTests::test_prepare_rejects_cache_even_if_local_metadata_is_rewritten PASSED [ 25%]
+tests/test_assets.py::AssetsTests::test_prepare_rejects_missing_edge_or_changed_mapping PASSED [ 26%]
+tests/test_assets.py::AssetsTests::test_prepare_rejects_real_archive_symlink PASSED [ 26%]
+tests/test_assets.py::AssetsTests::test_prepare_requires_verified_archive_before_import_or_extract PASSED [ 27%]
+tests/test_assets.py::AssetsTests::test_registry_pins_identity_and_mapping_hashes PASSED [ 27%]
+tests/test_assets.py::AssetsTests::test_verify_and_fetch_reject_symlink_destination PASSED [ 28%]
+tests/test_assets.py::AssetsTests::test_verify_missing_and_checksum_mismatch PASSED [ 28%]
+tests/test_assets.py::AssetsTests::test_verify_size_mismatch PASSED      [ 29%]
+tests/test_atlas.py::AtlasChecks::test_paths_interventions_and_bounded_provenance_export PASSED [ 29%]
+tests/test_body_adaptation.py::SessionState::test_all_four_fresh_trials_fit_only_new_measurements_and_compensate PASSED [ 30%]
+tests/test_body_adaptation.py::SessionState::test_bad_direction_agreement_is_retained_rejection_without_fallback PASSED [ 30%]
+tests/test_body_adaptation.py::SessionState::test_contact_pipeline_wrong_controls_and_user_actions_reject_without_mutation PASSED [ 31%]
+tests/test_body_adaptation.py::SessionState::test_fitted_terminal_interval_retains_cursor_and_fit_then_cannot_advance PASSED [ 32%]
+tests/test_body_adaptation.py::SessionState::test_fixed_probes_next_trial_preserves_buffer_and_requires_paused_completion PASSED [ 32%]
+tests/test_body_adaptation.py::SessionState::test_fourth_transition_starts_one_fresh_fitted_episode_and_cannot_repeat PASSED [ 33%]
+tests/test_body_adaptation.py::SessionState::test_ordinary_reset_aborts_partial_and_clears_fitted_session PASSED [ 33%]
+tests/test_body_adaptation.py::SessionState::test_partial_and_fitted_snapshot_validation_binds_sample_fit_and_native_cursor PASSED [ 34%]
+tests/test_body_adaptation_engine.py::EngineContracts::test_early_probe_outcome_keeps_failed_raw_interval_and_callback_cleanup PASSED [ 34%]
+tests/test_body_adaptation_engine.py::EngineContracts::test_final_next_preserves_new_fit_and_reset_clears_it PASSED [ 35%]
+tests/test_body_adaptation_engine.py::EngineContracts::test_fitted_actions_applied_once_and_final_valid_tick_recorded PASSED [ 35%]
+tests/test_body_adaptation_engine.py::EngineContracts::test_probe_rejects_manual_and_world_commands_then_pauses_at_exact_completion PASSED [ 36%]
+tests/test_body_adaptation_engine.py::EngineContracts::test_profile_and_conditional_schema_native_prevalidation PASSED [ 36%]
+tests/test_body_homing.py::Composition::test_composed_native_admission_rejects_before_any_destination_change PASSED [ 37%]
+tests/test_body_homing.py::Composition::test_explicit_derivation_and_distinct_actual_world_metadata PASSED [ 38%]
+tests/test_body_homing.py::Composition::test_post_hold_nominal_and_once_only_action_replay PASSED [ 38%]
+tests/test_body_homing.py::Composition::test_restrictions_and_reset_activation_only_after_fitted_boundary PASSED [ 39%]
+tests/test_body_profile.py::BodyChecks::test_action_replay_compares_optional_body_fields_without_breaking_legacy PASSED [ 39%]
+tests/test_body_profile.py::BodyChecks::test_contact_overflow_is_retained_and_numeric_converter_never_truncates PASSED [ 40%]
+tests/test_body_profile.py::BodyChecks::test_engine_conditional_schema_and_rejection_before_mutating_manual_intent PASSED [ 40%]
+tests/test_body_profile.py::BodyChecks::test_engine_source_action_replay_reset_and_restored_application PASSED [ 41%]
+tests/test_body_profile.py::BodyChecks::test_interval_cleanup_rejection_and_once_only_override PASSED [ 41%]
+tests/test_body_profile.py::BodyChecks::test_nominal_mapping_zero_reverse_saturation_and_keyboard_combinations PASSED [ 42%]
+tests/test_body_profile.py::BodyChecks::test_rejected_contact_retains_packet_and_failed_engine_cannot_snapshot PASSED [ 42%]
+tests/test_body_profile.py::BodyChecks::test_shared_helpers_preserve_frozen_diagnostic_protocol PASSED [ 43%]
+tests/test_body_profile.py::BodyChecks::test_snapshot_application_rejects_malformed_state_without_touching_destination PASSED [ 44%]
+tests/test_body_profile.py::BodyChecks::test_state_identity_cursor_and_native_encoder_validation PASSED [ 44%]
+tests/test_body_profile.py::BodyChecks::test_world_metadata_does_not_relax_geometry_or_authoring_source_pins PASSED [ 45%]
+tests/test_cli.py::CliTests::test_doctor_dispatches_without_loading_runtime PASSED [ 45%]
+tests/test_cli.py::CliTests::test_evaluation_receives_storage_flags_without_runtime_substitution PASSED [ 46%]
+tests/test_cli.py::CliTests::test_export_asset_overlap_and_lock_rejected_before_write PASSED [ 46%]
+tests/test_cli.py::CliTests::test_export_counts_custom_artifacts_and_passes_live_budget PASSED [ 47%]
+tests/test_cli.py::CliTests::test_lab_requires_built_ui_and_binds_only_loopback PASSED [ 47%]
+tests/test_cli.py::CliTests::test_missing_assets_is_nonzero PASSED       [ 48%]
+tests/test_cli.py::CliTests::test_rejects_unbounded_evaluation_before_launch PASSED [ 48%]
+tests/test_cli.py::CliTests::test_replay_requires_new_uuid_and_successful_comparison PASSED [ 49%]
+tests/test_cli.py::CliTests::test_replay_storage_config_holds_lease_and_counts_existing_runs PASSED [ 50%]
+tests/test_cli.py::CliTests::test_storage_flag_bounds_reject_before_dispatch PASSED [ 50%]
+tests/test_comparison.py::ComparisonTests::test_actual_masks_u_swaps_and_parent_provenance_are_visible PASSED [ 51%]
+tests/test_comparison.py::ComparisonTests::test_byte_budget_and_exclusive_output_preserve_existing_documents PASSED [ 51%]
+tests/test_comparison.py::ComparisonTests::test_cli_keeps_json_default_and_exports_html_under_existing_storage_checks PASSED [ 52%]
+tests/test_comparison.py::ComparisonTests::test_coincident_routes_survive_with_common_projection_and_both_source_identities PASSED [ 52%]
+tests/test_comparison.py::ComparisonTests::test_hostile_text_is_escaped_and_credentials_are_not_exported PASSED [ 53%]
+tests/test_comparison.py::ComparisonTests::test_incomplete_corrupt_empty_and_incompatible_projection_sources_fail_before_output PASSED [ 53%]
+tests/test_comparison.py::ComparisonTests::test_source_change_during_render_is_rejected_before_publication PASSED [ 54%]
+tests/test_comparison.py::ComparisonTests::test_stationary_routes_have_visible_markers_at_the_recorded_coordinate PASSED [ 54%]
+tests/test_doctor.py::DoctorTests::test_default_does_not_run_renderer PASSED [ 55%]
+tests/test_doctor.py::DoctorTests::test_dependencies_use_metadata_and_show_setup PASSED [ 55%]
+tests/test_doctor.py::DoctorTests::test_disk_failure_is_not_reported_ready PASSED [ 56%]
+tests/test_doctor.py::DoctorTests::test_disk_reports_existing_parent_of_asset_root PASSED [ 57%]
+tests/test_doctor.py::DoctorTests::test_git_parent_repository_is_rejected PASSED [ 57%]
+tests/test_doctor.py::DoctorTests::test_gpu_reports_device_and_vram PASSED [ 58%]
+tests/test_doctor.py::DoctorTests::test_gpu_timeout_is_nonfatal_and_bounded PASSED [ 58%]
+tests/test_doctor.py::DoctorTests::test_missing_git_and_gpu_commands_are_reported PASSED [ 59%]
+tests/test_doctor.py::DoctorTests::test_module_import_does_not_import_simulation_dependencies PASSED [ 59%]
+tests/test_doctor.py::DoctorTests::test_probe_preserves_explicit_backend PASSED [ 60%]
+tests/test_doctor.py::DoctorTests::test_probe_sets_linux_default_in_child_only PASSED [ 60%]
+tests/test_doctor.py::DoctorTests::test_renderer_invalid_output_is_not_success PASSED [ 61%]
+tests/test_doctor.py::DoctorTests::test_renderer_missing_dependency_shows_setup PASSED [ 61%]
+tests/test_doctor.py::DoctorTests::test_renderer_timeout_is_an_error PASSED [ 62%]
+tests/test_doctor.py::DoctorTests::test_schema_and_missing_assets_are_explicit PASSED [ 63%]
+tests/test_doctor.py::DoctorTests::test_upstream_pin_and_dirty_state PASSED [ 63%]
+tests/test_doctor.py::DoctorTests::test_wrong_upstream_pin_fails PASSED  [ 64%]
+tests/test_engine.py::EngineTests::test_application_restore_preserves_pending_command_and_destination_identity PASSED [ 64%]
+tests/test_engine.py::EngineTests::test_close_releases_world_when_recorder_cannot_log_pending_cancellation PASSED [ 65%]
+tests/test_engine.py::EngineTests::test_disconnect_cancels_full_queue_and_clears_manual_intent_without_stepping PASSED [ 65%]
+tests/test_engine.py::EngineTests::test_duplicate_identity_and_stale_application_are_recorded PASSED [ 66%]
+tests/test_engine.py::EngineTests::test_eye_mask_is_policy_input_and_recorded_without_destroying_raw_camera PASSED [ 66%]
+tests/test_engine.py::EngineTests::test_intervention_refresh_failure_is_runtime_failure_after_mutation PASSED [ 67%]
+tests/test_engine.py::EngineTests::test_intervention_shape_rejected_before_copy_or_queue PASSED [ 67%]
+tests/test_engine.py::EngineTests::test_invalid_application_is_rejected_without_mutation PASSED [ 68%]
+tests/test_engine.py::EngineTests::test_manual_pi_boundary_and_teacher_reset PASSED [ 69%]
+tests/test_engine.py::EngineTests::test_pause_step_run_stop_and_reset_have_exact_tick_boundaries PASSED [ 69%]
+tests/test_engine.py::EngineTests::test_policy_allowlist_and_invalid_output_stop_before_world_step PASSED [ 70%]
+tests/test_engine.py::EngineTests::test_queue_and_idempotency_caps_do_not_drop_accepted_commands PASSED [ 70%]
+tests/test_engine.py::EngineTests::test_recorded_actions_bypass_inference_and_reject_invalid_values PASSED [ 71%]
+tests/test_engine.py::EngineTests::test_rejects_bad_commands_and_cross_thread_access PASSED [ 71%]
+tests/test_engine.py::EngineTests::test_teacher_reset_baseline_mismatch_rejected_before_branch_mutation PASSED [ 72%]
+tests/test_engine.py::EngineTests::test_terminal_states_cannot_step_without_explicit_reset PASSED [ 72%]
+tests/test_evaluate.py::EvaluationTests::test_batch_preflight_counts_written_cameras_and_input_without_hidden_dump PASSED [ 73%]
+tests/test_evaluate.py::EvaluationTests::test_bounded_process_checks_shared_budget_before_launch PASSED [ 73%]
+tests/test_evaluate.py::EvaluationTests::test_evaluation_aggregate_exhaustion_preserves_existing_outputs PASSED [ 74%]
+tests/test_evaluate.py::EvaluationTests::test_evaluation_asset_overlap_rejected_before_launch PASSED [ 75%]
+tests/test_evaluate.py::EvaluationTests::test_evaluation_count_limit_includes_non_uuid_directories PASSED [ 75%]
+tests/test_evaluate.py::EvaluationTests::test_evaluation_shares_parent_lease_and_configuration_with_worker PASSED [ 76%]
+tests/test_evaluate.py::EvaluationTests::test_exit_during_timeout_cleanup_still_records_terminal_supervisor PASSED [ 76%]
+tests/test_evaluate.py::EvaluationTests::test_hung_final_log_fsync_is_bounded_and_cannot_report_completed PASSED [ 77%]
+tests/test_evaluate.py::EvaluationTests::test_native_and_python_log_floods_preserve_bounded_prefix_and_fail PASSED [ 77%]
+tests/test_evaluate.py::EvaluationTests::test_nonzero_worker_is_failed PASSED [ 78%]
+tests/test_evaluate.py::EvaluationTests::test_termination_has_priority_over_time_limit PASSED [ 78%]
+tests/test_evaluate.py::EvaluationTests::test_worker_is_bounded_and_existing_run_is_preserved PASSED [ 79%]
+tests/test_evaluate.py::EvaluationTests::test_zero_exit_without_recording_is_not_success PASSED [ 79%]
+tests/test_execution_report.py::ContinuationEvidenceTests::test_camera_and_integer_identity_stays_exact_and_float_tolerance_is_fixed PASSED [ 80%]
+tests/test_export_close.py::ExportCloseChecks::test_deferred_close_failure_removes_only_new_outputs PASSED [ 80%]
+tests/test_flynn.py::ImportTests::test_module_import_is_lazy PASSED      [ 81%]
+tests/test_flynn.py::FlynnTests::test_camera_conversion_matches_reference_without_privileged_sensors PASSED [ 82%]
+tests/test_flynn.py::FlynnTests::test_finite_raw_output_retains_upstream_action_scaling PASSED [ 82%]
+tests/test_flynn.py::FlynnTests::test_loader_records_order_and_structural_identity PASSED [ 83%]
+tests/test_flynn.py::FlynnTests::test_missing_declared_sensors_are_rejected PASSED [ 83%]
+tests/test_flynn.py::FlynnTests::test_none_collision_angle_matches_upstream_and_numeric_arrays_are_valid PASSED [ 84%]
+tests/test_flynn.py::FlynnTests::test_nonfinite_allowed_sensor_is_rejected PASSED [ 84%]
+tests/test_flynn.py::FlynnTests::test_nonfinite_cell_readout_fails_before_sanitization_and_restores_state PASSED [ 85%]
+tests/test_flynn.py::FlynnTests::test_nonfinite_hidden_is_rejected PASSED [ 85%]
+tests/test_flynn.py::FlynnTests::test_nonfinite_outgoing_hidden_is_rejected_even_with_finite_readout PASSED [ 86%]
+tests/test_flynn.py::FlynnTests::test_parity_preserves_single_step_hidden_and_retinal_evolution PASSED [ 86%]
+tests/test_flynn.py::FlynnTests::test_privileged_sensor_changes_do_not_change_actions PASSED [ 87%]
+tests/test_flynn.py::FlynnTests::test_reset_clears_both_state_kinds PASSED [ 88%]
+tests/test_flynn.py::FlynnTests::test_structural_checkpoint_mismatch_with_equal_shapes_is_rejected PASSED [ 88%]
+tests/test_flynn.py::FlynnTests::test_wrong_cell_shape_has_bounded_diagnostics PASSED [ 89%]
+tests/test_flynn_memory_transfer.py::FlynnTransferBoundaries::test_controller_preparation_excludes_only_explicit_fresh_fields PASSED [ 89%]
+tests/test_flynn_memory_transfer.py::FlynnTransferBoundaries::test_first_infrastructure_failure_keeps_unattempted_stages_without_children PASSED [ 90%]
+tests/test_flynn_memory_transfer.py::FlynnTransferBoundaries::test_fixed_twelve_stage_plan_has_only_declared_resource_access PASSED [ 90%]
+tests/test_flynn_memory_transfer.py::FlynnTransferBoundaries::test_neural_step_calls_real_method_without_motor_override_and_binds_rows PASSED [ 91%]
+tests/test_flynn_memory_transfer.py::FlynnTransferBoundaries::test_prepared_plan_hash_preserves_exact_job_ids_and_rejects_tampering PASSED [ 91%]
+tests/test_flynn_memory_transfer.py::FlynnTransferBoundaries::test_task_failure_is_narrow_and_snapshot_cap_precedes_publication PASSED [ 92%]
+tests/test_interventions.py::InterventionTests::test_clearance_uses_current_qpos_not_stale_world_or_cached_positions PASSED [ 92%]
+tests/test_interventions.py::InterventionTests::test_goal_geometry_and_declared_cue_match_and_nearby_goal_is_allowed PASSED [ 93%]
+tests/test_interventions.py::InterventionTests::test_obstacle_edit_updates_locked_physics_and_caches_without_step PASSED [ 94%]
+tests/test_interventions.py::InterventionTests::test_preview_validates_geometry_and_leaves_all_state_unchanged PASSED [ 94%]
+tests/test_interventions.py::InterventionTests::test_rejected_inputs_leave_every_fixture_field_unchanged PASSED [ 95%]
+tests/test_interventions.py::SimulationInterventionTests::test_real_upstream_edit_forwards_geometry_and_persists_after_step SKIPPED [ 95%]
+tests/test_lab.py::ApiGuards::test_active_owner_prevents_export_and_second_service_on_same_roots PASSED [ 96%]
+tests/test_lab.py::ApiGuards::test_bounded_body_and_path_fields_rejected_before_launch PASSED [ 96%]
+tests/test_lab.py::ApiGuards::test_command_requires_explicit_revision PASSED [ 97%]
+tests/test_lab.py::ApiGuards::test_host_origin_and_session_guards PASSED [ 97%]
+tests/test_lab.py::ApiGuards::test_native_owner_log_limit_is_terminal_and_bounded PASSED [ 98%]
+tests/test_lab.py::ApiGuards::test_transport_events_have_separate_bounded_cursor PASSED [ 98%]
+tests/test_lab.py::ApiGuards::test_unregistered_ids_and_traversal_rejected PASSED [ 99%]
+tests/test_lab.py::ApiGuards::test_websocket_first_message_authentication PASSED [100%]
+
+=============================== warnings summary ===============================
+../lab-hardening/.venv/lib/python3.11/site-packages/fastapi/testclient.py:1
+  /home/utkarsh/Work/shraddha/brain/.worktrees/lab-hardening/.venv/lib/python3.11/site-packages/fastapi/testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+tests/test_artifacts.py::ArtifactTests::test_export_budget_checks_before_publication_and_exact_image_bytes
+  /home/utkarsh/Work/shraddha/brain/.worktrees/lab-hardening/.venv/lib/python3.11/site-packages/matplotlib/_fontconfig_pattern.py:64: PyparsingDeprecationWarning: 'oneOf' deprecated - use 'one_of'
+    prop = Group((name + Suppress("=") + comma_separated(value)) | oneOf(_CONSTANTS))
+
+tests/test_artifacts.py::ArtifactTests::test_export_budget_checks_before_publication_and_exact_image_bytes
+tests/test_artifacts.py::ArtifactTests::test_export_budget_checks_before_publication_and_exact_image_bytes
+tests/test_artifacts.py::ArtifactTests::test_export_budget_checks_before_publication_and_exact_image_bytes
+tests/test_artifacts.py::ArtifactTests::test_export_budget_checks_before_publication_and_exact_image_bytes
+tests/test_artifacts.py::ArtifactTests::test_export_budget_checks_before_publication_and_exact_image_bytes
+tests/test_artifacts.py::ArtifactTests::test_export_budget_checks_before_publication_and_exact_image_bytes
+  /home/utkarsh/Work/shraddha/brain/.worktrees/lab-hardening/.venv/lib/python3.11/site-packages/matplotlib/_fontconfig_pattern.py:85: PyparsingDeprecationWarning: 'parseString' deprecated - use 'parse_string'
+    parse = parser.parseString(pattern)
+
+tests/test_artifacts.py::ArtifactTests::test_export_budget_checks_before_publication_and_exact_image_bytes
+tests/test_artifacts.py::ArtifactTests::test_export_budget_checks_before_publication_and_exact_image_bytes
+tests/test_artifacts.py::ArtifactTests::test_export_budget_checks_before_publication_and_exact_image_bytes
+tests/test_artifacts.py::ArtifactTests::test_export_budget_checks_before_publication_and_exact_image_bytes
+tests/test_artifacts.py::ArtifactTests::test_export_budget_checks_before_publication_and_exact_image_bytes
+tests/test_artifacts.py::ArtifactTests::test_export_budget_checks_before_publication_and_exact_image_bytes
+  /home/utkarsh/Work/shraddha/brain/.worktrees/lab-hardening/.venv/lib/python3.11/site-packages/matplotlib/_fontconfig_pattern.py:89: PyparsingDeprecationWarning: 'resetCache' deprecated - use 'reset_cache'
+    parser.resetCache()
+
+tests/test_artifacts.py::ArtifactTests::test_export_budget_checks_before_publication_and_exact_image_bytes
+  /home/utkarsh/Work/shraddha/brain/.worktrees/lab-hardening/.venv/lib/python3.11/site-packages/matplotlib/_mathtext.py:45: PyparsingDeprecationWarning: 'enablePackrat' deprecated - use 'enable_packrat'
+    ParserElement.enablePackrat()
+
+tests/test_flynn.py: 17 warnings
+  /home/utkarsh/Work/shraddha/brain/.worktrees/research-phase/upstream/fly-gym/core/utils.py:240: UserWarning: To copy construct from a tensor, it is recommended to use sourceTensor.detach().clone() or sourceTensor.detach().clone().requires_grad_(True), rather than torch.tensor(sourceTensor).
+    return torch.tensor(neuron_type_ids, dtype=torch.long), num_types
+
+tests/test_flynn.py::FlynnTests::test_camera_conversion_matches_reference_without_privileged_sensors
+  /home/utkarsh/Work/shraddha/brain/.worktrees/research-phase/upstream/fly-gym/models/connectome_rnn_model.py:98: UserWarning: Sparse CSR tensor support is in beta state. If you miss a functionality in the sparse tensor support, please submit a feature request to https://github.com/pytorch/pytorch/issues. (Triggered internally at /pytorch/aten/src/ATen/SparseCsrTensorImpl.cpp:53.)
+    Wcsr = Wc.to_sparse_csr()
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+========= 183 passed, 1 skipped, 652 deselected, 33 warnings in 34.77s =========

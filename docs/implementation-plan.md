@@ -54,6 +54,23 @@ selected model. The [memory-v2 design](plans/m5-v2-decision-scene.md) is complet
 as a specification only. R2, R3 and learned puck capability remain open; no new
 runtime pilot, native evaluation or held-out access is implied.
 
+The subsequent approved [memory-v2 feasibility contract](plans/memory-v2-feasibility.md)
+authorizes the shared decision supervisor, versioned continuation state and a
+single bounded development attempt. It prioritizes memory feasibility; puck and
+navigation receive offline diagnostics only. Its two-hour execution ceiling and
+8 GiB output cap apply independently of the completed fitting phase. Native
+prerequisites must pass before the four-condition, six-case pilot can start.
+Failed geometry or a mandatory prerequisite stops that attempt without rescue.
+R2/R3, learned puck capability, hardware and operator qualification remain open.
+
+The [implemented feasibility readout](reports/memory-v2-feasibility.md) retains
+passing software/geometry checks and a failed first native acquisition: CPU FLYNN
+loses the next retreat marker outside forward visibility at tick 101. Seven later
+prerequisites and the paired pilot remain unattempted under the stopping rule.
+Offline puck/navigation diagnostics complete without new fits or promotion.
+Another scene or native attempt requires a separately reviewed prospective
+amendment; no automatic layout change or rescue follows this evidence.
+
 ## Architecture and contracts
 
 Use Python 3.11 with uv, MuJoCo/Gymnasium, PyTorch, a local FastAPI service, and React/TypeScript/Vite with Node 24 LTS. Pin the upstream FLYNN submodule at `8d964599119b420de67ee259434d273651a1a76d`; retain its effective preprocessing, control interval, and action conversion. Freeze the working environment in uv.lock after reference checks.
