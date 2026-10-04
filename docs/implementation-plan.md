@@ -27,6 +27,26 @@ M6 remains unchecked for learned puck pushing. The other subgates meet their dec
 | Measured body adaptation | [Held-out opposite-wheel commands](reports/m6-body-turn-transfer.md), existing lifecycle/replay and the [fresh-calibration new actuator case](reports/m6-new-body-response-v2.md) pass. The new standalone case does not inherit restoration/replay qualification. |
 | Learned puck pushing | Open: all three models in both development arms score 0/4 against the unchanged 3/4 gate. Held-out remains locked; the existing stop-fitting decision remains active. |
 
+## Research phase — 4 October 2026
+
+The approved [capability-first phase](plans/research-capability-phase.md) replaces
+further v1 memory collection and reopens puck fitting only for bounded exploration.
+Memory v1 is [retired with an observed structural limitation](reports/m5-v1-structural-null.md);
+its 44/48 matrix and held-out remain incomplete. R2 will require a decision-bearing
+v2 study. Do not execute the historical remaining-07 repeat or v1 held-out outline.
+
+Exploratory work uses retained train/seen development data, train-only preprocessing,
+prospective script decision rules, compact provenance, and an aggregate two-hour
+compute ceiling. It requires no additional root-audit/GO hierarchy and is never
+release evidence. Graph model-class probes are allowed only with matched original/
+rewired interventions. Production bundles and all reserved scene IDs remain locked.
+Confirmatory work retains committed protocols, versioned admission, fresh evaluations
+and explicit rejection rules. The historical failures/nulls remain unchanged.
+
+The puck stop-fitting decision remains historical; conditioning/capacity probes
+are authorized by this phase. No automatic new collection, relabeling, held-out
+opening, model promotion, hardware operation or exhibition acceptance follows.
+
 ## Architecture and contracts
 
 Use Python 3.11 with uv, MuJoCo/Gymnasium, PyTorch, a local FastAPI service, and React/TypeScript/Vite with Node 24 LTS. Pin the upstream FLYNN submodule at `8d964599119b420de67ee259434d273651a1a76d`; retain its effective preprocessing, control interval, and action conversion. Freeze the working environment in uv.lock after reference checks.
