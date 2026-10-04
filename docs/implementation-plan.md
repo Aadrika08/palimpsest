@@ -93,6 +93,15 @@ Filesystem atomic recording capacity needs qualification before a new prospectiv
 native execution contract. Earlier measured acquisition/travel failures remain
 preserved; R2/R3 and physical/operator qualification remain open.
 
+The [storage/Git recovery](reports/memory-storage-recovery.md) now passes a bounded
+2,100-tick synthetic recording, 66 chunk publications, 65 atomic progress replacements
+and exact readback through the actual writer/reader. The research checkout's three
+documentation updates are recovered without altering the interrupted study; main
+is unchanged. This is a current filesystem write check, not native route feasibility.
+Actions is enabled, but its historical account billing/spending block is separate.
+A new native invocation requires a separate prospective contract; the frozen plan's
+no-retry rule remains intact.
+
 ## Architecture and contracts
 
 Use Python 3.11 with uv, MuJoCo/Gymnasium, PyTorch, a local FastAPI service, and React/TypeScript/Vite with Node 24 LTS. Pin the upstream FLYNN submodule at `8d964599119b420de67ee259434d273651a1a76d`; retain its effective preprocessing, control interval, and action conversion. Freeze the working environment in uv.lock after reference checks.

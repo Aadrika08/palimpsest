@@ -182,3 +182,8 @@ Final CI-documentation staging on `/home` subsequently failed with
 shared clone on `/tmp`; the three documentation files were verified and committed
 with the same repository-local author. This publication recovery did not rerun
 science or alter the interrupted raw outputs.
+
+A subsequent [storage/Git recovery](memory-storage-recovery.md) passed the actual
+writer/reader at 2,100 synthetic ticks and recovered the research checkout's Git
+index. That later measurement does not qualify this interrupted native owner or
+change any historical receipt.
