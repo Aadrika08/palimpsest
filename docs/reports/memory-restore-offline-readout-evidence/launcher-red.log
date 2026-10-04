@@ -1,0 +1,67 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+_ test_offline_launcher_keeps_real_child_admission_clean_and_marker_exclusive __
+
+tmp_path = PosixPath('/tmp/pytest-of-utkarsh/pytest-66/test_offline_launcher_keeps_re0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x736d94945410>
+
+    def test_offline_launcher_keeps_real_child_admission_clean_and_marker_exclusive(tmp_path,monkeypatch):
+        actual_repo=Path(__file__).resolve().parents[1]
+        source=actual_repo/'docs/reports/memory-restore-offline-readout-evidence/execute-readout.py'
+        spec=importlib.util.spec_from_file_location('offline_launcher',source)
+        launcher=importlib.util.module_from_spec(spec);spec.loader.exec_module(launcher)
+        evidence=tmp_path/'docs/reports/memory-restore-offline-readout-evidence';evidence.mkdir(parents=True)
+        workspace=tmp_path/'.superpowers/sdd/memory-restore-offline-readout';workspace.mkdir(parents=True)
+        old=tmp_path/'.superpowers/sdd/memory-restore-study-v2/diagnose';old.mkdir(parents=True)
+        (old/'launched.json').write_text('original consumed native invocation\n')
+        (tmp_path/'.gitignore').write_text('.superpowers/\nruns/\n')
+        actual_run=subprocess.run
+        actual_run(['git','init','-q',str(tmp_path)],check=True)
+        def commit():
+            actual_run(['git','-C',str(tmp_path),'add','.'],check=True)
+            actual_run(['git','-C',str(tmp_path),'-c','user.name=Fixture',
+                '-c','user.email=fixture@example.test','commit','-qm','fixture'],check=True)
+        commit()
+        head=subprocess.check_output(['git','rev-parse','HEAD'],cwd=tmp_path,text=True).strip()
+        registration=evidence/'registration.json'
+        registration.write_text(json.dumps({'schema':'memory-restore-offline-registration-v1',
+            'repo':str(tmp_path),'output':str(tmp_path/'runs/offline'),'retained_root':str(tmp_path/'retained'),
+            'assets':str(tmp_path/'assets'),'history_root':str(tmp_path/'histories'),
+            'python':sys.executable,'seconds_cap':300,'implementation_commit':head}))
+        commit();monkeypatch.setattr(launcher,'__file__',str(evidence/'execute-readout.py'))
+        calls=[]
+        def child(command,**kwargs):
+            if command[0]!='timeout':return actual_run(command,**kwargs)
+            calls.append(command)
+            assert command[3]=='290s'
+            assert command[-4:-1]==['-m','scripts.memory_restore_offline_readout','--registration']
+            bootstrap=(
+                'import sys; sys.path.insert(0,'+repr(str(actual_repo))+'); '
+                'from scripts import memory_restore_offline_readout as o; '
+                'o.__file__='+repr(str(tmp_path/'scripts/offline.py'))+'\n'
+                'def stop_before_analysis(*args):\n'
+                '    print("production clean offline admission reached; no analysis",flush=True)\n'
+                '    raise SystemExit(0)\n'
+                'o.recheck_inputs=stop_before_analysis\n'
+                'raise SystemExit(o.main(["--registration",'+repr(str(registration))+']))\n')
+            env=dict(kwargs['env'],PYTHONPATH=str(actual_repo/'src')+':'+str(actual_repo))
+            return actual_run(command[:4]+[sys.executable,'-c',bootstrap],**{**kwargs,'env':env})
+        monkeypatch.setattr(launcher.subprocess,'run',child)
+>       assert launcher.main()==0
+               ^^^^^^^^^^^^^^^
+
+tests/test_memory_restore_offline_readout.py:181: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def main():
+        evidence = Path(__file__).resolve().parent
+        repo = evidence.parents[2]
+        registration = p.read_json(evidence/'registration.json')
+        if registration.get('mode') != 'diagnose':
+>           raise ValueError('This launcher accepts only the diagnostic registration')
+E           ValueError: This launcher accepts only the diagnostic registration
+
+docs/reports/memory-restore-offline-readout-evidence/execute-readout.py:16: ValueError
+=========================== short test summary info ============================
+FAILED tests/test_memory_restore_offline_readout.py::test_offline_launcher_keeps_real_child_admission_clean_and_marker_exclusive
+1 failed, 9 deselected in 0.16s

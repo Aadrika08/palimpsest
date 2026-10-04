@@ -1,0 +1,18 @@
+{
+  "status": "offline-audit-complete",
+  "total_seconds": 3.4236310019987286,
+  "summary": {
+    "trace_equal": true,
+    "state_equal": false,
+    "differing_components": [
+      "native_data",
+      "native_sha256"
+    ],
+    "owner_count": 2,
+    "native_fields_equal": false
+  },
+  "offline_pair_audit_complete": true,
+  "new_native_owners": 0,
+  "physics_steps": 0,
+  "qualification_claims": []
+}

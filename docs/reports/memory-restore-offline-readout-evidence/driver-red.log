@@ -1,0 +1,197 @@
+FFFFFFFFF                                                                [100%]
+=================================== FAILURES ===================================
+_____ test_offline_pair_audits_retained_payloads_without_current_pid_probe _____
+
+tmp_path = PosixPath('/tmp/pytest-of-utkarsh/pytest-63/test_offline_pair_audits_retai0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x760866ac1f90>
+
+    def test_offline_pair_audits_retained_payloads_without_current_pid_probe(tmp_path,monkeypatch):
+>       module = offline(); registration,receipt,close = retained_pair(tmp_path,monkeypatch)
+                 ^^^^^^^^^
+
+tests/test_memory_restore_offline_readout.py:68: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def offline():
+        spec = importlib.util.find_spec('scripts.memory_restore_offline_readout')
+>       assert spec is not None, 'Offline retained-pair reader is not implemented'
+E       AssertionError: Offline retained-pair reader is not implemented
+E       assert None is not None
+
+tests/test_memory_restore_offline_readout.py:17: AssertionError
+______ test_offline_pair_refuses_unbound_or_incomplete_evidence[cleanup] _______
+
+tmp_path = PosixPath('/tmp/pytest-of-utkarsh/pytest-63/test_offline_pair_refuses_unbo0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x760865d3c410>
+change = 'cleanup'
+
+    @pytest.mark.parametrize('change',['cleanup','extra-job','missing-post','corrupt-post','raw-count'])
+    def test_offline_pair_refuses_unbound_or_incomplete_evidence(tmp_path,monkeypatch,change):
+>       module = offline(); registration,receipt,close = retained_pair(tmp_path,monkeypatch)
+                 ^^^^^^^^^
+
+tests/test_memory_restore_offline_readout.py:80: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def offline():
+        spec = importlib.util.find_spec('scripts.memory_restore_offline_readout')
+>       assert spec is not None, 'Offline retained-pair reader is not implemented'
+E       AssertionError: Offline retained-pair reader is not implemented
+E       assert None is not None
+
+tests/test_memory_restore_offline_readout.py:17: AssertionError
+_____ test_offline_pair_refuses_unbound_or_incomplete_evidence[extra-job] ______
+
+tmp_path = PosixPath('/tmp/pytest-of-utkarsh/pytest-63/test_offline_pair_refuses_unbo1')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7608643bf9d0>
+change = 'extra-job'
+
+    @pytest.mark.parametrize('change',['cleanup','extra-job','missing-post','corrupt-post','raw-count'])
+    def test_offline_pair_refuses_unbound_or_incomplete_evidence(tmp_path,monkeypatch,change):
+>       module = offline(); registration,receipt,close = retained_pair(tmp_path,monkeypatch)
+                 ^^^^^^^^^
+
+tests/test_memory_restore_offline_readout.py:80: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def offline():
+        spec = importlib.util.find_spec('scripts.memory_restore_offline_readout')
+>       assert spec is not None, 'Offline retained-pair reader is not implemented'
+E       AssertionError: Offline retained-pair reader is not implemented
+E       assert None is not None
+
+tests/test_memory_restore_offline_readout.py:17: AssertionError
+____ test_offline_pair_refuses_unbound_or_incomplete_evidence[missing-post] ____
+
+tmp_path = PosixPath('/tmp/pytest-of-utkarsh/pytest-63/test_offline_pair_refuses_unbo2')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7608643aad50>
+change = 'missing-post'
+
+    @pytest.mark.parametrize('change',['cleanup','extra-job','missing-post','corrupt-post','raw-count'])
+    def test_offline_pair_refuses_unbound_or_incomplete_evidence(tmp_path,monkeypatch,change):
+>       module = offline(); registration,receipt,close = retained_pair(tmp_path,monkeypatch)
+                 ^^^^^^^^^
+
+tests/test_memory_restore_offline_readout.py:80: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def offline():
+        spec = importlib.util.find_spec('scripts.memory_restore_offline_readout')
+>       assert spec is not None, 'Offline retained-pair reader is not implemented'
+E       AssertionError: Offline retained-pair reader is not implemented
+E       assert None is not None
+
+tests/test_memory_restore_offline_readout.py:17: AssertionError
+____ test_offline_pair_refuses_unbound_or_incomplete_evidence[corrupt-post] ____
+
+tmp_path = PosixPath('/tmp/pytest-of-utkarsh/pytest-63/test_offline_pair_refuses_unbo3')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7608643bf9d0>
+change = 'corrupt-post'
+
+    @pytest.mark.parametrize('change',['cleanup','extra-job','missing-post','corrupt-post','raw-count'])
+    def test_offline_pair_refuses_unbound_or_incomplete_evidence(tmp_path,monkeypatch,change):
+>       module = offline(); registration,receipt,close = retained_pair(tmp_path,monkeypatch)
+                 ^^^^^^^^^
+
+tests/test_memory_restore_offline_readout.py:80: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def offline():
+        spec = importlib.util.find_spec('scripts.memory_restore_offline_readout')
+>       assert spec is not None, 'Offline retained-pair reader is not implemented'
+E       AssertionError: Offline retained-pair reader is not implemented
+E       assert None is not None
+
+tests/test_memory_restore_offline_readout.py:17: AssertionError
+_____ test_offline_pair_refuses_unbound_or_incomplete_evidence[raw-count] ______
+
+tmp_path = PosixPath('/tmp/pytest-of-utkarsh/pytest-63/test_offline_pair_refuses_unbo4')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x760866a50990>
+change = 'raw-count'
+
+    @pytest.mark.parametrize('change',['cleanup','extra-job','missing-post','corrupt-post','raw-count'])
+    def test_offline_pair_refuses_unbound_or_incomplete_evidence(tmp_path,monkeypatch,change):
+>       module = offline(); registration,receipt,close = retained_pair(tmp_path,monkeypatch)
+                 ^^^^^^^^^
+
+tests/test_memory_restore_offline_readout.py:80: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def offline():
+        spec = importlib.util.find_spec('scripts.memory_restore_offline_readout')
+>       assert spec is not None, 'Offline retained-pair reader is not implemented'
+E       AssertionError: Offline retained-pair reader is not implemented
+E       assert None is not None
+
+tests/test_memory_restore_offline_readout.py:17: AssertionError
+_______________________ test_inventory_change_is_refused _______________________
+
+tmp_path = PosixPath('/tmp/pytest-of-utkarsh/pytest-63/test_inventory_change_is_refus0')
+
+    def test_inventory_change_is_refused(tmp_path):
+>       module = offline(); root=tmp_path/'input'; root.mkdir(); path=root/'data'; path.write_bytes(b'old')
+                 ^^^^^^^^^
+
+tests/test_memory_restore_offline_readout.py:98: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def offline():
+        spec = importlib.util.find_spec('scripts.memory_restore_offline_readout')
+>       assert spec is not None, 'Offline retained-pair reader is not implemented'
+E       AssertionError: Offline retained-pair reader is not implemented
+E       assert None is not None
+
+tests/test_memory_restore_offline_readout.py:17: AssertionError
+______ test_failed_offline_close_cannot_publish_complete_readout[recheck] ______
+
+tmp_path = PosixPath('/tmp/pytest-of-utkarsh/pytest-63/test_failed_offline_close_cann0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x760863d1c7d0>
+failure = 'recheck'
+
+    @pytest.mark.parametrize('failure',['recheck','close-deadline'])
+    def test_failed_offline_close_cannot_publish_complete_readout(tmp_path,monkeypatch,failure):
+>       module=offline(); monkeypatch.setattr(module,'__file__',str(tmp_path/'scripts/offline.py'))
+               ^^^^^^^^^
+
+tests/test_memory_restore_offline_readout.py:106: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def offline():
+        spec = importlib.util.find_spec('scripts.memory_restore_offline_readout')
+>       assert spec is not None, 'Offline retained-pair reader is not implemented'
+E       AssertionError: Offline retained-pair reader is not implemented
+E       assert None is not None
+
+tests/test_memory_restore_offline_readout.py:17: AssertionError
+__ test_failed_offline_close_cannot_publish_complete_readout[close-deadline] ___
+
+tmp_path = PosixPath('/tmp/pytest-of-utkarsh/pytest-63/test_failed_offline_close_cann1')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x760864717ed0>
+failure = 'close-deadline'
+
+    @pytest.mark.parametrize('failure',['recheck','close-deadline'])
+    def test_failed_offline_close_cannot_publish_complete_readout(tmp_path,monkeypatch,failure):
+>       module=offline(); monkeypatch.setattr(module,'__file__',str(tmp_path/'scripts/offline.py'))
+               ^^^^^^^^^
+
+tests/test_memory_restore_offline_readout.py:106: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def offline():
+        spec = importlib.util.find_spec('scripts.memory_restore_offline_readout')
+>       assert spec is not None, 'Offline retained-pair reader is not implemented'
+E       AssertionError: Offline retained-pair reader is not implemented
+E       assert None is not None
+
+tests/test_memory_restore_offline_readout.py:17: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_memory_restore_offline_readout.py::test_offline_pair_audits_retained_payloads_without_current_pid_probe
+FAILED tests/test_memory_restore_offline_readout.py::test_offline_pair_refuses_unbound_or_incomplete_evidence[cleanup]
+FAILED tests/test_memory_restore_offline_readout.py::test_offline_pair_refuses_unbound_or_incomplete_evidence[extra-job]
+FAILED tests/test_memory_restore_offline_readout.py::test_offline_pair_refuses_unbound_or_incomplete_evidence[missing-post]
+FAILED tests/test_memory_restore_offline_readout.py::test_offline_pair_refuses_unbound_or_incomplete_evidence[corrupt-post]
+FAILED tests/test_memory_restore_offline_readout.py::test_offline_pair_refuses_unbound_or_incomplete_evidence[raw-count]
+FAILED tests/test_memory_restore_offline_readout.py::test_inventory_change_is_refused
+FAILED tests/test_memory_restore_offline_readout.py::test_failed_offline_close_cannot_publish_complete_readout[recheck]
+FAILED tests/test_memory_restore_offline_readout.py::test_failed_offline_close_cannot_publish_complete_readout[close-deadline]
+9 failed in 0.17s

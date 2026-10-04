@@ -100,7 +100,13 @@ def native_fields(snapshot):
     omitted = []
     def retain(value, path):
         if isinstance(value, np.ndarray) and value.dtype.kind in 'buif' and value.dtype.fields is None:
-            fields[path] = value.copy()
+            if value.flags.owndata:
+                # A null MjData arena pointer can produce a fresh NumPy-owned
+                # array. Its contents are not evidence from the native payload.
+                omitted.append({'field':path,'reason':'owned NumPy array is not a view of native storage',
+                                'shape':list(value.shape),'dtype':value.dtype.str})
+            else:
+                fields[path] = value.copy()
         elif type(value) in (int, float, bool):
             fields[path] = value
     for name in dir(data):
@@ -122,7 +128,7 @@ def compare_native_states(left, right):
     one, omitted_one = native_fields(left); two, omitted_two = native_fields(right)
     result = compare_values(one, two)
     result.update(decoded_field_count=[len(one), len(two)], omitted_fields=[omitted_one, omitted_two],
-        physics_steps=0, scope='All exposed plain numeric MjData fields plus timer/warning/solver/contact arrays and serialized model hash; opaque residual native bytes remain outside this named-field inventory')
+        physics_steps=0, scope='Exposed plain numeric MjData scalars and native-storage views plus timer/warning/solver/contact arrays and serialized model hash; owned NumPy arrays are omitted as unbacked views; opaque residual native bytes remain outside this named-field inventory')
     return result
 
 

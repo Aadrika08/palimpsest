@@ -1,0 +1,20 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+______ test_native_decoder_omits_owned_views_of_unpopulated_arena_fields _______
+
+    def test_native_decoder_omits_owned_views_of_unpopulated_arena_fields():
+        mujoco=pytest.importorskip('mujoco')
+        model=mujoco.MjModel.from_xml_string('<mujoco><worldbody/></mujoco>')
+        data=mujoco.MjData(model)
+        # Artificial metadata exercises a null arena pointer with a nonzero view
+        # shape. No physics, retained snapshot, or study state is involved.
+        data.nefc=1
+        assert data.efc_AR_rownnz.flags.owndata is True
+        fields,omitted=d.native_fields({'native_data':data.__getstate__()})
+>       assert 'efc_AR_rownnz' not in fields
+E       AssertionError: assert 'efc_AR_rownnz' not in {'M': array([], dtype=float64), 'act': array([], dtype=float64), 'act_dot': array([], dtype=float64), 'actuator_force': array([], dtype=float64), ...}
+
+tests/test_memory_restore_offline_readout.py:115: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_memory_restore_offline_readout.py::test_native_decoder_omits_owned_views_of_unpopulated_arena_fields
+1 failed, 10 deselected in 0.21s
