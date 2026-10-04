@@ -110,6 +110,13 @@ The complete integrated default suite passes **878 tests with 24 skips**, in 116
 [command and limits](memory-v2-evidence/validation.md), [raw log](memory-v2-evidence/regression.log).
 The previous TestClient hang did not recur; no causal production fix is claimed.
 
+[Draft PR #66](https://github.com/Aadrika08/palimpsest/pull/66) is authored by
+Aadrika08 and stacked on `research/capability-integration`. Main is unchanged.
+GitHub fixture/frontend CI did not start because the account has failed payments
+or a spending-limit restriction: [exact annotations](memory-v2-evidence/ci-annotations.json).
+Local passing tests do not make those unstarted remote jobs green. Account billing
+or spending-limit resolution remains an external CI prerequisite.
+
 The next memory study needs a separately reviewed acquisition/waypoint amendment
 that accounts for actual heading and the entire arrival neighborhood. The measured
 failure is at a visibility boundary before any memory comparison; changing U or

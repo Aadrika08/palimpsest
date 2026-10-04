@@ -20,3 +20,7 @@ run outputs under the 7200 s/8 GiB contract. Test skips do not qualify native ga
 See docs/reports/memory-v2-feasibility.md and its compact evidence index. Camera
 payloads remain in the indexed machine-local raw root. This PR is stacked on
 research/capability-integration and remains a draft; no automatic merge is requested.
+
+GitHub fixture/frontend CI did not start: its annotations report failed account
+payments or a spending-limit restriction. Local tests pass; remote CI remains
+blocked on account billing/spending-limit resolution.
