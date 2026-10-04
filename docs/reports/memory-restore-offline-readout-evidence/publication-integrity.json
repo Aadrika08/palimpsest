@@ -1,0 +1,102 @@
+{
+  "checked_utc": "2026-10-04T17:14:02.959860+00:00",
+  "delivery_helper_changed_after_close": true,
+  "executed_bound_files_verified": 13,
+  "executed_helper_preserved_separately": true,
+  "new_native_owners": 0,
+  "offline_output_index_verified": true,
+  "physics_steps": 0,
+  "preserved_sets": [
+    {
+      "files": 339,
+      "root": "/home/utkarsh/Work/shraddha/brain/.worktrees/research-phase/runs/memory-travel-recovery-20261004T133718Z",
+      "unchanged": true
+    },
+    {
+      "files": 24,
+      "root": "/home/utkarsh/Work/shraddha/brain/.worktrees/research-phase/runs/memory-travel-handoff-20261004T125507Z",
+      "unchanged": true
+    },
+    {
+      "files": 25,
+      "root": "/home/utkarsh/Work/shraddha/brain/.worktrees/research-phase/docs/reports/memory-restore-diagnostic-evidence",
+      "unchanged": true
+    },
+    {
+      "files": 30,
+      "root": "/home/utkarsh/Work/shraddha/brain/.worktrees/research-phase/runs/memory-restore-study-v2-diagnose-20261004T155817Z",
+      "unchanged": true
+    },
+    {
+      "files": 26,
+      "root": "/home/utkarsh/Work/shraddha/brain/.worktrees/research-phase/docs/reports/memory-restore-study-v2-evidence",
+      "unchanged": true
+    }
+  ],
+  "published": [
+    {
+      "bytes": 1788,
+      "path": "execution.json",
+      "sha256": "2d1e51e9b126972cf9e633e42e31721091b11d82c96d587d7776a8eb19b12878",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/research-phase/runs/memory-restore-offline-readout-20261004T170251Z/execution.json"
+    },
+    {
+      "bytes": 45257,
+      "path": "analysis.json",
+      "sha256": "567d42881833787caf43abac2f8e019cd17458becd02d4fa38471c73c0744952",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/research-phase/runs/memory-restore-offline-readout-20261004T170251Z/analysis.json"
+    },
+    {
+      "bytes": 592,
+      "path": "offline-launched.json",
+      "sha256": "94ed99bb1faba04ffc294ab02ef85d025e50576c8292f53c8a6281fdd3735ea3",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/research-phase/.superpowers/sdd/memory-restore-offline-readout/offline-launched.json"
+    },
+    {
+      "bytes": 11722,
+      "path": "executed-offline-driver.py",
+      "sha256": "ce0bfd40cb9da431fb7dcf03fe72733bcc551c706a72924ba5b6178dddb969fb",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/research-phase/scripts/memory_restore_offline_readout.py"
+    },
+    {
+      "bytes": 22789,
+      "path": "executed-diagnostic-driver.py",
+      "sha256": "7c1bf669c7d0cd8eea03d57fa538e8dedc90ad5cc83eaa3b13a3d093a01c0fb4",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/research-phase/.superpowers/sdd/memory-restore-offline-readout/executed-diagnostic-driver.py"
+    },
+    {
+      "bytes": 74762,
+      "path": "executed-pilot-driver.py",
+      "sha256": "1702e2b918dc8f412fe2e11a3b888c3e2aa2dabf192d5c27f3ff23b492d3dc85",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/research-phase/scripts/memory_decision_pilot.py"
+    },
+    {
+      "bytes": 301,
+      "path": "wrapper.log",
+      "sha256": "0d84afd9cbe2b717ae3c13e30215c492323d593c1cf759fbfd4842dd2b4c9224",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/research-phase/.superpowers/sdd/memory-restore-offline-readout/wrapper.log"
+    },
+    {
+      "bytes": 1335,
+      "path": "decoder-red.log",
+      "sha256": "c214356118beb44fa3b889d762101124b03fb003004809c7b2ca64c82f37dc81",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/research-phase/.superpowers/sdd/memory-restore-offline-readout/decoder-red.log"
+    },
+    {
+      "bytes": 99,
+      "path": "decoder-green.log",
+      "sha256": "5caa8e978a225ec0cad7ae24126d5e26bfdaec916f06936e3225b3ddf62356e4",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/research-phase/.superpowers/sdd/memory-restore-offline-readout/decoder-green.log"
+    },
+    {
+      "bytes": 5972,
+      "path": "delivery-full-suite.log",
+      "sha256": "261e03dc57c9fcbcf44fd76c5757630ee212c0c2973bd04c992d89507f58a4ea",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/research-phase/.superpowers/sdd/memory-restore-offline-readout/delivery-full-suite.log"
+    }
+  ],
+  "qualification_claims": [],
+  "registration_sha256": "2f584e00e70c43430d3c2fccbb7c734c679066c74cf5060e4b01702908103ad2",
+  "schema": "memory-restore-offline-publication-v1",
+  "scope": "Post-close documentary hash/copy checks only; no new scientific readout or native decode"
+}

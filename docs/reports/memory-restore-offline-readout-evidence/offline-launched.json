@@ -1,0 +1,16 @@
+{
+  "command": [
+    "timeout",
+    "--signal=TERM",
+    "--kill-after=5",
+    "290s",
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/lab-hardening/.venv/bin/python",
+    "-m",
+    "scripts.memory_restore_offline_readout",
+    "--registration",
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/research-phase/docs/reports/memory-restore-offline-readout-evidence/registration.json"
+  ],
+  "started_monotonic": 39417.153396496,
+  "registration_sha256": "2f584e00e70c43430d3c2fccbb7c734c679066c74cf5060e4b01702908103ad2",
+  "implementation_head": "0259763c713ddaad96b5e4f8ed42ff41d786e689"
+}
