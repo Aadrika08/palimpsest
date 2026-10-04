@@ -178,9 +178,13 @@ of memory benefit, not acquisition alone. R3 and learned puck capability retain 
 previous failures; held-out, physical hardware, operator and exhibition acceptance
 remain open. No model promotion, release completion or automatic merge is claimed.
 
-Publication is on `research/memory-waypoint-amendment`, stacked on
+[Draft PR #67](https://github.com/Aadrika08/palimpsest/pull/67) publishes
+`research/memory-waypoint-amendment`, stacked on
 `research/memory-v2-feasibility` (draft #66). Repo-local author identity is
 Aadrika Maurya <aadrikamaurya@gmail.com>; pushes/API publication use Aadrika08.
 The original main remains `ee6bf61ea8faec02d5522c7eee30ab7cf333f29d`.
-Remote CI status is verified separately after publication; local tests do not
-resolve the previously observed account billing/spending restriction.
+At published head `860213f`, fixtures/frontend jobs failed without starting:
+GitHub reports failed recent payments or a spending limit that needs increasing.
+[Exact live annotations](memory-waypoint-evidence/ci-annotations.json) retain that
+external CI blocker separately from passing local tests. No workflow or account
+billing settings were changed.
