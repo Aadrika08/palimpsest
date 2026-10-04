@@ -67,7 +67,13 @@ private geometry remains inside the sensor producer, with independently checked
 packet provenance. This is a declared sensor-contract change requiring approval
 and validation, not an implicit distance channel. Passage observations remain
 governed by the separate .75 m rule. Goal termination uses the existing declared
-goal predicate, identically in every condition.
+geometric goal predicate, identically in every condition. V2 must explicitly
+version its request/termination interaction: pending inspections of unchosen
+routes are deferred work, not mandatory obligations that suppress goal success.
+The current engine suppresses goal completion with pending requests, so leaving
+that behavior unchanged would prevent an avoiding condition from finishing.
+Keep those facts uncertain and retain their audit; never fabricate resolved
+inspection evidence merely to clear a queue.
 
 Start M with unknown estimates. The common prefix must obtain two real `open`
 samples, with episode/tick evidence, while gates are open; then return to the
@@ -96,7 +102,9 @@ States are `acquire`, `await_decision`, `commit`, `follow_route`, `inspect`,
 `retreat`, `replan`, and terminal `goal`/`failure`. Transitions and route changes
 are recorded with their exact inputs. Requests may flag a belief as uncertain
 and create pending work; they cannot independently command a second steering
-policy or skip the route decision.
+policy or skip the route decision. Requests on unchosen routes remain deferred;
+the shared terminal goal rule does not wait for them. The chosen route's own
+required inspection still cannot be bypassed.
 
 At commitment or replanning, exclude known-blocked routes. Prefer observed-open
 routes to uncertain routes; among equal classes, choose the lowest fixed public
