@@ -1,0 +1,244 @@
+{
+  "artifact_index": [
+    {
+      "bytes": 6322,
+      "path": "invocation.py",
+      "sha256": "4c06ae83b672c0639691f35b2db49af491b3f53c13c6d3c867e6f5cf2962c535"
+    },
+    {
+      "bytes": 95,
+      "path": "nav-reproduce-supervisor/stderr.log",
+      "sha256": "0c2b1e3b04858a757bc365d759a303dca88f38330aad25d7df3243217356c6f8"
+    },
+    {
+      "bytes": 0,
+      "path": "nav-reproduce-supervisor/stdout.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 345,
+      "path": "nav-reproduce-supervisor/supervisor.json",
+      "sha256": "ff24a65117fc2b75672bf212853297d7455d437b3502ef4d756b61c5d71204a4"
+    },
+    {
+      "bytes": 277516,
+      "path": "puck-explore/capacity256-seed-21.npz",
+      "sha256": "dc4b7a07db364bf4e7adc384ff030a12a7fbeb5aca8699a3ecaf2162f0784ea5"
+    },
+    {
+      "bytes": 277516,
+      "path": "puck-explore/capacity256-seed-22.npz",
+      "sha256": "eb7d3479af2f6e466608bf0a5c7264318303bede7a85aa59c2361b03960e86b1"
+    },
+    {
+      "bytes": 277516,
+      "path": "puck-explore/capacity256-seed-23.npz",
+      "sha256": "d690d3651364825a05e8d70a757b036acbaacdf6002301a554a4bc6d3e888f89"
+    },
+    {
+      "bytes": 7266,
+      "path": "puck-explore/conditioned32-seed-21.npz",
+      "sha256": "22057eedb1f7526f42ed06f9b63e5e660c606547b48bd7bcddf3eb8f5e05c527"
+    },
+    {
+      "bytes": 7266,
+      "path": "puck-explore/conditioned32-seed-22.npz",
+      "sha256": "96a3a6d989d8497720e17289ab30775a412d927719d75809d630182559f1e2c8"
+    },
+    {
+      "bytes": 7266,
+      "path": "puck-explore/conditioned32-seed-23.npz",
+      "sha256": "57afffbcd6c5693c9e26c979072f02c70270b6674637b2ea525dcec6b83e52cc"
+    },
+    {
+      "bytes": 7266,
+      "path": "puck-explore/longer32-seed-21.npz",
+      "sha256": "b5e56bfdd0e88d922b2fddb7f179919fc2a4417bb17066fdae2e856e184c1e55"
+    },
+    {
+      "bytes": 7266,
+      "path": "puck-explore/longer32-seed-22.npz",
+      "sha256": "490b2a3ab300cfb380c69e437fd7dcd472a81dc7b739a51a400e2cb7500d68ea"
+    },
+    {
+      "bytes": 7266,
+      "path": "puck-explore/longer32-seed-23.npz",
+      "sha256": "687d0a10087b7f8e94ebfe653792af44be8f84aeef1abda811e9ec6f86e14814"
+    },
+    {
+      "bytes": 262190,
+      "path": "puck-explore/report.json",
+      "sha256": "e25c3c933abe7a5b07bf79461018a1ba77fc54ea7ff712173a68848db147f9e2"
+    },
+    {
+      "bytes": 0,
+      "path": "puck-explore-supervisor/stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 161,
+      "path": "puck-explore-supervisor/stdout.log",
+      "sha256": "4412543390ea18d19d4ccffa04faf80dbb0f9610a48286e70357595997f871da"
+    },
+    {
+      "bytes": 346,
+      "path": "puck-explore-supervisor/supervisor.json",
+      "sha256": "fb663ea03d8405a383d5136ad41c503a547fda6ede40e727af6d6c2ac61500d8"
+    },
+    {
+      "bytes": 53964,
+      "path": "puck-reproduce/report.json",
+      "sha256": "b826434680979b866556d4ced254f9d99c37f41c40a38e9a143f3cf78f5bf54b"
+    },
+    {
+      "bytes": 7266,
+      "path": "puck-reproduce/reproduction-seed-21.npz",
+      "sha256": "e5284de291a94276b5f9dafcd8ab52abb3566741b72d4666aef3a3ac916de680"
+    },
+    {
+      "bytes": 7266,
+      "path": "puck-reproduce/reproduction-seed-22.npz",
+      "sha256": "d6a17a528e80a2d4fb97a93790b404092a3761e8c485f06f535dca0cf06e6684"
+    },
+    {
+      "bytes": 7266,
+      "path": "puck-reproduce/reproduction-seed-23.npz",
+      "sha256": "afda5c0cd948b09f9f08c130f2ecb24243b135820affab840bc67633c0288d3b"
+    },
+    {
+      "bytes": 0,
+      "path": "puck-reproduce-supervisor/stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 160,
+      "path": "puck-reproduce-supervisor/stdout.log",
+      "sha256": "f462fa7ded0f5560f094d35f623440a762845d895b312a5d086b576084113d75"
+    },
+    {
+      "bytes": 344,
+      "path": "puck-reproduce-supervisor/supervisor.json",
+      "sha256": "d2e22edda7f825ef59c5bd9d677064aa34fedb146ca7535541fbdd0440e5094e"
+    }
+  ],
+  "caps": {
+    "combined_reproduction": 1200,
+    "nav_explore": 3000,
+    "puck_explore": 2400,
+    "readout": 600
+  },
+  "elapsed_seconds": 345.591561662,
+  "held_out_used": false,
+  "implementation_head": "d96e623e8256e6e7bb913385dd563a6cf4a22cd2",
+  "invocation_source_sha256": "4c06ae83b672c0639691f35b2db49af491b3f53c13c6d3c867e6f5cf2962c535",
+  "label": "EXPLORATORY \u2014 not gate evidence",
+  "max_seconds": 7200,
+  "output": "/home/utkarsh/Work/shraddha/brain/.worktrees/research-phase/runs/research-capability-20261004T070529Z",
+  "qualification_claims": [],
+  "readout_seconds": 0.002656274999935704,
+  "root": "/home/utkarsh/Work/shraddha/brain/.worktrees/research-phase",
+  "stages": {
+    "nav-explore": {
+      "reason": "reproduction not passed",
+      "status": "unattempted"
+    },
+    "nav-reproduce": {
+      "command": [
+        "/home/utkarsh/Work/shraddha/brain/.worktrees/lab-hardening/.venv/bin/python",
+        "/home/utkarsh/Work/shraddha/brain/.worktrees/research-phase/scripts/nav_fit_ladder.py",
+        "--stage",
+        "reproduce",
+        "--seconds",
+        "1155",
+        "--output",
+        "/home/utkarsh/Work/shraddha/brain/.worktrees/research-phase/runs/research-capability-20261004T070529Z/nav-reproduce",
+        "--historical-root",
+        "/home/utkarsh/Work/shraddha/brain/.worktrees/male-navigation-training-v2",
+        "--historical-bundles",
+        "/home/utkarsh/Work/shraddha/brain/.worktrees/male-navigation-training-v2/runs/m7-navigation-training-v2-v2-6feade9-20261003/bundles"
+      ],
+      "runner_status": "absent",
+      "supervisor": {
+        "elapsed_seconds": 0.07243946000016876,
+        "output": "/home/utkarsh/Work/shraddha/brain/.worktrees/research-phase/runs/research-capability-20261004T070529Z/nav-reproduce-supervisor",
+        "returncode": 1,
+        "schema_version": 1,
+        "started_utc": "2026-10-04T07:05:54.367033+00:00",
+        "status": "failed",
+        "timeout_seconds": 1170.5493903330002
+      }
+    },
+    "puck-explore": {
+      "command": [
+        "/home/utkarsh/Work/shraddha/brain/.worktrees/lab-hardening/.venv/bin/python",
+        "/home/utkarsh/Work/shraddha/brain/.worktrees/research-phase/scripts/puck_fit_ladder.py",
+        "--stage",
+        "explore",
+        "--seconds",
+        "2379",
+        "--output",
+        "/home/utkarsh/Work/shraddha/brain/.worktrees/research-phase/runs/research-capability-20261004T070529Z/puck-explore",
+        "--collection-report",
+        "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-stop-boundary/runs/m6-puck-teacher-collection-v2-20261003/gate/report.json",
+        "--collection-sha256",
+        "3cf5044ac12fa80ebfed9aa044d0e983a94fcddb4e177da779a4684b944b518b",
+        "--training-root",
+        "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-training-v2/runs/puck-training-v2-20261003",
+        "--reproduction-report",
+        "/home/utkarsh/Work/shraddha/brain/.worktrees/research-phase/runs/research-capability-20261004T070529Z/puck-reproduce/report.json"
+      ],
+      "report_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/research-phase/runs/research-capability-20261004T070529Z/puck-explore/report.json",
+      "report_sha256": "e25c3c933abe7a5b07bf79461018a1ba77fc54ea7ff712173a68848db147f9e2",
+      "runner_status": "completed",
+      "supervisor": {
+        "elapsed_seconds": 321.05432322499973,
+        "output": "/home/utkarsh/Work/shraddha/brain/.worktrees/research-phase/runs/research-capability-20261004T070529Z/puck-explore-supervisor",
+        "returncode": 0,
+        "schema_version": 1,
+        "started_utc": "2026-10-04T07:05:54.442861+00:00",
+        "status": "completed",
+        "timeout_seconds": 2394.9999984769993
+      }
+    },
+    "puck-reproduce": {
+      "command": [
+        "/home/utkarsh/Work/shraddha/brain/.worktrees/lab-hardening/.venv/bin/python",
+        "/home/utkarsh/Work/shraddha/brain/.worktrees/research-phase/scripts/puck_fit_ladder.py",
+        "--stage",
+        "reproduce",
+        "--seconds",
+        "1179",
+        "--output",
+        "/home/utkarsh/Work/shraddha/brain/.worktrees/research-phase/runs/research-capability-20261004T070529Z/puck-reproduce",
+        "--collection-report",
+        "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-stop-boundary/runs/m6-puck-teacher-collection-v2-20261003/gate/report.json",
+        "--collection-sha256",
+        "3cf5044ac12fa80ebfed9aa044d0e983a94fcddb4e177da779a4684b944b518b",
+        "--training-root",
+        "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-training-v2/runs/puck-training-v2-20261003"
+      ],
+      "report_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/research-phase/runs/research-capability-20261004T070529Z/puck-reproduce/report.json",
+      "report_sha256": "b826434680979b866556d4ced254f9d99c37f41c40a38e9a143f3cf78f5bf54b",
+      "runner_status": "passed",
+      "supervisor": {
+        "elapsed_seconds": 24.438000742999975,
+        "output": "/home/utkarsh/Work/shraddha/brain/.worktrees/research-phase/runs/research-capability-20261004T070529Z/puck-reproduce-supervisor",
+        "returncode": 0,
+        "schema_version": 1,
+        "started_utc": "2026-10-04T07:05:29.923052+00:00",
+        "status": "completed",
+        "timeout_seconds": 1194.994008571
+      }
+    }
+  },
+  "started_utc": "20261004T070529Z",
+  "status": "finished-bounded-exploration",
+  "storage": {
+    "files": 25,
+    "headroom_bytes": 0,
+    "max_bytes": 2147483648,
+    "min_free_bytes": 2147483648,
+    "remaining_bytes": 2146256579,
+    "used_bytes": 1227069
+  }
+}

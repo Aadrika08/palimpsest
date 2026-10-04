@@ -9,10 +9,10 @@ open for a decision-bearing v2 study.
 
 The [44-cell readout](m5-development-readout-44.md) retains 44/48 accepted cells,
 396 condition readouts and 352 own-versus-reference pairs. All task comparisons
-tie; 340 goal comparisons tie and own is one tick later in12. All120 applicable
-stale-correction comparisons tie across15 change cells. All15 null cells retain
-false targeting, while14 no-event cells have zero selector calls/behavior bytes.
-Four C3 cells retain broader state differences;40 later cells have strict core
+tie; 340 goal comparisons tie and own is one tick later in 12. All 120 applicable
+stale-correction comparisons tie across 15 change cells. All 15 null cells retain
+false targeting, while 14 no-event cells have zero selector calls/behavior bytes.
+Four C3 cells retain broader state differences; 40 later cells have strict core
 forks. Shared namespaces and repeated conditions are not independent samples.
 
 The remaining-07 failure is retained and no partial cell is promoted. Its
@@ -37,8 +37,8 @@ memory claim or guarantee about different geometry follows.
 
 ## Why held-out was declined
 
-The [v1 outline](../plans/m5-heldout-proposal.md) projected approximately7.4-8.1h
-and16.3GB extra retained output. These are historical planning estimates, not
+The [v1 outline](../plans/m5-heldout-proposal.md) projected approximately 7.4-8.1h
+and 16.3GB extra retained output. These are historical planning estimates, not
 current guarantees. The user selected bounded research exploration and retired
 v1: further confirmation of this narrow profile is a lower priority than a scene
 where remembered passability actually affects a decision. A rigorous null can be

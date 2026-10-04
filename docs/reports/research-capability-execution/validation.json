@@ -1,0 +1,154 @@
+{
+  "cache_fixture": "Owned temporary pathlib.Path.home via unittest.mock.patch; HOME unchanged; no production predicates patched",
+  "cwd": "/home/utkarsh/Work/shraddha/brain/.worktrees/research-phase",
+  "date": "2026-10-04",
+  "earlier_verification_observations": [
+    {
+      "action": "Populate exact pinned submodule from existing local checkout",
+      "detail": "Fresh isolated checkout lacked pinned upstream mapping CSV",
+      "observed_passed_before_failure": 50,
+      "outcome": "Failed"
+    },
+    {
+      "action": "Owned temporary Path.home fixture; HOME and production source unchanged",
+      "detail": "Real user cache writer.lock is read-only in sandbox",
+      "observed_passed_before_failure": 85,
+      "outcome": "Failed"
+    },
+    {
+      "command": "timeout 180 env PYTHONPATH=.:src:scripts:tests OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 <python> /tmp/palimpsest-research-checks.py -q -o faulthandler_timeout=20",
+      "detail": "Combined suite stalled at tests/test_lab.py ApiGuards.setUp in TestClient.__enter__. Diagnostic showed main thread waiting on concurrent.futures.result, portal event loop in selector.select, lab monitor waiting.",
+      "evidence": "Observed tool diagnostic in this session, summarized here; not a raw log",
+      "outcome": "Timed out",
+      "raw_combined_trace_retained": false,
+      "returncode": 124
+    },
+    {
+      "baseline_pytest_seconds": 0.84,
+      "detail": "Same host/origin/session guard standalone on baseline and research checkouts",
+      "logs": [
+        "standalone-baseline-asgi.log",
+        "standalone-research-asgi.log"
+      ],
+      "outcome": "Passed",
+      "research_pytest_seconds": 0.72
+    }
+  ],
+  "environment": {
+    "MKL_NUM_THREADS": "1",
+    "OMP_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1",
+    "PYTHONPATH": ".:src:scripts:tests"
+  },
+  "focused_checks": [
+    {
+      "cpu_opt_in": "PALIMPSEST_TEST_PUCK_TORCH=1",
+      "evidence": "Observed tool result in this implementation session",
+      "passed": 33,
+      "scope": "Puck fitting/model/balanced synthetic checks",
+      "seconds": 17.3
+    },
+    {
+      "cpu_opt_in": "PALIMPSEST_MALE_TORCH_CHECKS=1",
+      "evidence": "Observed tool result in this implementation session",
+      "passed": 14,
+      "scope": "Navigation ladder including producer identity correction",
+      "seconds": 2.42
+    }
+  ],
+  "label": "Software verification; no scientific qualification claim",
+  "limitations": [
+    "Combined-process TestClient startup hang is unresolved; order dependence is observed, unique cause unestablished",
+    "Partitioned pass does not establish absence of cross-module shared-state bugs",
+    "Optional native/renderer/Torch paths remain skipped in default regression; changed Torch paths checked separately",
+    "Verification uses existing isolated upstream unit/physics fixtures; no new scientific task rollout or retained-data collection"
+  ],
+  "partitioned_regression": {
+    "all_default_tests_accounted_for": true,
+    "full_single_process_pass": false,
+    "isolated_api_modules": [
+      {
+        "command": [
+          "/home/utkarsh/Work/shraddha/brain/.worktrees/lab-hardening/.venv/bin/python",
+          "/tmp/palimpsest-research-checks.py",
+          "-q",
+          "tests/test_lab.py",
+          "-o",
+          "faulthandler_timeout=30"
+        ],
+        "log": "/tmp/palimpsest-test_lab-isolated.log",
+        "module": "tests/test_lab.py",
+        "passed": 17,
+        "published_log": "regression-lab.log",
+        "returncode": 0,
+        "seconds": 29.276564485000563,
+        "skipped": 2
+      },
+      {
+        "command": [
+          "/home/utkarsh/Work/shraddha/brain/.worktrees/lab-hardening/.venv/bin/python",
+          "/tmp/palimpsest-research-checks.py",
+          "-q",
+          "tests/test_male_lab.py",
+          "-o",
+          "faulthandler_timeout=30"
+        ],
+        "log": "/tmp/palimpsest-test_male_lab-isolated.log",
+        "module": "tests/test_male_lab.py",
+        "passed": 7,
+        "published_log": "regression-male-lab.log",
+        "returncode": 0,
+        "seconds": 1.7702982569999222,
+        "skipped": 0
+      },
+      {
+        "command": [
+          "/home/utkarsh/Work/shraddha/brain/.worktrees/lab-hardening/.venv/bin/python",
+          "/tmp/palimpsest-research-checks.py",
+          "-q",
+          "tests/test_memory_branch.py",
+          "-o",
+          "faulthandler_timeout=30"
+        ],
+        "log": "/tmp/palimpsest-test_memory_branch-isolated.log",
+        "module": "tests/test_memory_branch.py",
+        "passed": 2,
+        "published_log": "regression-memory-branch.log",
+        "returncode": 0,
+        "seconds": 1.6203984270005094,
+        "skipped": 1
+      }
+    ],
+    "non_api": {
+      "command": [
+        "timeout",
+        "240",
+        "env",
+        "PYTHONPATH=.:src:scripts:tests",
+        "OMP_NUM_THREADS=1",
+        "OPENBLAS_NUM_THREADS=1",
+        "MKL_NUM_THREADS=1",
+        "/home/utkarsh/Work/shraddha/brain/.worktrees/lab-hardening/.venv/bin/python",
+        "/tmp/palimpsest-research-checks.py",
+        "-q",
+        "--ignore=tests/test_lab.py",
+        "--ignore=tests/test_male_lab.py",
+        "--ignore=tests/test_memory_branch.py",
+        "-o",
+        "faulthandler_timeout=45"
+      ],
+      "passed": 786,
+      "published_log": "regression-non-api.log",
+      "pytest_seconds": 84.95,
+      "returncode": 0,
+      "skipped": 21
+    },
+    "total_collected": 836,
+    "total_passed": 812,
+    "total_skipped": 24
+  },
+  "python": "/home/utkarsh/Work/shraddha/brain/.worktrees/lab-hardening/.venv/bin/python",
+  "qualification_claims": [],
+  "upstream_revision": "8d964599119b420de67ee259434d273651a1a76d",
+  "upstream_setup": "Shared clone of existing initialized local checkout; no revision change or asset download"
+}

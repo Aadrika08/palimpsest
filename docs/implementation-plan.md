@@ -47,6 +47,13 @@ The puck stop-fitting decision remains historical; conditioning/capacity probes
 are authorized by this phase. No automatic new collection, relabeling, held-out
 opening, model promotion, hardware operation or exhibition acceptance follows.
 
+The [executed exploratory readout](reports/research-capability-phase.md) records
+exact reproduction of all nine historical fits, nine new puck fits and twelve
+navigation probes. None meets its joint rule; both fitting tracks stop with no
+selected model. The [memory-v2 design](plans/m5-v2-decision-scene.md) is complete
+as a specification only. R2, R3 and learned puck capability remain open; no new
+runtime pilot, native evaluation or held-out access is implied.
+
 ## Architecture and contracts
 
 Use Python 3.11 with uv, MuJoCo/Gymnasium, PyTorch, a local FastAPI service, and React/TypeScript/Vite with Node 24 LTS. Pin the upstream FLYNN submodule at `8d964599119b420de67ee259434d273651a1a76d`; retain its effective preprocessing, control interval, and action conversion. Freeze the working environment in uv.lock after reference checks.
