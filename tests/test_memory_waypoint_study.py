@@ -170,3 +170,24 @@ def test_prerequisite_accounting_starts_before_geometry_preparation(tmp_path,mon
     plan = {'output':str(tmp_path/'development'),'phase_root':str(tmp_path),'geometry_valid':True}
     module.run_prerequisites(plan,world.WAYPOINT_PROFILE_HASHES[0],None,10000.)
     assert observed == [5500.]
+
+
+def test_native_tick_limit_and_stall_require_matching_terminal_event_and_raw_motion():
+    p = study().pilot
+    def fixture(reason,count,movement):
+        outcome = {'reason':reason,'episode':0,'steps':count}
+        rows = [{'pose':[0.,0.,0.],'next_pose':[movement,0.,0.],'action':[.5,0.]} for _ in range(count)]
+        return {'rows':rows,'events':[{'kind':'episode_finished','outcome':outcome}]}, {
+            'outcome':outcome,'total_ticks':count,'final_phase':'truncated' if reason=='time_limit' else 'terminated'}
+    data, report = fixture('time_limit',1200,.01)
+    assert p.audit_native_prefix_terminal(data,report) == 'time_limit'
+    with pytest.raises(ValueError):
+        p.audit_native_prefix_terminal({**data,'events':[]},report)
+    data, report = fixture('stalled',50,.001)
+    assert p.audit_native_prefix_terminal(data,report) == 'stalled'
+    data['rows'][-1]['next_pose'][0] = .01
+    with pytest.raises(ValueError):
+        p.audit_native_prefix_terminal(data,report)
+    data, report = fixture('time_limit',100,.01)
+    with pytest.raises(ValueError):
+        p.audit_native_prefix_terminal(data,report)

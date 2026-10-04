@@ -669,6 +669,28 @@ def admit_prefix_failure(job, supervised, report, manifest):
         raise ValueError('Unqualified acquisition infrastructure failure')
 
 
+def audit_native_prefix_terminal(data, report):
+    """Reconstruct pinned CPU-world stall/time-limit termination from raw rows."""
+    outcome = report.get('outcome') or {}
+    reason, total = outcome.get('reason'), report['total_ticks']
+    ended = [e for e in data['events'] if e['kind'] == 'episode_finished']
+    if (reason not in ('stalled','time_limit') or outcome.get('episode') != 0 or
+            outcome.get('steps') != total or len(ended) != 1 or ended[0].get('outcome') != outcome or
+            len(data['rows']) != total or report.get('final_phase') != ('terminated' if reason == 'stalled' else 'truncated')):
+        raise ValueError('Native prefix termination differs from actual terminal event')
+    counter, stalls = 0, []
+    for index, row in enumerate(data['rows']):
+        moved = math.dist(row['pose'][:2],row['next_pose'][:2])
+        counter = counter+1 if moved < .002 and abs(float(row['action'][0])) > .05 else 0
+        if counter >= 50:
+            stalls.append(index)
+    if reason == 'stalled' and stalls != [total-1]:
+        raise ValueError('Native stall not independently reproduced at its final motor row')
+    if reason == 'time_limit' and (total != 1200 or stalls):
+        raise ValueError('Native acquisition cap not reached or earlier stall ignored')
+    return reason
+
+
 def audit_prefix_failure(job, supervised, deadline=None):
     """An audited task failure is evidence; allocation/runtime errors are not.
 
@@ -688,7 +710,7 @@ def audit_prefix_failure(job, supervised, deadline=None):
     declared_failure = (report['final_memory']['supervisor']['phase'] == 'failure' and
         reason in ('acquisition_timeout','waypoint_timeout','inspection_timeout','acquisition_incomplete'))
     if not (cue_failure or declared_failure):
-        raise ValueError('Failure is not the declared sensor/supervisor contract')
+        reason = audit_native_prefix_terminal(data,report)
     environments = [e for e in data['events'] if e['kind'] == 'environment']
     if len(environments) != 1 or any(environments[0].get(k) != job['source_identity'].get(k)
             for k in ('source_sha256','lock_sha256','upstream_commit')):
