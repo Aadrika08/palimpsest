@@ -27,8 +27,13 @@ def main():
         OMP_NUM_THREADS='1', OPENBLAS_NUM_THREADS='1', MKL_NUM_THREADS='1',
         NUMEXPR_NUM_THREADS='1', MUJOCO_GL='egl', CUDA_VISIBLE_DEVICES='')
     print(json.dumps({'diagnostic_invocation': 'starting', 'output': registration['output']}), flush=True)
-    with (evidence/'native-invocation.log').open('x') as log:
+    # The child repeats clean-checkout admission. Keep its live log ignored until
+    # it has exited; publication files created beforehand would dirty the repo.
+    native_log = marker.parent/'native-invocation.log'
+    with native_log.open('x') as log:
         completed = subprocess.run(command, cwd=repo, env=env, stdout=log, stderr=subprocess.STDOUT)
+    with (evidence/'native-invocation.log').open('xb') as published:
+        published.write(native_log.read_bytes())
     result = {'native_exit_code': completed.returncode, 'registration_sha256': p.file_hash(evidence/'registration.json')}
     with (evidence/'invocation-result.json').open('x') as stream:
         json.dump(result, stream, indent=2); stream.write('\n')

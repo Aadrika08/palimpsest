@@ -262,3 +262,39 @@ def test_offline_native_decode_exposes_changed_field_without_stepping():
     assert result['decoded_field_count'][0] > 100
     assert result['physics_steps'] == 0
     assert left.time == right.time == 0.
+
+
+def test_launcher_keeps_checkout_clean_until_child_admission(tmp_path, monkeypatch):
+    import importlib.util
+    import subprocess
+    path = Path(__file__).resolve().parents[1]/'docs/reports/memory-restore-diagnostic-evidence/execute-diagnostic.py'
+    spec = importlib.util.spec_from_file_location('restore_launcher_test', path)
+    module = importlib.util.module_from_spec(spec); spec.loader.exec_module(module)
+    evidence = tmp_path/'docs/reports/memory-restore-diagnostic-evidence'; evidence.mkdir(parents=True)
+    workspace = tmp_path/'.superpowers/sdd/memory-restore-diagnostic'; workspace.mkdir(parents=True)
+    (tmp_path/'.gitignore').write_text('.superpowers/\n')
+    (evidence/'registration.json').write_text(json.dumps({'repo': str(tmp_path),
+        'output': str(tmp_path/'runs/diagnostic'), 'python': '/not-executed/python'}))
+    subprocess.run(['git','init','-q',str(tmp_path)],check=True)
+    subprocess.run(['git','-C',str(tmp_path),'add','.'],check=True)
+    subprocess.run(['git','-C',str(tmp_path),'-c','user.name=Fixture','-c','user.email=fixture@example.test',
+                    'commit','-qm','fixture'],check=True)
+    monkeypatch.setattr(module, '__file__', str(evidence/'execute-diagnostic.py'))
+    actual_run = subprocess.run
+    native_calls = []
+    def run(command, **kwargs):
+        if command[0] != 'timeout':
+            return actual_run(command, **kwargs)
+        native_calls.append(command)
+        # This is a real clean-check across the parent→child admission boundary.
+        assert subprocess.check_output(['git','status','--porcelain'],cwd=tmp_path) == b''
+        kwargs['stdout'].write('stubbed process; no native owner\n')
+        return subprocess.CompletedProcess(command, 0)
+    monkeypatch.setattr(module.subprocess, 'run', run)
+    assert module.main() == 0
+    assert len(native_calls) == 1
+    assert (evidence/'native-invocation.log').read_text() == 'stubbed process; no native owner\n'
+    assert (workspace/'diagnostic-launched.json').exists()
+    with pytest.raises(ValueError, match='clean'):
+        module.main()
+    assert len(native_calls) == 1

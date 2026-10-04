@@ -1,0 +1,9 @@
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/utkarsh/Work/shraddha/brain/.worktrees/research-phase/scripts/memory_restore_diagnostic.py", line 379, in <module>
+    raise SystemExit(main())
+                     ^^^^^^
+  File "/home/utkarsh/Work/shraddha/brain/.worktrees/research-phase/scripts/memory_restore_diagnostic.py", line 273, in main
+    raise ValueError('Native admission requires a clean implementation checkout')
+ValueError: Native admission requires a clean implementation checkout
