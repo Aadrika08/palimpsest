@@ -103,6 +103,9 @@ class Engine:
         self.env, self.writer = env, writer
         self.controller, self.policy, self.teacher = controller, policy, teacher
         self.scenario, self.texture = scenario, texture
+        if scenario == 'memory-decision-v2':
+            from .profiles import validate_decision
+            validate_decision(scenario,texture,controller)
         from .memory_reference import REFERENCES
         self.reference_mode = scenario if scenario in REFERENCES else None
         self.memory_case, restore_snapshot, memory_u = self._memory_restore(
@@ -131,7 +134,7 @@ class Engine:
         self.seed = _seed(seed)
         if scenario in ('adaptive-wheel-calibration', 'adaptive-encoder-homing') and self.seed != 1:
             raise ValueError('Measured calibration requires its declared seed 1')
-        if restore_snapshot is not None and self.seed != self.memory_case['seed']:
+        if (restore_snapshot is not None or scenario == 'memory-decision-v2') and self.seed != self.memory_case['seed']:
             raise ValueError('Continuation seed differs from its exact acquisition case')
         self.run_id = writer.manifest.get("run_id", uuid.uuid4().hex)
         self.parent_run_id = None
@@ -189,6 +192,8 @@ class Engine:
         """One narrow atomic continuation exception; ordinary admission is unchanged."""
         if type(replace_controller) is not bool:
             raise ValueError('Controller replacement must be an explicit boolean')
+        if scenario == 'memory-decision-v2':
+            return cls._decision_restore(value, controller, device, snapshot, replace_controller, u)
         from .memory_reference import REFERENCES, validate_source
         reference = scenario in REFERENCES
         if snapshot is None:
@@ -237,6 +242,87 @@ class Engine:
         return case, copy.deepcopy(snapshot), None if u is None else memory.validate_u(u)
 
     @classmethod
+    def _decision_restore(cls, value, controller, device, snapshot, replace_controller, u):
+        from . import memory, memory_decision, memory_decision_world
+        from .snapshots import SNAPSHOT_KEYS, SCHEMA_VERSION, DECISION_MAX_BYTES, MAX_METADATA, validate_decision_snapshot
+        if controller != 'flynn' or device != 'cpu' or replace_controller or u is not None:
+            raise ValueError('Memory-v2 requires CPU FLYNN, explicit selector boundary and no controller replacement')
+        case = memory_decision_world.validate_case(value)
+        if not memory_decision_world.geometry_check(case)['valid']:
+            raise ValueError('Mandatory memory-v2 geometry failed')
+        if snapshot is None:
+            return case, None, None
+        validate_decision_snapshot(snapshot)
+        if (type(snapshot) is not dict or set(snapshot) != SNAPSHOT_KEYS or
+                type(snapshot.get('schema_version')) is not int or snapshot['schema_version'] != SCHEMA_VERSION):
+            raise ValueError('Unsupported memory-v2 snapshot container')
+        native = snapshot['native_data']
+        if (type(native) is not bytes or not native or len(native)>DECISION_MAX_BYTES or
+                hashlib.sha256(native).hexdigest()!=snapshot['native_sha256']):
+            raise ValueError('Invalid memory-v2 native bytes/hash')
+        app = snapshot['application']
+        if type(app) is not dict or len(memory.canonical_bytes(app))>MAX_METADATA:
+            raise ValueError('Invalid bounded memory-v2 application')
+        expected = {'schema_version','source_run_id','event_prefix','teacher_reset_identity','controller','episode','total_tick',
+            'revision','eyes','scenario','texture','episode_step','phase','manual_action','metrics','last_outcome','seed',
+            'episode_finished','pending_commands','session_exhausted','recording_failed','receipts','original_commands',
+            'memory','world_task_state','controller_tensors','execution_mode','task_state'}
+        if (set(app)!=expected or type(app['schema_version']) is not int or app['schema_version']!=8 or
+                app['scenario']!='memory-decision-v2' or app['controller']!='flynn' or app['phase']!='paused' or
+                app['texture']!='checker' or app['execution_mode'] not in ('live','policy') or
+                app['episode']!=0 or app['seed']!=case['seed'] or app['total_tick']!=app['episode_step']):
+            raise ValueError('Memory-v2 requires its exact paused CPU FLYNN source application')
+        for key in ('episode','total_tick','episode_step','revision'):
+            if type(app[key]) is not int or app[key]<0:
+                raise ValueError('Invalid memory-v2 application counter')
+        _seed(app['seed'])
+        if app['teacher_reset_identity'] is not None or type(app['eyes']) is not dict or any(type(v) is not bool for v in app['eyes'].values()):
+            raise ValueError('Memory-v2 source has incompatible teacher/eye state')
+        memory._fields(app['controller_tensors'],'graph_buffers parameters')
+        for digest in app['controller_tensors'].values():
+            memory._digest(digest)
+        if app['episode_step']>2100 or app['task_state'] is not None or app['manual_action']!=[0.,0.] or app['eyes']!={'left':True,'right':True}:
+            raise ValueError('Memory-v2 source exceeds its declared single-controller profile')
+        if app['recording_failed'] is not False or app['session_exhausted'] is not False or app['episode_finished'] is not False or app['last_outcome'] is not None:
+            raise ValueError('Terminal memory-v2 source cannot continue')
+        task = memory_decision.validate_state(app['memory'])
+        world_state = memory_decision_world.validate_state(app['world_task_state'])
+        previous = app['episode_step']-1 if app['episode_step'] else None
+        if (world_state['case']!=case or task['graph']!=memory_decision_world.public_graph(case) or
+                task['initial_m']!={'version':1,'facts':case['facts']} or
+                world_state['last_tick']!=previous or
+                (None if task['cursor'] is None else task['cursor']['tick'])!=previous or
+                task['supervisor']['decision_tick']!=world_state['decision_tick'] or
+                task['supervisor']['continuation_start_tick']!=world_state['armed_boundary_tick']):
+            raise ValueError('Memory-v2 snapshot graph/case/cursors/schedule differ')
+        if task['supervisor']['phase'] in ('goal','failure') or world_state['gate_result']=='rejected':
+            raise ValueError('Failed mandatory memory-v2 state cannot continue')
+        prefix=app['event_prefix']
+        memory._fields(prefix,'sha256 size_bytes event_count')
+        memory._digest(prefix['sha256'])
+        memory._int(prefix['size_bytes'])
+        memory._int(prefix['event_count'])
+        memory._id(app['source_run_id'])
+        memory._fields(app['metrics'],'reward contact_ticks path_length')
+        if any(type(v) not in (int,float) or not math.isfinite(v) for v in app['metrics'].values()) or type(app['metrics']['contact_ticks']) is not int or app['metrics']['contact_ticks']<0 or app['metrics']['path_length']<0:
+            raise ValueError('Invalid memory-v2 metrics')
+        originals,receipts,pending=app['original_commands'],app['receipts'],app['pending_commands']
+        if type(originals) is not dict or type(receipts) is not dict or set(originals)!=set(receipts) or len(originals)>cls.MAX_IDS or type(pending) is not list or len(pending)>cls.MAX_QUEUE:
+            raise ValueError('Invalid memory-v2 command queues')
+        probe=cls.__new__(cls)
+        probe.body_state=None
+        probe.scenario='memory-decision-v2'
+        for identifier,original in originals.items():
+            if (probe._validate_command(original)!=original or original['id']!=identifier or
+                    type(receipts[identifier]) is not dict or receipts[identifier].get('id')!=identifier or
+                    receipts[identifier].get('status') not in ('queued','applied','rejected','failed')):
+                raise ValueError('Invalid memory-v2 receipt history')
+        normalized=[probe._validate_command(command) for command in pending]
+        if len({c['id'] for c in normalized})!=len(normalized) or any(originals.get(c['id'])!=c for c in normalized) or {c['id'] for c in normalized}!={i for i,r in receipts.items() if r['status']=='queued'}:
+            raise ValueError('Invalid memory-v2 pending queue')
+        return case, copy.deepcopy(snapshot), None
+
+    @classmethod
     def open(cls, repo_root, asset_root, output, controller="manual", device="cpu", seed=0,
              max_bytes=2 * 1024**3, scenario="reproduction", texture="checker", run_id=None,
              storage_budget=None, memory_case=None, expected_policy_identity=None, *, research_binding=None,
@@ -255,7 +341,10 @@ class Engine:
             raise ValueError('Male policy identity requires a male controller')
         seed = _seed(seed)
         from .memory_reference import REFERENCES
-        if scenario in REFERENCES:
+        if scenario == 'memory-decision-v2':
+            from .profiles import validate_decision
+            profile = validate_decision(scenario, texture, controller)
+        elif scenario in REFERENCES:
             from .profiles import validate_reference
             profile = validate_reference(scenario, texture, controller)
         else:
@@ -266,7 +355,7 @@ class Engine:
             raise ValueError('Measured calibration requires its declared seed 1')
         memory_case, restore_snapshot, memory_u = cls._memory_restore(
             memory_case, scenario, controller, device, restore_snapshot, replace_controller, memory_u)
-        if restore_snapshot is not None and seed != memory_case['seed']:
+        if (restore_snapshot is not None or scenario == 'memory-decision-v2') and seed != memory_case['seed']:
             raise ValueError('Continuation seed differs from its exact acquisition case')
         case_manifest = {}
         if memory_case is not None:
@@ -331,7 +420,7 @@ class Engine:
             random.seed(seed)
             np.random.seed(seed)
             torch.manual_seed(seed)
-            torch.set_num_threads(2)
+            torch.set_num_threads(1 if scenario == 'memory-decision-v2' else 2)
             reference = import_upstream(root, "run_connectome_rnn_checkpoint")
             env = reference._make_env(None, profile['n_obstacles'], texture_mode=texture)
             configure_world(env)
@@ -394,7 +483,12 @@ class Engine:
             import mujoco
             mujoco.mj_resetData(self.env.model, self.env.data)
         self.observation, _ = self.env.reset(seed=self.seed)
-        if self.scenario == 'memory-passages' or self.reference_mode:
+        if self.scenario == 'memory-decision-v2':
+            from . import memory_decision, memory_decision_world
+            self.world_task_state = memory_decision_world.configure(self.env, memory_decision_world.initial_state(self.memory_case))
+            self.memory = memory_decision.initialize(self.memory_case)
+            self.observation = self.env._get_obs()
+        elif self.scenario == 'memory-passages' or self.reference_mode:
             from . import memory, memory_task, memory_world
             self.world_task_state = memory_world.configure(self.env, memory_world.initial_state(case=self.memory_case))
             episode_id = f'episode-{self.episode}'
@@ -513,6 +607,8 @@ class Engine:
             _xy(payload["xy"])
             if kind == "move_obstacle" and (type(payload["index"]) is not int or payload["index"] < 0):
                 raise ValueError("obstacle index must be a nonnegative integer")
+        if self.scenario == 'memory-decision-v2' and value['kind'] not in ('run','pause','step','stop'):
+            raise ValueError('Memory-v2 excludes manual steering, reset, sensor edits and interventions')
         command = copy.deepcopy(value)
         payload = command.setdefault("payload", {})
         if not isinstance(payload, dict):
@@ -690,6 +786,10 @@ class Engine:
         import numpy as np
         from .evaluate import outcome
 
+        if self.scenario == 'memory-decision-v2' and self.memory['supervisor']['phase']=='await_decision' and self.memory['supervisor']['decision_tick'] is None:
+            raise ValueError('Acquired boundary must be explicitly armed before more control ticks')
+        if self.scenario == 'memory-decision-v2' and action_override is not None:
+            raise ValueError('Memory-v2 motor actions must come from CPU FLYNN')
         obs = self.observation
         task_hold = False
         if self.task_state is not None:
@@ -707,7 +807,31 @@ class Engine:
             if bool(obs['sensors']['collision']):
                 raise ValueError('Declared task contact: control halted before physics step')
         reference_inputs = None
-        if self.reference_mode:
+        if self.scenario == 'memory-decision-v2':
+            from . import memory_decision, memory_decision_world
+            self.world_task_state, changes = memory_decision_world.advance_world(self.env,self.world_task_state,self.episode_step)
+            if changes:
+                self.revision += 1
+            for change in changes:
+                self._event('memory_world_changed',detail=change)
+                if change['kind']=='memory_gate_applied':
+                    self._event('intervention',change=change['intervention'],origin='memory_world_schedule')
+            if self.world_task_state['gate_result']=='rejected':
+                raise ValueError('Mandatory memory-v2 gate intervention rejected')
+            if changes:
+                obs = self.observation = self.env._get_obs()
+            private,pose,circles = memory_decision_world.sensing_inputs(self.env,self.world_task_state)
+            packet = memory_decision.capture_symbolic(private,pose,circles,episode_id=self.memory['episode_id'],tick=self.episode_step)
+            self._event('memory_sensed',packet=packet)
+            self.memory,bearing,decisions = memory_decision.advance_memory(self.memory,packet)
+            for decision in decisions:
+                self._event('memory_decision',detail=decision,route_anchor={'stage':'pre-control','xy':pose[:2]})
+            self._event('memory_inspected',memory=memory_decision.inspect(self.memory))
+            if self.memory['supervisor']['phase']=='failure':
+                raise ValueError('Memory-v2 supervisor failure: '+self.memory['supervisor']['failure_reason'])
+            self._event('memory_cue',bearing=bearing,raw_upstream_bearing=list(map(float,obs['sensors']['wind_direction'])))
+            obs = {**obs,'sensors':{**obs['sensors'],'wind_direction':bearing}}
+        elif self.reference_mode:
             from . import memory, memory_reference, memory_task, memory_world
             if (memory.sha256(self.memory) != self._reference_memory_sha256
                     or action_override is not None and self.writer.manifest.get('execution_mode') != 'actions'):
@@ -859,6 +983,25 @@ class Engine:
                       'task_completed' if self.task_state['phase'] == 'complete' else
                       'time_limit' if truncated else None)
             terminated = reason in ('collision', 'stalled', 'task_completed')
+        elif self.scenario == 'memory-decision-v2':
+            from . import memory_decision
+            goal = float(info['dist_to_goal']) < self.env.goal_radius and memory_decision.goal_allowed(self.memory)
+            if goal:
+                self.memory = memory_decision.mark_goal(self.memory)
+            reason = ('goal' if goal else 'stalled' if info.get('stalled') else
+                      'collision' if self.env.end_on_collision and next_obs['sensors']['collision'] else
+                      'time_limit' if truncated else None)
+            terminated = reason in ('goal','stalled','collision')
+            # Pause after the actual FLYNN step, preserving cursor=step-1. No
+            # synthetic placement/steering enters the acquisition boundary.
+            if not reason and memory_decision.acquired_boundary(self.memory):
+                self.phase = 'paused'
+                self._event('memory_acquired_boundary',boundary_tick=self.episode_step,
+                    acquired_evidence=self.memory['supervisor']['acquired_evidence'])
+            start = self.memory['supervisor']['continuation_start_tick']
+            cap = 1200 if start is None else min(2100,start+900)
+            if not reason and self.episode_step>=cap and (start is not None or self.memory['supervisor']['phase']!='await_decision'):
+                reason,terminated = 'time_limit',False
         elif self.memory is not None and (self.memory['active'] is not None or self.memory['requests']):
             # Reaching the common goal does not complete a pending inspection.
             reason = ('stalled' if info.get('stalled') else
@@ -902,6 +1045,8 @@ class Engine:
         active_command = None
         try:
             if action_override is not None:
+                if self.scenario == 'memory-decision-v2':
+                    raise ValueError('Memory-v2 motor actions must come from CPU FLYNN')
                 action_override = _action(action_override, manual=self.controller == 'manual')
                 self.writer.manifest.update(execution_mode='actions', inference_executed=False,
                                             population_names=[])
@@ -1028,7 +1173,7 @@ class Engine:
                 size += len(data)
                 count += data.count(b"\n")
         from .snapshots import controller_hashes
-        return copy.deepcopy({"schema_version": 7 if self.scenario == 'adaptive-encoder-homing' else 6 if self.scenario == 'adaptive-wheel-calibration' else 5 if self.body_state is not None else 4,
+        return copy.deepcopy({"schema_version": 8 if self.scenario == 'memory-decision-v2' else 7 if self.scenario == 'adaptive-encoder-homing' else 6 if self.scenario == 'adaptive-wheel-calibration' else 5 if self.body_state is not None else 4,
             **({"composition": self.composition} if self.scenario == 'adaptive-encoder-homing' else {}),
             **({"body_state": self.body_state} if self.body_state is not None else {}), "source_run_id": self.run_id,
             "execution_mode": self.writer.manifest.get('execution_mode', 'live'),
@@ -1063,7 +1208,7 @@ class Engine:
                     "episode_step", "phase", "manual_action", "metrics", "last_outcome", "seed",
                     "episode_finished", "pending_commands", "session_exhausted", "recording_failed",
                     "receipts", "original_commands", "memory", "world_task_state", "controller_tensors", "execution_mode", "task_state"}
-        schema = 4
+        schema = 8 if self.scenario == 'memory-decision-v2' else 4
         if self.body_state is not None:
             schema = 7 if self.scenario == 'adaptive-encoder-homing' else 6 if self.scenario == 'adaptive-wheel-calibration' else 5
             expected.add("body_state")
@@ -1086,7 +1231,7 @@ class Engine:
             raise ValueError('Snapshot scenario/texture differs')
         if type(state['eyes']) is not dict or set(state['eyes']) != {'left', 'right'} or any(type(v) is not bool for v in state['eyes'].values()):
             raise ValueError('Invalid snapshot eye settings')
-        if state["episode_step"] > state["total_tick"] or state["episode_step"] > 600:
+        if state["episode_step"] > state["total_tick"] or state["episode_step"] > (2100 if self.scenario == 'memory-decision-v2' else 600):
             raise ValueError("invalid episode step count")
         if self.body_state is not None:
             if self.scenario in ('adaptive-wheel-calibration', 'adaptive-encoder-homing'):
@@ -1100,7 +1245,23 @@ class Engine:
                 from .body_profile import validate_state
                 state['body_state'] = validate_state(state['body_state'], self.env._body_profile_identity,
                     episode=state['episode'], episode_step=state['episode_step'])
-        if self.scenario == 'memory-passages' or self.reference_mode:
+        if self.scenario == 'memory-decision-v2':
+            from . import memory_decision, memory_decision_world
+            from .snapshots import controller_hashes
+            state['memory'] = memory_decision.validate_state(state['memory'])
+            state['world_task_state'] = memory_decision_world.validate_state(state['world_task_state'])
+            previous = state['episode_step']-1 if state['episode_step'] else None
+            if (state['episode']!=0 or state['total_tick']!=state['episode_step'] or state['seed']!=self.memory_case['seed'] or
+                    state['world_task_state']['case']!=self.memory_case or
+                    state['memory']['graph']!=memory_decision_world.public_graph(self.memory_case) or
+                    state['memory']['initial_m']!={'version':1,'facts':self.memory_case['facts']} or
+                    (None if state['memory']['cursor'] is None else state['memory']['cursor']['tick'])!=previous or
+                    state['world_task_state']['last_tick']!=previous or
+                    state['memory']['supervisor']['decision_tick']!=state['world_task_state']['decision_tick'] or
+                    state['memory']['supervisor']['continuation_start_tick']!=state['world_task_state']['armed_boundary_tick'] or
+                    state['controller_tensors']!=controller_hashes(self.policy)):
+                raise ValueError('Memory-v2 source identity/graph/cursor/schedule/tensors differ')
+        elif self.scenario == 'memory-passages' or self.reference_mode:
             from . import memory_task, memory_world
             from .snapshots import controller_hashes
             state['memory'] = memory_task.validate_state(state['memory'])
@@ -1206,6 +1367,8 @@ class Engine:
     def restore_branch(self, snapshot, *, replace_controller=False):
         """Restore a registered snapshot, explicitly distinguishing controller replacement."""
         from .snapshots import restore
+        if self.scenario == 'memory-decision-v2' and replace_controller:
+            raise ValueError('Memory-v2 cannot replace its acquisition controller')
         state = copy.deepcopy(snapshot['application'])
         previous = state['controller']
         reference_transaction = self.reference_mode and state['scenario'] == 'memory-passages'
@@ -1268,6 +1431,47 @@ class Engine:
         self._event('body_homing_derived', reference_sha256=reference,
                     derivation=self.composition['derivation'])
         return reference
+
+    def configure_memory_selector(self, config, u=None):
+        """The sole explicit selector substitution at an acquired paused boundary."""
+        self._active()
+        from . import memory, memory_decision
+        if self.scenario!='memory-decision-v2' or self.phase!='paused' or self._pending:
+            raise ValueError('Selector configuration requires the clean acquired paused v2 boundary')
+        before = copy.deepcopy(self.memory)
+        updated = memory_decision.configure_selector(before,config,u)
+        retained_before = {key:value for key,value in before.items() if key not in ('u','selector')}
+        retained_after = {key:value for key,value in updated.items() if key not in ('u','selector')}
+        if memory.sha256(retained_before)!=memory.sha256(retained_after):
+            raise ValueError('State changed outside declared selector resources')
+        self.memory = updated
+        self.writer.manifest['memory_selector'] = copy.deepcopy(updated['selector'])
+        self.writer.manifest['memory_selector_sha256'] = memory.sha256(updated['selector'])
+        self.writer.manifest['initial_memory'] = {key:memory.sha256(updated[key]) for key in ('m','e','u')}
+        self._event('memory_selector_configured',selector=updated['selector'],u=updated['u'],
+            retained_memory_sha256=memory.sha256(retained_before))
+        return self.public_state()
+
+    def arm_memory_decision(self):
+        """Freeze a schedule only after real acquisition and the paused boundary."""
+        self._active()
+        from . import memory, memory_decision, memory_decision_world
+        if self.scenario!='memory-decision-v2' or self.phase!='paused' or self._pending:
+            raise ValueError('Decision arm requires the clean acquired paused v2 boundary')
+        task = memory_decision.arm(self.memory,self.episode_step)
+        acquired = self.application_state()
+        acquired.pop('source_run_id')
+        acquired.pop('event_prefix')
+        acquired['memory'].pop('u')
+        acquired['memory'].pop('selector')
+        acquired_hash = memory.sha256(acquired)
+        state = memory_decision_world.arm(self.world_task_state,self.episode_step,acquired_hash)
+        self.memory,self.world_task_state = task,state
+        self.writer.manifest['memory_decision_schedule'] = {
+            'boundary_tick':self.episode_step,'event_tick':state['event_tick'],
+            'decision_tick':state['decision_tick'],'acquired_state_sha256':acquired_hash}
+        self._event('memory_decision_armed',schedule=self.writer.manifest['memory_decision_schedule'])
+        return self.public_state()
 
     def restore_memory_branch(self, snapshot, u):
         """Restore a fresh destination, replace U only, verify before publication."""
