@@ -66,8 +66,9 @@ collection is necessary. No further automatic fitting is authorized by this run.
 Width32 preprocessing is internal to the model, preserving the raw-input guard.
 Folding mu/sigma into its first affine layer preserves the original six-array
 shape. All six folded exports pass action parity across both panels; maximum
-error is4.4108e-7, below1e-6. Width256 checkpoints have an explicit exploratory
-format. Shape compatibility does not admit a new recipe through the legacy
+error is 4.4108e-7, below 1e-6. Width256 NPZs contain six wider parameter arrays
+plus `mean` and `scale`, without an embedded format/version marker. Shape
+compatibility does not admit a new recipe through the legacy
 bundle reader; these artifacts are not qualified production bundles.
 
 Pinned CPU Torch2.9.0/NumPy2.2.5, float32 model arithmetic, original float64
