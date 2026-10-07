@@ -1,0 +1,23 @@
+{
+  "actual_exec_exit_code": 1,
+  "aggregate_cap_bytes": 8589934592,
+  "aggregate_phase_bytes_before_publication_receipt": 1346637208,
+  "archive": {
+    "all_member_bytes_match": true,
+    "bytes": 10954436,
+    "members": 97,
+    "path": "retained-records.zip",
+    "sha256": "5f7a29ff110fe098b84b3d6660e1f164953a06be27dfbcde96310351d6898504"
+  },
+  "exact_invocation_seconds": "not present in failed canonical receipt; no duration invented",
+  "held_out_used": false,
+  "index_sha256": "eabad70894ab708fe789af1d794cda288e116e7975c1330804703dad8d8f0e6c",
+  "native_prerequisites_passed": false,
+  "paired_pilot": "unattempted-by-scope",
+  "post_close_work": "byte copying, hashing and ZIP readback only; no new scientific grade or invocation",
+  "qualification_claims": [],
+  "r2_complete": false,
+  "raw_replay_bundle_self_contained": false,
+  "schema": "closed-memory-publication-v2",
+  "status": "retained-failed-campaign"
+}

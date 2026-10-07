@@ -154,11 +154,16 @@ raw inequality (74 native bytes) stays explicit. See
 [the report](../reports/restore-qualification-v2.md) and
 [PR #85](https://github.com/Aadrika08/palimpsest/pull/85). This checks only the
 restore prerequisite above; full memory qualification and the pilot remain open.
-The user has separately approved [eight fresh cells](memory-prerequisites-v2.md)
-for one selected profile, using a newly generated south-prefix. Software is in
-final verification; registration/native invocation have not occurred. The approved
-allocation is separate 180 s registration preparation plus one 4,900 s invocation,
-eight owners maximum and zero corrective studies. A pass still launches no pilot.
+The separately approved [eight fresh cells](memory-prerequisites-v2.md) ran once
+for one selected profile from a fresh south-prefix. All eight owner reports
+record the required inline outcomes, but final publication exceeded its 1 MiB
+control-envelope cap and independent scientific close stopped. Candidate pair
+comparison and final qualification remain unconfirmed. See
+[the retained failed result](../reports/memory-prerequisites-v2.md). Registration
+preparation and the one invocation are consumed; zero corrective studies/retries
+were authorized. A separate software-only receipt repair cannot qualify this
+closed allocation. Any new scientific readout needs a new approved scope; the
+prerequisite gate and pilot remain open.
 
 The fresh artwork-material v3 allocation passed in 22.06 seconds. Its compact
 comparison preserves source geometry and complete raw-event references while
