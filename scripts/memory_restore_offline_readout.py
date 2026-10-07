@@ -7,9 +7,11 @@ import argparse
 from datetime import datetime, timezone
 import importlib.metadata
 import json
+import math
 from pathlib import Path
 import shutil
 import signal
+import struct
 import subprocess
 import sys
 import time
@@ -32,6 +34,87 @@ def verify_inventory(reference, deadline):
     keyed = lambda rows:{row['path']:(row['bytes'],row['sha256']) for row in rows}
     if len(keyed(reference['files'])) != len(reference['files']) or keyed(actual) != keyed(reference['files']):
         raise ValueError('Immutable retained evidence inventory changed')
+
+
+def attribute_native_pair(left, right, deadline=None):
+    """Map timer bytes on decoded copies only; preserve the scientific state gate."""
+    import mujoco
+    if mujoco.__version__ != '3.3.6':
+        raise ValueError('Byte attribution requires the reviewed MuJoCo 3.3.6 serializer')
+    payloads = [state['native_data'] for state in (left,right)]
+    if any(type(value) is not bytes or len(value)>16*p.MiB for value in payloads):
+        raise ValueError('Attribution requires bounded trusted native bytes')
+    if len(payloads[0])!=len(payloads[1]):
+        raise ValueError('Native payload lengths differ; no same-layout attribution')
+    def offsets(one,two):
+        if len(one)!=len(two):raise ValueError('Probe changed serialized layout')
+        return [i for i,(x,y) in enumerate(zip(one,two)) if x!=y]
+    decoded, sides, ownership = [], [], []
+    for payload in payloads:
+        p.deadline_check(deadline)
+        data=mujoco.MjData.__new__(mujoco.MjData); data.__setstate__(payload)
+        if data.__getstate__()!=payload:
+            raise ValueError('Native round trip differs; attribution refused')
+        decoded.append(data)
+        arrays={}
+        for name in ('efc_AR_rowadr','efc_AR_rownnz'):
+            value=getattr(data,name)
+            arrays[name]={'shape':list(value.shape),'dtype':value.dtype.str,
+                'numpy_owns_data':bool(value.flags.owndata),'has_base':value.base is not None}
+        side={'solver':int(data.model.opt.solver),
+            'solver_name':mujoco.mjtSolver(data.model.opt.solver).name,
+            'noslip_iterations':int(data.model.opt.noslip_iterations),
+            'dual_solver_eligible':bool(data.model.opt.solver==mujoco.mjtSolver.mjSOL_PGS or data.model.opt.noslip_iterations>0),
+            'nA':int(data.nA),'nefc':int(data.nefc),'suspect_array_views':arrays,'timer_fields':[]}
+        owners={}
+        for index,original in enumerate(data.timer.duration.copy()):
+            p.deadline_check(deadline)
+            original_bytes=struct.pack('=d',float(original))
+            if not math.isfinite(float(original)):
+                raise ValueError('Nonfinite timer statistic')
+            for mask in (1,2):
+                probe_bytes=bytes(value^mask for value in original_bytes)
+                probe=struct.unpack('=d',probe_bytes)[0]
+                if math.isfinite(probe):break
+            else:raise ValueError('No finite timer probe')
+            try:
+                data.timer.duration[index]=probe
+                changed=data.__getstate__()
+            finally:
+                data.timer.duration[index]=original
+            changed_offsets=offsets(payload,changed)
+            if (len(changed_offsets)!=8 or changed_offsets!=list(range(changed_offsets[0],changed_offsets[0]+8))
+                    or payload[changed_offsets[0]:changed_offsets[0]+8]!=original_bytes
+                    or changed[changed_offsets[0]:changed_offsets[0]+8]!=probe_bytes
+                    or any(offset in owners for offset in changed_offsets)):
+                raise ValueError('Timer probe is not one unique contiguous float64 field')
+            if data.__getstate__()!=payload:
+                raise ValueError('Restoring a timer probe changed native bytes')
+            owners.update((offset,index) for offset in changed_offsets)
+            side['timer_fields'].append({'index':index,'duration':float(original),
+                'start_offset':changed_offsets[0],'end_offset_exclusive':changed_offsets[-1]+1,
+                'probe_changed_bytes':8,'probe_sha256':p.hashlib.sha256(changed).hexdigest()})
+        sides.append(side); ownership.append(owners)
+    different=offsets(*payloads)
+    attributed=[offset for offset in different if offset in ownership[0] and ownership[0][offset]==ownership[1].get(offset)]
+    attributed_set=set(attributed)
+    unexplained=[offset for offset in different if offset not in attributed_set]
+    original=decoded[0].timer.duration.copy()
+    try:
+        decoded[0].timer.duration[:]=decoded[1].timer.duration
+        patched=decoded[0].__getstate__()
+    finally:
+        decoded[0].timer.duration[:]=original
+    if decoded[0].__getstate__()!=payloads[0]:
+        raise ValueError('Timer attribution copy did not restore exactly')
+    p.deadline_check(deadline)
+    return {'payload_bytes':[len(value) for value in payloads],'roundtrip_equal':[True,True],
+        'different_offsets':different,'attributed_offsets':attributed,'unexplained_offsets':unexplained,
+        'all_differences_attributed_to_timer_duration':bool(different) and not unexplained and patched==payloads[1],
+        'timer_patch_equal_to_right':patched==payloads[1],
+        'timer_patch_sha256':p.hashlib.sha256(patched).hexdigest(),'sides':sides,
+        'physics_steps':0,'new_native_owners':0,
+        'scope':'Decoded-copy serialization probes only; no snapshot repair, gate change or qualification'}
 
 
 def recheck_inputs(registration, deadline):
@@ -114,12 +197,15 @@ def audit_pair(registration, deadline):
     comparison = d.compare_states(posts[0],posts[1],ids[0],ids[1])
     native = d.compare_native_states(posts[0],posts[1]) if 'native_data' in comparison['differing_components'] else None
     p.deadline_check(deadline)
-    return {'owners':rows,'trace_equal':rows[0]['trace_digest']==rows[1]['trace_digest'],
+    result = {'owners':rows,'trace_equal':rows[0]['trace_digest']==rows[1]['trace_digest'],
         'comparison':comparison,'native_comparison':native,'independent_restore_attempts':2,
         'controls_per_restore':5,'physics_steps':0,'new_native_owners':0,
         'owner_exit_evidence':'recorded same-namespace cleanup only; current liveness unassessed',
         'qualifier':'Separate exploratory offline audit; original failed close and prerequisite gate unchanged',
         'qualification_claims':[]}
+    if registration.get('readout_kind')=='native-byte-attribution-v1':
+        result['byte_attribution']=attribute_native_pair(posts[0],posts[1],deadline)
+    return result
 
 
 def main(argv=None):
@@ -129,7 +215,8 @@ def main(argv=None):
     args=parser.parse_args(argv); registration=p.read_json(args.registration)
     repo=p.checked_path(registration['repo'])
     if (registration.get('schema')!='memory-restore-offline-registration-v1' or
-            registration.get('seconds_cap')!=SECONDS or repo!=Path(__file__).resolve().parents[1]):
+            registration.get('seconds_cap')!=SECONDS or repo!=Path(__file__).resolve().parents[1] or
+            registration.get('readout_kind') not in (None,'native-byte-attribution-v1')):
         raise ValueError('Registered offline checkout/schema/allocation differs')
     if subprocess.check_output(['git','status','--porcelain'],cwd=repo):
         raise ValueError('Offline admission requires a clean checkout')
@@ -164,6 +251,8 @@ def main(argv=None):
                 'differing_components':analysis['comparison'].get('differing_components'),
                 'owner_count':len(analysis['owners']),
                 'native_fields_equal':(analysis.get('native_comparison') or {}).get('equal')}
+            if 'byte_attribution' in analysis:
+                receipt['summary']['all_native_differences_are_timer_duration']=analysis['byte_attribution']['all_differences_attributed_to_timer_duration']
             recheck_inputs(registration,deadline)
             receipt['immutable_inputs_unchanged']=True
             receipt['artifact_index']=[row for row in p.hash_ledger(root,deadline) if row['path']!='execution.json']

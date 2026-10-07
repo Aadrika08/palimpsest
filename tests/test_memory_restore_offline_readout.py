@@ -117,6 +117,27 @@ def test_native_decoder_omits_owned_views_of_unpopulated_arena_fields():
     assert any(row['field']=='efc_AR_rownnz' and row.get('reason')=='owned NumPy array is not a view of native storage' for row in omitted)
 
 
+@pytest.mark.parametrize('unrelated_difference',[False,True])
+def test_native_byte_attribution_proves_timer_bytes_without_hiding_other_state(monkeypatch,unrelated_difference):
+    mujoco=pytest.importorskip('mujoco')
+    for name in ('mj_step','mj_forward','mj_resetData'):
+        monkeypatch.setattr(mujoco,name,lambda *args:pytest.fail('physics operation attempted'))
+    model=mujoco.MjModel.from_xml_string('<mujoco><worldbody><body><joint type="slide"/><geom size=".1"/></body></worldbody></mujoco>')
+    left=mujoco.MjData(model); right=mujoco.MjData(model)
+    right.timer.duration[:]=np.arange(len(right.timer.duration))*.001
+    if unrelated_difference:right.qpos[0]=.2
+    originals=[data.__getstate__() for data in (left,right)]
+    result=offline().attribute_native_pair(*({'native_data':value} for value in originals))
+    assert result['roundtrip_equal']==[True,True]
+    assert result['all_differences_attributed_to_timer_duration'] is not unrelated_difference
+    assert result['timer_patch_equal_to_right'] is not unrelated_difference
+    assert bool(result['unexplained_offsets']) is unrelated_difference
+    assert all(row['probe_changed_bytes']==8 for side in result['sides'] for row in side['timer_fields'])
+    assert all(side['dual_solver_eligible'] is False for side in result['sides'])
+    assert [data.__getstate__() for data in (left,right)]==originals
+    assert result['physics_steps']==result['new_native_owners']==0
+
+
 @pytest.mark.parametrize('failure',['recheck','close-deadline'])
 def test_failed_offline_close_cannot_publish_complete_readout(tmp_path,monkeypatch,failure):
     module=offline(); monkeypatch.setattr(module,'__file__',str(tmp_path/'scripts/offline.py'))
@@ -150,13 +171,14 @@ def test_failed_offline_close_cannot_publish_complete_readout(tmp_path,monkeypat
     assert result['qualification_claims']==[]
 
 
-def test_offline_launcher_keeps_real_child_admission_clean_and_marker_exclusive(tmp_path,monkeypatch):
+@pytest.mark.parametrize('study',['memory-restore-offline-readout','memory-native-byte-attribution'])
+def test_offline_launcher_keeps_real_child_admission_clean_and_marker_exclusive(tmp_path,monkeypatch,study):
     actual_repo=Path(__file__).resolve().parents[1]
-    source=actual_repo/'docs/reports/memory-restore-offline-readout-evidence/execute-readout.py'
+    source=actual_repo/'docs/reports'/f'{study}-evidence/execute-readout.py'
     spec=importlib.util.spec_from_file_location('offline_launcher',source)
     launcher=importlib.util.module_from_spec(spec);spec.loader.exec_module(launcher)
-    evidence=tmp_path/'docs/reports/memory-restore-offline-readout-evidence';evidence.mkdir(parents=True)
-    workspace=tmp_path/'.superpowers/sdd/memory-restore-offline-readout';workspace.mkdir(parents=True)
+    evidence=tmp_path/'docs/reports'/f'{study}-evidence';evidence.mkdir(parents=True)
+    workspace=tmp_path/'.superpowers/sdd'/study;workspace.mkdir(parents=True)
     old=tmp_path/'.superpowers/sdd/memory-restore-study-v2/diagnose';old.mkdir(parents=True)
     (old/'launched.json').write_text('original consumed native invocation\n')
     (tmp_path/'.gitignore').write_text('.superpowers/\nruns/\n')

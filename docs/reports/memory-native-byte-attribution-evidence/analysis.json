@@ -1,0 +1,1562 @@
+{
+  "byte_attribution": {
+    "all_differences_attributed_to_timer_duration": true,
+    "attributed_offsets": [
+      279971,
+      279972,
+      279973,
+      279974,
+      279975,
+      279976,
+      279987,
+      279988,
+      279989,
+      279990,
+      279991,
+      279992,
+      280020,
+      280021,
+      280022,
+      280023,
+      280024,
+      280036,
+      280037,
+      280038,
+      280039,
+      280040,
+      280052,
+      280053,
+      280054,
+      280055,
+      280056,
+      280067,
+      280068,
+      280069,
+      280070,
+      280071,
+      280084,
+      280085,
+      280086,
+      280087,
+      280100,
+      280101,
+      280102,
+      280103,
+      280104,
+      280116,
+      280117,
+      280118,
+      280119,
+      280120,
+      280131,
+      280132,
+      280133,
+      280134,
+      280135,
+      280147,
+      280148,
+      280149,
+      280150,
+      280151,
+      280152,
+      280165,
+      280166,
+      280167,
+      280168,
+      280180,
+      280181,
+      280182,
+      280183,
+      280184,
+      280195,
+      280196,
+      280197,
+      280198,
+      280199,
+      280200
+    ],
+    "different_offsets": [
+      279971,
+      279972,
+      279973,
+      279974,
+      279975,
+      279976,
+      279987,
+      279988,
+      279989,
+      279990,
+      279991,
+      279992,
+      280020,
+      280021,
+      280022,
+      280023,
+      280024,
+      280036,
+      280037,
+      280038,
+      280039,
+      280040,
+      280052,
+      280053,
+      280054,
+      280055,
+      280056,
+      280067,
+      280068,
+      280069,
+      280070,
+      280071,
+      280084,
+      280085,
+      280086,
+      280087,
+      280100,
+      280101,
+      280102,
+      280103,
+      280104,
+      280116,
+      280117,
+      280118,
+      280119,
+      280120,
+      280131,
+      280132,
+      280133,
+      280134,
+      280135,
+      280147,
+      280148,
+      280149,
+      280150,
+      280151,
+      280152,
+      280165,
+      280166,
+      280167,
+      280168,
+      280180,
+      280181,
+      280182,
+      280183,
+      280184,
+      280195,
+      280196,
+      280197,
+      280198,
+      280199,
+      280200
+    ],
+    "new_native_owners": 0,
+    "payload_bytes": [
+      458761,
+      458761
+    ],
+    "physics_steps": 0,
+    "roundtrip_equal": [
+      true,
+      true
+    ],
+    "scope": "Decoded-copy serialization probes only; no snapshot repair, gate change or qualification",
+    "sides": [
+      {
+        "dual_solver_eligible": false,
+        "nA": 0,
+        "nefc": 284,
+        "noslip_iterations": 0,
+        "solver": 2,
+        "solver_name": "mjSOL_NEWTON",
+        "suspect_array_views": {
+          "efc_AR_rowadr": {
+            "dtype": "<i4",
+            "has_base": false,
+            "numpy_owns_data": true,
+            "shape": [
+              284
+            ]
+          },
+          "efc_AR_rownnz": {
+            "dtype": "<i4",
+            "has_base": false,
+            "numpy_owns_data": true,
+            "shape": [
+              284
+            ]
+          }
+        },
+        "timer_fields": [
+          {
+            "duration": 1.33002103300079,
+            "end_offset_exclusive": 279979,
+            "index": 0,
+            "probe_changed_bytes": 8,
+            "probe_sha256": "6678599866a21379bd7c19433e9c3850c017521321cae9238987d68cda6290e0",
+            "start_offset": 279971
+          },
+          {
+            "duration": 1.31194103300027,
+            "end_offset_exclusive": 279995,
+            "index": 1,
+            "probe_changed_bytes": 8,
+            "probe_sha256": "d388df1682755c289d5d44fece1bd9c61e6c9089fb19cbaf951e50eb74334a09",
+            "start_offset": 279987
+          },
+          {
+            "duration": 0.0,
+            "end_offset_exclusive": 280011,
+            "index": 2,
+            "probe_changed_bytes": 8,
+            "probe_sha256": "4e5a41524b324f21b2a32d1158da65841d3a91535091d611c9af3e9375350808",
+            "start_offset": 280003
+          },
+          {
+            "duration": 0.6934017809987836,
+            "end_offset_exclusive": 280027,
+            "index": 3,
+            "probe_changed_bytes": 8,
+            "probe_sha256": "b9f1e5bdb603f73e93071a7565e44a959d74fb4fb16bcd1451cd671dbdada951",
+            "start_offset": 280019
+          },
+          {
+            "duration": 0.04706870399923346,
+            "end_offset_exclusive": 280043,
+            "index": 4,
+            "probe_changed_bytes": 8,
+            "probe_sha256": "e2f4d6aeebea1a5680c37f27832c4f170834715c81e704d19d0d49cf7c88cd53",
+            "start_offset": 280035
+          },
+          {
+            "duration": 0.0034841290001210723,
+            "end_offset_exclusive": 280059,
+            "index": 5,
+            "probe_changed_bytes": 8,
+            "probe_sha256": "56ce5a55f8f71c310eefc86e36a4070f43029ce0ef63e3aa3d352be9715e5cd2",
+            "start_offset": 280051
+          },
+          {
+            "duration": 0.5573469110009412,
+            "end_offset_exclusive": 280075,
+            "index": 6,
+            "probe_changed_bytes": 8,
+            "probe_sha256": "aed458d6b657d6d1aa4e050f5b686ac0304daff1dd9dc9a9e4c937c6fb96d84d",
+            "start_offset": 280067
+          },
+          {
+            "duration": 0.014095237000105953,
+            "end_offset_exclusive": 280091,
+            "index": 7,
+            "probe_changed_bytes": 8,
+            "probe_sha256": "a0d6c0384328defad8e67e4efffe5676660959d787ceaa915106b3ba5d10b30f",
+            "start_offset": 280083
+          },
+          {
+            "duration": 0.04394533899972686,
+            "end_offset_exclusive": 280107,
+            "index": 8,
+            "probe_changed_bytes": 8,
+            "probe_sha256": "d3b6b8c8f514a438c5c38c844cccb8a728860da2da468e35e74bc5ff069b26c6",
+            "start_offset": 280099
+          },
+          {
+            "duration": 0.012955451998717393,
+            "end_offset_exclusive": 280123,
+            "index": 9,
+            "probe_changed_bytes": 8,
+            "probe_sha256": "2be415fc54b89119e4f0acc65f842df9532a82e48a5963d26ab283d017bf4c12",
+            "start_offset": 280115
+          },
+          {
+            "duration": 0.27530539000096965,
+            "end_offset_exclusive": 280139,
+            "index": 10,
+            "probe_changed_bytes": 8,
+            "probe_sha256": "e20e5f47edded604cff4ffd236b74bb6de54af1feabb6c8065554a38623dd2f2",
+            "start_offset": 280131
+          },
+          {
+            "duration": 0.3562196509985398,
+            "end_offset_exclusive": 280155,
+            "index": 11,
+            "probe_changed_bytes": 8,
+            "probe_sha256": "1e5bccedc4e359703793b938c9c94be867942d1f661f10f31acd7827dbf026de",
+            "start_offset": 280147
+          },
+          {
+            "duration": 0.0006763919977004207,
+            "end_offset_exclusive": 280171,
+            "index": 12,
+            "probe_changed_bytes": 8,
+            "probe_sha256": "9a13d16c97d3d67720c89413d0513d859531becaff7b8352995f8ba94a6ee082",
+            "start_offset": 280163
+          },
+          {
+            "duration": 0.04239694200227717,
+            "end_offset_exclusive": 280187,
+            "index": 13,
+            "probe_changed_bytes": 8,
+            "probe_sha256": "0907818a465718c9e210383b5f729ef6003f9c693957b2f42efc1f5537698f2a",
+            "start_offset": 280179
+          },
+          {
+            "duration": 0.23111930199838682,
+            "end_offset_exclusive": 280203,
+            "index": 14,
+            "probe_changed_bytes": 8,
+            "probe_sha256": "0c1141a9547dd37bfc5b42b115c479a11b15a7dd3a5cf55bb784f7688e07105d",
+            "start_offset": 280195
+          }
+        ]
+      },
+      {
+        "dual_solver_eligible": false,
+        "nA": 0,
+        "nefc": 284,
+        "noslip_iterations": 0,
+        "solver": 2,
+        "solver_name": "mjSOL_NEWTON",
+        "suspect_array_views": {
+          "efc_AR_rowadr": {
+            "dtype": "<i4",
+            "has_base": false,
+            "numpy_owns_data": true,
+            "shape": [
+              284
+            ]
+          },
+          "efc_AR_rownnz": {
+            "dtype": "<i4",
+            "has_base": false,
+            "numpy_owns_data": true,
+            "shape": [
+              284
+            ]
+          }
+        },
+        "timer_fields": [
+          {
+            "duration": 1.3296543770007894,
+            "end_offset_exclusive": 279979,
+            "index": 0,
+            "probe_changed_bytes": 8,
+            "probe_sha256": "699d90461ae047ac24be5e7b2df14fcc10e99938d622db77703ccd094bda5eb7",
+            "start_offset": 279971
+          },
+          {
+            "duration": 1.3114497870002815,
+            "end_offset_exclusive": 279995,
+            "index": 1,
+            "probe_changed_bytes": 8,
+            "probe_sha256": "c685f9fe4a4c515e9bd42b9d047136c2356f033d41c96c8b8729a6af94f5c74c",
+            "start_offset": 279987
+          },
+          {
+            "duration": 0.0,
+            "end_offset_exclusive": 280011,
+            "index": 2,
+            "probe_changed_bytes": 8,
+            "probe_sha256": "81d5c564985dcb31da3fab63a00d5466dad53cc103b4b13c49bf83b5d2fdf6de",
+            "start_offset": 280003
+          },
+          {
+            "duration": 0.6930547819987964,
+            "end_offset_exclusive": 280027,
+            "index": 3,
+            "probe_changed_bytes": 8,
+            "probe_sha256": "d16e2dc5fa8a1b099324d5e64df084b98fa7e9d647bb9d75259818615896d483",
+            "start_offset": 280019
+          },
+          {
+            "duration": 0.04703362199922623,
+            "end_offset_exclusive": 280043,
+            "index": 4,
+            "probe_changed_bytes": 8,
+            "probe_sha256": "5379cde5ea43514f2af1ec04aa1b8c53ea690465da326bb0b68c8ccc8de4a1ae",
+            "start_offset": 280035
+          },
+          {
+            "duration": 0.0034306340001322155,
+            "end_offset_exclusive": 280059,
+            "index": 5,
+            "probe_changed_bytes": 8,
+            "probe_sha256": "1fccc13e55f5ddedceeb0a0a3ce4fe90315074eea2b6914d28168110f72410f4",
+            "start_offset": 280051
+          },
+          {
+            "duration": 0.5573152650009696,
+            "end_offset_exclusive": 280075,
+            "index": 6,
+            "probe_changed_bytes": 8,
+            "probe_sha256": "756f08a30e76fe22526201a3f898bb1687af9a9d70f621742acc3182429e5a5c",
+            "start_offset": 280067
+          },
+          {
+            "duration": 0.014093467000098059,
+            "end_offset_exclusive": 280091,
+            "index": 7,
+            "probe_changed_bytes": 8,
+            "probe_sha256": "978d5fd8ac49ce9f9ab9664299b16493e559cff171a17291833c4719acd3fa65",
+            "start_offset": 280083
+          },
+          {
+            "duration": 0.04392736999971447,
+            "end_offset_exclusive": 280107,
+            "index": 8,
+            "probe_changed_bytes": 8,
+            "probe_sha256": "127c7789c7daf3b12e9fffede323ef180892fb8f08cfe4eecf6752b7ea974d1c",
+            "start_offset": 280099
+          },
+          {
+            "duration": 0.012952145998699649,
+            "end_offset_exclusive": 280123,
+            "index": 9,
+            "probe_changed_bytes": 8,
+            "probe_sha256": "b54fe44a41cdb8b4bc4a12e504ad640850881230b9cfd53447fe8b73fc38d2ad",
+            "start_offset": 280115
+          },
+          {
+            "duration": 0.27527190400095947,
+            "end_offset_exclusive": 280139,
+            "index": 10,
+            "probe_changed_bytes": 8,
+            "probe_sha256": "b53145828d6e873870741e9048d2e8457d2ffeca2800bb9f922fe5fd398e1043",
+            "start_offset": 280131
+          },
+          {
+            "duration": 0.35592901199854765,
+            "end_offset_exclusive": 280155,
+            "index": 11,
+            "probe_changed_bytes": 8,
+            "probe_sha256": "6188198be720aa70f0329c648c0c79951e67e040cfff5cd0c597163d652fee0b",
+            "start_offset": 280147
+          },
+          {
+            "duration": 0.0006760249977020294,
+            "end_offset_exclusive": 280171,
+            "index": 12,
+            "probe_changed_bytes": 8,
+            "probe_sha256": "ee53d7538b9e19fa33a3d84abf05b3efbe9872930adbecd18aa1e6022f45b477",
+            "start_offset": 280163
+          },
+          {
+            "duration": 0.04238242400228742,
+            "end_offset_exclusive": 280187,
+            "index": 13,
+            "probe_changed_bytes": 8,
+            "probe_sha256": "39d4e581e47061f4fa88864285d8159f3c69c0967a1486b376947f280515a30c",
+            "start_offset": 280179
+          },
+          {
+            "duration": 0.23110058199839045,
+            "end_offset_exclusive": 280203,
+            "index": 14,
+            "probe_changed_bytes": 8,
+            "probe_sha256": "0612f038e4a9614eada431b6f6f49932c0c5ee5b9b44386907c6433073d96dbe",
+            "start_offset": 280195
+          }
+        ]
+      }
+    ],
+    "timer_patch_equal_to_right": true,
+    "timer_patch_sha256": "c6a2fa9f6c67023ce27ed21df46cce37352556981c91c75c7792292f585faca8",
+    "unexplained_offsets": []
+  },
+  "comparison": {
+    "component_hashes": [
+      {
+        "application": "ffd4a2903d62c7b95e79c02d08ae71e5f7e869c19c76152e1e176b70a8139274",
+        "environment": "ef5f22e769176f7e5a6e7d180937c61bb4e56cfd0c313ad24565b9e5b468b8e3",
+        "identity": "f70cd73a0340ec2d3b30599b92ee95e9f80f5975943a17bad45dc7a67081f18e",
+        "integration": "a515e4d2cebb44945c783c8fb960b4f8fef60d7ac6f4444d92095636b3fba24e",
+        "integration_enum": "24eb60f6f4f8c68f1b619579ad51bf124d61b7504a5bfd836298dd9af6ea6bf8",
+        "native_data": "fab9d134c9131647d21cdf107856ae2264369fae690fd32bd8d65800cf42d22b",
+        "native_sha256": "02e89d1731e9a8fc4c9c4c0bfb287c0580529086986ad80c7c0a17be39e4713f",
+        "observation": "ddea949ef1670aa20a6364580a6c3960ac79cec208871147e2b27f87bf763662",
+        "policy": "dbca3caa10f5100e7bb917bd486e9def29dfa0c3c7cd998fd91a90b1a44880bd",
+        "rng": "6fc289ab4d7862f0656a72b7fc271e0c3f15ba2e218728b5b33394b008cebf50",
+        "schema_version": "830117280eda66c37c0ce7c6b2f12dc2d7ce6cf63d038885da59b18feba9bee3",
+        "teacher": "5a95d8fed83f34f23577f09dd47cf96d801d43bf50e6b4578d8b815138d9e02f"
+      },
+      {
+        "application": "ffd4a2903d62c7b95e79c02d08ae71e5f7e869c19c76152e1e176b70a8139274",
+        "environment": "ef5f22e769176f7e5a6e7d180937c61bb4e56cfd0c313ad24565b9e5b468b8e3",
+        "identity": "f70cd73a0340ec2d3b30599b92ee95e9f80f5975943a17bad45dc7a67081f18e",
+        "integration": "a515e4d2cebb44945c783c8fb960b4f8fef60d7ac6f4444d92095636b3fba24e",
+        "integration_enum": "24eb60f6f4f8c68f1b619579ad51bf124d61b7504a5bfd836298dd9af6ea6bf8",
+        "native_data": "a68afa34947a0fdbf82fc43ed9a0b193746db50847cf442a4544bdcccd2ef266",
+        "native_sha256": "26bae833a714a6952392a481e49994580e533963d008402a35978c6dd10fb6c1",
+        "observation": "ddea949ef1670aa20a6364580a6c3960ac79cec208871147e2b27f87bf763662",
+        "policy": "dbca3caa10f5100e7bb917bd486e9def29dfa0c3c7cd998fd91a90b1a44880bd",
+        "rng": "6fc289ab4d7862f0656a72b7fc271e0c3f15ba2e218728b5b33394b008cebf50",
+        "schema_version": "830117280eda66c37c0ce7c6b2f12dc2d7ce6cf63d038885da59b18feba9bee3",
+        "teacher": "5a95d8fed83f34f23577f09dd47cf96d801d43bf50e6b4578d8b815138d9e02f"
+      }
+    ],
+    "detail_limit": 64,
+    "details_may_be_truncated": false,
+    "differences": [
+      {
+        "different_bytes": 72,
+        "first_offsets": [
+          279971,
+          279972,
+          279973,
+          279974,
+          279975,
+          279976,
+          279987,
+          279988,
+          279989,
+          279990,
+          279991,
+          279992,
+          280020,
+          280021,
+          280022,
+          280023
+        ],
+        "left_bytes": 458761,
+        "left_type": "bytes",
+        "path": "/native_data",
+        "reason": "opaque-bytes",
+        "right_bytes": 458761,
+        "right_type": "bytes"
+      },
+      {
+        "left_preview": "'e4b7499d44b990c16a8b606d64e29ea21907e0efce9bc8bbc0e2987828ab5ae8'",
+        "left_type": "str",
+        "path": "/native_sha256",
+        "right_preview": "'c6a2fa9f6c67023ce27ed21df46cce37352556981c91c75c7792292f585faca8'",
+        "right_type": "str"
+      }
+    ],
+    "differing_components": [
+      "native_data",
+      "native_sha256"
+    ],
+    "equal": false,
+    "left_digest": "4645bee796915201c043098f6e00fb17f68fa805e4fa74ab597b23e979f2947e",
+    "normalization": "unchanged condition_state and new-destination-receipt IDs only",
+    "right_digest": "37b47825b374b8dfc2992ac947391e04737a78e63066dfb4b5f25c727719c1e9"
+  },
+  "controls_per_restore": 5,
+  "independent_restore_attempts": 2,
+  "native_comparison": {
+    "component_hashes": [
+      {
+        "M": "0006689dcb4515efc7f59c9f5d65f57f1f5107466da432c5ab227e63d56271d0",
+        "actuator_force": "eb21a5977e5c46b15c864702b9544f2f04cd7d325938971f1d4ef832b602c1b2",
+        "actuator_length": "55c0d98b6bbebf73d9cf99f32ad6fa456dec515aafb7f5b09f09cfe5221cbfae",
+        "actuator_moment": "f07ae25369dd0c456b5bab76fd34a8d1656f480321fd2eb0281ca14b20c9cd21",
+        "actuator_velocity": "41a37761a4b1e3e00c92dca9b5f1ba05ae469cafb5e7f104da4200b2cab94e97",
+        "bvh_active": "81845f5e49361422f57e3b954125089040442cbd742d5c89c9a6d687e4f79a23",
+        "cacc": "6e13f0766d4c0d5f721577b59c32463de4d98900b79949438c9437c2a99eeb77",
+        "cam_xmat": "4d065027f25845a3d7a142284ecde7a47b28f6c7502d1e5f008214b464ecd92f",
+        "cam_xpos": "4b4230eca9c32298f7f7a6bf2a091d8d501b2d2ed2a93c25f07b0d15a50ac839",
+        "cdof": "4167dd638b009817ed7a360ff97713447a87847584a59faae1244f0ecab0b020",
+        "cdof_dot": "feca2b65dd4bf28e7b4989069b0f9b67a9795c61cc81b42f76b01809e382381a",
+        "cfrc_ext": "6e13f0766d4c0d5f721577b59c32463de4d98900b79949438c9437c2a99eeb77",
+        "cfrc_int": "6e13f0766d4c0d5f721577b59c32463de4d98900b79949438c9437c2a99eeb77",
+        "cinert": "4b10c46f33dbde60b8067ab494f2efb92f90e1c714f8f93488a91f21fd9fdce5",
+        "contact.H": "f0e3f886dc300bb6a521f78353ae694147a5130c980a8e6f0f7cbbb3181130be",
+        "contact.dim": "b8b4c6eb30d8653e20fdf723e92939b79449cf4422c74e109c3181d028997aa7",
+        "contact.dist": "7730352ce03856dfb29b3e3fad4c9c9e45cc003b01e2df82b5b1ac8083a41d8a",
+        "contact.efc_address": "dc1a36ea03d8542160693de79b4c388bb13d297a0bda247fa3300a930157c715",
+        "contact.elem": "91b06e448799cfbf43de6f9c873c94b8daab751568cc61d7bbb1eca2b433d4d2",
+        "contact.exclude": "34ff2da523a6e5d4af598b9911865c31e134130493b9d7d714a8b61171ceb7b2",
+        "contact.flex": "91b06e448799cfbf43de6f9c873c94b8daab751568cc61d7bbb1eca2b433d4d2",
+        "contact.frame": "178435e2704f044dc45637e63cd50fc8f0d816197c096084e45c6235776c5dcd",
+        "contact.friction": "9c0293c66cc865186eeae1898dba1e1bd3dd68cc590df579655e7dd4c8e158a3",
+        "contact.geom": "8a9d14e291da227f0a74f2e74a1b7f61ceb1ca95dd21cd305c73f0ed48c3c7eb",
+        "contact.geom1": "34ff2da523a6e5d4af598b9911865c31e134130493b9d7d714a8b61171ceb7b2",
+        "contact.geom2": "145e29af069a61148a7fe94a8f2d7421bf588d28e6820ae4f5397066a9524022",
+        "contact.includemargin": "bb117fb8817be0ebe4f2ee67da55b72121861f4e3503ccf8a8c5fc926e9f8db2",
+        "contact.mu": "d14b37a4c4f1bb2b3a7ca47df37dd75cd5f2f34c6b925b45c93fde003929e0e1",
+        "contact.pos": "3e8fcad57bea246a401acecace381a6264c24ec106c14ead577a20657f250150",
+        "contact.solimp": "25e341a026f398547e7f5dcfb20dab5e39c0961569764806281c9112501bdc02",
+        "contact.solref": "42c49de85751b037c7a6f28fc8815fe8ebd1705c6c331a2f81c75be760957fff",
+        "contact.solreffriction": "4b342b46d5f6e50fe3ffde7b863cd437f5d8b3492735583c7283f65da8ec64cc",
+        "contact.vert": "91b06e448799cfbf43de6f9c873c94b8daab751568cc61d7bbb1eca2b433d4d2",
+        "crb": "5edb3c2861da8e1009cfde50948e62bcb73a69c18598cf204018adec3927acbd",
+        "ctrl": "eb21a5977e5c46b15c864702b9544f2f04cd7d325938971f1d4ef832b602c1b2",
+        "cvel": "383ab4c97387656d0972fa3a2bd56058b89429c9f491f2411a38ad1fa4d11be6",
+        "dof_island": "f99c8083dc9f1c2d8d26b1a3019921db614c7f66c5f803ae8ce2fae70dbdf1e4",
+        "efc_D": "33eb11d7ce75436cf7d851dd41431b74239a390958e8779a08d241878dbe1eee",
+        "efc_J": "b899a9fe8d874c261edf3a0608393ffb6f7ef10af4b7ef1e5f7c14cdc174bf6b",
+        "efc_J_colind": "3114e4f336e57a4ffdd26b0b49acb249e3ba8246c3490af1608fad8b6237e333",
+        "efc_J_rowadr": "1abf6ac73d05babfd4ff619e22cd2c11dc106fe5f8b846b3f177b2c848a593a2",
+        "efc_J_rownnz": "881b842ab9eb0d1c90d53e22248613cd666aa92a3dfb88b51de3917ffaa8cd40",
+        "efc_J_rowsuper": "105ed8d5cb2a11fef81cef4611c8ecd643aef34cf430a281d8c11336990f53a0",
+        "efc_KBIP": "e357bddee6a9970e51e8fbe1d8dd4b9b67b55ba07e2be8c1f08c5cf84e8af303",
+        "efc_R": "b9f22c893be05c462085cc3cd598fabd067beb7b1e4dbed95b7865e313346618",
+        "efc_aref": "77ab559dddcfbad7347a1a368aee4d0f2a224cec6f576333e9c9ae9b02c49dfd",
+        "efc_b": "aa6de9c302e83eb8898bcfebdd639c8f4a2083381e7e71a05c6123fa2a0ca123",
+        "efc_diagApprox": "9aa40b322de33aacec660821d40a0af632cfd18a4c2ac8da6e7f5dd24c8474a2",
+        "efc_force": "c8165380e8508283d1891aeace395507be02ea406aa38c1333922dd42ea189af",
+        "efc_frictionloss": "17ef200f706b679a20b6a479a0b0ade2b9431b20adc86d35741bd00b7ba150d8",
+        "efc_id": "460eaf99967b767bbefe6f14a5855a630ca6b7f6d289d6bb2ff435b009ab1a09",
+        "efc_island": "7ac44e80fce08a4d391b625c8f19e7bc9ea3832f48dcb657aa548b5b446047a1",
+        "efc_margin": "17ef200f706b679a20b6a479a0b0ade2b9431b20adc86d35741bd00b7ba150d8",
+        "efc_pos": "b9eaaeba57bf3cfe84004e03d3a908a122a2de8d8d4ece4d9d5e2dc5a3ef6956",
+        "efc_state": "d54244852dba07f313e48035955cd821610c40f89841a01c691402be83d6eb89",
+        "efc_type": "b20fc668f94de04d9a2389bfce8aa22bec2f72077ccfaf832eca663d1892bd50",
+        "efc_vel": "9f6ac3cd5dca538988a3e99c9d3b93ebc1a3e1051ad1770060bb8a98e34de90e",
+        "energy": "847705357485b34cd1bd0f0731069fa11f6d5541f61e3734eb79f5f11d2191f1",
+        "geom_xmat": "afd1b2ebcf9a69ea2deae16797a788c34182073aa21a3d8c131e9d208c4ac467",
+        "geom_xpos": "08e8e85e82de41c6c199ebb165ace6c26b77fbbf2895ef8b4b48c805ef864ee9",
+        "iLD": "4e636255007152d242b0287dbfb9838d53295bac3bda701a767e8bd2aff1ab3e",
+        "iLDiagInv": "ac5de6efd082ca7eb953dbaae8188c1c4ac990f2a05e4f78421e99bb0db14089",
+        "iM": "0006689dcb4515efc7f59c9f5d65f57f1f5107466da432c5ab227e63d56271d0",
+        "iM_colind": "a44ab6d282502ddb68a4925af2a6f41a7e7ef7dd753a6e66c29b5f849648af24",
+        "iM_rowadr": "f14fa4f443a5f0826035bebf847628db97f34717cbe369bf661f6d1c710e0a47",
+        "iM_rownnz": "4a496adac0464189818a7fcbca5ccc2a8b2dd7d6cbe330be476db5005d9a33bc",
+        "iacc": "64790102d3714c0ce681ddcaea6a7f097b32e50c14ab9e1edbd9aa9004128d57",
+        "iacc_smooth": "2203ea1b6ecb0e8369a53ec712d2ae11d0996beea23e9775b3c4745ee448b6d9",
+        "iefc_D": "c9761f44c4f3cc46c8d8c66e3e0260b2e30cafd166bd0deb57d0253a6df78a9f",
+        "iefc_J": "bb861698353016ca0d76137e348a96a795f570755c85a0a7c36306092aa941ef",
+        "iefc_J_colind": "a8250954b58374917bb3411a5f73251171f8c3ca13c7742e8b9fbbed3de750ca",
+        "iefc_J_rowadr": "296d4a8a3576e7d2c768eaed18ecbf2c62b30d5f65748868e4d006cc1a561f7c",
+        "iefc_J_rownnz": "23c00b180f3a387bdd121cf16b632b84d00b920167c9d01dc01c1e48cf35b256",
+        "iefc_J_rowsuper": "3229f1bbad1c59dee0b08e0538dfe605eb7cf40a34ef094784a4c959b60fe413",
+        "iefc_R": "68c04fbaeead37768738b8346f5f658ff5398ca8041c8a593f9553819f80c133",
+        "iefc_aref": "e2fa93c8b89e73c9ab80905014ce79e6fa27076a4a7bc469f38d2e2b3add0870",
+        "iefc_force": "a72f5b0cd812a87237e12f75799848f2cf7181b56cd636e3132a12b91d383bae",
+        "iefc_frictionloss": "17ef200f706b679a20b6a479a0b0ade2b9431b20adc86d35741bd00b7ba150d8",
+        "iefc_id": "fc06ff76daccca54cca9848a1a5aa75d01a11241085eff7ac9493bfe2fd10e7b",
+        "iefc_state": "25fd8a0668ade7f75f0bc3eeb66cd434c2e9d9c3c68bfc454dfc183828b68079",
+        "iefc_type": "389d759e6cc71612365d46ff9745b540982cd13f4724e87ef8f90fef70993e5d",
+        "ifrc_constraint": "9bc20fee2dda8feed34522bb15a3269505dbe8c2fdd7cd4d5a36f8ce243791bb",
+        "ifrc_smooth": "d7d75fd496f3251071d071020169925d9b46ff4fc7e9fa2fc9ad7d8f3b4e5848",
+        "island_dofadr": "1b8412531c2f3b84f92a818a73b95f33f42dc12cc83f5eb823d3fe2344c296a6",
+        "island_idofadr": "1b8412531c2f3b84f92a818a73b95f33f42dc12cc83f5eb823d3fe2344c296a6",
+        "island_iefcadr": "88fe5ec6d874977c7fbf7a5c783cd2d713e3ad8c83cd46a3bcadbb50687d2114",
+        "island_ne": "730a8e46f9143834ff2b0fa78dc927bda0a783cbd4aae0d94ee51de0284dc7bd",
+        "island_nefc": "3cc256c403dc96598728175ccde7dcdb126e5d2960533008514a236ab1910900",
+        "island_nf": "730a8e46f9143834ff2b0fa78dc927bda0a783cbd4aae0d94ee51de0284dc7bd",
+        "island_nv": "f3f4fcd11576a133ffc91302d865f87cee0fb86f4a463cd483a0b8fa54f9da94",
+        "light_xdir": "f3283d4ea4a027556eb6a9cb1e210ddbd9ff75214adf6dde1423e57f9891fdbc",
+        "light_xpos": "cc98057e879cd67d7aae62e9aeaed92f43e5ab2738220b1c5fb6b665e2c239f5",
+        "map_dof2idof": "5ca1bfc48da9501b6630fe7346774cf45a57b97c256814204a69c2ff45865cea",
+        "map_efc2iefc": "07f7227d60bb4fc0417b68710f0cbb0fbcae66582106328b98ad8af3f3ad9e92",
+        "map_idof2dof": "5ca1bfc48da9501b6630fe7346774cf45a57b97c256814204a69c2ff45865cea",
+        "map_iefc2efc": "3749c6e5d4ab5799060a6b186b4eda478804365558d3d134a124ac31a22d6ff3",
+        "maxuse_arena": "f034322f59d6d2218fafdb6aa3c399e139930969dd46642dbafea942f8c4f358",
+        "maxuse_con": "c735279e1a074b1f4db2663570ef6743cb704d634dcef1999216ce47194a2845",
+        "maxuse_efc": "722ab4779d0be4e21aaf76682edc8c59cee0a03ee5b5a4b7bcccc4b8bae84d6c",
+        "maxuse_stack": "0f8c453b009e7f9a58817f1ed6b9bc82080b65a6752a0d664c5159ac46bfde86",
+        "maxuse_threadstack": "b0c0820a12e7d2c998979dd41bf02e65296e422dbf0ab1f91a3f068a5584c834",
+        "model_native_sha256": "cf22a4bcc67b3eccdfe32a15bda8fa99446a48da26a8f9702037db3852ec1b01",
+        "moment_colind": "45cd246b6dd3713da1e5611acb2366c2d5e076809d5f380f7a3fa4fc1af86f48",
+        "moment_rowadr": "4a23c957fbb1d8e39175ed6f595f04f5ca6c596cabc7f6e61833b044b363da1c",
+        "moment_rownnz": "d027364d75071c6454de6c00f2e03b63ec2a482418962c8398442eff5ca5ad97",
+        "nA": "727e10f8891a80a0beab4bc7c2f88929ebb98d4987a716ac7b2e0d4afdf31e73",
+        "nJ": "f8d5e5c1444ce8da59c1903b0c514b6a246904f04d1b1ee701ba3786ab769b9d",
+        "narena": "b4a478f6c15edc0919223a3c9303825abae1f13d89e83e332074cb7222f937b0",
+        "nbuffer": "42d5775bbeeaaabda3e34739835c33ca17f5c6f582d1cb9b836304cd9c14027e",
+        "ncon": "c735279e1a074b1f4db2663570ef6743cb704d634dcef1999216ce47194a2845",
+        "ne": "727e10f8891a80a0beab4bc7c2f88929ebb98d4987a716ac7b2e0d4afdf31e73",
+        "nefc": "722ab4779d0be4e21aaf76682edc8c59cee0a03ee5b5a4b7bcccc4b8bae84d6c",
+        "nf": "727e10f8891a80a0beab4bc7c2f88929ebb98d4987a716ac7b2e0d4afdf31e73",
+        "nidof": "5913c82acc9f6b2ce804712bc8f8a36643ad1c26e96f92b68cb12e327caea67d",
+        "nisland": "41d62c8b0cbefac8b9a378b017dd0e48e5fa79a9777411ab9979dcf224eba10c",
+        "nl": "727e10f8891a80a0beab4bc7c2f88929ebb98d4987a716ac7b2e0d4afdf31e73",
+        "nplugin": "727e10f8891a80a0beab4bc7c2f88929ebb98d4987a716ac7b2e0d4afdf31e73",
+        "parena": "e691757d9a7d2773f7eb748fb33d22467e696f0da7fc8c13b72747bc90368cdf",
+        "pbase": "727e10f8891a80a0beab4bc7c2f88929ebb98d4987a716ac7b2e0d4afdf31e73",
+        "pstack": "727e10f8891a80a0beab4bc7c2f88929ebb98d4987a716ac7b2e0d4afdf31e73",
+        "qDeriv": "62ad10bc56d1ad1168c613535551647e21126e1eeafc8b598200040a3fd6e736",
+        "qH": "f5d3de41b2f49a18f2ef1b86844a16d226207165ee12915a3d87a6351b528563",
+        "qHDiagInv": "c722f7961d96df31fcc79386947df6e9a6a347c7a7e7202a7fbe0edee0374c70",
+        "qLD": "4e636255007152d242b0287dbfb9838d53295bac3bda701a767e8bd2aff1ab3e",
+        "qLDiagInv": "ac5de6efd082ca7eb953dbaae8188c1c4ac990f2a05e4f78421e99bb0db14089",
+        "qLU": "62ad10bc56d1ad1168c613535551647e21126e1eeafc8b598200040a3fd6e736",
+        "qM": "5aaf16ba392ec9464153a7c18b398ca04a792c25142ac9dc03749c5da150e1fa",
+        "qacc": "64790102d3714c0ce681ddcaea6a7f097b32e50c14ab9e1edbd9aa9004128d57",
+        "qacc_smooth": "2203ea1b6ecb0e8369a53ec712d2ae11d0996beea23e9775b3c4745ee448b6d9",
+        "qacc_warmstart": "64790102d3714c0ce681ddcaea6a7f097b32e50c14ab9e1edbd9aa9004128d57",
+        "qfrc_actuator": "f8aeb7dc4ae6ac5340516e6571058931c101a04eee93489823a94fbd200c2ca0",
+        "qfrc_applied": "cb62ed38859813391506c70d0393ea8f9810da782a17eb5a711c016271557d82",
+        "qfrc_bias": "7d6db71b2737dab9e5a4261788f43342892e3d713c7329839cca97181e96a51c",
+        "qfrc_constraint": "9bc20fee2dda8feed34522bb15a3269505dbe8c2fdd7cd4d5a36f8ce243791bb",
+        "qfrc_damper": "360acdb9a85ad62384dc06e363205bd9e905396f9dd57da94b1420c56e1d63c9",
+        "qfrc_fluid": "cb62ed38859813391506c70d0393ea8f9810da782a17eb5a711c016271557d82",
+        "qfrc_gravcomp": "cb62ed38859813391506c70d0393ea8f9810da782a17eb5a711c016271557d82",
+        "qfrc_inverse": "cb62ed38859813391506c70d0393ea8f9810da782a17eb5a711c016271557d82",
+        "qfrc_passive": "360acdb9a85ad62384dc06e363205bd9e905396f9dd57da94b1420c56e1d63c9",
+        "qfrc_smooth": "d7d75fd496f3251071d071020169925d9b46ff4fc7e9fa2fc9ad7d8f3b4e5848",
+        "qfrc_spring": "cb62ed38859813391506c70d0393ea8f9810da782a17eb5a711c016271557d82",
+        "qpos": "f9e2e508de60b1aa1b5844dddf9fc5ea3832d05fafe60f4c4071e123d8428f80",
+        "qvel": "a3038e9383afd3183290ff68288131672b5e1d2c0ae1f2df86ef34eeaa34528c",
+        "signature": "727e10f8891a80a0beab4bc7c2f88929ebb98d4987a716ac7b2e0d4afdf31e73",
+        "site_xmat": "976d36f495868893f89fce200787beb7e1dde408cdf0d03f8e0aad69d38ea8d0",
+        "site_xpos": "7c38d242cd54a163c56610cccbefdf6867f79752d260ad8b24832fe42ba546e2",
+        "solver.gradient": "5737d38ad7944e6d5bf21ef0e68e6a0d1a8ed57dd2bb7ff64d284a962638c766",
+        "solver.improvement": "5fc8446c57a20fc5db636f207dc87ce125ab2e8cbcedb4683b1b5c6b69de4b85",
+        "solver.lineslope": "5fc8446c57a20fc5db636f207dc87ce125ab2e8cbcedb4683b1b5c6b69de4b85",
+        "solver.nactive": "56248b61244114d540eebc38d069553996b15705db542d5e60e10e13929353bb",
+        "solver.nchange": "185741c08ce8e4c8560c69833715702a8ac53bd3f4b04ee615a2b354d2987b4f",
+        "solver.neval": "b558dcfaf6b1770bf8c70e1eabdf42ebf20b277e761f08d9d08428a0df580e90",
+        "solver.nupdate": "185741c08ce8e4c8560c69833715702a8ac53bd3f4b04ee615a2b354d2987b4f",
+        "solver_fwdinv": "847705357485b34cd1bd0f0731069fa11f6d5541f61e3734eb79f5f11d2191f1",
+        "solver_niter": "31dcbb6eda48520872964164b3a7a06c39575a900c3021145fa5c7fdd5e01c02",
+        "solver_nnz": "31dcbb6eda48520872964164b3a7a06c39575a900c3021145fa5c7fdd5e01c02",
+        "subtree_angmom": "842c6e68de90202412fc1ae61ff9792baf2602e1766d149ea449ec148def6bde",
+        "subtree_com": "fbb4408e0f92bf4db587c784a118b6f5a9d3c9b7a855b8c650c30765b9215258",
+        "subtree_linvel": "842c6e68de90202412fc1ae61ff9792baf2602e1766d149ea449ec148def6bde",
+        "threadpool": "727e10f8891a80a0beab4bc7c2f88929ebb98d4987a716ac7b2e0d4afdf31e73",
+        "time": "4029bed3729d008f001d585d3686ef550a709401055ef6708a7ddbe263b3e252",
+        "timer.duration": "a8f85f3bf7f2854212dcbdadf05a40331db4a010fb0ec1b186ffc8f6c51e60b1",
+        "timer.number": "e6555e0ccc05d5fc8a2c98ad3548949a7d16c4c9520f1d0eab2d6db8484e15b5",
+        "warning.lastinfo": "b3494bab20b60e8d81761ad786001a04e0e7e5d10b5e4af3d3aeb4fcc03d3fb7",
+        "warning.number": "b3494bab20b60e8d81761ad786001a04e0e7e5d10b5e4af3d3aeb4fcc03d3fb7",
+        "xanchor": "ae22ef2acf40ee0d264c21bb509a607acd6df57fc183aeff9b8752bae4fc80aa",
+        "xaxis": "af5f70f6f3b93e736aaf28d1dd03acd29b1afa99aa73b196e237e87bdc8b6ac7",
+        "xfrc_applied": "6e13f0766d4c0d5f721577b59c32463de4d98900b79949438c9437c2a99eeb77",
+        "ximat": "c95dd06f2aa73fa517889d898728ec0f9a023cb8d5e143e99c73fb45dd0aef30",
+        "xipos": "6200be03da243f37853ff5fccc1db72a5bb193fe10a59e35210739b4467cc0f3",
+        "xmat": "7d833640194d31920fd1d86bd75a14723ed71cb101b18b868945065b67aff958",
+        "xpos": "5425c55e77317356e6ea3746aa1de871393cee897365ea9362961a28dccd18ec",
+        "xquat": "2c3e3e4f765248becb7ab0f4918a5509addc2a6554c2464e75afc5f15eb91210"
+      },
+      {
+        "M": "0006689dcb4515efc7f59c9f5d65f57f1f5107466da432c5ab227e63d56271d0",
+        "actuator_force": "eb21a5977e5c46b15c864702b9544f2f04cd7d325938971f1d4ef832b602c1b2",
+        "actuator_length": "55c0d98b6bbebf73d9cf99f32ad6fa456dec515aafb7f5b09f09cfe5221cbfae",
+        "actuator_moment": "f07ae25369dd0c456b5bab76fd34a8d1656f480321fd2eb0281ca14b20c9cd21",
+        "actuator_velocity": "41a37761a4b1e3e00c92dca9b5f1ba05ae469cafb5e7f104da4200b2cab94e97",
+        "bvh_active": "81845f5e49361422f57e3b954125089040442cbd742d5c89c9a6d687e4f79a23",
+        "cacc": "6e13f0766d4c0d5f721577b59c32463de4d98900b79949438c9437c2a99eeb77",
+        "cam_xmat": "4d065027f25845a3d7a142284ecde7a47b28f6c7502d1e5f008214b464ecd92f",
+        "cam_xpos": "4b4230eca9c32298f7f7a6bf2a091d8d501b2d2ed2a93c25f07b0d15a50ac839",
+        "cdof": "4167dd638b009817ed7a360ff97713447a87847584a59faae1244f0ecab0b020",
+        "cdof_dot": "feca2b65dd4bf28e7b4989069b0f9b67a9795c61cc81b42f76b01809e382381a",
+        "cfrc_ext": "6e13f0766d4c0d5f721577b59c32463de4d98900b79949438c9437c2a99eeb77",
+        "cfrc_int": "6e13f0766d4c0d5f721577b59c32463de4d98900b79949438c9437c2a99eeb77",
+        "cinert": "4b10c46f33dbde60b8067ab494f2efb92f90e1c714f8f93488a91f21fd9fdce5",
+        "contact.H": "f0e3f886dc300bb6a521f78353ae694147a5130c980a8e6f0f7cbbb3181130be",
+        "contact.dim": "b8b4c6eb30d8653e20fdf723e92939b79449cf4422c74e109c3181d028997aa7",
+        "contact.dist": "7730352ce03856dfb29b3e3fad4c9c9e45cc003b01e2df82b5b1ac8083a41d8a",
+        "contact.efc_address": "dc1a36ea03d8542160693de79b4c388bb13d297a0bda247fa3300a930157c715",
+        "contact.elem": "91b06e448799cfbf43de6f9c873c94b8daab751568cc61d7bbb1eca2b433d4d2",
+        "contact.exclude": "34ff2da523a6e5d4af598b9911865c31e134130493b9d7d714a8b61171ceb7b2",
+        "contact.flex": "91b06e448799cfbf43de6f9c873c94b8daab751568cc61d7bbb1eca2b433d4d2",
+        "contact.frame": "178435e2704f044dc45637e63cd50fc8f0d816197c096084e45c6235776c5dcd",
+        "contact.friction": "9c0293c66cc865186eeae1898dba1e1bd3dd68cc590df579655e7dd4c8e158a3",
+        "contact.geom": "8a9d14e291da227f0a74f2e74a1b7f61ceb1ca95dd21cd305c73f0ed48c3c7eb",
+        "contact.geom1": "34ff2da523a6e5d4af598b9911865c31e134130493b9d7d714a8b61171ceb7b2",
+        "contact.geom2": "145e29af069a61148a7fe94a8f2d7421bf588d28e6820ae4f5397066a9524022",
+        "contact.includemargin": "bb117fb8817be0ebe4f2ee67da55b72121861f4e3503ccf8a8c5fc926e9f8db2",
+        "contact.mu": "d14b37a4c4f1bb2b3a7ca47df37dd75cd5f2f34c6b925b45c93fde003929e0e1",
+        "contact.pos": "3e8fcad57bea246a401acecace381a6264c24ec106c14ead577a20657f250150",
+        "contact.solimp": "25e341a026f398547e7f5dcfb20dab5e39c0961569764806281c9112501bdc02",
+        "contact.solref": "42c49de85751b037c7a6f28fc8815fe8ebd1705c6c331a2f81c75be760957fff",
+        "contact.solreffriction": "4b342b46d5f6e50fe3ffde7b863cd437f5d8b3492735583c7283f65da8ec64cc",
+        "contact.vert": "91b06e448799cfbf43de6f9c873c94b8daab751568cc61d7bbb1eca2b433d4d2",
+        "crb": "5edb3c2861da8e1009cfde50948e62bcb73a69c18598cf204018adec3927acbd",
+        "ctrl": "eb21a5977e5c46b15c864702b9544f2f04cd7d325938971f1d4ef832b602c1b2",
+        "cvel": "383ab4c97387656d0972fa3a2bd56058b89429c9f491f2411a38ad1fa4d11be6",
+        "dof_island": "f99c8083dc9f1c2d8d26b1a3019921db614c7f66c5f803ae8ce2fae70dbdf1e4",
+        "efc_D": "33eb11d7ce75436cf7d851dd41431b74239a390958e8779a08d241878dbe1eee",
+        "efc_J": "b899a9fe8d874c261edf3a0608393ffb6f7ef10af4b7ef1e5f7c14cdc174bf6b",
+        "efc_J_colind": "3114e4f336e57a4ffdd26b0b49acb249e3ba8246c3490af1608fad8b6237e333",
+        "efc_J_rowadr": "1abf6ac73d05babfd4ff619e22cd2c11dc106fe5f8b846b3f177b2c848a593a2",
+        "efc_J_rownnz": "881b842ab9eb0d1c90d53e22248613cd666aa92a3dfb88b51de3917ffaa8cd40",
+        "efc_J_rowsuper": "105ed8d5cb2a11fef81cef4611c8ecd643aef34cf430a281d8c11336990f53a0",
+        "efc_KBIP": "e357bddee6a9970e51e8fbe1d8dd4b9b67b55ba07e2be8c1f08c5cf84e8af303",
+        "efc_R": "b9f22c893be05c462085cc3cd598fabd067beb7b1e4dbed95b7865e313346618",
+        "efc_aref": "77ab559dddcfbad7347a1a368aee4d0f2a224cec6f576333e9c9ae9b02c49dfd",
+        "efc_b": "aa6de9c302e83eb8898bcfebdd639c8f4a2083381e7e71a05c6123fa2a0ca123",
+        "efc_diagApprox": "9aa40b322de33aacec660821d40a0af632cfd18a4c2ac8da6e7f5dd24c8474a2",
+        "efc_force": "c8165380e8508283d1891aeace395507be02ea406aa38c1333922dd42ea189af",
+        "efc_frictionloss": "17ef200f706b679a20b6a479a0b0ade2b9431b20adc86d35741bd00b7ba150d8",
+        "efc_id": "460eaf99967b767bbefe6f14a5855a630ca6b7f6d289d6bb2ff435b009ab1a09",
+        "efc_island": "7ac44e80fce08a4d391b625c8f19e7bc9ea3832f48dcb657aa548b5b446047a1",
+        "efc_margin": "17ef200f706b679a20b6a479a0b0ade2b9431b20adc86d35741bd00b7ba150d8",
+        "efc_pos": "b9eaaeba57bf3cfe84004e03d3a908a122a2de8d8d4ece4d9d5e2dc5a3ef6956",
+        "efc_state": "d54244852dba07f313e48035955cd821610c40f89841a01c691402be83d6eb89",
+        "efc_type": "b20fc668f94de04d9a2389bfce8aa22bec2f72077ccfaf832eca663d1892bd50",
+        "efc_vel": "9f6ac3cd5dca538988a3e99c9d3b93ebc1a3e1051ad1770060bb8a98e34de90e",
+        "energy": "847705357485b34cd1bd0f0731069fa11f6d5541f61e3734eb79f5f11d2191f1",
+        "geom_xmat": "afd1b2ebcf9a69ea2deae16797a788c34182073aa21a3d8c131e9d208c4ac467",
+        "geom_xpos": "08e8e85e82de41c6c199ebb165ace6c26b77fbbf2895ef8b4b48c805ef864ee9",
+        "iLD": "4e636255007152d242b0287dbfb9838d53295bac3bda701a767e8bd2aff1ab3e",
+        "iLDiagInv": "ac5de6efd082ca7eb953dbaae8188c1c4ac990f2a05e4f78421e99bb0db14089",
+        "iM": "0006689dcb4515efc7f59c9f5d65f57f1f5107466da432c5ab227e63d56271d0",
+        "iM_colind": "a44ab6d282502ddb68a4925af2a6f41a7e7ef7dd753a6e66c29b5f849648af24",
+        "iM_rowadr": "f14fa4f443a5f0826035bebf847628db97f34717cbe369bf661f6d1c710e0a47",
+        "iM_rownnz": "4a496adac0464189818a7fcbca5ccc2a8b2dd7d6cbe330be476db5005d9a33bc",
+        "iacc": "64790102d3714c0ce681ddcaea6a7f097b32e50c14ab9e1edbd9aa9004128d57",
+        "iacc_smooth": "2203ea1b6ecb0e8369a53ec712d2ae11d0996beea23e9775b3c4745ee448b6d9",
+        "iefc_D": "c9761f44c4f3cc46c8d8c66e3e0260b2e30cafd166bd0deb57d0253a6df78a9f",
+        "iefc_J": "bb861698353016ca0d76137e348a96a795f570755c85a0a7c36306092aa941ef",
+        "iefc_J_colind": "a8250954b58374917bb3411a5f73251171f8c3ca13c7742e8b9fbbed3de750ca",
+        "iefc_J_rowadr": "296d4a8a3576e7d2c768eaed18ecbf2c62b30d5f65748868e4d006cc1a561f7c",
+        "iefc_J_rownnz": "23c00b180f3a387bdd121cf16b632b84d00b920167c9d01dc01c1e48cf35b256",
+        "iefc_J_rowsuper": "3229f1bbad1c59dee0b08e0538dfe605eb7cf40a34ef094784a4c959b60fe413",
+        "iefc_R": "68c04fbaeead37768738b8346f5f658ff5398ca8041c8a593f9553819f80c133",
+        "iefc_aref": "e2fa93c8b89e73c9ab80905014ce79e6fa27076a4a7bc469f38d2e2b3add0870",
+        "iefc_force": "a72f5b0cd812a87237e12f75799848f2cf7181b56cd636e3132a12b91d383bae",
+        "iefc_frictionloss": "17ef200f706b679a20b6a479a0b0ade2b9431b20adc86d35741bd00b7ba150d8",
+        "iefc_id": "fc06ff76daccca54cca9848a1a5aa75d01a11241085eff7ac9493bfe2fd10e7b",
+        "iefc_state": "25fd8a0668ade7f75f0bc3eeb66cd434c2e9d9c3c68bfc454dfc183828b68079",
+        "iefc_type": "389d759e6cc71612365d46ff9745b540982cd13f4724e87ef8f90fef70993e5d",
+        "ifrc_constraint": "9bc20fee2dda8feed34522bb15a3269505dbe8c2fdd7cd4d5a36f8ce243791bb",
+        "ifrc_smooth": "d7d75fd496f3251071d071020169925d9b46ff4fc7e9fa2fc9ad7d8f3b4e5848",
+        "island_dofadr": "1b8412531c2f3b84f92a818a73b95f33f42dc12cc83f5eb823d3fe2344c296a6",
+        "island_idofadr": "1b8412531c2f3b84f92a818a73b95f33f42dc12cc83f5eb823d3fe2344c296a6",
+        "island_iefcadr": "88fe5ec6d874977c7fbf7a5c783cd2d713e3ad8c83cd46a3bcadbb50687d2114",
+        "island_ne": "730a8e46f9143834ff2b0fa78dc927bda0a783cbd4aae0d94ee51de0284dc7bd",
+        "island_nefc": "3cc256c403dc96598728175ccde7dcdb126e5d2960533008514a236ab1910900",
+        "island_nf": "730a8e46f9143834ff2b0fa78dc927bda0a783cbd4aae0d94ee51de0284dc7bd",
+        "island_nv": "f3f4fcd11576a133ffc91302d865f87cee0fb86f4a463cd483a0b8fa54f9da94",
+        "light_xdir": "f3283d4ea4a027556eb6a9cb1e210ddbd9ff75214adf6dde1423e57f9891fdbc",
+        "light_xpos": "cc98057e879cd67d7aae62e9aeaed92f43e5ab2738220b1c5fb6b665e2c239f5",
+        "map_dof2idof": "5ca1bfc48da9501b6630fe7346774cf45a57b97c256814204a69c2ff45865cea",
+        "map_efc2iefc": "07f7227d60bb4fc0417b68710f0cbb0fbcae66582106328b98ad8af3f3ad9e92",
+        "map_idof2dof": "5ca1bfc48da9501b6630fe7346774cf45a57b97c256814204a69c2ff45865cea",
+        "map_iefc2efc": "3749c6e5d4ab5799060a6b186b4eda478804365558d3d134a124ac31a22d6ff3",
+        "maxuse_arena": "f034322f59d6d2218fafdb6aa3c399e139930969dd46642dbafea942f8c4f358",
+        "maxuse_con": "c735279e1a074b1f4db2663570ef6743cb704d634dcef1999216ce47194a2845",
+        "maxuse_efc": "722ab4779d0be4e21aaf76682edc8c59cee0a03ee5b5a4b7bcccc4b8bae84d6c",
+        "maxuse_stack": "0f8c453b009e7f9a58817f1ed6b9bc82080b65a6752a0d664c5159ac46bfde86",
+        "maxuse_threadstack": "b0c0820a12e7d2c998979dd41bf02e65296e422dbf0ab1f91a3f068a5584c834",
+        "model_native_sha256": "cf22a4bcc67b3eccdfe32a15bda8fa99446a48da26a8f9702037db3852ec1b01",
+        "moment_colind": "45cd246b6dd3713da1e5611acb2366c2d5e076809d5f380f7a3fa4fc1af86f48",
+        "moment_rowadr": "4a23c957fbb1d8e39175ed6f595f04f5ca6c596cabc7f6e61833b044b363da1c",
+        "moment_rownnz": "d027364d75071c6454de6c00f2e03b63ec2a482418962c8398442eff5ca5ad97",
+        "nA": "727e10f8891a80a0beab4bc7c2f88929ebb98d4987a716ac7b2e0d4afdf31e73",
+        "nJ": "f8d5e5c1444ce8da59c1903b0c514b6a246904f04d1b1ee701ba3786ab769b9d",
+        "narena": "b4a478f6c15edc0919223a3c9303825abae1f13d89e83e332074cb7222f937b0",
+        "nbuffer": "42d5775bbeeaaabda3e34739835c33ca17f5c6f582d1cb9b836304cd9c14027e",
+        "ncon": "c735279e1a074b1f4db2663570ef6743cb704d634dcef1999216ce47194a2845",
+        "ne": "727e10f8891a80a0beab4bc7c2f88929ebb98d4987a716ac7b2e0d4afdf31e73",
+        "nefc": "722ab4779d0be4e21aaf76682edc8c59cee0a03ee5b5a4b7bcccc4b8bae84d6c",
+        "nf": "727e10f8891a80a0beab4bc7c2f88929ebb98d4987a716ac7b2e0d4afdf31e73",
+        "nidof": "5913c82acc9f6b2ce804712bc8f8a36643ad1c26e96f92b68cb12e327caea67d",
+        "nisland": "41d62c8b0cbefac8b9a378b017dd0e48e5fa79a9777411ab9979dcf224eba10c",
+        "nl": "727e10f8891a80a0beab4bc7c2f88929ebb98d4987a716ac7b2e0d4afdf31e73",
+        "nplugin": "727e10f8891a80a0beab4bc7c2f88929ebb98d4987a716ac7b2e0d4afdf31e73",
+        "parena": "e691757d9a7d2773f7eb748fb33d22467e696f0da7fc8c13b72747bc90368cdf",
+        "pbase": "727e10f8891a80a0beab4bc7c2f88929ebb98d4987a716ac7b2e0d4afdf31e73",
+        "pstack": "727e10f8891a80a0beab4bc7c2f88929ebb98d4987a716ac7b2e0d4afdf31e73",
+        "qDeriv": "62ad10bc56d1ad1168c613535551647e21126e1eeafc8b598200040a3fd6e736",
+        "qH": "f5d3de41b2f49a18f2ef1b86844a16d226207165ee12915a3d87a6351b528563",
+        "qHDiagInv": "c722f7961d96df31fcc79386947df6e9a6a347c7a7e7202a7fbe0edee0374c70",
+        "qLD": "4e636255007152d242b0287dbfb9838d53295bac3bda701a767e8bd2aff1ab3e",
+        "qLDiagInv": "ac5de6efd082ca7eb953dbaae8188c1c4ac990f2a05e4f78421e99bb0db14089",
+        "qLU": "62ad10bc56d1ad1168c613535551647e21126e1eeafc8b598200040a3fd6e736",
+        "qM": "5aaf16ba392ec9464153a7c18b398ca04a792c25142ac9dc03749c5da150e1fa",
+        "qacc": "64790102d3714c0ce681ddcaea6a7f097b32e50c14ab9e1edbd9aa9004128d57",
+        "qacc_smooth": "2203ea1b6ecb0e8369a53ec712d2ae11d0996beea23e9775b3c4745ee448b6d9",
+        "qacc_warmstart": "64790102d3714c0ce681ddcaea6a7f097b32e50c14ab9e1edbd9aa9004128d57",
+        "qfrc_actuator": "f8aeb7dc4ae6ac5340516e6571058931c101a04eee93489823a94fbd200c2ca0",
+        "qfrc_applied": "cb62ed38859813391506c70d0393ea8f9810da782a17eb5a711c016271557d82",
+        "qfrc_bias": "7d6db71b2737dab9e5a4261788f43342892e3d713c7329839cca97181e96a51c",
+        "qfrc_constraint": "9bc20fee2dda8feed34522bb15a3269505dbe8c2fdd7cd4d5a36f8ce243791bb",
+        "qfrc_damper": "360acdb9a85ad62384dc06e363205bd9e905396f9dd57da94b1420c56e1d63c9",
+        "qfrc_fluid": "cb62ed38859813391506c70d0393ea8f9810da782a17eb5a711c016271557d82",
+        "qfrc_gravcomp": "cb62ed38859813391506c70d0393ea8f9810da782a17eb5a711c016271557d82",
+        "qfrc_inverse": "cb62ed38859813391506c70d0393ea8f9810da782a17eb5a711c016271557d82",
+        "qfrc_passive": "360acdb9a85ad62384dc06e363205bd9e905396f9dd57da94b1420c56e1d63c9",
+        "qfrc_smooth": "d7d75fd496f3251071d071020169925d9b46ff4fc7e9fa2fc9ad7d8f3b4e5848",
+        "qfrc_spring": "cb62ed38859813391506c70d0393ea8f9810da782a17eb5a711c016271557d82",
+        "qpos": "f9e2e508de60b1aa1b5844dddf9fc5ea3832d05fafe60f4c4071e123d8428f80",
+        "qvel": "a3038e9383afd3183290ff68288131672b5e1d2c0ae1f2df86ef34eeaa34528c",
+        "signature": "727e10f8891a80a0beab4bc7c2f88929ebb98d4987a716ac7b2e0d4afdf31e73",
+        "site_xmat": "976d36f495868893f89fce200787beb7e1dde408cdf0d03f8e0aad69d38ea8d0",
+        "site_xpos": "7c38d242cd54a163c56610cccbefdf6867f79752d260ad8b24832fe42ba546e2",
+        "solver.gradient": "5737d38ad7944e6d5bf21ef0e68e6a0d1a8ed57dd2bb7ff64d284a962638c766",
+        "solver.improvement": "5fc8446c57a20fc5db636f207dc87ce125ab2e8cbcedb4683b1b5c6b69de4b85",
+        "solver.lineslope": "5fc8446c57a20fc5db636f207dc87ce125ab2e8cbcedb4683b1b5c6b69de4b85",
+        "solver.nactive": "56248b61244114d540eebc38d069553996b15705db542d5e60e10e13929353bb",
+        "solver.nchange": "185741c08ce8e4c8560c69833715702a8ac53bd3f4b04ee615a2b354d2987b4f",
+        "solver.neval": "b558dcfaf6b1770bf8c70e1eabdf42ebf20b277e761f08d9d08428a0df580e90",
+        "solver.nupdate": "185741c08ce8e4c8560c69833715702a8ac53bd3f4b04ee615a2b354d2987b4f",
+        "solver_fwdinv": "847705357485b34cd1bd0f0731069fa11f6d5541f61e3734eb79f5f11d2191f1",
+        "solver_niter": "31dcbb6eda48520872964164b3a7a06c39575a900c3021145fa5c7fdd5e01c02",
+        "solver_nnz": "31dcbb6eda48520872964164b3a7a06c39575a900c3021145fa5c7fdd5e01c02",
+        "subtree_angmom": "842c6e68de90202412fc1ae61ff9792baf2602e1766d149ea449ec148def6bde",
+        "subtree_com": "fbb4408e0f92bf4db587c784a118b6f5a9d3c9b7a855b8c650c30765b9215258",
+        "subtree_linvel": "842c6e68de90202412fc1ae61ff9792baf2602e1766d149ea449ec148def6bde",
+        "threadpool": "727e10f8891a80a0beab4bc7c2f88929ebb98d4987a716ac7b2e0d4afdf31e73",
+        "time": "4029bed3729d008f001d585d3686ef550a709401055ef6708a7ddbe263b3e252",
+        "timer.duration": "edc96a0ed53c2f49d48c89b52a63a1746d3e58308312241932468973e414aa2e",
+        "timer.number": "e6555e0ccc05d5fc8a2c98ad3548949a7d16c4c9520f1d0eab2d6db8484e15b5",
+        "warning.lastinfo": "b3494bab20b60e8d81761ad786001a04e0e7e5d10b5e4af3d3aeb4fcc03d3fb7",
+        "warning.number": "b3494bab20b60e8d81761ad786001a04e0e7e5d10b5e4af3d3aeb4fcc03d3fb7",
+        "xanchor": "ae22ef2acf40ee0d264c21bb509a607acd6df57fc183aeff9b8752bae4fc80aa",
+        "xaxis": "af5f70f6f3b93e736aaf28d1dd03acd29b1afa99aa73b196e237e87bdc8b6ac7",
+        "xfrc_applied": "6e13f0766d4c0d5f721577b59c32463de4d98900b79949438c9437c2a99eeb77",
+        "ximat": "c95dd06f2aa73fa517889d898728ec0f9a023cb8d5e143e99c73fb45dd0aef30",
+        "xipos": "6200be03da243f37853ff5fccc1db72a5bb193fe10a59e35210739b4467cc0f3",
+        "xmat": "7d833640194d31920fd1d86bd75a14723ed71cb101b18b868945065b67aff958",
+        "xpos": "5425c55e77317356e6ea3746aa1de871393cee897365ea9362961a28dccd18ec",
+        "xquat": "2c3e3e4f765248becb7ab0f4918a5509addc2a6554c2464e75afc5f15eb91210"
+      }
+    ],
+    "decoded_field_count": [
+      173,
+      173
+    ],
+    "detail_limit": 64,
+    "details_may_be_truncated": false,
+    "differences": [
+      {
+        "different_elements": 14,
+        "first_flat_indices": [
+          0,
+          1,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14
+        ],
+        "left_dtype": "<f8",
+        "left_shape": [
+          15
+        ],
+        "left_type": "ndarray",
+        "max_abs_difference": 0.000491245999988621,
+        "path": "/timer.duration",
+        "right_dtype": "<f8",
+        "right_shape": [
+          15
+        ],
+        "right_type": "ndarray"
+      }
+    ],
+    "differing_components": [
+      "timer.duration"
+    ],
+    "equal": false,
+    "left_digest": "87a2f918ea80ffbad50624646138252f402cd0b46df3f870828f6acfc54c2d68",
+    "omitted_fields": [
+      [
+        {
+          "dtype": "<f8",
+          "field": "act",
+          "reason": "owned NumPy array is not a view of native storage",
+          "shape": [
+            0
+          ]
+        },
+        {
+          "dtype": "<f8",
+          "field": "act_dot",
+          "reason": "owned NumPy array is not a view of native storage",
+          "shape": [
+            0
+          ]
+        },
+        {
+          "dtype": "<f8",
+          "field": "bvh_aabb_dyn",
+          "reason": "owned NumPy array is not a view of native storage",
+          "shape": [
+            0,
+            6
+          ]
+        },
+        {
+          "dtype": "<f8",
+          "field": "efc_AR",
+          "reason": "owned NumPy array is not a view of native storage",
+          "shape": [
+            0
+          ]
+        },
+        {
+          "dtype": "<i4",
+          "field": "efc_AR_colind",
+          "reason": "owned NumPy array is not a view of native storage",
+          "shape": [
+            0
+          ]
+        },
+        {
+          "dtype": "<i4",
+          "field": "efc_AR_rowadr",
+          "reason": "owned NumPy array is not a view of native storage",
+          "shape": [
+            284
+          ]
+        },
+        {
+          "dtype": "<i4",
+          "field": "efc_AR_rownnz",
+          "reason": "owned NumPy array is not a view of native storage",
+          "shape": [
+            284
+          ]
+        },
+        {
+          "dtype": "|u1",
+          "field": "eq_active",
+          "reason": "owned NumPy array is not a view of native storage",
+          "shape": [
+            0
+          ]
+        },
+        {
+          "dtype": "<f8",
+          "field": "flexedge_J",
+          "reason": "owned NumPy array is not a view of native storage",
+          "shape": [
+            0,
+            70
+          ]
+        },
+        {
+          "dtype": "<i4",
+          "field": "flexedge_J_colind",
+          "reason": "owned NumPy array is not a view of native storage",
+          "shape": [
+            0,
+            70
+          ]
+        },
+        {
+          "dtype": "<i4",
+          "field": "flexedge_J_rowadr",
+          "reason": "owned NumPy array is not a view of native storage",
+          "shape": [
+            0
+          ]
+        },
+        {
+          "dtype": "<i4",
+          "field": "flexedge_J_rownnz",
+          "reason": "owned NumPy array is not a view of native storage",
+          "shape": [
+            0
+          ]
+        },
+        {
+          "dtype": "<f8",
+          "field": "flexedge_length",
+          "reason": "owned NumPy array is not a view of native storage",
+          "shape": [
+            0
+          ]
+        },
+        {
+          "dtype": "<f8",
+          "field": "flexedge_velocity",
+          "reason": "owned NumPy array is not a view of native storage",
+          "shape": [
+            0
+          ]
+        },
+        {
+          "dtype": "<f8",
+          "field": "flexelem_aabb",
+          "reason": "owned NumPy array is not a view of native storage",
+          "shape": [
+            0,
+            6
+          ]
+        },
+        {
+          "dtype": "<f8",
+          "field": "flexvert_xpos",
+          "reason": "owned NumPy array is not a view of native storage",
+          "shape": [
+            0,
+            3
+          ]
+        },
+        {
+          "dtype": "<f8",
+          "field": "mocap_pos",
+          "reason": "owned NumPy array is not a view of native storage",
+          "shape": [
+            0,
+            3
+          ]
+        },
+        {
+          "dtype": "<f8",
+          "field": "mocap_quat",
+          "reason": "owned NumPy array is not a view of native storage",
+          "shape": [
+            0,
+            4
+          ]
+        },
+        {
+          "dtype": "<i4",
+          "field": "plugin",
+          "reason": "owned NumPy array is not a view of native storage",
+          "shape": [
+            0
+          ]
+        },
+        {
+          "dtype": "<u8",
+          "field": "plugin_data",
+          "reason": "owned NumPy array is not a view of native storage",
+          "shape": [
+            0
+          ]
+        },
+        {
+          "dtype": "<f8",
+          "field": "plugin_state",
+          "reason": "owned NumPy array is not a view of native storage",
+          "shape": [
+            0
+          ]
+        },
+        {
+          "dtype": "<f8",
+          "field": "sensordata",
+          "reason": "owned NumPy array is not a view of native storage",
+          "shape": [
+            0
+          ]
+        },
+        {
+          "dtype": "<f8",
+          "field": "ten_J",
+          "reason": "owned NumPy array is not a view of native storage",
+          "shape": [
+            0,
+            70
+          ]
+        },
+        {
+          "dtype": "<i4",
+          "field": "ten_J_colind",
+          "reason": "owned NumPy array is not a view of native storage",
+          "shape": [
+            0,
+            70
+          ]
+        },
+        {
+          "dtype": "<i4",
+          "field": "ten_J_rowadr",
+          "reason": "owned NumPy array is not a view of native storage",
+          "shape": [
+            0
+          ]
+        },
+        {
+          "dtype": "<i4",
+          "field": "ten_J_rownnz",
+          "reason": "owned NumPy array is not a view of native storage",
+          "shape": [
+            0
+          ]
+        },
+        {
+          "dtype": "<f8",
+          "field": "ten_length",
+          "reason": "owned NumPy array is not a view of native storage",
+          "shape": [
+            0
+          ]
+        },
+        {
+          "dtype": "<f8",
+          "field": "ten_velocity",
+          "reason": "owned NumPy array is not a view of native storage",
+          "shape": [
+            0
+          ]
+        },
+        {
+          "dtype": "<i4",
+          "field": "ten_wrapadr",
+          "reason": "owned NumPy array is not a view of native storage",
+          "shape": [
+            0
+          ]
+        },
+        {
+          "dtype": "<i4",
+          "field": "ten_wrapnum",
+          "reason": "owned NumPy array is not a view of native storage",
+          "shape": [
+            0
+          ]
+        },
+        {
+          "dtype": "<i4",
+          "field": "tendon_efcadr",
+          "reason": "owned NumPy array is not a view of native storage",
+          "shape": [
+            0
+          ]
+        },
+        {
+          "dtype": "<f8",
+          "field": "userdata",
+          "reason": "owned NumPy array is not a view of native storage",
+          "shape": [
+            0
+          ]
+        },
+        {
+          "dtype": "<i4",
+          "field": "wrap_obj",
+          "reason": "owned NumPy array is not a view of native storage",
+          "shape": [
+            0,
+            2
+          ]
+        },
+        {
+          "dtype": "<f8",
+          "field": "wrap_xpos",
+          "reason": "owned NumPy array is not a view of native storage",
+          "shape": [
+            0,
+            6
+          ]
+        }
+      ],
+      [
+        {
+          "dtype": "<f8",
+          "field": "act",
+          "reason": "owned NumPy array is not a view of native storage",
+          "shape": [
+            0
+          ]
+        },
+        {
+          "dtype": "<f8",
+          "field": "act_dot",
+          "reason": "owned NumPy array is not a view of native storage",
+          "shape": [
+            0
+          ]
+        },
+        {
+          "dtype": "<f8",
+          "field": "bvh_aabb_dyn",
+          "reason": "owned NumPy array is not a view of native storage",
+          "shape": [
+            0,
+            6
+          ]
+        },
+        {
+          "dtype": "<f8",
+          "field": "efc_AR",
+          "reason": "owned NumPy array is not a view of native storage",
+          "shape": [
+            0
+          ]
+        },
+        {
+          "dtype": "<i4",
+          "field": "efc_AR_colind",
+          "reason": "owned NumPy array is not a view of native storage",
+          "shape": [
+            0
+          ]
+        },
+        {
+          "dtype": "<i4",
+          "field": "efc_AR_rowadr",
+          "reason": "owned NumPy array is not a view of native storage",
+          "shape": [
+            284
+          ]
+        },
+        {
+          "dtype": "<i4",
+          "field": "efc_AR_rownnz",
+          "reason": "owned NumPy array is not a view of native storage",
+          "shape": [
+            284
+          ]
+        },
+        {
+          "dtype": "|u1",
+          "field": "eq_active",
+          "reason": "owned NumPy array is not a view of native storage",
+          "shape": [
+            0
+          ]
+        },
+        {
+          "dtype": "<f8",
+          "field": "flexedge_J",
+          "reason": "owned NumPy array is not a view of native storage",
+          "shape": [
+            0,
+            70
+          ]
+        },
+        {
+          "dtype": "<i4",
+          "field": "flexedge_J_colind",
+          "reason": "owned NumPy array is not a view of native storage",
+          "shape": [
+            0,
+            70
+          ]
+        },
+        {
+          "dtype": "<i4",
+          "field": "flexedge_J_rowadr",
+          "reason": "owned NumPy array is not a view of native storage",
+          "shape": [
+            0
+          ]
+        },
+        {
+          "dtype": "<i4",
+          "field": "flexedge_J_rownnz",
+          "reason": "owned NumPy array is not a view of native storage",
+          "shape": [
+            0
+          ]
+        },
+        {
+          "dtype": "<f8",
+          "field": "flexedge_length",
+          "reason": "owned NumPy array is not a view of native storage",
+          "shape": [
+            0
+          ]
+        },
+        {
+          "dtype": "<f8",
+          "field": "flexedge_velocity",
+          "reason": "owned NumPy array is not a view of native storage",
+          "shape": [
+            0
+          ]
+        },
+        {
+          "dtype": "<f8",
+          "field": "flexelem_aabb",
+          "reason": "owned NumPy array is not a view of native storage",
+          "shape": [
+            0,
+            6
+          ]
+        },
+        {
+          "dtype": "<f8",
+          "field": "flexvert_xpos",
+          "reason": "owned NumPy array is not a view of native storage",
+          "shape": [
+            0,
+            3
+          ]
+        },
+        {
+          "dtype": "<f8",
+          "field": "mocap_pos",
+          "reason": "owned NumPy array is not a view of native storage",
+          "shape": [
+            0,
+            3
+          ]
+        },
+        {
+          "dtype": "<f8",
+          "field": "mocap_quat",
+          "reason": "owned NumPy array is not a view of native storage",
+          "shape": [
+            0,
+            4
+          ]
+        },
+        {
+          "dtype": "<i4",
+          "field": "plugin",
+          "reason": "owned NumPy array is not a view of native storage",
+          "shape": [
+            0
+          ]
+        },
+        {
+          "dtype": "<u8",
+          "field": "plugin_data",
+          "reason": "owned NumPy array is not a view of native storage",
+          "shape": [
+            0
+          ]
+        },
+        {
+          "dtype": "<f8",
+          "field": "plugin_state",
+          "reason": "owned NumPy array is not a view of native storage",
+          "shape": [
+            0
+          ]
+        },
+        {
+          "dtype": "<f8",
+          "field": "sensordata",
+          "reason": "owned NumPy array is not a view of native storage",
+          "shape": [
+            0
+          ]
+        },
+        {
+          "dtype": "<f8",
+          "field": "ten_J",
+          "reason": "owned NumPy array is not a view of native storage",
+          "shape": [
+            0,
+            70
+          ]
+        },
+        {
+          "dtype": "<i4",
+          "field": "ten_J_colind",
+          "reason": "owned NumPy array is not a view of native storage",
+          "shape": [
+            0,
+            70
+          ]
+        },
+        {
+          "dtype": "<i4",
+          "field": "ten_J_rowadr",
+          "reason": "owned NumPy array is not a view of native storage",
+          "shape": [
+            0
+          ]
+        },
+        {
+          "dtype": "<i4",
+          "field": "ten_J_rownnz",
+          "reason": "owned NumPy array is not a view of native storage",
+          "shape": [
+            0
+          ]
+        },
+        {
+          "dtype": "<f8",
+          "field": "ten_length",
+          "reason": "owned NumPy array is not a view of native storage",
+          "shape": [
+            0
+          ]
+        },
+        {
+          "dtype": "<f8",
+          "field": "ten_velocity",
+          "reason": "owned NumPy array is not a view of native storage",
+          "shape": [
+            0
+          ]
+        },
+        {
+          "dtype": "<i4",
+          "field": "ten_wrapadr",
+          "reason": "owned NumPy array is not a view of native storage",
+          "shape": [
+            0
+          ]
+        },
+        {
+          "dtype": "<i4",
+          "field": "ten_wrapnum",
+          "reason": "owned NumPy array is not a view of native storage",
+          "shape": [
+            0
+          ]
+        },
+        {
+          "dtype": "<i4",
+          "field": "tendon_efcadr",
+          "reason": "owned NumPy array is not a view of native storage",
+          "shape": [
+            0
+          ]
+        },
+        {
+          "dtype": "<f8",
+          "field": "userdata",
+          "reason": "owned NumPy array is not a view of native storage",
+          "shape": [
+            0
+          ]
+        },
+        {
+          "dtype": "<i4",
+          "field": "wrap_obj",
+          "reason": "owned NumPy array is not a view of native storage",
+          "shape": [
+            0,
+            2
+          ]
+        },
+        {
+          "dtype": "<f8",
+          "field": "wrap_xpos",
+          "reason": "owned NumPy array is not a view of native storage",
+          "shape": [
+            0,
+            6
+          ]
+        }
+      ]
+    ],
+    "physics_steps": 0,
+    "right_digest": "d4fe49a6184b472aeed35d88364a14a7ef8fa7a3fa973d60ccb12cd2f1ddc997",
+    "scope": "Exposed plain numeric MjData scalars and native-storage views plus timer/warning/solver/contact arrays and serialized model hash; owned NumPy arrays are omitted as unbacked views; opaque residual native bytes remain outside this named-field inventory"
+  },
+  "new_native_owners": 0,
+  "owner_exit_evidence": "recorded same-namespace cleanup only; current liveness unassessed",
+  "owners": [
+    {
+      "historical_cleanup_status": "already-exited",
+      "initial_invariants_preserved": true,
+      "job_id": "restore-1",
+      "owner": {
+        "pgid": 665661,
+        "pid": 665661,
+        "run_id": "a622e7d821954286a7595b846baae849",
+        "starttime": 3553048
+      },
+      "post_snapshot_sha256": "e510702ff4c8b74b320600c5e5d81dfd732097282bfebd21a12122a66e36f00e",
+      "post_state_digest": "4645bee796915201c043098f6e00fb17f68fa805e4fa74ab597b23e979f2947e",
+      "raw_audit_pass": true,
+      "raw_rows": 5,
+      "retained_post_state_audited": true,
+      "run_id": "a622e7d821954286a7595b846baae849",
+      "trace_digest": "794593e481fe2cca88fa49f59a491e33597f0bf2f9713b3496a68ad3d99f3249"
+    },
+    {
+      "historical_cleanup_status": "already-exited",
+      "initial_invariants_preserved": true,
+      "job_id": "restore-2",
+      "owner": {
+        "pgid": 679708,
+        "pid": 679708,
+        "run_id": "b14d9fc28bef43cbae0a5a417f898ebc",
+        "starttime": 3556091
+      },
+      "post_snapshot_sha256": "bf27779d83c23d0c64106a1916e4583c6144b03587561ddc1c88dd57a18ca30d",
+      "post_state_digest": "37b47825b374b8dfc2992ac947391e04737a78e63066dfb4b5f25c727719c1e9",
+      "raw_audit_pass": true,
+      "raw_rows": 5,
+      "retained_post_state_audited": true,
+      "run_id": "b14d9fc28bef43cbae0a5a417f898ebc",
+      "trace_digest": "794593e481fe2cca88fa49f59a491e33597f0bf2f9713b3496a68ad3d99f3249"
+    }
+  ],
+  "physics_steps": 0,
+  "qualification_claims": [],
+  "qualifier": "Separate exploratory offline audit; original failed close and prerequisite gate unchanged",
+  "trace_equal": true
+}
