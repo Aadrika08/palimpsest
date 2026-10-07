@@ -1,0 +1,165 @@
+{
+  "elapsed_before_receipt_seconds": 10.43433775700396,
+  "error": "ValueError: Export or cleanup failed",
+  "exports": [
+    {
+      "cleanup": {
+        "passed": true,
+        "process_group_absent": true,
+        "same_process_alive": false
+      },
+      "supervisor": {
+        "elapsed_seconds": 1.2285304539982462,
+        "output": "/home/utkarsh/Work/shraddha/brain/.worktrees/artwork-material-v2/.superpowers/sdd/artwork-material-v2/export-0-supervision",
+        "returncode": 0,
+        "schema_version": 1,
+        "started_utc": "2026-10-07T15:39:07.097493+00:00",
+        "status": "completed",
+        "timeout_seconds": 120
+      },
+      "worker": {
+        "argv": [
+          "--repo",
+          "/home/utkarsh/Work/shraddha/brain/.worktrees/artwork-material-v2",
+          "export",
+          "/home/utkarsh/Work/shraddha/brain/.worktrees/artwork-material-v2/.superpowers/sdd/artwork-material-v2/inputs/runs/d60e7d78cb1d4d04a4268f2528a6c534",
+          "--format",
+          "svg",
+          "--output",
+          "/home/utkarsh/Work/shraddha/brain/.worktrees/artwork-material-v2/.superpowers/sdd/artwork-material-v2/artifacts/borrowed-body.svg",
+          "--storage-max-bytes",
+          "67108864",
+          "--min-free-bytes",
+          "2147483648",
+          "--max-exports",
+          "3",
+          "--log-max-bytes",
+          "1048576"
+        ],
+        "artifact": {
+          "sha256": "ba503844aea46a7bffb41c6eb9b083316b648dc27152e7fcefe7507d650a1bf5",
+          "size_bytes": 8332995
+        },
+        "numpy_version": "2.2.5",
+        "output": "borrowed-body.svg",
+        "process": {
+          "pid": 1115153,
+          "process_group": 1115153,
+          "start_ticks": 8180837
+        },
+        "qualification_claims": [],
+        "returncode": 0,
+        "runtime_imported": [],
+        "status": "passed"
+      }
+    },
+    {
+      "cleanup": {
+        "passed": true,
+        "process_group_absent": true,
+        "same_process_alive": false
+      },
+      "supervisor": {
+        "elapsed_seconds": 1.6749857480026549,
+        "output": "/home/utkarsh/Work/shraddha/brain/.worktrees/artwork-material-v2/.superpowers/sdd/artwork-material-v2/export-1-supervision",
+        "returncode": 0,
+        "schema_version": 1,
+        "started_utc": "2026-10-07T15:39:08.329687+00:00",
+        "status": "completed",
+        "timeout_seconds": 120
+      },
+      "worker": {
+        "argv": [
+          "--repo",
+          "/home/utkarsh/Work/shraddha/brain/.worktrees/artwork-material-v2",
+          "sonify",
+          "/home/utkarsh/Work/shraddha/brain/.worktrees/artwork-material-v2/.superpowers/sdd/artwork-material-v2/inputs/runs/d60e7d78cb1d4d04a4268f2528a6c534",
+          "--episode",
+          "0",
+          "--population",
+          "visual_left",
+          "--population",
+          "visual_right",
+          "--population",
+          "descending",
+          "--output",
+          "/home/utkarsh/Work/shraddha/brain/.worktrees/artwork-material-v2/.superpowers/sdd/artwork-material-v2/artifacts/counterfactual-choir.wav",
+          "--storage-max-bytes",
+          "67108864",
+          "--min-free-bytes",
+          "2147483648",
+          "--max-exports",
+          "3",
+          "--log-max-bytes",
+          "1048576"
+        ],
+        "artifact": {
+          "sha256": "7fee0e336ca137c6431517b3d4eaaaa012c501987fb33b95909c41891b811f61",
+          "size_bytes": 2460152
+        },
+        "numpy_version": "2.2.5",
+        "output": "counterfactual-choir.wav",
+        "process": {
+          "pid": 1115156,
+          "process_group": 1115156,
+          "start_ticks": 8180960
+        },
+        "qualification_claims": [],
+        "returncode": 0,
+        "runtime_imported": [],
+        "status": "passed"
+      }
+    },
+    {
+      "cleanup": {
+        "passed": true,
+        "process_group_absent": true,
+        "same_process_alive": false
+      },
+      "supervisor": {
+        "elapsed_seconds": 4.133641583001008,
+        "output": "/home/utkarsh/Work/shraddha/brain/.worktrees/artwork-material-v2/.superpowers/sdd/artwork-material-v2/export-2-supervision",
+        "returncode": 1,
+        "schema_version": 1,
+        "started_utc": "2026-10-07T15:39:10.008252+00:00",
+        "status": "failed",
+        "timeout_seconds": 120
+      },
+      "worker": {
+        "argv": [
+          "--repo",
+          "/home/utkarsh/Work/shraddha/brain/.worktrees/artwork-material-v2",
+          "compare",
+          "/home/utkarsh/Work/shraddha/brain/.worktrees/artwork-material-v2/.superpowers/sdd/artwork-material-v2/inputs/runs/d60e7d78cb1d4d04a4268f2528a6c534",
+          "/home/utkarsh/Work/shraddha/brain/.worktrees/artwork-material-v2/.superpowers/sdd/artwork-material-v2/inputs/runs/c0ac36d0bcf54c9e90f948fe28454e0f",
+          "--output",
+          "/home/utkarsh/Work/shraddha/brain/.worktrees/artwork-material-v2/.superpowers/sdd/artwork-material-v2/artifacts/one-map-many-lives.html",
+          "--storage-max-bytes",
+          "67108864",
+          "--min-free-bytes",
+          "2147483648",
+          "--max-exports",
+          "3",
+          "--log-max-bytes",
+          "1048576"
+        ],
+        "error": "ValueError: export failed",
+        "numpy_version": "2.2.5",
+        "output": "one-map-many-lives.html",
+        "process": {
+          "pid": 1115195,
+          "process_group": 1115195,
+          "start_ticks": 8181128
+        },
+        "qualification_claims": [],
+        "returncode": 1,
+        "runtime_imported": [],
+        "status": "failed"
+      }
+    }
+  ],
+  "finalization_errors": [],
+  "qualification_claims": [],
+  "status": "failed",
+  "writer_lease_released": true
+}

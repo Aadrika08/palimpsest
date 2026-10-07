@@ -1,0 +1,41 @@
+{
+  "argv": [
+    "--repo",
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/artwork-material-v2",
+    "sonify",
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/artwork-material-v2/.superpowers/sdd/artwork-material-v2/inputs/runs/d60e7d78cb1d4d04a4268f2528a6c534",
+    "--episode",
+    "0",
+    "--population",
+    "visual_left",
+    "--population",
+    "visual_right",
+    "--population",
+    "descending",
+    "--output",
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/artwork-material-v2/.superpowers/sdd/artwork-material-v2/artifacts/counterfactual-choir.wav",
+    "--storage-max-bytes",
+    "67108864",
+    "--min-free-bytes",
+    "2147483648",
+    "--max-exports",
+    "3",
+    "--log-max-bytes",
+    "1048576"
+  ],
+  "artifact": {
+    "sha256": "7fee0e336ca137c6431517b3d4eaaaa012c501987fb33b95909c41891b811f61",
+    "size_bytes": 2460152
+  },
+  "numpy_version": "2.2.5",
+  "output": "counterfactual-choir.wav",
+  "process": {
+    "pid": 1115156,
+    "process_group": 1115156,
+    "start_ticks": 8180960
+  },
+  "qualification_claims": [],
+  "returncode": 0,
+  "runtime_imported": [],
+  "status": "passed"
+}
