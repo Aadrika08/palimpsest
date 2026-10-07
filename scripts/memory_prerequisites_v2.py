@@ -18,8 +18,9 @@ DERIVATION = {'job_id': 'south-prefix', 'operation': 'prefix',
 
 
 def validate_registration(reg):
-    if (reg.get('schema') != 'memory-prerequisites-registration-v2' or
-            reg.get('mode') != 'prerequisites-v2' or reg.get('seconds_caps') != [4300, 600] or
+    mode = reg.get('mode')
+    version = 'v2' if mode == 'prerequisites-v2' else 'v3' if mode == 'prerequisites-v3' else None
+    if (version is None or reg.get('schema') != f'memory-prerequisites-registration-{version}' or reg.get('seconds_caps') != [4300, 600] or
             reg.get('state_contract') != d.STATE_CONTRACT or reg.get('profile_sha256') != d.PROFILE or
             reg.get('protocol_sha256') != p.TRAVEL_PROTOCOL_SHA256 or
             reg.get('expected_specs') != p.travel_specs('travel-feasibility', d.PROFILE) or
@@ -34,15 +35,18 @@ def validate_registration(reg):
         raise ValueError('Campaign runtime versions differ from approved Python/packages')
     repo = p.checked_path(reg['repo']); output = p.checked_path(reg['output'])
     control = p.checked_path(reg['control_root']); publication = p.checked_path(reg['publication_root'])
-    if (control != repo/'.superpowers/sdd/memory-prerequisites-v2' or
-            publication != repo/'docs/reports/memory-prerequisites-v2-evidence' or
-            output.parent != repo/'runs' or not output.name.startswith('memory-prerequisites-v2-')):
+    if (control != repo/f'.superpowers/sdd/memory-prerequisites-{version}' or
+            publication != repo/f'docs/reports/memory-prerequisites-{version}-evidence' or
+            output.parent != repo/'runs' or not output.name.startswith(f'memory-prerequisites-{version}-')):
         raise ValueError('Campaign output/control/publication path differs')
     paths = {'driver': repo/'scripts/memory_prerequisites_v2.py',
         'auditor': repo/'scripts/memory_prerequisites_v2.py',
         'comparator': repo/'scripts/memory_restore_offline_readout.py',
         'launcher': publication/'execute-campaign.py', 'registration_preparer': publication/'register.py',
         'shared_launcher': repo/'docs/reports/restore-qualification-v2-evidence/execute-restore-v2.py'}
+    if version == 'v3':
+        paths.update(campaign_launcher=repo/'docs/reports/memory-prerequisites-v2-evidence/execute-campaign.py',
+                     shared_preparer=repo/'docs/reports/memory-prerequisites-v2-evidence/register.py')
     for name, path in paths.items():
         digest = reg.get(name+'_sha256')
         if (reg.get(name+'_path') != str(path) or type(digest) is not str or len(digest) != 64 or
@@ -78,7 +82,9 @@ def recheck_inputs(reg, deadline=None):
     required_environment.update(MUJOCO_GL='egl', CUDA_VISIBLE_DEVICES='')
     if reg['runtime'].get('environment') != required_environment:
         raise ValueError('Campaign requires one CPU thread, EGL and disabled CUDA')
-    for name in ('driver', 'auditor', 'comparator', 'launcher', 'shared_launcher', 'registration_preparer'):
+    names = ('driver', 'auditor', 'comparator', 'launcher', 'shared_launcher', 'registration_preparer')
+    if reg['mode'] == 'prerequisites-v3': names += ('campaign_launcher', 'shared_preparer')
+    for name in names:
         if p.file_hash(reg[name+'_path']) != reg[name+'_sha256']:
             raise ValueError('Registered campaign '+name+' changed')
         p.deadline_check(deadline)
@@ -234,6 +240,7 @@ def launcher_origin(reg, path):
 
 def run(path):
     path = p.checked_path(path); reg = p.read_json(path); validate_registration(reg)
+    version = reg['mode'].rsplit('-',1)[1]
     started = launcher_origin(reg,path); owner_deadline = started+4300; global_deadline = started+4900
     repo = p.checked_path(reg['repo'])
     if repo != Path(__file__).resolve().parents[1] or path != Path(reg['publication_root'])/'registration.json':
@@ -252,7 +259,7 @@ def run(path):
     plan.update(protocol=p.TRAVEL_PROTOCOL, protocol_sha256=p.TRAVEL_PROTOCOL_SHA256,
                 selected_profile_sha256=d.PROFILE)
     storage = budget(reg)
-    receipt = {'schema':'memory-prerequisites-execution-v2', 'mode':'prerequisites-v2',
+    receipt = {'schema':f'memory-prerequisites-execution-{version}', 'mode':reg['mode'],
         'implementation_head':head, 'registration_sha256':p.file_hash(path),
         'launcher_marker_sha256':p.file_hash(Path(reg['control_root'])/'launched.json'),
         'source_identity':reg['source_identity'], 'state_contract':reg['state_contract'],
@@ -338,10 +345,11 @@ def run(path):
 
 def audit(path):
     path = p.checked_path(path); reg = p.read_json(path); validate_registration(reg)
+    version = reg['mode'].rsplit('-',1)[1]
     root = p.checked_path(reg['output']); target = root/'scientific-close.json'; storage = budget(reg)
     if target.exists():
         raise FileExistsError('Scientific close exists; no repeated readout')
-    close = {'schema':'memory-prerequisites-scientific-close-v2', 'status':'scientific-close-stop',
+    close = {'schema':f'memory-prerequisites-scientific-close-{version}', 'status':'scientific-close-stop',
         'output':str(root), 'state_contract':reg['state_contract'], 'native_prerequisites_passed':False,
         'qualification_claims':[], 'r2_complete':False, 'paired_pilot':'unattempted-by-scope',
         'held_out_used':False, 'physics_steps':0, 'new_native_owners':0, 'owners':[]}
@@ -376,7 +384,7 @@ def audit(path):
                 raise ValueError('Fresh auditor, registration, driver receipt or namespace differs')
             recheck_inputs(reg, deadline)
         recheck()
-        if (receipt.get('schema') != 'memory-prerequisites-execution-v2' or receipt.get('mode') != 'prerequisites-v2' or
+        if (receipt.get('schema') != f'memory-prerequisites-execution-{version}' or receipt.get('mode') != reg['mode'] or
                 receipt.get('status') != 'prerequisites-provisional-pass' or receipt.get('registration_sha256') != digest or
                 receipt.get('source_identity') != reg['source_identity'] or receipt.get('output') != str(root) or
                 receipt.get('state_contract') != reg['state_contract'] or receipt.get('seconds_caps') != [4300,600] or

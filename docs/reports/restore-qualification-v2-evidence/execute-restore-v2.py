@@ -16,15 +16,16 @@ from palimpsest.evaluate import bounded_logs
 MODE = 'restore-v2'
 PASS_KEY = 'narrow_restore_passed'
 WATCHDOG_SECONDS = 890
+CAMPAIGN_MODES = ('prerequisites-v2', 'prerequisites-v3')
 
 
 def watchdog_prefix():
-    return ['timeout']+(['--foreground'] if MODE == 'prerequisites-v2' else [])+[
+    return ['timeout']+(['--foreground'] if MODE in CAMPAIGN_MODES else [])+[
         '--signal=TERM','--kill-after=5',str(WATCHDOG_SECONDS)+'s']
 
 
 def signal_child(process, signum):
-    if MODE == 'prerequisites-v2':
+    if MODE in CAMPAIGN_MODES:
         os.kill(process.pid,signum)
     else:
         os.killpg(process.pid,signum)
@@ -94,7 +95,7 @@ def execute():
     command = [registration['python'],
                str(Path(__file__).resolve()), '--pipeline', str(path)]
     p.write_control(marker, {'command':command, 'started_monotonic':(
-        admission_started if MODE == 'prerequisites-v2' else time.monotonic()),
+        admission_started if MODE in CAMPAIGN_MODES else time.monotonic()),
         'watchdog_command': watchdog_prefix()+[
             registration['python'], str(Path(__file__).resolve()), '--supervised'],
         'registration_sha256':p.file_hash(path), 'implementation_head':subprocess.check_output(
@@ -122,7 +123,7 @@ def execute():
         # Live files remain ignored until clean child admission and both stages exit.
         with bounded_logs(marker.parent, p.MiB, fail_log) as (stdout, stderr):
             process = subprocess.Popen(command, cwd=repo, env=env, stdout=stdout,
-                                       stderr=stderr, start_new_session=MODE != 'prerequisites-v2')
+                                       stderr=stderr, start_new_session=MODE not in CAMPAIGN_MODES)
             if failures:
                 fail_log(failures[0])
             code = process.wait()
@@ -219,7 +220,7 @@ def main(argv=None):
     code = 1
     try:
         process = subprocess.Popen(command, cwd=registration['repo'], env=env,
-                                   start_new_session=MODE != 'prerequisites-v2')
+                                   start_new_session=MODE not in CAMPAIGN_MODES)
         code = process.wait()
     except BaseException:
         code = 1

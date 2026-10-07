@@ -12,26 +12,29 @@ from scripts import memory_prerequisites_v2 as m
 from palimpsest import memory_decision_world as world
 
 
-def main():
+def main(version='v2', *, evidence=None, baseline_path=None, registration_preparer_path=None):
     started = time.monotonic(); deadline = started+180
-    evidence = Path(__file__).resolve().parent; repo = evidence.parents[2]
+    if version not in ('v2','v3'): raise ValueError('Unknown campaign version')
+    evidence = Path(evidence).resolve() if evidence is not None else Path(__file__).resolve().parent
+    repo = evidence.parents[2]
     path = evidence/'registration.json'
-    control = repo/'.superpowers/sdd/memory-prerequisites-v2'
+    control = repo/f'.superpowers/sdd/memory-prerequisites-{version}'
     if path.exists() or control.exists():
         raise FileExistsError('Fresh campaign registration or control already exists')
     if subprocess.check_output(['git','status','--porcelain'], cwd=repo):
         raise ValueError('Registration requires committed software and protocol')
-    baseline = p.read_json(repo/'docs/reports/restore-qualification-v2-evidence/registration.json')
+    baseline = p.read_json(baseline_path if baseline_path is not None else
+                           repo/'docs/reports/restore-qualification-v2-evidence/registration.json')
     preserved = baseline['preserved_sets']
     for name in ('output','control_root','publication_root'):
         root = p.checked_path(baseline[name])
         preserved.append({'root':str(root), 'files':p.hash_ledger(root, deadline)})
     stamp = datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%SZ')
-    contract = repo/'docs/plans/memory-prerequisites-v2.md'
+    contract = repo/f'docs/plans/memory-prerequisites-{version}.md'
     specs = p.travel_specs('travel-feasibility', d.PROFILE)
     reg = {key:baseline[key] for key in ('assets','history_root','history_inputs',
                                         'prior_output','prior_inventory')}
-    reg.update(schema='memory-prerequisites-registration-v2', mode='prerequisites-v2',
+    reg.update(schema=f'memory-prerequisites-registration-{version}', mode=f'prerequisites-{version}',
         repo=str(repo), python=sys.executable, state_contract=d.STATE_CONTRACT,
         implementation_commit=subprocess.check_output(['git','rev-parse','HEAD'],cwd=repo,text=True).strip(),
         contract=str(contract), contract_sha256=p.file_hash(contract),
@@ -40,7 +43,7 @@ def main():
         expected_cases=[world.make_case(spec['seed'],spec['regime'],spec['kind'],spec['mirrored'],
                         profile_sha256=d.PROFILE) for spec in specs],
         source_derivation=m.DERIVATION, seconds_caps=[4300,600],
-        output=str(repo/'runs'/('memory-prerequisites-v2-'+stamp)), control_root=str(control),
+        output=str(repo/'runs'/(f'memory-prerequisites-{version}-'+stamp)), control_root=str(control),
         publication_root=str(evidence), source_identity=p.source_identity(repo,reg['assets']),
         runtime=d.runtime_v2_identity(), preserved_sets=preserved,
         prepared_utc=datetime.now(timezone.utc).isoformat(), preparation_started_monotonic=started,
@@ -50,11 +53,15 @@ def main():
     if reg['source_identity'] != baseline['source_identity']:
         raise ValueError('Native source/assets differ from the preserved baseline')
     reg['protected_roots'] = sorted({reg['prior_output'], *(row['root'] for row in preserved)})
-    for name,target in {'driver':repo/'scripts/memory_prerequisites_v2.py',
+    paths = {'driver':repo/'scripts/memory_prerequisites_v2.py',
             'auditor':repo/'scripts/memory_prerequisites_v2.py',
             'comparator':repo/'scripts/memory_restore_offline_readout.py',
-            'launcher':evidence/'execute-campaign.py', 'registration_preparer':Path(__file__).resolve(),
-            'shared_launcher':repo/'docs/reports/restore-qualification-v2-evidence/execute-restore-v2.py'}.items():
+            'launcher':evidence/'execute-campaign.py', 'registration_preparer':Path(registration_preparer_path).resolve() if registration_preparer_path is not None else Path(__file__).resolve(),
+            'shared_launcher':repo/'docs/reports/restore-qualification-v2-evidence/execute-restore-v2.py'}
+    if version == 'v3':
+        paths.update(campaign_launcher=repo/'docs/reports/memory-prerequisites-v2-evidence/execute-campaign.py',
+                     shared_preparer=repo/'docs/reports/memory-prerequisites-v2-evidence/register.py')
+    for name,target in paths.items():
         reg[name+'_path'] = str(target); reg[name+'_sha256'] = p.file_hash(target)
     m.validate_registration(reg)
     p.safe_output(reg['output'],reg['protected_roots'])

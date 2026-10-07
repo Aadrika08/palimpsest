@@ -147,7 +147,7 @@ rover and physical artwork remain inactive throughout this goal.
 - [Six-mode export smoke and its limits](../reports/m9-offline-handoff.md).
 - [Artwork operator acceptance](../exhibition-runbook.md).
 
-## Current scoped results, 7 October 2026
+## Current scoped results, 7–8 October 2026
 
 The fresh narrow restore pair passes under the reviewed timer-aware contract;
 raw inequality (74 native bytes) stays explicit. See
@@ -164,12 +164,25 @@ comparison and final qualification remain unconfirmed. See
 preparation and the one invocation are consumed; zero corrective studies/retries
 were authorized. A separate software-only receipt repair cannot qualify this
 closed allocation. Any new scientific readout needs a new approved scope; the
-prerequisite gate and pilot remain open. The separate software-only
+prerequisite gate and pilot remained open at that failed close. The separate software-only
 [receipt repair](../reports/memory-campaign-receipt-size.md) removes duplicate
 driver audit payloads while preserving full attempts and independent recomputation.
-Its 152 focused software checks passed; they supply no native qualification. The next
-[fresh eight-cell proposal](memory-prerequisites-v3.md) requests a new finite
-allocation and remains unapproved; nothing is launched automatically.
+Its 152 focused software checks passed; they supply no native qualification.
+The separately approved [fresh v3 campaign](memory-prerequisites-v3.md) has now
+passed all eight selected-profile prerequisite cells once. Its independent close
+finished 898.37 seconds from the original launcher origin. Both five-control
+restores used the new south-prefix; acquired invariants, exact non-timing traces
+and frozen timer-aware candidate equality passed. Legacy raw state remains
+unequal at 67 native bytes. The 180-second registration and single 4,900-second
+invocation allocations are consumed, with zero retries/corrective studies.
+Required software checks passed 1,082 tests (24 skipped), and review found no
+Critical/Important issue. See [the retained scoped pass](../reports/memory-prerequisites-v3.md).
+This finishes prerequisites on one profile/source/host, not Memory/R2. It permits
+the [separate six-case/four-condition pilot proposal](memory-decision-pilot-v2.md):
+six acquisitions and 24 continuations, maximum 30 owners, requested separate
+180-second registration and one 6,600-second invocation, fail-closed 8 GiB,
+zero retries/corrective studies. The admission bridge, new protocol and pilot
+remain unapproved/unstarted; no held-out or other lane is authorized by v3 approval.
 
 The fresh artwork-material v3 allocation passed in 22.06 seconds. Its compact
 comparison preserves source geometry and complete raw-event references while

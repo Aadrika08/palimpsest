@@ -10,8 +10,8 @@ import pytest
 from palimpsest.storage import StorageBudget, StorageLimits
 
 
-def launcher():
-    source = Path(__file__).resolve().parents[1] / 'docs/reports/memory-prerequisites-v2-evidence/execute-campaign.py'
+def launcher(version='v2'):
+    source = Path(__file__).resolve().parents[1] / f'docs/reports/memory-prerequisites-{version}-evidence/execute-campaign.py'
     assert source.exists(), 'Fresh campaign launcher is not implemented'
     spec = importlib.util.spec_from_file_location('campaign_launcher_fixture', source)
     module = importlib.util.module_from_spec(spec)
@@ -20,8 +20,9 @@ def launcher():
 
 
 @pytest.mark.parametrize('driver_code,audit_code,passed', [(0,0,True),(0,0,False),(1,0,True),(0,1,True)])
-def test_campaign_pipeline_requires_all_three_results(tmp_path, monkeypatch, driver_code, audit_code, passed):
-    module = launcher(); root = tmp_path / 'output'; path = tmp_path / 'registration.json'
+@pytest.mark.parametrize('version',['v2','v3'])
+def test_campaign_pipeline_requires_all_three_results(tmp_path, monkeypatch, driver_code, audit_code, passed,version):
+    module = launcher(version); root = tmp_path / 'output'; path = tmp_path / 'registration.json'
     reg = {'output': str(root)}
     monkeypatch.setattr(module.runner, 'admission', lambda value: reg)
     calls = []
@@ -41,9 +42,10 @@ def test_campaign_pipeline_requires_all_three_results(tmp_path, monkeypatch, dri
 
 
 @pytest.mark.parametrize('code', [0, 124])
-def test_whole_campaign_watchdog_invalidates_failed_close(tmp_path, monkeypatch, code):
-    module = launcher(); runner = module.runner
-    evidence = tmp_path / 'docs/reports/memory-prerequisites-v2-evidence'
+@pytest.mark.parametrize('version',['v2','v3'])
+def test_whole_campaign_watchdog_invalidates_failed_close(tmp_path, monkeypatch, code,version):
+    module = launcher(version); runner = module.runner
+    evidence = tmp_path / f'docs/reports/memory-prerequisites-{version}-evidence'
     evidence.mkdir(parents=True)
     source = evidence / 'execute-campaign.py'
     root = tmp_path / 'runs/memory-prerequisites-v2-fixture'; root.mkdir(parents=True)
@@ -86,14 +88,15 @@ def test_failed_invalidation_preserves_bytes_without_authoritative_success(tmp_p
 
 
 @pytest.mark.parametrize('code', [0, 124])
-def test_absolute_watchdog_covers_parent_failure_recovery(monkeypatch, code):
-    module = launcher(); calls = []
+@pytest.mark.parametrize('version',['v2','v3'])
+def test_absolute_watchdog_covers_parent_failure_recovery(monkeypatch, code,version):
+    module = launcher(version); calls = []
     def child(command, **kwargs):
         calls.append(command)
         assert command[:3] == ['timeout','--signal=KILL','4900s']
         assert command[-3:] == [sys.executable, str(Path(module.__file__).resolve()), '--bounded']
         return SimpleNamespace(returncode=code)
-    monkeypatch.setattr(module.subprocess,'run',child)
+    monkeypatch.setattr(module.runner.subprocess,'run',child)
     assert module.main([]) == (0 if code == 0 else 1)
     assert len(calls) == 1
 
@@ -134,17 +137,18 @@ def test_changed_launcher_registration_refuses_before_owners(tmp_path,monkeypatc
     assert not root.exists() and launched == []
 
 
-def test_ancestor_hard_timeout_leaves_no_campaign_python_process(tmp_path):
+@pytest.mark.parametrize('version',['v2','v3'])
+def test_ancestor_hard_timeout_leaves_no_campaign_python_process(tmp_path,version):
     """Real runner spawning; the only worker is an exact-identity harmless sleeper."""
     import os
     import signal
     import subprocess
 
     repo = tmp_path/'repo'
-    evidence = repo/'docs/reports/memory-prerequisites-v2-evidence'
+    evidence = repo/f'docs/reports/memory-prerequisites-{version}-evidence'
     evidence.mkdir(parents=True)
     script = evidence/'execute.py'
-    source = Path(__file__).resolve().parents[1]/'docs/reports/memory-prerequisites-v2-evidence/execute-campaign.py'
+    source = Path(__file__).resolve().parents[1]/f'docs/reports/memory-prerequisites-{version}-evidence/execute-campaign.py'
     reg = {'repo':str(repo),'output':str(repo/'runs/fixture'), 'python':sys.executable,
         'control_root':str(repo/'control'), 'publication_root':str(evidence)}
     (evidence/'registration.json').write_text(json.dumps(reg))

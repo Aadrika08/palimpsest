@@ -1,6 +1,6 @@
 # Proposed fresh memory prerequisite campaign after receipt repair
 
-7 October 2026. **Proposed, not approved or started.** The previous registration
+7 October 2026. **Approved by the user's "approved" reply; registration/native execution have not started.** The previous registration
 and single invocation are consumed. [PR #90](https://github.com/Aadrika08/palimpsest/pull/90)
 preserves their failed independent close. The
 [software-only repair](memory-campaign-receipt-size.md) cannot qualify those data.
