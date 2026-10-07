@@ -37,8 +37,10 @@ pytest's current symlink; this is explicitly disclosed in `green.json` and was
 resolved by deduplicated byte observation, without changing the test or rerunning
 it to hide the error. A subsequent normal focused bundle confirmed the regression
 and related campaign/restore/storage paths: **152 passed in 37.11 seconds, exit 0**.
-`git diff --check` passed. The full suite was not repeated for this three-line
-change; the earlier 1,064-test summary belongs to the pre-campaign v2 implementation.
+Source and prose whitespace checks passed. The full branch check flags original
+trailing whitespace in the retained verbatim pytest failure log; that evidence
+was preserved rather than reformatted. The full suite was not repeated for this
+three-line change; the earlier 1,064-test summary belongs to the pre-campaign v2 implementation.
 
 [Red/green/focused records](memory-campaign-receipt-size-evidence/focused.json)
 and [independent static review](memory-campaign-receipt-size-evidence/review.json)
