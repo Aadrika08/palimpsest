@@ -1,0 +1,218 @@
+{
+  "artifact_checks": "passed",
+  "artifacts": {
+    "afterimage.svg": {
+      "sha256": "a39b8e5465ef0d3979958a0e8033c122b21da9c2de7864490898a5bdc1ae9f62",
+      "size_bytes": 9563
+    },
+    "atlas.svg": {
+      "sha256": "33f749f00a11c3815782edd239282734fb26cc071ab83470e1bd3a2fa81e2489",
+      "size_bytes": 592586
+    },
+    "borrowed-body.svg": {
+      "sha256": "ba503844aea46a7bffb41c6eb9b083316b648dc27152e7fcefe7507d650a1bf5",
+      "size_bytes": 8332995
+    },
+    "counterfactual-choir.wav": {
+      "sha256": "7fee0e336ca137c6431517b3d4eaaaa012c501987fb33b95909c41891b811f61",
+      "size_bytes": 2460152
+    },
+    "one-map-many-lives.html": {
+      "sha256": "641d77eaef606d5f6a0b822a57ec89e4c2377410bac9807863f6e50163cf5a45",
+      "size_bytes": 377890
+    },
+    "space-between-two-flies.svg": {
+      "sha256": "88b0dd69d23ced240199aede489dc29014ae5b7cb46d79f4617615c82ae61949",
+      "size_bytes": 1742443
+    }
+  },
+  "elapsed_before_receipt_seconds": 22.06263338799181,
+  "exports": [
+    {
+      "cleanup": {
+        "passed": true,
+        "process_group_absent": true,
+        "same_process_alive": false
+      },
+      "supervisor": {
+        "elapsed_seconds": 2.0743152350041782,
+        "output": "/home/utkarsh/Work/shraddha/brain/.worktrees/artwork-material-v3/.superpowers/sdd/artwork-material-v3/export-0-supervision",
+        "returncode": 0,
+        "schema_version": 1,
+        "started_utc": "2026-10-07T16:30:56.153537+00:00",
+        "status": "completed",
+        "timeout_seconds": 120
+      },
+      "worker": {
+        "argv": [
+          "--repo",
+          "/home/utkarsh/Work/shraddha/brain/.worktrees/artwork-material-v3",
+          "export",
+          "/home/utkarsh/Work/shraddha/brain/.worktrees/artwork-material-v3/.superpowers/sdd/artwork-material-v3/inputs/runs/d60e7d78cb1d4d04a4268f2528a6c534",
+          "--format",
+          "svg",
+          "--output",
+          "/home/utkarsh/Work/shraddha/brain/.worktrees/artwork-material-v3/.superpowers/sdd/artwork-material-v3/artifacts/borrowed-body.svg",
+          "--storage-max-bytes",
+          "67108864",
+          "--min-free-bytes",
+          "2147483648",
+          "--max-exports",
+          "3",
+          "--log-max-bytes",
+          "1048576"
+        ],
+        "artifact": {
+          "sha256": "ba503844aea46a7bffb41c6eb9b083316b648dc27152e7fcefe7507d650a1bf5",
+          "size_bytes": 8332995
+        },
+        "numpy_version": "2.2.5",
+        "output": "borrowed-body.svg",
+        "process": {
+          "pid": 1174092,
+          "process_group": 1174092,
+          "start_ticks": 8491742
+        },
+        "qualification_claims": [],
+        "returncode": 0,
+        "runtime_imported": [],
+        "status": "passed"
+      }
+    },
+    {
+      "cleanup": {
+        "passed": true,
+        "process_group_absent": true,
+        "same_process_alive": false
+      },
+      "supervisor": {
+        "elapsed_seconds": 2.7318639639997855,
+        "output": "/home/utkarsh/Work/shraddha/brain/.worktrees/artwork-material-v3/.superpowers/sdd/artwork-material-v3/export-1-supervision",
+        "returncode": 0,
+        "schema_version": 1,
+        "started_utc": "2026-10-07T16:30:58.232861+00:00",
+        "status": "completed",
+        "timeout_seconds": 120
+      },
+      "worker": {
+        "argv": [
+          "--repo",
+          "/home/utkarsh/Work/shraddha/brain/.worktrees/artwork-material-v3",
+          "sonify",
+          "/home/utkarsh/Work/shraddha/brain/.worktrees/artwork-material-v3/.superpowers/sdd/artwork-material-v3/inputs/runs/d60e7d78cb1d4d04a4268f2528a6c534",
+          "--episode",
+          "0",
+          "--population",
+          "visual_left",
+          "--population",
+          "visual_right",
+          "--population",
+          "descending",
+          "--output",
+          "/home/utkarsh/Work/shraddha/brain/.worktrees/artwork-material-v3/.superpowers/sdd/artwork-material-v3/artifacts/counterfactual-choir.wav",
+          "--storage-max-bytes",
+          "67108864",
+          "--min-free-bytes",
+          "2147483648",
+          "--max-exports",
+          "3",
+          "--log-max-bytes",
+          "1048576"
+        ],
+        "artifact": {
+          "sha256": "7fee0e336ca137c6431517b3d4eaaaa012c501987fb33b95909c41891b811f61",
+          "size_bytes": 2460152
+        },
+        "numpy_version": "2.2.5",
+        "output": "counterfactual-choir.wav",
+        "process": {
+          "pid": 1174134,
+          "process_group": 1174134,
+          "start_ticks": 8491950
+        },
+        "qualification_claims": [],
+        "returncode": 0,
+        "runtime_imported": [],
+        "status": "passed"
+      }
+    },
+    {
+      "cleanup": {
+        "passed": true,
+        "process_group_absent": true,
+        "same_process_alive": false
+      },
+      "supervisor": {
+        "elapsed_seconds": 6.848577755998122,
+        "output": "/home/utkarsh/Work/shraddha/brain/.worktrees/artwork-material-v3/.superpowers/sdd/artwork-material-v3/export-2-supervision",
+        "returncode": 0,
+        "schema_version": 1,
+        "started_utc": "2026-10-07T16:31:00.970269+00:00",
+        "status": "completed",
+        "timeout_seconds": 120
+      },
+      "worker": {
+        "argv": [
+          "--repo",
+          "/home/utkarsh/Work/shraddha/brain/.worktrees/artwork-material-v3",
+          "compare",
+          "/home/utkarsh/Work/shraddha/brain/.worktrees/artwork-material-v3/.superpowers/sdd/artwork-material-v3/inputs/runs/d60e7d78cb1d4d04a4268f2528a6c534",
+          "/home/utkarsh/Work/shraddha/brain/.worktrees/artwork-material-v3/.superpowers/sdd/artwork-material-v3/inputs/runs/c0ac36d0bcf54c9e90f948fe28454e0f",
+          "--output",
+          "/home/utkarsh/Work/shraddha/brain/.worktrees/artwork-material-v3/.superpowers/sdd/artwork-material-v3/artifacts/one-map-many-lives.html",
+          "--storage-max-bytes",
+          "67108864",
+          "--min-free-bytes",
+          "2147483648",
+          "--max-exports",
+          "3",
+          "--log-max-bytes",
+          "1048576"
+        ],
+        "artifact": {
+          "sha256": "641d77eaef606d5f6a0b822a57ec89e4c2377410bac9807863f6e50163cf5a45",
+          "size_bytes": 377890
+        },
+        "numpy_version": "2.2.5",
+        "output": "one-map-many-lives.html",
+        "process": {
+          "pid": 1174215,
+          "process_group": 1174215,
+          "start_ticks": 8492224
+        },
+        "qualification_claims": [],
+        "returncode": 0,
+        "runtime_imported": [],
+        "status": "passed"
+      }
+    }
+  ],
+  "finalization_errors": [],
+  "input_manifest": {
+    "sha256": "6cac84d9b733ed1e1fb7267b302dd0f7d1105e288e9b53fac65fe497501d77e9",
+    "size_bytes": 20348
+  },
+  "input_zip": {
+    "sha256": "80251ccd5889ce01ac2cf447f7ff591848be69b3d5fb38a70ec6ef55c7708aed",
+    "size_bytes": 577247342
+  },
+  "qualification_claims": [],
+  "review_members": [
+    "README.md",
+    "THIRD_PARTY_NOTICES.md",
+    "afterimage.svg",
+    "atlas.svg",
+    "borrowed-body.svg",
+    "checksums.json",
+    "counterfactual-choir.wav",
+    "one-map-many-lives.html",
+    "space-between-two-flies.svg"
+  ],
+  "review_zip": {
+    "sha256": "e4994c965d3b2ff18623e39b745dbb4d7f4f36ed2ddecd7f2d6f5fddb7a132de",
+    "size_bytes": 13529793
+  },
+  "review_zip_name": "palimpsest-artwork-review-development-v3.zip",
+  "status": "passed",
+  "writer_lease_released": true
+}
