@@ -1,0 +1,463 @@
+{
+  "cleanup": {
+    "passed": true,
+    "process_group_absent": true,
+    "same_process_alive": false
+  },
+  "elapsed_seconds": 15.299186196993105,
+  "failure": {
+    "message": "",
+    "type": "AssertionError"
+  },
+  "lease_free": true,
+  "observed_live_survivors": [],
+  "observed_processes": [
+    {
+      "command": "npm run build                                                                                                                                                                                ",
+      "fds": 22,
+      "group": 1176477,
+      "pid": 1176540,
+      "ppid": 1176477,
+      "rss_bytes": 78057472,
+      "start_ticks": 8499358,
+      "state": "R",
+      "threads": 11
+    },
+    {
+      "command": "node /home/utkarsh/Work/shraddha/brain/.worktrees/manual-lab-refresh-v3/ui/node_modules/.bin/vite build ",
+      "fds": 21,
+      "group": 1176477,
+      "pid": 1176561,
+      "ppid": 1176540,
+      "rss_bytes": 162975744,
+      "start_ticks": 8499372,
+      "state": "S",
+      "threads": 43
+    },
+    {
+      "command": "/home/utkarsh/Work/shraddha/brain/.worktrees/lab-hardening/ui/node_modules/@typescript/typescript-linux-x64/lib/tsc --noEmit ",
+      "fds": 5,
+      "group": 1176477,
+      "pid": 1176562,
+      "ppid": 1176561,
+      "rss_bytes": 102653952,
+      "start_ticks": 8499373,
+      "state": "S",
+      "threads": 21
+    },
+    {
+      "command": "/home/utkarsh/Work/shraddha/brain/.worktrees/lab-hardening/.venv/bin/python -B -m palimpsest lab --port 8772 --runs /home/utkarsh/Work/shraddha/brain/.worktrees/manual-lab-refresh-v3/.superpowers/sdd/manual-lab-refresh-v3/runs --exports /home/utkarsh/Work/shraddha/brain/.worktrees/manual-lab-refresh-v3/.superpowers/sdd/manual-lab-refresh-v3/exports --storage-max-bytes 268435456 --min-free-bytes 2147483648 --max-runs 3 --max-snapshots 2 --max-exports 1 --log-max-bytes 1048576 ",
+      "fds": 16,
+      "group": 1176477,
+      "pid": 1176652,
+      "ppid": 1176477,
+      "rss_bytes": 62812160,
+      "start_ticks": 8499455,
+      "state": "S",
+      "threads": 7
+    },
+    {
+      "command": "/home/utkarsh/.local/share/mise/installs/node/24.21.0/bin/node /home/utkarsh/Work/shraddha/brain/.worktrees/manual-lab-refresh-v3/ui/node_modules/@playwright/test/cli.js test /home/utkarsh/Work/shraddha/brain/.worktrees/manual-lab-refresh-v3/ui/tests/lab.spec.ts --config /home/utkarsh/Work/shraddha/brain/.worktrees/manual-lab-refresh-v3/ui/playwright.config.ts --grep actual local manual workflow, snapshots, sequential branches, comparison and export$ --workers 1 --retries 0 --timeout 180000 ",
+      "fds": 24,
+      "group": 1176477,
+      "pid": 1176673,
+      "ppid": 1176477,
+      "rss_bytes": 176713728,
+      "start_ticks": 8499506,
+      "state": "S",
+      "threads": 11
+    },
+    {
+      "command": "/home/utkarsh/.local/share/mise/installs/node/24.21.0/bin/node /home/utkarsh/Work/shraddha/brain/.worktrees/lab-hardening/ui/node_modules/playwright/lib/worker/workerProcessEntry.js ",
+      "fds": 23,
+      "group": 1176477,
+      "pid": 1176695,
+      "ppid": 1176673,
+      "rss_bytes": 281911296,
+      "start_ticks": 8499559,
+      "state": "S",
+      "threads": 11
+    },
+    {
+      "command": "/usr/lib/chromium/chromium --ozone-platform=wayland --ozone-platform-hint=wayland --enable-features=TouchpadOverscrollHistoryNavigation --load-extension=/usr/share/omarchy/default/chromium/extensions/copy-url,/usr/share/omarchy/default/chromium/extensions/yt-dlp,/usr/share/omarchy/default/chromium/extensions/whatsapp-slim --use-gl=desktop --password-store=gnome-libsecret --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-window",
+      "fds": 129,
+      "group": 1176761,
+      "pid": 1176761,
+      "ppid": 1176695,
+      "rss_bytes": 233848832,
+      "start_ticks": 8499603,
+      "state": "R",
+      "threads": 35
+    },
+    {
+      "command": "/usr/lib/chromium/chromium --type=zygote --no-zygote-sandbox --no-sandbox --headless --crashpad-handler-pid=1176771 --enable-crash-reporter=,Arch Linux --noerrdialogs --user-data-dir=/tmp/playwright_chromiumdev_profile-lSSiWr --change-stack-guard-on-fork=enable --no-first-run --ozone-platform=headless --ozone-override-screen-size=800,600 --use-angle=swiftshader-webgl ",
+      "fds": 12,
+      "group": 1176761,
+      "pid": 1176777,
+      "ppid": 1176761,
+      "rss_bytes": 45465600,
+      "start_ticks": 8499610,
+      "state": "S",
+      "threads": 1
+    },
+    {
+      "command": "/usr/lib/chromium/chromium --type=zygote --no-sandbox --headless --crashpad-handler-pid=1176771 --enable-crash-reporter=,Arch Linux --noerrdialogs --user-data-dir=/tmp/playwright_chromiumdev_profile-lSSiWr --change-stack-guard-on-fork=enable --no-first-run --ozone-platform=headless --ozone-override-screen-size=800,600 --use-angle=swiftshader-webgl ",
+      "fds": 12,
+      "group": 1176761,
+      "pid": 1176778,
+      "ppid": 1176761,
+      "rss_bytes": 45531136,
+      "start_ticks": 8499610,
+      "state": "S",
+      "threads": 1
+    },
+    {
+      "command": "/usr/lib/chromium/chromium --type=utility --utility-sub-type=network.mojom.NetworkService --lang=en-US --service-sandbox-type=none --no-sandbox --disable-dev-shm-usage --use-gl=desktop --mute-audio --crashpad-handler-pid=1176771 --enable-crash-reporter=,Arch Linux --noerrdialogs --user-data-dir=/tmp/playwright_chromiumdev_profile-lSSiWr --change-stack-guard-on-fork=enable --shared-files=v8_context_snapshot_data:100 --field-trial-handle=3,i,15204851896563276010,15998576676687870657,262144 --enable-features=C",
+      "fds": 36,
+      "group": 1176761,
+      "pid": 1176810,
+      "ppid": 1176761,
+      "rss_bytes": 85532672,
+      "start_ticks": 8499617,
+      "state": "S",
+      "threads": 11
+    },
+    {
+      "command": "",
+      "fds": 0,
+      "group": 1176761,
+      "pid": 1176872,
+      "ppid": 1176778,
+      "rss_bytes": 0,
+      "start_ticks": 8499639,
+      "state": "Z",
+      "threads": 1
+    },
+    {
+      "command": "/usr/lib/chromium/chromium --type=renderer --crashpad-handler-pid=1176771 --enable-crash-reporter=,Arch Linux --noerrdialogs --user-data-dir=/tmp/playwright_chromiumdev_profile-lSSiWr --change-stack-guard-on-fork=enable --no-sandbox --disable-dev-shm-usage --disable-back-forward-cache --disable-background-timer-throttling --disable-breakpad --force-color-profile=srgb --remote-debugging-pipe --allow-pre-commit-input --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePoint",
+      "fds": 36,
+      "group": 1176761,
+      "pid": 1176873,
+      "ppid": 1176778,
+      "rss_bytes": 221470720,
+      "start_ticks": 8499639,
+      "state": "S",
+      "threads": 17
+    },
+    {
+      "command": "/usr/lib/chromium/chromium --type=gpu-process --no-sandbox --disable-dev-shm-usage --disable-breakpad --headless --ozone-platform=headless --enable-unsafe-swiftshader --crashpad-handler-pid=1176771 --enable-crash-reporter=,Arch Linux --noerrdialogs --user-data-dir=/tmp/playwright_chromiumdev_profile-lSSiWr --change-stack-guard-on-fork=enable --gpu-preferences=YAAAAAAAAAAgAAAEAAAAAAAAAAAAAGAASAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAMAAAAAAAAAAwAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAMAAAAAQAAAA",
+      "fds": 38,
+      "group": 1176761,
+      "pid": 1176850,
+      "ppid": 1176777,
+      "rss_bytes": 142848000,
+      "start_ticks": 8499630,
+      "state": "S",
+      "threads": 26
+    },
+    {
+      "command": "/usr/lib/chromium/chromium --type=utility --utility-sub-type=storage.mojom.StorageService --lang=en-US --service-sandbox-type=utility --no-sandbox --disable-dev-shm-usage --use-gl=desktop --mute-audio --crashpad-handler-pid=1176771 --enable-crash-reporter=,Arch Linux --noerrdialogs --user-data-dir=/tmp/playwright_chromiumdev_profile-lSSiWr --change-stack-guard-on-fork=enable --shared-files=v8_context_snapshot_data:100 --field-trial-handle=3,i,15204851896563276010,15998576676687870657,262144 --enable-feature",
+      "fds": 24,
+      "group": 1176761,
+      "pid": 1176822,
+      "ppid": 1176778,
+      "rss_bytes": 47808512,
+      "start_ticks": 8499627,
+      "state": "S",
+      "threads": 8
+    },
+    {
+      "command": "",
+      "fds": 0,
+      "group": 1176761,
+      "pid": 1176863,
+      "ppid": 1176778,
+      "rss_bytes": 0,
+      "start_ticks": 8499636,
+      "state": "Z",
+      "threads": 2
+    },
+    {
+      "command": "/home/utkarsh/Work/shraddha/brain/.worktrees/lab-hardening/.venv/bin/python -B -c from multiprocessing.resource_tracker import main;main(18) ",
+      "fds": 5,
+      "group": 1176477,
+      "pid": 1176957,
+      "ppid": 1176652,
+      "rss_bytes": 16695296,
+      "start_ticks": 8499790,
+      "state": "S",
+      "threads": 1
+    },
+    {
+      "command": "",
+      "fds": 0,
+      "group": 1176958,
+      "pid": 1176958,
+      "ppid": 1176652,
+      "rss_bytes": 0,
+      "start_ticks": 8499790,
+      "state": "Z",
+      "threads": 1
+    },
+    {
+      "command": "/usr/lib/chromium/chromium --type=gpu-process --no-sandbox --disable-dev-shm-usage --disable-breakpad --headless --ozone-platform=headless --enable-unsafe-swiftshader --crashpad-handler-pid=1176771 --enable-crash-reporter=,Arch Linux --noerrdialogs --user-data-dir=/tmp/playwright_chromiumdev_profile-lSSiWr --change-stack-guard-on-fork=enable --gpu-preferences=YAAAAAAAAAAgAAAEAAAAAAAAAAAAAGAASAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAMAAAAAAAAAAwAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAMAAAAAQAAAA",
+      "fds": 30,
+      "group": 1176761,
+      "pid": 1177140,
+      "ppid": 1176777,
+      "rss_bytes": 117616640,
+      "start_ticks": 8500506,
+      "state": "S",
+      "threads": 26
+    }
+  ],
+  "publication": {
+    ".superpowers/sdd/manual-lab-refresh-v3/.palimpsest-storage.lock": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    ".superpowers/sdd/manual-lab-refresh-v3/launched.json": {
+      "bytes": 225,
+      "sha256": "e039d0dc39c2f78eae31f7dc77c067b097433875eb82f4449e62bb49f6994788"
+    },
+    ".superpowers/sdd/manual-lab-refresh-v3/processes.json": {
+      "bytes": 9033,
+      "sha256": "3363cbbaec4e968c7a2c187a46cbd9a475cf8d798a35b26d97a1f777945931ff"
+    },
+    ".superpowers/sdd/manual-lab-refresh-v3/selection/stderr.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    ".superpowers/sdd/manual-lab-refresh-v3/selection/stdout.log": {
+      "bytes": 2935,
+      "sha256": "7c21c589049935f80fe6b492e63131eac14ae81764a4f340576526ce7d3e26f1"
+    },
+    ".superpowers/sdd/manual-lab-refresh-v3/selection/supervisor.json": {
+      "bytes": 320,
+      "sha256": "61e40d3f7893a2e05a2757e54ec26f620e32e08c703794d4a4e984a2fdc89bd3"
+    },
+    ".superpowers/sdd/manual-lab-refresh-v3/server.stderr.log": {
+      "bytes": 445,
+      "sha256": "d5749c2997704d6133e553c1ee792c290b3158ca3352e2673b61af91fab5b672"
+    },
+    ".superpowers/sdd/manual-lab-refresh-v3/server.stdout.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    ".superpowers/sdd/manual-lab-refresh-v3/supervision/stderr.log": {
+      "bytes": 166,
+      "sha256": "39ce9b82e555f48a86ba839c0769bbf57239a3b2b96dd026902e5a659c818a04"
+    },
+    ".superpowers/sdd/manual-lab-refresh-v3/supervision/stdout.log": {
+      "bytes": 2741,
+      "sha256": "90b24b634902c53892a027ce4b58076b9bc4c344127bf0d60195a81abade0df0"
+    },
+    ".superpowers/sdd/manual-lab-refresh-v3/supervision/supervisor.json": {
+      "bytes": 320,
+      "sha256": "ca40f443ec6463dac9302792ef98ff1e24e880a7d53629c6272c4fcca5a63db9"
+    },
+    ".superpowers/sdd/manual-lab-refresh-v3/worker.json": {
+      "bytes": 3808,
+      "sha256": "b2d96c0659a502d3bff1f10b8f4ee24a188d65fcc8112bda5b62cd2e52191c91"
+    },
+    "docs/plans/manual-lab-refresh-v3-registration.json": {
+      "bytes": 38576,
+      "sha256": "1b1ee87ac9ff716d280eaaf9b9124c39efcecb5be8f2dc4f4ac0e21dbc00aaf0"
+    },
+    "ui/test-results/.last-run.json": {
+      "bytes": 96,
+      "sha256": "a6fc82d80b21ab01804d93a08340b30738a0cf0f6bb1ed8179697634c27d6a44"
+    },
+    "ui/test-results/.palimpsest-storage.lock": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "ui/test-results/lab-actual-local-manual-wo-b6c0e-nches-comparison-and-export/error-context.md": {
+      "bytes": 19426,
+      "sha256": "4976cd9820fd501c89210e8f9a0d453e499a90ccd968700de57aa3411f043e5f"
+    },
+    "ui/test-results/lab-actual-local-manual-wo-b6c0e-nches-comparison-and-export/owner-close.json": {
+      "bytes": 21160,
+      "sha256": "b5e6e2b359bf7361e2b5683ce21f1c7e3317f9b7fcd3e722aaddd7467fb63b30"
+    },
+    "ui/test-results/lab-actual-local-manual-wo-b6c0e-nches-comparison-and-export/test-failed-1.png": {
+      "bytes": 98864,
+      "sha256": "0c42eaccb661924f4c9032ba64686e94bfe9d1177b470dd9bc3d4a3e148cc0fe"
+    },
+    "ui/test-results/lab-actual-local-manual-wo-b6c0e-nches-comparison-and-export/trace.zip": {
+      "bytes": 4437596,
+      "sha256": "6b56a8d3bf799afc59e8cfa0b7ef357d83d3e87f3d5db96c0d3498921a30dbad"
+    }
+  },
+  "qualification_claims": [],
+  "status": "failed",
+  "supervisor": {
+    "elapsed_seconds": 14.557284733004053,
+    "output": "/home/utkarsh/Work/shraddha/brain/.worktrees/manual-lab-refresh-v3/.superpowers/sdd/manual-lab-refresh-v3/supervision",
+    "returncode": 1,
+    "schema_version": 1,
+    "started_utc": "2026-10-07T16:32:10.642193+00:00",
+    "status": "failed",
+    "timeout_seconds": 330
+  },
+  "worker": {
+    "build": {
+      "ui/dist/assets/index-DP8Vou6b.js": {
+        "bytes": 257795,
+        "sha256": "ea70ba1e34e10f456238097e970ae19535caae3694c51a215f60c3427f9d5dcb"
+      },
+      "ui/dist/assets/index-YXzjLjgu.css": {
+        "bytes": 7190,
+        "sha256": "7312ee5d53d71af957b6317764d2d4010a8a8663808758effba70dcd516f3d87"
+      },
+      "ui/dist/index.html": {
+        "bytes": 418,
+        "sha256": "d7e3f6a221ee55f5a6346a381d38d145206d91487a4471ad92b62523ffa01f5f"
+      }
+    },
+    "build_returncode": 0,
+    "descendant_exit_grace": {
+      "elapsed_seconds": 0.0003936930006602779,
+      "outcomes": [
+        {
+          "group": 1176477,
+          "outcome": "exited",
+          "pid": 1176540,
+          "start_ticks": 8499358
+        },
+        {
+          "group": 1176477,
+          "outcome": "exited",
+          "pid": 1176561,
+          "start_ticks": 8499372
+        },
+        {
+          "group": 1176477,
+          "outcome": "exited",
+          "pid": 1176562,
+          "start_ticks": 8499373
+        },
+        {
+          "group": 1176477,
+          "outcome": "exited",
+          "pid": 1176652,
+          "start_ticks": 8499455
+        },
+        {
+          "group": 1176477,
+          "outcome": "exited",
+          "pid": 1176673,
+          "start_ticks": 8499506
+        },
+        {
+          "group": 1176477,
+          "outcome": "exited",
+          "pid": 1176695,
+          "start_ticks": 8499559
+        },
+        {
+          "group": 1176761,
+          "outcome": "exited",
+          "pid": 1176761,
+          "start_ticks": 8499603
+        },
+        {
+          "group": 1176761,
+          "outcome": "exited",
+          "pid": 1176777,
+          "start_ticks": 8499610
+        },
+        {
+          "group": 1176761,
+          "outcome": "exited",
+          "pid": 1176778,
+          "start_ticks": 8499610
+        },
+        {
+          "group": 1176761,
+          "outcome": "exited",
+          "pid": 1176810,
+          "start_ticks": 8499617
+        },
+        {
+          "group": 1176761,
+          "outcome": "exited",
+          "pid": 1176872,
+          "start_ticks": 8499639
+        },
+        {
+          "group": 1176761,
+          "outcome": "exited",
+          "pid": 1176873,
+          "start_ticks": 8499639
+        },
+        {
+          "group": 1176761,
+          "outcome": "exited",
+          "pid": 1176850,
+          "start_ticks": 8499630
+        },
+        {
+          "group": 1176761,
+          "outcome": "exited",
+          "pid": 1176822,
+          "start_ticks": 8499627
+        },
+        {
+          "group": 1176761,
+          "outcome": "exited",
+          "pid": 1176863,
+          "start_ticks": 8499636
+        },
+        {
+          "group": 1176477,
+          "outcome": "exited",
+          "pid": 1176957,
+          "start_ticks": 8499790
+        },
+        {
+          "group": 1176958,
+          "outcome": "exited",
+          "pid": 1176958,
+          "start_ticks": 8499790
+        },
+        {
+          "group": 1176761,
+          "outcome": "exited",
+          "pid": 1177140,
+          "start_ticks": 8500506
+        }
+      ],
+      "seconds_max": 2,
+      "worker_deadline_monotonic": 85312.043710056
+    },
+    "elapsed_seconds": 14.386551317002159,
+    "failure": {
+      "message": "Child exited 1",
+      "type": "RuntimeError"
+    },
+    "owned_survivors_requiring_kill": [],
+    "process": {
+      "pid": 1176477,
+      "process_group": 1176477,
+      "start_ticks": 8499191
+    },
+    "qualification_claims": [],
+    "selected_test": {
+      "file": "lab.spec.ts",
+      "line": 21,
+      "title": "actual local manual workflow, snapshots, sequential branches, comparison and export"
+    },
+    "selection": {
+      "elapsed_seconds": 0.9712197140033823,
+      "output": "/home/utkarsh/Work/shraddha/brain/.worktrees/manual-lab-refresh-v3/.superpowers/sdd/manual-lab-refresh-v3/selection",
+      "returncode": 0,
+      "schema_version": 1,
+      "started_utc": "2026-10-07T16:32:11.342751+00:00",
+      "status": "completed",
+      "timeout_seconds": 30
+    },
+    "server_pid": 1176652,
+    "status": "failed"
+  }
+}

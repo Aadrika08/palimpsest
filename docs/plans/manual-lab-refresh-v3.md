@@ -1,7 +1,8 @@
 # Manual Browser Admission and Cleanup Implementation Plan
 
 > **For agentic workers:** Use superpowers:executing-plans task by task. This is a
-> proposal; no new browser/native allocation is authorized by this document.
+> approved preparation and one later finite manual QA allocation. Root reviews and
+> commits these controls before execution; preparation does not consume the phase.
 
 **Goal:** Complete the existing actual manual workflow with adequate managed
 storage and honest bounded cleanup, preserving both consumed failures.
@@ -40,7 +41,7 @@ failures. Never merely enable Step on a failed runtime or raise a scientific gat
 `scripts/manual_lab_refresh_v2.py`, `verify_afterimage.py`, `verify_endurance.py`
 and `palimpsest.storage`. Keep v1/v2 worktree bytes and their controls unchanged.
 
-- [ ] Reproduce the storage refusal with a tiny engine stub carrying camera
+- [x] Reproduce the storage refusal with a tiny engine stub carrying camera
   arrays and `StorageBudget`; call existing `worker._episode_preflight` without
   physics, owners or snapshots. Verify its real reservation uses 121,470,976
   bytes for the recorded camera regime and reproduces the original sum:
@@ -56,27 +57,27 @@ assert used + reserve + headroom < 256 * 1024**2
   also exercise the actual existing reservation function/budget with synthetic
   camera data and temporary files, so a changed camera estimate cannot silently
   invalidate the proposed configuration.
-- [ ] Bind proposed managed runs/exports storage to **256 MiB**; keep the total
+- [x] Bind proposed managed runs/exports storage to **256 MiB**; keep the total
   phase/controls/build/test/publication ceiling **1 GiB** and every admission and
   actual-write refusal unchanged. Three owners are sequential; aggregate counts
   include all previous recordings/snapshots rather than resetting on branches.
   Check failed admission still refuses a deliberately over-budget fixture.
-- [ ] Reproduce descendant cleanup using software processes only: one naturally
+- [x] Reproduce descendant cleanup using software processes only: one naturally
   exits shortly after its parent; one stays live; one PID observation has a
   different starttime. Add at most **two seconds** of natural-exit observation
   within the existing worker/outer deadline, checking exact PID/starttime/group.
   A live matching survivor at the end is killed and the phase fails as before.
   A reused PID is neither killed nor called the old process. Record grace elapsed
   and outcomes; interruption cannot silently promote a pass.
-- [ ] Investigate the retained resource-tracker outcome against this fixture and
+- [x] Investigate the retained resource-tracker outcome against this fixture and
   the normal lab shutdown code. If references/IPC persist beyond the bounded
   grace, diagnose and fix the proven lifecycle cause with a focused check before
   registration. Do not assume that adding a delay fixes the real tracker, call
   private `_stop` methods or exclude tracker processes from cleanup requirements.
-- [ ] Keep the producer small by reusing v2 supervision/publication helpers.
+- [x] Keep the producer small by reusing v2 supervision/publication helpers.
   Freeze every reused implementation and new wrapper/test/plan hash; ensure child
   argv enters the same newly bound allocation. Test final publication refusal,
-  late close and TERM, then review the source and commit the verified controls.
+  late close and TERM, then root reviews the source and commits the verified controls.
   Run focused software tests; report actual red/green outcomes. These are not a
   new browser gate or resource-tracker qualification.
 
@@ -95,6 +96,32 @@ assert used + reserve + headroom < 256 * 1024**2
   permits natural exit only; any forced cleanup still fails. On failure, stop,
   preserve every partial file and marker, and keep qualification claims empty.
 
-This proposal supplies no new UI acceptance, scientific, human or simulation
-release claim. Source-level preparation and a fresh v3 allocation are pending
-approval; consumed v1/v2 phases are never rerun.
+## Prepared mechanism and limits
+
+The v3 wrapper binds the v2 finite producer to fresh v3 paths, schema and worker
+argv. A default-disabled callback in the shared v2 helper permits one collective
+natural-exit observation window, at most two seconds and capped by the existing
+worker deadline. It checks PID, start ticks and process group; changed identities
+are untouched. Matching live survivors retain the existing kill-and-fail rule.
+Source pins explicitly include the shared helper, wrapper, both software tests,
+v3 plan, runtime, UI, installed dependency metadata and tracked upstream assets.
+
+A harmless software fixture used the public multiprocessing spawn Event and
+observed the tracker's pipe descriptors. It deliberately inherited the writer
+into a short-lived sleeper: the tracker remained alive after its parent exited,
+then exited naturally after the last writer closed. This characterizes CPython's
+EOF mechanism. It does not prove which writer delayed the consumed v2 tracker,
+or qualify two seconds as sufficient for every actual browser shutdown. Real
+matching survivors after that window still fail. No private tracker shutdown API
+or special exemption is introduced.
+
+Development red/green logs are under ignored
+`.superpowers/sdd/manual-lab-refresh-v3-development/`, outside the absent finite
+phase. Only tiny software fixtures and harmless Python processes ran. The
+metadata-only registration is prospective; root commits and reviews source before
+invoking its frozen outer command once. No selection/build/browser/native phase
+ran during preparation.
+
+This preparation supplies no new UI acceptance, scientific, human or simulation
+release claim. Actual manual QA remains unexecuted; consumed v1/v2 phases are
+never rerun.
