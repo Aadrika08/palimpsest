@@ -45,7 +45,7 @@ def test_pipeline_needs_driver_independent_audit_and_terminal_close(tmp_path, mo
 
 
 @pytest.mark.parametrize('dirty', ['none', 'parent', 'child', 'pass', 'overflow', 'late', 'publication',
-                                  'owned-stop', 'owned-survivor', 'invalidate'])
+                                  'owned-stop', 'owned-survivor', 'owned-reused', 'invalidate'])
 def test_real_git_and_child_admission_exclusive_marker(tmp_path, monkeypatch, dirty):
     module = launcher(); actual_repo = Path(__file__).resolve().parents[1]
     evidence = tmp_path/'docs/reports/restore-qualification-v2-evidence'; evidence.mkdir(parents=True)
@@ -71,16 +71,16 @@ def test_real_git_and_child_admission_exclusive_marker(tmp_path, monkeypatch, di
     disk_usage = shutil.disk_usage
     monkeypatch.setattr(shutil, 'disk_usage', lambda path: disk_usage(path)._replace(free=20*p.GiB))
     kills = []; alive = [True]
-    if dirty in ('owned-stop', 'owned-survivor'):
+    if dirty in ('owned-stop', 'owned-survivor', 'owned-reused'):
         from scripts import memory_waypoint_study as w
-        monkeypatch.setattr(w, 'proc_identity', lambda pid: (1,999))
+        monkeypatch.setattr(w, 'proc_identity', lambda pid: (2 if dirty == 'owned-reused' else 1,999))
         def kill(pgid, signum):
             kills.append((pgid, signum))
             if signum == module.signal.SIGKILL and dirty == 'owned-stop':
                 alive[0] = False
         monkeypatch.setattr(w, 'os', SimpleNamespace(killpg=kill))
         monkeypatch.setattr(w, 'time', SimpleNamespace(sleep=lambda seconds: None))
-        monkeypatch.setattr(d, 'owner_exited', lambda owner: not alive[0])
+        monkeypatch.setattr(d, 'owner_exited', lambda owner: dirty == 'owned-reused' or not alive[0])
     if dirty == 'invalidate':
         replace = d.replace_control
         def refuse_false_close(path, value, storage):
@@ -120,7 +120,7 @@ def test_real_git_and_child_admission_exclusive_marker(tmp_path, monkeypatch, di
             'spec=importlib.util.spec_from_file_location("fixture_launcher",'+repr(str(source))+')\n'
             'm=importlib.util.module_from_spec(spec);spec.loader.exec_module(m)\n'
             'raise SystemExit(m.main(["--pipeline",'+repr(str(path))+']))\n')
-        if dirty in ('pass', 'overflow', 'late', 'publication', 'owned-stop', 'owned-survivor', 'invalidate'):
+        if dirty in ('pass', 'overflow', 'late', 'publication', 'owned-stop', 'owned-survivor', 'owned-reused', 'invalidate'):
             # Separate launcher-failure fixtures, rather than native/driver proof.
             bootstrap = (
                 'import json,os,time;from pathlib import Path;'
@@ -129,7 +129,7 @@ def test_real_git_and_child_admission_exclusive_marker(tmp_path, monkeypatch, di
                 'time.monotonic()'+('-1' if dirty in ('late','invalidate') else '+100')+'}));'
                 '(root/"scientific-close.json").write_text(json.dumps({"narrow_restore_passed":True}));'
                 'os.write(1,b"x"*'+str(2*p.MiB if dirty == 'overflow' else 1)+')')
-            if dirty in ('owned-stop', 'owned-survivor'):
+            if dirty in ('owned-stop', 'owned-survivor', 'owned-reused'):
                 bootstrap += (';run=root/"stage/runs/fake";run.mkdir(parents=True);'
                     '(run/"owner.json").write_text(json.dumps({"pid":999,"starttime":1,"pgid":999,"run_id":"fake"}));'
                     'raise SystemExit('+('1' if dirty == 'owned-stop' else '0')+')')
@@ -143,7 +143,8 @@ def test_real_git_and_child_admission_exclusive_marker(tmp_path, monkeypatch, di
         assert not calls and not (Path(reg['control_root'])/'launched.json').exists()
     else:
         # The pass case doubles scientific data; admission alone never passes.
-        assert module.main([]) == (0 if dirty == 'pass' else 1)
+        passed = dirty in ('pass', 'owned-reused')
+        assert module.main([]) == (0 if passed else 1)
         assert len(calls) == 1
         stdout = (evidence/'native-stdout.log').read_text() if dirty != 'publication' else ''
         stderr = (evidence/'native-stderr.log').read_text() if dirty != 'publication' else ''
@@ -153,12 +154,12 @@ def test_real_git_and_child_admission_exclusive_marker(tmp_path, monkeypatch, di
             assert 'clean committed checkout' in stderr
             assert 'production clean admission reached' not in stdout
         result = p.read_json(evidence/'invocation-result.json')
-        assert (result['native_exit_code'] == 0) is (dirty == 'pass')
+        assert (result['native_exit_code'] == 0) is passed
         if dirty == 'invalidate':
             assert not (Path(reg['output'])/'scientific-close.json').exists()
             assert p.read_json(Path(reg['output'])/'scientific-close.invalidated.json')['narrow_restore_passed'] is True
-        elif dirty in ('pass', 'overflow', 'late', 'publication', 'owned-stop', 'owned-survivor'):
-            assert p.read_json(Path(reg['output'])/'scientific-close.json')['narrow_restore_passed'] is (dirty == 'pass')
+        elif dirty in ('pass', 'overflow', 'late', 'publication', 'owned-stop', 'owned-survivor', 'owned-reused'):
+            assert p.read_json(Path(reg['output'])/'scientific-close.json')['narrow_restore_passed'] is passed
             assert (Path(reg['control_root'])/'stdout.log').stat().st_size <= p.MiB
         else:
             assert result['pipeline_exit_code'] != 0
@@ -166,11 +167,15 @@ def test_real_git_and_child_admission_exclusive_marker(tmp_path, monkeypatch, di
         if dirty in ('owned-stop', 'owned-survivor'):
             assert kills == [(999,module.signal.SIGTERM),(999,module.signal.SIGKILL)]
             assert result['cleanup'][0]['matching_owner_exited'] is (dirty == 'owned-stop')
+        elif dirty == 'owned-reused':
+            assert kills == []
+            assert result['cleanup'][0]['status'] == 'pid-reused-do-not-touch'
+            assert result['cleanup'][0]['matching_owner_exited'] is True
         assert (Path(reg['control_root'])/'launched.json').exists()
         commit()
         assert subprocess.check_output(['git','status','--porcelain'],cwd=tmp_path) == b''
         with pytest.raises(ValueError if dirty in ('pass', 'overflow', 'late', 'publication',
-                           'owned-stop', 'owned-survivor', 'invalidate') else FileExistsError):
+                           'owned-stop', 'owned-survivor', 'owned-reused', 'invalidate') else FileExistsError):
             module.main([])
         assert len(calls) == 1
     assert old.read_text() == 'consumed original; immutable\n'
