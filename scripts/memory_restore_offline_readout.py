@@ -133,6 +133,35 @@ def recheck_inputs(registration, deadline):
     p.deadline_check(deadline)
 
 
+def compare_reproducibility_states(left,right,left_ids,right_ids,deadline=None):
+    """Opt-in v2 candidate projection; raw snapshots and legacy digests stay exact."""
+    raw_hashes=[]
+    for state in (left,right):
+        blob=state.get('native_data')
+        if type(blob) is not bytes or p.hashlib.sha256(blob).hexdigest()!=state.get('native_sha256'):
+            raise ValueError('Raw native checksum must verify before candidate projection')
+        raw_hashes.append(state['native_sha256'])
+    projected=[p.repeat_post_state(state,ids) for state,ids in ((left,left_ids),(right,right_ids))]
+    proof=attribute_native_pair(left,right,deadline)
+    ranges=[[(row['start_offset'],row['end_offset_exclusive']) for row in side['timer_fields']]
+            for side in proof['sides']]
+    if len(ranges[0])!=15 or ranges[0]!=ranges[1] or any(end-start!=8 for start,end in ranges[0]):
+        raise ValueError('Candidate requires the same 15 mapped float64 duration intervals')
+    for state in projected:
+        native=bytearray(state['native_data'])
+        for start,end in ranges[0]:native[start:end]=b'\0'*8
+        state['native_data']=bytes(native)
+        state['native_sha256']=p.hashlib.sha256(state['native_data']).hexdigest()
+    result=d.compare_values(*projected)
+    result.update(contract_id='restore-reproducibility-v2-candidate',raw_native_sha256=raw_hashes,
+        projected_native_sha256=[state['native_sha256'] for state in projected],
+        excluded_native_bytes_per_side=120,timer_duration_intervals=ranges[0],
+        timer_duration_diagnostics=[[row['duration'] for row in side['timer_fields']] for side in proof['sides']],
+        qualification_claims=[],scope='Candidate comparison only; raw integrity/legacy gate unchanged')
+    p.deadline_check(deadline)
+    return result
+
+
 def audit_pair(registration, deadline):
     root = p.checked_path(registration['retained_root']); stage=root/'stage'
     close_path = p.checked_path(registration['failed_close']['path'])
@@ -205,6 +234,8 @@ def audit_pair(registration, deadline):
         'qualification_claims':[]}
     if registration.get('readout_kind')=='native-byte-attribution-v1':
         result['byte_attribution']=attribute_native_pair(posts[0],posts[1],deadline)
+    elif registration.get('readout_kind')=='restore-reproducibility-v2-candidate':
+        result['candidate_comparison']=compare_reproducibility_states(posts[0],posts[1],ids[0],ids[1],deadline)
     return result
 
 
@@ -216,7 +247,7 @@ def main(argv=None):
     repo=p.checked_path(registration['repo'])
     if (registration.get('schema')!='memory-restore-offline-registration-v1' or
             registration.get('seconds_cap')!=SECONDS or repo!=Path(__file__).resolve().parents[1] or
-            registration.get('readout_kind') not in (None,'native-byte-attribution-v1')):
+            registration.get('readout_kind') not in (None,'native-byte-attribution-v1','restore-reproducibility-v2-candidate')):
         raise ValueError('Registered offline checkout/schema/allocation differs')
     if subprocess.check_output(['git','status','--porcelain'],cwd=repo):
         raise ValueError('Offline admission requires a clean checkout')
@@ -253,6 +284,9 @@ def main(argv=None):
                 'native_fields_equal':(analysis.get('native_comparison') or {}).get('equal')}
             if 'byte_attribution' in analysis:
                 receipt['summary']['all_native_differences_are_timer_duration']=analysis['byte_attribution']['all_differences_attributed_to_timer_duration']
+            if 'candidate_comparison' in analysis:
+                receipt['summary']['candidate_reproducibility_equal']=analysis['candidate_comparison']['equal']
+                receipt['summary']['candidate_contract_id']=analysis['candidate_comparison']['contract_id']
             recheck_inputs(registration,deadline)
             receipt['immutable_inputs_unchanged']=True
             receipt['artifact_index']=[row for row in p.hash_ledger(root,deadline) if row['path']!='execution.json']
