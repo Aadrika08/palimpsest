@@ -1,0 +1,34 @@
+{
+  "comparator_invocations": 0,
+  "critical": 0,
+  "important": 0,
+  "minor_clarifications_applied": [
+    "explicit min(origin + 6600, close_started + 600) independent close deadline",
+    "label reference worker wall_seconds separately from supervisor elapsed_seconds"
+  ],
+  "native_invocations": 0,
+  "qualification_claims": [],
+  "reviewer": "memory_v3_whole_branch_review",
+  "schema": "memory-prerequisites-post-close-doc-review-v3",
+  "scientific_regrade": false,
+  "scope": [
+    "docs/reports/memory-prerequisites-v3.md",
+    "docs/plans/simulation-first-completion-goal.md",
+    "docs/plans/memory-decision-pilot-v2.md"
+  ],
+  "snp_decoding": false,
+  "source": "independent read-only agent findings, transcribed by root",
+  "tests_run": false,
+  "transcribed_utc": "2026-10-07T19:10:42.540032+00:00",
+  "verified": [
+    "producer metadata vs scoped pass and retained legacy inequality",
+    "15 intervals / 120-byte frozen candidate projection",
+    "close timing vs parent exit limit",
+    "six exact cases / four conditions / 30 owners",
+    "5340 + 300 + 360 = 6000 owner stage, plus 600 close and 180 prep = 6780",
+    "separate unapproved admission bridge and new pilot protocol",
+    "12 GiB theoretical recordings vs 8 GiB aggregate fail-closed limitation",
+    "natural-task-failure scoring and mechanism predicates",
+    "R2 false and pilot / held-out unstarted"
+  ]
+}
