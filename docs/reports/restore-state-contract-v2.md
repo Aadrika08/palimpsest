@@ -65,3 +65,9 @@ remain separate.
 
 Repo-local author Aadrika Maurya <aadrikamaurya@gmail.com>; publication as Aadrika08.
 Main unchanged; all prior reports, native evidence and consumed markers preserved.
+
+[Independent final review](restore-state-contract-v2-evidence/final-review.md)
+found no Critical, Important or Minor issues and independently passed 14 selected
+synthetic tests in 2.33 s. The review accepts publication within this prospective
+software scope; its declined judgments and executor rulings are recorded. Fresh
+qualification remains unattempted.
