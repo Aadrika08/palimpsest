@@ -1,0 +1,209 @@
+{
+  "accessibility": {
+    "screen_reader_acceptance": false,
+    "standalone_route_svg_title_desc_missing": true,
+    "svg_title_desc_present": [
+      "afterimage.svg",
+      "atlas.svg",
+      "space-between-two-flies.svg"
+    ],
+    "textual_captions_in_readme": true
+  },
+  "actual": {
+    "child_elapsed_seconds": 0.5196842550067231,
+    "child_exit_code": 0,
+    "cleanup": {
+      "passed": true,
+      "process_group_absent": true,
+      "same_process_alive": false
+    },
+    "enclosing_exec_exit_code": 0,
+    "inputs_unchanged": true,
+    "numpy": "2.2.5",
+    "parent_elapsed_before_receipt_seconds": 0.588407791001373,
+    "python": "3.11.15 (main, Jun 23 2026, 15:19:43) [Clang 22.1.3 ]",
+    "runtime_imported": [],
+    "selected_sources_unchanged": true,
+    "writer_lease_released": true
+  },
+  "agent_operated": true,
+  "archive": {
+    "sha256": "3c4c81e3506208ba30737723b8125fb43d162af81cc2a46897bbde361d2cbe5d",
+    "size_bytes": 2460327
+  },
+  "archive_members": [
+    "README.md",
+    "THIRD_PARTY_NOTICES.md",
+    "afterimage.svg",
+    "atlas.svg",
+    "borrowed-body.svg",
+    "checksums.json",
+    "counterfactual-choir.wav",
+    "one-map-many-lives.html",
+    "space-between-two-flies.svg"
+  ],
+  "artifact_bytes": 2446812,
+  "artifact_files": {
+    "README.md": {
+      "sha256": "789163443940c19b8de2e8ba57a2ff63cd08cbdf3280b16f082764ecdf678e31",
+      "size_bytes": 4536
+    },
+    "THIRD_PARTY_NOTICES.md": {
+      "sha256": "436aa6169cfda0e793f3742e3c8642ba21d7038bf0413a2f9cfad2c92a24f280",
+      "size_bytes": 6681
+    },
+    "afterimage.svg": {
+      "sha256": "a39b8e5465ef0d3979958a0e8033c122b21da9c2de7864490898a5bdc1ae9f62",
+      "size_bytes": 9563
+    },
+    "atlas.svg": {
+      "sha256": "33f749f00a11c3815782edd239282734fb26cc071ab83470e1bd3a2fa81e2489",
+      "size_bytes": 592586
+    },
+    "borrowed-body.svg": {
+      "sha256": "68b3362d738d8999ea7c87ef883e58b7d63811ad331333105bed4b5d3d7d5f82",
+      "size_bytes": 20090
+    },
+    "checksums.json": {
+      "sha256": "de6e50df5521a0659757c8daaf9bbe739d3846e358d829f4dcd4f9940d1e05d8",
+      "size_bytes": 1274
+    },
+    "counterfactual-choir.wav": {
+      "sha256": "515be430ffb7229eb77473a5e8f69e44272d112e7e2c06eaafb27a03f0736896",
+      "size_bytes": 18222
+    },
+    "one-map-many-lives.html": {
+      "sha256": "fa2d25f73c0df937403448c7866072ff592415ed1993f750888f61365f5e9907",
+      "size_bytes": 63908
+    },
+    "space-between-two-flies.svg": {
+      "sha256": "88b0dd69d23ced240199aede489dc29014ae5b7cb46d79f4617615c82ae61949",
+      "size_bytes": 1742443
+    }
+  },
+  "control_checks": {
+    "cases": [
+      "normal",
+      "sigterm",
+      "late-publication",
+      "final-read-error"
+    ],
+    "kind": "synthetic mocked control checks, no actual exporters/process launches/leases",
+    "root_exit_code": 0,
+    "source": {
+      "sha256": "4a41c72381663398e7cd7e920c3335c6efe1a606a65255d46a2d047bed02b164",
+      "size_bytes": 7284
+    },
+    "status": "passed"
+  },
+  "controls": {
+    "aggregate_bytes": 67108864,
+    "child_seconds": 120,
+    "exports": 6,
+    "invocations": 1,
+    "logs_per_stream_bytes": 262144,
+    "min_free_bytes": 1073741824,
+    "normal_seconds": 150,
+    "outer_kill_grace_seconds": 5,
+    "outer_term_seconds": 170,
+    "storage_enforcement": "Writer checks and preflight/final observations, not atomic quota"
+  },
+  "export_commands": 6,
+  "guide_correction": {
+    "additional_bytes_cap": 8388608,
+    "count": 1,
+    "old_archive_unchanged": true,
+    "qualification_claims": [],
+    "reason": "Initial guide overgeneralized SVG descriptions; revised guide explicitly reports missing standalone route alternative",
+    "six_artifacts_unchanged": true
+  },
+  "human_review": {
+    "audio_max_manual_plays": 3,
+    "status": "not_performed",
+    "suggested_cap_seconds": 600,
+    "verdicts": [
+      "keep",
+      "revise presentation",
+      "insufficient sample"
+    ]
+  },
+  "id": "artwork-review-preparation-v1",
+  "independent_readback": {
+    "all_six_artifact_hashes_match_historical": true,
+    "child_identity_group_absent": true,
+    "existing_writer_lease_read_only_probe": "free",
+    "input_files": 19,
+    "one_correction_caps_verified": true,
+    "selected_source_files": 20,
+    "status": "passed_v1_and_v2",
+    "stderr_bytes": 0,
+    "stdout_bytes": 1044,
+    "v2_changed_members": [
+      "README.md",
+      "checksums.json"
+    ],
+    "v2_nine_member_footer_hashes_checksums_verified": true,
+    "zip_footer_and_member_bytes_checked": true
+  },
+  "input_bytes": 4852480,
+  "input_files": 19,
+  "local_paths": {
+    "guide": "/home/utkarsh/Work/shraddha/brain/.worktrees/artwork-portability-preparation/.superpowers/sdd/artwork-review-preparation-v1/review-v2/README.md",
+    "phase": "/home/utkarsh/Work/shraddha/brain/.worktrees/artwork-portability-preparation/.superpowers/sdd/artwork-review-preparation-v1",
+    "review_archive": "/home/utkarsh/Work/shraddha/brain/.worktrees/artwork-portability-preparation/.superpowers/sdd/artwork-review-preparation-v1/palimpsest-artwork-review-v2.zip"
+  },
+  "previous_v1_archive": {
+    "sha256": "f558f30a04f497ddb65596e1f18503170bec2639aa9b4be9446a8a4ef66eb2e0",
+    "size_bytes": 2460157
+  },
+  "qualification_claims": [],
+  "receipt_fingerprints": {
+    "guide-correction-registration.json": {
+      "sha256": "0b6f5f69fa9fd04743ab510649b169b4cdc5af53c2b2d470772fe444cfb4c141",
+      "size_bytes": 234
+    },
+    "launched.json": {
+      "sha256": "15aa3adde512ea16c5f7822815eec17c630301b80f5b2148c055890906800e82",
+      "size_bytes": 109
+    },
+    "package-v2.json": {
+      "sha256": "b3d1dc9379eabe3b128c42e5ce2c589991832fc967d893713504bb3091a9f339",
+      "size_bytes": 2458
+    },
+    "package.json": {
+      "sha256": "27dabad7e8404105976fb433d6479882f7226885554e6f2730dc2c7cc47c5930",
+      "size_bytes": 2086
+    },
+    "package.py": {
+      "sha256": "5885c0520a347c0ff090fe7e359f05804d5099acf815cad86a4753bbdec64641",
+      "size_bytes": 2917
+    },
+    "preparation.json": {
+      "sha256": "300fc2173258c6afa78f322f2123c0691d99c7acb9a85fb01b80f121eec678e2",
+      "size_bytes": 40409
+    },
+    "prepare.py": {
+      "sha256": "eede2dc4ede844f5c31788ee69a415c8777d58cdfa440089a3206a5998664da5",
+      "size_bytes": 7604
+    },
+    "registration.json": {
+      "sha256": "cd7d967caa74017701e919bd99346875ee1b03f714e8173118090fade30f58ca",
+      "size_bytes": 11934
+    },
+    "worker.json": {
+      "sha256": "a0e52a76d6a7e6b616453c11f45e28c66e9d20af78cc4ab3ae12f54508ca6d80",
+      "size_bytes": 19582
+    }
+  },
+  "remaining": [
+    "longer decision-bearing/sustained source samples where required",
+    "standalone route accessibility",
+    "user aesthetic judgment",
+    "independent operator setup/full declared sessions",
+    "audience/custodian/sharing/retention declarations"
+  ],
+  "scope": "Local review preparation from relocated historical records. No historical one-shot driver/worker invocation, new inference, physics, capability/scientific qualification, human acceptance, public sharing, or physical actuation.",
+  "source_commit": "5c9232ef65431f539cca1604494d2b1b7299537a",
+  "source_manifest_sha256": "9766f285b7f4008f894845cc12d51e34a14dafc5eaf88fba6e13bdec36944982",
+  "status": "preparation_passed_acceptance_open"
+}
