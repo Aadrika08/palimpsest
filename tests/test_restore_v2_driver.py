@@ -145,3 +145,17 @@ def test_wrong_comparator_pin_refused_before_source_read(tmp_path, monkeypatch):
     monkeypatch.setattr(d, 'recheck_inputs', lambda *a: pytest.fail('source read before pin check'))
     with pytest.raises(ValueError, match='comparator changed'):
         d.recheck_v2_inputs(reg)
+
+
+def test_native_owner_reserves_combined_output_before_allocation(tmp_path, monkeypatch):
+    from palimpsest.storage import StorageLimitError
+    reg = registration(tmp_path)
+    evidence = Path(reg['publication_root']); evidence.mkdir(parents=True)
+    # Sparse fixture: sibling bytes consume the phase cap without filling disk.
+    with (evidence/'occupied').open('wb') as stream:
+        stream.truncate(8*p.GiB-512*p.MiB)
+    plan = {'output': reg['output']+'/stage', 'selected_profile_sha256': d.PROFILE,
+            'restore_v2_budget_reservation': True}
+    monkeypatch.setattr(p, 'launch_owner', lambda *a, **kw: pytest.fail('native owner allocated'))
+    with pytest.raises(StorageLimitError, match='quota'):
+        d.run_pair(plan, d.restore_v2_budget(reg), d.time.monotonic()+600, {})

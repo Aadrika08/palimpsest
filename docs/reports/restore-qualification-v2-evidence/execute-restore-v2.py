@@ -14,7 +14,7 @@ from scripts import memory_decision_pilot as p, memory_restore_diagnostic as d
 from palimpsest.evaluate import bounded_logs
 
 
-def admission(path):
+def admission(path, *, recheck=True):
     evidence = Path(__file__).resolve().parent
     repo = evidence.parents[2]
     registration = p.read_json(path)
@@ -27,7 +27,8 @@ def admission(path):
         raise ValueError('Registered output must be absent; no retry')
     if subprocess.check_output(['git', 'status', '--porcelain'], cwd=repo):
         raise ValueError('Native invocation requires a clean committed checkout')
-    d.recheck_v2_inputs(registration)
+    if recheck:
+        d.recheck_v2_inputs(registration)
     return registration
 
 
@@ -62,12 +63,7 @@ def invalidate(root, storage, error):
                 path.rename(root/'scientific-close.invalidated.json')
 
 
-def main(argv=None):
-    parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--pipeline', type=Path)
-    args = parser.parse_args(argv)
-    if args.pipeline is not None:
-        return pipeline(args.pipeline)
+def execute():
     evidence = Path(__file__).resolve().parent
     path = evidence/'registration.json'
     registration = admission(path)
@@ -78,9 +74,11 @@ def main(argv=None):
     if shutil.disk_usage(repo).free < 10*p.GiB:
         raise ValueError('Admission requires 10 GiB free')
     marker.parent.mkdir(parents=True, exist_ok=True)
-    command = ['timeout', '--signal=TERM', '--kill-after=5', '890s', registration['python'],
+    command = [registration['python'],
                str(Path(__file__).resolve()), '--pipeline', str(path)]
     p.write_control(marker, {'command':command, 'started_monotonic':time.monotonic(),
+        'watchdog_command': ['timeout', '--signal=TERM', '--kill-after=5', '890s',
+            registration['python'], str(Path(__file__).resolve()), '--supervised'],
         'registration_sha256':p.file_hash(path), 'implementation_head':subprocess.check_output(
             ['git','rev-parse','HEAD'], cwd=repo, text=True).strip()}, storage)
     env = dict(os.environ, PYTHONPATH='.:src:scripts', PYTHONDONTWRITEBYTECODE='1',
@@ -102,7 +100,6 @@ def main(argv=None):
                 timer.daemon = True; timer.start()
     print(json.dumps({'restore_v2_invocation':'starting', 'output':str(root)}), flush=True)
     code = 1
-    previous_term = signal.signal(signal.SIGTERM, lambda signum, frame: fail_log('Launcher interrupted'))
     try:
         # Live files remain ignored until clean child admission and both stages exit.
         with bounded_logs(marker.parent, p.MiB, fail_log) as (stdout, stderr):
@@ -126,7 +123,6 @@ def main(argv=None):
             process.wait()  # The log-failure cleanup has its existing five-second kill.
         invalidate(root, storage, error)
     finally:
-        signal.signal(signal.SIGTERM, previous_term)
         if timer is not None:
             timer.cancel()
         if process is not None:
@@ -144,6 +140,8 @@ def main(argv=None):
             code = 1; failures.append(str(error))
             invalidate(root, storage, error)
     try:
+        if failures:
+            code = 1
         for name in ('stdout.log', 'stderr.log'):
             source = marker.parent/name
             payload = source.read_bytes()
@@ -172,6 +170,62 @@ def main(argv=None):
         return 1
     print(json.dumps(result), flush=True)
     return code
+
+
+def main(argv=None):
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--pipeline', type=Path)
+    parser.add_argument('--supervised', action='store_true')
+    args = parser.parse_args(argv)
+    if args.pipeline is not None:
+        return pipeline(args.pipeline)
+    def interrupted(signum, frame):
+        raise RuntimeError('Launcher interrupted: '+str(signum))
+    if args.supervised:
+        previous = signal.signal(signal.SIGTERM, interrupted)
+        try:
+            return execute()
+        finally:
+            signal.signal(signal.SIGTERM, previous)
+    evidence = Path(__file__).resolve().parent
+    registration = admission(evidence/'registration.json', recheck=False)
+    if registration['python'] != d.sys.executable:
+        raise ValueError('Registered launcher Python differs')
+    command = ['timeout', '--signal=TERM', '--kill-after=5', '890s', registration['python'],
+               str(Path(__file__).resolve()), '--supervised']
+    env = dict(os.environ, PYTHONPATH='.:src:scripts', PYTHONDONTWRITEBYTECODE='1',
+        OMP_NUM_THREADS='1', OPENBLAS_NUM_THREADS='1', MKL_NUM_THREADS='1',
+        NUMEXPR_NUM_THREADS='1', MUJOCO_GL='egl', CUDA_VISIBLE_DEVICES='')
+    previous = signal.signal(signal.SIGTERM, interrupted)
+    process = None
+    code = 1
+    try:
+        process = subprocess.Popen(command, cwd=registration['repo'], env=env, start_new_session=True)
+        code = process.wait()
+    except BaseException:
+        code = 1
+        if process is not None and process.poll() is None:
+            with contextlib.suppress(ProcessLookupError):
+                os.killpg(process.pid, signal.SIGTERM)
+            try:
+                process.wait(timeout=5)
+            except subprocess.TimeoutExpired:
+                with contextlib.suppress(ProcessLookupError):
+                    os.killpg(process.pid, signal.SIGKILL)
+                process.wait()
+    finally:
+        signal.signal(signal.SIGTERM, previous)
+    if code != 0:
+        root = Path(registration['output']); storage = d.restore_v2_budget(registration)
+        invalidate(root, storage, 'Whole-invocation watchdog or interruption: '+str(code))
+        cleanup = d.cleanup_owners(root) if root.exists() else []
+        result_path = evidence/'invocation-result.json'
+        if root.exists():
+            result = p.read_json(result_path) if result_path.exists() else {}
+            result.update(native_exit_code=1, watchdog_exit_code=code, cleanup=cleanup,
+                qualification_claims=[], registration_sha256=p.file_hash(evidence/'registration.json'))
+            d.replace_control(result_path, result, storage)
+    return 0 if code == 0 else 1
 
 
 if __name__ == '__main__':

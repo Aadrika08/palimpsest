@@ -310,6 +310,11 @@ def run_pair(plan, storage, deadline, source, checkpoint=None):
     results = []
     for spec in p.travel_specs('travel-feasibility', plan['selected_profile_sha256'])[-2:]:
         p.deadline_check(deadline)
+        if plan.get('restore_v2_budget_reservation') is True:
+            # The unchanged child budgets its run root only. Reserve its complete
+            # recording, two SNPs and bounded control/log allowance across all
+            # three roots; concurrent parent logs fit the existing 64 MiB reserve.
+            storage.check(512*p.MiB+2*16*p.MiB+4*p.MiB, path=Path(plan['output'])/'runs')
         result = p.launch_owner('travel-feasibility', spec, plan, storage, deadline,
                                 source=source, retain_repeat_state=True)
         results.append(result)
@@ -378,6 +383,8 @@ def main(argv=None):
         root/'stage', root, owner_deadline, profile_sha256=PROFILE)
     plan.update(protocol=p.TRAVEL_PROTOCOL, protocol_sha256=p.TRAVEL_PROTOCOL_SHA256,
                 selected_profile_sha256=PROFILE)
+    if v2:
+        plan['restore_v2_budget_reservation'] = True
     storage = restore_v2_budget(registration) if v2 else p.phase_budget(root)
     receipt = {'schema': 'memory-restore-execution-v2' if v2 else 'memory-restore-execution-v1', 'mode': mode, 'implementation_head': head,
         'registration_sha256': p.file_hash(args.registration), 'source_identity': registration['source_identity'],
