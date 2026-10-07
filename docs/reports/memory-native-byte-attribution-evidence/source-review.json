@@ -1,0 +1,27 @@
+{
+  "reviewed_version": "MuJoCo 3.3.6",
+  "reviewed_date": "2026-10-07",
+  "sources": [
+    {
+      "url": "https://raw.githubusercontent.com/google-deepmind/mujoco/3.3.6/python/mujoco/structs_wrappers.cc",
+      "symbol": "MjDataWrapper::Serialize / Deserialize",
+      "finding": "Timer structs are serialized; dual arena arrays are conditional on mj_isDual(model). Absent arena payload pointers are null on deserialize."
+    },
+    {
+      "url": "https://raw.githubusercontent.com/google-deepmind/mujoco/3.3.6/src/engine/engine_core_constraint.c",
+      "symbol": "mj_isDual",
+      "finding": "Dual eligibility is solver == mjSOL_PGS or noslip_iterations > 0."
+    },
+    {
+      "url": "https://raw.githubusercontent.com/google-deepmind/mujoco/3.3.6/python/mujoco/structs.cc",
+      "symbol": "MJDATA_ARENA_POINTERS_DUAL binding",
+      "finding": "Getter builds an array from native field pointer, shape and owner; ownership metadata is inspected without copying unbacked contents."
+    },
+    {
+      "url": "https://raw.githubusercontent.com/google-deepmind/mujoco/3.3.6/include/mujoco/mjdata.h",
+      "symbol": "mjTimerStat / mjtTimer",
+      "finding": "Each timer contains cumulative duration and call count. Field names and timer indices are diagnostic statistics."
+    }
+  ],
+  "boundary": "Source interpretation supports probe design; actual payload attribution and model eligibility require the registered readout."
+}
