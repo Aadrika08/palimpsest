@@ -1,10 +1,12 @@
 # Fresh narrow restore validation under the v2 comparison
 
-7 October 2026. **Proposed for review; not executed.** Parent `25dff6b`, project
+7 October 2026. **Scope approved by the user; native attempt not executed.** Parent `25dff6b`, project
 [completion goal](simulation-first-completion-goal.md), candidate in PR #74.
 This is one bounded extension of the existing restore driver, not another
 controller, geometry, recorder, snapshot format or generic experiment framework.
-Implementation and the native invocation require approval of this concrete scope.
+The user's subsequent "approved" authorizes this concrete implementation and
+single native invocation. The finite allocation and excluded downstream work
+below remain unchanged.
 
 ## Question and outcome
 
