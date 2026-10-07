@@ -24,7 +24,10 @@ screenshots. Collect natural failures and stop; zero corrective attempts.
 Aggregate phase bound 360 seconds: one 60-second build, 30-second readiness,
 180-second browser-test bound, 20-second server shutdown and the remaining time
 for integrity/cleanup/readback. A 330-second isolated-process-group supervisor
-and outer TERM at 350 seconds plus five-second KILL grace cover owned descendants.
+and outer TERM at 350 seconds plus five-second KILL grace bound the worker group.
+Sample at most 128 owned descendant identities using the existing endurance
+helpers, including detached browser processes; refuse success if any observed
+live survivor requires forced cleanup. Retain the PID/start-time inventory.
 No timeout restart or additional test invocation. Pin the full launch commands.
 
 Managed simulation/export roots: 128 MiB, three runs, two snapshots per run,
