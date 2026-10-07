@@ -93,3 +93,7 @@ frames, coincident route traces and a 0.08 s choir. A usable simulation encounte
 user visual/audio review and full declared-duration independent-operator sessions
 remain open under the [runbook](../exhibition-runbook.md). No R5, memory, navigation,
 physical rover or public-sharing claim is promoted by packaging.
+
+The relocated inputs have since produced a [local six-mode review pack](artwork-review-preparation.md)
+through the existing exporters in a separate bounded preparation. Its captions,
+short-source limitations and identified route-accessibility gap remain explicit.
