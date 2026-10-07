@@ -1,0 +1,101 @@
+ui/node_modules/playwright/lib/common/index.js:504-510
+504:     }
+505:     this.config = {
+506:       argv: configCLIOverrides.argv ?? [],
+507:       configFile: resolvedConfigFile,
+508:       rootDir: pathResolve(configDir, userConfig.testDir) || configDir,
+509:       failOnFlakyTests: takeFirst(configCLIOverrides.failOnFlakyTests, userConfig.failOnFlakyTests, false),
+510:       forbidOnly: takeFirst(configCLIOverrides.forbidOnly, userConfig.forbidOnly, false),
+
+ui/node_modules/playwright/lib/common/index.js:588-596
+588:       // Note: we either apply the cli override for repeatEach or not, depending on whether the
+589:       // project is top-level vs dependency. See collectProjectsAndTestFiles in loadUtils.
+590:       repeatEach: takeFirst(projectConfig.repeatEach, config.repeatEach, 1),
+591:       retries: takeFirst(configCLIOverrides.retries, projectConfig.retries, config.retries, 0),
+592:       metadata: takeFirst(projectConfig.metadata, config.metadata, {}),
+593:       name: takeFirst(projectConfig.name, config.name, ""),
+594:       testDir,
+595:       snapshotDir: takeFirst(pathResolve(configDir, projectConfig.snapshotDir), pathResolve(configDir, config.snapshotDir), testDir),
+596:       testIgnore: takeFirst(projectConfig.testIgnore, config.testIgnore, []),
+
+ui/node_modules/playwright/lib/common/index.js:2609-2615
+2609:   _collectGrepTitlePath(path10) {
+2610:     if (this.parent)
+2611:       this.parent._collectGrepTitlePath(path10);
+2612:     if (this.title || this._type !== "describe")
+2613:       path10.push(this.title);
+2614:     path10.push(...this._tags);
+2615:   }
+
+ui/node_modules/playwright/lib/common/index.js:2831-2841
+2831:   _grepBaseTitlePath() {
+2832:     const path10 = [];
+2833:     this.parent._collectGrepTitlePath(path10);
+2834:     path10.push(this.title);
+2835:     return path10;
+2836:   }
+2837:   _grepTitleWithTags() {
+2838:     const path10 = this._grepBaseTitlePath();
+2839:     path10.push(...this._tags);
+2840:     return path10.join(" ");
+2841:   }
+
+ui/node_modules/playwright/lib/common/index.js:2855-2861
+2855: async function loadTestFile(file2, config, testErrors) {
+2856:   if (cachedFileSuites.has(file2))
+2857:     return cachedFileSuites.get(file2);
+2858:   const suite = new Suite(import_path9.default.relative(config.config.rootDir, file2) || import_path9.default.basename(file2), "file");
+2859:   suite._requireFile = file2;
+2860:   suite.location = { file: file2, line: 0, column: 0 };
+2861:   suite._tags = [...config.config.tags];
+
+ui/node_modules/playwright/lib/runner/index.js:2643-2655
+2643: }
+2644: function createProjectSuite(project, fileSuites) {
+2645:   const projectSuite = new import_common4.test.Suite(project.project.name, "project");
+2646:   for (const fileSuite of fileSuites)
+2647:     projectSuite._addSuite(import_common4.suiteUtils.bindFileSuiteToProject(project, fileSuite));
+2648:   const grepMatcher = (0, import_util6.createTitleMatcher)(project.project.grep);
+2649:   const grepInvertMatcher = project.project.grepInvert ? (0, import_util6.createTitleMatcher)(project.project.grepInvert) : null;
+2650:   import_common4.suiteUtils.filterTestsRemoveEmptySuites(projectSuite, (test) => {
+2651:     const grepTitle = test._grepTitleWithTags();
+2652:     if (grepInvertMatcher?.(grepTitle))
+2653:       return false;
+2654:     return grepMatcher(grepTitle);
+2655:   });
+
+ui/node_modules/playwright/lib/runner/index.js:6459-6467
+6459:       if (testRun.options.grep || testRun.options.grepInvert) {
+6460:         const grepMatcher = testRun.options.grep ? (0, import_util15.createTitleMatcher)((0, import_util15.forceRegExp)(testRun.options.grep)) : () => true;
+6461:         const grepInvertMatcher = testRun.options.grepInvert ? (0, import_util15.createTitleMatcher)((0, import_util15.forceRegExp)(testRun.options.grepInvert)) : () => false;
+6462:         testRun.preOnlyTestFilters.push((test) => {
+6463:           const grepTitle = test._grepTitleWithTags();
+6464:           return !grepInvertMatcher(grepTitle) && grepMatcher(grepTitle);
+6465:         });
+6466:       }
+6467:       if (testRun.options.lastFailedTestIds) {
+
+ui/node_modules/playwright/lib/util.js:131-139
+131: function createTitleMatcher(patterns) {
+132:   const reList = Array.isArray(patterns) ? patterns : [patterns];
+133:   return (value) => {
+134:     for (const re of reList) {
+135:       re.lastIndex = 0;
+136:       if (re.test(value))
+137:         return true;
+138:     }
+139:     return false;
+
+ui/node_modules/playwright/lib/util.js:152-156
+152: function forceRegExp(pattern) {
+153:   const match = pattern.match(/^\/(.*)\/([gi]*)$/);
+154:   if (match)
+155:     return new RegExp(match[1], match[2]);
+156:   return new RegExp(pattern, "gi");
+
+ui/tests/lab.spec.ts:21-21
+21: test('actual local manual workflow, snapshots, sequential branches, comparison and export',async({page})=>{
+
+ui/playwright.config.ts:1-2
+1: import {defineConfig} from '@playwright/test';
+2: export default defineConfig({testDir:'./tests',workers:1,timeout:180_000,use:{baseURL:process.env.PALIMPSEST_LAB_URL??'http://127.0.0.1:8765',headless:true,viewport:{width:1440,height:1050},launchOptions:{executablePath:process.env.PALIMPSEST_BROWSER??'/usr/bin/chromium',args:['--no-sandbox']},screenshot:'only-on-failure',trace:'retain-on-failure'},reporter:'list'});

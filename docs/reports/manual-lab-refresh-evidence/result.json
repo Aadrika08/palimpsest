@@ -1,0 +1,113 @@
+{
+  "cleanup": {
+    "passed": true,
+    "process_group_absent": true,
+    "same_process_alive": false
+  },
+  "elapsed_seconds": 3.409123699006159,
+  "failure": {
+    "message": "",
+    "type": "AssertionError"
+  },
+  "lease_free": true,
+  "observed_live_survivors": [],
+  "observed_processes": [
+    {
+      "command": "npm run build                                                                                                                                                                                ",
+      "fds": 22,
+      "group": 881585,
+      "pid": 881588,
+      "ppid": 881585,
+      "rss_bytes": 77279232,
+      "start_ticks": 7198664,
+      "state": "S",
+      "threads": 11
+    },
+    {
+      "command": "node /home/utkarsh/Work/shraddha/brain/.worktrees/manual-lab-refresh/ui/node_modules/.bin/vite build ",
+      "fds": 21,
+      "group": 881585,
+      "pid": 881604,
+      "ppid": 881588,
+      "rss_bytes": 157351936,
+      "start_ticks": 7198677,
+      "state": "S",
+      "threads": 43
+    },
+    {
+      "command": "/home/utkarsh/Work/shraddha/brain/.worktrees/lab-hardening/ui/node_modules/@typescript/typescript-linux-x64/lib/tsc --noEmit ",
+      "fds": 5,
+      "group": 881585,
+      "pid": 881605,
+      "ppid": 881604,
+      "rss_bytes": 74506240,
+      "start_ticks": 7198678,
+      "state": "S",
+      "threads": 23
+    },
+    {
+      "command": "/home/utkarsh/Work/shraddha/brain/.worktrees/lab-hardening/.venv/bin/python -B -m palimpsest lab --port 8771 --runs /home/utkarsh/Work/shraddha/brain/.worktrees/manual-lab-refresh/.superpowers/sdd/manual-lab-refresh-v1/runs --exports /home/utkarsh/Work/shraddha/brain/.worktrees/manual-lab-refresh/.superpowers/sdd/manual-lab-refresh-v1/exports --storage-max-bytes 134217728 --min-free-bytes 2147483648 --max-runs 3 --max-snapshots 2 --max-exports 1 --log-max-bytes 1048576 ",
+      "fds": 11,
+      "group": 881585,
+      "pid": 881677,
+      "ppid": 881585,
+      "rss_bytes": 51453952,
+      "start_ticks": 7198744,
+      "state": "S",
+      "threads": 3
+    },
+    {
+      "command": "/home/utkarsh/.local/share/mise/installs/node/24.21.0/bin/node node_modules/@playwright/test/cli.js test tests/lab.spec.ts --grep ^actual local manual workflow, snapshots, sequential branches, comparison and export$ --workers 1 --retries 0 --timeout 180000 ",
+      "fds": 21,
+      "group": 881585,
+      "pid": 881680,
+      "ppid": 881585,
+      "rss_bytes": 220811264,
+      "start_ticks": 7198782,
+      "state": "R",
+      "threads": 11
+    }
+  ],
+  "qualification_claims": [],
+  "status": "failed",
+  "supervisor": {
+    "elapsed_seconds": 2.680353786010528,
+    "output": "/home/utkarsh/Work/shraddha/brain/.worktrees/manual-lab-refresh/.superpowers/sdd/manual-lab-refresh-v1/supervision",
+    "returncode": 1,
+    "schema_version": 1,
+    "started_utc": "2026-10-07T12:55:24.800051+00:00",
+    "status": "failed",
+    "timeout_seconds": 330
+  },
+  "worker": {
+    "build": {
+      "ui/dist/assets/index-DAGRN550.js": {
+        "bytes": 257683,
+        "sha256": "a3c6992604815d801d4ddcdab9c83154d32e031b56e127b55da75b21e284da8d"
+      },
+      "ui/dist/assets/index-YXzjLjgu.css": {
+        "bytes": 7190,
+        "sha256": "7312ee5d53d71af957b6317764d2d4010a8a8663808758effba70dcd516f3d87"
+      },
+      "ui/dist/index.html": {
+        "bytes": 418,
+        "sha256": "66ba5a077836337961e62738f60271acf5a580e7c8936501bb5b9b55b07f1f67"
+      }
+    },
+    "build_returncode": 0,
+    "elapsed_seconds": 2.515188413002761,
+    "failure": {
+      "message": "Child exited 1",
+      "type": "RuntimeError"
+    },
+    "owned_survivors_requiring_kill": [],
+    "process": {
+      "pid": 881585,
+      "process_group": 881585,
+      "start_ticks": 7198607
+    },
+    "qualification_claims": [],
+    "server_pid": 881677,
+    "status": "failed"
+  }
+}
