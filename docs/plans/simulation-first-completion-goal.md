@@ -29,7 +29,7 @@ physical/exhibition claims do not inherit success from this simulation release.
   asset-backed and browser checks run; skips do not count as proof. Retain the
   existing R0/R1 evidence and reverify changed paths, operational faults, storage
   limits and declared endurance. Report CPU/GPU and display-rate limitations.
-- [ ] **Restore prerequisite:** prospectively review/freeze the
+- [x] **Restore prerequisite:** prospectively review/freeze the
   [v2 candidate contract](restore-state-contract-v2.md), then qualify it on fresh
   same-source five-control restore pair before dependent memory work. Require
   audited raw records, source invariants, exact non-timing traces and declared
@@ -38,8 +38,8 @@ physical/exhibition claims do not inherit success from this simulation release.
   profiling diagnostics and legacy results. The candidate's synthetic tests and
   historical timer attribution alone do not pass this gate.
 - [ ] **Memory/R2:** establish a decision-bearing, executable v2 scene with real
-  observed beliefs and no privileged-state leak; pass all eight fresh profile
-  prerequisites before the four-condition, six-case development pilot. Then freeze
+  observed beliefs and no privileged-state leak; pass all eight fresh prerequisite cells for the selected profile
+  before the four-condition, six-case development pilot. Then freeze
   and execute the full nine-condition matched-control development and held-out
   study, including targeting, justified revisions, action/task propagation,
   false revisions, costs and uncertainty. Include every required condition and
@@ -92,7 +92,7 @@ physical/exhibition claims do not inherit success from this simulation release.
    restore-qualification plan from the candidate in PR #74.
 2. Freeze its contract and bounded protocol, run narrow fresh restore validation
    once within that allocation, and independently audit the resulting evidence.
-3. Complete the full fresh memory-profile prerequisites, then the pilot and
+3. Complete the eight fresh memory prerequisite cells, then the pilot and
    confirmatory work in that order. A narrow restore pass alone unlocks no pilot.
    In parallel, diagnose the existing puck/navigation failures and propose
    evidence-supported, finite new development studies; serialize heavy jobs.
@@ -146,3 +146,23 @@ rover and physical artwork remain inactive throughout this goal.
 - [Existing navigation capability gate](m7-navigation-study.md).
 - [Six-mode export smoke and its limits](../reports/m9-offline-handoff.md).
 - [Artwork operator acceptance](../exhibition-runbook.md).
+
+## Current scoped results, 7 October 2026
+
+The fresh narrow restore pair passes under the reviewed timer-aware contract;
+raw inequality (74 native bytes) stays explicit. See
+[the report](../reports/restore-qualification-v2.md) and
+[PR #85](https://github.com/Aadrika08/palimpsest/pull/85). This checks only the
+restore prerequisite above; memory qualification and the pilot remain open.
+The [next eight-cell proposal](memory-prerequisites-v2.md) uses one selected
+profile and a fresh south-prefix, with no historical-source substitution. It is
+pending approval and authorizes no execution.
+
+The separately approved manual-browser v2 and artwork-material v2 allocations
+were consumed and failed. The browser reached its first branch but recording
+admission exceeded its 128 MiB managed quota; cleanup also forced a tracker
+child. Artwork produced partial SVG/audio but HTML exceeded its 4 MiB metadata
+cap. The next plans preserve source admission/failure rules and all raw evidence;
+no corrective invocation is authorized automatically. Learned puck/navigation,
+adequate Afterimage, human artwork/operator acceptance and final delivery remain
+open. Physical rover work remains deferred.
