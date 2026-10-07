@@ -49,6 +49,8 @@ above are separate actual results. Independent source review found no Critical o
 Important issue. Deferred minor: v3 write_json redundantly sets the same grace bound
 already supplied by exit_grace; behavior is correct.
 
-The browser gate stays open. Next work needs a prospective, diagnostic allocation
-that can identify the Chromium resource failure before proposing another workflow.
+The browser gate stays open. A [prospective diagnostic plan](../plans/manual-lab-resource-diagnostic-v1.md)
+proposes one owner, 56 paused controls and the two preview payloads with bounded
+resource capture. It is unapproved and its changed timing makes nonreproduction
+inconclusive. No next workflow or causal fix follows automatically.
 Memory, learned-model capability, artistic acceptance and rover gates are unchanged.
