@@ -95,11 +95,11 @@ class SonificationTests(unittest.TestCase):
         self.assertEqual(output.read_bytes(), self.export(run, 'second.wav').read_bytes())
 
     def test_fractional_tick_samples_preserve_duration_without_per_tick_rounding_drift(self):
-        samples, metadata = self.read(self.export(self.fixture(dt=.00003, start=5)))
+        samples, metadata = self.read(self.export(self.fixture(dt=.00003, start=600)))
         self.assertEqual(len(samples), 4)
         self.assertEqual(metadata['timing']['sample_boundaries'], [0, 1, 3, 4])
-        self.assertEqual(metadata['timing']['start_tick'], 5)
-        self.assertAlmostEqual(metadata['timing']['simulation_start_seconds'], .00015)
+        self.assertEqual(metadata['timing']['start_tick'], 600)
+        self.assertAlmostEqual(metadata['timing']['simulation_start_seconds'], .018)
 
     def test_each_population_can_be_selected_without_renormalizing_others(self):
         run = self.fixture()

@@ -237,8 +237,6 @@ def _load(run_path):
         if count > MAX_TICKS:
             raise ValueError("too many recording ticks")
         episode, tick = row["episode"], row["tick"]
-        if tick >= 600:
-            raise ValueError("episode exceeds the supported 600 control ticks")
         pose = _vector(row.get("pose"), 3, "pose")
         next_pose = _vector(row.get("next_pose"), 3, "next pose")
         item = episodes.setdefault(episode, {"episode": episode, "start_tick": tick,
