@@ -315,6 +315,9 @@ def run(path):
                     receipt['status'] = 'prerequisites-provisional-pass'
                 except BaseException as error:
                     receipt.update(status='prerequisites-failure', readout_error={'type':type(error).__name__,'message':str(error)})
+                # Attempts retain full reports; independent close keeps its own audits.
+                for owner in analysis.get('owners', []):
+                    owner.pop('audit', None)
                 receipt.update(analysis)
                 attempted_ids = {row['job_id'] for row in receipt['attempted']}
                 receipt['unattempted'] = [spec['id'] for spec in reg['expected_specs'] if spec['id'] not in attempted_ids]
