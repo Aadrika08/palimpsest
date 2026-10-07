@@ -29,7 +29,7 @@ def test_unknown_registration_cannot_allocate():
         campaign().validate_registration({'mode':'qualify'})
 
 
-def setup_campaign(tmp_path, monkeypatch):
+def setup_campaign(tmp_path, monkeypatch, *, source_receipts=None):
     m = campaign(); repo = tmp_path/'repo'; (repo/'scripts').mkdir(parents=True)
     module = repo/'scripts/memory_prerequisites_v2.py'; module.write_text('fixture campaign\n')
     monkeypatch.setattr(m, '__file__', str(module))
@@ -89,7 +89,8 @@ def setup_campaign(tmp_path, monkeypatch):
         'native_sha256':p.hashlib.sha256(native).hexdigest(), 'application':{
             'source_run_id':'source', 'event_prefix':{}, 'memory':{'u':{}, 'selector':{},
                 'm':{'facts':[]}, 'supervisor':{'phase':'await_decision'}},
-            'receipts':{'old':{'received_run_id':'source','applied_tick':1}}}}
+            'receipts':source_receipts if source_receipts is not None else
+                {'old':{'received_run_id':'source','applied_tick':1}}}}
     launched = []; raw_rows = {}
     def launch(stage, spec, plan, storage, deadline, *, source, retain_repeat_state):
         assert stage == 'travel-feasibility' and spec['id'] not in launched
@@ -123,7 +124,7 @@ def setup_campaign(tmp_path, monkeypatch):
             post = copy.deepcopy(state)
             post['native_data'] = bytes([len(launched)])*120+native[120:]
             post['native_sha256'] = p.hashlib.sha256(post['native_data']).hexdigest()
-            report.update(p.publish_repeat_state(post,{'old'},run,storage))
+            report.update(p.publish_repeat_state(post,set(state['application']['receipts']),run,storage))
         (run/'worker-report.json').write_text(json.dumps(report)); launched.append(spec['id'])
         return report
     monkeypatch.setattr(p, 'launch_owner', launch)
@@ -158,6 +159,50 @@ def test_all_eight_fresh_cells_close_only_after_independent_recomputation(tmp_pa
     assert len(close['owners']) == len(close['allocated_jobs']) == len(close['started_owners']) == 8
     assert p.read_json(root/'execution.json') == before
     with pytest.raises(FileExistsError): m.audit(path)
+
+
+def test_native_sized_reports_publish_complete_bounded_driver_and_independent_close(tmp_path,monkeypatch):
+    # Synthetic source identities and nested reports reproduce the eight-owner
+    # envelope pressure without reading retained evidence or launching physics.
+    receipts = {'neural-'+str(i):{'received_run_id':'source','applied_tick':i} for i in range(727)}
+    m,path,root,reg,launched,rows = setup_campaign(tmp_path,monkeypatch,source_receipts=receipts)
+    memory = {'u':{'cache':{'neural-'+str(i):{'packet':{'tick':i,
+        'subject_id':'south-aperture','status':'observed'}} for i in range(280)}},
+        'selector':{}, 'm':{'facts':[]}, 'supervisor':{'phase':'await_decision'}}
+    launch = p.launch_owner
+    def large_report(*args,**kwargs):
+        report = launch(*args,**kwargs)
+        report['final_memory'] = copy.deepcopy(memory)
+        Path(report['run'],'worker-report.json').write_text(json.dumps(report))
+        return report
+    monkeypatch.setattr(p,'launch_owner',large_report)
+
+    assert m.run(path) == 0
+    before = p.read_json(root/'execution.json')
+    assert before['native_prerequisites_passed'] is False
+    assert before['qualification_claims'] == []
+    assert before['unattempted'] == []
+    assert len(before['attempted']) == len(before['owners']) == len(before['cleanup']) == 8
+    assert len(before['allocated_jobs']) == len(before['started_owners']) == 8
+    assert all(row['final_memory'] == memory for row in before['attempted'])
+    assert all(len(row['repeat_source_receipt_ids']) == 727 for row in before['attempted'][-2:])
+    assert all(row['raw_audit_pass'] and row['matching_owner_exited'] for row in before['owners'])
+    start = p.read_json(Path(reg['control_root'])/'launched.json')['started_monotonic']
+    assert before['started_monotonic'] == start
+    assert before['owner_deadline_monotonic'] == start+4300
+    assert before['global_deadline_monotonic'] == start+4900
+    assert start <= before['readout_started_monotonic'] <= before['readout_deadline_monotonic']
+    assert before['readout_deadline_monotonic'] == min(start+4900,before['readout_started_monotonic']+600)
+    assert not (root/'scientific-close.json').exists()
+
+    assert m.audit(path) == 0
+    close = p.read_json(root/'scientific-close.json')
+    assert close['native_prerequisites_passed'] is True
+    assert close['qualification_claims'] == [] and close['r2_complete'] is False
+    assert len(close['owners']) == len(close['allocated_jobs']) == len(close['started_owners']) == 8
+    assert all(row['audit']['final_memory'] == memory for row in close['owners'])
+    assert p.read_json(root/'execution.json') == before
+    assert all(candidate.stat().st_size <= p.MiB for candidate in root.rglob('*.json'))
 
 
 def test_first_failed_mandatory_cell_stops_later_owners_and_retains_started(tmp_path,monkeypatch):

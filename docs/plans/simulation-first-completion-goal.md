@@ -159,11 +159,17 @@ for one selected profile from a fresh south-prefix. All eight owner reports
 record the required inline outcomes, but final publication exceeded its 1 MiB
 control-envelope cap and independent scientific close stopped. Candidate pair
 comparison and final qualification remain unconfirmed. See
-[the retained failed result](../reports/memory-prerequisites-v2.md). Registration
+[the retained failed result](../reports/memory-prerequisites-v2.md) and
+[PR #90](https://github.com/Aadrika08/palimpsest/pull/90). Registration
 preparation and the one invocation are consumed; zero corrective studies/retries
 were authorized. A separate software-only receipt repair cannot qualify this
 closed allocation. Any new scientific readout needs a new approved scope; the
-prerequisite gate and pilot remain open.
+prerequisite gate and pilot remain open. The separate software-only
+[receipt repair](../reports/memory-campaign-receipt-size.md) removes duplicate
+driver audit payloads while preserving full attempts and independent recomputation.
+Its 152 focused software checks passed; they supply no native qualification. The next
+[fresh eight-cell proposal](memory-prerequisites-v3.md) requests a new finite
+allocation and remains unapproved; nothing is launched automatically.
 
 The fresh artwork-material v3 allocation passed in 22.06 seconds. Its compact
 comparison preserves source geometry and complete raw-event references while
