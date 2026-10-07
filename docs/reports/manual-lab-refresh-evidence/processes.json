@@ -1,0 +1,57 @@
+[
+  {
+    "command": "npm run build                                                                                                                                                                                ",
+    "fds": 22,
+    "group": 881585,
+    "pid": 881588,
+    "ppid": 881585,
+    "rss_bytes": 77279232,
+    "start_ticks": 7198664,
+    "state": "S",
+    "threads": 11
+  },
+  {
+    "command": "node /home/utkarsh/Work/shraddha/brain/.worktrees/manual-lab-refresh/ui/node_modules/.bin/vite build ",
+    "fds": 21,
+    "group": 881585,
+    "pid": 881604,
+    "ppid": 881588,
+    "rss_bytes": 157351936,
+    "start_ticks": 7198677,
+    "state": "S",
+    "threads": 43
+  },
+  {
+    "command": "/home/utkarsh/Work/shraddha/brain/.worktrees/lab-hardening/ui/node_modules/@typescript/typescript-linux-x64/lib/tsc --noEmit ",
+    "fds": 5,
+    "group": 881585,
+    "pid": 881605,
+    "ppid": 881604,
+    "rss_bytes": 74506240,
+    "start_ticks": 7198678,
+    "state": "S",
+    "threads": 23
+  },
+  {
+    "command": "/home/utkarsh/Work/shraddha/brain/.worktrees/lab-hardening/.venv/bin/python -B -m palimpsest lab --port 8771 --runs /home/utkarsh/Work/shraddha/brain/.worktrees/manual-lab-refresh/.superpowers/sdd/manual-lab-refresh-v1/runs --exports /home/utkarsh/Work/shraddha/brain/.worktrees/manual-lab-refresh/.superpowers/sdd/manual-lab-refresh-v1/exports --storage-max-bytes 134217728 --min-free-bytes 2147483648 --max-runs 3 --max-snapshots 2 --max-exports 1 --log-max-bytes 1048576 ",
+    "fds": 11,
+    "group": 881585,
+    "pid": 881677,
+    "ppid": 881585,
+    "rss_bytes": 51453952,
+    "start_ticks": 7198744,
+    "state": "S",
+    "threads": 3
+  },
+  {
+    "command": "/home/utkarsh/.local/share/mise/installs/node/24.21.0/bin/node node_modules/@playwright/test/cli.js test tests/lab.spec.ts --grep ^actual local manual workflow, snapshots, sequential branches, comparison and export$ --workers 1 --retries 0 --timeout 180000 ",
+    "fds": 21,
+    "group": 881585,
+    "pid": 881680,
+    "ppid": 881585,
+    "rss_bytes": 220811264,
+    "start_ticks": 7198782,
+    "state": "R",
+    "threads": 11
+  }
+]

@@ -1,0 +1,138 @@
+{
+  "browser_cli_failure": "Child exited 1; No tests found.",
+  "browser_last_run": {
+    "failedTests": [],
+    "status": "failed"
+  },
+  "build_returncode": 0,
+  "command_exit_code": 1,
+  "consumed": true,
+  "corrective_attempts": 0,
+  "diagnostic_source_hashes": {
+    "ui/node_modules/playwright/lib/common/index.js": {
+      "sha256": "f4a6b14f5ba21a118b58a6a25eb0b281a3acc4157023b014e0197145056124a4",
+      "size_bytes": 115517
+    },
+    "ui/node_modules/playwright/lib/runner/index.js": {
+      "sha256": "7a2e4e1114d3237d61b87723b4d86a37944c9143f3ce2fb0b2e8867e0c612a5e",
+      "size_bytes": 315445
+    },
+    "ui/node_modules/playwright/lib/util.js": {
+      "sha256": "874c55495773da8c5a2ec46551c2265937bf08446231c09a8b5966e8bea2b1f7",
+      "size_bytes": 14295
+    },
+    "ui/playwright.config.ts": {
+      "sha256": "675ab610fd86561c343d2048793372f36cbfee2cdd7f1bf2964e1d7513b45e39",
+      "size_bytes": 417
+    },
+    "ui/tests/lab.spec.ts": {
+      "sha256": "1f31a7d760b09768897443514fdd6e1f27b5081e49e12505764a3e5205485dfa",
+      "size_bytes": 34724
+    }
+  },
+  "diagnostic_source_scope": "Source-only post-stop inspection; installed Playwright common/runner/util bytes were not separately hashed in the original 204-pin registration.",
+  "elapsed_before_parent_receipt_seconds": 3.409123699006159,
+  "evidence": {
+    "browser-last-run.json": {
+      "sha256": "e22df5d0991eb28c09093b1e678b3fa8cd1fab48185d38e67cf79fb6e63ad5ea",
+      "size_bytes": 45
+    },
+    "control-check.py": {
+      "sha256": "3506768b49b51c054359edc14baf2197f9367a5e7ee5feb360b207793a0cc520",
+      "size_bytes": 3468
+    },
+    "launch.py": {
+      "sha256": "9ec024d25104781ac593b32b0cfb077791db7e79425d62197042837f5cca700c",
+      "size_bytes": 15830
+    },
+    "launched.json": {
+      "sha256": "c174b72f78534487a5c4c1023f0c301e7e1bf19aa2cdf4461faa568dcd802f5d",
+      "size_bytes": 91
+    },
+    "processes.json": {
+      "sha256": "85e4914f59807a0731aa69825d9edd79924090b00b606f4c5c6bd13e9b6b9a42",
+      "size_bytes": 2119
+    },
+    "registration.json": {
+      "sha256": "ec3df48a3dc1ab822eb6438937bbad7d83a62f9130685b18a48c19b09d20cca7",
+      "size_bytes": 36011
+    },
+    "result.json": {
+      "sha256": "3b89ac7d4d6dbc9f92beff7cc9b3cab69fac15dace74971bc25a145217f7b9b1",
+      "size_bytes": 3825
+    },
+    "selector-source.txt": {
+      "sha256": "b16547f6e566c10aa0ac3adc2aab97420a37ff4bb50f88d9c4caee5cbb01aba9",
+      "size_bytes": 5311
+    },
+    "server.stderr.log": {
+      "sha256": "a5a7df7b6ee416f8ebe4ebd29512130fcf3f863160157e813f6b28b955a52384",
+      "size_bytes": 351
+    },
+    "server.stdout.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    "supervision/stderr.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    "supervision/stdout.log": {
+      "sha256": "62d70fc38bb3d6fcd99b85e3a18b3e2f7467805a8b3ad0f6b9b81f9d0a842375",
+      "size_bytes": 574
+    },
+    "supervision/supervisor.json": {
+      "sha256": "6355b8cc2f490e6a670f25f399b2c9fec327c67de59c60354f405a93dac47e63",
+      "size_bytes": 316
+    },
+    "worker.json": {
+      "sha256": "a597a187c3bec8474ca8cc68b85c8957c4f2f21fe164fb08a9ce42b70d6e1d7c",
+      "size_bytes": 823
+    }
+  },
+  "future_phase": "Proposal only; explicit owner decision required; do not rerun consumed manual-lab-refresh-v1.",
+  "lease_release": "Original receipt reports lease_free=true; publication audit acquires no lock.",
+  "native_recordings": 0,
+  "observed_process_identities_absent": 5,
+  "original_limits": {
+    "aggregate_seconds": 360,
+    "continuing_free_bytes": 2147483648,
+    "initial_free_bytes": 4294967296,
+    "kill_grace_seconds": 5,
+    "managed_roots_max_bytes": 134217728,
+    "max_exports": 1,
+    "max_log_bytes": 1048576,
+    "max_manual_owners": 3,
+    "max_snapshots_per_run": 2,
+    "outer_term_seconds": 350,
+    "phase_max_bytes": 1073741824,
+    "worker_supervisor_seconds": 330
+  },
+  "producer_commit": "ffe3e7794458d583865e55cc7b25c6151efb03c2",
+  "qualification_claims": [],
+  "retained_storage": {
+    ".superpowers/sdd/manual-lab-refresh-v1": {
+      "files": 15,
+      "size_bytes": 63408
+    },
+    "ui/dist": {
+      "files": 4,
+      "size_bytes": 265291
+    },
+    "ui/test-results": {
+      "files": 2,
+      "size_bytes": 45
+    }
+  },
+  "retained_storage_total_bytes": 328744,
+  "same_worker_identity_absent": true,
+  "schema": "manual-lab-refresh-report-v1",
+  "server_shutdown_log_complete": true,
+  "source_pins_verified": 204,
+  "status": "failed",
+  "supervisor_returncode": 1,
+  "svg_exports": 0,
+  "worker_elapsed_seconds": 2.515188413002761,
+  "worker_process_group_absent": true,
+  "workflow_screenshots": 0
+}
