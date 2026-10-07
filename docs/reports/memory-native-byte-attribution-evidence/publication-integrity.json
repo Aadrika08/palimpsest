@@ -1,0 +1,65 @@
+{
+  "all_preserved_inputs_unchanged": true,
+  "bound_files_verified": 18,
+  "executed_code_matches_registration": true,
+  "new_native_owners": 0,
+  "offline_artifact_index_verified": true,
+  "physics_steps": 0,
+  "preserved_set_counts": [
+    339,
+    24,
+    25,
+    30,
+    26,
+    25,
+    4
+  ],
+  "published": [
+    {
+      "bytes": 1842,
+      "path": "execution.json",
+      "sha256": "e5644d521ea89436589a1210a48ea9f04fd05641e73b07994134f48e3daec80b",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/research-phase/runs/memory-native-byte-attribution-20261007T080942Z/execution.json"
+    },
+    {
+      "bytes": 65008,
+      "path": "analysis.json",
+      "sha256": "0d0ed37d30ff80cad97e8608af726b9bed2cb3bef48a70f1ab7c09320ab07f29",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/research-phase/runs/memory-native-byte-attribution-20261007T080942Z/analysis.json"
+    },
+    {
+      "bytes": 592,
+      "path": "offline-launched.json",
+      "sha256": "1a0fd2d4f8d35c78c3025205192e71a8ec66edf6bc16f8d20ccb441cffea918f",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/research-phase/.superpowers/sdd/memory-native-byte-attribution/offline-launched.json"
+    },
+    {
+      "bytes": 301,
+      "path": "wrapper.log",
+      "sha256": "51f41bda291db33c0d1c989209be72763d904f8a37437cc34afb8f1b215f6397",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/research-phase/.superpowers/sdd/memory-native-byte-attribution/wrapper.log"
+    },
+    {
+      "bytes": 17119,
+      "path": "executed-offline-driver.py",
+      "sha256": "44435d2aafceb0fe9e02a8e3f6b8f2dd9b2a995a874802c4eed2b84f8ac4c048",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/research-phase/scripts/memory_restore_offline_readout.py"
+    },
+    {
+      "bytes": 23268,
+      "path": "executed-diagnostic-driver.py",
+      "sha256": "d6b82c4f0aba4980cded23135d24b1fde84122ef0e763ca8bfb818b5edc67d4a",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/research-phase/scripts/memory_restore_diagnostic.py"
+    },
+    {
+      "bytes": 74762,
+      "path": "executed-pilot-driver.py",
+      "sha256": "1702e2b918dc8f412fe2e11a3b888c3e2aa2dabf192d5c27f3ff23b492d3dc85",
+      "source": "/home/utkarsh/Work/shraddha/brain/.worktrees/research-phase/scripts/memory_decision_pilot.py"
+    }
+  ],
+  "qualification_claims": [],
+  "registration_sha256": "5c92b8bb63ba06f456f0daab9642e94d7c4c56d429f195a72abc833b86db20b7",
+  "schema": "memory-native-byte-attribution-publication-v1",
+  "scope": "Post-close documentary hash/copy verification; no additional scientific readout"
+}
