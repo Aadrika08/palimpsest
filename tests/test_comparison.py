@@ -64,6 +64,94 @@ class ComparisonTests(unittest.TestCase):
         next(event for event in events if event['kind'] == 'chunk')['sha256'] = hashlib.sha256(chunk.read_bytes()).hexdigest()
         path.write_text(''.join(json.dumps(event) + '\n' for event in events))
 
+    def test_large_inspector_histories_fit_html_without_losing_raw_events_or_geometry(self):
+        from collections import Counter
+        from prepare_artwork_material_v2 import check_comparison_geometry
+        left, right = self.fixture(), self.fixture()
+        before = {}
+        for run in (left, right):
+            path = run / 'recording/events.jsonl'
+            events = [json.loads(line) for line in path.read_text().splitlines()]
+            memory = {'facts': [{'id': f'fact-{i}', 'estimate': 'route-a' * 16, 'status': 'confirmed', 'revision': 1} for i in range(128)]}
+            for _ in range(160):
+                events.append({'kind': 'memory_inspected', 'sequence': len(events), 'run_id': run.name, 'episode': 0, 'episode_step': 0, 'memory': memory})
+            path.write_text(''.join(json.dumps(event) + '\n' for event in events))
+            manifest_path = run / 'recording/manifest.json'
+            manifest = json.loads(manifest_path.read_text())
+            manifest['recorded_events'] = len(events)
+            manifest_path.write_text(json.dumps(manifest))
+            before[run] = path.read_bytes()
+        full = artifacts.compare_runs(left, right)
+        self.assertGreater(len(json.dumps(full).encode()), 4 * 1024**2)
+        output = self.export(left, right)
+        raw = output.read_text()
+        meta = json.loads(Document(raw).metadata)
+        self.assertLess(len(Document(raw).metadata.encode()), 4 * 1024**2)
+        self.assertLess(output.stat().st_size, 16 * 1024**2)
+        self.assertIn('Comparison summary and source provenance', raw)
+        self.assertIn('Full event payloads', raw)
+        for side, run in (('left', left), ('right', right)):
+            original = full[side]
+            actual = meta['comparison'][side]
+            self.assertNotIn('events', actual)
+            self.assertEqual({key: actual[key] for key in original if key != 'events'}, {key: value for key, value in original.items() if key != 'events'})
+            stream = actual['event_stream']
+            self.assertEqual(stream, {'path': f'runs/{run.name}/recording/events.jsonl',
+                'size_bytes': len(before[run]), 'sha256': hashlib.sha256(before[run]).hexdigest(),
+                'total_event_count': len(before[run].splitlines()), 'visible_event_count': len(original['events']),
+                'visible_kind_counts': dict(Counter(event['kind'] for event in original['events'])), 'payloads_embedded': False})
+            self.assertIn(stream['path'], raw)
+            self.assertEqual((run / 'recording/events.jsonl').read_bytes(), before[run])
+        self.assertEqual(artifacts.compare_runs(left, right), full)
+        check_comparison_geometry(raw, meta)
+
+    def test_omitted_raw_event_secrets_and_oversized_provenance_still_refuse_output(self):
+        left, right = self.fixture(), self.fixture()
+        events_path = left / 'recording/events.jsonl'
+        original = events_path.read_text()
+        events = [json.loads(line) for line in original.splitlines()]
+        # This kind is absent from the visible-event arrays too.
+        events.append({'kind': 'diagnostics', 'sequence': len(events), 'run_id': left.name,
+                       'report': {'checks': [], 'token': 'must-not-be-hidden'}})
+        events_path.write_text(''.join(json.dumps(event) + '\n' for event in events))
+        path = left / 'recording/manifest.json'
+        original_manifest = path.read_text()
+        manifest = json.loads(original_manifest)
+        manifest['recorded_events'] = len(events)
+        path.write_text(json.dumps(manifest))
+        with self.assertRaisesRegex(ValueError, 'credential'):
+            self.export(left, right)
+        self.assertFalse((self.root / 'comparison.html').exists())
+        events_path.write_text(original)
+        path.write_text(original_manifest)
+        path = left / 'recording/manifest.json'
+        manifest = json.loads(path.read_text())
+        manifest['profile'] = 'x' * (512 * 1024)
+        path.write_text(json.dumps(manifest))
+        from palimpsest import comparison
+        with patch.object(comparison, 'MAX_METADATA_BYTES', 1024), self.assertRaisesRegex(ValueError, 'metadata'):
+            self.export(left, right)
+        self.assertFalse((self.root / 'comparison.html').exists())
+
+    def test_material_readback_rejects_tampered_raw_event_references(self):
+        import copy
+        from prepare_artwork_material_v3 import check_event_references
+        left, right = self.fixture(), self.fixture()
+        metadata = json.loads(Document(self.export(left, right).read_text()).metadata)
+        check_event_references(metadata, [left, right])
+        changed = copy.deepcopy(metadata)
+        changed['comparison']['left']['traces'][0]['points'][0][0] += 1
+        with self.assertRaisesRegex(ValueError, 'source fields'):
+            check_event_references(changed, [left, right])
+        for key, value in [('path', 'runs/another/recording/events.jsonl'),
+                           ('sha256', '0' * 64), ('size_bytes', 0),
+                           ('total_event_count', 0), ('visible_event_count', 0),
+                           ('visible_kind_counts', {}), ('payloads_embedded', True)]:
+            changed = copy.deepcopy(metadata)
+            changed['comparison']['left']['event_stream'][key] = value
+            with self.subTest(field=key), self.assertRaisesRegex(ValueError, 'raw event reference'):
+                check_event_references(changed, [left, right])
+
     def test_coincident_routes_survive_with_common_projection_and_both_source_identities(self):
         self.assertIsNotNone(importlib.util.find_spec('palimpsest.comparison'), 'offline comparison renderer is missing')
         left, right = self.fixture(), self.fixture()
