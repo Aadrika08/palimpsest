@@ -1,0 +1,58 @@
+.FF                                                                      [100%]
+=================================== FAILURES ===================================
+____ test_all_eight_fresh_cells_close_only_after_independent_recomputation _____
+
+tmp_path = PosixPath('/tmp/pytest-of-utkarsh/pytest-38/test_all_eight_fresh_cells_clo0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x79e9409ae590>
+
+    def test_all_eight_fresh_cells_close_only_after_independent_recomputation(tmp_path,monkeypatch):
+        m,path,root,reg,launched,rows = setup_campaign(tmp_path,monkeypatch)
+        assert m.run(path) == 0
+        assert launched == ['south-no-event','south-change','north-no-event','north-change',
+                            'south-prefix','north-prefix','restore-1','restore-2']
+        before = p.read_json(root/'execution.json')
+        assert before['native_prerequisites_passed'] is False
+        assert before['restore_pair_matches'] is False
+        assert before['candidate_restore_pair_matches'] is True
+        assert not (root/'scientific-close.json').exists()
+>       assert m.audit(path) == 0
+E       AssertionError: assert 1 == 0
+E        +  where 1 = <function audit at 0x79e93f3ef2e0>(PosixPath('/tmp/pytest-of-utkarsh/pytest-38/test_all_eight_fresh_cells_clo0/repo/docs/reports/memory-prerequisites-v2-evidence/registration.json'))
+E        +    where <function audit at 0x79e93f3ef2e0> = <module 'scripts.memory_prerequisites_v2' from '/home/utkarsh/Work/shraddha/brain/.worktrees/memory-prerequisites-v2/scripts/memory_prerequisites_v2.py'>.audit
+
+tests/test_memory_prerequisites_v2.py:145: AssertionError
+----------------------------- Captured stdout call -----------------------------
+{"status": "prerequisites-provisional-pass", "native_prerequisites_passed": false, "restore_pair_matches": false, "candidate_restore_pair_matches": true, "total_new_controls": 40, "unattempted": []}
+{"status": "scientific-close-stop", "native_prerequisites_passed": false, "restore_pair_matches": false, "candidate_restore_pair_matches": true, "error": {"type": "ValueError", "message": "Independent campaign comparison differs from driver"}, "failure_publication_error": null}
+___ test_first_failed_mandatory_cell_stops_later_owners_and_retains_started ____
+
+tmp_path = PosixPath('/tmp/pytest-of-utkarsh/pytest-38/test_first_failed_mandatory_ce0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x79e9409ac290>
+
+    def test_first_failed_mandatory_cell_stops_later_owners_and_retains_started(tmp_path,monkeypatch):
+        m,path,root,reg,launched,rows = setup_campaign(tmp_path,monkeypatch)
+        launch = p.launch_owner
+        def failed(*args,**kwargs):
+            report = launch(*args,**kwargs)
+            report['goal'] = False
+            Path(report['run'],'worker-report.json').write_text(json.dumps(report))
+            return report
+        monkeypatch.setattr(p,'launch_owner',failed)
+        assert m.run(path) == 1 and launched == ['south-no-event']
+        receipt = p.read_json(root/'execution.json')
+        assert len(receipt['owners']) == 1 and len(receipt['unattempted']) == 7
+        assert m.audit(path) == 1
+        close = p.read_json(root/'scientific-close.json')
+        assert close['native_prerequisites_passed'] is False
+>       assert len(close['allocated_jobs']) == len(close['started_owners']) == 1
+                   ^^^^^^^^^^^^^^^^^^^^^^^
+E       KeyError: 'allocated_jobs'
+
+tests/test_memory_prerequisites_v2.py:170: KeyError
+----------------------------- Captured stdout call -----------------------------
+{"status": "prerequisites-failure", "native_prerequisites_passed": false, "restore_pair_matches": null, "candidate_restore_pair_matches": null, "total_new_controls": null, "unattempted": ["south-change", "north-no-event", "north-change", "south-prefix", "north-prefix", "restore-1", "restore-2"]}
+{"status": "scientific-close-stop", "native_prerequisites_passed": false, "restore_pair_matches": null, "candidate_restore_pair_matches": null, "error": {"type": "ValueError", "message": "Driver did not provisionally close all eight cells"}, "failure_publication_error": null}
+=========================== short test summary info ============================
+FAILED tests/test_memory_prerequisites_v2.py::test_all_eight_fresh_cells_close_only_after_independent_recomputation
+FAILED tests/test_memory_prerequisites_v2.py::test_first_failed_mandatory_cell_stops_later_owners_and_retains_started
+2 failed, 1 passed in 0.70s
