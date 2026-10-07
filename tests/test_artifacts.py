@@ -118,6 +118,30 @@ class ArtifactTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "count mismatch"):
             artifacts.playback(run)
 
+    def test_long_episode_preserves_playback_export_and_comparison(self):
+        run = self.run_fixture(count=601)
+        sample = artifacts.playback(run, tick=600)
+        self.assertEqual(sample["transition"]["tick"], 600)
+        self.assertEqual(sample["state"]["episode_step"], 601)
+        self.assertEqual(len(sample["trace"]), 602)
+        self.assertEqual(sample["trace"][-1], [60.1, 120.2])
+        output = artifacts.export_run(run, self.root / "long.svg", "svg")
+        metadata = json.loads(ET.fromstring(output.read_bytes()).find(
+            "{http://www.w3.org/2000/svg}metadata").text)
+        self.assertEqual(metadata["traces"][0]["points"], sample["trace"])
+        self.assertEqual(artifacts.compare_runs(run, run)["left"]["traces"], metadata["traces"])
+
+    def test_tick_identity_is_independent_of_record_count_limit(self):
+        run = self.run_fixture(start=100_000)
+        sample = artifacts.playback(run, tick=100_001)
+        self.assertEqual(sample["transition"]["tick"], 100_001)
+        self.assertEqual(len(sample["trace"]), 3)
+        artifacts._CACHE.clear()
+        with patch.object(artifacts, "MAX_TICKS", 1):
+            with self.assertRaisesRegex(ValueError, "too many recording ticks"):
+                artifacts.export_run(run, self.root / "over-limit.svg", "svg")
+        self.assertFalse((self.root / "over-limit.svg").exists())
+
     def test_incomplete_missing_geometry_exact_tick_and_symlink_reject(self):
         for run in (self.run_fixture(completed=False), self.run_fixture(world=False)):
             with self.assertRaises(ValueError):
