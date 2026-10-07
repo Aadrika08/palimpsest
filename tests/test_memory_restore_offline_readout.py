@@ -21,7 +21,7 @@ def offline():
     return module
 
 
-def retained_pair(tmp_path, monkeypatch):
+def retained_pair(tmp_path, monkeypatch, native_pair=None):
     stage = tmp_path/'retained/stage'; (stage/'jobs').mkdir(parents=True)
     plan = {'repo':str(Path(p.__file__).resolve().parents[1]), 'assets':str(tmp_path/'assets'),
         'history_root':str(tmp_path/'histories'),'output':str(stage),'phase_root':str(stage.parent),
@@ -30,6 +30,8 @@ def retained_pair(tmp_path, monkeypatch):
         'application':{'source_run_id':'source','event_prefix':{},
             'memory':{'u':{},'selector':{},'m':{'facts':[]}},
             'receipts':{'old':{'received_run_id':'source','applied_tick':1}}}}
+    if native_pair is not None:
+        initial.update(native_data=native_pair[0],native_sha256=p.hashlib.sha256(native_pair[0]).hexdigest())
     source = stage/'source/snapshots/initial.snp'; source.parent.mkdir(parents=True)
     save_snapshot(initial,source)
     reference = {'snapshot_path':str(source),'snapshot_sha256':p.file_hash(source),
@@ -39,7 +41,9 @@ def retained_pair(tmp_path, monkeypatch):
         job = p.make_job('travel-feasibility',spec,plan,'repeat',source=reference)
         run = Path(job['output']); (run/'snapshots').mkdir(parents=True)
         save_snapshot(initial,run/'snapshots/initial.snp')
-        final = copy.deepcopy(initial); final['native_data'] += bytes([index])
+        final = copy.deepcopy(initial)
+        final['native_data'] = final['native_data']+bytes([index]) if native_pair is None else native_pair[index]
+        if native_pair is not None:final['native_sha256']=p.hashlib.sha256(final['native_data']).hexdigest()
         post = p.publish_repeat_state(final,{'old'},run,p.phase_budget(stage.parent))
         owner = {'run_id':job['run_id'],'pid':1000+index,'pgid':1000+index,'starttime':1}
         (run/'owner.json').write_text(json.dumps(owner))
@@ -136,6 +140,52 @@ def test_native_byte_attribution_proves_timer_bytes_without_hiding_other_state(m
     assert all(side['dual_solver_eligible'] is False for side in result['sides'])
     assert [data.__getstate__() for data in (left,right)]==originals
     assert result['physics_steps']==result['new_native_owners']==0
+
+
+@pytest.mark.parametrize('change',['duration','timer-count','native-qpos','application','checksum','receipt'])
+def test_v2_candidate_excludes_only_durations_and_keeps_raw_integrity(monkeypatch,change):
+    mujoco=pytest.importorskip('mujoco')
+    for name in ('mj_step','mj_forward','mj_resetData'):
+        monkeypatch.setattr(mujoco,name,lambda *args:pytest.fail('physics operation attempted'))
+    model=mujoco.MjModel.from_xml_string('<mujoco><worldbody><body><joint type="slide"/><geom size=".1"/></body></worldbody></mujoco>')
+    one=mujoco.MjData(model); two=mujoco.MjData(model)
+    two.timer.duration[:]=np.arange(15)*.001
+    if change=='timer-count':two.timer.number[0]=1
+    if change=='native-qpos':two.qpos[0]=.2
+    states=[]
+    for data in (one,two):
+        blob=data.__getstate__()
+        states.append({'native_data':blob,'native_sha256':p.hashlib.sha256(blob).hexdigest(),
+            'application':{'source_run_id':'source','event_prefix':{},'memory':{'u':{},'selector':{},'m':{'facts':[]}},
+                           'receipts':{'old':{'received_run_id':'source','applied_tick':1}}}})
+    if change=='application':states[1]['application']['memory']['m']['facts'].append('changed')
+    if change=='checksum':states[1]['native_sha256']='0'*64
+    if change=='receipt':states[1]['application']['receipts']['new']={'received_run_id':'foreign','applied_tick':6}
+    before=[d.state_digest(value) for value in states]
+    if change in ('checksum','receipt'):
+        with pytest.raises(ValueError):offline().compare_reproducibility_states(*states,{'old'},{'old'})
+    else:
+        result=offline().compare_reproducibility_states(*states,{'old'},{'old'})
+        assert result['equal'] is (change=='duration')
+        assert result['contract_id']=='restore-reproducibility-v2-candidate'
+        assert result['excluded_native_bytes_per_side']==120
+        assert result['raw_native_sha256']==[state['native_sha256'] for state in states]
+        assert result['qualification_claims']==[]
+        assert d.compare_states(*states,{'old'},{'old'})['equal'] is False
+    assert [d.state_digest(value) for value in states]==before
+
+
+def test_v2_registered_candidate_reports_both_comparisons_without_promoting_gate(tmp_path,monkeypatch):
+    mujoco=pytest.importorskip('mujoco')
+    model=mujoco.MjModel.from_xml_string('<mujoco><worldbody/></mujoco>')
+    one=mujoco.MjData(model); two=mujoco.MjData(model); two.timer.duration[0]=.001
+    registration,receipt,close=retained_pair(tmp_path,monkeypatch,native_pair=[one.__getstate__(),two.__getstate__()])
+    registration['readout_kind']='restore-reproducibility-v2-candidate'
+    result=offline().audit_pair(registration,None)
+    assert result['comparison']['equal'] is False
+    assert result['candidate_comparison']['equal'] is True
+    assert result['qualification_claims']==[]
+    assert p.read_json(close)==receipt
 
 
 @pytest.mark.parametrize('failure',['recheck','close-deadline'])
