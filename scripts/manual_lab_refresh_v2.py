@@ -24,6 +24,9 @@ NPM = NODE.parent / 'npm'
 CACHE_UI = Path('/home/utkarsh/Work/shraddha/brain/.worktrees/lab-hardening/ui')
 PORT = 8772
 BASE = '40f4597'
+SCHEMA = 'manual-lab-refresh-v2'
+EXIT_GRACE = None
+PROCESS_MATCH = None
 REGISTRATION = ROOT / 'docs/plans/manual-lab-refresh-v2-registration.json'
 PUBLICATION = ROOT / 'docs/reports/manual-lab-refresh-v2-evidence'
 TITLE = 'actual local manual workflow, snapshots, sequential branches, comparison and export'
@@ -217,10 +220,15 @@ def worker():
             except BaseException as error:
                 result['status'] = 'failed'
                 result.setdefault('child_cleanup_failures', []).append({'pid': child.pid, 'type': type(error).__name__, 'message': str(error)})
+        if EXIT_GRACE is not None:
+            try:
+                result['descendant_exit_grace'] = EXIT_GRACE(list(OBSERVED.values()), start + 320)
+            except BaseException as error:
+                result.update(status='failed', exit_grace_failure={'type': type(error).__name__, 'message': str(error)})
         survivors = []
         for row in OBSERVED.values():
             current = process(row['pid'])
-            if current and current['start_ticks'] == row['start_ticks'] and current['state'] != 'Z':
+            if current and current['start_ticks'] == row['start_ticks'] and current['state'] != 'Z' and (PROCESS_MATCH is None or PROCESS_MATCH(current, row)):
                 survivors.append(row['pid'])
                 try:
                     os.kill(row['pid'], signal.SIGKILL)
@@ -240,7 +248,7 @@ def register():
     # Pure metadata preparation: no Playwright, browser, owner, socket or lease.
     assert not REGISTRATION.exists() and not (PHASE / 'launched.json').exists()
     assert subprocess.check_output(['git', '-C', 'upstream/fly-gym', 'rev-parse', 'HEAD'], text=True).strip() == '8d964599119b420de67ee259434d273651a1a76d'
-    registration = {'schema': 'manual-lab-refresh-v2', 'code_base': BASE,
+    registration = {'schema': SCHEMA, 'code_base': BASE,
         'sources': pins(), 'commands': {'selection': SELECTION, 'build': BUILD, 'server': SERVER, 'browser': BROWSER,
             'outer': ['timeout', '--signal=TERM', '--kill-after=5s', '350s', sys.executable, '-B', str(Path(__file__).resolve()), '--launch']},
         'native_owners_max': 3, 'exports_max': 1, 'selection_invocations_max': 1,
@@ -264,7 +272,7 @@ def launch():
     assert subprocess.check_output([str(NODE), '--version'], text=True).strip() == 'v24.21.0'
     assert subprocess.check_output(['git', '-C', 'upstream/fly-gym', 'status', '--porcelain'], text=True) == ''
     registration = json.loads(REGISTRATION.read_text())
-    assert registration['schema'] == 'manual-lab-refresh-v2' and registration['code_base'] == BASE
+    assert registration['schema'] == SCHEMA and registration['code_base'] == BASE
     assert pins() == registration['sources'], 'Registered source changed'
     assert all(registration['commands'][name] == command for name, command in (('selection', SELECTION), ('build', BUILD), ('server', SERVER), ('browser', BROWSER)))
     assert cached_dependencies() == registration['cached_dependencies']
@@ -289,7 +297,7 @@ def launch():
         result['observed_live_survivors'] = []
         for row in result['observed_processes']:
             current = process(row['pid'])
-            if current and current['start_ticks'] == row['start_ticks'] and current['state'] != 'Z':
+            if current and current['start_ticks'] == row['start_ticks'] and current['state'] != 'Z' and (PROCESS_MATCH is None or PROCESS_MATCH(current, row)):
                 result['observed_live_survivors'].append(row['pid'])
                 try:
                     os.kill(row['pid'], signal.SIGKILL)
