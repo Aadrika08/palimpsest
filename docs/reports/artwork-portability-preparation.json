@@ -1,0 +1,68 @@
+{
+  "archives": [
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/research-phase/.superpowers/sdd/simulation-first-completion-goal/artwork-portability/palimpsest-artwork-inputs-v1.zip",
+      "sha256": "35ff2f665e52d1a0cce9aa90af2874b0fed2c6a801fafc7046144483a45dac4d",
+      "size_bytes": 4855640
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/research-phase/.superpowers/sdd/simulation-first-completion-goal/artwork-portability/reproduction-check.zip",
+      "sha256": "35ff2f665e52d1a0cce9aa90af2874b0fed2c6a801fafc7046144483a45dac4d",
+      "size_bytes": 4855640
+    }
+  ],
+  "deterministic_archive": true,
+  "elapsed_seconds": 0.05462721100047929,
+  "exact_documented_instruction_checks": {
+    "corrupt_archive": {
+      "refused_before_output": true,
+      "returncode": 1
+    },
+    "existing_destination": {
+      "refused": true,
+      "returncode": 1
+    },
+    "normal": {
+      "returncode": 0,
+      "stdout": "{'verified_files': 19, 'source_bytes': 4852480}"
+    },
+    "observed_utc": "2026-10-07T09:59:55.847363+00:00",
+    "qualification_claims": [],
+    "schema": "artwork-relocation-instruction-check-v1",
+    "scope": "Execute exact documented relocation block in fresh worktree; no exporter/inference/native owner"
+  },
+  "files": 19,
+  "human_acceptance": "unattempted",
+  "independent_readonly_verification": {
+    "archive_bytes": 4855640,
+    "archive_sha256": "35ff2f665e52d1a0cce9aa90af2874b0fed2c6a801fafc7046144483a45dac4d",
+    "artistic_operator_acceptance": "unattempted",
+    "bytes_after_receipt": 14568977,
+    "exact_member_and_source_hashes": true,
+    "files_after_receipt": 24,
+    "no_exports_or_inference": true,
+    "original_and_relocated_admission": true,
+    "status": "passed",
+    "verifier": "simulation_artwork_goal"
+  },
+  "manifest_sha256": "9766f285b7f4008f894845cc12d51e34a14dafc5eaf88fba6e13bdec36944982",
+  "no_model_runtime_loaded": true,
+  "observed_utc": "2026-10-07T09:48:01.120744+00:00",
+  "original_inputs": "/home/utkarsh/Work/shraddha/brain/.worktrees/artwork-handoff/runs/artwork-handoff-v1-inputs",
+  "public_sharing": "unapproved",
+  "qualification_claims": [],
+  "relocation": "/home/utkarsh/Work/shraddha/brain/.worktrees/research-phase/.superpowers/sdd/simulation-first-completion-goal/artwork-portability/relocated-inputs",
+  "schema": "artwork-portability-preparation-v1",
+  "scope": "Local byte-preserving package and relocated input admission only; no exporter, inference, native owner, public transfer or human acceptance",
+  "source_bytes": 4852480,
+  "sources_unchanged": true,
+  "status": "passed",
+  "storage": {
+    "files": 23,
+    "headroom_bytes": 0,
+    "max_bytes": 33554432,
+    "min_free_bytes": 2147483648,
+    "remaining_bytes": 18987194,
+    "used_bytes": 14567238
+  }
+}
