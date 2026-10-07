@@ -1,0 +1,327 @@
+{
+  "allocated_jobs": [
+    {
+      "bytes": 27723,
+      "path": "209e91c0ae6f4c30a0f98dd7394228d1.json",
+      "sha256": "d6bb07f9608fa77fe1768d6339e43500421eb378443d78629d99f448e6d1e0cd"
+    },
+    {
+      "bytes": 27723,
+      "path": "c06867fdbf33417ba6f5430d4cff7e63.json",
+      "sha256": "6b8b0f03d49249aa67ec50fa82c2e9adf835d74bf0c1b2c2e7ae03d8928a15f2"
+    }
+  ],
+  "allocated_jobs_sha256": "18496ee92c2ebbf99aab0aab665e2f5f4eb5c3a2f7cc45f74b3a3974aad0e4c0",
+  "candidate_comparison": {
+    "component_hashes": [
+      {
+        "application": "8c9e02293f813871b25de6dd095830df27d97cf17bcaa761058ea408ced5e56c",
+        "environment": "ef5f22e769176f7e5a6e7d180937c61bb4e56cfd0c313ad24565b9e5b468b8e3",
+        "identity": "f70cd73a0340ec2d3b30599b92ee95e9f80f5975943a17bad45dc7a67081f18e",
+        "integration": "ec188a656314141eb2a050021b89dbebd393a7f6b3465743c17fe0f333a500bf",
+        "integration_enum": "24eb60f6f4f8c68f1b619579ad51bf124d61b7504a5bfd836298dd9af6ea6bf8",
+        "native_data": "8e3c8a348cb2c379ba80dbbd590e605f6794a120ce81e538553f6bbf311e9313",
+        "native_sha256": "dc897f232a8da26be8b8c5d259a44599b1135a45320d31c4f7ec27f712900714",
+        "observation": "5cd4b7463f2beb8cb4232c617dbe7d3cf5956fab267379f5f67c597bedaa16b5",
+        "policy": "5049f42e7f0490c2bee9411274cb18b7f31e077c4b8029cae21408b3d2f2c383",
+        "rng": "6fc289ab4d7862f0656a72b7fc271e0c3f15ba2e218728b5b33394b008cebf50",
+        "schema_version": "830117280eda66c37c0ce7c6b2f12dc2d7ce6cf63d038885da59b18feba9bee3",
+        "teacher": "5a95d8fed83f34f23577f09dd47cf96d801d43bf50e6b4578d8b815138d9e02f"
+      },
+      {
+        "application": "8c9e02293f813871b25de6dd095830df27d97cf17bcaa761058ea408ced5e56c",
+        "environment": "ef5f22e769176f7e5a6e7d180937c61bb4e56cfd0c313ad24565b9e5b468b8e3",
+        "identity": "f70cd73a0340ec2d3b30599b92ee95e9f80f5975943a17bad45dc7a67081f18e",
+        "integration": "ec188a656314141eb2a050021b89dbebd393a7f6b3465743c17fe0f333a500bf",
+        "integration_enum": "24eb60f6f4f8c68f1b619579ad51bf124d61b7504a5bfd836298dd9af6ea6bf8",
+        "native_data": "8e3c8a348cb2c379ba80dbbd590e605f6794a120ce81e538553f6bbf311e9313",
+        "native_sha256": "dc897f232a8da26be8b8c5d259a44599b1135a45320d31c4f7ec27f712900714",
+        "observation": "5cd4b7463f2beb8cb4232c617dbe7d3cf5956fab267379f5f67c597bedaa16b5",
+        "policy": "5049f42e7f0490c2bee9411274cb18b7f31e077c4b8029cae21408b3d2f2c383",
+        "rng": "6fc289ab4d7862f0656a72b7fc271e0c3f15ba2e218728b5b33394b008cebf50",
+        "schema_version": "830117280eda66c37c0ce7c6b2f12dc2d7ce6cf63d038885da59b18feba9bee3",
+        "teacher": "5a95d8fed83f34f23577f09dd47cf96d801d43bf50e6b4578d8b815138d9e02f"
+      }
+    ],
+    "contract_id": "restore-reproducibility-v2-candidate",
+    "detail_limit": 64,
+    "details_may_be_truncated": false,
+    "differences": [],
+    "differing_components": [],
+    "equal": true,
+    "excluded_native_bytes_per_side": 120,
+    "left_digest": "70223db34c3e397e61d8dd5fbe26806170eed9244f60fed16f4a22a1a5d1ae46",
+    "projected_native_sha256": [
+      "5b2158f6533c5b81045701c7a16e3c52e20da9a06a74531e0b9ff5a12a8c1a5e",
+      "5b2158f6533c5b81045701c7a16e3c52e20da9a06a74531e0b9ff5a12a8c1a5e"
+    ],
+    "qualification_claims": [],
+    "raw_native_sha256": [
+      "3283d9e5f5a4125f0869459580c09819c40f725449aa2242b701a934b0642c18",
+      "5b08d7472891e8f573ffdcba7a04993585e203185d6f5b863c3b228b9c133d75"
+    ],
+    "right_digest": "70223db34c3e397e61d8dd5fbe26806170eed9244f60fed16f4a22a1a5d1ae46",
+    "scope": "Candidate comparison only; raw integrity/legacy gate unchanged",
+    "timer_duration_diagnostics": [
+      [
+        1.3294288190007997,
+        1.3112688140002682,
+        0.0,
+        0.692980735998777,
+        0.047025748999221406,
+        0.0034304140001140127,
+        0.5572196180009605,
+        0.014090715000079967,
+        0.043922334999692225,
+        0.0129501059987156,
+        0.2752211760009615,
+        0.3559128579985469,
+        0.0006762779977229627,
+        0.0423747090022637,
+        0.23105637299840964
+      ],
+      [
+        1.3291878680008047,
+        1.3111162460002745,
+        0.0,
+        0.6929583059987934,
+        0.04701837399922226,
+        0.003430289000117881,
+        0.5570940570009633,
+        0.014086484000099375,
+        0.04404740199972679,
+        0.012947903998700383,
+        0.27516120300098734,
+        0.3558283689985515,
+        0.0006762089977030428,
+        0.042372631002272954,
+        0.23099989099841167
+      ]
+    ],
+    "timer_duration_intervals": [
+      [
+        279971,
+        279979
+      ],
+      [
+        279987,
+        279995
+      ],
+      [
+        280003,
+        280011
+      ],
+      [
+        280019,
+        280027
+      ],
+      [
+        280035,
+        280043
+      ],
+      [
+        280051,
+        280059
+      ],
+      [
+        280067,
+        280075
+      ],
+      [
+        280083,
+        280091
+      ],
+      [
+        280099,
+        280107
+      ],
+      [
+        280115,
+        280123
+      ],
+      [
+        280131,
+        280139
+      ],
+      [
+        280147,
+        280155
+      ],
+      [
+        280163,
+        280171
+      ],
+      [
+        280179,
+        280187
+      ],
+      [
+        280195,
+        280203
+      ]
+    ]
+  },
+  "candidate_restore_pair_matches": true,
+  "closed_monotonic": 80044.514332923,
+  "comparison": {
+    "component_hashes": [
+      {
+        "application": "8c9e02293f813871b25de6dd095830df27d97cf17bcaa761058ea408ced5e56c",
+        "environment": "ef5f22e769176f7e5a6e7d180937c61bb4e56cfd0c313ad24565b9e5b468b8e3",
+        "identity": "f70cd73a0340ec2d3b30599b92ee95e9f80f5975943a17bad45dc7a67081f18e",
+        "integration": "ec188a656314141eb2a050021b89dbebd393a7f6b3465743c17fe0f333a500bf",
+        "integration_enum": "24eb60f6f4f8c68f1b619579ad51bf124d61b7504a5bfd836298dd9af6ea6bf8",
+        "native_data": "2994f687dae9e2d2320044b4f521374ac0254f51dcbb8c727e17009d65789d22",
+        "native_sha256": "a751745128170a896170595fabd8cc2acfd41fcf780992ba1500a92573c06cd4",
+        "observation": "5cd4b7463f2beb8cb4232c617dbe7d3cf5956fab267379f5f67c597bedaa16b5",
+        "policy": "5049f42e7f0490c2bee9411274cb18b7f31e077c4b8029cae21408b3d2f2c383",
+        "rng": "6fc289ab4d7862f0656a72b7fc271e0c3f15ba2e218728b5b33394b008cebf50",
+        "schema_version": "830117280eda66c37c0ce7c6b2f12dc2d7ce6cf63d038885da59b18feba9bee3",
+        "teacher": "5a95d8fed83f34f23577f09dd47cf96d801d43bf50e6b4578d8b815138d9e02f"
+      },
+      {
+        "application": "8c9e02293f813871b25de6dd095830df27d97cf17bcaa761058ea408ced5e56c",
+        "environment": "ef5f22e769176f7e5a6e7d180937c61bb4e56cfd0c313ad24565b9e5b468b8e3",
+        "identity": "f70cd73a0340ec2d3b30599b92ee95e9f80f5975943a17bad45dc7a67081f18e",
+        "integration": "ec188a656314141eb2a050021b89dbebd393a7f6b3465743c17fe0f333a500bf",
+        "integration_enum": "24eb60f6f4f8c68f1b619579ad51bf124d61b7504a5bfd836298dd9af6ea6bf8",
+        "native_data": "408681d5e976e4918ec2f140fcd0893ff59ffe5811cef43d54197e8edf03f726",
+        "native_sha256": "fc2931bf8fad35d011bccfbd4c18580ba51819ced2b603848948ac16a21c2bf2",
+        "observation": "5cd4b7463f2beb8cb4232c617dbe7d3cf5956fab267379f5f67c597bedaa16b5",
+        "policy": "5049f42e7f0490c2bee9411274cb18b7f31e077c4b8029cae21408b3d2f2c383",
+        "rng": "6fc289ab4d7862f0656a72b7fc271e0c3f15ba2e218728b5b33394b008cebf50",
+        "schema_version": "830117280eda66c37c0ce7c6b2f12dc2d7ce6cf63d038885da59b18feba9bee3",
+        "teacher": "5a95d8fed83f34f23577f09dd47cf96d801d43bf50e6b4578d8b815138d9e02f"
+      }
+    ],
+    "detail_limit": 64,
+    "details_may_be_truncated": false,
+    "differences": [
+      {
+        "different_bytes": 74,
+        "first_offsets": [
+          279971,
+          279972,
+          279973,
+          279974,
+          279975,
+          279976,
+          279987,
+          279988,
+          279989,
+          279990,
+          279991,
+          280019,
+          280020,
+          280021,
+          280022,
+          280023
+        ],
+        "left_bytes": 458761,
+        "left_type": "bytes",
+        "path": "/native_data",
+        "reason": "opaque-bytes",
+        "right_bytes": 458761,
+        "right_type": "bytes"
+      },
+      {
+        "left_preview": "'3283d9e5f5a4125f0869459580c09819c40f725449aa2242b701a934b0642c18'",
+        "left_type": "str",
+        "path": "/native_sha256",
+        "right_preview": "'5b08d7472891e8f573ffdcba7a04993585e203185d6f5b863c3b228b9c133d75'",
+        "right_type": "str"
+      }
+    ],
+    "differing_components": [
+      "native_data",
+      "native_sha256"
+    ],
+    "equal": false,
+    "left_digest": "0839f44bc3d01be7866bac19b189f096e34e3901667b684c8c2d5dd8a3a662f0",
+    "normalization": "unchanged condition_state and new-destination-receipt IDs only",
+    "right_digest": "01510ccb85899253385a8790ff35babc3f9be3e031fbce4ea1829f5f115133b7"
+  },
+  "controls_per_restore": 5,
+  "driver_execution_sha256": "6aa683a24cdaf1b5587554b55cc081995318dcc4fdea0c28750744a76be3267f",
+  "held_out_used": false,
+  "immutable_inputs_and_raw_evidence_unchanged": true,
+  "independent_restore_attempts": 2,
+  "narrow_restore_passed": true,
+  "native_prerequisites_passed": false,
+  "new_native_owners": 0,
+  "output": "/home/utkarsh/Work/shraddha/brain/.worktrees/restore-v2-execution/runs/restore-v2-pair-20261007T150507Z",
+  "owners": [
+    {
+      "disposition": "audited-recording",
+      "job_id": "restore-1",
+      "matching_owner_exited": true,
+      "owner": {
+        "pgid": 49,
+        "pid": 49,
+        "run_id": "209e91c0ae6f4c30a0f98dd7394228d1",
+        "starttime": 7998117
+      },
+      "post_snapshot_sha256": "0a5d8ea7c871e3d21f73f747916f0269756c41f3ccdbb14f70d5f6cf75e36f02",
+      "post_state_digest": "0839f44bc3d01be7866bac19b189f096e34e3901667b684c8c2d5dd8a3a662f0",
+      "raw_audit_pass": true,
+      "raw_rows": 5,
+      "retained_post_state_audited": true,
+      "run_id": "209e91c0ae6f4c30a0f98dd7394228d1",
+      "trace_digest": "bf05e4fe707954ab3ed9e28cbf39137c778918279228cbabef2ed4272f76c9cf"
+    },
+    {
+      "disposition": "audited-recording",
+      "job_id": "restore-2",
+      "matching_owner_exited": true,
+      "owner": {
+        "pgid": 104,
+        "pid": 104,
+        "run_id": "c06867fdbf33417ba6f5430d4cff7e63",
+        "starttime": 8000872
+      },
+      "post_snapshot_sha256": "316fe0bed79922bf26fd225f89be81ab87b6ede23612ecb48aecc0b21b9aeae4",
+      "post_state_digest": "01510ccb85899253385a8790ff35babc3f9be3e031fbce4ea1829f5f115133b7",
+      "raw_audit_pass": true,
+      "raw_rows": 5,
+      "retained_post_state_audited": true,
+      "run_id": "c06867fdbf33417ba6f5430d4cff7e63",
+      "trace_digest": "bf05e4fe707954ab3ed9e28cbf39137c778918279228cbabef2ed4272f76c9cf"
+    }
+  ],
+  "paired_pilot": "unattempted-by-scope",
+  "physics_steps": 0,
+  "process_namespace": "pid:[4026533098]",
+  "qualification_claims": [],
+  "readout_deadline_monotonic": 80333.291197638,
+  "registration_sha256": "d731fb72ff8c10d5a004966ee197a84bf52a5f96e279f43bfbd96c85e4986dc8",
+  "restore_pair_matches": false,
+  "schema": "memory-restore-scientific-close-v2",
+  "started_owners": [
+    {
+      "bytes": 102,
+      "path": "stage/runs/209e91c0ae6f4c30a0f98dd7394228d1/owner.json",
+      "sha256": "cfc4ef6350589b58de9b1f3b22ba6ef54073b52e3a7554f500b438c0dbac083b"
+    },
+    {
+      "bytes": 104,
+      "path": "stage/runs/c06867fdbf33417ba6f5430d4cff7e63/owner.json",
+      "sha256": "ea911badb5d195ab3612aa18b31b6498c9f7305dd1a77d94699ae68d116adb6e"
+    }
+  ],
+  "started_owners_sha256": "59da00957ad4625420a721a001de2039582d323d99ba52772c3651a27c053014",
+  "started_utc": "2026-10-07T15:09:36.764954+00:00",
+  "state_contract": "restore-reproducibility-v2-candidate",
+  "status": "narrow-restore-passed",
+  "storage_before_close": {
+    "additional_bytes": 0,
+    "files": 64,
+    "free_bytes": 17256157184,
+    "headroom_bytes": 67108864,
+    "max_bytes": 8589934592,
+    "min_free_bytes": 2147483648,
+    "remaining_bytes": 8578489660,
+    "used_bytes": 11444932
+  },
+  "total_new_controls": 10,
+  "trace_equal": true
+}

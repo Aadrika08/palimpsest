@@ -208,3 +208,10 @@ envelopes, each-model goal admission and late-return failure. All twelve native 
 goals. Independent audits verify all rows, initial states and normal cleanup.
 The failed goal admission keeps held-out locked; learned manipulation remains
 unqualified.
+
+The [fresh narrow restore-v2 pair](reports/restore-qualification-v2.md) passes
+its independent timer-aware complete-state close for one selected CPU profile:
+two five-control continuations match, while raw native equality remains false
+(74 differing bytes). This pair substitutes for none of the separate eight
+fresh prerequisite cells. The full memory prerequisite campaign and pilot remain
+unattempted; held-out is unopened and qualification claims remain empty.

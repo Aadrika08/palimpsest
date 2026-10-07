@@ -1,0 +1,149 @@
+{
+  "component_hashes": [
+    {
+      "application": "8c9e02293f813871b25de6dd095830df27d97cf17bcaa761058ea408ced5e56c",
+      "environment": "ef5f22e769176f7e5a6e7d180937c61bb4e56cfd0c313ad24565b9e5b468b8e3",
+      "identity": "f70cd73a0340ec2d3b30599b92ee95e9f80f5975943a17bad45dc7a67081f18e",
+      "integration": "ec188a656314141eb2a050021b89dbebd393a7f6b3465743c17fe0f333a500bf",
+      "integration_enum": "24eb60f6f4f8c68f1b619579ad51bf124d61b7504a5bfd836298dd9af6ea6bf8",
+      "native_data": "8e3c8a348cb2c379ba80dbbd590e605f6794a120ce81e538553f6bbf311e9313",
+      "native_sha256": "dc897f232a8da26be8b8c5d259a44599b1135a45320d31c4f7ec27f712900714",
+      "observation": "5cd4b7463f2beb8cb4232c617dbe7d3cf5956fab267379f5f67c597bedaa16b5",
+      "policy": "5049f42e7f0490c2bee9411274cb18b7f31e077c4b8029cae21408b3d2f2c383",
+      "rng": "6fc289ab4d7862f0656a72b7fc271e0c3f15ba2e218728b5b33394b008cebf50",
+      "schema_version": "830117280eda66c37c0ce7c6b2f12dc2d7ce6cf63d038885da59b18feba9bee3",
+      "teacher": "5a95d8fed83f34f23577f09dd47cf96d801d43bf50e6b4578d8b815138d9e02f"
+    },
+    {
+      "application": "8c9e02293f813871b25de6dd095830df27d97cf17bcaa761058ea408ced5e56c",
+      "environment": "ef5f22e769176f7e5a6e7d180937c61bb4e56cfd0c313ad24565b9e5b468b8e3",
+      "identity": "f70cd73a0340ec2d3b30599b92ee95e9f80f5975943a17bad45dc7a67081f18e",
+      "integration": "ec188a656314141eb2a050021b89dbebd393a7f6b3465743c17fe0f333a500bf",
+      "integration_enum": "24eb60f6f4f8c68f1b619579ad51bf124d61b7504a5bfd836298dd9af6ea6bf8",
+      "native_data": "8e3c8a348cb2c379ba80dbbd590e605f6794a120ce81e538553f6bbf311e9313",
+      "native_sha256": "dc897f232a8da26be8b8c5d259a44599b1135a45320d31c4f7ec27f712900714",
+      "observation": "5cd4b7463f2beb8cb4232c617dbe7d3cf5956fab267379f5f67c597bedaa16b5",
+      "policy": "5049f42e7f0490c2bee9411274cb18b7f31e077c4b8029cae21408b3d2f2c383",
+      "rng": "6fc289ab4d7862f0656a72b7fc271e0c3f15ba2e218728b5b33394b008cebf50",
+      "schema_version": "830117280eda66c37c0ce7c6b2f12dc2d7ce6cf63d038885da59b18feba9bee3",
+      "teacher": "5a95d8fed83f34f23577f09dd47cf96d801d43bf50e6b4578d8b815138d9e02f"
+    }
+  ],
+  "contract_id": "restore-reproducibility-v2-candidate",
+  "detail_limit": 64,
+  "details_may_be_truncated": false,
+  "differences": [],
+  "differing_components": [],
+  "equal": true,
+  "excluded_native_bytes_per_side": 120,
+  "left_digest": "70223db34c3e397e61d8dd5fbe26806170eed9244f60fed16f4a22a1a5d1ae46",
+  "projected_native_sha256": [
+    "5b2158f6533c5b81045701c7a16e3c52e20da9a06a74531e0b9ff5a12a8c1a5e",
+    "5b2158f6533c5b81045701c7a16e3c52e20da9a06a74531e0b9ff5a12a8c1a5e"
+  ],
+  "qualification_claims": [],
+  "raw_native_sha256": [
+    "3283d9e5f5a4125f0869459580c09819c40f725449aa2242b701a934b0642c18",
+    "5b08d7472891e8f573ffdcba7a04993585e203185d6f5b863c3b228b9c133d75"
+  ],
+  "right_digest": "70223db34c3e397e61d8dd5fbe26806170eed9244f60fed16f4a22a1a5d1ae46",
+  "scope": "Candidate comparison only; raw integrity/legacy gate unchanged",
+  "timer_duration_diagnostics": [
+    [
+      1.3294288190007997,
+      1.3112688140002682,
+      0.0,
+      0.692980735998777,
+      0.047025748999221406,
+      0.0034304140001140127,
+      0.5572196180009605,
+      0.014090715000079967,
+      0.043922334999692225,
+      0.0129501059987156,
+      0.2752211760009615,
+      0.3559128579985469,
+      0.0006762779977229627,
+      0.0423747090022637,
+      0.23105637299840964
+    ],
+    [
+      1.3291878680008047,
+      1.3111162460002745,
+      0.0,
+      0.6929583059987934,
+      0.04701837399922226,
+      0.003430289000117881,
+      0.5570940570009633,
+      0.014086484000099375,
+      0.04404740199972679,
+      0.012947903998700383,
+      0.27516120300098734,
+      0.3558283689985515,
+      0.0006762089977030428,
+      0.042372631002272954,
+      0.23099989099841167
+    ]
+  ],
+  "timer_duration_intervals": [
+    [
+      279971,
+      279979
+    ],
+    [
+      279987,
+      279995
+    ],
+    [
+      280003,
+      280011
+    ],
+    [
+      280019,
+      280027
+    ],
+    [
+      280035,
+      280043
+    ],
+    [
+      280051,
+      280059
+    ],
+    [
+      280067,
+      280075
+    ],
+    [
+      280083,
+      280091
+    ],
+    [
+      280099,
+      280107
+    ],
+    [
+      280115,
+      280123
+    ],
+    [
+      280131,
+      280139
+    ],
+    [
+      280147,
+      280155
+    ],
+    [
+      280163,
+      280171
+    ],
+    [
+      280179,
+      280187
+    ],
+    [
+      280195,
+      280203
+    ]
+  ]
+}
