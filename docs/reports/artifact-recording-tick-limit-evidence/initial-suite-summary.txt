@@ -1,0 +1,38 @@
+=========================== short test summary info ============================
+FAILED tests/test_assets.py::AssetsTests::test_registry_pins_identity_and_mapping_hashes
+FAILED tests/test_male_recovery_collection.py::RecoveryContracts::test_actual_pinned_teacher_45_back_queries_latched_contact_and_clearance
+FAILED tests/test_male_recovery_collection.py::RecoveryContracts::test_clear_then_new_rising_edge_and_same_query_completion_restart
+FAILED tests/test_male_recovery_collection.py::RecoveryContracts::test_earliest_event_boundary_rejects_early_late_or_replaced_cycle
+FAILED tests/test_male_recovery_collection.py::RecoveryContracts::test_incomplete_cycle_cannot_be_scored_complete_and_labels_are_separate
+FAILED tests/test_male_recovery_data.py::RecoveryData::test_full_executed_targets_right_censored_windows_and_private_fields
+FAILED tests/test_male_recovery_data.py::RecoveryData::test_rejects_substituted_expert_cropped_prefix_forged_clearance_and_history
+FAILED tests/test_male_recovery_heldout.py::RecoveryHeldout::test_staged_functions_reach_adapters_and_retain_native_failure
+FAILED tests/test_puck_profile.py::PuckInstallationTests::test_authored_reset_rejects_changed_non_puck_range
+FAILED tests/test_puck_profile.py::PuckInstallationTests::test_authored_reset_rejects_layout_before_mutation_and_rolls_back_forward_failure
+FAILED tests/test_puck_profile.py::PuckInstallationTests::test_authored_reset_replaces_reset_locks_at_zero_time_without_step
+FAILED tests/test_puck_profile.py::PuckInstallationTests::test_constructor_goal_outside_task_domain_is_admitted_before_authored_reset
+FAILED tests/test_puck_profile.py::PuckInstallationTests::test_install_rebinds_and_closes_only_retired_renderer
+FAILED tests/test_puck_profile.py::PuckInstallationTests::test_old_renderer_close_failure_is_terminal_after_owner_commit
+FAILED tests/test_puck_profile.py::PuckInstallationTests::test_scene_allocation_failure_closes_staged_renderer_only
+FAILED tests/test_puck_profile.py::PuckInstallationTests::test_staged_structural_or_transform_changes_leave_old_owner_intact
+FAILED tests/test_puck_profile.py::PuckInstallationTests::test_wrong_staged_renderer_and_callback_are_rejected_without_commit
+FAILED tests/test_verify_body_compensation.py::CompensationChecks::test_inverse_matches_pinned_upstream_without_normalization
+ERROR tests/test_flynn.py::FlynnTests::test_camera_conversion_matches_reference_without_privileged_sensors
+ERROR tests/test_flynn.py::FlynnTests::test_finite_raw_output_retains_upstream_action_scaling
+ERROR tests/test_flynn.py::FlynnTests::test_loader_records_order_and_structural_identity
+ERROR tests/test_flynn.py::FlynnTests::test_missing_declared_sensors_are_rejected
+ERROR tests/test_flynn.py::FlynnTests::test_none_collision_angle_matches_upstream_and_numeric_arrays_are_valid
+ERROR tests/test_flynn.py::FlynnTests::test_nonfinite_allowed_sensor_is_rejected
+ERROR tests/test_flynn.py::FlynnTests::test_nonfinite_cell_readout_fails_before_sanitization_and_restores_state
+ERROR tests/test_flynn.py::FlynnTests::test_nonfinite_hidden_is_rejected - Mo...
+ERROR tests/test_flynn.py::FlynnTests::test_nonfinite_outgoing_hidden_is_rejected_even_with_finite_readout
+ERROR tests/test_flynn.py::FlynnTests::test_parity_preserves_single_step_hidden_and_retinal_evolution
+ERROR tests/test_flynn.py::FlynnTests::test_privileged_sensor_changes_do_not_change_actions
+ERROR tests/test_flynn.py::FlynnTests::test_reset_clears_both_state_kinds - M...
+ERROR tests/test_flynn.py::FlynnTests::test_structural_checkpoint_mismatch_with_equal_shapes_is_rejected
+ERROR tests/test_flynn.py::FlynnTests::test_wrong_cell_shape_has_bounded_diagnostics
+ERROR tests/test_snapshots.py::FlynnContinuation::test_bad_recurrent_shape_rejected_without_mutation
+ERROR tests/test_snapshots.py::FlynnContinuation::test_numeric_profile_binds_cuda_flags_without_initializing_cuda
+ERROR tests/test_snapshots.py::FlynnContinuation::test_pre_act_snapshot_preserves_none_retinas
+ERROR tests/test_snapshots.py::FlynnContinuation::test_real_upstream_hidden_retina_and_torch_rng_continue
+18 failed, 924 passed, 26 skipped, 16 warnings, 18 errors in 94.77s (0:01:34)
