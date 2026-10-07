@@ -1,0 +1,22 @@
+{
+  "independent_close": "scientific-close-stop; KeyError readout_started_monotonic; no candidate comparison",
+  "native_prerequisites_passed": false,
+  "no_new_native_jobs": true,
+  "no_scientific_readout_or_comparison": true,
+  "prospective_software_fix": "omit redundant nested audit in driver owner summaries; keep complete attempts/raw data and independent recomputation; realistic nonnative publication regression; separate branch",
+  "qualification_claims": [],
+  "retention": {
+    "aggregate_three_root_bytes_at_readback": 1346638138,
+    "archive_sha256": "5f7a29ff110fe098b84b3d6660e1f164953a06be27dfbcde96310351d6898504",
+    "canonical_and_log_copies_identical": 7,
+    "critical": 0,
+    "excluded_local_npz": 189,
+    "important": 0,
+    "indexed_originals": 288,
+    "owner_pid_paths_observed_absent": 8,
+    "unique_attempts_jobs_cleanup_ids": 8,
+    "zip_members": 97
+  },
+  "root_cause": "final driver envelope duplicates full owners[].audit reports already represented by attempted[]; exceeds 1 MiB; last checkpoint lacks readout timestamps",
+  "scope": "post-close static failure review and byte-only retention readback"
+}

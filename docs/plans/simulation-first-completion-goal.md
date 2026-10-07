@@ -153,23 +153,37 @@ The fresh narrow restore pair passes under the reviewed timer-aware contract;
 raw inequality (74 native bytes) stays explicit. See
 [the report](../reports/restore-qualification-v2.md) and
 [PR #85](https://github.com/Aadrika08/palimpsest/pull/85). This checks only the
-restore prerequisite above; memory qualification and the pilot remain open.
-The [next eight-cell proposal](memory-prerequisites-v2.md) uses one selected
-profile and a fresh south-prefix, with no historical-source substitution. It is
-pending approval and authorizes no execution.
+restore prerequisite above; full memory qualification and the pilot remain open.
+The separately approved [eight fresh cells](memory-prerequisites-v2.md) ran once
+for one selected profile from a fresh south-prefix. All eight owner reports
+record the required inline outcomes, but final publication exceeded its 1 MiB
+control-envelope cap and independent scientific close stopped. Candidate pair
+comparison and final qualification remain unconfirmed. See
+[the retained failed result](../reports/memory-prerequisites-v2.md). Registration
+preparation and the one invocation are consumed; zero corrective studies/retries
+were authorized. A separate software-only receipt repair cannot qualify this
+closed allocation. Any new scientific readout needs a new approved scope; the
+prerequisite gate and pilot remain open.
 
-The separately approved manual-browser v2 and artwork-material v2 allocations
-were consumed and failed: [browser PR #87](https://github.com/Aadrika08/palimpsest/pull/87)
-and [artwork PR #86](https://github.com/Aadrika08/palimpsest/pull/86). The browser reached its first branch but recording
-admission exceeded its 128 MiB managed quota; cleanup also forced a tracker
-child. Artwork produced partial SVG/audio but HTML exceeded its 4 MiB metadata
-cap. The next plans preserve source admission/failure rules and all raw evidence;
-no corrective invocation is authorized automatically. Learned puck/navigation,
-adequate Afterimage, human artwork/operator acceptance and final delivery remain
-open. Physical rover work remains deferred.
+The fresh artwork-material v3 allocation passed in 22.06 seconds. Its compact
+comparison preserves source geometry and complete raw-event references while
+remaining below the original byte limits. All six artifact hashes and the
+nine-member review ZIP were independently checked:
+[PR #88](https://github.com/Aadrika08/palimpsest/pull/88),
+[retained report](https://github.com/Aadrika08/palimpsest/blob/verify/artwork-material-v3/docs/reports/artwork-material-v3.md).
+This finishes bounded offline material preparation, not the artistic experience
+or human acceptance gates. Afterimage is still insufficient for sustained review.
 
-The next source/admission proposals are
-[HTML comparison compaction](https://github.com/Aadrika08/palimpsest/blob/verify/artwork-material-v2/docs/plans/artwork-comparison-compaction.md)
-and [manual browser v3](https://github.com/Aadrika08/palimpsest/blob/verify/manual-lab-refresh-v2/docs/plans/manual-lab-refresh-v3.md).
-These and the eight-cell memory proposal need separate new allocations; existing
-consumed phases permit no corrective invocation.
+Manual-browser v3 failed in 15.30 seconds after its first owner completed 56 ticks.
+The approved 256 MiB managed budget admitted its recording; Chromium then returned
+ERR_INSUFFICIENT_RESOURCES on a placement-preview fetch. No exhausted-resource
+cause is established. Its paused snapshot, branches, comparison and export were
+not reached. Original cleanup passed with no required kill or observed survivor.
+See [PR #89](https://github.com/Aadrika08/palimpsest/pull/89) and
+[retained report](https://github.com/Aadrika08/palimpsest/blob/verify/manual-lab-refresh-v3/docs/reports/manual-lab-refresh-v3.md).
+No retry is authorized. Earlier failed browser/artwork v1/v2 evidence is preserved.
+
+Learned puck/navigation, adequate Afterimage, browser acceptance, human
+artwork/operator acceptance and final delivery remain open. Physical rover work
+remains deferred. The project remains incomplete; these bounded results do not
+lower any required capability, research or acceptance threshold.

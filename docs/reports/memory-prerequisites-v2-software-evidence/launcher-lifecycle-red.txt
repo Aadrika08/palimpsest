@@ -1,0 +1,77 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+_________ test_ancestor_hard_timeout_leaves_no_campaign_python_process _________
+
+tmp_path = PosixPath('/tmp/pytest-of-utkarsh/pytest-48/test_ancestor_hard_timeout_lea0')
+
+    def test_ancestor_hard_timeout_leaves_no_campaign_python_process(tmp_path):
+        """Real runner spawning; the only worker is an exact-identity harmless sleeper."""
+        import os
+        import signal
+        import subprocess
+    
+        repo = tmp_path/'repo'
+        evidence = repo/'docs/reports/memory-prerequisites-v2-evidence'
+        evidence.mkdir(parents=True)
+        script = evidence/'execute.py'
+        source = Path(__file__).resolve().parents[1]/'docs/reports/memory-prerequisites-v2-evidence/execute-campaign.py'
+        reg = {'repo':str(repo),'output':str(repo/'runs/fixture'), 'python':sys.executable,
+            'control_root':str(repo/'control'), 'publication_root':str(evidence)}
+        (evidence/'registration.json').write_text(json.dumps(reg))
+        script.write_text(f'''import importlib.util, json, os, signal, sys, time
+    from pathlib import Path
+    from types import SimpleNamespace
+    HERE = Path(__file__).resolve().parents[3]
+    def identity(role):
+        fields = Path('/proc/self/stat').read_text().rsplit(')',1)[1].split()
+        (HERE/(role+'.json')).write_text(json.dumps({{'pid':os.getpid(),
+            'starttime':int(fields[19]),'pgid':os.getpgrp()}}))
+    role = 'pipeline' if '--pipeline' in sys.argv else 'supervised' if '--supervised' in sys.argv else 'controller'
+    identity(role)
+    SOURCE = Path({str(source)!r})
+    sys.path[:0] = [str(SOURCE.parents[3]),str(SOURCE.parents[3]/'src')]
+    spec = importlib.util.spec_from_file_location('actual_campaign',SOURCE)
+    module = importlib.util.module_from_spec(spec); spec.loader.exec_module(module)
+    runner = module.runner; runner.__file__ = __file__; runner.WATCHDOG_SECONDS = 1.5
+    reg = json.loads((Path(__file__).parent/'registration.json').read_text())
+    runner.admission = lambda *args,**kw: reg
+    runner.shutil.disk_usage = lambda path: SimpleNamespace(free=16*runner.p.GiB)
+    runner.subprocess.check_output = lambda *args,**kw: '0'*40
+    from palimpsest.storage import StorageBudget,StorageLimits
+    runner.d.restore_v2_budget = lambda reg: StorageBudget(
+        [reg[key] for key in ('output','control_root','publication_root')],
+        StorageLimits(max_bytes=64*runner.p.MiB,min_free_bytes=0),headroom_bytes=0)
+    runner.d.recheck_v2_inputs = lambda *args: None
+    runner.d.cleanup_owners = lambda root: []
+    def harmless_run(path):
+        signal.signal(signal.SIGTERM,signal.SIG_IGN)
+        identity('pipeline-ready')
+        while True: time.sleep(60)
+    module.m.run = harmless_run
+    raise SystemExit(runner.main(sys.argv[1:]))
+    ''')
+    
+        def matching_live(record):
+            try:
+                fields = Path(f"/proc/{record['pid']}/stat").read_text().rsplit(')',1)[1].split()
+                return (int(fields[19]),os.getpgid(record['pid'])) == (record['starttime'],record['pgid']) and fields[0] != 'Z'
+            except (FileNotFoundError,ProcessLookupError):
+                return False
+    
+        try:
+            with (repo/'harness.log').open('wb') as log:
+                result = subprocess.run(['timeout','--signal=KILL','5s',sys.executable,str(script)],
+                    cwd=repo,stdout=log,stderr=log,start_new_session=True,timeout=12)
+            assert result.returncode != 0
+            assert (repo/'pipeline-ready.json').exists(), (repo/'harness.log').read_text()
+            records = {role:json.loads((repo/(role+'.json')).read_text())
+                       for role in ('controller','supervised','pipeline')}
+            survivors = {role:record for role,record in records.items() if matching_live(record)}
+>           assert not survivors, f'Python pipeline survived ancestor hard timeout: {survivors}'
+E           AssertionError: Python pipeline survived ancestor hard timeout: {'supervised': {'pid': 1236482, 'starttime': 8666468, 'pgid': 1236481}, 'pipeline': {'pid': 1236485, 'starttime': 8666476, 'pgid': 1236485}}
+E           assert not {'pipeline': {'pgid': 1236485, 'pid': 1236485, 'starttime': 8666476}, 'supervised': {'pgid': 1236481, 'pid': 1236482, 'starttime': 8666468}}
+
+tests/test_memory_prerequisites_v2_launcher.py:200: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_memory_prerequisites_v2_launcher.py::test_ancestor_hard_timeout_leaves_no_campaign_python_process
+1 failed, 12 deselected in 5.08s

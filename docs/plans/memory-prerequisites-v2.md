@@ -1,9 +1,9 @@
 # Eight fresh memory prerequisites for the selected v2 profile
 
-7 October 2026. **Proposal only; no implementation, registration, allocation or
-native invocation is authorized by this draft.** The approved narrow restore
-allocation is consumed. This is the next separate campaign for the simulation-first
-completion goal, not an extension of that allocation.
+7 October 2026. **Approved by the user's "approved" reply: one new registration,
+one eight-cell campaign, and a separate 180 s nonnative registration preparation.**
+The approved narrow restore allocation is consumed. This is the next separate
+campaign for the simulation-first completion goal, not an extension of that allocation.
 
 ## Correct scope and present evidence
 
@@ -106,7 +106,7 @@ hashes and duration diagnostics. Raw equality may be false; report it without
 repair. Candidate equality plus unequal non-timing traces or failed invariants is
 a failure. No stored-state mutation or broader exclusion. [S4.]
 
-## Minimal implementation required after approval
+## Minimal approved implementation
 
 Add an explicit separate v2 campaign mode/registration and independent full-eight
 readout using existing driver, owner, storage and raw-audit helpers. Commit the
@@ -129,7 +129,7 @@ Design any future pilot admission bridge prospectively in that separate plan.
 
 ## Finite allocation and storage
 
-Propose the existing fixed-profile qualification limits, unchanged:
+Use the approved fixed-profile qualification limits, unchanged:
 
 - Exactly one new registration and invocation, at most eight sequential native
   owners, zero retries and zero corrective studies. No reallocation after failure.
@@ -138,8 +138,15 @@ Propose the existing fixed-profile qualification limits, unchanged:
   publication and close: 600 s, within the same original deadline; no restarted
   readout window. Invocation total at most 4,900 s, no transfer.
 - One outer watchdog encloses the complete launch/admission/owner/audit/cleanup/
-  publication pipeline: TERM at 4,890 s, KILL after 5 s. It must not cover only the
-  driver or leave parent rechecks/publication outside the bound.
+  publication pipeline: TERM at 4,890 s, KILL after 5 s. An ancestor hard KILL at
+  4,900 s also encloses the parent's emergency recovery after watchdog failure;
+  no post-watchdog analysis/publication is unbounded. The owner/readout deadlines
+  derive from the immutable launcher's start before its full input admission,
+  not from a later driver entry. The independent auditor binds that clock and
+  marker checksum to the registration and original receipt. The inner watchdog
+  uses foreground mode and the nonnative pipeline inherits the ancestor's process
+  group; parent death cannot detach it from the hard bound. Native owner groups
+  keep their existing individual bounds and exact-identity cleanup.
 - Full cells: 720 s internal / 730 s external. Prefix cells: 360 / 370 s.
   Repeat cells: 150 / 160 s. Require remaining owner allocation to fit its full
   external bound plus the existing 10 s cleanup reserve before admission.
@@ -150,11 +157,12 @@ Propose the existing fixed-profile qualification limits, unchanged:
   stream. Reserve each owner's complete bounded payload against the same counted
   roots immediately before admission. No deletion or source maintenance.
 
-The numerical allocation above comes from the original full qualification; it
-is proposed for renewed approval, not inherited authorization. [S2, S6, S8.]
+The numerical allocation above comes from the original full qualification and
+has explicit renewed approval for this fresh campaign. [S2, S6, S8.]
 
-Use new absent output/control/publication roots and a distinct exclusive marker;
-freeze their exact paths in registration. Count all three roots, including native
+Use new absent native output/control roots and a fresh publication namespace with
+only committed launcher/preparer sources before registration, plus a distinct
+exclusive marker; freeze their exact paths in registration. Count all three roots, including native
 data, workspace controls/live logs and publication copies, with the same
 `StorageBudget`. No outer lease may block the actual native writer. Keep live logs
 ignored until child admission/execution has exited. Require clean parent and child
@@ -162,13 +170,10 @@ checkouts. Bind and protect the whole historical/narrow campaign inventories fro
 overlap. No old marker absence or automatic continuation grants another attempt.
 Checks are observations/reservations, not atomic disk quotas. [S4.]
 
-**Preparation-budget decision:** original full qualification fixes the 4,900 s
-invocation but does not give separate pre-registration inventory time. Recommend
-reusing the narrow study's 180 s nonnative registration cap, explicitly approved
-as an additional phase, giving a prospective nonsoftware total of 5,080 s.
-That is a proposed allocation, not an existing eight-owner limit. Alternatively
-include registration preparation within the 4,300 s stage and register its measured
-elapsed time; this reduces native headroom. Resolve this before registration.
+**Approved preparation budget:** reuse the narrow study's 180 s nonnative
+registration cap as an additional phase, giving a nonsoftware total of 5,080 s.
+This cap covers inventory, registration publication and its Git commit; preparation
+must close before native admission. The original 4,900 s invocation stays intact.
 Software implementation/tests and later prose/Git work remain outside scientific
 compute; later work cannot add analysis to a closed scientific phase. [S4, S6.]
 
@@ -213,15 +218,15 @@ multiplicity freeze. No puck/navigation fits, artwork/browser execution, CI,
 merge, purchases, cloud, hardware or rover activity belongs to this campaign.
 [S5, S7.]
 
-## Proposed approval scope
+## Approved scope
 
 1. Use the source-defined one-profile/eight-cell campaign. Eight distinct profiles
    are unspecified and cannot reuse these limits.
-2. Approve the v2 campaign-only state gate and finite one-invocation/eight-owner
+2. Apply the v2 campaign-only state gate and finite one-invocation/eight-owner
    allocation, with the pilot explicitly excluded.
-3. Use a separate 180 s registration preparation cap (recommended 5,080 s aggregate),
-   keeping the original 4,900 s invocation intact. This is an explicit new proposal,
-   not an inherited allocation. Freeze exact identities/paths/runtime and prospective
+3. Use a separate 180 s registration preparation cap (5,080 s aggregate),
+   keeping the original 4,900 s invocation intact. This is explicitly approved,
+   not inherited from a consumed allocation. Freeze exact identities/paths/runtime and prospective
    source derivation after review.
 
 ## Source references

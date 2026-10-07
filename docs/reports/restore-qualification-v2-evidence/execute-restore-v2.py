@@ -13,6 +13,22 @@ import time
 from scripts import memory_decision_pilot as p, memory_restore_diagnostic as d
 from palimpsest.evaluate import bounded_logs
 
+MODE = 'restore-v2'
+PASS_KEY = 'narrow_restore_passed'
+WATCHDOG_SECONDS = 890
+
+
+def watchdog_prefix():
+    return ['timeout']+(['--foreground'] if MODE == 'prerequisites-v2' else [])+[
+        '--signal=TERM','--kill-after=5',str(WATCHDOG_SECONDS)+'s']
+
+
+def signal_child(process, signum):
+    if MODE == 'prerequisites-v2':
+        os.kill(process.pid,signum)
+    else:
+        os.killpg(process.pid,signum)
+
 
 def admission(path, *, recheck=True):
     evidence = Path(__file__).resolve().parent
@@ -20,8 +36,8 @@ def admission(path, *, recheck=True):
     registration = p.read_json(path)
     if path != evidence/'registration.json' or Path(registration['repo']) != repo:
         raise ValueError('Registered checkout and registration path must be exact')
-    if registration.get('mode') != 'restore-v2':
-        raise ValueError('This launcher accepts only restore-v2')
+    if registration.get('mode') != MODE:
+        raise ValueError('This launcher accepts only '+MODE)
     d.validate_v2_registration(registration)
     if Path(registration['output']).exists():
         raise ValueError('Registered output must be absent; no retry')
@@ -53,17 +69,18 @@ def invalidate(root, storage, error):
     path = root/'scientific-close.json'
     if path.exists():
         close = p.read_json(path)
-        close.update(status='scientific-close-stop', narrow_restore_passed=False,
-                     qualification_claims=[], launcher_error=str(error))
+        close.update(status='scientific-close-stop', qualification_claims=[],
+                     launcher_error=str(error), **{PASS_KEY:False})
         try:
             d.replace_control(path, close, storage)
         except BaseException:
             # Keep the original bytes, but remove authority if failure cannot publish.
-            if path.exists() and p.read_json(path).get('narrow_restore_passed') is True:
+            if path.exists() and p.read_json(path).get(PASS_KEY) is True:
                 path.rename(root/'scientific-close.invalidated.json')
 
 
 def execute():
+    admission_started = time.monotonic()
     evidence = Path(__file__).resolve().parent
     path = evidence/'registration.json'
     registration = admission(path)
@@ -76,8 +93,9 @@ def execute():
     marker.parent.mkdir(parents=True, exist_ok=True)
     command = [registration['python'],
                str(Path(__file__).resolve()), '--pipeline', str(path)]
-    p.write_control(marker, {'command':command, 'started_monotonic':time.monotonic(),
-        'watchdog_command': ['timeout', '--signal=TERM', '--kill-after=5', '890s',
+    p.write_control(marker, {'command':command, 'started_monotonic':(
+        admission_started if MODE == 'prerequisites-v2' else time.monotonic()),
+        'watchdog_command': watchdog_prefix()+[
             registration['python'], str(Path(__file__).resolve()), '--supervised'],
         'registration_sha256':p.file_hash(path), 'implementation_head':subprocess.check_output(
             ['git','rev-parse','HEAD'], cwd=repo, text=True).strip()}, storage)
@@ -91,11 +109,11 @@ def execute():
         failures.append(reason)
         if process is not None:
             with contextlib.suppress(ProcessLookupError):
-                os.killpg(process.pid, signal.SIGTERM)
+                signal_child(process, signal.SIGTERM)
             if timer is None:
                 def kill():
                     with contextlib.suppress(ProcessLookupError):
-                        os.killpg(process.pid, signal.SIGKILL)
+                        signal_child(process, signal.SIGKILL)
                 timer = threading.Timer(5, kill)
                 timer.daemon = True; timer.start()
     print(json.dumps({'restore_v2_invocation':'starting', 'output':str(root)}), flush=True)
@@ -104,7 +122,7 @@ def execute():
         # Live files remain ignored until clean child admission and both stages exit.
         with bounded_logs(marker.parent, p.MiB, fail_log) as (stdout, stderr):
             process = subprocess.Popen(command, cwd=repo, env=env, stdout=stdout,
-                                       stderr=stderr, start_new_session=True)
+                                       stderr=stderr, start_new_session=MODE != 'prerequisites-v2')
             if failures:
                 fail_log(failures[0])
             code = process.wait()
@@ -113,7 +131,7 @@ def execute():
         deadline = p.read_json(root/'execution.json')['readout_deadline_monotonic']
         p.deadline_check(deadline)
         d.recheck_v2_inputs(registration, deadline)
-        if p.read_json(root/'scientific-close.json').get('narrow_restore_passed') is not True:
+        if p.read_json(root/'scientific-close.json').get(PASS_KEY) is not True:
             raise ValueError('Independent scientific close did not pass')
     except BaseException as error:
         code = 1
@@ -127,7 +145,7 @@ def execute():
             timer.cancel()
         if process is not None:
             with contextlib.suppress(ProcessLookupError):
-                os.killpg(process.pid, signal.SIGKILL)
+                signal_child(process, signal.SIGKILL)
         try:
             # Native bounded_process owners have their own PGIDs: pipeline exit
             # cannot substitute for exact recorded owner cleanup and absence.
@@ -191,7 +209,7 @@ def main(argv=None):
     registration = admission(evidence/'registration.json', recheck=False)
     if registration['python'] != d.sys.executable:
         raise ValueError('Registered launcher Python differs')
-    command = ['timeout', '--signal=TERM', '--kill-after=5', '890s', registration['python'],
+    command = watchdog_prefix()+[registration['python'],
                str(Path(__file__).resolve()), '--supervised']
     env = dict(os.environ, PYTHONPATH='.:src:scripts', PYTHONDONTWRITEBYTECODE='1',
         OMP_NUM_THREADS='1', OPENBLAS_NUM_THREADS='1', MKL_NUM_THREADS='1',
@@ -200,18 +218,19 @@ def main(argv=None):
     process = None
     code = 1
     try:
-        process = subprocess.Popen(command, cwd=registration['repo'], env=env, start_new_session=True)
+        process = subprocess.Popen(command, cwd=registration['repo'], env=env,
+                                   start_new_session=MODE != 'prerequisites-v2')
         code = process.wait()
     except BaseException:
         code = 1
         if process is not None and process.poll() is None:
             with contextlib.suppress(ProcessLookupError):
-                os.killpg(process.pid, signal.SIGTERM)
+                signal_child(process, signal.SIGTERM)
             try:
                 process.wait(timeout=5)
             except subprocess.TimeoutExpired:
                 with contextlib.suppress(ProcessLookupError):
-                    os.killpg(process.pid, signal.SIGKILL)
+                    signal_child(process, signal.SIGKILL)
                 process.wait()
     finally:
         signal.signal(signal.SIGTERM, previous)
