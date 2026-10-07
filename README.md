@@ -29,6 +29,8 @@ Commands use [`uv run --no-sync`](https://docs.astral.sh/uv/concepts/projects/sy
 uv run --no-sync palimpsest doctor --probe-renderer
 ```
 
+Before fetching FLYNN assets, an `assets: missing` check and exit status 1 are expected. If the remaining required checks pass, continue to [Interactive lab](#interactive-lab) for manual or teacher control. Inspect the renderer check separately; missing assets can still make the probe command exit 1 even when rendering works.
+
 ## Model assets
 
 Read [third-party notices](THIRD_PARTY_NOTICES.md) before acquisition or reuse. The graph archive and full-vision checkpoint are distributed under **CC BY-NC 4.0**. Their exact URLs, sizes, hashes, source revisions, mappings, and provenance limitations are recorded in [the model manifest](model_manifests/flynn-full-vision.json).
