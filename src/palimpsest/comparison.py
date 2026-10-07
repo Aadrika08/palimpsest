@@ -83,9 +83,12 @@ def _overlay(report, projection):
 def _world_view(metadata, label):
     root = ET.fromstring(artifacts._svg(metadata))
     root.remove(root.find(f'{{{NS}}}metadata'))  # Full provenance appears once in the HTML.
-    root.set('role', 'img')
-    root.set('aria-labelledby', f'world-{label}')
-    ET.SubElement(root, f'{{{NS}}}title', {'id': f'world-{label}'}).text = f'{label}: last recorded world per episode and recorded routes'
+    root.set('aria-labelledby', f'world-{label} world-{label}-description')
+    title, description = root.find(f'{{{NS}}}title'), root.find(f'{{{NS}}}desc')
+    title.set('id', f'world-{label}')
+    title.text = f'{label}: last recorded world per episode and recorded routes'
+    description.set('id', f'world-{label}-description')
+    description.text = f'{label}: {description.text}'
     if label == 'B':
         scale = 360 / metadata['projection']['arena']
         for line in root.iter(f'{{{NS}}}polyline'):
