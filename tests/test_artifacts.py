@@ -118,6 +118,36 @@ class ArtifactTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "count mismatch"):
             artifacts.playback(run)
 
+    def test_event_identity_rejects_playback_comparison_and_exports(self):
+        for identity in (str(uuid.uuid4()), "not-a-uuid", None, 42):
+            run = self.run_fixture()
+            self.register_snapshot(run)
+            artifacts.playback(run)  # A previously validated cache cannot hide a changed event.
+            path = run / "recording/events.jsonl"
+            events = [json.loads(line) for line in path.read_text().splitlines()]
+            next(event for event in events if event["kind"] == "episode_started")["run_id"] = identity
+            path.write_text("".join(json.dumps(event) + "\n" for event in events))
+            for operation in ("playback", "comparison", "svg", "png", "bundle"):
+                output = self.root / f"{run.name}.{operation}"
+                with self.subTest(identity=identity, operation=operation):
+                    with self.assertRaisesRegex(ValueError, "run identity|UUID"):
+                        if operation == "playback":
+                            artifacts.playback(run)
+                        elif operation == "comparison":
+                            artifacts.compare_runs(run, run)
+                        else:
+                            artifacts.export_run(run, output, operation)
+                    self.assertFalse(output.exists())
+
+    def test_event_identity_accepts_equivalent_uuid_and_unlabelled_events(self):
+        run = self.run_fixture()
+        path = run / "recording/events.jsonl"
+        events = [json.loads(line) for line in path.read_text().splitlines()]
+        next(event for event in events if event["kind"] == "episode_started")["run_id"] = uuid.UUID(run.name).hex
+        path.write_text("".join(json.dumps(event) + "\n" for event in events))
+        self.assertEqual(artifacts.playback(run)["state"]["run_id"], run.name)
+        self.assertTrue(any("run_id" not in event for event in events))
+
     def test_long_episode_preserves_playback_export_and_comparison(self):
         run = self.run_fixture(count=601)
         sample = artifacts.playback(run, tick=600)

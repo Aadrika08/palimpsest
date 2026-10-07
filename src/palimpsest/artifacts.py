@@ -214,6 +214,10 @@ def _load(run_path):
     if manifest.get("status") != "completed":
         raise ValueError("artifact requires a completed recording")
     events = _events(run)
+    run_id = _id(manifest["run_id"])
+    for event in events:
+        if "run_id" in event and _id(event["run_id"]) != run_id:
+            raise ValueError("recorded event run identity differs")
     chunks = [event for event in events if event["kind"] == "chunk"]
     if len(chunks) > MAX_CHUNKS:
         raise ValueError("too many recording chunks")
