@@ -100,7 +100,11 @@ refusal to hide an unrelated `qpos` difference. The reused real-child launcher
 check verifies clean admission and an exclusive marker for both studies. The new
 checks failed before implementation, then the focused suite passed **38** in
 1.45 s. The full local suite passed **953**, with **24 skipped** and 39 warnings,
-in 98.66 s. These are software checks; they execute no native worker or physics.
+in 98.66 s. The new attribution and launcher checks take no physics steps. The
+full software suite includes isolated MuJoCo step/forward exercises on synthetic
+fixtures, including `PhysicsSnapshots` in `tests/test_snapshots.py`. Those are
+software validation, not retained-study replay or qualification. The registered
+readout's zero-physics count applies to that invocation alone.
 [RED](memory-native-byte-attribution-evidence/red.log),
 [GREEN](memory-native-byte-attribution-evidence/green.log),
 [full suite](memory-native-byte-attribution-evidence/full-suite.log).
@@ -119,6 +123,14 @@ archived as the [offline driver](memory-native-byte-attribution-evidence/execute
 [diagnostic helper](memory-native-byte-attribution-evidence/executed-diagnostic-driver.py)
 and [pilot helper](memory-native-byte-attribution-evidence/executed-pilot-driver.py).
 Raw SNP/NPZ stay local at registered paths; Git metadata are not a replay bundle.
+
+[One independent final review](memory-native-byte-attribution-evidence/final-review.md)
+found no blocking code issue and passed 14 synthetic checks in 0.96 s. It caught
+the original report's overbroad no-physics claim about the full software suite;
+that editorial error is corrected above. The reviewer verified registration and
+analysis hashes and all three archived drivers, without independently decoding
+retained states or repeating the full suite. Its scope limits and executor
+rulings are preserved in the review record; no deferred minor findings remain.
 
 The attribution is exact for this pair and version. It does not show restored
 behavior across more seeds, longer trajectories, other models or hardware, nor
