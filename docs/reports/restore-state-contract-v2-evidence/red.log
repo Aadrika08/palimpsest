@@ -1,0 +1,223 @@
+FFFFFFF                                                                  [100%]
+=================================== FAILURES ===================================
+_ test_v2_candidate_excludes_only_durations_and_keeps_raw_integrity[duration] __
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x71e04d2ebe10>
+change = 'duration'
+
+    @pytest.mark.parametrize('change',['duration','timer-count','native-qpos','application','checksum','receipt'])
+    def test_v2_candidate_excludes_only_durations_and_keeps_raw_integrity(monkeypatch,change):
+        mujoco=pytest.importorskip('mujoco')
+        for name in ('mj_step','mj_forward','mj_resetData'):
+            monkeypatch.setattr(mujoco,name,lambda *args:pytest.fail('physics operation attempted'))
+        model=mujoco.MjModel.from_xml_string('<mujoco><worldbody><body><joint type="slide"/><geom size=".1"/></body></worldbody></mujoco>')
+        one=mujoco.MjData(model); two=mujoco.MjData(model)
+        two.timer.duration[:]=np.arange(15)*.001
+        if change=='timer-count':two.timer.number[0]=1
+        if change=='native-qpos':two.qpos[0]=.2
+        states=[]
+        for data in (one,two):
+            blob=data.__getstate__()
+            states.append({'native_data':blob,'native_sha256':p.hashlib.sha256(blob).hexdigest(),
+                'application':{'source_run_id':'source','event_prefix':{},'memory':{'u':{},'selector':{},'m':{'facts':[]}},
+                               'receipts':{'old':{'received_run_id':'source','applied_tick':1}}}})
+        if change=='application':states[1]['application']['memory']['m']['facts'].append('changed')
+        if change=='checksum':states[1]['native_sha256']='0'*64
+        if change=='receipt':states[1]['application']['receipts']['new']={'received_run_id':'foreign','applied_tick':6}
+        before=[d.state_digest(value) for value in states]
+        if change in ('checksum','receipt'):
+            with pytest.raises(ValueError):offline().compare_reproducibility_states(*states,{'old'},{'old'})
+        else:
+>           result=offline().compare_reproducibility_states(*states,{'old'},{'old'})
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           AttributeError: module 'scripts.memory_restore_offline_readout' has no attribute 'compare_reproducibility_states'
+
+tests/test_memory_restore_offline_readout.py:168: AttributeError
+_ test_v2_candidate_excludes_only_durations_and_keeps_raw_integrity[timer-count] _
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x71e04d91cd10>
+change = 'timer-count'
+
+    @pytest.mark.parametrize('change',['duration','timer-count','native-qpos','application','checksum','receipt'])
+    def test_v2_candidate_excludes_only_durations_and_keeps_raw_integrity(monkeypatch,change):
+        mujoco=pytest.importorskip('mujoco')
+        for name in ('mj_step','mj_forward','mj_resetData'):
+            monkeypatch.setattr(mujoco,name,lambda *args:pytest.fail('physics operation attempted'))
+        model=mujoco.MjModel.from_xml_string('<mujoco><worldbody><body><joint type="slide"/><geom size=".1"/></body></worldbody></mujoco>')
+        one=mujoco.MjData(model); two=mujoco.MjData(model)
+        two.timer.duration[:]=np.arange(15)*.001
+        if change=='timer-count':two.timer.number[0]=1
+        if change=='native-qpos':two.qpos[0]=.2
+        states=[]
+        for data in (one,two):
+            blob=data.__getstate__()
+            states.append({'native_data':blob,'native_sha256':p.hashlib.sha256(blob).hexdigest(),
+                'application':{'source_run_id':'source','event_prefix':{},'memory':{'u':{},'selector':{},'m':{'facts':[]}},
+                               'receipts':{'old':{'received_run_id':'source','applied_tick':1}}}})
+        if change=='application':states[1]['application']['memory']['m']['facts'].append('changed')
+        if change=='checksum':states[1]['native_sha256']='0'*64
+        if change=='receipt':states[1]['application']['receipts']['new']={'received_run_id':'foreign','applied_tick':6}
+        before=[d.state_digest(value) for value in states]
+        if change in ('checksum','receipt'):
+            with pytest.raises(ValueError):offline().compare_reproducibility_states(*states,{'old'},{'old'})
+        else:
+>           result=offline().compare_reproducibility_states(*states,{'old'},{'old'})
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           AttributeError: module 'scripts.memory_restore_offline_readout' has no attribute 'compare_reproducibility_states'
+
+tests/test_memory_restore_offline_readout.py:168: AttributeError
+_ test_v2_candidate_excludes_only_durations_and_keeps_raw_integrity[native-qpos] _
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x71e04ad1e5d0>
+change = 'native-qpos'
+
+    @pytest.mark.parametrize('change',['duration','timer-count','native-qpos','application','checksum','receipt'])
+    def test_v2_candidate_excludes_only_durations_and_keeps_raw_integrity(monkeypatch,change):
+        mujoco=pytest.importorskip('mujoco')
+        for name in ('mj_step','mj_forward','mj_resetData'):
+            monkeypatch.setattr(mujoco,name,lambda *args:pytest.fail('physics operation attempted'))
+        model=mujoco.MjModel.from_xml_string('<mujoco><worldbody><body><joint type="slide"/><geom size=".1"/></body></worldbody></mujoco>')
+        one=mujoco.MjData(model); two=mujoco.MjData(model)
+        two.timer.duration[:]=np.arange(15)*.001
+        if change=='timer-count':two.timer.number[0]=1
+        if change=='native-qpos':two.qpos[0]=.2
+        states=[]
+        for data in (one,two):
+            blob=data.__getstate__()
+            states.append({'native_data':blob,'native_sha256':p.hashlib.sha256(blob).hexdigest(),
+                'application':{'source_run_id':'source','event_prefix':{},'memory':{'u':{},'selector':{},'m':{'facts':[]}},
+                               'receipts':{'old':{'received_run_id':'source','applied_tick':1}}}})
+        if change=='application':states[1]['application']['memory']['m']['facts'].append('changed')
+        if change=='checksum':states[1]['native_sha256']='0'*64
+        if change=='receipt':states[1]['application']['receipts']['new']={'received_run_id':'foreign','applied_tick':6}
+        before=[d.state_digest(value) for value in states]
+        if change in ('checksum','receipt'):
+            with pytest.raises(ValueError):offline().compare_reproducibility_states(*states,{'old'},{'old'})
+        else:
+>           result=offline().compare_reproducibility_states(*states,{'old'},{'old'})
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           AttributeError: module 'scripts.memory_restore_offline_readout' has no attribute 'compare_reproducibility_states'
+
+tests/test_memory_restore_offline_readout.py:168: AttributeError
+_ test_v2_candidate_excludes_only_durations_and_keeps_raw_integrity[application] _
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x71e04ad59890>
+change = 'application'
+
+    @pytest.mark.parametrize('change',['duration','timer-count','native-qpos','application','checksum','receipt'])
+    def test_v2_candidate_excludes_only_durations_and_keeps_raw_integrity(monkeypatch,change):
+        mujoco=pytest.importorskip('mujoco')
+        for name in ('mj_step','mj_forward','mj_resetData'):
+            monkeypatch.setattr(mujoco,name,lambda *args:pytest.fail('physics operation attempted'))
+        model=mujoco.MjModel.from_xml_string('<mujoco><worldbody><body><joint type="slide"/><geom size=".1"/></body></worldbody></mujoco>')
+        one=mujoco.MjData(model); two=mujoco.MjData(model)
+        two.timer.duration[:]=np.arange(15)*.001
+        if change=='timer-count':two.timer.number[0]=1
+        if change=='native-qpos':two.qpos[0]=.2
+        states=[]
+        for data in (one,two):
+            blob=data.__getstate__()
+            states.append({'native_data':blob,'native_sha256':p.hashlib.sha256(blob).hexdigest(),
+                'application':{'source_run_id':'source','event_prefix':{},'memory':{'u':{},'selector':{},'m':{'facts':[]}},
+                               'receipts':{'old':{'received_run_id':'source','applied_tick':1}}}})
+        if change=='application':states[1]['application']['memory']['m']['facts'].append('changed')
+        if change=='checksum':states[1]['native_sha256']='0'*64
+        if change=='receipt':states[1]['application']['receipts']['new']={'received_run_id':'foreign','applied_tick':6}
+        before=[d.state_digest(value) for value in states]
+        if change in ('checksum','receipt'):
+            with pytest.raises(ValueError):offline().compare_reproducibility_states(*states,{'old'},{'old'})
+        else:
+>           result=offline().compare_reproducibility_states(*states,{'old'},{'old'})
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           AttributeError: module 'scripts.memory_restore_offline_readout' has no attribute 'compare_reproducibility_states'
+
+tests/test_memory_restore_offline_readout.py:168: AttributeError
+_ test_v2_candidate_excludes_only_durations_and_keeps_raw_integrity[checksum] __
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x71e04b1701d0>
+change = 'checksum'
+
+    @pytest.mark.parametrize('change',['duration','timer-count','native-qpos','application','checksum','receipt'])
+    def test_v2_candidate_excludes_only_durations_and_keeps_raw_integrity(monkeypatch,change):
+        mujoco=pytest.importorskip('mujoco')
+        for name in ('mj_step','mj_forward','mj_resetData'):
+            monkeypatch.setattr(mujoco,name,lambda *args:pytest.fail('physics operation attempted'))
+        model=mujoco.MjModel.from_xml_string('<mujoco><worldbody><body><joint type="slide"/><geom size=".1"/></body></worldbody></mujoco>')
+        one=mujoco.MjData(model); two=mujoco.MjData(model)
+        two.timer.duration[:]=np.arange(15)*.001
+        if change=='timer-count':two.timer.number[0]=1
+        if change=='native-qpos':two.qpos[0]=.2
+        states=[]
+        for data in (one,two):
+            blob=data.__getstate__()
+            states.append({'native_data':blob,'native_sha256':p.hashlib.sha256(blob).hexdigest(),
+                'application':{'source_run_id':'source','event_prefix':{},'memory':{'u':{},'selector':{},'m':{'facts':[]}},
+                               'receipts':{'old':{'received_run_id':'source','applied_tick':1}}}})
+        if change=='application':states[1]['application']['memory']['m']['facts'].append('changed')
+        if change=='checksum':states[1]['native_sha256']='0'*64
+        if change=='receipt':states[1]['application']['receipts']['new']={'received_run_id':'foreign','applied_tick':6}
+        before=[d.state_digest(value) for value in states]
+        if change in ('checksum','receipt'):
+>           with pytest.raises(ValueError):offline().compare_reproducibility_states(*states,{'old'},{'old'})
+                                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           AttributeError: module 'scripts.memory_restore_offline_readout' has no attribute 'compare_reproducibility_states'
+
+tests/test_memory_restore_offline_readout.py:166: AttributeError
+__ test_v2_candidate_excludes_only_durations_and_keeps_raw_integrity[receipt] __
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x71e04b1726d0>
+change = 'receipt'
+
+    @pytest.mark.parametrize('change',['duration','timer-count','native-qpos','application','checksum','receipt'])
+    def test_v2_candidate_excludes_only_durations_and_keeps_raw_integrity(monkeypatch,change):
+        mujoco=pytest.importorskip('mujoco')
+        for name in ('mj_step','mj_forward','mj_resetData'):
+            monkeypatch.setattr(mujoco,name,lambda *args:pytest.fail('physics operation attempted'))
+        model=mujoco.MjModel.from_xml_string('<mujoco><worldbody><body><joint type="slide"/><geom size=".1"/></body></worldbody></mujoco>')
+        one=mujoco.MjData(model); two=mujoco.MjData(model)
+        two.timer.duration[:]=np.arange(15)*.001
+        if change=='timer-count':two.timer.number[0]=1
+        if change=='native-qpos':two.qpos[0]=.2
+        states=[]
+        for data in (one,two):
+            blob=data.__getstate__()
+            states.append({'native_data':blob,'native_sha256':p.hashlib.sha256(blob).hexdigest(),
+                'application':{'source_run_id':'source','event_prefix':{},'memory':{'u':{},'selector':{},'m':{'facts':[]}},
+                               'receipts':{'old':{'received_run_id':'source','applied_tick':1}}}})
+        if change=='application':states[1]['application']['memory']['m']['facts'].append('changed')
+        if change=='checksum':states[1]['native_sha256']='0'*64
+        if change=='receipt':states[1]['application']['receipts']['new']={'received_run_id':'foreign','applied_tick':6}
+        before=[d.state_digest(value) for value in states]
+        if change in ('checksum','receipt'):
+>           with pytest.raises(ValueError):offline().compare_reproducibility_states(*states,{'old'},{'old'})
+                                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           AttributeError: module 'scripts.memory_restore_offline_readout' has no attribute 'compare_reproducibility_states'
+
+tests/test_memory_restore_offline_readout.py:166: AttributeError
+_ test_v2_registered_candidate_reports_both_comparisons_without_promoting_gate _
+
+tmp_path = PosixPath('/tmp/pytest-of-utkarsh/pytest-6/test_v2_registered_candidate_r0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x71e04b170b50>
+
+    def test_v2_registered_candidate_reports_both_comparisons_without_promoting_gate(tmp_path,monkeypatch):
+        mujoco=pytest.importorskip('mujoco')
+        model=mujoco.MjModel.from_xml_string('<mujoco><worldbody/></mujoco>')
+        one=mujoco.MjData(model); two=mujoco.MjData(model); two.timer.duration[0]=.001
+        registration,receipt,close=retained_pair(tmp_path,monkeypatch,native_pair=[one.__getstate__(),two.__getstate__()])
+        registration['readout_kind']='restore-reproducibility-v2-candidate'
+        result=offline().audit_pair(registration,None)
+        assert result['comparison']['equal'] is False
+>       assert result['candidate_comparison']['equal'] is True
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       KeyError: 'candidate_comparison'
+
+tests/test_memory_restore_offline_readout.py:186: KeyError
+=========================== short test summary info ============================
+FAILED tests/test_memory_restore_offline_readout.py::test_v2_candidate_excludes_only_durations_and_keeps_raw_integrity[duration]
+FAILED tests/test_memory_restore_offline_readout.py::test_v2_candidate_excludes_only_durations_and_keeps_raw_integrity[timer-count]
+FAILED tests/test_memory_restore_offline_readout.py::test_v2_candidate_excludes_only_durations_and_keeps_raw_integrity[native-qpos]
+FAILED tests/test_memory_restore_offline_readout.py::test_v2_candidate_excludes_only_durations_and_keeps_raw_integrity[application]
+FAILED tests/test_memory_restore_offline_readout.py::test_v2_candidate_excludes_only_durations_and_keeps_raw_integrity[checksum]
+FAILED tests/test_memory_restore_offline_readout.py::test_v2_candidate_excludes_only_durations_and_keeps_raw_integrity[receipt]
+FAILED tests/test_memory_restore_offline_readout.py::test_v2_registered_candidate_reports_both_comparisons_without_promoting_gate
+7 failed, 14 deselected in 0.31s
