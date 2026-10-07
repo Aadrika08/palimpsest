@@ -71,6 +71,9 @@ Create a run, start or step it, then pause to capture a snapshot. World edits ha
 
 Branches run sequentially in fresh workers. Preserving the controller restores its state; choosing a different controller retains the world but starts fresh controller state and records that distinction. Compare provenance before interpreting route overlays. Loading, replay, failure, termination and time limits retain explicit labels. CPU full-model continuation is qualified only for the measured profile; CUDA has the known strict-continuation limitation described below.
 
+To recover a closed run's snapshots after reloading, select its entry in
+**Recorded run**, then select a **Snapshot** and choose **Start branch**.
+
 The inspector reports measured active execution time and real-time factor (advanced simulated seconds divided by active wall seconds). Loading and paused periods are excluded; logging, rendering and waiting for a requested pause boundary are included. A value below one means slower than real time. Trajectory visibility is a presentation-only control and sends no simulation command. Close the active owner before exporting a completed recording.
 
 The lab stores UUID-named directories under `runs/lab/`. Playback reads recorded values without simulation or inference. Action replay advances physics using recorded actions and skips inference. Policy replay recomputes the recorded controller. Both executable replays check compatible source provenance, snapshots and numeric records, then report agreement or the first divergence under fixed tolerances; completion alone is not agreement.
