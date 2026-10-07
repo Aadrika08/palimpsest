@@ -7,7 +7,8 @@ artwork material pass and pending timer-aware restore study. No model inference,
 scientific scoring, new research arm, held-out access or human acceptance.
 
 Use a new worktree, unchanged pinned upstream `8d96459`, the existing Python 3.11
-environment, Node 24.21.0, Chromium and cached UI dependencies matching the lock.
+environment, Node 24.21.0, Chromium and cached UI dependency metadata matching the
+lock and declared versions. This does not rehash every installed package file.
 This tests cached setup, not a new dependency installation or model-asset fetch.
 Freeze source/control/runtime identities before launch; keep one consumed marker.
 
