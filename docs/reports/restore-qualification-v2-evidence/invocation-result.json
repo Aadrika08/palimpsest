@@ -1,0 +1,39 @@
+{
+  "cleanup": [
+    {
+      "matching_owner_exited": true,
+      "owner": {
+        "pgid": 49,
+        "pid": 49,
+        "run_id": "209e91c0ae6f4c30a0f98dd7394228d1",
+        "starttime": 7998117
+      },
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/restore-v2-execution/runs/restore-v2-pair-20261007T150507Z/stage/runs/209e91c0ae6f4c30a0f98dd7394228d1/owner.json",
+      "status": "already-exited"
+    },
+    {
+      "matching_owner_exited": true,
+      "owner": {
+        "pgid": 104,
+        "pid": 104,
+        "run_id": "c06867fdbf33417ba6f5430d4cff7e63",
+        "starttime": 8000872
+      },
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/restore-v2-execution/runs/restore-v2-pair-20261007T150507Z/stage/runs/c06867fdbf33417ba6f5430d4cff7e63/owner.json",
+      "status": "already-exited"
+    }
+  ],
+  "failures": [],
+  "native_exit_code": 0,
+  "pipeline_exit_code": 0,
+  "qualification_claims": [],
+  "registration_sha256": "d731fb72ff8c10d5a004966ee197a84bf52a5f96e279f43bfbd96c85e4986dc8",
+  "storage": {
+    "files": 67,
+    "headroom_bytes": 67108864,
+    "max_bytes": 8589934592,
+    "min_free_bytes": 2147483648,
+    "remaining_bytes": 8578476018,
+    "used_bytes": 11458574
+  }
+}

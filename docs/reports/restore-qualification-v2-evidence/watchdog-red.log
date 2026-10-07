@@ -1,0 +1,79 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+___________ test_outer_watchdog_encloses_supervised_finalization[0] ____________
+
+tmp_path = PosixPath('/tmp/pytest-of-utkarsh/pytest-31/test_outer_watchdog_encloses_s0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7c8cf6da17d0>
+exit_code = 0
+
+    @pytest.mark.parametrize('exit_code', [0, 124])
+    def test_outer_watchdog_encloses_supervised_finalization(tmp_path, monkeypatch, exit_code):
+        module = launcher(); reg = registration(tmp_path); reg['python'] = sys.executable
+        evidence = Path(reg['publication_root']); evidence.mkdir(parents=True)
+        source = evidence/'execute-restore-v2.py'; shutil.copyfile(module.__file__, source)
+        monkeypatch.setattr(module, '__file__', str(source))
+        (evidence/'registration.json').write_text(json.dumps(reg))
+        root = Path(reg['output']); root.mkdir(parents=True)
+        (root/'scientific-close.json').write_text(json.dumps({'narrow_restore_passed': True}))
+        monkeypatch.setattr(module, 'admission', lambda *a, **kw: reg)
+        monkeypatch.setattr(module.subprocess, 'check_output', lambda *a, **kw: 'a'*40)
+        disk_usage = shutil.disk_usage
+        monkeypatch.setattr(shutil, 'disk_usage', lambda path: disk_usage(path)._replace(free=20*p.GiB))
+        calls = []
+        def child(command, **kwargs):
+            calls.append(command)
+            assert command[:4] == ['timeout', '--signal=TERM', '--kill-after=5', '890s']
+            assert command[-1] == '--supervised'
+            return SimpleNamespace(pid=999999999, wait=lambda **kw: exit_code, poll=lambda: exit_code)
+        monkeypatch.setattr(module.subprocess, 'Popen', child)
+>       assert module.main([]) == (0 if exit_code == 0 else 1)
+E       AssertionError: assert 1 == 0
+E        +  where 1 = <function main at 0x7c8cf6cdcd60>([])
+E        +    where <function main at 0x7c8cf6cdcd60> = <module 'restore_v2_launcher' from '/home/utkarsh/Work/shraddha/brain/.worktrees/restore-v2-execution/docs/reports/restore-qualification-v2-evidence/execute-restore-v2.py'>.main
+
+tests/test_restore_v2_launcher.py:229: AssertionError
+----------------------------- Captured stdout call -----------------------------
+{"restore_v2_invocation": "starting", "output": "/tmp/pytest-of-utkarsh/pytest-31/test_outer_watchdog_encloses_s0/runs/restore-v2-pair-fixture"}
+{"native_exit_code": 1, "pipeline_exit_code": null, "qualification_claims": [], "failures": ["assert '/tmp/pytest-...stration.json' == '--supervised'\n  \n  - --supervised\n  + /tmp/pytest-of-utkarsh/pytest-31/test_outer_watchdog_encloses_s0/docs/reports/restore-qualification-v2-evidence/registration.json"], "cleanup": [], "registration_sha256": "57cf1b75882e0f9fe920723a80b0a6752fe3ceab5b752516a458d18ddea930f6", "storage": {"used_bytes": 12419, "files": 8, "remaining_bytes": 8589922173, "max_bytes": 8589934592, "headroom_bytes": 67108864, "min_free_bytes": 2147483648}}
+__________ test_outer_watchdog_encloses_supervised_finalization[124] ___________
+
+tmp_path = PosixPath('/tmp/pytest-of-utkarsh/pytest-31/test_outer_watchdog_encloses_s1')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7c8cf6c9c950>
+exit_code = 124
+
+    @pytest.mark.parametrize('exit_code', [0, 124])
+    def test_outer_watchdog_encloses_supervised_finalization(tmp_path, monkeypatch, exit_code):
+        module = launcher(); reg = registration(tmp_path); reg['python'] = sys.executable
+        evidence = Path(reg['publication_root']); evidence.mkdir(parents=True)
+        source = evidence/'execute-restore-v2.py'; shutil.copyfile(module.__file__, source)
+        monkeypatch.setattr(module, '__file__', str(source))
+        (evidence/'registration.json').write_text(json.dumps(reg))
+        root = Path(reg['output']); root.mkdir(parents=True)
+        (root/'scientific-close.json').write_text(json.dumps({'narrow_restore_passed': True}))
+        monkeypatch.setattr(module, 'admission', lambda *a, **kw: reg)
+        monkeypatch.setattr(module.subprocess, 'check_output', lambda *a, **kw: 'a'*40)
+        disk_usage = shutil.disk_usage
+        monkeypatch.setattr(shutil, 'disk_usage', lambda path: disk_usage(path)._replace(free=20*p.GiB))
+        calls = []
+        def child(command, **kwargs):
+            calls.append(command)
+            assert command[:4] == ['timeout', '--signal=TERM', '--kill-after=5', '890s']
+            assert command[-1] == '--supervised'
+            return SimpleNamespace(pid=999999999, wait=lambda **kw: exit_code, poll=lambda: exit_code)
+        monkeypatch.setattr(module.subprocess, 'Popen', child)
+        assert module.main([]) == (0 if exit_code == 0 else 1)
+        assert len(calls) == 1
+>       assert calls[0][-1] == '--supervised'
+E       AssertionError: assert '/tmp/pytest-...stration.json' == '--supervised'
+E         
+E         - --supervised
+E         + /tmp/pytest-of-utkarsh/pytest-31/test_outer_watchdog_encloses_s1/docs/reports/restore-qualification-v2-evidence/registration.json
+
+tests/test_restore_v2_launcher.py:231: AssertionError
+----------------------------- Captured stdout call -----------------------------
+{"restore_v2_invocation": "starting", "output": "/tmp/pytest-of-utkarsh/pytest-31/test_outer_watchdog_encloses_s1/runs/restore-v2-pair-fixture"}
+{"native_exit_code": 1, "pipeline_exit_code": null, "qualification_claims": [], "failures": ["assert '/tmp/pytest-...stration.json' == '--supervised'\n  \n  - --supervised\n  + /tmp/pytest-of-utkarsh/pytest-31/test_outer_watchdog_encloses_s1/docs/reports/restore-qualification-v2-evidence/registration.json"], "cleanup": [], "registration_sha256": "d0faa620e4196ba5eef7a9c92886ff4e8e16cb72ab309c83c9a35ffa2cdc2bb0", "storage": {"used_bytes": 12419, "files": 8, "remaining_bytes": 8589922173, "max_bytes": 8589934592, "headroom_bytes": 67108864, "min_free_bytes": 2147483648}}
+=========================== short test summary info ============================
+FAILED tests/test_restore_v2_launcher.py::test_outer_watchdog_encloses_supervised_finalization[0]
+FAILED tests/test_restore_v2_launcher.py::test_outer_watchdog_encloses_supervised_finalization[124]
+2 failed, 17 deselected in 0.23s

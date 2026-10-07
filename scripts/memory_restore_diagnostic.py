@@ -10,8 +10,11 @@ from datetime import datetime, timezone
 import json
 import os
 from pathlib import Path
+import platform
 import signal
+import socket
 import subprocess
+import sys
 import time
 
 from scripts import memory_decision_pilot as p
@@ -19,7 +22,86 @@ from scripts.memory_waypoint_study import cleanup_owners, replace_control
 from palimpsest.snapshots import read_snapshot, state_digest
 
 PROFILE = '7faba0a56d129ea051d5c28a019964034b546923dbe49cedb3a605af84437ec3'
-CAPS = {'diagnose': (600, 300), 'qualify': (4300, 600)}
+CAPS = {'diagnose': (600, 300), 'qualify': (4300, 600), 'restore-v2': (600, 300)}
+STATE_CONTRACT = 'restore-reproducibility-v2-candidate'
+
+
+def runtime_v2_identity():
+    import importlib.metadata
+    environment = ('OMP_NUM_THREADS', 'OPENBLAS_NUM_THREADS', 'MKL_NUM_THREADS',
+                   'NUMEXPR_NUM_THREADS', 'MUJOCO_GL', 'CUDA_VISIBLE_DEVICES')
+    return {'python_path': sys.executable, 'python_resolved_path': str(Path(sys.executable).resolve()),
+        'python_sha256': p.file_hash(Path(sys.executable).resolve()),
+        'python_version': list(sys.version_info[:3]), 'platform': platform.platform(),
+        'host': socket.gethostname(),
+        'versions': {name: importlib.metadata.version(name) for name in ('numpy', 'mujoco', 'torch')},
+        'environment': {name: os.environ.get(name) for name in environment}}
+
+
+def validate_v2_registration(registration):
+    """The new scope never broadens a legacy registration or preserved root."""
+    if (registration.get('schema') != 'memory-restore-registration-v2'
+            or registration.get('mode') != 'restore-v2'
+            or registration.get('state_contract') != STATE_CONTRACT
+            or registration.get('seconds_caps') != [600, 300]
+            or registration.get('expected_specs') != p.travel_specs('travel-feasibility', PROFILE)[-2:]
+            or not isinstance(registration.get('runtime'), dict) or not registration['runtime']):
+        raise ValueError('Unknown or incomplete v2 registration')
+    repo = p.checked_path(registration['repo'])
+    control = p.checked_path(registration['control_root'])
+    publication = p.checked_path(registration['publication_root'])
+    output = p.checked_path(registration['output'])
+    if (control != repo/'.superpowers/sdd/restore-qualification-v2'
+            or publication != repo/'docs/reports/restore-qualification-v2-evidence'
+            or output.parent != repo/'runs' or not output.name.startswith('restore-v2-pair-')):
+        raise ValueError('Registered v2 output/control/publication path differs')
+    paths = {'comparator': repo/'scripts/memory_restore_offline_readout.py',
+             'auditor': repo/'scripts/memory_restore_v2_audit.py',
+             'launcher': publication/'execute-restore-v2.py'}
+    for name, expected in paths.items():
+        digest = registration.get(name+'_sha256')
+        if (registration.get(name+'_path') != str(expected) or type(digest) is not str
+                or len(digest) != 64 or any(c not in '0123456789abcdef' for c in digest)):
+            raise ValueError('Missing or invalid v2 '+name+' binding')
+    preserved = registration.get('preserved_sets')
+    protected = [p.checked_path(path) for path in registration.get('protected_roots', [])]
+    if not isinstance(preserved, list) or not preserved:
+        raise ValueError('Missing preserved v2 evidence inventory')
+    required = [p.checked_path(registration['prior_output']),
+                p.checked_path(registration['source_snapshot']['path']),
+                *(p.checked_path(item['root']) for item in preserved)]
+    if any(path not in protected for path in required):
+        raise ValueError('Preserved v2 source protection is incomplete')
+    sources = p.source_paths(repo, registration['assets'], registration['history_root'])+protected
+    if any(p.overlaps(root, source) for root in (output, control, publication) for source in sources):
+        raise ValueError('Registered v2 output overlaps preserved source')
+    if any(p.overlaps(a, b) for a, b in ((output, control), (output, publication), (control, publication))):
+        raise ValueError('Registered v2 counted roots overlap')
+
+
+def restore_v2_budget(registration):
+    from palimpsest.storage import StorageBudget, StorageLimits
+    return StorageBudget(tuple(p.checked_path(registration[key]) for key in
+        ('output', 'control_root', 'publication_root')), StorageLimits(max_bytes=8*p.GiB,
+        min_free_bytes=2*p.GiB, max_runs=38, max_snapshots=1), headroom_bytes=64*p.MiB)
+
+
+def recheck_v2_inputs(registration, deadline=None):
+    validate_v2_registration(registration)
+    if runtime_v2_identity() != registration['runtime']:
+        raise ValueError('Registered v2 runtime differs')
+    for name in ('comparator', 'auditor', 'launcher'):
+        if p.file_hash(registration[name+'_path']) != registration[name+'_sha256']:
+            raise ValueError('Registered v2 '+name+' changed')
+        p.deadline_check(deadline)
+    recheck_inputs(registration, deadline)
+    reference = registration['source_snapshot']; source = p.checked_path(reference['path'])
+    if source.stat().st_size != reference['bytes'] or p.file_hash(source) != reference['sha256']:
+        raise ValueError('Registered v2 raw source changed')
+    from scripts.memory_restore_offline_readout import verify_inventory
+    for reference in registration['preserved_sets']:
+        verify_inventory(reference, deadline)
+    p.deadline_check(deadline)
 
 
 def compare_states(left, right, left_ids, right_ids):
@@ -228,6 +310,11 @@ def run_pair(plan, storage, deadline, source, checkpoint=None):
     results = []
     for spec in p.travel_specs('travel-feasibility', plan['selected_profile_sha256'])[-2:]:
         p.deadline_check(deadline)
+        if plan.get('restore_v2_budget_reservation') is True:
+            # The unchanged child budgets its run root only. Reserve its complete
+            # recording, two SNPs and bounded control/log allowance across all
+            # three roots; concurrent parent logs fit the existing 64 MiB reserve.
+            storage.check(512*p.MiB+2*16*p.MiB+4*p.MiB, path=Path(plan['output'])/'runs')
         result = p.launch_owner('travel-feasibility', spec, plan, storage, deadline,
                                 source=source, retain_repeat_state=True)
         results.append(result)
@@ -264,7 +351,10 @@ def main(argv=None):
     parser.add_argument('--registration', type=Path, required=True)
     args = parser.parse_args(argv)
     registration = p.read_json(args.registration)
-    if registration.get('schema') != 'memory-restore-registration-v1' or registration.get('mode') not in CAPS:
+    v2 = registration.get('mode') == 'restore-v2'
+    if v2:
+        validate_v2_registration(registration)
+    elif registration.get('schema') != 'memory-restore-registration-v1' or registration.get('mode') not in ('diagnose', 'qualify'):
         raise ValueError('Unknown diagnostic registration')
     mode = registration['mode']; owner_cap, readout_cap = CAPS[mode]
     global_deadline = started+owner_cap+readout_cap; owner_deadline = started+owner_cap
@@ -281,22 +371,31 @@ def main(argv=None):
     if subprocess.check_output(['git', 'diff', registration['implementation_commit'], head, '--name-only',
         '--', 'src', 'scripts', 'tests', 'model_manifests', 'uv.lock', 'upstream'], cwd=repo):
         raise ValueError('Registered implementation differs')
-    root = p.safe_output(registration['output'], p.source_paths(repo, registration['assets'], registration['history_root']))
+    sources = p.source_paths(repo, registration['assets'], registration['history_root'])
+    if v2:
+        sources += registration['protected_roots']+[registration['control_root'], registration['publication_root']]
+    root = p.safe_output(registration['output'], sources)
     if root.exists():
         raise ValueError('Registered invocation output already exists; no retry')
-    recheck_inputs(registration, owner_deadline)
+    recheck = recheck_v2_inputs if v2 else recheck_inputs
+    recheck(registration, owner_deadline)
     plan = p.preflight(repo, Path(registration['assets']), Path(registration['history_root']),
         root/'stage', root, owner_deadline, profile_sha256=PROFILE)
     plan.update(protocol=p.TRAVEL_PROTOCOL, protocol_sha256=p.TRAVEL_PROTOCOL_SHA256,
                 selected_profile_sha256=PROFILE)
-    storage = p.phase_budget(root)
-    receipt = {'schema': 'memory-restore-execution-v1', 'mode': mode, 'implementation_head': head,
+    if v2:
+        plan['restore_v2_budget_reservation'] = True
+    storage = restore_v2_budget(registration) if v2 else p.phase_budget(root)
+    receipt = {'schema': 'memory-restore-execution-v2' if v2 else 'memory-restore-execution-v1', 'mode': mode, 'implementation_head': head,
         'registration_sha256': p.file_hash(args.registration), 'source_identity': registration['source_identity'],
         'started_utc': datetime.now(timezone.utc).isoformat(), 'started_monotonic': started,
         'global_deadline_monotonic': global_deadline, 'owner_deadline_monotonic': owner_deadline,
         'seconds_caps': [owner_cap, readout_cap], 'output': str(root), 'status': 'running',
         'attempted': [], 'qualification_claims': [], 'paired_pilot': 'unattempted-by-scope',
         'held_out_used': False, 'retries': 0, 'native_prerequisites_passed': False}
+    if v2:
+        receipt.update(state_contract=STATE_CONTRACT, candidate_restore_pair_matches=False,
+                       narrow_restore_passed=False, process_namespace=os.readlink('/proc/self/ns/pid'))
     def interrupted(signum, frame):
         raise RuntimeError('External invocation interruption: '+str(signum))
     signal.signal(signal.SIGTERM, interrupted)
@@ -307,7 +406,7 @@ def main(argv=None):
         p.write_control(stage/'preflight.json', plan, storage)
         replace_control(root/'execution.json', receipt, storage)
         try:
-            if mode == 'diagnose':
+            if mode in ('diagnose', 'restore-v2'):
                 source = copy_source(registration['source_snapshot'], stage/'source/snapshots/initial.snp', storage)
                 p.write_control(root/'source-copy.json', source, storage)
                 def checkpoint(results):
@@ -334,7 +433,7 @@ def main(argv=None):
                 attempted = {row['run_id']: row for row in receipt['attempted']}
                 rows = audit_owners(stage, attempted, readout_deadline)
                 receipt['owners'] = rows
-                expected = (p.travel_specs('travel-feasibility', PROFILE)[-2:] if mode=='diagnose'
+                expected = (p.travel_specs('travel-feasibility', PROFILE)[-2:] if mode in ('diagnose', 'restore-v2')
                             else p.travel_specs('travel-feasibility', PROFILE))
                 by_id = {row['job_id']: row for row in rows}
                 receipt['unattempted'] = [spec['id'] for spec in expected if spec['id'] not in by_id]
@@ -354,16 +453,28 @@ def main(argv=None):
                     trace_equal = repeats[0]['audit']['trace_digest'] == repeats[1]['audit']['trace_digest']
                     receipt['restore_pair_matches'] = (comparison['equal'] and trace_equal and
                         all(row['audit'].get('invariants_preserved') is True for row in repeats))
+                    if v2:
+                        from scripts.memory_restore_offline_readout import compare_reproducibility_states
+                        candidate = compare_reproducibility_states(posts[0][0], posts[1][0],
+                            posts[0][1], posts[1][1], readout_deadline)
+                        p.write_control(root/'candidate-state-comparison.json', candidate, storage)
+                        receipt['candidate_comparison'] = {k: candidate[k] for k in
+                            ('equal', 'left_digest', 'right_digest', 'differing_components', 'contract_id')}
+                        receipt['candidate_restore_pair_matches'] = (candidate['equal'] and trace_equal
+                            and all(row['audit'].get('invariants_preserved') is True for row in repeats))
                 else:
                     receipt['restore_pair_matches'] = False
-                if mode=='diagnose':
+                if v2:
+                    receipt['status'] = ('narrow-restore-provisional-pass' if complete
+                        and receipt['candidate_restore_pair_matches'] else 'narrow-restore-failure')
+                elif mode=='diagnose':
                     receipt['status'] = ('diagnostic-pair-audited' if complete else 'diagnostic-evidence-stop')
                 else:
                     gates = complete and receipt['restore_pair_matches'] and all(
                         p.prerequisite_pass(spec['mandatory'], {**by_id[spec['id']]['audit'],
                             'repeat_matches': receipt['restore_pair_matches']}) for spec in expected)
                     receipt['status'] = 'native-prerequisite-failure'
-                recheck_inputs(registration, readout_deadline)
+                recheck(registration, readout_deadline)
                 receipt['source_and_prior_evidence_unchanged'] = True
                 receipt['artifact_index'] = [item for item in p.hash_ledger(root, readout_deadline)
                                              if item['path'] != 'execution.json']
@@ -388,7 +499,8 @@ def main(argv=None):
                 replace_control(root/'execution.json', receipt, storage)
     print(json.dumps({key: receipt.get(key) for key in ('status','mode','total_seconds','readout_seconds',
         'total_new_controls','restore_pair_matches','comparison','native_prerequisites_passed')}, indent=2), flush=True)
-    return 0 if receipt['status'] in ('diagnostic-pair-audited','native-prerequisites-passed','native-prerequisite-failure') else 1
+    return 0 if receipt['status'] in ('diagnostic-pair-audited','native-prerequisites-passed',
+        'native-prerequisite-failure','narrow-restore-provisional-pass') else 1
 
 
 if __name__ == '__main__':

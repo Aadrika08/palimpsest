@@ -1,0 +1,445 @@
+FFFFFF........FF                                                         [100%]
+=================================== FAILURES ===================================
+___ test_fresh_main_preserves_legacy_and_never_publishes_terminal_pass[pass] ___
+
+tmp_path = PosixPath('/tmp/pytest-of-utkarsh/pytest-14/test_fresh_main_preserves_lega0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x79a802707d90>
+outcome = 'pass'
+
+    @pytest.mark.parametrize('outcome', ['pass', 'trace', 'invariant', 'candidate', 'readout', 'late'])
+    def test_fresh_main_preserves_legacy_and_never_publishes_terminal_pass(tmp_path, monkeypatch, outcome):
+        repo = tmp_path/'repo'; (repo/'scripts').mkdir(parents=True)
+        monkeypatch.setattr(d, '__file__', str(repo/'scripts/memory_restore_diagnostic.py'))
+        reg = registration(repo); output = Path(reg['output'])
+        regfile = tmp_path/'registration.json'; regfile.write_text(json.dumps(reg))
+        monkeypatch.setattr(d.subprocess, 'check_output',
+            lambda command, **kwargs: '0'*40+'\n' if 'rev-parse' in command else b'')
+        checks = []
+        def recheck(registration, deadline=None):
+            checks.append(True)
+            if len(checks) == 2 and outcome == 'readout':
+                raise ValueError('frozen source changed')
+        monkeypatch.setattr(d, 'recheck_v2_inputs', recheck, raising=False)
+        monkeypatch.setattr(p, 'preflight', lambda *a, **kw: {'output': str(output/'stage')})
+        from contextlib import nullcontext
+        from palimpsest.storage import StorageBudget
+        monkeypatch.setattr(StorageBudget, 'lock', lambda self: nullcontext())
+        monkeypatch.setattr(d, 'copy_source', lambda *a: {})
+        monkeypatch.setattr(d, 'run_pair', lambda *a: [])
+        monkeypatch.setattr(d, 'cleanup_owners', lambda root: [])
+        rows = [{'job_id': 'restore-'+str(index+1), 'run_id': str(index),
+            'raw_audit_pass': True, 'matching_owner_exited': True,
+            'retained_post_state_audited': True, 'raw_rows': 5,
+            'audit': {'trace_digest': 'different' if outcome == 'trace' and index else 'same',
+                      'invariants_preserved': outcome != 'invariant'}} for index in range(2)]
+        monkeypatch.setattr(d, 'audit_owners', lambda *a: rows)
+        monkeypatch.setattr(d, 'audit_post_state', lambda *a: (post_state(), {'old'}))
+        from scripts import memory_restore_offline_readout as comparator
+        candidate = {'equal': outcome != 'candidate', 'contract_id': reg['state_contract'],
+                     'left_digest': '1'*64, 'right_digest': '1'*64, 'differing_components': []}
+        monkeypatch.setattr(comparator, 'compare_reproducibility_states', lambda *a: copy.deepcopy(candidate))
+        expired = []
+        if outcome == 'late':
+            real_time = d.time.monotonic
+            monkeypatch.setattr(d.time, 'monotonic', lambda: real_time()+(10000 if expired else 0))
+            real_replace = d.replace_control
+            def replace(path, value, storage):
+                real_replace(path, value, storage)
+                if value.get('status') == 'narrow-restore-provisional-pass':
+                    expired.append(True)
+            monkeypatch.setattr(d, 'replace_control', replace)
+>       assert d.main(['--registration', str(regfile)]) == (0 if outcome == 'pass' else 1)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_restore_v2_driver.py:78: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+argv = ['--registration', '/tmp/pytest-of-utkarsh/pytest-14/test_fresh_main_preserves_lega0/registration.json']
+
+    def main(argv=None):
+        started = time.monotonic()
+        parser = argparse.ArgumentParser(description=__doc__)
+        parser.add_argument('--registration', type=Path, required=True)
+        args = parser.parse_args(argv)
+        registration = p.read_json(args.registration)
+        if registration.get('schema') != 'memory-restore-registration-v1' or registration.get('mode') not in CAPS:
+>           raise ValueError('Unknown diagnostic registration')
+E           ValueError: Unknown diagnostic registration
+
+scripts/memory_restore_diagnostic.py:268: ValueError
+__ test_fresh_main_preserves_legacy_and_never_publishes_terminal_pass[trace] ___
+
+tmp_path = PosixPath('/tmp/pytest-of-utkarsh/pytest-14/test_fresh_main_preserves_lega1')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x79a802783850>
+outcome = 'trace'
+
+    @pytest.mark.parametrize('outcome', ['pass', 'trace', 'invariant', 'candidate', 'readout', 'late'])
+    def test_fresh_main_preserves_legacy_and_never_publishes_terminal_pass(tmp_path, monkeypatch, outcome):
+        repo = tmp_path/'repo'; (repo/'scripts').mkdir(parents=True)
+        monkeypatch.setattr(d, '__file__', str(repo/'scripts/memory_restore_diagnostic.py'))
+        reg = registration(repo); output = Path(reg['output'])
+        regfile = tmp_path/'registration.json'; regfile.write_text(json.dumps(reg))
+        monkeypatch.setattr(d.subprocess, 'check_output',
+            lambda command, **kwargs: '0'*40+'\n' if 'rev-parse' in command else b'')
+        checks = []
+        def recheck(registration, deadline=None):
+            checks.append(True)
+            if len(checks) == 2 and outcome == 'readout':
+                raise ValueError('frozen source changed')
+        monkeypatch.setattr(d, 'recheck_v2_inputs', recheck, raising=False)
+        monkeypatch.setattr(p, 'preflight', lambda *a, **kw: {'output': str(output/'stage')})
+        from contextlib import nullcontext
+        from palimpsest.storage import StorageBudget
+        monkeypatch.setattr(StorageBudget, 'lock', lambda self: nullcontext())
+        monkeypatch.setattr(d, 'copy_source', lambda *a: {})
+        monkeypatch.setattr(d, 'run_pair', lambda *a: [])
+        monkeypatch.setattr(d, 'cleanup_owners', lambda root: [])
+        rows = [{'job_id': 'restore-'+str(index+1), 'run_id': str(index),
+            'raw_audit_pass': True, 'matching_owner_exited': True,
+            'retained_post_state_audited': True, 'raw_rows': 5,
+            'audit': {'trace_digest': 'different' if outcome == 'trace' and index else 'same',
+                      'invariants_preserved': outcome != 'invariant'}} for index in range(2)]
+        monkeypatch.setattr(d, 'audit_owners', lambda *a: rows)
+        monkeypatch.setattr(d, 'audit_post_state', lambda *a: (post_state(), {'old'}))
+        from scripts import memory_restore_offline_readout as comparator
+        candidate = {'equal': outcome != 'candidate', 'contract_id': reg['state_contract'],
+                     'left_digest': '1'*64, 'right_digest': '1'*64, 'differing_components': []}
+        monkeypatch.setattr(comparator, 'compare_reproducibility_states', lambda *a: copy.deepcopy(candidate))
+        expired = []
+        if outcome == 'late':
+            real_time = d.time.monotonic
+            monkeypatch.setattr(d.time, 'monotonic', lambda: real_time()+(10000 if expired else 0))
+            real_replace = d.replace_control
+            def replace(path, value, storage):
+                real_replace(path, value, storage)
+                if value.get('status') == 'narrow-restore-provisional-pass':
+                    expired.append(True)
+            monkeypatch.setattr(d, 'replace_control', replace)
+>       assert d.main(['--registration', str(regfile)]) == (0 if outcome == 'pass' else 1)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_restore_v2_driver.py:78: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+argv = ['--registration', '/tmp/pytest-of-utkarsh/pytest-14/test_fresh_main_preserves_lega1/registration.json']
+
+    def main(argv=None):
+        started = time.monotonic()
+        parser = argparse.ArgumentParser(description=__doc__)
+        parser.add_argument('--registration', type=Path, required=True)
+        args = parser.parse_args(argv)
+        registration = p.read_json(args.registration)
+        if registration.get('schema') != 'memory-restore-registration-v1' or registration.get('mode') not in CAPS:
+>           raise ValueError('Unknown diagnostic registration')
+E           ValueError: Unknown diagnostic registration
+
+scripts/memory_restore_diagnostic.py:268: ValueError
+_ test_fresh_main_preserves_legacy_and_never_publishes_terminal_pass[invariant] _
+
+tmp_path = PosixPath('/tmp/pytest-of-utkarsh/pytest-14/test_fresh_main_preserves_lega2')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x79a8011ac1d0>
+outcome = 'invariant'
+
+    @pytest.mark.parametrize('outcome', ['pass', 'trace', 'invariant', 'candidate', 'readout', 'late'])
+    def test_fresh_main_preserves_legacy_and_never_publishes_terminal_pass(tmp_path, monkeypatch, outcome):
+        repo = tmp_path/'repo'; (repo/'scripts').mkdir(parents=True)
+        monkeypatch.setattr(d, '__file__', str(repo/'scripts/memory_restore_diagnostic.py'))
+        reg = registration(repo); output = Path(reg['output'])
+        regfile = tmp_path/'registration.json'; regfile.write_text(json.dumps(reg))
+        monkeypatch.setattr(d.subprocess, 'check_output',
+            lambda command, **kwargs: '0'*40+'\n' if 'rev-parse' in command else b'')
+        checks = []
+        def recheck(registration, deadline=None):
+            checks.append(True)
+            if len(checks) == 2 and outcome == 'readout':
+                raise ValueError('frozen source changed')
+        monkeypatch.setattr(d, 'recheck_v2_inputs', recheck, raising=False)
+        monkeypatch.setattr(p, 'preflight', lambda *a, **kw: {'output': str(output/'stage')})
+        from contextlib import nullcontext
+        from palimpsest.storage import StorageBudget
+        monkeypatch.setattr(StorageBudget, 'lock', lambda self: nullcontext())
+        monkeypatch.setattr(d, 'copy_source', lambda *a: {})
+        monkeypatch.setattr(d, 'run_pair', lambda *a: [])
+        monkeypatch.setattr(d, 'cleanup_owners', lambda root: [])
+        rows = [{'job_id': 'restore-'+str(index+1), 'run_id': str(index),
+            'raw_audit_pass': True, 'matching_owner_exited': True,
+            'retained_post_state_audited': True, 'raw_rows': 5,
+            'audit': {'trace_digest': 'different' if outcome == 'trace' and index else 'same',
+                      'invariants_preserved': outcome != 'invariant'}} for index in range(2)]
+        monkeypatch.setattr(d, 'audit_owners', lambda *a: rows)
+        monkeypatch.setattr(d, 'audit_post_state', lambda *a: (post_state(), {'old'}))
+        from scripts import memory_restore_offline_readout as comparator
+        candidate = {'equal': outcome != 'candidate', 'contract_id': reg['state_contract'],
+                     'left_digest': '1'*64, 'right_digest': '1'*64, 'differing_components': []}
+        monkeypatch.setattr(comparator, 'compare_reproducibility_states', lambda *a: copy.deepcopy(candidate))
+        expired = []
+        if outcome == 'late':
+            real_time = d.time.monotonic
+            monkeypatch.setattr(d.time, 'monotonic', lambda: real_time()+(10000 if expired else 0))
+            real_replace = d.replace_control
+            def replace(path, value, storage):
+                real_replace(path, value, storage)
+                if value.get('status') == 'narrow-restore-provisional-pass':
+                    expired.append(True)
+            monkeypatch.setattr(d, 'replace_control', replace)
+>       assert d.main(['--registration', str(regfile)]) == (0 if outcome == 'pass' else 1)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_restore_v2_driver.py:78: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+argv = ['--registration', '/tmp/pytest-of-utkarsh/pytest-14/test_fresh_main_preserves_lega2/registration.json']
+
+    def main(argv=None):
+        started = time.monotonic()
+        parser = argparse.ArgumentParser(description=__doc__)
+        parser.add_argument('--registration', type=Path, required=True)
+        args = parser.parse_args(argv)
+        registration = p.read_json(args.registration)
+        if registration.get('schema') != 'memory-restore-registration-v1' or registration.get('mode') not in CAPS:
+>           raise ValueError('Unknown diagnostic registration')
+E           ValueError: Unknown diagnostic registration
+
+scripts/memory_restore_diagnostic.py:268: ValueError
+_ test_fresh_main_preserves_legacy_and_never_publishes_terminal_pass[candidate] _
+
+tmp_path = PosixPath('/tmp/pytest-of-utkarsh/pytest-14/test_fresh_main_preserves_lega3')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x79a80115c910>
+outcome = 'candidate'
+
+    @pytest.mark.parametrize('outcome', ['pass', 'trace', 'invariant', 'candidate', 'readout', 'late'])
+    def test_fresh_main_preserves_legacy_and_never_publishes_terminal_pass(tmp_path, monkeypatch, outcome):
+        repo = tmp_path/'repo'; (repo/'scripts').mkdir(parents=True)
+        monkeypatch.setattr(d, '__file__', str(repo/'scripts/memory_restore_diagnostic.py'))
+        reg = registration(repo); output = Path(reg['output'])
+        regfile = tmp_path/'registration.json'; regfile.write_text(json.dumps(reg))
+        monkeypatch.setattr(d.subprocess, 'check_output',
+            lambda command, **kwargs: '0'*40+'\n' if 'rev-parse' in command else b'')
+        checks = []
+        def recheck(registration, deadline=None):
+            checks.append(True)
+            if len(checks) == 2 and outcome == 'readout':
+                raise ValueError('frozen source changed')
+        monkeypatch.setattr(d, 'recheck_v2_inputs', recheck, raising=False)
+        monkeypatch.setattr(p, 'preflight', lambda *a, **kw: {'output': str(output/'stage')})
+        from contextlib import nullcontext
+        from palimpsest.storage import StorageBudget
+        monkeypatch.setattr(StorageBudget, 'lock', lambda self: nullcontext())
+        monkeypatch.setattr(d, 'copy_source', lambda *a: {})
+        monkeypatch.setattr(d, 'run_pair', lambda *a: [])
+        monkeypatch.setattr(d, 'cleanup_owners', lambda root: [])
+        rows = [{'job_id': 'restore-'+str(index+1), 'run_id': str(index),
+            'raw_audit_pass': True, 'matching_owner_exited': True,
+            'retained_post_state_audited': True, 'raw_rows': 5,
+            'audit': {'trace_digest': 'different' if outcome == 'trace' and index else 'same',
+                      'invariants_preserved': outcome != 'invariant'}} for index in range(2)]
+        monkeypatch.setattr(d, 'audit_owners', lambda *a: rows)
+        monkeypatch.setattr(d, 'audit_post_state', lambda *a: (post_state(), {'old'}))
+        from scripts import memory_restore_offline_readout as comparator
+        candidate = {'equal': outcome != 'candidate', 'contract_id': reg['state_contract'],
+                     'left_digest': '1'*64, 'right_digest': '1'*64, 'differing_components': []}
+        monkeypatch.setattr(comparator, 'compare_reproducibility_states', lambda *a: copy.deepcopy(candidate))
+        expired = []
+        if outcome == 'late':
+            real_time = d.time.monotonic
+            monkeypatch.setattr(d.time, 'monotonic', lambda: real_time()+(10000 if expired else 0))
+            real_replace = d.replace_control
+            def replace(path, value, storage):
+                real_replace(path, value, storage)
+                if value.get('status') == 'narrow-restore-provisional-pass':
+                    expired.append(True)
+            monkeypatch.setattr(d, 'replace_control', replace)
+>       assert d.main(['--registration', str(regfile)]) == (0 if outcome == 'pass' else 1)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_restore_v2_driver.py:78: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+argv = ['--registration', '/tmp/pytest-of-utkarsh/pytest-14/test_fresh_main_preserves_lega3/registration.json']
+
+    def main(argv=None):
+        started = time.monotonic()
+        parser = argparse.ArgumentParser(description=__doc__)
+        parser.add_argument('--registration', type=Path, required=True)
+        args = parser.parse_args(argv)
+        registration = p.read_json(args.registration)
+        if registration.get('schema') != 'memory-restore-registration-v1' or registration.get('mode') not in CAPS:
+>           raise ValueError('Unknown diagnostic registration')
+E           ValueError: Unknown diagnostic registration
+
+scripts/memory_restore_diagnostic.py:268: ValueError
+_ test_fresh_main_preserves_legacy_and_never_publishes_terminal_pass[readout] __
+
+tmp_path = PosixPath('/tmp/pytest-of-utkarsh/pytest-14/test_fresh_main_preserves_lega4')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x79a80115f390>
+outcome = 'readout'
+
+    @pytest.mark.parametrize('outcome', ['pass', 'trace', 'invariant', 'candidate', 'readout', 'late'])
+    def test_fresh_main_preserves_legacy_and_never_publishes_terminal_pass(tmp_path, monkeypatch, outcome):
+        repo = tmp_path/'repo'; (repo/'scripts').mkdir(parents=True)
+        monkeypatch.setattr(d, '__file__', str(repo/'scripts/memory_restore_diagnostic.py'))
+        reg = registration(repo); output = Path(reg['output'])
+        regfile = tmp_path/'registration.json'; regfile.write_text(json.dumps(reg))
+        monkeypatch.setattr(d.subprocess, 'check_output',
+            lambda command, **kwargs: '0'*40+'\n' if 'rev-parse' in command else b'')
+        checks = []
+        def recheck(registration, deadline=None):
+            checks.append(True)
+            if len(checks) == 2 and outcome == 'readout':
+                raise ValueError('frozen source changed')
+        monkeypatch.setattr(d, 'recheck_v2_inputs', recheck, raising=False)
+        monkeypatch.setattr(p, 'preflight', lambda *a, **kw: {'output': str(output/'stage')})
+        from contextlib import nullcontext
+        from palimpsest.storage import StorageBudget
+        monkeypatch.setattr(StorageBudget, 'lock', lambda self: nullcontext())
+        monkeypatch.setattr(d, 'copy_source', lambda *a: {})
+        monkeypatch.setattr(d, 'run_pair', lambda *a: [])
+        monkeypatch.setattr(d, 'cleanup_owners', lambda root: [])
+        rows = [{'job_id': 'restore-'+str(index+1), 'run_id': str(index),
+            'raw_audit_pass': True, 'matching_owner_exited': True,
+            'retained_post_state_audited': True, 'raw_rows': 5,
+            'audit': {'trace_digest': 'different' if outcome == 'trace' and index else 'same',
+                      'invariants_preserved': outcome != 'invariant'}} for index in range(2)]
+        monkeypatch.setattr(d, 'audit_owners', lambda *a: rows)
+        monkeypatch.setattr(d, 'audit_post_state', lambda *a: (post_state(), {'old'}))
+        from scripts import memory_restore_offline_readout as comparator
+        candidate = {'equal': outcome != 'candidate', 'contract_id': reg['state_contract'],
+                     'left_digest': '1'*64, 'right_digest': '1'*64, 'differing_components': []}
+        monkeypatch.setattr(comparator, 'compare_reproducibility_states', lambda *a: copy.deepcopy(candidate))
+        expired = []
+        if outcome == 'late':
+            real_time = d.time.monotonic
+            monkeypatch.setattr(d.time, 'monotonic', lambda: real_time()+(10000 if expired else 0))
+            real_replace = d.replace_control
+            def replace(path, value, storage):
+                real_replace(path, value, storage)
+                if value.get('status') == 'narrow-restore-provisional-pass':
+                    expired.append(True)
+            monkeypatch.setattr(d, 'replace_control', replace)
+>       assert d.main(['--registration', str(regfile)]) == (0 if outcome == 'pass' else 1)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_restore_v2_driver.py:78: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+argv = ['--registration', '/tmp/pytest-of-utkarsh/pytest-14/test_fresh_main_preserves_lega4/registration.json']
+
+    def main(argv=None):
+        started = time.monotonic()
+        parser = argparse.ArgumentParser(description=__doc__)
+        parser.add_argument('--registration', type=Path, required=True)
+        args = parser.parse_args(argv)
+        registration = p.read_json(args.registration)
+        if registration.get('schema') != 'memory-restore-registration-v1' or registration.get('mode') not in CAPS:
+>           raise ValueError('Unknown diagnostic registration')
+E           ValueError: Unknown diagnostic registration
+
+scripts/memory_restore_diagnostic.py:268: ValueError
+___ test_fresh_main_preserves_legacy_and_never_publishes_terminal_pass[late] ___
+
+tmp_path = PosixPath('/tmp/pytest-of-utkarsh/pytest-14/test_fresh_main_preserves_lega5')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x79a8011caf10>
+outcome = 'late'
+
+    @pytest.mark.parametrize('outcome', ['pass', 'trace', 'invariant', 'candidate', 'readout', 'late'])
+    def test_fresh_main_preserves_legacy_and_never_publishes_terminal_pass(tmp_path, monkeypatch, outcome):
+        repo = tmp_path/'repo'; (repo/'scripts').mkdir(parents=True)
+        monkeypatch.setattr(d, '__file__', str(repo/'scripts/memory_restore_diagnostic.py'))
+        reg = registration(repo); output = Path(reg['output'])
+        regfile = tmp_path/'registration.json'; regfile.write_text(json.dumps(reg))
+        monkeypatch.setattr(d.subprocess, 'check_output',
+            lambda command, **kwargs: '0'*40+'\n' if 'rev-parse' in command else b'')
+        checks = []
+        def recheck(registration, deadline=None):
+            checks.append(True)
+            if len(checks) == 2 and outcome == 'readout':
+                raise ValueError('frozen source changed')
+        monkeypatch.setattr(d, 'recheck_v2_inputs', recheck, raising=False)
+        monkeypatch.setattr(p, 'preflight', lambda *a, **kw: {'output': str(output/'stage')})
+        from contextlib import nullcontext
+        from palimpsest.storage import StorageBudget
+        monkeypatch.setattr(StorageBudget, 'lock', lambda self: nullcontext())
+        monkeypatch.setattr(d, 'copy_source', lambda *a: {})
+        monkeypatch.setattr(d, 'run_pair', lambda *a: [])
+        monkeypatch.setattr(d, 'cleanup_owners', lambda root: [])
+        rows = [{'job_id': 'restore-'+str(index+1), 'run_id': str(index),
+            'raw_audit_pass': True, 'matching_owner_exited': True,
+            'retained_post_state_audited': True, 'raw_rows': 5,
+            'audit': {'trace_digest': 'different' if outcome == 'trace' and index else 'same',
+                      'invariants_preserved': outcome != 'invariant'}} for index in range(2)]
+        monkeypatch.setattr(d, 'audit_owners', lambda *a: rows)
+        monkeypatch.setattr(d, 'audit_post_state', lambda *a: (post_state(), {'old'}))
+        from scripts import memory_restore_offline_readout as comparator
+        candidate = {'equal': outcome != 'candidate', 'contract_id': reg['state_contract'],
+                     'left_digest': '1'*64, 'right_digest': '1'*64, 'differing_components': []}
+        monkeypatch.setattr(comparator, 'compare_reproducibility_states', lambda *a: copy.deepcopy(candidate))
+        expired = []
+        if outcome == 'late':
+            real_time = d.time.monotonic
+            monkeypatch.setattr(d.time, 'monotonic', lambda: real_time()+(10000 if expired else 0))
+            real_replace = d.replace_control
+            def replace(path, value, storage):
+                real_replace(path, value, storage)
+                if value.get('status') == 'narrow-restore-provisional-pass':
+                    expired.append(True)
+            monkeypatch.setattr(d, 'replace_control', replace)
+>       assert d.main(['--registration', str(regfile)]) == (0 if outcome == 'pass' else 1)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_restore_v2_driver.py:78: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+argv = ['--registration', '/tmp/pytest-of-utkarsh/pytest-14/test_fresh_main_preserves_lega5/registration.json']
+
+    def main(argv=None):
+        started = time.monotonic()
+        parser = argparse.ArgumentParser(description=__doc__)
+        parser.add_argument('--registration', type=Path, required=True)
+        args = parser.parse_args(argv)
+        registration = p.read_json(args.registration)
+        if registration.get('schema') != 'memory-restore-registration-v1' or registration.get('mode') not in CAPS:
+>           raise ValueError('Unknown diagnostic registration')
+E           ValueError: Unknown diagnostic registration
+
+scripts/memory_restore_diagnostic.py:268: ValueError
+________________ test_v2_budget_counts_publication_and_controls ________________
+
+tmp_path = PosixPath('/tmp/pytest-of-utkarsh/pytest-14/test_v2_budget_counts_publicat0')
+
+    def test_v2_budget_counts_publication_and_controls(tmp_path):
+        reg = registration(tmp_path); root = Path(reg['publication_root']); root.mkdir(parents=True)
+        (root/'material').write_bytes(b'12345')
+        control = Path(reg['control_root']); control.mkdir(parents=True)
+        (control/'launched.json').write_bytes(b'1234567')
+        output = Path(reg['output']); output.mkdir(parents=True)
+        (output/'recording').write_bytes(b'123456789')
+>       assert d.restore_v2_budget(reg).usage()['used_bytes'] == 21
+               ^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'scripts.memory_restore_diagnostic' has no attribute 'restore_v2_budget'
+
+tests/test_restore_v2_driver.py:129: AttributeError
+_______ test_changed_runtime_or_comparator_is_refused_before_source_read _______
+
+tmp_path = PosixPath('/tmp/pytest-of-utkarsh/pytest-14/test_changed_runtime_or_compar0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x79a8027e52d0>
+
+    def test_changed_runtime_or_comparator_is_refused_before_source_read(tmp_path, monkeypatch):
+        reg = registration(tmp_path)
+        monkeypatch.setattr(d, 'runtime_v2_identity', lambda: {'fixture': False}, raising=False)
+        monkeypatch.setattr(d, 'recheck_inputs', lambda *a: pytest.fail('source read before pin check'))
+        with pytest.raises(ValueError, match='runtime'):
+>           d.recheck_v2_inputs(reg)
+            ^^^^^^^^^^^^^^^^^^^
+E           AttributeError: module 'scripts.memory_restore_diagnostic' has no attribute 'recheck_v2_inputs'
+
+tests/test_restore_v2_driver.py:137: AttributeError
+=========================== short test summary info ============================
+FAILED tests/test_restore_v2_driver.py::test_fresh_main_preserves_legacy_and_never_publishes_terminal_pass[pass]
+FAILED tests/test_restore_v2_driver.py::test_fresh_main_preserves_legacy_and_never_publishes_terminal_pass[trace]
+FAILED tests/test_restore_v2_driver.py::test_fresh_main_preserves_legacy_and_never_publishes_terminal_pass[invariant]
+FAILED tests/test_restore_v2_driver.py::test_fresh_main_preserves_legacy_and_never_publishes_terminal_pass[candidate]
+FAILED tests/test_restore_v2_driver.py::test_fresh_main_preserves_legacy_and_never_publishes_terminal_pass[readout]
+FAILED tests/test_restore_v2_driver.py::test_fresh_main_preserves_legacy_and_never_publishes_terminal_pass[late]
+FAILED tests/test_restore_v2_driver.py::test_v2_budget_counts_publication_and_controls
+FAILED tests/test_restore_v2_driver.py::test_changed_runtime_or_comparator_is_refused_before_source_read
+8 failed, 8 passed in 0.23s
