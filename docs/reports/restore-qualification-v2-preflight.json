@@ -1,0 +1,52 @@
+{
+  "elapsed_seconds": 1.7149613840010716,
+  "free_bytes_observed": 19124940800,
+  "history_inputs_verified": 2,
+  "initial_preflight_refusal": {
+    "attribution_registration": "1702e2b918dc8f412fe2e11a3b888c3e2aa2dabf192d5c27f3ff23b492d3dc85",
+    "cause": "Compared current source to pre-read-only-validator-repair registration; existing commit59990c5 added read_only validation for retained evidence. Worker admission default remains strict.",
+    "changed_key": "pilot_driver_sha256",
+    "current": "1702e2b918dc8f412fe2e11a3b888c3e2aa2dabf192d5c27f3ff23b492d3dc85",
+    "error": "AssertionError: Inherited native source/assets changed",
+    "older_registration": "92a08c620b4a4bbd9b1c49d72827ac04df4818c658bae77049ab126c70a5d2a8",
+    "resolution": "Use the later attribution baseline for current implementation; preserve older executed bytes and failure. No product code changed for this check.",
+    "scope": "Unregistered metadata check, before any allocation or native execution"
+  },
+  "native_qualification": "unattempted",
+  "observed_utc": "2026-10-07T09:46:12.004199+00:00",
+  "planning_base": "25dff6b259ce2615f4738c27bec196a05004af27",
+  "preserved_files": 473,
+  "qualification_claims": [],
+  "required_admission_free_bytes": 10737418240,
+  "runtime": {
+    "host": "friday",
+    "platform": "Linux-7.2.5-3-omarchy-x86_64-with-glibc2.44",
+    "python_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/lab-hardening/.venv/bin/python",
+    "python_resolved_path": "/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/bin/python3.11",
+    "python_sha256": "572cfa2a8597e2f431c785613539b1d219fa99eecf5ffb5765731a2ebc3e692a",
+    "python_version": [
+      3,
+      11,
+      15
+    ],
+    "versions": {
+      "mujoco": "3.3.6",
+      "numpy": "2.2.5",
+      "torch": "2.9.0"
+    }
+  },
+  "schema": "restore-v2-planning-preflight-v1",
+  "scope": "Read-only source/history/asset/evidence rehash and runtime metadata; no snapshot decoding, native owner, physics or scientific readout",
+  "source_assets_identity_matches_attribution_registration": true,
+  "source_identity_sha256": "1cc2ab2de4922030ab2484329888518b3db8ae79bac71b10db8d955c60cacb4f",
+  "source_invariant_rechecked": false,
+  "source_raw_sha_verified": true,
+  "source_snapshot": {
+    "bytes": 1559915,
+    "invariant": "86fa2ebcee8305a1b39c779a9a52e7c844345142fdbc4fd19175584a695a8b78",
+    "lineage": "audited prior recovery-study south-prefix; copied unchanged for exploratory diagnosis only",
+    "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/research-phase/runs/memory-travel-recovery-20261004T133718Z/prerequisites/runs/2f1ac4fbae794737b174e6e1fc2a7541/snapshots/initial.snp",
+    "sha256": "c839fae1fe3d981cf4b7073970f7eb06d5738f009d6cb23f249408fd227cf6bf",
+    "source_run_id": "2f1ac4fbae794737b174e6e1fc2a7541"
+  }
+}
