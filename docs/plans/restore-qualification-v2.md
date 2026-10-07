@@ -164,3 +164,20 @@ On pass, prepare the separate full-profile prerequisite plan. On failure, preser
 all outcomes, stop this allocation and present the exact failed requirement.
 
 Repo-local author Aadrika Maurya <aadrikamaurya@gmail.com>; publication as Aadrika08.
+
+## Independent proposal review
+
+Fresh-context reviewer `restore_v2_protocol_review` checked the candidate, goal,
+worker/comparator/driver/launcher paths and this proposal. No blocking scientific
+flaw or legacy-gate promotion was found. Two documentary clarifications were
+identified and incorporated: the outer watchdog covers the entire driver/auditor/
+scientific-close pipeline, and the counted roots include fresh controls/logs and
+publication evidence as well as native records. The final narrow flag is explicitly
+owned by the independently checked terminal close, not the provisional driver.
+
+The reviewer independently rehashed the source SNP, both histories, all 473
+preserved files, current source/assets baseline and resolved Python binary.
+Its free-space observation was 19,121,115,136 bytes. It decoded no snapshot,
+launched no native owner and ran no software suite. The source invariant and
+simulation outcome remain unverified by this preparation. Account quota telemetry
+is unavailable; use one implementation lane and sequential heavy work.
