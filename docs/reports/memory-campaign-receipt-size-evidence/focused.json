@@ -1,0 +1,25 @@
+{
+  "command": [
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/lab-hardening/.venv/bin/python",
+    "-B",
+    "-m",
+    "pytest",
+    "-q",
+    "tests/test_memory_prerequisites_v2.py",
+    "tests/test_memory_prerequisites_v2_launcher.py",
+    "tests/test_memory_restore_diagnostic.py",
+    "tests/test_memory_restore_offline_readout.py",
+    "tests/test_memory_restore_v2_audit.py",
+    "tests/test_memory_restore_study_v2.py",
+    "tests/test_memory_decision_pilot.py",
+    "tests/test_storage.py",
+    "--basetemp",
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-campaign-receipt-size/.superpowers/sdd/software-tmp-memory-campaign-receipt-size/focused-fixtures"
+  ],
+  "cwd": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-campaign-receipt-size",
+  "started_utc": "2026-10-07T17:52:50.901918+00:00",
+  "elapsed_seconds": 37.537408536998555,
+  "exit_code": 0,
+  "software_only": true,
+  "native_opt_ins": false
+}

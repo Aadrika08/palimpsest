@@ -1,0 +1,15 @@
+{
+  "software_only": true,
+  "native_opt_ins": false,
+  "pytest_exit_code": 0,
+  "pytest_summary": "1 passed in 1.81s",
+  "test": "tests/test_memory_prerequisites_v2.py::test_native_sized_reports_publish_complete_bounded_driver_and_independent_close",
+  "wrapper_exit_code": 1,
+  "postprocessing_error": "Fixture glob also matched the pytest current symlink; resolved paths deduplicated without rerunning or changing the test.",
+  "elapsed_seconds": null,
+  "synthetic_receipt_bytes": {
+    "execution.json": 533498,
+    "scientific-close.json": 555774
+  },
+  "largest_synthetic_json_bytes": 555774
+}
