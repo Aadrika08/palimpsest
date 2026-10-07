@@ -159,10 +159,17 @@ profile and a fresh south-prefix, with no historical-source substitution. It is
 pending approval and authorizes no execution.
 
 The separately approved manual-browser v2 and artwork-material v2 allocations
-were consumed and failed. The browser reached its first branch but recording
+were consumed and failed: [browser PR #87](https://github.com/Aadrika08/palimpsest/pull/87)
+and [artwork PR #86](https://github.com/Aadrika08/palimpsest/pull/86). The browser reached its first branch but recording
 admission exceeded its 128 MiB managed quota; cleanup also forced a tracker
 child. Artwork produced partial SVG/audio but HTML exceeded its 4 MiB metadata
 cap. The next plans preserve source admission/failure rules and all raw evidence;
 no corrective invocation is authorized automatically. Learned puck/navigation,
 adequate Afterimage, human artwork/operator acceptance and final delivery remain
 open. Physical rover work remains deferred.
+
+The next source/admission proposals are
+[HTML comparison compaction](https://github.com/Aadrika08/palimpsest/blob/verify/artwork-material-v2/docs/plans/artwork-comparison-compaction.md)
+and [manual browser v3](https://github.com/Aadrika08/palimpsest/blob/verify/manual-lab-refresh-v2/docs/plans/manual-lab-refresh-v3.md).
+These and the eight-cell memory proposal need separate new allocations; existing
+consumed phases permit no corrective invocation.
