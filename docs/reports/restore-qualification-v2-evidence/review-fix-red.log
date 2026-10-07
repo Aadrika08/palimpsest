@@ -1,0 +1,403 @@
+.................F...............FFFF                                    [100%]
+=================================== FAILURES ===================================
+_________ test_native_owner_reserves_combined_output_before_allocation _________
+
+tmp_path = PosixPath('/tmp/pytest-of-utkarsh/pytest-29/test_native_owner_reserves_com0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7a76143d6c10>
+
+    def test_native_owner_reserves_combined_output_before_allocation(tmp_path, monkeypatch):
+        from palimpsest.storage import StorageLimitError
+        reg = registration(tmp_path)
+        evidence = Path(reg['publication_root']); evidence.mkdir(parents=True)
+        # Sparse fixture: sibling bytes consume the phase cap without filling disk.
+        with (evidence/'occupied').open('wb') as stream:
+            stream.truncate(8*p.GiB-512*p.MiB)
+        plan = {'output': reg['output']+'/stage', 'selected_profile_sha256': d.PROFILE,
+                'restore_v2_budget_reservation': True}
+        monkeypatch.setattr(p, 'launch_owner', lambda *a, **kw: pytest.fail('native owner allocated'))
+        with pytest.raises(StorageLimitError, match='quota'):
+>           d.run_pair(plan, d.restore_v2_budget(reg), d.time.monotonic()+600, {})
+
+tests/test_restore_v2_driver.py:161: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+scripts/memory_restore_diagnostic.py:313: in run_pair
+    result = p.launch_owner('travel-feasibility', spec, plan, storage, deadline,
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+a = ('travel-feasibility', {'id': 'restore-1', 'kind': 'change', 'mandatory': 'restore', 'mirrored': False, ...}, {'output...9964034b546923dbe49cedb3a605af84437ec3'}, <palimpsest.storage.StorageBudget object at 0x7a76143f2410>, 79528.436470368)
+kw = {'retain_repeat_state': True, 'source': {}}
+
+>   monkeypatch.setattr(p, 'launch_owner', lambda *a, **kw: pytest.fail('native owner allocated'))
+                                                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   Failed: native owner allocated
+
+tests/test_restore_v2_driver.py:159: Failed
+_______ test_real_git_and_child_admission_exclusive_marker[term-recheck] _______
+
+tmp_path = PosixPath('/tmp/pytest-of-utkarsh/pytest-29/test_real_git_and_child_admiss11')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7a76143abdd0>
+request = <FixtureRequest for <Function test_real_git_and_child_admission_exclusive_marker[term-recheck]>>
+dirty = 'term-recheck'
+
+    @pytest.mark.parametrize('dirty', ['none', 'parent', 'child', 'pass', 'overflow', 'late', 'publication',
+                                      'owned-stop', 'owned-survivor', 'owned-reused', 'invalidate',
+                                      'term-recheck', 'term-publication'])
+    def test_real_git_and_child_admission_exclusive_marker(tmp_path, monkeypatch, request, dirty):
+        module = launcher(); actual_repo = Path(__file__).resolve().parents[1]
+        previous = module.signal.signal(module.signal.SIGTERM, module.signal.SIG_DFL)
+        request.addfinalizer(lambda: module.signal.signal(module.signal.SIGTERM, previous))
+        evidence = tmp_path/'docs/reports/restore-qualification-v2-evidence'; evidence.mkdir(parents=True)
+        source = evidence/'execute-restore-v2.py'
+        shutil.copyfile(module.__file__, source)
+        (tmp_path/'.gitignore').write_text('.superpowers/\nruns/\n')
+        (tmp_path/'README').write_text('committed\n')
+        old = tmp_path/'.superpowers/sdd/memory-restore-study-v2/diagnose/launched.json'
+        old.parent.mkdir(parents=True); old.write_text('consumed original; immutable\n')
+        subprocess.run(['git','init','-q',str(tmp_path)],check=True)
+        def commit():
+            subprocess.run(['git','-C',str(tmp_path),'add','.'],check=True)
+            subprocess.run(['git','-C',str(tmp_path),'-c','user.name=Fixture',
+                            '-c','user.email=fixture@example.test','commit','-qm','fixture'],check=True)
+        commit()
+        reg = registration(tmp_path); reg['python'] = sys.executable
+        reg['implementation_commit'] = subprocess.check_output(['git','rev-parse','HEAD'],cwd=tmp_path,text=True).strip()
+        path = evidence/'registration.json'; path.write_text(json.dumps(reg)); commit()
+        monkeypatch.setattr(module, '__file__', str(source))
+        monkeypatch.setattr(d, '__file__', str(tmp_path/'scripts/memory_restore_diagnostic.py'))
+        # Source/native preflight is doubled; both production Git admission checks run.
+        monkeypatch.setattr(d, 'recheck_v2_inputs', lambda *a: None)
+        interrupted = []
+        if dirty == 'term-recheck':
+            def recheck(*args):
+                if Path(reg['output']).exists():
+                    handler = module.signal.getsignal(module.signal.SIGTERM)
+                    interrupted.append(callable(handler))
+                    if callable(handler): handler(module.signal.SIGTERM, None)
+            monkeypatch.setattr(d, 'recheck_v2_inputs', recheck)
+        elif dirty == 'term-publication':
+            write = p.write_control
+            def write_control(path, value, storage):
+                if Path(path).name == 'invocation-result.json':
+                    handler = module.signal.getsignal(module.signal.SIGTERM)
+                    interrupted.append(callable(handler))
+                    if callable(handler): handler(module.signal.SIGTERM, None)
+                return write(path, value, storage)
+            monkeypatch.setattr(p, 'write_control', write_control)
+        disk_usage = shutil.disk_usage
+        monkeypatch.setattr(shutil, 'disk_usage', lambda path: disk_usage(path)._replace(free=20*p.GiB))
+        kills = []; alive = [True]
+        if dirty in ('owned-stop', 'owned-survivor', 'owned-reused'):
+            from scripts import memory_waypoint_study as w
+            monkeypatch.setattr(w, 'proc_identity', lambda pid: (2 if dirty == 'owned-reused' else 1,999))
+            def kill(pgid, signum):
+                kills.append((pgid, signum))
+                if signum == module.signal.SIGKILL and dirty == 'owned-stop':
+                    alive[0] = False
+            monkeypatch.setattr(w, 'os', SimpleNamespace(killpg=kill))
+            monkeypatch.setattr(w, 'time', SimpleNamespace(sleep=lambda seconds: None))
+            monkeypatch.setattr(d, 'owner_exited', lambda owner: dirty == 'owned-reused' or not alive[0])
+        if dirty == 'invalidate':
+            replace = d.replace_control
+            def refuse_false_close(path, value, storage):
+                if Path(path).name == 'scientific-close.json':
+                    raise ValueError('false close publication failure fixture')
+                return replace(path, value, storage)
+            monkeypatch.setattr(d, 'replace_control', refuse_false_close)
+        if dirty == 'publication':
+            storage = d.restore_v2_budget(reg); check = storage.check
+            def fail_publication(size, *, path):
+                if Path(path).name == 'native-stdout.log':
+                    raise ValueError('publication storage failure fixture')
+                return check(size, path=path)
+            monkeypatch.setattr(storage, 'check', fail_publication)
+            monkeypatch.setattr(d, 'restore_v2_budget', lambda reg: storage)
+        actual_popen = module.subprocess.Popen; calls = []
+        def child(command, **kwargs):
+            if command[0] != 'timeout':
+                return actual_popen(command, **kwargs)
+            calls.append(command)
+            assert command[:4] == ['timeout','--signal=TERM','--kill-after=5','890s']
+            assert command[-2:] == ['--pipeline',str(path)]
+            for name in ('OMP_NUM_THREADS','MKL_NUM_THREADS','OPENBLAS_NUM_THREADS','NUMEXPR_NUM_THREADS'):
+                assert kwargs['env'][name] == '1'
+            assert kwargs['env']['MUJOCO_GL'] == 'egl'
+            if dirty == 'child':
+                (tmp_path/'README').write_text('changed after parent admission\n')
+            bootstrap = (
+                'import importlib.util,sys;sys.path.insert(0,'+repr(str(actual_repo))+');'
+                'from scripts import memory_restore_diagnostic as d;'
+                'd.__file__='+repr(str(tmp_path/'scripts/memory_restore_diagnostic.py'))+';'
+                'd.recheck_v2_inputs=lambda *a:None\n'
+                'def stop(*a,**kw):\n'
+                ' print("production clean admission reached; no native allocation",flush=True)\n'
+                ' raise SystemExit(0)\n'
+                'd.p.preflight=stop\n'
+                'spec=importlib.util.spec_from_file_location("fixture_launcher",'+repr(str(source))+')\n'
+                'm=importlib.util.module_from_spec(spec);spec.loader.exec_module(m)\n'
+                'raise SystemExit(m.main(["--pipeline",'+repr(str(path))+']))\n')
+            if dirty in ('pass', 'overflow', 'late', 'publication', 'owned-stop', 'owned-survivor', 'owned-reused', 'invalidate', 'term-recheck', 'term-publication'):
+                # Separate launcher-failure fixtures, rather than native/driver proof.
+                bootstrap = (
+                    'import json,os,time;from pathlib import Path;'
+                    'root=Path('+repr(reg['output'])+');root.mkdir(parents=True);'
+                    '(root/"execution.json").write_text(json.dumps({"readout_deadline_monotonic":'
+                    'time.monotonic()'+('-1' if dirty in ('late','invalidate') else '+100')+'}));'
+                    '(root/"scientific-close.json").write_text(json.dumps({"narrow_restore_passed":True}));'
+                    'os.write(1,b"x"*'+str(2*p.MiB if dirty == 'overflow' else 1)+')')
+                if dirty in ('owned-stop', 'owned-survivor', 'owned-reused'):
+                    bootstrap += (';run=root/"stage/runs/fake";run.mkdir(parents=True);'
+                        '(run/"owner.json").write_text(json.dumps({"pid":999,"starttime":1,"pgid":999,"run_id":"fake"}));'
+                        'raise SystemExit('+('1' if dirty == 'owned-stop' else '0')+')')
+            env = dict(kwargs['env'], PYTHONPATH=str(actual_repo/'src')+':'+str(actual_repo))
+            return actual_popen(command[:4]+[sys.executable,'-c',bootstrap], **{**kwargs,'env':env})
+        monkeypatch.setattr(module.subprocess, 'Popen', child)
+        if dirty == 'parent':
+            (tmp_path/'README').write_text('dirty before parent admission\n')
+            with pytest.raises(ValueError, match='clean'):
+                module.main([])
+            assert not calls and not (Path(reg['control_root'])/'launched.json').exists()
+        else:
+            # The pass case doubles scientific data; admission alone never passes.
+            passed = dirty in ('pass', 'owned-reused')
+>           assert module.main([]) == (0 if passed else 1)
+E           AssertionError: assert 0 == 1
+E            +  where 0 = <function main at 0x7a76143d28e0>([])
+E            +    where <function main at 0x7a76143d28e0> = <module 'restore_v2_launcher' from '/home/utkarsh/Work/shraddha/brain/.worktrees/restore-v2-execution/docs/reports/restore-qualification-v2-evidence/execute-restore-v2.py'>.main
+
+tests/test_restore_v2_launcher.py:167: AssertionError
+----------------------------- Captured stdout call -----------------------------
+{"restore_v2_invocation": "starting", "output": "/tmp/pytest-of-utkarsh/pytest-29/test_real_git_and_child_admiss11/runs/restore-v2-pair-fixture"}
+{"native_exit_code": 0, "pipeline_exit_code": 0, "qualification_claims": [], "failures": ["Launcher interrupted"], "cleanup": [], "registration_sha256": "09fb4b3abd51e96caf2b1937b17aa46755a7af39b46316617b42e5212f6d4d73", "storage": {"used_bytes": 12174, "files": 9, "remaining_bytes": 8589922418, "max_bytes": 8589934592, "headroom_bytes": 67108864, "min_free_bytes": 2147483648}}
+_____ test_real_git_and_child_admission_exclusive_marker[term-publication] _____
+
+tmp_path = PosixPath('/tmp/pytest-of-utkarsh/pytest-29/test_real_git_and_child_admiss12')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7a7614395690>
+request = <FixtureRequest for <Function test_real_git_and_child_admission_exclusive_marker[term-publication]>>
+dirty = 'term-publication'
+
+    @pytest.mark.parametrize('dirty', ['none', 'parent', 'child', 'pass', 'overflow', 'late', 'publication',
+                                      'owned-stop', 'owned-survivor', 'owned-reused', 'invalidate',
+                                      'term-recheck', 'term-publication'])
+    def test_real_git_and_child_admission_exclusive_marker(tmp_path, monkeypatch, request, dirty):
+        module = launcher(); actual_repo = Path(__file__).resolve().parents[1]
+        previous = module.signal.signal(module.signal.SIGTERM, module.signal.SIG_DFL)
+        request.addfinalizer(lambda: module.signal.signal(module.signal.SIGTERM, previous))
+        evidence = tmp_path/'docs/reports/restore-qualification-v2-evidence'; evidence.mkdir(parents=True)
+        source = evidence/'execute-restore-v2.py'
+        shutil.copyfile(module.__file__, source)
+        (tmp_path/'.gitignore').write_text('.superpowers/\nruns/\n')
+        (tmp_path/'README').write_text('committed\n')
+        old = tmp_path/'.superpowers/sdd/memory-restore-study-v2/diagnose/launched.json'
+        old.parent.mkdir(parents=True); old.write_text('consumed original; immutable\n')
+        subprocess.run(['git','init','-q',str(tmp_path)],check=True)
+        def commit():
+            subprocess.run(['git','-C',str(tmp_path),'add','.'],check=True)
+            subprocess.run(['git','-C',str(tmp_path),'-c','user.name=Fixture',
+                            '-c','user.email=fixture@example.test','commit','-qm','fixture'],check=True)
+        commit()
+        reg = registration(tmp_path); reg['python'] = sys.executable
+        reg['implementation_commit'] = subprocess.check_output(['git','rev-parse','HEAD'],cwd=tmp_path,text=True).strip()
+        path = evidence/'registration.json'; path.write_text(json.dumps(reg)); commit()
+        monkeypatch.setattr(module, '__file__', str(source))
+        monkeypatch.setattr(d, '__file__', str(tmp_path/'scripts/memory_restore_diagnostic.py'))
+        # Source/native preflight is doubled; both production Git admission checks run.
+        monkeypatch.setattr(d, 'recheck_v2_inputs', lambda *a: None)
+        interrupted = []
+        if dirty == 'term-recheck':
+            def recheck(*args):
+                if Path(reg['output']).exists():
+                    handler = module.signal.getsignal(module.signal.SIGTERM)
+                    interrupted.append(callable(handler))
+                    if callable(handler): handler(module.signal.SIGTERM, None)
+            monkeypatch.setattr(d, 'recheck_v2_inputs', recheck)
+        elif dirty == 'term-publication':
+            write = p.write_control
+            def write_control(path, value, storage):
+                if Path(path).name == 'invocation-result.json':
+                    handler = module.signal.getsignal(module.signal.SIGTERM)
+                    interrupted.append(callable(handler))
+                    if callable(handler): handler(module.signal.SIGTERM, None)
+                return write(path, value, storage)
+            monkeypatch.setattr(p, 'write_control', write_control)
+        disk_usage = shutil.disk_usage
+        monkeypatch.setattr(shutil, 'disk_usage', lambda path: disk_usage(path)._replace(free=20*p.GiB))
+        kills = []; alive = [True]
+        if dirty in ('owned-stop', 'owned-survivor', 'owned-reused'):
+            from scripts import memory_waypoint_study as w
+            monkeypatch.setattr(w, 'proc_identity', lambda pid: (2 if dirty == 'owned-reused' else 1,999))
+            def kill(pgid, signum):
+                kills.append((pgid, signum))
+                if signum == module.signal.SIGKILL and dirty == 'owned-stop':
+                    alive[0] = False
+            monkeypatch.setattr(w, 'os', SimpleNamespace(killpg=kill))
+            monkeypatch.setattr(w, 'time', SimpleNamespace(sleep=lambda seconds: None))
+            monkeypatch.setattr(d, 'owner_exited', lambda owner: dirty == 'owned-reused' or not alive[0])
+        if dirty == 'invalidate':
+            replace = d.replace_control
+            def refuse_false_close(path, value, storage):
+                if Path(path).name == 'scientific-close.json':
+                    raise ValueError('false close publication failure fixture')
+                return replace(path, value, storage)
+            monkeypatch.setattr(d, 'replace_control', refuse_false_close)
+        if dirty == 'publication':
+            storage = d.restore_v2_budget(reg); check = storage.check
+            def fail_publication(size, *, path):
+                if Path(path).name == 'native-stdout.log':
+                    raise ValueError('publication storage failure fixture')
+                return check(size, path=path)
+            monkeypatch.setattr(storage, 'check', fail_publication)
+            monkeypatch.setattr(d, 'restore_v2_budget', lambda reg: storage)
+        actual_popen = module.subprocess.Popen; calls = []
+        def child(command, **kwargs):
+            if command[0] != 'timeout':
+                return actual_popen(command, **kwargs)
+            calls.append(command)
+            assert command[:4] == ['timeout','--signal=TERM','--kill-after=5','890s']
+            assert command[-2:] == ['--pipeline',str(path)]
+            for name in ('OMP_NUM_THREADS','MKL_NUM_THREADS','OPENBLAS_NUM_THREADS','NUMEXPR_NUM_THREADS'):
+                assert kwargs['env'][name] == '1'
+            assert kwargs['env']['MUJOCO_GL'] == 'egl'
+            if dirty == 'child':
+                (tmp_path/'README').write_text('changed after parent admission\n')
+            bootstrap = (
+                'import importlib.util,sys;sys.path.insert(0,'+repr(str(actual_repo))+');'
+                'from scripts import memory_restore_diagnostic as d;'
+                'd.__file__='+repr(str(tmp_path/'scripts/memory_restore_diagnostic.py'))+';'
+                'd.recheck_v2_inputs=lambda *a:None\n'
+                'def stop(*a,**kw):\n'
+                ' print("production clean admission reached; no native allocation",flush=True)\n'
+                ' raise SystemExit(0)\n'
+                'd.p.preflight=stop\n'
+                'spec=importlib.util.spec_from_file_location("fixture_launcher",'+repr(str(source))+')\n'
+                'm=importlib.util.module_from_spec(spec);spec.loader.exec_module(m)\n'
+                'raise SystemExit(m.main(["--pipeline",'+repr(str(path))+']))\n')
+            if dirty in ('pass', 'overflow', 'late', 'publication', 'owned-stop', 'owned-survivor', 'owned-reused', 'invalidate', 'term-recheck', 'term-publication'):
+                # Separate launcher-failure fixtures, rather than native/driver proof.
+                bootstrap = (
+                    'import json,os,time;from pathlib import Path;'
+                    'root=Path('+repr(reg['output'])+');root.mkdir(parents=True);'
+                    '(root/"execution.json").write_text(json.dumps({"readout_deadline_monotonic":'
+                    'time.monotonic()'+('-1' if dirty in ('late','invalidate') else '+100')+'}));'
+                    '(root/"scientific-close.json").write_text(json.dumps({"narrow_restore_passed":True}));'
+                    'os.write(1,b"x"*'+str(2*p.MiB if dirty == 'overflow' else 1)+')')
+                if dirty in ('owned-stop', 'owned-survivor', 'owned-reused'):
+                    bootstrap += (';run=root/"stage/runs/fake";run.mkdir(parents=True);'
+                        '(run/"owner.json").write_text(json.dumps({"pid":999,"starttime":1,"pgid":999,"run_id":"fake"}));'
+                        'raise SystemExit('+('1' if dirty == 'owned-stop' else '0')+')')
+            env = dict(kwargs['env'], PYTHONPATH=str(actual_repo/'src')+':'+str(actual_repo))
+            return actual_popen(command[:4]+[sys.executable,'-c',bootstrap], **{**kwargs,'env':env})
+        monkeypatch.setattr(module.subprocess, 'Popen', child)
+        if dirty == 'parent':
+            (tmp_path/'README').write_text('dirty before parent admission\n')
+            with pytest.raises(ValueError, match='clean'):
+                module.main([])
+            assert not calls and not (Path(reg['control_root'])/'launched.json').exists()
+        else:
+            # The pass case doubles scientific data; admission alone never passes.
+            passed = dirty in ('pass', 'owned-reused')
+>           assert module.main([]) == (0 if passed else 1)
+E           AssertionError: assert 0 == 1
+E            +  where 0 = <function main at 0x7a76143d1d00>([])
+E            +    where <function main at 0x7a76143d1d00> = <module 'restore_v2_launcher' from '/home/utkarsh/Work/shraddha/brain/.worktrees/restore-v2-execution/docs/reports/restore-qualification-v2-evidence/execute-restore-v2.py'>.main
+
+tests/test_restore_v2_launcher.py:167: AssertionError
+----------------------------- Captured stdout call -----------------------------
+{"restore_v2_invocation": "starting", "output": "/tmp/pytest-of-utkarsh/pytest-29/test_real_git_and_child_admiss12/runs/restore-v2-pair-fixture"}
+{"native_exit_code": 0, "pipeline_exit_code": 0, "qualification_claims": [], "failures": [], "cleanup": [], "registration_sha256": "2000d6599959282d5d7ab8b6d592bd3ea8936d7d5455f8be01b7453c87abfb98", "storage": {"used_bytes": 12173, "files": 9, "remaining_bytes": 8589922419, "max_bytes": 8589934592, "headroom_bytes": 67108864, "min_free_bytes": 2147483648}}
+___________ test_outer_watchdog_encloses_supervised_finalization[0] ____________
+
+tmp_path = PosixPath('/tmp/pytest-of-utkarsh/pytest-29/test_outer_watchdog_encloses_s0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7a7612d50510>
+exit_code = 0
+
+    @pytest.mark.parametrize('exit_code', [0, 124])
+    def test_outer_watchdog_encloses_supervised_finalization(tmp_path, monkeypatch, exit_code):
+        module = launcher(); reg = registration(tmp_path); reg['python'] = sys.executable
+        root = Path(reg['output']); root.mkdir(parents=True)
+        (root/'scientific-close.json').write_text(json.dumps({'narrow_restore_passed': True}))
+        monkeypatch.setattr(module, 'admission', lambda *a, **kw: reg)
+        calls = []
+        def child(command, **kwargs):
+            calls.append(command)
+            assert command[:4] == ['timeout', '--signal=TERM', '--kill-after=5', '890s']
+            assert command[-1] == '--supervised'
+            return SimpleNamespace(pid=999999999, wait=lambda **kw: exit_code, poll=lambda: exit_code)
+        monkeypatch.setattr(module.subprocess, 'Popen', child)
+>       assert module.main([]) == (0 if exit_code == 0 else 1)
+               ^^^^^^^^^^^^^^^
+
+tests/test_restore_v2_launcher.py:222: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+argv = []
+
+    def main(argv=None):
+        parser = argparse.ArgumentParser(description=__doc__)
+        parser.add_argument('--pipeline', type=Path)
+        args = parser.parse_args(argv)
+        if args.pipeline is not None:
+            return pipeline(args.pipeline)
+        evidence = Path(__file__).resolve().parent
+        path = evidence/'registration.json'
+        registration = admission(path)
+        repo = Path(registration['repo']); root = Path(registration['output'])
+        storage = d.restore_v2_budget(registration)
+        marker = Path(registration['control_root'])/'launched.json'
+        storage.check(2*p.MiB, path=marker)
+        if shutil.disk_usage(repo).free < 10*p.GiB:
+>           raise ValueError('Admission requires 10 GiB free')
+E           ValueError: Admission requires 10 GiB free
+
+docs/reports/restore-qualification-v2-evidence/execute-restore-v2.py:79: ValueError
+__________ test_outer_watchdog_encloses_supervised_finalization[124] ___________
+
+tmp_path = PosixPath('/tmp/pytest-of-utkarsh/pytest-29/test_outer_watchdog_encloses_s1')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7a761439ec50>
+exit_code = 124
+
+    @pytest.mark.parametrize('exit_code', [0, 124])
+    def test_outer_watchdog_encloses_supervised_finalization(tmp_path, monkeypatch, exit_code):
+        module = launcher(); reg = registration(tmp_path); reg['python'] = sys.executable
+        root = Path(reg['output']); root.mkdir(parents=True)
+        (root/'scientific-close.json').write_text(json.dumps({'narrow_restore_passed': True}))
+        monkeypatch.setattr(module, 'admission', lambda *a, **kw: reg)
+        calls = []
+        def child(command, **kwargs):
+            calls.append(command)
+            assert command[:4] == ['timeout', '--signal=TERM', '--kill-after=5', '890s']
+            assert command[-1] == '--supervised'
+            return SimpleNamespace(pid=999999999, wait=lambda **kw: exit_code, poll=lambda: exit_code)
+        monkeypatch.setattr(module.subprocess, 'Popen', child)
+>       assert module.main([]) == (0 if exit_code == 0 else 1)
+               ^^^^^^^^^^^^^^^
+
+tests/test_restore_v2_launcher.py:222: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+argv = []
+
+    def main(argv=None):
+        parser = argparse.ArgumentParser(description=__doc__)
+        parser.add_argument('--pipeline', type=Path)
+        args = parser.parse_args(argv)
+        if args.pipeline is not None:
+            return pipeline(args.pipeline)
+        evidence = Path(__file__).resolve().parent
+        path = evidence/'registration.json'
+        registration = admission(path)
+        repo = Path(registration['repo']); root = Path(registration['output'])
+        storage = d.restore_v2_budget(registration)
+        marker = Path(registration['control_root'])/'launched.json'
+        storage.check(2*p.MiB, path=marker)
+        if shutil.disk_usage(repo).free < 10*p.GiB:
+>           raise ValueError('Admission requires 10 GiB free')
+E           ValueError: Admission requires 10 GiB free
+
+docs/reports/restore-qualification-v2-evidence/execute-restore-v2.py:79: ValueError
+=========================== short test summary info ============================
+FAILED tests/test_restore_v2_driver.py::test_native_owner_reserves_combined_output_before_allocation
+FAILED tests/test_restore_v2_launcher.py::test_real_git_and_child_admission_exclusive_marker[term-recheck]
+FAILED tests/test_restore_v2_launcher.py::test_real_git_and_child_admission_exclusive_marker[term-publication]
+FAILED tests/test_restore_v2_launcher.py::test_outer_watchdog_encloses_supervised_finalization[0]
+FAILED tests/test_restore_v2_launcher.py::test_outer_watchdog_encloses_supervised_finalization[124]
+5 failed, 32 passed in 1.40s
