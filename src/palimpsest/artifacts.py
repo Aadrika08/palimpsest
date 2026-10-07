@@ -433,7 +433,13 @@ def _export_metadata(data, *, allow_empty=False):
 def _svg(metadata):
     ns = "http://www.w3.org/2000/svg"
     ET.register_namespace("", ns)
-    root = ET.Element(f"{{{ns}}}svg", {"width": "800", "height": "800", "viewBox": "0 0 800 800"})
+    root = ET.Element(f"{{{ns}}}svg", {"width": "800", "height": "800", "viewBox": "0 0 800 800",
+                      "role": "img", "aria-labelledby": "route-title route-description"})
+    ET.SubElement(root, f"{{{ns}}}title", {"id": "route-title"}).text = "Recorded routes"
+    ET.SubElement(root, f"{{{ns}}}desc", {"id": "route-description"}).text = (
+        f"Recorded world-coordinate routes for run {metadata['run_id']}. "
+        "Obstacles and goals show the last recorded world per episode. "
+        "This is a recorded view, with no new simulation or physical pen marks.")
     ET.SubElement(root, f"{{{ns}}}metadata").text = json.dumps(metadata, allow_nan=False, separators=(",", ":"))
     ET.SubElement(root, f"{{{ns}}}rect", {"width": "800", "height": "800", "fill": "#edf2f4"})
     arena = metadata["projection"]["arena"]

@@ -191,6 +191,14 @@ class ArtifactTests(unittest.TestCase):
         svg = artifacts.export_run(run, self.root / "trace.svg", "svg")
         root = ET.fromstring(svg.read_bytes())
         ns = {"s": "http://www.w3.org/2000/svg"}
+        self.assertEqual(root.get("role"), "img")
+        references = root.get("aria-labelledby", "").split()
+        self.assertEqual(len(references), 2)
+        labels = [root.find(f".//*[@id='{identifier}']") for identifier in references]
+        self.assertEqual([node.tag for node in labels], [f"{{{ns['s']}}}title", f"{{{ns['s']}}}desc"])
+        self.assertTrue(all(node.text.strip() for node in labels))
+        self.assertIn(run.name, labels[1].text)
+        self.assertIn("recorded", labels[1].text.lower())
         metadata = json.loads(root.find("s:metadata", ns).text)
         line = root.find(".//s:polyline", ns)
         self.assertEqual([[float(x) for x in pair.split(",")] for pair in line.attrib["points"].split()], metadata["traces"][0]["points"])

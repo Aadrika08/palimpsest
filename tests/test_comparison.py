@@ -87,6 +87,19 @@ class ComparisonTests(unittest.TestCase):
         self.assertIn('do not establish causality', html)
         self.assertLess(html.index('Recorded differences'), html.index('Route overlay'))
         self.assertEqual(len(re.findall(r'<svg\b', html)), 3)
+        identifiers = []
+        for match in re.finditer(r'<svg\b.*?</svg>', html, re.S):
+            view = ET.fromstring(match[0])
+            self.assertEqual(view.get('role'), 'img')
+            references = view.get('aria-labelledby', '').split()
+            self.assertEqual(len(references), 2)
+            labels = [view.find(f".//*[@id='{identifier}']") for identifier in references]
+            self.assertEqual([node.tag for node in labels], [f"{{{ns['s']}}}title", f"{{{ns['s']}}}desc"])
+            self.assertEqual(len(view.findall('s:title', ns)), 1)
+            self.assertEqual(len(view.findall('s:desc', ns)), 1)
+            self.assertTrue(all(node.text.strip() for node in labels))
+            identifiers.extend(node.get('id') for node in view.iter() if node.get('id'))
+        self.assertEqual(len(identifiers), len(set(identifiers)))
         self.assertIn(('html', {'lang': 'en'}), document.tags)
         self.assertFalse(any(tag in {'script', 'iframe', 'audio', 'video', 'img'} for tag, _ in document.tags))
 
