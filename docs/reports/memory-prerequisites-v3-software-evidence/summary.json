@@ -1,0 +1,35 @@
+{
+  "focused": {
+    "exit_code": 0,
+    "passed": 64,
+    "seconds": 25.64
+  },
+  "full_suite": {
+    "exit_code": 0,
+    "native_opt_ins": false,
+    "passed": 1082,
+    "seconds": 230.58,
+    "skipped": 24,
+    "warnings": 39
+  },
+  "independent_review": {
+    "critical": 0,
+    "important": 0,
+    "minor": "representative envelope sizing; unchanged fail-closed cap"
+  },
+  "native_campaign": "not_started",
+  "native_registration": "not_started",
+  "preparer_and_dependency_checks": {
+    "exit_code": 0,
+    "passed": 3,
+    "seconds": 0.32
+  },
+  "quota_telemetry": "unavailable",
+  "red": {
+    "exit_code": 1,
+    "failed": 2,
+    "failure": "v3 namespace rejected; v3 launcher absent",
+    "seconds": 0.27
+  },
+  "working_set_binding": "unavailable"
+}

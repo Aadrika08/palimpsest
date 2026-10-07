@@ -147,7 +147,7 @@ rover and physical artwork remain inactive throughout this goal.
 - [Six-mode export smoke and its limits](../reports/m9-offline-handoff.md).
 - [Artwork operator acceptance](../exhibition-runbook.md).
 
-## Current scoped results, 7 October 2026
+## Current scoped results, 7–8 October 2026
 
 The fresh narrow restore pair passes under the reviewed timer-aware contract;
 raw inequality (74 native bytes) stays explicit. See
@@ -168,8 +168,11 @@ prerequisite gate and pilot remain open. The separate software-only
 [receipt repair](../reports/memory-campaign-receipt-size.md) removes duplicate
 driver audit payloads while preserving full attempts and independent recomputation.
 Its 152 focused software checks passed; they supply no native qualification. The next
-[fresh eight-cell proposal](memory-prerequisites-v3.md) requests a new finite
-allocation and remains unapproved; nothing is launched automatically.
+[fresh eight-cell plan](memory-prerequisites-v3.md) is separately approved:
+180-second registration plus one 4,900-second invocation, 8 GiB, eight owners
+maximum and zero retries/corrective studies. Its software checks and independent
+review are in progress; registration and native execution have not started. No
+pilot, held-out study or other lane is authorized by this approval.
 
 The fresh artwork-material v3 allocation passed in 22.06 seconds. Its compact
 comparison preserves source geometry and complete raw-event references while
