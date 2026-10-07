@@ -1,0 +1,111 @@
+{
+  "child_elapsed_seconds": 0.6235695060022408,
+  "cleanup": {
+    "passed": true,
+    "process_group_absent": true,
+    "same_process_alive": false
+  },
+  "elapsed_before_receipt_seconds": 4.623026010012836,
+  "error": "episode exceeds the supported 600 control ticks",
+  "evidence": {
+    "control-check.py": {
+      "sha256": "db85d9b2c78b54fe128406527aaf580af091f848ea572a0d003a1868214074cb",
+      "size_bytes": 2652
+    },
+    "input-manifest.json": {
+      "sha256": "6cac84d9b733ed1e1fb7267b302dd0f7d1105e288e9b53fac65fe497501d77e9",
+      "size_bytes": 20348
+    },
+    "launched.json": {
+      "sha256": "dd35dbf66dc6d6c4f7cc7fa7fe9276c5e396b66eab7f87b90b2f4aa018ab1c94",
+      "size_bytes": 91
+    },
+    "prepare.py": {
+      "sha256": "077957db5317cd192017d8b5e60bd4324f69e19fd9b81bbcad408a07e2eb6d80",
+      "size_bytes": 18331
+    },
+    "registration.json": {
+      "sha256": "206f5fe4840b9f4a93bad2f2935782ba54ff88f6a733b581fb634a3bd1c96db5",
+      "size_bytes": 48679
+    },
+    "result.json": {
+      "sha256": "cfe978422b26cdeeb391db623bed83b8f57b4203228085ab4cad239a770906b1",
+      "size_bytes": 1857
+    },
+    "review-guide-template.md": {
+      "sha256": "76f253a75a52709a206e6b4661f776e09555b55fa3ad5077450d8621072864e6",
+      "size_bytes": 5257
+    },
+    "stderr.log": {
+      "sha256": "17b45c38410b90d5c506e37a42c3d13b56afc4acbd874ed5feb62b2ea95bde99",
+      "size_bytes": 83
+    },
+    "stdout.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    "supervisor.json": {
+      "sha256": "ebd47df807cb911606b3e660d7c5cfc183c3fa1530207645ebfd67e238713de9",
+      "size_bytes": 336
+    },
+    "worker.json": {
+      "sha256": "e5f0b5a949e904cdec4d89ce70ffa496eebc4ef538e83257f9b1d880ea4f17d3",
+      "size_bytes": 1079
+    }
+  },
+  "exports": {
+    "attempted": 1,
+    "planned": 3,
+    "succeeded": 0,
+    "unattempted": [
+      "counterfactual-choir.wav",
+      "one-map-many-lives.html"
+    ]
+  },
+  "id": "artwork-review-development-material-v1",
+  "independent_audit": {
+    "pgid": 808174,
+    "pid": 808174,
+    "prior_review_zips_unchanged": true,
+    "process_absent": true,
+    "relocated_files": 98,
+    "seconds": 1.707,
+    "source_pin_coverage": "22 agent-resolved;6 additional aliases resolved by root,all matched",
+    "start_ticks": 6762178,
+    "zip_footer_crc_sha_sizes": "passed"
+  },
+  "input_archive": {
+    "members": 99,
+    "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/artwork-review-accessible-pack/.superpowers/sdd/artwork-review-development-v1/palimpsest-artwork-inputs-development-v1.zip",
+    "sha256": "80251ccd5889ce01ac2cf447f7ff591848be69b3d5fb38a70ec6ef55c7708aed",
+    "size_bytes": 577247342
+  },
+  "input_manifest_sha256": "6cac84d9b733ed1e1fb7267b302dd0f7d1105e288e9b53fac65fe497501d77e9",
+  "native_owners": 0,
+  "phase_bytes_before_publication": 1154553501,
+  "producer_commit": "a1c47fc682fa5cc5f763edaf30625cef08570a0a",
+  "qualification_claims": [],
+  "remaining": [
+    "shared artifact reader episode limit",
+    "longer derivative admission/export",
+    "adequate Afterimage material",
+    "human aesthetic and independent full-session acceptance",
+    "restore/memory/learned-control gates"
+  ],
+  "retries": 0,
+  "review_archive_created": false,
+  "root_checker_correction": {
+    "corrected": "all six derivative files and reviewZIP absent;only zero-byte .palimpsest-storage.lock present",
+    "initial": "incorrectly required an empty artifact directory;assertion failed on zero-byte storage lock",
+    "scientific_or_runtime_changes": false
+  },
+  "runtime_imported": [],
+  "scope": "Offline material preparation; no new inference/native/scientific qualification",
+  "sources": {
+    "bytes": 577207446,
+    "files": 98,
+    "fresh_relocation_verified": true
+  },
+  "status": "failed",
+  "writer_lease_release_original_receipt": true
+}
