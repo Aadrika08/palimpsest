@@ -525,15 +525,28 @@ class PuckReservationAndMintAdmissionTests(unittest.TestCase):
                 ('layout', invalid_layout_minter, copy.deepcopy(snapshot), None),
                 ('inventory', fake_candidate, changed, None),
                 ('fsync', fake_candidate, copy.deepcopy(snapshot), 'fsync'),
+                ('directory fsync', fake_candidate, copy.deepcopy(snapshot), 'directory_fsync'),
                 ('rename', fake_candidate, copy.deepcopy(snapshot), 'replace'),
             )
             for label, minter, final_inventory, fault in cases:
                 with self.subTest(label=label), tempfile.TemporaryDirectory() as scene_directory:
-                    context = (patch.object(on_policy.os, 'fsync', side_effect=OSError('fsync'))
-                               if fault == 'fsync' else
-                               patch.object(on_policy.os, 'replace', side_effect=OSError('rename'))
-                               if fault == 'replace' else patch.object(on_policy.os, 'replace',
-                                                                       wraps=os.replace))
+                    fsync_calls = []
+                    real_fsync = os.fsync
+
+                    def directory_fsync(file_descriptor):
+                        fsync_calls.append(file_descriptor)
+                        if len(fsync_calls) == 2:
+                            raise OSError('directory fsync')
+                        return real_fsync(file_descriptor)
+
+                    context = (
+                        patch.object(on_policy.os, 'fsync', side_effect=OSError('fsync'))
+                        if fault == 'fsync' else
+                        patch.object(on_policy.os, 'fsync', side_effect=directory_fsync)
+                        if fault == 'directory_fsync' else
+                        patch.object(on_policy.os, 'replace', side_effect=OSError('rename'))
+                        if fault == 'replace' else patch.object(
+                            on_policy.os, 'replace', wraps=os.replace))
                     with context, self.assertRaises((ValueError, RuntimeError, OSError)):
                         stage(Path(scene_directory).resolve(), reservation['manifest_bytes'],
                               minter, inventory_after=final_inventory)
