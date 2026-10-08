@@ -436,3 +436,29 @@ admits implementation of the compact schema, reader, auditor and converter only.
 Allocation, pruning, native owners, collection and R2 qualification remain
 unauthorized until their later source, replay, namespace, upstream and fresh
 capacity gates pass. Main, CI and the physical rover remain unchanged.
+
+### Puck navigation-v3 intervention frozen, 8 October 2026
+
+[PR #108](https://github.com/Aadrika08/palimpsest/pull/108), stacked on the
+failed balanced-development PR #56, freezes one on-policy relabeling round for
+the measured support gap: zero teacher-training rows versus 1,575 student
+development rows in the behind-point contact/ready state. Existing original
+models collect on four new scenes; the unchanged teacher labels every visited
+pre-action state once; all admitted rows are appended once; and three fresh
+unchanged models receive one development pass on four disjoint new scenes.
+
+Collection IDs 6110-6113 and development IDs 6120-6123 are reserved candidates;
+held-out 6200-6207 stays locked. Because task-v5 has no arbitrary scene
+generator, the source plan now requires a pure deterministic minter and a narrow
+explicit-layout reset seam before any registry or geometry work. A later typed
+all-ref/raw-registry admission must prove exact ID, canonical-scene, scientific-
+initial and payload disjointness before those candidates can be minted.
+
+Review caught and fixed two material gaps: the missing scene-generation path and
+a mechanism check that allowed a post-training model/source choice. The latter
+is now fixed to relabeled seed 21, scene 6110, a 5-120-interval source,
+`initial`/`tick1` boundaries and one four-owner order. Final document, JSON,
+deadline, storage and identity checks passed with no remaining Critical or
+Important issue. This authorizes only prospective source implementation. No raw
+registry, model, Torch, MuJoCo, minter, simulator, training, development or
+held-out input was accessed; the 3/4 and later 6/8 per-model gates remain open.
