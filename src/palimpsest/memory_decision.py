@@ -97,9 +97,9 @@ def initialize(case, e=None, u=None):
 
 def _validate_graph(graph,m):
     memory._fields(graph,'version routes acquisition_ids decision_landmark_id common_goal_id edges landmark_ids profile_sha256')
-    if graph['version'] != 2 or type(graph['version']) is not int:
+    profile = world.registered_profile(graph['profile_sha256'])
+    if type(graph['version']) is not int or graph['version'] not in (2,3) or graph['version'] != profile['version']:
         raise ValueError('Unsupported memory-v2 public graph')
-    world.registered_profile(graph['profile_sha256'])
     ids = graph['landmark_ids']
     memory._list(ids,MAX_LANDMARKS)
     for item in ids:
@@ -210,7 +210,8 @@ def validate_state(state):
         raise ValueError('Waypoint deadline differs from frozen budget')
     if (sup['inspection_started_tick'] is None) != (sup['inspection_deadline_tick'] is None) or sup['inspection_started_tick'] is not None and sup['inspection_deadline_tick'] != sup['inspection_started_tick']+150:
         raise ValueError('Inspection deadline differs from frozen budget')
-    if (sup['decision_tick'] is None) != (sup['continuation_start_tick'] is None) or sup['decision_tick'] is not None and sup['decision_tick'] != sup['continuation_start_tick']+2:
+    decision_offset = world.registered_profile(state['graph']['profile_sha256'])['arm_schedule']['decision_offset']
+    if (sup['decision_tick'] is None) != (sup['continuation_start_tick'] is None) or sup['decision_tick'] is not None and sup['decision_tick'] != sup['continuation_start_tick']+decision_offset:
         raise ValueError('Supervisor schedule differs from acquired boundary')
     if sup['commitment_tick'] is not None and (sup['decision_tick'] is None or sup['commitment_tick'] < sup['decision_tick'] or cursor is None or sup['commitment_tick'] > cursor['tick']):
         raise ValueError('Invalid commitment timestamp')
@@ -285,7 +286,8 @@ def arm(state,boundary_tick):
     memory._int(boundary_tick)
     if not acquired_boundary(state) or state['cursor']['tick'] != boundary_tick-1:
         raise ValueError('Decision arm requires explicit acquired paused boundary')
-    state['supervisor'].update(continuation_start_tick=boundary_tick,decision_tick=boundary_tick+2)
+    decision_offset = world.registered_profile(state['graph']['profile_sha256'])['arm_schedule']['decision_offset']
+    state['supervisor'].update(continuation_start_tick=boundary_tick,decision_tick=boundary_tick+decision_offset)
     return validate_state(state)
 
 
