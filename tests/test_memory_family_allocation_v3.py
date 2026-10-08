@@ -60,7 +60,7 @@ def _expected(root):
         'bytes': len(payload), 'sha256': hashlib.sha256(payload).hexdigest(),
     }]
     return {
-        'path': str(root), 'entries': 1, 'files': 1, 'bytes': len(payload),
+        'entries': 1, 'files': 1, 'bytes': len(payload),
         'inventory_sha256': memory.sha256(ledger),
         'export_bytes': len(payload),
         'export_sha256': hashlib.sha256(payload).hexdigest(),
@@ -219,6 +219,21 @@ def test_unresolved_production_gate_cannot_publish_or_reach_assets(tmp_path):
                 'allocation-admission.json').exists()
 
 
+def test_forbidden_partition_reference_refuses_before_producer_reads_it(tmp_path):
+    inputs = _admission_inputs(tmp_path)
+    registration = artifacts._json(inputs['registration_path'].read_bytes())
+    relation = next(iter(registration['histories']))
+    registration['histories'][relation]['path'] = '/tmp/held-out-do-not-read.json'
+    _write(inputs['registration_path'], registration)
+    with patch.object(allocation.producer, '_registration',
+                      side_effect=AssertionError('producer opened held-out input')):
+        with pytest.raises(ValueError, match='held-out'):
+            allocation.admit(inputs['registration_path'], inputs['paths'], ROOT,
+                             ROOT / 'fixture-assets')
+    assert not (inputs['values']['roots']['publication'] /
+                'allocation-admission.json').exists()
+
+
 def test_exact_namespace_exports_build_complete_bounded_inventory(tmp_path):
     inline_run = uuid.UUID(int=71).hex
     second_run = uuid.UUID(int=72).hex
@@ -253,6 +268,55 @@ def test_exact_namespace_exports_build_complete_bounded_inventory(tmp_path):
     assert result['coverage']['searched_roots_sha256'] == memory.sha256(roots)
     with patch.object(allocation, 'NAMESPACE_COVERAGE', contract):
         assert result == allocation.build_namespace_inventory(paths)
+
+
+def test_frozen_export_identity_is_portable_across_manifest_roots(tmp_path):
+    _, historical, training, contract = _coverage_fixture(tmp_path / 'frozen')
+    relocated_history = tmp_path / 'relocated/history'
+    relocated_training = tmp_path / 'relocated/training'
+    _export(relocated_history, SOURCE_IDS[0], 'historical',
+            known_sources=['fixture-development-campaign'],
+            authored=['retained-old-case'])
+    _export(relocated_training, SOURCE_IDS[1], 'training',
+            known_sources=['fixture-training-campaign'],
+            authored=['trained-old-controller'], seeds=[10])
+    paths = _paths(tmp_path / 'relocated', relocated_history, relocated_training)
+
+    with patch.object(allocation, 'NAMESPACE_COVERAGE', contract):
+        result = allocation.build_namespace_inventory(paths)
+
+    assert [row['path'] for row in result['coverage']['roots']] == [
+        str(relocated_history), str(relocated_training)]
+
+
+def test_export_root_enumeration_stops_after_second_entry(tmp_path):
+    paths, historical, _, contract = _coverage_fixture(tmp_path)
+
+    class TooManyEntries:
+        def __init__(self):
+            self.count = 0
+
+        def __enter__(self):
+            return self
+
+        def __exit__(self, *_):
+            return False
+
+        def __iter__(self):
+            return self
+
+        def __next__(self):
+            self.count += 1
+            if self.count > 2:
+                raise AssertionError('enumerated beyond the rejection bound')
+            return SimpleNamespace(name=f'entry-{self.count}')
+
+    entries = TooManyEntries()
+    with patch.object(allocation, 'NAMESPACE_COVERAGE', contract), \
+            patch.object(allocation.os, 'scandir', return_value=entries):
+        with pytest.raises(ValueError, match='one-file allowlist'):
+            allocation.build_namespace_inventory(paths)
+    assert entries.count == 2
 
 
 @pytest.mark.parametrize('defect', [
@@ -290,7 +354,6 @@ def test_namespace_coverage_rejects_unfrozen_or_unsafe_inputs(tmp_path, defect):
         export.unlink()
         os.mkfifo(export)
     elif defect == 'overlap':
-        contract['sources'][1]['expected']['path'] = str(historical)
         paths = _paths(tmp_path, historical, training, [
             {'source_id': SOURCE_IDS[0], 'path': str(historical)},
             {'source_id': SOURCE_IDS[1], 'path': str(historical)}])
@@ -301,7 +364,6 @@ def test_namespace_coverage_rejects_unfrozen_or_unsafe_inputs(tmp_path, defect):
     else:
         forbidden = tmp_path / 'held-out-secret'
         forbidden.mkdir()
-        contract['sources'][0]['expected']['path'] = str(forbidden)
         paths = _paths(tmp_path, forbidden, training)
     with patch.object(allocation, 'NAMESPACE_COVERAGE', contract):
         if defect == 'held-out':
@@ -410,6 +472,17 @@ def test_identity_checks_never_load_construct_or_run_a_model():
     assert all(set(row) == {'path', 'bytes', 'sha256'} for row in behavior.values())
 
 
+def test_admission_refuses_source_bytes_different_from_loaded_code(tmp_path):
+    inputs = _admission_inputs(tmp_path)
+    drifted = allocation._behavior_identity(ROOT)
+    drifted['storage']['sha256'] = '0' * 64
+    with patch.object(allocation, '_behavior_identity', return_value=drifted):
+        with pytest.raises(RuntimeError, match='loaded|executing'):
+            _admit(inputs)
+    assert not (inputs['values']['roots']['publication'] /
+                'allocation-admission.json').exists()
+
+
 def test_admission_source_has_no_model_runtime_or_subprocess_call_path():
     tree = ast.parse(Path(allocation.__file__).read_text())
     imports, calls = set(), set()
@@ -445,6 +518,44 @@ def test_missing_or_different_upstream_tree_rejects_without_git_process(tmp_path
             allocation._upstream_identity(repo)
 
 
+def test_upstream_gitdir_must_stay_in_repository_metadata(tmp_path):
+    repo = tmp_path / 'repo'
+    upstream = repo / 'upstream/fly-gym'
+    upstream.mkdir(parents=True)
+    external = tmp_path / 'external-git'
+    external.mkdir()
+    (external / 'HEAD').write_text('1' * 40 + '\n')
+    (upstream / '.git').write_text(f'gitdir: {external}\n')
+    protocol = copy.deepcopy(allocation.PROTOCOL)
+    protocol['upstream'] = {
+        'path': 'upstream/fly-gym', 'commit': '1' * 40,
+        'files': 0, 'bytes': 0, 'inventory_sha256': memory.sha256([]),
+    }
+    with patch.object(allocation, 'PROTOCOL', protocol):
+        with pytest.raises(ValueError, match='repository.*metadata'):
+            allocation._upstream_identity(repo)
+
+
+def test_upstream_rejects_forbidden_gitdir_before_reading_head(tmp_path):
+    repo = tmp_path / 'repo'
+    upstream = repo / 'upstream/fly-gym'
+    upstream.mkdir(parents=True)
+    forbidden = tmp_path / 'held-out-private-git'
+    forbidden.mkdir()
+    (forbidden / 'HEAD').write_text('1' * 40 + '\n')
+    (upstream / '.git').write_text(f'gitdir: {forbidden}\n')
+    actual_read = allocation.artifacts._read
+
+    def guarded_read(path, limit):
+        if Path(path) == forbidden / 'HEAD':
+            raise AssertionError('forbidden HEAD was read')
+        return actual_read(path, limit)
+
+    with patch.object(allocation.artifacts, '_read', side_effect=guarded_read):
+        with pytest.raises(ValueError, match='held-out'):
+            allocation._upstream_identity(repo)
+
+
 def test_clean_upstream_tree_identity_uses_full_content_without_git(tmp_path):
     repo = tmp_path / 'repo'
     upstream = repo / 'upstream/fly-gym'
@@ -476,6 +587,66 @@ def test_clean_upstream_tree_identity_uses_full_content_without_git(tmp_path):
         'path': str(upstream), 'commit': '1' * 40, 'files': 2, 'bytes': 9,
         'inventory_sha256': memory.sha256(rows),
     }
+
+
+@pytest.mark.parametrize('escape', ['edge', 'mapping'])
+def test_prepared_graph_paths_must_stay_below_graph_root(tmp_path, escape):
+    repo, root = tmp_path / 'repo', tmp_path / 'assets'
+    manifest_path = repo / 'model_manifests/flynn-full-vision.json'
+    manifest_path.parent.mkdir(parents=True)
+    manifest_payload = b'fixture-manifest'
+    manifest_path.write_bytes(manifest_payload)
+    root.mkdir()
+    (root / 'archive.7z').write_bytes(b'archive')
+    (root / 'checkpoint.pt').write_bytes(b'checkpoint')
+    archive_sha = 'a' * 64
+    graph_root = root / f'graph-{archive_sha}'
+    (graph_root / 'nested').mkdir(parents=True)
+    outside = tmp_path / 'outside-graph'
+    outside.mkdir()
+    edge = outside / 'edge.bin' if escape == 'edge' else graph_root / 'nested/edge.bin'
+    edge.write_bytes(b'edge')
+    mapping = outside / 'mapping.json'
+    mapping.write_bytes(b'mapping')
+    edge_path = str(edge) if escape == 'edge' else 'nested/edge.bin'
+    mapping_path = str(mapping) if escape == 'mapping' else 'mapping.json'
+    if escape == 'edge':
+        (outside / 'mapping.json').write_bytes(b'mapping')
+    _write(graph_root / 'palimpsest-prepared.json', {
+        'archive_sha256': archive_sha, 'upstream_commit': 'fixture-upstream',
+        'edge_path': edge_path,
+    })
+    manifest = {
+        'profile_id': 'flynn-full-vision', 'upstream_commit': 'fixture-upstream',
+        'files': [
+            {'id': 'graph_archive', 'path': 'archive.7z', 'sha256': archive_sha},
+            {'id': 'checkpoint', 'path': 'checkpoint.pt'},
+        ],
+        'graph': {
+            'edge_identity': {'size_bytes': 4,
+                              'sha256': hashlib.sha256(b'edge').hexdigest()},
+            'mapping_files': [{
+                'path': mapping_path, 'size_bytes': 7,
+                'sha256': hashlib.sha256(b'mapping').hexdigest(),
+            }],
+        },
+    }
+    protocol = copy.deepcopy(allocation.PROTOCOL)
+    protocol['assets']['manifest_sha256'] = hashlib.sha256(manifest_payload).hexdigest()
+    with patch.object(allocation, 'PROTOCOL', protocol), \
+            patch.object(allocation.model_assets, 'load_manifest', return_value=manifest), \
+            patch.object(allocation.model_assets, 'verify_assets', return_value={'ok': True}), \
+            patch.object(allocation.model_assets, '_check_mappings', return_value=None):
+        with pytest.raises(ValueError, match='graph root'):
+            allocation._asset_model_identity(repo, root)
+
+
+def test_registration_is_validated_from_prechecked_bytes_without_reopen(tmp_path):
+    inputs = _admission_inputs(tmp_path)
+    with patch.object(allocation.producer, '_registration',
+                      side_effect=AssertionError('registration pathname reopened')):
+        descriptor = _admit(inputs)
+    assert Path(descriptor['path']).is_file()
 
 
 def test_resolved_fixture_success_is_exclusive_zero_owner_and_canonical(tmp_path):
@@ -558,3 +729,27 @@ def test_unprovable_post_link_rollback_surfaces_indeterminate_state(tmp_path):
         with pytest.raises(allocation.PublicationIndeterminate,
                            match='rollback.*indeterminate'):
             _admit(inputs)
+
+
+def test_rollback_never_unlinks_a_replacement_inode(tmp_path):
+    inputs = _admission_inputs(tmp_path)
+    target = inputs['values']['roots']['publication'] / 'allocation-admission.json'
+    first = allocation._behavior_identity(ROOT)
+    second = copy.deepcopy(first)
+    second['storage']['sha256'] = '0' * 64
+    calls = 0
+
+    def replace_then_drift(_):
+        nonlocal calls
+        calls += 1
+        if calls == 1:
+            return first
+        target.unlink()
+        target.write_bytes(b'concurrent replacement')
+        return second
+
+    with patch.object(allocation, '_behavior_identity', side_effect=replace_then_drift):
+        with pytest.raises(allocation.PublicationIndeterminate,
+                           match='rollback.*indeterminate'):
+            _admit(inputs)
+    assert target.read_bytes() == b'concurrent replacement'

@@ -37,8 +37,10 @@ canonical receipt before the final full revalidation and durable commit.
 ## Review Focus
 
 - The exact `pre-heldout-development-history` and `training-namespace` exports
-  must match protocol-frozen paths/counts/digests and known-source enumeration;
-  unresolved coverage refuses before reading either external path.
+  must match protocol-frozen counts/digests and known-source enumeration; the
+  separate path manifest supplies portable roots and the searched-root receipt
+  binds the paths actually used. Unresolved coverage refuses before reading
+  either external path.
 - Each namespace root permits only one canonical `namespace-export.json`;
   directories, extra files, symlinks, special files, or drift must refuse.
 - A UUID, authored string, or development seed already present in any declared
@@ -48,12 +50,16 @@ canonical receipt before the final full revalidation and durable commit.
   already admitted root usage without double-counting or weakening the 2 GiB
   floor.
 - Upstream pin plus full tree content must reject missing, dirty, untracked, or
-  wrong-HEAD checkouts without calling Git.
+  wrong-HEAD checkouts without calling Git, and its gitdir cannot escape the
+  checkout's own Git common metadata directory.
+- Prepared graph edge and mapping paths must remain under the verified graph
+  root, and a namespace root rejects after reading at most two entries.
 - Exclusive publication must link before final revalidation. Rollback must
   unlink and directory-fsync; inability to prove rollback is an explicit
   indeterminate state.
 - Every behavior-bearing local source has exact path/size/SHA-256 in the
-  receipt, is rechecked after linking, and is required future-launcher input.
+  receipt, equals the baseline captured while the module imports, is rechecked
+  after linking, and is required future-launcher input.
 
 ---
 

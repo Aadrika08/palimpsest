@@ -70,8 +70,10 @@ its logical source ID, kind, reviewed known-source enumeration, canonical UUIDs,
 bounded authored IDs, and training seeds. The protocol must independently
 freeze each export's byte count and SHA-256; root entry/file/byte counts and a
 canonical inventory SHA-256; and the known-source, run-ID, authored-ID, and seed
-counts/digests. The path manifest only maps those two frozen logical sources to
-portable absolute locations. It cannot add a source or assert an identity.
+counts/digests. These frozen identities exclude the machine-local root path.
+The path manifest alone maps the two frozen logical sources to portable
+absolute locations, while the searched-root receipt binds the actual paths. A
+path manifest cannot add a source or assert an identity.
 Name-based `held-out` rejection is defense in depth; the exact two source IDs,
 one-file allowlist, schema, and frozen identities are the authority.
 
@@ -106,7 +108,9 @@ to the final name, and removes the temporary name. It then revalidates every
 mutable input and capacity check while the final name is visible, before syncing
 the directory. Any failure after linking must unlink the target and sync the
 directory again. Failure to prove either rollback step raises an explicit
-indeterminate-publication error; an existing target is never replaced.
+indeterminate-publication error. Rollback verifies that the final name still
+identifies the inode linked by this call before unlinking; a replacement is
+preserved and surfaced as indeterminate. An existing target is never replaced.
 
 ## Source identities
 
@@ -128,6 +132,14 @@ performing inference, or spawning a process:
   producer, family generator, artifact, asset, memory, family-world, and storage
   helpers. These are rehashed after exclusive linking and are part of the
   receipt that any future launcher must bind.
+
+The submodule gitdir must be the exact `modules/upstream/fly-gym` directory
+under the checkout's own Git common directory; an arbitrary external gitdir is
+rejected before `HEAD` is read. Prepared graph metadata may name only a relative
+edge and relative mapping files that remain below the verified graph root.
+Behavior-source identities are captured while this module imports and current
+source bytes must still equal that loaded-code baseline before a receipt is
+constructed as well as after exclusive linking.
 
 The upstream tree identity includes path, file/symlink kind, executable bit,
 byte count, and content hash. Missing, changed, deleted, or untracked files alter
