@@ -160,8 +160,15 @@ planning-time pure enumeration of all 144 development-block-zero generated cases
 and every source length 1..1,200 and condition length 1..900 found at most 7
 source ticks and 11 condition ticks, because the final tick is already a quantile
 and the two schedule neighborhoods overlap. Tick translation does not change the
-cardinality. The enumerated case-list digest was
-`b5f603d175a4799864442055399656cb760c8d9ff82bfed354827b4d940a4bb5`.
+cardinality. Before implementation, the enumeration was repeated with the
+required `../lab-hardening/.venv/bin/python` Python 3.11.15 interpreter. Both
+valid synthetic prerequisite IDs `gate-a` and `fixture-prefix` produced the same
+case-list digest
+`009135479864b4a1c83c611683ada7efce298d29e9a807a7740b07ee6d09112c`.
+The earlier
+`b5f603d175a4799864442055399656cb760c8d9ff82bfed354827b4d940a4bb5`
+planning value came from unpinned `/usr/bin/python` 3.14.7 and is superseded
+before any owner or evidence execution.
 The implementation must repeat that generator-backed test and require that
 digest. Empty recordings remain invalid. At every tick, the raw auditor and
 converter check the existing policy-call observation/result hashes, require

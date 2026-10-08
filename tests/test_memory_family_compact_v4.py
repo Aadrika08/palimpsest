@@ -145,11 +145,20 @@ def test_protocol_is_canonical_and_freezes_exact_false_claim_contract():
     assert sum(field['bytes'] for field in fields) == \
         protocol['row']['bytes_per_tick'] == 19_534
     assert protocol['audit_ticks'] == {
-        'case_list_sha256': 'b5f603d175a4799864442055399656cb760c8d9ff82bfed354827b4d940a4bb5',
+        'case_list_sha256': '009135479864b4a1c83c611683ada7efce298d29e9a807a7740b07ee6d09112c',
         'final_ticks': 2, 'maximum': 16, 'neighborhood_radius': 1,
         'quantile_denominator': 5, 'quantile_points': 6,
         'selected_frame_shape': [128, 128, 3],
         'selected_frame_dtype': '|u1',
+        'generator_interpreter': {
+            'path': '../lab-hardening/.venv/bin/python',
+            'version': '3.11.15',
+        },
+        'prerequisite_ids_checked': ['gate-a', 'fixture-prefix'],
+        'superseded_unpinned': {
+            'case_list_sha256': 'b5f603d175a4799864442055399656cb760c8d9ff82bfed354827b4d940a4bb5',
+            'path': '/usr/bin/python', 'version': '3.14.7',
+        },
     }
 
     source = protocol['recordings']['source']
@@ -290,7 +299,7 @@ def test_audit_tick_rule_is_bounded_for_every_generated_development_case():
     )
     assert len(generated['cases']) == 144
     assert memory.sha256(generated['cases']) == \
-        'b5f603d175a4799864442055399656cb760c8d9ff82bfed354827b4d940a4bb5'
+        '009135479864b4a1c83c611683ada7efce298d29e9a807a7740b07ee6d09112c'
     source_max = max(len(compact.audit_ticks(range(n)))
                      for n in range(1, 1201))
     condition_max = 0
