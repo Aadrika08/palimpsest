@@ -9,6 +9,7 @@ from pathlib import Path
 import shutil
 import signal
 import stat
+import struct
 import subprocess
 import time
 import xml.etree.ElementTree as ET
@@ -24,6 +25,7 @@ MEMBERS = (*ARTIFACTS, 'README.md', 'THIRD_PARTY_NOTICES.md', 'checksums.json')
 SOURCES = ('scripts/prepare_artwork_encounter.py', 'tests/test_artwork_encounter.py',
            'docs/plans/artwork-encounter-v1.md')
 OUTPUT_LIMIT, FREE_FLOOR, HEADROOM = 64 * 1024**2, 2 * 1024**3, 64 * 1024**2
+MAX_HEADING = struct.unpack('!f', struct.pack('!f', math.pi))[0]  # Producer stores float32 actions.
 
 
 def require(condition, message):
@@ -128,7 +130,7 @@ def alignment(raw):
                 'frame/source/model time alignment differs')
         action, point = row['action'], row['point']
         require(isinstance(action, list) and isinstance(point, list) and len(action) == len(point) == 2
-                and all(number(v) for v in (*action, *point)) and abs(action[0]) <= 3 and abs(action[1]) <= math.pi
+                and all(number(v) for v in (*action, *point)) and abs(action[0]) <= 3 and abs(action[1]) <= MAX_HEADING
                 and point == [360 * action[0] / 3, -360 * action[1] / math.pi], 'exact response-plane alignment differs')
     return rows
 

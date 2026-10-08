@@ -6,6 +6,7 @@ import math
 from pathlib import Path
 import re
 import shutil
+import struct
 import subprocess
 import tempfile
 from types import SimpleNamespace
@@ -134,6 +135,17 @@ class EncounterTests(unittest.TestCase):
         self.meta['alignment'] = self.meta['alignment'][:1]
         self.meta['stimulus']['manifest']['source_times_seconds'] = [4.]
         self.assertEqual(len(encounter.alignment(self.svg())), 1)
+
+    def test_producer_float32_heading_endpoints_remain_admissible(self):
+        limit = struct.unpack('!f', struct.pack('!f', math.pi))[0]
+        for heading in (-limit, limit):
+            row = self.meta['alignment'][0]
+            row.update(action=[0., heading], point=[0., -360 * heading / math.pi])
+            self.assertEqual(encounter.alignment(self.svg())[0], row)
+        row['action'][1] = math.nextafter(limit, math.inf)
+        row['point'][1] = -360 * row['action'][1] / math.pi
+        with self.assertRaises(ValueError):
+            encounter.alignment(self.svg())
 
     def test_html_and_json_embedding_cannot_close_script(self):
         self.meta['title'] = '</script><script>alert(1)</script>&\u2028\u2029'

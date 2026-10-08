@@ -43,3 +43,20 @@ operated complete sessions and rights/audience/custodian/retention declarations
 remain open. Afterimage still contains only eight responses / 0.5 source seconds /
 0.16 model seconds and is insufficient for sustained material assessment.
 Qualification claims remain empty; account quota is unknown.
+
+## Independent source review and correction
+
+One independent review found no Critical issue and one Important issue: the
+consumer required double-precision `pi`, rejecting the renderer's legitimate
+float32 endpoint (`3.1415927410125732`). Root reproduced the rejection with a
+stdlib-only synthetic fixture, then retained the producer's exact float32 bound.
+Both signs are accepted and the next larger representable value is rejected.
+All ten component tests passed in 0.038 seconds after the fix; no source renderer
+or actual material was invoked by these tests. No Minor findings remain.
+
+Review limits: actual ZIP contents and final preparation/byte retention still
+require the registered invocation and independent close; browser/audio/keyboard
+and human acceptance need their own evidence. This local preparation assumes a
+controlled worktree, not an adversarial concurrent filesystem writer. The
+fixed-source pin and exclusive output guards remain mandatory. This review does
+not extend the eight-frame material or qualify any scientific behavior.
