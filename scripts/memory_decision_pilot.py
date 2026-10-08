@@ -63,6 +63,15 @@ TRAVEL_PROTOCOL = {**WAYPOINT_PROTOCOL, 'version': 3,
     'candidate_detour_offsets_m': [.25, .20, .15],
     'stage_seconds': {'development': 2300, 'prerequisites': 4300, 'readout': 600}}
 TRAVEL_PROTOCOL_SHA256 = sha(TRAVEL_PROTOCOL)
+SELECTED_PILOT_PROTOCOL = {**TRAVEL_PROTOCOL, 'version':4,
+    'scope':'selected-profile-paired-decision-pilot-only', 'conditions':list(CONDITIONS),
+    'profile_sha256':'7faba0a56d129ea051d5c28a019964034b546923dbe49cedb3a605af84437ec3',
+    'stage_seconds':{'pilot':6000,'readout':600}, 'native_owners_max':30}
+SELECTED_PILOT_PROTOCOL_SHA256 = sha(SELECTED_PILOT_PROTOCOL)
+
+
+def selected_pilot_specs():
+    return [{**spec,'profile_sha256':SELECTED_PILOT_PROTOCOL['profile_sha256']} for spec in pilot_specs()]
 
 
 def travel_specs(stage, profile_sha256=None):
@@ -77,6 +86,11 @@ def travel_specs(stage, profile_sha256=None):
 
 
 def owner_allocation(stage, operation, protocol_sha256):
+    if protocol_sha256 == SELECTED_PILOT_PROTOCOL_SHA256:
+        if stage != 'pilot-v2' or operation not in ('prefix','condition'):
+            raise ValueError('Selected pilot admits only its frozen acquisition and condition slots')
+        name = 'prefix' if operation == 'prefix' else 'pilot'
+        return SELECTED_PILOT_PROTOCOL[name+'_internal_seconds'], SELECTED_PILOT_PROTOCOL[name+'_external_seconds']
     if protocol_sha256 == PROTOCOL_SHA256 and stage in ('feasibility', 'pilot'):
         return PROTOCOL[stage+'_internal_seconds'], PROTOCOL[stage+'_external_seconds']
     if protocol_sha256 == TRAVEL_PROTOCOL_SHA256:
@@ -731,21 +745,24 @@ def admit_prefix_failure(job, supervised, report, manifest):
         raise ValueError('Unqualified acquisition infrastructure failure')
 
 
-def audit_native_prefix_terminal(data, report, *, expected_cap=1200):
+def audit_native_prefix_terminal(data, report, *, expected_cap=1200, start_tick=0, stall_steps=0):
     """Reconstruct pinned CPU-world stall/time-limit termination from raw rows."""
     outcome = report.get('outcome') or {}
     reason, total = outcome.get('reason'), report['total_ticks']
     ended = [e for e in data['events'] if e['kind'] == 'episode_finished']
     if (reason not in ('stalled','time_limit') or outcome.get('episode') != 0 or
             outcome.get('steps') != total or len(ended) != 1 or ended[0].get('outcome') != outcome or
-            len(data['rows']) != total or report.get('final_phase') != ('terminated' if reason == 'stalled' else 'truncated')):
+            type(start_tick) is not int or type(stall_steps) is not int or not 0 <= start_tick <= total
+            or not 0 <= stall_steps < 50 or len(data['rows']) != total-start_tick
+            or [int(r['tick']) for r in data['rows']] != list(range(start_tick,total))
+            or report.get('final_phase') != ('terminated' if reason == 'stalled' else 'truncated')):
         raise ValueError('Native prefix termination differs from actual terminal event')
-    counter, stalls = 0, []
+    counter, stalls = stall_steps, []
     for index, row in enumerate(data['rows']):
         moved = math.dist(row['pose'][:2],row['next_pose'][:2])
         counter = counter+1 if moved < .002 and abs(float(row['action'][0])) > .05 else 0
         if counter >= 50:
-            stalls.append(index)
+            stalls.append(start_tick+index)
     if reason == 'stalled' and stalls != [total-1]:
         raise ValueError('Native stall not independently reproduced at its final motor row')
     if reason == 'time_limit' and (total != expected_cap or stalls):
@@ -1116,8 +1133,9 @@ def validate_feasibility(path, plan):
     return {'path': str(checked_path(path)), 'sha256': file_hash(path)}
 
 
-def execute_stage(stage, plan, storage, deadline, *, retain_repeat_state=False):
-    specs = (travel_specs(stage,plan.get('selected_profile_sha256')) if stage == 'travel-feasibility' else
+def execute_stage(stage, plan, storage, deadline, *, retain_repeat_state=False, checkpoint=None):
+    specs = (selected_pilot_specs() if stage == 'pilot-v2' else
+             travel_specs(stage,plan.get('selected_profile_sha256')) if stage == 'travel-feasibility' else
              waypoint_specs(stage,plan.get('selected_profile_sha256')) if stage == 'waypoint-feasibility' else
              feasibility_specs() if stage in ('feasibility','waypoint-feasibility','travel-feasibility') else pilot_specs())
     report = {'version': 1, 'stage': stage, 'output': plan['output'], 'phase_root': plan['phase_root'],
@@ -1159,14 +1177,14 @@ def execute_stage(stage, plan, storage, deadline, *, retain_repeat_state=False):
                 sources[spec['id']] = result
             else:
                 prefix = launch_owner(stage, spec, plan, storage, deadline, operation='prefix')
-                report['attempted'].append(prefix)
+                report['attempted'].append(checkpoint(prefix) if checkpoint is not None else prefix)
                 if not prerequisite_pass('prefix', prefix) or prefix.get('raw_audit_pass') is not True:
                     raise ValueError('Pilot real-prefix prerequisite failed')
                 records = []
                 for condition in CONDITIONS:
                     result = launch_owner(stage, spec, plan, storage, deadline,
                         operation='condition', condition=condition, source=prefix)
-                    report['attempted'].append(result)
+                    report['attempted'].append(checkpoint(result) if checkpoint is not None else result)
                     records.append(result)
                     if result.get('status') != 'recorded' or result.get('raw_audit_pass') is not True:
                         raise ValueError('Pilot infrastructure/raw audit failure; no partial pair promotion')
@@ -1187,14 +1205,14 @@ def execute_stage(stage, plan, storage, deadline, *, retain_repeat_state=False):
                 if not pair['own_sham_identical'] or not pair['commitment_before_fresh_sample']:
                     raise ValueError('Paired continuation identity/opportunity audit failed')
         report['mandatory_pass'] = True
-        if stage == 'pilot':
+        if stage in ('pilot','pilot-v2'):
             report['mechanism_observed'] = (any(a['m_caused_route_difference'] for a in report['pair_audits'] if a['kind'] == 'change')
                 and any(a['closed_route_cost_observed'] for a in report['pair_audits'])
                 and any(a['false_targeting_cost_observed'] for a in report['pair_audits']))
     except Exception as error:
         report['errors'].append({'type': type(error).__name__, 'message': str(error)})
         report['unattempted'] = [spec['id'] for spec in specs[next_index:]]
-        if stage == 'pilot':
+        if stage in ('pilot','pilot-v2'):
             attempted_ids = {r['job_id'] for r in report['attempted']}
             report['unattempted'] = [spec['id'] for spec in specs if spec['id'] not in attempted_ids]
             report['unattempted'] += [spec['id']+'/'+condition for spec in specs for condition in CONDITIONS

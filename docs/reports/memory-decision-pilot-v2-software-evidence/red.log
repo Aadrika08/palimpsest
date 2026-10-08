@@ -1,0 +1,125 @@
+FFFFFFF                                                                  [100%]
+=================================== FAILURES ===================================
+______________ test_unknown_prerequisite_cannot_allocate_a_pilot _______________
+
+tmp_path = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/memory-decision-pilot-v2/.superpowers/sdd/software-tmp-memory-decision-pilot-v2/pytest-of-utkarsh/pytest-2/test_unknown_prerequisite_cann0')
+
+    def test_unknown_prerequisite_cannot_allocate_a_pilot(tmp_path):
+>       s = selected()
+            ^^^^^^^^^^
+
+tests/test_memory_selected_pilot.py:20: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def selected():
+>       assert importlib.util.find_spec('scripts.memory_selected_pilot'), 'Selected pilot admission is missing'
+E       AssertionError: Selected pilot admission is missing
+E       assert None
+E        +  where None = <function find_spec at 0x7ce2acfaef20>('scripts.memory_selected_pilot')
+E        +    where <function find_spec at 0x7ce2acfaef20> = <module 'importlib.util' (frozen)>.find_spec
+E        +      where <module 'importlib.util' (frozen)> = importlib.util
+
+tests/test_memory_selected_pilot.py:15: AssertionError
+____ test_selected_protocol_admits_only_frozen_prefix_and_condition_bounds _____
+
+    def test_selected_protocol_admits_only_frozen_prefix_and_condition_bounds():
+        protocol = getattr(p, 'SELECTED_PILOT_PROTOCOL_SHA256', None)
+>       assert protocol is not None, 'Separate selected-profile worker protocol is missing'
+E       AssertionError: Separate selected-profile worker protocol is missing
+E       assert None is not None
+
+tests/test_memory_selected_pilot.py:28: AssertionError
+_________ test_restored_stall_uses_acquired_tick_and_inherited_counter _________
+
+    def test_restored_stall_uses_acquired_tick_and_inherited_counter():
+        row = {'tick':727,'pose':np.array([0.,0.,0.]),'next_pose':np.array([0.,0.,0.]),
+               'action':np.array([.1,0.])}
+        outcome = {'reason':'stalled','episode':0,'steps':728}
+        data = {'rows':[row], 'events':[{'kind':'episode_finished','outcome':outcome}]}
+        report = {'outcome':outcome,'total_ticks':728,'final_phase':'terminated'}
+>       assert p.audit_native_prefix_terminal(data,report,start_tick=727,stall_steps=49) == 'stalled'
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: audit_native_prefix_terminal() got an unexpected keyword argument 'start_tick'
+
+tests/test_memory_selected_pilot.py:44: TypeError
+______________ test_restored_time_limit_cannot_hide_missing_rows _______________
+
+    def test_restored_time_limit_cannot_hide_missing_rows():
+        rows = [{'tick':i,'pose':[0.,0.,0.],'next_pose':[.01,0.,0.],'action':[.1,0.]}
+                for i in range(727,730)]
+        outcome={'reason':'time_limit','episode':0,'steps':730}
+        data={'rows':rows,'events':[{'kind':'episode_finished','outcome':outcome}]}
+        report={'outcome':outcome,'total_ticks':730,'final_phase':'truncated'}
+>       assert p.audit_native_prefix_terminal(data,report,expected_cap=730,start_tick=727) == 'time_limit'
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: audit_native_prefix_terminal() got an unexpected keyword argument 'start_tick'
+
+tests/test_memory_selected_pilot.py:58: TypeError
+______ test_bounded_pair_publication_keeps_full_reports_outside_envelope _______
+
+tmp_path = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/memory-decision-pilot-v2/.superpowers/sdd/software-tmp-memory-decision-pilot-v2/pytest-of-utkarsh/pytest-2/test_bounded_pair_publication_0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7ce2a9da41d0>
+
+    def test_bounded_pair_publication_keeps_full_reports_outside_envelope(tmp_path,monkeypatch):
+>       s = selected()
+            ^^^^^^^^^^
+
+tests/test_memory_selected_pilot.py:65: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def selected():
+>       assert importlib.util.find_spec('scripts.memory_selected_pilot'), 'Selected pilot admission is missing'
+E       AssertionError: Selected pilot admission is missing
+E       assert None
+E        +  where None = <function find_spec at 0x7ce2acfaef20>('scripts.memory_selected_pilot')
+E        +    where <function find_spec at 0x7ce2acfaef20> = <module 'importlib.util' (frozen)>.find_spec
+E        +      where <module 'importlib.util' (frozen)> = importlib.util
+
+tests/test_memory_selected_pilot.py:15: AssertionError
+____ test_pilot_pairs_use_all_six_selected_specs_and_keep_natural_failures _____
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7ce2a9dce4d0>
+
+    def test_pilot_pairs_use_all_six_selected_specs_and_keep_natural_failures(monkeypatch):
+>       selected()
+
+tests/test_memory_selected_pilot.py:79: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def selected():
+>       assert importlib.util.find_spec('scripts.memory_selected_pilot'), 'Selected pilot admission is missing'
+E       AssertionError: Selected pilot admission is missing
+E       assert None
+E        +  where None = <function find_spec at 0x7ce2acfaef20>('scripts.memory_selected_pilot')
+E        +    where <function find_spec at 0x7ce2acfaef20> = <module 'importlib.util' (frozen)>.find_spec
+E        +      where <module 'importlib.util' (frozen)> = importlib.util
+
+tests/test_memory_selected_pilot.py:15: AssertionError
+______ test_source_failure_lists_every_remaining_slot_without_replacement ______
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7ce2a9d78b50>
+
+    def test_source_failure_lists_every_remaining_slot_without_replacement(monkeypatch):
+>       selected()
+
+tests/test_memory_selected_pilot.py:101: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def selected():
+>       assert importlib.util.find_spec('scripts.memory_selected_pilot'), 'Selected pilot admission is missing'
+E       AssertionError: Selected pilot admission is missing
+E       assert None
+E        +  where None = <function find_spec at 0x7ce2acfaef20>('scripts.memory_selected_pilot')
+E        +    where <function find_spec at 0x7ce2acfaef20> = <module 'importlib.util' (frozen)>.find_spec
+E        +      where <module 'importlib.util' (frozen)> = importlib.util
+
+tests/test_memory_selected_pilot.py:15: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_memory_selected_pilot.py::test_unknown_prerequisite_cannot_allocate_a_pilot
+FAILED tests/test_memory_selected_pilot.py::test_selected_protocol_admits_only_frozen_prefix_and_condition_bounds
+FAILED tests/test_memory_selected_pilot.py::test_restored_stall_uses_acquired_tick_and_inherited_counter
+FAILED tests/test_memory_selected_pilot.py::test_restored_time_limit_cannot_hide_missing_rows
+FAILED tests/test_memory_selected_pilot.py::test_bounded_pair_publication_keeps_full_reports_outside_envelope
+FAILED tests/test_memory_selected_pilot.py::test_pilot_pairs_use_all_six_selected_specs_and_keep_natural_failures
+FAILED tests/test_memory_selected_pilot.py::test_source_failure_lists_every_remaining_slot_without_replacement
+7 failed in 0.14s

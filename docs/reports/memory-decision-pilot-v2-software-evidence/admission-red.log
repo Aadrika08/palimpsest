@@ -1,0 +1,191 @@
+FFFFFFF                                                                  [100%]
+=================================== FAILURES ===================================
+______________ test_unknown_prerequisite_cannot_allocate_a_pilot _______________
+
+tmp_path = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/memory-decision-pilot-v2/.superpowers/sdd/software-tmp-memory-decision-pilot-v2/pytest-of-utkarsh/pytest-3/test_unknown_prerequisite_cann0')
+
+    def test_unknown_prerequisite_cannot_allocate_a_pilot(tmp_path):
+>       s = selected()
+            ^^^^^^^^^^
+
+tests/test_memory_selected_pilot.py:20: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def selected():
+>       assert importlib.util.find_spec('scripts.memory_selected_pilot'), 'Selected pilot admission is missing'
+E       AssertionError: Selected pilot admission is missing
+E       assert None
+E        +  where None = <function find_spec at 0x7a706bbb2f20>('scripts.memory_selected_pilot')
+E        +    where <function find_spec at 0x7a706bbb2f20> = <module 'importlib.util' (frozen)>.find_spec
+E        +      where <module 'importlib.util' (frozen)> = importlib.util
+
+tests/test_memory_selected_pilot.py:15: AssertionError
+_ test_only_pinned_independent_prerequisite_and_explicit_worker_derivation_admit _
+
+tmp_path = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/memory-decision-pilot-v2/.superpowers/sdd/software-tmp-memory-decision-pilot-v2/pytest-of-utkarsh/pytest-3/test_only_pinned_independent_p0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7a706acb5c10>
+
+    def test_only_pinned_independent_prerequisite_and_explicit_worker_derivation_admit(tmp_path,monkeypatch):
+>       s,path,root,reg,new=admitted_fixture(tmp_path,monkeypatch)
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_memory_selected_pilot.py:48: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_memory_selected_pilot.py:27: in admitted_fixture
+    s=selected()
+      ^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def selected():
+>       assert importlib.util.find_spec('scripts.memory_selected_pilot'), 'Selected pilot admission is missing'
+E       AssertionError: Selected pilot admission is missing
+E       assert None
+E        +  where None = <function find_spec at 0x7a706bbb2f20>('scripts.memory_selected_pilot')
+E        +    where <function find_spec at 0x7a706bbb2f20> = <module 'importlib.util' (frozen)>.find_spec
+E        +      where <module 'importlib.util' (frozen)> = importlib.util
+
+tests/test_memory_selected_pilot.py:15: AssertionError
+_ test_prerequisite_flags_never_replace_pins_inputs_and_complete_cells[close-pin] _
+
+tmp_path = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/memory-decision-pilot-v2/.superpowers/sdd/software-tmp-memory-decision-pilot-v2/pytest-of-utkarsh/pytest-3/test_prerequisite_flags_never_0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7a7068516a50>
+mutation = 'close-pin'
+
+    @pytest.mark.parametrize('mutation',['close-pin','copied-success','source-drift','candidate-exclusion','missing-cell'])
+    def test_prerequisite_flags_never_replace_pins_inputs_and_complete_cells(tmp_path,monkeypatch,mutation):
+>       s,path,root,reg,new=admitted_fixture(tmp_path,monkeypatch)
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_memory_selected_pilot.py:61: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_memory_selected_pilot.py:27: in admitted_fixture
+    s=selected()
+      ^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def selected():
+>       assert importlib.util.find_spec('scripts.memory_selected_pilot'), 'Selected pilot admission is missing'
+E       AssertionError: Selected pilot admission is missing
+E       assert None
+E        +  where None = <function find_spec at 0x7a706bbb2f20>('scripts.memory_selected_pilot')
+E        +    where <function find_spec at 0x7a706bbb2f20> = <module 'importlib.util' (frozen)>.find_spec
+E        +      where <module 'importlib.util' (frozen)> = importlib.util
+
+tests/test_memory_selected_pilot.py:15: AssertionError
+_ test_prerequisite_flags_never_replace_pins_inputs_and_complete_cells[copied-success] _
+
+tmp_path = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/memory-decision-pilot-v2/.superpowers/sdd/software-tmp-memory-decision-pilot-v2/pytest-of-utkarsh/pytest-3/test_prerequisite_flags_never_1')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7a7068504d50>
+mutation = 'copied-success'
+
+    @pytest.mark.parametrize('mutation',['close-pin','copied-success','source-drift','candidate-exclusion','missing-cell'])
+    def test_prerequisite_flags_never_replace_pins_inputs_and_complete_cells(tmp_path,monkeypatch,mutation):
+>       s,path,root,reg,new=admitted_fixture(tmp_path,monkeypatch)
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_memory_selected_pilot.py:61: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_memory_selected_pilot.py:27: in admitted_fixture
+    s=selected()
+      ^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def selected():
+>       assert importlib.util.find_spec('scripts.memory_selected_pilot'), 'Selected pilot admission is missing'
+E       AssertionError: Selected pilot admission is missing
+E       assert None
+E        +  where None = <function find_spec at 0x7a706bbb2f20>('scripts.memory_selected_pilot')
+E        +    where <function find_spec at 0x7a706bbb2f20> = <module 'importlib.util' (frozen)>.find_spec
+E        +      where <module 'importlib.util' (frozen)> = importlib.util
+
+tests/test_memory_selected_pilot.py:15: AssertionError
+_ test_prerequisite_flags_never_replace_pins_inputs_and_complete_cells[source-drift] _
+
+tmp_path = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/memory-decision-pilot-v2/.superpowers/sdd/software-tmp-memory-decision-pilot-v2/pytest-of-utkarsh/pytest-3/test_prerequisite_flags_never_2')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7a7068520bd0>
+mutation = 'source-drift'
+
+    @pytest.mark.parametrize('mutation',['close-pin','copied-success','source-drift','candidate-exclusion','missing-cell'])
+    def test_prerequisite_flags_never_replace_pins_inputs_and_complete_cells(tmp_path,monkeypatch,mutation):
+>       s,path,root,reg,new=admitted_fixture(tmp_path,monkeypatch)
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_memory_selected_pilot.py:61: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_memory_selected_pilot.py:27: in admitted_fixture
+    s=selected()
+      ^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def selected():
+>       assert importlib.util.find_spec('scripts.memory_selected_pilot'), 'Selected pilot admission is missing'
+E       AssertionError: Selected pilot admission is missing
+E       assert None
+E        +  where None = <function find_spec at 0x7a706bbb2f20>('scripts.memory_selected_pilot')
+E        +    where <function find_spec at 0x7a706bbb2f20> = <module 'importlib.util' (frozen)>.find_spec
+E        +      where <module 'importlib.util' (frozen)> = importlib.util
+
+tests/test_memory_selected_pilot.py:15: AssertionError
+_ test_prerequisite_flags_never_replace_pins_inputs_and_complete_cells[candidate-exclusion] _
+
+tmp_path = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/memory-decision-pilot-v2/.superpowers/sdd/software-tmp-memory-decision-pilot-v2/pytest-of-utkarsh/pytest-3/test_prerequisite_flags_never_3')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7a70689881d0>
+mutation = 'candidate-exclusion'
+
+    @pytest.mark.parametrize('mutation',['close-pin','copied-success','source-drift','candidate-exclusion','missing-cell'])
+    def test_prerequisite_flags_never_replace_pins_inputs_and_complete_cells(tmp_path,monkeypatch,mutation):
+>       s,path,root,reg,new=admitted_fixture(tmp_path,monkeypatch)
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_memory_selected_pilot.py:61: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_memory_selected_pilot.py:27: in admitted_fixture
+    s=selected()
+      ^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def selected():
+>       assert importlib.util.find_spec('scripts.memory_selected_pilot'), 'Selected pilot admission is missing'
+E       AssertionError: Selected pilot admission is missing
+E       assert None
+E        +  where None = <function find_spec at 0x7a706bbb2f20>('scripts.memory_selected_pilot')
+E        +    where <function find_spec at 0x7a706bbb2f20> = <module 'importlib.util' (frozen)>.find_spec
+E        +      where <module 'importlib.util' (frozen)> = importlib.util
+
+tests/test_memory_selected_pilot.py:15: AssertionError
+_ test_prerequisite_flags_never_replace_pins_inputs_and_complete_cells[missing-cell] _
+
+tmp_path = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/memory-decision-pilot-v2/.superpowers/sdd/software-tmp-memory-decision-pilot-v2/pytest-of-utkarsh/pytest-3/test_prerequisite_flags_never_4')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7a706897bc10>
+mutation = 'missing-cell'
+
+    @pytest.mark.parametrize('mutation',['close-pin','copied-success','source-drift','candidate-exclusion','missing-cell'])
+    def test_prerequisite_flags_never_replace_pins_inputs_and_complete_cells(tmp_path,monkeypatch,mutation):
+>       s,path,root,reg,new=admitted_fixture(tmp_path,monkeypatch)
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_memory_selected_pilot.py:61: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_memory_selected_pilot.py:27: in admitted_fixture
+    s=selected()
+      ^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def selected():
+>       assert importlib.util.find_spec('scripts.memory_selected_pilot'), 'Selected pilot admission is missing'
+E       AssertionError: Selected pilot admission is missing
+E       assert None
+E        +  where None = <function find_spec at 0x7a706bbb2f20>('scripts.memory_selected_pilot')
+E        +    where <function find_spec at 0x7a706bbb2f20> = <module 'importlib.util' (frozen)>.find_spec
+E        +      where <module 'importlib.util' (frozen)> = importlib.util
+
+tests/test_memory_selected_pilot.py:15: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_memory_selected_pilot.py::test_unknown_prerequisite_cannot_allocate_a_pilot
+FAILED tests/test_memory_selected_pilot.py::test_only_pinned_independent_prerequisite_and_explicit_worker_derivation_admit
+FAILED tests/test_memory_selected_pilot.py::test_prerequisite_flags_never_replace_pins_inputs_and_complete_cells[close-pin]
+FAILED tests/test_memory_selected_pilot.py::test_prerequisite_flags_never_replace_pins_inputs_and_complete_cells[copied-success]
+FAILED tests/test_memory_selected_pilot.py::test_prerequisite_flags_never_replace_pins_inputs_and_complete_cells[source-drift]
+FAILED tests/test_memory_selected_pilot.py::test_prerequisite_flags_never_replace_pins_inputs_and_complete_cells[candidate-exclusion]
+FAILED tests/test_memory_selected_pilot.py::test_prerequisite_flags_never_replace_pins_inputs_and_complete_cells[missing-cell]
+7 failed, 6 deselected in 0.16s
