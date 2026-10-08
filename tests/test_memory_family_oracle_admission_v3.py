@@ -146,12 +146,11 @@ def _tree_hashes(root):
             for path in sorted(root.rglob('*')) if path.is_file()}
 
 
-def _pair(root, row=4):
+def _pair(root, row=4, *, protocol_sha256='4' * 64,
+          source_identity_sha256='6' * 64):
     root.mkdir(parents=True, exist_ok=True)
     sample = evidence(row=row)
     case = sample['case']
-    protocol_sha256 = '4' * 64
-    source_identity_sha256 = '6' * 64
     plan_path = root / 'plan.json'
     plan_sha256 = _canonical_file(plan_path, {'schema': 'fixture-plan-v1'})
     configured = next(event for event in sample['post_events']
