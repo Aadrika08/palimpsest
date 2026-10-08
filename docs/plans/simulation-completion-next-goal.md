@@ -346,3 +346,41 @@ synthetic/development suite passed 33 tests. No third retained attempt, held-out
 access, model inference or simulator run occurred. This result can inform one
 new prospective intervention on fresh development scenes, but it does not revive
 the failed v2 gate, unlock held-out scenes or close R3.
+
+### Family allocation admission failed inconclusively, 8 October 2026
+
+[PR #104](https://github.com/Aadrika08/palimpsest/pull/104), stacked on #101,
+adds the zero-owner allocation contract for storage, historical namespaces,
+upstream bytes, runtime sources and model assets. The frozen execution did not
+reach those gates: direct-file import failed, then the supported module command
+entered `admit` but resolved a stale `StorageLimits` without `max_entries`.
+Both error streams are retained byte-for-byte. The result is
+`EXECUTION_ERROR / INCONCLUSIVE`; no admission was published and the attempt is
+consumed. A checkout-bound import bootstrap and its isolated regressions now
+pass, but any execution needs a new prospectively frozen attempt and review.
+
+The unchanged contract still requires 645,285,281,792 bytes (600.96875 GiB),
+while the host capacity was not measured by this failed execution. The current
+bound is dominated by 1,440 generic full-recording quotas. Next memory work is a
+separately reviewed compact evidence contract that retains model inputs,
+controls, poses, task events and selected audit frames without weakening the 48
+family / 1,296-cell analysis or deleting prior evidence. R2 remains open.
+
+### Navigation selected-checkpoint support audited, 8 October 2026
+
+[PR #105](https://github.com/Aadrika08/palimpsest/pull/105), stacked on #103,
+completed one frozen offline audit of all six selected original-graph
+checkpoints on the unchanged four-source recorded-development split. The sole
+invocation covered 7,368 rows and 234 recurrent windows in 3.219 seconds. All
+three old-corpus checkpoints emitted both heading signs and switched within a
+source; every augmented checkpoint emitted one sign only and never switched.
+The velocity target was +0.7 on all 1,228 rows, so reverse-velocity support is
+uninformative on this split.
+
+Independent compact review recomputed the metrics and found no Critical or
+Important issue. Unequal corpus composition, row exposure, update counts,
+source order and checkpoint selection prevent causal attribution. Next
+navigation work is one prospectively frozen matched-budget training study on
+four fresh development scenes; the eight held-out scenes remain locked until
+every augmented seed passes at least 3/4 development goals. No simulator,
+training, held-out or R3 claim was made by this audit.
