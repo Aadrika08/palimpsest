@@ -531,6 +531,59 @@ def _policy_calls(events):
     return calls
 
 
+def _normal_condition_terminal(events, manifest, terminal_state, schedule):
+    finished = [(index, event) for index, event in enumerate(events)
+                if event.get('kind') == 'episode_finished']
+    outcome = manifest.get('last_outcome')
+    if outcome is None:
+        if (finished or terminal_state['manifest_status'] != 'completed'
+                or terminal_state['final_phase'] != 'paused'):
+            raise ValueError('Paused condition has a normal terminal event')
+        return
+    if len(finished) != 1 or terminal_state['manifest_status'] != 'completed':
+        raise ValueError('Normal condition requires one completed terminal event')
+    index, event = finished[0]
+    _fields(event, {
+        'sequence', 'kind', 'run_id', 'episode', 'episode_step', 'tick',
+        'outcome', 'metrics',
+    }, 'Normal episode terminal')
+    _fields(outcome, {'reason', 'episode', 'steps', 'final_distance'},
+            'Normal episode outcome')
+    metrics = manifest.get('metrics')
+    _fields(metrics, {'reward', 'contact_ticks', 'path_length'},
+            'Normal episode metrics')
+    total_ticks = terminal_state['total_ticks']
+    reason = outcome['reason']
+    expected_phase = 'truncated' if reason == 'time_limit' else 'terminated'
+    cap = schedule['boundary_tick'] + 900
+    if (reason not in ('goal', 'stalled', 'collision', 'time_limit')
+            or type(outcome['episode']) is not int or outcome['episode'] != 0
+            or type(outcome['steps']) is not int
+            or outcome['steps'] != total_ticks
+            or type(outcome['final_distance']) is not float
+            or not math.isfinite(outcome['final_distance'])
+            or outcome['final_distance'] < 0.0
+            or terminal_state['final_phase'] != expected_phase
+            or terminal_state['last_tick'] != total_ticks - 1
+            or not schedule['decision_tick'] < total_ticks <= cap
+            or reason == 'time_limit' and total_ticks != cap
+            or event['kind'] != 'episode_finished'
+            or event['run_id'] != manifest.get('run_id')
+            or type(event['sequence']) is not int or event['sequence'] != index
+            or event['outcome'] != outcome or event['metrics'] != metrics
+            or type(metrics['reward']) is not float
+            or not math.isfinite(metrics['reward'])
+            or type(metrics['contact_ticks']) is not int
+            or metrics['contact_ticks'] < 0
+            or type(metrics['path_length']) is not float
+            or not math.isfinite(metrics['path_length'])
+            or metrics['path_length'] < 0.0
+            or any(child.get('kind') != 'chunk'
+                   for child in events[index + 1:])):
+        raise ValueError('Normal condition terminal differs from engine output')
+    oracle._event_boundary(event, total_ticks, 'episode_finished')
+
+
 def _condition_terminal(data, case, projection, terminal_state, schedule):
     events = data['events']
     manifest = data['manifest']
@@ -548,8 +601,9 @@ def _condition_terminal(data, case, projection, terminal_state, schedule):
     failures = [(index, event) for index, event in enumerate(events)
                 if event.get('kind') == 'runtime_failure']
     if not tail:
-        if failures or manifest.get('last_outcome') is not None:
+        if failures:
             raise ValueError('Successful condition contains a terminal failure')
+        _normal_condition_terminal(events, manifest, terminal_state, schedule)
         return
     if last_tick != last_row + 1 or last_tick <= schedule['decision_tick']:
         raise ValueError('Condition failure is not a terminal sensor-only tick')
