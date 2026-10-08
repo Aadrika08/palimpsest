@@ -30,7 +30,6 @@ if PROTOCOL_BYTES != memory.canonical_bytes(PROTOCOL):
     raise ValueError('Allocation-admission protocol must be canonical JSON')
 
 NAMESPACE_COVERAGE = copy.deepcopy(PROTOCOL['inventory'])
-INVENTORY_LIMITS = NAMESPACE_COVERAGE  # Backward-compatible name for plan tooling.
 ALLOCATION_MAX_BYTES = PROTOCOL['storage']['allocation_max_bytes']
 MIN_FREE_BYTES = PROTOCOL['storage']['min_free_bytes']
 MINIMUM_CAPACITY_BYTES = PROTOCOL['storage']['minimum_capacity_bytes']
@@ -188,53 +187,37 @@ def _uuid(value):
 
 def _identifier(value):
     memory._id(value)
-    if uuid_like(value):
-        raise ValueError('UUIDs belong in historical_run_ids')
-
-
-def uuid_like(value):
     try:
-        return type(value) is str and value in {uuid.UUID(value).hex, str(uuid.UUID(value))}
+        forms = {uuid.UUID(value).hex, str(uuid.UUID(value))}
     except (AttributeError, ValueError):
-        return False
-
-
-def _source_expected(export, root, payload, ledger):
-    return {
-        'path': str(root), 'entries': 1, 'files': 1, 'bytes': len(payload),
-        'inventory_sha256': memory.sha256(ledger),
-        'export_bytes': len(payload),
-        'export_sha256': hashlib.sha256(payload).hexdigest(),
-        'known_sources_count': len(export['known_sources']),
-        'known_sources_sha256': memory.sha256(export['known_sources']),
-        'historical_run_ids_count': len(export['historical_run_ids']),
-        'historical_run_ids_sha256': memory.sha256(export['historical_run_ids']),
-        'historical_authored_ids_count': len(export['historical_authored_ids']),
-        'historical_authored_ids_sha256': memory.sha256(
-            export['historical_authored_ids']),
-        'training_seeds_count': len(export['training_seeds']),
-        'training_seeds_sha256': memory.sha256(export['training_seeds']),
-    }
+        return
+    if value in forms:
+        raise ValueError('UUIDs belong in historical_run_ids')
 
 
 def _read_export(path_row, source_contract, limits):
     source_id, kind = source_contract['source_id'], source_contract['kind']
     expected = source_contract['expected']
     expected_fields = {
-        'path', 'entries', 'files', 'bytes', 'inventory_sha256',
+        'entries', 'files', 'bytes', 'inventory_sha256',
         'export_bytes', 'export_sha256', 'known_sources_count',
         'known_sources_sha256', 'historical_run_ids_count',
         'historical_run_ids_sha256', 'historical_authored_ids_count',
         'historical_authored_ids_sha256', 'training_seeds_count',
         'training_seeds_sha256',
     }
-    if set(expected) != expected_fields or path_row['path'] != expected['path']:
-        raise ValueError(f'{source_id} path or frozen identity differs')
+    if set(expected) != expected_fields:
+        raise ValueError(f'{source_id} frozen identity differs')
     root = Path(path_row['path'])
     if _held_out(root):
         raise ValueError('Namespace export cannot name held-out data')
     root = _safe_absolute(root, f'{source_id} root', directory=True)
-    entries = list(os.scandir(root))
+    entries = []
+    with os.scandir(root) as iterator:
+        for entry in iterator:
+            entries.append(entry)
+            if len(entries) == 2:
+                break
     if len(entries) != 1 or entries[0].name != 'namespace-export.json':
         raise ValueError(f'{source_id} root differs from the one-file allowlist')
     info = entries[0].stat(follow_symlinks=False)
@@ -306,10 +289,24 @@ def _read_export(path_row, source_contract, limits):
         'executable': bool(before.st_mode & stat.S_IXUSR),
         'bytes': len(payload), 'sha256': hashlib.sha256(payload).hexdigest(),
     }]
-    actual = _source_expected(export, root, payload, ledger)
+    actual = {
+        'entries': 1, 'files': 1, 'bytes': len(payload),
+        'inventory_sha256': memory.sha256(ledger),
+        'export_bytes': len(payload),
+        'export_sha256': hashlib.sha256(payload).hexdigest(),
+        'known_sources_count': len(export['known_sources']),
+        'known_sources_sha256': memory.sha256(export['known_sources']),
+        'historical_run_ids_count': len(export['historical_run_ids']),
+        'historical_run_ids_sha256': memory.sha256(export['historical_run_ids']),
+        'historical_authored_ids_count': len(export['historical_authored_ids']),
+        'historical_authored_ids_sha256': memory.sha256(
+            export['historical_authored_ids']),
+        'training_seeds_count': len(export['training_seeds']),
+        'training_seeds_sha256': memory.sha256(export['training_seeds']),
+    }
     if actual != expected:
         raise ValueError(f'{source_id} namespace export differs from frozen identity')
-    receipt = {'source_id': source_id, 'kind': kind, **actual}
+    receipt = {'source_id': source_id, 'kind': kind, 'path': str(root), **actual}
     return root, export, receipt
 
 
@@ -356,19 +353,17 @@ def build_namespace_inventory(search_manifest_path):
     return {'namespace': namespace, 'coverage': coverage}
 
 
-def _nearest_existing(path: Path) -> Path:
-    current = path
-    while not current.exists():
-        if current == current.parent:
-            raise ValueError('Storage root has no existing ancestor')
-        current = current.parent
-    return current
-
-
 def _capacity(roots):
     ordered = [_safe_absolute(roots[name], f'{name} root')
                for name in ('output', 'control', 'publication')]
-    devices = {_nearest_existing(path).stat().st_dev for path in ordered}
+    devices = set()
+    for path in ordered:
+        current = path
+        while not current.exists():
+            if current == current.parent:
+                raise ValueError('Storage root has no existing ancestor')
+            current = current.parent
+        devices.add(current.stat().st_dev)
     if len(devices) != 1:
         raise StorageLimitError('Allocation roots must share one filesystem')
     limits = StorageLimits(
@@ -395,10 +390,8 @@ def _capacity(roots):
     }
 
 
-def _git_directory(upstream: Path) -> Path:
+def _git_directory(repo: Path, upstream: Path) -> Path:
     marker = upstream / '.git'
-    if marker.is_dir() and not marker.is_symlink():
-        return marker
     if not marker.is_file() or marker.is_symlink():
         raise ValueError('upstream/fly-gym is not initialized')
     try:
@@ -413,6 +406,11 @@ def _git_directory(upstream: Path) -> Path:
         raise ValueError('upstream/fly-gym has an unsafe gitdir marker')
     directory = Path(os.path.abspath(
         candidate if candidate.is_absolute() else upstream / candidate))
+    if _held_out(directory):
+        raise ValueError('upstream/fly-gym gitdir cannot name held-out data')
+    expected = repo / '.git/modules/upstream/fly-gym'
+    if directory != expected:
+        raise ValueError('upstream/fly-gym gitdir is outside repository Git metadata')
     if any(part.is_symlink() for part in (directory, *directory.parents)):
         raise ValueError('upstream/fly-gym gitdir traverses a symlink')
     if not directory.is_dir():
@@ -424,7 +422,7 @@ def _upstream_identity(repo_root):
     repo = _safe_absolute(repo_root, 'Repository root', directory=True)
     upstream = _safe_absolute(repo / PROTOCOL['upstream']['path'],
                               'upstream/fly-gym', directory=True)
-    git_directory = _git_directory(upstream)
+    git_directory = _git_directory(repo, upstream)
     head_path = git_directory / 'HEAD'
     if head_path.is_symlink():
         raise ValueError('upstream/fly-gym HEAD cannot be a symlink')
@@ -537,6 +535,9 @@ def _behavior_identity(repo_root):
     return result
 
 
+LOADED_BEHAVIOR_IDENTITY = _behavior_identity(REPO_ROOT)
+
+
 def _asset_model_identity(repo_root, asset_root):
     repo = _safe_absolute(repo_root, 'Repository root', directory=True)
     root = _safe_absolute(asset_root, 'Asset root', directory=True)
@@ -553,22 +554,32 @@ def _asset_model_identity(repo_root, asset_root):
     files = {item['id']: _descriptor(root / item['path'], label='Pinned FLYNN asset')
              for item in manifest['files']}
     archive = next(item for item in manifest['files'] if item['id'] == 'graph_archive')
-    graph_root = root / f"graph-{archive['sha256']}"
+    graph_root = _safe_absolute(root / f"graph-{archive['sha256']}",
+                                'Prepared graph root', directory=True)
     metadata_path = graph_root / 'palimpsest-prepared.json'
-    metadata_payload = artifacts._read(metadata_path, MiB)
-    prepared = artifacts._json(metadata_payload)
+    _, prepared, _ = _canonical_file(metadata_path, MiB, 'Prepared graph metadata')
     if (type(prepared) is not dict or prepared.get('archive_sha256') != archive['sha256']
             or prepared.get('upstream_commit') != manifest['upstream_commit']
             or type(prepared.get('edge_path')) is not str):
         raise ValueError('Prepared graph metadata differs')
-    edge = _safe_absolute(graph_root / prepared['edge_path'],
+    edge_relative = Path(prepared['edge_path'])
+    if edge_relative.is_absolute() or '..' in edge_relative.parts:
+        raise ValueError('Prepared graph edge must remain below the graph root')
+    edge = _safe_absolute(graph_root / edge_relative,
                           'Prepared graph edge', directory=False)
+    if not edge.is_relative_to(graph_root):
+        raise ValueError('Prepared graph edge must remain below the graph root')
     graph = manifest['graph']
     expected_edge = graph['edge_identity']
     edge_descriptor = _descriptor(edge, label='Prepared graph edge')
     if (edge_descriptor['bytes'], edge_descriptor['sha256']) != (
             expected_edge['size_bytes'], expected_edge['sha256']):
         raise ValueError('Prepared graph edge differs')
+    for item in graph['mapping_files']:
+        relative = Path(item['path'])
+        if (relative.is_absolute() or '..' in relative.parts
+                or not (edge.parent / relative).is_relative_to(graph_root)):
+            raise ValueError('Prepared graph mapping must remain below the graph root')
     model_assets._check_mappings(repo, edge.parent, graph['mapping_files'])
     mappings = {}
     for item in graph['mapping_files']:
@@ -589,8 +600,8 @@ def _asset_model_identity(repo_root, asset_root):
     }
 
 
-def _registration_state(registration_path, inventory):
-    path, registration, digest = producer._registration(registration_path)
+def _registration_state(source, inventory):
+    path, registration, payload, digest = source
     if (registration['block'] != PROTOCOL['population']['block']
             or registration['split'] != PROTOCOL['population']['split']
             or registration['resource_projection']['known_bytes']
@@ -600,27 +611,39 @@ def _registration_state(registration_path, inventory):
     namespace = artifacts._json(artifacts._read(namespace_path, producer.MAX_NAMESPACE))
     if namespace != inventory['namespace']:
         raise ValueError('Producer namespace inventory differs from frozen coverage exports')
-    run_ids = []
-    for slot in registration['case_slots']:
-        run_ids.append(slot['source_run_id'])
-        run_ids.extend(slot['condition_run_ids'][condition]
-                       for condition in registration['conditions'])
-    if len(run_ids) != 1440 or len(set(run_ids)) != 1440:
-        raise ValueError('Allocation requires exactly 1,440 distinct run IDs')
     _, generated = producer._plan(registration['plan']['path'], registration['block'])
-    authored = producer._authored_ids(generated['cases'])
-    historical_runs = set(inventory['namespace']['historical_run_ids'])
-    historical_authored = set(inventory['namespace']['historical_authored_ids'])
-    if set(run_ids).intersection(historical_runs):
-        raise ValueError('Registered run ID collides with retained history')
-    if authored.intersection(historical_authored):
-        raise ValueError('Selected authored ID collides with retained history')
     family_seeds = {case['seed'] for case in generated['cases']}
     training_seeds = set(inventory['coverage']['training_seeds'])
     if family_seeds.intersection(training_seeds):
         raise ValueError('Development family seed collides with a training seed')
-    descriptor = {'path': str(path), 'bytes': path.stat().st_size, 'sha256': digest}
+    descriptor = {'path': str(path), 'bytes': len(payload), 'sha256': digest}
     return descriptor, registration
+
+
+def _validated_registration(registration_path):
+    """Reject held-out references before the producer opens any bound input."""
+    path, value, payload = _canonical_file(
+        registration_path, producer.MAX_JSON, 'Producer registration')
+    if (type(value) is not dict or value.get('split') != 'development'
+            or value.get('held_out_used') is not False):
+        raise ValueError('Allocation requires a development-only registration')
+
+    def check(item):
+        if type(item) is str:
+            if _held_out(item):
+                raise ValueError('Producer registration cannot reference held-out data')
+        elif type(item) is list:
+            for child in item:
+                check(child)
+        elif type(item) is dict:
+            for child in item.values():
+                check(child)
+
+    check(value)
+    registration = producer.validate_registration(value)
+    if path != Path(registration['roots']['publication']) / 'registration.json':
+        raise ValueError('Producer registration path differs')
+    return path, registration, payload, hashlib.sha256(payload).hexdigest()
 
 
 def _root_state(registration, inventory, repo_root, asset_root, search_manifest,
@@ -674,7 +697,16 @@ def _fsync_directory(directory):
         os.close(descriptor)
 
 
-def _durable_rollback(target):
+def _inode(path):
+    info = path.lstat()
+    if not stat.S_ISREG(info.st_mode):
+        raise RuntimeError('Admission target is not a regular file')
+    return info.st_dev, info.st_ino
+
+
+def _durable_rollback(target, linked_inode):
+    if _inode(target) != linked_inode:
+        raise RuntimeError('Admission target inode changed before rollback')
     target.unlink(missing_ok=True)
     _fsync_directory(target.parent)
 
@@ -698,23 +730,24 @@ def _blockers(registration, search_manifest, repo_root):
 
 def admit(registration_path, search_manifest_path, repo_root, asset_root):
     """Publish one receipt only for a fully resolved, zero-owner preflight."""
-    registration_path = _safe_absolute(
-        registration_path, 'Producer registration', directory=False)
+    registration_source = _validated_registration(registration_path)
+    registration_path, registration = registration_source[:2]
     repo = _safe_absolute(repo_root, 'Repository root', directory=True)
     if repo != REPO_ROOT:
         raise ValueError('Admission checkout and --repo must match exactly')
-    _, registration, _ = producer._registration(registration_path)
     early = _blockers(registration, search_manifest_path, repo)
     inventory, capacity, upstream = (
         early['namespace'], early['storage'], early['upstream'])
     registration_descriptor, registration = _registration_state(
-        registration_path, inventory)
+        registration_source, inventory)
     roots, target = _root_state(
         registration, inventory, repo, asset_root, search_manifest_path)
     assets_model = _asset_model_identity(repo, asset_root)
     runtime = _runtime_identity(repo)
     profile = _profile_identity()
     behavior = _behavior_identity(repo)
+    _same(behavior, LOADED_BEHAVIOR_IDENTITY,
+          'Behavior sources differ from executing code')
     protocol_descriptor = _descriptor(PROTOCOL_PATH, label='Allocation protocol')
     receipt = {
         'schema': 'memory-family-allocation-admission-v3',
@@ -743,7 +776,7 @@ def admit(registration_path, search_manifest_path, repo_root, asset_root):
     if len(payload) > MAX_RECEIPT:
         raise ValueError('Allocation admission exceeds its publication bound')
     payload_sha256 = hashlib.sha256(payload).hexdigest()
-    temporary, linked = None, False
+    temporary, linked, linked_inode = None, False, None
     try:
         with tempfile.NamedTemporaryFile(
                 mode='wb', dir=target.parent, prefix=f'.{target.name}.',
@@ -754,6 +787,9 @@ def admit(registration_path, search_manifest_path, repo_root, asset_root):
             os.fsync(stream.fileno())
         os.link(temporary, target)
         linked = True
+        linked_inode = _inode(temporary)
+        if _inode(target) != linked_inode:
+            raise RuntimeError('Exclusive admission link changed before validation')
         temporary.unlink()
         temporary = None
 
@@ -761,7 +797,7 @@ def admit(registration_path, search_manifest_path, repo_root, asset_root):
         # again. Coverage is deliberately last so mutations caused by an earlier
         # identity check are still observed.
         current_registration, current_value = _registration_state(
-            registration_path, inventory)
+            _validated_registration(registration_path), inventory)
         _same(current_registration, registration_descriptor, 'Producer registration')
         _same(current_value, registration, 'Producer registration value')
         _same(_upstream_identity(repo), upstream, 'Pinned upstream identity')
@@ -785,6 +821,8 @@ def admit(registration_path, search_manifest_path, repo_root, asset_root):
         _same(current_roots, roots, 'Allocation root identity')
         if current_target != target:
             raise RuntimeError('Allocation target changed after exclusive link')
+        if _inode(target) != linked_inode:
+            raise RuntimeError('Exclusive admission link inode changed before commit')
         linked_descriptor = _descriptor(target, label='Linked admission payload')
         if (linked_descriptor['bytes'] != len(payload)
                 or linked_descriptor['sha256'] != payload_sha256):
@@ -793,7 +831,7 @@ def admit(registration_path, search_manifest_path, repo_root, asset_root):
     except BaseException as error:
         if linked:
             try:
-                _durable_rollback(target)
+                _durable_rollback(target, linked_inode)
             except BaseException as rollback_error:
                 raise PublicationIndeterminate(
                     'Admission rollback failed; publication state is indeterminate') \
