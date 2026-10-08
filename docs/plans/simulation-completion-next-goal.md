@@ -192,11 +192,30 @@ canonical run-ID, packet-provenance and terminal-tick checks were tightened. No
 raw owner, native job, model, development block or held-out block ran, so this is
 software-contract evidence rather than runtime qualification.
 
-Next memory work: add the smallest checksum-validating raw-artifact adapter that
-derives the oracle inputs and bindings from completed owner files, with synthetic
-fixture coverage and no allocation. Then specify the version-3 native producer,
-raw audit and finite historical namespace/allocation proof before collecting any
-development data. The frozen analysis contract must still define effect and
-null-harm margins, interval estimator and stop rules. R2 and all seven
+### Family raw oracle admission implemented, 8 October 2026
+
+[PR #99](https://github.com/Aadrika08/palimpsest/pull/99), stacked on #98,
+implements byte-level admission for one explicitly named source/`own` pair. It
+checks strict terminal manifests and reports, complete event/chunk recordings,
+snapshot registration and durable prefixes, restore lineage, policy-call
+bindings and fitted-history provenance before deriving the pure-oracle inputs.
+Snapshot metadata now rejects duplicate JSON keys.
+
+Independent review reproduced and closed a mixed-generation read bug by moving
+fingerprints before every first decode. It also required exact manifest/report
+world-state equality and run identity on every non-chunk event and any chunk that
+declares one. Final review found no remaining critical or important issue. The
+clean affected slice passed 139 tests with 7 skips and four optional-upstream
+tests deselected; focused adapter/snapshot coverage passed 16 tests. No actual
+owner pair, model, development block or held-out block ran.
+
+The adapter deliberately does not accept owner/cleanup assertions: version-3
+registration and close receipts do not exist yet, so those would be
+self-consistent rather than independently authenticated. Next memory work is to
+freeze and implement the native producer registration, finite job/owner/cleanup
+accounting and immutable close that emits the admission envelope. That plan must
+also prove historical seed/ID disjointness and a feasible time/storage allocation
+before any native development collection. Effect and null-harm margins, interval
+estimator and stop rules remain to be frozen before readout. R2 and all seven
 release-level gates remain open. Main, CI and the physical rover remain outside
 this phase.
