@@ -287,25 +287,57 @@
     },
     "development": {
       "attempt": "Exactly one stage invocation and at most one owner execution per fixed case; no retry or replacement.",
+      "owners": 24,
       "per_owner_seconds": 180,
       "per_owner_bytes": 167772160,
-      "stage_internal_seconds": 4320,
-      "normal_through_return_seconds": 4370,
-      "enclosing_hard_target_seconds": 4380,
+      "cumulative_child_allowance_seconds": 4320,
+      "mandatory_parent_internal_overhead_seconds": 50,
+      "parent_internal_overhead_breakdown_seconds": {
+        "pre_owner_admission_and_durable_reservation": 20,
+        "cumulative_owner_launch_reap_and_accounting": 20,
+        "post_owner_reduction_and_pending_report_stage": 10
+      },
+      "stage_internal_deadline_seconds": 4370,
+      "normal_return_margin_seconds": 50,
+      "normal_return_breakdown_seconds": {
+        "final_source_input_and_cap_recheck": 15,
+        "final_fsync_and_atomic_publication": 20,
+        "resource_release_and_identity_drain": 10,
+        "through_return_guard": 5
+      },
+      "normal_through_return_seconds": 4420,
+      "enclosing_hard_margin_seconds": 10,
+      "enclosing_hard_target_seconds": 4430,
       "stage_bytes": 4294967296,
       "minimum_free_bytes": 1073741824,
-      "time_basis": "The internal cap equals 24 owners times the full 180-second owner maximum; the 50/60-second margins cover normal publication and the enclosing hard target."
+      "time_basis": "The 4,320-second cumulative child allowance is separate from 50 seconds of mandatory parent work, so all 24 children may consume their full 180-second maxima and the parent may still finish admission, launch/reap accounting, reduction, and pending staging by the 4,370-second internal deadline. A separate 50-second normal-return margin reaches 4,420; the enclosing hard target is 10 seconds later at 4,430."
     },
     "held_out": {
       "attempt": "Exactly one later stage invocation after separate GO and at most one owner execution per fixed case; no retry or replacement.",
+      "owners": 48,
       "per_owner_seconds": 180,
       "per_owner_bytes": 167772160,
-      "stage_internal_seconds": 8640,
-      "normal_through_return_seconds": 8690,
-      "enclosing_hard_target_seconds": 8700,
+      "cumulative_child_allowance_seconds": 8640,
+      "mandatory_parent_internal_overhead_seconds": 50,
+      "parent_internal_overhead_breakdown_seconds": {
+        "pre_owner_admission_and_durable_reservation": 20,
+        "cumulative_owner_launch_reap_and_accounting": 20,
+        "post_owner_reduction_and_pending_report_stage": 10
+      },
+      "stage_internal_deadline_seconds": 8690,
+      "normal_return_margin_seconds": 50,
+      "normal_return_breakdown_seconds": {
+        "final_source_input_and_cap_recheck": 15,
+        "final_fsync_and_atomic_publication": 20,
+        "resource_release_and_identity_drain": 10,
+        "through_return_guard": 5
+      },
+      "normal_through_return_seconds": 8740,
+      "enclosing_hard_margin_seconds": 10,
+      "enclosing_hard_target_seconds": 8750,
       "stage_bytes": 8589934592,
       "minimum_free_bytes": 1073741824,
-      "time_basis": "The internal cap equals 48 owners times the full 180-second owner maximum; the 50/60-second margins cover normal publication and the enclosing hard target."
+      "time_basis": "The 8,640-second cumulative child allowance is separate from 50 seconds of mandatory parent work, so all 48 children may consume their full 180-second maxima and the parent may still finish admission, launch/reap accounting, reduction, and pending staging by the 8,690-second internal deadline. A separate 50-second normal-return margin reaches 8,740; the enclosing hard target is 10 seconds later at 8,750."
     },
     "work_estimate": "Training comprises 276,480 real row presentations, 8,640 optimizer updates, and 7,368 terminal recorded-dev rows. This is 49.5 percent of v2 training presentations and 46.8 percent of v2 updates. Historical v2 used about 140 seconds per pair under the same host/runtime, so 4 to 8 minutes for all three v3 pairs including admission/publication is a planning estimate, not a promise; hard bounds above govern."
   },
@@ -317,6 +349,7 @@
     "Publication fault injection proves durable attempt reservation precedes input/Torch work; crash, timeout, fsync, rename, and final-source failures retain one failure receipt, never publish admissible success, and permanently consume the attempt.",
     "Selection fixtures prove only update 1,440 is publishable and recorded-dev loss cannot change the selected checkpoint.",
     "Development source fixtures prove exact 3130-3133 case order, all-six scientific-initial matching, prior/held-out seed and payload disjointness, unchanged native goal scoring, 3/4 per-seed reduction, all-owner admission, and held-out lock on every negative or operational failure.",
+    "Synthetic stage-deadline fixtures for both 24- and 48-owner rosters prove owners*180 equals only the cumulative child allowance; the exact 20+20+10 parent-internal and 15+20+10+5 normal-return breakdowns sum independently; all maximum-duration children plus mandatory parent work fit through normal return; and a one-tick child, parent, publication, or hard-target overrun stops, retains failure, leaves later owners not_started, and cannot publish admissible success.",
     "Fresh-process imports prove no Torch or MuJoCo in pure admission/schedule tests and no held-out path is opened by training or development preparation."
   ],
   "execution_stops": [
@@ -326,6 +359,7 @@
     "During fitting, stop the study on the first wrong update/presentation/fragment/reset count, nonfinite value, parameter-roster change, source drift, timeout, RSS breach, or output-cap breach. Preserve completed earlier pairs and mark later pairs not_started.",
     "No development owner starts until all six terminal checkpoints, their exact schedules, and the complete training report pass independent compact review.",
     "During development, collect all normal natural outcomes before scoring. An infrastructure/admission failure stops later owners; a natural non-goal counts as a functional failure. No retry in either case.",
+    "For development and held-out, account cumulative child allowance, mandatory parent-internal work, normal-return work, and the enclosing hard margin as four distinct ledgers. Any ledger overrun stops before the next owner or success publication; unused time in one ledger does not expand another.",
     "Do not generate, open, or run held-out 3120-3127 unless all 24 development cases are admitted, every augmented seed is at least 3/4, and a separate frozen held-out review returns GO.",
     "No threshold, budget, sampler, checkpoint rule, seed, source, model, or topology changes are permitted after any numerical result."
   ],

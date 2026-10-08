@@ -71,10 +71,10 @@ Training totals 276,480 real presentations and 8,640 optimizer updates across si
 | Stage | Attempts | Time bounds | Output/free-space bounds |
 | --- | --- | --- | --- |
 | Training | one enclosing attempt; each seed pair starts at most once | 600 s internal / 660 s outer per pair; 2,100 s internal / 2,150 s normal return / 2,160 s enclosing | 64 MiB per pair; 256 MiB aggregate; 1 GiB RSS per pair; 1 GiB free floor |
-| Development | one stage; each fixed owner once | 180 s/owner; 4,320 s internal / 4,370 s normal return / 4,380 s enclosing | 160 MiB/owner; 4 GiB stage; 1 GiB free floor |
-| Held-out | one later stage after separate GO; each fixed owner once | 180 s/owner; 8,640 s internal / 8,690 s normal return / 8,700 s enclosing | 160 MiB/owner; 8 GiB stage; 1 GiB free floor |
+| Development | one stage; each fixed owner once | 180 s/owner; 4,320 s child allowance + 50 s parent = 4,370 s internal / 4,420 s normal return / 4,430 s enclosing | 160 MiB/owner; 4 GiB stage; 1 GiB free floor |
+| Held-out | one later stage after separate GO; each fixed owner once | 180 s/owner; 8,640 s child allowance + 50 s parent = 8,690 s internal / 8,740 s normal return / 8,750 s enclosing | 160 MiB/owner; 8 GiB stage; 1 GiB free floor |
 
-The development and held-out internal caps equal the full sum of their owner maxima (`24×180` and `48×180`). The extra 50 seconds covers normal publication and the extra 60 seconds is the enclosing hard target; neither stage relies on typical cases finishing early.
+The child allowances are only the full sums of owner maxima (`24×180=4,320` and `48×180=8,640`); they do not include parent work. Each stage separately reserves 50 internal parent seconds: 20 for pre-owner admission and durable reservation, 20 cumulative for owner launch/reap/accounting, and 10 for reduction and pending-report staging. The internal deadlines are therefore 4,370 and 8,690 seconds. Another 50 seconds is reserved through normal return—15 for final source/input/cap checks, 20 for fsync and atomic publication, 10 for release and identity drain, and 5 for the return guard—followed by a separate 10-second enclosing hard margin. Unused child time cannot enlarge a parent or publication ledger, and neither stage relies on typical cases finishing early.
 
 A durable fresh-output attempt receipt must be fsynced before any retained input, Torch, model, simulator, or scene access. A crash or outer timeout consumes the attempt. The first source, input, schedule, finite, runtime, deadline, RSS, storage, publication, or admission fault stops the stage, retains the failure, and leaves later work `not_started`.
 
@@ -85,6 +85,7 @@ A durable fresh-output attempt receipt must be fsynced before any retained input
 - A cyclic remainder that crosses a source end must split and reset rather than create artificial last-to-first recurrence.
 - A corpus or source-order change must fail before Torch import, and a held-out argument must be unreachable from training/development preparation.
 - Terminal checkpoint publication must remain fixed at update 1,440 even if an earlier recorded-development score is lower.
+- All maximum-duration owners plus mandatory parent work must fit their separate ledgers; a one-tick overrun in any ledger must retain failure and prevent admissible publication.
 
 ---
 
@@ -143,6 +144,7 @@ A durable fresh-output attempt receipt must be fsynced before any retained input
 
 - [ ] Write failing source-only tests for exact case order 3130–3133 × seeds 10/11/12 × old/augmented, model-index admission, all-six matched scientific initials, canonical/payload disjointness, source/runtime/contact guards, native goal scoring, and first-failure retention.
 - [ ] Add reducer tests proving all 24 normal owners plus 3/4 goals independently for each augmented seed are necessary; old-arm counts remain descriptive and no pooled criterion exists.
+- [ ] Add a synthetic monotonic-clock boundary test for both 24 and 48 owners. Prove `owners*180` is only the child allowance, the `20+20+10` parent work reaches the internal deadline exactly, `15+20+10+5` reaches normal return exactly, and the 10-second enclosing margin is separate. Exact-limit completion passes; a one-tick child, parent, publication, or hard-target overrun stops, retains the first failure, leaves later owners `not_started`, and never publishes success.
 - [ ] Implement the smallest named V3 evaluator by reusing the v2 evaluator's bounded owner, record, contact, and publication helpers. Keep teacher queries, rescue, replacement seeds, checkpoint selection, and held-out IDs unreachable.
 - [ ] Freeze source hashes and one exact development invocation, obtain independent GO, then run once. If any augmented seed is below 3/4 or any owner is inadmissible, publish that result and stop with held-out locked.
 
