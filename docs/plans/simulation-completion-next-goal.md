@@ -384,3 +384,28 @@ navigation work is one prospectively frozen matched-budget training study on
 four fresh development scenes; the eight held-out scenes remain locked until
 every augmented seed passes at least 3/4 development goals. No simulator,
 training, held-out or R3 claim was made by this audit.
+
+### Navigation matched-budget schedule implemented, 8 October 2026
+
+[PR #106](https://github.com/Aadrika08/palimpsest/pull/106), stacked on #105,
+freezes the navigation-v3 matched training-and-selection clock and implements its
+pure deterministic scheduler. Each arm receives exactly 46,080 real loss-bearing
+row presentations in 1,440 updates of 32 rows. Hamilton allocation, seeded cyclic
+remainders, source and wrap resets, packed-update continuations, terminal-only
+selection and canonical schedule hashing are fixed before any corpus or model is
+opened.
+
+The RED test commit failed three tests because the scheduler did not yet exist;
+the GREEN implementation passes all three focused unittest and pytest checks
+under pinned Python 3.11.15. An additional 1,000 randomized schedules passed,
+and independent review checked 7,440 exhaustive small schedules, cross-process
+hash stability and import purity with no remaining Critical or Important issue.
+The review also caught and fixed a test-command path that could resolve a sibling
+worktree package.
+
+This is schedule-contract evidence only. No retained corpus, Torch, model,
+checkpoint, simulator, development scene or held-out payload was opened. The
+bounded trainer and atomic evidence path remain to be implemented and reviewed;
+fresh development scenes 3130-3133 then require at least 3/4 goals for every
+augmented seed before a separate GO can unlock held-out scenes 3120-3127. R3,
+main, CI and the physical rover remain unchanged.
