@@ -2,6 +2,7 @@
 import copy
 import hashlib
 import importlib
+import io
 import os
 from pathlib import Path
 import subprocess
@@ -21,6 +22,7 @@ RETAINED = (
     'reward', 'simulation_time', 'raw_output', 'eyes', 'revision',
 )
 CAMERAS = ('cam_left', 'cam_right', 'raw_cam_left', 'raw_cam_right')
+CASE_ID = 'memory-family-v3-fixture-change'
 
 
 def _compact():
@@ -67,14 +69,19 @@ def _legacy(rows, run_id):
          'episode_step': rows[0]['tick']},
         {'sequence': 1, 'kind': 'memory_decision_armed', 'episode': 0,
          'episode_step': rows[0]['tick']},
-        {'sequence': 2, 'kind': 'chunk', 'path': 'chunks/000000.npz',
-         'sha256': 'a' * 64, 'episode': 0, 'start': rows[0]['tick'],
-         'count': len(rows), 'arrays': arrays},
     ]
+    for index, offset in enumerate(range(0, len(rows), 32)):
+        events.append({
+            'sequence': len(events), 'kind': 'chunk',
+            'path': f'chunks/{index:06d}.npz',
+            'sha256': f'{index + 10:064x}', 'episode': 0,
+            'start': rows[offset]['tick'],
+            'count': min(32, len(rows) - offset), 'arrays': arrays,
+        })
     manifest = memory.canonical_bytes({
         'run_id': run_id, 'status': 'completed',
         'recording_format': 'palimpsest-npz-v1',
-        'recorded_ticks': len(rows), 'recorded_chunks': 1,
+        'recorded_ticks': len(rows), 'recorded_chunks': len(events) - 2,
         'recorded_events': len(events),
     }) + b'\n'
     event_bytes = b''.join(memory.canonical_bytes(event) + b'\n'
@@ -87,21 +94,21 @@ def _snapshot_reference(source_run_id):
         'kind': 'shared-source',
         'source_run_id': source_run_id,
         'source_receipt_sha256': 'b' * 64,
-        'path': 'cases/case-7/source/snapshots/initial.snp',
+        'path': f'cases/{CASE_ID}/source/snapshots/initial.snp',
         'size_bytes': 1234,
         'sha256': 'c' * 64,
     }
 
 
-def _fixture():
+def _fixture(count=2):
     compact = _compact()
     run_id = uuid.UUID(int=701).hex
     source_run_id = uuid.UUID(int=700).hex
-    rows = [_row(7), _row(8)]
+    rows = [_row(7 + offset) for offset in range(count)]
     legacy_manifest, legacy_events, events = _legacy(rows, run_id)
     snapshot_reference = _snapshot_reference(source_run_id)
     bundle = compact.convert_synthetic(
-        run_id=run_id, case_id='memory-family-v3-fixture-change',
+        run_id=run_id, case_id=CASE_ID,
         operation='condition', condition='own', rows=rows,
         legacy_manifest_bytes=legacy_manifest,
         legacy_events_bytes=legacy_events,
@@ -110,6 +117,56 @@ def _fixture():
     )
     return compact, rows, events, legacy_manifest, legacy_events, \
         snapshot_reference, bundle
+
+
+@pytest.fixture(scope='module')
+def long_fixture():
+    return _fixture(33)
+
+
+def _descriptor(path, payload):
+    return {'path': path, 'size_bytes': len(payload),
+            'sha256': hashlib.sha256(payload).hexdigest()}
+
+
+def _rebind_index(bundle, index):
+    changed = dict(bundle)
+    payload = memory.canonical_bytes(index)
+    changed['chunk-index.json'] = payload
+    manifest = artifacts._json(changed['manifest.json'])
+    manifest['chunk_index'] = _descriptor('chunk-index.json', payload)
+    changed['manifest.json'] = memory.canonical_bytes(manifest)
+    return changed
+
+
+def _mutate_chunk(bundle, chunk_index, mutate, *, camera_sequence=False):
+    changed = dict(bundle)
+    index = artifacts._json(changed['chunk-index.json'])
+    path = index['chunks'][chunk_index]['path']
+    with np.load(io.BytesIO(changed[path]), allow_pickle=False) as archive:
+        arrays = {name: archive[name].copy() for name in archive.files}
+    mutate(arrays)
+    with io.BytesIO() as stream:
+        np.savez(stream, **arrays)
+        changed[path] = stream.getvalue()
+    index['chunks'][chunk_index]['sha256'] = hashlib.sha256(
+        changed[path]).hexdigest()
+    changed = _rebind_index(changed, index)
+    if camera_sequence:
+        digest = hashlib.sha256()
+        for entry in index['chunks']:
+            with np.load(io.BytesIO(changed[entry['path']]),
+                         allow_pickle=False) as archive:
+                for offset in range(entry['count']):
+                    for name in (
+                        'cam_left_sha256', 'cam_right_sha256',
+                        'raw_cam_left_sha256', 'raw_cam_right_sha256',
+                    ):
+                        digest.update(archive[name][offset].tobytes())
+        manifest = artifacts._json(changed['manifest.json'])
+        manifest['camera_sequence_sha256'] = digest.hexdigest()
+        changed['manifest.json'] = memory.canonical_bytes(manifest)
+    return changed
 
 
 def test_protocol_is_canonical_and_freezes_exact_false_claim_contract():
@@ -319,7 +376,7 @@ def test_audit_tick_rule_is_bounded_for_every_generated_development_case():
 
 @pytest.mark.parametrize('defect', [
     'dtype', 'nonfinite', 'eyes', 'camera', 'gap', 'snapshot-path',
-    'legacy-count',
+    'legacy-count', 'eyes-event',
 ])
 def test_converter_rejects_invalid_raw_projection_before_bundle(defect):
     compact = _compact()
@@ -344,9 +401,17 @@ def test_converter_rejects_invalid_raw_projection_before_bundle(defect):
         parsed[-1]['count'] += 1
         legacy_events = b''.join(memory.canonical_bytes(event) + b'\n'
                                  for event in parsed)
+    elif defect == 'eyes-event':
+        parsed = [artifacts._json(line) for line in legacy_events.splitlines()]
+        parsed.append({'sequence': len(parsed), 'kind': 'eyes_changed'})
+        legacy_events = b''.join(memory.canonical_bytes(event) + b'\n'
+                                 for event in parsed)
+        manifest = artifacts._json(legacy_manifest)
+        manifest['recorded_events'] = len(parsed)
+        legacy_manifest = memory.canonical_bytes(manifest) + b'\n'
     with pytest.raises(ValueError):
         compact.convert_synthetic(
-            run_id=run_id, case_id='memory-family-v3-fixture-change',
+            run_id=run_id, case_id=CASE_ID,
             operation='condition', condition='own', rows=rows,
             legacy_manifest_bytes=legacy_manifest,
             legacy_events_bytes=legacy_events,
@@ -372,3 +437,132 @@ def test_reader_rejects_unknown_schema_or_tampered_bound_payload(defect):
         changed.pop('audit-frames.npz')
     with pytest.raises(ValueError):
         compact.read_compact(changed)
+
+
+@pytest.mark.parametrize('defect', ['missing', 'extra', 'reordered'])
+def test_reader_requires_chunk_bijection(long_fixture, defect):
+    compact, _, _, _, _, _, bundle = long_fixture
+    index = artifacts._json(bundle['chunk-index.json'])
+    changed = dict(bundle)
+    if defect == 'missing':
+        removed = index['chunks'].pop()
+        changed.pop(removed['path'])
+    elif defect == 'extra':
+        extra = copy.deepcopy(index['chunks'][-1])
+        extra.update(index=2, path='chunks/000002.npz')
+        changed[extra['path']] = changed[index['chunks'][-1]['path']]
+        extra['sha256'] = hashlib.sha256(changed[extra['path']]).hexdigest()
+        index['chunks'].append(extra)
+    else:
+        index['chunks'].reverse()
+    changed = _rebind_index(changed, index)
+    with pytest.raises(ValueError):
+        compact.read_compact(changed)
+
+
+@pytest.mark.parametrize(('field', 'value'), [
+    ('row_count', 2.0), ('chunk_count', True), ('event_count', 3.0),
+    ('first_tick', 7.0), ('last_tick', 8.0),
+])
+def test_reader_rejects_noninteger_manifest_counts(field, value):
+    compact, _, _, _, _, _, bundle = _fixture()
+    changed = dict(bundle)
+    manifest = artifacts._json(changed['manifest.json'])
+    manifest[field] = value
+    changed['manifest.json'] = memory.canonical_bytes(manifest)
+    with pytest.raises(ValueError):
+        compact.read_compact(changed)
+
+
+@pytest.mark.parametrize('operation', ['source', 'condition'])
+def test_read_limits_accept_equality_and_reject_one_over(operation):
+    compact = _compact()
+    recording = compact.PROTOCOL['recordings'][operation]
+    assert compact.validate_read_limits(
+        operation, row_count=recording['max_rows'],
+        total_bytes=recording['ceiling_bytes'],
+        overhead_bytes=recording['container_overhead_max_bytes'],
+    ) is None
+    for values in (
+        {'row_count': recording['max_rows'] + 1,
+         'total_bytes': recording['ceiling_bytes'],
+         'overhead_bytes': recording['container_overhead_max_bytes']},
+        {'row_count': recording['max_rows'],
+         'total_bytes': recording['ceiling_bytes'] + 1,
+         'overhead_bytes': recording['container_overhead_max_bytes']},
+        {'row_count': recording['max_rows'],
+         'total_bytes': recording['ceiling_bytes'],
+         'overhead_bytes': recording['container_overhead_max_bytes'] + 1},
+    ):
+        with pytest.raises(ValueError):
+            compact.validate_read_limits(operation, **values)
+    with pytest.raises(ValueError):
+        compact.validate_read_limits(
+            operation, row_count=True, total_bytes=1, overhead_bytes=1)
+
+
+def test_reader_enforces_all_row_eye_and_camera_digest_invariants(long_fixture):
+    compact, _, _, _, _, _, bundle = long_fixture
+    eyes = _mutate_chunk(
+        bundle, 0, lambda arrays: arrays['eyes'].__setitem__((3, 0), False))
+    with pytest.raises(ValueError):
+        compact.read_compact(eyes)
+
+    def diverge(arrays):
+        arrays['cam_left_sha256'][3, 0] ^= 1
+
+    digests = _mutate_chunk(bundle, 0, diverge, camera_sequence=True)
+    with pytest.raises(ValueError):
+        compact.read_compact(digests)
+
+
+@pytest.mark.parametrize('path', [
+    '', '.', '/cases/case/source/snapshots/initial.snp',
+    '../cases/case/source/snapshots/initial.snp',
+    f'cases//{CASE_ID}/source/snapshots/initial.snp',
+    f'cases/{CASE_ID}/source/snapshots/../initial.snp',
+    f'cases/wrong-case/source/snapshots/initial.snp',
+    f'cases/{CASE_ID}/conditions/snapshots/initial.snp',
+    f'cases\\{CASE_ID}\\source\\snapshots\\initial.snp',
+    f'cases/{CASE_ID}/source/snapshots/initial.snp/alias',
+])
+def test_converter_rejects_nonportable_or_wrong_snapshot_path(path):
+    compact = _compact()
+    run_id = uuid.UUID(int=901).hex
+    rows = [_row(7), _row(8)]
+    legacy_manifest, legacy_events, _ = _legacy(rows, run_id)
+    reference = _snapshot_reference(uuid.UUID(int=900).hex)
+    reference['path'] = path
+    with pytest.raises(ValueError):
+        compact.convert_synthetic(
+            run_id=run_id, case_id=CASE_ID,
+            operation='condition', condition='own', rows=rows,
+            legacy_manifest_bytes=legacy_manifest,
+            legacy_events_bytes=legacy_events,
+            snapshot_reference=reference, event_tick=7, decision_tick=8,
+        )
+
+
+def test_snapshot_size_accepts_16_mib_and_rejects_one_over():
+    compact = _compact()
+    run_id = uuid.UUID(int=903).hex
+    rows = [_row(7), _row(8)]
+    legacy_manifest, legacy_events, _ = _legacy(rows, run_id)
+    reference = _snapshot_reference(uuid.UUID(int=902).hex)
+    reference['size_bytes'] = 16 * 1024**2
+    compact.convert_synthetic(
+        run_id=run_id, case_id=CASE_ID,
+        operation='condition', condition='own', rows=rows,
+        legacy_manifest_bytes=legacy_manifest,
+        legacy_events_bytes=legacy_events,
+        snapshot_reference=reference, event_tick=7, decision_tick=8,
+    )
+    reference['size_bytes'] += 1
+    with pytest.raises(ValueError):
+        compact.convert_synthetic(
+            run_id=run_id, case_id=CASE_ID,
+            operation='condition', condition='own', rows=rows,
+            legacy_manifest_bytes=legacy_manifest,
+            legacy_events_bytes=legacy_events,
+            snapshot_reference=reference, event_tick=7, decision_tick=8,
+        )
