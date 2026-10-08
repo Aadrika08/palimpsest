@@ -833,6 +833,31 @@ class PuckReservationAndMintAdmissionTests(unittest.TestCase):
                 on_policy._read_published_reservation(target)
             self.assertTrue(raced['done'])
 
+    def test_publication_reader_rechecks_blockers_after_final_secure_read(self):
+        on_policy = subject()
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory).resolve()
+            result = self.reserve(root)
+            target = Path(result['manifest_path'])
+            quarantine = root / '.reservation.json.quarantine'
+            real_read = on_policy._read_exact_file
+            reads = []
+
+            def read_exact(*arguments, **keywords):
+                raw = real_read(*arguments, **keywords)
+                reads.append(Path(arguments[1]).name)
+                if len(reads) == 4:
+                    quarantine.write_bytes(b'synthetic-late-quarantine\n')
+                return raw
+
+            with patch.object(on_policy, '_read_exact_file', side_effect=read_exact), \
+                    self.assertRaisesRegex(ValueError, 'changed'):
+                on_policy._read_published_reservation(target)
+            self.assertEqual(reads, [
+                'reservation.json', 'reservation.json.commit.json',
+                'reservation.json', 'reservation.json.commit.json'])
+            self.assertTrue(quarantine.is_file())
+
     def test_preexisting_commit_paths_refuse_before_minting(self):
         _, stage = self.api('stage_scene_manifest')
         snapshot = inventory_snapshot()
