@@ -116,3 +116,43 @@ The diagnostic allocation is consumed, with no retry or automatic rescue study.
 All seven release-level checkboxes above remain open; the physical rover stays
 deferred. The goal tracker remains an unfinished prior goal; this phase completion
 does not mark the project complete.
+
+### Continued pursuit, 8 October 2026
+
+The active thread goal now points to this document. The previous goal turn made
+verified progress, and this continuation completed two further software units:
+
+- [PR #95](https://github.com/Aadrika08/palimpsest/pull/95), stacked on #94:
+  complete registered nine-condition/family accounting. Missing or failed
+  infrastructure remains unscored; audited natural failures retain 900 and their
+  actual path/duration. All cells and named prerequisites are required before
+  descriptive aggregation. Final suite: 1,188 passed, 24 skipped; independent
+  source review found no material issue. This is not the native driver, family
+  generator, independent sampling proof or full scientific analysis.
+- [PR #96](https://github.com/Aadrika08/palimpsest/pull/96), stacked on #88:
+  portable six-mode local encounter, native audio/stop controls and exact manual
+  Afterimage inspection. Ten synthetic checks passed after fixing the producer's
+  float32 heading boundary. One derivative-only preparation completed in
+  0.464882 seconds; independent byte/readout verification passed. A twelve-file
+  encounter ZIP is retained in the PR. No new model or simulator ran.
+
+Ruling: the old raw audit already detects missing selected cues at required
+control boundaries. Do not add an all-visible/all-success requirement to scored
+memory arms. Their natural failures are legitimate study outcomes. Existing
+open-route/retreat/acquisition/restore prerequisite requirements remain binding
+within their declared scope; they do not qualify every approach state. The next
+memory matrix must include and retain null/direct-route-z outcomes without
+attempting repairs until all outcomes become successes.
+
+Browser preflight exposed zero available surfaces; one local-page open request
+returned `Browser is not available: iab`. Thus real rendering, keyboard, viewport
+and audio verification remain blocked on an available browser. Afterimage still
+contains only eight responses / 0.5 source seconds / 0.16 model seconds and is
+insufficient for sustained artistic assessment. No human acceptance is inferred.
+
+Next independent work: implement the family generator and nine-condition slot
+producer, bind oracle proof and existing raw audits, then freeze the complete
+development protocol/allocation and inferential decisions before collection.
+Continue other release lanes where their prerequisites are satisfied. All seven
+release-level gates remain open. The goal stays active; main and physical rover
+work remain unchanged, and CI remains excluded.
