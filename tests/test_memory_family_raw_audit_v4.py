@@ -256,7 +256,7 @@ def _fixture(root, pixel_shift=0, *, natural_failure=False,
             'reason': 'runtime_failure', 'episode': 0, 'steps': failure_tick,
             'type': 'CueUnavailable',
             'message': 'selected_waypoint_unavailable: ' + unavailable,
-            'policy_diagnostics': None,
+            'policy_diagnostics': {},
         }
         post_events.append({
             'sequence': len(post_events), 'kind': 'runtime_failure',

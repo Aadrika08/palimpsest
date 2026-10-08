@@ -75,6 +75,16 @@ def _deadline(deadline):
         raise TimeoutError('Raw-audit deadline exhausted')
 
 
+def _public_deadline(deadline):
+    entered = time.monotonic()
+    if type(deadline) not in (int, float) or not math.isfinite(deadline):
+        raise ValueError('Raw-audit deadline must be finite')
+    if deadline - entered > RAW_CONTRACT['deadline_seconds_max']:
+        raise ValueError('Raw-audit deadline exceeds 300 seconds from entry')
+    if entered >= deadline:
+        raise TimeoutError('Raw-audit deadline exhausted')
+
+
 def deadline_from_seconds(seconds):
     if (type(seconds) not in (int, float) or not math.isfinite(seconds)
             or not 0 < seconds <= RAW_CONTRACT['deadline_seconds_max']):
@@ -136,27 +146,39 @@ def validate_raw_limits(operation, *, row_count, event_count, chunk_count,
 
 def _path_fingerprint(value):
     return (value.st_dev, value.st_ino, value.st_mode, value.st_size,
-            value.st_mtime_ns, value.st_ctime_ns)
+            value.st_mtime_ns, value.st_ctime_ns, value.st_nlink)
 
 
-def _hash_file(path, deadline):
+def _hash_file(path, deadline, maximum, *, expected=None):
     """Hash one regular file through O_NOFOLLOW and rebind its pathname."""
     path = artifacts._safe_path(path)
     descriptor = os.open(path, os.O_RDONLY | getattr(os, 'O_NOFOLLOW', 0))
     try:
         before = os.fstat(descriptor)
-        if not stat.S_ISREG(before.st_mode):
-            raise ValueError('Raw inventory contains a nonregular file')
+        if (not stat.S_ISREG(before.st_mode) or before.st_nlink != 1
+                or type(maximum) is not int or maximum < 0
+                or before.st_size > maximum):
+            raise ValueError('Raw inventory file type, links, or size are invalid')
+        if expected is not None and _path_fingerprint(before) != expected:
+            raise RuntimeError('Raw inventory file changed before hashing')
         digest = hashlib.sha256()
+        total = 0
         with os.fdopen(descriptor, 'rb', closefd=False) as stream:
-            while block := stream.read(MiB):
+            while True:
                 _deadline(deadline)
+                block = stream.read(min(MiB, maximum + 1 - total))
+                if not block:
+                    break
+                total += len(block)
+                if total > maximum:
+                    raise ValueError('Raw inventory file grew beyond its limit')
                 digest.update(block)
         after = os.fstat(descriptor)
         named = os.stat(path, follow_symlinks=False)
     finally:
         os.close(descriptor)
-    if (_path_fingerprint(before) != _path_fingerprint(after)
+    if (after.st_nlink != 1
+            or _path_fingerprint(before) != _path_fingerprint(after)
             or _path_fingerprint(after) != _path_fingerprint(named)):
         raise RuntimeError('Raw inventory file changed while hashing')
     return ({'path': None, 'size_bytes': after.st_size,
@@ -176,13 +198,26 @@ def _allowed_file(relative, operation):
     return operation == 'source' and relative == Path('snapshots/initial.snp')
 
 
+def _file_limit(relative, operation):
+    limits = RAW_LIMITS[operation]
+    if relative == Path('recording/manifest.json'):
+        return artifacts.MAX_MANIFEST
+    if relative == Path('recording/events.jsonl'):
+        return limits['events_max_bytes']
+    if relative == Path('worker-report.json'):
+        return limits['report_max_bytes']
+    if relative == Path('snapshots/initial.snp'):
+        return limits['snapshot_max_bytes']
+    return limits['recording_max_bytes']
+
+
 def _inventory(run, operation, deadline):
     limits = RAW_LIMITS[operation]
     allowed_directories = {
         Path('.'), Path('recording'), Path('recording/chunks'),
         *({Path('snapshots')} if operation == 'source' else set()),
     }
-    rows = []
+    candidates = []
     inodes = set()
     for directory, directories, names in os.walk(run, followlinks=False):
         _deadline(deadline)
@@ -199,19 +234,49 @@ def _inventory(run, operation, deadline):
             if child.is_symlink() or not child.is_dir():
                 raise ValueError('Raw run directory is a symlink or alias')
         for name in names:
-            if len(rows) >= limits['max_files']:
+            if len(candidates) >= limits['max_files']:
                 raise ValueError('Raw run exceeds its file-count limit')
             path = current / name
             relative = path.relative_to(run)
-            if path.is_symlink() or not _allowed_file(relative, operation):
-                raise ValueError('Raw run contains an unregistered file or symlink')
-            descriptor, inode = _hash_file(path, deadline)
+            metadata = path.lstat()
+            if (not _allowed_file(relative, operation)
+                    or not stat.S_ISREG(metadata.st_mode)
+                    or metadata.st_nlink != 1):
+                raise ValueError('Raw run contains an unregistered, linked, or nonregular file')
+            inode = (metadata.st_dev, metadata.st_ino)
             if inode in inodes:
                 raise ValueError('Raw run contains a hard-link alias')
             inodes.add(inode)
-            descriptor['path'] = relative.as_posix()
-            rows.append(descriptor)
-    rows.sort(key=lambda value: value['path'])
+            candidates.append((relative, path, _path_fingerprint(metadata)))
+
+    candidates.sort(key=lambda value: value[0].as_posix())
+    sizes = {relative.as_posix(): fingerprint[3]
+             for relative, _, fingerprint in candidates}
+    required = {'recording/manifest.json', 'recording/events.jsonl',
+                'worker-report.json'}
+    if not required.issubset(sizes):
+        raise ValueError('Raw tree lacks required metadata or report files')
+    recording_bytes = sum(size for name, size in sizes.items()
+                          if name.startswith('recording/'))
+    if (recording_bytes > limits['recording_max_bytes']
+            or any(size > _file_limit(Path(name), operation)
+                   for name, size in sizes.items())):
+        raise ValueError('Raw tree exceeds a prehash byte limit')
+
+    rows = []
+    recording_remaining = limits['recording_max_bytes']
+    for relative, path, fingerprint in candidates:
+        maximum = _file_limit(relative, operation)
+        if relative.parts[0] == 'recording':
+            maximum = min(maximum, recording_remaining)
+        descriptor, _ = _hash_file(
+            path, deadline, maximum, expected=fingerprint)
+        if relative.parts[0] == 'recording':
+            recording_remaining -= descriptor['size_bytes']
+        if recording_remaining < 0:
+            raise ValueError('Raw recording grew beyond its aggregate limit')
+        descriptor['path'] = relative.as_posix()
+        rows.append(descriptor)
     return rows
 
 
@@ -367,7 +432,8 @@ def _terminal(data, report, case, operation, condition, source_run_id,
         if (report['source_snapshot_sha256'] is not None
                 or manifest.get('parent_run_id') is not None
                 or manifest.get('parent_event_prefix') is not None
-                or report['final_phase'] != 'paused'):
+                or report['final_phase'] != 'paused'
+                or manifest.get('last_outcome') is not None):
             raise ValueError('Source raw run has condition lineage or terminal state')
     else:
         _digest(report['source_snapshot_sha256'], 'worker source snapshot')
@@ -431,6 +497,116 @@ def _source_application(value, case, run_id, report):
     return value, task, source_world, boundary
 
 
+def _policy_calls(events):
+    calls = [event for event in events
+             if event.get('kind') == 'neural_policy_call']
+    event_fields = {
+        'sequence', 'kind', 'run_id', 'episode', 'episode_step', 'tick',
+        'observation_sha256', 'cameras_sha256', 'sensors', 'result_sha256',
+    }
+    for event in calls:
+        _fields(event, event_fields, 'Neural policy call')
+        _fields(event['cameras_sha256'], {'cam_left', 'cam_right'},
+                'Neural policy cameras')
+        _fields(event['result_sha256'],
+                {'action', 'encoded_input', 'raw_output'},
+                'Neural policy result')
+        _fields(event['sensors'],
+                {'collision', 'collision_angle', 'wind_direction'},
+                'Neural policy sensors')
+        for name, value in {**event['cameras_sha256'],
+                            **event['result_sha256']}.items():
+            _digest(value, f'neural policy {name}')
+        _digest(event['observation_sha256'], 'neural policy observation')
+        sensors = event['sensors']
+        angle = sensors['collision_angle']
+        wind = sensors['wind_direction']
+        if (type(sensors['collision']) is not bool
+                or (angle is not None and (type(angle) not in (int, float)
+                                           or not math.isfinite(angle)))
+                or type(wind) is not list or len(wind) != 2
+                or any(type(value) not in (int, float)
+                       or not math.isfinite(value) for value in wind)):
+            raise ValueError('Neural policy sensors have an invalid exact schema')
+    return calls
+
+
+def _condition_terminal(data, case, projection, terminal_state, schedule):
+    events = data['events']
+    manifest = data['manifest']
+    last_row = projection[-1]['tick']
+    last_tick = terminal_state['last_tick']
+    tail = terminal_state['natural_failure']
+    expected_ticks = {row['tick'] for row in projection} | \
+        ({last_tick} if tail else set())
+    sensed = [(index, event) for index, event in enumerate(events)
+              if event.get('kind') == 'memory_sensed']
+    if (len(sensed) != len(expected_ticks)
+            or {event.get('episode_step') for _, event in sensed}
+            != expected_ticks):
+        raise ValueError('Condition sensed packets differ from rows and terminal boundary')
+    failures = [(index, event) for index, event in enumerate(events)
+                if event.get('kind') == 'runtime_failure']
+    if not tail:
+        if failures or manifest.get('last_outcome') is not None:
+            raise ValueError('Successful condition contains a terminal failure')
+        return
+    if last_tick != last_row + 1 or last_tick <= schedule['decision_tick']:
+        raise ValueError('Condition failure is not a terminal sensor-only tick')
+    terminal_sensed = [(index, event) for index, event in sensed
+                       if event.get('episode_step') == last_tick]
+    if (len(terminal_sensed) != 1 or len(failures) != 1
+            or terminal_sensed[0][0] + 1 != failures[0][0]
+            or any(event.get('kind') != 'chunk'
+                   for event in events[failures[0][0] + 1:])):
+        raise ValueError('Terminal sensor-only tick has progress or wrong ordering')
+    failure = failures[0][1]
+    _fields(failure, {
+        'sequence', 'kind', 'run_id', 'episode', 'episode_step', 'tick', 'error',
+    }, 'Terminal runtime failure')
+    _fields(terminal_sensed[0][1], {
+        'sequence', 'kind', 'run_id', 'episode', 'episode_step', 'tick', 'packet',
+    }, 'Terminal sensed packet')
+    oracle._event_boundary(failure, last_tick, 'runtime_failure')
+    error = failure.get('error')
+    expected_fields = {
+        'reason', 'episode', 'steps', 'type', 'message', 'policy_diagnostics',
+    }
+    if (type(error) is not dict or set(error) != expected_fields
+            or error['reason'] != 'runtime_failure' or error['episode'] != 0
+            or error['steps'] != last_tick or error['type'] != 'CueUnavailable'
+            or error['policy_diagnostics'] != {}
+            or manifest.get('last_outcome') != error):
+        raise ValueError('Terminal sensor-only tick has an invalid runtime outcome')
+
+    tail_row = {
+        'episode': 0, 'tick': last_tick,
+        'pose': projection[-1]['next_pose'],
+        'next_pose': projection[-1]['next_pose'],
+    }
+    packets, _ = oracle._recorded_packets(
+        case, events, [tail_row], 'episode-0',
+        event_tick=schedule['event_tick'],
+        gate_result=data['manifest']['world_state']['gate_result'])
+    bridges = [event for event in events[:terminal_sensed[0][0]]
+               if event.get('kind') == 'memory_decision'
+               and type(event.get('detail')) is dict
+               and event['detail'].get('kind') == 'memory_bridge']
+    if not bridges:
+        raise ValueError('Terminal CueUnavailable lacks its active bridge target')
+    bridge = bridges[-1]
+    oracle._event_boundary(bridge, last_row, 'terminal predecessor bridge')
+    detail = bridge['detail']
+    _fields(detail, {'kind', 'tick', 'landmark_id', 'bearing', 'phase'},
+            'Terminal predecessor bridge')
+    target = detail['landmark_id']
+    visible = {landmark['id'] for landmark in packets[0]['landmarks']}
+    if (detail['tick'] != last_row or target not in case['landmarks']
+            or target in visible
+            or error['message'] != 'selected_waypoint_unavailable: ' + target):
+        raise ValueError('Terminal CueUnavailable differs from reconstructed geometry')
+
+
 def _support_and_oracle(data, report, case, operation, condition,
                         source_run_id, source_snapshot_sha256, projection,
                         terminal_state, deadline):
@@ -445,7 +621,9 @@ def _support_and_oracle(data, report, case, operation, condition,
                 or registered[0].get('filename') != 'initial.snp'):
             raise ValueError('Source requires one registered initial snapshot')
         snapshot_path = run / 'snapshots/initial.snp'
-        snapshot_sha256 = _hash_file(snapshot_path, deadline)[0]['sha256']
+        snapshot_sha256 = _hash_file(
+            snapshot_path, deadline,
+            RAW_LIMITS['source']['snapshot_max_bytes'])[0]['sha256']
         if (registered[0].get('sha256') != snapshot_sha256
                 or report['snapshot_sha256'] != snapshot_sha256):
             raise ValueError('Source snapshot bytes differ from their registration')
@@ -486,15 +664,7 @@ def _support_and_oracle(data, report, case, operation, condition,
     _, schedule = oracle._schedule(
         case, events, boundary, report['world_state'],
         report['world_state']['acquired_state_sha256'])
-    failures = [event for event in events if event.get('kind') == 'runtime_failure']
-    if terminal_state['natural_failure']:
-        if (len(failures) != 1
-                or failures[0].get('episode_step') != terminal_state['last_tick']
-                or type(failures[0].get('error')) is not dict
-                or failures[0]['error'].get('reason') != 'runtime_failure'):
-            raise ValueError('Condition natural failure lacks its exact terminal event')
-    elif failures:
-        raise ValueError('Successful condition contains a runtime failure event')
+    _condition_terminal(data, case, projection, terminal_state, schedule)
     return {
         'status': 'condition-local-pass', 'pair_admission': False,
         'events_sha256': memory.sha256(events),
@@ -574,9 +744,8 @@ def _audit_candidate(run_path, *, run_id, case_id, operation, condition,
             or state['last_tick'] not in (
                 projection[-1]['tick'], projection[-1]['tick'] + 1)):
         raise ValueError('Raw row interval differs from its terminal cursor')
+    calls = _policy_calls(data['events'])
     admission._policy_bindings(data)
-    calls = [event for event in data['events']
-             if event.get('kind') == 'neural_policy_call']
     policy_result = {
         'status': 'exhaustive-pass', 'call_count': len(calls),
         'bindings_sha256': memory.sha256([{
@@ -691,7 +860,7 @@ def audit_raw_run(run_path, receipt_root, *, run_id, case_id, operation,
                   condition, source_run_id, source_snapshot_sha256,
                   source_identity_sha256, deadline):
     """Audit one closed run and exclusively publish its immutable receipt."""
-    _deadline(deadline)
+    _public_deadline(deadline)
     run_id = _run_id(run_id)
     run, root, target = _paths(
         run_path, receipt_root, run_id, published=False)
@@ -728,7 +897,8 @@ def audit_raw_run(run_path, receipt_root, *, run_id, case_id, operation,
         current = _audit_candidate(run, **values)
         if memory.canonical_bytes(current) != payload:
             raise RuntimeError('Raw-audit inputs changed after exclusive link')
-        descriptor, _ = _hash_file(target, deadline)
+        descriptor, _ = _hash_file(
+            target, deadline, RAW_CONTRACT['receipt_max_bytes'])
         if (descriptor['size_bytes'] != len(payload)
                 or descriptor['sha256'] != payload_sha256
                 or _inode(target) != linked_inode):
@@ -756,7 +926,7 @@ def validate_raw_receipt(run_path, receipt_root, *, run_id, case_id, operation,
                          condition, source_run_id, source_snapshot_sha256,
                          source_identity_sha256, deadline):
     """Read and recompute one published receipt; write nothing."""
-    _deadline(deadline)
+    _public_deadline(deadline)
     run_id = _run_id(run_id)
     run, _, target = _paths(run_path, receipt_root, run_id, published=True)
     payload = artifacts._read(target, RAW_CONTRACT['receipt_max_bytes'])
