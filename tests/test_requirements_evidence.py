@@ -1,5 +1,6 @@
 import re
 from pathlib import Path
+from urllib.parse import unquote
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -19,6 +20,44 @@ GATES = {
 
 def rows(pattern, text):
     return re.findall(pattern, text, flags=re.MULTILINE)
+
+
+def heading_slugs(path):
+    slugs, seen = set(), {}
+    for line in path.read_text().splitlines():
+        match = re.match(r"^#{1,6}\s+(.+?)\s*#*\s*$", line)
+        if not match:
+            continue
+        heading = re.sub(r"[`*_~]", "", match.group(1)).casefold()
+        slug = re.sub(r"[^\w\- ]", "", heading)
+        slug = re.sub(r"\s+", "-", slug.strip())
+        duplicate = seen.get(slug, 0)
+        seen[slug] = duplicate + 1
+        slugs.add(slug if duplicate == 0 else f"{slug}-{duplicate}")
+    return slugs
+
+
+def link_errors(source, text):
+    destinations = rows(r"\[[^\]]+\]\(([^)]+)\)", text)
+    destinations += rows(r"^\[[^\]]+\]:\s*(\S+)", text)
+    ignored_runs, missing, fragments = [], [], []
+    for destination in destinations:
+        destination = destination.strip("<>")
+        if "://" in destination:
+            continue
+        target, separator, fragment = destination.partition("#")
+        resolved = source if not target else (source.parent / target).resolve()
+        if resolved.is_relative_to(ROOT / "runs"):
+            ignored_runs.append(destination)
+        if not resolved.exists():
+            missing.append(destination)
+        elif (
+            separator
+            and resolved.suffix.casefold() == ".md"
+            and unquote(fragment).casefold() not in heading_slugs(resolved)
+        ):
+            fragments.append(destination)
+    return ignored_runs, missing, fragments
 
 
 def test_every_prd_requirement_has_one_explicit_status():
@@ -45,18 +84,20 @@ def test_every_simulation_completion_gate_has_one_explicit_status():
     assert {gate for gate, _ in actual} == GATES
     assert {status for _, status in actual} <= STATUSES
     assert all(status != "deferred" for _, status in actual)
+    assert dict(actual)["SIM-LAB"] == "failed"
 
 
-def test_release_matrix_links_are_portable():
-    text = MATRIX.read_text()
-    destinations = rows(r"\[[^\]]+\]\(([^)]+)\)", text)
-    destinations += rows(r"^\[[^\]]+\]:\s*(\S+)", text)
-    local = []
-    for destination in destinations:
-        target = destination.strip("<>").split("#", 1)[0]
-        if not target or "://" in target:
-            continue
-        local.append(target)
-    assert not any(Path(target).parts[:2] == ("..", "runs") for target in local)
-    missing = [target for target in local if not (MATRIX.parent / target).resolve().exists()]
+def test_release_matrix_links_are_portable(tmp_path):
+    ignored_runs, missing, fragments = link_errors(MATRIX, MATRIX.read_text())
+    assert ignored_runs == []
     assert missing == []
+    assert fragments == []
+    target = tmp_path / "target.md"
+    target.write_text("# Present heading\n")
+    source = tmp_path / "source.md"
+    source.write_text("[missing](target.md#absent-heading)\n")
+    assert link_errors(source, source.read_text()) == (
+        [],
+        [],
+        ["target.md#absent-heading"],
+    )

@@ -70,7 +70,7 @@ Passing R1 requirements does not make a later research or human gate pass.
 
 | Gate | Status | Evidence and remaining boundary |
 | --- | --- | --- |
-| SIM-LAB | limited | Scoped M3/R1 evidence passes, but the final integrated candidate still needs the goal's fresh asset-backed and browser revalidation. The measured 27.9809 Hz display limitation remains. |
+| SIM-LAB | failed | Scoped M3/R1 evidence passes, but the [fixed required manual-browser v3 gate](plans/simulation-first-completion-goal.md) was evaluated and failed after 56 ticks, before snapshot, branches, comparison or export. Final integrated-candidate revalidation remains required; the measured 27.9809 Hz display limitation also remains. |
 | SIM-MEMORY | limited | The prospective family software and analysis contracts are recorded in the [active goal](plans/simulation-completion-next-goal.md#family-prospective-analysis-contract-verified-8-october-2026); no development family or held-out block has been collected. |
 | SIM-TASKS | failed | Exploration, homing and adaptation retain scoped passes, but both fixed learned-puck development arms score 0/4 per model against the required 3/4 gate. Held-out and product integration remain locked. |
 | SIM-MALECNS | failed | The fixed navigation development study completed, but all augmented models score 0/4 against the per-seed 3/4 gate. Its held-out stage remains locked and R3 remains open. |
