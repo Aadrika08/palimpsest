@@ -24,10 +24,11 @@ sys.path.insert(0, str(ROOT / "src"))
 sys.path.insert(0, str(ROOT / "scripts"))
 
 PROTOCOL_PATH = ROOT / "docs/plans/m7-navigation-v2-checkpoint-support-v1.json"
-PROTOCOL_SHA256 = "5869d1d46861ab6d9bfad87e557f5a652c671a3730da5d2d46d4ce80e09f9b68"
+PROTOCOL_SHA256 = "ef1d2e1b86028d1bd360e0bb149610043287ecd3f6e735ce6d2d90c5f3ac2f0b"
 TEST_PATH = ROOT / "tests/test_male_navigation_v2_checkpoint_support.py"
 MiB = 1024**2
 SOURCE_FILES = {
+    "src/palimpsest/__init__.py": "palimpsest",
     "scripts/prepare_male_navigation_v2.py": "prepare_male_navigation_v2",
     "scripts/train_male_navigation_v2.py": None,
     "scripts/train_male_reduced.py": "train_male_reduced",

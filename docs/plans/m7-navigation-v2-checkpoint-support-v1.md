@@ -1,6 +1,6 @@
 # M7 navigation-v2 selected-checkpoint output-support audit
 
-This is the frozen prospective plan for `M7-NAV-CHECKPOINT-SUPPORT-V1`. Its machine-readable [protocol](m7-navigation-v2-checkpoint-support-v1.json) has SHA-256 `5869d1d46861ab6d9bfad87e557f5a652c671a3730da5d2d46d4ce80e09f9b68`. At this freeze, no checkpoint byte has been opened, no model has been constructed, and no inference has run. Pre-execution review amended only the fail-closed source, attempt and publication contracts before any retained input was read.
+This is the frozen prospective plan for `M7-NAV-CHECKPOINT-SUPPORT-V1`. Its machine-readable [protocol](m7-navigation-v2-checkpoint-support-v1.json) has SHA-256 `ef1d2e1b86028d1bd360e0bb149610043287ecd3f6e735ce6d2d90c5f3ac2f0b`. At this freeze, no checkpoint byte has been opened, no model has been constructed, and no inference has run. Pre-execution review amended only the fail-closed source, attempt and publication contracts before any retained input was read.
 
 ## Goal and evidence boundary
 

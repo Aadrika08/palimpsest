@@ -137,6 +137,7 @@ class AdmissionTests(unittest.TestCase):
             "scripts/prepare_male_navigation_v2.py",
             "scripts/train_male_navigation_v2.py",
             "scripts/train_male_reduced.py",
+            "src/palimpsest/__init__.py",
             "src/palimpsest/artifacts.py",
             "src/palimpsest/male_model.py",
             "src/palimpsest/male_navigation_research.py",
