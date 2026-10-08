@@ -44,6 +44,9 @@ Admission requires:
   after the event, and no fresh passage observation through commitment;
 - gold recomputed only by `memory_experiment.gold_target_ids` from the admitted
   source M, reconstructed occupancy and actual trigger. Null/no-event gold is empty.
+- the donor's own U has fitted-history provenance bound to its admitted history,
+  and its recorded selection is replayed through the shared non-oracle selector;
+  that replay authenticates the donor and is never an input to evaluator gold.
 
 The retained proof binds case/family/profile hashes; protocol, plan and source
 identity hashes; source/post run, recording, report and snapshot hashes; source M
@@ -56,7 +59,8 @@ adapter rejects any supplied proof for the other eight conditions.
 Synthetic tests cover all 48 rows, three case kinds, both schedules and both
 closure sides. Mutation tests cover source evidence, packets, geometry, schedule,
 trigger, intervention, artifact bindings, proof targets/provenance and non-oracle
-proof leakage. Proof construction must not call fitting or a selector.
+proof leakage. Proof construction must not fit; only donor authentication may call
+the shared own selector, while evaluator gold remains occupancy-derived.
 
 This proof contract validates supplied retained evidence; it is not a raw-file
 reader or a native driver. A later driver/auditor must first checksum files,
