@@ -1,0 +1,30 @@
+{
+  "archive": {
+    "sha256": "e4994c965d3b2ff18623e39b745dbb4d7f4f36ed2ddecd7f2d6f5fddb7a132de",
+    "size_bytes": 13529793
+  },
+  "head": "b782a0eafdd3f0d1ce6e4914b463e77a0b6afe04",
+  "limits": {
+    "free_bytes": 2147483648,
+    "headroom_bytes": 67108864,
+    "output_bytes": 67108864,
+    "seconds": 120
+  },
+  "output": "/home/utkarsh/Work/shraddha/brain/.worktrees/artwork-encounter-v1/runs/artwork-encounter-v1",
+  "qualification_claims": [],
+  "schema_version": 1,
+  "sources": {
+    "docs/plans/artwork-encounter-v1.md": {
+      "sha256": "2db718627bf2283bc49fa149e6ad8a73e9fdf01d32f4364f906e06ed16f528dc",
+      "size_bytes": 4874
+    },
+    "scripts/prepare_artwork_encounter.py": {
+      "sha256": "028ccf89937bd5ac725da7a35053fa49414efca698a4fac4ce773abaad3e9a7b",
+      "size_bytes": 19052
+    },
+    "tests/test_artwork_encounter.py": {
+      "sha256": "e0ac899e63abb3e34f8626b60ba519607a003e274ef76a5f5d75c56c1fd259bf",
+      "size_bytes": 12416
+    }
+  }
+}
