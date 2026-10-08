@@ -914,6 +914,36 @@ class PuckReservationAndMintAdmissionTests(unittest.TestCase):
             self.assertEqual(raced, [True])
             self.assertTrue(displaced.is_dir())
 
+    def test_publisher_rejects_same_byte_target_and_receipt_replacement_between_reads(self):
+        on_policy = subject()
+        snapshot = inventory_snapshot()
+        for victim_name in ('reservation.json', 'reservation.json.commit.json'):
+            with self.subTest(victim=victim_name), \
+                    tempfile.TemporaryDirectory() as directory:
+                root = Path(directory).resolve()
+                victim = root / victim_name
+                replacement = root / f'.{victim_name}.replacement'
+                real_read = on_policy._read_exact_file
+                victim_reads = []
+
+                def read_exact(*arguments, **keywords):
+                    result = real_read(*arguments, **keywords)
+                    if Path(arguments[1]) == victim:
+                        raw = result[0] if keywords.get('return_identity') else result
+                        victim_reads.append(raw)
+                        if len(victim_reads) == 1:
+                            replacement.write_bytes(raw)
+                            os.replace(replacement, victim)
+                    return result
+
+                with patch.object(on_policy, '_read_exact_file',
+                                  side_effect=read_exact), \
+                        self.assertRaisesRegex(ValueError, 'identity|changed'):
+                    self.reserve(root, snapshot, copy.deepcopy(snapshot))
+                self.assertEqual(len(victim_reads), 2)
+                self.assertEqual(victim_reads[0], victim_reads[1])
+                self.assertTrue((root / '.reservation.json.quarantine').is_file())
+
     def test_publication_reader_rechecks_blockers_after_final_secure_read(self):
         on_policy = subject()
         with tempfile.TemporaryDirectory() as directory:
