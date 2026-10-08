@@ -219,3 +219,36 @@ before any native development collection. Effect and null-harm margins, interval
 estimator and stop rules remain to be frozen before readout. R2 and all seven
 release-level gates remain open. Main, CI and the physical rover remain outside
 this phase.
+
+### Family producer contract verified, 8 October 2026
+
+[PR #100](https://github.com/Aadrika08/palimpsest/pull/100), stacked on #99,
+implements the zero-allocation family-v3 producer contract. It regenerates one
+complete 48-family/144-case development block, binds 144 source and 1,296
+condition owner IDs, semantically validates both relation histories and their
+disjoint namespaces, and materializes only non-executable source/`own`
+descriptors. A synthetic pair close requires exact outer-registration, job,
+owner, cleanup, supervisor, manifest and run-tree provenance; rechecks complete
+before/after ledgers; invokes the raw oracle adapter; and publishes through a
+rollback-safe exclusive link.
+
+The focused producer/admission suite passed 47 tests in 69.46 seconds. The
+affected oracle/family/snapshot/artifact/replay slice passed 172 tests with 7
+skips and 4 deselections in 151.39 seconds. Two final reviewers found no
+remaining Critical or Important issue after relation relabeling, E-to-U drift,
+cross-registration splicing, resource ceilings, deadline enforcement,
+dependency provenance, supervisor scalar types and post-link failure handling
+were tightened. The affected snapshot tests executed small local MuJoCo fixture
+steps; no study owner, trained-model inference, collection block or held-out
+input ran.
+
+Native allocation remains inadmissible. The frozen known subtotal is
+627,836,977,152 bytes against 68,881,358,848 plan-time free bytes, a
+558,955,618,304-byte shortfall before unallocated report, audit, prerequisite
+and close headroom. Historical namespace inventory completeness is also still
+external, and the synthetic owner/supervisor fixtures do not prove a launcher
+command, environment or child PID. Next memory work is to freeze effect and
+null-harm margins, interval estimator and stopping rules; resolve storage and
+the complete historical inventory; then implement a separately hash-bound
+launcher/allocation registration. R2 and all seven release-level gates remain
+open. Main, CI and the physical rover remain unchanged.
