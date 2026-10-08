@@ -29,7 +29,6 @@ _SCENE_FIELDS = {'scene_id', 'canonical_scene_sha256',
                  'scientific_initial_sha256', 'payload_sha256'}
 _INVENTORY_FIELDS = {'version', 'complete', 'remote_refs_fresh',
                      'held_out_accessed', 'roots', 'records'}
-_CANDIDATE_FIELDS = {'layout', 'canonical_scene', 'scientific_initial', 'payload'}
 _RESERVATION_FIELDS = {
     'version', 'kind', 'lineage_sha256', 'scene_ids', 'inventory_before_sha256',
     'inventory_after_sha256', 'inventory', 'occupied_scene_ids',
@@ -38,6 +37,10 @@ _RESERVATION_FIELDS = {
 }
 _SCENE_MANIFEST_FIELDS = {
     'version', 'kind', 'lineage_sha256', 'reservation_sha256', 'scene_ids', 'scenes',
+}
+_SCENE_ENTRY_FIELDS = {
+    'scene_id', 'slot', 'split', 'canonical_scene_sha256',
+    'scientific_initial_sha256', 'payload_sha256', 'layout',
 }
 _MAX_JSON_BYTES = 64 * 1024 * 1024
 
@@ -153,11 +156,43 @@ def _publication_root(value):
     return root
 
 
+def _fsync_directory(root):
+    flags = os.O_RDONLY | getattr(os, 'O_DIRECTORY', 0)
+    directory = os.open(root, flags)
+    try:
+        os.fsync(directory)
+    finally:
+        os.close(directory)
+
+
+def _quarantine_path(root, name):
+    return root / f'.{name}.quarantine'
+
+
+def _write_quarantine(root, name):
+    quarantine = _quarantine_path(root, name)
+    marker = _canonical_bytes({
+        'version': 1, 'kind': 'puck-on-policy-publication-quarantine-v1',
+        'target': name,
+    }, 'publication quarantine')
+    with quarantine.open('xb') as handle:
+        handle.write(marker)
+        handle.flush()
+        os.fsync(handle.fileno())
+    _fsync_directory(root)
+    return quarantine
+
+
+def _remove_failed_target(target):
+    target.unlink()
+
+
 def _atomic_manifest(root, name, manifest):
     root = _publication_root(root)
     target = root / name
     pending = root / f'.{name}.pending'
-    if target.exists() or target.is_symlink() or pending.exists() or pending.is_symlink():
+    quarantine = _quarantine_path(root, name)
+    if any(path.exists() or path.is_symlink() for path in (target, pending, quarantine)):
         raise ValueError(f'{name}: fresh publication paths required')
     raw = _canonical_bytes(manifest, name)
     published = False
@@ -166,25 +201,61 @@ def _atomic_manifest(root, name, manifest):
             handle.write(raw)
             handle.flush()
             os.fsync(handle.fileno())
+        _write_quarantine(root, name)
         os.replace(pending, target)
         published = True
-        flags = os.O_RDONLY | getattr(os, 'O_DIRECTORY', 0)
-        directory = os.open(root, flags)
-        try:
-            os.fsync(directory)
-        finally:
-            os.close(directory)
+        _fsync_directory(root)
+        quarantine.unlink()
     except BaseException:
+        cleanup_failed = False
         try:
             pending.unlink(missing_ok=True)
-            if published:
-                target.unlink(missing_ok=True)
-        finally:
-            raise
+        except BaseException:
+            cleanup_failed = True
+        if published:
+            try:
+                _remove_failed_target(target)
+            except BaseException:
+                cleanup_failed = True
+            try:
+                _fsync_directory(root)
+            except BaseException:
+                cleanup_failed = True
+        if not cleanup_failed:
+            try:
+                quarantine.unlink(missing_ok=True)
+            except BaseException:
+                cleanup_failed = True
+        raise
     return {
         'manifest_path': str(target), 'manifest_bytes': raw,
         'manifest_sha256': _sha256(raw),
     }
+
+
+def _read_publication(value, name):
+    if not isinstance(value, (str, os.PathLike)):
+        raise ValueError(f'{name}: publication path required')
+    target = Path(value)
+    if not target.is_absolute() or target.name != name:
+        raise ValueError(f'{name}: exact publication path required')
+    root = _publication_root(target.parent)
+    pending = root / f'.{name}.pending'
+    quarantine = _quarantine_path(root, name)
+    if (quarantine.exists() or quarantine.is_symlink() or
+            pending.exists() or pending.is_symlink()):
+        raise ValueError(f'{name}: publication is quarantined or indeterminate')
+    if (not target.exists() or not target.is_file() or target.is_symlink() or
+            target.resolve(strict=True) != target):
+        raise ValueError(f'{name}: exact published file required')
+    with target.open('rb') as handle:
+        raw = handle.read(_MAX_JSON_BYTES + 1)
+    if len(raw) > _MAX_JSON_BYTES:
+        raise ValueError(f'{name}: published file exceeds bound')
+    if (quarantine.exists() or quarantine.is_symlink() or
+            pending.exists() or pending.is_symlink()):
+        raise ValueError(f'{name}: publication changed while read')
+    return raw
 
 
 def _inventory_roster():
@@ -279,9 +350,16 @@ def _validate_inventory(snapshot, lineage_sha256):
             else:
                 if scene_id in roster:
                     raise ValueError('Reserved puck scene ID collision')
+                identities = {
+                    field: _digest(scene[field], f'inventory {field}')
+                    for field in occupied}
+                if (scene_id in occupied_ids or
+                        any(value in occupied[field]
+                            for field, value in identities.items())):
+                    raise ValueError('Prior puck scene or identity collision')
                 occupied_ids.add(scene_id)
                 for field in occupied:
-                    occupied[field].add(_digest(scene[field], f'inventory {field}'))
+                    occupied[field].add(identities[field])
         if role == 'self_reservation' and tuple(scene_ids) != roster:
             raise ValueError('Self reservation roster is partial or reordered')
         record_names.add((kind, name))
@@ -341,10 +419,18 @@ def _read_reservation(raw):
     return manifest
 
 
+def _read_published_reservation(path):
+    raw = _read_publication(path, 'reservation.json')
+    return raw, _read_reservation(raw)
+
+
 def _admit_staged_layout(row, scene_id, slot, split):
     if type(row) is not dict or set(row) != _ROW_FIELDS:
         raise ValueError('Staged puck layout requires exact fields')
-    if (type(row['version']) is not int or row['version'] != 1 or row['kind'] != SCHEMA or
+    if (type(scene_id) is not int or type(slot) is not int or
+            not 0 <= slot < 8 or
+            split != (COLLECTION_SPLIT if slot < 4 else DEVELOPMENT_SPLIT) or
+            type(row['version']) is not int or row['version'] != 1 or row['kind'] != SCHEMA or
             type(row['seed']) is not int or row['seed'] != scene_id or
             type(row['slot']) is not int or row['slot'] != slot or row['split'] != split or
             row['initial_qvel'] != 'all zeros'):
@@ -363,60 +449,109 @@ def _admit_staged_layout(row, scene_id, slot, split):
         raise ValueError('Staged puck layout violates task-v5 bounds or clearance')
 
 
-def scene_candidate_identities(candidate):
-    """Return independent hashes for a typed fake/real scene candidate."""
-    if type(candidate) is not dict or set(candidate) != _CANDIDATE_FIELDS:
-        raise ValueError('Scene candidate requires exact fields')
-    result = {}
-    for field, output in (
-            ('canonical_scene', 'canonical_scene_sha256'),
-            ('scientific_initial', 'scientific_initial_sha256'),
-            ('payload', 'payload_sha256')):
-        if type(candidate[field]) is not dict or not candidate[field]:
-            raise ValueError(f'{field}: nonempty typed object required')
-        result[output] = _sha256(_canonical_bytes(candidate[field], field))
-    return result
+def scene_candidate_identities(layout):
+    """Derive all collision identities from one admitted exact layout."""
+    if type(layout) is not dict or set(layout) != _ROW_FIELDS:
+        raise ValueError('Scene layout requires exact fields')
+    scene_id, slot, split = layout['seed'], layout['slot'], layout['split']
+    _admit_staged_layout(layout, scene_id, slot, split)
+    canonical_scene = {
+        'version': 1, 'kind': 'puck-on-policy-canonical-scene-v1',
+        'rover_pose': layout['rover_pose'], 'puck_xy': layout['puck_xy'],
+        'goal_xy': layout['goal_xy'],
+    }
+    scientific_initial = canonical_scene | {
+        'kind': 'puck-on-policy-scientific-initial-v1',
+        'initial_qvel': layout['initial_qvel'],
+    }
+    return {
+        'canonical_scene_sha256': _sha256(
+            _canonical_bytes(canonical_scene, 'canonical scene')),
+        'scientific_initial_sha256': _sha256(
+            _canonical_bytes(scientific_initial, 'scientific initial')),
+        'payload_sha256': _sha256(_canonical_bytes(layout, 'complete scene payload')),
+    }
 
 
-def _read_scene_manifest(raw):
+def _validate_scene_entry(entry, scene_id, slot, split):
+    if type(entry) is not dict or set(entry) != _SCENE_ENTRY_FIELDS:
+        raise ValueError('Scene-manifest entry requires exact fields')
+    if (type(entry['scene_id']) is not int or entry['scene_id'] != scene_id or
+            type(entry['slot']) is not int or entry['slot'] != slot or
+            entry['split'] != split):
+        raise ValueError('Scene-manifest entry order or identity differs')
+    _admit_staged_layout(entry['layout'], scene_id, slot, split)
+    identities = scene_candidate_identities(entry['layout'])
+    for field, expected in identities.items():
+        if _digest(entry[field], f'scene manifest {field}') != expected:
+            raise ValueError(f'Scene-manifest {field} is unbound')
+    return identities
+
+
+def _read_scene_manifest(raw, reservation_raw):
     if type(raw) is not bytes or len(raw) > _MAX_JSON_BYTES:
         raise ValueError('Canonical scene-manifest bytes required')
     try:
         manifest = json.loads(raw)
     except (UnicodeDecodeError, json.JSONDecodeError) as error:
         raise ValueError('Canonical scene-manifest JSON required') from error
-    if (_canonical_bytes(manifest, 'scene manifest') != raw or type(manifest) is not dict or
-            set(manifest) != _SCENE_MANIFEST_FIELDS or manifest['version'] != 1 or
+    if (type(manifest) is not dict or
+            _canonical_bytes(manifest, 'scene manifest') != raw or
+            set(manifest) != _SCENE_MANIFEST_FIELDS or
+            type(manifest['version']) is not int or manifest['version'] != 1 or
             manifest['kind'] != 'puck-on-policy-scene-manifest-v1'):
         raise ValueError('Scene manifest schema or canonical bytes differ')
-    if tuple(manifest['scene_ids']) != _inventory_roster():
+    reservation = _read_reservation(reservation_raw)
+    if (_digest(manifest['lineage_sha256'], 'scene-manifest lineage') !=
+            reservation['lineage_sha256'] or
+            _digest(manifest['reservation_sha256'], 'scene-manifest reservation') !=
+            _sha256(reservation_raw)):
+        raise ValueError('Scene manifest reservation lineage is unbound')
+    roster = _inventory_roster()
+    if tuple(manifest['scene_ids']) != roster:
         raise ValueError('Scene manifest roster differs')
+    scenes = manifest['scenes']
+    if type(scenes) is not list or len(scenes) != len(roster):
+        raise ValueError('Scene manifest requires exactly eight entries')
+    seen = {field: set() for field in (
+        'canonical_scene_sha256', 'scientific_initial_sha256', 'payload_sha256')}
+    for slot, (scene_id, entry) in enumerate(zip(roster, scenes)):
+        split = COLLECTION_SPLIT if slot < 4 else DEVELOPMENT_SPLIT
+        identities = _validate_scene_entry(entry, scene_id, slot, split)
+        if any(value in seen[field] for field, value in identities.items()):
+            raise ValueError('Scene-manifest identity collision')
+        for field, value in identities.items():
+            seen[field].add(value)
     return manifest
 
 
-def collection_scene_projection(scene_manifest_bytes, *, audience):
-    """Derive the only view that a collection process may receive."""
-    if audience != 'collection':
-        raise ValueError('Only the collection scene projection is available')
-    manifest = _read_scene_manifest(scene_manifest_bytes)
+def _collection_projection_bytes(manifest):
     collection_ids = _inventory_roster()[:4]
-    scenes = manifest['scenes'][:4]
-    if ([item.get('scene_id') for item in scenes] != list(collection_ids) or
-            any(item.get('split') != COLLECTION_SPLIT for item in scenes)):
-        raise ValueError('Collection scene projection differs')
+    scenes = [{field: entry[field] for field in _SCENE_ENTRY_FIELDS}
+              for entry in manifest['scenes'][:4]]
     return _canonical_bytes({
         'version': 1, 'kind': 'puck-on-policy-collection-projection-v1',
-        'lineage_sha256': manifest['lineage_sha256'],
-        'reservation_sha256': manifest['reservation_sha256'],
         'scene_ids': list(collection_ids), 'scenes': scenes,
     }, 'collection projection')
 
 
-def stage_scene_manifest(output_root, reservation_bytes, minter, *, inventory_after):
+def collection_scene_projection(scene_manifest_path, *, reservation_path, audience):
+    """Read durable publications and derive the only collection-visible view."""
+    if audience != 'collection':
+        raise ValueError('Only the collection scene projection is available')
+    reservation_raw, _ = _read_published_reservation(reservation_path)
+    scene_raw = _read_publication(scene_manifest_path, 'scene-manifest.json')
+    manifest = _read_scene_manifest(scene_raw, reservation_raw)
+    if _read_publication(reservation_path, 'reservation.json') != reservation_raw:
+        raise ValueError('Reservation changed while deriving collection projection')
+    return _collection_projection_bytes(manifest)
+
+
+def stage_scene_manifest(output_root, reservation_path, minter, *, inventory_after):
     """Stage all eight candidates through a caller-supplied minter and publish once."""
     if not callable(minter):
         raise ValueError('Scene minter must be callable')
-    reservation = _read_reservation(reservation_bytes)
+    reservation_raw, reservation = _read_published_reservation(reservation_path)
     roster = _inventory_roster()
     occupied_ids = set(reservation['occupied_scene_ids'])
     seen_ids = set()
@@ -429,18 +564,16 @@ def stage_scene_manifest(output_root, reservation_bytes, minter, *, inventory_af
         split = COLLECTION_SPLIT if slot < 4 else DEVELOPMENT_SPLIT
         if scene_id in occupied_ids or scene_id in seen_ids:
             raise ValueError('Puck scene ID collision')
-        candidate = minter(scene_id, slot, split)
-        if type(candidate) is not dict or set(candidate) != _CANDIDATE_FIELDS:
-            raise ValueError('Scene minter returned an invalid candidate')
-        _admit_staged_layout(candidate['layout'], scene_id, slot, split)
-        identities = scene_candidate_identities(candidate)
+        layout = minter(scene_id, slot, split)
+        _admit_staged_layout(layout, scene_id, slot, split)
+        identities = scene_candidate_identities(layout)
         for field, value in identities.items():
             if value in occupied[field]:
                 raise ValueError(f'{field} collision')
-        normalized = json.loads(_canonical_bytes(candidate, 'scene candidate'))
+        normalized = json.loads(_canonical_bytes(layout, 'scene layout'))
         scenes.append({
             'scene_id': scene_id, 'slot': slot, 'split': split,
-            **identities, 'candidate': normalized,
+            **identities, 'layout': normalized,
         })
         seen_ids.add(scene_id)
         for field, value in identities.items():
@@ -452,14 +585,17 @@ def stage_scene_manifest(output_root, reservation_bytes, minter, *, inventory_af
             _sha256(final_bytes) != reservation['inventory_after_sha256'] or
             any(final[field] != reservation[field] for field in final)):
         raise ValueError('Inventory changed before scene publication')
+    if _read_publication(reservation_path, 'reservation.json') != reservation_raw:
+        raise ValueError('Reservation changed before scene publication')
     manifest = {
         'version': 1, 'kind': 'puck-on-policy-scene-manifest-v1',
         'lineage_sha256': reservation['lineage_sha256'],
-        'reservation_sha256': _sha256(reservation_bytes),
+        'reservation_sha256': _sha256(reservation_raw),
         'scene_ids': list(roster), 'scenes': scenes,
     }
     manifest_bytes = _canonical_bytes(manifest, 'scene manifest')
-    projection = collection_scene_projection(manifest_bytes, audience='collection')
+    _read_scene_manifest(manifest_bytes, reservation_raw)
+    projection = _collection_projection_bytes(manifest)
     result = _atomic_manifest(output_root, 'scene-manifest.json', manifest)
     result['collection_projection_bytes'] = projection
     return result
