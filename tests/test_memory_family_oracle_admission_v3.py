@@ -328,6 +328,23 @@ def test_rejects_identity_non_own_substitute_and_snapshot_lineage(tmp_path):
         _admit(pair)
 
 
+@pytest.mark.parametrize('kind', ['memory_cue', 'neural_policy_call'])
+def test_rejects_non_chunk_event_without_run_identity(tmp_path, kind):
+    pair = _pair(tmp_path)
+    _edit_events(pair, lambda events: next(event for event in events
+        if event['kind'] == kind).pop('run_id'))
+    with pytest.raises(ValueError, match='another run'):
+        _admit(pair)
+
+
+def test_rejects_chunk_with_foreign_run_identity(tmp_path):
+    pair = _pair(tmp_path)
+    _edit_events(pair, lambda events: next(event for event in events
+        if event['kind'] == 'chunk').__setitem__('run_id', uuid.uuid4().hex))
+    with pytest.raises(ValueError, match='another run'):
+        _admit(pair)
+
+
 def test_rejects_history_selector_u_and_terminal_report_mismatch(tmp_path):
     messages = {'history': 'History bundle identity/U',
                 'history-sha': 'History bundle identity/U',
@@ -385,5 +402,61 @@ def test_rejects_source_prefix_and_read_time_fingerprint_drift(tmp_path):
     with patch.object(admission, 'iter_ticks', side_effect=drifting), \
          patch.object(admission.oracle, 'oracle_evidence') as oracle, \
          pytest.raises(ValueError):
+        _admit(pair)
+    oracle.assert_not_called()
+
+
+def test_rejects_mutation_after_event_decode_and_manifest_world_mismatch(tmp_path):
+    pair = _pair(tmp_path / 'decode-drift')
+    original = admission.artifacts._events
+    post_id = pair['post']['run_id']
+    def mutate_after_decode(run):
+        decoded = original(run)
+        if Path(run).name == post_id:
+            path = Path(run) / 'recording/events.jsonl'
+            payload = path.read_bytes()
+            altered = payload.replace(b'"before": 0', b'"before": 9', 1)
+            assert altered != payload
+            path.write_bytes(altered)
+        return decoded
+    with patch.object(admission.artifacts, '_events', side_effect=mutate_after_decode), \
+         patch.object(admission.oracle, 'oracle_evidence') as oracle, \
+         pytest.raises(ValueError, match='changed during decode'):
+        _admit(pair)
+    oracle.assert_not_called()
+
+    pair = _pair(tmp_path / 'world')
+    path = Path(pair['post']['run_path']) / 'recording/manifest.json'
+    manifest = json.loads(path.read_text())
+    manifest['world_state']['last_tick'] -= 1
+    _canonical_file(path, manifest)
+    with pytest.raises(ValueError, match='terminal manifest'):
+        _admit(pair)
+
+
+@pytest.mark.parametrize('target', ['report', 'snapshot'])
+def test_rejects_support_mutation_after_decode(tmp_path, target):
+    pair = _pair(tmp_path)
+    post = Path(pair['post']['run_path'])
+    if target == 'report':
+        original = admission._bounded_json
+        report_path = post / 'worker-report.json'
+        def mutate(path, maximum, label):
+            decoded = original(path, maximum, label)
+            if Path(path) == report_path:
+                report_path.write_bytes(report_path.read_bytes() + b' ')
+            return decoded
+        patcher = patch.object(admission, '_bounded_json', side_effect=mutate)
+    else:
+        original = admission._initial_snapshot
+        snapshot_path = post / 'snapshots/initial.snp'
+        def mutate(data):
+            decoded = original(data)
+            if data['run'] == post:
+                snapshot_path.write_bytes(snapshot_path.read_bytes() + b' ')
+            return decoded
+        patcher = patch.object(admission, '_initial_snapshot', side_effect=mutate)
+    with patcher, patch.object(admission.oracle, 'oracle_evidence') as oracle, \
+         pytest.raises(ValueError, match='support changed'):
         _admit(pair)
     oracle.assert_not_called()

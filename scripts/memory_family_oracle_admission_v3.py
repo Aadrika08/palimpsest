@@ -106,6 +106,8 @@ def _read_run(descriptor, deadline):
     """Decode one terminal recording with one stable, exhaustive chunk pass."""
     _deadline(deadline)
     run = descriptor['run']
+    metadata_paths = [run / 'recording/manifest.json', run / 'recording/events.jsonl']
+    metadata_fingerprint = artifacts._fingerprint(metadata_paths)
     manifest = artifacts._manifest(run)
     events = artifacts._events(run)
     if manifest.get('run_id') != descriptor['run_id']:
@@ -113,12 +115,14 @@ def _read_run(descriptor, deadline):
     chunks = [event for event in events if event.get('kind') == 'chunk']
     if len(chunks) > artifacts.MAX_CHUNKS:
         raise ValueError('Recording has too many chunks')
-    paths = [run / 'recording' / name for name in ('manifest.json', 'events.jsonl')]
+    paths = metadata_paths.copy()
     for index, event in enumerate(chunks):
         if event.get('path') != f'chunks/{index:06d}.npz':
             raise ValueError('Unsafe or out-of-order recording chunk')
         paths.append(run / 'recording' / event['path'])
     fingerprint = artifacts._fingerprint(paths)
+    if fingerprint[:len(metadata_paths)] != metadata_fingerprint:
+        raise ValueError('Recording metadata changed during decode')
     rows = []
     try:
         for row in iter_ticks(run / 'recording'):
@@ -134,7 +138,9 @@ def _read_run(descriptor, deadline):
         raise ValueError('Family recording has no control rows')
     if artifacts._fingerprint(paths) != fingerprint:
         raise ValueError('Recording changed during admission')
-    if any(event.get('run_id') not in (None, descriptor['run_id']) for event in events):
+    if any(event.get('run_id') != descriptor['run_id']
+            and (event.get('kind') != 'chunk' or 'run_id' in event)
+            for event in events):
         raise ValueError('Recording event belongs to another run')
     return {'run': run, 'manifest': manifest, 'events': events, 'rows': rows,
             'paths': paths, 'fingerprint': fingerprint}
@@ -172,6 +178,15 @@ def _support(data, case, *, operation, condition, source_snapshot_sha256, deadli
     """Bind one report and its single registered initial snapshot to raw bytes."""
     _deadline(deadline)
     report_path = data['run'] / 'worker-report.json'
+    snapshot_path = data['run'] / 'snapshots/initial.snp'
+    index_path = data['run'] / 'snapshots/index.json'
+    index_present = index_path.exists() or index_path.is_symlink()
+    paths = [*data['paths'], report_path, snapshot_path]
+    if index_present:
+        paths.append(index_path)
+    fingerprint = artifacts._fingerprint(paths)
+    if fingerprint[:len(data['paths'])] != data['fingerprint']:
+        raise ValueError('Recording changed before support admission')
     report = _bounded_json(report_path, MAX_REPORT_BYTES, 'worker report')
     if type(report) is not dict or not REPORT_FIELDS.issubset(report):
         raise ValueError('Worker report lacks required fields')
@@ -194,14 +209,8 @@ def _support(data, case, *, operation, condition, source_snapshot_sha256, deadli
     snapshot, entry, _ = _initial_snapshot(data)
     if entry != registrations[0] or report['snapshot_sha256'] != entry['sha256']:
         raise ValueError('Worker report snapshot differs from its registered bytes')
-    snapshot_path = data['run'] / 'snapshots' / entry['filename']
-    paths = [*data['paths'], report_path, snapshot_path]
-    index_path = data['run'] / 'snapshots/index.json'
-    if index_path.exists() or index_path.is_symlink():
-        paths.append(index_path)
-    if artifacts._fingerprint(data['paths']) != data['fingerprint']:
-        raise ValueError('Recording changed before support admission')
-    fingerprint = artifacts._fingerprint(paths)
+    if data['run'] / 'snapshots' / entry['filename'] != snapshot_path:
+        raise ValueError('Registered initial snapshot path differs')
     try:
         state = world.validate_state(report['world_state'])
     except (KeyError, TypeError, ValueError) as error:
@@ -210,15 +219,24 @@ def _support(data, case, *, operation, condition, source_snapshot_sha256, deadli
         raise ValueError('Worker report belongs to another family case')
     manifest = data['manifest']
     expected_status = 'failed' if report['final_phase'] == 'failed' else 'completed'
+    try:
+        manifest_world = world.validate_state(manifest.get('world_state'))
+    except (KeyError, TypeError, ValueError) as error:
+        raise ValueError('Terminal manifest has invalid world state') from error
     if (manifest.get('status') != expected_status
             or manifest.get('final_phase') != report['final_phase']
-            or manifest.get('total_tick') != report['total_ticks']):
+            or manifest.get('total_tick') != report['total_ticks']
+            or manifest_world != state):
         raise ValueError('Worker report differs from the terminal manifest')
     if 'outcome' in report and report['outcome'] != manifest.get('last_outcome'):
         raise ValueError('Worker report outcome differs from the terminal manifest')
     application = snapshot.get('application') if type(snapshot) is dict else None
     if type(application) is not dict:
         raise ValueError('Registered initial snapshot lacks its application state')
+    if (index_path.exists() or index_path.is_symlink()) != index_present:
+        raise ValueError('Snapshot registry changed during support admission')
+    if artifacts._fingerprint(paths) != fingerprint:
+        raise ValueError('Run support changed during admission')
     return {'report': report, 'report_path': report_path, 'snapshot': snapshot,
             'application': application, 'entry': entry, 'world_state': state,
             'paths': paths, 'fingerprint': fingerprint}
