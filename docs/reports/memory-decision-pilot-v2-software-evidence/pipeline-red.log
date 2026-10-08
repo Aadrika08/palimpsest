@@ -1,0 +1,270 @@
+FFFFFFFFFFFFF                                                            [100%]
+=================================== FAILURES ===================================
+_____ test_thirty_slots_require_independent_close_and_keep_bounded_reports _____
+
+tmp_path = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/memory-decision-pilot-v2/.superpowers/sdd/software-tmp-memory-decision-pilot-v2/pytest-of-utkarsh/pytest-13/test_thirty_slots_require_inde0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x73c09ffbad90>
+
+    def test_thirty_slots_require_independent_close_and_keep_bounded_reports(tmp_path,monkeypatch):
+        s,reg,path,root,launched=pilot_fixture(tmp_path,monkeypatch,large=True)
+>       assert callable(getattr(s,'run',None)) and callable(getattr(s,'audit',None)), 'Selected runner/close missing'
+E       AssertionError: Selected runner/close missing
+E       assert (False)
+E        +  where False = callable(None)
+E        +    where None = getattr(<module 'scripts.memory_selected_pilot' from '/home/utkarsh/Work/shraddha/brain/.worktrees/memory-decision-pilot-v2/scripts/memory_selected_pilot.py'>, 'run', None)
+
+tests/test_memory_selected_pilot.py:318: AssertionError
+----------------------------- Captured stdout call -----------------------------
+{"status": "prerequisites-provisional-pass", "native_prerequisites_passed": false, "restore_pair_matches": false, "candidate_restore_pair_matches": true, "total_new_controls": 40, "unattempted": []}
+{"status": "native-prerequisites-passed", "native_prerequisites_passed": true, "restore_pair_matches": false, "candidate_restore_pair_matches": true, "error": null, "failure_publication_error": null}
+_ test_first_failure_stops_all_later_owners_and_retains_partial_close[prefix-1] _
+
+tmp_path = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/memory-decision-pilot-v2/.superpowers/sdd/software-tmp-memory-decision-pilot-v2/pytest-of-utkarsh/pytest-13/test_first_failure_stops_all_l0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x73c09ffe3fd0>
+failure = 'prefix', count = 1
+
+    @pytest.mark.parametrize('failure,count',[('prefix',1),('condition',2),('own-sham',5),('allocation',1)])
+    def test_first_failure_stops_all_later_owners_and_retains_partial_close(tmp_path,monkeypatch,failure,count):
+        s,reg,path,root,launched=pilot_fixture(tmp_path,monkeypatch,failure=failure)
+>       assert callable(getattr(s,'run',None)), 'Selected runner missing'
+E       AssertionError: Selected runner missing
+E       assert False
+E        +  where False = callable(None)
+E        +    where None = getattr(<module 'scripts.memory_selected_pilot' from '/home/utkarsh/Work/shraddha/brain/.worktrees/memory-decision-pilot-v2/scripts/memory_selected_pilot.py'>, 'run', None)
+
+tests/test_memory_selected_pilot.py:338: AssertionError
+----------------------------- Captured stdout call -----------------------------
+{"status": "prerequisites-provisional-pass", "native_prerequisites_passed": false, "restore_pair_matches": false, "candidate_restore_pair_matches": true, "total_new_controls": 40, "unattempted": []}
+{"status": "native-prerequisites-passed", "native_prerequisites_passed": true, "restore_pair_matches": false, "candidate_restore_pair_matches": true, "error": null, "failure_publication_error": null}
+_ test_first_failure_stops_all_later_owners_and_retains_partial_close[condition-2] _
+
+tmp_path = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/memory-decision-pilot-v2/.superpowers/sdd/software-tmp-memory-decision-pilot-v2/pytest-of-utkarsh/pytest-13/test_first_failure_stops_all_l1')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x73c09db1f190>
+failure = 'condition', count = 2
+
+    @pytest.mark.parametrize('failure,count',[('prefix',1),('condition',2),('own-sham',5),('allocation',1)])
+    def test_first_failure_stops_all_later_owners_and_retains_partial_close(tmp_path,monkeypatch,failure,count):
+        s,reg,path,root,launched=pilot_fixture(tmp_path,monkeypatch,failure=failure)
+>       assert callable(getattr(s,'run',None)), 'Selected runner missing'
+E       AssertionError: Selected runner missing
+E       assert False
+E        +  where False = callable(None)
+E        +    where None = getattr(<module 'scripts.memory_selected_pilot' from '/home/utkarsh/Work/shraddha/brain/.worktrees/memory-decision-pilot-v2/scripts/memory_selected_pilot.py'>, 'run', None)
+
+tests/test_memory_selected_pilot.py:338: AssertionError
+----------------------------- Captured stdout call -----------------------------
+{"status": "prerequisites-provisional-pass", "native_prerequisites_passed": false, "restore_pair_matches": false, "candidate_restore_pair_matches": true, "total_new_controls": 40, "unattempted": []}
+{"status": "native-prerequisites-passed", "native_prerequisites_passed": true, "restore_pair_matches": false, "candidate_restore_pair_matches": true, "error": null, "failure_publication_error": null}
+_ test_first_failure_stops_all_later_owners_and_retains_partial_close[own-sham-5] _
+
+tmp_path = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/memory-decision-pilot-v2/.superpowers/sdd/software-tmp-memory-decision-pilot-v2/pytest-of-utkarsh/pytest-13/test_first_failure_stops_all_l2')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x73c09db955d0>
+failure = 'own-sham', count = 5
+
+    @pytest.mark.parametrize('failure,count',[('prefix',1),('condition',2),('own-sham',5),('allocation',1)])
+    def test_first_failure_stops_all_later_owners_and_retains_partial_close(tmp_path,monkeypatch,failure,count):
+        s,reg,path,root,launched=pilot_fixture(tmp_path,monkeypatch,failure=failure)
+>       assert callable(getattr(s,'run',None)), 'Selected runner missing'
+E       AssertionError: Selected runner missing
+E       assert False
+E        +  where False = callable(None)
+E        +    where None = getattr(<module 'scripts.memory_selected_pilot' from '/home/utkarsh/Work/shraddha/brain/.worktrees/memory-decision-pilot-v2/scripts/memory_selected_pilot.py'>, 'run', None)
+
+tests/test_memory_selected_pilot.py:338: AssertionError
+----------------------------- Captured stdout call -----------------------------
+{"status": "prerequisites-provisional-pass", "native_prerequisites_passed": false, "restore_pair_matches": false, "candidate_restore_pair_matches": true, "total_new_controls": 40, "unattempted": []}
+{"status": "native-prerequisites-passed", "native_prerequisites_passed": true, "restore_pair_matches": false, "candidate_restore_pair_matches": true, "error": null, "failure_publication_error": null}
+_ test_first_failure_stops_all_later_owners_and_retains_partial_close[allocation-1] _
+
+tmp_path = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/memory-decision-pilot-v2/.superpowers/sdd/software-tmp-memory-decision-pilot-v2/pytest-of-utkarsh/pytest-13/test_first_failure_stops_all_l3')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x73c09db1ebd0>
+failure = 'allocation', count = 1
+
+    @pytest.mark.parametrize('failure,count',[('prefix',1),('condition',2),('own-sham',5),('allocation',1)])
+    def test_first_failure_stops_all_later_owners_and_retains_partial_close(tmp_path,monkeypatch,failure,count):
+        s,reg,path,root,launched=pilot_fixture(tmp_path,monkeypatch,failure=failure)
+>       assert callable(getattr(s,'run',None)), 'Selected runner missing'
+E       AssertionError: Selected runner missing
+E       assert False
+E        +  where False = callable(None)
+E        +    where None = getattr(<module 'scripts.memory_selected_pilot' from '/home/utkarsh/Work/shraddha/brain/.worktrees/memory-decision-pilot-v2/scripts/memory_selected_pilot.py'>, 'run', None)
+
+tests/test_memory_selected_pilot.py:338: AssertionError
+----------------------------- Captured stdout call -----------------------------
+{"status": "prerequisites-provisional-pass", "native_prerequisites_passed": false, "restore_pair_matches": false, "candidate_restore_pair_matches": true, "total_new_controls": 40, "unattempted": []}
+{"status": "native-prerequisites-passed", "native_prerequisites_passed": true, "restore_pair_matches": false, "candidate_restore_pair_matches": true, "error": null, "failure_publication_error": null}
+____________ test_independent_close_rejects_tampered_evidence[raw] _____________
+
+tmp_path = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/memory-decision-pilot-v2/.superpowers/sdd/software-tmp-memory-decision-pilot-v2/pytest-of-utkarsh/pytest-13/test_independent_close_rejects0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x73c09db71290>
+mutation = 'raw'
+
+    @pytest.mark.parametrize('mutation',['raw','supervision','slot','source','extra-owner','cleanup','clock','input'])
+    def test_independent_close_rejects_tampered_evidence(tmp_path,monkeypatch,mutation):
+        import time
+        s,reg,path,root,launched=pilot_fixture(tmp_path,monkeypatch)
+>       assert callable(getattr(s,'run',None)), 'Selected runner missing'
+E       AssertionError: Selected runner missing
+E       assert False
+E        +  where False = callable(None)
+E        +    where None = getattr(<module 'scripts.memory_selected_pilot' from '/home/utkarsh/Work/shraddha/brain/.worktrees/memory-decision-pilot-v2/scripts/memory_selected_pilot.py'>, 'run', None)
+
+tests/test_memory_selected_pilot.py:352: AssertionError
+----------------------------- Captured stdout call -----------------------------
+{"status": "prerequisites-provisional-pass", "native_prerequisites_passed": false, "restore_pair_matches": false, "candidate_restore_pair_matches": true, "total_new_controls": 40, "unattempted": []}
+{"status": "native-prerequisites-passed", "native_prerequisites_passed": true, "restore_pair_matches": false, "candidate_restore_pair_matches": true, "error": null, "failure_publication_error": null}
+________ test_independent_close_rejects_tampered_evidence[supervision] _________
+
+tmp_path = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/memory-decision-pilot-v2/.superpowers/sdd/software-tmp-memory-decision-pilot-v2/pytest-of-utkarsh/pytest-13/test_independent_close_rejects1')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x73c09db6ee10>
+mutation = 'supervision'
+
+    @pytest.mark.parametrize('mutation',['raw','supervision','slot','source','extra-owner','cleanup','clock','input'])
+    def test_independent_close_rejects_tampered_evidence(tmp_path,monkeypatch,mutation):
+        import time
+        s,reg,path,root,launched=pilot_fixture(tmp_path,monkeypatch)
+>       assert callable(getattr(s,'run',None)), 'Selected runner missing'
+E       AssertionError: Selected runner missing
+E       assert False
+E        +  where False = callable(None)
+E        +    where None = getattr(<module 'scripts.memory_selected_pilot' from '/home/utkarsh/Work/shraddha/brain/.worktrees/memory-decision-pilot-v2/scripts/memory_selected_pilot.py'>, 'run', None)
+
+tests/test_memory_selected_pilot.py:352: AssertionError
+----------------------------- Captured stdout call -----------------------------
+{"status": "prerequisites-provisional-pass", "native_prerequisites_passed": false, "restore_pair_matches": false, "candidate_restore_pair_matches": true, "total_new_controls": 40, "unattempted": []}
+{"status": "native-prerequisites-passed", "native_prerequisites_passed": true, "restore_pair_matches": false, "candidate_restore_pair_matches": true, "error": null, "failure_publication_error": null}
+____________ test_independent_close_rejects_tampered_evidence[slot] ____________
+
+tmp_path = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/memory-decision-pilot-v2/.superpowers/sdd/software-tmp-memory-decision-pilot-v2/pytest-of-utkarsh/pytest-13/test_independent_close_rejects2')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x73c09fec9910>
+mutation = 'slot'
+
+    @pytest.mark.parametrize('mutation',['raw','supervision','slot','source','extra-owner','cleanup','clock','input'])
+    def test_independent_close_rejects_tampered_evidence(tmp_path,monkeypatch,mutation):
+        import time
+        s,reg,path,root,launched=pilot_fixture(tmp_path,monkeypatch)
+>       assert callable(getattr(s,'run',None)), 'Selected runner missing'
+E       AssertionError: Selected runner missing
+E       assert False
+E        +  where False = callable(None)
+E        +    where None = getattr(<module 'scripts.memory_selected_pilot' from '/home/utkarsh/Work/shraddha/brain/.worktrees/memory-decision-pilot-v2/scripts/memory_selected_pilot.py'>, 'run', None)
+
+tests/test_memory_selected_pilot.py:352: AssertionError
+----------------------------- Captured stdout call -----------------------------
+{"status": "prerequisites-provisional-pass", "native_prerequisites_passed": false, "restore_pair_matches": false, "candidate_restore_pair_matches": true, "total_new_controls": 40, "unattempted": []}
+{"status": "native-prerequisites-passed", "native_prerequisites_passed": true, "restore_pair_matches": false, "candidate_restore_pair_matches": true, "error": null, "failure_publication_error": null}
+___________ test_independent_close_rejects_tampered_evidence[source] ___________
+
+tmp_path = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/memory-decision-pilot-v2/.superpowers/sdd/software-tmp-memory-decision-pilot-v2/pytest-of-utkarsh/pytest-13/test_independent_close_rejects3')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x73c09db4b990>
+mutation = 'source'
+
+    @pytest.mark.parametrize('mutation',['raw','supervision','slot','source','extra-owner','cleanup','clock','input'])
+    def test_independent_close_rejects_tampered_evidence(tmp_path,monkeypatch,mutation):
+        import time
+        s,reg,path,root,launched=pilot_fixture(tmp_path,monkeypatch)
+>       assert callable(getattr(s,'run',None)), 'Selected runner missing'
+E       AssertionError: Selected runner missing
+E       assert False
+E        +  where False = callable(None)
+E        +    where None = getattr(<module 'scripts.memory_selected_pilot' from '/home/utkarsh/Work/shraddha/brain/.worktrees/memory-decision-pilot-v2/scripts/memory_selected_pilot.py'>, 'run', None)
+
+tests/test_memory_selected_pilot.py:352: AssertionError
+----------------------------- Captured stdout call -----------------------------
+{"status": "prerequisites-provisional-pass", "native_prerequisites_passed": false, "restore_pair_matches": false, "candidate_restore_pair_matches": true, "total_new_controls": 40, "unattempted": []}
+{"status": "native-prerequisites-passed", "native_prerequisites_passed": true, "restore_pair_matches": false, "candidate_restore_pair_matches": true, "error": null, "failure_publication_error": null}
+________ test_independent_close_rejects_tampered_evidence[extra-owner] _________
+
+tmp_path = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/memory-decision-pilot-v2/.superpowers/sdd/software-tmp-memory-decision-pilot-v2/pytest-of-utkarsh/pytest-13/test_independent_close_rejects4')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x73c09f19b390>
+mutation = 'extra-owner'
+
+    @pytest.mark.parametrize('mutation',['raw','supervision','slot','source','extra-owner','cleanup','clock','input'])
+    def test_independent_close_rejects_tampered_evidence(tmp_path,monkeypatch,mutation):
+        import time
+        s,reg,path,root,launched=pilot_fixture(tmp_path,monkeypatch)
+>       assert callable(getattr(s,'run',None)), 'Selected runner missing'
+E       AssertionError: Selected runner missing
+E       assert False
+E        +  where False = callable(None)
+E        +    where None = getattr(<module 'scripts.memory_selected_pilot' from '/home/utkarsh/Work/shraddha/brain/.worktrees/memory-decision-pilot-v2/scripts/memory_selected_pilot.py'>, 'run', None)
+
+tests/test_memory_selected_pilot.py:352: AssertionError
+----------------------------- Captured stdout call -----------------------------
+{"status": "prerequisites-provisional-pass", "native_prerequisites_passed": false, "restore_pair_matches": false, "candidate_restore_pair_matches": true, "total_new_controls": 40, "unattempted": []}
+{"status": "native-prerequisites-passed", "native_prerequisites_passed": true, "restore_pair_matches": false, "candidate_restore_pair_matches": true, "error": null, "failure_publication_error": null}
+__________ test_independent_close_rejects_tampered_evidence[cleanup] ___________
+
+tmp_path = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/memory-decision-pilot-v2/.superpowers/sdd/software-tmp-memory-decision-pilot-v2/pytest-of-utkarsh/pytest-13/test_independent_close_rejects5')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x73c09db8e890>
+mutation = 'cleanup'
+
+    @pytest.mark.parametrize('mutation',['raw','supervision','slot','source','extra-owner','cleanup','clock','input'])
+    def test_independent_close_rejects_tampered_evidence(tmp_path,monkeypatch,mutation):
+        import time
+        s,reg,path,root,launched=pilot_fixture(tmp_path,monkeypatch)
+>       assert callable(getattr(s,'run',None)), 'Selected runner missing'
+E       AssertionError: Selected runner missing
+E       assert False
+E        +  where False = callable(None)
+E        +    where None = getattr(<module 'scripts.memory_selected_pilot' from '/home/utkarsh/Work/shraddha/brain/.worktrees/memory-decision-pilot-v2/scripts/memory_selected_pilot.py'>, 'run', None)
+
+tests/test_memory_selected_pilot.py:352: AssertionError
+----------------------------- Captured stdout call -----------------------------
+{"status": "prerequisites-provisional-pass", "native_prerequisites_passed": false, "restore_pair_matches": false, "candidate_restore_pair_matches": true, "total_new_controls": 40, "unattempted": []}
+{"status": "native-prerequisites-passed", "native_prerequisites_passed": true, "restore_pair_matches": false, "candidate_restore_pair_matches": true, "error": null, "failure_publication_error": null}
+___________ test_independent_close_rejects_tampered_evidence[clock] ____________
+
+tmp_path = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/memory-decision-pilot-v2/.superpowers/sdd/software-tmp-memory-decision-pilot-v2/pytest-of-utkarsh/pytest-13/test_independent_close_rejects6')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x73c09d707190>
+mutation = 'clock'
+
+    @pytest.mark.parametrize('mutation',['raw','supervision','slot','source','extra-owner','cleanup','clock','input'])
+    def test_independent_close_rejects_tampered_evidence(tmp_path,monkeypatch,mutation):
+        import time
+        s,reg,path,root,launched=pilot_fixture(tmp_path,monkeypatch)
+>       assert callable(getattr(s,'run',None)), 'Selected runner missing'
+E       AssertionError: Selected runner missing
+E       assert False
+E        +  where False = callable(None)
+E        +    where None = getattr(<module 'scripts.memory_selected_pilot' from '/home/utkarsh/Work/shraddha/brain/.worktrees/memory-decision-pilot-v2/scripts/memory_selected_pilot.py'>, 'run', None)
+
+tests/test_memory_selected_pilot.py:352: AssertionError
+----------------------------- Captured stdout call -----------------------------
+{"status": "prerequisites-provisional-pass", "native_prerequisites_passed": false, "restore_pair_matches": false, "candidate_restore_pair_matches": true, "total_new_controls": 40, "unattempted": []}
+{"status": "native-prerequisites-passed", "native_prerequisites_passed": true, "restore_pair_matches": false, "candidate_restore_pair_matches": true, "error": null, "failure_publication_error": null}
+___________ test_independent_close_rejects_tampered_evidence[input] ____________
+
+tmp_path = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/memory-decision-pilot-v2/.superpowers/sdd/software-tmp-memory-decision-pilot-v2/pytest-of-utkarsh/pytest-13/test_independent_close_rejects7')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x73c0a04096d0>
+mutation = 'input'
+
+    @pytest.mark.parametrize('mutation',['raw','supervision','slot','source','extra-owner','cleanup','clock','input'])
+    def test_independent_close_rejects_tampered_evidence(tmp_path,monkeypatch,mutation):
+        import time
+        s,reg,path,root,launched=pilot_fixture(tmp_path,monkeypatch)
+>       assert callable(getattr(s,'run',None)), 'Selected runner missing'
+E       AssertionError: Selected runner missing
+E       assert False
+E        +  where False = callable(None)
+E        +    where None = getattr(<module 'scripts.memory_selected_pilot' from '/home/utkarsh/Work/shraddha/brain/.worktrees/memory-decision-pilot-v2/scripts/memory_selected_pilot.py'>, 'run', None)
+
+tests/test_memory_selected_pilot.py:352: AssertionError
+----------------------------- Captured stdout call -----------------------------
+{"status": "prerequisites-provisional-pass", "native_prerequisites_passed": false, "restore_pair_matches": false, "candidate_restore_pair_matches": true, "total_new_controls": 40, "unattempted": []}
+{"status": "native-prerequisites-passed", "native_prerequisites_passed": true, "restore_pair_matches": false, "candidate_restore_pair_matches": true, "error": null, "failure_publication_error": null}
+=========================== short test summary info ============================
+FAILED tests/test_memory_selected_pilot.py::test_thirty_slots_require_independent_close_and_keep_bounded_reports
+FAILED tests/test_memory_selected_pilot.py::test_first_failure_stops_all_later_owners_and_retains_partial_close[prefix-1]
+FAILED tests/test_memory_selected_pilot.py::test_first_failure_stops_all_later_owners_and_retains_partial_close[condition-2]
+FAILED tests/test_memory_selected_pilot.py::test_first_failure_stops_all_later_owners_and_retains_partial_close[own-sham-5]
+FAILED tests/test_memory_selected_pilot.py::test_first_failure_stops_all_later_owners_and_retains_partial_close[allocation-1]
+FAILED tests/test_memory_selected_pilot.py::test_independent_close_rejects_tampered_evidence[raw]
+FAILED tests/test_memory_selected_pilot.py::test_independent_close_rejects_tampered_evidence[supervision]
+FAILED tests/test_memory_selected_pilot.py::test_independent_close_rejects_tampered_evidence[slot]
+FAILED tests/test_memory_selected_pilot.py::test_independent_close_rejects_tampered_evidence[source]
+FAILED tests/test_memory_selected_pilot.py::test_independent_close_rejects_tampered_evidence[extra-owner]
+FAILED tests/test_memory_selected_pilot.py::test_independent_close_rejects_tampered_evidence[cleanup]
+FAILED tests/test_memory_selected_pilot.py::test_independent_close_rejects_tampered_evidence[clock]
+FAILED tests/test_memory_selected_pilot.py::test_independent_close_rejects_tampered_evidence[input]
+13 failed, 21 deselected in 17.65s

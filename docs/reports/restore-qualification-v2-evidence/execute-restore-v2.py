@@ -16,7 +16,7 @@ from palimpsest.evaluate import bounded_logs
 MODE = 'restore-v2'
 PASS_KEY = 'narrow_restore_passed'
 WATCHDOG_SECONDS = 890
-CAMPAIGN_MODES = ('prerequisites-v2', 'prerequisites-v3')
+CAMPAIGN_MODES = ('prerequisites-v2', 'prerequisites-v3', 'decision-pilot-v2')
 
 
 def watchdog_prefix():

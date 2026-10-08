@@ -352,6 +352,26 @@ def audit_pair(records):
         'scores': {c: capped_score(r) for c, r in conditions.items()}}
 
 
+def audit_case_pair(spec, records):
+    pair = audit_pair(records)
+    own, no_u = records[0], records[2]
+    pair['m_caused_route_difference'] = bool(pair['m_caused_route_difference']
+        and own.get('commitment_inputs') and no_u.get('commitment_inputs')
+        and own['commitment_inputs'][0] != no_u['commitment_inputs'][0]
+        and own['invariant'] == no_u['invariant'])
+    pair.update(case_id=spec['id'],kind=spec['kind'])
+    pair['closed_route_cost_observed'] = (spec['kind'] == 'change' and no_u.get('first_commitment_blocked')
+        and no_u.get('retreat_completed') and no_u['path_length'] > own['path_length'])
+    pair['false_targeting_cost_observed'] = spec['kind'] == 'null' and own['path_length'] > no_u['path_length']
+    return pair
+
+
+def mechanism_observed(pairs):
+    return (any(a['m_caused_route_difference'] for a in pairs if a['kind'] == 'change')
+        and any(a['closed_route_cost_observed'] for a in pairs)
+        and any(a['false_targeting_cost_observed'] for a in pairs))
+
+
 def common_helpers():
     from scripts import verify_memory_transfer as common
     return common
@@ -434,30 +454,33 @@ def validate_job(raw, *, read_only=False):
     """Validate private jobs; only auditors may inspect already allocated output."""
     if type(read_only) is not bool:
         raise ValueError('Read-only job validation requires a boolean')
-    if type(raw) is not dict or set(raw) != JOB_FIELDS or len(canonical(raw)) > 256*1024:
+    selected = type(raw) is dict and raw.get('protocol_sha256') == SELECTED_PILOT_PROTOCOL_SHA256
+    fields = JOB_FIELDS | {'pilot_registration_path','pilot_registration_sha256'} if selected else JOB_FIELDS
+    if type(raw) is not dict or set(raw) != fields or len(canonical(raw)) > 256*1024:
         raise ValueError('Unknown/missing or oversized private worker fields')
     job = copy.deepcopy(raw)
     travel = job['protocol_sha256'] == TRAVEL_PROTOCOL_SHA256
     amendment = job['protocol_sha256'] in (WAYPOINT_PROTOCOL_SHA256,TRAVEL_PROTOCOL_SHA256)
-    if type(job['version']) is not int or job['version'] != (3 if travel else 2 if amendment else 1) or (not amendment and job['protocol_sha256'] != PROTOCOL_SHA256):
+    if type(job['version']) is not int or job['version'] != (4 if selected else 3 if travel else 2 if amendment else 1) or (not selected and not amendment and job['protocol_sha256'] != PROTOCOL_SHA256):
         raise ValueError('Worker protocol differs')
     owner_allocation(job['stage'],job['operation'],job['protocol_sha256'])
-    if job['stage'] not in ('feasibility', 'pilot', 'waypoint-development', 'waypoint-feasibility','travel-development','travel-feasibility') or job['operation'] not in ('prefix', 'full', 'repeat', 'condition'):
+    if job['stage'] not in ('feasibility', 'pilot', 'pilot-v2', 'waypoint-development', 'waypoint-feasibility','travel-development','travel-feasibility') or job['operation'] not in ('prefix', 'full', 'repeat', 'condition'):
         raise ValueError('Unsupported worker stage/operation')
     if job['condition'] not in (*CONDITIONS, None):
         raise ValueError('Unsupported condition')
-    if job['operation'] == 'condition' and (job['stage'] != 'pilot' or job['condition'] is None):
+    if job['operation'] == 'condition' and (job['stage'] not in ('pilot','pilot-v2') or job['condition'] is None):
         raise ValueError('Scored branches require pilot condition')
     if job['operation'] != 'condition' and job['condition'] is not None:
         raise ValueError('Acquisition/prerequisites have no selector condition')
-    specs = (travel_specs(job['stage'],job['case'].get('profile_sha256')) if travel else
+    specs = (selected_pilot_specs() if selected else
+             travel_specs(job['stage'],job['case'].get('profile_sha256')) if travel else
              waypoint_specs(job['stage'],job['case'].get('profile_sha256')) if amendment else
              feasibility_specs() if job['stage'] == 'feasibility' else pilot_specs())
     if job['spec'] not in specs:
         raise ValueError('Unfrozen development spec or held-out case')
     if job['stage'] in ('feasibility','waypoint-development','waypoint-feasibility','travel-development','travel-feasibility') and job['operation'] != job['spec']['operation']:
         raise ValueError('Prerequisite operation differs')
-    if job['stage'] == 'pilot' and job['operation'] not in ('prefix', 'condition'):
+    if job['stage'] in ('pilot','pilot-v2') and job['operation'] not in ('prefix', 'condition'):
         raise ValueError('Pilot cannot use prerequisite controls')
     for key in ('repo', 'assets', 'history_root', 'output', 'stage_output', 'phase_root'):
         if not Path(job[key]).is_absolute() or str(checked_path(job[key])) != job[key]:
@@ -490,6 +513,9 @@ def validate_job(raw, *, read_only=False):
         profile_sha256=spec.get('profile_sha256',world.PROFILE_SHA256))
     if canonical(job['case']) != canonical(expected) or world.geometry_check(expected).get('valid') is not True:
         raise ValueError('Worker case differs or frozen geometry is invalid')
+    if selected:
+        from scripts.memory_selected_pilot import validate_worker_admission
+        validate_worker_admission(job)
     return job
 
 
@@ -537,6 +563,12 @@ def worker(raw, *, retain_repeat_state=False):
         raise ValueError('Post-state retention requires a repeat worker')
     internal, _ = owner_allocation(job['stage'],job['operation'],job['protocol_sha256'])
     deadline = started+internal
+    if job['protocol_sha256'] == SELECTED_PILOT_PROTOCOL_SHA256:
+        from scripts import memory_selected_pilot as selected
+        storage = selected.budget(read_json(job['pilot_registration_path']))
+        selected.check_owner_admission(job,storage)
+    else:
+        storage = phase_budget(job['phase_root'])  # Parent lease; no child lock.
     if source_identity(job['repo'], job['assets']) != job['source_identity']:
         raise ValueError('Worker source/prepared assets changed before writer admission')
     histories = mapped_histories(job['spec']['regime'], common_helpers().load_histories(job['history_root']))
@@ -545,7 +577,6 @@ def worker(raw, *, retain_repeat_state=False):
     from palimpsest.snapshots import read_snapshot
     from palimpsest.replay import _register_initial
     run = Path(job['output'])
-    storage = phase_budget(job['phase_root'])  # Parent lease; no child lock.
     limit = 384*MiB if job['operation'] == 'condition' else 512*MiB
     storage.check(limit+16*MiB, path=run)
     native = None
@@ -630,7 +661,8 @@ def worker(raw, *, retain_repeat_state=False):
         except Exception as error:
             report.update(status='failed', identity_or_time_error={'type': type(error).__name__, 'message': str(error)})
     report['wall_seconds'] = time.monotonic()-started
-    report['capped_ticks'] = capped_score(report)
+    if job['protocol_sha256'] != SELECTED_PILOT_PROTOCOL_SHA256:
+        report['capped_ticks'] = capped_score(report)
     write_control(run/'worker-report.json', report, storage)
     return 0 if report['status'] == 'recorded' else 1
 
@@ -745,8 +777,10 @@ def admit_prefix_failure(job, supervised, report, manifest):
         raise ValueError('Unqualified acquisition infrastructure failure')
 
 
-def audit_native_prefix_terminal(data, report, *, expected_cap=1200, start_tick=0, stall_steps=0):
+def audit_native_prefix_terminal(data, report, *, expected_cap=1200, start_tick=None, stall_steps=0):
     """Reconstruct pinned CPU-world stall/time-limit termination from raw rows."""
+    verify_ticks = start_tick is not None
+    start_tick = 0 if start_tick is None else start_tick
     outcome = report.get('outcome') or {}
     reason, total = outcome.get('reason'), report['total_ticks']
     ended = [e for e in data['events'] if e['kind'] == 'episode_finished']
@@ -754,13 +788,17 @@ def audit_native_prefix_terminal(data, report, *, expected_cap=1200, start_tick=
             outcome.get('steps') != total or len(ended) != 1 or ended[0].get('outcome') != outcome or
             type(start_tick) is not int or type(stall_steps) is not int or not 0 <= start_tick <= total
             or not 0 <= stall_steps < 50 or len(data['rows']) != total-start_tick
-            or [int(r['tick']) for r in data['rows']] != list(range(start_tick,total))
+            or (verify_ticks and [int(r['tick']) for r in data['rows']] != list(range(start_tick,total)))
             or report.get('final_phase') != ('terminated' if reason == 'stalled' else 'truncated')):
         raise ValueError('Native prefix termination differs from actual terminal event')
     counter, stalls = stall_steps, []
     for index, row in enumerate(data['rows']):
         moved = math.dist(row['pose'][:2],row['next_pose'][:2])
-        counter = counter+1 if moved < .002 and abs(float(row['action'][0])) > .05 else 0
+        if verify_ticks:
+            import numpy as np
+            moved = np.linalg.norm(np.asarray(row['next_pose'][:2],np.float32)-np.asarray(row['pose'][:2],np.float32))
+        speed = np.float32(row['action'][0]) if verify_ticks else float(row['action'][0])
+        counter = counter+1 if moved < .002 and abs(speed) > .05 else 0
         if counter >= 50:
             stalls.append(start_tick+index)
     if reason == 'stalled' and stalls != [total-1]:
@@ -820,7 +858,7 @@ def audit_prefix_failure(job, supervised, deadline=None):
     if cue_failure and [e['episode_step'] for e in packets] != list(range(total+1)):
         raise ValueError('Terminal sensor-only failure packet is missing')
     replay_memory_audit(job,data,None,report,require_terminal_cue=cue_failure)
-    if job['version'] == 3 and (cue_failure or declared_failure):
+    if job['version'] in (3,4) and (cue_failure or declared_failure):
         reason = audit_travel_task_failure(data,report)
     result = {'status':'failed','raw_audit_pass':True,'retained_task_failure':True,
         'acquired':False,'goal':False,'continuation_ticks':0,'total_ticks':total,'capped_ticks':900,
@@ -954,7 +992,8 @@ def audit_run(job, supervised, deadline=None):
             if fact.get('estimate') != 'open' or evidence is None or not candidates:
                 raise ValueError('Acquired belief lacks a real initial open sample')
     replay_memory_audit(job, data, snapshot, report,
-        require_terminal_cue=job['protocol_sha256']==TRAVEL_PROTOCOL_SHA256 and (report.get('outcome') or {}).get('type')=='CueUnavailable')
+        require_terminal_cue=job['protocol_sha256'] in (TRAVEL_PROTOCOL_SHA256,SELECTED_PILOT_PROTOCOL_SHA256)
+            and (report.get('outcome') or {}).get('type')=='CueUnavailable')
     details = [e['detail'] for e in data['events'] if e['kind'] == 'memory_decision']
     commits = [d for d in details if d['kind'] == 'memory_commitment']
     graph = world.public_graph(job['case'])
@@ -998,14 +1037,18 @@ def audit_run(job, supervised, deadline=None):
             commits[0]['subject_id'] == job['case'].get('closure_subject_id'))}
     if job['operation'] == 'repeat' and (len(scored) != 5 or not report.get('post_state_digest')):
         raise ValueError('Deterministic restore prerequisite did not complete exactly five real policy ticks')
-    result['capped_ticks'] = capped_score(result)
+    if job['protocol_sha256'] != SELECTED_PILOT_PROTOCOL_SHA256 or job['operation']=='condition':
+        result['capped_ticks'] = capped_score(result)
     if job['protocol_sha256'] == TRAVEL_PROTOCOL_SHA256 and job['operation']=='full' and not report['goal']:
         result['retained_task_failure_reason'] = audit_travel_task_failure(data,report)
+        result['retained_task_failure'] = True
+    if job['protocol_sha256'] == SELECTED_PILOT_PROTOCOL_SHA256 and job['operation']=='condition' and not report['goal']:
+        result['retained_task_failure_reason'] = audit_travel_task_failure(data,report,source_snapshot=snapshot)
         result['retained_task_failure'] = True
     return result
 
 
-def audit_travel_task_failure(data, report):
+def audit_travel_task_failure(data, report, *, source_snapshot=None):
     """Called only after complete raw/profile/packet/M audit, never by worker."""
     if report.get('goal') is not False:
         raise ValueError('A goal cannot be retained as a failed task')
@@ -1016,7 +1059,14 @@ def audit_travel_task_failure(data, report):
         start = sup.get('continuation_start_tick')
         if type(start) is not int or start<0:
             raise ValueError('Post-acquisition termination needs declared continuation boundary')
-        return audit_native_prefix_terminal(data,report,expected_cap=min(2100,start+900))
+        restored = {}
+        if source_snapshot is not None:
+            if source_snapshot['application']['episode_step'] != start:
+                raise ValueError('Restored task boundary differs from its fresh source')
+            if data['rows'] and list(source_snapshot['environment']['values']['_prev_xy']) != list(data['rows'][0]['pose'][:2]):
+                raise ValueError('Restored stall origin differs from its fresh source')
+            restored = {'start_tick':start,'stall_steps':source_snapshot['environment']['values']['_stall_steps']}
+        return audit_native_prefix_terminal(data,report,expected_cap=min(2100,start+900),**restored)
     failures = [e for e in data['events'] if e['kind']=='runtime_failure']
     if (reason!='runtime_failure' or report['final_phase']!='failed' or len(failures)!=1
             or failures[0].get('episode_step')!=total or failures[0].get('error')!=outcome
@@ -1059,7 +1109,11 @@ def hash_ledger(root, deadline=None):
 def make_job(stage, spec, plan, operation, condition=None, source=None):
     from palimpsest import memory_decision_world as world
     identifier = uuid.uuid4().hex
-    return {'version': 3 if plan.get('protocol_sha256') == TRAVEL_PROTOCOL_SHA256 else 2 if plan.get('protocol_sha256') == WAYPOINT_PROTOCOL_SHA256 else 1, 'repo': plan['repo'], 'assets': plan['assets'], 'history_root': plan['history_root'],
+    selected = plan.get('protocol_sha256') == SELECTED_PILOT_PROTOCOL_SHA256
+    if selected:
+        label=spec['id']+('/'+condition if condition else '')
+        identifier=next(s['run_id'] for s in plan['owner_slots'] if s['job_id']==label)
+    result = {'version': 4 if selected else 3 if plan.get('protocol_sha256') == TRAVEL_PROTOCOL_SHA256 else 2 if plan.get('protocol_sha256') == WAYPOINT_PROTOCOL_SHA256 else 1, 'repo': plan['repo'], 'assets': plan['assets'], 'history_root': plan['history_root'],
         'stage_output': plan['output'], 'phase_root': plan['phase_root'],
         'output': str(Path(plan['output'])/'runs'/identifier), 'run_id': identifier,
         'stage': stage, 'operation': operation, 'condition': condition, 'spec': spec,
@@ -1069,6 +1123,9 @@ def make_job(stage, spec, plan, operation, condition=None, source=None):
         'snapshot_path': None if source is None else source['snapshot_path'],
         'snapshot_sha256': None if source is None else source['snapshot_sha256'],
         'expected_invariant': None if source is None else source['invariant']}
+    if selected:
+        result.update({k:plan[k] for k in ('pilot_registration_path','pilot_registration_sha256')})
+    return result
 
 
 def launch_owner(stage, spec, plan, storage, deadline, *, operation=None, condition=None, source=None,
@@ -1081,6 +1138,9 @@ def launch_owner(stage, spec, plan, storage, deadline, *, operation=None, condit
     if not admit_time(time.monotonic(), deadline, outer, PROTOCOL['cleanup_seconds']):
         raise TimeoutError('Remaining stage allocation cannot accommodate owner and cleanup; no time transfer')
     job = validate_job(make_job(stage, spec, plan, operation, condition, source))
+    if job['protocol_sha256'] == SELECTED_PILOT_PROTOCOL_SHA256:
+        from scripts.memory_selected_pilot import check_owner_admission
+        check_owner_admission(job,storage,deadline)
     output = Path(plan['output'])
     (output/'jobs').mkdir(exist_ok=True)
     write_control(output/'jobs'/(job['run_id']+'.json'), job, storage)
@@ -1093,10 +1153,12 @@ def launch_owner(stage, spec, plan, storage, deadline, *, operation=None, condit
     result = {'job_id': spec['id']+('/'+condition if condition else ''), 'run': job['output'],
         'run_id': job['run_id'], 'operation': operation, 'condition': condition, 'goal': False,
         'continuation_ticks': 0, 'capped_ticks': 900, 'status': 'failed', 'supervision': supervised}
+    if job['protocol_sha256'] == SELECTED_PILOT_PROTOCOL_SHA256:
+        result.pop('capped_ticks')
     try:
         deadline_check(deadline)
         worker_report = read_json(Path(job['output'])/'worker-report.json')
-        if job['version'] in (2,3) and worker_report.get('acquired') is False:
+        if job['version'] in (2,3,4) and operation != 'condition' and worker_report.get('acquired') is False:
             result.update(audit_prefix_failure(job,supervised,deadline))
         else:
             result.update(audit_run(job, supervised, deadline))
@@ -1108,6 +1170,8 @@ def launch_owner(stage, spec, plan, storage, deadline, *, operation=None, condit
         worker_path = Path(job['output'])/'worker-report.json'
         if worker_path.exists():
             result['failed_worker_report'] = read_json(worker_path)
+    if job['protocol_sha256'] == SELECTED_PILOT_PROTOCOL_SHA256 and operation!='condition':
+        result.pop('capped_ticks',None)
     return result
 
 
@@ -1188,27 +1252,14 @@ def execute_stage(stage, plan, storage, deadline, *, retain_repeat_state=False, 
                     records.append(result)
                     if result.get('status') != 'recorded' or result.get('raw_audit_pass') is not True:
                         raise ValueError('Pilot infrastructure/raw audit failure; no partial pair promotion')
-                pair = audit_pair(records)
-                own, no_u = records[0], records[2]
-                pair['m_caused_route_difference'] = bool(pair['m_caused_route_difference']
-                    and own.get('commitment_inputs') and no_u.get('commitment_inputs')
-                    and own['commitment_inputs'][0] != no_u['commitment_inputs'][0]
-                    and own['invariant'] == no_u['invariant'])
-                pair['case_id'] = spec['id']
-                pair['kind'] = spec['kind']
-                pair['closed_route_cost_observed'] = (spec['kind'] == 'change' and records[2].get('first_commitment_blocked')
-                    and records[2].get('retreat_completed') and records[2]['path_length'] > records[0]['path_length'])
-                pair['false_targeting_cost_observed'] = (spec['kind'] == 'null' and
-                    records[0]['path_length'] > records[2]['path_length'])
+                pair = audit_case_pair(spec,records)
                 report['pair_audits'].append(pair)
                 next_index = index+1
                 if not pair['own_sham_identical'] or not pair['commitment_before_fresh_sample']:
                     raise ValueError('Paired continuation identity/opportunity audit failed')
         report['mandatory_pass'] = True
         if stage in ('pilot','pilot-v2'):
-            report['mechanism_observed'] = (any(a['m_caused_route_difference'] for a in report['pair_audits'] if a['kind'] == 'change')
-                and any(a['closed_route_cost_observed'] for a in report['pair_audits'])
-                and any(a['false_targeting_cost_observed'] for a in report['pair_audits']))
+            report['mechanism_observed'] = mechanism_observed(report['pair_audits'])
     except Exception as error:
         report['errors'].append({'type': type(error).__name__, 'message': str(error)})
         report['unattempted'] = [spec['id'] for spec in specs[next_index:]]
