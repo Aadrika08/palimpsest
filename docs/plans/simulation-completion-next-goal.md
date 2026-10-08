@@ -498,3 +498,26 @@ historical behavior is unchanged, but a future v3 execution must carry a new
 reviewed source binding and may not claim the frozen old routes green. Registry
 admission, real scene minting, collection, fitting, development and held-out
 remain unexecuted.
+
+### Compact memory-v4 reader and converter verified, 8 October 2026
+
+PR #107 now includes the canonical compact protocol, a strict pure reader and a
+family-only synthetic converter. The contract preserves exact legacy manifest
+and event bytes, numeric model/control/pose/action rows, lowercase-ASCII trace
+digest semantics, all-row camera digests, selected raw frames and portable shared
+source snapshot references. It enforces exact chunk bijection, row and total-byte
+ceilings, a separate one-MiB overhead cap, source/condition audit schedules and
+normal bounded snapshot paths.
+
+Implementation exposed and corrected one planning provenance error before any
+execution: the original 144-case digest came from unpinned Python 3.14. The plan
+now records that superseded value and binds the identical corrected digest from
+both checked prerequisite IDs under required Python 3.11.15. Independent review
+then found five groups of crafted reader bypasses; every bypass received a RED
+test and narrow fix. The final pinned suite passes 42 synthetic tests, and the
+same reviewer returned GO with no remaining Critical or Important issue.
+
+This remains pure source evidence. The separately executable raw auditor,
+producer close, full raw-tree deletion, compact-pair admission, allocation,
+launcher, owners, retained collection and R2 qualification remain incomplete and
+unauthorized. Main, CI and the physical rover remain unchanged.
