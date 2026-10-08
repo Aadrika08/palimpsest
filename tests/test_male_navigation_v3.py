@@ -1,9 +1,17 @@
 """Pure matched-budget schedule checks; no corpus, Torch, MuJoCo, or simulator."""
 from dataclasses import FrozenInstanceError
+import copy
 import hashlib
 import json
+import os
+from pathlib import Path
+import subprocess
 import sys
+import tempfile
+import time
+import types
 import unittest
+from unittest.mock import patch
 
 try:
     from palimpsest import male_matched_budget as budget
@@ -12,6 +20,14 @@ except ImportError as error:  # RED until Task 1's module exists.
     IMPORT_ERROR = error
 else:
     IMPORT_ERROR = None
+
+try:
+    import train_male_navigation_v3 as trainer
+except ImportError as error:  # RED until Task 2's trainer exists.
+    trainer = None
+    TRAINER_IMPORT_ERROR = error
+else:
+    TRAINER_IMPORT_ERROR = None
 
 
 OLD_ROWS = (277, 182, 315, 245, 199, 265, 243, 257, 67, 67)
@@ -127,6 +143,172 @@ class MatchedBudgetSchedule(unittest.TestCase):
             with self.subTest(operation=operation):
                 with self.assertRaises(ValueError):
                     operation()
+
+
+class MatchedBudgetTrainer(unittest.TestCase):
+    def setUp(self):
+        self.assertIsNotNone(trainer, f"missing V3 trainer: {TRAINER_IMPORT_ERROR}")
+
+    @staticmethod
+    def manifest():
+        def entries(rows, offset=0):
+            return [{"run_id": f"{offset + index + 1:032x}", "episode": 0,
+                     "ticks": count,
+                     "feature_target_sha256": f"{offset + index + 1:064x}"}
+                    for index, count in enumerate(rows)]
+        old = entries(OLD_ROWS)
+        augmented = old + entries(AUGMENTED_ROWS[len(OLD_ROWS):], len(OLD_ROWS))
+        development = [
+            {"run_id": row["run_id"], "episode": 0, "ticks": row["rows"],
+             "feature_target_sha256": row["feature_target_sha256"]}
+            for row in trainer.protocol()["corpora"]["recorded_development"]["sequence_order"]
+        ]
+        return {"arms": {
+            "old": {"train": old, "dev": development, "held_out": []},
+            "augmented": {"train": augmented, "dev": copy.deepcopy(development),
+                          "held_out": []},
+        }}
+
+    def test_contract_admits_exact_six_models_and_canonical_schedules(self):
+        self.assertEqual(trainer.planned_models(), tuple(
+            (seed, arm) for seed in (10, 11, 12)
+            for arm in ("old-corpus", "augmented")))
+        schedules = trainer.admit_schedules(self.manifest(), 10)
+        for arm, expected in (("old-corpus", OLD_PRESENTATIONS),
+                              ("augmented", AUGMENTED_PRESENTATIONS)):
+            schedule = schedules[arm]
+            settings = trainer.fixed_training(10, arm)
+            self.assertEqual((settings["real_row_presentations"],
+                              settings["optimizer_updates"],
+                              settings["selected_optimizer_update"]),
+                             (46080, 1440, 1440))
+            self.assertEqual(schedule.source_presentations, expected)
+            self.assertEqual(len(schedule.updates), 1440)
+            self.assertEqual(schedule.sha256,
+                             hashlib.sha256(schedule.canonical_bytes()).hexdigest())
+        self.assertEqual(schedules["old-corpus"].sources,
+                         schedules["augmented"].sources[:len(OLD_ROWS)])
+
+        for mutation in ("old_length", "prefix", "dev", "held_out"):
+            changed = self.manifest()
+            if mutation == "old_length": changed["arms"]["old"]["train"][0]["ticks"] += 1
+            if mutation == "prefix": changed["arms"]["augmented"]["train"][0]["feature_target_sha256"] = "f" * 64
+            if mutation == "dev": changed["arms"]["augmented"]["dev"].reverse()
+            if mutation == "held_out": changed["arms"]["old"]["held_out"] = [{"forbidden": True}]
+            with self.subTest(mutation=mutation), self.assertRaises(ValueError):
+                trainer.admit_schedules(changed, 10)
+
+    def test_update_runner_resets_sources_detaches_continuations_and_steps_once(self):
+        schedule = budget.build_schedule(
+            (budget.SourceIdentity("1" * 32, 0, "1" * 64, 5),
+             budget.SourceIdentity("2" * 32, 0, "2" * 64, 3)),
+            seed=10, presentations=8, rows_per_update=4)
+        events = []
+
+        class Scalar:
+            def __init__(self, value): self.value = value
+            def __add__(self, other): return Scalar(self.value + other.value)
+            def __truediv__(self, value): return Scalar(self.value / value)
+            def backward(self): events.append("backward")
+            def __float__(self): return float(self.value)
+
+        class Values:
+            def __init__(self, count): self.count = count
+            def sum(self): return Scalar(self.count)
+            def numel(self): return self.count
+            def detach(self): return self
+
+        class Hidden:
+            def __init__(self, source): self.source = source
+            def detach(self): events.append(("detach", self.source)); return self
+
+        class Tensor:
+            def __init__(self, rows): self.rows = rows
+            def unsqueeze(self, dimension): self.dimension = dimension; return self
+
+        class Model:
+            def __init__(self): self.parameter = types.SimpleNamespace(requires_grad=True)
+            def parameters(self): return [self.parameter]
+            def train(self): events.append("train")
+            def reset(self):
+                source = sum(event == "reset" for event in events)
+                events.append("reset")
+                return Hidden(source)
+            def __call__(self, inputs, hidden):
+                events.append(("forward", tuple(inputs.rows), hidden.source))
+                return hidden, object()
+
+        class Optimizer:
+            def zero_grad(self, *, set_to_none): events.append("zero_grad")
+            def step(self): events.append("step")
+
+        finite = types.SimpleNamespace(all=lambda: True)
+        fake_torch = types.SimpleNamespace(
+            from_numpy=lambda rows: Tensor(rows), isfinite=lambda value: finite,
+            nn=types.SimpleNamespace(utils=types.SimpleNamespace(
+                clip_grad_norm_=lambda parameters, cap, error_if_nonfinite: events.append("clip"))))
+        data = {"train": [
+            {"features": list(range(5)), "targets": list(range(5))},
+            {"features": list(range(10, 13)), "targets": list(range(10, 13))},
+        ]}
+        result = trainer.run_update_units(
+            Model(), Optimizer(), data, schedule, fake_torch,
+            lambda actions, targets: Values(len(targets.rows)), time.monotonic() + 2,
+            resource_check=lambda deadline: events.append("resource"))
+        self.assertEqual(result, {"optimizer_updates": 2,
+                                  "real_row_presentations": 8,
+                                  "train_loss": 1.0})
+        self.assertEqual(events.count("reset"), 2)
+        self.assertEqual(sum(event == "zero_grad" for event in events), 2)
+        self.assertEqual(sum(event == "backward" for event in events), 2)
+        self.assertEqual(sum(event == "clip" for event in events), 2)
+        self.assertEqual(sum(event == "step" for event in events), 2)
+        self.assertEqual([event for event in events if isinstance(event, tuple)
+                          and event[0] == "detach"], [("detach", 0)])
+        self.assertEqual([event[1] for event in events if isinstance(event, tuple)
+                          and event[0] == "forward"],
+                         [(0, 1, 2, 3), (4,), (10, 11, 12)])
+
+    def test_attempt_is_durable_fresh_and_failure_keeps_later_arm_not_started(self):
+        class Budget:
+            def check(self, additional, *, path): return {"additional_bytes": additional}
+
+        with tempfile.TemporaryDirectory() as directory:
+            parent = Path(directory)
+            output = parent / "seed-10"
+            receipt = trainer.reserve_attempt(output, 10, time.monotonic() + 2, Budget())
+            self.assertTrue(Path(receipt["path"]).is_file())
+            self.assertFalse(output.exists())
+            with self.assertRaises(FileExistsError):
+                trainer.reserve_attempt(output, 10, time.monotonic() + 2, Budget())
+
+            report = trainer.initial_report(10, receipt)
+            report["models"]["old-corpus"] = {"status": "failed"}
+            trainer.publish_failure(output, report, ValueError("first arm failed"),
+                                    time.monotonic() + 2, Budget())
+            retained = json.loads((parent / "seed-10.failure.json").read_text())
+            self.assertEqual(retained["models"]["augmented"]["status"], "not_started")
+            self.assertEqual(retained["error"]["type"], "ValueError")
+            self.assertFalse((output / "report.json").exists())
+
+    def test_admission_stops_before_heavy_import_on_limits_or_heldout_cli(self):
+        with patch.object(trainer, "rss_bytes", return_value=trainer.GiB + 1):
+            with self.assertRaisesRegex(MemoryError, "RSS"):
+                trainer.check_resources(time.monotonic() + 2)
+        with self.assertRaises(TimeoutError): trainer.check_resources(0)
+
+        env = {**os.environ, "PYTHONPATH": os.pathsep.join((str(Path(__file__).resolve().parents[1] / "src"),
+                                                              str(Path(__file__).resolve().parents[1] / "scripts")))}
+        command = "import train_male_navigation_v3,sys; assert not ({'torch','mujoco'} & set(sys.modules))"
+        imported = subprocess.run([sys.executable, "-c", command], env=env,
+                                  capture_output=True, text=True, timeout=15)
+        self.assertEqual(imported.returncode, 0, imported.stderr[-1000:])
+        rejected = subprocess.run(
+            [sys.executable, str(Path(__file__).resolve().parents[1] / "scripts/train_male_navigation_v3.py"),
+             "--training-seed", "10", "--output", "unused", "--held-out", "3120"],
+            env=env, capture_output=True, text=True, timeout=15)
+        self.assertEqual(rejected.returncode, 2)
+        self.assertFalse(Path("unused").exists())
 
 
 if __name__ == "__main__":
