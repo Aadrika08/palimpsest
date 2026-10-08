@@ -320,3 +320,29 @@ has not run on retained data. The frozen invocation is consumed; any new attempt
 needs a separate prospective amendment and cannot be treated as an automatic
 retry. R3 remains failed/open, its held-out reserve remains locked, and main,
 CI and the physical rover remain unchanged.
+
+### Navigation-v2 amended diagnosis completed, 8 October 2026
+
+The separately frozen amendment on [PR #103](https://github.com/Aadrika08/palimpsest/pull/103)
+binds the original failure, the exact one-line result-schema correction and every
+unchanged analytical choice. A disclosed metadata-only probe printed no case,
+outcome or trajectory value. Independent review then admitted one final amended
+invocation after an atomic-receipt bug was reproduced and fixed.
+
+The amended read completed in 5.42 seconds across all 24 runs, 12 matched pairs
+and 10,822 ticks. The old-corpus arm recorded four goals, six stalls and two time
+limits; the augmented arm recorded zero goals, six contact stalls and six clear
+time limits. Augmented trajectories had lower median best progress (1.011 m
+versus 3.744 m) and path length (4.541 m versus 7.428 m), no reverse-command
+ticks and no velocity or heading sign changes. Every matched pair's action first
+diverged at tick zero. Contact stalls occurred six times in each arm, and the
+augmented terminal class differed by seed, so no single contact or causal
+explanation is supported.
+
+The 542-file, 2,382,058,832-byte input ledger matched before and after. All 24
+owner results were validated before trajectory decoding; compact-only review
+reopened no raw input and found no Critical or Important issue. The final
+synthetic/development suite passed 33 tests. No third retained attempt, held-out
+access, model inference or simulator run occurred. This result can inform one
+new prospective intervention on fresh development scenes, but it does not revive
+the failed v2 gate, unlock held-out scenes or close R3.
