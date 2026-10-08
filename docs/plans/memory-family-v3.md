@@ -19,19 +19,29 @@ independence, native feasibility or generalization.
 
 ## Fixed software candidate
 
-Use 24 assignment rows: three cost strata (south cheaper, north cheaper, exact
-tie), each crossed with eight binary rows. For binary row `r`, a factor is the
-parity of `r & mask`: learned relation=1, relation physical side=2, fact lexical
-side=3, subject/landmark lexical side=4, route lexical side=5, schedule=6.
-Zero means local relation / south / early schedule. Publish all rows. This is
-pairwise balance with deliberate aliases: fact=relation XOR relation-side;
-route=relation XOR subject; schedule=relation-side XOR subject. No separate
-interaction-effect claim is permitted. Changed passage is preferred in half of
-each cost stratum, including ties. Closure always follows the learned relation.
+Use 48 assignment rows. A fixed 12-run strength-2 projection balances fact,
+subject/landmark and route lexical order plus schedule. Every public projection
+row is crossed with all four combinations of learned relation and its physical
+side. The rows are grouped into three balanced 16-family cost strata: south
+cheaper, north cheaper and exact tie. Every binary pair is balanced over the
+block, every binary factor is balanced within each cost stratum, and the changed
+passage is preferred in half of each stratum. Higher-order interaction effects
+are not separately identified.
 
-Each row and block gets a distinct seed; block range is [0, 2^25), row [0,24).
-Development seeds are 2^30 + 32*block + row; held-out seeds are 2^31 + 32*block
-+ row. These partitions are disjoint. Actual training-seed/entity separation
+This full hidden-factor crossing is required by the information boundary. An
+initial 24-row fraction used exact aliases among learned relation, relation side,
+lexical order and schedule. Independent review showed that the public graph could
+therefore reconstruct the future closure. Those rows were rejected before source
+freeze. For every retained public tuple, both relations and both closure sides now
+occur; the graph alone cannot recover either hidden factor. Closure still follows
+the learned relation supplied by the applicable selector resource.
+
+Each row and block gets a distinct seed; block range is [0, 2^23), row [0,48).
+Development seeds are 2^29 + 64*block + row; held-out seeds are 2^30 + 64*block
++ row. These partitions are disjoint and fit the Engine 31-bit seed boundary. An
+initial proposal used 2^31 for held-out; the actual mocked Engine constructor
+rejected it before source freeze, so both partitions were lowered and boundary
+tests added. Actual training-seed/entity separation
 must also be checked against the frozen training inventory before collection.
 No held-out block is selected by this implementation.
 
@@ -63,7 +73,7 @@ split/block/row/kind; edits and unknown versions/profiles fail before runtime en
 - Update supervisor graph validation and schedule consumption, and private
   profile metadata. Engine and replay must admit the actual case through their
   existing validation paths, including acquired snapshot and schedule checks.
-- Supply a software-only nine-condition slot producer bound to generated family
+- Supply a software-only one-block nine-condition slot producer bound to generated family
   IDs and hashes, compatible with the PR #95 readout. It launches nothing and
   does not invent prerequisites, oracle proof or study allocation.
 - Add tests for all factors/aliases, real costs/ties, twin consistency, split

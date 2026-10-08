@@ -1,4 +1,4 @@
-"""Frozen memory-v2 development candidate; geometry is evaluator/sensor-only.
+"""Versioned memory decision candidates; geometry is evaluator/sensor-only.
 
 No native feasibility is asserted. Public routes contain IDs and fixed authored
 lengths, never private coordinates, closures, or observed pose.
@@ -61,8 +61,39 @@ def _travel_profile(offset):
 
 _TRAVEL_PROFILES = [_travel_profile(offset) for offset in (.25, .20, .15)]
 TRAVEL_PROFILE_HASHES = tuple(memory.sha256(profile) for profile in _TRAVEL_PROFILES)
+FAMILY_DESIGN = {'version': 3, 'rows_per_block': 48, 'block_limit': 2**23,
+    'split_seed_bases': {'development': 2**29, 'held-out': 2**30}, 'seed_stride': 64,
+    'public_factor_names': ['fact_first_side', 'subject_first_side', 'route_first_side', 'schedule_index'],
+    # A 12-run strength-2 projection, grouped in balanced fours by cost stratum.
+    'public_factor_rows': [[1,1,0,1], [0,1,1,0], [1,0,1,1], [0,0,0,0],
+                           [0,1,0,1], [0,0,1,0], [1,1,0,0], [1,0,1,1],
+                           [0,0,0,1], [1,0,0,0], [1,1,1,0], [0,1,1,1]],
+    'cost_strata': ['south', 'north', 'tie'],
+    'geometry': {'detour_x': [.5, .6, .7], 'exit_x': [1.1, 1.2, 1.3],
+                 'loop_radius': [1.2, 1.3, 1.4],
+                 'offset_pair': [[.15, .20], [.15, .25], [.20, .25]],
+                 'tie_offset': [.15, .20, .25]},
+    'draw': 'sha256-labelled-seed-modulo-catalog-v1'}
+
+
+def _family_profile(schedule):
+    profile = copy.deepcopy(_TRAVEL_PROFILES[0])
+    profile.update(version=3, id='memory-family-v3', family_design=FAMILY_DESIGN,
+        claim='unvalidated-family-candidate', arm_schedule={'event_offset': 1+schedule, 'decision_offset': 2+schedule},
+        preferred_side='family-cost-then-route-id', waypoint_amendment='family-loop-v3',
+        travel_amendment='family-both-detours-v3')
+    # These coordinates are case-specific in the family contract.
+    for key in ('loop_radius_m', 'detour_offset_m', 'nonpreferred_detour_xy', 'north_retreat_xy', 'exit_xy'):
+        profile.pop(key)
+    profile['retreat_waypoints'] = 7
+    return profile
+
+
+_FAMILY_PROFILES = [_family_profile(schedule) for schedule in range(2)]
+FAMILY_PROFILE_HASHES = tuple(memory.sha256(profile) for profile in _FAMILY_PROFILES)
 _PROFILES = {PROFILE_SHA256: PROFILE, **dict(zip(WAYPOINT_PROFILE_HASHES, _WAYPOINT_PROFILES)),
-             **dict(zip(TRAVEL_PROFILE_HASHES, _TRAVEL_PROFILES))}
+             **dict(zip(TRAVEL_PROFILE_HASHES, _TRAVEL_PROFILES)),
+             **dict(zip(FAMILY_PROFILE_HASHES, _FAMILY_PROFILES))}
 
 
 def registered_profile(profile_sha256=PROFILE_SHA256):
@@ -73,7 +104,7 @@ def registered_profile(profile_sha256=PROFILE_SHA256):
 
 def make_case(seed, regime, kind, mirrored=False, *, profile_sha256=PROFILE_SHA256):
     profile = registered_profile(profile_sha256)
-    if type(seed) is not int or not 0 <= seed < 2**32 or regime not in memory.RELATIONS or kind not in ('change', 'null', 'no-event') or type(mirrored) is not bool:
+    if profile['version'] != 2 or type(seed) is not int or not 0 <= seed < 2**32 or regime not in memory.RELATIONS or kind not in ('change', 'null', 'no-event') or type(mirrored) is not bool:
         raise ValueError('Invalid development memory-v2 case')
     cid = f'memory-v2-{seed:08x}-{regime}-{kind}-{int(mirrored)}'
     cue = cid + '-cue'
@@ -107,12 +138,83 @@ def make_case(seed, regime, kind, mirrored=False, *, profile_sha256=PROFILE_SHA2
     return case
 
 
+def family_assignment(row):
+    if type(row) is not int or not 0 <= row < FAMILY_DESIGN['rows_per_block']:
+        raise ValueError('Invalid family assignment row')
+    public_row, hidden = divmod(row, 4)
+    factors = dict(zip(FAMILY_DESIGN['public_factor_names'],
+                       FAMILY_DESIGN['public_factor_rows'][public_row]))
+    factors.update(regime=memory.RELATIONS[hidden & 1], relation_side=hidden >> 1)
+    return {'row': row, 'cost_stratum': FAMILY_DESIGN['cost_strata'][public_row // 4], **factors}
+
+
+def _family_pick(seed, label, choices):
+    return copy.deepcopy(choices[int(memory.sha256(['memory-family-v3', seed, label]), 16) % len(choices)])
+
+
+def make_family_case(split, block, row, kind):
+    """Software candidate only; constructing a case grants no study allocation."""
+    memory._enum(split, ('development', 'held-out'))
+    memory._enum(kind, ('change', 'null', 'no-event'))
+    if type(block) is not int or not 0 <= block < FAMILY_DESIGN['block_limit']:
+        raise ValueError('Invalid family block')
+    factors = family_assignment(row)
+    seed = FAMILY_DESIGN['split_seed_bases'][split] + FAMILY_DESIGN['seed_stride']*block + row
+    family_id = 'memory-family-v3-' + memory.sha256([split, block, row])[:24]
+    cid = family_id + '-' + kind
+    catalog = FAMILY_DESIGN['geometry']
+    geometry = {name: _family_pick(seed, name, catalog[name]) for name in ('detour_x', 'exit_x', 'loop_radius')}
+    if factors['cost_stratum'] == 'tie':
+        offsets = [_family_pick(seed, 'tie_offset', catalog['tie_offset'])]*2
+    else:
+        offsets = _family_pick(seed, 'offset_pair', catalog['offset_pair'])
+        if factors['cost_stratum'] == 'north':
+            offsets.reverse()
+    geometry['detour_offsets'] = offsets
+    subjects = [cid + ('-subject-a' if side == factors['subject_first_side'] else '-subject-z') for side in range(2)]
+    route_ids = [cid + ('-route-a' if side == factors['route_first_side'] else '-route-z') for side in range(2)]
+    cue = cid + '-cue'
+    facts = [{'id': cid + ('-fact-a' if side == factors['fact_first_side'] else '-fact-z'),
+        'subject_id': subject, 'kind': 'passability', 'estimate': None, 'status': 'unknown', 'evidence': None,
+        'associations': [{'cue_id': cue, 'relation': factors['regime'] if side == factors['relation_side']
+                         else memory.RELATIONS[1-memory.RELATIONS.index(factors['regime'])]}],
+        'inspection_landmark_id': subject + '-inspection', 'revision': 0, 'origin': 'initial_unknown'}
+        for side, subject in enumerate(subjects)]
+    markers = {cid + '-decision': DECISION_XY.copy(), cid + '-goal': GOAL_XY.copy()}
+    retreat = _loop_profile(geometry['loop_radius'])['north_retreat_xy']
+    for side, subject in enumerate(subjects):
+        sign = -1 if side == 0 else 1
+        markers.update({subject + '-inspection': [-.8, float(sign)], subject + '-crossing': [0., float(sign)],
+                        subject + '-detour': [geometry['detour_x'], sign*(1+offsets[side])],
+                        subject + '-exit': [geometry['exit_x'], float(sign)]})
+        for index, (x, y) in enumerate(retreat):
+            markers[subject + f'-retreat-{index}'] = [x, sign*y]
+    profile_sha256 = FAMILY_PROFILE_HASHES[factors['schedule_index']]
+    case = {'version': 3, 'claim': 'unvalidated-family-runtime-configuration', 'case_id': cid,
+        'family_id': family_id, 'split': split, 'block': block, 'row': row, 'factors': factors, 'geometry': geometry,
+        'seed': seed, 'regime': factors['regime'], 'kind': kind, 'acquisition': True,
+        'profile_sha256': profile_sha256, 'acquisition_protocol_sha256': profile_sha256,
+        'subjects_by_side': subjects, 'route_ids_by_side': route_ids, 'facts': memory.seed_m(facts, [])['facts'],
+        'cue_id': cue, 'common_goal_id': cid + '-goal', 'decision_landmark_id': cid + '-decision',
+        'closure_subject_id': subjects[factors['relation_side']] if kind == 'change' else None,
+        'event_enabled': kind != 'no-event', 'start_pose': START_POSE.copy(),
+        'goal_xy': GOAL_XY.copy(), 'cue_xy': PROFILE['cue_xy'].copy(), 'landmarks': markers}
+    case['graph_sha256'] = memory.sha256(_public_graph(case))
+    case['case_sha256'] = memory.sha256(case)
+    return case
+
+
 def validate_case(case):
     if type(case) is not dict or len(memory.canonical_bytes(case)) > 64 * 1024:
         raise ValueError('Invalid bounded memory-v2 case')
     try:
-        expected = make_case(case['seed'], case['regime'], case['kind'], case['mirrored'],
-                             profile_sha256=case['profile_sha256'])
+        if type(case['version']) is not int or case['version'] not in (2, 3):
+            raise ValueError('Unsupported memory decision case version')
+        if case['version'] == 3:
+            expected = make_family_case(case['split'], case['block'], case['row'], case['kind'])
+        else:
+            expected = make_case(case['seed'], case['regime'], case['kind'], case['mirrored'],
+                                 profile_sha256=case['profile_sha256'])
     except KeyError as error:
         raise ValueError('Incomplete memory-v2 case') from error
     if memory.canonical_bytes(case) != memory.canonical_bytes(expected):
@@ -122,6 +224,8 @@ def validate_case(case):
 
 def _public_graph(case):
     decision, goal = case['decision_landmark_id'], case['common_goal_id']
+    profile = registered_profile(case['profile_sha256'])
+    retreat_count = profile['retreat_waypoints'] if case['version'] == 3 else len(profile['north_retreat_xy'])
     routes, edges = [], []
     for side, subject in enumerate(case['subjects_by_side']):
         inspection = subject + '-inspection'
@@ -129,9 +233,9 @@ def _public_graph(case):
         if subject + '-detour' in case['landmarks']:
             waypoints.append(subject + '-detour')
         waypoints += [subject + '-exit', goal]
-        retreat = [subject + f'-retreat-{i}' for i in range(len(registered_profile(case['profile_sha256'])['north_retreat_xy']))] + [decision]
+        retreat = [subject + f'-retreat-{i}' for i in range(retreat_count)] + [decision]
         cost = sum(math.dist(case['landmarks'][a], case['landmarks'][b]) for a, b in zip([decision] + waypoints, waypoints))
-        route_id = case['case_id'] + ('-route-a' if side == int(case['mirrored']) else '-route-z')
+        route_id = case['route_ids_by_side'][side] if case['version'] == 3 else case['case_id'] + ('-route-a' if side == int(case['mirrored']) else '-route-z')
         fact = next(f for f in case['facts'] if f['subject_id'] == subject)
         routes.append({'route_id': route_id, 'subject_id': subject, 'fact_id': fact['id'],
             'cost': cost, 'inspection_landmark_id': inspection, 'waypoint_ids': waypoints,
@@ -145,7 +249,7 @@ def _public_graph(case):
     for subject in case['subjects_by_side']:
         route = next(r for r in routes if r['subject_id'] == subject)
         acquisition += [route['inspection_landmark_id']] + route['retreat_ids']
-    return {'version': 2, 'routes': sorted(routes, key=lambda r: r['route_id']),
+    return {'version': case['version'], 'routes': sorted(routes, key=lambda r: r['route_id']),
         'acquisition_ids': acquisition, 'decision_landmark_id': decision, 'common_goal_id': goal,
         'edges': edges, 'landmark_ids': sorted(case['landmarks']), 'profile_sha256': case['profile_sha256']}
 
@@ -291,7 +395,8 @@ def validate_state(state):
     else:
         memory._digest(state['acquired_state_sha256'])
         base = state['armed_boundary_tick']
-        if state['decision_tick'] != base+2 or state['event_tick'] != (base+1 if case['event_enabled'] else None):
+        schedule = registered_profile(case['profile_sha256'])['arm_schedule']
+        if state['decision_tick'] != base+schedule['decision_offset'] or state['event_tick'] != (base+schedule['event_offset'] if case['event_enabled'] else None):
             raise ValueError('Schedule differs from frozen acquired boundary')
         if state['applied'] != (state['event_tick'] is not None and state['last_tick'] is not None and state['last_tick'] >= state['event_tick']):
             raise ValueError('World applied state differs from schedule cursor')
@@ -309,8 +414,9 @@ def arm(state, boundary_tick, acquired_state_sha256):
     memory._digest(acquired_state_sha256)
     if state['armed_boundary_tick'] is not None or state['last_tick'] != boundary_tick-1:
         raise ValueError('World arm requires its unarmed acquired snapshot boundary')
-    state.update(armed_boundary_tick=boundary_tick, decision_tick=boundary_tick+2,
-                 event_tick=boundary_tick+1 if state['case']['event_enabled'] else None,
+    schedule = registered_profile(state['profile_sha256'])['arm_schedule']
+    state.update(armed_boundary_tick=boundary_tick, decision_tick=boundary_tick+schedule['decision_offset'],
+                 event_tick=boundary_tick+schedule['event_offset'] if state['case']['event_enabled'] else None,
                  acquired_state_sha256=acquired_state_sha256)
     return validate_state(state)
 
