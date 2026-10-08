@@ -48,6 +48,12 @@ _COMMIT_RECEIPT_FIELDS = {
     'version', 'kind', 'target', 'manifest_sha256', 'manifest_bytes',
     'reservation_sha256', 'protocol_sha256',
 }
+_ADMISSION_RECEIPT_FIELDS = {
+    'version', 'kind', 'target', 'receipt',
+    'manifest_sha256', 'manifest_bytes', 'manifest_identity',
+    'receipt_sha256', 'receipt_bytes', 'receipt_identity',
+    'reservation_sha256', 'protocol_sha256',
+}
 _MAX_JSON_BYTES = 64 * 1024 * 1024
 _MAX_COMMIT_BYTES = 4096
 
@@ -280,7 +286,7 @@ def _write_bytes_new(path, raw, maximum, *, directory=None, root_identity=None):
 
 
 def _read_exact_file(root, path, maximum, label, *, directory=None,
-                     root_identity=None, return_identity=False):
+                     root_identity=None, return_identity=False, expected_links=1):
     root = Path(root)
     path = Path(path)
     if path.parent != root or not path.name:
@@ -294,7 +300,9 @@ def _read_exact_file(root, path, maximum, label, *, directory=None,
     try:
         _verify_publication_root(root, directory, root_identity, f'{label}: parent')
         before = os.stat(path.name, dir_fd=directory, follow_symlinks=False)
-        if (not stat.S_ISREG(before.st_mode) or before.st_nlink != 1 or
+        if (type(expected_links) is not int or expected_links < 1 or
+                not stat.S_ISREG(before.st_mode) or
+                before.st_nlink != expected_links or
                 before.st_size > maximum):
             raise ValueError(f'{label}: missing, linked, or oversized file')
         flags = (os.O_RDONLY | getattr(os, 'O_NOFOLLOW', 0) |
@@ -341,6 +349,14 @@ def _commit_pending_path(root, name):
     return root / f'.{name}.commit.pending'
 
 
+def _admission_anchor_path(root, name):
+    return root / f'.{name}.admission.anchor'
+
+
+def _admission_path(root, name):
+    return root / f'{name}.admission.json'
+
+
 def _publication_paths(root, name):
     return {
         'target': root / name,
@@ -348,6 +364,8 @@ def _publication_paths(root, name):
         'quarantine': _quarantine_path(root, name),
         'commit': _commit_path(root, name),
         'commit_pending': _commit_pending_path(root, name),
+        'admission_anchor': _admission_anchor_path(root, name),
+        'admission': _admission_path(root, name),
     }
 
 
@@ -405,7 +423,36 @@ def _write_commit_receipt(path, raw, *, directory=None, root_identity=None):
                             directory=directory, root_identity=root_identity)
 
 
-def _exclusive_publish(pending, final, *, directory=None, root_identity=None):
+def _admission_receipt(name, raw, manifest_identity, commit_raw,
+                       receipt_identity, receipt):
+    identities = (manifest_identity, receipt_identity)
+    if any(type(identity) not in (list, tuple) or len(identity) != 7 or
+           any(type(value) is not int for value in identity) or
+           not stat.S_ISREG(identity[2]) or identity[3] != 1
+           for identity in identities):
+        raise ValueError('Publication admission identities differ')
+    if (manifest_identity[4] != len(raw) or
+            receipt_identity[4] != len(commit_raw) or
+            type(receipt) is not dict or set(receipt) != _COMMIT_RECEIPT_FIELDS):
+        raise ValueError('Publication admission bytes differ')
+    return {
+        'version': 1,
+        'kind': 'puck-on-policy-publication-admission-v1',
+        'target': name,
+        'receipt': f'{name}.commit.json',
+        'manifest_sha256': _sha256(raw),
+        'manifest_bytes': len(raw),
+        'manifest_identity': list(manifest_identity),
+        'receipt_sha256': _sha256(commit_raw),
+        'receipt_bytes': len(commit_raw),
+        'receipt_identity': list(receipt_identity),
+        'reservation_sha256': receipt['reservation_sha256'],
+        'protocol_sha256': receipt['protocol_sha256'],
+    }
+
+
+def _exclusive_publish(pending, final, *, directory=None, root_identity=None,
+                       verify_after=True):
     pending, final = Path(pending), Path(final)
     if pending.parent != final.parent:
         raise ValueError('Publication names must share one exact parent')
@@ -420,6 +467,8 @@ def _exclusive_publish(pending, final, *, directory=None, root_identity=None):
             raise FileExistsError(f'Publication destination exists: {final.name}')
         os.link(pending.name, final.name, src_dir_fd=directory,
                 dst_dir_fd=directory, follow_symlinks=False)
+        if not verify_after:
+            return
         source = os.stat(pending.name, dir_fd=directory, follow_symlinks=False)
         destination = os.stat(final.name, dir_fd=directory, follow_symlinks=False)
         if (not stat.S_ISREG(source.st_mode) or
@@ -433,10 +482,44 @@ def _exclusive_publish(pending, final, *, directory=None, root_identity=None):
             os.close(directory)
 
 
+def _commit_admission(root, paths, raw, manifest_identity, commit_raw,
+                      receipt_identity, admission_raw, *, directory,
+                      root_identity):
+    blockers = (paths['pending'], paths['quarantine'], paths['commit_pending'])
+    if any(_path_present(path, directory, root_identity) for path in blockers):
+        raise ValueError('Publication remains quarantined or indeterminate')
+    if _path_present(paths['admission'], directory, root_identity):
+        raise FileExistsError(
+            f'Publication destination exists: {paths["admission"].name}')
+    final_raw, final_manifest_identity = _read_exact_file(
+        root, paths['target'], _MAX_JSON_BYTES, paths['target'].name,
+        directory=directory, root_identity=root_identity, return_identity=True)
+    final_commit_raw, final_receipt_identity = _read_exact_file(
+        root, paths['commit'], _MAX_COMMIT_BYTES, 'publication commit receipt',
+        directory=directory, root_identity=root_identity, return_identity=True)
+    final_admission_raw = _read_exact_file(
+        root, paths['admission_anchor'], _MAX_COMMIT_BYTES,
+        'publication admission anchor', directory=directory,
+        root_identity=root_identity)
+    if final_raw != raw or final_manifest_identity != manifest_identity:
+        raise ValueError('Published manifest identity changed before commit')
+    if final_commit_raw != commit_raw or final_receipt_identity != receipt_identity:
+        raise ValueError('Published receipt identity changed before commit')
+    if final_admission_raw != admission_raw:
+        raise ValueError('Publication admission anchor changed before commit')
+    _verify_publication_root(root, directory, root_identity)
+    # The no-replace hard link is the sole linearization point.  Its source is
+    # already durable and binds both admitted file identities.  No namespace
+    # mutation or fallible reread follows it.
+    _exclusive_publish(
+        paths['admission_anchor'], paths['admission'], directory=directory,
+        root_identity=root_identity, verify_after=False)
+
+
 def _atomic_manifest(root, name, manifest):
     raw = _canonical_bytes(manifest, name)
-    commit_raw = _canonical_bytes(
-        _commit_receipt(name, manifest, raw), 'publication commit receipt')
+    receipt = _commit_receipt(name, manifest, raw)
+    commit_raw = _canonical_bytes(receipt, 'publication commit receipt')
     root, directory, root_identity = _open_publication_root(root)
     committing = False
     try:
@@ -444,6 +527,7 @@ def _atomic_manifest(root, name, manifest):
         target, pending = paths['target'], paths['pending']
         quarantine = paths['quarantine']
         commit, commit_pending = paths['commit'], paths['commit_pending']
+        admission_anchor = paths['admission_anchor']
         if any(_path_present(path, directory, root_identity)
                for path in paths.values()):
             raise ValueError(f'{name}: fresh publication paths required')
@@ -493,17 +577,28 @@ def _atomic_manifest(root, name, manifest):
         if (final_receipt_raw != receipt_raw or
                 final_receipt_identity != receipt_identity):
             raise ValueError('Published receipt identity changed during admission')
+        admission_raw = _canonical_bytes(
+            _admission_receipt(name, final_target_raw, final_target_identity,
+                               final_receipt_raw, final_receipt_identity, receipt),
+            'publication admission receipt')
+        _write_bytes_new(admission_anchor, admission_raw, _MAX_COMMIT_BYTES,
+                         directory=directory, root_identity=root_identity)
+        _fsync_directory(root, directory, root_identity)
+        _verify_publication_root(root, directory, root_identity)
+        os.unlink(quarantine.name, dir_fd=directory)
+        _verify_publication_root(root, directory, root_identity)
+        _fsync_directory(root, directory, root_identity)
         result = {
             'manifest_path': str(target), 'manifest_bytes': raw,
             'manifest_sha256': _sha256(raw),
             'commit_path': str(commit), 'commit_bytes': commit_raw,
             'commit_sha256': _sha256(commit_raw),
         }
-        _verify_publication_root(root, directory, root_identity)
-        # Target and receipt are durable and identity-checked.  This unlink is the
-        # namespace commit point; only a non-reporting descriptor close follows.
         committing = True
-        os.unlink(quarantine.name, dir_fd=directory)
+        _commit_admission(
+            root, paths, final_target_raw, final_target_identity,
+            final_receipt_raw, final_receipt_identity, admission_raw,
+            directory=directory, root_identity=root_identity)
         return result
     finally:
         try:
@@ -534,15 +629,29 @@ def _read_publication(value, name):
             commit_raw, commit_identity = _read_exact_file(
                 root, commit, _MAX_COMMIT_BYTES, 'publication commit receipt',
                 directory=directory, root_identity=root_identity, return_identity=True)
+            admission_anchor_raw, admission_anchor_identity = _read_exact_file(
+                root, paths['admission_anchor'], _MAX_COMMIT_BYTES,
+                'publication admission anchor', directory=directory,
+                root_identity=root_identity, return_identity=True, expected_links=2)
+            admission_raw, admission_identity = _read_exact_file(
+                root, paths['admission'], _MAX_COMMIT_BYTES,
+                'publication admission receipt', directory=directory,
+                root_identity=root_identity, return_identity=True, expected_links=2)
         except OSError as error:
-            raise ValueError(f'{name}: exact target and commit receipt required') from error
+            raise ValueError(
+                f'{name}: exact target, receipt, and admission required') from error
+        if (admission_anchor_raw != admission_raw or
+                admission_anchor_identity != admission_identity):
+            raise ValueError(f'{name}: admission link identity differs')
         if any(_path_present(path, directory, root_identity) for path in blockers):
             raise ValueError(f'{name}: publication changed while read')
         try:
             manifest = json.loads(raw)
             receipt = json.loads(commit_raw)
+            admission = json.loads(admission_raw)
         except (UnicodeDecodeError, json.JSONDecodeError) as error:
-            raise ValueError(f'{name}: publication or commit JSON differs') from error
+            raise ValueError(
+                f'{name}: publication, commit, or admission JSON differs') from error
         expected = _commit_receipt(name, manifest, raw)
         if (type(receipt) is not dict or set(receipt) != _COMMIT_RECEIPT_FIELDS or
                 _canonical_bytes(receipt, 'publication commit receipt') != commit_raw or
@@ -550,6 +659,16 @@ def _read_publication(value, name):
                 type(receipt['manifest_bytes']) is not int or
                 receipt != expected):
             raise ValueError(f'{name}: positive commit receipt differs')
+        expected_admission = _admission_receipt(
+            name, raw, target_identity, commit_raw, commit_identity, receipt)
+        if (type(admission) is not dict or
+                set(admission) != _ADMISSION_RECEIPT_FIELDS or
+                _canonical_bytes(admission, 'publication admission receipt') !=
+                admission_raw or type(admission['version']) is not int or
+                type(admission['manifest_bytes']) is not int or
+                type(admission['receipt_bytes']) is not int or
+                admission != expected_admission):
+            raise ValueError(f'{name}: identity-bound admission receipt differs')
         try:
             final_raw, final_target_identity = _read_exact_file(
                 root, target, _MAX_JSON_BYTES, name, directory=directory,
@@ -557,12 +676,29 @@ def _read_publication(value, name):
             final_commit_raw, final_commit_identity = _read_exact_file(
                 root, commit, _MAX_COMMIT_BYTES, 'publication commit receipt',
                 directory=directory, root_identity=root_identity, return_identity=True)
+            final_admission_anchor_raw, final_admission_anchor_identity = \
+                _read_exact_file(
+                    root, paths['admission_anchor'], _MAX_COMMIT_BYTES,
+                    'publication admission anchor', directory=directory,
+                    root_identity=root_identity, return_identity=True,
+                    expected_links=2)
+            final_admission_raw, final_admission_identity = _read_exact_file(
+                root, paths['admission'], _MAX_COMMIT_BYTES,
+                'publication admission receipt', directory=directory,
+                root_identity=root_identity, return_identity=True,
+                expected_links=2)
         except OSError as error:
             raise ValueError(f'{name}: publication disappeared during admission') from error
         if final_raw != raw or final_target_identity != target_identity:
             raise ValueError(f'{name}: publication identity changed after admission')
         if final_commit_raw != commit_raw or final_commit_identity != commit_identity:
             raise ValueError(f'{name}: commit receipt identity changed during admission')
+        if (final_admission_anchor_raw != admission_anchor_raw or
+                final_admission_anchor_identity != admission_anchor_identity or
+                final_admission_raw != admission_raw or
+                final_admission_identity != admission_identity or
+                final_admission_anchor_identity != final_admission_identity):
+            raise ValueError(f'{name}: admission identity changed during admission')
         if any(_path_present(path, directory, root_identity) for path in blockers):
             raise ValueError(f'{name}: publication changed during final admission')
         return raw

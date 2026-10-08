@@ -81,6 +81,31 @@ def commit_receipt(name, manifest_bytes, *, protocol_sha256, reservation_sha256=
     }
 
 
+def write_synthetic_admission(root, name, manifest_bytes, receipt_bytes, *,
+                              protocol_sha256, reservation_sha256):
+    target = root / name
+    receipt_path = root / f'{name}.commit.json'
+    manifest_identity = list(subject()._identity(os.lstat(target)))
+    receipt_identity = list(subject()._identity(os.lstat(receipt_path)))
+    admission = {
+        'version': 1,
+        'kind': 'puck-on-policy-publication-admission-v1',
+        'target': name,
+        'receipt': f'{name}.commit.json',
+        'manifest_sha256': digest(manifest_bytes),
+        'manifest_bytes': len(manifest_bytes),
+        'manifest_identity': manifest_identity,
+        'receipt_sha256': digest(receipt_bytes),
+        'receipt_bytes': len(receipt_bytes),
+        'receipt_identity': receipt_identity,
+        'reservation_sha256': reservation_sha256,
+        'protocol_sha256': protocol_sha256,
+    }
+    anchor = root / f'.{name}.admission.anchor'
+    anchor.write_bytes(canonical_bytes(admission))
+    os.link(anchor, root / f'{name}.admission.json')
+
+
 def write_synthetic_publication(root, name, manifest, *, protocol_sha256,
                                 reservation_sha256=None):
     raw = canonical_bytes(manifest)
@@ -89,7 +114,11 @@ def write_synthetic_publication(root, name, manifest, *, protocol_sha256,
     receipt = commit_receipt(
         name, raw, protocol_sha256=protocol_sha256,
         reservation_sha256=reservation_sha256)
-    target.with_name(f'{name}.commit.json').write_bytes(canonical_bytes(receipt))
+    receipt_bytes = canonical_bytes(receipt)
+    target.with_name(f'{name}.commit.json').write_bytes(receipt_bytes)
+    write_synthetic_admission(
+        root, name, raw, receipt_bytes, protocol_sha256=protocol_sha256,
+        reservation_sha256=receipt['reservation_sha256'])
     return target
 
 
@@ -363,6 +392,8 @@ class PuckReservationAndMintAdmissionTests(unittest.TestCase):
             self.assertEqual(links, [
                 ('.reservation.json.pending', 'reservation.json'),
                 ('.reservation.json.commit.pending', 'reservation.json.commit.json'),
+                ('.reservation.json.admission.anchor',
+                 'reservation.json.admission.json'),
             ])
             self.assertEqual(set(result), {
                 'manifest_path', 'manifest_bytes', 'manifest_sha256',
@@ -385,7 +416,9 @@ class PuckReservationAndMintAdmissionTests(unittest.TestCase):
             self.assertEqual(commit.read_bytes(), result['commit_bytes'])
             self.assertEqual(result['commit_sha256'], digest(result['commit_bytes']))
             self.assertEqual(sorted(item.name for item in root.iterdir()),
-                             ['reservation.json', 'reservation.json.commit.json'])
+                             ['.reservation.json.admission.anchor',
+                              'reservation.json', 'reservation.json.admission.json',
+                              'reservation.json.commit.json'])
             self.assertEqual(on_policy.RESERVED_SCENE_IDS, RESERVED_IDS)
 
     def test_partial_duplicate_or_out_of_lineage_reserved_rosters_fail(self):
@@ -513,6 +546,8 @@ class PuckReservationAndMintAdmissionTests(unittest.TestCase):
                 ('.scene-manifest.json.pending', 'scene-manifest.json'),
                 ('.scene-manifest.json.commit.pending',
                  'scene-manifest.json.commit.json'),
+                ('.scene-manifest.json.admission.anchor',
+                 'scene-manifest.json.admission.json'),
             ])
             target = Path(scene_directory) / 'scene-manifest.json'
             manifest_bytes = target.read_bytes()
@@ -737,6 +772,10 @@ class PuckReservationAndMintAdmissionTests(unittest.TestCase):
                     if receipt_bytes is not None:
                         target.with_name('scene-manifest.json.commit.json').write_bytes(
                             receipt_bytes)
+                        write_synthetic_admission(
+                            root, 'scene-manifest.json', manifest_bytes, receipt_bytes,
+                            protocol_sha256=PROTOCOL_SHA256,
+                            reservation_sha256=reservation['manifest_sha256'])
                     with self.assertRaises(ValueError):
                         project(target, reservation_path=reservation['manifest_path'],
                                 audience='collection')
@@ -754,7 +793,10 @@ class PuckReservationAndMintAdmissionTests(unittest.TestCase):
 
     def test_publication_reader_rejects_target_and_receipt_hardlink_replay(self):
         on_policy = subject()
-        for victim_name in ('reservation.json', 'reservation.json.commit.json'):
+        for victim_name in (
+                'reservation.json', 'reservation.json.commit.json',
+                '.reservation.json.admission.anchor',
+                'reservation.json.admission.json'):
             with self.subTest(victim=victim_name), \
                     tempfile.TemporaryDirectory() as directory, \
                     tempfile.TemporaryDirectory() as outside:
@@ -1005,6 +1047,7 @@ class PuckReservationAndMintAdmissionTests(unittest.TestCase):
                 receipt = root / 'reservation.json.commit.json'
                 quarantine = root / '.reservation.json.quarantine'
                 real_unlink = os.unlink
+                real_commit_admission = getattr(on_policy, '_commit_admission', None)
                 substitutions = []
 
                 def replace_with_new_inode(path, raw):
@@ -1012,22 +1055,33 @@ class PuckReservationAndMintAdmissionTests(unittest.TestCase):
                     replacement.write_bytes(raw)
                     os.replace(replacement, path)
 
+                def substitute():
+                    if label == 'target':
+                        replace_with_new_inode(target, target.read_bytes())
+                    elif label == 'receipt':
+                        replace_with_new_inode(receipt, receipt.read_bytes())
+                    else:
+                        replace_with_new_inode(target, alternate_target)
+                        replace_with_new_inode(receipt, alternate_receipt)
+                    substitutions.append(label)
+
                 def unlink(path, *arguments, **keywords):
                     if Path(path).name == quarantine.name:
                         self.assertIsNotNone(keywords.get('dir_fd'))
-                        if label == 'target':
-                            replace_with_new_inode(target, target.read_bytes())
-                        elif label == 'receipt':
-                            replace_with_new_inode(receipt, receipt.read_bytes())
-                        else:
-                            replace_with_new_inode(target, alternate_target)
-                            replace_with_new_inode(receipt, alternate_receipt)
-                        substitutions.append(label)
+                        substitute()
                     return real_unlink(path, *arguments, **keywords)
+
+                def commit_admission(*arguments, **keywords):
+                    substitute()
+                    return real_commit_admission(*arguments, **keywords)
 
                 publisher_failed = False
                 try:
-                    with patch.object(on_policy.os, 'unlink', side_effect=unlink):
+                    boundary = (patch.object(
+                        on_policy, '_commit_admission', side_effect=commit_admission)
+                        if real_commit_admission is not None else
+                        patch.object(on_policy.os, 'unlink', side_effect=unlink))
+                    with boundary:
                         self.reserve(root, snapshot, copy.deepcopy(snapshot))
                 except (OSError, ValueError):
                     publisher_failed = True
@@ -1071,7 +1125,7 @@ class PuckReservationAndMintAdmissionTests(unittest.TestCase):
             def read_exact(*arguments, **keywords):
                 raw = real_read(*arguments, **keywords)
                 reads.append(Path(arguments[1]).name)
-                if len(reads) == 4:
+                if len(reads) == 8:
                     quarantine.write_bytes(b'synthetic-late-quarantine\n')
                 return raw
 
@@ -1080,7 +1134,11 @@ class PuckReservationAndMintAdmissionTests(unittest.TestCase):
                 on_policy._read_published_reservation(target)
             self.assertEqual(reads, [
                 'reservation.json', 'reservation.json.commit.json',
-                'reservation.json', 'reservation.json.commit.json'])
+                '.reservation.json.admission.anchor',
+                'reservation.json.admission.json',
+                'reservation.json', 'reservation.json.commit.json',
+                '.reservation.json.admission.anchor',
+                'reservation.json.admission.json'])
             self.assertTrue(quarantine.is_file())
 
     def test_preexisting_commit_paths_refuse_before_minting(self):
@@ -1089,7 +1147,9 @@ class PuckReservationAndMintAdmissionTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as reservation_directory:
             reservation = self.reserve(Path(reservation_directory).resolve(), snapshot)
             for name in ('scene-manifest.json.commit.json',
-                         '.scene-manifest.json.commit.pending'):
+                         '.scene-manifest.json.commit.pending',
+                         '.scene-manifest.json.admission.anchor',
+                         'scene-manifest.json.admission.json'):
                 with self.subTest(name=name), tempfile.TemporaryDirectory() as directory:
                     root = Path(directory).resolve(); marker = root / name
                     marker.write_bytes(b'preexisting')
@@ -1105,14 +1165,15 @@ class PuckReservationAndMintAdmissionTests(unittest.TestCase):
                     self.assertEqual(calls, [])
                     self.assertEqual(list(root.iterdir()), [marker])
 
-    def test_target_and_receipt_publication_never_overwrite_raced_destinations(self):
+    def test_publication_never_overwrites_raced_destinations(self):
         on_policy, stage = self.api('stage_scene_manifest')
         snapshot = inventory_snapshot()
         racer = b'synthetic-raced-destination\n'
         with tempfile.TemporaryDirectory() as reservation_directory:
             reservation = self.reserve(Path(reservation_directory).resolve(), snapshot)
             for victim_name in ('scene-manifest.json',
-                                'scene-manifest.json.commit.json'):
+                                'scene-manifest.json.commit.json',
+                                'scene-manifest.json.admission.json'):
                 with self.subTest(victim=victim_name), \
                         tempfile.TemporaryDirectory() as directory:
                     root = Path(directory).resolve()
@@ -1142,7 +1203,7 @@ class PuckReservationAndMintAdmissionTests(unittest.TestCase):
                         on_policy._read_publication(
                             root / 'scene-manifest.json', 'scene-manifest.json')
 
-    def test_quarantine_removal_is_the_final_publication_syscall(self):
+    def test_identity_bound_admission_link_is_the_final_publication_syscall(self):
         on_policy, stage = self.api('stage_scene_manifest')
         snapshot = inventory_snapshot()
         with tempfile.TemporaryDirectory() as reservation_directory, \
@@ -1152,6 +1213,7 @@ class PuckReservationAndMintAdmissionTests(unittest.TestCase):
             events = []
             real_fsync_directory = on_policy._fsync_directory
             real_unlink = os.unlink
+            real_link = os.link
 
             def fsync_directory(path, *arguments, **keywords):
                 if Path(path) == root:
@@ -1164,12 +1226,107 @@ class PuckReservationAndMintAdmissionTests(unittest.TestCase):
                                    keywords.get('dir_fd') is not None))
                 return real_unlink(path, *arguments, **keywords)
 
+            def link(source, destination, *arguments, **keywords):
+                if Path(destination).name.startswith('scene-manifest.json'):
+                    events.append(('link', Path(source).name,
+                                   Path(destination).name,
+                                   keywords.get('dst_dir_fd') is not None))
+                return real_link(source, destination, *arguments, **keywords)
+
             with patch.object(on_policy, '_fsync_directory', side_effect=fsync_directory), \
-                    patch.object(on_policy.os, 'unlink', side_effect=unlink):
+                    patch.object(on_policy.os, 'unlink', side_effect=unlink), \
+                    patch.object(on_policy.os, 'link', side_effect=link):
                 stage(root, reservation['manifest_path'], fake_candidate,
                       inventory_after=copy.deepcopy(snapshot))
             self.assertEqual(events[-1],
-                             ('unlink', '.scene-manifest.json.quarantine', True))
+                             ('link', '.scene-manifest.json.admission.anchor',
+                              'scene-manifest.json.admission.json', True))
+            self.assertIn(('unlink', '.scene-manifest.json.quarantine', True), events)
+
+    def test_admission_precommit_write_fsync_and_link_failures_are_unreadable(self):
+        on_policy = subject()
+        snapshot = inventory_snapshot()
+        real_write = on_policy._write_bytes_new
+        real_fsync_directory = on_policy._fsync_directory
+        real_link = os.link
+
+        for fault in ('write', 'anchor fsync', 'quarantine fsync', 'link'):
+            with self.subTest(fault=fault), tempfile.TemporaryDirectory() as directory:
+                root = Path(directory).resolve()
+                paths = on_policy._publication_paths(root, 'reservation.json')
+
+                def write(path, *arguments, **keywords):
+                    if (fault == 'write' and
+                            Path(path).name == paths['admission_anchor'].name):
+                        raise OSError('admission anchor write failed')
+                    return real_write(path, *arguments, **keywords)
+
+                def fsync_directory(path, *arguments, **keywords):
+                    if (fault == 'anchor fsync' and
+                            paths['admission_anchor'].exists() and
+                            paths['quarantine'].exists()):
+                        raise OSError('admission anchor directory fsync failed')
+                    if (fault == 'quarantine fsync' and
+                            paths['admission_anchor'].exists() and
+                            not paths['quarantine'].exists() and
+                            not paths['admission'].exists()):
+                        raise OSError('quarantine removal directory fsync failed')
+                    return real_fsync_directory(path, *arguments, **keywords)
+
+                def link(source, destination, *arguments, **keywords):
+                    if (fault == 'link' and
+                            Path(destination).name == paths['admission'].name):
+                        raise OSError('admission link failed')
+                    return real_link(source, destination, *arguments, **keywords)
+
+                with patch.object(on_policy, '_write_bytes_new', side_effect=write), \
+                        patch.object(on_policy, '_fsync_directory',
+                                     side_effect=fsync_directory), \
+                        patch.object(on_policy.os, 'link', side_effect=link), \
+                        self.assertRaises(OSError):
+                    self.reserve(root, snapshot, copy.deepcopy(snapshot))
+                self.assertFalse(paths['admission'].exists())
+                with self.assertRaises(ValueError):
+                    on_policy._read_published_reservation(paths['target'])
+
+    def test_identity_bound_admission_receipt_is_exact_and_protocol_pinned(self):
+        on_policy = subject()
+        mutations = {
+            'missing final': None,
+            'malformed': b'{\n',
+        }
+        for label, field, value in (
+                ('boolean version', 'version', True),
+                ('wrong protocol', 'protocol_sha256', '0' * 64),
+                ('wrong manifest identity', 'manifest_identity', [0] * 7),
+                ('wrong receipt identity', 'receipt_identity', [0] * 7),
+                ('wrong receipt hash', 'receipt_sha256', '1' * 64),
+                ('extra field', 'extra', True)):
+            mutations[label] = (field, value)
+
+        for label, mutation in mutations.items():
+            with self.subTest(label=label), tempfile.TemporaryDirectory() as directory:
+                root = Path(directory).resolve()
+                result = self.reserve(root)
+                target = Path(result['manifest_path'])
+                paths = on_policy._publication_paths(root, target.name)
+                admission = json.loads(paths['admission'].read_bytes())
+                paths['admission'].unlink()
+                if label == 'missing final':
+                    with self.assertRaises(ValueError):
+                        on_policy._read_published_reservation(target)
+                    continue
+                paths['admission_anchor'].unlink()
+                if type(mutation) is tuple:
+                    field, value = mutation
+                    admission[field] = value
+                    raw = canonical_bytes(admission)
+                else:
+                    raw = mutation
+                paths['admission_anchor'].write_bytes(raw)
+                os.link(paths['admission_anchor'], paths['admission'])
+                with self.assertRaises(ValueError):
+                    on_policy._read_published_reservation(target)
 
     def test_compounded_postcommit_failure_never_exposes_false_success(self):
         on_policy = subject()
