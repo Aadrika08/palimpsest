@@ -10,7 +10,6 @@ import signal
 import subprocess
 import sys
 import tempfile
-import time
 import unittest
 from unittest.mock import patch
 
@@ -263,16 +262,20 @@ class NavigationV3ExecutionTests(unittest.TestCase):
                     "start_ticks": 100, "argv": ["trainer"], "command": "trainer"}
 
         cleaned = []
+        def cleanup(group):
+            events.append(("cleanup", group))
+            cleaned.append(group)
         with self.assertRaises(InterruptedError):
             owner.spawn_contained(
                 ["trainer"], ROOT, {}, None, None, popen=popen,
                 identity_reader=identity, install_handler=install,
-                cleanup=lambda group: cleaned.append(group))
+                cleanup=cleanup)
         self.assertEqual(cleaned, [50])
         self.assertIs(handlers[signal.SIGINT], prior[signal.SIGINT])
         self.assertIs(handlers[signal.SIGTERM], prior[signal.SIGTERM])
-        self.assertEqual([row[0] for row in events[:4]],
-                         ["handler", "handler", "popen", "identity"])
+        self.assertEqual([row[0] for row in events],
+                         ["handler", "handler", "popen", "identity", "cleanup",
+                          "handler", "handler"])
 
     def test_spawned_exec_has_unblocked_term_without_preexec_in_threads(self):
         command = [owner.PYTHON, "-c",

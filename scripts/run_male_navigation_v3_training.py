@@ -3,7 +3,6 @@ from __future__ import annotations
 
 import argparse
 import ast
-import contextlib
 import copy
 import hashlib
 import json
@@ -272,8 +271,15 @@ def _runner_argv(digest):
 
 def _outer_argv(digest):
     environment = [f"{key}={value}" for key, value in sorted(EXACT_ENVIRONMENT.items())]
-    return ["/usr/bin/timeout", "--signal=TERM", "--kill-after=10s", f"{NORMAL_SECONDS}s",
-            "/usr/bin/env", "-i", *environment, *_runner_argv(digest)]
+    return [
+        "/usr/bin/systemd-run", "--user", "--wait", "--collect",
+        f"--unit=palimpsest-{RUN_NAME}",
+        "--property=Type=exec", "--property=KillMode=control-group",
+        f"--property=RuntimeMaxSec={NORMAL_SECONDS}s",
+        f"--property=TimeoutStopSec={HARD_SECONDS - NORMAL_SECONDS}s",
+        "--property=SendSIGKILL=yes", "--property=TimeoutStopFailureMode=kill",
+        "/usr/bin/env", "-i", *environment, *_runner_argv(digest),
+    ]
 
 
 def _pair_rows():
@@ -645,16 +651,28 @@ def drain_process_group(identity, deadline, known, *, group_reader=process_group
         sleep(.1)
 
 
+def cleanup_spawn_group(group):
+    """Terminate and prove empty a just-spawned PID-as-PGID."""
+    result = drain_process_group({"group": group}, time.monotonic() + 5, {})
+    if not result["drained"]:
+        raise RuntimeError("Spawned process group survived cleanup")
+
+
 def spawn_contained(command, cwd, environment, stdout, stderr, *,
                     popen=subprocess.Popen, identity_reader=process_identity,
-                    mask=signal.pthread_sigmask):
-    """Return owned PID/start/group while INT/TERM remain blocked for the caller."""
-    blocked = {signal.SIGINT, signal.SIGTERM}
-    previous = mask(signal.SIG_BLOCK, blocked)
-    process = None
+                    install_handler=signal.signal, cleanup=cleanup_spawn_group):
+    """Return owned PID/start/group after deferring signals across identity capture."""
+    deferred, previous = [], {}
+    process = owned = caught = None
+
+    def defer(number, frame):
+        deferred.append(number)
+
     try:
+        for number in (signal.SIGINT, signal.SIGTERM):
+            previous[number] = install_handler(number, defer)
         process = popen(command, cwd=cwd, env=environment, stdout=stdout, stderr=stderr,
-                        start_new_session=True)
+                        start_new_session=True, restore_signals=True)
         current = None
         for _ in range(100):
             current = identity_reader(process.pid)
@@ -669,19 +687,39 @@ def spawn_contained(command, cwd, environment, stdout, stderr, *,
             raise ValueError("Spawned trainer PID/start/group/argv identity differs")
         owned = {key: current[key] for key in
                  ("pid", "ppid", "group", "start_ticks", "command")}
-        return process, owned, previous
-    except BaseException:
-        if process is not None and process.poll() is None:
-            with contextlib.suppress(ProcessLookupError):
-                os.killpg(process.pid, signal.SIGKILL)
-            with contextlib.suppress(subprocess.TimeoutExpired):
-                process.wait(timeout=3)
-        mask(signal.SIG_SETMASK, previous)
-        raise
+    except BaseException as error:
+        caught = error
 
-
-def restore_signal_mask(previous, *, mask=signal.pthread_sigmask):
-    mask(signal.SIG_SETMASK, previous)
+    cleaned = False
+    if process is not None and (caught is not None or deferred):
+        try:
+            cleanup(process.pid)
+            waiter = getattr(process, "wait", None)
+            if waiter is not None:
+                waiter(timeout=1)
+            cleaned = True
+        except BaseException as error:
+            caught = error
+    for number in reversed(tuple(previous)):
+        try:
+            install_handler(number, previous[number])
+        except BaseException as error:
+            caught = error
+    # A signal can arrive between the pre-restore check and handler restoration.
+    if process is not None and (caught is not None or deferred) and not cleaned:
+        try:
+            cleanup(process.pid)
+            waiter = getattr(process, "wait", None)
+            if waiter is not None:
+                waiter(timeout=1)
+        except BaseException as error:
+            caught = error
+    if caught is not None:
+        raise caught
+    if deferred:
+        raise InterruptedError(
+            f"Execution interrupted by {signal.Signals(deferred[0]).name}")
+    return process, owned
 
 
 def admit_process_observation(identity, parent_pid, rows, known, maximum):
@@ -728,18 +766,10 @@ def supervise_pair(pair, deadline):
         if message not in errors:
             errors.append(message)
 
-    # Block before bounded_logs starts its drain threads so every new thread and
-    # the child inherit the mask until PID/start/group ownership is recorded.
-    thread_previous_mask = signal.pthread_sigmask(
-        signal.SIG_BLOCK, {signal.SIGINT, signal.SIGTERM})
-    mask_guard = contextlib.ExitStack()
-    mask_guard.callback(restore_signal_mask, thread_previous_mask)
-    with mask_guard, bounded_logs(supervision, LOG_BYTES, log_failure) as (stdout, stderr):
+    with bounded_logs(supervision, LOG_BYTES, log_failure) as (stdout, stderr):
         try:
-            process, identity, previous_mask = spawn_contained(
+            process, identity = spawn_contained(
                 pair["argv"], ROOT, EXACT_ENVIRONMENT, stdout, stderr)
-            restore_signal_mask(previous_mask)  # Still blocked by the enclosing thread mask.
-            restore_signal_mask(thread_previous_mask)  # Pending TERM now has owned cleanup state.
             while True:
                 now = time.monotonic()
                 code = process.poll()
