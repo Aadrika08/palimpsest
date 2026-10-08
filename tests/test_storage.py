@@ -96,9 +96,19 @@ class StorageTests(_StorageFixture, unittest.TestCase):
         (managed / "alias").unlink()
         (managed / "one").touch()
         (managed / "two").touch()
-        with patch("palimpsest.storage.MAX_SCAN_ENTRIES", 1):
-            with self.assertRaisesRegex(StorageLimitError, "entry limit"):
-                budget.usage()
+        with self.assertRaisesRegex(StorageLimitError, "entry limit"):
+            self.budget([managed], max_entries=1).usage()
+
+    def test_configured_entry_limit_is_enforced_without_changing_default(self):
+        managed = self.root / "managed"
+        managed.mkdir()
+        (managed / "one").touch()
+        (managed / "two").touch()
+
+        self.assertEqual(StorageLimits().max_entries, 100_000)
+        with self.assertRaisesRegex(StorageLimitError, "entry limit"):
+            self.budget([managed], max_entries=1).usage()
+        self.assertEqual(self.budget([managed], max_entries=2).usage()["files"], 2)
 
     def test_counts_include_initial_snapshot_and_validate_configuration(self):
         budget = self.budget(max_runs=2, max_snapshots=2, max_exports=2)

@@ -25,9 +25,10 @@ class StorageLimits:
     max_runs: int = 1024
     max_snapshots: int = 64  # Per run, including its initial snapshot.
     max_exports: int = 1024
+    max_entries: int = MAX_SCAN_ENTRIES
 
     def __post_init__(self):
-        for name in ("max_bytes", "max_runs", "max_snapshots", "max_exports"):
+        for name in ("max_bytes", "max_runs", "max_snapshots", "max_exports", "max_entries"):
             if type(getattr(self, name)) is not int or getattr(self, name) <= 0:
                 raise ValueError(f"{name} must be a positive integer")
         if type(self.min_free_bytes) is not int or self.min_free_bytes < 0:
@@ -86,7 +87,7 @@ class StorageBudget:
             for _, directories, names, descriptor in os.fwalk(root, follow_symlinks=False, onerror=scan_error):
                 for name in directories + names:
                     entries += 1
-                    if entries > MAX_SCAN_ENTRIES:
+                    if entries > self.limits.max_entries:
                         raise StorageLimitError("Storage inventory exceeds entry limit")
                     try:
                         info = os.stat(name, dir_fd=descriptor, follow_symlinks=False)
