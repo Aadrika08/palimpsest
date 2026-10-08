@@ -15,8 +15,6 @@ from types import SimpleNamespace
 import unittest
 from unittest.mock import patch
 
-import numpy as np
-
 from palimpsest import puck_profile as puck
 
 
@@ -115,8 +113,7 @@ def inventory_snapshot():
     }
 
 
-def fake_candidate(scene_id, slot, split, *, canonical_marker=None,
-                   initial_marker=None, payload_marker=None):
+def fake_candidate(scene_id, slot, split):
     y = -0.7 + slot * 0.2
     layout = {
         'version': 1, 'kind': 'puck-on-policy-layout-v1', 'seed': scene_id,
@@ -125,15 +122,7 @@ def fake_candidate(scene_id, slot, split, *, canonical_marker=None,
         'puck_xy': [-0.25, float(y)], 'goal_xy': [1.0, float(y)],
         'initial_qvel': 'all zeros',
     }
-    return {
-        'layout': layout,
-        'canonical_scene': {'schema': 'synthetic-canonical-v1',
-                            'marker': canonical_marker or f'canonical-{scene_id}'},
-        'scientific_initial': {'schema': 'synthetic-initial-v1',
-                               'marker': initial_marker or f'initial-{scene_id}'},
-        'payload': {'schema': 'synthetic-payload-v1',
-                    'marker': payload_marker or f'payload-{scene_id}'},
-    }
+    return layout
 
 
 def subject():
@@ -237,6 +226,8 @@ class PuckOnPolicyLayoutTests(unittest.TestCase):
             on_policy.admit_layout(changed, seed=7101, split='on_policy_collection')
 
     def test_reset_seam_is_keyword_only_and_reaches_only_the_existing_native_boundary(self):
+        import numpy as np
+
         on_policy = subject()
         layout_signature = inspect.signature(puck.layout)
         self.assertEqual(str(layout_signature), '(repo_root, seed, split)')
@@ -396,6 +387,19 @@ class PuckReservationAndMintAdmissionTests(unittest.TestCase):
                 self.reserve(Path(directory).resolve(), before, after)
             self.assertEqual(list(Path(directory).iterdir()), [])
 
+    def test_prior_roster_and_each_identity_class_reject_duplicates(self):
+        for field in ('scene_id', 'canonical_scene_sha256',
+                      'scientific_initial_sha256', 'payload_sha256'):
+            snapshot = inventory_snapshot()
+            prior = snapshot['records'][2]['scenes'][0]
+            duplicate = inventory_scene(6001, f'duplicate-{field}')
+            duplicate[field] = prior[field]
+            snapshot['records'][0]['scenes'].append(duplicate)
+            with self.subTest(field=field), tempfile.TemporaryDirectory() as directory:
+                with self.assertRaisesRegex(ValueError, 'collision'):
+                    self.reserve(Path(directory).resolve(), snapshot, copy.deepcopy(snapshot))
+                self.assertEqual(list(Path(directory).iterdir()), [])
+
     def test_fake_minter_stages_exact_order_and_collection_only_projection(self):
         on_policy, stage = self.api('stage_scene_manifest')
         _, project = self.api('collection_scene_projection')
@@ -422,7 +426,7 @@ class PuckReservationAndMintAdmissionTests(unittest.TestCase):
             with patch.object(on_policy, 'mint_layouts', side_effect=AssertionError(
                     'the reviewed real minter must remain uninvoked')), \
                     patch.object(on_policy.os, 'replace', side_effect=replace):
-                result = stage(Path(scene_directory).resolve(), reservation['manifest_bytes'],
+                result = stage(Path(scene_directory).resolve(), reservation['manifest_path'],
                                minter, inventory_after=copy.deepcopy(snapshot))
 
             expected_calls = [
@@ -441,27 +445,71 @@ class PuckReservationAndMintAdmissionTests(unittest.TestCase):
                              list(RESERVED_IDS))
             self.assertEqual(result['manifest_sha256'], digest(manifest_bytes))
             self.assertEqual(Path(result['manifest_path']), target)
+            expected_scene_fields = {
+                'scene_id', 'slot', 'split', 'canonical_scene_sha256',
+                'scientific_initial_sha256', 'payload_sha256', 'layout'}
+            self.assertTrue(all(set(row) == expected_scene_fields
+                                for row in manifest['scenes']))
             projection_bytes = result['collection_projection_bytes']
             self.assertEqual(projection_bytes,
-                             project(manifest_bytes, audience='collection'))
+                             project(target, reservation_path=reservation['manifest_path'],
+                                     audience='collection'))
             projection = json.loads(projection_bytes)
             self.assertEqual(projection_bytes, canonical_bytes(projection))
+            self.assertEqual(set(projection), {'version', 'kind', 'scene_ids', 'scenes'})
             self.assertEqual(projection['scene_ids'], list(RESERVED_IDS[:4]))
             self.assertEqual([row['scene_id'] for row in projection['scenes']],
                              list(RESERVED_IDS[:4]))
+            self.assertTrue(all(set(row) == expected_scene_fields
+                                for row in projection['scenes']))
             self.assertNotIn(b'6120', projection_bytes)
             self.assertNotIn(b'on_policy_development', projection_bytes)
-            self.assertNotIn(b'development-', projection_bytes)
             self.assertNotIn(b'path', projection_bytes)
+            self.assertNotIn(b'payload_bytes', projection_bytes)
+
+            def assert_projection_safe(value):
+                self.assertNotIsInstance(value, bytes)
+                if type(value) is dict:
+                    for key, child in value.items():
+                        self.assertNotIn('path', key.lower())
+                        self.assertNotEqual(key, 'payload_bytes')
+                        assert_projection_safe(child)
+                elif type(value) is list:
+                    for child in value:
+                        assert_projection_safe(child)
+                elif type(value) is str:
+                    self.assertNotIn('on_policy_development', value)
+
+            assert_projection_safe(projection)
             for audience in ('development', 'held_out'):
                 with self.subTest(audience=audience), self.assertRaises(ValueError):
-                    project(manifest_bytes, audience=audience)
+                    project(target, reservation_path=reservation['manifest_path'],
+                            audience=audience)
 
-    def test_id_and_all_three_identity_collision_classes_fail_closed(self):
+    def test_layout_derived_identities_and_all_collision_classes_fail_closed(self):
         on_policy, identities = self.api('scene_candidate_identities')
         _, stage = self.api('stage_scene_manifest')
         first = fake_candidate(RESERVED_IDS[0], 0, 'on_policy_collection')
         first_identities = identities(first)
+        canonical_scene = {
+            'version': 1, 'kind': 'puck-on-policy-canonical-scene-v1',
+            'rover_pose': first['rover_pose'], 'puck_xy': first['puck_xy'],
+            'goal_xy': first['goal_xy']}
+        scientific_initial = canonical_scene | {
+            'kind': 'puck-on-policy-scientific-initial-v1',
+            'initial_qvel': 'all zeros'}
+        self.assertEqual(first_identities, {
+            'canonical_scene_sha256': digest(canonical_scene),
+            'scientific_initial_sha256': digest(scientific_initial),
+            'payload_sha256': digest(canonical_bytes(first)),
+        })
+        legacy_caller_markers = {
+            'layout': first, 'canonical_scene': {'marker': 'changed'},
+            'scientific_initial': {'marker': 'changed'},
+            'payload': {'marker': 'changed'}}
+        with self.assertRaises(ValueError):
+            identities(legacy_caller_markers)
+
         for collision_field in ('canonical_scene_sha256',
                                 'scientific_initial_sha256', 'payload_sha256'):
             snapshot = inventory_snapshot()
@@ -472,34 +520,71 @@ class PuckReservationAndMintAdmissionTests(unittest.TestCase):
                     tempfile.TemporaryDirectory() as scene_directory:
                 reservation = self.reserve(Path(reservation_directory).resolve(), snapshot)
                 with self.assertRaisesRegex(ValueError, 'collision'):
-                    stage(Path(scene_directory).resolve(), reservation['manifest_bytes'],
+                    stage(Path(scene_directory).resolve(), reservation['manifest_path'],
                           fake_candidate, inventory_after=copy.deepcopy(snapshot))
                 self.assertEqual(list(Path(scene_directory).iterdir()), [])
 
-        source = fake_candidate(RESERVED_IDS[0], 0, 'on_policy_collection')
-        objects = {
-            'canonical_scene': source['canonical_scene'],
-            'scientific_initial': source['scientific_initial'],
-            'payload': source['payload'],
-        }
-        for field, duplicate_value in objects.items():
+        def duplicate_physical_scene(scene_id, slot, split):
+            row = fake_candidate(scene_id, slot, split)
+            if scene_id == RESERVED_IDS[4]:
+                for field in ('rover_pose', 'puck_xy', 'goal_xy', 'initial_qvel'):
+                    row[field] = copy.deepcopy(first[field])
+            return row
+
+        def metadata_evasion(scene_id, slot, split):
+            row = duplicate_physical_scene(scene_id, slot, split)
+            if scene_id == RESERVED_IDS[4]:
+                row['identity_marker'] = 'changed-to-evade-collision'
+            return row
+
+        for label, minter in (('physical duplicate', duplicate_physical_scene),
+                              ('changed metadata', metadata_evasion)):
             snapshot = inventory_snapshot()
-
-            def colliding_minter(scene_id, slot, split, *, field=field,
-                                 duplicate_value=duplicate_value):
-                candidate = fake_candidate(scene_id, slot, split)
-                if scene_id == RESERVED_IDS[4]:
-                    candidate[field] = copy.deepcopy(duplicate_value)
-                return candidate
-
-            with self.subTest(cross_split_collision=field), \
+            with self.subTest(label=label), \
                     tempfile.TemporaryDirectory() as reservation_directory, \
                     tempfile.TemporaryDirectory() as scene_directory:
                 reservation = self.reserve(Path(reservation_directory).resolve(), snapshot)
-                with self.assertRaisesRegex(ValueError, 'collision'):
-                    stage(Path(scene_directory).resolve(), reservation['manifest_bytes'],
-                          colliding_minter, inventory_after=copy.deepcopy(snapshot))
+                with self.assertRaises((ValueError, RuntimeError)):
+                    stage(Path(scene_directory).resolve(), reservation['manifest_path'],
+                          minter, inventory_after=copy.deepcopy(snapshot))
                 self.assertEqual(list(Path(scene_directory).iterdir()), [])
+
+    def test_scene_manifest_reader_deeply_rejects_tamper_and_unbound_hashes(self):
+        _, stage = self.api('stage_scene_manifest')
+        _, project = self.api('collection_scene_projection')
+        snapshot = inventory_snapshot()
+        with tempfile.TemporaryDirectory() as reservation_directory, \
+                tempfile.TemporaryDirectory() as source_directory:
+            reservation = self.reserve(Path(reservation_directory).resolve(), snapshot)
+            published = stage(Path(source_directory).resolve(), reservation['manifest_path'],
+                              fake_candidate, inventory_after=copy.deepcopy(snapshot))
+            original = json.loads(Path(published['manifest_path']).read_bytes())
+            mutations = {}
+
+            extra = copy.deepcopy(original); extra['scenes'].append(copy.deepcopy(extra['scenes'][-1]))
+            mutations['extra scene'] = extra
+            missing = copy.deepcopy(original); missing['scenes'].pop()
+            mutations['missing scene'] = missing
+            unbound = copy.deepcopy(original); unbound['scenes'][0]['payload_sha256'] = '0' * 64
+            mutations['unbound payload hash'] = unbound
+            path = copy.deepcopy(original); path['scenes'][0]['layout']['development_path'] = '/dev/scene'
+            mutations['nested development path'] = path
+            payload_bytes = copy.deepcopy(original); payload_bytes['scenes'][0]['payload_bytes'] = 'secret'
+            mutations['payload bytes field'] = payload_bytes
+            wrong_id = copy.deepcopy(original); wrong_id['scenes'][0]['scene_id'] = 6120
+            mutations['wrong ordered ID'] = wrong_id
+            lineage = copy.deepcopy(original); lineage['lineage_sha256'] = '1' * 64
+            mutations['unbound lineage'] = lineage
+            reservation_hash = copy.deepcopy(original); reservation_hash['reservation_sha256'] = '2' * 64
+            mutations['unbound reservation'] = reservation_hash
+
+            for label, manifest in mutations.items():
+                with self.subTest(label=label), tempfile.TemporaryDirectory() as forged_directory:
+                    target = Path(forged_directory).resolve() / 'scene-manifest.json'
+                    target.write_bytes(canonical_bytes(manifest))
+                    with self.assertRaises(ValueError):
+                        project(target, reservation_path=reservation['manifest_path'],
+                                audience='collection')
 
     def test_minter_layout_inventory_and_publication_failures_leave_no_scene_manifest(self):
         on_policy, stage = self.api('stage_scene_manifest')
@@ -515,7 +600,7 @@ class PuckReservationAndMintAdmissionTests(unittest.TestCase):
             def invalid_layout_minter(scene_id, slot, split):
                 candidate = fake_candidate(scene_id, slot, split)
                 if slot == 2:
-                    candidate['layout']['goal_xy'] = candidate['layout']['puck_xy'][:]
+                    candidate['goal_xy'] = candidate['puck_xy'][:]
                 return candidate
 
             changed = copy.deepcopy(snapshot)
@@ -535,7 +620,7 @@ class PuckReservationAndMintAdmissionTests(unittest.TestCase):
 
                     def directory_fsync(file_descriptor):
                         fsync_calls.append(file_descriptor)
-                        if len(fsync_calls) == 2:
+                        if len(fsync_calls) == 4:
                             raise OSError('directory fsync')
                         return real_fsync(file_descriptor)
 
@@ -548,9 +633,86 @@ class PuckReservationAndMintAdmissionTests(unittest.TestCase):
                         if fault == 'replace' else patch.object(
                             on_policy.os, 'replace', wraps=os.replace))
                     with context, self.assertRaises((ValueError, RuntimeError, OSError)):
-                        stage(Path(scene_directory).resolve(), reservation['manifest_bytes'],
+                        stage(Path(scene_directory).resolve(), reservation['manifest_path'],
                               minter, inventory_after=final_inventory)
                     self.assertEqual(list(Path(scene_directory).iterdir()), [])
+                    if fault == 'directory_fsync':
+                        self.assertEqual(len(fsync_calls), 5)
+
+    def test_failed_durable_commit_is_removed_or_explicitly_quarantined(self):
+        on_policy, stage = self.api('stage_scene_manifest')
+        _, project = self.api('collection_scene_projection')
+        snapshot = inventory_snapshot()
+        with tempfile.TemporaryDirectory() as reservation_directory:
+            reservation = self.reserve(Path(reservation_directory).resolve(), snapshot)
+            real_fsync = os.fsync
+
+            def fail_calls(*numbers):
+                calls = []
+
+                def controlled(file_descriptor):
+                    calls.append(file_descriptor)
+                    if len(calls) in numbers:
+                        raise OSError(f'fsync call {len(calls)}')
+                    return real_fsync(file_descriptor)
+
+                return calls, controlled
+
+            calls, publication_failure = fail_calls(4)
+            with tempfile.TemporaryDirectory() as scene_directory, \
+                    patch.object(on_policy.os, 'fsync', side_effect=publication_failure):
+                root = Path(scene_directory).resolve()
+                with self.assertRaises(OSError):
+                    stage(root, reservation['manifest_path'], fake_candidate,
+                          inventory_after=copy.deepcopy(snapshot))
+                self.assertEqual(len(calls), 5)
+                self.assertEqual(list(root.iterdir()), [])
+
+            calls, cleanup_failure = fail_calls(4, 5)
+            with tempfile.TemporaryDirectory() as scene_directory, \
+                    patch.object(on_policy.os, 'fsync', side_effect=cleanup_failure):
+                root = Path(scene_directory).resolve(); target = root / 'scene-manifest.json'
+                quarantine = root / '.scene-manifest.json.quarantine'
+                with self.assertRaises(OSError):
+                    stage(root, reservation['manifest_path'], fake_candidate,
+                          inventory_after=copy.deepcopy(snapshot))
+                self.assertFalse(target.exists())
+                self.assertTrue(quarantine.exists())
+                with self.assertRaisesRegex(ValueError, 'quarant'):
+                    project(target, reservation_path=reservation['manifest_path'],
+                            audience='collection')
+
+            calls, publication_failure = fail_calls(4)
+            with tempfile.TemporaryDirectory() as scene_directory, \
+                    patch.object(on_policy.os, 'fsync', side_effect=publication_failure), \
+                    patch.object(on_policy, '_remove_failed_target', create=True,
+                                 side_effect=OSError('unlink failed')):
+                root = Path(scene_directory).resolve(); target = root / 'scene-manifest.json'
+                quarantine = root / '.scene-manifest.json.quarantine'
+                with self.assertRaises(OSError):
+                    stage(root, reservation['manifest_path'], fake_candidate,
+                          inventory_after=copy.deepcopy(snapshot))
+                self.assertTrue(target.exists())
+                self.assertTrue(quarantine.exists())
+                with self.assertRaisesRegex(ValueError, 'quarant'):
+                    project(target, reservation_path=reservation['manifest_path'],
+                            audience='collection')
+
+            quarantine = Path(reservation['manifest_path']).with_name(
+                '.reservation.json.quarantine')
+            quarantine.write_bytes(b'indeterminate')
+            calls = []
+
+            def forbidden_minter(*arguments):
+                calls.append(arguments)
+                raise AssertionError('quarantined reservation reached minter')
+
+            with tempfile.TemporaryDirectory() as scene_directory:
+                with self.assertRaisesRegex(ValueError, 'quarant'):
+                    stage(Path(scene_directory).resolve(), reservation['manifest_path'],
+                          forbidden_minter, inventory_after=copy.deepcopy(snapshot))
+                self.assertEqual(calls, [])
+                self.assertEqual(list(Path(scene_directory).iterdir()), [])
 
     def test_output_alias_and_symlink_paths_are_rejected_without_publication(self):
         _, stage = self.api('stage_scene_manifest')
@@ -562,7 +724,7 @@ class PuckReservationAndMintAdmissionTests(unittest.TestCase):
             real = parent / 'real'; real.mkdir()
             alias = parent / 'alias'; alias.symlink_to(real, target_is_directory=True)
             with self.assertRaises(ValueError):
-                stage(alias, reservation['manifest_bytes'], fake_candidate,
+                stage(alias, reservation['manifest_path'], fake_candidate,
                       inventory_after=copy.deepcopy(snapshot))
             self.assertEqual(list(real.iterdir()), [])
 
