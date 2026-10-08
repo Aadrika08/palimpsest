@@ -315,6 +315,64 @@ def _request(fixture, part, *, target=None):
     }
 
 
+def _normal_terminal_fixture(reason):
+    """One pure, engine-shaped normal condition terminal; no owner is run."""
+    boundary_tick = 20
+    decision_tick = 22
+    total_ticks = (boundary_tick + 900
+                   if reason == 'time_limit' else decision_tick + 1)
+    run_id = '1234567890abcdef1234567890abcdef'
+    metrics = {'reward': 1.25, 'contact_ticks': 0, 'path_length': 2.5}
+    outcome = {
+        'reason': reason, 'episode': 0, 'steps': total_ticks,
+        'final_distance': 0.25,
+    }
+    projection = [{
+        'episode': 0, 'tick': tick,
+        'pose': [float(tick), 0.0, 0.0],
+        'next_pose': [float(tick + 1), 0.0, 0.0],
+    } for tick in range(boundary_tick, total_ticks)]
+    events = [{
+        'sequence': index, 'kind': 'memory_sensed', 'run_id': run_id,
+        'episode': 0, 'episode_step': row['tick'], 'tick': row['tick'],
+        'packet': {},
+    } for index, row in enumerate(projection)]
+    finished = {
+        'sequence': len(events), 'kind': 'episode_finished', 'run_id': run_id,
+        'episode': 0, 'episode_step': total_ticks, 'tick': total_ticks,
+        'outcome': copy.deepcopy(outcome), 'metrics': copy.deepcopy(metrics),
+    }
+    events.extend([finished, {
+        'sequence': len(events) + 1, 'kind': 'chunk',
+        'path': 'chunks/000000.npz',
+    }])
+    return {
+        'data': {'events': events, 'manifest': {
+            'run_id': run_id, 'status': 'completed',
+            'last_outcome': outcome, 'metrics': metrics,
+        }},
+        'case': {},
+        'projection': projection,
+        'terminal_state': {
+            'manifest_status': 'completed',
+            'final_phase': ('truncated' if reason == 'time_limit'
+                            else 'terminated'),
+            'total_ticks': total_ticks, 'last_tick': total_ticks - 1,
+            'natural_failure': False,
+        },
+        'schedule': {
+            'boundary_tick': boundary_tick, 'event_tick': None,
+            'decision_tick': decision_tick, 'acquired_state_sha256': '0' * 64,
+        },
+    }
+
+
+def _check_normal_terminal(audit, fixture):
+    return audit._condition_terminal(
+        fixture['data'], fixture['case'], fixture['projection'],
+        fixture['terminal_state'], fixture['schedule'])
+
+
 def _receipt_path(request):
     return (Path(request['receipt_root']) /
             f"{request['run_id']}.raw-audit.json")
@@ -432,6 +490,81 @@ def test_retains_a_natural_condition_failure_without_a_replacement(tmp_path):
     assert receipt['terminal_state']['final_phase'] == 'failed'
     assert receipt['terminal_state']['natural_failure'] is True
     assert receipt['terminal_state']['replacement'] is False
+
+
+@pytest.mark.parametrize('reason', [
+    'goal', 'stalled', 'collision', 'time_limit',
+])
+def test_accepts_exact_engine_normal_condition_outcome(reason):
+    audit = _audit()
+    fixture = _normal_terminal_fixture(reason)
+    assert _check_normal_terminal(audit, fixture) is None
+
+
+@pytest.mark.parametrize('defect', [
+    'manifest-missing', 'event-missing', 'outcome-schema', 'outcome-mismatch',
+    'outcome-reason', 'outcome-steps', 'outcome-distance', 'event-schema',
+    'event-boundary', 'metrics-mismatch', 'phase-mismatch', 'manifest-status',
+    'duplicate-event', 'progress-after-event', 'time-limit-before-cap',
+])
+def test_rejects_malformed_or_mismatched_normal_condition_terminal(defect):
+    audit = _audit()
+    fixture = _normal_terminal_fixture(
+        'time_limit' if defect == 'time-limit-before-cap' else 'goal')
+    data = fixture['data']
+    finished = next(event for event in data['events']
+                    if event['kind'] == 'episode_finished')
+    if defect == 'manifest-missing':
+        data['manifest']['last_outcome'] = None
+    elif defect == 'event-missing':
+        data['events'].remove(finished)
+    elif defect == 'outcome-schema':
+        finished['outcome']['undeclared'] = True
+    elif defect == 'outcome-mismatch':
+        finished['outcome']['final_distance'] += 1.0
+    elif defect == 'outcome-reason':
+        data['manifest']['last_outcome']['reason'] = 'task_completed'
+        finished['outcome']['reason'] = 'task_completed'
+    elif defect == 'outcome-steps':
+        data['manifest']['last_outcome']['steps'] -= 1
+        finished['outcome']['steps'] -= 1
+    elif defect == 'outcome-distance':
+        data['manifest']['last_outcome']['final_distance'] = float('nan')
+        finished['outcome']['final_distance'] = float('nan')
+    elif defect == 'event-schema':
+        finished['undeclared'] = True
+    elif defect == 'event-boundary':
+        finished['tick'] -= 1
+    elif defect == 'metrics-mismatch':
+        finished['metrics']['reward'] += 1.0
+    elif defect == 'phase-mismatch':
+        fixture['terminal_state']['final_phase'] = 'paused'
+    elif defect == 'manifest-status':
+        fixture['terminal_state']['manifest_status'] = 'failed'
+    elif defect == 'duplicate-event':
+        data['events'].insert(-1, copy.deepcopy(finished))
+    elif defect == 'progress-after-event':
+        data['events'].insert(-1, {
+            'sequence': finished['sequence'] + 1, 'kind': 'memory_cue',
+            'run_id': data['manifest']['run_id'], 'episode': 0,
+            'episode_step': finished['tick'], 'tick': finished['tick'],
+            'bearing': [1.0, 0.0],
+        })
+    else:
+        fixture['terminal_state']['total_ticks'] -= 1
+        fixture['terminal_state']['last_tick'] -= 1
+        data['manifest']['last_outcome']['steps'] -= 1
+        finished['episode_step'] -= 1
+        finished['tick'] -= 1
+        finished['outcome']['steps'] -= 1
+        fixture['projection'].pop()
+        data['events'] = [
+            event for event in data['events']
+            if not (event.get('kind') == 'memory_sensed'
+                    and event.get('episode_step') == 919)
+        ]
+    with pytest.raises(ValueError):
+        _check_normal_terminal(audit, fixture)
 
 
 @pytest.mark.parametrize('defect', [
