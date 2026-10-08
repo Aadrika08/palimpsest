@@ -155,20 +155,20 @@ and every output keeps `r2_complete=false` and empty qualification claims.
 - Modify: `tests/test_memory_confirmatory_v3.py`
 - Modify: `docs/plans/memory-confirmatory-v3-design.md`
 
-- [ ] Write the exact canonical protocol and assert strict rejection of missing,
+- [x] Write the exact canonical protocol and assert strict rejection of missing,
   unknown, nonfinite, Boolean-substituted, or altered fields.
-- [ ] Pin the cyclic order, 16/16/16 strata, exact 48-family phase count, margins,
+- [x] Pin the cyclic order, 16/16/16 strata, exact 48-family phase count, margins,
   confidence levels, no-interim rule, and split sequencing.
-- [ ] Amend the older design explicitly: thresholds and the full estimator are
+- [x] Amend the older design explicitly: thresholds and the full estimator are
   now frozen before development; development may test only the fixed precision
   screen and technical prerequisites before held-out access.
-- [ ] Add a regression proving acquisition-phase failures are unscored and never
+- [x] Add a regression proving acquisition-phase failures are unscored and never
   converted to the 900-point natural continuation outcome.
-- [ ] Add synthetic 48-family checks for interval arithmetic, strict boundaries,
+- [x] Add synthetic 48-family checks for interval arithmetic, strict boundaries,
   development precision, held-out benefit/null/harm/inconclusive dispositions,
   null cost/success guards, exact no-event guards, immutable inputs, and
   refusal on incomplete or unverified evidence.
-- [ ] Run the focused tests and record the expected failures before implementation.
+- [x] Run the focused tests and record the expected failures before implementation.
 
 ### Task 2: Implement the smallest pure analyzer
 
@@ -176,17 +176,17 @@ and every output keeps `r2_complete=false` and empty qualification claims.
 - Create: `scripts/memory_family_analysis_v3.py`
 - Modify: `scripts/memory_confirmatory_v3.py`
 
-- [ ] Implement exact protocol validation, regenerated analysis design, complete
+- [x] Implement exact protocol validation, regenerated analysis design, complete
   deterministic owner ordering, and one bounded strict-JSON CLI envelope.
-- [ ] Recompute the retained family/kind contrasts from readout cells, rejecting
+- [x] Recompute the retained family/kind contrasts from readout cells, rejecting
   mismatches with the descriptive vectors and any unexpected family count/order.
-- [ ] Implement blocked Satterthwaite intervals with zero-variance refusal, the
+- [x] Implement blocked Satterthwaite intervals with zero-variance refusal, the
   zero-event upper bound,
   development precision gate, held-out decision table, strict margin comparisons,
   and fail-closed evidence bindings.
-- [ ] Keep the analyzer pure, bounded, deterministic, JSON-safe, and explicit
+- [x] Keep the analyzer pure, bounded, deterministic, JSON-safe, and explicit
   about its model assumption and inability to prove upstream attestations.
-- [ ] Remove acquisition-phase causes from natural continuation failures; retain
+- [x] Remove acquisition-phase causes from natural continuation failures; retain
   them as a named unscored infrastructure disposition.
 
 ### Task 3: Bind semantics through the producer
@@ -195,13 +195,13 @@ and every output keeps `r2_complete=false` and empty qualification claims.
 - Modify: `scripts/memory_family_producer_v3.py`
 - Modify: `tests/test_memory_family_producer_v3.py`
 
-- [ ] Validate the protocol semantically in both producer registration paths,
+- [x] Validate the protocol semantically in both producer registration paths,
   rather than accepting any canonical JSON object.
-- [ ] Embed the exact regenerated analysis design and cross-check protocol split,
+- [x] Embed the exact regenerated analysis design and cross-check protocol split,
   development block zero, family order/strata, and condition/owner order.
-- [ ] Add the analysis module to the producer dependency inventory and preserve
+- [x] Add the analysis module to the producer dependency inventory and preserve
   the existing protocol digest in job/admission envelopes.
-- [ ] Reject a canonical but scientifically altered protocol without writing or
+- [x] Reject a canonical but scientifically altered protocol without writing or
   launching anything. Preserve every zero-allocation sentinel.
 
 ### Task 4: Verify, review, and publish the boundary
@@ -210,14 +210,14 @@ and every output keeps `r2_complete=false` and empty qualification claims.
 - Create: `docs/reports/memory-family-analysis-v3.md`
 - Create: `docs/reports/memory-family-analysis-v3-evidence/verification.json`
 
-- [ ] Run focused analysis/readout/producer tests, then the affected family,
+- [x] Run focused analysis/readout/producer tests, then the affected family,
   oracle, admission, snapshot, artifact, and replay slice. Compile changed Python
   files and run `git diff --check`.
-- [ ] Independently review estimands, interval arithmetic, multiplicity, exact
+- [x] Independently review estimands, interval arithmetic, multiplicity, exact
   boundaries, incomplete-matrix refusal, acquisition disposition, protocol
   binding, and all evidence claims. Fix material findings once and rerun the
   affected checks.
-- [ ] Record exact commands, results, hashes, assumptions, and remaining blockers.
+- [x] Record exact commands, results, hashes, assumptions, and remaining blockers.
   Commit as Aadrika Maurya, push through Aadrika08, and open a draft PR stacked on
   PR #100. Do not merge or allocate a native study.
 

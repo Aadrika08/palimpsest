@@ -1,0 +1,123 @@
+{
+  "schema": "memory-family-analysis-v3-verification-v1",
+  "date": "2026-10-08",
+  "base_commit": "392bfe161ac2a07612b2602694728752d7bf1fc7",
+  "plan_commits": [
+    "ee247478a71e609b0563cbee6e5abcce9e568528",
+    "b2a88ec7aa91f9c940d57a10f3b47f7fb80622c5"
+  ],
+  "implementation_commits": [
+    "c9dc01532411a2ab48e6b605096dd016777bed2e",
+    "9d1e054164da853edf3e2acd9133eb55b05cbf6c",
+    "6b956181d4d80860835128b8b587f31d3e0b4a20"
+  ],
+  "branch": "research/memory-family-analysis-v3",
+  "publication": {
+    "pull_request": 101,
+    "draft": true,
+    "base_branch": "research/memory-family-native-registration-v3",
+    "base_pull_request": 100,
+    "goal_tracker_branch": "research/simulation-completion-next",
+    "goal_tracker_commit": "fd6b2f803f67992a83b777a8c0e0e08dce857a92"
+  },
+  "mode": "software-analysis-contract-only",
+  "native_owners_started": 0,
+  "trained_model_inference_runs": 0,
+  "native_study_physics_steps": 0,
+  "unit_test_mujoco_fixture_steps_executed": true,
+  "scientific_observations_read": 0,
+  "development_families_collected": 0,
+  "held_out_blocks_selected": 0,
+  "study_allocation_granted": false,
+  "r2_complete": false,
+  "qualification_claims": [],
+  "contract": {
+    "protocol_sha256": "02e252fb5bdf41c48b2b384378e8a70eee98480829e25e1f0dcf269faebdce9b",
+    "development_design_sha256": "c70ba02adf06c7035145a5372437ae26545d004eee31c38bdef6927d8c25eb04",
+    "family_design_sha256": "8eaf7a6bc8130d5787d1bad149a7e6c013b5418f3dc9bf2aa6388664f9b37785",
+    "owner_order_sha256": "9e0430eff26d606e2df081ae55294025d302b2aaf3de53ea2497a990a94e92b4",
+    "families_per_phase": 48,
+    "families_per_stratum": 16,
+    "cases_per_phase": 144,
+    "condition_cells_per_phase": 1296,
+    "logical_owners_per_phase": 1440,
+    "primary_references": [
+      "no-U",
+      "swapped"
+    ],
+    "primary_two_sided_confidence": 0.975,
+    "null_cost_one_sided_confidence": 0.95,
+    "meaningful_benefit_ticks": 90,
+    "acceptable_harm_ticks": 45,
+    "null_success_harm_margin": 0.0625,
+    "zero_event_upper_bound": 0.06241108903237481
+  },
+  "tests": [
+    {
+      "command": "PYTHONPATH=src /home/utkarsh/Work/shraddha/brain/.worktrees/execution-recovery/.venv/bin/python -m pytest -q tests/test_memory_family_analysis_v3.py tests/test_memory_confirmatory_v3.py",
+      "result": "53 passed in 10.92s"
+    },
+    {
+      "command": "PYTHONPATH=src /home/utkarsh/Work/shraddha/brain/.worktrees/execution-recovery/.venv/bin/python -m pytest -q tests/test_memory_family_producer_v3.py",
+      "result": "35 passed in 70.59s"
+    },
+    {
+      "command": "PYTHONPATH=src /home/utkarsh/Work/shraddha/brain/.worktrees/execution-recovery/.venv/bin/python -m pytest -q tests/test_artifacts.py tests/test_memory_confirmatory_v3.py tests/test_memory_decision_world.py tests/test_memory_experiment.py tests/test_memory_family_analysis_v3.py tests/test_memory_family_oracle_admission_v3.py tests/test_memory_family_oracle_v3.py tests/test_memory_family_producer_v3.py tests/test_memory_family_runtime.py tests/test_memory_family_slots.py tests/test_memory_family_world.py tests/test_memory_task.py tests/test_replay.py tests/test_snapshots.py -k 'not FlynnContinuation'",
+      "result": "221 passed, 7 skipped, 4 deselected, 15 warnings in 166.93s"
+    },
+    {
+      "command": "python -m py_compile scripts/memory_family_analysis_v3.py scripts/memory_confirmatory_v3.py scripts/memory_family_producer_v3.py",
+      "result": "passed"
+    },
+    {
+      "command": "git diff --check",
+      "result": "passed"
+    }
+  ],
+  "independent_review": {
+    "reviewers": 3,
+    "statistical_material_findings": 1,
+    "analyzer_material_findings": 5,
+    "producer_material_findings": 0,
+    "remaining_critical": 0,
+    "remaining_important": 0,
+    "fixed": [
+      "complete approximate-normality, independence and catalog-scope disclosure",
+      "immutable protocol reference bytes and digest",
+      "duplicate run, per-case invariant and own-sham readout validation",
+      "verification receipt lineage binding",
+      "strict integer verification block validation",
+      "own-sham numeric equality compatibility with the upstream readout contract"
+    ],
+    "final_analyzer_tests_passed_by_reviewer": 32
+  },
+  "source_sha256": {
+    "scripts/memory_family_analysis_v3.py": "7ae190f8828416251dae73db150f85e73742e3c688bd75477120650c948ef2ac",
+    "scripts/memory_confirmatory_v3.py": "d25b3be1aa1d9c23f6452cf5649b2a5d464d2111c42702c5e60f6305c2115faa",
+    "scripts/memory_family_producer_v3.py": "5203d669d9632882f83d2747d99d0490d14ab7698b8b6af341dc0d6fe45ac453",
+    "tests/test_memory_family_analysis_v3.py": "32e5351067c60623aa919792dbda2c7c2d96828ac70e3452a80d401d1f32df8f",
+    "tests/test_memory_confirmatory_v3.py": "4142d12be6971a813c6dcde84e87749887d1671fe498eed1c38d484c9b551c6e",
+    "tests/test_memory_family_producer_v3.py": "b2a55567db947971ef957ac15dc8571f72ef72079a777a804d4eb773bffb9532",
+    "docs/plans/memory-family-analysis-v3.md": "b97a58430224f7cdf120344f26c6937d4a5846e35978ca2fba3ce283cd699716",
+    "docs/plans/memory-family-analysis-v3-protocol.json": "02e252fb5bdf41c48b2b384378e8a70eee98480829e25e1f0dcf269faebdce9b",
+    "docs/plans/memory-confirmatory-v3-design.md": "1e6442f2f88ea558055d9bbfdcebf4ed953cb05df5a2af15fbe989c99ba32b8f"
+  },
+  "resource_decision": {
+    "known_required_bytes": 627836977152,
+    "free_bytes": 68743004160,
+    "known_shortfall_bytes": 559093972992,
+    "native_allocation_admissible": false,
+    "unbounded_overhead_excluded": true
+  },
+  "limits": [
+    "approximate model-based intervals with 16 families per cost stratum",
+    "family independence and approximate normality are assumptions, not hash-proven facts",
+    "zero-event success margin clears its conservative bound by only about 0.0000889",
+    "verification receipt bindings are checked but receipt truth is not independently observed",
+    "no complete historical namespace inventory or hash-bound launcher",
+    "no development collection or held-out selection",
+    "no native study or physical-rover evidence",
+    "four FlynnContinuation tests deselected because the upstream core and agents fixture is absent",
+    "CI excluded by instruction"
+  ]
+}
