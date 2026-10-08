@@ -1,0 +1,347 @@
+{
+  "bindings": {
+    "amendment_runner_sha256": "018df14736bd06b5fa563e135d0aae54cbf9696e004cc1fa7602ed05d483aa97",
+    "amendment_sha256": "94dc0b7ead6942bc13c568f9d8e2c77af7604fe3fbaa5ea55b013f000933c41c",
+    "analysis_source_sha256": "a9242aad83fb69a12fd351eaa9af826bbe1df05be166094f8cb54d944509ace7",
+    "development_index_sha256": "850c6337e1fa4e2916751a8f02c20dae4a9ba347eb88eb3f17d17cedb065dc71",
+    "input_ledger": {
+      "bytes": 2382058832,
+      "files": 542,
+      "sha256": "d84998e73aee2c0136383420dba9f3668b26475f45b40f5f72cad724201b3b15"
+    },
+    "metadata_read_clarification_sha256": "2d03e2aaedc8ada337a0b8315126eb665c8f6667273ea8306303f8bb7227f588",
+    "protocol_sha256": "242fad46433241697bb7d7731e692cd1b42918b3788a8f816c6c8a9e9271b5e3"
+  },
+  "checks": {
+    "amendment_execution_completed": true,
+    "committed_execution_byte_identical": true,
+    "committed_report_byte_identical": true,
+    "held_out_accessed_false": true,
+    "input_before_after_equal": true,
+    "model_or_simulator_executed_false": true,
+    "no_failure_receipt": true,
+    "no_third_attempt": true,
+    "numeric_ticks_exact": true,
+    "owner_results_prevalidated": true,
+    "pairs_exact": true,
+    "prevalidation_trajectory_decodes_zero": true,
+    "qualification_claims_empty": true,
+    "r3_complete_false": true,
+    "report_hash_matches_receipt": true,
+    "runs_exact": true
+  },
+  "descriptive_summary": {
+    "arms": {
+      "augmented": {
+        "measures": {
+          "best_progress_metres": {
+            "maximum": 2.9987663326793648,
+            "mean": 1.2831943374526404,
+            "median": 1.0109091689610172,
+            "minimum": 0.0
+          },
+          "contact_ticks": {
+            "maximum": 144,
+            "mean": 45.583333333333336,
+            "median": 26.0,
+            "minimum": 0
+          },
+          "heading_sign_changes": {
+            "maximum": 0,
+            "mean": 0.0,
+            "median": 0.0,
+            "minimum": 0
+          },
+          "mean_abs_heading_command": {
+            "maximum": 0.24512361146509648,
+            "mean": 0.14751630679899053,
+            "median": 0.1206644432163766,
+            "minimum": 0.07717598603417476
+          },
+          "mean_abs_velocity_command": {
+            "maximum": 0.443927600459997,
+            "mean": 0.3478707800124692,
+            "median": 0.38664289149378117,
+            "minimum": 0.21328732239703338
+          },
+          "net_progress_metres": {
+            "maximum": 2.996900344696658,
+            "mean": 1.01157712343595,
+            "median": 1.0095386286575028,
+            "minimum": -1.443406543872154
+          },
+          "path_length_metres": {
+            "maximum": 8.346065772412228,
+            "mean": 4.961453577008258,
+            "median": 4.540908786339779,
+            "minimum": 1.6847299669840718
+          },
+          "regression_from_best_metres": {
+            "maximum": 1.443406543872154,
+            "mean": 0.27161721401669053,
+            "median": 0.0023035342948678483,
+            "minimum": 0.0
+          },
+          "reverse_command_ticks": {
+            "maximum": 0,
+            "mean": 0.0,
+            "median": 0.0,
+            "minimum": 0
+          },
+          "stopped_command_ticks": {
+            "maximum": 0,
+            "mean": 0.0,
+            "median": 0.0,
+            "minimum": 0
+          },
+          "terminal_contact_suffix_ticks": {
+            "maximum": 141,
+            "mean": 42.416666666666664,
+            "median": 24.5,
+            "minimum": 0
+          },
+          "terminal_stall_like_suffix_ticks": {
+            "maximum": 50,
+            "mean": 25.0,
+            "median": 25.0,
+            "minimum": 0
+          },
+          "velocity_sign_changes": {
+            "maximum": 0,
+            "mean": 0.0,
+            "median": 0.0,
+            "minimum": 0
+          }
+        },
+        "outcomes": {
+          "stalled": 6,
+          "time_limit": 6
+        },
+        "runs": 12,
+        "terminal_classes": {
+          "terminal-clear-time-limit": 6,
+          "terminal-contact-stall": 6
+        }
+      },
+      "old-corpus": {
+        "measures": {
+          "best_progress_metres": {
+            "maximum": 9.281047909229786,
+            "mean": 3.8634128653811497,
+            "median": 3.744247730439368,
+            "minimum": 0.0
+          },
+          "contact_ticks": {
+            "maximum": 537,
+            "mean": 85.33333333333333,
+            "median": 54.5,
+            "minimum": 0
+          },
+          "heading_sign_changes": {
+            "maximum": 7,
+            "mean": 2.0,
+            "median": 1.0,
+            "minimum": 1
+          },
+          "mean_abs_heading_command": {
+            "maximum": 0.3526012672269472,
+            "mean": 0.16463736676887938,
+            "median": 0.14477661336461445,
+            "minimum": 0.047624976439148085
+          },
+          "mean_abs_velocity_command": {
+            "maximum": 0.7682207180508251,
+            "mean": 0.5555220069704516,
+            "median": 0.5583422433156326,
+            "minimum": 0.10122889132549365
+          },
+          "net_progress_metres": {
+            "maximum": 9.281047909229786,
+            "mean": 3.4313556538009418,
+            "median": 3.744247730439368,
+            "minimum": -2.422389652141568
+          },
+          "path_length_metres": {
+            "maximum": 14.088030890682646,
+            "mean": 7.700196076223122,
+            "median": 7.427957219662856,
+            "minimum": 1.27673181483577
+          },
+          "regression_from_best_metres": {
+            "maximum": 2.422389652141568,
+            "mean": 0.43205721158020777,
+            "median": 0.003604916220538268,
+            "minimum": 0.0
+          },
+          "reverse_command_ticks": {
+            "maximum": 9,
+            "mean": 0.75,
+            "median": 0.0,
+            "minimum": 0
+          },
+          "stopped_command_ticks": {
+            "maximum": 513,
+            "mean": 49.583333333333336,
+            "median": 0.0,
+            "minimum": 0
+          },
+          "terminal_contact_suffix_ticks": {
+            "maximum": 534,
+            "mean": 63.833333333333336,
+            "median": 4.5,
+            "minimum": 0
+          },
+          "terminal_stall_like_suffix_ticks": {
+            "maximum": 50,
+            "mean": 25.25,
+            "median": 26.5,
+            "minimum": 0
+          },
+          "velocity_sign_changes": {
+            "maximum": 4,
+            "mean": 0.3333333333333333,
+            "median": 0.0,
+            "minimum": 0
+          }
+        },
+        "outcomes": {
+          "goal": 4,
+          "stalled": 6,
+          "time_limit": 2
+        },
+        "runs": 12,
+        "terminal_classes": {
+          "goal": 4,
+          "terminal-clear-time-limit": 1,
+          "terminal-contact-stall": 6,
+          "terminal-contact-time-limit": 1
+        }
+      }
+    },
+    "pairs": {
+      "count": 12,
+      "first_action_divergence_ticks": {
+        "0": 12
+      },
+      "maximum_absolute_action_difference": {
+        "maximum": 1.7117983549833298,
+        "mean": 0.9120368591199318,
+        "median": 0.8361198082566261,
+        "minimum": 0.344931498169899
+      },
+      "mean_absolute_action_difference": {
+        "maximum": 0.41187467653537624,
+        "mean": 0.25383388263706796,
+        "median": 0.22743876000314145,
+        "minimum": 0.11663531758122796
+      },
+      "outcome_transitions": {
+        "goal -> stalled": 3,
+        "goal -> time_limit": 1,
+        "stalled -> stalled": 2,
+        "stalled -> time_limit": 4,
+        "time_limit -> stalled": 1,
+        "time_limit -> time_limit": 1
+      }
+    },
+    "training_seeds": {
+      "10": {
+        "augmented": {
+          "outcomes": {
+            "stalled": 2,
+            "time_limit": 2
+          },
+          "terminal_classes": {
+            "terminal-clear-time-limit": 2,
+            "terminal-contact-stall": 2
+          }
+        },
+        "old-corpus": {
+          "outcomes": {
+            "goal": 2,
+            "stalled": 2
+          },
+          "terminal_classes": {
+            "goal": 2,
+            "terminal-contact-stall": 2
+          }
+        }
+      },
+      "11": {
+        "augmented": {
+          "outcomes": {
+            "time_limit": 4
+          },
+          "terminal_classes": {
+            "terminal-clear-time-limit": 4
+          }
+        },
+        "old-corpus": {
+          "outcomes": {
+            "goal": 1,
+            "stalled": 2,
+            "time_limit": 1
+          },
+          "terminal_classes": {
+            "goal": 1,
+            "terminal-contact-stall": 2,
+            "terminal-contact-time-limit": 1
+          }
+        }
+      },
+      "12": {
+        "augmented": {
+          "outcomes": {
+            "stalled": 4
+          },
+          "terminal_classes": {
+            "terminal-contact-stall": 4
+          }
+        },
+        "old-corpus": {
+          "outcomes": {
+            "goal": 1,
+            "stalled": 2,
+            "time_limit": 1
+          },
+          "terminal_classes": {
+            "goal": 1,
+            "terminal-clear-time-limit": 1,
+            "terminal-contact-stall": 2
+          }
+        }
+      }
+    }
+  },
+  "held_out_accessed": false,
+  "model_or_simulator_executed": false,
+  "output_inventory": {
+    "amendment-execution.json": {
+      "bytes": 1022,
+      "sha256": "3cdca1317d51e0935fd84619bfcaa340fbfff911f7b83b1a631925be3558f2ed"
+    },
+    "amendment.json": {
+      "bytes": 13593,
+      "sha256": "94dc0b7ead6942bc13c568f9d8e2c77af7604fe3fbaa5ea55b013f000933c41c"
+    },
+    "metadata-read-clarification.md": {
+      "bytes": 2975,
+      "sha256": "2d03e2aaedc8ada337a0b8315126eb665c8f6667273ea8306303f8bb7227f588"
+    },
+    "protocol.json": {
+      "bytes": 6964,
+      "sha256": "242fad46433241697bb7d7731e692cd1b42918b3788a8f816c6c8a9e9271b5e3"
+    },
+    "report.json": {
+      "bytes": 25723,
+      "sha256": "42f11c9380d449205aa1451d8538dbe6db007f2367a819936ab02f6406a6e855"
+    }
+  },
+  "qualification_claims": [],
+  "r3_complete": false,
+  "raw_analysis_repeated": false,
+  "schema": "m7-navigation-v2-failure-diagnosis-amendment-verification-v1",
+  "source": "The five compact amended-output files and their local publication copies; no retained producer file or raw trajectory was reopened.",
+  "status": "verified-compact-output",
+  "total_output_bytes": 50277
+}
