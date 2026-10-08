@@ -346,8 +346,12 @@ class PuckReservationAndMintAdmissionTests(unittest.TestCase):
 
             def link(source, target, *arguments, **keywords):
                 source, target = Path(source), Path(target)
-                self.assertTrue(source.is_file())
-                self.assertFalse(target.exists())
+                self.assertIsNotNone(keywords.get('src_dir_fd'))
+                self.assertIsNotNone(keywords.get('dst_dir_fd'))
+                self.assertGreater(os.stat(
+                    source, dir_fd=keywords['src_dir_fd'], follow_symlinks=False).st_size, 0)
+                with self.assertRaises(FileNotFoundError):
+                    os.stat(target, dir_fd=keywords['dst_dir_fd'], follow_symlinks=False)
                 links.append((source.name, target.name))
                 real_link(source, target, *arguments, **keywords)
 
@@ -485,8 +489,12 @@ class PuckReservationAndMintAdmissionTests(unittest.TestCase):
 
             def link(source, target, *arguments, **keywords):
                 source, target = Path(source), Path(target)
-                self.assertTrue(source.is_file())
-                self.assertFalse(target.exists())
+                self.assertIsNotNone(keywords.get('src_dir_fd'))
+                self.assertIsNotNone(keywords.get('dst_dir_fd'))
+                self.assertGreater(os.stat(
+                    source, dir_fd=keywords['src_dir_fd'], follow_symlinks=False).st_size, 0)
+                with self.assertRaises(FileNotFoundError):
+                    os.stat(target, dir_fd=keywords['dst_dir_fd'], follow_symlinks=False)
                 links.append((source.name, target.name))
                 real_link(source, target, *arguments, **keywords)
 
@@ -845,12 +853,13 @@ class PuckReservationAndMintAdmissionTests(unittest.TestCase):
             target_reads = []
 
             def read_exact(*arguments, **keywords):
-                raw = real_read(*arguments, **keywords)
+                result = real_read(*arguments, **keywords)
+                raw = result[0] if keywords.get('return_identity') else result
                 if Path(arguments[1]) == target:
                     target_reads.append(raw)
                     if len(target_reads) == 1:
                         os.replace(replacement, target)
-                return raw
+                return result
 
             with patch.object(on_policy, '_read_exact_file', side_effect=read_exact), \
                     self.assertRaisesRegex(ValueError, 'identity|changed|rebound'):
@@ -1038,7 +1047,7 @@ class PuckReservationAndMintAdmissionTests(unittest.TestCase):
                     real_link = os.link
 
                     def insert_racer(destination):
-                        if Path(destination) == victim and not victim.exists():
+                        if Path(destination).name == victim.name and not victim.exists():
                             victim.write_bytes(racer)
 
                     def replace(source, destination, *arguments, **keywords):
@@ -1068,24 +1077,25 @@ class PuckReservationAndMintAdmissionTests(unittest.TestCase):
             root = Path(directory).resolve()
             events = []
             real_fsync_directory = on_policy._fsync_directory
-            real_unlink = Path.unlink
+            real_unlink = os.unlink
 
-            def fsync_directory(path):
+            def fsync_directory(path, *arguments, **keywords):
                 if Path(path) == root:
                     events.append(('fsync-directory', None))
-                return real_fsync_directory(path)
+                return real_fsync_directory(path, *arguments, **keywords)
 
             def unlink(path, *arguments, **keywords):
-                if Path(path).parent == root:
-                    events.append(('unlink', Path(path).name))
+                if Path(path).name.startswith('.scene-manifest.json'):
+                    events.append(('unlink', Path(path).name,
+                                   keywords.get('dir_fd') is not None))
                 return real_unlink(path, *arguments, **keywords)
 
             with patch.object(on_policy, '_fsync_directory', side_effect=fsync_directory), \
-                    patch.object(Path, 'unlink', new=unlink):
+                    patch.object(on_policy.os, 'unlink', side_effect=unlink):
                 stage(root, reservation['manifest_path'], fake_candidate,
                       inventory_after=copy.deepcopy(snapshot))
             self.assertEqual(events[-1],
-                             ('unlink', '.scene-manifest.json.quarantine'))
+                             ('unlink', '.scene-manifest.json.quarantine', True))
 
     def test_compounded_postcommit_failure_never_exposes_false_success(self):
         on_policy = subject()
@@ -1101,11 +1111,11 @@ class PuckReservationAndMintAdmissionTests(unittest.TestCase):
             real_unlink = Path.unlink
             postcommit_faults = []
 
-            def final_durability_failure(path):
+            def final_durability_failure(path, *arguments, **keywords):
                 if target.exists() and commit.exists() and not quarantine.exists():
                     postcommit_faults.append('postcommit-fsync')
                     raise OSError('final durability failure')
-                return real_fsync_directory(path)
+                return real_fsync_directory(path, *arguments, **keywords)
 
             def receipt_demotion_failure(source, destination, *arguments, **keywords):
                 if Path(source) == commit and Path(destination) == commit_pending:
@@ -1152,12 +1162,12 @@ class PuckReservationAndMintAdmissionTests(unittest.TestCase):
             events = []
             real_directory_fsync = on_policy._fsync_directory
 
-            def directory_fsync(path):
+            def directory_fsync(path, *arguments, **keywords):
                 if target.exists() and 'target-directory-fsync' not in events:
                     events.append('target-directory-fsync')
-                return real_directory_fsync(path)
+                return real_directory_fsync(path, *arguments, **keywords)
 
-            def write_receipt(path, raw):
+            def write_receipt(path, raw, *arguments, **keywords):
                 self.assertTrue(target.exists())
                 self.assertIn('target-directory-fsync', events)
                 events.append('receipt-write')
@@ -1165,6 +1175,7 @@ class PuckReservationAndMintAdmissionTests(unittest.TestCase):
                     handle.write(raw)
                     handle.flush()
                     os.fsync(handle.fileno())
+                return on_policy._identity(os.lstat(path))
 
             with patch.object(on_policy, '_fsync_directory', side_effect=directory_fsync), \
                     patch.object(on_policy, '_write_commit_receipt', create=True,
@@ -1183,7 +1194,7 @@ class PuckReservationAndMintAdmissionTests(unittest.TestCase):
             real_link = os.link
             real_directory_fsync = on_policy._fsync_directory
 
-            def partial_then_fsync_failure(path, raw):
+            def partial_then_fsync_failure(path, raw, *arguments, **keywords):
                 Path(path).write_bytes(raw[:8])
                 raise OSError('commit receipt fsync')
 
@@ -1191,6 +1202,12 @@ class PuckReservationAndMintAdmissionTests(unittest.TestCase):
                 if Path(target).name == 'scene-manifest.json.commit.json':
                     raise OSError('commit receipt publication')
                 return real_link(source, target, *arguments, **keywords)
+
+            def receipt_admission_fsync(root, *arguments, **keywords):
+                if ((Path(root) / 'scene-manifest.json.commit.json').exists() and
+                        (Path(root) / '.scene-manifest.json.quarantine').exists()):
+                    raise OSError('commit receipt admission fsync')
+                return real_directory_fsync(root, *arguments, **keywords)
 
             for label, context_factory in (
                     ('write', lambda: patch.object(
@@ -1202,11 +1219,8 @@ class PuckReservationAndMintAdmissionTests(unittest.TestCase):
                     ('exclusive publication', lambda: patch.object(
                         on_policy.os, 'link', side_effect=receipt_link_failure)),
                     ('admission fsync', lambda: patch.object(
-                        on_policy, '_fsync_directory', side_effect=lambda root: (
-                            (_ for _ in ()).throw(OSError('commit receipt admission fsync'))
-                            if (Path(root) / 'scene-manifest.json.commit.json').exists()
-                            and (Path(root) / '.scene-manifest.json.quarantine').exists()
-                            else real_directory_fsync(root))))):
+                        on_policy, '_fsync_directory',
+                        side_effect=receipt_admission_fsync))):
                 with self.subTest(label=label), tempfile.TemporaryDirectory() as directory, \
                         context_factory():
                     root = Path(directory).resolve()
@@ -1309,18 +1323,20 @@ class PuckReservationAndMintAdmissionTests(unittest.TestCase):
                     project(target, reservation_path=reservation['manifest_path'],
                             audience='collection')
 
-            real_unlink = Path.unlink
+            real_unlink = os.unlink
             with tempfile.TemporaryDirectory() as scene_directory:
                 root = Path(scene_directory).resolve()
                 target = root / 'scene-manifest.json'
                 quarantine = root / '.scene-manifest.json.quarantine'
 
                 def fail_final_commit(path, *arguments, **keywords):
-                    if Path(path) == quarantine:
+                    if Path(path).name == quarantine.name:
+                        self.assertIsNotNone(keywords.get('dir_fd'))
                         raise OSError('final quarantine removal failed')
                     return real_unlink(path, *arguments, **keywords)
 
-                with patch.object(Path, 'unlink', new=fail_final_commit), \
+                with patch.object(on_policy.os, 'unlink',
+                                  side_effect=fail_final_commit), \
                         self.assertRaises(OSError):
                     stage(root, reservation['manifest_path'], fake_candidate,
                           inventory_after=copy.deepcopy(snapshot))

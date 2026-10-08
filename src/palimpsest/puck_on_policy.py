@@ -176,8 +176,8 @@ def _object_identity(value):
     return value.st_dev, value.st_ino, value.st_mode, value.st_nlink
 
 
-def _fsync_directory(root):
-    root = _publication_root(root)
+def _open_publication_root(value):
+    root = _publication_root(value)
     before = os.lstat(root)
     flags = (os.O_RDONLY | getattr(os, 'O_DIRECTORY', 0) |
              getattr(os, 'O_NOFOLLOW', 0) | getattr(os, 'O_CLOEXEC', 0))
@@ -189,41 +189,70 @@ def _fsync_directory(root):
                 _directory_identity(opened) != _directory_identity(before) or
                 _directory_identity(opened) != _directory_identity(rebound)):
             raise ValueError('Publication parent directory rebound')
-        os.fsync(directory)
-        after = os.fstat(directory)
-        rebound = os.lstat(root)
-        if (_directory_identity(after) != _directory_identity(opened) or
-                _directory_identity(rebound) != _directory_identity(opened)):
-            raise ValueError('Publication parent directory changed during fsync')
-    finally:
+        return root, directory, _directory_identity(opened)
+    except BaseException:
         os.close(directory)
+        raise
 
 
-def _path_present(path):
-    return os.path.lexists(os.fspath(path))
+def _verify_publication_root(root, directory, root_identity, label='Publication parent'):
+    opened = os.fstat(directory)
+    rebound = os.lstat(root)
+    if (not stat.S_ISDIR(opened.st_mode) or
+            _directory_identity(opened) != root_identity or
+            _directory_identity(rebound) != root_identity):
+        raise ValueError(f'{label} directory changed or rebound')
 
 
-def _write_bytes_new(path, raw, maximum):
+def _fsync_directory(root, directory=None, root_identity=None):
+    owned = directory is None
+    if owned:
+        root, directory, root_identity = _open_publication_root(root)
+    try:
+        _verify_publication_root(root, directory, root_identity)
+        os.fsync(directory)
+        _verify_publication_root(root, directory, root_identity)
+    finally:
+        if owned:
+            os.close(directory)
+
+
+def _path_present(path, directory=None, root_identity=None):
+    path = Path(path)
+    if directory is None:
+        return os.path.lexists(os.fspath(path))
+    root = path.parent
+    _verify_publication_root(root, directory, root_identity)
+    try:
+        os.stat(path.name, dir_fd=directory, follow_symlinks=False)
+    except FileNotFoundError:
+        present = False
+    else:
+        present = True
+    _verify_publication_root(root, directory, root_identity)
+    return present
+
+
+def _write_bytes_new(path, raw, maximum, *, directory=None, root_identity=None):
     if type(raw) is not bytes or len(raw) > maximum:
         raise ValueError('Bounded publication bytes required')
     path = Path(path)
-    root = _publication_root(path.parent)
-    if path.parent != root or not path.name:
+    if not path.name:
         raise ValueError('Publication file parent differs')
-    root_before = os.lstat(root)
-    root_flags = (os.O_RDONLY | getattr(os, 'O_DIRECTORY', 0) |
-                  getattr(os, 'O_NOFOLLOW', 0) | getattr(os, 'O_CLOEXEC', 0))
-    root_descriptor = os.open(root, root_flags)
+    owned = directory is None
+    if owned:
+        root, directory, root_identity = _open_publication_root(path.parent)
+    else:
+        root = path.parent
+        _verify_publication_root(root, directory, root_identity)
+    if path.parent != root:
+        raise ValueError('Publication file parent differs')
     descriptor = None
     try:
-        root_opened = os.fstat(root_descriptor)
-        if (not stat.S_ISDIR(root_opened.st_mode) or
-                _directory_identity(root_opened) != _directory_identity(root_before) or
-                _directory_identity(os.lstat(root)) != _directory_identity(root_opened)):
-            raise ValueError('Publication parent directory rebound')
+        _verify_publication_root(root, directory, root_identity)
         flags = (os.O_WRONLY | os.O_CREAT | os.O_EXCL |
                  getattr(os, 'O_NOFOLLOW', 0) | getattr(os, 'O_CLOEXEC', 0))
-        descriptor = os.open(path.name, flags, 0o600, dir_fd=root_descriptor)
+        descriptor = os.open(path.name, flags, 0o600, dir_fd=directory)
         opened = os.fstat(descriptor)
         if not stat.S_ISREG(opened.st_mode) or opened.st_nlink != 1:
             raise ValueError('New publication file is linked or nonregular')
@@ -235,46 +264,44 @@ def _write_bytes_new(path, raw, maximum):
             view = view[written:]
         os.fsync(descriptor)
         after = os.fstat(descriptor)
-        rebound = os.stat(path.name, dir_fd=root_descriptor, follow_symlinks=False)
+        rebound = os.stat(path.name, dir_fd=directory, follow_symlinks=False)
         if (_object_identity(after) != _object_identity(opened) or
                 _identity(rebound) != _identity(after) or
                 after.st_nlink != 1 or after.st_size != len(raw)):
             raise ValueError('Publication file rebound during write')
-        root_after = os.fstat(root_descriptor)
-        if (_directory_identity(root_after) != _directory_identity(root_opened) or
-                _directory_identity(os.lstat(root)) != _directory_identity(root_opened)):
-            raise ValueError('Publication parent changed during write')
+        _verify_publication_root(root, directory, root_identity,
+                                 'Publication parent during write')
+        return _identity(after)
     finally:
         if descriptor is not None:
             os.close(descriptor)
-        os.close(root_descriptor)
+        if owned:
+            os.close(directory)
 
 
-def _read_exact_file(root, path, maximum, label):
-    root = _publication_root(root)
+def _read_exact_file(root, path, maximum, label, *, directory=None,
+                     root_identity=None, return_identity=False):
+    root = Path(root)
     path = Path(path)
     if path.parent != root or not path.name:
         raise ValueError(f'{label}: exact parent required')
-    root_before = os.lstat(root)
-    root_flags = (os.O_RDONLY | getattr(os, 'O_DIRECTORY', 0) |
-                  getattr(os, 'O_NOFOLLOW', 0) | getattr(os, 'O_CLOEXEC', 0))
-    root_descriptor = os.open(root, root_flags)
+    owned = directory is None
+    if owned:
+        root, directory, root_identity = _open_publication_root(root)
+    else:
+        _verify_publication_root(root, directory, root_identity, f'{label}: parent')
     descriptor = None
     try:
-        root_opened = os.fstat(root_descriptor)
-        if (not stat.S_ISDIR(root_opened.st_mode) or
-                _directory_identity(root_opened) != _directory_identity(root_before) or
-                _directory_identity(os.lstat(root)) != _directory_identity(root_opened)):
-            raise ValueError(f'{label}: parent directory rebound')
-        before = os.stat(path.name, dir_fd=root_descriptor, follow_symlinks=False)
+        _verify_publication_root(root, directory, root_identity, f'{label}: parent')
+        before = os.stat(path.name, dir_fd=directory, follow_symlinks=False)
         if (not stat.S_ISREG(before.st_mode) or before.st_nlink != 1 or
                 before.st_size > maximum):
             raise ValueError(f'{label}: missing, linked, or oversized file')
         flags = (os.O_RDONLY | getattr(os, 'O_NOFOLLOW', 0) |
                  getattr(os, 'O_CLOEXEC', 0))
-        descriptor = os.open(path.name, flags, dir_fd=root_descriptor)
+        descriptor = os.open(path.name, flags, dir_fd=directory)
         opened = os.fstat(descriptor)
-        rebound = os.stat(path.name, dir_fd=root_descriptor, follow_symlinks=False)
+        rebound = os.stat(path.name, dir_fd=directory, follow_symlinks=False)
         if (_identity(opened) != _identity(before) or
                 _identity(rebound) != _identity(opened)):
             raise ValueError(f'{label}: file rebound while opening')
@@ -288,19 +315,18 @@ def _read_exact_file(root, path, maximum, label):
             remaining -= len(block)
         raw = b''.join(chunks)
         after = os.fstat(descriptor)
-        rebound = os.stat(path.name, dir_fd=root_descriptor, follow_symlinks=False)
-        root_after = os.fstat(root_descriptor)
+        rebound = os.stat(path.name, dir_fd=directory, follow_symlinks=False)
         if (len(raw) > maximum or _identity(after) != _identity(opened) or
                 _identity(rebound) != _identity(opened)):
             raise ValueError(f'{label}: file changed during read')
-        if (_directory_identity(root_after) != _directory_identity(root_opened) or
-                _directory_identity(os.lstat(root)) != _directory_identity(root_opened)):
-            raise ValueError(f'{label}: parent directory changed during read')
-        return raw
+        _verify_publication_root(root, directory, root_identity, f'{label}: parent')
+        result = (raw, _identity(opened)) if return_identity else raw
+        return result
     finally:
         if descriptor is not None:
             os.close(descriptor)
-        os.close(root_descriptor)
+        if owned:
+            os.close(directory)
 
 
 def _quarantine_path(root, name):
@@ -333,14 +359,15 @@ def _fresh_publication_root(value, name):
     return root
 
 
-def _write_quarantine(root, name):
+def _write_quarantine(root, name, *, directory=None, root_identity=None):
     quarantine = _quarantine_path(root, name)
     marker = _canonical_bytes({
         'version': 1, 'kind': 'puck-on-policy-publication-quarantine-v1',
         'target': name,
     }, 'publication quarantine')
-    _write_bytes_new(quarantine, marker, _MAX_COMMIT_BYTES)
-    _fsync_directory(root)
+    _write_bytes_new(quarantine, marker, _MAX_COMMIT_BYTES,
+                     directory=directory, root_identity=root_identity)
+    _fsync_directory(root, directory, root_identity)
     return quarantine
 
 
@@ -373,60 +400,117 @@ def _commit_receipt(name, manifest, raw):
     }
 
 
-def _write_commit_receipt(path, raw):
-    _write_bytes_new(path, raw, _MAX_COMMIT_BYTES)
+def _write_commit_receipt(path, raw, *, directory=None, root_identity=None):
+    return _write_bytes_new(path, raw, _MAX_COMMIT_BYTES,
+                            directory=directory, root_identity=root_identity)
 
 
-def _exclusive_publish(pending, final):
+def _exclusive_publish(pending, final, *, directory=None, root_identity=None):
     pending, final = Path(pending), Path(final)
     if pending.parent != final.parent:
         raise ValueError('Publication names must share one exact parent')
-    if _path_present(final):
-        raise FileExistsError(f'Publication destination exists: {final.name}')
-    os.link(pending, final, follow_symlinks=False)
-    source = os.lstat(pending)
-    destination = os.lstat(final)
-    if (not stat.S_ISREG(source.st_mode) or
-            (source.st_dev, source.st_ino) != (destination.st_dev, destination.st_ino) or
-            source.st_nlink != 2 or destination.st_nlink != 2):
-        raise ValueError('Exclusive publication link identity differs')
+    owned = directory is None
+    if owned:
+        root, directory, root_identity = _open_publication_root(pending.parent)
+    else:
+        root = pending.parent
+    try:
+        _verify_publication_root(root, directory, root_identity)
+        if _path_present(final, directory, root_identity):
+            raise FileExistsError(f'Publication destination exists: {final.name}')
+        os.link(pending.name, final.name, src_dir_fd=directory,
+                dst_dir_fd=directory, follow_symlinks=False)
+        source = os.stat(pending.name, dir_fd=directory, follow_symlinks=False)
+        destination = os.stat(final.name, dir_fd=directory, follow_symlinks=False)
+        if (not stat.S_ISREG(source.st_mode) or
+                (source.st_dev, source.st_ino) !=
+                (destination.st_dev, destination.st_ino) or
+                source.st_nlink != 2 or destination.st_nlink != 2):
+            raise ValueError('Exclusive publication link identity differs')
+        _verify_publication_root(root, directory, root_identity)
+    finally:
+        if owned:
+            os.close(directory)
 
 
 def _atomic_manifest(root, name, manifest):
-    root = _fresh_publication_root(root, name)
-    paths = _publication_paths(root, name)
-    target, pending = paths['target'], paths['pending']
-    quarantine = paths['quarantine']
-    commit, commit_pending = paths['commit'], paths['commit_pending']
     raw = _canonical_bytes(manifest, name)
     commit_raw = _canonical_bytes(
         _commit_receipt(name, manifest, raw), 'publication commit receipt')
-    _write_bytes_new(pending, raw, _MAX_JSON_BYTES)
-    _write_quarantine(root, name)
-    _exclusive_publish(pending, target)
-    _fsync_directory(root)
-    pending.unlink()
-    _fsync_directory(root)
-    _write_commit_receipt(commit_pending, commit_raw)
-    _exclusive_publish(commit_pending, commit)
-    _fsync_directory(root)
-    commit_pending.unlink()
-    _fsync_directory(root)
-    if (_read_exact_file(root, target, _MAX_JSON_BYTES, name) != raw or
-            _read_exact_file(root, commit, _MAX_COMMIT_BYTES,
-                             'publication commit receipt') != commit_raw):
-        raise ValueError('Durable publication bytes changed before commit')
-    result = {
-        'manifest_path': str(target), 'manifest_bytes': raw,
-        'manifest_sha256': _sha256(raw),
-        'commit_path': str(commit), 'commit_bytes': commit_raw,
-        'commit_sha256': _sha256(commit_raw),
-    }
-    # The target and positive receipt are already durably linked.  This unlink is
-    # the commit point and intentionally has no later fallible syscall.  A crash
-    # may restore the un-fsynced quarantine entry, which fails closed.
-    quarantine.unlink()
-    return result
+    root, directory, root_identity = _open_publication_root(root)
+    committing = False
+    try:
+        paths = _publication_paths(root, name)
+        target, pending = paths['target'], paths['pending']
+        quarantine = paths['quarantine']
+        commit, commit_pending = paths['commit'], paths['commit_pending']
+        if any(_path_present(path, directory, root_identity)
+               for path in paths.values()):
+            raise ValueError(f'{name}: fresh publication paths required')
+        pending_identity = _write_bytes_new(
+            pending, raw, _MAX_JSON_BYTES, directory=directory,
+            root_identity=root_identity)
+        _write_quarantine(root, name, directory=directory,
+                          root_identity=root_identity)
+        _exclusive_publish(pending, target, directory=directory,
+                           root_identity=root_identity)
+        _fsync_directory(root, directory, root_identity)
+        _verify_publication_root(root, directory, root_identity)
+        os.unlink(pending.name, dir_fd=directory)
+        _verify_publication_root(root, directory, root_identity)
+        _fsync_directory(root, directory, root_identity)
+        target_raw, target_identity = _read_exact_file(
+            root, target, _MAX_JSON_BYTES, name, directory=directory,
+            root_identity=root_identity, return_identity=True)
+        if (target_raw != raw or
+                target_identity[:3] != pending_identity[:3]):
+            raise ValueError('Published manifest identity changed before admission')
+        commit_pending_identity = _write_commit_receipt(
+            commit_pending, commit_raw, directory=directory,
+            root_identity=root_identity)
+        _exclusive_publish(commit_pending, commit, directory=directory,
+                           root_identity=root_identity)
+        _fsync_directory(root, directory, root_identity)
+        _verify_publication_root(root, directory, root_identity)
+        os.unlink(commit_pending.name, dir_fd=directory)
+        _verify_publication_root(root, directory, root_identity)
+        _fsync_directory(root, directory, root_identity)
+        receipt_raw, receipt_identity = _read_exact_file(
+            root, commit, _MAX_COMMIT_BYTES, 'publication commit receipt',
+            directory=directory, root_identity=root_identity, return_identity=True)
+        if (receipt_raw != commit_raw or
+                receipt_identity[:3] != commit_pending_identity[:3]):
+            raise ValueError('Published receipt identity changed before admission')
+        final_target_raw, final_target_identity = _read_exact_file(
+            root, target, _MAX_JSON_BYTES, name, directory=directory,
+            root_identity=root_identity, return_identity=True)
+        final_receipt_raw, final_receipt_identity = _read_exact_file(
+            root, commit, _MAX_COMMIT_BYTES, 'publication commit receipt',
+            directory=directory, root_identity=root_identity, return_identity=True)
+        if (final_target_raw != target_raw or
+                final_target_identity != target_identity):
+            raise ValueError('Published manifest identity changed during admission')
+        if (final_receipt_raw != receipt_raw or
+                final_receipt_identity != receipt_identity):
+            raise ValueError('Published receipt identity changed during admission')
+        result = {
+            'manifest_path': str(target), 'manifest_bytes': raw,
+            'manifest_sha256': _sha256(raw),
+            'commit_path': str(commit), 'commit_bytes': commit_raw,
+            'commit_sha256': _sha256(commit_raw),
+        }
+        _verify_publication_root(root, directory, root_identity)
+        # Target and receipt are durable and identity-checked.  This unlink is the
+        # namespace commit point; only a non-reporting descriptor close follows.
+        committing = True
+        os.unlink(quarantine.name, dir_fd=directory)
+        return result
+    finally:
+        try:
+            os.close(directory)
+        except OSError:
+            if not committing:
+                raise
 
 
 def _read_publication(value, name):
@@ -435,43 +519,55 @@ def _read_publication(value, name):
     target = Path(value)
     if not target.is_absolute() or target.name != name:
         raise ValueError(f'{name}: exact publication path required')
-    root = _publication_root(target.parent)
-    paths = _publication_paths(root, name)
-    pending, quarantine = paths['pending'], paths['quarantine']
-    commit, commit_pending = paths['commit'], paths['commit_pending']
-    if any(_path_present(path) for path in (quarantine, pending, commit_pending)):
-        raise ValueError(f'{name}: publication is quarantined or indeterminate')
+    root, directory, root_identity = _open_publication_root(target.parent)
     try:
-        raw = _read_exact_file(root, target, _MAX_JSON_BYTES, name)
-        commit_raw = _read_exact_file(root, commit, _MAX_COMMIT_BYTES,
-                                      'publication commit receipt')
-    except OSError as error:
-        raise ValueError(f'{name}: exact target and commit receipt required') from error
-    if any(_path_present(path) for path in (quarantine, pending, commit_pending)):
-        raise ValueError(f'{name}: publication changed while read')
-    try:
-        manifest = json.loads(raw)
-        receipt = json.loads(commit_raw)
-    except (UnicodeDecodeError, json.JSONDecodeError) as error:
-        raise ValueError(f'{name}: publication or commit JSON differs') from error
-    expected = _commit_receipt(name, manifest, raw)
-    if (type(receipt) is not dict or set(receipt) != _COMMIT_RECEIPT_FIELDS or
-            _canonical_bytes(receipt, 'publication commit receipt') != commit_raw or
-            type(receipt['version']) is not int or
-            type(receipt['manifest_bytes']) is not int or
-            receipt != expected):
-        raise ValueError(f'{name}: positive commit receipt differs')
-    try:
-        if _read_exact_file(root, target, _MAX_JSON_BYTES, name) != raw:
-            raise ValueError(f'{name}: publication changed after commit admission')
-        if _read_exact_file(root, commit, _MAX_COMMIT_BYTES,
-                            'publication commit receipt') != commit_raw:
-            raise ValueError(f'{name}: commit receipt changed during admission')
-    except OSError as error:
-        raise ValueError(f'{name}: publication disappeared during admission') from error
-    if any(_path_present(path) for path in (quarantine, pending, commit_pending)):
-        raise ValueError(f'{name}: publication changed during final admission')
-    return raw
+        paths = _publication_paths(root, name)
+        pending, quarantine = paths['pending'], paths['quarantine']
+        commit, commit_pending = paths['commit'], paths['commit_pending']
+        blockers = (quarantine, pending, commit_pending)
+        if any(_path_present(path, directory, root_identity) for path in blockers):
+            raise ValueError(f'{name}: publication is quarantined or indeterminate')
+        try:
+            raw, target_identity = _read_exact_file(
+                root, target, _MAX_JSON_BYTES, name, directory=directory,
+                root_identity=root_identity, return_identity=True)
+            commit_raw, commit_identity = _read_exact_file(
+                root, commit, _MAX_COMMIT_BYTES, 'publication commit receipt',
+                directory=directory, root_identity=root_identity, return_identity=True)
+        except OSError as error:
+            raise ValueError(f'{name}: exact target and commit receipt required') from error
+        if any(_path_present(path, directory, root_identity) for path in blockers):
+            raise ValueError(f'{name}: publication changed while read')
+        try:
+            manifest = json.loads(raw)
+            receipt = json.loads(commit_raw)
+        except (UnicodeDecodeError, json.JSONDecodeError) as error:
+            raise ValueError(f'{name}: publication or commit JSON differs') from error
+        expected = _commit_receipt(name, manifest, raw)
+        if (type(receipt) is not dict or set(receipt) != _COMMIT_RECEIPT_FIELDS or
+                _canonical_bytes(receipt, 'publication commit receipt') != commit_raw or
+                type(receipt['version']) is not int or
+                type(receipt['manifest_bytes']) is not int or
+                receipt != expected):
+            raise ValueError(f'{name}: positive commit receipt differs')
+        try:
+            final_raw, final_target_identity = _read_exact_file(
+                root, target, _MAX_JSON_BYTES, name, directory=directory,
+                root_identity=root_identity, return_identity=True)
+            final_commit_raw, final_commit_identity = _read_exact_file(
+                root, commit, _MAX_COMMIT_BYTES, 'publication commit receipt',
+                directory=directory, root_identity=root_identity, return_identity=True)
+        except OSError as error:
+            raise ValueError(f'{name}: publication disappeared during admission') from error
+        if final_raw != raw or final_target_identity != target_identity:
+            raise ValueError(f'{name}: publication identity changed after admission')
+        if final_commit_raw != commit_raw or final_commit_identity != commit_identity:
+            raise ValueError(f'{name}: commit receipt identity changed during admission')
+        if any(_path_present(path, directory, root_identity) for path in blockers):
+            raise ValueError(f'{name}: publication changed during final admission')
+        return raw
+    finally:
+        os.close(directory)
 
 
 def _inventory_roster():
