@@ -677,7 +677,8 @@ def read_snapshot(path):
             raise ValueError("Snapshot archive exceeds limits or duplicates entries")
         if "metadata.json" not in names or archive.getinfo("metadata.json").file_size > MAX_METADATA:
             raise ValueError("Missing/oversized snapshot metadata")
-        metadata = json.loads(archive.read("metadata.json"))
+        from .artifacts import _json
+        metadata = _json(archive.read("metadata.json"))
         if metadata.get("format") != "palimpsest.snapshot" or metadata.get("schema_version") != SCHEMA_VERSION:
             raise ValueError("Unsupported snapshot file format/version")
         used = {"metadata.json"}
