@@ -5,6 +5,13 @@
   "base_commit": "a1801e62533d2aeaec164441a39037ef0da3ec09",
   "implementation_commit": "c7c621f404edec36932b14e97570504d6215c2bf",
   "branch": "research/memory-family-native-registration-v3",
+  "publication": {
+    "pull_request": 100,
+    "draft": true,
+    "base_branch": "research/memory-family-oracle-raw-adapter",
+    "goal_tracker_branch": "research/simulation-completion-next",
+    "goal_tracker_commit": "fd6b2f8"
+  },
   "mode": "software-contract-only",
   "native_owners_started": 0,
   "trained_model_inference_runs": 0,

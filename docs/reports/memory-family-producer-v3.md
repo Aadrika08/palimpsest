@@ -4,6 +4,8 @@
 **Implementation commit:** `c7c621f404edec36932b14e97570504d6215c2bf`  
 **Base:** `a1801e62533d2aeaec164441a39037ef0da3ec09`
 (`research/memory-family-oracle-raw-adapter`)  
+**Handoff:** draft [PR #100](https://github.com/Aadrika08/palimpsest/pull/100);
+goal tracker `fd6b2f8`
 **Status:** verified software contract; native allocation remains inadmissible
 
 ## Result

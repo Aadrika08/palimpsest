@@ -263,7 +263,7 @@ and [`memory-family-oracle-admission-v3.md`](memory-family-oracle-admission-v3.m
   against the known subtotal, plus the still-unbounded report/audit/prerequisite
   overhead and historical-inventory completeness gate.
 
-- [ ] **Step 4: Publish a stacked draft PR and update the goal tracker**
+- [x] **Step 4: Publish a stacked draft PR and update the goal tracker**
 
   Push this branch through the `Aadrika08` account, open a draft PR against
   `research/memory-family-oracle-raw-adapter`, verify base/head/account, then add
