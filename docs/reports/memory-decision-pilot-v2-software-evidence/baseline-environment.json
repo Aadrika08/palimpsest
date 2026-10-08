@@ -1,0 +1,24 @@
+{
+  "command": [
+    "flock",
+    "/tmp/palimpsest-software-tests.lock",
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/lab-hardening/.venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "tests/test_memory_decision_pilot.py",
+    "tests/test_memory_prerequisites_v2.py",
+    "tests/test_memory_prerequisites_v2_launcher.py"
+  ],
+  "exit_code": 0,
+  "elapsed_seconds": 28.2675847329956,
+  "native_opt_ins": false,
+  "runtime_environment": {
+    "OMP_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1",
+    "MKL_NUM_THREADS": "1",
+    "NUMEXPR_NUM_THREADS": "1",
+    "MUJOCO_GL": "egl",
+    "CUDA_VISIBLE_DEVICES": ""
+  }
+}

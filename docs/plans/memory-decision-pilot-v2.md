@@ -1,11 +1,12 @@
 # Proposed six-case memory decision development pilot
 
-8 October 2026. **Proposed, unapproved and unstarted.** This document requests a
-separate implementation and finite execution allocation. The approval for
+8 October 2026. **Approved by the user's subsequent "approved" reply; implementation,
+registration and native execution have not started.** This document fixes the
+separately approved implementation and finite execution allocation. The approval for
 [memory-prerequisites-v3](memory-prerequisites-v3.md) authorized eight fresh
 prerequisite cells on one profile; it did not authorize this bridge or pilot.
-No implementation, registration, owner, decoder, new readout or pilot follows
-from writing this proposal.
+Writing the earlier proposal alone did not authorize implementation or execution;
+the subsequent approval supplies this separate scope.
 
 ## Evidence that permits this proposal
 
