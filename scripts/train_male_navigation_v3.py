@@ -144,6 +144,30 @@ def admit_schedules(manifest, seed):
     return schedules
 
 
+def admit_model_context(graph, context, args):
+    """Recheck the original graph, extraction manifest, and cell pins returned by V2."""
+    study = protocol()
+    inputs = study["immutable_inputs"]
+    actual_paths = {name: Path(os.path.abspath(getattr(args, name)))
+                    for name in ("graph", "graph_manifest", "cell_source")}
+    declared_paths = {
+        "graph": Path(os.path.abspath(inputs["graph"]["path"])),
+        "graph_manifest": Path(os.path.abspath(inputs["graph_manifest"]["path"])),
+        "cell_source": Path(os.path.abspath(inputs["cell_source"]["path"])),
+    }
+    expected = {
+        str(actual_paths["graph"]): inputs["graph"]["sha256"],
+        str(actual_paths["graph_manifest"]): inputs["graph_manifest"]["sha256"],
+        str(actual_paths["cell_source"]): inputs["cell_source"]["sha256"],
+    }
+    if (actual_paths != declared_paths or not isinstance(graph, dict) or
+            graph.get("source_graph_sha256") != study["training"]["model"]["graph_sha256"] or
+            graph.get("graph_manifest_sha256") != inputs["graph_manifest"]["sha256"] or
+            not isinstance(context, dict) or context.get("model_inputs") != expected):
+        raise ValueError("Pinned original graph, extraction manifest, or cell context differs")
+    return expected
+
+
 def source_identity(deadline, expected=None):
     value = protocol()
     pinned = value["behavior_source_admission"]["existing_hashes"]
@@ -246,6 +270,80 @@ def publish_failure(output, report, error, deadline, storage_budget):
                            storage_budget, MAX_JSON)
     _fsync_directory(path.parent)
     return item
+
+
+def _completed_report(value):
+    return (isinstance(value, dict) and
+            value.get("status") == "completed-navigation-v3-training" and
+            value.get("training_completed") is True and
+            isinstance(value.get("models"), dict) and
+            set(value["models"]) == set(ARMS) and
+            all(value["models"][arm].get("status") == "completed" for arm in ARMS) and
+            value.get("held_out_status") == "locked_unopened" and
+            value.get("qualification_claims") == [])
+
+
+def success_admitted(output, expected_report_sha=None):
+    """A report is success evidence only with its completion receipt and no failure."""
+    output = Path(output)
+    if (_failure_path(output).exists() or not _attempt_path(output).is_file() or
+            not (output / "report.json").is_file() or
+            not (output / "publication.json").is_file() or
+            (output / "report.pending").exists() or
+            (output / "publication.pending").exists()):
+        return False
+    try:
+        payload = artifacts._read(output / "report.json", MAX_JSON)
+        report_value = artifacts._json(payload)
+        receipt = data_reader.read_json(output / "publication.json", MAX_JSON)
+    except (OSError, ValueError):
+        return False
+    digest = hashlib.sha256(payload).hexdigest()
+    return (_completed_report(report_value) and receipt == {
+        "id": "male-navigation-v3-publication-v1",
+        "status": "durably-published",
+        "study_protocol_sha256": PROTOCOL_SHA,
+        "report_sha256": digest,
+        "report_size_bytes": len(payload),
+        "qualification_claims": [],
+    } and (expected_report_sha is None or digest == expected_report_sha))
+
+
+def publish_success(output, deadline, validate, storage_budget, staged):
+    """Durably publish the report, then a receipt required for V3 admission."""
+    output = Path(output)
+    pending, report = output / "report.pending", output / "report.json"
+    publication_pending, publication = (output / "publication.pending",
+                                        output / "publication.json")
+    if (not isinstance(staged, dict) or staged.get("path") != "report.pending" or
+            not isinstance(staged.get("sha256"), str) or
+            type(staged.get("size_bytes")) is not int):
+        raise ValueError("Exact staged V3 report identity required")
+    if (_failure_path(output).exists() or report.exists() or publication.exists() or
+            publication_pending.exists()):
+        raise FileExistsError("Fresh failure-free V3 publication paths required")
+    payload = artifacts._read(pending, MAX_JSON)
+    if (len(payload) != staged["size_bytes"] or
+            hashlib.sha256(payload).hexdigest() != staged["sha256"] or
+            not _completed_report(artifacts._json(payload))):
+        raise ValueError("Staged V3 report identity changed")
+    validate()
+    data_reader.check_deadline(deadline)
+    pending.replace(report)
+    _fsync_directory(output)
+    receipt = {
+        "id": "male-navigation-v3-publication-v1",
+        "status": "durably-published",
+        "study_protocol_sha256": PROTOCOL_SHA,
+        "report_sha256": staged["sha256"],
+        "report_size_bytes": staged["size_bytes"],
+        "qualification_claims": [],
+    }
+    _write_artifact(publication_pending, male_model.canonical(receipt), deadline,
+                    storage_budget, MAX_JSON)
+    publication_pending.replace(publication)
+    _fsync_directory(output)  # Required final durability boundary.
+    return receipt
 
 
 def rss_bytes():
@@ -429,11 +527,13 @@ def train(args):
             admitted_output, data, graph, context = trainer_v2.prepare(args, deadline)
             if admitted_output != output:
                 raise ValueError("V2 admission returned a different output")
+            admit_model_context(graph, context, args)
             schedules = admit_schedules(context["manifest"], args.training_seed)
             validate_prepared_data(data, schedules)
             source_identity(deadline, before_sources)
             check_resources(deadline)
             output.mkdir(exist_ok=False)
+            _fsync_directory(output.parent)
 
             def write(name, payload, maximum=MAX_FILE):
                 if sum(path.stat().st_size for path in output.iterdir() if path.is_file()) + len(payload) > PAIR_BYTES:
@@ -514,7 +614,12 @@ def train(args):
             source_identity(deadline, before_sources)
             check_resources(deadline)
             aggregate.check(0, path=output)
-            trainer_v2.stage_report(output, report, deadline, pair)
+            report["success_admission"] = {
+                "requires": ["normal_return", "report.json", "publication.json",
+                             "no_seed_failure_receipt"],
+                "publication_id": "male-navigation-v3-publication-v1",
+            }
+            staged = trainer_v2.stage_report(output, report, deadline, pair)
 
         def final_admission():
             if cpu_runtime(torch_module) != runtime:
@@ -524,7 +629,7 @@ def train(args):
             check_resources(deadline)
             aggregate.check(0, path=output)
 
-        trainer_v2.publish_report(output, deadline, final_admission)
+        publish_success(output, deadline, final_admission, pair, staged)
         return report
     except BaseException as error:
         if report is None and _attempt_path(output).exists():

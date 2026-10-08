@@ -475,6 +475,39 @@ class MatchedBudgetTrainer(unittest.TestCase):
             with self.assertRaisesRegex(ValueError, "Pinned local behavior"):
                 trainer.source_identity(time.monotonic() + 5)
 
+        study = trainer.protocol()
+        args = types.SimpleNamespace(
+            graph=Path(study["immutable_inputs"]["graph"]["path"]),
+            graph_manifest=Path(study["immutable_inputs"]["graph_manifest"]["path"]),
+            cell_source=Path(study["immutable_inputs"]["cell_source"]["path"]))
+        expected = {
+            str(Path(os.path.abspath(args.graph))):
+                study["immutable_inputs"]["graph"]["sha256"],
+            str(Path(os.path.abspath(args.graph_manifest))):
+                study["immutable_inputs"]["graph_manifest"]["sha256"],
+            str(Path(os.path.abspath(args.cell_source))):
+                study["immutable_inputs"]["cell_source"]["sha256"],
+        }
+        graph = {"source_graph_sha256": study["training"]["model"]["graph_sha256"],
+                 "graph_manifest_sha256":
+                     study["immutable_inputs"]["graph_manifest"]["sha256"]}
+        context = {"model_inputs": expected}
+        trainer.admit_model_context(graph, context, args)
+        for drift in ("graph", "graph-manifest", "cell", "path"):
+            changed_graph, changed_context = copy.deepcopy(graph), copy.deepcopy(context)
+            if drift == "graph":
+                changed_graph["source_graph_sha256"] = "0" * 64
+            elif drift == "path":
+                changed_args = copy.copy(args)
+                changed_args.cell_source = Path("/fixture/substitute-cell")
+            else:
+                path = args.graph_manifest if drift == "graph-manifest" else args.cell_source
+                changed_context["model_inputs"][str(Path(os.path.abspath(path)))] = "0" * 64
+            with self.subTest(model_drift=drift), self.assertRaises(ValueError):
+                trainer.admit_model_context(
+                    changed_graph, changed_context,
+                    changed_args if drift == "path" else args)
+
         for drift in ("graph", "cell", "source"):
             with self.subTest(drift=drift), tempfile.TemporaryDirectory() as directory:
                 output = Path(directory) / "seed-10"
@@ -566,6 +599,7 @@ class MatchedBudgetTrainer(unittest.TestCase):
                   patch.object(trainer, "source_identity", return_value={}),
                   patch.object(trainer, "pre_runtime", return_value={}),
                   patch.object(trainer, "_load_v2", return_value=fake_v2),
+                  patch.object(trainer, "admit_model_context"),
                   patch.object(trainer, "admit_schedules",
                                return_value={arm: Schedule() for arm in trainer.ARMS}),
                   patch.object(trainer, "validate_prepared_data"),
@@ -625,6 +659,7 @@ class MatchedBudgetTrainer(unittest.TestCase):
                   patch.object(trainer, "source_identity", return_value={}),
                   patch.object(trainer, "pre_runtime", return_value={}),
                   patch.object(trainer, "_load_v2", side_effect=load_v2),
+                  patch.object(trainer, "admit_model_context"),
                   patch.object(trainer, "admit_schedules",
                                return_value={arm: Schedule() for arm in trainer.ARMS}),
                   patch.object(trainer, "validate_prepared_data"),
@@ -647,8 +682,13 @@ class MatchedBudgetTrainer(unittest.TestCase):
             output = Path(directory) / "seed-10"
             trainer.reserve_attempt(output, 10, time.monotonic() + 2, Budget())
             output.mkdir()
-            payload = json.dumps({"status": "completed-navigation-v3-training"},
-                                 sort_keys=True, separators=(",", ":")).encode()
+            payload = json.dumps({
+                "status": "completed-navigation-v3-training",
+                "training_completed": True,
+                "models": {arm: {"status": "completed"} for arm in trainer.ARMS},
+                "held_out_status": "locked_unopened",
+                "qualification_claims": [],
+            }, sort_keys=True, separators=(",", ":")).encode()
             staged = trainer._write_artifact(output / "report.pending", payload,
                                              time.monotonic() + 2, Budget(), trainer.MAX_JSON)
             completion = trainer.publish_success(
@@ -673,7 +713,8 @@ class MatchedBudgetTrainer(unittest.TestCase):
 
         real_replace = Path.replace
         real_sync = trainer._fsync_directory
-        for failure in ("rename", "fsync", "final-source", "final-runtime"):
+        for failure in ("report-rename", "completion-rename", "report-fsync",
+                        "completion-fsync", "final-source", "final-runtime"):
             with self.subTest(failure=failure), tempfile.TemporaryDirectory() as directory:
                 output = Path(directory) / "seed-10"
                 args = types.SimpleNamespace(training_seed=10, output=output,
@@ -711,12 +752,19 @@ class MatchedBudgetTrainer(unittest.TestCase):
                     return {"runtime": "fixed"}
 
                 def replace(path, target):
-                    if failure == "rename" and Path(path).name == "report.pending":
-                        raise OSError("injected report rename failure")
+                    if (failure == "report-rename" and Path(path).name == "report.pending") or (
+                            failure == "completion-rename" and
+                            Path(path).name == "publication.pending"):
+                        raise OSError("injected publication rename failure")
                     return real_replace(path, target)
 
+                output_syncs = 0
                 def sync(path):
-                    if failure == "fsync" and Path(path) == output:
+                    nonlocal output_syncs
+                    if Path(path) == output:
+                        output_syncs += 1
+                    if ((failure == "report-fsync" and output_syncs == 1) or
+                            (failure == "completion-fsync" and output_syncs == 2)):
                         raise OSError("injected publication directory fsync failure")
                     return real_sync(path)
 
@@ -731,6 +779,7 @@ class MatchedBudgetTrainer(unittest.TestCase):
                       patch.object(trainer, "source_identity", return_value={}),
                       patch.object(trainer, "pre_runtime", return_value={}),
                       patch.object(trainer, "_load_v2", return_value=fake_v2),
+                      patch.object(trainer, "admit_model_context"),
                       patch.object(trainer, "admit_schedules",
                                    return_value={arm: Schedule() for arm in trainer.ARMS}),
                       patch.object(trainer, "validate_prepared_data"),
@@ -743,7 +792,8 @@ class MatchedBudgetTrainer(unittest.TestCase):
                         trainer.train(args)
                 self.assertTrue(trainer._failure_path(output).is_file())
                 self.assertFalse(trainer.success_admitted(output))
-                self.assertFalse((output / "publication.json").exists())
+                self.assertEqual((output / "publication.json").exists(),
+                                 failure == "completion-fsync")
 
     def test_admission_stops_before_heavy_import_on_limits_or_heldout_cli(self):
         with patch.object(trainer, "rss_bytes", return_value=trainer.GiB + 1):
