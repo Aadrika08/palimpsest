@@ -102,7 +102,7 @@ A durable fresh-output attempt receipt must be fsynced before any retained input
 - [ ] Write pure failing tests for the exact old and augmented length arrays. Assert 46,080 rows, 1,440 units, 32 real rows/unit, the frozen Hamilton arrays, the frozen per-source totals, `q/q+1` row exposure, deterministic seed starts, and byte-identical canonical replay.
 - [ ] Add failing synthetic cases for 1-, 31-, 32-, and 33-row sources, Hamilton ties, multi-source packing, and cyclic wrap. Assert no padding/drop and explicit reset/continuation markers.
 - [ ] Implement the smallest immutable schedule builder using integer arithmetic and `hashlib.sha256`; reject booleans, duplicate identities, empty sources, invalid lengths, overflow, mismatched totals, and any fragment not exactly covering its declared rows.
-- [ ] Run `python -m unittest tests.test_male_navigation_v3 -v`; expected result is all pure schedule tests passing with neither `torch` nor `mujoco` imported.
+- [ ] Run `PYTHONPATH=src ../lab-hardening/.venv/bin/python -m unittest tests.test_male_navigation_v3 -v`; expected result is all pure schedule tests passing under pinned Python 3.11.15 with neither `torch` nor `mujoco` imported.
 - [ ] Commit the pure source/tests and request independent review. Do not open retained inputs.
 
 ### Task 2: Implement the bounded V3 trainer and atomic evidence
