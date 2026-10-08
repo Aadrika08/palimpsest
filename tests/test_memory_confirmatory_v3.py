@@ -61,9 +61,10 @@ def test_complete_family_readout_preserves_failure_and_equal_weighting():
     assert result['family_independence_verified'] is False
 
 
-@pytest.mark.parametrize('mutation', ['missing', 'owner-timeout', 'owner-exit', 'raw-audit', 'unknown-exception', 'prerequisite-failed', 'prerequisite-missing'])
+@pytest.mark.parametrize('mutation', ['missing', 'owner-timeout', 'owner-exit', 'raw-audit', 'unknown-exception', 'acquisition-timeout', 'prerequisite-failed', 'prerequisite-missing'])
 def test_incomplete_matrix_never_imputes_task_score_or_aggregates(mutation):
     plan, rows, gates = example()
+    target = rows[0]
     if mutation == 'missing': rows.pop()
     elif mutation == 'owner-timeout': rows[0].update(owner_status='timeout', audit=None)
     elif mutation == 'owner-exit': rows[0]['owner_exit_proved'] = False
@@ -71,13 +72,23 @@ def test_incomplete_matrix_never_imputes_task_score_or_aggregates(mutation):
     elif mutation == 'unknown-exception':
         rows[0]['audit'].update(goal=False, retained_task_failure=True,
             retained_task_failure_reason='MemoryError', outcome={'reason':'runtime_failure','type':'MemoryError'})
+    elif mutation == 'acquisition-timeout':
+        target = next(row for row in rows if row['condition'] == 'swapped')
+        target['audit'].update(goal=False, retained_task_failure=True,
+            retained_task_failure_reason='acquisition_timeout',
+            outcome={'reason':'runtime_failure','type':'ValueError',
+                     'message':'Memory-v2 supervisor failure: acquisition_timeout'})
     elif mutation == 'prerequisite-failed': gates[0]['audit']['goal'] = False
     else: gates.clear()
     result = summarize(plan, rows, gates)
     assert not result['readout_complete'] and result['contrasts'] is None
     assert result['missing_slots'] or result['unscored_slots'] or result['unmet_prerequisites']
-    if mutation in ('owner-timeout', 'owner-exit', 'raw-audit', 'unknown-exception'):
-        assert not any(c['case_id'] == rows[0]['case_id'] and c['condition'] == rows[0]['condition'] for c in result['cells'])
+    if mutation in ('owner-timeout', 'owner-exit', 'raw-audit', 'unknown-exception', 'acquisition-timeout'):
+        assert not any(c['case_id'] == target['case_id'] and c['condition'] == target['condition'] for c in result['cells'])
+    if mutation == 'acquisition-timeout':
+        assert next(row for row in result['unscored_slots']
+                    if row['case_id'] == target['case_id'] and
+                    row['condition'] == target['condition'])['reason'] == 'acquisition-before-fork'
 
 
 @pytest.mark.parametrize('mutation', ['duplicate-slot', 'extra-slot', 'reused-run', 'case-alias', 'four-conditions', 'failed-sham', 'invariant', 'boolean-ticks', 'nan-path', 'goal-cause', 'failure-cause'])
