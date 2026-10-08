@@ -286,3 +286,37 @@ qualification also remain open. Memory allocation is therefore still
 inadmissible; continue other simulation-release lanes while those prerequisites
 are resolved. All seven release-level gates remain open. Main, CI and the
 physical rover remain unchanged.
+
+### Portable release-evidence matrix published, 8 October 2026
+
+[PR #102](https://github.com/Aadrika08/palimpsest/pull/102), stacked on this
+tracker, gives each of the 26 PRD requirements and seven simulation-completion
+gates one explicit `passed`, `failed`, `limited` or `deferred` status. It replaces
+the release matrix's ignored-run links with committed report anchors while the
+existing JSON evidence index retains raw paths and hashes. A focused contract
+checks exact coverage, the physical deferral, local files and Markdown fragments.
+
+Review corrected `SIM-LAB` from limited to failed because the fixed manual-browser
+v3 gate ended after 56 ticks with `ERR_INSUFFICIENT_RESOURCES`; final integrated
+browser revalidation remains outstanding. The matrix and two baseline report
+tests pass all five checks, and independent follow-up review found no material
+issue. This improves the handoff but closes no release-level gate. CI and live
+browser execution remain outside this unit.
+
+### Navigation-v2 diagnosis failed closed, 8 October 2026
+
+[PR #103](https://github.com/Aadrika08/palimpsest/pull/103), stacked on the
+completed navigation-v2 development evidence, prospectively froze one read-only
+diagnosis of the 24 retained runs. The sole invocation stopped after 2.337815377
+seconds because the producer stores `outcome` as a string while the authored
+fixture modeled an object. It emitted a 293-byte failure receipt and no
+`report.json`, trajectory result or navigation claim.
+
+The corrected parser and faithful regression pass the 15-test diagnosis suite;
+the existing nine development-v2 tests also pass. Byte identity, source/protocol
+hashes, report absence and the single-invocation boundary were independently
+verified with no remaining Critical or Important finding. The corrected analyzer
+has not run on retained data. The frozen invocation is consumed; any new attempt
+needs a separate prospective amendment and cannot be treated as an automatic
+retry. R3 remains failed/open, its held-out reserve remains locked, and main,
+CI and the physical rover remain unchanged.
