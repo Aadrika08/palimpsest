@@ -246,6 +246,19 @@ def validate_read_limits(operation, *, row_count, total_bytes, overhead_bytes):
         raise ValueError('Compact recording exceeds frozen read limits')
 
 
+def _validate_operation_schedule(operation, condition, event_tick, decision_tick):
+    if operation not in ('source', 'condition'):
+        raise ValueError('Unknown compact operation')
+    conditions = PROTOCOL['analysis_contract']['conditions']
+    if ((operation == 'source' and condition is not None)
+            or (operation == 'condition' and condition not in conditions)):
+        raise ValueError('Compact condition differs from operation')
+    if operation == 'source' and (event_tick is not None or decision_tick is not None):
+        raise ValueError('Source conversion has no continuation schedule')
+    if operation == 'condition' and decision_tick is None:
+        raise ValueError('Condition conversion requires a decision tick')
+
+
 def audit_ticks(ticks, *, event_tick=None, decision_tick=None):
     """Return the frozen ordered audit union for one contiguous interval."""
     values = list(ticks)
@@ -427,16 +440,8 @@ def convert_synthetic(*, run_id, case_id, operation, condition, rows,
 
     _run_id(run_id)
     memory._id(case_id)
-    if operation not in ('source', 'condition'):
-        raise ValueError('Unknown compact operation')
-    conditions = PROTOCOL['analysis_contract']['conditions']
-    if ((operation == 'source' and condition is not None)
-            or (operation == 'condition' and condition not in conditions)):
-        raise ValueError('Compact condition differs from operation')
-    if operation == 'source' and (event_tick is not None or decision_tick is not None):
-        raise ValueError('Source conversion has no continuation schedule')
-    if operation == 'condition' and decision_tick is None:
-        raise ValueError('Condition conversion requires a decision tick')
+    _validate_operation_schedule(
+        operation, condition, event_tick, decision_tick)
     compact_rows = _project_rows(rows, operation)
     legacy_manifest = _legacy_manifest(legacy_manifest_bytes, run_id)
     events = _legacy_events(legacy_events_bytes, operation)
@@ -569,12 +574,11 @@ def read_compact(bundle):
 
     manifest = _read_manifest(bundle)
     operation = manifest['operation']
-    if operation not in ('source', 'condition'):
-        raise ValueError('Unknown compact operation')
-    if ((operation == 'source' and manifest['condition'] is not None)
-            or (operation == 'condition'
-                and manifest['condition'] not in PROTOCOL['analysis_contract']['conditions'])):
-        raise ValueError('Compact condition differs from operation')
+    schedule = manifest['audit_schedule']
+    _fields(schedule, {'event_tick', 'decision_tick'}, 'Audit schedule')
+    _validate_operation_schedule(
+        operation, manifest['condition'], schedule['event_tick'],
+        schedule['decision_tick'])
     total_bytes = sum(len(payload) for payload in bundle.values())
     validate_read_limits(
         operation, row_count=manifest['row_count'], total_bytes=total_bytes,
@@ -657,8 +661,6 @@ def read_compact(bundle):
                     row['cam_right_sha256'], row['raw_cam_right_sha256'])):
             raise ValueError('Compact all-row eye commitment differs')
 
-    schedule = manifest['audit_schedule']
-    _fields(schedule, {'event_tick', 'decision_tick'}, 'Audit schedule')
     selected = audit_ticks(
         [row['tick'] for row in rows], event_tick=schedule['event_tick'],
         decision_tick=schedule['decision_tick'],
