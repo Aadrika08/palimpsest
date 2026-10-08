@@ -2,9 +2,9 @@
   "schema": "m7-navigation-v2-checkpoint-support-execution-manifest-v1",
   "attempt": 1,
   "retry_allowed": false,
-  "protocol_sha256": "3d166474f62f3405b8f40301e1a56adf2023fc178a6aa59a6153a11e318973f6",
-  "script_sha256": "d350ba0f4cbf9b5fcf3a1fc54fbc51eeadad967de5ae7c41ec991362b40ea27e",
-  "test_sha256": "fa533673f573231e9a330be6b32f425286ade519fdd4823e951ee7b71379f02a",
+  "protocol_sha256": "8efe8f24e3f8ac74a4213dc938cc256662037cff7865f070f6a85ba78b7ebb35",
+  "script_sha256": "f3fd0a758cef760db0bc36e0592063d017787961cd6b54d5f36762360067d5bf",
+  "test_sha256": "822113b9467682f56d07b414ab81a54b1a8af83d4de3c0bab3104c435e937f80",
   "behavior_sources": {
     "scripts/prepare_male_navigation_v2.py": "ef32434826c04398c5c98e9b8debbe0b9d90adea2f9ac558a05ec00ce5eff333",
     "scripts/train_male_navigation_v2.py": "808f0e410d37d3dbcb56bb4978d4ad2ac824cb5977dafb05873a02fd9aa74737",
@@ -18,5 +18,6 @@
     "src/palimpsest/storage.py": "79664d876834ef20b459cc83963515effdaf75d0256fe5764a9cf8e18cd448c2"
   },
   "outer_timeout_seconds": 210,
+  "outer_supervisor": {"program": "/usr/bin/timeout", "arguments": ["--signal=TERM", "210s"], "through_return_seconds": 210},
   "output": "/home/utkarsh/Work/shraddha/brain/.worktrees/navigation-v2-checkpoint-support/runs/m7-navigation-v2-checkpoint-support-v1"
 }
