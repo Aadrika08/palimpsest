@@ -1,0 +1,239 @@
+"""Synthetic trust-boundary tests for the one-shot navigation-v3 training owner."""
+import copy
+import hashlib
+import importlib
+import json
+import os
+from pathlib import Path
+import sys
+import tempfile
+import unittest
+from unittest.mock import patch
+
+
+ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / "scripts"))
+sys.path.insert(0, str(ROOT / "src"))
+owner = importlib.import_module("run_male_navigation_v3_training")
+
+
+def canonical(value):
+    return json.dumps(value, sort_keys=True, separators=(",", ":"),
+                      ensure_ascii=True, allow_nan=False).encode() + b"\n"
+
+
+class FakeClock:
+    def __init__(self, values=None):
+        self.values = iter(values or ())
+        self.value = 0.0
+
+    def __call__(self):
+        try:
+            self.value = next(self.values)
+        except StopIteration:
+            pass
+        return self.value
+
+
+class NavigationV3ExecutionTests(unittest.TestCase):
+    def production_manifest(self):
+        path = ROOT / owner.MANIFEST_PATH
+        payload = path.read_bytes()
+        value = json.loads(payload)
+        return path, payload, value
+
+    def test_manifest_freezes_exact_order_command_environment_inputs_and_limits(self):
+        path, payload, value = self.production_manifest()
+        admitted = owner.admit_manifest(path, value["self_sha256"])
+        self.assertEqual(payload, canonical(value))
+        self.assertEqual([row["seed"] for row in admitted["pairs"]], [10, 11, 12])
+        self.assertEqual([Path(row["output"]).name for row in admitted["pairs"]],
+                         ["seed-10", "seed-11", "seed-12"])
+        self.assertEqual(admitted["runtime"], {
+            "python": "3.11.15", "cuda_visible_devices": "", "cpu_threads": 1})
+        self.assertEqual(admitted["limits"], {
+            "pair_internal_seconds": 600, "pair_outer_seconds": 660,
+            "all_internal_seconds": 2100, "normal_through_return_seconds": 2150,
+            "enclosing_hard_target_seconds": 2160,
+            "pair_payload_bytes": 64 * 1024**2,
+            "aggregate_bytes": 256 * 1024**2,
+            "rss_bytes": 1024**3, "minimum_free_bytes": 1024**3,
+            "process_inventory_entries": 256, "log_bytes_per_stream": 1024**2})
+        self.assertEqual(admitted["invocation"]["cwd"], str(ROOT))
+        self.assertEqual(admitted["invocation"]["runner_argv"][-1],
+                         admitted["self_sha256"])
+        self.assertEqual(admitted["invocation"]["environment"], owner.EXACT_ENVIRONMENT)
+        self.assertEqual(admitted["immutable_inputs"], owner.protocol()["immutable_inputs"])
+        self.assertEqual(admitted["data_manifest_sha256"], owner.DATA_SHA)
+        self.assertEqual(admitted["qualification_claims"], [])
+        self.assertEqual(admitted["held_out_status"], "locked_unopened")
+
+    def test_manifest_rejects_noncanonical_or_any_bound_field_drift(self):
+        path, payload, value = self.production_manifest()
+        for mutate in (
+            lambda row: row["pairs"].reverse(),
+            lambda row: row["pairs"][0].update(seed=11),
+            lambda row: row["limits"].update(pair_outer_seconds=661),
+            lambda row: row["runtime"].update(python="3.11.16"),
+            lambda row: row["invocation"]["environment"].update(OMP_NUM_THREADS="2"),
+            lambda row: row["immutable_inputs"]["graph"].update(sha256="0" * 64),
+            lambda row: row["behavior_sources"].update({"extra.py": "0" * 64}),
+        ):
+            changed = copy.deepcopy(value)
+            mutate(changed)
+            with self.subTest(changed=changed), tempfile.TemporaryDirectory() as directory:
+                candidate = Path(directory) / "manifest.json"
+                candidate.write_bytes(canonical(owner.seal_manifest(changed)))
+                with self.assertRaises(ValueError):
+                    owner.admit_manifest(candidate, json.loads(candidate.read_text())["self_sha256"])
+        with tempfile.TemporaryDirectory() as directory:
+            candidate = Path(directory) / "manifest.json"
+            candidate.write_bytes(payload + b" ")
+            with self.assertRaises(ValueError):
+                owner.admit_manifest(candidate, value["self_sha256"])
+
+    def test_fresh_reservation_is_durable_and_any_stale_path_consumes_attempt(self):
+        with tempfile.TemporaryDirectory() as directory:
+            output = Path(directory) / "study"
+            receipt = owner.reserve_attempt(output, "a" * 64)
+            self.assertTrue((output / "attempt.json").is_file())
+            self.assertEqual(receipt["retry_allowed"], False)
+            self.assertEqual(receipt["pairs"], [10, 11, 12])
+            for stale in (output, output / "attempt.json", output / "failure.json"):
+                with self.subTest(stale=stale), self.assertRaises(FileExistsError):
+                    owner.reserve_attempt(output, "a" * 64)
+
+    def test_pair_receipt_requires_hash_bound_two_model_success_and_complete_inventory(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            pair = root / "seed-10"
+            pair.mkdir()
+            (root / "seed-10.attempt.json").write_bytes(canonical({
+                "id": "male-navigation-v3-pair-attempt-v1",
+                "study_protocol_sha256": owner.PROTOCOL_SHA,
+                "training_seed": 10, "output": str(pair.absolute()),
+                "models": [{"seed": seed, "arm": arm}
+                           for seed in (10, 11, 12) for arm in owner.ARMS],
+                "retry_allowed": False, "qualification_claims": []}))
+            for name in owner.PAIR_AUXILIARY_FILES:
+                (pair / name).write_bytes(canonical({"synthetic": name}))
+            models = {}
+            for arm in owner.ARMS:
+                name = arm + ".pt"
+                payload = (arm + "-synthetic-checkpoint").encode()
+                (pair / name).write_bytes(payload)
+                models[arm] = {
+                    "status": "completed", "optimizer_updates": 1440,
+                    "real_row_presentations": 46080,
+                    "selected_optimizer_update": 1440,
+                    "selected_real_row_presentations": 46080,
+                    "graph_variant": "original",
+                    "checkpoint": {"path": name, "size_bytes": len(payload),
+                                   "sha256": hashlib.sha256(payload).hexdigest()}}
+            report = {
+                "status": "completed-navigation-v3-training", "training_completed": True,
+                "training_seed": 10, "study_protocol_sha256": owner.PROTOCOL_SHA,
+                "data_manifest_sha256": owner.DATA_SHA, "models": models,
+                "held_out_status": "locked_unopened", "qualification_claims": []}
+            report_payload = canonical(report)
+            (pair / "report.json").write_bytes(report_payload)
+            (pair / "publication.json").write_bytes(canonical({
+                "id": "male-navigation-v3-publication-v1", "status": "durably-published",
+                "study_protocol_sha256": owner.PROTOCOL_SHA,
+                "report_sha256": hashlib.sha256(report_payload).hexdigest(),
+                "report_size_bytes": len(report_payload), "qualification_claims": []}))
+            admitted = owner.admit_pair(pair, 10)
+            self.assertEqual(len(admitted["models"]), 2)
+            self.assertEqual(set(admitted["inventory"]), set(owner.PAIR_FILES))
+            (pair / "unexpected").write_bytes(b"x")
+            with self.assertRaises(ValueError):
+                owner.admit_pair(pair, 10)
+
+    def test_orchestration_is_ordered_and_first_failure_leaves_later_pairs_not_started(self):
+        rows = [{"seed": seed, "argv": [str(seed)], "output": f"/tmp/seed-{seed}"}
+                for seed in (10, 11, 12)]
+        calls = []
+
+        def runner(pair, deadline):
+            calls.append((pair["seed"], deadline))
+            return {"status": "completed" if pair["seed"] == 10 else "failed",
+                    "returncode": 0 if pair["seed"] == 10 else 7,
+                    "identity": {"pid": pair["seed"], "start_ticks": 1,
+                                 "process_group": pair["seed"]},
+                    "observed": [], "survivors": []}
+
+        report = owner.orchestrate(rows, 0.0, runner,
+                                   lambda pair, seed: {"models": [seed * 2, seed * 2 + 1]},
+                                   FakeClock([0, 0, 10, 10, 20, 20]))
+        self.assertEqual([seed for seed, _ in calls], [10, 11])
+        self.assertEqual(report["pairs"]["10"]["status"], "completed")
+        self.assertEqual(report["pairs"]["11"]["status"], "failed")
+        self.assertEqual(report["pairs"]["12"]["status"], "not_started")
+        self.assertFalse(report["training_completed"])
+
+    def test_global_and_pair_boundaries_fail_closed(self):
+        rows = [{"seed": seed, "argv": [str(seed)], "output": f"/tmp/seed-{seed}"}
+                for seed in (10, 11, 12)]
+        exact = owner.orchestrate(rows, 0.0,
+            lambda pair, deadline: {"status": "completed", "returncode": 0,
+                                    "identity": {"pid": pair["seed"], "start_ticks": 1,
+                                                 "process_group": pair["seed"]},
+                                    "observed": [], "survivors": [],
+                                    "elapsed_seconds": 660},
+            lambda pair, seed: {"models": [seed * 2, seed * 2 + 1]},
+            FakeClock([0, 660, 660, 1320, 1320, 1980, 2100]))
+        self.assertTrue(exact["training_completed"])
+        late = owner.orchestrate(rows, 0.0,
+            lambda pair, deadline: {"status": "completed", "returncode": 0,
+                                    "identity": {}, "observed": [], "survivors": []},
+            lambda pair, seed: {"models": []}, FakeClock([1441]))
+        self.assertEqual(late["pairs"]["10"]["status"], "not_started")
+        self.assertEqual(late["failure"]["type"], "TimeoutError")
+
+    def test_process_identity_inventory_rejects_escape_reuse_and_overflow(self):
+        identity = {"pid": 50, "ppid": 40, "group": 50, "start_ticks": 100,
+                    "command": "python trainer"}
+        observed = owner.admit_process_observation(identity, 40, [identity], {}, 256)
+        self.assertEqual(observed[(50, 100)]["group"], 50)
+        for changed in (
+            {**identity, "group": 51}, {**identity, "ppid": 41},
+            {**identity, "start_ticks": 101},
+        ):
+            with self.assertRaises(ValueError):
+                owner.admit_process_observation(identity, 40, [changed], {}, 256)
+        with self.assertRaises(ValueError):
+            owner.admit_process_observation(identity, 40,
+                [{"pid": n, "ppid": 50, "group": 50, "start_ticks": n,
+                  "command": "child"} for n in range(257)], {}, 256)
+
+    def test_execute_reserves_before_child_and_retains_crash_without_retry(self):
+        with tempfile.TemporaryDirectory() as directory:
+            output = Path(directory) / "aggregate"
+            value = {"self_sha256": "a" * 64, "output": str(output),
+                     "pairs": [{"seed": seed, "output": str(output / f"seed-{seed}"),
+                                "argv": [str(seed)]} for seed in (10, 11, 12)]}
+            calls = []
+
+            def run(pair, deadline):
+                self.assertTrue((output / "attempt.json").is_file())
+                calls.append(pair["seed"])
+                raise RuntimeError("synthetic crash")
+
+            with (patch.object(owner, "admit_manifest", return_value=value),
+                  patch.object(owner, "preflight", return_value=None),
+                  patch.object(owner, "source_identity", return_value={}),
+                  patch.object(owner, "runtime_identity", return_value={}),
+                  patch.object(owner, "check_resources", return_value=None),
+                  patch.object(owner, "supervise_pair", side_effect=run)):
+                with self.assertRaisesRegex(RuntimeError, "synthetic crash"):
+                    owner.execute(Path("synthetic"), "a" * 64)
+            self.assertEqual(calls, [10])
+            failure = json.loads((output / "failure.json").read_text())
+            self.assertEqual(failure["pairs"]["10"]["status"], "failed")
+            self.assertEqual(failure["pairs"]["11"]["status"], "not_started")
+            with self.assertRaises(FileExistsError):
+                owner.reserve_attempt(output, "a" * 64)
+
+
+if __name__ == "__main__":
+    unittest.main()
