@@ -92,6 +92,8 @@ PROTOCOL = {
         'retries': 0,
     },
 }
+_PROTOCOL_BYTES = memory.canonical_bytes(PROTOCOL)
+_PROTOCOL_SHA256 = memory.sha256(PROTOCOL)
 
 
 def require(value, message):
@@ -101,7 +103,7 @@ def require(value, message):
 
 def validate_protocol(protocol):
     memory._bounded(protocol, MAX_INPUT_BYTES)
-    require(memory.canonical_bytes(protocol) == memory.canonical_bytes(PROTOCOL),
+    require(memory.canonical_bytes(protocol) == _PROTOCOL_BYTES,
             'Analysis protocol differs from the frozen contract')
     return copy.deepcopy(protocol)
 
@@ -146,7 +148,7 @@ def _make_design(split, block):
             owner_order.append([case_id, 'source'])
             owner_order.extend([case_id, condition] for condition in condition_order(row))
     return {'schema': 'memory-family-analysis-design-v3', 'split': split, 'block': block,
-        'protocol_sha256': memory.sha256(PROTOCOL),
+        'protocol_sha256': _PROTOCOL_SHA256,
         'family_design_sha256': memory.sha256(world.FAMILY_DESIGN),
         'families': families, 'execution_rows': family_order(),
         'owner_order_sha256': memory.sha256(owner_order), 'family_count': 48}
@@ -182,6 +184,7 @@ def _validate_verification(verification, readout, protocol, design):
     require(verification['schema'] == 'memory-family-analysis-verification-v3',
             'Unknown analysis verification schema')
     require(verification['split'] == design['split'] == readout['split']
+            and type(verification['block']) is int
             and verification['block'] == design['block'], 'Analysis split or block binding differs')
     for name in ('registration_sha256', 'plan_sha256', 'readout_sha256',
                  'protocol_sha256', 'design_sha256'):
@@ -250,7 +253,7 @@ def _validate_readout(readout, design):
     memory._list(readout['cells'], 1297)
 
     families = {row['family_id']: row for row in design['families']}
-    expected, cells = {}, {}
+    expected, cells, run_ids = {}, {}, set()
     for family in design['families']:
         row = family['row']
         for kind in KINDS:
@@ -265,6 +268,8 @@ def _validate_readout(readout, design):
             memory._id(cell[name])
         memory._enum(cell['kind'], KINDS)
         memory._enum(cell['condition'], CONDITIONS)
+        require(cell['run_id'] not in run_ids, 'Run ID is reused across analysis cells')
+        run_ids.add(cell['run_id'])
         slot = (cell['case_id'], cell['condition'])
         require(slot in expected and slot not in cells, 'Unregistered or duplicate analysis cell')
         require(expected[slot] == (cell['family_id'], cell['kind']),
@@ -284,6 +289,16 @@ def _validate_readout(readout, design):
         memory._digest(cell['trace_digest']); memory._digest(cell['invariant'])
         cells[slot] = cell
     require(set(cells) == set(expected), 'Analysis cells do not cover the registered design')
+
+    pair_equality = ('trace_digest', 'goal', 'continuation_ticks',
+                     'path_length', 'outcome')
+    for case_id in {case_id for case_id, _ in expected}:
+        rows = [cells[case_id, condition] for condition in CONDITIONS]
+        require(len({row['invariant'] for row in rows}) == 1,
+                'Paired invariant differs across analysis cells')
+        own, sham = cells[case_id, 'own'], cells[case_id, 'sham']
+        require(all(own[name] == sham[name] for name in pair_equality),
+                'Own/sham analysis cells differ')
 
     equality = ('trace_digest', 'goal', 'continuation_ticks', 'path_length',
                 'capped_ticks', 'outcome')
@@ -441,6 +456,7 @@ def analyze(readout, protocol, design, verification):
         'block': design['block'], 'family_count': 48,
         'protocol_sha256': memory.sha256(protocol), 'design_sha256': memory.sha256(design),
         'readout_sha256': memory.sha256(readout),
+        'verification_sha256': memory.sha256(verification),
         'registration_sha256': verification['registration_sha256'],
         'primary': primary, 'guardrails': guardrails,
         'guardrail_summary': guard_summary,
@@ -451,12 +467,16 @@ def analyze(readout, protocol, design, verification):
                              'maximum_half_width_ticks': 45,
                              'no_event_invariant': True},
         'held_out_registration_admissible': admissible,
-        'model_assumption': ('independent generated families within fixed cost strata; '
-                             'model-based coverage'),
+        'model_assumption': (
+            'approximate normality of bounded family contrasts and independence across '
+            'the 48 generated families within fixed cost strata, conditional on the '
+            'registered generator and balanced assignment; IDs and hashes prove neither '
+            'these assumptions nor generalization beyond the registered catalog'),
         'receipt_bindings_validated': True, 'receipt_truth_verified': False,
         'study_complete': False, 'r2_complete': False, 'qualification_claims': [],
-        'scope': ('Model-conditional registered-family analysis only; receipt contents are '
-                  'not independently observed truth and no simulation release gate is closed')}
+        'scope': ('Model-conditional registered-catalog analysis only; receipt contents are '
+                  'not independently observed truth, generalization is unestablished, and '
+                  'no simulation release gate is closed')}
 
 
 def _load(path):

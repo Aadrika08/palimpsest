@@ -142,6 +142,17 @@ def test_protocol_is_exact_canonical_and_condition_order_is_minimally_balanced()
         with pytest.raises(ValueError):
             analysis.validate_protocol(changed)
 
+    frozen = copy.deepcopy(protocol)
+    try:
+        analysis.PROTOCOL['inference']['meaningful_benefit_ticks'] = 89
+        assert analysis.validate_protocol(frozen) == frozen
+        with pytest.raises(ValueError):
+            analysis.validate_protocol(analysis.PROTOCOL)
+        assert analysis.build_design('development', 0, frozen)['protocol_sha256'] == memory.sha256(frozen)
+    finally:
+        analysis.PROTOCOL.clear()
+        analysis.PROTOCOL.update(frozen)
+
 
 @pytest.mark.parametrize(('name', 'pattern', 'expected'), [
     ('benefit', lambda i, k: 0 if k == 'no-event' else
@@ -161,7 +172,10 @@ def test_held_out_dispositions_use_families_strata_and_strict_primary_bounds(nam
     assert result['receipt_bindings_validated'] is True
     assert result['receipt_truth_verified'] is False
     assert result['model_assumption'] == (
-        'independent generated families within fixed cost strata; model-based coverage')
+        'approximate normality of bounded family contrasts and independence across '
+        'the 48 generated families within fixed cost strata, conditional on the '
+        'registered generator and balanced assignment; IDs and hashes prove neither '
+        'these assumptions nor generalization beyond the registered catalog')
     for reference in ('no-U', 'swapped'):
         interval = result['primary'][reference]
         assert interval['estimate'] == pytest.approx(
@@ -321,6 +335,50 @@ def test_generated_design_and_recomputed_cell_contrasts_are_not_caller_assertion
         analysis.analyze(changed_readout, protocol, design, changed_verification)
 
 
+@pytest.mark.parametrize('mutation', ['duplicate-run', 'case-invariant', 'own-sham'])
+def test_analyzer_rejects_readouts_impossible_under_the_descriptive_contract(mutation):
+    protocol = _protocol()
+    readout = _readout(lambda i, kind: 0 if kind == 'no-event' else i % 3 - 1)
+    design = analysis.build_design('held-out', 17, protocol)
+    if mutation == 'duplicate-run':
+        readout['cells'][1]['run_id'] = readout['cells'][0]['run_id']
+    else:
+        case_id = next(cell['case_id'] for cell in readout['cells']
+                       if cell['kind'] == 'change')
+        condition = 'no-U' if mutation == 'case-invariant' else 'sham'
+        cell = next(cell for cell in readout['cells']
+                    if cell['case_id'] == case_id and cell['condition'] == condition)
+        cell['invariant' if mutation == 'case-invariant' else 'trace_digest'] = _digest(mutation)
+    verification = _verification(readout, protocol, design)
+    with pytest.raises(ValueError):
+        analysis.analyze(readout, protocol, design, verification)
+
+
+def test_own_sham_validation_preserves_upstream_numeric_equality():
+    protocol = _protocol()
+    readout = _readout(lambda i, kind: 0 if kind == 'no-event' else i % 3 - 1)
+    cell = next(cell for cell in readout['cells']
+                if cell['kind'] == 'change' and cell['condition'] == 'sham')
+    cell['path_length'] = int(cell['path_length'])
+    design = analysis.build_design('held-out', 17, protocol)
+    verification = _verification(readout, protocol, design)
+    assert analysis.analyze(readout, protocol, design, verification)['receipt_bindings_validated']
+
+
+def test_result_binds_verification_receipt_lineage():
+    protocol = _protocol()
+    readout = _readout(lambda i, kind: 0 if kind == 'no-event' else i % 3 - 1)
+    design = analysis.build_design('held-out', 17, protocol)
+    verification = _verification(readout, protocol, design)
+    first = analysis.analyze(readout, protocol, design, verification)
+    changed = copy.deepcopy(verification)
+    changed['checks']['condition_order']['sha256'] = _digest('different-order-receipt')
+    second = analysis.analyze(readout, protocol, design, changed)
+    assert first['verification_sha256'] == memory.sha256(verification)
+    assert second['verification_sha256'] == memory.sha256(changed)
+    assert first['verification_sha256'] != second['verification_sha256']
+
+
 @pytest.mark.parametrize('mutation', [
     'incomplete', 'readout-digest', 'protocol-digest', 'failed-check',
     'missing-check', 'development-gate', 'split', 'family-count',
@@ -340,6 +398,16 @@ def test_incomplete_unbound_or_missequenced_input_never_reaches_inference(mutati
     elif mutation == 'selection': verification['held_out_selection']['raw_hex'] = '000012'
     elif mutation == 'split': verification['split'] = 'development'
     else: readout['registered_family_count'] = 47
+    with pytest.raises(ValueError):
+        analysis.analyze(readout, protocol, design, verification)
+
+
+def test_boolean_development_block_is_not_integer_zero():
+    protocol = _protocol()
+    readout = _readout(lambda _i, _kind: 0, split='development')
+    design = analysis.build_design('development', 0, protocol)
+    verification = _verification(readout, protocol, design)
+    verification['block'] = False
     with pytest.raises(ValueError):
         analysis.analyze(readout, protocol, design, verification)
 
