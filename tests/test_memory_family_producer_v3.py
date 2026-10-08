@@ -1,13 +1,14 @@
 """Zero-allocation family-v3 producer contract checks; no native owners run."""
 import copy
 import hashlib
+import json
 from pathlib import Path
 import uuid
 from unittest.mock import patch
 
 import pytest
 
-from palimpsest import artifacts, memory
+from palimpsest import artifacts, memory, memory_experiment
 from palimpsest.memory_experiment import CONDITIONS
 from scripts import memory_family_producer_v3 as producer
 from scripts.memory_family_v3 import build_slots
@@ -43,16 +44,23 @@ def _contract_inputs(tmp_path, *, pair=None):
     source_identity = {'schema': 'source-identity-v1', 'commit': 'fixture'}
     histories = {}
     if pair is None:
-        value = {'version': 1, 'e': {'version': 1, 'episodes': []},
-                 'u': {'version': 1, 'rules': []},
-                 'history_sha256': memory.sha256({'version': 1, 'episodes': []})}
-        for relation in memory.RELATIONS:
+        for index, relation in enumerate(memory.RELATIONS):
+            history = memory_experiment.make_history(200 + 100 * index, relation)
+            value = {'version': 1,
+                     'acquisition': 'recorded_declared_sensor_history',
+                     'e': history, 'u': memory.fit(history),
+                     'history_sha256': memory.sha256(history)}
             histories[relation] = str(_write(inputs / f'{relation}.json', value))
     else:
         payload = Path(pair['history_bundle_path']).read_bytes()
         for relation in memory.RELATIONS:
             path = inputs / f'{relation}.json'
-            path.write_bytes(payload)
+            if relation == pair['case']['regime']:
+                path.write_bytes(payload)
+            else:
+                history = memory_experiment.make_history(400, relation)
+                _write(path, {'version': 1, 'e': history, 'u': memory.fit(history),
+                              'history_sha256': memory.sha256(history)})
             histories[relation] = str(path)
     inventory_path = _write(inputs / 'namespace.json', {
         'schema': 'memory-family-namespace-inventory-v3',
@@ -114,14 +122,16 @@ def test_registration_freezes_one_complete_block_without_writing(tmp_path):
     assert registration['authored_ids']['count'] > 144
     memory._digest(registration['authored_ids']['sha256'])
     assert set(registration['dependencies']) == {
-        'producer', 'family_generator', 'raw_admission', 'pure_oracle'}
+        'producer', 'family_generator', 'raw_admission', 'pure_oracle',
+        'owner_diagnostic'}
     assert producer.validate_registration(registration) == registration
     assert not any(path.exists() for path in values['roots'].values())
 
 
 @pytest.mark.parametrize('defect', [
     'duplicate-run', 'historical-run', 'case', 'resource', 'input-byte',
-    'overlap-root', 'namespace-shape',
+    'overlap-root', 'namespace-shape', 'source-identity', 'history-map',
+    'protocol-format', 'dependency', 'nested-shape',
 ])
 def test_registration_rejects_identity_input_and_resource_tampering(tmp_path, defect):
     values = _contract_inputs(tmp_path)
@@ -142,6 +152,23 @@ def test_registration_rejects_identity_input_and_resource_tampering(tmp_path, de
         Path(values['protocol_path']).write_bytes(b'{}')
     elif defect == 'overlap-root':
         changed['roots']['control'] = changed['roots']['output'] + '/child'
+    elif defect == 'source-identity':
+        changed['source_identity'] = 'not-an-object'
+        changed['source_identity_sha256'] = memory.sha256(changed['source_identity'])
+    elif defect == 'history-map':
+        changed['histories'] = {
+            memory.RELATIONS[0]: changed['histories'][memory.RELATIONS[1]],
+            memory.RELATIONS[1]: changed['histories'][memory.RELATIONS[0]],
+        }
+    elif defect == 'protocol-format':
+        protocol = artifacts._json(Path(values['protocol_path']).read_bytes())
+        Path(values['protocol_path']).write_text(
+            json.dumps(protocol, indent=2, allow_nan=False) + '\n')
+        changed['protocol']['sha256'] = _sha(values['protocol_path'])
+    elif defect == 'dependency':
+        changed['dependencies']['owner_diagnostic']['sha256'] = 'f' * 64
+    elif defect == 'nested-shape':
+        changed['plan'] = []
     else:
         _write(values['inventory_path'], {'schema': 'wrong',
             'historical_run_ids': [], 'historical_authored_ids': []})
@@ -149,6 +176,32 @@ def test_registration_rejects_identity_input_and_resource_tampering(tmp_path, de
     with pytest.raises(ValueError):
         producer.validate_registration(changed)
     assert not any(path.exists() for path in values['roots'].values())
+
+
+def test_registration_rejects_history_namespace_reuse(tmp_path):
+    values = _contract_inputs(tmp_path)
+    for relation in memory.RELATIONS:
+        history = memory_experiment.make_history(777, relation)
+        _write(values['histories'][relation], {
+            'version': 1, 'e': history, 'u': memory.fit(history),
+            'history_sha256': memory.sha256(history),
+        })
+    with pytest.raises(ValueError, match='History namespaces overlap'):
+        _build(values)
+
+    values = _contract_inputs(tmp_path / 'authored')
+    path = Path(values['histories'][memory.RELATIONS[0]])
+    bundle = artifacts._json(path.read_bytes())
+    authored_id = values['slots']['cases'][0]['case_id']
+    check = bundle['e']['episodes'][0]['checks'][0]
+    check['subject_id'] = authored_id
+    check['before']['subject_id'] = authored_id
+    check['after']['subject_id'] = authored_id
+    bundle['history_sha256'] = memory.sha256(bundle['e'])
+    bundle['u'] = memory.fit(bundle['e'])
+    _write(path, bundle)
+    with pytest.raises(ValueError, match='authored ID collides'):
+        _build(values)
 
 
 def _registration_file(values, registration):
@@ -204,12 +257,23 @@ def test_source_and_own_descriptors_are_exact_and_non_executable(tmp_path):
         with pytest.raises(ValueError):
             producer.validate_job(changed)
 
+    with snapshot_path.open('wb') as stream:
+        stream.truncate(producer.RESOURCE_PROJECTION['snapshot_max_bytes'])
+    bounded = {**source, 'snapshot_sha256': _sha(snapshot_path)}
+    assert producer.make_job(
+        registration_path, slot['case_id'], 'own', bounded)['source'] == bounded
+    with snapshot_path.open('ab') as stream:
+        stream.write(b'x')
+    oversized = {**bounded, 'snapshot_sha256': _sha(snapshot_path)}
+    with pytest.raises(ValueError):
+        producer.make_job(registration_path, slot['case_id'], 'own', oversized)
+
 
 def _patch_manifest(run, binding):
     path = Path(run) / 'recording/manifest.json'
     value = artifacts._json(path.read_bytes())
     value['memory_family_producer_v3'] = binding
-    _write(path, value)
+    path.write_text(json.dumps(value, indent=2, allow_nan=False) + '\n')
 
 
 def _supervision(values, job, timeout):
@@ -220,9 +284,11 @@ def _supervision(values, job, timeout):
     report = {
         'schema_version': 1, 'status': 'completed',
         'timeout_seconds': timeout, 'started_utc': '2026-10-08T00:00:00+00:00',
-        'output': str(root), 'returncode': 0, 'elapsed_seconds': 1.0,
+        'output': str(root), 'returncode': 0,
+        'elapsed_seconds': 1.0,
     }
-    path = _write(root / 'supervisor.json', report)
+    path = root / 'supervisor.json'
+    path.write_text(json.dumps(report, indent=2, allow_nan=False) + '\n')
     return {'path': str(path), 'sha256': _sha(path)}
 
 
@@ -300,7 +366,11 @@ def test_close_admits_real_synthetic_pair_and_writes_once(tmp_path):
     assert _tree_hashes(values['roots']['output']) == raw_before
 
 
-@pytest.mark.parametrize('defect', ['namespace', 'owner-active', 'supervisor', 'manifest', 'drift'])
+@pytest.mark.parametrize('defect', [
+    'namespace', 'owner-active', 'supervisor', 'supervisor-path',
+    'supervisor-extra', 'supervisor-overrun', 'supervisor-control', 'manifest',
+    'job-registration', 'drift',
+])
 def test_close_rejects_unproved_or_changed_inputs_without_publication(tmp_path, defect):
     values, _, registration, source_job, own_job, cleanup = _closed_pair(tmp_path)
     cleanup_value = artifacts._json(Path(cleanup).read_bytes())
@@ -315,11 +385,67 @@ def test_close_rejects_unproved_or_changed_inputs_without_publication(tmp_path, 
         _write(path, report)
         cleanup_value['rows'][0]['supervisor_sha256'] = _sha(path)
         _write(cleanup, cleanup_value)
+    elif defect == 'supervisor-path':
+        original_path = Path(cleanup_value['rows'][0]['supervisor_path'])
+        other = original_path.parents[1] / 'substitute' / 'supervisor.json'
+        other.parent.mkdir()
+        for name in ('stdout.log', 'stderr.log'):
+            (other.parent / name).write_bytes((original_path.parent / name).read_bytes())
+        report = artifacts._json(original_path.read_bytes())
+        report['output'] = str(other.parent)
+        other.write_text(json.dumps(report, indent=2, allow_nan=False) + '\n')
+        cleanup_value['rows'][0]['supervisor_path'] = str(other)
+        cleanup_value['rows'][0]['supervisor_sha256'] = _sha(other)
+        _write(cleanup, cleanup_value)
+    elif defect == 'supervisor-extra':
+        path = Path(cleanup_value['rows'][0]['supervisor_path'])
+        (path.parent / 'unregistered.log').write_bytes(b'extra')
+    elif defect == 'supervisor-overrun':
+        path = Path(cleanup_value['rows'][0]['supervisor_path'])
+        report = artifacts._json(path.read_bytes())
+        report['elapsed_seconds'] = report['timeout_seconds'] + 11
+        path.write_text(json.dumps(report, indent=2, allow_nan=False) + '\n')
+        cleanup_value['rows'][0]['supervisor_sha256'] = _sha(path)
+        _write(cleanup, cleanup_value)
+    elif defect == 'supervisor-control':
+        path = Path(cleanup_value['rows'][0]['supervisor_path'])
+        report = artifacts._json(path.read_bytes())
+        report['started_utc'] = 'x' * producer.RESOURCE_PROJECTION['control_max_bytes']
+        path.write_text(json.dumps(report, allow_nan=False))
+        cleanup_value['rows'][0]['supervisor_sha256'] = _sha(path)
+        _write(cleanup, cleanup_value)
     elif defect == 'manifest':
         path = Path(artifacts._json(Path(source_job).read_bytes())['output']) / 'recording/manifest.json'
         manifest = artifacts._json(path.read_bytes())
         manifest.pop('memory_family_producer_v3')
         _write(path, manifest)
+    elif defect == 'job-registration':
+        outer_sha = _sha(registration)
+        alternate = artifacts._json(Path(registration).read_bytes())
+        alternate_publication = tmp_path / 'publication-alternate'
+        alternate['roots']['publication'] = str(alternate_publication)
+        alternate_path = _write(alternate_publication / 'registration.json', alternate)
+        original_post = artifacts._json(Path(own_job).read_bytes())
+        jobs = [
+            producer.make_job(alternate_path, original_post['case_id'], None),
+            producer.make_job(alternate_path, original_post['case_id'], 'own',
+                              original_post['source']),
+        ]
+        for job_path, job, row in zip((source_job, own_job), jobs,
+                                      cleanup_value['rows']):
+            _write(job_path, job)
+            owner_path = Path(row['owner_path'])
+            owner = artifacts._json(owner_path.read_bytes())
+            owner['job_sha256'] = _sha(job_path)
+            _write(owner_path, owner)
+            row['owner_sha256'] = _sha(owner_path)
+            _patch_manifest(job['output'], {
+                'schema': 'memory-family-producer-binding-v3',
+                'registration_sha256': outer_sha,
+                'job_sha256': _sha(job_path),
+                'owner_sha256': row['owner_sha256'],
+            })
+        _write(cleanup, cleanup_value)
 
     original = producer.admission.admit_oracle_pair
     if defect == 'drift':
@@ -337,3 +463,28 @@ def test_close_rejects_unproved_or_changed_inputs_without_publication(tmp_path, 
         with pytest.raises((ValueError, RuntimeError)):
             producer.close_oracle_pair(registration, source_job, own_job, cleanup)
     assert not any((values['roots']['publication'] / 'pair-closes').iterdir())
+
+
+def test_close_publication_failure_leaves_no_partial_final_or_temporary(tmp_path):
+    values, _, registration, source_job, own_job, cleanup = _closed_pair(tmp_path)
+    close_root = values['roots']['publication'] / 'pair-closes'
+    with patch.object(producer.os, 'readlink', return_value='pid:[fixture]'), \
+            patch.object(producer.diagnostic, 'owner_exited', return_value=True), \
+            patch.object(producer.os, 'link', side_effect=OSError('fixture publish failure')):
+        with pytest.raises(OSError, match='fixture publish failure'):
+            producer.close_oracle_pair(registration, source_job, own_job, cleanup)
+    assert not any(close_root.iterdir())
+
+
+def test_contract_flow_has_no_native_launch_path(tmp_path):
+    forbidden = AssertionError('contract attempted native execution')
+    with patch('palimpsest.evaluate.bounded_process', side_effect=forbidden), \
+            patch('subprocess.Popen', side_effect=forbidden), \
+            patch('palimpsest.engine.Engine.open', side_effect=forbidden), \
+            patch('os.killpg', side_effect=forbidden):
+        values, _, registration, source_job, own_job, cleanup = _closed_pair(tmp_path)
+        with patch.object(producer.os, 'readlink', return_value='pid:[fixture]'), \
+                patch.object(producer.diagnostic, 'owner_exited', return_value=True):
+            result = producer.close_oracle_pair(
+                registration, source_job, own_job, cleanup)
+    assert Path(result['path']).is_file()
