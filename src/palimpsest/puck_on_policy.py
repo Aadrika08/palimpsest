@@ -187,6 +187,17 @@ def _remove_failed_target(target):
     target.unlink()
 
 
+def _retain_quarantine(root, name):
+    quarantine = _quarantine_path(root, name)
+    if quarantine.exists() or quarantine.is_symlink():
+        return
+    try:
+        _write_quarantine(root, name)
+    except BaseException:
+        # A partially created marker is still an explicit reader-visible refusal.
+        pass
+
+
 def _atomic_manifest(root, name, manifest):
     root = _publication_root(root)
     target = root / name
@@ -206,6 +217,7 @@ def _atomic_manifest(root, name, manifest):
         published = True
         _fsync_directory(root)
         quarantine.unlink()
+        _fsync_directory(root)
     except BaseException:
         cleanup_failed = False
         try:
@@ -226,6 +238,8 @@ def _atomic_manifest(root, name, manifest):
                 quarantine.unlink(missing_ok=True)
             except BaseException:
                 cleanup_failed = True
+        if cleanup_failed:
+            _retain_quarantine(root, name)
         raise
     return {
         'manifest_path': str(target), 'manifest_bytes': raw,
@@ -513,13 +527,20 @@ def _read_scene_manifest(raw, reservation_raw):
     scenes = manifest['scenes']
     if type(scenes) is not list or len(scenes) != len(roster):
         raise ValueError('Scene manifest requires exactly eight entries')
-    seen = {field: set() for field in (
-        'canonical_scene_sha256', 'scientific_initial_sha256', 'payload_sha256')}
+    occupied_ids = set(reservation['occupied_scene_ids'])
+    seen_ids = set()
+    seen = {
+        field: set(reservation[f'occupied_{field}']) for field in (
+            'canonical_scene_sha256', 'scientific_initial_sha256', 'payload_sha256')
+    }
     for slot, (scene_id, entry) in enumerate(zip(roster, scenes)):
         split = COLLECTION_SPLIT if slot < 4 else DEVELOPMENT_SPLIT
+        if scene_id in occupied_ids or scene_id in seen_ids:
+            raise ValueError('Scene-manifest scene ID collision')
         identities = _validate_scene_entry(entry, scene_id, slot, split)
         if any(value in seen[field] for field, value in identities.items()):
             raise ValueError('Scene-manifest identity collision')
+        seen_ids.add(scene_id)
         for field, value in identities.items():
             seen[field].add(value)
     return manifest
