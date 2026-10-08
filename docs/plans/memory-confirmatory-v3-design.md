@@ -33,9 +33,13 @@ The [completed terminal attribution](../reports/memory-terminal-attribution.md)
 now establishes FOV-only exit loss at tick 880: -90.890360 degrees, 0.452448 m,
 no occlusion, after exit selection at 864 and visibility through 879. This is
 travel visibility loss in one retained own branch, not proof of a geometry or
-controller repair. The next feasibility gate must cover continued target
-visibility during null route-z travel; arrival-only successor checks are
-insufficient. This observation supplies no new native allocation or sham audit.
+controller repair. The next matrix must retain null/direct-route-z coverage and
+its audited visibility failures; arrival-only successor checks do not qualify
+that travel. This does not introduce an all-success/all-visible prerequisite for
+scored arms. The existing prerequisites require success only in their declared
+open-route/retreat/acquisition/restore cells. A scored natural failure remains a
+900 outcome, and harmful transfer may be a valid scientific result. This
+observation supplies no new native allocation or sham audit.
 
 ## Conditions, resources and common fork
 
