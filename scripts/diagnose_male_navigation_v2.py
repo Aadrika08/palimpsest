@@ -322,7 +322,7 @@ def _run_rows(result, case, ledger, producer, protocol, deadline):
     deadband = protocol["analysis"]["thresholds"]["command_deadband"]
     stall_step = protocol["analysis"]["thresholds"]["stall_step_metres"]
     stall_like = (steps < stall_step) & (np.abs(action[:, 0]) > deadband)
-    outcome = result.get("outcome", {}).get("reason")
+    outcome = result.get("outcome")
     if (result.get("status") != "completed-recording" or result.get("executed_ticks") != count or
             result.get("case") != {key: case[key] for key in ("id", "scene_seed", "training_seed", "arm")} or
             outcome != case["outcome"]):

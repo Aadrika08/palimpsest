@@ -117,7 +117,7 @@ class BatchFixture:
         })
         _write_json(run.parent / "result.json", {
             "case": {key: case[key] for key in ("id", "scene_seed", "training_seed", "arm")},
-            "executed_ticks": 2, "outcome": {"reason": case["outcome"], "steps": 2},
+            "executed_ticks": 2, "outcome": case["outcome"],
             "run_id": case["run_id"], "status": "completed-recording",
         })
         for path in (chunk, recording / "events.jsonl", recording / "manifest.json", run.parent / "result.json"):
