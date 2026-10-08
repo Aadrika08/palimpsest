@@ -462,3 +462,39 @@ deadline, storage and identity checks passed with no remaining Critical or
 Important issue. This authorizes only prospective source implementation. No raw
 registry, model, Torch, MuJoCo, minter, simulator, training, development or
 held-out input was accessed; the 3/4 and later 6/8 per-model gates remain open.
+
+### Navigation-v3 bounded trainer verified, 8 October 2026
+
+PR #106 now includes the pure matched-budget scheduler and bounded pair trainer.
+The trainer admits the exact corpus roster, original graph, cell, source/runtime
+identities and canonical schedules before lazy Torch import; executes exactly
+46,080 real rows in 1,440 updates per model; copies only the terminal state; and
+keeps development and held-out routes unreachable. Its v3-specific success path
+requires report rename, directory fsync, a report-hash-bound completion receipt,
+a second directory fsync and final source/runtime checks.
+
+Independent review initially stopped the slice because its tests did not prove
+loss normalization, nonfinite/drift/cap boundaries, terminal-copy timing or
+publication failures. The expanded pinned suite passes all 16 synthetic tests;
+review also completed one fully mocked admissible pair and reproduced every
+rename, fsync, final-source and final-runtime failure as inadmissible. Final
+review found no remaining Critical or Important issue. No retained corpus,
+model, real Torch, simulator, development or held-out execution occurred. Task 3
+must still freeze the complete six-model execution manifest and outer supervisor
+before any training attempt.
+
+### Puck-v3 pure layout source verified, 8 October 2026
+
+PR #108 now implements a finite deterministic one-to-one layout minter and the
+keyword-only explicit-layout reset seam needed by its prospective new scenes.
+Focused pure tests pass, all twenty historical callers retain their positional
+API, reserved IDs remain locked, and no native mutation occurs before explicit
+layout admission. Independent review found no Critical or Important issue.
+
+The wider historical caller suite remains intentionally fail-closed on this
+stacked branch: 39 checks reject the changed whole-file source hash and 15 checks
+still lack the pinned upstream XML; there was no other failure signature. Direct
+historical behavior is unchanged, but a future v3 execution must carry a new
+reviewed source binding and may not claim the frozen old routes green. Registry
+admission, real scene minting, collection, fitting, development and held-out
+remain unexecuted.
