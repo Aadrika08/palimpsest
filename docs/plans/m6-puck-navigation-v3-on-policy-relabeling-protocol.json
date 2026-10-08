@@ -1,0 +1,480 @@
+{
+  "id": "M6-PUCK-NAV-V3-ON-POLICY-RELABEL-1",
+  "version": 1,
+  "state": "prospective-docs-only; no source or numerical execution authorized",
+  "base_commit": "dac56f95ad29cb1ad19e7a64aa8df4023ea27f9b",
+  "predecessor": {
+    "branch": "feat/puck-balanced-development",
+    "pull_request": 56,
+    "pull_request_url": "https://github.com/Aadrika08/palimpsest/pull/56",
+    "verified_remote_head": "dac56f95ad29cb1ad19e7a64aa8df4023ea27f9b",
+    "relationship": "This protocol is stacked directly on the exact predecessor branch and remote PR head."
+  },
+  "question": "Does one fixed round of unchanged analytic-teacher labels on states visited by the existing original puck students produce three freshly fitted models that each reach at least three of four goals on new disjoint development scenes?",
+  "scope": "One simulator-only offline aggregation round for the existing puck task; no production, UI, physical, biological, safety, or automatic release qualification.",
+  "evidence_basis": {
+    "support_gap_report": {
+      "path": "docs/reports/m6-puck-student-diagnosis.md",
+      "sha256": "ae54e2de43536141736e677d68e835c3dd5f9fdd2b51fb8b542d71de5d79084e",
+      "measured_joint_condition": "BEFORE approach, contact true, ready corridor, behind-point arrival greater than 0.08 m",
+      "teacher_training_rows": 0,
+      "student_development_rows": 1575,
+      "interpretation": "Measured support gap and plausible compounding-error mechanism, not causal proof."
+    },
+    "latest_failed_capability_report": {
+      "path": "docs/reports/m6-puck-balanced-development.md",
+      "sha256": "e983dfe0dda9e7f245f1259806bf34e72bf1ad33a9dd4253e5ba4f5b4324e48b",
+      "result": "All three balanced models reached zero of four goals; held-out remained locked."
+    },
+    "immutable_protocols": {
+      "learning_v2": {
+        "path": "docs/plans/m6-puck-learning-v2.json",
+        "sha256": "bfdd047c1763af3d0b254c55df9137e179b65ce99e7eb870ca76f41332a83354"
+      },
+      "task_v5": {
+        "path": "docs/plans/m6-puck-pushing-protocol-v5.json",
+        "sha256": "77ce33fa593247715abe99ff2ba0eca399edbac44b29a580d4f92410b8013c30"
+      },
+      "historical_development": {
+        "path": "docs/plans/m6-puck-student-development-v1.json",
+        "sha256": "2857cfc1c5fe18e9d5f34fe30fdc4fc56467110f69424b8efb82bf77b1f2a370"
+      }
+    }
+  },
+  "single_intervention": {
+    "name": "one on-policy student-state teacher-relabel aggregation round",
+    "collector": "Exact existing original models 21, 22, and 23",
+    "labeler": "Unchanged analytic-puck-behind-align-push-v5 teacher queried once per pre-action student state",
+    "training_change": "Append every admitted teacher-labelled student-state row to the original training split in one fixed order shared by all three fresh fits.",
+    "world_action": "Only the original student's predicted action advances the world during collection.",
+    "excluded": [
+      "balanced loss or row weights",
+      "state or label filtering",
+      "coverage-censoring stop",
+      "teacher takeover, prefix, blend, action override, noise, rescue, or reset",
+      "feature, architecture, loss, optimizer, epoch, batch, seed, or selection change",
+      "winning collector/model selection",
+      "second aggregation round",
+      "threshold tuning or held-out-driven change"
+    ],
+    "estimand_limitation": "The intervention adds rows and therefore adds optimizer updates under the unchanged 30-epoch clock. It also includes all visited states, so the study estimates the complete fixed aggregation procedure and cannot isolate targeted joint-state coverage, other new states, data volume, or extra updates."
+  },
+  "scene_reservations": {
+    "collection": [
+      6110,
+      6111,
+      6112,
+      6113
+    ],
+    "development": [
+      6120,
+      6121,
+      6122,
+      6123
+    ],
+    "held_out": [
+      6200,
+      6201,
+      6202,
+      6203,
+      6204,
+      6205,
+      6206,
+      6207
+    ],
+    "planning_screen": {
+      "scope": "Tracked plans/reports at current local and remote-tracking ref tips plus reachable documentation history; semantic puck-scene use only.",
+      "result": "No candidate ID was found as a puck scene. Textual matches were non-scene material such as hash substrings and an unrelated 6112-byte count.",
+      "raw_scene_registries_or_manifests_opened": false,
+      "scene_geometry_or_payload_generated": false,
+      "claim": "Candidate screen only; not disjointness admission."
+    }
+  },
+  "contamination_admission_before_mint": {
+    "timing": "Must complete and publish atomically before any candidate ID is entered in a scene registry or any new geometry is generated.",
+    "ref_inventory": [
+      "every reachable commit under local heads and tags",
+      "every reachable commit under remote-tracking refs",
+      "freshly advertised remote heads, tags, and pull refs",
+      "every registered worktree head"
+    ],
+    "repository_inventory": [
+      "typed scene/layout fields in tracked plans, reports, manifests, and evidence indexes",
+      "all retained raw scene registries and manifests",
+      "all prior train, recorded-dev, development, evaluation, held-out, and evidence roots"
+    ],
+    "semantic_parsing": "Parse typed scene/layout fields; do not treat numeric substrings in hashes, byte counts, timestamps, or unrelated tasks as scene collisions.",
+    "reject": [
+      "exact scene ID occurrence in a prior roster",
+      "missing, unreadable, symlinked, changing, or incomplete inventory root",
+      "stale or incomplete remote-ref advertisement",
+      "generator, task, runtime, or source drift"
+    ],
+    "self_reservation_exception": "The only allowed typed occurrences are this protocol's exact eight-ID roster and its single hash-bound reservation/scene-manifest lineage. Any occurrence outside that exact lineage or any duplicate lineage manifest is a collision.",
+    "publication": "One durable reservation manifest binds all eight collection/development IDs, inventory roots/ref OIDs, parser/source hashes, and before/after inventory hashes.",
+    "collision_disposition": "Stop this protocol. Never substitute an ID in place; create a versioned protocol and obtain another independent review.",
+    "held_out_lock": "The existing task-v5 authored rows 6200-6207 are not regenerated, opened, or accepted by any executable in this protocol."
+  },
+  "scene_minting_after_reservation": {
+    "timing": "After a passed reservation admission and separate source/execution GO, before collection, model loading, or training.",
+    "attempts": 1,
+    "scenes": "All four collection and all four development candidates in fixed ID order.",
+    "current_api_boundary": "Task v5 contains exactly 32 authored rows; current puck_profile.layout and authored_reset reject 6110-6113 and 6120-6123. No existing arbitrary-seed generator is claimed.",
+    "source_freeze": "Before the minter is called with any reserved ID or can write a candidate, independently review and hash-freeze one pure deterministic v3 layout minter with a one-to-one ID mapping, finite parameter domain, exact arithmetic, runtime and argv, plus one keyword-only explicit-layout authored-reset seam whose historical default path remains unchanged. Synthetic fixtures use nonreserved fake IDs only. Each reserved ID yields one payload; no candidate search or geometry replacement follows a collision.",
+    "procedure": "Generate all eight candidate scene payloads in fixed ID order into a fresh staging root without loading a model, importing Torch or MuJoCo, or running an episode.",
+    "task_invariants": "Every candidate must pass the unchanged task-v5 numeric layout and arena-clearance predicates; XML, physics, sensors, contacts, task arithmetic, teacher, and all 32 historical authored rows remain unchanged.",
+    "disjointness": "Reject duplicate canonical scene, scientific initial state, or complete payload against every earlier train, recorded-dev, development, evaluation, or held-out case and between the new collection and development splits.",
+    "publication": "After exact source/inventory recheck, atomically publish one manifest binding all eight payloads. Collection receives only a collection projection; development paths and bytes are unresolvable to collection, preparation, training, and checkpoint selection.",
+    "failure": "Retain inadmissible failure evidence, publish no usable scene manifest, do not substitute an ID, and require a versioned protocol plus independent review."
+  },
+  "fixed_source_models": {
+    "model_seeds": [
+      21,
+      22,
+      23
+    ],
+    "index_path": "docs/plans/m6-puck-student-models-v1.json",
+    "index_sha256": "d8a2daf24943e5e8a2abf5062458910a1034dd003f8aa5153c32f0f83567502f",
+    "training_evidence_path": "docs/reports/m6-puck-training-v2.json",
+    "training_evidence_sha256": "c0d941eedf3aa3e7a20bc3788348b877ce70e8deed225c31e0a7e3cf404dc48c",
+    "use": "Existing original models only, all three in fixed order; collectors and immutable paired development baselines.",
+    "balanced_models_excluded": true,
+    "model_or_checkpoint_bytes_opened_in_this_planning_commit": false
+  },
+  "collection": {
+    "order": "scene 6110,6111,6112,6113; within each scene model 21,22,23",
+    "owners": 12,
+    "maximum_ticks": 7200,
+    "max_ticks_per_owner": 600,
+    "attempts": 1,
+    "initialization": "One fresh natural episode per owner from its exact admitted v3 scene-manifest row through the reviewed explicit-layout seam, with unchanged task-v5 XML, physics, sensors, contacts, task, own phase cursor, runtime, and original checkpoint identity.",
+    "pre_action": "Retain the exact float32 sensors[8] and independently prepared float32 student_inputs[9] with own BEFORE-mode.",
+    "teacher_query": "Query the unchanged analytic teacher exactly once and retain its float64 action plus before/after private cursor fields.",
+    "query_isolation": "Native state, effective observation/input bytes, student cursor, and relevant Python, NumPy, Torch, environment, and space RNG states must be identical immediately before and after the teacher query. Declared teacher-private state is retained separately and never enters student input.",
+    "mode_agreement": "Teacher and independently reconstructed sensor-only modes agree before and after every complete interval; mismatch stops without repairing or copying either cursor.",
+    "student_execution": "Invoke the frozen student policy exactly once, retain predicted and executed float64 actions separately from the teacher label, and advance physics only with the student action.",
+    "commit": "Commit both cursor transitions and the row only after one complete native interval; any query, inference, action, step, record, or cursor failure commits neither and stops later owners.",
+    "termination": "Natural outcome or 600 ticks; no reset, replacement, retry, perturbation, prefix, rescue, post-terminal continuation, or coverage-triggered stop.",
+    "retention": "Keep every complete admitted row and every natural outcome, including states outside the motivating condition.",
+    "coverage_predicate": "Own BEFORE-mode approach, contact true, axial distance in [0.35,0.63] metres, absolute lateral distance at most 0.06 metres, and behind-point distance greater than 0.08 metres, using the unchanged task-v5 arithmetic.",
+    "coverage_gate": "All 12 owners normal and admitted, and at least one motivating-condition row from each collector model 21,22,23. Zero for any model is a valid failed result and forbids training.",
+    "coverage_non_use": "Counts cannot filter, crop, weight, select a collector, extend a trajectory, or authorize another round."
+  },
+  "data": {
+    "base_train_scenes": "6000-6015",
+    "base_train_rows": 5710,
+    "recorded_dev_scenes": "6016-6019",
+    "recorded_dev_rows": 1314,
+    "new_sources": 12,
+    "new_row_count_minimum": 12,
+    "new_row_count_maximum": 7200,
+    "maximum_augmented_train_rows": 12910,
+    "ordering": "Exact base training order followed by all complete collection sources in fixed scene/model order; within-source completed interval order.",
+    "inputs": "Unchanged float32[9] student input including own BEFORE-mode.",
+    "targets": "Unchanged teacher float64[2] action arithmetic and range; actual executed student actions remain separate metadata.",
+    "recorded_dev": "The exact unchanged 1314 rows are used only for per-epoch selection.",
+    "forbidden": "No development or held-out row, row dropping, weighting, oversampling, duplicate-stream weighting, target mixing, or loader fallback.",
+    "manifest": "A distinct immutable v3 manifest binds source order, scene, collector model, natural ending, row counts, all feature/teacher-target/executed-action hashes, coverage counts, protocols, and before/after source hashes."
+  },
+  "learning": {
+    "new_models": 3,
+    "training_seeds": [
+      21,
+      22,
+      23
+    ],
+    "paired_baselines": "Existing original checkpoints for the same seeds; they are not refit.",
+    "initialization": "Fresh deterministic existing make_model initialization for each declared seed; no warm start.",
+    "architecture": [
+      9,
+      32,
+      32,
+      2
+    ],
+    "parameter_count": 1442,
+    "activation": "tanh",
+    "parameter_and_forward_dtype": "float32",
+    "target_dtype": "float64",
+    "action_scaling": "Promote normalized float32 output to float64 before multiplying by float64 0.4; no clipping or fallback.",
+    "loss": "Unweighted mean over rows and both components of ((prediction-target)/0.4)^2 in float64.",
+    "epochs": 30,
+    "batch_size": 64,
+    "batching": "Existing seeded training-only permutation and ordinary final partial batch; no sampler change.",
+    "optimizer": "Adam",
+    "learning_rate": 0.001,
+    "weight_decay": 0.0,
+    "gradient_norm_cap": 1.0,
+    "device": "CPU",
+    "cpu_threads": 1,
+    "selection": "Earliest strict minimum ordinary unweighted 1314-row recorded-dev mean loss independently for each seed; no fresh-development or held-out input.",
+    "maximum_updates_per_epoch": 202,
+    "maximum_updates_per_model": 6060,
+    "maximum_updates_all_models": 18180,
+    "planning_feasibility": "Maximum updates per model are 6060/2700 = 2.244444... times the original. The pinned historical report records 6.9035-7.9661 seconds fit/finalize and 12.4652-17.0717 seconds supervised per seed; unchanged 120-second internal and 200-second supervised limits are planning-feasible, not promised.",
+    "retention": "All 90 epoch rows, all three statuses/checkpoints, exact corpus/source order, and source/input hashes before and after.",
+    "failure": "First operational, source, count, dtype, nonfinite, deadline, RSS, storage, or publication fault stops later seeds; no retry, epoch extension, replacement, or partial-model promotion."
+  },
+  "mechanism_admission": {
+    "purpose": "Operational compatibility only; it is not a scientific arm or task-success result.",
+    "model_seed": 21,
+    "scene_id": 6110,
+    "scene_source": "The exact admitted collection scene-manifest row for 6110, already spent by the fixed collection stage. The mechanism source is a new bounded relabeled-v3 model-21 trajectory on that row, not reuse of an original-collector trajectory.",
+    "source_horizon": "At least 5 and at most 120 complete intervals; retain exact initial and tick1 snapshots. A natural outcome remains an outcome and missing tick1-plus-four successor coverage fails admission.",
+    "owner_order": [
+      "source: relabeled-v3 model 21 from the exact scene-6110 reset, at most 120 complete intervals",
+      "native continuation: relabeled-v3 model 21 from source tick1, exactly the next 4 complete intervals",
+      "saved-action replay: construct the same relabeled-v3 model 21, restore source initial, replay the complete source duration with zero predictions",
+      "policy replay: relabeled-v3 model 21 from source initial, predict once per interval for the complete source duration"
+    ],
+    "procedure": "Reuse the existing fixed four-owner source, native-continuation, saved-action-replay, and policy-replay contract through the distinct v3 model-index binding. Every owner constructs the same pinned relabeled-v3 seed-21 CPU MLP before capture or restore; there is no controller replacement.",
+    "boundaries": "Source captures initial and tick1; native continuation restores tick1; both replays restore initial. Every derivative uses only the fixed source windows above.",
+    "predictions": "Source, native continuation, and policy replay predict exactly once per complete interval; saved-action replay makes zero predictions.",
+    "scope": "One prospectively fixed relabeled-v3 model and one already spent collection scene-manifest row; no new collection candidate, development scene, held-out scene, model choice, source choice, or winning-model selection.",
+    "gate": "All owners and exact native/action/cursor/source checks pass before development."
+  },
+  "development": {
+    "scenes": [
+      6120,
+      6121,
+      6122,
+      6123
+    ],
+    "arms": [
+      "existing-original",
+      "relabeled-v3"
+    ],
+    "order": "scene increasing; model 21,22,23; existing-original then relabeled-v3",
+    "owners": 24,
+    "maximum_ticks": 14400,
+    "attempts": 1,
+    "initial_matching": "Within each scene all six owners match the exact scientific initial state before action 1; model identity and Torch RNG retain their established separate treatment.",
+    "episode": "Fresh teacher-free natural episode, one policy prediction per interval, maximum 600 ticks, no intervention, reset, fallback, rescue, retry, or replacement.",
+    "outcome_collection": "Collect all natural outcomes before scoring. A natural non-goal is a functional failure and does not stop later fixed owners; infrastructure/admission failure stops later owners as not_started.",
+    "goal_definition": "Unchanged native final_state.reason == 'puck_goal' within 600 ticks.",
+    "gate": "All 24 owners normal and admitted, and each relabeled-v3 model independently reaches at least 3 of 4 goals.",
+    "baseline_reporting": "Existing-original counts and paired per-scene differences are descriptive; no comparative threshold, pooling, or winning-model selection.",
+    "one_pass": true
+  },
+  "held_out": {
+    "scenes": [
+      6200,
+      6201,
+      6202,
+      6203,
+      6204,
+      6205,
+      6206,
+      6207
+    ],
+    "state": "existing task-v5 authored rows; locked, unopened, unexecuted, and unreachable by this protocol",
+    "prerequisites": "Passed immutable development report, separate held-out protocol and execution manifest, complete disjointness proof, source/model/resource admission, independent review, and explicit GO.",
+    "later_order": "scene increasing; model 21,22,23; existing-original then relabeled-v3",
+    "later_owners": 48,
+    "later_maximum_ticks": 28800,
+    "later_gate": "All 48 owners normal and admitted, and each relabeled-v3 model independently reaches at least 6 of 8 goals.",
+    "forbidden": "No pooling, winning model, replacement, retry, tuning, rescue, or threshold change."
+  },
+  "attempts_and_atomic_publication": {
+    "source_phase": "Only synthetic/source checks may rerun before source freeze. No raw registry, retained input, model, Torch, MuJoCo, scene-minter invocation, or simulator access.",
+    "reservation": "Every retained-input or numerical stage fsyncs one fresh durable attempt receipt before first input/runtime access. Crash, timeout, partial output, or outer termination consumes the attempt.",
+    "failure": "Retain the first failure and every completed earlier owner; later owners are not_started. Failure evidence can never satisfy success admission.",
+    "success": "Last fallible action after final source/input/cap recheck, fsync and atomic rename, process and descendant drain, sampler stop, and writer-lease release.",
+    "no_retry": true
+  },
+  "runtime": {
+    "python": "3.11.15",
+    "numpy": "2.2.5",
+    "torch": "2.9.0",
+    "mujoco": "3.3.6",
+    "backend": "egl",
+    "device": "cpu",
+    "training_and_inference_threads": 1
+  },
+  "limits": {
+    "per_native_owner_seconds": 180,
+    "per_native_owner_bytes": 167772160,
+    "per_initial_snapshot_bytes": 8388608,
+    "per_log_bytes": 1048576,
+    "owner_concurrency": "sequential; at most one active child",
+    "rss_per_active_stage_process_tree_bytes": 1073741824,
+    "minimum_free_bytes": 1073741824,
+    "retained_run_cap_bytes": 17179869184,
+    "stage_output_caps_bytes": {
+      "ref_registry_admission_and_reservation": 67108864,
+      "scene_minting": 268435456,
+      "collection": 3221225472,
+      "data_preparation": 67108864,
+      "training": 67108864,
+      "mechanism_admission": 1073741824,
+      "development": 4294967296,
+      "held_out_after_separate_go": 8589934592
+    },
+    "pre_held_out_stage_caps_total_bytes": 9059696640,
+    "pre_held_out_required_with_free_floor_bytes": 10133438464,
+    "all_stages_required_with_free_floor_bytes": 18723373056,
+    "held_out_capacity_gate": "The all-stage maximum exceeds the current 16 GiB retained-run cap. Separate held-out review must prove measured retained bytes plus the full 8 GiB held-out allowance and 1 GiB floor fit within 16 GiB, or freeze and independently approve a larger retention contract. Never delete evidence or weaken a live cap.",
+    "deadline_ledger_breakdowns_seconds": {
+      "parent_internal": {
+        "pre_owner_admission_and_durable_reservation": 20,
+        "cumulative_launch_reap_and_accounting": 20,
+        "reduction_and_pending_report_staging": 10,
+        "total": 50
+      },
+      "normal_return": {
+        "final_source_input_and_cap_recheck": 15,
+        "fsync_and_atomic_publication": 20,
+        "resource_release_and_identity_drain": 10,
+        "through_return_guard": 5,
+        "total": 50
+      },
+      "enclosing_hard_margin": 10,
+      "borrowing": "Unused time in a child, parent, normal-return, or hard ledger never expands another ledger."
+    },
+    "stage_deadlines_seconds": {
+      "ref_registry_admission_and_reservation": {
+        "internal": 600,
+        "normal_through_return": 650,
+        "enclosing_hard": 660
+      },
+      "scene_minting": {
+        "owners": 8,
+        "cumulative_child_allowance": 1440,
+        "internal_with_parent": 1490,
+        "normal_through_return": 1540,
+        "enclosing_hard": 1550
+      },
+      "collection": {
+        "owners": 12,
+        "cumulative_child_allowance": 2160,
+        "internal_with_parent": 2210,
+        "normal_through_return": 2260,
+        "enclosing_hard": 2270
+      },
+      "data_preparation": {
+        "internal": 180,
+        "normal_through_return": 230,
+        "enclosing_hard": 240
+      },
+      "training": {
+        "owners": 3,
+        "per_seed_internal": 120,
+        "per_seed_term": 180,
+        "per_seed_kill_grace": 15,
+        "per_seed_supervised": 200,
+        "cumulative_child_allowance": 600,
+        "internal_with_parent": 650,
+        "normal_through_return": 700,
+        "enclosing_hard": 710
+      },
+      "mechanism_admission": {
+        "owners": 4,
+        "cumulative_child_allowance": 720,
+        "internal_with_parent": 770,
+        "normal_through_return": 820,
+        "enclosing_hard": 830
+      },
+      "development": {
+        "owners": 24,
+        "cumulative_child_allowance": 4320,
+        "internal_with_parent": 4370,
+        "normal_through_return": 4420,
+        "enclosing_hard": 4430
+      },
+      "held_out_after_separate_go": {
+        "owners": 48,
+        "cumulative_child_allowance": 8640,
+        "internal_with_parent": 8690,
+        "normal_through_return": 8740,
+        "enclosing_hard": 8750
+      }
+    }
+  },
+  "planned_source": {
+    "create": [
+      "src/palimpsest/puck_on_policy.py",
+      "scripts/mint_puck_on_policy_scenes.py",
+      "scripts/collect_puck_on_policy.py",
+      "scripts/prepare_train_puck_on_policy.py",
+      "scripts/evaluate_puck_on_policy.py",
+      "tests/test_puck_on_policy.py",
+      "tests/test_puck_on_policy_development.py"
+    ],
+    "edit": [
+      "src/palimpsest/puck_profile.py: add only a keyword-only exact-layout reset seam; preserve historical default behavior",
+      "scripts/verify_puck_mechanics.py: add only explicit on-policy collection and v3 development envelope routes; preserve every historical envelope"
+    ],
+    "reuse": [
+      "existing strict record and storage helpers",
+      "puck_learning admission and preparation arithmetic",
+      "puck_profile teacher/task predicates",
+      "puck_student action and decision functions",
+      "train_puck finite fit/evaluate loop",
+      "existing bounded process and four-owner mechanism helpers",
+      "existing development owner, initial-match, reducer, and publication helpers"
+    ],
+    "preserve": [
+      "all historical/default loaders, protocols, models, reports, and evidence",
+      "production Engine and UI paths",
+      "task, physics, sensors, contacts, features, model, loss, and training clock"
+    ],
+    "source_admission": "The future execution manifest binds the protocol, minter, every new/edited source and test, package initializer, complete transitive local behavior-source closure, upstream/runtime identities, exact argv/environment/cwd/output paths, immutable input hashes, and stage supervisor before protected access; rehash the same roster before success publication.",
+    "minimality": "One named adapter, two narrow shared-path seams, and thin explicit stage entrypoints; no generic policy registry, framework, global monkeypatch, or duplicated native owner."
+  },
+  "tests_before_execution_freeze": [
+    "Exact scene/model/source-order and schema fixtures reject every unlisted ID, old/new identity mix, and any held-out argument before Torch or MuJoCo import.",
+    "Synthetic ref/worktree/registry fixtures parse typed scene fields, allow only this protocol's exact roster and single reservation/scene-manifest lineage, and reject every other candidate-ID occurrence or duplicate lineage; unrelated numeric byte/hash fields do not collide; missing/stale/symlinked/changing inventories fail closed.",
+    "Scene-mint fixtures prove current task-v5 APIs reject the new IDs; a fake minter proves exact eight-scene staging order, unchanged numeric-layout admission, cross-split canonical/initial/payload duplicate rejection, collection-only projection, development path denial, no model or episode execution, and no usable manifest after any failure; pure minter arithmetic is exercised only with nonreserved fixture IDs.",
+    "A fake interval proves exactly one teacher query then one student inference, query isolation, student-only world action, separate teacher/executed actions, and commit-after-complete-step cursor semantics; every failure point commits neither row nor cursor.",
+    "Manifest fixtures prove every complete admitted row enters the shared corpus exactly once in fixed order, motivating-condition counts are exact, and no filter, crop, weighting, coverage stop, or duplicate-stream weighting exists.",
+    "Numerical fixtures prove unchanged feature/dtype/0.4 scaling/unweighted loss, 30 epochs, batch 64 including final partial batch, seeded shuffle, Adam settings, gradient cap, recorded-dev selection, and 12910-row/6060-update maxima.",
+    "Strict model-index and mechanism fixtures prove all three distinct bundles, zero predictions during saved-action replay, exact native continuation/policy replay, and no historical-loader widening.",
+    "Development fixtures prove exact 24-owner order, same-scene six-way scientific initials, all natural outcomes retained, per-model 3-of-4 reduction, descriptive baseline only, first infrastructure failure retention, and held-out unreachability.",
+    "Publication fault injection proves durable reservation precedes protected access and crash, timeout, fsync, rename, source drift, nonfinite, RSS, storage, output, drain, or lease failure retains one failure and never admissible success.",
+    "Synthetic monotonic-clock fixtures prove every child sum and 20+20+10 parent, 15+20+10+5 normal-return, and 10-second hard margin independently; exact boundaries pass and one-tick overruns fail for scene-mint, collection, training, mechanism, development, and held-out ledgers."
+  ],
+  "execution_stops": [
+    "Do not implement or execute from an unreviewed or changed protocol. Source work ends in a hash-bound execution manifest and independent review.",
+    "Do not open raw registries, retained inputs, model/checkpoint bytes, Torch, MuJoCo, invoke the scene minter, or run a simulator before the stage-specific durable reservation and reviewed GO. Scene minting may use only the exact frozen minter after its own GO and may not load a model or run an episode.",
+    "Stop the protocol on any ref inventory, ID, scene, scientific-initial, payload, source, runtime, model, data, order, count, dtype, query-isolation, cursor, finite, deadline, RSS, storage, publication, cleanup, or before/after hash mismatch.",
+    "A failed collection coverage gate forbids training; incomplete or failed training/mechanism admission forbids development; any failed development gate keeps held-out locked.",
+    "No repair, retry, replacement, tuning, second aggregation round, threshold change, winning model, consumed-attempt reopening, evidence deletion, cap relaxation, or held-out access."
+  ],
+  "evidence_boundary": {
+    "development_pass": "Supports only simulator capability of the complete fixed one-round relabeling procedure on four fresh development scenes.",
+    "later_held_out_pass": "Would support only the separately authorized eight-scene simulator criterion.",
+    "unsupported": [
+      "causal proof that the measured support gap caused prior failure",
+      "isolation of targeted-state labels from other new states, data volume, or extra updates",
+      "analytic-teacher correctness or complete student observability",
+      "benefit from another aggregation round",
+      "physical, biological, safety, UI, release, or general-purpose capability"
+    ]
+  },
+  "current_reusable_source_sha256": {
+    "src/palimpsest/puck_learning.py": "fe0350b1f7becf263ffbe19b8c906651a4f7655306dc60407927dcc20244f88d",
+    "src/palimpsest/puck_model.py": "27f3446c71f59937f49fed4faddc614e5a792413b74328e81b361c72dd7f06d5",
+    "src/palimpsest/puck_profile.py": "585d41691d275313b276d49213249427ac645f7aa85fee544a05c37d2e652e2d",
+    "src/palimpsest/puck_student.py": "d944395f1b9303415d5e5311f589ef26c226718d76bd226fde7449b051795df8",
+    "src/palimpsest/puck_teacher.py": "781262791692202974f7aa39daab8deaf43899ffab7fa64ab366c40996224c82",
+    "src/palimpsest/puck_development.py": "390049ae6ca3a97182918b8df3f5645a325c3ac3961b50ae8ce6bf0fdb721802",
+    "scripts/collect_puck_teachers.py": "c021864215c02548992e9dfb2478221945a556fb973f877db930839e2e58b8bd",
+    "scripts/train_puck.py": "a1dfc8c42a04f5b51217c261a0ea3f159b31d547e9ba0ff0b6005a2338be1b1f",
+    "scripts/evaluate_puck_development.py": "d2abac5dec2acd4de29933d35c9b456582e1ad15bc9135661de1d3f054fd9721",
+    "scripts/verify_puck_mechanics.py": "302542165d19c27351f336b5d32f848b34fd515d9f976e0a631ffbec1ca1f13c",
+    "uv.lock": "8a7a880d020c1907e221575fda65642241f809fc628a55381f1b6137bff1b732"
+  },
+  "current_reusable_source_hash_scope": "Direct orientation pins only; never sufficient for execution. The reviewed execution manifest must enumerate the complete transitive local behavior-source closure, including src/palimpsest/__init__.py.",
+  "forbidden_access_in_this_planning_commit": {
+    "retained_raw_inputs": false,
+    "raw_scene_registries_or_manifests": false,
+    "models_or_checkpoints": false,
+    "torch_imported": false,
+    "mujoco_imported": false,
+    "simulator_executed": false,
+    "collection_executed": false,
+    "training_executed": false,
+    "development_executed": false,
+    "held_out_accessed": false
+  },
+  "qualification_claims": []
+}
