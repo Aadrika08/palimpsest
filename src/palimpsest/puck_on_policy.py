@@ -9,6 +9,7 @@ import json
 import math
 import os
 from pathlib import Path
+import stat
 
 from .task_mechanics import MAX_COUNTER, MAX_ITEMS
 
@@ -18,6 +19,7 @@ COLLECTION_SPLIT = 'on_policy_collection'
 DEVELOPMENT_SPLIT = 'on_policy_development'
 RESERVED_SCENE_IDS = (6110, 6111, 6112, 6113, 6120, 6121, 6122, 6123)
 HELD_OUT_SCENE_IDS = (6200, 6201, 6202, 6203, 6204, 6205, 6206, 6207)
+PROTOCOL_SHA256 = 'fe8b2615f965a114274a13aeb2d49c26d3f79e0920eee72bce4eb671adff3d13'
 _ROW_FIELDS = {'version', 'kind', 'seed', 'split', 'slot', 'rover_pose',
                'puck_xy', 'goal_xy', 'initial_qvel'}
 _INVENTORY_KINDS = {'ref', 'worktree', 'raw_registry', 'manifest'}
@@ -161,13 +163,144 @@ def _publication_root(value):
     return root
 
 
+def _identity(value):
+    return (value.st_dev, value.st_ino, value.st_mode, value.st_nlink,
+            value.st_size, value.st_mtime_ns, value.st_ctime_ns)
+
+
+def _directory_identity(value):
+    return value.st_dev, value.st_ino, value.st_mode
+
+
+def _object_identity(value):
+    return value.st_dev, value.st_ino, value.st_mode, value.st_nlink
+
+
 def _fsync_directory(root):
-    flags = os.O_RDONLY | getattr(os, 'O_DIRECTORY', 0)
+    root = _publication_root(root)
+    before = os.lstat(root)
+    flags = (os.O_RDONLY | getattr(os, 'O_DIRECTORY', 0) |
+             getattr(os, 'O_NOFOLLOW', 0) | getattr(os, 'O_CLOEXEC', 0))
     directory = os.open(root, flags)
     try:
+        opened = os.fstat(directory)
+        rebound = os.lstat(root)
+        if (not stat.S_ISDIR(opened.st_mode) or
+                _directory_identity(opened) != _directory_identity(before) or
+                _directory_identity(opened) != _directory_identity(rebound)):
+            raise ValueError('Publication parent directory rebound')
         os.fsync(directory)
+        after = os.fstat(directory)
+        rebound = os.lstat(root)
+        if (_directory_identity(after) != _directory_identity(opened) or
+                _directory_identity(rebound) != _directory_identity(opened)):
+            raise ValueError('Publication parent directory changed during fsync')
     finally:
         os.close(directory)
+
+
+def _path_present(path):
+    return os.path.lexists(os.fspath(path))
+
+
+def _write_bytes_new(path, raw, maximum):
+    if type(raw) is not bytes or len(raw) > maximum:
+        raise ValueError('Bounded publication bytes required')
+    path = Path(path)
+    root = _publication_root(path.parent)
+    if path.parent != root or not path.name:
+        raise ValueError('Publication file parent differs')
+    root_before = os.lstat(root)
+    root_flags = (os.O_RDONLY | getattr(os, 'O_DIRECTORY', 0) |
+                  getattr(os, 'O_NOFOLLOW', 0) | getattr(os, 'O_CLOEXEC', 0))
+    root_descriptor = os.open(root, root_flags)
+    descriptor = None
+    try:
+        root_opened = os.fstat(root_descriptor)
+        if (not stat.S_ISDIR(root_opened.st_mode) or
+                _directory_identity(root_opened) != _directory_identity(root_before) or
+                _directory_identity(os.lstat(root)) != _directory_identity(root_opened)):
+            raise ValueError('Publication parent directory rebound')
+        flags = (os.O_WRONLY | os.O_CREAT | os.O_EXCL |
+                 getattr(os, 'O_NOFOLLOW', 0) | getattr(os, 'O_CLOEXEC', 0))
+        descriptor = os.open(path.name, flags, 0o600, dir_fd=root_descriptor)
+        opened = os.fstat(descriptor)
+        if not stat.S_ISREG(opened.st_mode) or opened.st_nlink != 1:
+            raise ValueError('New publication file is linked or nonregular')
+        view = memoryview(raw)
+        while view:
+            written = os.write(descriptor, view)
+            if written <= 0:
+                raise OSError('Short publication write')
+            view = view[written:]
+        os.fsync(descriptor)
+        after = os.fstat(descriptor)
+        rebound = os.stat(path.name, dir_fd=root_descriptor, follow_symlinks=False)
+        if (_object_identity(after) != _object_identity(opened) or
+                _identity(rebound) != _identity(after) or
+                after.st_nlink != 1 or after.st_size != len(raw)):
+            raise ValueError('Publication file rebound during write')
+        root_after = os.fstat(root_descriptor)
+        if (_directory_identity(root_after) != _directory_identity(root_opened) or
+                _directory_identity(os.lstat(root)) != _directory_identity(root_opened)):
+            raise ValueError('Publication parent changed during write')
+    finally:
+        if descriptor is not None:
+            os.close(descriptor)
+        os.close(root_descriptor)
+
+
+def _read_exact_file(root, path, maximum, label):
+    root = _publication_root(root)
+    path = Path(path)
+    if path.parent != root or not path.name:
+        raise ValueError(f'{label}: exact parent required')
+    root_before = os.lstat(root)
+    root_flags = (os.O_RDONLY | getattr(os, 'O_DIRECTORY', 0) |
+                  getattr(os, 'O_NOFOLLOW', 0) | getattr(os, 'O_CLOEXEC', 0))
+    root_descriptor = os.open(root, root_flags)
+    descriptor = None
+    try:
+        root_opened = os.fstat(root_descriptor)
+        if (not stat.S_ISDIR(root_opened.st_mode) or
+                _directory_identity(root_opened) != _directory_identity(root_before) or
+                _directory_identity(os.lstat(root)) != _directory_identity(root_opened)):
+            raise ValueError(f'{label}: parent directory rebound')
+        before = os.stat(path.name, dir_fd=root_descriptor, follow_symlinks=False)
+        if (not stat.S_ISREG(before.st_mode) or before.st_nlink != 1 or
+                before.st_size > maximum):
+            raise ValueError(f'{label}: missing, linked, or oversized file')
+        flags = (os.O_RDONLY | getattr(os, 'O_NOFOLLOW', 0) |
+                 getattr(os, 'O_CLOEXEC', 0))
+        descriptor = os.open(path.name, flags, dir_fd=root_descriptor)
+        opened = os.fstat(descriptor)
+        rebound = os.stat(path.name, dir_fd=root_descriptor, follow_symlinks=False)
+        if (_identity(opened) != _identity(before) or
+                _identity(rebound) != _identity(opened)):
+            raise ValueError(f'{label}: file rebound while opening')
+        chunks = []
+        remaining = maximum + 1
+        while remaining:
+            block = os.read(descriptor, min(65536, remaining))
+            if not block:
+                break
+            chunks.append(block)
+            remaining -= len(block)
+        raw = b''.join(chunks)
+        after = os.fstat(descriptor)
+        rebound = os.stat(path.name, dir_fd=root_descriptor, follow_symlinks=False)
+        root_after = os.fstat(root_descriptor)
+        if (len(raw) > maximum or _identity(after) != _identity(opened) or
+                _identity(rebound) != _identity(opened)):
+            raise ValueError(f'{label}: file changed during read')
+        if (_directory_identity(root_after) != _directory_identity(root_opened) or
+                _directory_identity(os.lstat(root)) != _directory_identity(root_opened)):
+            raise ValueError(f'{label}: parent directory changed during read')
+        return raw
+    finally:
+        if descriptor is not None:
+            os.close(descriptor)
+        os.close(root_descriptor)
 
 
 def _quarantine_path(root, name):
@@ -195,7 +328,7 @@ def _publication_paths(root, name):
 def _fresh_publication_root(value, name):
     root = _publication_root(value)
     paths = _publication_paths(root, name)
-    if any(path.exists() or path.is_symlink() for path in paths.values()):
+    if any(_path_present(path) for path in paths.values()):
         raise ValueError(f'{name}: fresh publication paths required')
     return root
 
@@ -206,35 +339,18 @@ def _write_quarantine(root, name):
         'version': 1, 'kind': 'puck-on-policy-publication-quarantine-v1',
         'target': name,
     }, 'publication quarantine')
-    with quarantine.open('xb') as handle:
-        handle.write(marker)
-        handle.flush()
-        os.fsync(handle.fileno())
+    _write_bytes_new(quarantine, marker, _MAX_COMMIT_BYTES)
     _fsync_directory(root)
     return quarantine
-
-
-def _remove_failed_target(target):
-    target.unlink()
-
-
-def _retain_quarantine(root, name):
-    quarantine = _quarantine_path(root, name)
-    if quarantine.exists() or quarantine.is_symlink():
-        return
-    try:
-        _write_quarantine(root, name)
-    except BaseException:
-        # A partially created marker is still an explicit reader-visible refusal.
-        pass
 
 
 def _commit_receipt(name, manifest, raw):
     if type(manifest) is not dict:
         raise ValueError('Publication manifest must be an object')
-    # At this pure boundary the frozen reservation lineage is the protocol pin.
-    protocol_sha256 = _digest(manifest.get('lineage_sha256'),
-                              'publication protocol')
+    lineage_sha256 = _digest(manifest.get('lineage_sha256'),
+                             'publication protocol')
+    if lineage_sha256 != PROTOCOL_SHA256:
+        raise ValueError('Publication protocol lineage differs')
     if name == 'reservation.json':
         if manifest.get('kind') != 'puck-on-policy-reservation-v1':
             raise ValueError('Reservation publication kind differs')
@@ -253,15 +369,27 @@ def _commit_receipt(name, manifest, raw):
         'manifest_sha256': _sha256(raw),
         'manifest_bytes': len(raw),
         'reservation_sha256': reservation_sha256,
-        'protocol_sha256': protocol_sha256,
+        'protocol_sha256': PROTOCOL_SHA256,
     }
 
 
 def _write_commit_receipt(path, raw):
-    with Path(path).open('xb') as handle:
-        handle.write(raw)
-        handle.flush()
-        os.fsync(handle.fileno())
+    _write_bytes_new(path, raw, _MAX_COMMIT_BYTES)
+
+
+def _exclusive_publish(pending, final):
+    pending, final = Path(pending), Path(final)
+    if pending.parent != final.parent:
+        raise ValueError('Publication names must share one exact parent')
+    if _path_present(final):
+        raise FileExistsError(f'Publication destination exists: {final.name}')
+    os.link(pending, final, follow_symlinks=False)
+    source = os.lstat(pending)
+    destination = os.lstat(final)
+    if (not stat.S_ISREG(source.st_mode) or
+            (source.st_dev, source.st_ino) != (destination.st_dev, destination.st_ino) or
+            source.st_nlink != 2 or destination.st_nlink != 2):
+        raise ValueError('Exclusive publication link identity differs')
 
 
 def _atomic_manifest(root, name, manifest):
@@ -273,62 +401,32 @@ def _atomic_manifest(root, name, manifest):
     raw = _canonical_bytes(manifest, name)
     commit_raw = _canonical_bytes(
         _commit_receipt(name, manifest, raw), 'publication commit receipt')
-    published = False
-    try:
-        with pending.open('xb') as handle:
-            handle.write(raw)
-            handle.flush()
-            os.fsync(handle.fileno())
-        _write_quarantine(root, name)
-        os.replace(pending, target)
-        published = True
-        _fsync_directory(root)
-        _write_commit_receipt(commit_pending, commit_raw)
-        os.replace(commit_pending, commit)
-        _fsync_directory(root)
-        quarantine.unlink()
-        _fsync_directory(root)
-    except BaseException:
-        cleanup_failed = False
-        if commit.exists() or commit.is_symlink():
-            try:
-                os.replace(commit, commit_pending)
-            except BaseException:
-                try:
-                    commit.unlink()
-                except BaseException:
-                    cleanup_failed = True
-        try:
-            pending.unlink(missing_ok=True)
-        except BaseException:
-            cleanup_failed = True
-        if published:
-            try:
-                _remove_failed_target(target)
-            except BaseException:
-                cleanup_failed = True
-            try:
-                _fsync_directory(root)
-            except BaseException:
-                cleanup_failed = True
-        if cleanup_failed:
-            try:
-                _retain_quarantine(root, name)
-            except BaseException:
-                pass
-        else:
-            for path in (commit_pending, quarantine):
-                try:
-                    path.unlink(missing_ok=True)
-                except BaseException:
-                    break
-        raise
-    return {
+    _write_bytes_new(pending, raw, _MAX_JSON_BYTES)
+    _write_quarantine(root, name)
+    _exclusive_publish(pending, target)
+    _fsync_directory(root)
+    pending.unlink()
+    _fsync_directory(root)
+    _write_commit_receipt(commit_pending, commit_raw)
+    _exclusive_publish(commit_pending, commit)
+    _fsync_directory(root)
+    commit_pending.unlink()
+    _fsync_directory(root)
+    if (_read_exact_file(root, target, _MAX_JSON_BYTES, name) != raw or
+            _read_exact_file(root, commit, _MAX_COMMIT_BYTES,
+                             'publication commit receipt') != commit_raw):
+        raise ValueError('Durable publication bytes changed before commit')
+    result = {
         'manifest_path': str(target), 'manifest_bytes': raw,
         'manifest_sha256': _sha256(raw),
         'commit_path': str(commit), 'commit_bytes': commit_raw,
         'commit_sha256': _sha256(commit_raw),
     }
+    # The target and positive receipt are already durably linked.  This unlink is
+    # the commit point and intentionally has no later fallible syscall.  A crash
+    # may restore the un-fsynced quarantine entry, which fails closed.
+    quarantine.unlink()
+    return result
 
 
 def _read_publication(value, name):
@@ -341,27 +439,15 @@ def _read_publication(value, name):
     paths = _publication_paths(root, name)
     pending, quarantine = paths['pending'], paths['quarantine']
     commit, commit_pending = paths['commit'], paths['commit_pending']
-    if (quarantine.exists() or quarantine.is_symlink() or
-            pending.exists() or pending.is_symlink() or
-            commit_pending.exists() or commit_pending.is_symlink()):
+    if any(_path_present(path) for path in (quarantine, pending, commit_pending)):
         raise ValueError(f'{name}: publication is quarantined or indeterminate')
-    if (not target.exists() or not target.is_file() or target.is_symlink() or
-            target.resolve(strict=True) != target):
-        raise ValueError(f'{name}: exact published file required')
-    if (not commit.exists() or not commit.is_file() or commit.is_symlink() or
-            commit.resolve(strict=True) != commit):
-        raise ValueError(f'{name}: exact positive commit receipt required')
-    with target.open('rb') as handle:
-        raw = handle.read(_MAX_JSON_BYTES + 1)
-    if len(raw) > _MAX_JSON_BYTES:
-        raise ValueError(f'{name}: published file exceeds bound')
-    with commit.open('rb') as handle:
-        commit_raw = handle.read(_MAX_COMMIT_BYTES + 1)
-    if len(commit_raw) > _MAX_COMMIT_BYTES:
-        raise ValueError(f'{name}: commit receipt exceeds bound')
-    if (quarantine.exists() or quarantine.is_symlink() or
-            pending.exists() or pending.is_symlink() or
-            commit_pending.exists() or commit_pending.is_symlink()):
+    try:
+        raw = _read_exact_file(root, target, _MAX_JSON_BYTES, name)
+        commit_raw = _read_exact_file(root, commit, _MAX_COMMIT_BYTES,
+                                      'publication commit receipt')
+    except OSError as error:
+        raise ValueError(f'{name}: exact target and commit receipt required') from error
+    if any(_path_present(path) for path in (quarantine, pending, commit_pending)):
         raise ValueError(f'{name}: publication changed while read')
     try:
         manifest = json.loads(raw)
@@ -375,12 +461,16 @@ def _read_publication(value, name):
             type(receipt['manifest_bytes']) is not int or
             receipt != expected):
         raise ValueError(f'{name}: positive commit receipt differs')
-    with target.open('rb') as handle:
-        if handle.read(_MAX_JSON_BYTES + 1) != raw:
+    try:
+        if _read_exact_file(root, target, _MAX_JSON_BYTES, name) != raw:
             raise ValueError(f'{name}: publication changed after commit admission')
-    with commit.open('rb') as handle:
-        if handle.read(_MAX_COMMIT_BYTES + 1) != commit_raw:
+        if _read_exact_file(root, commit, _MAX_COMMIT_BYTES,
+                            'publication commit receipt') != commit_raw:
             raise ValueError(f'{name}: commit receipt changed during admission')
+    except OSError as error:
+        raise ValueError(f'{name}: publication disappeared during admission') from error
+    if any(_path_present(path) for path in (quarantine, pending, commit_pending)):
+        raise ValueError(f'{name}: publication changed during final admission')
     return raw
 
 
@@ -393,6 +483,8 @@ def _inventory_roster():
 
 def _validate_inventory(snapshot, lineage_sha256):
     lineage_sha256 = _digest(lineage_sha256, 'reservation lineage')
+    if lineage_sha256 != PROTOCOL_SHA256:
+        raise ValueError('Reservation lineage differs from frozen protocol')
     if type(snapshot) is not dict or set(snapshot) != _INVENTORY_FIELDS:
         raise ValueError('Inventory snapshot requires exact fields')
     if (type(snapshot['version']) is not int or snapshot['version'] != 1 or
@@ -512,7 +604,7 @@ def reserve_scene_roster(output_root, inventory_before, inventory_after, *, line
     roster = _inventory_roster()
     manifest = {
         'version': 1, 'kind': 'puck-on-policy-reservation-v1',
-        'lineage_sha256': lineage_sha256, 'scene_ids': list(roster),
+        'lineage_sha256': PROTOCOL_SHA256, 'scene_ids': list(roster),
         'inventory_before_sha256': _sha256(before_bytes),
         'inventory_after_sha256': _sha256(after_bytes),
         'inventory': json.loads(before_bytes),
@@ -532,9 +624,12 @@ def _read_reservation(raw):
         raise ValueError('Reservation bytes are not canonical')
     if type(manifest) is not dict or set(manifest) != _RESERVATION_FIELDS:
         raise ValueError('Reservation manifest requires exact fields')
-    if manifest['version'] != 1 or manifest['kind'] != 'puck-on-policy-reservation-v1':
+    if (type(manifest['version']) is not int or manifest['version'] != 1 or
+            manifest['kind'] != 'puck-on-policy-reservation-v1'):
         raise ValueError('Reservation schema differs')
     lineage = _digest(manifest['lineage_sha256'], 'reservation lineage')
+    if lineage != PROTOCOL_SHA256:
+        raise ValueError('Reservation lineage differs from frozen protocol')
     if tuple(manifest['scene_ids']) != _inventory_roster():
         raise ValueError('Reservation scene roster differs')
     admitted = _validate_inventory(manifest['inventory'], lineage)
