@@ -984,6 +984,80 @@ class PuckReservationAndMintAdmissionTests(unittest.TestCase):
                 self.assertEqual(raced, [True])
                 self.assertTrue((root / '.reservation.json.quarantine').is_file())
 
+    def test_final_commit_boundary_rejects_target_and_receipt_substitution(self):
+        on_policy = subject()
+        snapshot = inventory_snapshot()
+        alternate_snapshot = inventory_snapshot()
+        alternate_snapshot['records'][0]['metadata']['variant'] = 'alternate'
+        with tempfile.TemporaryDirectory() as alternate_directory:
+            alternate = self.reserve(
+                Path(alternate_directory).resolve(), alternate_snapshot,
+                copy.deepcopy(alternate_snapshot))
+            alternate_target = alternate['manifest_bytes']
+            alternate_receipt = alternate['commit_bytes']
+
+        for label in ('target', 'receipt', 'canonical pair'):
+            with self.subTest(label=label), \
+                    tempfile.TemporaryDirectory() as directory, \
+                    tempfile.TemporaryDirectory() as scene_directory:
+                root = Path(directory).resolve()
+                target = root / 'reservation.json'
+                receipt = root / 'reservation.json.commit.json'
+                quarantine = root / '.reservation.json.quarantine'
+                real_unlink = os.unlink
+                substitutions = []
+
+                def replace_with_new_inode(path, raw):
+                    replacement = root / f'.{path.name}.boundary-replacement'
+                    replacement.write_bytes(raw)
+                    os.replace(replacement, path)
+
+                def unlink(path, *arguments, **keywords):
+                    if Path(path).name == quarantine.name:
+                        self.assertIsNotNone(keywords.get('dir_fd'))
+                        if label == 'target':
+                            replace_with_new_inode(target, target.read_bytes())
+                        elif label == 'receipt':
+                            replace_with_new_inode(receipt, receipt.read_bytes())
+                        else:
+                            replace_with_new_inode(target, alternate_target)
+                            replace_with_new_inode(receipt, alternate_receipt)
+                        substitutions.append(label)
+                    return real_unlink(path, *arguments, **keywords)
+
+                publisher_failed = False
+                try:
+                    with patch.object(on_policy.os, 'unlink', side_effect=unlink):
+                        self.reserve(root, snapshot, copy.deepcopy(snapshot))
+                except (OSError, ValueError):
+                    publisher_failed = True
+
+                def rejects(call):
+                    try:
+                        call()
+                    except (OSError, ValueError):
+                        return True
+                    return False
+
+                raw_reader_failed = rejects(
+                    lambda: on_policy._read_publication(target, 'reservation.json'))
+                typed_reader_failed = rejects(
+                    lambda: on_policy._read_published_reservation(target))
+                minter_calls = []
+
+                def minter(*arguments):
+                    minter_calls.append(arguments)
+                    return fake_candidate(*arguments)
+
+                stage_reader_failed = rejects(lambda: on_policy.stage_scene_manifest(
+                    Path(scene_directory).resolve(), target, minter,
+                    inventory_after=copy.deepcopy(snapshot)))
+                self.assertEqual(substitutions, [label])
+                self.assertEqual(
+                    (publisher_failed, raw_reader_failed, typed_reader_failed,
+                     stage_reader_failed, minter_calls),
+                    (True, True, True, True, []))
+
     def test_publication_reader_rechecks_blockers_after_final_secure_read(self):
         on_policy = subject()
         with tempfile.TemporaryDirectory() as directory:
