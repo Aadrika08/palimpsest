@@ -273,6 +273,7 @@ def _outer_argv(digest):
     environment = [f"{key}={value}" for key, value in sorted(EXACT_ENVIRONMENT.items())]
     return [
         "/usr/bin/systemd-run", "--user", "--wait", "--collect",
+        f"--working-directory={ROOT}",
         f"--unit=palimpsest-{RUN_NAME}",
         "--property=Type=exec", "--property=KillMode=control-group",
         f"--property=RuntimeMaxSec={NORMAL_SECONDS}s",
@@ -658,19 +659,61 @@ def cleanup_spawn_group(group):
         raise RuntimeError("Spawned process group survived cleanup")
 
 
+def finish_spawn_handoff(process, handoff, *, abort=False):
+    """Restore deferred handlers after the caller owns the spawned identity."""
+    caught = None
+
+    def clean():
+        if process is None or handoff["cleaned"]:
+            return
+        handoff["cleanup"](process.pid)
+        waiter = getattr(process, "wait", None)
+        if waiter is not None:
+            waiter(timeout=1)
+        handoff["cleaned"] = True
+
+    if abort or handoff["deferred"]:
+        try:
+            clean()
+        except BaseException as error:
+            caught = error
+    for number in tuple(reversed(handoff["remaining"])):
+        try:
+            handoff["install_handler"](number, handoff["previous"][number])
+        except BaseException as error:
+            if caught is None:
+                caught = error
+        else:
+            handoff["remaining"].remove(number)
+    if (abort or handoff["deferred"] or caught is not None) and not handoff["cleaned"]:
+        try:
+            clean()
+        except BaseException as error:
+            if caught is None:
+                caught = error
+    if caught is not None:
+        raise caught
+    if handoff["deferred"]:
+        raise InterruptedError(
+            f"Execution interrupted by {signal.Signals(handoff['deferred'][0]).name}")
+
+
 def spawn_contained(command, cwd, environment, stdout, stderr, *,
                     popen=subprocess.Popen, identity_reader=process_identity,
                     install_handler=signal.signal, cleanup=cleanup_spawn_group):
-    """Return owned PID/start/group after deferring signals across identity capture."""
-    deferred, previous = [], {}
-    process = owned = caught = None
+    """Return ownership plus live defer state for caller-side handoff."""
+    handoff = {"deferred": [], "previous": {}, "remaining": [],
+               "install_handler": install_handler, "cleanup": cleanup,
+               "cleaned": False}
+    process = None
 
     def defer(number, frame):
-        deferred.append(number)
+        handoff["deferred"].append(number)
 
     try:
         for number in (signal.SIGINT, signal.SIGTERM):
-            previous[number] = install_handler(number, defer)
+            handoff["previous"][number] = install_handler(number, defer)
+            handoff["remaining"].append(number)
         process = popen(command, cwd=cwd, env=environment, stdout=stdout, stderr=stderr,
                         start_new_session=True, restore_signals=True)
         current = None
@@ -687,39 +730,13 @@ def spawn_contained(command, cwd, environment, stdout, stderr, *,
             raise ValueError("Spawned trainer PID/start/group/argv identity differs")
         owned = {key: current[key] for key in
                  ("pid", "ppid", "group", "start_ticks", "command")}
+        return process, owned, handoff
     except BaseException as error:
-        caught = error
-
-    cleaned = False
-    if process is not None and (caught is not None or deferred):
         try:
-            cleanup(process.pid)
-            waiter = getattr(process, "wait", None)
-            if waiter is not None:
-                waiter(timeout=1)
-            cleaned = True
-        except BaseException as error:
-            caught = error
-    for number in reversed(tuple(previous)):
-        try:
-            install_handler(number, previous[number])
-        except BaseException as error:
-            caught = error
-    # A signal can arrive between the pre-restore check and handler restoration.
-    if process is not None and (caught is not None or deferred) and not cleaned:
-        try:
-            cleanup(process.pid)
-            waiter = getattr(process, "wait", None)
-            if waiter is not None:
-                waiter(timeout=1)
-        except BaseException as error:
-            caught = error
-    if caught is not None:
-        raise caught
-    if deferred:
-        raise InterruptedError(
-            f"Execution interrupted by {signal.Signals(deferred[0]).name}")
-    return process, owned
+            finish_spawn_handoff(process, handoff, abort=True)
+        except BaseException as cleanup_error:
+            raise cleanup_error from error
+        raise
 
 
 def admit_process_observation(identity, parent_pid, rows, known, maximum):
@@ -761,15 +778,17 @@ def supervise_pair(pair, deadline):
     stdout_path, stderr_path = supervision / "stdout.log", supervision / "stderr.log"
     started = time.monotonic()
     known, identity, errors, signals = {}, None, [], []
-    process = None
+    process = handoff = None
     def log_failure(message):
         if message not in errors:
             errors.append(message)
 
     with bounded_logs(supervision, LOG_BYTES, log_failure) as (stdout, stderr):
         try:
-            process, identity = spawn_contained(
+            process, identity, handoff = spawn_contained(
                 pair["argv"], ROOT, EXACT_ENVIRONMENT, stdout, stderr)
+            finish_spawn_handoff(process, handoff)
+            handoff = None
             while True:
                 now = time.monotonic()
                 code = process.poll()
@@ -812,6 +831,12 @@ def supervise_pair(pair, deadline):
                     process.wait(timeout=max(0.0, min(5.0, deadline - time.monotonic())))
                 except subprocess.TimeoutExpired:
                     errors.append("Pair leader did not drain after forced termination")
+        finally:
+            if handoff is not None and handoff["remaining"]:
+                try:
+                    finish_spawn_handoff(process, handoff, abort=True)
+                except BaseException as error:
+                    errors.append(f"{type(error).__name__}: {str(error)[:512]}")
     drained = ({"drained": False, "forced": False, "signals": [],
                 "survivors": [], "known": known} if identity is None else
                drain_process_group(identity, deadline, known))
