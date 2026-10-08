@@ -175,10 +175,28 @@ covered in split local runs: 1,248 passed and 24 skipped. Socket-dependent tests
 required loopback permission because the managed sandbox denied their fixtures.
 No native owner, physics step, model, observation or held-out block ran.
 
-Next memory work: implement and independently review the oracle proof/isolation
-and the version-3 native producer/raw audit, including both-schedule event
-visibility and no-predecision-passage-evidence checks. Then freeze the development
-block, historical split-disjointness proof, exact owner/time/storage allocation,
-effect and null-harm margins, interval estimator and stop rules before collecting
-development data. R2 and all seven release-level gates remain open. Main, CI and
-the physical rover remain outside this phase.
+### Family oracle proof admitted, 8 October 2026
+
+[PR #98](https://github.com/Aadrika08/palimpsest/pull/98), stacked on #97,
+implements the pure evaluator-side oracle proof for the version-3 family task.
+It reconstructs source and own-continuation packets, replays acquisition and the
+post intervention, verifies Engine event chronology and pose continuity, proves
+the terminal sensor-only tick, and rejects passage evidence through the decision
+tick. Gold target IDs come only from the experiment specification; the proof
+cannot admit a non-oracle condition or a self-asserted evidence binding.
+
+The focused oracle suite passed 5 tests and the affected memory suite passed all
+92 tests. Python compilation and whitespace validation also passed. Independent
+review found no remaining critical or important issue after donor isolation,
+canonical run-ID, packet-provenance and terminal-tick checks were tightened. No
+raw owner, native job, model, development block or held-out block ran, so this is
+software-contract evidence rather than runtime qualification.
+
+Next memory work: add the smallest checksum-validating raw-artifact adapter that
+derives the oracle inputs and bindings from completed owner files, with synthetic
+fixture coverage and no allocation. Then specify the version-3 native producer,
+raw audit and finite historical namespace/allocation proof before collecting any
+development data. The frozen analysis contract must still define effect and
+null-harm margins, interval estimator and stop rules. R2 and all seven
+release-level gates remain open. Main, CI and the physical rover remain outside
+this phase.
