@@ -667,7 +667,8 @@ def _read_publication(value, name):
                 admission_raw or type(admission['version']) is not int or
                 type(admission['manifest_bytes']) is not int or
                 type(admission['receipt_bytes']) is not int or
-                admission != expected_admission):
+                admission_raw != _canonical_bytes(
+                    expected_admission, 'expected publication admission receipt')):
             raise ValueError(f'{name}: identity-bound admission receipt differs')
         try:
             final_raw, final_target_identity = _read_exact_file(
