@@ -184,35 +184,38 @@ def _report(path, *, run_id, case, operation, condition, snapshot_sha256,
     Path(path).write_bytes(memory.canonical_bytes(value))
 
 
-def _fixture(root, pixel_shift=0, *, natural_failure=False):
+def _fixture(root, pixel_shift=0, *, natural_failure=False,
+             include_source=False):
     audit = _audit()
-    root.mkdir(parents=True)
+    root.mkdir(parents=True, exist_ok=True)
     sample = evidence(row=4)
     case = sample['case']
     assert case['case_id'] == CASE_ID
     source_id = sample['bindings']['source']['run_id']
     condition_id = sample['bindings']['post']['run_id']
 
-    source_run = root / source_id
-    source_writer = RunWriter(
-        source_run / 'recording',
-        _manifest(audit, case, source_id, 'source', None, None),
-        max_bytes=admission.SOURCE_RECORDING_MAX_BYTES)
-    _emit_trace(source_writer, sample['source_events'], sample['source_rows'],
-                pixel_shift)
     source_application = copy.deepcopy(sample['source_application'])
-    source_application['event_prefix'] = _prefix(source_writer)
-    source_snapshot_sha256 = _register_source_snapshot(
-        source_writer, source_application)
-    _finish(source_writer, source_application['total_tick'],
-            source_application['world_task_state'])
-    _report(
-        source_run / 'worker-report.json', run_id=source_id, case=case,
-        operation='source', condition=None,
-        snapshot_sha256=source_snapshot_sha256,
-        source_snapshot_sha256=None,
-        total_ticks=source_application['total_tick'],
-        world_state=source_application['world_task_state'])
+    source_snapshot_sha256 = '9' * 64
+    source_run = root / source_id
+    if include_source:
+        source_writer = RunWriter(
+            source_run / 'recording',
+            _manifest(audit, case, source_id, 'source', None, None),
+            max_bytes=admission.SOURCE_RECORDING_MAX_BYTES)
+        _emit_trace(source_writer, sample['source_events'], sample['source_rows'],
+                    pixel_shift)
+        source_application['event_prefix'] = _prefix(source_writer)
+        source_snapshot_sha256 = _register_source_snapshot(
+            source_writer, source_application)
+        _finish(source_writer, source_application['total_tick'],
+                source_application['world_task_state'])
+        _report(
+            source_run / 'worker-report.json', run_id=source_id, case=case,
+            operation='source', condition=None,
+            snapshot_sha256=source_snapshot_sha256,
+            source_snapshot_sha256=None,
+            total_ticks=source_application['total_tick'],
+            world_state=source_application['world_task_state'])
 
     post_events = copy.deepcopy(sample['post_events'])
     restored = next(event for event in post_events
@@ -366,7 +369,7 @@ def test_protocol_binds_raw_auditor_and_import_is_pure():
 @pytest.mark.parametrize('part', ['source', 'condition'])
 def test_audits_one_closed_run_read_only_and_publishes_exclusively(tmp_path, part):
     audit = _audit()
-    fixture = _fixture(tmp_path / part)
+    fixture = _fixture(tmp_path / part, include_source=part == 'source')
     request = _request(fixture, part)
     before = _tree_hashes(fixture[part]['run_path'])
     result = audit.audit_raw_run(**request)
@@ -394,7 +397,7 @@ def test_audits_one_closed_run_read_only_and_publishes_exclusively(tmp_path, par
 
 def test_retains_a_natural_condition_failure_without_a_replacement(tmp_path):
     audit = _audit()
-    fixture = _fixture(tmp_path, natural_failure=True)
+    fixture = _fixture(tmp_path / 'fixture', natural_failure=True)
     request = _request(fixture, 'condition')
     receipt = audit.audit_raw_run(**request)['receipt']
     assert receipt['terminal_state']['manifest_status'] == 'failed'
@@ -404,7 +407,7 @@ def test_retains_a_natural_condition_failure_without_a_replacement(tmp_path):
 
 
 def test_direct_file_cli_publishes_the_same_source_contract(tmp_path):
-    fixture = _fixture(tmp_path / 'cli')
+    fixture = _fixture(tmp_path / 'cli', include_source=True)
     request = _request(fixture, 'source')
     command = [
         sys.executable, str(ROOT / 'scripts/memory_family_raw_audit_v4.py'),
@@ -544,7 +547,7 @@ def test_rejects_terminal_and_condition_oracle_mismatch(tmp_path, defect):
 def test_rejects_source_restore_lineage_or_snapshot_mutation(tmp_path):
     audit = _audit()
     for defect in ('lineage', 'snapshot'):
-        fixture = _fixture(tmp_path / defect)
+        fixture = _fixture(tmp_path / defect, include_source=True)
         request = _request(fixture, 'source')
         run = request['run_path']
         if defect == 'lineage':
@@ -600,7 +603,7 @@ def test_rejects_invalid_or_expired_deadlines_before_read(tmp_path):
 
 def test_rejects_preexisting_converter_shaped_or_spliced_receipt(tmp_path):
     audit = _audit()
-    fixture = _fixture(tmp_path / 'first')
+    fixture = _fixture(tmp_path / 'first', include_source=True)
     request = _request(fixture, 'source')
     converter = memory.canonical_bytes({
         'schema': 'memory-family-compact-conversion-v1',
@@ -611,7 +614,7 @@ def test_rejects_preexisting_converter_shaped_or_spliced_receipt(tmp_path):
         audit.audit_raw_run(**request)
     assert _receipt_path(request).read_bytes() == converter
 
-    other = _fixture(tmp_path / 'other', pixel_shift=17)
+    other = _fixture(tmp_path / 'other', pixel_shift=17, include_source=True)
     first_target = tmp_path / 'first-receipt'
     other_target = tmp_path / 'other-receipt'
     first_target.mkdir()
@@ -641,8 +644,8 @@ def test_mutation_after_initial_scan_rolls_back_exclusive_link(tmp_path, monkeyp
 
     def drift(*args, **kwargs):
         nonlocal calls
-        value = original(*args, **kwargs)
         calls += 1
+        value = original(*args, **kwargs)
         if calls == 1:
             chunk = next((request['run_path'] / 'recording/chunks').iterdir())
             chunk.write_bytes(chunk.read_bytes() + b'drift')

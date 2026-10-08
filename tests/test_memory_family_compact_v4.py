@@ -269,7 +269,6 @@ def test_protocol_binds_exact_present_sources_and_marks_future_roles_unresolved(
     compact = _compact()
     assert compact.behavior_source_identities(ROOT) == compact.PROTOCOL['behavior_sources']
     assert compact.PROTOCOL['future_behavior_sources'] == [
-        {'id': 'raw_audit', 'path': 'scripts/memory_family_raw_audit_v4.py'},
         {'id': 'pair_admission', 'path': 'scripts/memory_family_oracle_admission_v4.py'},
         {'id': 'producer', 'path': 'scripts/memory_family_producer_v4.py'},
     ]
