@@ -56,8 +56,7 @@ EXPECTED = [
 ]
 
 RESERVED_IDS = (6110, 6111, 6112, 6113, 6120, 6121, 6122, 6123)
-LINEAGE_SHA256 = hashlib.sha256(b'synthetic-v3-reservation-lineage').hexdigest()
-PROTOCOL_SHA256 = LINEAGE_SHA256
+PROTOCOL_SHA256 = 'fe8b2615f965a114274a13aeb2d49c26d3f79e0920eee72bce4eb671adff3d13'
 
 
 def canonical_bytes(value):
@@ -125,7 +124,7 @@ def inventory_snapshot():
         'kind': 'manifest', 'name': 'synthetic-v3-self-reservation',
         'root': roots[-1]['path'],
         'identity_sha256': digest({'record': 'self-reservation'}),
-        'role': 'self_reservation', 'lineage_sha256': LINEAGE_SHA256,
+        'role': 'self_reservation', 'lineage_sha256': PROTOCOL_SHA256,
         'scenes': [{
             'scene_id': scene_id, 'canonical_scene_sha256': None,
             'scientific_initial_sha256': None, 'payload_sha256': None,
@@ -305,29 +304,59 @@ class PuckReservationAndMintAdmissionTests(unittest.TestCase):
         _, reserve = self.api('reserve_scene_roster')
         before = inventory_snapshot() if before is None else before
         after = copy.deepcopy(before) if after is None else after
-        return reserve(directory, before, after, lineage_sha256=LINEAGE_SHA256)
+        return reserve(directory, before, after, lineage_sha256=PROTOCOL_SHA256)
+
+    def test_reservation_lineage_and_receipt_bind_the_frozen_protocol(self):
+        on_policy, reserve = self.api('reserve_scene_roster')
+        self.assertEqual(getattr(on_policy, 'PROTOCOL_SHA256', None), PROTOCOL_SHA256)
+        snapshot = inventory_snapshot()
+        wrong = 'a' * 64
+        wrong_snapshot = copy.deepcopy(snapshot)
+        wrong_snapshot['records'][-1]['lineage_sha256'] = wrong
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory).resolve()
+            with self.assertRaisesRegex(ValueError, 'protocol'):
+                reserve(root, wrong_snapshot, copy.deepcopy(wrong_snapshot),
+                        lineage_sha256=wrong)
+            self.assertEqual(list(root.iterdir()), [])
+
+        with tempfile.TemporaryDirectory() as directory:
+            result = self.reserve(Path(directory).resolve(), snapshot)
+            manifest = json.loads(result['manifest_bytes'])
+            receipt = json.loads(result['commit_bytes'])
+            self.assertEqual(manifest['lineage_sha256'], PROTOCOL_SHA256)
+            self.assertEqual(receipt['protocol_sha256'], PROTOCOL_SHA256)
+
+    def test_reservation_version_rejects_boolean(self):
+        on_policy = subject()
+        with tempfile.TemporaryDirectory() as directory:
+            result = self.reserve(Path(directory).resolve())
+            manifest = json.loads(result['manifest_bytes'])
+            manifest['version'] = True
+            with self.assertRaisesRegex(ValueError, 'schema'):
+                on_policy._read_reservation(canonical_bytes(manifest))
 
     def test_typed_inventory_reserves_exact_stable_self_lineage_atomically(self):
         on_policy, _ = self.api('reserve_scene_roster')
         snapshot = inventory_snapshot()
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory).resolve()
-            real_replace = os.replace
-            replacements = []
+            real_link = os.link
+            links = []
 
-            def replace(source, target):
+            def link(source, target, *arguments, **keywords):
                 source, target = Path(source), Path(target)
                 self.assertTrue(source.is_file())
                 self.assertFalse(target.exists())
-                replacements.append((source.name, target.name))
-                real_replace(source, target)
+                links.append((source.name, target.name))
+                real_link(source, target, *arguments, **keywords)
 
-            with patch.object(on_policy.os, 'replace', side_effect=replace):
+            with patch.object(on_policy.os, 'link', side_effect=link):
                 result = self.reserve(root, snapshot, copy.deepcopy(snapshot))
 
             target = root / 'reservation.json'
             commit = root / 'reservation.json.commit.json'
-            self.assertEqual(replacements, [
+            self.assertEqual(links, [
                 ('.reservation.json.pending', 'reservation.json'),
                 ('.reservation.json.commit.pending', 'reservation.json.commit.json'),
             ])
@@ -340,7 +369,7 @@ class PuckReservationAndMintAdmissionTests(unittest.TestCase):
             self.assertEqual(result['manifest_bytes'], canonical_bytes(manifest))
             self.assertEqual(result['manifest_sha256'], digest(result['manifest_bytes']))
             self.assertEqual(manifest['scene_ids'], list(RESERVED_IDS))
-            self.assertEqual(manifest['lineage_sha256'], LINEAGE_SHA256)
+            self.assertEqual(manifest['lineage_sha256'], PROTOCOL_SHA256)
             self.assertEqual(manifest['inventory'], snapshot)
             self.assertEqual(manifest['inventory_before_sha256'], digest(snapshot))
             self.assertEqual(manifest['inventory_after_sha256'], digest(snapshot))
@@ -380,7 +409,7 @@ class PuckReservationAndMintAdmissionTests(unittest.TestCase):
         mutations['prior ID collision'] = prior_collision
 
         extra_lineage = inventory_snapshot()
-        extra_lineage['records'][0]['lineage_sha256'] = LINEAGE_SHA256
+        extra_lineage['records'][0]['lineage_sha256'] = PROTOCOL_SHA256
         mutations['extra lineage occurrence'] = extra_lineage
 
         for label, snapshot in mutations.items():
@@ -451,19 +480,19 @@ class PuckReservationAndMintAdmissionTests(unittest.TestCase):
                 calls.append((scene_id, slot, split))
                 return fake_candidate(scene_id, slot, split)
 
-            real_replace = os.replace
-            replacements = []
+            real_link = os.link
+            links = []
 
-            def replace(source, target):
+            def link(source, target, *arguments, **keywords):
                 source, target = Path(source), Path(target)
                 self.assertTrue(source.is_file())
                 self.assertFalse(target.exists())
-                replacements.append((source.name, target.name))
-                real_replace(source, target)
+                links.append((source.name, target.name))
+                real_link(source, target, *arguments, **keywords)
 
             with patch.object(on_policy, 'mint_layouts', side_effect=AssertionError(
                     'the reviewed real minter must remain uninvoked')), \
-                    patch.object(on_policy.os, 'replace', side_effect=replace):
+                    patch.object(on_policy.os, 'link', side_effect=link):
                 result = stage(Path(scene_directory).resolve(), reservation['manifest_path'],
                                minter, inventory_after=copy.deepcopy(snapshot))
 
@@ -472,7 +501,7 @@ class PuckReservationAndMintAdmissionTests(unittest.TestCase):
                  else 'on_policy_development')
                 for slot, scene_id in enumerate(RESERVED_IDS)]
             self.assertEqual(calls, expected_calls)
-            self.assertEqual(replacements, [
+            self.assertEqual(links, [
                 ('.scene-manifest.json.pending', 'scene-manifest.json'),
                 ('.scene-manifest.json.commit.pending',
                  'scene-manifest.json.commit.json'),
@@ -715,6 +744,95 @@ class PuckReservationAndMintAdmissionTests(unittest.TestCase):
                     project(target, reservation_path=reservation['manifest_path'],
                             audience='collection')
 
+    def test_publication_reader_rejects_target_and_receipt_hardlink_replay(self):
+        on_policy = subject()
+        for victim_name in ('reservation.json', 'reservation.json.commit.json'):
+            with self.subTest(victim=victim_name), \
+                    tempfile.TemporaryDirectory() as directory, \
+                    tempfile.TemporaryDirectory() as outside:
+                root = Path(directory).resolve()
+                result = self.reserve(root)
+                target = Path(result['manifest_path'])
+                victim = root / victim_name
+                os.link(victim, Path(outside).resolve() / 'external-hardlink')
+                with self.assertRaisesRegex(ValueError, 'linked'):
+                    on_policy._read_published_reservation(target)
+
+    def test_publication_reader_rejects_same_byte_file_and_parent_rebinding(self):
+        on_policy = subject()
+        real_path_open = Path.open
+        real_os_open = os.open
+
+        for victim_name in ('reservation.json', 'reservation.json.commit.json'):
+            with self.subTest(victim=victim_name), \
+                    tempfile.TemporaryDirectory() as directory:
+                root = Path(directory).resolve()
+                result = self.reserve(root)
+                target = Path(result['manifest_path'])
+                victim = root / victim_name
+                replacement = root / f'{victim_name}.replacement'
+                replacement.write_bytes(victim.read_bytes())
+                raced = {'done': False}
+
+                def race():
+                    if not raced['done']:
+                        raced['done'] = True
+                        os.replace(replacement, victim)
+
+                def path_open(path, *arguments, **keywords):
+                    handle = real_path_open(path, *arguments, **keywords)
+                    if Path(path) == victim:
+                        race()
+                    return handle
+
+                def descriptor_open(path, *arguments, **keywords):
+                    descriptor = real_os_open(path, *arguments, **keywords)
+                    if Path(path).name == victim.name:
+                        race()
+                    return descriptor
+
+                with patch.object(Path, 'open', new=path_open), \
+                        patch.object(on_policy.os, 'open', side_effect=descriptor_open), \
+                        self.assertRaisesRegex(ValueError, 'rebound'):
+                    on_policy._read_published_reservation(target)
+                self.assertTrue(raced['done'])
+
+        with tempfile.TemporaryDirectory() as directory:
+            base = Path(directory).resolve()
+            live = base / 'live'; live.mkdir()
+            result = self.reserve(live)
+            target = Path(result['manifest_path'])
+            standby = base / 'standby'; standby.mkdir()
+            for name in ('reservation.json', 'reservation.json.commit.json'):
+                (standby / name).write_bytes((live / name).read_bytes())
+            displaced = base / 'displaced'
+            raced = {'done': False}
+
+            def swap_parent():
+                if not raced['done']:
+                    raced['done'] = True
+                    live.rename(displaced)
+                    standby.rename(live)
+
+            def path_open(path, *arguments, **keywords):
+                handle = real_path_open(path, *arguments, **keywords)
+                if Path(path).name == 'reservation.json':
+                    swap_parent()
+                return handle
+
+            def descriptor_open(path, *arguments, **keywords):
+                descriptor = real_os_open(path, *arguments, **keywords)
+                if (keywords.get('dir_fd') is not None and
+                        Path(path).name == 'reservation.json'):
+                    swap_parent()
+                return descriptor
+
+            with patch.object(Path, 'open', new=path_open), \
+                    patch.object(on_policy.os, 'open', side_effect=descriptor_open), \
+                    self.assertRaisesRegex(ValueError, 'parent'):
+                on_policy._read_published_reservation(target)
+            self.assertTrue(raced['done'])
+
     def test_preexisting_commit_paths_refuse_before_minting(self):
         _, stage = self.api('stage_scene_manifest')
         snapshot = inventory_snapshot()
@@ -736,6 +854,125 @@ class PuckReservationAndMintAdmissionTests(unittest.TestCase):
                               inventory_after=copy.deepcopy(snapshot))
                     self.assertEqual(calls, [])
                     self.assertEqual(list(root.iterdir()), [marker])
+
+    def test_target_and_receipt_publication_never_overwrite_raced_destinations(self):
+        on_policy, stage = self.api('stage_scene_manifest')
+        snapshot = inventory_snapshot()
+        racer = b'synthetic-raced-destination\n'
+        with tempfile.TemporaryDirectory() as reservation_directory:
+            reservation = self.reserve(Path(reservation_directory).resolve(), snapshot)
+            for victim_name in ('scene-manifest.json',
+                                'scene-manifest.json.commit.json'):
+                with self.subTest(victim=victim_name), \
+                        tempfile.TemporaryDirectory() as directory:
+                    root = Path(directory).resolve()
+                    victim = root / victim_name
+                    real_replace = os.replace
+                    real_link = os.link
+
+                    def insert_racer(destination):
+                        if Path(destination) == victim and not victim.exists():
+                            victim.write_bytes(racer)
+
+                    def replace(source, destination, *arguments, **keywords):
+                        insert_racer(destination)
+                        return real_replace(source, destination, *arguments, **keywords)
+
+                    def link(source, destination, *arguments, **keywords):
+                        insert_racer(destination)
+                        return real_link(source, destination, *arguments, **keywords)
+
+                    with patch.object(on_policy.os, 'replace', side_effect=replace), \
+                            patch.object(on_policy.os, 'link', side_effect=link), \
+                            self.assertRaises(FileExistsError):
+                        stage(root, reservation['manifest_path'], fake_candidate,
+                              inventory_after=copy.deepcopy(snapshot))
+                    self.assertEqual(victim.read_bytes(), racer)
+                    with self.assertRaises(ValueError):
+                        on_policy._read_publication(
+                            root / 'scene-manifest.json', 'scene-manifest.json')
+
+    def test_quarantine_removal_is_the_final_publication_syscall(self):
+        on_policy, stage = self.api('stage_scene_manifest')
+        snapshot = inventory_snapshot()
+        with tempfile.TemporaryDirectory() as reservation_directory, \
+                tempfile.TemporaryDirectory() as directory:
+            reservation = self.reserve(Path(reservation_directory).resolve(), snapshot)
+            root = Path(directory).resolve()
+            events = []
+            real_fsync_directory = on_policy._fsync_directory
+            real_unlink = Path.unlink
+
+            def fsync_directory(path):
+                if Path(path) == root:
+                    events.append(('fsync-directory', None))
+                return real_fsync_directory(path)
+
+            def unlink(path, *arguments, **keywords):
+                if Path(path).parent == root:
+                    events.append(('unlink', Path(path).name))
+                return real_unlink(path, *arguments, **keywords)
+
+            with patch.object(on_policy, '_fsync_directory', side_effect=fsync_directory), \
+                    patch.object(Path, 'unlink', new=unlink):
+                stage(root, reservation['manifest_path'], fake_candidate,
+                      inventory_after=copy.deepcopy(snapshot))
+            self.assertEqual(events[-1],
+                             ('unlink', '.scene-manifest.json.quarantine'))
+
+    def test_compounded_postcommit_failure_never_exposes_false_success(self):
+        on_policy = subject()
+        snapshot = inventory_snapshot()
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory).resolve()
+            target = root / 'reservation.json'
+            commit = root / 'reservation.json.commit.json'
+            commit_pending = root / '.reservation.json.commit.pending'
+            quarantine = root / '.reservation.json.quarantine'
+            real_fsync_directory = on_policy._fsync_directory
+            real_replace = os.replace
+            real_unlink = Path.unlink
+            postcommit_faults = []
+
+            def final_durability_failure(path):
+                if target.exists() and commit.exists() and not quarantine.exists():
+                    postcommit_faults.append('postcommit-fsync')
+                    raise OSError('final durability failure')
+                return real_fsync_directory(path)
+
+            def receipt_demotion_failure(source, destination, *arguments, **keywords):
+                if Path(source) == commit and Path(destination) == commit_pending:
+                    raise OSError('receipt demotion failed')
+                return real_replace(source, destination, *arguments, **keywords)
+
+            def receipt_unlink_failure(path, *arguments, **keywords):
+                if Path(path) == commit:
+                    raise OSError('receipt unlink failed')
+                return real_unlink(path, *arguments, **keywords)
+
+            failed = False
+            with patch.object(on_policy, '_fsync_directory',
+                              side_effect=final_durability_failure), \
+                    patch.object(on_policy.os, 'replace',
+                                 side_effect=receipt_demotion_failure), \
+                    patch.object(Path, 'unlink', new=receipt_unlink_failure), \
+                    patch.object(on_policy, '_remove_failed_target', create=True,
+                                 side_effect=OSError('target unlink failed')), \
+                    patch.object(on_policy, '_retain_quarantine', create=True,
+                                 side_effect=OSError('quarantine recreation failed')):
+                try:
+                    self.reserve(root, snapshot, copy.deepcopy(snapshot))
+                except OSError:
+                    failed = True
+
+            if failed:
+                self.assertTrue(postcommit_faults)
+                with self.assertRaises(ValueError):
+                    on_policy._read_published_reservation(target)
+            else:
+                self.assertEqual(postcommit_faults, [])
+                raw, manifest = on_policy._read_published_reservation(target)
+                self.assertEqual(raw, canonical_bytes(manifest))
 
     def test_commit_receipt_is_attempted_only_after_target_directory_fsync(self):
         on_policy, stage = self.api('stage_scene_manifest')
@@ -771,22 +1008,22 @@ class PuckReservationAndMintAdmissionTests(unittest.TestCase):
             self.assertLess(events.index('target-directory-fsync'),
                             events.index('receipt-write'))
 
-    def test_commit_receipt_write_fsync_rename_and_admission_fail_closed(self):
+    def test_commit_receipt_write_fsync_publication_and_admission_fail_closed(self):
         on_policy, stage = self.api('stage_scene_manifest')
         snapshot = inventory_snapshot()
         with tempfile.TemporaryDirectory() as reservation_directory:
             reservation = self.reserve(Path(reservation_directory).resolve(), snapshot)
-            real_replace = os.replace
+            real_link = os.link
             real_directory_fsync = on_policy._fsync_directory
 
             def partial_then_fsync_failure(path, raw):
                 Path(path).write_bytes(raw[:8])
                 raise OSError('commit receipt fsync')
 
-            def receipt_rename_failure(source, target):
-                if Path(source).name == '.scene-manifest.json.commit.pending':
-                    raise OSError('commit receipt rename')
-                return real_replace(source, target)
+            def receipt_link_failure(source, target, *arguments, **keywords):
+                if Path(target).name == 'scene-manifest.json.commit.json':
+                    raise OSError('commit receipt publication')
+                return real_link(source, target, *arguments, **keywords)
 
             for label, context_factory in (
                     ('write', lambda: patch.object(
@@ -795,8 +1032,8 @@ class PuckReservationAndMintAdmissionTests(unittest.TestCase):
                     ('fsync', lambda: patch.object(
                         on_policy, '_write_commit_receipt', create=True,
                         side_effect=partial_then_fsync_failure)),
-                    ('rename', lambda: patch.object(
-                        on_policy.os, 'replace', side_effect=receipt_rename_failure)),
+                    ('exclusive publication', lambda: patch.object(
+                        on_policy.os, 'link', side_effect=receipt_link_failure)),
                     ('admission fsync', lambda: patch.object(
                         on_policy, '_fsync_directory', side_effect=lambda root: (
                             (_ for _ in ()).throw(OSError('commit receipt admission fsync'))
@@ -809,9 +1046,13 @@ class PuckReservationAndMintAdmissionTests(unittest.TestCase):
                     with self.assertRaises(OSError):
                         stage(root, reservation['manifest_path'], fake_candidate,
                               inventory_after=copy.deepcopy(snapshot))
-                    self.assertEqual(list(root.iterdir()), [])
+                    paths = on_policy._publication_paths(root, 'scene-manifest.json')
+                    self.assertTrue(any((paths[name].exists() or paths[name].is_symlink())
+                                        for name in ('pending', 'quarantine', 'commit_pending')))
+                    with self.assertRaises(ValueError):
+                        on_policy._read_publication(paths['target'], 'scene-manifest.json')
 
-    def test_minter_layout_inventory_and_publication_failures_leave_no_scene_manifest(self):
+    def test_minter_layout_inventory_and_publication_failures_are_unreadable(self):
         on_policy, stage = self.api('stage_scene_manifest')
         snapshot = inventory_snapshot()
         with tempfile.TemporaryDirectory() as reservation_directory:
@@ -836,7 +1077,7 @@ class PuckReservationAndMintAdmissionTests(unittest.TestCase):
                 ('inventory', fake_candidate, changed, None),
                 ('fsync', fake_candidate, copy.deepcopy(snapshot), 'fsync'),
                 ('directory fsync', fake_candidate, copy.deepcopy(snapshot), 'directory_fsync'),
-                ('rename', fake_candidate, copy.deepcopy(snapshot), 'replace'),
+                ('exclusive publication', fake_candidate, copy.deepcopy(snapshot), 'link'),
             )
             for label, minter, final_inventory, fault in cases:
                 with self.subTest(label=label), tempfile.TemporaryDirectory() as scene_directory:
@@ -854,194 +1095,88 @@ class PuckReservationAndMintAdmissionTests(unittest.TestCase):
                         if fault == 'fsync' else
                         patch.object(on_policy.os, 'fsync', side_effect=directory_fsync)
                         if fault == 'directory_fsync' else
-                        patch.object(on_policy.os, 'replace', side_effect=OSError('rename'))
-                        if fault == 'replace' else patch.object(
-                            on_policy.os, 'replace', wraps=os.replace))
+                        patch.object(on_policy.os, 'link', side_effect=OSError('link'))
+                        if fault == 'link' else patch.object(
+                            on_policy.os, 'link', wraps=os.link))
                     with context, self.assertRaises((ValueError, RuntimeError, OSError)):
-                        stage(Path(scene_directory).resolve(), reservation['manifest_path'],
+                        root = Path(scene_directory).resolve()
+                        stage(root, reservation['manifest_path'],
                               minter, inventory_after=final_inventory)
-                    self.assertEqual(list(Path(scene_directory).iterdir()), [])
-                    if fault == 'directory_fsync':
-                        self.assertEqual(len(fsync_calls), 5)
+                    paths = on_policy._publication_paths(root, 'scene-manifest.json')
+                    with self.assertRaises(ValueError):
+                        on_policy._read_publication(paths['target'], 'scene-manifest.json')
+                    if fault is None:
+                        self.assertEqual(list(root.iterdir()), [])
+                    else:
+                        self.assertTrue(any(
+                            paths[name].exists() or paths[name].is_symlink()
+                            for name in ('pending', 'quarantine', 'commit_pending')))
 
-    def test_failed_durable_commit_is_removed_or_explicitly_quarantined(self):
+    def test_publication_failures_retain_a_reader_visible_blocker(self):
         on_policy, stage = self.api('stage_scene_manifest')
         _, project = self.api('collection_scene_projection')
         snapshot = inventory_snapshot()
         with tempfile.TemporaryDirectory() as reservation_directory:
             reservation = self.reserve(Path(reservation_directory).resolve(), snapshot)
             real_fsync = os.fsync
-
-            def fail_calls(*numbers):
-                calls = []
-
-                def controlled(file_descriptor):
-                    calls.append(file_descriptor)
-                    if len(calls) in numbers:
-                        raise OSError(f'fsync call {len(calls)}')
-                    return real_fsync(file_descriptor)
-
-                return calls, controlled
-
-            calls, publication_failure = fail_calls(4)
-            with tempfile.TemporaryDirectory() as scene_directory, \
-                    patch.object(on_policy.os, 'fsync', side_effect=publication_failure):
-                root = Path(scene_directory).resolve()
-                with self.assertRaises(OSError):
-                    stage(root, reservation['manifest_path'], fake_candidate,
-                          inventory_after=copy.deepcopy(snapshot))
-                self.assertEqual(len(calls), 5)
-                self.assertEqual(list(root.iterdir()), [])
-
-            calls, cleanup_failure = fail_calls(4, 5)
-            with tempfile.TemporaryDirectory() as scene_directory, \
-                    patch.object(on_policy.os, 'fsync', side_effect=cleanup_failure):
-                root = Path(scene_directory).resolve(); target = root / 'scene-manifest.json'
-                quarantine = root / '.scene-manifest.json.quarantine'
-                with self.assertRaises(OSError):
-                    stage(root, reservation['manifest_path'], fake_candidate,
-                          inventory_after=copy.deepcopy(snapshot))
-                self.assertFalse(target.exists())
-                self.assertTrue(quarantine.exists())
-                with self.assertRaisesRegex(ValueError, 'quarant'):
-                    project(target, reservation_path=reservation['manifest_path'],
-                            audience='collection')
-
-            calls, final_success_fsync_failure = fail_calls(5)
-            with tempfile.TemporaryDirectory() as scene_directory, \
-                    patch.object(on_policy.os, 'fsync', side_effect=final_success_fsync_failure):
-                root = Path(scene_directory).resolve()
-                with self.assertRaises(OSError):
-                    stage(root, reservation['manifest_path'], fake_candidate,
-                          inventory_after=copy.deepcopy(snapshot))
-                self.assertEqual(len(calls), 6)
-                self.assertEqual(list(root.iterdir()), [])
-
-            calls, final_and_cleanup_fsync_failure = fail_calls(5, 6)
-            with tempfile.TemporaryDirectory() as scene_directory, \
-                    patch.object(on_policy.os, 'fsync',
-                                 side_effect=final_and_cleanup_fsync_failure):
-                root = Path(scene_directory).resolve(); target = root / 'scene-manifest.json'
-                quarantine = root / '.scene-manifest.json.quarantine'
-                with self.assertRaises(OSError):
-                    stage(root, reservation['manifest_path'], fake_candidate,
-                          inventory_after=copy.deepcopy(snapshot))
-                self.assertFalse(target.exists())
-                self.assertTrue(quarantine.exists())
-                with self.assertRaisesRegex(ValueError, 'quarant'):
-                    project(target, reservation_path=reservation['manifest_path'],
-                            audience='collection')
-
-            calls, final_success_fsync_failure = fail_calls(5)
-            with tempfile.TemporaryDirectory() as scene_directory, \
-                    patch.object(on_policy.os, 'fsync',
-                                 side_effect=final_success_fsync_failure), \
-                    patch.object(on_policy, '_remove_failed_target',
-                                 side_effect=OSError('unlink after final fsync failed')):
-                root = Path(scene_directory).resolve(); target = root / 'scene-manifest.json'
-                quarantine = root / '.scene-manifest.json.quarantine'
-                with self.assertRaises(OSError):
-                    stage(root, reservation['manifest_path'], fake_candidate,
-                          inventory_after=copy.deepcopy(snapshot))
-                self.assertTrue(target.exists())
-                self.assertTrue(quarantine.exists())
-                with self.assertRaisesRegex(ValueError, 'quarant'):
-                    project(target, reservation_path=reservation['manifest_path'],
-                            audience='collection')
-
-            calls, publication_failure = fail_calls(4)
-            with tempfile.TemporaryDirectory() as scene_directory, \
-                    patch.object(on_policy.os, 'fsync', side_effect=publication_failure), \
-                    patch.object(on_policy, '_remove_failed_target', create=True,
-                                 side_effect=OSError('unlink failed')):
-                root = Path(scene_directory).resolve(); target = root / 'scene-manifest.json'
-                quarantine = root / '.scene-manifest.json.quarantine'
-                with self.assertRaises(OSError):
-                    stage(root, reservation['manifest_path'], fake_candidate,
-                          inventory_after=copy.deepcopy(snapshot))
-                self.assertTrue(target.exists())
-                self.assertTrue(quarantine.exists())
-                with self.assertRaisesRegex(ValueError, 'quarant'):
-                    project(target, reservation_path=reservation['manifest_path'],
-                            audience='collection')
-
-            quarantine = Path(reservation['manifest_path']).with_name(
-                '.reservation.json.quarantine')
-            quarantine.write_bytes(b'indeterminate')
             calls = []
 
+            def fail_target_directory_fsync(file_descriptor):
+                calls.append(file_descriptor)
+                if len(calls) == 4:
+                    raise OSError('target directory fsync failed')
+                return real_fsync(file_descriptor)
+
+            with tempfile.TemporaryDirectory() as scene_directory, \
+                    patch.object(on_policy.os, 'fsync',
+                                 side_effect=fail_target_directory_fsync):
+                root = Path(scene_directory).resolve()
+                target = root / 'scene-manifest.json'
+                with self.assertRaises(OSError):
+                    stage(root, reservation['manifest_path'], fake_candidate,
+                          inventory_after=copy.deepcopy(snapshot))
+                paths = on_policy._publication_paths(root, target.name)
+                self.assertTrue(any(paths[name].exists() for name in
+                                    ('pending', 'quarantine', 'commit_pending')))
+                with self.assertRaises(ValueError):
+                    project(target, reservation_path=reservation['manifest_path'],
+                            audience='collection')
+
+            real_unlink = Path.unlink
+            with tempfile.TemporaryDirectory() as scene_directory:
+                root = Path(scene_directory).resolve()
+                target = root / 'scene-manifest.json'
+                quarantine = root / '.scene-manifest.json.quarantine'
+
+                def fail_final_commit(path, *arguments, **keywords):
+                    if Path(path) == quarantine:
+                        raise OSError('final quarantine removal failed')
+                    return real_unlink(path, *arguments, **keywords)
+
+                with patch.object(Path, 'unlink', new=fail_final_commit), \
+                        self.assertRaises(OSError):
+                    stage(root, reservation['manifest_path'], fake_candidate,
+                          inventory_after=copy.deepcopy(snapshot))
+                self.assertTrue(quarantine.exists())
+                with self.assertRaisesRegex(ValueError, 'quarant'):
+                    project(target, reservation_path=reservation['manifest_path'],
+                            audience='collection')
+
+            reservation_quarantine = Path(reservation['manifest_path']).with_name(
+                '.reservation.json.quarantine')
+            reservation_quarantine.write_bytes(b'indeterminate')
+            minter_calls = []
+
             def forbidden_minter(*arguments):
-                calls.append(arguments)
+                minter_calls.append(arguments)
                 raise AssertionError('quarantined reservation reached minter')
 
             with tempfile.TemporaryDirectory() as scene_directory:
                 with self.assertRaisesRegex(ValueError, 'quarant'):
                     stage(Path(scene_directory).resolve(), reservation['manifest_path'],
                           forbidden_minter, inventory_after=copy.deepcopy(snapshot))
-                self.assertEqual(calls, [])
+                self.assertEqual(minter_calls, [])
                 self.assertEqual(list(Path(scene_directory).iterdir()), [])
-
-    def test_compounded_final_fsync_cleanup_and_quarantine_failure_is_unreadable(self):
-        on_policy, stage = self.api('stage_scene_manifest')
-        _, project = self.api('collection_scene_projection')
-        snapshot = inventory_snapshot()
-        real_directory_fsync = on_policy._fsync_directory
-
-        def faults_for(root, target_name):
-            target = root / target_name
-            quarantine = root / f'.{target_name}.quarantine'
-
-            def final_directory_fsync(path):
-                if target.exists() and not quarantine.exists():
-                    raise OSError('final parent fsync failed')
-                return real_directory_fsync(path)
-
-            return final_directory_fsync
-
-        with tempfile.TemporaryDirectory() as directory:
-            root = Path(directory).resolve(); target = root / 'reservation.json'
-            calls = []
-            with patch.object(on_policy, '_fsync_directory',
-                              side_effect=faults_for(root, target.name)), \
-                    patch.object(on_policy, '_remove_failed_target',
-                                 side_effect=OSError('target unlink failed')), \
-                    patch.object(on_policy, '_retain_quarantine',
-                                 side_effect=OSError('quarantine recreation failed')):
-                with self.assertRaises(OSError):
-                    self.reserve(root, snapshot, copy.deepcopy(snapshot))
-            self.assertTrue(target.exists())
-            with self.assertRaises(ValueError):
-                on_policy._read_published_reservation(target)
-
-            def forbidden_minter(*arguments):
-                calls.append(arguments)
-                return fake_candidate(*arguments)
-
-            with tempfile.TemporaryDirectory() as scene_directory:
-                with self.assertRaises(ValueError):
-                    stage(Path(scene_directory).resolve(), target, forbidden_minter,
-                          inventory_after=copy.deepcopy(snapshot))
-            self.assertEqual(calls, [])
-
-        with tempfile.TemporaryDirectory() as reservation_directory, \
-                tempfile.TemporaryDirectory() as directory:
-            reservation = self.reserve(Path(reservation_directory).resolve(), snapshot)
-            root = Path(directory).resolve(); target = root / 'scene-manifest.json'
-            with patch.object(on_policy, '_fsync_directory',
-                              side_effect=faults_for(root, target.name)), \
-                    patch.object(on_policy, '_remove_failed_target',
-                                 side_effect=OSError('target unlink failed')), \
-                    patch.object(on_policy, '_retain_quarantine',
-                                 side_effect=OSError('quarantine recreation failed')):
-                with self.assertRaises(OSError):
-                    stage(root, reservation['manifest_path'], fake_candidate,
-                          inventory_after=copy.deepcopy(snapshot))
-            self.assertTrue(target.exists())
-            with self.assertRaises(ValueError):
-                on_policy._read_publication(target, target.name)
-            with self.assertRaises(ValueError):
-                project(target, reservation_path=reservation['manifest_path'],
-                        audience='collection')
 
     def test_output_alias_and_symlink_paths_are_rejected_without_publication(self):
         _, stage = self.api('stage_scene_manifest')
