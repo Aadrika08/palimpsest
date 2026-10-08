@@ -2,7 +2,7 @@
 
 8 October 2026. Software-only implementation plan, based on `e100275` and the
 [family oracle contract](memory-family-oracle-v3.md). This unit reads one
-explicitly registered source/own-continuation pair. It does not discover a
+explicitly named source/own-continuation pair. It does not discover a
 donor, launch an owner, allocate a study, inspect a matrix result, or qualify the
 family runtime.
 
@@ -10,8 +10,8 @@ family runtime.
 
 Add `scripts/memory_family_oracle_admission_v3.py` with one public function,
 `admit_oracle_pair`. The caller supplies the canonical case; independent frozen
-plan, protocol, source-identity and history hashes; and two exact registration
-descriptors naming the source and retained `own` continuation. The function
+plan, protocol, source-identity and history hashes; and two exact descriptors
+naming the source and retained `own` recording. The function
 validates the bytes and provenance for that pair, projects the complete decoded
 events and motor rows into the existing pure oracle, validates the resulting
 proof, and returns the proof plus its oracle-only selector resource.
@@ -33,32 +33,30 @@ admit_oracle_pair(
 )
 ```
 
-Each run descriptor has exactly `run_id`, `run_path`, `job_path`,
-`supervisor_path`, `attempted` and `cleanup`; the post descriptor additionally
-has `condition: 'own'` and `source_snapshot_sha256`. The return value has exactly
-`proof`, `proof_sha256` and `selector_resource`.
+Each run descriptor has exactly `run_id` and `run_path`; the post descriptor
+additionally has `condition: 'own'` and `source_snapshot_sha256`. The return
+value has exactly `proof`, `proof_sha256` and `selector_resource`.
 
 ## Fixed input and trust boundary
 
-Each source/post descriptor has exact registered run, job, owner, supervision,
-attempt and cleanup identities. The post descriptor is fixed to condition
-`own` and binds the source snapshot checksum. Run IDs are distinct canonical
-UUIDs. All descriptor paths and artifact bytes are untrusted; the expected
-case and expected hash bindings are independent caller inputs.
+The post descriptor is fixed to condition `own` and binds the source snapshot
+checksum. Run IDs are distinct canonical UUIDs. All descriptor paths and
+artifact bytes are untrusted; the expected case and expected hash bindings are
+independent caller inputs. Descriptors do not assert owner allocation or exit.
+There is no version-3 producer registration/receipt schema yet, so accepting
+inline owner, attempt or cleanup objects here would only prove self-consistency.
 
 For each explicitly named run, admission must validate:
 
 - safe non-symlink paths and bounded, duplicate-key/nonfinite-safe JSON;
-- the registered slot/job/run join, exact case and source identity, CPU FLYNN
-  controller, scenario, seed, operation, condition and recording ceiling;
-- one matching owner, stopped-owner cleanup receipt, completed bounded
-  supervision receipt and bounded logs;
+- exact run identity, canonical case and source identity, CPU FLYNN controller,
+  scenario, seed, source/own operation, condition and recording ceiling;
 - a terminal manifest, complete ordered events, safe ordered chunks, chunk
   checksums/schema/counts and a stable before/after fingerprint;
 - exact policy-call bindings on the full decoded rows before reducing them to
   `{episode,tick,pose,next_pose}` for the pure oracle;
 - one registered initial snapshot, its file checksum and durable event prefix;
-  the post job/manifest/restore lineage must point to that exact source snapshot;
+  the post manifest/restore lineage must point to that exact source snapshot;
 - strict worker reports coherent with the admitted raw terminal state; report
   outcome fields may be authenticated but never supply oracle gold; and
 - a bounded history bundle whose file hash, E hash, fitted U and recorded own
@@ -66,10 +64,11 @@ For each explicitly named run, admission must validate:
 
 Reuse the strict readers in `palimpsest.artifacts`, exhaustive chunk validation
 in `palimpsest.records.iter_ticks`, snapshot registration and replay helpers,
-owner-exit check, policy-binding audit and recording digest. Do not call the old
-pilot `read_raw`, `native_manifest_matches`, `audit_run` or generic condition
-replay unchanged: their parsing, protocol and condition assumptions are frozen
-to earlier studies.
+policy-binding audit and recording digest. Tighten the shared snapshot metadata
+decoder to reject duplicate keys and nonfinite constants before using the
+snapshot helpers. Do not call the old pilot `read_raw`,
+`native_manifest_matches`, `audit_run` or generic condition replay unchanged:
+their parsing, protocol and condition assumptions are frozen to earlier studies.
 
 Bindings passed to `memory_family_oracle_v3.oracle_evidence` are derived from
 the admitted bytes. They contain the independent protocol, plan and source
@@ -84,7 +83,7 @@ Add `tests/test_memory_family_oracle_admission_v3.py` with one synthetic on-disk
 source/own pair assembled from the existing oracle fixture. The passing case
 must prove a change row end to end and preserve the input tree. Focused mutation
 coverage must reject byte/count/sequence drift, duplicate or unsafe JSON paths,
-wrong run/job/owner/supervision joins, non-own or substitute donors, source
+wrong run identity, non-own or substitute donors, source
 snapshot/prefix/restore mismatch, history/selector/U mismatch, report/raw
 terminal mismatch and fingerprint drift before a proof is returned. Existing
 pure-oracle tests retain coverage of all 48 rows, kinds, schedules, closure sides
@@ -92,11 +91,15 @@ and semantic tampering; this adapter test must not duplicate that matrix.
 
 Run the focused admission/oracle suites, affected memory suites, Python compile
 checks and `git diff --check`. Have an independent reviewer inspect the final
-diff for donor selection, self-authentication, event filtering, TOCTOU and
+diff for donor selection, self-authentication, event filtering, read-time drift and
 non-oracle proof leakage. Record exact results in a report before publishing a
 draft PR stacked on #98.
 
-This unit admits one already completed software pair. Native producer/job
-schemas, historical namespace inventory, storage/time allocation, matrix
-completeness, development inference and held-out collection remain separate
-future gates. No native owner or model runs in this unit.
+This unit admits the bytes of one already completed software pair. The existing
+safe-path and before/after fingerprints detect ordinary drift but cannot exclude
+a hostile same-user rename or in-place mutation between every pathname reopen;
+an immutable producer close is required before this adapter becomes study
+evidence. Version-3 registration, native producer/job/owner/cleanup receipts,
+immutable close, historical namespace inventory, storage/time allocation,
+matrix completeness, development inference and held-out collection remain
+separate future gates. No native owner or model runs in this unit.
