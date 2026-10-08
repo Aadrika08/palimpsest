@@ -492,6 +492,34 @@ def test_retains_a_natural_condition_failure_without_a_replacement(tmp_path):
     assert receipt['terminal_state']['replacement'] is False
 
 
+def test_rejects_normal_episode_terminal_spliced_before_natural_failure(tmp_path):
+    audit = _audit()
+    fixture = _fixture(tmp_path / 'splice', natural_failure=True)
+    request = _request(fixture, 'condition')
+
+    def edit(events):
+        failure_index = next(index for index, event in enumerate(events)
+                             if event['kind'] == 'runtime_failure')
+        tick = events[failure_index]['tick']
+        events.insert(failure_index - 1, {
+            'sequence': failure_index - 1, 'kind': 'episode_finished',
+            'run_id': request['run_id'], 'episode': 0,
+            'episode_step': tick, 'tick': tick,
+            'outcome': {
+                'reason': 'goal', 'episode': 0, 'steps': tick,
+                'final_distance': 0.0,
+            },
+            'metrics': {
+                'reward': 0.0, 'contact_ticks': 0, 'path_length': 0.0,
+            },
+        })
+
+    _rewrite_events(request['run_path'], edit)
+    with pytest.raises(ValueError):
+        audit.audit_raw_run(**request)
+    assert not _receipt_path(request).exists()
+
+
 @pytest.mark.parametrize('reason', [
     'goal', 'stalled', 'collision', 'time_limit',
 ])
