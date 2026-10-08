@@ -8,6 +8,7 @@ import subprocess
 import sys
 import tempfile
 import unittest
+from unittest import mock
 import zipfile
 
 import numpy as np
@@ -69,6 +70,34 @@ class MetricTests(unittest.TestCase):
 
 
 class AdmissionTests(unittest.TestCase):
+    def test_candidate_admission_uses_exact_common_frozen_training_root(self):
+        audit = load_audit()
+        protocol = audit.load_protocol()
+        expected = Path("/home/utkarsh/Work/shraddha/brain/.worktrees/male-navigation-training-v2")
+        observed = {}
+
+        def admit(root, assets, index):
+            observed.update(root=root, assets=assets, index=index)
+            return "admitted"
+
+        with mock.patch.object(audit.male_navigation_research, "_admit", side_effect=admit):
+            self.assertEqual(audit.admit_candidates(protocol, {"models": []}), "admitted")
+        self.assertEqual(observed, {
+            "root": expected,
+            "assets": Path("/home/utkarsh/Work/shraddha/brain/.worktrees/r0-reproduction/data/assets/flynn"),
+            "index": {"models": []},
+        })
+
+        protocol["immutable_inputs"]["cell_source"]["path"] = str(
+            Path("/tmp/different") / "upstream/fly-gym/models/connectome_rnn_model.py")
+        with self.assertRaisesRegex(ValueError, "common frozen training root"):
+            audit.admit_candidates(protocol, {})
+
+        protocol = audit.load_protocol()
+        protocol["checkpoints"][0]["path"] = "/tmp/different/old-corpus.pt"
+        with self.assertRaisesRegex(ValueError, "training artifact root"):
+            audit.admit_candidates(protocol, {})
+
     def test_execution_manifest_binds_source_test_protocol_and_output(self):
         audit = load_audit()
         with tempfile.TemporaryDirectory() as temporary:

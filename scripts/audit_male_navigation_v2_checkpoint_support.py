@@ -50,6 +50,36 @@ def _path(value):
     return path if path.is_absolute() else ROOT / path
 
 
+def _layout_root(path, suffix, message):
+    path, suffix = _path(path), Path(suffix)
+    root = path.parents[len(suffix.parts) - 1]
+    if root / suffix != path:
+        raise ValueError(message)
+    return root
+
+
+def admit_candidates(protocol, index):
+    graph_root = _layout_root(protocol["immutable_inputs"]["graph_manifest"]["path"],
+                              "data/manifests/malecns-reduced-neighborhood-v1.json",
+                              "exact common frozen training root required")
+    cell_root = _layout_root(protocol["immutable_inputs"]["cell_source"]["path"],
+                             "upstream/fly-gym/models/connectome_rnn_model.py",
+                             "exact common frozen training root required")
+    if graph_root != cell_root:
+        raise ValueError("exact common frozen training root required")
+    runs_root = graph_root / "runs"
+    for item in protocol["checkpoints"] + protocol["pair_reports"]:
+        try:
+            relative = _path(item["path"]).relative_to(runs_root)
+        except (KeyError, ValueError):
+            raise ValueError("exact frozen training artifact root required") from None
+        if not relative.parts:
+            raise ValueError("exact frozen training artifact root required")
+    assets = _layout_root(protocol["immutable_inputs"]["graph"]["path"],
+                          "male-reduced-v1/source-graph.json", "exact frozen graph asset root required")
+    return male_navigation_research._admit(graph_root, assets, index)
+
+
 def read_pin(pin, cap, deadline=math.inf):
     if (not isinstance(pin, dict) or set(pin) < {"path", "bytes", "sha256"} or
             type(pin["bytes"]) is not int or not 0 < pin["bytes"] <= cap or
@@ -503,8 +533,7 @@ def execute(output, execution_manifest_path, execution_manifest_sha256):
     if data.get("held_out") != []:
         raise ValueError("held-out transfer rows are forbidden")
     targets = validate_development(protocol, data["dev"])
-    admitted = male_navigation_research._admit(ROOT,
-        _path(protocol["immutable_inputs"]["graph"]["path"]).parent.parent, index)
+    admitted = admit_candidates(protocol, index)
     if set(admitted) != {(seed, arm) for seed in (10, 11, 12) for arm in ("old-corpus", "augmented")}:
         raise ValueError("six candidate admission differs")
     _deadline(deadline)
