@@ -391,30 +391,37 @@ def _capacity(roots):
 
 
 def _git_directory(repo: Path, upstream: Path) -> Path:
-    marker = upstream / '.git'
-    if not marker.is_file() or marker.is_symlink():
-        raise ValueError('upstream/fly-gym is not initialized')
-    try:
-        value = artifacts._read(marker, 4096).decode('utf-8')
-    except UnicodeError as error:
-        raise ValueError('upstream/fly-gym has an invalid gitdir marker') from error
-    if not value.startswith('gitdir: ') or not value.endswith('\n'):
-        raise ValueError('upstream/fly-gym has an invalid gitdir marker')
-    relative = value[len('gitdir: '):-1]
-    candidate = Path(relative)
-    if not relative or '\n' in relative or '\x00' in relative:
-        raise ValueError('upstream/fly-gym has an unsafe gitdir marker')
-    directory = Path(os.path.abspath(
-        candidate if candidate.is_absolute() else upstream / candidate))
-    if _held_out(directory):
-        raise ValueError('upstream/fly-gym gitdir cannot name held-out data')
-    expected = repo / '.git/modules/upstream/fly-gym'
+    def resolve(marker, label):
+        if marker.is_dir() and not marker.is_symlink():
+            directory = marker
+        elif marker.is_file() and not marker.is_symlink():
+            try:
+                value = artifacts._read(marker, 4096).decode('utf-8')
+            except UnicodeError as error:
+                raise ValueError(f'{label} has an invalid gitdir marker') from error
+            if not value.startswith('gitdir: ') or not value.endswith('\n'):
+                raise ValueError(f'{label} has an invalid gitdir marker')
+            raw = value[len('gitdir: '):-1]
+            if not raw or '\n' in raw or '\x00' in raw:
+                raise ValueError(f'{label} has an unsafe gitdir marker')
+            candidate = Path(raw)
+            directory = Path(os.path.abspath(
+                candidate if candidate.is_absolute() else marker.parent / candidate))
+        else:
+            raise ValueError(f'{label} is not initialized')
+        if _held_out(directory):
+            raise ValueError(f'{label} cannot name held-out data')
+        if any(part.is_symlink() for part in (directory, *directory.parents)):
+            raise ValueError(f'{label} traverses a symlink')
+        if not directory.is_dir():
+            raise ValueError(f'{label} is not initialized')
+        return directory
+
+    directory = resolve(upstream / '.git', 'upstream/fly-gym gitdir')
+    checkout_git = resolve(repo / '.git', 'repository Git metadata')
+    expected = checkout_git / 'modules/upstream/fly-gym'
     if directory != expected:
         raise ValueError('upstream/fly-gym gitdir is outside repository Git metadata')
-    if any(part.is_symlink() for part in (directory, *directory.parents)):
-        raise ValueError('upstream/fly-gym gitdir traverses a symlink')
-    if not directory.is_dir():
-        raise ValueError('upstream/fly-gym is not initialized')
     return directory
 
 
