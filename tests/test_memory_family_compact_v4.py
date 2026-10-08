@@ -439,6 +439,67 @@ def test_reader_rejects_unknown_schema_or_tampered_bound_payload(defect):
         compact.read_compact(changed)
 
 
+@pytest.mark.parametrize('audit_schedule', [
+    {'event_tick': 7, 'decision_tick': None},
+    {'event_tick': None, 'decision_tick': 8},
+])
+def test_reader_rejects_any_source_audit_schedule(audit_schedule):
+    compact = _compact()
+    run_id = uuid.UUID(int=710).hex
+    rows = [_row(7), _row(8)]
+    legacy_manifest, legacy_events, events = _legacy(rows, run_id)
+    snapshot_ref = _snapshot_reference(run_id)
+    snapshot_ref.update(kind='source', source_receipt_sha256=None)
+    prefix = {
+        'size_bytes': len(legacy_events),
+        'sha256': hashlib.sha256(legacy_events).hexdigest(),
+        'event_count': len(events),
+    }
+    changed = compact.convert_synthetic(
+        run_id=run_id, case_id=CASE_ID,
+        operation='source', condition=None, rows=rows,
+        legacy_manifest_bytes=legacy_manifest,
+        legacy_events_bytes=legacy_events,
+        snapshot_reference=snapshot_ref, snapshot_event_prefix=prefix,
+    )
+    manifest = artifacts._json(changed['manifest.json'])
+    manifest['audit_schedule'] = audit_schedule
+    changed['manifest.json'] = memory.canonical_bytes(manifest)
+
+    with pytest.raises(ValueError):
+        compact.read_compact(changed)
+
+
+def test_reader_rejects_condition_without_decision_tick_after_frame_rebind(
+        long_fixture):
+    compact, rows, _, _, _, _, bundle = long_fixture
+    changed = dict(bundle)
+    original = compact.audit_ticks(
+        [row['tick'] for row in rows], event_tick=7, decision_tick=8)
+    selected = compact.audit_ticks(
+        [row['tick'] for row in rows], event_tick=7, decision_tick=None)
+    assert len(selected) < len(original)
+    by_tick = {row['tick']: row for row in rows}
+    with io.BytesIO() as stream:
+        np.savez(
+            stream,
+            tick=np.asarray(selected, np.int64),
+            raw_cam_left=np.stack(
+                [by_tick[tick]['raw_cam_left'] for tick in selected]),
+            raw_cam_right=np.stack(
+                [by_tick[tick]['raw_cam_right'] for tick in selected]),
+        )
+        changed['audit-frames.npz'] = stream.getvalue()
+    manifest = artifacts._json(changed['manifest.json'])
+    manifest['audit_schedule']['decision_tick'] = None
+    manifest['audit_frames'] = _descriptor(
+        'audit-frames.npz', changed['audit-frames.npz'])
+    changed['manifest.json'] = memory.canonical_bytes(manifest)
+
+    with pytest.raises(ValueError):
+        compact.read_compact(changed)
+
+
 @pytest.mark.parametrize('defect', ['missing', 'extra', 'reordered'])
 def test_reader_requires_chunk_bijection(long_fixture, defect):
     compact, _, _, _, _, _, bundle = long_fixture
