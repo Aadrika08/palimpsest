@@ -156,3 +156,29 @@ development protocol/allocation and inferential decisions before collection.
 Continue other release lanes where their prerequisites are satisfied. All seven
 release-level gates remain open. The goal stays active; main and physical rover
 work remain unchanged, and CI remains excluded.
+
+### Family runtime integrated, 8 October 2026
+
+[PR #97](https://github.com/Aadrika08/palimpsest/pull/97), stacked on #95,
+implements the independent-family software candidate in the actual Engine,
+categorical supervisor, snapshot and replay paths. One block contains 48
+families, 144 change/null/no-event cases and all 1,296 nine-condition slots.
+Both routes have real path-derived geometry; three cost strata, two schedules,
+lexical orders, learned relation and physical relation side are balanced. The
+84 retained legacy case/graph hashes remain unchanged.
+
+Testing caught and fixed a 31-bit Engine seed overflow. Independent review then
+found that an initial 24-row factor fraction let the public graph infer the future
+closure; the unpublished table was replaced by a 48-row hidden-factor crossing.
+Follow-up review found no material issue. All 1,272 collected software tests were
+covered in split local runs: 1,248 passed and 24 skipped. Socket-dependent tests
+required loopback permission because the managed sandbox denied their fixtures.
+No native owner, physics step, model, observation or held-out block ran.
+
+Next memory work: implement and independently review the oracle proof/isolation
+and the version-3 native producer/raw audit, including both-schedule event
+visibility and no-predecision-passage-evidence checks. Then freeze the development
+block, historical split-disjointness proof, exact owner/time/storage allocation,
+effect and null-harm margins, interval estimator and stop rules before collecting
+development data. R2 and all seven release-level gates remain open. Main, CI and
+the physical rover remain outside this phase.
