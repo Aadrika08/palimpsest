@@ -62,6 +62,26 @@ For each explicitly named run, admission must validate:
 - a bounded history bundle whose file hash, E hash, fitted U and recorded own
   selector/U provenance all agree.
 
+This adapter freezes only the producer-neutral admission envelope needed for
+those checks. Each terminal manifest must carry
+`memory_family_oracle_admission_v3` with exactly `schema`, `protocol_sha256`,
+`source_identity_sha256`, `case`, `operation`, `condition` and
+`source_snapshot_sha256`. The schema is `memory-family-oracle-admission-v3`;
+source uses operation `source`, null condition/source snapshot, and post uses
+operation `condition`, condition `own` and the admitted source snapshot hash.
+The envelope values must equal the independent caller inputs.
+
+Each bounded `worker-report.json` must require `schema`, `run_id`, `case_id`,
+`operation`, `condition`, `status`, `acquired`, `snapshot_sha256`,
+`source_snapshot_sha256`, `total_ticks`, `final_phase` and `world_state`.
+The report schema is `memory-family-owner-report-v3`; status is `recorded` and
+acquired is true. Its identities and source/post fields must match the manifest
+envelope. The source snapshot hash is the registered initial SNP; the post
+source-snapshot hash equals it. Source finishes paused at its snapshot boundary.
+Post manifest/report terminal status, phase, tick count and world cursor must
+agree, including the single sensor-only natural failure already admitted by the
+pure oracle. Extra report fields are hash-bound but ignored for gold.
+
 Reuse the strict readers in `palimpsest.artifacts`, exhaustive chunk validation
 in `palimpsest.records.iter_ticks`, snapshot registration and replay helpers,
 policy-binding audit and recording digest. Tighten the shared snapshot metadata
@@ -100,6 +120,7 @@ safe-path and before/after fingerprints detect ordinary drift but cannot exclude
 a hostile same-user rename or in-place mutation between every pathname reopen;
 an immutable producer close is required before this adapter becomes study
 evidence. Version-3 registration, native producer/job/owner/cleanup receipts,
-immutable close, historical namespace inventory, storage/time allocation,
+enforcement of this admission envelope, immutable close, historical namespace
+inventory, storage/time allocation,
 matrix completeness, development inference and held-out collection remain
 separate future gates. No native owner or model runs in this unit.
