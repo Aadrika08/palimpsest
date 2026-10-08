@@ -8,12 +8,12 @@
 development allocation admission only when storage, namespace, upstream, and
 runtime identities all satisfy the frozen contract.
 
-**Architecture:** A new pure script validates the existing PR #100 producer
-registration, recursively rebuilds its namespace inventory from declared
-historical/training roots, and derives source identities without model imports
-or subprocesses. It uses the existing artifact and storage primitives for safe
-paths, bounded reads, recount, and capacity, then publishes one exclusive
-canonical receipt after a second input scan.
+**Architecture:** A new zero-owner script validates the existing PR #100
+producer registration and accepts only two independently frozen namespace-only
+exports, never caller-selected evidence trees. It derives source identities
+without model loading or subprocesses, uses existing artifact and storage
+primitives for bounded reads/recount/capacity, then exclusively links a
+canonical receipt before the final full revalidation and durable commit.
 
 **Tech Stack:** Python 3.11 standard library, existing `palimpsest.memory`,
 `artifacts`, `assets`, and `storage` helpers, producer/family validators, pytest.
@@ -36,8 +36,11 @@ canonical receipt after a second input scan.
 
 ## Review Focus
 
-- Search roots that contain malformed/oversized JSON, symlinks, special files,
-  or change during preflight must refuse without leaving an admission.
+- The exact `pre-heldout-development-history` and `training-namespace` exports
+  must match protocol-frozen paths/counts/digests and known-source enumeration;
+  unresolved coverage refuses before reading either external path.
+- Each namespace root permits only one canonical `namespace-export.json`;
+  directories, extra files, symlinks, special files, or drift must refuse.
 - A UUID, authored string, or development seed already present in any declared
   historical/training root must be detected even when it appears only in a path
   component or nested metadata value.
@@ -46,8 +49,11 @@ canonical receipt after a second input scan.
   floor.
 - Upstream pin plus full tree content must reject missing, dirty, untracked, or
   wrong-HEAD checkouts without calling Git.
-- Exclusive publication must survive failures before and after the hard link
-  without overwriting history or leaving a poisoned target.
+- Exclusive publication must link before final revalidation. Rollback must
+  unlink and directory-fsync; inability to prove rollback is an explicit
+  indeterminate state.
+- Every behavior-bearing local source has exact path/size/SHA-256 in the
+  receipt, is rechecked after linking, and is required future-launcher input.
 
 ---
 
@@ -80,23 +86,27 @@ canonical receipt after a second input scan.
 - `admit(registration_path, search_manifest_path, repo_root, asset_root)` returns
   and exclusively publishes one allocation receipt.
 
-- [ ] Build synthetic historical/training trees and assert recursive UUID,
-  nested authored-string, path-component, training-seed, file-count, byte-count,
-  and searched-root digest collection with literal expectations.
-- [ ] Add table tests for malformed JSON, oversized JSONL line, symlink, special
-  file, overlapping roots, duplicate roots, entry limit, and scan-byte limit.
+- [ ] Assert unresolved production coverage refuses before opening an external
+  root and leaves both allocation flags false.
+- [ ] Build two synthetic namespace-only exports plus an independent resolved
+  fixture contract; assert exact UUID/authored-ID/training-seed collection,
+  known-source enumeration, counts, bytes, and combined digest.
+- [ ] Add table tests for unknown/missing source IDs, unexpected files or
+  directories, malformed/noncanonical/oversized export, symlink, special file,
+  overlap, expected-identity drift, and held-out sentinel paths.
 - [ ] Reuse the producer fixture to bind 1,440 UUIDs, then test namespace/run,
   namespace/authored, and training-seed collisions.
 - [ ] Test direct roots, same-filesystem capacity arithmetic, frozen subtotal
-  equality, missing/dirty upstream refusal, runtime/asset/profile binding, and
-  the zero-owner flags.
-- [ ] Test exclusive success, existing-target refusal, mutation during the
-  second scan, and injected fsync/link failure rollback. Patch only external
+  equality, missing/dirty upstream refusal, runtime/asset/profile/source
+  binding, and the zero-owner flags. Sentinel Engine/model constructors,
+  graph/checkpoint loaders, inference, and subprocess calls rather than imports.
+- [ ] Test exclusive success, existing-target refusal, mutation after the hard
+  link, and injected fsync/link/rollback failure handling. Patch only external
   capacity/upstream/assets identities in the success fixture; inventory,
   registration validation, and publication stay real.
-- [ ] Guard `Engine.open`, model imports, `subprocess.Popen/run/check_output`,
-  and held-out paths with sentinels. Run the file and confirm import failure
-  because the module does not exist, then commit the red tests.
+- [ ] Guard `Engine.open`, FLYNN/male model loaders, prepared-graph/model APIs,
+  subprocess calls, and held-out paths with sentinels. Commit corrected RED
+  tests before changing the admission implementation.
 
 ### Task 3: Implement the deterministic admission module
 
@@ -108,21 +118,23 @@ canonical receipt after a second input scan.
 - CLI arguments are `--registration`, `--search-manifest`, `--repo`, and
   `--assets`; the CLI calls `admit` and prints only its returned descriptor.
 
-- [ ] Add bounded canonical JSON/file hashing and recursive root scanning using
-  `os.fwalk(..., follow_symlinks=False)` with sorted traversal and explicit
-  type/entry/byte/metadata limits.
-- [ ] Collect canonical UUIDs, bounded strings, path components, and training
-  seed values; generate the producer namespace and searched-root receipt.
+- [ ] Validate the exact two source IDs against the frozen contract. Open only
+  the one allowlisted file in each direct root, with no recursive discovery;
+  require canonical schema, counts, bytes, digests, and known-source identity.
+- [ ] Collect canonical UUIDs, bounded authored IDs, and training seeds from
+  those exact exports; generate the producer namespace and coverage receipt.
 - [ ] Validate the producer registration, regenerate cases/authored IDs/seeds,
   compare the inventory exactly, and reject every collision.
 - [ ] Validate fresh direct roots and use `StorageBudget` with 643,137,798,144
   max bytes, 2 GiB floor, 1,448 runs, two snapshots per run, 1,592 exports, and
   131,072 entries.
-- [ ] Derive pure interpreter/dependency, asset/model/graph, family-profile, and
-  detached upstream pin/full-tree identities.
-- [ ] Rebuild mutable identities and capacity before publication, then use the
-  producer's synced temporary/exclusive-hard-link/rollback pattern for one
-  canonical receipt.
+- [ ] Derive interpreter/dependency, asset/model/graph, family-profile,
+  behavior-source, and detached upstream pin/full-tree identities without
+  calling any load/constructor/inference path.
+- [ ] Sync a temporary, link it exclusively, remove the temporary name, then
+  rebuild every mutable identity and capacity. On any failure, unlink and
+  directory-fsync; raise an indeterminate-publication error if rollback cannot
+  be proven durable.
 - [ ] Run the focused allocation and storage tests, compile the changed Python,
   and commit the implementation.
 
@@ -137,8 +149,9 @@ canonical receipt after a second input scan.
   refusal blockers, and zero-publication observation.
 
 - [ ] Build a software-only probe registration in `/tmp` from the frozen block,
-  existing retained histories, deterministic UUIDs, and declared historical and
-  training roots. Do not initialize upstream or allocate a native root.
+  existing retained histories, deterministic UUIDs, and the unresolved
+  production coverage contract. Do not open external namespace roots,
+  initialize upstream, or allocate a native root.
 - [ ] Run the real CLI once; require ordered capacity and/or upstream refusal and
   prove `allocation-admission.json` is absent.
 - [ ] Run the focused tests, then the full affected PR #97-#101 family/oracle/
@@ -150,4 +163,3 @@ canonical receipt after a second input scan.
   findings through RED-GREEN tests, and commit the report/evidence.
 - [ ] Push `research/memory-family-allocation-admission-v3` and open a draft PR
   based on `research/memory-family-analysis-v3`; do not merge or invoke CI.
-

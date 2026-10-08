@@ -6,12 +6,13 @@
 
 ## Purpose and authority
 
-This unit closes the storage, namespace, upstream, and runtime identity gap left
-by the software-only producer registration. It may publish one immutable
-capacity-and-identity admission, but it cannot start or authorize an Engine,
-model load, subprocess, native owner, held-out read, retry, replacement, or
-protocol change. A later reviewed launcher must bind this receipt before it can
-request native execution.
+This unit measures the storage, namespace, upstream, and runtime gates left by
+the software-only producer registration. It may publish one immutable
+capacity-and-identity admission only after every gate has a separately frozen
+identity. It cannot start or authorize an Engine, model load, subprocess,
+native owner, held-out read, retry, replacement, or protocol change. A later
+reviewed launcher must bind the receipt path, byte count, and SHA-256 before it
+can request native execution.
 
 The existing family generator, nine conditions, owner order, endpoints,
 failure retention, stopping rules, and development/held-out boundary remain
@@ -54,33 +55,41 @@ owners. Each recording has at most 2,100 rows and therefore at most 66
 can exceed the current 100,000-entry default. This contract freezes a 131,072
 entry limit while leaving the storage helper's default unchanged.
 
-## Namespace inventory
+## Namespace coverage
 
-The caller supplies one canonical search manifest with at least one
-`historical` root and one `training` root. Roots are absolute, pairwise
-non-overlapping directories with no symlink component. The builder walks every
-entry without following links, rejects symlinks and special files, and hashes
-every regular file. It parses every `.json` and `.jsonl` file within the frozen
-metadata and line bounds; malformed or oversized metadata fails rather than
-being skipped.
+Caller-chosen recursive roots cannot prove that every relevant historical or
+training source was declared, and scanning arbitrary evidence roots cannot
+enforce the held-out boundary. This contract therefore admits exactly two
+logical sources: `pre-heldout-development-history` and `training-namespace`.
+Each must be a direct, absolute, non-symlink external directory containing
+exactly one canonical `namespace-export.json`; extra files, subdirectories,
+links, and special files are rejected before metadata is read.
 
-The builder collects canonical UUIDs and every string of at most 128 characters
-from metadata and path components. It also records all nonnegative integers
-under keys containing `seed` in training roots. This deliberately broad set
-may reject an innocuous repeated label, but it cannot silently omit a
-prospective family/run identifier present in supported retained metadata. The
-namespace JSON remains compatible with the PR #100 producer schema. A separate
-search receipt binds absolute roots, kind, entry/file/byte counts, per-root
-content digest, the combined searched-root digest, and training-seed digest.
+Each export has the exact `memory-family-namespace-export-v3` schema and binds
+its logical source ID, kind, reviewed known-source enumeration, canonical UUIDs,
+bounded authored IDs, and training seeds. The protocol must independently
+freeze each export's byte count and SHA-256; root entry/file/byte counts and a
+canonical inventory SHA-256; and the known-source, run-ID, authored-ID, and seed
+counts/digests. The path manifest only maps those two frozen logical sources to
+portable absolute locations. It cannot add a source or assert an identity.
+Name-based `held-out` rejection is defense in depth; the exact two source IDs,
+one-file allowlist, schema, and frozen identities are the authority.
 
-Admission independently rebuilds the inventory, requires exact equality with
-the producer-bound namespace file, and rejects intersections with all 1,440
-run UUIDs, the generated authored-ID set, and the 48 development family seeds.
-It scans the roots again before publication; any difference aborts.
+No reviewed pre-heldout exports are frozen in this revision. The canonical
+protocol therefore records `coverage_status: unresolved` and
+`allocation_authorized: false`, with null expected identities. Preflight must
+refuse before opening either external directory. It must not inspect held-out
+metadata to try to resolve global namespace completeness. A later protocol
+revision may fill the expected identities only after independent review of the
+two namespace-only exports and their known-source enumeration.
 
-Completeness is relative to the explicitly declared roots and supported JSON
-metadata. The receipt never calls IDs or hashes evidence of statistical
-independence.
+When coverage is resolved, admission rebuilds the producer-compatible namespace
+from the two exact exports, requires equality with the producer-bound namespace
+file, and rejects intersections with all 1,440 run UUIDs, the generated
+authored-ID set, and the 48 development family seeds. It repeats both exact
+export checks after exclusive publication. Hashes bind the reviewed export
+bytes; they do not prove statistical independence or that an omitted real-world
+source does not exist.
 
 ## Roots and capacity
 
@@ -91,15 +100,18 @@ symlink components, outside every immutable/search input, and backed by one
 filesystem so the aggregate quota has one meaningful free-space measurement.
 
 The preflight reuses `StorageBudget` for bounded recount and free-space
-calculation. It creates no root and takes no writer lease. Success writes one
-canonical payload to a synced temporary file, links it exclusively to the final
-name, syncs the directory, and removes the temporary. Any failure after linking
-removes the target; an existing target is never replaced.
+calculation. It creates no root and takes no writer lease. A possible success
+writes one canonical payload to a synced temporary file, links it exclusively
+to the final name, and removes the temporary name. It then revalidates every
+mutable input and capacity check while the final name is visible, before syncing
+the directory. Any failure after linking must unlink the target and sync the
+directory again. Failure to prove either rollback step raises an explicit
+indeterminate-publication error; an existing target is never replaced.
 
 ## Source identities
 
-Admission binds, without importing simulation/model modules or spawning a
-process:
+Admission binds without constructing/loading a model, opening an Engine,
+performing inference, or spawning a process:
 
 - CPython 3.11 implementation, version, cache tag, resolved executable path and
   executable SHA-256;
@@ -112,6 +124,10 @@ process:
 - a full clean upstream tree inventory of 122 files, 21,280,722 bytes, with
   canonical inventory SHA-256
   `ad06f7682f3c403f5b3b53d06e57594ffcb868997204796c6fba40b281b096bc`.
+- exact paths, byte counts, and SHA-256 values for the admission script,
+  producer, family generator, artifact, asset, memory, family-world, and storage
+  helpers. These are rehashed after exclusive linking and are part of the
+  receipt that any future launcher must bind.
 
 The upstream tree identity includes path, file/symlink kind, executable bit,
 byte count, and content hash. Missing, changed, deleted, or untracked files alter
@@ -120,10 +136,13 @@ repository authenticity.
 
 ## Fail-closed result
 
-Capacity and upstream checks are evaluated before the expensive namespace and
-asset scans so the present host can report both known blockers without creating
-an artifact. A refusal raises one ordered error and publishes nothing. Success
-records `storage_allocation_admitted: true`, `native_owner_launch_authorized:
-false`, `native_allocation: false`, `held_out_used: false`, and an empty
-`qualification_claims` list.
-
+Capacity, upstream, and frozen namespace-coverage checks are evaluated before
+asset scans so the present host reports all known blockers without creating an
+artifact. A refusal raises one ordered error and publishes nothing. Because the
+two reviewed namespace exports are not yet frozen, this revision records
+`allocation_authorized: false`, `storage_allocation_admitted: false`,
+`namespace_coverage_complete: false`, `native_owner_launch_authorized: false`,
+`native_allocation: false`, `held_out_used: false`, and an empty
+`qualification_claims` list. Synthetic tests may exercise the success and
+rollback machinery against an independently constructed resolved fixture, but
+that does not change the production refusal or qualify any native allocation.

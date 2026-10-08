@@ -1,11 +1,10 @@
 """Synthetic zero-owner allocation checks; no model, subprocess, or study runs."""
-import builtins
 import copy
+from contextlib import ExitStack
 import hashlib
 import json
 import os
 from pathlib import Path
-import subprocess
 from types import SimpleNamespace
 import uuid
 from unittest.mock import patch
@@ -21,6 +20,7 @@ from test_memory_family_producer_v3 import (
 
 ROOT = Path(__file__).parents[1]
 PROTOCOL_PATH = ROOT / 'docs/plans/memory-family-allocation-admission-v3-protocol.json'
+SOURCE_IDS = ('pre-heldout-development-history', 'training-namespace')
 UPSTREAM_IDENTITY = {
     'path': '/fixture/repo/upstream/fly-gym',
     'commit': '8d964599119b420de67ee259434d273651a1a76d',
@@ -30,41 +30,100 @@ UPSTREAM_IDENTITY = {
 }
 ASSET_MODEL_IDENTITY = {
     'manifest': {'path': '/fixture/repo/model_manifests/flynn-full-vision.json',
-                 'sha256': 'e319bb18e12110dbc096d62d3d6e9550c7b37434bf5e18e410c5410c21bb97e5'},
+                 'bytes': 1, 'sha256':
+                 'e319bb18e12110dbc096d62d3d6e9550c7b37434bf5e18e410c5410c21bb97e5'},
     'assets': {'fixture': True}, 'model': {'fixture': True},
     'prepared_graph': {'fixture': True},
 }
 
 
-def _search_manifest(tmp_path, *, historical=None, training=None):
-    historical = historical or tmp_path / 'inventory-roots/history'
-    training = training or tmp_path / 'inventory-roots/training'
-    historical.mkdir(parents=True, exist_ok=True)
-    training.mkdir(parents=True, exist_ok=True)
-    manifest = _write(tmp_path / 'inventory/search.json', {
-        'schema': 'memory-family-namespace-search-v3',
-        'roots': [
-            {'kind': 'historical', 'path': str(historical)},
-            {'kind': 'training', 'path': str(training)},
-        ],
+def _export(root, source_id, kind, *, known_sources, run_ids=(), authored=(), seeds=()):
+    root.mkdir(parents=True, exist_ok=True)
+    return _write(root / 'namespace-export.json', {
+        'schema': 'memory-family-namespace-export-v3',
+        'source_id': source_id,
+        'kind': kind,
+        'known_sources': sorted(known_sources),
+        'historical_run_ids': sorted(run_ids),
+        'historical_authored_ids': sorted(authored),
+        'training_seeds': sorted(seeds),
     })
-    return manifest, historical, training
+
+
+def _expected(root):
+    path = root / 'namespace-export.json'
+    payload = path.read_bytes()
+    value = artifacts._json(payload)
+    ledger = [{
+        'path': path.name, 'kind': 'file', 'executable': False,
+        'bytes': len(payload), 'sha256': hashlib.sha256(payload).hexdigest(),
+    }]
+    return {
+        'path': str(root), 'entries': 1, 'files': 1, 'bytes': len(payload),
+        'inventory_sha256': memory.sha256(ledger),
+        'export_bytes': len(payload),
+        'export_sha256': hashlib.sha256(payload).hexdigest(),
+        'known_sources_count': len(value['known_sources']),
+        'known_sources_sha256': memory.sha256(value['known_sources']),
+        'historical_run_ids_count': len(value['historical_run_ids']),
+        'historical_run_ids_sha256': memory.sha256(value['historical_run_ids']),
+        'historical_authored_ids_count': len(value['historical_authored_ids']),
+        'historical_authored_ids_sha256': memory.sha256(
+            value['historical_authored_ids']),
+        'training_seeds_count': len(value['training_seeds']),
+        'training_seeds_sha256': memory.sha256(value['training_seeds']),
+    }
+
+
+def _resolved_contract(historical, training):
+    contract = copy.deepcopy(allocation.PROTOCOL['inventory'])
+    contract.update(coverage_status='resolved', allocation_authorized=True,
+                    reason=None)
+    contract['sources'] = [
+        {'source_id': SOURCE_IDS[0], 'kind': 'historical',
+         'expected': _expected(historical)},
+        {'source_id': SOURCE_IDS[1], 'kind': 'training',
+         'expected': _expected(training)},
+    ]
+    return contract
+
+
+def _paths(tmp_path, historical, training, sources=None):
+    sources = sources or [
+        {'source_id': SOURCE_IDS[0], 'path': str(historical)},
+        {'source_id': SOURCE_IDS[1], 'path': str(training)},
+    ]
+    return _write(tmp_path / 'inventory/coverage-paths.json', {
+        'schema': 'memory-family-namespace-paths-v3', 'sources': sources,
+    })
+
+
+def _coverage_fixture(tmp_path, *, training_seed=10):
+    historical = tmp_path / 'namespace-exports/history'
+    training = tmp_path / 'namespace-exports/training'
+    _export(historical, SOURCE_IDS[0], 'historical',
+            known_sources=['fixture-development-campaign'],
+            authored=['retained-old-case'])
+    _export(training, SOURCE_IDS[1], 'training',
+            known_sources=['fixture-training-campaign'],
+            authored=['trained-old-controller'], seeds=[training_seed])
+    return (_paths(tmp_path, historical, training), historical, training,
+            _resolved_contract(historical, training))
 
 
 def _admission_inputs(tmp_path, *, training_seed=10):
-    search, historical, training = _search_manifest(tmp_path)
-    _write(historical / 'history.json', {'id': 'retained-old-case'})
-    _write(training / 'training.json', {
-        'training_seed': training_seed, 'entity_id': 'trained-old-controller'})
-    inventory = allocation.build_namespace_inventory(search)
+    paths, historical, training, contract = _coverage_fixture(
+        tmp_path, training_seed=training_seed)
+    with patch.object(allocation, 'NAMESPACE_COVERAGE', contract):
+        inventory = allocation.build_namespace_inventory(paths)
     values = _contract_inputs(tmp_path)
     _write(values['inventory_path'], inventory['namespace'])
     registration = _build(values)
     registration_path = _registration_file(values, registration)
     return {
-        'search': search, 'historical': historical, 'training': training,
-        'inventory': inventory, 'values': values, 'registration': registration,
-        'registration_path': registration_path,
+        'paths': paths, 'historical': historical, 'training': training,
+        'coverage': contract, 'inventory': inventory, 'values': values,
+        'registration': registration, 'registration_path': registration_path,
     }
 
 
@@ -90,17 +149,17 @@ def _admit(inputs, **patches):
         '_asset_model_identity': ASSET_MODEL_IDENTITY,
     }
     defaults.update(patches)
-    with patch.object(allocation, '_capacity', return_value=defaults['_capacity']), \
-            patch.object(allocation, '_upstream_identity',
-                         return_value=defaults['_upstream_identity']), \
-            patch.object(allocation, '_asset_model_identity',
-                         return_value=defaults['_asset_model_identity']):
+    with ExitStack() as stack:
+        stack.enter_context(patch.object(
+            allocation, 'NAMESPACE_COVERAGE', inputs['coverage']))
+        for name, value in defaults.items():
+            stack.enter_context(patch.object(allocation, name, return_value=value))
         return allocation.admit(
-            inputs['registration_path'], inputs['search'], ROOT,
+            inputs['registration_path'], inputs['paths'], ROOT,
             ROOT / 'fixture-assets')
 
 
-def test_protocol_freezes_exact_capacity_arithmetic_and_is_canonical():
+def test_protocol_freezes_capacity_and_an_unresolved_namespace_gate():
     payload = PROTOCOL_PATH.read_bytes()
     protocol = artifacts._json(payload)
     storage = protocol['storage']
@@ -116,130 +175,158 @@ def test_protocol_freezes_exact_capacity_arithmetic_and_is_canonical():
     assert allocation.MIN_FREE_BYTES == 2_147_483_648
     assert allocation.MINIMUM_CAPACITY_BYTES == 645_285_281_792
     assert protocol['population']['max_runs'] == 1448
-    assert storage['max_entries'] == 131_072
+    assert protocol['inventory']['source_ids'] == list(SOURCE_IDS)
+    assert protocol['inventory']['coverage_status'] == 'unresolved'
+    assert protocol['inventory']['allocation_authorized'] is False
+    assert all(row['expected'] is None for row in protocol['inventory']['sources'])
+    assert protocol['result']['storage_allocation_admitted'] is False
+    assert protocol['result']['allocation_authorized'] is False
+    assert {row['id'] for row in protocol['behavior_sources']} == {
+        'admission', 'producer', 'family_generator', 'artifacts', 'assets',
+        'memory_core', 'family_world', 'storage',
+    }
 
 
-def test_inventory_collects_all_bounded_strings_uuids_paths_and_training_seeds(tmp_path):
-    search, historical, training = _search_manifest(tmp_path)
+def test_unresolved_coverage_refuses_before_any_external_root_read(tmp_path):
+    paths = _write(tmp_path / 'coverage-paths.json', {
+        'schema': 'memory-family-namespace-paths-v3',
+        'sources': [
+            {'source_id': SOURCE_IDS[0], 'path': '/not/read/history'},
+            {'source_id': SOURCE_IDS[1], 'path': '/not/read/training'},
+        ],
+    })
+    with patch.object(allocation.os, 'scandir',
+                      side_effect=AssertionError('external root read')):
+        with pytest.raises(allocation.AdmissionRefused, match='unresolved'):
+            allocation.build_namespace_inventory(paths)
+
+
+def test_exact_namespace_exports_build_complete_bounded_inventory(tmp_path):
     inline_run = uuid.UUID(int=71).hex
-    path_run = uuid.UUID(int=72).hex
-    history = _write(historical / 'history.json', {
-        'run_id': inline_run,
-        'case': {'id': 'old-case', 'nested': ['old-subject']},
-    })
-    events = historical / 'events.jsonl'
-    events.write_bytes(memory.canonical_bytes({'subject_id': 'event-subject'}) + b'\n')
-    path_entry = historical / path_run / 'raw.bin'
-    path_entry.parent.mkdir()
-    path_entry.write_bytes(b'raw')
-    training_file = _write(training / 'training.json', {
-        'training_seed': 10, 'rewiring_seeds': [11, 12],
-        'entity_id': 'trained-agent',
-    })
+    second_run = uuid.UUID(int=72).hex
+    historical = tmp_path / 'namespace-exports/history'
+    training = tmp_path / 'namespace-exports/training'
+    _export(historical, SOURCE_IDS[0], 'historical',
+            known_sources=['development-a', 'development-b'],
+            run_ids=[inline_run, second_run], authored=['old-case', 'old-subject'])
+    _export(training, SOURCE_IDS[1], 'training',
+            known_sources=['training-a'], authored=['trained-agent'], seeds=[10, 11, 12])
+    paths = _paths(tmp_path, historical, training)
+    contract = _resolved_contract(historical, training)
 
-    result = allocation.build_namespace_inventory(search)
+    with patch.object(allocation, 'NAMESPACE_COVERAGE', contract):
+        result = allocation.build_namespace_inventory(paths)
 
     assert result['namespace'] == {
         'schema': 'memory-family-namespace-inventory-v3',
-        'historical_run_ids': [inline_run, path_run],
-        'historical_authored_ids': sorted([
-            'events.jsonl', 'event-subject', 'history.json', 'old-case',
-            'old-subject', 'raw.bin', 'trained-agent', 'training.json',
-        ]),
+        'historical_run_ids': [inline_run, second_run],
+        'historical_authored_ids': ['old-case', 'old-subject', 'trained-agent'],
     }
-    assert result['search']['training_seeds'] == [10, 11, 12]
-    assert result['search']['training_seeds_sha256'] == memory.sha256([10, 11, 12])
-    roots = result['search']['roots']
-    assert [(row['kind'], row['entries'], row['files'], row['bytes']) for row in roots] == [
-        ('historical', 4, 3,
-         history.stat().st_size + events.stat().st_size + path_entry.stat().st_size),
-        ('training', 1, 1, training_file.stat().st_size),
+    assert result['coverage']['training_seeds'] == [10, 11, 12]
+    assert result['coverage']['training_seeds_sha256'] == memory.sha256([10, 11, 12])
+    assert result['coverage']['known_sources'] == [
+        'development-a', 'development-b', 'training-a']
+    roots = result['coverage']['roots']
+    assert [(row['source_id'], row['kind'], row['entries'], row['files'])
+            for row in roots] == [
+        (SOURCE_IDS[0], 'historical', 1, 1),
+        (SOURCE_IDS[1], 'training', 1, 1),
     ]
-    assert result['search']['searched_roots_sha256'] == memory.sha256(roots)
-    assert result == allocation.build_namespace_inventory(search)
+    assert result['coverage']['searched_roots_sha256'] == memory.sha256(roots)
+    with patch.object(allocation, 'NAMESPACE_COVERAGE', contract):
+        assert result == allocation.build_namespace_inventory(paths)
 
 
 @pytest.mark.parametrize('defect', [
-    'malformed-json', 'oversized-jsonl-line', 'symlink', 'special',
-    'overlap', 'duplicate', 'entry-limit', 'byte-limit', 'held-out',
+    'missing-source', 'unknown-source', 'extra-file', 'subdirectory',
+    'malformed', 'noncanonical', 'oversized', 'symlink', 'special',
+    'overlap', 'identity-drift', 'held-out',
 ])
-def test_inventory_rejects_incomplete_or_unsafe_searches(tmp_path, defect):
-    search, historical, training = _search_manifest(tmp_path)
-    limits = copy.deepcopy(allocation.INVENTORY_LIMITS)
-    if defect == 'malformed-json':
-        (historical / 'bad.json').write_text('{')
-    elif defect == 'oversized-jsonl-line':
-        limits['max_jsonl_line_bytes'] = 8
-        (historical / 'events.jsonl').write_bytes(b'{"id":"too-long"}\n')
+def test_namespace_coverage_rejects_unfrozen_or_unsafe_inputs(tmp_path, defect):
+    paths, historical, training, contract = _coverage_fixture(tmp_path)
+    export = historical / 'namespace-export.json'
+    if defect == 'missing-source':
+        paths = _paths(tmp_path, historical, training, [
+            {'source_id': SOURCE_IDS[0], 'path': str(historical)}])
+    elif defect == 'unknown-source':
+        paths = _paths(tmp_path, historical, training, [
+            {'source_id': SOURCE_IDS[0], 'path': str(historical)},
+            {'source_id': 'caller-selected-root', 'path': str(training)}])
+    elif defect == 'extra-file':
+        (historical / 'evidence.json').write_text('{}')
+    elif defect == 'subdirectory':
+        (historical / 'runs').mkdir()
+    elif defect == 'malformed':
+        export.write_text('{')
+    elif defect == 'noncanonical':
+        value = artifacts._json(export.read_bytes())
+        export.write_text(json.dumps(value, indent=2) + '\n')
+    elif defect == 'oversized':
+        contract['max_metadata_bytes'] = export.stat().st_size - 1
     elif defect == 'symlink':
-        (historical / 'alias').symlink_to(training, target_is_directory=True)
+        target = tmp_path / 'outside.json'
+        target.write_bytes(export.read_bytes())
+        export.unlink()
+        export.symlink_to(target)
     elif defect == 'special':
-        os.mkfifo(historical / 'fifo')
+        export.unlink()
+        os.mkfifo(export)
     elif defect == 'overlap':
-        nested = historical / 'nested'
-        nested.mkdir()
-        search = _write(tmp_path / 'inventory/overlap.json', {
-            'schema': 'memory-family-namespace-search-v3',
-            'roots': [{'kind': 'historical', 'path': str(historical)},
-                      {'kind': 'training', 'path': str(nested)}],
-        })
-    elif defect == 'duplicate':
-        search = _write(tmp_path / 'inventory/duplicate.json', {
-            'schema': 'memory-family-namespace-search-v3',
-            'roots': [{'kind': 'historical', 'path': str(historical)},
-                      {'kind': 'training', 'path': str(historical)}],
-        })
-    elif defect == 'entry-limit':
-        limits['max_entries'] = 1
-        (historical / 'one').touch()
-        (historical / 'two').touch()
-    elif defect == 'byte-limit':
-        limits['max_scanned_bytes'] = 1
-        (historical / 'two-bytes.bin').write_bytes(b'xx')
+        contract['sources'][1]['expected']['path'] = str(historical)
+        paths = _paths(tmp_path, historical, training, [
+            {'source_id': SOURCE_IDS[0], 'path': str(historical)},
+            {'source_id': SOURCE_IDS[1], 'path': str(historical)}])
+    elif defect == 'identity-drift':
+        value = artifacts._json(export.read_bytes())
+        value['historical_authored_ids'].append('late')
+        _write(export, value)
     else:
         forbidden = tmp_path / 'held-out-secret'
         forbidden.mkdir()
-        search = _write(tmp_path / 'inventory/held-out.json', {
-            'schema': 'memory-family-namespace-search-v3',
-            'roots': [{'kind': 'historical', 'path': str(forbidden)},
-                      {'kind': 'training', 'path': str(training)}],
-        })
-    with patch.object(allocation, 'INVENTORY_LIMITS', limits):
+        contract['sources'][0]['expected']['path'] = str(forbidden)
+        paths = _paths(tmp_path, forbidden, training)
+    with patch.object(allocation, 'NAMESPACE_COVERAGE', contract):
         if defect == 'held-out':
-            with patch.object(allocation.os, 'fwalk', side_effect=AssertionError('held-out root read')):
+            with patch.object(allocation.os, 'scandir',
+                              side_effect=AssertionError('held-out root read')):
                 with pytest.raises(ValueError):
-                    allocation.build_namespace_inventory(search)
+                    allocation.build_namespace_inventory(paths)
         else:
             with pytest.raises((OSError, ValueError)):
-                allocation.build_namespace_inventory(search)
+                allocation.build_namespace_inventory(paths)
 
 
 @pytest.mark.parametrize('collision', ['run', 'authored'])
 def test_built_inventory_makes_producer_reject_historical_identity_reuse(tmp_path, collision):
     values = _contract_inputs(tmp_path)
-    search, historical, _ = _search_manifest(tmp_path)
+    paths, historical, training, _ = _coverage_fixture(tmp_path)
+    export = artifacts._json((historical / 'namespace-export.json').read_bytes())
     if collision == 'run':
-        reused = values['run_ids'][0]
+        export['historical_run_ids'] = [values['run_ids'][0]]
     else:
-        reused = values['slots']['cases'][0]['case_id']
-    _write(historical / 'collision.json', {'id': reused})
-    inventory = allocation.build_namespace_inventory(search)
+        export['historical_authored_ids'] = [values['slots']['cases'][0]['case_id']]
+    _write(historical / 'namespace-export.json', export)
+    contract = _resolved_contract(historical, training)
+    with patch.object(allocation, 'NAMESPACE_COVERAGE', contract):
+        inventory = allocation.build_namespace_inventory(paths)
     _write(values['inventory_path'], inventory['namespace'])
     with pytest.raises(ValueError, match='collides with retained history'):
         _build(values)
 
 
-def test_admission_rejects_training_seed_reuse_and_search_drift(tmp_path):
-    family_seed = 2**29
-    inputs = _admission_inputs(tmp_path / 'seed', training_seed=family_seed)
+def test_admission_rejects_training_seed_reuse_and_export_drift(tmp_path):
+    inputs = _admission_inputs(tmp_path / 'seed', training_seed=2**29)
     with pytest.raises(ValueError, match='training seed'):
         _admit(inputs)
     assert not (inputs['values']['roots']['publication'] /
                 'allocation-admission.json').exists()
 
     inputs = _admission_inputs(tmp_path / 'drift')
-    _write(inputs['historical'] / 'late.json', {'id': 'late-history'})
-    with pytest.raises(ValueError, match='namespace inventory'):
+    export = inputs['historical'] / 'namespace-export.json'
+    changed = artifacts._json(export.read_bytes())
+    changed['historical_authored_ids'].append('late-history')
+    _write(export, changed)
+    with pytest.raises(ValueError, match='namespace export|coverage'):
         _admit(inputs)
     assert not (inputs['values']['roots']['publication'] /
                 'allocation-admission.json').exists()
@@ -265,15 +352,16 @@ def test_capacity_uses_existing_root_bytes_and_one_shared_filesystem(tmp_path):
         allocation._capacity(roots)
 
 
-def test_current_style_missing_upstream_and_capacity_refuse_together_without_publication(tmp_path):
+def test_capacity_and_missing_upstream_refuse_together_without_publication(tmp_path):
     inputs = _admission_inputs(tmp_path)
     capacity_error = allocation.StorageLimitError(
         'Storage free-space floor reached: free=1, additional=2, headroom=0, floor=3')
-    with patch.object(allocation, '_capacity', side_effect=capacity_error), \
+    with patch.object(allocation, 'NAMESPACE_COVERAGE', inputs['coverage']), \
+            patch.object(allocation, '_capacity', side_effect=capacity_error), \
             patch.object(allocation, '_upstream_identity',
                          side_effect=ValueError('upstream/fly-gym is not initialized')):
         with pytest.raises(allocation.AdmissionRefused) as caught:
-            allocation.admit(inputs['registration_path'], inputs['search'], ROOT,
+            allocation.admit(inputs['registration_path'], inputs['paths'], ROOT,
                              ROOT / 'fixture-assets')
     assert str(caught.value) == (
         'Allocation refused: storage: Storage free-space floor reached: free=1, '
@@ -282,22 +370,24 @@ def test_current_style_missing_upstream_and_capacity_refuse_together_without_pub
                 'allocation-admission.json').exists()
 
 
-def test_profile_and_runtime_identity_are_bound_without_importing_models():
-    forbidden = {'torch', 'mujoco', 'flygym'}
-    original = builtins.__import__
-
-    def guarded(name, *args, **kwargs):
-        if name.split('.')[0] in forbidden:
-            raise AssertionError(f'model/runtime import attempted: {name}')
-        return original(name, *args, **kwargs)
-
-    with patch('builtins.__import__', side_effect=guarded):
+def test_identity_checks_never_load_construct_or_run_a_model():
+    forbidden = AssertionError('model construction/load/inference attempted')
+    with patch('palimpsest.engine.Engine.open', side_effect=forbidden), \
+            patch('palimpsest.assets.prepare_graph', side_effect=forbidden), \
+            patch('palimpsest.flynn.load_policy', side_effect=forbidden), \
+            patch('palimpsest.male_policy.load_pinned_policy', side_effect=forbidden), \
+            patch('subprocess.Popen', side_effect=forbidden), \
+            patch('subprocess.run', side_effect=forbidden), \
+            patch('subprocess.check_output', side_effect=forbidden):
         runtime = allocation._runtime_identity(ROOT)
         profile = allocation._profile_identity()
+        behavior = allocation._behavior_identity(ROOT)
     assert runtime['python']['major_minor'] == [3, 11]
     assert set(runtime['distributions']) == set(allocation.PROTOCOL['runtime']['distributions'])
     assert set(runtime['project_files']) == {'pyproject.toml', 'uv.lock'}
     assert profile == allocation.PROTOCOL['profile']
+    assert set(behavior) == {row['id'] for row in allocation.PROTOCOL['behavior_sources']}
+    assert all(set(row) == {'path', 'bytes', 'sha256'} for row in behavior.values())
 
 
 def test_missing_or_different_upstream_tree_rejects_without_git_process(tmp_path):
@@ -318,29 +408,27 @@ def test_missing_or_different_upstream_tree_rejects_without_git_process(tmp_path
             allocation._upstream_identity(repo)
 
 
-def test_success_is_exclusive_zero_owner_and_canonical(tmp_path):
+def test_resolved_fixture_success_is_exclusive_zero_owner_and_canonical(tmp_path):
     inputs = _admission_inputs(tmp_path)
     forbidden = AssertionError('allocation attempted execution')
-    original = builtins.__import__
-
-    def guarded(name, *args, **kwargs):
-        if name.split('.')[0] in {'torch', 'mujoco', 'flygym'}:
-            raise forbidden
-        return original(name, *args, **kwargs)
-
     with patch('palimpsest.engine.Engine.open', side_effect=forbidden), \
+            patch('palimpsest.assets.prepare_graph', side_effect=forbidden), \
+            patch('palimpsest.flynn.load_policy', side_effect=forbidden), \
+            patch('palimpsest.male_policy.load_pinned_policy', side_effect=forbidden), \
             patch('subprocess.Popen', side_effect=forbidden), \
             patch('subprocess.run', side_effect=forbidden), \
-            patch('subprocess.check_output', side_effect=forbidden), \
-            patch('builtins.__import__', side_effect=guarded):
+            patch('subprocess.check_output', side_effect=forbidden):
         descriptor = _admit(inputs)
 
     target = Path(descriptor['path'])
     admission = artifacts._json(target.read_bytes())
     assert target == inputs['values']['roots']['publication'] / 'allocation-admission.json'
     assert target.read_bytes() == memory.canonical_bytes(admission)
+    assert descriptor['bytes'] == target.stat().st_size
     assert descriptor['sha256'] == hashlib.sha256(target.read_bytes()).hexdigest()
     assert admission['storage_allocation_admitted'] is True
+    assert admission['allocation_authorized'] is True
+    assert admission['namespace_coverage_complete'] is True
     assert admission['native_owner_launch_authorized'] is False
     assert admission['native_allocation'] is False
     assert admission['held_out_used'] is False
@@ -350,45 +438,53 @@ def test_success_is_exclusive_zero_owner_and_canonical(tmp_path):
     assert admission['identity']['upstream'] == UPSTREAM_IDENTITY
     assert admission['identity']['assets_model'] == ASSET_MODEL_IDENTITY
     assert admission['namespace']['searched_roots_sha256'] == (
-        inputs['inventory']['search']['searched_roots_sha256'])
+        inputs['inventory']['coverage']['searched_roots_sha256'])
+    assert set(admission['identity']['behavior_sources']) == {
+        row['id'] for row in allocation.PROTOCOL['behavior_sources']}
     assert not inputs['values']['roots']['output'].exists()
     assert not inputs['values']['roots']['control'].exists()
     with pytest.raises(FileExistsError):
         _admit(inputs)
 
 
-@pytest.mark.parametrize('failure', ['link', 'directory-fsync', 'second-scan'])
-def test_publication_failure_or_second_scan_drift_rolls_back(tmp_path, failure):
+@pytest.mark.parametrize('failure', ['link', 'commit-fsync', 'post-link-drift'])
+def test_publication_failure_after_or_before_link_rolls_back_durably(tmp_path, failure):
     inputs = _admission_inputs(tmp_path)
     target = inputs['values']['roots']['publication'] / 'allocation-admission.json'
     if failure == 'link':
         context = patch.object(allocation.os, 'link', side_effect=OSError('link failed'))
-    elif failure == 'directory-fsync':
+    elif failure == 'commit-fsync':
         actual = allocation.os.fsync
         calls = 0
 
-        def fail_second(descriptor):
+        def fail_commit(descriptor):
             nonlocal calls
             calls += 1
             if calls == 2:
-                raise OSError('directory fsync failed')
+                raise OSError('commit fsync failed')
             return actual(descriptor)
-        context = patch.object(allocation.os, 'fsync', side_effect=fail_second)
+        context = patch.object(allocation.os, 'fsync', side_effect=fail_commit)
     else:
-        def mutate(*_):
-            _write(inputs['historical'] / 'late.json', {'id': 'late'})
-            return ASSET_MODEL_IDENTITY
-        context = patch.object(allocation, '_asset_model_identity', side_effect=mutate)
-    with context, patch.object(allocation, '_capacity', return_value=_capacity()), \
-            patch.object(allocation, '_upstream_identity', return_value=UPSTREAM_IDENTITY):
-        if failure == 'second-scan':
-            call = lambda: allocation.admit(
-                inputs['registration_path'], inputs['search'], ROOT,
-                ROOT / 'fixture-assets')
-        else:
-            call = lambda: _admit(inputs)
+        first = allocation._behavior_identity(ROOT)
+        second = copy.deepcopy(first)
+        second['storage']['sha256'] = '0' * 64
+        context = patch.object(allocation, '_behavior_identity',
+                               side_effect=[first, second])
+    with context:
         with pytest.raises((OSError, RuntimeError), match='failed|changed'):
-            call()
+            _admit(inputs)
     assert not target.exists()
     assert not list(target.parent.glob(f'.{target.name}.*.tmp'))
 
+
+def test_unprovable_post_link_rollback_surfaces_indeterminate_state(tmp_path):
+    inputs = _admission_inputs(tmp_path)
+    first = allocation._behavior_identity(ROOT)
+    second = copy.deepcopy(first)
+    second['storage']['sha256'] = '0' * 64
+    with patch.object(allocation, '_behavior_identity', side_effect=[first, second]), \
+            patch.object(allocation, '_durable_rollback',
+                         side_effect=OSError('rollback directory fsync failed')):
+        with pytest.raises(allocation.PublicationIndeterminate,
+                           match='rollback.*indeterminate'):
+            _admit(inputs)
