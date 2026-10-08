@@ -2,6 +2,8 @@
 from __future__ import annotations
 
 import argparse
+import ast
+import contextlib
 import copy
 import hashlib
 import json
@@ -12,6 +14,7 @@ import platform
 import resource
 import shutil
 import signal
+import stat
 import subprocess
 import sys
 import time
@@ -49,28 +52,16 @@ PAIR_AUXILIARY_FILES = (
 )
 PAIR_FILES = (*PAIR_AUXILIARY_FILES, "old-corpus.pt", "augmented.pt",
               "report.json", "publication.json")
-SOURCE_FILES = (
+SOURCE_MANUAL_FILES = (
     "docs/plans/m7-navigation-v3-matched-budget-protocol.json",
-    "scripts/prepare_male_navigation_v2.py",
-    "scripts/prepare_male_recovery_data.py",
-    "scripts/run_male_navigation_v3_training.py",
-    "scripts/train_male_navigation_v2.py",
-    "scripts/train_male_navigation_v3.py",
-    "scripts/train_male_recovery.py",
-    "scripts/train_male_reduced.py",
-    "src/palimpsest/__init__.py",
-    "src/palimpsest/artifacts.py",
-    "src/palimpsest/evaluate.py",
-    "src/palimpsest/male_matched_budget.py",
-    "src/palimpsest/male_model.py",
-    "src/palimpsest/male_navigation_research.py",
-    "src/palimpsest/male_policy.py",
-    "src/palimpsest/male_research.py",
-    "src/palimpsest/records.py",
-    "src/palimpsest/storage.py",
     "tests/test_male_navigation_v3.py",
     "tests/test_male_navigation_v3_execution.py",
     "uv.lock",
+)
+SOURCE_ENTRY_FILES = (
+    "scripts/run_male_navigation_v3_training.py",
+    "scripts/train_male_navigation_v2.py",  # V3 loads this by an admitted importlib string.
+    "scripts/train_male_navigation_v3.py",
 )
 EXACT_ENVIRONMENT = {
     "CUDA_VISIBLE_DEVICES": "",
@@ -109,14 +100,115 @@ def _json(payload):
 
 
 def _read(path, maximum=MAX_JSON):
-    path = Path(path)
-    if path.is_symlink() or not path.is_file() or path.stat().st_size > maximum:
+    """Read one stable, singly-linked regular file through an O_NOFOLLOW fd."""
+    path = Path(os.path.abspath(path))
+    for parent in path.parents:
+        info = os.lstat(parent)
+        if stat.S_ISLNK(info.st_mode):
+            raise ValueError(f"Linked parent refused: {path.name}")
+    before = os.lstat(path)
+    if (not stat.S_ISREG(before.st_mode) or before.st_nlink != 1 or
+            before.st_size > maximum):
         raise ValueError(f"Missing, linked, or oversized file: {path.name}")
-    with path.open("rb") as stream:
-        payload = stream.read(maximum + 1)
-    if len(payload) > maximum:
-        raise ValueError(f"Oversized file: {path.name}")
-    return payload
+    flags = os.O_RDONLY | getattr(os, "O_CLOEXEC", 0) | getattr(os, "O_NOFOLLOW", 0)
+    descriptor = os.open(path, flags)
+    try:
+        opened = os.fstat(descriptor)
+        rebound = os.lstat(path)
+        identity = lambda item: (item.st_dev, item.st_ino, item.st_mode,
+                                 item.st_nlink, item.st_size, item.st_mtime_ns,
+                                 item.st_ctime_ns)
+        if (not stat.S_ISREG(opened.st_mode) or opened.st_nlink != 1 or
+                identity(opened) != identity(before) or identity(opened) != identity(rebound)):
+            raise ValueError(f"File identity rebound while opening: {path.name}")
+        chunks, remaining = [], maximum + 1
+        while remaining:
+            block = os.read(descriptor, min(65536, remaining))
+            if not block:
+                break
+            chunks.append(block); remaining -= len(block)
+        payload = b"".join(chunks)
+        after = os.fstat(descriptor)
+        rebound = os.lstat(path)
+        if len(payload) > maximum or identity(after) != identity(opened) or identity(rebound) != identity(opened):
+            raise ValueError(f"File changed during bounded read: {path.name}")
+        return payload
+    finally:
+        os.close(descriptor)
+
+
+def _module_path(module):
+    if not module:
+        return None
+    candidates = []
+    parts = module.split(".")
+    if parts[0] == "palimpsest":
+        relative = Path("src").joinpath(*parts)
+        candidates.extend((relative.with_suffix(".py"), relative / "__init__.py"))
+    elif len(parts) == 1:
+        candidates.extend((Path("scripts") / f"{module}.py", Path(f"{module}.py"),
+                           Path("src") / f"{module}.py"))
+    for candidate in candidates:
+        if (ROOT / candidate).is_file():
+            return candidate.as_posix()
+    return None
+
+
+def _source_module(name):
+    path = Path(name)
+    if path.parts[:2] == ("src", "palimpsest"):
+        tail = list(path.with_suffix("").parts[1:])
+        if tail[-1] == "__init__":
+            tail.pop()
+        return ".".join(tail)
+    if path.parts and path.parts[0] == "scripts":
+        return path.stem
+    return path.stem
+
+
+def static_source_roster():
+    """Conservative local import closure for both executed entry points."""
+    pending, found = list(SOURCE_ENTRY_FILES), set()
+    while pending:
+        name = pending.pop()
+        if name in found:
+            continue
+        found.add(name)
+        tree = ast.parse(_read(ROOT / name, 8 * MiB), filename=name)
+        current = _source_module(name)
+        package = current if name.endswith("/__init__.py") else current.rpartition(".")[0]
+        modules = []
+        for node in ast.walk(tree):
+            if isinstance(node, ast.Import):
+                modules.extend(alias.name for alias in node.names)
+            elif isinstance(node, ast.ImportFrom):
+                if node.level:
+                    base = package.split(".") if package else []
+                    remove = max(0, node.level - 1)
+                    if remove:
+                        base = base[:-remove]
+                    if node.module:
+                        base.extend(node.module.split("."))
+                    module = ".".join(base)
+                else:
+                    module = node.module or ""
+                modules.append(module)
+                modules.extend(f"{module}.{alias.name}" if module else alias.name
+                               for alias in node.names if alias.name != "*")
+            elif (isinstance(node, ast.Call) and node.args and
+                  isinstance(node.args[0], ast.Constant) and
+                  isinstance(node.args[0].value, str) and
+                  ((isinstance(node.func, ast.Name) and node.func.id == "__import__") or
+                   (isinstance(node.func, ast.Attribute) and
+                    node.func.attr == "import_module"))):
+                modules.append(node.args[0].value)
+        for module in modules:
+            candidate = _module_path(module)
+            if candidate is not None and candidate not in found:
+                pending.append(candidate)
+            if module.startswith("palimpsest."):
+                pending.append("src/palimpsest/__init__.py")
+    return tuple(sorted(found | set(SOURCE_MANUAL_FILES)))
 
 
 def _digest(payload):
@@ -180,7 +272,7 @@ def _runner_argv(digest):
 
 def _outer_argv(digest):
     environment = [f"{key}={value}" for key, value in sorted(EXACT_ENVIRONMENT.items())]
-    return ["/usr/bin/timeout", "--signal=TERM", "--kill-after=10s", f"{HARD_SECONDS}s",
+    return ["/usr/bin/timeout", "--signal=TERM", "--kill-after=10s", f"{NORMAL_SECONDS}s",
             "/usr/bin/env", "-i", *environment, *_runner_argv(digest)]
 
 
@@ -240,7 +332,7 @@ def admit_manifest(path, expected_digest):
         raise ValueError("Frozen execution contract differs")
     sources = value["behavior_sources"]
     pinned = protocol()["behavior_source_admission"]["existing_hashes"]
-    if (not isinstance(sources, dict) or set(sources) != set(SOURCE_FILES) or
+    if (not isinstance(sources, dict) or set(sources) != set(static_source_roster()) or
             any(not isinstance(item, str) or len(item) != 64 or
                 any(char not in "0123456789abcdef" for char in item)
                 for item in sources.values()) or
@@ -256,7 +348,7 @@ def admit_manifest(path, expected_digest):
 
 def source_identity(expected=None):
     observed = {}
-    for name in SOURCE_FILES:
+    for name in static_source_roster():
         path = ROOT / name
         payload = _read(path, 8 * MiB)
         observed[name] = _digest(payload)
@@ -283,11 +375,15 @@ def _safe_output(path):
     return path
 
 
+def _lexists(path):
+    return os.path.lexists(os.fspath(path))
+
+
 def preflight(value):
     output = _safe_output(value["output"])
     if output != OUTPUT or output.parent != ROOT / "runs":
         raise ValueError("Exact aggregate output family required")
-    if output.exists():
+    if _lexists(output):
         raise FileExistsError("Enclosing training attempt is already consumed")
     for item in value["immutable_inputs"].values():
         source = Path(os.path.abspath(item["path"]))
@@ -296,28 +392,75 @@ def preflight(value):
 
 
 def _fsync_directory(path):
-    descriptor = os.open(path, os.O_RDONLY | getattr(os, "O_DIRECTORY", 0))
+    path = Path(os.path.abspath(path))
+    before = os.lstat(path)
+    descriptor = os.open(path, os.O_RDONLY | getattr(os, "O_DIRECTORY", 0) |
+                         getattr(os, "O_NOFOLLOW", 0) | getattr(os, "O_CLOEXEC", 0))
     try:
+        opened = os.fstat(descriptor)
+        rebound = os.lstat(path)
+        if (not stat.S_ISDIR(opened.st_mode) or
+                (opened.st_dev, opened.st_ino) != (before.st_dev, before.st_ino) or
+                (opened.st_dev, opened.st_ino) != (rebound.st_dev, rebound.st_ino)):
+            raise ValueError("Directory rebound during durability sync")
         os.fsync(descriptor)
     finally:
         os.close(descriptor)
 
 
-def _write_new(path, value, maximum=MAX_JSON):
-    payload = canonical(value)
+def _write_bytes_new(path, payload, maximum=MAX_JSON):
     if len(payload) > maximum:
         raise ValueError("Execution receipt exceeds cap")
-    with Path(path).open("xb") as stream:
-        stream.write(payload)
-        stream.flush()
-        os.fsync(stream.fileno())
+    path = Path(path)
+    flags = (os.O_WRONLY | os.O_CREAT | os.O_EXCL | getattr(os, "O_CLOEXEC", 0) |
+             getattr(os, "O_NOFOLLOW", 0))
+    descriptor = os.open(path, flags, 0o600)
+    try:
+        info = os.fstat(descriptor)
+        if not stat.S_ISREG(info.st_mode) or info.st_nlink != 1:
+            raise ValueError("New execution receipt is not a private regular file")
+        view = memoryview(payload)
+        while view:
+            count = os.write(descriptor, view)
+            if count <= 0:
+                raise OSError("Short execution receipt write")
+            view = view[count:]
+        os.fsync(descriptor)
+        rebound = os.lstat(path)
+        if (rebound.st_dev, rebound.st_ino, rebound.st_nlink) != (
+                info.st_dev, info.st_ino, 1):
+            raise ValueError("Execution receipt path rebound during write")
+    finally:
+        os.close(descriptor)
+    return payload
+
+
+def _write_new(path, value, maximum=MAX_JSON):
+    _write_bytes_new(path, canonical(value), maximum)
     return value
+
+
+def _exclusive_publish(pending, final):
+    """Link a durable pending file into a fresh final name without replacement."""
+    pending, final = Path(pending), Path(final)
+    if pending.parent != final.parent:
+        raise ValueError("Publication names must share one directory")
+    payload = _read(pending)
+    if _lexists(final):
+        raise FileExistsError(f"Publication destination already exists: {final.name}")
+    os.link(pending, final, follow_symlinks=False)
+    _fsync_directory(final.parent)
+    os.unlink(pending)
+    _fsync_directory(final.parent)
+    if _read(final) != payload:
+        raise ValueError("Exclusive publication bytes changed")
+    return payload
 
 
 def reserve_attempt(output, manifest_digest):
     """Create the enclosing output and durable no-retry marker before any child."""
     output = _safe_output(output)
-    if output.exists():
+    if _lexists(output):
         raise FileExistsError("Enclosing training attempt is already consumed")
     if not output.parent.is_dir():
         raise ValueError("Fresh existing aggregate parent required")
@@ -340,16 +483,31 @@ def rss_bytes():
 
 def _tree_bytes(root):
     total = entries = 0
-    if not Path(root).exists():
+    if not _lexists(root):
         return 0
-    for directory, directories, files in os.walk(root, followlinks=False):
+    if not stat.S_ISDIR(os.lstat(root).st_mode):
+        raise ValueError("Aggregate inventory root is not a directory")
+    for directory, directories, files, descriptor in os.fwalk(root, follow_symlinks=False):
         for name in directories + files:
-            path = Path(directory) / name
             entries += 1
-            if entries > 1024 or path.is_symlink():
-                raise ValueError("Aggregate inventory exceeds bounds or contains symlink")
-            if path.is_file():
-                total += path.stat().st_size
+            if entries > 1024:
+                raise ValueError("Aggregate inventory exceeds entry bound")
+            info = os.stat(name, dir_fd=descriptor, follow_symlinks=False)
+            if stat.S_ISLNK(info.st_mode) or (not stat.S_ISDIR(info.st_mode) and
+                                              not stat.S_ISREG(info.st_mode)):
+                raise ValueError("Aggregate inventory contains linked/nonregular entry")
+            if stat.S_ISREG(info.st_mode):
+                flags = os.O_RDONLY | getattr(os, "O_CLOEXEC", 0) | getattr(os, "O_NOFOLLOW", 0)
+                child = os.open(name, flags, dir_fd=descriptor)
+                try:
+                    opened = os.fstat(child)
+                    rebound = os.stat(name, dir_fd=descriptor, follow_symlinks=False)
+                    if (opened.st_dev, opened.st_ino, opened.st_nlink, opened.st_size) != (
+                            rebound.st_dev, rebound.st_ino, rebound.st_nlink, rebound.st_size) or opened.st_nlink != 1:
+                        raise ValueError("Aggregate inventory file rebound or is hard-linked")
+                    total += opened.st_size
+                finally:
+                    os.close(child)
     return total
 
 
@@ -367,38 +525,163 @@ def check_resources(output, deadline):
 
 
 def process_identity(pid):
+    root_descriptor = None
     try:
         root = Path("/proc") / str(pid)
-        fields = (root / "stat").read_text().rsplit(") ", 1)[1].split()
-        status = dict(line.split(":", 1) for line in (root / "status").read_text().splitlines()
+        flags = os.O_RDONLY | getattr(os, "O_DIRECTORY", 0) | getattr(os, "O_NOFOLLOW", 0)
+        root_descriptor = os.open(root, flags)
+        root_identity = os.fstat(root_descriptor)
+
+        def read(name, maximum):
+            descriptor = os.open(name, os.O_RDONLY | getattr(os, "O_NOFOLLOW", 0),
+                                 dir_fd=root_descriptor)
+            try:
+                opened = os.fstat(descriptor)
+                if not stat.S_ISREG(opened.st_mode) or opened.st_nlink != 1:
+                    raise ValueError("Unsafe proc identity member")
+                chunks, remaining = [], maximum + 1
+                while remaining:
+                    block = os.read(descriptor, min(4096, remaining))
+                    if not block:
+                        break
+                    chunks.append(block); remaining -= len(block)
+                payload = b"".join(chunks)
+                rebound = os.stat(name, dir_fd=root_descriptor, follow_symlinks=False)
+                after = os.fstat(descriptor)
+                if (len(payload) > maximum or
+                        (opened.st_dev, opened.st_ino, opened.st_nlink) !=
+                        (after.st_dev, after.st_ino, after.st_nlink) or
+                        (opened.st_dev, opened.st_ino, opened.st_nlink) !=
+                        (rebound.st_dev, rebound.st_ino, rebound.st_nlink)):
+                    raise ValueError("Proc identity member rebound")
+                return payload
+            finally:
+                os.close(descriptor)
+
+        fields = read("stat", 4096).decode().rsplit(") ", 1)[1].split()
+        status = dict(line.split(":", 1) for line in read("status", 64 * 1024).decode().splitlines()
                       if ":" in line)
-        raw = (root / "cmdline").read_bytes().split(b"\0")
+        raw = read("cmdline", 64 * 1024).split(b"\0")
         if raw and raw[-1] == b"":
             raw.pop()
+        rebound = os.stat(root, follow_symlinks=False)
+        if (root_identity.st_dev, root_identity.st_ino) != (rebound.st_dev, rebound.st_ino):
+            return None
         return {"pid": pid, "ppid": int(fields[1]), "group": int(fields[2]),
                 "start_ticks": int(fields[19]), "state": fields[0],
                 "rss_bytes": int(status.get("VmRSS", "0 kB").split()[0]) * 1024,
                 "argv": [os.fsdecode(item) for item in raw],
                 "command": b" ".join(raw).decode(errors="replace")[:512]}
-    except (FileNotFoundError, ProcessLookupError, PermissionError, ValueError, KeyError):
+    except (FileNotFoundError, ProcessLookupError, PermissionError, ValueError, KeyError,
+            UnicodeError, OSError):
         return None
+    finally:
+        if root_descriptor is not None:
+            os.close(root_descriptor)
 
 
-def descendants(parent_pid):
-    ancestry = {}
-    for path in Path("/proc").iterdir():
-        if path.name.isdigit():
-            try:
-                ancestry[int(path.name)] = int(
-                    (path / "stat").read_text().rsplit(") ", 1)[1].split()[1])
-            except (FileNotFoundError, ProcessLookupError, PermissionError, ValueError):
+def process_group_members(group):
+    rows = []
+    descriptor = os.open("/proc", os.O_RDONLY | getattr(os, "O_DIRECTORY", 0) |
+                         getattr(os, "O_NOFOLLOW", 0))
+    try:
+        for name in os.listdir(descriptor):
+            if not name.isdigit():
                 continue
-    result, parents = {}, {parent_pid}
-    while parents:
-        found = {pid for pid, ppid in ancestry.items() if ppid in parents and pid not in result}
-        result.update({pid: process_identity(pid) for pid in found})
-        parents = found
-    return [row for row in result.values() if row is not None]
+            row = process_identity(int(name))
+            if row is not None and row["group"] == group and row["state"] != "Z":
+                rows.append(row)
+    finally:
+        os.close(descriptor)
+    return rows
+
+
+def _record_group(identity, rows, known, maximum=MAX_PROCESSES):
+    if identity["group"] in (os.getpid(), os.getpgrp()):
+        raise ValueError("Refusing to supervise the parent process group")
+    result = dict(known)
+    for row in rows:
+        key = (row.get("pid"), row.get("start_ticks"))
+        if (any(type(item) is not int for item in key) or
+                row.get("group") != identity["group"]):
+            raise ValueError("Observed process escaped or changed identity")
+        if key not in result and len(result) >= maximum:
+            raise ValueError("Finite child process inventory exceeded")
+        result[key] = {name: row.get(name) for name in
+                       ("pid", "ppid", "group", "start_ticks", "state",
+                        "rss_bytes", "command")}
+    return result
+
+
+def drain_process_group(identity, deadline, known, *, group_reader=process_group_members,
+                        clock=time.monotonic, sleep=time.sleep, kill=os.killpg):
+    """Drain the owned group even after its leader exits and descendants reparent."""
+    signals, term_at = [], None
+    while True:
+        rows = group_reader(identity["group"])
+        known = _record_group(identity, rows, known)
+        if not rows:
+            return {"drained": True, "forced": bool(signals), "signals": signals,
+                    "survivors": [], "known": known}
+        now = clock()
+        number = (signal.SIGKILL if now >= deadline or
+                  term_at is not None and now - term_at >= 3 else
+                  signal.SIGTERM if term_at is None else None)
+        if number is not None:
+            try:
+                kill(identity["group"], number)
+            except ProcessLookupError:
+                pass
+            name = signal.Signals(number).name
+            if not signals or signals[-1] != name:
+                signals.append(name)
+            if term_at is None:
+                term_at = now
+        if now >= deadline:
+            survivors = group_reader(identity["group"])
+            known = _record_group(identity, survivors, known)
+            return {"drained": not survivors, "forced": True, "signals": signals,
+                    "survivors": survivors, "known": known}
+        sleep(.1)
+
+
+def spawn_contained(command, cwd, environment, stdout, stderr, *,
+                    popen=subprocess.Popen, identity_reader=process_identity,
+                    mask=signal.pthread_sigmask):
+    """Return owned PID/start/group while INT/TERM remain blocked for the caller."""
+    blocked = {signal.SIGINT, signal.SIGTERM}
+    previous = mask(signal.SIG_BLOCK, blocked)
+    process = None
+    try:
+        process = popen(command, cwd=cwd, env=environment, stdout=stdout, stderr=stderr,
+                        start_new_session=True)
+        current = None
+        for _ in range(100):
+            current = identity_reader(process.pid)
+            if current is not None:
+                break
+            if process.poll() is not None:
+                break
+            time.sleep(.01)
+        if (current is None or current.get("pid") != process.pid or
+                current.get("ppid") != os.getpid() or current.get("group") != process.pid or
+                current.get("argv") != command):
+            raise ValueError("Spawned trainer PID/start/group/argv identity differs")
+        owned = {key: current[key] for key in
+                 ("pid", "ppid", "group", "start_ticks", "command")}
+        return process, owned, previous
+    except BaseException:
+        if process is not None and process.poll() is None:
+            with contextlib.suppress(ProcessLookupError):
+                os.killpg(process.pid, signal.SIGKILL)
+            with contextlib.suppress(subprocess.TimeoutExpired):
+                process.wait(timeout=3)
+        mask(signal.SIG_SETMASK, previous)
+        raise
+
+
+def restore_signal_mask(previous, *, mask=signal.pthread_sigmask):
+    mask(signal.SIG_SETMASK, previous)
 
 
 def admit_process_observation(identity, parent_pid, rows, known, maximum):
@@ -410,16 +693,7 @@ def admit_process_observation(identity, parent_pid, rows, known, maximum):
     if (current is None or current.get("start_ticks") != identity["start_ticks"] or
             current.get("ppid") != parent_pid or current.get("group") != identity["group"]):
         raise ValueError("Child identity disappeared, escaped, or was reused")
-    result = dict(known)
-    for row in rows:
-        key = (row.get("pid"), row.get("start_ticks"))
-        if any(type(item) is not int for item in key) or row.get("group") != identity["group"]:
-            raise ValueError("Observed child escaped its process group")
-        if key not in result and len(result) >= maximum:
-            raise ValueError("Finite child process inventory exceeded")
-        result[key] = {name: row.get(name) for name in
-                       ("pid", "ppid", "group", "start_ticks", "command")}
-    return result
+    return _record_group(identity, rows, known, maximum)
 
 
 def _signal_group(identity, number, signals):
@@ -444,7 +718,6 @@ def supervise_pair(pair, deadline):
     from palimpsest.evaluate import bounded_logs
 
     parent = os.getpid()
-    baseline = {(row["pid"], row["start_ticks"]) for row in descendants(parent)}
     supervision = Path(pair["output"]).parent / "supervision" / f"seed-{pair['seed']}"
     supervision.mkdir(parents=True, exist_ok=False)
     stdout_path, stderr_path = supervision / "stdout.log", supervision / "stderr.log"
@@ -455,27 +728,32 @@ def supervise_pair(pair, deadline):
         if message not in errors:
             errors.append(message)
 
-    with bounded_logs(supervision, LOG_BYTES, log_failure) as (stdout, stderr):
+    # Block before bounded_logs starts its drain threads so every new thread and
+    # the child inherit the mask until PID/start/group ownership is recorded.
+    thread_previous_mask = signal.pthread_sigmask(
+        signal.SIG_BLOCK, {signal.SIGINT, signal.SIGTERM})
+    mask_guard = contextlib.ExitStack()
+    mask_guard.callback(restore_signal_mask, thread_previous_mask)
+    with mask_guard, bounded_logs(supervision, LOG_BYTES, log_failure) as (stdout, stderr):
         try:
-            process = subprocess.Popen(pair["argv"], cwd=ROOT, env=EXACT_ENVIRONMENT,
-                                       stdout=stdout, stderr=stderr, start_new_session=True)
+            process, identity, previous_mask = spawn_contained(
+                pair["argv"], ROOT, EXACT_ENVIRONMENT, stdout, stderr)
+            restore_signal_mask(previous_mask)  # Still blocked by the enclosing thread mask.
+            restore_signal_mask(thread_previous_mask)  # Pending TERM now has owned cleanup state.
             while True:
                 now = time.monotonic()
                 code = process.poll()
-                rows = [row for row in descendants(parent)
-                        if (row["pid"], row["start_ticks"]) not in baseline]
-                current = process_identity(process.pid)
-                if identity is None and current is not None:
-                    identity = {key: current[key] for key in
-                                ("pid", "ppid", "group", "start_ticks", "command")}
-                    if current.get("argv") != pair["argv"]:
-                        errors.append("Child argv differs")
-                if identity is not None and code is None:
+                rows = process_group_members(identity["group"])
+                if code is None:
                     try:
                         known = admit_process_observation(identity, parent, rows, known,
                                                           MAX_PROCESSES)
                     except ValueError as error:
                         errors.append(str(error))
+                else:
+                    known = _record_group(identity, rows, known)
+                    if rows:
+                        errors.append("Trainer leader exited with live process-group descendants")
                 if sum(row.get("rss_bytes", 0) for row in rows) > RSS_BYTES:
                     errors.append("Pair RSS cap exceeded")
                 if errors or now >= deadline - 10:
@@ -504,15 +782,18 @@ def supervise_pair(pair, deadline):
                     process.wait(timeout=max(0.0, min(5.0, deadline - time.monotonic())))
                 except subprocess.TimeoutExpired:
                     errors.append("Pair leader did not drain after forced termination")
-    survivors = []
-    for key, row in known.items():
-        current = process_identity(key[0])
-        if current is not None and current["start_ticks"] == key[1] and current["state"] != "Z":
-            survivors.append(row)
-            try:
-                os.kill(current["pid"], signal.SIGKILL)
-            except ProcessLookupError:
-                pass
+    drained = ({"drained": False, "forced": False, "signals": [],
+                "survivors": [], "known": known} if identity is None else
+               drain_process_group(identity, deadline, known))
+    known = drained["known"]
+    survivors = drained["survivors"]
+    for name in drained["signals"]:
+        if not signals or signals[-1] != name:
+            signals.append(name)
+    if drained["forced"]:
+        errors.append("Trainer process group required forced drain")
+    if not drained["drained"]:
+        errors.append("Trainer process group survived the outer deadline")
     elapsed = time.monotonic() - started
     code = process.returncode if process is not None else None
     status = "completed" if (code == 0 and identity is not None and not errors and
@@ -529,11 +810,10 @@ def supervise_pair(pair, deadline):
 
 def _inventory(root):
     root = _safe_output(root)
-    names = []
-    for path in sorted(root.iterdir()):
-        if path.is_symlink() or not path.is_file():
-            raise ValueError("Pair inventory contains a link or non-file")
-        names.append(path.name)
+    before = os.lstat(root)
+    if not stat.S_ISDIR(before.st_mode):
+        raise ValueError("Pair inventory root is not a directory")
+    names = sorted(os.listdir(root))
     if set(names) != set(PAIR_FILES):
         raise ValueError("Pair evidence inventory differs")
     result, total = {}, 0
@@ -541,7 +821,10 @@ def _inventory(root):
         payload = _read(root / name, PAIR_BYTES)
         total += len(payload)
         result[name] = {"sha256": _digest(payload), "size_bytes": len(payload)}
-    if total > PAIR_BYTES:
+    after = os.lstat(root)
+    if (names != sorted(os.listdir(root)) or
+            (before.st_dev, before.st_ino) != (after.st_dev, after.st_ino) or
+            total > PAIR_BYTES):
         raise ValueError("Pair evidence exceeds payload cap")
     return result
 
@@ -552,7 +835,7 @@ def admit_pair(output, seed):
         raise ValueError("Wrong pair output identity")
     failure = output.with_name(output.name + ".failure.json")
     pending = (output / "report.pending", output / "publication.pending")
-    if failure.exists() or any(path.exists() for path in pending):
+    if _lexists(failure) or any(_lexists(path) for path in pending):
         raise ValueError("Pair has failure or pending evidence")
     attempt = _json(_read(output.with_name(output.name + ".attempt.json")))
     expected_models = [{"seed": item_seed, "arm": arm}
@@ -668,7 +951,7 @@ def _publish_failure(output, report, error):
     report.setdefault("failure", {"type": type(error).__name__,
                                   "message": str(error)[:1024]})
     path = Path(output) / "failure.json"
-    if not path.exists():
+    if not _lexists(path):
         _write_new(path, report)
         _fsync_directory(output)
 
@@ -677,16 +960,14 @@ def _publish_success(output, report, deadline):
     output = Path(output)
     pending, final = output / "report.pending", output / "report.json"
     receipt_pending, receipt = output / "publication.pending", output / "publication.json"
-    if any(path.exists() for path in (pending, final, receipt_pending, receipt,
+    if any(_lexists(path) for path in (pending, final, receipt_pending, receipt,
                                       output / "failure.json")):
         raise FileExistsError("Fresh aggregate publication paths required")
     payload = canonical(report)
     if time.monotonic() > deadline:
         raise TimeoutError("Aggregate normal-return deadline exceeded")
-    with pending.open("xb") as stream:
-        stream.write(payload); stream.flush(); os.fsync(stream.fileno())
-    pending.replace(final)
-    _fsync_directory(output)
+    _write_bytes_new(pending, payload)
+    _exclusive_publish(pending, final)
     completion = {"id": "male-navigation-v3-enclosing-publication-v1",
                   "status": "durably-published",
                   "execution_manifest_sha256": report["execution_manifest_sha256"],
@@ -695,18 +976,18 @@ def _publish_success(output, report, deadline):
     _write_new(receipt_pending, completion)
     if time.monotonic() > deadline:
         raise TimeoutError("Aggregate normal-return deadline exceeded")
-    receipt_pending.replace(receipt)
-    _fsync_directory(output)  # Last fallible success step.
+    _exclusive_publish(receipt_pending, receipt)
+    if time.monotonic() > deadline:
+        raise TimeoutError("Aggregate normal-return deadline exceeded")
     return completion
 
 
 def success_admitted(output, manifest_digest):
     """Admit aggregate success only with six models and the durable receipt."""
     output = Path(output)
-    if (not (output / "attempt.json").is_file() or
-            not (output / "report.json").is_file() or
-            not (output / "publication.json").is_file() or
-            any((output / name).exists() for name in
+    if (any(not _lexists(output / name) for name in
+            ("attempt.json", "report.json", "publication.json")) or
+            any(_lexists(output / name) for name in
                 ("failure.json", "report.pending", "publication.pending"))):
         return False
     try:
@@ -725,12 +1006,23 @@ def success_admitted(output, manifest_digest):
             any(report.get("pairs", {}).get(str(seed), {}).get("status") != "completed"
                 for seed in SEEDS)):
         return False
-    return receipt == {
+    if receipt != {
         "id": "male-navigation-v3-enclosing-publication-v1",
         "status": "durably-published", "execution_manifest_sha256": manifest_digest,
         "report_sha256": _digest(payload), "report_size_bytes": len(payload),
         "models": 6, "qualification_claims": [],
-    }
+    }:
+        return False
+    admitted_models = []
+    try:
+        for seed in SEEDS:
+            evidence = admit_pair(output / f"seed-{seed}", seed)
+            if evidence != report["pairs"][str(seed)].get("evidence"):
+                return False
+            admitted_models.extend(evidence["models"])
+    except (OSError, ValueError, KeyError, TypeError):
+        return False
+    return report["models"] == admitted_models
 
 
 def execute(manifest_path, expected_digest):

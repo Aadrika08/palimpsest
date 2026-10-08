@@ -250,11 +250,13 @@ class NavigationV3ExecutionTests(unittest.TestCase):
             return {"pid": 50, "ppid": os.getpid(), "group": 50,
                     "start_ticks": 100, "argv": ["trainer"], "command": "trainer"}
 
-        result, owned = owner.spawn_contained(
+        result, owned, previous = owner.spawn_contained(
             ["trainer"], ROOT, {}, None, None, popen=popen,
             identity_reader=identity, mask=mask)
         self.assertIs(result, process)
         self.assertEqual(owned["start_ticks"], 100)
+        self.assertEqual([row[0] for row in events], ["mask", "popen", "identity"])
+        owner.restore_signal_mask(previous, mask=mask)
         self.assertEqual([row[0] for row in events], ["mask", "popen", "identity", "mask"])
         self.assertEqual(events[0][1], signal.SIG_BLOCK)
         self.assertEqual(events[-1][1], signal.SIG_SETMASK)
