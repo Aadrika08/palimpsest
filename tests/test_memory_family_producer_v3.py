@@ -122,8 +122,12 @@ def test_registration_freezes_one_complete_block_without_writing(tmp_path):
     assert registration['authored_ids']['count'] > 144
     memory._digest(registration['authored_ids']['sha256'])
     assert set(registration['dependencies']) == {
-        'producer', 'family_generator', 'raw_admission', 'pure_oracle',
-        'owner_diagnostic'}
+        'producer', 'artifacts', 'memory_core', 'family_world',
+        'synthetic_history', 'family_generator', 'family_plan_validator',
+        'raw_admission', 'pure_oracle', 'owner_diagnostic', 'profiles',
+        'records', 'replay', 'snapshots', 'memory_decision', 'memory_task',
+        'memory_world', 'interventions', 'male_policy', 'male_model',
+        'flynn_policy_binding', 'manual_transfer_helpers'}
     assert producer.validate_registration(registration) == registration
     assert not any(path.exists() for path in values['roots'].values())
 
@@ -201,6 +205,14 @@ def test_registration_rejects_history_namespace_reuse(tmp_path):
     bundle['u'] = memory.fit(bundle['e'])
     _write(path, bundle)
     with pytest.raises(ValueError, match='authored ID collides'):
+        _build(values)
+
+    values = _contract_inputs(tmp_path / 'u-mismatch')
+    path = Path(values['histories'][memory.RELATIONS[0]])
+    bundle = artifacts._json(path.read_bytes())
+    bundle['u'] = memory.artifact(memory.RELATIONS[0])
+    _write(path, bundle)
+    with pytest.raises(ValueError, match='registered relation'):
         _build(values)
 
 
@@ -368,8 +380,8 @@ def test_close_admits_real_synthetic_pair_and_writes_once(tmp_path):
 
 @pytest.mark.parametrize('defect', [
     'namespace', 'owner-active', 'supervisor', 'supervisor-path',
-    'supervisor-extra', 'supervisor-overrun', 'supervisor-control', 'manifest',
-    'job-registration', 'drift',
+    'supervisor-extra', 'supervisor-overrun', 'supervisor-types',
+    'supervisor-control', 'manifest', 'job-registration', 'run-extra', 'drift',
 ])
 def test_close_rejects_unproved_or_changed_inputs_without_publication(tmp_path, defect):
     values, _, registration, source_job, own_job, cleanup = _closed_pair(tmp_path)
@@ -405,6 +417,14 @@ def test_close_rejects_unproved_or_changed_inputs_without_publication(tmp_path, 
         report = artifacts._json(path.read_bytes())
         report['elapsed_seconds'] = report['timeout_seconds'] + 11
         path.write_text(json.dumps(report, indent=2, allow_nan=False) + '\n')
+        cleanup_value['rows'][0]['supervisor_sha256'] = _sha(path)
+        _write(cleanup, cleanup_value)
+    elif defect == 'supervisor-types':
+        path = Path(cleanup_value['rows'][0]['supervisor_path'])
+        report = artifacts._json(path.read_bytes())
+        report.update(schema_version=True, returncode=False,
+                      timeout_seconds=float(report['timeout_seconds']))
+        path.write_text(json.dumps(report, allow_nan=False))
         cleanup_value['rows'][0]['supervisor_sha256'] = _sha(path)
         _write(cleanup, cleanup_value)
     elif defect == 'supervisor-control':
@@ -446,6 +466,9 @@ def test_close_rejects_unproved_or_changed_inputs_without_publication(tmp_path, 
                 'owner_sha256': row['owner_sha256'],
             })
         _write(cleanup, cleanup_value)
+    elif defect == 'run-extra':
+        job = artifacts._json(Path(source_job).read_bytes())
+        (Path(job['output']) / 'unregistered.bin').write_bytes(b'unclassified')
 
     original = producer.admission.admit_oracle_pair
     if defect == 'drift':
@@ -473,6 +496,64 @@ def test_close_publication_failure_leaves_no_partial_final_or_temporary(tmp_path
             patch.object(producer.os, 'link', side_effect=OSError('fixture publish failure')):
         with pytest.raises(OSError, match='fixture publish failure'):
             producer.close_oracle_pair(registration, source_job, own_job, cleanup)
+    assert not any(close_root.iterdir())
+    with patch.object(producer.os, 'readlink', return_value='pid:[fixture]'), \
+            patch.object(producer.diagnostic, 'owner_exited', return_value=True), \
+            patch.object(producer.os, 'fsync', side_effect=[
+                None, OSError('fixture durability failure')]):
+        with pytest.raises(OSError, match='fixture durability failure'):
+            producer.close_oracle_pair(registration, source_job, own_job, cleanup)
+    assert not any(close_root.iterdir())
+
+
+def test_close_enforces_aggregate_pair_control_budget(tmp_path):
+    values, _, registration, source_job, own_job, cleanup = _closed_pair(tmp_path)
+    cleanup_value = artifacts._json(Path(cleanup).read_bytes())
+    for row in cleanup_value['rows']:
+        path = Path(row['supervisor_path'])
+        report = artifacts._json(path.read_bytes())
+        report['started_utc'] = 'x' * (
+            producer.RESOURCE_PROJECTION['control_max_bytes'] - 6144)
+        path.write_text(json.dumps(report, allow_nan=False))
+        row['supervisor_sha256'] = _sha(path)
+    _write(cleanup, cleanup_value)
+    control_paths = [Path(source_job), Path(own_job), Path(cleanup)]
+    for row in cleanup_value['rows']:
+        control_paths.extend((Path(row['owner_path']), Path(row['supervisor_path'])))
+    assert all(path.stat().st_size <= producer.RESOURCE_PROJECTION['control_max_bytes']
+               for path in control_paths)
+    assert sum(path.stat().st_size for path in control_paths) > (
+        2 * producer.RESOURCE_PROJECTION['control_max_bytes'])
+
+    with patch.object(producer.os, 'readlink', return_value='pid:[fixture]'), \
+            patch.object(producer.diagnostic, 'owner_exited', return_value=True):
+        with pytest.raises(ValueError, match='aggregate bound'):
+            producer.close_oracle_pair(
+                registration, source_job, own_job, cleanup)
+    assert not any((values['roots']['publication'] / 'pair-closes').iterdir())
+
+
+def test_close_deadline_expiry_during_serialization_does_not_publish(tmp_path):
+    values, _, registration, source_job, own_job, cleanup = _closed_pair(tmp_path)
+    close_root = values['roots']['publication'] / 'pair-closes'
+    expired = False
+    canonical_bytes = producer.memory.canonical_bytes
+
+    def expire_after_close(value):
+        nonlocal expired
+        payload = canonical_bytes(value)
+        if type(value) is dict and value.get('schema') == (
+                'memory-family-oracle-pair-close-v3'):
+            expired = True
+        return payload
+
+    with patch.object(producer.os, 'readlink', return_value='pid:[fixture]'), \
+            patch.object(producer.diagnostic, 'owner_exited', return_value=True), \
+            patch.object(producer.memory, 'canonical_bytes', side_effect=expire_after_close), \
+            patch.object(producer.time, 'monotonic', side_effect=lambda: 101 if expired else 0):
+        with pytest.raises(TimeoutError):
+            producer.close_oracle_pair(
+                registration, source_job, own_job, cleanup, deadline=100)
     assert not any(close_root.iterdir())
 
 

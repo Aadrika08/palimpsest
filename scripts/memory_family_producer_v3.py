@@ -10,12 +10,16 @@ import tempfile
 import time
 import uuid
 
-from palimpsest import artifacts, memory, memory_decision_world as world
-from palimpsest import memory_experiment
+from palimpsest import (
+    artifacts, interventions, male_model, male_policy, memory, memory_decision,
+    memory_decision_world as world, memory_experiment, memory_task, memory_world,
+    profiles, records, replay, snapshots,
+)
 from palimpsest.memory_experiment import CONDITIONS
 from scripts import memory_family_oracle_admission_v3 as admission
 from scripts import memory_family_oracle_v3 as oracle
 from scripts import memory_family_v3 as family
+from scripts import memory_confirmatory_v3 as confirmatory
 from scripts import memory_restore_diagnostic as diagnostic
 
 
@@ -143,10 +147,29 @@ def _overlaps(left, right):
 def _dependency_descriptors(deadline=None):
     paths = {
         'producer': Path(__file__),
+        'artifacts': Path(artifacts.__file__),
+        'memory_core': Path(memory.__file__),
+        'family_world': Path(world.__file__),
+        'synthetic_history': Path(memory_experiment.__file__),
         'family_generator': Path(family.__file__),
+        'family_plan_validator': Path(confirmatory.__file__),
         'raw_admission': Path(admission.__file__),
         'pure_oracle': Path(oracle.__file__),
         'owner_diagnostic': Path(diagnostic.__file__),
+        'profiles': Path(profiles.__file__),
+        'records': Path(records.__file__),
+        'replay': Path(replay.__file__),
+        'snapshots': Path(snapshots.__file__),
+        'memory_decision': Path(memory_decision.__file__),
+        'memory_task': Path(memory_task.__file__),
+        'memory_world': Path(memory_world.__file__),
+        'interventions': Path(interventions.__file__),
+        'male_policy': Path(male_policy.__file__),
+        'male_model': Path(male_model.__file__),
+        'flynn_policy_binding': Path(admission.__file__).with_name(
+            'verify_flynn_memory_transfer.py'),
+        'manual_transfer_helpers': Path(admission.__file__).with_name(
+            'verify_memory_transfer.py'),
     }
     return {name: {'path': str(artifacts._safe_path(path)),
                    'sha256': _file_sha(path, deadline)}
@@ -535,8 +558,11 @@ def _supervision(path, timeout, deadline=None):
     _fields(report, {'schema_version', 'status', 'timeout_seconds', 'started_utc',
                      'output', 'returncode', 'elapsed_seconds'}, 'Supervisor report')
     elapsed = report['elapsed_seconds']
-    if (report['schema_version'] != 1 or report['status'] != 'completed'
-            or report['returncode'] != 0 or report['timeout_seconds'] != timeout
+    if (type(report['schema_version']) is not int or report['schema_version'] != 1
+            or report['status'] != 'completed'
+            or type(report['returncode']) is not int or report['returncode'] != 0
+            or type(report['timeout_seconds']) is not int
+            or report['timeout_seconds'] != timeout
             or type(report['started_utc']) is not str or not report['started_utc']
             or artifacts._safe_path(report['output']) != path.parent
             or type(elapsed) not in (int, float) or not math.isfinite(elapsed)
@@ -616,13 +642,17 @@ def _file_ledger(paths, deadline=None):
     return result
 
 
-def _run_ledger(root, deadline=None):
+def _run_ledger(root, recording_max_bytes, deadline=None):
     root = artifacts._safe_path(root)
     if not root.is_dir():
         raise ValueError('Producer run ledger root is missing')
-    result = []
+    allowed_directories = {
+        Path('.'), Path('recording'), Path('recording/chunks'), Path('snapshots')}
+    result, recording_bytes = [], 0
     for directory, directories, names in os.walk(root, followlinks=False):
         _deadline(deadline)
+        if Path(directory).relative_to(root) not in allowed_directories:
+            raise ValueError('Run contains an unregistered directory')
         directories.sort()
         children = [Path(directory) / name for name in directories + names]
         if any(path.is_symlink() for path in children):
@@ -631,8 +661,23 @@ def _run_ledger(root, deadline=None):
             path = Path(directory) / name
             if len(result) >= 100_000 or not path.is_file():
                 raise ValueError('Output ledger exceeds regular-file inventory bound')
-            result.append({'path': str(path.relative_to(root)),
-                           'bytes': path.stat().st_size,
+            relative, size = path.relative_to(root), path.stat().st_size
+            if relative.parts[0] == 'recording':
+                recording_bytes += size
+                if recording_bytes > recording_max_bytes:
+                    raise ValueError('Run recording exceeds its registered bound')
+            elif relative == Path('snapshots/initial.snp'):
+                if not 0 < size <= RESOURCE_PROJECTION['snapshot_max_bytes']:
+                    raise ValueError('Run snapshot exceeds its registered bound')
+            elif relative in (Path('worker-report.json'), Path('snapshots/index.json')):
+                if size > admission.MAX_REPORT_BYTES:
+                    raise ValueError('Run report evidence exceeds its bound')
+            elif relative == Path('owner.json'):
+                if size > RESOURCE_PROJECTION['control_max_bytes']:
+                    raise ValueError('Run owner evidence exceeds its bound')
+            else:
+                raise ValueError('Run contains an unregistered file')
+            result.append({'path': str(relative), 'bytes': size,
                            'sha256': _file_sha(path, deadline)})
     return result
 
@@ -650,8 +695,10 @@ def _ledger(registration_path, registration, source_job_path, source_job,
                       Path(row['supervisor']['path']).parent / 'stderr.log'))
     return {
         'files': _file_ledger(files, deadline),
-        'source_run': _run_ledger(source_job['output'], deadline),
-        'post_run': _run_ledger(post_job['output'], deadline),
+        'source_run': _run_ledger(
+            source_job['output'], admission.SOURCE_RECORDING_MAX_BYTES, deadline),
+        'post_run': _run_ledger(
+            post_job['output'], admission.POST_RECORDING_MAX_BYTES, deadline),
     }
 
 
@@ -782,8 +829,9 @@ def close_oracle_pair(registration_path, source_job_path, post_job_path,
     payload = memory.canonical_bytes(close)
     if len(payload) > MAX_CLOSE:
         raise ValueError('Oracle pair close exceeds its publication bound')
+    _deadline(deadline)
     payload_sha256 = hashlib.sha256(payload).hexdigest()
-    temporary = None
+    temporary, linked = None, False
     try:
         with tempfile.NamedTemporaryFile(
                 mode='wb', dir=target.parent, prefix=f'.{target.name}.',
@@ -792,12 +840,20 @@ def close_oracle_pair(registration_path, source_job_path, post_job_path,
             stream.write(payload)
             stream.flush()
             os.fsync(stream.fileno())
+        _deadline(deadline)
         os.link(temporary, target)
+        linked = True
+        _deadline(deadline)
         directory = os.open(target.parent, os.O_RDONLY)
         try:
             os.fsync(directory)
         finally:
             os.close(directory)
+        _deadline(deadline)
+    except BaseException:
+        if linked:
+            target.unlink(missing_ok=True)
+        raise
     finally:
         if temporary is not None:
             temporary.unlink(missing_ok=True)
