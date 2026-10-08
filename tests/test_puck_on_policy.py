@@ -944,6 +944,37 @@ class PuckReservationAndMintAdmissionTests(unittest.TestCase):
                 self.assertEqual(victim_reads[0], victim_reads[1])
                 self.assertTrue((root / '.reservation.json.quarantine').is_file())
 
+    def test_publisher_rejects_both_names_rebound_after_exclusive_link(self):
+        on_policy = subject()
+        snapshot = inventory_snapshot()
+        for victim_name in ('reservation.json', 'reservation.json.commit.json'):
+            with self.subTest(victim=victim_name), \
+                    tempfile.TemporaryDirectory() as directory:
+                root = Path(directory).resolve()
+                replacement = root / f'.{victim_name}.replacement'
+                real_link = os.link
+                raced = []
+
+                def link(source, destination, *arguments, **keywords):
+                    result = real_link(source, destination, *arguments, **keywords)
+                    if Path(destination).name == victim_name and not raced:
+                        source_path = root / Path(source)
+                        destination_path = root / Path(destination)
+                        replacement.write_bytes(destination_path.read_bytes())
+                        source_path.unlink()
+                        destination_path.unlink()
+                        real_link(replacement, source_path, follow_symlinks=False)
+                        real_link(source_path, destination_path, follow_symlinks=False)
+                        replacement.unlink()
+                        raced.append(True)
+                    return result
+
+                with patch.object(on_policy.os, 'link', side_effect=link), \
+                        self.assertRaisesRegex(ValueError, 'identity|changed'):
+                    self.reserve(root, snapshot, copy.deepcopy(snapshot))
+                self.assertEqual(raced, [True])
+                self.assertTrue((root / '.reservation.json.quarantine').is_file())
+
     def test_publication_reader_rechecks_blockers_after_final_secure_read(self):
         on_policy = subject()
         with tempfile.TemporaryDirectory() as directory:
