@@ -103,6 +103,23 @@ class NavigationV3ExecutionTests(unittest.TestCase):
             with self.assertRaises(ValueError):
                 owner.admit_manifest(candidate, value["self_sha256"])
 
+    def test_main_accepts_real_python_argv_shape_and_checks_interpreter(self):
+        path, _, value = self.production_manifest()
+        process_argv = value["invocation"]["runner_argv"][1:]
+        arguments = process_argv[1:]
+        with patch.object(sys, "argv", process_argv), \
+                patch.object(sys, "executable", owner.PYTHON), \
+                patch.object(owner, "execute") as execute:
+            owner.main(arguments)
+        execute.assert_called_once_with(path, value["self_sha256"])
+
+        with patch.object(sys, "argv", process_argv), \
+                patch.object(sys, "executable", "/wrong/python"), \
+                patch.object(owner, "execute") as execute, \
+                self.assertRaisesRegex(ValueError, "Runner argv"):
+            owner.main(arguments)
+        execute.assert_not_called()
+
     def test_fresh_reservation_is_durable_and_any_stale_path_consumes_attempt(self):
         with tempfile.TemporaryDirectory() as directory:
             output = Path(directory) / "study"
