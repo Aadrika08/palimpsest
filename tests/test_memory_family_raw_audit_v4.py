@@ -3,6 +3,7 @@ import copy
 import hashlib
 import importlib
 import io
+import math
 import os
 from pathlib import Path
 import subprocess
@@ -13,10 +14,10 @@ import uuid
 import numpy as np
 import pytest
 
-from palimpsest import artifacts, memory, snapshots
+from palimpsest import artifacts, memory, memory_decision as decision, snapshots
 from palimpsest.records import RunWriter
 from scripts import memory_family_oracle_admission_v3 as admission
-from test_memory_family_oracle_v3 import evidence
+from test_memory_family_oracle_v3 import _packet, evidence
 
 
 ROOT = Path(__file__).parents[1]
@@ -157,12 +158,13 @@ def _manifest(audit, case, run_id, operation, condition, source_snapshot_sha256,
     }
 
 
-def _finish(writer, total_ticks, world_state, final_phase='paused'):
+def _finish(writer, total_ticks, world_state, final_phase='paused',
+            last_outcome=None):
     writer.finish({
         'run_id': writer.manifest['run_id'],
         'parent_run_id': writer.manifest.get('parent_run_id'),
         'parent_event_prefix': writer.manifest.get('parent_event_prefix'),
-        'final_phase': final_phase, 'last_outcome': None,
+        'final_phase': final_phase, 'last_outcome': last_outcome,
         'metrics': {'reward': 0.0, 'contact_ticks': 0, 'path_length': 0.0},
         'total_tick': total_ticks, 'close_reason': 'operator_closed',
         'world_state': world_state,
@@ -224,18 +226,43 @@ def _fixture(root, pixel_shift=0, *, natural_failure=False,
         source_application['event_prefix'])
     post_world = copy.deepcopy(sample['post_world_state'])
     final_phase = 'paused'
+    last_outcome = None
     if natural_failure:
         failure_tick = post_world['last_tick'] + 1
+        configured = next(event for event in post_events
+                          if event['kind'] == 'memory_selector_configured')
+        state = decision.configure_selector(
+            source_application['memory'], configured['selector'], configured['u'])
+        state = decision.arm(state, source_application['episode_step'])
+        packets = {event['episode_step']: event['packet'] for event in post_events
+                   if event['kind'] == 'memory_sensed'}
+        for row in sample['post_rows']:
+            state, _, _ = decision.advance_memory(state, packets[row['tick']])
+        supervisor = state['supervisor']
+        unavailable = supervisor['waypoint_ids'][supervisor['waypoint_index']]
+        pose = sample['post_rows'][-1]['next_pose'].copy()
+        pose[2] = math.remainder(pose[2] + math.pi, 2 * math.pi)
+        sample['post_rows'][-1]['next_pose'] = pose
+        packet = _packet(
+            case, pose, failure_tick, event_tick=post_world['event_tick'],
+            gate_result=post_world['gate_result'])
+        post_events.append({
+            'sequence': len(post_events), 'kind': 'memory_sensed',
+            'run_id': condition_id, 'episode': 0,
+            'episode_step': failure_tick, 'tick': failure_tick,
+            'packet': packet,
+        })
+        last_outcome = {
+            'reason': 'runtime_failure', 'episode': 0, 'steps': failure_tick,
+            'type': 'CueUnavailable',
+            'message': 'selected_waypoint_unavailable: ' + unavailable,
+            'policy_diagnostics': None,
+        }
         post_events.append({
             'sequence': len(post_events), 'kind': 'runtime_failure',
             'run_id': condition_id, 'episode': 0,
             'episode_step': failure_tick, 'tick': failure_tick,
-            'error': {
-                'reason': 'runtime_failure', 'episode': 0,
-                'steps': failure_tick, 'type': 'CueUnavailable',
-                'message': 'synthetic retained natural task failure',
-                'policy_diagnostics': None,
-            },
+            'error': copy.deepcopy(last_outcome),
         })
         post_world['last_tick'] = failure_tick
         final_phase = 'failed'
@@ -249,7 +276,8 @@ def _fixture(root, pixel_shift=0, *, natural_failure=False,
         max_bytes=admission.POST_RECORDING_MAX_BYTES)
     _emit_trace(condition_writer, post_events, sample['post_rows'], pixel_shift)
     total_ticks = sample['post_world_state']['last_tick'] + 1
-    _finish(condition_writer, total_ticks, post_world, final_phase)
+    _finish(condition_writer, total_ticks, post_world, final_phase,
+            last_outcome)
     _report(
         condition_run / 'worker-report.json', run_id=condition_id, case=case,
         operation='condition', condition='own',
@@ -406,6 +434,45 @@ def test_retains_a_natural_condition_failure_without_a_replacement(tmp_path):
     assert receipt['terminal_state']['replacement'] is False
 
 
+@pytest.mark.parametrize('defect', [
+    'manifest-outcome', 'error-schema', 'error-message', 'diagnostics',
+    'error-tick', 'progress-after-failure',
+])
+def test_rejects_inexact_sensor_only_natural_failure(tmp_path, defect):
+    audit = _audit()
+    fixture = _fixture(tmp_path / defect, natural_failure=True)
+    request = _request(fixture, 'condition')
+    run = request['run_path']
+    if defect == 'manifest-outcome':
+        path = run / 'recording/manifest.json'
+        manifest = artifacts._json(path.read_bytes())
+        manifest['last_outcome'] = None
+        path.write_text(memory.canonical_bytes(manifest).decode() + '\n')
+    else:
+        def edit(events):
+            failure = next(event for event in events
+                           if event['kind'] == 'runtime_failure')
+            if defect == 'error-schema':
+                failure['error']['undeclared'] = True
+            elif defect == 'error-message':
+                failure['error']['message'] = 'selected_waypoint_unavailable: forged'
+            elif defect == 'diagnostics':
+                failure['error']['policy_diagnostics'] = {'forged': True}
+            elif defect == 'error-tick':
+                failure['error']['steps'] -= 1
+            else:
+                events.append({
+                    'sequence': len(events), 'kind': 'memory_cue',
+                    'run_id': request['run_id'], 'episode': 0,
+                    'episode_step': failure['tick'], 'tick': failure['tick'],
+                    'bearing': [1.0, 0.0],
+                })
+        _rewrite_events(run, edit)
+    with pytest.raises(ValueError):
+        audit.audit_raw_run(**request)
+    assert not _receipt_path(request).exists()
+
+
 def test_direct_file_cli_publishes_the_same_source_contract(tmp_path):
     fixture = _fixture(tmp_path / 'cli', include_source=True)
     request = _request(fixture, 'source')
@@ -480,6 +547,42 @@ def test_rejects_mutated_spliced_or_aliased_raw_tree(tmp_path, defect):
     else:
         (run / 'unexpected.txt').write_text('unregistered\n')
     with pytest.raises((OSError, ValueError)):
+        audit.audit_raw_run(**request)
+    assert not _receipt_path(request).exists()
+
+
+def test_rejects_external_hardlink_to_any_raw_file(tmp_path):
+    audit = _audit()
+    fixture = _fixture(tmp_path / 'fixture')
+    request = _request(fixture, 'condition')
+    chunk = next((request['run_path'] / 'recording/chunks').iterdir())
+    os.link(chunk, tmp_path / 'outside-run.npz')
+    with pytest.raises(ValueError):
+        audit.audit_raw_run(**request)
+    assert not _receipt_path(request).exists()
+
+
+def test_rejects_undeclared_policy_sensor_even_when_hash_is_rebound(tmp_path):
+    audit = _audit()
+    fixture = _fixture(tmp_path)
+    request = _request(fixture, 'condition')
+    run = request['run_path']
+    chunk = next((run / 'recording/chunks').iterdir())
+    with np.load(chunk, allow_pickle=False) as archive:
+        left = archive['cam_left'][0].copy()
+        right = archive['cam_right'][0].copy()
+
+    def edit(events):
+        call = next(event for event in events
+                    if event['kind'] == 'neural_policy_call')
+        call['sensors']['undeclared'] = 0.0
+        call['observation_sha256'] = snapshots.state_digest({
+            'cam_left': left, 'cam_right': right,
+            'sensors': call['sensors'],
+        })
+
+    _rewrite_events(run, edit)
+    with pytest.raises(ValueError):
         audit.audit_raw_run(**request)
     assert not _receipt_path(request).exists()
 
@@ -598,6 +701,61 @@ def test_rejects_invalid_or_expired_deadlines_before_read(tmp_path):
         with pytest.raises(ValueError):
             audit.deadline_from_seconds(seconds)
     assert audit.deadline_from_seconds(300) > time.monotonic()
+    assert not _receipt_path(request).exists()
+
+
+@pytest.mark.parametrize('entry', ['audit', 'validate'])
+def test_public_entry_rejects_absolute_deadline_beyond_300_seconds(
+        tmp_path, entry):
+    audit = _audit()
+    fixture = _fixture(tmp_path)
+    request = _request(fixture, 'condition')
+    if entry == 'validate':
+        audit.audit_raw_run(**request)
+        function = audit.validate_raw_receipt
+    else:
+        function = audit.audit_raw_run
+    with pytest.raises(ValueError, match='300'):
+        function(**{**request, 'deadline': time.monotonic() + 301})
+
+
+@pytest.mark.parametrize('oversized', [
+    'recording', 'events', 'report', 'snapshot',
+])
+def test_rejects_size_caps_before_hashing_oversized_file(
+        tmp_path, monkeypatch, oversized):
+    audit = _audit()
+    fixture = _fixture(
+        tmp_path / oversized, include_source=oversized == 'snapshot')
+    part = 'source' if oversized == 'snapshot' else 'condition'
+    request = _request(fixture, part)
+    run = request['run_path']
+    limits = audit.RAW_LIMITS[part]
+    if oversized == 'recording':
+        path = next((run / 'recording/chunks').iterdir())
+        maximum = limits['recording_max_bytes']
+    elif oversized == 'events':
+        path = run / 'recording/events.jsonl'
+        maximum = limits['events_max_bytes']
+    elif oversized == 'report':
+        path = run / 'worker-report.json'
+        maximum = limits['report_max_bytes']
+    else:
+        path = run / 'snapshots/initial.snp'
+        maximum = limits['snapshot_max_bytes']
+    path.write_bytes(b'')
+    with path.open('r+b') as stream:
+        stream.truncate(maximum + 1)
+    original = audit._hash_file
+
+    def reject_hash(target, *args, **kwargs):
+        if Path(target) == path:
+            raise AssertionError('oversized raw file was hashed before rejection')
+        return original(target, *args, **kwargs)
+
+    monkeypatch.setattr(audit, '_hash_file', reject_hash)
+    with pytest.raises(ValueError):
+        audit.audit_raw_run(**request)
     assert not _receipt_path(request).exists()
 
 
