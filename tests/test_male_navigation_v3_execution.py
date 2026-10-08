@@ -1,13 +1,16 @@
 """Synthetic trust-boundary tests for the one-shot navigation-v3 training owner."""
 import copy
+import contextlib
 import hashlib
 import importlib
 import json
 import os
 from pathlib import Path
 import signal
+import subprocess
 import sys
 import tempfile
+import time
 import unittest
 from unittest.mock import patch
 
@@ -63,9 +66,13 @@ class NavigationV3ExecutionTests(unittest.TestCase):
         self.assertEqual(admitted["invocation"]["cwd"], str(ROOT))
         self.assertEqual(admitted["invocation"]["runner_argv"][-1],
                          admitted["self_sha256"])
-        self.assertEqual(admitted["invocation"]["outer_argv"][:5], [
-            "/usr/bin/timeout", "--signal=TERM", "--kill-after=10s", "2150s",
-            "/usr/bin/env"])
+        self.assertEqual(admitted["invocation"]["outer_argv"][:11], [
+            "/usr/bin/systemd-run", "--user", "--wait", "--collect",
+            "--unit=palimpsest-m7-navigation-v3-matched-budget-v1",
+            "--property=Type=exec", "--property=KillMode=control-group",
+            "--property=RuntimeMaxSec=2150s", "--property=TimeoutStopSec=10s",
+            "--property=SendSIGKILL=yes", "--property=TimeoutStopFailureMode=kill"])
+        self.assertEqual(admitted["invocation"]["outer_argv"][11], "/usr/bin/env")
         self.assertEqual(admitted["invocation"]["environment"], owner.EXACT_ENVIRONMENT)
         self.assertEqual(admitted["immutable_inputs"], owner.protocol()["immutable_inputs"])
         self.assertEqual(admitted["data_manifest_sha256"], owner.DATA_SHA)
@@ -233,16 +240,21 @@ class NavigationV3ExecutionTests(unittest.TestCase):
         self.assertEqual([number for _, number in sent], [signal.SIGTERM, signal.SIGKILL])
         self.assertIn((51, 101), result["known"])
 
-    def test_spawn_blocks_external_term_until_pid_start_and_group_are_owned(self):
+    def test_spawn_defers_external_term_until_pid_start_and_group_are_owned(self):
         events = []
-        process = type("Process", (), {"pid": 50})()
+        process = type("Process", (), {"pid": 50, "poll": lambda self: None})()
+        prior = {signal.SIGINT: object(), signal.SIGTERM: object()}
+        handlers = dict(prior)
 
-        def mask(operation, values):
-            events.append(("mask", operation, set(values)))
-            return {signal.SIGUSR1}
+        def install(number, handler):
+            previous = handlers[number]
+            handlers[number] = handler
+            events.append(("handler", number, handler))
+            return previous
 
         def popen(*args, **kwargs):
             events.append(("popen", kwargs["start_new_session"]))
+            handlers[signal.SIGTERM](signal.SIGTERM, None)
             return process
 
         def identity(pid):
@@ -250,16 +262,48 @@ class NavigationV3ExecutionTests(unittest.TestCase):
             return {"pid": 50, "ppid": os.getpid(), "group": 50,
                     "start_ticks": 100, "argv": ["trainer"], "command": "trainer"}
 
-        result, owned, previous = owner.spawn_contained(
-            ["trainer"], ROOT, {}, None, None, popen=popen,
-            identity_reader=identity, mask=mask)
-        self.assertIs(result, process)
-        self.assertEqual(owned["start_ticks"], 100)
-        self.assertEqual([row[0] for row in events], ["mask", "popen", "identity"])
-        owner.restore_signal_mask(previous, mask=mask)
-        self.assertEqual([row[0] for row in events], ["mask", "popen", "identity", "mask"])
-        self.assertEqual(events[0][1], signal.SIG_BLOCK)
-        self.assertEqual(events[-1][1], signal.SIG_SETMASK)
+        cleaned = []
+        with self.assertRaises(InterruptedError):
+            owner.spawn_contained(
+                ["trainer"], ROOT, {}, None, None, popen=popen,
+                identity_reader=identity, install_handler=install,
+                cleanup=lambda group: cleaned.append(group))
+        self.assertEqual(cleaned, [50])
+        self.assertIs(handlers[signal.SIGINT], prior[signal.SIGINT])
+        self.assertIs(handlers[signal.SIGTERM], prior[signal.SIGTERM])
+        self.assertEqual([row[0] for row in events[:4]],
+                         ["handler", "handler", "popen", "identity"])
+
+    def test_spawned_exec_has_unblocked_term_without_preexec_in_threads(self):
+        command = [owner.PYTHON, "-c",
+                   "import signal,time; print(int(signal.SIGTERM in "
+                   "signal.pthread_sigmask(signal.SIG_BLOCK, set())), flush=True); time.sleep(.2)"]
+        process, identity = owner.spawn_contained(
+            command, ROOT, dict(os.environ), subprocess.PIPE, subprocess.PIPE)
+        stdout, stderr = process.communicate(timeout=3)
+        self.assertEqual(process.returncode, 0, stderr.decode(errors="replace"))
+        self.assertEqual(stdout.strip(), b"0")
+        self.assertEqual(identity["group"], process.pid)
+
+    def test_leader_exit_before_identity_drains_forked_group_before_error(self):
+        command = [owner.PYTHON, "-c",
+                   "import os,time; child=os.fork(); os._exit(0) if child else time.sleep(30)"]
+        created = []
+        def popen(*args, **kwargs):
+            process = subprocess.Popen(*args, **kwargs)
+            created.append(process)
+            return process
+        try:
+            with self.assertRaises(ValueError):
+                owner.spawn_contained(
+                    command, ROOT, dict(os.environ), subprocess.DEVNULL,
+                    subprocess.DEVNULL, popen=popen, identity_reader=lambda pid: None)
+            self.assertEqual(len(created), 1)
+            self.assertEqual(owner.process_group_members(created[0].pid), [])
+        finally:
+            if created:
+                with contextlib.suppress(ProcessLookupError):
+                    os.killpg(created[0].pid, signal.SIGKILL)
 
     def test_execute_reserves_before_child_and_retains_crash_without_retry(self):
         with tempfile.TemporaryDirectory() as directory:
