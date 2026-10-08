@@ -109,13 +109,13 @@ and [`memory-family-oracle-admission-v3.md`](memory-family-oracle-admission-v3.m
   `validate_registration`, `make_job`, `validate_job`, and
   `close_oracle_pair`; envelope and owner/supervisor checks remain private.
 
-- [ ] **Step 1: Extend only the reusable fixture inputs**
+- [x] **Step 1: Extend only the reusable fixture inputs**
 
   Add keyword-only `protocol_sha256` and `source_identity_sha256` parameters to
   `_pair`, retaining the existing `'4' * 64` and `'6' * 64` defaults. Use those
   values when writing each admission envelope and in the returned descriptor.
 
-- [ ] **Step 2: Write the exact registration test**
+- [x] **Step 2: Write the exact registration test**
 
   Build one canonical development plan for block zero, a two-relation history
   map, an empty strict namespace inventory, and 1,440 deterministic UUIDs. Assert
@@ -123,14 +123,14 @@ and [`memory-family-oracle-admission-v3.md`](memory-family-oracle-admission-v3.m
   bindings, authored-ID inventory digest, zero-allocation flags, and absence of
   output/control directory creation.
 
-- [ ] **Step 3: Write strict tamper tests**
+- [x] **Step 3: Write strict tamper tests**
 
   Parametrize duplicate and historical UUIDs, a changed case hash, held-out or
   multi-block plan, unknown condition, changed input bytes, overlapping roots,
   malformed namespace entries, and altered fixed resource totals. Each must
   raise `ValueError` without creating evidence.
 
-- [ ] **Step 4: Write job and envelope tests**
+- [x] **Step 4: Write job and envelope tests**
 
   Assert that source and `own` descriptors use their registered UUID/path, exact
   regenerated case, correct relation history, source snapshot binding, and exact
@@ -138,7 +138,7 @@ and [`memory-family-oracle-admission-v3.md`](memory-family-oracle-admission-v3.m
   path/hash, stale registration bytes, any other condition, and any attempt to
   treat the descriptor as an allocation grant.
 
-- [ ] **Step 5: Write owner and close tests**
+- [x] **Step 5: Write owner and close tests**
 
   Reuse `_pair` for one block-zero row-four change pair. Write exact job and owner
   and normal supervision files plus one two-row cleanup receipt, patch only the
@@ -148,7 +148,7 @@ and [`memory-family-oracle-admission-v3.md`](memory-family-oracle-admission-v3.m
   owner, failed supervisor, missing manifest binding, second close, and an input
   mutation during admission; no rejected close may publish a receipt.
 
-- [ ] **Step 6: Run the focused tests and confirm the expected import failure**
+- [x] **Step 6: Run the focused tests and confirm the expected import failure**
 
   Run `python -m pytest -q tests/test_memory_family_producer_v3.py` and confirm it
   fails because `scripts.memory_family_producer_v3` does not exist. Commit the
@@ -176,13 +176,13 @@ and [`memory-family-oracle-admission-v3.md`](memory-family-oracle-admission-v3.m
   the real oracle admission, rechecks its full ledger, and exclusively writes and
   returns the derived close descriptor.
 
-- [ ] **Step 1: Add strict bounded primitives**
+- [x] **Step 1: Add strict bounded primitives**
 
   Reuse `artifacts._safe_path`, `_read`, and `_json`; use canonical SHA-256,
   canonical UUID hex, finite monotonic deadlines, fixed field sets, fixed-size
   JSON reads, and `open('xb')`. Do not add a dependency or a CLI.
 
-- [ ] **Step 2: Regenerate and validate the complete matrix**
+- [x] **Step 2: Regenerate and validate the complete matrix**
 
   Call `build_slots('development', [block], plan['prerequisites'])`, regenerate
   all cases, prove only the intentional family ID is shared among twins, derive
@@ -190,14 +190,14 @@ and [`memory-family-oracle-admission-v3.md`](memory-family-oracle-admission-v3.m
   source-then-nine-condition order, and reject intersections with the supplied
   historical inventory.
 
-- [ ] **Step 3: Bind fixed inputs and resources**
+- [x] **Step 3: Bind fixed inputs and resources**
 
   Require the plan file to equal the regenerated canonical plan. Bind the
   protocol and source identity by canonical digest, both relation histories by
   safe path and file digest, the strict namespace inventory, non-overlapping
   roots, critical dependency file digests, and the literal resource projection.
 
-- [ ] **Step 4: Derive exact jobs and admission envelopes**
+- [x] **Step 4: Derive exact jobs and admission envelopes**
 
   Recover a case and slot only from the registration. A source has null source
   fields; the `own` descriptor has the exact registered source run plus
@@ -206,7 +206,7 @@ and [`memory-family-oracle-admission-v3.md`](memory-family-oracle-admission-v3.m
   envelope privately rather than accepting an inline copy. Mark every descriptor
   `non-executable-contract` and reject every condition except `own` in this unit.
 
-- [ ] **Step 5: Validate independent owner cleanup**
+- [x] **Step 5: Validate independent owner cleanup**
 
   Require exact owner fields for schema, run ID, PID/start time/PGID, PID namespace,
   registration hash and job hash; positive integers; `pid == pgid`; exact cleanup
@@ -215,7 +215,7 @@ and [`memory-family-oracle-admission-v3.md`](memory-family-oracle-admission-v3.m
   `completed`, return code zero, its registered timeout, finite elapsed time within
   the cap, and stdout/stderr files within 1 MiB. Never signal or clean a process.
 
-- [ ] **Step 6: Publish one hash-sealed close**
+- [x] **Step 6: Publish one hash-sealed close**
 
   Require exact job file locations and one ordered two-row cleanup receipt.
   Require each raw manifest's producer binding to equal the registration, job and
@@ -226,7 +226,7 @@ and [`memory-family-oracle-admission-v3.md`](memory-family-oracle-admission-v3.m
   `contract-pair-validated`, `study_complete:false`, empty claims, and the
   software-only scope. Return its path and SHA-256.
 
-- [ ] **Step 7: Run focused tests and commit**
+- [x] **Step 7: Run focused tests and commit**
 
   Run `python -m pytest -q tests/test_memory_family_producer_v3.py
   tests/test_memory_family_oracle_admission_v3.py` and commit only after all
@@ -243,20 +243,20 @@ and [`memory-family-oracle-admission-v3.md`](memory-family-oracle-admission-v3.m
 - Produces: a human report and machine-readable verification record; neither is
   a native registration, allocation, or scientific result.
 
-- [ ] **Step 1: Run focused and affected verification**
+- [x] **Step 1: Run focused and affected verification**
 
   Run the producer/admission/oracle/family/slot/snapshot tests, compile the
   changed Python files, and run `git diff --check`. Record exact commands,
   pass/skip/failure counts, durations, commit, and file hashes.
 
-- [ ] **Step 2: Review the trust boundaries**
+- [x] **Step 2: Review the trust boundaries**
 
   Independently inspect registration regeneration, namespace collision checks,
   source/post linkage, manifest provenance, PID namespace, supervision, read-time
   drift, exclusive close, and any route by which model/runtime work could start.
   Fix material findings and rerun only the affected checks.
 
-- [ ] **Step 3: Write and commit the report**
+- [x] **Step 3: Write and commit the report**
 
   State that tests use synthetic recordings; no block was selected, registered,
   allocated, or run. Record the 558,955,618,304-byte current capacity shortfall
