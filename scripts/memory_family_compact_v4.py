@@ -10,6 +10,7 @@ import copy
 import hashlib
 import io
 from pathlib import Path, PurePosixPath
+import re
 import uuid
 import zipfile
 
@@ -70,6 +71,9 @@ FRAME_FIELDS = {
     'raw_cam_left': ('|u1', (128, 128, 3)),
     'raw_cam_right': ('|u1', (128, 128, 3)),
 }
+_PATH_COMPONENT = re.compile(r'[A-Za-z0-9][A-Za-z0-9._-]*\Z')
+_SNAPSHOT_FILE = re.compile(r'[A-Za-z0-9][A-Za-z0-9._-]*\.snp\Z')
+SNAPSHOT_MAX_BYTES = 16 * MiB
 
 
 def _fields(value, expected, label):
@@ -98,7 +102,10 @@ def _relative(value, label):
     if type(value) is not str or not value or '\\' in value:
         raise ValueError(f'Invalid relative {label}')
     path = PurePosixPath(value)
-    if path.is_absolute() or '..' in path.parts or path.as_posix() != value:
+    if (path.is_absolute() or not path.parts
+            or any(part in ('.', '..') or not _PATH_COMPONENT.fullmatch(part)
+                   for part in path.parts)
+            or path.as_posix() != value):
         raise ValueError(f'Invalid relative {label}')
     return value
 
@@ -115,6 +122,10 @@ def _descriptor(path, payload):
 
 def _check_descriptor(value, path, payload):
     _fields(value, DESCRIPTOR_FIELDS, 'Payload descriptor')
+    if (type(value['path']) is not str
+            or type(value['size_bytes']) is not int or value['size_bytes'] < 0):
+        raise ValueError('Invalid compact payload descriptor')
+    _digest(value['sha256'], 'payload SHA-256')
     if value != _descriptor(path, payload):
         raise ValueError('Compact payload descriptor differs')
 
@@ -218,6 +229,23 @@ def behavior_source_identities(repo_root):
     return result
 
 
+def validate_read_limits(operation, *, row_count, total_bytes, overhead_bytes):
+    """Enforce the frozen per-operation row, recording, and overhead ceilings."""
+    if operation not in ('source', 'condition'):
+        raise ValueError('Unknown compact operation')
+    for name, value in (
+        ('row_count', row_count), ('total_bytes', total_bytes),
+        ('overhead_bytes', overhead_bytes),
+    ):
+        if type(value) is not int or value < 0:
+            raise ValueError(f'Invalid compact {name}')
+    limits = PROTOCOL['recordings'][operation]
+    if (not 1 <= row_count <= limits['max_rows']
+            or total_bytes > limits['ceiling_bytes']
+            or overhead_bytes > limits['container_overhead_max_bytes']):
+        raise ValueError('Compact recording exceeds frozen read limits')
+
+
 def audit_ticks(ticks, *, event_tick=None, decision_tick=None):
     """Return the frozen ordered audit union for one contiguous interval."""
     values = list(ticks)
@@ -248,6 +276,9 @@ def _legacy_manifest(payload, run_id):
             or value.get('recording_format') != 'palimpsest-npz-v1'
             or value.get('status') != 'completed'):
         raise ValueError('Legacy manifest identity or terminal state differs')
+    for name in ('recorded_ticks', 'recorded_chunks', 'recorded_events'):
+        if type(value.get(name)) is not int or value[name] < 0:
+            raise ValueError('Invalid legacy terminal count')
     return value
 
 
@@ -261,9 +292,12 @@ def _legacy_events(payload, operation):
         if not line or len(line) > MiB:
             raise ValueError('Invalid legacy event line')
         event = artifacts._json(line)
-        if (type(event) is not dict or event.get('sequence') != sequence
+        if (type(event) is not dict or type(event.get('sequence')) is not int
+                or event['sequence'] != sequence
                 or type(event.get('kind')) is not str or not event['kind']):
             raise ValueError('Invalid legacy event sequence')
+        if event['kind'] == 'eyes_changed':
+            raise ValueError('Family compact evidence forbids eyes_changed events')
         if event['kind'] == 'chunk':
             _fields(event, {
                 'sequence', 'kind', 'path', 'sha256', 'episode', 'start',
@@ -271,8 +305,9 @@ def _legacy_events(payload, operation):
             }, 'Legacy chunk event')
             _relative(event['path'], 'legacy chunk path')
             _digest(event['sha256'], 'legacy chunk SHA-256')
-            if (event['episode'] != 0 or type(event['start']) is not int
-                    or event['start'] < 0 or type(event['count']) is not int
+            if (type(event['episode']) is not int or event['episode'] != 0
+                    or type(event['start']) is not int or event['start'] < 0
+                    or type(event['count']) is not int
                     or not 1 <= event['count'] <= CHUNK_ROWS
                     or type(event['arrays']) is not dict or not event['arrays']):
                 raise ValueError('Invalid legacy chunk mapping')
@@ -280,7 +315,7 @@ def _legacy_events(payload, operation):
     return result
 
 
-def _snapshot(value, operation, run_id):
+def _snapshot(value, operation, run_id, case_id):
     _fields(value, SNAPSHOT_FIELDS, 'Snapshot reference')
     expected_kind = 'source' if operation == 'source' else 'shared-source'
     if value['kind'] != expected_kind:
@@ -293,8 +328,14 @@ def _snapshot(value, operation, run_id):
         _digest(value['source_receipt_sha256'], 'source receipt SHA-256')
         if value['source_run_id'] == run_id:
             raise ValueError('Condition snapshot must reference the source run')
-    _relative(value['path'], 'snapshot path')
-    if type(value['size_bytes']) is not int or value['size_bytes'] <= 0:
+    path = PurePosixPath(_relative(value['path'], 'snapshot path'))
+    if (not _PATH_COMPONENT.fullmatch(case_id)
+            or len(path.parts) != 5
+            or path.parts[:4] != ('cases', case_id, 'source', 'snapshots')
+            or not _SNAPSHOT_FILE.fullmatch(path.name)):
+        raise ValueError('Snapshot path differs from its case/source identity')
+    if (type(value['size_bytes']) is not int
+            or not 1 <= value['size_bytes'] <= SNAPSHOT_MAX_BYTES):
         raise ValueError('Invalid snapshot size')
     _digest(value['sha256'], 'snapshot SHA-256')
     return copy.deepcopy(value)
@@ -407,7 +448,7 @@ def convert_synthetic(*, run_id, case_id, operation, condition, rows,
     expected_chunks = (len(rows) + CHUNK_ROWS - 1) // CHUNK_ROWS
     if len(chunks) != expected_chunks:
         raise ValueError('Legacy chunk count differs from compact partition')
-    snapshot_reference = _snapshot(snapshot_reference, operation, run_id)
+    snapshot_reference = _snapshot(snapshot_reference, operation, run_id, case_id)
     snapshot_event_prefix = _prefix(snapshot_event_prefix, legacy_events_bytes)
     if (operation == 'source') != (snapshot_event_prefix is not None):
         raise ValueError('Only a source binds its snapshot event prefix')
@@ -427,6 +468,8 @@ def convert_synthetic(*, run_id, case_id, operation, condition, rows,
         values = {name: np.stack([row[name] for row in compact_rows[cursor:cursor + count]])
                   for name in schema}
         path = f'chunks/{index:06d}.npz'
+        if legacy['path'] != path:
+            raise ValueError('Legacy chunk path differs from compact partition')
         payload = _npz(values)
         payloads[path] = payload
         index_rows.append({
@@ -505,6 +548,18 @@ def _read_manifest(bundle):
         raise ValueError('Compact manifest contract differs')
     _run_id(manifest['run_id'])
     memory._id(manifest['case_id'])
+    for name in ('row_count', 'chunk_count', 'event_count',
+                 'first_tick', 'last_tick'):
+        if type(manifest[name]) is not int:
+            raise ValueError('Compact manifest counts must be integers')
+    if (manifest['row_count'] < 1 or manifest['chunk_count'] < 1
+            or manifest['event_count'] < manifest['chunk_count']
+            or manifest['first_tick'] < 0
+            or manifest['last_tick'] - manifest['first_tick'] + 1
+            != manifest['row_count']
+            or manifest['chunk_count']
+            != (manifest['row_count'] + CHUNK_ROWS - 1) // CHUNK_ROWS):
+        raise ValueError('Invalid compact manifest counts')
     return manifest
 
 
@@ -520,6 +575,10 @@ def read_compact(bundle):
             or (operation == 'condition'
                 and manifest['condition'] not in PROTOCOL['analysis_contract']['conditions'])):
         raise ValueError('Compact condition differs from operation')
+    total_bytes = sum(len(payload) for payload in bundle.values())
+    validate_read_limits(
+        operation, row_count=manifest['row_count'], total_bytes=total_bytes,
+        overhead_bytes=0)
     for name, path in (
         ('legacy_manifest', 'legacy-manifest.json'),
         ('legacy_events', 'legacy-events.jsonl'),
@@ -543,6 +602,9 @@ def read_compact(bundle):
     if index['schema'] != 'memory-family-compact-chunk-index-v1' \
             or type(index['chunks']) is not list:
         raise ValueError('Invalid compact chunk index')
+    if (len(index['chunks']) != manifest['chunk_count']
+            or len(legacy_chunks) != manifest['chunk_count']):
+        raise ValueError('Compact chunk ledgers are not bijective')
     expected_paths = {
         'manifest.json', 'legacy-manifest.json', 'legacy-events.jsonl',
         'chunk-index.json', 'audit-frames.npz',
@@ -553,15 +615,20 @@ def read_compact(bundle):
     schema = _row_schema()
     rows = []
     cursor = manifest['first_tick']
+    overhead_bytes = sum(len(bundle[path]) for path in (
+        'manifest.json', 'legacy-manifest.json', 'chunk-index.json'))
     for position, (entry, legacy) in enumerate(zip(index['chunks'], legacy_chunks)):
         _fields(entry, INDEX_ENTRY_FIELDS, 'Compact chunk entry')
         path = f'chunks/{position:06d}.npz'
         expected_count = min(CHUNK_ROWS, manifest['row_count'] - len(rows))
+        for name in ('index', 'episode', 'start', 'count', 'legacy_sequence'):
+            if type(entry[name]) is not int:
+                raise ValueError('Compact chunk scalars must be integers')
         if (entry['index'] != position or entry['path'] != path
                 or entry['episode'] != 0 or entry['start'] != cursor
                 or entry['count'] != expected_count or entry['arrays'] != schema
                 or entry['legacy_sequence'] != legacy['sequence']
-                or entry['legacy_path'] != legacy['path']
+                or legacy['path'] != path or entry['legacy_path'] != legacy['path']
                 or entry['legacy_sha256'] != legacy['sha256']
                 or hashlib.sha256(bundle[path]).hexdigest() != entry['sha256']):
             raise ValueError('Compact chunk mapping differs')
@@ -571,6 +638,8 @@ def read_compact(bundle):
              for name, description in schema.items()},
             entry['count'], 'compact chunk',
         )
+        overhead_bytes += len(bundle[path]) - sum(
+            value.nbytes for value in arrays.values())
         for offset in range(entry['count']):
             rows.append({'episode': 0, 'tick': cursor + offset,
                          **{name: value[offset].copy()
@@ -580,6 +649,13 @@ def read_compact(bundle):
             or rows[0]['tick'] != manifest['first_tick']
             or rows[-1]['tick'] != manifest['last_tick']):
         raise ValueError('Compact row interval differs')
+    for row in rows:
+        if (row['eyes'].tolist() != [True, True]
+                or not np.array_equal(
+                    row['cam_left_sha256'], row['raw_cam_left_sha256'])
+                or not np.array_equal(
+                    row['cam_right_sha256'], row['raw_cam_right_sha256'])):
+            raise ValueError('Compact all-row eye commitment differs')
 
     schedule = manifest['audit_schedule']
     _fields(schedule, {'event_tick', 'decision_tick'}, 'Audit schedule')
@@ -589,6 +665,8 @@ def read_compact(bundle):
     )
     frame_arrays = _read_npz(
         bundle['audit-frames.npz'], FRAME_FIELDS, len(selected), 'audit frame')
+    overhead_bytes += len(bundle['audit-frames.npz']) - sum(
+        frame_arrays[name].nbytes for name in ('raw_cam_left', 'raw_cam_right'))
     if frame_arrays['tick'].tolist() != list(selected):
         raise ValueError('Audit frame ticks differ from frozen selection')
     by_tick = {row['tick']: row for row in rows}
@@ -620,14 +698,15 @@ def read_compact(bundle):
                  'camera_sequence_sha256', 'row_sequence_sha256', 'trace_digest'):
         _digest(manifest[name], name)
     snapshot_reference = _snapshot(
-        manifest['snapshot_reference'], operation, manifest['run_id'])
+        manifest['snapshot_reference'], operation, manifest['run_id'],
+        manifest['case_id'])
     snapshot_event_prefix = _prefix(
         manifest['snapshot_event_prefix'], bundle['legacy-events.jsonl'])
     if (operation == 'source') != (snapshot_event_prefix is not None):
         raise ValueError('Compact snapshot event prefix differs')
-    ceiling = PROTOCOL['recordings'][operation]['ceiling_bytes']
-    if sum(len(payload) for payload in bundle.values()) > ceiling:
-        raise ValueError('Compact bundle exceeds recording ceiling')
+    validate_read_limits(
+        operation, row_count=manifest['row_count'], total_bytes=total_bytes,
+        overhead_bytes=overhead_bytes)
     return {
         'manifest': copy.deepcopy(manifest),
         'legacy_manifest_bytes': bundle['legacy-manifest.json'],
