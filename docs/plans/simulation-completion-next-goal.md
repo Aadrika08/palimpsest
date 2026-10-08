@@ -252,3 +252,37 @@ null-harm margins, interval estimator and stopping rules; resolve storage and
 the complete historical inventory; then implement a separately hash-bound
 launcher/allocation registration. R2 and all seven release-level gates remain
 open. Main, CI and the physical rover remain unchanged.
+
+### Family prospective analysis contract verified, 8 October 2026
+
+[PR #101](https://github.com/Aadrika08/palimpsest/pull/101), stacked on #100,
+freezes the complete prospective family analysis before any development outcome
+or selected held-out block is opened. It regenerates and authenticates the 48
+family identities, 16/16/16 cost strata and full 1,440-owner logical order;
+recomputes the complete 1,296-cell descriptive readout; and implements the two
+97.5% blocked primary intervals, two one-sided null-cost guards, zero-event
+success guards, exact no-event invariant, fixed development precision screen and
+held-out decision table. Acquisition-phase failures are now unscored stops rather
+than capped natural failures. Producer registration semantically binds the exact
+protocol, regenerated design and analyzer source.
+
+The final analysis/readout and producer commands passed 53 and 35 tests. The
+affected family/oracle/snapshot/artifact/replay slice passed 221 tests with 7
+skips and 4 optional-upstream deselections. Three independent implementation
+reviews found six material disclosure, trust-boundary and compatibility issues;
+all were fixed, and final scoped review found no remaining issue. The repository
+[verification report](../reports/memory-family-analysis-v3.md) records exact
+commands, hashes and limits. CI remained excluded.
+
+This does not close R2. The intervals explicitly assume approximate normality of
+bounded family contrasts and independence across 48 generated families within
+fixed strata; IDs and hashes do not prove either assumption or generalization.
+No development family was collected and no held-out block was selected. Current
+free space is 68,743,004,160 bytes against the 627,836,977,152-byte known
+subtotal, a 559,093,972,992-byte shortfall before still-unbounded overhead.
+Historical namespace completeness, a hash-bound launcher/allocation
+registration, real upstream receipts and native source/profile/snapshot/sensing
+qualification also remain open. Memory allocation is therefore still
+inadmissible; continue other simulation-release lanes while those prerequisites
+are resolved. All seven release-level gates remain open. Main, CI and the
+physical rover remain unchanged.
