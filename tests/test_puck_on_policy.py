@@ -1328,6 +1328,24 @@ class PuckReservationAndMintAdmissionTests(unittest.TestCase):
                 with self.assertRaises(ValueError):
                     on_policy._read_published_reservation(target)
 
+    def test_admission_identity_rejects_json_numeric_type_aliases(self):
+        on_policy = subject()
+        for alias in (True, 1.0):
+            with self.subTest(alias=alias), tempfile.TemporaryDirectory() as directory:
+                root = Path(directory).resolve()
+                result = self.reserve(root)
+                target = Path(result['manifest_path'])
+                paths = on_policy._publication_paths(root, target.name)
+                admission = json.loads(paths['admission'].read_bytes())
+                self.assertEqual(admission['manifest_identity'][3], 1)
+                admission['manifest_identity'][3] = alias
+                paths['admission'].unlink()
+                paths['admission_anchor'].unlink()
+                paths['admission_anchor'].write_bytes(canonical_bytes(admission))
+                os.link(paths['admission_anchor'], paths['admission'])
+                with self.assertRaises(ValueError):
+                    on_policy._read_published_reservation(target)
+
     def test_compounded_postcommit_failure_never_exposes_false_success(self):
         on_policy = subject()
         snapshot = inventory_snapshot()
