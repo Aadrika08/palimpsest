@@ -1,0 +1,19 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+___________ test_unregistered_or_rewritten_consumed_identity_refused ___________
+
+tmp_path = PosixPath('/tmp/pytest-of-utkarsh/pytest-55/test_unregistered_or_rewritten0')
+
+    def test_unregistered_or_rewritten_consumed_identity_refused(tmp_path):
+        path = tmp_path/'record'; path.write_bytes(b'a')
+        row = {'path': str(path), 'bytes': 1, 'sha256': hashlib.sha256(b'a').hexdigest()}
+        module = diagnostic()
+>       assert hasattr(module, 'require_registered'), 'consumed files must bind to registration and original inventory'
+E       AssertionError: consumed files must bind to registration and original inventory
+E       assert False
+E        +  where False = hasattr(<module 'scripts.memory_terminal_attribution' from '/home/utkarsh/Work/shraddha/brain/.worktrees/simulation-completion-next/scripts/memory_terminal_attribution.py'>, 'require_registered')
+
+tests/test_memory_terminal_attribution.py:108: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_memory_terminal_attribution.py::test_unregistered_or_rewritten_consumed_identity_refused
+1 failed in 0.04s

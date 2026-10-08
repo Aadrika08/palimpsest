@@ -1,0 +1,117 @@
+FFFFFF                                                                   [100%]
+=================================== FAILURES ===================================
+____ test_registration_identity_covers_exact_parsed_bytes_and_later_change _____
+
+tmp_path = PosixPath('/tmp/pytest-of-utkarsh/pytest-57/test_registration_identity_cov0')
+
+    def test_registration_identity_covers_exact_parsed_bytes_and_later_change(tmp_path):
+        module = diagnostic()
+>       assert hasattr(module, 'verify_registration'), 'registration needs a separate immutable identity'
+E       AssertionError: registration needs a separate immutable identity
+E       assert False
+E        +  where False = hasattr(<module 'scripts.memory_terminal_attribution' from '/home/utkarsh/Work/shraddha/brain/.worktrees/simulation-completion-next/scripts/memory_terminal_attribution.py'>, 'verify_registration')
+
+tests/test_memory_terminal_attribution.py:118: AssertionError
+_ test_completed_controls_require_one_visible_bridge_and_terminal_requires_none[missing] _
+
+problem = 'missing'
+
+    @pytest.mark.parametrize('problem', ['missing', 'duplicate', 'terminal', 'invisible'])
+    def test_completed_controls_require_one_visible_bridge_and_terminal_requires_none(problem):
+        case, rows, events, target = terminal_fixture()
+        if problem == 'missing':
+            events.pop(1)
+        elif problem == 'duplicate':
+            events.insert(1, copy.deepcopy(events[1]))
+        elif problem == 'terminal':
+            events.append({'kind': 'memory_decision', 'episode_step': 10,
+                           'detail': {'kind': 'memory_bridge', 'tick': 10, 'landmark_id': target}})
+        else:
+            events[1]['detail']['landmark_id'] = 'missing-landmark'
+>       with pytest.raises(ValueError, match='bridge'):
+E       Failed: DID NOT RAISE <class 'ValueError'>
+
+tests/test_memory_terminal_attribution.py:140: Failed
+_ test_completed_controls_require_one_visible_bridge_and_terminal_requires_none[duplicate] _
+
+problem = 'duplicate'
+
+    @pytest.mark.parametrize('problem', ['missing', 'duplicate', 'terminal', 'invisible'])
+    def test_completed_controls_require_one_visible_bridge_and_terminal_requires_none(problem):
+        case, rows, events, target = terminal_fixture()
+        if problem == 'missing':
+            events.pop(1)
+        elif problem == 'duplicate':
+            events.insert(1, copy.deepcopy(events[1]))
+        elif problem == 'terminal':
+            events.append({'kind': 'memory_decision', 'episode_step': 10,
+                           'detail': {'kind': 'memory_bridge', 'tick': 10, 'landmark_id': target}})
+        else:
+            events[1]['detail']['landmark_id'] = 'missing-landmark'
+>       with pytest.raises(ValueError, match='bridge'):
+E       Failed: DID NOT RAISE <class 'ValueError'>
+
+tests/test_memory_terminal_attribution.py:140: Failed
+_ test_completed_controls_require_one_visible_bridge_and_terminal_requires_none[terminal] _
+
+problem = 'terminal'
+
+    @pytest.mark.parametrize('problem', ['missing', 'duplicate', 'terminal', 'invisible'])
+    def test_completed_controls_require_one_visible_bridge_and_terminal_requires_none(problem):
+        case, rows, events, target = terminal_fixture()
+        if problem == 'missing':
+            events.pop(1)
+        elif problem == 'duplicate':
+            events.insert(1, copy.deepcopy(events[1]))
+        elif problem == 'terminal':
+            events.append({'kind': 'memory_decision', 'episode_step': 10,
+                           'detail': {'kind': 'memory_bridge', 'tick': 10, 'landmark_id': target}})
+        else:
+            events[1]['detail']['landmark_id'] = 'missing-landmark'
+>       with pytest.raises(ValueError, match='bridge'):
+E       Failed: DID NOT RAISE <class 'ValueError'>
+
+tests/test_memory_terminal_attribution.py:140: Failed
+_ test_completed_controls_require_one_visible_bridge_and_terminal_requires_none[invisible] _
+
+problem = 'invisible'
+
+    @pytest.mark.parametrize('problem', ['missing', 'duplicate', 'terminal', 'invisible'])
+    def test_completed_controls_require_one_visible_bridge_and_terminal_requires_none(problem):
+        case, rows, events, target = terminal_fixture()
+        if problem == 'missing':
+            events.pop(1)
+        elif problem == 'duplicate':
+            events.insert(1, copy.deepcopy(events[1]))
+        elif problem == 'terminal':
+            events.append({'kind': 'memory_decision', 'episode_step': 10,
+                           'detail': {'kind': 'memory_bridge', 'tick': 10, 'landmark_id': target}})
+        else:
+            events[1]['detail']['landmark_id'] = 'missing-landmark'
+>       with pytest.raises(ValueError, match='bridge'):
+E       Failed: DID NOT RAISE <class 'ValueError'>
+
+tests/test_memory_terminal_attribution.py:140: Failed
+__________ test_loaded_project_code_must_be_from_the_hashed_checkout ___________
+
+tmp_path = PosixPath('/tmp/pytest-of-utkarsh/pytest-57/test_loaded_project_code_must_0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x76473518da10>
+
+    def test_loaded_project_code_must_be_from_the_hashed_checkout(tmp_path, monkeypatch):
+        import sys
+        from types import SimpleNamespace
+        module = diagnostic()
+>       assert hasattr(module, 'verify_loaded_sources'), 'actual imported source location must be bound'
+E       AssertionError: actual imported source location must be bound
+E       assert False
+E        +  where False = hasattr(<module 'scripts.memory_terminal_attribution' from '/home/utkarsh/Work/shraddha/brain/.worktrees/simulation-completion-next/scripts/memory_terminal_attribution.py'>, 'verify_loaded_sources')
+
+tests/test_memory_terminal_attribution.py:148: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_memory_terminal_attribution.py::test_registration_identity_covers_exact_parsed_bytes_and_later_change
+FAILED tests/test_memory_terminal_attribution.py::test_completed_controls_require_one_visible_bridge_and_terminal_requires_none[missing]
+FAILED tests/test_memory_terminal_attribution.py::test_completed_controls_require_one_visible_bridge_and_terminal_requires_none[duplicate]
+FAILED tests/test_memory_terminal_attribution.py::test_completed_controls_require_one_visible_bridge_and_terminal_requires_none[terminal]
+FAILED tests/test_memory_terminal_attribution.py::test_completed_controls_require_one_visible_bridge_and_terminal_requires_none[invisible]
+FAILED tests/test_memory_terminal_attribution.py::test_loaded_project_code_must_be_from_the_hashed_checkout
+6 failed, 16 deselected in 0.09s

@@ -1,0 +1,426 @@
+FFFFFFFFFFFFFFF                                                          [100%]
+=================================== FAILURES ===================================
+_ test_visibility_inclusive_edges_and_separate_reasons[xy0-circles0-True-failures0] _
+
+xy = [4.0, 0.0], circles = [], visible = True, failures = []
+
+    @pytest.mark.parametrize('xy,circles,visible,failures', [
+        ([4., 0.], [], True, []),
+        ([4.000001, 0.], [], False, ['range']),
+        ([0., 1.], [], True, []),
+        ([0., -1.], [], True, []),
+        ([-.000001, 1.], [], False, ['fov']),
+        ([2., 0.], [[1., .4, .4]], False, ['occlusion']),
+        ([-5., 0.], [], False, ['range', 'fov']),
+        ([0., 0.], [], True, []),
+    ])
+    def test_visibility_inclusive_edges_and_separate_reasons(xy, circles, visible, failures):
+>       result = diagnostic().visibility([0., 0., 0.], xy, circles)
+                 ^^^^^^^^^^^^
+
+tests/test_memory_terminal_attribution.py:31: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def diagnostic():
+        name = 'scripts.memory_terminal_attribution'
+>       assert importlib.util.find_spec(name) is not None, 'bounded attribution script is required'
+E       AssertionError: bounded attribution script is required
+E       assert None is not None
+E        +  where None = <function find_spec at 0x7605d67b2e80>('scripts.memory_terminal_attribution')
+E        +    where <function find_spec at 0x7605d67b2e80> = <module 'importlib.util' (frozen)>.find_spec
+E        +      where <module 'importlib.util' (frozen)> = importlib.util
+
+tests/test_memory_terminal_attribution.py:16: AssertionError
+_ test_visibility_inclusive_edges_and_separate_reasons[xy1-circles1-False-failures1] _
+
+xy = [4.000001, 0.0], circles = [], visible = False, failures = ['range']
+
+    @pytest.mark.parametrize('xy,circles,visible,failures', [
+        ([4., 0.], [], True, []),
+        ([4.000001, 0.], [], False, ['range']),
+        ([0., 1.], [], True, []),
+        ([0., -1.], [], True, []),
+        ([-.000001, 1.], [], False, ['fov']),
+        ([2., 0.], [[1., .4, .4]], False, ['occlusion']),
+        ([-5., 0.], [], False, ['range', 'fov']),
+        ([0., 0.], [], True, []),
+    ])
+    def test_visibility_inclusive_edges_and_separate_reasons(xy, circles, visible, failures):
+>       result = diagnostic().visibility([0., 0., 0.], xy, circles)
+                 ^^^^^^^^^^^^
+
+tests/test_memory_terminal_attribution.py:31: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def diagnostic():
+        name = 'scripts.memory_terminal_attribution'
+>       assert importlib.util.find_spec(name) is not None, 'bounded attribution script is required'
+E       AssertionError: bounded attribution script is required
+E       assert None is not None
+E        +  where None = <function find_spec at 0x7605d67b2e80>('scripts.memory_terminal_attribution')
+E        +    where <function find_spec at 0x7605d67b2e80> = <module 'importlib.util' (frozen)>.find_spec
+E        +      where <module 'importlib.util' (frozen)> = importlib.util
+
+tests/test_memory_terminal_attribution.py:16: AssertionError
+_ test_visibility_inclusive_edges_and_separate_reasons[xy2-circles2-True-failures2] _
+
+xy = [0.0, 1.0], circles = [], visible = True, failures = []
+
+    @pytest.mark.parametrize('xy,circles,visible,failures', [
+        ([4., 0.], [], True, []),
+        ([4.000001, 0.], [], False, ['range']),
+        ([0., 1.], [], True, []),
+        ([0., -1.], [], True, []),
+        ([-.000001, 1.], [], False, ['fov']),
+        ([2., 0.], [[1., .4, .4]], False, ['occlusion']),
+        ([-5., 0.], [], False, ['range', 'fov']),
+        ([0., 0.], [], True, []),
+    ])
+    def test_visibility_inclusive_edges_and_separate_reasons(xy, circles, visible, failures):
+>       result = diagnostic().visibility([0., 0., 0.], xy, circles)
+                 ^^^^^^^^^^^^
+
+tests/test_memory_terminal_attribution.py:31: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def diagnostic():
+        name = 'scripts.memory_terminal_attribution'
+>       assert importlib.util.find_spec(name) is not None, 'bounded attribution script is required'
+E       AssertionError: bounded attribution script is required
+E       assert None is not None
+E        +  where None = <function find_spec at 0x7605d67b2e80>('scripts.memory_terminal_attribution')
+E        +    where <function find_spec at 0x7605d67b2e80> = <module 'importlib.util' (frozen)>.find_spec
+E        +      where <module 'importlib.util' (frozen)> = importlib.util
+
+tests/test_memory_terminal_attribution.py:16: AssertionError
+_ test_visibility_inclusive_edges_and_separate_reasons[xy3-circles3-True-failures3] _
+
+xy = [0.0, -1.0], circles = [], visible = True, failures = []
+
+    @pytest.mark.parametrize('xy,circles,visible,failures', [
+        ([4., 0.], [], True, []),
+        ([4.000001, 0.], [], False, ['range']),
+        ([0., 1.], [], True, []),
+        ([0., -1.], [], True, []),
+        ([-.000001, 1.], [], False, ['fov']),
+        ([2., 0.], [[1., .4, .4]], False, ['occlusion']),
+        ([-5., 0.], [], False, ['range', 'fov']),
+        ([0., 0.], [], True, []),
+    ])
+    def test_visibility_inclusive_edges_and_separate_reasons(xy, circles, visible, failures):
+>       result = diagnostic().visibility([0., 0., 0.], xy, circles)
+                 ^^^^^^^^^^^^
+
+tests/test_memory_terminal_attribution.py:31: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def diagnostic():
+        name = 'scripts.memory_terminal_attribution'
+>       assert importlib.util.find_spec(name) is not None, 'bounded attribution script is required'
+E       AssertionError: bounded attribution script is required
+E       assert None is not None
+E        +  where None = <function find_spec at 0x7605d67b2e80>('scripts.memory_terminal_attribution')
+E        +    where <function find_spec at 0x7605d67b2e80> = <module 'importlib.util' (frozen)>.find_spec
+E        +      where <module 'importlib.util' (frozen)> = importlib.util
+
+tests/test_memory_terminal_attribution.py:16: AssertionError
+_ test_visibility_inclusive_edges_and_separate_reasons[xy4-circles4-False-failures4] _
+
+xy = [-1e-06, 1.0], circles = [], visible = False, failures = ['fov']
+
+    @pytest.mark.parametrize('xy,circles,visible,failures', [
+        ([4., 0.], [], True, []),
+        ([4.000001, 0.], [], False, ['range']),
+        ([0., 1.], [], True, []),
+        ([0., -1.], [], True, []),
+        ([-.000001, 1.], [], False, ['fov']),
+        ([2., 0.], [[1., .4, .4]], False, ['occlusion']),
+        ([-5., 0.], [], False, ['range', 'fov']),
+        ([0., 0.], [], True, []),
+    ])
+    def test_visibility_inclusive_edges_and_separate_reasons(xy, circles, visible, failures):
+>       result = diagnostic().visibility([0., 0., 0.], xy, circles)
+                 ^^^^^^^^^^^^
+
+tests/test_memory_terminal_attribution.py:31: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def diagnostic():
+        name = 'scripts.memory_terminal_attribution'
+>       assert importlib.util.find_spec(name) is not None, 'bounded attribution script is required'
+E       AssertionError: bounded attribution script is required
+E       assert None is not None
+E        +  where None = <function find_spec at 0x7605d67b2e80>('scripts.memory_terminal_attribution')
+E        +    where <function find_spec at 0x7605d67b2e80> = <module 'importlib.util' (frozen)>.find_spec
+E        +      where <module 'importlib.util' (frozen)> = importlib.util
+
+tests/test_memory_terminal_attribution.py:16: AssertionError
+_ test_visibility_inclusive_edges_and_separate_reasons[xy5-circles5-False-failures5] _
+
+xy = [2.0, 0.0], circles = [[1.0, 0.4, 0.4]], visible = False
+failures = ['occlusion']
+
+    @pytest.mark.parametrize('xy,circles,visible,failures', [
+        ([4., 0.], [], True, []),
+        ([4.000001, 0.], [], False, ['range']),
+        ([0., 1.], [], True, []),
+        ([0., -1.], [], True, []),
+        ([-.000001, 1.], [], False, ['fov']),
+        ([2., 0.], [[1., .4, .4]], False, ['occlusion']),
+        ([-5., 0.], [], False, ['range', 'fov']),
+        ([0., 0.], [], True, []),
+    ])
+    def test_visibility_inclusive_edges_and_separate_reasons(xy, circles, visible, failures):
+>       result = diagnostic().visibility([0., 0., 0.], xy, circles)
+                 ^^^^^^^^^^^^
+
+tests/test_memory_terminal_attribution.py:31: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def diagnostic():
+        name = 'scripts.memory_terminal_attribution'
+>       assert importlib.util.find_spec(name) is not None, 'bounded attribution script is required'
+E       AssertionError: bounded attribution script is required
+E       assert None is not None
+E        +  where None = <function find_spec at 0x7605d67b2e80>('scripts.memory_terminal_attribution')
+E        +    where <function find_spec at 0x7605d67b2e80> = <module 'importlib.util' (frozen)>.find_spec
+E        +      where <module 'importlib.util' (frozen)> = importlib.util
+
+tests/test_memory_terminal_attribution.py:16: AssertionError
+_ test_visibility_inclusive_edges_and_separate_reasons[xy6-circles6-False-failures6] _
+
+xy = [-5.0, 0.0], circles = [], visible = False, failures = ['range', 'fov']
+
+    @pytest.mark.parametrize('xy,circles,visible,failures', [
+        ([4., 0.], [], True, []),
+        ([4.000001, 0.], [], False, ['range']),
+        ([0., 1.], [], True, []),
+        ([0., -1.], [], True, []),
+        ([-.000001, 1.], [], False, ['fov']),
+        ([2., 0.], [[1., .4, .4]], False, ['occlusion']),
+        ([-5., 0.], [], False, ['range', 'fov']),
+        ([0., 0.], [], True, []),
+    ])
+    def test_visibility_inclusive_edges_and_separate_reasons(xy, circles, visible, failures):
+>       result = diagnostic().visibility([0., 0., 0.], xy, circles)
+                 ^^^^^^^^^^^^
+
+tests/test_memory_terminal_attribution.py:31: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def diagnostic():
+        name = 'scripts.memory_terminal_attribution'
+>       assert importlib.util.find_spec(name) is not None, 'bounded attribution script is required'
+E       AssertionError: bounded attribution script is required
+E       assert None is not None
+E        +  where None = <function find_spec at 0x7605d67b2e80>('scripts.memory_terminal_attribution')
+E        +    where <function find_spec at 0x7605d67b2e80> = <module 'importlib.util' (frozen)>.find_spec
+E        +      where <module 'importlib.util' (frozen)> = importlib.util
+
+tests/test_memory_terminal_attribution.py:16: AssertionError
+_ test_visibility_inclusive_edges_and_separate_reasons[xy7-circles7-True-failures7] _
+
+xy = [0.0, 0.0], circles = [], visible = True, failures = []
+
+    @pytest.mark.parametrize('xy,circles,visible,failures', [
+        ([4., 0.], [], True, []),
+        ([4.000001, 0.], [], False, ['range']),
+        ([0., 1.], [], True, []),
+        ([0., -1.], [], True, []),
+        ([-.000001, 1.], [], False, ['fov']),
+        ([2., 0.], [[1., .4, .4]], False, ['occlusion']),
+        ([-5., 0.], [], False, ['range', 'fov']),
+        ([0., 0.], [], True, []),
+    ])
+    def test_visibility_inclusive_edges_and_separate_reasons(xy, circles, visible, failures):
+>       result = diagnostic().visibility([0., 0., 0.], xy, circles)
+                 ^^^^^^^^^^^^
+
+tests/test_memory_terminal_attribution.py:31: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def diagnostic():
+        name = 'scripts.memory_terminal_attribution'
+>       assert importlib.util.find_spec(name) is not None, 'bounded attribution script is required'
+E       AssertionError: bounded attribution script is required
+E       assert None is not None
+E        +  where None = <function find_spec at 0x7605d67b2e80>('scripts.memory_terminal_attribution')
+E        +    where <function find_spec at 0x7605d67b2e80> = <module 'importlib.util' (frozen)>.find_spec
+E        +      where <module 'importlib.util' (frozen)> = importlib.util
+
+tests/test_memory_terminal_attribution.py:16: AssertionError
+_______________ test_nonfinite_or_malformed_pose_refused[pose0] ________________
+
+pose = [0.0, 0.0, nan]
+
+    @pytest.mark.parametrize('pose', [[0., 0., math.nan], [math.inf, 0., 0.], [0., 0.]])
+    def test_nonfinite_or_malformed_pose_refused(pose):
+        with pytest.raises(ValueError):
+>           diagnostic().visibility(pose, [1., 0.], [])
+            ^^^^^^^^^^^^
+
+tests/test_memory_terminal_attribution.py:39: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def diagnostic():
+        name = 'scripts.memory_terminal_attribution'
+>       assert importlib.util.find_spec(name) is not None, 'bounded attribution script is required'
+E       AssertionError: bounded attribution script is required
+E       assert None is not None
+E        +  where None = <function find_spec at 0x7605d67b2e80>('scripts.memory_terminal_attribution')
+E        +    where <function find_spec at 0x7605d67b2e80> = <module 'importlib.util' (frozen)>.find_spec
+E        +      where <module 'importlib.util' (frozen)> = importlib.util
+
+tests/test_memory_terminal_attribution.py:16: AssertionError
+_______________ test_nonfinite_or_malformed_pose_refused[pose1] ________________
+
+pose = [inf, 0.0, 0.0]
+
+    @pytest.mark.parametrize('pose', [[0., 0., math.nan], [math.inf, 0., 0.], [0., 0.]])
+    def test_nonfinite_or_malformed_pose_refused(pose):
+        with pytest.raises(ValueError):
+>           diagnostic().visibility(pose, [1., 0.], [])
+            ^^^^^^^^^^^^
+
+tests/test_memory_terminal_attribution.py:39: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def diagnostic():
+        name = 'scripts.memory_terminal_attribution'
+>       assert importlib.util.find_spec(name) is not None, 'bounded attribution script is required'
+E       AssertionError: bounded attribution script is required
+E       assert None is not None
+E        +  where None = <function find_spec at 0x7605d67b2e80>('scripts.memory_terminal_attribution')
+E        +    where <function find_spec at 0x7605d67b2e80> = <module 'importlib.util' (frozen)>.find_spec
+E        +      where <module 'importlib.util' (frozen)> = importlib.util
+
+tests/test_memory_terminal_attribution.py:16: AssertionError
+_______________ test_nonfinite_or_malformed_pose_refused[pose2] ________________
+
+pose = [0.0, 0.0]
+
+    @pytest.mark.parametrize('pose', [[0., 0., math.nan], [math.inf, 0., 0.], [0., 0.]])
+    def test_nonfinite_or_malformed_pose_refused(pose):
+        with pytest.raises(ValueError):
+>           diagnostic().visibility(pose, [1., 0.], [])
+            ^^^^^^^^^^^^
+
+tests/test_memory_terminal_attribution.py:39: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def diagnostic():
+        name = 'scripts.memory_terminal_attribution'
+>       assert importlib.util.find_spec(name) is not None, 'bounded attribution script is required'
+E       AssertionError: bounded attribution script is required
+E       assert None is not None
+E        +  where None = <function find_spec at 0x7605d67b2e80>('scripts.memory_terminal_attribution')
+E        +    where <function find_spec at 0x7605d67b2e80> = <module 'importlib.util' (frozen)>.find_spec
+E        +      where <module 'importlib.util' (frozen)> = importlib.util
+
+tests/test_memory_terminal_attribution.py:16: AssertionError
+_ test_sensor_only_terminal_uses_next_pose_and_keeps_unknown_selection_unknown _
+
+    def test_sensor_only_terminal_uses_next_pose_and_keeps_unknown_selection_unknown():
+        case, rows, events, target = terminal_fixture()
+>       result = diagnostic().attribute(case, rows, events, target, 10, 3)
+                 ^^^^^^^^^^^^
+
+tests/test_memory_terminal_attribution.py:60: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def diagnostic():
+        name = 'scripts.memory_terminal_attribution'
+>       assert importlib.util.find_spec(name) is not None, 'bounded attribution script is required'
+E       AssertionError: bounded attribution script is required
+E       assert None is not None
+E        +  where None = <function find_spec at 0x7605d67b2e80>('scripts.memory_terminal_attribution')
+E        +    where <function find_spec at 0x7605d67b2e80> = <module 'importlib.util' (frozen)>.find_spec
+E        +      where <module 'importlib.util' (frozen)> = importlib.util
+
+tests/test_memory_terminal_attribution.py:16: AssertionError
+______ test_duplicate_packet_or_pose_mismatch_or_expanded_window_refused _______
+
+    def test_duplicate_packet_or_pose_mismatch_or_expanded_window_refused():
+        case, rows, events, target = terminal_fixture()
+        bad = copy.deepcopy(events)
+        bad.append(copy.deepcopy(events[-1]))
+        with pytest.raises(ValueError, match='Duplicate'):
+>           diagnostic().attribute(case, rows, bad, target, 10, 3)
+            ^^^^^^^^^^^^
+
+tests/test_memory_terminal_attribution.py:75: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def diagnostic():
+        name = 'scripts.memory_terminal_attribution'
+>       assert importlib.util.find_spec(name) is not None, 'bounded attribution script is required'
+E       AssertionError: bounded attribution script is required
+E       assert None is not None
+E        +  where None = <function find_spec at 0x7605d67b2e80>('scripts.memory_terminal_attribution')
+E        +    where <function find_spec at 0x7605d67b2e80> = <module 'importlib.util' (frozen)>.find_spec
+E        +      where <module 'importlib.util' (frozen)> = importlib.util
+
+tests/test_memory_terminal_attribution.py:16: AssertionError
+_______ test_integrity_rejects_changed_bytes_symlinks_and_expired_clock ________
+
+tmp_path = PosixPath('/tmp/pytest-of-utkarsh/pytest-53/test_integrity_rejects_changed0')
+
+    def test_integrity_rejects_changed_bytes_symlinks_and_expired_clock(tmp_path):
+        path = tmp_path/'source'; path.write_bytes(b'preserved')
+        rows = [{'path': str(path), 'bytes': 9, 'sha256': hashlib.sha256(b'preserved').hexdigest()}]
+>       assert diagnostic().verify_files(rows, time.monotonic()+30) == 1
+               ^^^^^^^^^^^^
+
+tests/test_memory_terminal_attribution.py:87: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def diagnostic():
+        name = 'scripts.memory_terminal_attribution'
+>       assert importlib.util.find_spec(name) is not None, 'bounded attribution script is required'
+E       AssertionError: bounded attribution script is required
+E       assert None is not None
+E        +  where None = <function find_spec at 0x7605d67b2e80>('scripts.memory_terminal_attribution')
+E        +    where <function find_spec at 0x7605d67b2e80> = <module 'importlib.util' (frozen)>.find_spec
+E        +      where <module 'importlib.util' (frozen)> = importlib.util
+
+tests/test_memory_terminal_attribution.py:16: AssertionError
+_____________ test_consumed_output_refuses_before_inputs_are_read ______________
+
+tmp_path = PosixPath('/tmp/pytest-of-utkarsh/pytest-53/test_consumed_output_refuses_b0')
+
+    def test_consumed_output_refuses_before_inputs_are_read(tmp_path):
+        output = tmp_path/'output'; output.mkdir()
+        with pytest.raises(FileExistsError):
+>           diagnostic().run({'output': str(output)})
+            ^^^^^^^^^^^^
+
+tests/test_memory_terminal_attribution.py:101: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def diagnostic():
+        name = 'scripts.memory_terminal_attribution'
+>       assert importlib.util.find_spec(name) is not None, 'bounded attribution script is required'
+E       AssertionError: bounded attribution script is required
+E       assert None is not None
+E        +  where None = <function find_spec at 0x7605d67b2e80>('scripts.memory_terminal_attribution')
+E        +    where <function find_spec at 0x7605d67b2e80> = <module 'importlib.util' (frozen)>.find_spec
+E        +      where <module 'importlib.util' (frozen)> = importlib.util
+
+tests/test_memory_terminal_attribution.py:16: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_memory_terminal_attribution.py::test_visibility_inclusive_edges_and_separate_reasons[xy0-circles0-True-failures0]
+FAILED tests/test_memory_terminal_attribution.py::test_visibility_inclusive_edges_and_separate_reasons[xy1-circles1-False-failures1]
+FAILED tests/test_memory_terminal_attribution.py::test_visibility_inclusive_edges_and_separate_reasons[xy2-circles2-True-failures2]
+FAILED tests/test_memory_terminal_attribution.py::test_visibility_inclusive_edges_and_separate_reasons[xy3-circles3-True-failures3]
+FAILED tests/test_memory_terminal_attribution.py::test_visibility_inclusive_edges_and_separate_reasons[xy4-circles4-False-failures4]
+FAILED tests/test_memory_terminal_attribution.py::test_visibility_inclusive_edges_and_separate_reasons[xy5-circles5-False-failures5]
+FAILED tests/test_memory_terminal_attribution.py::test_visibility_inclusive_edges_and_separate_reasons[xy6-circles6-False-failures6]
+FAILED tests/test_memory_terminal_attribution.py::test_visibility_inclusive_edges_and_separate_reasons[xy7-circles7-True-failures7]
+FAILED tests/test_memory_terminal_attribution.py::test_nonfinite_or_malformed_pose_refused[pose0]
+FAILED tests/test_memory_terminal_attribution.py::test_nonfinite_or_malformed_pose_refused[pose1]
+FAILED tests/test_memory_terminal_attribution.py::test_nonfinite_or_malformed_pose_refused[pose2]
+FAILED tests/test_memory_terminal_attribution.py::test_sensor_only_terminal_uses_next_pose_and_keeps_unknown_selection_unknown
+FAILED tests/test_memory_terminal_attribution.py::test_duplicate_packet_or_pose_mismatch_or_expanded_window_refused
+FAILED tests/test_memory_terminal_attribution.py::test_integrity_rejects_changed_bytes_symlinks_and_expired_clock
+FAILED tests/test_memory_terminal_attribution.py::test_consumed_output_refuses_before_inputs_are_read
+15 failed in 0.15s

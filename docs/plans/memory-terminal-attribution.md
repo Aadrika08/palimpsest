@@ -57,27 +57,27 @@ read and pinned, never edited. Registration fixes all consumed file hashes first
 Files: create `scripts/memory_terminal_attribution.py` and
 `tests/test_memory_terminal_attribution.py`. Preserve all existing runtime files.
 
-- [ ] Test `visibility(pose, xy, circles)` with hand-derived inclusive range/FOV,
+- [x] Test `visibility(pose, xy, circles)` with hand-derived inclusive range/FOV,
   behind-camera, occlusion, coincident and nonfinite cases. It returns distance,
   bearing degrees, range/FOV booleans, blocking-circle indices and visible boolean.
-- [ ] Test `attribute(case, rows, events, target, terminal_tick, event_tick)` on a
+- [x] Test `attribute(case, rows, events, target, terminal_tick, event_tick)` on a
   tiny real-format sensor-only terminal fixture with a visible predecessor and
   missing successor. Assert the terminal uses `next_pose`; a wrong packet fails;
   a >64-row window fails; duplicate packet ticks fail.
-- [ ] Test `verify_files(rows, deadline)` with real temporary files: unsafe paths,
+- [x] Test `verify_files(rows, deadline)` with real temporary files: unsafe paths,
   symlinks and changed bytes fail; valid immutable bytes pass. Test consumed output
   refusal before decoding. These checks must fail before implementation exists.
-- [ ] Implement the pure visibility decomposition using the existing segment
+- [x] Implement the pure visibility decomposition using the existing segment
   distance helper. Cross-check the terminal target's visibility against the actual
   reconstructed sensor packet. Read bridge/arrival events for timing; do not
   reproduce supervisor state or invent a missing first selection.
-- [ ] Implement one fail-closed registered invocation: exclusive consumed marker,
+- [x] Implement one fail-closed registered invocation: exclusive consumed marker,
   existing real-user read-only writer lease, source/input admission, streaming
   reader/deque, before/after hashes, bounded JSON report, failure receipt. Cap all
   control documents at1MiB. No new framework or dependency.
-- [ ] Run focused tests and the required existing software suite with checkout
+- [x] Run focused tests and the required existing software suite with checkout
   PYTHONPATH, CPU/EGL environment and no native-study opt-ins. Retain actual results.
-- [ ] Review the full change once; fix material findings with regression checks,
+- [x] Review the full change once; fix material findings with regression checks,
   then commit verified software before diagnostic registration.
 
 ## Task 2: one registered offline diagnostic and handoff
