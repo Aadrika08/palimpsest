@@ -42,7 +42,12 @@ _SCENE_ENTRY_FIELDS = {
     'scene_id', 'slot', 'split', 'canonical_scene_sha256',
     'scientific_initial_sha256', 'payload_sha256', 'layout',
 }
+_COMMIT_RECEIPT_FIELDS = {
+    'version', 'kind', 'target', 'manifest_sha256', 'manifest_bytes',
+    'reservation_sha256', 'protocol_sha256',
+}
 _MAX_JSON_BYTES = 64 * 1024 * 1024
+_MAX_COMMIT_BYTES = 4096
 
 # Integer eighth-metre/radian coefficients.  Fixed slots 0..7 are the complete
 # parameter domain; binary-fraction conversion makes the arithmetic exact.
@@ -169,6 +174,32 @@ def _quarantine_path(root, name):
     return root / f'.{name}.quarantine'
 
 
+def _commit_path(root, name):
+    return root / f'{name}.commit.json'
+
+
+def _commit_pending_path(root, name):
+    return root / f'.{name}.commit.pending'
+
+
+def _publication_paths(root, name):
+    return {
+        'target': root / name,
+        'pending': root / f'.{name}.pending',
+        'quarantine': _quarantine_path(root, name),
+        'commit': _commit_path(root, name),
+        'commit_pending': _commit_pending_path(root, name),
+    }
+
+
+def _fresh_publication_root(value, name):
+    root = _publication_root(value)
+    paths = _publication_paths(root, name)
+    if any(path.exists() or path.is_symlink() for path in paths.values()):
+        raise ValueError(f'{name}: fresh publication paths required')
+    return root
+
+
 def _write_quarantine(root, name):
     quarantine = _quarantine_path(root, name)
     marker = _canonical_bytes({
@@ -198,14 +229,50 @@ def _retain_quarantine(root, name):
         pass
 
 
+def _commit_receipt(name, manifest, raw):
+    if type(manifest) is not dict:
+        raise ValueError('Publication manifest must be an object')
+    # At this pure boundary the frozen reservation lineage is the protocol pin.
+    protocol_sha256 = _digest(manifest.get('lineage_sha256'),
+                              'publication protocol')
+    if name == 'reservation.json':
+        if manifest.get('kind') != 'puck-on-policy-reservation-v1':
+            raise ValueError('Reservation publication kind differs')
+        reservation_sha256 = _sha256(raw)
+    elif name == 'scene-manifest.json':
+        if manifest.get('kind') != 'puck-on-policy-scene-manifest-v1':
+            raise ValueError('Scene publication kind differs')
+        reservation_sha256 = _digest(
+            manifest.get('reservation_sha256'), 'publication reservation')
+    else:
+        raise ValueError('Unsupported publication target')
+    return {
+        'version': 1,
+        'kind': 'puck-on-policy-publication-commit-v1',
+        'target': name,
+        'manifest_sha256': _sha256(raw),
+        'manifest_bytes': len(raw),
+        'reservation_sha256': reservation_sha256,
+        'protocol_sha256': protocol_sha256,
+    }
+
+
+def _write_commit_receipt(path, raw):
+    with Path(path).open('xb') as handle:
+        handle.write(raw)
+        handle.flush()
+        os.fsync(handle.fileno())
+
+
 def _atomic_manifest(root, name, manifest):
-    root = _publication_root(root)
-    target = root / name
-    pending = root / f'.{name}.pending'
-    quarantine = _quarantine_path(root, name)
-    if any(path.exists() or path.is_symlink() for path in (target, pending, quarantine)):
-        raise ValueError(f'{name}: fresh publication paths required')
+    root = _fresh_publication_root(root, name)
+    paths = _publication_paths(root, name)
+    target, pending = paths['target'], paths['pending']
+    quarantine = paths['quarantine']
+    commit, commit_pending = paths['commit'], paths['commit_pending']
     raw = _canonical_bytes(manifest, name)
+    commit_raw = _canonical_bytes(
+        _commit_receipt(name, manifest, raw), 'publication commit receipt')
     published = False
     try:
         with pending.open('xb') as handle:
@@ -216,10 +283,21 @@ def _atomic_manifest(root, name, manifest):
         os.replace(pending, target)
         published = True
         _fsync_directory(root)
+        _write_commit_receipt(commit_pending, commit_raw)
+        os.replace(commit_pending, commit)
+        _fsync_directory(root)
         quarantine.unlink()
         _fsync_directory(root)
     except BaseException:
         cleanup_failed = False
+        if commit.exists() or commit.is_symlink():
+            try:
+                os.replace(commit, commit_pending)
+            except BaseException:
+                try:
+                    commit.unlink()
+                except BaseException:
+                    cleanup_failed = True
         try:
             pending.unlink(missing_ok=True)
         except BaseException:
@@ -233,17 +311,23 @@ def _atomic_manifest(root, name, manifest):
                 _fsync_directory(root)
             except BaseException:
                 cleanup_failed = True
-        if not cleanup_failed:
-            try:
-                quarantine.unlink(missing_ok=True)
-            except BaseException:
-                cleanup_failed = True
         if cleanup_failed:
-            _retain_quarantine(root, name)
+            try:
+                _retain_quarantine(root, name)
+            except BaseException:
+                pass
+        else:
+            for path in (commit_pending, quarantine):
+                try:
+                    path.unlink(missing_ok=True)
+                except BaseException:
+                    break
         raise
     return {
         'manifest_path': str(target), 'manifest_bytes': raw,
         'manifest_sha256': _sha256(raw),
+        'commit_path': str(commit), 'commit_bytes': commit_raw,
+        'commit_sha256': _sha256(commit_raw),
     }
 
 
@@ -254,21 +338,49 @@ def _read_publication(value, name):
     if not target.is_absolute() or target.name != name:
         raise ValueError(f'{name}: exact publication path required')
     root = _publication_root(target.parent)
-    pending = root / f'.{name}.pending'
-    quarantine = _quarantine_path(root, name)
+    paths = _publication_paths(root, name)
+    pending, quarantine = paths['pending'], paths['quarantine']
+    commit, commit_pending = paths['commit'], paths['commit_pending']
     if (quarantine.exists() or quarantine.is_symlink() or
-            pending.exists() or pending.is_symlink()):
+            pending.exists() or pending.is_symlink() or
+            commit_pending.exists() or commit_pending.is_symlink()):
         raise ValueError(f'{name}: publication is quarantined or indeterminate')
     if (not target.exists() or not target.is_file() or target.is_symlink() or
             target.resolve(strict=True) != target):
         raise ValueError(f'{name}: exact published file required')
+    if (not commit.exists() or not commit.is_file() or commit.is_symlink() or
+            commit.resolve(strict=True) != commit):
+        raise ValueError(f'{name}: exact positive commit receipt required')
     with target.open('rb') as handle:
         raw = handle.read(_MAX_JSON_BYTES + 1)
     if len(raw) > _MAX_JSON_BYTES:
         raise ValueError(f'{name}: published file exceeds bound')
+    with commit.open('rb') as handle:
+        commit_raw = handle.read(_MAX_COMMIT_BYTES + 1)
+    if len(commit_raw) > _MAX_COMMIT_BYTES:
+        raise ValueError(f'{name}: commit receipt exceeds bound')
     if (quarantine.exists() or quarantine.is_symlink() or
-            pending.exists() or pending.is_symlink()):
+            pending.exists() or pending.is_symlink() or
+            commit_pending.exists() or commit_pending.is_symlink()):
         raise ValueError(f'{name}: publication changed while read')
+    try:
+        manifest = json.loads(raw)
+        receipt = json.loads(commit_raw)
+    except (UnicodeDecodeError, json.JSONDecodeError) as error:
+        raise ValueError(f'{name}: publication or commit JSON differs') from error
+    expected = _commit_receipt(name, manifest, raw)
+    if (type(receipt) is not dict or set(receipt) != _COMMIT_RECEIPT_FIELDS or
+            _canonical_bytes(receipt, 'publication commit receipt') != commit_raw or
+            type(receipt['version']) is not int or
+            type(receipt['manifest_bytes']) is not int or
+            receipt != expected):
+        raise ValueError(f'{name}: positive commit receipt differs')
+    with target.open('rb') as handle:
+        if handle.read(_MAX_JSON_BYTES + 1) != raw:
+            raise ValueError(f'{name}: publication changed after commit admission')
+    with commit.open('rb') as handle:
+        if handle.read(_MAX_COMMIT_BYTES + 1) != commit_raw:
+            raise ValueError(f'{name}: commit receipt changed during admission')
     return raw
 
 
@@ -390,6 +502,7 @@ def _validate_inventory(snapshot, lineage_sha256):
 
 def reserve_scene_roster(output_root, inventory_before, inventory_after, *, lineage_sha256):
     """Admit supplied inventory snapshots and atomically reserve all eight IDs."""
+    output_root = _fresh_publication_root(output_root, 'reservation.json')
     before = _validate_inventory(inventory_before, lineage_sha256)
     after = _validate_inventory(inventory_after, lineage_sha256)
     before_bytes = _canonical_bytes(inventory_before, 'inventory before')
@@ -570,6 +683,7 @@ def collection_scene_projection(scene_manifest_path, *, reservation_path, audien
 
 def stage_scene_manifest(output_root, reservation_path, minter, *, inventory_after):
     """Stage all eight candidates through a caller-supplied minter and publish once."""
+    output_root = _fresh_publication_root(output_root, 'scene-manifest.json')
     if not callable(minter):
         raise ValueError('Scene minter must be callable')
     reservation_raw, reservation = _read_published_reservation(reservation_path)
