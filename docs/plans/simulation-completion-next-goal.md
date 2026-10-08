@@ -99,3 +99,20 @@ work and record actual measurements, not estimates presented as guarantees.
 The existing goal tracker is unfinished; this document does not mark it complete
 or create a duplicate. Implementation progress belongs in the linked phase
 reports and the original completion checklist.
+
+### First work unit completed, 8 October 2026
+
+The [registered offline attribution](../reports/memory-terminal-attribution.md)
+ran once in 0.390343 seconds outer. It attributes the retained local-null/own exit
+failure to FOV-only loss during travel at tick 880, after selection at 864. The
+final software suite passed 1,168 tests (24 skipped); the source review's two
+Important findings were fixed before registration. Original input/source bytes,
+the pilot's 900 failure score and its false mechanism result remain intact.
+
+The [nine-condition design proposal](memory-confirmatory-v3-design.md) is written.
+Next: specify the continued-visibility feasibility gate, independent family
+generator, oracle proof, sample/analysis choices and finite new native allocation.
+The diagnostic allocation is consumed, with no retry or automatic rescue study.
+All seven release-level checkboxes above remain open; the physical rover stays
+deferred. The goal tracker remains an unfinished prior goal; this phase completion
+does not mark the project complete.

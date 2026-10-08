@@ -29,6 +29,14 @@ automatic permission to change scientific behavior. An unresolved finding remain
 unresolved. The [v2 design's prerequisites](m5-v2-decision-scene.md#separate-pilot-and-stop-rules)
 are not silently removed by calling the eventual result a null.
 
+The [completed terminal attribution](../reports/memory-terminal-attribution.md)
+now establishes FOV-only exit loss at tick 880: -90.890360 degrees, 0.452448 m,
+no occlusion, after exit selection at 864 and visibility through 879. This is
+travel visibility loss in one retained own branch, not proof of a geometry or
+controller repair. The next feasibility gate must cover continued target
+visibility during null route-z travel; arrival-only successor checks are
+insufficient. This observation supplies no new native allocation or sham audit.
+
 ## Conditions, resources and common fork
 
 **Choice:** retain target limit one and the existing nine definitions, in this

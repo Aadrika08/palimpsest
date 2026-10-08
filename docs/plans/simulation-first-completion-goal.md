@@ -198,6 +198,18 @@ A future failure-aware null metric or visibility diagnostic needs its own
 prospective protocol and approved bounded allocation. No held-out or other lane
 is authorized by the prerequisite or pilot approval.
 
+The user's renewed instruction to write and pursue the goal is recorded in the
+[next execution goal](simulation-completion-next-goal.md). Its separately frozen
+single offline diagnostic has now completed in 0.390343 seconds outer with zero
+native owners/physics/held-out access. The [terminal attribution report](../reports/memory-terminal-attribution.md)
+establishes local-null/own FOV-only exit loss at tick 880 (-90.890360 degrees,
+0.452448 m, no occlusion), after first observed exit selection at 864. This
+qualifies only the explanation of that recorded pose. Pilot scores and the false
+mechanism result are unchanged. The diagnostic allocation is consumed; the
+[nine-condition design](memory-confirmatory-v3-design.md) remains prospective.
+Continued travel visibility, independent family generation and the finite new
+development/held-out design remain unresolved requirements before collection.
+
 The fresh artwork-material v3 allocation passed in 22.06 seconds. Its compact
 comparison preserves source geometry and complete raw-event references while
 remaining below the original byte limits. All six artifact hashes and the
