@@ -1,4 +1,5 @@
 """Synthetic zero-owner allocation checks; no model, subprocess, or study runs."""
+import ast
 import copy
 from contextlib import ExitStack
 import hashlib
@@ -183,7 +184,7 @@ def test_protocol_freezes_capacity_and_an_unresolved_namespace_gate():
     assert protocol['result']['allocation_authorized'] is False
     assert {row['id'] for row in protocol['behavior_sources']} == {
         'admission', 'producer', 'family_generator', 'artifacts', 'assets',
-        'memory_core', 'family_world', 'storage',
+        'memory_core', 'family_world', 'storage', 'allocation_protocol',
     }
 
 
@@ -199,6 +200,23 @@ def test_unresolved_coverage_refuses_before_any_external_root_read(tmp_path):
                       side_effect=AssertionError('external root read')):
         with pytest.raises(allocation.AdmissionRefused, match='unresolved'):
             allocation.build_namespace_inventory(paths)
+
+
+def test_unresolved_production_gate_cannot_publish_or_reach_assets(tmp_path):
+    inputs = _admission_inputs(tmp_path)
+    forbidden = AssertionError('external namespace or asset read')
+    with patch.object(allocation.os, 'scandir', side_effect=forbidden), \
+            patch.object(allocation, '_capacity', return_value=_capacity()), \
+            patch.object(allocation, '_upstream_identity',
+                         return_value=UPSTREAM_IDENTITY), \
+            patch.object(allocation, '_asset_model_identity',
+                         side_effect=forbidden):
+        with pytest.raises(allocation.AdmissionRefused,
+                           match='namespace: Namespace coverage unresolved'):
+            allocation.admit(inputs['registration_path'], inputs['paths'], ROOT,
+                             ROOT / 'fixture-assets')
+    assert not (inputs['values']['roots']['publication'] /
+                'allocation-admission.json').exists()
 
 
 def test_exact_namespace_exports_build_complete_bounded_inventory(tmp_path):
@@ -325,8 +343,10 @@ def test_admission_rejects_training_seed_reuse_and_export_drift(tmp_path):
     export = inputs['historical'] / 'namespace-export.json'
     changed = artifacts._json(export.read_bytes())
     changed['historical_authored_ids'].append('late-history')
+    changed['historical_authored_ids'].sort()
     _write(export, changed)
-    with pytest.raises(ValueError, match='namespace export|coverage'):
+    with pytest.raises(allocation.AdmissionRefused,
+                       match='namespace: .*namespace export|namespace: .*coverage'):
         _admit(inputs)
     assert not (inputs['values']['roots']['publication'] /
                 'allocation-admission.json').exists()
@@ -390,6 +410,23 @@ def test_identity_checks_never_load_construct_or_run_a_model():
     assert all(set(row) == {'path', 'bytes', 'sha256'} for row in behavior.values())
 
 
+def test_admission_source_has_no_model_runtime_or_subprocess_call_path():
+    tree = ast.parse(Path(allocation.__file__).read_text())
+    imports, calls = set(), set()
+    for node in ast.walk(tree):
+        if isinstance(node, ast.Import):
+            imports.update(alias.name.split('.')[0] for alias in node.names)
+        elif isinstance(node, ast.ImportFrom) and node.module:
+            imports.add(node.module.split('.')[0])
+        elif isinstance(node, ast.Call):
+            calls.add(ast.unparse(node.func))
+    assert not imports.intersection({'torch', 'mujoco', 'flygym', 'subprocess'})
+    assert not calls.intersection({
+        'Engine.open', 'prepare_graph', 'load_policy', 'load_pinned_policy',
+        'subprocess.run', 'subprocess.Popen', 'subprocess.check_output',
+    })
+
+
 def test_missing_or_different_upstream_tree_rejects_without_git_process(tmp_path):
     repo = tmp_path / 'repo'
     (repo / 'upstream/fly-gym').mkdir(parents=True)
@@ -406,6 +443,39 @@ def test_missing_or_different_upstream_tree_rejects_without_git_process(tmp_path
         (repo / 'upstream/fly-gym/untracked.txt').write_text('different')
         with pytest.raises(ValueError, match='tree'):
             allocation._upstream_identity(repo)
+
+
+def test_clean_upstream_tree_identity_uses_full_content_without_git(tmp_path):
+    repo = tmp_path / 'repo'
+    upstream = repo / 'upstream/fly-gym'
+    git_dir = repo / '.git/modules/upstream/fly-gym'
+    (upstream / 'nested').mkdir(parents=True)
+    git_dir.mkdir(parents=True)
+    (git_dir / 'HEAD').write_text('1' * 40 + '\n')
+    (upstream / '.git').write_text(
+        'gitdir: ../../.git/modules/upstream/fly-gym\n')
+    (upstream / 'root.txt').write_bytes(b'root')
+    (upstream / 'nested/child.txt').write_bytes(b'child')
+    rows = [
+        {'path': 'root.txt', 'kind': 'file', 'executable': False,
+         'bytes': 4, 'sha256': hashlib.sha256(b'root').hexdigest()},
+        {'path': 'nested/child.txt', 'kind': 'file', 'executable': False,
+         'bytes': 5, 'sha256': hashlib.sha256(b'child').hexdigest()},
+    ]
+    protocol = copy.deepcopy(allocation.PROTOCOL)
+    protocol['upstream'] = {
+        'path': 'upstream/fly-gym', 'commit': '1' * 40,
+        'files': 2, 'bytes': 9, 'inventory_sha256': memory.sha256(rows),
+    }
+    with patch.object(allocation, 'PROTOCOL', protocol), \
+            patch('subprocess.Popen', side_effect=AssertionError('subprocess')), \
+            patch('subprocess.run', side_effect=AssertionError('subprocess')), \
+            patch('subprocess.check_output', side_effect=AssertionError('subprocess')):
+        result = allocation._upstream_identity(repo)
+    assert result == {
+        'path': str(upstream), 'commit': '1' * 40, 'files': 2, 'bytes': 9,
+        'inventory_sha256': memory.sha256(rows),
+    }
 
 
 def test_resolved_fixture_success_is_exclusive_zero_owner_and_canonical(tmp_path):
