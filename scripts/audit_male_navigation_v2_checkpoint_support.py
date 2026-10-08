@@ -24,7 +24,7 @@ sys.path.insert(0, str(ROOT / "src"))
 sys.path.insert(0, str(ROOT / "scripts"))
 
 PROTOCOL_PATH = ROOT / "docs/plans/m7-navigation-v2-checkpoint-support-v1.json"
-PROTOCOL_SHA256 = "3d166474f62f3405b8f40301e1a56adf2023fc178a6aa59a6153a11e318973f6"
+PROTOCOL_SHA256 = "8efe8f24e3f8ac74a4213dc938cc256662037cff7865f070f6a85ba78b7ebb35"
 TEST_PATH = ROOT / "tests/test_male_navigation_v2_checkpoint_support.py"
 MiB = 1024**2
 SOURCE_FILES = {
@@ -198,6 +198,9 @@ def validate_protocol(protocol):
             protocol.get("attempt_contract", {}).get("actual_invocations") != 1 or
             protocol["attempt_contract"].get("retry_after_failure") is not False or
             not isinstance(protocol["attempt_contract"].get("durable_reservation"), str) or
+            protocol["attempt_contract"].get("outer_supervisor") != {
+                "program": "/usr/bin/timeout", "arguments": ["--signal=TERM", "210s"],
+                "through_return_seconds": 210} or
             set(protocol.get("reader_sources", {})) != set(SOURCE_FILES) or
             protocol.get("limits") != {"internal_seconds": 180, "normal_through_return_seconds": 210,
                 "output_bytes": 16 * MiB, "log_bytes_each": MiB, "minimum_free_bytes": 1024**3,
@@ -240,14 +243,15 @@ def load_execution_manifest(path, expected_sha256, output, protocol=None):
     value = json.loads(raw)
     protocol = load_protocol() if protocol is None else protocol
     if (not isinstance(value, dict) or set(value) != {"schema", "attempt", "retry_allowed", "protocol_sha256",
-            "script_sha256", "test_sha256", "behavior_sources", "outer_timeout_seconds", "output"} or
+            "script_sha256", "test_sha256", "behavior_sources", "outer_timeout_seconds", "outer_supervisor", "output"} or
             value.get("schema") != "m7-navigation-v2-checkpoint-support-execution-manifest-v1" or
             value.get("attempt") != 1 or value.get("retry_allowed") is not False or
             value.get("protocol_sha256") != PROTOCOL_SHA256 or
             value.get("script_sha256") != _sha(Path(__file__).read_bytes()) or
             value.get("test_sha256") != _sha(TEST_PATH.read_bytes()) or
             value.get("behavior_sources") != protocol["reader_sources"] or
-            value.get("outer_timeout_seconds") != protocol["limits"]["normal_through_return_seconds"]):
+            value.get("outer_timeout_seconds") != protocol["limits"]["normal_through_return_seconds"] or
+            value.get("outer_supervisor") != protocol["attempt_contract"]["outer_supervisor"]):
         raise ValueError("execution manifest source or protocol binding differs")
     if value.get("output") != str(Path(output).absolute()):
         raise ValueError("execution output differs")
@@ -652,7 +656,8 @@ def execute(output, execution_manifest_path, execution_manifest_sha256):
         "status": "attempt-reserved", "attempt": 1, "retry_allowed": False,
         "protocol_sha256": PROTOCOL_SHA256,
         "execution_manifest_sha256": execution_manifest_sha256,
-        "outer_timeout_seconds": protocol["limits"]["normal_through_return_seconds"]}
+        "outer_timeout_seconds": protocol["limits"]["normal_through_return_seconds"],
+        "outer_supervisor": execution_manifest["outer_supervisor"]}
     attempt_payload = reserve_attempt(output, attempt)
     source_before = verify_behavior_sources(protocol, deadline)
     behavior = load_behavior(protocol)
@@ -706,6 +711,7 @@ def execute(output, execution_manifest_path, execution_manifest_sha256):
         "protocol_sha256": PROTOCOL_SHA256, "report_sha256": _sha(canonical(report)),
         "execution_manifest_sha256": execution_manifest_sha256,
         "attempt_sha256": _sha(attempt_payload),
+        "outer_supervisor": execution_manifest["outer_supervisor"],
         "arrays_sha256": _sha(arrays_payload), "rows": report["rows"], "windows": report["windows"],
         "elapsed_seconds": elapsed, "held_out_accessed": False, "simulator_executed": False,
         "training_executed": False, "qualification_claims": [], "r3_complete": False}

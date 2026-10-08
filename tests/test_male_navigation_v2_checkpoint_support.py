@@ -115,6 +115,9 @@ class AdmissionTests(unittest.TestCase):
                 "test_sha256": hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
                 "behavior_sources": audit.load_protocol()["reader_sources"],
                 "outer_timeout_seconds": 210,
+                "outer_supervisor": {"program": "/usr/bin/timeout",
+                                     "arguments": ["--signal=TERM", "210s"],
+                                     "through_return_seconds": 210},
                 "output": str(output),
             }
             path = root / "execution-manifest.json"
@@ -158,7 +161,8 @@ class AdmissionTests(unittest.TestCase):
             (root / "runs").mkdir()
             output = root / "runs/result"
             with (mock.patch.object(audit, "ROOT", root),
-                  mock.patch.object(audit, "load_execution_manifest", return_value={}),
+                  mock.patch.object(audit, "load_execution_manifest", return_value={
+                      "outer_supervisor": protocol["attempt_contract"]["outer_supervisor"]}),
                   mock.patch.object(audit, "load_protocol", return_value=protocol),
                   mock.patch.object(audit, "verify_behavior_sources",
                                     side_effect=lambda *_: events.append("sources") or {}),
