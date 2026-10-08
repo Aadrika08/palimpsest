@@ -19,6 +19,19 @@ HAS_SIM = all(importlib.util.find_spec(name) for name in ("numpy", "mujoco"))
 REPO = Path(__file__).resolve().parents[1]
 
 
+class SnapshotContainerParsing(unittest.TestCase):
+    def test_duplicate_metadata_key_rejected(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / "duplicate.snp"
+            metadata = (b'{"format":"palimpsest.snapshot",'
+                        b'"format":"palimpsest.snapshot",'
+                        b'"schema_version":1,"container":{}}')
+            with zipfile.ZipFile(path, "w") as archive:
+                archive.writestr("metadata.json", metadata)
+            with self.assertRaisesRegex(ValueError, "duplicate JSON key"):
+                read_snapshot(path)
+
+
 @unittest.skipUnless(HAS_SIM, "simulation dependencies unavailable")
 class PhysicsSnapshots(unittest.TestCase):
     def setUp(self):
