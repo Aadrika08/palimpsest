@@ -199,6 +199,50 @@ class MatchedBudgetTrainer(unittest.TestCase):
             with self.subTest(mutation=mutation), self.assertRaises(ValueError):
                 trainer.admit_schedules(changed, 10)
 
+        valid = schedules["old-corpus"]
+        with patch.object(budget, "build_schedule", return_value=valid):
+            with self.assertRaisesRegex(ValueError, "schedule"):
+                trainer.admit_schedules(self.manifest(), 10)
+
+    def prepared_fixture(self):
+        import numpy as np
+
+        episodes, sources = [], []
+        for index, rows in enumerate((2, 3)):
+            features = np.full((rows, 388), index / 10, dtype=np.float32)
+            targets = np.full((rows, 2), .1 + index / 10, dtype=np.float32)
+            digest = hashlib.sha256(features.tobytes() + targets.tobytes()).hexdigest()
+            source = budget.SourceIdentity(f"{index + 1:032x}", 0, digest, rows)
+            sources.append(source)
+            episodes.append({"run_id": source.run_id, "episode": 0,
+                             "features": features, "targets": targets})
+        development = [
+            {"run_id": row["run_id"], "episode": 0,
+             "targets": np.zeros((row["rows"], 2), dtype=np.float32)}
+            for row in trainer.protocol()["corpora"]["recorded_development"]["sequence_order"]
+        ]
+        data = {arm: {"train": copy.deepcopy(episodes),
+                      "dev": copy.deepcopy(development), "held_out": []}
+                for arm in trainer.ARMS}
+        schedules = {arm: types.SimpleNamespace(sources=tuple(sources))
+                     for arm in trainer.ARMS}
+        return np, data, schedules
+
+    def test_prepared_arrays_reject_nonfinite_wrong_dtype_and_wrong_order(self):
+        np, data, schedules = self.prepared_fixture()
+        trainer.validate_prepared_data(data, schedules)
+        for mutation in ("nonfinite", "dtype", "order"):
+            changed = copy.deepcopy(data)
+            if mutation == "nonfinite":
+                changed["old-corpus"]["train"][0]["targets"][0, 0] = np.nan
+            if mutation == "dtype":
+                changed["old-corpus"]["train"][0]["features"] = changed[
+                    "old-corpus"]["train"][0]["features"].astype(np.float64)
+            if mutation == "order":
+                changed["old-corpus"]["train"].reverse()
+            with self.subTest(mutation=mutation), self.assertRaises(ValueError):
+                trainer.validate_prepared_data(changed, schedules)
+
     def test_update_runner_resets_sources_detaches_continuations_and_steps_once(self):
         schedule = budget.build_schedule(
             (budget.SourceIdentity("1" * 32, 0, "1" * 64, 5),
@@ -210,7 +254,7 @@ class MatchedBudgetTrainer(unittest.TestCase):
             def __init__(self, value): self.value = value
             def __add__(self, other): return Scalar(self.value + other.value)
             def __truediv__(self, value): return Scalar(self.value / value)
-            def backward(self): events.append("backward")
+            def backward(self): events.append(("backward", self.value))
             def __float__(self): return float(self.value)
 
         class Values:
@@ -261,7 +305,9 @@ class MatchedBudgetTrainer(unittest.TestCase):
                                   "train_loss": 1.0})
         self.assertEqual(events.count("reset"), 2)
         self.assertEqual(sum(event == "zero_grad" for event in events), 2)
-        self.assertEqual(sum(event == "backward" for event in events), 2)
+        self.assertEqual([event for event in events if isinstance(event, tuple)
+                          and event[0] == "backward"],
+                         [("backward", 1.0), ("backward", 1.0)])
         self.assertEqual(sum(event == "clip" for event in events), 2)
         self.assertEqual(sum(event == "step" for event in events), 2)
         self.assertEqual([event for event in events if isinstance(event, tuple)
@@ -269,6 +315,103 @@ class MatchedBudgetTrainer(unittest.TestCase):
         self.assertEqual([event[1] for event in events if isinstance(event, tuple)
                           and event[0] == "forward"],
                          [(0, 1, 2, 3), (4,), (10, 11, 12)])
+
+    def test_update_runner_rejects_wrong_count_nonfinite_loss_and_parameters(self):
+        schedule = budget.build_schedule(
+            (budget.SourceIdentity("1" * 32, 0, "1" * 64, 4),),
+            seed=10, presentations=4, rows_per_update=4)
+
+        class Tensor:
+            def __init__(self, rows): self.rows = rows
+            def unsqueeze(self, dimension): return self
+
+        class Hidden:
+            def detach(self): return self
+
+        class Scalar:
+            finite = True
+            def __init__(self, value): self.value = value
+            def __truediv__(self, denominator): return Scalar(self.value / denominator)
+            def backward(self): pass
+            def __float__(self): return float(self.value)
+
+        class Values:
+            def __init__(self, count, finite=True): self.count, self.finite = count, finite
+            def numel(self): return self.count
+            def sum(self): return Scalar(self.count)
+            def detach(self): return self
+
+        class Parameter:
+            requires_grad = True
+            def __init__(self, finite=True): self.finite = finite
+
+        class Model:
+            def __init__(self, parameter): self.parameter = parameter
+            def parameters(self): return [self.parameter]
+            def train(self): pass
+            def reset(self): return Hidden()
+            def __call__(self, inputs, hidden): return hidden, object()
+
+        optimizer = types.SimpleNamespace(zero_grad=lambda **kwargs: None, step=lambda: None)
+        data = {"train": [{"features": list(range(4)), "targets": list(range(4))}]}
+        for failure in ("count", "loss", "parameter"):
+            parameter = Parameter(finite=failure != "parameter")
+            values = Values(3 if failure == "count" else 4, finite=failure != "loss")
+            finite = lambda value: types.SimpleNamespace(
+                all=lambda: getattr(value, "finite", True))
+            fake_torch = types.SimpleNamespace(
+                from_numpy=lambda rows: Tensor(rows), isfinite=finite,
+                nn=types.SimpleNamespace(utils=types.SimpleNamespace(
+                    clip_grad_norm_=lambda *args, **kwargs: None)))
+            with self.subTest(failure=failure), self.assertRaises(ValueError):
+                trainer.run_update_units(
+                    Model(parameter), optimizer, data, schedule, fake_torch,
+                    lambda actions, targets: values, time.monotonic() + 2,
+                    resource_check=lambda deadline: None)
+
+    def test_terminal_state_is_copied_before_recorded_development_evaluation(self):
+        events = []
+
+        class State:
+            def __init__(self, value): self.value = value
+            def detach(self): return self
+            def cpu(self): return self
+            def clone(self):
+                events.append(("clone", self.value))
+                return State(self.value)
+
+        class Parameter:
+            requires_grad = True
+            def numel(self): return 1
+
+        state = State(7)
+        model = types.SimpleNamespace(
+            parameters=lambda: [Parameter()],
+            named_parameters=lambda: [("weight", Parameter())],
+            state_dict=lambda: {"weight": state})
+        torch_module = types.SimpleNamespace(
+            optim=types.SimpleNamespace(Adam=lambda parameters, lr: object()))
+        schedule = types.SimpleNamespace(updates=(object(), object()), presentations=8)
+
+        def evaluate(model, development, deadline, settings):
+            events.append(("evaluate", state.value))
+            state.value = 99
+            return {"ticks": 1228, "loss": .1, "velocity_mae": .2,
+                    "wrapped_heading_mae_radians": .3}
+
+        with (patch.object(trainer.fitter, "make_model", return_value=model),
+              patch.object(trainer, "run_update_units", return_value={
+                  "optimizer_updates": 2, "real_row_presentations": 8,
+                  "train_loss": .1}),
+              patch.object(trainer.fitter, "evaluate", side_effect=evaluate)):
+            _, terminal, result = trainer.fit_terminal(
+                {}, {"dev": object()}, Path("cell"), schedule,
+                {"training_seed": 10, "learning_rate": .001}, torch_module,
+                time.monotonic() + 2)
+        self.assertEqual(events, [("clone", 7), ("evaluate", 7)])
+        self.assertEqual(terminal["weight"].value, 7)
+        self.assertEqual(result["selected_optimizer_update"], 2)
+        self.assertEqual(state.value, 99)
 
     def test_attempt_is_durable_fresh_and_failure_keeps_later_arm_not_started(self):
         class Budget:
@@ -291,6 +434,146 @@ class MatchedBudgetTrainer(unittest.TestCase):
             self.assertEqual(retained["models"]["augmented"]["status"], "not_started")
             self.assertEqual(retained["error"]["type"], "ValueError")
             self.assertFalse((output / "report.json").exists())
+
+    def test_output_preflight_rejects_overlap_stale_and_consumed_paths(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            managed, inputs = root / "managed", root / "inputs"
+            managed.mkdir(); inputs.mkdir()
+            study = {"immutable_inputs": {"fixture": {"path": str(inputs / "data.json")}}}
+            output = managed / "seed-10"
+            self.assertEqual(trainer.preflight_output(output, 10, study), output)
+
+            with self.assertRaisesRegex(ValueError, "overlaps"):
+                trainer.preflight_output(inputs / "seed-10", 10, study)
+            for consumed in (output, trainer._attempt_path(output), trainer._failure_path(output)):
+                if consumed == output:
+                    consumed.mkdir()
+                else:
+                    consumed.write_text("consumed")
+                with self.subTest(consumed=consumed), self.assertRaises(FileExistsError):
+                    trainer.preflight_output(output, 10, study)
+                if consumed == output:
+                    consumed.rmdir()
+                else:
+                    consumed.unlink()
+
+    def test_graph_cell_and_loaded_source_drift_stop_before_torch(self):
+        class FakeBudget:
+            def __init__(self, *args, **kwargs): pass
+            def check(self, additional, *, path): return {}
+            def lock(self): return self
+            def __enter__(self): return self
+            def __exit__(self, *args): return None
+
+        admitted = trainer.source_identity(time.monotonic() + 5)
+        pinned_name = next(iter(trainer.protocol()["behavior_source_admission"]["existing_hashes"]))
+        def changed_hash(path, *args):
+            name = Path(path).relative_to(trainer.ROOT).as_posix()
+            return "0" * 64 if name == pinned_name else admitted[name]
+        with patch.object(trainer.data_reader, "file_sha", side_effect=changed_hash):
+            with self.assertRaisesRegex(ValueError, "Pinned local behavior"):
+                trainer.source_identity(time.monotonic() + 5)
+
+        for drift in ("graph", "cell", "source"):
+            with self.subTest(drift=drift), tempfile.TemporaryDirectory() as directory:
+                output = Path(directory) / "seed-10"
+                args = types.SimpleNamespace(training_seed=10, output=output,
+                                             graph=Path("graph"), graph_manifest=Path("manifest"),
+                                             cell_source=Path("cell"))
+                calls = 0
+
+                def sources(deadline, expected=None):
+                    nonlocal calls
+                    calls += 1
+                    if drift == "source" and calls == 2:
+                        raise ValueError("loaded source drift")
+                    return {}
+
+                fake_v2 = types.SimpleNamespace(
+                    prepare=lambda args, deadline: (_ for _ in ()).throw(
+                        ValueError(drift + " drift")))
+                with (patch.object(trainer, "StorageBudget", FakeBudget),
+                      patch.object(trainer, "check_resources", return_value=0),
+                      patch.object(trainer, "source_identity", side_effect=sources),
+                      patch.object(trainer, "pre_runtime", return_value={}),
+                      patch.object(trainer, "_load_v2", return_value=fake_v2),
+                      patch.object(trainer, "_load_torch",
+                                   side_effect=AssertionError("Torch crossed failed admission"))):
+                    with self.assertRaisesRegex(ValueError, "drift"):
+                        trainer.train(args)
+                self.assertTrue(trainer._attempt_path(output).is_file())
+                retained = json.loads(trainer._failure_path(output).read_text())
+                self.assertEqual(retained["models"]["old-corpus"]["status"], "not_started")
+                self.assertEqual(retained["models"]["augmented"]["status"], "not_started")
+
+    def test_storage_file_and_pair_caps_stop_before_torch(self):
+        class RejectingBudget:
+            def __init__(self, *args, **kwargs): pass
+            def lock(self): return self
+            def __enter__(self): return self
+            def __exit__(self, *args): return None
+            def check(self, additional, *, path): raise RuntimeError("storage cap")
+
+        with tempfile.TemporaryDirectory() as directory:
+            output = Path(directory) / "seed-10"
+            args = types.SimpleNamespace(training_seed=10, output=output,
+                                         graph=Path("graph"), graph_manifest=Path("manifest"),
+                                         cell_source=Path("cell"))
+            with (patch.object(trainer, "StorageBudget", RejectingBudget),
+                  patch.object(trainer, "check_resources", return_value=0),
+                  patch.object(trainer, "source_identity", return_value={}),
+                  patch.object(trainer, "pre_runtime", return_value={}),
+                  patch.object(trainer, "_load_v2",
+                               side_effect=AssertionError("input admission crossed storage cap"))):
+                with self.assertRaisesRegex(RuntimeError, "storage cap"):
+                    trainer.train(args)
+            self.assertFalse(trainer._attempt_path(output).exists())
+
+        class Budget:
+            def check(self, additional, *, path): return {}
+
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / "oversized"
+            with self.assertRaisesRegex(ValueError, "byte cap"):
+                trainer._write_artifact(path, b"xx", time.monotonic() + 2, Budget(), 1)
+            self.assertFalse(path.exists())
+
+        class FakeBudget(Budget):
+            def __init__(self, *args, **kwargs): pass
+            def lock(self): return self
+            def __enter__(self): return self
+            def __exit__(self, *args): return None
+
+        class Schedule:
+            sha256 = "a" * 64
+            def canonical_bytes(self): return b"{}"
+
+        with tempfile.TemporaryDirectory() as directory:
+            output = Path(directory) / "seed-10"
+            args = types.SimpleNamespace(training_seed=10, output=output,
+                                         graph=Path("graph"), graph_manifest=Path("manifest"),
+                                         cell_source=Path("cell"))
+            fake_v2 = types.SimpleNamespace(
+                prepare=lambda args, deadline: (
+                    output, {arm: object() for arm in trainer.ARMS},
+                    {"ordered_ids_sha256": "ids"}, {"manifest": {}, "model_inputs": {}}),
+                check_context=lambda *args, **kwargs: None,
+                write_artifact=trainer._write_artifact)
+            with (patch.object(trainer, "PAIR_BYTES", 16),
+                  patch.object(trainer, "StorageBudget", FakeBudget),
+                  patch.object(trainer, "check_resources", return_value=0),
+                  patch.object(trainer, "source_identity", return_value={}),
+                  patch.object(trainer, "pre_runtime", return_value={}),
+                  patch.object(trainer, "_load_v2", return_value=fake_v2),
+                  patch.object(trainer, "admit_schedules",
+                               return_value={arm: Schedule() for arm in trainer.ARMS}),
+                  patch.object(trainer, "validate_prepared_data"),
+                  patch.object(trainer, "_load_torch",
+                               side_effect=AssertionError("Torch crossed pair cap"))):
+                with self.assertRaisesRegex(ValueError, "payload cap"):
+                    trainer.train(args)
+            self.assertTrue(trainer._failure_path(output).is_file())
 
     def test_pair_owner_reserves_before_admission_and_stops_after_first_arm_failure(self):
         class FakeBudget:
@@ -355,6 +638,112 @@ class MatchedBudgetTrainer(unittest.TestCase):
             self.assertEqual(failure["models"]["old-corpus"]["status"], "failed")
             self.assertEqual(failure["models"]["augmented"]["status"], "not_started")
             self.assertFalse((output / "report.json").exists())
+
+    def test_v3_success_requires_report_rename_directory_sync_and_completion_receipt(self):
+        class Budget:
+            def check(self, additional, *, path): return {}
+
+        with tempfile.TemporaryDirectory() as directory:
+            output = Path(directory) / "seed-10"
+            trainer.reserve_attempt(output, 10, time.monotonic() + 2, Budget())
+            output.mkdir()
+            payload = json.dumps({"status": "completed-navigation-v3-training"},
+                                 sort_keys=True, separators=(",", ":")).encode()
+            staged = trainer._write_artifact(output / "report.pending", payload,
+                                             time.monotonic() + 2, Budget(), trainer.MAX_JSON)
+            completion = trainer.publish_success(
+                output, time.monotonic() + 2, lambda: None, Budget(), staged)
+            self.assertTrue((output / "report.json").is_file())
+            self.assertTrue((output / "publication.json").is_file())
+            self.assertFalse((output / "report.pending").exists())
+            self.assertEqual(completion["report_sha256"], staged["sha256"])
+            self.assertTrue(trainer.success_admitted(output, staged["sha256"]))
+
+    def test_publication_faults_are_retained_and_never_admitted(self):
+        class FakeBudget:
+            def __init__(self, *args, **kwargs): pass
+            def check(self, additional, *, path): return {}
+            def lock(self): return self
+            def __enter__(self): return self
+            def __exit__(self, *args): return None
+
+        class Schedule:
+            sha256 = "a" * 64
+            def canonical_bytes(self): return b"{}"
+
+        real_replace = Path.replace
+        real_sync = trainer._fsync_directory
+        for failure in ("rename", "fsync", "final-source", "final-runtime"):
+            with self.subTest(failure=failure), tempfile.TemporaryDirectory() as directory:
+                output = Path(directory) / "seed-10"
+                args = types.SimpleNamespace(training_seed=10, output=output,
+                                             graph=Path("graph"), graph_manifest=Path("manifest"),
+                                             cell_source=Path("cell"))
+                runtime_calls = 0
+
+                def context(context, deadline, receipt, budget):
+                    if failure == "final-source" and Path(receipt).name == "after-final-sync.json":
+                        raise ValueError("injected final source drift")
+
+                fake_v2 = types.SimpleNamespace(
+                    prepare=lambda args, deadline: (
+                        output, {arm: object() for arm in trainer.ARMS},
+                        {"ordered_ids_sha256": "ids"},
+                        {"manifest": {}, "model_inputs": {}}),
+                    check_context=context,
+                    write_artifact=trainer._write_artifact,
+                    stage_report=lambda root, report, deadline, budget: trainer._write_artifact(
+                        root / "report.pending", trainer.male_model.canonical(report),
+                        deadline, budget, trainer.MAX_JSON),
+                    publish_report=lambda *args, **kwargs: self.fail(
+                        "V3 used the non-durable historical publisher"))
+
+                fake_torch = types.SimpleNamespace(
+                    set_num_threads=lambda value: None,
+                    use_deterministic_algorithms=lambda value: None,
+                    save=lambda checkpoint, stream: stream.write(b"checkpoint"))
+
+                def runtime(torch_module):
+                    nonlocal runtime_calls
+                    runtime_calls += 1
+                    if failure == "final-runtime" and runtime_calls == 2:
+                        raise ValueError("injected final runtime drift")
+                    return {"runtime": "fixed"}
+
+                def replace(path, target):
+                    if failure == "rename" and Path(path).name == "report.pending":
+                        raise OSError("injected report rename failure")
+                    return real_replace(path, target)
+
+                def sync(path):
+                    if failure == "fsync" and Path(path) == output:
+                        raise OSError("injected publication directory fsync failure")
+                    return real_sync(path)
+
+                fit = lambda *args, **kwargs: (
+                    object(), {"weight": 1},
+                    {"optimizer_updates": 1440, "real_row_presentations": 46080,
+                     "selected_optimizer_update": 1440,
+                     "selected_real_row_presentations": 46080,
+                     "trainable_names": ["weight"], "recorded_development": {"ticks": 1228}})
+                with (patch.object(trainer, "StorageBudget", FakeBudget),
+                      patch.object(trainer, "check_resources", return_value=0),
+                      patch.object(trainer, "source_identity", return_value={}),
+                      patch.object(trainer, "pre_runtime", return_value={}),
+                      patch.object(trainer, "_load_v2", return_value=fake_v2),
+                      patch.object(trainer, "admit_schedules",
+                                   return_value={arm: Schedule() for arm in trainer.ARMS}),
+                      patch.object(trainer, "validate_prepared_data"),
+                      patch.object(trainer, "_load_torch", return_value=fake_torch),
+                      patch.object(trainer, "cpu_runtime", side_effect=runtime),
+                      patch.object(trainer, "fit_terminal", side_effect=fit),
+                      patch.object(Path, "replace", new=replace),
+                      patch.object(trainer, "_fsync_directory", side_effect=sync)):
+                    with self.assertRaises((OSError, ValueError)):
+                        trainer.train(args)
+                self.assertTrue(trainer._failure_path(output).is_file())
+                self.assertFalse(trainer.success_admitted(output))
+                self.assertFalse((output / "publication.json").exists())
 
     def test_admission_stops_before_heavy_import_on_limits_or_heldout_cli(self):
         with patch.object(trainer, "rss_bytes", return_value=trainer.GiB + 1):
