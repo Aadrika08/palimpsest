@@ -336,6 +336,29 @@ class AnalysisTests(unittest.TestCase):
 
 
 class PublicationTests(unittest.TestCase):
+    def test_missing_exact_output_parent_is_created_for_durable_failure_evidence(self):
+        audit = load_audit()
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            output = root / "runs/result"
+            with mock.patch.object(audit, "ROOT", root):
+                audit.prepare_output_parent(output)
+                self.assertTrue((root / "runs").is_dir())
+                audit.reserve_attempt(output, {"status": "attempt-reserved"})
+                audit.publish_failure(output, {"status": "failed"})
+                self.assertTrue((output / "failure.json").is_file())
+                with self.assertRaisesRegex(ValueError, "exact audit runs directory"):
+                    audit.prepare_output_parent(root / "different/result")
+
+            other = root / "other"
+            other.mkdir()
+            alias = root / "alias-root"
+            alias.mkdir()
+            (alias / "runs").symlink_to(other)
+            with mock.patch.object(audit, "ROOT", alias):
+                with self.assertRaisesRegex(ValueError, "regular non-symlink"):
+                    audit.prepare_output_parent(alias / "runs/result")
+
     def test_attempt_reservation_is_durable_and_nonrepeatable(self):
         audit = load_audit()
         with tempfile.TemporaryDirectory() as temporary:
@@ -372,16 +395,19 @@ class PublicationTests(unittest.TestCase):
     def test_final_marker_failure_removes_completion_markers_but_retains_attempt(self):
         audit = load_audit()
         with tempfile.TemporaryDirectory() as temporary:
-            output = Path(temporary) / "fresh"
-            audit.reserve_attempt(output, {"status": "attempt-reserved"})
-            with self.assertRaisesRegex(OSError, "injected"):
-                audit.publish_success(output, b"{}\n", b"arrays", {"status": "completed"},
-                                      {"status": "completed-execution"}, fault="final_rename")
-            self.assertFalse((output / "report.json").exists())
-            self.assertFalse((output / "execution.json").exists())
-            self.assertTrue((output / "attempt.json").is_file())
-            audit.publish_failure(output, {"status": "failed", "error": "injected"})
-            self.assertTrue((output / "failure.json").is_file())
+            root = Path(temporary)
+            (root / "runs").mkdir()
+            output = root / "runs/fresh"
+            with mock.patch.object(audit, "ROOT", root):
+                audit.reserve_attempt(output, {"status": "attempt-reserved"})
+                with self.assertRaisesRegex(OSError, "injected"):
+                    audit.publish_success(output, b"{}\n", b"arrays", {"status": "completed"},
+                                          {"status": "completed-execution"}, fault="final_rename")
+                self.assertFalse((output / "report.json").exists())
+                self.assertFalse((output / "execution.json").exists())
+                self.assertTrue((output / "attempt.json").is_file())
+                audit.publish_failure(output, {"status": "failed", "error": "injected"})
+                self.assertTrue((output / "failure.json").is_file())
 
     def test_import_does_not_load_torch_or_simulator(self):
         command = [

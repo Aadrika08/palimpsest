@@ -8,6 +8,7 @@
     "actual_invocations": 1,
     "retry_after_failure": false,
     "durable_reservation": "Before any checkpoint hash, local behavior import, model construction, or inference, create the fresh output directory and fsync an attempt.json reservation. Directory existence permanently refuses another analysis attempt, including after crash or outer timeout.",
+    "output_parent": "Create if absent, validate as a non-symlink directory, and fsync only the exact audit-worktree runs/ parent before checking output freshness and reserving the attempt.",
     "outer_supervisor": {"program": "/usr/bin/timeout", "arguments": ["--signal=TERM", "210s"], "through_return_seconds": 210},
     "source_review": "Independent review of the frozen implementation and synthetic tests must return GO before the sole invocation.",
     "post_run_review": "Independent verification may read only the compact audit output and pinned tracked documents; it must not run inference again."

@@ -24,7 +24,7 @@ sys.path.insert(0, str(ROOT / "src"))
 sys.path.insert(0, str(ROOT / "scripts"))
 
 PROTOCOL_PATH = ROOT / "docs/plans/m7-navigation-v2-checkpoint-support-v1.json"
-PROTOCOL_SHA256 = "8efe8f24e3f8ac74a4213dc938cc256662037cff7865f070f6a85ba78b7ebb35"
+PROTOCOL_SHA256 = "5869d1d46861ab6d9bfad87e557f5a652c671a3730da5d2d46d4ce80e09f9b68"
 TEST_PATH = ROOT / "tests/test_male_navigation_v2_checkpoint_support.py"
 MiB = 1024**2
 SOURCE_FILES = {
@@ -198,6 +198,7 @@ def validate_protocol(protocol):
             protocol.get("attempt_contract", {}).get("actual_invocations") != 1 or
             protocol["attempt_contract"].get("retry_after_failure") is not False or
             not isinstance(protocol["attempt_contract"].get("durable_reservation"), str) or
+            not isinstance(protocol["attempt_contract"].get("output_parent"), str) or
             protocol["attempt_contract"].get("outer_supervisor") != {
                 "program": "/usr/bin/timeout", "arguments": ["--signal=TERM", "210s"],
                 "through_return_seconds": 210} or
@@ -479,6 +480,18 @@ def _atomic_write(path, payload):
     _fsync_directory(path.parent)
 
 
+def prepare_output_parent(output):
+    output = Path(output).absolute()
+    expected = ROOT / "runs"
+    if output.parent != expected:
+        raise ValueError("checkpoint-support output must use the exact audit runs directory")
+    if not expected.exists():
+        expected.mkdir(parents=False, exist_ok=False)
+        _fsync_directory(ROOT)
+    if expected.is_symlink() or not expected.is_dir() or expected.resolve() != expected.absolute():
+        raise ValueError("checkpoint-support runs directory must be a regular non-symlink directory")
+
+
 def reserve_attempt(output, receipt):
     output = Path(output)
     if output.exists():
@@ -544,6 +557,7 @@ def publish_success(output, protocol_payload, arrays_payload, report, execution,
 
 def publish_failure(output, failure):
     output = Path(output)
+    prepare_output_parent(output)
     if not output.exists():
         reserve_attempt(output, {"schema": "m7-navigation-v2-checkpoint-support-attempt-v1",
             "status": "attempt-reserved-by-failure", "attempt": 1, "retry_allowed": False,
@@ -648,7 +662,8 @@ def execute(output, execution_manifest_path, execution_manifest_sha256):
     deadline = started + protocol["limits"]["internal_seconds"]
     return_deadline = started + protocol["limits"]["normal_through_return_seconds"]
     output = Path(output).absolute()
-    if output.exists() or not output.parent.is_dir() or output.parent != ROOT / "runs":
+    prepare_output_parent(output)
+    if output.exists():
         raise ValueError("fresh output under the audit worktree runs directory required")
     if shutil.disk_usage(output.parent).free < protocol["limits"]["minimum_free_bytes"]:
         raise ValueError("checkpoint-support free-space floor not met")
