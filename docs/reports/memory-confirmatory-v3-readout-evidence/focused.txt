@@ -1,0 +1,111 @@
+...........................................F............                 [100%]
+=================================== FAILURES ===================================
+__ test_production_worker_uses_cpu_policy_prefix_configures_only_at_boundary ___
+
+tmp_path = PosixPath('/tmp/pytest-of-utkarsh/pytest-60/test_production_worker_uses_cp0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x707eb12bd710>
+
+    def test_production_worker_uses_cpu_policy_prefix_configures_only_at_boundary(tmp_path, monkeypatch):
+        """Run production orchestration with a synthetic engine, never native/model jobs."""
+        import copy
+        from types import SimpleNamespace
+        from palimpsest import engine as engine_module, replay, snapshots
+        module = runner()
+        engines = []
+        class FakeEngine:
+            def __init__(self):
+                self.controller, self.phase, self.episode, self.episode_step = 'flynn', 'paused', 0, 0
+                self.policy = SimpleNamespace(act=lambda obs: None)
+                self.env, self.observation, self.teacher = object(), {}, None
+                self.writer = SimpleNamespace(manifest={})
+                self.memory = {'version': 3, 'u': {}, 'selector': {}, 'supervisor': {'phase': 'acquire'}}
+                self.world_task_state, self.last_outcome = {}, None
+                self.closed, self.configured, self.armed = False, False, False
+                self.commands = []
+            def _event(self, *a, **kw):
+                pass
+            def submit(self, command):
+                assert command['kind'] == 'step'
+                assert 'action' not in command and 'payload' not in command
+                self.commands.append(command)
+                return {'status': 'queued'}
+            def advance(self):
+                self.episode_step += 1
+                if self.episode_step == 2:
+                    self.memory['supervisor']['phase'] = 'await_decision'
+                if self.armed:
+                    self.memory['supervisor']['phase'] = 'goal'
+                    self.phase = 'terminated'
+                return {'phase': self.phase}
+            def configure_memory_selector(self, config, u=None):
+                assert self.memory['supervisor']['phase'] == 'await_decision'
+                self.configured = True
+                self.memory['u'], self.memory['selector'] = u, config
+            def arm_memory_decision(self):
+                assert self.configured
+                self.armed = True
+            def close(self):
+                self.closed = True
+        def open_engine(*args, **kwargs):
+            assert kwargs['controller'] == 'flynn' and kwargs['device'] == 'cpu'
+            assert kwargs['scenario'] == 'memory-decision-v2'
+            engine = FakeEngine()
+            engines.append(engine)
+            return engine
+        native = {}
+        def capture(engine):
+            return {'application': {'memory': copy.deepcopy(engine.memory), 'source_run_id': 'a'*32,
+                                   'event_prefix': {}, 'receipts': {}}, 'rng': [4]}
+        def register(engine, run, budget):
+            (run/'snapshots').mkdir()
+            (run/'snapshots/initial.snp').write_bytes(b'synthetic snapshot')
+            native.update(capture(engine))
+        job = {'stage': 'feasibility', 'operation': 'full', 'condition': None, 'repo': str(tmp_path),
+            'assets': str(tmp_path/'assets'), 'history_root': str(tmp_path/'histories'),
+            'source_identity': {}, 'output': str(tmp_path/'run'), 'phase_root': str(tmp_path),
+            'run_id': 'a'*32, 'spec': {'id': 'synthetic', 'regime': 'local_cue'}, 'case': {'seed': 400},
+            'snapshot_path': None, 'protocol_sha256':module.PROTOCOL_SHA256}
+        monkeypatch.setattr(module, 'validate_job', lambda raw: copy.deepcopy(raw))
+        monkeypatch.setattr(module, 'source_identity', lambda *a: {})
+        monkeypatch.setattr(module, 'common_helpers', lambda: SimpleNamespace(load_histories=lambda root: {}))
+        monkeypatch.setattr(module, 'selector_for', lambda *a: {'condition': 'no-U'})
+        monkeypatch.setattr(module, 'u_for', lambda *a: {'synthetic': True})
+        monkeypatch.setattr(module, 'capture_engine', capture)
+        monkeypatch.setattr(engine_module.Engine, 'open', open_engine)
+        monkeypatch.setattr(replay, '_register_initial', register)
+        monkeypatch.setattr(snapshots, 'read_snapshot', lambda path: copy.deepcopy(native))
+>       assert module.worker(job) == 0
+               ^^^^^^^^^^^^^^^^^^
+
+tests/test_memory_decision_pilot.py:380: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+scripts/memory_decision_pilot.py:581: in worker
+    storage.check(limit+16*MiB, path=run)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <palimpsest.storage.StorageBudget object at 0x707eb126b910>
+additional_bytes = 553648128
+
+    def check(self, additional_bytes, *, path):
+        _nonnegative(additional_bytes, "additional_bytes")
+        destination = _safe_path(path)
+        if not any(destination.is_relative_to(root) for root in self.roots):
+            raise StorageLimitError("Destination is outside configured storage roots")
+        report = self.usage()
+        required = additional_bytes + self.headroom_bytes
+        if report["used_bytes"] + required > self.limits.max_bytes:
+            raise StorageLimitError(f"Storage quota exceeded: used={report['used_bytes']}, additional={additional_bytes}, "
+                                    f"headroom={self.headroom_bytes}, limit={self.limits.max_bytes}")
+        existing = destination
+        while not existing.exists():
+            existing = existing.parent
+        free = shutil.disk_usage(existing).free
+        if free - required < self.limits.min_free_bytes:
+>           raise StorageLimitError(f"Storage free-space floor reached: free={free}, additional={additional_bytes}, "
+                                    f"headroom={self.headroom_bytes}, floor={self.limits.min_free_bytes}")
+E           palimpsest.storage.StorageLimitError: Storage free-space floor reached: free=2543382528, additional=553648128, headroom=67108864, floor=2147483648
+
+src/palimpsest/storage.py:123: StorageLimitError
+=========================== short test summary info ============================
+FAILED tests/test_memory_decision_pilot.py::test_production_worker_uses_cpu_policy_prefix_configures_only_at_boundary
+1 failed, 55 passed in 3.27s
