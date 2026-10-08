@@ -570,7 +570,7 @@ def install_fixed_model(env, repo_root):
     return copy.deepcopy(identity)
 
 
-def authored_reset(env, repo_root, seed, split, episode_id):
+def authored_reset(env, repo_root, seed, split, episode_id, *, explicit_layout=None):
     """Apply one explicit time-zero layout after upstream reset has relocked XY.
 
     Stage new data; restore old mutable model arrays if mj_forward/validation
@@ -579,7 +579,11 @@ def authored_reset(env, repo_root, seed, split, episode_id):
     import mujoco as mj
     import numpy as np
     from .snapshots import ASTAR_CACHE, _model_digest
-    row = layout(repo_root, seed, split)
+    if explicit_layout is None:
+        row = layout(repo_root, seed, split)
+    else:
+        from .puck_on_policy import admit_layout
+        row = admit_layout(explicit_layout, seed=seed, split=split)
     _identifier(episode_id)
     _, extra = _admit_owner(env)
     identity = getattr(env, '_puck_profile_identity', {})

@@ -148,6 +148,14 @@ class PuckOnPolicyLayoutTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             on_policy.admit_layout(EXPECTED[0], seed=7100, split='on_policy_development')
 
+    def test_layout_admission_rejects_negative_zero_payload_drift(self):
+        on_policy = subject()
+        changed = json.loads(json.dumps(EXPECTED[1]))
+        self.assertEqual(changed['goal_xy'][1], 0.0)
+        changed['goal_xy'][1] = -0.0
+        with self.assertRaises(ValueError):
+            on_policy.admit_layout(changed, seed=7101, split='on_policy_collection')
+
     def test_reset_seam_is_keyword_only_and_reaches_only_the_existing_native_boundary(self):
         on_policy = subject()
         layout_signature = inspect.signature(puck.layout)
