@@ -10,6 +10,7 @@ import pytest
 
 from palimpsest import artifacts, memory, memory_experiment
 from palimpsest.memory_experiment import CONDITIONS
+from scripts import memory_family_analysis_v3 as analysis
 from scripts import memory_family_producer_v3 as producer
 from scripts.memory_family_v3 import build_slots
 from test_memory_family_oracle_admission_v3 import _pair, _tree_hashes
@@ -37,10 +38,7 @@ def _contract_inputs(tmp_path, *, pair=None):
     prerequisites = [{'id': 'fixture-prefix', 'kind': 'prefix'}]
     slots = build_slots('development', [0], prerequisites)
     plan_path = _write(inputs / 'plan.json', slots['plan'])
-    protocol_path = _write(inputs / 'protocol.json', {
-        'schema': 'memory-family-native-protocol-v3',
-        'scope': 'synthetic-contract-only',
-    })
+    protocol_path = _write(inputs / 'protocol.json', copy.deepcopy(analysis.PROTOCOL))
     source_identity = {'schema': 'source-identity-v1', 'commit': 'fixture'}
     histories = {}
     if pair is None:
@@ -96,6 +94,7 @@ def test_registration_freezes_one_complete_block_without_writing(tmp_path):
 
     assert set(registration) == {
         'schema', 'mode', 'split', 'block', 'conditions', 'plan', 'protocol',
+        'analysis_design',
         'source_identity', 'source_identity_sha256', 'histories',
         'namespace_inventory', 'roots', 'dependencies', 'resource_projection',
         'case_slots', 'authored_ids', 'retries', 'corrective_studies',
@@ -106,6 +105,8 @@ def test_registration_freezes_one_complete_block_without_writing(tmp_path):
     assert registration['mode'] == 'software-contract-only'
     assert registration['split'] == 'development' and registration['block'] == 0
     assert registration['conditions'] == list(CONDITIONS)
+    assert registration['analysis_design'] == analysis.build_design(
+        'development', 0, analysis.PROTOCOL)
     assert len(registration['case_slots']) == 144
     assert len({slot['source_run_id'] for slot in registration['case_slots']}) == 144
     condition_ids = [run_id for slot in registration['case_slots']
@@ -124,6 +125,7 @@ def test_registration_freezes_one_complete_block_without_writing(tmp_path):
     assert set(registration['dependencies']) == {
         'producer', 'artifacts', 'memory_core', 'family_world',
         'synthetic_history', 'family_generator', 'family_plan_validator',
+        'family_analysis',
         'raw_admission', 'pure_oracle', 'owner_diagnostic', 'profiles',
         'records', 'replay', 'snapshots', 'memory_decision', 'memory_task',
         'memory_world', 'interventions', 'male_policy', 'male_model',
@@ -135,7 +137,8 @@ def test_registration_freezes_one_complete_block_without_writing(tmp_path):
 @pytest.mark.parametrize('defect', [
     'duplicate-run', 'historical-run', 'case', 'resource', 'input-byte',
     'overlap-root', 'namespace-shape', 'source-identity', 'history-map',
-    'protocol-format', 'dependency', 'nested-shape',
+    'protocol-format', 'protocol-semantic', 'analysis-design', 'dependency',
+    'nested-shape',
 ])
 def test_registration_rejects_identity_input_and_resource_tampering(tmp_path, defect):
     values = _contract_inputs(tmp_path)
@@ -169,6 +172,13 @@ def test_registration_rejects_identity_input_and_resource_tampering(tmp_path, de
         Path(values['protocol_path']).write_text(
             json.dumps(protocol, indent=2, allow_nan=False) + '\n')
         changed['protocol']['sha256'] = _sha(values['protocol_path'])
+    elif defect == 'protocol-semantic':
+        protocol = artifacts._json(Path(values['protocol_path']).read_bytes())
+        protocol['inference']['meaningful_benefit_ticks'] = 89
+        _write(values['protocol_path'], protocol)
+        changed['protocol']['sha256'] = _sha(values['protocol_path'])
+    elif defect == 'analysis-design':
+        changed['analysis_design']['owner_order_sha256'] = 'f' * 64
     elif defect == 'dependency':
         changed['dependencies']['owner_diagnostic']['sha256'] = 'f' * 64
     elif defect == 'nested-shape':
@@ -180,6 +190,15 @@ def test_registration_rejects_identity_input_and_resource_tampering(tmp_path, de
     with pytest.raises(ValueError):
         producer.validate_registration(changed)
     assert not any(path.exists() for path in values['roots'].values())
+
+
+def test_registration_build_rejects_canonical_protocol_semantic_drift(tmp_path):
+    values = _contract_inputs(tmp_path)
+    protocol = artifacts._json(Path(values['protocol_path']).read_bytes())
+    protocol['inference']['meaningful_benefit_ticks'] = 89
+    _write(values['protocol_path'], protocol)
+    with pytest.raises(ValueError, match='frozen contract'):
+        _build(values)
 
 
 def test_registration_rejects_history_namespace_reuse(tmp_path):
@@ -305,8 +324,7 @@ def _supervision(values, job, timeout):
 
 
 def _closed_pair(tmp_path):
-    protocol = {'schema': 'memory-family-native-protocol-v3',
-                'scope': 'synthetic-contract-only'}
+    protocol = copy.deepcopy(analysis.PROTOCOL)
     source_identity = {'schema': 'source-identity-v1', 'commit': 'fixture'}
     output = tmp_path / 'output'
     pair = _pair(output / 'runs', protocol_sha256=memory.sha256(protocol),

@@ -16,6 +16,7 @@ from palimpsest import (
     profiles, records, replay, snapshots,
 )
 from palimpsest.memory_experiment import CONDITIONS
+from scripts import memory_family_analysis_v3 as analysis
 from scripts import memory_family_oracle_admission_v3 as admission
 from scripts import memory_family_oracle_v3 as oracle
 from scripts import memory_family_v3 as family
@@ -29,6 +30,7 @@ MAX_NAMESPACE = 16 * MiB
 MAX_CLOSE = 32 * MiB
 REGISTRATION_FIELDS = {
     'schema', 'mode', 'split', 'block', 'conditions', 'plan', 'protocol',
+    'analysis_design',
     'source_identity', 'source_identity_sha256', 'histories',
     'namespace_inventory', 'roots', 'dependencies', 'resource_projection',
     'case_slots', 'authored_ids', 'retries', 'corrective_studies',
@@ -153,6 +155,7 @@ def _dependency_descriptors(deadline=None):
         'synthetic_history': Path(memory_experiment.__file__),
         'family_generator': Path(family.__file__),
         'family_plan_validator': Path(confirmatory.__file__),
+        'family_analysis': Path(analysis.__file__),
         'raw_admission': Path(admission.__file__),
         'pure_oracle': Path(oracle.__file__),
         'owner_diagnostic': Path(diagnostic.__file__),
@@ -291,6 +294,8 @@ def build_registration(block, *, plan_path, protocol_path, source_identity,
         protocol_path, canonical=True)
     if type(protocol) is not dict:
         raise ValueError('Protocol must be a JSON object')
+    analysis.validate_protocol(protocol)
+    analysis_design = analysis.build_design('development', block, protocol)
     if type(source_identity) is not dict:
         raise ValueError('Source identity must be a JSON object')
     try:
@@ -329,6 +334,7 @@ def build_registration(block, *, plan_path, protocol_path, source_identity,
         'mode': 'software-contract-only', 'split': 'development', 'block': block,
         'conditions': list(CONDITIONS), 'plan': plan,
         'protocol': {'path': str(protocol_path), 'sha256': protocol_sha256},
+        'analysis_design': analysis_design,
         'source_identity': source_identity,
         'source_identity_sha256': source_identity_sha256,
         'histories': histories, 'namespace_inventory': namespace, 'roots': roots,
@@ -373,6 +379,10 @@ def validate_registration(registration, deadline=None):
     if type(protocol) is not dict or registration['protocol'] != {
             'path': str(protocol_path), 'sha256': protocol_sha256}:
         raise ValueError('Registered protocol binding differs')
+    analysis.validate_protocol(protocol)
+    analysis_design = analysis.build_design(registration['split'], block, protocol)
+    if memory.canonical_bytes(registration['analysis_design']) != memory.canonical_bytes(analysis_design):
+        raise ValueError('Registered analysis design differs')
     if type(registration['source_identity']) is not dict:
         raise ValueError('Registered source identity must be an object')
     try:
