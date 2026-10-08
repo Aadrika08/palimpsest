@@ -605,6 +605,8 @@ def _condition_terminal(data, case, projection, terminal_state, schedule):
             raise ValueError('Successful condition contains a terminal failure')
         _normal_condition_terminal(events, manifest, terminal_state, schedule)
         return
+    if any(event.get('kind') == 'episode_finished' for event in events):
+        raise ValueError('Natural condition failure contains a normal terminal event')
     if last_tick != last_row + 1 or last_tick <= schedule['decision_tick']:
         raise ValueError('Condition failure is not a terminal sensor-only tick')
     terminal_sensed = [(index, event) for index, event in sensed
