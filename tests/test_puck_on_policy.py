@@ -57,6 +57,7 @@ EXPECTED = [
 
 RESERVED_IDS = (6110, 6111, 6112, 6113, 6120, 6121, 6122, 6123)
 LINEAGE_SHA256 = hashlib.sha256(b'synthetic-v3-reservation-lineage').hexdigest()
+PROTOCOL_SHA256 = LINEAGE_SHA256
 
 
 def canonical_bytes(value):
@@ -67,6 +68,30 @@ def canonical_bytes(value):
 def digest(value):
     raw = value if type(value) is bytes else canonical_bytes(value)
     return hashlib.sha256(raw).hexdigest()
+
+
+def commit_receipt(name, manifest_bytes, *, protocol_sha256, reservation_sha256=None):
+    return {
+        'version': 1,
+        'kind': 'puck-on-policy-publication-commit-v1',
+        'target': name,
+        'manifest_sha256': digest(manifest_bytes),
+        'manifest_bytes': len(manifest_bytes),
+        'reservation_sha256': reservation_sha256 or digest(manifest_bytes),
+        'protocol_sha256': protocol_sha256,
+    }
+
+
+def write_synthetic_publication(root, name, manifest, *, protocol_sha256,
+                                reservation_sha256=None):
+    raw = canonical_bytes(manifest)
+    target = root / name
+    target.write_bytes(raw)
+    receipt = commit_receipt(
+        name, raw, protocol_sha256=protocol_sha256,
+        reservation_sha256=reservation_sha256)
+    target.with_name(f'{name}.commit.json').write_bytes(canonical_bytes(receipt))
+    return target
 
 
 def inventory_scene(scene_id, marker):
@@ -301,8 +326,14 @@ class PuckReservationAndMintAdmissionTests(unittest.TestCase):
                 result = self.reserve(root, snapshot, copy.deepcopy(snapshot))
 
             target = root / 'reservation.json'
-            self.assertEqual(replacements, [('.reservation.json.pending', 'reservation.json')])
-            self.assertEqual(set(result), {'manifest_path', 'manifest_bytes', 'manifest_sha256'})
+            commit = root / 'reservation.json.commit.json'
+            self.assertEqual(replacements, [
+                ('.reservation.json.pending', 'reservation.json'),
+                ('.reservation.json.commit.pending', 'reservation.json.commit.json'),
+            ])
+            self.assertEqual(set(result), {
+                'manifest_path', 'manifest_bytes', 'manifest_sha256',
+                'commit_path', 'commit_bytes', 'commit_sha256'})
             self.assertEqual(Path(result['manifest_path']), target)
             self.assertEqual(target.read_bytes(), result['manifest_bytes'])
             manifest = json.loads(result['manifest_bytes'])
@@ -314,7 +345,14 @@ class PuckReservationAndMintAdmissionTests(unittest.TestCase):
             self.assertEqual(manifest['inventory_before_sha256'], digest(snapshot))
             self.assertEqual(manifest['inventory_after_sha256'], digest(snapshot))
             self.assertEqual(manifest['occupied_scene_ids'], [6000])
-            self.assertEqual([item.name for item in root.iterdir()], ['reservation.json'])
+            receipt = json.loads(result['commit_bytes'])
+            self.assertEqual(receipt, commit_receipt(
+                'reservation.json', result['manifest_bytes'],
+                protocol_sha256=PROTOCOL_SHA256))
+            self.assertEqual(commit.read_bytes(), result['commit_bytes'])
+            self.assertEqual(result['commit_sha256'], digest(result['commit_bytes']))
+            self.assertEqual(sorted(item.name for item in root.iterdir()),
+                             ['reservation.json', 'reservation.json.commit.json'])
             self.assertEqual(on_policy.RESERVED_SCENE_IDS, RESERVED_IDS)
 
     def test_partial_duplicate_or_out_of_lineage_reserved_rosters_fail(self):
@@ -434,8 +472,11 @@ class PuckReservationAndMintAdmissionTests(unittest.TestCase):
                  else 'on_policy_development')
                 for slot, scene_id in enumerate(RESERVED_IDS)]
             self.assertEqual(calls, expected_calls)
-            self.assertEqual(replacements, [('.scene-manifest.json.pending',
-                                             'scene-manifest.json')])
+            self.assertEqual(replacements, [
+                ('.scene-manifest.json.pending', 'scene-manifest.json'),
+                ('.scene-manifest.json.commit.pending',
+                 'scene-manifest.json.commit.json'),
+            ])
             target = Path(scene_directory) / 'scene-manifest.json'
             manifest_bytes = target.read_bytes()
             manifest = json.loads(manifest_bytes)
@@ -445,6 +486,12 @@ class PuckReservationAndMintAdmissionTests(unittest.TestCase):
                              list(RESERVED_IDS))
             self.assertEqual(result['manifest_sha256'], digest(manifest_bytes))
             self.assertEqual(Path(result['manifest_path']), target)
+            self.assertEqual(json.loads(result['commit_bytes']), commit_receipt(
+                'scene-manifest.json', manifest_bytes,
+                protocol_sha256=PROTOCOL_SHA256,
+                reservation_sha256=reservation['manifest_sha256']))
+            self.assertEqual(Path(result['commit_path']),
+                             target.with_name('scene-manifest.json.commit.json'))
             expected_scene_fields = {
                 'scene_id', 'slot', 'split', 'canonical_scene_sha256',
                 'scientific_initial_sha256', 'payload_sha256', 'layout'}
@@ -580,8 +627,10 @@ class PuckReservationAndMintAdmissionTests(unittest.TestCase):
 
             for label, manifest in mutations.items():
                 with self.subTest(label=label), tempfile.TemporaryDirectory() as forged_directory:
-                    target = Path(forged_directory).resolve() / 'scene-manifest.json'
-                    target.write_bytes(canonical_bytes(manifest))
+                    target = write_synthetic_publication(
+                        Path(forged_directory).resolve(), 'scene-manifest.json', manifest,
+                        protocol_sha256=PROTOCOL_SHA256,
+                        reservation_sha256=reservation['manifest_sha256'])
                     with self.assertRaises(ValueError):
                         project(target, reservation_path=reservation['manifest_path'],
                                 audience='collection')
@@ -607,11 +656,160 @@ class PuckReservationAndMintAdmissionTests(unittest.TestCase):
             manifest = json.loads(Path(published['manifest_path']).read_bytes())
             manifest['scenes'][0]['layout'] = forged_layout
             manifest['scenes'][0].update(forged_identities)
-            target = Path(forged_directory).resolve() / 'scene-manifest.json'
-            target.write_bytes(canonical_bytes(manifest))
+            target = write_synthetic_publication(
+                Path(forged_directory).resolve(), 'scene-manifest.json', manifest,
+                protocol_sha256=PROTOCOL_SHA256,
+                reservation_sha256=reservation['manifest_sha256'])
             with self.assertRaisesRegex(ValueError, 'collision'):
                 project(target, reservation_path=reservation['manifest_path'],
                         audience='collection')
+
+    def test_path_reader_requires_exact_positive_commit_receipt(self):
+        _, stage = self.api('stage_scene_manifest')
+        _, project = self.api('collection_scene_projection')
+        snapshot = inventory_snapshot()
+        with tempfile.TemporaryDirectory() as reservation_directory, \
+                tempfile.TemporaryDirectory() as source_directory:
+            reservation = self.reserve(Path(reservation_directory).resolve(), snapshot)
+            published = stage(Path(source_directory).resolve(), reservation['manifest_path'],
+                              fake_candidate, inventory_after=copy.deepcopy(snapshot))
+            manifest_bytes = Path(published['manifest_path']).read_bytes()
+            valid = commit_receipt(
+                'scene-manifest.json', manifest_bytes,
+                protocol_sha256=PROTOCOL_SHA256,
+                reservation_sha256=reservation['manifest_sha256'])
+            mutations = {'missing receipt': None, 'malformed receipt': b'{\n'}
+            for label, field, value in (
+                    ('extra field', 'extra', True),
+                    ('wrong target', 'target', 'other.json'),
+                    ('wrong manifest hash', 'manifest_sha256', '0' * 64),
+                    ('wrong manifest size', 'manifest_bytes', len(manifest_bytes) + 1),
+                    ('boolean manifest size', 'manifest_bytes', True),
+                    ('wrong reservation', 'reservation_sha256', '1' * 64),
+                    ('wrong protocol', 'protocol_sha256', '2' * 64)):
+                receipt = copy.deepcopy(valid); receipt[field] = value
+                mutations[label] = canonical_bytes(receipt)
+            mutations['noncanonical receipt'] = json.dumps(
+                valid, sort_keys=True, indent=2).encode('utf-8')
+
+            for label, receipt_bytes in mutations.items():
+                with self.subTest(label=label), tempfile.TemporaryDirectory() as directory:
+                    root = Path(directory).resolve()
+                    target = root / 'scene-manifest.json'
+                    target.write_bytes(manifest_bytes)
+                    if receipt_bytes is not None:
+                        target.with_name('scene-manifest.json.commit.json').write_bytes(
+                            receipt_bytes)
+                    with self.assertRaises(ValueError):
+                        project(target, reservation_path=reservation['manifest_path'],
+                                audience='collection')
+
+            with tempfile.TemporaryDirectory() as directory, \
+                    tempfile.TemporaryDirectory() as outside:
+                root = Path(directory).resolve(); target = root / 'scene-manifest.json'
+                target.write_bytes(manifest_bytes)
+                external = Path(outside).resolve() / 'commit.json'
+                external.write_bytes(canonical_bytes(valid))
+                target.with_name('scene-manifest.json.commit.json').symlink_to(external)
+                with self.assertRaises(ValueError):
+                    project(target, reservation_path=reservation['manifest_path'],
+                            audience='collection')
+
+    def test_preexisting_commit_paths_refuse_before_minting(self):
+        _, stage = self.api('stage_scene_manifest')
+        snapshot = inventory_snapshot()
+        with tempfile.TemporaryDirectory() as reservation_directory:
+            reservation = self.reserve(Path(reservation_directory).resolve(), snapshot)
+            for name in ('scene-manifest.json.commit.json',
+                         '.scene-manifest.json.commit.pending'):
+                with self.subTest(name=name), tempfile.TemporaryDirectory() as directory:
+                    root = Path(directory).resolve(); marker = root / name
+                    marker.write_bytes(b'preexisting')
+                    calls = []
+
+                    def forbidden_minter(*arguments):
+                        calls.append(arguments)
+                        return fake_candidate(*arguments)
+
+                    with self.assertRaises(ValueError):
+                        stage(root, reservation['manifest_path'], forbidden_minter,
+                              inventory_after=copy.deepcopy(snapshot))
+                    self.assertEqual(calls, [])
+                    self.assertEqual(list(root.iterdir()), [marker])
+
+    def test_commit_receipt_is_attempted_only_after_target_directory_fsync(self):
+        on_policy, stage = self.api('stage_scene_manifest')
+        snapshot = inventory_snapshot()
+        with tempfile.TemporaryDirectory() as reservation_directory, \
+                tempfile.TemporaryDirectory() as scene_directory:
+            reservation = self.reserve(Path(reservation_directory).resolve(), snapshot)
+            root = Path(scene_directory).resolve()
+            target = root / 'scene-manifest.json'
+            events = []
+            real_directory_fsync = on_policy._fsync_directory
+
+            def directory_fsync(path):
+                if target.exists() and 'target-directory-fsync' not in events:
+                    events.append('target-directory-fsync')
+                return real_directory_fsync(path)
+
+            def write_receipt(path, raw):
+                self.assertTrue(target.exists())
+                self.assertIn('target-directory-fsync', events)
+                events.append('receipt-write')
+                with Path(path).open('xb') as handle:
+                    handle.write(raw)
+                    handle.flush()
+                    os.fsync(handle.fileno())
+
+            with patch.object(on_policy, '_fsync_directory', side_effect=directory_fsync), \
+                    patch.object(on_policy, '_write_commit_receipt', create=True,
+                                 side_effect=write_receipt):
+                stage(root, reservation['manifest_path'], fake_candidate,
+                      inventory_after=copy.deepcopy(snapshot))
+            self.assertIn('receipt-write', events)
+            self.assertLess(events.index('target-directory-fsync'),
+                            events.index('receipt-write'))
+
+    def test_commit_receipt_write_fsync_rename_and_admission_fail_closed(self):
+        on_policy, stage = self.api('stage_scene_manifest')
+        snapshot = inventory_snapshot()
+        with tempfile.TemporaryDirectory() as reservation_directory:
+            reservation = self.reserve(Path(reservation_directory).resolve(), snapshot)
+            real_replace = os.replace
+            real_directory_fsync = on_policy._fsync_directory
+
+            def partial_then_fsync_failure(path, raw):
+                Path(path).write_bytes(raw[:8])
+                raise OSError('commit receipt fsync')
+
+            def receipt_rename_failure(source, target):
+                if Path(source).name == '.scene-manifest.json.commit.pending':
+                    raise OSError('commit receipt rename')
+                return real_replace(source, target)
+
+            for label, context_factory in (
+                    ('write', lambda: patch.object(
+                        on_policy, '_write_commit_receipt', create=True,
+                        side_effect=OSError('commit receipt write'))),
+                    ('fsync', lambda: patch.object(
+                        on_policy, '_write_commit_receipt', create=True,
+                        side_effect=partial_then_fsync_failure)),
+                    ('rename', lambda: patch.object(
+                        on_policy.os, 'replace', side_effect=receipt_rename_failure)),
+                    ('admission fsync', lambda: patch.object(
+                        on_policy, '_fsync_directory', side_effect=lambda root: (
+                            (_ for _ in ()).throw(OSError('commit receipt admission fsync'))
+                            if (Path(root) / 'scene-manifest.json.commit.json').exists()
+                            and (Path(root) / '.scene-manifest.json.quarantine').exists()
+                            else real_directory_fsync(root))))):
+                with self.subTest(label=label), tempfile.TemporaryDirectory() as directory, \
+                        context_factory():
+                    root = Path(directory).resolve()
+                    with self.assertRaises(OSError):
+                        stage(root, reservation['manifest_path'], fake_candidate,
+                              inventory_after=copy.deepcopy(snapshot))
+                    self.assertEqual(list(root.iterdir()), [])
 
     def test_minter_layout_inventory_and_publication_failures_leave_no_scene_manifest(self):
         on_policy, stage = self.api('stage_scene_manifest')
@@ -782,6 +980,68 @@ class PuckReservationAndMintAdmissionTests(unittest.TestCase):
                           forbidden_minter, inventory_after=copy.deepcopy(snapshot))
                 self.assertEqual(calls, [])
                 self.assertEqual(list(Path(scene_directory).iterdir()), [])
+
+    def test_compounded_final_fsync_cleanup_and_quarantine_failure_is_unreadable(self):
+        on_policy, stage = self.api('stage_scene_manifest')
+        _, project = self.api('collection_scene_projection')
+        snapshot = inventory_snapshot()
+        real_directory_fsync = on_policy._fsync_directory
+
+        def faults_for(root, target_name):
+            target = root / target_name
+            quarantine = root / f'.{target_name}.quarantine'
+
+            def final_directory_fsync(path):
+                if target.exists() and not quarantine.exists():
+                    raise OSError('final parent fsync failed')
+                return real_directory_fsync(path)
+
+            return final_directory_fsync
+
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory).resolve(); target = root / 'reservation.json'
+            calls = []
+            with patch.object(on_policy, '_fsync_directory',
+                              side_effect=faults_for(root, target.name)), \
+                    patch.object(on_policy, '_remove_failed_target',
+                                 side_effect=OSError('target unlink failed')), \
+                    patch.object(on_policy, '_retain_quarantine',
+                                 side_effect=OSError('quarantine recreation failed')):
+                with self.assertRaises(OSError):
+                    self.reserve(root, snapshot, copy.deepcopy(snapshot))
+            self.assertTrue(target.exists())
+            with self.assertRaises(ValueError):
+                on_policy._read_published_reservation(target)
+
+            def forbidden_minter(*arguments):
+                calls.append(arguments)
+                return fake_candidate(*arguments)
+
+            with tempfile.TemporaryDirectory() as scene_directory:
+                with self.assertRaises(ValueError):
+                    stage(Path(scene_directory).resolve(), target, forbidden_minter,
+                          inventory_after=copy.deepcopy(snapshot))
+            self.assertEqual(calls, [])
+
+        with tempfile.TemporaryDirectory() as reservation_directory, \
+                tempfile.TemporaryDirectory() as directory:
+            reservation = self.reserve(Path(reservation_directory).resolve(), snapshot)
+            root = Path(directory).resolve(); target = root / 'scene-manifest.json'
+            with patch.object(on_policy, '_fsync_directory',
+                              side_effect=faults_for(root, target.name)), \
+                    patch.object(on_policy, '_remove_failed_target',
+                                 side_effect=OSError('target unlink failed')), \
+                    patch.object(on_policy, '_retain_quarantine',
+                                 side_effect=OSError('quarantine recreation failed')):
+                with self.assertRaises(OSError):
+                    stage(root, reservation['manifest_path'], fake_candidate,
+                          inventory_after=copy.deepcopy(snapshot))
+            self.assertTrue(target.exists())
+            with self.assertRaises(ValueError):
+                on_policy._read_publication(target, target.name)
+            with self.assertRaises(ValueError):
+                project(target, reservation_path=reservation['manifest_path'],
+                        audience='collection')
 
     def test_output_alias_and_symlink_paths_are_rejected_without_publication(self):
         _, stage = self.api('stage_scene_manifest')
