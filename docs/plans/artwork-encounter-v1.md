@@ -8,7 +8,7 @@ repair, repeat or reopen any historical artwork/browser allocation.
 ## Bounded preparation
 
 Implement and test the script before root's independent source review. Root must
-review a committed source registration before the one actual preparation starts.
+review a registration of committed sources before the one actual preparation starts.
 This plan does not launch it. Input:
 `docs/reports/artwork-material-v3-evidence/palimpsest-artwork-review-development-v3.zip`,
 13,529,793 bytes, SHA256
@@ -29,6 +29,8 @@ publication. Copy derivative bytes unchanged and verify every copied member.
 Registration binds committed HEAD, script, plan, input ZIP and fresh destination.
 The output receipt reports elapsed time, pins, member checks and empty qualification
 claims; its launch marker remains consumed on either success or failure.
+Admission refusal also consumes the invocation; root retains its command outcome
+even if no marker could be created. There is no automatic retry.
 
 ## Encounter
 
@@ -59,3 +61,20 @@ invocation. Those remain explicit acceptance gates, alongside a named independen
 operator's setup and entire declared-duration session, audience/custodian/retention
 declarations, user artistic judgment, and adequate new Afterimage material.
 Account quota telemetry is unavailable; quota is unknown.
+
+## Root-only next actions (not executed during software preparation)
+
+After the committed source review, print the registration with
+`python scripts/prepare_artwork_encounter.py --register --output OUTPUT`, where
+OUTPUT is a fresh directory under this worktree with an existing parent. Retain
+the printed registration outside the checkout or under an ignored path, so its
+creation does not dirty the clean source gate; review it before launching once.
+
+For that one launch, use
+`timeout --signal=TERM --kill-after=1s 119s python scripts/prepare_artwork_encounter.py --registration REGISTRATION --output OUTPUT`.
+The external 119-second TERM / one-second KILL ceiling covers blocked system calls;
+the script checks its 120-second deadline at each bounded operation. Root must
+retain actual outer start/end, return code and any admission/finalization error.
+The receipt's elapsed field is explicitly measured before receipt publication.
+Only an exit-zero command plus a passing receipt and independent byte checks can
+establish preparation success. None supplies human acceptance.
