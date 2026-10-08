@@ -409,3 +409,30 @@ bounded trainer and atomic evidence path remain to be implemented and reviewed;
 fresh development scenes 3130-3133 then require at least 3/4 goals for every
 augmented seed before a separate GO can unlock held-out scenes 3120-3127. R3,
 main, CI and the physical rover remain unchanged.
+
+### Compact family evidence plan admitted for implementation, 8 October 2026
+
+[PR #107](https://github.com/Aadrika08/palimpsest/pull/107), stacked on #104,
+replaces the infeasible generic 600.96875 GiB recording projection with a
+family-specific compact evidence contract. It retains exact model inputs,
+controls, poses, actions, task and lifecycle events, byte-identical legacy
+manifest/event files, one shared acquired snapshot per case and deterministic
+raw camera audit frames. It does not claim full-pixel, renderer, physics or
+Engine replay for omitted frames.
+
+The frozen maximum is 61,639,491,584 bytes plus a 2 GiB continuing floor, or
+63,786,975,232 bytes minimum. The final pre-review point measurement leaves
+3,680,202,752 bytes; future admission must measure again. The plan derives
+77,391 steady and 77,440 peak entries under a 77,824 cap, including the exact
+474 prerequisite entries, and caps aggregate snapshots at 154. Generator-backed
+enumeration over all 144 cases found at most seven source and eleven condition
+audit ticks under the declared limit of sixteen.
+
+Independent review initially stopped the plan because raw-tree pruning and two
+support/entry allowances did not match its accounting. The complete raw-tree
+removal sequence and exact allowances were fixed; the second review returned GO
+with no remaining Critical or Important issue and recomputed every bound. This
+admits implementation of the compact schema, reader, auditor and converter only.
+Allocation, pruning, native owners, collection and R2 qualification remain
+unauthorized until their later source, replay, namespace, upstream and fresh
+capacity gates pass. Main, CI and the physical rover remain unchanged.
