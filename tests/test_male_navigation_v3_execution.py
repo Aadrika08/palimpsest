@@ -128,13 +128,20 @@ class NavigationV3ExecutionTests(unittest.TestCase):
                     "selected_optimizer_update": 1440,
                     "selected_real_row_presentations": 46080,
                     "graph_variant": "original",
+                    "schedule_sha256": hashlib.sha256(
+                        (pair / (arm + "-schedule.json")).read_bytes()).hexdigest(),
+                    "recorded_development": {"ticks": 1228},
                     "checkpoint": {"path": name, "size_bytes": len(payload),
                                    "sha256": hashlib.sha256(payload).hexdigest()}}
             report = {
                 "status": "completed-navigation-v3-training", "training_completed": True,
+                "training_attempted": True,
                 "training_seed": 10, "study_protocol_sha256": owner.PROTOCOL_SHA,
                 "data_manifest_sha256": owner.DATA_SHA, "models": models,
-                "held_out_status": "locked_unopened", "qualification_claims": []}
+                "protocol_sha256": hashlib.sha256(
+                    (pair / "protocol.json").read_bytes()).hexdigest(),
+                "held_out_status": "locked_unopened", "held_out_used_for_selection": False,
+                "qualification_claims": []}
             report_payload = canonical(report)
             (pair / "report.json").write_bytes(report_payload)
             (pair / "publication.json").write_bytes(canonical({
@@ -210,6 +217,8 @@ class NavigationV3ExecutionTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as directory:
             output = Path(directory) / "aggregate"
             value = {"self_sha256": "a" * 64, "output": str(output),
+                     "invocation": {"cwd": str(ROOT)},
+                     "behavior_sources": {},
                      "pairs": [{"seed": seed, "output": str(output / f"seed-{seed}"),
                                 "argv": [str(seed)]} for seed in (10, 11, 12)]}
             calls = []
@@ -233,6 +242,56 @@ class NavigationV3ExecutionTests(unittest.TestCase):
             self.assertEqual(failure["pairs"]["11"]["status"], "not_started")
             with self.assertRaises(FileExistsError):
                 owner.reserve_attempt(output, "a" * 64)
+
+    def test_aggregate_success_needs_durable_receipt_and_all_six_models(self):
+        with tempfile.TemporaryDirectory() as directory:
+            output = Path(directory) / "aggregate"
+            digest = "a" * 64
+            owner.reserve_attempt(output, digest)
+            report = {
+                "status": "completed-navigation-v3-enclosing-training",
+                "training_completed": True, "execution_manifest_sha256": digest,
+                "pairs": {str(seed): {"status": "completed"} for seed in (10, 11, 12)},
+                "models": [{"seed": seed, "arm": arm}
+                           for seed in (10, 11, 12) for arm in owner.ARMS],
+                "qualification_claims": [], "held_out_status": "locked_unopened"}
+            owner._publish_success(output, report, float("inf"))
+            self.assertTrue(owner.success_admitted(output, digest))
+            (output / "failure.json").write_bytes(canonical({"status": "failed"}))
+            self.assertFalse(owner.success_admitted(output, digest))
+
+    def test_source_drift_after_all_pairs_retains_failure_and_no_success(self):
+        with tempfile.TemporaryDirectory() as directory:
+            output = Path(directory) / "aggregate"
+            value = {"self_sha256": "a" * 64, "output": str(output),
+                     "invocation": {"cwd": str(ROOT)}, "behavior_sources": {},
+                     "pairs": [{"seed": seed, "output": str(output / f"seed-{seed}"),
+                                "argv": [str(seed)]} for seed in (10, 11, 12)]}
+            supervision = {"status": "completed", "returncode": 0,
+                           "identity": {"pid": 1}, "observed": [], "survivors": [],
+                           "elapsed_seconds": 1}
+            evidence = lambda path, seed: {
+                "models": [{"seed": seed, "arm": arm} for arm in owner.ARMS],
+                "inventory": {"report.json": {"sha256": str(seed)}}}
+            sources = [{}, ValueError("synthetic final source drift")]
+
+            def source(expected=None):
+                item = sources.pop(0)
+                if isinstance(item, BaseException):
+                    raise item
+                return item
+
+            with (patch.object(owner, "admit_manifest", return_value=value),
+                  patch.object(owner, "preflight", return_value=None),
+                  patch.object(owner, "source_identity", side_effect=source),
+                  patch.object(owner, "runtime_identity", return_value={}),
+                  patch.object(owner, "check_resources", return_value=None),
+                  patch.object(owner, "supervise_pair", return_value=supervision),
+                  patch.object(owner, "admit_pair", side_effect=evidence)):
+                with self.assertRaisesRegex(ValueError, "source drift"):
+                    owner.execute(Path("synthetic"), "a" * 64)
+            self.assertTrue((output / "failure.json").is_file())
+            self.assertFalse((output / "publication.json").exists())
 
 
 if __name__ == "__main__":
