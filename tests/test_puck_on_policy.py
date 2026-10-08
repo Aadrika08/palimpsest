@@ -833,6 +833,87 @@ class PuckReservationAndMintAdmissionTests(unittest.TestCase):
                 on_policy._read_published_reservation(target)
             self.assertTrue(raced['done'])
 
+    def test_publication_reader_rejects_same_byte_target_replacement_between_reads(self):
+        on_policy = subject()
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory).resolve()
+            result = self.reserve(root)
+            target = Path(result['manifest_path'])
+            replacement = root / 'same-byte-reservation-replacement'
+            replacement.write_bytes(target.read_bytes())
+            real_read = on_policy._read_exact_file
+            target_reads = []
+
+            def read_exact(*arguments, **keywords):
+                raw = real_read(*arguments, **keywords)
+                if Path(arguments[1]) == target:
+                    target_reads.append(raw)
+                    if len(target_reads) == 1:
+                        os.replace(replacement, target)
+                return raw
+
+            with patch.object(on_policy, '_read_exact_file', side_effect=read_exact), \
+                    self.assertRaisesRegex(ValueError, 'identity|changed|rebound'):
+                on_policy._read_published_reservation(target)
+            self.assertEqual(len(target_reads), 2)
+            self.assertEqual(target_reads[0], target_reads[1])
+
+    def test_publication_reader_rejects_cloned_parent_replacement_between_reads(self):
+        on_policy = subject()
+        with tempfile.TemporaryDirectory() as directory:
+            base = Path(directory).resolve()
+            live = base / 'live'; live.mkdir()
+            result = self.reserve(live)
+            target = Path(result['manifest_path'])
+            standby, displaced = base / 'standby', base / 'displaced'
+            real_read = on_policy._read_exact_file
+            reads = []
+
+            def read_exact(*arguments, **keywords):
+                raw = real_read(*arguments, **keywords)
+                reads.append(Path(arguments[1]).name)
+                if len(reads) == 2:
+                    standby.mkdir()
+                    for item in live.iterdir():
+                        (standby / item.name).write_bytes(item.read_bytes())
+                    live.rename(displaced)
+                    standby.rename(live)
+                return raw
+
+            with patch.object(on_policy, '_read_exact_file', side_effect=read_exact), \
+                    self.assertRaisesRegex(ValueError, 'parent'):
+                on_policy._read_published_reservation(target)
+            self.assertEqual(reads[:2],
+                             ['reservation.json', 'reservation.json.commit.json'])
+            self.assertTrue(displaced.is_dir())
+
+    def test_publication_rejects_parent_replacement_after_quarantine_creation(self):
+        on_policy = subject()
+        snapshot = inventory_snapshot()
+        with tempfile.TemporaryDirectory() as directory:
+            base = Path(directory).resolve()
+            live = base / 'live'; live.mkdir()
+            standby, displaced = base / 'standby', base / 'displaced'
+            real_write_quarantine = on_policy._write_quarantine
+            raced = []
+
+            def write_quarantine(*arguments, **keywords):
+                marker = real_write_quarantine(*arguments, **keywords)
+                standby.mkdir()
+                for item in live.iterdir():
+                    (standby / item.name).write_bytes(item.read_bytes())
+                live.rename(displaced)
+                standby.rename(live)
+                raced.append(True)
+                return marker
+
+            with patch.object(on_policy, '_write_quarantine',
+                              side_effect=write_quarantine), \
+                    self.assertRaisesRegex(ValueError, 'parent'):
+                self.reserve(live, snapshot, copy.deepcopy(snapshot))
+            self.assertEqual(raced, [True])
+            self.assertTrue(displaced.is_dir())
+
     def test_publication_reader_rechecks_blockers_after_final_secure_read(self):
         on_policy = subject()
         with tempfile.TemporaryDirectory() as directory:
