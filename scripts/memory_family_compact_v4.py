@@ -281,14 +281,67 @@ def audit_ticks(ticks, *, event_tick=None, decision_tick=None):
     return result
 
 
-def _legacy_manifest(payload, run_id):
+def _raw_terminal(receipt, run_id, case_id, operation, condition):
+    if receipt is None:
+        return None
+    _fields(receipt, PROTOCOL['schemas']['raw_audit']['exact_keys'],
+            'Raw-audit receipt')
+    terminal = receipt.get('terminal_state')
+    nested = PROTOCOL['raw_audit']['nested_schemas']
+    for name in ('raw_inventory', 'source_identity', 'terminal_state',
+                 'policy_result', 'oracle_result'):
+        _fields(receipt.get(name), nested[name]['exact_keys'],
+                f'Raw-audit {name}')
+    terminal = receipt['terminal_state']
+    files = receipt['raw_inventory']['files']
+    if type(files) is not list:
+        raise ValueError('Raw-audit inventory files must be a list')
+    for row in files:
+        _fields(row, nested['file']['exact_keys'], 'Raw-audit inventory file')
+        _relative(row['path'], 'raw-audit inventory path')
+        if type(row['size_bytes']) is not int or row['size_bytes'] < 0:
+            raise ValueError('Invalid raw-audit inventory file size')
+        _digest(row['sha256'], 'raw-audit inventory file SHA-256')
+    if (receipt.get('schema') != PROTOCOL['schemas']['raw_audit']['name']
+            or receipt.get('protocol_sha256') != PROTOCOL_SHA256
+            or receipt.get('run_id') != run_id
+            or receipt.get('case_id') != case_id
+            or receipt.get('operation') != operation
+            or receipt.get('condition') != condition
+            or receipt.get('claims') != PROTOCOL['claims']):
+        raise ValueError('Raw-audit receipt identity differs')
+    if (type(terminal.get('natural_failure')) is not bool
+            or terminal.get('replacement') is not False):
+        raise ValueError('Raw-audit terminal state differs')
+    return terminal
+
+
+def _legacy_manifest(payload, run_id, case_id, operation, condition,
+                     raw_audit_receipt=None):
     if type(payload) is not bytes or len(payload) > MiB:
         raise ValueError('Invalid legacy manifest bytes')
     value = artifacts._json(payload)
     if (type(value) is not dict or value.get('run_id') != run_id
-            or value.get('recording_format') != 'palimpsest-npz-v1'
-            or value.get('status') != 'completed'):
+            or value.get('recording_format') != 'palimpsest-npz-v1'):
         raise ValueError('Legacy manifest identity or terminal state differs')
+    terminal = _raw_terminal(
+        raw_audit_receipt, run_id, case_id, operation, condition)
+    status = value.get('status')
+    if operation == 'source':
+        if status != 'completed' or (terminal is not None and (
+                terminal['manifest_status'] != 'completed'
+                or terminal['natural_failure'])):
+            raise ValueError('Source legacy manifest must be completed')
+    elif status == 'failed':
+        if (terminal is None or terminal['manifest_status'] != 'failed'
+                or terminal['final_phase'] != 'failed'
+                or terminal['natural_failure'] is not True):
+            raise ValueError(
+                'Failed condition requires its exact natural-failure receipt')
+    elif status != 'completed' or (terminal is not None and (
+            terminal['manifest_status'] != 'completed'
+            or terminal['natural_failure'])):
+        raise ValueError('Condition legacy terminal state differs')
     for name in ('recorded_ticks', 'recorded_chunks', 'recorded_events'):
         if type(value.get(name)) is not int or value[name] < 0:
             raise ValueError('Invalid legacy terminal count')
@@ -434,7 +487,7 @@ def _prefix(value, legacy_events):
 def convert_synthetic(*, run_id, case_id, operation, condition, rows,
                       legacy_manifest_bytes, legacy_events_bytes,
                       snapshot_reference, event_tick=None, decision_tick=None,
-                      snapshot_event_prefix=None):
+                      snapshot_event_prefix=None, raw_audit_receipt=None):
     """Build an in-memory compact candidate from synthetic decoded legacy rows."""
     import numpy as np
 
@@ -443,7 +496,9 @@ def convert_synthetic(*, run_id, case_id, operation, condition, rows,
     _validate_operation_schedule(
         operation, condition, event_tick, decision_tick)
     compact_rows = _project_rows(rows, operation)
-    legacy_manifest = _legacy_manifest(legacy_manifest_bytes, run_id)
+    legacy_manifest = _legacy_manifest(
+        legacy_manifest_bytes, run_id, case_id, operation, condition,
+        raw_audit_receipt)
     events = _legacy_events(legacy_events_bytes, operation)
     chunks = [event for event in events if event['kind'] == 'chunk']
     if (legacy_manifest.get('recorded_ticks') != len(rows)
@@ -568,7 +623,7 @@ def _read_manifest(bundle):
     return manifest
 
 
-def read_compact(bundle):
+def read_compact(bundle, *, raw_audit_receipt=None):
     """Exhaustively validate and decode one in-memory compact candidate."""
     import numpy as np
 
@@ -591,7 +646,8 @@ def read_compact(bundle):
     ):
         _check_descriptor(manifest[name], path, bundle[path])
     legacy_manifest = _legacy_manifest(
-        bundle['legacy-manifest.json'], manifest['run_id'])
+        bundle['legacy-manifest.json'], manifest['run_id'], manifest['case_id'],
+        operation, manifest['condition'], raw_audit_receipt)
     events = _legacy_events(bundle['legacy-events.jsonl'], operation)
     legacy_chunks = [event for event in events if event['kind'] == 'chunk']
     if (legacy_manifest.get('recorded_ticks') != manifest['row_count']

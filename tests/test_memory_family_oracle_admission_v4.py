@@ -2,6 +2,7 @@
 import copy
 import hashlib
 import importlib
+import math
 import os
 from pathlib import Path
 import subprocess
@@ -12,11 +13,12 @@ import uuid
 import numpy as np
 import pytest
 
-from palimpsest import artifacts, memory, memory_experiment, memory_task, snapshots
+from palimpsest import artifacts, memory, memory_decision as decision
+from palimpsest import memory_experiment, memory_task, snapshots
 from scripts import memory_family_compact_v4 as compact
 from scripts import memory_family_raw_audit_v4 as raw_audit
 from test_memory_family_compact_v4 import _row
-from test_memory_family_oracle_v3 import evidence
+from test_memory_family_oracle_v3 import _packet, evidence
 
 
 ROOT = Path(__file__).parents[1]
@@ -64,7 +66,9 @@ def _raw_rows(projection):
     return rows
 
 
-def _legacy(run_id, rows, supplied_events, *, status='completed'):
+def _legacy(run_id, rows, supplied_events, *, status='completed',
+            world_state, final_phase='paused', last_outcome=None,
+            parent_run_id=None, parent_event_prefix=None):
     arrays = {
         name: {'dtype': value.dtype.str, 'shape': list(value.shape)}
         for name, value in rows[0].items() if name not in {'episode', 'tick'}
@@ -93,6 +97,11 @@ def _legacy(run_id, rows, supplied_events, *, status='completed'):
         'recording_format': 'palimpsest-npz-v1',
         'recorded_ticks': len(rows), 'recorded_chunks': len(chunks),
         'recorded_events': len(events),
+        'world_state': copy.deepcopy(world_state),
+        'final_phase': final_phase, 'total_tick': rows[-1]['tick'] + 1,
+        'last_outcome': copy.deepcopy(last_outcome),
+        'parent_run_id': parent_run_id,
+        'parent_event_prefix': copy.deepcopy(parent_event_prefix),
     }) + b'\n'
     event_bytes = b''.join(memory.canonical_bytes(event) + b'\n'
                            for event in events)
@@ -152,18 +161,20 @@ def _inventory(operation, legacy_manifest, legacy_events, events,
 def _raw_receipt(*, run_id, case, operation, condition, rows, events,
                  legacy_manifest, legacy_events, source_identity,
                  snapshot_descriptor, source_run_id, source_application,
-                 schedule, natural_failure=False):
+                 schedule, world_state, natural_failure=False):
     terminal = {
         'manifest_status': 'failed' if natural_failure else 'completed',
         'final_phase': 'failed' if natural_failure else 'paused',
         'total_ticks': rows[-1]['tick'] + 1,
         'last_tick': rows[-1]['tick'] + (1 if natural_failure else 0),
         'natural_failure': natural_failure, 'replacement': False,
-        'world_state_sha256': 'f' * 64,
+        'world_state_sha256': memory.sha256(world_state),
         'snapshot_sha256': snapshot_descriptor['sha256'],
         'source_run_id': source_run_id,
     }
     projected = _projection(rows)
+    calls = [event for event in events
+             if event['kind'] == 'neural_policy_call']
     return {
         'schema': 'memory-family-raw-audit-v4',
         'protocol_sha256': compact.PROTOCOL_SHA256,
@@ -181,9 +192,12 @@ def _raw_receipt(*, run_id, case, operation, condition, rows, events,
         'terminal_state': terminal,
         'policy_result': {
             'status': 'exhaustive-pass',
-            'call_count': sum(event['kind'] == 'neural_policy_call'
-                              for event in events),
-            'bindings_sha256': '1' * 64,
+            'call_count': len(calls),
+            'bindings_sha256': memory.sha256([{
+                key: event[key] for key in (
+                    'tick', 'observation_sha256', 'cameras_sha256',
+                    'result_sha256')
+            } for event in calls]),
         },
         'oracle_result': {
             'status': ('source-boundary-pass' if operation == 'source'
@@ -206,8 +220,9 @@ def _histories(root, case):
     other = next(relation for relation in memory.RELATIONS
                  if relation != case['regime'])
     result = {}
-    for role, relation in (('own', case['regime']), ('swapped', other)):
-        history = memory_experiment.make_history(200, relation)
+    for role, relation, seed in (
+            ('own', case['regime'], 200), ('swapped', other, 1200)):
+        history = memory_experiment.make_history(seed, relation)
         fitted = memory.fit(history)
         bundle = {'e': history, 'u': fitted,
                   'history_sha256': memory.sha256(history)}
@@ -216,16 +231,12 @@ def _histories(root, case):
     return result
 
 
-def _condition_values(condition, case, histories, source_application):
+def _condition_values(condition, case, histories, source_application,
+                      prior_own_result=None):
     empty = memory.artifact(method='empty-v1')
     gold = ([] if case['kind'] != 'change' else [next(
         fact['id'] for fact in case['facts']
         if fact['subject_id'] == case['closure_subject_id'])])
-    oracle_identity = {
-        'case_sha256': case['case_sha256'],
-        'gold_target_ids_sha256': memory.sha256(gold),
-        'source_application_sha256': memory.sha256(source_application),
-    }
     if condition == 'swapped':
         role, u = 'swapped', histories['swapped']['bundle']['u']
     elif condition in ('own', 'sham'):
@@ -239,14 +250,19 @@ def _condition_values(condition, case, histories, source_application):
         resource = histories['own']['bundle']['e']
         resource_kind = 'history'
     elif condition == 'oracle':
-        resource, resource_kind = gold, 'gold-target-ids'
+        if prior_own_result is None:
+            raise ValueError('Oracle fixture requires prior independent evidence')
+        resource = copy.deepcopy(
+            prior_own_result['oracle_result']['gold_target_ids'])
+        resource_kind = 'gold-target-ids'
     else:
         resource, resource_kind = None, 'none'
     provenance = (
         histories['swapped']['descriptor']['sha256'] if condition == 'swapped'
         else histories['own']['descriptor']['sha256']
         if condition in ('own', 'sham', 'retrieval')
-        else memory.sha256(oracle_identity) if condition == 'oracle'
+        else prior_own_result['oracle_result']['proof_sha256']
+        if condition == 'oracle'
         else memory_experiment.PROTOCOL_SHA256)
     selector = {
         'version': 1, 'condition': condition, 'limit': 1,
@@ -274,7 +290,7 @@ def _condition_values(condition, case, histories, source_application):
             'provenance_sha256': provenance,
         },
         'u_identity': {'kind': u_kind, 'sha256': memory.sha256(u)},
-        'oracle_identity': oracle_identity,
+        'gold_target_ids_sha256': memory.sha256(gold),
     }
     return selector, u, expected
 
@@ -288,14 +304,6 @@ def _condition_events(sample, condition, run_id, selector, u,
                 if key not in ('u', 'selector')}
     configured.update(selector=copy.deepcopy(selector), u=copy.deepcopy(u),
                       retained_memory_sha256=memory.sha256(retained))
-    trigger = next(event['detail']['trigger'] for event in events
-                   if event.get('detail', {}).get('kind') == 'memory_trigger')
-    selection = memory_experiment.selection_for_condition(
-        condition, source_application['memory']['m'], trigger,
-        **memory_task.selector_resources(selector, u), limit=1)
-    selected = next(event for event in events
-                    if event.get('detail', {}).get('kind') == 'memory_selection')
-    selected['detail']['selection'] = selection
     restored = next(event for event in events
                     if event['kind'] == 'application_restored')
     restored['parent_run_id'] = source_application['source_run_id']
@@ -312,20 +320,63 @@ def _condition_events(sample, condition, run_id, selector, u,
     armed = next(event for event in events
                  if event['kind'] == 'memory_decision_armed')
     armed['schedule']['acquired_state_sha256'] = memory.sha256(configured_memory)
+    state = decision.configure_selector(source_application['memory'], selector, u)
+    state = decision.arm(state, source_application['episode_step'])
+    replayed_events = []
+    for event in events:
+        if event['kind'] == 'memory_decision':
+            continue
+        replayed_events.append(event)
+        if event['kind'] != 'memory_sensed':
+            continue
+        state, _, audit = decision.advance_memory(state, event['packet'])
+        replayed_events.extend({
+            'kind': 'memory_decision', 'run_id': run_id,
+            'episode': 0, 'episode_step': event['episode_step'],
+            'tick': event['tick'], 'detail': copy.deepcopy(detail),
+        } for detail in audit)
+    events = replayed_events
+    last_outcome = None
     if natural_failure:
-        tick = max(event.get('tick', 0) for event in events) + 1
+        supervisor = state['supervisor']
+        unavailable = supervisor['waypoint_ids'][supervisor['waypoint_index']]
+        pose = sample['post_rows'][-1]['next_pose'].copy()
+        pose[2] = math.remainder(pose[2] + math.pi, 2 * math.pi)
+        sample['post_rows'][-1]['next_pose'] = pose
+        tick = sample['post_world_state']['last_tick'] + 1
+        packet = _packet(
+            sample['case'], pose, tick,
+            event_tick=sample['post_world_state']['event_tick'],
+            gate_result=sample['post_world_state']['gate_result'])
+        events.append({
+            'kind': 'memory_sensed', 'run_id': run_id, 'episode': 0,
+            'episode_step': tick, 'tick': tick, 'packet': packet,
+        })
+        try:
+            decision.advance_memory(state, packet)
+        except Exception as error:
+            if (type(error).__name__ != 'CueUnavailable'
+                    or str(error) != 'selected_waypoint_unavailable: ' + unavailable):
+                raise
+            failure_type, failure_message = type(error).__name__, str(error)
+        else:
+            raise AssertionError('Natural-failure fixture did not fail naturally')
+        last_outcome = {
+            'reason': 'runtime_failure', 'episode': 0, 'steps': tick,
+            'type': failure_type, 'message': failure_message,
+            'policy_diagnostics': {},
+        }
         events.append({
             'kind': 'runtime_failure', 'run_id': run_id, 'episode': 0,
             'episode_step': tick, 'tick': tick,
-            'error': {'reason': 'runtime_failure', 'episode': 0,
-                      'steps': tick, 'type': 'CueUnavailable',
-                      'message': 'selected_waypoint_unavailable: synthetic',
-                      'policy_diagnostics': {}},
+            'error': copy.deepcopy(last_outcome),
         })
+        sample['post_world_state']['last_tick'] = tick
     for sequence, event in enumerate(events):
         event['sequence'] = sequence
         event['run_id'] = run_id
-    return events, copy.deepcopy(armed['schedule'])
+    return (events, copy.deepcopy(armed['schedule']),
+            copy.deepcopy(sample['post_world_state']), last_outcome)
 
 
 def _conversion(root, relative, *, run_id, case, operation, condition,
@@ -346,7 +397,8 @@ def _conversion(root, relative, *, run_id, case, operation, condition,
     return value, _write(root, relative, value)
 
 
-def _fixture(root, condition='own', *, natural_failure=False):
+def _fixture(root, condition='own', *, natural_failure=False,
+             prior_own_result=None):
     admission = _admission()
     root.mkdir(parents=True, exist_ok=True)
     sample = evidence(row=4, kind='change')
@@ -355,9 +407,9 @@ def _fixture(root, condition='own', *, natural_failure=False):
     condition_run_id = uuid.uuid5(uuid.NAMESPACE_URL,
                                   'compact-v4-' + condition).hex
     source_rows = _raw_rows(sample['source_rows'])
-    condition_rows = _raw_rows(sample['post_rows'])
     source_manifest, source_event_bytes, source_events = _legacy(
-        source_run_id, source_rows, sample['source_events'])
+        source_run_id, source_rows, sample['source_events'],
+        world_state=sample['source_application']['world_task_state'])
     source_application = copy.deepcopy(sample['source_application'])
     source_application['event_prefix'] = {
         'size_bytes': len(source_event_bytes),
@@ -380,7 +432,8 @@ def _fixture(root, condition='own', *, natural_failure=False):
         legacy_manifest=source_manifest, legacy_events=source_event_bytes,
         source_identity=source_identity,
         snapshot_descriptor=snapshot_descriptor, source_run_id=None,
-        source_application=source_application, schedule=None)
+        source_application=source_application, schedule=None,
+        world_state=source_application['world_task_state'])
     source_raw_descriptor = _write(
         root, 'receipts/source.raw-audit.json', source_raw)
     source_snapshot_reference = {
@@ -403,13 +456,18 @@ def _fixture(root, condition='own', *, natural_failure=False):
         raw_descriptor=source_raw_descriptor, source_identity=source_identity)
 
     selector, u, expected = _condition_values(
-        condition, case, histories, source_application)
-    condition_events_base, schedule = _condition_events(
+        condition, case, histories, source_application, prior_own_result)
+    condition_events_base, schedule, condition_world, last_outcome = _condition_events(
         sample, condition, condition_run_id, selector, u,
         source_application, natural_failure=natural_failure)
+    condition_rows = _raw_rows(sample['post_rows'])
     status = 'failed' if natural_failure else 'completed'
     condition_manifest, condition_event_bytes, condition_events = _legacy(
-        condition_run_id, condition_rows, condition_events_base, status=status)
+        condition_run_id, condition_rows, condition_events_base, status=status,
+        world_state=condition_world,
+        final_phase='failed' if natural_failure else 'paused',
+        last_outcome=last_outcome, parent_run_id=source_run_id,
+        parent_event_prefix=source_application['event_prefix'])
     condition_raw = _raw_receipt(
         run_id=condition_run_id, case=case, operation='condition',
         condition=condition, rows=condition_rows, events=condition_events,
@@ -417,6 +475,7 @@ def _fixture(root, condition='own', *, natural_failure=False):
         legacy_events=condition_event_bytes, source_identity=source_identity,
         snapshot_descriptor=snapshot_descriptor, source_run_id=source_run_id,
         source_application=None, schedule=schedule,
+        world_state=condition_world,
         natural_failure=natural_failure)
     condition_raw_descriptor = _write(
         root, 'receipts/condition.raw-audit.json', condition_raw)
@@ -440,6 +499,8 @@ def _fixture(root, condition='own', *, natural_failure=False):
         case=case, operation='condition', condition=condition,
         bundle=condition_bundle, raw_descriptor=condition_raw_descriptor,
         source_identity=source_identity)
+    prior_own_descriptor = (None if prior_own_result is None else _write(
+        root, 'receipts/prior-own.pair.json', prior_own_result))
     return {
         'root': root, 'case': case, 'condition': condition,
         'source_run_id': source_run_id,
@@ -455,11 +516,13 @@ def _fixture(root, condition='own', *, natural_failure=False):
             role: copy.deepcopy(value['descriptor'])
             for role, value in histories.items()},
         'expected': expected, 'natural_failure': natural_failure,
+        'condition_world': condition_world, 'schedule': schedule,
+        'prior_own_receipt': prior_own_descriptor,
     }
 
 
 def _request(fixture):
-    return {
+    request = {
         'case': fixture['case'],
         'source_bundle': fixture['source_bundle'],
         'condition_bundle': fixture['condition_bundle'],
@@ -473,6 +536,9 @@ def _request(fixture):
         'owner_source_sha256': OWNER_SOURCE_SHA256,
         'deadline': time.monotonic() + 30,
     }
+    if fixture['prior_own_receipt'] is not None:
+        request['prior_own_receipt'] = fixture['prior_own_receipt']
+    return request
 
 
 def _rebind_file(fixture, relative, value):
@@ -491,6 +557,32 @@ def _rebind_file(fixture, relative, value):
             fixture['condition_conversion'])
     else:
         raise AssertionError(relative)
+
+
+def _rebind_condition_events(fixture, events):
+    payload = b''.join(memory.canonical_bytes(event) + b'\n'
+                       for event in events)
+    fixture['condition_bundle']['legacy-events.jsonl'] = payload
+    manifest = artifacts._json(fixture['condition_bundle']['manifest.json'])
+    manifest['legacy_events'] = _descriptor('legacy-events.jsonl', payload)
+    fixture['condition_bundle']['manifest.json'] = memory.canonical_bytes(manifest)
+
+    receipt = copy.deepcopy(fixture['condition_raw'])
+    inventory = receipt['raw_inventory']
+    row = next(value for value in inventory['files']
+               if value['path'] == 'recording/events.jsonl')
+    old_size = row['size_bytes']
+    row.update(size_bytes=len(payload), sha256=hashlib.sha256(payload).hexdigest())
+    inventory['recording_bytes'] += len(payload) - old_size
+    inventory['total_bytes'] += len(payload) - old_size
+    inventory['tree_sha256'] = memory.sha256(inventory['files'])
+    receipt['oracle_result']['events_sha256'] = memory.sha256(events)
+    _rebind_file(fixture, 'receipts/condition.raw-audit.json', receipt)
+    fixture['condition_conversion']['compact_manifest'] = _descriptor(
+        'manifest.json', fixture['condition_bundle']['manifest.json'])
+    fixture['condition_conversion_descriptor'] = _write(
+        fixture['root'], 'receipts/condition.conversion.json',
+        fixture['condition_conversion'])
 
 
 def test_protocol_promotes_pair_admission_and_freezes_nested_shapes():
@@ -518,11 +610,55 @@ def test_protocol_promotes_pair_admission_and_freezes_nested_shapes():
             'exact_keys': ['sha256', 'provenance_sha256']},
         'u_identity': {'exact_keys': ['kind', 'sha256']},
         'oracle_result': {'exact_keys': [
-            'status', 'source_events_sha256', 'source_rows_sha256',
-            'condition_events_sha256', 'condition_rows_sha256',
+            'status', 'proof_sha256', 'source_events_sha256',
+            'source_rows_sha256', 'condition_events_sha256',
+            'condition_rows_sha256', 'condition_world_state_sha256',
             'schedule_sha256', 'source_application_sha256',
-            'recorded_selection_sha256', 'gold_target_ids_sha256',
+            'recorded_selection_sha256', 'gold_target_ids',
+            'gold_target_ids_sha256', 'prior_own_receipt',
         ]},
+    }
+    assert protocol['pair_admission']['post_prune_inventory_authority'] == {
+        'statement': (
+            'The canonical immutable raw-audit receipt is the independently '
+            'published pre-prune attestation. After raw pruning, pair admission '
+            'revalidates its descriptor, inventory tree/totals/limits and every '
+            'retained cross-binding. A field whose bytes are not retained is '
+            'receipt-authoritative only; it is not a post-prune byte rehash or '
+            'replay claim.'),
+        'retained_cross_bindings': {
+            'manifest': {
+                'raw_path': 'recording/manifest.json',
+                'compact_path': 'legacy-manifest.json',
+                'identity': ['size_bytes', 'sha256'],
+            },
+            'events': {
+                'raw_path': 'recording/events.jsonl',
+                'compact_path': 'legacy-events.jsonl',
+                'identity': ['size_bytes', 'sha256'],
+            },
+            'chunks': {
+                'raw_path': 'recording/{legacy_path}',
+                'compact_path': 'chunk-index.chunks[].legacy_path',
+                'identity': ['path', 'sha256'],
+            },
+            'source_snapshot': {
+                'raw_path': 'snapshots/initial.snp',
+                'compact_path': 'snapshot_reference',
+                'identity': ['size_bytes', 'sha256'],
+            },
+        },
+        'receipt_only': {
+            'legacy_chunk_size_bytes': {
+                'path': 'recording/{legacy_path}',
+                'meaning': 'pre-prune-auditor-attestation-not-post-prune-byte-replay',
+            },
+            'worker_report': {
+                'path': 'worker-report.json',
+                'identity': ['path', 'size_bytes', 'sha256'],
+                'meaning': 'pre-prune-auditor-attestation-not-post-prune-byte-replay',
+            },
+        },
     }
     assert admission.PROTOCOL is compact.PROTOCOL
 
@@ -547,7 +683,12 @@ def test_import_is_pure_and_loads_no_native_model_or_v3_pair_entrypoint():
 def test_admits_all_nine_exact_condition_identity_mappings_read_only(
         tmp_path, monkeypatch, condition):
     admission = _admission()
-    fixture = _fixture(tmp_path / condition, condition)
+    prior_own_result = None
+    if condition == 'oracle':
+        donor = _fixture(tmp_path / 'oracle-donor', 'own')
+        prior_own_result = admission.admit_compact_pair(**_request(donor))
+    fixture = _fixture(
+        tmp_path / condition, condition, prior_own_result=prior_own_result)
     before = _tree_hashes(fixture['root'])
     from scripts import memory_family_oracle_admission_v3 as admission_v3
     monkeypatch.setattr(
@@ -566,7 +707,7 @@ def test_admits_all_nine_exact_condition_identity_mappings_read_only(
     assert not any(result['claims'].values())
     assert result['oracle_result']['status'] == 'compact-pair-pass'
     assert result['oracle_result']['gold_target_ids_sha256'] == \
-        fixture['expected']['oracle_identity']['gold_target_ids_sha256']
+        fixture['expected']['gold_target_ids_sha256']
     assert _tree_hashes(fixture['root']) == before
     full = compact._legacy_events(
         fixture['condition_bundle']['legacy-events.jsonl'], 'condition')
@@ -580,6 +721,15 @@ def test_failed_condition_requires_and_accepts_only_exact_natural_failure_receip
         tmp_path):
     admission = _admission()
     fixture = _fixture(tmp_path / 'natural', natural_failure=True)
+    read = compact.read_compact(
+        fixture['condition_bundle'],
+        raw_audit_receipt=fixture['condition_raw'])
+    events = compact._legacy_events(read['legacy_events_bytes'], 'condition')
+    raw_audit._condition_terminal(
+        {'events': events,
+         'manifest': artifacts._json(read['legacy_manifest_bytes'])},
+        fixture['case'], _projection(read['rows']),
+        fixture['condition_raw']['terminal_state'], fixture['schedule'])
     result = admission.admit_compact_pair(**_request(fixture))
     assert result['condition'] == 'own'
     assert fixture['condition_raw']['terminal_state']['natural_failure'] is True
@@ -592,9 +742,36 @@ def test_failed_condition_requires_and_accepts_only_exact_natural_failure_receip
         admission.admit_compact_pair(**_request(fixture))
 
 
+def test_compact_reader_never_accepts_a_failed_source_and_requires_the_receipt(
+        tmp_path):
+    natural = _fixture(tmp_path / 'condition', natural_failure=True)
+    with pytest.raises(ValueError):
+        compact.read_compact(natural['condition_bundle'])
+    assert compact.read_compact(
+        natural['condition_bundle'],
+        raw_audit_receipt=natural['condition_raw'])['manifest']['operation'] \
+        == 'condition'
+
+    source = _fixture(tmp_path / 'source')
+    receipt = copy.deepcopy(source['source_raw'])
+    receipt['terminal_state'].update(
+        manifest_status='failed', final_phase='failed', natural_failure=True)
+    bundle = dict(source['source_bundle'])
+    legacy = artifacts._json(bundle['legacy-manifest.json'])
+    legacy['status'] = 'failed'
+    bundle['legacy-manifest.json'] = memory.canonical_bytes(legacy) + b'\n'
+    manifest = artifacts._json(bundle['manifest.json'])
+    manifest['legacy_manifest'] = _descriptor(
+        'legacy-manifest.json', bundle['legacy-manifest.json'])
+    bundle['manifest.json'] = memory.canonical_bytes(manifest)
+    with pytest.raises(ValueError, match='Source legacy manifest'):
+        compact.read_compact(bundle, raw_audit_receipt=receipt)
+
+
 @pytest.mark.parametrize('defect', [
     'raw-count', 'raw-events-hash', 'conversion-manifest',
     'source-identity', 'snapshot-source-receipt', 'history', 'selection',
+    'policy-result', 'chunk-sequence',
 ])
 def test_rejects_receipt_compact_identity_and_selector_cross_binding(
         tmp_path, defect):
@@ -628,21 +805,30 @@ def test_rejects_receipt_compact_identity_and_selector_cross_binding(
             fixture['condition_conversion'])
     elif defect == 'history':
         fixture['history_bundles']['own']['sha256'] = '0' * 64
-    else:
+    elif defect == 'selection':
         payload = fixture['condition_bundle']['legacy-events.jsonl']
         events = [artifacts._json(line) for line in payload.splitlines()]
         selected = next(event for event in events
                         if event.get('detail', {}).get('kind') == 'memory_selection')
         selected['detail']['selection']['target_ids'] = []
-        fixture['condition_bundle']['legacy-events.jsonl'] = b''.join(
-            memory.canonical_bytes(event) + b'\n' for event in events)
+        _rebind_condition_events(fixture, events)
+    elif defect == 'policy-result':
+        changed = copy.deepcopy(fixture['condition_raw'])
+        changed['policy_result']['bindings_sha256'] = '0' * 64
+        _rebind_file(fixture, 'receipts/condition.raw-audit.json', changed)
+    else:
+        events = compact._legacy_events(
+            fixture['condition_bundle']['legacy-events.jsonl'], 'condition')
+        next(event for event in events if event['kind'] == 'chunk')[
+            'sequence'] += 1
+        _rebind_condition_events(fixture, events)
     with pytest.raises((OSError, RuntimeError, ValueError)):
         admission.admit_compact_pair(**_request(fixture))
 
 
 @pytest.mark.parametrize('defect', [
     'snapshot-mutation', 'snapshot-symlink', 'snapshot-hardlink',
-    'receipt-symlink',
+    'receipt-symlink', 'receipt-missing',
 ])
 def test_rejects_snapshot_or_receipt_mutation_alias_and_path_following(
         tmp_path, defect):
@@ -658,12 +844,170 @@ def test_rejects_snapshot_or_receipt_mutation_alias_and_path_following(
         fixture['snapshot_path'].symlink_to(target)
     elif defect == 'snapshot-hardlink':
         os.link(fixture['snapshot_path'], fixture['root'] / 'snapshot-alias.snp')
-    else:
+    elif defect == 'receipt-symlink':
         path = fixture['root'] / fixture['condition_conversion_descriptor']['path']
         target = fixture['root'] / 'conversion-target.json'
         target.write_bytes(path.read_bytes())
         path.unlink()
         path.symlink_to(target)
+    else:
+        (fixture['root'] / fixture['source_conversion_descriptor']['path']).unlink()
     with pytest.raises((OSError, RuntimeError, ValueError)):
         admission.admit_compact_pair(**_request(fixture))
 
+
+def test_rejects_condition_snapshot_bound_to_another_source_run(tmp_path):
+    admission = _admission()
+    fixture = _fixture(tmp_path / 'wrong-source-run')
+    manifest = artifacts._json(fixture['condition_bundle']['manifest.json'])
+    manifest['snapshot_reference']['source_run_id'] = uuid.uuid4().hex
+    fixture['condition_bundle']['manifest.json'] = memory.canonical_bytes(manifest)
+    fixture['condition_conversion']['compact_manifest'] = _descriptor(
+        'manifest.json', fixture['condition_bundle']['manifest.json'])
+    fixture['condition_conversion_descriptor'] = _write(
+        fixture['root'], 'receipts/condition.conversion.json',
+        fixture['condition_conversion'])
+    with pytest.raises(ValueError):
+        admission.admit_compact_pair(**_request(fixture))
+
+
+@pytest.mark.parametrize('defect', [
+    'final-phase', 'total-ticks', 'last-tick', 'world-state-shape',
+    'world-state-value',
+])
+def test_rejects_rebound_terminal_semantic_forgery(tmp_path, defect):
+    admission = _admission()
+    fixture = _fixture(tmp_path / defect)
+    receipt = copy.deepcopy(fixture['condition_raw'])
+    terminal = receipt['terminal_state']
+    if defect == 'final-phase':
+        terminal['final_phase'] = 'failed'
+    elif defect == 'total-ticks':
+        terminal['total_ticks'] += 100
+    elif defect == 'last-tick':
+        terminal['last_tick'] += 1
+    elif defect == 'world-state-shape':
+        terminal['world_state_sha256'] = {'forged': True}
+    else:
+        terminal['world_state_sha256'] = '0' * 64
+    _rebind_file(fixture, 'receipts/condition.raw-audit.json', receipt)
+    with pytest.raises(ValueError):
+        admission.admit_compact_pair(**_request(fixture))
+
+
+@pytest.mark.parametrize('defect', [
+    'restored-revision', 'restored-eyes', 'commitment',
+])
+def test_rejects_rebound_restore_or_commitment_semantic_forgery(
+        tmp_path, defect):
+    admission = _admission()
+    fixture = _fixture(tmp_path / defect)
+    events = compact._legacy_events(
+        fixture['condition_bundle']['legacy-events.jsonl'], 'condition')
+    if defect in ('restored-revision', 'restored-eyes'):
+        restored = next(event for event in events
+                        if event['kind'] == 'application_restored')
+        if defect == 'restored-revision':
+            restored['revision'] += 1
+        else:
+            restored['eyes']['left'] = False
+    else:
+        commitment = next(
+            event['detail'] for event in events
+            if event.get('detail', {}).get('kind') == 'memory_commitment')
+        commitment['route_id'] = 'forged-route'
+    _rebind_condition_events(fixture, events)
+    with pytest.raises(ValueError):
+        admission.admit_compact_pair(**_request(fixture))
+
+
+def test_oracle_requires_prior_own_receipt_and_non_oracle_rejects_one(tmp_path):
+    admission = _admission()
+    donor = _fixture(tmp_path / 'donor')
+    prior = admission.admit_compact_pair(**_request(donor))
+    oracle_fixture = _fixture(
+        tmp_path / 'oracle', 'oracle', prior_own_result=prior)
+    request = _request(oracle_fixture)
+    request.pop('prior_own_receipt')
+    with pytest.raises(ValueError, match='prior-own receipt'):
+        admission.admit_compact_pair(**request)
+
+    own = _fixture(tmp_path / 'own')
+    request = _request(own)
+    request['prior_own_receipt'] = _write(
+        own['root'], 'receipts/unexpected-prior-own.json', prior)
+    with pytest.raises(ValueError, match='Only the oracle'):
+        admission.admit_compact_pair(**request)
+
+
+@pytest.mark.parametrize('defect', [
+    'mutation', 'symlink', 'hardlink', 'condition', 'claims', 'proof', 'gold',
+])
+def test_rejects_prior_own_receipt_alias_mutation_or_wrong_identity(
+        tmp_path, defect):
+    admission = _admission()
+    donor = _fixture(tmp_path / f'{defect}-donor')
+    prior = admission.admit_compact_pair(**_request(donor))
+    fixture = _fixture(
+        tmp_path / f'{defect}-oracle', 'oracle', prior_own_result=prior)
+    path = fixture['root'] / fixture['prior_own_receipt']['path']
+    if defect == 'mutation':
+        path.write_bytes(path.read_bytes() + b'changed')
+    elif defect == 'symlink':
+        target = fixture['root'] / 'prior-own-target.json'
+        target.write_bytes(path.read_bytes())
+        path.unlink()
+        path.symlink_to(target)
+    elif defect == 'hardlink':
+        os.link(path, fixture['root'] / 'prior-own-alias.json')
+    else:
+        changed = copy.deepcopy(prior)
+        if defect == 'condition':
+            changed['condition'] = 'swapped'
+        elif defect == 'claims':
+            changed['claims']['compact_oracle_equivalent'] = True
+        elif defect == 'proof':
+            changed['oracle_result']['proof_sha256'] = '0' * 64
+        else:
+            changed['oracle_result']['gold_target_ids'] = []
+            changed['oracle_result']['gold_target_ids_sha256'] = memory.sha256([])
+        fixture['prior_own_receipt'] = _write(
+            fixture['root'], 'receipts/prior-own.pair.json', changed)
+    with pytest.raises((OSError, RuntimeError, ValueError)):
+        admission.admit_compact_pair(**_request(fixture))
+
+
+@pytest.mark.parametrize('defect', [
+    'zero-worker-report', 'oversize-worker-report', 'zero-chunk',
+    'oversize-recording',
+])
+def test_rejects_rebound_raw_inventory_outside_frozen_authority_limits(
+        tmp_path, defect):
+    admission = _admission()
+    fixture = _fixture(tmp_path / defect)
+    receipt = copy.deepcopy(fixture['condition_raw'])
+    inventory = receipt['raw_inventory']
+    if 'worker-report' in defect:
+        row = next(value for value in inventory['files']
+                   if value['path'] == 'worker-report.json')
+        row['size_bytes'] = (0 if defect == 'zero-worker-report'
+                             else raw_audit.RAW_LIMITS['condition'][
+                                 'report_max_bytes'] + 1)
+    else:
+        row = next(value for value in inventory['files']
+                   if value['path'].startswith('recording/chunks/'))
+        row['size_bytes'] = (0 if defect == 'zero-chunk'
+                             else raw_audit.RAW_LIMITS['condition'][
+                                 'recording_max_bytes'] + 1)
+    inventory['recording_bytes'] = sum(
+        value['size_bytes'] for value in inventory['files']
+        if value['path'].startswith('recording/'))
+    inventory['support_bytes'] = sum(
+        value['size_bytes'] for value in inventory['files']
+        if not value['path'].startswith('recording/'))
+    inventory['total_bytes'] = (
+        inventory['recording_bytes'] + inventory['support_bytes'])
+    inventory['tree_sha256'] = memory.sha256(inventory['files'])
+    _rebind_file(fixture, 'receipts/condition.raw-audit.json', receipt)
+    with pytest.raises(ValueError):
+        admission.admit_compact_pair(**_request(fixture))
