@@ -5,6 +5,7 @@ import importlib
 import json
 import os
 from pathlib import Path
+import signal
 import sys
 import tempfile
 import unittest
@@ -62,6 +63,9 @@ class NavigationV3ExecutionTests(unittest.TestCase):
         self.assertEqual(admitted["invocation"]["cwd"], str(ROOT))
         self.assertEqual(admitted["invocation"]["runner_argv"][-1],
                          admitted["self_sha256"])
+        self.assertEqual(admitted["invocation"]["outer_argv"][:5], [
+            "/usr/bin/timeout", "--signal=TERM", "--kill-after=10s", "2150s",
+            "/usr/bin/env"])
         self.assertEqual(admitted["invocation"]["environment"], owner.EXACT_ENVIRONMENT)
         self.assertEqual(admitted["immutable_inputs"], owner.protocol()["immutable_inputs"])
         self.assertEqual(admitted["data_manifest_sha256"], owner.DATA_SHA)
@@ -213,6 +217,48 @@ class NavigationV3ExecutionTests(unittest.TestCase):
                 [{"pid": n, "ppid": 50, "group": 50, "start_ticks": n,
                   "command": "child"} for n in range(257)], {}, 256)
 
+    def test_leader_exit_never_hides_live_group_descendant_and_forces_drain(self):
+        identity = {"pid": 50, "ppid": 40, "group": 50, "start_ticks": 100,
+                    "command": "python trainer"}
+        descendant = {"pid": 51, "ppid": 1, "group": 50, "start_ticks": 101,
+                      "state": "S", "rss_bytes": 10, "command": "worker"}
+        rows = iter(([descendant], [descendant], []))
+        sent = []
+        result = owner.drain_process_group(
+            identity, 10.0, {}, group_reader=lambda group: next(rows),
+            clock=FakeClock([0.0, 4.0, 4.0]), sleep=lambda _: None,
+            kill=lambda group, number: sent.append((group, number)))
+        self.assertTrue(result["drained"])
+        self.assertTrue(result["forced"])
+        self.assertEqual([number for _, number in sent], [signal.SIGTERM, signal.SIGKILL])
+        self.assertIn((51, 101), result["known"])
+
+    def test_spawn_blocks_external_term_until_pid_start_and_group_are_owned(self):
+        events = []
+        process = type("Process", (), {"pid": 50})()
+
+        def mask(operation, values):
+            events.append(("mask", operation, set(values)))
+            return {signal.SIGUSR1}
+
+        def popen(*args, **kwargs):
+            events.append(("popen", kwargs["start_new_session"]))
+            return process
+
+        def identity(pid):
+            events.append(("identity", pid))
+            return {"pid": 50, "ppid": os.getpid(), "group": 50,
+                    "start_ticks": 100, "argv": ["trainer"], "command": "trainer"}
+
+        result, owned = owner.spawn_contained(
+            ["trainer"], ROOT, {}, None, None, popen=popen,
+            identity_reader=identity, mask=mask)
+        self.assertIs(result, process)
+        self.assertEqual(owned["start_ticks"], 100)
+        self.assertEqual([row[0] for row in events], ["mask", "popen", "identity", "mask"])
+        self.assertEqual(events[0][1], signal.SIG_BLOCK)
+        self.assertEqual(events[-1][1], signal.SIG_SETMASK)
+
     def test_execute_reserves_before_child_and_retains_crash_without_retry(self):
         with tempfile.TemporaryDirectory() as directory:
             output = Path(directory) / "aggregate"
@@ -248,17 +294,91 @@ class NavigationV3ExecutionTests(unittest.TestCase):
             output = Path(directory) / "aggregate"
             digest = "a" * 64
             owner.reserve_attempt(output, digest)
+            evidence = {str(seed): {
+                "seed": seed,
+                "models": [{"seed": seed, "arm": arm} for arm in owner.ARMS],
+                "report_sha256": str(seed) * 64,
+                "publication_sha256": str(seed + 1) * 64,
+                "inventory": {"report.json": {"sha256": str(seed) * 64}}}
+                for seed in (10, 11, 12)}
             report = {
                 "status": "completed-navigation-v3-enclosing-training",
                 "training_completed": True, "execution_manifest_sha256": digest,
-                "pairs": {str(seed): {"status": "completed"} for seed in (10, 11, 12)},
+                "pairs": {str(seed): {"status": "completed", "evidence": evidence[str(seed)]}
+                          for seed in (10, 11, 12)},
                 "models": [{"seed": seed, "arm": arm}
                            for seed in (10, 11, 12) for arm in owner.ARMS],
                 "qualification_claims": [], "held_out_status": "locked_unopened"}
             owner._publish_success(output, report, float("inf"))
-            self.assertTrue(owner.success_admitted(output, digest))
+            calls = []
+            def admit(path, seed):
+                calls.append((Path(path).name, seed))
+                return copy.deepcopy(evidence[str(seed)])
+            with patch.object(owner, "admit_pair", side_effect=admit):
+                self.assertTrue(owner.success_admitted(output, digest))
+            self.assertEqual(calls, [("seed-10", 10), ("seed-11", 11), ("seed-12", 12)])
+            changed = copy.deepcopy(evidence["11"])
+            changed["publication_sha256"] = "f" * 64
+            with patch.object(owner, "admit_pair",
+                              side_effect=[evidence["10"], changed, evidence["12"]]):
+                self.assertFalse(owner.success_admitted(output, digest))
             (output / "failure.json").write_bytes(canonical({"status": "failed"}))
             self.assertFalse(owner.success_admitted(output, digest))
+
+    def test_normal_deadline_is_rechecked_after_final_publication_fsync(self):
+        with tempfile.TemporaryDirectory() as directory:
+            output = Path(directory)
+            report = {"execution_manifest_sha256": "a" * 64, "models": [0] * 6}
+            with (patch.object(owner.time, "monotonic", side_effect=[0.0, 0.5, 1.1]),
+                  self.assertRaises(TimeoutError)):
+                owner._publish_success(output, report, 1.0)
+
+    def test_static_source_roster_closes_lazy_navigation_imports(self):
+        roster = owner.static_source_roster()
+        required = {
+            "scripts/collect_male_navigation_v2.py",
+            "scripts/collect_male_navigation.py",
+            "scripts/verify_body_adaptation.py",
+            "src/palimpsest/body_profile.py",
+            "src/palimpsest/snapshots.py",
+        }
+        self.assertTrue(required <= set(roster))
+        _, _, manifest = self.production_manifest()
+        self.assertEqual(set(manifest["behavior_sources"]), set(roster))
+
+    def test_secure_reads_reject_hardlinks_and_path_rebinding(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            original, linked = root / "original", root / "linked"
+            original.write_bytes(b"original")
+            os.link(original, linked)
+            with self.assertRaises(ValueError):
+                owner._read(linked)
+
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            target, replacement = root / "target", root / "replacement"
+            target.write_bytes(b"before")
+            replacement.write_bytes(b"after")
+            real_open = os.open
+            def racing_open(path, flags, *args, **kwargs):
+                descriptor = real_open(path, flags, *args, **kwargs)
+                if Path(path) == target:
+                    os.replace(replacement, target)
+                return descriptor
+            with patch.object(owner.os, "open", side_effect=racing_open):
+                with self.assertRaises(ValueError):
+                    owner._read(target)
+
+    def test_exclusive_final_publication_never_overwrites_raced_destination(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            pending, final = root / "report.pending", root / "report.json"
+            pending.write_bytes(b"ours")
+            final.write_bytes(b"racer")
+            with self.assertRaises(FileExistsError):
+                owner._exclusive_publish(pending, final)
+            self.assertEqual(final.read_bytes(), b"racer")
 
     def test_source_drift_after_all_pairs_retains_failure_and_no_success(self):
         with tempfile.TemporaryDirectory() as directory:
