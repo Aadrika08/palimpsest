@@ -3,10 +3,12 @@ import hashlib
 import importlib.util
 import io
 import json
+import math
 from pathlib import Path
 import subprocess
 import sys
 import tempfile
+import time
 import unittest
 from unittest import mock
 import zipfile
@@ -80,8 +82,9 @@ class AdmissionTests(unittest.TestCase):
             observed.update(root=root, assets=assets, index=index)
             return "admitted"
 
-        with mock.patch.object(audit.male_navigation_research, "_admit", side_effect=admit):
-            self.assertEqual(audit.admit_candidates(protocol, {"models": []}), "admitted")
+        research = mock.Mock()
+        research._admit.side_effect = admit
+        self.assertEqual(audit.admit_candidates(protocol, {"models": []}, research), "admitted")
         self.assertEqual(observed, {
             "root": expected,
             "assets": Path("/home/utkarsh/Work/shraddha/brain/.worktrees/r0-reproduction/data/assets/flynn"),
@@ -91,12 +94,12 @@ class AdmissionTests(unittest.TestCase):
         protocol["immutable_inputs"]["cell_source"]["path"] = str(
             Path("/tmp/different") / "upstream/fly-gym/models/connectome_rnn_model.py")
         with self.assertRaisesRegex(ValueError, "common frozen training root"):
-            audit.admit_candidates(protocol, {})
+            audit.admit_candidates(protocol, {}, research)
 
         protocol = audit.load_protocol()
         protocol["checkpoints"][0]["path"] = "/tmp/different/old-corpus.pt"
         with self.assertRaisesRegex(ValueError, "training artifact root"):
-            audit.admit_candidates(protocol, {})
+            audit.admit_candidates(protocol, {}, research)
 
     def test_execution_manifest_binds_source_test_protocol_and_output(self):
         audit = load_audit()
@@ -110,6 +113,8 @@ class AdmissionTests(unittest.TestCase):
                 "protocol_sha256": audit.PROTOCOL_SHA256,
                 "script_sha256": hashlib.sha256(SCRIPT.read_bytes()).hexdigest(),
                 "test_sha256": hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
+                "behavior_sources": audit.load_protocol()["reader_sources"],
+                "outer_timeout_seconds": 210,
                 "output": str(output),
             }
             path = root / "execution-manifest.json"
@@ -121,6 +126,51 @@ class AdmissionTests(unittest.TestCase):
                 audit.load_execution_manifest(path, "0" * 64, output)
             with self.assertRaisesRegex(ValueError, "execution output"):
                 audit.load_execution_manifest(path, pin, root / "different")
+
+    def test_all_local_behavior_sources_are_pinned_before_import(self):
+        audit = load_audit()
+        protocol = audit.load_protocol()
+        expected = {
+            "scripts/prepare_male_navigation_v2.py",
+            "scripts/train_male_navigation_v2.py",
+            "scripts/train_male_reduced.py",
+            "src/palimpsest/artifacts.py",
+            "src/palimpsest/male_model.py",
+            "src/palimpsest/male_navigation_research.py",
+            "src/palimpsest/male_policy.py",
+            "src/palimpsest/male_research.py",
+            "src/palimpsest/records.py",
+            "src/palimpsest/storage.py",
+        }
+        self.assertEqual(set(protocol["reader_sources"]), expected)
+        self.assertEqual(audit.verify_behavior_sources(protocol, math.inf), protocol["reader_sources"])
+
+    def test_execute_reserves_attempt_before_import_or_input_hashes(self):
+        audit = load_audit()
+        protocol = audit.load_protocol()
+        events = []
+
+        class StopBeforeInput(Exception):
+            pass
+
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            (root / "runs").mkdir()
+            output = root / "runs/result"
+            with (mock.patch.object(audit, "ROOT", root),
+                  mock.patch.object(audit, "load_execution_manifest", return_value={}),
+                  mock.patch.object(audit, "load_protocol", return_value=protocol),
+                  mock.patch.object(audit, "verify_behavior_sources",
+                                    side_effect=lambda *_: events.append("sources") or {}),
+                  mock.patch.object(audit, "reserve_attempt",
+                                    side_effect=lambda *_: events.append("reserve") or b"attempt"),
+                  mock.patch.object(audit, "load_behavior",
+                                    side_effect=lambda *_: events.append("imports") or object()),
+                  mock.patch.object(audit, "_fingerprints",
+                                    side_effect=lambda *_: (events.append("inputs"), (_ for _ in ()).throw(StopBeforeInput()))[1])):
+                with self.assertRaises(StopBeforeInput):
+                    audit.execute(output, Path("manifest"), "0" * 64)
+        self.assertEqual(events, ["reserve", "sources", "imports", "sources", "inputs"])
 
     def test_protocol_hash_and_exact_budget_accounting(self):
         audit = load_audit()
@@ -243,35 +293,101 @@ class AnalysisTests(unittest.TestCase):
                 with self.assertRaisesRegex(ValueError, message):
                     self.audit.analyze_outputs(self.protocol, self.targets, outputs, self.published)
 
+    def test_inference_resets_each_source_and_carries_between_windows(self):
+        audit = self.audit
+        calls = []
+
+        class Agent:
+            training = False
+            resets = 0
+
+            def parameters(self):
+                return []
+
+            def reset(self):
+                value = f"reset-{self.resets}"
+                self.resets += 1
+                return value
+
+        class Torch:
+            @staticmethod
+            def inference_mode():
+                return mock.MagicMock(__enter__=lambda _: None, __exit__=lambda *_: None)
+
+        def forward(_agent, features, targets, hidden, _torch, _loss):
+            calls.append((len(features), hidden))
+            rows = len(features)
+            actions = np.zeros((rows, 2), np.float32)
+            raw = np.ones((rows, 2), np.float32)
+            return f"{hidden}+{rows}", actions, raw, True, float(rows), 0.0, 0.0
+
+        episodes = [
+            {"features": np.zeros((33, 388), np.float32), "targets": np.zeros((33, 2), np.float32)},
+            {"features": np.zeros((1, 388), np.float32), "targets": np.zeros((1, 2), np.float32)},
+        ]
+        result = audit._infer(Agent(), episodes, Torch(), math.inf, None, forward_window=forward)
+
+        self.assertEqual(calls, [(32, "reset-0"), (1, "reset-0+32"), (1, "reset-1")])
+        self.assertEqual((result["rows"], result["windows"]), (34, 3))
+
 
 class PublicationTests(unittest.TestCase):
+    def test_attempt_reservation_is_durable_and_nonrepeatable(self):
+        audit = load_audit()
+        with tempfile.TemporaryDirectory() as temporary:
+            output = Path(temporary) / "fresh"
+            payload = audit.reserve_attempt(output, {"status": "attempt-reserved"})
+            self.assertEqual((output / "attempt.json").read_bytes(), payload)
+            with self.assertRaises(FileExistsError):
+                audit.reserve_attempt(output, {"status": "attempt-reserved"})
+
+    def test_deadline_rss_and_aggregate_output_caps_fail_closed(self):
+        audit = load_audit()
+        protocol = audit.load_protocol()
+        with self.assertRaises(TimeoutError):
+            audit.final_prepublication_checks(protocol, time.monotonic() - 1, math.inf, b"")
+        high = mock.Mock(ru_maxrss=protocol["limits"]["rss_budget_bytes"] // 1024 + 1)
+        with mock.patch.object(audit.resource, "getrusage", return_value=high):
+            with self.assertRaises(MemoryError):
+                audit.final_prepublication_checks(protocol, math.inf, math.inf, b"")
+        protocol["limits"]["output_bytes"] = 3
+        with self.assertRaisesRegex(ValueError, "publication"):
+            audit.final_prepublication_checks(protocol, math.inf, math.inf, b"aa", b"bb")
+
     def test_success_is_atomic_and_report_is_last(self):
         audit = load_audit()
         with tempfile.TemporaryDirectory() as temporary:
             output = Path(temporary) / "fresh"
+            audit.reserve_attempt(output, {"status": "attempt-reserved"})
             audit.publish_success(output, b"{}\n", b"arrays", {"status": "completed"},
                                   {"status": "completed-execution"})
             self.assertEqual(sorted(path.name for path in output.iterdir()),
-                             ["execution.json", "outputs.npz", "protocol.json", "report.json"])
+                             ["attempt.json", "execution.json", "outputs.npz", "protocol.json", "report.json"])
             self.assertEqual(json.loads((output / "report.json").read_text())["status"], "completed")
 
-    def test_publication_fault_removes_completion_markers(self):
+    def test_final_marker_failure_removes_completion_markers_but_retains_attempt(self):
         audit = load_audit()
         with tempfile.TemporaryDirectory() as temporary:
             output = Path(temporary) / "fresh"
+            audit.reserve_attempt(output, {"status": "attempt-reserved"})
             with self.assertRaisesRegex(OSError, "injected"):
                 audit.publish_success(output, b"{}\n", b"arrays", {"status": "completed"},
-                                      {"status": "completed-execution"}, fault="after_execution")
+                                      {"status": "completed-execution"}, fault="final_rename")
             self.assertFalse((output / "report.json").exists())
             self.assertFalse((output / "execution.json").exists())
+            self.assertTrue((output / "attempt.json").is_file())
             audit.publish_failure(output, {"status": "failed", "error": "injected"})
             self.assertTrue((output / "failure.json").is_file())
 
     def test_import_does_not_load_torch_or_simulator(self):
         command = [
             sys.executable, "-I", "-c",
-            (f"import sys;sys.path[:0]=[{str(ROOT / 'src')!r},{str(ROOT / 'scripts')!r}];"
-             "import audit_male_navigation_v2_checkpoint_support;"
+            ("import importlib.util, pathlib, sys;"
+             f"p=pathlib.Path({str(SCRIPT)!r});s=importlib.util.spec_from_file_location('audit',p);"
+             "m=importlib.util.module_from_spec(s);s.loader.exec_module(m);"
+             "v=m.load_protocol();m.verify_behavior_sources(v,float('inf'));b=m.load_behavior(v);"
+             f"r=pathlib.Path({str(ROOT)!r}).resolve();"
+             "assert all(pathlib.Path(x.__file__).resolve().is_relative_to(r) for x in b.modules);"
              "assert 'torch' not in sys.modules and 'mujoco' not in sys.modules"),
         ]
         subprocess.run(command, check=True, cwd=ROOT, timeout=15)

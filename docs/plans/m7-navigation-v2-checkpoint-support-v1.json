@@ -7,6 +7,7 @@
   "attempt_contract": {
     "actual_invocations": 1,
     "retry_after_failure": false,
+    "durable_reservation": "Before any checkpoint hash, local behavior import, model construction, or inference, create the fresh output directory and fsync an attempt.json reservation. Directory existence permanently refuses another analysis attempt, including after crash or outer timeout.",
     "source_review": "Independent review of the frozen implementation and synthetic tests must return GO before the sole invocation.",
     "post_run_review": "Independent verification may read only the compact audit output and pinned tracked documents; it must not run inference again."
   },
@@ -56,9 +57,13 @@
     "scripts/prepare_male_navigation_v2.py": "ef32434826c04398c5c98e9b8debbe0b9d90adea2f9ac558a05ec00ce5eff333",
     "scripts/train_male_navigation_v2.py": "808f0e410d37d3dbcb56bb4978d4ad2ac824cb5977dafb05873a02fd9aa74737",
     "scripts/train_male_reduced.py": "75d3fc1fd71bab6b749c158a58fe9d802fc10253f4416d1c8f5739a2bdf4ff4a",
+    "src/palimpsest/artifacts.py": "7a5f4a1080abffe82f8296468c6d8ca3a2b975277b96925fdf75bb9ac1ed034a",
     "src/palimpsest/male_model.py": "9327bca1db3cbeda7aab8b222ccfa59daef4e01f3f1b4689f83009955d970cad",
     "src/palimpsest/male_navigation_research.py": "eac674912f64d02da45152a6cae9329da512c92bd8205a322b7018d0f99e5f32",
-    "src/palimpsest/male_policy.py": "d2fd1a80781e8bad11b6e4947e1a3a8d61bd4acf46dfcaf6c191ccb6987e7cfe"
+    "src/palimpsest/male_policy.py": "d2fd1a80781e8bad11b6e4947e1a3a8d61bd4acf46dfcaf6c191ccb6987e7cfe",
+    "src/palimpsest/male_research.py": "e46ac8d8988a77f75c921666039cb39ea6fc0aeb13df862042af96b69367d232",
+    "src/palimpsest/records.py": "c4be6f1699c1d8550a7f2db2979f7f9f18196ac986eef2aefe3ba665cae99ac3",
+    "src/palimpsest/storage.py": "79664d876834ef20b459cc83963515effdaf75d0256fe5764a9cf8e18cd448c2"
   },
   "runtime": {
     "python": "3.11.15",
@@ -218,7 +223,7 @@
       "seed-12/old-corpus",
       "seed-12/augmented"
     ],
-    "admission_before_torch": "Validate every pinned file, all six candidate bundles, runtime distribution metadata, empty held-out lists, exact four-source development roster, fresh output, storage, and source hashes before importing Torch or constructing a model.",
+    "admission_before_torch": "Validate all current local behavior source hashes before importing them. Durably reserve the sole attempt before checkpoint hashing. Then validate every pinned file, all six candidate bundles, runtime distribution metadata, empty held-out lists, exact four-source development roster, fresh output, storage, and source hashes before importing Torch or constructing a model.",
     "passes_per_checkpoint": 1,
     "gradient_enabled": false,
     "optimizer_allowed": false,
@@ -245,12 +250,14 @@
     "gate": "descriptive only; no metric changes model selection, capability thresholds, or release state"
   },
   "stopping_rules": [
-    "Any path, byte count, hash, roster, runtime, source, fresh-output, storage, or held-out mismatch stops before Torch import and retains a bounded failure receipt.",
+    "Any path, byte count, hash, roster, runtime, source, fresh-output, storage, or held-out mismatch stops before Torch import and retains the durable attempt reservation plus a bounded failure receipt when publication remains possible.",
+    "A crash or 210-second outer timeout leaves the durable attempt reservation and permanently forbids a retry.",
     "All six bundles must be admitted before the first checkpoint is constructed.",
     "After Torch import, the first load, shape, dtype, finite, scaling, count, published-metric, source-drift, deadline, or output-cap mismatch stops the invocation; remaining checkpoints are not run.",
     "Exactly 1,228 rows and 39 windows per checkpoint, 7,368 rows and 234 windows total, are required.",
     "Failure of the sole actual invocation is terminal for this protocol; no correction, retry, replacement input, threshold change, or partial publication is permitted.",
-    "Success publishes compact arrays and receipts atomically, with the final report appearing last and no fallible operation afterward."
+    "Immediately before success publication, recheck the 180-second internal deadline, 1 GiB RSS cap, aggregate 16 MiB output cap, unchanged behavior-source hashes, and unchanged input hashes.",
+    "Success fsyncs all payloads and a prepared report before the report rename; the final report rename is the last fallible commit step and no operation follows it."
   ],
   "limits": {
     "internal_seconds": 180,

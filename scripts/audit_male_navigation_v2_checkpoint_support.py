@@ -1,6 +1,7 @@
 """One-pass recorded-development output-support audit for six frozen checkpoints."""
 import argparse
 import hashlib
+import importlib
 import importlib.metadata
 import io
 import json
@@ -12,6 +13,7 @@ import resource
 import shutil
 import sys
 import time
+from types import SimpleNamespace
 import zipfile
 
 import numpy as np
@@ -21,24 +23,32 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 sys.path.insert(0, str(ROOT / "scripts"))
 
-from palimpsest import artifacts, male_navigation_research, male_policy
-import prepare_male_navigation_v2 as data_reader
-from train_male_reduced import loss_for
-
-
 PROTOCOL_PATH = ROOT / "docs/plans/m7-navigation-v2-checkpoint-support-v1.json"
-PROTOCOL_SHA256 = "699f6b28e3f566416be1480d961cbca8be7e809501a4d59ed62e1b7c92f660ff"
+PROTOCOL_SHA256 = "3d166474f62f3405b8f40301e1a56adf2023fc178a6aa59a6153a11e318973f6"
 TEST_PATH = ROOT / "tests/test_male_navigation_v2_checkpoint_support.py"
 MiB = 1024**2
+SOURCE_FILES = {
+    "scripts/prepare_male_navigation_v2.py": "prepare_male_navigation_v2",
+    "scripts/train_male_navigation_v2.py": None,
+    "scripts/train_male_reduced.py": "train_male_reduced",
+    "src/palimpsest/artifacts.py": "palimpsest.artifacts",
+    "src/palimpsest/male_model.py": "palimpsest.male_model",
+    "src/palimpsest/male_navigation_research.py": "palimpsest.male_navigation_research",
+    "src/palimpsest/male_policy.py": "palimpsest.male_policy",
+    "src/palimpsest/male_research.py": "palimpsest.male_research",
+    "src/palimpsest/records.py": "palimpsest.records",
+    "src/palimpsest/storage.py": "palimpsest.storage",
+}
+BEHAVIOR_MODULES = {path: module for path, module in SOURCE_FILES.items() if module is not None}
 
 
 def canonical(value):
     return (json.dumps(value, sort_keys=True, separators=(",", ":"), allow_nan=False) + "\n").encode()
 
 
-def _deadline(deadline):
+def _deadline(deadline, message="checkpoint-support audit exceeded its 180-second internal deadline"):
     if time.monotonic() > deadline:
-        raise TimeoutError("checkpoint-support audit exceeded its 180-second internal deadline")
+        raise TimeoutError(message)
 
 
 def _sha(payload):
@@ -50,6 +60,52 @@ def _path(value):
     return path if path.is_absolute() else ROOT / path
 
 
+def verify_behavior_sources(protocol, deadline):
+    expected = protocol.get("reader_sources")
+    if not isinstance(expected, dict) or set(expected) != set(SOURCE_FILES):
+        raise ValueError("exact local behavior-source roster required")
+    observed = {}
+    for name, digest in expected.items():
+        path = ROOT / name
+        if (not isinstance(digest, str) or len(digest) != 64 or path.is_symlink() or
+                not path.is_file() or path.resolve() != path.absolute() or path.stat().st_size > 8 * MiB):
+            raise ValueError("bounded regular behavior source required: " + name)
+        payload = bytearray()
+        with path.open("rb") as stream:
+            while True:
+                _deadline(deadline)
+                block = stream.read(min(MiB, 8 * MiB - len(payload) + 1))
+                if not block:
+                    break
+                payload.extend(block)
+                if len(payload) > 8 * MiB:
+                    raise ValueError("behavior source exceeds cap: " + name)
+        observed[name] = _sha(payload)
+        if observed[name] != digest:
+            raise ValueError("behavior source differs: " + name)
+    return observed
+
+
+def load_behavior(protocol):
+    if set(protocol.get("reader_sources", {})) != set(SOURCE_FILES):
+        raise ValueError("exact local behavior-source roster required")
+    modules = []
+    for path, name in BEHAVIOR_MODULES.items():
+        module = importlib.import_module(name)
+        if Path(module.__file__).absolute() != (ROOT / path).absolute():
+            raise ValueError("behavior module resolved outside audit worktree: " + name)
+        modules.append(module)
+    by_name = {module.__name__: module for module in modules}
+    return SimpleNamespace(
+        artifacts=by_name["palimpsest.artifacts"],
+        research=by_name["palimpsest.male_navigation_research"],
+        male_policy=by_name["palimpsest.male_policy"],
+        data_reader=by_name["prepare_male_navigation_v2"],
+        loss_for=by_name["train_male_reduced"].loss_for,
+        modules=tuple(modules),
+    )
+
+
 def _layout_root(path, suffix, message):
     path, suffix = _path(path), Path(suffix)
     root = path.parents[len(suffix.parts) - 1]
@@ -58,7 +114,7 @@ def _layout_root(path, suffix, message):
     return root
 
 
-def admit_candidates(protocol, index):
+def admit_candidates(protocol, index, research):
     graph_root = _layout_root(protocol["immutable_inputs"]["graph_manifest"]["path"],
                               "data/manifests/malecns-reduced-neighborhood-v1.json",
                               "exact common frozen training root required")
@@ -77,7 +133,7 @@ def admit_candidates(protocol, index):
             raise ValueError("exact frozen training artifact root required")
     assets = _layout_root(protocol["immutable_inputs"]["graph"]["path"],
                           "male-reduced-v1/source-graph.json", "exact frozen graph asset root required")
-    return male_navigation_research._admit(graph_root, assets, index)
+    return research._admit(graph_root, assets, index)
 
 
 def read_pin(pin, cap, deadline=math.inf):
@@ -141,6 +197,8 @@ def validate_protocol(protocol):
             "c8ee6a5bf1f50476412f17b0928c18bdec57ec10" or
             protocol.get("attempt_contract", {}).get("actual_invocations") != 1 or
             protocol["attempt_contract"].get("retry_after_failure") is not False or
+            not isinstance(protocol["attempt_contract"].get("durable_reservation"), str) or
+            set(protocol.get("reader_sources", {})) != set(SOURCE_FILES) or
             protocol.get("limits") != {"internal_seconds": 180, "normal_through_return_seconds": 210,
                 "output_bytes": 16 * MiB, "log_bytes_each": MiB, "minimum_free_bytes": 1024**3,
                 "rss_budget_bytes": 1024**3, "input_file_cap_bytes": 8 * MiB,
@@ -171,7 +229,7 @@ def load_protocol(path=PROTOCOL_PATH):
     return validate_protocol(json.loads(raw))
 
 
-def load_execution_manifest(path, expected_sha256, output):
+def load_execution_manifest(path, expected_sha256, output, protocol=None):
     path = Path(path)
     if (not isinstance(expected_sha256, str) or len(expected_sha256) != 64 or path.is_symlink() or
             not path.is_file() or path.resolve() != path.absolute() or path.stat().st_size > MiB):
@@ -180,13 +238,16 @@ def load_execution_manifest(path, expected_sha256, output):
     if _sha(raw) != expected_sha256:
         raise ValueError("execution manifest bytes differ")
     value = json.loads(raw)
+    protocol = load_protocol() if protocol is None else protocol
     if (not isinstance(value, dict) or set(value) != {"schema", "attempt", "retry_allowed", "protocol_sha256",
-            "script_sha256", "test_sha256", "output"} or
+            "script_sha256", "test_sha256", "behavior_sources", "outer_timeout_seconds", "output"} or
             value.get("schema") != "m7-navigation-v2-checkpoint-support-execution-manifest-v1" or
             value.get("attempt") != 1 or value.get("retry_allowed") is not False or
             value.get("protocol_sha256") != PROTOCOL_SHA256 or
             value.get("script_sha256") != _sha(Path(__file__).read_bytes()) or
-            value.get("test_sha256") != _sha(TEST_PATH.read_bytes())):
+            value.get("test_sha256") != _sha(TEST_PATH.read_bytes()) or
+            value.get("behavior_sources") != protocol["reader_sources"] or
+            value.get("outer_timeout_seconds") != protocol["limits"]["normal_through_return_seconds"]):
         raise ValueError("execution manifest source or protocol binding differs")
     if value.get("output") != str(Path(output).absolute()):
         raise ValueError("execution output differs")
@@ -393,42 +454,103 @@ def analyze_outputs(protocol, targets, outputs, published):
     return report, payload
 
 
-def _atomic_write(path, payload):
-    pending = path.with_name(path.name + ".pending")
-    with pending.open("xb") as stream:
-        stream.write(payload); stream.flush(); os.fsync(stream.fileno())
-    pending.replace(path)
-    descriptor = os.open(path.parent, os.O_RDONLY | os.O_DIRECTORY)
+def _fsync_directory(path):
+    descriptor = os.open(path, os.O_RDONLY | os.O_DIRECTORY)
     try:
         os.fsync(descriptor)
     finally:
         os.close(descriptor)
 
 
-def publish_success(output, protocol_payload, arrays_payload, report, execution, fault=None):
+def _write_pending(path, payload):
+    pending = path.with_name(path.name + ".pending")
+    with pending.open("xb") as stream:
+        stream.write(payload); stream.flush(); os.fsync(stream.fileno())
+    return pending
+
+
+def _atomic_write(path, payload):
+    pending = _write_pending(path, payload)
+    pending.replace(path)
+    _fsync_directory(path.parent)
+
+
+def reserve_attempt(output, receipt):
     output = Path(output)
     if output.exists():
-        raise FileExistsError("fresh checkpoint-support output required")
-    output.mkdir(parents=True, exist_ok=False)
+        raise FileExistsError("checkpoint-support attempt already consumed")
+    output.mkdir(parents=False, exist_ok=False)
+    _fsync_directory(output.parent)
+    payload = canonical(receipt)
+    _atomic_write(output / "attempt.json", payload)
+    return payload
+
+
+def check_output_cap(protocol, *payloads):
+    if sum(len(payload) for payload in payloads) > protocol["limits"]["output_bytes"]:
+        raise ValueError("checkpoint-support publication exceeds frozen cap")
+
+
+def final_prepublication_checks(protocol, deadline, return_deadline, *payloads):
+    check_output_cap(protocol, *payloads)
+    _deadline(deadline)
+    _check_rss(protocol)
+    _deadline(return_deadline, "checkpoint-support audit exceeded its 210-second through-return deadline")
+
+
+def publish_success(output, protocol_payload, arrays_payload, report, execution, fault=None):
+    output = Path(output)
+    attempt = output / "attempt.json"
+    if (not output.is_dir() or attempt.is_symlink() or not attempt.is_file() or
+            (output / "failure.json").exists() or (output / "report.json").exists()):
+        raise ValueError("durable checkpoint-support attempt reservation required")
     try:
         _atomic_write(output / "protocol.json", protocol_payload)
         _atomic_write(output / "outputs.npz", arrays_payload)
         _atomic_write(output / "execution.json", canonical(execution))
-        if fault == "after_execution":
+        pending = _write_pending(output / "report.json", canonical(report))
+        _fsync_directory(output)
+        if fault == "final_rename":
             raise OSError("injected publication failure")
-        _atomic_write(output / "report.json", canonical(report))
     except BaseException:
         for name in ("report.json", "execution.json", "report.json.pending", "execution.json.pending"):
             try:
                 (output / name).unlink(missing_ok=True)
             except OSError:
                 pass
+        try:
+            _fsync_directory(output)
+        except OSError:
+            pass
+        raise
+    try:
+        pending.replace(output / "report.json")
+    except BaseException:
+        for name in ("report.json", "execution.json", "report.json.pending", "execution.json.pending"):
+            try:
+                (output / name).unlink(missing_ok=True)
+            except OSError:
+                pass
+        try:
+            _fsync_directory(output)
+        except OSError:
+            pass
         raise
 
 
 def publish_failure(output, failure):
     output = Path(output)
-    output.mkdir(parents=True, exist_ok=True)
+    if not output.exists():
+        reserve_attempt(output, {"schema": "m7-navigation-v2-checkpoint-support-attempt-v1",
+            "status": "attempt-reserved-by-failure", "attempt": 1, "retry_allowed": False,
+            "protocol_sha256": PROTOCOL_SHA256,
+            "execution_manifest_sha256": failure.get("execution_manifest_sha256")})
+    elif not (output / "attempt.json").is_file():
+        _atomic_write(output / "attempt.json", canonical({
+            "schema": "m7-navigation-v2-checkpoint-support-attempt-v1",
+            "status": "attempt-reserved-by-failure", "attempt": 1, "retry_allowed": False,
+            "protocol_sha256": PROTOCOL_SHA256,
+            "execution_manifest_sha256": failure.get("execution_manifest_sha256")}))
     if (output / "report.json").exists() or (output / "execution.json").exists():
         raise ValueError("completion marker exists; failure publication refused")
     path = output / "failure.json"
@@ -447,11 +569,7 @@ def _fingerprints(protocol, deadline):
     for item in protocol["pair_reports"]:
         observed[f"pair-report-{item['training_seed']}"] = _sha(
             read_pin(item, protocol["limits"]["input_file_cap_bytes"], deadline))
-    for name, digest in protocol["reader_sources"].items():
-        payload = (ROOT / name).read_bytes()
-        if _sha(payload) != digest:
-            raise ValueError("reader source differs: " + name)
-        observed[name] = digest
+    observed.update(verify_behavior_sources(protocol, deadline))
     return observed
 
 
@@ -471,7 +589,24 @@ def _check_rss(protocol):
         raise MemoryError("checkpoint-support RSS budget exceeded")
 
 
-def _infer(agent, episodes, torch, deadline):
+def _forward_window(agent, features, targets, hidden, torch, loss_function):
+    inputs = torch.from_numpy(features).unsqueeze(1)
+    targets = torch.from_numpy(targets).unsqueeze(1)
+    hidden, output, diagnostics = agent(inputs, hidden, diagnostics=True)
+    raw = diagnostics["raw_output"]
+    scaled = torch.tanh(raw) * raw.new_tensor([3., math.pi])
+    exact = torch.equal(output, scaled)
+    values = loss_function(output, targets)
+    if (not torch.isfinite(hidden).all() or not torch.isfinite(output).all() or
+            not torch.isfinite(raw).all() or not torch.isfinite(values).all()):
+        raise ValueError("nonfinite checkpoint inference value")
+    delta = output[..., 1] - targets[..., 1]
+    return (hidden, output.reshape(-1, 2).cpu().numpy().copy(), raw.reshape(-1, 2).cpu().numpy().copy(), exact,
+            float(values.sum()), float((output[..., 0] - targets[..., 0]).abs().sum()),
+            float(torch.atan2(torch.sin(delta), torch.cos(delta)).abs().sum()))
+
+
+def _infer(agent, episodes, torch, deadline, loss_function, forward_window=_forward_window):
     if agent.training or any(parameter.requires_grad for parameter in agent.parameters()):
         raise ValueError("inference-only frozen model required")
     actions, raw_outputs = [], []
@@ -484,22 +619,12 @@ def _infer(agent, episodes, torch, deadline):
             episode_actions, episode_raw = [], []
             for start in range(0, len(episode["features"]), 32):
                 _deadline(deadline)
-                inputs = torch.from_numpy(episode["features"][start:start + 32]).unsqueeze(1)
-                targets = torch.from_numpy(episode["targets"][start:start + 32]).unsqueeze(1)
-                hidden, output, diagnostics = agent(inputs, hidden, diagnostics=True)
-                raw = diagnostics["raw_output"]
-                scaled = torch.tanh(raw) * raw.new_tensor([3., math.pi])
-                exact = exact and torch.equal(output, scaled)
-                values = loss_for(output, targets)
-                if (not torch.isfinite(hidden).all() or not torch.isfinite(output).all() or
-                        not torch.isfinite(raw).all() or not torch.isfinite(values).all()):
-                    raise ValueError("nonfinite checkpoint inference value")
-                total += float(values.sum())
-                velocity += float((output[..., 0] - targets[..., 0]).abs().sum())
-                delta = output[..., 1] - targets[..., 1]
-                heading += float(torch.atan2(torch.sin(delta), torch.cos(delta)).abs().sum())
-                current_actions = output.reshape(-1, 2).cpu().numpy().copy()
-                current_raw = raw.reshape(-1, 2).cpu().numpy().copy()
+                (hidden, current_actions, current_raw, window_exact, window_total,
+                 window_velocity, window_heading) = forward_window(
+                    agent, episode["features"][start:start + 32], episode["targets"][start:start + 32],
+                    hidden, torch, loss_function)
+                exact = exact and window_exact
+                total += window_total; velocity += window_velocity; heading += window_heading
                 episode_actions.append(current_actions); episode_raw.append(current_raw)
                 rows += len(current_actions); windows += 1
             actions.append(np.concatenate(episode_actions)); raw_outputs.append(np.concatenate(episode_raw))
@@ -512,15 +637,27 @@ def _infer(agent, episodes, torch, deadline):
 
 def execute(output, execution_manifest_path, execution_manifest_sha256):
     started = time.monotonic()
-    execution_manifest = load_execution_manifest(execution_manifest_path, execution_manifest_sha256, output)
     protocol_payload = PROTOCOL_PATH.read_bytes()
     protocol = load_protocol()
+    execution_manifest = load_execution_manifest(
+        execution_manifest_path, execution_manifest_sha256, output, protocol)
     deadline = started + protocol["limits"]["internal_seconds"]
+    return_deadline = started + protocol["limits"]["normal_through_return_seconds"]
     output = Path(output).absolute()
     if output.exists() or not output.parent.is_dir() or output.parent != ROOT / "runs":
         raise ValueError("fresh output under the audit worktree runs directory required")
     if shutil.disk_usage(output.parent).free < protocol["limits"]["minimum_free_bytes"]:
         raise ValueError("checkpoint-support free-space floor not met")
+    attempt = {"schema": "m7-navigation-v2-checkpoint-support-attempt-v1",
+        "status": "attempt-reserved", "attempt": 1, "retry_allowed": False,
+        "protocol_sha256": PROTOCOL_SHA256,
+        "execution_manifest_sha256": execution_manifest_sha256,
+        "outer_timeout_seconds": protocol["limits"]["normal_through_return_seconds"]}
+    attempt_payload = reserve_attempt(output, attempt)
+    source_before = verify_behavior_sources(protocol, deadline)
+    behavior = load_behavior(protocol)
+    if verify_behavior_sources(protocol, deadline) != source_before:
+        raise ValueError("checkpoint-support behavior sources changed during import")
     before = _fingerprints(protocol, deadline)
     runtime = _runtime_before_torch(protocol)
     _check_rss(protocol)
@@ -529,11 +666,11 @@ def execute(output, execution_manifest_path, execution_manifest_sha256):
     published = validate_documents(protocol, index, data_manifest)
     old_manifest = json.loads(read_pin(protocol["immutable_inputs"]["old_manifest"], 8 * MiB, deadline))
     transfer_root = _path(protocol["immutable_inputs"]["safe_transfer"]["path"]).parent
-    data = data_reader.read_old_transfer(transfer_root, old_manifest, data_manifest["historical_reader"])
+    data = behavior.data_reader.read_old_transfer(transfer_root, old_manifest, data_manifest["historical_reader"])
     if data.get("held_out") != []:
         raise ValueError("held-out transfer rows are forbidden")
     targets = validate_development(protocol, data["dev"])
-    admitted = admit_candidates(protocol, index)
+    admitted = admit_candidates(protocol, index, behavior.research)
     if set(admitted) != {(seed, arm) for seed in (10, 11, 12) for arm in ("old-corpus", "augmented")}:
         raise ValueError("six candidate admission differs")
     _deadline(deadline)
@@ -546,28 +683,34 @@ def execute(output, execution_manifest_path, execution_manifest_sha256):
     for frozen in protocol["checkpoints"]:
         seed, arm = frozen["training_seed"], frozen["arm"]
         graph, payload, provenance = admitted[seed, arm]
-        policy = male_policy._load_checked_policy(graph, payload, dict(provenance),
+        policy = behavior.male_policy._load_checked_policy(graph, payload, dict(provenance),
             _path(protocol["immutable_inputs"]["cell_source"]["path"]), device="cpu", seed=0)
-        outputs[model_key(seed, arm)] = _infer(policy.agent, data["dev"], torch, deadline)
+        outputs[model_key(seed, arm)] = _infer(
+            policy.agent, data["dev"], torch, deadline, behavior.loss_for)
         del policy
         _check_rss(protocol)
     report, arrays_payload = analyze_outputs(protocol, targets, outputs, published)
     after = _fingerprints(protocol, deadline)
     if after != before:
         raise ValueError("checkpoint-support inputs changed during inference")
+    source_after = verify_behavior_sources(protocol, deadline)
+    if source_after != source_before:
+        raise ValueError("checkpoint-support behavior sources changed during inference")
     elapsed = time.monotonic() - started
     report.update(runtime={**runtime, "torch_build": torch.__version__, "device": "cpu", "threads": torch.get_num_threads()},
                   elapsed_seconds=elapsed, input_before=before, input_after=after,
-                  execution_manifest_sha256=execution_manifest_sha256)
+                  behavior_sources_before=source_before, behavior_sources_after=source_after,
+                  attempt_sha256=_sha(attempt_payload), execution_manifest_sha256=execution_manifest_sha256)
     execution = {"schema": "m7-navigation-v2-checkpoint-support-execution-v1",
         "status": "inference-completed-pending-final-report", "attempt": 1, "retry_allowed": False,
         "protocol_sha256": PROTOCOL_SHA256, "report_sha256": _sha(canonical(report)),
         "execution_manifest_sha256": execution_manifest_sha256,
+        "attempt_sha256": _sha(attempt_payload),
         "arrays_sha256": _sha(arrays_payload), "rows": report["rows"], "windows": report["windows"],
         "elapsed_seconds": elapsed, "held_out_accessed": False, "simulator_executed": False,
         "training_executed": False, "qualification_claims": [], "r3_complete": False}
-    if sum(map(len, (protocol_payload, arrays_payload, canonical(report), canonical(execution)))) > protocol["limits"]["output_bytes"]:
-        raise ValueError("checkpoint-support publication exceeds frozen cap")
+    final_prepublication_checks(protocol, deadline, return_deadline, attempt_payload,
+                                protocol_payload, arrays_payload, canonical(report), canonical(execution))
     publish_success(output, protocol_payload, arrays_payload, report, execution)
 
 
