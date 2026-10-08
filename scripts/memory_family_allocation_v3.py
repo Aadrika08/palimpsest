@@ -13,6 +13,10 @@ import sys
 import tempfile
 import uuid
 
+# Direct-file and module entry points must load this checkout, never an installed copy.
+REPO_ROOT = Path(__file__).resolve().parents[1]
+sys.path[:0] = [str(REPO_ROOT / 'src'), str(REPO_ROOT)]
+
 from palimpsest import (
     artifacts, assets as model_assets, memory,
     memory_decision_world as family_world,
@@ -22,7 +26,6 @@ from scripts import memory_family_producer_v3 as producer
 
 
 MiB = 1024**2
-REPO_ROOT = Path(__file__).resolve().parents[1]
 PROTOCOL_PATH = REPO_ROOT / 'docs/plans/memory-family-allocation-admission-v3-protocol.json'
 PROTOCOL_BYTES = PROTOCOL_PATH.read_bytes()
 PROTOCOL = artifacts._json(PROTOCOL_BYTES)
