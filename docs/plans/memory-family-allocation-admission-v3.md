@@ -1,7 +1,7 @@
 # Memory family v3 allocation admission contract
 
-**Date:** 8 October 2026  
-**Scope:** development block zero, deterministic zero-owner admission only  
+**Date:** 8 October 2026
+**Scope:** development block zero, deterministic zero-owner admission only
 **Base:** `686e6e0` (`research/memory-family-analysis-v3`)
 
 ## Purpose and authority

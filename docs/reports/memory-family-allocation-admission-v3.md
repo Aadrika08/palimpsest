@@ -1,9 +1,9 @@
 # Memory family v3 allocation-admission execution report
 
-**Date:** 8 October 2026  
-**Attempt ID:** `memory-family-allocation-v3-probe-g01m8ejp`  
-**Attempted commit:** `3c2a1975a2943e488ab958073c0b3b18291c294c`  
-**Execution status:** `EXECUTION_ERROR`  
+**Date:** 8 October 2026
+**Attempt ID:** `memory-family-allocation-v3-probe-g01m8ejp`
+**Attempted commit:** `3c2a1975a2943e488ab958073c0b3b18291c294c`
+**Execution status:** `EXECUTION_ERROR`
 **Scientific status:** `INCONCLUSIVE`
 
 ## Outcome
