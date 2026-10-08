@@ -1,0 +1,107 @@
+{
+  "schema": "memory-family-producer-v3-verification",
+  "version": 1,
+  "date": "2026-10-08",
+  "base_commit": "a1801e62533d2aeaec164441a39037ef0da3ec09",
+  "implementation_commit": "c7c621f404edec36932b14e97570504d6215c2bf",
+  "branch": "research/memory-family-native-registration-v3",
+  "publication": {
+    "pull_request": 100,
+    "draft": true,
+    "base_branch": "research/memory-family-oracle-raw-adapter",
+    "goal_tracker_branch": "research/simulation-completion-next",
+    "goal_tracker_commit": "fd6b2f8"
+  },
+  "mode": "software-contract-only",
+  "native_owners_started": 0,
+  "trained_model_inference_runs": 0,
+  "native_study_physics_steps": 0,
+  "unit_test_mujoco_fixture_steps_executed": true,
+  "held_out_used": false,
+  "qualification_claims": [],
+  "matrix": {
+    "families": 48,
+    "cases": 144,
+    "source_owners": 144,
+    "condition_owners": 1296,
+    "total_owners": 1440,
+    "materialized_conditions": ["own"]
+  },
+  "tests": [
+    {
+      "command": "../memory-family-oracle-raw-adapter/.venv/bin/python -m pytest -q tests/test_memory_family_producer_v3.py tests/test_memory_family_oracle_admission_v3.py",
+      "result": "47 passed in 69.46s"
+    },
+    {
+      "command": "../memory-family-oracle-raw-adapter/.venv/bin/python -m pytest -q tests/test_memory_family_producer_v3.py tests/test_memory_family_oracle_admission_v3.py tests/test_memory_family_oracle_v3.py tests/test_memory_family_world.py tests/test_memory_family_runtime.py tests/test_memory_family_slots.py tests/test_memory_decision.py tests/test_memory_task.py tests/test_memory_experiment.py tests/test_snapshots.py tests/test_artifacts.py tests/test_replay.py -k 'not FlynnContinuation'",
+      "result": "172 passed, 7 skipped, 4 deselected, 15 warnings in 151.39s"
+    },
+    {
+      "command": "../memory-family-oracle-raw-adapter/.venv/bin/python -m py_compile scripts/memory_family_producer_v3.py tests/test_memory_family_producer_v3.py tests/test_memory_family_oracle_admission_v3.py",
+      "result": "passed in 0.03s"
+    },
+    {
+      "command": "git diff --check a1801e62533d2aeaec164441a39037ef0da3ec09..c7c621f404edec36932b14e97570504d6215c2bf",
+      "result": "passed in 0.00s"
+    }
+  ],
+  "independent_review": {
+    "initial_reviewers": 3,
+    "material_findings_fixed": [
+      "canonical protocol and semantic relation-history identity",
+      "history and selected-authored namespace disjointness",
+      "outer registration to job binding",
+      "snapshot, per-file control, aggregate control and run-tree ceilings",
+      "deadline-aware source and run-ledger hashing plus finalization gates",
+      "behavior-bearing direct and transitive source provenance",
+      "exact supervisor scalar types and frozen timeout",
+      "zero-launch sentinel coverage",
+      "temporary-file exclusive-link publication and post-link rollback"
+    ],
+    "final_reviewers": 2,
+    "remaining_critical_findings": 0,
+    "remaining_important_findings": 0,
+    "reviewer_checks": [
+      "32 producer tests passed in 67.52s",
+      "15 raw-admission tests passed",
+      "Python compilation passed",
+      "git diff --check passed"
+    ]
+  },
+  "resource_projection": {
+    "raw_bytes": 599147937792,
+    "snapshot_bytes": 24159191040,
+    "log_control_bytes": 4529848320,
+    "known_bytes": 627836977152,
+    "outer_seconds": 221760,
+    "cleanup_seconds": 14400,
+    "outer_plus_cleanup_seconds": 236160,
+    "excluded": ["reports", "audits", "prerequisites", "close-headroom"]
+  },
+  "capacity": {
+    "plan_time_free_bytes": 68881358848,
+    "plan_time_shortfall_bytes": 558955618304,
+    "verification_free_bytes": 68848934912,
+    "verification_shortfall_bytes": 558988042240,
+    "native_allocation_admissible": false
+  },
+  "sha256": {
+    "scripts/memory_family_producer_v3.py": "44804c8ce035681462b0dd551450a1d0ab04f8ad8b4fca7b6fa483a43a32bfc0",
+    "tests/test_memory_family_producer_v3.py": "5df13a334d482b2616fac2f109f718e1816e09a8e13f5a5244deabb5cf5f60fe",
+    "tests/test_memory_family_oracle_admission_v3.py": "2aabe1e0d0ff1e046e8a77bd6beb891130d4f1e091fbebd8cec38c6890f7d01d"
+  },
+  "limits": [
+    "synthetic temporary recordings only",
+    "owner and supervisor records are self-asserted test fixtures",
+    "PID namespace and owner-exit observations are patched in tests",
+    "no on-disk native registration or allocation grant",
+    "historical namespace inventory completeness is external",
+    "report, audit, prerequisite and close-headroom bytes remain unallocated",
+    "ordinary-drift hash sealing is not hostile same-user immutability",
+    "no development or held-out collection",
+    "affected snapshot regression tests execute local MuJoCo fixture steps",
+    "no physical rover evidence",
+    "CI excluded by instruction"
+  ],
+  "next_decision": "do not allocate until storage, namespace inventory, inferential protocol and launcher provenance gates pass"
+}
