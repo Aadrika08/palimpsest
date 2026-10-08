@@ -20,13 +20,22 @@ import time
 
 
 ROOT = Path(__file__).resolve().parents[1]
-MANIFEST_PATH = "docs/plans/m7-navigation-v3-matched-budget-execution-v1.json"
+MANIFEST_PATH = "docs/plans/m7-navigation-v3-matched-budget-execution-v2.json"
+AMENDMENT_PATH = "docs/plans/m7-navigation-v3-matched-budget-execution-v2-amendment.md"
+PRIOR_MANIFEST_PATH = "docs/plans/m7-navigation-v3-matched-budget-execution-v1.json"
+PRIOR_REPORT_PATH = "docs/reports/m7-navigation-v3-matched-budget-attempt-1.md"
+PRIOR_VERIFICATION_PATH = (
+    "docs/reports/m7-navigation-v3-matched-budget-attempt-1/verification.json")
+PRIOR_JOURNAL_PATH = (
+    "docs/reports/m7-navigation-v3-matched-budget-attempt-1/journal.log")
 PROTOCOL_PATH = "docs/plans/m7-navigation-v3-matched-budget-protocol.json"
 PROTOCOL_SHA = "ecfafd2b6bedaf5d073e0bf32571d1978084ec7ddfb0e8c6c98a298d38d70732"
 DATA_SHA = "47c4523c40e485ba4839cc80c9db891761791b801cc777755028122a1dbacb41"
 PYTHON = "/home/utkarsh/Work/shraddha/brain/.worktrees/r0-reproduction/.venv/bin/python"
-RUN_NAME = "m7-navigation-v3-matched-budget-v1"
+RUN_NAME = "m7-navigation-v3-matched-budget-v2"
 OUTPUT = ROOT / "runs" / RUN_NAME
+PRIOR_OUTPUT = ROOT / "runs" / "m7-navigation-v3-matched-budget-v1"
+ATTEMPT = 2
 SEEDS = (10, 11, 12)
 ARMS = ("old-corpus", "augmented")
 MiB = 1024**2
@@ -311,6 +320,65 @@ def _limits():
     }
 
 
+def _descriptor(name, maximum=MAX_JSON):
+    payload = _read(ROOT / name, maximum)
+    return {"path": name, "size_bytes": len(payload), "sha256": _digest(payload)}
+
+
+def prior_failure():
+    verification_payload = _read(ROOT / PRIOR_VERIFICATION_PATH)
+    verification = _json(verification_payload)
+    journal = _read(ROOT / PRIOR_JOURNAL_PATH)
+    prior_manifest_payload = _read(ROOT / PRIOR_MANIFEST_PATH)
+    prior_manifest = _json(prior_manifest_payload)
+    expected = {
+        "attempt": 1,
+        "execution_manifest_sha256":
+            "c7bbd686b74282ea579662ecf938073152ec1261be89163d37f8f4841c3195f7",
+        "held_out_accessed": False,
+        "journal": {"lines": 10, "path": PRIOR_JOURNAL_PATH,
+                    "sha256":
+                        "51773fc00774b4a3f781fbc96df4c5a642a436afb4bae2a581a34b1243071db2",
+                    "size_bytes": 2794},
+        "models_opened": False, "output_created": False,
+        "qualification_claims": [], "reserved": False,
+        "schema": "m7-navigation-v3-matched-budget-attempt-1-failure-v1",
+        "service": {"cpu_time_display": "431ms", "exit_status": 1,
+                    "memory_peak_display": "21.7M", "runtime_display": "700ms"},
+        "source_commit": "148142b2086b93bdc1b3f0016ec070f99a20823f",
+        "status": "execution-error-before-reservation",
+        "torch_imported": False, "training_started": False,
+    }
+    descriptors = {
+        "execution_manifest": _descriptor(PRIOR_MANIFEST_PATH),
+        "report": _descriptor(PRIOR_REPORT_PATH),
+        "verification": _descriptor(PRIOR_VERIFICATION_PATH),
+        "journal": _descriptor(PRIOR_JOURNAL_PATH),
+    }
+    expected_descriptors = {
+        "execution_manifest": {"path": PRIOR_MANIFEST_PATH, "size_bytes": 13438,
+            "sha256": "6a1e2fff4c2553000d56009388f4691809fa205aabf3e8124c938b3a18c41326"},
+        "report": {"path": PRIOR_REPORT_PATH, "size_bytes": 1498,
+            "sha256": "a0230698ef610b514730dbc7b0b6f226560d1a014f69a5d1de97a110bb767629"},
+        "verification": {"path": PRIOR_VERIFICATION_PATH, "size_bytes": 744,
+            "sha256": "d3ae8f5795fc66f9a4fc05ffe0656ae99b33ecd8bb44b66d7271a3e7bdcb105c"},
+        "journal": {"path": PRIOR_JOURNAL_PATH, "size_bytes": 2794,
+            "sha256": "51773fc00774b4a3f781fbc96df4c5a642a436afb4bae2a581a34b1243071db2"},
+    }
+    if (canonical(verification) != verification_payload or verification != expected or
+            descriptors != expected_descriptors or len(journal.splitlines()) != 10 or
+            prior_manifest.get("self_sha256") != expected["execution_manifest_sha256"] or
+            execution_digest(prior_manifest) != expected["execution_manifest_sha256"] or
+            journal.count(b"ValueError: Runner argv differs from frozen invocation") != 1):
+        raise ValueError("Prior navigation invocation evidence differs")
+    return {
+        "attempt": 1, "status": "execution-error-before-reservation",
+        "output": str(PRIOR_OUTPUT), "output_created": False,
+        "correction": "compare-executable-plus-python-sys-argv",
+        **descriptors,
+    }
+
+
 def admit_manifest(path, expected_digest):
     payload = _read(path)
     value = _json(payload)
@@ -323,10 +391,11 @@ def admit_manifest(path, expected_digest):
     if set(value) != {"schema", "attempt", "retry_allowed", "self_sha256",
                       "protocol_sha256", "data_manifest_sha256", "immutable_inputs",
                       "behavior_sources", "runtime", "limits", "output", "pairs",
-                      "invocation", "held_out_status", "qualification_claims"}:
+                      "invocation", "held_out_status", "qualification_claims",
+                      "amendment", "prior_failure"}:
         raise ValueError("Execution manifest fields differ")
-    if (value["schema"] != "m7-navigation-v3-matched-budget-execution-v1" or
-            value["attempt"] != 1 or value["retry_allowed"] is not False or
+    if (value["schema"] != "m7-navigation-v3-matched-budget-execution-v2" or
+            value["attempt"] != ATTEMPT or value["retry_allowed"] is not False or
             value["protocol_sha256"] != PROTOCOL_SHA or
             value["data_manifest_sha256"] != DATA_SHA or
             value["immutable_inputs"] != protocol()["immutable_inputs"] or
@@ -334,6 +403,8 @@ def admit_manifest(path, expected_digest):
                                  "cpu_threads": 1} or
             value["limits"] != _limits() or value["output"] != str(OUTPUT) or
             value["pairs"] != _pair_rows() or
+            value["amendment"] != _descriptor(AMENDMENT_PATH) or
+            value["prior_failure"] != prior_failure() or
             value["held_out_status"] != "locked_unopened" or
             value["qualification_claims"] != []):
         raise ValueError("Frozen execution contract differs")
@@ -392,6 +463,8 @@ def preflight(value):
         raise ValueError("Exact aggregate output family required")
     if _lexists(output):
         raise FileExistsError("Enclosing training attempt is already consumed")
+    if _lexists(PRIOR_OUTPUT):
+        raise FileExistsError("Consumed invocation unexpectedly created output")
     for item in value["immutable_inputs"].values():
         source = Path(os.path.abspath(item["path"]))
         if output == source or output in source.parents or source in output.parents:
@@ -474,7 +547,7 @@ def reserve_attempt(output, manifest_digest):
     output.mkdir(exist_ok=False)
     _fsync_directory(output.parent)
     receipt = {
-        "id": "male-navigation-v3-enclosing-attempt-v1", "attempt": 1,
+        "id": "male-navigation-v3-enclosing-attempt-v2", "attempt": ATTEMPT,
         "execution_manifest_sha256": manifest_digest, "output": str(output),
         "pairs": list(SEEDS), "retry_allowed": False,
         "held_out_status": "locked_unopened", "qualification_claims": [],
@@ -1052,7 +1125,9 @@ def success_admitted(output, manifest_digest):
         receipt = _json(_read(output / "publication.json"))
     except (OSError, ValueError):
         return False
-    if (attempt.get("execution_manifest_sha256") != manifest_digest or
+    if (attempt.get("id") != "male-navigation-v3-enclosing-attempt-v2" or
+            attempt.get("attempt") != ATTEMPT or
+            attempt.get("execution_manifest_sha256") != manifest_digest or
             attempt.get("retry_allowed") is not False or
             report.get("status") != "completed-navigation-v3-enclosing-training" or
             report.get("training_completed") is not True or
@@ -1134,7 +1209,7 @@ def main(argv=None):
     parser.add_argument("--execution-manifest-sha256", required=True)
     args = parser.parse_args(argv)
     value = admit_manifest(args.execution_manifest, args.execution_manifest_sha256)
-    if sys.argv != value["invocation"]["runner_argv"]:
+    if [sys.executable, *sys.argv] != value["invocation"]["runner_argv"]:
         raise ValueError("Runner argv differs from frozen invocation")
     def interrupted(number, frame):
         raise InterruptedError(f"Execution interrupted by {signal.Signals(number).name}")

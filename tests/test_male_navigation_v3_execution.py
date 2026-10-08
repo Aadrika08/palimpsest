@@ -49,6 +49,7 @@ class NavigationV3ExecutionTests(unittest.TestCase):
         path, payload, value = self.production_manifest()
         admitted = owner.admit_manifest(path, value["self_sha256"])
         self.assertEqual(payload, canonical(value))
+        self.assertEqual(admitted["attempt"], 2)
         self.assertEqual([row["seed"] for row in admitted["pairs"]], [10, 11, 12])
         self.assertEqual([Path(row["output"]).name for row in admitted["pairs"]],
                          ["seed-10", "seed-11", "seed-12"])
@@ -68,7 +69,7 @@ class NavigationV3ExecutionTests(unittest.TestCase):
         self.assertEqual(admitted["invocation"]["outer_argv"][:12], [
             "/usr/bin/systemd-run", "--user", "--wait", "--collect",
             f"--working-directory={ROOT}",
-            "--unit=palimpsest-m7-navigation-v3-matched-budget-v1",
+            "--unit=palimpsest-m7-navigation-v3-matched-budget-v2",
             "--property=Type=exec", "--property=KillMode=control-group",
             "--property=RuntimeMaxSec=2150s", "--property=TimeoutStopSec=10s",
             "--property=SendSIGKILL=yes", "--property=TimeoutStopFailureMode=kill"])
@@ -76,6 +77,10 @@ class NavigationV3ExecutionTests(unittest.TestCase):
         self.assertEqual(admitted["invocation"]["environment"], owner.EXACT_ENVIRONMENT)
         self.assertEqual(admitted["immutable_inputs"], owner.protocol()["immutable_inputs"])
         self.assertEqual(admitted["data_manifest_sha256"], owner.DATA_SHA)
+        self.assertEqual(admitted["amendment"]["path"], owner.AMENDMENT_PATH)
+        self.assertEqual(admitted["prior_failure"], owner.prior_failure())
+        self.assertEqual(admitted["prior_failure"]["attempt"], 1)
+        self.assertFalse(admitted["prior_failure"]["output_created"])
         self.assertEqual(admitted["qualification_claims"], [])
         self.assertEqual(admitted["held_out_status"], "locked_unopened")
 
@@ -89,6 +94,8 @@ class NavigationV3ExecutionTests(unittest.TestCase):
             lambda row: row["invocation"]["environment"].update(OMP_NUM_THREADS="2"),
             lambda row: row["immutable_inputs"]["graph"].update(sha256="0" * 64),
             lambda row: row["behavior_sources"].update({"extra.py": "0" * 64}),
+            lambda row: row["prior_failure"]["journal"].update(sha256="0" * 64),
+            lambda row: row["amendment"].update(size_bytes=0),
         ):
             changed = copy.deepcopy(value)
             mutate(changed)
@@ -125,11 +132,20 @@ class NavigationV3ExecutionTests(unittest.TestCase):
             output = Path(directory) / "study"
             receipt = owner.reserve_attempt(output, "a" * 64)
             self.assertTrue((output / "attempt.json").is_file())
+            self.assertEqual(receipt["id"], "male-navigation-v3-enclosing-attempt-v2")
+            self.assertEqual(receipt["attempt"], 2)
             self.assertEqual(receipt["retry_allowed"], False)
             self.assertEqual(receipt["pairs"], [10, 11, 12])
             for stale in (output, output / "attempt.json", output / "failure.json"):
                 with self.subTest(stale=stale), self.assertRaises(FileExistsError):
                     owner.reserve_attempt(output, "a" * 64)
+
+    def test_attempt_two_preflight_requires_both_output_paths_absent(self):
+        value = {"output": str(owner.OUTPUT), "immutable_inputs": {}}
+        with patch.object(owner, "_lexists",
+                          side_effect=lambda path: Path(path) == owner.PRIOR_OUTPUT), \
+                self.assertRaisesRegex(FileExistsError, "Consumed invocation"):
+            owner.preflight(value)
 
     def test_pair_receipt_requires_hash_bound_two_model_success_and_complete_inventory(self):
         with tempfile.TemporaryDirectory() as directory:
