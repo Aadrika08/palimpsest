@@ -209,8 +209,8 @@ relabel v1 reserved seeds or development records as v3 held-out evidence.
    families, fallback profiles or corrective studies. Qualify affected source/
    profile/snapshot/sensing paths; unchanged old prerequisites are not rerun for
    appearances, and changed scientific paths do not inherit their qualification.
-   Collect all nine conditions and natural failures; review feasibility and
-   variance before committing the confirmatory sample count and analysis.
+   Collect all nine conditions and natural failures, then evaluate the already
+   fixed four-endpoint precision gate before permitting held-out registration.
 3. **One held-out phase:** separately freeze/register only after mandatory
    development gates pass. Execute the entire predeclared matrix within its own
    finite allocation, without tuning, case substitution or post-result extensions.

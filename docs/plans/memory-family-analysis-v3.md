@@ -70,14 +70,16 @@ The primary benefit claim is an intersection: both primary upper bounds must be
 strictly below -90. An adequately precise null requires both complete primary
 intervals to lie strictly inside `(-90, 45)`. A primary harm result requires at
 least one Bonferroni interval lower bound strictly above 45. Equality never
-passes a margin. Compute `primary_disposition` before guardrails. Final benefit
-or supported-null requires that primary disposition and every guard to pass;
-primary harm overrides guards; an observed own-only failure is
-`observed-guardrail-harm`; another failed guard is `guardrail-not-established`;
+passes a margin. Any zero-variance or nonfinite primary or null-cost interval is
+`variance-unresolved` before classification. Otherwise compute
+`primary_disposition` before guardrails. Final benefit or supported-null requires
+that primary disposition and every guard pass; primary harm overrides guards;
+an observed own-only failure is `observed-guardrail-harm`; a benefit or
+supported-null primary with another failed guard is `guardrail-not-established`;
 all remaining configurations are `inconclusive`. This is one global all-pass
 intersection claim. No component-level population claim is permitted.
 
-An overall result cannot hide null harm. For each reference in the null stratum,
+An overall result cannot hide null harm. For each reference in the null case kind,
 require a one-sided 95% blocked-t upper cost bound strictly below 45 and zero
 observed events where own fails and the reference reaches the goal. With 48
 independent families, the conservative zero-event upper bound `-log(0.05)/48` is
@@ -132,9 +134,9 @@ Every analysis envelope contains the canonical protocol, descriptive readout,
 producer-derived analysis design, and verification object. The analysis design
 regenerates all 48 family IDs, rows and cost strata from split/block and binds the
 protocol and family-design hashes. The verification object exactly binds the
-registration, protocol, plan, readout and five passed receipts for family
+registration, protocol, plan, readout and six passed receipts for family
 sampling, provenance, assignment balance, complete owner order, and access
-sequencing. Held-out verification also carries the raw selection receipt and
+sequencing, plus the no-event zero-selector/behavior invariant. Held-out verification also carries the raw selection receipt and
 recomputes its masked index. Inputs are bounded canonical JSON; the CLI emits one JSON result.
 A bare Boolean or caller-supplied family-to-stratum map is insufficient.
 

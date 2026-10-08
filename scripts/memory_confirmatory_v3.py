@@ -12,7 +12,8 @@ from scripts.memory_decision_pilot import capped_score, prerequisite_pass
 
 MAX_INPUT_BYTES = 32 * 1024**2
 SUPERVISOR_FAILURES = ('continuation_timeout', 'waypoint_timeout', 'inspection_timeout',
-    'no_route', 'attempt_limit', 'acquisition_timeout', 'acquisition_incomplete', 'acquisition_blocked')
+    'no_route', 'attempt_limit')
+ACQUISITION_FAILURES = ('acquisition_timeout', 'acquisition_incomplete', 'acquisition_blocked')
 
 
 def require(value, message):
@@ -88,10 +89,12 @@ def project_audit(audit):
                     and type(outcome.get('message')) is str
                     and outcome['message'].startswith('selected_waypoint_unavailable: '),
                     'Cue failure contradicts terminal outcome')
-        elif reason in SUPERVISOR_FAILURES:
+        elif reason in SUPERVISOR_FAILURES + ACQUISITION_FAILURES:
             require(outcome.get('reason') == 'runtime_failure' and outcome.get('type') == 'ValueError'
                     and outcome.get('message') == 'Memory-v2 supervisor failure: '+reason,
                     'Supervisor failure contradicts terminal outcome')
+            if reason in ACQUISITION_FAILURES:
+                return None, 'acquisition-before-fork'
         else:
             return None, 'unknown-terminal-infrastructure'
     if 'capped_ticks' in audit:
