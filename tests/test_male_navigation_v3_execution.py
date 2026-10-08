@@ -65,13 +65,14 @@ class NavigationV3ExecutionTests(unittest.TestCase):
         self.assertEqual(admitted["invocation"]["cwd"], str(ROOT))
         self.assertEqual(admitted["invocation"]["runner_argv"][-1],
                          admitted["self_sha256"])
-        self.assertEqual(admitted["invocation"]["outer_argv"][:11], [
+        self.assertEqual(admitted["invocation"]["outer_argv"][:12], [
             "/usr/bin/systemd-run", "--user", "--wait", "--collect",
+            f"--working-directory={ROOT}",
             "--unit=palimpsest-m7-navigation-v3-matched-budget-v1",
             "--property=Type=exec", "--property=KillMode=control-group",
             "--property=RuntimeMaxSec=2150s", "--property=TimeoutStopSec=10s",
             "--property=SendSIGKILL=yes", "--property=TimeoutStopFailureMode=kill"])
-        self.assertEqual(admitted["invocation"]["outer_argv"][11], "/usr/bin/env")
+        self.assertEqual(admitted["invocation"]["outer_argv"][12], "/usr/bin/env")
         self.assertEqual(admitted["invocation"]["environment"], owner.EXACT_ENVIRONMENT)
         self.assertEqual(admitted["immutable_inputs"], owner.protocol()["immutable_inputs"])
         self.assertEqual(admitted["data_manifest_sha256"], owner.DATA_SHA)
@@ -265,11 +266,15 @@ class NavigationV3ExecutionTests(unittest.TestCase):
         def cleanup(group):
             events.append(("cleanup", group))
             cleaned.append(group)
+        result, owned, handoff = owner.spawn_contained(
+            ["trainer"], ROOT, {}, None, None, popen=popen,
+            identity_reader=identity, install_handler=install,
+            cleanup=cleanup)
+        self.assertIs(result, process)
+        self.assertEqual(owned["start_ticks"], 100)
+        self.assertEqual(cleaned, [])
         with self.assertRaises(InterruptedError):
-            owner.spawn_contained(
-                ["trainer"], ROOT, {}, None, None, popen=popen,
-                identity_reader=identity, install_handler=install,
-                cleanup=cleanup)
+            owner.finish_spawn_handoff(result, handoff)
         self.assertEqual(cleaned, [50])
         self.assertIs(handlers[signal.SIGINT], prior[signal.SIGINT])
         self.assertIs(handlers[signal.SIGTERM], prior[signal.SIGTERM])
@@ -281,12 +286,69 @@ class NavigationV3ExecutionTests(unittest.TestCase):
         command = [owner.PYTHON, "-c",
                    "import signal,time; print(int(signal.SIGTERM in "
                    "signal.pthread_sigmask(signal.SIG_BLOCK, set())), flush=True); time.sleep(.2)"]
-        process, identity = owner.spawn_contained(
+        process, identity, handoff = owner.spawn_contained(
             command, ROOT, dict(os.environ), subprocess.PIPE, subprocess.PIPE)
+        owner.finish_spawn_handoff(process, handoff)
         stdout, stderr = process.communicate(timeout=3)
         self.assertEqual(process.returncode, 0, stderr.decode(errors="replace"))
         self.assertEqual(stdout.strip(), b"0")
         self.assertEqual(identity["group"], process.pid)
+
+    def test_signal_after_spawn_return_waits_for_caller_owned_handoff(self):
+        process = type("Process", (), {"pid": 50, "poll": lambda self: None})()
+        cleaned = []
+        caller = {"process": None, "identity": None}
+        def interrupted(number, frame):
+            raise InterruptedError("prior handler ran before caller ownership")
+        handlers = {signal.SIGINT: interrupted, signal.SIGTERM: interrupted}
+        def install(number, handler):
+            previous = handlers[number]
+            handlers[number] = handler
+            return previous
+        def identity(pid):
+            return {"pid": 50, "ppid": os.getpid(), "group": 50,
+                    "start_ticks": 100, "argv": ["trainer"], "command": "trainer"}
+
+        try:
+            spawned = owner.spawn_contained(
+                ["trainer"], ROOT, {}, None, None, popen=lambda *a, **k: process,
+                identity_reader=identity, install_handler=install,
+                cleanup=lambda group: cleaned.append(group))
+            handlers[signal.SIGTERM](signal.SIGTERM, None)
+            caller["process"], caller["identity"], handoff = spawned
+            owner.finish_spawn_handoff(caller["process"], handoff)
+        except InterruptedError:
+            pass
+        self.assertIs(caller["process"], process)
+        self.assertEqual(caller["identity"]["start_ticks"], 100)
+        self.assertEqual(cleaned, [50])
+        self.assertIs(handlers[signal.SIGINT], interrupted)
+        self.assertIs(handlers[signal.SIGTERM], interrupted)
+
+    def test_handoff_attempts_every_handler_restore_before_failing_closed(self):
+        process = type("Process", (), {"pid": 50, "poll": lambda self: None})()
+        prior = {signal.SIGINT: object(), signal.SIGTERM: object()}
+        handlers, restores, cleaned = dict(prior), [], []
+        def install(number, handler):
+            previous = handlers[number]
+            if handler is prior[number]:
+                restores.append(number)
+                if number == signal.SIGTERM:
+                    raise RuntimeError("synthetic handler restore failure")
+            handlers[number] = handler
+            return previous
+        def identity(pid):
+            return {"pid": 50, "ppid": os.getpid(), "group": 50,
+                    "start_ticks": 100, "argv": ["trainer"], "command": "trainer"}
+
+        result, _, handoff = owner.spawn_contained(
+            ["trainer"], ROOT, {}, None, None, popen=lambda *a, **k: process,
+            identity_reader=identity, install_handler=install,
+            cleanup=lambda group: cleaned.append(group))
+        with self.assertRaisesRegex(RuntimeError, "restore failure"):
+            owner.finish_spawn_handoff(result, handoff)
+        self.assertEqual(set(restores), {signal.SIGINT, signal.SIGTERM})
+        self.assertEqual(cleaned, [50])
 
     def test_leader_exit_before_identity_drains_forked_group_before_error(self):
         command = [owner.PYTHON, "-c",
