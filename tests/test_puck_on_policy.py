@@ -586,6 +586,33 @@ class PuckReservationAndMintAdmissionTests(unittest.TestCase):
                         project(target, reservation_path=reservation['manifest_path'],
                                 audience='collection')
 
+    def test_scene_manifest_reader_rechecks_self_consistent_prior_collision(self):
+        on_policy, identities = self.api('scene_candidate_identities')
+        _, stage = self.api('stage_scene_manifest')
+        _, project = self.api('collection_scene_projection')
+        forged_layout = fake_candidate(RESERVED_IDS[0], 0, 'on_policy_collection')
+        for field in ('rover_pose', 'puck_xy', 'goal_xy'):
+            forged_layout[field][1] += .0625
+        forged_identities = identities(forged_layout)
+        snapshot = inventory_snapshot()
+        snapshot['records'][2]['scenes'][0]['canonical_scene_sha256'] = \
+            forged_identities['canonical_scene_sha256']
+
+        with tempfile.TemporaryDirectory() as reservation_directory, \
+                tempfile.TemporaryDirectory() as source_directory, \
+                tempfile.TemporaryDirectory() as forged_directory:
+            reservation = self.reserve(Path(reservation_directory).resolve(), snapshot)
+            published = stage(Path(source_directory).resolve(), reservation['manifest_path'],
+                              fake_candidate, inventory_after=copy.deepcopy(snapshot))
+            manifest = json.loads(Path(published['manifest_path']).read_bytes())
+            manifest['scenes'][0]['layout'] = forged_layout
+            manifest['scenes'][0].update(forged_identities)
+            target = Path(forged_directory).resolve() / 'scene-manifest.json'
+            target.write_bytes(canonical_bytes(manifest))
+            with self.assertRaisesRegex(ValueError, 'collision'):
+                project(target, reservation_path=reservation['manifest_path'],
+                        audience='collection')
+
     def test_minter_layout_inventory_and_publication_failures_leave_no_scene_manifest(self):
         on_policy, stage = self.api('stage_scene_manifest')
         snapshot = inventory_snapshot()
@@ -677,6 +704,48 @@ class PuckReservationAndMintAdmissionTests(unittest.TestCase):
                     stage(root, reservation['manifest_path'], fake_candidate,
                           inventory_after=copy.deepcopy(snapshot))
                 self.assertFalse(target.exists())
+                self.assertTrue(quarantine.exists())
+                with self.assertRaisesRegex(ValueError, 'quarant'):
+                    project(target, reservation_path=reservation['manifest_path'],
+                            audience='collection')
+
+            calls, final_success_fsync_failure = fail_calls(5)
+            with tempfile.TemporaryDirectory() as scene_directory, \
+                    patch.object(on_policy.os, 'fsync', side_effect=final_success_fsync_failure):
+                root = Path(scene_directory).resolve()
+                with self.assertRaises(OSError):
+                    stage(root, reservation['manifest_path'], fake_candidate,
+                          inventory_after=copy.deepcopy(snapshot))
+                self.assertEqual(len(calls), 6)
+                self.assertEqual(list(root.iterdir()), [])
+
+            calls, final_and_cleanup_fsync_failure = fail_calls(5, 6)
+            with tempfile.TemporaryDirectory() as scene_directory, \
+                    patch.object(on_policy.os, 'fsync',
+                                 side_effect=final_and_cleanup_fsync_failure):
+                root = Path(scene_directory).resolve(); target = root / 'scene-manifest.json'
+                quarantine = root / '.scene-manifest.json.quarantine'
+                with self.assertRaises(OSError):
+                    stage(root, reservation['manifest_path'], fake_candidate,
+                          inventory_after=copy.deepcopy(snapshot))
+                self.assertFalse(target.exists())
+                self.assertTrue(quarantine.exists())
+                with self.assertRaisesRegex(ValueError, 'quarant'):
+                    project(target, reservation_path=reservation['manifest_path'],
+                            audience='collection')
+
+            calls, final_success_fsync_failure = fail_calls(5)
+            with tempfile.TemporaryDirectory() as scene_directory, \
+                    patch.object(on_policy.os, 'fsync',
+                                 side_effect=final_success_fsync_failure), \
+                    patch.object(on_policy, '_remove_failed_target',
+                                 side_effect=OSError('unlink after final fsync failed')):
+                root = Path(scene_directory).resolve(); target = root / 'scene-manifest.json'
+                quarantine = root / '.scene-manifest.json.quarantine'
+                with self.assertRaises(OSError):
+                    stage(root, reservation['manifest_path'], fake_candidate,
+                          inventory_after=copy.deepcopy(snapshot))
+                self.assertTrue(target.exists())
                 self.assertTrue(quarantine.exists())
                 with self.assertRaisesRegex(ValueError, 'quarant'):
                     project(target, reservation_path=reservation['manifest_path'],
