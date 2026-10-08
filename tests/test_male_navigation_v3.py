@@ -157,7 +157,8 @@ class MatchedBudgetTrainer(unittest.TestCase):
                      "feature_target_sha256": f"{offset + index + 1:064x}"}
                     for index, count in enumerate(rows)]
         old = entries(OLD_ROWS)
-        augmented = old + entries(AUGMENTED_ROWS[len(OLD_ROWS):], len(OLD_ROWS))
+        augmented = copy.deepcopy(old) + entries(
+            AUGMENTED_ROWS[len(OLD_ROWS):], len(OLD_ROWS))
         development = [
             {"run_id": row["run_id"], "episode": 0, "ticks": row["rows"],
              "feature_target_sha256": row["feature_target_sha256"]}
@@ -291,11 +292,85 @@ class MatchedBudgetTrainer(unittest.TestCase):
             self.assertEqual(retained["error"]["type"], "ValueError")
             self.assertFalse((output / "report.json").exists())
 
+    def test_pair_owner_reserves_before_admission_and_stops_after_first_arm_failure(self):
+        class FakeBudget:
+            def __init__(self, *args, **kwargs): pass
+            def check(self, additional, *, path): return {"additional_bytes": additional}
+            def lock(self): return self
+            def __enter__(self): return self
+            def __exit__(self, *args): return None
+
+        class Schedule:
+            sha256 = "a" * 64
+            def canonical_bytes(self): return b"{}"
+
+        with tempfile.TemporaryDirectory() as directory:
+            output = Path(directory) / "seed-10"
+            args = types.SimpleNamespace(training_seed=10, output=output,
+                                         graph=Path("graph"), graph_manifest=Path("manifest"),
+                                         cell_source=Path("cell"))
+            calls = []
+
+            def load_v2():
+                self.assertTrue((Path(directory) / "seed-10.attempt.json").is_file())
+                calls.append("admission")
+                return types.SimpleNamespace(
+                    prepare=lambda args, deadline: (
+                        output, {arm: object() for arm in trainer.ARMS},
+                        {"ordered_ids_sha256": "ids"},
+                        {"manifest": {}, "model_inputs": {}}),
+                    check_context=lambda *args, **kwargs: None,
+                    write_artifact=trainer._write_artifact,
+                    stage_report=lambda root, report, deadline, budget: trainer._write_artifact(
+                        root / "report.pending", b"{}", deadline, budget, trainer.MAX_JSON),
+                    publish_report=lambda *args, **kwargs: self.fail("failed pair published success"))
+
+            def load_torch():
+                self.assertTrue((output / "old-corpus-schedule.json").is_file())
+                self.assertTrue((output / "augmented-schedule.json").is_file())
+                calls.append("torch")
+                return types.SimpleNamespace(
+                    set_num_threads=lambda value: None,
+                    use_deterministic_algorithms=lambda value: None)
+
+            def fail_fit(*args, **kwargs):
+                calls.append("old-corpus")
+                raise ValueError("injected first-arm failure")
+
+            with (patch.object(trainer, "StorageBudget", FakeBudget),
+                  patch.object(trainer, "check_resources", return_value=0),
+                  patch.object(trainer, "source_identity", return_value={}),
+                  patch.object(trainer, "pre_runtime", return_value={}),
+                  patch.object(trainer, "_load_v2", side_effect=load_v2),
+                  patch.object(trainer, "admit_schedules",
+                               return_value={arm: Schedule() for arm in trainer.ARMS}),
+                  patch.object(trainer, "validate_prepared_data"),
+                  patch.object(trainer, "_load_torch", side_effect=load_torch),
+                  patch.object(trainer, "cpu_runtime", return_value={}),
+                  patch.object(trainer, "fit_terminal", side_effect=fail_fit)):
+                with self.assertRaisesRegex(ValueError, "first-arm failure"):
+                    trainer.train(args)
+            self.assertEqual(calls, ["admission", "torch", "old-corpus"])
+            failure = json.loads((Path(directory) / "seed-10.failure.json").read_text())
+            self.assertEqual(failure["models"]["old-corpus"]["status"], "failed")
+            self.assertEqual(failure["models"]["augmented"]["status"], "not_started")
+            self.assertFalse((output / "report.json").exists())
+
     def test_admission_stops_before_heavy_import_on_limits_or_heldout_cli(self):
         with patch.object(trainer, "rss_bytes", return_value=trainer.GiB + 1):
             with self.assertRaisesRegex(MemoryError, "RSS"):
                 trainer.check_resources(time.monotonic() + 2)
         with self.assertRaises(TimeoutError): trainer.check_resources(0)
+
+        fake_torch = types.SimpleNamespace(
+            __version__="2.9.0+cu128", get_num_threads=lambda: 1,
+            cuda=types.SimpleNamespace(is_initialized=lambda: False))
+        version = lambda name: "2.2.5" if name == "numpy" else "2.9.0"
+        with (patch.object(trainer.platform, "python_version", return_value="3.11.15"),
+              patch.object(trainer.importlib.metadata, "version", side_effect=version),
+              patch.dict(os.environ, {"CUDA_VISIBLE_DEVICES": ""}),
+              patch.dict(sys.modules, {"torch": fake_torch})):
+            self.assertEqual(trainer.cpu_runtime(fake_torch)["torch_build"], "2.9.0+cu128")
 
         env = {**os.environ, "PYTHONPATH": os.pathsep.join((str(Path(__file__).resolve().parents[1] / "src"),
                                                               str(Path(__file__).resolve().parents[1] / "scripts")))}
