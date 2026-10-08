@@ -51,7 +51,7 @@ canonical receipt before the final full revalidation and durable commit.
   floor.
 - Upstream pin plus full tree content must reject missing, dirty, untracked, or
   wrong-HEAD checkouts without calling Git, and its gitdir cannot escape the
-  checkout's own Git common metadata directory.
+  checkout's own resolved Git metadata directory.
 - Prepared graph edge and mapping paths must remain under the verified graph
   root, and a namespace root rejects after reading at most two entries.
 - Exclusive publication must link before final revalidation. Rollback must

@@ -536,6 +536,28 @@ def test_upstream_gitdir_must_stay_in_repository_metadata(tmp_path):
             allocation._upstream_identity(repo)
 
 
+def test_upstream_gitdir_accepts_exact_linked_worktree_metadata(tmp_path):
+    repo = tmp_path / 'repo'
+    upstream = repo / 'upstream/fly-gym'
+    upstream.mkdir(parents=True)
+    checkout_git = tmp_path / 'main.git/worktrees/allocation'
+    git_dir = checkout_git / 'modules/upstream/fly-gym'
+    git_dir.mkdir(parents=True)
+    (repo / '.git').write_text(f'gitdir: {checkout_git}\n')
+    relative = os.path.relpath(git_dir, upstream)
+    (upstream / '.git').write_text(f'gitdir: {relative}\n')
+    (git_dir / 'HEAD').write_text('1' * 40 + '\n')
+    protocol = copy.deepcopy(allocation.PROTOCOL)
+    protocol['upstream'] = {
+        'path': 'upstream/fly-gym', 'commit': '1' * 40,
+        'files': 0, 'bytes': 0, 'inventory_sha256': memory.sha256([]),
+    }
+    with patch.object(allocation, 'PROTOCOL', protocol):
+        result = allocation._upstream_identity(repo)
+    assert result['commit'] == '1' * 40
+    assert result['files'] == result['bytes'] == 0
+
+
 def test_upstream_rejects_forbidden_gitdir_before_reading_head(tmp_path):
     repo = tmp_path / 'repo'
     upstream = repo / 'upstream/fly-gym'

@@ -134,7 +134,7 @@ performing inference, or spawning a process:
   receipt that any future launcher must bind.
 
 The submodule gitdir must be the exact `modules/upstream/fly-gym` directory
-under the checkout's own Git common directory; an arbitrary external gitdir is
+under the checkout's own resolved Git directory; an arbitrary external gitdir is
 rejected before `HEAD` is read. Prepared graph metadata may name only a relative
 edge and relative mapping files that remain below the verified graph root.
 Behavior-source identities are captured while this module imports and current
