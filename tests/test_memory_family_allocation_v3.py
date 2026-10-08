@@ -6,6 +6,9 @@ import hashlib
 import json
 import os
 from pathlib import Path
+import subprocess
+import sys
+import textwrap
 from types import SimpleNamespace
 import uuid
 from unittest.mock import patch
@@ -186,6 +189,67 @@ def test_protocol_freezes_capacity_and_an_unresolved_namespace_gate():
         'admission', 'producer', 'family_generator', 'artifacts', 'assets',
         'memory_core', 'family_world', 'storage', 'allocation_protocol',
     }
+
+
+@pytest.mark.parametrize('mode', ['direct', 'module'])
+def test_import_bootstrap_binds_checkout_without_running_preflight(mode):
+    program = textwrap.dedent(r'''
+        import dataclasses
+        import json
+        import os
+        from pathlib import Path
+        import runpy
+        import sys
+
+        mode, root_text = sys.argv[1:]
+        root = Path(root_text).resolve()
+        source = root / 'scripts/memory_family_allocation_v3.py'
+        forbidden_calls = {'main', 'admit', 'build_namespace_inventory'}
+
+        def trace(frame, event, _):
+            if (event == 'call' and Path(frame.f_code.co_filename).resolve() == source
+                    and frame.f_code.co_name in forbidden_calls):
+                raise AssertionError(f'called {frame.f_code.co_name} during import')
+            return trace
+
+        def external_scan(*_, **__):
+            raise AssertionError('external namespace scan during import')
+
+        os.scandir = external_scan
+        sys.settrace(trace)
+        try:
+            if mode == 'direct':
+                namespace = runpy.run_path(str(source), run_name='allocation_import_only')
+            else:
+                sys.path.insert(0, str(root))
+                namespace = runpy.run_module(
+                    'scripts.memory_family_allocation_v3',
+                    run_name='allocation_import_only')
+        finally:
+            sys.settrace(None)
+
+        storage = sys.modules['palimpsest.storage']
+        origins = {
+            'artifacts': str(Path(namespace['artifacts'].__file__).resolve()),
+            'producer': str(Path(namespace['producer'].__file__).resolve()),
+            'storage': str(Path(storage.__file__).resolve()),
+        }
+        assert origins == {
+            'artifacts': str(root / 'src/palimpsest/artifacts.py'),
+            'producer': str(root / 'scripts/memory_family_producer_v3.py'),
+            'storage': str(root / 'src/palimpsest/storage.py'),
+        }
+        field = next(item for item in dataclasses.fields(namespace['StorageLimits'])
+                     if item.name == 'max_entries')
+        assert field.default == 100_000
+        assert namespace['StorageLimits'](
+            max_bytes=1, min_free_bytes=0, max_entries=131_072).max_entries == 131_072
+        print(json.dumps({'mode': mode, 'origins': origins}, sort_keys=True))
+    ''')
+    completed = subprocess.run(
+        [sys.executable, '-I', '-c', program, mode, str(ROOT)],
+        cwd='/tmp', text=True, capture_output=True, check=False)
+    assert completed.returncode == 0, completed.stderr
 
 
 def test_unresolved_coverage_refuses_before_any_external_root_read(tmp_path):
