@@ -285,6 +285,7 @@ def execute_amendment(producer, index_path, output, protocol, amendment,
         return report
     except BaseException as error:
         (output / "report.json").unlink(missing_ok=True)
+        (output / "amendment-execution.json").unlink(missing_ok=True)
         failure = {
             "schema": "m7-navigation-v2-failure-diagnosis-amendment-execution-v1",
             "status": "failed-amended-diagnosis",

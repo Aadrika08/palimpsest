@@ -215,6 +215,33 @@ class AmendmentOrchestrationTests(unittest.TestCase):
         self.assertEqual(failure["status"], "failed-amended-diagnosis")
         self.assertFalse((output / "report.json").exists())
 
+    def test_completion_receipt_fault_leaves_only_failure_evidence(self):
+        write = diagnosis._write_output
+
+        def fail_after_receipt_rename(output, name, payload, maximum):
+            write(output, name, payload, maximum)
+            if name == "amendment-execution.json":
+                raise OSError("authored directory fsync failure")
+
+        with patch.object(amendment, "ROOT", self.root), \
+                patch.object(diagnosis, "_write_output", side_effect=fail_after_receipt_rename):
+            output = self.root / self.contract["execution"]["fresh_output_relative"]
+            with self.assertRaisesRegex(OSError, "authored directory fsync failure"):
+                amendment.execute_amendment(
+                    self.fixture.producer,
+                    self.fixture.index_path,
+                    output,
+                    self.fixture.protocol,
+                    self.contract,
+                    amendment.AMENDMENT_PATH.read_bytes(),
+                    amendment.CLARIFICATION_PATH.read_bytes(),
+                )
+
+        self.assertFalse((output / "report.json").exists())
+        self.assertFalse((output / "amendment-execution.json").exists())
+        failure = json.loads((output / "amendment-failure.json").read_text())
+        self.assertEqual(failure["status"], "failed-amended-diagnosis")
+
 
 if __name__ == "__main__":
     unittest.main()
