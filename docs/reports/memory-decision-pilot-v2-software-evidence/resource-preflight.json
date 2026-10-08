@@ -1,0 +1,33 @@
+{
+  "aggregate_bytes": 8589934592,
+  "continuing_floor_bytes": 2147483648,
+  "event_bytes_per_tick_rounded_max": 12000,
+  "free_bytes_observed": 14184312832,
+  "guarantees_all_owners": false,
+  "hashes_checked_by_storage_agent": false,
+  "headroom_bytes": 67108864,
+  "individual_recording_ceiling_sum_bytes": 12884901888,
+  "initial_floor_bytes": 10737418240,
+  "method": "closed JSON/index sizes only; no native decode or new data",
+  "nonraw_parts": {
+    "events": 345600000,
+    "global_metadata": 33554432,
+    "owner_metadata": 157286400,
+    "snapshots": 503316480,
+    "stdout_stderr": 62914560
+  },
+  "nonraw_projection": 1102671872,
+  "observation_utc": "2026-10-08T01:21:58Z",
+  "projected_phase_bytes": 8454943744,
+  "protected_files_projected": 1151,
+  "quota": "unknown",
+  "rate_scope": "seed400 local-cue only; recorded rows denominator, not cumulative total_ticks",
+  "raw_bytes_per_tick_observed_max": 217000,
+  "raw_projection": 6249600000,
+  "remaining_after_headroom_bytes": 67881984,
+  "reserved_plus_floor_headroom_bytes": 10804527104,
+  "schema": "selected-pilot-byte-projection-v2",
+  "source": "independent storage preflight transcribed; root reserves five MiB per-owner metadata including independent audit instead of four",
+  "ticks_projected": 28800,
+  "uncompressed_nonraw_copy_allowance": 1102671872
+}

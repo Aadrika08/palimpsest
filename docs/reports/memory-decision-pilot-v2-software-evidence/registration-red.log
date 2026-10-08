@@ -1,0 +1,304 @@
+.FFFFFFF                                                                 [100%]
+=================================== FAILURES ===================================
+___ test_registration_freezes_thirty_unique_slots_without_allocating_runtime ___
+
+tmp_path = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/memory-decision-pilot-v2/.superpowers/sdd/software-tmp-memory-decision-pilot-v2/pytest-of-utkarsh/pytest-6/test_registration_freezes_thir0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x74117c908ed0>
+
+    def test_registration_freezes_thirty_unique_slots_without_allocating_runtime(tmp_path,monkeypatch):
+>       s,reg,path=registration_fixture(tmp_path,monkeypatch)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_memory_selected_pilot.py:193: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+tmp_path = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/memory-decision-pilot-v2/.superpowers/sdd/software-tmp-memory-decision-pilot-v2/pytest-of-utkarsh/pytest-6/test_registration_freezes_thir0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x74117c908ed0>
+
+    def registration_fixture(tmp_path,monkeypatch):
+        s,path,root,baseline,repo=admitted_fixture(tmp_path,monkeypatch)
+        names=['scripts/memory_selected_pilot.py','scripts/memory_restore_diagnostic.py',
+            'docs/plans/memory-decision-pilot-v2.md',
+            'docs/reports/restore-qualification-v2-evidence/execute-restore-v2.py',
+            'docs/reports/memory-decision-pilot-v2-evidence/register.py',
+            'docs/reports/memory-decision-pilot-v2-evidence/execute-pilot.py',
+            'docs/reports/memory-decision-pilot-v2-software-evidence/resource-preflight.json']
+        for name in names:
+            target=repo/name;target.parent.mkdir(parents=True,exist_ok=True)
+            target.write_text('fixture '+name+'\n')
+        (repo/names[-1]).write_text(json.dumps({'projected_phase_bytes':8454943744,
+            'aggregate_bytes':8*p.GiB,'headroom_bytes':64*p.MiB,'guarantees_all_owners':False}))
+        monkeypatch.setattr(s,'__file__',str(repo/'scripts/memory_selected_pilot.py'))
+        monkeypatch.setattr(d,'__file__',str(repo/'scripts/memory_restore_diagnostic.py'))
+>       assert callable(getattr(s,'build_registration',None)), 'Bounded pilot registration is missing'
+E       AssertionError: Bounded pilot registration is missing
+E       assert False
+E        +  where False = callable(None)
+E        +    where None = getattr(<module 'scripts.memory_selected_pilot' from '/home/utkarsh/Work/shraddha/brain/.worktrees/memory-decision-pilot-v2/scripts/memory_selected_pilot.py'>, 'build_registration', None)
+
+tests/test_memory_selected_pilot.py:186: AssertionError
+----------------------------- Captured stdout call -----------------------------
+{"status": "prerequisites-provisional-pass", "native_prerequisites_passed": false, "restore_pair_matches": false, "candidate_restore_pair_matches": true, "total_new_controls": 40, "unattempted": []}
+{"status": "native-prerequisites-passed", "native_prerequisites_passed": true, "restore_pair_matches": false, "candidate_restore_pair_matches": true, "error": null, "failure_publication_error": null}
+_ test_registration_refuses_resource_or_protocol_extension[seconds_caps-value0] _
+
+tmp_path = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/memory-decision-pilot-v2/.superpowers/sdd/software-tmp-memory-decision-pilot-v2/pytest-of-utkarsh/pytest-6/test_registration_refuses_reso0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x74117a748c10>
+key = 'seconds_caps', value = [6001, 600]
+
+    @pytest.mark.parametrize('key,value',[('seconds_caps',[6001,600]),('corrective_studies',1),
+        ('native_owners_max',31),('protocol_sha256',p.TRAVEL_PROTOCOL_SHA256)])
+    def test_registration_refuses_resource_or_protocol_extension(tmp_path,monkeypatch,key,value):
+>       s,reg,path=registration_fixture(tmp_path,monkeypatch);reg[key]=value
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_memory_selected_pilot.py:206: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+tmp_path = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/memory-decision-pilot-v2/.superpowers/sdd/software-tmp-memory-decision-pilot-v2/pytest-of-utkarsh/pytest-6/test_registration_refuses_reso0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x74117a748c10>
+
+    def registration_fixture(tmp_path,monkeypatch):
+        s,path,root,baseline,repo=admitted_fixture(tmp_path,monkeypatch)
+        names=['scripts/memory_selected_pilot.py','scripts/memory_restore_diagnostic.py',
+            'docs/plans/memory-decision-pilot-v2.md',
+            'docs/reports/restore-qualification-v2-evidence/execute-restore-v2.py',
+            'docs/reports/memory-decision-pilot-v2-evidence/register.py',
+            'docs/reports/memory-decision-pilot-v2-evidence/execute-pilot.py',
+            'docs/reports/memory-decision-pilot-v2-software-evidence/resource-preflight.json']
+        for name in names:
+            target=repo/name;target.parent.mkdir(parents=True,exist_ok=True)
+            target.write_text('fixture '+name+'\n')
+        (repo/names[-1]).write_text(json.dumps({'projected_phase_bytes':8454943744,
+            'aggregate_bytes':8*p.GiB,'headroom_bytes':64*p.MiB,'guarantees_all_owners':False}))
+        monkeypatch.setattr(s,'__file__',str(repo/'scripts/memory_selected_pilot.py'))
+        monkeypatch.setattr(d,'__file__',str(repo/'scripts/memory_restore_diagnostic.py'))
+>       assert callable(getattr(s,'build_registration',None)), 'Bounded pilot registration is missing'
+E       AssertionError: Bounded pilot registration is missing
+E       assert False
+E        +  where False = callable(None)
+E        +    where None = getattr(<module 'scripts.memory_selected_pilot' from '/home/utkarsh/Work/shraddha/brain/.worktrees/memory-decision-pilot-v2/scripts/memory_selected_pilot.py'>, 'build_registration', None)
+
+tests/test_memory_selected_pilot.py:186: AssertionError
+----------------------------- Captured stdout call -----------------------------
+{"status": "prerequisites-provisional-pass", "native_prerequisites_passed": false, "restore_pair_matches": false, "candidate_restore_pair_matches": true, "total_new_controls": 40, "unattempted": []}
+{"status": "native-prerequisites-passed", "native_prerequisites_passed": true, "restore_pair_matches": false, "candidate_restore_pair_matches": true, "error": null, "failure_publication_error": null}
+_ test_registration_refuses_resource_or_protocol_extension[corrective_studies-1] _
+
+tmp_path = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/memory-decision-pilot-v2/.superpowers/sdd/software-tmp-memory-decision-pilot-v2/pytest-of-utkarsh/pytest-6/test_registration_refuses_reso1')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x74117a7de690>
+key = 'corrective_studies', value = 1
+
+    @pytest.mark.parametrize('key,value',[('seconds_caps',[6001,600]),('corrective_studies',1),
+        ('native_owners_max',31),('protocol_sha256',p.TRAVEL_PROTOCOL_SHA256)])
+    def test_registration_refuses_resource_or_protocol_extension(tmp_path,monkeypatch,key,value):
+>       s,reg,path=registration_fixture(tmp_path,monkeypatch);reg[key]=value
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_memory_selected_pilot.py:206: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+tmp_path = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/memory-decision-pilot-v2/.superpowers/sdd/software-tmp-memory-decision-pilot-v2/pytest-of-utkarsh/pytest-6/test_registration_refuses_reso1')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x74117a7de690>
+
+    def registration_fixture(tmp_path,monkeypatch):
+        s,path,root,baseline,repo=admitted_fixture(tmp_path,monkeypatch)
+        names=['scripts/memory_selected_pilot.py','scripts/memory_restore_diagnostic.py',
+            'docs/plans/memory-decision-pilot-v2.md',
+            'docs/reports/restore-qualification-v2-evidence/execute-restore-v2.py',
+            'docs/reports/memory-decision-pilot-v2-evidence/register.py',
+            'docs/reports/memory-decision-pilot-v2-evidence/execute-pilot.py',
+            'docs/reports/memory-decision-pilot-v2-software-evidence/resource-preflight.json']
+        for name in names:
+            target=repo/name;target.parent.mkdir(parents=True,exist_ok=True)
+            target.write_text('fixture '+name+'\n')
+        (repo/names[-1]).write_text(json.dumps({'projected_phase_bytes':8454943744,
+            'aggregate_bytes':8*p.GiB,'headroom_bytes':64*p.MiB,'guarantees_all_owners':False}))
+        monkeypatch.setattr(s,'__file__',str(repo/'scripts/memory_selected_pilot.py'))
+        monkeypatch.setattr(d,'__file__',str(repo/'scripts/memory_restore_diagnostic.py'))
+>       assert callable(getattr(s,'build_registration',None)), 'Bounded pilot registration is missing'
+E       AssertionError: Bounded pilot registration is missing
+E       assert False
+E        +  where False = callable(None)
+E        +    where None = getattr(<module 'scripts.memory_selected_pilot' from '/home/utkarsh/Work/shraddha/brain/.worktrees/memory-decision-pilot-v2/scripts/memory_selected_pilot.py'>, 'build_registration', None)
+
+tests/test_memory_selected_pilot.py:186: AssertionError
+----------------------------- Captured stdout call -----------------------------
+{"status": "prerequisites-provisional-pass", "native_prerequisites_passed": false, "restore_pair_matches": false, "candidate_restore_pair_matches": true, "total_new_controls": 40, "unattempted": []}
+{"status": "native-prerequisites-passed", "native_prerequisites_passed": true, "restore_pair_matches": false, "candidate_restore_pair_matches": true, "error": null, "failure_publication_error": null}
+_ test_registration_refuses_resource_or_protocol_extension[native_owners_max-31] _
+
+tmp_path = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/memory-decision-pilot-v2/.superpowers/sdd/software-tmp-memory-decision-pilot-v2/pytest-of-utkarsh/pytest-6/test_registration_refuses_reso2')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x74117a774310>
+key = 'native_owners_max', value = 31
+
+    @pytest.mark.parametrize('key,value',[('seconds_caps',[6001,600]),('corrective_studies',1),
+        ('native_owners_max',31),('protocol_sha256',p.TRAVEL_PROTOCOL_SHA256)])
+    def test_registration_refuses_resource_or_protocol_extension(tmp_path,monkeypatch,key,value):
+>       s,reg,path=registration_fixture(tmp_path,monkeypatch);reg[key]=value
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_memory_selected_pilot.py:206: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+tmp_path = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/memory-decision-pilot-v2/.superpowers/sdd/software-tmp-memory-decision-pilot-v2/pytest-of-utkarsh/pytest-6/test_registration_refuses_reso2')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x74117a774310>
+
+    def registration_fixture(tmp_path,monkeypatch):
+        s,path,root,baseline,repo=admitted_fixture(tmp_path,monkeypatch)
+        names=['scripts/memory_selected_pilot.py','scripts/memory_restore_diagnostic.py',
+            'docs/plans/memory-decision-pilot-v2.md',
+            'docs/reports/restore-qualification-v2-evidence/execute-restore-v2.py',
+            'docs/reports/memory-decision-pilot-v2-evidence/register.py',
+            'docs/reports/memory-decision-pilot-v2-evidence/execute-pilot.py',
+            'docs/reports/memory-decision-pilot-v2-software-evidence/resource-preflight.json']
+        for name in names:
+            target=repo/name;target.parent.mkdir(parents=True,exist_ok=True)
+            target.write_text('fixture '+name+'\n')
+        (repo/names[-1]).write_text(json.dumps({'projected_phase_bytes':8454943744,
+            'aggregate_bytes':8*p.GiB,'headroom_bytes':64*p.MiB,'guarantees_all_owners':False}))
+        monkeypatch.setattr(s,'__file__',str(repo/'scripts/memory_selected_pilot.py'))
+        monkeypatch.setattr(d,'__file__',str(repo/'scripts/memory_restore_diagnostic.py'))
+>       assert callable(getattr(s,'build_registration',None)), 'Bounded pilot registration is missing'
+E       AssertionError: Bounded pilot registration is missing
+E       assert False
+E        +  where False = callable(None)
+E        +    where None = getattr(<module 'scripts.memory_selected_pilot' from '/home/utkarsh/Work/shraddha/brain/.worktrees/memory-decision-pilot-v2/scripts/memory_selected_pilot.py'>, 'build_registration', None)
+
+tests/test_memory_selected_pilot.py:186: AssertionError
+----------------------------- Captured stdout call -----------------------------
+{"status": "prerequisites-provisional-pass", "native_prerequisites_passed": false, "restore_pair_matches": false, "candidate_restore_pair_matches": true, "total_new_controls": 40, "unattempted": []}
+{"status": "native-prerequisites-passed", "native_prerequisites_passed": true, "restore_pair_matches": false, "candidate_restore_pair_matches": true, "error": null, "failure_publication_error": null}
+_ test_registration_refuses_resource_or_protocol_extension[protocol_sha256-ae7c4014868d5ade9928cfdda2729c3562df38404a32f7c4b7980d4cbb567a5d] _
+
+tmp_path = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/memory-decision-pilot-v2/.superpowers/sdd/software-tmp-memory-decision-pilot-v2/pytest-of-utkarsh/pytest-6/test_registration_refuses_reso3')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x74117cc6a990>
+key = 'protocol_sha256'
+value = 'ae7c4014868d5ade9928cfdda2729c3562df38404a32f7c4b7980d4cbb567a5d'
+
+    @pytest.mark.parametrize('key,value',[('seconds_caps',[6001,600]),('corrective_studies',1),
+        ('native_owners_max',31),('protocol_sha256',p.TRAVEL_PROTOCOL_SHA256)])
+    def test_registration_refuses_resource_or_protocol_extension(tmp_path,monkeypatch,key,value):
+>       s,reg,path=registration_fixture(tmp_path,monkeypatch);reg[key]=value
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_memory_selected_pilot.py:206: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+tmp_path = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/memory-decision-pilot-v2/.superpowers/sdd/software-tmp-memory-decision-pilot-v2/pytest-of-utkarsh/pytest-6/test_registration_refuses_reso3')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x74117cc6a990>
+
+    def registration_fixture(tmp_path,monkeypatch):
+        s,path,root,baseline,repo=admitted_fixture(tmp_path,monkeypatch)
+        names=['scripts/memory_selected_pilot.py','scripts/memory_restore_diagnostic.py',
+            'docs/plans/memory-decision-pilot-v2.md',
+            'docs/reports/restore-qualification-v2-evidence/execute-restore-v2.py',
+            'docs/reports/memory-decision-pilot-v2-evidence/register.py',
+            'docs/reports/memory-decision-pilot-v2-evidence/execute-pilot.py',
+            'docs/reports/memory-decision-pilot-v2-software-evidence/resource-preflight.json']
+        for name in names:
+            target=repo/name;target.parent.mkdir(parents=True,exist_ok=True)
+            target.write_text('fixture '+name+'\n')
+        (repo/names[-1]).write_text(json.dumps({'projected_phase_bytes':8454943744,
+            'aggregate_bytes':8*p.GiB,'headroom_bytes':64*p.MiB,'guarantees_all_owners':False}))
+        monkeypatch.setattr(s,'__file__',str(repo/'scripts/memory_selected_pilot.py'))
+        monkeypatch.setattr(d,'__file__',str(repo/'scripts/memory_restore_diagnostic.py'))
+>       assert callable(getattr(s,'build_registration',None)), 'Bounded pilot registration is missing'
+E       AssertionError: Bounded pilot registration is missing
+E       assert False
+E        +  where False = callable(None)
+E        +    where None = getattr(<module 'scripts.memory_selected_pilot' from '/home/utkarsh/Work/shraddha/brain/.worktrees/memory-decision-pilot-v2/scripts/memory_selected_pilot.py'>, 'build_registration', None)
+
+tests/test_memory_selected_pilot.py:186: AssertionError
+----------------------------- Captured stdout call -----------------------------
+{"status": "prerequisites-provisional-pass", "native_prerequisites_passed": false, "restore_pair_matches": false, "candidate_restore_pair_matches": true, "total_new_controls": 40, "unattempted": []}
+{"status": "native-prerequisites-passed", "native_prerequisites_passed": true, "restore_pair_matches": false, "candidate_restore_pair_matches": true, "error": null, "failure_publication_error": null}
+_ test_worker_needs_committed_registration_and_exact_case_slot_before_allocation _
+
+tmp_path = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/memory-decision-pilot-v2/.superpowers/sdd/software-tmp-memory-decision-pilot-v2/pytest-of-utkarsh/pytest-6/test_worker_needs_committed_re0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x741179d45090>
+
+    def test_worker_needs_committed_registration_and_exact_case_slot_before_allocation(tmp_path,monkeypatch):
+>       s,reg,path=registration_fixture(tmp_path,monkeypatch)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_memory_selected_pilot.py:211: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+tmp_path = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/memory-decision-pilot-v2/.superpowers/sdd/software-tmp-memory-decision-pilot-v2/pytest-of-utkarsh/pytest-6/test_worker_needs_committed_re0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x741179d45090>
+
+    def registration_fixture(tmp_path,monkeypatch):
+        s,path,root,baseline,repo=admitted_fixture(tmp_path,monkeypatch)
+        names=['scripts/memory_selected_pilot.py','scripts/memory_restore_diagnostic.py',
+            'docs/plans/memory-decision-pilot-v2.md',
+            'docs/reports/restore-qualification-v2-evidence/execute-restore-v2.py',
+            'docs/reports/memory-decision-pilot-v2-evidence/register.py',
+            'docs/reports/memory-decision-pilot-v2-evidence/execute-pilot.py',
+            'docs/reports/memory-decision-pilot-v2-software-evidence/resource-preflight.json']
+        for name in names:
+            target=repo/name;target.parent.mkdir(parents=True,exist_ok=True)
+            target.write_text('fixture '+name+'\n')
+        (repo/names[-1]).write_text(json.dumps({'projected_phase_bytes':8454943744,
+            'aggregate_bytes':8*p.GiB,'headroom_bytes':64*p.MiB,'guarantees_all_owners':False}))
+        monkeypatch.setattr(s,'__file__',str(repo/'scripts/memory_selected_pilot.py'))
+        monkeypatch.setattr(d,'__file__',str(repo/'scripts/memory_restore_diagnostic.py'))
+>       assert callable(getattr(s,'build_registration',None)), 'Bounded pilot registration is missing'
+E       AssertionError: Bounded pilot registration is missing
+E       assert False
+E        +  where False = callable(None)
+E        +    where None = getattr(<module 'scripts.memory_selected_pilot' from '/home/utkarsh/Work/shraddha/brain/.worktrees/memory-decision-pilot-v2/scripts/memory_selected_pilot.py'>, 'build_registration', None)
+
+tests/test_memory_selected_pilot.py:186: AssertionError
+----------------------------- Captured stdout call -----------------------------
+{"status": "prerequisites-provisional-pass", "native_prerequisites_passed": false, "restore_pair_matches": false, "candidate_restore_pair_matches": true, "total_new_controls": 40, "unattempted": []}
+{"status": "native-prerequisites-passed", "native_prerequisites_passed": true, "restore_pair_matches": false, "candidate_restore_pair_matches": true, "error": null, "failure_publication_error": null}
+_____________ test_clock_refuses_rebased_or_late_independent_close _____________
+
+tmp_path = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/memory-decision-pilot-v2/.superpowers/sdd/software-tmp-memory-decision-pilot-v2/pytest-of-utkarsh/pytest-6/test_clock_refuses_rebased_or_0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x74117a39f5d0>
+
+    def test_clock_refuses_rebased_or_late_independent_close(tmp_path,monkeypatch):
+>       s,reg,path=registration_fixture(tmp_path,monkeypatch)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_memory_selected_pilot.py:227: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+tmp_path = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/memory-decision-pilot-v2/.superpowers/sdd/software-tmp-memory-decision-pilot-v2/pytest-of-utkarsh/pytest-6/test_clock_refuses_rebased_or_0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x74117a39f5d0>
+
+    def registration_fixture(tmp_path,monkeypatch):
+        s,path,root,baseline,repo=admitted_fixture(tmp_path,monkeypatch)
+        names=['scripts/memory_selected_pilot.py','scripts/memory_restore_diagnostic.py',
+            'docs/plans/memory-decision-pilot-v2.md',
+            'docs/reports/restore-qualification-v2-evidence/execute-restore-v2.py',
+            'docs/reports/memory-decision-pilot-v2-evidence/register.py',
+            'docs/reports/memory-decision-pilot-v2-evidence/execute-pilot.py',
+            'docs/reports/memory-decision-pilot-v2-software-evidence/resource-preflight.json']
+        for name in names:
+            target=repo/name;target.parent.mkdir(parents=True,exist_ok=True)
+            target.write_text('fixture '+name+'\n')
+        (repo/names[-1]).write_text(json.dumps({'projected_phase_bytes':8454943744,
+            'aggregate_bytes':8*p.GiB,'headroom_bytes':64*p.MiB,'guarantees_all_owners':False}))
+        monkeypatch.setattr(s,'__file__',str(repo/'scripts/memory_selected_pilot.py'))
+        monkeypatch.setattr(d,'__file__',str(repo/'scripts/memory_restore_diagnostic.py'))
+>       assert callable(getattr(s,'build_registration',None)), 'Bounded pilot registration is missing'
+E       AssertionError: Bounded pilot registration is missing
+E       assert False
+E        +  where False = callable(None)
+E        +    where None = getattr(<module 'scripts.memory_selected_pilot' from '/home/utkarsh/Work/shraddha/brain/.worktrees/memory-decision-pilot-v2/scripts/memory_selected_pilot.py'>, 'build_registration', None)
+
+tests/test_memory_selected_pilot.py:186: AssertionError
+----------------------------- Captured stdout call -----------------------------
+{"status": "prerequisites-provisional-pass", "native_prerequisites_passed": false, "restore_pair_matches": false, "candidate_restore_pair_matches": true, "total_new_controls": 40, "unattempted": []}
+{"status": "native-prerequisites-passed", "native_prerequisites_passed": true, "restore_pair_matches": false, "candidate_restore_pair_matches": true, "error": null, "failure_publication_error": null}
+=========================== short test summary info ============================
+FAILED tests/test_memory_selected_pilot.py::test_registration_freezes_thirty_unique_slots_without_allocating_runtime
+FAILED tests/test_memory_selected_pilot.py::test_registration_refuses_resource_or_protocol_extension[seconds_caps-value0]
+FAILED tests/test_memory_selected_pilot.py::test_registration_refuses_resource_or_protocol_extension[corrective_studies-1]
+FAILED tests/test_memory_selected_pilot.py::test_registration_refuses_resource_or_protocol_extension[native_owners_max-31]
+FAILED tests/test_memory_selected_pilot.py::test_registration_refuses_resource_or_protocol_extension[protocol_sha256-ae7c4014868d5ade9928cfdda2729c3562df38404a32f7c4b7980d4cbb567a5d]
+FAILED tests/test_memory_selected_pilot.py::test_worker_needs_committed_registration_and_exact_case_slot_before_allocation
+FAILED tests/test_memory_selected_pilot.py::test_clock_refuses_rebased_or_late_independent_close
+7 failed, 1 passed, 12 deselected in 10.44s

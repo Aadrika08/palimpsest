@@ -1,0 +1,15 @@
+{
+  "exit_code": 0,
+  "elapsed_seconds": 292.18613737399573,
+  "command": "python -m pytest -q",
+  "native_opt_ins": false,
+  "environment": {
+    "OMP_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1",
+    "MKL_NUM_THREADS": "1",
+    "NUMEXPR_NUM_THREADS": "1",
+    "MUJOCO_GL": "egl",
+    "CUDA_VISIBLE_DEVICES": "",
+    "PYTHONPATH": "/home/utkarsh/Work/shraddha/brain/.worktrees/memory-decision-pilot-v2/src:/home/utkarsh/Work/shraddha/brain/.worktrees/memory-decision-pilot-v2"
+  }
+}

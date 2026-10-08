@@ -182,7 +182,21 @@ the [separate six-case/four-condition pilot proposal](memory-decision-pilot-v2.m
 six acquisitions and 24 continuations, maximum 30 owners, requested separate
 180-second registration and one 6,600-second invocation, fail-closed 8 GiB,
 zero retries/corrective studies. The admission bridge, new protocol and pilot
-remain unapproved/unstarted; no held-out or other lane is authorized by v3 approval.
+were subsequently approved separately and completed once. See the
+[pilot result](../reports/memory-decision-pilot-v2.md) and
+[PR #93](https://github.com/Aadrika08/palimpsest/pull/93). All 6 acquisitions and
+24 continuations were independently audited; 22/24 continuations reached goals.
+Own/sham local-null arms failed naturally with CueUnavailable and each retains
+the 900-tick score. Mandatory calibration and own/sham/opportunity gates passed;
+the frozen path-based null-cost predicate and composite mechanism remain false.
+Registration used 18.088 seconds outer; the single invocation used 2847.971 seconds
+outer, with authoritative close inside its original readout deadline. Thirty
+owner exits passed in that invocation; all 1151 protected files remain byte-identical.
+Both allocations are consumed, with zero retries/corrective studies. Full
+nine-condition memory development and held-out remain unstarted; R2 is incomplete.
+A future failure-aware null metric or visibility diagnostic needs its own
+prospective protocol and approved bounded allocation. No held-out or other lane
+is authorized by the prerequisite or pilot approval.
 
 The fresh artwork-material v3 allocation passed in 22.06 seconds. Its compact
 comparison preserves source geometry and complete raw-event references while

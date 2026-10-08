@@ -1,0 +1,181 @@
+......F..F.FF.......................                                     [100%]
+=================================== FAILURES ===================================
+_______ test_preparation_rechecks_reserves_and_commits_only_registration _______
+
+tmp_path = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/memory-decision-pilot-v2/.superpowers/sdd/software-tmp-memory-decision-pilot-v2/pytest-of-utkarsh/pytest-10/test_preparation_rechecks_rese0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x786b516c7d50>
+
+    def test_preparation_rechecks_reserves_and_commits_only_registration(tmp_path,monkeypatch):
+        module,evidence,reg,calls=preparer_fixture(tmp_path,monkeypatch)
+>       assert module.main(['--bounded'])==0
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_memory_selected_pilot_launcher.py:106: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+docs/reports/memory-decision-pilot-v2-evidence/register.py:78: in main
+    return prepare()
+           ^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def prepare():
+        started = time.monotonic();deadline = started+180
+        evidence = Path(__file__).resolve().parent;repo = evidence.parents[2]
+        path = evidence/'registration.json'
+        control = repo/'.superpowers/sdd/memory-decision-pilot-v2-runtime'
+        if path.exists() or control.exists():
+            raise FileExistsError('Pilot registration/control already exists; no retry')
+        if subprocess.check_output(['git','status','--porcelain'],cwd=repo):
+            raise ValueError('Preparation requires clean committed software')
+        prerequisite = repo.parent/'memory-prerequisites-v3/docs/reports/memory-prerequisites-v3-evidence/registration.json'
+        with preparation_lease():
+            stamp = datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%SZ')
+            reg = m.build_registration(repo,prerequisite,stamp=stamp,deadline=deadline)
+>           p.safe_output(reg['output'],reg['protected_roots'])
+                                        ^^^^^^^^^^^^^^^^^^^^^^
+E           KeyError: 'protected_roots'
+
+docs/reports/memory-decision-pilot-v2-evidence/register.py:46: KeyError
+___________ test_preparation_refusal_never_writes_or_commits[output] ___________
+
+tmp_path = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/memory-decision-pilot-v2/.superpowers/sdd/software-tmp-memory-decision-pilot-v2/pytest-of-utkarsh/pytest-10/test_preparation_refusal_never2')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x786b51886d90>
+reason = 'output'
+
+    @pytest.mark.parametrize('reason',['registration','control','output','dirty','reservation','deadline'])
+    def test_preparation_refusal_never_writes_or_commits(tmp_path,monkeypatch,reason):
+        module,evidence,reg,calls=preparer_fixture(tmp_path,monkeypatch)
+        if reason=='registration':(evidence/'registration.json').write_text('{}')
+        elif reason in ('control','output'):Path(reg['control_root' if reason=='control' else 'output']).mkdir(parents=True)
+        elif reason=='dirty':monkeypatch.setattr(module.subprocess,'check_output',lambda *a,**k:b' M source.py')
+        elif reason=='reservation':
+            monkeypatch.setattr(module.shutil,'disk_usage',lambda value:SimpleNamespace(
+                free=10*module.p.GiB+64*module.p.MiB-1))
+        elif reason=='deadline':
+            def recheck(value,deadline):monkeypatch.setattr(module.time,'monotonic',lambda:281)
+            monkeypatch.setattr(module.m,'recheck_inputs',recheck)
+>       with pytest.raises((ValueError,FileExistsError,RuntimeError)):module.main(['--bounded'])
+                                                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_memory_selected_pilot_launcher.py:129: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+docs/reports/memory-decision-pilot-v2-evidence/register.py:78: in main
+    return prepare()
+           ^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def prepare():
+        started = time.monotonic();deadline = started+180
+        evidence = Path(__file__).resolve().parent;repo = evidence.parents[2]
+        path = evidence/'registration.json'
+        control = repo/'.superpowers/sdd/memory-decision-pilot-v2-runtime'
+        if path.exists() or control.exists():
+            raise FileExistsError('Pilot registration/control already exists; no retry')
+        if subprocess.check_output(['git','status','--porcelain'],cwd=repo):
+            raise ValueError('Preparation requires clean committed software')
+        prerequisite = repo.parent/'memory-prerequisites-v3/docs/reports/memory-prerequisites-v3-evidence/registration.json'
+        with preparation_lease():
+            stamp = datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%SZ')
+            reg = m.build_registration(repo,prerequisite,stamp=stamp,deadline=deadline)
+>           p.safe_output(reg['output'],reg['protected_roots'])
+                                        ^^^^^^^^^^^^^^^^^^^^^^
+E           KeyError: 'protected_roots'
+
+docs/reports/memory-decision-pilot-v2-evidence/register.py:46: KeyError
+________ test_preparation_refusal_never_writes_or_commits[reservation] _________
+
+tmp_path = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/memory-decision-pilot-v2/.superpowers/sdd/software-tmp-memory-decision-pilot-v2/pytest-of-utkarsh/pytest-10/test_preparation_refusal_never4')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x786b5154da90>
+reason = 'reservation'
+
+    @pytest.mark.parametrize('reason',['registration','control','output','dirty','reservation','deadline'])
+    def test_preparation_refusal_never_writes_or_commits(tmp_path,monkeypatch,reason):
+        module,evidence,reg,calls=preparer_fixture(tmp_path,monkeypatch)
+        if reason=='registration':(evidence/'registration.json').write_text('{}')
+        elif reason in ('control','output'):Path(reg['control_root' if reason=='control' else 'output']).mkdir(parents=True)
+        elif reason=='dirty':monkeypatch.setattr(module.subprocess,'check_output',lambda *a,**k:b' M source.py')
+        elif reason=='reservation':
+            monkeypatch.setattr(module.shutil,'disk_usage',lambda value:SimpleNamespace(
+                free=10*module.p.GiB+64*module.p.MiB-1))
+        elif reason=='deadline':
+            def recheck(value,deadline):monkeypatch.setattr(module.time,'monotonic',lambda:281)
+            monkeypatch.setattr(module.m,'recheck_inputs',recheck)
+>       with pytest.raises((ValueError,FileExistsError,RuntimeError)):module.main(['--bounded'])
+                                                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_memory_selected_pilot_launcher.py:129: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+docs/reports/memory-decision-pilot-v2-evidence/register.py:78: in main
+    return prepare()
+           ^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def prepare():
+        started = time.monotonic();deadline = started+180
+        evidence = Path(__file__).resolve().parent;repo = evidence.parents[2]
+        path = evidence/'registration.json'
+        control = repo/'.superpowers/sdd/memory-decision-pilot-v2-runtime'
+        if path.exists() or control.exists():
+            raise FileExistsError('Pilot registration/control already exists; no retry')
+        if subprocess.check_output(['git','status','--porcelain'],cwd=repo):
+            raise ValueError('Preparation requires clean committed software')
+        prerequisite = repo.parent/'memory-prerequisites-v3/docs/reports/memory-prerequisites-v3-evidence/registration.json'
+        with preparation_lease():
+            stamp = datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%SZ')
+            reg = m.build_registration(repo,prerequisite,stamp=stamp,deadline=deadline)
+>           p.safe_output(reg['output'],reg['protected_roots'])
+                                        ^^^^^^^^^^^^^^^^^^^^^^
+E           KeyError: 'protected_roots'
+
+docs/reports/memory-decision-pilot-v2-evidence/register.py:46: KeyError
+__________ test_preparation_refusal_never_writes_or_commits[deadline] __________
+
+tmp_path = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/memory-decision-pilot-v2/.superpowers/sdd/software-tmp-memory-decision-pilot-v2/pytest-of-utkarsh/pytest-10/test_preparation_refusal_never5')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x786b5186afd0>
+reason = 'deadline'
+
+    @pytest.mark.parametrize('reason',['registration','control','output','dirty','reservation','deadline'])
+    def test_preparation_refusal_never_writes_or_commits(tmp_path,monkeypatch,reason):
+        module,evidence,reg,calls=preparer_fixture(tmp_path,monkeypatch)
+        if reason=='registration':(evidence/'registration.json').write_text('{}')
+        elif reason in ('control','output'):Path(reg['control_root' if reason=='control' else 'output']).mkdir(parents=True)
+        elif reason=='dirty':monkeypatch.setattr(module.subprocess,'check_output',lambda *a,**k:b' M source.py')
+        elif reason=='reservation':
+            monkeypatch.setattr(module.shutil,'disk_usage',lambda value:SimpleNamespace(
+                free=10*module.p.GiB+64*module.p.MiB-1))
+        elif reason=='deadline':
+            def recheck(value,deadline):monkeypatch.setattr(module.time,'monotonic',lambda:281)
+            monkeypatch.setattr(module.m,'recheck_inputs',recheck)
+>       with pytest.raises((ValueError,FileExistsError,RuntimeError)):module.main(['--bounded'])
+                                                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_memory_selected_pilot_launcher.py:129: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+docs/reports/memory-decision-pilot-v2-evidence/register.py:78: in main
+    return prepare()
+           ^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def prepare():
+        started = time.monotonic();deadline = started+180
+        evidence = Path(__file__).resolve().parent;repo = evidence.parents[2]
+        path = evidence/'registration.json'
+        control = repo/'.superpowers/sdd/memory-decision-pilot-v2-runtime'
+        if path.exists() or control.exists():
+            raise FileExistsError('Pilot registration/control already exists; no retry')
+        if subprocess.check_output(['git','status','--porcelain'],cwd=repo):
+            raise ValueError('Preparation requires clean committed software')
+        prerequisite = repo.parent/'memory-prerequisites-v3/docs/reports/memory-prerequisites-v3-evidence/registration.json'
+        with preparation_lease():
+            stamp = datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%SZ')
+            reg = m.build_registration(repo,prerequisite,stamp=stamp,deadline=deadline)
+>           p.safe_output(reg['output'],reg['protected_roots'])
+                                        ^^^^^^^^^^^^^^^^^^^^^^
+E           KeyError: 'protected_roots'
+
+docs/reports/memory-decision-pilot-v2-evidence/register.py:46: KeyError
+=========================== short test summary info ============================
+FAILED tests/test_memory_selected_pilot_launcher.py::test_preparation_rechecks_reserves_and_commits_only_registration
+FAILED tests/test_memory_selected_pilot_launcher.py::test_preparation_refusal_never_writes_or_commits[output]
+FAILED tests/test_memory_selected_pilot_launcher.py::test_preparation_refusal_never_writes_or_commits[reservation]
+FAILED tests/test_memory_selected_pilot_launcher.py::test_preparation_refusal_never_writes_or_commits[deadline]
+4 failed, 32 passed in 11.23s

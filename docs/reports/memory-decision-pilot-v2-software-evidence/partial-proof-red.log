@@ -1,0 +1,60 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+___________ test_independent_close_rejects_tampered_evidence[input] ____________
+
+tmp_path = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/memory-decision-pilot-v2/.superpowers/sdd/software-tmp-memory-decision-pilot-v2/pytest-of-utkarsh/pytest-16/test_independent_close_rejects0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x73d2b09bf050>
+mutation = 'input'
+
+    @pytest.mark.parametrize('mutation',['raw','supervision','slot','source','extra-owner','cleanup','clock','input'])
+    def test_independent_close_rejects_tampered_evidence(tmp_path,monkeypatch,mutation):
+        import time
+        s,reg,path,root,launched=pilot_fixture(tmp_path,monkeypatch)
+        assert callable(getattr(s,'run',None)), 'Selected runner missing'
+        assert s.run(path)==0
+        first=reg['owner_slots'][0]['run_id'];second=reg['owner_slots'][1]['run_id']
+        if mutation=='raw':(root/'stage/runs'/first/'worker-report.json').write_text('{}')
+        elif mutation=='supervision':(root/'stage/supervision'/first/'supervisor.json').write_text('{}')
+        elif mutation=='slot':
+            jobpath=root/'stage/jobs'/(first+'.json');job=p.read_json(jobpath);job['run_id']='f'*32;jobpath.write_text(json.dumps(job))
+        elif mutation=='source':
+            jobpath=root/'stage/jobs'/(second+'.json');job=p.read_json(jobpath);job['snapshot_sha256']='f'*64;jobpath.write_text(json.dumps(job))
+        elif mutation=='extra-owner':
+            extra=root/'stage/runs/extra';extra.mkdir();(extra/'owner.json').write_text(json.dumps({'run_id':'f'*32}))
+        elif mutation=='input':Path(reg['contract']).write_text('altered')
+        else:
+            receipt=p.read_json(root/'execution.json')
+            if mutation=='clock':receipt['readout_deadline_monotonic']=time.monotonic()+6600
+            else:receipt['cleanup'][0]['status']='terminated-owned-worker'
+            (root/'execution.json').write_text(json.dumps(receipt))
+        assert s.audit(path)==1
+        close=p.read_json(root/'scientific-close.json')
+        assert close['pilot_complete'] is False and close['qualification_claims']==[]
+        if mutation=='input':
+>           assert len(close['owners'])==30 and close['unattempted']==[]
+E           assert (0 == 30)
+E            +  where 0 = len([])
+
+tests/test_memory_selected_pilot.py:406: AssertionError
+----------------------------- Captured stdout call -----------------------------
+{"status": "prerequisites-provisional-pass", "native_prerequisites_passed": false, "restore_pair_matches": false, "candidate_restore_pair_matches": true, "total_new_controls": 40, "unattempted": []}
+{"status": "native-prerequisites-passed", "native_prerequisites_passed": true, "restore_pair_matches": false, "candidate_restore_pair_matches": true, "error": null, "failure_publication_error": null}
+{"status": "pilot-provisional-pass", "mandatory_pass": true, "mechanism_observed": true, "unattempted": []}
+{"status": "scientific-close-stop", "pilot_complete": false, "mandatory_pass": false, "mechanism_observed": false, "error": {"type": "ValueError", "message": "Diagnostic contract changed"}}
+___________ test_restored_terminal_binds_previous_xy_from_the_source ___________
+
+    def test_restored_terminal_binds_previous_xy_from_the_source():
+        snapshot={'application':{'episode_step':727},'environment':{'values':{'_stall_steps':49,'_prev_xy':[1.,0.]}}}
+        outcome={'reason':'stalled','episode':0,'steps':728}
+        report={'goal':False,'total_ticks':728,'final_phase':'terminated','outcome':outcome,
+            'final_memory':{'supervisor':{'continuation_start_tick':727}}}
+        data={'events':[{'kind':'episode_finished','outcome':outcome}],
+            'rows':[{'tick':727,'pose':[0.,0.,0.],'next_pose':[0.,0.,0.],'action':[.1,0.]}]}
+>       with pytest.raises(ValueError):p.audit_travel_task_failure(data,report,source_snapshot=snapshot)
+E       Failed: DID NOT RAISE <class 'ValueError'>
+
+tests/test_memory_selected_pilot.py:416: Failed
+=========================== short test summary info ============================
+FAILED tests/test_memory_selected_pilot.py::test_independent_close_rejects_tampered_evidence[input]
+FAILED tests/test_memory_selected_pilot.py::test_restored_terminal_binds_previous_xy_from_the_source
+2 failed, 36 deselected in 3.80s
