@@ -59,9 +59,11 @@ class NativeIntervalTests(unittest.TestCase):
         self.app = {'fixture': 'application'}
 
     def staged(self, tick=0):
-        own = {**self.own, 'tick': tick}
+        own = copy.deepcopy(self.own)
+        for completed in range(1,tick+1):
+            own=learning.commit(own,learning.prepare(self.sensors,own),completed)
         with patch.object(puck_model, 'predict', return_value=self.prediction):
-            return adapter.stage_interval(self.sensors, self.world, self.mode, own, object(),
+            return adapter.stage_interval(self.sensors, self.world, own['mode'], own, object(),
                 terminal_reason=None, capture_query_state=lambda: adapter.capture_query_state(self.env, self.observation, application=self.app))
 
     def payload(self, staged):
@@ -168,6 +170,28 @@ class NativeIntervalTests(unittest.TestCase):
             staged=self.staged();arrays,event=self.payload(staged)
             arrays['teacher_mode_before']=np.uint8(1)
             with self.assertRaises(ValueError):writer.publish(staged,arrays,event,completed_tick=1)
+
+    def test_completed_event_cannot_disagree_with_native_packet(self):
+        writer=adapter.PuckIntervalWriter(self.path,max_bytes=2*1024**2)
+        staged=self.staged();arrays,event=self.payload(staged)
+        arrays.update(native_completed_tick=np.int64(1),native_data_time_s=np.float64(.02),
+            world_after=np.zeros(12,np.float64),reward=np.float64(0.),task_sha256=np.zeros(32,np.uint8))
+        with self.assertRaises(ValueError):writer.publish(staged,arrays,event,completed_tick=1)
+
+    def test_output_root_replacement_during_publication_never_admits_new_interval(self):
+        writer=adapter.PuckIntervalWriter(self.path,max_bytes=2*1024**2)
+        self.publish(writer)
+        real=adapter._write_bytes_new
+        def replace_root(*args,**kwargs):
+            result=real(*args,**kwargs)
+            self.path.rename(self.path.with_name('moved'))
+            self.path.mkdir()
+            return result
+        with patch.object(adapter,'_write_bytes_new',side_effect=replace_root):
+            with self.assertRaises((ValueError,OSError)):self.publish(writer,1)
+        self.assertEqual(list(adapter.read_committed_intervals(self.path)),[])
+        moved=self.path.with_name('moved')
+        self.assertEqual([r['completed_tick'] for r in adapter.read_committed_intervals(moved)],[1])
 
     def test_actual_interval_steps_only_student_and_commits_after_native_and_publication(self):
         writer=adapter.PuckIntervalWriter(self.path,max_bytes=2*1024**2)
