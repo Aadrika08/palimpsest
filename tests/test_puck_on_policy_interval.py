@@ -159,6 +159,55 @@ class IntervalTests(unittest.TestCase):
                                                     completed_tick=1, publication_receipt=self.receipt(staged))
         self.assertEqual((own['tick'], mode), (1, 'approach'))
 
+    def test_inference_cannot_change_live_packet_world_or_cursor(self):
+        for target in ('sensors', 'world', 'own'):
+            self.setUp()
+            with self.subTest(target=target):
+                def predict(model, inputs):
+                    if target == 'sensors': self.sensors[0] = 0
+                    elif target == 'world': self.world['time_s'] = 1.
+                    else: self.own['tick'] = 7
+                    return self.prediction
+                with patch.object(puck_model, 'predict', side_effect=predict):
+                    with self.assertRaises(ValueError):
+                        adapter.stage_interval(self.sensors, self.world, 'approach', self.own, object(),
+                                               terminal_reason=None, capture_query_state=lambda: self.capture)
+
+    def test_synthetic_owner_executes_only_student_then_publishes_before_cursor_admission(self):
+        staged = self.stage()
+        execution = []
+        execution.append(staged['row']['action'].copy())  # Synthetic completed step only.
+        self.assertEqual(execution[0].tobytes(), self.prediction.tobytes())
+        self.assertEqual(self.own, learning.initial_cursor())
+        with self.assertRaises(ValueError):
+            adapter.admit_completed_interval(staged, self.own, 'approach',
+                                             completed_tick=1, publication_receipt=None)
+        self.assertEqual(self.own, learning.initial_cursor())
+        own, mode = adapter.admit_completed_interval(staged, self.own, 'approach',
+                                                    completed_tick=1, publication_receipt=self.receipt(staged))
+        self.assertEqual((own['tick'], mode), (1, 'push'))
+        with self.assertRaises(ValueError):
+            adapter.admit_completed_interval(staged, own, mode,
+                                             completed_tick=1, publication_receipt=self.receipt(staged))
+
+    def test_budget_terminal_and_self_consistent_row_forgery_fail(self):
+        for tick in (600,):
+            self.own = self.own | {'tick': tick}
+            with patch.object(teacher, 'decide') as query:
+                with self.assertRaises(ValueError): self.stage()
+                query.assert_not_called()
+        self.setUp()
+        staged = self.stage()
+        for field, value in (('action', np.zeros(2, np.float64)),
+                             ('teacher_mode_after', np.uint8(1)),
+                             ('student_inputs', np.zeros(9, np.float32)),
+                             ('tick', True)):
+            bad = copy.deepcopy(staged)
+            bad['row'][field] = value
+            with self.assertRaises(ValueError):
+                adapter.admit_completed_interval(bad, self.own, 'approach',
+                                                 completed_tick=1, publication_receipt=self.receipt(bad))
+
 
 if __name__ == '__main__':
     unittest.main()
