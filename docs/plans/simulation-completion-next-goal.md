@@ -570,3 +570,45 @@ Continue the lab and portable artwork work where their prerequisites permit;
 browser, adequate Afterimage, human artistic/operator acceptance and integration
 remain open. None of the seven release-level checkboxes is completed by these
 source checks. CI and the physical rover remain excluded.
+
+### Compact pair and puck interval source gates closed, 14 October 2026
+
+[PR #109](https://github.com/Aadrika08/palimpsest/pull/109), stacked on #107,
+publishes compact-v4 source/condition pair admission for all nine conditions at
+`f5d3ba658607b5fc1bc2e1299b631f0c4df6cb4c`. The earlier STOP findings are repaired:
+input descriptors remain bound through final rereads, root/ancestor/leaf names
+are checked after those reads, prior-own identities bind the exact current
+source and derived own mapping, and receipt identities retain exact types.
+The oracle fixture now reuses the donor's exact source bytes and receipts across
+an explicit ZIP timestamp boundary. Faithful RED commits retain every bypass.
+
+The five-file affected suite passes 213 tests; independent review passes all 85
+pair tests, compilation/import/diff checks and 16 source pins, returning GO with
+no remaining Critical or Important finding in this bounded scope. Protocol SHA
+is `18998855233fde58213873c325cc1f726c4fbc517113f81423eb3477d89bf597`.
+This closes the pure pair-admission source gate, not native collection or R2.
+Post-prune omitted bytes remain explicitly receipt-authoritative.
+
+[PR #110](https://github.com/Aadrika08/palimpsest/pull/110), stacked on #108,
+publishes pure on-policy interval staging and receipt-bound cursor admission at
+`347a838389d7532b1727ad90bddd9b2bdca617cc`. One teacher query supplies a separate
+label, query-isolation checks protect supplied captures and live inputs/world/
+cursor, and one student prediction supplies the executed action. Cursor updates
+are returned only after a contiguous tick and exact supplied v3 row receipt.
+
+Root review reproduced a schema collision: the historical teacher reader treated
+the executed student action as its teacher target. The v3 private mode columns
+are now distinct; both historical consumers reject them, while v3 admission
+accepts legitimate unfiltered intervals. Independent review returned GO and
+reran all 49 affected synthetic tests, including ten interval tests. Compilation,
+import, unchanged frozen protocol, diff and clean-worktree checks pass.
+
+No native owner, real model, scene minting, collection, fitting, development or
+held-out execution occurred in either slice. Puck's complete native capture,
+completed-step evidence and durable row/event publication remain integration
+requirements. Next memory work is producer close and reviewed full raw-tree
+pruning, followed by fresh allocation/launcher admission. Next puck work is the
+native collection route and its capture/writer contract, then registry discovery
+and the full execution manifest. Navigation remains stopped at consumed attempt
+2; browser and human artwork/operator acceptance remain unresolved. All seven
+release-level gates remain open, with CI and physical hardware excluded.
