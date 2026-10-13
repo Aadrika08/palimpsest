@@ -14,6 +14,7 @@ from unittest.mock import patch
 import numpy as np
 from palimpsest import puck_on_policy as adapter, puck_learning as learning
 from palimpsest import puck_model, puck_teacher, puck_profile as puck, snapshots
+from palimpsest import puck_student
 from palimpsest.records import RunWriter
 from test_puck_profile import OWNERSHIP, raw_contacts
 
@@ -58,6 +59,8 @@ class NativeIntervalTests(unittest.TestCase):
             mj_getState=lambda model,data,value,kind: value.fill(0))
         self.capture_modules = patch.dict(sys.modules, {'mujoco': self.fake_mj})
         self.capture_modules.start(); self.addCleanup(self.capture_modules.stop)
+        native_world=patch.object(gate,'world_from',side_effect=lambda env,goal:{**self.world,'time_s':env.data.time})
+        native_world.start();self.addCleanup(native_world.stop)
         self.app = {'fixture': 'application'}
 
     def staged(self, tick=0):
@@ -171,7 +174,7 @@ class NativeIntervalTests(unittest.TestCase):
                                       end=end,close=lambda:closed.append(True))
                 contact=puck.classify_contacts(raw_contacts(0),OWNERSHIP,tick=0,time_s=0.)
                 with ExitStack() as stack:
-                    stack.enter_context(patch.object(gate,'world_from',return_value={**self.world,'time_s':.02}))
+                    stack.enter_context(patch.object(gate,'world_from',side_effect=lambda env,goal:{**self.world,'time_s':env.data.time}))
                     stack.enter_context(patch.object(puck_model,'predict',return_value=self.prediction))
                     if fault in ('tick','event'):stack.enter_context(patch.object(RunWriter,fault,side_effect=OSError(fault)))
                     elif fault=='fsync':stack.enter_context(patch.object(adapter.os,'fsync',side_effect=OSError(fault)))
@@ -192,9 +195,23 @@ class NativeIntervalTests(unittest.TestCase):
         self.assertEqual([r['completed_tick'] for r in rows],[1,2])
         self.assertEqual(rows[0]['row']['action'].tobytes(),self.prediction.tobytes())
         self.assertNotIn('teacher_mode_before',rows[0]['row'])
+        with self.assertRaises(ValueError):learning.admit_teacher_rows([rows[0]['row']],1)
+        with patch.object(puck_model,'predict',side_effect=AssertionError('No historical prediction')):
+            with self.assertRaises(ValueError):puck_student.decide(self.sensors,self.own,None,recorded=rows[0]['row'])
         for tick in (1,2):
             directory=self.path/f'{tick:06d}'
             self.assertEqual((directory/'commit.json').stat().st_ino,(directory/'commit.anchor.json').stat().st_ino)
+
+    def test_real_storage_budget_counts_both_commit_names_and_all_directory_entries(self):
+        from palimpsest.storage import StorageBudget,StorageLimits
+        budget=StorageBudget((self.path,),StorageLimits(max_bytes=2*1024**2,min_free_bytes=0))
+        writer=adapter.PuckIntervalWriter(self.path,max_bytes=2*1024**2,storage_budget=budget)
+        self.publish(writer)
+        usage=budget.usage()
+        measured=sum(p.stat().st_size for p in self.path.rglob('*') if p.is_file())
+        self.assertEqual(usage['used_bytes'],measured)
+        self.assertEqual(writer._bytes,measured)
+        self.assertEqual(usage['files'],5)
 
     def test_faults_poison_writer_and_preserve_only_earlier_committed_prefix(self):
         for fault in ('tick','event','finish','fsync','anchor','publication'):
@@ -268,7 +285,7 @@ class NativeIntervalTests(unittest.TestCase):
         probe=SimpleNamespace(ownership=OWNERSHIP,install=lambda:calls.append(('install',)),begin=lambda tick:None,
             end=lambda:raw_contacts(1),close=lambda:calls.append(('close',)))
         after={**self.world,'time_s':.02}
-        with patch.object(gate,'world_from',return_value=after), patch.object(puck_model,'predict',return_value=self.prediction), \
+        with patch.object(gate,'world_from',side_effect=lambda env,goal:{**self.world,'time_s':env.data.time}), patch.object(puck_model,'predict',return_value=self.prediction), \
              patch.object(puck_teacher,'decide',wraps=puck_teacher.decide) as teacher:
             result=gate.on_policy_interval(self.env,self.observation,state,self.world,contact,self.own,self.mode,object(),probe,writer)
         self.assertEqual(teacher.call_count,1)
@@ -307,6 +324,24 @@ class NativeIntervalTests(unittest.TestCase):
                 gate.on_policy_interval(self.env,self.observation,puck.initialize(self.world,'fixture'),self.world,
                                         contact,self.own,self.mode,object(),object(),writer)
             teacher.assert_not_called();predict.assert_not_called()
+
+    def test_stale_prestate_is_rejected_before_query_prediction_or_step(self):
+        for fault in ('world','native_tick','native_time','state','contact'):
+            with self.subTest(fault=fault),tempfile.TemporaryDirectory() as temporary:
+                writer=adapter.PuckIntervalWriter(Path(temporary)/'rows',max_bytes=2*1024**2)
+                world=copy.deepcopy(self.world);state=puck.initialize(world,'fixture')
+                contact=puck.classify_contacts(raw_contacts(0),OWNERSHIP,tick=0,time_s=0.)
+                self.env._t=0;self.env.data.time=0.
+                if fault=='world':world['puck_xyz'][0]=.1
+                elif fault=='native_tick':self.env._t=1
+                elif fault=='native_time':self.env.data.time=.02
+                elif fault=='state':state['tick']=1
+                else:contact['tick']=1
+                with patch.object(puck_teacher,'decide') as teacher,patch.object(puck_model,'predict') as predict:
+                    with self.assertRaisesRegex(ValueError,'pre-action'):
+                        gate.on_policy_interval(self.env,self.observation,state,world,contact,self.own,self.mode,object(),object(),writer)
+                    teacher.assert_not_called();predict.assert_not_called()
+                self.assertTrue(writer._broken)
 
     def test_probe_install_failure_is_closed_and_stops_the_writer(self):
         writer=adapter.PuckIntervalWriter(self.path,max_bytes=2*1024**2)
