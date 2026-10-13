@@ -36,6 +36,8 @@ class NativeIntervalTests(unittest.TestCase):
         self.assertTrue(callable(getattr(adapter, 'capture_query_state', None)), 'native capture seam missing')
         self.assertTrue(callable(getattr(adapter, 'PuckIntervalWriter', None)), 'durable interval writer missing')
         self.assertTrue(callable(getattr(gate, 'on_policy_interval', None)), 'actual interval seam missing')
+        py_rng,np_rng=random.getstate(),np.random.get_state()
+        self.addCleanup(random.setstate,py_rng);self.addCleanup(np.random.set_state,np_rng)
         self.temp = tempfile.TemporaryDirectory(); self.addCleanup(self.temp.cleanup)
         self.path = Path(self.temp.name)/'intervals'
         self.own = learning.initial_cursor(); self.mode = 'approach'
@@ -67,14 +69,26 @@ class NativeIntervalTests(unittest.TestCase):
                 terminal_reason=None, capture_query_state=lambda: adapter.capture_query_state(self.env, self.observation, application=self.app))
 
     def payload(self, staged):
+        from palimpsest.body_profile import effective_control
         arrays = {k: v for k,v in staged['row'].items() if k not in ('episode','tick')}
-        arrays.update(qpos=np.zeros(2,np.float64))
-        event = {'completed_tick': staged['row']['tick']+1, 'state': {'tick': staged['row']['tick']+1},
-                 'world': copy.deepcopy(self.world), 'contact': {'fixture': True}, 'reward': 0.,
+        tick=staged['row']['tick'];before={**self.world,'time_s':tick*.02};after={**self.world,'time_s':(tick+1)*.02}
+        def contact(n):return puck.classify_contacts(raw_contacts(n),OWNERSHIP,tick=n,time_s=n*.02)
+        state=puck.initialize(self.world,'fixture')
+        for n in range(1,tick+1):state,_=puck.advance(state,{**self.world,'time_s':n*.02},contact(n),self.prediction.tolist())
+        next_state,reward=puck.advance(state,after,contact(tick+1),self.prediction.tolist())
+        event = {'completed_tick': tick+1, 'state_before':state,'world_before':before,'contact_before':contact(tick),
+                 'state':next_state,'world':after,'contact':contact(tick+1),'reward':reward,
                  'supervisor_mode_before': staged['own_pending']['before']['mode'],
                  'supervisor_mode_after': staged['own_pending']['after']['mode'],
                  'teacher_query_mode_before': staged['teacher_mode_before'],
                  'teacher_query_mode_after': staged['teacher_mode_after']}
+        normalized=json.loads(adapter._canonical_bytes(event,'fixture'))
+        task={'state':normalized['state'],'world':normalized['world'],'contact':normalized['contact'],
+              'own_supervisor_cursor':{**staged['own_pending']['after'],'tick':tick+1}}
+        arrays.update(qpos=np.zeros(2,np.float64),ctrl=np.asarray(effective_control(self.prediction.tolist()),np.float64),
+            world_before=gate.world_array(before),world_after=gate.world_array(after),reward=np.asarray(reward,np.float64),
+            native_completed_tick=np.asarray(tick+1,np.int64),native_data_time_s=np.asarray(after['time_s'],np.float64),
+            task_sha256=np.frombuffer(bytes.fromhex(snapshots.state_digest(task)),np.uint8))
         return arrays,event
 
     def publish(self, writer, tick=0):
@@ -119,6 +133,54 @@ class NativeIntervalTests(unittest.TestCase):
                 capture.assert_not_called()
         self.env.np_random=np.random.default_rng(2);self.fake_mj.get_mjcb_control=lambda: object()
         with self.assertRaises(ValueError):adapter.capture_query_state(self.env,self.observation,application=self.app)
+
+    def test_fake_torch_and_recursive_space_rng_changes_are_observed_without_import(self):
+        cpu=np.array([1,2,3],np.uint8)
+        tensor=SimpleNamespace(cpu=lambda:SimpleNamespace(numpy=lambda:cpu))
+        fake_torch=SimpleNamespace(get_rng_state=lambda:tensor,cuda=SimpleNamespace(is_initialized=lambda:False))
+        child=SimpleNamespace(_np_random=np.random.default_rng(7))
+        self.env.observation_space.spaces={'child':child}
+        with patch.dict(sys.modules,{'torch':fake_torch}),patch.object(snapshots,'_torch_profile',return_value={'fixture':True}):
+            before=adapter.capture_query_state(self.env,self.observation,application=self.app)
+            cpu[0]=9;child._np_random.random()
+            after=adapter.capture_query_state(self.env,self.observation,application=self.app)
+        self.assertNotEqual(snapshots.state_digest(before['torch_rng']),snapshots.state_digest(after['torch_rng']))
+        self.assertNotEqual(snapshots.state_digest(before['space_rng']),snapshots.state_digest(after['space_rng']))
+        self.assertEqual(before['torch_rng']['cpu'].tolist(),[1,2,3])
+
+    def test_query_capture_exceeding_8_mib_is_rejected(self):
+        self.env.data.__getstate__=lambda:b'x'*(8*1024**2)
+        with self.assertRaisesRegex(ValueError,'8 MiB'):
+            adapter.capture_query_state(self.env,self.observation,application=self.app)
+
+    def test_native_probe_and_packet_publication_failures_stop_before_cursors(self):
+        from palimpsest.body_profile import effective_control
+        for fault in ('probe','tick','event','fsync'):
+            with self.subTest(fault=fault),tempfile.TemporaryDirectory() as temporary:
+                self.env._t=0;self.env.data.time=0.
+                path=Path(temporary)/'intervals';writer=adapter.PuckIntervalWriter(path,max_bytes=2*1024**2)
+                closed=[]
+                def step(action):
+                    self.env._t=1;self.env.data.time=.02;self.env.data.ctrl[:]=effective_control(action)
+                    return self.observation,0.,False,False,{'dist_to_goal':1.,'stalled':False}
+                self.env.step=step
+                def end():
+                    if fault=='probe':raise OSError('probe end')
+                    return raw_contacts(1)
+                probe=SimpleNamespace(ownership=OWNERSHIP,install=lambda:None,begin=lambda tick:None,
+                                      end=end,close=lambda:closed.append(True))
+                contact=puck.classify_contacts(raw_contacts(0),OWNERSHIP,tick=0,time_s=0.)
+                with ExitStack() as stack:
+                    stack.enter_context(patch.object(gate,'world_from',return_value={**self.world,'time_s':.02}))
+                    stack.enter_context(patch.object(puck_model,'predict',return_value=self.prediction))
+                    if fault in ('tick','event'):stack.enter_context(patch.object(RunWriter,fault,side_effect=OSError(fault)))
+                    elif fault=='fsync':stack.enter_context(patch.object(adapter.os,'fsync',side_effect=OSError(fault)))
+                    with self.assertRaises(OSError):
+                        gate.on_policy_interval(self.env,self.observation,puck.initialize(self.world,'fixture'),self.world,
+                                                contact,self.own,self.mode,object(),probe,writer)
+                self.assertEqual(closed,[True]);self.assertEqual(self.own['tick'],0)
+                self.assertEqual(list(adapter.read_committed_intervals(path)),[])
+                with self.assertRaises(ValueError):self.publish(writer)
 
     def test_real_disk_two_interval_prefix_binds_rows_and_events(self):
         writer=adapter.PuckIntervalWriter(self.path,max_bytes=2*1024**2)
