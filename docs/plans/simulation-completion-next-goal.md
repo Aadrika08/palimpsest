@@ -521,3 +521,52 @@ This remains pure source evidence. The separately executable raw auditor,
 producer close, full raw-tree deletion, compact-pair admission, allocation,
 launcher, owners, retained collection and R2 qualification remain incomplete and
 unauthorized. Main, CI and the physical rover remain unchanged.
+
+### Reviewed source gates and retained failures, 13 October 2026
+
+[PR #107](https://github.com/Aadrika08/palimpsest/pull/107) now includes the
+separately executable compact-v4 raw auditor at reviewed head `d2a32ef`.
+The prior exact-head review returned GO after terminal-path regressions, with
+37 focused and 128 affected synthetic checks passing. This is source evidence;
+producer close, raw-tree deletion, allocation and retained collection remain
+unexecuted.
+
+[PR #106](https://github.com/Aadrika08/palimpsest/pull/106) now retains both
+consumed navigation-v3 invocations. Attempt 1 failed before reservation on the
+interpreter/argv representation. A faithful regression, separately frozen v2
+manifest and independent review corrected that guard at `e691591`; 38
+focused/affected checks passed. Attempt 2 reserved its enclosing and seed-10
+attempts, then failed on the transitive `httpx` import before training.
+The retained service journal reports 1.971 seconds wall time, 1.401 seconds CPU
+and a displayed 35.6M peak. Both seed-10 arms and seeds 11/12 remain
+`not_started`; no model or qualification claim was published and held-out stays
+`locked_unopened`. Evidence commit `9138276` preserves seven runtime artifacts
+byte-for-byte, the journal capture, report and hash inventory. This finite lane
+ends inconclusively; attempt 2 is consumed and no attempt 3 is authorized.
+Any future navigation execution requires a new prospective design decision.
+
+[PR #108](https://github.com/Aadrika08/palimpsest/pull/108) now includes typed
+all-ref/raw-registry admission and identity-bound reservation/mint publication.
+Independent review returned GO at `865eb504b7a8bbd10124c929ee51ad4f315de919`.
+The faithful predecessor regression accepted JSON `true` and `1.0` aliases for
+an integer admission identity; exact canonical-byte comparison rejects both.
+All 39 focused tests, compilation/import and diff checks passed. The final
+exclusive hard link remains the publication boundary. This synthetic review
+does not qualify power-loss persistence. Real registry admission, scene minting,
+collection, training, development and held-out evaluation remain unexecuted.
+
+The stacked compact-pair candidate `bc8ca23` passed 176 affected synthetic checks,
+but its independent review returned STOP: ancestor and already-read input
+continuity, complete prior-own identity binding and exact integer count types
+need repair. It remains unpublished pending faithful RED/GREEN regressions and
+another review. Post-prune chunk sizes and worker-report metadata remain
+pre-prune receipt attestations because their bytes are absent; admission cannot
+independently reconstruct them from the compact bundle.
+
+Next: close the pair-admission review, then implement compact producer close and
+pruning behind their separate replay/namespace/allocation gates. Prepare the
+puck execution source and manifest through review before opening real inputs.
+Continue the lab and portable artwork work where their prerequisites permit;
+browser, adequate Afterimage, human artistic/operator acceptance and integration
+remain open. None of the seven release-level checkboxes is completed by these
+source checks. CI and the physical rover remain excluded.
