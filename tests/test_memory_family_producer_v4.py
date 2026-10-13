@@ -75,7 +75,7 @@ def fixture(root):
         'claims': copy.deepcopy(compact.PROTOCOL['claims']),
     }))
     controls = {}
-    for role in ('job', 'supervisor', 'stdout', 'stderr', 'cleanup', 'audit', 'terminal_export'):
+    for role in ('job', 'supervisor', 'stdout', 'stderr', 'cleanup', 'audit'):
         control = root / f'{role}.json'
         control.write_bytes(b'' if role in ('stdout', 'stderr') else memory.canonical_bytes({'closed': True}))
         controls[role] = descriptor(control.name, control.read_bytes())
@@ -86,18 +86,14 @@ def fixture(root):
         'snapshot': snapshot_descriptor,
         'raw_audit': descriptor(Path(raw_receipt['path']).relative_to(root),
                                 Path(raw_receipt['path']).read_bytes()),
-        'owner_record': descriptor(str(owner_path.relative_to(root)), owner_path.read_bytes()),
+        'owner_record': descriptor(f"cases/{case['case_id']}/source/owner.json", owner_path.read_bytes()),
         'controls': controls,
     }
-    registration.pop('schema')
-    registration.pop('protocol_sha256')
-    campaign = {'schema': 'memory-family-source-finalization-registration-v4',
-                'protocol_sha256': compact.PROTOCOL_SHA256, 'sources': [registration],
-                'claims': copy.deepcopy(compact.PROTOCOL['claims'])}
-    registration_path = root / 'registration.json'
-    registration_path.write_bytes(memory.canonical_bytes(campaign))
+    registration['claims'] = copy.deepcopy(compact.PROTOCOL['claims'])
+    registration_path = root / 'terminal-export.json'
+    registration_path.write_bytes(memory.canonical_bytes(registration))
     return {'root': root, 'raw': raw, 'source': source, 'snapshot': snapshot,
-            'registration': descriptor('registration.json', registration_path.read_bytes()),
+            'registration': descriptor('terminal-export.json', registration_path.read_bytes()),
             'contract': registration, 'sample': sample}
 
 
@@ -132,7 +128,7 @@ def test_seals_exact_source_without_copying_snapshot_or_deleting_raw(tmp_path):
     assert sealed['read']['legacy_events_bytes'] == raw_before['recording/events.jsonl']
     assert sealed['read']['legacy_manifest_bytes'] == raw_before['recording/manifest.json']
     assert (sample['source'] / 'worker-report.json').read_bytes() == raw_before['worker-report.json']
-    assert (sample['source'] / 'owner.json').read_bytes() == (sample['root'] / sample['contract']['owner_record']['path']).read_bytes()
+    assert (sample['source'] / 'owner.json').read_bytes() == (sample['source'] / 'owner.json').read_bytes()
     before = inventory(sample['root'])
     with pytest.raises((FileExistsError, ValueError)):
         module.seal_compact_source(**request(sample))

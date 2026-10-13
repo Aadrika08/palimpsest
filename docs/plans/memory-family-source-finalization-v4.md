@@ -10,20 +10,22 @@ All protocol claims remain false and qualification claims remain empty.
 
 `seal_compact_source(evidence_root, registration, *, case_id, deadline)` consumes an
 immutable root-relative registration descriptor (`path`, `size_bytes`, `sha256`).
-The canonical shared campaign registration has exactly `schema`,
-`protocol_sha256`, `sources`, and `claims`. Each of at most 144 source slots has
-exactly `case`, `run_id`, `owner_source_sha256`, `snapshot`, `raw_audit`,
-`owner_record`, and `controls`. Its schema is
-`memory-family-source-finalization-registration-v4`. The nine unchanged
-conditions and development case are validated from the frozen family contract.
-`controls` has exactly the existing job, supervisor, stdout, stderr, cleanup,
-audit and terminal-export descriptors for the already closed owner;
-it is byte-bound evidence, not a new native cleanup or allocation admission.
-The source raw tree is derived as `.pending/<case>/.raw/<run>`, its permanent
-staging source as `.pending/<case>/source`. Registration occupies one preexisting shared campaign-contract entry; it and
-controls live outside that case and are rechecked through held descriptors. The
-owner record already occupies source/owner.json; the sealer does not create a
-second owner-record path. No new campaign/control file is created by sealing. Native owner
+The canonical post-close export has exactly `schema`, `protocol_sha256`, `case`,
+`run_id`, `owner_source_sha256`, `snapshot`, `raw_audit`, `owner_record`,
+`controls`, and `claims`. Its schema is
+`memory-family-source-finalization-registration-v4`. This consumes the EXISTING
+per-owner terminal-export control slot, whose closed hashes become known only
+after source audit/cleanup. It is not a native registration or launch gate. The
+shared prospective campaign registration remains separate and unchanged.
+`controls` contains exactly the other job, supervisor, stdout, stderr, cleanup
+and audit descriptors; it excludes the terminal export itself, avoiding digest
+recursion. The nine unchanged conditions and development case are validated from
+the frozen family contract. The source raw tree is derived as
+`.pending/<case>/.raw/<run>`, its permanent staging source as
+`.pending/<case>/source`. Registration/export and controls live outside that case
+and are rechecked through held descriptors. The owner record already occupies
+source/owner.json; the sealer does not create a second owner-record path. No new
+campaign/control file is created by sealing. Native owner
 job/cleanup admission remains a separate future integration requirement.
 
 The separately executed raw auditor receives `--evidence-root` and
