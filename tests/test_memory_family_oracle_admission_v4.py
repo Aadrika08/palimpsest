@@ -421,40 +421,59 @@ def _fixture(root, condition='own', *, natural_failure=False,
         f"cases/{case['case_id']}/source/snapshots/initial.snp")
     snapshot_path = root / snapshot_relative
     snapshot_path.parent.mkdir(parents=True)
-    snapshots.save_snapshot({'application': source_application}, snapshot_path)
+    if source_fixture is None:
+        snapshots.save_snapshot({'application': source_application}, snapshot_path)
+    else:
+        assert source_fixture['case'] == case
+        assert source_fixture['source_run_id'] == source_run_id
+        snapshot_path.write_bytes(source_fixture['snapshot_path'].read_bytes())
     snapshot_payload = snapshot_path.read_bytes()
     snapshot_descriptor = _descriptor(snapshot_relative, snapshot_payload)
     histories = _histories(root, case)
     source_identity = raw_audit.canonical_source_identity(
         OWNER_SOURCE_SHA256)
-    source_raw = _raw_receipt(
-        run_id=source_run_id, case=case, operation='source', condition=None,
-        rows=source_rows, events=source_events,
-        legacy_manifest=source_manifest, legacy_events=source_event_bytes,
-        source_identity=source_identity,
-        snapshot_descriptor=snapshot_descriptor, source_run_id=None,
-        source_application=source_application, schedule=None,
-        world_state=source_application['world_task_state'])
-    source_raw_descriptor = _write(
-        root, 'receipts/source.raw-audit.json', source_raw)
-    source_snapshot_reference = {
-        'kind': 'source', 'source_run_id': source_run_id,
-        'source_receipt_sha256': None, 'path': snapshot_relative,
-        'size_bytes': snapshot_descriptor['size_bytes'],
-        'sha256': snapshot_descriptor['sha256'],
-    }
-    source_bundle = compact.convert_synthetic(
-        run_id=source_run_id, case_id=case['case_id'], operation='source',
-        condition=None, rows=source_rows,
-        legacy_manifest_bytes=source_manifest,
-        legacy_events_bytes=source_event_bytes,
-        snapshot_reference=source_snapshot_reference,
-        snapshot_event_prefix=source_application['event_prefix'],
-        raw_audit_receipt=source_raw)
-    source_conversion, source_conversion_descriptor = _conversion(
-        root, 'receipts/source.conversion.json', run_id=source_run_id,
-        case=case, operation='source', condition=None, bundle=source_bundle,
-        raw_descriptor=source_raw_descriptor, source_identity=source_identity)
+    if source_fixture is None:
+        source_raw = _raw_receipt(
+            run_id=source_run_id, case=case, operation='source', condition=None,
+            rows=source_rows, events=source_events,
+            legacy_manifest=source_manifest, legacy_events=source_event_bytes,
+            source_identity=source_identity,
+            snapshot_descriptor=snapshot_descriptor, source_run_id=None,
+            source_application=source_application, schedule=None,
+            world_state=source_application['world_task_state'])
+        source_raw_descriptor = _write(
+            root, 'receipts/source.raw-audit.json', source_raw)
+        source_snapshot_reference = {
+            'kind': 'source', 'source_run_id': source_run_id,
+            'source_receipt_sha256': None, 'path': snapshot_relative,
+            'size_bytes': snapshot_descriptor['size_bytes'],
+            'sha256': snapshot_descriptor['sha256'],
+        }
+        source_bundle = compact.convert_synthetic(
+            run_id=source_run_id, case_id=case['case_id'], operation='source',
+            condition=None, rows=source_rows,
+            legacy_manifest_bytes=source_manifest,
+            legacy_events_bytes=source_event_bytes,
+            snapshot_reference=source_snapshot_reference,
+            snapshot_event_prefix=source_application['event_prefix'],
+            raw_audit_receipt=source_raw)
+        source_conversion, source_conversion_descriptor = _conversion(
+            root, 'receipts/source.conversion.json', run_id=source_run_id,
+            case=case, operation='source', condition=None, bundle=source_bundle,
+            raw_descriptor=source_raw_descriptor, source_identity=source_identity)
+
+    else:
+        source_raw = copy.deepcopy(source_fixture['source_raw'])
+        source_bundle = copy.deepcopy(source_fixture['source_bundle'])
+        source_conversion = copy.deepcopy(source_fixture['source_conversion'])
+        raw_descriptor = source_conversion['raw_audit']
+        source_raw_descriptor = _write(root, raw_descriptor['path'],
+            (source_fixture['root'] / raw_descriptor['path']).read_bytes())
+        assert source_raw_descriptor == raw_descriptor
+        conversion_descriptor = source_fixture['source_conversion_descriptor']
+        source_conversion_descriptor = _write(root, conversion_descriptor['path'],
+            (source_fixture['root'] / conversion_descriptor['path']).read_bytes())
+        assert source_conversion_descriptor == conversion_descriptor
 
     selector, u, expected = _condition_values(
         condition, case, histories, source_application, prior_own_result)
@@ -685,11 +704,13 @@ def test_admits_all_nine_exact_condition_identity_mappings_read_only(
         tmp_path, monkeypatch, condition):
     admission = _admission()
     prior_own_result = None
+    donor = None
     if condition == 'oracle':
         donor = _fixture(tmp_path / 'oracle-donor', 'own')
         prior_own_result = admission.admit_compact_pair(**_request(donor))
     fixture = _fixture(
-        tmp_path / condition, condition, prior_own_result=prior_own_result)
+        tmp_path / condition, condition, prior_own_result=prior_own_result,
+        source_fixture=donor)
     before = _tree_hashes(fixture['root'])
     from scripts import memory_family_oracle_admission_v3 as admission_v3
     monkeypatch.setattr(
@@ -927,7 +948,7 @@ def test_oracle_requires_prior_own_receipt_and_non_oracle_rejects_one(tmp_path):
     donor = _fixture(tmp_path / 'donor')
     prior = admission.admit_compact_pair(**_request(donor))
     oracle_fixture = _fixture(
-        tmp_path / 'oracle', 'oracle', prior_own_result=prior)
+        tmp_path / 'oracle', 'oracle', prior_own_result=prior, source_fixture=donor)
     request = _request(oracle_fixture)
     request.pop('prior_own_receipt')
     with pytest.raises(ValueError, match='prior-own receipt'):
@@ -950,7 +971,7 @@ def test_rejects_prior_own_receipt_alias_mutation_or_wrong_identity(
     donor = _fixture(tmp_path / f'{defect}-donor')
     prior = admission.admit_compact_pair(**_request(donor))
     fixture = _fixture(
-        tmp_path / f'{defect}-oracle', 'oracle', prior_own_result=prior)
+        tmp_path / f'{defect}-oracle', 'oracle', prior_own_result=prior, source_fixture=donor)
     path = fixture['root'] / fixture['prior_own_receipt']['path']
     if defect == 'mutation':
         path.write_bytes(path.read_bytes() + b'changed')
@@ -1047,7 +1068,7 @@ def test_prior_own_nested_values_bind_current_source_and_own_mapping(tmp_path, d
     admission = _admission()
     donor = _fixture(tmp_path / 'donor')
     prior = admission.admit_compact_pair(**_request(donor))
-    fixture = _fixture(tmp_path / 'oracle', 'oracle', prior_own_result=prior)
+    fixture = _fixture(tmp_path / 'oracle', 'oracle', prior_own_result=prior, source_fixture=donor)
     changed = copy.deepcopy(prior)
     if defect.startswith('source-'):
         name = 'conversion' if defect == 'source-conversion' else 'raw_audit'

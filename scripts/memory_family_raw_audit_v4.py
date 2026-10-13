@@ -879,7 +879,11 @@ def _validate_receipt_shape(receipt):
         _digest(receipt[name], name)
     if (receipt['schema'] != 'memory-family-raw-audit-v4'
             or receipt['protocol_sha256'] != PROTOCOL_SHA256
-            or receipt['claims'] != PROTOCOL['claims']):
+            or memory.canonical_bytes(receipt['claims'])
+            != memory.canonical_bytes(PROTOCOL['claims'])
+            or memory.canonical_bytes(receipt['source_identity'])
+            != memory.canonical_bytes(canonical_source_identity(
+                receipt['source_identity']['owner_source_sha256']))):
         raise ValueError('Raw-audit receipt contract differs')
 
 

@@ -143,6 +143,8 @@ def _bound_file(root, value, maximum, deadline, label):
         if digest != descriptor_value['sha256']:
             raise ValueError(f'{label} checksum differs')
         yield file_descriptor, payload, descriptor_value
+        os.lseek(file_descriptor, 0, os.SEEK_SET)
+        repeated, repeated_digest = _read_fd(file_descriptor, maximum, deadline)
         if _fingerprint(root.lstat()) != directories[0]:
             raise RuntimeError('Evidence root changed while admitted')
         for index, identity in enumerate(directories):
@@ -152,8 +154,6 @@ def _bound_file(root, value, maximum, deadline, label):
             if (_fingerprint(current) != identity
                     or _fingerprint(named) != identity):
                 raise RuntimeError(f'{label} ancestor changed while admitted')
-        os.lseek(file_descriptor, 0, os.SEEK_SET)
-        repeated, repeated_digest = _read_fd(file_descriptor, maximum, deadline)
         after = os.fstat(file_descriptor)
         rebound = os.stat(parts[-1], dir_fd=opened[-2], follow_symlinks=False)
         if (repeated != payload or repeated_digest != digest
@@ -186,8 +186,10 @@ def _conversion(root, descriptor, bundle, operation, run_id, case_id,
             or receipt['run_id'] != run_id or receipt['case_id'] != case_id
             or receipt['operation'] != operation
             or receipt['condition'] != condition
-            or receipt['source_identity'] != expected_source_identity
-            or receipt['claims'] != PROTOCOL['claims']):
+            or memory.canonical_bytes(receipt['source_identity'])
+            != memory.canonical_bytes(expected_source_identity)
+            or memory.canonical_bytes(receipt['claims'])
+            != memory.canonical_bytes(PROTOCOL['claims'])):
         raise ValueError('Conversion receipt identity differs')
     compact_manifest = _descriptor(
         receipt['compact_manifest'], 'compact manifest')
@@ -275,7 +277,8 @@ def _raw_receipt(root, descriptor, operation, run_id, case_id, condition,
     if (receipt['run_id'] != run_id or receipt['case_id'] != case_id
             or receipt['operation'] != operation
             or receipt['condition'] != condition
-            or receipt['source_identity'] != expected_source_identity
+            or memory.canonical_bytes(receipt['source_identity'])
+            != memory.canonical_bytes(expected_source_identity)
             or receipt['policy_result']['status'] != 'exhaustive-pass'):
         raise ValueError('Raw-audit receipt identity differs')
     return receipt, bound
