@@ -68,14 +68,17 @@ def fixture(root):
                             env={**os.environ, 'PYTHONDONTWRITEBYTECODE': '1'})
     assert result.returncode == 0, result.stderr
     raw_receipt = artifacts._json(result.stdout.encode())
-    owner_path = root / 'owner.json'
+    owner_path = source / 'owner.json'
     owner_path.write_bytes(memory.canonical_bytes({
         'schema': 'memory-family-source-owner-v4', 'case_id': case['case_id'],
         'run_id': run_id, 'owner_source_sha256': request['source_identity_sha256'],
         'claims': copy.deepcopy(compact.PROTOCOL['claims']),
     }))
-    control = root / 'control.json'
-    control.write_bytes(memory.canonical_bytes({'closed': True}))
+    controls = {}
+    for role in ('job', 'supervisor', 'stdout', 'stderr', 'cleanup', 'audit', 'terminal_export'):
+        control = root / f'{role}.json'
+        control.write_bytes(b'' if role in ('stdout', 'stderr') else memory.canonical_bytes({'closed': True}))
+        controls[role] = descriptor(control.name, control.read_bytes())
     registration = {
         'schema': 'memory-family-source-finalization-registration-v4',
         'protocol_sha256': compact.PROTOCOL_SHA256, 'case': case, 'run_id': run_id,
@@ -83,12 +86,16 @@ def fixture(root):
         'snapshot': snapshot_descriptor,
         'raw_audit': descriptor(Path(raw_receipt['path']).relative_to(root),
                                 Path(raw_receipt['path']).read_bytes()),
-        'owner_record': descriptor('owner.json', owner_path.read_bytes()),
-        'controls': [descriptor('control.json', control.read_bytes())],
-        'claims': copy.deepcopy(compact.PROTOCOL['claims']),
+        'owner_record': descriptor(str(owner_path.relative_to(root)), owner_path.read_bytes()),
+        'controls': controls,
     }
+    registration.pop('schema')
+    registration.pop('protocol_sha256')
+    campaign = {'schema': 'memory-family-source-finalization-registration-v4',
+                'protocol_sha256': compact.PROTOCOL_SHA256, 'sources': [registration],
+                'claims': copy.deepcopy(compact.PROTOCOL['claims'])}
     registration_path = root / 'registration.json'
-    registration_path.write_bytes(memory.canonical_bytes(registration))
+    registration_path.write_bytes(memory.canonical_bytes(campaign))
     return {'root': root, 'raw': raw, 'source': source, 'snapshot': snapshot,
             'registration': descriptor('registration.json', registration_path.read_bytes()),
             'contract': registration, 'sample': sample}
@@ -96,7 +103,7 @@ def fixture(root):
 
 def request(sample):
     return dict(evidence_root=sample['root'], registration=sample['registration'],
-                deadline=time.monotonic() + 30)
+                case_id=sample['sample']['case']['case_id'], deadline=time.monotonic() + 30)
 
 
 def test_source_finalizer_exists_and_import_is_pure():
@@ -125,7 +132,7 @@ def test_seals_exact_source_without_copying_snapshot_or_deleting_raw(tmp_path):
     assert sealed['read']['legacy_events_bytes'] == raw_before['recording/events.jsonl']
     assert sealed['read']['legacy_manifest_bytes'] == raw_before['recording/manifest.json']
     assert (sample['source'] / 'worker-report.json').read_bytes() == raw_before['worker-report.json']
-    assert (sample['source'] / 'owner.json').read_bytes() == (sample['root'] / 'owner.json').read_bytes()
+    assert (sample['source'] / 'owner.json').read_bytes() == (sample['root'] / sample['contract']['owner_record']['path']).read_bytes()
     before = inventory(sample['root'])
     with pytest.raises((FileExistsError, ValueError)):
         module.seal_compact_source(**request(sample))

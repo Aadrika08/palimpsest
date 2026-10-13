@@ -8,18 +8,22 @@ All protocol claims remain false and qualification claims remain empty.
 
 ## APIs and identities
 
-`seal_compact_source(evidence_root, registration, *, deadline)` consumes an
+`seal_compact_source(evidence_root, registration, *, case_id, deadline)` consumes an
 immutable root-relative registration descriptor (`path`, `size_bytes`, `sha256`).
-The canonical registration has exactly `schema`, `protocol_sha256`, `case`,
-`run_id`, `owner_source_sha256`, `snapshot`, `raw_audit`, `owner_record`,
-`controls`, and `claims`. Its schema is
+The canonical shared campaign registration has exactly `schema`,
+`protocol_sha256`, `sources`, and `claims`. Each of at most 144 source slots has
+exactly `case`, `run_id`, `owner_source_sha256`, `snapshot`, `raw_audit`,
+`owner_record`, and `controls`. Its schema is
 `memory-family-source-finalization-registration-v4`. The nine unchanged
 conditions and development case are validated from the frozen family contract.
-`controls` is a descriptor list for the already closed owner's control evidence;
+`controls` has exactly the existing job, supervisor, stdout, stderr, cleanup,
+audit and terminal-export descriptors for the already closed owner;
 it is byte-bound evidence, not a new native cleanup or allocation admission.
 The source raw tree is derived as `.pending/<case>/.raw/<run>`, its permanent
-staging source as `.pending/<case>/source`. Registration and controls must live
-outside that case and must be rechecked through held descriptors. Native owner
+staging source as `.pending/<case>/source`. Registration occupies one preexisting shared campaign-contract entry; it and
+controls live outside that case and are rechecked through held descriptors. The
+owner record already occupies source/owner.json; the sealer does not create a
+second owner-record path. No new campaign/control file is created by sealing. Native owner
 job/cleanup admission remains a separate future integration requirement.
 
 The separately executed raw auditor receives `--evidence-root` and
@@ -45,7 +49,8 @@ No `.pending/cases` directory or other unbudgeted directory is introduced.
 
 The conversion schema adds exactly `inventory`, `support`, and `registration`.
 `inventory` is the sorted path/size/SHA list of every compact recording payload
-and the raw receipt. `support` is the sorted descriptor list for byte-identical
+and the raw receipt, plus the separately inventoried canonical source snapshot
+descriptor without copying its bytes. `support` is the sorted descriptor list for byte-identical
 `worker-report.json` and `owner.json`; `registration` binds the input contract.
 No additional receipt file is introduced. Conversion receipt and raw receipt
 live inside `source/recording`; source marker and support files live in `source`.
@@ -74,7 +79,13 @@ All current 32/25 MiB recording caps, 1 MiB compact overhead, 16 MiB snapshot,
 arithmetic remain unchanged. Raw receipt and conversion receipt count against
 compact overhead; source support/marker and input control files count against the
 single combined owner-control MiB, except each stdout/stderr stream's own MiB.
-The one quarantine marker uses the existing transient allowance. Pruning refuses
+The converter uses no on-disk numeric scratch. While worker-report.json exists
+both in the raw run and final source, its raw path occupies the existing single
+converter-scratch entry: its at most 1 MiB fits that entry's 32 MiB allowance.
+The final report is charged once to owner support/control; the transient raw
+report is charged once to scratch, never to that support allowance again. The
+scratch allowance cannot simultaneously contain another file. The one quarantine
+marker uses the existing transient allowance. Pruning refuses
 before all mutation while the protocol's replay/pruning flags are false.
 No code in this slice removes raw files or publishes the final case directory.
 
