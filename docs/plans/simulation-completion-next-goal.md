@@ -638,3 +638,36 @@ uses eight entries: 7,200 collection intervals need 57,600 entries before other
 metadata; 14,400 development rows cannot reuse this layout in one root under
 the existing scan cap. Global retained inventory/reservation still needs review.
 All seven release gates remain open; main, CI and physical hardware are unchanged.
+
+### Memory source staging seal reviewed, 14 October 2026
+
+[PR #112](https://github.com/Aadrika08/palimpsest/pull/112), stacked on #109,
+publishes source-only compact-v4 sealing and reading at
+`399d39fa6f44e80f3af7dc71702c4e9d6c196fd4`. A separately executed raw auditor
+binds the sole permanent source snapshot; conversion proves every retained
+numeric bit, camera/row digest, exact legacy metadata byte, selected frame and
+oracle projection before sealing. Worker report and owner bytes are retained.
+
+Review reproduced late input/output and namespace drift, plus a fully formed
+marker surviving fsync and quarantine failures. All input/output context checks
+and required fsyncs now finish before a final Linux no-replace marker rename.
+The prepared marker uses the existing compact temporary slot; no permanent
+anchor or additional allowance was introduced. Postcommit descriptor-close
+errors are returned as teardown warnings, which future native callers must stop
+on. Final-name power-loss persistence remains unqualified.
+
+Independent review returned source GO with all 243 affected tests passing in
+84.77 seconds and ten independent fault scenarios passing. Root reran eleven
+publication/continuity tests. All 18 source pins, compilation, import isolation,
+canonical alias rejection, pruning refusal and diff checks pass. Protocol SHA is
+`40c2f243559dd177d1387ccfa4efe6419181be5ed9cd0aa330f388f2a9ce4eb9`.
+
+This seals one staged source and retains every raw byte. Native job/control/
+cleanup integration, staged pair wiring, all nine condition closes, cell replay,
+case/campaign close, pruning, namespace coverage and fresh allocation admission
+remain open. No native owner, real model, collection, fitting, development or
+held-out block ran. All protocol qualification claims remain false/empty.
+Next: condition/case close and replay/pruning gates; complete puck owner/manifest
+admission; resume browser/artwork work when a browser is available. Navigation
+remains stopped after consumed attempt 2 with no attempt 3 authorized. All seven
+release gates remain open, with main, CI and the physical rover unchanged.
