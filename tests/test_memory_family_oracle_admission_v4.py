@@ -9,6 +9,7 @@ import subprocess
 import sys
 import time
 import uuid
+import zipfile
 
 import numpy as np
 import pytest
@@ -398,7 +399,7 @@ def _conversion(root, relative, *, run_id, case, operation, condition,
 
 
 def _fixture(root, condition='own', *, natural_failure=False,
-             prior_own_result=None):
+             prior_own_result=None, source_fixture=None):
     admission = _admission()
     root.mkdir(parents=True, exist_ok=True)
     sample = evidence(row=4, kind='change')
@@ -1105,3 +1106,61 @@ def test_admission_deadline_includes_final_descriptor_reread(tmp_path, monkeypat
     monkeypatch.setattr(admission, '_read_fd', late)
     with pytest.raises(TimeoutError):
         admission.admit_compact_pair(**request)
+
+
+def test_final_snapshot_reread_rechecks_ancestor_edges(tmp_path, monkeypatch):
+    admission = _admission()
+    fixture = _fixture(tmp_path / 'final-snapshot-parent')
+    original = admission._read_fd
+    payload = fixture['snapshot_path'].read_bytes()
+    reads = 0
+    def changed(*args, **kwargs):
+        nonlocal reads
+        result = original(*args, **kwargs)
+        if result[0] == payload:
+            reads += 1
+            if reads == 2:
+                directory = fixture['snapshot_path'].parent
+                directory.rename(directory.with_name('renamed-snapshots'))
+                directory.mkdir()
+                fixture['snapshot_path'].write_bytes(b'{}')
+        return result
+    monkeypatch.setattr(admission, '_read_fd', changed)
+    with pytest.raises((OSError, RuntimeError, ValueError)):
+        admission.admit_compact_pair(**_request(fixture))
+
+
+@pytest.mark.parametrize('kind', ['raw', 'conversion'])
+@pytest.mark.parametrize('defect', ['claims', 'source-protocol-size'])
+def test_receipt_contract_rejects_rebound_nested_numeric_aliases(tmp_path, kind, defect):
+    admission = _admission()
+    fixture = _fixture(tmp_path / f'{kind}-{defect}')
+    receipt = copy.deepcopy(fixture['condition_raw'] if kind == 'raw'
+                            else fixture['condition_conversion'])
+    if defect == 'claims':
+        receipt['claims']['compact_oracle_equivalent'] = 0
+    else:
+        protocol = receipt['source_identity']['protocol']
+        protocol['size_bytes'] = float(protocol['size_bytes'])
+    if kind == 'raw':
+        _rebind_file(fixture, 'receipts/condition.raw-audit.json', receipt)
+    else:
+        fixture['condition_conversion_descriptor'] = _write(
+            fixture['root'], 'receipts/condition.conversion.json', receipt)
+    with pytest.raises(ValueError):
+        admission.admit_compact_pair(**_request(fixture))
+
+
+def test_oracle_fixture_reuses_donor_source_across_zip_time_boundary(tmp_path, monkeypatch):
+    admission = _admission()
+    monkeypatch.setattr(zipfile.time, 'localtime', lambda *args: (2026, 10, 14, 0, 0, 0, 2, 287, 0))
+    donor = _fixture(tmp_path / 'donor')
+    prior = admission.admit_compact_pair(**_request(donor))
+    monkeypatch.setattr(zipfile.time, 'localtime', lambda *args: (2026, 10, 14, 0, 0, 2, 2, 287, 0))
+    fixture = _fixture(tmp_path / 'oracle', 'oracle', prior_own_result=prior,
+                       source_fixture=donor)
+    assert fixture['snapshot_path'].read_bytes() == donor['snapshot_path'].read_bytes()
+    assert fixture['source_bundle'] == donor['source_bundle']
+    assert fixture['source_conversion_descriptor'] == donor['source_conversion_descriptor']
+    assert fixture['source_raw'] == donor['source_raw']
+    assert admission.admit_compact_pair(**_request(fixture))['condition'] == 'oracle'
