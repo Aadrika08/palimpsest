@@ -7,6 +7,7 @@ import numpy as np
 
 from palimpsest import puck_on_policy as adapter, puck_learning as learning
 from palimpsest import puck_profile as puck, puck_model, puck_teacher as teacher
+from palimpsest import puck_student as student
 from palimpsest.snapshots import state_digest
 
 
@@ -207,6 +208,18 @@ class IntervalTests(unittest.TestCase):
             with self.assertRaises(ValueError):
                 adapter.admit_completed_interval(bad, self.own, 'approach',
                                                  completed_tick=1, publication_receipt=self.receipt(bad))
+
+    def test_historical_teacher_reader_rejects_v3_student_action_rows(self):
+        row = self.stage()['row']
+        self.assertNotEqual(row['action'].tobytes(), row['teacher_action'].tobytes())
+        with self.assertRaises(ValueError):
+            learning.admit_teacher_rows([row], 1)
+
+    def test_historical_student_replay_rejects_v3_rows_without_inference(self):
+        row = self.stage()['row']
+        with patch.object(puck_model, 'predict', side_effect=AssertionError('No replay prediction')):
+            with self.assertRaises(ValueError):
+                student.decide(self.sensors, self.own, None, recorded=row)
 
 
 if __name__ == '__main__':
