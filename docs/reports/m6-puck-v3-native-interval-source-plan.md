@@ -49,9 +49,13 @@ Commit JSON has exactly:
 
 ```
 version, kind, protocol_sha256, completed_tick, previous_commit_sha256,
-row_sha256, staged_sha256, arrays_sha256, event_sha256, files
+row_sha256, staged_sha256, arrays_sha256, event_sha256, query_sha256, files
 ```
 
+`query_sha256` retains the equal before/after query digest so the reader can
+reconstruct the staged decision from the committed numeric row and own cursor.
+`event_sha256` hashes canonical JSON bytes; numeric array hashing uses exact
+ndarray dtype/shape/bytes, including NPZ scalar-column decoding.
 `files` binds each of the three exact recording paths to SHA-256, bytes and full
 regular-file identity. The two commitment names must point to the same inode
 with exactly two links and contain canonical identical bytes. The first
@@ -60,7 +64,8 @@ The marker is a new v3-only identity and never a historical record schema.
 
 ## Failure order and durability
 
-Before native step: stage decision, validate candidate cursor/row receipt and
+Before native step: admit exact actual native world, time and matching native/
+task/contact/own ticks; stage decision, validate candidate cursor/row receipt and
 immutable packet inputs. After one completed native step: validate native
 control/contact/task and bounded v3 packet/event; no live cursor change yet.
 Create fresh interval directory and write/finish the one-row `RunWriter`.
@@ -81,10 +86,18 @@ admission, not a claim of atomic persistence of a RAM cursor across power loss.
 
 Limits remain 600 intervals, 128 KiB numeric row, 16 KiB interval event, 8 MiB
 query capture and 160 MiB owner evidence. Every write is budgeted; all per-row
-NPZ headers, both commitment names (one inode, one payload), event/manifest
+NPZ headers, both commitment names (one inode, counted twice by existing retained
+byte accounting), event/manifest
 bytes and directories count in measured retained storage. No fixed-size
 estimate substitutes for exact byte accounting. Per-interval buffering is one
 row. The parent must leave allowance for initial snapshot/log/result files.
+
+Each interval creates three directories and five file names: eight inventory
+entries. The collection maximum therefore adds 57,600 entries, before owner/
+stage metadata, under the existing 100,000-entry scan limit. This collection
+writer must not be silently reused for a 14,400-row development root (115,200
+entries). A later global retained-root admission must account for earlier
+stages; a source test is not that admission.
 
 RED/GREEN synthetic fixtures use fake native/model/module boundaries and real
 temporary-directory `RunWriter`. They cover isolated capture components,

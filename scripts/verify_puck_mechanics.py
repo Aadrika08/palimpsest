@@ -371,7 +371,80 @@ def packet(env, observation, before, after, inputs, action, state, contact, inte
     return arrays
 
 
+def on_policy_interval(env, observation, state, world, contact, own, teacher_mode,
+                       model, probe, writer):
+    """Actual one-interval seam; no qualified collection envelope exists yet."""
+    from palimpsest import puck_on_policy as adapter
+    from palimpsest.body_profile import effective_control
+    from palimpsest.snapshots import state_digest
+    import numpy as np
+    try:
+        if writer._broken:
+            raise ValueError('V3 interval owner stopped')
+        if (type(env._t) is not int or type(state.get('tick')) is not int or
+                type(contact.get('tick')) is not int or
+                env._t != own['tick'] or state['tick'] != own['tick'] or contact['tick'] != own['tick'] or
+                float(env.data.time) != world['time_s'] or
+                state_digest(world_from(env,world['goal_xy'])) != state_digest(world) or
+                state['goal_xy'] != world['goal_xy'] or
+                state['previous_puck_xy'] != world['puck_xyz'][:2] or
+                state['previous_rover_xy'] != world['rover_pose'][:2] or
+                state['previous_distance'] != math.dist(world['puck_xyz'][:2],world['goal_xy'])):
+            raise ValueError('V3 exact native pre-action world/tick/task/contact boundary required')
+        inputs = puck.project(world, contact)
+        application = {'state': state, 'world': world, 'contact': contact,
+                       'own': own, 'teacher_mode': teacher_mode}
+        staged = adapter.stage_interval(inputs, world, teacher_mode, own, model,
+            terminal_reason=state['reason'], capture_query_state=lambda:
+                adapter.capture_query_state(env, observation, application=application))
+        tick = own['tick']+1
+        receipt = adapter._interval_receipt(staged,tick)
+        next_own,next_teacher = adapter.admit_completed_interval(staged,own,teacher_mode,
+            completed_tick=tick,publication_receipt=receipt)
+        action = staged['row']['action'].tolist()
+        before = copy.deepcopy(world)
+        try:
+            probe.install()
+            probe.begin(own['tick'])
+            next_observation,nav_reward,nav_done,nav_truncated,nav_info = env.step(action)
+            interval = probe.end()
+        finally:
+            probe.close()
+        if type(env._t) is not int or env._t != tick or list(env.data.ctrl) != effective_control(action):
+            raise ValueError('V3 actual native completed tick/control differs')
+        after = world_from(env,world['goal_xy'])
+        env._obstacle_xy[0] = np.asarray(after['puck_xyz'][:2],np.float32)
+        next_contact = puck.classify_contacts(interval,probe.ownership,tick=tick,time_s=after['time_s'])
+        next_state,reward = puck.advance(state,after,next_contact,action)
+        if next_state['tick'] != tick:
+            raise ValueError('V3 task completed tick differs')
+        arrays = packet(env,observation,before,after,inputs,action,next_state,next_contact,interval,reward,
+            [nav_reward,bool(nav_done),bool(nav_truncated),nav_info['dist_to_goal'],bool(nav_info['stalled'])],
+            None,None,state['episode_id'],student_pending=staged['own_pending'])
+        arrays.update({k:v for k,v in staged['row'].items() if k not in ('episode','tick')})
+        event = {'completed_tick':tick,'state_before':state,'world_before':before,'contact_before':contact,
+            'state':next_state,'world':after,'contact':next_contact,'reward':reward,
+            'supervisor_mode_before':own['mode'],'supervisor_mode_after':next_own['mode'],
+            'teacher_query_mode_before':teacher_mode,'teacher_query_mode_after':next_teacher}
+        normalized = json.loads(adapter._canonical_bytes(event,'V3 interval event'))
+        task = {'state':normalized['state'],'world':normalized['world'],'contact':normalized['contact'],
+                'own_supervisor_cursor':next_own}
+        arrays.update(native_completed_tick=np.array(tick,np.int64),
+            native_data_time_s=np.array(float(env.data.time),np.float64),
+            task_sha256=np.frombuffer(bytes.fromhex(state_digest(task)),np.uint8))
+        completed = {'observation':next_observation,'state':next_state,'world':after,'contact':next_contact,
+                     'own':next_own,'teacher_mode':next_teacher}
+        writer.publish(staged,arrays,event,completed_tick=tick)
+        # Receipt was validated before publication; the writer returns that exact object.
+        return completed
+    except BaseException:
+        writer.stop()
+        raise
+
+
 def owner(config):
+    if 'puck_on_policy' in config:
+        raise ValueError('Puck-v3 collection route is not qualified')
     from palimpsest.storage import StorageBudget, StorageLimits
     root, output, row=Path(config['repo']),Path(config['output']),config['row']
     spec=protocol(root); task=puck.load_protocol(root)
