@@ -1,6 +1,6 @@
 # Prospective source finalization amendment
 
-Scope: the source-only post-close converter and durable staging seal in
+Scope: the source-only post-close converter and staging seal in
 `scripts/memory_family_producer_v4.py`. This implements the approved compact
 plan's next source lifecycle slice; it does not allocate, launch, prune, publish
 a case, qualify a model, or change any analysis threshold or resource allowance.
@@ -18,7 +18,11 @@ per-owner terminal-export control slot, whose closed hashes become known only
 after source audit/cleanup. It is not a native registration or launch gate. The
 shared prospective campaign registration remains separate and unchanged.
 `controls` contains exactly the other job, supervisor, stdout, stderr, cleanup
-and audit descriptors; it excludes the terminal export itself, avoiding digest
+and audit descriptors; audit is exactly the independently published raw-audit
+receipt in the existing independent owner-audit slot. The converter retains its
+byte-identical copy inside the recording, charged to compact overhead. The
+external audit is charged to its separate existing 1 MiB audit allowance, not
+again to combined owner control. Controls exclude the terminal export itself, avoiding digest
 recursion. The nine unchanged conditions and development case are validated from
 the frozen family contract. The source raw tree is derived as
 `.pending/<case>/.raw/<run>`, its permanent staging source as
@@ -58,8 +62,15 @@ No additional receipt file is introduced. Conversion receipt and raw receipt
 live inside `source/recording`; source marker and support files live in `source`.
 The marker schema is `memory-family-compact-source-commit-v1` with exactly
 `schema`, `protocol_sha256`, `case_id`, `run_id`, `conversion`, and `claims`.
-It binds the root-relative conversion receipt path, size and SHA and is the last
-source publication operation. Readers require that marker and exhaust its
+It binds the root-relative conversion receipt path, size and SHA. The marker is
+first written and file-fsynced as `.commit.tmp`, using the existing single compact
+publication temporary entry. Every directory fsync, input/context-exit recheck,
+raw namespace check, support check and descriptor-edge check completes before
+Linux `renameat2(RENAME_NOREPLACE)` renames that temporary to `commit.json`.
+That syscall is the last publication operation, with no fallible validation or
+fsync afterward. Unsupported libc/kernel/filesystem support refuses without a
+final marker; no overwriting fallback is permitted. Marker-data fsync failure
+combined with quarantine-publication failure therefore cannot admit a source. Readers require that marker and exhaust its
 inventory before admitting a source. This is a staged source seal, not atomic
 case publication or native-owner qualification.
 
@@ -70,7 +81,8 @@ recomputes the published raw audit; reads the full closed raw rows; builds the
 compact candidate; compares every retained numeric bit, camera and legacy row
 digest, exact legacy metadata byte, selected frame and oracle projection; writes
 the final staged files exclusively; exhausts a disk reread; rechecks all inputs;
-and fsyncs files/directories before exclusive receipt and final marker publication.
+and fsyncs files/directories before exclusive receipt and prepared-marker
+publication. Input context exits happen before the final no-replace rename.
 It retains raw evidence on success and failure. Once output writing starts, any
 exception leaves that attempt immutable and writes one exclusive quarantine
 marker when possible; inability to make quarantine durable is indeterminate.
@@ -97,3 +109,21 @@ commit-last durability and failure quarantine, immutable one-shot attempts,
 resource boundaries, import purity, and mutation-free pruning refusal. Pinned
 cell replay, native owner writer/cleanup wiring, all nine condition closes,
 case/final close, namespace coverage and allocation admission remain prerequisites.
+
+## Namespace durability boundary
+
+Data files, conversion receipt, marker temporary, and their preparation directory
+entries are fsynced before final rename. The final marker rename is atomic and
+exclusive while the host is running; its namespace persistence across power loss
+is explicitly unqualified because no directory fsync follows that final operation.
+The later case publication is a separate prerequisite. A missing final marker,
+leftover marker temporary, quarantine or indeterminate candidate refuses every
+reader/next attempt. This amendment does not claim a power-loss-qualified native
+source publication or change release gates.
+
+The syscall contract was checked against the upstream Linux man-pages project's
+[rename(2)](https://man7.org/linux/man-pages/man2/rename.2.html) and
+[fsync(2)](https://man7.org/linux/man-pages/man2/fsync.2.html). No local man2 page
+was available. The implementation uses directory-relative descriptors and
+RENAME_NOREPLACE, refuses unsupported operation, and introduces no generic writer
+changes or additional permanent anchor.
