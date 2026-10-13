@@ -7,6 +7,11 @@ producer close, pruning, and allocation remain separate future gates.
 from __future__ import annotations
 
 import copy
+from contextlib import contextmanager
+import math
+import os
+import stat
+import time
 import hashlib
 import io
 from pathlib import Path, PurePosixPath
@@ -406,6 +411,96 @@ def _snapshot(value, operation, run_id, case_id):
     _digest(value['sha256'], 'snapshot SHA-256')
     return copy.deepcopy(value)
 
+
+def source_snapshot_path(evidence_root, case_id, *, staged):
+    """Resolve the one canonical snapshot through its registered case location."""
+    memory._id(case_id)
+    if not _PATH_COMPONENT.fullmatch(case_id) or type(staged) is not bool:
+        raise ValueError('Invalid source case location')
+    return Path(evidence_root) / ('.pending' if staged else 'cases') / case_id / 'source/snapshots/initial.snp'
+
+
+def _file_identity(value):
+    return (value.st_dev, value.st_ino, value.st_mode, value.st_size,
+            value.st_mtime_ns, value.st_ctime_ns, value.st_nlink)
+
+
+@contextmanager
+def bound_payload(root, descriptor, maximum, deadline, *, source_case=None,
+                  staged=True, allow_empty=False, raw_run=None):
+    """Hold file and ancestor descriptors; sibling writes cannot replace edges."""
+    _fields(descriptor, DESCRIPTOR_FIELDS, 'Bound payload descriptor')
+    relative = _relative(descriptor['path'], 'bound payload path')
+    minimum = 0 if allow_empty else 1
+    if type(descriptor['size_bytes']) is not int or not minimum <= descriptor['size_bytes'] <= maximum:
+        raise ValueError('Bound payload size exceeds its frozen limit')
+    _digest(descriptor['sha256'])
+    if source_case is not None:
+        memory._id(source_case)
+        if raw_run is not None:
+            _run_id(raw_run)
+            relative = f'.pending/{source_case}/.raw/{raw_run}/{relative}'
+        prefix = f'cases/{source_case}/source/'
+        if (raw_run is None and not relative.startswith(prefix)) or type(staged) is not bool:
+            raise ValueError('Payload is outside the registered source')
+        if raw_run is None:
+            relative = (f'.pending/{source_case}/source/' if staged else prefix) + relative[len(prefix):]
+    root = artifacts._safe_path(root)
+    parts = PurePosixPath(relative).parts
+    opened, edges = [], []
+    def edge(value):
+        return value.st_dev, value.st_ino, value.st_mode
+    def check_deadline():
+        if (type(deadline) not in (int, float) or not math.isfinite(deadline)
+                or time.monotonic() >= deadline):
+            raise TimeoutError('Bound payload deadline exhausted')
+    def read(fd):
+        os.lseek(fd, 0, os.SEEK_SET)
+        payload = bytearray()
+        while True:
+            check_deadline()
+            block = os.read(fd, min(MiB, maximum + 1 - len(payload)))
+            if not block:
+                return bytes(payload)
+            payload.extend(block)
+            if len(payload) > maximum:
+                raise ValueError('Bound payload exceeds its frozen limit')
+    try:
+        opened.append(os.open(root, os.O_RDONLY | os.O_DIRECTORY | os.O_NOFOLLOW))
+        edges.append(edge(os.fstat(opened[0])))
+        if edges[0] != edge(root.lstat()):
+            raise RuntimeError('Evidence root changed before open')
+        for part in parts[:-1]:
+            opened.append(os.open(part, os.O_RDONLY | os.O_DIRECTORY | os.O_NOFOLLOW, dir_fd=opened[-1]))
+            edges.append(edge(os.fstat(opened[-1])))
+        fd = os.open(parts[-1], os.O_RDONLY | os.O_NOFOLLOW, dir_fd=opened[-1])
+        opened.append(fd)
+        before = os.fstat(fd)
+        if (not stat.S_ISREG(before.st_mode) or before.st_nlink != 1
+                or before.st_size != descriptor['size_bytes']):
+            raise ValueError('Bound payload type, size or alias count differs')
+        payload = read(fd)
+        if hashlib.sha256(payload).hexdigest() != descriptor['sha256']:
+            raise ValueError('Bound payload checksum differs')
+        def recheck():
+            if edge(root.lstat()) != edges[0]:
+                raise RuntimeError('Evidence root replaced while bound')
+            for index, identity in enumerate(edges):
+                named = (root.lstat() if index == 0 else os.stat(
+                    parts[index - 1], dir_fd=opened[index - 1], follow_symlinks=False))
+                if edge(os.fstat(opened[index])) != identity or edge(named) != identity:
+                    raise RuntimeError('Bound payload ancestor edge changed')
+            named = os.stat(parts[-1], dir_fd=opened[-2], follow_symlinks=False)
+            if (_file_identity(before) != _file_identity(os.fstat(fd))
+                    or _file_identity(before) != _file_identity(named)
+                    or read(fd) != payload):
+                raise RuntimeError('Bound payload changed while held')
+        recheck()
+        yield fd, payload, recheck
+        recheck()
+    finally:
+        for fd in reversed(opened):
+            os.close(fd)
 
 def _project_rows(rows, operation):
     import numpy as np

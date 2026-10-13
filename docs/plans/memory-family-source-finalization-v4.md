@@ -127,3 +127,10 @@ The syscall contract was checked against the upstream Linux man-pages project's
 was available. The implementation uses directory-relative descriptors and
 RENAME_NOREPLACE, refuses unsupported operation, and introduces no generic writer
 changes or additional permanent anchor.
+
+Read-only descriptor teardown after a successful final rename is best-effort and
+reported in the returned `descriptor_teardown_errors` list; it cannot reclassify
+an already published source as a failed publication. Before publication, teardown
+errors still stop preparation. A future native caller must stop the phase on a
+nonempty teardown warning rather than launch another owner. No post-publication
+filesystem writes, checks or fsyncs are used to record that return metadata.

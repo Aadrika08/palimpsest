@@ -140,12 +140,6 @@ def _inventory(operation, legacy_manifest, legacy_events, events,
         'path': f"recording/{event['path']}", 'size_bytes': 1,
         'sha256': event['sha256'],
     } for event in events if event['kind'] == 'chunk')
-    if operation == 'source':
-        files.append({
-            'path': 'snapshots/initial.snp',
-            'size_bytes': snapshot_descriptor['size_bytes'],
-            'sha256': snapshot_descriptor['sha256'],
-        })
     files.sort(key=lambda row: row['path'])
     recording_bytes = sum(row['size_bytes'] for row in files
                           if row['path'].startswith('recording/'))
@@ -187,6 +181,7 @@ def _raw_receipt(*, run_id, case, operation, condition, rows, events,
         'camera_sequence_sha256': _sequence_hash(
             rows, ('cam_left', 'cam_right', 'raw_cam_left', 'raw_cam_right')),
         'row_sequence_sha256': _sequence_hash(rows, ('row',)),
+        'snapshot_reference': copy.deepcopy(snapshot_descriptor) if operation == 'source' else None,
         'raw_inventory': _inventory(
             operation, legacy_manifest, legacy_events, events,
             snapshot_descriptor),
@@ -393,6 +388,7 @@ def _conversion(root, relative, *, run_id, case, operation, condition,
         'compact_trace_digest': manifest['trace_digest'],
         'legacy_trace_digest': manifest['trace_digest'],
         'source_identity': copy.deepcopy(source_identity),
+        'inventory': [], 'support': [], 'registration': None,
         'claims': copy.deepcopy(compact.PROTOCOL['claims']),
     }
     return value, _write(root, relative, value)
@@ -617,8 +613,7 @@ def test_protocol_promotes_pair_admission_and_freezes_nested_shapes():
         'size_bytes': len(payload),
         'sha256': hashlib.sha256(payload).hexdigest(),
     }
-    assert protocol['future_behavior_sources'] == [
-        {'id': 'producer', 'path': 'scripts/memory_family_producer_v4.py'}]
+    assert protocol['future_behavior_sources'] == []
     nested = protocol['pair_admission']['nested_schemas']
     assert nested == {
         'descriptor': {'exact_keys': ['path', 'size_bytes', 'sha256']},
@@ -663,7 +658,7 @@ def test_protocol_promotes_pair_admission_and_freezes_nested_shapes():
                 'identity': ['path', 'sha256'],
             },
             'source_snapshot': {
-                'raw_path': 'snapshots/initial.snp',
+                'raw_path': 'snapshot_reference',
                 'compact_path': 'snapshot_reference',
                 'identity': ['size_bytes', 'sha256'],
             },

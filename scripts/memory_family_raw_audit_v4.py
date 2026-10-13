@@ -195,7 +195,7 @@ def _allowed_file(relative, operation):
             and len(relative.stem) == 6 and relative.stem.isdigit()
             and relative.suffix == '.npz'):
         return True
-    return operation == 'source' and relative == Path('snapshots/initial.snp')
+    return False
 
 
 def _file_limit(relative, operation):
@@ -215,7 +215,6 @@ def _inventory(run, operation, deadline):
     limits = RAW_LIMITS[operation]
     allowed_directories = {
         Path('.'), Path('recording'), Path('recording/chunks'),
-        *({Path('snapshots')} if operation == 'source' else set()),
     }
     candidates = []
     inodes = set()
@@ -294,7 +293,7 @@ def _inventory_value(files):
     }
 
 
-def _preflight_limits(run, operation, files):
+def _preflight_limits(run, operation, files, snapshot_bytes=0):
     """Reject operation caps from bounded metadata before decoding a chunk."""
     by_path = {row['path']: row for row in files}
     required = {'recording/manifest.json', 'recording/events.jsonl',
@@ -303,8 +302,6 @@ def _preflight_limits(run, operation, files):
         raise ValueError('Raw tree lacks required metadata or report files')
     limits = RAW_LIMITS[operation]
     inventory = _inventory_value(files)
-    snapshot_bytes = (by_path.get('snapshots/initial.snp', {})
-                      .get('size_bytes', 0))
     if (by_path['recording/events.jsonl']['size_bytes'] > limits['events_max_bytes']
             or inventory['recording_bytes'] > limits['recording_max_bytes']
             or by_path['worker-report.json']['size_bytes'] > limits['report_max_bytes']
@@ -665,7 +662,7 @@ def _condition_terminal(data, case, projection, terminal_state, schedule):
 
 def _support_and_oracle(data, report, case, operation, condition,
                         source_run_id, source_snapshot_sha256, projection,
-                        terminal_state, deadline):
+                        terminal_state, deadline, snapshot_fd=None, snapshot_reference=None):
     events = data['events']
     run = data['run']
     oracle._events(copy.deepcopy(events), data['manifest']['run_id'],
@@ -676,17 +673,12 @@ def _support_and_oracle(data, report, case, operation, condition,
         if (len(registered) != 1 or registered[0].get('initial') is not True
                 or registered[0].get('filename') != 'initial.snp'):
             raise ValueError('Source requires one registered initial snapshot')
-        snapshot_path = run / 'snapshots/initial.snp'
-        snapshot_sha256 = _hash_file(
-            snapshot_path, deadline,
-            RAW_LIMITS['source']['snapshot_max_bytes'])[0]['sha256']
-        if (registered[0].get('sha256') != snapshot_sha256
-                or report['snapshot_sha256'] != snapshot_sha256):
-            raise ValueError('Source snapshot bytes differ from their registration')
-        try:
-            snapshot = snapshots.read_snapshot(snapshot_path)
-        except (OSError, TypeError, ValueError) as error:
-            raise ValueError('Source snapshot is invalid') from error
+        if snapshot_fd is None:
+            raise ValueError('Source audit requires its separately bound snapshot')
+        if (registered[0].get('sha256') != snapshot_reference['sha256']
+                or report['snapshot_sha256'] != snapshot_reference['sha256']):
+            raise ValueError('Source snapshot differs from its registration')
+        snapshot = snapshots.read_snapshot(Path(f'/proc/self/fd/{snapshot_fd}'))
         application = snapshot.get('application') if type(snapshot) is dict else None
         _prefix(application, run / 'recording/events.jsonl')
         parsed, _, _, boundary = _source_application(
@@ -732,7 +724,8 @@ def _support_and_oracle(data, report, case, operation, condition,
 
 def _audit_candidate(run_path, *, run_id, case_id, operation, condition,
                      source_run_id, source_snapshot_sha256,
-                     source_identity_sha256, deadline):
+                     source_identity_sha256, deadline, snapshot_reference=None,
+                     snapshot_fd=None):
     _deadline(deadline)
     run_id = _run_id(run_id)
     memory._id(case_id)
@@ -755,7 +748,8 @@ def _audit_candidate(run_path, *, run_id, case_id, operation, condition,
         raise ValueError('Raw run path and identity differ')
     source_identity = canonical_source_identity(source_identity_sha256)
     before = _inventory(run, operation, deadline)
-    _preflight_limits(run, operation, before)
+    _preflight_limits(run, operation, before,
+        snapshot_reference['size_bytes'] if operation == 'source' else 0)
     descriptor = {'run_id': run_id, 'run': run}
     data = admission._read_run(descriptor, deadline)
     manifest = data['manifest']
@@ -782,7 +776,6 @@ def _audit_candidate(run_path, *, run_id, case_id, operation, condition,
     expected_files = {
         'recording/manifest.json', 'recording/events.jsonl', 'worker-report.json',
         *(f"recording/{event['path']}" for event in chunks),
-        *({'snapshots/initial.snp'} if operation == 'source' else set()),
     }
     if {row['path'] for row in before} != expected_files:
         raise ValueError('Raw inventory differs from its exact event/support tree')
@@ -811,7 +804,7 @@ def _audit_candidate(run_path, *, run_id, case_id, operation, condition,
     }
     oracle_result = _support_and_oracle(
         data, report, case, operation, condition, source_run_id,
-        source_snapshot_sha256, projection, terminal_state, deadline)
+        source_snapshot_sha256, projection, terminal_state, deadline, snapshot_fd, snapshot_reference)
     inventory = _inventory_value(before)
     by_path = {row['path']: row for row in before}
     limits = RAW_LIMITS[operation]
@@ -821,8 +814,7 @@ def _audit_candidate(run_path, *, run_id, case_id, operation, condition,
         event_bytes=by_path['recording/events.jsonl']['size_bytes'],
         recording_bytes=inventory['recording_bytes'],
         report_bytes=by_path['worker-report.json']['size_bytes'],
-        snapshot_bytes=(by_path['snapshots/initial.snp']['size_bytes']
-                        if operation == 'source' else 0),
+        snapshot_bytes=(snapshot_reference['size_bytes'] if operation == 'source' else 0),
         file_count=inventory['file_count'])
     if len(data['rows']) > limits['max_rows']:
         raise ValueError('Raw row count exceeds its operation bound')
@@ -839,6 +831,7 @@ def _audit_candidate(run_path, *, run_id, case_id, operation, condition,
         'camera_sequence_sha256': camera_sequence_sha256,
         'row_sequence_sha256': row_sequence_sha256,
         'raw_inventory': inventory,
+        'snapshot_reference': copy.deepcopy(snapshot_reference),
         'terminal_state': terminal_state,
         'policy_result': policy_result, 'oracle_result': oracle_result,
         'source_identity': source_identity,
@@ -866,6 +859,16 @@ def _validate_receipt_shape(receipt):
     ):
         if any(type(group[name]) is not int or group[name] < 0 for name in names):
             raise ValueError('Raw-audit counts and ticks must be nonnegative integers')
+    reference = receipt['snapshot_reference']
+    if receipt['operation'] == 'source':
+        compact._fields(reference, compact.DESCRIPTOR_FIELDS, 'Raw source snapshot reference')
+        if (reference['path'] != f"cases/{receipt['case_id']}/source/snapshots/initial.snp"
+                or type(reference['size_bytes']) is not int
+                or not 1 <= reference['size_bytes'] <= compact.SNAPSHOT_MAX_BYTES):
+            raise ValueError('Raw source snapshot reference differs')
+        compact._digest(reference['sha256'])
+    elif reference is not None:
+        raise ValueError('Condition raw receipt cannot bind a local snapshot')
     files = receipt['raw_inventory']['files']
     if type(files) is not list:
         raise ValueError('Raw inventory files must be a list')
@@ -925,9 +928,9 @@ def _rollback(target, linked_inode):
     _fsync_directory(target.parent)
 
 
-def audit_raw_run(run_path, receipt_root, *, run_id, case_id, operation,
+def _audit_raw_run(run_path, receipt_root, *, run_id, case_id, operation,
                   condition, source_run_id, source_snapshot_sha256,
-                  source_identity_sha256, deadline):
+                  source_identity_sha256, deadline, snapshot_reference=None, snapshot_fd=None):
     """Audit one closed run and exclusively publish its immutable receipt."""
     _public_deadline(deadline)
     run_id = _run_id(run_id)
@@ -937,7 +940,8 @@ def audit_raw_run(run_path, receipt_root, *, run_id, case_id, operation,
         run_id=run_id, case_id=case_id, operation=operation,
         condition=condition, source_run_id=source_run_id,
         source_snapshot_sha256=source_snapshot_sha256,
-        source_identity_sha256=source_identity_sha256, deadline=deadline)
+        source_identity_sha256=source_identity_sha256, deadline=deadline,
+        snapshot_reference=snapshot_reference, snapshot_fd=snapshot_fd)
     receipt = _audit_candidate(run, **values)
     payload = memory.canonical_bytes(receipt)
     if len(payload) > RAW_CONTRACT['receipt_max_bytes']:
@@ -991,9 +995,9 @@ def audit_raw_run(run_path, receipt_root, *, run_id, case_id, operation,
             'sha256': payload_sha256, 'receipt': copy.deepcopy(receipt)}
 
 
-def validate_raw_receipt(run_path, receipt_root, *, run_id, case_id, operation,
+def _validate_raw_receipt(run_path, receipt_root, *, run_id, case_id, operation,
                          condition, source_run_id, source_snapshot_sha256,
-                         source_identity_sha256, deadline):
+                         source_identity_sha256, deadline, snapshot_reference=None, snapshot_fd=None):
     """Read and recompute one published receipt; write nothing."""
     _public_deadline(deadline)
     run_id = _run_id(run_id)
@@ -1007,14 +1011,58 @@ def validate_raw_receipt(run_path, receipt_root, *, run_id, case_id, operation,
         run, run_id=run_id, case_id=case_id, operation=operation,
         condition=condition, source_run_id=source_run_id,
         source_snapshot_sha256=source_snapshot_sha256,
-        source_identity_sha256=source_identity_sha256, deadline=deadline)
+        source_identity_sha256=source_identity_sha256, deadline=deadline,
+        snapshot_reference=snapshot_reference, snapshot_fd=snapshot_fd)
     if memory.canonical_bytes(expected) != payload:
         raise ValueError('Raw-audit receipt differs from current immutable inputs')
     return copy.deepcopy(receipt)
 
 
+
+def _with_snapshot(function, run_path, receipt_root, *, evidence_root=None,
+                   snapshot_reference=None, staged=True, **values):
+    if values['operation'] == 'source':
+        _public_deadline(values['deadline'])
+        if evidence_root is None or snapshot_reference is None:
+            raise ValueError('Source requires one external registered snapshot')
+        case_id = values['case_id']
+        if snapshot_reference['path'] != f'cases/{case_id}/source/snapshots/initial.snp':
+            raise ValueError('Source snapshot path differs from its canonical registration')
+        result = None
+        try:
+            with compact.bound_payload(evidence_root, snapshot_reference,
+                    RAW_LIMITS['source']['snapshot_max_bytes'], values['deadline'],
+                    source_case=case_id, staged=staged) as (fd, _, recheck):
+                result = function(run_path, receipt_root, **values,
+                                  snapshot_reference=snapshot_reference, snapshot_fd=fd)
+                recheck()
+            return result
+        except BaseException:
+            if function is _audit_raw_run and result is not None:
+                try:
+                    target = Path(result['path'])
+                    if _hash_file(target, values['deadline'], RAW_CONTRACT['receipt_max_bytes'])[0]['sha256'] != result['sha256']:
+                        raise RuntimeError('Raw receipt changed before snapshot rollback')
+                    _rollback(target, _inode(target))
+                except BaseException as error:
+                    raise PublicationIndeterminate('Snapshot-bound receipt rollback is indeterminate') from error
+            raise
+    if snapshot_reference is not None or evidence_root is not None:
+        raise ValueError('Condition audit cannot carry source snapshot bytes')
+    return function(run_path, receipt_root, **values)
+
+
+def audit_raw_run(run_path, receipt_root, **values):
+    return _with_snapshot(_audit_raw_run, run_path, receipt_root, **values)
+
+
+def validate_raw_receipt(run_path, receipt_root, **values):
+    return _with_snapshot(_validate_raw_receipt, run_path, receipt_root, **values)
+
 def main(argv=None):
     parser = argparse.ArgumentParser()
+    parser.add_argument('--evidence-root', type=Path)
+    parser.add_argument('--source-snapshot')
     parser.add_argument('--run', required=True, type=Path)
     parser.add_argument('--receipt-root', required=True, type=Path)
     parser.add_argument('--run-id', required=True)
@@ -1027,7 +1075,8 @@ def main(argv=None):
     parser.add_argument('--deadline-seconds', required=True, type=float)
     args = parser.parse_args(argv)
     result = audit_raw_run(
-        args.run, args.receipt_root, run_id=args.run_id,
+        args.run, args.receipt_root, evidence_root=args.evidence_root,
+        snapshot_reference=(None if args.source_snapshot is None else artifacts._json(args.source_snapshot.encode())), run_id=args.run_id,
         case_id=args.case_id, operation=args.operation,
         condition=args.condition, source_run_id=args.source_run_id,
         source_snapshot_sha256=args.source_snapshot_sha256,
