@@ -172,6 +172,383 @@ def admit_completed_interval(staged, own, teacher_mode, *, completed_tick, publi
         raise ValueError('Exact successful v3 row publication receipt required')
     return next_own, staged['teacher_mode_after']
 
+
+_INTERVAL_EVENT_FIELDS = {'completed_tick', 'state_before', 'world_before', 'contact_before',
+                          'state', 'world', 'contact', 'reward',
+                          'supervisor_mode_before', 'supervisor_mode_after',
+                          'teacher_query_mode_before', 'teacher_query_mode_after'}
+_INTERVAL_COMMIT_FIELDS = {'version', 'kind', 'protocol_sha256', 'completed_tick',
+                           'previous_commit_sha256', 'row_sha256', 'staged_sha256',
+                           'arrays_sha256', 'event_sha256', 'query_sha256', 'files'}
+_INTERVAL_FILES = ('recording/manifest.json', 'recording/events.jsonl',
+                   'recording/chunks/000000.npz')
+_PUCK_CAPTURE_FIELDS = ('_puck_bindings', '_puck_profile_identity', '_puck_reset_seed',
+                        'base_body_id', 'goal_site_id', 'left_hinge_id', 'right_hinge_id',
+                        'cam_left_id', 'cam_right_id', 'obstacle_ids', 'obstacle_body_ids',
+                        'obstacle_x_joint_ids', 'obstacle_y_joint_ids',
+                        '_obstacle_x_qposadr', '_obstacle_y_qposadr')
+
+
+def capture_query_state(env, observation, *, application):
+    """Observe a paused native owner; numerical coverage remains unqualified."""
+    from . import snapshots
+    import mujoco
+    if (mujoco.get_mjcb_control() is not None or
+            vars(env).get('_np_random', vars(env).get('np_random')) is None):
+        raise ValueError('Paused callback-free owner with initialized RNG required')
+    initial_native, full_model = env.data.__getstate__(), env.model.__getstate__()
+    if (type(initial_native) is not bytes or type(full_model) is not bytes or
+            len(initial_native)+len(full_model) > 8*1024**2):
+        raise ValueError('Native query bytes exceed 8 MiB')
+    snapshot = snapshots.capture(env, observation, application=application)
+    if snapshot['native_data'] != initial_native or env.model.__getstate__() != full_model:
+        raise ValueError('Native/model state changed during query capture')
+    rng = snapshot.pop('rng')
+    observed = snapshot.pop('observation')
+    native = {'snapshot': snapshot, 'full_model': full_model,
+              'puck_wrapper': snapshots._fields(env, _PUCK_CAPTURE_FIELDS),
+              'planner_cache': None if not hasattr(env, 'planner') else
+                  snapshots._fields(env.planner, snapshots.ASTAR_CACHE)}
+    if type(native['full_model']) is not bytes or len(native['full_model']) > 8*1024**2:
+        raise ValueError('Bounded exact native model bytes required')
+    result = snapshots._copy({'native_state': native, 'observation': observed,
+        'python_rng': rng['python'], 'numpy_rng': rng['numpy'],
+        'torch_rng': {'cpu': rng['torch_cpu'], 'cuda': rng['torch_cuda']},
+        'environment_rng': {'state': rng['environment'], 'seed': rng['environment_seed']},
+        'space_rng': rng['spaces']})
+    def payload_bytes(value):
+        if type(value) is bytes: return len(value)
+        if hasattr(value, 'nbytes'): return value.nbytes
+        if type(value) is dict: return sum(len(k.encode())+payload_bytes(v) for k,v in value.items())
+        if type(value) in (list,tuple,set): return sum(payload_bytes(v) for v in value)
+        return len(json.dumps(value,allow_nan=False).encode())
+    if payload_bytes(result) > 8*1024**2:
+        raise ValueError('Query capture payload exceeds 8 MiB')
+    return result
+
+
+def _interval_receipt(staged, completed_tick):
+    from .snapshots import state_digest
+    return {'version': 1, 'kind': 'puck-on-policy-row-publication-v1',
+            'protocol_sha256': PROTOCOL_SHA256, 'status': 'published',
+            'completed_tick': completed_tick, 'row_sha256': state_digest(staged['row']),
+            'staged_sha256': state_digest(staged)}
+
+
+def _interval_payload(staged, arrays, event, completed_tick):
+    import numpy as np
+    from .snapshots import state_digest
+    receipt = _interval_receipt(staged, completed_tick)
+    admit_completed_interval(staged, staged['own_pending']['before'],
+                             staged['teacher_mode_before'], completed_tick=completed_tick,
+                             publication_receipt=receipt)
+    if (type(arrays) is not dict or type(event) is not dict or
+            set(event) != _INTERVAL_EVENT_FIELDS or
+            {'teacher_mode_before', 'teacher_mode_after'} & set(arrays) or
+            not (_INTERVAL_ROW_FIELDS-{'episode', 'tick'}) <= set(arrays) or
+            any(state_digest(arrays[k]) != state_digest(v) for k,v in staged['row'].items()
+                if k not in ('episode', 'tick')) or
+            any(not isinstance(a, (np.ndarray, np.generic)) or a.dtype.kind not in 'biufc' or
+                not np.isfinite(a).all() for a in arrays.values()) or
+            sum(a.nbytes for a in arrays.values()) > 128*1024 or
+            type(event['completed_tick']) is not int or event['completed_tick'] != completed_tick or
+            type(event['state']) is not dict or type(event['state'].get('tick')) is not int or
+            event['state']['tick'] != completed_tick or
+            any(event[k] != v for k,v in {
+                'supervisor_mode_before': staged['own_pending']['before']['mode'],
+                'supervisor_mode_after': staged['own_pending']['after']['mode'],
+                'teacher_query_mode_before': staged['teacher_mode_before'],
+                'teacher_query_mode_after': staged['teacher_mode_after']}.items())):
+        raise ValueError('Exact bounded v3 numeric row and completed event required')
+    if len(_canonical_bytes(event, 'v3 interval event')) > 16*1024:
+        raise ValueError('V3 interval event exceeds bound')
+    from . import puck_profile as puck
+    from .body_profile import effective_control
+    normalized = json.loads(_canonical_bytes(event, 'V3 event'))
+    before,after = normalized['world_before'],normalized['world']
+    row_action = staged['row']['action'].tolist()
+    expected_state,expected_reward = puck.advance(normalized['state_before'],after,normalized['contact'],row_action)
+    expected_task = {'state':normalized['state'],'world':after,'contact':normalized['contact'],
+                     'own_supervisor_cursor': {**staged['own_pending']['after'],'tick':completed_tick}}
+    def world_array(world):
+        return np.array([world['time_s'],*world['rover_pose'],*world['puck_xyz'],
+                         *world['puck_velocity_xy'],*world['goal_xy']],np.float64)
+    required_native = {'native_completed_tick':np.asarray(completed_tick,np.int64),
+        'native_data_time_s':np.asarray(after['time_s'],np.float64),
+        'world_before':world_array(before),'world_after':world_array(after),
+        'reward':np.asarray(expected_reward,np.float64),
+        'ctrl':np.asarray(effective_control(row_action),np.float64),
+        'task_sha256':np.frombuffer(bytes.fromhex(state_digest(expected_task)),np.uint8)}
+    if (state_digest(expected_state) != state_digest(normalized['state']) or
+            type(normalized['reward']) not in (int,float) or normalized['reward'] != expected_reward or
+            state_digest(puck.project(before,normalized['contact_before'])) != state_digest(staged['row']['inputs']) or
+            normalized['contact_before']['tick'] != completed_tick-1 or
+            any(k not in arrays or state_digest(np.asarray(arrays[k])) != state_digest(v)
+                for k,v in required_native.items())):
+        raise ValueError('V3 native packet differs from exact task/contact transition')
+    return receipt
+
+
+def _verify_interval_directory(path, descriptor, identity):
+    _publication_root(path)
+    _verify_publication_root(path, descriptor, identity, 'V3 transaction directory')
+
+
+def _interval_file_inventory(row_root, directories):
+    result = {}
+    for name in _INTERVAL_FILES:
+        path = row_root/name
+        directory, identity = directories[path.parent]
+        raw, info = _read_exact_file(path.parent, path, 2*1024**2, 'v3 interval file',
+            directory=directory, root_identity=identity, return_identity=True)
+        result[name] = {'sha256': _sha256(raw), 'bytes': len(raw), 'identity': list(info)}
+    return result
+
+
+def _decode_interval_recording(row_root, directories, completed_tick, *, maximum=None):
+    """Exhaust a finished candidate and bind its decoded content to stable files."""
+    from .records import FORMAT, _json, iter_ticks
+    for path,(descriptor,identity) in directories.items():
+        _verify_interval_directory(path,descriptor,identity)
+    files = _interval_file_inventory(row_root,directories)
+    record = row_root/'recording'
+    descriptor,identity = directories[record]
+    manifest_raw = _read_exact_file(record,record/'manifest.json',2*1024**2,
+        'V3 recording manifest',directory=descriptor,root_identity=identity)
+    manifest = json.loads(manifest_raw)
+    if maximum is None:
+        maximum = manifest.get('recording_max_bytes') if type(manifest) is dict else None
+    if type(maximum) is not int or not 0 < maximum <= 160*1024**2:
+        raise ValueError('Exact bounded candidate recording allowance required')
+    expected_manifest = {'schema':'puck-on-policy-interval-record-v1',
+        'protocol_sha256':PROTOCOL_SHA256,'completed_tick':completed_tick,
+        'status':'completed','recording_format':FORMAT,'recording_max_bytes':maximum,
+        'ticks':1,'recorded_ticks':1,'recorded_chunks':1,'recorded_events':2}
+    if manifest_raw != (_json(expected_manifest)+'\n').encode():
+        raise ValueError('Exact completed v3 candidate manifest required')
+    event_raw = _read_exact_file(record,record/'events.jsonl',2*1024**2,
+        'V3 recording events',directory=descriptor,root_identity=identity)
+    rows = list(iter_ticks(record))
+    events = [json.loads(line) for line in event_raw.splitlines()]
+    if (len(rows) != 1 or type(rows[0]['episode']) is not int or rows[0]['episode'] != 0 or
+            type(rows[0]['tick']) is not int or rows[0]['tick'] != completed_tick-1 or
+            len(events) != 2 or any(type(event) is not dict for event in events)):
+        raise ValueError('Exactly one complete candidate row and interval event required')
+    arrays = {k:v for k,v in rows[0].items() if k not in ('episode','tick')}
+    event = {k:v for k,v in events[1].items() if k not in ('sequence','kind')}
+    expected_chunk = {'path':'chunks/000000.npz','sha256':files['recording/chunks/000000.npz']['sha256'],
+        'episode':0,'start':completed_tick-1,'count':1,'sequence':0,'kind':'chunk',
+        'arrays':{k:{'dtype':v.dtype.str,'shape':list(v.shape)} for k,v in arrays.items()}}
+    expected_event = {**event,'sequence':1,'kind':'puck_on_policy_interval'}
+    if event_raw != ((_json(expected_chunk)+'\n')+(_json(expected_event)+'\n')).encode():
+        raise ValueError('Exact candidate event/chunk schema required')
+    for path,(descriptor,identity) in directories.items():
+        _verify_interval_directory(path,descriptor,identity)
+    if _interval_file_inventory(row_root,directories) != files:
+        raise ValueError('V3 candidate changed during exhaustive decoding')
+    return rows[0],arrays,event,files
+
+
+class PuckIntervalWriter:
+    """One fresh v3 owner; every failure permanently stops further publication."""
+    def __init__(self, path, *, max_bytes, storage_budget=None):
+        if type(max_bytes) is not int or not 0 < max_bytes <= 160*1024**2:
+            raise ValueError('V3 owner recording allowance must fit 160 MiB')
+        self.path = Path(path)
+        if not self.path.is_absolute() or self.path.parent.resolve() != self.path.parent:
+            raise ValueError('Exact absolute v3 recording parent required')
+        self.path.mkdir(exist_ok=False)
+        self._root_identity = _directory_identity(os.lstat(self.path))
+        self.max_bytes, self.storage_budget = max_bytes, storage_budget
+        self._tick, self._bytes, self._previous, self._schema = 0, 0, None, None
+        from .puck_learning import initial_cursor
+        self._own = initial_cursor()
+        self._broken = False
+
+    def stop(self):
+        self._broken = True
+
+    def publish(self, staged, arrays, event, *, completed_tick):
+        from .records import RunWriter
+        from .snapshots import state_digest
+        directories = {}
+        writer = None
+        committing = False
+        try:
+            if (self._broken or type(completed_tick) is not int or
+                    completed_tick != self._tick+1 or completed_tick > 600):
+                raise ValueError('V3 writer stopped or interval is noncontiguous')
+            receipt = _interval_payload(staged, arrays, event, completed_tick)
+            if state_digest(staged['own_pending']['before']) != state_digest(self._own):
+                raise ValueError('V3 staged predecessor differs from committed cursor')
+            schema = {k: (v.dtype.str, list(v.shape)) for k,v in arrays.items()}
+            if self._schema is not None and schema != self._schema:
+                raise ValueError('V3 interval schema changed')
+            expected_arrays_digest = _interval_arrays_digest(arrays)
+            expected_event_raw = _canonical_bytes(event,'Staged event')
+            expected_query_digest = staged['query_before_sha256']
+            next_own = {**staged['own_pending']['after'], 'tick':completed_tick}
+            root, descriptor, identity = _open_publication_root(self.path)
+            directories[root] = (descriptor, identity)
+            if identity != self._root_identity:
+                raise ValueError('V3 output root rebound')
+            row_root = root/f'{completed_tick:06d}'
+            os.mkdir(row_root.name, dir_fd=descriptor)
+            _, row_descriptor, row_identity = _open_publication_root(row_root)
+            directories[row_root] = (row_descriptor, row_identity)
+            allowance = self.max_bytes-self._bytes-2*8192
+            if allowance <= 0:
+                raise RuntimeError('V3 owner byte allowance exhausted')
+            writer = RunWriter(row_root/'recording', {
+                'schema': 'puck-on-policy-interval-record-v1',
+                'protocol_sha256': PROTOCOL_SHA256, 'completed_tick': completed_tick},
+                max_bytes=allowance, storage_budget=self.storage_budget)
+            for path in (row_root/'recording', row_root/'recording/chunks'):
+                _, fd, ident = _open_publication_root(path)
+                directories[path] = (fd, ident)
+            writer.tick(0, completed_tick-1, **arrays)
+            writer.flush()
+            writer.event('puck_on_policy_interval', **event)
+            writer.finish({'ticks': 1})
+            for path,(fd,ident) in reversed(list(directories.items())):
+                _fsync_directory(path, fd, ident)
+            candidate,candidate_arrays,candidate_event,files = _decode_interval_recording(
+                row_root,directories,completed_tick,maximum=allowance)
+            candidate_row = {k:v for k,v in candidate.items() if k in _INTERVAL_ROW_FIELDS}
+            if (state_digest(candidate_row) != receipt['row_sha256'] or
+                    _interval_arrays_digest(candidate_arrays) != expected_arrays_digest or
+                    _canonical_bytes(candidate_event,'Candidate event') != expected_event_raw):
+                raise ValueError('Decoded v3 candidate differs from exact staged row/event')
+            commitment = {'version': 1, 'kind': 'puck-on-policy-interval-commit-v1',
+                'protocol_sha256': PROTOCOL_SHA256, 'completed_tick': completed_tick,
+                'previous_commit_sha256': self._previous, 'row_sha256': receipt['row_sha256'],
+                'staged_sha256': receipt['staged_sha256'], 'arrays_sha256': expected_arrays_digest,
+                'event_sha256': _sha256(expected_event_raw), 'query_sha256': expected_query_digest,
+                'files': files}
+            raw = _canonical_bytes(commitment, 'v3 interval commitment')
+            if len(raw) > 8192 or self._bytes+sum(f['bytes'] for f in files.values())+2*len(raw) > self.max_bytes:
+                raise RuntimeError('V3 exact retained byte allowance exceeded')
+            if self.storage_budget is not None:
+                self.storage_budget.check(2*len(raw), path=row_root)
+            anchor = row_root/'commit.anchor.json'
+            _write_bytes_new(anchor, raw, 8192, directory=row_descriptor, root_identity=row_identity)
+            _fsync_directory(row_root, row_descriptor, row_identity)
+            for path,(fd,ident) in directories.items():
+                _verify_interval_directory(path, fd, ident)
+            if sorted(os.listdir(descriptor)) != [f'{n:06d}' for n in range(1,completed_tick+1)]:
+                raise ValueError('V3 owner transaction namespace changed')
+            if _interval_file_inventory(row_root, directories) != files:
+                raise ValueError('V3 recording changed before commitment')
+            if _read_exact_file(row_root, anchor, 8192, 'V3 commitment anchor',
+                    directory=row_descriptor, root_identity=row_identity) != raw:
+                raise ValueError('V3 commitment anchor changed')
+            # The final link is the sole admission point; no fallible work follows.
+            next_bytes = self._bytes+sum(f['bytes'] for f in files.values())+2*len(raw)
+            next_digest = _sha256(raw)
+            for path,(fd,ident) in directories.items():
+                _verify_interval_directory(path, fd, ident)
+            committing = True
+            _exclusive_publish(anchor, row_root/'commit.json', directory=row_descriptor,
+                               root_identity=row_identity, verify_after=False)
+            self._tick, self._bytes, self._previous, self._schema = completed_tick, next_bytes, next_digest, schema
+            self._own = next_own
+            return receipt
+        except BaseException:
+            self.stop()
+            raise
+        finally:
+            if writer is not None and not writer._events.closed:
+                # A failed transaction's buffered row is never promoted by cleanup.
+                writer._broken = True
+                writer._events.close()
+            for fd,_ in directories.values():
+                try: os.close(fd)
+                except OSError:
+                    if not committing: raise
+
+
+def read_committed_intervals(path):
+    """Yield the strict committed v3 prefix; raw uncommitted bytes are not rows."""
+    from . import puck_learning as learning
+    from .snapshots import state_digest
+    root, root_fd, root_identity = _open_publication_root(path)
+    previous, own, schema = None, learning.initial_cursor(), None
+    gap = False
+    try:
+        names = sorted(os.listdir(root_fd))
+        if len(names) > 600 or any(n not in {f'{t:06d}' for t in range(1,601)} for n in names):
+            raise ValueError('Bounded exact v3 interval namespace required')
+        for number,name in enumerate(names,1):
+            directories = {root: (root_fd,root_identity)}
+            row_root = root/name
+            try:
+                _,fd,ident = _open_publication_root(row_root)
+                directories[row_root] = (fd,ident)
+                if not _path_present(row_root/'commit.json',fd,ident):
+                    gap = True
+                    continue
+                if gap or int(name) != number:
+                    raise ValueError('Committed v3 interval after a prefix gap')
+                raw,marker_identity = _read_exact_file(row_root,row_root/'commit.json',8192,'V3 commitment',
+                    directory=fd,root_identity=ident,return_identity=True,expected_links=2)
+                anchor,anchor_identity = _read_exact_file(row_root,row_root/'commit.anchor.json',8192,'V3 commitment anchor',
+                    directory=fd,root_identity=ident,return_identity=True,expected_links=2)
+                commitment = json.loads(raw)
+                if (raw != anchor or marker_identity != anchor_identity or
+                        type(commitment) is not dict or set(commitment) != _INTERVAL_COMMIT_FIELDS or
+                        raw != _canonical_bytes(commitment,'V3 commitment') or
+                        type(commitment['version']) is not int or commitment['version'] != 1 or
+                        commitment['kind'] != 'puck-on-policy-interval-commit-v1' or
+                        commitment['protocol_sha256'] != PROTOCOL_SHA256 or
+                        type(commitment['completed_tick']) is not int or commitment['completed_tick'] != number or
+                        commitment['previous_commit_sha256'] != previous):
+                    raise ValueError('V3 commitment identity or predecessor differs')
+                for directory in (row_root/'recording',row_root/'recording/chunks'):
+                    _,child_fd,child_identity = _open_publication_root(directory)
+                    directories[directory] = (child_fd,child_identity)
+                candidate,arrays,event,files = _decode_interval_recording(row_root,directories,number)
+                if state_digest(files) != state_digest(commitment['files']):
+                    raise ValueError('V3 recording file identity or bytes changed')
+                row = {k:v for k,v in candidate.items() if k in _INTERVAL_ROW_FIELDS}
+                pending = learning.prepare(row['inputs'],own)
+                staged = {'version':1,'kind':'puck-on-policy-staged-interval-v1',
+                    'protocol_sha256':PROTOCOL_SHA256,'row':row,'own_pending':pending,
+                    'teacher_mode_before':own['mode'],'teacher_mode_after':pending['after']['mode'],
+                    'query_before_sha256':commitment['query_sha256'],'query_after_sha256':commitment['query_sha256']}
+                receipt = _interval_payload(staged,arrays,event,number)
+                current_schema = {k:(v.dtype.str,list(v.shape)) for k,v in arrays.items()}
+                if (_interval_arrays_digest(arrays) != commitment['arrays_sha256'] or
+                        _sha256(_canonical_bytes(event,'V3 event')) != commitment['event_sha256'] or
+                        receipt['row_sha256'] != commitment['row_sha256'] or
+                        receipt['staged_sha256'] != commitment['staged_sha256'] or
+                        schema is not None and schema != current_schema):
+                    raise ValueError('V3 committed row/event/staged schema or digest differs')
+                for directory,(child_fd,child_identity) in directories.items():
+                    _verify_interval_directory(directory,child_fd,child_identity)
+                if _interval_file_inventory(row_root,directories) != files:
+                    raise ValueError('V3 recording changed during read')
+                final_raw,final_identity = _read_exact_file(row_root,row_root/'commit.json',8192,'V3 commitment',
+                    directory=fd,root_identity=ident,return_identity=True,expected_links=2)
+                final_anchor,final_anchor_identity = _read_exact_file(row_root,row_root/'commit.anchor.json',8192,'V3 commitment anchor',
+                    directory=fd,root_identity=ident,return_identity=True,expected_links=2)
+                if final_raw != raw or final_anchor != raw or final_identity != marker_identity or final_anchor_identity != anchor_identity:
+                    raise ValueError('V3 commitment changed during read')
+                previous, schema = _sha256(raw), current_schema
+                own = learning.commit(pending['before'],pending,number)
+                yield {'completed_tick':number,'row':candidate,'event':event,'publication_receipt':receipt}
+            finally:
+                for directory,(child_fd,_) in directories.items():
+                    if directory != root: os.close(child_fd)
+    finally:
+        os.close(root_fd)
+
+
+def _interval_arrays_digest(arrays):
+    import numpy as np
+    from .snapshots import state_digest
+    # NPZ decodes scalar columns as NumPy scalars; stored dtype/shape/bytes prevail.
+    return state_digest({k:np.asarray(v) for k,v in arrays.items()})
+
 # Integer eighth-metre/radian coefficients.  Fixed slots 0..7 are the complete
 # parameter domain; binary-fraction conversion makes the arithmetic exact.
 # Fields: puck x/y, goal dx/dy, rover dx/dy, rover yaw.
