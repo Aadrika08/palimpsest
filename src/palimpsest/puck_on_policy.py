@@ -5,6 +5,7 @@ snapshots and publishes only to an explicitly supplied fresh directory.
 """
 
 import hashlib
+import copy
 import json
 import math
 import os
@@ -56,6 +57,120 @@ _ADMISSION_RECEIPT_FIELDS = {
 }
 _MAX_JSON_BYTES = 64 * 1024 * 1024
 _MAX_COMMIT_BYTES = 4096
+
+_QUERY_STATE_FIELDS = {'native_state', 'observation', 'python_rng', 'numpy_rng',
+                       'torch_rng', 'environment_rng', 'space_rng'}
+_INTERVAL_ROW_FIELDS = {'episode', 'tick', 'inputs', 'student_inputs', 'teacher_action',
+                        'predicted_action', 'action', 'teacher_query_mode_before', 'teacher_query_mode_after',
+                        'supervisor_mode_before', 'supervisor_mode_after'}
+_STAGED_INTERVAL_FIELDS = {'version', 'kind', 'protocol_sha256', 'row', 'own_pending',
+                           'teacher_mode_before', 'teacher_mode_after',
+                           'query_before_sha256', 'query_after_sha256'}
+
+
+def stage_interval(sensors, world, teacher_mode, own, model, *, terminal_reason,
+                   capture_query_state):
+    """Stage label/action/cursors without stepping or publishing a live interval.
+
+    The capture seam must be independently qualified before native use; matching
+    supplied snapshots alone cannot prove that the seam covers all native state.
+    """
+    import numpy as np
+    from . import puck_learning as learning, puck_teacher as teacher, puck_student as student
+    from .snapshots import state_digest
+
+    if terminal_reason is not None:
+        raise ValueError('No on-policy decision after a terminal outcome')
+    pending = learning.prepare(sensors, own)
+    if teacher_mode != pending['before']['mode']:
+        raise ValueError('Teacher and own BEFORE modes differ')
+
+    def capture():
+        state = capture_query_state()
+        if type(state) is not dict or set(state) != _QUERY_STATE_FIELDS:
+            raise ValueError('Complete explicit query state capture required')
+        try:
+            return state_digest({'captured': state, 'sensors': sensors,
+                                 'inputs': pending['inputs'], 'own': own, 'world': world})
+        except TypeError as error:
+            raise ValueError('Query state capture contains unsupported state') from error
+
+    before = capture()
+    label, next_mode, teacher_pending = teacher.decide(sensors, world, teacher_mode, own)
+    after = capture()
+    if before != after or state_digest(teacher_pending) != state_digest(pending):
+        raise ValueError('Teacher query changed protected state or effective inputs')
+    if next_mode != pending['after']['mode']:
+        raise ValueError('Teacher and own AFTER modes differ')
+    label = student.action(np.asarray(label, np.float64))
+    live_before = state_digest({'sensors': sensors, 'world': world, 'own': own})
+    predicted, student_pending = student.decide(sensors, own, model)
+    if (state_digest(student_pending) != state_digest(pending) or
+            state_digest({'sensors': sensors, 'world': world, 'own': own}) != live_before):
+        raise ValueError('Student inference changed staged inputs or own cursor')
+    predicted = student.action(predicted)
+    row = {'episode': 0, 'tick': own['tick'], 'inputs': sensors.copy(),
+           'student_inputs': pending['inputs'].copy(), 'teacher_action': label,
+           'predicted_action': predicted.copy(), 'action': predicted.copy(),
+           'teacher_query_mode_before': np.uint8(learning.MODES[teacher_mode]+1),
+           'teacher_query_mode_after': np.uint8(learning.MODES[next_mode]+1),
+           'supervisor_mode_before': np.uint8(learning.MODES[own['mode']]),
+           'supervisor_mode_after': np.uint8(learning.MODES[pending['after']['mode']])}
+    return {'version': 1, 'kind': 'puck-on-policy-staged-interval-v1',
+            'protocol_sha256': PROTOCOL_SHA256, 'row': row, 'own_pending': copy.deepcopy(pending),
+            'teacher_mode_before': teacher_mode, 'teacher_mode_after': next_mode,
+            'query_before_sha256': before, 'query_after_sha256': after}
+
+
+def admit_completed_interval(staged, own, teacher_mode, *, completed_tick, publication_receipt):
+    """Return both cursors after a supplied exact successful row receipt.
+
+    This pure admission function does not perform or attest a native step or a
+    durable writer commit. The later owner must qualify those receipt semantics.
+    """
+    from . import puck_learning as learning, puck_student as student
+    from .snapshots import state_digest
+
+    before = learning.validate_cursor(own)
+    if (type(staged) is not dict or set(staged) != _STAGED_INTERVAL_FIELDS or
+            type(staged['version']) is not int or staged['version'] != 1 or
+            staged['kind'] != 'puck-on-policy-staged-interval-v1' or
+            staged['protocol_sha256'] != PROTOCOL_SHA256 or
+            type(completed_tick) is not int or completed_tick != before['tick']+1 or
+            teacher_mode != before['mode'] or staged['teacher_mode_before'] != teacher_mode):
+        raise ValueError('Staged interval predecessor or completed tick differs')
+    query_digest = _digest(staged['query_before_sha256'], 'Query state digest')
+    if staged['query_after_sha256'] != query_digest:
+        raise ValueError('Teacher query isolation receipt differs')
+    row = staged['row']
+    if (type(row) is not dict or set(row) != _INTERVAL_ROW_FIELDS or
+            type(row['episode']) is not int or row['episode'] != 0 or
+            type(row['tick']) is not int or row['tick'] != before['tick']):
+        raise ValueError('Exact contiguous v3 interval row required')
+    expected = learning.prepare(row['inputs'], before)
+    if state_digest(staged['own_pending']) != state_digest(expected):
+        raise ValueError('Staged supervisor transition differs from sensors')
+    next_own = learning.commit(own, staged['own_pending'], completed_tick)
+    if staged['teacher_mode_after'] != next_own['mode']:
+        raise ValueError('Teacher and own AFTER modes differ')
+    if state_digest(row['student_inputs']) != state_digest(expected['inputs']):
+        raise ValueError('Exact BEFORE-mode features differ')
+    for name, code in (('teacher_query_mode_before', learning.MODES[before['mode']]+1),
+                       ('teacher_query_mode_after', learning.MODES[next_own['mode']]+1),
+                       ('supervisor_mode_before', learning.MODES[before['mode']]),
+                       ('supervisor_mode_after', learning.MODES[next_own['mode']])):
+        learning._mode(row[name], code)
+    student.action(row['teacher_action'])
+    predicted, executed = student.action(row['predicted_action']), student.action(row['action'])
+    if predicted.tobytes() != executed.tobytes():
+        raise ValueError('Only the predicted student action may execute')
+    expected_receipt = {'version': 1, 'kind': 'puck-on-policy-row-publication-v1',
+                        'protocol_sha256': PROTOCOL_SHA256, 'status': 'published',
+                        'completed_tick': completed_tick, 'row_sha256': state_digest(row),
+                        'staged_sha256': state_digest(staged)}
+    if state_digest(publication_receipt) != state_digest(expected_receipt):
+        raise ValueError('Exact successful v3 row publication receipt required')
+    return next_own, staged['teacher_mode_after']
 
 # Integer eighth-metre/radian coefficients.  Fixed slots 0..7 are the complete
 # parameter domain; binary-fraction conversion makes the arithmetic exact.
