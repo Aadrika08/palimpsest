@@ -857,6 +857,15 @@ def _validate_receipt_shape(receipt):
     for name in ('raw_inventory', 'source_identity', 'terminal_state',
                  'policy_result', 'oracle_result'):
         _fields(receipt[name], schemas[name]['exact_keys'], name)
+    for group, names in (
+        (receipt, ('row_count', 'chunk_count', 'event_count')),
+        (receipt['raw_inventory'], ('file_count', 'recording_bytes',
+                                    'support_bytes', 'total_bytes')),
+        (receipt['terminal_state'], ('total_ticks', 'last_tick')),
+        (receipt['policy_result'], ('call_count',)),
+    ):
+        if any(type(group[name]) is not int or group[name] < 0 for name in names):
+            raise ValueError('Raw-audit counts and ticks must be nonnegative integers')
     files = receipt['raw_inventory']['files']
     if type(files) is not list:
         raise ValueError('Raw inventory files must be a list')

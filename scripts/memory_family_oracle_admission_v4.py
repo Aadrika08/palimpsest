@@ -7,7 +7,7 @@ It publishes nothing and never imports an owner, Engine, model, or simulator.
 """
 from __future__ import annotations
 
-from contextlib import contextmanager
+from contextlib import ExitStack, contextmanager
 import copy
 import hashlib
 import math
@@ -117,6 +117,7 @@ def _bound_file(root, value, maximum, deadline, label):
         raise ValueError('Evidence root must be one direct non-symlink directory')
     parts = PurePosixPath(descriptor_value['path']).parts
     opened = []
+    directories = []
     try:
         opened.append(os.open(
             root, os.O_RDONLY | getattr(os, 'O_DIRECTORY', 0)
@@ -127,6 +128,7 @@ def _bound_file(root, value, maximum, deadline, label):
             opened.append(os.open(
                 part, os.O_RDONLY | getattr(os, 'O_DIRECTORY', 0)
                 | getattr(os, 'O_NOFOLLOW', 0), dir_fd=opened[-1]))
+        directories = [_fingerprint(os.fstat(fd)) for fd in opened]
         file_descriptor = os.open(
             parts[-1], os.O_RDONLY | getattr(os, 'O_NOFOLLOW', 0),
             dir_fd=opened[-1])
@@ -141,6 +143,15 @@ def _bound_file(root, value, maximum, deadline, label):
         if digest != descriptor_value['sha256']:
             raise ValueError(f'{label} checksum differs')
         yield file_descriptor, payload, descriptor_value
+        if _fingerprint(root.lstat()) != directories[0]:
+            raise RuntimeError('Evidence root changed while admitted')
+        for index, identity in enumerate(directories):
+            current = os.fstat(opened[index])
+            named = (root.lstat() if index == 0 else os.stat(
+                parts[index - 1], dir_fd=opened[index - 1], follow_symlinks=False))
+            if (_fingerprint(current) != identity
+                    or _fingerprint(named) != identity):
+                raise RuntimeError(f'{label} ancestor changed while admitted')
         os.lseek(file_descriptor, 0, os.SEEK_SET)
         repeated, repeated_digest = _read_fd(file_descriptor, maximum, deadline)
         after = os.fstat(file_descriptor)
@@ -154,19 +165,20 @@ def _bound_file(root, value, maximum, deadline, label):
             os.close(opened_descriptor)
 
 
-def _canonical_file(root, descriptor, maximum, deadline, label):
-    with _bound_file(root, descriptor, maximum, deadline, label) as (_, payload, value):
-        parsed = artifacts._json(payload)
-        if payload != memory.canonical_bytes(parsed):
-            raise ValueError(f'{label} must be canonical JSON')
-        return parsed, value
+def _canonical_file(root, descriptor, maximum, deadline, label, lifetime):
+    _, payload, value = lifetime.enter_context(
+        _bound_file(root, descriptor, maximum, deadline, label))
+    parsed = artifacts._json(payload)
+    if payload != memory.canonical_bytes(parsed):
+        raise ValueError(f'{label} must be canonical JSON')
+    return parsed, value
 
 
 def _conversion(root, descriptor, bundle, operation, run_id, case_id,
-                condition, expected_source_identity, deadline):
+                condition, expected_source_identity, deadline, lifetime):
     receipt, bound = _canonical_file(
         root, descriptor, PAIR_CONTRACT['receipt_max_bytes'], deadline,
-        f'{operation} conversion receipt')
+        f'{operation} conversion receipt', lifetime)
     _fields(receipt, PROTOCOL['schemas']['conversion']['exact_keys'],
             'Conversion receipt')
     if (receipt['schema'] != PROTOCOL['schemas']['conversion']['name']
@@ -255,10 +267,10 @@ def _projection(rows):
 
 
 def _raw_receipt(root, descriptor, operation, run_id, case_id, condition,
-                 expected_source_identity, deadline):
+                 expected_source_identity, deadline, lifetime):
     receipt, bound = _canonical_file(
         root, descriptor, raw_audit.RAW_CONTRACT['receipt_max_bytes'], deadline,
-        f'{operation} raw-audit receipt')
+        f'{operation} raw-audit receipt', lifetime)
     raw_audit._validate_receipt_shape(receipt)
     if (receipt['run_id'] != run_id or receipt['case_id'] != case_id
             or receipt['operation'] != operation
@@ -352,10 +364,10 @@ def _cross_bind(receipt, read, events, projection, snapshot_reference,
     _inventory(receipt, read, events, snapshot_reference)
 
 
-def _history(root, descriptor, deadline, role):
+def _history(root, descriptor, deadline, role, lifetime):
     bundle, bound = _canonical_file(
         root, descriptor, PAIR_CONTRACT['history_max_bytes'], deadline,
-        f'{role} history bundle')
+        f'{role} history bundle', lifetime)
     _fields(bundle, {'e', 'u', 'history_sha256'}, 'History bundle')
     history = memory.validate_e(bundle['e'])
     recorded = memory.validate_u(bundle['u'])
@@ -369,16 +381,14 @@ def _history(root, descriptor, deadline, role):
 
 
 def _source_application(root, reference, source_read, source_events,
-                        source_projection, case, source_run_id, deadline):
+                        source_projection, case, source_run_id, deadline, lifetime):
     descriptor = {key: reference[key] for key in ('path', 'size_bytes', 'sha256')}
-    with _bound_file(
-            root, descriptor, compact.SNAPSHOT_MAX_BYTES, deadline,
-            'source snapshot') as (file_descriptor, _, _):
-        try:
-            snapshot = snapshots.read_snapshot(
-                Path(f'/proc/self/fd/{file_descriptor}'))
-        except (OSError, TypeError, ValueError) as error:
-            raise ValueError('Source snapshot is invalid') from error
+    file_descriptor, _, _ = lifetime.enter_context(_bound_file(
+        root, descriptor, compact.SNAPSHOT_MAX_BYTES, deadline, 'source snapshot'))
+    try:
+        snapshot = snapshots.read_snapshot(Path(f'/proc/self/fd/{file_descriptor}'))
+    except (OSError, TypeError, ValueError) as error:
+        raise ValueError('Source snapshot is invalid') from error
     application = snapshot.get('application') if type(snapshot) is dict else None
     if type(application) is not dict or set(application) != oracle.APPLICATION_FIELDS:
         raise ValueError('Source snapshot lacks its exact application state')
@@ -425,10 +435,11 @@ def _single(events, kind, label):
 
 
 def _prior_own(root, descriptor, case, source_run_id, application,
-               source_events, source_projection, snapshot_reference, deadline):
+               source_events, source_projection, snapshot_reference, deadline,
+               source_receipt, histories, lifetime):
     receipt, bound = _canonical_file(
         root, descriptor, PAIR_CONTRACT['receipt_max_bytes'], deadline,
-        'prior-own pair receipt')
+        'prior-own pair receipt', lifetime)
     _fields(receipt, PROTOCOL['schemas']['pair_admission']['exact_keys'],
             'Prior-own pair receipt')
     oracle_result = receipt.get('oracle_result')
@@ -446,6 +457,8 @@ def _prior_own(root, descriptor, case, source_run_id, application,
         _digest(oracle_result[name], f'prior-own oracle {name}')
     _run_id(receipt.get('source_run_id'))
     _run_id(receipt.get('condition_run_id'))
+    compact._snapshot(receipt['snapshot_reference'], 'condition',
+                      receipt['condition_run_id'], case['case_id'])
     for name in ('source_receipt', 'condition_receipt'):
         _fields(receipt[name],
                 PAIR_CONTRACT['nested_schemas']['receipt_identity']['exact_keys'],
@@ -456,6 +469,23 @@ def _prior_own(root, descriptor, case, source_run_id, application,
                  'u_identity'):
         _fields(receipt[name], PAIR_CONTRACT['nested_schemas'][name]['exact_keys'],
                 f'Prior-own {name}')
+    own_selector = {
+        'version': 1, 'condition': 'own', 'limit': 1, 'resource': None,
+        'resource_sha256': memory.sha256(None),
+        'provenance_sha256': histories['own']['descriptor']['sha256'],
+    }
+    task = application['memory']
+    expected_own = _condition_mapping('own', task, {
+        'selector': own_selector, 'u': histories['own']['u'],
+        'retained_memory_sha256': memory.sha256({
+            key: value for key, value in task.items()
+            if key not in ('u', 'selector')}),
+    }, histories, None)
+    if (receipt['source_receipt'] != source_receipt
+            or any(receipt[name] != expected_own[name] for name in (
+                'history_identity', 'resource_identity', 'selector_identity',
+                'u_identity'))):
+        raise ValueError('Prior own source descriptors or selector/U mapping differs')
     gold = oracle_result['gold_target_ids']
     if (receipt['schema'] != PROTOCOL['schemas']['pair_admission']['name']
             or receipt['protocol_sha256'] != PROTOCOL_SHA256
@@ -464,7 +494,8 @@ def _prior_own(root, descriptor, case, source_run_id, application,
             or receipt['condition_run_id'] == source_run_id
             or receipt['condition'] != 'own'
             or receipt['snapshot_reference'] != snapshot_reference
-            or receipt['claims'] != PROTOCOL['claims']
+            or memory.canonical_bytes(receipt['claims'])
+            != memory.canonical_bytes(PROTOCOL['claims'])
             or oracle_result['status'] != 'compact-pair-pass'
             or oracle_result['prior_own_receipt'] is not None
             or type(gold) is not list
@@ -778,176 +809,178 @@ def admit_compact_pair(*, case, source_bundle, condition_bundle,
                        history_bundles, owner_source_sha256, deadline,
                        prior_own_receipt=None):
     """Validate and return one exact compact-pair receipt without writing."""
-    _public_deadline(deadline)
-    case = world.validate_case(copy.deepcopy(case))
-    if case['version'] != 3 or case.get('split') != 'development':
-        raise ValueError('Compact pair requires a development family-v3 case')
-    source_run_id = _run_id(source_run_id)
-    condition_run_id = _run_id(condition_run_id)
-    if source_run_id == condition_run_id:
-        raise ValueError('Source and condition runs must be distinct')
-    if condition not in PROTOCOL['analysis_contract']['conditions']:
-        raise ValueError('Unknown compact-pair condition')
-    _digest(owner_source_sha256, 'owner source SHA-256')
-    if type(history_bundles) is not dict or set(history_bundles) != {'own', 'swapped'}:
-        raise ValueError('Compact pair requires exact own/swapped history descriptors')
+    with ExitStack() as lifetime:
+        _public_deadline(deadline)
+        case = world.validate_case(copy.deepcopy(case))
+        if case['version'] != 3 or case.get('split') != 'development':
+            raise ValueError('Compact pair requires a development family-v3 case')
+        source_run_id = _run_id(source_run_id)
+        condition_run_id = _run_id(condition_run_id)
+        if source_run_id == condition_run_id:
+            raise ValueError('Source and condition runs must be distinct')
+        if condition not in PROTOCOL['analysis_contract']['conditions']:
+            raise ValueError('Unknown compact-pair condition')
+        _digest(owner_source_sha256, 'owner source SHA-256')
+        if type(history_bundles) is not dict or set(history_bundles) != {'own', 'swapped'}:
+            raise ValueError('Compact pair requires exact own/swapped history descriptors')
 
-    expected_source_identity = raw_audit.canonical_source_identity(
-        owner_source_sha256)
-    source_conversion, source_conversion_bound, source_raw_descriptor = _conversion(
-        evidence_root, source_conversion_receipt, source_bundle, 'source',
-        source_run_id, case['case_id'], None, expected_source_identity, deadline)
-    condition_conversion, condition_conversion_bound, condition_raw_descriptor = _conversion(
-        evidence_root, condition_conversion_receipt, condition_bundle,
-        'condition', condition_run_id, case['case_id'], condition,
-        expected_source_identity, deadline)
-    source_raw, source_raw_bound = _raw_receipt(
-        evidence_root, source_raw_descriptor, 'source', source_run_id,
-        case['case_id'], None, expected_source_identity, deadline)
-    condition_raw, condition_raw_bound = _raw_receipt(
-        evidence_root, condition_raw_descriptor, 'condition', condition_run_id,
-        case['case_id'], condition, expected_source_identity, deadline)
-    receipt_paths = {
-        source_conversion_bound['path'], condition_conversion_bound['path'],
-        source_raw_bound['path'], condition_raw_bound['path'],
-    }
-    if len(receipt_paths) != 4:
-        raise ValueError('Source and condition receipts must use distinct paths')
+        expected_source_identity = raw_audit.canonical_source_identity(
+            owner_source_sha256)
+        source_conversion, source_conversion_bound, source_raw_descriptor = _conversion(
+            evidence_root, source_conversion_receipt, source_bundle, 'source',
+            source_run_id, case['case_id'], None, expected_source_identity, deadline, lifetime)
+        condition_conversion, condition_conversion_bound, condition_raw_descriptor = _conversion(
+            evidence_root, condition_conversion_receipt, condition_bundle,
+            'condition', condition_run_id, case['case_id'], condition,
+            expected_source_identity, deadline, lifetime)
+        source_raw, source_raw_bound = _raw_receipt(
+            evidence_root, source_raw_descriptor, 'source', source_run_id,
+            case['case_id'], None, expected_source_identity, deadline, lifetime)
+        condition_raw, condition_raw_bound = _raw_receipt(
+            evidence_root, condition_raw_descriptor, 'condition', condition_run_id,
+            case['case_id'], condition, expected_source_identity, deadline, lifetime)
+        receipt_paths = {
+            source_conversion_bound['path'], condition_conversion_bound['path'],
+            source_raw_bound['path'], condition_raw_bound['path'],
+        }
+        if len(receipt_paths) != 4:
+            raise ValueError('Source and condition receipts must use distinct paths')
 
-    source_read = compact.read_compact(
-        source_bundle, raw_audit_receipt=source_raw)
-    condition_read = compact.read_compact(
-        condition_bundle, raw_audit_receipt=condition_raw)
-    if (source_read['manifest']['run_id'] != source_run_id
-            or source_read['manifest']['case_id'] != case['case_id']
-            or source_read['manifest']['operation'] != 'source'
-            or source_read['manifest']['condition'] is not None
-            or condition_read['manifest']['run_id'] != condition_run_id
-            or condition_read['manifest']['case_id'] != case['case_id']
-            or condition_read['manifest']['operation'] != 'condition'
-            or condition_read['manifest']['condition'] != condition):
-        raise ValueError('Compact bundle identity differs')
-    if (source_conversion['compact_trace_digest'] != source_read['trace_digest']
-            or source_conversion['legacy_trace_digest'] != source_read['trace_digest']
-            or condition_conversion['compact_trace_digest']
-            != condition_read['trace_digest']
-            or condition_conversion['legacy_trace_digest']
-            != condition_read['trace_digest']):
-        raise ValueError('Conversion trace digest differs from compact replay')
+        source_read = compact.read_compact(
+            source_bundle, raw_audit_receipt=source_raw)
+        condition_read = compact.read_compact(
+            condition_bundle, raw_audit_receipt=condition_raw)
+        if (source_read['manifest']['run_id'] != source_run_id
+                or source_read['manifest']['case_id'] != case['case_id']
+                or source_read['manifest']['operation'] != 'source'
+                or source_read['manifest']['condition'] is not None
+                or condition_read['manifest']['run_id'] != condition_run_id
+                or condition_read['manifest']['case_id'] != case['case_id']
+                or condition_read['manifest']['operation'] != 'condition'
+                or condition_read['manifest']['condition'] != condition):
+            raise ValueError('Compact bundle identity differs')
+        if (source_conversion['compact_trace_digest'] != source_read['trace_digest']
+                or source_conversion['legacy_trace_digest'] != source_read['trace_digest']
+                or condition_conversion['compact_trace_digest']
+                != condition_read['trace_digest']
+                or condition_conversion['legacy_trace_digest']
+                != condition_read['trace_digest']):
+            raise ValueError('Conversion trace digest differs from compact replay')
 
-    source_reference = source_read['snapshot_reference']
-    condition_reference = condition_read['snapshot_reference']
-    if (condition_reference != {
-            **source_reference, 'kind': 'shared-source',
-            'source_receipt_sha256': source_conversion_bound['sha256']}):
-        raise ValueError('Condition does not bind the one source snapshot/receipt')
+        source_reference = source_read['snapshot_reference']
+        condition_reference = condition_read['snapshot_reference']
+        if (condition_reference != {
+                **source_reference, 'kind': 'shared-source',
+                'source_receipt_sha256': source_conversion_bound['sha256']}):
+            raise ValueError('Condition does not bind the one source snapshot/receipt')
 
-    source_events = compact._legacy_events(
-        source_read['legacy_events_bytes'], 'source')
-    condition_events = compact._legacy_events(
-        condition_read['legacy_events_bytes'], 'condition')
-    oracle._events(copy.deepcopy(source_events), source_run_id, 'source compact events')
-    oracle._events(copy.deepcopy(condition_events), condition_run_id,
-                   'condition compact events')
-    source_projection = _projection(source_read['rows'])
-    condition_projection = _projection(condition_read['rows'])
-    oracle._rows(copy.deepcopy(source_projection), 0, 'source compact rows')
+        source_events = compact._legacy_events(
+            source_read['legacy_events_bytes'], 'source')
+        condition_events = compact._legacy_events(
+            condition_read['legacy_events_bytes'], 'condition')
+        oracle._events(copy.deepcopy(source_events), source_run_id, 'source compact events')
+        oracle._events(copy.deepcopy(condition_events), condition_run_id,
+                       'condition compact events')
+        source_projection = _projection(source_read['rows'])
+        condition_projection = _projection(condition_read['rows'])
+        oracle._rows(copy.deepcopy(source_projection), 0, 'source compact rows')
 
-    application, task, boundary = _source_application(
-        evidence_root, source_reference, source_read, source_events,
-        source_projection, case, source_run_id, deadline)
-    oracle._rows(copy.deepcopy(condition_projection), boundary,
-                 'condition compact rows')
-    histories = {
-        role: _history(evidence_root, history_bundles[role], deadline, role)
-        for role in ('own', 'swapped')}
-    if (histories['own']['descriptor']['path']
-            == histories['swapped']['descriptor']['path']
-            or memory_experiment._ids(histories['own']['e'])
-            & memory_experiment._ids(histories['swapped']['e'])):
-        raise ValueError('Own/swapped history namespaces must be disjoint')
+        application, task, boundary = _source_application(
+            evidence_root, source_reference, source_read, source_events,
+            source_projection, case, source_run_id, deadline, lifetime)
+        oracle._rows(copy.deepcopy(condition_projection), boundary,
+                     'condition compact rows')
+        histories = {
+            role: _history(evidence_root, history_bundles[role], deadline, role, lifetime)
+            for role in ('own', 'swapped')}
+        if (histories['own']['descriptor']['path']
+                == histories['swapped']['descriptor']['path']
+                or memory_experiment._ids(histories['own']['e'])
+                & memory_experiment._ids(histories['swapped']['e'])):
+            raise ValueError('Own/swapped history namespaces must be disjoint')
 
-    source_legacy_manifest = artifacts._json(
-        source_read['legacy_manifest_bytes'])
-    condition_legacy_manifest = artifacts._json(
-        condition_read['legacy_manifest_bytes'])
-    _terminal(
-        source_raw, source_legacy_manifest, source_reference, None,
-        projection=source_projection, application=application)
-    post_world = world.validate_state(
-        condition_legacy_manifest.get('world_state'))
-    prior_own = None
-    if condition == 'oracle':
-        if prior_own_receipt is None:
-            raise ValueError('Oracle condition requires a prior-own receipt')
-        prior_own = _prior_own(
-            evidence_root, prior_own_receipt, case, source_run_id,
-            application, source_events, source_projection, condition_reference,
-            deadline)
-        if prior_own[1]['path'] in receipt_paths:
-            raise ValueError('Prior-own and current receipt paths must be distinct')
-    elif prior_own_receipt is not None:
-        raise ValueError('Only the oracle condition accepts a prior-own receipt')
-    identities = _condition_identity(
-        condition, case, application, task, source_events, source_projection,
-        condition_events, condition_projection, post_world, source_run_id,
-        condition_run_id, histories, prior_own)
-    _terminal(
-        condition_raw, condition_legacy_manifest, condition_reference,
-        source_run_id, projection=condition_projection, case=case,
-        events=condition_events, schedule=identities['schedule'])
-    _cross_bind(source_raw, source_read, source_events, source_projection,
-                source_reference, application, None)
-    _cross_bind(condition_raw, condition_read, condition_events,
-                condition_projection, condition_reference, None,
-                identities['schedule'])
+        source_legacy_manifest = artifacts._json(
+            source_read['legacy_manifest_bytes'])
+        condition_legacy_manifest = artifacts._json(
+            condition_read['legacy_manifest_bytes'])
+        _terminal(
+            source_raw, source_legacy_manifest, source_reference, None,
+            projection=source_projection, application=application)
+        post_world = world.validate_state(
+            condition_legacy_manifest.get('world_state'))
+        prior_own = None
+        if condition == 'oracle':
+            if prior_own_receipt is None:
+                raise ValueError('Oracle condition requires a prior-own receipt')
+            prior_own = _prior_own(
+                evidence_root, prior_own_receipt, case, source_run_id,
+                application, source_events, source_projection, condition_reference,
+                deadline, {'conversion': source_conversion_bound,
+                           'raw_audit': source_raw_bound}, histories, lifetime)
+            if prior_own[1]['path'] in receipt_paths:
+                raise ValueError('Prior-own and current receipt paths must be distinct')
+        elif prior_own_receipt is not None:
+            raise ValueError('Only the oracle condition accepts a prior-own receipt')
+        identities = _condition_identity(
+            condition, case, application, task, source_events, source_projection,
+            condition_events, condition_projection, post_world, source_run_id,
+            condition_run_id, histories, prior_own)
+        _terminal(
+            condition_raw, condition_legacy_manifest, condition_reference,
+            source_run_id, projection=condition_projection, case=case,
+            events=condition_events, schedule=identities['schedule'])
+        _cross_bind(source_raw, source_read, source_events, source_projection,
+                    source_reference, application, None)
+        _cross_bind(condition_raw, condition_read, condition_events,
+                    condition_projection, condition_reference, None,
+                    identities['schedule'])
 
-    receipt_schema = PAIR_CONTRACT['nested_schemas']['receipt_identity'][
-        'exact_keys']
-    source_receipt = {
-        'conversion': source_conversion_bound, 'raw_audit': source_raw_bound}
-    condition_receipt = {
-        'conversion': condition_conversion_bound,
-        'raw_audit': condition_raw_bound}
-    _fields(source_receipt, receipt_schema, 'Source receipt identity')
-    _fields(condition_receipt, receipt_schema, 'Condition receipt identity')
-    result = {
-        'schema': PROTOCOL['schemas']['pair_admission']['name'],
-        'protocol_sha256': PROTOCOL_SHA256,
-        'case_id': case['case_id'], 'source_run_id': source_run_id,
-        'condition_run_id': condition_run_id, 'condition': condition,
-        'source_receipt': source_receipt,
-        'condition_receipt': condition_receipt,
-        'snapshot_reference': copy.deepcopy(condition_reference),
-        'history_identity': identities['history_identity'],
-        'resource_identity': identities['resource_identity'],
-        'selector_identity': identities['selector_identity'],
-        'u_identity': identities['u_identity'],
-        'oracle_result': {
-            'status': 'compact-pair-pass',
-            'proof_sha256': identities['proof_sha256'],
-            'source_events_sha256': memory.sha256(source_events),
-            'source_rows_sha256': memory.sha256(source_projection),
-            'condition_events_sha256': memory.sha256(condition_events),
-            'condition_rows_sha256': memory.sha256(condition_projection),
-            'condition_world_state_sha256':
-                identities['condition_world_state_sha256'],
-            'schedule_sha256': memory.sha256(identities['schedule']),
-            'source_application_sha256': memory.sha256(application),
-            'recorded_selection_sha256':
-                identities['recorded_selection_sha256'],
-            'gold_target_ids': identities['gold_target_ids'],
-            'gold_target_ids_sha256': identities['gold_target_ids_sha256'],
-            'prior_own_receipt': (None if prior_own is None
-                                  else prior_own[1]),
-        },
-        'claims': copy.deepcopy(PROTOCOL['claims']),
-    }
-    _fields(result, PROTOCOL['schemas']['pair_admission']['exact_keys'],
-            'Compact-pair admission receipt')
-    for name in ('history_identity', 'resource_identity', 'selector_identity',
-                 'u_identity', 'oracle_result'):
-        _fields(result[name], PAIR_CONTRACT['nested_schemas'][name]['exact_keys'],
-                name)
+        receipt_schema = PAIR_CONTRACT['nested_schemas']['receipt_identity'][
+            'exact_keys']
+        source_receipt = {
+            'conversion': source_conversion_bound, 'raw_audit': source_raw_bound}
+        condition_receipt = {
+            'conversion': condition_conversion_bound,
+            'raw_audit': condition_raw_bound}
+        _fields(source_receipt, receipt_schema, 'Source receipt identity')
+        _fields(condition_receipt, receipt_schema, 'Condition receipt identity')
+        result = {
+            'schema': PROTOCOL['schemas']['pair_admission']['name'],
+            'protocol_sha256': PROTOCOL_SHA256,
+            'case_id': case['case_id'], 'source_run_id': source_run_id,
+            'condition_run_id': condition_run_id, 'condition': condition,
+            'source_receipt': source_receipt,
+            'condition_receipt': condition_receipt,
+            'snapshot_reference': copy.deepcopy(condition_reference),
+            'history_identity': identities['history_identity'],
+            'resource_identity': identities['resource_identity'],
+            'selector_identity': identities['selector_identity'],
+            'u_identity': identities['u_identity'],
+            'oracle_result': {
+                'status': 'compact-pair-pass',
+                'proof_sha256': identities['proof_sha256'],
+                'source_events_sha256': memory.sha256(source_events),
+                'source_rows_sha256': memory.sha256(source_projection),
+                'condition_events_sha256': memory.sha256(condition_events),
+                'condition_rows_sha256': memory.sha256(condition_projection),
+                'condition_world_state_sha256':
+                    identities['condition_world_state_sha256'],
+                'schedule_sha256': memory.sha256(identities['schedule']),
+                'source_application_sha256': memory.sha256(application),
+                'recorded_selection_sha256':
+                    identities['recorded_selection_sha256'],
+                'gold_target_ids': identities['gold_target_ids'],
+                'gold_target_ids_sha256': identities['gold_target_ids_sha256'],
+                'prior_own_receipt': (None if prior_own is None
+                                      else prior_own[1]),
+            },
+            'claims': copy.deepcopy(PROTOCOL['claims']),
+        }
+        _fields(result, PROTOCOL['schemas']['pair_admission']['exact_keys'],
+                'Compact-pair admission receipt')
+        for name in ('history_identity', 'resource_identity', 'selector_identity',
+                     'u_identity', 'oracle_result'):
+            _fields(result[name], PAIR_CONTRACT['nested_schemas'][name]['exact_keys'],
+                    name)
     _deadline(deadline)
     return result
