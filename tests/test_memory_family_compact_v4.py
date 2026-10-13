@@ -265,12 +265,10 @@ def test_protocol_is_canonical_and_freezes_exact_false_claim_contract():
     assert compact.validate_protocol(copy.deepcopy(protocol)) == protocol
 
 
-def test_protocol_binds_exact_present_sources_and_marks_only_producer_unresolved():
+def test_protocol_binds_exact_present_sources_including_source_producer():
     compact = _compact()
     assert compact.behavior_source_identities(ROOT) == compact.PROTOCOL['behavior_sources']
-    assert compact.PROTOCOL['future_behavior_sources'] == [
-        {'id': 'producer', 'path': 'scripts/memory_family_producer_v4.py'},
-    ]
+    assert compact.PROTOCOL['future_behavior_sources'] == []
     assert all(set(row) == {'id', 'path', 'size_bytes', 'sha256'}
                for row in compact.PROTOCOL['behavior_sources'])
 

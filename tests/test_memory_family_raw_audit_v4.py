@@ -119,8 +119,8 @@ def _prefix(writer):
 
 
 def _register_source_snapshot(writer, application):
-    directory = writer.path.parent / 'snapshots'
-    directory.mkdir()
+    directory = writer.path.parent.parent / '.pending' / CASE_ID / 'source/snapshots'
+    directory.mkdir(parents=True)
     path = directory / 'initial.snp'
     snapshots.save_snapshot({'application': application}, path)
     digest = _sha(path)
@@ -298,12 +298,14 @@ def _fixture(root, pixel_shift=0, *, natural_failure=False,
                       'source_run_id': source_id,
                       'source_snapshot_sha256': source_snapshot_sha256},
         'receipts': receipts,
+        'evidence_root': root,
+        'snapshot_path': root / '.pending' / CASE_ID / 'source/snapshots/initial.snp',
     }
 
 
 def _request(fixture, part, *, target=None):
     value = fixture[part]
-    return {
+    result = {
         'run_path': value['run_path'],
         'receipt_root': target or fixture['receipts'],
         'run_id': value['run_id'], 'case_id': fixture['case']['case_id'],
@@ -313,6 +315,12 @@ def _request(fixture, part, *, target=None):
         'source_identity_sha256': SOURCE_IDENTITY_SHA256,
         'deadline': time.monotonic() + 30,
     }
+    if part == 'source':
+        snapshot = fixture['snapshot_path']
+        result.update(evidence_root=fixture['evidence_root'], snapshot_reference={
+            'path': f'cases/{CASE_ID}/source/snapshots/initial.snp',
+            'size_bytes': snapshot.stat().st_size, 'sha256': _sha(snapshot)})
+    return result
 
 
 def _normal_terminal_fixture(reason):
@@ -644,6 +652,8 @@ def test_direct_file_cli_publishes_the_same_source_contract(tmp_path):
         '--run-id', request['run_id'], '--case-id', request['case_id'],
         '--operation', 'source',
         '--source-identity-sha256', request['source_identity_sha256'],
+        '--evidence-root', str(request['evidence_root']),
+        '--source-snapshot', memory.canonical_bytes(request['snapshot_reference']).decode(),
         '--deadline-seconds', '30',
     ]
     result = subprocess.run(
@@ -820,7 +830,7 @@ def test_rejects_source_restore_lineage_or_snapshot_mutation(tmp_path):
             manifest['parent_run_id'] = uuid.uuid4().hex
             path.write_text(memory.canonical_bytes(manifest).decode() + '\n')
         else:
-            path = run / 'snapshots/initial.snp'
+            path = fixture['snapshot_path']
             path.write_bytes(path.read_bytes() + b'mutated')
         with pytest.raises(ValueError):
             audit.audit_raw_run(**request)
@@ -853,7 +863,7 @@ def test_exact_raw_limits_accept_equality_and_reject_one_over(operation):
 
 def test_rejects_invalid_or_expired_deadlines_before_read(tmp_path):
     audit = _audit()
-    fixture = _fixture(tmp_path)
+    fixture = _fixture(tmp_path, include_source=True)
     request = _request(fixture, 'source')
     for deadline in (None, float('nan'), time.monotonic() - 1):
         with pytest.raises((TimeoutError, ValueError)):
@@ -902,7 +912,7 @@ def test_rejects_size_caps_before_hashing_oversized_file(
         path = run / 'worker-report.json'
         maximum = limits['report_max_bytes']
     else:
-        path = run / 'snapshots/initial.snp'
+        path = fixture['snapshot_path']
         maximum = limits['snapshot_max_bytes']
     path.write_bytes(b'')
     with path.open('r+b') as stream:

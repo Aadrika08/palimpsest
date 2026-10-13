@@ -231,8 +231,6 @@ def _inventory(receipt, read, events, snapshot_reference):
         'worker-report.json',
         *(f"recording/{event['path']}" for event in events
           if event['kind'] == 'chunk'),
-        *({'snapshots/initial.snp'}
-          if receipt['operation'] == 'source' else set()),
     }
     if set(by_path) != expected_paths:
         raise ValueError('Raw inventory paths differ from compact legacy evidence')
@@ -254,7 +252,7 @@ def _inventory(receipt, read, events, snapshot_reference):
                 'sha256'] != event['sha256']:
             raise ValueError('Raw chunk inventory differs from its legacy event')
     if receipt['operation'] == 'source':
-        snapshot = by_path['snapshots/initial.snp']
+        snapshot = receipt['snapshot_reference']
         if ({key: snapshot[key] for key in ('size_bytes', 'sha256')}
                 != {key: snapshot_reference[key]
                     for key in ('size_bytes', 'sha256')}):
