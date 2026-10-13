@@ -857,6 +857,15 @@ def _validate_receipt_shape(receipt):
     for name in ('raw_inventory', 'source_identity', 'terminal_state',
                  'policy_result', 'oracle_result'):
         _fields(receipt[name], schemas[name]['exact_keys'], name)
+    for group, names in (
+        (receipt, ('row_count', 'chunk_count', 'event_count')),
+        (receipt['raw_inventory'], ('file_count', 'recording_bytes',
+                                    'support_bytes', 'total_bytes')),
+        (receipt['terminal_state'], ('total_ticks', 'last_tick')),
+        (receipt['policy_result'], ('call_count',)),
+    ):
+        if any(type(group[name]) is not int or group[name] < 0 for name in names):
+            raise ValueError('Raw-audit counts and ticks must be nonnegative integers')
     files = receipt['raw_inventory']['files']
     if type(files) is not list:
         raise ValueError('Raw inventory files must be a list')
@@ -870,7 +879,11 @@ def _validate_receipt_shape(receipt):
         _digest(receipt[name], name)
     if (receipt['schema'] != 'memory-family-raw-audit-v4'
             or receipt['protocol_sha256'] != PROTOCOL_SHA256
-            or receipt['claims'] != PROTOCOL['claims']):
+            or memory.canonical_bytes(receipt['claims'])
+            != memory.canonical_bytes(PROTOCOL['claims'])
+            or memory.canonical_bytes(receipt['source_identity'])
+            != memory.canonical_bytes(canonical_source_identity(
+                receipt['source_identity']['owner_source_sha256']))):
         raise ValueError('Raw-audit receipt contract differs')
 
 
