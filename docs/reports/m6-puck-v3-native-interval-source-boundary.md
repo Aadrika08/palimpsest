@@ -40,6 +40,11 @@ no-replace hard link to an already fsynced commitment anchor, after all recordin
 and directory checks/fsyncs. Root/transaction/recording/chunk directory identities
 and exact paths are checked through that boundary; no fallible work follows the
 link. Both commitment names count toward the exact retained-byte allowance.
+Before writing the commitment anchor, publication exhausts the candidate through
+the unchanged strict numeric reader, checks the exact completed manifest and
+chunk/event schema, and compares its decoded staged row, every numeric array and
+event against immutable pre-write hashes/bytes. File hashes alone are not
+admission: a self-consistent rewritten row/event also fails before commitment.
 `read_committed_intervals` admits only the verified contiguous prefix and
 rechecks files, marker and directory identities during reading. Failed raw
 transactions are retained but cannot become rows. Missing first commitments
@@ -68,13 +73,18 @@ python -m unittest tests.test_puck_on_policy_native_interval \
   tests.test_puck_on_policy_interval tests.test_puck_on_policy tests.test_records
 ```
 
-76 tests passed. RED commits retained missing APIs, accepted native packet/event
+77 tests passed. RED commits retained missing APIs, accepted native packet/event
 disagreement, missing 8 MiB capture enforcement, omitted probe-install cleanup
 and stale pre-action admission. GREEN coverage includes real temporary-file
 RunWriter/storage accounting, complete successful two-interval prefix, file/
 event/finish/fsync/anchor/link failures, root replacement, malformed/swapped/
 gapped recording rejection, fake native/model/wrapper/observation/RNG mutation,
 historical reader rejection and pre-import unqualified/held-out denial.
+Independent review of `8e4c4cc` STOPped publication after a post-finish chunk
+corruption was accepted and only later rejected by the reader. RED `34e7cf1`
+reproduced that failure and three self-consistent replacement/manifest cases;
+the candidate decode/compare gate rejects them all before an anchor or marker,
+without advancing either writer cursor, while retaining the earlier prefix.
 Compilation, fresh imports without Torch/MuJoCo, historical AST/byte identity
 and whitespace checks passed. Full project/native/model tests were deliberately
 excluded by this source-only authorization; no registry, retained input, model,

@@ -305,6 +305,50 @@ def _interval_file_inventory(row_root, directories):
     return result
 
 
+def _decode_interval_recording(row_root, directories, completed_tick, *, maximum=None):
+    """Exhaust a finished candidate and bind its decoded content to stable files."""
+    from .records import FORMAT, _json, iter_ticks
+    for path,(descriptor,identity) in directories.items():
+        _verify_interval_directory(path,descriptor,identity)
+    files = _interval_file_inventory(row_root,directories)
+    record = row_root/'recording'
+    descriptor,identity = directories[record]
+    manifest_raw = _read_exact_file(record,record/'manifest.json',2*1024**2,
+        'V3 recording manifest',directory=descriptor,root_identity=identity)
+    manifest = json.loads(manifest_raw)
+    if maximum is None:
+        maximum = manifest.get('recording_max_bytes') if type(manifest) is dict else None
+    if type(maximum) is not int or not 0 < maximum <= 160*1024**2:
+        raise ValueError('Exact bounded candidate recording allowance required')
+    expected_manifest = {'schema':'puck-on-policy-interval-record-v1',
+        'protocol_sha256':PROTOCOL_SHA256,'completed_tick':completed_tick,
+        'status':'completed','recording_format':FORMAT,'recording_max_bytes':maximum,
+        'ticks':1,'recorded_ticks':1,'recorded_chunks':1,'recorded_events':2}
+    if manifest_raw != (_json(expected_manifest)+'\n').encode():
+        raise ValueError('Exact completed v3 candidate manifest required')
+    event_raw = _read_exact_file(record,record/'events.jsonl',2*1024**2,
+        'V3 recording events',directory=descriptor,root_identity=identity)
+    rows = list(iter_ticks(record))
+    events = [json.loads(line) for line in event_raw.splitlines()]
+    if (len(rows) != 1 or type(rows[0]['episode']) is not int or rows[0]['episode'] != 0 or
+            type(rows[0]['tick']) is not int or rows[0]['tick'] != completed_tick-1 or
+            len(events) != 2 or any(type(event) is not dict for event in events)):
+        raise ValueError('Exactly one complete candidate row and interval event required')
+    arrays = {k:v for k,v in rows[0].items() if k not in ('episode','tick')}
+    event = {k:v for k,v in events[1].items() if k not in ('sequence','kind')}
+    expected_chunk = {'path':'chunks/000000.npz','sha256':files['recording/chunks/000000.npz']['sha256'],
+        'episode':0,'start':completed_tick-1,'count':1,'sequence':0,'kind':'chunk',
+        'arrays':{k:{'dtype':v.dtype.str,'shape':list(v.shape)} for k,v in arrays.items()}}
+    expected_event = {**event,'sequence':1,'kind':'puck_on_policy_interval'}
+    if event_raw != ((_json(expected_chunk)+'\n')+(_json(expected_event)+'\n')).encode():
+        raise ValueError('Exact candidate event/chunk schema required')
+    for path,(descriptor,identity) in directories.items():
+        _verify_interval_directory(path,descriptor,identity)
+    if _interval_file_inventory(row_root,directories) != files:
+        raise ValueError('V3 candidate changed during exhaustive decoding')
+    return rows[0],arrays,event,files
+
+
 class PuckIntervalWriter:
     """One fresh v3 owner; every failure permanently stops further publication."""
     def __init__(self, path, *, max_bytes, storage_budget=None):
@@ -340,6 +384,10 @@ class PuckIntervalWriter:
             schema = {k: (v.dtype.str, list(v.shape)) for k,v in arrays.items()}
             if self._schema is not None and schema != self._schema:
                 raise ValueError('V3 interval schema changed')
+            expected_arrays_digest = _interval_arrays_digest(arrays)
+            expected_event_raw = _canonical_bytes(event,'Staged event')
+            expected_query_digest = staged['query_before_sha256']
+            next_own = {**staged['own_pending']['after'], 'tick':completed_tick}
             root, descriptor, identity = _open_publication_root(self.path)
             directories[root] = (descriptor, identity)
             if identity != self._root_identity:
@@ -364,12 +412,18 @@ class PuckIntervalWriter:
             writer.finish({'ticks': 1})
             for path,(fd,ident) in reversed(list(directories.items())):
                 _fsync_directory(path, fd, ident)
-            files = _interval_file_inventory(row_root, directories)
+            candidate,candidate_arrays,candidate_event,files = _decode_interval_recording(
+                row_root,directories,completed_tick,maximum=allowance)
+            candidate_row = {k:v for k,v in candidate.items() if k in _INTERVAL_ROW_FIELDS}
+            if (state_digest(candidate_row) != receipt['row_sha256'] or
+                    _interval_arrays_digest(candidate_arrays) != expected_arrays_digest or
+                    _canonical_bytes(candidate_event,'Candidate event') != expected_event_raw):
+                raise ValueError('Decoded v3 candidate differs from exact staged row/event')
             commitment = {'version': 1, 'kind': 'puck-on-policy-interval-commit-v1',
                 'protocol_sha256': PROTOCOL_SHA256, 'completed_tick': completed_tick,
                 'previous_commit_sha256': self._previous, 'row_sha256': receipt['row_sha256'],
-                'staged_sha256': receipt['staged_sha256'], 'arrays_sha256': _interval_arrays_digest(arrays),
-                'event_sha256': _sha256(_canonical_bytes(event,'V3 event')), 'query_sha256': staged['query_before_sha256'],
+                'staged_sha256': receipt['staged_sha256'], 'arrays_sha256': expected_arrays_digest,
+                'event_sha256': _sha256(expected_event_raw), 'query_sha256': expected_query_digest,
                 'files': files}
             raw = _canonical_bytes(commitment, 'v3 interval commitment')
             if len(raw) > 8192 or self._bytes+sum(f['bytes'] for f in files.values())+2*len(raw) > self.max_bytes:
@@ -391,7 +445,6 @@ class PuckIntervalWriter:
             # The final link is the sole admission point; no fallible work follows.
             next_bytes = self._bytes+sum(f['bytes'] for f in files.values())+2*len(raw)
             next_digest = _sha256(raw)
-            next_own = {**staged['own_pending']['after'], 'tick':completed_tick}
             for path,(fd,ident) in directories.items():
                 _verify_interval_directory(path, fd, ident)
             committing = True
@@ -416,7 +469,6 @@ class PuckIntervalWriter:
 
 def read_committed_intervals(path):
     """Yield the strict committed v3 prefix; raw uncommitted bytes are not rows."""
-    from .records import iter_ticks
     from . import puck_learning as learning
     from .snapshots import state_digest
     root, root_fd, root_identity = _open_publication_root(path)
@@ -454,27 +506,10 @@ def read_committed_intervals(path):
                 for directory in (row_root/'recording',row_root/'recording/chunks'):
                     _,child_fd,child_identity = _open_publication_root(directory)
                     directories[directory] = (child_fd,child_identity)
-                files = _interval_file_inventory(row_root,directories)
+                candidate,arrays,event,files = _decode_interval_recording(row_root,directories,number)
                 if state_digest(files) != state_digest(commitment['files']):
                     raise ValueError('V3 recording file identity or bytes changed')
-                record_fd,record_identity = directories[row_root/'recording']
-                manifest_raw = _read_exact_file(row_root/'recording',row_root/'recording/manifest.json',2*1024**2,
-                    'V3 recording manifest',directory=record_fd,root_identity=record_identity)
-                event_raw = _read_exact_file(row_root/'recording',row_root/'recording/events.jsonl',2*1024**2,
-                    'V3 recording events',directory=record_fd,root_identity=record_identity)
-                manifest = json.loads(manifest_raw)
-                rows = list(iter_ticks(row_root/'recording'))
-                events = [json.loads(line) for line in event_raw.splitlines()]
-                if (manifest.get('schema') != 'puck-on-policy-interval-record-v1' or
-                        manifest.get('protocol_sha256') != PROTOCOL_SHA256 or manifest.get('status') != 'completed' or
-                        type(manifest.get('completed_tick')) is not int or manifest['completed_tick'] != number or
-                        len(rows) != 1 or rows[0]['episode'] != 0 or rows[0]['tick'] != number-1 or
-                        len(events) != 2 or events[0].get('kind') != 'chunk' or
-                        events[1].get('kind') != 'puck_on_policy_interval' or events[1].get('sequence') != 1):
-                    raise ValueError('Exact completed one-row v3 recording required')
-                arrays = {k:v for k,v in rows[0].items() if k not in ('episode','tick')}
-                event = {k:v for k,v in events[1].items() if k not in ('sequence','kind')}
-                row = {k:v for k,v in rows[0].items() if k in _INTERVAL_ROW_FIELDS}
+                row = {k:v for k,v in candidate.items() if k in _INTERVAL_ROW_FIELDS}
                 pending = learning.prepare(row['inputs'],own)
                 staged = {'version':1,'kind':'puck-on-policy-staged-interval-v1',
                     'protocol_sha256':PROTOCOL_SHA256,'row':row,'own_pending':pending,
@@ -500,7 +535,7 @@ def read_committed_intervals(path):
                     raise ValueError('V3 commitment changed during read')
                 previous, schema = _sha256(raw), current_schema
                 own = learning.commit(pending['before'],pending,number)
-                yield {'completed_tick':number,'row':rows[0],'event':event,'publication_receipt':receipt}
+                yield {'completed_tick':number,'row':candidate,'event':event,'publication_receipt':receipt}
             finally:
                 for directory,(child_fd,_) in directories.items():
                     if directory != root: os.close(child_fd)
