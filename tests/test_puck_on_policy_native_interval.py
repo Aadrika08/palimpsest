@@ -288,6 +288,37 @@ class NativeIntervalTests(unittest.TestCase):
         self.assertEqual(closed,[True]);self.assertEqual(self.own['tick'],0)
         self.assertEqual(list(adapter.read_committed_intervals(self.path)),[])
         with self.assertRaises(ValueError):self.publish(writer)
+        with patch.object(puck_teacher,'decide') as teacher,patch.object(puck_model,'predict') as predict:
+            with self.assertRaisesRegex(ValueError,'stopped'):
+                gate.on_policy_interval(self.env,self.observation,puck.initialize(self.world,'fixture'),self.world,
+                                        contact,self.own,self.mode,object(),probe,writer)
+            teacher.assert_not_called();predict.assert_not_called()
+
+    def test_restart_and_query_failure_cannot_reuse_live_writer(self):
+        writer=adapter.PuckIntervalWriter(self.path,max_bytes=2*1024**2)
+        with self.assertRaises(FileExistsError):adapter.PuckIntervalWriter(self.path,max_bytes=2*1024**2)
+        contact=puck.classify_contacts(raw_contacts(0),OWNERSHIP,tick=0,time_s=0.)
+        with patch.object(puck_teacher,'decide',side_effect=ValueError('query failure')):
+            with self.assertRaisesRegex(ValueError,'query failure'):
+                gate.on_policy_interval(self.env,self.observation,puck.initialize(self.world,'fixture'),self.world,
+                                        contact,self.own,self.mode,object(),object(),writer)
+        with patch.object(puck_teacher,'decide') as teacher,patch.object(puck_model,'predict') as predict:
+            with self.assertRaisesRegex(ValueError,'stopped'):
+                gate.on_policy_interval(self.env,self.observation,puck.initialize(self.world,'fixture'),self.world,
+                                        contact,self.own,self.mode,object(),object(),writer)
+            teacher.assert_not_called();predict.assert_not_called()
+
+    def test_probe_install_failure_is_closed_and_stops_the_writer(self):
+        writer=adapter.PuckIntervalWriter(self.path,max_bytes=2*1024**2)
+        closed=[]
+        def install():raise OSError('probe install')
+        probe=SimpleNamespace(install=install,close=lambda:closed.append(True))
+        contact=puck.classify_contacts(raw_contacts(0),OWNERSHIP,tick=0,time_s=0.)
+        with patch.object(puck_model,'predict',return_value=self.prediction):
+            with self.assertRaisesRegex(OSError,'probe install'):
+                gate.on_policy_interval(self.env,self.observation,puck.initialize(self.world,'fixture'),self.world,
+                                        contact,self.own,self.mode,object(),probe,writer)
+        self.assertEqual(closed,[True])
 
     def test_unqualified_owner_route_rejects_before_protected_imports(self):
         with patch.dict(sys.modules,{'torch':None,'mujoco':None}):
