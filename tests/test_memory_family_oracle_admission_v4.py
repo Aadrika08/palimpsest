@@ -1011,3 +1011,72 @@ def test_rejects_rebound_raw_inventory_outside_frozen_authority_limits(
     _rebind_file(fixture, 'receipts/condition.raw-audit.json', receipt)
     with pytest.raises(ValueError):
         admission.admit_compact_pair(**_request(fixture))
+
+
+@pytest.mark.parametrize('defect', ['parent-rebind', 'late-receipt-write'])
+def test_admission_keeps_all_input_bindings_until_return(tmp_path, monkeypatch, defect):
+    admission = _admission()
+    fixture = _fixture(tmp_path / defect)
+    if defect == 'parent-rebind':
+        original = artifacts._json
+        swapped = (fixture['root'] / fixture['history_bundles']['swapped']['path']).read_bytes()
+        def changed(payload):
+            value = original(payload)
+            if payload == swapped:
+                directory = fixture['root'] / 'histories'
+                directory.rename(fixture['root'] / 'renamed-histories')
+                directory.write_bytes(b'{}')
+            return value
+        monkeypatch.setattr(artifacts, '_json', changed)
+    else:
+        original = admission._history
+        def changed(*args, **kwargs):
+            result = original(*args, **kwargs)
+            (fixture['root'] / fixture['source_conversion_descriptor']['path']).write_bytes(b'{}')
+            return result
+        monkeypatch.setattr(admission, '_history', changed)
+    with pytest.raises((OSError, RuntimeError, ValueError)):
+        admission.admit_compact_pair(**_request(fixture))
+
+
+@pytest.mark.parametrize('defect', ['source-conversion', 'source-raw', 'u-digest',
+                                  'selector-digest', 'history', 'selector-provenance'])
+def test_prior_own_nested_values_bind_current_source_and_own_mapping(tmp_path, defect):
+    admission = _admission()
+    donor = _fixture(tmp_path / 'donor')
+    prior = admission.admit_compact_pair(**_request(donor))
+    fixture = _fixture(tmp_path / 'oracle', 'oracle', prior_own_result=prior)
+    changed = copy.deepcopy(prior)
+    if defect.startswith('source-'):
+        name = 'conversion' if defect == 'source-conversion' else 'raw_audit'
+        changed['source_receipt'][name] = {'path': 'missing.json', 'size_bytes': 1, 'sha256': '0' * 64}
+    elif defect == 'u-digest':
+        changed['u_identity']['sha256'] = 'invalid'
+    elif defect == 'selector-digest':
+        changed['selector_identity']['sha256'] = 'invalid'
+    elif defect == 'history':
+        changed['history_identity']['bundle_sha256'] = '0' * 64
+    else:
+        changed['selector_identity']['provenance_sha256'] = '0' * 64
+    fixture['prior_own_receipt'] = _write(fixture['root'], 'receipts/prior-own.pair.json', changed)
+    with pytest.raises(ValueError):
+        admission.admit_compact_pair(**_request(fixture))
+
+
+@pytest.mark.parametrize('group,field', [
+    (None, 'row_count'), (None, 'chunk_count'), (None, 'event_count'),
+    ('raw_inventory', 'file_count'), ('raw_inventory', 'recording_bytes'),
+    ('raw_inventory', 'support_bytes'), ('raw_inventory', 'total_bytes'),
+    ('terminal_state', 'total_ticks'), ('terminal_state', 'last_tick'),
+    ('policy_result', 'call_count'),
+])
+@pytest.mark.parametrize('alias', ['float', 'bool'])
+def test_raw_receipt_integer_fields_reject_numeric_aliases(tmp_path, group, field, alias):
+    admission = _admission()
+    fixture = _fixture(tmp_path / f'{group}-{field}-{alias}')
+    receipt = copy.deepcopy(fixture['condition_raw'])
+    target = receipt if group is None else receipt[group]
+    target[field] = float(target[field]) if alias == 'float' else bool(target[field])
+    _rebind_file(fixture, 'receipts/condition.raw-audit.json', receipt)
+    with pytest.raises(ValueError):
+        admission.admit_compact_pair(**_request(fixture))
