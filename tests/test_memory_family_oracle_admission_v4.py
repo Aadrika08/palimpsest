@@ -1040,7 +1040,8 @@ def test_admission_keeps_all_input_bindings_until_return(tmp_path, monkeypatch, 
 
 
 @pytest.mark.parametrize('defect', ['source-conversion', 'source-raw', 'u-digest',
-                                  'selector-digest', 'history', 'selector-provenance'])
+                                  'selector-digest', 'history', 'selector-provenance',
+                                  'snapshot-size', 'claims-alias'])
 def test_prior_own_nested_values_bind_current_source_and_own_mapping(tmp_path, defect):
     admission = _admission()
     donor = _fixture(tmp_path / 'donor')
@@ -1056,8 +1057,12 @@ def test_prior_own_nested_values_bind_current_source_and_own_mapping(tmp_path, d
         changed['selector_identity']['sha256'] = 'invalid'
     elif defect == 'history':
         changed['history_identity']['bundle_sha256'] = '0' * 64
-    else:
+    elif defect == 'selector-provenance':
         changed['selector_identity']['provenance_sha256'] = '0' * 64
+    elif defect == 'snapshot-size':
+        changed['snapshot_reference']['size_bytes'] = float(changed['snapshot_reference']['size_bytes'])
+    else:
+        changed['claims']['compact_oracle_equivalent'] = 0
     fixture['prior_own_receipt'] = _write(fixture['root'], 'receipts/prior-own.pair.json', changed)
     with pytest.raises(ValueError):
         admission.admit_compact_pair(**_request(fixture))
