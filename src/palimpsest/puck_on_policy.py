@@ -61,7 +61,7 @@ _MAX_COMMIT_BYTES = 4096
 _QUERY_STATE_FIELDS = {'native_state', 'observation', 'python_rng', 'numpy_rng',
                        'torch_rng', 'environment_rng', 'space_rng'}
 _INTERVAL_ROW_FIELDS = {'episode', 'tick', 'inputs', 'student_inputs', 'teacher_action',
-                        'predicted_action', 'action', 'teacher_mode_before', 'teacher_mode_after',
+                        'predicted_action', 'action', 'teacher_query_mode_before', 'teacher_query_mode_after',
                         'supervisor_mode_before', 'supervisor_mode_after'}
 _STAGED_INTERVAL_FIELDS = {'version', 'kind', 'protocol_sha256', 'row', 'own_pending',
                            'teacher_mode_before', 'teacher_mode_after',
@@ -112,8 +112,8 @@ def stage_interval(sensors, world, teacher_mode, own, model, *, terminal_reason,
     row = {'episode': 0, 'tick': own['tick'], 'inputs': sensors.copy(),
            'student_inputs': pending['inputs'].copy(), 'teacher_action': label,
            'predicted_action': predicted.copy(), 'action': predicted.copy(),
-           'teacher_mode_before': np.uint8(learning.MODES[teacher_mode]+1),
-           'teacher_mode_after': np.uint8(learning.MODES[next_mode]+1),
+           'teacher_query_mode_before': np.uint8(learning.MODES[teacher_mode]+1),
+           'teacher_query_mode_after': np.uint8(learning.MODES[next_mode]+1),
            'supervisor_mode_before': np.uint8(learning.MODES[own['mode']]),
            'supervisor_mode_after': np.uint8(learning.MODES[pending['after']['mode']])}
     return {'version': 1, 'kind': 'puck-on-policy-staged-interval-v1',
@@ -155,8 +155,8 @@ def admit_completed_interval(staged, own, teacher_mode, *, completed_tick, publi
         raise ValueError('Teacher and own AFTER modes differ')
     if state_digest(row['student_inputs']) != state_digest(expected['inputs']):
         raise ValueError('Exact BEFORE-mode features differ')
-    for name, code in (('teacher_mode_before', learning.MODES[before['mode']]+1),
-                       ('teacher_mode_after', learning.MODES[next_own['mode']]+1),
+    for name, code in (('teacher_query_mode_before', learning.MODES[before['mode']]+1),
+                       ('teacher_query_mode_after', learning.MODES[next_own['mode']]+1),
                        ('supervisor_mode_before', learning.MODES[before['mode']]),
                        ('supervisor_mode_after', learning.MODES[next_own['mode']])):
         learning._mode(row[name], code)

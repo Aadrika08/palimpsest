@@ -17,6 +17,15 @@ no action execution; a later owner may execute only `staged['row']['action']`.
 No condition filters a valid interval. Its row tick is the existing zero-based
 record tick; its candidate cursor tick is the next completed interval.
 
+The v3 numeric row uses `teacher_query_mode_before` and
+`teacher_query_mode_after`, preserving the same uint8 mode codes while keeping
+the historical `teacher_mode_before`/`teacher_mode_after` columns absent.
+The unchanged historical teacher-data reader therefore rejects v3 rows rather
+than interpreting the executed student `action` as a teacher target. The
+unchanged historical student action-replay reader also rejects the v3 row's
+teacher-prefixed fields. V3 completion admission checks the exact new row
+fields; copying a historical mode column into it also fails admission.
+
 The explicit capture callback must return exactly `native_state`, `observation`,
 `python_rng`, `numpy_rng`, `torch_rng`, `environment_rng`, and `space_rng`.
 Typed `state_digest` hashes the returned state together with the live sensor
@@ -61,7 +70,10 @@ Verification used Python 3.11.15 and NumPy 2.2.5 from the existing reproduction
 environment, with `PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=src:.`. The initial RED
 commit rejects the absent API; the second RED commit reproduces inference
 mutation of retained sensors/world. The GREEN focused interval suite passes
-8 tests and the complete affected on-policy synthetic suite passes 47 tests.
+10 tests and the complete affected on-policy synthetic suite passes 49 tests.
+The schema-repair RED faithfully showed the historical teacher reader accepting
+the student action as its target while ignoring the separate teacher label;
+the new column names close that collision without editing either old reader.
 Synthetic calls replace the numerical inference boundary; no Torch or MuJoCo
 runtime is imported. Compilation, fresh imports, protocol-byte identity and
 diff-whitespace checks passed. Broader

@@ -144,7 +144,7 @@ class IntervalTests(unittest.TestCase):
             with self.assertRaises(ValueError):
                 adapter.admit_completed_interval(staged, self.own, 'approach',
                                                  completed_tick=1, publication_receipt=receipt | change)
-        for changed in ('teacher_action', 'student_inputs', 'action', 'teacher_mode_after'):
+        for changed in ('teacher_action', 'student_inputs', 'action', 'teacher_query_mode_after'):
             bad = copy.deepcopy(staged)
             bad['row'][changed] = np.zeros(3)
             with self.assertRaises(ValueError):
@@ -200,7 +200,7 @@ class IntervalTests(unittest.TestCase):
         self.setUp()
         staged = self.stage()
         for field, value in (('action', np.zeros(2, np.float64)),
-                             ('teacher_mode_after', np.uint8(1)),
+                             ('teacher_query_mode_after', np.uint8(1)),
                              ('student_inputs', np.zeros(9, np.float32)),
                              ('tick', True)):
             bad = copy.deepcopy(staged)
@@ -210,10 +210,20 @@ class IntervalTests(unittest.TestCase):
                                                  completed_tick=1, publication_receipt=self.receipt(bad))
 
     def test_historical_teacher_reader_rejects_v3_student_action_rows(self):
-        row = self.stage()['row']
+        staged = self.stage()
+        row = staged['row']
         self.assertNotEqual(row['action'].tobytes(), row['teacher_action'].tobytes())
+        self.assertIn('teacher_query_mode_before', row)
+        self.assertIn('teacher_query_mode_after', row)
+        self.assertNotIn('teacher_mode_before', row)
+        self.assertNotIn('teacher_mode_after', row)
         with self.assertRaises(ValueError):
             learning.admit_teacher_rows([row], 1)
+        bad = copy.deepcopy(staged)
+        bad['row']['teacher_mode_before'] = row['teacher_query_mode_before']
+        with self.assertRaises(ValueError):
+            adapter.admit_completed_interval(bad, self.own, 'approach',
+                                             completed_tick=1, publication_receipt=self.receipt(bad))
 
     def test_historical_student_replay_rejects_v3_rows_without_inference(self):
         row = self.stage()['row']
