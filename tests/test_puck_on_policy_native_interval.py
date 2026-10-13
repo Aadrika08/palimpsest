@@ -226,6 +226,43 @@ class NativeIntervalTests(unittest.TestCase):
                 with self.assertRaises(ValueError):self.publish(writer,1)
                 self.assertEqual([r['completed_tick'] for r in adapter.read_committed_intervals(path)],[1])
 
+    def test_candidate_is_decoded_and_compared_before_committing_corruption_or_replacement(self):
+        from palimpsest.records import _json
+        real_finish=RunWriter.finish
+        for fault in ('chunk','row','event','manifest'):
+            with self.subTest(fault=fault),tempfile.TemporaryDirectory() as temporary:
+                path=Path(temporary)/'rows';writer=adapter.PuckIntervalWriter(path,max_bytes=2*1024**2)
+                self.publish(writer)
+                def corrupt(candidate,*args,**kwargs):
+                    real_finish(candidate,*args,**kwargs)
+                    chunk=candidate.path/'chunks/000000.npz'
+                    if fault=='chunk':chunk.write_bytes(b'corrupted after finish');return
+                    if fault=='manifest':
+                        manifest=json.loads((candidate.path/'manifest.json').read_bytes())
+                        manifest['extra']='unexpected source identity'
+                        (candidate.path/'manifest.json').write_text(_json(manifest)+'\n')
+                        return
+                    with np.load(chunk,allow_pickle=False) as archive:
+                        arrays={name:archive[name].copy() for name in archive.files}
+                    events=[json.loads(line) for line in (candidate.path/'events.jsonl').read_text().splitlines()]
+                    if fault=='row':arrays['teacher_action'][0,0]=.3
+                    else:
+                        events[1]['state_before']['episode_id']='rebound-fixture'
+                        events[1]['state']['episode_id']='rebound-fixture'
+                        task={'state':events[1]['state'],'world':events[1]['world'],'contact':events[1]['contact'],
+                              'own_supervisor_cursor':writer._own|{'tick':2}}
+                        arrays['task_sha256'][0]=np.frombuffer(bytes.fromhex(snapshots.state_digest(task)),np.uint8)
+                    with chunk.open('wb') as stream:np.savez(stream,**arrays)
+                    events[0]['sha256']=hashlib.sha256(chunk.read_bytes()).hexdigest()
+                    (candidate.path/'events.jsonl').write_text(''.join(_json(e)+'\n' for e in events))
+                with patch.object(RunWriter,'finish',side_effect=corrupt,autospec=True):
+                    with self.assertRaises((ValueError,OSError)):
+                        self.publish(writer,1)
+                self.assertEqual(writer._tick,1);self.assertEqual(writer._own['tick'],1)
+                self.assertTrue(writer._broken)
+                self.assertFalse((path/'000002/commit.json').exists())
+                self.assertEqual([row['completed_tick'] for row in adapter.read_committed_intervals(path)],[1])
+
     def test_torn_swapped_reordered_or_changed_committed_payload_is_rejected(self):
         for fault in ('marker','events','chunk','gap','swap'):
             with self.subTest(fault=fault), tempfile.TemporaryDirectory() as temporary:
