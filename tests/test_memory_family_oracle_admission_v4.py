@@ -1085,3 +1085,23 @@ def test_raw_receipt_integer_fields_reject_numeric_aliases(tmp_path, group, fiel
     _rebind_file(fixture, 'receipts/condition.raw-audit.json', receipt)
     with pytest.raises(ValueError):
         admission.admit_compact_pair(**_request(fixture))
+
+
+def test_admission_deadline_includes_final_descriptor_reread(tmp_path, monkeypatch):
+    admission = _admission()
+    fixture = _fixture(tmp_path / 'late-final-reread')
+    request = _request(fixture)
+    original = admission._read_fd
+    payload = (fixture['root'] / fixture['source_conversion_descriptor']['path']).read_bytes()
+    reads = 0
+    def late(*args, **kwargs):
+        nonlocal reads
+        result = original(*args, **kwargs)
+        if result[0] == payload:
+            reads += 1
+            if reads == 2:
+                monkeypatch.setattr(admission.time, 'monotonic', lambda: request['deadline'] + 1)
+        return result
+    monkeypatch.setattr(admission, '_read_fd', late)
+    with pytest.raises(TimeoutError):
+        admission.admit_compact_pair(**request)
