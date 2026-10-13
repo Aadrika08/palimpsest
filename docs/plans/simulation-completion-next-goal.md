@@ -612,3 +612,29 @@ native collection route and its capture/writer contract, then registry discovery
 and the full execution manifest. Navigation remains stopped at consumed attempt
 2; browser and human artwork/operator acceptance remain unresolved. All seven
 release-level gates remain open, with CI and physical hardware excluded.
+
+### Puck recorded-interval source integration reviewed, 14 October 2026
+
+[PR #111](https://github.com/Aadrika08/palimpsest/pull/111), stacked on #110,
+publishes the headless query capture, bounded interval writer/reader and native
+mechanics seam at `52e8218d376f8dc85220e5f2b2ae4e2b593fdedb`.
+The student action is stepped once; exact pre/post task, contact, control, time
+and completed-tick evidence binds its row and event. Any failure stops that
+writer, and cursors are returned only after interval publication.
+
+Independent review reproduced an Important bug: corrupting a chunk after normal
+writer finish still produced a commit marker. RED `34e7cf1` retains four accepted
+corrupt/rebound candidate cases; the repaired publisher exhausts the written
+candidate and compares its exact manifest, row, arrays and event to immutable
+staged commitments before final publication. Root and reviewer each reran all
+77 affected synthetic tests; final independent review returned GO. Compilation,
+import isolation, historical source/protocol preservation and diff checks pass.
+
+These tests use fake native boundaries and real temporary-file recordings.
+No native episode, model, registry, scene minting, collection, fitting or held-out
+input ran. Complete native capture, final-link power-loss persistence and the
+full source/runtime/scene/owner manifest remain unqualified. Per-interval layout
+uses eight entries: 7,200 collection intervals need 57,600 entries before other
+metadata; 14,400 development rows cannot reuse this layout in one root under
+the existing scan cap. Global retained inventory/reservation still needs review.
+All seven release gates remain open; main, CI and physical hardware are unchanged.
