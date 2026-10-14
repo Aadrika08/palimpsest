@@ -59,11 +59,12 @@ Clearing space does not authorize a consumed-attempt retry or change a protocol.
 | 5 | Integrate and validate the lab and all six simulated artwork encounters. | Real browser workflows, declared-duration artwork inputs, audiovisual/keyboard/viewport checks, exports, replay and recovery pass on the integrated candidate. | Sustained portable inputs, browser access and reviewed integration. |
 | 6 | Conduct user artistic review, independent operator acceptance and final handoff. | User acceptance, independently completed install/runbook and all seven release gates with linked evidence on one reproducible release candidate. | Human sessions and the completed studies/product gates. |
 
-**Start now:** continue strict retained manifest/raw-registry, reference and
-Markdown parsing, declared project-scope aggregation and complete semantic
-inventory assembly from PR #124. Its root observer and catalog occurrence
-assembler are reviewed source components; they do not establish full coverage
-or reservation admission. Preserve variants and explicit legacy-schema conflicts.
+**Start now:** finish the remaining standalone owner/development/mechanics/
+training-result and on-policy registry/publication families, Markdown/reference
+parsing, declared project-scope aggregation and complete semantic inventory
+assembly from PR #125. Its selected retained parser, pinned reference resolver
+and existing root/catalog components do not establish full coverage or
+reservation admission. Preserve variants and explicit legacy-schema conflicts.
 Use authored temporary fixtures while the catalog-access choice is pending.
 Continue through the complete launcher rather than treating each prerequisite
 PR as the milestone exit.
@@ -191,6 +192,26 @@ old uniqueness incompatibilities are explicit, never silently dropped. No actual
 project/catalog/retained scan, registry stage or numerical/native work ran.
 Full semantic/reference/retained-root aggregation, source/runtime bootstrap and
 the durable launcher remain incomplete. All seven release gates remain open.
+
+[Draft PR #125](https://github.com/Aadrika08/palimpsest/pull/125) connects six
+historical recording schemas, the genuine teacher report and both training
+protocol families to pinned manifest/catalog reference resolution. It reuses
+existing held-file custody for explicitly registered JSON inputs. Independent
+SOURCE GO applies to `7ae648eb`; final root **848 affected checks pass, six
+explicitly deselected, 53.63 seconds**, and independent repetition passes
+**848/6 in 55.46 seconds**. New focused coverage passes **216 checks** at root and
+independently. Review found four contracts missed by the initial 828-check pass;
+regressions/fixes reject contradictory report/manifest catalog pins, training/
+report ordered source rosters, manifest receipts and hidden geometry aliases.
+An additional supplied training catalog pin cannot be ignored. The
+[source report](https://github.com/Aadrika08/palimpsest/blob/research/puck-v3-retained-scene-references/docs/reports/puck-v3-retained-scene-references-source.md)
+retains the initial evidence, fixes, exact command and limits. Default pytest
+still stops at missing FastAPI. Failed/not-started mentions and null/missing pins
+remain explicit; geometry is never synthesized from owner/model/snapshot hashes.
+Selected byte authentication and reference closure are not complete project,
+retained-schema/root coverage or stage admission. Unsupported families and
+unknown model-seed arrays in copied learning metadata fail closed. No actual
+catalog/retained scan or numerical/native stage ran; all seven gates stay open.
 
 The [prospective inventory admission amendment 01](https://github.com/Aadrika08/palimpsest/blob/research/puck-v3-scene-inventory/docs/plans/puck-v3-scene-inventory-admission-amendment-01.md)
 records a separately requested decision: collision-only access to already-public
@@ -388,7 +409,8 @@ Continue the **puck durable owner/stage launcher** from PR #121's independently
 audited original-bundle result, PR #120's descriptor-held execution context,
 and PR #122's reviewed native publication and fixed-clock integration. Implement
 complete repository/retained-root aggregation and semantic/reference/Markdown
-assembly from PR #124's candidate-root and catalog-occurrence components, plus
+assembly from PR #125's selected retained-reference path and PR #124's root/
+catalog components, plus
 a fresh worker bootstrap, then bind source/runtime/dependency identities, exact invocation,
 reservation, registry/scene/model custody, supervision and terminal publication
 into a working path. Actual collection remains unauthorized until the complete
