@@ -8,6 +8,7 @@ It publishes nothing and never imports an owner, Engine, model, or simulator.
 from __future__ import annotations
 
 from contextlib import ExitStack, contextmanager
+from dataclasses import dataclass
 import copy
 import hashlib
 import math
@@ -29,6 +30,12 @@ PROTOCOL = compact.PROTOCOL
 PROTOCOL_SHA256 = compact.PROTOCOL_SHA256
 PAIR_CONTRACT = PROTOCOL['pair_admission']
 MiB = 1024**2
+
+
+@dataclass(frozen=True)
+class _StagedRoot:
+    root: Path
+    case_id: str
 
 
 def _fields(value, expected, label):
@@ -111,11 +118,18 @@ def _bound_file(root, value, maximum, deadline, label):
     descriptor_value = _descriptor(value, label)
     if descriptor_value['size_bytes'] > maximum:
         raise ValueError(f'{label} exceeds its frozen limit')
-    root = Path(root)
+    location = root if type(root) is _StagedRoot else None
+    root = Path(location.root if location is not None else root)
     root_state = root.lstat()
     if not stat.S_ISDIR(root_state.st_mode) or root.is_symlink():
         raise ValueError('Evidence root must be one direct non-symlink directory')
     parts = PurePosixPath(descriptor_value['path']).parts
+    if location is not None and parts[0] == 'cases':
+        if len(parts) < 3 or parts[1] != location.case_id:
+            raise ValueError('Staged descriptor belongs to another case')
+        parts = ('.pending', *parts[1:])
+    elif location is not None and parts[0] == '.pending':
+        raise ValueError('Staged descriptors must retain canonical portable paths')
     opened = []
     directories = []
     try:
@@ -984,4 +998,92 @@ def admit_compact_pair(*, case, source_bundle, condition_bundle,
             _fields(result[name], PAIR_CONTRACT['nested_schemas'][name]['exact_keys'],
                     name)
     _deadline(deadline)
+    return result
+
+
+@contextmanager
+def _staged_namespace(root, case_id):
+    """Hold the read-only staged case and reject final aliases through return."""
+    root = Path(root)
+    opened, named, identities = [], [], []
+    try:
+        opened.append(os.open(root, os.O_RDONLY | os.O_DIRECTORY | os.O_NOFOLLOW))
+        named.append((None, root))
+        for name in ('.pending', case_id, 'source'):
+            parent = opened[-1]
+            opened.append(os.open(name, os.O_RDONLY | os.O_DIRECTORY | os.O_NOFOLLOW,
+                                  dir_fd=parent))
+            named.append((parent, name))
+        case_fd, source_fd = opened[2:4]
+        try:
+            cases_fd = os.open('cases', os.O_RDONLY | os.O_DIRECTORY | os.O_NOFOLLOW,
+                               dir_fd=opened[0])
+        except FileNotFoundError:
+            cases_fd = None
+        if cases_fd is not None:
+            opened.append(cases_fd)
+            named.append((opened[0], 'cases'))
+        identities = [_fingerprint(os.fstat(fd)) for fd in opened]
+        def absent(parent, name):
+            try:
+                os.stat(name, dir_fd=parent, follow_symlinks=False)
+            except FileNotFoundError:
+                return
+            raise ValueError('Staged case has a final alias, quarantine or temporary marker')
+        def check():
+            for fd, (parent, name), expected in zip(opened, named, identities):
+                state = (Path(name).lstat() if parent is None
+                         else os.stat(name, dir_fd=parent, follow_symlinks=False))
+                if _fingerprint(os.fstat(fd)) != expected or _fingerprint(state) != expected:
+                    raise RuntimeError('Staged namespace changed during admission')
+            absent(case_fd, 'quarantine.json')
+            absent(source_fd, '.commit.tmp')
+            if cases_fd is not None:
+                absent(cases_fd, case_id)
+        check()
+        yield _StagedRoot(root, case_id)
+        check()
+    finally:
+        for fd in reversed(opened):
+            os.close(fd)
+
+
+def admit_staged_compact_pair(*, source_commit, evidence_root, case, **request):
+    """Prove a staged pair without publishing or changing its portable schema."""
+    required = {'source_bundle', 'condition_bundle', 'source_run_id',
+                'condition_run_id', 'condition', 'source_conversion_receipt',
+                'condition_conversion_receipt', 'history_bundles',
+                'owner_source_sha256', 'deadline'}
+    _fields(request, required | ({'prior_own_receipt'} if 'prior_own_receipt' in request else set()),
+            'Staged pair arguments')
+    _public_deadline(request['deadline'])
+    case = world.validate_case(copy.deepcopy(case))
+    if case['version'] != 3 or case.get('split') != 'development':
+        raise ValueError('Staged admission requires a development family case')
+    condition = request['condition']
+    if condition not in PROTOCOL['analysis_contract']['conditions']:
+        raise ValueError('Unknown staged condition')
+    run_id = _run_id(request['source_run_id'])
+    case_id = case['case_id']
+    base = f'cases/{case_id}'
+    expected_paths = (
+        (source_commit, f'{base}/source/commit.json'),
+        (request['source_conversion_receipt'], f'{base}/source/recording/conversion.json'),
+        (request['condition_conversion_receipt'],
+         f'{base}/conditions/{condition}/recording/conversion.json'),
+    )
+    for value, expected in expected_paths:
+        if _descriptor(value, 'Staged descriptor')['path'] != expected:
+            raise ValueError('Staged input path differs from its case/condition')
+    with _staged_namespace(evidence_root, case_id) as location, ExitStack() as lifetime:
+        marker, _ = _canonical_file(location, source_commit, MiB,
+            request['deadline'], 'Staged source commit', lifetime)
+        expected = {'schema': 'memory-family-compact-source-commit-v1',
+                    'protocol_sha256': PROTOCOL_SHA256, 'case_id': case_id,
+                    'run_id': run_id, 'conversion': request['source_conversion_receipt'],
+                    'claims': PROTOCOL['claims']}
+        if memory.canonical_bytes(marker) != memory.canonical_bytes(expected):
+            raise ValueError('Staged source commit identity differs')
+        result = admit_compact_pair(case=case, evidence_root=location, **request)
+    _deadline(request['deadline'])
     return result
