@@ -35,16 +35,16 @@ authority follows from resolving selected references.
 
 ## Steps and verification
 
-- [ ] Write missing-feature RED tests on authored canonical inventory/reservation/
+- [x] Write missing-feature RED tests on authored canonical inventory/reservation/
   scene/projection/receipt bytes and real temporary selected files. No actual
   registry, minter, publication writer or model/native owner is invoked.
-- [ ] Implement strict registry codec and integrated pinned reference resolution.
+- [x] Implement strict registry codec and integrated pinned reference resolution.
   Exercise changed layout/hash/roster, missing/wrong dependencies, local-target
   aliases, size/lineage/receipt mismatches, copied content paths, null assertions,
   mixed historical/registry inputs and selected-file drift/cleanup.
-- [ ] Independently review exact source and repeat affected tests. Retain any
+- [x] Independently review exact source and repeat affected tests. Retain any
   intermediate failures, default-suite errors and inherited exclusions.
-- [ ] Commit/push a stacked draft PR and report; update goal/matrix without closing
+- [x] Commit/push a stacked draft PR and report; update goal/matrix without closing
   any of the seven simulation release gates.
 
 Limits remain source failure ceilings within the unchanged registry stage:
@@ -59,3 +59,11 @@ original model inference, native owner, collection, fitting or evaluation runs.
 Memory attempt-02 and catalog access remain pending; navigation attempt3 remains
 unauthorized. Preserve original hashes/thresholds and consumed failures. CI and
 physical rover remain excluded; all seven simulation release gates stay open.
+
+## Delivery
+
+Draft PR #126 stacks on PR #125. Source GO applies to exact `1a93ac8`;
+182 focused and 1030 affected checks pass independently, with six inherited
+exclusions. The source report records exact results and retained failures.
+Goal PR #94 and evidence-matrix PR #102 carry the updated continuation goal.
+No actual-input execution or release gate is granted by this source delivery.
