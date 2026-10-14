@@ -27,13 +27,13 @@ Passing parser fixtures or publishing another plan is progress, not this exit.
 
 Perform the work in this order:
 
-1. Review and verify the implemented declared-scope puck inventory at `a498648`.
-   It now combines live document census, Git history, Markdown/JSON references and
-   historical variants in one held path. Compatibility with actual project inputs
-   is still unqualified; use authored fixtures while catalog access is pending.
-2. Connect that path to a fresh worker and the existing reservation, model custody,
-   native recorder, clock accounting, supervision and durable collection close.
-   Freeze and review the complete executable path before an actual collection.
+1. Connect the reviewed declared-scope puck inventory at `22cf8aa` (PR #128)
+   to a fresh worker. It combines live census, Git history, Markdown/JSON references
+   and historical variants in one held path. Actual project compatibility is still
+   unqualified; use authored fixtures while catalog access is pending.
+2. Bind that worker to the existing reservation, model custody, native recorder,
+   clock accounting, supervision and durable collection close. Freeze and review
+   the complete executable path before an actual collection.
 3. Complete the memory condition/case-close source path. After explicit approval
    of amendment 02, execute and independently audit the one registered full-model
    replay; a passing result is required before admitting the complete memory study.
@@ -110,9 +110,9 @@ Clearing space does not authorize a consumed-attempt retry or change a protocol.
 | 5 | Integrate and validate the lab and all six simulated artwork encounters. | Real browser workflows, declared-duration artwork inputs, audiovisual/keyboard/viewport checks, exports, replay and recovery pass on the integrated candidate. | Sustained portable inputs, browser access and reviewed integration. |
 | 6 | Conduct user artistic review, independent operator acceptance and final handoff. | User acceptance, independently completed install/runbook and all seven release gates with linked evidence on one reproducible release candidate. | Human sessions and the completed studies/product gates. |
 
-**Start now:** independently review and verify the implemented Markdown/reference
-and declared project-scope inventory at `a498648`, after PR #127's eight
-report-family adapters and PR #126's registry path. Selected report/retained/registry parsers,
+**Start now:** connect the independently reviewed declared-scope inventory in
+PR #128 (`22cf8aa`) to the fresh worker and complete durable launcher. It follows
+PR #127's report-family adapters and PR #126's registry path. Selected report/retained/registry parsers,
 pinned reference resolvers and existing root/catalog components do not establish
 full coverage or reservation admission. Unsupported embedded protocol variants
 and historical contexts must remain explicit coverage failures. Preserve variants and explicit legacy-schema conflicts.
@@ -484,11 +484,10 @@ remain required. All seven simulation gates remain open.
 
 Continue the **puck durable owner/stage launcher** from PR #121's independently
 audited original-bundle result, PR #120's descriptor-held execution context,
-and PR #122's reviewed native publication and fixed-clock integration. Implement
-complete repository/retained-root aggregation and semantic/reference/Markdown
-assembly after PR #127's report families, PR #126's registry and PR #125's
-selected retained-reference paths and PR #124's root/catalog components, plus
-a fresh worker bootstrap, then bind source/runtime/dependency identities, exact invocation,
+and PR #122's reviewed native publication and fixed-clock integration. Use
+PR #128's declared repository/retained-root and semantic/reference/Markdown
+assembly, then implement a fresh worker bootstrap and bind source/runtime/
+dependency identities, exact invocation,
 reservation, registry/scene/model custody, supervision and terminal publication
 into a working path. Actual collection remains unauthorized until the complete
 execution admission passes. The catalog-access amendment choice remains pending;
@@ -502,3 +501,18 @@ Freeze each unit's precise interfaces, source/runtime identities and bounded
 verification before implementation or actual-input execution. Preserve every
 failed attempt; no blind retries, held-out tuning, threshold reduction or physical
 rover work. All seven simulation release gates remain open.
+
+[Draft PR #128](https://github.com/Aadrika08/palimpsest/pull/128) now integrates exact
+live census, Git/worktree coverage and per-commit Markdown/JSON semantics in one
+held inventory path with preserved variants and guarded legacy collision projection.
+Independent source GO applies to `22cf8aa12e9237e2075f5e7b95ea167e6524f4e2`;
+281 focused checks pass independently and 1276 affected checks pass at root and
+independently, with the same six inherited exclusions (62.11s / 61.77s).
+Review fixes retain declarations inside link labels, titles and reference IDs.
+The [source report](https://github.com/Aadrika08/palimpsest/blob/research/puck-v3-inventory-scope/docs/reports/puck-v3-inventory-scope-source.md)
+retains every RED and compatibility limit. Source GO covers authored fixtures and
+the declared subset; actual project compatibility, runtime qualification and
+reservation/native collection are still unqualified. Unsupported formats, unknown
+scene-free classifications and relative fenced-JSON origins are not silently
+qualified. No actual inventory or study ran. The next deliverable remains the
+fresh-worker/durable launcher and memory case-close path; all seven gates stay open.
