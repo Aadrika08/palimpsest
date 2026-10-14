@@ -21,7 +21,9 @@ def document(value=None, *, commit='1', path='docs/tasks/puck.json', algorithm='
     oid = hashlib.new(algorithm, b'blob ' + str(len(payload)).encode() + b'\0' + payload).hexdigest()
     size = 40 if algorithm == 'sha1' else 64
     return {'repository': '/authored/repository', 'object_format': algorithm,
-            'commit': commit * size, 'root_tree': '2' * size, 'path': path,
+            'commit': commit * size,
+            'root_tree': hashlib.new(algorithm, b'authored tree descriptor:' + payload).hexdigest(),
+            'path': path,
             'oid': oid, 'mode': '100644', 'raw': payload}
 
 
@@ -178,3 +180,22 @@ def test_deadline_expiry_during_parser_cannot_return_a_receipt(monkeypatch):
         return result
     monkeypatch.setattr(value, 'parse_task_catalog', expired)
     with pytest.raises(TimeoutError): assemble([document()], deadline=time.monotonic() + .01)
+
+
+@pytest.mark.parametrize('defect', ['blob', 'mode'])
+def test_same_tree_path_cannot_claim_conflicting_blob_or_mode(defect):
+    second = document(commit='3')
+    if defect == 'blob':
+        altered = catalog(); altered['layouts'][0]['goal_xy'][0] = 1.75
+        second = document(altered, commit='3')
+    else:
+        second['mode'] = '100755'
+    second['root_tree'] = document()['root_tree']
+    with pytest.raises(ValueError): assemble([document(), second])
+
+
+def test_same_tree_entry_across_commits_preserves_both_occurrences():
+    result = assemble([document(), document(commit='3')])
+    assert result['document_occurrences'] == 2
+    assert result['scene_occurrences'] == 6
+    assert all(len(row['occurrences']) == 2 for row in result['variants'])

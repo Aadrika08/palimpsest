@@ -199,7 +199,7 @@ def assemble_task_catalog_occurrences(documents, *, deadline):
     if type(documents) is not list or not 1 <= len(documents) <= _MAX_DOCUMENT_OCCURRENCES:
         raise ValueError('Bounded nonempty catalog document occurrences required')
     grouped, locations, parsed_blobs = {}, set(), {}
-    repository_formats, commit_trees = {}, {}
+    repository_formats, commit_trees, tree_entries = {}, {}, {}
     input_bytes = metadata_bytes = occurrence_count = 0
     exposed = False
     for document in documents:
@@ -224,6 +224,10 @@ def assemble_task_catalog_occurrences(documents, *, deadline):
         commit_key = repository, document['commit']
         if commit_trees.setdefault(commit_key, document['root_tree']) != document['root_tree']:
             raise ValueError('Catalog commit root-tree descriptors conflict')
+        tree_key = repository, document['root_tree'], doc_path
+        entry = document['oid'], document['mode']
+        if tree_entries.setdefault(tree_key, entry) != entry:
+            raise ValueError('Catalog tree entry descriptors conflict')
         payload = document['raw']
         if type(payload) is not bytes or not 0 < len(payload) <= _MAX_BYTES:
             raise ValueError('Bounded task catalog bytes required')
