@@ -64,9 +64,10 @@ def fixture(seed=21):
 
 
 def amend(sample, filename, mutate):
+    before = sample['bundle_payloads'][filename]
     value = json.loads(sample['bundle_payloads'][filename]);mutate(value)
     sample['bundle_payloads'][filename] = raw(value)
-    if filename == 'protocol.json':
+    if filename == 'protocol.json' and sample['bundle_payloads'][filename] != before:
         report = json.loads(sample['bundle_payloads']['report.json'])
         report['protocol_sha256'] = sha(sample['bundle_payloads'][filename])
         report['files'][0].update(sha256=report['protocol_sha256'],bytes=len(sample['bundle_payloads'][filename]))
@@ -164,3 +165,34 @@ def test_production_facade_rejects_rewritten_index_without_any_pin_override():
     with pytest.raises(ValueError,match='index'):
         adapter().admit_original_bundle_bytes(seed=21,original_model_index_raw=raw(index),
             bundle_payloads=sample['bundle_payloads'],historical_source_payloads=sample['historical_source_payloads'])
+
+
+def test_private_lineage_rejects_unrepresentable_json_integer_loss():
+    sample=fixture()
+    amend(sample,'report.json',lambda report:report['history'][0].update(dev_loss=10**1000))
+    with pytest.raises(ValueError):adapter()._validate_lineage(**sample)
+
+
+@pytest.mark.parametrize('defect',['task-pin','teacher-pin','arithmetic-missing'])
+def test_historical_source_links_cannot_be_changed_even_with_rebound_source_ledger(defect):
+    sample=fixture()
+    spec=json.loads(sample['historical_source_payloads'][SOURCE_PATHS[-2]])
+    if defect=='task-pin':spec['task_protocol']['sha256']='0'*64
+    elif defect=='teacher-pin':spec['teacher_source_sha256']='0'*64
+    else:del spec['action_arithmetic']
+    source=raw(spec);sample['historical_source_payloads'][SOURCE_PATHS[-2]]=source
+    sample['expected_source_hashes'][SOURCE_PATHS[-2]]=sha(source)
+    def update(protocol):
+        protocol['source_hashes']=sample['expected_source_hashes']
+        protocol['learning_protocol_sha256']=sha(source)
+    amend(sample,'protocol.json',update)
+    with pytest.raises(ValueError):adapter()._validate_lineage(**sample)
+
+
+def test_bad_npz_is_rejected_after_its_report_ledger_is_rebound():
+    sample=fixture();sample['bundle_payloads']['checkpoint.npz']=b'not a numeric archive'
+    def update(report):
+        report['files'][1].update(bytes=21,sha256=sha(sample['bundle_payloads']['checkpoint.npz']))
+    amend(sample,'report.json',update)
+    with pytest.raises(ValueError,match='checkpoint'):
+        adapter()._validate_lineage(**sample)
