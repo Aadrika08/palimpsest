@@ -337,7 +337,7 @@ with execution:
             verified=True
 '''
     # Failed/poisoned contexts deliberately raise on nominal close.
-    script="try:\n"+''.join('    '+line+'\n' for line in script.splitlines())+"except (ValueError,RuntimeError):\n    assert scenario!='model'\nassert verified\n"
+    script="try:\n"+''.join('    '+line+'\n' for line in script.splitlines())+"except (ValueError,RuntimeError):\n    if not verified: raise\n    assert scenario!='model'\nassert verified\n"
     result=subprocess.run([sys.executable,'-c',script,str(tmp_path/'case'),scenario],
         capture_output=True,text=True,timeout=45)
     assert result.returncode==0,result.stderr
