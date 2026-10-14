@@ -282,3 +282,50 @@ def test_snapshot_copy_deadline_failure_poison_closes(tmp_path,monkeypatch):
                 return result
             monkeypatch.setattr(module().copy,'deepcopy',late)
             sources.snapshot()
+
+
+def protocol_document(docs,path='/authored/recording',manifest_raw=None):
+    payload=docs[1]['raw'] if manifest_raw is None else manifest_raw
+    return {'schema':'puck-training-v1','learning_protocol_sha256':'b'*64,'training_seed':21,
+        'learning':{},'action_arithmetic':'authored','checkpoint':'authored',
+        'collection_report':{'path':'/authored/report.json','sha256':sha(docs[2]['raw'])},
+        'sources':[{'seed':6000,'split':'train','ticks':32,'manifest_sha256':sha(payload),
+            'source_hashes':{},'feature_sha256':'a'*64,'target_sha256':'b'*64,'path':path}],
+        'source_hashes':{},'limits':{}}
+
+
+def test_report_reference_cannot_silently_change_catalog_identity():
+    docs=documents();changed=catalog();changed['layouts'][0]['goal_xy'][0]=1.75
+    changed_raw=raw(changed);changed_manifest=raw(manifest(changed_raw))
+    docs[1]['raw']=changed_manifest;docs[2]['raw']=raw(report(changed_manifest,docs[0]['raw']))
+    docs.append({'path':'/authored/catalog2.json','kind':'task_catalog','raw':changed_raw})
+    result=resolve(docs)
+    assert result['declared_reference_closure_resolved'] is False
+    assert any(ref['reason']=='target_catalog_pin_differs' for ref in result['unresolved_references'])
+    assert len(result['variants'])==2  # conflicting authentic occurrences are still retained
+
+
+def test_training_sources_must_match_the_pinned_collection_report_paths_and_pins():
+    docs=documents();changed=manifest(docs[0]['raw']);changed['status']='completed';changed=raw(changed)
+    docs.append({'path':'/authored/other-recording/manifest.json','kind':'recording_manifest','raw':changed})
+    protocol=protocol_document(docs,path='/authored/other-recording',manifest_raw=changed)
+    docs.append({'path':'/authored/protocol.json','kind':'training_protocol','raw':raw(protocol)})
+    result=resolve(docs)
+    assert result['declared_reference_closure_resolved'] is False
+    assert any(ref['reason']=='collection_report_source_roster_differs' for ref in result['unresolved_references'])
+    assert any(ref['path']=='/authored/other-recording/manifest.json' for ref in result['resolved_references'])
+
+
+def test_training_report_source_roster_order_is_part_of_reference_binding():
+    docs=documents();other=manifest(docs[0]['raw']);other['seed']=6200;other['split']='held_out'
+    other['row'].update(seed=6200,split='held_out',id='teacher-6200',case='teacher-6200');payload=raw(other)
+    docs.append({'path':'/authored/other/manifest.json','kind':'recording_manifest','raw':payload})
+    rep=json.loads(docs[2]['raw']);rep['sources'].append({'seed':6200,'split':'held_out','path':'/authored/other','manifest_sha256':sha(payload)})
+    rep['owners'].append({**other['row'],'status':'not_started'});docs[2]['raw']=raw(rep)
+    protocol=protocol_document(docs)
+    extra={**protocol['sources'][0],'seed':6200,'split':'held_out','path':'/authored/other','manifest_sha256':sha(payload)}
+    protocol['sources']=[extra,protocol['sources'][0]]
+    docs.append({'path':'/authored/protocol.json','kind':'training_protocol','raw':raw(protocol)})
+    result=resolve(docs)
+    assert result['declared_reference_closure_resolved'] is False
+    assert any(ref['reason']=='collection_report_source_roster_differs' for ref in result['unresolved_references'])

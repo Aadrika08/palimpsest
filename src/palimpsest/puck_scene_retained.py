@@ -268,10 +268,12 @@ class _Inventory:
                     lower = name.lower()
                     normalized = re.sub(r'([a-z])([A-Z])', r'\1_\2', name).lower()
                     tokens = re.split(r'[^a-z0-9]+', normalized)
+                    normalized_field = '_'.join(token for token in tokens if token)
                     declaration = bool(set(tokens) & {'scene', 'scenes', 'seed', 'seeds',
                         'split', 'splits', 'layout', 'layouts', 'geometry', 'geometries'})
                     # Hash-map file names are receipts, not declaration field names.
-                    sensitive = base not in self.hash_maps and (lower in _SENSITIVE or declaration)
+                    sensitive = base not in self.hash_maps and (
+                        lower in _SENSITIVE or normalized_field in _SENSITIVE or declaration)
                     if sensitive and pointer not in self.allowed:
                         raise ValueError('Unsupported scene/geometry declaration at ' + pointer)
                     stack.append((child, pointer))
@@ -372,6 +374,10 @@ class _Inventory:
             for name in ('feature_sha256', 'target_sha256'):
                 _hash(source[name], _pointer(base, name))
             self.hash_map(source['source_hashes'], base + '/source_hashes')
+            pin = _hash(source['manifest_sha256'], base + '/manifest_sha256', nullable=True)
+            numeric_pin = source['source_hashes'].get('manifest.json')
+            if pin is not None and numeric_pin is not None and numeric_pin != pin:
+                raise ValueError('Conflicting training manifest receipt at ' + base)
             self.reference(source, base, 'recording_manifest', directory=True, scene=scene)
 
 

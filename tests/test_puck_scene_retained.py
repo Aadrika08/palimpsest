@@ -515,3 +515,36 @@ def test_root_helper_hashes_and_training_record_hashes_are_not_catalog_aliases()
     value = training()
     value['sources'][0]['source_hashes']['docs/plans/m6-puck-pushing-protocol-v5.json'] = OTHER
     assert parse(value, 'training_protocol')['mentions'][0]['catalog_sha256'] is None
+
+
+@pytest.mark.parametrize('alias', ['roverPose', 'puckXY', 'goalXY', 'puckXYZ',
+    'initialPuckXY', 'worldBefore', 'finalWorld', 'rover.pose', 'puck-xyz',
+    'goal/xy', 'initial.puck-xy', 'world-before', 'final/world'])
+def test_geometry_and_world_field_aliases_cannot_hide_untyped_declarations(alias):
+    value = manifest()
+    value['extra'] = {alias: [0, 0, 0]}
+    with pytest.raises(ValueError): parse(value)
+
+
+def test_training_manifest_pin_must_agree_with_known_numeric_source_receipt():
+    value = training()
+    value['sources'][0]['source_hashes']['manifest.json'] = OTHER
+    with pytest.raises(ValueError): parse(value, 'training_protocol')
+    value['sources'][0]['source_hashes']['manifest.json'] = PIN
+    result = parse(value, 'training_protocol')
+    assert result['references'][1]['sha256'] == PIN
+
+
+def test_training_numeric_manifest_receipt_does_not_replace_null_reference_pin():
+    value = training()
+    value['sources'][0]['manifest_sha256'] = None
+    value['sources'][0]['source_hashes']['manifest.json'] = OTHER
+    result = parse(value, 'training_protocol')
+    assert result['references'][1]['sha256'] is None
+    assert result['missing_pins'] == ['/sources/0/manifest_sha256']
+
+
+def test_geometry_alias_file_name_in_verified_source_hash_map_is_a_receipt():
+    value = manifest()
+    value['source_hashes']['src/palimpsest/roverPose.py'] = OTHER
+    assert len(parse(value)['mentions']) == 2

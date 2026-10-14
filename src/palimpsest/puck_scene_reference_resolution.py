@@ -89,6 +89,18 @@ def resolve_retained_puck_documents(documents, *, deadline, origins=None):
     origins={_path(path):_path(cwd) for path,cwd in origins.items()}
     resolved=[];unresolved=[];missing=[];links={}
     reference_count=0
+
+    def manifest_roster(path):
+        roster=[]
+        for ref in parsed[path]['references']:
+            if ref['kind']!='recording_manifest':continue
+            target=ref['path']
+            if not target.startswith('/'):
+                if path not in origins:return None
+                target=str(PurePosixPath(origins[path])/target)
+            roster.append((ref['scene_id'],ref['split'],target,ref['sha256']))
+        return roster
+
     for path,value in sorted(parsed.items()):
         if pins[path]['kind']=='task_catalog':continue
         missing.extend({'document_path':path,'pointer':pointer} for pointer in value['missing_pins'])
@@ -108,6 +120,20 @@ def resolve_retained_puck_documents(documents, *, deadline, origins=None):
                 elif ref['scene_id'] is not None and not any(
                         mention['scene_id']==ref['scene_id'] and mention['split']==ref['split']
                         for mention in parsed[target]['mentions']):reason='target_scene_differs'
+                elif ref['kind']=='recording_manifest':
+                    parent=[mention for mention in value['mentions']
+                            if mention['pointer']==ref['pointer']+'/seed']
+                    children=[mention for mention in parsed[target]['mentions']
+                              if mention['scene_id']==ref['scene_id'] and mention['split']==ref['split']]
+                    if any(mention['catalog_sha256'] is not None
+                           and any(child['catalog_sha256']!=mention['catalog_sha256'] for child in children)
+                           for mention in parent):reason='target_catalog_pin_differs'
+                elif ref['kind']=='teacher_collection_report':
+                    parent_roster=manifest_roster(path);child_roster=manifest_roster(target)
+                    if parent_roster is None or child_roster is None:
+                        reason='collection_report_source_roster_unbound'
+                    elif parent_roster!=child_roster:
+                        reason='collection_report_source_roster_differs'
             record={'document_path':path,'pointer':ref['pointer'],'path':target,'sha256':ref['sha256']}
             if reason:unresolved.append(dict(record,reason=reason))
             else:
