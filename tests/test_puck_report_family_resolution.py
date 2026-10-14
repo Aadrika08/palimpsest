@@ -14,7 +14,8 @@ def documents():
         source_hashes={'manifest.json':sha(manifest['raw'])})
     protocol_raw=raw(protocol)
     result=report();result.update(protocol_sha256=sha(protocol_raw))
-    result['files'][0].update(sha256=sha(protocol_raw),bytes=len(protocol_raw));result_raw=raw(result)
+    result['files'][0].update(sha256=sha(protocol_raw),bytes=len(protocol_raw))
+    result['files'].append({'path':'checkpoint.npz','sha256':'c'*64,'bytes':123});result_raw=raw(result)
     model_index=index();model_index['models'][0]['files'].update({'protocol.json':sha(protocol_raw),'report.json':sha(result_raw)})
     wrapper=prepared();wrapper.update(protocol=protocol,protocol_sha256=sha(protocol_raw))
     docs.extend([{'path':'/authored/models/seed-21/protocol.json','kind':'training_protocol','raw':protocol_raw},
@@ -167,3 +168,55 @@ def test_baseline_dependency_checks_owner_and_snapshot_receipts():
     baseline=next(row for row in evidence['unresolved_references'] if row['pointer'].endswith('/initial_match/reference'))
     assert baseline['reason']=='target_baseline_snapshot_differs'
     assert evidence['declared_reference_closure_resolved'] is False
+
+
+def test_report_recording_manifest_must_agree_with_full_owner_row_and_model():
+    import json
+    docs=development_documents();child=json.loads(docs[2]['raw']);parent=json.loads(docs[-1]['raw'])
+    child['row']['model_seed']=child['model_identity']['training_seed']=22
+    docs[2]['raw']=raw(child);parent['owners'][0]['manifest_sha256']=sha(docs[2]['raw']);docs[-1]['raw']=raw(parent)
+    evidence=resolve(docs)
+    assert any(row['reason']=='target_recording_row_differs' for row in evidence['unresolved_references'])
+
+
+def test_explicit_report_catalog_cannot_bypass_conflicting_external_result_catalog():
+    import json
+    docs=development_documents();docs=[doc for doc in docs if doc['kind']!='recording_manifest']
+    child=json.loads(docs[1]['raw']);parent=json.loads(docs[-1]['raw'])
+    parent['pushing_protocol_sha256']=sha(docs[0]['raw']);owner=parent['owners'][0]
+    owner.pop('result');owner.pop('manifest_sha256')
+    other_catalog=json.loads(docs[0]['raw']);other_catalog['layouts'][0]['goal_xy'][0]=1.75
+    other_raw=raw(other_catalog);child['student_identity']['pushing_protocol_sha256']=sha(other_raw)
+    docs[1]['raw']=raw(child);owner['result_sha256']=sha(docs[1]['raw']);docs[-1]['raw']=raw(parent)
+    docs.append({'path':'/authored/other-catalog.json','kind':'task_catalog','raw':other_raw})
+    evidence=resolve(docs)
+    assert any(row['reason']=='target_catalog_pin_differs' for row in evidence['unresolved_references'])
+    assert len(evidence['variants'])==2
+
+
+def test_model_index_checks_declared_checkpoint_receipt_in_pinned_training_report():
+    import json
+    docs=documents();child=next(doc for doc in docs if doc['kind']=='training_report')
+    value=json.loads(child['raw']);value['files'][1]['sha256']='f'*64
+    child['raw']=raw(value);parent=next(doc for doc in docs if doc['kind']=='model_index')
+    value=json.loads(parent['raw']);value['models'][0]['files']['report.json']=sha(child['raw']);parent['raw']=raw(value)
+    evidence=resolve(docs,origins={'/authored/model-index.json':'/authored/models'})
+    assert any(row['reason']=='target_model_file_receipt_differs' for row in evidence['unresolved_references'])
+
+
+@pytest.mark.parametrize('objective_pin', ['invalid','f'*64])
+def test_balanced_training_report_objective_must_bind_pinned_protocol(objective_pin):
+    import json
+    docs=documents();docs=[doc for doc in docs if doc['kind'] not in ('model_index','prepared_training')]
+    protocol=next(doc for doc in docs if doc['kind']=='training_protocol')
+    value=json.loads(protocol['raw']);value.update(schema='puck-balanced-training-v1',
+        balanced_objective={'path':'/authored/objective.json','sha256':'a'*64})
+    protocol['raw']=raw(value)
+    result=next(doc for doc in docs if doc['kind']=='training_report');value=json.loads(result['raw'])
+    value.update(protocol_sha256=sha(protocol['raw']),training_objective_sha256=objective_pin)
+    value['files'][0].update(sha256=sha(protocol['raw']),bytes=len(protocol['raw']));result['raw']=raw(value)
+    if objective_pin=='invalid':
+        with pytest.raises(ValueError):resolve(docs)
+    else:
+        evidence=resolve(docs)
+        assert any(row['reason']=='target_training_objective_differs' for row in evidence['unresolved_references'])

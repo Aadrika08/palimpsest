@@ -169,8 +169,21 @@ class _Reports(_Inventory):
             self.result['held_out_mentions'] |= split == 'held_out'
             self.limit()
 
+    def retained_file_receipts(self, value, base):
+        _object(value, base)
+        # Only keys of this exact receipt map are file names. Children remain
+        # strict typed receipts; no geometry-containing subtree is exempted.
+        self.hash_maps.add(base)
+        for name, receipt in value.items():
+            path=_path(name, _pointer(base,name))
+            if path.startswith('/'):
+                raise ValueError('Retained inventory file paths must be relative')
+            self.binary_receipt(receipt, _pointer(base,name))
+
     def report(self, kind):
         document = self.document
+        if 'retained_inventory' in document:
+            self.retained_file_receipts(document['retained_inventory'], '/retained_inventory')
         if 'schema' in document:
             raise ValueError('Historical puck reports have no schema discriminator')
         self.catalog = self.catalog_pin(document, '', missing=False)
@@ -225,11 +238,19 @@ class _Reports(_Inventory):
                 else:
                     self.owner_result(owner['result'], base + '/result', expected=declared,
                                       output=output, catalog=self.catalog)
+                    identity=owner['result'].get('student_identity',{}).get('model_identity')
+                    expected=document.get('models',{}).get(str(declared.get('model_seed')))
+                    if identity is not None and expected is not None:
+                        for field in sorted({'training_seed',*_MODEL_HASHES} & expected.keys()):
+                            if field not in identity:
+                                self.result['missing_pins'].append(base+'/result/student_identity/model_identity/'+field)
+                            elif identity[field]!=expected[field]:
+                                raise ValueError('Conflicting report/student model identity')
 
 
 def parse_puck_report_document(raw: bytes, *, kind: str):
     """Inventory explicit report kinds without target reads or cwd inference."""
-    if kind not in _KINDS:
+    if type(kind) is not str or kind not in _KINDS:
         raise ValueError('Unsupported puck report document kind')
     inventory = _Reports(_decode(raw), kind, raw)
     if kind == 'owner_result':

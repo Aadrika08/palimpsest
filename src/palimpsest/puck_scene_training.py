@@ -32,6 +32,8 @@ def _report(inv):
         raise ValueError('Typed training result status required')
     seed=_model(doc.get('training_seed'),'/training_seed');inv.allowed.add('/training_seed')
     protocol_pin=_hash(doc.get('protocol_sha256'),'/protocol_sha256')
+    if 'training_objective_sha256' in doc:
+        _hash(doc['training_objective_sha256'],'/training_objective_sha256')
     if doc.get('held_out_used') is not False:
         raise ValueError('Training held-out use must remain false')
     names=set();protocol_found=False

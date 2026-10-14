@@ -310,3 +310,32 @@ def test_catalogless_plain_result_does_not_invent_a_mandatory_catalog_field():
     result = parse(value)
     assert result['mentions'][0]['catalog_sha256'] is None
     assert result['missing_pins'] == []
+
+
+@pytest.mark.parametrize('kind,builder', [('mechanics_report',mechanics_report),('development_report',development_report)])
+def test_retained_file_inventory_is_typed_receipt_map_not_scene_declaration(kind,builder):
+    value=builder();value['retained_inventory']={'scene-6100/seed-21/result.json':{'sha256':PIN,'bytes':123}}
+    assert parse(value,kind)['executable'] is False
+
+
+@pytest.mark.parametrize('defect', ['hidden','size','path','pin'])
+def test_retained_file_receipt_exception_cannot_hide_geometry_or_invalid_receipts(defect):
+    value=development_report();receipt={'sha256':PIN,'bytes':123};path='scene-6100/seed-21/result.json'
+    if defect=='hidden':receipt['scene_ids']=[6110]
+    elif defect=='size':receipt['bytes']=True
+    elif defect=='path':path='../result.json'
+    else:receipt['sha256']='invalid'
+    value['retained_inventory']={path:receipt}
+    with pytest.raises(ValueError):parse(value,'development_report')
+
+
+def test_development_embedded_student_model_hashes_must_match_report_model_identity():
+    value=development_report();result=owner_result();result['student_identity']['model_identity']['checkpoint_sha256']=OTHER
+    value['owners'][0]['result']=result
+    with pytest.raises(ValueError,match='model identity'):
+        parse(value,'development_report')
+
+
+def test_report_document_kind_type_is_explicit_and_rejects_unhashable_input():
+    module=importlib.import_module('palimpsest.puck_scene_reports')
+    with pytest.raises(ValueError):module.parse_puck_report_document(b'{}',kind=[])

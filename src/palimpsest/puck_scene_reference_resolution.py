@@ -67,7 +67,29 @@ def _point(document, pointer):
 
 
 def _report_dependency_reason(parent, target, reference):
-    if reference['kind'] not in ('owner_result','construction_result'):
+    if reference['kind']=='training_protocol' and 'training_completed' in parent:
+        objective=parent.get('training_objective_sha256')
+        target_objective=target.get('balanced_objective')
+        if objective is not None or target.get('schema')=='puck-balanced-training-v1':
+            if (type(target_objective) is not dict
+                    or objective!=target_objective.get('sha256')):
+                return 'target_training_objective_differs'
+        return None
+    if reference['kind']=='training_report' and 'models' in parent:
+        entry=_point(parent,reference['pointer'].rsplit('/files/',1)[0])
+        if target['protocol_sha256']!=entry['files']['protocol.json']:
+            return 'target_model_file_receipt_differs'
+        checkpoints=[file for file in target['files'] if file['path']=='checkpoint.npz']
+        if len(checkpoints)!=1:
+            return 'target_model_checkpoint_receipt_missing'
+        if checkpoints[0]['sha256']!=entry['files']['checkpoint.npz']:
+            return 'target_model_file_receipt_differs'
+        return None
+    if reference['kind'] not in ('owner_result','construction_result','recording_manifest'):
+        return None
+    # Recording source refs in training/teacher reports have a different roster
+    # shape. Only report owner refs carry the complete actual owner row here.
+    if reference['kind']=='recording_manifest' and not reference['pointer'].startswith('/owners/'):
         return None
     if 'expected_owner_id' in reference:
         row=target.get('row',{})
@@ -79,11 +101,19 @@ def _report_dependency_reason(parent, target, reference):
     owner=_point(parent,reference['pointer'])
     if type(owner) is not dict:
         return 'parent_owner_receipt_differs'
-    if reference['kind']=='owner_result':
+    if reference['kind'] in ('owner_result','recording_manifest'):
         expected={key:value for key,value in owner.items() if key in _ROW_FIELDS}
         if expected!=target['row']:
-            return 'target_owner_row_differs'
-    if 'result' in owner and _canonical(owner['result'])!=_canonical(target):
+            return 'target_recording_row_differs' if reference['kind']=='recording_manifest' else 'target_owner_row_differs'
+    if reference['kind']=='owner_result':
+        identity=target.get('student_identity',{}).get('model_identity')
+        expected=parent.get('models',{}).get(str(target['row'].get('model_seed')))
+        if identity is not None and expected is not None:
+            from .puck_scene_reports import _MODEL_HASHES
+            for field in sorted({'training_seed',*_MODEL_HASHES} & expected.keys()):
+                if field not in identity:return 'target_model_identity_missing'
+                if identity[field]!=expected[field]:return 'target_model_identity_differs'
+    if reference['kind']!='recording_manifest' and 'result' in owner and _canonical(owner['result'])!=_canonical(target):
         return 'target_embedded_result_differs'
     return None
 
@@ -179,9 +209,9 @@ def resolve_retained_puck_documents(documents, *, deadline, origins=None):
                 elif (report_reason:=_report_dependency_reason(
                         json.loads(raw_documents[path]),json.loads(raw_documents[target]),ref)):
                     reason=report_reason
-                elif ref['kind']=='recording_manifest':
+                elif ref['kind'] in ('recording_manifest','owner_result') and 'expected_owner_id' not in ref:
                     parent=[mention for mention in value['mentions']
-                            if mention['pointer']==ref['pointer']+'/seed']
+                            if mention['pointer'] in (ref['pointer']+'/seed',ref['pointer']+'/result/row/seed')]
                     children=[mention for mention in parsed[target]['mentions']
                               if mention['scene_id']==ref['scene_id'] and mention['split']==ref['split']]
                     if any(mention['catalog_sha256'] is not None
