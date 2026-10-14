@@ -213,6 +213,7 @@ def test_full_namespace_coverage_refuses_before_any_live_document_payload_read(t
     b'[Scene IDs: 6110 catalog.json](catalog.json)\n',
     b'[Task](catalog.json "Scene IDs: 6110")\n',
     b'[r]: catalog.json "Scene IDs: 6110"\n',
+    b'[Task][Scene IDs: 6110]\n',
     b'[Scene IDs: 6110][r]\n[r]: catalog.json\n',
     b'[Scene IDs: 6110]\n[Scene IDs: 6110]: catalog.json\n',
 ])

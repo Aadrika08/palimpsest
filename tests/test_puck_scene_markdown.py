@@ -232,6 +232,7 @@ def test_unclosed_markdown_marker_poison_is_bounded(character):
     '[Scene IDs: 6110 catalog.json](catalog.json)',
     '[Task](catalog.json "Scene IDs: 6110")',
     '[r]: catalog.json "Scene IDs: 6110"',
+    '[Task][Scene IDs: 6110]',
 ])
 def test_sensitive_link_labels_cannot_disappear_from_inventory(text):
     result = parse(text.encode())

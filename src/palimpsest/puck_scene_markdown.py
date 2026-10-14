@@ -273,6 +273,7 @@ def parse_puck_markdown_document(raw):
             excluded.append(match.span())
         for match in _USE.finditer(line):
             label_declaration(match[1], pointer + '/reference_link_labels/' + str(match.start()))
+            label_declaration(match[2], pointer + '/reference_identifiers/' + str(match.start()))
             label = ' '.join((match[2] or match[1]).lower().split())
             resolved = definitions.get(label)
             if resolved is not None:
