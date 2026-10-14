@@ -90,7 +90,7 @@ def test_real_fresh_worker_executes_authenticated_source_and_emits_no_grants(tmp
     assert receipt['entry_result'] == {'answer': 42}
     assert receipt['python_version'] == '3.11.15'
     assert receipt['interpreter_object_bound'] is True
-    assert {r['name'] for r in receipt['loaded_modules']} == {'palimpsest', 'palimpsest.puck_worker_preflight'}
+    assert {r['name'] for r in receipt['loaded_modules']} == {'_puck_held_file_bootstrap', 'palimpsest', 'palimpsest.puck_worker_preflight'}
     assert receipt['process']['pid'] == receipt['process']['pgid']
     assert receipt['environment_sha256'] == sha(raw(registration['environment']))
     for key in ('runtime_qualified', 'dependencies_qualified', 'native_authorized', 'collection_authorized', 'executable'):
@@ -217,3 +217,32 @@ def test_interpreter_identity_refuses_before_source_holder_module_exec(tmp_path)
     assert result.returncode != 0
     assert 'Running interpreter object differs' in result.stderr
     assert not marker.exists()
+
+
+@pytest.mark.parametrize('variant', ['class', 'imported-alias', 'method-wrapper', 'support-holder'])
+def test_every_loaded_local_dispatch_slot_remains_bound(tmp_path, variant):
+    def change(reg):
+        root = Path(reg['source_root'])
+        sources = {'scripts/helper.py': 'def value():\n    return 43\n',
+            'scripts/probe.py': 'from scripts.helper import value\nclass Probe:\n    @staticmethod\n    def value():\n        return 43\n'}
+        for relative, text in sources.items():
+            path = root / relative; path.write_text(text)
+            reg['source_files'].append(descriptor(path, relative))
+            reg['modules'].append({'name':relative[:-3].replace('/', '.'), 'path':relative})
+        reg['source_files'].sort(key=lambda row:row['path'])
+        reg['namespaces'] = [{'name':'scripts', 'path':'scripts'}]
+    body = 'from scripts import probe\n'
+    if variant == 'class':
+        body += ('class Replacement:\n    @staticmethod\n    def value():\n        return 99\n'
+                 'probe.Probe = Replacement\nreturn {"answer": probe.Probe.value()}')
+    elif variant == 'imported-alias':
+        body += 'probe.value = lambda: 99\nreturn {"answer": probe.value()}'
+    elif variant == 'method-wrapper':
+        body += 'probe.Probe.value = classmethod(probe.Probe.value)\nreturn {}'
+    else:
+        body += ('import sys\nsys.modules["_puck_held_file_bootstrap"].HeldCollectionFiles.recheck = lambda _: None\n'
+                 'return {}')
+    result, _ = launch(tmp_path, body=body, change=change)
+    assert result.returncode != 0
+    assert result.stdout == ''
+    assert 'binding changed' in result.stderr

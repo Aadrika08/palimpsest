@@ -267,6 +267,7 @@ class HeldWorkerBootstrap:
         self._raw = registration_raw; self._sha = expected_sha256; self._deadline = deadline
         self._registration_path = _path(registration_path)
         self._state = 'new'; self._children = []; self._loaded = {}; self._bindings = []
+        self._classes = []
         self._loading = set()
         self._finder = None; self._meta_path = None; self._source = None; self._runtime = None
         self._early_runtime_fds = []
@@ -352,7 +353,10 @@ class HeldWorkerBootstrap:
             payload = _read_initial(str(Path(self._reg['source_root'])/HOLDER), descriptors[HOLDER]['sha256'])
             helper = types.ModuleType('_puck_held_file_bootstrap'); sys.modules[helper.__name__] = helper
             helper.__file__ = str(Path(self._reg['source_root'])/HOLDER)
+            helper.__spec__ = importlib.util.spec_from_loader(helper.__name__, None, origin=helper.__file__)
+            helper.__package__ = ''
             exec(compile(payload, helper.__file__, 'exec', dont_inherit=True), helper.__dict__)
+            self._capture(helper.__name__, helper, HOLDER, digest(payload))
             Holder = helper.HeldCollectionFiles
             self._source = self._enter(Holder(self._reg['source_root'], self._reg['source_files'], self._deadline))
             self._registration = self._enter(Holder(str(Path(self._registration_path).parent),
@@ -407,15 +411,21 @@ class HeldWorkerBootstrap:
         self._loaded[name] = (module, module.__file__, module.__loader__, spec,
             spec.origin, spec.loader, module.__package__, tuple(getattr(module, '__path__', ())),
             spec.name, tuple(spec.submodule_search_locations or ()), path, sha256)
-        def bind(owner, key, function):
-            if type(function) is types.FunctionType and function.__module__ == name:
-                self._bindings.append((owner, key, function, function.__code__))
+        def bind(owner, key, slot):
+            functions = ([slot] if type(slot) is types.FunctionType else
+                [slot.__func__] if isinstance(slot, (staticmethod, classmethod)) else
+                [fn for fn in (slot.fget, slot.fset, slot.fdel) if fn is not None] if isinstance(slot, property) else [])
+            if functions:
+                self._bindings.append((owner, key, slot, tuple((fn, fn.__code__) for fn in functions
+                    if type(fn) is types.FunctionType)))
                 if len(self._bindings) > 65536: raise ValueError('Loaded function binding ceiling exceeded')
         for key, value in list(vars(module).items()):
             bind(module, key, value)
-            if isinstance(value, type) and value.__module__ == name:
-                for member, function in list(vars(value).items()):
-                    bind(value, member, function.__func__ if isinstance(function, (staticmethod, classmethod)) else function)
+            if isinstance(value, type):
+                self._classes.append((module, key, value, type(value), value.__bases__, tuple(vars(value))))
+                if len(self._classes) > 65536: raise ValueError('Loaded class binding ceiling exceeded')
+                if value.__module__ == name:
+                    for member, slot in list(vars(value).items()): bind(value, member, slot)
 
     def recheck(self):
         try:
@@ -426,12 +436,6 @@ class HeldWorkerBootstrap:
                 if (name.split('.')[0] not in sys.stdlib_module_names and
                         name not in {'__main__', '_puck_held_file_bootstrap'}|self._loaded.keys()|self._loading):
                     raise RuntimeError('Unregistered module cache entry: '+name)
-            for child in self._children: child.recheck()
-            if _identity(os.stat('/proc/self/exe')) != self._image: raise RuntimeError('Running interpreter object differs')
-            if _process(os.getpid()) != self._process or _process(os.getppid()) != self._parent:
-                raise RuntimeError('Worker or parent identity changed')
-            if dict(os.environ) != self._reg['environment'] or os.getcwd() != self._reg['cwd']:
-                raise RuntimeError('Worker environment/cwd changed')
             for name, binding in self._loaded.items():
                 module, filename, loader, spec, origin, spec_loader, package, search, spec_name, spec_search, _, _ = binding
                 if (sys.modules.get(name) is not module or module.__file__ != filename or module.__loader__ is not loader
@@ -439,11 +443,20 @@ class HeldWorkerBootstrap:
                         or module.__package__ != package or tuple(getattr(module, '__path__', ())) != search
                         or spec.name != spec_name or tuple(spec.submodule_search_locations or ()) != spec_search):
                     raise RuntimeError('Authenticated loaded module dispatch changed')
-            for owner, key, function, code in self._bindings:
-                current = vars(owner).get(key)
-                if isinstance(current, (staticmethod, classmethod)): current = current.__func__
-                if current is not function or function.__code__ is not code:
+            for owner, key, slot, functions in self._bindings:
+                if vars(owner).get(key) is not slot or any(fn.__code__ is not code for fn, code in functions):
                     raise RuntimeError('Authenticated function code binding changed')
+            for owner, key, cls, metaclass, bases, keys in self._classes:
+                if (vars(owner).get(key) is not cls or type(cls) is not metaclass
+                        or cls.__bases__ != bases or tuple(vars(cls)) != keys):
+                    raise RuntimeError('Authenticated class binding changed')
+            # Check support dispatch before invoking its guard methods.
+            for child in self._children: child.recheck()
+            if _identity(os.stat('/proc/self/exe')) != self._image: raise RuntimeError('Running interpreter object differs')
+            if _process(os.getpid()) != self._process or _process(os.getppid()) != self._parent:
+                raise RuntimeError('Worker or parent identity changed')
+            if dict(os.environ) != self._reg['environment'] or os.getcwd() != self._reg['cwd']:
+                raise RuntimeError('Worker environment/cwd changed')
             self._clock()
         except BaseException as error: self._fail(error); raise
 
