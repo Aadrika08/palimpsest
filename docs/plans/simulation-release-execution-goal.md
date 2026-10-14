@@ -39,7 +39,9 @@ simulation first.
 ## Next work to perform
 
 1. **Puck execution path — next independent implementation unit.** Continue
-   from the passed original-bundle result in PR #121. Deliver a working durable
+   from the passed original-bundle result in PR #121 and reviewed native custody/
+   clock integration in PR #122. Next implement authentic registry/reservation
+   discovery and the fresh-worker bootstrap, then complete the durable
    collection launcher that binds exact source/runtime/dependencies, invocation,
    scene/model/registry custody, reservation, one-owner lease, process/storage
    supervision, interval recording and terminal publication. Verify failure
@@ -137,6 +139,22 @@ This qualifies the original-bundle facade/materialization/probes only: collectio
 native execution, task capability and all seven release gates remain unqualified.
 The next puck unit is the complete durable owner/stage launcher.
 
+[Draft PR #122](https://github.com/Aadrika08/palimpsest/pull/122), published at
+`fc04598`, connects held model staging and checks to native interval/durable row
+publication, and adds fixed collection clock accounting. Independent SOURCE GO
+applies to `b3d84a6`: 411 affected tests passed in 44.83 seconds at root and
+44.78 seconds independently, with six explicitly excluded mechanics failures
+reproduced on unchanged PR #121 base. The default repository run stopped at
+missing FastAPI during collection; broad validation remains unqualified.
+Authored CPU models, faithful fake native state and real temporary disk records
+prove these source boundaries; no original-model inference or actual physics ran.
+The isolation probe now uses `-I -B` to avoid changing its source namespace.
+Every gap and completion receipt cost consumes the fixed parent/return bucket;
+unused child time cannot expand those allowances. Source changes grant no owner
+or collection execution. Complete authentic registry/scene admission, fresh-worker
+source/runtime/dependencies, lease/process supervision and owner/collection close
+remain required. All seven simulation gates remain open.
+
 ## Memory milestone ready for approval: full-model replay
 
 **Deliverable:** one independently reviewed result showing whether the unchanged
@@ -221,8 +239,10 @@ Source tests alone do not satisfy this exit.
 - [ ] Bind current execution source closure and runtime to exact registry,
   scene, model, invocation and filesystem custody. Complete process supervision,
   storage limits, interval recording, owner/manifest close and attempt receipts.
-  PR #120 supplies working input custody and model staging with source-only
-  evidence. Fresh-worker loaded code, runtime/dependencies, exact invocation,
+  PR #120 supplies working input custody and model staging; PR #122 connects
+  that context to native interval/publication and fixed clock accounting with
+  source-only evidence. Authentic registry/scene admission, fresh-worker loaded
+  code, runtime/dependencies, exact invocation,
   durable reservation and bounded owner/stage execution remain unqualified.
 - [ ] Independently verify the complete collection path, including strict
   historical/new envelope separation and development/held-out inaccessibility.
@@ -314,8 +334,9 @@ while a required capability or acceptance gate remains open.
 ## First action when pursuing this goal
 
 Continue the **puck durable owner/stage launcher** from PR #121's independently
-audited original-bundle result and PR #120's descriptor-held execution context.
-Bind fresh-worker source/runtime/dependency identities, exact invocation,
+audited original-bundle result, PR #120's descriptor-held execution context,
+and PR #122's reviewed native publication and fixed-clock integration. Implement
+authentic registry/reservation discovery and a fresh worker bootstrap, then bind source/runtime/dependency identities, exact invocation,
 reservation, registry/scene/model custody, supervision and terminal publication
 into a working path. Actual collection remains unauthorized until the complete
 execution admission passes.
