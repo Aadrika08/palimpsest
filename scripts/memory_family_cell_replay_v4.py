@@ -77,6 +77,8 @@ def _replay_rows(*, policy, rows, source_snapshot, operation, first_tick,
     torch = policy.torch
     hidden = (torch.zeros_like(staged[0]) if operation == 'source' else staged[0].clone())
     try:
+        policy.failure_diagnostics = {}
+        policy._current_raw_output = None
         cell._cached_alphas = None
         cell._alphas_dirty = True
         with torch.inference_mode():
@@ -154,6 +156,7 @@ def _pinned_policy(policy):
 
 def replay_compact_cell(*, policy, bundle, raw_audit_receipt, source_snapshot, deadline):
     """Compare every compact row using actual admitted FLYNN, returning no grant."""
+    import numpy as np
     audit._public_deadline(deadline)
     _pinned_policy(policy)
     audit._validate_receipt_shape(raw_audit_receipt)
@@ -172,6 +175,8 @@ def replay_compact_cell(*, policy, bundle, raw_audit_receipt, source_snapshot, d
             or application['world_task_state']['case']['case_id'] != manifest['case_id']
             or application['seed'] != policy.provenance['seed']
             or source_snapshot['identity']['policy']['class'] != 'palimpsest.flynn.FlynnPolicy'
+            or source_snapshot['identity']['numpy'] != np.__version__ or np.__version__ != '2.2.5'
+            or source_snapshot['identity']['python'] != list(sys.version_info[:3])
             or source_snapshot['identity']['policy']['device'] != 'cpu'
             or source_snapshot['identity']['policy']['dtype'] != 'torch.float32'):
         raise ValueError('Cell replay source snapshot/application identity differs')
