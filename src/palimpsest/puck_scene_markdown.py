@@ -249,7 +249,7 @@ def parse_puck_markdown_document(raw):
         numeric_label = (_SCENE.search(label) or re.search(
             r'(?<![\w/.-])seeds?(?![\w/.-])', label, re.I))
         if (_GEOMETRY.search(label) or numeric_label
-                and re.search(r'\d', label) and not _FILE.search(label)):
+                and re.search(r'\d', label)):
             unsupported(pointer, 'Declarations in unsupported Markdown link label', label)
 
     for number, original, pointer in active:
