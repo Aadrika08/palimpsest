@@ -183,7 +183,7 @@ def _amendment(value):
     raw_freeze, freeze_descriptor = public_payload(PRIOR + 'execution-freeze.json', PRIOR_FREEZE_SHA)
     original, index = _json(raw_freeze), _json(raw_index)
     if (type(value['attempt_number']) is not int or value['attempt_number'] != 2
-            or value['prior_attempt'] != index_descriptor
+            or _canonical(value['prior_attempt']) != _canonical(index_descriptor)
             or index['status'] != 'failed-consumed-before-numerical-worker'
             or index['worker_started'] is not False or index['model_inference_calls'] != 0):
         raise ValueError('Amendment prior failure or attempt number differs')
@@ -689,7 +689,9 @@ def main(argv=None):
         job = _read_control(output / 'attempt.json')
         if (job['freeze_sha256'] != args.freeze_sha256
                 or type(job.get('attempt')) is not int
-                or job['attempt'] != freeze.get('attempt_number', 1)):
+                or job['attempt'] != freeze.get('attempt_number', 1)
+                or freeze['schema'] == AMENDMENT
+                   and job.get('approved_amendment_sha256') != args.approved_amendment_sha256):
             raise ValueError('Attempt freeze differs')
         if args.parent:
             return _parent(freeze, args, job)
