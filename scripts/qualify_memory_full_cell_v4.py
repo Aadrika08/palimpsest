@@ -331,10 +331,18 @@ def _supervised(command, output, *, normal_deadline, hard_deadline,
     survivors = sorted(_group_members(process.pid))
     if survivors:
         failed('matching process-group survivors after cleanup')
+    # poll() can first observe an already-exited leader, and bounded log drainage
+    # can itself overrun. Successful exit status does not establish timely return.
+    finished = time.monotonic()
+    if finished >= hard_deadline:
+        failed('hard deadline')
+    elif finished >= normal_deadline:
+        failed('normal-return deadline')
     return {'status': 'completed' if process.returncode == 0 and not failure else 'failed',
             'returncode': process.returncode, 'failure': failure[0] if failure else None,
             'matching_survivors': survivors, 'sampled_peak_rss_bytes': peak,
-            'rss_sampling_seconds': .05, 'pid': process.pid}
+            'rss_sampling_seconds': .05, 'pid': process.pid,
+            'finished_monotonic': finished}
 
 
 def main(argv=None):

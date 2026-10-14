@@ -5,6 +5,13 @@ selected-profile evidence uses world-case v2 and has no family-v4 raw-audit
 receipt. It must not be relabeled as a family compact source or used to grant
 family-v3 acquisition, compact conversion, pruning or collection admission.
 
+**Execution status:** source preparation only; actual qualification is not
+admitted. The execution JSON is a prospective candidate, not an execution grant.
+Whole-parent publication/return timing and the exact invocation/freeze require
+independent review before any protected input access. The worker's late-success
+and final-log-drain deadline bypasses were reproduced and repaired; this narrow
+fix has independent review and does not close the remaining execution gates.
+
 ## Fixed original evidence
 
 Consume only the committed prerequisite-v3 publication index, registration,
@@ -55,7 +62,7 @@ replacement datasets. No scientific outcome is scored or selected here.
 
 Source implementation and temporary-fixture verification may iterate. Actual
 protected input/model access occurs only after source and freeze review GO and
-one exclusive, fsynced attempt reservation. One process, CPU / float32 / one
+one exclusive, fsynced attempt reservation. CPU / float32 / one
 numerical thread; Python 3.11.15, NumPy 2.2.5, Torch 2.9.0 and exact recorded
 Torch profile. Retain registered thread/CUDA environment. Zero GPU or physics.
 
