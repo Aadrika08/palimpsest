@@ -2,6 +2,7 @@
 import hashlib
 import importlib
 import importlib.util
+import json
 import os
 from pathlib import Path
 import subprocess
@@ -49,6 +50,105 @@ def fixture(tmp_path, object_format='sha1'):
 def held(repo, remote, **kwargs):
     return module().HeldGitSceneSources(repo, remote='origin',
         expected_remote_url=str(remote), deadline=time.monotonic() + 30, **kwargs)
+
+
+@pytest.mark.parametrize('object_format', ['sha1', 'sha256'])
+def test_document_read_binds_historical_attachment_and_returns_detached_context(tmp_path, object_format):
+    repo, remote, old = fixture(tmp_path, object_format)
+    with held(repo, remote) as sources:
+        descriptor = next(row for row in sources.snapshot()['documents'] if row['commit'] == old)
+        view = sources.read_document(old, descriptor['path'], expected_oid=descriptor['oid'])
+        raw = b'{"scene":"authored-old"}\n'
+        assert view == {**descriptor, 'repo': str(repo), 'object_format': object_format,
+                        'size_bytes': len(raw), 'sha256': hashlib.sha256(raw).hexdigest(), 'raw': raw}
+        view['path'] = 'changed.json'
+        view['raw'] = b'changed'
+        assert sources.read_document(old, 'old.json', expected_oid=descriptor['oid'])['raw'] == raw
+        assert sources.snapshot()['inventory_complete'] is False
+    with pytest.raises(RuntimeError):
+        sources.read_document(old, 'old.json', expected_oid=descriptor['oid'])
+
+
+def test_document_context_keeps_same_path_history_and_identical_copies_separate(tmp_path):
+    repo, remote, old = fixture(tmp_path)
+    raw = b'{"scene":"authored-current-variant"}\n'
+    (repo / 'old.json').write_bytes(raw)
+    (repo / 'copied.json').write_bytes(raw)
+    git(repo, 'add', '.'); git(repo, 'commit', '-qm', 'authored historical variant and copy')
+    git(repo, 'push', '-q', 'origin', 'main')
+    head = git(repo, 'rev-parse', 'HEAD')
+    with held(repo, remote) as sources:
+        documents = sources.snapshot()['documents']
+        old_entry = next(row for row in documents if row['commit'] == old and row['path'] == 'old.json')
+        current = next(row for row in documents if row['commit'] == head and row['path'] == 'old.json')
+        copied = next(row for row in documents if row['commit'] == head and row['path'] == 'copied.json')
+        (repo / 'old.json').write_bytes(b'{"scene":"uncommitted-live-variant"}\n')
+        old_view = sources.read_document(old, 'old.json', expected_oid=old_entry['oid'])
+        current_view = sources.read_document(head, 'old.json', expected_oid=current['oid'])
+        copied_view = sources.read_document(head, 'copied.json', expected_oid=copied['oid'])
+        assert old_view['raw'] == b'{"scene":"authored-old"}\n'
+        assert current_view['raw'] == copied_view['raw'] == raw
+        assert current_view['oid'] == copied_view['oid'] != old_view['oid']
+        assert current_view['path'] != copied_view['path']
+        assert old_view['root_tree'] != current_view['root_tree']
+
+
+@pytest.mark.parametrize('kind', ['wrong-commit', 'wrong-path', 'wrong-oid', 'commit-type',
+                                  'path-type', 'oid-type', 'traversal', 'absolute', 'nul'])
+def test_invalid_document_attachment_poisons_and_closes_all_descriptors(tmp_path, kind):
+    repo, remote, old = fixture(tmp_path)
+    before = len(os.listdir('/proc/self/fd'))
+    sources = held(repo, remote)
+    with pytest.raises(ValueError):
+        with sources:
+            descriptor = next(row for row in sources.snapshot()['documents'] if row['commit'] == old)
+            commit, path, oid = old, 'old.json', descriptor['oid']
+            if kind == 'wrong-commit': commit = git(repo, 'rev-parse', 'HEAD')
+            elif kind == 'wrong-path': path = 'new.md'
+            elif kind == 'wrong-oid': oid = '0' * 40
+            elif kind == 'commit-type': commit = None
+            elif kind == 'path-type': path = Path('old.json')
+            elif kind == 'oid-type': oid = []
+            elif kind == 'traversal': path = '../old.json'
+            elif kind == 'absolute': path = '/old.json'
+            else: path = 'old.json\0'
+            sources.read_document(commit, path, expected_oid=oid)
+    assert len(os.listdir('/proc/self/fd')) == before
+    with pytest.raises(RuntimeError): sources.snapshot()
+    with pytest.raises(RuntimeError): sources.retained_metadata_size_bytes()
+
+
+def test_metadata_budget_is_bounded_payload_free_and_accounts_for_reads(tmp_path):
+    repo, remote, old = fixture(tmp_path)
+    with held(repo, remote) as sources:
+        snapshot = sources.snapshot()
+        initial = sources.retained_metadata_size_bytes()
+        assert type(initial) is int and 0 < initial <= module().MAX_METADATA_BYTES
+        assert initial >= len(json.dumps(snapshot).encode())
+        assert sources.snapshot()['read_records'] == []
+        descriptor = next(row for row in snapshot['documents'] if row['commit'] == old)
+        sources.read_document(old, 'old.json', expected_oid=descriptor['oid'])
+        assert sources.retained_metadata_size_bytes() > initial
+    with pytest.raises(RuntimeError): sources.retained_metadata_size_bytes()
+
+
+@pytest.mark.parametrize('operation', ['document', 'budget'])
+@pytest.mark.parametrize('failure', ['drift', 'cap', 'deadline'])
+def test_public_document_and_metadata_failures_poison_custody(tmp_path, monkeypatch, operation, failure):
+    repo, remote, old = fixture(tmp_path)
+    before = len(os.listdir('/proc/self/fd'))
+    sources = held(repo, remote)
+    with pytest.raises((ValueError, RuntimeError, TimeoutError)):
+        with sources:
+            descriptor = next(row for row in sources.snapshot()['documents'] if row['commit'] == old)
+            if failure == 'drift': git(repo, 'branch', 'later', old)
+            elif failure == 'deadline': sources.deadline = time.monotonic() - 1
+            elif operation == 'document': monkeypatch.setattr(module(), 'MAX_DOCUMENT_BYTES', 1)
+            else: monkeypatch.setattr(module(), 'MAX_METADATA_BYTES', sources.retained_metadata_size_bytes() - 1)
+            if operation == 'document': sources.read_document(old, 'old.json', expected_oid=descriptor['oid'])
+            else: sources.retained_metadata_size_bytes()
+    assert len(os.listdir('/proc/self/fd')) == before
+    with pytest.raises(RuntimeError): sources.snapshot()
 
 
 @pytest.mark.parametrize('object_format', ['sha1', 'sha256'])

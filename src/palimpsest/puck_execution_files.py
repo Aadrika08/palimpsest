@@ -7,6 +7,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 import hashlib
+import json
 import math
 import os
 from pathlib import Path
@@ -275,6 +276,21 @@ class HeldCollectionFiles:
         except BaseException:
             self._failed()
             raise
+
+    def retained_metadata_size_bytes(self):
+        """Count held metadata only; no descriptor or path capability escapes."""
+        try:
+            self.recheck()
+            state = {'root': str(self.root), 'subtrees': self._subtrees,
+                'entries': [(row.path, row.size, row.sha256) for row in self._entries.values()],
+                'directories': [[parts, name, identity] for parts, (_, _, name, identity) in sorted(self._dirs.items())],
+                'files': [[path, name, identity] for path, (_, _, name, identity) in sorted(self._files.items())]}
+            size = len(json.dumps(state, sort_keys=True, separators=(',', ':')).encode())
+            if size > MAX_TOTAL_BYTES:
+                raise ValueError('Held collection metadata exceeds source ceiling')
+            self.recheck(); return size
+        except BaseException:
+            self._failed(); raise
 
     def _guard(self, relative):
         self._active()

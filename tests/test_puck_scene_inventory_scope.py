@@ -108,18 +108,101 @@ def test_distinct_historical_scene_variants_are_preserved_and_stop_legacy_projec
         if row['path']==str(repo/'catalog.json'):row.update(size_bytes=len(payload),sha256=sha(payload))
     registration['git_documents'].append({'repo':str(repo),'oid':git(repo,'rev-parse','HEAD:catalog.json'),
         'kind':'task_catalog','size_bytes':len(payload),'sha256':sha(payload)})
-    with held(registration) as inventory:
-        receipt=inventory.snapshot()
-        assert receipt['declared_scope_covered'] is True and receipt['semantic_closure_resolved'] is True
-        assert len(receipt['variants'])==3
-        assert receipt['id_variants']
-        with pytest.raises(ValueError,match='legacy'):inventory.legacy_projection()
+    with pytest.raises(ValueError,match='legacy'):
+        with held(registration) as inventory:
+            receipt=inventory.snapshot()
+            assert receipt['declared_scope_covered'] is True and receipt['semantic_closure_resolved'] is True
+            assert len(receipt['variants'])==3
+            assert receipt['id_variants']
+            inventory.legacy_projection()
 
 
 def test_public_held_out_catalog_exposure_is_recorded_and_not_silently_mapped_to_legacy_flag(tmp_path):
     registration,_,_=fixture(tmp_path);payload=raw(catalog())
     path=Path(registration['files'][0]['path']);path.write_bytes(payload)
     registration['files'][0].update(size_bytes=len(payload),sha256=sha(payload))
+    with pytest.raises(ValueError,match='legacy'):
+        with held(registration) as inventory:
+            assert inventory.snapshot()['held_out_catalog_read'] is True
+            inventory.legacy_projection()
+
+
+def add_live(registration,path,payload,kind):
+    path.write_bytes(payload)
+    registration['files'].append({'path':str(path),'kind':kind,'size_bytes':len(payload),'sha256':sha(payload)})
+    registration['files'].sort(key=lambda row:row['path'])
+
+
+def test_markdown_declared_scenes_follow_authenticated_local_json_link(tmp_path):
+    registration,_,paths=fixture(tmp_path)
+    add_live(registration,paths['manifests']/'note.md',b'Scene IDs: 6000; split: train\n[Task](catalog.json)\n','markdown')
     with held(registration) as inventory:
-        assert inventory.snapshot()['held_out_catalog_read'] is True
-        with pytest.raises(ValueError,match='legacy'):inventory.legacy_projection()
+        receipt=inventory.snapshot();assert receipt['semantic_closure_resolved'] is True
+        occurrence=next(row for v in receipt['variants'] if v['scene_id']==6000 for row in v['occurrences'] if row['document_path'].endswith('note.md'))
+        assert occurrence['identity_sources']==[str(paths['manifests']/'catalog.json')]
+        inventory.legacy_projection()
+
+
+def test_unknown_markdown_declarations_block_projection_and_preserve_diagnostics(tmp_path):
+    registration,_,paths=fixture(tmp_path)
+    add_live(registration,paths['manifests']/'note.md',b'Scene IDs are perhaps 6000 or 6001\n','markdown')
+    with pytest.raises(ValueError,match='legacy'):
+        with held(registration) as inventory:
+            assert inventory.snapshot()['blockers']
+            inventory.legacy_projection()
+
+
+def test_historical_markdown_links_never_select_uncommitted_worktree_file(tmp_path):
+    registration,_,_=fixture(tmp_path,True);repo=Path(registration['repositories'][0]['repo'])
+    note=b'Scene IDs: 6000; split: train\n[Task](catalog.json)\n'
+    add_live(registration,repo/'note.md',note,'markdown');git(repo,'add','.');git(repo,'commit','-qm','authored link');git(repo,'push','-q','origin','main')
+    commit=git(repo,'rev-parse','HEAD')
+    registration['git_documents'].append({'repo':str(repo),'oid':git(repo,'rev-parse','HEAD:note.md'),'kind':'markdown','size_bytes':len(note),'sha256':sha(note)})
+    value=catalog();value['layouts']=value['layouts'][:1];value['layouts'][0]['goal_xy'][0]=1.75
+    payload=raw(value);(repo/'catalog.json').write_bytes(payload)
+    next(row for row in registration['files'] if row['path']==str(repo/'catalog.json')).update(size_bytes=len(payload),sha256=sha(payload))
+    with held(registration) as inventory:
+        receipt=inventory.snapshot();assert receipt['semantic_closure_resolved'] is True
+        notes=[(v,row) for v in receipt['variants'] if v['scene_id']==6000 for row in v['occurrences'] if row['document_path']==str(repo/'note.md')]
+        old=next(v for v,row in notes if row['context'].get('commit')==commit)
+        current=next(v for v,row in notes if row['context']['kind']=='filesystem')
+        assert old['scientific_initial_sha256']!=current['scientific_initial_sha256']
+
+
+def test_json_reference_budget_is_shared_across_live_and_historical_contexts(tmp_path,monkeypatch):
+    from test_puck_scene_reference_resolution import report
+    registration,_,_=fixture(tmp_path,True);repo=Path(registration['repositories'][0]['repo'])
+    cat_raw=(repo/'catalog.json').read_bytes();payload=raw(report(b'{}',cat_raw))
+    add_live(registration,repo/'report.json',payload,'teacher_collection_report')
+    git(repo,'add','.');git(repo,'commit','-qm','authored missing reference');git(repo,'push','-q','origin','main')
+    registration['git_documents'].append({'repo':str(repo),'oid':git(repo,'rev-parse','HEAD:report.json'),
+        'kind':'teacher_collection_report','size_bytes':len(payload),'sha256':sha(payload)})
+    monkeypatch.setattr(module(),'MAX_REFERENCES',1)
+    with pytest.raises(ValueError,match='reference ceiling'):
+        with held(registration):pass
+
+
+def test_public_custody_metadata_budgets_cover_roots_and_selected_file_holders(tmp_path):
+    from palimpsest.puck_scene_roots import HeldSceneInventoryRoots,_json
+    from palimpsest.puck_execution_files import HeldCollectionFiles
+    registration,forest,_=fixture(tmp_path)
+    root_raw=_json(registration['root_contract'])
+    with HeldSceneInventoryRoots(root_raw,expected_sha256=sha(root_raw),deadline=time.monotonic()+10) as roots:
+        assert callable(getattr(roots,'retained_metadata_size_bytes',None)), 'Root metadata budget seam missing'
+        assert 0<roots.retained_metadata_size_bytes()<=64*1024**2
+    file=registration['files'][0]
+    entries=[{'path':str(Path(file['path']).relative_to(forest)),'size_bytes':file['size_bytes'],'sha256':file['sha256']}]
+    with HeldCollectionFiles(forest,entries,time.monotonic()+10) as files:
+        assert callable(getattr(files,'retained_metadata_size_bytes',None)), 'File metadata budget seam missing'
+        assert 0<files.retained_metadata_size_bytes()<=64*1024**2
+
+
+def test_full_namespace_coverage_refuses_before_any_live_document_payload_read(tmp_path,monkeypatch):
+    registration,_,_=fixture(tmp_path,True);registration['git_documents']=[]
+    subject=module();reads=[];original=subject.HeldCollectionFiles.read
+    def recording_read(holder,*args):
+        reads.append(args);return original(holder,*args)
+    monkeypatch.setattr(subject.HeldCollectionFiles,'read',recording_read)
+    with pytest.raises(ValueError,match='classification coverage'):
+        with held(registration):pass
+    assert reads==[]
