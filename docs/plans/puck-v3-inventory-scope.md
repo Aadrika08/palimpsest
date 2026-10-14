@@ -48,8 +48,12 @@ observations are not an atomic snapshot, hostile-host proof or post-close custod
   Markdown codec, complete held coordinator and guarded legacy projection.
 - [x] Independently review exact source and repeat meaningful focused/affected
   verification serially; preserve failures and existing six mechanics exclusions.
-- [ ] Commit/push a stacked draft PR/report and synchronize goal/matrix without
+- [x] Commit/push a stacked draft PR/report and synchronize goal/matrix without
   changing any release status. Continue fresh-worker/durable launcher binding.
 
 CI and physical rover stay excluded. Memory amendment02 and mixed-catalog access
 remain pending; navigation attempt3 is unauthorized. All seven gates stay open.
+
+Delivered as [draft PR #128](https://github.com/Aadrika08/palimpsest/pull/128);
+source evidence is retained in [the report](../reports/puck-v3-inventory-scope-source.md).
+The complete executable launcher milestone remains open.
