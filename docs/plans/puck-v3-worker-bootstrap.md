@@ -28,11 +28,11 @@ The interpreter object and measured Python version are scoped facts; stdlib,
 ELF dependencies, external packages and native images remain a trusted/unqualified
 boundary. This is not a sandbox against malicious admitted Python.
 
-- [ ] Observe fresh-child REDs for missing API; wrong source/runtime/argv/env;
+- [x] Observe fresh-child REDs for missing API; wrong source/runtime/argv/env;
   foreign imports, namespace gaps, drift and loaded-code replacement.
-- [ ] Implement stdlib seed, strict registration, held-source finder and the
+- [x] Implement stdlib seed, strict registration, held-source finder and the
   fixed executable preflight entry; keep every refusal terminal.
-- [ ] Independently review the branch, run focused/affected checks serially and
+- [x] Independently review the branch, run focused/affected checks serially and
   retain default-suite limitations and exact source evidence.
 - [ ] Commit/push a stacked draft PR and synchronize goal/matrix. Continue the
   separate dependency/native admission and complete durable collection launcher.
@@ -40,3 +40,11 @@ boundary. This is not a sandbox against malicious admitted Python.
 The full twelve-owner allocation and historical owner denial stay unchanged.
 Memory amendment02, catalog access and navigation decisions remain pending.
 No actual study/registry/model/native stage; CI and physical rover excluded.
+
+Ruling: use an external-own-digest argv suffix, preserving exact observed argv
+without a self-hash cycle. Stdlib/ELF dependencies stay explicitly trusted and
+unqualified; this bootstrap cannot grant collection by observing Python alone.
+Review source `875da74` found two Important dispatch gaps; one fix pass at
+`0629f43` reproduced and corrected class, alias, wrapper and support-holder gaps.
+Independent verification repeated tests on the corrected source; it is not a
+second source review or exact execution/runtime GO.
