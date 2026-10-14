@@ -53,6 +53,16 @@ unqualified. The catalog-access amendment decision is pending. Browser preflight
 on 15 October 2026 locally again exposed zero apps/browsers; no workflow ran.
 All seven gate statuses below remain unchanged.
 
+The clarified execution goal now targets two complete working paths: memory
+replay-to-case-close and puck inventory-to-collection, followed by the fixed
+studies, integrated lab/artworks and human acceptance. The next source unit is
+root discovery and semantic inventory on `research/puck-v3-inventory-roots`.
+Disk was refreshed at 14 October 20:54 UTC to 100,027,265,024 bytes (~93.2 GiB),
+above the frozen memory floor. Required inputs and free space must still be
+rechecked before an admitted stage. Memory attempt-02, catalog-access and new
+navigation-study decisions remain pending; clearing space grants none of them.
+No new study or browser workflow ran, and all seven gate statuses remain unchanged.
+
 ## Functional matrix
 
 | PRD ID | Status | Acceptance boundary | Runnable coverage | Observed evidence and limits |
