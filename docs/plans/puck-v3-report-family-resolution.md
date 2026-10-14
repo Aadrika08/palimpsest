@@ -24,11 +24,11 @@ Binary checkpoint/SNP receipts remain declarations; this JSON resolver cannot
 qualify their bytes or claim native replay. No generated path replaces a missing
 historical context.
 
-- [ ] Write and observe missing-feature REDs on authored bytes/temp files.
-- [ ] Implement codecs and integrate pinned dependency resolution; check actual
+- [x] Write and observe missing-feature REDs on authored bytes/temp files.
+- [x] Implement codecs and integrate pinned dependency resolution; check actual
   producer shapes, failed partial variants, hidden declarations, type aliases,
   scene/model confusion, path anchors, contradictory rows/receipts and limits.
-- [ ] Independently review exact source and repeat focused/affected checks with
+- [x] Independently review exact source and repeat focused/affected checks with
   the same six inherited mechanics exclusions and bounded default-suite result.
 - [ ] Commit/push a stacked draft PR with source evidence; synchronize execution
   goal/matrix, preserving all seven release statuses.
