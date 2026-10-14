@@ -113,6 +113,8 @@ assert result['seed']==seed and result['model_calls']==1
 assert len(result['negatives'])==6 and all(row['rejected'] is True for row in result['negatives'])
 assert result['action_dtype']=='float64' and len(result['action'])==2
 assert result['parameters_restored'] is True
+assert result['runtime']=={'python':'3.11.15','numpy':'2.2.5','torch':'2.9.0',
+    'threads':1,'device':'cpu','deterministic_algorithms':True,'cuda_initialized':False}
 assert 'mujoco' not in sys.modules and 'palimpsest.engine' not in sys.modules
 '''
     result=subprocess.run([sys.executable,'-c',script,str(seed)],capture_output=True,text=True,timeout=30)
@@ -132,3 +134,12 @@ def test_import_runner_does_not_import_numerical_or_native_runtime():
         "import scripts.qualify_puck_original_bundles_v1,sys; assert 'torch' not in sys.modules; assert 'mujoco' not in sys.modules; assert 'numpy' not in sys.modules"],
         capture_output=True,text=True,timeout=10)
     assert result.returncode==0,result.stderr
+
+
+def test_invocation_refuses_wrong_interpreter_and_environment_without_reservation(monkeypatch):
+    m=module()
+    with pytest.raises(ValueError,match='interpreter'):m.check_invocation({'python_executable':'/other/python'})
+    for key,value in m.ENVIRONMENT.items():monkeypatch.setenv(key,value)
+    m.check_invocation({'python_executable':sys.executable})
+    monkeypatch.setenv('CUDA_VISIBLE_DEVICES','0')
+    with pytest.raises(ValueError,match='environment'):m.check_invocation({'python_executable':sys.executable})
