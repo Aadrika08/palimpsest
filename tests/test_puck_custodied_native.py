@@ -10,7 +10,7 @@ import pytest
 @pytest.mark.parametrize('scenario',[
     'success','two-intervals','parameter-before','parameter-during-step',
     'file-during-step','wrong-goal','stale-native-tick','publication-failure',
-    'file-after-publication','unmaterialized','closed','mixed-model'])
+    'file-after-publication','unmaterialized','closed','mixed-model','second-file-drift'])
 def test_custodied_native_interval_on_authored_inputs(tmp_path,scenario):
     # Each child isolates the actual Torch profile and the faithful fake native
     # runtime. It opens only temporary authored bundle/source files.
@@ -29,6 +29,9 @@ from palimpsest.body_profile import effective_control
 from palimpsest.records import RunWriter
 
 fixture=NativeIntervalTests(methodName='runTest');fixture.setUp()
+from scripts import verify_puck_mechanics as native_gate
+world_patch=patch.object(native_gate,'world_from',side_effect=lambda env,goal:{**fixture.world,'time_s':env.data.time})
+world_patch.start();fixture.addCleanup(world_patch.stop)
 execution,custody=context(Path(sys.argv[1]))
 scenario=sys.argv[2]
 assert callable(getattr(execution,'native_interval',None)), 'Custodied native interval API missing'
@@ -57,7 +60,7 @@ def step(action):
     fixture.env.data.ctrl[:]=effective_control(action)
     if scenario=='parameter-during-step':
         with torch.no_grad():model[0].bias[0]+=1
-    if scenario=='file-during-step':drift_file()
+    if scenario=='file-during-step' or scenario=='second-file-drift' and calls['step']==2:drift_file()
     if scenario=='stale-native-tick':fixture.env._t-=1
     return fixture.observation,0.,False,False,{'dist_to_goal':1.,'stalled':False}
 fixture.env.step=step
@@ -84,7 +87,7 @@ try:
             with patch.object(RunWriter,'finish',side_effect=OSError('authored publication failure')) if scenario=='publication-failure' else __import__('contextlib').nullcontext():
                 completed=execution.native_interval(fixture.env,fixture.observation,state,world,contact,
                     own,mode,probe,writer)
-                if scenario=='two-intervals':
+                if scenario in ('two-intervals','second-file-drift'):
                     completed=execution.native_interval(fixture.env,completed['observation'],completed['state'],
                         completed['world'],completed['contact'],completed['own'],completed['teacher_mode'],probe,writer)
 except (ValueError,RuntimeError,OSError) as error:failure=error
@@ -101,10 +104,10 @@ if scenario in ('success','two-intervals'):
 else:
     assert failure is not None,'Custody/native/publication failure accepted'
     assert writer._broken,'Failed native route left writer reusable'
-    assert len(rows)==(1 if scenario=='file-after-publication' else 0),len(rows)
+    assert len(rows)==(1 if scenario in ('file-after-publication','second-file-drift') else 0),len(rows)
     assert fixture.own['tick']==0
-    if scenario in ('parameter-before','wrong-goal','unmaterialized','closed','mixed-model'):
-        assert calls['step']==0,calls
+    n=0 if scenario in ('parameter-before','wrong-goal','unmaterialized','closed','mixed-model') else 2 if scenario=='second-file-drift' else 1
+    assert calls=={'teacher':n,'predict':n,'step':n},calls
     try:execution.recheck()
     except RuntimeError:pass
     else:raise AssertionError('Failed native route left custody usable')
@@ -118,4 +121,13 @@ print('authored native custody scenario passed')
     result=subprocess.run([sys.executable,'-c',code,str(tmp_path/'inputs'),scenario],
                           cwd=Path(__file__).resolve().parents[1],env=env,
                           capture_output=True,text=True,timeout=30)
+    assert result.returncode==0,result.stdout+result.stderr
+
+
+def test_native_pipeline_imports_from_declared_package_path_without_fixture_path_changes():
+    code='from scripts.verify_puck_mechanics import on_policy_interval; assert callable(on_policy_interval)'
+    result=subprocess.run([sys.executable,'-c',code],
+        cwd=Path(__file__).resolve().parents[1],
+        env={**os.environ,'PYTHONDONTWRITEBYTECODE':'1','PYTHONPATH':'src:.'},
+        capture_output=True,text=True,timeout=10)
     assert result.returncode==0,result.stdout+result.stderr

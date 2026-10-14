@@ -318,7 +318,7 @@ class PuckOnPolicyLayoutTests(unittest.TestCase):
                 "import palimpsest.puck_on_policy, palimpsest.puck_profile; "
                 "bad=sorted({'torch','mujoco'} & set(sys.modules)); "
                 "assert not bad, bad")
-        result = subprocess.run([sys.executable, '-I', '-c', code], text=True,
+        result = subprocess.run([sys.executable, '-I', '-B', '-c', code], text=True,
                                 capture_output=True, timeout=30)
         self.assertEqual(result.returncode, 0, result.stderr)
 

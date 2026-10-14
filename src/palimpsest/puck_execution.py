@@ -341,6 +341,24 @@ class _HeldCollectionExecution:
             self._fail()
             raise
 
+    def native_interval(self,env,observation,state,world,contact,own,teacher_mode,
+                        probe,writer):
+        """One custodied native/publication interval; no owner allocation grant.
+
+        The launcher must separately admit native construction, reservation,
+        runtime, process ownership and final owner close. No loose model can
+        bypass this context's staged inference or publication checks.
+        """
+        try:
+            self._active()
+            from scripts.verify_puck_mechanics import on_policy_interval
+            return on_policy_interval(env,observation,state,world,contact,own,
+                teacher_mode,None,probe,writer,execution=self)
+        except BaseException:
+            writer.stop()
+            self._fail()
+            raise
+
     def __exit__(self,kind,error,traceback):
         if self._state!='active':
             if kind is None:raise RuntimeError('Collection custody failed before context exit')

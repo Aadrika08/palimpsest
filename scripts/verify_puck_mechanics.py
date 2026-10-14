@@ -19,7 +19,10 @@ import sys
 import time
 import zipfile
 
-from verify_afterimage import digest, write_json, process_identity, cleanup_check
+if __package__:
+    from .verify_afterimage import digest, write_json, process_identity, cleanup_check
+else:
+    from verify_afterimage import digest, write_json, process_identity, cleanup_check
 from palimpsest import puck_profile as puck
 from palimpsest.snapshots import state_digest
 
@@ -372,13 +375,17 @@ def packet(env, observation, before, after, inputs, action, state, contact, inte
 
 
 def on_policy_interval(env, observation, state, world, contact, own, teacher_mode,
-                       model, probe, writer):
-    """Actual one-interval seam; no qualified collection envelope exists yet."""
+                       model, probe, writer, *, execution=None):
+    """One interval, optionally staged through held custody; no owner grant."""
     from palimpsest import puck_on_policy as adapter
     from palimpsest.body_profile import effective_control
     from palimpsest.snapshots import state_digest
     import numpy as np
     try:
+        if execution is not None:
+            from palimpsest.puck_execution import _HeldCollectionExecution
+            if not isinstance(execution,_HeldCollectionExecution) or model is not None:
+                raise ValueError('Custodied interval requires held execution and no loose model')
         if writer._broken:
             raise ValueError('V3 interval owner stopped')
         if (type(env._t) is not int or type(state.get('tick')) is not int or
@@ -394,15 +401,20 @@ def on_policy_interval(env, observation, state, world, contact, own, teacher_mod
         inputs = puck.project(world, contact)
         application = {'state': state, 'world': world, 'contact': contact,
                        'own': own, 'teacher_mode': teacher_mode}
-        staged = adapter.stage_interval(inputs, world, teacher_mode, own, model,
-            terminal_reason=state['reason'], capture_query_state=lambda:
-                adapter.capture_query_state(env, observation, application=application))
+        capture = lambda: adapter.capture_query_state(env,observation,application=application)
+        if execution is None:
+            staged = adapter.stage_interval(inputs,world,teacher_mode,own,model,
+                terminal_reason=state['reason'],capture_query_state=capture)
+        else:
+            staged = execution.stage_interval(inputs,world,teacher_mode,own,
+                terminal_reason=state['reason'],capture_query_state=capture)
         tick = own['tick']+1
         receipt = adapter._interval_receipt(staged,tick)
         next_own,next_teacher = adapter.admit_completed_interval(staged,own,teacher_mode,
             completed_tick=tick,publication_receipt=receipt)
         action = staged['row']['action'].tolist()
         before = copy.deepcopy(world)
+        if execution is not None:execution.check_parameters()
         try:
             probe.install()
             probe.begin(own['tick'])
@@ -434,11 +446,16 @@ def on_policy_interval(env, observation, state, world, contact, own, teacher_mod
             task_sha256=np.frombuffer(bytes.fromhex(state_digest(task)),np.uint8))
         completed = {'observation':next_observation,'state':next_state,'world':after,'contact':next_contact,
                      'own':next_own,'teacher_mode':next_teacher}
+        if execution is not None:execution.check_parameters()
         writer.publish(staged,arrays,event,completed_tick=tick)
+        if execution is not None:execution.check_parameters()
         # Receipt was validated before publication; the writer returns that exact object.
         return completed
     except BaseException:
         writer.stop()
+        if execution is not None:
+            from palimpsest.puck_execution import _HeldCollectionExecution
+            if isinstance(execution,_HeldCollectionExecution):execution._fail()
         raise
 
 
