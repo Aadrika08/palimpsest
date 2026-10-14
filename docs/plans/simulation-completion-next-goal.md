@@ -777,3 +777,41 @@ admission; complete fixed memory and puck evaluations; the separately authorized
 navigation decision; sustained lab/artwork encounters; human acceptance and
 final integration. First implementation unit: memory recurrent-cell replay.
 All seven release gates remain open. CI and the physical rover remain excluded.
+
+### Actual recurrent-cell replay source path reviewed
+
+Continued active-goal pursuit, 14 October 2026:
+
+[PR #117](https://github.com/Aadrika08/palimpsest/pull/117), stacked on #115,
+implements the actual guarded FLYNN cell consumer at
+`8463c2c73a21f83ab8933f03b01a6fdf984f3f46`. It feeds the already processed
+encoded input directly into the upstream cell; every finite float32 raw output
+and action must match bit-for-bit. Source starts zero hidden and ends at the
+acquired source hidden; conditions start that hidden and report a computed final
+digest without independent endpoint qualification. No retina/renderer/physics/
+Engine path runs. The consumer checks pinned public model identity, runtime,
+live tensors and held prospective source files; authenticated SNP/model-asset
+custody remains a caller obligation.
+
+The final affected suite passes 328 tests without skips in 119.20 s; independent
+GO passes 41 focused checks plus two faithful actual-guard failure cases. Review
+found a diagnostics-dictionary mutation missed by the first output-hook fixture.
+RED `2cb3f81` retains the deep-content failure; fix `1869954` isolates replay
+diagnostics and restores caller state, references and caches on failure. All
+21 local behavior pins and three upstream source pins, fresh lazy import,
+compile and diff checks pass. Prospective protocol SHA is
+`cbdf034970963a847d42fabc879cc4596a99c8c1b58311561a6c678233e9c4fa`.
+
+Numerical tests use the actual pinned upstream cell on generated temporary tiny
+graphs/checkpoints. Public family admission refuses those synthetic model pins.
+No original model, retained recording/SNP, native owner, development/held-out
+study, pruning or navigation attempt ran. All qualification and launch grants
+remain false. Full-model positive qualification and condition/case integration
+remain required before pruning/allocation/collection admission.
+
+Next concrete work: freeze and independently review full-model cell qualification
+with model/input/runtime custody, and wire replay proof into complete condition/
+case sealing. Puck's next production unit is a descriptor-held execution context
+for source roster, original bundle/model and collection-only scene custody,
+consumed by the existing interval route. All seven release gates remain open;
+navigation attempt 3 stays unauthorized, CI excluded and physical rover deferred.

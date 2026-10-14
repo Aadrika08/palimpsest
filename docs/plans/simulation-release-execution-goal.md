@@ -27,6 +27,14 @@ thresholds remain binding.
   disk cleanup. Free space alone does not establish that inputs remain present
   or valid. Recheck space immediately before each admitted stage.
 
+Latest implementation progress: [PR #117](https://github.com/Aadrika08/palimpsest/pull/117)
+adds the actual recurrent-cell consumer, with 328 affected tests and independent
+review. Temporary tiny-model tests exercise the actual upstream cell and both
+starting states; the public family consumer rejects synthetic model pins.
+Full FLYNN positive qualification, authenticated model/SNP custody and durable
+condition/case integration remain open. None of the study or release exits below
+is complete from this source evidence alone.
+
 ## Immediate goal: complete the two execution paths
 
 Finish the memory and puck paths from admitted inputs to independently checked
@@ -152,8 +160,12 @@ while a required capability or acceptance gate remains open.
 
 ## First action when pursuing this goal
 
-Start with **memory recurrent-cell replay**, based on PR #115, while the
-independent puck execution/custody contract is prepared from PR #116. Freeze each
-unit's precise interfaces, source/runtime identities and bounded verification
-before implementation or actual-input execution. Preserve every failed attempt;
-no blind retries, held-out tuning, threshold reduction or physical rover work.
+Continue **memory recurrent-cell replay** from PR #117: freeze and independently
+review bounded full-model qualification with exact model/input/runtime custody,
+then bind its proof into condition/case close. The independent next puck unit is
+a descriptor-held collection execution context that feeds admitted original
+arrays/model and collection-only scenes into the existing interval route, from
+PR #116. Freeze each unit's precise interfaces, source/runtime identities and
+bounded verification before implementation or actual-input execution. Preserve
+every failed attempt; no blind retries, held-out tuning, threshold reduction or
+physical rover work.
