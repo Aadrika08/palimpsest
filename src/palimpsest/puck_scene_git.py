@@ -708,6 +708,61 @@ class HeldGitSceneSources:
         except BaseException:
             self._state = 'failed'; self._held.close(); raise
 
+    def read_document(self, commit, path, *, expected_oid):
+        """Read one authenticated historical attachment as a detached byte view.
+
+        The held commit/tree/path/mode/OID occurrence, not a current-worktree
+        pathname or caller-supplied attachment, selects the document. Raw bytes
+        are a consumer context only; they are never inserted into the receipt.
+        """
+        try:
+            self._active()
+            if any(type(value) is not str for value in (commit, path, expected_oid)):
+                raise ValueError('Git document attachment requires exact text fields')
+            self._oid(commit)
+            self._oid(expected_oid)
+            _relative(path)
+            matches = [row for row in self._evidence['documents']
+                       if row['commit'] == commit and row['path'] == path]
+            if len(matches) != 1 or matches[0]['oid'] != expected_oid:
+                raise ValueError('Git document attachment was not discovered with its exact OID')
+            descriptor = dict(matches[0])
+            payload = self.read_blob(expected_oid)
+            result = dict(descriptor, repo=self.repo, object_format=self._format,
+                          size_bytes=len(payload), sha256=hashlib.sha256(payload).hexdigest(),
+                          raw=payload)
+            self._held.check()
+            _clock(self.deadline)
+            return result
+        except BaseException as error:
+            self._state = 'failed'
+            try:
+                self._held.close()
+            except BaseException as cleanup_error:
+                error.add_note('Git document attachment cleanup failed: ' + repr(cleanup_error))
+            raise
+
+    def retained_metadata_size_bytes(self):
+        """Count bounded retained descriptor/read metadata without payload reads."""
+        try:
+            self._active()
+            self._held.check()
+            retained_size = len(json.dumps(self._evidence).encode('utf-8'))
+            retained_size += len(json.dumps(self._held.namespace).encode('utf-8'))
+            retained_size += len(json.dumps(self._read_records).encode('utf-8'))
+            if retained_size > MAX_METADATA_BYTES:
+                raise ValueError('Retained Git descriptor/read metadata exceeds 64 MiB')
+            self._held.check()
+            _clock(self.deadline)
+            return retained_size
+        except BaseException as error:
+            self._state = 'failed'
+            try:
+                self._held.close()
+            except BaseException as cleanup_error:
+                error.add_note('Git metadata budget cleanup failed: ' + repr(cleanup_error))
+            raise
+
     def __exit__(self, exc_type, exc, traceback):
         if self._state != 'active':
             self._held.close()

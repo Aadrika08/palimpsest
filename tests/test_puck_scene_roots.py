@@ -29,6 +29,151 @@ def held(root, opaque=(), raw=None, **kwargs):
         deadline=kwargs.pop('deadline', time.monotonic() + 30), **kwargs)
 
 
+def test_document_census_contains_every_regular_json_and_markdown_name(tmp_path, monkeypatch):
+    root = tmp_path / 'forest'; root.mkdir()
+    nested = root / 'nested'; nested.mkdir()
+    documents = [root / 'unrecognized.JSON', nested / 'notes.mD', root / 'manifest.json']
+    for path in documents: path.write_bytes(b'not parsed or authenticated')
+    alias = nested / 'alias.md'; os.link(documents[0], alias); documents.append(alias)
+    (root / 'readme.txt').write_bytes(b'not a document candidate')
+    (root / 'directory.md').mkdir()
+    m = module(); original_open = m.os.open
+
+    def directory_only(path, flags, *args, **kwargs):
+        assert flags & os.O_DIRECTORY, 'document census opened a leaf payload'
+        return original_open(path, flags, *args, **kwargs)
+
+    monkeypatch.setattr(m.os, 'open', directory_only)
+    with held(root) as inventory:
+        receipt = inventory.snapshot()
+        expected = []
+        for path in sorted(documents):
+            value = path.stat()
+            expected.append({'path': str(path), 'search_root': str(root),
+                'relpath': str(path.relative_to(root)), 'size_bytes': value.st_size,
+                'stat_identity': [value.st_dev, value.st_ino, value.st_mode, value.st_size,
+                    value.st_mtime_ns, value.st_ctime_ns, value.st_nlink]})
+        assert receipt['document_candidates'] == expected
+        assert receipt['payload_reads'] == 0
+        assert receipt['candidate_hints_only'] is True
+        assert receipt['contents_authenticated'] is False
+        receipt['document_candidates'][0]['stat_identity'].clear()
+        assert inventory.snapshot()['document_candidates'] == expected
+
+
+def test_bare_git_shaped_directory_is_explicit_unsupported_metadata_candidate(tmp_path, monkeypatch):
+    bare = tmp_path / 'authored-bare'; bare.mkdir()
+    (bare / 'HEAD').write_bytes(b'not read')
+    (bare / 'objects').mkdir(); (bare / 'refs').mkdir()
+    near = tmp_path / 'near'; near.mkdir(); (near / 'HEAD').mkdir()
+    (near / 'objects').mkdir(); (near / 'refs').mkdir()
+    m = module(); original_open = m.os.open
+
+    def directory_only(path, flags, *args, **kwargs):
+        assert flags & os.O_DIRECTORY, 'bare candidate inspection opened a leaf payload'
+        return original_open(path, flags, *args, **kwargs)
+
+    monkeypatch.setattr(m.os, 'open', directory_only)
+    with held(tmp_path) as inventory:
+        receipt = inventory.snapshot()
+        assert receipt['unsupported_git_candidates'] == [{
+            'path': str(bare), 'search_root': str(tmp_path), 'marker_kind': 'bare',
+            'reason': 'HEAD regular file plus objects and refs directories',
+            'contents_authenticated': False}]
+        assert receipt['repository_candidates'] == []
+        assert receipt['inventory_complete'] is False
+        assert receipt['all_repositories_discovered'] is False
+
+
+def test_document_census_reports_search_root_owner_with_global_path_order(tmp_path):
+    roots = [tmp_path / 'z-root', tmp_path / 'a-root']
+    for root in roots:
+        root.mkdir(); (root / 'same.md').write_bytes(b'authored')
+    document = json.loads(contract(roots[0]))
+    document['search_roots'] = [str(root) for root in roots]
+    raw = json.dumps(document, sort_keys=True, separators=(',', ':')).encode()
+    with held(roots[0], raw=raw) as inventory:
+        candidates = inventory.snapshot()['document_candidates']
+        assert [row['path'] for row in candidates] == [str(root / 'same.md') for root in sorted(roots)]
+        assert [row['search_root'] for row in candidates] == [str(root) for root in sorted(roots)]
+        assert all(row['relpath'] == 'same.md' for row in candidates)
+
+
+def test_census_and_bare_hints_do_not_enter_opaque_git_or_explicit_exclusions(tmp_path):
+    storage = tmp_path / '.git'; storage.mkdir()
+    opaque = tmp_path / 'opaque'; opaque.mkdir()
+    for directory in (storage, opaque):
+        (directory / 'ignored.JSON').write_bytes(b'not observed')
+        (directory / 'HEAD').write_bytes(b'not read')
+        (directory / 'objects').mkdir(); (directory / 'refs').mkdir()
+    with held(tmp_path, [{'path': str(opaque), 'reason': 'authored exclusion'}]) as inventory:
+        receipt = inventory.snapshot()
+        assert receipt['document_candidates'] == []
+        assert receipt['unsupported_git_candidates'] == []
+        (storage / 'changed.md').write_bytes(b'outside observed scope')
+        (opaque / 'changed.md').write_bytes(b'outside observed scope')
+        inventory.recheck()
+
+
+@pytest.mark.parametrize('name', ['foreign:document.json', 'foreign\\document.MD'])
+@pytest.mark.parametrize('location', ['leaf', 'ancestor', 'root'])
+def test_candidate_foreign_separator_names_refuse_and_close(tmp_path, monkeypatch, name, location):
+    root = tmp_path
+    if location == 'leaf': (root / name).write_bytes(b'authored')
+    else:
+        nested = root / name; nested.mkdir(); (nested / 'document.md').write_bytes(b'authored')
+        if location == 'root': root = nested
+    m = module(); original = m.os.open; opened = []
+
+    def remember(*args, **kwargs):
+        fd = original(*args, **kwargs); opened.append(fd); return fd
+
+    monkeypatch.setattr(m.os, 'open', remember)
+    inventory = held(root)
+    with pytest.raises(ValueError, match='Document candidate paths'):
+        inventory.__enter__()
+    for fd in opened:
+        with pytest.raises(OSError): os.fstat(fd)
+    with pytest.raises(RuntimeError): inventory.snapshot()
+
+
+def test_unrelated_foreign_separator_names_keep_existing_namespace_semantics(tmp_path):
+    root = tmp_path / 'authored:root\\name'; root.mkdir()
+    (root / 'ordinary:leaf\\name.txt').write_bytes(b'authored')
+    with held(root) as inventory:
+        assert inventory.snapshot()['document_candidates'] == []
+
+
+@pytest.mark.parametrize('cap, limit', [('MAX_ENTRIES', 2), ('MAX_METADATA_BYTES', 1500)])
+def test_document_census_obeys_existing_work_bounds_and_closes(tmp_path, monkeypatch, cap, limit):
+    for index in range(32): (tmp_path / f'document-{index}.JSON').write_bytes(b'authored')
+    m = module(); original = m.os.open; opened = []
+
+    def remember(*args, **kwargs):
+        fd = original(*args, **kwargs); opened.append(fd); return fd
+
+    monkeypatch.setattr(m, cap, limit)
+    monkeypatch.setattr(m.os, 'open', remember)
+    with pytest.raises(ValueError):
+        with held(tmp_path): pass
+    for fd in opened:
+        with pytest.raises(OSError): os.fstat(fd)
+
+
+@pytest.mark.parametrize('mutation', ['add', 'remove', 'replace', 'edit', 'hardlink'])
+def test_document_candidate_census_rechecks_namespace_and_stat_identity(tmp_path, mutation):
+    leaf = tmp_path / 'document.JSON'; leaf.write_bytes(b'authored')
+    with held(tmp_path) as inventory:
+        assert inventory.snapshot()['document_candidates'][0]['path'] == str(leaf)
+        if mutation == 'add': (tmp_path / 'new.md').write_bytes(b'authored')
+        elif mutation == 'remove': leaf.unlink()
+        elif mutation == 'replace':
+            replacement = tmp_path / 'replacement'; replacement.write_bytes(b'authored'); replacement.replace(leaf)
+        elif mutation == 'edit': leaf.write_bytes(b'changed content size')
+        else: os.link(leaf, tmp_path.parent / (tmp_path.name + '-external-document'))
+        with pytest.raises(RuntimeError): inventory.snapshot()
+
+
 def test_nested_repositories_gitfile_and_retained_hints_are_metadata_only(tmp_path, monkeypatch):
     root = tmp_path / 'forest'; root.mkdir()
     repo = root / 'repo'; repo.mkdir(); (repo / '.git').mkdir()

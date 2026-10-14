@@ -245,6 +245,7 @@ class HeldSceneInventoryRoots:
 
     def _discover(self):
         repositories, retained, git_storage = [], {}, []
+        documents, unsupported_git = [], []
         for path in self._opaque:
             root = next(root for root in self._contract['search_roots'] if _under(path, root))
             if len(PurePosixPath(path).relative_to(root).parts) > MAX_DEPTH:
@@ -256,10 +257,10 @@ class HeldSceneInventoryRoots:
         for path in sorted(self._opaque):
             self._directory(path)
         counts = [0, 0]
-        pending = [(root, 0, None) for root in reversed(self._contract['search_roots'])]
+        pending = [(root, 0, None, root) for root in reversed(self._contract['search_roots'])]
         while pending:
             self._clock()
-            path, depth, expected = pending.pop()
+            path, depth, expected, root = pending.pop()
             if depth > MAX_DEPTH:
                 raise ValueError('Root discovery depth exceeds its fixed bound')
             self._directory(path, expected)
@@ -275,10 +276,14 @@ class HeldSceneInventoryRoots:
                 hints.add(base)
             entries, namespace = self._listing(path, counts)
             self._namespaces[path] = namespace
+            bare_markers = set()
             for name, identity, opaque, _ in entries:
                 self._clock()
                 child = path.rstrip('/') + '/' + name
                 is_directory = stat.S_ISDIR(identity[2])
+                if ((name == 'HEAD' and not is_directory)
+                        or (name in {'objects', 'refs'} and is_directory)):
+                    bare_markers.add(name)
                 if name == '.git':
                     kind = 'directory' if is_directory else 'regular_file'
                     repositories.append({'path': path, 'marker_path': child, 'marker_kind': kind})
@@ -292,10 +297,31 @@ class HeldSceneInventoryRoots:
                         if name in {'runs', 'registry', 'registries', 'evidence'} or name.endswith('-evidence'):
                             retained[child] = [name]
                     else:
-                        pending.append((child, depth + 1, identity))
+                        pending.append((child, depth + 1, identity, root))
                 elif (name in {'manifest.json', 'registry.json', 'reservation.json', 'index.json'}
                       or name.endswith('-manifest.json') or name.endswith('-registry.json')):
                     hints.add(name)
+                if not is_directory and name.lower().endswith(('.json', '.md')):
+                    # Candidate paths must be portable unambiguous descriptor
+                    # paths; unrelated namespace names keep their prior rules.
+                    if ':' in child or '\\' in child:
+                        raise ValueError('Document candidate paths must be canonical absolute paths')
+                    _absolute(child)
+                    candidate = {
+                        'path': child, 'search_root': root,
+                        'relpath': str(PurePosixPath(child).relative_to(root)),
+                        'size_bytes': identity[3], 'stat_identity': list(identity),
+                    }
+                    self._charge(candidate)
+                    documents.append(candidate)
+            if bare_markers == {'HEAD', 'objects', 'refs'}:
+                candidate = {
+                    'path': path, 'search_root': root, 'marker_kind': 'bare',
+                    'reason': 'HEAD regular file plus objects and refs directories',
+                    'contents_authenticated': False,
+                }
+                self._charge(candidate)
+                unsupported_git.append(candidate)
             if hints:
                 retained[path] = sorted(hints)
         self._budget += counts[1]
@@ -304,6 +330,8 @@ class HeldSceneInventoryRoots:
             'contract_sha256': self._digest,
             'search_roots': list(self._contract['search_roots']),
             'repository_candidates': sorted(repositories, key=lambda row: row['path']),
+            'document_candidates': sorted(documents, key=lambda row: row['path']),
+            'unsupported_git_candidates': sorted(unsupported_git, key=lambda row: row['path']),
             'retained_root_candidates': [{'path': path, 'hints': hints}
                                          for path, hints in sorted(retained.items())],
             'excluded_scope': [dict(row, contents_authenticated=False)
@@ -380,6 +408,20 @@ class HeldSceneInventoryRoots:
             self._failed = True
             self._close(error)
             raise
+
+    def retained_metadata_size_bytes(self):
+        """Count bounded discovery/state metadata without exposing descriptors."""
+        try:
+            self._active(); self._recheck()
+            state = {'contract': self._contract, 'receipt': self._receipt,
+                'directories': [[path, name, identity] for path, (_, _, name, identity) in sorted(self._dirs.items())],
+                'namespaces': sorted(self._namespaces.items())}
+            size = max(self._budget, len(_json(state)))
+            if size > MAX_METADATA_BYTES:
+                raise ValueError('Root retained metadata exceeds its fixed bound')
+            self._recheck(); return size
+        except BaseException as error:
+            self._failed = True; self._close(error); raise
 
     def recheck(self):
         try:
