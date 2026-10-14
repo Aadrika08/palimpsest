@@ -174,3 +174,107 @@ def test_failed_open_closes_every_descriptor(tmp_path):
     with pytest.raises(FileNotFoundError):
         with open_files(root, entries): pass
     assert len(os.listdir('/proc/self/fd')) == before
+
+
+def test_contract_equality_without_materializing_gib_graphs(tmp_path):
+    module = custody()
+    fixed = [dict(descriptor(str(i), b'x'), size_bytes=module.MAX_FILE_BYTES) for i in range(2)]
+    assert module.HeldReplayFiles(tmp_path, fixed, time.monotonic() + 30)
+    many = [descriptor(f'{i:04d}', b'') for i in range(module.MAX_FILES)]
+    assert module.HeldReplayFiles(tmp_path, many, time.monotonic() + 30)
+    root, leaf, entries = sample(tmp_path)
+    payload = b'x' * MiB
+    leaf.write_bytes(payload)
+    entries = [dict(descriptor(entries[0]['path'], payload), size_bytes=None, max_bytes=MiB)]
+    with open_files(root, entries) as held:
+        assert held.read(entries[0]['path'], MiB) == payload
+
+
+def test_exit_drift_rechecked_even_when_body_raises(tmp_path):
+    root, leaf, entries = sample(tmp_path)
+    held = open_files(root, entries)
+    before = len(os.listdir('/proc/self/fd'))
+    with pytest.raises((RuntimeError, ValueError), match='changed|differs'):
+        with held:
+            leaf.write_bytes(b'mutated')
+            raise LookupError('caller body failed')
+    assert len(os.listdir('/proc/self/fd')) == before
+    with pytest.raises(RuntimeError): held.path(entries[0]['path'])
+
+
+def test_caught_drift_cannot_make_context_successful(tmp_path):
+    root, leaf, entries = sample(tmp_path)
+    held = open_files(root, entries)
+    before = len(os.listdir('/proc/self/fd'))
+    with pytest.raises(RuntimeError, match='failed before context exit'):
+        with held:
+            fd = int(held.fd_path(entries[0]['path']).name)
+            leaf.write_bytes(b'mutated')
+            with pytest.raises((RuntimeError, ValueError)): held.recheck()
+            with pytest.raises(OSError): os.fstat(fd)
+            with pytest.raises(RuntimeError): held.read(entries[0]['path'], MiB)
+    assert len(os.listdir('/proc/self/fd')) == before
+
+
+def test_exact_subtree_extra_directory_not_opened(tmp_path, monkeypatch):
+    module = custody(); root, leaf, entries = sample(tmp_path)
+    (leaf.parent / 'unregistered').mkdir()
+    original = module.os.open
+    def guarded(path, flags, *args, **kwargs):
+        assert path != 'unregistered', 'Unexpected directory was opened before refusal'
+        return original(path, flags, *args, **kwargs)
+    monkeypatch.setattr(module.os, 'open', guarded)
+    with pytest.raises(ValueError, match='unregistered'):
+        with open_files(root, entries, exact_subtrees=('runs/run-a',)): pass
+
+
+def test_unknown_size_content_exceeds_registered_cap(tmp_path):
+    root, leaf, entries = sample(tmp_path)
+    entries[0].update(size_bytes=None, max_bytes=2)
+    with pytest.raises(ValueError):
+        with open_files(root, entries): pass
+
+
+def test_outer_ancestor_symlink_refused(tmp_path):
+    root, leaf, entries = sample(tmp_path)
+    alias = tmp_path / 'alias'
+    alias.symlink_to(root.parent, target_is_directory=True)
+    with pytest.raises(OSError):
+        with open_files(alias / root.name, entries): pass
+
+
+@pytest.mark.parametrize('deadline', [None, True, float('inf'), float('nan')])
+def test_invalid_deadline_rejected_before_open(tmp_path, deadline):
+    module = custody(); root, leaf, entries = sample(tmp_path)
+    with pytest.raises(ValueError): module.HeldReplayFiles(root, entries, deadline)
+
+
+@pytest.mark.parametrize('defect', ['wrong-digest', 'wrong-size', 'relative-root', 'no-files'])
+def test_actual_binding_mismatch_or_invalid_root(tmp_path, defect):
+    root, leaf, entries = sample(tmp_path)
+    if defect == 'wrong-digest': entries[0]['sha256'] = '0' * 64
+    elif defect == 'wrong-size': entries[0]['size_bytes'] += 1
+    elif defect == 'relative-root': root = Path('relative')
+    else: entries = []
+    before = len(os.listdir('/proc/self/fd'))
+    with pytest.raises(ValueError):
+        with open_files(root, entries): pass
+    assert len(os.listdir('/proc/self/fd')) == before
+
+
+def test_graph_hash_is_streamed_in_mib_blocks_without_small_read_copy(tmp_path, monkeypatch):
+    module = custody(); root, leaf, entries = sample(tmp_path)
+    payload = b'g' * (2 * MiB + 7)
+    leaf.write_bytes(payload)
+    entries = [descriptor(entries[0]['path'], payload)]
+    original = module.os.read
+    sizes = []
+    def bounded(fd, count):
+        assert 0 < count <= MiB
+        sizes.append(count)
+        return original(fd, count)
+    monkeypatch.setattr(module.os, 'read', bounded)
+    with open_files(root, entries) as held:
+        assert held.path(entries[0]['path']) == leaf
+        with pytest.raises(ValueError): held.read(entries[0]['path'], MiB)
+    assert len(sizes) >= 12
