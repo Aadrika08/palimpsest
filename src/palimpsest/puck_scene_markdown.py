@@ -24,7 +24,7 @@ _GEOMETRY = re.compile(r'\b(?:geometry(?:[_-][\w-]+)?|geometries|\w+_(?:xy|xyz|p
 _SENSITIVE = re.compile(r'\b(?:scene(?:s|[_-][\w-]+)?|layout(?:s|[_-][\w-]+)?|geometry(?:[_-][\w-]+)?|geometries|seed(?:s|[_-][\w-]+)?|\w+_(?:xy|xyz|pose))\b', re.I)
 _OTHER_SEED = re.compile(r'\b(?:model|training|rng|random|environment)(?:[ _-]+(?:rng|random|number))?[ _-]+seeds?\b', re.I)
 _INLINE = re.compile(r'\[([^\]\[\n]*)\]\(([^()\n]*)\)')
-_DEF = re.compile(r'^\s{0,3}\[([^\]\n]+)\]:\s*(\S+)(?:\s+"[^"\n]*")?\s*$')
+_DEF = re.compile(r'^\s{0,3}\[([^\]\n]+)\]:\s*(\S+)(?:\s+"([^"\n]*)")?\s*$')
 _USE = re.compile(r'\[([^\]\[\n]+)\]\[([^\]\[\n]*)\]')
 _SHORTCUT = re.compile(r'\[([^\]\[\n]+)\]')
 _CODE = re.compile(r'(?<!`)(`+)([^`\n]+)\1(?!`)')
@@ -250,18 +250,23 @@ def parse_puck_markdown_document(raw):
             r'(?<![\w/.-])seeds?(?![\w/.-])', label, re.I))
         if (_GEOMETRY.search(label) or numeric_label
                 and re.search(r'\d', label)):
-            unsupported(pointer, 'Declarations in unsupported Markdown link label', label)
+            unsupported(pointer, 'Declarations in unsupported Markdown link text', label)
 
     for number, original, pointer in active:
         line = original.rstrip('\r\n')
         definition = _DEF.fullmatch(line)
         if definition:
             label_declaration(definition[1], pointer + '/reference_definition_label')
+            if definition[3] is not None:
+                label_declaration(definition[3], pointer + '/reference_definition_title')
             reference(definition[2], pointer + '/reference_definition', line)
             continue
         excluded = []
         for match in _INLINE.finditer(line):
             label_declaration(match[1], pointer + '/link_labels/' + str(match.start()))
+            title = re.search(r'\s+"([^"\n]*)"\s*$', match[2])
+            if title:
+                label_declaration(title[1], pointer + '/link_titles/' + str(match.start()))
             target = re.sub(r'\s+"[^"\n]*"\s*$', '', match[2]).strip()
             reference(target, pointer + '/links/' + str(match.start()), line,
                       scene_document=bool(_SCENE.search(match[1]) or re.search(r'\bdocument\b', match[1], re.I)))
