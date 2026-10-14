@@ -671,3 +671,43 @@ Next: condition/case close and replay/pruning gates; complete puck owner/manifes
 admission; resume browser/artwork work when a browser is available. Navigation
 remains stopped after consumed attempt 2 with no attempt 3 authorized. All seven
 release gates remain open, with main, CI and the physical rover unchanged.
+
+### Staged pair and collection-description source gates reviewed
+
+Continued pursuit, 14 October 2026:
+
+- [PR #113](https://github.com/Aadrika08/palimpsest/pull/113), stacked on #112,
+  adds read-only staged compact-pair admission at
+  `c3b7d4695d9cc32a7de5420fffb33728cfb17cbf`. Canonical case descriptors resolve
+  only through `.pending/<case>` while returned receipts keep portable final
+  paths. Source-marker and full read-only input identities remain held through
+  all nine condition proofs. Existing final-bundle admission stays unchanged.
+  All 262 affected tests passed; independent GO reran 106 checks and rejected
+  eleven additional marker/ancestor/alias/deadline faults. All 18 source pins,
+  import/compile/diff checks pass. Prospective protocol SHA is
+  `2530626bffc785388322750c4665010968edd12ed7ea22205106c55c21105b4e`.
+- [PR #114](https://github.com/Aadrika08/palimpsest/pull/114), stacked on #111,
+  adds pure collection-envelope admission at
+  `672bb83ce9f381c6efc15a8255955a049cf22a9c`. Twelve descriptions bind supplied
+  immutable projection/index metadata, source/runtime observations, invocation
+  roster and ledgers; every returned description is non-executable. Within the
+  existing 160 MiB owner cap, snapshot/log/metadata allowances leave 149 MiB for
+  recording. All 110 affected tests pass; independent GO rejects 49 additional
+  metadata faults and verifies admission/owner denial with filesystem opening
+  forbidden. Historical modules, protocols and profile-loader checks remain
+  unchanged. The expected description digest remains a caller trust boundary;
+  source-closure completeness and live runtime/provenance are not proved here.
+
+These are prerequisite source units, not condition/case publication or native
+execution grants. No model checkpoint, native owner, real collection, fitting,
+development or held-out block ran. Memory still needs condition/case close,
+recurrent-cell replay, pruning and fresh namespace/allocation admission. Puck
+needs a separately reviewed execution/provenance adapter: existing construction,
+mechanics, learning and bundle loaders reject the current profile's historical
+pin mismatch. Preserve those checks rather than repin old protocols. Complete
+source/runtime/registry/scene/model/process/attempt/storage/owner gates remain.
+
+Browser preflight again exposed zero apps and browsers. Adequate Afterimage,
+browser/artwork verification, human artistic/operator acceptance and integration
+remain open. Navigation remains stopped at consumed attempt 2, with no attempt 3
+authorized. All seven release gates remain open; CI and physical rover stay out.
