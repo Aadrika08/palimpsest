@@ -220,3 +220,12 @@ def test_balanced_training_report_objective_must_bind_pinned_protocol(objective_
     else:
         evidence=resolve(docs)
         assert any(row['reason']=='target_training_objective_differs' for row in evidence['unresolved_references'])
+
+
+def test_manifest_model_hashes_must_match_declared_report_model_identity():
+    import json
+    docs=development_documents();child=json.loads(docs[2]['raw']);parent=json.loads(docs[-1]['raw'])
+    child['model_identity']['checkpoint_sha256']='f'*64
+    docs[2]['raw']=raw(child);parent['owners'][0]['manifest_sha256']=sha(docs[2]['raw']);docs[-1]['raw']=raw(parent)
+    evidence=resolve(docs)
+    assert any(row['reason']=='target_model_identity_differs' for row in evidence['unresolved_references'])

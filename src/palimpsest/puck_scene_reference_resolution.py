@@ -105,8 +105,9 @@ def _report_dependency_reason(parent, target, reference):
         expected={key:value for key,value in owner.items() if key in _ROW_FIELDS}
         if expected!=target['row']:
             return 'target_recording_row_differs' if reference['kind']=='recording_manifest' else 'target_owner_row_differs'
-    if reference['kind']=='owner_result':
-        identity=target.get('student_identity',{}).get('model_identity')
+    if reference['kind'] in ('owner_result','recording_manifest'):
+        identity=(target.get('student_identity',{}).get('model_identity')
+            if reference['kind']=='owner_result' else target.get('model_identity'))
         expected=parent.get('models',{}).get(str(target['row'].get('model_seed')))
         if identity is not None and expected is not None:
             from .puck_scene_reports import _MODEL_HASHES
