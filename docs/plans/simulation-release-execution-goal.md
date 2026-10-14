@@ -27,10 +27,10 @@ Passing parser fixtures or publishing another plan is progress, not this exit.
 
 Perform the work in this order:
 
-1. Connect the reviewed declared-scope puck inventory at `22cf8aa` (PR #128)
-   to a fresh worker. It combines live census, Git history, Markdown/JSON references
-   and historical variants in one held path. Actual project compatibility is still
-   unqualified; use authored fixtures while catalog access is pending.
+1. Complete external dependency/native import admission for PR #129's working
+   stdlib worker preflight, then connect it to PR #128's reviewed declared inventory
+   (`22cf8aa`). Actual project compatibility and complete runtime qualification
+   remain unqualified; use authored fixtures while catalog access is pending.
 2. Bind that worker to the existing reservation, model custody, native recorder,
    clock accounting, supervision and durable collection close. Freeze and review
    the complete executable path before an actual collection.
@@ -110,9 +110,11 @@ Clearing space does not authorize a consumed-attempt retry or change a protocol.
 | 5 | Integrate and validate the lab and all six simulated artwork encounters. | Real browser workflows, declared-duration artwork inputs, audiovisual/keyboard/viewport checks, exports, replay and recovery pass on the integrated candidate. | Sustained portable inputs, browser access and reviewed integration. |
 | 6 | Conduct user artistic review, independent operator acceptance and final handoff. | User acceptance, independently completed install/runbook and all seven release gates with linked evidence on one reproducible release candidate. | Human sessions and the completed studies/product gates. |
 
-**Start now:** connect the independently reviewed declared-scope inventory in
-PR #128 (`22cf8aa`) to the fresh worker and complete durable launcher. It follows
-PR #127's report-family adapters and PR #126's registry path. Selected report/retained/registry parsers,
+**Start now:** complete external dependency/native import admission and connect
+PR #129's working stdlib worker preflight to PR #128's declared inventory and the
+complete durable launcher. Source bootstrap is verified; the complete runtime and
+collection route remain unqualified. These follow PR #127's report-family adapters
+and PR #126's registry path. Selected report/retained/registry parsers,
 pinned reference resolvers and existing root/catalog components do not establish
 full coverage or reservation admission. Unsupported embedded protocol variants
 and historical contexts must remain explicit coverage failures. Preserve variants and explicit legacy-schema conflicts.
@@ -486,8 +488,9 @@ Continue the **puck durable owner/stage launcher** from PR #121's independently
 audited original-bundle result, PR #120's descriptor-held execution context,
 and PR #122's reviewed native publication and fixed-clock integration. Use
 PR #128's declared repository/retained-root and semantic/reference/Markdown
-assembly, then implement a fresh worker bootstrap and bind source/runtime/
-dependency identities, exact invocation,
+assembly and PR #129's executable stdlib worker preflight, then complete
+external dependency/native import admission and bind source/runtime identities,
+exact invocation,
 reservation, registry/scene/model custody, supervision and terminal publication
 into a working path. Actual collection remains unauthorized until the complete
 execution admission passes. The catalog-access amendment choice remains pending;
@@ -516,3 +519,23 @@ reservation/native collection are still unqualified. Unsupported formats, unknow
 scene-free classifications and relative fenced-JSON origins are not silently
 qualified. No actual inventory or study ran. The next deliverable remains the
 fresh-worker/durable launcher and memory case-close path; all seven gates stay open.
+
+[Draft PR #129](https://github.com/Aadrika08/palimpsest/pull/129) adds a real fresh-child
+stdlib bootstrap: authenticated seed bytes before compile, original interpreter
+object/version before source-supplied custody code, exact environment/cwd/kernel
+argv, complete local Python/XML census and held-source imports. Review found two
+class/imported-alias dispatch gaps; a four-RED fix also binds wrappers and support
+code. A final typed-runtime descriptor RED now refuses before support execution.
+Final source `164ad387a5b0da8b768fbc926404cfd34c57b6b9` passes 26 child checks
+at root/independently (4.62s / 4.63s) and 1302 affected checks independently with
+the same six exclusions (66.41s). Prior dispatch-fix source passes 1301 affected
+checks at root/independently (66.09s / 67.33s). The
+[source report](https://github.com/Aadrika08/palimpsest/blob/research/puck-v3-worker-bootstrap/docs/reports/puck-v3-worker-bootstrap-source.md)
+retains all failures and boundaries. This is source/child evidence, not final
+exact execution/runtime GO. Stdlib/ELF dependencies remain explicitly trusted;
+NumPy/Torch/MuJoCo/native imports remain denied until their separate admission.
+No actual inventory, original qualification CLI, model/native owner or study ran.
+Default pytest still stops at missing FastAPI. External dependency/native imports,
+worker-to-envelope/inventory/reservation binding, exact-environment supervision,
+lease/descendant/resource handling and durable terminal collection remain required.
+All seven simulation release gates stay open; frozen decisions remain pending.

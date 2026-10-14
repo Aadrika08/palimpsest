@@ -129,6 +129,17 @@ collection; the next work is fresh-worker/durable launcher binding. Free space i
 14 October 23:12 UTC. Disk clearance grants no study amendment or retry.
 All seven release statuses remain unchanged.
 
+[Draft PR #129](https://github.com/Aadrika08/palimpsest/pull/129) supplies a real
+fresh-child local-source preflight. Final source `164ad38` passes 26 child checks
+at root/independently and 1302 affected checks independently with six inherited
+exclusions (66.41s). Review fixes bind class/function aliases, wrappers and support
+code; a typed-descriptor correction rejects before support code execution.
+The prior source has 1301 affected root/independent passes. These are source/child
+results, not final exact runtime/execution GO: stdlib/ELF remain trusted and external
+package/native imports remain denied. Complete collection/worker integration,
+supervision and durable close stay open. No actual inventory/model/native/study
+stage ran; default pytest stops at missing FastAPI. All seven statuses remain unchanged.
+
 ## Functional matrix
 
 | PRD ID | Status | Acceptance boundary | Runnable coverage | Observed evidence and limits |
