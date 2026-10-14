@@ -56,12 +56,27 @@ All seven gate statuses below remain unchanged.
 The clarified execution goal now targets two complete working paths: memory
 replay-to-case-close and puck inventory-to-collection, followed by the fixed
 studies, integrated lab/artworks and human acceptance. The next source unit is
-root discovery and semantic inventory on `research/puck-v3-inventory-roots`.
+strict retained-schema/reference/Markdown parsing and full semantic/root
+aggregation after the reviewed PR #124 source components.
 Disk was refreshed at 14 October 20:54 UTC to 100,027,265,024 bytes (~93.2 GiB),
 above the frozen memory floor. Required inputs and free space must still be
 rechecked before an admitted stage. Memory attempt-02, catalog-access and new
 navigation-study decisions remain pending; clearing space grants none of them.
 No new study or browser workflow ran, and all seven gate statuses remain unchanged.
+
+[Draft PR #124](https://github.com/Aadrika08/palimpsest/pull/124) adds held
+metadata-only candidate-root discovery and historical occurrence/variant
+assembly. SOURCE GO extends to `c025aa95`; independent affected verification
+passes 632 checks with six retained baseline exclusions in 55.88 seconds, and
+root's subsequent serial verification passes 632/6 in 52.96 seconds. The
+[source report](https://github.com/Aadrika08/palimpsest/blob/research/puck-v3-inventory-roots/docs/reports/puck-v3-inventory-roots-source.md)
+retains the earlier 631-pass/one-failure root run and its unestablished cause.
+Default pytest still stops at missing FastAPI. Excluded scope and candidate hints
+remain explicit; identical occurrence provenance and distinct authentic variants
+are preserved, with legacy uniqueness conflicts reported. No actual inventory,
+reservation, original model/native or study stage ran. Full semantic/root coverage,
+fresh-worker bootstrap and complete launcher admission remain open; all seven
+release gate statuses remain unchanged.
 
 ## Functional matrix
 
