@@ -59,10 +59,14 @@ Clearing space does not authorize a consumed-attempt retry or change a protocol.
 | 5 | Integrate and validate the lab and all six simulated artwork encounters. | Real browser workflows, declared-duration artwork inputs, audiovisual/keyboard/viewport checks, exports, replay and recovery pass on the integrated candidate. | Sustained portable inputs, browser access and reviewed integration. |
 | 6 | Conduct user artistic review, independent operator acceptance and final handoff. | User acceptance, independently completed install/runbook and all seven release gates with linked evidence on one reproducible release candidate. | Human sessions and the completed studies/product gates. |
 
-**Start now:** implement the root discovery and semantic inventory in
-`research/puck-v3-inventory-roots`, continuing PR #123. Use authored temporary
-fixtures while the catalog-access choice is pending. Continue through the complete
-launcher rather than treating each prerequisite PR as the milestone exit.
+**Start now:** continue strict retained manifest/raw-registry, reference and
+Markdown parsing, declared project-scope aggregation and complete semantic
+inventory assembly from PR #124. Its root observer and catalog occurrence
+assembler are reviewed source components; they do not establish full coverage
+or reservation admission. Preserve variants and explicit legacy-schema conflicts.
+Use authored temporary fixtures while the catalog-access choice is pending.
+Continue through the complete launcher rather than treating each prerequisite
+PR as the milestone exit.
 Memory source work can proceed independently; actual heavy stages are serialized.
 
 **Decisions still required:** memory qualification amendment 02 in PR #119;
@@ -169,6 +173,24 @@ document payload until explicit `read_blob`; task extraction reports catalog
 exposure accurately and grants no inventory/scene/native/collection admission.
 The default suite still stops at missing FastAPI during collection. No real
 project observer/parser or registry stage ran.
+
+[Draft PR #124](https://github.com/Aadrika08/palimpsest/pull/124) adds held,
+metadata-only discovery of declared repository/retained-root candidates and
+variant-preserving catalog occurrence assembly. Independent SOURCE GO applies
+to `c025aa95` (production source unchanged from `dc65819`). Independent affected
+checks pass **632 tests, six explicitly deselected, 55.88 seconds**; root's
+subsequent serial command passes **632/6 in 52.96 seconds**. The earlier root
+combined command recorded 631 passes and one inherited terminal-model failure;
+its cause remains unestablished, and the report retains it alongside the isolated
+pass and improved exception diagnostics. Default pytest stops at missing FastAPI.
+The [source report](https://github.com/Aadrika08/palimpsest/blob/research/puck-v3-inventory-roots/docs/reports/puck-v3-inventory-roots-source.md)
+records exact scope and limits. Root metadata, Git markers and retained-name hints
+do not authenticate payloads, excluded scopes, source attachment or complete
+project coverage. Distinct identity variants and hash aliases remain preserved;
+old uniqueness incompatibilities are explicit, never silently dropped. No actual
+project/catalog/retained scan, registry stage or numerical/native work ran.
+Full semantic/reference/retained-root aggregation, source/runtime bootstrap and
+the durable launcher remain incomplete. All seven release gates remain open.
 
 The [prospective inventory admission amendment 01](https://github.com/Aadrika08/palimpsest/blob/research/puck-v3-scene-inventory/docs/plans/puck-v3-scene-inventory-admission-amendment-01.md)
 records a separately requested decision: collision-only access to already-public
@@ -365,8 +387,9 @@ while a required capability or acceptance gate remains open.
 Continue the **puck durable owner/stage launcher** from PR #121's independently
 audited original-bundle result, PR #120's descriptor-held execution context,
 and PR #122's reviewed native publication and fixed-clock integration. Implement
-all-repository/retained-root discovery and variant-preserving semantic inventory
-assembly from PR #123, plus a fresh worker bootstrap, then bind source/runtime/dependency identities, exact invocation,
+complete repository/retained-root aggregation and semantic/reference/Markdown
+assembly from PR #124's candidate-root and catalog-occurrence components, plus
+a fresh worker bootstrap, then bind source/runtime/dependency identities, exact invocation,
 reservation, registry/scene/model custody, supervision and terminal publication
 into a working path. Actual collection remains unauthorized until the complete
 execution admission passes. The catalog-access amendment choice remains pending;
