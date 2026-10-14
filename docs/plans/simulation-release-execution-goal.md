@@ -36,40 +36,45 @@ another attempt. CI, rover hardware, physical art fabrication, purchases and
 paid cloud are outside this goal. The artworks are completed and assessed in
 simulation first.
 
-## Next work to perform
+## Execution focus after disk cleanup
 
-1. **Puck execution path — next independent implementation unit.** Continue
-   from the passed original-bundle result in PR #121 and reviewed native custody/
-   clock integration in PR #122 and Git/catalog source components in PR #123.
-   Next implement all repository/retained-root discovery, strict semantic inventory
-   assembly and the fresh-worker bootstrap, then complete the durable
-   collection launcher that binds exact source/runtime/dependencies, invocation,
-   scene/model/registry custody, reservation, one-owner lease, process/storage
-   supervision, interval recording and terminal publication. Verify failure
-   behavior and obtain independent source and exact-allocation review before
-   actual collection. Exit: a reviewed working path admitted within the fixed
-   collection limits.
-2. **Memory replay — ready, awaiting the separate attempt-02 approval.** Once
-   explicitly approved, run the reviewed frozen qualification once and audit
-   its terminal evidence. A pass enables condition/case close, reviewed pruning
-   and allocation admission. Without approval, continue independent source work;
-   disk cleanup is not approval for that amendment.
-3. **Complete the research and capability studies.** After admission, execute
-   the fixed memory study and puck collection/fitting/development, then separately
-   admitted held-out evaluations. Resolve the MaleCNS prospective study decision;
-   navigation attempt 3 is not authorized. Preserve budgets, thresholds and failures.
-4. **Complete the experience.** Validate the integrated lab in a real browser,
-   supply sustained inputs for the six encounters, and prepare concrete user and
-   independent-operator acceptance sessions. Historical short exports are inputs,
-   not acceptance.
-5. **Deliver the accepted simulation release.** Integrate reviewed work when
-   landing is authorized, verify the final candidate and close each of the seven
-   gates with linked evidence. Only then propose physical rover work.
+**Next milestone: complete a working, reviewed memory replay-to-case-close path
+and puck inventory-to-collection path.** The result must include executable
+entry points, exact input/runtime admission, meaningful failure checks and durable
+terminal evidence. Then perform the admitted studies. A collection of passing
+component tests or additional planning documents does not satisfy this milestone.
 
-The immediate output is the reviewed puck launcher and the memory replay result
-if its approval arrives. Actual heavy stages remain serialized. Keep progress
-reports tied to these outputs and the seven release gates rather than counting
-source units as project completion.
+At **2026-10-14 20:54 UTC** (15 October locally), this filesystem had
+**100,027,265,024 bytes free (~93.2 GiB)**, above the frozen memory minimum of
+**63,786,975,232 bytes (~59.4 GiB)**. Disk capacity is sufficient at this observation;
+recheck free space and required inputs immediately before each admitted stage.
+Clearing space does not authorize a consumed-attempt retry or change a protocol.
+
+| Order | Work to perform | Concrete exit | Current dependency |
+| --- | --- | --- | --- |
+| 1 | Complete puck repository/retained-root discovery and semantic scene inventory. Preserve every historical variant and occurrence. | Reviewed inventory implementation covers declared repositories, retained roots, references and supported schemas, rejects incomplete coverage, and feeds the existing collision/reservation checks. | Source work can proceed now. Actual catalog scanning needs the pending access decision and exact stage admission. |
+| 2 | Complete puck fresh-worker bootstrap and durable collection launcher using the existing custody, interval writer, clock ledger and supervisor. | One executable path binds source, runtime/dependencies, argv, reservation, scene/model inputs, one-owner lease, storage limits and terminal close; fault tests and independent review pass. | Inventory implementation and exact allocation/source/runtime/input review before any actual collection. |
+| 3 | Qualify memory replay once, then implement condition/case close, pruning and family admission. | Independently audited replay result for all 737 retained cells; after a pass, all nine conditions and whole-case close preserve custody and evidence, and the full family path is reviewed. | Attempt-02 approval remains pending. Independent source implementation can continue. |
+| 4 | Execute the fixed memory and puck studies; resolve the next MaleCNS study prospectively. | Complete valid memory development/held-out evidence and puck capability evidence against the unchanged gates. Navigation has a reviewed prospective decision before any new attempt. | Working execution paths and separate stage admissions. A failed stage stops its lane with evidence and a concrete decision. |
+| 5 | Integrate and validate the lab and all six simulated artwork encounters. | Real browser workflows, declared-duration artwork inputs, audiovisual/keyboard/viewport checks, exports, replay and recovery pass on the integrated candidate. | Sustained portable inputs, browser access and reviewed integration. |
+| 6 | Conduct user artistic review, independent operator acceptance and final handoff. | User acceptance, independently completed install/runbook and all seven release gates with linked evidence on one reproducible release candidate. | Human sessions and the completed studies/product gates. |
+
+**Start now:** implement the root discovery and semantic inventory in
+`research/puck-v3-inventory-roots`, continuing PR #123. Use authored temporary
+fixtures while the catalog-access choice is pending. Continue through the complete
+launcher rather than treating each prerequisite PR as the milestone exit.
+Memory source work can proceed independently; actual heavy stages are serialized.
+
+**Decisions still required:** memory qualification amendment 02 in PR #119;
+public mixed-catalog collision access versus independently prepared identity-only
+projections in the PR #123 amendment; and a prospective navigation study decision.
+This goal grants none of those decisions. No navigation attempt 3 is authorized.
+
+**Working rule:** each implementation unit ends with working behavior, relevant
+verification, a commit and a reviewable branch/PR. Reuse existing mechanisms;
+add another component only for a named missing requirement of these paths.
+After the paths pass review, perform the admitted stages and report actual results.
+Do not silently retry failures or lower capability thresholds to close the goal.
 
 ## Current position
 
@@ -81,10 +86,9 @@ source units as project completion.
   audited original-bundle qualification; it is not a collection or capability study.
 - All seven simulation release gates remain open. Historical failed capability
   results and consumed navigation attempts remain unchanged.
-- At **2026-10-14 19:38 UTC** (15 October locally), this checkout's filesystem had
-  **100,153,241,600 bytes free (~93.3 GiB)**. This exceeds the frozen memory
-  minimum of **63,786,975,232 bytes (~59.4 GiB)**. The earlier disk shortage is
-  resolved at this observation; allocation and launcher admission are still open.
+- The latest disk observation is recorded in the execution-focus section above.
+  The earlier disk shortage is resolved at that observation; allocation and
+  launcher admission are still open.
 - Recheck required model, upstream and retained evidence inventories after the
   disk cleanup. Free space alone does not establish that inputs remain present
   or valid. Recheck space immediately before each admitted stage.
