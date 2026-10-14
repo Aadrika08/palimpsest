@@ -569,17 +569,74 @@ def seal_compact_source(evidence_root, registration, *, case_id, deadline):
                     raise SealIndeterminate('Source quarantine durability is indeterminate') from quarantine_error
             raise
 
+def _retained_source_namespace(lifetime, source_fd, case_fd, run_id, condition_run_id):
+    names = set(os.listdir(case_fd))
+    if 'source' not in names or names - {'source', '.raw', 'conditions'}:
+        raise ValueError('Retained source stage contains unaccounted case entries')
+    if condition_run_id is not None:
+        pair._run_id(condition_run_id)
+        if condition_run_id == run_id or '.raw' not in names:
+            raise ValueError('Retained reader requires a different explicit raw owner')
+    for name in names - {'source'}:
+        fd = os.open(name, os.O_RDONLY | os.O_DIRECTORY | os.O_NOFOLLOW, dir_fd=case_fd)
+        _hold_directory(lifetime, case_fd, name, fd)
+        entries = set(os.listdir(fd))
+        if name == '.raw':
+            expected = set() if condition_run_id is None else {condition_run_id}
+            if entries != expected:
+                raise ValueError('Source raw tree remains or condition raw owner differs')
+        elif entries - set(PROTOCOL['analysis_contract']['conditions']):
+            raise ValueError('Unregistered completed condition namespace')
+        for child in entries:
+            child_fd = os.open(child, os.O_RDONLY | os.O_DIRECTORY | os.O_NOFOLLOW, dir_fd=fd)
+            _hold_directory(lifetime, fd, child, child_fd)
+    source_before = compact._file_identity(os.fstat(source_fd))
+    case_before = compact._file_identity(os.fstat(case_fd))
+    def recheck():
+        if (compact._file_identity(os.fstat(source_fd)) != source_before
+                or compact._file_identity(os.fstat(case_fd)) != case_before
+                or set(os.listdir(case_fd)) != names):
+            raise RuntimeError('Retained source/case namespace changed while read')
+    lifetime.callback(recheck)
+
+
 def read_sealed_source(evidence_root, registration, *, case_id, deadline):
-    """Require the staged source marker and revalidate every sealed payload."""
+    """Require the staged source marker and revalidate every sealed/raw payload."""
+    return _read_sealed_source(evidence_root, registration, case_id=case_id, deadline=deadline)
+
+
+def read_retained_sealed_source(evidence_root, registration, *, case_id,
+                                source_commit, deadline, condition_run_id=None):
+    """Validate retained source evidence; removed raw bytes remain attested only."""
+    audit._public_deadline(deadline)
+    memory._id(case_id)
+    if not compact._PATH_COMPONENT.fullmatch(case_id):
+        raise ValueError('Invalid retained source case')
+    pair._descriptor(source_commit, 'Retained source commit')
+    if source_commit['path'] != f'cases/{case_id}/source/commit.json':
+        raise ValueError('Retained source commit is outside its canonical case path')
+    with pair._staged_namespace(evidence_root, case_id):
+        return _read_sealed_source(evidence_root, registration, case_id=case_id,
+            deadline=deadline, source_commit=source_commit, condition_run_id=condition_run_id)
+
+
+def _read_sealed_source(evidence_root, registration, *, case_id, deadline,
+                        source_commit=None, condition_run_id=None):
     with ExitStack() as lifetime:
         contract, case, run_id, receipt, raw_bytes, _, checks, control_bytes = _inputs(
             evidence_root, registration, case_id, deadline, lifetime)
         source_fd, case_fd, output_check = lifetime.enter_context(_source_directory(evidence_root, case_id))
-        _readonly_source_namespace(lifetime, source_fd, case_fd, run_id)
+        if source_commit is None:
+            _readonly_source_namespace(lifetime, source_fd, case_fd, run_id)
+            _case_tree(case_fd, run_id)
+        else:
+            _retained_source_namespace(lifetime, source_fd, case_fd, run_id, condition_run_id)
         if 'quarantine.json' in os.listdir(case_fd):
             raise ValueError('Source is quarantined')
-        _case_tree(case_fd, run_id)
         marker_bytes = _read_file(source_fd, 'commit.json', MiB, lifetime=lifetime, deadline=deadline)
+        if source_commit is not None:
+            compact._check_descriptor(source_commit,
+                f'cases/{case_id}/source/commit.json', marker_bytes)
         marker = _canonical(marker_bytes, PROTOCOL['source_finalization']['marker_keys'], 'Source commit marker')
         recording = os.open('recording', os.O_RDONLY | os.O_DIRECTORY | os.O_NOFOLLOW, dir_fd=source_fd)
         _hold_directory(lifetime, source_fd, 'recording', recording)
@@ -616,13 +673,28 @@ def read_sealed_source(evidence_root, registration, *, case_id, deadline):
                 or read['snapshot_reference'] != {'kind': 'source', 'source_run_id': run_id,
                     'source_receipt_sha256': None, **contract['snapshot']}):
             raise ValueError('Sealed compact source identity differs')
-        raw_request = _raw_request(evidence_root, contract, case_id, run_id, deadline)
-        checks.extend(_bind_raw_inventory(lifetime, evidence_root, raw_request['run_path'],
-            case_id, run_id, receipt['raw_inventory']['files'], deadline))
-        if audit.validate_raw_receipt(**raw_request) != receipt:
-            raise ValueError('Sealed raw receipt differs from retained raw bytes')
-        raw_data = legacy._read_run({'run_id': run_id, 'run': raw_request['run_path']}, deadline)
-        _prove(raw_data, bundle, receipt)
+        if source_commit is None:
+            raw_request = _raw_request(evidence_root, contract, case_id, run_id, deadline)
+            checks.extend(_bind_raw_inventory(lifetime, evidence_root, raw_request['run_path'],
+                case_id, run_id, receipt['raw_inventory']['files'], deadline))
+            if audit.validate_raw_receipt(**raw_request) != receipt:
+                raise ValueError('Sealed raw receipt differs from retained raw bytes')
+            raw_data = legacy._read_run({'run_id': run_id, 'run': raw_request['run_path']}, deadline)
+            _prove(raw_data, bundle, receipt)
+        else:
+            staged = pair._StagedRoot(Path(evidence_root), case_id)
+            pair._raw_receipt(staged, contract['raw_audit'], 'source', run_id,
+                case_id, None, audit.canonical_source_identity(contract['owner_source_sha256']),
+                deadline, lifetime)
+            events = compact._legacy_events(read['legacy_events_bytes'], 'source')
+            projection = pair._projection(read['rows'])
+            application, _, _ = pair._source_application(staged,
+                read['snapshot_reference'], read, events, projection, case, run_id,
+                deadline, lifetime)
+            pair._cross_bind(receipt, read, events, projection,
+                read['snapshot_reference'], application, None)
+            pair._terminal(receipt, artifacts._json(read['legacy_manifest_bytes']), read['snapshot_reference'],
+                None, projection=projection, application=application)
         owner = _read_file(source_fd, 'owner.json', MiB, lifetime=lifetime, deadline=deadline)
         worker = _read_file(source_fd, 'worker-report.json', MiB, lifetime=lifetime, deadline=deadline)
         expected = sorted([*[_descriptor(f'recording/{p}', b) for p, b in bundle.items()],
@@ -647,7 +719,10 @@ def read_sealed_source(evidence_root, registration, *, case_id, deadline):
         for check in checks:
             check()
         output_check()
-        return {'read': read, 'conversion': conversion, 'marker': marker}
+        result = {'read': read, 'conversion': conversion, 'marker': marker}
+        if source_commit is not None:
+            result.update(raw_replay_performed=False, claims=copy.deepcopy(PROTOCOL['claims']))
+        return result
 
 
 def prune_raw_source(*args, **kwargs):
