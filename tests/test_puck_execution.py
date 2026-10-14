@@ -129,6 +129,30 @@ def test_unregistered_source_or_bundle_entry_is_not_hidden_by_supplied_roster(tm
             with execution:pytest.fail('Unregistered input entered')
 
 
+@pytest.mark.parametrize('path',['src/palimpsest/__pycache__/stale.pyc',
+    'upstream/fly-gym/new/unregistered.xml','scripts/new/deep/unregistered.py'])
+def test_unregistered_transitive_source_and_bytecode_are_rejected(tmp_path,path):
+    execution,custody=context(tmp_path/'case')
+    extra=Path(custody['roles']['sources']['root'])/path
+    extra.parent.mkdir(parents=True,exist_ok=True);extra.write_bytes(b'foreign source')
+    with pytest.raises(ValueError):
+        with execution:pytest.fail('Unregistered transitive code entered')
+
+
+def test_non_code_upstream_readme_is_not_mistaken_for_executable_source(tmp_path):
+    execution,custody=context(tmp_path/'case')
+    path=Path(custody['roles']['sources']['root'])/'upstream/fly-gym/README.md'
+    path.write_text('Authored non-executable upstream text')
+    with execution:execution.recheck()
+
+
+def test_public_context_cannot_bind_foreign_import_root_even_with_original_runtime_descriptor(tmp_path):
+    custody,_=fixture(tmp_path/'case')
+    custody['roles']['runtime']['files']=[copy.deepcopy(module().RUNTIME_PIN)]
+    with pytest.raises(ValueError,match='source root'):
+        module().HeldCollectionExecution(raw(custody),sha(raw(custody)),time.monotonic()+30)
+
+
 def test_failed_body_does_not_bypass_final_custody_check(tmp_path):
     execution,custody=context(tmp_path/'case')
     with pytest.raises((RuntimeError,ValueError),match='changed|differ'):
@@ -146,7 +170,16 @@ def test_public_context_refuses_authored_runtime_without_original_binary_access(
             pytest.fail('Public runtime pin substituted')
 
 
-@pytest.mark.parametrize('scenario',['model','parameter-drift','file-after-inference','wrong-goal'])
+def test_parameter_check_before_materialization_poisons_context(tmp_path):
+    execution,_=context(tmp_path/'case')
+    with pytest.raises(RuntimeError,match='failed'):
+        with execution:
+            with pytest.raises(RuntimeError,match='materialized'):execution.check_parameters()
+            with pytest.raises(RuntimeError,match='failed'):execution.recheck()
+
+
+@pytest.mark.parametrize('scenario',['model','parameter-drift','file-after-inference','wrong-goal',
+    'second-model','training-mode','terminal'])
 def test_actual_unchanged_cpu_model_and_interval_seam_on_authored_inputs(tmp_path,scenario):
     script=r'''
 import sys
@@ -163,8 +196,17 @@ with execution:
     execution.check_parameters()
     assert not model.training
     assert all(np.all(value.detach().numpy()==.125) for value in model.state_dict().values())
-    if scenario=='parameter-drift':
-        with torch.no_grad():model[0].bias[0]+=1
+    if scenario=='second-model':
+        try:execution.materialize_original_model()
+        except RuntimeError:
+            try:execution.recheck()
+            except RuntimeError:verified=True
+            else:raise AssertionError('Repeated construction did not poison context')
+        else:raise AssertionError('Repeated model construction accepted')
+    elif scenario in ('parameter-drift','training-mode'):
+        if scenario=='training-mode':model.train()
+        else:
+            with torch.no_grad():model[0].bias[0]+=1
         try:execution.check_parameters()
         except ValueError:verified=True
         else:raise AssertionError('Changed parameter accepted')
@@ -187,7 +229,7 @@ with execution:
         puck_model.predict=change
         try:
             staged=execution.stage_interval(sensors,world,'approach',puck_learning.initial_cursor(),
-                terminal_reason=None,capture_query_state=lambda:capture)
+                terminal_reason='goal' if scenario=='terminal' else None,capture_query_state=lambda:capture)
         except (ValueError,RuntimeError):
             assert scenario!='model'
             assert len(inferred)==(1 if scenario=='file-after-inference' else 0)

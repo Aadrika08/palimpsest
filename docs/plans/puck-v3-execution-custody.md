@@ -14,9 +14,14 @@ projection, immutable model index, the selected original bundle, nine historical
 producer sources and the exact runtime binary. All descriptors have fixed sizes
 and hashes. Authenticate the manifest before opening roles. Bind source hashes
 and source root to the pure collection envelope; derive before/after maps from
-held files rather than accepting caller observations. Require complete exact
-registered package/scripts/upstream subtrees and the fixed public protocol/index,
-pyproject and lock entries. Only the four collection scenes may resolve.
+held files rather than accepting caller observations. Require the exact Python/XML
+inventory under package/scripts/upstream, plus public protocol/index, pyproject
+and lock entries. Bound discovery at 4,096 entries and 32 levels; hold discovered
+directory edges, reject bytecode, symlinks and nonregular entries, and permit
+regular non-code upstream documentation. The public context also checks that
+the current imported package files come from the admitted source root and roster.
+Only the four collection scenes may resolve. Fresh-worker loaded-code and external
+runtime/dependency qualification remain later launcher requirements.
 
 Use a stdlib holder with nofollow root/ancestor/leaf directory edges, regular
 single-link files, stable identities and streamed hashes. At most 512 files per
