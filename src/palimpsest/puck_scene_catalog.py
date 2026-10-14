@@ -153,3 +153,146 @@ def parse_task_catalog(raw):
         'held_out_catalog_read':any(scene['split']=='held_out' for scene in scenes),
         'held_out_runtime_opened':False,'inventory_complete':False,
         'executable':False,'qualification_claims':[]}
+
+
+# Source ceilings inside the prospective registry stage, never extra allocation.
+_MAX_DOCUMENT_OCCURRENCES = _MAX_VARIANTS = 4096
+_MAX_SCENE_OCCURRENCES = 65536
+_MAX_OCCURRENCE_INPUT_BYTES = 32 * 1024 ** 2
+_MAX_OCCURRENCE_METADATA_BYTES = 64 * 1024 ** 2
+_DOCUMENT_FIELDS = {'repository', 'object_format', 'commit', 'root_tree',
+                    'path', 'oid', 'mode', 'raw'}
+_IDENTITY_FIELDS = ('canonical_scene_sha256', 'scientific_initial_sha256', 'payload_sha256')
+
+
+def assemble_task_catalog_occurrences(documents, *, deadline):
+    """Preserve task-catalog variants and occurrences without inventory admission.
+
+    Blob framing binds supplied bytes to their OID. Commit/tree attachment,
+    repository scope, fresh refs and filesystem custody are NOT proved by caller
+    descriptors. Other scene-bearing schema families require separate dispatch.
+    Compatibility below concerns old scene-row uniqueness only, never a complete
+    inventory or permission to reserve or execute.
+    """
+    import time
+    from pathlib import PurePosixPath
+    import re
+
+    now = time.monotonic()
+    if type(deadline) not in (int, float) or not math.isfinite(deadline) or deadline > now + 600:
+        raise ValueError('Bounded finite catalog assembly deadline required')
+
+    def clock():
+        if time.monotonic() >= deadline:
+            raise TimeoutError('Catalog assembly deadline exhausted')
+
+    def path(value, *, absolute):
+        if (type(value) is not str or not value or '\\' in value
+                or any(ord(char) < 32 or ord(char) == 127 for char in value)
+                or value.startswith('//') or value != str(PurePosixPath(value))
+                or value.startswith('/') != absolute
+                or any(part in ('', '.', '..') for part in value.split('/')[1 if absolute else 0:])):
+            raise ValueError('Canonical catalog occurrence path required')
+        return value
+
+    clock()
+    if type(documents) is not list or not 1 <= len(documents) <= _MAX_DOCUMENT_OCCURRENCES:
+        raise ValueError('Bounded nonempty catalog document occurrences required')
+    grouped, locations, parsed_blobs = {}, set(), {}
+    repository_formats, commit_trees, tree_entries = {}, {}, {}
+    input_bytes = metadata_bytes = occurrence_count = 0
+    exposed = False
+    for document in documents:
+        clock()
+        if type(document) is not dict or set(document) != _DOCUMENT_FIELDS:
+            raise ValueError('Exact catalog document occurrence fields required')
+        repository = path(document['repository'], absolute=True)
+        doc_path = path(document['path'], absolute=False)
+        if not doc_path.casefold().endswith('.json'):
+            raise ValueError('Supported task catalog JSON document required')
+        algorithm = document['object_format']
+        if type(algorithm) is not str or algorithm not in ('sha1', 'sha256'):
+            raise ValueError('Registered Git object format required')
+        if repository_formats.setdefault(repository, algorithm) != algorithm:
+            raise ValueError('Catalog repository object formats conflict')
+        width = 40 if algorithm == 'sha1' else 64
+        for field in ('commit', 'root_tree', 'oid'):
+            if type(document[field]) is not str or re.fullmatch('[0-9a-f]{'+str(width)+'}', document[field]) is None:
+                raise ValueError('Canonical catalog Git object identity required')
+        if type(document['mode']) is not str or document['mode'] not in ('100644', '100755'):
+            raise ValueError('Regular catalog Git document mode required')
+        commit_key = repository, document['commit']
+        if commit_trees.setdefault(commit_key, document['root_tree']) != document['root_tree']:
+            raise ValueError('Catalog commit root-tree descriptors conflict')
+        tree_key = repository, document['root_tree'], doc_path
+        entry = document['oid'], document['mode']
+        if tree_entries.setdefault(tree_key, entry) != entry:
+            raise ValueError('Catalog tree entry descriptors conflict')
+        payload = document['raw']
+        if type(payload) is not bytes or not 0 < len(payload) <= _MAX_BYTES:
+            raise ValueError('Bounded task catalog bytes required')
+        input_bytes += len(payload)
+        if input_bytes > _MAX_OCCURRENCE_INPUT_BYTES:
+            raise ValueError('Catalog aggregate input exceeds source ceiling')
+        digest = hashlib.new(algorithm)
+        digest.update(b'blob ' + str(len(payload)).encode() + b'\0')
+        digest.update(payload)
+        if digest.hexdigest() != document['oid']:
+            raise ValueError('Catalog Git blob binding differs')
+        location = (repository, document['commit'], doc_path)
+        if location in locations:
+            raise ValueError('Repeated or conflicting catalog document occurrence')
+        locations.add(location)
+        key = algorithm, document['oid']
+        if key not in parsed_blobs:
+            parsed_blobs[key] = parse_task_catalog(payload)
+        parsed = parsed_blobs[key]
+        exposed |= parsed['held_out_catalog_read']
+        clock()
+        for scene in parsed['scenes']:
+            clock()
+            identity = (scene['scene_id'], *(scene[field] for field in _IDENTITY_FIELDS))
+            occurrence = {field: document[field] for field in _DOCUMENT_FIELDS - {'raw'}}
+            occurrence.update(document_sha256=parsed['document_sha256'],
+                              schema=parsed['schema'], pointer=scene['pointer'], split=scene['split'])
+            metadata_bytes += len(_canonical(occurrence))
+            occurrence_count += 1
+            if (metadata_bytes > _MAX_OCCURRENCE_METADATA_BYTES
+                    or occurrence_count > _MAX_SCENE_OCCURRENCES):
+                raise ValueError('Catalog occurrence metadata exceeds source ceiling')
+            if identity not in grouped:
+                if len(grouped) >= _MAX_VARIANTS:
+                    raise ValueError('Catalog variants exceed source ceiling')
+                grouped[identity] = []
+            grouped[identity].append(occurrence)
+
+    variants = []; ids = {}; domains = {field: {} for field in _IDENTITY_FIELDS}
+    for identity, occurrences in sorted(grouped.items()):
+        clock()
+        index = len(variants)
+        row = dict(zip(('scene_id', *_IDENTITY_FIELDS), identity))
+        row['occurrences'] = sorted(occurrences, key=lambda value: (
+            value['repository'], value['commit'], value['root_tree'], value['path'],
+            value['oid'], value['pointer']))
+        variants.append(row)
+        ids.setdefault(row['scene_id'], []).append(index)
+        for field in _IDENTITY_FIELDS:
+            domains[field].setdefault(row[field], []).append(index)
+    id_variants = [{'scene_id': scene_id, 'variant_indices': indices}
+                   for scene_id, indices in sorted(ids.items()) if len(indices) > 1]
+    aliases = [{'field': field, 'sha256': digest, 'variant_indices': indices}
+               for field in _IDENTITY_FIELDS
+               for digest, indices in sorted(domains[field].items()) if len(indices) > 1]
+    result = {'kind': 'puck-task-catalog-occurrences-v1', 'version': 1,
+              'variants': variants, 'id_variants': id_variants, 'identity_aliases': aliases,
+              'legacy_scene_rows_compatible': not id_variants and not aliases,
+              'document_occurrences': len(documents), 'scene_occurrences': occurrence_count,
+              'input_bytes': input_bytes, 'held_out_catalog_read': exposed,
+              'inventory_complete': False, 'source_closure_authenticated': False,
+              'held_out_runtime_opened': False, 'reservation_authorized': False,
+              'collection_authorized': False, 'executable': False, 'qualification_claims': []}
+    clock()
+    if len(_canonical(result)) > _MAX_OCCURRENCE_METADATA_BYTES:
+        raise ValueError('Catalog receipt exceeds source metadata ceiling')
+    clock()
+    return result
