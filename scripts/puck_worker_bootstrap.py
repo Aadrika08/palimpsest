@@ -188,7 +188,7 @@ def _parse(raw, expected):
     if type(runtime) is not dict or set(runtime) != {'root', 'files', 'python_version'}:
         raise ValueError('Exact interpreter registration required')
     _path(runtime['root'])
-    if runtime['files'] != [RUNTIME_PIN] or runtime['python_version'] != '3.11.15':
+    if canonical(runtime['files']) != canonical([RUNTIME_PIN]) or runtime['python_version'] != '3.11.15':
         raise ValueError('Original interpreter pin/version required')
     if total + RUNTIME_PIN['size_bytes'] > 80*MiB:
         raise ValueError('Existing aggregate input ceiling exceeded')

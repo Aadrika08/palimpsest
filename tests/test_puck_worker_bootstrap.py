@@ -219,6 +219,19 @@ def test_interpreter_identity_refuses_before_source_holder_module_exec(tmp_path)
     assert not marker.exists()
 
 
+def test_invalid_runtime_descriptor_type_refuses_before_support_code_exec(tmp_path):
+    marker = tmp_path / 'holder-ran'
+    def change(reg):
+        reg['runtime']['files'][0]['size_bytes'] = float(reg['runtime']['files'][0]['size_bytes'])
+        path = Path(reg['source_root']) / 'src/palimpsest/puck_execution_files.py'
+        path.write_bytes(path.read_bytes() + ('\nPath('+repr(str(marker))+').write_text("ran")\n').encode())
+        next(r for r in reg['source_files'] if r['path'].endswith('puck_execution_files.py')).update(
+            descriptor(path, 'src/palimpsest/puck_execution_files.py'))
+    result, _ = launch(tmp_path, change=change)
+    assert result.returncode != 0
+    assert not marker.exists()
+
+
 @pytest.mark.parametrize('variant', ['class', 'imported-alias', 'method-wrapper', 'support-holder'])
 def test_every_loaded_local_dispatch_slot_remains_bound(tmp_path, variant):
     def change(reg):
