@@ -45,6 +45,16 @@ Full-model replay and durable condition/case integration remain unqualified.
 Another invocation requires a separately reviewed amendment and explicit approval.
 None of the study or release exits below is complete from this evidence.
 
+[Draft PR #119](https://github.com/Aadrika08/palimpsest/pull/119) now contains the
+separately numbered amendment 02, published at `2514c47`. Independent source and
+exact-freeze review approved `d6ce5fc` and freeze SHA
+`1bfc3245c30130bcb72e5d5d2afc2fae99f6a0052e117dea001d98d40e52cd2f`.
+The 108 custody/qualification/amendment tests passed and were independently
+repeated. The readiness report contains the exact prospective invocation.
+**User approval is pending; no attempt 02 reservation or execution has occurred.**
+Attempt 1 and PR #118 remain unchanged. The generic metadata cap, original inputs
+and all numerical/resource limits remain fixed.
+
 ## Next milestone: qualify the full-model memory replay mechanism
 
 **Deliverable:** one independently reviewed result showing whether the unchanged
@@ -53,17 +63,17 @@ historical traces, including their recorded actions and final hidden states.
 Four prescribed wrong-input/state/output/model checks must reject. This is the
 next executable proof; it does not qualify camera/physics replay or complete R2.
 
-Work in `research/memory-replay-custody-v4`, continuing PR #117:
+Work in `research/memory-cell-qualification-amendment-02`, continuing PR #118:
 
 1. Prepare a separately numbered qualification amendment registering the
    interpreter's exact **21,662,864-byte size** and unchanged original SHA.
    Preserve attempt 1, its source and its freeze; keep the 1 MiB unknown-metadata
    cap. Keep every original trace/model identity, negative and resource limit.
 2. Implement and independently review the new amendment and exact executable
-   freeze, then obtain explicit approval before another invocation. Current
-   custody/qualification checks pass 89 tests, independently repeated; the
-   inherited 328 affected checks also pass. Source and first-attempt audits
-   establish no full-model positive result.
+   freeze, then obtain explicit approval before another invocation. Source and
+   freeze review are complete in PR #119; 108 focused checks pass independently.
+   The inherited 328 affected checks passed in the previous unit. Source and
+   first-attempt audits establish no full-model positive result.
 3. Only for an approved new phase, reserve its distinct durable attempt before
    protected-input access. Authenticate the original index, 45 retained files,
    unchanged model, source and runtime through held descriptors. Missing/changed
@@ -134,6 +144,9 @@ Source tests alone do not satisfy this exit.
 can execute through one reviewed, bounded path. Collection remains unauthorized
 until its exact execution admission passes; a non-executable description cannot
 be treated as an owner grant.
+
+Only four of the eight scenes belong to collection (IDs 6110–6113); the four
+development scenes (6120–6123) must remain inaccessible to the collection route.
 
 Memory and puck source work may proceed independently. Serialize actual model,
 native and study stages within their existing budgets.
@@ -212,10 +225,11 @@ while a required capability or acceptance gate remains open.
 
 ## First action when pursuing this goal
 
-Continue **memory recurrent-cell replay** from PR #118: prepare and independently
-review the exact-size runtime amendment following consumed attempt 1. Obtain
-explicit approval before another invocation; bind a passing full-model proof into
-condition/case close afterward. The independent next puck unit is
+Continue **memory recurrent-cell replay** from PR #119: obtain explicit approval
+of the reviewed exact-size runtime amendment following consumed attempt 1, then
+perform exactly one attempt 02 and independently audit its terminal evidence.
+Bind a passing full-model proof into condition/case close afterward. The
+independent next puck unit is
 a descriptor-held collection execution context that feeds admitted original
 arrays/model and collection-only scenes into the existing interval route, from
 PR #116. Freeze each unit's precise interfaces, source/runtime identities and
