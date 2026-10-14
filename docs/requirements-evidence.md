@@ -56,9 +56,9 @@ All seven gate statuses below remain unchanged.
 The clarified execution goal now targets two complete working paths: memory
 replay-to-case-close and puck inventory-to-collection, followed by the fixed
 studies, integrated lab/artworks and human acceptance. The next source unit is
-remaining standalone owner/development/mechanics/training-result/prepared/model
-index families, Markdown/reference parsing and full semantic/root aggregation
-after the selected PR #126 registry and PR #125 retained components.
+Markdown/reference parsing and full project-scope/semantic/root aggregation
+after PR #127 report-family, PR #126 registry and PR #125 retained components.
+Unsupported protocol variants and missing historical context stay explicit.
 Disk was refreshed at 14 October 22:01 UTC to 99,986,862,080 bytes (~93.1 GiB),
 above the frozen memory floor. Required inputs and free space must still be
 rechecked before an admitted stage. Memory attempt-02, catalog-access and new
@@ -104,6 +104,18 @@ and stored stat tuples remain declarations, never complete inventory or executio
 admission. No actual registry/catalog/native or study stage ran. All seven release
 statuses remain unchanged; default pytest still stops at missing FastAPI.
 
+
+[Draft PR #127](https://github.com/Aadrika08/palimpsest/pull/127) adds eight selected
+owner/construction/mechanics/development/training/prepared/model-index families.
+Independent review of exact source `0c2a1b57` finds no remaining concrete defect;
+102 new focused checks and 1132 affected checks pass independently, with the same
+six inherited exclusions (root 53.48 seconds / independent 53.75 seconds).
+Full row/model/catalog/ledger/objective conflicts are rejected. Binary receipts,
+unsupported protocol variants and missing historical context remain unqualified.
+The source report retains generated-bytecode refusal and an inherited custody
+anomaly with cause unknown; no guard or threshold was relaxed. No actual scan,
+reservation, model/native or study stage ran. Markdown/full scope/launcher work
+and all seven release gates remain open; default pytest stops at missing FastAPI.
 
 ## Functional matrix
 
