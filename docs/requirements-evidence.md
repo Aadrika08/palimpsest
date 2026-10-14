@@ -16,6 +16,13 @@ qualification amendment 02. Actual user approval and execution remain pending;
 attempt 01 is preserved as consumed. These source results change no requirement
 status or scientific/capability claim.
 
+[Draft PR #120](https://github.com/Aadrika08/palimpsest/pull/120) has independent
+SOURCE GO and 220 passing affected checks for working puck input custody and
+unchanged model staging. Its authored positives do not qualify original bundles
+or native collection. Broad-suite validation remains unqualified; the report
+retains the dependency errors, interrupted run and first baseline failure.
+Complete execution admission and every simulation release gate remain open.
+
 ## Functional matrix
 
 | PRD ID | Status | Acceptance boundary | Runnable coverage | Observed evidence and limits |

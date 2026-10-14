@@ -16,7 +16,8 @@ thresholds remain binding.
 - Reviewed source work includes memory compact auditing, source sealing, staged
   pair admission and retained-only reading through PR #115; puck registry,
   interval recording, collection descriptions and historical bundle provenance
-  through PR #116. These are software prerequisites, not executed studies.
+  through PR #116, and descriptor-held collection/model staging through PR #120.
+  These are software prerequisites, not executed studies.
 - All seven simulation release gates remain open. Historical failed capability
   results and consumed navigation attempts remain unchanged.
 - At **2026-10-14 16:52 UTC**, this checkout's filesystem had
@@ -54,6 +55,16 @@ repeated. The readiness report contains the exact prospective invocation.
 **User approval is pending; no attempt 02 reservation or execution has occurred.**
 Attempt 1 and PR #118 remain unchanged. The generic metadata cap, original inputs
 and all numerical/resource limits remain fixed.
+
+[Draft PR #120](https://github.com/Aadrika08/palimpsest/pull/120), published at
+`dcbb89f`, adds working puck input custody and unchanged model staging. Independent
+SOURCE GO applies to `72013da`; 220 affected checks passed and were independently
+repeated. Review fixes reject altered model computation, directory drift during
+inventory and cross-role aliases. Authored fixtures do not qualify original
+bundles or grant collection. Full-suite validation remains unqualified: missing
+dependencies stopped one environment, another run failed/stalled and was stopped,
+and a bounded base comparison confirmed the first missing-upstream-CSV failure.
+The report preserves these results; all seven release gates stay open.
 
 ## Next milestone: qualify the full-model memory replay mechanism
 
@@ -136,6 +147,9 @@ Source tests alone do not satisfy this exit.
 - [ ] Bind current execution source closure and runtime to exact registry,
   scene, model, invocation and filesystem custody. Complete process supervision,
   storage limits, interval recording, owner/manifest close and attempt receipts.
+  PR #120 supplies working input custody and model staging with source-only
+  evidence. Fresh-worker loaded code, runtime/dependencies, exact invocation,
+  durable reservation and bounded owner/stage execution remain unqualified.
 - [ ] Independently verify the complete collection path, including strict
   historical/new envelope separation and development/held-out inaccessibility.
   Freeze the reviewed source/runtime/input identities before numerical work.
@@ -229,10 +243,12 @@ Continue **memory recurrent-cell replay** from PR #119: obtain explicit approval
 of the reviewed exact-size runtime amendment following consumed attempt 1, then
 perform exactly one attempt 02 and independently audit its terminal evidence.
 Bind a passing full-model proof into condition/case close afterward. The
-independent next puck unit is
-a descriptor-held collection execution context that feeds admitted original
-arrays/model and collection-only scenes into the existing interval route, from
-PR #116. Freeze each unit's precise interfaces, source/runtime identities and
+independent puck context is now source-reviewed in PR #120. Continue from it with
+a bounded supplied-original-byte positive qualification and the complete durable
+owner/stage launcher, including fresh-worker source/runtime/dependency admission,
+supervision and terminal publication. Actual collection remains unauthorized
+until the complete execution admission passes. Freeze each unit's precise
+interfaces, source/runtime identities and
 bounded verification before implementation or actual-input execution. Preserve
 every failed attempt; no blind retries, held-out tuning, threshold reduction or
 physical rover work.
