@@ -56,9 +56,10 @@ All seven gate statuses below remain unchanged.
 The clarified execution goal now targets two complete working paths: memory
 replay-to-case-close and puck inventory-to-collection, followed by the fixed
 studies, integrated lab/artworks and human acceptance. The next source unit is
-remaining standalone retained/registry families, Markdown/reference parsing
-and full semantic/root aggregation after the reviewed PR #125 source components.
-Disk was refreshed at 14 October 20:54 UTC to 100,027,265,024 bytes (~93.2 GiB),
+remaining standalone owner/development/mechanics/training-result/prepared/model
+index families, Markdown/reference parsing and full semantic/root aggregation
+after the selected PR #126 registry and PR #125 retained components.
+Disk was refreshed at 14 October 22:01 UTC to 99,986,862,080 bytes (~93.1 GiB),
 above the frozen memory floor. Required inputs and free space must still be
 rechecked before an admitted stage. Memory attempt-02, catalog-access and new
 navigation-study decisions remain pending; clearing space grants none of them.
@@ -91,6 +92,18 @@ payload/reference closure remains distinct from complete inventory, source/
 runtime bootstrap and owner/collection admission. No actual retained/catalog
 scan or numerical/native stage ran. Default pytest still stops at missing FastAPI;
 all seven gate statuses remain unchanged.
+
+[Draft PR #126](https://github.com/Aadrika08/palimpsest/pull/126) adds six pure
+on-policy registry/publication families and selected dependency/custody integration.
+Exact source `1a93ac8` passes 182 focused and 1030 root affected checks with the
+same six baseline exclusions. Independent SOURCE GO applies to `1a93ac8`;
+focused repetition passes 182 in 0.56 seconds and affected repetition passes
+1030/6 in 53.79 seconds (root 54.64 seconds). Hidden metadata declarations are rejected;
+mixed occurrence/reference budgets are shared. Bare prior hashes, unminted nulls
+and stored stat tuples remain declarations, never complete inventory or execution
+admission. No actual registry/catalog/native or study stage ran. All seven release
+statuses remain unchanged; default pytest still stops at missing FastAPI.
+
 
 ## Functional matrix
 

@@ -38,14 +38,29 @@ simulation first.
 
 ## Execution focus after disk cleanup
 
+**Goal for this continuation:** finish the reviewed execution paths for puck
+inventory → collision checks → reservation → fresh worker → durable collection,
+and memory replay → condition completion → case close → family admission. Then
+run only separately admitted studies, integrate their supported results into the
+lab and six artworks, and obtain user/operator acceptance on one reproducible
+release. Source fixtures establish software behavior; actual study results and
+human sessions establish their respective release gates.
+
+**Immediate source exit:** the puck inventory covers every declared repository,
+retained root and supported reference family, retains conflicting historical
+variants, and rejects unresolved or unsupported coverage before reservation.
+Connect that inventory to the existing collection mechanisms rather than ending
+at individual parser PRs. Memory source work can proceed while amendment-02
+approval is pending. No new study attempt follows from freeing disk space.
+
 **Next milestone: complete a working, reviewed memory replay-to-case-close path
 and puck inventory-to-collection path.** The result must include executable
 entry points, exact input/runtime admission, meaningful failure checks and durable
 terminal evidence. Then perform the admitted studies. A collection of passing
 component tests or additional planning documents does not satisfy this milestone.
 
-At **2026-10-14 20:54 UTC** (15 October locally), this filesystem had
-**100,027,265,024 bytes free (~93.2 GiB)**, above the frozen memory minimum of
+At **2026-10-14 22:01 UTC** (15 October locally), this filesystem had
+**99,986,862,080 bytes free (~93.1 GiB)**, above the frozen memory minimum of
 **63,786,975,232 bytes (~59.4 GiB)**. Disk capacity is sufficient at this observation;
 recheck free space and required inputs immediately before each admitted stage.
 Clearing space does not authorize a consumed-attempt retry or change a protocol.
@@ -60,9 +75,9 @@ Clearing space does not authorize a consumed-attempt retry or change a protocol.
 | 6 | Conduct user artistic review, independent operator acceptance and final handoff. | User acceptance, independently completed install/runbook and all seven release gates with linked evidence on one reproducible release candidate. | Human sessions and the completed studies/product gates. |
 
 **Start now:** finish the remaining standalone owner/development/mechanics/
-training-result and on-policy registry/publication families, Markdown/reference
-parsing, declared project-scope aggregation and complete semantic inventory
-assembly from PR #125. Its selected retained parser, pinned reference resolver
+training-result/prepared/model-index families, Markdown/reference parsing,
+declared project-scope aggregation and complete semantic inventory assembly
+after PR #126. The selected retained/registry parsers, pinned reference resolvers
 and existing root/catalog components do not establish full coverage or
 reservation admission. Preserve variants and explicit legacy-schema conflicts.
 Use authored temporary fixtures while the catalog-access choice is pending.
@@ -403,14 +418,26 @@ on the integrated candidate, including human acceptance. Report each gate as
 passed, failed or incomplete with its evidence. Do not declare the project done
 while a required capability or acceptance gate remains open.
 
+[Draft PR #126](https://github.com/Aadrika08/palimpsest/pull/126) adds six pure
+on-policy registry/publication codecs, pinned dependency resolution and selected
+custody integration. Exact source `1a93ac8` passes 182 focused checks and 1030
+root affected checks with the same six inherited exclusions. Independent SOURCE
+GO applies to `1a93ac8`; affected repetition passes 1030/6 in 53.79 seconds
+(root 54.64 seconds), and focused repetition passes 182 in 0.56 seconds.
+Review fixes reject hidden scene declarations in metadata and share occurrence/
+reference budgets across historical and registry families. Bare prior hashes,
+unminted self-reservations and historical stat declarations remain explicitly
+unbound. No actual scan, reservation, publication, model/native or study stage ran.
+Full inventory/worker/launcher admission and all seven release gates remain open.
+
 ## First action when pursuing this goal
 
 Continue the **puck durable owner/stage launcher** from PR #121's independently
 audited original-bundle result, PR #120's descriptor-held execution context,
 and PR #122's reviewed native publication and fixed-clock integration. Implement
 complete repository/retained-root aggregation and semantic/reference/Markdown
-assembly from PR #125's selected retained-reference path and PR #124's root/
-catalog components, plus
+assembly after PR #126's registry and PR #125's selected retained-reference
+paths and PR #124's root/catalog components, plus
 a fresh worker bootstrap, then bind source/runtime/dependency identities, exact invocation,
 reservation, registry/scene/model custody, supervision and terminal publication
 into a working path. Actual collection remains unauthorized until the complete
