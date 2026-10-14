@@ -9,6 +9,13 @@ boundary has scoped evidence, even when the evidence column retains limitations;
 `failed` means a fixed gate was evaluated and missed; `limited` means required
 evidence remains incomplete; and `deferred` is outside the simulation release.
 
+The current [simulation execution goal](plans/simulation-release-execution-goal.md)
+retains all seven release gates as open. [Draft PR #119](https://github.com/Aadrika08/palimpsest/pull/119)
+has independent source/freeze GO and 108 passing focused checks for memory
+qualification amendment 02. Actual user approval and execution remain pending;
+attempt 01 is preserved as consumed. These source results change no requirement
+status or scientific/capability claim.
+
 ## Functional matrix
 
 | PRD ID | Status | Acceptance boundary | Runnable coverage | Observed evidence and limits |
