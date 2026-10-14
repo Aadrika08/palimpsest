@@ -141,3 +141,28 @@ def test_ambiguous_registered_registry_views_refuse(defect):
 @pytest.mark.parametrize('deadline',[True,-1,float('nan'),float('inf')])
 def test_registry_resolution_deadline_is_bounded(deadline):
     with pytest.raises((ValueError,TimeoutError)):resolve(registry_documents(),deadline=deadline)
+
+
+@pytest.mark.parametrize('unresolved', [False, True])
+def test_mixed_occurrence_budget_includes_bare_unminted_and_unresolved_rows(monkeypatch, unresolved):
+    registry = registry_documents()
+    historical = historical_documents()
+    if unresolved:
+        historical = [item for item in historical if item['kind'] != 'task_catalog']
+    # Registry: 30 declarations; historical: four mentions. Each lane fits 30.
+    monkeypatch.setattr(subject, 'MAX_OCCURRENCES', 30)
+    resolve(registry)
+    subject.resolve_retained_puck_documents(historical, deadline=time.monotonic()+10)
+    with pytest.raises(ValueError, match='Mixed scene evidence'):
+        subject.resolve_retained_puck_documents(registry+historical, deadline=time.monotonic()+10)
+
+
+def test_mixed_reference_budget_is_shared_across_schema_families(monkeypatch):
+    registry = registry_documents()
+    historical = historical_documents()
+    # Six registry edges and one historical edge each fit; together they do not.
+    monkeypatch.setattr(subject, 'MAX_REFERENCES', 6)
+    resolve(registry)
+    subject.resolve_retained_puck_documents(historical, deadline=time.monotonic()+10)
+    with pytest.raises(ValueError, match='Mixed references'):
+        subject.resolve_retained_puck_documents(registry+historical, deadline=time.monotonic()+10)
