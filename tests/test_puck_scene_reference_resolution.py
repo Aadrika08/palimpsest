@@ -219,3 +219,66 @@ def test_body_failure_remains_primary_if_final_file_check_also_fails(tmp_path):
 def test_external_registration_hash_is_required_before_any_input_open(tmp_path):
     _,reg=registration(tmp_path)
     with pytest.raises(ValueError):held(reg,expected_sha256='0'*64)
+
+
+def test_recorded_root_cwd_is_a_valid_explicit_origin():
+    docs=documents()
+    for doc in docs:doc['path']=doc['path'].removeprefix('/authored')
+    value=json.loads(docs[2]['raw']);value['sources'][0]['path']='recording';docs[2]['raw']=raw(value)
+    assert resolve(docs,origins={'/report.json':'/'})['declared_reference_closure_resolved'] is True
+
+
+def test_caught_payload_failure_cannot_end_as_successful_custody_close(tmp_path):
+    root,reg=registration(tmp_path)
+    with pytest.raises(RuntimeError):
+        with held(reg) as sources:
+            (root/'catalog.json').write_bytes(b'changed')
+            with pytest.raises((ValueError,RuntimeError)):sources.recheck()
+
+
+@pytest.mark.parametrize('cap',['MAX_FILES','MAX_TOTAL_BYTES','MAX_METADATA_BYTES','MAX_REFERENCES','MAX_OCCURRENCES','MAX_VARIANTS'])
+def test_resolution_source_caps_refuse_partial_success(monkeypatch,cap):
+    monkeypatch.setattr(module(),cap,0)
+    with pytest.raises(ValueError):resolve(documents())
+
+
+@pytest.mark.parametrize('defect',['duplicate-key','unknown-field','overlap','descriptor-order',
+    'bad-kind','bad-size','bad-hash','unregistered-origin','duplicate-origin','noncanonical'])
+def test_registration_errors_refuse_before_payload_custody(tmp_path,defect):
+    _,reg=registration(tmp_path);value=json.loads(reg)
+    if defect=='unknown-field':value['complete']=True
+    elif defect=='overlap':value['roots'].append(copy.deepcopy(value['roots'][0]))
+    elif defect=='descriptor-order':value['roots'][0]['files'].reverse()
+    elif defect=='bad-kind':value['roots'][0]['files'][0]['kind']='model'
+    elif defect=='bad-size':value['roots'][0]['files'][0]['size_bytes']=True
+    elif defect=='bad-hash':value['roots'][0]['files'][0]['sha256']='A'*64
+    elif defect=='unregistered-origin':value['origins']=[{'document_path':'/absent.json','cwd':'/authored'}]
+    elif defect=='duplicate-origin':
+        value['origins']=[{'document_path':str(__import__('pathlib').Path(value['roots'][0]['root'])/'report.json'),'cwd':'/authored'}]*2
+    payload=raw(value)
+    if defect=='duplicate-key':payload=payload.replace(b'"version":1',b'"version":1,"version":1')
+    elif defect=='noncanonical':payload=payload.rstrip(b'\n')
+    with pytest.raises(ValueError):held(payload)
+
+
+def test_held_receipt_prefix_is_inside_the_registered_metadata_ceiling(tmp_path,monkeypatch):
+    _,reg=registration(tmp_path)
+    with held(reg) as sources:full=sources.snapshot()
+    del full['registration_sha256'];del full['registered_document_bytes_authenticated']
+    cap=len(json.dumps(full,sort_keys=True,separators=(',',':'),allow_nan=False).encode())+1
+    monkeypatch.setattr(module(),'MAX_METADATA_BYTES',cap)
+    with pytest.raises(ValueError):
+        with held(reg):pass
+
+
+def test_snapshot_copy_deadline_failure_poison_closes(tmp_path,monkeypatch):
+    _,reg=registration(tmp_path)
+    with pytest.raises(TimeoutError):
+        with held(reg) as sources:
+            original=module().copy.deepcopy
+            def late(value):
+                result=original(value)
+                monkeypatch.setattr(module().time,'monotonic',lambda:float('inf'))
+                return result
+            monkeypatch.setattr(module().copy,'deepcopy',late)
+            sources.snapshot()
