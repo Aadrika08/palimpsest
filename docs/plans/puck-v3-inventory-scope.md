@@ -42,11 +42,11 @@ provider metadata and expanded commit occurrences; never partition to evade caps
 Failure poisons the coordinator and closes every child in reverse order. Last-held
 observations are not an atomic snapshot, hostile-host proof or post-close custody.
 
-- [ ] Observe API/coverage/semantic/collision REDs on authored temporary forests
+- [x] Observe API/coverage/semantic/collision REDs on authored temporary forests
   and real small Git repositories; no actual project data or models.
-- [ ] Implement metadata census and public Git document/budget seams, pure
+- [x] Implement metadata census and public Git document/budget seams, pure
   Markdown codec, complete held coordinator and guarded legacy projection.
-- [ ] Independently review exact source and repeat meaningful focused/affected
+- [x] Independently review exact source and repeat meaningful focused/affected
   verification serially; preserve failures and existing six mechanics exclusions.
 - [ ] Commit/push a stacked draft PR/report and synchronize goal/matrix without
   changing any release status. Continue fresh-worker/durable launcher binding.
