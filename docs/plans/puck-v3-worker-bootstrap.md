@@ -34,7 +34,7 @@ boundary. This is not a sandbox against malicious admitted Python.
   fixed executable preflight entry; keep every refusal terminal.
 - [x] Independently review the branch, run focused/affected checks serially and
   retain default-suite limitations and exact source evidence.
-- [ ] Commit/push a stacked draft PR and synchronize goal/matrix. Continue the
+- [x] Commit/push a stacked draft PR and synchronize goal/matrix. Continue the
   separate dependency/native admission and complete durable collection launcher.
 
 The full twelve-owner allocation and historical owner denial stay unchanged.
@@ -48,3 +48,9 @@ Review source `875da74` found two Important dispatch gaps; one fix pass at
 `0629f43` reproduced and corrected class, alias, wrapper and support-holder gaps.
 Independent verification repeated tests on the corrected source; it is not a
 second source review or exact execution/runtime GO.
+
+Delivered as [draft PR #129](https://github.com/Aadrika08/palimpsest/pull/129).
+Final source `164ad38` also rejects runtime descriptor type drift before support
+execution. Final26 child checks pass root/independently; final1302 affected checks
+pass independently with six inherited exclusions. Runtime/execution GO and the
+complete collection launcher remain open.

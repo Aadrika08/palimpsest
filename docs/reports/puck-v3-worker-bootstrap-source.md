@@ -9,7 +9,7 @@ receipt. External dependencies and native/numerical collection remain denied.
 
 Base PR #128: `eb96a19522561b34b2a0d97e0f04558361429828`.
 Reviewed initial source: `875da74afcfc07fe761a4afa115cdf7c5c335f61`.
-Final corrected/tested source: `0629f43009fcaa53a7f9590381d0ee54eabe4b91`.
+Final corrected/tested source: `164ad387a5b0da8b768fbc926404cfd34c57b6b9`.
 
 ## Working execution boundary
 
@@ -80,9 +80,18 @@ checked before invoking support guards. No independent exact-source GO or runtim
 GO is claimed from the initial review. Independent corrected-source test repetition
 is verification evidence, not a second code review.
 
-Final focused: **25 passed, 4.59 seconds root / 4.60 seconds independent**.
-Final serialized affected: **1301 passed, six deselected, 66.09 seconds root /
-67.33 seconds independent**, exit0. The affected command is the exact 25-file
+Dispatch-fix source `0629f43`: **25 focused passed, 4.59 seconds root / 4.60
+seconds independent**, and **1301 affected passed, six deselected, 66.09 seconds
+root / 67.33 seconds independent**, exit0.
+
+Finalization found one additional typed-registration defect: Python numeric
+equality accepted a floating-point interpreter size until after support code
+execution. The marker RED reproduced in 0.13 seconds; canonical typed comparison
+now refuses it in `_parse` before support code. Final source is `164ad38`.
+Final focused: **26 passed, 4.62 seconds root / 4.63 seconds independent**.
+Final independent serialized affected: **1302 passed, six deselected, 66.41
+seconds**, exit0. The earlier root broad result applies to the prior source;
+no root 1302-test run or final exact source/runtime GO is claimed. The affected command is the exact 25-file
 command in [PR #128's report](puck-v3-inventory-scope-source.md) with
 `tests/test_puck_worker_bootstrap.py` added and the same six inherited mechanics
 construction-pin/missing-httpx exclusions. `git diff --check` passes.
