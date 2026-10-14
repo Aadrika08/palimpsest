@@ -2,7 +2,7 @@
 from __future__ import annotations
 
 import argparse
-from contextlib import ExitStack, suppress
+from contextlib import ExitStack, suppress, contextmanager
 import copy
 import hashlib
 import json
@@ -13,6 +13,8 @@ import time
 import signal
 import shutil
 import subprocess
+import stat
+import threading
 
 ROOT = Path(__file__).resolve().parents[1]
 RUNS = ('e91cf0a8efbe4712b01a0a469991fcb8', 'e0277617fcd64bc0b1314f723b45b30f',
@@ -22,6 +24,14 @@ META = 'docs/reports/memory-prerequisites-v3-evidence/'
 SOURCE_FIXED = ('pyproject.toml', 'uv.lock', 'model_manifests/flynn-full-vision.json',
                 'docs/plans/memory-family-compact-evidence-v4-protocol.json',
                 'docs/plans/memory-full-cell-qualification-v4.md')
+PYTHON = '/home/utkarsh/Work/shraddha/brain/.worktrees/lab-hardening/.venv/bin/python'
+ENVIRONMENT = {'CUDA_VISIBLE_DEVICES': '', 'MKL_NUM_THREADS': '1', 'MUJOCO_GL': 'egl',
+               'NUMEXPR_NUM_THREADS': '1', 'OMP_NUM_THREADS': '1', 'OPENBLAS_NUM_THREADS': '1',
+               'PYTHONDONTWRITEBYTECODE': '1', 'PYTHONPATH': 'src:.'}
+LIMITS = {'internal_seconds': 600, 'normal_seconds': 650, 'hard_seconds': 660,
+          'sampled_rss_bytes': 6 * 1024**3, 'sampling_seconds': .05,
+          'min_free_bytes': 2 * 1024**3, 'output_bytes': 128 * 1024**2,
+          'log_bytes': 1024**2, 'result_bytes': 1024**2, 'workload_processes': 3}
 
 
 def _canonical(value):
@@ -98,13 +108,22 @@ def _source_roster(root):
 
 
 def _freeze(path, expected_sha):
-    payload = Path(path).read_bytes()
+    with Path(path).open('rb') as stream:
+        payload = stream.read(1024**2 + 1)
     if len(payload) > 1024**2 or hashlib.sha256(payload).hexdigest() != expected_sha:
         raise ValueError('Reviewed execution freeze differs')
     from palimpsest.artifacts import _json
     value = _json(payload)
     if payload != _canonical(value) or value['schema'] != 'memory-full-cell-qualification-v4':
         raise ValueError('Execution freeze is not canonical/recognized')
+    if set(value) != {'schema', 'repo_root', 'run_ids', 'positive_cells', 'max_cells',
+            'model_seed', 'native_owners', 'physics_steps', 'attempts', 'claims', 'inputs',
+            'environment', 'output', 'model_edge', 'model_checkpoint', 'python_executable',
+            'limits', 'supervisor'}:
+        raise ValueError('Execution freeze fields differ')
+    if any(type(value[key]) is not int for key in ('positive_cells', 'max_cells',
+           'model_seed', 'native_owners', 'physics_steps', 'attempts')):
+        raise ValueError('Execution freeze requires exact integer scope')
     if (value['repo_root'] != str(ROOT) or value['run_ids'] != list(RUNS)
             or value['positive_cells'] != 737 or value['max_cells'] != 1470
             or value['model_seed'] != 400 or value['native_owners'] != 0
@@ -112,6 +131,19 @@ def _freeze(path, expected_sha):
             or value['claims'] != {'family_admission': False, 'pruning_authorized': False,
                                   'qualification_claims': []}):
         raise ValueError('Execution freeze scope differs')
+    if (any(type(value['claims'][key]) is not bool for key in ('family_admission', 'pruning_authorized'))
+            or _canonical(value['limits']) != _canonical(LIMITS)
+            or value['environment'] != ENVIRONMENT or value['python_executable'] != PYTHON
+            or value['output'] != str(ROOT / 'runs/memory-full-cell-qualification-v4-attempt-01')
+            or value['model_checkpoint'] != 'connectome_rnn_dagger_princeton_full_vision.pt'
+            or value['model_edge'] != 'graph-49d19491c1df4b8f02af0e285b71dc171f47488a93ee5b91be8ee4e280bee9f1/drosophila adult connectome/connections_princeton.csv'
+            or set(value['supervisor']) != {'path', 'sha256', 'argv'}
+            or value['supervisor']['path'] != '/usr/bin/timeout'
+            or value['supervisor']['argv'] != ['--signal=TERM', '--kill-after=10s', '650s']
+            or type(value['supervisor']['sha256']) is not str
+            or len(value['supervisor']['sha256']) != 64
+            or any(c not in '0123456789abcdef' for c in value['supervisor']['sha256'])):
+        raise ValueError('Execution freeze invocation or limits differ')
     if (set(value['inputs']) != {'sources', 'metadata', 'raw', 'assets', 'runtime'}
             or value['inputs']['sources']['root'] != str(ROOT)
             or value['inputs']['metadata']['root'] != str(ROOT)
@@ -278,11 +310,82 @@ def _group_members(group):
     return result
 
 
+def _output_bytes(root):
+    """Bound the entire attempt namespace, including both pairs of logs."""
+    total = count = directories_seen = 0
+    if root.is_symlink():
+        raise ValueError('Qualification output root is aliased')
+    for directory, directories, files in os.walk(root, followlinks=False):
+        directories_seen += len(directories)
+        if directories_seen > 2 or any((Path(directory) / name).is_symlink() for name in directories):
+            raise ValueError('Qualification output namespace differs')
+        for name in files:
+            count += 1
+            value = (Path(directory) / name).lstat()
+            if count > 32 or not stat.S_ISREG(value.st_mode) or value.st_nlink != 1:
+                raise ValueError('Qualification output namespace differs')
+            total += value.st_size
+    return total
+
+
+def _kill_owned_groups(state):
+    # Kill the known group first, even if discovery of an in-flight launch fails.
+    own_group = os.getpgrp()
+    if state.get('group') and state['group'] != own_group:
+        with suppress(ProcessLookupError):
+            os.killpg(state['group'], signal.SIGKILL)
+    # Popen can still be waiting for exec before returning its PID. Direct
+    # children of this dedicated monitor are also its owned launches.
+    for path in Path('/proc').iterdir():
+        if not path.name.isdecimal():
+            continue
+        try:
+            values = (path / 'stat').read_text().rsplit(')', 1)[1].split()
+            if int(values[1]) == os.getpid() and int(values[2]) != own_group:
+                with suppress(ProcessLookupError):
+                    os.killpg(int(values[2]), signal.SIGKILL)
+        except (OSError, ValueError):
+            continue
+
+
+@contextmanager
+def _hard_guard(deadline, state):
+    """Last operational kill clock, including outer monitor/publication stalls."""
+    own_group = os.getpgrp()
+    if own_group != os.getpid():
+        raise ValueError('Hard guard requires a dedicated outer process group')
+    stop = threading.Event()
+    def expire():
+        if stop.wait(max(0, deadline - time.monotonic())):
+            return
+        try:
+            _kill_owned_groups(state)
+        finally:
+            os.killpg(own_group, signal.SIGKILL)
+            os._exit(124)
+    previous = signal.getsignal(signal.SIGTERM)
+    def interrupted(signum, frame):
+        raise InterruptedError('Qualification outside monitor was terminated')
+    signal.signal(signal.SIGTERM, interrupted)
+    guard = threading.Thread(target=expire, daemon=True)
+    guard.start()
+    try:
+        yield
+    except BaseException:
+        _kill_owned_groups(state)
+        raise
+    finally:
+        stop.set()
+        signal.signal(signal.SIGTERM, previous)
+        guard.join(timeout=.1)
+
+
 def _supervised(command, output, *, normal_deadline, hard_deadline,
-                min_free_bytes=2 * 1024**3, max_processes=1):
+                min_free_bytes=2 * 1024**3, max_processes=1, output_root=None, guard_state=None):
     """Observed owned group; bounded existing log drains, no model imports."""
     if type(max_processes) is not int or not 1 <= max_processes <= 3:
         raise ValueError('Qualification process allowance differs')
+    output_root = Path(output_root) if output_root is not None else output
     from palimpsest.evaluate import bounded_logs
     failure = []
     process = None
@@ -293,6 +396,8 @@ def _supervised(command, output, *, normal_deadline, hard_deadline,
     with bounded_logs(output, 1024**2, failed) as (stdout, stderr):
         process = subprocess.Popen(command, stdout=stdout, stderr=stderr,
             env=dict(os.environ), cwd=ROOT, start_new_session=True)
+        if guard_state is not None:
+            guard_state['group'] = process.pid
         monitor_error = None
         try:
             while process.poll() is None:
@@ -306,7 +411,7 @@ def _supervised(command, output, *, normal_deadline, hard_deadline,
                     failed('sampled RSS stop threshold')
                 elif shutil.disk_usage(output).free < min_free_bytes:
                     failed('free-space floor')
-                elif sum(path.stat().st_size for path in output.iterdir() if path.is_file()) > 128 * 1024**2:
+                elif _output_bytes(output_root) > 128 * 1024**2:
                     failed('aggregate output cap')
                 elif time.monotonic() >= normal_deadline:
                     failed('normal-return deadline')
@@ -336,6 +441,12 @@ def _supervised(command, output, *, normal_deadline, hard_deadline,
     survivors = sorted(_group_members(process.pid))
     if survivors:
         failed('matching process-group survivors after cleanup')
+    elif guard_state is not None:
+        guard_state['group'] = None
+    if _output_bytes(output_root) > 128 * 1024**2:
+        failed('aggregate output cap')
+    if shutil.disk_usage(output_root).free < min_free_bytes:
+        failed('free-space floor')
     # poll() can first observe an already-exited leader, and bounded log drainage
     # can itself overrun. Successful exit status does not establish timely return.
     finished = time.monotonic()
@@ -350,57 +461,147 @@ def _supervised(command, output, *, normal_deadline, hard_deadline,
             'finished_monotonic': finished}
 
 
-def main(argv=None):
-    parser = argparse.ArgumentParser()
-    parser.add_argument('--freeze', required=True)
-    parser.add_argument('--freeze-sha256', required=True)
-    parser.add_argument('--worker', action='store_true')
-    args = parser.parse_args(argv)
-    freeze = _freeze(args.freeze, args.freeze_sha256)
-    for key, value in freeze['environment'].items():
-        if os.environ.get(key) != value:
-            raise ValueError('Frozen environment differs: ' + key)
+def _read_control(path):
+    from palimpsest.artifacts import _json
+    with path.open('rb') as stream:
+        raw = stream.read(1024**2 + 1)
+    if len(raw) > 1024**2:
+        raise ValueError('Qualification control exceeds its cap')
+    return _json(raw)
+
+
+def _require_parent_origin(job):
+    group = os.getpgrp()
+    if (type(job.get('supervisor_pid')) is not int or job['supervisor_pid'] <= 0
+            or os.getppid() != group or group == os.getpid()):
+        raise ValueError('Qualification parent lacks its owned timeout group')
+    stat = Path(f'/proc/{group}/stat').read_text().rsplit(')', 1)[1].split()
+    if (int(stat[1]) != job['supervisor_pid']
+            or Path(f'/proc/{group}/exe').resolve() != Path('/usr/bin/timeout')):
+        raise ValueError('Qualification parent timeout origin differs')
+
+
+def _run_worker(command, output, deadline):
+    from palimpsest.evaluate import bounded_logs
+    failures = []
+    with bounded_logs(output, 1024**2, failures.append) as (stdout, stderr):
+        # Inherit the timeout-owned group. The outer supervisor owns final cleanup,
+        # including descendants that outlive their immediate parent.
+        completed = subprocess.run(command, stdout=stdout, stderr=stderr,
+            cwd=ROOT, env=dict(os.environ), start_new_session=False,
+            timeout=max(.001, deadline - time.monotonic()), check=False)
+    if failures or completed.returncode != 0:
+        raise RuntimeError('Qualification worker or log drainage failed; no retry')
+    if time.monotonic() >= deadline:
+        raise TimeoutError('Qualification worker exceeded internal deadline')
+
+
+def _parent(freeze, args, job):
     output = Path(freeze['output'])
-    if args.worker:
-        job = json.loads((output / 'attempt.json').read_bytes())
-        if job['freeze_sha256'] != args.freeze_sha256:
-            raise ValueError('Worker attempt freeze differs')
-        _write(output / 'worker-started.json', {'pid': os.getpid(), 'started_monotonic': time.monotonic()})
-        with ExitStack() as stack:
-            inputs = _held_inputs(freeze, job['deadline'], stack)
-            result = _qualify(freeze, inputs, job['deadline'])
-        _write(output / 'worker-result.json', result)
-        return
-    started = time.monotonic()
-    output.parent.mkdir(exist_ok=True)
-    output.mkdir(parents=False, exist_ok=False)
-    deadline = started + 600
-    _write(output / 'attempt.json', {'freeze_sha256': args.freeze_sha256, 'started_monotonic': started,
-                                   'deadline': deadline, 'parent_pid': os.getpid(), 'attempt': 1})
+    deadline, started = job['deadline'], job['started_monotonic']
     try:
+        _require_parent_origin(job)
+        _write(output / 'parent-started.json', {'pid': os.getpid(), 'group': os.getpgrp(),
+               'started_monotonic': time.monotonic()})
         with ExitStack() as stack:
             inputs = _held_inputs(freeze, deadline, stack)
             command = [sys.executable, '-m', 'scripts.qualify_memory_full_cell_v4',
-                       '--freeze', str(Path(args.freeze).resolve()), '--freeze-sha256', args.freeze_sha256, '--worker']
-            supervision = _supervised(command, output,
-                normal_deadline=started + 650, hard_deadline=started + 660)
-            _write(output / 'supervisor.json', supervision)
-            if supervision['status'] != 'completed' or supervision['returncode'] != 0:
-                raise RuntimeError('Qualification worker failed; no retry')
-            if time.monotonic() >= deadline:
-                raise TimeoutError('Internal qualification deadline exceeded')
+                '--freeze', str(Path(args.freeze).resolve()), '--freeze-sha256', args.freeze_sha256, '--worker']
+            _run_worker(command, output, deadline)
             for held in inputs.values(): held.recheck()
-            result = json.loads((output / 'worker-result.json').read_bytes())
-            if result['positive_cells'] != 737 or len(result['negatives']) != 4:
+            result = _read_control(output / 'worker-result.json')
+            if (type(result.get('positive_cells')) is not int or result['positive_cells'] != 737
+                    or len(result.get('negatives', [])) != 4
+                    or any(row.get('rejected') is not True for row in result['negatives'])):
                 raise ValueError('Worker result is incomplete')
         if time.monotonic() >= deadline:
             raise TimeoutError('Final custody exceeded internal deadline')
         _write(output / 'close.json', {'status': 'passed', 'freeze_sha256': args.freeze_sha256,
-                                     'elapsed_seconds': time.monotonic() - started, 'claims': freeze['claims']})
+            'elapsed_seconds': time.monotonic() - started, 'claims': freeze['claims']})
+        if time.monotonic() >= deadline:
+            raise TimeoutError('Close publication exceeded internal deadline')
     except BaseException as error:
         _write(output / 'failure.json', {'status': 'failed', 'error_type': type(error).__name__,
-                                       'message': str(error), 'claims': freeze['claims']})
+            'message': str(error), 'claims': freeze['claims']})
         raise
+
+
+def main(argv=None):
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--freeze', required=True)
+    parser.add_argument('--freeze-sha256', required=True)
+    modes = parser.add_mutually_exclusive_group()
+    modes.add_argument('--worker', action='store_true')
+    modes.add_argument('--parent', action='store_true')
+    args = parser.parse_args(argv)
+    freeze = _freeze(args.freeze, args.freeze_sha256)
+    if sys.executable != freeze['python_executable']:
+        raise ValueError('Frozen invocation interpreter differs')
+    for key, value in freeze['environment'].items():
+        if os.environ.get(key) != value:
+            raise ValueError('Frozen environment differs: ' + key)
+    output = Path(freeze['output'])
+    if args.parent or args.worker:
+        job = _read_control(output / 'attempt.json')
+        if job['freeze_sha256'] != args.freeze_sha256:
+            raise ValueError('Attempt freeze differs')
+        if args.parent:
+            return _parent(freeze, args, job)
+        parent = _read_control(output / 'parent-started.json')
+        if os.getppid() != parent['pid'] or os.getpgrp() != parent['group']:
+            raise ValueError('Qualification worker process origin differs')
+        _write(output / 'worker-started.json', {'pid': os.getpid(), 'group': os.getpgrp(),
+                                             'started_monotonic': time.monotonic()})
+        with ExitStack() as stack:
+            inputs = _held_inputs(freeze, job['deadline'], stack)
+            result = _qualify(freeze, inputs, job['deadline'])
+        _write(output / 'worker-result.json', result)
+        if time.monotonic() >= job['deadline']:
+            raise TimeoutError('Worker publication exceeded internal deadline')
+        return
+    # The outside monitor reserves once and never imports the numerical stack.
+    # Its clocks include startup, custody, inference, final checks and close fsync.
+    if os.getpgrp() != os.getpid():
+        os.setsid()
+    started = time.monotonic()
+    guard_state = {"group": None}
+    with _hard_guard(started + 660, guard_state):
+        output.parent.mkdir(exist_ok=True)
+        output.mkdir(parents=False, exist_ok=False)
+        (output / 'outer').mkdir()
+        deadline = started + 600
+        _write(output / 'attempt.json', {'freeze_sha256': args.freeze_sha256,
+            'started_monotonic': started, 'deadline': deadline,
+            'supervisor_pid': os.getpid(), 'attempt': 1})
+        try:
+            tool = freeze['supervisor']
+            with Path(tool['path']).open('rb') as stream:
+                payload = stream.read(1024**2 + 1)
+            if len(payload) > 1024**2 or hashlib.sha256(payload).hexdigest() != tool['sha256']:
+                raise ValueError('Frozen timeout executable differs')
+            command = [tool['path'], *tool['argv'], sys.executable,
+                '-m', 'scripts.qualify_memory_full_cell_v4', '--freeze', str(Path(args.freeze).resolve()),
+                '--freeze-sha256', args.freeze_sha256, '--parent']
+            supervision = _supervised(command, output / 'outer', normal_deadline=started + 650,
+                hard_deadline=started + 660, max_processes=3,
+                output_root=output, guard_state=guard_state)
+            _write(output / 'supervisor.json', supervision)
+            if (supervision['status'] != 'completed' or supervision['returncode'] != 0
+                    or supervision['matching_survivors'] or (output / 'failure.json').exists()):
+                raise RuntimeError('Whole-parent qualification failed; no retry')
+            close = _read_control(output / 'close.json')
+            if close['status'] != 'passed' or close['freeze_sha256'] != args.freeze_sha256:
+                raise ValueError('Qualification parent close differs')
+            _write(output / 'terminal.json', {'status': 'passed', 'freeze_sha256': args.freeze_sha256,
+                'elapsed_seconds': time.monotonic() - started, 'claims': freeze['claims']})
+            # This receipt is outside the timed workload group. Refuse slow fsync;
+            # external observed exit 0 is also required before accepting an attempt.
+            if time.monotonic() >= started + 650:
+                raise TimeoutError('Terminal publication exceeded normal-return boundary')
+        except BaseException as error:
+            _write(output / 'outer-failure.json', {'status': 'failed', 'error_type': type(error).__name__,
+                'message': str(error), 'claims': freeze['claims']})
+            raise
 
 
 if __name__ == '__main__':

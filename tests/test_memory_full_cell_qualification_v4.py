@@ -254,3 +254,103 @@ def test_parent_refuses_standalone_or_wrong_supervisor_origin():
     assert hasattr(m, '_require_parent_origin'), 'Parent origin admission is missing'
     with pytest.raises(ValueError):
         m._require_parent_origin({'supervisor_pid': -1})
+
+
+def test_supervisor_checks_final_aggregate_output_outside_log_directory(tmp_path, monkeypatch):
+    m = module()
+    logs = tmp_path / 'outer'
+    logs.mkdir()
+    real_popen = m.subprocess.Popen
+    def launch(*args, **kwargs):
+        process = real_popen(*args, **kwargs)
+        process.wait(timeout=5)
+        with (tmp_path / 'excess.bin').open('wb') as stream:
+            stream.truncate(128 * 1024**2 + 1)
+        return process
+    monkeypatch.setattr(m.subprocess, 'Popen', launch)
+    now = time.monotonic()
+    result = m._supervised([sys.executable, '-c', 'pass'], logs,
+                          normal_deadline=now + 3, hard_deadline=now + 4,
+                          min_free_bytes=0, output_root=tmp_path)
+    assert result['status'] == 'failed'
+    assert result['failure'] == 'aggregate output cap'
+    assert result['matching_survivors'] == []
+
+
+def test_valid_current_freeze_loads_without_opening_its_protected_inputs():
+    m = module()
+    path = m.ROOT / 'docs/plans/memory-full-cell-qualification-v4-execution.json'
+    value = m._freeze(path, hashlib.sha256(path.read_bytes()).hexdigest())
+    assert value['positive_cells'] == 737
+    assert value['limits']['workload_processes'] == 3
+
+
+def test_hard_guard_ends_stalled_monitor_and_its_known_owned_group(tmp_path):
+    import subprocess
+    import signal
+    m = module()
+    path = tmp_path / 'owned.pid'
+    code = f'''import subprocess,sys,time
+from pathlib import Path
+from scripts.qualify_memory_full_cell_v4 import _hard_guard
+state={{"group":None}}
+with _hard_guard(time.monotonic()+.4,state):
+    child=subprocess.Popen([sys.executable,"-c","import signal,time;signal.signal(signal.SIGTERM,signal.SIG_IGN);time.sleep(20)"],start_new_session=True)
+    state["group"]=child.pid
+    Path({str(path)!r}).write_text(str(child.pid))
+    time.sleep(20)
+'''
+    process = subprocess.Popen([sys.executable, '-c', code], cwd=m.ROOT,
+                               env=dict(os.environ), start_new_session=True)
+    try:
+        process.wait(timeout=3)
+        assert process.returncode == -signal.SIGKILL
+        assert path.exists(), 'Test must actually start its owned child'
+        stat = Path('/proc') / path.read_text() / 'stat'
+        assert not stat.exists() or stat.read_text().rsplit(')', 1)[1].split()[0] in ('Z', 'X')
+    finally:
+        if process.poll() is None:
+            os.killpg(process.pid, signal.SIGKILL)
+            process.wait(timeout=3)
+        if path.exists():
+            try: os.killpg(int(path.read_text()), signal.SIGKILL)
+            except ProcessLookupError: pass
+
+
+def test_guard_term_interruption_cleans_its_group_before_monitor_exit(tmp_path):
+    import subprocess
+    import signal
+    m = module()
+    path = tmp_path / 'owned.pid'
+    code = f'''import subprocess,sys,time
+from pathlib import Path
+from scripts.qualify_memory_full_cell_v4 import _hard_guard
+state={{"group":None}}
+with _hard_guard(time.monotonic()+5,state):
+    child=subprocess.Popen([sys.executable,"-c","import signal,time;signal.signal(signal.SIGTERM,signal.SIG_IGN);time.sleep(20)"],start_new_session=True)
+    state["group"]=child.pid
+    Path({str(path)!r}).write_text(str(child.pid))
+    time.sleep(20)
+'''
+    process = subprocess.Popen([sys.executable, '-c', code], cwd=m.ROOT,
+                               env=dict(os.environ), start_new_session=True)
+    try:
+        until = time.monotonic() + 2
+        while not path.exists() and process.poll() is None and time.monotonic() < until:
+            time.sleep(.01)
+        assert path.exists(), 'Test must actually launch its owned child'
+        os.kill(process.pid, signal.SIGTERM)
+        process.wait(timeout=3)
+        assert process.returncode != 0
+        stat = Path('/proc') / path.read_text() / 'stat'
+        until = time.monotonic() + .5
+        while stat.exists() and stat.read_text().rsplit(')', 1)[1].split()[0] not in ('Z', 'X') and time.monotonic() < until:
+            time.sleep(.01)
+        assert not stat.exists() or stat.read_text().rsplit(')', 1)[1].split()[0] in ('Z', 'X')
+    finally:
+        if process.poll() is None:
+            os.killpg(process.pid, signal.SIGKILL)
+            process.wait(timeout=3)
+        if path.exists():
+            try: os.killpg(int(path.read_text()), signal.SIGKILL)
+            except ProcessLookupError: pass

@@ -7,7 +7,7 @@ family-v3 acquisition, compact conversion, pruning or collection admission.
 
 **Execution status:** source preparation only; actual qualification is not
 admitted. The execution JSON is a prospective candidate, not an execution grant.
-Whole-parent publication/return timing and the exact invocation/freeze require
+Whole-parent publication/return supervision and the exact invocation/freeze require
 independent review before any protected input access. The worker's late-success
 and final-log-drain deadline bypasses were reproduced and repaired; this narrow
 fix has independent review and does not close the remaining execution gates.
@@ -70,10 +70,33 @@ Frozen limits: 600-second internal interval from reservation including final
 custody checks; 650-second normal-return boundary and 660-second hard supervisor
 deadline; sampled 6 GiB RSS stop threshold at 0.05-second intervals (not a hard
 memory bound); 2 GiB free-space floor; 128 MiB aggregate new output,
-1 MiB each stdout/stderr and 1 MiB result. One model worker plus its small custody/
-supervisor parent; one attempt directory outside protected
-inputs. Supervisor must observe final process drainage and input/source rehash
-before accepting success. These are finite operational limits, not WCET claims.
+1 MiB each stdout/stderr and 1 MiB result. One model worker and its custody parent
+inherit the owned GNU-timeout process group; a small outside supervisor holds the
+one original reservation clock. At most three live workload-group processes
+(timeout, parent, worker) and one outside monitor are allowed. There is one attempt
+directory outside protected inputs. No process may start a new group except the
+outside monitor's owned timeout launch.
+
+The reviewed argv is the registered Python executable invoking this module with
+the exact freeze path and independently supplied freeze SHA256. The default mode
+reserves once, launches the pinned `/usr/bin/timeout --signal=TERM --kill-after=10s
+650s` with the same Python/module/freeze arguments plus `--parent`; that parent
+launches only `--worker`, inheriting the group. Parent and worker verify their
+process origin and use the original reservation deadline, without restarted
+allowances. The outside supervisor always scans the whole owned group and kills
+survivors, including on timeout-leader exit. GNU timeout alone is insufficient:
+a TERM-ignoring descendant can survive if the direct command exits before KILL.
+
+The outside monitor also owns a daemon hard-clock guard through terminal receipt
+publication. At the original 660-second boundary it kills the active workload
+group, any still-launching direct-child groups, and its own dedicated group. The
+guard covers outer monitor/fsync stalls; it is not a kernel scheduling or blocked
+I/O WCET guarantee. Parent close requires post-fsync return within 600 seconds;
+outer terminal publication requires post-fsync return within 650 seconds and a
+separately observed external exit 0. All group drainage and input/source rehash
+must pass. A close/terminal marker alone never establishes success; any failure
+marker, nonzero/late external exit or surviving group invalidates it. These are
+finite operational limits, not hostile-process isolation or WCET claims.
 Any missing input, mismatch, deadline, RSS, cleanup or publication failure consumes
 the attempt, retains failure evidence and stops this qualification. No automatic
 corrective invocation or original artifact modification/deletion.
