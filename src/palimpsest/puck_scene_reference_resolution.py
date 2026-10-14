@@ -23,6 +23,9 @@ MAX_ROOTS = 32
 MAX_VARIANTS = MAX_REFERENCES = 4096
 MAX_OCCURRENCES = 65536
 _KINDS = {'task_catalog', 'recording_manifest', 'teacher_collection_report', 'training_protocol'}
+_REGISTRY_KINDS = {'on_policy_inventory','on_policy_reservation','on_policy_scene_manifest',
+    'on_policy_collection_projection','on_policy_publication_commit','on_policy_publication_admission'}
+_KINDS |= _REGISTRY_KINDS
 _FIELDS = ('canonical_scene_sha256', 'scientific_initial_sha256', 'payload_sha256')
 
 
@@ -62,6 +65,9 @@ def resolve_retained_puck_documents(documents, *, deadline, origins=None):
     _deadline(deadline)
     if type(documents) is not list or not 1<=len(documents)<=MAX_FILES:
         raise ValueError('Bounded nonempty scene document views required')
+    if any(type(item) is dict and type(item.get('kind')) is str
+           and item['kind'] in _REGISTRY_KINDS for item in documents):
+        return _resolve_mixed_registry_documents(documents,deadline=deadline,origins=origins)
     parsed={};pins={};catalogs={};input_bytes=0;exposure=False
     for item in documents:
         _clock(deadline)
@@ -337,3 +343,179 @@ class HeldRetainedPuckDocuments:
             if error is not None:error.add_note('Retained document final deadline failed: '+str(late))
             else:raise
         return False
+
+
+def resolve_puck_registry_documents(documents, *,deadline):
+    """Bound registry references over supplied bytes; never publication admission.
+
+    Layout-bearing rows are recomputed by the codec. Bare inventory hashes and
+    historical stat tuples remain declarations. Digest references preserve every
+    identical-content location; local publication names use the document parent.
+    """
+    from .puck_scene_registry import parse_puck_registry_document
+    from . import puck_on_policy as policy
+    _deadline(deadline)
+    if type(documents) is not list or not 1<=len(documents)<=MAX_FILES:
+        raise ValueError('Bounded nonempty registry document views required')
+    parsed={};views={};pins={};by_digest={};input_bytes=0
+    for item in documents:
+        _clock(deadline)
+        if type(item) is not dict or set(item)!={'path','kind','raw'}:
+            raise ValueError('Exact registry document view fields required')
+        path=_path(item['path']);kind=item['kind'];payload=item['raw']
+        if path in parsed or type(kind) is not str or kind not in _REGISTRY_KINDS:
+            raise ValueError('Duplicate or unsupported registry view')
+        if not path.casefold().endswith('.json') or type(payload) is not bytes or not 0<len(payload)<=MAX_BYTES:
+            raise ValueError('Bounded registry JSON bytes required')
+        input_bytes+=len(payload)
+        if input_bytes>MAX_TOTAL_BYTES:raise ValueError('Registry aggregate exceeds source ceiling')
+        digest=hashlib.sha256(payload).hexdigest()
+        pins[path]={'path':path,'kind':kind,'sha256':digest,'size_bytes':len(payload)}
+        parsed[path]=parse_puck_registry_document(payload,kind=kind);views[path]=payload
+        by_digest.setdefault((kind,digest),[]).append(path)
+        _clock(deadline)
+    resolved=[];unresolved=[];reference_count=0
+    for path,value in sorted(parsed.items()):
+        for ref in value['references']:
+            _clock(deadline);reference_count+=1
+            if reference_count>MAX_REFERENCES:raise ValueError('Registry references exceed source ceiling')
+            reason=None;targets=[]
+            if ref['path_base']=='content_digest':
+                targets=sorted(by_digest.get((ref['kind'],ref['sha256']),[]))
+                if not targets:reason='unregistered_content_digest'
+            elif ref['path_base']=='document_directory':
+                target=str(PurePosixPath(path).parent/ref['path'])
+                _path(target)
+                if target not in pins:reason='unregistered_target'
+                elif pins[target]['kind']!=ref['kind']:reason='target_kind_differs'
+                elif pins[target]['sha256']!=ref['sha256']:reason='target_digest_differs'
+                else:targets=[target]
+            else:raise ValueError('Unsupported registry reference anchor')
+            record={'document_path':path,'pointer':ref['pointer'],'sha256':ref['sha256'],
+                    'kind':ref['kind'],'relation':ref['relation'],'paths':targets}
+            if reason:unresolved.append(dict(record,reason=reason));continue
+            document=json.loads(views[path])
+            try:
+                for target in targets:
+                    _clock(deadline)
+                    if ref['relation']=='reservation' and pins[path]['kind']=='on_policy_scene_manifest':
+                        policy._read_scene_manifest(views[path],views[target])
+                    elif ref['relation']=='publication_target':
+                        target_document=json.loads(views[target])
+                        expected=policy._commit_receipt(document['target'],target_document,views[target])
+                        if pins[path]['kind']=='on_policy_publication_commit':
+                            if document!=expected:raise ValueError('Commit receipt content differs')
+                        else:
+                            for field in ('manifest_sha256','manifest_bytes','reservation_sha256','protocol_sha256'):
+                                if document[field]!=expected[field]:raise ValueError('Admission target content differs')
+                    elif ref['relation']=='commit_receipt':
+                        commit=json.loads(views[target])
+                        if document['receipt_bytes']!=len(views[target]):raise ValueError('Admission commit size differs')
+                        for field in ('target','manifest_sha256','manifest_bytes','reservation_sha256','protocol_sha256'):
+                            if document[field]!=commit[field]:raise ValueError('Admission/commit receipt content differs')
+            except ValueError:
+                unresolved.append(dict(record,reason='dependency_content_differs'))
+            else:resolved.append(record)
+    grouped={};unbound=[];unminted=[];count=0
+    for path,value in sorted(parsed.items()):
+        for scene in value['scenes']:
+            _clock(deadline);count+=1
+            if count>MAX_OCCURRENCES:raise ValueError('Registry occurrences exceed source ceiling')
+            occurrence={'document_path':path,'document_sha256':pins[path]['sha256'],
+                        'pointer':scene['pointer'],'scene_id':scene['scene_id'],
+                        'split':scene['split'],'role':scene['role'],
+                        'lineage_sha256':scene['lineage_sha256'],'layout_bound':scene['layout_bound']}
+            if scene['role']=='self_reservation':unminted.append(occurrence)
+            elif not scene['layout_bound']:
+                unbound.append({**occurrence,**{field:scene[field] for field in _FIELDS}})
+            else:
+                identity=(scene['scene_id'],*(scene[field] for field in _FIELDS))
+                if identity not in grouped:
+                    if len(grouped)>=MAX_VARIANTS:raise ValueError('Registry variants exceed source ceiling')
+                    grouped[identity]=[]
+                grouped[identity].append(occurrence)
+    variants=[];ids={};domains={field:{} for field in _FIELDS}
+    for identity,occurrences in sorted(grouped.items()):
+        _clock(deadline);index=len(variants)
+        row=dict(zip(('scene_id',*_FIELDS),identity));row['occurrences']=occurrences
+        variants.append(row);ids.setdefault(row['scene_id'],[]).append(index)
+        for field in _FIELDS:domains[field].setdefault(row[field],[]).append(index)
+    result={'kind':'puck-registry-reference-resolution-v1','version':1,
+        'documents':[pins[path] for path in sorted(pins)],'variants':variants,
+        'unbound_scene_declarations':unbound,'unminted_reservations':unminted,
+        'id_variants':[{'scene_id':sid,'variant_indices':indices} for sid,indices in sorted(ids.items()) if len(indices)>1],
+        'identity_aliases':[{'field':field,'sha256':digest,'variant_indices':indices} for field in _FIELDS
+            for digest,indices in sorted(domains[field].items()) if len(indices)>1],
+        'resolved_references':resolved,'unresolved_references':unresolved,
+        'declared_registry_references_resolved':not unresolved,
+        'historical_stat_declarations_authenticated':False,
+        'inventory_complete':False,'source_closure_authenticated':False,
+        'reservation_authorized':False,'collection_authorized':False,'executable':False,'qualification_claims':[]}
+    _clock(deadline)
+    if len(_canonical(result))>MAX_METADATA_BYTES:raise ValueError('Registry receipt exceeds source ceiling')
+    _clock(deadline)
+    return result
+
+
+def _resolve_mixed_registry_documents(documents, *,deadline,origins):
+    """Preserve old output semantics; registry evidence is explicitly scoped."""
+    historical=[];registry=[];names=set();total=0
+    for item in documents:
+        _clock(deadline)
+        if type(item) is not dict or set(item)!={'path','kind','raw'}:
+            raise ValueError('Exact mixed document fields required')
+        path=_path(item['path']);kind=item['kind'];payload=item['raw']
+        if path in names or type(kind) is not str or kind not in _KINDS:
+            raise ValueError('Ambiguous mixed document view')
+        if type(payload) is not bytes or not 0<len(payload)<=MAX_BYTES:
+            raise ValueError('Bounded mixed document bytes required')
+        names.add(path);total+=len(payload)
+        if total>MAX_TOTAL_BYTES:raise ValueError('Mixed input exceeds source ceiling')
+        (registry if kind in _REGISTRY_KINDS else historical).append(item)
+    if origins is None:origins={}
+    if type(origins) is not dict or any(path not in names for path in origins):raise ValueError('Unregistered mixed document origin')
+    origins={_path(path):_path(cwd) for path,cwd in origins.items()}
+    if historical:
+        result=resolve_retained_puck_documents(historical,deadline=deadline,
+            origins={path:cwd for path,cwd in origins.items() if path in {item['path'] for item in historical}})
+    else:
+        result={'kind':'puck-retained-scene-resolution-v1','version':1,'documents':[],'variants':[],
+            'resolved_references':[],'unresolved_references':[],'unresolved_mentions':[],'missing_pins':[],
+            'declared_reference_closure_resolved':True,'held_out_catalog_read':False,
+            'held_out_runtime_opened':False,'inventory_complete':False,'source_closure_authenticated':False,
+            'reservation_authorized':False,'collection_authorized':False,'executable':False,'qualification_claims':[]}
+    evidence=resolve_puck_registry_documents(registry,deadline=deadline)
+    reference_count = sum(len(lane[key]) for lane in (result, evidence)
+        for key in ('resolved_references', 'unresolved_references'))
+    if reference_count > MAX_REFERENCES:
+        raise ValueError('Mixed references exceed source ceiling')
+    # Every declaration consumes the same occurrence allowance, including rows
+    # that cannot bind geometry and intentional unminted reservations.
+    count = (len(result['unresolved_mentions'])
+        + len(evidence['unbound_scene_declarations'])
+        + len(evidence['unminted_reservations']))
+    if count > MAX_OCCURRENCES:
+        raise ValueError('Mixed scene evidence exceeds source ceiling')
+    result['registry']=evidence
+    result['documents']=sorted(result['documents']+evidence['documents'],key=lambda row:row['path'])
+    result['declared_reference_closure_resolved'] &= evidence['declared_registry_references_resolved'] and not evidence['unbound_scene_declarations']
+    grouped={}
+    for row in result['variants']+evidence['variants']:
+        _clock(deadline);identity=(row['scene_id'],*(row[field] for field in _FIELDS))
+        grouped.setdefault(identity,[]).extend(row['occurrences']);count+=len(row['occurrences'])
+        if count>MAX_OCCURRENCES or len(grouped)>MAX_VARIANTS:raise ValueError('Mixed scene evidence exceeds source ceiling')
+    variants=[];ids={};domains={field:{} for field in _FIELDS}
+    for identity,occurrences in sorted(grouped.items()):
+        _clock(deadline);index=len(variants)
+        row=dict(zip(('scene_id',*_FIELDS),identity));row['occurrences']=sorted(occurrences,key=_canonical)
+        variants.append(row);ids.setdefault(row['scene_id'],[]).append(index)
+        for field in _FIELDS:domains[field].setdefault(row[field],[]).append(index)
+    result['variants']=variants
+    result['id_variants']=[{'scene_id':sid,'variant_indices':indices} for sid,indices in sorted(ids.items()) if len(indices)>1]
+    result['identity_aliases']=[{'field':field,'sha256':digest,'variant_indices':indices} for field in _FIELDS
+        for digest,indices in sorted(domains[field].items()) if len(indices)>1]
+    result['legacy_scene_rows_compatible']=not result['id_variants'] and not result['identity_aliases']
+    _clock(deadline)
+    if len(_canonical(result))>MAX_METADATA_BYTES:raise ValueError('Mixed receipt exceeds source ceiling')
+    _clock(deadline)
+    return result
