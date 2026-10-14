@@ -41,16 +41,16 @@ notes; failed contexts cannot resume or leak descriptors.
 
 ## Bounded implementation and verification
 
-- [ ] Write real temporary-forest tests for root/retained candidates, linked Git
+- [x] Write real temporary-forest tests for root/retained candidates, linked Git
   markers, explicit exclusions, no leaf opens, malformed/ambiguous contracts,
   namespace/edge changes, failure poisoning, descriptor cleanup and deadlines.
   Watch the missing-feature RED before implementing the API.
-- [ ] Implement the held discovery component. Fixed source ceilings: 64 KiB
+- [x] Implement the held discovery component. Fixed source ceilings: 64 KiB
   contract, 32 search roots, 1024 declared opaque subtrees, depth 32, 8192 held
   directories, 65,536 observed entries and 64 MiB receipt/metadata. Deadline no
   later than 600 seconds ahead. These are failure ceilings within the existing
   registry stage, not additional execution/resource grants.
-- [ ] Review and verify the source unit and inherited Git/catalog/collection
+- [x] Review and verify the source unit and inherited Git/catalog/collection
   checks. Record broad-suite failures and exclusions honestly. Independently
   review the exact commit before publication.
 - [ ] Commit/push a stacked draft PR and measured source report; update goal and
