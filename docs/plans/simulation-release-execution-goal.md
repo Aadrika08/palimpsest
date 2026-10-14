@@ -19,8 +19,8 @@ thresholds remain binding.
   through PR #116. These are software prerequisites, not executed studies.
 - All seven simulation release gates remain open. Historical failed capability
   results and consumed navigation attempts remain unchanged.
-- At **2026-10-14 15:39 UTC**, this checkout's filesystem had
-  **100,710,133,760 bytes free (~93.8 GiB)**. This exceeds the frozen memory
+- At **2026-10-14 16:52 UTC**, this checkout's filesystem had
+  **100,415,995,904 bytes free (~93.5 GiB)**. This exceeds the frozen memory
   minimum of **63,786,975,232 bytes (~59.4 GiB)**. The earlier disk shortage is
   resolved at this observation; allocation and launcher admission are still open.
 - Recheck required model, upstream and retained evidence inventories after the
@@ -31,9 +31,59 @@ Latest implementation progress: [PR #117](https://github.com/Aadrika08/palimpses
 adds the actual recurrent-cell consumer, with 328 affected tests and independent
 review. Temporary tiny-model tests exercise the actual upstream cell and both
 starting states; the public family consumer rejects synthetic model pins.
-Full FLYNN positive qualification, authenticated model/SNP custody and durable
-condition/case integration remain open. None of the study or release exits below
-is complete from this source evidence alone.
+The custody and bounded qualification candidate continues in
+[draft PR #118](https://github.com/Aadrika08/palimpsest/pull/118), commit
+`fb46052`. Its 70 source tests pass; independent review approves custody and
+the narrow worker deadline fix. Full FLYNN positive qualification, complete
+execution admission and durable condition/case integration remain open. None
+of the study or release exits below is complete from this source evidence alone.
+
+## Next milestone: qualify the full-model memory replay mechanism
+
+**Deliverable:** one independently reviewed result showing whether the unchanged
+full FLYNN recurrent cell reproduces all **737 recorded cells** in three fixed
+historical traces, including their recorded actions and final hidden states.
+Four prescribed wrong-input/state/output/model checks must reject. This is the
+next executable proof; it does not qualify camera/physics replay or complete R2.
+
+Work in `research/memory-replay-custody-v4`, continuing PR #117:
+
+1. Finish `scripts/qualify_memory_full_cell_v4.py` and
+   `scripts/memory_family_replay_custody_v4.py`. Repair the reviewed deadline
+   bypass: an already-exited worker must not receive success after the deadline,
+   and final log drainage, custody checks and publication must have explicit
+   time boundaries. Verify termination and cleanup on errors and interruption.
+   The late-worker and log-drain bypasses now have reproduced failing tests and
+   a tested fix; the whole-parent publication/return boundary remains open.
+2. Run temporary-file and plain-process regression tests, then independently
+   review the runner and exact JSON execution freeze. Custody currently has
+   56 passing temporary-file tests; the current combined source check passes
+   70 tests. Review still stops execution pending the complete time boundary
+   and exact freeze. No protected model, raw recording or SNP has been read for
+   this qualification.
+3. After review GO, reserve **one** durable attempt before protected-input
+   access. Authenticate the exact original index, 45 retained files, model,
+   source and runtime through the held descriptors. Missing or changed inputs
+   after cleanup produce a retained failure; do not substitute inputs or retry.
+4. Run the fixed CPU-only qualification, preserve logs and result, and obtain
+   an independent result audit. The allocation is zero native owners and zero
+   physics steps, at most 1,470 cell calls, 600 seconds internal, 650 seconds
+   normal return and 660 seconds hard supervision. The sampled 6 GiB RSS stop
+   threshold is not a hard memory bound. The detailed qualification plan and
+   reviewed freeze control execution.
+5. If the attempt passes, bind the proven mechanism into nine-condition seals
+   and whole-case close. Only then finish and review pruning and the prospective
+   family allocation/launcher admission. A failed attempt stops this lane with
+   its evidence and a concrete prospective decision; other admitted work can
+   continue.
+
+**Milestone exit:** reviewed source and invocation, one terminal attempt with
+complete custody/supervision evidence, and an independently audited pass or
+failure. A pass applies only to these historical encoded-cell traces. It grants
+no family collection, pruning, held-out or scientific claim by itself.
+
+The following memory/puck path exits and seven release gates remain the project
+goal. This milestone makes the next action finite without reducing that goal.
 
 ## Immediate goal: complete the two execution paths
 
