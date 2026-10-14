@@ -168,3 +168,19 @@ def test_terminal_publication_rechecks_still_held_input_after_fsync(tmp_path,mon
         held.__exit__(RuntimeError,RuntimeError('test cleanup'),None)
     assert rejected,'Changed input passed terminal close after publication'
     assert (output/'terminal.json').is_file()
+
+
+@pytest.mark.parametrize('different',[False,True])
+def test_running_image_binding_uses_held_file_object_not_launcher_text(tmp_path,different):
+    m=module();bind=getattr(m,'_bind_running_image',None)
+    assert callable(bind),'Running process image binding absent'
+    from palimpsest.puck_execution_files import HeldCollectionFiles
+    root=tmp_path/'runtime';root.mkdir();binary=root/'python3.11';binary.write_bytes(b'authored')
+    other=tmp_path/'other';other.write_bytes(b'authored')
+    with HeldCollectionFiles(root,[{'path':'python3.11','size_bytes':8,
+            'sha256':hashlib.sha256(b'authored').hexdigest()}],time.monotonic()+30) as held:
+        observation=other.stat() if different else binary.stat()
+        if different:
+            with pytest.raises(ValueError,match='running image'):bind(held,image_stat=observation)
+        else:bind(held,image_stat=observation)
+    with pytest.raises(RuntimeError):bind(held,image_stat=binary.stat())

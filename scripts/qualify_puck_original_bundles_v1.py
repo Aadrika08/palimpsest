@@ -197,12 +197,26 @@ def qualify_model(seed,index_raw,bundle,historical,deadline,*,admitter=None):
             'cuda_initialized':torch.cuda.is_initialized()}}
 
 
+def _bind_running_image(runtime,*,image_stat=None):
+    """Bind the executing image to custody; authored observations are test-only."""
+    from palimpsest.puck_execution_files import _identity
+    runtime._guard('python3.11')
+    held=os.fstat(runtime._files['python3.11'][0])
+    actual=os.stat('/proc/self/exe') if image_stat is None else image_stat
+    if _identity(actual)!=_identity(held):
+        raise ValueError('Qualification running image differs from held original runtime')
+    runtime.recheck()
+
+
 def held_inputs(freeze,deadline,stack):
     from palimpsest.puck_execution_files import HeldCollectionFiles
     from palimpsest.puck_execution import _unique_held_objects
     equal([row['path'] for row in freeze['inputs']['sources']['files']],source_paths(),'Current source roster')
-    held={name:stack.enter_context(HeldCollectionFiles(role['root'],role['files'],deadline))
-          for name,role in freeze['inputs'].items()}
+    held={}
+    for name in ('runtime','sources','historical','bundles'):
+        role=freeze['inputs'][name]
+        held[name]=stack.enter_context(HeldCollectionFiles(role['root'],role['files'],deadline))
+        if name=='runtime':_bind_running_image(held[name])
     _unique_held_objects(held)
     return held
 

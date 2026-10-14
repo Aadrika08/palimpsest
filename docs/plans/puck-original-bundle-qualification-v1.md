@@ -19,7 +19,11 @@ checks exact fields, source roster, original bundle metadata, historical pins,
 runtime identity, environment, limits and false claims. Durably reserve a new
 exclusive `runs/puck-original-bundle-qualification-v1-attempt-01` before any
 protected input custody. Hold source/historical/bundle/runtime descriptors through
-model decoding, loading, probes and final close. Hold publication directory edges
+model decoding, loading, probes and final close. Hold the runtime first and bind
+each running parent/worker image to that exact file object before original bundle
+access. Record the observed Python/NumPy/Torch, CPU/thread/determinism and CUDA
+initialization profile. Keep all holders open through terminal fsync and its
+postpublication checks. Hold publication directory edges
 and publish exclusive fsynced control files. A changed or missing input stops;
 retain failure rather than substitute a different root, seed or bundle.
 This admission covers the nine registered original bundle files, with every
