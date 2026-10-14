@@ -151,3 +151,30 @@ def test_actual_temporary_git_discovery_to_explicit_read_to_catalog_assembly(tmp
         assert [row['scene_id'] for row in result['variants']] == [5100, 6000, 6200]
         assert result['source_closure_authenticated'] is False
         sources.recheck()
+
+
+def test_one_commit_cannot_claim_two_root_trees_across_document_paths():
+    first = document(); second = document(path='other/puck.json')
+    second['root_tree'] = '3' * 40
+    with pytest.raises(ValueError): assemble([first, second])
+
+
+def test_one_repository_cannot_claim_conflicting_git_object_formats():
+    with pytest.raises(ValueError): assemble([document(), document(algorithm='sha256')])
+
+
+@pytest.mark.parametrize('cap', ['_MAX_DOCUMENT_OCCURRENCES', '_MAX_VARIANTS',
+    '_MAX_SCENE_OCCURRENCES', '_MAX_OCCURRENCE_INPUT_BYTES', '_MAX_OCCURRENCE_METADATA_BYTES'])
+def test_source_work_bounds_prevent_partial_success(monkeypatch, cap):
+    monkeypatch.setattr(subject(), cap, 0)
+    with pytest.raises(ValueError): assemble([document()])
+
+
+def test_deadline_expiry_during_parser_cannot_return_a_receipt(monkeypatch):
+    value = subject(); original = value.parse_task_catalog
+    def expired(raw_bytes):
+        result = original(raw_bytes)
+        time.sleep(.02)
+        return result
+    monkeypatch.setattr(value, 'parse_task_catalog', expired)
+    with pytest.raises(TimeoutError): assemble([document()], deadline=time.monotonic() + .01)
