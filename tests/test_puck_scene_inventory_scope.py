@@ -206,3 +206,17 @@ def test_full_namespace_coverage_refuses_before_any_live_document_payload_read(t
     with pytest.raises(ValueError,match='classification coverage'):
         with held(registration):pass
     assert reads==[]
+
+
+@pytest.mark.parametrize('note', [
+    b'[Scene IDs: 6110](catalog.json)\n',
+    b'[Scene IDs: 6110][r]\n[r]: catalog.json\n',
+    b'[Scene IDs: 6110]\n[Scene IDs: 6110]: catalog.json\n',
+])
+def test_reserved_scene_declaration_inside_link_label_blocks_projection(tmp_path,note):
+    registration,_,paths=fixture(tmp_path)
+    add_live(registration,paths['manifests']/'note.md',note,'markdown')
+    with pytest.raises(ValueError,match='legacy'):
+        with held(registration) as inventory:
+            assert inventory.snapshot()['semantic_closure_resolved'] is False
+            inventory.legacy_projection()

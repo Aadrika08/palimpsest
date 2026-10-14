@@ -242,19 +242,32 @@ def parse_puck_markdown_document(raw):
                 r'\b(?:project[ _-]path|recorded_cwd)\s*[:=]', line, re.I) else 'document_directory',
             'pin_source': 'declared' if pin else 'absent', 'fragment': fragment})
 
+    def label_declaration(label, pointer):
+        # Link labels are visible document content. Removing the link syntax must
+        # not erase a scene/seed/geometry declaration embedded in that content.
+        # This grammar does not bind label declarations; retain a coverage blocker.
+        numeric_label = (_SCENE.search(label) or re.search(
+            r'(?<![\w/.-])seeds?(?![\w/.-])', label, re.I))
+        if (_GEOMETRY.search(label) or numeric_label
+                and re.search(r'\d', label) and not _FILE.search(label)):
+            unsupported(pointer, 'Declarations in unsupported Markdown link label', label)
+
     for number, original, pointer in active:
         line = original.rstrip('\r\n')
         definition = _DEF.fullmatch(line)
         if definition:
+            label_declaration(definition[1], pointer + '/reference_definition_label')
             reference(definition[2], pointer + '/reference_definition', line)
             continue
         excluded = []
         for match in _INLINE.finditer(line):
+            label_declaration(match[1], pointer + '/link_labels/' + str(match.start()))
             target = re.sub(r'\s+"[^"\n]*"\s*$', '', match[2]).strip()
             reference(target, pointer + '/links/' + str(match.start()), line,
                       scene_document=bool(_SCENE.search(match[1]) or re.search(r'\bdocument\b', match[1], re.I)))
             excluded.append(match.span())
         for match in _USE.finditer(line):
+            label_declaration(match[1], pointer + '/reference_link_labels/' + str(match.start()))
             label = ' '.join((match[2] or match[1]).lower().split())
             resolved = definitions.get(label)
             if resolved is not None:
@@ -267,6 +280,7 @@ def parse_puck_markdown_document(raw):
                 continue
             label = ' '.join(match[1].lower().split())
             if label in definitions:
+                label_declaration(match[1], pointer + '/shortcut_link_labels/' + str(match.start()))
                 resolved = definitions[label]
                 if resolved is not None:
                     reference(resolved[0], pointer + '/shortcut_links/' + str(match.start()), line)
