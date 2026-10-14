@@ -124,3 +124,37 @@ def test_results_are_independent_defensive_documents():
     value=catalog();result=subject().parse_task_catalog(raw(value))
     result['scenes'][0]['scene_id']=99
     assert subject().parse_task_catalog(raw(value))['scenes'][0]['scene_id']==6000
+
+
+def test_authored_historical_teacher_physics_row_has_same_reset_payload():
+    value=catalog();row=value['physics_cases'][0]
+    del row['action'];row['controller']='puck-teacher';row['ticks']=600
+    result=subject().parse_task_catalog(raw(value))
+    payload={k:row[k] for k in ('seed','rover_pose','puck_xy','goal_xy')}
+    payload.update(split='mechanics',initial_qvel='all zeros')
+    assert result['scenes'][2]['payload_sha256']==hashlib.sha256(raw(payload)).hexdigest()
+
+
+@pytest.mark.parametrize('defect',['both','unknown-controller','unknown-nested-scene','huge-coordinate','list-id'])
+def test_additional_schema_ambiguities_never_return_partial_catalog(defect):
+    value=catalog()
+    if defect=='both':value['physics_cases'][0]['controller']='puck-teacher'
+    elif defect=='unknown-controller':
+        row=value['physics_cases'][0];del row['action'];row['controller']='unknown'
+    elif defect=='unknown-nested-scene':
+        value['metadata']={'seed':6110,'rover_pose':[0,0,0],'puck_xy':[0,0],'goal_xy':[1,0]}
+    elif defect=='huge-coordinate':value['layouts'][0]['puck_xy'][0]=10**1000
+    elif defect=='list-id':value['id']=[]
+    with pytest.raises(ValueError):subject().parse_task_catalog(raw(value))
+
+
+@pytest.mark.parametrize('defect',['depth','count','pointer-masquerade'])
+def test_structure_caps_and_pointer_components_cannot_hide_scene_fields(defect):
+    value=catalog()
+    if defect=='depth':
+        nested={}
+        for _ in range(33):nested={'metadata':nested}
+        value['metadata']=nested
+    elif defect=='count':value['metadata']=[None]*4097
+    else:value['layouts/0']={'seed':6110}
+    with pytest.raises(ValueError):subject().parse_task_catalog(raw(value))
