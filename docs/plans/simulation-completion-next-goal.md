@@ -711,3 +711,49 @@ Browser preflight again exposed zero apps and browsers. Adequate Afterimage,
 browser/artwork verification, human artistic/operator acceptance and integration
 remain open. Navigation remains stopped at consumed attempt 2, with no attempt 3
 authorized. All seven release gates remain open; CI and physical rover stay out.
+
+### Retained memory source and historical puck provenance reviewed
+
+Continued pursuit, 14 October 2026:
+
+- [PR #115](https://github.com/Aadrika08/palimpsest/pull/115), stacked on #113,
+  adds the separate retained-only sealed-source reader at
+  `49d57425a76ed906ff361143c7d3a6860ab0ee28`. It holds source commit, registration,
+  controls, independent audit, retained compact/support bytes and shared SNP;
+  source application/oracle/world/terminal bindings are recomputed. The original
+  reader still requires raw recordings. Root passed 270 affected tests plus 19
+  staged-pair tests; independent GO passed 77 retained/old-producer tests, two
+  pin/import checks and two additional rebound-worker/final-alias faults. All
+  18 behavior pins, pure import/compile and diff checks pass. Prospective protocol
+  SHA is `a4e278ab7ec5513ac1d5f2b0dd896f681e984eacea9cbb938862fe7cdd8e7ad9`.
+  Removed raw bytes remain pre-prune attestations: `raw_replay_performed:false`.
+  Known condition directories receive namespace checks only. Actual pruning,
+  condition/case close, recurrent-cell replay and collection remain forbidden.
+- [PR #116](https://github.com/Aadrika08/palimpsest/pull/116), stacked on #114,
+  adds supplied-byte original-bundle provenance at
+  `9e42402226f76d841bd34244b6af1461db61a80c`. Its production facade pins the
+  immutable original model index and all three artifact hashes before bundle
+  decoding, then validates nine historical producer inputs separately from
+  current execution provenance. Historical loaders/profiles/protocols remain
+  unchanged. Root and independent review each passed 154 pure affected checks;
+  independent review rejected 23 additional metadata/ZIP faults and exercised
+  private synthetic admission/public refusal with filesystem opening forbidden.
+  All nine historical pins match committed producer source. Every result stays
+  non-executable with empty qualification claims. Exact original production
+  positive admission remains unqualified: no real checkpoint or model was read.
+
+These source units write no qualification grants or new resource allowances.
+No real evidence was removed; only temporary fake raw trees were removed in
+tests. No native owner, collection, fitting, development, held-out or new
+navigation attempt ran. The current checkout has approximately 39 GiB free,
+below the unchanged compact family's 63,786,975,232-byte (~59.4 GiB) minimum
+capacity gate. This live observation does not establish a future allocation.
+
+Next memory work: prove retained recurrent-cell replay, then condition/case
+close and reviewed raw pruning before fresh allocation/launcher admission.
+Next puck work: bind current execution source closure, runtime and registry/
+scene/model custody to the non-executable descriptions before owner admission.
+Original-bundle supplied-byte positive qualification needs a separately frozen
+read of original artifacts. Browser/artwork evidence and human acceptance remain
+open. All seven simulation gates remain open; navigation attempt 3 remains
+unauthorized, CI excluded and physical rover deferred.
