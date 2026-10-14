@@ -55,7 +55,7 @@ loaded source/runtime admission or permission to reserve/execute.
   alias/drift poisoning, copied receipts and exception continuity.
 - [x] Independently review exact source and run affected inherited checks;
   retain full-suite failures, exclusions and any intermediate failed checks.
-- [ ] Commit/push a stacked draft PR and source report; update the active goal
+- [x] Commit/push a stacked draft PR and source report; update the active goal
   and requirement matrix without promoting the seven release gates.
 
 Source ceilings remain inside the existing registry allocation: 4 MiB per
@@ -70,3 +70,8 @@ inventory, reservation, collection and executable admission and has no
 qualification claim. No actual project/catalog/retained scan, model/native/study
 stage, memory attempt-02, navigation retry, CI or physical rover runs in this
 wave. Pending catalog-access and consumed-attempt decisions remain unchanged.
+
+Published as [draft PR #125](https://github.com/Aadrika08/palimpsest/pull/125).
+The [source report](../reports/puck-v3-retained-scene-references-source.md) retains
+exact checks, review fixes and incomplete admissions. Goal/matrix updates preserve
+all seven simulation release gates as open.
