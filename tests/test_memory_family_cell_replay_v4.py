@@ -9,7 +9,17 @@ import numpy as np
 import pytest
 
 from palimpsest import snapshots
-from test_flynn import FlynnTests, HAS_ML
+import test_flynn as flynn_fixture
+
+
+def policy_state_digest(policy):
+    def arrays(value):
+        if type(value) is dict:
+            return {k: arrays(v) for k, v in value.items()}
+        if value is None:
+            return None
+        return value.detach().cpu().numpy().copy()
+    return snapshots.state_digest(tuple(arrays(v) for v in policy._state()))
 
 
 def replay_module():
@@ -20,13 +30,13 @@ def replay_module():
 
 @pytest.fixture(scope='module')
 def fixture_class():
-    if not HAS_ML:
+    if not flynn_fixture.HAS_ML:
         pytest.fail('Pinned synthetic upstream cell tests require simulation dependencies')
-    FlynnTests.setUpClass()
+    flynn_fixture.FlynnTests.setUpClass()
     try:
-        yield FlynnTests
+        yield flynn_fixture.FlynnTests
     finally:
-        FlynnTests.tearDownClass()
+        flynn_fixture.FlynnTests.tearDownClass()
 
 
 @pytest.fixture
@@ -66,7 +76,7 @@ def request(sample, operation='source'):
 @pytest.mark.parametrize('operation', ['source', 'condition'])
 def test_actual_upstream_cell_matches_recorded_policy_without_retina(sample, operation, monkeypatch):
     module = replay_module()
-    before = snapshots.state_digest(sample['policy']._state())
+    before = policy_state_digest(sample['policy'])
     def forbidden(*args, **kwargs):
         pytest.fail('Encoded cell replay attempted retina or observation processing')
     monkeypatch.setattr(sample['policy'].agent, 'step', forbidden)
@@ -78,7 +88,7 @@ def test_actual_upstream_cell_matches_recorded_policy_without_retina(sample, ope
     assert result['action_equal'] is True
     assert result['source_endpoint_verified'] is (operation == 'source')
     assert result['final_hidden_sha256'] != ''
-    assert snapshots.state_digest(sample['policy']._state()) == before
+    assert policy_state_digest(sample['policy']) == before
     assert 'mujoco' not in sys.modules
 
 
@@ -108,10 +118,10 @@ def test_replay_rejects_wrong_real_trace_or_state(sample, defect):
         with args['policy'].torch.no_grad(): tensor.add_(1)
     elif defect == 'runtime': args['source_snapshot']['identity']['torch']['threads'] = 2
     elif defect == 'deadline': args['deadline'] = time.monotonic() - 1
-    before = snapshots.state_digest(args['policy']._state())
+    before = policy_state_digest(args['policy'])
     with pytest.raises((ValueError, TimeoutError)):
         module._replay_rows(**args)
-    assert snapshots.state_digest(args['policy']._state()) == before
+    assert policy_state_digest(args['policy']) == before
 
 
 def test_condition_rejects_wrong_acquired_hidden(sample):
@@ -127,3 +137,42 @@ def test_public_family_consumer_refuses_fixture_model_identity(sample):
         module.replay_compact_cell(policy=sample['policy'], bundle={},
             raw_audit_receipt={}, source_snapshot=sample['source_snapshot'],
             deadline=time.monotonic() + 30)
+
+
+@pytest.mark.parametrize('defect', ['late-deadline', 'late-parameter', 'late-snapshot',
+                                   'nonfinite-cell', 'wrong-cell-shape'])
+def test_late_cell_failure_rejects_and_restores_caller_state(sample, defect, monkeypatch):
+    module = replay_module()
+    args = request(sample)
+    policy = sample['policy']
+    policy.failure_diagnostics = {'existing': 'preserve'}
+    state_before = policy_state_digest(policy)
+    diagnostic_before = policy.failure_diagnostics
+    diagnostic_value_before = copy.deepcopy(diagnostic_before)
+    encoded_before = policy._encoded
+    cached_before = policy.agent.cell._cached_alphas
+    dirty_before = policy.agent.cell._alphas_dirty
+    def changed(cell, inputs, outputs):
+        hidden, raw = outputs
+        if defect == 'late-deadline':
+            monkeypatch.setattr(module.audit.time, 'monotonic', lambda: args['deadline'] + 1)
+        elif defect == 'late-parameter':
+            with policy.torch.no_grad(): policy.agent.r_scale.add_(1)
+        elif defect == 'late-snapshot':
+            args['source_snapshot']['application']['extra'] = True
+        elif defect == 'nonfinite-cell':
+            return hidden, policy.torch.full_like(raw, float('nan'))
+        elif defect == 'wrong-cell-shape':
+            return hidden, raw[:, :1]
+    hook = policy.agent.cell.register_forward_hook(changed, prepend=True)
+    try:
+        with pytest.raises((ValueError, TimeoutError)):
+            module._replay_rows(**args)
+        assert policy_state_digest(policy) == state_before
+        assert policy.failure_diagnostics is diagnostic_before
+        assert policy.failure_diagnostics == diagnostic_value_before
+        assert policy._encoded is encoded_before
+        assert policy.agent.cell._cached_alphas is cached_before
+        assert policy.agent.cell._alphas_dirty is dirty_before
+    finally:
+        hook.remove()
