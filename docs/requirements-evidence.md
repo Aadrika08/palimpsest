@@ -117,6 +117,18 @@ anomaly with cause unknown; no guard or threshold was relaxed. No actual scan,
 reservation, model/native or study stage ran. Markdown/full scope/launcher work
 and all seven release gates remain open; default pytest stops at missing FastAPI.
 
+The [active execution objective](plans/simulation-release-execution-goal.md#active-objective-and-next-deliverable)
+now names the complete local simulation release and the next concrete deliverable:
+one reviewed puck inventory-to-collection launcher and memory replay-to-case-close
+path. The declared-scope inventory in draft PR #128 now has independent source
+GO at `22cf8aa`, 281 focused passes and 1276 affected passes with six inherited
+exclusions (root 62.11s / independent 61.77s). Review fixes reject declarations
+hidden inside Markdown labels, titles and reference IDs. These authored-source
+results do not qualify actual project compatibility, runtime, reservation or
+collection; the next work is fresh-worker/durable launcher binding. Free space is 99,890,302,976 bytes at
+14 October 23:12 UTC. Disk clearance grants no study amendment or retry.
+All seven release statuses remain unchanged.
+
 ## Functional matrix
 
 | PRD ID | Status | Acceptance boundary | Runnable coverage | Observed evidence and limits |
