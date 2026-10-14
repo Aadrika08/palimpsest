@@ -11,17 +11,75 @@ This is the current execution guide for the existing
 completion criteria; the frozen study protocols and original acceptance
 thresholds remain binding.
 
+## Clear goal and completion boundary
+
+**Finish the project in simulation:** a person can install Palimpsest locally,
+operate its inspectable lab, use qualified supported controllers, experience all
+six artworks, inspect the complete research evidence, and reproduce the release
+without undocumented assistance. The user must accept the artistic experience,
+and an independent operator must complete the runbook. Begin physical rover work
+only after that simulation release is accepted.
+
+| Required result | Completion evidence | Current release status |
+| --- | --- | --- |
+| Memory / R2 | Complete valid development and held-out nine-condition study, independently audited family analysis and controls; a supported positive or null result is acceptable. | Open |
+| Learned puck control | Every required relabeled model reaches at least 3/4 development and 6/8 held-out goals, with mechanism replay and lab integration. | Open; earlier capability gates failed |
+| MaleCNS navigation | Every required seed reaches 3/4 development and 6/8 held-out goals under matched budgets; topology benefit is not required. | Open; earlier capability gates failed |
+| Simulation lab | Asset-backed installation and real browser workflows, replay, exports, recovery and required endurance pass on the integrated candidate. | Open; final browser gate incomplete after failure |
+| Six artwork encounters | All six have sufficient portable inputs, declared-duration visual/audio/keyboard/viewport use, faithful mappings, controls and provenance. | Open |
+| Human acceptance | Recorded user artistic acceptance and independent operator installation plus all six modes. | Open; needs human sessions |
+| Integrated delivery | Reviewed dependency-ordered integration, final verification, reproducible installation, licence/limit documentation and complete evidence matrix. | Open |
+
+A prerequisite test pass advances its lane; it does not close a release gate.
+A failed capability study is retained and requires a prospective decision before
+another attempt. CI, rover hardware, physical art fabrication, purchases and
+paid cloud are outside this goal. The artworks are completed and assessed in
+simulation first.
+
+## Next work to perform
+
+1. **Puck execution path — next independent implementation unit.** Continue
+   from the passed original-bundle result in PR #121. Deliver a working durable
+   collection launcher that binds exact source/runtime/dependencies, invocation,
+   scene/model/registry custody, reservation, one-owner lease, process/storage
+   supervision, interval recording and terminal publication. Verify failure
+   behavior and obtain independent source and exact-allocation review before
+   actual collection. Exit: a reviewed working path admitted within the fixed
+   collection limits.
+2. **Memory replay — ready, awaiting the separate attempt-02 approval.** Once
+   explicitly approved, run the reviewed frozen qualification once and audit
+   its terminal evidence. A pass enables condition/case close, reviewed pruning
+   and allocation admission. Without approval, continue independent source work;
+   disk cleanup is not approval for that amendment.
+3. **Complete the research and capability studies.** After admission, execute
+   the fixed memory study and puck collection/fitting/development, then separately
+   admitted held-out evaluations. Resolve the MaleCNS prospective study decision;
+   navigation attempt 3 is not authorized. Preserve budgets, thresholds and failures.
+4. **Complete the experience.** Validate the integrated lab in a real browser,
+   supply sustained inputs for the six encounters, and prepare concrete user and
+   independent-operator acceptance sessions. Historical short exports are inputs,
+   not acceptance.
+5. **Deliver the accepted simulation release.** Integrate reviewed work when
+   landing is authorized, verify the final candidate and close each of the seven
+   gates with linked evidence. Only then propose physical rover work.
+
+The immediate output is the reviewed puck launcher and the memory replay result
+if its approval arrives. Actual heavy stages remain serialized. Keep progress
+reports tied to these outputs and the seven release gates rather than counting
+source units as project completion.
+
 ## Current position
 
 - Reviewed source work includes memory compact auditing, source sealing, staged
   pair admission and retained-only reading through PR #115; puck registry,
   interval recording, collection descriptions and historical bundle provenance
   through PR #116, and descriptor-held collection/model staging through PR #120.
-  These are software prerequisites, not executed studies.
+  These are software prerequisites. PR #121 now adds an executed, independently
+  audited original-bundle qualification; it is not a collection or capability study.
 - All seven simulation release gates remain open. Historical failed capability
   results and consumed navigation attempts remain unchanged.
-- At **2026-10-14 16:52 UTC**, this checkout's filesystem had
-  **100,415,995,904 bytes free (~93.5 GiB)**. This exceeds the frozen memory
+- At **2026-10-14 19:38 UTC** (15 October locally), this checkout's filesystem had
+  **100,153,241,600 bytes free (~93.3 GiB)**. This exceeds the frozen memory
   minimum of **63,786,975,232 bytes (~59.4 GiB)**. The earlier disk shortage is
   resolved at this observation; allocation and launcher admission are still open.
 - Recheck required model, upstream and retained evidence inventories after the
@@ -66,13 +124,27 @@ dependencies stopped one environment, another run failed/stalled and was stopped
 and a bounded base comparison confirmed the first missing-upstream-CSV failure.
 The report preserves these results; all seven release gates stay open.
 
-## Next milestone: qualify the full-model memory replay mechanism
+[Draft PR #121](https://github.com/Aadrika08/palimpsest/pull/121), published at
+`9485df1`, retains the passed single original-bundle attempt on source `2264ddd`
+and freeze SHA `15e8c12ab7a744647f08be42387d5043a4ef966466c63b5b6917dfacae8e2c3c`.
+All three original models materialized unchanged on CPU; one fixed probe each
+passed and all 18 prescribed negatives rejected. External observation was
+**1.86 seconds, exit 0**. Independent evidence audit checked all 115 inputs,
+18 original parameter hashes and the seven output records, adding zero model
+calls. Source and exact-freeze review passed 288 affected checks independently.
+The committed report and lossless evidence preserve this consumed allocation.
+This qualifies the original-bundle facade/materialization/probes only: collection,
+native execution, task capability and all seven release gates remain unqualified.
+The next puck unit is the complete durable owner/stage launcher.
+
+## Memory milestone ready for approval: full-model replay
 
 **Deliverable:** one independently reviewed result showing whether the unchanged
 full FLYNN recurrent cell reproduces all **737 recorded cells** in three fixed
 historical traces, including their recorded actions and final hidden states.
 Four prescribed wrong-input/state/output/model checks must reject. This is the
-next executable proof; it does not qualify camera/physics replay or complete R2.
+next memory proof after explicit approval; it does not qualify camera/physics replay
+or complete R2.
 
 Work in `research/memory-cell-qualification-amendment-02`, continuing PR #118:
 
@@ -141,9 +213,11 @@ Source tests alone do not satisfy this exit.
 
 ### 2. Puck: complete provenance and owner admission
 
-- [ ] Freeze a bounded supplied-original-byte positive check for models 21–23.
-  Verify the immutable index and original report/protocol/checkpoint bytes;
-  qualify the new provenance facade without changing historical loaders or pins.
+- [x] Freeze and execute one bounded supplied-original-byte positive check for
+  models 21–23. PR #121 passes original index/report/protocol/checkpoint custody,
+  unchanged CPU model materialization, three probes and 18 negatives, with
+  independent audit. Historical loaders and pins stay unchanged; no native or
+  collection grant follows.
 - [ ] Bind current execution source closure and runtime to exact registry,
   scene, model, invocation and filesystem custody. Complete process supervision,
   storage limits, interval recording, owner/manifest close and attempt receipts.
@@ -239,16 +313,18 @@ while a required capability or acceptance gate remains open.
 
 ## First action when pursuing this goal
 
-Continue **memory recurrent-cell replay** from PR #119: obtain explicit approval
-of the reviewed exact-size runtime amendment following consumed attempt 1, then
-perform exactly one attempt 02 and independently audit its terminal evidence.
-Bind a passing full-model proof into condition/case close afterward. The
-independent puck context is now source-reviewed in PR #120. Continue from it with
-a bounded supplied-original-byte positive qualification and the complete durable
-owner/stage launcher, including fresh-worker source/runtime/dependency admission,
-supervision and terminal publication. Actual collection remains unauthorized
-until the complete execution admission passes. Freeze each unit's precise
-interfaces, source/runtime identities and
-bounded verification before implementation or actual-input execution. Preserve
-every failed attempt; no blind retries, held-out tuning, threshold reduction or
-physical rover work.
+Continue the **puck durable owner/stage launcher** from PR #121's independently
+audited original-bundle result and PR #120's descriptor-held execution context.
+Bind fresh-worker source/runtime/dependency identities, exact invocation,
+reservation, registry/scene/model custody, supervision and terminal publication
+into a working path. Actual collection remains unauthorized until the complete
+execution admission passes.
+
+Memory amendment 02 in PR #119 is ready for its separately requested explicit
+approval. After approval, perform exactly one invocation and independently audit
+it; bind a passing full-model proof into condition/case close. Do not interpret
+the disk cleanup or continued source work as approval for another attempt.
+Freeze each unit's precise interfaces, source/runtime identities and bounded
+verification before implementation or actual-input execution. Preserve every
+failed attempt; no blind retries, held-out tuning, threshold reduction or physical
+rover work. All seven simulation release gates remain open.
