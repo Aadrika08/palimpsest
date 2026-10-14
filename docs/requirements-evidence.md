@@ -56,8 +56,8 @@ All seven gate statuses below remain unchanged.
 The clarified execution goal now targets two complete working paths: memory
 replay-to-case-close and puck inventory-to-collection, followed by the fixed
 studies, integrated lab/artworks and human acceptance. The next source unit is
-strict retained-schema/reference/Markdown parsing and full semantic/root
-aggregation after the reviewed PR #124 source components.
+remaining standalone retained/registry families, Markdown/reference parsing
+and full semantic/root aggregation after the reviewed PR #125 source components.
 Disk was refreshed at 14 October 20:54 UTC to 100,027,265,024 bytes (~93.2 GiB),
 above the frozen memory floor. Required inputs and free space must still be
 rechecked before an admitted stage. Memory attempt-02, catalog-access and new
@@ -77,6 +77,20 @@ are preserved, with legacy uniqueness conflicts reported. No actual inventory,
 reservation, original model/native or study stage ran. Full semantic/root coverage,
 fresh-worker bootstrap and complete launcher admission remain open; all seven
 release gate statuses remain unchanged.
+
+[Draft PR #125](https://github.com/Aadrika08/palimpsest/pull/125) adds selected
+historical retained-schema parsing, pinned recording/catalog reference resolution
+and descriptor-held JSON input custody. SOURCE GO applies to `7ae648eb`;
+root affected checks pass 848 with six retained baseline exclusions in 53.63
+seconds, independently repeated in 55.46 seconds. The 216 new checks include
+source-backed review fixes for contradictory catalog/source/manifest identities
+and hidden geometry aliases. The
+[source report](https://github.com/Aadrika08/palimpsest/blob/research/puck-v3-retained-scene-references/docs/reports/puck-v3-retained-scene-references-source.md)
+retains all intermediate evidence and explicit unsupported families. Selected
+payload/reference closure remains distinct from complete inventory, source/
+runtime bootstrap and owner/collection admission. No actual retained/catalog
+scan or numerical/native stage ran. Default pytest still stops at missing FastAPI;
+all seven gate statuses remain unchanged.
 
 ## Functional matrix
 
