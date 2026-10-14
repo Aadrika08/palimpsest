@@ -63,8 +63,8 @@ def test_exact_raw_parent_options(tmp_path, parent):
     if parent == 'absent':
         raw_parent.rmdir()
     elif parent == 'condition':
-        (raw_parent / 'condition-owner').mkdir()
-        extra['condition_run_id'] = 'condition-owner'
+        (raw_parent / ('1' * 32)).mkdir()
+        extra['condition_run_id'] = '1' * 32
     assert call(**retained_request(sample, **extra))['raw_replay_performed'] is False
 
 
@@ -78,15 +78,15 @@ def test_retained_reader_rejects_unaccounted_or_changed_evidence(tmp_path, defec
     kwargs = retained_request(sample)
     case = sample['source'].parent
     if defect == 'unknown-raw':
-        (sample['raw'].parent / 'unknown-owner').mkdir()
+        (sample['raw'].parent / ('2' * 32)).mkdir()
     elif defect == 'wrong-raw':
-        (sample['raw'].parent / 'unknown-owner').mkdir()
-        kwargs['condition_run_id'] = 'condition-owner'
+        (sample['raw'].parent / ('2' * 32)).mkdir()
+        kwargs['condition_run_id'] = '1' * 32
     elif defect == 'source-id':
         kwargs['condition_run_id'] = sample['contract']['run_id']
     elif defect == 'raw-symlink':
-        (sample['raw'].parent / 'condition-owner').symlink_to(sample['source'], target_is_directory=True)
-        kwargs['condition_run_id'] = 'condition-owner'
+        (sample['raw'].parent / ('1' * 32)).symlink_to(sample['source'], target_is_directory=True)
+        kwargs['condition_run_id'] = '1' * 32
     elif defect in ('unknown-case', 'quarantine'):
         (case / ('quarantine.json' if defect == 'quarantine' else 'unknown')).write_bytes(b'x')
     elif defect in ('condition-file', 'unknown-condition'):
@@ -139,3 +139,15 @@ def test_known_condition_namespace_is_only_inspected_as_names(tmp_path):
     conditions.mkdir()
     (conditions / compact.PROTOCOL['analysis_contract']['conditions'][0]).mkdir()
     assert call(**retained_request(sample))['raw_replay_performed'] is False
+
+
+@pytest.mark.parametrize('case_id', ['../escape', '', None])
+def test_retained_reader_rejects_bad_case_before_opening_namespace(monkeypatch, case_id):
+    call = reader()
+    def forbidden(*args, **kwargs):
+        pytest.fail('Invalid case reached filesystem namespace')
+    monkeypatch.setattr(producer.pair, '_staged_namespace', forbidden)
+    with pytest.raises((ValueError, TypeError)):
+        call('unused', {}, case_id=case_id, deadline=time.monotonic() + 30,
+             source_commit={'path': f'cases/{case_id}/source/commit.json',
+                            'size_bytes': 1, 'sha256': '0' * 64})
