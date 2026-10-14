@@ -341,9 +341,12 @@ def _kill_owned_groups(state):
             continue
         try:
             values = (path / 'stat').read_text().rsplit(')', 1)[1].split()
-            if int(values[1]) == os.getpid() and int(values[2]) != own_group:
+            if int(values[1]) == os.getpid():
                 with suppress(ProcessLookupError):
-                    os.killpg(int(values[2]), signal.SIGKILL)
+                    if int(values[2]) == own_group:
+                        os.kill(int(path.name), signal.SIGKILL)
+                    else:
+                        os.killpg(int(values[2]), signal.SIGKILL)
         except (OSError, ValueError):
             continue
 

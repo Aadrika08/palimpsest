@@ -315,9 +315,12 @@ with _hard_guard(time.monotonic()+.4,state):
         if path.exists():
             try: os.killpg(int(path.read_text()), signal.SIGKILL)
             except ProcessLookupError: pass
+            try: os.kill(int(path.read_text()), signal.SIGKILL)
+            except ProcessLookupError: pass
 
 
-def test_guard_term_interruption_cleans_its_group_before_monitor_exit(tmp_path):
+@pytest.mark.parametrize('isolate_child', [True, False])
+def test_guard_term_interruption_cleans_its_group_before_monitor_exit(tmp_path, isolate_child):
     import subprocess
     import signal
     m = module()
@@ -327,8 +330,8 @@ from pathlib import Path
 from scripts.qualify_memory_full_cell_v4 import _hard_guard
 state={{"group":None}}
 with _hard_guard(time.monotonic()+5,state):
-    child=subprocess.Popen([sys.executable,"-c","import signal,time;signal.signal(signal.SIGTERM,signal.SIG_IGN);time.sleep(20)"],start_new_session=True)
-    state["group"]=child.pid
+    child=subprocess.Popen([sys.executable,"-c","import signal,time;signal.signal(signal.SIGTERM,signal.SIG_IGN);time.sleep(20)"],start_new_session={isolate_child!r})
+    state["group"]=child.pid if {isolate_child!r} else None
     Path({str(path)!r}).write_text(str(child.pid))
     time.sleep(20)
 '''
@@ -353,4 +356,6 @@ with _hard_guard(time.monotonic()+5,state):
             process.wait(timeout=3)
         if path.exists():
             try: os.killpg(int(path.read_text()), signal.SIGKILL)
+            except ProcessLookupError: pass
+            try: os.kill(int(path.read_text()), signal.SIGKILL)
             except ProcessLookupError: pass
