@@ -47,13 +47,13 @@ loaded source/runtime admission or permission to reserve/execute.
 
 ## Verification and delivery
 
-- [ ] Write failing authored tests for genuine manifest/report/training shapes,
+- [x] Write failing authored tests for genuine manifest/report/training shapes,
   redundant identity conflicts, failed/null-pin records, exact reference path
   semantics, unrecognized declarations and finite structure bounds.
-- [ ] Implement parser and pure resolver; test real temporary file custody,
+- [x] Implement parser and pure resolver; test real temporary file custody,
   wrong/missing target pins, unavailable catalog geometry, explicit origins,
   alias/drift poisoning, copied receipts and exception continuity.
-- [ ] Independently review exact source and run affected inherited checks;
+- [x] Independently review exact source and run affected inherited checks;
   retain full-suite failures, exclusions and any intermediate failed checks.
 - [ ] Commit/push a stacked draft PR and source report; update the active goal
   and requirement matrix without promoting the seven release gates.
