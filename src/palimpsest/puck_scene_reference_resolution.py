@@ -14,7 +14,7 @@ import time
 
 from .puck_execution_files import HeldCollectionFiles
 from .puck_scene_catalog import parse_task_catalog
-from .puck_scene_retained import parse_retained_puck_document
+from .puck_scene_retained import parse_retained_puck_document, _ROW_FIELDS
 
 MAX_FILES = 512
 MAX_BYTES = 4 * 1024**2
@@ -25,7 +25,10 @@ MAX_OCCURRENCES = 65536
 _KINDS = {'task_catalog', 'recording_manifest', 'teacher_collection_report', 'training_protocol'}
 _REGISTRY_KINDS = {'on_policy_inventory','on_policy_reservation','on_policy_scene_manifest',
     'on_policy_collection_projection','on_policy_publication_commit','on_policy_publication_admission'}
-_KINDS |= _REGISTRY_KINDS
+_REPORT_KINDS = {'owner_result','construction_result','mechanics_report',
+    'construction_report','development_report'}
+_TRAINING_KINDS = {'training_report','prepared_training','model_index'}
+_KINDS |= _REGISTRY_KINDS | _REPORT_KINDS | _TRAINING_KINDS
 _FIELDS = ('canonical_scene_sha256', 'scientific_initial_sha256', 'payload_sha256')
 
 
@@ -55,6 +58,67 @@ def _clock(deadline):
     if time.monotonic()>=deadline:raise TimeoutError('Scene reference deadline exhausted')
 
 
+def _point(document, pointer):
+    value=document
+    for token in pointer.split('/')[1:]:
+        token=token.replace('~1','/').replace('~0','~')
+        value=value[int(token)] if type(value) is list else value[token]
+    return value
+
+
+def _report_dependency_reason(parent, target, reference):
+    if reference['kind']=='training_protocol' and 'training_completed' in parent:
+        objective=parent.get('training_objective_sha256')
+        target_objective=target.get('balanced_objective')
+        if objective is not None or target.get('schema')=='puck-balanced-training-v1':
+            if (type(target_objective) is not dict
+                    or objective!=target_objective.get('sha256')):
+                return 'target_training_objective_differs'
+        return None
+    if reference['kind']=='training_report' and 'models' in parent:
+        entry=_point(parent,reference['pointer'].rsplit('/files/',1)[0])
+        if target['protocol_sha256']!=entry['files']['protocol.json']:
+            return 'target_model_file_receipt_differs'
+        checkpoints=[file for file in target['files'] if file['path']=='checkpoint.npz']
+        if len(checkpoints)!=1:
+            return 'target_model_checkpoint_receipt_missing'
+        if checkpoints[0]['sha256']!=entry['files']['checkpoint.npz']:
+            return 'target_model_file_receipt_differs'
+        return None
+    if reference['kind'] not in ('owner_result','construction_result','recording_manifest'):
+        return None
+    # Recording source refs in training/teacher reports have a different roster
+    # shape. Only report owner refs carry the complete actual owner row here.
+    if reference['kind']=='recording_manifest' and not reference['pointer'].startswith('/owners/'):
+        return None
+    if 'expected_owner_id' in reference:
+        row=target.get('row',{})
+        if row.get('id')!=reference['expected_owner_id'] or row.get('model_seed')!=21:
+            return 'target_baseline_owner_differs'
+        if target.get('snapshots',{}).get('initial',{}).get('sha256')!=reference['expected_snapshot_sha256']:
+            return 'target_baseline_snapshot_differs'
+        return None
+    owner=_point(parent,reference['pointer'])
+    if type(owner) is not dict:
+        return 'parent_owner_receipt_differs'
+    if reference['kind'] in ('owner_result','recording_manifest'):
+        expected={key:value for key,value in owner.items() if key in _ROW_FIELDS}
+        if expected!=target['row']:
+            return 'target_recording_row_differs' if reference['kind']=='recording_manifest' else 'target_owner_row_differs'
+    if reference['kind'] in ('owner_result','recording_manifest'):
+        identity=(target.get('student_identity',{}).get('model_identity')
+            if reference['kind']=='owner_result' else target.get('model_identity'))
+        expected=parent.get('models',{}).get(str(target['row'].get('model_seed')))
+        if identity is not None and expected is not None:
+            from .puck_scene_reports import _MODEL_HASHES
+            for field in sorted({'training_seed',*_MODEL_HASHES} & expected.keys()):
+                if field not in identity:return 'target_model_identity_missing'
+                if identity[field]!=expected[field]:return 'target_model_identity_differs'
+    if reference['kind']!='recording_manifest' and 'result' in owner and _canonical(owner['result'])!=_canonical(target):
+        return 'target_embedded_result_differs'
+    return None
+
+
 def resolve_retained_puck_documents(documents, *, deadline, origins=None):
     """Pure diagnostic closure over exactly the supplied typed byte views.
 
@@ -68,7 +132,7 @@ def resolve_retained_puck_documents(documents, *, deadline, origins=None):
     if any(type(item) is dict and type(item.get('kind')) is str
            and item['kind'] in _REGISTRY_KINDS for item in documents):
         return _resolve_mixed_registry_documents(documents,deadline=deadline,origins=origins)
-    parsed={};pins={};catalogs={};input_bytes=0;exposure=False
+    parsed={};pins={};catalogs={};raw_documents={};input_bytes=0;exposure=False
     for item in documents:
         _clock(deadline)
         if type(item) is not dict or set(item)!={'path','kind','raw'}:
@@ -86,8 +150,15 @@ def resolve_retained_puck_documents(documents, *, deadline, origins=None):
             value=parse_task_catalog(payload)
             catalogs.setdefault(digest,[]).append((path,value))
             exposure|=value['held_out_catalog_read']
+        elif kind in _REPORT_KINDS:
+            from .puck_scene_reports import parse_puck_report_document
+            value=parse_puck_report_document(payload,kind=kind)
+        elif kind in _TRAINING_KINDS:
+            from .puck_scene_training import parse_puck_training_document
+            value=parse_puck_training_document(payload,kind=kind)
         else:value=parse_retained_puck_document(payload,kind=kind)
         parsed[path]=value
+        raw_documents[path]=payload
         _clock(deadline)
     if origins is None:origins={}
     if type(origins) is not dict or any(path not in parsed for path in origins):
@@ -114,8 +185,12 @@ def resolve_retained_puck_documents(documents, *, deadline, origins=None):
             _clock(deadline);reference_count+=1
             if reference_count>MAX_REFERENCES:raise ValueError('Reference count exceeds source ceiling')
             target=ref['path'];reason=None
+            anchor=ref.get('path_base','recorded_cwd')
+            if anchor not in ('recorded_cwd','document_directory'):
+                raise ValueError('Unsupported retained reference anchor')
             if not target.startswith('/'):
-                if path not in origins:reason='relative_reference_without_recorded_cwd'
+                if anchor=='document_directory':target=str(PurePosixPath(path).parent/target)
+                elif path not in origins:reason='relative_reference_without_recorded_cwd'
                 else:target=str(PurePosixPath(origins[path])/target)
             if reason is None:
                 _path(target)
@@ -123,12 +198,21 @@ def resolve_retained_puck_documents(documents, *, deadline, origins=None):
                 elif target not in pins:reason='unregistered_target'
                 elif pins[target]['sha256']!=ref['sha256']:reason='target_digest_differs'
                 elif pins[target]['kind']!=ref['kind']:reason='target_kind_differs'
+                elif 'size_bytes' in ref and pins[target]['size_bytes']!=ref['size_bytes']:
+                    reason='target_byte_length_differs'
+                elif 'expected_model_seed' in ref and (
+                        type(json.loads(raw_documents[target]).get('training_seed')) is not int
+                        or json.loads(raw_documents[target])['training_seed']!=ref['expected_model_seed']):
+                    reason='target_model_seed_differs'
                 elif ref['scene_id'] is not None and not any(
                         mention['scene_id']==ref['scene_id'] and mention['split']==ref['split']
                         for mention in parsed[target]['mentions']):reason='target_scene_differs'
-                elif ref['kind']=='recording_manifest':
+                elif (report_reason:=_report_dependency_reason(
+                        json.loads(raw_documents[path]),json.loads(raw_documents[target]),ref)):
+                    reason=report_reason
+                elif ref['kind'] in ('recording_manifest','owner_result') and 'expected_owner_id' not in ref:
                     parent=[mention for mention in value['mentions']
-                            if mention['pointer']==ref['pointer']+'/seed']
+                            if mention['pointer'] in (ref['pointer']+'/seed',ref['pointer']+'/result/row/seed')]
                     children=[mention for mention in parsed[target]['mentions']
                               if mention['scene_id']==ref['scene_id'] and mention['split']==ref['split']]
                     if any(mention['catalog_sha256'] is not None
@@ -144,7 +228,7 @@ def resolve_retained_puck_documents(documents, *, deadline, origins=None):
             if reason:unresolved.append(dict(record,reason=reason))
             else:
                 resolved.append(record)
-                links[path,ref['pointer']]=target
+                links[path,ref['pointer'],ref['kind']]=target
     grouped={};unresolved_mentions=[];occurrence_count=0;metadata_bytes=0
 
     def geometry(path,mention,depth=0):
@@ -161,23 +245,38 @@ def resolve_retained_puck_documents(documents, *, deadline, origins=None):
             row=selected[0][1]
             return (row,digest,sorted(p for p,_ in selected)),None
         value=parsed[path]
-        refs=[ref for ref in value['references'] if ref['kind']=='recording_manifest'
+        refs=[ref for ref in value['references'] if ref['kind'] in ('recording_manifest','owner_result')
               and mention['pointer']==ref['pointer']+'/seed'
               and ref['scene_id']==mention['scene_id'] and ref['split']==mention['split']]
-        if len(refs)!=1:return None,'missing_catalog_or_unique_manifest_reference'
-        target=links.get((path,refs[0]['pointer']))
-        if target is None:return None,'unresolved_manifest_reference'
-        candidates=[item for item in parsed[target]['mentions']
-                    if item['scene_id']==mention['scene_id'] and item['split']==mention['split']]
         identities=[]
-        for candidate in candidates:
-            found,error=geometry(target,candidate,depth+1)
-            if error:return None,error
-            identities.append(found)
-        if not identities:return None,'target_scene_missing'
+        for ref in refs:
+            target=links.get((path,ref['pointer'],ref['kind']))
+            if target is None:return None,'unresolved_manifest_reference'
+            candidates=[item for item in parsed[target]['mentions']
+                        if item['scene_id']==mention['scene_id'] and item['split']==mention['split']]
+            if not candidates:return None,'target_scene_missing'
+            for candidate in candidates:
+                found,error=geometry(target,candidate,depth+1)
+                if error:return None,error
+                identities.append(found)
+        # The parser already verifies this exact embedded owner row against the
+        # report row. Its explicit student catalog pin may bind the outer roster.
+        if not refs:
+            embedded=[item for item in value['mentions']
+                if item['pointer']==mention['pointer'].removesuffix('/seed')+'/result/row/seed'
+                and item['scene_id']==mention['scene_id'] and item['split']==mention['split']]
+            for candidate in embedded:
+                found,error=geometry(path,candidate,depth+1)
+                if error:return None,error
+                identities.append(found)
+        if not identities:return None,'missing_catalog_or_unique_manifest_reference'
         keys={tuple(found[0][field] for field in _FIELDS) for found in identities}
         if len(keys)!=1:return None,'target_identity_conflict'
-        return identities[0],None
+        if len({found[1] for found in identities})!=1:
+            return None,'target_catalog_identity_conflict'
+        # Same digest/scene payload: retain all authentic copied catalog paths.
+        return (identities[0][0],identities[0][1],
+                sorted({source for found in identities for source in found[2]})),None
 
     for path,value in sorted(parsed.items()):
         if pins[path]['kind']=='task_catalog':continue
