@@ -30,7 +30,7 @@ historical context.
   scene/model confusion, path anchors, contradictory rows/receipts and limits.
 - [x] Independently review exact source and repeat focused/affected checks with
   the same six inherited mechanics exclusions and bounded default-suite result.
-- [ ] Commit/push a stacked draft PR with source evidence; synchronize execution
+- [x] Commit/push a stacked draft PR with source evidence; synchronize execution
   goal/matrix, preserving all seven release statuses.
 
 Existing shared ceilings apply: 4 MiB/JSON, 512 selected files, 32 roots,
@@ -43,3 +43,12 @@ pending. CI and physical rover remain excluded.
 
 Next full milestone still requires Markdown/project-scope aggregation, complete
 semantic inventory/collision admission and fresh-worker/durable launcher binding.
+
+## Delivery
+
+Draft PR #127 stacks on PR #126. Independent source review applies to `0c2a1b57`;
+102 new focused and 1132 affected checks pass independently with six retained
+baseline exclusions. The source report preserves all intermediate failures and
+review fixes. Goal PR #94 and matrix PR #102 now identify Markdown and full
+project-scope semantic inventory assembly as the next action. No release gate
+or actual-input execution is granted by this delivery.
