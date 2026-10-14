@@ -4,6 +4,7 @@ import hashlib
 import importlib
 import importlib.util
 import json
+import sys
 from pathlib import Path
 
 import pytest
@@ -11,6 +12,7 @@ import pytest
 from palimpsest import puck_on_policy as p
 
 ROOT = Path(__file__).parents[1]
+sys.path.insert(0,str(ROOT/'scripts'))
 MiB = 1024**2
 RUNTIME = {'python':'3.11.15','numpy':'2.2.5','torch':'2.9.0','mujoco':'3.3.6',
            'backend':'egl','device':'cpu','training_and_inference_threads':1}
@@ -89,7 +91,7 @@ def test_all_twelve_exact_owners_are_non_executable_and_defensively_copied(ordin
     result['owner']['argv'].append('mutated')
     result['limits']['recording_bytes'] = 0
     assert sample == before
-    from scripts.verify_puck_mechanics import owner
+    from verify_puck_mechanics import owner
     with pytest.raises(ValueError,match='not qualified'):
         owner(admit(sample))
 
