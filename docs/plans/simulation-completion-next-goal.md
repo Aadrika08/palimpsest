@@ -5,6 +5,10 @@ renews pursuit of the existing [simulation-first completion goal](simulation-fir
 Baseline: `93d7f6f`, completed selected memory pilot, draft PR #93.
 This is an execution goal, not a replacement for frozen study protocols.
 
+**Current execution guide:** [finish Palimpsest in simulation](simulation-release-execution-goal.md).
+It states the ordered work and exits, including the verified 14 October disk
+cleanup. Earlier capacity observations below are historical, not current blockers.
+
 ## Outcome
 
 Deliver a locally installable, independently usable Palimpsest simulation release
@@ -757,3 +761,19 @@ Original-bundle supplied-byte positive qualification needs a separately frozen
 read of original artifacts. Browser/artwork evidence and human acceptance remain
 open. All seven simulation gates remain open; navigation attempt 3 remains
 unauthorized, CI excluded and physical rover deferred.
+
+### Capacity refreshed and execution goal clarified
+
+14 October 2026, 15:39 UTC: after the user's disk cleanup, `df -B1` reports
+100,710,133,760 available bytes (~93.8 GiB) on this checkout's filesystem, above
+the frozen memory minimum of 63,786,975,232 bytes (~59.4 GiB). The earlier
+capacity shortage is resolved for this observation. Required inputs, namespace,
+runtime, allocation, replay, pruning and launcher admission still need their
+fresh checks; this observation launches no study and changes no protocol grant.
+
+The [current execution goal](simulation-release-execution-goal.md) makes the
+sequence explicit: memory replay/close/pruning/allocation and puck custody/owner
+admission; complete fixed memory and puck evaluations; the separately authorized
+navigation decision; sustained lab/artwork encounters; human acceptance and
+final integration. First implementation unit: memory recurrent-cell replay.
+All seven release gates remain open. CI and the physical rover remain excluded.
