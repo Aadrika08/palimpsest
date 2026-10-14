@@ -38,3 +38,11 @@ supervision and release evidence remain open.
 The reader writes no entries and has an 18 MiB plus 64 KiB supplied-input ceiling
 per bundle, with the existing 2 MiB expanded checkpoint cap. Its measured tests
 do not establish process RSS, admission worst-case time or retained-root budget.
+
+Root independently reran the same 154 checks in 1.69 seconds. Independent review
+reran them in 1.66 seconds and rejected 23 additional authored metadata/ZIP faults.
+Its synthetic private admission and fixed-public refusal also passed with
+`builtins.open` and `os.open` forbidden. The nine committed historical pins,
+fresh import, compile and unchanged historical source/protocol bytes passed
+independent review. GO applies to this source unit only; exact public positive
+original admission remains unqualified.
