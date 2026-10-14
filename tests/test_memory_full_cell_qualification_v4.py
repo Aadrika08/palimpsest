@@ -359,3 +359,82 @@ with _hard_guard(time.monotonic()+5,state):
             except ProcessLookupError: pass
             try: os.kill(int(path.read_text()), signal.SIGKILL)
             except ProcessLookupError: pass
+
+
+def test_output_reservation_refuses_symlink_ancestor_without_touching_protected_tree(tmp_path):
+    m = module()
+    assert hasattr(m, '_reserve_output'), 'Output reservation lacks anchored ancestry'
+    workspace = tmp_path / 'workspace'
+    workspace.mkdir()
+    protected = tmp_path / 'protected'
+    protected.mkdir()
+    (workspace / 'runs').symlink_to(protected, target_is_directory=True)
+    freeze = {'output': str(workspace / 'runs' / 'attempt'), 'inputs':
+              {'raw': {'root': str(protected)}, 'assets': {'root': str(tmp_path / 'assets')},
+               'runtime': {'root': str(tmp_path / 'runtime')}}}
+    with pytest.raises((ValueError, OSError)):
+        m._reserve_output(freeze)
+    assert list(protected.iterdir()) == []
+
+
+def test_publication_late_parent_alias_cannot_write_into_protected_tree(tmp_path, monkeypatch):
+    m = module()
+    own = tmp_path / 'own'
+    own.mkdir()
+    protected = tmp_path / 'protected'
+    protected.mkdir()
+    moved = tmp_path / 'original-own'
+    real_open = m.os.open
+    switched = [False]
+    def opening(path, *args, **kwargs):
+        if path == 'close.json' and kwargs.get('dir_fd') is not None and not switched[0]:
+            own.rename(moved)
+            own.symlink_to(protected, target_is_directory=True)
+            switched[0] = True
+        return real_open(path, *args, **kwargs)
+    monkeypatch.setattr(m.os, 'open', opening)
+    with pytest.raises((RuntimeError, OSError)):
+        m._write(own / 'close.json', {'status': 'passed'})
+    assert switched[0], 'Publication must open relative to its held directory'
+    assert list(protected.iterdir()) == []
+
+
+def test_log_drain_late_alias_cannot_write_into_protected_tree(tmp_path, monkeypatch):
+    import threading
+    m = module()
+    own, moved, protected = (tmp_path / name for name in ('own', 'moved', 'protected'))
+    own.mkdir()
+    protected.mkdir()
+    ready, release = threading.Event(), threading.Event()
+    lock = threading.Lock()
+    entered = set()
+    real_open, real_popen = Path.open, m.subprocess.Popen
+    def opening(path, *args, **kwargs):
+        if path.name in ('stdout.log', 'stderr.log'):
+            with lock:
+                entered.add(path.name)
+                if len(entered) == 2: ready.set()
+            assert release.wait(2), 'Test must release its two real log drains'
+        return real_open(path, *args, **kwargs)
+    def launch(*args, **kwargs):
+        assert ready.wait(2), 'Test must observe both drain opens before swapping'
+        own.rename(moved)
+        own.symlink_to(protected, target_is_directory=True)
+        release.set()
+        return real_popen(*args, **kwargs)
+    monkeypatch.setattr(Path, 'open', opening)
+    monkeypatch.setattr(m.subprocess, 'Popen', launch)
+    now = time.monotonic()
+    with pytest.raises((ValueError, RuntimeError, OSError)):
+        m._supervised([sys.executable, '-c', "print('fixture')"], own,
+                      normal_deadline=now + 3, hard_deadline=now + 4, min_free_bytes=0)
+    assert list(protected.iterdir()) == []
+
+
+def test_control_read_allows_its_own_access_time_update(tmp_path):
+    m = module()
+    path = tmp_path / 'control.json'
+    m._write(path, {'fixture': True})
+    before = path.stat()
+    os.utime(path, ns=(1, before.st_mtime_ns))
+    assert m._read_control(path) == {'fixture': True}

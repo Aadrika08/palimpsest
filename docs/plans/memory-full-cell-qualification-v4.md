@@ -77,6 +77,13 @@ one original reservation clock. At most three live workload-group processes
 directory outside protected inputs. No process may start a new group except the
 outside monitor's owned timeout launch.
 
+Reservation creates directories by anchored no-follow descriptors and fsyncs
+their parent entries. All JSON publications and both pairs of bounded log drains
+use held output-directory descriptors, with ancestor/name checks through return.
+Output must not overlap raw/model/runtime roots or source/metadata files. Output
+accounting and control reads also reject ancestor aliases; control file identity
+excludes access-time updates caused by the read itself.
+
 The reviewed argv is the registered Python executable invoking this module with
 the exact freeze path and independently supplied freeze SHA256. The default mode
 reserves once, launches the pinned `/usr/bin/timeout --signal=TERM --kill-after=10s

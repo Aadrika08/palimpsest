@@ -282,17 +282,71 @@ def _qualify(freeze, inputs, deadline):
             'claims': copy.deepcopy(freeze['claims'])}
 
 
+@contextmanager
+def _publication_directory(path):
+    """Hold every output-directory edge; mutable entries may change, names may not."""
+    path = Path(path)
+    if not path.is_absolute():
+        raise ValueError('Qualification publication directory must be absolute')
+    opened = []
+    def identity(value):
+        return value.st_dev, value.st_ino, value.st_mode
+    def recheck():
+        for fd, parent, name, expected in opened:
+            if (identity(os.fstat(fd)) != expected
+                    or identity(os.stat(name, dir_fd=parent, follow_symlinks=False)) != expected):
+                raise RuntimeError('Qualification publication directory edge changed')
+    try:
+        parent = None
+        for name in ('/', *path.parts[1:]):
+            fd = os.open(name, os.O_RDONLY | os.O_DIRECTORY | os.O_NOFOLLOW, dir_fd=parent)
+            expected = identity(os.fstat(fd))
+            opened.append((fd, parent, name, expected))
+            if identity(os.stat(name, dir_fd=parent, follow_symlinks=False)) != expected:
+                raise RuntimeError('Qualification publication directory changed during open')
+            parent = fd
+        recheck()
+        yield parent
+        recheck()
+    finally:
+        for fd, _, _, _ in reversed(opened):
+            os.close(fd)
+
+
+def _reserve_output(freeze):
+    output = Path(freeze['output'])
+    for role, section in freeze['inputs'].items():
+        root = Path(section['root'])
+        protected = ([root] if role in ('raw', 'assets', 'runtime') else
+                     [root / row['path'] for row in section.get('files', [])])
+        if any(output == path or output in path.parents or path in output.parents for path in protected):
+            raise ValueError('Qualification output overlaps protected input storage')
+    if output.parent.name != 'runs':
+        raise ValueError('Qualification output must have its registered runs parent')
+    with _publication_directory(output.parent.parent) as repo:
+        with suppress(FileExistsError):
+            os.mkdir('runs', mode=0o700, dir_fd=repo)
+        os.fsync(repo)
+        with _publication_directory(output.parent) as runs:
+            os.mkdir(output.name, mode=0o700, dir_fd=runs)
+            os.fsync(runs)
+            with _publication_directory(output) as own:
+                os.mkdir('outer', mode=0o700, dir_fd=own)
+                os.fsync(own)
+
+
 def _write(path, value):
     payload = _canonical(value)
     if len(payload) > 1024**2:
         raise ValueError('Qualification report exceeds frozen cap')
-    with path.open('xb') as stream:
-        stream.write(payload)
-        stream.flush()
-        os.fsync(stream.fileno())
-    fd = os.open(path.parent, os.O_RDONLY | os.O_DIRECTORY | os.O_NOFOLLOW)
-    try: os.fsync(fd)
-    finally: os.close(fd)
+    with _publication_directory(path.parent) as parent:
+        fd = os.open(path.name, os.O_WRONLY | os.O_CREAT | os.O_EXCL | os.O_NOFOLLOW,
+                     0o600, dir_fd=parent)
+        with os.fdopen(fd, 'wb') as stream:
+            stream.write(payload)
+            stream.flush()
+            os.fsync(stream.fileno())
+        os.fsync(parent)
 
 
 def _group_members(group):
@@ -313,19 +367,26 @@ def _group_members(group):
 def _output_bytes(root):
     """Bound the entire attempt namespace, including both pairs of logs."""
     total = count = directories_seen = 0
-    if root.is_symlink():
-        raise ValueError('Qualification output root is aliased')
-    for directory, directories, files in os.walk(root, followlinks=False):
-        directories_seen += len(directories)
-        if directories_seen > 2 or any((Path(directory) / name).is_symlink() for name in directories):
-            raise ValueError('Qualification output namespace differs')
-        for name in files:
-            count += 1
-            value = (Path(directory) / name).lstat()
-            if count > 32 or not stat.S_ISREG(value.st_mode) or value.st_nlink != 1:
+    with _publication_directory(root) as held:
+        for directory, directories, files in os.walk(f'/proc/self/fd/{held}', followlinks=False):
+            directories_seen += len(directories)
+            if directories_seen > 2 or any((Path(directory) / name).is_symlink() for name in directories):
                 raise ValueError('Qualification output namespace differs')
-            total += value.st_size
+            for name in files:
+                count += 1
+                value = (Path(directory) / name).lstat()
+                if count > 32 or not stat.S_ISREG(value.st_mode) or value.st_nlink != 1:
+                    raise ValueError('Qualification output namespace differs')
+                total += value.st_size
     return total
+
+
+@contextmanager
+def _owned_logs(output, failures):
+    from palimpsest.evaluate import bounded_logs
+    with _publication_directory(output) as held:
+        with bounded_logs(Path(f'/proc/self/fd/{held}'), 1024**2, failures) as streams:
+            yield streams
 
 
 def _kill_owned_groups(state):
@@ -389,14 +450,13 @@ def _supervised(command, output, *, normal_deadline, hard_deadline,
     if type(max_processes) is not int or not 1 <= max_processes <= 3:
         raise ValueError('Qualification process allowance differs')
     output_root = Path(output_root) if output_root is not None else output
-    from palimpsest.evaluate import bounded_logs
     failure = []
     process = None
     peak = 0
     def failed(reason):
         if not failure:
             failure.append(reason)
-    with bounded_logs(output, 1024**2, failed) as (stdout, stderr):
+    with _owned_logs(output, failed) as (stdout, stderr):
         process = subprocess.Popen(command, stdout=stdout, stderr=stderr,
             env=dict(os.environ), cwd=ROOT, start_new_session=True)
         if guard_state is not None:
@@ -466,8 +526,17 @@ def _supervised(command, output, *, normal_deadline, hard_deadline,
 
 def _read_control(path):
     from palimpsest.artifacts import _json
-    with path.open('rb') as stream:
-        raw = stream.read(1024**2 + 1)
+    from scripts.memory_family_replay_custody_v4 import _identity
+    with _publication_directory(path.parent) as parent:
+        fd = os.open(path.name, os.O_RDONLY | os.O_NOFOLLOW | os.O_NONBLOCK, dir_fd=parent)
+        with os.fdopen(fd, 'rb') as stream:
+            before = os.fstat(stream.fileno())
+            if not stat.S_ISREG(before.st_mode) or before.st_nlink != 1 or before.st_size > 1024**2:
+                raise ValueError('Qualification control is not a bounded regular file')
+            raw = stream.read(1024**2 + 1)
+            if (_identity(before) != _identity(os.fstat(stream.fileno()))
+                    or _identity(before) != _identity(os.stat(path.name, dir_fd=parent, follow_symlinks=False))):
+                raise RuntimeError('Qualification control changed during read')
     if len(raw) > 1024**2:
         raise ValueError('Qualification control exceeds its cap')
     return _json(raw)
@@ -485,9 +554,8 @@ def _require_parent_origin(job):
 
 
 def _run_worker(command, output, deadline):
-    from palimpsest.evaluate import bounded_logs
     failures = []
-    with bounded_logs(output, 1024**2, failures.append) as (stdout, stderr):
+    with _owned_logs(output, failures.append) as (stdout, stderr):
         # Inherit the timeout-owned group. The outer supervisor owns final cleanup,
         # including descendants that outlive their immediate parent.
         completed = subprocess.run(command, stdout=stdout, stderr=stderr,
@@ -569,9 +637,7 @@ def main(argv=None):
     started = time.monotonic()
     guard_state = {"group": None}
     with _hard_guard(started + 660, guard_state):
-        output.parent.mkdir(exist_ok=True)
-        output.mkdir(parents=False, exist_ok=False)
-        (output / 'outer').mkdir()
+        _reserve_output(freeze)
         deadline = started + 600
         _write(output / 'attempt.json', {'freeze_sha256': args.freeze_sha256,
             'started_monotonic': started, 'deadline': deadline,
