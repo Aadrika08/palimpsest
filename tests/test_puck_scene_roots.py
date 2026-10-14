@@ -4,7 +4,6 @@ import importlib
 import importlib.util
 import json
 import os
-import stat
 import time
 
 import pytest
@@ -247,3 +246,251 @@ def test_constructor_and_failed_entry_close_all_owned_descriptors(tmp_path, monk
     for fd in opened:
         with pytest.raises(OSError): os.fstat(fd)
     with pytest.raises(RuntimeError): inventory.__enter__()
+
+
+def test_replacement_after_namespace_recheck_cannot_return_stable_receipt(tmp_path, monkeypatch):
+    root = tmp_path / 'root'; root.mkdir()
+    m = module(); root_identity = os.stat(root).st_ino
+    with held(root) as inventory:
+        original = m.os.fstat; root_calls = 0
+
+        def replace_after_final_stat(fd):
+            nonlocal root_calls
+            result = original(fd)
+            if result.st_ino == root_identity:
+                root_calls += 1
+                if root_calls == 3:
+                    root.rename(tmp_path / 'moved'); root.mkdir()
+            return result
+
+        monkeypatch.setattr(m.os, 'fstat', replace_after_final_stat)
+        with pytest.raises(RuntimeError):
+            inventory.snapshot()
+
+
+def test_opaque_contents_can_change_between_parent_stat_and_directory_open(tmp_path, monkeypatch):
+    opaque = tmp_path / 'opaque'; opaque.mkdir()
+    m = module(); original = m.os.stat; opaque_stats = 0
+
+    def mutate_after_stat(path, *args, **kwargs):
+        nonlocal opaque_stats
+        result = original(path, *args, **kwargs)
+        if path == 'opaque':
+            opaque_stats += 1
+            if opaque_stats == 2:
+                (opaque / 'new').write_bytes(b'intentionally unobserved')
+        return result
+
+    monkeypatch.setattr(m.os, 'stat', mutate_after_stat)
+    with held(tmp_path, [{'path': str(opaque), 'reason': 'authored'}]) as inventory:
+        assert inventory.snapshot()['declared_scope_namespace_stable'] is True
+
+
+def test_opaque_directory_at_depth_33_still_exceeds_bound(tmp_path):
+    current = tmp_path
+    for i in range(33): current = current / str(i); current.mkdir()
+    with pytest.raises(ValueError):
+        with held(tmp_path, [{'path': str(current), 'reason': 'authored'}]): pass
+
+
+def test_explicit_exclusion_inside_git_control_storage_refuses(tmp_path):
+    storage = tmp_path / '.git'; storage.mkdir(); opaque = storage / 'hidden'; opaque.mkdir()
+    with pytest.raises(ValueError):
+        held(tmp_path, [{'path': str(opaque), 'reason': 'authored'}])
+
+
+def test_entry_scan_deadline_is_checked_before_each_stat(tmp_path, monkeypatch):
+    (tmp_path / 'first').write_bytes(b'authored'); (tmp_path / 'second').write_bytes(b'authored')
+    m = module(); original = m.os.stat; calls = 0
+
+    def expire_after_leaf(path, *args, **kwargs):
+        nonlocal calls
+        result = original(path, *args, **kwargs)
+        if path in ('first', 'second'):
+            calls += 1
+            monkeypatch.setattr(m.time, 'monotonic', lambda: float('inf'))
+        return result
+
+    monkeypatch.setattr(m.os, 'stat', expire_after_leaf)
+    with pytest.raises(TimeoutError):
+        with held(tmp_path): pass
+    assert calls == 1
+
+
+def test_directory_open_race_replacement_refuses_and_closes(tmp_path, monkeypatch):
+    child = tmp_path / 'child'; child.mkdir(); m = module(); original = m.os.open
+    opened = []
+
+    def replace_after_open(path, *args, **kwargs):
+        fd = original(path, *args, **kwargs); opened.append(fd)
+        if path == 'child': child.rename(tmp_path / 'moved'); child.mkdir()
+        return fd
+
+    monkeypatch.setattr(m.os, 'open', replace_after_open)
+    with pytest.raises(RuntimeError):
+        with held(tmp_path): pass
+    for fd in opened:
+        with pytest.raises(OSError): os.fstat(fd)
+
+
+def test_cleanup_error_does_not_replace_body_exception(tmp_path, monkeypatch):
+    m = module(); original = m.os.close; once = False
+    body = LookupError('authored body exception')
+    with pytest.raises(LookupError) as caught:
+        with held(tmp_path):
+            def close_then_report(fd):
+                nonlocal once
+                original(fd)
+                if not once:
+                    once = True
+                    raise OSError('authored cleanup failure')
+
+            monkeypatch.setattr(m.os, 'close', close_then_report)
+            raise body
+    assert caught.value is body
+    assert any('cleanup failed' in note for note in body.__notes__)
+
+
+@pytest.mark.parametrize('kind', ['drift', 'deadline', 'copy-failure'])
+def test_snapshot_copy_is_within_custody_and_poison_closes(tmp_path, monkeypatch, kind):
+    m = module(); original = m.copy.deepcopy
+    opened = []; original_open = m.os.open
+
+    def remember(*args, **kwargs):
+        fd = original_open(*args, **kwargs); opened.append(fd); return fd
+
+    monkeypatch.setattr(m.os, 'open', remember)
+    with held(tmp_path) as inventory:
+        def interrupt_copy(value):
+            result = original(value)
+            if kind == 'drift': (tmp_path / 'new').write_bytes(b'authored mutation')
+            elif kind == 'deadline': monkeypatch.setattr(m.time, 'monotonic', lambda: float('inf'))
+            else: raise LookupError('authored copy failure')
+            return result
+
+        monkeypatch.setattr(m.copy, 'deepcopy', interrupt_copy)
+        expected = {'drift': RuntimeError, 'deadline': TimeoutError, 'copy-failure': LookupError}[kind]
+        with pytest.raises(expected): inventory.snapshot()
+        for fd in opened:
+            with pytest.raises(OSError): os.fstat(fd)
+        with pytest.raises(RuntimeError): inventory.recheck()
+
+
+def test_leaf_read_atime_does_not_change_namespace_digest(tmp_path):
+    leaf = tmp_path / 'leaf'; leaf.write_bytes(b'authored')
+    original = leaf.stat()
+    os.utime(leaf, ns=(1, original.st_mtime_ns))
+    with held(tmp_path) as inventory:
+        receipt = inventory.snapshot()
+        assert leaf.read_bytes() == b'authored'
+        assert leaf.stat().st_atime_ns != 1
+        assert inventory.snapshot()['observed_directories'] == receipt['observed_directories']
+
+
+def test_ancestor_symlink_refuses_before_any_namespace_scan(tmp_path, monkeypatch):
+    real = tmp_path / 'real'; real.mkdir(); (real / 'root').mkdir()
+    alias = tmp_path / 'alias'; alias.symlink_to(real)
+    m = module(); original = m.os.scandir; scans = []
+
+    def record(fd):
+        scans.append(fd); return original(fd)
+
+    monkeypatch.setattr(m.os, 'scandir', record)
+    with pytest.raises(OSError):
+        with held(alias / 'root'): pass
+    assert scans == []
+
+
+def test_directory_descriptor_budget_closes_every_successful_open(tmp_path, monkeypatch):
+    m = module(); original = m.os.open; opened = []
+
+    def remember(*args, **kwargs):
+        fd = original(*args, **kwargs); opened.append(fd); return fd
+
+    monkeypatch.setattr(m, 'MAX_DIRECTORIES', 2)
+    monkeypatch.setattr(m.os, 'open', remember)
+    with pytest.raises(ValueError):
+        with held(tmp_path): pass
+    assert len(opened) == 2
+    for fd in opened:
+        with pytest.raises(OSError): os.fstat(fd)
+
+
+def test_search_root_cannot_enter_automatic_git_storage(tmp_path):
+    storage = tmp_path / '.git'; storage.mkdir(); objects = storage / 'objects'; objects.mkdir()
+    with pytest.raises(ValueError): held(objects)
+
+
+def test_exact_git_storage_search_root_is_only_reported_opaque(tmp_path):
+    storage = tmp_path / '.git'; storage.mkdir(); (storage / 'link').symlink_to('missing')
+    with held(storage) as inventory:
+        receipt = inventory.snapshot()
+        assert receipt['observed_directories'] == []
+        assert receipt['git_control_storage'] == [
+            {'path': str(storage), 'marker_kind': 'directory', 'contents_authenticated': False}]
+
+
+def test_opaque_named_retained_candidate_is_only_a_name_hint(tmp_path):
+    runs = tmp_path / 'runs'; runs.mkdir(); (runs / 'ignored').symlink_to('missing')
+    with held(tmp_path, [{'path': str(runs), 'reason': 'authored'}]) as inventory:
+        assert inventory.snapshot()['retained_root_candidates'] == [{'path': str(runs), 'hints': ['runs']}]
+
+
+def test_deadline_expiry_during_successful_descriptor_close_refuses(tmp_path, monkeypatch):
+    m = module(); original = m.os.close
+    with pytest.raises(TimeoutError):
+        with held(tmp_path):
+            def expire_on_close(fd):
+                original(fd)
+                monkeypatch.setattr(m.time, 'monotonic', lambda: float('inf'))
+
+            monkeypatch.setattr(m.os, 'close', expire_on_close)
+
+
+@pytest.mark.parametrize('operation', ['snapshot', 'recheck'])
+def test_operation_before_enter_is_a_poisoning_lifecycle_failure(tmp_path, operation):
+    inventory = held(tmp_path)
+    with pytest.raises(RuntimeError): getattr(inventory, operation)()
+    with pytest.raises(RuntimeError): inventory.__enter__()
+
+
+def test_reentry_failure_poison_closes_active_context(tmp_path, monkeypatch):
+    m = module(); original = m.os.open; opened = []
+
+    def remember(*args, **kwargs):
+        fd = original(*args, **kwargs); opened.append(fd); return fd
+
+    monkeypatch.setattr(m.os, 'open', remember)
+    with held(tmp_path) as inventory:
+        with pytest.raises(RuntimeError): inventory.__enter__()
+        for fd in opened:
+            with pytest.raises(OSError): os.fstat(fd)
+        with pytest.raises(RuntimeError): inventory.snapshot()
+
+
+def test_hardlink_count_change_is_observed_metadata_drift(tmp_path):
+    root = tmp_path / 'root'; root.mkdir(); leaf = root / 'leaf'; leaf.write_bytes(b'authored')
+    with held(root) as inventory:
+        os.link(leaf, tmp_path / 'external-link')
+        with pytest.raises(RuntimeError): inventory.recheck()
+
+
+def test_body_exception_retains_both_drift_and_cleanup_notes(tmp_path, monkeypatch):
+    m = module(); original = m.os.close; once = False
+    body = LookupError('authored body exception')
+    with pytest.raises(LookupError) as caught:
+        with held(tmp_path):
+            (tmp_path / 'new').write_bytes(b'drift')
+
+            def close_then_report(fd):
+                nonlocal once
+                original(fd)
+                if not once:
+                    once = True
+                    raise OSError('authored cleanup failure')
+
+            monkeypatch.setattr(m.os, 'close', close_then_report)
+            raise body
+    assert caught.value is body
+    assert any('drift check failed' in note for note in body.__notes__)
+    assert any('cleanup failed' in note for note in body.__notes__)
