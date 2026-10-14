@@ -257,7 +257,8 @@ def test_directory_change_at_end_of_inventory_is_rejected_before_recheck_returns
 
 
 @pytest.mark.parametrize('scenario',['model','parameter-drift','file-after-inference','wrong-goal',
-    'second-model','training-mode','terminal','activation-drift','forward-drift','hook-drift'])
+    'second-model','training-mode','terminal','activation-drift','forward-drift','hook-drift',
+    'compiled-dispatch','call-dispatch','global-hook'])
 def test_actual_unchanged_cpu_model_and_interval_seam_on_authored_inputs(tmp_path,scenario):
     script=r'''
 import sys
@@ -281,12 +282,18 @@ with execution:
             except RuntimeError:verified=True
             else:raise AssertionError('Repeated construction did not poison context')
         else:raise AssertionError('Repeated model construction accepted')
-    elif scenario in ('activation-drift','forward-drift','hook-drift'):
+    elif scenario in ('activation-drift','forward-drift','hook-drift',
+                      'compiled-dispatch','call-dispatch','global-hook'):
         inputs=np.zeros(9,np.float32)
         before=puck_model.predict(model,inputs)
         if scenario=='activation-drift':model[1]=torch.nn.Identity()
         elif scenario=='forward-drift':model[1].forward=lambda value:value
-        else:model[1].register_forward_hook(lambda mod,args,value:value*0)
+        elif scenario=='hook-drift':model[1].register_forward_hook(lambda mod,args,value:value*0)
+        elif scenario=='compiled-dispatch':model._compiled_call_impl=lambda values:model.forward(values)*.5
+        elif scenario=='call-dispatch':model._call_impl=lambda values:model.forward(values)*.5
+        else:
+            torch.nn.modules.module.register_module_forward_hook(
+                lambda mod,args,value:value*.5 if mod is model else value)
         assert not np.array_equal(before,puck_model.predict(model,inputs))
         try:execution.check_parameters()
         except ValueError:verified=True

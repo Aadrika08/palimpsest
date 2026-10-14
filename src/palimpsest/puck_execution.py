@@ -100,6 +100,12 @@ def _unique_held_objects(holders):
             objects.add(identity)
 
 
+def _dispatch(module):
+    return (getattr(module.forward,'__func__',None),
+            getattr(module._call_impl,'__func__',None),
+            getattr(module._wrapped_call_impl,'__func__',None),type(module).__call__)
+
+
 class _HeldCollectionExecution:
     """Private generic core for authored fixtures; never an execution authority."""
 
@@ -257,12 +263,15 @@ class _HeldCollectionExecution:
 
     def _parameters(self):
         import torch
+        framework=torch.nn.modules.module
+        if framework._global_forward_hooks or framework._global_forward_pre_hooks:
+            raise ValueError('Global model hooks differ from the uninstrumented inference profile')
         modules=list(self._model.named_modules())
         if len(modules)!=len(self._model_graph):
             raise ValueError('Live collection model topology differs')
-        for (name,module),(expected_name,expected_module,expected_type,expected_forward) in zip(modules,self._model_graph):
+        for (name,module),(expected_name,expected_module,expected_type,expected_dispatch) in zip(modules,self._model_graph):
             if (name!=expected_name or module is not expected_module or type(module) is not expected_type
-                    or getattr(module.forward,'__func__',None) is not expected_forward
+                    or _dispatch(module)!=expected_dispatch or module._compiled_call_impl is not None
                     or module.training or module._forward_hooks or module._forward_pre_hooks
                     or module._backward_hooks or module._backward_pre_hooks):
                 raise ValueError('Live collection model computation or evaluation mode differs')
@@ -302,7 +311,7 @@ class _HeldCollectionExecution:
                                   for name,value in self._arrays.items()},strict=True)
             model.eval()
             self._model=model
-            self._model_graph=[(name,module,type(module),module.forward.__func__)
+            self._model_graph=[(name,module,type(module),_dispatch(module))
                                for name,module in model.named_modules()]
             self.recheck()
             return model
