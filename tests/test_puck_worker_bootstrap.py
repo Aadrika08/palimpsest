@@ -53,10 +53,11 @@ def fixture(tmp_path, body='return {"answer": 42}'):
     registration = {'kind': 'puck-worker-source-bootstrap-v1', 'version': 1,
         'source_root': str(root), 'source_files': [descriptor(root / p, p) for p in paths],
         'modules': [{'name': 'palimpsest', 'path': 'src/palimpsest/__init__.py'},
+                    {'name': 'palimpsest.puck_execution_files', 'path': 'src/palimpsest/puck_execution_files.py'},
                     {'name': 'palimpsest.puck_worker_preflight', 'path': 'src/palimpsest/puck_worker_preflight.py'}],
         'namespaces': [], 'runtime': {'root': str(image.parent),
             'files': [descriptor(image, image.name)], 'python_version': '3.11.15'},
-        'environment': {'PYTHONDONTWRITEBYTECODE': '1'}, 'cwd': str(root),
+        'environment': {'PYTHONDONTWRITEBYTECODE': '1', 'LC_ALL': 'C.UTF-8', 'LANG': 'C.UTF-8'}, 'cwd': str(root),
         'argv_prefix': [], 'qualification_claims': [], 'executable': False}
     manifest = tmp_path / 'registration.json'
     bootstrap_sha = sha(bootstrap.read_bytes())
@@ -113,19 +114,25 @@ def test_bad_admission_never_executes_local_entry(tmp_path, defect):
     assert result.returncode != 0
     assert result.stdout == ''
     assert 'ENTRY_RAN' not in result.stderr
+    reason = {'source-sha':'input file bytes or size differ',
+        'python-version':'interpreter pin/version', 'argv':'Frozen worker command',
+        'environment':'environment/cwd differs', 'duplicate-module':'source module mapping',
+        'omit-module':'Complete Python module mapping'}[defect]
+    assert reason in result.stderr
 
 
-@pytest.mark.parametrize('body', [
-    'import numpy\nreturn {}',
-    'from palimpsest import unregistered\nreturn {}',
-    'import sys\nsys.modules[__name__].preflight = lambda _: {}\nreturn {}',
-    'import sys\nsys.meta_path.clear()\nreturn {}',
-    'import pathlib\np = pathlib.Path(__file__)\np.write_bytes(p.read_bytes() + b"# drift\\n")\nreturn {}',
+@pytest.mark.parametrize('body, reason', [
+    ('import numpy\nreturn {}', 'Unregistered local or external dependency'),
+    ('from palimpsest import unregistered\nreturn {}', 'Unregistered local or external dependency'),
+    ('import sys\nsys.modules[__name__].preflight = lambda _: {}\nreturn {}', 'function code binding changed'),
+    ('import sys\nsys.meta_path.clear()\nreturn {}', 'Source import dispatch changed'),
+    ('import pathlib\np = pathlib.Path(__file__)\np.write_bytes(p.read_bytes() + b"# drift\\n")\nreturn {}', 'input file edge or metadata changed'),
 ])
-def test_foreign_import_or_source_dispatch_drift_is_terminal(tmp_path, body):
+def test_foreign_import_or_source_dispatch_drift_is_terminal(tmp_path, body, reason):
     result, _ = launch(tmp_path, body=body)
     assert result.returncode != 0
     assert result.stdout == ''
+    assert reason in result.stderr
 
 
 def test_seed_rejects_wrong_bootstrap_digest_before_code_runs(tmp_path):
@@ -148,3 +155,65 @@ def test_command_elements_preserve_existing_4096_byte_limit(tmp_path):
     args = module.command(sys.executable, str(bootstrap), bootstrap_sha, str(manifest), 'f' * 64)
     assert max(len(x.encode()) for x in args) <= 4096
     assert args[1:5] == ['-I', '-B', '-S', '-c']
+
+
+def test_registered_scripts_namespace_loads_from_held_bytes(tmp_path):
+    def change(reg):
+        path = Path(reg['source_root']) / 'scripts/probe.py'
+        path.write_text('def value():\n    return 43\n')
+        reg['source_files'].append(descriptor(path, 'scripts/probe.py'))
+        reg['source_files'].sort(key=lambda row: row['path'])
+        reg['modules'].append({'name':'scripts.probe', 'path':'scripts/probe.py'})
+        reg['namespaces'] = [{'name':'scripts', 'path':'scripts'}]
+    result, _ = launch(tmp_path, body='from scripts.probe import value\nreturn {"answer": value()}', change=change)
+    assert result.returncode == 0, result.stderr
+    receipt = json.loads(result.stdout)
+    assert receipt['entry_result'] == {'answer':43}
+    assert {'scripts', 'scripts.probe'} <= {row['name'] for row in receipt['loaded_modules']}
+
+
+@pytest.mark.parametrize('body, reason', [
+    ('import sys,types\nsys.modules["palimpsest.unregistered"] = types.ModuleType("palimpsest.unregistered")\nreturn {}', 'Unregistered module cache'),
+    ('import sys\nsys.modules[__name__].__spec__.name = "foreign"\nreturn {}', 'module dispatch'),
+])
+def test_module_cache_and_spec_replacements_cannot_bypass_source_binding(tmp_path, body, reason):
+    result, _ = launch(tmp_path, body=body)
+    assert result.returncode != 0
+    assert reason in result.stderr
+
+
+def test_byte_identical_other_interpreter_inode_is_not_running_image(tmp_path):
+    def change(reg):
+        root = tmp_path / 'runtime'; root.mkdir()
+        (root / 'python3.11').write_bytes(Path('/proc/self/exe').read_bytes())
+        reg['runtime']['root'] = str(root)
+    result, _ = launch(tmp_path, body='raise AssertionError("ENTRY_RAN")', change=change)
+    assert result.returncode != 0
+    assert 'Running interpreter object differs' in result.stderr
+    assert 'ENTRY_RAN' not in result.stderr
+
+
+def test_caught_failed_operation_cannot_be_rearmed_by_restoring_environment(tmp_path):
+    body = ('import os\nos.environ["DRIFT"] = "yes"\n'
+            'try:\n    admission.snapshot()\nexcept RuntimeError:\n    pass\n'
+            'del os.environ["DRIFT"]\nreturn {}')
+    result, _ = launch(tmp_path, body=body)
+    assert result.returncode != 0
+    assert 'Bootstrap inactive or poisoned' in result.stderr
+    assert result.stdout == ''
+
+
+def test_interpreter_identity_refuses_before_source_holder_module_exec(tmp_path):
+    marker = tmp_path / 'holder-ran'
+    def change(reg):
+        runtime = tmp_path / 'runtime'; runtime.mkdir()
+        (runtime / 'python3.11').write_bytes(Path('/proc/self/exe').read_bytes())
+        reg['runtime']['root'] = str(runtime)
+        path = Path(reg['source_root']) / 'src/palimpsest/puck_execution_files.py'
+        path.write_bytes(path.read_bytes() + ('\nPath('+repr(str(marker))+').write_text("ran")\n').encode())
+        next(r for r in reg['source_files'] if r['path'].endswith('puck_execution_files.py')).update(
+            descriptor(path, 'src/palimpsest/puck_execution_files.py'))
+    result, _ = launch(tmp_path, change=change)
+    assert result.returncode != 0
+    assert 'Running interpreter object differs' in result.stderr
+    assert not marker.exists()
