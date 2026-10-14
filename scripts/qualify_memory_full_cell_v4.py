@@ -23,7 +23,13 @@ INDEX_SHA = 'b9e571a8fff0d9c1bc0a2d10b47355ad9cff96fc0e056d5f994789a95748e3a3'
 META = 'docs/reports/memory-prerequisites-v3-evidence/'
 SOURCE_FIXED = ('pyproject.toml', 'uv.lock', 'model_manifests/flynn-full-vision.json',
                 'docs/plans/memory-family-compact-evidence-v4-protocol.json',
-                'docs/plans/memory-full-cell-qualification-v4.md')
+                'docs/plans/memory-full-cell-qualification-v4.md',
+                'docs/plans/memory-full-cell-qualification-v4-amendment-02.md')
+AMENDMENT = 'memory-full-cell-qualification-v4-amendment-02'
+PRIOR = 'docs/reports/memory-full-cell-qualification-v4-attempt-01-evidence/'
+PRIOR_INDEX_SHA = '27bac35a94811355fba6dd5fb93d37d9c4bd921de709647d44218e800c44eb82'
+PRIOR_FREEZE_SHA = '9bba5a4a4fdd980ab2022d7ef0813aa4b2fa6a2c26c6ce86fead7110ad624c82'
+RUNTIME_SHA = '572cfa2a8597e2f431c785613539b1d219fa99eecf5ffb5765731a2ebc3e692a'
 PYTHON = '/home/utkarsh/Work/shraddha/brain/.worktrees/lab-hardening/.venv/bin/python'
 ENVIRONMENT = {'CUDA_VISIBLE_DEVICES': '', 'MKL_NUM_THREADS': '1', 'MUJOCO_GL': 'egl',
                'NUMEXPR_NUM_THREADS': '1', 'OMP_NUM_THREADS': '1', 'OPENBLAS_NUM_THREADS': '1',
@@ -114,12 +120,14 @@ def _freeze(path, expected_sha):
         raise ValueError('Reviewed execution freeze differs')
     from palimpsest.artifacts import _json
     value = _json(payload)
-    if payload != _canonical(value) or value['schema'] != 'memory-full-cell-qualification-v4':
+    amendment = value.get('schema') == AMENDMENT
+    if payload != _canonical(value) or value['schema'] not in ('memory-full-cell-qualification-v4', AMENDMENT):
         raise ValueError('Execution freeze is not canonical/recognized')
-    if set(value) != {'schema', 'repo_root', 'run_ids', 'positive_cells', 'max_cells',
+    keys = {'schema', 'repo_root', 'run_ids', 'positive_cells', 'max_cells',
             'model_seed', 'native_owners', 'physics_steps', 'attempts', 'claims', 'inputs',
             'environment', 'output', 'model_edge', 'model_checkpoint', 'python_executable',
-            'limits', 'supervisor'}:
+            'limits', 'supervisor'} | ({'attempt_number', 'prior_attempt'} if amendment else set())
+    if set(value) != keys:
         raise ValueError('Execution freeze fields differ')
     if any(type(value[key]) is not int for key in ('positive_cells', 'max_cells',
            'model_seed', 'native_owners', 'physics_steps', 'attempts')):
@@ -134,7 +142,8 @@ def _freeze(path, expected_sha):
     if (any(type(value['claims'][key]) is not bool for key in ('family_admission', 'pruning_authorized'))
             or _canonical(value['limits']) != _canonical(LIMITS)
             or value['environment'] != ENVIRONMENT or value['python_executable'] != PYTHON
-            or value['output'] != str(ROOT / 'runs/memory-full-cell-qualification-v4-attempt-01')
+            or value['output'] != str(ROOT / ('runs/memory-full-cell-qualification-v4-attempt-02' if amendment
+                                             else 'runs/memory-full-cell-qualification-v4-attempt-01'))
             or value['model_checkpoint'] != 'connectome_rnn_dagger_princeton_full_vision.pt'
             or value['model_edge'] != 'graph-49d19491c1df4b8f02af0e285b71dc171f47488a93ee5b91be8ee4e280bee9f1/drosophila adult connectome/connections_princeton.csv'
             or set(value['supervisor']) != {'path', 'sha256', 'argv'}
@@ -150,7 +159,66 @@ def _freeze(path, expected_sha):
             or value['environment'].get('PYTHONDONTWRITEBYTECODE') != '1'
             or value['environment'].get('PYTHONPATH') != 'src:.'):
         raise ValueError('Execution freeze input/source boundary differs')
+    if amendment:
+        _amendment(value)
     return value
+
+
+def _amendment(value):
+    """One exact prospective change bound to the immutable, consumed failure."""
+    from palimpsest.artifacts import _json
+    def public_payload(path, expected_sha=None):
+        with _publication_directory((ROOT / path).parent) as parent:
+            fd = os.open(Path(path).name, os.O_RDONLY | os.O_NOFOLLOW | os.O_NONBLOCK, dir_fd=parent)
+            with os.fdopen(fd, 'rb') as stream:
+                info = os.fstat(stream.fileno())
+                if not stat.S_ISREG(info.st_mode) or info.st_nlink != 1 or info.st_size > 1024**2:
+                    raise ValueError('Prior amendment evidence is not bounded regular metadata')
+                raw = stream.read(1024**2 + 1)
+        digest = hashlib.sha256(raw).hexdigest()
+        if len(raw) > 1024**2 or expected_sha is not None and digest != expected_sha:
+            raise ValueError('Prior amendment evidence identity differs')
+        return raw, {'path': path, 'size_bytes': len(raw), 'sha256': digest}
+    raw_index, index_descriptor = public_payload(PRIOR + 'index.json', PRIOR_INDEX_SHA)
+    raw_freeze, freeze_descriptor = public_payload(PRIOR + 'execution-freeze.json', PRIOR_FREEZE_SHA)
+    original, index = _json(raw_freeze), _json(raw_index)
+    if (type(value['attempt_number']) is not int or value['attempt_number'] != 2
+            or value['prior_attempt'] != index_descriptor
+            or index['status'] != 'failed-consumed-before-numerical-worker'
+            or index['worker_started'] is not False or index['model_inference_calls'] != 0):
+        raise ValueError('Amendment prior failure or attempt number differs')
+    for key in set(original) - {'schema', 'inputs', 'output'}:
+        if _canonical(value[key]) != _canonical(original[key]):
+            raise ValueError('Amendment changes original scope: ' + key)
+    for role in ('assets', 'raw'):
+        if _canonical(value['inputs'][role]) != _canonical(original['inputs'][role]):
+            raise ValueError('Amendment changes original input role: ' + role)
+    runtime = copy.deepcopy(original['inputs']['runtime'])
+    runtime['files'] = [{'path': 'python3.11', 'size_bytes': 21662864, 'sha256': RUNTIME_SHA}]
+    if _canonical(value['inputs']['runtime']) != _canonical(runtime):
+        raise ValueError('Amendment exact-size runtime binding differs')
+    additions = [index_descriptor, freeze_descriptor]
+    for row in index['files']:
+        _, descriptor = public_payload(PRIOR + row['path'], row['sha256'])
+        if descriptor['size_bytes'] != row['size_bytes']:
+            raise ValueError('Prior output size differs')
+        additions.append(descriptor)
+    expected_metadata = copy.deepcopy(original['inputs']['metadata'])
+    expected_metadata['files'] = sorted(expected_metadata['files'] + additions, key=lambda row: row['path'])
+    if _canonical(value['inputs']['metadata']) != _canonical(expected_metadata):
+        raise ValueError('Amendment prior evidence metadata roster differs')
+    if [row['path'] for row in value['inputs']['sources']['files']] != _source_roster(ROOT):
+        raise ValueError('Amendment execution source namespace differs')
+
+
+def _execution_command(freeze, args, mode):
+    if mode not in ('parent', 'worker'):
+        raise ValueError('Qualification subprocess mode differs')
+    command = [sys.executable, '-m', 'scripts.qualify_memory_full_cell_v4', '--freeze',
+               str(Path(args.freeze).resolve()), '--freeze-sha256', args.freeze_sha256]
+    if freeze.get('schema') == AMENDMENT:
+        command += ['--approved-amendment-sha256', args.approved_amendment_sha256]
+    return command + ['--' + mode]
 
 
 def _held_inputs(freeze, deadline, stack):
@@ -576,8 +644,7 @@ def _parent(freeze, args, job):
                'started_monotonic': time.monotonic()})
         with ExitStack() as stack:
             inputs = _held_inputs(freeze, deadline, stack)
-            command = [sys.executable, '-m', 'scripts.qualify_memory_full_cell_v4',
-                '--freeze', str(Path(args.freeze).resolve()), '--freeze-sha256', args.freeze_sha256, '--worker']
+            command = _execution_command(freeze, args, 'worker')
             _run_worker(command, output, deadline)
             for held in inputs.values(): held.recheck()
             result = _read_control(output / 'worker-result.json')
@@ -601,11 +668,17 @@ def main(argv=None):
     parser = argparse.ArgumentParser()
     parser.add_argument('--freeze', required=True)
     parser.add_argument('--freeze-sha256', required=True)
+    parser.add_argument('--approved-amendment-sha256')
     modes = parser.add_mutually_exclusive_group()
     modes.add_argument('--worker', action='store_true')
     modes.add_argument('--parent', action='store_true')
     args = parser.parse_args(argv)
     freeze = _freeze(args.freeze, args.freeze_sha256)
+    if freeze['schema'] == AMENDMENT:
+        if args.approved_amendment_sha256 != args.freeze_sha256:
+            raise ValueError('Exact amendment approval confirmation is required before reservation')
+    elif args.approved_amendment_sha256 is not None:
+        raise ValueError('Amendment approval cannot authorize the original consumed attempt')
     if sys.executable != freeze['python_executable']:
         raise ValueError('Frozen invocation interpreter differs')
     for key, value in freeze['environment'].items():
@@ -614,7 +687,9 @@ def main(argv=None):
     output = Path(freeze['output'])
     if args.parent or args.worker:
         job = _read_control(output / 'attempt.json')
-        if job['freeze_sha256'] != args.freeze_sha256:
+        if (job['freeze_sha256'] != args.freeze_sha256
+                or type(job.get('attempt')) is not int
+                or job['attempt'] != freeze.get('attempt_number', 1)):
             raise ValueError('Attempt freeze differs')
         if args.parent:
             return _parent(freeze, args, job)
@@ -641,16 +716,16 @@ def main(argv=None):
         deadline = started + 600
         _write(output / 'attempt.json', {'freeze_sha256': args.freeze_sha256,
             'started_monotonic': started, 'deadline': deadline,
-            'supervisor_pid': os.getpid(), 'attempt': 1})
+            'supervisor_pid': os.getpid(), 'attempt': freeze.get('attempt_number', 1),
+            **({'approved_amendment_sha256': args.approved_amendment_sha256}
+               if freeze['schema'] == AMENDMENT else {})})
         try:
             tool = freeze['supervisor']
             with Path(tool['path']).open('rb') as stream:
                 payload = stream.read(1024**2 + 1)
             if len(payload) > 1024**2 or hashlib.sha256(payload).hexdigest() != tool['sha256']:
                 raise ValueError('Frozen timeout executable differs')
-            command = [tool['path'], *tool['argv'], sys.executable,
-                '-m', 'scripts.qualify_memory_full_cell_v4', '--freeze', str(Path(args.freeze).resolve()),
-                '--freeze-sha256', args.freeze_sha256, '--parent']
+            command = [tool['path'], *tool['argv'], *_execution_command(freeze, args, 'parent')]
             supervision = _supervised(command, output / 'outer', normal_deadline=started + 650,
                 hard_deadline=started + 660, max_processes=3,
                 output_root=output, guard_state=guard_state)

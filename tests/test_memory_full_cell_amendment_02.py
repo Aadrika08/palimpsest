@@ -51,7 +51,7 @@ def test_amendment_accepts_exact_runtime_size_and_preserved_prior_failure(tmp_pa
 
 
 @pytest.mark.parametrize('defect', ['runtime-unknown', 'runtime-size', 'runtime-hash', 'raw-root',
-    'asset-hash', 'missing-prior', 'prior-hash', 'attempt-alias', 'attempt-three', 'limits', 'source-extra'])
+    'asset-hash', 'missing-prior', 'prior-hash', 'prior-size-alias', 'attempt-alias', 'attempt-three', 'limits', 'source-extra'])
 def test_amendment_refuses_expanded_or_ambiguous_allocation(tmp_path, defect):
     f = candidate()
     if defect == 'runtime-unknown':
@@ -62,6 +62,7 @@ def test_amendment_refuses_expanded_or_ambiguous_allocation(tmp_path, defect):
     elif defect == 'asset-hash': f['inputs']['assets']['files'][0]['sha256'] = '0' * 64
     elif defect == 'missing-prior': f['inputs']['metadata']['files'].pop()
     elif defect == 'prior-hash': f['prior_attempt']['sha256'] = '0' * 64
+    elif defect == 'prior-size-alias': f['prior_attempt']['size_bytes'] = float(f['prior_attempt']['size_bytes'])
     elif defect == 'attempt-alias': f['attempt_number'] = 2.0
     elif defect == 'attempt-three': f['attempt_number'] = 3
     elif defect == 'limits': f['limits']['normal_seconds'] += 1
@@ -111,3 +112,21 @@ def test_original_freeze_and_evidence_stay_byte_identical():
     assert hashlib.sha256((m.ROOT / 'docs/plans/memory-full-cell-qualification-v4-execution.json').read_bytes()).hexdigest() == ORIGINAL_SHA
     assert hashlib.sha256((m.ROOT / (PRIOR+'execution-freeze.json')).read_bytes()).hexdigest() == ORIGINAL_SHA
     assert hashlib.sha256((m.ROOT / (PRIOR+'index.json')).read_bytes()).hexdigest() == '27bac35a94811355fba6dd5fb93d37d9c4bd921de709647d44218e800c44eb82'
+
+
+def test_parent_refuses_mixed_confirmation_in_attempt_receipt(tmp_path, monkeypatch):
+    f = candidate()
+    raw = m._canonical(f)
+    path = tmp_path / 'freeze.json'
+    path.write_bytes(raw)
+    sha = hashlib.sha256(raw).hexdigest()
+    monkeypatch.setattr(m.sys, 'executable', m.PYTHON)
+    for key, value in m.ENVIRONMENT.items(): monkeypatch.setenv(key, value)
+    monkeypatch.setattr(m, '_read_control', lambda path: {'freeze_sha256': sha,
+        'attempt': 2, 'approved_amendment_sha256': '0'*64})
+    called = []
+    monkeypatch.setattr(m, '_parent', lambda *args: called.append(True))
+    with pytest.raises(ValueError, match='Attempt freeze'):
+        m.main(['--freeze', str(path), '--freeze-sha256', sha,
+                '--approved-amendment-sha256', sha, '--parent'])
+    assert called == []
