@@ -2,7 +2,7 @@
 from __future__ import annotations
 
 import argparse
-from contextlib import ExitStack
+from contextlib import ExitStack, suppress
 import copy
 import hashlib
 import json
@@ -279,8 +279,10 @@ def _group_members(group):
 
 
 def _supervised(command, output, *, normal_deadline, hard_deadline,
-                min_free_bytes=2 * 1024**3):
-    """Observed one-worker group; bounded existing log drains, no model imports."""
+                min_free_bytes=2 * 1024**3, max_processes=1):
+    """Observed owned group; bounded existing log drains, no model imports."""
+    if type(max_processes) is not int or not 1 <= max_processes <= 3:
+        raise ValueError('Qualification process allowance differs')
     from palimpsest.evaluate import bounded_logs
     failure = []
     process = None
@@ -298,7 +300,7 @@ def _supervised(command, output, *, normal_deadline, hard_deadline,
                 parent_rss = int(Path('/proc/self/statm').read_text().split()[1]) * os.sysconf('SC_PAGE_SIZE')
                 rss = parent_rss + sum(row['rss_bytes'] for row in members.values())
                 peak = max(peak, rss)
-                if set(members) - {process.pid}:
+                if len(members) > max_processes:
                     failed('unexpected child process')
                 elif rss > 6 * 1024**3:
                     failed('sampled RSS stop threshold')
@@ -315,17 +317,20 @@ def _supervised(command, output, *, normal_deadline, hard_deadline,
             monitor_error = error
             failed('process monitor error')
         if failure and process.poll() is None:
-            os.killpg(process.pid, signal.SIGTERM)
+            with suppress(ProcessLookupError):
+                os.killpg(process.pid, signal.SIGTERM)
         try:
             process.wait(timeout=max(.001, hard_deadline - time.monotonic()))
         except subprocess.TimeoutExpired:
             failed('hard deadline')
-            os.killpg(process.pid, signal.SIGKILL)
+            with suppress(ProcessLookupError):
+                os.killpg(process.pid, signal.SIGKILL)
             process.wait(timeout=1)
         members = _group_members(process.pid)
         if members:
             failed('matching process-group survivors')
-            os.killpg(process.pid, signal.SIGKILL)
+            with suppress(ProcessLookupError):
+                os.killpg(process.pid, signal.SIGKILL)
         if monitor_error is not None:
             raise monitor_error
     survivors = sorted(_group_members(process.pid))

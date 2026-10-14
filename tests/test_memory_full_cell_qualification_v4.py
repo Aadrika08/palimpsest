@@ -5,6 +5,10 @@ import importlib.util
 import sys
 import time
 import os
+from pathlib import Path
+import json
+import hashlib
+from types import SimpleNamespace
 
 import numpy as np
 import pytest
@@ -167,3 +171,86 @@ def test_supervisor_monitor_error_cannot_leave_its_worker_running(tmp_path, monk
         for pid in spawned:
             try: os.killpg(pid, 9)
             except ProcessLookupError: pass
+
+
+def test_whole_parent_supervisor_kills_term_ignoring_child_after_timeout_parent_exit(tmp_path):
+    m = module()
+    child_path = tmp_path / 'child.pid'
+    worker = 'import signal,time;signal.signal(signal.SIGTERM,signal.SIG_IGN);time.sleep(20)'
+    parent = ('import subprocess,sys,time;from pathlib import Path;'
+              f'p=subprocess.Popen([sys.executable,"-c",{worker!r}]);'
+              f'Path({str(child_path)!r}).write_text(str(p.pid));time.sleep(20)')
+    now = time.monotonic()
+    command = ['/usr/bin/timeout', '--signal=TERM', '--kill-after=.2s', '.2s',
+               sys.executable, '-c', parent]
+    result = m._supervised(command, tmp_path, normal_deadline=now + 3,
+                          hard_deadline=now + 4, min_free_bytes=0, max_processes=3)
+    assert result['status'] == 'failed'
+    assert result['returncode'] == 124
+    assert result['matching_survivors'] == []
+    assert child_path.exists(), 'Test must actually launch its TERM-ignoring child'
+    pid = int(child_path.read_text())
+    stat = Path('/proc') / str(pid) / 'stat'
+    assert not stat.exists() or stat.read_text().rsplit(')', 1)[1].split()[0] in ('Z', 'X')
+
+
+def test_whole_parent_supervisor_accepts_timely_parent_and_worker_return(tmp_path):
+    m = module()
+    parent = 'import subprocess,sys;subprocess.run([sys.executable,"-c","print(123)"],check=True)'
+    now = time.monotonic()
+    result = m._supervised(['/usr/bin/timeout', '--signal=TERM', '--kill-after=1s', '3s',
+                           sys.executable, '-c', parent], tmp_path,
+                          normal_deadline=now + 4, hard_deadline=now + 5,
+                          min_free_bytes=0, max_processes=3)
+    assert result['status'] == 'completed'
+    assert result['matching_survivors'] == []
+    assert (tmp_path / 'stdout.log').read_bytes() == b'123\n'
+
+
+@pytest.mark.parametrize('field,value', [('positive_cells', 737.0), ('max_cells', 1470.0),
+                                        ('model_seed', 400.0), ('attempts', True),
+                                        ('native_owners', False), ('physics_steps', False)])
+def test_execution_freeze_refuses_numeric_type_aliases(tmp_path, field, value):
+    m = module()
+    freeze = json.loads((m.ROOT / 'docs/plans/memory-full-cell-qualification-v4-execution.json').read_bytes())
+    freeze[field] = value
+    raw = m._canonical(freeze)
+    path = tmp_path / 'freeze.json'
+    path.write_bytes(raw)
+    with pytest.raises(ValueError):
+        m._freeze(path, hashlib.sha256(raw).hexdigest())
+
+
+def test_parent_late_close_fsync_cannot_leave_an_accepted_close(tmp_path, monkeypatch):
+    m = module()
+    assert hasattr(m, '_parent'), 'Whole-parent qualification boundary is missing'
+    now = time.monotonic()
+    clock = [now]
+    job = {'deadline': now + 10, 'started_monotonic': now, 'freeze_sha256': 'a' * 64}
+    freeze = {'output': str(tmp_path), 'claims': {'family_admission': False,
+              'pruning_authorized': False, 'qualification_claims': []}}
+    args = SimpleNamespace(freeze='fixture', freeze_sha256='a' * 64)
+    real_write = m._write
+    def write(path, value):
+        real_write(path, value)
+        if path.name == 'close.json':
+            clock[0] = job['deadline'] + 1
+    def worker(command, output, deadline):
+        real_write(output / 'worker-result.json', {'positive_cells': 737,
+                   'negatives': [{'rejected': True}] * 4})
+    monkeypatch.setattr(m, '_require_parent_origin', lambda job: None)
+    monkeypatch.setattr(m, '_held_inputs', lambda freeze, deadline, stack: {})
+    monkeypatch.setattr(m, '_run_worker', worker)
+    monkeypatch.setattr(m, '_write', write)
+    monkeypatch.setattr(m.time, 'monotonic', lambda: clock[0])
+    with pytest.raises(TimeoutError):
+        m._parent(freeze, args, job)
+    assert (tmp_path / 'failure.json').exists()
+    assert json.loads((tmp_path / 'failure.json').read_bytes())['status'] == 'failed'
+
+
+def test_parent_refuses_standalone_or_wrong_supervisor_origin():
+    m = module()
+    assert hasattr(m, '_require_parent_origin'), 'Parent origin admission is missing'
+    with pytest.raises(ValueError):
+        m._require_parent_origin({'supervisor_pid': -1})
