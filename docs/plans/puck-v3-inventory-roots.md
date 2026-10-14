@@ -64,3 +64,28 @@ No actual retained root, project observer, catalog/parser, registry/reservation,
 model, native owner, physics, collection, fit, development or held-out path is
 opened by this unit. Memory attempt-02 and catalog access remain pending their
 separate decisions. Navigation attempt 3, CI and physical rover remain excluded.
+
+## Catalog occurrence assembly in the same source wave
+
+Extend `puck_scene_catalog.py` with
+`assemble_task_catalog_occurrences(documents, *, deadline)`; cover it in
+`tests/test_puck_scene_occurrences.py`. Documents carry exact repository,
+object-format, commit/root-tree/path/OID/mode descriptors plus caller bytes.
+Validate framed Git blob OIDs and raw SHA256 separately, parse the supported
+catalog, then group exact `(scene_id, canonical_scene_sha256,
+scientific_initial_sha256, payload_sha256)` tuples. Retain every distinct
+repository/commit/tree/path/OID/pointer occurrence and reject conflicting or
+repeated commit/path declarations. Sort output deterministically.
+
+Report all same-ID variants and per-domain hash aliases. The narrowly named
+`legacy_scene_rows_compatible` tests the old global identity-row uniqueness,
+not root/record completeness, schema admission or source authentication. Caller
+commit/tree descriptors do not authenticate attachment. No reservation-ready
+snapshot or complete flag is emitted. Unsupported documents fail rather than
+become empty scene catalogs. Markdown/reference/raw-registry parsing and full
+retained-file custody remain required for the complete inventory path.
+
+Bound 4096 documents/variants, 65,536 scene occurrences, 32 MiB total input bytes
+and 64 MiB retained output metadata, under the same absolute deadline. These
+source failure ceilings do not expand the actual stage's fixed allocation.
+Actual catalogs remain behind the pending access choice.
