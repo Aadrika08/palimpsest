@@ -61,8 +61,10 @@ Torch profile. Retain registered thread/CUDA environment. Zero GPU or physics.
 
 Frozen limits: 600-second internal interval from reservation including final
 custody checks; 650-second normal-return boundary and 660-second hard supervisor
-deadline; 6 GiB RSS ceiling; 2 GiB free-space floor; 128 MiB aggregate new output,
-1 MiB each stdout/stderr and 1 MiB result. One attempt directory outside protected
+deadline; sampled 6 GiB RSS stop threshold at 0.05-second intervals (not a hard
+memory bound); 2 GiB free-space floor; 128 MiB aggregate new output,
+1 MiB each stdout/stderr and 1 MiB result. One model worker plus its small custody/
+supervisor parent; one attempt directory outside protected
 inputs. Supervisor must observe final process drainage and input/source rehash
 before accepting success. These are finite operational limits, not WCET claims.
 Any missing input, mismatch, deadline, RSS, cleanup or publication failure consumes

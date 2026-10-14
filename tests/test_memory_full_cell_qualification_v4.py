@@ -2,6 +2,9 @@
 import copy
 import importlib
 import importlib.util
+import sys
+import time
+import os
 
 import numpy as np
 import pytest
@@ -69,3 +72,98 @@ def test_prescribed_negative_is_separate_from_original_bytes(kind):
         assert np.array_equal(modified_rows[0]['raw_output'], np.full(2, 100, np.float32))
     else:
         assert np.array_equal(modified_snapshot['policy']['hidden'], np.full((1, 4), 100, np.float32))
+
+
+def test_actual_qualification_supervisor_drains_and_bounds_logs(tmp_path):
+    m = module()
+    now = time.monotonic()
+    result = m._supervised([sys.executable, '-c', "print('qualified fixture')"], tmp_path,
+                           normal_deadline=now + 5, hard_deadline=now + 6,
+                           min_free_bytes=0)
+    assert result['status'] == 'completed'
+    assert result['returncode'] == 0
+    assert result['matching_survivors'] == []
+    assert (tmp_path / 'stdout.log').read_bytes() == b'qualified fixture\n'
+
+
+def test_qualification_supervisor_kills_overdue_owned_process(tmp_path):
+    m = module()
+    now = time.monotonic()
+    result = m._supervised([sys.executable, '-c', 'import time;time.sleep(10)'], tmp_path,
+                           normal_deadline=now + .05, hard_deadline=now + 1,
+                           min_free_bytes=0)
+    assert result['status'] == 'failed'
+    assert result['matching_survivors'] == []
+    assert result['failure'] == 'normal-return deadline'
+
+
+def test_supervisor_refuses_already_exited_worker_observed_after_deadlines(tmp_path, monkeypatch):
+    m = module()
+    real_popen = m.subprocess.Popen
+    def launch(*args, **kwargs):
+        process = real_popen(*args, **kwargs)
+        # Simulate the monitor being descheduled until its real child has exited.
+        process.wait(timeout=5)
+        time.sleep(.03)
+        return process
+    monkeypatch.setattr(m.subprocess, 'Popen', launch)
+    now = time.monotonic()
+    result = m._supervised([sys.executable, '-c', 'pass'], tmp_path,
+                           normal_deadline=now + .005, hard_deadline=now + .01,
+                           min_free_bytes=0)
+    assert result['status'] == 'failed'
+    assert result['failure'] == 'hard deadline'
+    assert result['returncode'] == 0
+    assert result['matching_survivors'] == []
+
+
+def test_supervisor_includes_final_log_drain_in_return_deadline(tmp_path, monkeypatch):
+    from contextlib import contextmanager
+    from palimpsest.evaluate import bounded_logs
+    m = module()
+    real_logs = bounded_logs
+    deadline = time.monotonic() + .3
+    @contextmanager
+    def delayed_logs(*args, **kwargs):
+        with real_logs(*args, **kwargs) as streams:
+            yield streams
+        # The worker is successful; only final drainage misses normal return.
+        time.sleep(max(0, deadline - time.monotonic()) + .01)
+    monkeypatch.setattr('palimpsest.evaluate.bounded_logs', delayed_logs)
+    result = m._supervised([sys.executable, '-c', "print('fixture')"], tmp_path,
+                           normal_deadline=deadline, hard_deadline=deadline + 3,
+                           min_free_bytes=0)
+    assert result['status'] == 'failed'
+    assert result['failure'] == 'normal-return deadline'
+    assert result['matching_survivors'] == []
+
+
+def test_supervisor_monitor_error_cannot_leave_its_worker_running(tmp_path, monkeypatch):
+    m = module()
+    spawned = []
+    real_popen = m.subprocess.Popen
+    real_members = m._group_members
+    def launch(*args, **kwargs):
+        process = real_popen(*args, **kwargs)
+        spawned.append(process.pid)
+        return process
+    count = [0]
+    def failed(group):
+        count[0] += 1
+        if count[0] == 1:
+            raise RuntimeError('injected proc monitor failure')
+        return real_members(group)
+    monkeypatch.setattr(m.subprocess, 'Popen', launch)
+    monkeypatch.setattr(m, '_group_members', failed)
+    now = time.monotonic()
+    try:
+        with pytest.raises(RuntimeError):
+            m._supervised([sys.executable, '-c', 'import time;time.sleep(10)'], tmp_path,
+                          normal_deadline=now + 5, hard_deadline=now + 6, min_free_bytes=0)
+        with pytest.raises(ProcessLookupError):
+            os.kill(spawned[0], 0)
+    finally:
+        # The failing RED must itself clean its deliberately leaked test child.
+        for pid in spawned:
+            try: os.killpg(pid, 9)
+            except ProcessLookupError: pass
