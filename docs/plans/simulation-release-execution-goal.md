@@ -11,6 +11,42 @@ This is the current execution guide for the existing
 completion criteria; the frozen study protocols and original acceptance
 thresholds remain binding.
 
+## Active objective and next deliverable
+
+**Deliver Palimpsest as a complete, reproducible local simulation project.**
+Complete the memory research, qualify learned puck and MaleCNS controllers,
+finish the lab and all six artworks, and obtain recorded artistic and independent
+operator acceptance on one integrated release. Physical rover work begins only
+after that acceptance. CI is excluded.
+
+**Next deliverable: a working route from reviewed inputs to durable evidence.**
+Finish the puck inventory-to-collection launcher and memory replay-to-case-close
+path. Their exit requires executable entry points, exact source/runtime/input
+admission, failure handling, preserved terminal records and independent review.
+Passing parser fixtures or publishing another plan is progress, not this exit.
+
+Perform the work in this order:
+
+1. Review and verify the implemented declared-scope puck inventory at `a498648`.
+   It now combines live document census, Git history, Markdown/JSON references and
+   historical variants in one held path. Compatibility with actual project inputs
+   is still unqualified; use authored fixtures while catalog access is pending.
+2. Connect that path to a fresh worker and the existing reservation, model custody,
+   native recorder, clock accounting, supervision and durable collection close.
+   Freeze and review the complete executable path before an actual collection.
+3. Complete the memory condition/case-close source path. After explicit approval
+   of amendment 02, execute and independently audit the one registered full-model
+   replay; a passing result is required before admitting the complete memory study.
+4. Execute separately admitted memory and puck studies and make the prospective
+   MaleCNS decision. Preserve failures and unchanged capability thresholds.
+5. Integrate supported results into the lab and six artworks, verify actual browser
+   encounters and declared durations, then complete user/operator acceptance and
+   the reproducible release handoff.
+
+**Stop condition:** all seven release gates below have their required evidence on
+one integrated candidate. All seven are currently open. Human sessions and the
+three prospective decisions remain explicit dependencies, not assumed approvals.
+
 ## Clear goal and completion boundary
 
 **Finish the project in simulation:** a person can install Palimpsest locally,
@@ -59,8 +95,8 @@ entry points, exact input/runtime admission, meaningful failure checks and durab
 terminal evidence. Then perform the admitted studies. A collection of passing
 component tests or additional planning documents does not satisfy this milestone.
 
-At **2026-10-14 22:01 UTC** (15 October locally), this filesystem had
-**99,986,862,080 bytes free (~93.1 GiB)**, above the frozen memory minimum of
+At **2026-10-14 23:12 UTC** (15 October locally), this filesystem had
+**99,890,302,976 bytes free (~93.0 GiB)**, above the frozen memory minimum of
 **63,786,975,232 bytes (~59.4 GiB)**. Disk capacity is sufficient at this observation;
 recheck free space and required inputs immediately before each admitted stage.
 Clearing space does not authorize a consumed-attempt retry or change a protocol.
@@ -74,9 +110,9 @@ Clearing space does not authorize a consumed-attempt retry or change a protocol.
 | 5 | Integrate and validate the lab and all six simulated artwork encounters. | Real browser workflows, declared-duration artwork inputs, audiovisual/keyboard/viewport checks, exports, replay and recovery pass on the integrated candidate. | Sustained portable inputs, browser access and reviewed integration. |
 | 6 | Conduct user artistic review, independent operator acceptance and final handoff. | User acceptance, independently completed install/runbook and all seven release gates with linked evidence on one reproducible release candidate. | Human sessions and the completed studies/product gates. |
 
-**Start now:** complete Markdown/reference parsing, declared project-scope
-aggregation and semantic inventory assembly after PR #127's eight report-family
-adapters and PR #126's registry path. Selected report/retained/registry parsers,
+**Start now:** independently review and verify the implemented Markdown/reference
+and declared project-scope inventory at `a498648`, after PR #127's eight
+report-family adapters and PR #126's registry path. Selected report/retained/registry parsers,
 pinned reference resolvers and existing root/catalog components do not establish
 full coverage or reservation admission. Unsupported embedded protocol variants
 and historical contexts must remain explicit coverage failures. Preserve variants and explicit legacy-schema conflicts.
