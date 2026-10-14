@@ -53,7 +53,7 @@ notes; failed contexts cannot resume or leak descriptors.
 - [x] Review and verify the source unit and inherited Git/catalog/collection
   checks. Record broad-suite failures and exclusions honestly. Independently
   review the exact commit before publication.
-- [ ] Commit/push a stacked draft PR and measured source report; update goal and
+- [x] Commit/push a stacked draft PR and measured source report; update goal and
   matrix without changing the seven release gates. Continue typed semantic
   assembly, runtime bootstrap and the full durable launcher.
 
@@ -89,3 +89,8 @@ Bound 4096 documents/variants, 65,536 scene occurrences, 32 MiB total input byte
 and 64 MiB retained output metadata, under the same absolute deadline. These
 source failure ceilings do not expand the actual stage's fixed allocation.
 Actual catalogs remain behind the pending access choice.
+
+Published as [draft PR #124](https://github.com/Aadrika08/palimpsest/pull/124).
+The [source report](../reports/puck-v3-inventory-roots-source.md) preserves all
+measured results and remaining admission gaps; goal/matrix updates retain all
+seven release gates as open.
