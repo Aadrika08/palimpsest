@@ -40,8 +40,9 @@ simulation first.
 
 1. **Puck execution path — next independent implementation unit.** Continue
    from the passed original-bundle result in PR #121 and reviewed native custody/
-   clock integration in PR #122. Next implement authentic registry/reservation
-   discovery and the fresh-worker bootstrap, then complete the durable
+   clock integration in PR #122 and Git/catalog source components in PR #123.
+   Next implement all repository/retained-root discovery, strict semantic inventory
+   assembly and the fresh-worker bootstrap, then complete the durable
    collection launcher that binds exact source/runtime/dependencies, invocation,
    scene/model/registry custody, reservation, one-owner lease, process/storage
    supervision, interval recording and terminal publication. Verify failure
@@ -154,6 +155,30 @@ unused child time cannot expand those allowances. Source changes grant no owner
 or collection execution. Complete authentic registry/scene admission, fresh-worker
 source/runtime/dependencies, lease/process supervision and owner/collection close
 remain required. All seven simulation gates remain open.
+
+[Draft PR #123](https://github.com/Aadrika08/palimpsest/pull/123), published at
+`ef44ce8`, adds descriptor-first held Git discovery for one known repository and
+pure historical task-catalog collision identities. Independent SOURCE GO applies
+to `5e93cc3`: 509 affected checks passed in 51.84 seconds at root and 51.90 seconds
+independently, with the same six retained baseline exclusions. Discovery opens no
+document payload until explicit `read_blob`; task extraction reports catalog
+exposure accurately and grants no inventory/scene/native/collection admission.
+The default suite still stops at missing FastAPI during collection. No real
+project observer/parser or registry stage ran.
+
+The [prospective inventory admission amendment 01](https://github.com/Aadrika08/palimpsest/blob/research/puck-v3-scene-inventory/docs/plans/puck-v3-scene-inventory-admission-amendment-01.md)
+records a separately requested decision: collision-only access to already-public
+mixed task catalogs, with explicit held-out catalog exposure, or independently
+prepared identity-only projections. **This decision is pending.** Real inventory
+execution also needs full root/semantic assembly and exact stage source/runtime/
+input/allocation admission. Preserve the literal lock until the decision arrives;
+actual held-out recordings, runtime scenes and evaluation remain unopened.
+Historical duplicate occurrences must retain provenance; distinct variants cannot
+be discarded to satisfy the old uniqueness checker. All seven gates stay open.
+
+Browser availability was refreshed on 15 October 2026 locally: zero apps and
+browsers were exposed. No browser/artwork workflow ran. Continue independent
+source implementation while these input/availability decisions remain open.
 
 ## Memory milestone ready for approval: full-model replay
 
@@ -336,10 +361,12 @@ while a required capability or acceptance gate remains open.
 Continue the **puck durable owner/stage launcher** from PR #121's independently
 audited original-bundle result, PR #120's descriptor-held execution context,
 and PR #122's reviewed native publication and fixed-clock integration. Implement
-authentic registry/reservation discovery and a fresh worker bootstrap, then bind source/runtime/dependency identities, exact invocation,
+all-repository/retained-root discovery and variant-preserving semantic inventory
+assembly from PR #123, plus a fresh worker bootstrap, then bind source/runtime/dependency identities, exact invocation,
 reservation, registry/scene/model custody, supervision and terminal publication
 into a working path. Actual collection remains unauthorized until the complete
-execution admission passes.
+execution admission passes. The catalog-access amendment choice remains pending;
+source work may continue without opening real catalogs or retained roots.
 
 Memory amendment 02 in PR #119 is ready for its separately requested explicit
 approval. After approval, perform exactly one invocation and independently audit
