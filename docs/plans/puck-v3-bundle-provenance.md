@@ -20,7 +20,7 @@ Current reviewed execution provenance remains a separate prerequisite.
 
 Bound report/protocol at 4 MiB each, checkpoint at 1 MiB with its existing 2 MiB
 expanded cap, index at 64 KiB, and each of exactly nine source payloads at 1 MiB.
-One supplied bundle therefore has an 18 MiB input ceiling. Writes and namespace
+One supplied bundle therefore has an 18 MiB plus 64 KiB input ceiling. Writes and namespace
 entries are zero. No allowance or retention limit is enlarged; later measured
 validation must fit existing owner/parent time and RSS budgets.
 

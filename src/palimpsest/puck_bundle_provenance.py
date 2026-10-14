@@ -86,7 +86,8 @@ def _validate_lineage(*, seed, bundle_payloads, historical_source_payloads,
     if (type(history) is not list or len(history) != 30 or
             any(type(row) is not dict or type(row.get('epoch')) is not int or
                 row['epoch'] != i or type(row.get('dev_loss')) not in (int,float) or
-                not math.isfinite(row['dev_loss']) or row['dev_loss'] < 0
+                not 0 <= row['dev_loss'] <= 1.7976931348623157e308 or
+                not math.isfinite(row['dev_loss'])
                 for i,row in enumerate(history,1))):
         raise ValueError('Thirty finite ordered epoch rows required')
     _equal(report.get('selected_epoch'),min(history,key=lambda row:row['dev_loss'])['epoch'],
