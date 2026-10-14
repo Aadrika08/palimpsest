@@ -143,3 +143,28 @@ def test_invocation_refuses_wrong_interpreter_and_environment_without_reservatio
     m.check_invocation({'python_executable':sys.executable})
     monkeypatch.setenv('CUDA_VISIBLE_DEVICES','0')
     with pytest.raises(ValueError,match='environment'):m.check_invocation({'python_executable':sys.executable})
+
+
+def test_terminal_publication_rechecks_still_held_input_after_fsync(tmp_path,monkeypatch):
+    m=module()
+    publish=getattr(m,'_publish_terminal',None)
+    assert callable(publish),'Terminal publication custody operation absent'
+    from palimpsest import bounded_qualification as guard
+    from palimpsest.puck_execution_files import HeldCollectionFiles
+    source=tmp_path/'source';source.mkdir();leaf=source/'input';leaf.write_bytes(b'authored')
+    output=tmp_path/'output';output.mkdir()
+    held=HeldCollectionFiles(source,[{'path':'input','size_bytes':8,
+        'sha256':hashlib.sha256(b'authored').hexdigest()}],time.monotonic()+30)
+    original=guard.write_new
+    def change(path,value,**kwargs):
+        original(path,value,**kwargs)
+        leaf.write_bytes(b'changed')
+    monkeypatch.setattr(guard,'write_new',change)
+    held.__enter__();rejected=False
+    try:
+        try:publish({'source':held},output,'a'*64,time.monotonic(),time.monotonic()+30)
+        except (ValueError,RuntimeError):rejected=True
+    finally:
+        held.__exit__(RuntimeError,RuntimeError('test cleanup'),None)
+    assert rejected,'Changed input passed terminal close after publication'
+    assert (output/'terminal.json').is_file()

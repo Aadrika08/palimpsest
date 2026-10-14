@@ -49,8 +49,12 @@ def clock(deadline):
 
 def source_paths():
     paths={INDEX,REPORT,PLAN,'pyproject.toml','uv.lock'}
+    deadline=time.monotonic()+5;visited=0
     for directory in ('src/palimpsest','scripts'):
         for path in (ROOT/directory).rglob('*'):
+            clock(deadline);visited+=1
+            if visited>4096 or len(path.relative_to(ROOT/directory).parts)>32:
+                raise ValueError('Qualification source discovery count/depth exceeded')
             if path.is_symlink() or path.name=='__pycache__' or path.suffix=='.pyc':
                 raise ValueError('Qualification source inventory has a link or bytecode')
             if path.is_file() and path.suffix=='.py':paths.add(path.relative_to(ROOT).as_posix())
@@ -60,12 +64,15 @@ def source_paths():
 
 def _public_bundle_descriptors():
     from palimpsest import artifacts,puck_bundle_provenance as p
-    raw=(ROOT/REPORT).read_bytes()
-    if hashlib.sha256(raw).hexdigest()!=REPORT_SHA:raise ValueError('Original public training evidence differs')
+    from palimpsest.puck_execution_files import HeldCollectionFiles
+    rows=[]
+    for name,digest,cap in ((INDEX,p.MODEL_INDEX_SHA256,64*1024),(REPORT,REPORT_SHA,MiB)):
+        size=(ROOT/name).lstat().st_size
+        if not 0<size<=cap:raise ValueError('Public original metadata size differs')
+        rows.append({'path':name,'size_bytes':size,'sha256':digest})
+    with HeldCollectionFiles(ROOT,sorted(rows,key=lambda row:row['path']),time.monotonic()+5) as held:
+        raw=held.read(REPORT,MiB);index_raw=held.read(INDEX,64*1024)
     report=artifacts._json(raw)
-    index_raw=(ROOT/INDEX).read_bytes()
-    if hashlib.sha256(index_raw).hexdigest()!=p.MODEL_INDEX_SHA256:
-        raise ValueError('Original public model index differs')
     index=artifacts._json(index_raw)
     rows=[]
     for recorded,entry in zip(report['models'],index['models'],strict=True):
@@ -194,8 +201,7 @@ def held_inputs(freeze,deadline,stack):
     from palimpsest.puck_execution_files import HeldCollectionFiles
     from palimpsest.puck_execution import _unique_held_objects
     equal([row['path'] for row in freeze['inputs']['sources']['files']],source_paths(),'Current source roster')
-    held={name:stack.enter_context(HeldCollectionFiles(role['root'],role['files'],deadline,
-            exact_subtrees=('seed-21','seed-22','seed-23') if name=='bundles' else ()))
+    held={name:stack.enter_context(HeldCollectionFiles(role['root'],role['files'],deadline))
           for name,role in freeze['inputs'].items()}
     _unique_held_objects(held)
     return held
@@ -228,6 +234,15 @@ def check_invocation(freeze):
     if sys.executable!=freeze['python_executable']:raise ValueError('Qualification interpreter differs')
     for name,value in ENVIRONMENT.items():
         if os.environ.get(name)!=value:raise ValueError('Qualification environment differs: '+name)
+
+
+def _publish_terminal(held,output,freeze_sha256,started,deadline):
+    from palimpsest import bounded_qualification as guard
+    clock(deadline)
+    guard.write_new(output/'terminal.json',{'status':'passed','freeze_sha256':freeze_sha256,
+        'elapsed_seconds':time.monotonic()-started,'scope':'original-bundle-facade-and-model-only','claims':CLAIMS})
+    for value in held.values():value.recheck()
+    clock(deadline)
 
 
 def main(argv=None):
@@ -271,9 +286,7 @@ def main(argv=None):
                 if any(len(row['negatives'])!=6 or any(x['rejected'] is not True for x in row['negatives'])
                        for row in result['positives']):raise ValueError('Qualification negatives incomplete')
                 for value in held.values():value.recheck()
-            clock(deadline)
-            guard.write_new(output/'terminal.json',{'status':'passed','freeze_sha256':args.freeze_sha256,
-                'elapsed_seconds':time.monotonic()-started,'scope':'original-bundle-facade-and-model-only','claims':CLAIMS})
+                _publish_terminal(held,output,args.freeze_sha256,started,deadline)
             clock(deadline)
         except BaseException as error:
             guard.write_new(output/'failure.json',{'status':'failed','error_type':type(error).__name__,

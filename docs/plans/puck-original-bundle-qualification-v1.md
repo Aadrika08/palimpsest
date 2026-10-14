@@ -22,6 +22,10 @@ protected input custody. Hold source/historical/bundle/runtime descriptors throu
 model decoding, loading, probes and final close. Hold publication directory edges
 and publish exclusive fsynced control files. A changed or missing input stops;
 retain failure rather than substitute a different root, seed or bundle.
+This admission covers the nine registered original bundle files, with every
+ancestor and leaf held. Existing training logs and other unconsumed files are
+outside this check; it does not establish whole training-folder namespace
+completeness or admit those folders as collection execution inputs.
 
 The worker calls the fixed production original-byte facade for every seed, loads
 all six admitted arrays strictly into the unchanged CPU float32 MLP and verifies
