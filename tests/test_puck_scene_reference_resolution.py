@@ -329,3 +329,11 @@ def test_training_report_source_roster_order_is_part_of_reference_binding():
     result=resolve(docs)
     assert result['declared_reference_closure_resolved'] is False
     assert any(ref['reason']=='collection_report_source_roster_differs' for ref in result['unresolved_references'])
+
+
+def test_supplied_training_catalog_pin_cannot_be_ignored_when_following_manifest():
+    docs=documents();protocol=protocol_document(docs);protocol['pushing_protocol_sha256']='f'*64
+    docs.append({'path':'/authored/protocol.json','kind':'training_protocol','raw':raw(protocol)})
+    result=resolve(docs)
+    assert result['declared_reference_closure_resolved'] is False
+    assert any(ref['reason']=='target_catalog_pin_differs' for ref in result['unresolved_references'])

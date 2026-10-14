@@ -354,7 +354,7 @@ class _Inventory:
         if document.get('schema') not in ('puck-training-v1', 'puck-balanced-training-v1'):
             raise ValueError('Unsupported puck training protocol schema')
         if 'pushing_protocol_sha256' in document:
-            _hash(document['pushing_protocol_sha256'], '/pushing_protocol_sha256')
+            self.catalog = _hash(document['pushing_protocol_sha256'], '/pushing_protocol_sha256')
         if 'source_hashes' in document:
             self.hash_map(document['source_hashes'], '/source_hashes')
         _integer(document.get('training_seed'), '/training_seed')
