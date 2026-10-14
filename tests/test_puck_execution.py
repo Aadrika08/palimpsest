@@ -178,8 +178,29 @@ def test_parameter_check_before_materialization_poisons_context(tmp_path):
             with pytest.raises(RuntimeError,match='failed'):execution.recheck()
 
 
+def test_directory_change_at_end_of_inventory_is_rejected_before_recheck_returns(tmp_path):
+    execution,custody=context(tmp_path/'case')
+    execution.__enter__()
+    original=execution._source_inventory
+    def change(holder):
+        original(holder)
+        directory=Path(custody['roles']['sources']['root'])/'upstream/fly-gym/models'
+        directory.rename(directory.with_name('models-old'))
+        directory.symlink_to(directory.with_name('models-old'),target_is_directory=True)
+    execution._source_inventory=change
+    rejected=False
+    try:
+        try:execution.recheck()
+        except (RuntimeError,ValueError):rejected=True
+    finally:
+        try:execution.__exit__(RuntimeError,RuntimeError('test cleanup'),None)
+        except (RuntimeError,ValueError,OSError):pass
+    # Assert after cleanup: a close-only refusal must not hide missing rejection.
+    assert rejected,'Inventory drift returned success before close'
+
+
 @pytest.mark.parametrize('scenario',['model','parameter-drift','file-after-inference','wrong-goal',
-    'second-model','training-mode','terminal'])
+    'second-model','training-mode','terminal','activation-drift','forward-drift','hook-drift'])
 def test_actual_unchanged_cpu_model_and_interval_seam_on_authored_inputs(tmp_path,scenario):
     script=r'''
 import sys
@@ -203,6 +224,16 @@ with execution:
             except RuntimeError:verified=True
             else:raise AssertionError('Repeated construction did not poison context')
         else:raise AssertionError('Repeated model construction accepted')
+    elif scenario in ('activation-drift','forward-drift','hook-drift'):
+        inputs=np.zeros(9,np.float32)
+        before=puck_model.predict(model,inputs)
+        if scenario=='activation-drift':model[1]=torch.nn.Identity()
+        elif scenario=='forward-drift':model[1].forward=lambda value:value
+        else:model[1].register_forward_hook(lambda mod,args,value:value*0)
+        assert not np.array_equal(before,puck_model.predict(model,inputs))
+        try:execution.check_parameters()
+        except ValueError:verified=True
+        else:raise AssertionError('Changed model computation accepted')
     elif scenario in ('parameter-drift','training-mode'):
         if scenario=='training-mode':model.train()
         else:

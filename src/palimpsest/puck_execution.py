@@ -97,6 +97,7 @@ class _HeldCollectionExecution:
         self._stack=ExitStack()
         self._state='new'
         self._model=None
+        self._model_graph=None
         self._arrays=None
         self._description=None
 
@@ -241,8 +242,15 @@ class _HeldCollectionExecution:
 
     def _parameters(self):
         import torch
-        if self._model.training:
-            raise ValueError('Collection model must remain in evaluation mode')
+        modules=list(self._model.named_modules())
+        if len(modules)!=len(self._model_graph):
+            raise ValueError('Live collection model topology differs')
+        for (name,module),(expected_name,expected_module,expected_type,expected_forward) in zip(modules,self._model_graph):
+            if (name!=expected_name or module is not expected_module or type(module) is not expected_type
+                    or getattr(module.forward,'__func__',None) is not expected_forward
+                    or module.training or module._forward_hooks or module._forward_pre_hooks
+                    or module._backward_hooks or module._backward_pre_hooks):
+                raise ValueError('Live collection model computation or evaluation mode differs')
         state=self._model.state_dict()
         if set(state)!=set(self._arrays):
             raise ValueError('Live model parameter names differ')
@@ -257,6 +265,9 @@ class _HeldCollectionExecution:
         try:
             for holder in self._holders.values():holder.recheck()
             self._inventory()
+            # Inventory can discover new held directory edges or race a rename.
+            # Check all edges and input bytes again before returning admission.
+            for holder in self._holders.values():holder.recheck()
             if self._model is not None:self._parameters()
             self._active()
         except BaseException:
@@ -276,6 +287,8 @@ class _HeldCollectionExecution:
                                   for name,value in self._arrays.items()},strict=True)
             model.eval()
             self._model=model
+            self._model_graph=[(name,module,type(module),module.forward.__func__)
+                               for name,module in model.named_modules()]
             self.recheck()
             return model
         except BaseException:
