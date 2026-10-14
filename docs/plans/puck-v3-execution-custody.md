@@ -36,8 +36,11 @@ Admit the selected bundle through the unchanged fixed production provenance
 facade. Construct the unchanged CPU model with `puck_model.make_model`, load
 the admitted arrays strictly, set evaluation mode, and compare every live CPU
 float32 parameter byte. Keep admitted arrays private. Model construction is
-one-shot. Every staged interval uses this bound model with the existing
+one-shot. Bind the unchanged named module objects, types, forward functions,
+evaluation mode and absence of module hooks, so a changed activation or forward
+path cannot pass merely because parameter bytes match. Every staged interval uses this bound model with the existing
 `stage_interval`; recheck inputs and parameters before and after it returns.
+Recheck all held edges and input bytes after namespace discovery, before returning.
 Any failed operation permanently poisons the context and closes its descriptors.
 Returned metadata is defensive. Closed/expired contexts cannot act or close
 successfully. A staged interval is not a native step or publication receipt.

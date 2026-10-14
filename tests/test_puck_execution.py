@@ -153,6 +153,63 @@ def test_public_context_cannot_bind_foreign_import_root_even_with_original_runti
         module().HeldCollectionExecution(raw(custody),sha(raw(custody)),time.monotonic()+30)
 
 
+def test_double_leading_root_spelling_is_rejected_before_input_access(tmp_path):
+    custody,admit=fixture(tmp_path/'case')
+    custody['roles']['historical']['root']='/'+custody['roles']['historical']['root']
+    with pytest.raises(ValueError,match='root'):
+        module()._HeldCollectionExecution(raw(custody),sha(raw(custody)),time.monotonic()+30,
+            bundle_admitter=admit,runtime_pin=custody['roles']['runtime']['files'][0])
+
+
+def test_same_inode_shared_by_source_and_historical_roles_is_rejected_before_decode(tmp_path):
+    custody,admit=fixture(tmp_path/'case')
+    import shutil
+    historical=Path(custody['roles']['historical']['root'])
+    shared=Path(custody['roles']['sources']['root'])/'src/palimpsest/producer_source'
+    shutil.move(str(historical),shared)
+    custody['roles']['historical']['root']='/'+str(shared)
+    # One absolute spelling deliberately bypasses the lexical duplicate guard
+    # to exercise the separate held-object check with authored real inodes.
+    for row in custody['roles']['historical']['files']:
+        if row['path'].endswith('.py'):
+            custody['roles']['sources']['files'].append({**row,
+                'path':'src/palimpsest/producer_source/'+row['path']})
+    custody['roles']['sources']['files'].sort(key=lambda row:row['path'])
+    source_payloads={row['path']:row['sha256'] for row in custody['roles']['sources']['files']}
+    directory=Path(custody['roles']['admission']['root'])
+    freeze=json.loads((directory/'freeze.json').read_bytes());freeze['sources']=source_payloads
+    freeze_raw=raw(freeze)
+    envelope=json.loads((directory/'envelope.json').read_bytes())
+    envelope.update(execution_freeze_sha256=sha(freeze_raw),sources_sha256=sha(raw(source_payloads)))
+    for entry in custody['roles']['admission']['files']:
+        payload=freeze_raw if entry['path']=='freeze.json' else raw(envelope)
+        (directory/entry['path']).write_bytes(payload)
+        entry.update(size_bytes=len(payload),sha256=sha(payload))
+    custody['execution_freeze_sha256']=sha(freeze_raw)
+    # Constructor may reject the known lexical alias before opening; if it
+    # proceeds, enter must reject before decoding/model construction.
+    called=[]
+    def track(**values):called.append(True);return admit(**values)
+    rejected=False
+    try:
+        with module()._HeldCollectionExecution(raw(custody),sha(raw(custody)),time.monotonic()+30,
+                bundle_admitter=track,runtime_pin=custody['roles']['runtime']['files'][0]):
+            pass
+    except ValueError:rejected=True
+    assert rejected and called==[]
+
+
+def test_held_object_uniqueness_checks_actual_inodes_across_roles(tmp_path):
+    from palimpsest.puck_execution_files import HeldCollectionFiles
+    root=tmp_path/'root';root.mkdir();(root/'shared').write_bytes(b'authored')
+    entries=[{'path':'shared','size_bytes':8,'sha256':sha(b'authored')}]
+    with HeldCollectionFiles(root,entries,time.monotonic()+30) as first:
+        with HeldCollectionFiles(root,entries,time.monotonic()+30) as second:
+            checker=getattr(module(),'_unique_held_objects',None)
+            assert callable(checker),'Cross-role held object identity check absent'
+            with pytest.raises(ValueError,match='alias'):checker({'first':first,'second':second})
+
+
 def test_failed_body_does_not_bypass_final_custody_check(tmp_path):
     execution,custody=context(tmp_path/'case')
     with pytest.raises((RuntimeError,ValueError),match='changed|differ'):

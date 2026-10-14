@@ -51,6 +51,8 @@ def _parse(raw, expected, deadline, runtime_pin):
     for role,description in value['roles'].items():
         admission._fields(description,{'root','files'},role)
         root=admission._path(description['root'],role+' root',absolute=True)
+        if root.startswith('//'):
+            raise ValueError('Custody root requires a single leading slash')
         entries=description['files']
         if type(entries) is not list or not 1<=len(entries)<=512:
             raise ValueError('Bounded custody file roster required')
@@ -84,6 +86,18 @@ def _parse(raw, expected, deadline, runtime_pin):
     if len(paths)!=len(set(paths)):
         raise ValueError('Custody input paths alias across roles')
     return value,holders
+
+
+def _unique_held_objects(holders):
+    import os
+    objects=set()
+    for holder in holders.values():
+        for fd,*_ in holder._files.values():
+            value=os.fstat(fd)
+            identity=(value.st_dev,value.st_ino)
+            if identity in objects:
+                raise ValueError('Held input objects alias across custody roles')
+            objects.add(identity)
 
 
 class _HeldCollectionExecution:
@@ -203,6 +217,7 @@ class _HeldCollectionExecution:
         try:
             for holder in self._holders.values():self._stack.enter_context(holder)
             self._state='active'
+            _unique_held_objects(self._holders)
             self.recheck()
             freeze_raw=self._read('admission','freeze.json',MiB)
             envelope_raw=self._read('admission','envelope.json',MiB)
