@@ -32,7 +32,8 @@ def sha(raw):
 
 
 def fixture(ordinal=0):
-    rows = p.mint_layouts(p.RESERVED_SCENE_IDS)
+    # Synthetic metadata only; the public minter correctly refuses reserved IDs.
+    rows = [p._row(scene_id,slot) for slot,scene_id in enumerate(p.RESERVED_SCENE_IDS)]
     entries = []
     for row in rows[:4]:
         entries.append({'scene_id':row['seed'],'slot':row['slot'],'split':row['split'],
