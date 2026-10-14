@@ -74,12 +74,12 @@ Clearing space does not authorize a consumed-attempt retry or change a protocol.
 | 5 | Integrate and validate the lab and all six simulated artwork encounters. | Real browser workflows, declared-duration artwork inputs, audiovisual/keyboard/viewport checks, exports, replay and recovery pass on the integrated candidate. | Sustained portable inputs, browser access and reviewed integration. |
 | 6 | Conduct user artistic review, independent operator acceptance and final handoff. | User acceptance, independently completed install/runbook and all seven release gates with linked evidence on one reproducible release candidate. | Human sessions and the completed studies/product gates. |
 
-**Start now:** finish the remaining standalone owner/development/mechanics/
-training-result/prepared/model-index families, Markdown/reference parsing,
-declared project-scope aggregation and complete semantic inventory assembly
-after PR #126. The selected retained/registry parsers, pinned reference resolvers
-and existing root/catalog components do not establish full coverage or
-reservation admission. Preserve variants and explicit legacy-schema conflicts.
+**Start now:** complete Markdown/reference parsing, declared project-scope
+aggregation and semantic inventory assembly after PR #127's eight report-family
+adapters and PR #126's registry path. Selected report/retained/registry parsers,
+pinned reference resolvers and existing root/catalog components do not establish
+full coverage or reservation admission. Unsupported embedded protocol variants
+and historical contexts must remain explicit coverage failures. Preserve variants and explicit legacy-schema conflicts.
 Use authored temporary fixtures while the catalog-access choice is pending.
 Continue through the complete launcher rather than treating each prerequisite
 PR as the milestone exit.
@@ -430,14 +430,28 @@ unminted self-reservations and historical stat declarations remain explicitly
 unbound. No actual scan, reservation, publication, model/native or study stage ran.
 Full inventory/worker/launcher admission and all seven release gates remain open.
 
+[Draft PR #127](https://github.com/Aadrika08/palimpsest/pull/127) adds eight
+selected owner/construction/mechanics/development/training/prepared/model-index
+report families. Independent review of exact source `0c2a1b57` finds no remaining
+concrete defect in its source/authored scope. New focused checks pass 102 in
+0.21 seconds independently; affected checks pass 1132 with the same six inherited
+exclusions in 53.48 seconds root and 53.75 seconds independently. Review fixes
+bind full owner rows, model/catalog hashes, protocol/checkpoint ledger declarations
+and balanced objective receipts. Binary/SNP receipts and missing historical context
+remain unqualified. Its report retains the earlier generated-bytecode refusal,
+one custody ancestor-change anomaly with cause unknown and fixture corrections;
+no custody guard or threshold was relaxed. No actual inventory or study stage ran.
+Markdown/full project-scope assembly, worker bootstrap and the complete launcher
+remain required. All seven simulation gates remain open.
+
 ## First action when pursuing this goal
 
 Continue the **puck durable owner/stage launcher** from PR #121's independently
 audited original-bundle result, PR #120's descriptor-held execution context,
 and PR #122's reviewed native publication and fixed-clock integration. Implement
 complete repository/retained-root aggregation and semantic/reference/Markdown
-assembly after PR #126's registry and PR #125's selected retained-reference
-paths and PR #124's root/catalog components, plus
+assembly after PR #127's report families, PR #126's registry and PR #125's
+selected retained-reference paths and PR #124's root/catalog components, plus
 a fresh worker bootstrap, then bind source/runtime/dependency identities, exact invocation,
 reservation, registry/scene/model custody, supervision and terminal publication
 into a working path. Actual collection remains unauthorized until the complete
