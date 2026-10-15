@@ -44,7 +44,7 @@ entire native execution history. All runtime/native/collection grants stay false
   authored tiny temporary namespaces, without importing installed simulation deps.
 - [x] Implement dependency custody, importer/resources/metadata and worker v2
   integration; preserve terminal refusal and source/model limits.
-- [ ] Review complete source, fix concrete findings with regression proof and
+- [x] Review complete source, fix concrete findings with regression proof and
   serialize meaningful focused/affected verification; retain suite limitations.
 - [ ] Commit/push a stacked draft PR and update goal/matrix. Then finish actual
   runtime qualification and the complete inventory-to-durable-collection route.
@@ -79,3 +79,6 @@ CI and physical rover remain excluded. All seven simulation gates stay open.
   authenticated empty directories are not exposed through resource traversal.
 - Actual origin-relative ELF fixture refuses because held-FD loading changes its
   lookup origin. No pathname fallback or native transitive compatibility claimed.
+
+Independent final-source repetition: 153 focused/16.38s and 1370 affected/78.32s,
+same six exclusions, exit0. All test processes stopped. See the source report.
