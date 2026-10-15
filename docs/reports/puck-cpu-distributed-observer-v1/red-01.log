@@ -1,0 +1,14 @@
+Traceback (most recent call last):
+  File "/home/utkarsh/.local/bin/pytest", line 3, in <module>
+    from pytest import console_main
+  File "/home/utkarsh/.local/lib/python3.14/site-packages/pytest/__init__.py", line 8, in <module>
+    from _pytest._code import ExceptionInfo
+  File "/home/utkarsh/.local/lib/python3.14/site-packages/_pytest/_code/__init__.py", line 5, in <module>
+    from .code import Code
+  File "/home/utkarsh/.local/lib/python3.14/site-packages/_pytest/_code/code.py", line 43, in <module>
+    from _pytest._io import TerminalWriter
+  File "/home/utkarsh/.local/lib/python3.14/site-packages/_pytest/_io/__init__.py", line 3, in <module>
+    from .terminalwriter import get_terminal_width
+  File "/home/utkarsh/.local/lib/python3.14/site-packages/_pytest/_io/terminalwriter.py", line 13, in <module>
+    import pygments
+ModuleNotFoundError: No module named 'pygments'
