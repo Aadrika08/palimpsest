@@ -209,3 +209,29 @@ def test_explicit_native_cache_profile_survives_data_only_staging(tmp_path):
         result=stage(reg,base/'stage')
         assert result['import_profile']==reg['import_profile']
         assert (Path(result['roots'][0]['root'])/relative).read_bytes()==b'authored native data, never executed'
+
+
+def test_aggregate_registration_metadata_above_four_mib_stages_tiny_payloads(tmp_path):
+    """A package-sized descriptor forest must not inherit the METADATA leaf cap."""
+    source,reg=forest(tmp_path)
+    directory='long-'+('d'*180);(source/directory).mkdir()
+    empty_hash=hashlib.sha256(b'').hexdigest()
+    for index in range(5000):
+        name=str(index).zfill(5)+'-'+('n'*210)
+        (source/directory/name).touch()
+        reg['roots'][0]['files'].append(dict(path=directory+'/'+name,size_bytes=0,sha256=empty_hash))
+    reg['roots'][0]['files'].sort(key=lambda row:row['path'])
+    source_bytes=len(canonical(reg))
+    assert 2*1024**2<source_bytes<16*1024**2
+    assert sum(row['size_bytes'] for row in reg['roots'][0]['files'])<1024
+    before=len(os.listdir('/proc/self/fd'))
+    with tmpfs_base() as base:
+        result=stage(reg,base/'stage',deadline=time.monotonic()+180)
+        staged_bytes=len(canonical(result))
+        assert source_bytes+staged_bytes>4*1024**2 and staged_bytes<16*1024**2
+        assert result['roots'][0]['files']==reg['roots'][0]['files']
+        copied=Path(result['roots'][0]['root'])/directory
+        assert len(list(copied.iterdir()))==5000 and all(p.stat().st_size==0 for p in copied.iterdir())
+        print(dict(scale_files=len(reg['roots'][0]['files']),source_registration_bytes=source_bytes,
+                   staged_registration_bytes=staged_bytes,aggregate_registration_bytes=source_bytes+staged_bytes))
+    assert len(os.listdir('/proc/self/fd'))==before
