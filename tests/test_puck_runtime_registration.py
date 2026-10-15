@@ -1,5 +1,4 @@
 """Registration construction uses only authored temporary package payloads."""
-import copy
 import hashlib
 import importlib
 import importlib.machinery

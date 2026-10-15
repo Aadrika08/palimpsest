@@ -26,7 +26,7 @@ def setup(deps, root, defect=None):
 def qualify(reg,source):
     reg.update(kind='puck-worker-source-bootstrap-v3',version=3,
         qualification={'kind':'puck-held-runtime-import-qualification-v1','version':1,
-            'expected_versions':dict(VERSIONS),'stdlib_cache_aliases':{'__mp_main__':'__main__'}})
+            'expected_versions':dict(VERSIONS),'stdlib_cache_aliases':{'__mp_main__':'__main__'},'negative_imports':['org']})
 
 
 def test_fixed_entry_runs_three_held_imports_and_binds_stdlib_main_alias(tmp_path):
@@ -71,6 +71,17 @@ def test_qualification_descriptor_is_fixed_and_strict_before_imports(tmp_path,de
 
 
 def test_v2_stays_preflight_only_and_does_not_admit_stdlib_alias_implicitly(tmp_path):
-    result,_=dependency_fixture(tmp_path,'import multiprocessing\nreturn {}')
+    result,_=dependency_fixture(tmp_path,'import sys\nsys.modules["__mp_main__"]=sys.modules["__main__"]\nreturn {}')
     assert result.returncode!=0 and result.stdout==''
     assert 'Unregistered module cache entry: __mp_main__' in result.stderr,result.stderr
+
+
+def test_first_failure_is_preserved_when_dependency_catches_import_error(tmp_path):
+    def mutate(deps,root):
+        setup(deps,root)
+        path=root/'numpy/__init__.py'
+        path.write_text('__version__="authored-numpy"\ntry:\n import foreign_optional\nexcept ImportError:\n pass\n')
+        deps['roots'][0]['files']=[descriptor(root/v['path'],v['path']) for v in deps['roots'][0]['files']]
+    result,_=dependency_fixture(tmp_path,'return {}',mutate=mutate,source_change=qualify)
+    assert result.returncode!=0 and result.stdout==''
+    assert 'foreign_optional' in result.stderr,result.stderr

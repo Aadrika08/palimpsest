@@ -22,6 +22,7 @@ MiB = 1024**2
 BOOTSTRAP = 'scripts/puck_worker_bootstrap.py'
 HOLDER = 'src/palimpsest/puck_execution_files.py'
 ENTRY = 'palimpsest.puck_worker_preflight'
+QUALIFICATION_ENTRY = 'palimpsest.puck_runtime_qualification'
 RUNTIME_PIN = {'path': 'python3.11', 'size_bytes': 21662864,
     'sha256': '572cfa2a8597e2f431c785613539b1d219fa99eecf5ffb5765731a2ebc3e692a'}
 _PREFIXES = ('src/palimpsest', 'scripts', 'upstream/fly-gym')
@@ -143,18 +144,31 @@ def _parse(raw, expected):
     if type(raw) is not bytes or not 0 < len(raw) <= MiB or digest(raw) != _hash(expected):
         raise ValueError('Externally pinned bounded worker registration required')
     reg = _decode(raw)
-    if (type(reg.get('version')) is not int or reg['version'] not in (1, 2)
-            or set(reg) != (_FIELDS if reg['version'] == 1 else _FIELDS | {'dependencies'})
+    if (type(reg.get('version')) is not int or reg['version'] not in (1, 2, 3)
+            or set(reg) != (_FIELDS if reg['version'] == 1 else
+                _FIELDS | {'dependencies'} | ({'qualification'} if reg['version']==3 else set()))
             or reg['kind'] != 'puck-worker-source-bootstrap-v'+str(reg['version'])
             or reg['qualification_claims'] != [] or reg['executable'] is not False):
         raise ValueError('Exact source-only bootstrap registration required')
-    if reg['version'] == 2:
+    if reg['version'] >= 2:
         dep = reg['dependencies']
         if type(dep) is not dict or set(dep) != {'path', 'size_bytes', 'sha256'}:
             raise ValueError('Exact dependency registration reference required')
         _path(dep['path']); _hash(dep['sha256'])
         if type(dep['size_bytes']) is not int or not 0 < dep['size_bytes'] <= 16*MiB:
             raise ValueError('Dependency registration reference ceiling exceeded')
+    if reg['version']==3:
+        q=reg['qualification']
+        if (type(q) is not dict or set(q)!= {'kind','version','expected_versions','stdlib_cache_aliases','negative_imports'}
+                or q['kind']!='puck-held-runtime-import-qualification-v1'
+                or type(q['version']) is not int or q['version']!=1
+                or type(q['expected_versions']) is not dict
+                or set(q['expected_versions'])!={'numpy','torch','mujoco'}
+                or any(type(v) is not str or not 1<=len(v)<=128 for v in q['expected_versions'].values())
+                or type(q['stdlib_cache_aliases']) is not dict
+                or q['stdlib_cache_aliases']!={'__mp_main__':'__main__'}
+                or q['negative_imports']!=['org']):
+            raise ValueError('Exact fixed runtime qualification descriptor required')
     _path(reg['source_root']); _path(reg['cwd'])
     files = reg['source_files']
     if type(files) is not list or not 1 <= len(files) <= 512:
@@ -187,7 +201,7 @@ def _parse(raw, expected):
         if name in modules or name in namespaces: raise ValueError('Duplicate import namespace')
         namespaces[name] = path
     expected = {p for p in paths if p.endswith('.py')} - {BOOTSTRAP}
-    if mapped_paths != expected or ENTRY not in modules:
+    if mapped_paths != expected or ENTRY not in modules or (reg['version']==3 and QUALIFICATION_ENTRY not in modules):
         raise ValueError('Complete Python module mapping required')
     for name in modules.keys() | namespaces.keys():
         parent = name.rpartition('.')[0]
@@ -250,8 +264,15 @@ class _SourceLoader(importlib.abc.Loader):
 class _SourceFinder(importlib.abc.MetaPathFinder):
     def __init__(self, owner): self.owner = owner
     def find_spec(self, fullname, path=None, target=None):
+        expected_denial=False
         try:
             self.owner._import_recheck()
+            if (self.owner._reg['version']==3 and
+                    fullname in self.owner._reg['qualification']['negative_imports']):
+                # CPython pickle's Jython probe expects ImportError on Linux.
+                # Deny this exact name without ambient loader fallback or poison.
+                self.owner._denied_imports.add(fullname); expected_denial=True
+                raise ModuleNotFoundError('Explicit qualification import denial: '+fullname,name=fullname)
             if fullname in self.owner._modules:
                 source = self.owner._modules[fullname]
                 loader = _SourceLoader(self.owner, fullname, source)
@@ -267,7 +288,8 @@ class _SourceFinder(importlib.abc.MetaPathFinder):
                 raise ImportError('Unregistered local or external dependency import: '+fullname)
             return None
         except BaseException as error:
-            self.owner._fail(error); raise
+            if not expected_denial: self.owner._fail(error)
+            raise
 
     def find_distributions(self, context):
         if self.owner._dependencies is None: return iter(())
@@ -284,12 +306,13 @@ class HeldWorkerBootstrap:
         self._reg, self._modules, self._namespaces = _parse(registration_raw, expected_sha256)
         self._raw = registration_raw; self._sha = expected_sha256; self._deadline = deadline
         self._registration_path = _path(registration_path)
-        self._state = 'new'; self._children = []; self._loaded = {}; self._bindings = []
+        self._state = 'new'; self._first_failure = None; self._children = []; self._loaded = {}; self._bindings = []
         self._classes = []
         self._loading = set()
         self._finder = None; self._meta_path = None; self._source = None; self._runtime = None
         self._early_runtime_fds = []
         self._dependencies = None; self._dependency_dispatch = None
+        self._main_module=sys.modules.get('__main__'); self._denied_imports=set()
 
     def _clock(self):
         if time.monotonic() >= self._deadline: raise TimeoutError('Fresh worker deadline exhausted')
@@ -309,7 +332,9 @@ class HeldWorkerBootstrap:
                 else: error.add_note('Early interpreter descriptor close: '+str(close_error))
         if error is not None: return error
 
-    def _fail(self, error): self._close(error)
+    def _fail(self, error):
+        if self._first_failure is None: self._first_failure=error
+        self._close(error)
 
     def _enter(self, holder):
         self._children.append(holder); return holder.__enter__()
@@ -392,7 +417,7 @@ class HeldWorkerBootstrap:
                 raise ValueError('Dedicated worker session/group required')
             self._meta_path = list(sys.meta_path); self._finder = _SourceFinder(self)
             sys.meta_path.insert(0, self._finder); self._state = 'active'
-            if self._reg['version'] == 2:
+            if self._reg['version'] >= 2:
                 from palimpsest.puck_dependency_imports import DependencyImports, HeldDependencyNamespace
                 dep = self._reg['dependencies']
                 raw = _read_initial(dep['path'], dep['sha256'], maximum=16*MiB)
@@ -469,7 +494,8 @@ class HeldWorkerBootstrap:
 
     def _check(self, *, full):
         try:
-            if self._state != 'active': raise RuntimeError('Bootstrap inactive or poisoned')
+            if self._state != 'active':
+                raise RuntimeError('Bootstrap inactive or poisoned') from self._first_failure
             self._clock()
             if sys.meta_path != [self._finder, *self._meta_path]: raise RuntimeError('Source import dispatch changed')
             for name, binding in self._loaded.items():
@@ -493,9 +519,17 @@ class HeldWorkerBootstrap:
                 if self._dependencies is not receiver or type(receiver) is not cls:
                     raise RuntimeError('Authenticated dependency receiver dispatch changed')
                 exported=cls.recheck(receiver)
+            aliases=set()
+            if self._reg['version']==3:
+                if sys.modules.get('__main__') is not self._main_module:
+                    raise RuntimeError('Runtime qualification main alias target changed')
+                if '__mp_main__' in sys.modules:
+                    if sys.modules['__mp_main__'] is not self._main_module:
+                        raise RuntimeError('Runtime qualification stdlib alias identity changed')
+                    aliases.add('__mp_main__')
             for name in sys.modules:
                 if (name.split('.')[0] not in sys.stdlib_module_names and
-                        name not in {'__main__', '_puck_held_file_bootstrap'}|self._loaded.keys()|self._loading
+                        name not in {'__main__', '_puck_held_file_bootstrap'}|aliases|self._loaded.keys()|self._loading
                         | (self._dependencies.loaded.keys() | self._dependencies.loading | exported if self._dependencies else set())):
                     raise RuntimeError('Unregistered module cache entry: '+name)
             # Check support dispatch before invoking its guard methods.
@@ -532,6 +566,9 @@ class HeldWorkerBootstrap:
                 'runtime_qualified':False, 'dependencies_qualified':False, 'native_authorized':False,
                 'collection_authorized':False, 'executable':False, 'qualification_claims':[]}
             if self._dependencies is not None: result['dependencies'] = self._dependencies.snapshot()
+            if self._reg['version']==3:
+                result['stdlib_cache_aliases']=({'__mp_main__':'__main__'} if '__mp_main__' in sys.modules else {})
+                result['denied_imports']=sorted(self._denied_imports)
             if len(canonical(result)) > MiB: raise ValueError('Bootstrap receipt ceiling exceeded')
             self.recheck(); return copy.deepcopy(result)
         except BaseException as error: self._fail(error); raise
@@ -539,8 +576,10 @@ class HeldWorkerBootstrap:
     def invoke(self):
         try:
             self.recheck()
-            module = __import__(ENTRY, fromlist=['preflight'])
-            self.recheck(); result = module.preflight(self); self.recheck()
+            qualification=self._reg['version']==3
+            module = __import__(QUALIFICATION_ENTRY if qualification else ENTRY,
+                fromlist=['qualify' if qualification else 'preflight'])
+            self.recheck(); result = module.qualify(self) if qualification else module.preflight(self); self.recheck()
             if type(result) is not dict or len(canonical(result)) > 64*1024:
                 raise ValueError('Bounded source-preflight result required')
             # Result data cannot overwrite receipt identity or authority fields.

@@ -14,12 +14,12 @@ import importlib.machinery
 import math
 import os
 from pathlib import Path
-import re
 import stat
 import sys
 import time
 
 from .puck_dependency_files import HeldDependencyNamespace, _absolute, _canonical, _NAME
+from .puck_dependency_bindings import validate_profile
 from .puck_execution_files import _identity, _relative
 
 MiB = 1024 ** 2
@@ -294,6 +294,7 @@ def _module_maps(site_root, observation, profile, census):
         physical.append({'name': name, 'root_index': 0, 'path': path, 'kind': kind, 'is_package': package})
     if not changes <= {row['name'] for row in physical}:
         raise ValueError('Dependency module-change identity is absent from retained cache')
+    validate_profile(profile, physical, namespaces)
     return sorted(physical, key=lambda row: row['name']), sorted(namespaces, key=lambda row: row['name'])
 
 
