@@ -207,6 +207,53 @@ def _owned_logs(output, failures):
             yield streams
 
 
+@contextmanager
+def _owned_direct_logs(output):
+    """Hold direct regular-file logs through synchronous sync and closure.
+
+    Aggregate output is sampled and can overshoot between observations. A
+    caller's hard_guard must cover a stalled synchronous fsync or close.
+    """
+    with publication_directory(output) as held:
+        streams = []
+        try:
+            for name in ('stdout.log', 'stderr.log'):
+                fd = os.open(name, os.O_WRONLY | os.O_CREAT | os.O_EXCL |
+                             os.O_NOFOLLOW | os.O_CLOEXEC, 0o600, dir_fd=held)
+                streams.append((fd, name, None))
+                value = os.fstat(fd)
+                identity = (value.st_dev, value.st_ino, value.st_mode)
+                streams[-1] = (fd, name, identity)
+                named = os.stat(name, dir_fd=held, follow_symlinks=False)
+                if (not stat.S_ISREG(value.st_mode) or value.st_nlink != 1
+                        or _identity(value) != _identity(named)):
+                    raise ValueError('Qualification direct log identity differs')
+            yield tuple(fd for fd, _, _ in streams)
+        finally:
+            first_error = None
+            for fd, name, identity in streams:
+                try:
+                    os.fsync(fd)
+                    value = os.fstat(fd)
+                    named = os.stat(name, dir_fd=held, follow_symlinks=False)
+                    if (not stat.S_ISREG(value.st_mode) or value.st_nlink != 1
+                            or (value.st_dev, value.st_ino, value.st_mode) != identity
+                            or _identity(value) != _identity(named)):
+                        raise ValueError('Qualification direct log identity differs')
+                except BaseException as error:
+                    if first_error is None: first_error = error
+                finally:
+                    try:
+                        os.close(fd)
+                    except BaseException as error:
+                        if first_error is None: first_error = error
+            try:
+                os.fsync(held)
+            except BaseException as error:
+                if first_error is None: first_error = error
+            if first_error is not None: raise first_error
+
+
 def _kill_owned_groups(state):
     # Kill the known group first, even if discovery of an in-flight launch fails.
     own_group = os.getpgrp()
@@ -269,8 +316,11 @@ def hard_guard(deadline, state):
 
 def supervised(command, output, *, cwd, normal_deadline, hard_deadline,
                rss_bytes, output_bytes, min_free_bytes, max_processes=1,
-               output_root=None, guard_state=None, output_namespace_limits=(32, 2)):
+               output_root=None, guard_state=None, output_namespace_limits=(32, 2),
+               log_mode='drained'):
     """Observe one owned group, bound retained logs and deny late/failing returns."""
+    if type(log_mode) is not str or log_mode not in ('drained', 'direct'):
+        raise ValueError('Qualification log mode is invalid')
     output = _absolute(output)
     output_root = _absolute(output_root) if output_root is not None else output
     cwd = _absolute(cwd)
@@ -308,7 +358,8 @@ def supervised(command, output, *, cwd, normal_deadline, hard_deadline,
         elif now >= normal_deadline: failed('normal-return deadline')
         return members
     with publication_directory(output_root):
-        with _owned_logs(output, failed) as (stdout, stderr):
+        logs = _owned_logs(output, failed) if log_mode == 'drained' else _owned_direct_logs(output)
+        with logs as (stdout, stderr):
             observe()
             if not failure:
                 process = subprocess.Popen(command, stdout=stdout, stderr=stderr,

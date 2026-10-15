@@ -82,6 +82,8 @@ def test_real_isolated_characterization_is_explicitly_not_runtime_qualification(
     assert result.returncode==0,result.stderr
     report=json.loads((output/'imports.json').read_bytes())
     assert report['status']=='observed'
+    assert report['kind']=='puck-runtime-import-characterization-result-v2' and report['version']==2
+    assert not {'profile','expected_versions','pycache_prefix'} & set(report)
     assert report['versions']=={'numpy':'2.2.5','torch':'2.9.0+fixture','mujoco':'3.3.6'}
     assert [row['name'] for row in report['imports']]==['numpy','torch','mujoco']
     assert any(row['name']=='torch.ops' and row['exports'] for row in report['cache']['modules'])
@@ -251,3 +253,162 @@ def test_export_observation_keeps_exceptional_bindings_and_ordinary_identities()
     assert rows['fixture.alias']['same_object_cache_names']==['fixture.alias','fixture.real']
     assert rows['fixture.proxy']['exports']==[{'producer':'fixture','attribute':'proxy'}]
     assert result['export_scope']=='exceptional_cache_identities'
+
+
+CPU_VERSIONS={'numpy':'2.2.5','torch':'2.9.0+cpu','torchvision':'0.24.0+cpu','mujoco':'3.3.6'}
+
+
+def launch_cpu(tmp_path, *, defect=None, inherited_cache=False):
+    import os
+    module=api();site=tmp_path/'site';site.mkdir()
+    output=tmp_path/'output';output.mkdir()
+    prefix=tmp_path/'pycache';prefix.mkdir(mode=0o700)
+    order=list(CPU_VERSIONS)
+    for index,(name,version) in enumerate(CPU_VERSIONS.items()):
+        directory=site/name;directory.mkdir()
+        body=('import sys\nassert '+repr(order[:index+1])+'==[name for name in '+repr(order)+' if name in sys.modules]\n'
+              '__version__='+repr(version)+'\n')
+        if name=='numpy' and defect=='chained-error':body+='try:\n    raise ImportError("authored missing dependency")\nexcept ImportError as original:\n    raise ImportError("authored outer wrapper") from original\n'
+        if name=='numpy' and defect=='broken-inner':body+='class Unprintable(ImportError):\n    def __str__(self):\n        raise RuntimeError("authored broken exception text")\nraise ImportError("authored primary import error") from Unprintable()\n'
+        if name=='torchvision' and defect=='version':body+='__version__="wrong"\n'
+        if name=='torchvision' and defect=='prefix-drift':body+='sys.pycache_prefix=None\n'
+        (directory/'__init__.py').write_text(body)
+    cache_control=None
+    if inherited_cache:
+        import py_compile
+        source=site/'numpy/__init__.py';correct=source.read_bytes()
+        source.write_bytes(correct.replace(b'2.2.5',b'9.9.9'))
+        py_compile.compile(str(source),doraise=True)
+        stamp=source.stat();source.write_bytes(correct)
+        os.utime(source,ns=(stamp.st_atime_ns,stamp.st_mtime_ns))
+        control='import sys; sys.path.append('+repr(str(site))+'); import numpy; print(numpy.__version__)'
+        cache_control=subprocess.run([sys.executable,'-I','-S','-B','-c',control],
+            capture_output=True,text=True,timeout=15)
+    request={'kind':'puck-runtime-import-characterization-v2','version':2,
+             'site_root':str(site),'output_root':str(output),
+             'environment':{'PYTHONDONTWRITEBYTECODE':'1','LC_ALL':'C.UTF-8','LANG':'C.UTF-8'},
+             'expected_versions':dict(CPU_VERSIONS),'pycache_prefix':str(prefix)}
+    startup_prefix=prefix
+    if defect=='prefix-missing':prefix.rmdir()
+    elif defect=='prefix-nonempty':(prefix/'unexpected').write_bytes(b'inert')
+    elif defect=='prefix-mismatch':
+        startup_prefix=tmp_path/'other-pycache';startup_prefix.mkdir(mode=0o700)
+    elif defect=='prefix-public':prefix.chmod(0o755)
+    elif defect=='prefix-symlink':
+        real=tmp_path/'real-pycache';prefix.rename(real);prefix.symlink_to(real,target_is_directory=True)
+    elif defect in ('prefix-site','prefix-output','prefix-below-site'):
+        startup_prefix={'prefix-site':site,'prefix-output':output,'prefix-below-site':site/'cache'}[defect]
+        if defect=='prefix-below-site':startup_prefix.mkdir(mode=0o700)
+        request['pycache_prefix']=str(startup_prefix)
+    elif defect=='missing-prefix':del request['pycache_prefix']
+    elif defect=='wrong-expected':request['expected_versions']['torch']='wrong'
+    elif defect=='missing-expected':del request['expected_versions']['torchvision']
+    elif defect=='extra-expected':request['expected_versions']['foreign']='1'
+    raw=module.canonical(request);path=tmp_path/'request.json';path.write_bytes(raw)
+    command=[sys.executable,'-I','-S','-B']
+    if defect!='prefix-unset':command+=['-X','pycache_prefix='+str(startup_prefix)]
+    command += [str(SCRIPT),str(path),module.sha(raw)]
+    child=subprocess.run(command,env=request['environment'],capture_output=True,text=True,
+                         timeout=15,start_new_session=True)
+    return child,output,request,prefix,cache_control
+
+
+def test_cpu_characterization_observes_four_fixed_versions_in_order_without_authority(tmp_path):
+    child,output,request,prefix,_=launch_cpu(tmp_path)
+    assert child.returncode==0,child.stderr
+    report=json.loads((output/'imports.json').read_bytes())
+    assert report['kind']=='puck-runtime-import-characterization-result-v3' and report['version']==3
+    assert report['profile']=='cpu-four-imports-v1'
+    assert report['expected_versions']==report['versions']==CPU_VERSIONS
+    assert report['pycache_prefix']==str(prefix)
+    assert [row['name'] for row in report['imports']]==list(CPU_VERSIONS)
+    assert report['status']=='observed' and report['observation_scope']=='completed_imports'
+    assert report['baseline_maps'] is not None and report['maps'] is not None and report['cache'] is not None
+    for name in ('runtime_qualified','native_authorized','collection_authorized','study_authorized','executable'):
+        assert report[name] is False
+    assert report['qualification_claims']==[] and list(prefix.iterdir())==[]
+
+
+@pytest.mark.parametrize('defect',['version','prefix-drift'])
+def test_cpu_characterization_stops_before_next_package_on_version_or_prefix_drift(tmp_path,defect):
+    child,output,_,_,_=launch_cpu(tmp_path,defect=defect)
+    assert child.returncode==1,child.stderr
+    report=json.loads((output/'imports.json').read_bytes())
+    assert report['status']=='failed' and report['observation_scope']=='post_failure'
+    assert [row['name'] for row in report['imports']]==['numpy','torch','torchvision']
+    assert report['imports'][-1]['status']=='failed'
+    assert ('version differs' if defect=='version' else 'pycache prefix changed') in report['error']['message']
+    assert report['cache'] is not None and report['maps'] is not None
+
+
+@pytest.mark.parametrize('defect',['prefix-missing','prefix-nonempty','prefix-mismatch','prefix-unset',
+    'prefix-public','prefix-symlink','prefix-site','prefix-output','prefix-below-site'])
+def test_cpu_characterization_refuses_invalid_private_prefix_before_initializers(tmp_path,defect):
+    child,output,_,_,_=launch_cpu(tmp_path,defect=defect)
+    assert child.returncode==1 and child.stdout==''
+    assert not (output/'imports.json').exists()
+    assert 'pycache' in child.stderr.lower(),child.stderr
+
+
+@pytest.mark.parametrize('defect',['missing-prefix','wrong-expected','missing-expected','extra-expected'])
+def test_cpu_characterization_requires_exact_request_and_version_set(tmp_path,defect):
+    child,output,_,_,_=launch_cpu(tmp_path,defect=defect)
+    assert child.returncode==1 and child.stdout==''
+    assert not (output/'imports.json').exists()
+    assert ('schema' if defect=='missing-prefix' else 'expected versions') in child.stderr.lower()
+
+
+def test_cpu_private_prefix_avoids_valid_inherited_wrong_bytecode(tmp_path):
+    child,output,_,prefix,control=launch_cpu(tmp_path,inherited_cache=True)
+    assert control.returncode==0 and control.stdout.strip()=='9.9.9',control.stderr
+    assert child.returncode==0,child.stderr
+    report=json.loads((output/'imports.json').read_bytes())
+    assert report['versions']==CPU_VERSIONS and report['status']=='observed'
+    assert list(prefix.iterdir())==[]
+
+
+
+def test_cpu_import_failure_retains_the_underlying_cause(tmp_path):
+    child,output,_,_,_=launch_cpu(tmp_path,defect='chained-error')
+    assert child.returncode==1,child.stderr
+    report=json.loads((output/'imports.json').read_bytes())
+    chain=report['error_chain']
+    assert chain['complete'] is True and chain['truncation'] is None
+    assert [(r['via'],r['message']) for r in chain['entries']]==[
+        ('raised','authored outer wrapper'),('cause','authored missing dependency')]
+    assert report['status']=='failed' and report['versions']=={}
+    assert report['runtime_qualified'] is False
+
+
+@pytest.mark.parametrize('shape',['context','suppressed','cycle','depth','message'])
+def test_cpu_error_chain_is_finite_and_reports_its_limits(shape):
+    m=api();outer=ImportError('outer');inner=ValueError('inner')
+    if shape in ('context','suppressed'):
+        outer.__context__=inner
+        outer.__suppress_context__=shape=='suppressed'
+    elif shape=='cycle':outer.__cause__=inner;inner.__cause__=outer
+    elif shape=='depth':
+        cursor=outer
+        for _ in range(12):cursor.__cause__=ValueError('nested');cursor=cursor.__cause__
+    else:outer=ValueError('x'*5000)
+    chain=m.cpu_error_chain(outer)
+    assert len(chain['entries'])<=8
+    assert all(len(r['message'])<=2048 for r in chain['entries'])
+    if shape=='context':
+        assert [r['via'] for r in chain['entries']]==['raised','context']
+    elif shape=='suppressed':assert len(chain['entries'])==1 and chain['complete'] is True
+    elif shape in ('cycle','depth'):
+        assert chain['complete'] is False and chain['truncation']==shape
+    else:assert chain['entries'][0]['message_truncated'] is True
+    assert m.failure_detail(outer)=={'type':m.class_name(outer),'message':str(outer)[:2048]}
+
+
+
+def test_cpu_chain_diagnostic_failure_cannot_erase_primary_report(tmp_path):
+    child,output,_,_,_=launch_cpu(tmp_path,defect='broken-inner')
+    assert child.returncode==1
+    assert (output/'imports.json').is_file(),'secondary chain inspection erased the primary report'
+    report=json.loads((output/'imports.json').read_bytes())
+    assert report['status']=='failed' and report['error']['message']=='authored primary import error'
+    assert report['error_chain']['complete'] is False
+    assert report['error_chain']['truncation']=='diagnostic_error'
