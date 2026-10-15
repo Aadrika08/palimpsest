@@ -1,0 +1,55 @@
+F...................F                                                    [100%]
+=================================== FAILURES ===================================
+_ test_closed03_epoch_accepts_exact_one_name_delta_from_historical_preparation _
+
+    def test_closed03_epoch_accepts_exact_one_name_delta_from_historical_preparation():
+        m,config,blobs=acceptance03_case()
+>       m.validate_configuration(config)
+
+tests/test_puck_cpu_held_amendment03.py:40: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+config = {'allocation_id': 3, 'claims': {'collection_authorized': False, 'executable': False, 'native_authorized': False, 'qual....}, 'expected_versions': {'mujoco': '3.3.6', 'numpy': '2.2.5', 'torch': '2.9.0+cpu', 'torchvision': '0.24.0+cpu'}, ...}
+
+    def validate_configuration(config):
+        keys={'kind','version','phase','allocation_id','root','stage_parent','sources','inputs',
+              'interpreter','environment','expected_versions','limits','negative_imports','claims'}
+        phase=config.get('phase') if type(config) is dict else None
+        amended=type(config) is dict and config.get('kind')=='puck-cpu-held-runtime-allocation-v2'
+        if amended:keys.add('preparation_acceptance')
+        elif phase=='qualify':keys.add('preparation')
+        epoch=2 if amended else 1
+        if (phase not in LIMITS or set(config)!=keys or (amended and phase!='qualify')
+                or config['kind']!='puck-cpu-held-runtime-allocation-v'+str(epoch)
+                or type(config['version']) is not int or config['version']!=epoch
+                or type(config['allocation_id']) is not int or config['allocation_id']!=epoch
+                or config['root']!=str(ROOT) or canonical(config['limits'])!=canonical(LIMITS[phase])
+                or config['interpreter']!=INTERPRETER or canonical(config['environment'])!=canonical(ENVIRONMENT)
+                or config['expected_versions']!=VERSIONS or canonical(config['claims'])!=canonical(CLAIMS)):
+>           raise ValueError('Exact CPU allocation configuration required')
+E           ValueError: Exact CPU allocation configuration required
+
+scripts/qualify_puck_cpu_held_runtime.py:164: ValueError
+_ test_authored03_completes_after_real_failed01_02_without_changing_their_bytes _
+
+tmp_path = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/runs/source-validation/cpu-parent-amendment03/red-01/test_authored03_completes_afte0')
+
+    def test_authored03_completes_after_real_failed01_02_without_changing_their_bytes(tmp_path):
+        with amendment03_fixture(tmp_path) as case:
+            root,m,config,stage=(case[k] for k in ('root','api','config','stage'))
+            identities=[(p.stat().st_dev,p.stat().st_ino) for p in sorted((stage/'inputs').iterdir())]
+            code,stdout,stderr=run_cli(root,m,'qualify03',config)
+            output=root/'runs/puck-cpu-held-qualification-03'
+            retained=(output/'result.json').read_bytes() if (output/'result.json').exists() else b''
+>           assert code==0,(code,stdout,stderr,retained)
+E           AssertionError: (1, b'', b'Traceback (most recent call last):
+E               File "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qual...rror(\'Exact CPU allocation configuration required\')
+E             ValueError: Exact CPU allocation configuration required
+E             ', b'')
+E           assert 1 == 0
+
+tests/test_puck_cpu_held_amendment03.py:148: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_puck_cpu_held_amendment03.py::test_closed03_epoch_accepts_exact_one_name_delta_from_historical_preparation
+FAILED tests/test_puck_cpu_held_amendment03.py::test_authored03_completes_after_real_failed01_02_without_changing_their_bytes
+2 failed, 19 passed in 10.32s
