@@ -2,38 +2,63 @@
 
 ## Active objective and next deliverable
 
-**Deliver one locally installable, reproducible Palimpsest simulation release:**
-complete the memory research, demonstrate the required learned puck and MaleCNS
-capabilities, finish the inspectable lab and all six artwork encounters, and obtain
-recorded artistic and independent operator acceptance on the integrated candidate.
-The physical rover starts after simulation acceptance. CI is outside this goal.
+**Goal: finish, prove and deliver Palimpsest as one reproducible local simulation
+release, including the research, supported controllers, inspectable lab and all
+six artworks. Begin the physical rover only after simulation acceptance.**
+
+A new operator must be able to install the release, run its supported modes,
+inspect/replay/export evidence and recover from interruptions using the runbook.
+The user must accept the artistic experience. The seven gates below define done;
+all seven remain open. CI and physical fabrication are outside this goal.
 
 This continues the existing [completion goal](simulation-completion-next-goal.md).
 It does not replace frozen protocols or lower their acceptance thresholds.
 
-**Next milestone: one reviewed executable route from admitted inputs to durable
-collection evidence, plus a complete memory replay-to-case-close route.**
-Component fixtures are prerequisites. The milestone requires real entry points,
-exact source/runtime/input admission, bounded failure handling, durable terminal
-records and independent review. It is not complete because another parser, plan
-or source-only PR passes.
+### Execution contract
 
-**First implementation unit:** implement the explicit finite held-import profile
-from PR #133's audited development observations. Bind exported objects and
-module replacement/reclassification/class identities to registered producer
-source and import phases. Preserve rejection of unknown cache entries and the
-existing exact-file-FD native contract. Prove any explicitly declared
-origin-relative native alternative with authored libraries and its distinct
-before/after/mapped-image guarantees before adoption. Then freeze and review the
-exact supported configuration before a separate held-runtime qualification.
+| Stage | Concrete deliverable | Evidence required to close it |
+| --- | --- | --- |
+| 1. Finish the execution paths | Working puck parent/worker collection and memory replay-to-condition/case close. | Meaningful success/failure tests, reviewed implementation and durable terminal records. Source tests close implementation work only. |
+| 2. Qualify the actual configuration | Separately admitted source, runtime, dependencies, inputs, process controls, storage and clocks for each route. | Exact prospective configuration review, bounded authorized execution and independent outcome audit. A failed qualification stops that lane. |
+| 3. Finish the studies and capability work | Valid memory development/held-out results and supported learned puck/MaleCNS controllers. | Complete independent audits; each required puck model and MaleCNS seed meets 3/4 development and 6/8 held-out goals. A valid positive or null memory result is acceptable. |
+| 4. Finish the simulation experience | One integrated lab with all six artwork encounters and sufficient portable inputs. | Actual browser, visual/audio, keyboard, viewport, replay, export, recovery and declared-duration/endurance evidence. |
+| 5. Accept and deliver | Reproducible installation, evidence index, licences, limitations and runbook on the integrated candidate. | Recorded user artistic acceptance, independent operator installation/all six modes and final verification closing all seven gates. |
 
-Development observation02 passed ordinary NumPy 2.2.5, Torch 2.9.0+cu128 and MuJoCo 3.3.6
-imports with the explicit EGL environment. Its 1,131-entry cache, 52 numerical
+Stages 1 and 2 interleave within each lane: a condition/case close that requires
+a successful qualification receipt waits for that actual proof. Never synthesize
+a passing receipt to make the implementation appear complete. Independent authored
+source fixtures may proceed while actual qualification is pending.
+
+**Immediate implementation target: the finite held-import profile and authored
+native compatibility required by the puck worker.** Use PR #133's audited
+observations to bind exported objects, module replacement/reclassification and
+class identities to registered producer source and import phases. Unknown cache
+entries must remain denied. Preserve the exact-file-FD native contract; prove any
+explicit origin-relative alternative with authored libraries and state its distinct
+before/after/mapped-image guarantees. Review the exact supported configuration
+before a separate held-runtime qualification.
+
+**Exit from this implementation unit:** the complete worker path uses those
+bindings, positive and deliberate mutation/unknown-entry fixtures pass, native
+origin behavior is measured with authored libraries, and the reviewed change is
+committed on a branch. A schema, parser or ordinary-import snapshot alone does
+not satisfy this exit. Then complete the parent/worker collection route; add
+components only when a named remaining requirement needs them.
+
+Development observation02 passed ordinary NumPy 2.2.5, Torch 2.9.0+cu128 and MuJoCo
+3.3.6 imports with the explicit EGL environment. Its 1,131-entry cache, 52 numerical
 exceptional rows (including 12 module subclasses) and 105 persistent file images
 are retained and independently audited. Observation01's failure remains intact;
-no refresh/retry of either consumed observation is allowed. This is finite input
-for the missing held profile, not runtime/collection qualification. Continue from
-that profile into the complete parent/worker collection route.
+both observations are consumed. This is input to implementation, not held-runtime,
+collection or release qualification. No refresh or retry is authorized.
+
+**Execution responsibility:** the agent owns implementation, verification,
+incremental commits and authorized draft-PR updates. The user owns artistic
+acceptance and the pending prospective study decisions; a separate operator owns
+the installation/encounter session. Continue independent source work while a
+required decision is pending. At every milestone report the working behavior,
+actual result, remaining gap and next concrete action, rather than counting PRs
+or test totals as release progress.
 
 ## Clear goal and completion boundary
 
@@ -64,10 +89,12 @@ attempt requires its prospective decision instead of changed thresholds or retri
 
 ## Execution focus after disk cleanup
 
-At **2026-10-15 01:37:44 UTC**, immediately before observation02, this filesystem
-had **99,738,644,480 bytes free (about 92.9 GiB)**, above the frozen memory
-minimum of **63,786,975,232 bytes (about 59.4 GiB)**. Space is sufficient at this check. Required inputs, free space
-and exact stage admission must be checked again immediately before execution.
+The **2026-10-15 02:01 UTC** goal refresh observed **99,717,603,328 bytes free
+(about 92.9 GiB)**, above the frozen memory minimum of **63,786,975,232 bytes
+(about 59.4 GiB)**. The reported disk shortage is resolved at this check. Required
+inputs, free space and exact stage admission must be checked again immediately
+before execution. The earlier observation02 preflight remains a separate retained
+measurement: 99,738,644,480 bytes at 01:37:44 UTC.
 
 | Order | Work | Exit before advancing |
 | --- | --- | --- |
