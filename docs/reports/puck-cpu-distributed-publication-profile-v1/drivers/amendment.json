@@ -1,0 +1,18 @@
+{
+  "actual05_invoked": false,
+  "actual_auditor_limits_changed": false,
+  "actual_observer_limits_changed": false,
+  "actual_parent_limits_changed": false,
+  "change": "Only outer authored validation driver timeout120 to300 seconds. Split tmpfs-native unit fixtures from persistent full-route fixtures using existing two namespace options.",
+  "current": {
+    "path": "/tmp/palimpsest-distributed-profile-check.py",
+    "sha256": "d8f454a7f6a6e5a466c223beb53150c4e92b1d82612239922563dd8ab098edee"
+  },
+  "diagnostic_failure": "Native identity requires tmpfs; observed f_type=0x9123683e",
+  "kind": "authored-profile-validation-driver-amendment-v1",
+  "original": {
+    "path": "/tmp/palimpsest-distributed-worker-check.py",
+    "sha256": "069340dbf08915cd631d5ad966deb0adbbf9115b7ef7e51f0f541edc291e6cbc"
+  },
+  "reason": "Combined17-file run used wrong persistent basetemp for three generic positive fixtures and exceeded outer120s. Driver terminated; subsequent authoritative /proc argv scan found no matching live pytest process. Do not report it as PASS."
+}
