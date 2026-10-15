@@ -37,13 +37,27 @@ def _attributes(value):
         raise ValueError('Dependency profile requires bounded raw attribute paths')
 
 
-def validate_profile(profile, modules, namespaces):
-    """Validate before payload IO; physical producer records are already checked."""
-    _fields(profile, ('exports','module_changes','native_origins'))
-    if any(type(profile[k]) is not list for k in profile):
+def _profile_groups(profile, *, allow_native_cache=False):
+    groups=('exports','module_changes','native_origins')
+    extended=type(profile) is dict and 'kind' in profile
+    if extended:
+        _fields(profile, (*groups,'kind','version','native_cache'))
+        if (not allow_native_cache or profile['kind']!='puck-producer-import-profile-v2'
+                or type(profile['version']) is not int or profile['version']!=2):
+            raise ValueError('Explicit v3 native cache import profile required')
+        groups+=('native_cache',)
+    else:
+        _fields(profile, groups)
+    if any(type(profile[k]) is not list for k in groups):
         raise ValueError('Dependency import profile rows must be lists')
-    if sum(len(v) for v in profile.values())>MAX_PROFILE_ROWS:
+    if sum(len(profile[k]) for k in groups)>MAX_PROFILE_ROWS:
         raise ValueError('Dependency import profile row ceiling exceeded')
+    return groups
+
+
+def validate_profile(profile, modules, namespaces, *, allow_native_cache=False):
+    """Validate before payload IO; physical producer records are already checked."""
+    _profile_groups(profile, allow_native_cache=allow_native_cache)
     physical={v['name']:v for v in modules}
     names=set(physical)|{v['name'] for v in namespaces}
     def producer(row):
@@ -95,6 +109,28 @@ def validate_profile(profile, modules, namespaces):
         if row['policy'] not in ('exact-file-fd-v1','held-directory-observed-v1'):
             raise ValueError('Unknown dependency native origin profile')
         native.add(name)
+
+    if len(profile.get('native_cache',[]))>128:
+        raise ValueError('Native cache name count exceeds the physical-absence proof bound')
+    cached=set()
+    for row in profile.get('native_cache', []):
+        _fields(row, ('name','producer','phase','delegate_attributes'))
+        name=_name(row['name']); source=_name(row['producer'])
+        if ('.' in name or name in names or name in exports or name in cached
+                or name.split('.')[0] in sys.stdlib_module_names
+                or name in ('__main__','__mp_main__','_puck_held_file_bootstrap')):
+            raise ValueError('Native cache name overlaps or spoofs another namespace')
+        if source not in physical or physical[source]['kind']!='extension':
+            raise ValueError('Native cache creator must be a registered extension')
+        if row['phase'] not in ('native_create','module_exec'):
+            raise ValueError('Native cache creation phase is invalid')
+        attributes=row['delegate_attributes']
+        if (type(attributes) is not list or len(attributes)>MAX_CLASS_SLOTS or any(
+                type(v) is not str or len(v)>256 or not _IDENTIFIER.fullmatch(v)
+                or v.startswith('__') for v in attributes)
+                or attributes!=sorted(set(attributes))):
+            raise ValueError('Native cache dispatch keys must be finite, sorted and distinct')
+        cached.add(name)
 
 
 def module_dict(module):
@@ -222,6 +258,79 @@ class ExportBindings:
         self.profile=profile; self.producers={}; self.code={}; self.prepared={}; self.active={}
         self.changes={v['name']:v for v in profile['module_changes']}
         self.class_seals=[]; self.anchors=[]; self.originals={}
+        self.native_cache={v['name']:v for v in profile.get('native_cache',[])}
+        self.cache_seals={}; self.cache_closed=set(); self.phase_stack=[]; self.cache_phases=set()
+        if any(name in sys.modules for name in self.native_cache):
+            raise RuntimeError('Native cache entry is preexisting before native initialization')
+    def open_phase(self, name, phase):
+        require_instance_dispatch(self,ExportBindings)
+        if not self.native_cache: return
+        if len(self.phase_stack)>=MAX_PROFILE_ROWS:
+            raise ValueError('Native cache initializer nesting exceeds bound')
+        key=(name,phase)
+        if any((r['producer'],r['phase'])==key for r in self.native_cache.values()):
+            if key in self.cache_phases: raise RuntimeError('Native cache creator phase repeated')
+            self.cache_phases.add(key)
+        self.phase_stack.append(key)
+    def _cache_recheck(self):
+        current_phase=self.phase_stack[-1] if self.phase_stack else None
+        for name,row in self.native_cache.items():
+            value=sys.modules.get(name,_MISSING)
+            previous=self.cache_seals.get(name)
+            if previous is None and value is _MISSING: continue
+            if previous is not None and value is not previous.module:
+                raise RuntimeError('Native cache object identity changed or disappeared')
+            if previous is None and current_phase!=(row['producer'],row['phase']):
+                raise RuntimeError('Native cache entry appeared outside its creator phase')
+            if type(value) is not types.ModuleType:
+                raise RuntimeError('Native cache object must be a plain module')
+            raw=module_dict(value)
+            if (raw.get('__name__')!=name or any(raw.get(k) is not None
+                    for k in ('__spec__','__file__','__loader__')) or '__path__' in raw):
+                raise RuntimeError('Native cache module metadata differs')
+            if previous is None:
+                previous=ModuleSeal(value,virtual=True,expected_name=name)
+                self.cache_seals[name]=previous
+            ModuleSeal.recheck(previous)
+            # Compare all dispatch keys, including additions not in the first
+            # seal. Data values may change; dispatch references may not escape
+            # their finite declaration or the initial creator close.
+            observed=ModuleSeal(value,virtual=True,expected_name=name)
+            keys={key for key,_ in observed.delegates}
+            expected=set(row['delegate_attributes'])
+            if not keys<=expected or (name in self.cache_closed and keys!=expected):
+                raise RuntimeError('Native cache dispatch keys differ from the finite declaration')
+            if name in self.cache_closed and any(
+                    module_dict(value).get(key,_MISSING) is not delegate
+                    for key,delegate in previous.delegates):
+                raise RuntimeError('Native cache dispatch reference changed')
+    def close_phase(self, name, phase):
+        require_instance_dispatch(self,ExportBindings)
+        if not self.native_cache: return
+        key=(name,phase)
+        if not self.phase_stack or self.phase_stack[-1]!=key:
+            raise RuntimeError('Native cache initializer phase stack differs')
+        # Screen while this initializer is still innermost: popping first would
+        # misattribute a nested creator's new object to its outer caller.
+        ExportBindings._cache_recheck(self)
+        for cache,row in self.native_cache.items():
+            if (row['producer'],row['phase'])!=key: continue
+            seal=self.cache_seals.get(cache)
+            if seal is None: raise RuntimeError('Native cache creator did not publish required entry')
+            ModuleSeal.recheck(seal)
+            complete=ModuleSeal(seal.module,virtual=True,expected_name=cache)
+            if {k for k,_ in complete.delegates}!=set(row['delegate_attributes']):
+                raise RuntimeError('Native cache dispatch keys are incomplete at creator close')
+            # Existing metadata/references were proved unchanged above. Capture
+            # only the additional declared delegates produced by nested imports.
+            self.cache_seals[cache]=complete; self.cache_closed.add(cache)
+        self.phase_stack.pop()
+        ExportBindings._cache_recheck(self)
+    def require_complete(self):
+        require_instance_dispatch(self,ExportBindings)
+        ExportBindings._cache_recheck(self)
+        if self.phase_stack or set(self.cache_seals)!=set(self.native_cache) or self.cache_closed!=set(self.native_cache):
+            raise RuntimeError('Native cache terminal completion is incomplete')
     def begin(self, name, module, code=None):
         require_instance_dispatch(self,ExportBindings)
         if name in self.producers and self.producers[name] is not module:
@@ -297,4 +406,5 @@ class ExportBindings:
                 if current is not seal.module: raise RuntimeError('Held dependency export cache object changed')
                 self.active[name]=seal.module
             elif name in self.active: raise RuntimeError('Held dependency export cache entry disappeared')
-        return set(self.active)
+        ExportBindings._cache_recheck(self)
+        return set(self.active)|set(self.cache_seals)

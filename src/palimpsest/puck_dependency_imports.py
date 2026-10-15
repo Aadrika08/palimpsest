@@ -121,9 +121,11 @@ class _Loader(importlib.abc.Loader):
                 native_load_path(owner.provider,self.row,policy))
             # CPython create_dynamic consumes spec.origin, not just loader.path.
             spec.origin = self.native.path
+            ExportBindings.open_phase(owner.bindings,spec.name,'native_create')
             module = self.native.create_module(spec)
             ExportBindings.begin(owner.bindings,spec.name,module)
             ExportBindings.complete(owner.bindings,spec.name,'native_create')
+            ExportBindings.close_phase(owner.bindings,spec.name,'native_create')
             owner.full_guard(); owner.images()
             require_native_target(owner.provider,self.row,policy,owner._observed)
             return module
@@ -136,14 +138,22 @@ class _Loader(importlib.abc.Loader):
         try:
             owner.guard()
             if self.row.get('kind') == 'extension':
-                owner.full_guard(); self.native.exec_module(module); owner.full_guard()
+                owner.full_guard()
+                ExportBindings.open_phase(owner.bindings,name,'module_exec')
+                self.native.exec_module(module)
+                ExportBindings.close_phase(owner.bindings,name,'module_exec')
+                owner.full_guard()
             elif self.row.get('kind') == 'python':
                 payload = owner.provider.read(self.row['root_index'], self.row['path'])
                 module.__file__ = self.get_filename(name)
                 if self.row['is_package']: module.__path__ = []
                 code=compile(payload, module.__file__, 'exec', dont_inherit=True)
                 ExportBindings.begin(owner.bindings,name,module,code)
+                # A nested Python initializer masks the outer native creator's
+                # first-capture permission, just as a nested extension does.
+                ExportBindings.open_phase(owner.bindings,name,'module_exec')
                 exec(code,module_dict(module))
+                ExportBindings.close_phase(owner.bindings,name,'module_exec')
             else:
                 module.__file__ = None; module.__path__ = []
             if self.row.get('kind')!='python': ExportBindings.begin(owner.bindings,name,module)
@@ -182,6 +192,9 @@ class DependencyImports:
         self.bindings=ExportBindings(profile)
         self._binding_receiver=self.bindings; self._provider_receiver=provider
         self.native_origins={v['name']:v['policy'] for v in profile['native_origins']}
+        if any(local==row['name'] or local.startswith(row['name']+'.')
+                for row in profile.get('native_cache',[]) for local in local_names):
+            raise ValueError('Native cache and source import mappings overlap')
         if {v['name'] for v in profile['exports']} & set(local_names):
             raise ValueError('Dependency export and source import mappings overlap')
         if (self.modules.keys() | self.namespaces.keys()) & set(local_names):
@@ -244,6 +257,7 @@ class DependencyImports:
                 'anonymous_code_qualified':False, 'native_closure_qualified':False}
     def snapshot(self):
         self.recheck()
+        ExportBindings.require_complete(self.bindings)
         receipt = self.provider.snapshot()
         receipt['loaded_modules'] = [{'name':name, 'path':(self.modules.get(name) or self.namespaces[name])['path']}
                                       for name in sorted(self.loaded)]
@@ -253,6 +267,11 @@ class DependencyImports:
             'original_metadata_bound':name in self.bindings.originals,
             'delegate_attributes':[key for key,_ in seal.delegates]}
             for name,(_,seal) in sorted(self.loaded.items())]
+        if self.bindings.native_cache:
+            receipt['native_cache_modules']=[{'name':name,'producer':row['producer'],
+                'phase':row['phase'],'delegate_attributes':list(row['delegate_attributes'])}
+                for name,row in sorted(self.bindings.native_cache.items())
+                if name in self.bindings.cache_closed]
         receipt['native_origin_policies']=dict(self.native_origins)
         receipt['images'] = self.images()
         return receipt

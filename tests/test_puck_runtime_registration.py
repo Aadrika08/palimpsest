@@ -204,3 +204,28 @@ def test_namespace_mutation_during_hash_fails(tmp_path, monkeypatch):
         return data
     monkeypatch.setattr(api().os, 'read', read)
     with pytest.raises((RuntimeError, OSError)): build(site, observation, profile)
+
+
+@pytest.mark.parametrize('defect', [None, 'missing', 'physical', 'legacy'])
+def test_explicit_cache_profile_maps_only_retained_virtual_identities(tmp_path, defect):
+    site, observation, profile, _ = setup(tmp_path)
+    native='demo/native'+importlib.machinery.EXTENSION_SUFFIXES[0]
+    (site/native).write_bytes(b'authored native bytes, never executed')
+    observation['cache']['modules'] += [row(site,'demo.native',native),
+        dict(name='cache_only_demo',file=None,spec_name=None,classification='virtual')]
+    profile.update(kind='puck-producer-import-profile-v2',version=2,native_cache=[
+        dict(name='cache_only_demo',producer='demo.native',phase='module_exec',delegate_attributes=[])])
+    if defect=='missing':observation['cache']['modules'].pop()
+    if defect=='physical':observation['cache']['modules'][-1]['file']=str(site/native)
+    snapshot=api()._Snapshot(time.monotonic()+30)
+    try:
+        census=snapshot.census(str(site))
+        def mapped():
+            return api()._module_maps(str(site),observation,profile,census,allow_native_cache=defect!='legacy')
+        if defect:
+            with pytest.raises(ValueError):mapped()
+        else:
+            modules,namespaces=mapped()
+            assert {r['name'] for r in modules}=={'demo','demo.core','demo.native'}
+            assert namespaces==[]
+    finally:snapshot.close()
