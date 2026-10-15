@@ -187,3 +187,69 @@ def test_trace_cancellation_is_not_swallowed_and_closes_owned_holders():
     assert result.returncode != 0 and result.stdout == ''
     assert [row['phase'] for _, row in traces(result.stderr)] == PHASES[:13]
     assert 'AUTHORED_TRACE_CANCEL' in result.stderr and 'AUTHORED_CANCEL_CLOSED' in result.stderr
+
+
+def test_dependency_setup_deadline_remains_terminal_before_imports():
+    def policy(reg, source):
+        cpu_policy(reg, source)
+        relative = 'src/palimpsest/puck_dependency_imports.py'
+        path = source/relative
+        path.write_text(path.read_text()+'\nimport sys\nsys.meta_path[0].owner._deadline = 0\n')
+        reg['source_files'] = [descriptor(source/row['path'], row['path'])
+            for row in reg['source_files']]
+    with authored() as base:
+        result, _ = dependency_fixture(base, 'return {}', mutate=cpu_setup, source_change=policy)
+    assert result.returncode != 0 and result.stdout == ''
+    assert [row['phase'] for _, row in traces(result.stderr)] == PHASES[:3]
+    assert 'Fresh worker deadline exhausted' in result.stderr
+
+
+def test_snapshot_deadline_guard_remains_before_entry_ready():
+    result = run_cpu(package='mujoco', code=(
+        'import sys\ndef install_snapshot_deadline():\n'
+        ' owner = sys.meta_path[0].owner\n original = owner.snapshot\n'
+        ' def snapshot():\n  owner._deadline = 0\n  return original()\n'
+        ' owner.snapshot = snapshot\ninstall_snapshot_deadline()\n'))
+    assert result.returncode != 0 and result.stdout == ''
+    assert [row['phase'] for _, row in traces(result.stderr)] == PHASES[:15]
+    assert 'Fresh worker deadline exhausted' in result.stderr
+
+
+def test_close_deadline_guard_runs_after_owned_holders_close():
+    result = run_cpu(package='mujoco', code=(
+        'import sys\ndef install_close_deadline():\n'
+        ' owner = sys.meta_path[0].owner\n original = owner._close\n'
+        ' def close(error=None):\n  result = original(error)\n'
+        '  assert not owner._children and not owner._early_runtime_fds\n'
+        '  if error is None: owner._deadline = 0\n  return result\n'
+        ' owner._close = close\ninstall_close_deadline()\n'))
+    assert result.returncode != 0 and result.stdout == ''
+    assert [row['phase'] for _, row in traces(result.stderr)] == PHASES[:17]
+    assert 'Fresh worker deadline exhausted' in result.stderr
+
+
+def test_close_ready_marker_cannot_override_the_final_deadline():
+    result = run_cpu(package='mujoco', code=(
+        'import os,sys\ndef install_late_marker():\n'
+        ' owner = sys.meta_path[0].owner\n original = os.write\n'
+        ' def write(fd, payload):\n  result = original(fd, payload)\n'
+        '  if b\'"phase":"close.ready"\' in payload: owner._deadline = 0\n'
+        '  return result\n os.write = write\ninstall_late_marker()\n'))
+    assert result.returncode != 0 and result.stdout == ''
+    assert [row['phase'] for _, row in traces(result.stderr)] == PHASES
+    assert 'Fresh worker deadline exhausted' in result.stderr
+
+
+def test_successful_outer_write_cannot_rearm_a_nested_trace_failure():
+    result = run_cpu(code=(
+        'import os,sys\noriginal_write = os.write\nwrite_calls = 0\n'
+        'def nested_write(fd, payload):\n global write_calls\n write_calls += 1\n'
+        ' if write_calls == 1:\n  sys.meta_path[0].owner._phase("authored.nested")\n'
+        '  return len(payload)\n if write_calls == 2: raise OSError("AUTHORED_NESTED_IO_FAILURE")\n'
+        ' return original_write(fd, payload)\n'
+        'os.write = nested_write\nsys.meta_path[0].owner._phase("authored.outer")\n'
+        'sys.meta_path[0].owner._phase("authored.no_retry")\nos.write = original_write\n'
+        'assert write_calls == 2, "TRACE_LATCH_REARMED"\n'))
+    assert result.returncode == 0, result.stderr
+    assert [row['phase'] for _, row in traces(result.stderr)] == PHASES[:11]
+    assert json.loads(result.stdout)['entry_result']['status'] == 'imports_completed'
