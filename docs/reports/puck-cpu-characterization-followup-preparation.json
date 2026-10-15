@@ -1,0 +1,63 @@
+{
+  "characterization02_invoked": false,
+  "collection_authorized": false,
+  "diagnostic_source": {
+    "chain_entries": 8,
+    "cpu_only": true,
+    "explicit_truncation": true,
+    "legacy_error_detail_unchanged": true,
+    "message_characters": 2048,
+    "path": "scripts/characterize_puck_runtime_imports.py",
+    "secondary_diagnostic_failure_preserves_primary_report": true,
+    "sha256": "cd3a1936dafa0dd94cfa4744a9cbb5b651f61eca8ea29819f4fb0d1291ebe992"
+  },
+  "initial_verification": {
+    "green_checks": 208,
+    "green_exit_code": 0,
+    "green_seconds": 6.53,
+    "green_session": 20123,
+    "green_terminal": "cf65e0",
+    "red_checks": 6
+  },
+  "kind": "cpu-characterization-followup-preparation-v1",
+  "metadata05": {
+    "added_files": [
+      {
+        "path": "/usr/lib/libz.so.1.3.2",
+        "sha256": "9ba92a0b85dc9b659e8f5e596a69452cec801def6ece0883a8a2c1f032e52397",
+        "size_bytes": 104464
+      }
+    ],
+    "corrected_libz_edges": 17,
+    "external_exit_code": 0,
+    "helper_sha256": "78543cf558955f91e8b067507d34b24fc987f110350cb575ff4a6a4891771836",
+    "native_aliases": 23,
+    "native_files": 29,
+    "path": "../plans/puck-cpu-characterization-native-metadata-05.json",
+    "sha256": "64a9e46f60700f12712262879547fbf26d785fb8a825098940e6494482dae2aa",
+    "size_bytes": 1618086,
+    "status": "COMPLETE",
+    "system_ELFs": 39,
+    "terminal_chunk": "cfc168",
+    "terminal_elapsed_seconds": 0.1812582120182924
+  },
+  "native_authorized": false,
+  "next_action": "finish exact characterization02 parent/configuration, bind prior failed capsule and independently review before invocation",
+  "original_actual_outcome": "FAIL",
+  "original_allocation_consumed": true,
+  "qualification_claims": [],
+  "release_gates_closed": 0,
+  "runtime_qualified": false,
+  "study_authorized": false,
+  "verification": {
+    "green_checks": 209,
+    "green_exit_code": 0,
+    "green_seconds": 6.62,
+    "green_session": 73621,
+    "green_terminal": "22e3d7",
+    "red_checks": 7,
+    "review_red_checks": 1,
+    "review_red_terminal": "cc29c1",
+    "review_regression": "secondary exception formatting must not erase primary import report"
+  }
+}

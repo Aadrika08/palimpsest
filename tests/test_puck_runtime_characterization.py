@@ -268,6 +268,8 @@ def launch_cpu(tmp_path, *, defect=None, inherited_cache=False):
         directory=site/name;directory.mkdir()
         body=('import sys\nassert '+repr(order[:index+1])+'==[name for name in '+repr(order)+' if name in sys.modules]\n'
               '__version__='+repr(version)+'\n')
+        if name=='numpy' and defect=='chained-error':body+='try:\n    raise ImportError("authored missing dependency")\nexcept ImportError as original:\n    raise ImportError("authored outer wrapper") from original\n'
+        if name=='numpy' and defect=='broken-inner':body+='class Unprintable(ImportError):\n    def __str__(self):\n        raise RuntimeError("authored broken exception text")\nraise ImportError("authored primary import error") from Unprintable()\n'
         if name=='torchvision' and defect=='version':body+='__version__="wrong"\n'
         if name=='torchvision' and defect=='prefix-drift':body+='sys.pycache_prefix=None\n'
         (directory/'__init__.py').write_text(body)
@@ -363,3 +365,50 @@ def test_cpu_private_prefix_avoids_valid_inherited_wrong_bytecode(tmp_path):
     report=json.loads((output/'imports.json').read_bytes())
     assert report['versions']==CPU_VERSIONS and report['status']=='observed'
     assert list(prefix.iterdir())==[]
+
+
+
+def test_cpu_import_failure_retains_the_underlying_cause(tmp_path):
+    child,output,_,_,_=launch_cpu(tmp_path,defect='chained-error')
+    assert child.returncode==1,child.stderr
+    report=json.loads((output/'imports.json').read_bytes())
+    chain=report['error_chain']
+    assert chain['complete'] is True and chain['truncation'] is None
+    assert [(r['via'],r['message']) for r in chain['entries']]==[
+        ('raised','authored outer wrapper'),('cause','authored missing dependency')]
+    assert report['status']=='failed' and report['versions']=={}
+    assert report['runtime_qualified'] is False
+
+
+@pytest.mark.parametrize('shape',['context','suppressed','cycle','depth','message'])
+def test_cpu_error_chain_is_finite_and_reports_its_limits(shape):
+    m=api();outer=ImportError('outer');inner=ValueError('inner')
+    if shape in ('context','suppressed'):
+        outer.__context__=inner
+        outer.__suppress_context__=shape=='suppressed'
+    elif shape=='cycle':outer.__cause__=inner;inner.__cause__=outer
+    elif shape=='depth':
+        cursor=outer
+        for _ in range(12):cursor.__cause__=ValueError('nested');cursor=cursor.__cause__
+    else:outer=ValueError('x'*5000)
+    chain=m.cpu_error_chain(outer)
+    assert len(chain['entries'])<=8
+    assert all(len(r['message'])<=2048 for r in chain['entries'])
+    if shape=='context':
+        assert [r['via'] for r in chain['entries']]==['raised','context']
+    elif shape=='suppressed':assert len(chain['entries'])==1 and chain['complete'] is True
+    elif shape in ('cycle','depth'):
+        assert chain['complete'] is False and chain['truncation']==shape
+    else:assert chain['entries'][0]['message_truncated'] is True
+    assert m.failure_detail(outer)=={'type':m.class_name(outer),'message':str(outer)[:2048]}
+
+
+
+def test_cpu_chain_diagnostic_failure_cannot_erase_primary_report(tmp_path):
+    child,output,_,_,_=launch_cpu(tmp_path,defect='broken-inner')
+    assert child.returncode==1
+    assert (output/'imports.json').is_file(),'secondary chain inspection erased the primary report'
+    report=json.loads((output/'imports.json').read_bytes())
+    assert report['status']=='failed' and report['error']['message']=='authored primary import error'
+    assert report['error_chain']['complete'] is False
+    assert report['error_chain']['truncation']=='diagnostic_error'

@@ -310,6 +310,29 @@ def failure_detail(error):
     return {'type': class_name(error), 'message': str(error)[:2048]}
 
 
+
+def cpu_error_chain(error):
+    """Retain at most eight causes/contexts with bounded message diagnostics."""
+    entries, seen, via = [], set(), 'raised'
+    while error is not None:
+        if id(error) in seen:
+            return dict(entries=entries, complete=False, truncation='cycle')
+        if len(entries) == 8:
+            return dict(entries=entries, complete=False, truncation='depth')
+        seen.add(id(error))
+        message = str(error)
+        entries.append(dict(type=class_name(error), message=message[:2048],
+                            message_truncated=len(message)>2048, via=via))
+        cause = BaseException.__getattribute__(error, '__cause__')
+        if cause is not None:
+            error, via = cause, 'cause'
+        elif not BaseException.__getattribute__(error, '__suppress_context__'):
+            error, via = BaseException.__getattribute__(error, '__context__'), 'context'
+        else:
+            error = None
+    return dict(entries=entries, complete=True, truncation=None)
+
+
 def observe(request, request_sha):
     cpu = request.get('version') == 2
     expected = tuple((name, request['expected_versions'][name]) for name in CPU_PACKAGES) if cpu else ()
@@ -356,6 +379,12 @@ def observe(request, request_sha):
     except BaseException as failure:
         # A package SystemExit(0) must not become an empty successful observation.
         error = failure_detail(failure)
+        if cpu:
+            try:
+                report['error_chain'] = cpu_error_chain(failure)
+            except BaseException as diagnostic:
+                report['error_chain'] = dict(entries=[], complete=False,
+                    truncation='diagnostic_error', error_type=class_name(diagnostic))
     report['observation_scope'] = 'completed_imports' if imports_complete else 'post_failure'
     actual_environment = dict(os.environ)
     if actual_environment != request['environment']:
