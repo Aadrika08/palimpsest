@@ -14,9 +14,11 @@ execution routes, complete valid research/capability gates, integrate the lab an
 all six artworks, record artistic/operator acceptance and deliver the runbook.
 Disk clearance permits fresh admission checks; CI and physical rover remain outside.
 The [clarified execution goal](plans/simulation-release-execution-goal.md) gives
-seven unchanged acceptance gates and six finite milestones. Finish the current
-memory single-condition sealing source unit, then the complete resource-feasible
-CPU runtime configuration proposal; no automatic actual retry follows. The previous
+seven unchanged acceptance gates and six finite milestones. The immediate goal is
+one installed and actually qualified CPU runtime, followed by one bounded simulator
+episode recorded, replayed and exported through the durable public route. Exact
+configuration/resource admission and independent outcome audits precede progress;
+no automatic actual retry or new scientific-study attempt follows. The previous
 [execution/evidence history](plans/simulation-release-execution-goal-history-2026-10-15.md)
 is preserved byte-identically. All 26 requirement and seven gate statuses are unchanged.
 
@@ -41,7 +43,8 @@ limits. This implementation milestone and all seven release gates remain open.
 audited CPU metadata:70 wheels/71 candidate distributions,1,304,650,469 declared
 expanded bytes and26,913 files. python-louvain remains source-only; full payload,
 installed-size/licence/native/render closure and RAM/staging admission remain open.
-The current snapshot fails the proposed wheel-only RAM planning scenario. A reviewed
+The retained assessment snapshot fails the proposed wheel-only RAM planning scenario;
+the refreshed goal records current resources without treating them as admission. A reviewed
 qualification descriptor-v3 now requires tmpfs dependency-v3 and fixed NumPy/Torch/
 torchvision/MuJoCo order, result-v2 and false authority. All25 new authored checks
 pass; broader runs retain ancestor-change failures, with affected legacy controls
