@@ -13,10 +13,29 @@ not instructions to rerun. Implementation history must not obscure what remains.
 
 ## Clear execution target after disk clearance
 
-**The next demonstrable outcome is one actual local CPU simulator episode that
-we can record, replay and export.** Package preparation and runtime qualification
-are dependencies of this outcome. The complete project goal remains the release
-above, with all seven gates below closed on one integrated candidate.
+**Goal to pursue now: produce one portable bundle from a real local CPU
+simulation episode, with a verified recording, replay and export.** This milestone
+is complete only when:
+
+1. The exact local runtime passes its separately admitted qualification and
+   independent audit.
+2. One admitted episode runs with declared model, scene, seed, limits and
+   operator/renderer checks, retaining its inputs, records and snapshots.
+3. Replay meets the comparison criterion declared before execution; the portable
+   export validates and the independent outcome/byte/cleanup audit passes.
+
+**First unfinished action:** connect the verified three-module metadata worker
+to the closed parent, bounded external observer and independent auditor, then
+prove that complete route with authored fixtures. Next, freeze and review exact
+controls for one actual metadata observation, use its evidence to finish the
+profile correction, and qualify the runtime before admitting the episode.
+Source fixtures demonstrate implementation only; the real episode bundle is
+the milestone's exit. Preserve every consumed attempt; no implicit retry.
+
+The complete project goal remains the release above: reproducible installation,
+supported controllers, valid memory results, the integrated lab, all six artworks
+and human/operator acceptance, with all seven gates below closed on one candidate.
+The physical rover follows that accepted simulation release as a separate phase.
 
 **Execution order:** a real episode bundle → valid research and capable
 controllers → the integrated lab and six artworks → artistic/operator
@@ -622,6 +641,11 @@ must name the blocked deliverable and its finite exit; do not grow an unbounded
 source-hardening programme or count test totals as release progress.
 
 ## Current starting point and decisions
+
+The fresh disk check at 15 October 19:13 UTC records 96,879,558,656 B available
+on the project filesystem and 3,592,376,320 B on `/tmp`. Space is available to
+continue implementation; each actual stage still needs its own fresh disk/RAM
+admission. This check makes no runtime or release acceptance claim.
 
 The 15 October 18:06 UTC check records 98,643,456,000 B free on the project disk
 and 3,526,299,648 B on `/tmp`, with MemAvailable 3,034,808,320 B. This dated
