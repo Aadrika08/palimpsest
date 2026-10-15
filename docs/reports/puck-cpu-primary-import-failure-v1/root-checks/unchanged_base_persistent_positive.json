@@ -1,0 +1,19 @@
+{
+  "case": "unchanged_base_persistent_positive",
+  "command": [
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/r0-reproduction/.venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "--tb=short",
+    "-p",
+    "no:cacheprovider",
+    "tests/test_puck_worker_dependencies.py::test_native_extension_initializes_from_held_file_and_is_observed",
+    "--basetemp=/home/utkarsh/.codex/worktrees/0071/brain/runs/source-validation/puck-cpu-primary-import-base-positive-01/tmp"
+  ],
+  "cwd": "/home/utkarsh/.codex/worktrees/0071/brain",
+  "elapsed_seconds": 0.26458755997009575,
+  "kind": "externally-observed-authored-pytest-v1",
+  "returncode": 1,
+  "scope": "authored fixture only; no actual CPU stack retry"
+}

@@ -1,0 +1,21 @@
+{
+  "base_commit": "4036a382b87ab99640bed96f6b2f8aeaa7873b2c",
+  "case": "unchanged_base_persistent_positive_02",
+  "command": [
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/r0-reproduction/.venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "--tb=short",
+    "-p",
+    "no:cacheprovider",
+    "tests/test_puck_worker_dependencies.py::test_native_extension_initializes_from_held_file_and_is_observed",
+    "--basetemp=/home/utkarsh/.codex/worktrees/0071/brain/runs/source-validation/puck-cpu-primary-import-base-positive-02/tmp"
+  ],
+  "cwd": "/home/utkarsh/.codex/worktrees/0071/brain",
+  "elapsed_seconds": 1.567859923990909,
+  "kind": "externally-observed-authored-pytest-v1",
+  "prior_setup_error": "01 failed before test execution because its explicit basetemp parent was absent; raw evidence retained",
+  "returncode": 1,
+  "scope": "authored native fixture only; no actual CPU stack retry"
+}

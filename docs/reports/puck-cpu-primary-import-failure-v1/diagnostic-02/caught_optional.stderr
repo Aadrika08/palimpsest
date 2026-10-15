@@ -1,0 +1,18 @@
+Traceback (most recent call last):
+  File "<string>", line 10, in <module>
+  File "/tmp/palimpsest-authored-poisoned-import-v6jimqq9/source/scripts/puck_worker_bootstrap.py", line 647, in <module>
+    if __name__ == '__main__': main()
+                               ^^^^^^
+  File "/tmp/palimpsest-authored-poisoned-import-v6jimqq9/source/scripts/puck_worker_bootstrap.py", line 640, in main
+    receipt = admission.invoke()
+              ^^^^^^^^^^^^^^^^^^
+  File "/tmp/palimpsest-authored-poisoned-import-v6jimqq9/source/scripts/puck_worker_bootstrap.py", line 617, in invoke
+    self.recheck(); result = module.qualify(self) if qualification else module.preflight(self); self.recheck()
+                                                                        ^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/palimpsest-authored-poisoned-import-v6jimqq9/source/src/palimpsest/puck_worker_preflight.py", line 2, in preflight
+    import fixture_dep
+  File "/tmp/palimpsest-authored-poisoned-import-v6jimqq9/source/src/palimpsest/puck_dependency_imports.py", line 155, in exec_module
+    exec(code,module_dict(module))
+  File "/tmp/palimpsest-authored-poisoned-import-v6jimqq9/dependency/fixture_dep/__init__.py", line 6, in <module>
+    from fixture_dep._native import answer
+ModuleNotFoundError: No module named 'fixture_dep._native'

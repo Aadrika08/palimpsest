@@ -1,0 +1,40 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+_______ test_native_extension_initializes_from_held_file_and_is_observed _______
+tests/test_puck_worker_dependencies.py:89: in test_native_extension_initializes_from_held_file_and_is_observed
+    assert result.returncode == 0, result.stderr
+E   AssertionError: Traceback (most recent call last):
+E       File "<string>", line 10, in <module>
+E       File "/home/utkarsh/.codex/worktrees/0071/brain/runs/source-validation/puck-cpu-primary-import-base-positive-02/tmp/test_native_extension_initiali0/source/scripts/puck_worker_bootstrap.py", line 647, in <module>
+E         if __name__ == '__main__': main()
+E                                    ^^^^^^
+E       File "/home/utkarsh/.codex/worktrees/0071/brain/runs/source-validation/puck-cpu-primary-import-base-positive-02/tmp/test_native_extension_initiali0/source/scripts/puck_worker_bootstrap.py", line 640, in main
+E         receipt = admission.invoke()
+E                   ^^^^^^^^^^^^^^^^^^
+E       File "/home/utkarsh/.codex/worktrees/0071/brain/runs/source-validation/puck-cpu-primary-import-base-positive-02/tmp/test_native_extension_initiali0/source/scripts/puck_worker_bootstrap.py", line 617, in invoke
+E         self.recheck(); result = module.qualify(self) if qualification else module.preflight(self); self.recheck()
+E                                                                             ^^^^^^^^^^^^^^^^^^^^^^
+E       File "/home/utkarsh/.codex/worktrees/0071/brain/runs/source-validation/puck-cpu-primary-import-base-positive-02/tmp/test_native_extension_initiali0/source/src/palimpsest/puck_worker_preflight.py", line 2, in preflight
+E         from fixture_dep import _native
+E       File "<frozen importlib._bootstrap>", line 1176, in _find_and_load
+E       File "<frozen importlib._bootstrap>", line 1147, in _find_and_load_unlocked
+E       File "<frozen importlib._bootstrap>", line 676, in _load_unlocked
+E       File "<frozen importlib._bootstrap>", line 573, in module_from_spec
+E       File "/home/utkarsh/.codex/worktrees/0071/brain/runs/source-validation/puck-cpu-primary-import-base-positive-02/tmp/test_native_extension_initiali0/source/src/palimpsest/puck_dependency_imports.py", line 129, in create_module
+E         owner.full_guard(); owner.images()
+E         ^^^^^^^^^^^^^^^^^^
+E       File "/home/utkarsh/.codex/worktrees/0071/brain/runs/source-validation/puck-cpu-primary-import-base-positive-02/tmp/test_native_extension_initiali0/source/scripts/puck_worker_bootstrap.py", line 516, in recheck
+E         return self._check(full=True)
+E                ^^^^^^^^^^^^^^^^^^^^^^
+E       File "/home/utkarsh/.codex/worktrees/0071/brain/runs/source-validation/puck-cpu-primary-import-base-positive-02/tmp/test_native_extension_initiali0/source/scripts/puck_worker_bootstrap.py", line 580, in _check
+E         if full: self._dependencies.images()
+E                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       File "/home/utkarsh/.codex/worktrees/0071/brain/runs/source-validation/puck-cpu-primary-import-base-positive-02/tmp/test_native_extension_initiali0/source/src/palimpsest/puck_dependency_imports.py", line 249, in images
+E         raise RuntimeError('Unregistered native file image: '+path)
+E     RuntimeError: Unregistered native file image: /home/utkarsh/.codex/worktrees/0071/brain/runs/source-validation/puck-cpu-primary-import-base-positive-02/tmp/test_native_extension_initiali0/dependency/fixture_dep/_native.cpython-311-x86_64-linux-gnu.so
+E     
+E   assert 1 == 0
+E    +  where 1 = CompletedProcess(args=['/home/utkarsh/Work/shraddha/brain/.worktrees/r0-reproduction/.venv/bin/python', '-I', '-B', '-...base-positive-02/tmp/test_native_extension_initiali0/dependency/fixture_dep/_native.cpython-311-x86_64-linux-gnu.so\n').returncode
+=========================== short test summary info ============================
+FAILED tests/test_puck_worker_dependencies.py::test_native_extension_initializes_from_held_file_and_is_observed
+1 failed in 1.40s
