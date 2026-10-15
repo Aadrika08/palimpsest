@@ -11,14 +11,14 @@ import pytest
 from test_puck_worker_bootstrap import fixture, descriptor, raw, sha, ROOT
 
 
-def dependency_fixture(tmp_path, body, *, native=False, native_link=None, mutate=None):
+def dependency_fixture(tmp_path, body, *, native=False, native_link=None, mutate=None, source_change=None):
     bootstrap, reg, manifest, script, script_sha = fixture(tmp_path, body)
     source = Path(reg['source_root'])
     for name in ('puck_dependency_files', 'puck_dependency_imports',
-                 'puck_dependency_bindings', 'puck_native_origins'):
+                 'puck_dependency_bindings', 'puck_native_origins', 'puck_runtime_qualification'):
         path = source / ('src/palimpsest/'+name+'.py')
         original = ROOT / ('src/palimpsest/'+name+'.py')
-        if name in ('puck_dependency_bindings', 'puck_native_origins') and not original.is_file():
+        if name in ('puck_dependency_bindings', 'puck_native_origins', 'puck_runtime_qualification') and not original.is_file():
             continue  # RED fixtures also exercise the unchanged v1 implementation.
         assert original.is_file(), 'Held dependency importer missing: '+name
         path.write_bytes(original.read_bytes())
@@ -65,6 +65,7 @@ def dependency_fixture(tmp_path, body, *, native=False, native_link=None, mutate
     dep_manifest = tmp_path/'dependencies.json'; payload = raw(deps); dep_manifest.write_bytes(payload)
     reg.update(kind='puck-worker-source-bootstrap-v2',version=2,
         dependencies={'path':str(dep_manifest),'size_bytes':len(payload),'sha256':sha(payload)})
+    if source_change: source_change(reg, source)
     payload = raw(reg); manifest.write_bytes(payload)
     command = bootstrap.command(sys.executable,str(script),script_sha,str(manifest),sha(payload))
     return subprocess.run(command,cwd=reg['cwd'],env=reg['environment'],capture_output=True,
