@@ -156,3 +156,12 @@ pending. No attempt3 or physical rover work follows from this change.
 
 These API references inform implementation; authored fresh-worker/C observations
 above, rather than documentation alone, establish the reported host behavior.
+
+## Publication and continuing goal
+
+[Draft PR134](https://github.com/Aadrika08/palimpsest/pull/134) is stacked on133.
+The authoritative execution goal was advanced in07be15a and synchronized to the
+matrix in2befb2b. Three requirements-evidence checks pass0.03s; both goal copies
+are byte-identical, links valid, all33 requirement/gate statuses unchanged.
+Main remains ee6bf61. The source unit is complete; the full simulation goal stays
+active with all seven release gates open and actual held qualification next.

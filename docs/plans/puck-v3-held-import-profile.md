@@ -42,7 +42,7 @@ mutation; unknown/declared-but-unprepared names; helper dispatch tampering.
   negatives, exact candidate profile covering 52 observed exceptional rows, source
   closure/dispatch regression; focused regression, full-suite attempt, one fresh
   whole-branch review and one RED/GREEN important-finding pass if required.
-- [ ] Task4: retain source report, commit/push draft PR stacked on133; synchronize
+- [x] Task4: retain source report, commit/push draft PR stacked on133; synchronize
   authoritative goal/evidence without changing any of the seven gate statuses.
 
 Verification command: existing R0 Python with PYTHONDONTWRITEBYTECODE=1 and
@@ -77,3 +77,9 @@ default suite10 FastAPI/httpx collection errors1.83s. No second review or final
 independent-source GO claimed. Rulings and boundary limitations are retained in
 docs/reports/puck-v3-held-import-profile-review.md. Next: publication/goal sync,
 then a separately frozen/reviewed actual held-runtime qualification configuration.
+
+Publication: draftPR134 stacked on133, initial head475dff4; production remains
+a57cb0d. Active goal07be15a and matrix2befb2b published; three matrix checks pass
+0.03s, goal copies byte-identical, links valid, all33 statuses unchanged. Main
+remains ee6bf61. All implementation tasks in this source unit are complete; no
+actual held-runtime qualification or scientific/release gate is closed by them.
