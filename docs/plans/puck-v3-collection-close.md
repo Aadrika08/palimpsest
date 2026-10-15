@@ -81,3 +81,8 @@ Independent final-source repetition: 25 focused passed/47.77s and 1395 affected
 passed/six inherited exclusions/125.66s, both exit0; all processes stopped.
 Default pytest retains missing-FastAPI collection error, 0.30s. No review minors.
 Source report records exact boundaries and remaining complete launcher work.
+
+Published draft PR #131 on PR #130. Goal PR #94 and matrix PR #102 updated;
+three matrix checks pass (0.03s) and both execution guides are byte-identical.
+The source/data-close unit is complete; the full launcher and release goal remain
+active, with all seven gates open and no actual stage invocation or retry.
