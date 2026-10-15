@@ -35,80 +35,56 @@ this engineering route; it cannot pass a controller capability gate.
 
 ## Current result and first unfinished action
 
-Runtime-import qualification remains open. Preparation 01 and ordinary
-observations 02/03 have scoped passing audits; the reviewed optional-import
-source contract in [PR161](https://github.com/Aadrika08/palimpsest/pull/161)
-has 616 affected authored passes. These do not establish installed-runtime acceptance.
+**The next product result is the real recorded, replayed and exported episode
+bundle. Runtime qualification is its current prerequisite.** Preparation 01 and
+ordinary observations 02/03 have scoped passing audits; they do not establish an
+installed-runtime pass.
 
-[Actual 06 in PR162](https://github.com/Aadrika08/palimpsest/pull/162) was frozen at
-`e4b2a4c` before one invocation. Complete data admission passed in 31.586s with
-all 16 unchanged inputs, staged identities, nineteen declared absences and resources.
-The observer then returned 1 normally in 95.381s without timeout: Torchvision/PIL's
-native extension could not resolve `libtiff-fc87e79d.so.6.2.0`. The independent
-auditor correctly refused the failed terminal. Parent closure is 5→5 descriptors
-with no children/threads; sampled supervision reports no matching survivors.
-Qualifications 01–06 are consumed. No complete four-import receipt or runtime pass exists.
+- [PR162](https://github.com/Aadrika08/palimpsest/pull/162) preserves failed 06:
+  data admission passed, but Torchvision/PIL could not resolve its packaged TIFF
+  library. Qualifications 01–06 are consumed; their failures and missing receipts
+  remain preserved.
+- [PR164](https://github.com/Aadrika08/palimpsest/pull/164) corrects exactly the
+  two Pillow native-origin declarations in candidate D. All 678 affected authored
+  cases pass. The separate post-06 data-only check 03 passed once in 26.972s with
+  complete byte/forest rechecks and normal closure. Its receipt review found no
+  findings; that dated result covers 06/C, not source 07/D or runtime acceptance.
+- [PR165](https://github.com/Aadrika08/palimpsest/pull/165) freezes distinct 07 at
+  pushed commit `1a1ffa0`. Its fresh data-only admission passed once in 42.608s,
+  with independent receipt review. **Its one runtime invocation failed at the
+  180s normal-return deadline.** The external observer returned 1 normally in
+  180.400s; supervision stopped the worker with SIGTERM and sampled no matching
+  survivors. Both worker logs are empty, and final outcome/baseline-after receipts
+  are absent. The independent auditor correctly refused the nonzero transport.
+  Attempt 07 is consumed. No completed four-import or parent-closure claim follows,
+  and the retained evidence does not identify which worker phase exhausted time.
 
-Independent static review finds the TIFF file present with pinned bytes. Exactly
-two registered Pillow extensions use leaf-FD origins despite requiring
-`$ORIGIN/../pillow.libs`. The finite review covers all 23 extension seeds and their
-declared dependency routes; selected hashes match. It does not establish dynamic
-loading or full post-06 custody. Two earlier post-failure byte checks did not finish:
-check 01 refused the wrong host interpreter before data work; separately numbered
-check 02 used the pinned interpreter but exhausted its 120s staged-forest deadline.
-Both refusals and missing receipts remain preserved; the distinct03 result follows.
+**First unfinished action:** make that runtime failure diagnosable with the
+smallest bounded phase evidence and deadline/cleanup source checks, before any
+separately reviewed prospective allocation. Preserve attempts 01–07 and their
+limits; do not silently retry or increase the deadline. Once the runtime qualifies,
+separately admit the exact public manual CPU episode route, including its operators
+and renderer. Detailed raw results remain in the linked PR/report packets, dated
+histories and Git history.
 
-The complete failure packet preserves 347 artifacts/38,423,088B, including empty
-files, and verifies against originals and committed bytes. Archive integrity is
-not runtime or full post-failure forest acceptance. [PR163](https://github.com/Aadrika08/palimpsest/pull/163)
-separately removes the training-runner import from manual environment construction,
-preserving exact arguments and seed/reset order. Its 19 authored cases pass and
-independent review finds no material findings. No real episode or renderer ran.
+[PR163](https://github.com/Aadrika08/palimpsest/pull/163) already implements the
+manual constructor seam with exact arguments and seed/reset order preserved;
+its 19 authored cases pass. It has not run a real episode or renderer. Integrate
+that source work into the product route.
 
-The source correction is committed in [PR164](https://github.com/Aadrika08/palimpsest/pull/164)
-at `d3bce4e`. Candidate D adds exactly two sorted existing held-directory policies,
-for `PIL._imaging` and `PIL._imagingft`, a 194-byte insertion that reconstructs C
-exactly when removed. Parent and independent auditor enforce the closed07
-projection; every other candidate field, historical epoch, input, native mount,
-negative name and limit remains unchanged. All 678 disjoint affected authored
-cases pass, including a transitive Pillow-shaped native failure then audited
-success. Independent source review found no material findings. This is not an
-installed-runtime pass, and no actual07 controls or allocation exists.
+Reuse `Engine` → UUID `RunWriter` → initial snapshot → replay → bundle export.
+The numeric `PuckIntervalWriter` format cannot simply be passed to those readers.
+The proposed public route uses the checker scene at upstream `8d964599`;
+protected inputs remain closed. Complete the finite CPU worker/import/operator/renderer bindings
+and the same admitted reopening route for replay. Declare the exact inputs,
+seed, limits and comparison criterion before execution, then package the source
+and replay exports with controls and comparison evidence without widening the
+export whitelist.
 
-**The complete data-only post06 check03 passed once in PR164.** Its exact controls
-were independently reviewed and pushed at `0dd615d4` before invocation. Fresh
-resources and all control pins passed. Outer and child exited0 normally without
-timeout in26.972s. Complete SITE/staged forests, source/input/native/interpreter/
-baseline bytes, nineteen absences and final full held rehash passed; descriptors
-closed4→4 with no children/threads. All eight phase markers completed. Independent
-receipt consistency review found no findings and did not repeat the payload rehash.
-This dated pass covers the unchanged DATA06/C runtime only. It preserves checks01/02
-and all six failed qualifications; it does not admit candidate D/source07.
-
-**Next action: freeze and review the distinct07 runtime qualification.** Bind the
-exact source07 parent/observer/auditor, candidate D and evidence against immutable
-historical06 source snapshots; never compare replaced live scripts to old06 pins.
-Preserve the remaining inputs, nineteen absences, limits and staged identities.
-Pass its own fresh full data/resource admission, then invoke at most once under
-reviewed controls. No actual07 configuration, admission program, output or
-invocation exists. The product exit remains the real recorded, replayed and
-exported episode bundle.
-
-**Keep checkpoint A tied to the episode deliverable.** Reuse the existing
-`Engine` → UUID `RunWriter` → initial snapshot → replay → bundle-export route.
-The distinct numeric `PuckIntervalWriter` format cannot simply be passed to those
-readers. The reviewed read-only map identifies a prospective manual engineering
-controller and locally available public checker scene at upstream `8d964599`;
-this is a proposal, not episode or renderer admission. The manual constructor source seam is implemented. Complete authenticated CPU
-worker dispatch, required import/operator/renderer bindings and actual replay
-reopening admission. Package the separate source/replay exports with controls,
-input identities and comparison evidence without widening the export whitelist.
-Declare the exact public route and comparison criterion before any episode.
-
-Every prerequisite must name the blocked checkpoint and smallest finite exit.
-Source fixtures, additional PRs and test totals do not substitute for the actual
-episode. Do not grow a general package-security framework. Independent episode
-and memory-contract implementation may proceed without opening an allocation.
+Every prerequisite must name the blocked milestone and its smallest finite exit.
+Source fixtures, PRs and test totals do not replace the episode. Do not grow a
+general package-security framework. Independent episode and memory-contract
+implementation may proceed without opening an allocation.
 
 ## What counts as finished
 
@@ -132,14 +108,14 @@ substitute for numerical results, capability, actual browser use or human accept
 
 ## What we do next
 
-| Order | Deliverable | Finite exit |
+| Order | Product milestone | Done when |
 | --- | --- | --- |
-| 1 | Establish the exact local CPU runtime. | PR164 reviews the two-Pillow-row source correction; data-only post06 check03 passes for retained06/C bytes. Freeze distinct07 with exact new bindings, fresh full admission, one runtime invocation and independent audit. Preserve every failed allocation; source/data-only passes are not this exit. |
-| 2 | Record, replay and export one actual simulator episode. | Admit the exact public engineering route, retain complete inputs/records/snapshots, pass declared replay/export and operator/renderer checks, and independently audit normal cleanup and the portable bundle. This does not qualify a learned controller. |
-| 3 | Complete memory family admission and case closure. | Finish the historical-seed-to-case binding and single-condition admission, qualify the exact admitted configuration, and resolve oracle/own ordering before all-nine/case closure. Preserve raw evidence and publication/quarantine checks. |
-| 4 | Complete studies and controller capability. | Valid development and separately admitted held-out results meet the unchanged memory/scientific and puck/MaleCNS gates above. Preserve failures and resolve any new study prospectively. |
-| 5 | Integrate and experience the product. | One candidate supports the lab and six artworks; actual browser, mapping, replay, export, interruption and endurance checks pass. |
-| 6 | Accept and deliver that candidate. | Artistic/operator sessions, final verification and all seven gate records are complete; installation and evidence are reproducible. |
+| 1 | One working episode bundle. | The exact runtime and public engineering route qualify; one nonzero episode has complete records and registered snapshots, all ticks pass the declared replay comparison, exports validate, and independent outcome/byte/cleanup audits pass. A task failure can prove this route, not controller capability. |
+| 2 | Valid memory results. | Frozen ordering, seed-to-case and admission issues are resolved prospectively; all nine conditions have valid development and separately admitted held-out results with independently audited family/control analysis. A valid positive or null result counts; missing or invalid cells do not. |
+| 3 | Supported controllers. | Every required relabeled puck model and MaleCNS seed meets unchanged 3/4 development and 6/8 held-out goals; mechanism replay and lab integration pass, with scoped exploration, homing and adaptation evidence retained. |
+| 4 | A usable six-artwork lab. | One asset-backed candidate passes actual browser, declared-duration visual/audio, keyboard/viewport, faithful mapping, control/provenance, replay/export, interruption/recovery and required endurance checks for all six encounters. |
+| 5 | Human acceptance. | The user records artistic acceptance, and an independent operator completes installation and an all-six-mode session. |
+| 6 | Reproducible delivery. | All seven gates close on that same integrated candidate; final review/verification, reproducible installation, licences, limitations, runbook and the complete requirements-to-evidence matrix are ready. |
 
 ## Decisions and evidence boundaries
 
