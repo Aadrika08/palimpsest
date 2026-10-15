@@ -20,8 +20,9 @@ task failure can still establish the recording/replay route; it cannot pass a
 controller capability gate. Tiny fixtures and package metadata cannot satisfy
 either actual-runtime exit below.
 
-1. **Prepare the installed runtime.** Verify the full pinned package payloads and
-   RECORD entries; build and hash the missing python-louvain wheel under its own
+1. **Prepare the installed runtime.** The pinned package payloads and wheel RECORD
+   entries now have actual audited evidence in PR #141. Build and hash the missing
+   python-louvain wheel under its own
    bounded configuration; measure the installed namespace and retain licence
    contents. Specify the exact interpreter, native/EGL paths, staging and custody.
    Finish the CPU preparation/qualification parent using the reviewed four-import
@@ -79,8 +80,10 @@ substitute for numerical results, capability, actual browser use or human accept
 | 5 | Integrate and experience the product. | One candidate supports the lab and all six artworks; actual browser, mapping, replay, export, interruption and endurance checks pass. |
 | 6 | Accept and deliver that candidate. | Artistic/operator sessions, final verification and all seven gate records are complete; the installation and evidence package are reproducible. |
 
-**Current next action:** verify the complete CPU package payloads and prepare the
-exact source-wheel build and installed-runtime configuration. Review the family
+**Current next action:** authenticate the proposed exact setuptools backend and
+freeze the bounded python-louvain wheel-build configuration, including authored
+source/write-routing and isolation preflights, before its actual build. Then
+complete the installed-runtime configuration. Review the family
 qualification binding in parallel without opening a new scientific allocation.
 The directory-enumeration source fix is complete within its tested scope; the
 first actual family admission remains open.
@@ -109,6 +112,16 @@ RAM shortfall in PR #138 remains a historical observation, not a new measurement
   audited CPU package metadata and a reviewed four-import worker source route.
   The complete executable configuration and actual installed-stack qualification
   remain unfinished. Metadata sizes are estimates, not installed-payload proof.
+- [Draft PR #141](https://github.com/Aadrika08/palimpsest/pull/141) supplies actual
+  full-payload evidence:71 archives/385,328,518B,70 wheels with complete RECORD
+  checks, and an independent terminal audit of all26,913 regular wheel members.
+  The single acquisition exited0 in55.276s; no owned worker-group members remained.
+  The [report](https://github.com/Aadrika08/palimpsest/blob/research/puck-cpu-payload-verification-v1/docs/reports/puck-cpu-payload-verification-v1.md)
+  retains raw outcomes, exact source/configuration, full checksum index and the
+  independent audit program. The
+  [source-wheel proposal](https://github.com/Aadrika08/palimpsest/blob/research/puck-cpu-payload-verification-v1/docs/plans/puck-python-louvain-build-v1-proposal.md)
+  selects an exact backend candidate; acquisition/build/installation of that
+  backend remains prospective. No numerical runtime or release gate is qualified.
 - [Draft PR #140](https://github.com/Aadrika08/palimpsest/pull/140) resolves the
   directory-enumeration gap: all33 authored condition checks pass on Btrfs and
   tmpfs, with369 affected legacy checks and88 census/admission/profile checks.
