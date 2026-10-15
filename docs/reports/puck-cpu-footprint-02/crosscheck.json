@@ -1,0 +1,622 @@
+{
+  "checks": [
+    {
+      "from": "project",
+      "requirement": "pytest<9,>=8.3",
+      "selected": "8.4.2"
+    },
+    {
+      "from": "pytest",
+      "requirement": "pygments>=2.7.2",
+      "selected": "2.21.0"
+    },
+    {
+      "from": "pytest",
+      "requirement": "pluggy<2,>=1.5",
+      "selected": "1.6.0"
+    },
+    {
+      "from": "pytest",
+      "requirement": "packaging>=20",
+      "selected": "26.3"
+    },
+    {
+      "from": "pytest",
+      "requirement": "iniconfig>=1",
+      "selected": "2.3.0"
+    },
+    {
+      "from": "project",
+      "requirement": "httpx==0.28.1",
+      "selected": "0.28.1"
+    },
+    {
+      "from": "httpx",
+      "requirement": "idna",
+      "selected": "3.20"
+    },
+    {
+      "from": "httpx",
+      "requirement": "httpcore==1.*",
+      "selected": "1.0.9"
+    },
+    {
+      "from": "httpcore",
+      "requirement": "h11>=0.16",
+      "selected": "0.16.0"
+    },
+    {
+      "from": "httpcore",
+      "requirement": "certifi",
+      "selected": "2026.7.22"
+    },
+    {
+      "from": "httpx",
+      "requirement": "certifi",
+      "selected": "2026.7.22"
+    },
+    {
+      "from": "httpx",
+      "requirement": "anyio",
+      "selected": "4.15.1"
+    },
+    {
+      "from": "anyio",
+      "requirement": "typing_extensions>=4.16.0; python_version < \"3.15\"",
+      "selected": "4.16.0"
+    },
+    {
+      "from": "anyio",
+      "requirement": "idna>=2.8",
+      "selected": "3.20"
+    },
+    {
+      "from": "project",
+      "requirement": "websockets==17.1",
+      "selected": "17.1"
+    },
+    {
+      "from": "project",
+      "requirement": "uvicorn==0.54.0",
+      "selected": "0.54.0"
+    },
+    {
+      "from": "uvicorn",
+      "requirement": "h11>=0.8",
+      "selected": "0.16.0"
+    },
+    {
+      "from": "uvicorn",
+      "requirement": "click>=7.0",
+      "selected": "8.5.0"
+    },
+    {
+      "from": "project",
+      "requirement": "fastapi==0.142.2",
+      "selected": "0.142.2"
+    },
+    {
+      "from": "fastapi",
+      "requirement": "opentelemetry-api>=1.44.0",
+      "selected": "1.45.0"
+    },
+    {
+      "from": "opentelemetry-api",
+      "requirement": "typing-extensions>=4.5.0",
+      "selected": "4.16.0"
+    },
+    {
+      "from": "fastapi",
+      "requirement": "annotated-doc>=0.0.2",
+      "selected": "0.0.5"
+    },
+    {
+      "from": "fastapi",
+      "requirement": "typing-inspection>=0.4.2",
+      "selected": "0.4.4"
+    },
+    {
+      "from": "typing-inspection",
+      "requirement": "typing-extensions>=4.15.0",
+      "selected": "4.16.0"
+    },
+    {
+      "from": "fastapi",
+      "requirement": "typing-extensions>=4.8.0",
+      "selected": "4.16.0"
+    },
+    {
+      "from": "fastapi",
+      "requirement": "pydantic>=2.9.0",
+      "selected": "2.13.5"
+    },
+    {
+      "from": "pydantic",
+      "requirement": "typing-inspection>=0.4.2",
+      "selected": "0.4.4"
+    },
+    {
+      "from": "pydantic",
+      "requirement": "typing-extensions>=4.14.1",
+      "selected": "4.16.0"
+    },
+    {
+      "from": "pydantic",
+      "requirement": "pydantic-core==2.46.5",
+      "selected": "2.46.5"
+    },
+    {
+      "from": "pydantic-core",
+      "requirement": "typing-extensions>=4.14.1",
+      "selected": "4.16.0"
+    },
+    {
+      "from": "pydantic",
+      "requirement": "annotated-types>=0.6.0",
+      "selected": "0.8.0"
+    },
+    {
+      "from": "fastapi",
+      "requirement": "starlette>=0.46.0",
+      "selected": "1.7.0"
+    },
+    {
+      "from": "starlette",
+      "requirement": "typing-extensions>=4.10.0; python_version < \"3.13\"",
+      "selected": "4.16.0"
+    },
+    {
+      "from": "starlette",
+      "requirement": "anyio<5,>=4.0.0",
+      "selected": "4.15.1"
+    },
+    {
+      "from": "project",
+      "requirement": "py7zr<2,>=1.0",
+      "selected": "1.1.3"
+    },
+    {
+      "from": "py7zr",
+      "requirement": "inflate64>=1.0.4",
+      "selected": "1.0.4"
+    },
+    {
+      "from": "py7zr",
+      "requirement": "multivolumefile>=0.2.3",
+      "selected": "0.2.3"
+    },
+    {
+      "from": "py7zr",
+      "requirement": "pybcj>=1.0.6",
+      "selected": "1.0.8"
+    },
+    {
+      "from": "py7zr",
+      "requirement": "pyppmd>=1.3.1",
+      "selected": "1.3.1"
+    },
+    {
+      "from": "py7zr",
+      "requirement": "backports.zstd>=1.0.0; python_version < \"3.14\"",
+      "selected": "1.7.0"
+    },
+    {
+      "from": "py7zr",
+      "requirement": "psutil; sys_platform != \"cygwin\"",
+      "selected": "7.2.2"
+    },
+    {
+      "from": "py7zr",
+      "requirement": "brotli>=1.2.0; platform_python_implementation == \"CPython\"",
+      "selected": "1.2.0"
+    },
+    {
+      "from": "py7zr",
+      "requirement": "pycryptodomex>=3.20.0",
+      "selected": "3.23.0"
+    },
+    {
+      "from": "py7zr",
+      "requirement": "texttable",
+      "selected": "1.7.0"
+    },
+    {
+      "from": "project",
+      "requirement": "python-louvain==0.16",
+      "selected": "0.16"
+    },
+    {
+      "from": "project",
+      "requirement": "networkx==3.4.2",
+      "selected": "3.4.2"
+    },
+    {
+      "from": "project",
+      "requirement": "seaborn==0.13.2",
+      "selected": "0.13.2"
+    },
+    {
+      "from": "seaborn",
+      "requirement": "matplotlib!=3.6.1,>=3.4",
+      "selected": "3.10.1"
+    },
+    {
+      "from": "matplotlib",
+      "requirement": "python-dateutil>=2.7",
+      "selected": "2.9.0.post0"
+    },
+    {
+      "from": "python-dateutil",
+      "requirement": "six>=1.5",
+      "selected": "1.17.0"
+    },
+    {
+      "from": "matplotlib",
+      "requirement": "pyparsing>=2.3.1",
+      "selected": "3.3.3"
+    },
+    {
+      "from": "matplotlib",
+      "requirement": "pillow>=8",
+      "selected": "12.3.0"
+    },
+    {
+      "from": "matplotlib",
+      "requirement": "packaging>=20.0",
+      "selected": "26.3"
+    },
+    {
+      "from": "matplotlib",
+      "requirement": "numpy>=1.23",
+      "selected": "2.2.5"
+    },
+    {
+      "from": "matplotlib",
+      "requirement": "kiwisolver>=1.3.1",
+      "selected": "1.5.1"
+    },
+    {
+      "from": "matplotlib",
+      "requirement": "fonttools>=4.22.0",
+      "selected": "4.66.1"
+    },
+    {
+      "from": "matplotlib",
+      "requirement": "cycler>=0.10",
+      "selected": "0.12.1"
+    },
+    {
+      "from": "matplotlib",
+      "requirement": "contourpy>=1.0.1",
+      "selected": "1.3.3"
+    },
+    {
+      "from": "contourpy",
+      "requirement": "numpy>=1.25",
+      "selected": "2.2.5"
+    },
+    {
+      "from": "seaborn",
+      "requirement": "pandas>=1.2",
+      "selected": "2.2.3"
+    },
+    {
+      "from": "pandas",
+      "requirement": "tzdata>=2022.7",
+      "selected": "2026.4"
+    },
+    {
+      "from": "pandas",
+      "requirement": "pytz>=2020.1",
+      "selected": "2026.4"
+    },
+    {
+      "from": "pandas",
+      "requirement": "python-dateutil>=2.8.2",
+      "selected": "2.9.0.post0"
+    },
+    {
+      "from": "pandas",
+      "requirement": "numpy>=1.23.2; python_version == \"3.11\"",
+      "selected": "2.2.5"
+    },
+    {
+      "from": "seaborn",
+      "requirement": "numpy!=1.24.0,>=1.20",
+      "selected": "2.2.5"
+    },
+    {
+      "from": "project",
+      "requirement": "matplotlib==3.10.1",
+      "selected": "3.10.1"
+    },
+    {
+      "from": "project",
+      "requirement": "opencv-python==4.12.0.88",
+      "selected": "4.12.0.88"
+    },
+    {
+      "from": "opencv-python",
+      "requirement": "numpy<2.3.0,>=2; python_version >= \"3.9\"",
+      "selected": "2.2.5"
+    },
+    {
+      "from": "project",
+      "requirement": "glfw==2.10.0",
+      "selected": "2.10.0"
+    },
+    {
+      "from": "project",
+      "requirement": "gymnasium==1.2.1",
+      "selected": "1.2.1"
+    },
+    {
+      "from": "gymnasium",
+      "requirement": "farama-notifications>=0.0.1",
+      "selected": "0.0.6"
+    },
+    {
+      "from": "gymnasium",
+      "requirement": "typing-extensions>=4.3.0",
+      "selected": "4.16.0"
+    },
+    {
+      "from": "gymnasium",
+      "requirement": "cloudpickle>=1.2.0",
+      "selected": "3.1.2"
+    },
+    {
+      "from": "gymnasium",
+      "requirement": "numpy>=1.21.0",
+      "selected": "2.2.5"
+    },
+    {
+      "from": "project",
+      "requirement": "mujoco==3.3.6",
+      "selected": "3.3.6"
+    },
+    {
+      "from": "mujoco",
+      "requirement": "pyopengl",
+      "selected": "3.1.10"
+    },
+    {
+      "from": "mujoco",
+      "requirement": "numpy",
+      "selected": "2.2.5"
+    },
+    {
+      "from": "mujoco",
+      "requirement": "glfw",
+      "selected": "2.10.0"
+    },
+    {
+      "from": "mujoco",
+      "requirement": "etils[epath]",
+      "selected": "1.14.0"
+    },
+    {
+      "from": "etils",
+      "requirement": "etils[epy]; extra == \"epath\"",
+      "selected": "1.14.0"
+    },
+    {
+      "from": "etils",
+      "requirement": "typing_extensions; extra == \"epy\"",
+      "selected": "4.16.0"
+    },
+    {
+      "from": "etils",
+      "requirement": "etils[epy]; extra == \"epath\"",
+      "selected": "1.14.0"
+    },
+    {
+      "from": "etils",
+      "requirement": "zipp; extra == \"epath\"",
+      "selected": "4.1.0"
+    },
+    {
+      "from": "etils",
+      "requirement": "typing_extensions; extra == \"epath\"",
+      "selected": "4.16.0"
+    },
+    {
+      "from": "etils",
+      "requirement": "fsspec; extra == \"epath\"",
+      "selected": "2026.9.0"
+    },
+    {
+      "from": "etils",
+      "requirement": "zipp; extra == \"epath\"",
+      "selected": "4.1.0"
+    },
+    {
+      "from": "etils",
+      "requirement": "typing_extensions; extra == \"epath\"",
+      "selected": "4.16.0"
+    },
+    {
+      "from": "etils",
+      "requirement": "fsspec; extra == \"epath\"",
+      "selected": "2026.9.0"
+    },
+    {
+      "from": "mujoco",
+      "requirement": "absl-py",
+      "selected": "2.5.0"
+    },
+    {
+      "from": "project",
+      "requirement": "scikit-learn==1.8.0",
+      "selected": "1.8.0"
+    },
+    {
+      "from": "scikit-learn",
+      "requirement": "threadpoolctl>=3.2.0",
+      "selected": "3.7.0"
+    },
+    {
+      "from": "scikit-learn",
+      "requirement": "joblib>=1.3.0",
+      "selected": "1.6.0"
+    },
+    {
+      "from": "joblib",
+      "requirement": "cloudpickle>=3.0",
+      "selected": "3.1.2"
+    },
+    {
+      "from": "scikit-learn",
+      "requirement": "scipy>=1.10.0",
+      "selected": "1.15.2"
+    },
+    {
+      "from": "scipy",
+      "requirement": "numpy<2.5,>=1.23.5",
+      "selected": "2.2.5"
+    },
+    {
+      "from": "scikit-learn",
+      "requirement": "numpy>=1.24.1",
+      "selected": "2.2.5"
+    },
+    {
+      "from": "project",
+      "requirement": "pandas==2.2.3",
+      "selected": "2.2.3"
+    },
+    {
+      "from": "project",
+      "requirement": "scipy==1.15.2",
+      "selected": "1.15.2"
+    },
+    {
+      "from": "project",
+      "requirement": "numpy==2.2.5",
+      "selected": "2.2.5"
+    },
+    {
+      "from": "project",
+      "requirement": "torchvision==0.24.0",
+      "selected": "0.24.0+cpu"
+    },
+    {
+      "from": "torchvision",
+      "requirement": "pillow!=8.3.*,>=5.3.0",
+      "selected": "12.3.0"
+    },
+    {
+      "from": "torchvision",
+      "requirement": "torch==2.9.0",
+      "selected": "2.9.0+cpu"
+    },
+    {
+      "from": "torch",
+      "requirement": "fsspec>=0.8.5",
+      "selected": "2026.9.0"
+    },
+    {
+      "from": "torch",
+      "requirement": "jinja2",
+      "selected": "3.1.6"
+    },
+    {
+      "from": "jinja2",
+      "requirement": "MarkupSafe>=2.0",
+      "selected": "3.0.3"
+    },
+    {
+      "from": "torch",
+      "requirement": "networkx>=2.5.1",
+      "selected": "3.4.2"
+    },
+    {
+      "from": "torch",
+      "requirement": "sympy>=1.13.3",
+      "selected": "1.14.0"
+    },
+    {
+      "from": "sympy",
+      "requirement": "mpmath<1.4,>=1.1.0",
+      "selected": "1.3.0"
+    },
+    {
+      "from": "torch",
+      "requirement": "typing-extensions>=4.10.0",
+      "selected": "4.16.0"
+    },
+    {
+      "from": "torch",
+      "requirement": "filelock",
+      "selected": "4.0.9"
+    },
+    {
+      "from": "torchvision",
+      "requirement": "numpy",
+      "selected": "2.2.5"
+    },
+    {
+      "from": "project",
+      "requirement": "torch==2.9.0",
+      "selected": "2.9.0+cpu"
+    }
+  ],
+  "collection_authorized": false,
+  "declared_expanded_bytes": 1304650469,
+  "executable": false,
+  "extra_selected_distributions": [],
+  "gaps": [
+    {
+      "name": "python-louvain",
+      "reason": "source-only package metadata/build not assessed"
+    }
+  ],
+  "kind": "cpu-wheel-metadata-crosscheck-v1",
+  "licence_metadata_omissions": [
+    "pyopengl",
+    "seaborn"
+  ],
+  "metadata_dependency_edges_checked": 112,
+  "packaging_version": "26.3",
+  "payload_hashes_verified": false,
+  "reached_distribution_count": 71,
+  "requires_python_conflicts": [],
+  "roots": [
+    "torch==2.9.0",
+    "torchvision==0.24.0",
+    "numpy==2.2.5",
+    "scipy==1.15.2",
+    "pandas==2.2.3",
+    "scikit-learn==1.8.0",
+    "mujoco==3.3.6",
+    "gymnasium==1.2.1",
+    "glfw==2.10.0",
+    "opencv-python==4.12.0.88",
+    "matplotlib==3.10.1",
+    "seaborn==0.13.2",
+    "networkx==3.4.2",
+    "python-louvain==0.16",
+    "py7zr>=1.0,<2",
+    "fastapi==0.142.2",
+    "uvicorn==0.54.0",
+    "websockets==17.1",
+    "httpx==0.28.1",
+    "pytest>=8.3,<9"
+  ],
+  "rounded_4k_file_bytes_estimate": 1372884992,
+  "runtime_qualified": false,
+  "selected_wheels": 70,
+  "target_environment": {
+    "implementation_name": "cpython",
+    "implementation_version": "3.11.15",
+    "os_name": "posix",
+    "platform_machine": "x86_64",
+    "platform_python_implementation": "CPython",
+    "platform_release": "7.2.5-3-omarchy",
+    "platform_system": "Linux",
+    "platform_version": "#1 SMP PREEMPT_DYNAMIC Mon, 14 Sep 2026 19:55:01 +0000",
+    "python_full_version": "3.11.15",
+    "python_version": "3.11",
+    "sys_platform": "linux"
+  }
+}

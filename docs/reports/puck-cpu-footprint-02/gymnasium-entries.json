@@ -1,0 +1,1802 @@
+[
+  {
+    "compressed_size": 589,
+    "compression": 8,
+    "crc32": 3511490364,
+    "external_attr": 2175008768,
+    "name": "gymnasium/__init__.py",
+    "size_bytes": 1430
+  },
+  {
+    "compressed_size": 7751,
+    "compression": 8,
+    "crc32": 1318577763,
+    "external_attr": 2175008768,
+    "name": "gymnasium/core.py",
+    "size_bytes": 29659
+  },
+  {
+    "compressed_size": 964,
+    "compression": 8,
+    "crc32": 2718508733,
+    "external_attr": 2175008768,
+    "name": "gymnasium/error.py",
+    "size_bytes": 3147
+  },
+  {
+    "compressed_size": 521,
+    "compression": 8,
+    "crc32": 3402938920,
+    "external_attr": 2175008768,
+    "name": "gymnasium/logger.py",
+    "size_bytes": 1225
+  },
+  {
+    "compressed_size": 2,
+    "compression": 8,
+    "crc32": 0,
+    "external_attr": 2175008768,
+    "name": "gymnasium/py.typed",
+    "size_bytes": 0
+  },
+  {
+    "compressed_size": 1635,
+    "compression": 8,
+    "crc32": 811516754,
+    "external_attr": 2175008768,
+    "name": "gymnasium/envs/__init__.py",
+    "size_bytes": 9905
+  },
+  {
+    "compressed_size": 1570,
+    "compression": 8,
+    "crc32": 3247765367,
+    "external_attr": 2175008768,
+    "name": "gymnasium/envs/functional_jax_env.py",
+    "size_bytes": 7596
+  },
+  {
+    "compressed_size": 10454,
+    "compression": 8,
+    "crc32": 3554153496,
+    "external_attr": 2175008768,
+    "name": "gymnasium/envs/registration.py",
+    "size_bytes": 42407
+  },
+  {
+    "compressed_size": 122,
+    "compression": 8,
+    "crc32": 4126593866,
+    "external_attr": 2175008768,
+    "name": "gymnasium/envs/box2d/__init__.py",
+    "size_bytes": 220
+  },
+  {
+    "compressed_size": 7870,
+    "compression": 8,
+    "crc32": 614559031,
+    "external_attr": 2175008768,
+    "name": "gymnasium/envs/box2d/bipedal_walker.py",
+    "size_bytes": 32028
+  },
+  {
+    "compressed_size": 3337,
+    "compression": 8,
+    "crc32": 2923663900,
+    "external_attr": 2175008768,
+    "name": "gymnasium/envs/box2d/car_dynamics.py",
+    "size_bytes": 12259
+  },
+  {
+    "compressed_size": 8233,
+    "compression": 8,
+    "crc32": 3638199799,
+    "external_attr": 2175008768,
+    "name": "gymnasium/envs/box2d/car_racing.py",
+    "size_bytes": 29600
+  },
+  {
+    "compressed_size": 9625,
+    "compression": 8,
+    "crc32": 3543384761,
+    "external_attr": 2175008768,
+    "name": "gymnasium/envs/box2d/lunar_lander.py",
+    "size_bytes": 33877
+  },
+  {
+    "compressed_size": 137,
+    "compression": 8,
+    "crc32": 4086684014,
+    "external_attr": 2175008768,
+    "name": "gymnasium/envs/classic_control/__init__.py",
+    "size_bytes": 363
+  },
+  {
+    "compressed_size": 5936,
+    "compression": 8,
+    "crc32": 1153042643,
+    "external_attr": 2175008768,
+    "name": "gymnasium/envs/classic_control/acrobot.py",
+    "size_bytes": 17229
+  },
+  {
+    "compressed_size": 5468,
+    "compression": 8,
+    "crc32": 131311667,
+    "external_attr": 2175008768,
+    "name": "gymnasium/envs/classic_control/cartpole.py",
+    "size_bytes": 22790
+  },
+  {
+    "compressed_size": 3718,
+    "compression": 8,
+    "crc32": 2870048805,
+    "external_attr": 2175008768,
+    "name": "gymnasium/envs/classic_control/continuous_mountain_car.py",
+    "size_bytes": 11337
+  },
+  {
+    "compressed_size": 3416,
+    "compression": 8,
+    "crc32": 3613347056,
+    "external_attr": 2175008768,
+    "name": "gymnasium/envs/classic_control/mountain_car.py",
+    "size_bytes": 10366
+  },
+  {
+    "compressed_size": 3448,
+    "compression": 8,
+    "crc32": 1520935433,
+    "external_attr": 2175008768,
+    "name": "gymnasium/envs/classic_control/pendulum.py",
+    "size_bytes": 10303
+  },
+  {
+    "compressed_size": 624,
+    "compression": 8,
+    "crc32": 2381397847,
+    "external_attr": 2175008768,
+    "name": "gymnasium/envs/classic_control/utils.py",
+    "size_bytes": 1407
+  },
+  {
+    "compressed_size": 6922,
+    "compression": 8,
+    "crc32": 523976487,
+    "external_attr": 2175008768,
+    "name": "gymnasium/envs/classic_control/assets/clockwise.png",
+    "size_bytes": 6992
+  },
+  {
+    "compressed_size": 67,
+    "compression": 8,
+    "crc32": 1417341653,
+    "external_attr": 2175008768,
+    "name": "gymnasium/envs/mujoco/__init__.py",
+    "size_bytes": 121
+  },
+  {
+    "compressed_size": 1576,
+    "compression": 8,
+    "crc32": 2583613792,
+    "external_attr": 2175008768,
+    "name": "gymnasium/envs/mujoco/ant_v4.py",
+    "size_bytes": 5859
+  },
+  {
+    "compressed_size": 7008,
+    "compression": 8,
+    "crc32": 2183561309,
+    "external_attr": 2175008768,
+    "name": "gymnasium/envs/mujoco/ant_v5.py",
+    "size_bytes": 28699
+  },
+  {
+    "compressed_size": 1082,
+    "compression": 8,
+    "crc32": 2410057377,
+    "external_attr": 2175008768,
+    "name": "gymnasium/envs/mujoco/half_cheetah_v4.py",
+    "size_bytes": 3555
+  },
+  {
+    "compressed_size": 4332,
+    "compression": 8,
+    "crc32": 1788397945,
+    "external_attr": 2175008768,
+    "name": "gymnasium/envs/mujoco/half_cheetah_v5.py",
+    "size_bytes": 16006
+  },
+  {
+    "compressed_size": 1439,
+    "compression": 8,
+    "crc32": 3686457022,
+    "external_attr": 2175008768,
+    "name": "gymnasium/envs/mujoco/hopper_v4.py",
+    "size_bytes": 5166
+  },
+  {
+    "compressed_size": 5281,
+    "compression": 8,
+    "crc32": 2875328605,
+    "external_attr": 2175008768,
+    "name": "gymnasium/envs/mujoco/hopper_v5.py",
+    "size_bytes": 19804
+  },
+  {
+    "compressed_size": 1578,
+    "compression": 8,
+    "crc32": 3795293218,
+    "external_attr": 2175008768,
+    "name": "gymnasium/envs/mujoco/humanoid_v4.py",
+    "size_bytes": 5574
+  },
+  {
+    "compressed_size": 8091,
+    "compression": 8,
+    "crc32": 772648228,
+    "external_attr": 2175008768,
+    "name": "gymnasium/envs/mujoco/humanoid_v5.py",
+    "size_bytes": 40392
+  },
+  {
+    "compressed_size": 910,
+    "compression": 8,
+    "crc32": 2993479507,
+    "external_attr": 2175008768,
+    "name": "gymnasium/envs/mujoco/humanoidstandup_v4.py",
+    "size_bytes": 2522
+  },
+  {
+    "compressed_size": 7131,
+    "compression": 8,
+    "crc32": 3959038591,
+    "external_attr": 2175008768,
+    "name": "gymnasium/envs/mujoco/humanoidstandup_v5.py",
+    "size_bytes": 36392
+  },
+  {
+    "compressed_size": 906,
+    "compression": 8,
+    "crc32": 77917776,
+    "external_attr": 2175008768,
+    "name": "gymnasium/envs/mujoco/inverted_double_pendulum_v4.py",
+    "size_bytes": 2179
+  },
+  {
+    "compressed_size": 4166,
+    "compression": 8,
+    "crc32": 827337733,
+    "external_attr": 2175008768,
+    "name": "gymnasium/envs/mujoco/inverted_double_pendulum_v5.py",
+    "size_bytes": 12915
+  },
+  {
+    "compressed_size": 724,
+    "compression": 8,
+    "crc32": 4071995829,
+    "external_attr": 2175008768,
+    "name": "gymnasium/envs/mujoco/inverted_pendulum_v4.py",
+    "size_bytes": 1693
+  },
+  {
+    "compressed_size": 3172,
+    "compression": 8,
+    "crc32": 2631358720,
+    "external_attr": 2175008768,
+    "name": "gymnasium/envs/mujoco/inverted_pendulum_v5.py",
+    "size_bytes": 9067
+  },
+  {
+    "compressed_size": 2555,
+    "compression": 8,
+    "crc32": 3658216988,
+    "external_attr": 2175008768,
+    "name": "gymnasium/envs/mujoco/mujoco_env.py",
+    "size_bytes": 7805
+  },
+  {
+    "compressed_size": 2,
+    "compression": 8,
+    "crc32": 0,
+    "external_attr": 2175008768,
+    "name": "gymnasium/envs/mujoco/mujoco_py_env.py",
+    "size_bytes": 0
+  },
+  {
+    "compressed_size": 7548,
+    "compression": 8,
+    "crc32": 1603130626,
+    "external_attr": 2175008768,
+    "name": "gymnasium/envs/mujoco/mujoco_rendering.py",
+    "size_bytes": 29803
+  },
+  {
+    "compressed_size": 1064,
+    "compression": 8,
+    "crc32": 3953863571,
+    "external_attr": 2175008768,
+    "name": "gymnasium/envs/mujoco/pusher_v4.py",
+    "size_bytes": 2913
+  },
+  {
+    "compressed_size": 3988,
+    "compression": 8,
+    "crc32": 1305594753,
+    "external_attr": 2175008768,
+    "name": "gymnasium/envs/mujoco/pusher_v5.py",
+    "size_bytes": 15659
+  },
+  {
+    "compressed_size": 862,
+    "compression": 8,
+    "crc32": 2167999165,
+    "external_attr": 2175008768,
+    "name": "gymnasium/envs/mujoco/reacher_v4.py",
+    "size_bytes": 2362
+  },
+  {
+    "compressed_size": 3708,
+    "compression": 8,
+    "crc32": 2286579654,
+    "external_attr": 2175008768,
+    "name": "gymnasium/envs/mujoco/reacher_v5.py",
+    "size_bytes": 13027
+  },
+  {
+    "compressed_size": 1051,
+    "compression": 8,
+    "crc32": 3156336812,
+    "external_attr": 2175008768,
+    "name": "gymnasium/envs/mujoco/swimmer_v4.py",
+    "size_bytes": 3626
+  },
+  {
+    "compressed_size": 4465,
+    "compression": 8,
+    "crc32": 824237489,
+    "external_attr": 2175008768,
+    "name": "gymnasium/envs/mujoco/swimmer_v5.py",
+    "size_bytes": 15395
+  },
+  {
+    "compressed_size": 826,
+    "compression": 8,
+    "crc32": 1990639130,
+    "external_attr": 2175008768,
+    "name": "gymnasium/envs/mujoco/utils.py",
+    "size_bytes": 2675
+  },
+  {
+    "compressed_size": 1350,
+    "compression": 8,
+    "crc32": 3534369467,
+    "external_attr": 2175008768,
+    "name": "gymnasium/envs/mujoco/walker2d_v4.py",
+    "size_bytes": 4824
+  },
+  {
+    "compressed_size": 5420,
+    "compression": 8,
+    "crc32": 3479923646,
+    "external_attr": 2175008768,
+    "name": "gymnasium/envs/mujoco/walker2d_v5.py",
+    "size_bytes": 20528
+  },
+  {
+    "compressed_size": 1048,
+    "compression": 8,
+    "crc32": 1063082519,
+    "external_attr": 2175008768,
+    "name": "gymnasium/envs/mujoco/assets/ant.xml",
+    "size_bytes": 4934
+  },
+  {
+    "compressed_size": 1467,
+    "compression": 8,
+    "crc32": 863983721,
+    "external_attr": 2175008768,
+    "name": "gymnasium/envs/mujoco/assets/half_cheetah.xml",
+    "size_bytes": 5616
+  },
+  {
+    "compressed_size": 1081,
+    "compression": 8,
+    "crc32": 1664406643,
+    "external_attr": 2175008768,
+    "name": "gymnasium/envs/mujoco/assets/hopper.xml",
+    "size_bytes": 3228
+  },
+  {
+    "compressed_size": 1750,
+    "compression": 8,
+    "crc32": 2362600690,
+    "external_attr": 2175008768,
+    "name": "gymnasium/envs/mujoco/assets/humanoid.xml",
+    "size_bytes": 8745
+  },
+  {
+    "compressed_size": 1756,
+    "compression": 8,
+    "crc32": 1154053029,
+    "external_attr": 2175008768,
+    "name": "gymnasium/envs/mujoco/assets/humanoidstandup.xml",
+    "size_bytes": 8733
+  },
+  {
+    "compressed_size": 739,
+    "compression": 8,
+    "crc32": 2580574779,
+    "external_attr": 2175008768,
+    "name": "gymnasium/envs/mujoco/assets/inverted_double_pendulum.xml",
+    "size_bytes": 1954
+  },
+  {
+    "compressed_size": 528,
+    "compression": 8,
+    "crc32": 1846649028,
+    "external_attr": 2175008768,
+    "name": "gymnasium/envs/mujoco/assets/inverted_pendulum.xml",
+    "size_bytes": 1353
+  },
+  {
+    "compressed_size": 721,
+    "compression": 8,
+    "crc32": 3067177194,
+    "external_attr": 2175008768,
+    "name": "gymnasium/envs/mujoco/assets/point.xml",
+    "size_bytes": 1815
+  },
+  {
+    "compressed_size": 1104,
+    "compression": 8,
+    "crc32": 2933877898,
+    "external_attr": 2175008768,
+    "name": "gymnasium/envs/mujoco/assets/pusher.xml",
+    "size_bytes": 5363
+  },
+  {
+    "compressed_size": 1218,
+    "compression": 8,
+    "crc32": 4031112773,
+    "external_attr": 2175008768,
+    "name": "gymnasium/envs/mujoco/assets/pusher_v5.xml",
+    "size_bytes": 5553
+  },
+  {
+    "compressed_size": 651,
+    "compression": 8,
+    "crc32": 197415842,
+    "external_attr": 2175008768,
+    "name": "gymnasium/envs/mujoco/assets/reacher.xml",
+    "size_bytes": 2323
+  },
+  {
+    "compressed_size": 820,
+    "compression": 8,
+    "crc32": 3518023340,
+    "external_attr": 2175008768,
+    "name": "gymnasium/envs/mujoco/assets/swimmer.xml",
+    "size_bytes": 2322
+  },
+  {
+    "compressed_size": 1273,
+    "compression": 8,
+    "crc32": 2984488488,
+    "external_attr": 2175008768,
+    "name": "gymnasium/envs/mujoco/assets/walker2d.xml",
+    "size_bytes": 4951
+  },
+  {
+    "compressed_size": 1269,
+    "compression": 8,
+    "crc32": 3364800927,
+    "external_attr": 2175008768,
+    "name": "gymnasium/envs/mujoco/assets/walker2d_v5.xml",
+    "size_bytes": 4946
+  },
+  {
+    "compressed_size": 144,
+    "compression": 8,
+    "crc32": 1100527600,
+    "external_attr": 2175008768,
+    "name": "gymnasium/envs/phys2d/__init__.py",
+    "size_bytes": 247
+  },
+  {
+    "compressed_size": 2598,
+    "compression": 8,
+    "crc32": 1803219200,
+    "external_attr": 2175008768,
+    "name": "gymnasium/envs/phys2d/cartpole.py",
+    "size_bytes": 9890
+  },
+  {
+    "compressed_size": 2519,
+    "compression": 8,
+    "crc32": 413610527,
+    "external_attr": 2175008768,
+    "name": "gymnasium/envs/phys2d/pendulum.py",
+    "size_bytes": 9298
+  },
+  {
+    "compressed_size": 6922,
+    "compression": 8,
+    "crc32": 523976487,
+    "external_attr": 2175008768,
+    "name": "gymnasium/envs/phys2d/assets/clockwise.png",
+    "size_bytes": 6992
+  },
+  {
+    "compressed_size": 121,
+    "compression": 8,
+    "crc32": 1398935173,
+    "external_attr": 2175008768,
+    "name": "gymnasium/envs/tabular/__init__.py",
+    "size_bytes": 181
+  },
+  {
+    "compressed_size": 5066,
+    "compression": 8,
+    "crc32": 1729843878,
+    "external_attr": 2175008768,
+    "name": "gymnasium/envs/tabular/blackjack.py",
+    "size_bytes": 17769
+  },
+  {
+    "compressed_size": 3906,
+    "compression": 8,
+    "crc32": 762067091,
+    "external_attr": 2175008768,
+    "name": "gymnasium/envs/tabular/cliffwalking.py",
+    "size_bytes": 13652
+  },
+  {
+    "compressed_size": 109,
+    "compression": 8,
+    "crc32": 2003478562,
+    "external_attr": 2175008768,
+    "name": "gymnasium/envs/toy_text/__init__.py",
+    "size_bytes": 235
+  },
+  {
+    "compressed_size": 4082,
+    "compression": 8,
+    "crc32": 3466636281,
+    "external_attr": 2175008768,
+    "name": "gymnasium/envs/toy_text/blackjack.py",
+    "size_bytes": 12536
+  },
+  {
+    "compressed_size": 3952,
+    "compression": 8,
+    "crc32": 3126963363,
+    "external_attr": 2175008768,
+    "name": "gymnasium/envs/toy_text/cliffwalking.py",
+    "size_bytes": 13347
+  },
+  {
+    "compressed_size": 5225,
+    "compression": 8,
+    "crc32": 1932839224,
+    "external_attr": 2175008768,
+    "name": "gymnasium/envs/toy_text/frozen_lake.py",
+    "size_bytes": 17333
+  },
+  {
+    "compressed_size": 6553,
+    "compression": 8,
+    "crc32": 2025516784,
+    "external_attr": 2175008768,
+    "name": "gymnasium/envs/toy_text/taxi.py",
+    "size_bytes": 25184
+  },
+  {
+    "compressed_size": 180,
+    "compression": 8,
+    "crc32": 2727634690,
+    "external_attr": 2175008768,
+    "name": "gymnasium/envs/toy_text/utils.py",
+    "size_bytes": 295
+  },
+  {
+    "compressed_size": 4709,
+    "compression": 8,
+    "crc32": 1008089860,
+    "external_attr": 2175008768,
+    "name": "gymnasium/envs/toy_text/font/Minecraft.ttf",
+    "size_bytes": 14488
+  },
+  {
+    "compressed_size": 4241,
+    "compression": 8,
+    "crc32": 1041116397,
+    "external_attr": 2175008768,
+    "name": "gymnasium/envs/toy_text/img/C2.png",
+    "size_bytes": 6275
+  },
+  {
+    "compressed_size": 4897,
+    "compression": 8,
+    "crc32": 2175145397,
+    "external_attr": 2175008768,
+    "name": "gymnasium/envs/toy_text/img/C3.png",
+    "size_bytes": 6947
+  },
+  {
+    "compressed_size": 5049,
+    "compression": 8,
+    "crc32": 1675677255,
+    "external_attr": 2175008768,
+    "name": "gymnasium/envs/toy_text/img/C4.png",
+    "size_bytes": 7115
+  },
+  {
+    "compressed_size": 5837,
+    "compression": 8,
+    "crc32": 1182143876,
+    "external_attr": 2175008768,
+    "name": "gymnasium/envs/toy_text/img/C5.png",
+    "size_bytes": 7948
+  },
+  {
+    "compressed_size": 6345,
+    "compression": 8,
+    "crc32": 2803782895,
+    "external_attr": 2175008768,
+    "name": "gymnasium/envs/toy_text/img/C6.png",
+    "size_bytes": 8488
+  },
+  {
+    "compressed_size": 6669,
+    "compression": 8,
+    "crc32": 2395069352,
+    "external_attr": 2175008768,
+    "name": "gymnasium/envs/toy_text/img/C7.png",
+    "size_bytes": 8704
+  },
+  {
+    "compressed_size": 7495,
+    "compression": 8,
+    "crc32": 3840216481,
+    "external_attr": 2175008768,
+    "name": "gymnasium/envs/toy_text/img/C8.png",
+    "size_bytes": 9807
+  },
+  {
+    "compressed_size": 8062,
+    "compression": 8,
+    "crc32": 2269282840,
+    "external_attr": 2175008768,
+    "name": "gymnasium/envs/toy_text/img/C9.png",
+    "size_bytes": 10427
+  },
+  {
+    "compressed_size": 4602,
+    "compression": 8,
+    "crc32": 4125337259,
+    "external_attr": 2175008768,
+    "name": "gymnasium/envs/toy_text/img/CA.png",
+    "size_bytes": 6621
+  },
+  {
+    "compressed_size": 16043,
+    "compression": 8,
+    "crc32": 436055528,
+    "external_attr": 2175008768,
+    "name": "gymnasium/envs/toy_text/img/CJ.png",
+    "size_bytes": 18635
+  },
+  {
+    "compressed_size": 16765,
+    "compression": 8,
+    "crc32": 2358923126,
+    "external_attr": 2175008768,
+    "name": "gymnasium/envs/toy_text/img/CK.png",
+    "size_bytes": 19498
+  },
+  {
+    "compressed_size": 16034,
+    "compression": 8,
+    "crc32": 787853882,
+    "external_attr": 2175008768,
+    "name": "gymnasium/envs/toy_text/img/CQ.png",
+    "size_bytes": 18772
+  },
+  {
+    "compressed_size": 7999,
+    "compression": 8,
+    "crc32": 3703440548,
+    "external_attr": 2175008768,
+    "name": "gymnasium/envs/toy_text/img/CT.png",
+    "size_bytes": 10454
+  },
+  {
+    "compressed_size": 40567,
+    "compression": 8,
+    "crc32": 3705521590,
+    "external_attr": 2175008768,
+    "name": "gymnasium/envs/toy_text/img/Card.png",
+    "size_bytes": 44172
+  },
+  {
+    "compressed_size": 3826,
+    "compression": 8,
+    "crc32": 2987950441,
+    "external_attr": 2175008768,
+    "name": "gymnasium/envs/toy_text/img/D2.png",
+    "size_bytes": 5905
+  },
+  {
+    "compressed_size": 4492,
+    "compression": 8,
+    "crc32": 678292506,
+    "external_attr": 2175008768,
+    "name": "gymnasium/envs/toy_text/img/D3.png",
+    "size_bytes": 6501
+  },
+  {
+    "compressed_size": 4624,
+    "compression": 8,
+    "crc32": 1136956037,
+    "external_attr": 2175008768,
+    "name": "gymnasium/envs/toy_text/img/D4.png",
+    "size_bytes": 6660
+  },
+  {
+    "compressed_size": 5424,
+    "compression": 8,
+    "crc32": 3640867415,
+    "external_attr": 2175008768,
+    "name": "gymnasium/envs/toy_text/img/D5.png",
+    "size_bytes": 7451
+  },
+  {
+    "compressed_size": 5916,
+    "compression": 8,
+    "crc32": 1478590257,
+    "external_attr": 2175008768,
+    "name": "gymnasium/envs/toy_text/img/D6.png",
+    "size_bytes": 7931
+  },
+  {
+    "compressed_size": 6126,
+    "compression": 8,
+    "crc32": 4269598527,
+    "external_attr": 2175008768,
+    "name": "gymnasium/envs/toy_text/img/D7.png",
+    "size_bytes": 8138
+  },
+  {
+    "compressed_size": 7113,
+    "compression": 8,
+    "crc32": 2302017089,
+    "external_attr": 2175008768,
+    "name": "gymnasium/envs/toy_text/img/D8.png",
+    "size_bytes": 9027
+  },
+  {
+    "compressed_size": 7231,
+    "compression": 8,
+    "crc32": 2086128339,
+    "external_attr": 2175008768,
+    "name": "gymnasium/envs/toy_text/img/D9.png",
+    "size_bytes": 9529
+  },
+  {
+    "compressed_size": 4231,
+    "compression": 8,
+    "crc32": 1696025021,
+    "external_attr": 2175008768,
+    "name": "gymnasium/envs/toy_text/img/DA.png",
+    "size_bytes": 6252
+  },
+  {
+    "compressed_size": 15679,
+    "compression": 8,
+    "crc32": 2995906182,
+    "external_attr": 2175008768,
+    "name": "gymnasium/envs/toy_text/img/DJ.png",
+    "size_bytes": 18468
+  },
+  {
+    "compressed_size": 16400,
+    "compression": 8,
+    "crc32": 2941173845,
+    "external_attr": 2175008768,
+    "name": "gymnasium/envs/toy_text/img/DK.png",
+    "size_bytes": 19118
+  },
+  {
+    "compressed_size": 15799,
+    "compression": 8,
+    "crc32": 3038208556,
+    "external_attr": 2175008768,
+    "name": "gymnasium/envs/toy_text/img/DQ.png",
+    "size_bytes": 18375
+  },
+  {
+    "compressed_size": 7227,
+    "compression": 8,
+    "crc32": 1178143166,
+    "external_attr": 2175008768,
+    "name": "gymnasium/envs/toy_text/img/DT.png",
+    "size_bytes": 9546
+  },
+  {
+    "compressed_size": 3891,
+    "compression": 8,
+    "crc32": 2576634302,
+    "external_attr": 2175008768,
+    "name": "gymnasium/envs/toy_text/img/H2.png",
+    "size_bytes": 5898
+  },
+  {
+    "compressed_size": 4451,
+    "compression": 8,
+    "crc32": 597107596,
+    "external_attr": 2175008768,
+    "name": "gymnasium/envs/toy_text/img/H3.png",
+    "size_bytes": 6466
+  },
+  {
+    "compressed_size": 4573,
+    "compression": 8,
+    "crc32": 1512652120,
+    "external_attr": 2175008768,
+    "name": "gymnasium/envs/toy_text/img/H4.png",
+    "size_bytes": 6623
+  },
+  {
+    "compressed_size": 5362,
+    "compression": 8,
+    "crc32": 1264398099,
+    "external_attr": 2175008768,
+    "name": "gymnasium/envs/toy_text/img/H5.png",
+    "size_bytes": 7384
+  },
+  {
+    "compressed_size": 5849,
+    "compression": 8,
+    "crc32": 3232951006,
+    "external_attr": 2175008768,
+    "name": "gymnasium/envs/toy_text/img/H6.png",
+    "size_bytes": 7884
+  },
+  {
+    "compressed_size": 6036,
+    "compression": 8,
+    "crc32": 3482410711,
+    "external_attr": 2175008768,
+    "name": "gymnasium/envs/toy_text/img/H7.png",
+    "size_bytes": 8041
+  },
+  {
+    "compressed_size": 6873,
+    "compression": 8,
+    "crc32": 241576344,
+    "external_attr": 2175008768,
+    "name": "gymnasium/envs/toy_text/img/H8.png",
+    "size_bytes": 8882
+  },
+  {
+    "compressed_size": 7282,
+    "compression": 8,
+    "crc32": 4100510852,
+    "external_attr": 2175008768,
+    "name": "gymnasium/envs/toy_text/img/H9.png",
+    "size_bytes": 9402
+  },
+  {
+    "compressed_size": 4867,
+    "compression": 8,
+    "crc32": 2711068996,
+    "external_attr": 2175008768,
+    "name": "gymnasium/envs/toy_text/img/HA.png",
+    "size_bytes": 6870
+  },
+  {
+    "compressed_size": 15849,
+    "compression": 8,
+    "crc32": 3165175352,
+    "external_attr": 2175008768,
+    "name": "gymnasium/envs/toy_text/img/HJ.png",
+    "size_bytes": 18394
+  },
+  {
+    "compressed_size": 16927,
+    "compression": 8,
+    "crc32": 542235771,
+    "external_attr": 2175008768,
+    "name": "gymnasium/envs/toy_text/img/HK.png",
+    "size_bytes": 19561
+  },
+  {
+    "compressed_size": 17562,
+    "compression": 8,
+    "crc32": 3402322228,
+    "external_attr": 2175008768,
+    "name": "gymnasium/envs/toy_text/img/HQ.png",
+    "size_bytes": 20159
+  },
+  {
+    "compressed_size": 7297,
+    "compression": 8,
+    "crc32": 3281209184,
+    "external_attr": 2175008768,
+    "name": "gymnasium/envs/toy_text/img/HT.png",
+    "size_bytes": 9366
+  },
+  {
+    "compressed_size": 4126,
+    "compression": 8,
+    "crc32": 3763036513,
+    "external_attr": 2175008768,
+    "name": "gymnasium/envs/toy_text/img/S2.png",
+    "size_bytes": 6205
+  },
+  {
+    "compressed_size": 4786,
+    "compression": 8,
+    "crc32": 1511839852,
+    "external_attr": 2175008768,
+    "name": "gymnasium/envs/toy_text/img/S3.png",
+    "size_bytes": 6812
+  },
+  {
+    "compressed_size": 4919,
+    "compression": 8,
+    "crc32": 262086636,
+    "external_attr": 2175008768,
+    "name": "gymnasium/envs/toy_text/img/S4.png",
+    "size_bytes": 7012
+  },
+  {
+    "compressed_size": 5788,
+    "compression": 8,
+    "crc32": 684289135,
+    "external_attr": 2175008768,
+    "name": "gymnasium/envs/toy_text/img/S5.png",
+    "size_bytes": 7809
+  },
+  {
+    "compressed_size": 6320,
+    "compression": 8,
+    "crc32": 1934895990,
+    "external_attr": 2175008768,
+    "name": "gymnasium/envs/toy_text/img/S6.png",
+    "size_bytes": 8370
+  },
+  {
+    "compressed_size": 6613,
+    "compression": 8,
+    "crc32": 4247697974,
+    "external_attr": 2175008768,
+    "name": "gymnasium/envs/toy_text/img/S7.png",
+    "size_bytes": 8585
+  },
+  {
+    "compressed_size": 7201,
+    "compression": 8,
+    "crc32": 3754336360,
+    "external_attr": 2175008768,
+    "name": "gymnasium/envs/toy_text/img/S8.png",
+    "size_bytes": 9527
+  },
+  {
+    "compressed_size": 7670,
+    "compression": 8,
+    "crc32": 563449160,
+    "external_attr": 2175008768,
+    "name": "gymnasium/envs/toy_text/img/S9.png",
+    "size_bytes": 9931
+  },
+  {
+    "compressed_size": 4649,
+    "compression": 8,
+    "crc32": 2961246,
+    "external_attr": 2175008768,
+    "name": "gymnasium/envs/toy_text/img/SA.png",
+    "size_bytes": 6630
+  },
+  {
+    "compressed_size": 15595,
+    "compression": 8,
+    "crc32": 980848359,
+    "external_attr": 2175008768,
+    "name": "gymnasium/envs/toy_text/img/SJ.png",
+    "size_bytes": 18175
+  },
+  {
+    "compressed_size": 16481,
+    "compression": 8,
+    "crc32": 369694316,
+    "external_attr": 2175008768,
+    "name": "gymnasium/envs/toy_text/img/SK.png",
+    "size_bytes": 19256
+  },
+  {
+    "compressed_size": 17142,
+    "compression": 8,
+    "crc32": 2572681166,
+    "external_attr": 2175008768,
+    "name": "gymnasium/envs/toy_text/img/SQ.png",
+    "size_bytes": 19809
+  },
+  {
+    "compressed_size": 7473,
+    "compression": 8,
+    "crc32": 2195915125,
+    "external_attr": 2175008768,
+    "name": "gymnasium/envs/toy_text/img/ST.png",
+    "size_bytes": 9816
+  },
+  {
+    "compressed_size": 896,
+    "compression": 8,
+    "crc32": 2198227147,
+    "external_attr": 2175008768,
+    "name": "gymnasium/envs/toy_text/img/cab_front.png",
+    "size_bytes": 891
+  },
+  {
+    "compressed_size": 960,
+    "compression": 8,
+    "crc32": 1586247875,
+    "external_attr": 2175008768,
+    "name": "gymnasium/envs/toy_text/img/cab_left.png",
+    "size_bytes": 955
+  },
+  {
+    "compressed_size": 897,
+    "compression": 8,
+    "crc32": 3939140190,
+    "external_attr": 2175008768,
+    "name": "gymnasium/envs/toy_text/img/cab_rear.png",
+    "size_bytes": 892
+  },
+  {
+    "compressed_size": 975,
+    "compression": 8,
+    "crc32": 2632704651,
+    "external_attr": 2175008768,
+    "name": "gymnasium/envs/toy_text/img/cab_right.png",
+    "size_bytes": 970
+  },
+  {
+    "compressed_size": 1743,
+    "compression": 8,
+    "crc32": 1275430824,
+    "external_attr": 2175008768,
+    "name": "gymnasium/envs/toy_text/img/cookie.png",
+    "size_bytes": 3455
+  },
+  {
+    "compressed_size": 681,
+    "compression": 8,
+    "crc32": 1988035964,
+    "external_attr": 2175008768,
+    "name": "gymnasium/envs/toy_text/img/cracked_hole.png",
+    "size_bytes": 706
+  },
+  {
+    "compressed_size": 940,
+    "compression": 8,
+    "crc32": 1622628854,
+    "external_attr": 2175008768,
+    "name": "gymnasium/envs/toy_text/img/elf_down.png",
+    "size_bytes": 935
+  },
+  {
+    "compressed_size": 877,
+    "compression": 8,
+    "crc32": 3963636643,
+    "external_attr": 2175008768,
+    "name": "gymnasium/envs/toy_text/img/elf_left.png",
+    "size_bytes": 872
+  },
+  {
+    "compressed_size": 863,
+    "compression": 8,
+    "crc32": 2628971431,
+    "external_attr": 2175008768,
+    "name": "gymnasium/envs/toy_text/img/elf_right.png",
+    "size_bytes": 858
+  },
+  {
+    "compressed_size": 847,
+    "compression": 8,
+    "crc32": 3896748281,
+    "external_attr": 2175008768,
+    "name": "gymnasium/envs/toy_text/img/elf_up.png",
+    "size_bytes": 842
+  },
+  {
+    "compressed_size": 476,
+    "compression": 8,
+    "crc32": 2444440568,
+    "external_attr": 2175008768,
+    "name": "gymnasium/envs/toy_text/img/goal.png",
+    "size_bytes": 526
+  },
+  {
+    "compressed_size": 2804,
+    "compression": 8,
+    "crc32": 1691182557,
+    "external_attr": 2175008768,
+    "name": "gymnasium/envs/toy_text/img/gridworld_median_bottom.png",
+    "size_bytes": 2799
+  },
+  {
+    "compressed_size": 2357,
+    "compression": 8,
+    "crc32": 97772039,
+    "external_attr": 2175008768,
+    "name": "gymnasium/envs/toy_text/img/gridworld_median_horiz.png",
+    "size_bytes": 2352
+  },
+  {
+    "compressed_size": 2566,
+    "compression": 8,
+    "crc32": 3391726657,
+    "external_attr": 2175008768,
+    "name": "gymnasium/envs/toy_text/img/gridworld_median_left.png",
+    "size_bytes": 2561
+  },
+  {
+    "compressed_size": 2525,
+    "compression": 8,
+    "crc32": 2678391398,
+    "external_attr": 2175008768,
+    "name": "gymnasium/envs/toy_text/img/gridworld_median_right.png",
+    "size_bytes": 2520
+  },
+  {
+    "compressed_size": 2849,
+    "compression": 8,
+    "crc32": 4224852420,
+    "external_attr": 2175008768,
+    "name": "gymnasium/envs/toy_text/img/gridworld_median_top.png",
+    "size_bytes": 2844
+  },
+  {
+    "compressed_size": 2599,
+    "compression": 8,
+    "crc32": 3799627489,
+    "external_attr": 2175008768,
+    "name": "gymnasium/envs/toy_text/img/gridworld_median_vert.png",
+    "size_bytes": 2594
+  },
+  {
+    "compressed_size": 652,
+    "compression": 8,
+    "crc32": 1888215729,
+    "external_attr": 2175008768,
+    "name": "gymnasium/envs/toy_text/img/hole.png",
+    "size_bytes": 676
+  },
+  {
+    "compressed_size": 19210,
+    "compression": 8,
+    "crc32": 2774394460,
+    "external_attr": 2175008768,
+    "name": "gymnasium/envs/toy_text/img/hotel.png",
+    "size_bytes": 21682
+  },
+  {
+    "compressed_size": 457,
+    "compression": 8,
+    "crc32": 2989045696,
+    "external_attr": 2175008768,
+    "name": "gymnasium/envs/toy_text/img/ice.png",
+    "size_bytes": 494
+  },
+  {
+    "compressed_size": 621,
+    "compression": 8,
+    "crc32": 3792831135,
+    "external_attr": 2175008768,
+    "name": "gymnasium/envs/toy_text/img/mountain_bg1.png",
+    "size_bytes": 651
+  },
+  {
+    "compressed_size": 611,
+    "compression": 8,
+    "crc32": 1037637055,
+    "external_attr": 2175008768,
+    "name": "gymnasium/envs/toy_text/img/mountain_bg2.png",
+    "size_bytes": 643
+  },
+  {
+    "compressed_size": 397,
+    "compression": 8,
+    "crc32": 82338918,
+    "external_attr": 2175008768,
+    "name": "gymnasium/envs/toy_text/img/mountain_cliff.png",
+    "size_bytes": 442
+  },
+  {
+    "compressed_size": 676,
+    "compression": 8,
+    "crc32": 3397133169,
+    "external_attr": 2175008768,
+    "name": "gymnasium/envs/toy_text/img/mountain_near-cliff1.png",
+    "size_bytes": 706
+  },
+  {
+    "compressed_size": 675,
+    "compression": 8,
+    "crc32": 790725310,
+    "external_attr": 2175008768,
+    "name": "gymnasium/envs/toy_text/img/mountain_near-cliff2.png",
+    "size_bytes": 704
+  },
+  {
+    "compressed_size": 822,
+    "compression": 8,
+    "crc32": 1559148053,
+    "external_attr": 2175008768,
+    "name": "gymnasium/envs/toy_text/img/passenger.png",
+    "size_bytes": 817
+  },
+  {
+    "compressed_size": 656,
+    "compression": 8,
+    "crc32": 1123148351,
+    "external_attr": 2175008768,
+    "name": "gymnasium/envs/toy_text/img/stool.png",
+    "size_bytes": 651
+  },
+  {
+    "compressed_size": 2336,
+    "compression": 8,
+    "crc32": 3344539694,
+    "external_attr": 2175008768,
+    "name": "gymnasium/envs/toy_text/img/taxi_background.png",
+    "size_bytes": 2331
+  },
+  {
+    "compressed_size": 29,
+    "compression": 8,
+    "crc32": 1695701129,
+    "external_attr": 2175008768,
+    "name": "gymnasium/experimental/__init__.py",
+    "size_bytes": 27
+  },
+  {
+    "compressed_size": 1449,
+    "compression": 8,
+    "crc32": 1566772548,
+    "external_attr": 2175008768,
+    "name": "gymnasium/experimental/functional.py",
+    "size_bytes": 4928
+  },
+  {
+    "compressed_size": 637,
+    "compression": 8,
+    "crc32": 3430044826,
+    "external_attr": 2175008768,
+    "name": "gymnasium/spaces/__init__.py",
+    "size_bytes": 1591
+  },
+  {
+    "compressed_size": 4911,
+    "compression": 8,
+    "crc32": 297517746,
+    "external_attr": 2175008768,
+    "name": "gymnasium/spaces/box.py",
+    "size_bytes": 19897
+  },
+  {
+    "compressed_size": 3484,
+    "compression": 8,
+    "crc32": 1417868523,
+    "external_attr": 2175008768,
+    "name": "gymnasium/spaces/dict.py",
+    "size_bytes": 11448
+  },
+  {
+    "compressed_size": 2332,
+    "compression": 8,
+    "crc32": 2688252405,
+    "external_attr": 2175008768,
+    "name": "gymnasium/spaces/discrete.py",
+    "size_bytes": 7699
+  },
+  {
+    "compressed_size": 3824,
+    "compression": 8,
+    "crc32": 3918343370,
+    "external_attr": 2175008768,
+    "name": "gymnasium/spaces/graph.py",
+    "size_bytes": 15149
+  },
+  {
+    "compressed_size": 1986,
+    "compression": 8,
+    "crc32": 2336146360,
+    "external_attr": 2175008768,
+    "name": "gymnasium/spaces/multi_binary.py",
+    "size_bytes": 6565
+  },
+  {
+    "compressed_size": 3561,
+    "compression": 8,
+    "crc32": 318739222,
+    "external_attr": 2175008768,
+    "name": "gymnasium/spaces/multi_discrete.py",
+    "size_bytes": 11881
+  },
+  {
+    "compressed_size": 2518,
+    "compression": 8,
+    "crc32": 2904890987,
+    "external_attr": 2175008768,
+    "name": "gymnasium/spaces/oneof.py",
+    "size_bytes": 8344
+  },
+  {
+    "compressed_size": 2849,
+    "compression": 8,
+    "crc32": 2291730150,
+    "external_attr": 2175008768,
+    "name": "gymnasium/spaces/sequence.py",
+    "size_bytes": 10197
+  },
+  {
+    "compressed_size": 2427,
+    "compression": 8,
+    "crc32": 1928444317,
+    "external_attr": 2175008768,
+    "name": "gymnasium/spaces/space.py",
+    "size_bytes": 6852
+  },
+  {
+    "compressed_size": 2621,
+    "compression": 8,
+    "crc32": 3582106228,
+    "external_attr": 2175008768,
+    "name": "gymnasium/spaces/text.py",
+    "size_bytes": 9681
+  },
+  {
+    "compressed_size": 2303,
+    "compression": 8,
+    "crc32": 2230714150,
+    "external_attr": 2175008768,
+    "name": "gymnasium/spaces/tuple.py",
+    "size_bytes": 7598
+  },
+  {
+    "compressed_size": 5309,
+    "compression": 8,
+    "crc32": 1104135508,
+    "external_attr": 2175008768,
+    "name": "gymnasium/spaces/utils.py",
+    "size_bytes": 23646
+  },
+  {
+    "compressed_size": 308,
+    "compression": 8,
+    "crc32": 2462416578,
+    "external_attr": 2175008768,
+    "name": "gymnasium/utils/__init__.py",
+    "size_bytes": 563
+  },
+  {
+    "compressed_size": 500,
+    "compression": 8,
+    "crc32": 1285699936,
+    "external_attr": 2175008768,
+    "name": "gymnasium/utils/colorize.py",
+    "size_bytes": 974
+  },
+  {
+    "compressed_size": 4618,
+    "compression": 8,
+    "crc32": 3984763171,
+    "external_attr": 2175008768,
+    "name": "gymnasium/utils/env_checker.py",
+    "size_bytes": 18666
+  },
+  {
+    "compressed_size": 1454,
+    "compression": 8,
+    "crc32": 3013453491,
+    "external_attr": 2175008768,
+    "name": "gymnasium/utils/env_match.py",
+    "size_bytes": 7548
+  },
+  {
+    "compressed_size": 592,
+    "compression": 8,
+    "crc32": 4053162441,
+    "external_attr": 2175008768,
+    "name": "gymnasium/utils/ezpickle.py",
+    "size_bytes": 1427
+  },
+  {
+    "compressed_size": 3797,
+    "compression": 8,
+    "crc32": 3327214582,
+    "external_attr": 2175008768,
+    "name": "gymnasium/utils/passive_env_checker.py",
+    "size_bytes": 16600
+  },
+  {
+    "compressed_size": 780,
+    "compression": 8,
+    "crc32": 2566585135,
+    "external_attr": 2175008768,
+    "name": "gymnasium/utils/performance.py",
+    "size_bytes": 2775
+  },
+  {
+    "compressed_size": 4873,
+    "compression": 8,
+    "crc32": 3364473054,
+    "external_attr": 2175008768,
+    "name": "gymnasium/utils/play.py",
+    "size_bytes": 16669
+  },
+  {
+    "compressed_size": 521,
+    "compression": 8,
+    "crc32": 664836191,
+    "external_attr": 2175008768,
+    "name": "gymnasium/utils/record_constructor.py",
+    "size_bytes": 1294
+  },
+  {
+    "compressed_size": 1666,
+    "compression": 8,
+    "crc32": 800512852,
+    "external_attr": 2175008768,
+    "name": "gymnasium/utils/save_video.py",
+    "size_bytes": 4638
+  },
+  {
+    "compressed_size": 647,
+    "compression": 8,
+    "crc32": 2382484781,
+    "external_attr": 2175008768,
+    "name": "gymnasium/utils/seeding.py",
+    "size_bytes": 1443
+  },
+  {
+    "compressed_size": 1534,
+    "compression": 8,
+    "crc32": 2729817651,
+    "external_attr": 2175008768,
+    "name": "gymnasium/utils/step_api_compatibility.py",
+    "size_bytes": 7157
+  },
+  {
+    "compressed_size": 210,
+    "compression": 8,
+    "crc32": 377034936,
+    "external_attr": 2175008768,
+    "name": "gymnasium/vector/__init__.py",
+    "size_bytes": 585
+  },
+  {
+    "compressed_size": 7851,
+    "compression": 8,
+    "crc32": 3183203942,
+    "external_attr": 2175008768,
+    "name": "gymnasium/vector/async_vector_env.py",
+    "size_bytes": 34824
+  },
+  {
+    "compressed_size": 3916,
+    "compression": 8,
+    "crc32": 2065516775,
+    "external_attr": 2175008768,
+    "name": "gymnasium/vector/sync_vector_env.py",
+    "size_bytes": 15782
+  },
+  {
+    "compressed_size": 5938,
+    "compression": 8,
+    "crc32": 34685839,
+    "external_attr": 2175008768,
+    "name": "gymnasium/vector/vector_env.py",
+    "size_bytes": 24534
+  },
+  {
+    "compressed_size": 269,
+    "compression": 8,
+    "crc32": 551563794,
+    "external_attr": 2175008768,
+    "name": "gymnasium/vector/utils/__init__.py",
+    "size_bytes": 698
+  },
+  {
+    "compressed_size": 722,
+    "compression": 8,
+    "crc32": 1417636423,
+    "external_attr": 2175008768,
+    "name": "gymnasium/vector/utils/misc.py",
+    "size_bytes": 1707
+  },
+  {
+    "compressed_size": 2234,
+    "compression": 8,
+    "crc32": 3448399242,
+    "external_attr": 2175008768,
+    "name": "gymnasium/vector/utils/shared_memory.py",
+    "size_bytes": 10098
+  },
+  {
+    "compressed_size": 4177,
+    "compression": 8,
+    "crc32": 3354708999,
+    "external_attr": 2175008768,
+    "name": "gymnasium/vector/utils/space_utils.py",
+    "size_bytes": 18600
+  },
+  {
+    "compressed_size": 2164,
+    "compression": 8,
+    "crc32": 2670503526,
+    "external_attr": 2175008768,
+    "name": "gymnasium/wrappers/__init__.py",
+    "size_bytes": 6652
+  },
+  {
+    "compressed_size": 3627,
+    "compression": 8,
+    "crc32": 3285457376,
+    "external_attr": 2175008768,
+    "name": "gymnasium/wrappers/array_conversion.py",
+    "size_bytes": 12508
+  },
+  {
+    "compressed_size": 2985,
+    "compression": 8,
+    "crc32": 89059015,
+    "external_attr": 2175008768,
+    "name": "gymnasium/wrappers/atari_preprocessing.py",
+    "size_bytes": 9741
+  },
+  {
+    "compressed_size": 4569,
+    "compression": 8,
+    "crc32": 523187476,
+    "external_attr": 2175008768,
+    "name": "gymnasium/wrappers/common.py",
+    "size_bytes": 21287
+  },
+  {
+    "compressed_size": 1017,
+    "compression": 8,
+    "crc32": 1631891746,
+    "external_attr": 2175008768,
+    "name": "gymnasium/wrappers/jax_to_numpy.py",
+    "size_bytes": 3000
+  },
+  {
+    "compressed_size": 1280,
+    "compression": 8,
+    "crc32": 1904849840,
+    "external_attr": 2175008768,
+    "name": "gymnasium/wrappers/jax_to_torch.py",
+    "size_bytes": 3703
+  },
+  {
+    "compressed_size": 928,
+    "compression": 8,
+    "crc32": 497325042,
+    "external_attr": 2175008768,
+    "name": "gymnasium/wrappers/numpy_to_torch.py",
+    "size_bytes": 2342
+  },
+  {
+    "compressed_size": 6648,
+    "compression": 8,
+    "crc32": 3949283622,
+    "external_attr": 2175008768,
+    "name": "gymnasium/wrappers/rendering.py",
+    "size_bytes": 29792
+  },
+  {
+    "compressed_size": 1732,
+    "compression": 8,
+    "crc32": 3378747147,
+    "external_attr": 2175008768,
+    "name": "gymnasium/wrappers/stateful_action.py",
+    "size_bytes": 5626
+  },
+  {
+    "compressed_size": 5873,
+    "compression": 8,
+    "crc32": 104089062,
+    "external_attr": 2175008768,
+    "name": "gymnasium/wrappers/stateful_observation.py",
+    "size_bytes": 26035
+  },
+  {
+    "compressed_size": 1716,
+    "compression": 8,
+    "crc32": 3503725583,
+    "external_attr": 2175008768,
+    "name": "gymnasium/wrappers/stateful_reward.py",
+    "size_bytes": 5121
+  },
+  {
+    "compressed_size": 2838,
+    "compression": 8,
+    "crc32": 3768570367,
+    "external_attr": 2175008768,
+    "name": "gymnasium/wrappers/transform_action.py",
+    "size_bytes": 11813
+  },
+  {
+    "compressed_size": 6287,
+    "compression": 8,
+    "crc32": 3040766209,
+    "external_attr": 2175008768,
+    "name": "gymnasium/wrappers/transform_observation.py",
+    "size_bytes": 32189
+  },
+  {
+    "compressed_size": 1071,
+    "compression": 8,
+    "crc32": 3375639776,
+    "external_attr": 2175008768,
+    "name": "gymnasium/wrappers/transform_reward.py",
+    "size_bytes": 3540
+  },
+  {
+    "compressed_size": 2389,
+    "compression": 8,
+    "crc32": 1910018260,
+    "external_attr": 2175008768,
+    "name": "gymnasium/wrappers/utils.py",
+    "size_bytes": 7982
+  },
+  {
+    "compressed_size": 1023,
+    "compression": 8,
+    "crc32": 3567654220,
+    "external_attr": 2175008768,
+    "name": "gymnasium/wrappers/vector/__init__.py",
+    "size_bytes": 3279
+  },
+  {
+    "compressed_size": 1462,
+    "compression": 8,
+    "crc32": 3902694230,
+    "external_attr": 2175008768,
+    "name": "gymnasium/wrappers/vector/array_conversion.py",
+    "size_bytes": 5072
+  },
+  {
+    "compressed_size": 2403,
+    "compression": 8,
+    "crc32": 1523253645,
+    "external_attr": 2175008768,
+    "name": "gymnasium/wrappers/vector/common.py",
+    "size_bytes": 8213
+  },
+  {
+    "compressed_size": 1567,
+    "compression": 8,
+    "crc32": 1198941799,
+    "external_attr": 2175008768,
+    "name": "gymnasium/wrappers/vector/dict_info_to_list.py",
+    "size_bytes": 5203
+  },
+  {
+    "compressed_size": 590,
+    "compression": 8,
+    "crc32": 1755150914,
+    "external_attr": 2175008768,
+    "name": "gymnasium/wrappers/vector/jax_to_numpy.py",
+    "size_bytes": 1392
+  },
+  {
+    "compressed_size": 563,
+    "compression": 8,
+    "crc32": 4080487452,
+    "external_attr": 2175008768,
+    "name": "gymnasium/wrappers/vector/jax_to_torch.py",
+    "size_bytes": 1338
+  },
+  {
+    "compressed_size": 619,
+    "compression": 8,
+    "crc32": 899734089,
+    "external_attr": 2175008768,
+    "name": "gymnasium/wrappers/vector/numpy_to_torch.py",
+    "size_bytes": 1616
+  },
+  {
+    "compressed_size": 5370,
+    "compression": 8,
+    "crc32": 338123575,
+    "external_attr": 2175008768,
+    "name": "gymnasium/wrappers/vector/rendering.py",
+    "size_bytes": 20614
+  },
+  {
+    "compressed_size": 1555,
+    "compression": 8,
+    "crc32": 3265474240,
+    "external_attr": 2175008768,
+    "name": "gymnasium/wrappers/vector/stateful_observation.py",
+    "size_bytes": 4746
+  },
+  {
+    "compressed_size": 1483,
+    "compression": 8,
+    "crc32": 1091231806,
+    "external_attr": 2175008768,
+    "name": "gymnasium/wrappers/vector/stateful_reward.py",
+    "size_bytes": 4574
+  },
+  {
+    "compressed_size": 2433,
+    "compression": 8,
+    "crc32": 1059768870,
+    "external_attr": 2175008768,
+    "name": "gymnasium/wrappers/vector/vectorize_action.py",
+    "size_bytes": 10769
+  },
+  {
+    "compressed_size": 3678,
+    "compression": 8,
+    "crc32": 469273880,
+    "external_attr": 2175008768,
+    "name": "gymnasium/wrappers/vector/vectorize_observation.py",
+    "size_bytes": 17720
+  },
+  {
+    "compressed_size": 1229,
+    "compression": 8,
+    "crc32": 376378358,
+    "external_attr": 2175008768,
+    "name": "gymnasium/wrappers/vector/vectorize_reward.py",
+    "size_bytes": 4304
+  },
+  {
+    "compressed_size": 645,
+    "compression": 8,
+    "crc32": 764604884,
+    "external_attr": 2175008768,
+    "name": "gymnasium-1.2.1.dist-info/licenses/LICENSE",
+    "size_bytes": 1104
+  },
+  {
+    "compressed_size": 3400,
+    "compression": 8,
+    "crc32": 1779086592,
+    "external_attr": 2175008768,
+    "name": "gymnasium-1.2.1.dist-info/METADATA",
+    "size_bytes": 9967
+  },
+  {
+    "compressed_size": 92,
+    "compression": 8,
+    "crc32": 3972720244,
+    "external_attr": 2175008768,
+    "name": "gymnasium-1.2.1.dist-info/WHEEL",
+    "size_bytes": 91
+  },
+  {
+    "compressed_size": 12,
+    "compression": 8,
+    "crc32": 1167992837,
+    "external_attr": 2175008768,
+    "name": "gymnasium-1.2.1.dist-info/top_level.txt",
+    "size_bytes": 10
+  },
+  {
+    "compressed_size": 10136,
+    "compression": 8,
+    "crc32": 2462323017,
+    "external_attr": 2176057344,
+    "name": "gymnasium-1.2.1.dist-info/RECORD",
+    "size_bytes": 20992
+  }
+]

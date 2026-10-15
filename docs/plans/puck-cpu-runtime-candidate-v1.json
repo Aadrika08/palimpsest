@@ -1,0 +1,183 @@
+{
+  "actual_invocation_authorized": false,
+  "archive_payload_hashes_verified": false,
+  "collection_authorized": false,
+  "evidence": [
+    {
+      "path": "docs/reports/puck-cpu-footprint-02/assessment.json",
+      "sha256": "7dbbcd90e38b5cb0d2d15f3121a4e19f34d7fa7ec9454b3459a347289c6e0bb3",
+      "size_bytes": 323415
+    },
+    {
+      "path": "docs/reports/puck-cpu-footprint-02/crosscheck.json",
+      "sha256": "b5de76796b3d088c0d195689a0a8acedef56682b13051c6202c56cfc428c0b9e",
+      "size_bytes": 13778
+    },
+    {
+      "path": "docs/reports/puck-cpu-footprint-02/host-metadata.json",
+      "sha256": "2e215f35cd07cd0da5ddbdd29332530af072432f131ebe8e2193ac2d0826bf53",
+      "size_bytes": 2593
+    },
+    {
+      "path": "docs/reports/puck-cpu-footprint-02/requests.json",
+      "sha256": "662e883c27d6fdebcd154337284c402d23d01e33567e2e9700d636b09908127e",
+      "size_bytes": 348990
+    }
+  ],
+  "executable": false,
+  "footprint_estimates": {
+    "additional_available_ram_reserve_bytes": 1073741824,
+    "archive_bytes_index_or_lock_declared": 385123877,
+    "expanded_bytes_central_directory_declared": 1304650469,
+    "external_proxy_scenario_fits_snapshot": false,
+    "file_count": 26913,
+    "historical_cuda_external_image_proxy_bytes": 538531136,
+    "measured_memavailable_bytes": 3877453824,
+    "not_installed_size_not_memory_reservation_not_hard_bounds": true,
+    "page_size_bytes": 4096,
+    "rounded_4k_wheel_files_bytes": 1372884992,
+    "sampled_worker_rss_stop_bytes": 2147483648,
+    "wheel_only_ram_scenario_bytes": 4594110464,
+    "wheel_only_scenario_fits_snapshot": false,
+    "wheel_plus_historical_external_proxy_ram_scenario_bytes": 5132641600
+  },
+  "installed_size_verified": false,
+  "kind": "puck-cpu-runtime-candidate-v1",
+  "licence_contents_audited": false,
+  "proposed_layout": {
+    "allocation_root": "/dev/shm/palimpsest-<fresh-allocation>",
+    "censused_input_roots": [
+      "inputs/site",
+      "inputs/native"
+    ],
+    "conditional_mount_root": "/dev/shm",
+    "no_privilege_or_mount_change_in_this_assessment": true,
+    "precreate_before_custody": [
+      "inputs/site",
+      "inputs/native",
+      "inputs/registration",
+      "scratch",
+      "outputs"
+    ],
+    "scratch_and_outputs_outside_censused_inputs": true,
+    "shared_ancestor_churn_remains_a_refusal": true
+  },
+  "qualification_claims": [],
+  "required_before_actual_admission": [
+    "Build and independently hash an exact python-louvain0.16 wheel under an admitted bounded build configuration; inspect resulting metadata and sizes",
+    "Acquire and verify full wheel payload SHA256/RECORD/licence contents without executing target code, then measure the complete installed namespace",
+    "Implement and review a separately versioned four-import worker/descriptor path including torchvision; retain the existing three-import contract",
+    "Specify exact interpreter/stdlib baseline and complete native/image/origin paths; do not assume that interpreter copying is required or solved",
+    "Select and prospectively declare exact EGL/vendor/renderer paths; CPU Torch metadata is not software-renderer qualification",
+    "Resolve shared-root staging churn under the unchanged ancestor guard; precreate own mutable scratch/output paths",
+    "Re-admit whole-stage RAM/storage/FD/metadata/process/clock limits on the exact configuration; current RAM snapshot fails the planning scenarios",
+    "Create a new prospective numbered configuration/observation decision where required, independent exact audit, bounded authorized invocation and independent outcome audit"
+  ],
+  "runtime_qualified": false,
+  "source_baseline_commit": "19b640e0a0bc7df927b72976809d1d2b3faac763",
+  "status": "prospective-incomplete-not-admitted",
+  "study_authorized": false,
+  "target": {
+    "candidate_pin_count": 71,
+    "candidate_pins": [
+      "absl-py==2.5.0",
+      "annotated-doc==0.0.5",
+      "annotated-types==0.8.0",
+      "anyio==4.15.1",
+      "backports-zstd==1.7.0",
+      "brotli==1.2.0",
+      "certifi==2026.7.22",
+      "click==8.5.0",
+      "cloudpickle==3.1.2",
+      "contourpy==1.3.3",
+      "cycler==0.12.1",
+      "etils==1.14.0",
+      "farama-notifications==0.0.6",
+      "fastapi==0.142.2",
+      "filelock==4.0.9",
+      "fonttools==4.66.1",
+      "fsspec==2026.9.0",
+      "glfw==2.10.0",
+      "gymnasium==1.2.1",
+      "h11==0.16.0",
+      "httpcore==1.0.9",
+      "httpx==0.28.1",
+      "idna==3.20",
+      "inflate64==1.0.4",
+      "iniconfig==2.3.0",
+      "jinja2==3.1.6",
+      "joblib==1.6.0",
+      "kiwisolver==1.5.1",
+      "markupsafe==3.0.3",
+      "matplotlib==3.10.1",
+      "mpmath==1.3.0",
+      "mujoco==3.3.6",
+      "multivolumefile==0.2.3",
+      "networkx==3.4.2",
+      "numpy==2.2.5",
+      "opencv-python==4.12.0.88",
+      "opentelemetry-api==1.45.0",
+      "packaging==26.3",
+      "pandas==2.2.3",
+      "pillow==12.3.0",
+      "pluggy==1.6.0",
+      "psutil==7.2.2",
+      "py7zr==1.1.3",
+      "pybcj==1.0.8",
+      "pycryptodomex==3.23.0",
+      "pydantic-core==2.46.5",
+      "pydantic==2.13.5",
+      "pygments==2.21.0",
+      "pyopengl==3.1.10",
+      "pyparsing==3.3.3",
+      "pyppmd==1.3.1",
+      "pytest==8.4.2",
+      "python-dateutil==2.9.0.post0",
+      "python-louvain==0.16",
+      "pytz==2026.4",
+      "scikit-learn==1.8.0",
+      "scipy==1.15.2",
+      "seaborn==0.13.2",
+      "six==1.17.0",
+      "starlette==1.7.0",
+      "sympy==1.14.0",
+      "texttable==1.7.0",
+      "threadpoolctl==3.7.0",
+      "torch==2.9.0+cpu",
+      "torchvision==0.24.0+cpu",
+      "typing-extensions==4.16.0",
+      "typing-inspection==0.4.4",
+      "tzdata==2026.4",
+      "uvicorn==0.54.0",
+      "websockets==17.1",
+      "zipp==4.1.0"
+    ],
+    "dependency_registration_version": 3,
+    "filesystem_policy": "tmpfs-raw-dev-inode-v1",
+    "implementation": "CPython",
+    "machine": "x86_64",
+    "proposed_expected_versions": {
+      "mujoco": "3.3.6",
+      "numpy": "2.2.5",
+      "torch": "2.9.0+cpu",
+      "torchvision": "0.24.0+cpu"
+    },
+    "python": "3.11.15",
+    "roots": "complete simulation, lab and dev requirements under Linux markers",
+    "system": "Linux",
+    "wheel_metadata_assessed_count": 70
+  },
+  "unchanged_project_inputs": [
+    {
+      "path": "pyproject.toml",
+      "sha256": "13435cdf27674955809c67d3d81410c502bf0f258b661e68ed82197842fbc800",
+      "size_bytes": 1103
+    },
+    {
+      "path": "uv.lock",
+      "sha256": "8a7a880d020c1907e221575fda65642241f809fc628a55381f1b6137bff1b732",
+      "size_bytes": 160034
+    }
+  ],
+  "version": 1
+}
