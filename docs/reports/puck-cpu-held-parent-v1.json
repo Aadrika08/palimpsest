@@ -1,0 +1,289 @@
+{
+  "actual_held_qualification_invoked": false,
+  "actual_installed_tree_staged": false,
+  "actual_preparation_invoked": false,
+  "actual_vendor_imports": false,
+  "authored_fixture": {
+    "file_count": 18,
+    "file_counts_by_root": [
+      9,
+      7,
+      1,
+      1
+    ],
+    "module_bodies": "Only authored __version__ assignments",
+    "module_names": [
+      "numpy",
+      "torch",
+      "torchvision",
+      "mujoco"
+    ],
+    "production_ram_floors_bytes": {
+      "prepare": 4294967296,
+      "qualify": 2147483648
+    },
+    "ram_floor_bytes": 134217728,
+    "required_real_native_cache_phases_qualified": false
+  },
+  "collection_authorized": false,
+  "evidence_index": {
+    "capsule_bytes": 9388947,
+    "capsule_files": 679,
+    "indexed_bytes": 9075324,
+    "indexed_files": 678,
+    "path": "puck-cpu-held-parent-v1/evidence-index.json",
+    "sha256": "3a71cca14cfe9f734aadce599cae26e48b4544f10d83cd51f68fdf7220bc9205"
+  },
+  "executable": false,
+  "fixtures": [
+    {
+      "fixture": "red-01",
+      "outcomes": {
+        "preparation": null,
+        "qualification": null
+      },
+      "structured_transport_receipts": false
+    },
+    {
+      "fixture": "green-01",
+      "outcomes": {
+        "preparation": {
+          "closure": {
+            "active_children": [],
+            "active_non_main_threads": [],
+            "fd_count_after": 5,
+            "fd_count_before": 5
+          },
+          "elapsed_seconds": 1.6653263099724427,
+          "status": "prepared"
+        },
+        "qualification": {
+          "closure": {
+            "active_children": [],
+            "active_non_main_threads": [],
+            "fd_count_after": 5,
+            "fd_count_before": 5
+          },
+          "elapsed_seconds": 0.543129596975632,
+          "error": "Namespace command must be explicit bounded text arguments",
+          "error_type": "ValueError",
+          "status": "FAIL"
+        }
+      },
+      "structured_transport_receipts": false
+    },
+    {
+      "fixture": "green-02",
+      "outcomes": {
+        "preparation": {
+          "closure": {
+            "active_children": [],
+            "active_non_main_threads": [],
+            "fd_count_after": 5,
+            "fd_count_before": 5
+          },
+          "elapsed_seconds": 1.5187287570443004,
+          "status": "prepared"
+        },
+        "qualification": {
+          "closure": {
+            "active_children": [],
+            "active_non_main_threads": [],
+            "fd_count_after": 5,
+            "fd_count_before": 5
+          },
+          "elapsed_seconds": 0.9325459039537236,
+          "error": "CPU qualify worker failed; retained logs are authoritative",
+          "error_type": "ValueError",
+          "status": "FAIL"
+        }
+      },
+      "structured_transport_receipts": false
+    },
+    {
+      "fixture": "green-03",
+      "outcomes": {
+        "preparation": {
+          "closure": {
+            "active_children": [],
+            "active_non_main_threads": [],
+            "fd_count_after": 5,
+            "fd_count_before": 5
+          },
+          "elapsed_seconds": 1.7153585460036993,
+          "status": "prepared"
+        },
+        "qualification": {
+          "closure": {
+            "active_children": [],
+            "active_non_main_threads": [],
+            "fd_count_after": 5,
+            "fd_count_before": 5
+          },
+          "elapsed_seconds": 2.4732634570100345,
+          "status": "imports_completed"
+        }
+      },
+      "structured_transport_receipts": false
+    },
+    {
+      "fixture": "transport-red-01",
+      "outcomes": {
+        "preparation": {
+          "closure": {
+            "active_children": [],
+            "active_non_main_threads": [],
+            "fd_count_after": 5,
+            "fd_count_before": 5
+          },
+          "elapsed_seconds": 1.2600748739787377,
+          "status": "prepared"
+        },
+        "qualification": {
+          "closure": {
+            "active_children": [],
+            "active_non_main_threads": [],
+            "fd_count_after": 5,
+            "fd_count_before": 5
+          },
+          "elapsed_seconds": 2.272964862000663,
+          "status": "imports_completed"
+        }
+      },
+      "structured_transport_receipts": false
+    },
+    {
+      "fixture": "transport-green-01",
+      "outcomes": {
+        "preparation": {
+          "closure": {
+            "active_children": [],
+            "active_non_main_threads": [],
+            "fd_count_after": 5,
+            "fd_count_before": 5
+          },
+          "elapsed_seconds": 1.2721715610241517,
+          "status": "prepared"
+        },
+        "qualification": {
+          "closure": {
+            "active_children": [],
+            "active_non_main_threads": [],
+            "fd_count_after": 5,
+            "fd_count_before": 5
+          },
+          "elapsed_seconds": 2.2732470990158617,
+          "status": "imports_completed"
+        }
+      },
+      "structured_transport_receipts": true
+    }
+  ],
+  "historical_configuration": {
+    "published": {
+      "sha256": "e6d51a1511e593ff2f21e442154960bbcd61103789630a050c9174fe45b40fad",
+      "size_bytes": 25530
+    },
+    "relation": "exact compact sorted canonical JSON plus LF; semantic values unchanged; original source pin retained",
+    "source": {
+      "sha256": "32605ca0d48537a6eabf98a54d605ad23bf525456760d83726381aeaf38e3e96",
+      "size_bytes": 30043
+    }
+  },
+  "implementation_commit": "dfd2bae9aef0626058cab8527783bf596cbec4db",
+  "kind": "puck-cpu-held-parent-source-report-v1",
+  "limitations": [
+    "Authored fixture success is not installed-stack, Cython creator, native closure, renderer or episode qualification",
+    "Earlier fixture CLI bytes remain present; structured external transport receipts were added only in the transport GREEN",
+    "Raw pytest stdout was not retained; external terminal references and raw fixture artifacts are identified separately",
+    "Descendant sampling and pidfd cleanup are operational engineering bounds, not hostile-code isolation or hard timing proof"
+  ],
+  "native_authorized": false,
+  "pr": "https://github.com/Aadrika08/palimpsest/pull/148",
+  "qualification_claims": [],
+  "release_gates_closed": 0,
+  "remaining": [
+    "freeze/review exact production configurations and prepare/review independent terminal/byte auditor before actual invocation",
+    "fresh full-stage resource admission, then separately numbered actual preparation and four-import held qualification",
+    "independent actual-outcome admission before operator/renderer and recorded/replayed/exported episode"
+  ],
+  "requirement_statuses_changed": 0,
+  "resource_snapshot": {
+    "actual_preparation_output_absent": true,
+    "actual_qualification_output_absent": true,
+    "mem_available_bytes": 2871246848,
+    "preparation_ram_floor_bytes": 4294967296,
+    "project_available_bytes": 99383128064,
+    "provenance": "root-reported metadata-only terminal bc3ec4; transient snapshot, not new admission or raw telemetry file",
+    "timestamp": "2026-10-15T12:21:37.447370+00:00",
+    "tmp_available_bytes": 4979810304
+  },
+  "runtime_qualified": false,
+  "status": "source_parent_and_authored_route_only",
+  "study_authorized": false,
+  "transport": [
+    {
+      "call": "prepare",
+      "elapsed_seconds": 1.3190238830284216,
+      "receipt": "fixtures/transport-green-01/authored-prepare-transport.json",
+      "returncode": 0
+    },
+    {
+      "call": "qualify",
+      "elapsed_seconds": 2.321237572992686,
+      "receipt": "fixtures/transport-green-01/authored-qualify-transport.json",
+      "returncode": 0
+    },
+    {
+      "call": "qualify-rerun",
+      "elapsed_seconds": 0.035399353015236557,
+      "receipt": "fixtures/transport-green-01/authored-qualify-rerun-transport.json",
+      "returncode": 1
+    }
+  ],
+  "transport_test_commit": "9282fcb9180a56f68dd361858e3143ca7bed7053",
+  "verification": [
+    {
+      "command": "PYTHONPATH=src PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 PYTHONDONTWRITEBYTECODE=1 /home/utkarsh/Work/shraddha/brain/.worktrees/r0-reproduction/.venv/bin/python -m pytest -q --tb=short -p no:cacheprovider tests/test_puck_cpu_registration.py tests/test_puck_cpu_namespace.py tests/test_puck_cpu_held_parent.py tests/test_puck_cpu_held_parent_integration.py tests/test_puck_runtime_staging.py tests/test_bounded_qualification.py tests/test_bounded_qualification_descendants.py tests/test_puck_cpu_runtime_entry.py tests/test_puck_held_runtime_parent.py tests/test_puck_runtime_registration.py --basetemp=runs/cpu-held-parent-affected-green-01",
+      "exit_code": 0,
+      "name": "affected source slice",
+      "passed": 326,
+      "provenance": "root-reported external tool terminal; no raw pytest stdout file was retained",
+      "raw_pytest_log_retained": false,
+      "seconds": 35.4,
+      "session": 11936,
+      "terminal": "20a78a"
+    },
+    {
+      "failed": 1,
+      "failure": "missing external CLI transport receipt after both authored phases and refusal completed",
+      "name": "transport receipt RED",
+      "raw_pytest_log_retained": false,
+      "seconds": 3.74,
+      "terminal": "34f692"
+    },
+    {
+      "name": "transport receipt GREEN",
+      "passed": 1,
+      "raw_pytest_log_retained": false,
+      "seconds": 3.74,
+      "session": 97109,
+      "terminal": "de4541"
+    },
+    {
+      "failed": 1,
+      "name": "staging scale with explicitly injected 4MiB budget",
+      "production_source_changed": false,
+      "raw_pytest_log_retained": false,
+      "seconds": 0.67,
+      "terminal": "54bff0"
+    },
+    {
+      "name": "focused staging with existing 64MiB budget",
+      "passed": 28,
+      "raw_pytest_log_retained": false,
+      "seconds": 3.04,
+      "terminal": "1ac8c5"
+    }
+  ]
+}

@@ -1,0 +1,66 @@
+{
+  "checks": [
+    {
+      "command": "PYTHONPATH=src PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 PYTHONDONTWRITEBYTECODE=1 /home/utkarsh/Work/shraddha/brain/.worktrees/r0-reproduction/.venv/bin/python -m pytest -q --tb=short -p no:cacheprovider tests/test_puck_cpu_registration.py tests/test_puck_cpu_namespace.py tests/test_puck_cpu_held_parent.py tests/test_puck_cpu_held_parent_integration.py tests/test_puck_runtime_staging.py tests/test_bounded_qualification.py tests/test_bounded_qualification_descendants.py tests/test_puck_cpu_runtime_entry.py tests/test_puck_held_runtime_parent.py tests/test_puck_runtime_registration.py --basetemp=runs/cpu-held-parent-affected-green-01",
+      "exit_code": 0,
+      "name": "affected source slice",
+      "passed": 326,
+      "provenance": "root-reported external tool terminal; no raw pytest stdout file was retained",
+      "raw_pytest_log_retained": false,
+      "seconds": 35.4,
+      "session": 11936,
+      "terminal": "20a78a"
+    },
+    {
+      "failed": 1,
+      "failure": "missing external CLI transport receipt after both authored phases and refusal completed",
+      "name": "transport receipt RED",
+      "raw_pytest_log_retained": false,
+      "seconds": 3.74,
+      "terminal": "34f692"
+    },
+    {
+      "name": "transport receipt GREEN",
+      "passed": 1,
+      "raw_pytest_log_retained": false,
+      "seconds": 3.74,
+      "session": 97109,
+      "terminal": "de4541"
+    },
+    {
+      "failed": 1,
+      "name": "staging scale with explicitly injected 4MiB budget",
+      "production_source_changed": false,
+      "raw_pytest_log_retained": false,
+      "seconds": 0.67,
+      "terminal": "54bff0"
+    },
+    {
+      "name": "focused staging with existing 64MiB budget",
+      "passed": 28,
+      "raw_pytest_log_retained": false,
+      "seconds": 3.04,
+      "terminal": "1ac8c5"
+    }
+  ],
+  "independent_review": {
+    "current_input_pins": 16,
+    "material_source_findings": 0,
+    "scope": "read-only source/metadata review at9282fcb; no independent actual-outcome audit",
+    "selected_index_bindings": 9,
+    "source_files": 24,
+    "worker_source_files": 10
+  },
+  "kind": "puck-cpu-held-parent-source-verification-ledger-v1",
+  "raw_pytest_logs_invented": false,
+  "resource_snapshot": {
+    "actual_preparation_output_absent": true,
+    "actual_qualification_output_absent": true,
+    "mem_available_bytes": 2871246848,
+    "preparation_ram_floor_bytes": 4294967296,
+    "project_available_bytes": 99383128064,
+    "provenance": "root-reported metadata-only terminal bc3ec4; transient snapshot, not new admission or raw telemetry file",
+    "timestamp": "2026-10-15T12:21:37.447370+00:00",
+    "tmp_available_bytes": 4979810304
+  }
+}

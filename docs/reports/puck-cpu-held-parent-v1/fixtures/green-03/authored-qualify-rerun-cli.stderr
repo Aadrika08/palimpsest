@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/home/utkarsh/.codex/worktrees/0071/brain/runs/cpu-held-parent-integration-green-03/test_actual_authored_prepare_t0/authored-project/scripts/qualify_puck_cpu_held_runtime.py", line 531, in <module>
+    if __name__=='__main__':raise SystemExit(main())
+                                             ^^^^^^
+  File "/home/utkarsh/.codex/worktrees/0071/brain/runs/cpu-held-parent-integration-green-03/test_actual_authored_prepare_t0/authored-project/scripts/qualify_puck_cpu_held_runtime.py", line 520, in main
+    if os.path.lexists(ROOT/OUTPUTS[config['phase']]):raise FileExistsError('CPU allocation already reserved')
+                                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileExistsError: CPU allocation already reserved
