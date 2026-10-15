@@ -76,9 +76,13 @@ ordered checklist is:
 - [x] Freshly verify04 pins/preservation/absence/resources, invoke once and
   preserve its FAIL and failed acceptance audit. The diagnostic identifies
   `torch._C._autograd` at native_create; this does not accept the runtime.
-- [ ] Prove and correct delayed export publication/custody with authored
-  intermediate-import tests, then independently review the source/profile
-  amendment before any separately numbered actual attempt. No05 exists.
+- [x] Implement and independently review explicit delayed publication/custody,
+  including intermediate fresh imports, nested-creator negatives and exact
+  worker/parent/auditor proof. All650 affected authored checks pass; this is source
+  proof only, with no real profile or actual configuration change.
+- [ ] Authenticate the finite `_autograd` creator/raw-path/dispatch declaration
+  and independently review its separate source/profile admission before any
+  separately numbered actual attempt. No05 exists.
 - [ ] Obtain passing held four-import qualification and an independent terminal,
   identity, staged-byte and cleanup audit. All01–04 failed; their acceptance
   auditors refused before post-stage byte checks. No accepted held-import result
@@ -106,6 +110,31 @@ Every added prerequisite must identify the checkpoint and smallest blocked check
 source-only hardening is not a substitute for reaching the episode deliverable.
 A failed actual stage retains its outcome and consumed allocation. No study or
 numerical invocation follows from a source fixture alone.
+
+## Completed source checkpoint: explicit delayed publication
+
+[Draft PR #155](https://github.com/Aadrika08/palimpsest/pull/155) retains the
+[source report](https://github.com/Aadrika08/palimpsest/blob/27a5c134613747c8c782829b8084834e92a53d66/docs/reports/puck-delayed-export-publication-v1.md).
+Code `f537b36` binds explicit Python publication to the exact innermost creator,
+raw producer edge, module/cache identity, observed metadata, monotonic finite
+dispatch references and terminal closure. Worker, parent and independent auditor
+require the same exact sorted proof. Ordinary exports and native-cache rules stay
+strict; old profiles reject unsolicited publication proof.
+
+All650 affected authored checks pass:263 tmpfs workers in154.97s and387 persistent
+planner/parent/auditor checks in115.50s. The new separate prepare/qualify fixture
+passes both auditor paths, fully rebound semantic tamper refusal, exact capsule
+pins, identity/closure checks and owned-stage cleanup. Review exposed and corrected
+a nested helper's incorrectly attributed delegate growth; both regression variants
+show RED before GREEN. All200 indexed copies/2,361,975B match originals and Git
+blobs, including19 empty files. Confounded baseline/broad/wrapper runs are retained;
+no fully green original baseline or full repository suite is claimed.
+
+These are AUTHORED source checks, not installed-stack acceptance. The real profile,
+actual configuration, installed data and historical source admission are unchanged.
+All01–04 remain failed/consumed; no05 exists. The next action is the finite real
+profile and source-transition review below, followed by actual held qualification.
+The recorded/replayed/exported episode is still checkpoint A's product exit.
 
 ## Current CPU result: qualification04 identifies a delayed export
 
@@ -144,14 +173,15 @@ the child can appear before reentrant guards, while ordinary exports are prepare
 only after execution. No replacement producer/phase has been accepted. Skip no row,
 move no whole roster and preserve refusal until the intermediate lifecycle is proved.
 
-Next, use the existing authored export fixture to publish a declared raw child,
-then import a fresh registered helper before returning. Prove intermediate identity,
-cache custody, creator/phase attribution and terminal closure, including mutation
-and wrong-phase negatives. A future finite contract must preserve current strict
-unprepared-export behavior and historical source/data identities. Review the
-source/profile amendment separately before any new actual attempt.04 is consumed;
-no05 configuration or invocation exists. The episode bundle remains the next
-product deliverable; all seven release gates remain open.
+The authored publication contract above now proves that intermediate lifecycle
+within its source scope. The real `_autograd` declaration remains uncorrected.
+Retained source supports creator `torch.autograd` and raw path
+`['torch','_C','_autograd']`; its final `python_tracer::init()` call and possible later
+writes still need exact inspection before a complete dispatch roster is frozen.
+Inspect other rows individually; no whole-roster phase change is supported.
+Review the separate real-profile/source admission before another actual attempt.
+04 is consumed; no05 configuration or invocation exists. The episode bundle
+remains the next product deliverable; all seven release gates remain open.
 
 ## Completed source checkpoint: closed04 diagnostic controls
 
@@ -461,24 +491,24 @@ substitute for numerical results, capability, actual browser use or human accept
 | 5 | Integrate and experience the product. | One candidate supports the lab and all six artworks; actual browser, mapping, replay, export, interruption and endurance checks pass. |
 | 6 | Accept and deliver that candidate. | Artistic/operator sessions, final verification and all seven gate records are complete; the installation and evidence package are reproducible. |
 
-**Current next action:** prove the delayed-export lifecycle and implement the
-smallest reviewed correction needed to obtain passing actual held qualification.
+**Current next action:** authenticate the exact `_autograd` publication roster
+and review its narrowly bound real-profile/source admission.
 
-1. Extend `tests/test_puck_dependency_profile.py`'s authored producer fixture:
-   publish its declared raw child into the module cache, then import a fresh
-   registered helper before the producer returns. Preserve the existing strict
-   unprepared-export and native-create negatives. Test the intended finite contract
-   before implementation; do not treat a pending name as accepted cache custody.
-2. Bind any intermediate publication to the exact producer, creator phase, raw
-   attribute edge and module/cache object identity. Test wrong phase, replacement,
-   disappearance, dispatch mutation and incomplete terminal closure. Reuse the
-   existing binding/phase machinery; add no configurable exemption. Inspect other
-   declared exports individually before changing their creation declarations.
-3. Independently review the source/profile correction and its authored proof.
-   Only then prepare a separately numbered actual amendment with exact reviewed
-   controls, current staged bytes, fresh resource admission and an independent
-   terminal/identity/byte/cleanup audit. Preserve04 and all earlier failures;
-   no05 is created or authorized by a failing receipt alone.
+1. Inspect the exact-version initializer's remaining tracer initialization and
+   later writes. Bind the supported Python creator `torch.autograd` and raw path
+   `['torch','_C','_autograd']`; freeze the complete finite direct-dispatch roster.
+   Current static leads are not an accepted roster or linked-binary build proof.
+   Preserve the other35 native-create declarations unless individually supported.
+2. Implement and independently review the explicit prospective source/profile
+   transition. Preserve all historical capsules, source restrictions, frozen
+   controls and consumed outcomes; changed current imports/profile inputs cannot
+   silently reuse an old source/data epoch. Reuse the now-proved publication
+   contract rather than adding exemptions or another binding framework.
+3. Only after that review, freeze a separately numbered actual configuration,
+   verify exact pins/current staged bytes/absence conditions, admit fresh
+   resources and invoke once. Require an independent terminal, identity, full-byte
+   and cleanup audit. Preserve04 and every earlier failure; no05 is created or
+   authorized by a failing receipt or authored fixture alone.
 4. Complete the distinct CPU engineering episode envelope, fixed authenticated
    worker entry, bounded parent and durable writer/replay/export connection.
    Resolve catalog access before protected reads; declare the model, scene, seed,
