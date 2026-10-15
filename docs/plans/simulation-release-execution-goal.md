@@ -1,143 +1,103 @@
 # Goal: finish Palimpsest in simulation
 
-**Outcome:** deliver a locally installable Palimpsest release with an inspectable
-simulation lab, qualified supported controllers, complete memory and MaleCNS
-research, all six usable artwork experiences, and a reproducible handoff accepted
-by the user and an independent operator. Start the physical rover only after
-simulation acceptance. CI stays outside this goal.
-
-This is the current execution guide for the existing
-[completion goal](simulation-completion-next-goal.md). It clarifies order and
-completion criteria; the frozen study protocols and original acceptance
-thresholds remain binding.
-
 ## Active objective and next deliverable
 
-**Deliver Palimpsest as a complete, reproducible local simulation project.**
-Complete the memory research, qualify learned puck and MaleCNS controllers,
-finish the lab and all six artworks, and obtain recorded artistic and independent
-operator acceptance on one integrated release. Physical rover work begins only
-after that acceptance. CI is excluded.
+**Deliver one locally installable, reproducible Palimpsest simulation release:**
+complete the memory research, demonstrate the required learned puck and MaleCNS
+capabilities, finish the inspectable lab and all six artwork encounters, and obtain
+recorded artistic and independent operator acceptance on the integrated candidate.
+The physical rover starts after simulation acceptance. CI is outside this goal.
 
-**Next deliverable: a working route from reviewed inputs to durable evidence.**
-Finish the puck inventory-to-collection launcher and memory replay-to-case-close
-path. Their exit requires executable entry points, exact source/runtime/input
-admission, failure handling, preserved terminal records and independent review.
-Passing parser fixtures or publishing another plan is progress, not this exit.
+This continues the existing [completion goal](simulation-completion-next-goal.md).
+It does not replace frozen protocols or lower their acceptance thresholds.
 
-Perform the work in this order:
+**Next milestone: one reviewed executable route from admitted inputs to durable
+collection evidence, plus a complete memory replay-to-case-close route.**
+Component fixtures are prerequisites. The milestone requires real entry points,
+exact source/runtime/input admission, bounded failure handling, durable terminal
+records and independent review. It is not complete because another parser, plan
+or source-only PR passes.
 
-1. Use PR #130's registered dependency custody and fresh-worker v2 import path
-   with PR #128's reviewed declared inventory (`22cf8aa`). Freeze and qualify an
-   exact supported dependency/runtime configuration; actual numerical compatibility
-   and complete native closure remain unqualified. Use authored fixtures for owner
-   integration while catalog access is pending.
-2. Bind that worker to the reservation/scene seal, model custody and PR #131's
-   natural-episode recording close. Connect exact-environment process identity,
-   progress/escaped-descendant drain, parent lease/storage and all clock buckets.
-   Recording terminals alone grant no execution or fitting. Freeze and review the
-   complete executable path before an actual collection.
-3. Complete the memory condition/case-close source path. After explicit approval
-   of amendment 02, execute and independently audit the one registered full-model
-   replay; a passing result is required before admitting the complete memory study.
-4. Execute separately admitted memory and puck studies and make the prospective
-   MaleCNS decision. Preserve failures and unchanged capability thresholds.
-5. Integrate supported results into the lab and six artworks, verify actual browser
-   encounters and declared durations, then complete user/operator acceptance and
-   the reproducible release handoff.
-
-**Stop condition:** all seven release gates below have their required evidence on
-one integrated candidate. All seven are currently open. Human sessions and the
-three prospective decisions remain explicit dependencies, not assumed approvals.
+**First implementation unit:** finish the bounded numerical-import characterization
+in `research/puck-v3-runtime-interop`, then use its actual observations to resolve
+the held worker's NumPy/Torch/MuJoCo compatibility blockers. Its plan and five
+negative/fixture tests exist; the characterization script is still missing.
+No actual characterization or held numerical qualification has run. Ordinary
+imports characterize compatibility; they do not qualify the held execution route.
 
 ## Clear goal and completion boundary
 
-**Finish the project in simulation:** a person can install Palimpsest locally,
-operate its inspectable lab, use qualified supported controllers, experience all
-six artworks, inspect the complete research evidence, and reproduce the release
-without undocumented assistance. The user must accept the artistic experience,
-and an independent operator must complete the runbook. Begin physical rover work
-only after that simulation release is accepted.
+A person must be able to install Palimpsest locally, operate its inspectable lab,
+use the supported controllers, experience all six artworks, inspect the research
+evidence and reproduce the release using the runbook. The user accepts the art;
+a separate operator proves the installation and encounter instructions work.
 
-| Required result | Completion evidence | Current release status |
+| Release gate | Required completion evidence | Current status |
 | --- | --- | --- |
-| Memory / R2 | Complete valid development and held-out nine-condition study, independently audited family analysis and controls; a supported positive or null result is acceptable. | Open |
-| Learned puck control | Every required relabeled model reaches at least 3/4 development and 6/8 held-out goals, with mechanism replay and lab integration. | Open; earlier capability gates failed |
-| MaleCNS navigation | Every required seed reaches 3/4 development and 6/8 held-out goals under matched budgets; topology benefit is not required. | Open; earlier capability gates failed |
-| Simulation lab | Asset-backed installation and real browser workflows, replay, exports, recovery and required endurance pass on the integrated candidate. | Open; final browser gate incomplete after failure |
-| Six artwork encounters | All six have sufficient portable inputs, declared-duration visual/audio/keyboard/viewport use, faithful mappings, controls and provenance. | Open |
-| Human acceptance | Recorded user artistic acceptance and independent operator installation plus all six modes. | Open; needs human sessions |
-| Integrated delivery | Reviewed dependency-ordered integration, final verification, reproducible installation, licence/limit documentation and complete evidence matrix. | Open |
+| Memory / R2 | Complete valid nine-condition development and held-out study, independently audited family analysis and controls. A supported positive or null result is acceptable. | Open |
+| Learned puck | Every required relabeled model reaches at least 3/4 development and 6/8 held-out goals; mechanism replay and lab integration pass. | Open; previous capability gates failed |
+| MaleCNS | Every required seed reaches at least 3/4 development and 6/8 held-out goals under matched budgets. A topology benefit is not required. | Open; previous capability gates failed |
+| Lab | Asset-backed installation and actual browser workflows, inspection, replay, exports, recovery and required endurance pass on the integrated candidate. | Open; final browser gate incomplete after failure |
+| Six artworks | All six have sufficient portable inputs and pass declared-duration visual/audio/keyboard/viewport use, faithful mappings, controls and provenance checks. | Open |
+| Human acceptance | Recorded user artistic acceptance and independent operator installation plus all six modes. | Open; requires human sessions |
+| Integrated delivery | Reviewed integration, final verification, reproducible installation, licence/limit documentation and the complete requirements-to-evidence matrix. | Open |
 
-A prerequisite test pass advances its lane; it does not close a release gate.
-A failed capability study is retained and requires a prospective decision before
-another attempt. CI, rover hardware, physical art fabrication, purchases and
-paid cloud are outside this goal. The artworks are completed and assessed in
-simulation first.
+The six encounters are Afterimage; One map, many possible lives; Counterfactual
+choir; Borrowed body; Atlas of what disappears; and The space between two flies.
+All are completed and assessed in simulation first. Physical rover work, physical
+art fabrication, purchases, paid cloud and CI are outside this goal.
+
+**Done means all seven gates pass their stated boundaries on one integrated
+candidate.** Missing or invalid research cells are not a null result. Failed
+capability gates are not successful release evidence. Preserve failures; any new
+attempt requires its prospective decision instead of changed thresholds or retries.
 
 ## Execution focus after disk cleanup
 
-**Goal for this continuation:** finish the reviewed execution paths for puck
-inventory → collision checks → reservation → fresh worker → durable collection,
-and memory replay → condition completion → case close → family admission. Then
-run only separately admitted studies, integrate their supported results into the
-lab and six artworks, and obtain user/operator acceptance on one reproducible
-release. Source fixtures establish software behavior; actual study results and
-human sessions establish their respective release gates.
+At **2026-10-15 01:02 UTC**, this filesystem had **99,770,359,808 bytes free
+(about 92.9 GiB)**, above the frozen memory minimum of **63,786,975,232 bytes
+(about 59.4 GiB)**. Space is sufficient at this check. Required inputs, free space
+and exact stage admission must be checked again immediately before execution.
 
-**Immediate source exit:** the puck inventory covers every declared repository,
-retained root and supported reference family, retains conflicting historical
-variants, and rejects unresolved or unsupported coverage before reservation.
-Connect that inventory to the existing collection mechanisms rather than ending
-at individual parser PRs. Memory source work can proceed while amendment-02
-approval is pending. No new study attempt follows from freeing disk space.
+| Order | Work | Exit before advancing |
+| --- | --- | --- |
+| 1 | Finish the bounded numerical-import characterization and resolve observed held-runtime incompatibilities. | Fixed-source fixture checks pass; one bounded development characterization retains its exact request/environment/source/invocation and pass or failure. An explicit supported dependency profile and authored native compatibility checks follow the observations. Freeze and review the exact held-runtime configuration before its separate qualification. |
+| 2 | Connect declared inventory, reservation/scene seals, model custody and the authenticated worker to natural-episode recording close. | One executable parent/worker route covers exact environment/process identity, progress and escaped descendants, one-owner lease, storage and every fixed clock bucket. Fault checks and independent review pass; the complete source/runtime/input allocation is admitted before actual collection. |
+| 3 | Finish memory replay-to-condition/case close, pruning and family admission. | After explicit amendment-02 approval, invoke the registered replay once and independently audit it. A pass precedes complete nine-condition/case-close admission and the full study. Independent source work can proceed while approval is pending. |
+| 4 | Execute separately admitted memory and puck studies; resolve the next MaleCNS study prospectively. | Complete valid development and separately admitted held-out evidence meets the unchanged scientific/capability boundaries. A failed stage stops its lane with evidence and a concrete prospective decision. |
+| 5 | Integrate supported results into the lab and six artworks. | Actual browser encounters and declared-duration visual/audio/keyboard/viewport, mapping, export, replay, recovery and endurance checks pass on the integrated candidate. |
+| 6 | Conduct artistic/operator acceptance and deliver the reproducible release. | Recorded user acceptance, independent installation and all six modes, final integrated verification and all seven gate records are complete. |
 
-**Next milestone: complete a working, reviewed memory replay-to-case-close path
-and puck inventory-to-collection path.** The result must include executable
-entry points, exact input/runtime admission, meaningful failure checks and durable
-terminal evidence. Then perform the admitted studies. A collection of passing
-component tests or additional planning documents does not satisfy this milestone.
+**Immediate characterization allocation:** use the existing bounded supervisor,
+60 seconds normal / 70 seconds hard, a sampled 1 GiB parent-plus-child RSS stop
+threshold, 64 MiB output, 1 GiB free-space floor and at most one child. Import only
+NumPy, Torch and MuJoCo from the exact registered site root/environment. Retain
+actual cache/alias/producer identities, raw versions and persistent mapped-image
+observations. No model, scene, catalog, retained-study or fitting inputs are opened.
+This development observation grants no scientific attempt, native-owner execution,
+collection, complete native/JIT closure or release qualification. Preserve a failure;
+do not automatically retry. The sampled RSS stop threshold is not a hard memory bound.
 
-At **2026-10-14 23:12 UTC** (15 October locally), this filesystem had
-**99,890,302,976 bytes free (~93.0 GiB)**, above the frozen memory minimum of
-**63,786,975,232 bytes (~59.4 GiB)**. Disk capacity is sufficient at this observation;
-recheck free space and required inputs immediately before each admitted stage.
-Clearing space does not authorize a consumed-attempt retry or change a protocol.
+**Why this unit comes first:** the current worker entry is preflight-only. The
+held file-descriptor native route fails an authored origin-relative shared-library
+fixture; installed-source inspection identifies Torch virtual cache exports and
+NumPy environment changes the present import guard does not support. Actual
+compatibility is unqualified. Resolve those observed contracts before attempting
+held numerical qualification or dispatching a real collection owner. PRs #128,
+#130 and #131 provide inventory, dependency custody and recording-close source
+mechanisms; reuse them in the complete route.
 
-| Order | Work to perform | Concrete exit | Current dependency |
-| --- | --- | --- | --- |
-| 1 | Complete puck repository/retained-root discovery and semantic scene inventory. Preserve every historical variant and occurrence. | Reviewed inventory implementation covers declared repositories, retained roots, references and supported schemas, rejects incomplete coverage, and feeds the existing collision/reservation checks. | Source work can proceed now. Actual catalog scanning needs the pending access decision and exact stage admission. |
-| 2 | Complete puck fresh-worker bootstrap and durable collection launcher using the existing custody, interval writer, clock ledger and supervisor. | One executable path binds source, runtime/dependencies, argv, reservation, scene/model inputs, one-owner lease, storage limits and terminal close; fault tests and independent review pass. | Inventory implementation and exact allocation/source/runtime/input review before any actual collection. |
-| 3 | Qualify memory replay once, then implement condition/case close, pruning and family admission. | Independently audited replay result for all 737 retained cells; after a pass, all nine conditions and whole-case close preserve custody and evidence, and the full family path is reviewed. | Attempt-02 approval remains pending. Independent source implementation can continue. |
-| 4 | Execute the fixed memory and puck studies; resolve the next MaleCNS study prospectively. | Complete valid memory development/held-out evidence and puck capability evidence against the unchanged gates. Navigation has a reviewed prospective decision before any new attempt. | Working execution paths and separate stage admissions. A failed stage stops its lane with evidence and a concrete decision. |
-| 5 | Integrate and validate the lab and all six simulated artwork encounters. | Real browser workflows, declared-duration artwork inputs, audiovisual/keyboard/viewport checks, exports, replay and recovery pass on the integrated candidate. | Sustained portable inputs, browser access and reviewed integration. |
-| 6 | Conduct user artistic review, independent operator acceptance and final handoff. | User acceptance, independently completed install/runbook and all seven release gates with linked evidence on one reproducible release candidate. | Human sessions and the completed studies/product gates. |
+**Three prospective decisions remain pending:** memory qualification amendment 02
+in PR #119; public mixed-catalog collision access versus independent identity-only
+projections in the PR #123 amendment; and the next navigation-study decision.
+No navigation attempt 3 is authorized. Disk clearance and this goal grant none of
+these decisions. Continue source work and authored fixtures where independent.
 
-**Start now:** qualify the actual supported dependency/runtime configuration
-and connect PR #130's authenticated worker to PR #128's declared inventory and
-PR #131's held natural-episode recording-close route. The worker entry still
-performs preflight only; bind complete parent admission and dispatch before any
-actual collection. The complete runtime, parent clock and collection route remain
-unqualified. These follow PR #127's report-family adapters
-and PR #126's registry path. Selected report/retained/registry parsers,
-pinned reference resolvers and existing root/catalog components do not establish
-full coverage or reservation admission. Unsupported embedded protocol variants
-and historical contexts must remain explicit coverage failures. Preserve variants and explicit legacy-schema conflicts.
-Use authored temporary fixtures while the catalog-access choice is pending.
-Continue through the complete launcher rather than treating each prerequisite
-PR as the milestone exit.
-Memory source work can proceed independently; actual heavy stages are serialized.
-
-**Decisions still required:** memory qualification amendment 02 in PR #119;
-public mixed-catalog collision access versus independently prepared identity-only
-projections in the PR #123 amendment; and a prospective navigation study decision.
-This goal grants none of those decisions. No navigation attempt 3 is authorized.
-
-**Working rule:** each implementation unit ends with working behavior, relevant
-verification, a commit and a reviewable branch/PR. Reuse existing mechanisms;
-add another component only for a named missing requirement of these paths.
-After the paths pass review, perform the admitted stages and report actual results.
-Do not silently retry failures or lower capability thresholds to close the goal.
+**Execution discipline:** finish each unit with working behavior, meaningful
+verification, a commit and a reviewable branch/PR. Add a component only to resolve
+a named missing requirement of these routes. Serialize actual model/native/study
+stages, preserve consumed attempts and failures, and keep all gate statuses tied
+to their evidence. Do not extend a completed unit with unrelated hardening.
 
 ## Current position
 
@@ -489,7 +449,10 @@ remain required. All seven simulation gates remain open.
 
 ## First action when pursuing this goal
 
-Continue the **puck durable owner/stage launcher** from PR #121's independently
+Start with the bounded numerical-import characterization and explicit held-runtime
+compatibility profile described above. Its result is development evidence, not a
+held-runtime or collection qualification. Then continue the **puck durable
+owner/stage launcher** from PR #121's independently
 audited original-bundle result, PR #120's descriptor-held execution context,
 and PR #122's reviewed native publication and fixed-clock integration. Use
 PR #128's declared repository/retained-root and semantic/reference/Markdown
