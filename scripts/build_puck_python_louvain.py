@@ -31,6 +31,7 @@ canonical = acquisition.canonical
 INTERPRETER = "/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/bin/python3.11"
 SOURCE_ARCHIVE = "runs/puck-cpu-payload-acquisition-01/archives/python-louvain-0.16.tar.gz"
 BASELINE_PATH = "docs/plans/puck-python-louvain-host-baseline-v1.json"
+OUTPUT = "runs/puck-python-louvain-build-02"
 WHEEL_NAME = "python_louvain-0.16-py3-none-any.whl"
 FIXTURE_NAME = "palimpsest_build_fixture-0.0-py3-none-any.whl"
 BACKEND = dict(name="setuptools", version="84.0.0", filename="setuptools-84.0.0-py3-none-any.whl",
@@ -52,7 +53,7 @@ CODE_PATHS = tuple(sorted(("scripts/build_puck_python_louvain.py", "scripts/puck
     "src/palimpsest/bounded_qualification.py", "src/palimpsest/evaluate.py",
     "src/palimpsest/puck_execution_files.py", "src/palimpsest/puck_package_payloads.py",
     "src/palimpsest/puck_build_inputs.py", "docs/plans/puck-python-louvain-build-v1.md",
-    "pyproject.toml", "uv.lock")))
+    "docs/plans/puck-python-louvain-build-v2.md", "pyproject.toml", "uv.lock")))
 PYTHON_SYSTEM_FILES = ["/usr/lib/ld-linux-x86-64.so.2", "/usr/lib/libc.so.6", "/usr/lib/libdl.so.2",
     "/usr/lib/libm.so.6", "/usr/lib/libpthread.so.0", "/usr/lib/librt.so.1", "/usr/lib/libutil.so.1"]
 
@@ -204,7 +205,7 @@ def run_stage(command, stage, root, normal, hard, state):
 
 def sandbox_command(baseline, source, backend, mode_args):
     prefix = baseline["python_prefix"]
-    command = ["/usr/bin/bwrap", "--unshare-all", "--die-with-parent", "--disable-userns",
+    command = ["/usr/bin/bwrap", "--unshare-all", "--unshare-user", "--die-with-parent", "--disable-userns",
         "--cap-drop", "ALL", "--clearenv", "--hostname", "palimpsest-wheel-build",
         "--ro-bind", prefix, prefix, "--dir", "/usr/lib"]
     for path in PYTHON_SYSTEM_FILES:
@@ -266,7 +267,7 @@ def load_configuration(root, relative, expected_hash):
             or canonical(config["limits"]) != canonical(LIMITS)
             or canonical(config["backend"]) != canonical(BACKEND)
             or canonical(config["claims"]) != canonical(CLAIMS)
-            or config["output"] != "runs/puck-python-louvain-build-01"):
+            or config["output"] != OUTPUT):
         raise ValueError("Wheel build configuration differs from the fixed prospective contract")
     for item in [*config["sources"], config["source_archive"], config["host_baseline"]]:
         acquisition.descriptor(item)

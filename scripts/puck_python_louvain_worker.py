@@ -63,6 +63,12 @@ def initialise():
 
 
 def readonly(directory):
+    if not os.statvfs(directory).f_flag & os.ST_RDONLY:
+        raise ValueError("Build input/root mount is not read-only: " + directory)
+    if directory == "/proc":
+        # procfs refuses creating arbitrary root files even on writable mounts.
+        # Its kernel-reported read-only mount flag is the relevant check.
+        return
     path = Path(directory) / ".palimpsest-write-refusal"
     try:
         fd = os.open(path, os.O_WRONLY | os.O_CREAT | os.O_EXCL, 0o600)
@@ -82,8 +88,8 @@ def probe(host_net_namespace, hidden_host_path):
         raise ValueError("Host project is visible inside the build namespace")
     if os.environ.get("HOME") != "/work/home" or list(Path("/work/home").iterdir()):
         raise ValueError("Build HOME is not fresh and empty")
-    expected_env = {"HOME", "TMPDIR", "PATH", "LC_ALL", "LANG", "TZ", "SOURCE_DATE_EPOCH"}
-    if set(os.environ) != expected_env:
+    expected_env = {"HOME", "TMPDIR", "PATH", "LC_ALL", "LANG", "TZ", "SOURCE_DATE_EPOCH", "PWD"}
+    if set(os.environ) != expected_env or os.environ.get("PWD") != "/source" or os.getcwd() != "/source":
         raise ValueError("Worker inherited an undeclared environment")
     for path in ("/", "/source", "/backend", sys.prefix, "/dev", "/proc"):
         readonly(path)

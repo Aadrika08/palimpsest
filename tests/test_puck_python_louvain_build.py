@@ -167,7 +167,7 @@ def authored_configuration(value):
         source_archive=dict(path=value.SOURCE_ARCHIVE, size_bytes=204641,
             sha256="b7ba2df5002fd28d3ee789a49532baad11fe648e4f2117cf0798e7520a1da56b"),
         host_baseline=dict(path=value.BASELINE_PATH, size_bytes=1, sha256="0" * 64),
-        backend=dict(value.BACKEND), output="runs/puck-python-louvain-build-01",
+        backend=dict(value.BACKEND), output=value.OUTPUT,
         limits=dict(value.LIMITS), claims=dict(value.CLAIMS))
 
 
@@ -188,7 +188,7 @@ def test_configuration_cannot_change_the_reviewed_input_or_execution_contract(tm
     if defect == "authority": config["claims"]["study_authorized"] = True
     elif defect == "backend": config["backend"]["url"] = "https://unreviewed.invalid/backend.whl"
     elif defect == "limits": config["limits"]["normal_seconds"] = 121
-    elif defect == "output": config["output"] = "runs/puck-python-louvain-build-02"
+    elif defect == "output": config["output"] = "runs/puck-python-louvain-build-01"
     elif defect == "archive": config["source_archive"]["sha256"] = "0" * 64
     elif defect == "sources": config["sources"].pop()
     elif defect == "version": config["version"] = True
@@ -245,3 +245,38 @@ def test_flushed_terminal_output_remains_inside_outer_hard_guard(monkeypatch):
     monkeypatch.setattr(value, "hard_guard", guard)
     monkeypatch.setattr(value, "print", output, raising=False)
     assert value.main() == 0
+
+
+@pytest.mark.skipif(os.environ.get("PALIMPSEST_BUILD_NAMESPACE_TEST") != "1", reason="explicit local Linux namespace probe")
+def test_authored_namespace_probe_requires_explicit_user_namespace(tmp_path):
+    value = module(PARENT)
+    baseline = json.loads((ROOT / value.BASELINE_PATH).read_bytes())
+    source = tmp_path / "source"
+    backend = tmp_path / "backend"
+    source.mkdir()
+    backend.mkdir()
+    (source / "authored.txt").write_text("inert fixture")
+    command = value.sandbox_command(baseline, source, backend,
+        ["probe", os.readlink("/proc/self/ns/net"), str(ROOT)])
+    stage = tmp_path / "namespace"
+    stage.mkdir()
+    now = time.monotonic()
+    result = value.run_stage(command, stage, ROOT, now + 10, now + 15, {})
+    assert result["status"] == "passed"
+    assert result["kind"] == "wheel-build-namespace-probe-v1"
+    assert result["denied_syscalls"] == [56, 57, 58, 59, 101, 109, 112, 272, 308, 322, 435]
+
+
+@pytest.mark.parametrize("readonly_mount", [False, True])
+def test_proc_readonly_is_proved_by_mount_flags_without_file_creation(monkeypatch, readonly_mount):
+    from types import SimpleNamespace
+    value = module(WORKER)
+    monkeypatch.setattr(value.os, "statvfs", lambda path: SimpleNamespace(f_flag=os.ST_RDONLY if readonly_mount else 0))
+    def no_create(*args, **kwargs):
+        raise AssertionError("proc root does not support regular-file creation probes")
+    monkeypatch.setattr(value.os, "open", no_create)
+    if readonly_mount:
+        value.readonly("/proc")
+    else:
+        with pytest.raises(ValueError, match="mount is not read-only"):
+            value.readonly("/proc")
