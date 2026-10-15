@@ -38,11 +38,11 @@ and inert-bytecode exception grant package-data acceptance only.
 The [next work unit](plans/simulation-release-execution-goal.md#clear-execution-target-after-disk-clearance)
 ends with that actual episode bundle. Accepted ordinary characterization02 below
 supplies observations; PR147 supplies the prospective CPU profile and tmpfs copier,
-and PR148 now completes the dedicated bounded source parent and authored
-end-to-end fixtures. The remaining ordered work is to freeze/review exact actual
-configurations and the independent terminal auditor, admit fresh full-stage
-resources, run separately numbered actual preparation and held qualification,
-then audit their terminal/byte outcomes. Resolve the episode/catalog contract
+and PR148 supplies the dedicated bounded source parent and authored end-to-end
+fixtures. PR149 adds reviewed PREPARE controls, the independent standard-library
+auditor and external observer. The remaining ordered work is fresh resource
+admission, actual preparation once plus audit, qualification freeze/review using
+that real passing result, then qualification plus audit. Resolve the episode/catalog contract
 before protected reads and audit the actual recorded/replayed/exported episode
 with its declared operator/renderer checks. Required cache/version/custody/cleanup
 failures stop and retain their allocation, with no implicit retry. The installed
@@ -52,14 +52,40 @@ session ran in this source checkpoint. The previous
 is preserved byte-identically. All 26 requirement and seven gate statuses remain
 unchanged; all seven release gates remain open.
 
-Fresh resource admission is still required: actual preparation has a 4 GiB
-MemAvailable floor and qualification 2 GiB. The metadata byte plan is 27,255 files /
-1,318,494,346 B across four roots, not an observed staged tree or complete RAM
-admission. Actual configurations must bind all 24 sources and 16 input roles to
-the accepted package, observation02 and declared profile/interpreter/native
-records. No exact actual-stack configuration or independent terminal auditor is
-prepared; prior resource snapshots and the fixture's 128 MiB floors do not admit
-an actual allocation.
+[Draft PR #149](https://github.com/Aadrika08/palimpsest/pull/149) retains the
+[source report](https://github.com/Aadrika08/palimpsest/blob/acd14e2861f8e0ec0209085dbd6b2ec302b26b64/docs/reports/puck-cpu-held-allocation-v1.md).
+The reviewed production PREPARE configuration is 7,903 B, SHA256
+`38134e016eff974e06806f1ac74492dc51e0a5721d8cd13d1123a1fd950fe8a6`,
+with 24 source pins, 16 input roles and the prospectively selected CPU roster
+`numpy._distributor_init_local`, `org`. The reviewed standard-library auditor is
+58,090 B, SHA256 `19723b4ec19c6cd8fd29d38b5cbabab60f89c136ee37564f6e94175439b4eed9`;
+the external observer is frozen and reviewed. The control freeze is committed
+at `7d368ebb91ee7e1d917190ae936e4cca12835618`. Qualification configuration is not
+frozen: the real preparation result and passing independent audit must exist
+first, with no placeholder preparation hash.
+
+Six accepted SITE metadata leaves exceed the old inherited 16 MiB file limit;
+the largest is 432,273,704 B. The prospective correction before any actual
+allocation sets preparation and the observer's inherited hard limit to 1 GiB.
+Qualification remains 16 MiB, observer streams 16 MiB and output 64 MiB. The
+original uninvoked configuration remains in commit `026ec3c`. A real 17 MiB
+regression exposes parent EFBIG and then the outer hard limit before correction;
+55 affected checks pass in 7.91 s, including authored phase pairs and CLI/tamper/
+alarm checks. These use stand-ins and do not qualify the installed stack.
+The auditor's pure metadata plan matches the parent: 27,255 files / 1,318,494,346 B,
+71 distributions, directory counts 2,074/2/0/0 and two prospective cache bindings.
+Those native creators remain unqualified on the actual held stack.
+
+Independent review permits one actual PREPARE after fresh resource admission,
+rechecking frozen control/source/input pins and confirming absent paths.
+The preflight at 2026-10-15 13:08:01.377406 UTC is **NOT_ADMITTED**: MemAvailable
+2,852,470,784 B is below the 4,294,967,296 B preparation floor. Project and `/tmp`
+free bytes are 99,317,600,256 / 4,988,243,968; all 40 source/input pins match and
+all actual allocation paths are absent. No production parent or namespace was
+started, and the actual preparation allocation remains unused. Refresh admission;
+qualification retains its separate 2 GiB RAM floor. No actual installed-stack,
+operator, renderer, model, collection or scientific qualification is claimed.
+All 33 statuses, seven gates and pending scientific/catalog decisions are unchanged.
 
 [Draft PR #148](https://github.com/Aadrika08/palimpsest/pull/148) implements the
 dedicated CPU preparation/four-import parent. Its
