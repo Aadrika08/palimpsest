@@ -13,7 +13,8 @@ import time
 
 ROOT=Path(__file__).resolve().parents[1]
 PYTHON='/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/bin/python3.11'
-OUTPUT='runs/puck-cpu-retained-admission-01'
+OUTPUT='runs/puck-cpu-retained-admission-02'
+DIRECTORY_IDENTITY_POLICY='selected-tree-full-metadata-ancestor-path-edges-v1'
 SITE='runs/puck-cpu-install-01/site'
 MiB=1024**2
 LIMITS=dict(normal_seconds=180,hard_seconds=195,address_space_bytes=1024*MiB,rss_bytes=512*MiB,
@@ -30,7 +31,14 @@ CODE_PATHS=tuple(sorted((
     'src/palimpsest/puck_execution_files.py','src/palimpsest/puck_package_payloads.py',
     'src/palimpsest/puck_build_inputs.py','src/palimpsest/puck_retained_installation.py',
     'docs/plans/puck-cpu-retained-installation-admission-v1.md',
-    'docs/plans/puck-cpu-retained-installation-admission-execution-v1.md','pyproject.toml','uv.lock')))
+    'docs/plans/puck-cpu-retained-installation-admission-execution-v1.md',
+    'docs/plans/puck-cpu-retained-installation-admission-execution-v2.md','pyproject.toml','uv.lock')))
+
+
+def require_prior_failure(prior):
+    if (prior['kind']!='cpu-retained-installation-admission-result-v1' or prior['status']!='FAIL'
+            or any(prior['claims'].get(key) is not False for key in CLAIMS)):
+        raise ValueError('Prior admission failure evidence differs')
 
 
 def require_fd_budget(needed):
@@ -82,7 +90,8 @@ def parent(path,digest,started):
         raise ValueError('Admission interpreter or loader environment differs')
     row=dict(path=path.relative_to(ROOT).as_posix(),size_bytes=path.lstat().st_size,sha256=digest)
     with AdmissionInputs(ROOT,[row],normal) as inputs:config=inputs.read_json(row['path'])
-    if (config['kind']!='cpu-retained-installation-admission-v1' or config['version']!=1
+    if (config['kind']!='cpu-retained-installation-admission-v2' or config['version']!=2
+            or config.get('directory_identity_policy')!=DIRECTORY_IDENTITY_POLICY
             or config['output']!=OUTPUT or config['site_root']!=SITE or config['limits']!=LIMITS
             or config['data_only_pyc']!=INERT or config['empty_directories']!=['mujoco.libs','pandas.libs']
             or tuple(r['path'] for r in config['sources'])!=CODE_PATHS):
@@ -98,11 +107,12 @@ def parent(path,digest,started):
     with AdmissionInputs(ROOT,entries,normal):pass
     reserve_output(output,{'sources':{'root':str(ROOT),'files':entries},'installed':{'root':str(ROOT/SITE)}})
     write_new(output/'configuration.json',config)
-    write_new(output/'invocation.json',dict(kind='cpu-retained-admission-invocation-v1',configuration_sha256=digest,
+    write_new(output/'invocation.json',dict(kind='cpu-retained-admission-invocation-v2',configuration_sha256=digest,
                                            started_at_utc=time.strftime('%Y-%m-%dT%H:%M:%SZ',time.gmtime())))
     before_fds=len(os.listdir('/proc/self/fd'));budget=Budget(ROOT,output,normal)
-    result=dict(kind='cpu-retained-installation-admission-result-v1',status='FAIL',claims=dict(CLAIMS),
-                configuration_sha256=digest,original_allocation_status='FAIL')
+    result=dict(kind='cpu-retained-installation-admission-result-v2',status='FAIL',claims=dict(CLAIMS),
+                configuration_sha256=digest,original_allocation_status='FAIL',prior_admission_status='FAIL',
+                directory_identity_policy=DIRECTORY_IDENTITY_POLICY)
     try:
         with AdmissionInputs(ROOT,entries,normal) as inputs:
             get=lambda role:inputs.read_json(config['roles'][role])
@@ -110,9 +120,13 @@ def parent(path,digest,started):
             if (old['status']!='FAIL' or old['claims']['installed'] is not False
                     or proof['status']!='PRESERVED_FAILURE_VERIFIED' or proof['accepted_installation'] is not False):
                 raise ValueError('Original failed evidence differs')
+            require_prior_failure(get('prior_admission_result'))
             original=ROOT/'runs/puck-cpu-install-01'
             for name in ('inventory.json','licences.json','baseline-after.json','logs/namespace.json'):
                 if os.path.lexists(original/name):raise ValueError('Original missing receipt was replaced')
+            for name in ('inventory.json','snapshot.json','baseline-after.json'):
+                if os.path.lexists(ROOT/'runs/puck-cpu-retained-admission-01'/name):
+                    raise ValueError('Prior admission missing receipt was replaced')
             if _group_members(2370311) or _group_members(2370341):raise ValueError('Original worker group still active')
             files=inventory['entries'];directories=layout['predicted_destination_directories']
             if (len(files)!=27225 or len(directories)!=2074 or len(files)+len(directories)+len(entries)+512>LIMITS['max_fds']
@@ -142,8 +156,9 @@ def parent(path,digest,started):
                     raise ValueError('Trusted installer changed during admission')
                 write_new(output/'baseline-after.json',after)
                 installed.recheck();inputs.recheck();budget.check()
-                snapshot=dict(kind='cpu-retained-installation-snapshot-v1',configuration_sha256=digest,
+                snapshot=dict(kind='cpu-retained-installation-snapshot-v2',configuration_sha256=digest,
                     site_root=str(ROOT/SITE),data_only_pyc=INERT,original_allocation_status='FAIL',
+                    prior_admission_status='FAIL',directory_identity_policy=DIRECTORY_IDENTITY_POLICY,
                     custody=dict(file_count=len(files),directory_count=len(directories),regular_file_bytes=1304701872,exact_namespace=True))
                 write_new(output/'snapshot.json',snapshot)
                 installed.recheck();inputs.recheck()

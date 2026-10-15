@@ -7,13 +7,45 @@ import json
 import os
 import stat
 
-from .puck_execution_files import _HeldFileCore, _relative
+from .puck_execution_files import _HeldFileCore, _identity, _relative
 
 MiB = 1024**2
 INERT_PYC_PATH = 'numpy/distutils/__pycache__/conv_template.cpython-311.pyc'
 
 
-class AdmissionInputs(_HeldFileCore):
+class _AdmissionFileCore(_HeldFileCore):
+    _full_selected_tree = False
+
+    def _edge(self,key,identity):
+        prefix=self.root.parts[1:]
+        selected=self._full_selected_tree and key[:len(prefix)]==prefix
+        return identity if selected else identity[:3]
+
+    def _directory(self,key):
+        if key in self._dirs:return self._dirs[key][0]
+        self._clock()
+        if not key:
+            parent,name=None,'/'
+            fd=os.open('/',os.O_RDONLY|os.O_DIRECTORY|os.O_NOFOLLOW)
+        else:
+            parent,name=self._directory(key[:-1]),key[-1]
+            fd=os.open(name,os.O_RDONLY|os.O_DIRECTORY|os.O_NOFOLLOW,dir_fd=parent)
+        self._fds.append(fd)
+        before=_identity(os.fstat(fd))
+        if self._edge(key,before)!=self._edge(key,_identity(os.stat(name,dir_fd=parent,follow_symlinks=False))):
+            raise RuntimeError('Retained directory edge changed during open: /'+'/'.join(key))
+        self._dirs[key]=(fd,parent,name,before)
+        return fd
+
+    def _check_dirs(self):
+        for key,(fd,parent,name,expected) in self._dirs.items():
+            self._clock();wanted=self._edge(key,expected)
+            if (self._edge(key,_identity(os.fstat(fd)))!=wanted or
+                    self._edge(key,_identity(os.stat(name,dir_fd=parent,follow_symlinks=False)))!=wanted):
+                raise RuntimeError('Retained directory identity changed: /'+'/'.join(key))
+
+
+class AdmissionInputs(_AdmissionFileCore):
     def __init__(self, root, entries, deadline):
         super().__init__(root,entries,deadline,limits=(512,32*MiB,64*MiB))
 
@@ -52,7 +84,8 @@ def validate_inert_files(entries,expected):
     return dict(expected)
 
 
-class HeldInstalledFiles(_HeldFileCore):
+class HeldInstalledFiles(_AdmissionFileCore):
+    _full_selected_tree = True
     def __init__(self,root,entries,directories,deadline,*,check=None):
         if (type(directories) is not list or directories!=sorted(set(directories))
                 or len(directories)>5000):

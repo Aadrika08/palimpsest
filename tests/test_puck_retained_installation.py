@@ -112,3 +112,41 @@ assert resource.getrlimit(resource.RLIMIT_NOFILE)==(32,32)
 """
     p=subprocess.run([m.PYTHON,'-I','-S','-B','-c',code],capture_output=True,text=True)
     assert p.returncode==0,p.stderr
+
+
+def test_unrelated_sibling_membership_does_not_change_admitted_tree(tmp_path):
+    root,rows,dirs=authored(tmp_path);m=module()
+    with m.HeldInstalledFiles(root,rows,dirs,time.monotonic()+10) as held:
+        (tmp_path/'unrelated-sibling').write_bytes(b'outside admitted tree')
+        held.recheck()
+    with m.AdmissionInputs(root,rows,time.monotonic()+10) as held:
+        (tmp_path/'another-unrelated-sibling').write_bytes(b'outside declared metadata files')
+        held.recheck()
+
+
+def test_redirected_ancestor_is_rejected_despite_same_leaf_bytes(tmp_path):
+    m=module();outer=tmp_path/'outer';outer.mkdir();root=outer/'site';root.mkdir()
+    (root/'value').write_bytes(b'unchanged');rows=[row('value',b'unchanged')]
+    with pytest.raises((ValueError,RuntimeError,OSError)):
+        with m.HeldInstalledFiles(root,rows,[],time.monotonic()+10) as held:
+            outer.rename(tmp_path/'saved');root.mkdir(parents=True);(root/'value').write_bytes(b'unchanged')
+            held.recheck()
+
+
+def test_public_collection_ancestor_policy_is_unchanged(tmp_path):
+    from palimpsest.puck_execution_files import HeldCollectionFiles
+    root,rows,dirs=authored(tmp_path)
+    with pytest.raises(RuntimeError):
+        with HeldCollectionFiles(root,rows,time.monotonic()+10) as held:
+            (tmp_path/'outside-sibling').write_bytes(b'still rejected by public profile')
+            held.recheck()
+
+
+@pytest.mark.parametrize('change',['pass','accepted','missing-authority'])
+def test_prior_admission_failure_cannot_be_promoted(change):
+    m=driver();prior=dict(kind='cpu-retained-installation-admission-result-v1',status='FAIL',claims=dict(m.CLAIMS))
+    m.require_prior_failure(prior)
+    if change=='pass':prior['status']='PASS'
+    elif change=='accepted':prior['claims']['package_preparation_accepted']=True
+    else:del prior['claims']['study_authorized']
+    with pytest.raises(ValueError,match='Prior admission'):m.require_prior_failure(prior)
