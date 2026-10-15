@@ -119,14 +119,14 @@ def _resolve(module, attributes):
 
 
 def _codes(code):
-    result=set(); stack=[code]
+    result=[]; seen=set(); stack=[code]
     while stack:
         item=stack.pop()
-        if item in result: continue
-        result.add(item)
+        if id(item) in seen: continue
+        seen.add(id(item)); result.append(item)
         if len(result)>MAX_CODE_OBJECTS: raise ValueError('Dependency compiled code ceiling exceeded')
         stack.extend(v for v in item.co_consts if type(v) is types.CodeType)
-    return result
+    return tuple(result)
 
 
 def _functions(slot):
@@ -159,8 +159,9 @@ class _ClassSeal:
 
 
 class ModuleSeal:
-    def __init__(self, module, *, virtual=False):
+    def __init__(self, module, *, virtual=False, expected_name=None):
         self.module=module; self.cls=type(module); self.virtual=virtual
+        self.expected_name=expected_name
         self.state=self._state()
     def _state(self):
         raw=module_dict(self.module)
@@ -172,6 +173,8 @@ class ModuleSeal:
             if type(spec) is not importlib.machinery.ModuleSpec:
                 raise RuntimeError('Held dependency spec type changed')
             d=vars(spec)
+            if self.expected_name is not None and d.get('name')!=self.expected_name:
+                raise RuntimeError('Held dependency physical spec name differs')
             spec_state=(spec,d.get('name'),d.get('loader'),d.get('origin'),
                         tuple(d.get('submodule_search_locations') or ()))
         path=raw.get('__path__',())
@@ -180,7 +183,15 @@ class ModuleSeal:
         return (type(self.module),raw.get('__name__'),raw.get('__loader__'),spec_state,
                 raw.get('__file__'),raw.get('__package__'),tuple(path))
     def recheck(self):
-        if self._state()!=self.state: raise RuntimeError('Held dependency module dispatch changed')
+        current=self._state(); expected=self.state
+        spec,old_spec=current[3],expected[3]
+        spec_changed=((spec is None)!=(old_spec is None) or
+            (spec is not None and old_spec is not None and
+             (spec[0] is not old_spec[0] or spec[2] is not old_spec[2]
+              or (spec[1],spec[3],spec[4])!=(old_spec[1],old_spec[3],old_spec[4]))))
+        if (current[0] is not expected[0] or current[2] is not expected[2] or spec_changed
+                or (current[1],*current[4:])!=(expected[1],*expected[4:])):
+            raise RuntimeError('Held dependency module dispatch changed')
 
 
 class ExportBindings:
@@ -208,7 +219,7 @@ class ExportBindings:
             if cls is not value: raise RuntimeError('Dependency module class differs from producer binding')
         else:
             if (type(value) is not types.FunctionType or value.__globals__ is not module_dict(producer)
-                    or value.__code__ not in self.code.get(record['producer'],set())):
+                    or not any(value.__code__ is code for code in self.code.get(record['producer'],()))):
                 raise RuntimeError('Dependency class factory is not held compiled source')
             expected=value.__code__.co_qualname+'.<locals>.'+record['nested']
             nested=[c for c in _codes(value.__code__) if c.co_qualname==expected]
@@ -217,7 +228,7 @@ class ExportBindings:
                     or cls.__module__!=record['producer'] or len(nested)!=1):
                 raise RuntimeError('Dependency generated class factory/base binding differs')
             allowed=_codes(nested[0])
-            if any(fn.__globals__ is not module_dict(producer) or fn.__code__ not in allowed
+            if any(fn.__globals__ is not module_dict(producer) or not any(fn.__code__ is code for code in allowed)
                    for slot in type.__getattribute__(cls,'__dict__').values() for fn in _functions(slot)):
                 raise RuntimeError('Dependency generated class methods differ from held factory code')
             self.anchors.append((value,None,value.__code__))
@@ -241,7 +252,7 @@ class ExportBindings:
             if (current is original)!=(change['kind']=='reclassify'):
                 raise RuntimeError('Dependency module transition kind differs')
             self.bind_class(type(current),change['class_binding'])
-        return current,ModuleSeal(current,virtual=change is not None)
+        return current,ModuleSeal(current,virtual=change is not None,expected_name=name)
     def recheck(self):
         for producer,path,value in self.anchors:
             if (producer.__code__ is not value if path is None else _resolve(producer,path) is not value):

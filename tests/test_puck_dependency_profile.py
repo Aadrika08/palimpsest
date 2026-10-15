@@ -159,3 +159,120 @@ def test_explicit_origin_policy_works_in_complete_worker_without_changing_v1(tmp
     assert receipt['dependencies']['native_origin_policies']=={
         'fixture_dep._native':'held-directory-observed-v1'}
     assert receipt['native_authorized'] is receipt['dependencies_qualified'] is False
+
+
+@pytest.mark.parametrize('phase,success',[('native_create',True),('module_exec',False)])
+def test_native_export_is_bound_before_create_module_guard(tmp_path,phase,success):
+    import subprocess,sysconfig
+    from test_puck_worker_bootstrap import descriptor
+    def mutate(deps,root):
+        p=upgrade(deps)
+        c=root/'native.c'
+        source=c.read_text().replace('return PyModule_Create(&mod);',
+            'PyObject* m=PyModule_Create(&mod);'
+            'PyObject* child=PyModule_New("fixture_dep.native_child");'
+            'if(!m || !child) return NULL;'
+            'if(PyDict_SetItemString(PyImport_GetModuleDict(),"fixture_dep.native_child",child)<0) return NULL;'
+            'if(PyModule_AddObject(m,"actual_export",child)<0) return NULL;return m;')
+        c.write_text(source)
+        native=next(v for v in deps['modules'] if v['kind']=='extension')
+        subprocess.run(['cc','-shared','-fPIC','-I'+sysconfig.get_paths()['include'],str(c),
+                        '-o',str(root/native['path'])],check=True,capture_output=True,timeout=15)
+        deps['roots'][0]['files']=[descriptor(root/v['path'],v['path']) for v in deps['roots'][0]['files']]
+        p['exports']=[{'name':'fixture_dep.native_child','producer':'fixture_dep._native','phase':phase,
+                      'attributes':['actual_export'],'class_binding':None}]
+    result,_=dependency_fixture(tmp_path,'from fixture_dep import _native\nimport fixture_dep.native_child\nreturn {}',
+                                native=True,mutate=mutate)
+    if success:
+        assert result.returncode==0,result.stderr
+        assert json.loads(result.stdout)['dependencies']['exported_modules']==[
+            {'name':'fixture_dep.native_child','producer':'fixture_dep._native'}]
+    else:
+        assert result.returncode!=0 and result.stdout==''
+        assert 'Unregistered module cache entry: fixture_dep.native_child' in result.stderr,result.stderr
+
+
+@pytest.mark.parametrize('target',['factory','method'])
+def test_equal_but_unheld_generated_code_is_refused_before_capture(tmp_path,target):
+    def mutate(deps,root):
+        generated_profile(deps,root)
+        path=root/'fixture_dep/one.py'
+        code=path.read_text()
+        if target=='factory':code=code.replace('install(sys.modules[__name__])',
+            'install.__code__=install.__code__.replace()\ninstall(sys.modules[__name__])')
+        else:code+='type(sys.modules[__name__]).answer.__code__=type(sys.modules[__name__]).answer.__code__.replace()\n'
+        path.write_text(code)
+        deps['roots'][0]['files']=[descriptor(root/v['path'],v['path']) for v in deps['roots'][0]['files']]
+    result,_=dependency_fixture(tmp_path,'import fixture_dep.one\nreturn {}',mutate=mutate)
+    assert result.returncode!=0 and result.stdout==''
+    assert 'held' in result.stderr.lower() and ('factory' in result.stderr or 'methods' in result.stderr),result.stderr
+
+
+def test_original_v1_physical_spec_name_contract_is_preserved(tmp_path):
+    def mutate(deps,root):
+        path=root/'fixture_dep/__init__.py'
+        path.write_text(path.read_text()+'__spec__.name="foreign"\n')
+        deps['roots'][0]['files']=[descriptor(root/v['path'],v['path']) for v in deps['roots'][0]['files']]
+    result,_=dependency_fixture(tmp_path,'import fixture_dep\nreturn {}',mutate=mutate)
+    assert result.returncode!=0 and result.stdout==''
+    assert 'dependency' in result.stderr.lower() and 'spec' in result.stderr.lower(),result.stderr
+
+
+@pytest.mark.parametrize('target',['ExportBindings.recheck','validate_profile'])
+def test_support_dispatch_is_checked_before_new_profile_callbacks(tmp_path,target):
+    body=('import fixture_dep\nimport palimpsest.puck_dependency_bindings as b\n'
+          'b.'+target+' = lambda *args: set()\nreturn {}')
+    result,_=dependency_fixture(tmp_path,body,mutate=lambda deps,root:upgrade(deps))
+    assert result.returncode!=0 and result.stdout==''
+    assert 'Authenticated function code binding changed' in result.stderr or 'Authenticated class binding changed' in result.stderr,result.stderr
+
+
+@pytest.mark.parametrize('policy',['exact-file-fd-v1','held-directory-observed-v1'])
+def test_new_origin_policy_does_not_allow_unregistered_native_helpers(tmp_path,policy):
+    def mutate(deps,root):
+        p=upgrade(deps);p['native_origins']=[{'name':'fixture_dep._native','policy':policy}]
+    result,_=dependency_fixture(tmp_path,'from fixture_dep import _native\nreturn {}',
+                                native=True,native_link='unregistered-absolute',mutate=mutate)
+    assert result.returncode!=0 and result.stdout==''
+    assert 'Unregistered native file image:' in result.stderr and 'libfixturehelper.so' in result.stderr,result.stderr
+
+
+def test_candidate_covers_all_observed_exceptional_rows_without_runtime_authority():
+    import hashlib
+    from test_puck_worker_bootstrap import ROOT
+    from palimpsest.puck_dependency_bindings import validate_profile
+    candidate=json.loads((ROOT/'docs/plans/puck-v3-observed-import-profile-candidate.json').read_text())
+    summary=json.loads((ROOT/'docs/reports/puck-v3-runtime-amendment-02/compatibility-observations.json').read_text())
+    report=(ROOT/'docs/reports/puck-v3-runtime-amendment-02/observation-02/payload/imports.json').read_bytes()
+    assert candidate['observation_report_sha256']==hashlib.sha256(report).hexdigest()==summary['report_sha256']
+    profile=candidate['import_profile']
+    declared={v['name'] for v in profile['exports']+profile['module_changes']}
+    assert declared=={v['name'] for v in summary['numerical_exceptional_bindings']}
+    assert len(declared)==52 and len(profile['exports'])==42 and len(profile['module_changes'])==10
+    class_bound={v['name'] for v in profile['exports'] if v['class_binding'] is not None}
+    class_bound.update(v['name'] for v in profile['module_changes'])
+    assert class_bound==set(summary['numerical_module_subclasses'])
+    # Schema validation uses authored declarations, not payload opens or imports.
+    required={v['producer'] for v in profile['exports']}
+    required.update(v['name'] for v in profile['module_changes']+profile['native_origins'])
+    for row in profile['exports']+profile['module_changes']:
+        binding=row['class_binding']
+        if binding:
+            required.add(binding['producer'])
+            required.update(v['producer'] for v in binding.get('bases',[]))
+    extension={v['name'] for v in profile['native_origins']}|{'torch._C'}
+    validate_profile(profile,[{'name':name,'kind':'extension' if name in extension else 'python'}
+                              for name in sorted(required)],[])
+    assert all(candidate[k] is False for k in ('native_phase_qualified','held_runtime_qualified','collection_authorized','executable'))
+    assert candidate['qualification_claims']==[]
+
+
+@pytest.mark.parametrize('field',['module_loader','spec_loader'])
+def test_loader_identity_cannot_be_replaced_by_equal_comparing_object(tmp_path,field):
+    target='fixture_dep.__loader__' if field=='module_loader' else 'fixture_dep.__spec__.loader'
+    body=('import fixture_dep\n'
+          'class EqualLoader:\n    def __eq__(self,other): return True\n'
+          +target+'=EqualLoader()\nreturn {}')
+    result,_=dependency_fixture(tmp_path,body)
+    assert result.returncode!=0 and result.stdout==''
+    assert 'Held dependency module dispatch changed' in result.stderr,result.stderr
