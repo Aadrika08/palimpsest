@@ -259,3 +259,13 @@ def test_every_loaded_local_dispatch_slot_remains_bound(tmp_path, variant):
     assert result.returncode != 0
     assert result.stdout == ''
     assert 'binding changed' in result.stderr
+
+
+def test_seed_read_access_time_change_is_not_a_content_change(tmp_path):
+    def age_access(reg):
+        path = Path(reg['source_root'])/'scripts/puck_worker_bootstrap.py'
+        state = path.stat()
+        os.utime(path, ns=(1,state.st_mtime_ns))
+    result,_ = launch(tmp_path,change=age_access)
+    assert result.returncode == 0, result.stderr
+    assert json.loads(result.stdout)['entry_result'] == {'answer':42}

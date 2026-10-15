@@ -41,7 +41,7 @@ class _Entry:
     sha256: str
 
 
-class HeldCollectionFiles:
+class _HeldFileCore:
     """One-shot read-only custody; an expired, failed or closed object is unusable.
 
     Fixed descriptors have exactly path/size_bytes/sha256. ``read`` copies at
@@ -50,7 +50,11 @@ class HeldCollectionFiles:
     Callers must keep this context open through their final admission decision.
     """
 
-    def __init__(self, root, entries, deadline, exact_subtrees=()):
+    def __init__(self, root, entries, deadline, exact_subtrees=(), *, limits):
+        if (type(limits) is not tuple or len(limits) != 3
+                or any(type(value) is not int or value < 1 for value in limits)):
+            raise ValueError('Internal file custody limits must be positive integers')
+        max_files, max_file_bytes, max_total_bytes = limits
         raw_root = os.fspath(root)
         if (type(raw_root) is not str or not raw_root.startswith('/')
                 or any(part in ('.', '..') for part in raw_root.split('/'))):
@@ -59,7 +63,7 @@ class HeldCollectionFiles:
         if (type(deadline) not in (int, float) or not math.isfinite(deadline)):
             raise ValueError('Collection deadline must be finite')
         self._deadline_value = deadline
-        if type(entries) not in (list, tuple) or not 1 <= len(entries) <= MAX_FILES:
+        if type(entries) not in (list, tuple) or not 1 <= len(entries) <= max_files:
             raise ValueError('Collection file count is outside the registered bound')
         parsed = []
         for row in entries:
@@ -73,13 +77,13 @@ class HeldCollectionFiles:
                     or any(char not in '0123456789abcdef' for char in digest)):
                 raise ValueError('Collection descriptor requires exact lowercase SHA-256')
             size = row['size_bytes']
-            if type(size) is not int or not 0 <= size <= MAX_FILE_BYTES:
+            if type(size) is not int or not 0 <= size <= max_file_bytes:
                 raise ValueError('Collection descriptor size exceeds its bound')
             parsed.append(_Entry(path, size, digest))
         paths = [row.path for row in parsed]
         if paths != sorted(set(paths)):
             raise ValueError('Collection descriptors must be sorted and distinct')
-        if sum(row.size for row in parsed) > MAX_TOTAL_BYTES:
+        if sum(row.size for row in parsed) > max_total_bytes:
             raise ValueError('Collection aggregate exceeds 64 MiB')
         if type(exact_subtrees) not in (list, tuple):
             raise ValueError('Exact collection subtrees must be an ordered collection')
@@ -231,6 +235,9 @@ class HeldCollectionFiles:
             if files != expected_files or dirs != expected_dirs:
                 raise ValueError('Exact collection subtree contains missing or unregistered entries')
 
+    def _accept_leaf(self, state, entry):
+        return stat.S_ISREG(state.st_mode) and state.st_nlink == 1 and state.st_size == entry.size
+
     def __enter__(self):
         if self._state != 'new':
             raise RuntimeError('Collection file custody can only be entered once')
@@ -248,9 +255,7 @@ class HeldCollectionFiles:
                 self._fds.append(fd)
                 state = os.fstat(fd)
                 expected = _identity(state)
-                if (not stat.S_ISREG(state.st_mode) or state.st_nlink != 1
-                        or state.st_size > entry.size
-                        or state.st_size != entry.size
+                if (not self._accept_leaf(state, entry)
                         or (state.st_dev, state.st_ino) in identities):
                     raise ValueError('Collection leaf type, alias count or size differs')
                 identities.add((state.st_dev, state.st_ino))
@@ -337,3 +342,14 @@ class HeldCollectionFiles:
                 self._state = 'closed'
             self._close()
         return False
+
+
+class HeldCollectionFiles(_HeldFileCore):
+    """Original fixed collection ceilings and strict single-link custody.
+
+    The internal core also serves a distinct dependency profile. This public
+    constructor accepts no limits override; collection's admission stays fixed.
+    """
+    def __init__(self, root, entries, deadline, exact_subtrees=()):
+        super().__init__(root, entries, deadline, exact_subtrees,
+                         limits=(MAX_FILES, MAX_FILE_BYTES, MAX_TOTAL_BYTES))
