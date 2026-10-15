@@ -1,0 +1,1321 @@
+........................................................................ [ 17%]
+..............................F..F........F..FF...F..FFFF.F.F........... [ 35%]
+........................................................................ [ 53%]
+.....F.................................................................. [ 71%]
+....F................FFF...........................FF......FF........... [ 89%]
+..........................................                               [100%]
+=================================== FAILURES ===================================
+___ test_equal_but_unheld_generated_code_is_refused_before_capture[factory] ____
+
+tmp_path = PosixPath('/tmp/palimpsest-delayed-exports-affected-bindings-01/test_equal_but_unheld_generate0')
+target = 'factory'
+
+    @pytest.mark.parametrize('target',['factory','method'])
+    def test_equal_but_unheld_generated_code_is_refused_before_capture(tmp_path,target):
+        def mutate(deps,root):
+            generated_profile(deps,root)
+            path=root/'fixture_dep/one.py'
+            code=path.read_text()
+            if target=='factory':code=code.replace('install(sys.modules[__name__])',
+                'install.__code__=install.__code__.replace()\ninstall(sys.modules[__name__])')
+            else:code+='type(sys.modules[__name__]).answer.__code__=type(sys.modules[__name__]).answer.__code__.replace()\n'
+            path.write_text(code)
+            deps['roots'][0]['files']=[descriptor(root/v['path'],v['path']) for v in deps['roots'][0]['files']]
+        result,_=dependency_fixture(tmp_path,'import fixture_dep.one\nreturn {}',mutate=mutate)
+        assert result.returncode!=0 and result.stdout==''
+>       assert 'held' in result.stderr.lower() and ('factory' in result.stderr or 'methods' in result.stderr),result.stderr
+E       AssertionError: Traceback (most recent call last):
+E           File "<string>", line 10, in <module>
+E           File "/tmp/palimpsest-delayed-exports-affected-bindings-01/test_equal_but_unheld_generate0/source/scripts/puck_worker_bootstrap.py", line 651, in <module>
+E             if __name__ == '__main__': main()
+E                                        ^^^^^^
+E           File "/tmp/palimpsest-delayed-exports-affected-bindings-01/test_equal_but_unheld_generate0/source/scripts/puck_worker_bootstrap.py", line 642, in main
+E             with HeldWorkerBootstrap(payload, expected_sha256=expected,
+E           File "/tmp/palimpsest-delayed-exports-affected-bindings-01/test_equal_but_unheld_generate0/source/scripts/puck_worker_bootstrap.py", line 445, in __enter__
+E             from palimpsest.puck_dependency_imports import DependencyImports, HeldDependencyNamespace
+E           File "<frozen importlib._bootstrap>", line 1176, in _find_and_load
+E           File "<frozen importlib._bootstrap>", line 1147, in _find_and_load_unlocked
+E           File "<frozen importlib._bootstrap>", line 690, in _load_unlocked
+E           File "/tmp/palimpsest-delayed-exports-affected-bindings-01/test_equal_but_unheld_generate0/source/scripts/puck_worker_bootstrap.py", line 272, in exec_module
+E             exec(compile(payload, filename, 'exec', dont_inherit=True), module.__dict__)
+E           File "/tmp/palimpsest-delayed-exports-affected-bindings-01/test_equal_but_unheld_generate0/source/src/palimpsest/puck_dependency_imports.py", line 10, in <module>
+E             import importlib.metadata
+E           File "/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/importlib/metadata/__init__.py", line 17, in <module>
+E             from . import _adapters, _meta
+E           File "/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/importlib/metadata/_adapters.py", line 3, in <module>
+E             import email.message
+E           File "/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/email/message.py", line 15, in <module>
+E             from email import utils
+E           File "/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/email/utils.py", line 40, in <module>
+E             from email.charset import Charset
+E           File "/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/email/charset.py", line 15, in <module>
+E             import email.quoprimime
+E           File "<frozen importlib._bootstrap>", line 1176, in _find_and_load
+E           File "<frozen importlib._bootstrap>", line 1138, in _find_and_load_unlocked
+E           File "<frozen importlib._bootstrap>", line 1078, in _find_spec
+E           File "/tmp/palimpsest-delayed-exports-affected-bindings-01/test_equal_but_unheld_generate0/source/scripts/puck_worker_bootstrap.py", line 286, in find_spec
+E             self.owner._import_recheck()
+E           File "/tmp/palimpsest-delayed-exports-affected-bindings-01/test_equal_but_unheld_generate0/source/scripts/puck_worker_bootstrap.py", line 522, in _import_recheck
+E             return self._check(full=self._dependencies is None)
+E                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           File "/tmp/palimpsest-delayed-exports-affected-bindings-01/test_equal_but_unheld_generate0/source/scripts/puck_worker_bootstrap.py", line 570, in _check
+E             if full: child.recheck()
+E                      ^^^^^^^^^^^^^^^
+E           File "/tmp/palimpsest-delayed-exports-affected-bindings-01/test_equal_but_unheld_generate0/source/src/palimpsest/puck_execution_files.py", line 275, in recheck
+E             self._check_dirs()
+E           File "/tmp/palimpsest-delayed-exports-affected-bindings-01/test_equal_but_unheld_generate0/source/src/palimpsest/puck_execution_files.py", line 157, in _check_dirs
+E             raise RuntimeError('Collection root or ancestor changed while held')
+E         RuntimeError: Collection root or ancestor changed while held
+E         Bootstrap holder close: Collection root or ancestor changed while held
+E         
+E       assert ('held' in 'traceback (most recent call last):\n  file "<string>", line 10, in <module>\n  file "/tmp/palimpsest-delayed-exports-...llection root or ancestor changed while held\nbootstrap holder close: collection root or ancestor changed while held\n' and ('factory' in 'Traceback (most recent call last):\n  File "<string>", line 10, in <module>\n  File "/tmp/palimpsest-delayed-exports-...llection root or ancestor changed while held\nBootstrap holder close: Collection root or ancestor changed while held\n' or 'methods' in 'Traceback (most recent call last):\n  File "<string>", line 10, in <module>\n  File "/tmp/palimpsest-delayed-exports-...llection root or ancestor changed while held\nBootstrap holder close: Collection root or ancestor changed while held\n'))
+E        +  where 'traceback (most recent call last):\n  file "<string>", line 10, in <module>\n  file "/tmp/palimpsest-delayed-exports-...llection root or ancestor changed while held\nbootstrap holder close: collection root or ancestor changed while held\n' = <built-in method lower of str object at 0x5ed3c01e1820>()
+E        +    where <built-in method lower of str object at 0x5ed3c01e1820> = 'Traceback (most recent call last):\n  File "<string>", line 10, in <module>\n  File "/tmp/palimpsest-delayed-exports-...llection root or ancestor changed while held\nBootstrap holder close: Collection root or ancestor changed while held\n'.lower
+E        +      where 'Traceback (most recent call last):\n  File "<string>", line 10, in <module>\n  File "/tmp/palimpsest-delayed-exports-...llection root or ancestor changed while held\nBootstrap holder close: Collection root or ancestor changed while held\n' = CompletedProcess(args=['/home/utkarsh/Work/shraddha/brain/.worktrees/r0-reproduction/.venv/bin/python', '-I', '-B', '-...lection root or ancestor changed while held\nBootstrap holder close: Collection root or ancestor changed while held\n').stderr
+E        +  and   'Traceback (most recent call last):\n  File "<string>", line 10, in <module>\n  File "/tmp/palimpsest-delayed-exports-...llection root or ancestor changed while held\nBootstrap holder close: Collection root or ancestor changed while held\n' = CompletedProcess(args=['/home/utkarsh/Work/shraddha/brain/.worktrees/r0-reproduction/.venv/bin/python', '-I', '-B', '-...lection root or ancestor changed while held\nBootstrap holder close: Collection root or ancestor changed while held\n').stderr
+E        +  and   'Traceback (most recent call last):\n  File "<string>", line 10, in <module>\n  File "/tmp/palimpsest-delayed-exports-...llection root or ancestor changed while held\nBootstrap holder close: Collection root or ancestor changed while held\n' = CompletedProcess(args=['/home/utkarsh/Work/shraddha/brain/.worktrees/r0-reproduction/.venv/bin/python', '-I', '-B', '-...lection root or ancestor changed while held\nBootstrap holder close: Collection root or ancestor changed while held\n').stderr
+
+tests/test_puck_dependency_profile.py:263: AssertionError
+_ test_support_dispatch_is_checked_before_new_profile_callbacks[ExportBindings.recheck] _
+
+tmp_path = PosixPath('/tmp/palimpsest-delayed-exports-affected-bindings-01/test_support_dispatch_is_check0')
+target = 'ExportBindings.recheck'
+
+    @pytest.mark.parametrize('target',['ExportBindings.recheck','validate_profile'])
+    def test_support_dispatch_is_checked_before_new_profile_callbacks(tmp_path,target):
+        body=('import fixture_dep\nimport palimpsest.puck_dependency_bindings as b\n'
+              'b.'+target+' = lambda *args: set()\nreturn {}')
+        result,_=dependency_fixture(tmp_path,body,mutate=lambda deps,root:upgrade(deps))
+        assert result.returncode!=0 and result.stdout==''
+>       assert 'Authenticated function code binding changed' in result.stderr or 'Authenticated class binding changed' in result.stderr,result.stderr
+E       AssertionError: Traceback (most recent call last):
+E           File "<string>", line 10, in <module>
+E           File "/tmp/palimpsest-delayed-exports-affected-bindings-01/test_support_dispatch_is_check0/source/scripts/puck_worker_bootstrap.py", line 651, in <module>
+E             if __name__ == '__main__': main()
+E                                        ^^^^^^
+E           File "/tmp/palimpsest-delayed-exports-affected-bindings-01/test_support_dispatch_is_check0/source/scripts/puck_worker_bootstrap.py", line 642, in main
+E             with HeldWorkerBootstrap(payload, expected_sha256=expected,
+E           File "/tmp/palimpsest-delayed-exports-affected-bindings-01/test_support_dispatch_is_check0/source/scripts/puck_worker_bootstrap.py", line 445, in __enter__
+E             from palimpsest.puck_dependency_imports import DependencyImports, HeldDependencyNamespace
+E           File "<frozen importlib._bootstrap>", line 1176, in _find_and_load
+E           File "<frozen importlib._bootstrap>", line 1147, in _find_and_load_unlocked
+E           File "<frozen importlib._bootstrap>", line 690, in _load_unlocked
+E           File "/tmp/palimpsest-delayed-exports-affected-bindings-01/test_support_dispatch_is_check0/source/scripts/puck_worker_bootstrap.py", line 272, in exec_module
+E             exec(compile(payload, filename, 'exec', dont_inherit=True), module.__dict__)
+E           File "/tmp/palimpsest-delayed-exports-affected-bindings-01/test_support_dispatch_is_check0/source/src/palimpsest/puck_dependency_imports.py", line 10, in <module>
+E             import importlib.metadata
+E           File "/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/importlib/metadata/__init__.py", line 17, in <module>
+E             from . import _adapters, _meta
+E           File "/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/importlib/metadata/_adapters.py", line 3, in <module>
+E             import email.message
+E           File "/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/email/message.py", line 17, in <module>
+E             from email._policybase import Policy, compat32
+E           File "/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/email/_policybase.py", line 7, in <module>
+E             from email import header
+E           File "<frozen importlib._bootstrap>", line 1176, in _find_and_load
+E           File "<frozen importlib._bootstrap>", line 1138, in _find_and_load_unlocked
+E           File "<frozen importlib._bootstrap>", line 1078, in _find_spec
+E           File "/tmp/palimpsest-delayed-exports-affected-bindings-01/test_support_dispatch_is_check0/source/scripts/puck_worker_bootstrap.py", line 286, in find_spec
+E             self.owner._import_recheck()
+E           File "/tmp/palimpsest-delayed-exports-affected-bindings-01/test_support_dispatch_is_check0/source/scripts/puck_worker_bootstrap.py", line 522, in _import_recheck
+E             return self._check(full=self._dependencies is None)
+E                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           File "/tmp/palimpsest-delayed-exports-affected-bindings-01/test_support_dispatch_is_check0/source/scripts/puck_worker_bootstrap.py", line 570, in _check
+E             if full: child.recheck()
+E                      ^^^^^^^^^^^^^^^
+E           File "/tmp/palimpsest-delayed-exports-affected-bindings-01/test_support_dispatch_is_check0/source/src/palimpsest/puck_execution_files.py", line 275, in recheck
+E             self._check_dirs()
+E           File "/tmp/palimpsest-delayed-exports-affected-bindings-01/test_support_dispatch_is_check0/source/src/palimpsest/puck_execution_files.py", line 157, in _check_dirs
+E             raise RuntimeError('Collection root or ancestor changed while held')
+E         RuntimeError: Collection root or ancestor changed while held
+E         Bootstrap holder close: Collection root or ancestor changed while held
+E         
+E       assert ('Authenticated function code binding changed' in 'Traceback (most recent call last):\n  File "<string>", line 10, in <module>\n  File "/tmp/palimpsest-delayed-exports-...llection root or ancestor changed while held\nBootstrap holder close: Collection root or ancestor changed while held\n' or 'Authenticated class binding changed' in 'Traceback (most recent call last):\n  File "<string>", line 10, in <module>\n  File "/tmp/palimpsest-delayed-exports-...llection root or ancestor changed while held\nBootstrap holder close: Collection root or ancestor changed while held\n')
+E        +  where 'Traceback (most recent call last):\n  File "<string>", line 10, in <module>\n  File "/tmp/palimpsest-delayed-exports-...llection root or ancestor changed while held\nBootstrap holder close: Collection root or ancestor changed while held\n' = CompletedProcess(args=['/home/utkarsh/Work/shraddha/brain/.worktrees/r0-reproduction/.venv/bin/python', '-I', '-B', '-...lection root or ancestor changed while held\nBootstrap holder close: Collection root or ancestor changed while held\n').stderr
+E        +  and   'Traceback (most recent call last):\n  File "<string>", line 10, in <module>\n  File "/tmp/palimpsest-delayed-exports-...llection root or ancestor changed while held\nBootstrap holder close: Collection root or ancestor changed while held\n' = CompletedProcess(args=['/home/utkarsh/Work/shraddha/brain/.worktrees/r0-reproduction/.venv/bin/python', '-I', '-B', '-...lection root or ancestor changed while held\nBootstrap holder close: Collection root or ancestor changed while held\n').stderr
+
+tests/test_puck_dependency_profile.py:282: AssertionError
+_________ test_review_instance_shadow_cannot_authorize_foreign_export __________
+
+tmp_path = PosixPath('/tmp/palimpsest-delayed-exports-affected-bindings-01/test_review_instance_shadow_ca0')
+
+    def test_review_instance_shadow_cannot_authorize_foreign_export(tmp_path):
+        body=('import fixture_dep.producer as p\nimport sys,types\n'
+              'sys.modules["fixture_dep.virtual"]=p.namespace\nadmission.recheck()\n'
+              'admission._dependencies.bindings.recheck=lambda: {"fixture_dep.virtual"}\n'
+              'sys.modules["fixture_dep.virtual"]=types.ModuleType("foreign")\nreturn {}')
+        result,_=dependency_fixture(tmp_path,body,mutate=fixture_profile)
+        assert result.returncode!=0 and result.stdout==''
+>       assert 'dispatch' in result.stderr.lower(),result.stderr
+E       AssertionError: Traceback (most recent call last):
+E           File "<string>", line 10, in <module>
+E           File "/tmp/palimpsest-delayed-exports-affected-bindings-01/test_review_instance_shadow_ca0/source/scripts/puck_worker_bootstrap.py", line 651, in <module>
+E             if __name__ == '__main__': main()
+E                                        ^^^^^^
+E           File "/tmp/palimpsest-delayed-exports-affected-bindings-01/test_review_instance_shadow_ca0/source/scripts/puck_worker_bootstrap.py", line 642, in main
+E             with HeldWorkerBootstrap(payload, expected_sha256=expected,
+E           File "/tmp/palimpsest-delayed-exports-affected-bindings-01/test_review_instance_shadow_ca0/source/scripts/puck_worker_bootstrap.py", line 445, in __enter__
+E             from palimpsest.puck_dependency_imports import DependencyImports, HeldDependencyNamespace
+E           File "<frozen importlib._bootstrap>", line 1176, in _find_and_load
+E           File "<frozen importlib._bootstrap>", line 1147, in _find_and_load_unlocked
+E           File "<frozen importlib._bootstrap>", line 690, in _load_unlocked
+E           File "/tmp/palimpsest-delayed-exports-affected-bindings-01/test_review_instance_shadow_ca0/source/scripts/puck_worker_bootstrap.py", line 272, in exec_module
+E             exec(compile(payload, filename, 'exec', dont_inherit=True), module.__dict__)
+E           File "/tmp/palimpsest-delayed-exports-affected-bindings-01/test_review_instance_shadow_ca0/source/src/palimpsest/puck_dependency_imports.py", line 19, in <module>
+E             from .puck_dependency_files import HeldDependencyNamespace
+E           File "<frozen importlib._bootstrap>", line 1176, in _find_and_load
+E           File "<frozen importlib._bootstrap>", line 1147, in _find_and_load_unlocked
+E           File "<frozen importlib._bootstrap>", line 690, in _load_unlocked
+E           File "/tmp/palimpsest-delayed-exports-affected-bindings-01/test_review_instance_shadow_ca0/source/scripts/puck_worker_bootstrap.py", line 272, in exec_module
+E             exec(compile(payload, filename, 'exec', dont_inherit=True), module.__dict__)
+E           File "/tmp/palimpsest-delayed-exports-affected-bindings-01/test_review_instance_shadow_ca0/source/src/palimpsest/puck_dependency_files.py", line 26, in <module>
+E             from .puck_dependency_bindings import validate_profile
+E           File "<frozen importlib._bootstrap>", line 1176, in _find_and_load
+E           File "<frozen importlib._bootstrap>", line 1138, in _find_and_load_unlocked
+E           File "<frozen importlib._bootstrap>", line 1078, in _find_spec
+E           File "/tmp/palimpsest-delayed-exports-affected-bindings-01/test_review_instance_shadow_ca0/source/scripts/puck_worker_bootstrap.py", line 286, in find_spec
+E             self.owner._import_recheck()
+E           File "/tmp/palimpsest-delayed-exports-affected-bindings-01/test_review_instance_shadow_ca0/source/scripts/puck_worker_bootstrap.py", line 522, in _import_recheck
+E             return self._check(full=self._dependencies is None)
+E                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           File "/tmp/palimpsest-delayed-exports-affected-bindings-01/test_review_instance_shadow_ca0/source/scripts/puck_worker_bootstrap.py", line 570, in _check
+E             if full: child.recheck()
+E                      ^^^^^^^^^^^^^^^
+E           File "/tmp/palimpsest-delayed-exports-affected-bindings-01/test_review_instance_shadow_ca0/source/src/palimpsest/puck_execution_files.py", line 275, in recheck
+E             self._check_dirs()
+E           File "/tmp/palimpsest-delayed-exports-affected-bindings-01/test_review_instance_shadow_ca0/source/src/palimpsest/puck_execution_files.py", line 157, in _check_dirs
+E             raise RuntimeError('Collection root or ancestor changed while held')
+E         RuntimeError: Collection root or ancestor changed while held
+E         Bootstrap holder close: Collection root or ancestor changed while held
+E         
+E       assert 'dispatch' in 'traceback (most recent call last):\n  file "<string>", line 10, in <module>\n  file "/tmp/palimpsest-delayed-exports-...llection root or ancestor changed while held\nbootstrap holder close: collection root or ancestor changed while held\n'
+E        +  where 'traceback (most recent call last):\n  file "<string>", line 10, in <module>\n  file "/tmp/palimpsest-delayed-exports-...llection root or ancestor changed while held\nbootstrap holder close: collection root or ancestor changed while held\n' = <built-in method lower of str object at 0x5ed3c01ee7b0>()
+E        +    where <built-in method lower of str object at 0x5ed3c01ee7b0> = 'Traceback (most recent call last):\n  File "<string>", line 10, in <module>\n  File "/tmp/palimpsest-delayed-exports-...llection root or ancestor changed while held\nBootstrap holder close: Collection root or ancestor changed while held\n'.lower
+E        +      where 'Traceback (most recent call last):\n  File "<string>", line 10, in <module>\n  File "/tmp/palimpsest-delayed-exports-...llection root or ancestor changed while held\nBootstrap holder close: Collection root or ancestor changed while held\n' = CompletedProcess(args=['/home/utkarsh/Work/shraddha/brain/.worktrees/r0-reproduction/.venv/bin/python', '-I', '-B', '-...lection root or ancestor changed while held\nBootstrap holder close: Collection root or ancestor changed while held\n').stderr
+
+tests/test_puck_dependency_profile.py:374: AssertionError
+_____ test_review_other_helper_receivers_cannot_shadow_recheck[class_seal] _____
+
+tmp_path = PosixPath('/tmp/palimpsest-delayed-exports-affected-bindings-01/test_review_other_helper_recei2')
+receiver = 'class_seal'
+
+    @pytest.mark.parametrize('receiver',['imports','module_seal','class_seal'])
+    def test_review_other_helper_receivers_cannot_shadow_recheck(tmp_path,receiver):
+        prefix=('import fixture_dep.producer as p\nimport sys\n'
+                'sys.modules["fixture_dep.virtual"]=p.namespace\nadmission.recheck()\n')
+        target={'imports':'admission._dependencies',
+                'module_seal':'admission._dependencies.bindings.prepared["fixture_dep.virtual"][1]',
+                'class_seal':'admission._dependencies.bindings.class_seals[0]'}[receiver]
+        body=prefix+target+'.recheck=lambda *args: {"fixture_dep.virtual"}\nreturn {}'
+        result,_=dependency_fixture(tmp_path,body,mutate=fixture_profile)
+        assert result.returncode!=0 and result.stdout==''
+>       assert 'dispatch' in result.stderr.lower(),result.stderr
+E       AssertionError: Traceback (most recent call last):
+E           File "<string>", line 10, in <module>
+E           File "/tmp/palimpsest-delayed-exports-affected-bindings-01/test_review_other_helper_recei2/source/scripts/puck_worker_bootstrap.py", line 651, in <module>
+E             if __name__ == '__main__': main()
+E                                        ^^^^^^
+E           File "/tmp/palimpsest-delayed-exports-affected-bindings-01/test_review_other_helper_recei2/source/scripts/puck_worker_bootstrap.py", line 642, in main
+E             with HeldWorkerBootstrap(payload, expected_sha256=expected,
+E           File "/tmp/palimpsest-delayed-exports-affected-bindings-01/test_review_other_helper_recei2/source/scripts/puck_worker_bootstrap.py", line 445, in __enter__
+E             from palimpsest.puck_dependency_imports import DependencyImports, HeldDependencyNamespace
+E           File "<frozen importlib._bootstrap>", line 1176, in _find_and_load
+E           File "<frozen importlib._bootstrap>", line 1147, in _find_and_load_unlocked
+E           File "<frozen importlib._bootstrap>", line 690, in _load_unlocked
+E           File "/tmp/palimpsest-delayed-exports-affected-bindings-01/test_review_other_helper_recei2/source/scripts/puck_worker_bootstrap.py", line 272, in exec_module
+E             exec(compile(payload, filename, 'exec', dont_inherit=True), module.__dict__)
+E           File "/tmp/palimpsest-delayed-exports-affected-bindings-01/test_review_other_helper_recei2/source/src/palimpsest/puck_dependency_imports.py", line 10, in <module>
+E             import importlib.metadata
+E           File "/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/importlib/metadata/__init__.py", line 8, in <module>
+E             import zipfile
+E           File "<frozen importlib._bootstrap>", line 1176, in _find_and_load
+E           File "<frozen importlib._bootstrap>", line 1138, in _find_and_load_unlocked
+E           File "<frozen importlib._bootstrap>", line 1078, in _find_spec
+E           File "/tmp/palimpsest-delayed-exports-affected-bindings-01/test_review_other_helper_recei2/source/scripts/puck_worker_bootstrap.py", line 286, in find_spec
+E             self.owner._import_recheck()
+E           File "/tmp/palimpsest-delayed-exports-affected-bindings-01/test_review_other_helper_recei2/source/scripts/puck_worker_bootstrap.py", line 522, in _import_recheck
+E             return self._check(full=self._dependencies is None)
+E                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           File "/tmp/palimpsest-delayed-exports-affected-bindings-01/test_review_other_helper_recei2/source/scripts/puck_worker_bootstrap.py", line 570, in _check
+E             if full: child.recheck()
+E                      ^^^^^^^^^^^^^^^
+E           File "/tmp/palimpsest-delayed-exports-affected-bindings-01/test_review_other_helper_recei2/source/src/palimpsest/puck_execution_files.py", line 275, in recheck
+E             self._check_dirs()
+E           File "/tmp/palimpsest-delayed-exports-affected-bindings-01/test_review_other_helper_recei2/source/src/palimpsest/puck_execution_files.py", line 157, in _check_dirs
+E             raise RuntimeError('Collection root or ancestor changed while held')
+E         RuntimeError: Collection root or ancestor changed while held
+E         Bootstrap holder close: Collection root or ancestor changed while held
+E         
+E       assert 'dispatch' in 'traceback (most recent call last):\n  file "<string>", line 10, in <module>\n  file "/tmp/palimpsest-delayed-exports-...llection root or ancestor changed while held\nbootstrap holder close: collection root or ancestor changed while held\n'
+E        +  where 'traceback (most recent call last):\n  file "<string>", line 10, in <module>\n  file "/tmp/palimpsest-delayed-exports-...llection root or ancestor changed while held\nbootstrap holder close: collection root or ancestor changed while held\n' = <built-in method lower of str object at 0x5ed3c00b8850>()
+E        +    where <built-in method lower of str object at 0x5ed3c00b8850> = 'Traceback (most recent call last):\n  File "<string>", line 10, in <module>\n  File "/tmp/palimpsest-delayed-exports-...llection root or ancestor changed while held\nBootstrap holder close: Collection root or ancestor changed while held\n'.lower
+E        +      where 'Traceback (most recent call last):\n  File "<string>", line 10, in <module>\n  File "/tmp/palimpsest-delayed-exports-...llection root or ancestor changed while held\nBootstrap holder close: Collection root or ancestor changed while held\n' = CompletedProcess(args=['/home/utkarsh/Work/shraddha/brain/.worktrees/r0-reproduction/.venv/bin/python', '-I', '-B', '-...lection root or ancestor changed while held\nBootstrap holder close: Collection root or ancestor changed while held\n').stderr
+
+tests/test_puck_dependency_profile.py:387: AssertionError
+_ test_declared_native_creation_survives_reentrant_guard_and_binds_receipt[native_create] _
+
+phase = 'native_create'
+
+    @pytest.mark.parametrize('phase', ['native_create', 'module_exec'])
+    def test_declared_native_creation_survives_reentrant_guard_and_binds_receipt(phase):
+        result = run('from fixture_dep import _native\nimport sys\nreturn {"answer":sys.modules["'+NAME+'"].answer()}',
+                     phase=phase, child=True)
+>       assert result.returncode == 0, result.stderr
+E       AssertionError: Traceback (most recent call last):
+E           File "<string>", line 10, in <module>
+E           File "/tmp/puck-native-cache-3v_n3gbf/source/scripts/puck_worker_bootstrap.py", line 651, in <module>
+E             if __name__ == '__main__': main()
+E                                        ^^^^^^
+E           File "/tmp/puck-native-cache-3v_n3gbf/source/scripts/puck_worker_bootstrap.py", line 642, in main
+E             with HeldWorkerBootstrap(payload, expected_sha256=expected,
+E           File "/tmp/puck-native-cache-3v_n3gbf/source/scripts/puck_worker_bootstrap.py", line 445, in __enter__
+E             from palimpsest.puck_dependency_imports import DependencyImports, HeldDependencyNamespace
+E           File "<frozen importlib._bootstrap>", line 1176, in _find_and_load
+E           File "<frozen importlib._bootstrap>", line 1147, in _find_and_load_unlocked
+E           File "<frozen importlib._bootstrap>", line 690, in _load_unlocked
+E           File "/tmp/puck-native-cache-3v_n3gbf/source/scripts/puck_worker_bootstrap.py", line 272, in exec_module
+E             exec(compile(payload, filename, 'exec', dont_inherit=True), module.__dict__)
+E           File "/tmp/puck-native-cache-3v_n3gbf/source/src/palimpsest/puck_dependency_imports.py", line 10, in <module>
+E             import importlib.metadata
+E           File "/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/importlib/metadata/__init__.py", line 17, in <module>
+E             from . import _adapters, _meta
+E           File "/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/importlib/metadata/_adapters.py", line 3, in <module>
+E             import email.message
+E           File "/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/email/message.py", line 141, in <module>
+E             class Message:
+E           File "/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/email/message.py", line 976, in Message
+E             from email.iterators import walk
+E           File "<frozen importlib._bootstrap>", line 1176, in _find_and_load
+E           File "<frozen importlib._bootstrap>", line 1138, in _find_and_load_unlocked
+E           File "<frozen importlib._bootstrap>", line 1078, in _find_spec
+E           File "/tmp/puck-native-cache-3v_n3gbf/source/scripts/puck_worker_bootstrap.py", line 286, in find_spec
+E             self.owner._import_recheck()
+E           File "/tmp/puck-native-cache-3v_n3gbf/source/scripts/puck_worker_bootstrap.py", line 522, in _import_recheck
+E             return self._check(full=self._dependencies is None)
+E                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           File "/tmp/puck-native-cache-3v_n3gbf/source/scripts/puck_worker_bootstrap.py", line 570, in _check
+E             if full: child.recheck()
+E                      ^^^^^^^^^^^^^^^
+E           File "/tmp/puck-native-cache-3v_n3gbf/source/src/palimpsest/puck_execution_files.py", line 275, in recheck
+E             self._check_dirs()
+E           File "/tmp/puck-native-cache-3v_n3gbf/source/src/palimpsest/puck_execution_files.py", line 157, in _check_dirs
+E             raise RuntimeError('Collection root or ancestor changed while held')
+E         RuntimeError: Collection root or ancestor changed while held
+E         Bootstrap holder close: Collection root or ancestor changed while held
+E         
+E       assert 1 == 0
+E        +  where 1 = CompletedProcess(args=['/home/utkarsh/Work/shraddha/brain/.worktrees/r0-reproduction/.venv/bin/python', '-I', '-B', '-...lection root or ancestor changed while held\nBootstrap holder close: Collection root or ancestor changed while held\n').returncode
+
+tests/test_puck_native_cache_bindings.py:94: AssertionError
+____ test_no_unbound_names_wrong_objects_or_preexisting_cache[preexisting] _____
+
+defect = 'preexisting'
+
+    @pytest.mark.parametrize('defect', ['nonmodule', 'extra', 'preexisting', 'missing'])
+    def test_no_unbound_names_wrong_objects_or_preexisting_cache(defect):
+        result = run('from fixture_dep import _native\nreturn {}', defect=defect)
+        assert result.returncode != 0 and result.stdout == ''
+>       assert 'Native cache' in result.stderr or 'Unregistered module cache entry: undeclared_cache_fixture' in result.stderr, result.stderr
+E       AssertionError: Traceback (most recent call last):
+E           File "<string>", line 10, in <module>
+E           File "/tmp/puck-native-cache-b8vjvcmn/source/scripts/puck_worker_bootstrap.py", line 651, in <module>
+E             if __name__ == '__main__': main()
+E                                        ^^^^^^
+E           File "/tmp/puck-native-cache-b8vjvcmn/source/scripts/puck_worker_bootstrap.py", line 644, in main
+E             receipt = admission.invoke()
+E                       ^^^^^^^^^^^^^^^^^^
+E           File "/tmp/puck-native-cache-b8vjvcmn/source/scripts/puck_worker_bootstrap.py", line 613, in invoke
+E             self.recheck()
+E           File "/tmp/puck-native-cache-b8vjvcmn/source/scripts/puck_worker_bootstrap.py", line 516, in recheck
+E             return self._check(full=True)
+E                    ^^^^^^^^^^^^^^^^^^^^^^
+E           File "/tmp/puck-native-cache-b8vjvcmn/source/scripts/puck_worker_bootstrap.py", line 570, in _check
+E             if full: child.recheck()
+E                      ^^^^^^^^^^^^^^^
+E           File "/tmp/puck-native-cache-b8vjvcmn/source/src/palimpsest/puck_dependency_files.py", line 446, in recheck
+E             try: self._recheck()
+E                  ^^^^^^^^^^^^^^^
+E           File "/tmp/puck-native-cache-b8vjvcmn/source/src/palimpsest/puck_dependency_files.py", line 441, in _recheck
+E             self._registration_holder.recheck()
+E           File "/tmp/puck-native-cache-b8vjvcmn/source/src/palimpsest/puck_execution_files.py", line 275, in recheck
+E             self._check_dirs()
+E           File "/tmp/puck-native-cache-b8vjvcmn/source/src/palimpsest/puck_execution_files.py", line 157, in _check_dirs
+E             raise RuntimeError('Collection root or ancestor changed while held')
+E         RuntimeError: Collection root or ancestor changed while held
+E         Bootstrap holder close: Collection root or ancestor changed while held
+E         Bootstrap holder close: Collection root or ancestor changed while held
+E         
+E       assert ('Native cache' in 'Traceback (most recent call last):\n  File "<string>", line 10, in <module>\n  File "/tmp/puck-native-cache-b8vjvcmn/...llection root or ancestor changed while held\nBootstrap holder close: Collection root or ancestor changed while held\n' or 'Unregistered module cache entry: undeclared_cache_fixture' in 'Traceback (most recent call last):\n  File "<string>", line 10, in <module>\n  File "/tmp/puck-native-cache-b8vjvcmn/...llection root or ancestor changed while held\nBootstrap holder close: Collection root or ancestor changed while held\n')
+E        +  where 'Traceback (most recent call last):\n  File "<string>", line 10, in <module>\n  File "/tmp/puck-native-cache-b8vjvcmn/...llection root or ancestor changed while held\nBootstrap holder close: Collection root or ancestor changed while held\n' = CompletedProcess(args=['/home/utkarsh/Work/shraddha/brain/.worktrees/r0-reproduction/.venv/bin/python', '-I', '-B', '-...lection root or ancestor changed while held\nBootstrap holder close: Collection root or ancestor changed while held\n').stderr
+E        +  and   'Traceback (most recent call last):\n  File "<string>", line 10, in <module>\n  File "/tmp/puck-native-cache-b8vjvcmn/...llection root or ancestor changed while held\nBootstrap holder close: Collection root or ancestor changed while held\n' = CompletedProcess(args=['/home/utkarsh/Work/shraddha/brain/.worktrees/r0-reproduction/.venv/bin/python', '-I', '-B', '-...lection root or ancestor changed while held\nBootstrap holder close: Collection root or ancestor changed while held\n').stderr
+
+tests/test_puck_native_cache_bindings.py:108: AssertionError
+___ test_exact_native_creation_phase_is_required[module_exec-native_create] ____
+
+actual = 'module_exec', declared = 'native_create'
+
+    @pytest.mark.parametrize('actual,declared', [('native_create','module_exec'), ('module_exec','native_create')])
+    def test_exact_native_creation_phase_is_required(actual, declared):
+        result = run('from fixture_dep import _native\nreturn {}', phase=actual, declared_phase=declared, child=True)
+        assert result.returncode != 0 and result.stdout == ''
+>       assert 'Native cache' in result.stderr, result.stderr
+E       AssertionError: Traceback (most recent call last):
+E           File "<string>", line 10, in <module>
+E           File "/tmp/puck-native-cache-qau3hm5q/source/scripts/puck_worker_bootstrap.py", line 651, in <module>
+E             if __name__ == '__main__': main()
+E                                        ^^^^^^
+E           File "/tmp/puck-native-cache-qau3hm5q/source/scripts/puck_worker_bootstrap.py", line 642, in main
+E             with HeldWorkerBootstrap(payload, expected_sha256=expected,
+E           File "/tmp/puck-native-cache-qau3hm5q/source/scripts/puck_worker_bootstrap.py", line 445, in __enter__
+E             from palimpsest.puck_dependency_imports import DependencyImports, HeldDependencyNamespace
+E           File "<frozen importlib._bootstrap>", line 1176, in _find_and_load
+E           File "<frozen importlib._bootstrap>", line 1147, in _find_and_load_unlocked
+E           File "<frozen importlib._bootstrap>", line 690, in _load_unlocked
+E           File "/tmp/puck-native-cache-qau3hm5q/source/scripts/puck_worker_bootstrap.py", line 272, in exec_module
+E             exec(compile(payload, filename, 'exec', dont_inherit=True), module.__dict__)
+E           File "/tmp/puck-native-cache-qau3hm5q/source/src/palimpsest/puck_dependency_imports.py", line 19, in <module>
+E             from .puck_dependency_files import HeldDependencyNamespace
+E           File "<frozen importlib._bootstrap>", line 1176, in _find_and_load
+E           File "<frozen importlib._bootstrap>", line 1147, in _find_and_load_unlocked
+E           File "<frozen importlib._bootstrap>", line 690, in _load_unlocked
+E           File "/tmp/puck-native-cache-qau3hm5q/source/scripts/puck_worker_bootstrap.py", line 272, in exec_module
+E             exec(compile(payload, filename, 'exec', dont_inherit=True), module.__dict__)
+E           File "/tmp/puck-native-cache-qau3hm5q/source/src/palimpsest/puck_dependency_files.py", line 25, in <module>
+E             from .puck_execution_files import _HeldFileCore, _identity, _relative
+E           File "<frozen importlib._bootstrap>", line 1176, in _find_and_load
+E           File "<frozen importlib._bootstrap>", line 1147, in _find_and_load_unlocked
+E           File "<frozen importlib._bootstrap>", line 690, in _load_unlocked
+E           File "/tmp/puck-native-cache-qau3hm5q/source/scripts/puck_worker_bootstrap.py", line 268, in exec_module
+E             payload = self.owner._source.read(self.path, MiB)
+E                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           File "/tmp/puck-native-cache-qau3hm5q/source/src/palimpsest/puck_execution_files.py", line 321, in read
+E             relative = self._guard(relative)
+E                        ^^^^^^^^^^^^^^^^^^^^^
+E           File "/tmp/puck-native-cache-qau3hm5q/source/src/palimpsest/puck_execution_files.py", line 307, in _guard
+E             self._check_dirs()
+E           File "/tmp/puck-native-cache-qau3hm5q/source/src/palimpsest/puck_execution_files.py", line 157, in _check_dirs
+E             raise RuntimeError('Collection root or ancestor changed while held')
+E         RuntimeError: Collection root or ancestor changed while held
+E         Bootstrap holder close: Collection root or ancestor changed while held
+E         
+E       assert 'Native cache' in 'Traceback (most recent call last):\n  File "<string>", line 10, in <module>\n  File "/tmp/puck-native-cache-qau3hm5q/...llection root or ancestor changed while held\nBootstrap holder close: Collection root or ancestor changed while held\n'
+E        +  where 'Traceback (most recent call last):\n  File "<string>", line 10, in <module>\n  File "/tmp/puck-native-cache-qau3hm5q/...llection root or ancestor changed while held\nBootstrap holder close: Collection root or ancestor changed while held\n' = CompletedProcess(args=['/home/utkarsh/Work/shraddha/brain/.worktrees/r0-reproduction/.venv/bin/python', '-I', '-B', '-...lection root or ancestor changed while held\nBootstrap holder close: Collection root or ancestor changed while held\n').stderr
+
+tests/test_puck_native_cache_bindings.py:115: AssertionError
+_ test_cache_object_metadata_and_closed_dispatch_set_cannot_change[sys.modules["native_cache_fixture"]=types.ModuleType("native_cache_fixture")] _
+
+mutation = 'sys.modules["native_cache_fixture"]=types.ModuleType("native_cache_fixture")'
+
+    @pytest.mark.parametrize('mutation', [
+        'sys.modules["'+NAME+'"]=types.ModuleType("'+NAME+'")',
+        'del sys.modules["'+NAME+'"]',
+        'sys.modules["'+NAME+'"].__name__="changed"',
+        'sys.modules["'+NAME+'"].answer=lambda:99',
+        'sys.modules["'+NAME+'"].new_dispatch=lambda:99',
+    ])
+    def test_cache_object_metadata_and_closed_dispatch_set_cannot_change(mutation):
+        result = run('from fixture_dep import _native\nimport sys,types\n'+mutation+'\nreturn {}')
+        assert result.returncode != 0 and result.stdout == ''
+>       assert any(x in result.stderr for x in ('Native cache','Held dependency delegate binding changed','Held dependency module dispatch changed')), result.stderr
+E       AssertionError: Traceback (most recent call last):
+E           File "<string>", line 10, in <module>
+E           File "/tmp/puck-native-cache-9_8oogaz/source/scripts/puck_worker_bootstrap.py", line 651, in <module>
+E             if __name__ == '__main__': main()
+E                                        ^^^^^^
+E           File "/tmp/puck-native-cache-9_8oogaz/source/scripts/puck_worker_bootstrap.py", line 642, in main
+E             with HeldWorkerBootstrap(payload, expected_sha256=expected,
+E           File "/tmp/puck-native-cache-9_8oogaz/source/scripts/puck_worker_bootstrap.py", line 445, in __enter__
+E             from palimpsest.puck_dependency_imports import DependencyImports, HeldDependencyNamespace
+E           File "<frozen importlib._bootstrap>", line 1176, in _find_and_load
+E           File "<frozen importlib._bootstrap>", line 1147, in _find_and_load_unlocked
+E           File "<frozen importlib._bootstrap>", line 690, in _load_unlocked
+E           File "/tmp/puck-native-cache-9_8oogaz/source/scripts/puck_worker_bootstrap.py", line 272, in exec_module
+E             exec(compile(payload, filename, 'exec', dont_inherit=True), module.__dict__)
+E           File "/tmp/puck-native-cache-9_8oogaz/source/src/palimpsest/puck_dependency_imports.py", line 10, in <module>
+E             import importlib.metadata
+E           File "/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/importlib/metadata/__init__.py", line 17, in <module>
+E             from . import _adapters, _meta
+E           File "/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/importlib/metadata/_adapters.py", line 3, in <module>
+E             import email.message
+E           File "/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/email/message.py", line 15, in <module>
+E             from email import utils
+E           File "/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/email/utils.py", line 29, in <module>
+E             import socket
+E           File "/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/socket.py", line 51, in <module>
+E             import _socket
+E           File "<frozen importlib._bootstrap>", line 1176, in _find_and_load
+E           File "<frozen importlib._bootstrap>", line 1138, in _find_and_load_unlocked
+E           File "<frozen importlib._bootstrap>", line 1078, in _find_spec
+E           File "/tmp/puck-native-cache-9_8oogaz/source/scripts/puck_worker_bootstrap.py", line 286, in find_spec
+E             self.owner._import_recheck()
+E           File "/tmp/puck-native-cache-9_8oogaz/source/scripts/puck_worker_bootstrap.py", line 522, in _import_recheck
+E             return self._check(full=self._dependencies is None)
+E                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           File "/tmp/puck-native-cache-9_8oogaz/source/scripts/puck_worker_bootstrap.py", line 570, in _check
+E             if full: child.recheck()
+E                      ^^^^^^^^^^^^^^^
+E           File "/tmp/puck-native-cache-9_8oogaz/source/src/palimpsest/puck_execution_files.py", line 275, in recheck
+E             self._check_dirs()
+E           File "/tmp/puck-native-cache-9_8oogaz/source/src/palimpsest/puck_execution_files.py", line 157, in _check_dirs
+E             raise RuntimeError('Collection root or ancestor changed while held')
+E         RuntimeError: Collection root or ancestor changed while held
+E         Bootstrap holder close: Collection root or ancestor changed while held
+E         
+E       assert False
+E        +  where False = any(<generator object test_cache_object_metadata_and_closed_dispatch_set_cannot_change.<locals>.<genexpr> at 0x75ac6ef86500>)
+
+tests/test_puck_native_cache_bindings.py:128: AssertionError
+_ test_cache_object_metadata_and_closed_dispatch_set_cannot_change[del sys.modules["native_cache_fixture"]] _
+
+mutation = 'del sys.modules["native_cache_fixture"]'
+
+    @pytest.mark.parametrize('mutation', [
+        'sys.modules["'+NAME+'"]=types.ModuleType("'+NAME+'")',
+        'del sys.modules["'+NAME+'"]',
+        'sys.modules["'+NAME+'"].__name__="changed"',
+        'sys.modules["'+NAME+'"].answer=lambda:99',
+        'sys.modules["'+NAME+'"].new_dispatch=lambda:99',
+    ])
+    def test_cache_object_metadata_and_closed_dispatch_set_cannot_change(mutation):
+        result = run('from fixture_dep import _native\nimport sys,types\n'+mutation+'\nreturn {}')
+        assert result.returncode != 0 and result.stdout == ''
+>       assert any(x in result.stderr for x in ('Native cache','Held dependency delegate binding changed','Held dependency module dispatch changed')), result.stderr
+E       AssertionError: Traceback (most recent call last):
+E           File "<string>", line 10, in <module>
+E           File "/tmp/puck-native-cache-33dz9n9j/source/scripts/puck_worker_bootstrap.py", line 651, in <module>
+E             if __name__ == '__main__': main()
+E                                        ^^^^^^
+E           File "/tmp/puck-native-cache-33dz9n9j/source/scripts/puck_worker_bootstrap.py", line 642, in main
+E             with HeldWorkerBootstrap(payload, expected_sha256=expected,
+E           File "/tmp/puck-native-cache-33dz9n9j/source/scripts/puck_worker_bootstrap.py", line 445, in __enter__
+E             from palimpsest.puck_dependency_imports import DependencyImports, HeldDependencyNamespace
+E           File "<frozen importlib._bootstrap>", line 1176, in _find_and_load
+E           File "<frozen importlib._bootstrap>", line 1147, in _find_and_load_unlocked
+E           File "<frozen importlib._bootstrap>", line 690, in _load_unlocked
+E           File "/tmp/puck-native-cache-33dz9n9j/source/scripts/puck_worker_bootstrap.py", line 272, in exec_module
+E             exec(compile(payload, filename, 'exec', dont_inherit=True), module.__dict__)
+E           File "/tmp/puck-native-cache-33dz9n9j/source/src/palimpsest/puck_dependency_imports.py", line 19, in <module>
+E             from .puck_dependency_files import HeldDependencyNamespace
+E           File "<frozen importlib._bootstrap>", line 1176, in _find_and_load
+E           File "<frozen importlib._bootstrap>", line 1147, in _find_and_load_unlocked
+E           File "<frozen importlib._bootstrap>", line 690, in _load_unlocked
+E           File "/tmp/puck-native-cache-33dz9n9j/source/scripts/puck_worker_bootstrap.py", line 274, in exec_module
+E             self.owner.recheck()
+E           File "/tmp/puck-native-cache-33dz9n9j/source/scripts/puck_worker_bootstrap.py", line 516, in recheck
+E             return self._check(full=True)
+E                    ^^^^^^^^^^^^^^^^^^^^^^
+E           File "/tmp/puck-native-cache-33dz9n9j/source/scripts/puck_worker_bootstrap.py", line 570, in _check
+E             if full: child.recheck()
+E                      ^^^^^^^^^^^^^^^
+E           File "/tmp/puck-native-cache-33dz9n9j/source/src/palimpsest/puck_execution_files.py", line 275, in recheck
+E             self._check_dirs()
+E           File "/tmp/puck-native-cache-33dz9n9j/source/src/palimpsest/puck_execution_files.py", line 157, in _check_dirs
+E             raise RuntimeError('Collection root or ancestor changed while held')
+E         RuntimeError: Collection root or ancestor changed while held
+E         Bootstrap holder close: Collection root or ancestor changed while held
+E         
+E       assert False
+E        +  where False = any(<generator object test_cache_object_metadata_and_closed_dispatch_set_cannot_change.<locals>.<genexpr> at 0x75ac6f8bec00>)
+
+tests/test_puck_native_cache_bindings.py:128: AssertionError
+_ test_cache_object_metadata_and_closed_dispatch_set_cannot_change[sys.modules["native_cache_fixture"].__name__="changed"] _
+
+mutation = 'sys.modules["native_cache_fixture"].__name__="changed"'
+
+    @pytest.mark.parametrize('mutation', [
+        'sys.modules["'+NAME+'"]=types.ModuleType("'+NAME+'")',
+        'del sys.modules["'+NAME+'"]',
+        'sys.modules["'+NAME+'"].__name__="changed"',
+        'sys.modules["'+NAME+'"].answer=lambda:99',
+        'sys.modules["'+NAME+'"].new_dispatch=lambda:99',
+    ])
+    def test_cache_object_metadata_and_closed_dispatch_set_cannot_change(mutation):
+        result = run('from fixture_dep import _native\nimport sys,types\n'+mutation+'\nreturn {}')
+        assert result.returncode != 0 and result.stdout == ''
+>       assert any(x in result.stderr for x in ('Native cache','Held dependency delegate binding changed','Held dependency module dispatch changed')), result.stderr
+E       AssertionError: Traceback (most recent call last):
+E           File "<string>", line 10, in <module>
+E           File "/tmp/puck-native-cache-kdyppzdc/source/scripts/puck_worker_bootstrap.py", line 651, in <module>
+E             if __name__ == '__main__': main()
+E                                        ^^^^^^
+E           File "/tmp/puck-native-cache-kdyppzdc/source/scripts/puck_worker_bootstrap.py", line 642, in main
+E             with HeldWorkerBootstrap(payload, expected_sha256=expected,
+E           File "/tmp/puck-native-cache-kdyppzdc/source/scripts/puck_worker_bootstrap.py", line 445, in __enter__
+E             from palimpsest.puck_dependency_imports import DependencyImports, HeldDependencyNamespace
+E           File "<frozen importlib._bootstrap>", line 1176, in _find_and_load
+E           File "<frozen importlib._bootstrap>", line 1138, in _find_and_load_unlocked
+E           File "<frozen importlib._bootstrap>", line 1078, in _find_spec
+E           File "/tmp/puck-native-cache-kdyppzdc/source/scripts/puck_worker_bootstrap.py", line 286, in find_spec
+E             self.owner._import_recheck()
+E           File "/tmp/puck-native-cache-kdyppzdc/source/scripts/puck_worker_bootstrap.py", line 522, in _import_recheck
+E             return self._check(full=self._dependencies is None)
+E                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           File "/tmp/puck-native-cache-kdyppzdc/source/scripts/puck_worker_bootstrap.py", line 570, in _check
+E             if full: child.recheck()
+E                      ^^^^^^^^^^^^^^^
+E           File "/tmp/puck-native-cache-kdyppzdc/source/src/palimpsest/puck_execution_files.py", line 275, in recheck
+E             self._check_dirs()
+E           File "/tmp/puck-native-cache-kdyppzdc/source/src/palimpsest/puck_execution_files.py", line 157, in _check_dirs
+E             raise RuntimeError('Collection root or ancestor changed while held')
+E         RuntimeError: Collection root or ancestor changed while held
+E         Bootstrap holder close: Collection root or ancestor changed while held
+E         
+E       assert False
+E        +  where False = any(<generator object test_cache_object_metadata_and_closed_dispatch_set_cannot_change.<locals>.<genexpr> at 0x75ac6f8bcf20>)
+
+tests/test_puck_native_cache_bindings.py:128: AssertionError
+_ test_cache_object_metadata_and_closed_dispatch_set_cannot_change[sys.modules["native_cache_fixture"].new_dispatch=lambda:99] _
+
+mutation = 'sys.modules["native_cache_fixture"].new_dispatch=lambda:99'
+
+    @pytest.mark.parametrize('mutation', [
+        'sys.modules["'+NAME+'"]=types.ModuleType("'+NAME+'")',
+        'del sys.modules["'+NAME+'"]',
+        'sys.modules["'+NAME+'"].__name__="changed"',
+        'sys.modules["'+NAME+'"].answer=lambda:99',
+        'sys.modules["'+NAME+'"].new_dispatch=lambda:99',
+    ])
+    def test_cache_object_metadata_and_closed_dispatch_set_cannot_change(mutation):
+        result = run('from fixture_dep import _native\nimport sys,types\n'+mutation+'\nreturn {}')
+        assert result.returncode != 0 and result.stdout == ''
+>       assert any(x in result.stderr for x in ('Native cache','Held dependency delegate binding changed','Held dependency module dispatch changed')), result.stderr
+E       AssertionError: Traceback (most recent call last):
+E           File "<string>", line 10, in <module>
+E           File "/tmp/puck-native-cache-rf4rflp_/source/scripts/puck_worker_bootstrap.py", line 651, in <module>
+E             if __name__ == '__main__': main()
+E                                        ^^^^^^
+E           File "/tmp/puck-native-cache-rf4rflp_/source/scripts/puck_worker_bootstrap.py", line 642, in main
+E             with HeldWorkerBootstrap(payload, expected_sha256=expected,
+E           File "/tmp/puck-native-cache-rf4rflp_/source/scripts/puck_worker_bootstrap.py", line 445, in __enter__
+E             from palimpsest.puck_dependency_imports import DependencyImports, HeldDependencyNamespace
+E           File "<frozen importlib._bootstrap>", line 1176, in _find_and_load
+E           File "<frozen importlib._bootstrap>", line 1147, in _find_and_load_unlocked
+E           File "<frozen importlib._bootstrap>", line 690, in _load_unlocked
+E           File "/tmp/puck-native-cache-rf4rflp_/source/scripts/puck_worker_bootstrap.py", line 272, in exec_module
+E             exec(compile(payload, filename, 'exec', dont_inherit=True), module.__dict__)
+E           File "/tmp/puck-native-cache-rf4rflp_/source/src/palimpsest/puck_dependency_imports.py", line 10, in <module>
+E             import importlib.metadata
+E           File "/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/importlib/metadata/__init__.py", line 17, in <module>
+E             from . import _adapters, _meta
+E           File "/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/importlib/metadata/_adapters.py", line 3, in <module>
+E             import email.message
+E           File "/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/email/message.py", line 15, in <module>
+E             from email import utils
+E           File "/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/email/utils.py", line 29, in <module>
+E             import socket
+E           File "/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/socket.py", line 54, in <module>
+E             import os, sys, io, selectors
+E           File "<frozen importlib._bootstrap>", line 1176, in _find_and_load
+E           File "<frozen importlib._bootstrap>", line 1138, in _find_and_load_unlocked
+E           File "<frozen importlib._bootstrap>", line 1078, in _find_spec
+E           File "/tmp/puck-native-cache-rf4rflp_/source/scripts/puck_worker_bootstrap.py", line 286, in find_spec
+E             self.owner._import_recheck()
+E           File "/tmp/puck-native-cache-rf4rflp_/source/scripts/puck_worker_bootstrap.py", line 522, in _import_recheck
+E             return self._check(full=self._dependencies is None)
+E                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           File "/tmp/puck-native-cache-rf4rflp_/source/scripts/puck_worker_bootstrap.py", line 570, in _check
+E             if full: child.recheck()
+E                      ^^^^^^^^^^^^^^^
+E           File "/tmp/puck-native-cache-rf4rflp_/source/src/palimpsest/puck_execution_files.py", line 279, in recheck
+E             self._check_dirs()
+E           File "/tmp/puck-native-cache-rf4rflp_/source/src/palimpsest/puck_execution_files.py", line 157, in _check_dirs
+E             raise RuntimeError('Collection root or ancestor changed while held')
+E         RuntimeError: Collection root or ancestor changed while held
+E         Bootstrap holder close: Collection root or ancestor changed while held
+E         
+E       assert False
+E        +  where False = any(<generator object test_cache_object_metadata_and_closed_dispatch_set_cannot_change.<locals>.<genexpr> at 0x75ac6f8bdd20>)
+
+tests/test_puck_native_cache_bindings.py:128: AssertionError
+_______ test_missing_or_undeclared_dispatch_key_refuses_at_creator_close _______
+
+    def test_missing_or_undeclared_dispatch_key_refuses_at_creator_close():
+        result = run('from fixture_dep import _native\nreturn {}', delegates=['answer','missing'])
+        assert result.returncode != 0 and result.stdout == ''
+>       assert 'Native cache dispatch' in result.stderr, result.stderr
+E       AssertionError: Traceback (most recent call last):
+E           File "<string>", line 10, in <module>
+E           File "/tmp/puck-native-cache-1646hupk/source/scripts/puck_worker_bootstrap.py", line 651, in <module>
+E             if __name__ == '__main__': main()
+E                                        ^^^^^^
+E           File "/tmp/puck-native-cache-1646hupk/source/scripts/puck_worker_bootstrap.py", line 642, in main
+E             with HeldWorkerBootstrap(payload, expected_sha256=expected,
+E           File "/tmp/puck-native-cache-1646hupk/source/scripts/puck_worker_bootstrap.py", line 445, in __enter__
+E             from palimpsest.puck_dependency_imports import DependencyImports, HeldDependencyNamespace
+E           File "<frozen importlib._bootstrap>", line 1176, in _find_and_load
+E           File "<frozen importlib._bootstrap>", line 1147, in _find_and_load_unlocked
+E           File "<frozen importlib._bootstrap>", line 690, in _load_unlocked
+E           File "/tmp/puck-native-cache-1646hupk/source/scripts/puck_worker_bootstrap.py", line 272, in exec_module
+E             exec(compile(payload, filename, 'exec', dont_inherit=True), module.__dict__)
+E           File "/tmp/puck-native-cache-1646hupk/source/src/palimpsest/puck_dependency_imports.py", line 10, in <module>
+E             import importlib.metadata
+E           File "/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/importlib/metadata/__init__.py", line 17, in <module>
+E             from . import _adapters, _meta
+E           File "/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/importlib/metadata/_adapters.py", line 3, in <module>
+E             import email.message
+E           File "/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/email/message.py", line 15, in <module>
+E             from email import utils
+E           File "/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/email/utils.py", line 40, in <module>
+E             from email.charset import Charset
+E           File "<frozen importlib._bootstrap>", line 1176, in _find_and_load
+E           File "<frozen importlib._bootstrap>", line 1138, in _find_and_load_unlocked
+E           File "<frozen importlib._bootstrap>", line 1078, in _find_spec
+E           File "/tmp/puck-native-cache-1646hupk/source/scripts/puck_worker_bootstrap.py", line 286, in find_spec
+E             self.owner._import_recheck()
+E           File "/tmp/puck-native-cache-1646hupk/source/scripts/puck_worker_bootstrap.py", line 522, in _import_recheck
+E             return self._check(full=self._dependencies is None)
+E                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           File "/tmp/puck-native-cache-1646hupk/source/scripts/puck_worker_bootstrap.py", line 570, in _check
+E             if full: child.recheck()
+E                      ^^^^^^^^^^^^^^^
+E           File "/tmp/puck-native-cache-1646hupk/source/src/palimpsest/puck_execution_files.py", line 275, in recheck
+E             self._check_dirs()
+E           File "/tmp/puck-native-cache-1646hupk/source/src/palimpsest/puck_execution_files.py", line 157, in _check_dirs
+E             raise RuntimeError('Collection root or ancestor changed while held')
+E         RuntimeError: Collection root or ancestor changed while held
+E         Bootstrap holder close: Collection root or ancestor changed while held
+E         
+E       assert 'Native cache dispatch' in 'Traceback (most recent call last):\n  File "<string>", line 10, in <module>\n  File "/tmp/puck-native-cache-1646hupk/...llection root or ancestor changed while held\nBootstrap holder close: Collection root or ancestor changed while held\n'
+E        +  where 'Traceback (most recent call last):\n  File "<string>", line 10, in <module>\n  File "/tmp/puck-native-cache-1646hupk/...llection root or ancestor changed while held\nBootstrap holder close: Collection root or ancestor changed while held\n' = CompletedProcess(args=['/home/utkarsh/Work/shraddha/brain/.worktrees/r0-reproduction/.venv/bin/python', '-I', '-B', '-...lection root or ancestor changed while held\nBootstrap holder close: Collection root or ancestor changed while held\n').stderr
+
+tests/test_puck_native_cache_bindings.py:149: AssertionError
+_ test_invalid_source_or_destination_refuses_without_replacing_existing_bytes[persistent] _
+
+tmp_path = PosixPath('/tmp/palimpsest-delayed-exports-affected-bindings-01/test_invalid_source_or_destina2')
+defect = 'persistent'
+
+    @pytest.mark.parametrize('defect',['registration-hash','leaf-hash','persistent','preexisting','overlap','ancestor-symlink'])
+    def test_invalid_source_or_destination_refuses_without_replacing_existing_bytes(tmp_path,defect):
+        source,reg=forest(tmp_path);before=len(os.listdir('/proc/self/fd'))
+        with tmpfs_base() as base:
+            target=base/'stage';kwargs={}
+            if defect=='registration-hash':kwargs['expected_sha256']='0'*64
+            elif defect=='leaf-hash':reg['roots'][0]['files'][0]['sha256']='0'*64
+            elif defect=='persistent':target=tmp_path/'persistent-stage'
+            elif defect=='preexisting':target.mkdir();(target/'preserved').write_bytes(b'preserved')
+            elif defect=='overlap':target=source/'stage'
+            else:
+                actual=base/'actual';actual.mkdir();alias=base/'alias';alias.symlink_to(actual,target_is_directory=True);target=alias/'stage'
+>           with pytest.raises((ValueError,RuntimeError,OSError)):stage(reg,target,**kwargs)
+E           Failed: DID NOT RAISE any of (<class 'ValueError'>, <class 'RuntimeError'>, <class 'OSError'>)
+
+tests/test_puck_runtime_staging.py:138: Failed
+___ test_invalid_roots_and_deadlines_refuse_without_payload_access[kwargs6] ____
+
+kwargs = {'deadline': 471518.640269822}
+
+    @pytest.mark.parametrize('kwargs',[dict(site_root='/usr/site'),dict(generated_root='/unread/site/generated'),
+        dict(generated_root='relative'),dict(deadline=True),dict(deadline=float('nan')),
+        dict(deadline=0),dict(deadline=time.monotonic()+181)])
+    def test_invalid_roots_and_deadlines_refuse_without_payload_access(kwargs):
+>       with pytest.raises(ValueError):build(**kwargs)
+E       Failed: DID NOT RAISE <class 'ValueError'>
+
+tests/test_puck_cpu_registration.py:192: Failed
+________________ test_prepare_exact_mounts_and_private_scratch _________________
+
+arguments = {'command': ['/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/bin/python3.11', '-I', '-S', '-B',...ated_root': '/tmp/palimpsest-delayed-exports-affected-bindings-01/test_prepare_exact_mounts_and_0/generated_root', ...}
+
+    def test_prepare_exact_mounts_and_private_scratch(arguments):
+>       command = build(arguments)
+                  ^^^^^^^^^^^^^^^^
+
+tests/test_puck_cpu_namespace.py:68: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_puck_cpu_namespace.py:54: in build
+    return api().sandbox_command(baseline,native,baseline_paths,**arguments)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+baseline = {'bwrap_executable': {'path': '/usr/bin/bwrap', 'sha256': '7c44fa8e7326e62e81ab3f70ff682bfc0eb3b447b39cf9fbb779a319483...0000)\n\t/usr/lib64/ld-linux-x86-64.so.2 (0x0000762d7acb2000)', 'ldd_returncode': 0, 'ldd_stderr': '', ...}, ...], ...}
+native = {'admission_inputs': [{'path': '/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-retained-admission-02/inventor...'installed_DSOs': 512, 'metadata_output_bytes': 16777216, 'native_leaf_bytes': 67108864, 'system_ELFs': 128, ...}, ...}
+baseline_paths = ['/etc/ld.so.cache', '/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/bin/python3.11', '/usr/lib/ld-linux-x86-64.so.2', '/usr/lib/libc.so.6', '/usr/lib/libdl.so.2', '/usr/lib/libm.so.6', ...]
+
+    def sandbox_command(baseline, native, baseline_paths, *, phase, stage_parent,
+                        source_root, control_root, output_root, command, environment,
+                        site_root=None, generated_root=None,
+                        scratch_bytes=_SCRATCH_BYTES) -> list[str]:
+        """Bind one admitted host tmpfs tree into two separate private namespaces.
+    
+        Preparation sees only explicitly supplied source trees and host native
+        leaves. Qualification sees the copied inputs, with only the authenticated
+        original interpreter/stdlib baseline exempted from staged native bindings.
+        No filesystem walk, package discovery or baseline inference is performed.
+        """
+        if type(baseline) is not dict or type(native) is not dict:
+            raise ValueError('Namespace requires authenticated baseline and native metadata')
+        prefix = _absolute(baseline.get('python_prefix'))
+        if any(_overlap(prefix, path) for path in _FIXED + ('/usr', '/etc', '/lib', '/lib64')):
+            raise ValueError('Namespace interpreter prefix overlaps fixed mount paths')
+        expected = sorted(['/etc/ld.so.cache', prefix + '/bin/python3.11']
+                          + ['/usr/lib/' + name for name in _BASE_LIBRARIES])
+        if (type(baseline_paths) not in (list, tuple) or list(baseline_paths) != expected):
+            raise ValueError('Namespace baseline paths must be the exact sorted original nine paths')
+        if phase not in ('prepare', 'qualify'):
+            raise ValueError('Namespace phase must be prepare or qualify')
+        if type(scratch_bytes) is not int or not 0 < scratch_bytes <= _SCRATCH_BYTES:
+            raise ValueError('Namespace scratch exceeds the 64 MiB ceiling')
+        if (type(command) not in (list, tuple) or not 1 <= len(command) <= 128
+                or not all(_argument(arg) for arg in command)):
+            raise ValueError('Namespace command must be explicit bounded text arguments')
+        _absolute(command[0])
+        if (type(environment) is not dict or len(environment) > 128
+                or any(not _text(key) or '=' in key or not _text(value, empty=True)
+                       for key, value in environment.items())):
+            raise ValueError('Namespace environment must be explicit bounded text')
+        if phase == 'qualify' and (site_root is not None or generated_root is not None):
+            raise ValueError('Namespace source trees are available only in prepare phase')
+        if phase == 'prepare' and site_root is None:
+            raise ValueError('Namespace prepare phase requires the explicit site source root')
+        hosts = [stage_parent, source_root, control_root, output_root]
+        hosts += [path for path in (site_root, generated_root) if path is not None]
+        checked = []
+        for path in hosts:
+            _absolute(path)
+            if any(_overlap(path, old) for old in checked + [prefix]):
+                raise ValueError('Namespace host roots overlap')
+            if (path in ('/home', '/tmp', '/var') or any(_overlap(path, fixed) for fixed in
+                    ('/usr', '/etc', '/proc', '/dev', '/sys', '/puck', '/output', '/scratch', '/lib', '/lib64', '/bin', '/sbin'))):
+                raise ValueError('Namespace cannot expose a broad host root')
+            checked.append(path)
+        for path in (site_root, generated_root):
+            if path is not None and any(_overlap(path, fixed) for fixed in _FIXED + ('/usr', '/etc', '/lib', '/lib64')):
+>               raise ValueError('Namespace source host path overlaps a fixed namespace path')
+E               ValueError: Namespace source host path overlaps a fixed namespace path
+
+src/palimpsest/puck_cpu_namespace.py:119: ValueError
+__________ test_exact_cpu_parent_environment_retains_empty_cuda_value __________
+
+arguments = {'command': ['/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/bin/python3.11', '-I', '-S', '-B',...ated_root': '/tmp/palimpsest-delayed-exports-affected-bindings-01/test_exact_cpu_parent_environm0/generated_root', ...}
+
+    def test_exact_cpu_parent_environment_retains_empty_cuda_value(arguments):
+        arguments['environment']=PARENT_ENVIRONMENT
+>       command=build(arguments)
+                ^^^^^^^^^^^^^^^^
+
+tests/test_puck_cpu_namespace.py:92: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_puck_cpu_namespace.py:54: in build
+    return api().sandbox_command(baseline,native,baseline_paths,**arguments)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+baseline = {'bwrap_executable': {'path': '/usr/bin/bwrap', 'sha256': '7c44fa8e7326e62e81ab3f70ff682bfc0eb3b447b39cf9fbb779a319483...0000)\n\t/usr/lib64/ld-linux-x86-64.so.2 (0x0000762d7acb2000)', 'ldd_returncode': 0, 'ldd_stderr': '', ...}, ...], ...}
+native = {'admission_inputs': [{'path': '/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-retained-admission-02/inventor...'installed_DSOs': 512, 'metadata_output_bytes': 16777216, 'native_leaf_bytes': 67108864, 'system_ELFs': 128, ...}, ...}
+baseline_paths = ['/etc/ld.so.cache', '/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/bin/python3.11', '/usr/lib/ld-linux-x86-64.so.2', '/usr/lib/libc.so.6', '/usr/lib/libdl.so.2', '/usr/lib/libm.so.6', ...]
+
+    def sandbox_command(baseline, native, baseline_paths, *, phase, stage_parent,
+                        source_root, control_root, output_root, command, environment,
+                        site_root=None, generated_root=None,
+                        scratch_bytes=_SCRATCH_BYTES) -> list[str]:
+        """Bind one admitted host tmpfs tree into two separate private namespaces.
+    
+        Preparation sees only explicitly supplied source trees and host native
+        leaves. Qualification sees the copied inputs, with only the authenticated
+        original interpreter/stdlib baseline exempted from staged native bindings.
+        No filesystem walk, package discovery or baseline inference is performed.
+        """
+        if type(baseline) is not dict or type(native) is not dict:
+            raise ValueError('Namespace requires authenticated baseline and native metadata')
+        prefix = _absolute(baseline.get('python_prefix'))
+        if any(_overlap(prefix, path) for path in _FIXED + ('/usr', '/etc', '/lib', '/lib64')):
+            raise ValueError('Namespace interpreter prefix overlaps fixed mount paths')
+        expected = sorted(['/etc/ld.so.cache', prefix + '/bin/python3.11']
+                          + ['/usr/lib/' + name for name in _BASE_LIBRARIES])
+        if (type(baseline_paths) not in (list, tuple) or list(baseline_paths) != expected):
+            raise ValueError('Namespace baseline paths must be the exact sorted original nine paths')
+        if phase not in ('prepare', 'qualify'):
+            raise ValueError('Namespace phase must be prepare or qualify')
+        if type(scratch_bytes) is not int or not 0 < scratch_bytes <= _SCRATCH_BYTES:
+            raise ValueError('Namespace scratch exceeds the 64 MiB ceiling')
+        if (type(command) not in (list, tuple) or not 1 <= len(command) <= 128
+                or not all(_argument(arg) for arg in command)):
+            raise ValueError('Namespace command must be explicit bounded text arguments')
+        _absolute(command[0])
+        if (type(environment) is not dict or len(environment) > 128
+                or any(not _text(key) or '=' in key or not _text(value, empty=True)
+                       for key, value in environment.items())):
+            raise ValueError('Namespace environment must be explicit bounded text')
+        if phase == 'qualify' and (site_root is not None or generated_root is not None):
+            raise ValueError('Namespace source trees are available only in prepare phase')
+        if phase == 'prepare' and site_root is None:
+            raise ValueError('Namespace prepare phase requires the explicit site source root')
+        hosts = [stage_parent, source_root, control_root, output_root]
+        hosts += [path for path in (site_root, generated_root) if path is not None]
+        checked = []
+        for path in hosts:
+            _absolute(path)
+            if any(_overlap(path, old) for old in checked + [prefix]):
+                raise ValueError('Namespace host roots overlap')
+            if (path in ('/home', '/tmp', '/var') or any(_overlap(path, fixed) for fixed in
+                    ('/usr', '/etc', '/proc', '/dev', '/sys', '/puck', '/output', '/scratch', '/lib', '/lib64', '/bin', '/sbin'))):
+                raise ValueError('Namespace cannot expose a broad host root')
+            checked.append(path)
+        for path in (site_root, generated_root):
+            if path is not None and any(_overlap(path, fixed) for fixed in _FIXED + ('/usr', '/etc', '/lib', '/lib64')):
+>               raise ValueError('Namespace source host path overlaps a fixed namespace path')
+E               ValueError: Namespace source host path overlaps a fixed namespace path
+
+src/palimpsest/puck_cpu_namespace.py:119: ValueError
+____ test_exact_seeded_cpu_parent_worker_command_accepts_python_whitespace _____
+
+arguments = {'command': ['/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/bin/python3.11', '-I', '-B', '-S',...ated_root': '/tmp/palimpsest-delayed-exports-affected-bindings-01/test_exact_seeded_cpu_parent_w0/generated_root', ...}
+
+    def test_exact_seeded_cpu_parent_worker_command_accepts_python_whitespace(arguments):
+        path=ROOT/'scripts/qualify_puck_cpu_held_runtime.py'
+        spec=importlib.util.spec_from_file_location('cpu_namespace_parent_command_test',path)
+        parent=importlib.util.module_from_spec(spec);spec.loader.exec_module(parent)
+        files=[]
+        for relative in parent.WORKER_SOURCES:
+            raw=(ROOT/relative).read_bytes()
+            files.append(dict(path=relative,size_bytes=len(raw),sha256=hashlib.sha256(raw).hexdigest()))
+        worker,command=parent.worker_registration(files,b'{"authored":"inert dependencies"}',negative_imports=['org'])
+        assert command[:5]==[PYTHON,'-I','-B','-S','-c']
+        assert command[5].startswith('import os,sys,stat,hashlib\n') and '\n' in command[5]
+        assert worker['argv_prefix']==command[:-1]
+        assert all(0<len(arg.encode())<=4096 for arg in command)
+        arguments['command']=command
+>       built=build(arguments)
+              ^^^^^^^^^^^^^^^^
+
+tests/test_puck_cpu_namespace.py:111: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_puck_cpu_namespace.py:54: in build
+    return api().sandbox_command(baseline,native,baseline_paths,**arguments)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+baseline = {'bwrap_executable': {'path': '/usr/bin/bwrap', 'sha256': '7c44fa8e7326e62e81ab3f70ff682bfc0eb3b447b39cf9fbb779a319483...0000)\n\t/usr/lib64/ld-linux-x86-64.so.2 (0x0000762d7acb2000)', 'ldd_returncode': 0, 'ldd_stderr': '', ...}, ...], ...}
+native = {'admission_inputs': [{'path': '/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-retained-admission-02/inventor...'installed_DSOs': 512, 'metadata_output_bytes': 16777216, 'native_leaf_bytes': 67108864, 'system_ELFs': 128, ...}, ...}
+baseline_paths = ['/etc/ld.so.cache', '/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/bin/python3.11', '/usr/lib/ld-linux-x86-64.so.2', '/usr/lib/libc.so.6', '/usr/lib/libdl.so.2', '/usr/lib/libm.so.6', ...]
+
+    def sandbox_command(baseline, native, baseline_paths, *, phase, stage_parent,
+                        source_root, control_root, output_root, command, environment,
+                        site_root=None, generated_root=None,
+                        scratch_bytes=_SCRATCH_BYTES) -> list[str]:
+        """Bind one admitted host tmpfs tree into two separate private namespaces.
+    
+        Preparation sees only explicitly supplied source trees and host native
+        leaves. Qualification sees the copied inputs, with only the authenticated
+        original interpreter/stdlib baseline exempted from staged native bindings.
+        No filesystem walk, package discovery or baseline inference is performed.
+        """
+        if type(baseline) is not dict or type(native) is not dict:
+            raise ValueError('Namespace requires authenticated baseline and native metadata')
+        prefix = _absolute(baseline.get('python_prefix'))
+        if any(_overlap(prefix, path) for path in _FIXED + ('/usr', '/etc', '/lib', '/lib64')):
+            raise ValueError('Namespace interpreter prefix overlaps fixed mount paths')
+        expected = sorted(['/etc/ld.so.cache', prefix + '/bin/python3.11']
+                          + ['/usr/lib/' + name for name in _BASE_LIBRARIES])
+        if (type(baseline_paths) not in (list, tuple) or list(baseline_paths) != expected):
+            raise ValueError('Namespace baseline paths must be the exact sorted original nine paths')
+        if phase not in ('prepare', 'qualify'):
+            raise ValueError('Namespace phase must be prepare or qualify')
+        if type(scratch_bytes) is not int or not 0 < scratch_bytes <= _SCRATCH_BYTES:
+            raise ValueError('Namespace scratch exceeds the 64 MiB ceiling')
+        if (type(command) not in (list, tuple) or not 1 <= len(command) <= 128
+                or not all(_argument(arg) for arg in command)):
+            raise ValueError('Namespace command must be explicit bounded text arguments')
+        _absolute(command[0])
+        if (type(environment) is not dict or len(environment) > 128
+                or any(not _text(key) or '=' in key or not _text(value, empty=True)
+                       for key, value in environment.items())):
+            raise ValueError('Namespace environment must be explicit bounded text')
+        if phase == 'qualify' and (site_root is not None or generated_root is not None):
+            raise ValueError('Namespace source trees are available only in prepare phase')
+        if phase == 'prepare' and site_root is None:
+            raise ValueError('Namespace prepare phase requires the explicit site source root')
+        hosts = [stage_parent, source_root, control_root, output_root]
+        hosts += [path for path in (site_root, generated_root) if path is not None]
+        checked = []
+        for path in hosts:
+            _absolute(path)
+            if any(_overlap(path, old) for old in checked + [prefix]):
+                raise ValueError('Namespace host roots overlap')
+            if (path in ('/home', '/tmp', '/var') or any(_overlap(path, fixed) for fixed in
+                    ('/usr', '/etc', '/proc', '/dev', '/sys', '/puck', '/output', '/scratch', '/lib', '/lib64', '/bin', '/sbin'))):
+                raise ValueError('Namespace cannot expose a broad host root')
+            checked.append(path)
+        for path in (site_root, generated_root):
+            if path is not None and any(_overlap(path, fixed) for fixed in _FIXED + ('/usr', '/etc', '/lib', '/lib64')):
+>               raise ValueError('Namespace source host path overlaps a fixed namespace path')
+E               ValueError: Namespace source host path overlaps a fixed namespace path
+
+src/palimpsest/puck_cpu_namespace.py:119: ValueError
+___________ test_reject_overlapping_host_inputs_and_nonprivate_stage ___________
+
+arguments = {'command': ['/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/bin/python3.11', '-I', '-S', '-B',...ated_root': '/tmp/palimpsest-delayed-exports-affected-bindings-01/test_reject_overlapping_host_i0/generated_root', ...}
+
+    def test_reject_overlapping_host_inputs_and_nonprivate_stage(arguments):
+        arguments['source_root']=arguments['control_root']
+        with pytest.raises(ValueError,match='overlap'): build(arguments)
+        arguments['source_root']=str(Path(arguments['control_root']).parent/'source_root')
+        os.chmod(arguments['stage_parent'],0o755)
+>       with pytest.raises(ValueError,match='0700'): build(arguments)
+                                                     ^^^^^^^^^^^^^^^^
+
+tests/test_puck_cpu_namespace.py:172: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_puck_cpu_namespace.py:54: in build
+    return api().sandbox_command(baseline,native,baseline_paths,**arguments)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+baseline = {'bwrap_executable': {'path': '/usr/bin/bwrap', 'sha256': '7c44fa8e7326e62e81ab3f70ff682bfc0eb3b447b39cf9fbb779a319483...0000)\n\t/usr/lib64/ld-linux-x86-64.so.2 (0x0000762d7acb2000)', 'ldd_returncode': 0, 'ldd_stderr': '', ...}, ...], ...}
+native = {'admission_inputs': [{'path': '/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-retained-admission-02/inventor...'installed_DSOs': 512, 'metadata_output_bytes': 16777216, 'native_leaf_bytes': 67108864, 'system_ELFs': 128, ...}, ...}
+baseline_paths = ['/etc/ld.so.cache', '/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/bin/python3.11', '/usr/lib/ld-linux-x86-64.so.2', '/usr/lib/libc.so.6', '/usr/lib/libdl.so.2', '/usr/lib/libm.so.6', ...]
+
+    def sandbox_command(baseline, native, baseline_paths, *, phase, stage_parent,
+                        source_root, control_root, output_root, command, environment,
+                        site_root=None, generated_root=None,
+                        scratch_bytes=_SCRATCH_BYTES) -> list[str]:
+        """Bind one admitted host tmpfs tree into two separate private namespaces.
+    
+        Preparation sees only explicitly supplied source trees and host native
+        leaves. Qualification sees the copied inputs, with only the authenticated
+        original interpreter/stdlib baseline exempted from staged native bindings.
+        No filesystem walk, package discovery or baseline inference is performed.
+        """
+        if type(baseline) is not dict or type(native) is not dict:
+            raise ValueError('Namespace requires authenticated baseline and native metadata')
+        prefix = _absolute(baseline.get('python_prefix'))
+        if any(_overlap(prefix, path) for path in _FIXED + ('/usr', '/etc', '/lib', '/lib64')):
+            raise ValueError('Namespace interpreter prefix overlaps fixed mount paths')
+        expected = sorted(['/etc/ld.so.cache', prefix + '/bin/python3.11']
+                          + ['/usr/lib/' + name for name in _BASE_LIBRARIES])
+        if (type(baseline_paths) not in (list, tuple) or list(baseline_paths) != expected):
+            raise ValueError('Namespace baseline paths must be the exact sorted original nine paths')
+        if phase not in ('prepare', 'qualify'):
+            raise ValueError('Namespace phase must be prepare or qualify')
+        if type(scratch_bytes) is not int or not 0 < scratch_bytes <= _SCRATCH_BYTES:
+            raise ValueError('Namespace scratch exceeds the 64 MiB ceiling')
+        if (type(command) not in (list, tuple) or not 1 <= len(command) <= 128
+                or not all(_argument(arg) for arg in command)):
+            raise ValueError('Namespace command must be explicit bounded text arguments')
+        _absolute(command[0])
+        if (type(environment) is not dict or len(environment) > 128
+                or any(not _text(key) or '=' in key or not _text(value, empty=True)
+                       for key, value in environment.items())):
+            raise ValueError('Namespace environment must be explicit bounded text')
+        if phase == 'qualify' and (site_root is not None or generated_root is not None):
+            raise ValueError('Namespace source trees are available only in prepare phase')
+        if phase == 'prepare' and site_root is None:
+            raise ValueError('Namespace prepare phase requires the explicit site source root')
+        hosts = [stage_parent, source_root, control_root, output_root]
+        hosts += [path for path in (site_root, generated_root) if path is not None]
+        checked = []
+        for path in hosts:
+            _absolute(path)
+            if any(_overlap(path, old) for old in checked + [prefix]):
+                raise ValueError('Namespace host roots overlap')
+            if (path in ('/home', '/tmp', '/var') or any(_overlap(path, fixed) for fixed in
+                    ('/usr', '/etc', '/proc', '/dev', '/sys', '/puck', '/output', '/scratch', '/lib', '/lib64', '/bin', '/sbin'))):
+                raise ValueError('Namespace cannot expose a broad host root')
+            checked.append(path)
+        for path in (site_root, generated_root):
+            if path is not None and any(_overlap(path, fixed) for fixed in _FIXED + ('/usr', '/etc', '/lib', '/lib64')):
+>               raise ValueError('Namespace source host path overlaps a fixed namespace path')
+E               ValueError: Namespace source host path overlaps a fixed namespace path
+
+src/palimpsest/puck_cpu_namespace.py:119: ValueError
+
+During handling of the above exception, another exception occurred:
+
+arguments = {'command': ['/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/bin/python3.11', '-I', '-S', '-B',...ated_root': '/tmp/palimpsest-delayed-exports-affected-bindings-01/test_reject_overlapping_host_i0/generated_root', ...}
+
+    def test_reject_overlapping_host_inputs_and_nonprivate_stage(arguments):
+        arguments['source_root']=arguments['control_root']
+        with pytest.raises(ValueError,match='overlap'): build(arguments)
+        arguments['source_root']=str(Path(arguments['control_root']).parent/'source_root')
+        os.chmod(arguments['stage_parent'],0o755)
+>       with pytest.raises(ValueError,match='0700'): build(arguments)
+E       AssertionError: Regex pattern did not match.
+E        Regex: '0700'
+E        Input: 'Namespace source host path overlaps a fixed namespace path'
+
+tests/test_puck_cpu_namespace.py:172: AssertionError
+______ test_reject_preexisting_prepare_input_and_qualify_source_exposure _______
+
+arguments = {'command': ['/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/bin/python3.11', '-I', '-S', '-B',...ated_root': '/tmp/palimpsest-delayed-exports-affected-bindings-01/test_reject_preexisting_prepar0/generated_root', ...}
+
+    def test_reject_preexisting_prepare_input_and_qualify_source_exposure(arguments):
+        (Path(arguments['stage_parent'])/'inputs').mkdir(mode=0o700)
+>       with pytest.raises(ValueError,match='exist'): build(arguments)
+                                                      ^^^^^^^^^^^^^^^^
+
+tests/test_puck_cpu_namespace.py:177: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_puck_cpu_namespace.py:54: in build
+    return api().sandbox_command(baseline,native,baseline_paths,**arguments)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+baseline = {'bwrap_executable': {'path': '/usr/bin/bwrap', 'sha256': '7c44fa8e7326e62e81ab3f70ff682bfc0eb3b447b39cf9fbb779a319483...0000)\n\t/usr/lib64/ld-linux-x86-64.so.2 (0x0000762d7acb2000)', 'ldd_returncode': 0, 'ldd_stderr': '', ...}, ...], ...}
+native = {'admission_inputs': [{'path': '/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-retained-admission-02/inventor...'installed_DSOs': 512, 'metadata_output_bytes': 16777216, 'native_leaf_bytes': 67108864, 'system_ELFs': 128, ...}, ...}
+baseline_paths = ['/etc/ld.so.cache', '/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/bin/python3.11', '/usr/lib/ld-linux-x86-64.so.2', '/usr/lib/libc.so.6', '/usr/lib/libdl.so.2', '/usr/lib/libm.so.6', ...]
+
+    def sandbox_command(baseline, native, baseline_paths, *, phase, stage_parent,
+                        source_root, control_root, output_root, command, environment,
+                        site_root=None, generated_root=None,
+                        scratch_bytes=_SCRATCH_BYTES) -> list[str]:
+        """Bind one admitted host tmpfs tree into two separate private namespaces.
+    
+        Preparation sees only explicitly supplied source trees and host native
+        leaves. Qualification sees the copied inputs, with only the authenticated
+        original interpreter/stdlib baseline exempted from staged native bindings.
+        No filesystem walk, package discovery or baseline inference is performed.
+        """
+        if type(baseline) is not dict or type(native) is not dict:
+            raise ValueError('Namespace requires authenticated baseline and native metadata')
+        prefix = _absolute(baseline.get('python_prefix'))
+        if any(_overlap(prefix, path) for path in _FIXED + ('/usr', '/etc', '/lib', '/lib64')):
+            raise ValueError('Namespace interpreter prefix overlaps fixed mount paths')
+        expected = sorted(['/etc/ld.so.cache', prefix + '/bin/python3.11']
+                          + ['/usr/lib/' + name for name in _BASE_LIBRARIES])
+        if (type(baseline_paths) not in (list, tuple) or list(baseline_paths) != expected):
+            raise ValueError('Namespace baseline paths must be the exact sorted original nine paths')
+        if phase not in ('prepare', 'qualify'):
+            raise ValueError('Namespace phase must be prepare or qualify')
+        if type(scratch_bytes) is not int or not 0 < scratch_bytes <= _SCRATCH_BYTES:
+            raise ValueError('Namespace scratch exceeds the 64 MiB ceiling')
+        if (type(command) not in (list, tuple) or not 1 <= len(command) <= 128
+                or not all(_argument(arg) for arg in command)):
+            raise ValueError('Namespace command must be explicit bounded text arguments')
+        _absolute(command[0])
+        if (type(environment) is not dict or len(environment) > 128
+                or any(not _text(key) or '=' in key or not _text(value, empty=True)
+                       for key, value in environment.items())):
+            raise ValueError('Namespace environment must be explicit bounded text')
+        if phase == 'qualify' and (site_root is not None or generated_root is not None):
+            raise ValueError('Namespace source trees are available only in prepare phase')
+        if phase == 'prepare' and site_root is None:
+            raise ValueError('Namespace prepare phase requires the explicit site source root')
+        hosts = [stage_parent, source_root, control_root, output_root]
+        hosts += [path for path in (site_root, generated_root) if path is not None]
+        checked = []
+        for path in hosts:
+            _absolute(path)
+            if any(_overlap(path, old) for old in checked + [prefix]):
+                raise ValueError('Namespace host roots overlap')
+            if (path in ('/home', '/tmp', '/var') or any(_overlap(path, fixed) for fixed in
+                    ('/usr', '/etc', '/proc', '/dev', '/sys', '/puck', '/output', '/scratch', '/lib', '/lib64', '/bin', '/sbin'))):
+                raise ValueError('Namespace cannot expose a broad host root')
+            checked.append(path)
+        for path in (site_root, generated_root):
+            if path is not None and any(_overlap(path, fixed) for fixed in _FIXED + ('/usr', '/etc', '/lib', '/lib64')):
+>               raise ValueError('Namespace source host path overlaps a fixed namespace path')
+E               ValueError: Namespace source host path overlaps a fixed namespace path
+
+src/palimpsest/puck_cpu_namespace.py:119: ValueError
+
+During handling of the above exception, another exception occurred:
+
+arguments = {'command': ['/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/bin/python3.11', '-I', '-S', '-B',...ated_root': '/tmp/palimpsest-delayed-exports-affected-bindings-01/test_reject_preexisting_prepar0/generated_root', ...}
+
+    def test_reject_preexisting_prepare_input_and_qualify_source_exposure(arguments):
+        (Path(arguments['stage_parent'])/'inputs').mkdir(mode=0o700)
+>       with pytest.raises(ValueError,match='exist'): build(arguments)
+E       AssertionError: Regex pattern did not match.
+E        Regex: 'exist'
+E        Input: 'Namespace source host path overlaps a fixed namespace path'
+
+tests/test_puck_cpu_namespace.py:177: AssertionError
+____________ test_identical_cross_manifest_aliases_are_merged_once _____________
+
+arguments = {'command': ['/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/bin/python3.11', '-I', '-S', '-B',...ated_root': '/tmp/palimpsest-delayed-exports-affected-bindings-01/test_identical_cross_manifest_0/generated_root', ...}
+
+    def test_identical_cross_manifest_aliases_are_merged_once(arguments):
+>       command=build(arguments)
+                ^^^^^^^^^^^^^^^^
+
+tests/test_puck_cpu_namespace.py:196: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_puck_cpu_namespace.py:54: in build
+    return api().sandbox_command(baseline,native,baseline_paths,**arguments)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+baseline = {'bwrap_executable': {'path': '/usr/bin/bwrap', 'sha256': '7c44fa8e7326e62e81ab3f70ff682bfc0eb3b447b39cf9fbb779a319483...0000)\n\t/usr/lib64/ld-linux-x86-64.so.2 (0x0000762d7acb2000)', 'ldd_returncode': 0, 'ldd_stderr': '', ...}, ...], ...}
+native = {'admission_inputs': [{'path': '/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-retained-admission-02/inventor...'installed_DSOs': 512, 'metadata_output_bytes': 16777216, 'native_leaf_bytes': 67108864, 'system_ELFs': 128, ...}, ...}
+baseline_paths = ['/etc/ld.so.cache', '/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/bin/python3.11', '/usr/lib/ld-linux-x86-64.so.2', '/usr/lib/libc.so.6', '/usr/lib/libdl.so.2', '/usr/lib/libm.so.6', ...]
+
+    def sandbox_command(baseline, native, baseline_paths, *, phase, stage_parent,
+                        source_root, control_root, output_root, command, environment,
+                        site_root=None, generated_root=None,
+                        scratch_bytes=_SCRATCH_BYTES) -> list[str]:
+        """Bind one admitted host tmpfs tree into two separate private namespaces.
+    
+        Preparation sees only explicitly supplied source trees and host native
+        leaves. Qualification sees the copied inputs, with only the authenticated
+        original interpreter/stdlib baseline exempted from staged native bindings.
+        No filesystem walk, package discovery or baseline inference is performed.
+        """
+        if type(baseline) is not dict or type(native) is not dict:
+            raise ValueError('Namespace requires authenticated baseline and native metadata')
+        prefix = _absolute(baseline.get('python_prefix'))
+        if any(_overlap(prefix, path) for path in _FIXED + ('/usr', '/etc', '/lib', '/lib64')):
+            raise ValueError('Namespace interpreter prefix overlaps fixed mount paths')
+        expected = sorted(['/etc/ld.so.cache', prefix + '/bin/python3.11']
+                          + ['/usr/lib/' + name for name in _BASE_LIBRARIES])
+        if (type(baseline_paths) not in (list, tuple) or list(baseline_paths) != expected):
+            raise ValueError('Namespace baseline paths must be the exact sorted original nine paths')
+        if phase not in ('prepare', 'qualify'):
+            raise ValueError('Namespace phase must be prepare or qualify')
+        if type(scratch_bytes) is not int or not 0 < scratch_bytes <= _SCRATCH_BYTES:
+            raise ValueError('Namespace scratch exceeds the 64 MiB ceiling')
+        if (type(command) not in (list, tuple) or not 1 <= len(command) <= 128
+                or not all(_argument(arg) for arg in command)):
+            raise ValueError('Namespace command must be explicit bounded text arguments')
+        _absolute(command[0])
+        if (type(environment) is not dict or len(environment) > 128
+                or any(not _text(key) or '=' in key or not _text(value, empty=True)
+                       for key, value in environment.items())):
+            raise ValueError('Namespace environment must be explicit bounded text')
+        if phase == 'qualify' and (site_root is not None or generated_root is not None):
+            raise ValueError('Namespace source trees are available only in prepare phase')
+        if phase == 'prepare' and site_root is None:
+            raise ValueError('Namespace prepare phase requires the explicit site source root')
+        hosts = [stage_parent, source_root, control_root, output_root]
+        hosts += [path for path in (site_root, generated_root) if path is not None]
+        checked = []
+        for path in hosts:
+            _absolute(path)
+            if any(_overlap(path, old) for old in checked + [prefix]):
+                raise ValueError('Namespace host roots overlap')
+            if (path in ('/home', '/tmp', '/var') or any(_overlap(path, fixed) for fixed in
+                    ('/usr', '/etc', '/proc', '/dev', '/sys', '/puck', '/output', '/scratch', '/lib', '/lib64', '/bin', '/sbin'))):
+                raise ValueError('Namespace cannot expose a broad host root')
+            checked.append(path)
+        for path in (site_root, generated_root):
+            if path is not None and any(_overlap(path, fixed) for fixed in _FIXED + ('/usr', '/etc', '/lib', '/lib64')):
+>               raise ValueError('Namespace source host path overlaps a fixed namespace path')
+E               ValueError: Namespace source host path overlaps a fixed namespace path
+
+src/palimpsest/puck_cpu_namespace.py:119: ValueError
+_____ test_real_two_bwrap_passes_preserve_raw_tmpfs_inode_and_held_custody _____
+
+tmp_path = PosixPath('/tmp/palimpsest-delayed-exports-affected-bindings-01/test_real_two_bwrap_passes_pre0')
+
+    def test_real_two_bwrap_passes_preserve_raw_tmpfs_inode_and_held_custody(tmp_path):
+        source=tmp_path/'capsule';source.mkdir(mode=0o700)
+        package=source/'src/palimpsest';package.mkdir(parents=True)
+        for name in ('__init__.py','bounded_qualification.py','puck_dependency_bindings.py',
+                     'puck_dependency_files.py','puck_execution_files.py','puck_native_identity.py',
+                     'puck_runtime_registration.py','puck_runtime_staging.py'):
+            shutil.copyfile(ROOT/'src/palimpsest'/name,package/name)
+        (source/'runner.py').write_text(RUNNER)
+        control=tmp_path/'control';control.mkdir(mode=0o700)
+        output=tmp_path/'output';output.mkdir(mode=0o700)
+        site=tmp_path/'authored-site';(site/'demo').mkdir(parents=True)
+        payload=b'raise AssertionError("authored bytes stay inert")\n'
+        (site/'demo/__init__.py').write_bytes(payload)
+        reg=dict(kind='puck-worker-dependencies-v3',version=3,native_identity='tmpfs-raw-dev-inode-v1',
+            roots=[dict(root=str(site),kind='package',files=[dict(path='demo/__init__.py',
+                size_bytes=len(payload),sha256=hashlib.sha256(payload).hexdigest())])],
+            modules=[dict(name='demo',root_index=0,path='demo/__init__.py',kind='python',is_package=True)],
+            namespaces=[],distributions=[],import_profile=dict(exports=[],module_changes=[],native_origins=[]))
+        generated=tmp_path/'authored-generated';(generated/'lib').mkdir(parents=True)
+        native_data=b'authored inert native-path data'
+        (generated/'lib/puck_cpu_namespace_authored.bin').write_bytes(native_data)
+        reg['roots'].append(dict(root=str(generated),kind='package',files=[dict(
+            path='lib/puck_cpu_namespace_authored.bin',size_bytes=len(native_data),
+            sha256=hashlib.sha256(native_data).hexdigest())]))
+        (control/'source.json').write_bytes(canonical(reg))
+        native={'native_files':[row for row in NATIVE['native_files'] if row['path'] in BASE_PATHS],
+                'aliases':BASELINE['host_path_aliases']}
+        with tempfile.TemporaryDirectory(prefix='puck-authored-two-pass-',dir='/tmp') as temporary:
+            ancestor=Path(temporary);stage=ancestor/'private-stage';stage.mkdir(mode=0o700)
+            args=dict(stage_parent=str(stage),source_root=str(source),control_root=str(control),
+                output_root=str(output),environment=PARENT_ENVIRONMENT,
+                command=[PYTHON,'-I','-S','-B','-X','pycache_prefix=/scratch/pycache',
+                         '/puck/source/runner.py','prepare',str(stage)])
+>           first=build(dict(args,phase='prepare',site_root=str(site),generated_root=str(generated)),native=native)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_puck_cpu_namespace.py:312: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_puck_cpu_namespace.py:54: in build
+    return api().sandbox_command(baseline,native,baseline_paths,**arguments)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+baseline = {'bwrap_executable': {'path': '/usr/bin/bwrap', 'sha256': '7c44fa8e7326e62e81ab3f70ff682bfc0eb3b447b39cf9fbb779a319483...0000)\n\t/usr/lib64/ld-linux-x86-64.so.2 (0x0000762d7acb2000)', 'ldd_returncode': 0, 'ldd_stderr': '', ...}, ...], ...}
+native = {'aliases': [['/lib', 'usr/lib'], ['/lib64', 'usr/lib'], ['/usr/lib64', 'lib']], 'native_files': [{'path': '/etc/ld.so...thread.so.0', 'sha256': '839b91403f89fa4c6888d50deb2b59cd0612f8cfe3d57dd9d6314832b4cb31ab', 'size_bytes': 14360}, ...]}
+baseline_paths = ['/etc/ld.so.cache', '/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/bin/python3.11', '/usr/lib/ld-linux-x86-64.so.2', '/usr/lib/libc.so.6', '/usr/lib/libdl.so.2', '/usr/lib/libm.so.6', ...]
+
+    def sandbox_command(baseline, native, baseline_paths, *, phase, stage_parent,
+                        source_root, control_root, output_root, command, environment,
+                        site_root=None, generated_root=None,
+                        scratch_bytes=_SCRATCH_BYTES) -> list[str]:
+        """Bind one admitted host tmpfs tree into two separate private namespaces.
+    
+        Preparation sees only explicitly supplied source trees and host native
+        leaves. Qualification sees the copied inputs, with only the authenticated
+        original interpreter/stdlib baseline exempted from staged native bindings.
+        No filesystem walk, package discovery or baseline inference is performed.
+        """
+        if type(baseline) is not dict or type(native) is not dict:
+            raise ValueError('Namespace requires authenticated baseline and native metadata')
+        prefix = _absolute(baseline.get('python_prefix'))
+        if any(_overlap(prefix, path) for path in _FIXED + ('/usr', '/etc', '/lib', '/lib64')):
+            raise ValueError('Namespace interpreter prefix overlaps fixed mount paths')
+        expected = sorted(['/etc/ld.so.cache', prefix + '/bin/python3.11']
+                          + ['/usr/lib/' + name for name in _BASE_LIBRARIES])
+        if (type(baseline_paths) not in (list, tuple) or list(baseline_paths) != expected):
+            raise ValueError('Namespace baseline paths must be the exact sorted original nine paths')
+        if phase not in ('prepare', 'qualify'):
+            raise ValueError('Namespace phase must be prepare or qualify')
+        if type(scratch_bytes) is not int or not 0 < scratch_bytes <= _SCRATCH_BYTES:
+            raise ValueError('Namespace scratch exceeds the 64 MiB ceiling')
+        if (type(command) not in (list, tuple) or not 1 <= len(command) <= 128
+                or not all(_argument(arg) for arg in command)):
+            raise ValueError('Namespace command must be explicit bounded text arguments')
+        _absolute(command[0])
+        if (type(environment) is not dict or len(environment) > 128
+                or any(not _text(key) or '=' in key or not _text(value, empty=True)
+                       for key, value in environment.items())):
+            raise ValueError('Namespace environment must be explicit bounded text')
+        if phase == 'qualify' and (site_root is not None or generated_root is not None):
+            raise ValueError('Namespace source trees are available only in prepare phase')
+        if phase == 'prepare' and site_root is None:
+            raise ValueError('Namespace prepare phase requires the explicit site source root')
+        hosts = [stage_parent, source_root, control_root, output_root]
+        hosts += [path for path in (site_root, generated_root) if path is not None]
+        checked = []
+        for path in hosts:
+            _absolute(path)
+            if any(_overlap(path, old) for old in checked + [prefix]):
+                raise ValueError('Namespace host roots overlap')
+            if (path in ('/home', '/tmp', '/var') or any(_overlap(path, fixed) for fixed in
+                    ('/usr', '/etc', '/proc', '/dev', '/sys', '/puck', '/output', '/scratch', '/lib', '/lib64', '/bin', '/sbin'))):
+                raise ValueError('Namespace cannot expose a broad host root')
+            checked.append(path)
+        for path in (site_root, generated_root):
+            if path is not None and any(_overlap(path, fixed) for fixed in _FIXED + ('/usr', '/etc', '/lib', '/lib64')):
+>               raise ValueError('Namespace source host path overlaps a fixed namespace path')
+E               ValueError: Namespace source host path overlaps a fixed namespace path
+
+src/palimpsest/puck_cpu_namespace.py:119: ValueError
+=========================== short test summary info ============================
+FAILED tests/test_puck_dependency_profile.py::test_equal_but_unheld_generated_code_is_refused_before_capture[factory]
+FAILED tests/test_puck_dependency_profile.py::test_support_dispatch_is_checked_before_new_profile_callbacks[ExportBindings.recheck]
+FAILED tests/test_puck_dependency_profile.py::test_review_instance_shadow_cannot_authorize_foreign_export
+FAILED tests/test_puck_dependency_profile.py::test_review_other_helper_receivers_cannot_shadow_recheck[class_seal]
+FAILED tests/test_puck_native_cache_bindings.py::test_declared_native_creation_survives_reentrant_guard_and_binds_receipt[native_create]
+FAILED tests/test_puck_native_cache_bindings.py::test_no_unbound_names_wrong_objects_or_preexisting_cache[preexisting]
+FAILED tests/test_puck_native_cache_bindings.py::test_exact_native_creation_phase_is_required[module_exec-native_create]
+FAILED tests/test_puck_native_cache_bindings.py::test_cache_object_metadata_and_closed_dispatch_set_cannot_change[sys.modules["native_cache_fixture"]=types.ModuleType("native_cache_fixture")]
+FAILED tests/test_puck_native_cache_bindings.py::test_cache_object_metadata_and_closed_dispatch_set_cannot_change[del sys.modules["native_cache_fixture"]]
+FAILED tests/test_puck_native_cache_bindings.py::test_cache_object_metadata_and_closed_dispatch_set_cannot_change[sys.modules["native_cache_fixture"].__name__="changed"]
+FAILED tests/test_puck_native_cache_bindings.py::test_cache_object_metadata_and_closed_dispatch_set_cannot_change[sys.modules["native_cache_fixture"].new_dispatch=lambda:99]
+FAILED tests/test_puck_native_cache_bindings.py::test_missing_or_undeclared_dispatch_key_refuses_at_creator_close
+FAILED tests/test_puck_runtime_staging.py::test_invalid_source_or_destination_refuses_without_replacing_existing_bytes[persistent]
+FAILED tests/test_puck_cpu_registration.py::test_invalid_roots_and_deadlines_refuse_without_payload_access[kwargs6]
+FAILED tests/test_puck_cpu_namespace.py::test_prepare_exact_mounts_and_private_scratch
+FAILED tests/test_puck_cpu_namespace.py::test_exact_cpu_parent_environment_retains_empty_cuda_value
+FAILED tests/test_puck_cpu_namespace.py::test_exact_seeded_cpu_parent_worker_command_accepts_python_whitespace
+FAILED tests/test_puck_cpu_namespace.py::test_reject_overlapping_host_inputs_and_nonprivate_stage
+FAILED tests/test_puck_cpu_namespace.py::test_reject_preexisting_prepare_input_and_qualify_source_exposure
+FAILED tests/test_puck_cpu_namespace.py::test_identical_cross_manifest_aliases_are_merged_once
+FAILED tests/test_puck_cpu_namespace.py::test_real_two_bwrap_passes_preserve_raw_tmpfs_inode_and_held_custody
+21 failed, 381 passed in 158.34s (0:02:38)

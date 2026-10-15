@@ -1,0 +1,91 @@
+..........F                                                              [100%]
+=================================== FAILURES ===================================
+__ test_native_export_is_bound_before_create_module_guard[module_exec-False] ___
+
+tmp_path = PosixPath('/tmp/palimpsest-delayed-exports-baseline-01/test_native_export_is_bound_be1')
+phase = 'module_exec', success = False
+
+    @pytest.mark.parametrize('phase,success',[('native_create',True),('module_exec',False)])
+    def test_native_export_is_bound_before_create_module_guard(tmp_path,phase,success):
+        import subprocess,sysconfig
+        from test_puck_worker_bootstrap import descriptor
+        def mutate(deps,root):
+            p=upgrade(deps)
+            c=root/'native.c'
+            source=c.read_text().replace('return PyModule_Create(&mod);',
+                'PyObject* m=PyModule_Create(&mod);'
+                'PyObject* child=PyModule_New("fixture_dep.native_child");'
+                'if(!m || !child) return NULL;'
+                'if(PyDict_SetItemString(PyImport_GetModuleDict(),"fixture_dep.native_child",child)<0) return NULL;'
+                'if(PyModule_AddObject(m,"actual_export",child)<0) return NULL;return m;')
+            c.write_text(source)
+            native=next(v for v in deps['modules'] if v['kind']=='extension')
+            subprocess.run(['cc','-shared','-fPIC','-I'+sysconfig.get_paths()['include'],str(c),
+                            '-o',str(root/native['path'])],check=True,capture_output=True,timeout=15)
+            deps['roots'][0]['files']=[descriptor(root/v['path'],v['path']) for v in deps['roots'][0]['files']]
+            p['exports']=[{'name':'fixture_dep.native_child','producer':'fixture_dep._native','phase':phase,
+                          'attributes':['actual_export'],'class_binding':None}]
+        result,_=dependency_fixture(tmp_path,'from fixture_dep import _native\nimport fixture_dep.native_child\nreturn {}',
+                                    native=True,mutate=mutate)
+        if success:
+            assert result.returncode==0,result.stderr
+            assert json.loads(result.stdout)['dependencies']['exported_modules']==[
+                {'name':'fixture_dep.native_child','producer':'fixture_dep._native'}]
+        else:
+            assert result.returncode!=0 and result.stdout==''
+>           assert 'Unregistered module cache entry: fixture_dep.native_child' in result.stderr,result.stderr
+E           AssertionError: Traceback (most recent call last):
+E               File "<string>", line 10, in <module>
+E               File "/tmp/palimpsest-delayed-exports-baseline-01/test_native_export_is_bound_be1/source/scripts/puck_worker_bootstrap.py", line 651, in <module>
+E                 if __name__ == '__main__': main()
+E                                            ^^^^^^
+E               File "/tmp/palimpsest-delayed-exports-baseline-01/test_native_export_is_bound_be1/source/scripts/puck_worker_bootstrap.py", line 642, in main
+E                 with HeldWorkerBootstrap(payload, expected_sha256=expected,
+E               File "/tmp/palimpsest-delayed-exports-baseline-01/test_native_export_is_bound_be1/source/scripts/puck_worker_bootstrap.py", line 445, in __enter__
+E                 from palimpsest.puck_dependency_imports import DependencyImports, HeldDependencyNamespace
+E               File "<frozen importlib._bootstrap>", line 1176, in _find_and_load
+E               File "<frozen importlib._bootstrap>", line 1147, in _find_and_load_unlocked
+E               File "<frozen importlib._bootstrap>", line 690, in _load_unlocked
+E               File "/tmp/palimpsest-delayed-exports-baseline-01/test_native_export_is_bound_be1/source/scripts/puck_worker_bootstrap.py", line 272, in exec_module
+E                 exec(compile(payload, filename, 'exec', dont_inherit=True), module.__dict__)
+E               File "/tmp/palimpsest-delayed-exports-baseline-01/test_native_export_is_bound_be1/source/src/palimpsest/puck_dependency_imports.py", line 10, in <module>
+E                 import importlib.metadata
+E               File "/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/importlib/metadata/__init__.py", line 17, in <module>
+E                 from . import _adapters, _meta
+E               File "/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/importlib/metadata/_adapters.py", line 3, in <module>
+E                 import email.message
+E               File "/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/email/message.py", line 15, in <module>
+E                 from email import utils
+E               File "/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/email/utils.py", line 40, in <module>
+E                 from email.charset import Charset
+E               File "/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/email/charset.py", line 15, in <module>
+E                 import email.quoprimime
+E               File "/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/email/quoprimime.py", line 44, in <module>
+E                 from string import ascii_letters, digits, hexdigits
+E               File "/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/string.py", line 21, in <module>
+E                 import _string
+E               File "<frozen importlib._bootstrap>", line 1176, in _find_and_load
+E               File "<frozen importlib._bootstrap>", line 1138, in _find_and_load_unlocked
+E               File "<frozen importlib._bootstrap>", line 1078, in _find_spec
+E               File "/tmp/palimpsest-delayed-exports-baseline-01/test_native_export_is_bound_be1/source/scripts/puck_worker_bootstrap.py", line 286, in find_spec
+E                 self.owner._import_recheck()
+E               File "/tmp/palimpsest-delayed-exports-baseline-01/test_native_export_is_bound_be1/source/scripts/puck_worker_bootstrap.py", line 522, in _import_recheck
+E                 return self._check(full=self._dependencies is None)
+E                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E               File "/tmp/palimpsest-delayed-exports-baseline-01/test_native_export_is_bound_be1/source/scripts/puck_worker_bootstrap.py", line 570, in _check
+E                 if full: child.recheck()
+E                          ^^^^^^^^^^^^^^^
+E               File "/tmp/palimpsest-delayed-exports-baseline-01/test_native_export_is_bound_be1/source/src/palimpsest/puck_execution_files.py", line 275, in recheck
+E                 self._check_dirs()
+E               File "/tmp/palimpsest-delayed-exports-baseline-01/test_native_export_is_bound_be1/source/src/palimpsest/puck_execution_files.py", line 157, in _check_dirs
+E                 raise RuntimeError('Collection root or ancestor changed while held')
+E             RuntimeError: Collection root or ancestor changed while held
+E             Bootstrap holder close: Collection root or ancestor changed while held
+E             
+E           assert 'Unregistered module cache entry: fixture_dep.native_child' in 'Traceback (most recent call last):\n  File "<string>", line 10, in <module>\n  File "/tmp/palimpsest-delayed-exports-...llection root or ancestor changed while held\nBootstrap holder close: Collection root or ancestor changed while held\n'
+E            +  where 'Traceback (most recent call last):\n  File "<string>", line 10, in <module>\n  File "/tmp/palimpsest-delayed-exports-...llection root or ancestor changed while held\nBootstrap holder close: Collection root or ancestor changed while held\n' = CompletedProcess(args=['/home/utkarsh/Work/shraddha/brain/.worktrees/r0-reproduction/.venv/bin/python', '-I', '-B', '-...lection root or ancestor changed while held\nBootstrap holder close: Collection root or ancestor changed while held\n').stderr
+
+tests/test_puck_dependency_profile.py:247: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_puck_dependency_profile.py::test_native_export_is_bound_before_create_module_guard[module_exec-False]
+1 failed, 10 passed in 11.99s

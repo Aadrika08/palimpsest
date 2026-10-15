@@ -1,0 +1,186 @@
+{
+  "actual04_failed_consumed": true,
+  "actual05_configuration_created": false,
+  "actual05_invoked": false,
+  "all_seven_release_gates_open": true,
+  "authored_publication_observations": {
+    "actual_vendor_imports": false,
+    "auditor_cli_returncode": 0,
+    "authored_scope": "AUTHORED fixture only; no real package acceptance or independent audit",
+    "consumed_output_reentry_refused": true,
+    "prepare_audit": "PASS",
+    "published_export_modules": [
+      {
+        "attributes": [
+          "authored_child"
+        ],
+        "delegate_attributes": [
+          "answer"
+        ],
+        "name": "torch.authored_publication",
+        "phase": "module_exec_publish",
+        "producer": "torch"
+      }
+    ],
+    "qualify_audit": "PASS",
+    "rebound_publication_proof_rejected": true
+  },
+  "authored_stage_cleanup": {
+    "absent": true,
+    "authored_scope": "AUTHORED fixture only; no real package acceptance or independent audit",
+    "owned_stage": "/tmp/palimpsest-puck-cpu-held-authored-b94f97956c38de23b797c956"
+  },
+  "collection_authorized": false,
+  "evidence_index": {
+    "path": "puck-delayed-export-publication-v1/evidence-index.json",
+    "sha256": "b59f26ce8d48cffcb40fd9f7143872f836901ec72b8e4866fc341074e8d3ca31",
+    "size_bytes": 90651
+  },
+  "executable": false,
+  "independent_source_review": "No material findings after exact-innermost-phase delegate-growth correction; source-only review",
+  "installed_runtime_data_changed": false,
+  "kind": "puck-delayed-export-publication-source-report-v1",
+  "native_authorized": false,
+  "qualification_claims": [],
+  "real_profile_changed": false,
+  "runtime_qualified": false,
+  "source_base_commit": "c9adf32ba54854d2edaec792abf8c0c375686814",
+  "source_code_commit": "f537b36e74a4d0d1f69e3f1dc6ef4aec1371a7e5",
+  "source_files": [
+    {
+      "path": "src/palimpsest/puck_dependency_bindings.py",
+      "sha256": "7012888d030917434d1536285bb97fd2de15b5b83e9da87ee1503cda970a7147",
+      "size_bytes": 28299
+    },
+    {
+      "path": "src/palimpsest/puck_dependency_imports.py",
+      "sha256": "e35b941c351971c15f225255170cd45530aa2304943fe2edd461b8d94080943b",
+      "size_bytes": 14868
+    },
+    {
+      "path": "scripts/qualify_puck_cpu_held_runtime.py",
+      "sha256": "644d9ca19607609291dc317f9f572cabb1b2b6eb08a7092806d307bce8779292",
+      "size_bytes": 49117
+    },
+    {
+      "path": "scripts/audit_puck_cpu_held_runtime.py",
+      "sha256": "d5b2cbb934ba5bb5729e89c2014055df430bf93274f851669f7e048b00c45dc8",
+      "size_bytes": 66957
+    },
+    {
+      "path": "tests/test_puck_published_exports.py",
+      "sha256": "fa4c20e159d0df7fde14051ae62e9dea94124c186c8496dfb67db67cbb7e405d",
+      "size_bytes": 9444
+    },
+    {
+      "path": "tests/test_puck_published_export_receipts.py",
+      "sha256": "1ea7cc11e1b71826cae17038eb056740ea2c51403c07c5ed96c82ecd33f8cf04",
+      "size_bytes": 8747
+    },
+    {
+      "path": "tests/test_puck_cpu_held_parent_integration.py",
+      "sha256": "d8db22910cd3017c113e9d9f4f93e5be084b7fe39a010abfbf3ecc2c9af0b9e5",
+      "size_bytes": 18569
+    },
+    {
+      "path": "tests/test_puck_published_export_integration.py",
+      "sha256": "5d0602a1db210dc2486252c57eb18fbaa5c10f05007c26b18d9b66d90a7c4999",
+      "size_bytes": 10761
+    }
+  ],
+  "status": "source verified",
+  "study_authorized": false,
+  "verification": {
+    "affected-bindings-01": {
+      "elapsed_seconds": 158.56672444898868,
+      "normal_return": true,
+      "pytest_summary": "21 failed, 381 passed in 158.34s (0:02:38)",
+      "returncode": 1,
+      "scope": "authored source checks; no new actual allocation"
+    },
+    "baseline-01": {
+      "elapsed_seconds": 12.353251530963462,
+      "normal_return": true,
+      "pytest_summary": "1 failed, 10 passed in 11.99s",
+      "returncode": 1,
+      "scope": "authored source checks; no new actual allocation"
+    },
+    "baseline-negative-02": {
+      "elapsed_seconds": 1.7747055829968303,
+      "normal_return": true,
+      "pytest_summary": "1 passed in 1.60s",
+      "returncode": 0,
+      "scope": "authored source checks; no new actual allocation"
+    },
+    "green-new-01": {
+      "elapsed_seconds": 39.49210730299819,
+      "normal_return": true,
+      "pytest_summary": "71 passed in 39.30s",
+      "returncode": 0,
+      "scope": "authored source checks; no new actual allocation"
+    },
+    "isolated-bindings-03": {
+      "elapsed_seconds": 155.33520962204784,
+      "normal_return": true,
+      "pytest_summary": "263 passed in 154.97s (0:02:34)",
+      "returncode": 0,
+      "scope": "authored source checks; no new actual allocation"
+    },
+    "isolated-persistent-bindings-02": {
+      "elapsed_seconds": 146.0067723140237,
+      "normal_return": true,
+      "pytest_summary": "10 failed, 392 passed in 145.81s (0:02:25)",
+      "returncode": 1,
+      "scope": "authored source checks; no new actual allocation"
+    },
+    "isolated-persistent-parent-01": {
+      "elapsed_seconds": 115.83709467400331,
+      "normal_return": true,
+      "pytest_summary": "387 passed in 115.50s (0:01:55)",
+      "returncode": 0,
+      "scope": "authored source checks; no new actual allocation"
+    },
+    "isolated-pilot-01": {
+      "elapsed_seconds": 0.01708955504000187,
+      "normal_return": true,
+      "pytest_summary": null,
+      "returncode": 1,
+      "scope": "authored source checks; no new actual allocation"
+    },
+    "isolated-pilot-02": {
+      "elapsed_seconds": 4.240610203007236,
+      "normal_return": true,
+      "pytest_summary": "3 passed, 26 deselected in 3.98s",
+      "returncode": 0,
+      "scope": "authored source checks; no new actual allocation"
+    },
+    "red-nested-growth-01": {
+      "elapsed_seconds": 1.820475690998137,
+      "normal_return": true,
+      "pytest_summary": "1 failed in 1.62s",
+      "returncode": 1,
+      "scope": "authored source checks; no new actual allocation"
+    },
+    "red-nested-growth-02": {
+      "elapsed_seconds": 3.312430223042611,
+      "normal_return": true,
+      "pytest_summary": "2 failed in 3.14s",
+      "returncode": 1,
+      "scope": "authored source checks; no new actual allocation"
+    },
+    "red-publication-01": {
+      "elapsed_seconds": 32.58067737001693,
+      "normal_return": true,
+      "pytest_summary": "2 failed, 25 passed in 32.34s",
+      "returncode": 1,
+      "scope": "authored source checks; no new actual allocation"
+    },
+    "red-receipts-01": {
+      "elapsed_seconds": 1.2368267989950255,
+      "normal_return": true,
+      "pytest_summary": "38 failed, 6 passed in 1.06s",
+      "returncode": 1,
+      "scope": "authored source checks; no new actual allocation"
+    }
+  }
+}
