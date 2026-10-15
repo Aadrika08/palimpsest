@@ -50,14 +50,28 @@ retain conditional/generated assumptions and visible publication/closure details
 These labels do not qualify the installed binary. Preserve the tested one-row
 candidate and the other 32 declarations; do not restart this sweep.
 
-**The next bounded work unit is one fixed three-module metadata projection.**
-Implement the [reviewed prospective observation](https://github.com/Aadrika08/palimpsest/blob/e3748c0a48faebfe7cbb9178fc5fae85b3a38118/docs/plans/puck-cpu-distributed-roster-observation-01-proposal.md)
-through the existing ordinary CPU characterization route. After the same four
-imports, capture raw terminal dispatch/identity metadata for only the already
-present distributed children, with finite limits and focused authored checks.
-Do not add helper imports, execute vendor members or read model/scene/catalog
-inputs. Its source exit is not installed-runtime evidence or actual execution
-approval; exact new controls must still be frozen and independently reviewed.
+**The worker component is verified.** [PR157](https://github.com/Aadrika08/palimpsest/pull/157)
+adds the fixed request-v3/result-v4 projection with 142 affected authored checks
+and two exact pinned CPU-interpreter namespace checks. It captures only the three
+already-present children after four imports and retains source-roster differences
+without accepting a profile. Independent review finds no material issue within
+that new-reader scope; the legacy cache inspector is unchanged.
+
+**The next bounded work unit is the complete observation execution route.**
+Integrate a closed new CPU parent epoch, finite ordinary external observer and
+separately pinned independent terminal/identity/full-byte auditor. The current
+parent still emits request-v2; the earlier terminal evidence is not a reusable
+observer executable. Use the [read-only integration map](https://github.com/Aadrika08/palimpsest/blob/d71c206d327f4c8a1c1d844db00aec961b4bd95e/docs/reports/puck-cpu-distributed-roster-worker-v1/integration-map.json)
+as the finite starting point, preserving observation02 and every earlier outcome.
+
+The source exit is an authored parent→worker→observer→independent-auditor proof
+with exact source/proposal/observation02 bindings, complete projection semantics,
+exclusive output, tampering/reentry refusal, old bytes and normal cleanup. Keep
+the reviewed limits and namespace contract. Add no new metadata features or
+general observer framework. That source exit still does not admit a real command:
+exact actual controls must then be frozen and independently reviewed, with fresh
+pin/byte/absence/resource admission before one observation. No model, scene or
+protected input is opened by this source route.
 
 The source proposals contain 11/69/29 names, but private build flags remain
 unproved. Measure the terminal rosters once under separately reviewed controls,
@@ -70,8 +84,12 @@ publication; those remain separate source/held-runtime obligations.
 
 - [x] Finish the 35-row creation/closure source map and independent review.
   This closes the finite source sweep only; the candidate remains unchanged.
-- [ ] Implement/review the fixed three-module projection and separately freeze,
-  admit, run once and independently audit its actual ordinary metadata observation.
+- [x] Implement/review the fixed worker projection, including legacy compatibility,
+  intended hook-regression REDs and exact pinned-interpreter authored namespace proof.
+- [ ] Complete the closed new parent, ordinary observer, independent auditor and
+  authored end-to-end source proof. No executable observation controls exist yet.
+- [ ] Separately freeze/review, freshly admit, invoke once and independently audit
+  the actual ordinary metadata observation. Worker fixtures do not satisfy this exit.
 - [ ] Review the complete explicit prospective profile/admission correction from
   the accepted roster evidence, with focused authored checks and independent review.
 - [ ] Freeze and independently review actual05 only after that profile is ready.
@@ -107,7 +125,36 @@ source-only hardening is not a substitute for reaching the episode deliverable.
 A failed actual stage retains its outcome and consumed allocation. No study or
 numerical invocation follows from a source fixture alone.
 
-## Current source result: export preflight complete
+## Current source result: distributed worker verified
+
+[PR157](https://github.com/Aadrika08/palimpsest/pull/157) retains the
+[worker source/evidence and integration gaps](https://github.com/Aadrika08/palimpsest/blob/d71c206d327f4c8a1c1d844db00aec961b4bd95e/docs/reports/puck-cpu-distributed-roster-worker-v1.md).
+Source `f333644` adds only the fixed request-v3/result-v4 metadata projection and
+its authored tests. New controls reject arbitrary targets, bad sets and malformed
+metadata before unsafe access; complete roster differences remain data with
+profile/runtime authority false. Root/child/loader/spec and direct references are
+rechecked after independent cache/maps capture. The hook-avoidance claim is scoped
+to the new projection, not the unchanged whole ordinary cache inspector.
+
+142 affected checks pass in 11.51s and two exact pinned CPU namespace checks pass
+in 0.39s, using fake packages and immutable historical-worker refusal. All 11 test
+batches are retained: initial 48-failure RED, additional intended name/dictionary/
+path hook REDs, corrections and one broader-run fixture-layout failure. Its fake
+site under /tmp collided with the declared scratch symlink; a persistent test root
+fixes the layout without a production namespace change. All 97 artifacts/692,265B,
+including 11 empty logs, match originals and Git-HEAD bytes. Independent source
+review finds no material issue. Full repository tests and CI were not run.
+
+The current CPU parent still emits request-v2. A closed new parent epoch, ordinary
+observer executable, independent outcome/byte auditor and complete authored route
+remain required. Six known new observation/held05 controls/output paths are absent
+in the data-owning checkout. No actual new observation, installed vendor import,
+model/scene/catalog read, operator, renderer, episode or study ran. Package/profile
+bytes were not revised or newly accepted. Qualifications01–04 remain failed and
+consumed; held05 and every release gate stay open. The actual portable episode
+bundle remains checkpoint A's product exit.
+
+## Completed source checkpoint: export preflight
 
 [PR156](https://github.com/Aadrika08/palimpsest/pull/156) now retains the
 [completed 35-row map](https://github.com/Aadrika08/palimpsest/blob/e3748c0a48faebfe7cbb9178fc5fae85b3a38118/docs/reports/puck-cpu-export-phase-preflight-v1.md).
@@ -520,21 +567,24 @@ substitute for numerical results, capability, actual browser use or human accept
 | 5 | Integrate and experience the product. | One candidate supports the lab and all six artworks; actual browser, mapping, replay, export, interruption and endurance checks pass. |
 | 6 | Accept and deliver that candidate. | Artistic/operator sessions, final verification and all seven gate records are complete; the installation and evidence package are reproducible. |
 
-**Current next action:** implement and review the fixed three-module ordinary
-metadata projection; the 35-row source preflight is finished.
+**Current next action:** complete the closed parent/ordinary observer/independent
+auditor integration for the verified worker; keep the 35-row source sweep closed.
 
-1. Reuse the existing CPU characterization parent/worker and implement only the
-   finite raw terminal projection from the reviewed proposal. Pin the three
-   source-derived comparison sets, preserve disagreements, and add focused
-   authored worker/parent/auditor checks. Metadata capture adds no vendor calls
-   beyond the frozen ordinary import path. Do not reopen the completed sweep.
-2. Freeze exact new source/input/control bytes for one separately numbered
-   observation. Preserve accepted observation02 and every prior allocation;
-   independently review the configuration/command and refresh pin/byte/absence/
-   resource admission before invoking once. Require complete stable snapshots,
-   intact installed bytes and an independent terminal/identity/cleanup audit.
-   Attribute observed differences before any candidate acceptance; failure grants
-   no implicit retry. This supplies roster data, not a held-runtime pass.
+1. Use the retained integration map to add the new parent epoch and derive the
+   three expected sets from pinned source proposals. Bind observation02's exact
+   configuration/result/report/audit/index/terminal evidence and historical source
+   capsule. Preserve current fixed versions, environment, resource bounds and
+   namespace. Add the finite ordinary observer and separately pinned independent
+   auditor; do not relax the held observer or import the producer to validate it.
+   Prove the complete authored route, projection/comparison semantics, reentry,
+   semantic tampering, input/history preservation and cleanup; independently review.
+2. Only after that complete source exit, freeze exact new inputs/control bytes and
+   the actual command. Independently review and refresh pins/current bytes/absence/
+   resources before one ordinary observation. Require complete stable snapshots,
+   intact package bytes and independent terminal/identity/full-byte/cleanup audit.
+   Attribute measured differences before accepting a candidate; failure grants no
+   implicit retry. This supplies terminal roster data, not a held-runtime pass.
+
 3. Review the explicit broader prospective profile and closed independent
    parent/auditor admission, preserving the one-row candidate as history and
    the other 32 native-create declarations. Only after that source exit, deploy

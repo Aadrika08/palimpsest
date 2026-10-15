@@ -32,18 +32,29 @@ assertion fix and one read-only CMake retrieval timeout remain preserved. The
 14-row core and 18-row standard source lanes and prospective proposal have
 independent review within their stated scope.
 
+[PR157](https://github.com/Aadrika08/palimpsest/pull/157) now supplies the
+[fixed worker projection and source proof](https://github.com/Aadrika08/palimpsest/blob/d71c206d327f4c8a1c1d844db00aec961b4bd95e/docs/reports/puck-cpu-distributed-roster-worker-v1.md):
+request-v3/result-v4 captures the three already-present children after fixed four
+imports, with bounded raw metadata, actual dispatch references, terminal rechecks
+and exact comparison sets. Complete source differences remain data and all runtime/
+profile authority stays false. The new reader avoids hooks within its own scope;
+legacy cache inspection is unchanged. 142 affected authored checks pass in 11.51s,
+plus two exact pinned CPU namespace checks in 0.39s with fake packages and historical
+worker refusal. All 11 test batches, intended REDs and the corrected /tmp fixture
+layout are preserved; 97 artifacts/692,265B including 11 empty logs match originals
+and committed bytes. Independent review finds no material issue in the new reader.
+
 The [next bounded work unit](plans/simulation-release-execution-goal.md#clear-execution-target-after-disk-clearance)
-is the fixed raw terminal metadata projection for only the three already-present
-distributed children through the existing ordinary four-import route. The
-[reviewed proposal](https://github.com/Aadrika08/palimpsest/blob/e3748c0a48faebfe7cbb9178fc5fae85b3a38118/docs/plans/puck-cpu-distributed-roster-observation-01-proposal.md)
-requires source checks and separately frozen/reviewed controls before one actual
-observation. Its 11/69/29 source roster proposals are not measured data or proof of
-private build flags; retain discrepancies for source attribution. Terminal roster
-measurement is not intermediate-publication or creator-close proof. Do not reopen
-the completed 35-row sweep or spend actual05 as a scout. No production source,
-profile, actual configuration or data changed in this source-only slice; no vendor
-import, operator, renderer, protected input, episode or study ran. 01–04 remain
-failed/consumed; six actual05 paths remain absent. All 33 statuses, seven gates and
+is the closed new CPU parent epoch, finite ordinary observer, separately pinned
+independent terminal/identity/full-byte auditor and complete authored source route.
+The current parent still emits request-v2; the earlier terminal record is not a
+reusable observer executable. The source integration map supplies the finite
+starting point; source proof and separately frozen/reviewed controls precede one
+actual observation. Terminal roster evidence is not intermediate-publication or
+creator-close proof. Keep the 35-row sweep closed. Package/profile bytes and real
+observation controls are unchanged; no actual new observation, installed vendor
+import, protected input, episode or study ran. 01–04 remain failed/consumed; held05
+and all seven release gates remain open. All 33 statuses/gate definitions and
 preserved history bytes stay unchanged; the audited episode bundle remains the
 next product exit.
 
