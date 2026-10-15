@@ -61,11 +61,13 @@ CPU runtime compatibility, staging RAM or custody.
   audited CPU package metadata and a reviewed four-import worker source route.
   The complete executable configuration and actual installed-stack qualification
   remain unfinished. Metadata sizes are estimates, not installed-payload proof.
-- Memory replay/source/pair custody exists, but durable condition/case integration
-  remains unfinished. No real successful full-model qualification admission exists.
-  Authored orchestration fixtures must remain labelled as such. The historical
-  seed400 qualification also needs a separately reviewed binding to generated
-  family-case seeds; amendment02 alone does not establish family-use admission.
+- [Draft PR #139](https://github.com/Aadrika08/palimpsest/pull/139) adds memory
+  condition sealing with authored tmpfs evidence. Project Btrfs fixtures fail in
+  the unchanged source producer before reaching the new sealer; resolve held-FD
+  directory enumeration before closing milestone1. Its [source report](https://github.com/Aadrika08/palimpsest/blob/research/memory-condition-seal-v1/docs/reports/memory-condition-seal-v1-source.md)
+  preserves both outcomes. Actual qualification, case closure and a reviewed
+  seed400-to-family-case proof binding remain unfinished; amendment02 alone does
+  not establish family-use admission.
 - The [memory ordering audit](../reports/memory-condition-case-close-gap-audit.md)
   finds oracle before own in 42/48 families (126/144 cases), conflicting with
   existing prior-own and condition-close requirements. No resolution is selected.
