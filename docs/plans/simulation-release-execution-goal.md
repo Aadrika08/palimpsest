@@ -29,21 +29,26 @@ a successful qualification receipt waits for that actual proof. Never synthesize
 a passing receipt to make the implementation appear complete. Independent authored
 source fixtures may proceed while actual qualification is pending.
 
-**Immediate implementation target: the finite held-import profile and authored
-native compatibility required by the puck worker.** Use PR #133's audited
-observations to bind exported objects, module replacement/reclassification and
-class identities to registered producer source and import phases. Unknown cache
-entries must remain denied. Preserve the exact-file-FD native contract; prove any
-explicit origin-relative alternative with authored libraries and state its distinct
-before/after/mapped-image guarantees. Review the exact supported configuration
-before a separate held-runtime qualification.
+**Next implementation/execution target: freeze and review the exact actual held-runtime
+qualification configuration.** PR #134 connects finite producer exports, module
+replacement/reclassification, class/original/delegate identities and explicit native
+origins to the real worker path. Its reviewed findings are regression-fixed on
+`a57cb0d`;149 authored affected checks pass61.66s. This completes that source unit,
+not actual installed-stack compatibility or runtime qualification.
 
-**Exit from this implementation unit:** the complete worker path uses those
-bindings, positive and deliberate mutation/unknown-entry fixtures pass, native
-origin behavior is measured with authored libraries, and the reviewed change is
-committed on a branch. A schema, parser or ordinary-import snapshot alone does
-not satisfy this exit. Then complete the parent/worker collection route; add
-components only when a named remaining requirement needs them.
+The next qualification must use the authenticated worker and held finder, with
+exact source/interpreter/dependency/image/environment/input identities, a fixed
+qualification entry, bounded resource/process/terminal behavior and independent
+prospective review. The production entry is still preflight-only: its snapshot
+alone cannot demonstrate numerical imports. The 52-row candidate has no admitted
+roots/file hashes; native-create availability and actual directory-origin behavior
+remain unqualified. Do not rerun either consumed ordinary-import observation.
+
+**Exit from the next unit:** one separately admitted bounded held-runtime invocation
+has a durable terminal result and independent outcome audit. A pass establishes
+only the reviewed import/runtime scope. A failure preserves its evidence and stops
+that allocation; no automatic retry follows. Then complete the actual parent/worker
+collection route. Add components only for a named remaining route requirement.
 
 Development observation02 passed ordinary NumPy 2.2.5, Torch 2.9.0+cu128 and MuJoCo
 3.3.6 imports with the explicit EGL environment. Its 1,131-entry cache, 52 numerical
@@ -98,7 +103,7 @@ measurement: 99,738,644,480 bytes at 01:37:44 UTC.
 
 | Order | Work | Exit before advancing |
 | --- | --- | --- |
-| 1 | Implement the finite held-import profile and native compatibility route from the audited observation02 data. | Authored tests bind all declared exported objects, module replacements/reclassifications and producer/class identities; unknown entries remain denied. Explicit native origin behavior passes authored libraries without silently changing the old file-FD contract. Freeze/review the exact source/runtime/dependency/environment profile before separate held-runtime qualification; ordinary-import snapshots grant none. |
+| 1 | Freeze/review the actual held-runtime qualification using PR #134's integrated finite profile and native contract. | Exact source/interpreter/dependency/image/environment configuration and bounded fixed entry are prospectively reviewed; one admitted invocation and independent outcome audit produce a scoped pass or preserved terminal failure. Native phase hypotheses and the 52-row static candidate are not qualifications. Observations01/02 remain consumed. |
 | 2 | Connect declared inventory, reservation/scene seals, model custody and the authenticated worker to natural-episode recording close. | One executable parent/worker route covers exact environment/process identity, progress and escaped descendants, one-owner lease, storage and every fixed clock bucket. Fault checks and independent review pass; the complete source/runtime/input allocation is admitted before actual collection. |
 | 3 | Finish memory replay-to-condition/case close, pruning and family admission. | After explicit amendment-02 approval, invoke the registered replay once and independently audit it. A pass precedes complete nine-condition/case-close admission and the full study. Independent source work can proceed while approval is pending. |
 | 4 | Execute separately admitted memory and puck studies; resolve the next MaleCNS study prospectively. | Complete valid development and separately admitted held-out evidence meets the unchanged scientific/capability boundaries. A failed stage stops its lane with evidence and a concrete prospective decision. |
@@ -117,13 +122,13 @@ These observations grant no owner, collection, held runtime, transient/anonymous
 JIT native closure or release qualification. Sampled RSS and process-group cleanup
 are operational controls, not hard memory or escaped-descendant proof.
 
-**Why this unit comes first:** the held worker is still preflight-only. The
-finite observation identifies 52 exceptional Torch cache rows, including spec-less
-file-backed native children and 12 module subclasses. The loader does not yet bind
-these replacement/reclassification/export contracts. Its file-FD native route also
-fails the authored origin-relative library fixture. Resolve these concrete gaps
-before actual held qualification or collection. Reuse PRs #128/#130/#131's
-inventory, dependency custody and recording close in the complete route.
+**Why this unit comes first:** the worker now has source support for the observed
+export/replacement/class patterns, but the actual held NumPy/Torch/MuJoCo configuration
+has not used it. The static candidate and authored glibc2.44 fixtures cannot prove
+that the installed stack meets the phase, namespace, lease, image and timing
+contracts. Establish that scoped result before actual collection. Reuse PRs
+#128/#130/#131's inventory, dependency custody and recording close in the complete
+route; the production worker entry remains preflight-only.
 
 **Memory source work remains available:** implement durable condition sealing
 that invokes existing cell replay internally and persists a registration-bound
@@ -495,22 +500,24 @@ remain required. All seven simulation gates remain open.
 
 ## First action when pursuing this goal
 
-Start with the finite held-import profile, explicit export/module/class phase
-bindings and authored native origin-relative handling described above. PR #133
-now supplies independently audited ordinary-import data; it grants no actual held
-runtime or collection. Observations01/02 are consumed. Freeze/review the separate
-supported held-runtime qualification before execution. Continue the **puck durable
-owner/stage launcher** from PR #121's independently
-audited original-bundle result, PR #120's descriptor-held execution context,
-and PR #122's reviewed native publication and fixed-clock integration. Use
-PR #128's declared repository/retained-root and semantic/reference/Markdown
-assembly, PR #129's executable stdlib worker preflight and PR #130's registered
-dependency/native import source path. Complete actual runtime admission and bind source/runtime identities,
-exact invocation,
-reservation, registry/scene/model custody, supervision and terminal publication
-into a working path. Actual collection remains unauthorized until the complete
-execution admission passes. The catalog-access amendment choice remains pending;
-source work may continue without opening real catalogs or retained roots.
+Freeze a separate actual held-runtime qualification from PR #134's integrated
+profile source and PR #133's independently audited ordinary-import data. Register
+exact source/interpreter/dependency roots/file hashes, persistent-image scope,
+environment, fixed entry and allocation; review before a single admitted invocation
+and independent outcome audit. Keep the candidate's native-create phase assumption
+and directory-origin trust window explicit. The existing entry is still stdlib
+preflight-only; wire the fixed qualification entry through the authenticated route
+rather than treating its snapshot as numerical compatibility. Observations01/02
+remain consumed; no ordinary-characterizer rerun follows.
+
+After scoped runtime admission, complete the **puck durable owner/stage launcher**
+using PRs #120–#131: inventory/reservation/scene and model custody, exact invocation,
+worker dispatch, independent process identity/progress/escaped descendants, shared
+lease, storage/fixed clocks and durable owner/stage terminal records. Collection
+remains unauthorized until complete execution admission. The catalog-access
+amendment is pending; independent source work may proceed without actual catalogs
+or retained study roots. A runtime failure stops that allocation with evidence;
+source work can continue without silently retrying it.
 
 Memory amendment 02 in PR #119 is ready for its separately requested explicit
 approval. After approval, perform exactly one invocation and independently audit
@@ -644,3 +651,25 @@ and authored native compatibility, then separately admit the held configuration.
 Memory condition and case close remain required; approval/qualification descriptor
 is pending. All seven gates and three prospective decisions stay open; default
 pytest retains ten FastAPI/httpx collection errors1.78s, no full-suite pass.
+
+
+[Draft PR #134](https://github.com/Aadrika08/palimpsest/pull/134), initially published
+at `475dff4` with production source `a57cb0d`, integrates a strict finite v2 import
+profile into the authentic worker. Forty-two exported cache objects and ten
+physical module transitions cover all52 observed exceptional rows; twelve class
+bindings and eleven numerical native-origin declarations remain a non-executable
+candidate. Authored fresh workers and glibc2.44 C libraries prove source boundaries
+and explicit `$ORIGIN`/`$ORIGIN/../lib` behavior while retaining strict v1 defaults.
+Independent review of601ee9e found3 Important defects (original metadata, delegate
+references, instance callback shadows); root reproduced six REDs6.85s, fixed them
+in one pass and verified149 affected checks61.66s. No second independent review or
+final-source GO is claimed. The reviewer's sequential focused49 checks38.09s and
+earlier contaminated48/one held-ancestor-refusal37.62s are retained. Default pytest
+still stops at ten FastAPI/httpx collection errors1.83s. The
+[source report](https://github.com/Aadrika08/palimpsest/blob/research/puck-v3-held-import-profile/docs/reports/puck-v3-held-import-profile-source.md)
+and [review rulings](https://github.com/Aadrika08/palimpsest/blob/research/puck-v3-held-import-profile/docs/reports/puck-v3-held-import-profile-review.md)
+keep trusted initialization, captured direct delegates, inherited scalar-metadata
+limits and native race/detection boundaries explicit. No installed-stack refresh,
+held runtime, model, task physics, catalog/retained scan, collection/fitting or study
+ran. Next freeze/review actual held-runtime qualification; all seven release gates
+and three prospective decisions remain open. Main remains unchanged.
