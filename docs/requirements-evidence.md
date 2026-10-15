@@ -13,8 +13,20 @@ The active goal is one reproducible local simulation release: qualify the actual
 execution routes, complete valid research/capability gates, integrate the lab and
 all six artworks, record artistic/operator acceptance and deliver the runbook.
 Disk clearance permits fresh admission checks; CI and physical rover remain outside.
-The next source goal is the measured native filesystem identity contract,
-followed by a complete separately reviewed runtime proposal; no automatic retry follows.
+The next deliverable is a complete resource-feasible runtime configuration proposal,
+using the reviewed explicit tmpfs dependency identity policy; no automatic retry follows.
+
+[Draft PR #137](https://github.com/Aadrika08/palimpsest/pull/137) adds explicit
+dependency-v3 tmpfs-only all-leaf identity admission, full census/read leases and
+authenticated helper source. Legacy schemas and raw native map/origin checks stay
+unchanged. Independent source review found no concrete defect;40 focused authored
+checks pass14.22s. The broader slice has191passes/1/tmp ancestor-change refusal
+36.90s; the same native positive passes in isolation. The
+[non-executable resource proposal](https://github.com/Aadrika08/palimpsest/blob/research/puck-v3-tmpfs-native-identity/docs/plans/puck-v3-tmpfs-native-staging-proposal.json)
+shows the original8.17GB namespace exceeds each available8.01GB tmpfs before
+reserves. CPU-only footprint, complete stdlib/external-library lookup, stable
+staging and exact admission remain open. No installed stack, actual allocation,
+collection, study or browser/human session ran. All33 statuses remain unchanged.
 
 [Draft PR #136](https://github.com/Aadrika08/palimpsest/pull/136) adds an explicit
 versioned finite expected-missing-import source policy. Independent whole-branch

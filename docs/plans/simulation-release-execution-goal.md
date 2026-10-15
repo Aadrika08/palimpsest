@@ -13,31 +13,45 @@ all seven remain open. CI and physical fabrication are outside this goal.
 
 ### Immediate milestone and stopping rule
 
-**Next goal: establish a correct native mapped-object identity contract on the
-actual local filesystem before another held-runtime allocation.**
-[Draft PR #136](https://github.com/Aadrika08/palimpsest/pull/136) implements the
-finite expected-missing-import source policy; independent review found no concrete
-source defect and90 new/legacy checks pass20.27s. Its two-name proposal is
-non-executable. Actual runtime compatibility remains unproved.
+**Next goal: produce a complete numerical-runtime configuration that fits this
+machine and preserves correct native-file identity, then qualify that exact
+configuration before collection.** Disk cleanup removed the disk-capacity blocker;
+it did not establish runtime compatibility or enough staging RAM.
 
-Authored Btrfs native fixtures exposed a second gap: fstat/pathstat report a
-different device from proc maps for the same measured inode. The owned-storage
-affected run has288passes/5native failures94.14s. Tmpfs's corresponding tiny
-authored probe matches. Own map_files following stat is EPERM. Existing native
-checks were left intact. The [next source deliverable](https://github.com/Aadrika08/palimpsest/blob/research/puck-v3-expected-missing-imports/docs/reports/puck-v3-native-filesystem-identity-next.md)
-requires an explicit identity/observation contract, meaningful cross-filesystem/
-object/permission/failure tests and independent review. If this platform cannot
-provide the proof, prepare a concrete supported configuration with full resource/
-custody costs for review; do not silently replace identity with pathname equality.
+The source prerequisite is now implemented in
+[draft PR #137](https://github.com/Aadrika08/palimpsest/pull/137): explicit dependency
+v3 admits every dependency leaf only on tmpfs, under full census/read leases,
+without changing raw device/inode map checks. Independent review found no concrete
+source defect;40 focused authored checks pass14.22s. The broader affected slice
+has191passes/1ancestor-change refusal36.90s, with the same native positive passing
+in isolation. This proves a narrow source policy, not the installed runtime.
+PR136's reviewed finite expected-missing-import policy remains a prerequisite.
 
-Preparation01 and qualification01 remain consumed. A later actual allocation
-requires its own numbered prospective decision, exact source/capsule/interpreter/
-dependency/environment/bounds admission and independent outcome audit. No automatic
-retry, privilege change, ordinary observation refresh or collection follows.
+The [staging proposal](https://github.com/Aadrika08/palimpsest/blob/research/puck-v3-tmpfs-native-identity/docs/plans/puck-v3-tmpfs-native-staging-proposal.json)
+is explicitly non-executable. The original8,172,376,285-byte CUDA dependency set
+exceeds each available8,011,890,688-byte tmpfs before reserves. The next source/
+design task is to assess an exact CPU-only candidate's wheel metadata and expanded
+footprint, complete interpreter/stdlib and external-library lookup paths, and
+resolve a stable staging location with the existing ancestor guard. CPU variants
+remain proposed, uninstalled and unqualified. Do not silently replace the frozen
+CUDA configuration or weaken identity/custody checks to make it pass.
 
-After a valid scoped runtime result: complete collection, valid studies and
-capability gates, the integrated lab and all six artworks, artistic/operator
-acceptance, then reproducible delivery. All seven release gates remain open.
+**Milestone exit:** a resource-feasible, fully specified configuration proposal,
+including source/capsule/interpreter/dependencies/environment, storage/RAM/FD/
+metadata/process/clock bounds, declared trusted baseline and limitations. An exact
+independent configuration review and a separately numbered prospective decision
+must precede any actual allocation; an independent outcome audit follows it.
+If the proposed configuration cannot fit or preserve custody, record that concrete
+failure and revise the prospective design before execution.
+
+Preparation01, qualification01 and observations01/02 remain consumed. No automatic
+retry, privilege/mount change, ordinary observation refresh, collection or study
+follows. Pending memory/catalog/navigation decisions are unchanged.
+
+After a valid scoped runtime result, finish natural-episode collection and durable
+memory condition/case close; complete valid studies and controller capability
+gates; integrate the lab and all six artworks; conduct artistic/operator sessions;
+then deliver one reproducible candidate. All seven gates below remain open.
 
 This continues the existing [completion goal](simulation-completion-next-goal.md).
 It does not replace frozen protocols or lower their acceptance thresholds.
@@ -76,7 +90,9 @@ poisoned the bootstrap; no completed three-import receipt exists. Torch/MuJoCo
 were not reached by the sequential entry. Raw failures and first cause remain
 retained. Independent final outcome audit accepted the preserved terminal failure, verified the pin chain and unchanged preparation, and found no evidence defect within scope.
 
-The finite expected-missing-import source contract is now reviewed in draftPR136; next source work is the native filesystem identity contract above. No automatic
+The finite expected-missing-import source contract is reviewed in draftPR136;
+PR137 now adds reviewed tmpfs-only dependency identity. The next deliverable is the
+complete resource-feasible configuration proposal above. No automatic
 actual retry, ordinary observation refresh, collection, fitting, physics, catalog
 access, navigation attempt3 or physical rover follows. All authority remains false.
 
@@ -133,7 +149,7 @@ measurement: 99,738,644,480 bytes at 01:37:44 UTC.
 
 | Order | Work | Exit before advancing |
 | --- | --- | --- |
-| 1 | Resolve the measured native filesystem identity gap; retain PR136's reviewed finite missing-import policy and prepare a complete actual configuration proposal. | Correct mapped-object identity and refusal semantics have authored cross-filesystem/object/permission proof and independent source review; any later numbered actual allocation is prospectively admitted and independently audited. Preparation01/qualification01 and observations01/02 remain consumed. No automatic retry or compatibility claim follows. |
+| 1 | Use PR137's reviewed tmpfs dependency policy and PR136's finite missing-import policy to prepare a complete, resource-feasible runtime configuration proposal. | Exact CPU-candidate footprint, interpreter/stdlib/external-library paths, stable staging, custody and whole-stage resource/process/clock admission are specified and independently reviewed. Only a separately numbered prospective decision admits actual execution; its outcome is independently audited. Original CUDA staging is currently infeasible. Consumed stages stay consumed. |
 | 2 | Connect declared inventory, reservation/scene seals, model custody and the authenticated worker to natural-episode recording close. | One executable parent/worker route covers exact environment/process identity, progress and escaped descendants, one-owner lease, storage and every fixed clock bucket. Fault checks and independent review pass; the complete source/runtime/input allocation is admitted before actual collection. |
 | 3 | Finish memory replay-to-condition/case close, pruning and family admission. | After explicit amendment-02 approval, invoke the registered replay once and independently audit it. A pass precedes complete nine-condition/case-close admission and the full study. Independent source work can proceed while approval is pending. |
 | 4 | Execute separately admitted memory and puck studies; resolve the next MaleCNS study prospectively. | Complete valid development and separately admitted held-out evidence meets the unchanged scientific/capability boundaries. A failed stage stops its lane with evidence and a concrete prospective decision. |
