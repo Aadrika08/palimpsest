@@ -43,8 +43,9 @@ fixtures. PR149 adds reviewed PREPARE controls, the independent standard-library
 auditor and external observer. Actual preparation01 and its audit pass; the
 subsequent independently reviewed qualifications01–03 are each invoked once
 and fail.03 corrects the observed optional import and reaches an unresolved
-native producer attribute. Expose the exact failure context before proposing a
-binding correction; no04 exists. Preserve01–03 without retries. Any prospective
+native producer attribute. The closed04 diagnostic source transition and exact
+actual controls are now reviewed and committed;04 remains uninvoked. Preserve
+01–03 without retries. Any prospective
 actual amendment needs exact source/data binding, independent review, current
 staged-byte checks and fresh admission. Passing held qualification and its
 independent audit remain required before the episode. Resolve the episode/catalog
@@ -81,9 +82,11 @@ its dated PASS does not accept bytes after03 or establish qualification. All35
 actual evidence copies match originals under independent review.01–03 remain
 failed/consumed. The source checkpoint below now supplies bounded failure
 context and preserved cause/refusal. It cannot recover03's unlogged row. Review
-the exact diagnostic source transition before a future invocation and require
-observed evidence before a profile/phase correction. No04 configuration or
-invocation exists. All33 statuses and all seven open gates remain unchanged; the recorded/replayed/exported episode bundle remains the next exit.
+the exact diagnostic source transition before invocation and require observed
+evidence before a profile/phase correction. That04 transition and exact frozen
+controls are now independently reviewed; actual04 remains uninvoked. All33
+statuses and all seven open gates remain unchanged; the recorded/replayed/
+exported episode bundle remains the next exit.
 
 [Draft PR #153](https://github.com/Aadrika08/palimpsest/pull/153) retains the
 [binding-diagnostic source report](https://github.com/Aadrika08/palimpsest/blob/911efa32fc5777167a6c0cb0b4dd3e8d45730608/docs/reports/puck-cpu-binding-diagnostics-v1.md).
@@ -91,12 +94,29 @@ All202 affected checks pass in113.47s; three new regressions show RED before GRE
 Both completion phases identify the second nested failure without hooks, preserve
 its RuntimeError cause and leave the third row untouched. Fresh authored worker
 refusal and a separate retained2,420B chained trace are source evidence, not Torch
-observations or actual qualification. All39 indexed copies match. The execution
-worktree and frozen03 controls remain unchanged; current source-epoch contracts
-still refuse changed bindings. Next is a closed reviewed diagnostic source epoch,
-preserving historical/current capsules and every data/policy/limit contract before
-any separately numbered actual invocation. No04 exists. No full suite or new
-runtime, episode, scientific, artwork or human gate is accepted.
+observations or actual qualification. All39 indexed copies match. This historical
+checkpoint supplies the diagnostic source; the reviewed04 transition below
+admits it while retaining frozen03 controls and all prior evidence. No full
+suite or new runtime, episode, scientific, artwork or human gate is accepted.
+
+[Draft PR #154](https://github.com/Aadrika08/palimpsest/pull/154) retains the
+[closed04 source proof](https://github.com/Aadrika08/palimpsest/blob/0211912d978c3d4ae5a45021e721bdff2e0b7744/docs/reports/puck-cpu-held-qualification-amendment-04.md).
+All 246 affected checks pass in 86.90s, with independent source review and 162
+exact evidence copies. A separate pre04 data-only census passes 27,255 files /
+1,318,494,346 B in 15.542632212 s at 16:06:25 UTC. It does not reaccept preparation,
+accept failed01–03, qualify the held runtime or supply post04 byte acceptance.
+The closed transition preserves v1–v3, historical/current capsule identities,
+all data, acceptance anchors, exact03 policy, versions, limits and refusal.
+
+The04 sources are deployed; exact actual04 configuration and independently
+[reviewed frozen controls](https://github.com/Aadrika08/palimpsest/blob/de2d4ca49f4d784ea1128824a19ea6d8d912e853/docs/plans/puck-cpu-held-qualification-04-freeze.json)
+are committed at `de2d4ca`. Review verifies 44 current pins, six controls, 34
+historical capsule leaves and four separate data-proof pins. Actual04 remains
+uninvoked. Next, freshly verify pins/preservation/absent paths and staged-byte/
+resource admission, invoke04 once and independently audit the real outcome.
+Preserve failure without implicit05; any binding correction requires observed
+context and source evidence. Held qualification and the actual episode remain
+open; all33 statuses and seven release gates remain unchanged.
 
 The [actual preparation report](https://github.com/Aadrika08/palimpsest/blob/4036a382b87ab99640bed96f6b2f8aeaa7873b2c/docs/reports/puck-cpu-held-preparation-01.md)
 records external exit0 in 25.5215614 s and frozen independent auditor normal

@@ -18,6 +18,11 @@ we can record, replay and export.** Package preparation and runtime qualificatio
 are dependencies of this outcome. The complete project goal remains the release
 above, with all seven gates below closed on one integrated candidate.
 
+**Execution order:** a real episode bundle → valid research and capable
+controllers → the integrated lab and six artworks → artistic/operator
+acceptance and reproducible delivery. Each checkpoint ends in observed
+behavior and an evidence package; another source-only milestone is not its exit.
+
 | Checkpoint | Concrete deliverable | Pass condition |
 | --- | --- | --- |
 | A — working simulation route | An exact local runtime and one portable real-episode bundle. | Retained installation admission, four-import qualification, declared operator/renderer checks, recording, replay comparison, export validation and normal cleanup pass with independent audits. |
@@ -64,6 +69,12 @@ ordered checklist is:
 - [x] Add and independently review bounded binding-failure context without
   changing refusal. All202 affected source checks and an authored chained-error
   observation pass; this does not identify03's lost row or qualify the stack.
+- [x] Implement and independently review the closed04 diagnostic source epoch,
+  pass 246 affected checks and preserve the dated pre04 data-only census.
+- [x] Deploy the reviewed04 sources and freeze/review the exact actual04
+  configuration and controls at `de2d4ca`. Actual04 remains uninvoked.
+- [ ] Freshly recheck the frozen04 pins, preserved artifacts, absent outputs
+  and resources, then invoke04 once and independently audit its outcome.
 - [ ] Obtain passing held four-import qualification and an independent terminal,
   identity, staged-byte and cleanup audit. All01–03 failed; their acceptance
   auditors refused before post-stage byte checks. No accepted held-import result
@@ -85,9 +96,11 @@ terminal auditor. Actual preparation01 and its byte audit pass; actual
 qualifications01–03 fail and are consumed. The03 correction passes the earlier
 optional-import denial and reaches a missing native producer attribute. The
 diagnostic source patch now provides bounded failure context with authored proof.
-It cannot recover03's unlogged row. Next, implement and review the closed source
-epoch admitting those exact diagnostic bytes before a future invocation. No04
-configuration or invocation exists. Do not rerun01–03. An unchanged accepted tree
+It cannot recover03's unlogged row. The closed04 source epoch is now verified,
+deployed and independently reviewed; actual04 configuration and frozen controls
+exist. Actual04 remains uninvoked. Next, recheck pins/absence and admit fresh
+resources before one invocation and an independent outcome audit. Do not
+rerun01–03. An unchanged accepted tree
 does not need another installation or retained-data admission.
 
 Every added prerequisite must identify the checkpoint and smallest blocked check;
@@ -118,33 +131,46 @@ The acceptance auditor exits1 normally in0.051284271s and refuses before post-st
 byte checks. `baseline-after.json` remains absent. A separate pre03 data-only
 census passes27,255 files/1,318,494,346B in13.446514741s at15:06:59UTC. Its dated
 PASS is neither held qualification nor post03 byte acceptance. There is no accepted
-held-import result or current post-qualification byte acceptance. No04 exists.
+held-import result or current post-qualification byte acceptance. The separate
+reviewed04 controls below exist; actual04 remains uninvoked.
 
 The source checkpoint below now supplies bounded producer/phase/export/path/
-component context and preserved-cause proof. Review the exact diagnostic source
-epoch before any separately numbered actual invocation; its retained context may
+component context and preserved-cause proof. Its closed04 transition and exact
+controls are independently reviewed. A freshly admitted invocation may
 identify the binding. Any later profile/phase correction follows observed evidence.
 Skip no row and guess no producer. The recorded/replayed/exported episode remains
 checkpointA's exit; all seven release gates remain open.
 
-## Current source checkpoint: binding diagnostics verified
+## Current source checkpoint: qualification04 ready for fresh admission
 
-[Draft PR #153](https://github.com/Aadrika08/palimpsest/pull/153) retains the
-[source report](https://github.com/Aadrika08/palimpsest/blob/911efa32fc5777167a6c0cb0b4dd3e8d45730608/docs/reports/puck-cpu-binding-diagnostics-v1.md).
-All202 affected checks pass in113.47s after the three new regressions first fail
-and then pass. The three-row check covers both phases, raw hook bypass, the exact
-second-row failure, preserved RuntimeError cause and an untouched third row.
-A fresh held authored worker refuses with no receipt or continuation. A separate
-authored observation retains0B stdout and2,420B chained diagnostic stderr; its
-invented fixture names are not Torch observations. All39 indexed evidence copies
-match originals. Independent source review reports no material findings.
+[Draft PR #154](https://github.com/Aadrika08/palimpsest/pull/154) retains the
+[closed04 source proof](https://github.com/Aadrika08/palimpsest/blob/0211912d978c3d4ae5a45021e721bdff2e0b7744/docs/reports/puck-cpu-held-qualification-amendment-04.md).
+All 246 affected checks pass in 86.90s. Independent source review finds no material
+issues. The closed transition admits only the reviewed diagnostic bindings and
+existing parent/bootstrap differences from historical preparation. V1–v3,
+historical capsules, all 16 data inputs, four roots, acceptance anchors, exact03
+missing-import roster, versions, limits and refusal behavior remain unchanged.
+Authored positive/negative and tamper checks are source proof, not Torch results.
 
-The actual execution worktree and frozen03 controls remain unchanged. Existing
-parent/auditor source-epoch checks still reject changed bindings. Next, add a closed
-qualification04 source transition for exactly this diagnostic support file and
-the existing parent/bootstrap differences, preserving v1–v3 and all data/policy
-contracts. No04 configuration or invocation exists; all runtime and episode exits
-remain open. No full repository suite is claimed.
+The separate pre04 data-only census passes 27,255 files / 1,318,494,346 B in
+15.542632212 s at 16:06:25 UTC. It does not reaccept preparation, accept failed01–03,
+qualify the held runtime or supply post04 byte acceptance. All 162 source-evidence
+copies match. The earlier [binding diagnostics](https://github.com/Aadrika08/palimpsest/blob/911efa32fc5777167a6c0cb0b4dd3e8d45730608/docs/reports/puck-cpu-binding-diagnostics-v1.md)
+retain their separate 202 affected checks and authored chained-failure proof;
+they do not recover03's unlogged row.
+
+The exact sources are deployed in the data-owning worktree. The actual04
+[configuration](https://github.com/Aadrika08/palimpsest/blob/de2d4ca49f4d784ea1128824a19ea6d8d912e853/docs/plans/puck-cpu-held-qualification-04.json)
+and [reviewed freeze](https://github.com/Aadrika08/palimpsest/blob/de2d4ca49f4d784ea1128824a19ea6d8d912e853/docs/plans/puck-cpu-held-qualification-04-freeze.json)
+are committed at `de2d4ca` before invocation. Independent deployment/control
+review verifies 44 current pins, six controls, 34 historical capsule leaves and
+four separate data-proof pins. Actual04 remains uninvoked. Recheck current pins,
+preservation, absent output paths and fresh resources before invoking it once.
+The qualification floors remain 2 GiB available RAM, 256 MiB tmpfs and 4 GiB project
+space; disk clearance alone does not admit execution. Audit its actual terminal,
+identity, staged bytes and cleanup; preserve any failure without implicit05.
+Passing held qualification and the episode bundle remain open. No full suite,
+scientific, renderer, controller, artwork, human or physical acceptance is claimed.
 
 ## Earlier CPU result: preparation accepted, qualification01 failed
 
@@ -387,10 +413,10 @@ test counts cannot satisfy either actual-runtime exit below.
 2. **Qualify that exact runtime — acceptance remains open.** Each independently
    reviewed qualification01–03 ran once and failed.03 corrects02's optional-import
    denial and reaches an unresolved native producer attribute. Its exact binding
-   remains unknown; source diagnostics cannot recover03's unlogged row. The source
-   patch supplies that context; review its closed transition before a future invocation.
-   All three acceptance auditors refuse before post-stage byte checks. No04
-   exists. Any later actual allocation needs a separately numbered, reviewed
+   remains unknown; source diagnostics cannot recover03's unlogged row. The04
+   source transition and exact controls are now reviewed and committed, but04
+   remains uninvoked. All three prior acceptance auditors refuse before
+   post-stage byte checks. Any actual allocation needs a separately numbered, reviewed
    source/data amendment, fresh staged-byte/resource checks, exact versions and
    custody, finite limits, normal cleanup and an independent audit. Never rerun
    01–03. Even passing imports do not qualify operators, rendering, physics,
@@ -442,26 +468,30 @@ substitute for numerical results, capability, actual browser use or human accept
 | 5 | Integrate and experience the product. | One candidate supports the lab and all six artworks; actual browser, mapping, replay, export, interruption and endurance checks pass. |
 | 6 | Accept and deliver that candidate. | Artistic/operator sessions, final verification and all seven gate records are complete; the installation and evidence package are reproducible. |
 
-**Current next action:** admit the verified diagnostic bytes through a closed
-source transition, then resolve the actual binding refusal and reach the episode:
+**Current next action:** freshly admit and execute the already reviewed04
+diagnostic attempt once, then use its observed outcome to unblock the episode.
 
-1. Implement the explicit qualification04 parent/observer/auditor source epoch.
-   Admit only the reviewed bindings diagnostic plus existing parent/bootstrap
-   differences from historical preparation; no configurable source allowlist.
-   Keep v1–v3 unchanged and rejecting the new support-source delta.
-2. Prove historical capsules under historical pins and a fresh capsule under
-   current pins using authored fixtures. Preserve all16 data inputs, four roots,
-   acceptance anchors, exact missing-import roster, versions, limits and refusal
-   behavior. Obtain independent source/configuration review.
-3. Before a separately numbered actual diagnostic invocation, verify current
-   staged bytes, fresh resource admission and exact frozen controls. Its retained
-   context may identify the binding; any later profile/phase correction must
-   follow that evidence. Preserve failure without implicit retry. Passing actual
-   held qualification and its independent terminal/byte/cleanup audit remain open.
+1. Recheck the 44 current pins, six frozen controls, four dated data-proof pins,
+   historical capsules and preserved01–03 artifacts. Require04 output, stream,
+   transport and audit paths absent. Refresh staged-byte/resource admission;
+   refuse execution if any unchanged floor or identity check fails.
+2. Invoke only the exact frozen04 observer command once. Retain its terminal
+   outcome and independently invoke the frozen acceptance auditor against the
+   real new transport hash. Preserve failed evidence without implicit05. A
+   refusal before byte checks supplies no post-stage byte acceptance.
+3. If04 identifies a binding failure, inspect the exact installed/upstream source
+   and observed producer/phase/export/component before a prospective correction.
+   Guess no producer or phase and skip no row. Passing held qualification and its
+   independent terminal/byte/cleanup audit remain required before the episode.
 4. Complete the distinct CPU engineering episode envelope, fixed authenticated
    worker entry, bounded parent and existing writer/replay/export connection.
-   Resolve catalog access before protected reads, specify model/scene/seed and
-   operator/renderer checks, then run and independently audit the actual bundle.
+   Resolve catalog access before protected reads; declare the exact model, scene,
+   seed, limits, operator/renderer probes and replay criterion. Run the bounded
+   episode and independently audit the actual portable bundle.
+
+The immediate milestone passes only with that bundle and its actual route checks.
+A natural task failure can prove recording/replay/export, but cannot pass a
+controller capability gate. Source fixtures and test totals cannot close either.
 
 Required cache, version, custody or cleanup failures stop the stage and retain
 its outcome and consumed allocation; there is no implicit retry. A source
@@ -484,7 +514,10 @@ source-hardening programme or count test totals as release progress.
 
 ## Current starting point and decisions
 
-Disk clearance permits fresh admission checks; it does not qualify the CPU/EGL
+The 15 October storage check records 98,667,294,720 B free on the project disk
+and 3,583,029,248 B on `/tmp`. This dated snapshot removes the immediate disk
+shortfall; it is not future admission. Disk clearance permits fresh admission
+checks; it does not qualify the CPU/EGL
 stack. The earlier PR149 RAM refusal is preserved, followed by admitted actual
 preparation01 and its passing audit. Qualifications01–03 then fail and are
 consumed; no acceptance auditor provides post-stage byte acceptance. Resource snapshots
