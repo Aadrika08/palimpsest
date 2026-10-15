@@ -1,0 +1,73 @@
+{
+  "actual07_invoked": false,
+  "artifact_count": 10,
+  "artifacts": [
+    {
+      "archived_path": "external-final-static-check.json",
+      "original_path": "/tmp/palimpsest-held07-external-final-static-check.json",
+      "sha256": "71b59a83cb2ede0d9ade4cbce8d60fd7ffce15451ff4420e8de3fd2ad390ce95",
+      "size_bytes": 406
+    },
+    {
+      "archived_path": "external-unit/check.json",
+      "original_path": "/tmp/palimpsest-held07-external-unit-check.json",
+      "sha256": "97cebc93135f11074da62e3a1742db74effe1b8e79a304e6ceabb518e5a2894a",
+      "size_bytes": 4728
+    },
+    {
+      "archived_path": "external-unit/check.py",
+      "original_path": "/tmp/palimpsest-held07-external-unit-check.py",
+      "sha256": "7ab34bcf56569e3690323ac01ad4ead8bc1eaa736b2af12adfbe93b9847b1869",
+      "size_bytes": 14183
+    },
+    {
+      "archived_path": "external-unit/command.json",
+      "original_path": "/tmp/palimpsest-held07-external-unit-command.json",
+      "sha256": "ce165a30c5d0d306afc00a8868c7ffea6a0976b982d2877926f0ab8c0023ab47",
+      "size_bytes": 264
+    },
+    {
+      "archived_path": "external-unit/result.json",
+      "original_path": "/tmp/palimpsest-held07-external-unit-result.json",
+      "sha256": "904578f3439e37522298b188abc3989c2b73588e8eeff0da66fac6bbdba8b6ab",
+      "size_bytes": 888
+    },
+    {
+      "archived_path": "external-unit/stderr.log",
+      "original_path": "/tmp/palimpsest-held07-external-unit-stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    {
+      "archived_path": "external-unit/stdout.log",
+      "original_path": "/tmp/palimpsest-held07-external-unit-stdout.log",
+      "sha256": "97cebc93135f11074da62e3a1742db74effe1b8e79a304e6ceabb518e5a2894a",
+      "size_bytes": 4728
+    },
+    {
+      "archived_path": "external-v1-before-review.py",
+      "original_path": "/tmp/palimpsest-held07-external-v1-at-review.py",
+      "sha256": "e9d87965a537ce48e1e98501fa5a340e86f60272f212aa6f4d4fcb8266ed5277",
+      "size_bytes": 2376
+    },
+    {
+      "archived_path": "freeze-builder.py",
+      "original_path": "/tmp/palimpsest-held07-build-freeze.py",
+      "sha256": "4f818743937f14196ea71b90b1ec58e5554d184f3f586f6251b628ea950eeeb4",
+      "size_bytes": 5652
+    },
+    {
+      "archived_path": "verify_evidence.py",
+      "original_path": "/home/utkarsh/.codex/worktrees/0071/brain/docs/reports/puck-cpu-post06-byte-custody-03/verify_evidence.py",
+      "sha256": "d5b874df818e72295d6951873e25a6fc8fc0deb0a79ec6183ca805508c19a759",
+      "size_bytes": 2128
+    }
+  ],
+  "kind": "puck-cpu-held07-control-source-evidence-index-v1",
+  "runtime_qualified": false,
+  "source_commit": "f0b122db7ccc4fd0117b0f8527b48b3a5d3b1c61",
+  "source_commit_scope": "Pre-control source context only; new07 controls are separately byte-pinned and must be committed before invocation.",
+  "source_paths": [],
+  "status": "REVIEWED_CONTROL_SOURCE_ONLY_NOT_INVOKED",
+  "version": 1
+}

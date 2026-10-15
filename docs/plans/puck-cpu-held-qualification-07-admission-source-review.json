@@ -1,0 +1,221 @@
+{
+  "base": {
+    "path": "/tmp/palimpsest-held06-post-byte-custody-03.py",
+    "sha256": "96e496cef4ba2b1c2250e8a2a45737cb930b18cb019c8cc2b32d565830c522ff",
+    "size_bytes": 19086
+  },
+  "configuration": {
+    "path": "/home/utkarsh/.codex/worktrees/0071/brain/docs/plans/puck-cpu-held-qualification-07.json",
+    "sha256": "1ed4b198a38512c751cca43e11fdb1cd00e7683031be545e6ccd12016555ee60",
+    "size_bytes": 8985
+  },
+  "delta_edits": [
+    {
+      "label": "docstring",
+      "new": "Fixed DATA-ONLY pre07 admission; no allocation, qualification or vendor import.",
+      "old": "Fixed DATA-ONLY post-failure06 byte/custody check03; no runtime allocation or vendor import.",
+      "replacements": 1
+    },
+    {
+      "label": "exclusive07_success_output",
+      "new": "OUTPUT=Path('/tmp/palimpsest-puck-cpu-held-qualification-07-admission-01.json')",
+      "old": "OUTPUT=Path('/tmp/palimpsest-held06-post-byte-custody-03.json')",
+      "replacements": 1
+    },
+    {
+      "label": "configuration07_path",
+      "new": "CONFIGURATION=ROOT/'docs/plans/puck-cpu-held-qualification-07.json'",
+      "old": "CONFIGURATION=ROOT/'docs/plans/puck-cpu-held-qualification-06.json'",
+      "replacements": 1
+    },
+    {
+      "label": "configuration07_sha",
+      "new": "CONFIG_SHA='1ed4b198a38512c751cca43e11fdb1cd00e7683031be545e6ccd12016555ee60'",
+      "old": "CONFIG_SHA='da630b05b871508686a4c92402725820b40b27253b2652b47c686a8f441a04e8'",
+      "replacements": 1
+    },
+    {
+      "label": "current7_auditor_sha",
+      "new": "AUDITOR_CURRENT_SHA='420c3d6f3b8c7ae799732184507e84177a546b74573fccf1f32728dbfc64440d'",
+      "old": "AUDITOR_CURRENT_SHA='f910d6bdf592fe7b488591398332ac70131891bd4f7c95ea793d20be8b90f829'",
+      "replacements": 1
+    },
+    {
+      "label": "restore07_absences",
+      "new": "    paths=[ROOT/'runs/puck-cpu-held-qualification-07']+[ROOT/('runs/puck-cpu-held-qualification-07-external-cli'+suffix) for suffix in ('.stdout','.stderr','-transport.json')]\n    paths+=[Path('/tmp/palimpsest-puck-cpu-held-qualification-07-audit-01.json'),OUTPUT]\n",
+      "old": "    paths=[OUTPUT]\n",
+      "replacements": 1
+    },
+    {
+      "label": "initial2GiB_floor",
+      "new": "initial_resources=resources();absence=absent()",
+      "old": "initial_resources=resources(4<<30);absence=absent()",
+      "replacements": 1
+    },
+    {
+      "label": "phase_kind",
+      "new": "held07-data-admission-phase-v1",
+      "old": "held06-post-byte-custody-phase-v1",
+      "replacements": 1
+    },
+    {
+      "label": "failure_kind",
+      "new": "held07-data-admission-failure-v1",
+      "old": "held06-post-byte-custody-failure-v1",
+      "replacements": 1
+    },
+    {
+      "label": "telemetry07_id",
+      "new": "check_id=7",
+      "old": "check_id=3",
+      "replacements": 2
+    },
+    {
+      "label": "freeze07_path",
+      "new": "held.json(ROOT/'docs/plans/puck-cpu-held-qualification-07-freeze.json'",
+      "old": "held.json(ROOT/'docs/plans/puck-cpu-held-qualification-06-freeze.json'",
+      "replacements": 1
+    },
+    {
+      "label": "historical_H_raw_role",
+      "new": "            raw_paths.update(row['path'] for row in frozen['preparation_acceptance'].values())\n            raw_paths.add('docs/plans/puck-cpu-observed-import-profile-candidate-01.json')\n",
+      "old": "            raw_paths.update(row['path'] for row in frozen['preparation_acceptance'].values())\n",
+      "replacements": 1
+    },
+    {
+      "label": "six_history_raw_roles",
+      "new": "for i in range(1,7))",
+      "old": "for i in range(1,6))",
+      "replacements": 1
+    },
+    {
+      "label": "source_snapshot_commit",
+      "new": "f0b122db7ccc4fd0117b0f8527b48b3a5d3b1c61",
+      "old": "6a4ba958021c70f4ec310370b34923aa36324087",
+      "replacements": 2
+    },
+    {
+      "label": "fixed_D_semantic_guard",
+      "new": "current.publication_candidate(data['candidate'],selected['candidate'],pillow_origins=True)",
+      "old": "current.publication_candidate(data['candidate'],selected['candidate'])",
+      "replacements": 1
+    },
+    {
+      "label": "success_kind",
+      "new": "kind='puck-cpu-held07-data-only-admission-v1'",
+      "old": "kind='puck-cpu-held06-post-failure-byte-custody-v1'",
+      "replacements": 1
+    },
+    {
+      "label": "success_status",
+      "new": "status='DATA_ONLY_ADMITTED'",
+      "old": "status='CURRENT_BYTES_PRESERVED_AFTER_FAILED06'",
+      "replacements": 1
+    },
+    {
+      "label": "success_scope",
+      "new": "scope='dated current07/D source/input/SITE/staged/native/interpreter bytes and resources only; no allocation, target import or preparation reacceptance'",
+      "old": "scope='post-failure current source/input/SITE/staged/native/interpreter bytes only; no allocation, target import or runtime acceptance'",
+      "replacements": 1
+    },
+    {
+      "label": "separate_current_digests",
+      "new": "dependencies_sha256=DEP_SHA,current_dependencies_sha256=m.sha(m.canonical(current_dependency,False)),current_candidate_sha256=m.sha(candidate_raw),auditor_source_sha256=",
+      "old": "dependencies_sha256=DEP_SHA,auditor_source_sha256=",
+      "replacements": 1
+    },
+    {
+      "label": "preserve_historic06_and_uninvoked07",
+      "new": "qualification06_invoked=True,qualification07_invoked=False,configuration_sha256=",
+      "old": "qualification06_invoked=True,configuration_sha256=",
+      "replacements": 1
+    }
+  ],
+  "draft": {
+    "path": "/tmp/palimpsest-held07-admission-draft.py",
+    "sha256": "7f9b695f7f01ad7e91c97c1f9caf0d3273b65f80f042f4694fb643b32534b99d",
+    "size_bytes": 19575
+  },
+  "intentionally_not_done": [
+    "No script/module/main/control/auditor/vendor/native/namespace/runtime invoked; no pytest or target-code test execution.",
+    "No current resource/PID/identity/absence observation or installed/staged/baseline byte census/hash.",
+    "No DATA/repository/Git/network writes. Only the two authorized/tmp draft/review files were authored.",
+    "No new freeze/outer command or any actual07 observer/output evidence authored or consumed."
+  ],
+  "kind": "puck-cpu-held07-admission-draft-static-review-v1",
+  "preserved": {
+    "PID_scope": "Same three recorded06 PID/start identities only; read-only absent/reused check, nonexhaustive/non-atomic observation, no signals.",
+    "address_space_bytes": 536870912,
+    "candidate_guard": "Current independent publication_candidate(H,D,pillow_origins=True); default5/6guard not changed.",
+    "core_bytes": 0,
+    "dependency_scope": "dependencies_sha256 stays historicalH DEP_SHA; current_dependencies_sha256 hashes currentD plan compact bytes with noLF; current_candidate_sha256 hashes exact frozenD candidate bytes.",
+    "file_bytes": 16777216,
+    "final_min_ram_bytes": 2147483648,
+    "hard_seconds": 130,
+    "inherited_limits": "Existing min(value,hard) narrowing unchanged.",
+    "initial_min_ram_bytes": 2147483648,
+    "max_fds": 40000,
+    "normal_seconds": 120,
+    "project_min_free_bytes": 4294967296,
+    "raw_scope": "All16 frozen inputs and4 preparation anchors; explicitly reserve historicalH plus fixed result01..06 before first manifest hold.",
+    "telemetry": "Eight completion phases; <=12records,<=8192B each,<=64KiB total; failuremessage<=1024chars; observed-only closure, no masking original failure.",
+    "tmpfs_min_free_bytes": 268435456,
+    "validation": "Original fullSITE hash census,hostnative/aliases/baseline/interpreter,oldpreparation capsules/controls/request/dependencies/stage/supervision/invocation,twofullforests,finalSITEmetadatarecensus,fullHeld.recheck,all19absencechecks,stageidentities,close/FD/children/threads/deadline/falseclaims unchanged outside explicit epoch guards."
+  },
+  "remaining_preflight": [
+    "Independent review of exact draft and final07manifest/pin closure before copying toDATA andfreezing.",
+    "Build new07freeze with unique current7 live pins,immutableold06archives,Dproof,committed03anchors,exactsourcecommit and nohashcycle. Preserve all old controls.",
+    "Root must bind final copied source bytes/externalcontrols; draft runner selfhash will authenticate actual__file__ bytes only when later invoked.",
+    "Fresh resources and complete full current7D byte/forest/baseline custody checks remain pending.",
+    "Any prospective data-only admission and later once-only observer require their separately frozen control route. This static review is no runtime,operator,renderer,episode,study or release qualification."
+  ],
+  "selected_candidate": {
+    "path": "docs/plans/puck-cpu-pillow-origin-profile-v1.json",
+    "sha256": "6eba35557f64b8f7108558b1334d488da20b2381d0e69ffece090645f8fb8d3d",
+    "size_bytes": 346424
+  },
+  "source_auditor": {
+    "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/audit_puck_cpu_held_runtime.py",
+    "sha256": "420c3d6f3b8c7ae799732184507e84177a546b74573fccf1f32728dbfc64440d",
+    "size_bytes": 76254
+  },
+  "source_commit": "f0b122db7ccc4fd0117b0f8527b48b3a5d3b1c61",
+  "source_commit_scope": "Explicit root-selected binding; this lane performed no Git verification.",
+  "static_checks": {
+    "assertion_count_preserved": 46,
+    "configuration07_digest_and_canonical_bytes": true,
+    "configuration_15_other_inputs_and4_preparation_anchors_exact": true,
+    "configuration_19_names_and_limits_unchanged": true,
+    "configuration_changed_fields": [
+      "allocation_id",
+      "inputs",
+      "kind",
+      "sources",
+      "version"
+    ],
+    "configuration_only_parent_source_changed": [
+      "scripts/qualify_puck_cpu_held_runtime.py"
+    ],
+    "final_resources_default_2GiB": true,
+    "fixed_six_failure_hash_tuple_retained": true,
+    "historical_H_raw_before_manifest": true,
+    "historical_results_raw_range": "1..6",
+    "imports_unchanged": true,
+    "initial_resources_default_2GiB": true,
+    "no_03_4GiB_resource_override": true,
+    "normalized_complete_AST_equal": true,
+    "original_three_PID_start_checks_retained": true,
+    "parse_and_compile_only": true,
+    "phase_count": 8,
+    "roundtrip_exact_base_bytes": true,
+    "unchanged_functions_AST": [
+      "resources",
+      "module",
+      "check_absences",
+      "_stderr_record"
+    ]
+  },
+  "status": "DRAFT_ONLY_NOT_INVOKED",
+  "unified_diff": "--- /tmp/palimpsest-held06-post-byte-custody-03.py\n+++ /tmp/palimpsest-held07-admission-draft.py\n@@ -1,4 +1,4 @@\n-\"\"\"Fixed DATA-ONLY post-failure06 byte/custody check03; no runtime allocation or vendor import.\"\"\"\n+\"\"\"Fixed DATA-ONLY pre07 admission; no allocation, qualification or vendor import.\"\"\"\n import datetime\n import importlib.machinery\n import hashlib\n@@ -15,10 +15,10 @@\n ROOT=Path('/home/utkarsh/.codex/worktrees/0071/brain')\n AUDITOR=ROOT/'docs/reports/puck-cpu-held-qualification-amendment-03/source-evidence/validation/prepared-byte-audit03-01/authenticated-auditor.py'\n AUDITOR_SHA='01bc2c99634cb3ec2e7bfc92f4fc96b219e07c8a5ea10351227a5cfb1181d4cf'\n-OUTPUT=Path('/tmp/palimpsest-held06-post-byte-custody-03.json')\n-CONFIGURATION=ROOT/'docs/plans/puck-cpu-held-qualification-06.json'\n-CONFIG_SHA='da630b05b871508686a4c92402725820b40b27253b2652b47c686a8f441a04e8'\n-AUDITOR_CURRENT_SHA='f910d6bdf592fe7b488591398332ac70131891bd4f7c95ea793d20be8b90f829'\n+OUTPUT=Path('/tmp/palimpsest-puck-cpu-held-qualification-07-admission-01.json')\n+CONFIGURATION=ROOT/'docs/plans/puck-cpu-held-qualification-07.json'\n+CONFIG_SHA='1ed4b198a38512c751cca43e11fdb1cd00e7683031be545e6ccd12016555ee60'\n+AUDITOR_CURRENT_SHA='420c3d6f3b8c7ae799732184507e84177a546b74573fccf1f32728dbfc64440d'\n OBS_AUDITOR_SHA='be7e1321356c554750baa6e0982dc939a23546eca1574b8f5f68b2bbdec3afa4'\n PREP_SHA='38134e016eff974e06806f1ac74492dc51e0a5721d8cd13d1123a1fd950fe8a6'\n RESULT_SHA='9d49c6ee3a0be61505cfe7d2267b659290be17365d6e35fb5fdbdc38e103f47d'\n@@ -36,7 +36,8 @@\n \n \n def absent():\n-    paths=[OUTPUT]\n+    paths=[ROOT/'runs/puck-cpu-held-qualification-07']+[ROOT/('runs/puck-cpu-held-qualification-07-external-cli'+suffix) for suffix in ('.stdout','.stderr','-transport.json')]\n+    paths+=[Path('/tmp/palimpsest-puck-cpu-held-qualification-07-audit-01.json'),OUTPUT]\n     missing=[ROOT/'runs/puck-cpu-runtime-characterization-01/baseline-after.json']\n     for allocation,leaves in [('puck-cpu-install-01',('inventory.json','licences.json','baseline-after.json','logs/namespace.json')),('puck-cpu-retained-admission-01',('inventory.json','snapshot.json','baseline-after.json'))]:\n         missing.extend(ROOT/'runs'/allocation/leaf for leaf in leaves)\n@@ -94,7 +95,7 @@\n \n \n def _phase(name,started,held):\n-    _stderr_record(dict(kind='held06-post-byte-custody-phase-v1',check_id=3,\n+    _stderr_record(dict(kind='held07-data-admission-phase-v1',check_id=7,\n         status='phase_completed',phase=name,elapsed_seconds=time.monotonic()-started,\n         held=dict(files=len(held.files),total=held.total)))\n \n@@ -103,7 +104,7 @@\n     # Telemetry failure must never replace the original exception. Omit closure\n     # unless this control observed a normal held.close and all fields below.\n     try:\n-        value=dict(kind='held06-post-byte-custody-failure-v1',check_id=3,status='FAIL',\n+        value=dict(kind='held07-data-admission-failure-v1',check_id=7,status='FAIL',\n             error_type=type(error).__name__,error=str(error)[:1024],\n             elapsed_seconds=time.monotonic()-started)\n         if held_closed and before is not None:\n@@ -127,7 +128,7 @@\n         assert len(sys.argv)==1 and sys.flags.isolated and sys.flags.no_site and sys.dont_write_bytecode\n         assert Path(sys.executable).resolve()==Path('/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/bin/python3.11')\n         assert 'LD_PRELOAD' not in os.environ and 'LD_LIBRARY_PATH' not in os.environ\n-        initial_resources=resources(4<<30);absence=absent()\n+        initial_resources=resources();absence=absent()\n     except BaseException as error:\n         _failure(error,started)\n         raise\n@@ -158,13 +159,14 @@\n             current.configuration(frozen,False)\n             for row in frozen['sources']:held.file(ROOT/row['path'],row,1024**2)\n             for row in frozen['preparation_acceptance'].values():held.file(ROOT/row['path'],row,16*1024**2,raw=True)\n-            manifest,manifest_raw=held.json(ROOT/'docs/plans/puck-cpu-held-qualification-06-freeze.json',maximum=1024**2)\n+            manifest,manifest_raw=held.json(ROOT/'docs/plans/puck-cpu-held-qualification-07-freeze.json',maximum=1024**2)\n             assert manifest_raw==(json.dumps(manifest,sort_keys=True,indent=2,allow_nan=False)+'\\n').encode()\n             raw_paths={row['path'] for row in frozen['inputs'].values()}\n             raw_paths.update(row['path'] for row in frozen['preparation_acceptance'].values())\n-            raw_paths.update('runs/puck-cpu-held-qualification-'+str(i).zfill(2)+'/result.json' for i in range(1,6))\n+            raw_paths.add('docs/plans/puck-cpu-observed-import-profile-candidate-01.json')\n+            raw_paths.update('runs/puck-cpu-held-qualification-'+str(i).zfill(2)+'/result.json' for i in range(1,7))\n             for row in manifest['pins']:held.file(ROOT/row['path'],row,16*1024**2,raw=row['path'] in raw_paths)\n-            assert manifest['source_commit']=='6a4ba958021c70f4ec310370b34923aa36324087' and manifest['observer_invocations']==1 and manifest['implicit_retry'] is False\n+            assert manifest['source_commit']=='f0b122db7ccc4fd0117b0f8527b48b3a5d3b1c61' and manifest['observer_invocations']==1 and manifest['implicit_retry'] is False\n             config,configraw=held.json(ROOT/'docs/plans/puck-cpu-held-preparation-01.json',maximum=1024**2,lf=True)\n             assert m.sha(configraw)==PREP_SHA;m.configuration(config,False)\n             assert config['root']==str(ROOT) and config['phase']=='prepare'\n@@ -183,7 +185,7 @@\n             selected=dict(data);selected_blobs=dict(blobs)\n             candidate_raw=held.file(ROOT/frozen['inputs']['candidate']['path'],frozen['inputs']['candidate'],16*1024**2,raw=True)\n             selected['candidate']=current.decode(candidate_raw);selected_blobs['candidate']=candidate_raw\n-            current.publication_candidate(data['candidate'],selected['candidate'])\n+            current.publication_candidate(data['candidate'],selected['candidate'],pillow_origins=True)\n             current.inputs_binding(frozen,selected,selected_blobs)\n             current_source,current_dependency,current_dirs=current.plan(frozen,selected)\n             assert current_source==source and current_dirs==directories\n@@ -251,7 +253,7 @@\n             except FileNotFoundError:matches=False\n             assert not matches\n             sampled.append(dict(pid=identity[0],start_ticks=identity[1],matching_identity_present=matches))\n-        result=dict(m.CLAIMS,kind='puck-cpu-held06-post-failure-byte-custody-v1',version=1,status='CURRENT_BYTES_PRESERVED_AFTER_FAILED06',scope='post-failure current source/input/SITE/staged/native/interpreter bytes only; no allocation, target import or runtime acceptance',preparation_configuration_sha256=PREP_SHA,preparation_result_sha256=RESULT_SHA,dependencies_sha256=DEP_SHA,auditor_source_sha256=AUDITOR_SHA,runner_sha256=own['sha256'],baseline=summary,root_count=4,historical_capsule_files=34,input_pins=16,**totals,closure=dict(fd_count_before=before,fd_count_after=after,active_children=[],active_non_main_threads=[]),elapsed_seconds=time.monotonic()-started,qualifications01_02_03_04_05_06_still_failed_consumed=True,qualification06_invoked=True,configuration_sha256=CONFIG_SHA,current_auditor_sha256=AUDITOR_CURRENT_SHA,resources_before=initial_resources,resources_after=final_resources,absence=absence,site_files=27225,site_directories=2074,site_bytes=1304701872,process_identity_samples=sampled,process_scope='three recorded identities only; nonexhaustive non-atomic lifetime observation',current_sources=24,current_inputs=16,negative_absence=negative_absence,source_commit='6a4ba958021c70f4ec310370b34923aa36324087')\n+        result=dict(m.CLAIMS,kind='puck-cpu-held07-data-only-admission-v1',version=1,status='DATA_ONLY_ADMITTED',scope='dated current07/D source/input/SITE/staged/native/interpreter bytes and resources only; no allocation, target import or preparation reacceptance',preparation_configuration_sha256=PREP_SHA,preparation_result_sha256=RESULT_SHA,dependencies_sha256=DEP_SHA,current_dependencies_sha256=m.sha(m.canonical(current_dependency,False)),current_candidate_sha256=m.sha(candidate_raw),auditor_source_sha256=AUDITOR_SHA,runner_sha256=own['sha256'],baseline=summary,root_count=4,historical_capsule_files=34,input_pins=16,**totals,closure=dict(fd_count_before=before,fd_count_after=after,active_children=[],active_non_main_threads=[]),elapsed_seconds=time.monotonic()-started,qualifications01_02_03_04_05_06_still_failed_consumed=True,qualification06_invoked=True,qualification07_invoked=False,configuration_sha256=CONFIG_SHA,current_auditor_sha256=AUDITOR_CURRENT_SHA,resources_before=initial_resources,resources_after=final_resources,absence=absence,site_files=27225,site_directories=2074,site_bytes=1304701872,process_identity_samples=sampled,process_scope='three recorded identities only; nonexhaustive non-atomic lifetime observation',current_sources=24,current_inputs=16,negative_absence=negative_absence,source_commit='f0b122db7ccc4fd0117b0f8527b48b3a5d3b1c61')\n         assert time.monotonic()<deadline;m.publish(OUTPUT,result)\n         _phase('close/publication',started,held)\n         assert time.monotonic()<deadline\n",
+  "version": 1
+}
