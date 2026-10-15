@@ -1,0 +1,103 @@
+{
+  "actual_invocation_authorized": false,
+  "collection_authorized": false,
+  "dependency_registration_version": 3,
+  "executable": false,
+  "kind": "puck-tmpfs-native-staging-proposal-v1",
+  "measured_at_utc": "2026-10-15T04:16:53.852392+00:00",
+  "metadata_only_host_snapshot": {
+    "filesystems": {
+      "/dev/shm": {
+        "available_bytes": 7559254016,
+        "capacity_bytes": 8011890688
+      },
+      "/home/utkarsh/.codex/worktrees/0071/brain": {
+        "available_bytes": 99544514560,
+        "capacity_bytes": 509943480320
+      },
+      "/run/user/1000": {
+        "available_bytes": 1522569216,
+        "capacity_bytes": 1602375680
+      },
+      "/tmp": {
+        "available_bytes": 5142966272,
+        "capacity_bytes": 8011890688
+      }
+    },
+    "memory": {
+      "MemAvailable": 4759592960,
+      "MemTotal": 16023781376,
+      "SwapFree": 9226567680,
+      "SwapTotal": 16023285760
+    }
+  },
+  "native_identity": "tmpfs-raw-dev-inode-v1",
+  "next_candidate": {
+    "proposed_versions": {
+      "mujoco": "3.3.6",
+      "numpy": "2.2.5",
+      "torch": "2.9.0+cpu",
+      "torchvision": "0.24.0+cpu"
+    },
+    "recommendation": "assess exact CPU-only runtime footprint first",
+    "required_before_execution": [
+      "exact wheel sources, hashes, licences, expanded namespace and native dependency sizes",
+      "interpreter and stdlib native-origin configuration",
+      "all external native-image lookup paths and baseline trust scope",
+      "stable writable executable tmpfs location and complete ancestor custody proof",
+      "whole-stage RAM/storage/FD/metadata/process/clock admission",
+      "fresh prospective numbered configuration and observation decisions where required",
+      "independent exact configuration review and independent outcome audit"
+    ],
+    "status": "metadata-and-design-only-not-admitted",
+    "versions_availability_hashes_and_expanded_sizes_verified": false
+  },
+  "prospective_resource_contract": {
+    "additional_available_ram_reserve_bytes": 1073741824,
+    "fd_floor": 40000,
+    "full_stage_minimum_capacity_bytes": 9246118109,
+    "full_stage_minimum_memavailable_bytes": 11393601757,
+    "limits_are_proposed_not_enforced_or_admitted": true,
+    "stage_free_floor_bytes": 1073741824,
+    "worker_sampled_rss_stop_bytes": 2147483648
+  },
+  "qualification_claims": [],
+  "retained_counts": {
+    "all_files": 31049,
+    "selected_nonbaseline_native_images": 93,
+    "site_files": 31000,
+    "system_images": 49
+  },
+  "retained_inputs": [
+    {
+      "path": "docs/reports/puck-v3-held-runtime-qualification-01/preparation-payload/dependencies.json",
+      "sha256": "54ca2c0dc66e1ef9000f1b9449b59c20dc9510d11f333a8ba535dcbb99bd9adb",
+      "size_bytes": 4731302
+    },
+    {
+      "path": "docs/reports/puck-v3-runtime-amendment-02/observation-02/payload/imports.json",
+      "sha256": "a1b70f800a329d1f7c01ca90f836cc37c45a29478707d04ce331444805207045",
+      "size_bytes": 304584
+    }
+  ],
+  "retained_logical_bytes": {
+    "all_dependencies": 8172376285,
+    "selected_nonbaseline_native_images": 5010115161,
+    "site_namespace": 7633845149,
+    "system_images": 538531136
+  },
+  "runtime_qualified": false,
+  "status": "infeasible-original-configuration-not-admitted",
+  "study_authorized": false,
+  "unsupported_shortcuts": [
+    "Btrfs device-number normalization",
+    "pathname equality as mapped-object proof",
+    "native-images-only staging as full namespace proof",
+    "trusted-root system_images in v3",
+    "packages-only staging as stdlib/external-image closure",
+    "swap counted as staging RAM",
+    "weakened ancestor metadata guard",
+    "silent replacement of the frozen CUDA stack"
+  ],
+  "version": 1
+}
