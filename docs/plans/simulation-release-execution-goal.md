@@ -36,67 +36,48 @@ and the pending study decisions; C and D retain their own browser and human
 evidence requirements. Disk clearance removes the disk blocker only. It does not
 resolve failed controller scores, the memory ordering conflict or human acceptance.
 
-**The next work unit is checkpoint A, ending with the episode bundle.** Its
-ordered checklist is:
+**Current readiness:** the retained CPU installation, ordinary four-import
+observation02 and dated held preparation01 have passing scoped audits. Held
+qualifications01–04 each failed and are consumed. Delayed-publication handling
+and the one-row `_autograd` correction have authored source proof. The complete
+real-runtime profile is unfinished; no actual05 configuration exists. The detailed
+results below remain evidence, not tasks to repeat.
 
-- [x] Accept the exact installed CPU package tree and retain its independent audit.
-- [x] Accept the bounded CPU four-import observation with exact versions,
-  intact pins, normal cleanup and an independent outcome audit. Distinct02
-  passes; failed01 remains preserved. This supplies CPU profile data only.
-- [x] Integrate the CPU profile and tmpfs copier into the dedicated bounded
-  preparation/four-import parent, emitting dependency-v3/descriptor-v3. PR148
-  supplies source checks and authored end-to-end fixtures only.
-- [x] Freeze and independently review the production PREPARE configuration,
-  binding all 24 sources and 16 input roles to accepted package receipts,
-  observation02 and the declared interpreter/native/profile inputs under PR149.
-- [x] Prepare and independently review the standard-library terminal/byte auditor
-  and external observer; retain their actual outcomes below.
-- [x] Admit preparation01 against its full-stage resource bounds. Its dated
-  MemAvailable was 4,518,219,776 B. Actual RAM floors remain 4 GiB for preparation
-  and 2 GiB for qualification; future stages require fresh admission.
-- [x] Run actual tmpfs preparation01 once and independently audit its passing
-  terminal outcome, complete staged bytes, custody and cleanup.
-- [x] Freeze and independently review qualification01 using the real preparation
-  result and its passing independent audit, without a placeholder hash.
-- [x] Invoke actual held qualification01 once and preserve its FAIL and consumed
-  allocation. This records an invocation, not qualification acceptance.
-- [x] Implement and review the separate qualification02 source capsule, pass
-  132 affected checks, freeze exact controls, admit resources and invoke once.
-  Preserve its FAIL and consumed allocation; this is not qualification acceptance.
-- [x] Implement and review the exact optional-import correction in03, pass
-  185 affected checks, freeze controls, admit resources and invoke once. Preserve
-  its native producer-attribute FAIL; this is not qualification acceptance.
-- [x] Add and independently review bounded binding-failure context without
-  changing refusal. All202 affected source checks and an authored chained-error
-  observation pass; this does not identify03's lost row or qualify the stack.
-- [x] Implement and independently review the closed04 diagnostic source epoch,
-  pass 246 affected checks and preserve the dated pre04 data-only census.
-- [x] Deploy the reviewed04 sources and freeze/review the exact actual04
-  configuration and controls at `de2d4ca` before invocation.
-- [x] Freshly verify04 pins/preservation/absence/resources, invoke once and
-  preserve its FAIL and failed acceptance audit. The diagnostic identifies
-  `torch._C._autograd` at native_create; this does not accept the runtime.
-- [x] Implement and independently review explicit delayed publication/custody,
-  including intermediate fresh imports, nested-creator negatives and exact
-  worker/parent/auditor proof. All650 affected authored checks pass; this is source
-  proof only, with no real profile or actual configuration change.
-- [x] Authenticate the41-name `_autograd` declaration and independently review
-  its closed single-row source/profile transition. All395 affected authored checks
-  pass; this candidate is source evidence, not a ready complete real profile.
-- [ ] Resolve the three additional distributed creation-phase conflicts and
-  finish the remaining32 native-create rows' per-row preflight. Review a broader
-  explicit prospective profile/admission before freezing actual05; none exists.
-- [ ] Obtain passing held four-import qualification and an independent terminal,
-  identity, staged-byte and cleanup audit. All01–04 failed; their acceptance
-  auditors refused before post-stage byte checks. No accepted held-import result
-  or current post-qualification byte acceptance exists.
-- [ ] Specify the engineering episode's exact model, scene, seed, limits and
-  required operator/renderer probes; complete the durable collection route.
-  Resolve catalog access before any protected read.
-- [ ] Run that episode, record its complete state/events, replay against the
-  declared comparison criterion, export the portable bundle and verify cleanup.
-- [ ] Independently audit the bundle and report checkpoint A's actual outcome,
-  the first remaining gap and the next concrete action.
+**The next bounded work unit is the remaining export preflight.** Produce one
+35-row source map: the three known distributed phase conflicts plus the other 32
+native-create declarations. Every row must identify its creator, creation phase,
+raw attribute path, finite dispatch/build assumptions, intermediate publication
+and closure evidence. Label it **source-supported**, **correction required** or
+**unresolved**. These labels make no installed-binary qualification claim.
+
+Stop this sweep when all 35 rows are classified. Each unresolved group must leave
+one specific prospective observation or decision, with exact inputs, finite
+limits, evidence required and a stopping rule. Review that proposal before any
+execution. Do not guess a roster, use actual05 as a scout, restart the sweep or
+add hardening unrelated to an identified failing check. Preserve the tested
+one-row candidate and record any broader correction as a separate explicit
+prospective revision.
+
+**Checkpoint A finishes with the actual episode bundle.** Its remaining sequence is:
+
+- [ ] Finish the 35-row map and review the complete prospective profile/admission
+  correction, with focused authored checks and independent source review.
+- [ ] Freeze and independently review actual05 only after that profile is ready.
+  Refresh exact pins, staged bytes, absence conditions and resource admission;
+  invoke once and require a passing independent terminal, identity, full-byte
+  and cleanup audit. Preserve01–04; failure grants no implicit06.
+- [ ] Complete the CPU episode envelope, authenticated worker and durable
+  writer/replay/export route. Separately admit exact model, scene, seed, limits,
+  operator/renderer probes and the replay comparison criterion before execution.
+  Use public engineering inputs only while protected catalog/model access is
+  unresolved; if an exact public input route cannot be admitted, record that
+  decision blocker before reading protected inputs. Import qualification alone
+  does not admit an episode or scientific study.
+- [ ] Run the admitted episode, retain complete records/snapshots, compare its
+  replay and validate the portable export and normal process cleanup.
+- [ ] Independently audit that bundle against its frozen criteria. Report the
+  actual result, first remaining gap and next concrete action. A natural task
+  failure may prove this route; it cannot pass a controller capability gate.
 
 The accepted ordinary observation02 supplies actual NumPy, Torch, torchvision
 and MuJoCo import/version and bounded module/native-map data. It does not establish
@@ -550,8 +531,9 @@ source-hardening programme or count test totals as release progress.
 
 ## Current starting point and decisions
 
-The 15 October storage check records 98,667,294,720 B free on the project disk
-and 3,583,029,248 B on `/tmp`. This dated snapshot removes the immediate disk
+The 15 October 18:06 UTC check records 98,643,456,000 B free on the project disk
+and 3,526,299,648 B on `/tmp`, with MemAvailable 3,034,808,320 B. This dated
+snapshot removes the immediate disk
 shortfall; it is not future admission. Disk clearance permits fresh admission
 checks; it does not qualify the CPU/EGL
 stack. The earlier PR149 RAM refusal is preserved, followed by admitted actual
