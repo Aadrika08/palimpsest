@@ -63,9 +63,11 @@ repository suite is claimed.
 
 Next: expose bounded producer/phase/export/attribute-component context at the
 shared resolution failure and prove it with authored exports while preserving
-the exception cause and refusal behavior. Review that source change and the
-exact observed binding before considering a separately numbered actual amendment.
-Do not guess a producer, change phases, skip rows or start04 from this report.
+the exception cause and refusal behavior. Source fixtures cannot recover03's
+unlogged row. Review the diagnostic source/data transition before any separately
+numbered actual invocation; its retained context may identify the binding. Any
+later producer/phase correction must follow that observed evidence. Do not guess
+a producer, skip rows or start04 from this report.
 Passing held qualification and its independent staged-byte/cleanup audit still
 precede the recorded/replayed/exported episode. All seven release gates remain
 open; no scientific, model, renderer, artwork, physical or release acceptance
