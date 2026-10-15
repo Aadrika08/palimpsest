@@ -181,6 +181,16 @@ missing FastAPI. All seven release statuses and three pending decisions remain
 unchanged; no final execution/runtime GO is claimed.
 
 
+The [execution goal](plans/simulation-release-execution-goal.md#active-objective-and-next-deliverable)
+now separates the full seven-gate simulation release from its next executable
+milestone. The first unit is a bounded numerical-import characterization, then
+observed held-runtime compatibility fixes and the complete collection launcher.
+The runtime-interop branch currently has a plan and missing-script fixture tests;
+no characterization or held numerical qualification has run. At 15 October 01:02 UTC,
+99,770,359,808 bytes were free (about 92.9 GiB), above the unchanged memory floor.
+No study or human acceptance occurred in this documentation update. All seven
+release statuses and all three prospective decisions remain unchanged.
+
 ## Functional matrix
 
 | PRD ID | Status | Acceptance boundary | Runnable coverage | Observed evidence and limits |
