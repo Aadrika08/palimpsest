@@ -424,6 +424,11 @@ def binding_receipt(value,dependency):
     require(names==sorted(set(names)) and set(VERSIONS)<=set(names),'Four loaded dependency roots required')
     exports=[dict(name=r['name'],producer=r['producer']) for r in sorted(profile['exports'],key=lambda r:r['name'])]
     require(value.get('exported_modules')==exports,'Complete producer export receipt required')
+    publications=[{key:row[key] for key in ('name','producer','phase','attributes','delegate_attributes')}
+        for row in sorted(profile['exports'],key=lambda r:r['name'])
+        if row.get('phase')=='module_exec_publish']
+    require(value.get('published_export_modules')==publications if publications
+            else 'published_export_modules' not in value,'Complete published export creator/closure receipt required')
     require(value.get('native_origin_policies')=={r['name']:r['policy'] for r in profile['native_origins']},'Complete native-origin policies required')
     require(value.get('native_cache_modules',[])==sorted(profile['native_cache'],key=lambda r:r['name']),'Complete native cache bindings required')
     dispatch=value.get('module_dispatch_bindings');require(type(dispatch) is list and [r.get('name') for r in dispatch]==names,'Loaded module dispatch receipt differs')

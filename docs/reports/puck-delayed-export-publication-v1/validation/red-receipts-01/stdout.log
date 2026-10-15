@@ -1,0 +1,1898 @@
+..FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF..FFFFF..F                             [100%]
+=================================== FAILURES ===================================
+___ test_published_export_proof_cannot_be_missing_or_rebound[missing-parent] ___
+
+consumer = 'parent', defect = 'missing'
+
+    @pytest.mark.parametrize('consumer', ['parent', 'independent-auditor'])
+    @pytest.mark.parametrize('defect', [
+        'missing', 'empty', 'not-list', 'phase', 'producer', 'attributes', 'delegates',
+        'name', 'extra-row', 'extra-field', 'missing-field', 'unsorted', 'duplicate',
+        'phase-case', 'path-case', 'delegate-order',
+    ])
+    def test_published_export_proof_cannot_be_missing_or_rebound(consumer, defect):
+        parent, auditor, dependency, result = receipt_case()
+        # Every negative starts from a terminal that meets all unrelated checks.
+        check_receipt(consumer, parent, auditor, dependency, result)
+        receipt = result['dependencies']
+        proof = receipt['published_export_modules']
+        if defect == 'missing':
+            del receipt['published_export_modules']
+        elif defect == 'empty':
+            receipt['published_export_modules'] = []
+        elif defect == 'not-list':
+            receipt['published_export_modules'] = {}
+        elif defect == 'phase':
+            proof[0]['phase'] = 'module_exec'
+        elif defect == 'producer':
+            proof[0]['producer'] = 'torch'
+        elif defect == 'attributes':
+            proof[0]['attributes'] = ['unrelated']
+        elif defect == 'delegates':
+            proof[0]['delegate_attributes'] = ['call']
+        elif defect == 'name':
+            proof[0]['name'] = 'numpy.unrelated'
+        elif defect == 'extra-row':
+            proof.append(dict(name='torch.undeclared', producer='torch',
+                              phase='module_exec_publish', attributes=['undeclared'],
+                              delegate_attributes=[]))
+        elif defect == 'extra-field':
+            proof[0]['unreviewed'] = False
+        elif defect == 'missing-field':
+            del proof[0]['attributes']
+        elif defect == 'unsorted':
+            proof.reverse()
+        elif defect == 'duplicate':
+            proof.append(copy.deepcopy(proof[-1]))
+        elif defect == 'phase-case':
+            proof[0]['phase'] = 'MODULE_EXEC_PUBLISH'
+        elif defect == 'path-case':
+            proof[0]['attributes'] = ['namespace', 'Published']
+        else:
+            proof[0]['delegate_attributes'].reverse()
+>       with pytest.raises(ValueError):
+E       Failed: DID NOT RAISE <class 'ValueError'>
+
+tests/test_puck_published_export_receipts.py:114: Failed
+_ test_published_export_proof_cannot_be_missing_or_rebound[missing-independent-auditor] _
+
+consumer = 'independent-auditor', defect = 'missing'
+
+    @pytest.mark.parametrize('consumer', ['parent', 'independent-auditor'])
+    @pytest.mark.parametrize('defect', [
+        'missing', 'empty', 'not-list', 'phase', 'producer', 'attributes', 'delegates',
+        'name', 'extra-row', 'extra-field', 'missing-field', 'unsorted', 'duplicate',
+        'phase-case', 'path-case', 'delegate-order',
+    ])
+    def test_published_export_proof_cannot_be_missing_or_rebound(consumer, defect):
+        parent, auditor, dependency, result = receipt_case()
+        # Every negative starts from a terminal that meets all unrelated checks.
+        check_receipt(consumer, parent, auditor, dependency, result)
+        receipt = result['dependencies']
+        proof = receipt['published_export_modules']
+        if defect == 'missing':
+            del receipt['published_export_modules']
+        elif defect == 'empty':
+            receipt['published_export_modules'] = []
+        elif defect == 'not-list':
+            receipt['published_export_modules'] = {}
+        elif defect == 'phase':
+            proof[0]['phase'] = 'module_exec'
+        elif defect == 'producer':
+            proof[0]['producer'] = 'torch'
+        elif defect == 'attributes':
+            proof[0]['attributes'] = ['unrelated']
+        elif defect == 'delegates':
+            proof[0]['delegate_attributes'] = ['call']
+        elif defect == 'name':
+            proof[0]['name'] = 'numpy.unrelated'
+        elif defect == 'extra-row':
+            proof.append(dict(name='torch.undeclared', producer='torch',
+                              phase='module_exec_publish', attributes=['undeclared'],
+                              delegate_attributes=[]))
+        elif defect == 'extra-field':
+            proof[0]['unreviewed'] = False
+        elif defect == 'missing-field':
+            del proof[0]['attributes']
+        elif defect == 'unsorted':
+            proof.reverse()
+        elif defect == 'duplicate':
+            proof.append(copy.deepcopy(proof[-1]))
+        elif defect == 'phase-case':
+            proof[0]['phase'] = 'MODULE_EXEC_PUBLISH'
+        elif defect == 'path-case':
+            proof[0]['attributes'] = ['namespace', 'Published']
+        else:
+            proof[0]['delegate_attributes'].reverse()
+>       with pytest.raises(ValueError):
+E       Failed: DID NOT RAISE <class 'ValueError'>
+
+tests/test_puck_published_export_receipts.py:114: Failed
+____ test_published_export_proof_cannot_be_missing_or_rebound[empty-parent] ____
+
+consumer = 'parent', defect = 'empty'
+
+    @pytest.mark.parametrize('consumer', ['parent', 'independent-auditor'])
+    @pytest.mark.parametrize('defect', [
+        'missing', 'empty', 'not-list', 'phase', 'producer', 'attributes', 'delegates',
+        'name', 'extra-row', 'extra-field', 'missing-field', 'unsorted', 'duplicate',
+        'phase-case', 'path-case', 'delegate-order',
+    ])
+    def test_published_export_proof_cannot_be_missing_or_rebound(consumer, defect):
+        parent, auditor, dependency, result = receipt_case()
+        # Every negative starts from a terminal that meets all unrelated checks.
+        check_receipt(consumer, parent, auditor, dependency, result)
+        receipt = result['dependencies']
+        proof = receipt['published_export_modules']
+        if defect == 'missing':
+            del receipt['published_export_modules']
+        elif defect == 'empty':
+            receipt['published_export_modules'] = []
+        elif defect == 'not-list':
+            receipt['published_export_modules'] = {}
+        elif defect == 'phase':
+            proof[0]['phase'] = 'module_exec'
+        elif defect == 'producer':
+            proof[0]['producer'] = 'torch'
+        elif defect == 'attributes':
+            proof[0]['attributes'] = ['unrelated']
+        elif defect == 'delegates':
+            proof[0]['delegate_attributes'] = ['call']
+        elif defect == 'name':
+            proof[0]['name'] = 'numpy.unrelated'
+        elif defect == 'extra-row':
+            proof.append(dict(name='torch.undeclared', producer='torch',
+                              phase='module_exec_publish', attributes=['undeclared'],
+                              delegate_attributes=[]))
+        elif defect == 'extra-field':
+            proof[0]['unreviewed'] = False
+        elif defect == 'missing-field':
+            del proof[0]['attributes']
+        elif defect == 'unsorted':
+            proof.reverse()
+        elif defect == 'duplicate':
+            proof.append(copy.deepcopy(proof[-1]))
+        elif defect == 'phase-case':
+            proof[0]['phase'] = 'MODULE_EXEC_PUBLISH'
+        elif defect == 'path-case':
+            proof[0]['attributes'] = ['namespace', 'Published']
+        else:
+            proof[0]['delegate_attributes'].reverse()
+>       with pytest.raises(ValueError):
+E       Failed: DID NOT RAISE <class 'ValueError'>
+
+tests/test_puck_published_export_receipts.py:114: Failed
+_ test_published_export_proof_cannot_be_missing_or_rebound[empty-independent-auditor] _
+
+consumer = 'independent-auditor', defect = 'empty'
+
+    @pytest.mark.parametrize('consumer', ['parent', 'independent-auditor'])
+    @pytest.mark.parametrize('defect', [
+        'missing', 'empty', 'not-list', 'phase', 'producer', 'attributes', 'delegates',
+        'name', 'extra-row', 'extra-field', 'missing-field', 'unsorted', 'duplicate',
+        'phase-case', 'path-case', 'delegate-order',
+    ])
+    def test_published_export_proof_cannot_be_missing_or_rebound(consumer, defect):
+        parent, auditor, dependency, result = receipt_case()
+        # Every negative starts from a terminal that meets all unrelated checks.
+        check_receipt(consumer, parent, auditor, dependency, result)
+        receipt = result['dependencies']
+        proof = receipt['published_export_modules']
+        if defect == 'missing':
+            del receipt['published_export_modules']
+        elif defect == 'empty':
+            receipt['published_export_modules'] = []
+        elif defect == 'not-list':
+            receipt['published_export_modules'] = {}
+        elif defect == 'phase':
+            proof[0]['phase'] = 'module_exec'
+        elif defect == 'producer':
+            proof[0]['producer'] = 'torch'
+        elif defect == 'attributes':
+            proof[0]['attributes'] = ['unrelated']
+        elif defect == 'delegates':
+            proof[0]['delegate_attributes'] = ['call']
+        elif defect == 'name':
+            proof[0]['name'] = 'numpy.unrelated'
+        elif defect == 'extra-row':
+            proof.append(dict(name='torch.undeclared', producer='torch',
+                              phase='module_exec_publish', attributes=['undeclared'],
+                              delegate_attributes=[]))
+        elif defect == 'extra-field':
+            proof[0]['unreviewed'] = False
+        elif defect == 'missing-field':
+            del proof[0]['attributes']
+        elif defect == 'unsorted':
+            proof.reverse()
+        elif defect == 'duplicate':
+            proof.append(copy.deepcopy(proof[-1]))
+        elif defect == 'phase-case':
+            proof[0]['phase'] = 'MODULE_EXEC_PUBLISH'
+        elif defect == 'path-case':
+            proof[0]['attributes'] = ['namespace', 'Published']
+        else:
+            proof[0]['delegate_attributes'].reverse()
+>       with pytest.raises(ValueError):
+E       Failed: DID NOT RAISE <class 'ValueError'>
+
+tests/test_puck_published_export_receipts.py:114: Failed
+__ test_published_export_proof_cannot_be_missing_or_rebound[not-list-parent] ___
+
+consumer = 'parent', defect = 'not-list'
+
+    @pytest.mark.parametrize('consumer', ['parent', 'independent-auditor'])
+    @pytest.mark.parametrize('defect', [
+        'missing', 'empty', 'not-list', 'phase', 'producer', 'attributes', 'delegates',
+        'name', 'extra-row', 'extra-field', 'missing-field', 'unsorted', 'duplicate',
+        'phase-case', 'path-case', 'delegate-order',
+    ])
+    def test_published_export_proof_cannot_be_missing_or_rebound(consumer, defect):
+        parent, auditor, dependency, result = receipt_case()
+        # Every negative starts from a terminal that meets all unrelated checks.
+        check_receipt(consumer, parent, auditor, dependency, result)
+        receipt = result['dependencies']
+        proof = receipt['published_export_modules']
+        if defect == 'missing':
+            del receipt['published_export_modules']
+        elif defect == 'empty':
+            receipt['published_export_modules'] = []
+        elif defect == 'not-list':
+            receipt['published_export_modules'] = {}
+        elif defect == 'phase':
+            proof[0]['phase'] = 'module_exec'
+        elif defect == 'producer':
+            proof[0]['producer'] = 'torch'
+        elif defect == 'attributes':
+            proof[0]['attributes'] = ['unrelated']
+        elif defect == 'delegates':
+            proof[0]['delegate_attributes'] = ['call']
+        elif defect == 'name':
+            proof[0]['name'] = 'numpy.unrelated'
+        elif defect == 'extra-row':
+            proof.append(dict(name='torch.undeclared', producer='torch',
+                              phase='module_exec_publish', attributes=['undeclared'],
+                              delegate_attributes=[]))
+        elif defect == 'extra-field':
+            proof[0]['unreviewed'] = False
+        elif defect == 'missing-field':
+            del proof[0]['attributes']
+        elif defect == 'unsorted':
+            proof.reverse()
+        elif defect == 'duplicate':
+            proof.append(copy.deepcopy(proof[-1]))
+        elif defect == 'phase-case':
+            proof[0]['phase'] = 'MODULE_EXEC_PUBLISH'
+        elif defect == 'path-case':
+            proof[0]['attributes'] = ['namespace', 'Published']
+        else:
+            proof[0]['delegate_attributes'].reverse()
+>       with pytest.raises(ValueError):
+E       Failed: DID NOT RAISE <class 'ValueError'>
+
+tests/test_puck_published_export_receipts.py:114: Failed
+_ test_published_export_proof_cannot_be_missing_or_rebound[not-list-independent-auditor] _
+
+consumer = 'independent-auditor', defect = 'not-list'
+
+    @pytest.mark.parametrize('consumer', ['parent', 'independent-auditor'])
+    @pytest.mark.parametrize('defect', [
+        'missing', 'empty', 'not-list', 'phase', 'producer', 'attributes', 'delegates',
+        'name', 'extra-row', 'extra-field', 'missing-field', 'unsorted', 'duplicate',
+        'phase-case', 'path-case', 'delegate-order',
+    ])
+    def test_published_export_proof_cannot_be_missing_or_rebound(consumer, defect):
+        parent, auditor, dependency, result = receipt_case()
+        # Every negative starts from a terminal that meets all unrelated checks.
+        check_receipt(consumer, parent, auditor, dependency, result)
+        receipt = result['dependencies']
+        proof = receipt['published_export_modules']
+        if defect == 'missing':
+            del receipt['published_export_modules']
+        elif defect == 'empty':
+            receipt['published_export_modules'] = []
+        elif defect == 'not-list':
+            receipt['published_export_modules'] = {}
+        elif defect == 'phase':
+            proof[0]['phase'] = 'module_exec'
+        elif defect == 'producer':
+            proof[0]['producer'] = 'torch'
+        elif defect == 'attributes':
+            proof[0]['attributes'] = ['unrelated']
+        elif defect == 'delegates':
+            proof[0]['delegate_attributes'] = ['call']
+        elif defect == 'name':
+            proof[0]['name'] = 'numpy.unrelated'
+        elif defect == 'extra-row':
+            proof.append(dict(name='torch.undeclared', producer='torch',
+                              phase='module_exec_publish', attributes=['undeclared'],
+                              delegate_attributes=[]))
+        elif defect == 'extra-field':
+            proof[0]['unreviewed'] = False
+        elif defect == 'missing-field':
+            del proof[0]['attributes']
+        elif defect == 'unsorted':
+            proof.reverse()
+        elif defect == 'duplicate':
+            proof.append(copy.deepcopy(proof[-1]))
+        elif defect == 'phase-case':
+            proof[0]['phase'] = 'MODULE_EXEC_PUBLISH'
+        elif defect == 'path-case':
+            proof[0]['attributes'] = ['namespace', 'Published']
+        else:
+            proof[0]['delegate_attributes'].reverse()
+>       with pytest.raises(ValueError):
+E       Failed: DID NOT RAISE <class 'ValueError'>
+
+tests/test_puck_published_export_receipts.py:114: Failed
+____ test_published_export_proof_cannot_be_missing_or_rebound[phase-parent] ____
+
+consumer = 'parent', defect = 'phase'
+
+    @pytest.mark.parametrize('consumer', ['parent', 'independent-auditor'])
+    @pytest.mark.parametrize('defect', [
+        'missing', 'empty', 'not-list', 'phase', 'producer', 'attributes', 'delegates',
+        'name', 'extra-row', 'extra-field', 'missing-field', 'unsorted', 'duplicate',
+        'phase-case', 'path-case', 'delegate-order',
+    ])
+    def test_published_export_proof_cannot_be_missing_or_rebound(consumer, defect):
+        parent, auditor, dependency, result = receipt_case()
+        # Every negative starts from a terminal that meets all unrelated checks.
+        check_receipt(consumer, parent, auditor, dependency, result)
+        receipt = result['dependencies']
+        proof = receipt['published_export_modules']
+        if defect == 'missing':
+            del receipt['published_export_modules']
+        elif defect == 'empty':
+            receipt['published_export_modules'] = []
+        elif defect == 'not-list':
+            receipt['published_export_modules'] = {}
+        elif defect == 'phase':
+            proof[0]['phase'] = 'module_exec'
+        elif defect == 'producer':
+            proof[0]['producer'] = 'torch'
+        elif defect == 'attributes':
+            proof[0]['attributes'] = ['unrelated']
+        elif defect == 'delegates':
+            proof[0]['delegate_attributes'] = ['call']
+        elif defect == 'name':
+            proof[0]['name'] = 'numpy.unrelated'
+        elif defect == 'extra-row':
+            proof.append(dict(name='torch.undeclared', producer='torch',
+                              phase='module_exec_publish', attributes=['undeclared'],
+                              delegate_attributes=[]))
+        elif defect == 'extra-field':
+            proof[0]['unreviewed'] = False
+        elif defect == 'missing-field':
+            del proof[0]['attributes']
+        elif defect == 'unsorted':
+            proof.reverse()
+        elif defect == 'duplicate':
+            proof.append(copy.deepcopy(proof[-1]))
+        elif defect == 'phase-case':
+            proof[0]['phase'] = 'MODULE_EXEC_PUBLISH'
+        elif defect == 'path-case':
+            proof[0]['attributes'] = ['namespace', 'Published']
+        else:
+            proof[0]['delegate_attributes'].reverse()
+>       with pytest.raises(ValueError):
+E       Failed: DID NOT RAISE <class 'ValueError'>
+
+tests/test_puck_published_export_receipts.py:114: Failed
+_ test_published_export_proof_cannot_be_missing_or_rebound[phase-independent-auditor] _
+
+consumer = 'independent-auditor', defect = 'phase'
+
+    @pytest.mark.parametrize('consumer', ['parent', 'independent-auditor'])
+    @pytest.mark.parametrize('defect', [
+        'missing', 'empty', 'not-list', 'phase', 'producer', 'attributes', 'delegates',
+        'name', 'extra-row', 'extra-field', 'missing-field', 'unsorted', 'duplicate',
+        'phase-case', 'path-case', 'delegate-order',
+    ])
+    def test_published_export_proof_cannot_be_missing_or_rebound(consumer, defect):
+        parent, auditor, dependency, result = receipt_case()
+        # Every negative starts from a terminal that meets all unrelated checks.
+        check_receipt(consumer, parent, auditor, dependency, result)
+        receipt = result['dependencies']
+        proof = receipt['published_export_modules']
+        if defect == 'missing':
+            del receipt['published_export_modules']
+        elif defect == 'empty':
+            receipt['published_export_modules'] = []
+        elif defect == 'not-list':
+            receipt['published_export_modules'] = {}
+        elif defect == 'phase':
+            proof[0]['phase'] = 'module_exec'
+        elif defect == 'producer':
+            proof[0]['producer'] = 'torch'
+        elif defect == 'attributes':
+            proof[0]['attributes'] = ['unrelated']
+        elif defect == 'delegates':
+            proof[0]['delegate_attributes'] = ['call']
+        elif defect == 'name':
+            proof[0]['name'] = 'numpy.unrelated'
+        elif defect == 'extra-row':
+            proof.append(dict(name='torch.undeclared', producer='torch',
+                              phase='module_exec_publish', attributes=['undeclared'],
+                              delegate_attributes=[]))
+        elif defect == 'extra-field':
+            proof[0]['unreviewed'] = False
+        elif defect == 'missing-field':
+            del proof[0]['attributes']
+        elif defect == 'unsorted':
+            proof.reverse()
+        elif defect == 'duplicate':
+            proof.append(copy.deepcopy(proof[-1]))
+        elif defect == 'phase-case':
+            proof[0]['phase'] = 'MODULE_EXEC_PUBLISH'
+        elif defect == 'path-case':
+            proof[0]['attributes'] = ['namespace', 'Published']
+        else:
+            proof[0]['delegate_attributes'].reverse()
+>       with pytest.raises(ValueError):
+E       Failed: DID NOT RAISE <class 'ValueError'>
+
+tests/test_puck_published_export_receipts.py:114: Failed
+__ test_published_export_proof_cannot_be_missing_or_rebound[producer-parent] ___
+
+consumer = 'parent', defect = 'producer'
+
+    @pytest.mark.parametrize('consumer', ['parent', 'independent-auditor'])
+    @pytest.mark.parametrize('defect', [
+        'missing', 'empty', 'not-list', 'phase', 'producer', 'attributes', 'delegates',
+        'name', 'extra-row', 'extra-field', 'missing-field', 'unsorted', 'duplicate',
+        'phase-case', 'path-case', 'delegate-order',
+    ])
+    def test_published_export_proof_cannot_be_missing_or_rebound(consumer, defect):
+        parent, auditor, dependency, result = receipt_case()
+        # Every negative starts from a terminal that meets all unrelated checks.
+        check_receipt(consumer, parent, auditor, dependency, result)
+        receipt = result['dependencies']
+        proof = receipt['published_export_modules']
+        if defect == 'missing':
+            del receipt['published_export_modules']
+        elif defect == 'empty':
+            receipt['published_export_modules'] = []
+        elif defect == 'not-list':
+            receipt['published_export_modules'] = {}
+        elif defect == 'phase':
+            proof[0]['phase'] = 'module_exec'
+        elif defect == 'producer':
+            proof[0]['producer'] = 'torch'
+        elif defect == 'attributes':
+            proof[0]['attributes'] = ['unrelated']
+        elif defect == 'delegates':
+            proof[0]['delegate_attributes'] = ['call']
+        elif defect == 'name':
+            proof[0]['name'] = 'numpy.unrelated'
+        elif defect == 'extra-row':
+            proof.append(dict(name='torch.undeclared', producer='torch',
+                              phase='module_exec_publish', attributes=['undeclared'],
+                              delegate_attributes=[]))
+        elif defect == 'extra-field':
+            proof[0]['unreviewed'] = False
+        elif defect == 'missing-field':
+            del proof[0]['attributes']
+        elif defect == 'unsorted':
+            proof.reverse()
+        elif defect == 'duplicate':
+            proof.append(copy.deepcopy(proof[-1]))
+        elif defect == 'phase-case':
+            proof[0]['phase'] = 'MODULE_EXEC_PUBLISH'
+        elif defect == 'path-case':
+            proof[0]['attributes'] = ['namespace', 'Published']
+        else:
+            proof[0]['delegate_attributes'].reverse()
+>       with pytest.raises(ValueError):
+E       Failed: DID NOT RAISE <class 'ValueError'>
+
+tests/test_puck_published_export_receipts.py:114: Failed
+_ test_published_export_proof_cannot_be_missing_or_rebound[producer-independent-auditor] _
+
+consumer = 'independent-auditor', defect = 'producer'
+
+    @pytest.mark.parametrize('consumer', ['parent', 'independent-auditor'])
+    @pytest.mark.parametrize('defect', [
+        'missing', 'empty', 'not-list', 'phase', 'producer', 'attributes', 'delegates',
+        'name', 'extra-row', 'extra-field', 'missing-field', 'unsorted', 'duplicate',
+        'phase-case', 'path-case', 'delegate-order',
+    ])
+    def test_published_export_proof_cannot_be_missing_or_rebound(consumer, defect):
+        parent, auditor, dependency, result = receipt_case()
+        # Every negative starts from a terminal that meets all unrelated checks.
+        check_receipt(consumer, parent, auditor, dependency, result)
+        receipt = result['dependencies']
+        proof = receipt['published_export_modules']
+        if defect == 'missing':
+            del receipt['published_export_modules']
+        elif defect == 'empty':
+            receipt['published_export_modules'] = []
+        elif defect == 'not-list':
+            receipt['published_export_modules'] = {}
+        elif defect == 'phase':
+            proof[0]['phase'] = 'module_exec'
+        elif defect == 'producer':
+            proof[0]['producer'] = 'torch'
+        elif defect == 'attributes':
+            proof[0]['attributes'] = ['unrelated']
+        elif defect == 'delegates':
+            proof[0]['delegate_attributes'] = ['call']
+        elif defect == 'name':
+            proof[0]['name'] = 'numpy.unrelated'
+        elif defect == 'extra-row':
+            proof.append(dict(name='torch.undeclared', producer='torch',
+                              phase='module_exec_publish', attributes=['undeclared'],
+                              delegate_attributes=[]))
+        elif defect == 'extra-field':
+            proof[0]['unreviewed'] = False
+        elif defect == 'missing-field':
+            del proof[0]['attributes']
+        elif defect == 'unsorted':
+            proof.reverse()
+        elif defect == 'duplicate':
+            proof.append(copy.deepcopy(proof[-1]))
+        elif defect == 'phase-case':
+            proof[0]['phase'] = 'MODULE_EXEC_PUBLISH'
+        elif defect == 'path-case':
+            proof[0]['attributes'] = ['namespace', 'Published']
+        else:
+            proof[0]['delegate_attributes'].reverse()
+>       with pytest.raises(ValueError):
+E       Failed: DID NOT RAISE <class 'ValueError'>
+
+tests/test_puck_published_export_receipts.py:114: Failed
+_ test_published_export_proof_cannot_be_missing_or_rebound[attributes-parent] __
+
+consumer = 'parent', defect = 'attributes'
+
+    @pytest.mark.parametrize('consumer', ['parent', 'independent-auditor'])
+    @pytest.mark.parametrize('defect', [
+        'missing', 'empty', 'not-list', 'phase', 'producer', 'attributes', 'delegates',
+        'name', 'extra-row', 'extra-field', 'missing-field', 'unsorted', 'duplicate',
+        'phase-case', 'path-case', 'delegate-order',
+    ])
+    def test_published_export_proof_cannot_be_missing_or_rebound(consumer, defect):
+        parent, auditor, dependency, result = receipt_case()
+        # Every negative starts from a terminal that meets all unrelated checks.
+        check_receipt(consumer, parent, auditor, dependency, result)
+        receipt = result['dependencies']
+        proof = receipt['published_export_modules']
+        if defect == 'missing':
+            del receipt['published_export_modules']
+        elif defect == 'empty':
+            receipt['published_export_modules'] = []
+        elif defect == 'not-list':
+            receipt['published_export_modules'] = {}
+        elif defect == 'phase':
+            proof[0]['phase'] = 'module_exec'
+        elif defect == 'producer':
+            proof[0]['producer'] = 'torch'
+        elif defect == 'attributes':
+            proof[0]['attributes'] = ['unrelated']
+        elif defect == 'delegates':
+            proof[0]['delegate_attributes'] = ['call']
+        elif defect == 'name':
+            proof[0]['name'] = 'numpy.unrelated'
+        elif defect == 'extra-row':
+            proof.append(dict(name='torch.undeclared', producer='torch',
+                              phase='module_exec_publish', attributes=['undeclared'],
+                              delegate_attributes=[]))
+        elif defect == 'extra-field':
+            proof[0]['unreviewed'] = False
+        elif defect == 'missing-field':
+            del proof[0]['attributes']
+        elif defect == 'unsorted':
+            proof.reverse()
+        elif defect == 'duplicate':
+            proof.append(copy.deepcopy(proof[-1]))
+        elif defect == 'phase-case':
+            proof[0]['phase'] = 'MODULE_EXEC_PUBLISH'
+        elif defect == 'path-case':
+            proof[0]['attributes'] = ['namespace', 'Published']
+        else:
+            proof[0]['delegate_attributes'].reverse()
+>       with pytest.raises(ValueError):
+E       Failed: DID NOT RAISE <class 'ValueError'>
+
+tests/test_puck_published_export_receipts.py:114: Failed
+_ test_published_export_proof_cannot_be_missing_or_rebound[attributes-independent-auditor] _
+
+consumer = 'independent-auditor', defect = 'attributes'
+
+    @pytest.mark.parametrize('consumer', ['parent', 'independent-auditor'])
+    @pytest.mark.parametrize('defect', [
+        'missing', 'empty', 'not-list', 'phase', 'producer', 'attributes', 'delegates',
+        'name', 'extra-row', 'extra-field', 'missing-field', 'unsorted', 'duplicate',
+        'phase-case', 'path-case', 'delegate-order',
+    ])
+    def test_published_export_proof_cannot_be_missing_or_rebound(consumer, defect):
+        parent, auditor, dependency, result = receipt_case()
+        # Every negative starts from a terminal that meets all unrelated checks.
+        check_receipt(consumer, parent, auditor, dependency, result)
+        receipt = result['dependencies']
+        proof = receipt['published_export_modules']
+        if defect == 'missing':
+            del receipt['published_export_modules']
+        elif defect == 'empty':
+            receipt['published_export_modules'] = []
+        elif defect == 'not-list':
+            receipt['published_export_modules'] = {}
+        elif defect == 'phase':
+            proof[0]['phase'] = 'module_exec'
+        elif defect == 'producer':
+            proof[0]['producer'] = 'torch'
+        elif defect == 'attributes':
+            proof[0]['attributes'] = ['unrelated']
+        elif defect == 'delegates':
+            proof[0]['delegate_attributes'] = ['call']
+        elif defect == 'name':
+            proof[0]['name'] = 'numpy.unrelated'
+        elif defect == 'extra-row':
+            proof.append(dict(name='torch.undeclared', producer='torch',
+                              phase='module_exec_publish', attributes=['undeclared'],
+                              delegate_attributes=[]))
+        elif defect == 'extra-field':
+            proof[0]['unreviewed'] = False
+        elif defect == 'missing-field':
+            del proof[0]['attributes']
+        elif defect == 'unsorted':
+            proof.reverse()
+        elif defect == 'duplicate':
+            proof.append(copy.deepcopy(proof[-1]))
+        elif defect == 'phase-case':
+            proof[0]['phase'] = 'MODULE_EXEC_PUBLISH'
+        elif defect == 'path-case':
+            proof[0]['attributes'] = ['namespace', 'Published']
+        else:
+            proof[0]['delegate_attributes'].reverse()
+>       with pytest.raises(ValueError):
+E       Failed: DID NOT RAISE <class 'ValueError'>
+
+tests/test_puck_published_export_receipts.py:114: Failed
+__ test_published_export_proof_cannot_be_missing_or_rebound[delegates-parent] __
+
+consumer = 'parent', defect = 'delegates'
+
+    @pytest.mark.parametrize('consumer', ['parent', 'independent-auditor'])
+    @pytest.mark.parametrize('defect', [
+        'missing', 'empty', 'not-list', 'phase', 'producer', 'attributes', 'delegates',
+        'name', 'extra-row', 'extra-field', 'missing-field', 'unsorted', 'duplicate',
+        'phase-case', 'path-case', 'delegate-order',
+    ])
+    def test_published_export_proof_cannot_be_missing_or_rebound(consumer, defect):
+        parent, auditor, dependency, result = receipt_case()
+        # Every negative starts from a terminal that meets all unrelated checks.
+        check_receipt(consumer, parent, auditor, dependency, result)
+        receipt = result['dependencies']
+        proof = receipt['published_export_modules']
+        if defect == 'missing':
+            del receipt['published_export_modules']
+        elif defect == 'empty':
+            receipt['published_export_modules'] = []
+        elif defect == 'not-list':
+            receipt['published_export_modules'] = {}
+        elif defect == 'phase':
+            proof[0]['phase'] = 'module_exec'
+        elif defect == 'producer':
+            proof[0]['producer'] = 'torch'
+        elif defect == 'attributes':
+            proof[0]['attributes'] = ['unrelated']
+        elif defect == 'delegates':
+            proof[0]['delegate_attributes'] = ['call']
+        elif defect == 'name':
+            proof[0]['name'] = 'numpy.unrelated'
+        elif defect == 'extra-row':
+            proof.append(dict(name='torch.undeclared', producer='torch',
+                              phase='module_exec_publish', attributes=['undeclared'],
+                              delegate_attributes=[]))
+        elif defect == 'extra-field':
+            proof[0]['unreviewed'] = False
+        elif defect == 'missing-field':
+            del proof[0]['attributes']
+        elif defect == 'unsorted':
+            proof.reverse()
+        elif defect == 'duplicate':
+            proof.append(copy.deepcopy(proof[-1]))
+        elif defect == 'phase-case':
+            proof[0]['phase'] = 'MODULE_EXEC_PUBLISH'
+        elif defect == 'path-case':
+            proof[0]['attributes'] = ['namespace', 'Published']
+        else:
+            proof[0]['delegate_attributes'].reverse()
+>       with pytest.raises(ValueError):
+E       Failed: DID NOT RAISE <class 'ValueError'>
+
+tests/test_puck_published_export_receipts.py:114: Failed
+_ test_published_export_proof_cannot_be_missing_or_rebound[delegates-independent-auditor] _
+
+consumer = 'independent-auditor', defect = 'delegates'
+
+    @pytest.mark.parametrize('consumer', ['parent', 'independent-auditor'])
+    @pytest.mark.parametrize('defect', [
+        'missing', 'empty', 'not-list', 'phase', 'producer', 'attributes', 'delegates',
+        'name', 'extra-row', 'extra-field', 'missing-field', 'unsorted', 'duplicate',
+        'phase-case', 'path-case', 'delegate-order',
+    ])
+    def test_published_export_proof_cannot_be_missing_or_rebound(consumer, defect):
+        parent, auditor, dependency, result = receipt_case()
+        # Every negative starts from a terminal that meets all unrelated checks.
+        check_receipt(consumer, parent, auditor, dependency, result)
+        receipt = result['dependencies']
+        proof = receipt['published_export_modules']
+        if defect == 'missing':
+            del receipt['published_export_modules']
+        elif defect == 'empty':
+            receipt['published_export_modules'] = []
+        elif defect == 'not-list':
+            receipt['published_export_modules'] = {}
+        elif defect == 'phase':
+            proof[0]['phase'] = 'module_exec'
+        elif defect == 'producer':
+            proof[0]['producer'] = 'torch'
+        elif defect == 'attributes':
+            proof[0]['attributes'] = ['unrelated']
+        elif defect == 'delegates':
+            proof[0]['delegate_attributes'] = ['call']
+        elif defect == 'name':
+            proof[0]['name'] = 'numpy.unrelated'
+        elif defect == 'extra-row':
+            proof.append(dict(name='torch.undeclared', producer='torch',
+                              phase='module_exec_publish', attributes=['undeclared'],
+                              delegate_attributes=[]))
+        elif defect == 'extra-field':
+            proof[0]['unreviewed'] = False
+        elif defect == 'missing-field':
+            del proof[0]['attributes']
+        elif defect == 'unsorted':
+            proof.reverse()
+        elif defect == 'duplicate':
+            proof.append(copy.deepcopy(proof[-1]))
+        elif defect == 'phase-case':
+            proof[0]['phase'] = 'MODULE_EXEC_PUBLISH'
+        elif defect == 'path-case':
+            proof[0]['attributes'] = ['namespace', 'Published']
+        else:
+            proof[0]['delegate_attributes'].reverse()
+>       with pytest.raises(ValueError):
+E       Failed: DID NOT RAISE <class 'ValueError'>
+
+tests/test_puck_published_export_receipts.py:114: Failed
+____ test_published_export_proof_cannot_be_missing_or_rebound[name-parent] _____
+
+consumer = 'parent', defect = 'name'
+
+    @pytest.mark.parametrize('consumer', ['parent', 'independent-auditor'])
+    @pytest.mark.parametrize('defect', [
+        'missing', 'empty', 'not-list', 'phase', 'producer', 'attributes', 'delegates',
+        'name', 'extra-row', 'extra-field', 'missing-field', 'unsorted', 'duplicate',
+        'phase-case', 'path-case', 'delegate-order',
+    ])
+    def test_published_export_proof_cannot_be_missing_or_rebound(consumer, defect):
+        parent, auditor, dependency, result = receipt_case()
+        # Every negative starts from a terminal that meets all unrelated checks.
+        check_receipt(consumer, parent, auditor, dependency, result)
+        receipt = result['dependencies']
+        proof = receipt['published_export_modules']
+        if defect == 'missing':
+            del receipt['published_export_modules']
+        elif defect == 'empty':
+            receipt['published_export_modules'] = []
+        elif defect == 'not-list':
+            receipt['published_export_modules'] = {}
+        elif defect == 'phase':
+            proof[0]['phase'] = 'module_exec'
+        elif defect == 'producer':
+            proof[0]['producer'] = 'torch'
+        elif defect == 'attributes':
+            proof[0]['attributes'] = ['unrelated']
+        elif defect == 'delegates':
+            proof[0]['delegate_attributes'] = ['call']
+        elif defect == 'name':
+            proof[0]['name'] = 'numpy.unrelated'
+        elif defect == 'extra-row':
+            proof.append(dict(name='torch.undeclared', producer='torch',
+                              phase='module_exec_publish', attributes=['undeclared'],
+                              delegate_attributes=[]))
+        elif defect == 'extra-field':
+            proof[0]['unreviewed'] = False
+        elif defect == 'missing-field':
+            del proof[0]['attributes']
+        elif defect == 'unsorted':
+            proof.reverse()
+        elif defect == 'duplicate':
+            proof.append(copy.deepcopy(proof[-1]))
+        elif defect == 'phase-case':
+            proof[0]['phase'] = 'MODULE_EXEC_PUBLISH'
+        elif defect == 'path-case':
+            proof[0]['attributes'] = ['namespace', 'Published']
+        else:
+            proof[0]['delegate_attributes'].reverse()
+>       with pytest.raises(ValueError):
+E       Failed: DID NOT RAISE <class 'ValueError'>
+
+tests/test_puck_published_export_receipts.py:114: Failed
+_ test_published_export_proof_cannot_be_missing_or_rebound[name-independent-auditor] _
+
+consumer = 'independent-auditor', defect = 'name'
+
+    @pytest.mark.parametrize('consumer', ['parent', 'independent-auditor'])
+    @pytest.mark.parametrize('defect', [
+        'missing', 'empty', 'not-list', 'phase', 'producer', 'attributes', 'delegates',
+        'name', 'extra-row', 'extra-field', 'missing-field', 'unsorted', 'duplicate',
+        'phase-case', 'path-case', 'delegate-order',
+    ])
+    def test_published_export_proof_cannot_be_missing_or_rebound(consumer, defect):
+        parent, auditor, dependency, result = receipt_case()
+        # Every negative starts from a terminal that meets all unrelated checks.
+        check_receipt(consumer, parent, auditor, dependency, result)
+        receipt = result['dependencies']
+        proof = receipt['published_export_modules']
+        if defect == 'missing':
+            del receipt['published_export_modules']
+        elif defect == 'empty':
+            receipt['published_export_modules'] = []
+        elif defect == 'not-list':
+            receipt['published_export_modules'] = {}
+        elif defect == 'phase':
+            proof[0]['phase'] = 'module_exec'
+        elif defect == 'producer':
+            proof[0]['producer'] = 'torch'
+        elif defect == 'attributes':
+            proof[0]['attributes'] = ['unrelated']
+        elif defect == 'delegates':
+            proof[0]['delegate_attributes'] = ['call']
+        elif defect == 'name':
+            proof[0]['name'] = 'numpy.unrelated'
+        elif defect == 'extra-row':
+            proof.append(dict(name='torch.undeclared', producer='torch',
+                              phase='module_exec_publish', attributes=['undeclared'],
+                              delegate_attributes=[]))
+        elif defect == 'extra-field':
+            proof[0]['unreviewed'] = False
+        elif defect == 'missing-field':
+            del proof[0]['attributes']
+        elif defect == 'unsorted':
+            proof.reverse()
+        elif defect == 'duplicate':
+            proof.append(copy.deepcopy(proof[-1]))
+        elif defect == 'phase-case':
+            proof[0]['phase'] = 'MODULE_EXEC_PUBLISH'
+        elif defect == 'path-case':
+            proof[0]['attributes'] = ['namespace', 'Published']
+        else:
+            proof[0]['delegate_attributes'].reverse()
+>       with pytest.raises(ValueError):
+E       Failed: DID NOT RAISE <class 'ValueError'>
+
+tests/test_puck_published_export_receipts.py:114: Failed
+__ test_published_export_proof_cannot_be_missing_or_rebound[extra-row-parent] __
+
+consumer = 'parent', defect = 'extra-row'
+
+    @pytest.mark.parametrize('consumer', ['parent', 'independent-auditor'])
+    @pytest.mark.parametrize('defect', [
+        'missing', 'empty', 'not-list', 'phase', 'producer', 'attributes', 'delegates',
+        'name', 'extra-row', 'extra-field', 'missing-field', 'unsorted', 'duplicate',
+        'phase-case', 'path-case', 'delegate-order',
+    ])
+    def test_published_export_proof_cannot_be_missing_or_rebound(consumer, defect):
+        parent, auditor, dependency, result = receipt_case()
+        # Every negative starts from a terminal that meets all unrelated checks.
+        check_receipt(consumer, parent, auditor, dependency, result)
+        receipt = result['dependencies']
+        proof = receipt['published_export_modules']
+        if defect == 'missing':
+            del receipt['published_export_modules']
+        elif defect == 'empty':
+            receipt['published_export_modules'] = []
+        elif defect == 'not-list':
+            receipt['published_export_modules'] = {}
+        elif defect == 'phase':
+            proof[0]['phase'] = 'module_exec'
+        elif defect == 'producer':
+            proof[0]['producer'] = 'torch'
+        elif defect == 'attributes':
+            proof[0]['attributes'] = ['unrelated']
+        elif defect == 'delegates':
+            proof[0]['delegate_attributes'] = ['call']
+        elif defect == 'name':
+            proof[0]['name'] = 'numpy.unrelated'
+        elif defect == 'extra-row':
+            proof.append(dict(name='torch.undeclared', producer='torch',
+                              phase='module_exec_publish', attributes=['undeclared'],
+                              delegate_attributes=[]))
+        elif defect == 'extra-field':
+            proof[0]['unreviewed'] = False
+        elif defect == 'missing-field':
+            del proof[0]['attributes']
+        elif defect == 'unsorted':
+            proof.reverse()
+        elif defect == 'duplicate':
+            proof.append(copy.deepcopy(proof[-1]))
+        elif defect == 'phase-case':
+            proof[0]['phase'] = 'MODULE_EXEC_PUBLISH'
+        elif defect == 'path-case':
+            proof[0]['attributes'] = ['namespace', 'Published']
+        else:
+            proof[0]['delegate_attributes'].reverse()
+>       with pytest.raises(ValueError):
+E       Failed: DID NOT RAISE <class 'ValueError'>
+
+tests/test_puck_published_export_receipts.py:114: Failed
+_ test_published_export_proof_cannot_be_missing_or_rebound[extra-row-independent-auditor] _
+
+consumer = 'independent-auditor', defect = 'extra-row'
+
+    @pytest.mark.parametrize('consumer', ['parent', 'independent-auditor'])
+    @pytest.mark.parametrize('defect', [
+        'missing', 'empty', 'not-list', 'phase', 'producer', 'attributes', 'delegates',
+        'name', 'extra-row', 'extra-field', 'missing-field', 'unsorted', 'duplicate',
+        'phase-case', 'path-case', 'delegate-order',
+    ])
+    def test_published_export_proof_cannot_be_missing_or_rebound(consumer, defect):
+        parent, auditor, dependency, result = receipt_case()
+        # Every negative starts from a terminal that meets all unrelated checks.
+        check_receipt(consumer, parent, auditor, dependency, result)
+        receipt = result['dependencies']
+        proof = receipt['published_export_modules']
+        if defect == 'missing':
+            del receipt['published_export_modules']
+        elif defect == 'empty':
+            receipt['published_export_modules'] = []
+        elif defect == 'not-list':
+            receipt['published_export_modules'] = {}
+        elif defect == 'phase':
+            proof[0]['phase'] = 'module_exec'
+        elif defect == 'producer':
+            proof[0]['producer'] = 'torch'
+        elif defect == 'attributes':
+            proof[0]['attributes'] = ['unrelated']
+        elif defect == 'delegates':
+            proof[0]['delegate_attributes'] = ['call']
+        elif defect == 'name':
+            proof[0]['name'] = 'numpy.unrelated'
+        elif defect == 'extra-row':
+            proof.append(dict(name='torch.undeclared', producer='torch',
+                              phase='module_exec_publish', attributes=['undeclared'],
+                              delegate_attributes=[]))
+        elif defect == 'extra-field':
+            proof[0]['unreviewed'] = False
+        elif defect == 'missing-field':
+            del proof[0]['attributes']
+        elif defect == 'unsorted':
+            proof.reverse()
+        elif defect == 'duplicate':
+            proof.append(copy.deepcopy(proof[-1]))
+        elif defect == 'phase-case':
+            proof[0]['phase'] = 'MODULE_EXEC_PUBLISH'
+        elif defect == 'path-case':
+            proof[0]['attributes'] = ['namespace', 'Published']
+        else:
+            proof[0]['delegate_attributes'].reverse()
+>       with pytest.raises(ValueError):
+E       Failed: DID NOT RAISE <class 'ValueError'>
+
+tests/test_puck_published_export_receipts.py:114: Failed
+_ test_published_export_proof_cannot_be_missing_or_rebound[extra-field-parent] _
+
+consumer = 'parent', defect = 'extra-field'
+
+    @pytest.mark.parametrize('consumer', ['parent', 'independent-auditor'])
+    @pytest.mark.parametrize('defect', [
+        'missing', 'empty', 'not-list', 'phase', 'producer', 'attributes', 'delegates',
+        'name', 'extra-row', 'extra-field', 'missing-field', 'unsorted', 'duplicate',
+        'phase-case', 'path-case', 'delegate-order',
+    ])
+    def test_published_export_proof_cannot_be_missing_or_rebound(consumer, defect):
+        parent, auditor, dependency, result = receipt_case()
+        # Every negative starts from a terminal that meets all unrelated checks.
+        check_receipt(consumer, parent, auditor, dependency, result)
+        receipt = result['dependencies']
+        proof = receipt['published_export_modules']
+        if defect == 'missing':
+            del receipt['published_export_modules']
+        elif defect == 'empty':
+            receipt['published_export_modules'] = []
+        elif defect == 'not-list':
+            receipt['published_export_modules'] = {}
+        elif defect == 'phase':
+            proof[0]['phase'] = 'module_exec'
+        elif defect == 'producer':
+            proof[0]['producer'] = 'torch'
+        elif defect == 'attributes':
+            proof[0]['attributes'] = ['unrelated']
+        elif defect == 'delegates':
+            proof[0]['delegate_attributes'] = ['call']
+        elif defect == 'name':
+            proof[0]['name'] = 'numpy.unrelated'
+        elif defect == 'extra-row':
+            proof.append(dict(name='torch.undeclared', producer='torch',
+                              phase='module_exec_publish', attributes=['undeclared'],
+                              delegate_attributes=[]))
+        elif defect == 'extra-field':
+            proof[0]['unreviewed'] = False
+        elif defect == 'missing-field':
+            del proof[0]['attributes']
+        elif defect == 'unsorted':
+            proof.reverse()
+        elif defect == 'duplicate':
+            proof.append(copy.deepcopy(proof[-1]))
+        elif defect == 'phase-case':
+            proof[0]['phase'] = 'MODULE_EXEC_PUBLISH'
+        elif defect == 'path-case':
+            proof[0]['attributes'] = ['namespace', 'Published']
+        else:
+            proof[0]['delegate_attributes'].reverse()
+>       with pytest.raises(ValueError):
+E       Failed: DID NOT RAISE <class 'ValueError'>
+
+tests/test_puck_published_export_receipts.py:114: Failed
+_ test_published_export_proof_cannot_be_missing_or_rebound[extra-field-independent-auditor] _
+
+consumer = 'independent-auditor', defect = 'extra-field'
+
+    @pytest.mark.parametrize('consumer', ['parent', 'independent-auditor'])
+    @pytest.mark.parametrize('defect', [
+        'missing', 'empty', 'not-list', 'phase', 'producer', 'attributes', 'delegates',
+        'name', 'extra-row', 'extra-field', 'missing-field', 'unsorted', 'duplicate',
+        'phase-case', 'path-case', 'delegate-order',
+    ])
+    def test_published_export_proof_cannot_be_missing_or_rebound(consumer, defect):
+        parent, auditor, dependency, result = receipt_case()
+        # Every negative starts from a terminal that meets all unrelated checks.
+        check_receipt(consumer, parent, auditor, dependency, result)
+        receipt = result['dependencies']
+        proof = receipt['published_export_modules']
+        if defect == 'missing':
+            del receipt['published_export_modules']
+        elif defect == 'empty':
+            receipt['published_export_modules'] = []
+        elif defect == 'not-list':
+            receipt['published_export_modules'] = {}
+        elif defect == 'phase':
+            proof[0]['phase'] = 'module_exec'
+        elif defect == 'producer':
+            proof[0]['producer'] = 'torch'
+        elif defect == 'attributes':
+            proof[0]['attributes'] = ['unrelated']
+        elif defect == 'delegates':
+            proof[0]['delegate_attributes'] = ['call']
+        elif defect == 'name':
+            proof[0]['name'] = 'numpy.unrelated'
+        elif defect == 'extra-row':
+            proof.append(dict(name='torch.undeclared', producer='torch',
+                              phase='module_exec_publish', attributes=['undeclared'],
+                              delegate_attributes=[]))
+        elif defect == 'extra-field':
+            proof[0]['unreviewed'] = False
+        elif defect == 'missing-field':
+            del proof[0]['attributes']
+        elif defect == 'unsorted':
+            proof.reverse()
+        elif defect == 'duplicate':
+            proof.append(copy.deepcopy(proof[-1]))
+        elif defect == 'phase-case':
+            proof[0]['phase'] = 'MODULE_EXEC_PUBLISH'
+        elif defect == 'path-case':
+            proof[0]['attributes'] = ['namespace', 'Published']
+        else:
+            proof[0]['delegate_attributes'].reverse()
+>       with pytest.raises(ValueError):
+E       Failed: DID NOT RAISE <class 'ValueError'>
+
+tests/test_puck_published_export_receipts.py:114: Failed
+_ test_published_export_proof_cannot_be_missing_or_rebound[missing-field-parent] _
+
+consumer = 'parent', defect = 'missing-field'
+
+    @pytest.mark.parametrize('consumer', ['parent', 'independent-auditor'])
+    @pytest.mark.parametrize('defect', [
+        'missing', 'empty', 'not-list', 'phase', 'producer', 'attributes', 'delegates',
+        'name', 'extra-row', 'extra-field', 'missing-field', 'unsorted', 'duplicate',
+        'phase-case', 'path-case', 'delegate-order',
+    ])
+    def test_published_export_proof_cannot_be_missing_or_rebound(consumer, defect):
+        parent, auditor, dependency, result = receipt_case()
+        # Every negative starts from a terminal that meets all unrelated checks.
+        check_receipt(consumer, parent, auditor, dependency, result)
+        receipt = result['dependencies']
+        proof = receipt['published_export_modules']
+        if defect == 'missing':
+            del receipt['published_export_modules']
+        elif defect == 'empty':
+            receipt['published_export_modules'] = []
+        elif defect == 'not-list':
+            receipt['published_export_modules'] = {}
+        elif defect == 'phase':
+            proof[0]['phase'] = 'module_exec'
+        elif defect == 'producer':
+            proof[0]['producer'] = 'torch'
+        elif defect == 'attributes':
+            proof[0]['attributes'] = ['unrelated']
+        elif defect == 'delegates':
+            proof[0]['delegate_attributes'] = ['call']
+        elif defect == 'name':
+            proof[0]['name'] = 'numpy.unrelated'
+        elif defect == 'extra-row':
+            proof.append(dict(name='torch.undeclared', producer='torch',
+                              phase='module_exec_publish', attributes=['undeclared'],
+                              delegate_attributes=[]))
+        elif defect == 'extra-field':
+            proof[0]['unreviewed'] = False
+        elif defect == 'missing-field':
+            del proof[0]['attributes']
+        elif defect == 'unsorted':
+            proof.reverse()
+        elif defect == 'duplicate':
+            proof.append(copy.deepcopy(proof[-1]))
+        elif defect == 'phase-case':
+            proof[0]['phase'] = 'MODULE_EXEC_PUBLISH'
+        elif defect == 'path-case':
+            proof[0]['attributes'] = ['namespace', 'Published']
+        else:
+            proof[0]['delegate_attributes'].reverse()
+>       with pytest.raises(ValueError):
+E       Failed: DID NOT RAISE <class 'ValueError'>
+
+tests/test_puck_published_export_receipts.py:114: Failed
+_ test_published_export_proof_cannot_be_missing_or_rebound[missing-field-independent-auditor] _
+
+consumer = 'independent-auditor', defect = 'missing-field'
+
+    @pytest.mark.parametrize('consumer', ['parent', 'independent-auditor'])
+    @pytest.mark.parametrize('defect', [
+        'missing', 'empty', 'not-list', 'phase', 'producer', 'attributes', 'delegates',
+        'name', 'extra-row', 'extra-field', 'missing-field', 'unsorted', 'duplicate',
+        'phase-case', 'path-case', 'delegate-order',
+    ])
+    def test_published_export_proof_cannot_be_missing_or_rebound(consumer, defect):
+        parent, auditor, dependency, result = receipt_case()
+        # Every negative starts from a terminal that meets all unrelated checks.
+        check_receipt(consumer, parent, auditor, dependency, result)
+        receipt = result['dependencies']
+        proof = receipt['published_export_modules']
+        if defect == 'missing':
+            del receipt['published_export_modules']
+        elif defect == 'empty':
+            receipt['published_export_modules'] = []
+        elif defect == 'not-list':
+            receipt['published_export_modules'] = {}
+        elif defect == 'phase':
+            proof[0]['phase'] = 'module_exec'
+        elif defect == 'producer':
+            proof[0]['producer'] = 'torch'
+        elif defect == 'attributes':
+            proof[0]['attributes'] = ['unrelated']
+        elif defect == 'delegates':
+            proof[0]['delegate_attributes'] = ['call']
+        elif defect == 'name':
+            proof[0]['name'] = 'numpy.unrelated'
+        elif defect == 'extra-row':
+            proof.append(dict(name='torch.undeclared', producer='torch',
+                              phase='module_exec_publish', attributes=['undeclared'],
+                              delegate_attributes=[]))
+        elif defect == 'extra-field':
+            proof[0]['unreviewed'] = False
+        elif defect == 'missing-field':
+            del proof[0]['attributes']
+        elif defect == 'unsorted':
+            proof.reverse()
+        elif defect == 'duplicate':
+            proof.append(copy.deepcopy(proof[-1]))
+        elif defect == 'phase-case':
+            proof[0]['phase'] = 'MODULE_EXEC_PUBLISH'
+        elif defect == 'path-case':
+            proof[0]['attributes'] = ['namespace', 'Published']
+        else:
+            proof[0]['delegate_attributes'].reverse()
+>       with pytest.raises(ValueError):
+E       Failed: DID NOT RAISE <class 'ValueError'>
+
+tests/test_puck_published_export_receipts.py:114: Failed
+__ test_published_export_proof_cannot_be_missing_or_rebound[unsorted-parent] ___
+
+consumer = 'parent', defect = 'unsorted'
+
+    @pytest.mark.parametrize('consumer', ['parent', 'independent-auditor'])
+    @pytest.mark.parametrize('defect', [
+        'missing', 'empty', 'not-list', 'phase', 'producer', 'attributes', 'delegates',
+        'name', 'extra-row', 'extra-field', 'missing-field', 'unsorted', 'duplicate',
+        'phase-case', 'path-case', 'delegate-order',
+    ])
+    def test_published_export_proof_cannot_be_missing_or_rebound(consumer, defect):
+        parent, auditor, dependency, result = receipt_case()
+        # Every negative starts from a terminal that meets all unrelated checks.
+        check_receipt(consumer, parent, auditor, dependency, result)
+        receipt = result['dependencies']
+        proof = receipt['published_export_modules']
+        if defect == 'missing':
+            del receipt['published_export_modules']
+        elif defect == 'empty':
+            receipt['published_export_modules'] = []
+        elif defect == 'not-list':
+            receipt['published_export_modules'] = {}
+        elif defect == 'phase':
+            proof[0]['phase'] = 'module_exec'
+        elif defect == 'producer':
+            proof[0]['producer'] = 'torch'
+        elif defect == 'attributes':
+            proof[0]['attributes'] = ['unrelated']
+        elif defect == 'delegates':
+            proof[0]['delegate_attributes'] = ['call']
+        elif defect == 'name':
+            proof[0]['name'] = 'numpy.unrelated'
+        elif defect == 'extra-row':
+            proof.append(dict(name='torch.undeclared', producer='torch',
+                              phase='module_exec_publish', attributes=['undeclared'],
+                              delegate_attributes=[]))
+        elif defect == 'extra-field':
+            proof[0]['unreviewed'] = False
+        elif defect == 'missing-field':
+            del proof[0]['attributes']
+        elif defect == 'unsorted':
+            proof.reverse()
+        elif defect == 'duplicate':
+            proof.append(copy.deepcopy(proof[-1]))
+        elif defect == 'phase-case':
+            proof[0]['phase'] = 'MODULE_EXEC_PUBLISH'
+        elif defect == 'path-case':
+            proof[0]['attributes'] = ['namespace', 'Published']
+        else:
+            proof[0]['delegate_attributes'].reverse()
+>       with pytest.raises(ValueError):
+E       Failed: DID NOT RAISE <class 'ValueError'>
+
+tests/test_puck_published_export_receipts.py:114: Failed
+_ test_published_export_proof_cannot_be_missing_or_rebound[unsorted-independent-auditor] _
+
+consumer = 'independent-auditor', defect = 'unsorted'
+
+    @pytest.mark.parametrize('consumer', ['parent', 'independent-auditor'])
+    @pytest.mark.parametrize('defect', [
+        'missing', 'empty', 'not-list', 'phase', 'producer', 'attributes', 'delegates',
+        'name', 'extra-row', 'extra-field', 'missing-field', 'unsorted', 'duplicate',
+        'phase-case', 'path-case', 'delegate-order',
+    ])
+    def test_published_export_proof_cannot_be_missing_or_rebound(consumer, defect):
+        parent, auditor, dependency, result = receipt_case()
+        # Every negative starts from a terminal that meets all unrelated checks.
+        check_receipt(consumer, parent, auditor, dependency, result)
+        receipt = result['dependencies']
+        proof = receipt['published_export_modules']
+        if defect == 'missing':
+            del receipt['published_export_modules']
+        elif defect == 'empty':
+            receipt['published_export_modules'] = []
+        elif defect == 'not-list':
+            receipt['published_export_modules'] = {}
+        elif defect == 'phase':
+            proof[0]['phase'] = 'module_exec'
+        elif defect == 'producer':
+            proof[0]['producer'] = 'torch'
+        elif defect == 'attributes':
+            proof[0]['attributes'] = ['unrelated']
+        elif defect == 'delegates':
+            proof[0]['delegate_attributes'] = ['call']
+        elif defect == 'name':
+            proof[0]['name'] = 'numpy.unrelated'
+        elif defect == 'extra-row':
+            proof.append(dict(name='torch.undeclared', producer='torch',
+                              phase='module_exec_publish', attributes=['undeclared'],
+                              delegate_attributes=[]))
+        elif defect == 'extra-field':
+            proof[0]['unreviewed'] = False
+        elif defect == 'missing-field':
+            del proof[0]['attributes']
+        elif defect == 'unsorted':
+            proof.reverse()
+        elif defect == 'duplicate':
+            proof.append(copy.deepcopy(proof[-1]))
+        elif defect == 'phase-case':
+            proof[0]['phase'] = 'MODULE_EXEC_PUBLISH'
+        elif defect == 'path-case':
+            proof[0]['attributes'] = ['namespace', 'Published']
+        else:
+            proof[0]['delegate_attributes'].reverse()
+>       with pytest.raises(ValueError):
+E       Failed: DID NOT RAISE <class 'ValueError'>
+
+tests/test_puck_published_export_receipts.py:114: Failed
+__ test_published_export_proof_cannot_be_missing_or_rebound[duplicate-parent] __
+
+consumer = 'parent', defect = 'duplicate'
+
+    @pytest.mark.parametrize('consumer', ['parent', 'independent-auditor'])
+    @pytest.mark.parametrize('defect', [
+        'missing', 'empty', 'not-list', 'phase', 'producer', 'attributes', 'delegates',
+        'name', 'extra-row', 'extra-field', 'missing-field', 'unsorted', 'duplicate',
+        'phase-case', 'path-case', 'delegate-order',
+    ])
+    def test_published_export_proof_cannot_be_missing_or_rebound(consumer, defect):
+        parent, auditor, dependency, result = receipt_case()
+        # Every negative starts from a terminal that meets all unrelated checks.
+        check_receipt(consumer, parent, auditor, dependency, result)
+        receipt = result['dependencies']
+        proof = receipt['published_export_modules']
+        if defect == 'missing':
+            del receipt['published_export_modules']
+        elif defect == 'empty':
+            receipt['published_export_modules'] = []
+        elif defect == 'not-list':
+            receipt['published_export_modules'] = {}
+        elif defect == 'phase':
+            proof[0]['phase'] = 'module_exec'
+        elif defect == 'producer':
+            proof[0]['producer'] = 'torch'
+        elif defect == 'attributes':
+            proof[0]['attributes'] = ['unrelated']
+        elif defect == 'delegates':
+            proof[0]['delegate_attributes'] = ['call']
+        elif defect == 'name':
+            proof[0]['name'] = 'numpy.unrelated'
+        elif defect == 'extra-row':
+            proof.append(dict(name='torch.undeclared', producer='torch',
+                              phase='module_exec_publish', attributes=['undeclared'],
+                              delegate_attributes=[]))
+        elif defect == 'extra-field':
+            proof[0]['unreviewed'] = False
+        elif defect == 'missing-field':
+            del proof[0]['attributes']
+        elif defect == 'unsorted':
+            proof.reverse()
+        elif defect == 'duplicate':
+            proof.append(copy.deepcopy(proof[-1]))
+        elif defect == 'phase-case':
+            proof[0]['phase'] = 'MODULE_EXEC_PUBLISH'
+        elif defect == 'path-case':
+            proof[0]['attributes'] = ['namespace', 'Published']
+        else:
+            proof[0]['delegate_attributes'].reverse()
+>       with pytest.raises(ValueError):
+E       Failed: DID NOT RAISE <class 'ValueError'>
+
+tests/test_puck_published_export_receipts.py:114: Failed
+_ test_published_export_proof_cannot_be_missing_or_rebound[duplicate-independent-auditor] _
+
+consumer = 'independent-auditor', defect = 'duplicate'
+
+    @pytest.mark.parametrize('consumer', ['parent', 'independent-auditor'])
+    @pytest.mark.parametrize('defect', [
+        'missing', 'empty', 'not-list', 'phase', 'producer', 'attributes', 'delegates',
+        'name', 'extra-row', 'extra-field', 'missing-field', 'unsorted', 'duplicate',
+        'phase-case', 'path-case', 'delegate-order',
+    ])
+    def test_published_export_proof_cannot_be_missing_or_rebound(consumer, defect):
+        parent, auditor, dependency, result = receipt_case()
+        # Every negative starts from a terminal that meets all unrelated checks.
+        check_receipt(consumer, parent, auditor, dependency, result)
+        receipt = result['dependencies']
+        proof = receipt['published_export_modules']
+        if defect == 'missing':
+            del receipt['published_export_modules']
+        elif defect == 'empty':
+            receipt['published_export_modules'] = []
+        elif defect == 'not-list':
+            receipt['published_export_modules'] = {}
+        elif defect == 'phase':
+            proof[0]['phase'] = 'module_exec'
+        elif defect == 'producer':
+            proof[0]['producer'] = 'torch'
+        elif defect == 'attributes':
+            proof[0]['attributes'] = ['unrelated']
+        elif defect == 'delegates':
+            proof[0]['delegate_attributes'] = ['call']
+        elif defect == 'name':
+            proof[0]['name'] = 'numpy.unrelated'
+        elif defect == 'extra-row':
+            proof.append(dict(name='torch.undeclared', producer='torch',
+                              phase='module_exec_publish', attributes=['undeclared'],
+                              delegate_attributes=[]))
+        elif defect == 'extra-field':
+            proof[0]['unreviewed'] = False
+        elif defect == 'missing-field':
+            del proof[0]['attributes']
+        elif defect == 'unsorted':
+            proof.reverse()
+        elif defect == 'duplicate':
+            proof.append(copy.deepcopy(proof[-1]))
+        elif defect == 'phase-case':
+            proof[0]['phase'] = 'MODULE_EXEC_PUBLISH'
+        elif defect == 'path-case':
+            proof[0]['attributes'] = ['namespace', 'Published']
+        else:
+            proof[0]['delegate_attributes'].reverse()
+>       with pytest.raises(ValueError):
+E       Failed: DID NOT RAISE <class 'ValueError'>
+
+tests/test_puck_published_export_receipts.py:114: Failed
+_ test_published_export_proof_cannot_be_missing_or_rebound[phase-case-parent] __
+
+consumer = 'parent', defect = 'phase-case'
+
+    @pytest.mark.parametrize('consumer', ['parent', 'independent-auditor'])
+    @pytest.mark.parametrize('defect', [
+        'missing', 'empty', 'not-list', 'phase', 'producer', 'attributes', 'delegates',
+        'name', 'extra-row', 'extra-field', 'missing-field', 'unsorted', 'duplicate',
+        'phase-case', 'path-case', 'delegate-order',
+    ])
+    def test_published_export_proof_cannot_be_missing_or_rebound(consumer, defect):
+        parent, auditor, dependency, result = receipt_case()
+        # Every negative starts from a terminal that meets all unrelated checks.
+        check_receipt(consumer, parent, auditor, dependency, result)
+        receipt = result['dependencies']
+        proof = receipt['published_export_modules']
+        if defect == 'missing':
+            del receipt['published_export_modules']
+        elif defect == 'empty':
+            receipt['published_export_modules'] = []
+        elif defect == 'not-list':
+            receipt['published_export_modules'] = {}
+        elif defect == 'phase':
+            proof[0]['phase'] = 'module_exec'
+        elif defect == 'producer':
+            proof[0]['producer'] = 'torch'
+        elif defect == 'attributes':
+            proof[0]['attributes'] = ['unrelated']
+        elif defect == 'delegates':
+            proof[0]['delegate_attributes'] = ['call']
+        elif defect == 'name':
+            proof[0]['name'] = 'numpy.unrelated'
+        elif defect == 'extra-row':
+            proof.append(dict(name='torch.undeclared', producer='torch',
+                              phase='module_exec_publish', attributes=['undeclared'],
+                              delegate_attributes=[]))
+        elif defect == 'extra-field':
+            proof[0]['unreviewed'] = False
+        elif defect == 'missing-field':
+            del proof[0]['attributes']
+        elif defect == 'unsorted':
+            proof.reverse()
+        elif defect == 'duplicate':
+            proof.append(copy.deepcopy(proof[-1]))
+        elif defect == 'phase-case':
+            proof[0]['phase'] = 'MODULE_EXEC_PUBLISH'
+        elif defect == 'path-case':
+            proof[0]['attributes'] = ['namespace', 'Published']
+        else:
+            proof[0]['delegate_attributes'].reverse()
+>       with pytest.raises(ValueError):
+E       Failed: DID NOT RAISE <class 'ValueError'>
+
+tests/test_puck_published_export_receipts.py:114: Failed
+_ test_published_export_proof_cannot_be_missing_or_rebound[phase-case-independent-auditor] _
+
+consumer = 'independent-auditor', defect = 'phase-case'
+
+    @pytest.mark.parametrize('consumer', ['parent', 'independent-auditor'])
+    @pytest.mark.parametrize('defect', [
+        'missing', 'empty', 'not-list', 'phase', 'producer', 'attributes', 'delegates',
+        'name', 'extra-row', 'extra-field', 'missing-field', 'unsorted', 'duplicate',
+        'phase-case', 'path-case', 'delegate-order',
+    ])
+    def test_published_export_proof_cannot_be_missing_or_rebound(consumer, defect):
+        parent, auditor, dependency, result = receipt_case()
+        # Every negative starts from a terminal that meets all unrelated checks.
+        check_receipt(consumer, parent, auditor, dependency, result)
+        receipt = result['dependencies']
+        proof = receipt['published_export_modules']
+        if defect == 'missing':
+            del receipt['published_export_modules']
+        elif defect == 'empty':
+            receipt['published_export_modules'] = []
+        elif defect == 'not-list':
+            receipt['published_export_modules'] = {}
+        elif defect == 'phase':
+            proof[0]['phase'] = 'module_exec'
+        elif defect == 'producer':
+            proof[0]['producer'] = 'torch'
+        elif defect == 'attributes':
+            proof[0]['attributes'] = ['unrelated']
+        elif defect == 'delegates':
+            proof[0]['delegate_attributes'] = ['call']
+        elif defect == 'name':
+            proof[0]['name'] = 'numpy.unrelated'
+        elif defect == 'extra-row':
+            proof.append(dict(name='torch.undeclared', producer='torch',
+                              phase='module_exec_publish', attributes=['undeclared'],
+                              delegate_attributes=[]))
+        elif defect == 'extra-field':
+            proof[0]['unreviewed'] = False
+        elif defect == 'missing-field':
+            del proof[0]['attributes']
+        elif defect == 'unsorted':
+            proof.reverse()
+        elif defect == 'duplicate':
+            proof.append(copy.deepcopy(proof[-1]))
+        elif defect == 'phase-case':
+            proof[0]['phase'] = 'MODULE_EXEC_PUBLISH'
+        elif defect == 'path-case':
+            proof[0]['attributes'] = ['namespace', 'Published']
+        else:
+            proof[0]['delegate_attributes'].reverse()
+>       with pytest.raises(ValueError):
+E       Failed: DID NOT RAISE <class 'ValueError'>
+
+tests/test_puck_published_export_receipts.py:114: Failed
+__ test_published_export_proof_cannot_be_missing_or_rebound[path-case-parent] __
+
+consumer = 'parent', defect = 'path-case'
+
+    @pytest.mark.parametrize('consumer', ['parent', 'independent-auditor'])
+    @pytest.mark.parametrize('defect', [
+        'missing', 'empty', 'not-list', 'phase', 'producer', 'attributes', 'delegates',
+        'name', 'extra-row', 'extra-field', 'missing-field', 'unsorted', 'duplicate',
+        'phase-case', 'path-case', 'delegate-order',
+    ])
+    def test_published_export_proof_cannot_be_missing_or_rebound(consumer, defect):
+        parent, auditor, dependency, result = receipt_case()
+        # Every negative starts from a terminal that meets all unrelated checks.
+        check_receipt(consumer, parent, auditor, dependency, result)
+        receipt = result['dependencies']
+        proof = receipt['published_export_modules']
+        if defect == 'missing':
+            del receipt['published_export_modules']
+        elif defect == 'empty':
+            receipt['published_export_modules'] = []
+        elif defect == 'not-list':
+            receipt['published_export_modules'] = {}
+        elif defect == 'phase':
+            proof[0]['phase'] = 'module_exec'
+        elif defect == 'producer':
+            proof[0]['producer'] = 'torch'
+        elif defect == 'attributes':
+            proof[0]['attributes'] = ['unrelated']
+        elif defect == 'delegates':
+            proof[0]['delegate_attributes'] = ['call']
+        elif defect == 'name':
+            proof[0]['name'] = 'numpy.unrelated'
+        elif defect == 'extra-row':
+            proof.append(dict(name='torch.undeclared', producer='torch',
+                              phase='module_exec_publish', attributes=['undeclared'],
+                              delegate_attributes=[]))
+        elif defect == 'extra-field':
+            proof[0]['unreviewed'] = False
+        elif defect == 'missing-field':
+            del proof[0]['attributes']
+        elif defect == 'unsorted':
+            proof.reverse()
+        elif defect == 'duplicate':
+            proof.append(copy.deepcopy(proof[-1]))
+        elif defect == 'phase-case':
+            proof[0]['phase'] = 'MODULE_EXEC_PUBLISH'
+        elif defect == 'path-case':
+            proof[0]['attributes'] = ['namespace', 'Published']
+        else:
+            proof[0]['delegate_attributes'].reverse()
+>       with pytest.raises(ValueError):
+E       Failed: DID NOT RAISE <class 'ValueError'>
+
+tests/test_puck_published_export_receipts.py:114: Failed
+_ test_published_export_proof_cannot_be_missing_or_rebound[path-case-independent-auditor] _
+
+consumer = 'independent-auditor', defect = 'path-case'
+
+    @pytest.mark.parametrize('consumer', ['parent', 'independent-auditor'])
+    @pytest.mark.parametrize('defect', [
+        'missing', 'empty', 'not-list', 'phase', 'producer', 'attributes', 'delegates',
+        'name', 'extra-row', 'extra-field', 'missing-field', 'unsorted', 'duplicate',
+        'phase-case', 'path-case', 'delegate-order',
+    ])
+    def test_published_export_proof_cannot_be_missing_or_rebound(consumer, defect):
+        parent, auditor, dependency, result = receipt_case()
+        # Every negative starts from a terminal that meets all unrelated checks.
+        check_receipt(consumer, parent, auditor, dependency, result)
+        receipt = result['dependencies']
+        proof = receipt['published_export_modules']
+        if defect == 'missing':
+            del receipt['published_export_modules']
+        elif defect == 'empty':
+            receipt['published_export_modules'] = []
+        elif defect == 'not-list':
+            receipt['published_export_modules'] = {}
+        elif defect == 'phase':
+            proof[0]['phase'] = 'module_exec'
+        elif defect == 'producer':
+            proof[0]['producer'] = 'torch'
+        elif defect == 'attributes':
+            proof[0]['attributes'] = ['unrelated']
+        elif defect == 'delegates':
+            proof[0]['delegate_attributes'] = ['call']
+        elif defect == 'name':
+            proof[0]['name'] = 'numpy.unrelated'
+        elif defect == 'extra-row':
+            proof.append(dict(name='torch.undeclared', producer='torch',
+                              phase='module_exec_publish', attributes=['undeclared'],
+                              delegate_attributes=[]))
+        elif defect == 'extra-field':
+            proof[0]['unreviewed'] = False
+        elif defect == 'missing-field':
+            del proof[0]['attributes']
+        elif defect == 'unsorted':
+            proof.reverse()
+        elif defect == 'duplicate':
+            proof.append(copy.deepcopy(proof[-1]))
+        elif defect == 'phase-case':
+            proof[0]['phase'] = 'MODULE_EXEC_PUBLISH'
+        elif defect == 'path-case':
+            proof[0]['attributes'] = ['namespace', 'Published']
+        else:
+            proof[0]['delegate_attributes'].reverse()
+>       with pytest.raises(ValueError):
+E       Failed: DID NOT RAISE <class 'ValueError'>
+
+tests/test_puck_published_export_receipts.py:114: Failed
+_ test_published_export_proof_cannot_be_missing_or_rebound[delegate-order-parent] _
+
+consumer = 'parent', defect = 'delegate-order'
+
+    @pytest.mark.parametrize('consumer', ['parent', 'independent-auditor'])
+    @pytest.mark.parametrize('defect', [
+        'missing', 'empty', 'not-list', 'phase', 'producer', 'attributes', 'delegates',
+        'name', 'extra-row', 'extra-field', 'missing-field', 'unsorted', 'duplicate',
+        'phase-case', 'path-case', 'delegate-order',
+    ])
+    def test_published_export_proof_cannot_be_missing_or_rebound(consumer, defect):
+        parent, auditor, dependency, result = receipt_case()
+        # Every negative starts from a terminal that meets all unrelated checks.
+        check_receipt(consumer, parent, auditor, dependency, result)
+        receipt = result['dependencies']
+        proof = receipt['published_export_modules']
+        if defect == 'missing':
+            del receipt['published_export_modules']
+        elif defect == 'empty':
+            receipt['published_export_modules'] = []
+        elif defect == 'not-list':
+            receipt['published_export_modules'] = {}
+        elif defect == 'phase':
+            proof[0]['phase'] = 'module_exec'
+        elif defect == 'producer':
+            proof[0]['producer'] = 'torch'
+        elif defect == 'attributes':
+            proof[0]['attributes'] = ['unrelated']
+        elif defect == 'delegates':
+            proof[0]['delegate_attributes'] = ['call']
+        elif defect == 'name':
+            proof[0]['name'] = 'numpy.unrelated'
+        elif defect == 'extra-row':
+            proof.append(dict(name='torch.undeclared', producer='torch',
+                              phase='module_exec_publish', attributes=['undeclared'],
+                              delegate_attributes=[]))
+        elif defect == 'extra-field':
+            proof[0]['unreviewed'] = False
+        elif defect == 'missing-field':
+            del proof[0]['attributes']
+        elif defect == 'unsorted':
+            proof.reverse()
+        elif defect == 'duplicate':
+            proof.append(copy.deepcopy(proof[-1]))
+        elif defect == 'phase-case':
+            proof[0]['phase'] = 'MODULE_EXEC_PUBLISH'
+        elif defect == 'path-case':
+            proof[0]['attributes'] = ['namespace', 'Published']
+        else:
+            proof[0]['delegate_attributes'].reverse()
+>       with pytest.raises(ValueError):
+E       Failed: DID NOT RAISE <class 'ValueError'>
+
+tests/test_puck_published_export_receipts.py:114: Failed
+_ test_published_export_proof_cannot_be_missing_or_rebound[delegate-order-independent-auditor] _
+
+consumer = 'independent-auditor', defect = 'delegate-order'
+
+    @pytest.mark.parametrize('consumer', ['parent', 'independent-auditor'])
+    @pytest.mark.parametrize('defect', [
+        'missing', 'empty', 'not-list', 'phase', 'producer', 'attributes', 'delegates',
+        'name', 'extra-row', 'extra-field', 'missing-field', 'unsorted', 'duplicate',
+        'phase-case', 'path-case', 'delegate-order',
+    ])
+    def test_published_export_proof_cannot_be_missing_or_rebound(consumer, defect):
+        parent, auditor, dependency, result = receipt_case()
+        # Every negative starts from a terminal that meets all unrelated checks.
+        check_receipt(consumer, parent, auditor, dependency, result)
+        receipt = result['dependencies']
+        proof = receipt['published_export_modules']
+        if defect == 'missing':
+            del receipt['published_export_modules']
+        elif defect == 'empty':
+            receipt['published_export_modules'] = []
+        elif defect == 'not-list':
+            receipt['published_export_modules'] = {}
+        elif defect == 'phase':
+            proof[0]['phase'] = 'module_exec'
+        elif defect == 'producer':
+            proof[0]['producer'] = 'torch'
+        elif defect == 'attributes':
+            proof[0]['attributes'] = ['unrelated']
+        elif defect == 'delegates':
+            proof[0]['delegate_attributes'] = ['call']
+        elif defect == 'name':
+            proof[0]['name'] = 'numpy.unrelated'
+        elif defect == 'extra-row':
+            proof.append(dict(name='torch.undeclared', producer='torch',
+                              phase='module_exec_publish', attributes=['undeclared'],
+                              delegate_attributes=[]))
+        elif defect == 'extra-field':
+            proof[0]['unreviewed'] = False
+        elif defect == 'missing-field':
+            del proof[0]['attributes']
+        elif defect == 'unsorted':
+            proof.reverse()
+        elif defect == 'duplicate':
+            proof.append(copy.deepcopy(proof[-1]))
+        elif defect == 'phase-case':
+            proof[0]['phase'] = 'MODULE_EXEC_PUBLISH'
+        elif defect == 'path-case':
+            proof[0]['attributes'] = ['namespace', 'Published']
+        else:
+            proof[0]['delegate_attributes'].reverse()
+>       with pytest.raises(ValueError):
+E       Failed: DID NOT RAISE <class 'ValueError'>
+
+tests/test_puck_published_export_receipts.py:114: Failed
+_ test_publication_receipt_key_is_forbidden_without_publication_declarations[empty-parent] _
+
+consumer = 'parent', proof = []
+
+    @pytest.mark.parametrize('consumer', ['parent', 'independent-auditor'])
+    @pytest.mark.parametrize('proof', [[], publication_rows()[1]], ids=['empty', 'undeclared'])
+    def test_publication_receipt_key_is_forbidden_without_publication_declarations(consumer, proof):
+        parent, auditor, dependency, result = receipt_case(published=False)
+        check_receipt(consumer, parent, auditor, dependency, result)
+        result['dependencies']['published_export_modules'] = copy.deepcopy(proof)
+>       with pytest.raises(ValueError):
+E       Failed: DID NOT RAISE <class 'ValueError'>
+
+tests/test_puck_published_export_receipts.py:131: Failed
+_ test_publication_receipt_key_is_forbidden_without_publication_declarations[empty-independent-auditor] _
+
+consumer = 'independent-auditor', proof = []
+
+    @pytest.mark.parametrize('consumer', ['parent', 'independent-auditor'])
+    @pytest.mark.parametrize('proof', [[], publication_rows()[1]], ids=['empty', 'undeclared'])
+    def test_publication_receipt_key_is_forbidden_without_publication_declarations(consumer, proof):
+        parent, auditor, dependency, result = receipt_case(published=False)
+        check_receipt(consumer, parent, auditor, dependency, result)
+        result['dependencies']['published_export_modules'] = copy.deepcopy(proof)
+>       with pytest.raises(ValueError):
+E       Failed: DID NOT RAISE <class 'ValueError'>
+
+tests/test_puck_published_export_receipts.py:131: Failed
+_ test_publication_receipt_key_is_forbidden_without_publication_declarations[undeclared-parent] _
+
+consumer = 'parent'
+proof = [{'attributes': ['namespace', 'published'], 'delegate_attributes': ['call', 'other'], 'name': 'numpy.published', 'phas...attributes': ['published'], 'delegate_attributes': [], 'name': 'torch.published', 'phase': 'module_exec_publish', ...}]
+
+    @pytest.mark.parametrize('consumer', ['parent', 'independent-auditor'])
+    @pytest.mark.parametrize('proof', [[], publication_rows()[1]], ids=['empty', 'undeclared'])
+    def test_publication_receipt_key_is_forbidden_without_publication_declarations(consumer, proof):
+        parent, auditor, dependency, result = receipt_case(published=False)
+        check_receipt(consumer, parent, auditor, dependency, result)
+        result['dependencies']['published_export_modules'] = copy.deepcopy(proof)
+>       with pytest.raises(ValueError):
+E       Failed: DID NOT RAISE <class 'ValueError'>
+
+tests/test_puck_published_export_receipts.py:131: Failed
+_ test_publication_receipt_key_is_forbidden_without_publication_declarations[undeclared-independent-auditor] _
+
+consumer = 'independent-auditor'
+proof = [{'attributes': ['namespace', 'published'], 'delegate_attributes': ['call', 'other'], 'name': 'numpy.published', 'phas...attributes': ['published'], 'delegate_attributes': [], 'name': 'torch.published', 'phase': 'module_exec_publish', ...}]
+
+    @pytest.mark.parametrize('consumer', ['parent', 'independent-auditor'])
+    @pytest.mark.parametrize('proof', [[], publication_rows()[1]], ids=['empty', 'undeclared'])
+    def test_publication_receipt_key_is_forbidden_without_publication_declarations(consumer, proof):
+        parent, auditor, dependency, result = receipt_case(published=False)
+        check_receipt(consumer, parent, auditor, dependency, result)
+        result['dependencies']['published_export_modules'] = copy.deepcopy(proof)
+>       with pytest.raises(ValueError):
+E       Failed: DID NOT RAISE <class 'ValueError'>
+
+tests/test_puck_published_export_receipts.py:131: Failed
+___ test_enhanced_registration_maps_published_child_to_its_declared_producer ___
+
+tmp_path = PosixPath('/tmp/palimpsest-delayed-exports-red-receipts-01/test_enhanced_registration_map0')
+
+    def test_enhanced_registration_maps_published_child_to_its_declared_producer(tmp_path):
+        site, observation, profile, _ = setup(tmp_path)
+        profile.update(kind='puck-producer-import-profile-v2', version=2, native_cache=[])
+        profile['exports'] = [demo_publication()]
+        observation['cache']['modules'].append(row(site, 'demo.published', spec=False))
+        api = registration_api()
+        snapshot = api._Snapshot(time.monotonic() + 30)
+        try:
+            census = snapshot.census(str(site))
+>           modules, namespaces = api._module_maps(str(site), observation, profile, census,
+                                                   allow_native_cache=True)
+
+tests/test_puck_published_export_receipts.py:149: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+src/palimpsest/puck_runtime_registration.py:302: in _module_maps
+    validate_profile(profile, physical, namespaces, allow_native_cache=allow_native_cache)
+src/palimpsest/puck_dependency_bindings.py:87: in validate_profile
+    _fields(row, ('name','producer','phase','attributes','class_binding'))
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+value = {'attributes': ['published'], 'class_binding': None, 'delegate_attributes': [], 'name': 'demo.published', ...}
+keys = ('name', 'producer', 'phase', 'attributes', 'class_binding')
+
+    def _fields(value, keys):
+        if type(value) is not dict or set(value) != set(keys):
+>           raise ValueError('Dependency import profile binding fields differ')
+E           ValueError: Dependency import profile binding fields differ
+
+src/palimpsest/puck_dependency_bindings.py:24: ValueError
+______ test_explicit_publication_declaration_survives_inert_tmpfs_staging ______
+
+tmp_path = PosixPath('/tmp/palimpsest-delayed-exports-red-receipts-01/test_explicit_publication_decl0')
+
+    def test_explicit_publication_declaration_survives_inert_tmpfs_staging(tmp_path):
+        source, registration = forest(tmp_path, version=3)
+        profile = registration['import_profile']
+        profile.update(kind='puck-producer-import-profile-v2', version=2, native_cache=[])
+        profile['exports'] = [demo_publication()]
+        before = copy.deepcopy(registration)
+        with tmpfs_base() as base:
+>           staged = stage(registration, base / 'stage')
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_puck_published_export_receipts.py:180: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_puck_runtime_staging.py:58: in stage
+    return api().stage_tmpfs_registration(raw,expected_sha256=kwargs.pop('expected_sha256',hashlib.sha256(raw).hexdigest()),
+src/palimpsest/puck_runtime_staging.py:170: in stage_tmpfs_registration
+    validated=HeldDependencyNamespace(registration_raw,expected_sha256=expected_sha256,
+src/palimpsest/puck_dependency_files.py:222: in __init__
+    self._validate()
+src/palimpsest/puck_dependency_files.py:321: in _validate
+    validate_profile(reg['import_profile'],reg['modules'],reg['namespaces'],
+src/palimpsest/puck_dependency_bindings.py:87: in validate_profile
+    _fields(row, ('name','producer','phase','attributes','class_binding'))
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+value = {'attributes': ['published'], 'class_binding': None, 'delegate_attributes': [], 'name': 'demo.published', ...}
+keys = ('name', 'producer', 'phase', 'attributes', 'class_binding')
+
+    def _fields(value, keys):
+        if type(value) is not dict or set(value) != set(keys):
+>           raise ValueError('Dependency import profile binding fields differ')
+E           ValueError: Dependency import profile binding fields differ
+
+src/palimpsest/puck_dependency_bindings.py:24: ValueError
+=========================== short test summary info ============================
+FAILED tests/test_puck_published_export_receipts.py::test_published_export_proof_cannot_be_missing_or_rebound[missing-parent]
+FAILED tests/test_puck_published_export_receipts.py::test_published_export_proof_cannot_be_missing_or_rebound[missing-independent-auditor]
+FAILED tests/test_puck_published_export_receipts.py::test_published_export_proof_cannot_be_missing_or_rebound[empty-parent]
+FAILED tests/test_puck_published_export_receipts.py::test_published_export_proof_cannot_be_missing_or_rebound[empty-independent-auditor]
+FAILED tests/test_puck_published_export_receipts.py::test_published_export_proof_cannot_be_missing_or_rebound[not-list-parent]
+FAILED tests/test_puck_published_export_receipts.py::test_published_export_proof_cannot_be_missing_or_rebound[not-list-independent-auditor]
+FAILED tests/test_puck_published_export_receipts.py::test_published_export_proof_cannot_be_missing_or_rebound[phase-parent]
+FAILED tests/test_puck_published_export_receipts.py::test_published_export_proof_cannot_be_missing_or_rebound[phase-independent-auditor]
+FAILED tests/test_puck_published_export_receipts.py::test_published_export_proof_cannot_be_missing_or_rebound[producer-parent]
+FAILED tests/test_puck_published_export_receipts.py::test_published_export_proof_cannot_be_missing_or_rebound[producer-independent-auditor]
+FAILED tests/test_puck_published_export_receipts.py::test_published_export_proof_cannot_be_missing_or_rebound[attributes-parent]
+FAILED tests/test_puck_published_export_receipts.py::test_published_export_proof_cannot_be_missing_or_rebound[attributes-independent-auditor]
+FAILED tests/test_puck_published_export_receipts.py::test_published_export_proof_cannot_be_missing_or_rebound[delegates-parent]
+FAILED tests/test_puck_published_export_receipts.py::test_published_export_proof_cannot_be_missing_or_rebound[delegates-independent-auditor]
+FAILED tests/test_puck_published_export_receipts.py::test_published_export_proof_cannot_be_missing_or_rebound[name-parent]
+FAILED tests/test_puck_published_export_receipts.py::test_published_export_proof_cannot_be_missing_or_rebound[name-independent-auditor]
+FAILED tests/test_puck_published_export_receipts.py::test_published_export_proof_cannot_be_missing_or_rebound[extra-row-parent]
+FAILED tests/test_puck_published_export_receipts.py::test_published_export_proof_cannot_be_missing_or_rebound[extra-row-independent-auditor]
+FAILED tests/test_puck_published_export_receipts.py::test_published_export_proof_cannot_be_missing_or_rebound[extra-field-parent]
+FAILED tests/test_puck_published_export_receipts.py::test_published_export_proof_cannot_be_missing_or_rebound[extra-field-independent-auditor]
+FAILED tests/test_puck_published_export_receipts.py::test_published_export_proof_cannot_be_missing_or_rebound[missing-field-parent]
+FAILED tests/test_puck_published_export_receipts.py::test_published_export_proof_cannot_be_missing_or_rebound[missing-field-independent-auditor]
+FAILED tests/test_puck_published_export_receipts.py::test_published_export_proof_cannot_be_missing_or_rebound[unsorted-parent]
+FAILED tests/test_puck_published_export_receipts.py::test_published_export_proof_cannot_be_missing_or_rebound[unsorted-independent-auditor]
+FAILED tests/test_puck_published_export_receipts.py::test_published_export_proof_cannot_be_missing_or_rebound[duplicate-parent]
+FAILED tests/test_puck_published_export_receipts.py::test_published_export_proof_cannot_be_missing_or_rebound[duplicate-independent-auditor]
+FAILED tests/test_puck_published_export_receipts.py::test_published_export_proof_cannot_be_missing_or_rebound[phase-case-parent]
+FAILED tests/test_puck_published_export_receipts.py::test_published_export_proof_cannot_be_missing_or_rebound[phase-case-independent-auditor]
+FAILED tests/test_puck_published_export_receipts.py::test_published_export_proof_cannot_be_missing_or_rebound[path-case-parent]
+FAILED tests/test_puck_published_export_receipts.py::test_published_export_proof_cannot_be_missing_or_rebound[path-case-independent-auditor]
+FAILED tests/test_puck_published_export_receipts.py::test_published_export_proof_cannot_be_missing_or_rebound[delegate-order-parent]
+FAILED tests/test_puck_published_export_receipts.py::test_published_export_proof_cannot_be_missing_or_rebound[delegate-order-independent-auditor]
+FAILED tests/test_puck_published_export_receipts.py::test_publication_receipt_key_is_forbidden_without_publication_declarations[empty-parent]
+FAILED tests/test_puck_published_export_receipts.py::test_publication_receipt_key_is_forbidden_without_publication_declarations[empty-independent-auditor]
+FAILED tests/test_puck_published_export_receipts.py::test_publication_receipt_key_is_forbidden_without_publication_declarations[undeclared-parent]
+FAILED tests/test_puck_published_export_receipts.py::test_publication_receipt_key_is_forbidden_without_publication_declarations[undeclared-independent-auditor]
+FAILED tests/test_puck_published_export_receipts.py::test_enhanced_registration_maps_published_child_to_its_declared_producer
+FAILED tests/test_puck_published_export_receipts.py::test_explicit_publication_declaration_survives_inert_tmpfs_staging
+38 failed, 6 passed in 1.06s

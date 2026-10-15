@@ -45,7 +45,7 @@ def write(root,name,value):
     return dict(path=name,size_bytes=len(raw),sha256=digest(raw))
 
 
-def project(tmp_path,*,rocm_probe=False,binding_failure=False):
+def project(tmp_path,*,rocm_probe=False,binding_failure=False,published_export=False):
     project=tmp_path/'authored-project';project.mkdir(mode=0o700)
     current=load(ROOT/PARENT,'cpu_authored_current_parent')
     marker=b'min_available_ram_bytes=(4096 if phase==\'prepare\' else 2048)*MiB'
@@ -87,6 +87,14 @@ def project(tmp_path,*,rocm_probe=False,binding_failure=False):
         package=rocm_probe and name=='torch'
         if package:
             source+=b'try:\n    from . import _rocm_init\nexcept ImportError:\n    OPTIONAL_ROCM_ABSENT = True\n'
+        if published_export and name=='torch':
+            source+=(b'import sys, types\n'
+                     b'def answer():\n    return 47\n'
+                     b"authored_child = types.ModuleType('torch.authored_publication')\n"
+                     b'authored_child.__file__ = __file__\n'
+                     b'authored_child.answer = answer\n'
+                     b"sys.modules['torch.authored_publication'] = authored_child\n"
+                     b'import _authored_cpu_generated\n')
         module_path=name+'/__init__.py' if package else name+'.py'
         write(site,module_path,source)
         entries.append(dict(path=module_path,size_bytes=len(source),sha256=digest(source)))
@@ -154,6 +162,9 @@ def project(tmp_path,*,rocm_probe=False,binding_failure=False):
         entries=[dict(inputs[role],path=path) for role,path in observation_names.items()]))
     exports=([dict(name='torch._authored_missing',producer='torch',phase='module_exec',
                    attributes=['_authored_missing'],class_binding=None)] if binding_failure else [])
+    if published_export:
+        exports.append(dict(name='torch.authored_publication',producer='torch',phase='module_exec_publish',
+                            attributes=['authored_child'],class_binding=None,delegate_attributes=['answer']))
     document('candidate',dict(kind='puck-cpu-observed-import-profile-candidate-v1',version=1,
         expected_versions=dict(api.VERSIONS),module_paths=sorted(modules,key=lambda r:r['name']),namespaces=[],
         import_profile=dict(kind='puck-producer-import-profile-v2',version=2,exports=exports,module_changes=[],native_origins=[],native_cache=[]),

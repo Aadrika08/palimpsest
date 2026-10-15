@@ -17,6 +17,7 @@ MAX_CODE_OBJECTS = 65536
 _IDENTIFIER = re.compile(r'[A-Za-z_]\w*', re.ASCII)
 _NAME = re.compile(r'[A-Za-z_]\w*(?:\.[A-Za-z_]\w*)*', re.ASCII)
 _MISSING = object()
+_PUBLISH_PHASE = 'module_exec_publish'
 
 
 def _fields(value, keys):
@@ -84,13 +85,25 @@ def validate_profile(profile, modules, namespaces, *, allow_native_cache=False):
         else: raise ValueError('Unknown dependency class binding kind')
     exports=set()
     for row in profile['exports']:
-        _fields(row, ('name','producer','phase','attributes','class_binding'))
+        publishing=type(row) is dict and row.get('phase')==_PUBLISH_PHASE
+        _fields(row, ('name','producer','phase','attributes','class_binding')+
+                (('delegate_attributes',) if publishing else ()))
         name=_name(row['name']); source=producer(row)
         if (name in names or name in exports or name.split('.')[0] in sys.stdlib_module_names
                 or name.split('.')[0]!=row['producer'].split('.')[0]):
             raise ValueError('Dependency export binding name overlaps or spoofs another namespace')
         exports.add(name)
-        if row['phase'] not in ('native_create','module_exec') or (
+        if publishing:
+            if (not allow_native_cache or profile.get('kind')!='puck-producer-import-profile-v2'
+                    or source['kind']!='python' or row['class_binding'] is not None):
+                raise ValueError('Published dependency export requires explicit v3 Python producer binding')
+            attributes=row['delegate_attributes']
+            if (type(attributes) is not list or len(attributes)>MAX_CLASS_SLOTS or any(
+                    type(v) is not str or len(v)>256 or not _IDENTIFIER.fullmatch(v)
+                    or v.startswith('__') for v in attributes)
+                    or attributes!=sorted(set(attributes))):
+                raise ValueError('Published dependency export dispatch keys must be finite, sorted and distinct')
+        elif row['phase'] not in ('native_create','module_exec') or (
                 row['phase']=='native_create' and source['kind']!='extension'):
             raise ValueError('Dependency export binding phase differs from producer kind')
         if row['class_binding'] is not None: class_binding(row['class_binding'])
@@ -262,14 +275,22 @@ class ExportBindings:
         self.class_seals=[]; self.anchors=[]; self.originals={}
         self.native_cache={v['name']:v for v in profile.get('native_cache',[])}
         self.cache_seals={}; self.cache_closed=set(); self.phase_stack=[]; self.cache_phases=set()
+        self.published={r['name']:r for r in profile['exports'] if r['phase']==_PUBLISH_PHASE}
+        self.publication_closed=set(); self.publication_phases=set()
         if any(name in sys.modules for name in self.native_cache):
             raise RuntimeError('Native cache entry is preexisting before native initialization')
+        if any(name in sys.modules for name in self.published):
+            raise RuntimeError('Published dependency export is preexisting before producer initialization')
     def open_phase(self, name, phase):
         require_instance_dispatch(self,ExportBindings)
-        if not self.native_cache: return
+        if not self.native_cache and not self.published: return
         if len(self.phase_stack)>=MAX_PROFILE_ROWS:
             raise ValueError('Native cache initializer nesting exceeds bound')
         key=(name,phase)
+        if phase=='module_exec' and any(r['producer']==name for r in self.published.values()):
+            if key in self.publication_phases:
+                raise RuntimeError('Published dependency export creator phase repeated')
+            self.publication_phases.add(key)
         if any((r['producer'],r['phase'])==key for r in self.native_cache.values()):
             if key in self.cache_phases: raise RuntimeError('Native cache creator phase repeated')
             self.cache_phases.add(key)
@@ -306,15 +327,57 @@ class ExportBindings:
                     module_dict(value).get(key,_MISSING) is not delegate
                     for key,delegate in previous.delegates):
                 raise RuntimeError('Native cache dispatch reference changed')
+    def _publication_recheck(self):
+        current_phase=self.phase_stack[-1] if self.phase_stack else None
+        for name,row in self.published.items():
+            value=sys.modules.get(name,_MISSING)
+            previous=self.prepared.get(name)
+            if value is _MISSING:
+                if previous is not None:
+                    raise RuntimeError('Published dependency export cache entry disappeared')
+                continue
+            if previous is None and current_phase!=(row['producer'],'module_exec'):
+                raise RuntimeError('Published dependency export appeared outside its creator phase')
+            if type(value) is not types.ModuleType:
+                raise RuntimeError('Published dependency export must be a plain module')
+            raw=module_dict(value)
+            if type(raw.get('__name__')) is not str or raw['__name__']!=name or '__path__' in raw:
+                raise RuntimeError('Published dependency export metadata differs')
+            producer=self.producers.get(row['producer'])
+            if producer is None or _resolve(producer,row['attributes']) is not value:
+                raise RuntimeError('Published dependency export raw producer edge differs')
+            if previous is not None:
+                if value is not previous[1].module:
+                    raise RuntimeError('Published dependency export cache object changed')
+                ModuleSeal.recheck(previous[1])
+            observed=ModuleSeal(value,virtual=True,expected_name=name)
+            keys={key for key,_ in observed.delegates}; declared=set(row['delegate_attributes'])
+            if not keys<=declared or (name in self.publication_closed and keys!=declared):
+                raise RuntimeError('Published dependency export dispatch keys differ')
+            if (previous is not None and keys-{key for key,_ in previous[1].delegates}
+                    and current_phase!=(row['producer'],'module_exec')):
+                raise RuntimeError('Published dependency export dispatch appeared outside its creator phase')
+            # Seal every observed addition while retaining all earlier references.
+            self.prepared[name]=(row,observed)
     def close_phase(self, name, phase):
         require_instance_dispatch(self,ExportBindings)
-        if not self.native_cache: return
+        if not self.native_cache and not self.published: return
         key=(name,phase)
         if not self.phase_stack or self.phase_stack[-1]!=key:
             raise RuntimeError('Native cache initializer phase stack differs')
         # Screen while this initializer is still innermost: popping first would
         # misattribute a nested creator's new object to its outer caller.
         ExportBindings._cache_recheck(self)
+        ExportBindings._publication_recheck(self)
+        if phase=='module_exec':
+            for export,row in self.published.items():
+                if row['producer']!=name: continue
+                previous=self.prepared.get(export)
+                if previous is None:
+                    raise RuntimeError('Published dependency export creator did not publish required entry')
+                if {key for key,_ in previous[1].delegates}!=set(row['delegate_attributes']):
+                    raise RuntimeError('Published dependency export dispatch keys incomplete at creator close')
+                self.publication_closed.add(export)
         for cache,row in self.native_cache.items():
             if (row['producer'],row['phase'])!=key: continue
             seal=self.cache_seals.get(cache)
@@ -328,9 +391,13 @@ class ExportBindings:
             self.cache_seals[cache]=complete; self.cache_closed.add(cache)
         self.phase_stack.pop()
         ExportBindings._cache_recheck(self)
+        ExportBindings._publication_recheck(self)
     def require_complete(self):
         require_instance_dispatch(self,ExportBindings)
         ExportBindings._cache_recheck(self)
+        ExportBindings._publication_recheck(self)
+        if self.published and (self.phase_stack or self.publication_closed!=set(self.published)):
+            raise RuntimeError('Published dependency export terminal completion is incomplete')
         if self.phase_stack or set(self.cache_seals)!=set(self.native_cache) or self.cache_closed!=set(self.native_cache):
             raise RuntimeError('Native cache terminal completion is incomplete')
     def begin(self, name, module, code=None):
@@ -399,6 +466,7 @@ class ExportBindings:
         return current,ModuleSeal(current,virtual=change is not None,expected_name=name)
     def recheck(self):
         require_instance_dispatch(self,ExportBindings)
+        ExportBindings._publication_recheck(self)
         for seal in self.originals.values(): ModuleSeal.recheck(seal)
         for producer,path,value in self.anchors:
             if (producer.__code__ is not value if path is None else _resolve(producer,path) is not value):
