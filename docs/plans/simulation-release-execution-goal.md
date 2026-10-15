@@ -13,23 +13,29 @@ not instructions to rerun. Implementation history must not obscure what remains.
 
 ## Immediate work unit: deliver the installed CPU runtime
 
-**Produce one fresh offline installation from the 71 verified wheel artifacts.**
-All 71 artifacts are available; they have not yet been installed. Disk installation
-is the next executable preparation step, separate from tmpfs staging, numerical
-qualification and any scientific study.
+**Deliver an accepted, measured local installation of the 71 verified wheels.**
+All71 artifacts were installed in allocation01, but its parent/supervisor failed
+log teardown. The separate failure audit measures27,225 files/1,304,701,872 regular
+bytes and retains96 licence files. This is verified retained data, not installation
+acceptance. The [actual report](https://github.com/Aadrika08/palimpsest/blob/research/puck-cpu-install-v1/docs/reports/puck-cpu-install-01.md)
+keeps both failures and all original missing finalizer receipts explicit.
+Complete the separately reviewed retained-tree admission before tmpfs staging,
+numerical qualification or scientific work; do not rerun allocation01.
 
-- [ ] Install the exact wheels into one fresh directory using the pinned local
-  installer and interpreter, with no dependency expansion, network access,
-  source builds, bytecode compilation or target-package execution.
-- [ ] Retain the complete installed file census and hashes, distribution and
+- [ ] Accept the exact wheel tree under a distinct reviewed preparation receipt.
+  The offline installation uses the pinned local installer/interpreter, with no
+  dependency expansion, network access, source builds, bytecode compilation or
+  target-package execution. A new data-only admission must explicitly handle the
+  one unchanged authenticated NumPy `.pyc`; the original blanket refusal stands.
+- [x] Retain the complete installed file census and hashes, distribution and
   wheel identities, actual relocation results, measured installed size and
   licence contents. Preserve the exact invocation, limits, logs, terminal result
-  and process cleanup in the preparation receipt.
+  and process cleanup as failed-allocation and separate derivative evidence.
 - [ ] Audit that result and publish the installation location and reproducible
   preparation instructions. Use the measured tree to specify the subsequent
   tmpfs/native/EGL custody and four-import qualification configuration.
 
-**Exit:** an actual retained installation with an audited preparation receipt.
+**Exit:** an actual retained installation with a distinct passing preparation receipt.
 A new proposal, helper or fixture pass does not complete this work unit. This
 exit qualifies package preparation only; all seven release gates remain open.
 
@@ -54,7 +60,7 @@ test counts cannot satisfy either actual-runtime exit below.
 1. **Prepare the installed runtime.** The pinned package payloads and wheel RECORD
    entries have actual audited evidence in PR #141. PR #142 adds the built and
    independently verified python-louvain wheel: all 71 candidate wheel artifacts
-   are now available. Complete the disk-installation exit above before preparing
+   are now available. Complete the installed-tree admission exit above before preparing
    the tmpfs configuration. Specify the exact interpreter, native/EGL paths,
    staging and custody from the measured installation.
    Finish the CPU preparation/qualification parent using the reviewed four-import
@@ -113,13 +119,16 @@ substitute for numerical results, capability, actual browser use or human accept
 | 5 | Integrate and experience the product. | One candidate supports the lab and all six artworks; actual browser, mapping, replay, export, interruption and endurance checks pass. |
 | 6 | Accept and deliver that candidate. | Artistic/operator sessions, final verification and all seven gate records are complete; the installation and evidence package are reproducible. |
 
-**Current next action:** deliver the actual disk installation and preparation
-receipt specified above. Use only the 71 exact verified wheel artifacts in a
-fresh bounded directory; retain its file inventory, hashes and licence contents.
-Then finish the interpreter, stdlib, native/EGL paths, tmpfs custody and executable
-four-import qualification configuration, using measured installed sizes for fresh
-resource admission. Review each actual configuration before invocation. The next
-runtime result must satisfy steps 1–2 above before episode collection begins.
+**Current next action:** implement and independently review the
+[retained-tree admission proposal](https://github.com/Aadrika08/palimpsest/blob/research/puck-cpu-install-v1/docs/plans/puck-cpu-retained-installation-admission-v1.md).
+Freeze a distinct read-only configuration for the measured installed namespace,
+its authenticated inert-bytecode exception, complete custody and durable new
+receipts. Preserve allocation01's FAIL; no installer rerun or replacement of its
+missing outputs. Package acceptance requires that distinct stage's actual pass.
+Then finish interpreter/stdlib/native/EGL/tmpfs custody and the executable fixed
+four-import configuration using measured sizes and fresh resource admission.
+Review each actual configuration before invocation. Steps1–2 must pass before
+any episode collection begins.
 Review the family qualification binding in parallel without opening a new
 scientific allocation. The directory-enumeration source fix is complete within
 its tested scope; the first actual family admission remains open.
@@ -131,9 +140,9 @@ source-hardening programme or count test totals as release progress.
 
 ## Current starting point and decisions
 
-At **2026-10-15 07:30:20 UTC**, the project filesystem has **105,339,097,088 bytes
-(98.10 GiB) available**. The same metadata-only check reports **4,917,227,520 bytes
-(4.58 GiB) MemAvailable**. Disk clearance removes the reported disk blocker;
+At **2026-10-15 07:57:52 UTC**, the project filesystem has **100,393,971,712 bytes
+(93.50 GiB) available**. The same metadata-only check reports **4,369,637,376 bytes
+(4.07 GiB) MemAvailable**. Disk clearance removes the reported disk blocker;
 available RAM is transient and this snapshot does not admit the complete CPU/EGL
 closure. Keep archives and build scratch on the project disk; stage only the exact
 required runtime inputs on tmpfs under its reviewed native-identity policy.
@@ -141,6 +150,19 @@ Recheck retained inputs, actual installed sizes, writable/executable staging,
 custody and all resource limits immediately before each admitted stage. The older
 RAM shortfall in PR #138 remains a historical observation, not a new measurement.
 
+- [Draft PR #143](https://github.com/Aadrika08/palimpsest/pull/143) supplies the
+  actual offline installation and independently verified retained namespace:
+  all71 distributions,27,225 regular files/1,304,701,872B,2,074 directories and
+  96 licence files/1,576,818B. UV returned0, but allocation01 exited1 in29.519s
+  on `native log drain/final sync timed out`; both groups are empty. The prepared
+  acceptance audit fails on one source-authentic NumPy `.pyc`. The separate failure
+  audit exits0 in8.914s and verifies payloads, RECORDs,18 launchers, licence bytes
+  and original receipts while keeping acceptance false. The
+  [full evidence](https://github.com/Aadrika08/palimpsest/blob/research/puck-cpu-install-v1/docs/reports/puck-cpu-install-01.md)
+  retains both programs and136 byte-identical indexed artifacts. All124 focused
+  source checks pass, including the real authored namespace fixture. The current
+  host/tool baseline matches; the missing original post-baseline receipt stays
+  missing. No numerical runtime, controller or release gate is qualified.
 - [PR #137](https://github.com/Aadrika08/palimpsest/pull/137) supplies the reviewed
   tmpfs-only native dependency identity policy; [PR #136](https://github.com/Aadrika08/palimpsest/pull/136)
   supplies finite expected-missing-import handling.
@@ -156,8 +178,9 @@ RAM shortfall in PR #138 remains a historical observation, not a new measurement
   source checks pass. The [actual report and wheel](https://github.com/Aadrika08/palimpsest/blob/research/puck-python-louvain-build-v1/docs/reports/puck-python-louvain-build-02.md)
   retain exact source/configuration, complete raw evidence and the audit program.
   Invocation 01 remains a preserved namespace-launch failure; its independent
-  failure-audit stdout bookkeeping error is recorded. Packages remain uninstalled
-  and no numerical runtime, study, controller or release gate is qualified.
+  failure-audit stdout bookkeeping error is recorded. Packages were uninstalled
+  at that stage; PR143 above now retains an unaccepted installed tree. No numerical
+  runtime, study, controller or release gate is qualified.
 - [Draft PR #141](https://github.com/Aadrika08/palimpsest/pull/141) supplies actual
   full-payload evidence:71 archives/385,328,518B,70 wheels with complete RECORD
   checks, and an independent terminal audit of all26,913 regular wheel members.
@@ -187,7 +210,9 @@ versus independent identity projections in
 study; and a concrete resolution of the memory ordering conflict. Continuation
 and disk clearance do not approve those decisions.
 
-Preparation 01, qualification 01, runtime observations 01/02 and navigation
+CPU installation01 also remains failed and consumed; its read-only byte audit
+does not grant preparation acceptance. Preparation01, qualification01, runtime
+observations01/02 and navigation
 attempts 1/2 remain consumed. Memory amendment 02 remains uninvoked. No silent
 retry, reordered study, altered threshold or invented passing receipt is permitted.
 A failed actual stage stops its lane with preserved evidence and a concrete

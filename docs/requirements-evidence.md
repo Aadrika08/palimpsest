@@ -15,9 +15,11 @@ all six artworks, record artistic/operator acceptance and deliver the runbook.
 Disk clearance permits fresh admission checks; CI and physical rover remain outside.
 The [clarified execution goal](plans/simulation-release-execution-goal.md) gives
 seven unchanged acceptance gates and six finite milestones. The immediate work
-unit is one fresh offline disk installation of the 71 verified wheels, retaining
-the complete installed census, hashes, licence contents, measured size and audited
-preparation receipt. This precedes tmpfs staging and numerical qualification.
+unit is acceptance of the exact71-wheel installed tree under a distinct reviewed
+preparation receipt. Allocation01 produced actual files but failed log teardown;
+a separate audit retains the census, hashes, licence contents and measured size
+without accepting installation. The retained-tree admission proposal precedes
+tmpfs staging and numerical qualification; no installer retry is inferred.
 The next milestone is one actual bounded simulator episode after held-import
 qualification and the episode's declared operator/renderer checks pass, recorded,
 replayed and exported through the durable public route. Its portable
@@ -29,6 +31,22 @@ no automatic actual retry or new scientific-study attempt follows. The previous
 [execution/evidence history](plans/simulation-release-execution-goal-history-2026-10-15.md)
 is preserved byte-identically. All 26 requirement and seven gate statuses are unchanged.
 
+[Draft PR #143](https://github.com/Aadrika08/palimpsest/pull/143) retains the
+actual offline installation:71 distributions,27,225 regular files/1,304,701,872B,
+2,074 directories and96 licence files/1,576,818B. UV returned0; allocation01
+exited1 in29.519s on log drain/final sync timeout, with empty worker groups.
+The acceptance audit separately fails on an unchanged `.pyc` supplied in NumPy.
+A preserved-failure audit exits0 in8.914s, verifying every payload/RECORD,18
+launchers, licences and original receipts while keeping acceptance false. The
+[report](https://github.com/Aadrika08/palimpsest/blob/research/puck-cpu-install-v1/docs/reports/puck-cpu-install-01.md)
+retains frozen source/configuration, raw failures, audit programs, census and136
+byte-identical indexed artifacts. All124 focused checks pass, including a real
+namespace fixture; current trusted host/tool pins match. No original missing
+receipt was filled in. The concrete next proposal is distinct read-only admission
+of this retained tree with explicit authenticated inert-bytecode handling and
+durable new receipts. No numerical import, model/scene/catalog, physics or study
+ran. All33 requirement/gate statuses remain unchanged; all seven gates are open.
+
 [Draft PR #142](https://github.com/Aadrika08/palimpsest/pull/142) closes the
 missing CPU wheel artifact gap: the portable python-louvain wheel is 9,458B,
 with nine fully verified members. Separately reviewed invocation 02 exited 0 in
@@ -38,9 +56,9 @@ with no findings, and 236 affected source checks pass in 3.80s. The
 [actual report and artifact](https://github.com/Aadrika08/palimpsest/blob/research/puck-python-louvain-build-v1/docs/reports/puck-python-louvain-build-02.md)
 retain raw results, exact source/configuration and the independent audit program.
 Invocation 01 and its audit limitations remain explicit, failed and consumed.
-All 71 candidate wheel artifacts are now available; complete installed namespace,
-licences/native/EGL/tmpfs custody and actual four-import runtime qualification
-remain next. This closes no release gate; all 33 statuses remain unchanged.
+All71 candidate wheel artifacts are available; PR143 above adds actual retained
+installation data. Its acceptance, native/EGL/tmpfs custody and actual four-import
+runtime qualification remain open. This closes no release gate; all 33 statuses remain unchanged.
 
 [Draft PR #141](https://github.com/Aadrika08/palimpsest/pull/141) closes the CPU
 archive-payload verification gap with one actual acquisition:71 archives,
@@ -51,8 +69,8 @@ no worker-group survivors or matching acquisition routes remain. The
 retains exact raw outcomes, source/configuration, audit program and checksums.
 135 affected source checks and70 legacy checks pass; default pytest retains its
 ten FastAPI/httpx collection errors. Newer PR #142 above closes the source-wheel
-gap; packages remain uninstalled, actual numerical runtime unqualified and all33
-requirement/release statuses unchanged. No consumed numerical allocation was retried.
+gap; packages were uninstalled at that stage. PR143 above retains unaccepted
+installed data; numerical runtime remains unqualified and all33 statuses unchanged. No consumed numerical allocation was retried.
 
 [Draft PR #140](https://github.com/Aadrika08/palimpsest/pull/140) resolves the measured
 Btrfs held-directory enumeration gap using fresh bounded descriptor-relative
