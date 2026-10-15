@@ -1,0 +1,107 @@
+{
+  "actual06_configuration_created": false,
+  "actual06_invoked": false,
+  "actual06_output_created": false,
+  "all_verification_runs": [
+    {
+      "label": "optional-import-contract-characterization-01",
+      "returncode": 0,
+      "seconds": 9.33257379499264,
+      "timed_out": false
+    },
+    {
+      "label": "optional-import-contract-guard-01",
+      "returncode": 0,
+      "seconds": 37.69331817701459,
+      "timed_out": false
+    },
+    {
+      "label": "optional-import-numeric-characterization-01",
+      "returncode": 1,
+      "seconds": 14.293369735009037,
+      "timed_out": false
+    },
+    {
+      "label": "optional-import-numeric-characterization-02",
+      "returncode": 0,
+      "seconds": 15.045764327049255,
+      "timed_out": false
+    },
+    {
+      "label": "optional-import-epoch06-observer-red-01",
+      "returncode": 1,
+      "seconds": 0.5158307039528154,
+      "timed_out": false
+    },
+    {
+      "label": "optional-import-epoch06-observer-green-01",
+      "returncode": 0,
+      "seconds": 0.9166887539904565,
+      "timed_out": false
+    },
+    {
+      "label": "optional-import-epoch06-contract-red-01",
+      "returncode": 1,
+      "seconds": 4.072263267997187,
+      "timed_out": false
+    },
+    {
+      "label": "optional-import-epoch06-contract-green-01",
+      "returncode": 1,
+      "seconds": 3.5212623910047114,
+      "timed_out": false
+    },
+    {
+      "label": "optional-import-epoch06-contract-green-02",
+      "returncode": 0,
+      "seconds": 3.620949356001802,
+      "timed_out": false
+    },
+    {
+      "label": "optional-import-epoch06-integration-01",
+      "returncode": 0,
+      "seconds": 16.296797723975033,
+      "timed_out": false
+    },
+    {
+      "label": "optional-import-epochs-regression-01",
+      "returncode": 4,
+      "seconds": 0.21474412200041115,
+      "timed_out": false
+    },
+    {
+      "label": "optional-import-publication05-regression-01",
+      "returncode": 0,
+      "seconds": 14.794478746014647,
+      "timed_out": false
+    },
+    {
+      "label": "optional-import-epochs-regression-02",
+      "returncode": 0,
+      "seconds": 137.12406481802464,
+      "timed_out": false
+    },
+    {
+      "label": "optional-import-guard-regression-02",
+      "returncode": 0,
+      "seconds": 44.557376826007385,
+      "timed_out": false
+    }
+  ],
+  "collection_authorized": false,
+  "final_affected_cases": 616,
+  "final_batches": {
+    "optional-import-epoch06-integration-01": 1,
+    "optional-import-epochs-regression-02": 556,
+    "optional-import-guard-regression-02": 58,
+    "optional-import-publication05-regression-01": 1
+  },
+  "independent_review_findings": [],
+  "kind": "puck-cpu-optional-import-source-verification-v1",
+  "qualification_claims": [],
+  "reviewed_sources_match": true,
+  "runtime_qualified": false,
+  "scope": "Authored source-only verification; no real06 allocation or installed vendor invocation",
+  "study_authorized": false,
+  "version": 1
+}

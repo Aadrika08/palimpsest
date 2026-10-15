@@ -45,7 +45,7 @@ def write(root,name,value):
     return dict(path=name,size_bytes=len(raw),sha256=digest(raw))
 
 
-def project(tmp_path,*,rocm_probe=False,binding_failure=False,published_export=False,autograd_publication=False):
+def project(tmp_path,*,rocm_probe=False,binding_failure=False,published_export=False,autograd_publication=False,caught_optional_import=False):
     project=tmp_path/'authored-project';project.mkdir(mode=0o700)
     current=load(ROOT/PARENT,'cpu_authored_current_parent')
     marker=b'min_available_ram_bytes=(4096 if phase==\'prepare\' else 2048)*MiB'
@@ -97,6 +97,9 @@ def project(tmp_path,*,rocm_probe=False,binding_failure=False,published_export=F
                      b'import _authored_cpu_generated\n')
         if autograd_publication and name=='torch':
             source+=b'import torch._C\nimport torch.autograd\nimport torch.distributed\nimport torch.distributed.autograd\nimport torch.distributed.rpc\n'
+        if caught_optional_import and name=='torch':
+            assert autograd_publication, 'The caught optional seam follows all four authored creators'
+            source+=b'try:\n    import pynvml\nexcept ImportError:\n    AUTHORED_OPTIONAL_PYNVML_ABSENT = True\n'
         module_path=name+'/__init__.py' if package else name+'.py'
         write(site,module_path,source)
         entries.append(dict(path=module_path,size_bytes=len(source),sha256=digest(source)))

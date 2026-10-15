@@ -1,0 +1,53 @@
+........................................................................ [ 85%]
+FF..........                                                             [100%]
+=================================== FAILURES ===================================
+____________ test06_does_not_change_any_legacy_roster_or_output[1] _____________
+
+version = 1
+
+    @pytest.mark.parametrize('version',[1,2,3,4,5])
+    def test06_does_not_change_any_legacy_roster_or_output(version):
+        if version==1:
+            m,_,blobs,_,_=acceptance05_case();config=json.loads(blobs['configuration'])
+        else:
+            case={2:acceptance_case,3:acceptance03_case,4:acceptance04_case,5:acceptance05_case}[version]()
+            m,config,blobs=case[:3]
+            if version==2:config['negative_imports']=list(BASE_ROSTER)
+        independent=auditor_api()
+        m.validate_configuration(config);independent.configuration(config,False)
+        expected=BASE_ROSTER if version<=2 else ROSTER03
+        assert config['negative_imports']==expected
+        suffix='preparation-01' if version==1 else 'qualification-'+str(version).zfill(2)
+        assert m.allocation_output(config)==independent.allocation_output(config)=='runs/puck-cpu-held-'+suffix
+        config['negative_imports']=list(ROSTER06)
+>       with pytest.raises(ValueError):m.validate_configuration(config)
+E       Failed: DID NOT RAISE <class 'ValueError'>
+
+tests/test_puck_cpu_held_amendment06.py:179: Failed
+____________ test06_does_not_change_any_legacy_roster_or_output[2] _____________
+
+version = 2
+
+    @pytest.mark.parametrize('version',[1,2,3,4,5])
+    def test06_does_not_change_any_legacy_roster_or_output(version):
+        if version==1:
+            m,_,blobs,_,_=acceptance05_case();config=json.loads(blobs['configuration'])
+        else:
+            case={2:acceptance_case,3:acceptance03_case,4:acceptance04_case,5:acceptance05_case}[version]()
+            m,config,blobs=case[:3]
+            if version==2:config['negative_imports']=list(BASE_ROSTER)
+        independent=auditor_api()
+        m.validate_configuration(config);independent.configuration(config,False)
+        expected=BASE_ROSTER if version<=2 else ROSTER03
+        assert config['negative_imports']==expected
+        suffix='preparation-01' if version==1 else 'qualification-'+str(version).zfill(2)
+        assert m.allocation_output(config)==independent.allocation_output(config)=='runs/puck-cpu-held-'+suffix
+        config['negative_imports']=list(ROSTER06)
+>       with pytest.raises(ValueError):m.validate_configuration(config)
+E       Failed: DID NOT RAISE <class 'ValueError'>
+
+tests/test_puck_cpu_held_amendment06.py:179: Failed
+=========================== short test summary info ============================
+FAILED tests/test_puck_cpu_held_amendment06.py::test06_does_not_change_any_legacy_roster_or_output[1]
+FAILED tests/test_puck_cpu_held_amendment06.py::test06_does_not_change_any_legacy_roster_or_output[2]
+2 failed, 82 passed in 3.31s

@@ -11,7 +11,7 @@ from test_puck_cpu_runtime_entry import (
 BASE_MISSING = ['numpy._distributor_init_local', 'org', 'torch._rocm_init']
 
 
-def optional_fixture(base, *, declared, present=None, probe=False):
+def optional_fixture(base, *, declared, present=None, probe=False, after_cuda=''):
     def mutate(deps, root):
         cpu_setup(deps, root, 'before-init' if present else None)
         modules = {
@@ -38,7 +38,7 @@ def optional_fixture(base, *, declared, present=None, probe=False):
             deps['roots'][0]['files'].append(descriptor(path, relative))
         initializer = root / 'torch/__init__.py'
         initializer.write_text(initializer.read_text() + 'from . import cuda\n' +
-            ('from ._import_utils import dill_available\nassert dill_available() is False\n' if probe else ''))
+            ('from ._import_utils import dill_available\nassert dill_available() is False\n' if probe else '') + after_cuda)
         if present:
             path = root / 'pynvml.py'
             path.write_text('raise AssertionError("OPTIONAL_TARGET_RAN")\n')
@@ -108,3 +108,58 @@ def test_caught_find_spec_probe_keeps_the_same_absence_and_poison_contract(decla
         assert result.returncode != 0 and result.stdout == ''
         assert 'Unregistered local or external dependency import: dill' in result.stderr
         assert 'Bootstrap inactive or poisoned' in result.stderr
+
+
+@pytest.mark.parametrize('declared_gmpy', [False, True])
+def test_numeric_helpers_keep_nested_fallbacks_and_cached_missing_probe(declared_gmpy):
+    names = ['pynvml', 'flint', 'gmpy2', 'triton'] + (['gmpy'] if declared_gmpy else [])
+    code = '''
+from functools import cache
+def numeric_backend():
+ try:
+  import flint
+ except ImportError:
+  pass
+ try:
+  import gmpy2
+ except ImportError:
+  try:
+   import gmpy
+  except ImportError:
+   pass
+ return 'python'
+@cache
+def has_triton_package():
+ try:
+  import triton
+ except ImportError:
+  return False
+ return True
+assert numeric_backend() == 'python'
+assert has_triton_package() is False
+assert has_triton_package() is False
+from .cuda.memory import READY
+assert READY is True
+'''
+    with authored() as base:
+        result = optional_fixture(base, declared=names, after_cuda=code)
+    if declared_gmpy:
+        assert result.returncode == 0, result.stderr
+        receipt = json.loads(result.stdout)
+        assert receipt['denied_imports'] == sorted(
+            ['numpy._distributor_init_local', 'org'] + names)
+        assert receipt['entry_result']['status'] == 'imports_completed'
+        assert receipt['runtime_qualified'] is receipt['collection_authorized'] is False
+    else:
+        assert result.returncode != 0 and result.stdout == ''
+        assert 'Unregistered local or external dependency import: gmpy' in result.stderr
+        assert 'Bootstrap inactive or poisoned' in result.stderr
+
+
+def test_declared_absence_does_not_turn_an_uncaught_find_spec_into_none():
+    code = 'import importlib.util\nassert importlib.util.find_spec("triton") is None\n'
+    with authored() as base:
+        result = optional_fixture(base, declared=['pynvml', 'triton'], after_cuda=code)
+    assert result.returncode != 0 and result.stdout == ''
+    assert 'ModuleNotFoundError: Explicit qualification import denial: triton' in result.stderr
+    assert 'Unregistered local or external dependency import: triton' not in result.stderr
