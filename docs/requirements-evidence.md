@@ -129,11 +129,23 @@ build proof. Ordinary export completion occurs after producer execution, so an
 intervening guard may still reject a simple phase-only move. No replacement phase
 or blanket change to the36 native-create rows is accepted.
 
-Next, prove declared child publication followed by a fresh nested helper import
-in the existing authored fixture, then the finite producer/phase/raw-edge/cache
-identity and terminal-closure contract, preserving strict unprepared negatives.
-Review any correction separately before another actual allocation.04 and01–03
-remain failed/consumed; no05 exists. Held qualification and the actual episode
+[Draft PR #155](https://github.com/Aadrika08/palimpsest/pull/155) now supplies the
+[explicit delayed-publication source proof](https://github.com/Aadrika08/palimpsest/blob/27a5c134613747c8c782829b8084834e92a53d66/docs/reports/puck-delayed-export-publication-v1.md).
+All650 affected authored checks pass (263 tmpfs,387 persistent parent/auditor).
+The source contract binds exact innermost creator, raw edge/cache identity,
+metadata, finite direct-dispatch growth and terminal closure, with identical proof
+required by worker, parent and independent auditor. The new separate-phase fixture
+passes audits, digest-rebound semantic tamper refusal, capsule/identity/closure and
+stage cleanup. Review's nested-creator growth defect shows RED before its fix;
+all200 exact copies/2,361,975B include19 empty files and preserved confounded runs.
+
+Real profile/configuration/data/source admission is unchanged. Next authenticate
+the complete `_autograd` dispatch roster, including remaining tracer/later-write
+evidence, then review its explicit creator/path/profile/source transition before
+any separately numbered actual allocation. Static source supports prospective
+creator `torch.autograd` / `['torch','_C','_autograd']`, not an accepted finite roster
+or a blanket move of the other35 declarations.04 and01–03 remain failed/consumed;
+no05 exists. Held qualification and the actual recorded/replayed/exported episode
 remain open; all33 statuses and seven release gates remain unchanged.
 
 The [actual preparation report](https://github.com/Aadrika08/palimpsest/blob/4036a382b87ab99640bed96f6b2f8aeaa7873b2c/docs/reports/puck-cpu-held-preparation-01.md)
