@@ -37,21 +37,40 @@ and inert-bytecode exception grant package-data acceptance only.
 
 The [next work unit](plans/simulation-release-execution-goal.md#clear-execution-target-after-disk-clearance)
 ends with that actual episode bundle. Accepted ordinary characterization02 below
-now supplies the CPU profile observations. Derive that profile, complete tmpfs
-staging and the descriptor-v3/four-import qualification parent, then qualify the
-actual held runtime before proving recording/replay/export with declared
-operator/renderer checks. The current producer-bound profile cannot represent
-observed `cython_runtime` and `_cython_3_0_12`, which lack file/spec/producer
-attribute edges; bind their native creation explicitly before held qualification,
-without skipping modules or guessing producers.
-Older three-import/dependency-v2 parents need
-substantive staging and configuration changes. Fresh full-stage RAM/storage/FD/
-process admission and independent configuration review precede actual
-qualification. No held qualification, real episode, study or browser/human session
-ran in this unit. Resource snapshots remain transient. The previous
+supplies observations; PR147 supplies the prospective source CPU profile and
+tmpfs copier. Integrate them into the dedicated bounded CPU preparation/four-import
+parent with stable tmpfs lifetime and authored two-pass namespace fixtures;
+freeze/review the finite configuration and fresh full-stage resources; run
+separately numbered actual preparation/qualification and independent auditing;
+then resolve the episode/catalog contract and audit the actual recorded/replayed/
+exported episode with its declared operator/renderer checks. Alias/baseline and
+native-creation bindings remain part of actual qualification; the old three-import
+parent is unfinished. Required cache/version/custody/cleanup failures stop and
+retain their allocation, with no implicit retry. No actual CPU held qualification, episode,
+study or browser/human session ran in this source checkpoint. The previous
 [execution/evidence history](plans/simulation-release-execution-goal-history-2026-10-15.md)
 is preserved byte-identically. All26 requirement and seven gate statuses remain
 unchanged; all seven release gates remain open.
+
+At 2026-10-15 11:24:21 UTC, the metadata-only resource snapshot is
+99,408,797,696 B (92.58 GiB) available project disk, 2,355,441,664 B (2.19 GiB)
+MemAvailable and 5,005,647,872 B (4.66 GiB) available on `/tmp`. The planned
+1,318,494,346-byte copy is content only, not full-stage RAM admission; recheck
+resources before each admitted stage.
+
+[Draft PR #147](https://github.com/Aadrika08/palimpsest/pull/147) adds source-only
+profile-v2 cache bindings under dependency-v3, terminal completeness checks and
+the streaming tmpfs copier. The prospective CPU candidate has 1,783 modules,
+38 exports, 13 changes, 11 native origins and 2 cache bindings across four roots;
+it is 340,908 B, SHA256
+`d20076cd2e1961d1514bb135746b1701a14567136b80ee073fecedb389f929df`.
+The [source report](https://github.com/Aadrika08/palimpsest/blob/7213ea1d6a9f9315708d0689648e631aece5275c/docs/reports/puck-cpu-held-preparation-v1.md)
+retains 62 passing focused checks; 66 legacy tmpfs checks pass in 59.59 s.
+The 342-case persistent slice has 336 passes and 6 retained failures: 5 reproduce
+on the old base and 1 is an ancestor-change refusal. No green full-suite result
+or actual installed-tree staging/held qualification is claimed. The generated
+helper is prospective source, without a historical-byte claim. All 33 statuses,
+scientific decisions and seven open gates remain unchanged.
 
 [Draft PR #146](https://github.com/Aadrika08/palimpsest/pull/146) accepts the distinct
 ordinary CPU characterization02: actual parent exit0 in17.546290720s, with
