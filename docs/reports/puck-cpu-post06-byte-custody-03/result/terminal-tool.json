@@ -1,0 +1,21 @@
+{
+  "actual07_invoked": false,
+  "check03_invoked": true,
+  "frozen_controls_commit": "0dd615d4e06b7141da1dc7a3fc21aa7d3b3780e6",
+  "implicit_retry": false,
+  "initial_tool_response": {
+    "chunk_id": "3714bf",
+    "output": "",
+    "session_id": 25570,
+    "wall_time_seconds": 1.000769892
+  },
+  "invocations": 1,
+  "kind": "held06-post03-external-tool-observation-v1",
+  "terminal_tool_response": {
+    "chunk_id": "1553b1",
+    "exit_code": 0,
+    "output": "{\"accepted\": true, \"elapsed_seconds\": 26.972317883977666, \"receipt\": \"/tmp/palimpsest-held06-post-byte-custody-03-external.json\", \"returncode\": 0, \"stderr\": {\"path\": \"/tmp/palimpsest-held06-post-byte-custody-03-external.stderr\", \"sha256\": \"eae6bcef63a3aa747486f81dd92b851a1ca191029a0f6b92854dec0649d1f2f9\", \"size_bytes\": 1479}, \"stdout\": {\"path\": \"/tmp/palimpsest-held06-post-byte-custody-03-external.stdout\", \"sha256\": \"000829dee6142af39f53a5f88e16b61d5f6e059ea645e250d65303dc3592d498\", \"size_bytes\": 2997}, \"timed_out\": false}\n",
+    "wall_time_seconds": 4.405631991
+  },
+  "wall_time_scope": "Tool wall_time_seconds is this tool observation chunk only; whole runtime comes from pinned external receipt/summary."
+}
