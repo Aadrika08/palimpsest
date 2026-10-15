@@ -425,6 +425,49 @@ class HeldDependencyNamespace:
         try: self._recheck()
         except BaseException as error: self._poison(error); raise
 
+    def require_absent_imports(self, names):
+        """Prove finite exact import names absent from the held package forest."""
+        try:
+            self._recheck()
+            if (type(names) is not tuple or not 1 <= len(names) <= 128 or any(
+                    type(name) is not str or len(name) > 512 or not _NAME.fullmatch(name)
+                    or name.split('.')[0] in sys.stdlib_module_names for name in names)):
+                raise ValueError('Absent imports require a bounded tuple of exact nonstdlib names')
+            if names != tuple(sorted(set(names))) or any(
+                    name.startswith(parent + '.') for index, name in enumerate(names) for parent in names[:index]):
+                raise ValueError('Absent imports must be sorted, unique and nonoverlapping')
+            reg = self._registration
+            declared = {row['name'] for row in reg['modules'] + reg['namespaces']}
+            declared.update(row['name'] for row in reg.get('import_profile', {}).get('exports', []))
+            packages = {row['name']:row for row in reg['modules'] if row['is_package']}
+            packages.update({row['name']:row for row in reg['namespaces']})
+            censuses = {index:{path for path, identity in child._namespace}
+                for index, child in enumerate(self._holders) if reg['roots'][index]['kind'] == 'package'}
+            suffixes = ('.py', '.pyc', *importlib.machinery.EXTENSION_SUFFIXES)
+            for name in names:
+                self._check_signal()
+                if any(known == name or known.startswith(name + '.') for known in declared):
+                    raise ValueError('Absent import overlaps a registered module, namespace or export: ' + name)
+                candidates = {(index, name.replace('.', '/')) for index in censuses}
+                parent_name, dot, leaf = name.rpartition('.')
+                if dot:
+                    parent = packages.get(parent_name)
+                    if parent is None:
+                        raise ValueError('Absent import parent is not a registered package or namespace: ' + name)
+                    directory = parent['path'].rpartition('/')[0] if parent.get('is_package') else parent['path']
+                    candidates.add((parent['root_index'], directory + '/' + leaf if directory else leaf))
+                for index, stem in candidates:
+                    self._check_signal()
+                    paths = censuses[index]
+                    directory, slash, leaf = stem.rpartition('/')
+                    cache = (directory + '/' if slash else '') + '__pycache__/' + leaf + '.'
+                    if (stem in paths or any(stem + suffix in paths for suffix in suffixes) or any(
+                            path.startswith(cache) and path.endswith('.pyc') and '/' not in path[len(cache):]
+                            for path in paths)):
+                        raise ValueError('Absent import has a physical package namespace alternative: ' + name)
+            self._check_signal()
+        except BaseException as error: self._poison(error); raise
+
     def _target_recheck(self, child, path):
         self._active(); self._check_signal()
         # Per-import consumption checks only its held ancestor chain and leaf.
