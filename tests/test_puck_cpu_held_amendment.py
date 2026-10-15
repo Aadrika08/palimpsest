@@ -158,9 +158,9 @@ from test_puck_cpu_held_parent_integration import ROOT, canonical, digest, load,
 
 
 @contextmanager
-def amendment_fixture(tmp_path,*,rocm_probe=False):
+def amendment_fixture(tmp_path,*,rocm_probe=False,historical_bindings=False,binding_failure=False):
     assert tmp_path.resolve().is_relative_to((ROOT/'runs').resolve()), 'Use persistent runs/ basetemp'
-    root,current,inputs,_=project(tmp_path,rocm_probe=rocm_probe)
+    root,current,inputs,_=project(tmp_path,rocm_probe=rocm_probe,binding_failure=binding_failure)
     legacy=ROOT/'docs/reports/puck-cpu-held-preparation-01'
     archived_auditor=legacy/'controls/scripts/audit_puck_cpu_held_runtime.py'
     archived_raw=archived_auditor.read_bytes()
@@ -171,6 +171,12 @@ def amendment_fixture(tmp_path,*,rocm_probe=False):
     old_bootstrap=(legacy/'raw/worker-source'/current.BOOTSTRAP).read_bytes()
     assert old_bootstrap!=fresh_bootstrap
     bootstrap.write_bytes(old_bootstrap)
+    bindings=root/'src/palimpsest/puck_dependency_bindings.py'
+    fresh_bindings=bindings.read_bytes()
+    if historical_bindings:
+        old_bindings=(legacy/'raw/worker-source/src/palimpsest/puck_dependency_bindings.py').read_bytes()
+        assert old_bindings!=fresh_bindings
+        bindings.write_bytes(old_bindings)
     sources=lambda:[dict(path=name,size_bytes=(root/name).stat().st_size,sha256=digest((root/name).read_bytes())) for name in current.SOURCES]
     stage=Path('/tmp')/('palimpsest-puck-cpu-held-authored-amendment-'+secrets.token_hex(12))
     assert not stage.exists()
@@ -210,12 +216,14 @@ def amendment_fixture(tmp_path,*,rocm_probe=False):
         assert json.loads(stdout)['status']==('FAIL' if rocm_probe else 'imports_completed')
         if rocm_probe:
             assert not (root/current.OUTPUTS['qualify']/'baseline-after.json').exists()
-            assert b'torch._rocm_init' in (root/current.OUTPUTS['qualify']/'logs/stderr.log').read_bytes()
+            expected=(b'Dependency producer attribute binding is missing' if binding_failure else b'torch._rocm_init')
+            assert expected in (root/current.OUTPUTS['qualify']/'logs/stderr.log').read_bytes()
         paths=[p for phase in ('prepare','qualify') for p in (root/current.OUTPUTS[phase]).rglob('*') if p.is_file()]
         paths += [configuration,transport,audit_output,cli_path]
         paths += list(root.glob('authored-prepare-cli.*'))+list(root.glob('authored-qualify-*'))+list(root.glob('authored-historical-audit.*'))
         legacy_bytes={str(p.relative_to(root)):p.read_bytes() for p in paths if p.is_file()}
         bootstrap.write_bytes(fresh_bootstrap)
+        if historical_bindings:bindings.write_bytes(fresh_bindings)
         acceptance={role:dict(path=str(path.relative_to(root)),size_bytes=path.stat().st_size,sha256=digest(path.read_bytes()))
             for role,path in dict(configuration=configuration,result=prepare_result,independent_audit=audit_output,
                 externally_observed_auditor_cli=cli_path).items()}

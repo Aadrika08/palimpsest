@@ -1,0 +1,33 @@
+{
+  "at": "2026-10-15T16:32:02.815077+00:00",
+  "baseline_after_absent": true,
+  "kind": "qualification04-post-terminal-custody-observation-v1",
+  "matching_survivors": [],
+  "proc_pid_namespace": "pid:[4026531836]",
+  "scope": "dated host PID/start identity and artifact observation; no post-stage byte audit",
+  "tracked_identities": [
+    {
+      "current_start_ticks": null,
+      "matching_identity_alive": false,
+      "pid": 2538974,
+      "pid_exists": false,
+      "start_ticks": 51590177
+    },
+    {
+      "current_start_ticks": null,
+      "matching_identity_alive": false,
+      "pid": 2538975,
+      "pid_exists": false,
+      "start_ticks": 51590178
+    },
+    {
+      "current_start_ticks": null,
+      "matching_identity_alive": false,
+      "pid": 2538976,
+      "pid_exists": false,
+      "start_ticks": 51590179
+    }
+  ],
+  "worker_stderr_bytes": 2914,
+  "worker_stdout_bytes": 0
+}

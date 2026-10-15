@@ -1,0 +1,438 @@
+FF............................FFFF......FF.............F.F.............. [ 90%]
+....FF..                                                                 [100%]
+=================================== FAILURES ===================================
+_ test04_accepts_only_mandatory_bootstrap_bindings_and_optional_parent[False] __
+
+parent_changed = False
+
+    @pytest.mark.parametrize('parent_changed',[False,True])
+    def test04_accepts_only_mandatory_bootstrap_bindings_and_optional_parent(parent_changed):
+        m,config,blobs=acceptance04_case()
+        historical=json.loads(blobs['configuration'])
+        if not parent_changed:
+            old=next(row for row in historical['sources'] if row['path']==PARENT)
+            config['sources']=[copy.deepcopy(old) if row['path']==PARENT else row for row in config['sources']]
+>       m.validate_configuration(config)
+
+tests/test_puck_cpu_held_amendment04.py:31: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+config = {'allocation_id': 4, 'claims': {'collection_authorized': False, 'executable': False, 'native_authorized': False, 'qual....}, 'expected_versions': {'mujoco': '3.3.6', 'numpy': '2.2.5', 'torch': '2.9.0+cpu', 'torchvision': '0.24.0+cpu'}, ...}
+
+    def validate_configuration(config):
+        keys={'kind','version','phase','allocation_id','root','stage_parent','sources','inputs',
+              'interpreter','environment','expected_versions','limits','negative_imports','claims'}
+        phase=config.get('phase') if type(config) is dict else None
+        kind=config.get('kind') if type(config) is dict else None
+        epoch=3 if kind=='puck-cpu-held-runtime-allocation-v3' else 2 if kind=='puck-cpu-held-runtime-allocation-v2' else 1
+        amended=epoch in (2,3)
+        if amended:keys.add('preparation_acceptance')
+        elif phase=='qualify':keys.add('preparation')
+        if (phase not in LIMITS or set(config)!=keys or (amended and phase!='qualify')
+                or config['kind']!='puck-cpu-held-runtime-allocation-v'+str(epoch)
+                or type(config['version']) is not int or config['version']!=epoch
+                or type(config['allocation_id']) is not int or config['allocation_id']!=epoch
+                or config['root']!=str(ROOT) or canonical(config['limits'])!=canonical(LIMITS[phase])
+                or config['interpreter']!=INTERPRETER or canonical(config['environment'])!=canonical(ENVIRONMENT)
+                or config['expected_versions']!=VERSIONS or canonical(config['claims'])!=canonical(CLAIMS)):
+>           raise ValueError('Exact CPU allocation configuration required')
+E           ValueError: Exact CPU allocation configuration required
+
+scripts/qualify_puck_cpu_held_runtime.py:168: ValueError
+__ test04_accepts_only_mandatory_bootstrap_bindings_and_optional_parent[True] __
+
+parent_changed = True
+
+    @pytest.mark.parametrize('parent_changed',[False,True])
+    def test04_accepts_only_mandatory_bootstrap_bindings_and_optional_parent(parent_changed):
+        m,config,blobs=acceptance04_case()
+        historical=json.loads(blobs['configuration'])
+        if not parent_changed:
+            old=next(row for row in historical['sources'] if row['path']==PARENT)
+            config['sources']=[copy.deepcopy(old) if row['path']==PARENT else row for row in config['sources']]
+>       m.validate_configuration(config)
+
+tests/test_puck_cpu_held_amendment04.py:31: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+config = {'allocation_id': 4, 'claims': {'collection_authorized': False, 'executable': False, 'native_authorized': False, 'qual....}, 'expected_versions': {'mujoco': '3.3.6', 'numpy': '2.2.5', 'torch': '2.9.0+cpu', 'torchvision': '0.24.0+cpu'}, ...}
+
+    def validate_configuration(config):
+        keys={'kind','version','phase','allocation_id','root','stage_parent','sources','inputs',
+              'interpreter','environment','expected_versions','limits','negative_imports','claims'}
+        phase=config.get('phase') if type(config) is dict else None
+        kind=config.get('kind') if type(config) is dict else None
+        epoch=3 if kind=='puck-cpu-held-runtime-allocation-v3' else 2 if kind=='puck-cpu-held-runtime-allocation-v2' else 1
+        amended=epoch in (2,3)
+        if amended:keys.add('preparation_acceptance')
+        elif phase=='qualify':keys.add('preparation')
+        if (phase not in LIMITS or set(config)!=keys or (amended and phase!='qualify')
+                or config['kind']!='puck-cpu-held-runtime-allocation-v'+str(epoch)
+                or type(config['version']) is not int or config['version']!=epoch
+                or type(config['allocation_id']) is not int or config['allocation_id']!=epoch
+                or config['root']!=str(ROOT) or canonical(config['limits'])!=canonical(LIMITS[phase])
+                or config['interpreter']!=INTERPRETER or canonical(config['environment'])!=canonical(ENVIRONMENT)
+                or config['expected_versions']!=VERSIONS or canonical(config['claims'])!=canonical(CLAIMS)):
+>           raise ValueError('Exact CPU allocation configuration required')
+E           ValueError: Exact CPU allocation configuration required
+
+scripts/qualify_puck_cpu_held_runtime.py:168: ValueError
+_ test_authored04_uses_exact_new_bindings_capsule_and_preserves_historical_bytes _
+
+tmp_path = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/runs/source-validation/cpu-amendment04/red-02/tmp/test_authored04_uses_exact_new0')
+
+    def test_authored04_uses_exact_new_bindings_capsule_and_preserves_historical_bytes(tmp_path):
+        with amendment04_fixture(tmp_path) as case:
+            root,m,config,stage=(case[k] for k in ('root','api','config','stage'))
+            identities=[(p.stat().st_dev,p.stat().st_ino) for p in sorted((stage/'inputs').iterdir())]
+            code,stdout,stderr=run_cli(root,m,'qualify04',config)
+            output=root/'runs/puck-cpu-held-qualification-04'
+            retained=(output/'result.json').read_bytes() if (output/'result.json').exists() else b''
+>           assert code==0,(code,stdout,stderr,retained)
+E           AssertionError: (1, b'', b'Traceback (most recent call last):
+E               File "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qual...rror(\'Exact CPU allocation configuration required\')
+E             ValueError: Exact CPU allocation configuration required
+E             ', b'')
+E           assert 1 == 0
+
+tests/test_puck_cpu_held_amendment04_integration.py:60: AssertionError
+__ test_authored04_preserves03_generic_failure_and_adds_exact_chained_context __
+
+tmp_path = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/runs/source-validation/cpu-amendment04/red-02/tmp/test_authored04_preserves03_ge0')
+
+    def test_authored04_preserves03_generic_failure_and_adds_exact_chained_context(tmp_path):
+>       with amendment04_fixture(tmp_path,binding_failure=True) as case:
+
+tests/test_puck_cpu_held_amendment04_integration.py:82: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/contextlib.py:137: in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+tests/test_puck_cpu_held_amendment04_integration.py:19: in amendment04_fixture
+    with amendment_fixture(tmp_path,rocm_probe=True,historical_bindings=True,binding_failure=binding_failure) as case:
+/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/contextlib.py:137: in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+tmp_path = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/runs/source-validation/cpu-amendment04/red-02/tmp/test_authored04_preserves03_ge0')
+
+    @contextmanager
+    def amendment_fixture(tmp_path,*,rocm_probe=False,historical_bindings=False,binding_failure=False):
+        assert tmp_path.resolve().is_relative_to((ROOT/'runs').resolve()), 'Use persistent runs/ basetemp'
+        root,current,inputs,_=project(tmp_path,rocm_probe=rocm_probe,binding_failure=binding_failure)
+        legacy=ROOT/'docs/reports/puck-cpu-held-preparation-01'
+        archived_auditor=legacy/'controls/scripts/audit_puck_cpu_held_runtime.py'
+        archived_raw=archived_auditor.read_bytes()
+        assert digest(archived_raw)==LEGACY_AUDITOR_SHA
+        (root/'scripts/audit_puck_cpu_held_runtime.py').write_bytes(archived_raw)
+        bootstrap=root/current.BOOTSTRAP
+        fresh_bootstrap=bootstrap.read_bytes()
+        old_bootstrap=(legacy/'raw/worker-source'/current.BOOTSTRAP).read_bytes()
+        assert old_bootstrap!=fresh_bootstrap
+        bootstrap.write_bytes(old_bootstrap)
+        bindings=root/'src/palimpsest/puck_dependency_bindings.py'
+        fresh_bindings=bindings.read_bytes()
+        if historical_bindings:
+            old_bindings=(legacy/'raw/worker-source/src/palimpsest/puck_dependency_bindings.py').read_bytes()
+            assert old_bindings!=fresh_bindings
+            bindings.write_bytes(old_bindings)
+        sources=lambda:[dict(path=name,size_bytes=(root/name).stat().st_size,sha256=digest((root/name).read_bytes())) for name in current.SOURCES]
+        stage=Path('/tmp')/('palimpsest-puck-cpu-held-authored-amendment-'+secrets.token_hex(12))
+        assert not stage.exists()
+        try:
+            prepare=current.configuration_template(phase='prepare',root=str(root),stage_parent=str(stage),
+                sources=sources(),inputs=inputs,negative_imports=['org'])
+            code,stdout,stderr=run_cli(root,current,'prepare',prepare)
+            assert code==0,(code,stdout,stderr)
+            prepare_result=root/current.OUTPUTS['prepare']/'result.json'
+            prepared_raw=prepare_result.read_bytes()
+            assert json.loads(prepared_raw)['status']=='prepared'
+            configuration=root/'authored-prepare-configuration.json'
+            transport=root/'authored-prepare-transport.json'
+            audit_output=root/'docs/authored/historical-audit.json'
+            command=[current.PYTHON,'-I','-S','-B',str(root/'scripts/audit_puck_cpu_held_runtime.py'),
+                '--configuration',str(configuration),'--sha256',digest(configuration.read_bytes()),
+                '--transport',str(transport),'--transport-sha256',digest(transport.read_bytes()),'--output',str(audit_output)]
+            started=time.monotonic()
+            process=subprocess.run(command,cwd=root,env=dict(PATH='/usr/bin:/bin',LANG='C.UTF-8',LC_ALL='C.UTF-8',PYTHONDONTWRITEBYTECODE='1'),
+                capture_output=True,timeout=30)
+            elapsed=time.monotonic()-started
+            channels={}
+            for name,raw in (('stdout',process.stdout),('stderr',process.stderr)):
+                path=root/('authored-historical-audit.'+name);path.write_bytes(raw)
+                channels[name]=dict(path=str(path),size_bytes=len(raw),sha256=digest(raw))
+            cli=dict(kind='externally-observed-cpu-auditor-cli-v1',command=command,observed_returncode=process.returncode,
+                elapsed_seconds=elapsed,published=dict(path=str(audit_output),size_bytes=audit_output.stat().st_size,sha256=digest(audit_output.read_bytes())),**channels)
+            cli_path=root/'docs/authored/historical-audit-cli.json';cli_path.write_bytes(canonical(cli))
+            assert process.returncode==0,(process.returncode,process.stdout,process.stderr)
+            assert process.stdout==audit_output.read_bytes() and not process.stderr
+            assert json.loads(process.stdout)['status']=='PASS'
+            preparation=dict(path=str(prepare_result.relative_to(root)),size_bytes=len(prepared_raw),sha256=digest(prepared_raw))
+            qualify=current.configuration_template(phase='qualify',root=str(root),stage_parent=str(stage),
+                sources=sources(),inputs=inputs,negative_imports=['org'],preparation=preparation)
+            code,stdout,stderr=run_cli(root,current,'qualify',qualify)
+            assert code==(1 if rocm_probe else 0),(code,stdout,stderr)
+            assert json.loads(stdout)['status']==('FAIL' if rocm_probe else 'imports_completed')
+            if rocm_probe:
+                assert not (root/current.OUTPUTS['qualify']/'baseline-after.json').exists()
+>               assert b'torch._rocm_init' in (root/current.OUTPUTS['qualify']/'logs/stderr.log').read_bytes()
+E               assert b'torch._rocm_init' in b'Traceback (most recent call last):\n  File "<string>", line 10, in <module>\n  File "/puck/source/scripts/puck_worke...^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nRuntimeError: Dependency producer attribute binding is missing\n'
+E                +  where b'Traceback (most recent call last):\n  File "<string>", line 10, in <module>\n  File "/puck/source/scripts/puck_worke...^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nRuntimeError: Dependency producer attribute binding is missing\n' = read_bytes()
+E                +    where read_bytes = ((PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/runs/source-validation/cpu-amendment04/red-02/tmp/test_authored04_preserves03_ge0/authored-project') / 'runs/puck-cpu-held-qualification-01') / 'logs/stderr.log').read_bytes
+
+tests/test_puck_cpu_held_amendment.py:219: AssertionError
+_________ test04_closed_identity_reaches_only_its_fresh_output[False] __________
+
+authored = False
+
+    @pytest.mark.parametrize('authored',[False,True])
+    def test04_closed_identity_reaches_only_its_fresh_output(authored):
+>       m=api();value=configuration04(m,authored);m.configuration(value,authored)
+                                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_puck_cpu_amendment04_audit.py:33: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+scripts/audit_puck_cpu_held_runtime.py:196: in configuration
+    require(phase in OUTPUTS and (not amended or phase=='qualify') and set(config)==keys and config['kind']=='puck-cpu-held-runtime-allocation-v'+str(version) and type(config['version']) is int and config['version']==version and type(config['allocation_id']) is int and config['allocation_id']==version,'Exact allocation configuration required')
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+value = False, message = 'Exact allocation configuration required'
+
+    def require(value,message):
+>       if not value:raise ValueError(message)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^
+E       ValueError: Exact allocation configuration required
+
+scripts/audit_puck_cpu_held_runtime.py:39: ValueError
+__________ test04_closed_identity_reaches_only_its_fresh_output[True] __________
+
+authored = True
+
+    @pytest.mark.parametrize('authored',[False,True])
+    def test04_closed_identity_reaches_only_its_fresh_output(authored):
+>       m=api();value=configuration04(m,authored);m.configuration(value,authored)
+                                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_puck_cpu_amendment04_audit.py:33: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+scripts/audit_puck_cpu_held_runtime.py:196: in configuration
+    require(phase in OUTPUTS and (not amended or phase=='qualify') and set(config)==keys and config['kind']=='puck-cpu-held-runtime-allocation-v'+str(version) and type(config['version']) is int and config['version']==version and type(config['allocation_id']) is int and config['allocation_id']==version,'Exact allocation configuration required')
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+value = False, message = 'Exact allocation configuration required'
+
+    def require(value,message):
+>       if not value:raise ValueError(message)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^
+E       ValueError: Exact allocation configuration required
+
+scripts/audit_puck_cpu_held_runtime.py:39: ValueError
+___ test04_requires_bootstrap_and_binding_delta_with_optional_parent[False] ____
+
+parent_changes = False
+
+    @pytest.mark.parametrize('parent_changes',[False,True])
+    def test04_requires_bootstrap_and_binding_delta_with_optional_parent(parent_changes):
+        m=api();current,old,prep=epoch04(m)
+        if not parent_changes:
+            next(r for r in current['sources'] if r['path']==m.PARENT).update(next(r for r in old['sources'] if r['path']==m.PARENT))
+>       m.preparation_epoch(current,old,prep)
+
+tests/test_puck_cpu_amendment04_audit.py:49: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+scripts/audit_puck_cpu_held_runtime.py:227: in preparation_epoch
+    require(all(canonical(current[k])==canonical(historical[k]) for k in shared),'Historical preparation data or policy changed')
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+value = False, message = 'Historical preparation data or policy changed'
+
+    def require(value,message):
+>       if not value:raise ValueError(message)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^
+E       ValueError: Historical preparation data or policy changed
+
+scripts/audit_puck_cpu_held_runtime.py:39: ValueError
+____ test04_requires_bootstrap_and_binding_delta_with_optional_parent[True] ____
+
+parent_changes = True
+
+    @pytest.mark.parametrize('parent_changes',[False,True])
+    def test04_requires_bootstrap_and_binding_delta_with_optional_parent(parent_changes):
+        m=api();current,old,prep=epoch04(m)
+        if not parent_changes:
+            next(r for r in current['sources'] if r['path']==m.PARENT).update(next(r for r in old['sources'] if r['path']==m.PARENT))
+>       m.preparation_epoch(current,old,prep)
+
+tests/test_puck_cpu_amendment04_audit.py:49: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+scripts/audit_puck_cpu_held_runtime.py:227: in preparation_epoch
+    require(all(canonical(current[k])==canonical(historical[k]) for k in shared),'Historical preparation data or policy changed')
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+value = False, message = 'Historical preparation data or policy changed'
+
+    def require(value,message):
+>       if not value:raise ValueError(message)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^
+E       ValueError: Historical preparation data or policy changed
+
+scripts/audit_puck_cpu_held_runtime.py:39: ValueError
+_ test04_historical_acceptance_retains_the_original_auditor_and_capsule_epoch __
+
+tmp_path = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/runs/source-validation/cpu-amendment04/red-02/tmp/test04_historical_acceptance_r0')
+
+    def test04_historical_acceptance_retains_the_original_auditor_and_capsule_epoch(tmp_path):
+        m=api();current=acceptance_files(m,tmp_path)
+        current.update(kind='puck-cpu-held-runtime-allocation-v4',version=4,allocation_id=4,
+            negative_imports=['org','torch._rocm_init'])
+        next(r for r in current['sources'] if r['path']==BINDINGS)['sha256']='d'*64
+        before=len(os.listdir('/proc/self/fd'));held=m.Held(time.monotonic()+10)
+        try:
+>           old,prepared,audit=m.historical_acceptance(held,current,True)
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_puck_cpu_amendment04_audit.py:93: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+scripts/audit_puck_cpu_held_runtime.py:240: in historical_acceptance
+    outcome(prep,old,sha(oldraw));preparation_epoch(current,old,prep)
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+scripts/audit_puck_cpu_held_runtime.py:227: in preparation_epoch
+    require(all(canonical(current[k])==canonical(historical[k]) for k in shared),'Historical preparation data or policy changed')
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+value = False, message = 'Historical preparation data or policy changed'
+
+    def require(value,message):
+>       if not value:raise ValueError(message)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^
+E       ValueError: Historical preparation data or policy changed
+
+scripts/audit_puck_cpu_held_runtime.py:39: ValueError
+_ test_real_authored04_independent_audits_fresh_bindings_and_preserves_history _
+
+tmp_path = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/runs/source-validation/cpu-amendment04/red-02/tmp/test_real_authored04_independe0')
+
+    def test_real_authored04_independent_audits_fresh_bindings_and_preserves_history(tmp_path):
+        from test_puck_cpu_held_amendment04_integration import amendment04_fixture
+        from test_puck_cpu_held_parent_integration import run_cli
+        m=api()
+        with amendment04_fixture(tmp_path) as case:
+            root,parent,config,stage=(case[k] for k in ('root','api','config','stage'))
+            code,stdout,stderr=run_cli(root,parent,'qualify04',config)
+>           assert code==0,(code,stdout,stderr)
+E           AssertionError: (1, b'', b'Traceback (most recent call last):
+E               File "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qual...alueError(\'Exact CPU allocation configuration required\')
+E             ValueError: Exact CPU allocation configuration required
+E             ')
+E           assert 1 == 0
+
+tests/test_puck_cpu_amendment04_audit.py:117: AssertionError
+__ test_qualification04_observer_preserves_prior_epochs_and_reserves_once[0] ___
+
+tmp_path = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/runs/source-validation/cpu-amendment04/red-02/tmp/test_qualification04_observer_0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7336bb67aa90>
+code = 0
+
+    @pytest.mark.parametrize('code',[0,7])
+    def test_qualification04_observer_preserves_prior_epochs_and_reserves_once(tmp_path,monkeypatch,code):
+        module,path,_=setup(tmp_path,monkeypatch,'import sys\nprint("authored04")\nsys.exit('+str(code)+')\n')
+        config=json.loads(path.read_bytes());config.update(kind='puck-cpu-held-runtime-allocation-v4',version=4,allocation_id=4,phase='qualify')
+        raw=module.canonical(config);path.write_bytes(raw);sha=hashlib.sha256(raw).hexdigest()
+        for epoch in ('01','02','03'):
+            stem='runs/puck-cpu-held-qualification-'+epoch;old=tmp_path/stem;old.mkdir();(old/'result.json').write_bytes(b'preserved consumed'+epoch.encode())
+            for suffix in ('-external-cli.stdout','-external-cli.stderr','-external-cli-transport.json'):
+                (tmp_path/(stem+suffix)).write_bytes(b'preserved'+epoch.encode()+suffix.encode())
+        legacy={p:p.read_bytes() for p in (tmp_path/'runs').rglob('*') if p.is_file()}
+>       result=module.observe(path,sha)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_puck_cpu_held_observer.py:157: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+configuration = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/runs/source-validation/cpu-amendment04/red-02/tmp/test_qualification04_observer_0/configuration.json')
+expected_sha256 = '5efea9efc219b5504a83ee50ca1cdefb4a383df0e3632daa0f3679d40a70b1c7'
+
+    def observe(configuration,expected_sha256):
+        started=time.monotonic();configuration=Path(configuration)
+        if not configuration.is_absolute() or not configuration.is_relative_to(ROOT):
+            raise ValueError('CPU configuration must be inside its exact project root')
+        raw=read(configuration,1024**2)
+        if hashlib.sha256(raw).hexdigest()!=expected_sha256:raise ValueError('CPU configuration SHA differs')
+        config=json.loads(raw)
+        if canonical(config)!=raw:raise ValueError('Canonical CPU configuration required')
+        phase=config.get('phase')
+        version={'puck-cpu-held-runtime-allocation-v2':2,'puck-cpu-held-runtime-allocation-v3':3}.get(config.get('kind'))
+        amended=version is not None
+        if amended:
+            if (phase!='qualify' or type(config.get('version')) is not int or config['version']!=version
+                    or type(config.get('allocation_id')) is not int or config['allocation_id']!=version):
+                raise ValueError('Exact amended qualification allocation identity required')
+            output_name={2:'runs/puck-cpu-held-qualification-02',3:'runs/puck-cpu-held-qualification-03'}[version]
+        else:
+            if config.get('kind')!='puck-cpu-held-runtime-allocation-v1' or phase not in OUTPUTS:
+>               raise ValueError('Exact CPU parent allocation root and phase required')
+E               ValueError: Exact CPU parent allocation root and phase required
+
+scripts/observe_puck_cpu_held_allocation.py:67: ValueError
+__ test_qualification04_observer_preserves_prior_epochs_and_reserves_once[7] ___
+
+tmp_path = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/runs/source-validation/cpu-amendment04/red-02/tmp/test_qualification04_observer_1')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7336bb63dbd0>
+code = 7
+
+    @pytest.mark.parametrize('code',[0,7])
+    def test_qualification04_observer_preserves_prior_epochs_and_reserves_once(tmp_path,monkeypatch,code):
+        module,path,_=setup(tmp_path,monkeypatch,'import sys\nprint("authored04")\nsys.exit('+str(code)+')\n')
+        config=json.loads(path.read_bytes());config.update(kind='puck-cpu-held-runtime-allocation-v4',version=4,allocation_id=4,phase='qualify')
+        raw=module.canonical(config);path.write_bytes(raw);sha=hashlib.sha256(raw).hexdigest()
+        for epoch in ('01','02','03'):
+            stem='runs/puck-cpu-held-qualification-'+epoch;old=tmp_path/stem;old.mkdir();(old/'result.json').write_bytes(b'preserved consumed'+epoch.encode())
+            for suffix in ('-external-cli.stdout','-external-cli.stderr','-external-cli-transport.json'):
+                (tmp_path/(stem+suffix)).write_bytes(b'preserved'+epoch.encode()+suffix.encode())
+        legacy={p:p.read_bytes() for p in (tmp_path/'runs').rglob('*') if p.is_file()}
+>       result=module.observe(path,sha)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_puck_cpu_held_observer.py:157: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+configuration = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/runs/source-validation/cpu-amendment04/red-02/tmp/test_qualification04_observer_1/configuration.json')
+expected_sha256 = 'b2673943458149fb20d66f91fbbdaa2675ae347fe1556e73a802965fab4de20a'
+
+    def observe(configuration,expected_sha256):
+        started=time.monotonic();configuration=Path(configuration)
+        if not configuration.is_absolute() or not configuration.is_relative_to(ROOT):
+            raise ValueError('CPU configuration must be inside its exact project root')
+        raw=read(configuration,1024**2)
+        if hashlib.sha256(raw).hexdigest()!=expected_sha256:raise ValueError('CPU configuration SHA differs')
+        config=json.loads(raw)
+        if canonical(config)!=raw:raise ValueError('Canonical CPU configuration required')
+        phase=config.get('phase')
+        version={'puck-cpu-held-runtime-allocation-v2':2,'puck-cpu-held-runtime-allocation-v3':3}.get(config.get('kind'))
+        amended=version is not None
+        if amended:
+            if (phase!='qualify' or type(config.get('version')) is not int or config['version']!=version
+                    or type(config.get('allocation_id')) is not int or config['allocation_id']!=version):
+                raise ValueError('Exact amended qualification allocation identity required')
+            output_name={2:'runs/puck-cpu-held-qualification-02',3:'runs/puck-cpu-held-qualification-03'}[version]
+        else:
+            if config.get('kind')!='puck-cpu-held-runtime-allocation-v1' or phase not in OUTPUTS:
+>               raise ValueError('Exact CPU parent allocation root and phase required')
+E               ValueError: Exact CPU parent allocation root and phase required
+
+scripts/observe_puck_cpu_held_allocation.py:67: ValueError
+=========================== short test summary info ============================
+FAILED tests/test_puck_cpu_held_amendment04.py::test04_accepts_only_mandatory_bootstrap_bindings_and_optional_parent[False]
+FAILED tests/test_puck_cpu_held_amendment04.py::test04_accepts_only_mandatory_bootstrap_bindings_and_optional_parent[True]
+FAILED tests/test_puck_cpu_held_amendment04_integration.py::test_authored04_uses_exact_new_bindings_capsule_and_preserves_historical_bytes
+FAILED tests/test_puck_cpu_held_amendment04_integration.py::test_authored04_preserves03_generic_failure_and_adds_exact_chained_context
+FAILED tests/test_puck_cpu_amendment04_audit.py::test04_closed_identity_reaches_only_its_fresh_output[False]
+FAILED tests/test_puck_cpu_amendment04_audit.py::test04_closed_identity_reaches_only_its_fresh_output[True]
+FAILED tests/test_puck_cpu_amendment04_audit.py::test04_requires_bootstrap_and_binding_delta_with_optional_parent[False]
+FAILED tests/test_puck_cpu_amendment04_audit.py::test04_requires_bootstrap_and_binding_delta_with_optional_parent[True]
+FAILED tests/test_puck_cpu_amendment04_audit.py::test04_historical_acceptance_retains_the_original_auditor_and_capsule_epoch
+FAILED tests/test_puck_cpu_amendment04_audit.py::test_real_authored04_independent_audits_fresh_bindings_and_preserves_history
+FAILED tests/test_puck_cpu_held_observer.py::test_qualification04_observer_preserves_prior_epochs_and_reserves_once[0]
+FAILED tests/test_puck_cpu_held_observer.py::test_qualification04_observer_preserves_prior_epochs_and_reserves_once[7]
+12 failed, 68 passed in 16.93s

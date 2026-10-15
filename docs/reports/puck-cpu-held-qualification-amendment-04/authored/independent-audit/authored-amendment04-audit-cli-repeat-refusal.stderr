@@ -1,0 +1,10 @@
+Traceback (most recent call last):
+  File "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/audit_puck_cpu_held_runtime.py", line 621, in <module>
+    if __name__=='__main__':raise SystemExit(main())
+                                             ^^^^^^
+  File "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/audit_puck_cpu_held_runtime.py", line 613, in main
+    publish(args.output,result)
+  File "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/scripts/audit_puck_cpu_held_runtime.py", line 593, in publish
+    fd=os.open(path.name,os.O_WRONLY|os.O_CREAT|os.O_EXCL|os.O_NOFOLLOW,0o600,dir_fd=parent);raw=canonical(value);require(len(raw)<=MiB,'Audit output ceiling exceeded')
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileExistsError: [Errno 17] File exists: 'authored-amendment04-audit-cli.json'
