@@ -41,3 +41,38 @@ retained/model/study execution, consumed attempt retry, CI or rover work.
 All seven simulation release gates and the three prospective decisions stay open.
 This unit advances the complete inventory-to-durable-collection route; it does
 not replace that route or the full release goal with a component-test exit.
+
+## Progress ledger
+
+- Plan/API RED `16dca64`: five missing-API failures (20 imported fixture checks
+  were accidentally collected; fixture module import now prevents duplication).
+  Expanded intended suite: eleven missing-API failures, 0.23s.
+- Initial connected source `1197667`: twenty focused pass, 6.55s; 1390 affected
+  pass, same six inherited exclusions, 84.03s. Faithful native fixture import alias
+  was corrected before crediting its intended wrong-initial RED. That RED showed
+  an action before layout refusal; the initial guard now runs before action.
+- Namespace alias, changed collector scene, duplicate scene identities and
+  reader-copy cap REDs were reproduced and fixed before review.
+- Whole-branch review found reused episodes, hidden extra recording files and
+  publisher rereads at 64 MiB. Three intended REDs, 1.91s; fixed in one pass.
+  Completed contexts now refuse second episodes, native continuation and staged
+  labels/predictions. The extra staged-query RED initially used invalid capture
+  metadata; corrected complete fixture capture reproduced the actual unintended
+  label/prediction before the fix was credited.
+- Maximum-duration authored fixture initially reached final publication but the
+  old small fixture's 30s custody expired: one failure, 32.61s. Preserved refusal;
+  no production clock/cap change. The maximum fixture now constructs custody under
+  the existing 180s owner allocation. Twenty-four then pass, 46.98s, including an
+  exact 600-interval time_limit close; the final post-terminal-query case was added
+  afterwards and independently reproduced RED -> GREEN.
+- Final corrected source: 1395 affected pass, same six inherited exclusions,
+  125.72s; all 25 new close cases are included. No full-runtime/source GO claimed.
+- Ruling: implement this independent recording-close seam while actual runtime
+  qualification remains open. It was absent from the executable collection path;
+  building it needs no original/catalog/study invocation. Cost if wrong: final
+  runtime/parent integration may require adaptation. Recording terminals never
+  imply native/process/study admission or fitting authority.
+- Ruling: complete data revalidation remains the source reference close behavior.
+  Its timing against fixed parent/return buckets is not qualified; integrated
+  measurement and a reviewed custody-preserving optimization may be needed.
+  No clock borrowing or timing-cap change is authorized by these fixtures.

@@ -980,6 +980,10 @@ def _exclusive_publish(pending, final, *, directory=None, root_identity=None,
             os.close(directory)
 
 
+def _publication_cap(name):
+    return 1024**2 if name in ('owner-terminal.json','collection-terminal.json') else _MAX_JSON_BYTES
+
+
 def _commit_admission(root, paths, raw, manifest_identity, commit_raw,
                       receipt_identity, admission_raw, *, directory,
                       root_identity, before_admission=None):
@@ -990,7 +994,7 @@ def _commit_admission(root, paths, raw, manifest_identity, commit_raw,
         raise FileExistsError(
             f'Publication destination exists: {paths["admission"].name}')
     final_raw, final_manifest_identity = _read_exact_file(
-        root, paths['target'], _MAX_JSON_BYTES, paths['target'].name,
+        root, paths['target'], _publication_cap(paths['target'].name), paths['target'].name,
         directory=directory, root_identity=root_identity, return_identity=True)
     final_commit_raw, final_receipt_identity = _read_exact_file(
         root, paths['commit'], _MAX_COMMIT_BYTES, 'publication commit receipt',
@@ -1035,7 +1039,7 @@ def _atomic_manifest(root, name, manifest, *, before_admission=None):
                for path in paths.values()):
             raise ValueError(f'{name}: fresh publication paths required')
         pending_identity = _write_bytes_new(
-            pending, raw, _MAX_JSON_BYTES, directory=directory,
+            pending, raw, _publication_cap(name), directory=directory,
             root_identity=root_identity)
         _write_quarantine(root, name, directory=directory,
                           root_identity=root_identity)
@@ -1047,7 +1051,7 @@ def _atomic_manifest(root, name, manifest, *, before_admission=None):
         _verify_publication_root(root, directory, root_identity)
         _fsync_directory(root, directory, root_identity)
         target_raw, target_identity = _read_exact_file(
-            root, target, _MAX_JSON_BYTES, name, directory=directory,
+            root, target, _publication_cap(name), name, directory=directory,
             root_identity=root_identity, return_identity=True)
         if (target_raw != raw or
                 target_identity[:3] != pending_identity[:3]):
@@ -1069,7 +1073,7 @@ def _atomic_manifest(root, name, manifest, *, before_admission=None):
                 receipt_identity[:3] != commit_pending_identity[:3]):
             raise ValueError('Published receipt identity changed before admission')
         final_target_raw, final_target_identity = _read_exact_file(
-            root, target, _MAX_JSON_BYTES, name, directory=directory,
+            root, target, _publication_cap(name), name, directory=directory,
             root_identity=root_identity, return_identity=True)
         final_receipt_raw, final_receipt_identity = _read_exact_file(
             root, commit, _MAX_COMMIT_BYTES, 'publication commit receipt',
@@ -1115,6 +1119,7 @@ def _atomic_manifest(root, name, manifest, *, before_admission=None):
 def _read_publication(value, name, *, max_manifest_bytes=_MAX_JSON_BYTES):
     if type(max_manifest_bytes) is not int or not 0<max_manifest_bytes<=_MAX_JSON_BYTES:
         raise ValueError('Bounded publication manifest cap required')
+    max_manifest_bytes=min(max_manifest_bytes,_publication_cap(name))
     if not isinstance(value, (str, os.PathLike)):
         raise ValueError(f'{name}: publication path required')
     target = Path(value)

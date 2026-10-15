@@ -153,7 +153,7 @@ def test_partial_or_reordered_roster_is_not_collection_close(tmp_path):
             execution_freeze_sha256='a'*64,reservation_sha256='b'*64)
 
 
-@pytest.mark.parametrize('scenario',['normal','wrong-initial'])
+@pytest.mark.parametrize('scenario',['normal','wrong-initial','second-episode','time-limit','post-terminal-query'])
 def test_actual_authored_model_native_episode_to_durable_close(tmp_path,scenario):
     import os,subprocess,sys
     code=r'''
@@ -171,8 +171,15 @@ from scripts import verify_puck_mechanics as gate
 fixture=fixtures.NativeIntervalTests(methodName='runTest');fixture.setUp()
 world_patch=patch.object(gate,'world_from',side_effect=lambda env,goal:{**fixture.world,'time_s':env.data.time})
 world_patch.start();fixture.addCleanup(world_patch.stop)
-execution,custody=context(Path(sys.argv[1])/'inputs')
-writer=adapter.PuckIntervalWriter(fixture.path,max_bytes=2*1024**2)
+if sys.argv[2]=='time-limit':
+    import time
+    from test_puck_execution import fixture as input_fixture,module as execution_api,raw,sha
+    custody,admit=input_fixture(Path(sys.argv[1])/'inputs')
+    payload=raw(custody)
+    execution=execution_api()._HeldCollectionExecution(payload,sha(payload),time.monotonic()+180,
+        bundle_admitter=admit,runtime_pin=custody['roles']['runtime']['files'][0])
+else:execution,custody=context(Path(sys.argv[1])/'inputs')
+writer=adapter.PuckIntervalWriter(fixture.path,max_bytes=149*1024**2)
 execution.__enter__();execution.materialize_original_model()
 scene=execution.description['scene'];layout=scene['layout']
 fixture.world.update(rover_pose=list(layout['rover_pose']),puck_xyz=[*layout['puck_xy'],.062],goal_xy=layout['goal_xy'])
@@ -182,8 +189,10 @@ contact=puck.classify_contacts(raw_contacts(0),OWNERSHIP,tick=0,time_s=0.)
 calls=[]
 def step(action):
     calls.append(action)
-    fixture.env._t+=1;fixture.env.data.time=.02;fixture.env.data.ctrl[:]=effective_control(action)
-    fixture.world['puck_xyz']=[*layout['puck_xy'],.15]
+    fixture.env._t+=1;fixture.env.data.time=fixture.env._t*.02;fixture.env.data.ctrl[:]=effective_control(action)
+    if sys.argv[2]=='time-limit':
+        fixture.world['rover_pose']=[fixture.world['rover_pose'][0],fixture.world['rover_pose'][1]+.003,fixture.world['rover_pose'][2]]
+    else:fixture.world['puck_xyz']=[*layout['puck_xy'],.15]
     return fixture.observation,0.,False,False,{'dist_to_goal':1.,'stalled':False}
 fixture.env.step=step
 probe=SimpleNamespace(ownership=OWNERSHIP,install=lambda:None,begin=lambda t:None,end=lambda:raw_contacts(fixture.env._t),close=lambda:None)
@@ -195,16 +204,35 @@ except ValueError as error:
     assert not calls, 'Wrong scientific initial reached native action'
     assert writer._broken
 else:
-    assert sys.argv[2]=='normal'
+    assert sys.argv[2] in ('normal','second-episode','time-limit','post-terminal-query')
     receipt=close.read_closed_owner(Path(result['recording_close']['manifest_path']))
-    assert receipt['intervals']==len(calls)==1 and receipt['terminal_reason']=='puck_height'
+    expected=600 if sys.argv[2]=='time-limit' else 1
+    assert receipt['intervals']==len(calls)==expected
+    assert receipt['terminal_reason']==('time_limit' if expected==600 else 'puck_height')
     assert result['native_authorized'] is False
     assert writer._broken
-    execution.__exit__(None,None,None)
+    if sys.argv[2]=='post-terminal-query':
+        from palimpsest import puck_learning as learning
+        try:
+            execution.stage_interval(puck.project(world,contact),world,'approach',learning.initial_cursor(),
+                terminal_reason=None,capture_query_state=lambda:dict.fromkeys(adapter._QUERY_STATE_FIELDS))
+        except RuntimeError:pass
+        else:raise AssertionError('Completed episode allowed another label/prediction')
+    elif sys.argv[2]=='second-episode':
+        second=fixture.path.parent/'second';second.mkdir()
+        other=adapter.PuckIntervalWriter(second/'intervals',max_bytes=2*1024**2)
+        fixture.world.update(world);fixture.env._t=0;fixture.env.data.time=0.
+        try:
+            close.run_collection_episode(execution,fixture.env,fixture.observation,state,world,contact,probe,other,
+                output_root=second,reservation_sha256='b'*64)
+        except RuntimeError:
+            assert len(calls)==1, 'Reused episode reached native action'
+        else:raise AssertionError('Same held execution ran another episode')
+    else:execution.__exit__(None,None,None)
 fixture.doCleanups()
 '''
     result=subprocess.run([sys.executable,'-c',code,str(tmp_path),scenario],
-        cwd=Path(__file__).absolute().parents[1],capture_output=True,text=True,timeout=30,
+        cwd=Path(__file__).absolute().parents[1],capture_output=True,text=True,timeout=200 if scenario=='time-limit' else 30,
         env={**os.environ,'PYTHONDONTWRITEBYTECODE':'1','PYTHONPATH':'src:.:tests',
              'CUDA_VISIBLE_DEVICES':'','OMP_NUM_THREADS':'1','MKL_NUM_THREADS':'1'})
     assert result.returncode==0,result.stdout+result.stderr
@@ -309,3 +337,23 @@ def test_one_uncovered_model_fails_without_dropping_its_complete_owners(tmp_path
     assert receipt['status']=='coverage_failed' and receipt['intervals']==12
     assert receipt['coverage_by_model']=={'21':4,'22':4,'23':0}
     assert len(receipt['owners'])==12 and receipt['fitting_authorized'] is False
+
+
+
+def test_extra_recording_file_cannot_hide_retained_bytes(tmp_path):
+    module=api();path,scene,event=recording(tmp_path)
+    extra=path/'000001/recording/extra.bin'
+    with extra.open('wb') as stream:stream.truncate(150*1024**2)
+    with pytest.raises(ValueError,match='namespace|unexpected'):
+        module.close_owner_recording(tmp_path,owner=owner(0),scene=scene,recording_path=path,
+            execution_freeze_sha256='a'*64,reservation_sha256='b'*64)
+
+
+def test_terminal_publisher_bounds_every_manifest_read_before_copy(tmp_path,monkeypatch):
+    original=p._read_exact_file;limits=[]
+    def read(root,path,maximum,label,**kwargs):
+        if Path(path).name=='owner-terminal.json':limits.append(maximum)
+        return original(root,path,maximum,label,**kwargs)
+    monkeypatch.setattr(p,'_read_exact_file',read)
+    close(tmp_path)
+    assert limits and max(limits)<=1024**2

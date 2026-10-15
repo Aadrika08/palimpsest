@@ -4,6 +4,7 @@ from __future__ import annotations
 import copy
 import math
 import os
+import stat
 from pathlib import Path
 
 from . import puck_on_policy as p, puck_learning as learning, puck_profile as puck
@@ -68,6 +69,35 @@ def _initial(world,state,scene):
         raise ValueError('Recording task initial state differs')
 
 
+def _row_namespace(path):
+    """Exact small directory rosters; unknown files never escape byte accounting."""
+    directories=[];total=0
+    try:
+        for relative,allowed in (
+                ('',{'recording','commit.json','commit.anchor.json'}),
+                ('recording',{'manifest.json','events.jsonl','chunks'}),
+                ('recording/chunks',{'000000.npz'})):
+            root,fd,identity=p._open_publication_root(path/relative)
+            directories.append((root,fd,identity));found=set()
+            with os.scandir(fd) as entries:
+                for entry in entries:
+                    if entry.name not in allowed or entry.name in found:
+                        raise ValueError('Unexpected recording namespace entry')
+                    found.add(entry.name)
+                    state=os.stat(entry.name,dir_fd=fd,follow_symlinks=False)
+                    directory=entry.name in ('recording','chunks')
+                    if directory:
+                        if not stat.S_ISDIR(state.st_mode):raise ValueError('Recording namespace directory differs')
+                    else:
+                        if not stat.S_ISREG(state.st_mode):raise ValueError('Recording namespace file differs')
+                        total+=state.st_size
+            if found!=allowed:raise ValueError('Incomplete recording namespace')
+        for root,fd,identity in directories:p._verify_publication_root(root,fd,identity)
+        return total
+    finally:
+        for _,fd,_ in reversed(directories):os.close(fd)
+
+
 def _recording(path, scene):
     """Stream actual rows, exact namespace and raw commitment chain twice-bound."""
     path=_path(path)
@@ -79,6 +109,8 @@ def _recording(path, scene):
         pins=[];previous=None;coverage=0;retained=0;cursor=learning.initial_cursor()
         for item in p.read_committed_intervals(path):
             n=item['completed_tick'];event=item['event'];row=item['row']
+            row_path=path/f'{n:06d}'
+            row_bytes=_row_namespace(row_path)
             if previous is None:
                 _initial(event['world_before'],event['state_before'],scene)
             else:
@@ -97,7 +129,11 @@ def _recording(path, scene):
                 if commit['completed_tick']!=n or commit['previous_commit_sha256']!=(pins[-1]['sha256'] if pins else None):
                     raise ValueError('Recording raw commitment chain differs')
                 pins.append({'completed_tick':n,'sha256':p._sha256(raw)})
-                retained+=sum(v['bytes'] for v in commit['files'].values())+2*len(raw)
+                if row_bytes!=sum(v['bytes'] for v in commit['files'].values())+2*len(raw):
+                    raise ValueError('Recording namespace byte accounting differs')
+                if _row_namespace(row_path)!=row_bytes:
+                    raise ValueError('Recording namespace changed during close')
+                retained+=row_bytes
             finally:os.close(child_fd)
             previous=event
         if len(pins)!=len(names):raise ValueError('Uncommitted prefix tail cannot close normally')
@@ -239,6 +275,7 @@ def run_collection_episode(execution, env, observation, state, world, contact, p
         writer.stop();raise ValueError('Held collection execution required')
     try:
         description=execution.description
+        execution._begin_collection_episode()
         if state.get('tick')!=0 or state.get('reason') is not None or env._t!=0:
             raise ValueError('A single fresh natural collection episode is required')
         _initial(world,state,description['scene'])
@@ -252,6 +289,7 @@ def run_collection_episode(execution, env, observation, state, world, contact, p
                 ('observation','state','world','contact','own','teacher_mode'))
             if state['reason'] is not None:break
         writer.stop()
+        execution._finish_collection_episode()
         if state['reason'] is None:raise ValueError('Collection episode did not terminate at its fixed bound')
         envelope=description['puck_on_policy'];declared=description['owner']
         owner={'ordinal':envelope['ordinal'],**{key:declared[key] for key in ('owner_id','scene_id','model_seed')}}
