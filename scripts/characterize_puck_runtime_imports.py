@@ -248,8 +248,47 @@ def publish(output, report):
     return {'report_sha256': sha(raw), 'report_bytes': len(raw), 'status': report['status']}
 
 
+def environment_delta(before, after):
+    """Bounded changed-name diagnostics; unknown values never appear as plaintext."""
+    result = {'complete': False, 'before_count': len(before), 'after_count': len(after),
+              'added': [], 'removed': [], 'changed': [],
+              'value_encoding': sys.getfilesystemencoding() + '/' + sys.getfilesystemencodeerrors()}
+    if len(before) > 256 or len(after) > 256:
+        return dict(result, reason='namespace_limit')
+    names = set(before) | set(after)
+    if len(names) > 256:
+        return dict(result, reason='namespace_limit')
+    if any(type(name) is not str or len(name) > 256 for name in names):
+        return dict(result, reason='key_limit')
+    changed = [name for name in sorted(names)
+               if name not in before or name not in after or before[name] != after[name]]
+    if len(changed) > 128:
+        return dict(result, reason='change_limit')
+    rows = {'added': [], 'removed': [], 'changed': []}
+    for name in changed:
+        row = {'name': name}
+        for prefix, values in (('before', before), ('after', after)):
+            if name not in values:
+                continue
+            value = values[name]
+            if type(value) is not str or len(value) > 4096:
+                return dict(result, reason='value_limit')
+            raw = os.fsencode(value)
+            if len(raw) > 4096:
+                return dict(result, reason='value_limit')
+            row[prefix + '_bytes'] = len(raw)
+            row[prefix + '_sha256'] = sha(raw)
+        section = 'added' if name not in before else 'removed' if name not in after else 'changed'
+        rows[section].append(row)
+    return dict(result, complete=True, **rows)
+
+
+def failure_detail(error):
+    return {'type': class_name(error), 'message': str(error)[:2048]}
+
+
 def observe(request, request_sha):
-    report = {'kind': 'puck-runtime-import-characterization-result-v1', 'version': 1,
+    report = {'kind': 'puck-runtime-import-characterization-result-v2', 'version': 2,
               'status': 'failed', 'request_sha256': request_sha,
               'source_sha256': sha(read_bounded(__file__, REPORT_BYTES)),
               'environment_sha256': sha(canonical(request['environment'])),
@@ -257,14 +296,16 @@ def observe(request, request_sha):
               'pid': os.getpid(), 'ppid': os.getppid(),
               'runtime_qualified': False, 'collection_authorized': False,
               'executable': False, 'qualification_claims': [],
-              'versions': {}, 'imports': [], 'cache': None, 'maps': None}
+              'versions': {}, 'imports': [], 'cache': None, 'maps': None,
+              'baseline_maps': None, 'environment_delta': None, 'observation_errors': []}
     started = time.monotonic()
     error = None
+    imports_complete = False
     try:
         # Ordinary imports deliberately remain separate from the held finder.
         # -I -S removes ambient site initialization; one explicit site is appended.
         sys.path.append(request['site_root'])
-        baseline = mapped_images()
+        report['baseline_maps'] = mapped_images()
         for name in PACKAGES:
             before = time.monotonic()
             row = {'name': name, 'status': 'failed'}
@@ -277,23 +318,55 @@ def observe(request, request_sha):
                 raise ValueError('Missing raw package version: ' + name)
             row.update(status='observed', seconds=time.monotonic() - before,
                        cache_entries=len(sys.modules))
-        report['cache'] = describe_cache(sys.modules)
-        report['maps'] = mapped_images()
-        report['baseline_maps'] = baseline
-        report['status'] = 'observed'
-    except Exception as failure:
-        error = {'type': class_name(failure), 'message': str(failure)[:2048]}
+        imports_complete = True
+    except BaseException as failure:
+        # A package SystemExit(0) must not become an empty successful observation.
+        error = failure_detail(failure)
+    report['observation_scope'] = 'completed_imports' if imports_complete else 'post_failure'
+    actual_environment = dict(os.environ)
+    if actual_environment != request['environment']:
+        if error is None:
+            error = failure_detail(ValueError('Exact environment changed during observation'))
+        try:
+            report['environment_delta'] = environment_delta(request['environment'], actual_environment)
+        except Exception as failure:
+            report['observation_errors'].append(dict(failure_detail(failure), stage='environment_delta'))
+    # These are independent bounded observations, even after failed import admission.
+    # A broken cache inspection must not erase the primary cause or a usable map snapshot.
+    for stage, snapshot in (('cache', lambda: describe_cache(sys.modules)), ('maps', mapped_images)):
+        try:
+            report[stage] = snapshot()
+        except BaseException as failure:
+            report['observation_errors'].append(dict(failure_detail(failure), stage=stage))
+    terminal_environment = dict(os.environ)
+    if terminal_environment != request['environment']:
+        if error is None:
+            error = failure_detail(ValueError('Exact environment changed during observation'))
+        if report['environment_delta'] is None or terminal_environment != actual_environment:
+            try:
+                delta = environment_delta(request['environment'], terminal_environment)
+                key = ('environment_delta' if report['environment_delta'] is None
+                       else 'terminal_environment_delta')
+                report[key] = delta
+            except Exception as failure:
+                report['observation_errors'].append(dict(failure_detail(failure), stage='terminal_environment_delta'))
     report['seconds'] = time.monotonic() - started
     if error is not None:
         report['error'] = error
-    # A too-large observation is a retained failure, never a truncated success.
+    elif report['observation_errors']:
+        report['error'] = dict(report['observation_errors'][0])
+    else:
+        report['status'] = 'observed'
+    # A too-large observation is retained failure. Keep the original cause and
+    # bounded environment delta; never truncate oversized cache data into success.
     observed_bytes = len(canonical(report))
     if observed_bytes > REPORT_BYTES:
         report['status'] = 'failed'
-        report.pop('baseline_maps', None)
-        report['cache'] = report['maps'] = None
-        report['error'] = {'type': 'report_limit', 'message': 'Full observation exceeded one MiB',
-                           'observed_bytes': observed_bytes}
+        report['baseline_maps'] = report['cache'] = report['maps'] = None
+        limit = {'stage': 'report', 'type': 'report_limit',
+                 'message': 'Full observation exceeded one MiB', 'observed_bytes': observed_bytes}
+        report['observation_errors'].append(limit)
+        report.setdefault('error', dict(limit))
     return report
 
 

@@ -56,7 +56,14 @@ def launch(tmp_path,*,defect=None):
         if name=='torch':
             body+='import sys,types\nops=types.ModuleType("torch.ops")\nsys.modules["torch.ops"]=ops\n'
             if defect=='import':body+='raise RuntimeError("authored import failure")\n'
+            if defect=='system-exit':body+='raise SystemExit(0)\n'
             if defect=='environment':body+='import os\nos.environ["UNREGISTERED"]="changed"\n'
+            if defect in ('metadata-edge-failure','large-report'):
+                body+='import os\nos.environ["UNREGISTERED"]="changed"\n'
+            if defect=='metadata-edge-failure':
+                body+='globals().update({"edge"+str(i):None for i in range(262145)})\n'
+            if defect=='large-report':
+                body+='for i in range(3000):\n name="authored_large"+str(i)\n mod=types.ModuleType(name)\n mod.__file__="/"+"x"*4095\n sys.modules[name]=mod\n'
         (directory/'__init__.py').write_text(body)
     output=tmp_path/'output';output.mkdir()
     environment={'PYTHONDONTWRITEBYTECODE':'1','LC_ALL':'C.UTF-8','LANG':'C.UTF-8'}
