@@ -24,11 +24,12 @@ is complete only when:
 3. Replay meets the comparison criterion declared before execution; the portable
    export validates and the independent outcome/byte/cleanup audit passes.
 
-**First unfinished action:** connect the verified three-module metadata worker
-and bounded external observer to the closed parent and independent auditor,
-then prove that complete route with authored fixtures. Next, freeze and review exact
-controls for one actual metadata observation, use its evidence to finish the
-profile correction, and qualify the runtime before admitting the episode.
+**First unfinished action:** freeze and independently review exact observation03
+source/input/control bytes, then freshly admit current installation bytes, pins,
+absence conditions and resources before one actual metadata observation. Its
+complete parent/worker/observer/independent-auditor source route is verified. Use
+accepted roster evidence to finish the profile correction and qualify the runtime
+before separately admitting the episode.
 Source fixtures demonstrate implementation only; the real episode bundle is
 the milestone's exit. Preserve every consumed attempt; no implicit retry.
 
@@ -76,26 +77,32 @@ already-present children after four imports and retains source-roster difference
 without accepting a profile. Independent review finds no material issue within
 that new-reader scope; the legacy cache inspector is unchanged.
 
-**The observer component is now source-verified too.** [The retained report](https://github.com/Aadrika08/palimpsest/blob/fb1bf346e6a67f98ecf73fb476edb240b583c1b6/docs/reports/puck-cpu-distributed-observer-v1.md)
+**The observer component was also source-verified.** [The retained report](https://github.com/Aadrika08/palimpsest/blob/fb1bf346e6a67f98ecf73fb476edb240b583c1b6/docs/reports/puck-cpu-distributed-observer-v1.md)
 binds source `e2f3242` and 57 authored checks, independently repeated by root in
 1.49s. Exact configuration/source checks, exclusive bounded streams, failure
 receipts and sampled cleanup pass in those fixtures. Sampling is not exhaustive
-or atomic PID-lifetime proof; no real observation or full integration ran.
+or atomic PID-lifetime proof; that component-only checkpoint ran no real observation.
 
-**The next bounded work unit is the complete observation execution route.**
-Connect the verified worker and observer to a closed new CPU parent epoch and
-separately pinned independent terminal/identity/full-byte auditor. The current
-parent still emits request-v2. Use the [read-only integration map](https://github.com/Aadrika08/palimpsest/blob/d71c206d327f4c8a1c1d844db00aec961b4bd95e/docs/reports/puck-cpu-distributed-roster-worker-v1/integration-map.json)
-as the finite starting point, preserving observation02 and every earlier outcome.
+**The complete observation route is now source-verified.** [The retained report](https://github.com/Aadrika08/palimpsest/blob/32d1dc690d93ffdfa820bcbe871515266acde5b0/docs/reports/puck-cpu-distributed-observation-v1.md)
+binds parent `f8f1280`, auditor/integration `b056d94` and414 affected authored passes
+in10.04s. The new closed parent preserves observation02 and binds19 sources,19
+roles and63 inputs; request-v3/result-v4 and both independent auditor entry points
+pass the complete fake-package route. The Unicode roster difference remains data
+with acceptance false; reentry and fully rebound false comparisons are refused.
+Independent review findings have genuine covered RED→GREEN fixes. All532 retained
+artifacts/8,919,896B match originals and committed Git bytes, including30 empty
+files. Full repository tests and CI were not run.
 
-The source exit is an authored parent→worker→observer→independent-auditor proof
-with exact source/proposal/observation02 bindings, complete projection semantics,
-exclusive output, tampering/reentry refusal, old bytes and normal cleanup. Keep
-the reviewed limits and namespace contract. Add no new metadata features or
-general observer framework. That source exit still does not admit a real command:
-exact actual controls must then be frozen and independently reviewed, with fresh
-pin/byte/absence/resource admission before one observation. No model, scene or
-protected input is opened by this source route.
+**The next bounded work unit is actual observation03 control freeze and admission.**
+Keep the35-row source sweep and completed source integration closed. Freeze and
+independently review the exact current configuration,19 source/63 input pins,
+observer, auditor and command; freshly check full installed bytes, fixed native/
+baseline inputs, absence conditions and resources before one invocation. Require
+normal timely external exits, complete stable projections, independent byte/
+identity/cleanup audit and preserved history. Do not add metadata features or
+relax the existing namespace or limits. No actual configuration, vendor import,
+model, scene, protected input, operator, renderer, episode or study ran in this
+source checkpoint.
 
 The source proposals contain 11/69/29 names, but private build flags remain
 unproved. Measure the terminal rosters once under separately reviewed controls,
@@ -110,8 +117,9 @@ publication; those remain separate source/held-runtime obligations.
   This closes the finite source sweep only; the candidate remains unchanged.
 - [x] Implement/review the fixed worker projection, including legacy compatibility,
   intended hook-regression REDs and exact pinned-interpreter authored namespace proof.
-- [ ] Complete the closed new parent, ordinary observer, independent auditor and
-  authored end-to-end source proof. No executable observation controls exist yet.
+- [x] Complete the closed new parent, ordinary observer, independent auditor and
+  authored end-to-end source proof:414 affected checks pass. No actual observation
+  controls exist yet; fixtures do not admit an installed-stack invocation.
 - [ ] Separately freeze/review, freshly admit, invoke once and independently audit
   the actual ordinary metadata observation. Worker fixtures do not satisfy this exit.
 - [ ] Review the complete explicit prospective profile/admission correction from
@@ -169,9 +177,9 @@ fixes the layout without a production namespace change. All 97 artifacts/692,265
 including 11 empty logs, match originals and Git-HEAD bytes. Independent source
 review finds no material issue. Full repository tests and CI were not run.
 
-The current CPU parent still emits request-v2. A closed new parent epoch,
-integration with the observer, independent outcome/byte auditor and complete
-authored route remain required. Six known new observation/held05 controls/output paths are absent
+That worker-only checkpoint still had a request-v2 parent. The complete closed
+new epoch and authored route are now verified as recorded above; exact actual
+observation controls and independently audited installed-stack execution remain open. Six known new observation/held05 controls/output paths are absent
 in the data-owning checkout. No actual new observation, installed vendor import,
 model/scene/catalog read, operator, renderer, episode or study ran. Package/profile
 bytes were not revised or newly accepted. Qualifications01–04 remain failed and
@@ -591,23 +599,21 @@ substitute for numerical results, capability, actual browser use or human accept
 | 5 | Integrate and experience the product. | One candidate supports the lab and all six artworks; actual browser, mapping, replay, export, interruption and endurance checks pass. |
 | 6 | Accept and deliver that candidate. | Artistic/operator sessions, final verification and all seven gate records are complete; the installation and evidence package are reproducible. |
 
-**Current next action:** complete the closed parent/ordinary observer/independent
-auditor integration for the verified worker; keep the 35-row source sweep closed.
+**Current next action:** freeze and independently review actual observation03
+controls, then freshly admit and observe once. Preserve the completed source sweep
+and authored integration; do not restart them.
 
-1. Use the retained integration map to add the new parent epoch and derive the
-   three expected sets from pinned source proposals. Bind observation02's exact
-   configuration/result/report/audit/index/terminal evidence and historical source
-   capsule. Preserve current fixed versions, environment, resource bounds and
-   namespace. Add the finite ordinary observer and separately pinned independent
-   auditor; do not relax the held observer or import the producer to validate it.
-   Prove the complete authored route, projection/comparison semantics, reentry,
-   semantic tampering, input/history preservation and cleanup; independently review.
-2. Only after that complete source exit, freeze exact new inputs/control bytes and
-   the actual command. Independently review and refresh pins/current bytes/absence/
-   resources before one ordinary observation. Require complete stable snapshots,
-   intact package bytes and independent terminal/identity/full-byte/cleanup audit.
-   Attribute measured differences before accepting a candidate; failure grants no
-   implicit retry. This supplies terminal roster data, not a held-runtime pass.
+1. Bind the final19 current sources,63 inputs and19 roles, including all immutable
+   helpers, source proposals and observation02 history. Freeze the exact canonical
+   configuration, observer/auditor bytes and commands for the data-owning checkout.
+   Independently review that concrete control package before any invocation.
+2. Refresh full current installation/native/baseline bytes, exact pins, output and
+   stream/transport absence, disk/RAM and descriptor admission. Invoke the fixed
+   observer once, retain its raw terminal evidence and independently audit the
+   complete projection, bytes, identities and cleanup. Require timely normal exits;
+   keep complete differences as data for attribution. Failure consumes this stage
+   and grants no implicit retry. A passing observation supplies terminal roster
+   evidence only; it does not accept a profile or qualify the held runtime.
 
 3. Review the explicit broader prospective profile and closed independent
    parent/auditor admission, preserving the one-row candidate as history and
