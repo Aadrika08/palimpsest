@@ -1,0 +1,164 @@
+{
+  "authority": {
+    "episode_executed": false,
+    "held_episode_admitted": false,
+    "release_gate_closed": false,
+    "runtime_qualified": false,
+    "study_authorized": false
+  },
+  "checks": [
+    {
+      "area": "Constructor",
+      "refs": [
+        "src/palimpsest/engine.py:81",
+        "upstream/fly-gym/run_connectome_rnn_checkpoint.py:203",
+        "upstream/fly-gym/shared_config.py:53"
+      ],
+      "result": "Public class is loaded through the existing guarded import_upstream; explicit kwargs preserve128x128/600/scenario obstacles/arena7/renderNone/no end-on-collision/zero goal-contact/.01 time/10 progress/.001 control/validated texture."
+    },
+    {
+      "area": "Seed/defaults/reset order",
+      "refs": [
+        "src/palimpsest/engine.py:331",
+        "src/palimpsest/engine.py:396",
+        "upstream/fly-gym/environment/mujoco_two_cam_env_random_obstacles.py:54",
+        "upstream/fly-gym/environment/mujoco_two_cam_env_random_obstacles.py:129",
+        "upstream/fly-gym/environment/mujoco_two_cam_env_random_obstacles.py:199"
+      ],
+      "result": "Constructor omits seed, retaining defaultNone and its first reset; Python/NumPy/Torch global seed and2threads precede construction; configure_world precedes existing Engine declared-seed reset. Other unspecified class defaults remain inherited."
+    },
+    {
+      "area": "Validation/manual profiles",
+      "refs": [
+        "src/palimpsest/engine.py:270",
+        "src/palimpsest/profiles.py:26",
+        "src/palimpsest/profiles.py:42"
+      ],
+      "result": "Existing ordinary/reference profile validation still precedes construction. Every ordinary profile supplies the same width/height/max_steps/arena keys; scenario obstacle count and texture continue through the validated profile. No public factory or arbitrary kwargs added."
+    },
+    {
+      "area": "Nonmanual/provenance/replay",
+      "refs": [
+        "src/palimpsest/engine.py:339",
+        "src/palimpsest/engine.py:363",
+        "src/palimpsest/replay.py:18",
+        "src/palimpsest/replay.py:138"
+      ],
+      "result": "Nonmanual old runner call and controller branches remain exact; engine.py stays in source events and replay _RUNTIME. Replay compatibility remains unchanged and refuses changed engine source identities."
+    },
+    {
+      "area": "Failure/close",
+      "refs": [
+        "src/palimpsest/engine.py:369",
+        "tests/test_public_manual_episode_constructor.py:232"
+      ],
+      "result": "Existing failed-writer and renderer/environment/writer cleanup are byte-unchanged. Tests cover failures after environment return and constructor refusal, normal close, close failure and output reuse refusal."
+    },
+    {
+      "area": "Authored tests",
+      "refs": [
+        "tests/test_public_manual_episode_constructor.py:1",
+        "tests/test_public_manual_episode_constructor.py:173"
+      ],
+      "result": "Fake vendor/environment/profile/asset/diagnostic boundaries surround the real Engine/RunWriter path. Representative kwargs/order/nonmanual/validation/cleanup checks contain no actual upstream/vendor/model/operator invocation."
+    }
+  ],
+  "exact_prior_engine_reconstruction": {
+    "changes_reversed": [
+      "Private _make_manual_environment helper insertion",
+      "controller==manual constructor branch; unchanged old runner branch used for every other controller"
+    ],
+    "matched_seam_pin": true,
+    "sha256": "c0091ecbf44069a5ef58cc8105675182f512dddb46c230c8e907cf84dba8539f"
+  },
+  "findings": [],
+  "kind": "public-manual-episode-constructor-independent-source-review-v1",
+  "limitations": [
+    "Read-only source review only; no tests, repository/target imports, Git, network, runtime, renderer, model, protected catalogue or allocation commands were executed.",
+    "Authored profile fixtures cover representative profiles, not real special-scenario physics. Unchanged actual validation/profile code establishes their constructor data shape at source scope.",
+    "No numeric/reset determinism equivalence or complete transitive import closure is claimed. Removing runner imports intentionally changes manual import graph while preserving explicit construction/reset semantics.",
+    "An upstream constructor failing after allocating internal native resources but before returning remains the existing env=None cleanup limitation; the patch does not change or qualify that behavior.",
+    "This source seam does not admit a held episode or repair/qualify the actual06 runtime failure. Renderer/XML/operator/diagnostic/custody/finite episode/replay/export admission remains separate."
+  ],
+  "seam_map": {
+    "path": "/tmp/palimpsest-public-episode-constructor-seam.json",
+    "sha256": "594c323754de284f95c29cd6727c59fddd5551cd5ab7e07c5e0629eaebcc8634"
+  },
+  "source_pins": [
+    {
+      "path": "src/palimpsest/engine.py",
+      "sha256": "ac02f9ecf63c49973b14c0b0884c6d725bc125502638447dae2f3b29ae2a8168",
+      "size_bytes": 78667
+    },
+    {
+      "path": "tests/test_public_manual_episode_constructor.py",
+      "sha256": "2ae330fc802250bb5300987bac968b8752361363ad7ee0f3c53899eba96629c7",
+      "size_bytes": 13633
+    },
+    {
+      "path": "docs/plans/public-manual-episode-constructor-v1.md",
+      "sha256": "03b89f30c50398233a4fae241c76db2444f05b748642feb2d6e289075505d038",
+      "size_bytes": 2138
+    },
+    {
+      "path": "src/palimpsest/profiles.py",
+      "sha256": "09fd4be64e25eb28554b129bf9db172c110ec18bed0a782055e70126f72c971d",
+      "size_bytes": 11582
+    },
+    {
+      "path": "src/palimpsest/replay.py",
+      "sha256": "ef59d87b98c6201b7ea140eb9835228435fff46b11e97f64f8c695ccc33bd8fc",
+      "size_bytes": 27255
+    },
+    {
+      "path": "src/palimpsest/flynn.py",
+      "sha256": "409b7503d76fd6f971a33d053e86c968b529edc226b85f44122e17a649f8f9f4",
+      "size_bytes": 14608
+    },
+    {
+      "path": "src/palimpsest/records.py",
+      "sha256": "c4be6f1699c1d8550a7f2db2979f7f9f18196ac986eef2aefe3ba665cae99ac3",
+      "size_bytes": 14238
+    },
+    {
+      "path": "src/palimpsest/snapshots.py",
+      "sha256": "22eee5484b49028a1a65839a47d1120883c1ce25b68abd8516b6a7657d1a2592",
+      "size_bytes": 38627
+    },
+    {
+      "path": "src/palimpsest/artifacts.py",
+      "sha256": "7a5f4a1080abffe82f8296468c6d8ca3a2b975277b96925fdf75bb9ac1ed034a",
+      "size_bytes": 36173
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/upstream/fly-gym/run_connectome_rnn_checkpoint.py",
+      "sha256": "8708e72aed42b2383d66c7efc5e41a81e21bb9d6dfca48e534a0ef300487cd34",
+      "size_bytes": 24952
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/upstream/fly-gym/shared_config.py",
+      "sha256": "8eb9a0b3f1f56fe98e056ac3cc7d6b728572e345f1f86df4e3619b2bff6ce001",
+      "size_bytes": 6044
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/upstream/fly-gym/train_connectome_rnn_dagger.py",
+      "sha256": "b1b0365ba5d85e0b05b18d2124e9948d2f844b31c3aa3b122420b0c917c96807",
+      "size_bytes": 44408
+    },
+    {
+      "path": "/home/utkarsh/Work/shraddha/brain/upstream/fly-gym/environment/mujoco_two_cam_env_random_obstacles.py",
+      "sha256": "37612bc4d2cbcda2aa5604d9975c06f2a6d77a64c6c1ebcb4330897d3e2bc751",
+      "size_bytes": 33934
+    }
+  ],
+  "status": "REVIEWED_NO_MATERIAL_FINDING",
+  "unchanged_related_source_files": [
+    "src/palimpsest/profiles.py",
+    "src/palimpsest/replay.py",
+    "src/palimpsest/flynn.py",
+    "src/palimpsest/records.py",
+    "src/palimpsest/snapshots.py",
+    "src/palimpsest/artifacts.py"
+  ],
+  "worktree": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03"
+}
