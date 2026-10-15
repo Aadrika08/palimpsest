@@ -26,6 +26,9 @@ PACKAGES = ('numpy', 'torch', 'mujoco')
 CPU_PACKAGES = ('numpy', 'torch', 'torchvision', 'mujoco')
 CPU_VERSIONS = {'numpy': '2.2.5', 'torch': '2.9.0+cpu',
                 'torchvision': '0.24.0+cpu', 'mujoco': '3.3.6'}
+DISTRIBUTED_EXPORTS = tuple('torch._C.' + name for name in (
+    '_distributed_autograd', '_distributed_c10d', '_distributed_rpc'))
+DISTRIBUTED_REPORT_BYTES = 256 * 1024
 
 
 def canonical(value):
@@ -131,6 +134,123 @@ def describe_cache(cache):
             'export_scope': 'exceptional_cache_identities'}
 
 
+def _distributed_dictionary(value, maximum=4096):
+    if (type(value) is not dict or len(value) > maximum
+            or any(type(key) is not str or not key or len(key) > 512 or '\0' in key for key in value)):
+        raise ValueError('Distributed export dictionary exceeds its exact type/limit')
+    return value
+
+
+def validate_distributed_expected(expected):
+    _distributed_dictionary(expected, 3)
+    if set(expected) != set(DISTRIBUTED_EXPORTS):
+        raise ValueError('Distributed expected targets differ from the fixed three children')
+    for names in expected.values():
+        if (type(names) is not list or not 0 < len(names) <= 4096
+                or any(type(name) is not str or not name or len(name) > 512 or '\0' in name
+                       for name in names)
+                or names != sorted(set(names))):
+            raise ValueError('Distributed expected dispatch is not bounded sorted distinct text')
+
+
+def _distributed_text(value, maximum=4096):
+    if value is not None and (type(value) is not str or len(value) > maximum or '\0' in value):
+        raise ValueError('Distributed export metadata text exceeds its exact type/limit')
+    return value
+
+
+def _distributed_type_name(value):
+    if value is None:
+        return None
+    kind = type(value)
+    # Builtin descriptors avoid loader metaclass/instance attribute hooks.
+    module = type.__dict__['__module__'].__get__(kind)
+    name = type.__dict__['__qualname__'].__get__(kind)
+    if type(module) is not str or type(name) is not str:
+        raise ValueError('Distributed loader type metadata is not plain text')
+    return _distributed_text(module + '.' + name, 512)
+
+
+def _distributed_paths(value):
+    kind = type(value)
+    if ((kind is not list and kind is not tuple) or len(value) > 128
+            or any(type(path) is not str for path in value)):
+        raise ValueError('Distributed export metadata path exceeds its exact type/limit')
+    return [_distributed_text(path) for path in value]
+
+
+def _distributed_state(cache):
+    _distributed_dictionary(cache, CACHE_ENTRIES)
+    torch, native = cache.get('torch'), cache.get('torch._C')
+    if type(torch) is not types.ModuleType or type(native) is not types.ModuleType:
+        raise ValueError('Distributed export native root is not a plain module')
+    torch_raw = _distributed_dictionary(module_dict(torch))
+    native_raw = _distributed_dictionary(module_dict(native))
+    if torch_raw.get('_C') is not native:
+        raise ValueError('Distributed export native root cache/raw identity differs')
+    rows, seals = [], []
+    for name in DISTRIBUTED_EXPORTS:
+        child = cache.get(name)
+        attribute = name.rsplit('.', 1)[1]
+        if (type(child) is not types.ModuleType
+                or native_raw.get(attribute) is not child):
+            raise ValueError('Distributed export child cache/raw identity or plain type differs')
+        raw = _distributed_dictionary(module_dict(child))
+        if type(raw.get('__name__')) is not str or raw.get('__name__') != name:
+            raise ValueError('Distributed export raw module name differs')
+        spec, loader = raw.get('__spec__'), raw.get('__loader__')
+        spec_loader = None
+        spec_metadata = None
+        if spec is not None:
+            if type(spec) is not ModuleSpec:
+                raise ValueError('Distributed export spec is not an exact ModuleSpec')
+            fields = _distributed_dictionary(object.__getattribute__(spec, '__dict__'))
+            spec_loader = fields.get('loader')
+            locations = fields.get('submodule_search_locations')
+            spec_metadata = dict(name=_distributed_text(fields.get('name'), 512),
+                origin=_distributed_text(fields.get('origin')),
+                loader_type=_distributed_type_name(spec_loader),
+                submodule_search_locations=None if locations is None else _distributed_paths(locations))
+        metadata = dict(name=name, module_type='builtins.module',
+            file=_distributed_text(raw.get('__file__')),
+            package=_distributed_text(raw.get('__package__')),
+            loader_type=_distributed_type_name(loader), spec=spec_metadata,
+            path=_distributed_paths(raw.get('__path__', [])))
+        # Actual type ancestry avoids a data object's spoofable __class__ property.
+        delegates = tuple(sorted((key, value) for key, value in list(raw.items())
+            if issubclass(type(value), (types.ModuleType, type, types.FunctionType, types.BuiltinFunctionType))))
+        rows.append(dict(name=name, raw_attribute_identity=True, cache_identity=True,
+                         metadata=metadata, delegate_attributes=[key for key, _ in delegates]))
+        seals.append(((torch, native, child, loader, spec, spec_loader), metadata, delegates))
+    return rows, tuple(seals)
+
+
+def describe_distributed_exports(cache, expected):
+    validate_distributed_expected(expected)
+    rows, seals = _distributed_state(cache)
+    for row in rows:
+        wanted, actual = list(expected[row['name']]), row['delegate_attributes']
+        missing, extra = sorted(set(wanted) - set(actual)), sorted(set(actual) - set(wanted))
+        row['comparison'] = dict(expected=wanted, missing=missing, extra=extra,
+                                 matches=not missing and not extra)
+    projection = dict(kind='puck-cpu-distributed-exports-v1', version=1,
+        capture_point='after_four_fixed_imports', stable=False,
+        profile_accepted=False, runtime_qualified=False, modules=rows)
+    if len(canonical(projection)) > DISTRIBUTED_REPORT_BYTES:
+        raise ValueError('Distributed export projection exceeds256KiB')
+    return projection, seals
+
+
+def recheck_distributed_exports(cache, seals):
+    _, current = _distributed_state(cache)
+    for old, new in zip(seals, current, strict=True):
+        if (any(before is not after for before, after in zip(old[0], new[0], strict=True))
+                or old[1] != new[1]
+                or [key for key, _ in old[2]] != [key for key, _ in new[2]]
+                or any(before is not after for (_, before), (_, after) in zip(old[2], new[2], strict=True))):
+            raise ValueError('Distributed export terminal identity, metadata or dispatch changed')
+
+
 def describe_maps(raw):
     if len(raw) > MAP_BYTES:
         raise ValueError('Mapped-image observation exceeds byte budget')
@@ -205,15 +325,20 @@ def request_at(path, expected_sha):
         raise ValueError('Request SHA mismatch')
     value = json.loads(raw)
     fields = {'kind', 'version', 'site_root', 'output_root', 'environment'}
-    cpu = type(value) is dict and type(value.get('version')) is int and value['version'] == 2
+    cpu = type(value) is dict and type(value.get('version')) is int and value['version'] in (2, 3)
     if cpu:
         fields |= {'expected_versions', 'pycache_prefix'}
+    distributed = cpu and value['version'] == 3
+    if distributed:
+        fields.add('distributed_expected')
     if (type(value) is not dict or set(value) != fields or canonical(value) != raw
-            or type(value['version']) is not int or value['version'] not in (1, 2)
+            or type(value['version']) is not int or value['version'] not in (1, 2, 3)
             or value['kind'] != 'puck-runtime-import-characterization-v' + str(value['version'])):
         raise ValueError('Request schema/canonical bytes mismatch')
     if cpu and (type(value['expected_versions']) is not dict or value['expected_versions'] != CPU_VERSIONS):
         raise ValueError('CPU expected versions differ from the fixed profile')
+    if distributed:
+        validate_distributed_expected(value['distributed_expected'])
     site = exact_directory(value['site_root'])
     output = exact_directory(value['output_root'])
     if site == output or site in output.parents or output in site.parents:
@@ -334,7 +459,8 @@ def cpu_error_chain(error):
 
 
 def observe(request, request_sha):
-    cpu = request.get('version') == 2
+    cpu = request.get('version') in (2, 3)
+    distributed = request.get('version') == 3
     expected = tuple((name, request['expected_versions'][name]) for name in CPU_PACKAGES) if cpu else ()
     report = {'kind': 'puck-runtime-import-characterization-result-v2', 'version': 2,
               'status': 'failed', 'request_sha256': request_sha,
@@ -351,6 +477,9 @@ def observe(request, request_sha):
                       profile='cpu-four-imports-v1', expected_versions=dict(expected),
                       pycache_prefix=request['pycache_prefix'], native_authorized=False,
                       study_authorized=False)
+    if distributed:
+        report.update(kind='puck-runtime-import-characterization-result-v4', version=4,
+                      profile='cpu-distributed-terminal-v1', distributed_exports=None)
     started = time.monotonic()
     error = None
     imports_complete = False
@@ -385,6 +514,13 @@ def observe(request, request_sha):
             except BaseException as diagnostic:
                 report['error_chain'] = dict(entries=[], complete=False,
                     truncation='diagnostic_error', error_type=class_name(diagnostic))
+    distributed_seals = None
+    if distributed and imports_complete:
+        try:
+            report['distributed_exports'], distributed_seals = describe_distributed_exports(
+                sys.modules, request['distributed_expected'])
+        except BaseException as failure:
+            report['observation_errors'].append(dict(failure_detail(failure), stage='distributed_exports'))
     report['observation_scope'] = 'completed_imports' if imports_complete else 'post_failure'
     actual_environment = dict(os.environ)
     if actual_environment != request['environment']:
@@ -401,6 +537,12 @@ def observe(request, request_sha):
             report[stage] = snapshot()
         except BaseException as failure:
             report['observation_errors'].append(dict(failure_detail(failure), stage=stage))
+    if distributed_seals is not None:
+        try:
+            recheck_distributed_exports(sys.modules, distributed_seals)
+            report['distributed_exports']['stable'] = True
+        except BaseException as failure:
+            report['observation_errors'].append(dict(failure_detail(failure), stage='distributed_exports_recheck'))
     terminal_environment = dict(os.environ)
     if cpu and sys.pycache_prefix != report['pycache_prefix'] and error is None:
         error = failure_detail(ValueError('CPU pycache prefix changed during observation'))
