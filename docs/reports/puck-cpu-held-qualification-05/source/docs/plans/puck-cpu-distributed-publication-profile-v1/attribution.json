@@ -1,0 +1,2025 @@
+{
+  "acceptance": {
+    "actual05_configuration_created": false,
+    "collection_authorized": false,
+    "native_authorized": false,
+    "prospective_candidate_written": false,
+    "qualification_claims": [],
+    "replacement_profile_accepted": false,
+    "runtime_qualified": false,
+    "source_attribution_complete": true,
+    "study_authorized": false
+  },
+  "actual03_report_sha256": "083dc25d6942329ee47113af9d0d65c390e901f3505f47e22a29697673e046db",
+  "attribution_and_assumptions": [
+    "The 11 autograd names and 66 of the69 c10d names are unconditional literal registrations in the retained initializer files. HashStore is guarded by !defined(_WIN32); ProcessGroupGloo and _ProcessGroupWrapper by defined(USE_C10D_GLOO).",
+    "The27 unconditional RPC names plus TensorPipeAgent and _TensorPipeRpcBackendOptionsBase guarded by USE_TENSORPIPE account for the29 observed RPC names.",
+    "All109 measured names match the finite source proposals. This resolves the exact terminal dispatch-name roster for the admitted actual03 snapshot; it does not prove the complete private compiler-definition set.",
+    "The remaining12 c10d conditional dispatch names are absent from actual03. Absence at this terminal snapshot is evidence about the snapshot, not proof that every private optional branch was compiled out.",
+    "_make_nccl_premul_sum has two unconditional overload registration literals at930 and936. Its observed presence does not establish USE_C10D_NCCL.",
+    "Physical Python creators call their native callbacks during module_exec; the callbacks create the child via torch._C.def_submodule and register dispatch before returning. C10d and RPC then execute fresh imports before Python creator closure, requiring publication handling.",
+    "For distributed autograd, the visible eager source has no explicit fresh import after publication; module_exec_publish is a conservative finite declaration consistent with the existing proposal, not a phase measured by actual03.",
+    "RPC chrono data casts may lazily import the datetime API inside its native callback. Those assignments are value instances, not direct sealed dispatch edges. Nested/import-hook behavior still needs the existing runtime publication/closure guard.",
+    "All three producers have a raw global torch binding in the retained installed Python source. Hence raw attributes [torch,_C,child] resolve from the physical Python producer; class_binding remains null."
+  ],
+  "candidate_derivation": {
+    "base_candidate": {
+      "path": "docs/plans/puck-cpu-autograd-publication-profile-v1.json",
+      "sha256": "ddc770acca34f849b2234db155ea477438560e3e4a58685a2c11632c44e93648",
+      "size_bytes": 342451
+    },
+    "changed_export_names": [
+      "torch._C._distributed_autograd",
+      "torch._C._distributed_c10d",
+      "torch._C._distributed_rpc"
+    ],
+    "lineage_note": "Keep historical observation02/configuration/audit bindings as historical fields; bind actual03 separately in the new reviewed candidate/admission rather than rewriting old evidence identities.",
+    "operation": "Deep-copy the existing one-row candidate and replace only the three import_profile.exports rows by exact name. This artifact does not write or accept that candidate.",
+    "other_preserved_exports": [
+      "torch.classes",
+      "torch.ops"
+    ],
+    "other_profile_and_outer_values_unchanged": true,
+    "preserved_autograd": {
+      "attributes": [
+        "torch",
+        "_C",
+        "_autograd"
+      ],
+      "class_binding": null,
+      "delegate_attributes": [
+        "CreationMeta",
+        "DeviceType",
+        "ProfilerEvent",
+        "SavedTensor",
+        "TensorGeometry",
+        "_InputMetadata",
+        "_KinetoEvent",
+        "_ProfilerDisableOptions",
+        "_ProfilerResult",
+        "_add_metadata_json",
+        "_clear_callbacks",
+        "_disable_profiler",
+        "_disable_profiler_legacy",
+        "_enable_profiler",
+        "_enable_profiler_legacy",
+        "_enable_record_function",
+        "_get_creation_meta",
+        "_get_current_graph_task_keep_graph",
+        "_get_data_attr",
+        "_get_sequence_nr",
+        "_kineto_step",
+        "_pop_saved_tensors_default_hooks",
+        "_prepare_profiler",
+        "_profiler_enabled",
+        "_profiler_type",
+        "_push_saved_tensors_default_hooks",
+        "_record_function_with_args_enter",
+        "_record_function_with_args_exit",
+        "_saved_tensors_hooks_disable",
+        "_saved_tensors_hooks_enable",
+        "_saved_tensors_hooks_get_disabled_error_message",
+        "_saved_tensors_hooks_is_enabled",
+        "_saved_tensors_hooks_set_tracing",
+        "_set_creation_meta",
+        "_set_empty_test_observer",
+        "_soft_assert_raises",
+        "_supported_activities",
+        "_toggle_collection_dynamic",
+        "_top_saved_tensors_default_hooks",
+        "_unsafe_set_version_counter",
+        "kineto_available"
+      ],
+      "name": "torch._C._autograd",
+      "phase": "module_exec_publish",
+      "producer": "torch.autograd"
+    },
+    "preserved_export_count": 35,
+    "preserved_native_create_names": [
+      "torch._C._aoti",
+      "torch._C._cpu",
+      "torch._C._dynamo",
+      "torch._C._dynamo.autograd_compiler",
+      "torch._C._dynamo.eval_frame",
+      "torch._C._dynamo.guards",
+      "torch._C._dynamo.utils",
+      "torch._C._export",
+      "torch._C._export.pt2_archive_constants",
+      "torch._C._fft",
+      "torch._C._functionalization",
+      "torch._C._functorch",
+      "torch._C._instruction_counter",
+      "torch._C._itt",
+      "torch._C._jit",
+      "torch._C._jit_tree_views",
+      "torch._C._lazy",
+      "torch._C._lazy_ts_backend",
+      "torch._C._linalg",
+      "torch._C._monitor",
+      "torch._C._nativert",
+      "torch._C._nested",
+      "torch._C._nn",
+      "torch._C._onnx",
+      "torch._C._profiler",
+      "torch._C._return_types",
+      "torch._C._sparse",
+      "torch._C._special",
+      "torch._C._te",
+      "torch._C._verbose",
+      "torch._C.cpp",
+      "torch._C.cpp.nn"
+    ],
+    "unchanged_export_rows_sha256": "8a56af38c19564b4132144517bc42b23ef9268703b000709c25dd7ed40d2a5df"
+  },
+  "coverage": {
+    "autograd": 11,
+    "c10d": 69,
+    "observed_unique_names": 109,
+    "registration_references": 110,
+    "rpc": 29,
+    "source_line_validation": "Each selected name is a quoted literal at each cited line in the authenticated retained C++ file; source extraction is read as data, not executed or treated as a C++ compiler.",
+    "unattributed_names": []
+  },
+  "input_pins": [
+    {
+      "path": "docs/plans/puck-cpu-autograd-publication-profile-v1.json",
+      "sha256": "ddc770acca34f849b2234db155ea477438560e3e4a58685a2c11632c44e93648",
+      "size_bytes": 342451
+    },
+    {
+      "path": "docs/reports/puck-cpu-characterization-03/evidence-index.json",
+      "sha256": "4f45a7917e0374a9f9948eaa0aa18ddaff15c194cb911c69ad2d31f53120c421",
+      "size_bytes": 42234
+    },
+    {
+      "path": "docs/reports/puck-cpu-characterization-03/inputs/runs/puck-cpu-retained-admission-02/inventory.json",
+      "sha256": "d1dac91f2b69e193d6eafc8b6c47a37204bb2cb51925faad5b895dea83701b35",
+      "size_bytes": 3996631
+    },
+    {
+      "path": "docs/reports/puck-cpu-characterization-03/outcome-audit-03.json",
+      "sha256": "465b8e30496aae9df13fc4411060cc4cfe98f793d27f4738490f50149cec9a5a",
+      "size_bytes": 5015
+    },
+    {
+      "path": "docs/reports/puck-cpu-characterization-03/raw/payload/imports.json",
+      "sha256": "083dc25d6942329ee47113af9d0d65c390e901f3505f47e22a29697673e046db",
+      "size_bytes": 540404
+    },
+    {
+      "path": "docs/reports/puck-cpu-export-phase-preflight-v1/installed-source/torch/distributed/__init__.py",
+      "sha256": "0e1ba0d76a5135e0109d213157e709b35f1a234afb9306c00bf6adf4f5c3d7d7",
+      "size_bytes": 5407
+    },
+    {
+      "path": "docs/reports/puck-cpu-export-phase-preflight-v1/installed-source/torch/distributed/autograd/__init__.py",
+      "sha256": "a356307e34629fc35f6240a3cdc7400454f46c6446022b989922c4c266e6789e",
+      "size_bytes": 1931
+    },
+    {
+      "path": "docs/reports/puck-cpu-export-phase-preflight-v1/installed-source/torch/distributed/rpc/__init__.py",
+      "sha256": "8474ae8306a9e4c48e6311457784bfb819987c4e1070e72ec8e2541342c3b823",
+      "size_bytes": 9945
+    },
+    {
+      "path": "docs/reports/puck-cpu-export-phase-preflight-v1/installed-source/torch/include/pybind11/chrono.h",
+      "sha256": "b00be9f25145323936d54477cfac6ac07963c0b84b866c9e44a01580280e9ae2",
+      "size_bytes": 8613
+    },
+    {
+      "path": "docs/reports/puck-cpu-export-phase-preflight-v1/installed-source/torch/share/cmake/Caffe2/Caffe2Config.cmake",
+      "sha256": "1751b5ae590844e9ddf3fb72aebc6e26ecab6def33b0d2ce88d419eac99c71d5",
+      "size_bytes": 5344
+    },
+    {
+      "path": "docs/reports/puck-cpu-export-phase-preflight-v1/installed-source/torch/share/cmake/Caffe2/Caffe2Targets.cmake",
+      "sha256": "69cca1ead63094fbbb67ee97c763345e870c19798a7647846e70f1b26abc7997",
+      "size_bytes": 6857
+    },
+    {
+      "path": "docs/reports/puck-cpu-export-phase-preflight-v1/notes/distributed-rosters/literal-rosters.json",
+      "sha256": "b3ae33519cc74698aa0eef4d17a85beb2d0a3f7a412caf14341bf0d88cb7f787",
+      "size_bytes": 25252
+    },
+    {
+      "path": "docs/reports/puck-cpu-export-phase-preflight-v1/notes/distributed-rosters/review.json",
+      "sha256": "de1aa2a7c7a0832b59f72cc07ffee5965a37657618ef8f70ea8f08238a815e04",
+      "size_bytes": 11683
+    },
+    {
+      "path": "docs/reports/puck-cpu-export-phase-preflight-v1/source-index.json",
+      "sha256": "4f8de786bcbb4000ebce28df4adcf417ab2485210349d8e01891af0d8ed62379",
+      "size_bytes": 21140
+    },
+    {
+      "path": "docs/reports/puck-cpu-export-phase-preflight-v1/source-map.json",
+      "sha256": "b299317cb8124186f84512d63315491f88b4103ef7a3e0fec76b9617eab44688",
+      "size_bytes": 100580
+    },
+    {
+      "path": "docs/reports/puck-cpu-export-phase-preflight-v1/upstream/torch/csrc/Module.cpp",
+      "sha256": "aa61d768ccbb9bbb7e235d688289f79a4f25954472143a46961e11dcf4860da1",
+      "size_bytes": 87615
+    },
+    {
+      "path": "docs/reports/puck-cpu-export-phase-preflight-v1/upstream/torch/csrc/distributed/autograd/init.cpp",
+      "sha256": "086d39e23700fba3ef98506ceaf9f608112e9c48cb5a61801afb54157ecd5b5e",
+      "size_bytes": 8435
+    },
+    {
+      "path": "docs/reports/puck-cpu-export-phase-preflight-v1/upstream/torch/csrc/distributed/c10d/init.cpp",
+      "sha256": "9e0e0a3c4f09fa12bbcff6dec059087bf7ccb3c94274d3e4646edfe5d401e3b8",
+      "size_bytes": 172574
+    },
+    {
+      "path": "docs/reports/puck-cpu-export-phase-preflight-v1/upstream/torch/csrc/distributed/rpc/init.cpp",
+      "sha256": "cda572b256fd02105c5bd7f56cfe15177d9482130a87927907774bece78b2358",
+      "size_bytes": 36555
+    }
+  ],
+  "kind": "puck-cpu-distributed-profile-source-attribution-v1",
+  "limitations": [
+    "Retained upstream files are at the package-declared commit, and retained Python/build files match accepted inventory hashes. This is source correspondence, not linked-binary equivalence or reconstruction of private build flags.",
+    "Actual03 records stable terminal raw/cache identity and dispatch-name sets after four imports. It does not recover intermediate publication, first-publication membership, creator-close timing, deferred/transitive mutation absence, operator/renderer behavior or held-runtime qualification.",
+    "Source callback-return lines and later Python imports are static evidence only. The existing module_exec_publish lifecycle implementation and independently admitted held05 remain required to establish runtime closure/custody.",
+    "No original candidate, profile, source, runtime control, consumed allocation or release gate was modified. No network, vendor import, namespace probe, installed/staged census, model, scene, protected catalog or study access occurred."
+  ],
+  "replacement_rows": [
+    {
+      "cpp_callback_return_line": 223,
+      "cpp_callback_source": "docs/reports/puck-cpu-export-phase-preflight-v1/upstream/torch/csrc/distributed/autograd/init.cpp",
+      "cpp_publication_line": 30,
+      "dispatch_attributions": [
+        {
+          "name": "DistAutogradContext",
+          "observed_pointer": "/distributed_exports/modules/0/delegate_attributes/0",
+          "registrations": [
+            {
+              "conditions": [],
+              "kind": "class",
+              "line": 36
+            }
+          ],
+          "source": "docs/reports/puck-cpu-export-phase-preflight-v1/upstream/torch/csrc/distributed/autograd/init.cpp"
+        },
+        {
+          "name": "_current_context",
+          "observed_pointer": "/distributed_exports/modules/0/delegate_attributes/1",
+          "registrations": [
+            {
+              "conditions": [],
+              "kind": "function",
+              "line": 118
+            }
+          ],
+          "source": "docs/reports/puck-cpu-export-phase-preflight-v1/upstream/torch/csrc/distributed/autograd/init.cpp"
+        },
+        {
+          "name": "_get_debug_info",
+          "observed_pointer": "/distributed_exports/modules/0/delegate_attributes/2",
+          "registrations": [
+            {
+              "conditions": [],
+              "kind": "function",
+              "line": 131
+            }
+          ],
+          "source": "docs/reports/puck-cpu-export-phase-preflight-v1/upstream/torch/csrc/distributed/autograd/init.cpp"
+        },
+        {
+          "name": "_get_max_id",
+          "observed_pointer": "/distributed_exports/modules/0/delegate_attributes/3",
+          "registrations": [
+            {
+              "conditions": [],
+              "kind": "function",
+              "line": 98
+            }
+          ],
+          "source": "docs/reports/puck-cpu-export-phase-preflight-v1/upstream/torch/csrc/distributed/autograd/init.cpp"
+        },
+        {
+          "name": "_init",
+          "observed_pointer": "/distributed_exports/modules/0/delegate_attributes/4",
+          "registrations": [
+            {
+              "conditions": [],
+              "kind": "function",
+              "line": 126
+            }
+          ],
+          "source": "docs/reports/puck-cpu-export-phase-preflight-v1/upstream/torch/csrc/distributed/autograd/init.cpp"
+        },
+        {
+          "name": "_is_valid_context",
+          "observed_pointer": "/distributed_exports/modules/0/delegate_attributes/5",
+          "registrations": [
+            {
+              "conditions": [],
+              "kind": "function",
+              "line": 103
+            }
+          ],
+          "source": "docs/reports/puck-cpu-export-phase-preflight-v1/upstream/torch/csrc/distributed/autograd/init.cpp"
+        },
+        {
+          "name": "_new_context",
+          "observed_pointer": "/distributed_exports/modules/0/delegate_attributes/6",
+          "registrations": [
+            {
+              "conditions": [],
+              "kind": "function",
+              "line": 83
+            }
+          ],
+          "source": "docs/reports/puck-cpu-export-phase-preflight-v1/upstream/torch/csrc/distributed/autograd/init.cpp"
+        },
+        {
+          "name": "_release_context",
+          "observed_pointer": "/distributed_exports/modules/0/delegate_attributes/7",
+          "registrations": [
+            {
+              "conditions": [],
+              "kind": "function",
+              "line": 91
+            }
+          ],
+          "source": "docs/reports/puck-cpu-export-phase-preflight-v1/upstream/torch/csrc/distributed/autograd/init.cpp"
+        },
+        {
+          "name": "_retrieve_context",
+          "observed_pointer": "/distributed_exports/modules/0/delegate_attributes/8",
+          "registrations": [
+            {
+              "conditions": [],
+              "kind": "function",
+              "line": 110
+            }
+          ],
+          "source": "docs/reports/puck-cpu-export-phase-preflight-v1/upstream/torch/csrc/distributed/autograd/init.cpp"
+        },
+        {
+          "name": "backward",
+          "observed_pointer": "/distributed_exports/modules/0/delegate_attributes/9",
+          "registrations": [
+            {
+              "conditions": [],
+              "kind": "function",
+              "line": 139
+            }
+          ],
+          "source": "docs/reports/puck-cpu-export-phase-preflight-v1/upstream/torch/csrc/distributed/autograd/init.cpp"
+        },
+        {
+          "name": "get_gradients",
+          "observed_pointer": "/distributed_exports/modules/0/delegate_attributes/10",
+          "registrations": [
+            {
+              "conditions": [],
+              "kind": "function",
+              "line": 184
+            }
+          ],
+          "source": "docs/reports/puck-cpu-export-phase-preflight-v1/upstream/torch/csrc/distributed/autograd/init.cpp"
+        }
+      ],
+      "key": "autograd",
+      "lifecycle_source_notes": {
+        "cpp_callback_return_line": 223,
+        "cpp_first_dispatch_line": 36,
+        "cpp_prepublication_imports": [
+          19,
+          24
+        ],
+        "cpp_publication_line": 30,
+        "ordinary_module_exec": "plausible from visible eager source: no explicit fresh import after publication; no runtime claim",
+        "publication_choice": "conservative explicit finite11 declaration; source proposal only",
+        "python_afterpublication_cached_import_line": 20,
+        "python_afterpublication_fresh_imports": [],
+        "python_callback_line": 16,
+        "python_remaining_execution": "class context definition lines37-66; method bodies deferred"
+      },
+      "native_root_callback_registration": {
+        "line_end": 2006,
+        "line_start": 1997,
+        "source": "docs/reports/puck-cpu-export-phase-preflight-v1/upstream/torch/csrc/Module.cpp"
+      },
+      "observed_dispatch_count": 11,
+      "observed_plain_module_metadata": {
+        "file": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/torch/_C.cpython-311-x86_64-linux-gnu.so",
+        "loader_type": null,
+        "module_type": "builtins.module",
+        "name": "torch._C._distributed_autograd",
+        "package": null,
+        "path": [],
+        "spec": null
+      },
+      "producer_module": {
+        "is_package": true,
+        "kind": "python",
+        "name": "torch.distributed.autograd",
+        "path": "torch/distributed/autograd/__init__.py",
+        "root_index": 0
+      },
+      "python_callback_line": 16,
+      "python_creator_source": "docs/reports/puck-cpu-export-phase-preflight-v1/installed-source/torch/distributed/autograd/__init__.py",
+      "replacement_export": {
+        "attributes": [
+          "torch",
+          "_C",
+          "_distributed_autograd"
+        ],
+        "class_binding": null,
+        "delegate_attributes": [
+          "DistAutogradContext",
+          "_current_context",
+          "_get_debug_info",
+          "_get_max_id",
+          "_init",
+          "_is_valid_context",
+          "_new_context",
+          "_release_context",
+          "_retrieve_context",
+          "backward",
+          "get_gradients"
+        ],
+        "name": "torch._C._distributed_autograd",
+        "phase": "module_exec_publish",
+        "producer": "torch.distributed.autograd"
+      },
+      "source_dispatch_literals_not_in_observed_roster": []
+    },
+    {
+      "cpp_callback_return_line": 4193,
+      "cpp_callback_source": "docs/reports/puck-cpu-export-phase-preflight-v1/upstream/torch/csrc/distributed/c10d/init.cpp",
+      "cpp_publication_line": 466,
+      "dispatch_attributions": [
+        {
+          "name": "AllToAllOptions",
+          "observed_pointer": "/distributed_exports/modules/1/delegate_attributes/0",
+          "registrations": [
+            {
+              "conditions": [],
+              "kind": "class",
+              "line": 1079
+            }
+          ],
+          "source": "docs/reports/puck-cpu-export-phase-preflight-v1/upstream/torch/csrc/distributed/c10d/init.cpp"
+        },
+        {
+          "name": "AllgatherOptions",
+          "observed_pointer": "/distributed_exports/modules/1/delegate_attributes/1",
+          "registrations": [
+            {
+              "conditions": [],
+              "kind": "class",
+              "line": 1049
+            }
+          ],
+          "source": "docs/reports/puck-cpu-export-phase-preflight-v1/upstream/torch/csrc/distributed/c10d/init.cpp"
+        },
+        {
+          "name": "AllreduceCoalescedOptions",
+          "observed_pointer": "/distributed_exports/modules/1/delegate_attributes/2",
+          "registrations": [
+            {
+              "conditions": [],
+              "kind": "class",
+              "line": 1035
+            }
+          ],
+          "source": "docs/reports/puck-cpu-export-phase-preflight-v1/upstream/torch/csrc/distributed/c10d/init.cpp"
+        },
+        {
+          "name": "AllreduceOptions",
+          "observed_pointer": "/distributed_exports/modules/1/delegate_attributes/3",
+          "registrations": [
+            {
+              "conditions": [],
+              "kind": "class",
+              "line": 1028
+            }
+          ],
+          "source": "docs/reports/puck-cpu-export-phase-preflight-v1/upstream/torch/csrc/distributed/c10d/init.cpp"
+        },
+        {
+          "name": "Backend",
+          "observed_pointer": "/distributed_exports/modules/1/delegate_attributes/4",
+          "registrations": [
+            {
+              "conditions": [],
+              "kind": "class",
+              "line": 2704
+            }
+          ],
+          "source": "docs/reports/puck-cpu-export-phase-preflight-v1/upstream/torch/csrc/distributed/c10d/init.cpp"
+        },
+        {
+          "name": "BarrierOptions",
+          "observed_pointer": "/distributed_exports/modules/1/delegate_attributes/5",
+          "registrations": [
+            {
+              "conditions": [],
+              "kind": "class",
+              "line": 1072
+            }
+          ],
+          "source": "docs/reports/puck-cpu-export-phase-preflight-v1/upstream/torch/csrc/distributed/c10d/init.cpp"
+        },
+        {
+          "name": "BroadcastOptions",
+          "observed_pointer": "/distributed_exports/modules/1/delegate_attributes/6",
+          "registrations": [
+            {
+              "conditions": [],
+              "kind": "class",
+              "line": 1021
+            }
+          ],
+          "source": "docs/reports/puck-cpu-export-phase-preflight-v1/upstream/torch/csrc/distributed/c10d/init.cpp"
+        },
+        {
+          "name": "BuiltinCommHookType",
+          "observed_pointer": "/distributed_exports/modules/1/delegate_attributes/7",
+          "registrations": [
+            {
+              "conditions": [],
+              "kind": "enum",
+              "line": 551
+            }
+          ],
+          "source": "docs/reports/puck-cpu-export-phase-preflight-v1/upstream/torch/csrc/distributed/c10d/init.cpp"
+        },
+        {
+          "name": "DDPLoggingData",
+          "observed_pointer": "/distributed_exports/modules/1/delegate_attributes/8",
+          "registrations": [
+            {
+              "conditions": [],
+              "kind": "class",
+              "line": 3853
+            }
+          ],
+          "source": "docs/reports/puck-cpu-export-phase-preflight-v1/upstream/torch/csrc/distributed/c10d/init.cpp"
+        },
+        {
+          "name": "DebugLevel",
+          "observed_pointer": "/distributed_exports/modules/1/delegate_attributes/9",
+          "registrations": [
+            {
+              "conditions": [],
+              "kind": "enum",
+              "line": 781
+            }
+          ],
+          "source": "docs/reports/puck-cpu-export-phase-preflight-v1/upstream/torch/csrc/distributed/c10d/init.cpp"
+        },
+        {
+          "name": "ErrorType",
+          "observed_pointer": "/distributed_exports/modules/1/delegate_attributes/10",
+          "registrations": [
+            {
+              "conditions": [],
+              "kind": "enum",
+              "line": 3618
+            }
+          ],
+          "source": "docs/reports/puck-cpu-export-phase-preflight-v1/upstream/torch/csrc/distributed/c10d/init.cpp"
+        },
+        {
+          "name": "FakeProcessGroup",
+          "observed_pointer": "/distributed_exports/modules/1/delegate_attributes/11",
+          "registrations": [
+            {
+              "conditions": [],
+              "kind": "class",
+              "line": 3824
+            }
+          ],
+          "source": "docs/reports/puck-cpu-export-phase-preflight-v1/upstream/torch/csrc/distributed/c10d/init.cpp"
+        },
+        {
+          "name": "FakeWork",
+          "observed_pointer": "/distributed_exports/modules/1/delegate_attributes/12",
+          "registrations": [
+            {
+              "conditions": [],
+              "kind": "class",
+              "line": 3847
+            }
+          ],
+          "source": "docs/reports/puck-cpu-export-phase-preflight-v1/upstream/torch/csrc/distributed/c10d/init.cpp"
+        },
+        {
+          "name": "FileStore",
+          "observed_pointer": "/distributed_exports/modules/1/delegate_attributes/13",
+          "registrations": [
+            {
+              "conditions": [],
+              "kind": "class",
+              "line": 1659
+            }
+          ],
+          "source": "docs/reports/puck-cpu-export-phase-preflight-v1/upstream/torch/csrc/distributed/c10d/init.cpp"
+        },
+        {
+          "name": "GatherOptions",
+          "observed_pointer": "/distributed_exports/modules/1/delegate_attributes/14",
+          "registrations": [
+            {
+              "conditions": [],
+              "kind": "class",
+              "line": 1054
+            }
+          ],
+          "source": "docs/reports/puck-cpu-export-phase-preflight-v1/upstream/torch/csrc/distributed/c10d/init.cpp"
+        },
+        {
+          "name": "GradBucket",
+          "observed_pointer": "/distributed_exports/modules/1/delegate_attributes/15",
+          "registrations": [
+            {
+              "conditions": [],
+              "kind": "class",
+              "line": 486
+            }
+          ],
+          "source": "docs/reports/puck-cpu-export-phase-preflight-v1/upstream/torch/csrc/distributed/c10d/init.cpp"
+        },
+        {
+          "name": "HashStore",
+          "observed_pointer": "/distributed_exports/modules/1/delegate_attributes/16",
+          "registrations": [
+            {
+              "conditions": [
+                "!defined(_WIN32)"
+              ],
+              "kind": "class",
+              "line": 1690
+            }
+          ],
+          "source": "docs/reports/puck-cpu-export-phase-preflight-v1/upstream/torch/csrc/distributed/c10d/init.cpp"
+        },
+        {
+          "name": "Logger",
+          "observed_pointer": "/distributed_exports/modules/1/delegate_attributes/17",
+          "registrations": [
+            {
+              "conditions": [],
+              "kind": "class",
+              "line": 733
+            }
+          ],
+          "source": "docs/reports/puck-cpu-export-phase-preflight-v1/upstream/torch/csrc/distributed/c10d/init.cpp"
+        },
+        {
+          "name": "OpType",
+          "observed_pointer": "/distributed_exports/modules/1/delegate_attributes/18",
+          "registrations": [
+            {
+              "conditions": [],
+              "kind": "enum",
+              "line": 3590
+            }
+          ],
+          "source": "docs/reports/puck-cpu-export-phase-preflight-v1/upstream/torch/csrc/distributed/c10d/init.cpp"
+        },
+        {
+          "name": "PrefixStore",
+          "observed_pointer": "/distributed_exports/modules/1/delegate_attributes/19",
+          "registrations": [
+            {
+              "conditions": [],
+              "kind": "class",
+              "line": 1806
+            }
+          ],
+          "source": "docs/reports/puck-cpu-export-phase-preflight-v1/upstream/torch/csrc/distributed/c10d/init.cpp"
+        },
+        {
+          "name": "ProcessGroup",
+          "observed_pointer": "/distributed_exports/modules/1/delegate_attributes/20",
+          "registrations": [
+            {
+              "conditions": [],
+              "kind": "class",
+              "line": 2045
+            }
+          ],
+          "source": "docs/reports/puck-cpu-export-phase-preflight-v1/upstream/torch/csrc/distributed/c10d/init.cpp"
+        },
+        {
+          "name": "ProcessGroupGloo",
+          "observed_pointer": "/distributed_exports/modules/1/delegate_attributes/21",
+          "registrations": [
+            {
+              "conditions": [
+                "defined(USE_C10D_GLOO)"
+              ],
+              "kind": "class",
+              "line": 3110
+            }
+          ],
+          "source": "docs/reports/puck-cpu-export-phase-preflight-v1/upstream/torch/csrc/distributed/c10d/init.cpp"
+        },
+        {
+          "name": "ReduceOp",
+          "observed_pointer": "/distributed_exports/modules/1/delegate_attributes/22",
+          "registrations": [
+            {
+              "conditions": [],
+              "kind": "class",
+              "line": 812
+            }
+          ],
+          "source": "docs/reports/puck-cpu-export-phase-preflight-v1/upstream/torch/csrc/distributed/c10d/init.cpp"
+        },
+        {
+          "name": "ReduceOptions",
+          "observed_pointer": "/distributed_exports/modules/1/delegate_attributes/23",
+          "registrations": [
+            {
+              "conditions": [],
+              "kind": "class",
+              "line": 1041
+            }
+          ],
+          "source": "docs/reports/puck-cpu-export-phase-preflight-v1/upstream/torch/csrc/distributed/c10d/init.cpp"
+        },
+        {
+          "name": "ReduceScatterOptions",
+          "observed_pointer": "/distributed_exports/modules/1/delegate_attributes/24",
+          "registrations": [
+            {
+              "conditions": [],
+              "kind": "class",
+              "line": 1066
+            }
+          ],
+          "source": "docs/reports/puck-cpu-export-phase-preflight-v1/upstream/torch/csrc/distributed/c10d/init.cpp"
+        },
+        {
+          "name": "Reducer",
+          "observed_pointer": "/distributed_exports/modules/1/delegate_attributes/25",
+          "registrations": [
+            {
+              "conditions": [],
+              "kind": "class",
+              "line": 556
+            }
+          ],
+          "source": "docs/reports/puck-cpu-export-phase-preflight-v1/upstream/torch/csrc/distributed/c10d/init.cpp"
+        },
+        {
+          "name": "ScatterOptions",
+          "observed_pointer": "/distributed_exports/modules/1/delegate_attributes/26",
+          "registrations": [
+            {
+              "conditions": [],
+              "kind": "class",
+              "line": 1060
+            }
+          ],
+          "source": "docs/reports/puck-cpu-export-phase-preflight-v1/upstream/torch/csrc/distributed/c10d/init.cpp"
+        },
+        {
+          "name": "Store",
+          "observed_pointer": "/distributed_exports/modules/1/delegate_attributes/27",
+          "registrations": [
+            {
+              "conditions": [],
+              "kind": "class",
+              "line": 1244
+            }
+          ],
+          "source": "docs/reports/puck-cpu-export-phase-preflight-v1/upstream/torch/csrc/distributed/c10d/init.cpp"
+        },
+        {
+          "name": "TCPStore",
+          "observed_pointer": "/distributed_exports/modules/1/delegate_attributes/28",
+          "registrations": [
+            {
+              "conditions": [],
+              "kind": "class",
+              "line": 1708
+            }
+          ],
+          "source": "docs/reports/puck-cpu-export-phase-preflight-v1/upstream/torch/csrc/distributed/c10d/init.cpp"
+        },
+        {
+          "name": "Work",
+          "observed_pointer": "/distributed_exports/modules/1/delegate_attributes/29",
+          "registrations": [
+            {
+              "conditions": [],
+              "kind": "class",
+              "line": 3636
+            }
+          ],
+          "source": "docs/reports/puck-cpu-export-phase-preflight-v1/upstream/torch/csrc/distributed/c10d/init.cpp"
+        },
+        {
+          "name": "WorkInfo",
+          "observed_pointer": "/distributed_exports/modules/1/delegate_attributes/30",
+          "registrations": [
+            {
+              "conditions": [],
+              "kind": "class",
+              "line": 3625
+            }
+          ],
+          "source": "docs/reports/puck-cpu-export-phase-preflight-v1/upstream/torch/csrc/distributed/c10d/init.cpp"
+        },
+        {
+          "name": "WorkResult",
+          "observed_pointer": "/distributed_exports/modules/1/delegate_attributes/31",
+          "registrations": [
+            {
+              "conditions": [],
+              "kind": "enum",
+              "line": 3612
+            }
+          ],
+          "source": "docs/reports/puck-cpu-export-phase-preflight-v1/upstream/torch/csrc/distributed/c10d/init.cpp"
+        },
+        {
+          "name": "_ControlCollectives",
+          "observed_pointer": "/distributed_exports/modules/1/delegate_attributes/32",
+          "registrations": [
+            {
+              "conditions": [],
+              "kind": "class",
+              "line": 1844
+            }
+          ],
+          "source": "docs/reports/puck-cpu-export-phase-preflight-v1/upstream/torch/csrc/distributed/c10d/init.cpp"
+        },
+        {
+          "name": "_DMAConnectivity",
+          "observed_pointer": "/distributed_exports/modules/1/delegate_attributes/33",
+          "registrations": [
+            {
+              "conditions": [],
+              "kind": "class",
+              "line": 1100
+            }
+          ],
+          "source": "docs/reports/puck-cpu-export-phase-preflight-v1/upstream/torch/csrc/distributed/c10d/init.cpp"
+        },
+        {
+          "name": "_DistributedBackendOptions",
+          "observed_pointer": "/distributed_exports/modules/1/delegate_attributes/34",
+          "registrations": [
+            {
+              "conditions": [],
+              "kind": "class",
+              "line": 1085
+            }
+          ],
+          "source": "docs/reports/puck-cpu-export-phase-preflight-v1/upstream/torch/csrc/distributed/c10d/init.cpp"
+        },
+        {
+          "name": "_ProcessGroupWrapper",
+          "observed_pointer": "/distributed_exports/modules/1/delegate_attributes/35",
+          "registrations": [
+            {
+              "conditions": [
+                "defined(USE_C10D_GLOO)"
+              ],
+              "kind": "class",
+              "line": 3230
+            }
+          ],
+          "source": "docs/reports/puck-cpu-export-phase-preflight-v1/upstream/torch/csrc/distributed/c10d/init.cpp"
+        },
+        {
+          "name": "_Request",
+          "observed_pointer": "/distributed_exports/modules/1/delegate_attributes/36",
+          "registrations": [
+            {
+              "conditions": [],
+              "kind": "class",
+              "line": 4163
+            }
+          ],
+          "source": "docs/reports/puck-cpu-export-phase-preflight-v1/upstream/torch/csrc/distributed/c10d/init.cpp"
+        },
+        {
+          "name": "_Response",
+          "observed_pointer": "/distributed_exports/modules/1/delegate_attributes/37",
+          "registrations": [
+            {
+              "conditions": [],
+              "kind": "class",
+              "line": 4177
+            }
+          ],
+          "source": "docs/reports/puck-cpu-export-phase-preflight-v1/upstream/torch/csrc/distributed/c10d/init.cpp"
+        },
+        {
+          "name": "_StoreCollectives",
+          "observed_pointer": "/distributed_exports/modules/1/delegate_attributes/38",
+          "registrations": [
+            {
+              "conditions": [],
+              "kind": "class",
+              "line": 2031
+            }
+          ],
+          "source": "docs/reports/puck-cpu-export-phase-preflight-v1/upstream/torch/csrc/distributed/c10d/init.cpp"
+        },
+        {
+          "name": "_SymmetricMemory",
+          "observed_pointer": "/distributed_exports/modules/1/delegate_attributes/39",
+          "registrations": [
+            {
+              "conditions": [],
+              "kind": "class",
+              "line": 1110
+            }
+          ],
+          "source": "docs/reports/puck-cpu-export-phase-preflight-v1/upstream/torch/csrc/distributed/c10d/init.cpp"
+        },
+        {
+          "name": "_WorkerServer",
+          "observed_pointer": "/distributed_exports/modules/1/delegate_attributes/40",
+          "registrations": [
+            {
+              "conditions": [],
+              "kind": "class",
+              "line": 4128
+            }
+          ],
+          "source": "docs/reports/puck-cpu-export-phase-preflight-v1/upstream/torch/csrc/distributed/c10d/init.cpp"
+        },
+        {
+          "name": "_allow_inflight_collective_as_graph_input",
+          "observed_pointer": "/distributed_exports/modules/1/delegate_attributes/41",
+          "registrations": [
+            {
+              "conditions": [],
+              "kind": "function",
+              "line": 991
+            }
+          ],
+          "source": "docs/reports/puck-cpu-export-phase-preflight-v1/upstream/torch/csrc/distributed/c10d/init.cpp"
+        },
+        {
+          "name": "_broadcast_coalesced",
+          "observed_pointer": "/distributed_exports/modules/1/delegate_attributes/42",
+          "registrations": [
+            {
+              "conditions": [],
+              "kind": "function",
+              "line": 3908
+            }
+          ],
+          "source": "docs/reports/puck-cpu-export-phase-preflight-v1/upstream/torch/csrc/distributed/c10d/init.cpp"
+        },
+        {
+          "name": "_compute_bucket_assignment_by_size",
+          "observed_pointer": "/distributed_exports/modules/1/delegate_attributes/43",
+          "registrations": [
+            {
+              "conditions": [],
+              "kind": "function",
+              "line": 3859
+            }
+          ],
+          "source": "docs/reports/puck-cpu-export-phase-preflight-v1/upstream/torch/csrc/distributed/c10d/init.cpp"
+        },
+        {
+          "name": "_create_work_from_future",
+          "observed_pointer": "/distributed_exports/modules/1/delegate_attributes/44",
+          "registrations": [
+            {
+              "conditions": [],
+              "kind": "function",
+              "line": 4006
+            }
+          ],
+          "source": "docs/reports/puck-cpu-export-phase-preflight-v1/upstream/torch/csrc/distributed/c10d/init.cpp"
+        },
+        {
+          "name": "_current_process_group",
+          "observed_pointer": "/distributed_exports/modules/1/delegate_attributes/45",
+          "registrations": [
+            {
+              "conditions": [],
+              "kind": "function",
+              "line": 2684
+            }
+          ],
+          "source": "docs/reports/puck-cpu-export-phase-preflight-v1/upstream/torch/csrc/distributed/c10d/init.cpp"
+        },
+        {
+          "name": "_detect_dma_connectivity",
+          "observed_pointer": "/distributed_exports/modules/1/delegate_attributes/46",
+          "registrations": [
+            {
+              "conditions": [],
+              "kind": "function",
+              "line": 1106
+            }
+          ],
+          "source": "docs/reports/puck-cpu-export-phase-preflight-v1/upstream/torch/csrc/distributed/c10d/init.cpp"
+        },
+        {
+          "name": "_dump_fr_trace",
+          "observed_pointer": "/distributed_exports/modules/1/delegate_attributes/47",
+          "registrations": [
+            {
+              "conditions": [],
+              "kind": "function",
+              "line": 4105
+            }
+          ],
+          "source": "docs/reports/puck-cpu-export-phase-preflight-v1/upstream/torch/csrc/distributed/c10d/init.cpp"
+        },
+        {
+          "name": "_dump_fr_trace_json",
+          "observed_pointer": "/distributed_exports/modules/1/delegate_attributes/48",
+          "registrations": [
+            {
+              "conditions": [],
+              "kind": "function",
+              "line": 4088
+            }
+          ],
+          "source": "docs/reports/puck-cpu-export-phase-preflight-v1/upstream/torch/csrc/distributed/c10d/init.cpp"
+        },
+        {
+          "name": "_get_handler",
+          "observed_pointer": "/distributed_exports/modules/1/delegate_attributes/49",
+          "registrations": [
+            {
+              "conditions": [],
+              "kind": "function",
+              "line": 4140
+            }
+          ],
+          "source": "docs/reports/puck-cpu-export-phase-preflight-v1/upstream/torch/csrc/distributed/c10d/init.cpp"
+        },
+        {
+          "name": "_get_handler_names",
+          "observed_pointer": "/distributed_exports/modules/1/delegate_attributes/50",
+          "registrations": [
+            {
+              "conditions": [],
+              "kind": "function",
+              "line": 4154
+            }
+          ],
+          "source": "docs/reports/puck-cpu-export-phase-preflight-v1/upstream/torch/csrc/distributed/c10d/init.cpp"
+        },
+        {
+          "name": "_get_work_registry_size",
+          "observed_pointer": "/distributed_exports/modules/1/delegate_attributes/51",
+          "registrations": [
+            {
+              "conditions": [],
+              "kind": "function",
+              "line": 980
+            }
+          ],
+          "source": "docs/reports/puck-cpu-export-phase-preflight-v1/upstream/torch/csrc/distributed/c10d/init.cpp"
+        },
+        {
+          "name": "_make_nccl_premul_sum",
+          "observed_pointer": "/distributed_exports/modules/1/delegate_attributes/52",
+          "registrations": [
+            {
+              "conditions": [],
+              "kind": "function",
+              "line": 930
+            },
+            {
+              "conditions": [],
+              "kind": "function",
+              "line": 936
+            }
+          ],
+          "source": "docs/reports/puck-cpu-export-phase-preflight-v1/upstream/torch/csrc/distributed/c10d/init.cpp"
+        },
+        {
+          "name": "_register_builtin_comm_hook",
+          "observed_pointer": "/distributed_exports/modules/1/delegate_attributes/53",
+          "registrations": [
+            {
+              "conditions": [],
+              "kind": "function",
+              "line": 479
+            }
+          ],
+          "source": "docs/reports/puck-cpu-export-phase-preflight-v1/upstream/torch/csrc/distributed/c10d/init.cpp"
+        },
+        {
+          "name": "_register_comm_hook",
+          "observed_pointer": "/distributed_exports/modules/1/delegate_attributes/54",
+          "registrations": [
+            {
+              "conditions": [],
+              "kind": "function",
+              "line": 472
+            }
+          ],
+          "source": "docs/reports/puck-cpu-export-phase-preflight-v1/upstream/torch/csrc/distributed/c10d/init.cpp"
+        },
+        {
+          "name": "_register_process_group",
+          "observed_pointer": "/distributed_exports/modules/1/delegate_attributes/55",
+          "registrations": [
+            {
+              "conditions": [],
+              "kind": "function",
+              "line": 952
+            }
+          ],
+          "source": "docs/reports/puck-cpu-export-phase-preflight-v1/upstream/torch/csrc/distributed/c10d/init.cpp"
+        },
+        {
+          "name": "_register_work",
+          "observed_pointer": "/distributed_exports/modules/1/delegate_attributes/56",
+          "registrations": [
+            {
+              "conditions": [],
+              "kind": "function",
+              "line": 969
+            }
+          ],
+          "source": "docs/reports/puck-cpu-export-phase-preflight-v1/upstream/torch/csrc/distributed/c10d/init.cpp"
+        },
+        {
+          "name": "_resolve_process_group",
+          "observed_pointer": "/distributed_exports/modules/1/delegate_attributes/57",
+          "registrations": [
+            {
+              "conditions": [],
+              "kind": "function",
+              "line": 962
+            }
+          ],
+          "source": "docs/reports/puck-cpu-export-phase-preflight-v1/upstream/torch/csrc/distributed/c10d/init.cpp"
+        },
+        {
+          "name": "_set_allow_inflight_collective_as_graph_input",
+          "observed_pointer": "/distributed_exports/modules/1/delegate_attributes/58",
+          "registrations": [
+            {
+              "conditions": [],
+              "kind": "function",
+              "line": 985
+            }
+          ],
+          "source": "docs/reports/puck-cpu-export-phase-preflight-v1/upstream/torch/csrc/distributed/c10d/init.cpp"
+        },
+        {
+          "name": "_set_global_rank",
+          "observed_pointer": "/distributed_exports/modules/1/delegate_attributes/59",
+          "registrations": [
+            {
+              "conditions": [],
+              "kind": "function",
+              "line": 3993
+            }
+          ],
+          "source": "docs/reports/puck-cpu-export-phase-preflight-v1/upstream/torch/csrc/distributed/c10d/init.cpp"
+        },
+        {
+          "name": "_set_process_group",
+          "observed_pointer": "/distributed_exports/modules/1/delegate_attributes/60",
+          "registrations": [
+            {
+              "conditions": [],
+              "kind": "function",
+              "line": 2683
+            }
+          ],
+          "source": "docs/reports/puck-cpu-export-phase-preflight-v1/upstream/torch/csrc/distributed/c10d/init.cpp"
+        },
+        {
+          "name": "_set_thread_isolation_mode",
+          "observed_pointer": "/distributed_exports/modules/1/delegate_attributes/61",
+          "registrations": [
+            {
+              "conditions": [],
+              "kind": "function",
+              "line": 943
+            }
+          ],
+          "source": "docs/reports/puck-cpu-export-phase-preflight-v1/upstream/torch/csrc/distributed/c10d/init.cpp"
+        },
+        {
+          "name": "_test_python_store",
+          "observed_pointer": "/distributed_exports/modules/1/delegate_attributes/62",
+          "registrations": [
+            {
+              "conditions": [],
+              "kind": "function",
+              "line": 3926
+            }
+          ],
+          "source": "docs/reports/puck-cpu-export-phase-preflight-v1/upstream/torch/csrc/distributed/c10d/init.cpp"
+        },
+        {
+          "name": "_unregister_all_process_groups",
+          "observed_pointer": "/distributed_exports/modules/1/delegate_attributes/63",
+          "registrations": [
+            {
+              "conditions": [],
+              "kind": "function",
+              "line": 1004
+            }
+          ],
+          "source": "docs/reports/puck-cpu-export-phase-preflight-v1/upstream/torch/csrc/distributed/c10d/init.cpp"
+        },
+        {
+          "name": "_unregister_process_group",
+          "observed_pointer": "/distributed_exports/modules/1/delegate_attributes/64",
+          "registrations": [
+            {
+              "conditions": [],
+              "kind": "function",
+              "line": 997
+            }
+          ],
+          "source": "docs/reports/puck-cpu-export-phase-preflight-v1/upstream/torch/csrc/distributed/c10d/init.cpp"
+        },
+        {
+          "name": "_verify_params_across_processes",
+          "observed_pointer": "/distributed_exports/modules/1/delegate_attributes/65",
+          "registrations": [
+            {
+              "conditions": [],
+              "kind": "function",
+              "line": 3890
+            }
+          ],
+          "source": "docs/reports/puck-cpu-export-phase-preflight-v1/upstream/torch/csrc/distributed/c10d/init.cpp"
+        },
+        {
+          "name": "get_debug_level",
+          "observed_pointer": "/distributed_exports/modules/1/delegate_attributes/66",
+          "registrations": [
+            {
+              "conditions": [],
+              "kind": "function",
+              "line": 793
+            }
+          ],
+          "source": "docs/reports/puck-cpu-export-phase-preflight-v1/upstream/torch/csrc/distributed/c10d/init.cpp"
+        },
+        {
+          "name": "set_debug_level",
+          "observed_pointer": "/distributed_exports/modules/1/delegate_attributes/67",
+          "registrations": [
+            {
+              "conditions": [],
+              "kind": "function",
+              "line": 797
+            }
+          ],
+          "source": "docs/reports/puck-cpu-export-phase-preflight-v1/upstream/torch/csrc/distributed/c10d/init.cpp"
+        },
+        {
+          "name": "set_debug_level_from_env",
+          "observed_pointer": "/distributed_exports/modules/1/delegate_attributes/68",
+          "registrations": [
+            {
+              "conditions": [],
+              "kind": "function",
+              "line": 801
+            }
+          ],
+          "source": "docs/reports/puck-cpu-export-phase-preflight-v1/upstream/torch/csrc/distributed/c10d/init.cpp"
+        }
+      ],
+      "key": "c10d",
+      "lifecycle_source_notes": {
+        "cpp_callback_return_line": 4193,
+        "cpp_first_dispatch_line": 471,
+        "cpp_prepublication_imports": [
+          454,
+          459
+        ],
+        "cpp_publication_line": 466,
+        "publication_choice": "required to admit native child before fresh nested physical imports while Python creator remains open",
+        "python_afterpublication_cached_import_lines": [
+          40,
+          129
+        ],
+        "python_afterpublication_fresh_imports": [
+          {
+            "line": 131,
+            "modules": [
+              "torch.distributed.device_mesh"
+            ]
+          },
+          {
+            "line": 136,
+            "modules": [
+              "torch.distributed.distributed_c10d"
+            ]
+          },
+          {
+            "line": 148,
+            "modules": [
+              "torch.distributed.remote_device"
+            ]
+          },
+          {
+            "line": 149,
+            "modules": [
+              "torch.distributed.rendezvous"
+            ]
+          }
+        ],
+        "python_callback_line": 29
+      },
+      "native_root_callback_registration": {
+        "line_end": 2006,
+        "line_start": 1997,
+        "source": "docs/reports/puck-cpu-export-phase-preflight-v1/upstream/torch/csrc/Module.cpp"
+      },
+      "observed_dispatch_count": 69,
+      "observed_plain_module_metadata": {
+        "file": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/torch/_C.cpython-311-x86_64-linux-gnu.so",
+        "loader_type": null,
+        "module_type": "builtins.module",
+        "name": "torch._C._distributed_c10d",
+        "package": null,
+        "path": [],
+        "spec": null
+      },
+      "producer_module": {
+        "is_package": true,
+        "kind": "python",
+        "name": "torch.distributed",
+        "path": "torch/distributed/__init__.py",
+        "root_index": 0
+      },
+      "python_callback_line": 29,
+      "python_creator_source": "docs/reports/puck-cpu-export-phase-preflight-v1/installed-source/torch/distributed/__init__.py",
+      "replacement_export": {
+        "attributes": [
+          "torch",
+          "_C",
+          "_distributed_c10d"
+        ],
+        "class_binding": null,
+        "delegate_attributes": [
+          "AllToAllOptions",
+          "AllgatherOptions",
+          "AllreduceCoalescedOptions",
+          "AllreduceOptions",
+          "Backend",
+          "BarrierOptions",
+          "BroadcastOptions",
+          "BuiltinCommHookType",
+          "DDPLoggingData",
+          "DebugLevel",
+          "ErrorType",
+          "FakeProcessGroup",
+          "FakeWork",
+          "FileStore",
+          "GatherOptions",
+          "GradBucket",
+          "HashStore",
+          "Logger",
+          "OpType",
+          "PrefixStore",
+          "ProcessGroup",
+          "ProcessGroupGloo",
+          "ReduceOp",
+          "ReduceOptions",
+          "ReduceScatterOptions",
+          "Reducer",
+          "ScatterOptions",
+          "Store",
+          "TCPStore",
+          "Work",
+          "WorkInfo",
+          "WorkResult",
+          "_ControlCollectives",
+          "_DMAConnectivity",
+          "_DistributedBackendOptions",
+          "_ProcessGroupWrapper",
+          "_Request",
+          "_Response",
+          "_StoreCollectives",
+          "_SymmetricMemory",
+          "_WorkerServer",
+          "_allow_inflight_collective_as_graph_input",
+          "_broadcast_coalesced",
+          "_compute_bucket_assignment_by_size",
+          "_create_work_from_future",
+          "_current_process_group",
+          "_detect_dma_connectivity",
+          "_dump_fr_trace",
+          "_dump_fr_trace_json",
+          "_get_handler",
+          "_get_handler_names",
+          "_get_work_registry_size",
+          "_make_nccl_premul_sum",
+          "_register_builtin_comm_hook",
+          "_register_comm_hook",
+          "_register_process_group",
+          "_register_work",
+          "_resolve_process_group",
+          "_set_allow_inflight_collective_as_graph_input",
+          "_set_global_rank",
+          "_set_process_group",
+          "_set_thread_isolation_mode",
+          "_test_python_store",
+          "_unregister_all_process_groups",
+          "_unregister_process_group",
+          "_verify_params_across_processes",
+          "get_debug_level",
+          "set_debug_level",
+          "set_debug_level_from_env"
+        ],
+        "name": "torch._C._distributed_c10d",
+        "phase": "module_exec_publish",
+        "producer": "torch.distributed"
+      },
+      "source_dispatch_literals_not_in_observed_roster": [
+        {
+          "conditions": [
+            "defined(USE_NVSHMEM)"
+          ],
+          "kind": "function",
+          "line": 1012,
+          "name": "_nvshmemx_cumodule_init"
+        },
+        {
+          "conditions": [
+            "defined(USE_NVSHMEM)"
+          ],
+          "kind": "function",
+          "line": 1018,
+          "name": "_is_nvshmem_available"
+        },
+        {
+          "conditions": [
+            "defined(USE_C10D_NCCL)"
+          ],
+          "kind": "class",
+          "line": 3250,
+          "name": "ProcessGroupNCCL"
+        },
+        {
+          "conditions": [
+            "defined(USE_C10D_NCCL)"
+          ],
+          "kind": "function",
+          "line": 3381,
+          "name": "_get_intra_node_comm_usage_counter"
+        },
+        {
+          "conditions": [
+            "defined(USE_C10D_MPI)"
+          ],
+          "kind": "class",
+          "line": 3503,
+          "name": "ProcessGroupMPI"
+        },
+        {
+          "conditions": [
+            "defined(USE_C10D_XCCL)"
+          ],
+          "kind": "class",
+          "line": 3519,
+          "name": "ProcessGroupXCCL"
+        },
+        {
+          "conditions": [
+            "defined(USE_C10D_XCCL)"
+          ],
+          "kind": "function",
+          "line": 3543,
+          "name": "_dump_xccl_trace"
+        },
+        {
+          "conditions": [
+            "defined(USE_C10D_XCCL)"
+          ],
+          "kind": "function",
+          "line": 3564,
+          "name": "get_xccl_version"
+        },
+        {
+          "conditions": [
+            "defined(USE_C10D_UCC)"
+          ],
+          "kind": "class",
+          "line": 3571,
+          "name": "ProcessGroupUCC"
+        },
+        {
+          "conditions": [
+            "defined(USE_C10D_NCCL)"
+          ],
+          "kind": "function",
+          "line": 4037,
+          "name": "_hash_tensors"
+        },
+        {
+          "conditions": [
+            "defined(USE_C10D_NCCL)"
+          ],
+          "kind": "function",
+          "line": 4047,
+          "name": "_dump_nccl_trace_json"
+        },
+        {
+          "conditions": [
+            "defined(USE_C10D_NCCL)"
+          ],
+          "kind": "function",
+          "line": 4064,
+          "name": "_dump_nccl_trace"
+        }
+      ]
+    },
+    {
+      "cpp_callback_return_line": 847,
+      "cpp_callback_source": "docs/reports/puck-cpu-export-phase-preflight-v1/upstream/torch/csrc/distributed/rpc/init.cpp",
+      "cpp_publication_line": 47,
+      "dispatch_attributions": [
+        {
+          "name": "PyRRef",
+          "observed_pointer": "/distributed_exports/modules/2/delegate_attributes/0",
+          "registrations": [
+            {
+              "conditions": [],
+              "kind": "class",
+              "line": 178
+            }
+          ],
+          "source": "docs/reports/puck-cpu-export-phase-preflight-v1/upstream/torch/csrc/distributed/rpc/init.cpp"
+        },
+        {
+          "name": "RemoteProfilerManager",
+          "observed_pointer": "/distributed_exports/modules/2/delegate_attributes/1",
+          "registrations": [
+            {
+              "conditions": [],
+              "kind": "class",
+              "line": 823
+            }
+          ],
+          "source": "docs/reports/puck-cpu-export-phase-preflight-v1/upstream/torch/csrc/distributed/rpc/init.cpp"
+        },
+        {
+          "name": "RpcAgent",
+          "observed_pointer": "/distributed_exports/modules/2/delegate_attributes/2",
+          "registrations": [
+            {
+              "conditions": [],
+              "kind": "class",
+              "line": 137
+            }
+          ],
+          "source": "docs/reports/puck-cpu-export-phase-preflight-v1/upstream/torch/csrc/distributed/rpc/init.cpp"
+        },
+        {
+          "name": "RpcBackendOptions",
+          "observed_pointer": "/distributed_exports/modules/2/delegate_attributes/3",
+          "registrations": [
+            {
+              "conditions": [],
+              "kind": "class",
+              "line": 54
+            }
+          ],
+          "source": "docs/reports/puck-cpu-export-phase-preflight-v1/upstream/torch/csrc/distributed/rpc/init.cpp"
+        },
+        {
+          "name": "TensorPipeAgent",
+          "observed_pointer": "/distributed_exports/modules/2/delegate_attributes/4",
+          "registrations": [
+            {
+              "conditions": [
+                "defined(USE_TENSORPIPE)"
+              ],
+              "kind": "class",
+              "line": 573
+            }
+          ],
+          "source": "docs/reports/puck-cpu-export-phase-preflight-v1/upstream/torch/csrc/distributed/rpc/init.cpp"
+        },
+        {
+          "name": "WorkerInfo",
+          "observed_pointer": "/distributed_exports/modules/2/delegate_attributes/5",
+          "registrations": [
+            {
+              "conditions": [],
+              "kind": "class",
+              "line": 88
+            }
+          ],
+          "source": "docs/reports/puck-cpu-export-phase-preflight-v1/upstream/torch/csrc/distributed/rpc/init.cpp"
+        },
+        {
+          "name": "_TensorPipeRpcBackendOptionsBase",
+          "observed_pointer": "/distributed_exports/modules/2/delegate_attributes/6",
+          "registrations": [
+            {
+              "conditions": [
+                "defined(USE_TENSORPIPE)"
+              ],
+              "kind": "class",
+              "line": 538
+            }
+          ],
+          "source": "docs/reports/puck-cpu-export-phase-preflight-v1/upstream/torch/csrc/distributed/rpc/init.cpp"
+        },
+        {
+          "name": "_cleanup_python_rpc_handler",
+          "observed_pointer": "/distributed_exports/modules/2/delegate_attributes/7",
+          "registrations": [
+            {
+              "conditions": [],
+              "kind": "function",
+              "line": 700
+            }
+          ],
+          "source": "docs/reports/puck-cpu-export-phase-preflight-v1/upstream/torch/csrc/distributed/rpc/init.cpp"
+        },
+        {
+          "name": "_delete_all_user_and_unforked_owner_rrefs",
+          "observed_pointer": "/distributed_exports/modules/2/delegate_attributes/8",
+          "registrations": [
+            {
+              "conditions": [],
+              "kind": "function",
+              "line": 680
+            }
+          ],
+          "source": "docs/reports/puck-cpu-export-phase-preflight-v1/upstream/torch/csrc/distributed/rpc/init.cpp"
+        },
+        {
+          "name": "_destroy_rref_context",
+          "observed_pointer": "/distributed_exports/modules/2/delegate_attributes/9",
+          "registrations": [
+            {
+              "conditions": [],
+              "kind": "function",
+              "line": 687
+            }
+          ],
+          "source": "docs/reports/puck-cpu-export-phase-preflight-v1/upstream/torch/csrc/distributed/rpc/init.cpp"
+        },
+        {
+          "name": "_disable_jit_rref_pickle",
+          "observed_pointer": "/distributed_exports/modules/2/delegate_attributes/10",
+          "registrations": [
+            {
+              "conditions": [],
+              "kind": "function",
+              "line": 845
+            }
+          ],
+          "source": "docs/reports/puck-cpu-export-phase-preflight-v1/upstream/torch/csrc/distributed/rpc/init.cpp"
+        },
+        {
+          "name": "_disable_server_process_global_profiler",
+          "observed_pointer": "/distributed_exports/modules/2/delegate_attributes/11",
+          "registrations": [
+            {
+              "conditions": [],
+              "kind": "function",
+              "line": 815
+            }
+          ],
+          "source": "docs/reports/puck-cpu-export-phase-preflight-v1/upstream/torch/csrc/distributed/rpc/init.cpp"
+        },
+        {
+          "name": "_enable_jit_rref_pickle",
+          "observed_pointer": "/distributed_exports/modules/2/delegate_attributes/12",
+          "registrations": [
+            {
+              "conditions": [],
+              "kind": "function",
+              "line": 830
+            }
+          ],
+          "source": "docs/reports/puck-cpu-export-phase-preflight-v1/upstream/torch/csrc/distributed/rpc/init.cpp"
+        },
+        {
+          "name": "_enable_server_process_global_profiler",
+          "observed_pointer": "/distributed_exports/modules/2/delegate_attributes/13",
+          "registrations": [
+            {
+              "conditions": [],
+              "kind": "function",
+              "line": 812
+            }
+          ],
+          "source": "docs/reports/puck-cpu-export-phase-preflight-v1/upstream/torch/csrc/distributed/rpc/init.cpp"
+        },
+        {
+          "name": "_get_current_rpc_agent",
+          "observed_pointer": "/distributed_exports/modules/2/delegate_attributes/14",
+          "registrations": [
+            {
+              "conditions": [],
+              "kind": "function",
+              "line": 652
+            }
+          ],
+          "source": "docs/reports/puck-cpu-export-phase-preflight-v1/upstream/torch/csrc/distributed/rpc/init.cpp"
+        },
+        {
+          "name": "_invoke_remote_builtin",
+          "observed_pointer": "/distributed_exports/modules/2/delegate_attributes/15",
+          "registrations": [
+            {
+              "conditions": [],
+              "kind": "function",
+              "line": 751
+            }
+          ],
+          "source": "docs/reports/puck-cpu-export-phase-preflight-v1/upstream/torch/csrc/distributed/rpc/init.cpp"
+        },
+        {
+          "name": "_invoke_remote_python_udf",
+          "observed_pointer": "/distributed_exports/modules/2/delegate_attributes/16",
+          "registrations": [
+            {
+              "conditions": [],
+              "kind": "function",
+              "line": 756
+            }
+          ],
+          "source": "docs/reports/puck-cpu-export-phase-preflight-v1/upstream/torch/csrc/distributed/rpc/init.cpp"
+        },
+        {
+          "name": "_invoke_remote_torchscript",
+          "observed_pointer": "/distributed_exports/modules/2/delegate_attributes/17",
+          "registrations": [
+            {
+              "conditions": [],
+              "kind": "function",
+              "line": 761
+            }
+          ],
+          "source": "docs/reports/puck-cpu-export-phase-preflight-v1/upstream/torch/csrc/distributed/rpc/init.cpp"
+        },
+        {
+          "name": "_invoke_rpc_builtin",
+          "observed_pointer": "/distributed_exports/modules/2/delegate_attributes/18",
+          "registrations": [
+            {
+              "conditions": [],
+              "kind": "function",
+              "line": 705
+            }
+          ],
+          "source": "docs/reports/puck-cpu-export-phase-preflight-v1/upstream/torch/csrc/distributed/rpc/init.cpp"
+        },
+        {
+          "name": "_invoke_rpc_python_udf",
+          "observed_pointer": "/distributed_exports/modules/2/delegate_attributes/19",
+          "registrations": [
+            {
+              "conditions": [],
+              "kind": "function",
+              "line": 717
+            }
+          ],
+          "source": "docs/reports/puck-cpu-export-phase-preflight-v1/upstream/torch/csrc/distributed/rpc/init.cpp"
+        },
+        {
+          "name": "_invoke_rpc_torchscript",
+          "observed_pointer": "/distributed_exports/modules/2/delegate_attributes/20",
+          "registrations": [
+            {
+              "conditions": [],
+              "kind": "function",
+              "line": 733
+            }
+          ],
+          "source": "docs/reports/puck-cpu-export-phase-preflight-v1/upstream/torch/csrc/distributed/rpc/init.cpp"
+        },
+        {
+          "name": "_is_current_rpc_agent_set",
+          "observed_pointer": "/distributed_exports/modules/2/delegate_attributes/21",
+          "registrations": [
+            {
+              "conditions": [],
+              "kind": "function",
+              "line": 650
+            }
+          ],
+          "source": "docs/reports/puck-cpu-export-phase-preflight-v1/upstream/torch/csrc/distributed/rpc/init.cpp"
+        },
+        {
+          "name": "_reset_current_rpc_agent",
+          "observed_pointer": "/distributed_exports/modules/2/delegate_attributes/22",
+          "registrations": [
+            {
+              "conditions": [],
+              "kind": "function",
+              "line": 675
+            }
+          ],
+          "source": "docs/reports/puck-cpu-export-phase-preflight-v1/upstream/torch/csrc/distributed/rpc/init.cpp"
+        },
+        {
+          "name": "_rref_context_get_debug_info",
+          "observed_pointer": "/distributed_exports/modules/2/delegate_attributes/23",
+          "registrations": [
+            {
+              "conditions": [],
+              "kind": "function",
+              "line": 695
+            }
+          ],
+          "source": "docs/reports/puck-cpu-export-phase-preflight-v1/upstream/torch/csrc/distributed/rpc/init.cpp"
+        },
+        {
+          "name": "_set_and_start_rpc_agent",
+          "observed_pointer": "/distributed_exports/modules/2/delegate_attributes/24",
+          "registrations": [
+            {
+              "conditions": [],
+              "kind": "function",
+              "line": 655
+            }
+          ],
+          "source": "docs/reports/puck-cpu-export-phase-preflight-v1/upstream/torch/csrc/distributed/rpc/init.cpp"
+        },
+        {
+          "name": "_set_profiler_node_id",
+          "observed_pointer": "/distributed_exports/modules/2/delegate_attributes/25",
+          "registrations": [
+            {
+              "conditions": [],
+              "kind": "function",
+              "line": 818
+            }
+          ],
+          "source": "docs/reports/puck-cpu-export-phase-preflight-v1/upstream/torch/csrc/distributed/rpc/init.cpp"
+        },
+        {
+          "name": "_set_rpc_timeout",
+          "observed_pointer": "/distributed_exports/modules/2/delegate_attributes/26",
+          "registrations": [
+            {
+              "conditions": [],
+              "kind": "function",
+              "line": 793
+            }
+          ],
+          "source": "docs/reports/puck-cpu-export-phase-preflight-v1/upstream/torch/csrc/distributed/rpc/init.cpp"
+        },
+        {
+          "name": "enable_gil_profiling",
+          "observed_pointer": "/distributed_exports/modules/2/delegate_attributes/27",
+          "registrations": [
+            {
+              "conditions": [],
+              "kind": "function",
+              "line": 780
+            }
+          ],
+          "source": "docs/reports/puck-cpu-export-phase-preflight-v1/upstream/torch/csrc/distributed/rpc/init.cpp"
+        },
+        {
+          "name": "get_rpc_timeout",
+          "observed_pointer": "/distributed_exports/modules/2/delegate_attributes/28",
+          "registrations": [
+            {
+              "conditions": [],
+              "kind": "function",
+              "line": 766
+            }
+          ],
+          "source": "docs/reports/puck-cpu-export-phase-preflight-v1/upstream/torch/csrc/distributed/rpc/init.cpp"
+        }
+      ],
+      "key": "rpc",
+      "lifecycle_source_notes": {
+        "chrono_caster_note": "retained pybind11/chrono.h77-99 lazily initializes datetime API then returns timedelta instance; possible earlier import inside native callback; no imported module assigned to child",
+        "cpp_callback_return_line": 847,
+        "cpp_eager_chrono_cast_lines": [
+          79,
+          80
+        ],
+        "cpp_first_dispatch_line": 52,
+        "cpp_prepublication_imports": [
+          35,
+          40
+        ],
+        "cpp_publication_line": 47,
+        "publication_choice": "required to admit native child before nested imports while Python creator remains open",
+        "python_afterpublication_fresh_imports": [
+          {
+            "line": 37,
+            "modules": [
+              "numbers"
+            ]
+          },
+          {
+            "line": 39,
+            "modules": [
+              "torch.distributed.autograd"
+            ]
+          },
+          {
+            "line": 81,
+            "modules": [
+              "torch.distributed.rpc.api",
+              "torch.distributed.rpc.backend_registry",
+              "torch.distributed.rpc.functions"
+            ]
+          },
+          {
+            "line": 84,
+            "modules": [
+              "torch.distributed.rpc.options"
+            ]
+          },
+          {
+            "line": 85,
+            "modules": [
+              "torch.distributed.rpc.server_process_global_profiler"
+            ]
+          }
+        ],
+        "python_callback_line": 28
+      },
+      "native_root_callback_registration": {
+        "line_end": 2006,
+        "line_start": 1997,
+        "source": "docs/reports/puck-cpu-export-phase-preflight-v1/upstream/torch/csrc/Module.cpp"
+      },
+      "observed_dispatch_count": 29,
+      "observed_plain_module_metadata": {
+        "file": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/torch/_C.cpython-311-x86_64-linux-gnu.so",
+        "loader_type": null,
+        "module_type": "builtins.module",
+        "name": "torch._C._distributed_rpc",
+        "package": null,
+        "path": [],
+        "spec": null
+      },
+      "producer_module": {
+        "is_package": true,
+        "kind": "python",
+        "name": "torch.distributed.rpc",
+        "path": "torch/distributed/rpc/__init__.py",
+        "root_index": 0
+      },
+      "python_callback_line": 28,
+      "python_creator_source": "docs/reports/puck-cpu-export-phase-preflight-v1/installed-source/torch/distributed/rpc/__init__.py",
+      "replacement_export": {
+        "attributes": [
+          "torch",
+          "_C",
+          "_distributed_rpc"
+        ],
+        "class_binding": null,
+        "delegate_attributes": [
+          "PyRRef",
+          "RemoteProfilerManager",
+          "RpcAgent",
+          "RpcBackendOptions",
+          "TensorPipeAgent",
+          "WorkerInfo",
+          "_TensorPipeRpcBackendOptionsBase",
+          "_cleanup_python_rpc_handler",
+          "_delete_all_user_and_unforked_owner_rrefs",
+          "_destroy_rref_context",
+          "_disable_jit_rref_pickle",
+          "_disable_server_process_global_profiler",
+          "_enable_jit_rref_pickle",
+          "_enable_server_process_global_profiler",
+          "_get_current_rpc_agent",
+          "_invoke_remote_builtin",
+          "_invoke_remote_python_udf",
+          "_invoke_remote_torchscript",
+          "_invoke_rpc_builtin",
+          "_invoke_rpc_python_udf",
+          "_invoke_rpc_torchscript",
+          "_is_current_rpc_agent_set",
+          "_reset_current_rpc_agent",
+          "_rref_context_get_debug_info",
+          "_set_and_start_rpc_agent",
+          "_set_profiler_node_id",
+          "_set_rpc_timeout",
+          "enable_gil_profiling",
+          "get_rpc_timeout"
+        ],
+        "name": "torch._C._distributed_rpc",
+        "phase": "module_exec_publish",
+        "producer": "torch.distributed.rpc"
+      },
+      "source_dispatch_literals_not_in_observed_roster": []
+    }
+  ],
+  "retained_upstream_commit": "0fabc3ba44823f257e70ce397d989c8de5e362c1",
+  "scope": "Read-only retained source and authenticated actual03 metadata attribution; no runtime execution, installed census, profile acceptance or actual05 controls.",
+  "source_worktree": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03"
+}

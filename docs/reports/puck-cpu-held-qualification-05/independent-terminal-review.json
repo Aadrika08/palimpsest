@@ -1,0 +1,245 @@
+{
+  "artifact_pins": [
+    {
+      "path": "/tmp/palimpsest-puck-cpu-held-qualification-05-admission-01.json",
+      "sha256": "603dd746c5f06e76f58bbc7c1b4db0d7a8d4e3f1468b4d2ed80770c50cb50369",
+      "size_bytes": 2741
+    },
+    {
+      "path": "runs/puck-cpu-held-qualification-05-external-cli-transport.json",
+      "sha256": "7350fc1e7552205b73975b422f3241cf44e124d3d00617232569946c860dbe82",
+      "size_bytes": 950
+    },
+    {
+      "path": "/tmp/palimpsest-puck-cpu-held-qualification-05-audit-01.json",
+      "sha256": "cf0b4a4f2bcebe97c1e33695b864516ef029b8bd52f461de10ecc8d7a903b2cf",
+      "size_bytes": 617
+    },
+    {
+      "path": "/tmp/palimpsest-held05-post-byte-custody-01.json",
+      "sha256": "d2b62b1fd547639566f617865b20002101786b2956db37e7c2f60bf4c34d4901",
+      "size_bytes": 7906
+    },
+    {
+      "path": "/tmp/palimpsest-held05-post-byte-custody-01.py",
+      "sha256": "c391971a08daf41f8c61bd7b49888b4284f601d104fdd96124549340bda3230f",
+      "size_bytes": 20829
+    },
+    {
+      "path": "/tmp/palimpsest-held05-admission-external-tool.json",
+      "sha256": "9135fb90c68e20ca8eac2910463a0c7d3415f9299c57c82514f3746794a46a03",
+      "size_bytes": 3852
+    },
+    {
+      "path": "/tmp/palimpsest-held05-observer-external-tool.json",
+      "sha256": "60d30cc46136b1d3d5e545db250620aea0d4aa232a1bfb0d4f796405f0a608f9",
+      "size_bytes": 2336
+    },
+    {
+      "path": "/tmp/palimpsest-held05-audit-external-tool.json",
+      "sha256": "a4e4425e47a9f7a9949f08124090674280d3a581b98f2e198a8098e57372c96a",
+      "size_bytes": 1882
+    },
+    {
+      "path": "/tmp/palimpsest-held05-post-custody-external-tool.json",
+      "sha256": "a798ba503b4866017344a35884352c85e25bc6e817231e175ded054d9d405d1a",
+      "size_bytes": 9154
+    },
+    {
+      "path": "/tmp/palimpsest-held05-pre-observer-resource-tool.json",
+      "sha256": "4ba815f305ae47f72143573cb8250cf4184c63ba098c8fd493ac791bb0f8bcea",
+      "size_bytes": 1022
+    },
+    {
+      "path": "/tmp/palimpsest-held05-concrete-audit-command.json",
+      "sha256": "35620cdba5fbbf58ba1c71c9060de0046bd01a50d2032f9731add96e016e9d06",
+      "size_bytes": 1390
+    },
+    {
+      "path": "runs/puck-cpu-held-qualification-05/result.json",
+      "sha256": "c5d2d2037ed248834d971278cbe2d6637b0324eb5b1518933e5201980b493e67",
+      "size_bytes": 618
+    },
+    {
+      "path": "runs/puck-cpu-held-qualification-05/supervision.json",
+      "sha256": "ca663d925aa6f163843a4315d0a789a6081ab06a7add3b17fc074621a6175de7",
+      "size_bytes": 357
+    }
+  ],
+  "claims": {
+    "collection_authorized": false,
+    "executable": false,
+    "native_authorized": false,
+    "qualification_claims": [],
+    "runtime_qualified": false,
+    "study_authorized": false
+  },
+  "kind": "palimpsest-held05-independent-terminal-custody-review-v1",
+  "limitations": [
+    "Full pre/post byte traversals were performed by the pinned recorded admission/post checkers; this review authenticated their source, terminals and summaries without rerunning them.",
+    "Root owns archive byte verification and goal/report updates."
+  ],
+  "material_open_findings": [],
+  "reconciled_outcomes": {
+    "admission": "DATA_ONLY_ADMITTED",
+    "admission_seconds": 26.53738016204443,
+    "independent_audit": "FAIL",
+    "independent_audit_error": "Normal external transport exit required",
+    "observer_parent_returncode": 1,
+    "observer_seconds": 45.85860303998925,
+    "observer_timed_out": false,
+    "parent_result": "FAIL",
+    "parent_result_bytes": 618,
+    "parent_seconds": 45.755890075990465,
+    "post_custody": "CURRENT_BYTES_PRESERVED_AFTER_FAILED05",
+    "post_custody_seconds": 28.41050533496309
+  },
+  "review_actions": "Read-only source diff/AST, selected artifact hashes, JSON and terminal-binding checks only; no checker or runtime rerun.",
+  "reviewed_at_utc": "2026-10-15T20:53:27.879436+00:00",
+  "scope": {
+    "current_inputs": 16,
+    "current_sources": 24,
+    "historical_capsule_files": 34,
+    "python_baseline": {
+      "external_file_count": 10,
+      "prefix_manifest_sha256": "4d54b1dac0283b93ac036029c3cb669022b34a748a7f2bda019809930b5c9886",
+      "regular_file_bytes": 90314007,
+      "regular_file_count": 4233,
+      "symlink_count": 1048
+    },
+    "site_bytes": 1304701872,
+    "site_directories": 2074,
+    "site_files": 27225,
+    "source_commit": "22b4180459d0782f0dd5d591a0ef460e477107c9",
+    "staged_bytes": 1318494346,
+    "staged_directories": 2076,
+    "staged_files": 27255
+  },
+  "terminals": {
+    "admission": {
+      "combined_output_matches_published": true,
+      "ended": {
+        "current_time": "2026-10-15 20:46:44 UTC"
+      },
+      "external_returncode": 0,
+      "stage": "held05-data-only-admission",
+      "started": {
+        "current_time": "2026-10-15 20:46:17 UTC"
+      },
+      "terminal_chunk_id": "fc6432"
+    },
+    "audit": {
+      "combined_output_matches_published": true,
+      "ended": {
+        "current_time": "2026-10-15 20:48:51 UTC"
+      },
+      "external_returncode": 1,
+      "stage": "held05-independent-auditor",
+      "started": {
+        "current_time": "2026-10-15 20:48:51 UTC"
+      },
+      "terminal_chunk_id": "153d4d"
+    },
+    "observer": {
+      "combined_output_matches_published": true,
+      "ended": {
+        "current_time": "2026-10-15 20:48:05 UTC"
+      },
+      "external_returncode": 1,
+      "stage": "held05-observer",
+      "started": {
+        "current_time": "2026-10-15 20:47:17 UTC"
+      },
+      "terminal_chunk_id": "b3c368"
+    },
+    "post-custody": {
+      "combined_output_matches_published": true,
+      "ended": {
+        "current_time": "2026-10-15 20:50:55 UTC"
+      },
+      "external_returncode": 0,
+      "stage": "held05-post-failure-current-byte-custody",
+      "started": {
+        "current_time": "2026-10-15 20:50:24 UTC"
+      },
+      "terminal_chunk_id": "a9d154"
+    }
+  },
+  "verdict": "TERMINAL_AND_DATED_BYTE_CUSTODY_RECORDS_CONSISTENT_ACTUAL05_CONSUMED_FAIL",
+  "verified": {
+    "admission_closure": {
+      "active_children": [],
+      "active_non_main_threads": [],
+      "fd_count_after": 4,
+      "fd_count_before": 4
+    },
+    "before_and_after_census_summaries_agree": true,
+    "concrete_audit_command_exact_frozen_prefix_and_measured_transport_digest": true,
+    "external_combined_outputs_byte_identical_to_published_json": true,
+    "external_parent_stderr_empty": true,
+    "external_parent_stdout_identical_to_failed_result": true,
+    "failed05_baseline_after_absent": true,
+    "fresh_pre_observer_record_matches_admission_and_limits": true,
+    "historical_missing_receipts_still_absent": [
+      "runs/puck-cpu-runtime-characterization-01/baseline-after.json",
+      "runs/puck-cpu-install-01/inventory.json",
+      "runs/puck-cpu-install-01/licences.json",
+      "runs/puck-cpu-install-01/baseline-after.json",
+      "runs/puck-cpu-install-01/logs/namespace.json",
+      "runs/puck-cpu-retained-admission-01/inventory.json",
+      "runs/puck-cpu-retained-admission-01/snapshot.json",
+      "runs/puck-cpu-retained-admission-01/baseline-after.json"
+    ],
+    "known_pid_start_rechecks": [
+      {
+        "matching_identity_present": false,
+        "pid": 3413186,
+        "start_ticks": 53128006
+      },
+      {
+        "matching_identity_present": false,
+        "pid": 3413187,
+        "start_ticks": 53128006
+      },
+      {
+        "matching_identity_present": false,
+        "pid": 3413188,
+        "start_ticks": 53128007
+      }
+    ],
+    "old_failure_hashes_preserved": {
+      "01": "224cb9bdb18228f6e8da7a47e7455cd604a6e756df5fd017294b9221f26d9299",
+      "02": "085d19bdd39d392aaeab0c1590ec92b99e0bb2a4e8945f5d23dd51733fbab56b",
+      "03": "ba5cad51576c3dd593c479d052328fcb4181943d3f5acdbdaa7cdee145f1254b",
+      "04": "d2db585f4851b916e7c632ca268d7527ce4604e6949918ea6d89408ddbcc3889"
+    },
+    "one_recorded_observer_invocation": true,
+    "parent_closure": {
+      "active_children": [],
+      "active_non_main_threads": [],
+      "fd_count_after": 5,
+      "fd_count_before": 5
+    },
+    "post_census_retains_frozen_admission_checks": true,
+    "post_checker_closure": {
+      "active_children": [],
+      "active_non_main_threads": [],
+      "fd_count_after": 4,
+      "fd_count_before": 4
+    },
+    "post_failure_artifact_pins": 24,
+    "post_failure_artifact_pins_match_live_bytes": true,
+    "post_source_diff_confined_to_dated_post_output_absence_failure_pins_and_process_identity_report": true
+  },
+  "version": 1,
+  "wording_boundaries": [
+    "DATA_ONLY_ADMITTED was a successful pre-import byte/resource admission, not runtime acceptance.",
+    "The only recorded05 observer returned1 normally without timeout, and actual05 remains consumed FAIL.",
+    "Independent auditor normal exit1 is the expected refusal of nonzero transport, not a passing runtime audit.",
+    "CURRENT_BYTES_PRESERVED_AFTER_FAILED05 is dated post-failure byte/custody evidence produced without target runtime invocation.",
+    "Known recorded three PID/start identities were absent at the checker sample; this is not exhaustive descendant absence or atomic lifetime proof.",
+    "Tool records retain combined external output; no separate admission/audit/post-check external stderr channel is asserted.",
+    "Parent and checker descriptor/thread/child closure records have their stated finite scopes; sampled process observations are not hard process-lifetime proof.",
+    "No completed held four-import result, creator-closure proof, episode/replay/export result, physical proof or qualification authority follows."
+  ]
+}
