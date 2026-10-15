@@ -1,0 +1,22 @@
+{
+  "command": [
+    "/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/bin/python3.11",
+    "-I",
+    "-S",
+    "-B",
+    "/home/utkarsh/.codex/worktrees/0071/brain/scripts/audit_puck_cpu_held_runtime.py",
+    "--configuration",
+    "/home/utkarsh/.codex/worktrees/0071/brain/docs/plans/puck-cpu-held-qualification-06.json",
+    "--sha256",
+    "da630b05b871508686a4c92402725820b40b27253b2652b47c686a8f441a04e8",
+    "--transport",
+    "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-held-qualification-06-external-cli-transport.json",
+    "--transport-sha256",
+    "6529898da96dd9a90eb0ddb07463ddac15adcbd839b192c74ecbfc1be6ea91c1",
+    "--output",
+    "/tmp/palimpsest-puck-cpu-held-qualification-06-audit-01.json"
+  ],
+  "expected_failure_due_to_nonzero_observer": true,
+  "transport_bytes": 950,
+  "transport_sha256": "6529898da96dd9a90eb0ddb07463ddac15adcbd839b192c74ecbfc1be6ea91c1"
+}

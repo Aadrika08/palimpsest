@@ -1,0 +1,184 @@
+{
+  "branch": "research/puck-cpu-optional-import-contract-v1",
+  "claims": {
+    "collection_authorized": false,
+    "executable": false,
+    "native_authorized": false,
+    "qualification_claims": [],
+    "runtime_qualified": false,
+    "study_authorized": false
+  },
+  "exact_negative_imports": [
+    "OpenGL_accelerate",
+    "accimage",
+    "av",
+    "colorama",
+    "defusedxml",
+    "dill",
+    "flint",
+    "gmpy",
+    "gmpy2",
+    "monkeytype",
+    "numpy._distributor_init_local",
+    "opt_einsum",
+    "org",
+    "pydot",
+    "pynvml",
+    "torch._rocm_init",
+    "torchdistx",
+    "tqdm",
+    "triton"
+  ],
+  "findings": [],
+  "kind": "palimpsest-optional-v6-independent-implementation-review-v1",
+  "limitations": [
+    "This is the requested finite diff review, not a full release/security audit.",
+    "No tests, production helpers, vendor modules, runtime probes, native queries or allocation entrypoints were invoked by this reviewer.",
+    "Bare-find_spec transparency, request caller/count/order, dynamic/native completeness and real timing headroom remain outside this source contract.",
+    "A passing authored fixture does not establish actual19-name real-package qualification or completion of episode/replay/export."
+  ],
+  "remaining_gates": [
+    "Root must retain and assess terminal results for the tests already running before claiming source validation passed.",
+    "No actual06 configuration, allocation output or invocation is covered here. A real attempt still requires separately reviewed frozen controls and dated byte/resource/absence admission."
+  ],
+  "review_base": "82e8f69",
+  "reviewed_at_utc": "2026-10-15T21:22:30.349318+00:00",
+  "reviewed_file_pins": [
+    {
+      "path": "scripts/qualify_puck_cpu_held_runtime.py",
+      "sha256": "3e06f55d2c788e40c211f9e2a3561d68bd01567f7c81caca319668715aebb3f9",
+      "size_bytes": 57514
+    },
+    {
+      "path": "scripts/audit_puck_cpu_held_runtime.py",
+      "sha256": "f910d6bdf592fe7b488591398332ac70131891bd4f7c95ea793d20be8b90f829",
+      "size_bytes": 75231
+    },
+    {
+      "path": "scripts/observe_puck_cpu_held_allocation.py",
+      "sha256": "2390113cc9e37ea0d4c8b106010d370073ac512a9a4b8198a16c144422f2375a",
+      "size_bytes": 6473
+    },
+    {
+      "path": "tests/test_puck_cpu_held_parent_integration.py",
+      "sha256": "e1ee472f6edc6a520ff17508c2199ff3183a40842fc571d82404aeeee00c6e1d",
+      "size_bytes": 22111
+    },
+    {
+      "path": "tests/test_puck_cpu_held_amendment05_integration.py",
+      "sha256": "188c63975c044e2864e9927f0cee0ff24bd35b926452e450d109b8140183f80a",
+      "size_bytes": 17718
+    },
+    {
+      "path": "tests/test_puck_cpu_held_observer.py",
+      "sha256": "cb16c90e8ea40dc849895ac146bc66861f21b210e684fbaaa0d39d5c94316c5e",
+      "size_bytes": 11738
+    },
+    {
+      "path": "tests/test_puck_cpu_optional_import_contract.py",
+      "sha256": "82d9c9b7625eb0a706bbff816217fbbfb1dd404db42b0a8f67f03be9fad7e0f5",
+      "size_bytes": 7777
+    },
+    {
+      "path": "tests/test_puck_cpu_held_amendment06.py",
+      "sha256": "5d0f0c154bb4b75f44417955067320612e770c0271d3c3a2db6045bff3df5d44",
+      "size_bytes": 11822
+    },
+    {
+      "path": "tests/test_puck_cpu_held_amendment06_integration.py",
+      "sha256": "b38d185e46ce10065d116ed84e95a3182dac481b3cbadeec7f3ceccd285fed47",
+      "size_bytes": 9914
+    }
+  ],
+  "reviewed_flow": [
+    {
+      "conclusion": "Exact v6 kind/version/integer ID, qualify-only phase, closed output and exclusive stream/transport paths agree. Producer and auditor define their rosters independently and match the literal19-name test contract.",
+      "paths": [
+        "scripts/qualify_puck_cpu_held_runtime.py:223",
+        "scripts/audit_puck_cpu_held_runtime.py:258",
+        "scripts/observe_puck_cpu_held_allocation.py:58"
+      ]
+    },
+    {
+      "conclusion": "v6 retains original preparation01 acceptance anchors, the24-source/16-role closure, the exact four changed historical source paths and only the distinct candidate input projection. Existing1/2 producer syntax permissiveness remains unchanged; independent historical acceptance stays strict.03\u201305 keep their old exact roster.",
+      "paths": [
+        "scripts/qualify_puck_cpu_held_runtime.py:291",
+        "scripts/audit_puck_cpu_held_runtime.py:302"
+      ]
+    },
+    {
+      "conclusion": "All prior v5 current-candidate/H-to-C exact-four-row publication and current-versus-historical dependency branches are carried to6. Old candidate and prepared dependency bytes remain historical; v6 attaches the same reviewed corrected profile to unchanged physical/module plans.",
+      "paths": [
+        "scripts/qualify_puck_cpu_held_runtime.py:620",
+        "scripts/qualify_puck_cpu_held_runtime.py:631",
+        "scripts/qualify_puck_cpu_held_runtime.py:697",
+        "scripts/qualify_puck_cpu_held_runtime.py:711",
+        "scripts/audit_puck_cpu_held_runtime.py:649",
+        "scripts/audit_puck_cpu_held_runtime.py:677"
+      ]
+    },
+    {
+      "conclusion": "Independent namespace command, authored/real stream paths, current worker capsules and versioned audit report include6. Normal transport/worker/creator/close/dispatch/baseline/forest checks remain in the acceptance path.",
+      "paths": [
+        "scripts/audit_puck_cpu_held_runtime.py:587",
+        "scripts/audit_puck_cpu_held_runtime.py:617",
+        "scripts/audit_puck_cpu_held_runtime.py:662",
+        "scripts/audit_puck_cpu_held_runtime.py:690"
+      ]
+    },
+    {
+      "conclusion": "New caught_optional_import fixture hook defaults False and only appends the caught pynvml seam after all four authored publication creators when explicitly selected. The18-name integration fixture is correctly distinct from real19-name metadata because the existing project fixture patches PREPARATION_NEGATIVE_IMPORTS to org and the auditor uses authored=True.",
+      "paths": [
+        "tests/test_puck_cpu_held_parent_integration.py:48",
+        "tests/test_puck_cpu_held_amendment05_integration.py:32",
+        "tests/test_puck_cpu_held_amendment06_integration.py:21"
+      ]
+    },
+    {
+      "conclusion": "Tests independently state the19-name roster, reject each missing/extra/reordered/aliased declaration and altered history/input/source pins, preserve legacy outputs/rosters, cover repeated reservation refusal and authored failed05\u2192successful06 with independent API/CLI audit and byte preservation. Optional fixtures explicitly retain undeclared poison, present-target refusal, caught find_spec, numeric fallback and uncaught find_spec refusal.",
+      "paths": [
+        "tests/test_puck_cpu_held_amendment06.py:23",
+        "tests/test_puck_cpu_held_amendment06.py:65",
+        "tests/test_puck_cpu_held_amendment06.py:164",
+        "tests/test_puck_cpu_held_amendment06_integration.py:25",
+        "tests/test_puck_cpu_optional_import_contract.py:113"
+      ]
+    }
+  ],
+  "root": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03",
+  "root_reported_test_state_at_assignment": "Observer30 and numeric9 passed; metadata84 and integration1 were running. This review does not independently attest those results.",
+  "static_checks_executed": {
+    "bootstrap_provider_import_loader_hashes_unchanged": true,
+    "parent_independent_and_literal_test_rosters_identical": true,
+    "roster_count": 19,
+    "selected_source_and_test_ast_parse_only": 9,
+    "target_or_test_execution": false
+  },
+  "tests_not_run_by_reviewer": [
+    "metadata06 suite",
+    "authored06 integration",
+    "observer suite",
+    "numeric optional regression",
+    "legacy affected suites"
+  ],
+  "unchanged_mechanism_pins": [
+    {
+      "path": "scripts/puck_worker_bootstrap.py",
+      "sha256": "436b1ffe34b96fca166f6fb38022ad7392daef3517e58157092db2d9fd84c69f",
+      "size_bytes": 38375
+    },
+    {
+      "path": "src/palimpsest/puck_dependency_files.py",
+      "sha256": "d1ca386780212b174a6e931a8ac4ce88e68c31b27fb1c0e16346a2150560fca1",
+      "size_bytes": 33543
+    },
+    {
+      "path": "src/palimpsest/puck_dependency_imports.py",
+      "sha256": "e35b941c351971c15f225255170cd45530aa2304943fe2edd461b8d94080943b",
+      "size_bytes": 14868
+    }
+  ],
+  "verdict": "NO_MATERIAL_FINDINGS_IN_READ_ONLY_SOURCE_REVIEW_ROOT_VALIDATION_REMAINS_SEPARATE",
+  "version": 1,
+  "what_this_change_does": "Adds one closed v6 allocation identity and the exact19-name negative roster in parent, observer and independent auditor; retains the existing qv3 held-absence and unexpected-import poison mechanism. Extends v5 publication/history projections to v6 and adds authored metadata/transport/closure regression coverage."
+}

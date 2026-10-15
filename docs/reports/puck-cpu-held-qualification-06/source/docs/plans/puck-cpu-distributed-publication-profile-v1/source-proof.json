@@ -1,0 +1,211 @@
+{
+  "actual05_configuration_created": false,
+  "actual05_invoked": false,
+  "admission_review": {
+    "path": "docs/plans/puck-cpu-distributed-publication-profile-v1/admission-review.md",
+    "sha256": "1d7a51a03e27c7ea426d1b05a33d101a753e82c47174713e363af4a8a6937f68",
+    "size_bytes": 18252
+  },
+  "attribution": {
+    "path": "docs/plans/puck-cpu-distributed-publication-profile-v1/attribution.json",
+    "sha256": "51376c707e68b72c7bf275ba7cc410adaa6acdf51b9ee957840c325c1eb8f91b",
+    "size_bytes": 73151
+  },
+  "candidate": {
+    "path": "docs/plans/puck-cpu-distributed-publication-profile-v1.json",
+    "sha256": "6532308a421d73fee2d7a7843528f40ba7613df49b283bdc0d25d67b2795620a",
+    "size_bytes": 346230
+  },
+  "changed_from_one_row_candidate": [
+    "torch._C._distributed_autograd",
+    "torch._C._distributed_c10d",
+    "torch._C._distributed_rpc"
+  ],
+  "collection_authorized": false,
+  "complete_changed_from_original": [
+    "torch._C._autograd",
+    "torch._C._distributed_autograd",
+    "torch._C._distributed_c10d",
+    "torch._C._distributed_rpc"
+  ],
+  "distributed_dispatch_names": 109,
+  "evidence_pins": [
+    {
+      "path": "docs/plans/puck-cpu-autograd-publication-profile-v1.json",
+      "sha256": "ddc770acca34f849b2234db155ea477438560e3e4a58685a2c11632c44e93648",
+      "size_bytes": 342451
+    },
+    {
+      "path": "docs/reports/puck-cpu-characterization-03/evidence-index.json",
+      "sha256": "4f45a7917e0374a9f9948eaa0aa18ddaff15c194cb911c69ad2d31f53120c421",
+      "size_bytes": 42234
+    },
+    {
+      "path": "docs/reports/puck-cpu-characterization-03/inputs/runs/puck-cpu-retained-admission-02/inventory.json",
+      "sha256": "d1dac91f2b69e193d6eafc8b6c47a37204bb2cb51925faad5b895dea83701b35",
+      "size_bytes": 3996631
+    },
+    {
+      "path": "docs/reports/puck-cpu-characterization-03/outcome-audit-03.json",
+      "sha256": "465b8e30496aae9df13fc4411060cc4cfe98f793d27f4738490f50149cec9a5a",
+      "size_bytes": 5015
+    },
+    {
+      "path": "docs/reports/puck-cpu-characterization-03/raw/payload/imports.json",
+      "sha256": "083dc25d6942329ee47113af9d0d65c390e901f3505f47e22a29697673e046db",
+      "size_bytes": 540404
+    },
+    {
+      "path": "docs/reports/puck-cpu-export-phase-preflight-v1/installed-source/torch/distributed/__init__.py",
+      "sha256": "0e1ba0d76a5135e0109d213157e709b35f1a234afb9306c00bf6adf4f5c3d7d7",
+      "size_bytes": 5407
+    },
+    {
+      "path": "docs/reports/puck-cpu-export-phase-preflight-v1/installed-source/torch/distributed/autograd/__init__.py",
+      "sha256": "a356307e34629fc35f6240a3cdc7400454f46c6446022b989922c4c266e6789e",
+      "size_bytes": 1931
+    },
+    {
+      "path": "docs/reports/puck-cpu-export-phase-preflight-v1/installed-source/torch/distributed/rpc/__init__.py",
+      "sha256": "8474ae8306a9e4c48e6311457784bfb819987c4e1070e72ec8e2541342c3b823",
+      "size_bytes": 9945
+    },
+    {
+      "path": "docs/reports/puck-cpu-export-phase-preflight-v1/installed-source/torch/include/pybind11/chrono.h",
+      "sha256": "b00be9f25145323936d54477cfac6ac07963c0b84b866c9e44a01580280e9ae2",
+      "size_bytes": 8613
+    },
+    {
+      "path": "docs/reports/puck-cpu-export-phase-preflight-v1/installed-source/torch/share/cmake/Caffe2/Caffe2Config.cmake",
+      "sha256": "1751b5ae590844e9ddf3fb72aebc6e26ecab6def33b0d2ce88d419eac99c71d5",
+      "size_bytes": 5344
+    },
+    {
+      "path": "docs/reports/puck-cpu-export-phase-preflight-v1/installed-source/torch/share/cmake/Caffe2/Caffe2Targets.cmake",
+      "sha256": "69cca1ead63094fbbb67ee97c763345e870c19798a7647846e70f1b26abc7997",
+      "size_bytes": 6857
+    },
+    {
+      "path": "docs/reports/puck-cpu-export-phase-preflight-v1/notes/distributed-rosters/literal-rosters.json",
+      "sha256": "b3ae33519cc74698aa0eef4d17a85beb2d0a3f7a412caf14341bf0d88cb7f787",
+      "size_bytes": 25252
+    },
+    {
+      "path": "docs/reports/puck-cpu-export-phase-preflight-v1/notes/distributed-rosters/review.json",
+      "sha256": "de1aa2a7c7a0832b59f72cc07ffee5965a37657618ef8f70ea8f08238a815e04",
+      "size_bytes": 11683
+    },
+    {
+      "path": "docs/reports/puck-cpu-export-phase-preflight-v1/source-index.json",
+      "sha256": "4f8de786bcbb4000ebce28df4adcf417ab2485210349d8e01891af0d8ed62379",
+      "size_bytes": 21140
+    },
+    {
+      "path": "docs/reports/puck-cpu-export-phase-preflight-v1/source-map.json",
+      "sha256": "b299317cb8124186f84512d63315491f88b4103ef7a3e0fec76b9617eab44688",
+      "size_bytes": 100580
+    },
+    {
+      "path": "docs/reports/puck-cpu-export-phase-preflight-v1/upstream/torch/csrc/Module.cpp",
+      "sha256": "aa61d768ccbb9bbb7e235d688289f79a4f25954472143a46961e11dcf4860da1",
+      "size_bytes": 87615
+    },
+    {
+      "path": "docs/reports/puck-cpu-export-phase-preflight-v1/upstream/torch/csrc/distributed/autograd/init.cpp",
+      "sha256": "086d39e23700fba3ef98506ceaf9f608112e9c48cb5a61801afb54157ecd5b5e",
+      "size_bytes": 8435
+    },
+    {
+      "path": "docs/reports/puck-cpu-export-phase-preflight-v1/upstream/torch/csrc/distributed/c10d/init.cpp",
+      "sha256": "9e0e0a3c4f09fa12bbcff6dec059087bf7ccb3c94274d3e4646edfe5d401e3b8",
+      "size_bytes": 172574
+    },
+    {
+      "path": "docs/reports/puck-cpu-export-phase-preflight-v1/upstream/torch/csrc/distributed/rpc/init.cpp",
+      "sha256": "cda572b256fd02105c5bd7f56cfe15177d9482130a87927907774bece78b2358",
+      "size_bytes": 36555
+    }
+  ],
+  "executable": false,
+  "exports": 38,
+  "kind": "puck-cpu-distributed-publication-profile-source-proof-v1",
+  "limitations": [
+    "Retained upstream files are at the package-declared commit, and retained Python/build files match accepted inventory hashes. This is source correspondence, not linked-binary equivalence or reconstruction of private build flags.",
+    "Actual03 records stable terminal raw/cache identity and dispatch-name sets after four imports. It does not recover intermediate publication, first-publication membership, creator-close timing, deferred/transitive mutation absence, operator/renderer behavior or held-runtime qualification.",
+    "Source callback-return lines and later Python imports are static evidence only. The existing module_exec_publish lifecycle implementation and independently admitted held05 remain required to establish runtime closure/custody.",
+    "No original candidate, profile, source, runtime control, consumed allocation or release gate was modified. No network, vendor import, namespace probe, installed/staged census, model, scene, protected catalog or study access occurred."
+  ],
+  "native_authorized": false,
+  "observation03_anchors": [
+    {
+      "path": "docs/reports/puck-cpu-characterization-03/controls/docs/plans/puck-cpu-runtime-characterization-03.json",
+      "sha256": "69cc87fb68e3c745196b3435c4caaa547ad3bb120ceac6d4834d6b24eecb4e49",
+      "size_bytes": 20311
+    },
+    {
+      "path": "docs/reports/puck-cpu-characterization-03/raw/configuration.json",
+      "sha256": "239efab01fba514d2bc90e7ecf8203032475b37f05a08437a2aedc1d5b2e1e91",
+      "size_bytes": 17146
+    },
+    {
+      "path": "docs/reports/puck-cpu-characterization-03/raw/result.json",
+      "sha256": "9670bdf9d297dd14459912d0a71d55a75da13b8723b4f5d79d88dc6c12748569",
+      "size_bytes": 838
+    },
+    {
+      "path": "docs/reports/puck-cpu-characterization-03/raw/payload/imports.json",
+      "sha256": "083dc25d6942329ee47113af9d0d65c390e901f3505f47e22a29697673e046db",
+      "size_bytes": 540404
+    },
+    {
+      "path": "docs/reports/puck-cpu-characterization-03/outcome-audit-03.json",
+      "sha256": "465b8e30496aae9df13fc4411060cc4cfe98f793d27f4738490f50149cec9a5a",
+      "size_bytes": 5015
+    },
+    {
+      "path": "docs/reports/puck-cpu-characterization-03/evidence-index.json",
+      "sha256": "4f45a7917e0374a9f9948eaa0aa18ddaff15c194cb911c69ad2d31f53120c421",
+      "size_bytes": 42234
+    },
+    {
+      "path": "docs/reports/puck-cpu-characterization-03/raw/observer-external-cli-transport.json",
+      "sha256": "cf0aa869200d07b74be7a40e89a6de8213dd9bbc6ecba1628b8ab0684c7865d3",
+      "size_bytes": 1940
+    },
+    {
+      "path": "docs/reports/puck-cpu-characterization-03/observer-external-tool.json",
+      "sha256": "7f29350d82689256279ddae6929d6cb3e19c85849d2e56ffaec0cf53247d9389",
+      "size_bytes": 3189
+    },
+    {
+      "path": "docs/reports/puck-cpu-characterization-03/independent-result-review.json",
+      "sha256": "74bb2a1fdc7f5b809d6fbbf0c0152e155d858837c99a160b6379eccdfeea2262",
+      "size_bytes": 20934
+    }
+  ],
+  "original_preparation_candidate": {
+    "path": "docs/plans/puck-cpu-observed-import-profile-candidate-01.json",
+    "sha256": "d20076cd2e1961d1514bb135746b1701a14567136b80ee073fecedb389f929df",
+    "size_bytes": 340908
+  },
+  "previous_one_row_candidate": {
+    "path": "docs/plans/puck-cpu-autograd-publication-profile-v1.json",
+    "sha256": "ddc770acca34f849b2234db155ea477438560e3e4a58685a2c11632c44e93648",
+    "size_bytes": 342451
+  },
+  "previous_one_row_source_proof": {
+    "path": "docs/plans/puck-cpu-autograd-publication-profile-v1/source-proof.json",
+    "sha256": "745e4677e9998351880cc4dfd419b7a43496c9eb009b86db3c44a02e0cd548cd",
+    "size_bytes": 6376
+  },
+  "profile_accepted": false,
+  "prospective_v5_decision": "No actual05 frozen controls or invocation exist. Amend the unexecuted v5 contract to require exactly autograd plus three distributed replacements against preparation01. Preserve prior one-row candidate, source evidence, v1-v4 semantics, 24/10 source rosters, four-source preparation delta and all15 noncandidate input pins.",
+  "qualification_claims": [],
+  "runtime_attachment": "None: fixed independently reviewed parent/auditor constants and candidate byte pins enforce the static decision; observation03 anchors are retained source-decision proof, not replacement historical input roles.",
+  "runtime_qualified": false,
+  "source_base": "5408f55fd9cc704edea9bd3b73dfcb4914e82987",
+  "source_registration_references": 110,
+  "study_authorized": false,
+  "unchanged_from_one_row_exports": 35,
+  "unchanged_native_create_rows": 32
+}

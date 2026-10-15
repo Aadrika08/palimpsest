@@ -1,0 +1,33 @@
+{
+  "at": "2026-10-15T20:48:30.242368+00:00",
+  "command": [
+    "/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/bin/python3.11",
+    "-I",
+    "-S",
+    "-B",
+    "/home/utkarsh/.codex/worktrees/0071/brain/scripts/audit_puck_cpu_held_runtime.py",
+    "--configuration",
+    "/home/utkarsh/.codex/worktrees/0071/brain/docs/plans/puck-cpu-held-qualification-05.json",
+    "--sha256",
+    "584f687eeb11797eb48caf0514fc0ea7f5b7f8e46af0c6a5304ef59a714cb3b8",
+    "--transport",
+    "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-held-qualification-05-external-cli-transport.json",
+    "--transport-sha256",
+    "7350fc1e7552205b73975b422f3241cf44e124d3d00617232569946c860dbe82",
+    "--output",
+    "/tmp/palimpsest-puck-cpu-held-qualification-05-audit-01.json"
+  ],
+  "configuration_sha256": "584f687eeb11797eb48caf0514fc0ea7f5b7f8e46af0c6a5304ef59a714cb3b8",
+  "environment": {
+    "LANG": "C.UTF-8",
+    "LC_ALL": "C.UTF-8",
+    "PATH": "/usr/bin:/bin",
+    "PYTHONDONTWRITEBYTECODE": "1"
+  },
+  "expected_scope": "One independent audit of failed terminal; cannot qualify failed05; no runtime retry",
+  "kind": "puck-cpu-held05-concrete-independent-audit-command-v1",
+  "observer_external_returncode": 1,
+  "observer_timed_out": false,
+  "transport_sha256": "7350fc1e7552205b73975b422f3241cf44e124d3d00617232569946c860dbe82",
+  "transport_size_bytes": 950
+}
