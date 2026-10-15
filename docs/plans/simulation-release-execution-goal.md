@@ -38,10 +38,22 @@ ordered checklist is:
 - [x] Accept the bounded CPU four-import observation with exact versions,
   intact pins, normal cleanup and an independent outcome audit. Distinct02
   passes; failed01 remains preserved. This supplies CPU profile data only.
-- [ ] Integrate the source CPU profile and tmpfs copier into the dedicated
-  preparation/four-import qualification parent. Emit dependency-v3/descriptor-v3,
-  review the exact configuration and resource admission, then qualify the actual
-  held runtime and independently audit its outcome.
+- [x] Integrate the CPU profile and tmpfs copier into the dedicated bounded
+  preparation/four-import parent, emitting dependency-v3/descriptor-v3. PR148
+  supplies source checks and authored end-to-end fixtures only.
+- [ ] Freeze and independently review the exact actual-stack configurations,
+  binding the complete 24-source roster and 16 input roles to accepted package
+  receipts, observation02 and the declared interpreter/native/profile inputs.
+- [ ] Prepare and independently review the terminal/byte outcome auditor before
+  invoking the actual stack.
+- [ ] Admit fresh full-stage RAM, tmpfs/project storage, descriptors and process
+  bounds. Actual RAM floors are 4 GiB for preparation and 2 GiB for qualification.
+- [ ] Run the separately numbered actual tmpfs preparation once and preserve its
+  terminal outcome and complete staged-byte evidence.
+- [ ] Run the separately numbered actual held four-import qualification once
+  after its preparation passes; retain normal custody and cleanup evidence.
+- [ ] Independently audit the actual terminal outcomes, source/input identities,
+  staged bytes and cleanup. No actual installed stack has reached these stages.
 - [ ] Specify the engineering episode's exact model, scene, seed, limits and
   required operator/renderer probes; complete the durable collection route.
   Resolve catalog access before any protected read.
@@ -53,17 +65,51 @@ ordered checklist is:
 The accepted ordinary observation02 supplies actual NumPy, Torch, torchvision
 and MuJoCo import/version and bounded module/native-map data. It does not establish
 held-runtime, native-closure, renderer, operator, model or episode qualification.
-The source CPU profile and tmpfs copier are now available in the checkpoint
-below. The older three-import qualification parent still needs substantive
-integration, staging and configuration work. An unchanged accepted tree
-does not need another installation or retained-data admission.
+The CPU profile, tmpfs copier and dedicated CPU parent are implemented in the
+source checkpoints below. Exact actual-stack configurations, the independent
+terminal auditor and fresh resource admission remain required before actual
+preparation and held qualification. An unchanged accepted tree does not need
+another installation or retained-data admission.
 
 Every added prerequisite must identify the checkpoint and smallest blocked check;
 source-only hardening is not a substitute for reaching the episode deliverable.
 A failed actual stage retains its outcome and consumed allocation. No study or
 numerical invocation follows from a source fixture alone.
 
-## Source checkpoint: prospective CPU held preparation
+## Source checkpoint: dedicated CPU parent and authored fixtures
+
+[Draft PR #148](https://github.com/Aadrika08/palimpsest/pull/148) implements the
+dedicated bounded CPU preparation/four-import parent. Its
+[source report](https://github.com/Aadrika08/palimpsest/blob/8df9faded4910e5aa1849abd23ca50971f648fac/docs/reports/puck-cpu-held-parent-v1.md)
+retains the source and authored-fixture evidence.
+
+The source route retains four registration roots, the exact 24-source roster
+and 16 input roles. Its metadata byte plan is 27,255 files / 1,318,494,346 B;
+this is a planned copy, not an observed staged tree or full-stage RAM admission.
+Actual configurations must bind the accepted package and ordinary observation02
+records, complete source rosters, candidate/profile, aliases and original trusted
+interpreter/stdlib/native baseline. No exact actual-stack configuration or
+independent terminal auditor is yet prepared.
+
+All 326 affected source checks pass in 35.40 s. A separate test-only transport
+check passes in 3.74 s. Authored end-to-end fixtures use 18 files and four stand-in
+modules, with test-only 128 MiB resource floors. They prove the bounded parent
+route within that fixture; actual RAM floors remain 4 GiB for preparation and
+2 GiB for qualification. Qualification uses explicit descendant supervision and
+a trusted `setsid`/`exec` launcher: the authored worker has PID/PPID/PGID/SID
+2/1/2/2, while its escaped host process group remains covered by descendant
+custody. The fixed bootstrap and worker contracts remain intact. Supervision
+provides sampled operational tracking and cleanup only; hostile fork containment
+and hard timing guarantees remain outside its scope.
+
+The installed CPU stack has not been staged or held-qualified. This source
+checkpoint grants no runtime/native, operator/renderer, collection, scientific,
+model or episode qualification. The next concrete gap is the exact configuration
+and auditor, followed by fresh admission and the separately numbered actual
+preparation/qualification. Checkpoint A still ends with the actual episode bundle;
+all seven release gates remain open.
+
+## Earlier source checkpoint: prospective CPU held preparation
 
 [Draft PR #147](https://github.com/Aadrika08/palimpsest/pull/147) retains the
 [source report](https://github.com/Aadrika08/palimpsest/blob/7213ea1d6a9f9315708d0689648e631aece5275c/docs/reports/puck-cpu-held-preparation-v1.md).
@@ -81,8 +127,9 @@ on the old base and 1 is an ancestor-change refusal. All failures remain retaine
 full-suite result is claimed. The Cython representation gap is resolved in
 source, while the predicted native-creation bindings remain unqualified on the
 actual held stack. No installed-tree staging or actual CPU held qualification
-ran in this source checkpoint. The dedicated parent/configuration and admission
-work below remain required; all seven release gates stay open.
+ran in that source checkpoint. PR148 above now supplies the dedicated source
+parent; exact actual configuration, admission and held qualification remain
+required. All seven release gates stay open.
 
 ## Latest checkpoint A result: ordinary CPU observation02 accepted
 
@@ -106,8 +153,9 @@ remains failed and consumed, with its original source, configuration, generic
 NumPy error, missing receipts and independent preservation audit unchanged.
 The host-zlib correction and bounded diagnostics belong to the distinct02 profile;
 the passing observation does not recover01's unrecorded underlying exception.
-Next integrate the source CPU profile and tmpfs copier into the dedicated parent
-and qualify the exact held runtime before any engineering episode allocation.
+Next freeze the actual configurations and independent auditor for the completed
+source parent, admit fresh resources and qualify the exact held runtime before
+any engineering episode allocation.
 
 ## Completed dependency within checkpoint A: accepted package data
 
@@ -168,10 +216,11 @@ test counts cannot satisfy either actual-runtime exit below.
    entries have actual audited evidence in PR #141. PR #142 adds the built and
    independently verified python-louvain wheel: all 71 candidate wheel artifacts
    are now available, and admission02 above accepts the retained installed tree.
-   Build the tmpfs configuration from that measured tree. Specify the exact interpreter, native/EGL paths,
-   staging and custody from the measured installation.
-   Finish the CPU preparation/qualification parent using the reviewed four-import
-   entry. This produces a reviewable executable configuration, not a passing run.
+   Use the completed dedicated CPU parent to build exact actual-stack
+   configurations from that measured tree: 24 sources, 16 input roles and four
+   roots, with the exact interpreter, native/EGL paths, staging and custody.
+   Review the independent terminal auditor before invocation. Source fixtures
+   produce no passing installed-runtime receipt.
 2. **Qualify that exact runtime.** After prospective review and any required
    decision, run the separately numbered qualification once. Require actual
    NumPy, Torch, torchvision and MuJoCo versions, the unchanged identity/custody
@@ -229,14 +278,14 @@ substitute for numerical results, capability, actual browser use or human accept
 **Current next action:** carry checkpoint A through these four finite steps in
 next-session execution:
 
-1. Integrate the existing CPU profile and tmpfs copier into the dedicated bounded
-   CPU preparation/four-import parent. Keep staged tmpfs inputs available through
-   preparation and qualification; prove that lifetime with authored two-pass
-   namespace fixtures. The older three-import parent remains unfinished.
-2. Freeze and independently review the exact finite configuration, binding the
-   accepted package receipts, observation02, source candidate, alias mappings and
-   original trusted interpreter/stdlib/native baseline. Admit fresh full-stage
-   RAM, storage, descriptor and process bounds before the actual allocation.
+1. Freeze and independently review the exact actual-stack configurations and
+   terminal/byte auditor for the completed CPU parent. Bind all 24 sources and
+   16 input roles, accepted package receipts, observation02, the source candidate,
+   alias mappings and original trusted interpreter/stdlib/native baseline.
+2. Admit fresh full-stage RAM, tmpfs/project storage, descriptors and the explicit
+   descendant process bounds before actual invocation. Preparation requires at
+   least 4 GiB MemAvailable and qualification 2 GiB; the authored fixture's
+   128 MiB floors do not admit the installed stack or its planned copy.
 3. Run separately numbered actual preparation and four-import held qualification,
    then obtain an independent terminal/byte audit with normal custody and cleanup.
    The source Cython representation gap is resolved; the predicted native-creation
@@ -262,24 +311,22 @@ source-hardening programme or count test totals as release progress.
 
 ## Current starting point and decisions
 
-At **2026-10-15 11:24:21 UTC**, the project filesystem has **99,408,797,696 bytes
-(92.58 GiB) available**. The same metadata-only snapshot reports **2,355,441,664
-bytes (2.19 GiB) MemAvailable** and **5,005,647,872 bytes (4.66 GiB) available on
-`/tmp`**. The planned **1,318,494,346-byte copy is content only**, not full-stage
-RAM admission. Disk clearance removes the reported disk blocker; these transient
-figures do not admit the complete CPU/EGL closure. Keep archives and build scratch
-on the project disk; stage only the exact required runtime inputs on tmpfs under
-its reviewed native-identity policy. Recheck retained inputs, actual installed
-sizes, writable/executable staging, custody and every resource bound immediately
-before each admitted stage. The older RAM shortfall in PR #138 remains a
-historical observation, not a new measurement.
+Disk clearance permits fresh admission checks; it does not admit the installed
+CPU/EGL stack. Resource snapshots are transient and must be refreshed immediately
+before each admitted stage. The planned 1,318,494,346-byte copy is content only,
+not full-stage RAM admission. Keep archives and build scratch on the project
+disk; stage only the exact required inputs on tmpfs under the reviewed identity
+policy. Recheck retained inputs, writable/executable staging, custody and every
+resource bound. Actual RAM floors remain 4 GiB for preparation and 2 GiB for
+qualification. The older RAM shortfall in PR #138 remains historical evidence.
 
 - [Draft PR #144](https://github.com/Aadrika08/palimpsest/pull/144) supplies
   accepted retained package preparation as detailed above. It does not accept the
   historical installer teardown, qualify the numerical runtime or close any
   release gate. Observation02 above now supplies ordinary CPU import data;
-  complete tmpfs/native/EGL staging and the exact held four-import qualification
-  parent remain the next executable gap. No real simulator
+  PR148 supplies the dedicated source parent. Exact actual-stack configurations,
+  the independent terminal auditor, fresh admission and actual tmpfs/native/EGL
+  staging and held four-import qualification remain open. No real simulator
   episode or scientific allocation ran in this unit.
 - [Draft PR #143](https://github.com/Aadrika08/palimpsest/pull/143) supplies the
   actual offline installation and independently verified retained namespace:

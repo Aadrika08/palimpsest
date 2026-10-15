@@ -37,26 +37,44 @@ and inert-bytecode exception grant package-data acceptance only.
 
 The [next work unit](plans/simulation-release-execution-goal.md#clear-execution-target-after-disk-clearance)
 ends with that actual episode bundle. Accepted ordinary characterization02 below
-supplies observations; PR147 supplies the prospective source CPU profile and
-tmpfs copier. Integrate them into the dedicated bounded CPU preparation/four-import
-parent with stable tmpfs lifetime and authored two-pass namespace fixtures;
-freeze/review the finite configuration and fresh full-stage resources; run
-separately numbered actual preparation/qualification and independent auditing;
-then resolve the episode/catalog contract and audit the actual recorded/replayed/
-exported episode with its declared operator/renderer checks. Alias/baseline and
-native-creation bindings remain part of actual qualification; the old three-import
-parent is unfinished. Required cache/version/custody/cleanup failures stop and
-retain their allocation, with no implicit retry. No actual CPU held qualification, episode,
-study or browser/human session ran in this source checkpoint. The previous
+supplies observations; PR147 supplies the prospective CPU profile and tmpfs copier,
+and PR148 now completes the dedicated bounded source parent and authored
+end-to-end fixtures. The remaining ordered work is to freeze/review exact actual
+configurations and the independent terminal auditor, admit fresh full-stage
+resources, run separately numbered actual preparation and held qualification,
+then audit their terminal/byte outcomes. Resolve the episode/catalog contract
+before protected reads and audit the actual recorded/replayed/exported episode
+with its declared operator/renderer checks. Required cache/version/custody/cleanup
+failures stop and retain their allocation, with no implicit retry. The installed
+CPU stack has not been staged or held-qualified; no episode, study or browser/human
+session ran in this source checkpoint. The previous
 [execution/evidence history](plans/simulation-release-execution-goal-history-2026-10-15.md)
-is preserved byte-identically. All26 requirement and seven gate statuses remain
+is preserved byte-identically. All 26 requirement and seven gate statuses remain
 unchanged; all seven release gates remain open.
 
-At 2026-10-15 11:24:21 UTC, the metadata-only resource snapshot is
-99,408,797,696 B (92.58 GiB) available project disk, 2,355,441,664 B (2.19 GiB)
-MemAvailable and 5,005,647,872 B (4.66 GiB) available on `/tmp`. The planned
-1,318,494,346-byte copy is content only, not full-stage RAM admission; recheck
-resources before each admitted stage.
+Fresh resource admission is still required: actual preparation has a 4 GiB
+MemAvailable floor and qualification 2 GiB. The metadata byte plan is 27,255 files /
+1,318,494,346 B across four roots, not an observed staged tree or complete RAM
+admission. Actual configurations must bind all 24 sources and 16 input roles to
+the accepted package, observation02 and declared profile/interpreter/native
+records. No exact actual-stack configuration or independent terminal auditor is
+prepared; prior resource snapshots and the fixture's 128 MiB floors do not admit
+an actual allocation.
+
+[Draft PR #148](https://github.com/Aadrika08/palimpsest/pull/148) implements the
+dedicated CPU preparation/four-import parent. Its
+[source report](https://github.com/Aadrika08/palimpsest/blob/8df9faded4910e5aa1849abd23ca50971f648fac/docs/reports/puck-cpu-held-parent-v1.md)
+retains the source and authored-fixture evidence. All 326 affected source checks pass in 35.40 s; a separate
+test-only transport check passes in 3.74 s. Authored end-to-end fixtures cover
+18 files and four stand-in modules. The qualification route retains a real PID1
+parent and the fixed worker contract through a trusted `setsid`/`exec` launcher;
+the authored worker has PID/PPID/PGID/SID 2/1/2/2. Explicit descendant supervision
+covers its escaped host process group, RSS, counts and cleanup. This provides
+sampled operational tracking and cleanup only; hostile fork containment and hard
+timing guarantees remain outside its scope. These are source
+and authored-fixture results only; no actual installed-runtime, native, renderer,
+operator, model, collection or scientific qualification is claimed. Checkpoint A
+still ends with the actual episode bundle.
 
 [Draft PR #147](https://github.com/Aadrika08/palimpsest/pull/147) adds source-only
 profile-v2 cache bindings under dependency-v3, terminal completeness checks and
@@ -170,7 +188,7 @@ measured installed-size and licence-content evidence; PR #144 above supplies
 current package-preparation acceptance. Native/render closure and RAM/staging
 admission remain open.
 The retained assessment snapshot fails the proposed wheel-only RAM planning scenario;
-the refreshed goal records current resources without treating them as admission. A reviewed
+the execution goal requires fresh resources without treating historical snapshots as admission. A reviewed
 qualification descriptor-v3 now requires tmpfs dependency-v3 and fixed NumPy/Torch/
 torchvision/MuJoCo order, result-v2 and false authority. All25 new authored checks
 pass; broader runs retain ancestor-change failures, with affected legacy controls
@@ -490,7 +508,7 @@ Passing R1 requirements does not make a later research or human gate pass.
 | Gate | Status | Evidence and remaining boundary |
 | --- | --- | --- |
 | SIM-LAB | failed | Scoped M3/R1 evidence passes, but the [fixed required manual-browser v3 gate](plans/simulation-first-completion-goal.md) was evaluated and failed after 56 ticks, before snapshot, branches, comparison or export. Browser preflight on 15 October 2026 locally again returned zero apps and browsers; no new browser workflow ran. Final integrated-candidate revalidation remains required; the measured 27.9809 Hz display limitation also remains. |
-| SIM-MEMORY | limited | The prospective family software and analysis contracts are recorded in the [goal](plans/simulation-completion-next-goal.md#family-prospective-analysis-contract-verified-8-october-2026). Reviewed [reader/raw auditing](https://github.com/Aadrika08/palimpsest/pull/107), [pair admission](https://github.com/Aadrika08/palimpsest/pull/109), [source seal](https://github.com/Aadrika08/palimpsest/pull/112) and [staged pair admission](https://github.com/Aadrika08/palimpsest/pull/113) have synthetic evidence. Staged admission passes 262 affected tests; independent GO reran 106 checks and eleven additional faults, preserving portable paths and source-marker continuity. The [retained-only source reader](https://github.com/Aadrika08/palimpsest/pull/115) passes 289 affected checks and independent review, binding retained source/SNP/worker/audit evidence without raw replay. Removed raw bytes remain pre-prune attestations; actual pruning stays forbidden. The [actual recurrent-cell consumer](https://github.com/Aadrika08/palimpsest/pull/117) passes 328 affected tests and independent review, using the actual upstream cell on temporary tiny-model fixtures. Full FLYNN positive replay, authenticated model/SNP custody and durable condition/case integration remain unqualified; all grants stay false. Native integration, complete condition/case close, cell replay, namespace/allocation admission and collection remain open. The [execution goal](plans/simulation-release-execution-goal.md) records 92.74 GiB free disk and 3.44 GiB MemAvailable at 08:52:09 UTC on 15 October 2026; these are transient resource observations. Fresh input, namespace, runtime and allocation admission remain required. Marker power-loss persistence remains unqualified. No development family or held-out block has been collected. |
+| SIM-MEMORY | limited | The prospective family software and analysis contracts are recorded in the [goal](plans/simulation-completion-next-goal.md#family-prospective-analysis-contract-verified-8-october-2026). Reviewed [reader/raw auditing](https://github.com/Aadrika08/palimpsest/pull/107), [pair admission](https://github.com/Aadrika08/palimpsest/pull/109), [source seal](https://github.com/Aadrika08/palimpsest/pull/112) and [staged pair admission](https://github.com/Aadrika08/palimpsest/pull/113) have synthetic evidence. Staged admission passes 262 affected tests; independent GO reran 106 checks and eleven additional faults, preserving portable paths and source-marker continuity. The [retained-only source reader](https://github.com/Aadrika08/palimpsest/pull/115) passes 289 affected checks and independent review, binding retained source/SNP/worker/audit evidence without raw replay. Removed raw bytes remain pre-prune attestations; actual pruning stays forbidden. The [actual recurrent-cell consumer](https://github.com/Aadrika08/palimpsest/pull/117) passes 328 affected tests and independent review, using the actual upstream cell on temporary tiny-model fixtures. Full FLYNN positive replay, authenticated model/SNP custody and durable condition/case integration remain unqualified; all grants stay false. Native integration, complete condition/case close, cell replay, namespace/allocation admission and collection remain open. The [execution goal](plans/simulation-release-execution-goal.md) requires fresh input, namespace, runtime and allocation admission; transient resource observations do not admit the installed stack. Marker power-loss persistence remains unqualified. No development family or held-out block has been collected. |
 | SIM-TASKS | failed | Exploration, homing and adaptation retain scoped passes, but both fixed learned-puck development arms score 0/4 per model against the required 3/4 gate. Reviewed [registry contracts](https://github.com/Aadrika08/palimpsest/pull/108), [interval staging](https://github.com/Aadrika08/palimpsest/pull/110), [recorded intervals](https://github.com/Aadrika08/palimpsest/pull/111) and [non-executable collection descriptions](https://github.com/Aadrika08/palimpsest/pull/114) have source evidence. Description admission passes 110 independently rerun affected tests and 49 additional metadata faults. The [supplied-byte provenance facade](https://github.com/Aadrika08/palimpsest/pull/116) passes 154 independently rerun pure checks and 23 additional faults, separating nine historical source inputs from current execution provenance. Its returned descriptions stay non-executable. The separately frozen [original-bundle qualification](https://github.com/Aadrika08/palimpsest/pull/121) now passes actual originals for seeds 21–23, three unchanged CPU model probes and all 18 negatives with independent audit. This grants no collection or capability qualification. PR #120 supplies reviewed input custody/model staging; original bundle materialization is qualified within PR #121's narrow scope. [PR #122](https://github.com/Aadrika08/palimpsest/pull/122) source-review passes held-model native publication and fixed clock accounting, with 411 passing affected checks and six explicitly retained baseline exclusions; its fake native fixtures do not qualify actual collection. Complete native capture/power-loss qualification, fresh-worker source/runtime/dependency binding, registry/scene reservations and full owner/manifest/process admission remain required before new collection, fitting and capability evaluation. [PR #123](https://github.com/Aadrika08/palimpsest/pull/123) source-review passes bounded Git enumeration and historical catalog extraction; whole-root/semantic discovery and the pending catalog-access boundary remain required before real registry/scene admission. Held-out and product integration remain locked. |
 | SIM-MALECNS | failed | All augmented models in the completed navigation-v2 development study score 0/4 against the per-seed 3/4 gate. The [matched-budget v3 follow-up](https://github.com/Aadrika08/palimpsest/pull/106) retained an argv failure before reservation and a separately frozen dependency failure before training. Attempt 2 is consumed, no models were published and no attempt 3 is authorized. Held-out remains locked and R3 remains open. |
 | SIM-ARTWORK | limited | The [six-mode offline handoff](reports/m9-offline-handoff.md) passes a short derivative export. The [portable local encounter](https://github.com/Aadrika08/palimpsest/pull/96) retains byte-verified inputs and native controls; real browser/audio/keyboard/viewport review remains unavailable. Afterimage still has only eight responses / 0.5 source seconds / 0.16 model seconds, insufficient for sustained assessment. Declared-duration use and artistic acceptance remain incomplete. |
