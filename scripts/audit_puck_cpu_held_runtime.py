@@ -43,6 +43,51 @@ AUTOGRAD_EXPORT=dict(name='torch._C._autograd',producer='torch.autograd',
         '_toggle_collection_dynamic','_top_saved_tensors_default_hooks','_unsafe_set_version_counter',
         'kineto_available',
     ])
+DISTRIBUTED_EXPORTS=(
+    dict(name='torch._C._distributed_autograd',producer='torch.distributed.autograd',
+        phase='module_exec_publish',attributes=['torch', '_C', '_distributed_autograd'],class_binding=None,
+        delegate_attributes=[
+            'DistAutogradContext','_current_context','_get_debug_info','_get_max_id','_init',
+            '_is_valid_context','_new_context','_release_context','_retrieve_context','backward',
+            'get_gradients',
+        ]),
+    dict(name='torch._C._distributed_c10d',producer='torch.distributed',
+        phase='module_exec_publish',attributes=['torch', '_C', '_distributed_c10d'],class_binding=None,
+        delegate_attributes=[
+            'AllToAllOptions','AllgatherOptions','AllreduceCoalescedOptions','AllreduceOptions',
+            'Backend','BarrierOptions','BroadcastOptions','BuiltinCommHookType','DDPLoggingData',
+            'DebugLevel','ErrorType','FakeProcessGroup','FakeWork','FileStore','GatherOptions',
+            'GradBucket','HashStore','Logger','OpType','PrefixStore','ProcessGroup',
+            'ProcessGroupGloo','ReduceOp','ReduceOptions','ReduceScatterOptions','Reducer',
+            'ScatterOptions','Store','TCPStore','Work','WorkInfo','WorkResult',
+            '_ControlCollectives','_DMAConnectivity','_DistributedBackendOptions',
+            '_ProcessGroupWrapper','_Request','_Response','_StoreCollectives','_SymmetricMemory',
+            '_WorkerServer','_allow_inflight_collective_as_graph_input','_broadcast_coalesced',
+            '_compute_bucket_assignment_by_size','_create_work_from_future',
+            '_current_process_group','_detect_dma_connectivity','_dump_fr_trace',
+            '_dump_fr_trace_json','_get_handler','_get_handler_names','_get_work_registry_size',
+            '_make_nccl_premul_sum','_register_builtin_comm_hook','_register_comm_hook',
+            '_register_process_group','_register_work','_resolve_process_group',
+            '_set_allow_inflight_collective_as_graph_input','_set_global_rank','_set_process_group',
+            '_set_thread_isolation_mode','_test_python_store','_unregister_all_process_groups',
+            '_unregister_process_group','_verify_params_across_processes','get_debug_level',
+            'set_debug_level','set_debug_level_from_env',
+        ]),
+    dict(name='torch._C._distributed_rpc',producer='torch.distributed.rpc',
+        phase='module_exec_publish',attributes=['torch', '_C', '_distributed_rpc'],class_binding=None,
+        delegate_attributes=[
+            'PyRRef','RemoteProfilerManager','RpcAgent','RpcBackendOptions','TensorPipeAgent',
+            'WorkerInfo','_TensorPipeRpcBackendOptionsBase','_cleanup_python_rpc_handler',
+            '_delete_all_user_and_unforked_owner_rrefs','_destroy_rref_context',
+            '_disable_jit_rref_pickle','_disable_server_process_global_profiler',
+            '_enable_jit_rref_pickle','_enable_server_process_global_profiler',
+            '_get_current_rpc_agent','_invoke_remote_builtin','_invoke_remote_python_udf',
+            '_invoke_remote_torchscript','_invoke_rpc_builtin','_invoke_rpc_python_udf',
+            '_invoke_rpc_torchscript','_is_current_rpc_agent_set','_reset_current_rpc_agent',
+            '_rref_context_get_debug_info','_set_and_start_rpc_agent','_set_profiler_node_id',
+            '_set_rpc_timeout','enable_gil_profiling','get_rpc_timeout',
+        ]),
+)
 OUTPUTS=dict(prepare='runs/puck-cpu-held-preparation-01',qualify='runs/puck-cpu-held-qualification-01')
 VERSIONS=dict(numpy='2.2.5',torch='2.9.0+cpu',torchvision='0.24.0+cpu',mujoco='3.3.6')
 CLAIMS=dict(runtime_qualified=False,native_authorized=False,collection_authorized=False,study_authorized=False,executable=False,qualification_claims=[])
@@ -239,12 +284,14 @@ def publication_candidate(prior,current):
     profile=prior.get('import_profile')
     rows=profile.get('exports') if type(profile) is dict else None
     require(type(rows) is list and all(type(row) is dict for row in rows),'Historical publication export list required')
-    targets=[i for i,row in enumerate(rows) if row.get('name')==AUTOGRAD_EXPORT['name']]
-    original=dict(name='torch._C._autograd',producer='torch._C',phase='native_create',attributes=['_autograd'],class_binding=None)
-    require(len(targets)==1 and rows[targets[0]]==original,'Exact historical autograd declaration required')
     expected=json.loads(canonical(prior))
-    expected['import_profile']['exports'][targets[0]]=AUTOGRAD_EXPORT
-    require(canonical(current)==canonical(expected),'Only the exact autograd publication declaration may change')
+    for replacement in (AUTOGRAD_EXPORT,*DISTRIBUTED_EXPORTS):
+        targets=[i for i,row in enumerate(rows) if row.get('name')==replacement['name']]
+        original=dict(name=replacement['name'],producer='torch._C',phase='native_create',
+                      attributes=[replacement['attributes'][-1]],class_binding=None)
+        require(len(targets)==1 and rows[targets[0]]==original,'Exact historical publication export declaration required')
+        expected['import_profile']['exports'][targets[0]]=replacement
+    require(canonical(current)==canonical(expected),'Only the exact four publication declarations may change')
 
 
 def preparation_epoch(current,historical,prep):

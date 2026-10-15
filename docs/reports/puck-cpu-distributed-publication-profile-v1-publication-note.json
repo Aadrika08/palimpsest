@@ -1,0 +1,21 @@
+{
+  "actual05_invoked": false,
+  "correction": "Keep every indexed evidence byte unchanged. Scope whitespace lint to the new report and previously checked source; verify raw bytes with the packet verifier, then commit every staged artifact and verify Git bytes.",
+  "first_archive_commit_attempt": {
+    "cause": "Raw pytest failure logs contain original trailing whitespace; four authored METADATA fixtures intentionally end with a blank line. All artifacts were staged, but no commit occurred.",
+    "exit_code": 2,
+    "failed_stage": "git diff --cached --check",
+    "tool_chunk": "14a91e"
+  },
+  "index_changed": false,
+  "kind": "puck-cpu-distributed-profile-publication-note-v1",
+  "premature_git_check": {
+    "cause": "Archive verifier was called against pre-publication HEAD after that commit attempt failed; it correctly refused missing archive paths.",
+    "exit_code": 1,
+    "tool_chunk": "4951c0"
+  },
+  "production_sources_changed": false,
+  "raw_evidence_bytes_changed": false,
+  "tests_repeated": false,
+  "unchanged_implementation_commit": "2be59ccd44da50c4aad7d1229e11ad8c6e0a05b0"
+}

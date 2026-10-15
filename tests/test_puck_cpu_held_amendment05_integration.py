@@ -1,4 +1,4 @@
-"""AUTHORED autograd transition; no installed vendor or real05 allocation."""
+"""AUTHORED four-publication transition; no installed vendor or real05 allocation."""
 import copy
 from contextlib import contextmanager
 import json
@@ -13,7 +13,7 @@ import pytest
 
 from test_puck_cpu_held_amendment import LEGACY_AUDITOR_SHA
 from test_puck_cpu_held_amendment04 import BINDINGS, PARENT
-from test_puck_cpu_held_amendment05 import DELEGATES, IMPORTS, TARGET
+from test_puck_cpu_held_amendment05 import IMPORTS, PUBLICATION_EXPORTS
 from test_puck_cpu_held_parent_integration import (
     AUTHORED, ROOT, canonical, digest, load, project, run_cli,
 )
@@ -101,11 +101,10 @@ def publication05_fixture(tmp_path):
             result=result_path,independent_audit=published,externally_observed_auditor_cli=cli).items()}
         updated_inputs=copy.deepcopy(inputs)
         candidate=json.loads((root/inputs['candidate']['path']).read_bytes())
-        assert candidate['import_profile']['exports']==[dict(name=TARGET,producer='torch._C',
-            phase='native_create',attributes=['_autograd'],class_binding=None)]
-        candidate['import_profile']['exports'][0]=dict(name=TARGET,producer='torch.autograd',
-            phase='module_exec_publish',attributes=['torch','_C','_autograd'],class_binding=None,
-            delegate_attributes=list(DELEGATES))
+        assert candidate['import_profile']['exports']==[dict(name=row['name'],producer='torch._C',
+            phase='native_create',attributes=[row['name'].rsplit('.',1)[1]],class_binding=None)
+            for row in PUBLICATION_EXPORTS]
+        candidate['import_profile']['exports']=copy.deepcopy(PUBLICATION_EXPORTS)
         candidate_path=root/'docs/authored/candidate-publication05.json'
         candidate_path.write_bytes(canonical(candidate));updated_inputs['candidate']=file_pin(root,candidate_path)
         config=current.configuration_template(phase='qualify',root=str(root),stage_parent=str(stage),
@@ -145,10 +144,13 @@ def test_authored05_corrects_only_publication_profile_and_audits_both_epochs(tmp
         assert (result['version'],result['allocation_id'])==(5,5)
         current_dep=(base/'control/dependencies.json').read_bytes()
         assert current_dep!=historical_dep
-        expected=dict(name=TARGET,producer='torch.autograd',phase='module_exec_publish',
-            attributes=['torch','_C','_autograd'],delegate_attributes=list(DELEGATES))
+        expected=[{key:value for key,value in row.items() if key!='class_binding'}
+                  for row in PUBLICATION_EXPORTS]
         worker_path=base/'logs/stdout.log';worker=json.loads(worker_path.read_bytes())
-        assert worker['dependencies']['published_export_modules']==[expected]
+        assert worker['dependencies']['published_export_modules']==expected
+        assert worker['dependencies']['exported_modules']==[
+            dict(name=row['name'],producer=row['producer']) for row in PUBLICATION_EXPORTS]
+        assert [len(row['delegate_attributes']) for row in expected]==[41,11,69,29]
         assert [(r['name'],r['version']) for r in worker['entry_result']['imports']]==list(api.VERSIONS.items())
         registration=json.loads((base/'control/worker-registration.json').read_bytes())
         assert registration['source_files']==[r for r in config['sources'] if r['path'] in api.WORKER_SOURCES]
@@ -193,37 +195,44 @@ def test_authored05_corrects_only_publication_profile_and_audits_both_epochs(tmp
             command=command,observed_returncode=process.returncode,elapsed_seconds=time.monotonic()-started)))
 
         stdout_path=root/'authored-qualify05-cli.stdout'
-        originals={p:p.read_bytes() for p in (worker_path,result_path,stdout_path,transport)}
-        try:
-            changed=json.loads(originals[worker_path])
-            changed['dependencies']['published_export_modules'][0]['delegate_attributes'].pop()
-            changed_worker=canonical(changed);worker_path.write_bytes(changed_worker)
-            changed_result=json.loads(result_raw);changed_result['worker_stdout_sha256']=digest(changed_worker)
-            changed_result_raw=canonical(changed_result);result_path.write_bytes(changed_result_raw);stdout_path.write_bytes(changed_result_raw)
-            changed_transport=json.loads(originals[transport]);changed_transport['stdout'].update(size_bytes=len(changed_result_raw),sha256=digest(changed_result_raw))
-            transport.write_bytes(canonical(changed_transport))
-            with pytest.raises(ValueError,match='(?i)publish'):audit()
-        finally:
-            for path,raw in originals.items():path.write_bytes(raw)
+        rejected_proof=[];rejected_candidate=[]
+        for position,row in enumerate(PUBLICATION_EXPORTS):
+            originals={p:p.read_bytes() for p in (worker_path,result_path,stdout_path,transport)}
+            try:
+                changed=json.loads(originals[worker_path])
+                assert changed['dependencies']['published_export_modules'][position]['name']==row['name']
+                changed['dependencies']['published_export_modules'][position]['delegate_attributes'].pop()
+                changed_worker=canonical(changed);worker_path.write_bytes(changed_worker)
+                changed_result=json.loads(result_raw);changed_result['worker_stdout_sha256']=digest(changed_worker)
+                changed_result_raw=canonical(changed_result);result_path.write_bytes(changed_result_raw);stdout_path.write_bytes(changed_result_raw)
+                changed_transport=json.loads(originals[transport]);changed_transport['stdout'].update(size_bytes=len(changed_result_raw),sha256=digest(changed_result_raw))
+                transport.write_bytes(canonical(changed_transport))
+                with pytest.raises(ValueError,match='(?i)publish'):audit()
+                rejected_proof.append(row['name'])
+            finally:
+                for path,raw in originals.items():path.write_bytes(raw)
 
-        candidate_path=root/config['inputs']['candidate']['path']
-        invocation=base/'invocation.json';retained_config=base/'configuration.json'
-        originals={p:p.read_bytes() for p in (candidate_path,configuration,retained_config,invocation,result_path,stdout_path,transport)}
-        try:
-            changed_candidate=json.loads(originals[candidate_path])
-            changed_candidate['import_profile']['exports'][0]['attributes']=['foreign']
-            changed_candidate_raw=canonical(changed_candidate);candidate_path.write_bytes(changed_candidate_raw)
-            changed_config=json.loads(originals[configuration]);changed_config['inputs']['candidate']=file_pin(root,candidate_path)
-            changed_config_raw=canonical(changed_config);configuration.write_bytes(changed_config_raw);retained_config.write_bytes(changed_config_raw)
-            changed_result=json.loads(originals[result_path]);changed_result['configuration_sha256']=digest(changed_config_raw)
-            changed_result_raw=canonical(changed_result);result_path.write_bytes(changed_result_raw);stdout_path.write_bytes(changed_result_raw)
-            changed_transport=json.loads(originals[transport]);changed_transport['configuration_sha256']=digest(changed_config_raw)
-            changed_transport['command'][-1]=digest(changed_config_raw)
-            changed_transport['stdout'].update(size_bytes=len(changed_result_raw),sha256=digest(changed_result_raw));transport.write_bytes(canonical(changed_transport))
-            changed_invocation=json.loads(originals[invocation]);changed_invocation['configuration_sha256']=digest(changed_config_raw);invocation.write_bytes(canonical(changed_invocation))
-            with pytest.raises(ValueError,match='(?i)(autograd|publication)'):audit()
-        finally:
-            for path,raw in originals.items():path.write_bytes(raw)
+            candidate_path=root/config['inputs']['candidate']['path']
+            invocation=base/'invocation.json';retained_config=base/'configuration.json'
+            originals={p:p.read_bytes() for p in (candidate_path,configuration,retained_config,invocation,result_path,stdout_path,transport)}
+            try:
+                changed_candidate=json.loads(originals[candidate_path])
+                assert changed_candidate['import_profile']['exports'][position]['name']==row['name']
+                changed_candidate['import_profile']['exports'][position]['attributes']=['foreign']
+                changed_candidate_raw=canonical(changed_candidate);candidate_path.write_bytes(changed_candidate_raw)
+                changed_config=json.loads(originals[configuration]);changed_config['inputs']['candidate']=file_pin(root,candidate_path)
+                changed_config_raw=canonical(changed_config);configuration.write_bytes(changed_config_raw);retained_config.write_bytes(changed_config_raw)
+                changed_result=json.loads(originals[result_path]);changed_result['configuration_sha256']=digest(changed_config_raw)
+                changed_result_raw=canonical(changed_result);result_path.write_bytes(changed_result_raw);stdout_path.write_bytes(changed_result_raw)
+                changed_transport=json.loads(originals[transport]);changed_transport['configuration_sha256']=digest(changed_config_raw)
+                changed_transport['command'][-1]=digest(changed_config_raw)
+                changed_transport['stdout'].update(size_bytes=len(changed_result_raw),sha256=digest(changed_result_raw));transport.write_bytes(canonical(changed_transport))
+                changed_invocation=json.loads(originals[invocation]);changed_invocation['configuration_sha256']=digest(changed_config_raw);invocation.write_bytes(canonical(changed_invocation))
+                with pytest.raises(ValueError,match='(?i)(autograd|publication|distributed)'):audit()
+                rejected_candidate.append(row['name'])
+            finally:
+                for path,raw in originals.items():path.write_bytes(raw)
+        assert rejected_proof==rejected_candidate==[row['name'] for row in PUBLICATION_EXPORTS]
 
         for path,raw in case['legacy_bytes'].items():assert (root/path).read_bytes()==raw
         assert (prepbase/'payload/dependencies.json').read_bytes()==historical_dep
@@ -237,7 +246,8 @@ def test_authored05_corrects_only_publication_profile_and_audits_both_epochs(tmp
         assert result_path.read_bytes()==result_raw
         for path,raw in case['legacy_bytes'].items():assert (root/path).read_bytes()==raw
         (root/'authored-publication05-observations.json').write_bytes(canonical(dict(
-            authored_scope=AUTHORED,publication_delegates=DELEGATES,actual_vendor_imports=False,
+            authored_scope=AUTHORED,publication_exports=PUBLICATION_EXPORTS,actual_vendor_imports=False,
+            rejected_proof_rows=rejected_proof,rejected_candidate_rows=rejected_candidate,
             historical_v1_failed=True,qualification05_audited=True,rebound_proof_rejected=True,
             rebound_candidate_rejected=True,historical_bytes_preserved=True,consumed_reentry_refused=True)))
     assert len(os.listdir('/proc/self/fd'))==before_fds
