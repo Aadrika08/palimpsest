@@ -43,25 +43,37 @@ and the one-row `_autograd` correction have authored source proof. The complete
 real-runtime profile is unfinished; no actual05 configuration exists. The detailed
 results below remain evidence, not tasks to repeat.
 
-**The next bounded work unit is the remaining export preflight.** Produce one
-35-row source map: the three known distributed phase conflicts plus the other 32
-native-create declarations. Every row must identify its creator, creation phase,
-raw attribute path, finite dispatch/build assumptions, intermediate publication
-and closure evidence. Label it **source-supported**, **correction required** or
-**unresolved**. These labels make no installed-binary qualification claim.
+**The 35-row source sweep is complete:** 32 rows have source support for their
+existing native-create phase; the three distributed children require correction.
+The [complete map and exact evidence](https://github.com/Aadrika08/palimpsest/blob/e3748c0a48faebfe7cbb9178fc5fae85b3a38118/docs/reports/puck-cpu-export-phase-preflight-v1.md)
+retain conditional/generated assumptions and visible publication/closure details.
+These labels do not qualify the installed binary. Preserve the tested one-row
+candidate and the other 32 declarations; do not restart this sweep.
 
-Stop this sweep when all 35 rows are classified. Each unresolved group must leave
-one specific prospective observation or decision, with exact inputs, finite
-limits, evidence required and a stopping rule. Review that proposal before any
-execution. Do not guess a roster, use actual05 as a scout, restart the sweep or
-add hardening unrelated to an identified failing check. Preserve the tested
-one-row candidate and record any broader correction as a separate explicit
-prospective revision.
+**The next bounded work unit is one fixed three-module metadata projection.**
+Implement the [reviewed prospective observation](https://github.com/Aadrika08/palimpsest/blob/e3748c0a48faebfe7cbb9178fc5fae85b3a38118/docs/plans/puck-cpu-distributed-roster-observation-01-proposal.md)
+through the existing ordinary CPU characterization route. After the same four
+imports, capture raw terminal dispatch/identity metadata for only the already
+present distributed children, with finite limits and focused authored checks.
+Do not add helper imports, execute vendor members or read model/scene/catalog
+inputs. Its source exit is not installed-runtime evidence or actual execution
+approval; exact new controls must still be frozen and independently reviewed.
+
+The source proposals contain 11/69/29 names, but private build flags remain
+unproved. Measure the terminal rosters once under separately reviewed controls,
+retain discrepancies and attribute every observed name before accepting a new
+profile. Complete observation data can pass while profile acceptance remains
+false. Terminal rosters do not prove creator-close timing or intermediate
+publication; those remain separate source/held-runtime obligations.
 
 **Checkpoint A finishes with the actual episode bundle.** Its remaining sequence is:
 
-- [ ] Finish the 35-row map and review the complete prospective profile/admission
-  correction, with focused authored checks and independent source review.
+- [x] Finish the 35-row creation/closure source map and independent review.
+  This closes the finite source sweep only; the candidate remains unchanged.
+- [ ] Implement/review the fixed three-module projection and separately freeze,
+  admit, run once and independently audit its actual ordinary metadata observation.
+- [ ] Review the complete explicit prospective profile/admission correction from
+  the accepted roster evidence, with focused authored checks and independent review.
 - [ ] Freeze and independently review actual05 only after that profile is ready.
   Refresh exact pins, staged bytes, absence conditions and resource admission;
   invoke once and require a passing independent terminal, identity, full-byte
@@ -95,7 +107,35 @@ source-only hardening is not a substitute for reaching the episode deliverable.
 A failed actual stage retains its outcome and consumed allocation. No study or
 numerical invocation follows from a source fixture alone.
 
-## Current CPU source result: one-row transition verified, phase gaps remain
+## Current source result: export preflight complete
+
+[PR156](https://github.com/Aadrika08/palimpsest/pull/156) now retains the
+[completed 35-row map](https://github.com/Aadrika08/palimpsest/blob/e3748c0a48faebfe7cbb9178fc5fae85b3a38118/docs/reports/puck-cpu-export-phase-preflight-v1.md).
+All 32 other native-create rows have source support for their existing phase;
+three distributed rows require later Python creators. No additional phase conflict
+was found in the 32 within this source scope. Conditional/generated dispatch and
+transitive/future mutation remain runtime obligations. The static 11/69/29
+proposals are not measured rosters; exported CMake flags do not establish all
+private build options. One bounded ordinary metadata observation is the remaining
+group, with no executable configuration yet.
+
+The standalone packet verifier passes 65 artifact fingerprints/original byte
+comparisons and Git-HEAD byte checks, 42 upstream Git blobs, seven selected
+installed-file inventory pins, all 35 declarations/source ranges and the unchanged
+candidate. The packet retains 1,792,892B, including one empty file and the original
+verifier before its empty-branch-list assertion fix. One read-only CMake retrieval
+timeout is preserved; only that missing source request was repeated, with no
+runtime retry. Root reviewed the 14-row core lane; an independent agent reviewed
+the 18-row standard lane and written prospective observation, with no material
+finding. These checks do not qualify binaries or independently prove the analysis.
+
+Production source/profile/data remain unchanged. All six actual05 paths are absent
+in the data-owning checkout; qualifications01–04 stay failed and consumed. No
+vendor import, operator, renderer, model, protected input, episode or study ran in
+this source-only slice. Full repository tests and CI were not run. The real episode
+bundle remains checkpoint A's exit; every release gate remains open.
+
+## Completed CPU source checkpoint: one-row transition verified
 
 [Draft PR #156](https://github.com/Aadrika08/palimpsest/pull/156) retains the
 [source proof and remaining-phase review](https://github.com/Aadrika08/palimpsest/blob/3bdc4c1de856af47d9cb51202164c644d27f6039/docs/reports/puck-cpu-held-qualification-amendment-05.md).
@@ -480,31 +520,33 @@ substitute for numerical results, capability, actual browser use or human accept
 | 5 | Integrate and experience the product. | One candidate supports the lab and all six artworks; actual browser, mapping, replay, export, interruption and endurance checks pass. |
 | 6 | Accept and deliver that candidate. | Artistic/operator sessions, final verification and all seven gate records are complete; the installation and evidence package are reproducible. |
 
-**Current next action:** resolve the three distributed source phase conflicts
-and finish per-row creation/closure preflight before freezing actual05.
+**Current next action:** implement and review the fixed three-module ordinary
+metadata projection; the 35-row source preflight is finished.
 
-1. Inspect `_distributed_autograd`, `_distributed_c10d` and `_distributed_rpc`
-   individually. Their exact source registers callbacks at native creation and
-   creates children during later Python initialization. Derive finite dispatch
-   rosters with CPU/build branches accounted for, and prove whether their fresh
-   nested imports need publication handling. If static inputs cannot establish a
-   roster, specify a separately reviewed bounded metadata observation; do not
-   invent a roster, execute an unfrozen probe or use an actual attempt as a scout.
-2. Finish the remaining32 native-create declarations' creation/closure preflight.
-   Preserve supported rows and record exact evidence for every correction. Keep
-   the reviewed one-row candidate/plan as history; introduce an explicit broader
-   prospective candidate and closed admission revision with authored tests and
-   independent review. Add no whole-roster move or configurable exemption.
-3. Once the complete profile is reviewed, deploy exact source/control bytes,
-   freeze a separately numbered actual05 configuration and independently review
-   it. Verify current staged bytes, all old pins/absence conditions and fresh
-   resources before one invocation. Require independent terminal, identity, full
-   byte and cleanup audit. Preserve01–04; failure grants no implicit06.
+1. Reuse the existing CPU characterization parent/worker and implement only the
+   finite raw terminal projection from the reviewed proposal. Pin the three
+   source-derived comparison sets, preserve disagreements, and add focused
+   authored worker/parent/auditor checks. Metadata capture adds no vendor calls
+   beyond the frozen ordinary import path. Do not reopen the completed sweep.
+2. Freeze exact new source/input/control bytes for one separately numbered
+   observation. Preserve accepted observation02 and every prior allocation;
+   independently review the configuration/command and refresh pin/byte/absence/
+   resource admission before invoking once. Require complete stable snapshots,
+   intact installed bytes and an independent terminal/identity/cleanup audit.
+   Attribute observed differences before any candidate acceptance; failure grants
+   no implicit retry. This supplies roster data, not a held-runtime pass.
+3. Review the explicit broader prospective profile and closed independent
+   parent/auditor admission, preserving the one-row candidate as history and
+   the other 32 native-create declarations. Only after that source exit, deploy
+   exact reviewed bytes, freeze and independently review actual05, recheck current
+   staged bytes/pins/absence/resources, invoke once and independently audit the
+   terminal, identity, full-byte and cleanup outcome. Preserve01–04; no implicit06.
 4. Complete the distinct CPU engineering episode envelope, fixed authenticated
    worker entry, bounded parent and durable writer/replay/export connection.
    Resolve catalog access before protected reads; declare the model, scene, seed,
-   limits, operator/renderer probes and replay criterion. Run and independently
-   audit the actual portable bundle after runtime qualification passes.
+   limits, operator/renderer probes and replay criterion before its separate
+   episode admission. Run and independently audit the portable bundle after
+   runtime qualification passes.
 
 The immediate milestone passes only with that bundle and its actual route checks.
 A natural task failure can prove recording/replay/export, but cannot pass a
