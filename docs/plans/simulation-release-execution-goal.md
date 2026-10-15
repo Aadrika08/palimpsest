@@ -35,55 +35,53 @@ this engineering route; it cannot pass a controller capability gate.
 
 ## Current result and first unfinished action
 
-Disk clearance removed the immediate disk shortage. Actual preparation 01 and
-ordinary observations 02/03 have passing scoped audits. The complete four-row
-publication correction has reviewed source attribution and 547 affected authored
-passes in [PR159](https://github.com/Aadrika08/palimpsest/pull/159).
-These are preparation, observation and source evidence; installed held-runtime
-qualification remains open.
+Runtime-import qualification remains open. Preparation 01 and ordinary
+observations 02/03 have scoped passing audits; the reviewed optional-import
+source contract in [PR161](https://github.com/Aadrika08/palimpsest/pull/161)
+has 616 affected authored passes. These do not establish installed-runtime acceptance.
 
-[Actual 05 in PR160](https://github.com/Aadrika08/palimpsest/pull/160) was separately
-reviewed and frozen at `fb258cd` before one invocation. Fresh admission passed
-in 26.537s, including complete installed/staged/native/interpreter bytes. The
-observer then returned1 normally in 45.859s without timeout. First fatal denial:
-optional `pynvml` requested by Torch's CUDA initializer. The guard closes custody
-and retains that violation even though Torch catches the import error. The later
-`torch.cuda.memory` error is a teardown symptom; its registered physical file is intact.
-The independent qualification auditor correctly refuses the failed terminal.
+[Actual 06 in PR162](https://github.com/Aadrika08/palimpsest/pull/162) was frozen at
+`e4b2a4c` before one invocation. Complete data admission passed in 31.586s with
+all 16 unchanged inputs, staged identities, nineteen declared absences and resources.
+The observer then returned 1 normally in 95.381s without timeout: Torchvision/PIL's
+native extension could not resolve `libtiff-fc87e79d.so.6.2.0`. The independent
+auditor correctly refused the failed terminal. Parent closure is 5→5 descriptors
+with no children/threads; sampled supervision reports no matching survivors.
+Qualifications 01–06 are consumed. No complete four-import receipt or runtime pass exists.
 
-A separate post-failure read-only audit passes in 28.411s: current source/input,
-installed/staged/native/interpreter bytes and original staged identities remain
-intact. Parent closure is5→5 descriptors with no children/threads; data audits
-close4→4. None of the three recorded worker PID/start identities remains; this
-is not exhaustive or atomic lifetime proof. The eight historical missing receipts
-remain missing. Failed qualifications 01–05 are consumed. Complete four-import
-creator closure, runtime acceptance and every episode/release gate remain unproved.
+Independent static review finds the TIFF file present with pinned bytes. Exactly
+two registered Pillow extensions use leaf-FD origins despite requiring
+`$ORIGIN/../pillow.libs`. The finite review covers all 23 extension seeds and their
+declared dependency routes; selected hashes match. It does not establish dynamic
+loading or full post-06 custody. The full post-failure byte check did not finish:
+check 01 refused the wrong host interpreter before data work; separately numbered
+check 02 used the pinned interpreter but exhausted its 120s staged-forest deadline.
+Preserve both refusals and missing receipts; full current post-06 bytes remain unproved.
 
-**The finite optional-import source contract is ready for prospective controls.**
-[PR161](https://github.com/Aadrika08/palimpsest/pull/161) adds closed epoch 06
-parent/observer/independent-auditor support for nineteen exact absent names using
-the unchanged guard. All 616 affected authored cases pass, including an authored 05
-caught-import failure followed by 06 success and independent API/CLI audits.
-Independent source review found no material findings; all 1,760 surveyed source
-hashes and the complete original 05 archive verify. Static coverage is not executed
-or dynamic/native completeness; forty-five nonliteral sites remain unresolved.
-This is source evidence only: no actual 06 controls, output or invocation exists.
+The complete failure packet preserves 347 artifacts/38,423,088B, including empty
+files, and verifies against originals and committed bytes. Archive integrity is
+not runtime or full post-failure forest acceptance. [PR163](https://github.com/Aadrika08/palimpsest/pull/163)
+separately removes the training-runner import from manual environment construction,
+preserving exact arguments and seed/reset order. Its 19 authored cases pass and
+independent review finds no material findings. No real episode or renderer ran.
 
-**Next action: separately freeze and review qualification 06 controls, then refresh
-complete admission before one actual invocation.** Bind current source/auditor and
-proof bytes, the unchanged publication candidate, all 15 other inputs, preparation
-acceptance and consumed outcomes. Preserve failures 01–05. Keep unexpected imports
-fatal and all limits unchanged; no repeated 05 or automatic retry follows. A pass
-must receive independent actual-runtime acceptance before admitting the episode.
+**Next action: implement and review the finite native-origin correction offline.**
+Reuse the existing held-directory policy for exactly `PIL._imaging` and
+`PIL._imagingft`, with a Pillow-shaped transitive-dependency regression and strict
+mismatch refusal. Bind the exact two-row candidate delta in both parent and
+independent auditor; preserve every other input, native mount, negative name and
+limit. Obtain complete separately reviewed current-byte/custody admission before
+any future separately frozen qualification. No 07 controls or allocation exists;
+no consumed attempt is retried. Keep the next product exit at the episode bundle.
 
 **Keep checkpoint A tied to the episode deliverable.** Reuse the existing
 `Engine` → UUID `RunWriter` → initial snapshot → replay → bundle-export route.
 The distinct numeric `PuckIntervalWriter` format cannot simply be passed to those
 readers. The reviewed read-only map identifies a prospective manual engineering
 controller and locally available public checker scene at upstream `8d964599`;
-this is a proposal, not episode or renderer admission. Complete the fixed CPU
-constructor/worker dispatch, required import/operator/renderer bindings and
-replay reopening seam. Package the separate source/replay exports with controls,
+this is a proposal, not episode or renderer admission. The manual constructor source seam is implemented. Complete authenticated CPU
+worker dispatch, required import/operator/renderer bindings and actual replay
+reopening admission. Package the separate source/replay exports with controls,
 input identities and comparison evidence without widening the export whitelist.
 Declare the exact public route and comparison criterion before any episode.
 
@@ -116,7 +114,7 @@ substitute for numerical results, capability, actual browser use or human accept
 
 | Order | Deliverable | Finite exit |
 | --- | --- | --- |
-| 1 | Establish the exact local CPU runtime. | Freeze/review distinct 06 controls, refresh complete admission, then obtain one passing actual qualification and independent audit. Preserve every failed allocation; proposals and source tests are not this exit. |
+| 1 | Establish the exact local CPU runtime. | Review the exact two-Pillow-row native-origin correction, obtain complete current-byte/custody admission, then obtain a separately frozen passing actual qualification and independent audit. Preserve every failed allocation; proposals and source tests are not this exit. |
 | 2 | Record, replay and export one actual simulator episode. | Admit the exact public engineering route, retain complete inputs/records/snapshots, pass declared replay/export and operator/renderer checks, and independently audit normal cleanup and the portable bundle. This does not qualify a learned controller. |
 | 3 | Complete memory family admission and case closure. | Finish the historical-seed-to-case binding and single-condition admission, qualify the exact admitted configuration, and resolve oracle/own ordering before all-nine/case closure. Preserve raw evidence and publication/quarantine checks. |
 | 4 | Complete studies and controller capability. | Valid development and separately admitted held-out results meet the unchanged memory/scientific and puck/MaleCNS gates above. Preserve failures and resolve any new study prospectively. |
