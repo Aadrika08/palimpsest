@@ -14,10 +14,13 @@ execution routes, complete valid research/capability gates, integrate the lab an
 all six artworks, record artistic/operator acceptance and deliver the runbook.
 Disk clearance permits fresh admission checks; CI and physical rover remain outside.
 The [clarified execution goal](plans/simulation-release-execution-goal.md) gives
-seven unchanged acceptance gates and six finite milestones. The immediate goal is
-one installed and actually qualified CPU runtime, followed by one bounded simulator
-episode recorded, replayed and exported through the durable public route. Exact
-configuration/resource admission and independent outcome audits precede progress;
+seven unchanged acceptance gates and six finite milestones. The next milestone is
+one actual bounded simulator episode on the exact qualified local CPU runtime,
+recorded, replayed and exported through the durable public route. Its portable
+bundle must retain source/runtime/model/scene identities, seed and limits, complete
+records and snapshots, replay comparisons, export hashes and normal cleanup.
+The goal records a fresh disk/RAM snapshot; disk clearance alone does not admit
+that runtime. Exact configuration/resource admission and independent outcome audits precede progress;
 no automatic actual retry or new scientific-study attempt follows. The previous
 [execution/evidence history](plans/simulation-release-execution-goal-history-2026-10-15.md)
 is preserved byte-identically. All 26 requirement and seven gate statuses are unchanged.
