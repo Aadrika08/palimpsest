@@ -59,13 +59,27 @@ installed-runtime pass.
   Attempt 07 is consumed. No completed four-import or parent-closure claim follows,
   and the retained evidence does not identify which worker phase exhausted time.
 
-**First unfinished action:** make that runtime failure diagnosable with the
-smallest bounded phase evidence and deadline/cleanup source checks, before any
-separately reviewed prospective allocation. Preserve attempts 01–07 and their
-limits; do not silently retry or increase the deadline. Once the runtime qualifies,
-separately admit the exact public manual CPU episode route, including its operators
-and renderer. Detailed raw results remain in the linked PR/report packets, dated
-histories and Git history.
+The bounded diagnostic source is now implemented and reviewed at
+[`5ccde54`](https://github.com/Aadrika08/palimpsest/blob/5ccde54d8f41d1f83ec858b2cdb8eb12755c795e/docs/plans/puck-cpu-runtime-phase-trace-v1.md).
+Its final 217 disjoint authored checks pass: 214 worker/consumer cases in 119.86s
+and three persistent historical-publication integrations in 46.53s. It adds 18
+nominal stderr checkpoints with a best-effort cap of 24 attempts/16KiB; terminal
+stdout follows close. The reviewed nested-latch and old-bootstrap compatibility
+fixes preserve q1/q2 and owners without the optional hook. Failed green01/consumer01
+source validations remain retained without a new root-cause claim for their
+storage-metadata/native persistent failures. These authored checks do not explain
+the installed 07 timeout or establish installed-runtime acceptance.
+
+**First unfinished action:** define and review a separately closed diagnostic
+epoch that explicitly admits the qualifier as a fifth preparation-relative source
+change. Preserve the old 05–07 predicates, all failed/consumed 01–07 outcomes and
+existing limits. Freeze its exact controls, pass fresh complete byte/custody/resource
+admission, then invoke at most once with an independent outcome/byte audit. No
+actual 08 controls or invocation exist; the new source checks add no episode,
+operator/renderer, model or study evidence. Once the installed runtime qualifies,
+separately admit the public manual CPU episode route. The product exit remains
+the real recorded, replayed and exported episode bundle. Detailed raw results
+remain in the linked PR/report packets, dated histories and Git history.
 
 [PR163](https://github.com/Aadrika08/palimpsest/pull/163) already implements the
 manual constructor seam with exact arguments and seed/reset order preserved;
