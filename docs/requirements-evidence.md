@@ -13,8 +13,12 @@ The active goal is one reproducible local simulation release: qualify the actual
 execution routes, complete valid research/capability gates, integrate the lab and
 all six artworks, record artistic/operator acceptance and deliver the runbook.
 Disk clearance permits fresh admission checks; CI and physical rover remain outside.
-The next deliverable is a complete resource-feasible runtime configuration proposal,
-using the reviewed explicit tmpfs dependency identity policy; no automatic retry follows.
+The [clarified execution goal](plans/simulation-release-execution-goal.md) gives
+seven unchanged acceptance gates and six finite milestones. Finish the current
+memory single-condition sealing source unit, then the complete resource-feasible
+CPU runtime configuration proposal; no automatic actual retry follows. The previous
+[execution/evidence history](plans/simulation-release-execution-goal-history-2026-10-15.md)
+is preserved byte-identically. All 26 requirement and seven gate statuses are unchanged.
 
 [Draft PR #138](https://github.com/Aadrika08/palimpsest/pull/138) retains independently
 audited CPU metadata:70 wheels/71 candidate distributions,1,304,650,469 declared
@@ -191,7 +195,7 @@ anomaly with cause unknown; no guard or threshold was relaxed. No actual scan,
 reservation, model/native or study stage ran. Markdown/full scope/launcher work
 and all seven release gates remain open; default pytest stops at missing FastAPI.
 
-The [active execution objective](plans/simulation-release-execution-goal.md#active-objective-and-next-deliverable)
+The [active execution objective](plans/simulation-release-execution-goal-history-2026-10-15.md#active-objective-and-next-deliverable)
 now names the complete local simulation release and the next concrete deliverable:
 one reviewed puck inventory-to-collection launcher and memory replay-to-case-close
 path. The declared-scope inventory in draft PR #128 now has independent source
@@ -254,7 +258,7 @@ missing FastAPI. All seven release statuses and three pending decisions remain
 unchanged; no final execution/runtime GO is claimed.
 
 
-The [execution goal](plans/simulation-release-execution-goal.md#active-objective-and-next-deliverable)
+The [execution goal](plans/simulation-release-execution-goal-history-2026-10-15.md#active-objective-and-next-deliverable)
 retains the full seven-gate simulation release. [Draft PR #133](https://github.com/Aadrika08/palimpsest/pull/133),
 head `8cca8ba`, adds reviewed bounded failure diagnostics and the explicit EGL
 development amendment. Root63 focused checks pass3.48s; independent source/freeze
