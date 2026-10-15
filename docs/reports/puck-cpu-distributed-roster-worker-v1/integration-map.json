@@ -1,0 +1,178 @@
+{
+  "auditor": {
+    "existing": "docs/reports/puck-cpu-characterization-02/outcome-audit-v2.py",
+    "existing_lines": {
+      "cli": "203-232",
+      "configuration_installation_history": "70-130",
+      "constants": "15-36",
+      "namespace_request_supervision": "131-148",
+      "parent_result_currentbyte_close": "178-201",
+      "support": "38-52",
+      "worker_report": "149-177"
+    },
+    "immutable_support": [
+      "docs/reports/puck-cpu-characterization-02/audit-support-characterization-v1.py",
+      "docs/reports/puck-cpu-characterization-02/audit-helper-install-v1.py",
+      "docs/reports/puck-cpu-characterization-02/audit-helper-admission-v3.py"
+    ],
+    "important_limits": "Archived auditor is02-specific, uses BASE/RUN/CONFIG/OUTPUT constants and3authenticated/tmp helper sources, only tests presence of namespaceflags rather than exactargv, and trusts caller --parent-exit-code. It is not a new03 auditor by path substitution alone.",
+    "minimum": "Separate reviewed currentauditor with explicit externally hashed config+transport and exclusive auditoutput. Read bounded canonical data; authenticate full current/source/history/helper closure before executing pinned data-only support bytes. Reconstruct exactnamespace argv independently; checking flag presence cannot establish the frozen selected mount closure; validate full v4projection independently ofworker/productionparent. Rehash completeinstalledtree/native/baseline and fingerprints, preserve absenceconditions, normalclosure and falseclaims. Helpers may be loaded from immutable archived repo paths instead of mutable/tmp originals, with authenticated completeclosure.",
+    "proposed_new": "scripts/audit_puck_cpu_runtime_characterization.py",
+    "tests": "New tests/test_puck_cpu_distributed_observation_audit.py and separate authored parent/worker/auditor integration file; oldarchivecontrols neveredited."
+  },
+  "current_contract": {
+    "configuration_kind": "puck-cpu-runtime-characterization-v1",
+    "configuration_version": 1,
+    "input_count": 42,
+    "output": "runs/puck-cpu-runtime-characterization-02",
+    "parent": "scripts/characterize_puck_cpu_runtime.py",
+    "parent_result_kind": "puck-cpu-characterization-outcome-v1",
+    "role_count": 12,
+    "source_count": 14,
+    "worker_request_kind": "puck-runtime-import-characterization-v2",
+    "worker_request_version": 2,
+    "worker_result_kind": "puck-runtime-import-characterization-result-v3",
+    "worker_result_version": 3
+  },
+  "historical_observation02_pins": {
+    "distributed_source_proposals": {
+      "path": "docs/reports/puck-cpu-export-phase-preflight-v1/notes/distributed-rosters/review.json",
+      "sha256": "de1aa2a7c7a0832b59f72cc07ffee5965a37657618ef8f70ea8f08238a815e04",
+      "size_bytes": 11683
+    },
+    "observation02_audit": {
+      "path": "docs/reports/puck-cpu-characterization-02/outcome-audit-02.json",
+      "sha256": "68db69256149ca20d4b698860898d33c4e6cbee2b840e4eeeb2fd5f21359eff3",
+      "size_bytes": 1452
+    },
+    "observation02_configuration": {
+      "path": "docs/reports/puck-cpu-characterization-02/frozen-configuration.json",
+      "sha256": "4b98ff368e97351b2079ff44c75cb910d08559e5e037a6afc4887c28cd38fea8",
+      "size_bytes": 13940
+    },
+    "observation02_external_terminal": {
+      "path": "docs/reports/puck-cpu-characterization-02/external-terminal-observations.json",
+      "sha256": "32ed28951e741dc00de6daa9f168347520361b17d26f99ee908e0b1eef1162c5",
+      "size_bytes": 1170
+    },
+    "observation02_index": {
+      "path": "docs/reports/puck-cpu-characterization-02/evidence-index.json",
+      "sha256": "c827dc11dd3bcfe60a3020dccc008c385c779f19f60ad2bf6f930d69fcd654da",
+      "size_bytes": 17046
+    },
+    "observation02_report": {
+      "path": "docs/reports/puck-cpu-characterization-02/raw/payload/imports.json",
+      "sha256": "f5c307bd361cd97e0f5a912610e2e639d62aa410aca4c393719667b24654b448",
+      "size_bytes": 534299
+    },
+    "observation02_result": {
+      "path": "docs/reports/puck-cpu-characterization-02/raw/result.json",
+      "sha256": "c3959dbb45d760c59e953caf11d05993c97c0d3912a801d957cf6f8dcbcfb3ff",
+      "size_bytes": 837
+    }
+  },
+  "kind": "puck-distributed-observation-epoch-source-map-v1",
+  "minimal_next_change_set": [
+    "Rootowned scripts/characterize_puck_runtime_imports.py +focusedworkertests.",
+    "scripts/characterize_puck_cpu_runtime.py: closednew03 allocation/source/data epoch, pinnedproposal request and strictresult.",
+    "New scripts/observe_puck_cpu_runtime_characterization.py +observer tests; keepheldobserverunchanged.",
+    "New scripts/audit_puck_cpu_runtime_characterization.py +independentschema/fullbyte tests; authenticate allreusedarchivedsupportclosure.",
+    "New authored ordinaryparent\u2192worker\u2192transport\u2192API/CLIaudit integration fixture and negative tests; preserveold02archivecontrols.",
+    "Only after sourcechecks/review: separately review concreteactual configuration/source/input/controlfreeze and currentresource/payloadpreflight. No actualconfiguration orinvocation iscreatedbythismap."
+  ],
+  "observer": {
+    "existing": "No versioned ordinary observer exists. external-terminal-observations.json is author-recorded exec tool output evidence, explicitly not generated by target.",
+    "held_observer": "scripts/observe_puck_cpu_held_allocation.py:49-101 is held-only and hardcodes qualifyparent/root/output; do not broaden its old schemas or use it against ordinaryCPUparent.",
+    "minimum": "Reuse small external transport pattern: canonical/hash-auth config, exactparentcommand/interpreter/env/root, exact03output/stream/transport paths, reserve all with exclusivity/lexists, processgroup harddeadline+cleanup, stdout/stderr bytepins, observed returncode/timed_out/configsha. No retries; parentoutput andobserverstreams independently consumed.",
+    "proposed_new": "scripts/observe_puck_cpu_runtime_characterization.py",
+    "tests": "New tests/test_puck_cpu_characterization_observer.py; reuse behavior patterns from tests/test_puck_cpu_held_observer.py without mutatingheldtests."
+  },
+  "parent_map": [
+    {
+      "lines": "15-63",
+      "purpose": "Fixed output, prior01 immutable anchors, native05 pin, exact limits/environment,12roles,14sources. Keep legacy constants/schema valid; add closed roster epoch constants, no arbitrary epoch/output selector."
+    },
+    {
+      "lines": "97-138",
+      "purpose": "validate_configuration/read_prior_configuration/required_input_rows are02-only. Preserve old42-row derivation; add new exact branch deriving current input closure from authenticated02, preserving all old42pins and14archived02sourcepins."
+    },
+    {
+      "lines": "141-169",
+      "purpose": "Historical validator intentionally expects failed01. Keep it; add separate02 successful-evidence validator rather than changing failure acceptance."
+    },
+    {
+      "lines": "192-214",
+      "purpose": "Reuse exact sandbox builder, selected readonly native leaves, environment and namespace. Request adds only worker v3 distributed_expected generated from pinned proposal; no new package mounts/helper imports."
+    },
+    {
+      "lines": "217-238",
+      "purpose": "Choose fixed new output from closed schema; existing AdmissionInputs/reserve_output/RLIMITs/resource checks reusable. New prior02/currentcontrol pins held and nonoverlapping."
+    },
+    {
+      "lines": "253-288",
+      "purpose": "Retain accepted-installation, namespace count, original-native and baseline checks; validate both historical01 failure and02 scoped success. Build v3 request with expectedrosters; do not synthesize new expectednames from measured output."
+    },
+    {
+      "lines": "290-325",
+      "purpose": "Keep probe/worker supervision and complete installed-tree/baseline rechecks. New branch validates resultv4 and all3stable projections/comparisons before normal observed outcome; preserve measured roster disagreements as data, keep profile acceptance and every authority false."
+    },
+    {
+      "lines": "329-350",
+      "purpose": "Authenticate current source/input/config bytes, interpreter and environment; output existence check must use selected closed newoutput, never overwrite02. Keep normal deadline/closure terminal requirements."
+    }
+  ],
+  "recommended_new_epoch": {
+    "configuration_kind": "puck-cpu-runtime-characterization-v2",
+    "configuration_version": 2,
+    "fields": "Retain exact existing10 top-level fields; roles/sources/inputs differ only through a closed v2 branch.",
+    "inputs": "Old02inputs42 unchanged +14old02sourcecaps +6old02anchors +1sourceproposal =63 exact sorted unique pins, assuming only these new roles. Existing accepted16/prior01source14/prior02source14 capsules total44. New rolecount19.",
+    "new_plan": "docs/plans/puck-cpu-distributed-roster-observation-01-proposal.md",
+    "output": "runs/puck-cpu-runtime-characterization-03",
+    "parent_result_kind": "puck-cpu-characterization-outcome-v2",
+    "parent_result_version": "If explicit version/id added, freeze exact values and retain legacyv1 absence; no arbitrary numbering.",
+    "request_addition": "distributed_expected: exact3fixedfullnames -> sorted distinct nonempty lists <=4096names <=512characters; derive exactlists from pinned sourceproposal only.",
+    "site_root": "runs/puck-cpu-install-01/site",
+    "source_epoch_rule": "No historical PASS is assigned to changed worker/parent/control source. Archive old02 sourcebytes; current sourcepins authenticate new implementation separately. Preserve old result/report/audit/index/terminal bytes, 01failedhistory and all held01-04 outcomes.",
+    "sources": "Recommended closed source set19: old14 with oldv2plan replaced by newproposal plan +new ordinary observer/new standalone auditor2 +3 immutable archived auditor-support files, if those helpers are reused. Use exact roster; recalculate only if implementation removes helper dependencies.",
+    "worker_addition": "distributed_exports only for requestv3; v1/v2 output/keyabsence unchanged.",
+    "worker_profile": "cpu-distributed-terminal-v1",
+    "worker_request_kind": "puck-runtime-import-characterization-v3",
+    "worker_request_version": 3,
+    "worker_result_kind": "puck-runtime-import-characterization-result-v4",
+    "worker_result_version": 4
+  },
+  "remaining_decisions": [
+    "Confirm finalnewsourceclosure19 vs standaloneauditor dependencyremoval;63inputcount applies to stated6anchors+1proposal design.",
+    "Bind existing proposal branchsets11/69/29 from archived review.json; measured disagreement remainsdata andnever mutates thisinput.",
+    "Define exactexternalobservernormal/hard/cleanup timings and transportstreamceilings consistentwith195s parenthardbound beforeactualcontrols.",
+    "Explicit read-only auditor may validate scopedhistorical02 proof and currentinstalledbytes; this does not reuse old02sourceproof fornewbytes or authorizeheld/scientificexecution."
+  ],
+  "root": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03",
+  "scope": "read-only implementation mapping; not executable configuration or actual allocation",
+  "strict_report_validation": [
+    "Parse bounded canonical JSON with duplicate/nonfinite/type/unknown-field rejection for new schema; oneMiB complete report and256KiB projection ceilings.",
+    "Require exactv4/kind/profile, source_sha/request_sha/environment_sha, pycacheprefix and4ordered exactversions; noerror/error_type/observation_errors/environmentdelta for success; boundedfinite times.",
+    "Require exactly3fixedrows, exactchildcache/rawpathidentities actually checked by frozenworker, exactplain-module type and bounded raw name/file/loader/spec/package/type metadata; validstable terminal check flag.",
+    "Validate sorted distinct raw direct dispatch names/categories; cap raw dictionary anddispatch4096 each, names512characters, metadata4096, types512, depth4. Reject truncation/partial/absentchildren.",
+    "Independently reconstruct expectedlists from pinnedproposal and exact missing/extra sets. Mismatch may pass completeobservation; profile acceptance andruntime/native/collection/study/executableauthority remainfalse.",
+    "Check worker stdout receipt against rawreport bytes/hash/status, retainedparent config/result/source bindings, probe+worker supervision/closure and normal external transport. Do not interpret ephemeral objectIDs as independently re-observed memory identity."
+  ],
+  "tests_and_fixture_reuse": [
+    {
+      "path": "tests/test_puck_runtime_characterization.py",
+      "reuse": "Rootowned worker tests; preserve oldrequestv1/v2 behavior and result-keyabsence; test v3 capture beforecache/maps and finalrecheck, malformedbounds/hooks, complete mismatches."
+    },
+    {
+      "path": "tests/test_puck_cpu_characterization_parent.py:20-36,110-174",
+      "reuse": "Keep legacy02 14sources/42inputs/12roles assertions. New separate file tests/test_puck_cpu_distributed_observation_epoch.py covers closedv2 epoch,63-rowderived closure, fixedproposal expectedsets, historical02 anchor/hash-rebound semantic negatives, legacyepoch refusals."
+    },
+    {
+      "path": "tests/test_puck_cpu_characterization_parent.py:66-86",
+      "reuse": "Existing realbwrapnamespace+4authoredimport fixture is reusable seam; extend opt-in syntheticTorch _C/3children metadata only, preservingdefaultoldworkerrequest. It currently DOES NOT exercise full CPUparentexecute or independentauditor."
+    },
+    {
+      "path": "tests/test_puck_cpu_held_parent_integration.py:28-45,48-208 and tests/test_puck_cpu_held_amendment05_integration.py",
+      "reuse": "Patterns for authoredself-consistent installationmetadata, isolatedclonedparent, separateCLItransport, independentAPI/CLIaudit, reboundtamper, bytepreservation/reentry/cleanup. They are held-only, not drop-in ordinary integration fixtures. Existing ordinaryparent hardcoded27,225files/2,074dirs/1,304,701,872B means full smallfixture needs transparentreversible testclone count/flooradaptations, never a productionauthored bypass."
+    }
+  ]
+}

@@ -1,0 +1,134 @@
+{
+  "artifacts": [
+    {
+      "original": "runs/source-validation/distributed-observer/green-01.log",
+      "path": "green-01.log",
+      "sha256": "fe20e004bd2ff33f27e04efc5ac4f15db55ae472edfccd810a5c014e3b729637",
+      "size_bytes": 2805
+    },
+    {
+      "original": "runs/source-validation/distributed-observer/green-02.log",
+      "path": "green-02.log",
+      "sha256": "adafab16970cc7a644b4990f840f8f372d5338a6f3590b17db15f8eb070245af",
+      "size_bytes": 99
+    },
+    {
+      "original": "runs/source-validation/distributed-observer/green-03.log",
+      "path": "green-03.log",
+      "sha256": "9c35d487dfdfc4896cb1b24ad7eaf6b14195c1f9a7f8dc7aff10f4331c2d29b2",
+      "size_bytes": 99
+    },
+    {
+      "original": "runs/source-validation/distributed-observer/green-04.log",
+      "path": "green-04.log",
+      "sha256": "f4677acf293e2974a609225b1b72e1fb25fc3bcdf564cfb232f68cc080e7bfd7",
+      "size_bytes": 99
+    },
+    {
+      "original": "runs/source-validation/distributed-observer/green-05-cli-paths.log",
+      "path": "green-05-cli-paths.log",
+      "sha256": "00528b4a11c8125f82bb5c06360fca96a06b20b89eabd37ab48ca8bcc5a019fc",
+      "size_bytes": 99
+    },
+    {
+      "original": "runs/source-validation/distributed-observer/red-01.log",
+      "path": "red-01.log",
+      "sha256": "c83ca3960a461ab5e3b28d55f1add4cf937ab7f3fd442eb7c9ca71a0700fdd57",
+      "size_bytes": 889
+    },
+    {
+      "original": "runs/source-validation/distributed-observer/red-02.log",
+      "path": "red-02.log",
+      "sha256": "e4cdc04f72027df22e48c204e2a3e98e1bab2551cc16c32991f0da20c30e7c35",
+      "size_bytes": 81569
+    },
+    {
+      "original": "runs/source-validation/distributed-observer/red-03-paths.log",
+      "path": "red-03-paths.log",
+      "sha256": "e09f518aa430e1d5afffb8b5bd76215d0160e03ce7c1f8ea5c9325963303e1d3",
+      "size_bytes": 5520
+    },
+    {
+      "original": "runs/source-validation/distributed-observer/red-04-directory.log",
+      "path": "red-04-directory.log",
+      "sha256": "91177b5ae8e2457b8ebd08b1ce8da59d27ab4a0bcc8d5af081948ed4b4cc3237",
+      "size_bytes": 2536
+    },
+    {
+      "original": "runs/source-validation/distributed-observer/red-05-stream-limit.log",
+      "path": "red-05-stream-limit.log",
+      "sha256": "185db92f81700bb49831e80794fc989c3ba6a61148182230c6d3d531d8bccceb",
+      "size_bytes": 1966
+    },
+    {
+      "original": "runs/source-validation/distributed-observer/root-review-01/command.json",
+      "path": "root-review-01/command.json",
+      "sha256": "d6ff7095daed47efd82a6ffb1ddf8c8bbdb06d411fcbf3bd41216750247915df",
+      "size_bytes": 583
+    },
+    {
+      "original": "runs/source-validation/distributed-observer/root-review-01/result.json",
+      "path": "root-review-01/result.json",
+      "sha256": "4312f2f82fb8415e3cdec62786b39f0c66a6a422f5a7414f86f7f5a5054e33a4",
+      "size_bytes": 92
+    },
+    {
+      "original": "runs/source-validation/distributed-observer/root-review-01/stderr.txt",
+      "path": "root-review-01/stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    {
+      "original": "runs/source-validation/distributed-observer/root-review-01/stdout.txt",
+      "path": "root-review-01/stdout.txt",
+      "sha256": "b425fcb9941bcda1f89856d0bc509fec814101b9bda20a132742be9dec0dfce1",
+      "size_bytes": 99
+    },
+    {
+      "original": "runs/source-validation/distributed-observer/root-review-02/command.json",
+      "path": "root-review-02/command.json",
+      "sha256": "a1aff1c4158791ab50efc8eaa5cb78724912f02fdc0dac570c1faf3c316124a6",
+      "size_bytes": 583
+    },
+    {
+      "original": "runs/source-validation/distributed-observer/root-review-02/result.json",
+      "path": "root-review-02/result.json",
+      "sha256": "7b7e3480a13f5defee33fd57cc0fc4d553ccc7da8a4d0bcb2b86f6032b289be6",
+      "size_bytes": 92
+    },
+    {
+      "original": "runs/source-validation/distributed-observer/root-review-02/stderr.txt",
+      "path": "root-review-02/stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    {
+      "original": "runs/source-validation/distributed-observer/root-review-02/stdout.txt",
+      "path": "root-review-02/stdout.txt",
+      "sha256": "ab531505c4b8e7d47417548d513fb023be36a71898b4a1a9c8c51c5890340aef",
+      "size_bytes": 99
+    }
+  ],
+  "collection_authorized": false,
+  "executable": false,
+  "kind": "puck-cpu-distributed-observer-source-evidence-v1",
+  "native_authorized": false,
+  "qualification_claims": [],
+  "runtime_qualified": false,
+  "scope": "authored external observer component only",
+  "source_commit": "e2f32423ca88ce5d021aa946109e992a39c5dfc0",
+  "sources": [
+    {
+      "path": "scripts/observe_puck_cpu_runtime_characterization.py",
+      "sha256": "35f969bf9288d5ba079c2a84c8e868a62f3e432a2a15b1c94599ce8817121d0b",
+      "size_bytes": 16239
+    },
+    {
+      "path": "tests/test_puck_cpu_distributed_observer.py",
+      "sha256": "bfed3c00edcb886797c1d3ca2eda0fe78ea1a126b527db2c8145dd2db5a8326f",
+      "size_bytes": 18428
+    }
+  ],
+  "study_authorized": false,
+  "version": 1
+}

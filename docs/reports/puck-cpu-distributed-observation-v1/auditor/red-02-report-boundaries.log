@@ -1,0 +1,34 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+______________ test_pid_namespace_init_report_has_zero_parent_pid ______________
+
+    def test_pid_namespace_init_report_has_zero_parent_pid():
+        module = api(); value = report(module); value.update(pid=1, ppid=0)
+>       module.validate_report(value, expected(), 'a' * 64, 'b' * 64)
+
+tests/test_puck_cpu_distributed_observation_audit.py:167: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+scripts/audit_puck_cpu_runtime_characterization.py:307: in validate_report
+    require(report['kind'] == 'puck-runtime-import-characterization-result-v4' and type(report['version']) is int
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+condition = False, message = 'Complete four-import worker binding differs'
+
+    def require(condition, message):
+        if not condition:
+>           raise ValueError(message)
+E           ValueError: Complete four-import worker binding differs
+
+scripts/audit_puck_cpu_runtime_characterization.py:112: ValueError
+____________ test_report_must_finish_before_normal_parent_deadline _____________
+
+    def test_report_must_finish_before_normal_parent_deadline():
+        module = api(); value = report(module); value['seconds'] = 180
+>       with pytest.raises(ValueError): module.validate_report(value, expected(), 'a' * 64, 'b' * 64)
+E       Failed: DID NOT RAISE <class 'ValueError'>
+
+tests/test_puck_cpu_distributed_observation_audit.py:172: Failed
+=========================== short test summary info ============================
+FAILED tests/test_puck_cpu_distributed_observation_audit.py::test_pid_namespace_init_report_has_zero_parent_pid
+FAILED tests/test_puck_cpu_distributed_observation_audit.py::test_report_must_finish_before_normal_parent_deadline
+2 failed, 76 deselected in 0.09s

@@ -1,0 +1,36 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+___ test_api_file_limit_preserves_failure_receipt_instead_of_unbounded_read ____
+
+tmp_path = PosixPath('/tmp/pytest-of-utkarsh/pytest-476/test_api_file_limit_preserves_0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7d08e2f9df90>
+
+    def test_api_file_limit_preserves_failure_receipt_instead_of_unbounded_read(tmp_path, monkeypatch):
+        body = 'import os\nfor i in range(18): os.write(1,b"x"*(1024**2))\n'
+        module, path, config = fixture(tmp_path, monkeypatch, body)
+>       result = module.observe(path, save(path, config))
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_puck_cpu_distributed_observer.py:351: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+scripts/observe_puck_cpu_runtime_characterization.py:292: in observe
+    raw = read(path, MAX_STREAM_BYTES)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+relative = 'runs/puck-cpu-runtime-characterization-03-external-cli.stdout'
+maximum = 16777216
+
+    def read(relative, maximum):
+        fd = _open(relative, os.O_RDONLY)
+        try:
+            before = os.fstat(fd)
+            if (not stat.S_ISREG(before.st_mode) or before.st_nlink != 1
+                    or not 0 <= before.st_size <= maximum):
+>               raise ValueError('Bounded single-link regular CPU transport data required')
+E               ValueError: Bounded single-link regular CPU transport data required
+
+scripts/observe_puck_cpu_runtime_characterization.py:73: ValueError
+=========================== short test summary info ============================
+FAILED tests/test_puck_cpu_distributed_observer.py::test_api_file_limit_preserves_failure_receipt_instead_of_unbounded_read
+1 failed, 54 deselected in 0.20s

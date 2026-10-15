@@ -1,0 +1,619 @@
+FFFFFFFFFFFFFFFFFFFFF..FFF                                               [100%]
+=================================== FAILURES ===================================
+_ test_child_cache_metadata_and_exceptional_edges_cannot_contradict_projection[file-torch._C._distributed_autograd] _
+
+name = 'torch._C._distributed_autograd', change = 'file'
+
+    @pytest.mark.parametrize('name', NAMES)
+    @pytest.mark.parametrize('change', ['file', 'spec-name', 'spec-origin', 'spec-type', 'missing-edge', 'attribute', 'producer'])
+    def test_child_cache_metadata_and_exceptional_edges_cannot_contradict_projection(name, change):
+        module = api(); value = report(module)
+        child = next(row for row in value['distributed_exports']['modules'] if row['name'] == name)
+        cached = next(row for row in value['cache']['modules'] if row['name'] == name)
+        if change == 'file': child['metadata']['file'] = '/AUTHORED/different.so'
+        elif change in ('spec-name', 'spec-origin'):
+            child['metadata']['spec'] = dict(name='different' if change == 'spec-name' else None,
+                origin='/different' if change == 'spec-origin' else None, loader_type=None, submodule_search_locations=None)
+        elif change == 'spec-type': cached['spec_type'] = 'authored.SpecSubclass'
+        elif change == 'missing-edge': cached['exports'] = []
+        elif change == 'attribute': cached['exports'][0]['attribute'] = 'different'
+        else: cached['exports'][0]['producer'] = 'different'
+>       with pytest.raises(ValueError): module.validate_report(value, expected(), 'a' * 64, 'b' * 64)
+E       Failed: DID NOT RAISE <class 'ValueError'>
+
+tests/test_puck_cpu_distributed_observation_audit.py:210: Failed
+_ test_child_cache_metadata_and_exceptional_edges_cannot_contradict_projection[file-torch._C._distributed_c10d] _
+
+name = 'torch._C._distributed_c10d', change = 'file'
+
+    @pytest.mark.parametrize('name', NAMES)
+    @pytest.mark.parametrize('change', ['file', 'spec-name', 'spec-origin', 'spec-type', 'missing-edge', 'attribute', 'producer'])
+    def test_child_cache_metadata_and_exceptional_edges_cannot_contradict_projection(name, change):
+        module = api(); value = report(module)
+        child = next(row for row in value['distributed_exports']['modules'] if row['name'] == name)
+        cached = next(row for row in value['cache']['modules'] if row['name'] == name)
+        if change == 'file': child['metadata']['file'] = '/AUTHORED/different.so'
+        elif change in ('spec-name', 'spec-origin'):
+            child['metadata']['spec'] = dict(name='different' if change == 'spec-name' else None,
+                origin='/different' if change == 'spec-origin' else None, loader_type=None, submodule_search_locations=None)
+        elif change == 'spec-type': cached['spec_type'] = 'authored.SpecSubclass'
+        elif change == 'missing-edge': cached['exports'] = []
+        elif change == 'attribute': cached['exports'][0]['attribute'] = 'different'
+        else: cached['exports'][0]['producer'] = 'different'
+>       with pytest.raises(ValueError): module.validate_report(value, expected(), 'a' * 64, 'b' * 64)
+E       Failed: DID NOT RAISE <class 'ValueError'>
+
+tests/test_puck_cpu_distributed_observation_audit.py:210: Failed
+_ test_child_cache_metadata_and_exceptional_edges_cannot_contradict_projection[file-torch._C._distributed_rpc] _
+
+name = 'torch._C._distributed_rpc', change = 'file'
+
+    @pytest.mark.parametrize('name', NAMES)
+    @pytest.mark.parametrize('change', ['file', 'spec-name', 'spec-origin', 'spec-type', 'missing-edge', 'attribute', 'producer'])
+    def test_child_cache_metadata_and_exceptional_edges_cannot_contradict_projection(name, change):
+        module = api(); value = report(module)
+        child = next(row for row in value['distributed_exports']['modules'] if row['name'] == name)
+        cached = next(row for row in value['cache']['modules'] if row['name'] == name)
+        if change == 'file': child['metadata']['file'] = '/AUTHORED/different.so'
+        elif change in ('spec-name', 'spec-origin'):
+            child['metadata']['spec'] = dict(name='different' if change == 'spec-name' else None,
+                origin='/different' if change == 'spec-origin' else None, loader_type=None, submodule_search_locations=None)
+        elif change == 'spec-type': cached['spec_type'] = 'authored.SpecSubclass'
+        elif change == 'missing-edge': cached['exports'] = []
+        elif change == 'attribute': cached['exports'][0]['attribute'] = 'different'
+        else: cached['exports'][0]['producer'] = 'different'
+>       with pytest.raises(ValueError): module.validate_report(value, expected(), 'a' * 64, 'b' * 64)
+E       Failed: DID NOT RAISE <class 'ValueError'>
+
+tests/test_puck_cpu_distributed_observation_audit.py:210: Failed
+_ test_child_cache_metadata_and_exceptional_edges_cannot_contradict_projection[spec-name-torch._C._distributed_autograd] _
+
+name = 'torch._C._distributed_autograd', change = 'spec-name'
+
+    @pytest.mark.parametrize('name', NAMES)
+    @pytest.mark.parametrize('change', ['file', 'spec-name', 'spec-origin', 'spec-type', 'missing-edge', 'attribute', 'producer'])
+    def test_child_cache_metadata_and_exceptional_edges_cannot_contradict_projection(name, change):
+        module = api(); value = report(module)
+        child = next(row for row in value['distributed_exports']['modules'] if row['name'] == name)
+        cached = next(row for row in value['cache']['modules'] if row['name'] == name)
+        if change == 'file': child['metadata']['file'] = '/AUTHORED/different.so'
+        elif change in ('spec-name', 'spec-origin'):
+            child['metadata']['spec'] = dict(name='different' if change == 'spec-name' else None,
+                origin='/different' if change == 'spec-origin' else None, loader_type=None, submodule_search_locations=None)
+        elif change == 'spec-type': cached['spec_type'] = 'authored.SpecSubclass'
+        elif change == 'missing-edge': cached['exports'] = []
+        elif change == 'attribute': cached['exports'][0]['attribute'] = 'different'
+        else: cached['exports'][0]['producer'] = 'different'
+>       with pytest.raises(ValueError): module.validate_report(value, expected(), 'a' * 64, 'b' * 64)
+E       Failed: DID NOT RAISE <class 'ValueError'>
+
+tests/test_puck_cpu_distributed_observation_audit.py:210: Failed
+_ test_child_cache_metadata_and_exceptional_edges_cannot_contradict_projection[spec-name-torch._C._distributed_c10d] _
+
+name = 'torch._C._distributed_c10d', change = 'spec-name'
+
+    @pytest.mark.parametrize('name', NAMES)
+    @pytest.mark.parametrize('change', ['file', 'spec-name', 'spec-origin', 'spec-type', 'missing-edge', 'attribute', 'producer'])
+    def test_child_cache_metadata_and_exceptional_edges_cannot_contradict_projection(name, change):
+        module = api(); value = report(module)
+        child = next(row for row in value['distributed_exports']['modules'] if row['name'] == name)
+        cached = next(row for row in value['cache']['modules'] if row['name'] == name)
+        if change == 'file': child['metadata']['file'] = '/AUTHORED/different.so'
+        elif change in ('spec-name', 'spec-origin'):
+            child['metadata']['spec'] = dict(name='different' if change == 'spec-name' else None,
+                origin='/different' if change == 'spec-origin' else None, loader_type=None, submodule_search_locations=None)
+        elif change == 'spec-type': cached['spec_type'] = 'authored.SpecSubclass'
+        elif change == 'missing-edge': cached['exports'] = []
+        elif change == 'attribute': cached['exports'][0]['attribute'] = 'different'
+        else: cached['exports'][0]['producer'] = 'different'
+>       with pytest.raises(ValueError): module.validate_report(value, expected(), 'a' * 64, 'b' * 64)
+E       Failed: DID NOT RAISE <class 'ValueError'>
+
+tests/test_puck_cpu_distributed_observation_audit.py:210: Failed
+_ test_child_cache_metadata_and_exceptional_edges_cannot_contradict_projection[spec-name-torch._C._distributed_rpc] _
+
+name = 'torch._C._distributed_rpc', change = 'spec-name'
+
+    @pytest.mark.parametrize('name', NAMES)
+    @pytest.mark.parametrize('change', ['file', 'spec-name', 'spec-origin', 'spec-type', 'missing-edge', 'attribute', 'producer'])
+    def test_child_cache_metadata_and_exceptional_edges_cannot_contradict_projection(name, change):
+        module = api(); value = report(module)
+        child = next(row for row in value['distributed_exports']['modules'] if row['name'] == name)
+        cached = next(row for row in value['cache']['modules'] if row['name'] == name)
+        if change == 'file': child['metadata']['file'] = '/AUTHORED/different.so'
+        elif change in ('spec-name', 'spec-origin'):
+            child['metadata']['spec'] = dict(name='different' if change == 'spec-name' else None,
+                origin='/different' if change == 'spec-origin' else None, loader_type=None, submodule_search_locations=None)
+        elif change == 'spec-type': cached['spec_type'] = 'authored.SpecSubclass'
+        elif change == 'missing-edge': cached['exports'] = []
+        elif change == 'attribute': cached['exports'][0]['attribute'] = 'different'
+        else: cached['exports'][0]['producer'] = 'different'
+>       with pytest.raises(ValueError): module.validate_report(value, expected(), 'a' * 64, 'b' * 64)
+E       Failed: DID NOT RAISE <class 'ValueError'>
+
+tests/test_puck_cpu_distributed_observation_audit.py:210: Failed
+_ test_child_cache_metadata_and_exceptional_edges_cannot_contradict_projection[spec-origin-torch._C._distributed_autograd] _
+
+name = 'torch._C._distributed_autograd', change = 'spec-origin'
+
+    @pytest.mark.parametrize('name', NAMES)
+    @pytest.mark.parametrize('change', ['file', 'spec-name', 'spec-origin', 'spec-type', 'missing-edge', 'attribute', 'producer'])
+    def test_child_cache_metadata_and_exceptional_edges_cannot_contradict_projection(name, change):
+        module = api(); value = report(module)
+        child = next(row for row in value['distributed_exports']['modules'] if row['name'] == name)
+        cached = next(row for row in value['cache']['modules'] if row['name'] == name)
+        if change == 'file': child['metadata']['file'] = '/AUTHORED/different.so'
+        elif change in ('spec-name', 'spec-origin'):
+            child['metadata']['spec'] = dict(name='different' if change == 'spec-name' else None,
+                origin='/different' if change == 'spec-origin' else None, loader_type=None, submodule_search_locations=None)
+        elif change == 'spec-type': cached['spec_type'] = 'authored.SpecSubclass'
+        elif change == 'missing-edge': cached['exports'] = []
+        elif change == 'attribute': cached['exports'][0]['attribute'] = 'different'
+        else: cached['exports'][0]['producer'] = 'different'
+>       with pytest.raises(ValueError): module.validate_report(value, expected(), 'a' * 64, 'b' * 64)
+E       Failed: DID NOT RAISE <class 'ValueError'>
+
+tests/test_puck_cpu_distributed_observation_audit.py:210: Failed
+_ test_child_cache_metadata_and_exceptional_edges_cannot_contradict_projection[spec-origin-torch._C._distributed_c10d] _
+
+name = 'torch._C._distributed_c10d', change = 'spec-origin'
+
+    @pytest.mark.parametrize('name', NAMES)
+    @pytest.mark.parametrize('change', ['file', 'spec-name', 'spec-origin', 'spec-type', 'missing-edge', 'attribute', 'producer'])
+    def test_child_cache_metadata_and_exceptional_edges_cannot_contradict_projection(name, change):
+        module = api(); value = report(module)
+        child = next(row for row in value['distributed_exports']['modules'] if row['name'] == name)
+        cached = next(row for row in value['cache']['modules'] if row['name'] == name)
+        if change == 'file': child['metadata']['file'] = '/AUTHORED/different.so'
+        elif change in ('spec-name', 'spec-origin'):
+            child['metadata']['spec'] = dict(name='different' if change == 'spec-name' else None,
+                origin='/different' if change == 'spec-origin' else None, loader_type=None, submodule_search_locations=None)
+        elif change == 'spec-type': cached['spec_type'] = 'authored.SpecSubclass'
+        elif change == 'missing-edge': cached['exports'] = []
+        elif change == 'attribute': cached['exports'][0]['attribute'] = 'different'
+        else: cached['exports'][0]['producer'] = 'different'
+>       with pytest.raises(ValueError): module.validate_report(value, expected(), 'a' * 64, 'b' * 64)
+E       Failed: DID NOT RAISE <class 'ValueError'>
+
+tests/test_puck_cpu_distributed_observation_audit.py:210: Failed
+_ test_child_cache_metadata_and_exceptional_edges_cannot_contradict_projection[spec-origin-torch._C._distributed_rpc] _
+
+name = 'torch._C._distributed_rpc', change = 'spec-origin'
+
+    @pytest.mark.parametrize('name', NAMES)
+    @pytest.mark.parametrize('change', ['file', 'spec-name', 'spec-origin', 'spec-type', 'missing-edge', 'attribute', 'producer'])
+    def test_child_cache_metadata_and_exceptional_edges_cannot_contradict_projection(name, change):
+        module = api(); value = report(module)
+        child = next(row for row in value['distributed_exports']['modules'] if row['name'] == name)
+        cached = next(row for row in value['cache']['modules'] if row['name'] == name)
+        if change == 'file': child['metadata']['file'] = '/AUTHORED/different.so'
+        elif change in ('spec-name', 'spec-origin'):
+            child['metadata']['spec'] = dict(name='different' if change == 'spec-name' else None,
+                origin='/different' if change == 'spec-origin' else None, loader_type=None, submodule_search_locations=None)
+        elif change == 'spec-type': cached['spec_type'] = 'authored.SpecSubclass'
+        elif change == 'missing-edge': cached['exports'] = []
+        elif change == 'attribute': cached['exports'][0]['attribute'] = 'different'
+        else: cached['exports'][0]['producer'] = 'different'
+>       with pytest.raises(ValueError): module.validate_report(value, expected(), 'a' * 64, 'b' * 64)
+E       Failed: DID NOT RAISE <class 'ValueError'>
+
+tests/test_puck_cpu_distributed_observation_audit.py:210: Failed
+_ test_child_cache_metadata_and_exceptional_edges_cannot_contradict_projection[spec-type-torch._C._distributed_autograd] _
+
+name = 'torch._C._distributed_autograd', change = 'spec-type'
+
+    @pytest.mark.parametrize('name', NAMES)
+    @pytest.mark.parametrize('change', ['file', 'spec-name', 'spec-origin', 'spec-type', 'missing-edge', 'attribute', 'producer'])
+    def test_child_cache_metadata_and_exceptional_edges_cannot_contradict_projection(name, change):
+        module = api(); value = report(module)
+        child = next(row for row in value['distributed_exports']['modules'] if row['name'] == name)
+        cached = next(row for row in value['cache']['modules'] if row['name'] == name)
+        if change == 'file': child['metadata']['file'] = '/AUTHORED/different.so'
+        elif change in ('spec-name', 'spec-origin'):
+            child['metadata']['spec'] = dict(name='different' if change == 'spec-name' else None,
+                origin='/different' if change == 'spec-origin' else None, loader_type=None, submodule_search_locations=None)
+        elif change == 'spec-type': cached['spec_type'] = 'authored.SpecSubclass'
+        elif change == 'missing-edge': cached['exports'] = []
+        elif change == 'attribute': cached['exports'][0]['attribute'] = 'different'
+        else: cached['exports'][0]['producer'] = 'different'
+>       with pytest.raises(ValueError): module.validate_report(value, expected(), 'a' * 64, 'b' * 64)
+E       Failed: DID NOT RAISE <class 'ValueError'>
+
+tests/test_puck_cpu_distributed_observation_audit.py:210: Failed
+_ test_child_cache_metadata_and_exceptional_edges_cannot_contradict_projection[spec-type-torch._C._distributed_c10d] _
+
+name = 'torch._C._distributed_c10d', change = 'spec-type'
+
+    @pytest.mark.parametrize('name', NAMES)
+    @pytest.mark.parametrize('change', ['file', 'spec-name', 'spec-origin', 'spec-type', 'missing-edge', 'attribute', 'producer'])
+    def test_child_cache_metadata_and_exceptional_edges_cannot_contradict_projection(name, change):
+        module = api(); value = report(module)
+        child = next(row for row in value['distributed_exports']['modules'] if row['name'] == name)
+        cached = next(row for row in value['cache']['modules'] if row['name'] == name)
+        if change == 'file': child['metadata']['file'] = '/AUTHORED/different.so'
+        elif change in ('spec-name', 'spec-origin'):
+            child['metadata']['spec'] = dict(name='different' if change == 'spec-name' else None,
+                origin='/different' if change == 'spec-origin' else None, loader_type=None, submodule_search_locations=None)
+        elif change == 'spec-type': cached['spec_type'] = 'authored.SpecSubclass'
+        elif change == 'missing-edge': cached['exports'] = []
+        elif change == 'attribute': cached['exports'][0]['attribute'] = 'different'
+        else: cached['exports'][0]['producer'] = 'different'
+>       with pytest.raises(ValueError): module.validate_report(value, expected(), 'a' * 64, 'b' * 64)
+E       Failed: DID NOT RAISE <class 'ValueError'>
+
+tests/test_puck_cpu_distributed_observation_audit.py:210: Failed
+_ test_child_cache_metadata_and_exceptional_edges_cannot_contradict_projection[spec-type-torch._C._distributed_rpc] _
+
+name = 'torch._C._distributed_rpc', change = 'spec-type'
+
+    @pytest.mark.parametrize('name', NAMES)
+    @pytest.mark.parametrize('change', ['file', 'spec-name', 'spec-origin', 'spec-type', 'missing-edge', 'attribute', 'producer'])
+    def test_child_cache_metadata_and_exceptional_edges_cannot_contradict_projection(name, change):
+        module = api(); value = report(module)
+        child = next(row for row in value['distributed_exports']['modules'] if row['name'] == name)
+        cached = next(row for row in value['cache']['modules'] if row['name'] == name)
+        if change == 'file': child['metadata']['file'] = '/AUTHORED/different.so'
+        elif change in ('spec-name', 'spec-origin'):
+            child['metadata']['spec'] = dict(name='different' if change == 'spec-name' else None,
+                origin='/different' if change == 'spec-origin' else None, loader_type=None, submodule_search_locations=None)
+        elif change == 'spec-type': cached['spec_type'] = 'authored.SpecSubclass'
+        elif change == 'missing-edge': cached['exports'] = []
+        elif change == 'attribute': cached['exports'][0]['attribute'] = 'different'
+        else: cached['exports'][0]['producer'] = 'different'
+>       with pytest.raises(ValueError): module.validate_report(value, expected(), 'a' * 64, 'b' * 64)
+E       Failed: DID NOT RAISE <class 'ValueError'>
+
+tests/test_puck_cpu_distributed_observation_audit.py:210: Failed
+_ test_child_cache_metadata_and_exceptional_edges_cannot_contradict_projection[missing-edge-torch._C._distributed_autograd] _
+
+name = 'torch._C._distributed_autograd', change = 'missing-edge'
+
+    @pytest.mark.parametrize('name', NAMES)
+    @pytest.mark.parametrize('change', ['file', 'spec-name', 'spec-origin', 'spec-type', 'missing-edge', 'attribute', 'producer'])
+    def test_child_cache_metadata_and_exceptional_edges_cannot_contradict_projection(name, change):
+        module = api(); value = report(module)
+        child = next(row for row in value['distributed_exports']['modules'] if row['name'] == name)
+        cached = next(row for row in value['cache']['modules'] if row['name'] == name)
+        if change == 'file': child['metadata']['file'] = '/AUTHORED/different.so'
+        elif change in ('spec-name', 'spec-origin'):
+            child['metadata']['spec'] = dict(name='different' if change == 'spec-name' else None,
+                origin='/different' if change == 'spec-origin' else None, loader_type=None, submodule_search_locations=None)
+        elif change == 'spec-type': cached['spec_type'] = 'authored.SpecSubclass'
+        elif change == 'missing-edge': cached['exports'] = []
+        elif change == 'attribute': cached['exports'][0]['attribute'] = 'different'
+        else: cached['exports'][0]['producer'] = 'different'
+>       with pytest.raises(ValueError): module.validate_report(value, expected(), 'a' * 64, 'b' * 64)
+E       Failed: DID NOT RAISE <class 'ValueError'>
+
+tests/test_puck_cpu_distributed_observation_audit.py:210: Failed
+_ test_child_cache_metadata_and_exceptional_edges_cannot_contradict_projection[missing-edge-torch._C._distributed_c10d] _
+
+name = 'torch._C._distributed_c10d', change = 'missing-edge'
+
+    @pytest.mark.parametrize('name', NAMES)
+    @pytest.mark.parametrize('change', ['file', 'spec-name', 'spec-origin', 'spec-type', 'missing-edge', 'attribute', 'producer'])
+    def test_child_cache_metadata_and_exceptional_edges_cannot_contradict_projection(name, change):
+        module = api(); value = report(module)
+        child = next(row for row in value['distributed_exports']['modules'] if row['name'] == name)
+        cached = next(row for row in value['cache']['modules'] if row['name'] == name)
+        if change == 'file': child['metadata']['file'] = '/AUTHORED/different.so'
+        elif change in ('spec-name', 'spec-origin'):
+            child['metadata']['spec'] = dict(name='different' if change == 'spec-name' else None,
+                origin='/different' if change == 'spec-origin' else None, loader_type=None, submodule_search_locations=None)
+        elif change == 'spec-type': cached['spec_type'] = 'authored.SpecSubclass'
+        elif change == 'missing-edge': cached['exports'] = []
+        elif change == 'attribute': cached['exports'][0]['attribute'] = 'different'
+        else: cached['exports'][0]['producer'] = 'different'
+>       with pytest.raises(ValueError): module.validate_report(value, expected(), 'a' * 64, 'b' * 64)
+E       Failed: DID NOT RAISE <class 'ValueError'>
+
+tests/test_puck_cpu_distributed_observation_audit.py:210: Failed
+_ test_child_cache_metadata_and_exceptional_edges_cannot_contradict_projection[missing-edge-torch._C._distributed_rpc] _
+
+name = 'torch._C._distributed_rpc', change = 'missing-edge'
+
+    @pytest.mark.parametrize('name', NAMES)
+    @pytest.mark.parametrize('change', ['file', 'spec-name', 'spec-origin', 'spec-type', 'missing-edge', 'attribute', 'producer'])
+    def test_child_cache_metadata_and_exceptional_edges_cannot_contradict_projection(name, change):
+        module = api(); value = report(module)
+        child = next(row for row in value['distributed_exports']['modules'] if row['name'] == name)
+        cached = next(row for row in value['cache']['modules'] if row['name'] == name)
+        if change == 'file': child['metadata']['file'] = '/AUTHORED/different.so'
+        elif change in ('spec-name', 'spec-origin'):
+            child['metadata']['spec'] = dict(name='different' if change == 'spec-name' else None,
+                origin='/different' if change == 'spec-origin' else None, loader_type=None, submodule_search_locations=None)
+        elif change == 'spec-type': cached['spec_type'] = 'authored.SpecSubclass'
+        elif change == 'missing-edge': cached['exports'] = []
+        elif change == 'attribute': cached['exports'][0]['attribute'] = 'different'
+        else: cached['exports'][0]['producer'] = 'different'
+>       with pytest.raises(ValueError): module.validate_report(value, expected(), 'a' * 64, 'b' * 64)
+E       Failed: DID NOT RAISE <class 'ValueError'>
+
+tests/test_puck_cpu_distributed_observation_audit.py:210: Failed
+_ test_child_cache_metadata_and_exceptional_edges_cannot_contradict_projection[attribute-torch._C._distributed_autograd] _
+
+name = 'torch._C._distributed_autograd', change = 'attribute'
+
+    @pytest.mark.parametrize('name', NAMES)
+    @pytest.mark.parametrize('change', ['file', 'spec-name', 'spec-origin', 'spec-type', 'missing-edge', 'attribute', 'producer'])
+    def test_child_cache_metadata_and_exceptional_edges_cannot_contradict_projection(name, change):
+        module = api(); value = report(module)
+        child = next(row for row in value['distributed_exports']['modules'] if row['name'] == name)
+        cached = next(row for row in value['cache']['modules'] if row['name'] == name)
+        if change == 'file': child['metadata']['file'] = '/AUTHORED/different.so'
+        elif change in ('spec-name', 'spec-origin'):
+            child['metadata']['spec'] = dict(name='different' if change == 'spec-name' else None,
+                origin='/different' if change == 'spec-origin' else None, loader_type=None, submodule_search_locations=None)
+        elif change == 'spec-type': cached['spec_type'] = 'authored.SpecSubclass'
+        elif change == 'missing-edge': cached['exports'] = []
+        elif change == 'attribute': cached['exports'][0]['attribute'] = 'different'
+        else: cached['exports'][0]['producer'] = 'different'
+>       with pytest.raises(ValueError): module.validate_report(value, expected(), 'a' * 64, 'b' * 64)
+E       Failed: DID NOT RAISE <class 'ValueError'>
+
+tests/test_puck_cpu_distributed_observation_audit.py:210: Failed
+_ test_child_cache_metadata_and_exceptional_edges_cannot_contradict_projection[attribute-torch._C._distributed_c10d] _
+
+name = 'torch._C._distributed_c10d', change = 'attribute'
+
+    @pytest.mark.parametrize('name', NAMES)
+    @pytest.mark.parametrize('change', ['file', 'spec-name', 'spec-origin', 'spec-type', 'missing-edge', 'attribute', 'producer'])
+    def test_child_cache_metadata_and_exceptional_edges_cannot_contradict_projection(name, change):
+        module = api(); value = report(module)
+        child = next(row for row in value['distributed_exports']['modules'] if row['name'] == name)
+        cached = next(row for row in value['cache']['modules'] if row['name'] == name)
+        if change == 'file': child['metadata']['file'] = '/AUTHORED/different.so'
+        elif change in ('spec-name', 'spec-origin'):
+            child['metadata']['spec'] = dict(name='different' if change == 'spec-name' else None,
+                origin='/different' if change == 'spec-origin' else None, loader_type=None, submodule_search_locations=None)
+        elif change == 'spec-type': cached['spec_type'] = 'authored.SpecSubclass'
+        elif change == 'missing-edge': cached['exports'] = []
+        elif change == 'attribute': cached['exports'][0]['attribute'] = 'different'
+        else: cached['exports'][0]['producer'] = 'different'
+>       with pytest.raises(ValueError): module.validate_report(value, expected(), 'a' * 64, 'b' * 64)
+E       Failed: DID NOT RAISE <class 'ValueError'>
+
+tests/test_puck_cpu_distributed_observation_audit.py:210: Failed
+_ test_child_cache_metadata_and_exceptional_edges_cannot_contradict_projection[attribute-torch._C._distributed_rpc] _
+
+name = 'torch._C._distributed_rpc', change = 'attribute'
+
+    @pytest.mark.parametrize('name', NAMES)
+    @pytest.mark.parametrize('change', ['file', 'spec-name', 'spec-origin', 'spec-type', 'missing-edge', 'attribute', 'producer'])
+    def test_child_cache_metadata_and_exceptional_edges_cannot_contradict_projection(name, change):
+        module = api(); value = report(module)
+        child = next(row for row in value['distributed_exports']['modules'] if row['name'] == name)
+        cached = next(row for row in value['cache']['modules'] if row['name'] == name)
+        if change == 'file': child['metadata']['file'] = '/AUTHORED/different.so'
+        elif change in ('spec-name', 'spec-origin'):
+            child['metadata']['spec'] = dict(name='different' if change == 'spec-name' else None,
+                origin='/different' if change == 'spec-origin' else None, loader_type=None, submodule_search_locations=None)
+        elif change == 'spec-type': cached['spec_type'] = 'authored.SpecSubclass'
+        elif change == 'missing-edge': cached['exports'] = []
+        elif change == 'attribute': cached['exports'][0]['attribute'] = 'different'
+        else: cached['exports'][0]['producer'] = 'different'
+>       with pytest.raises(ValueError): module.validate_report(value, expected(), 'a' * 64, 'b' * 64)
+E       Failed: DID NOT RAISE <class 'ValueError'>
+
+tests/test_puck_cpu_distributed_observation_audit.py:210: Failed
+_ test_child_cache_metadata_and_exceptional_edges_cannot_contradict_projection[producer-torch._C._distributed_autograd] _
+
+name = 'torch._C._distributed_autograd', change = 'producer'
+
+    @pytest.mark.parametrize('name', NAMES)
+    @pytest.mark.parametrize('change', ['file', 'spec-name', 'spec-origin', 'spec-type', 'missing-edge', 'attribute', 'producer'])
+    def test_child_cache_metadata_and_exceptional_edges_cannot_contradict_projection(name, change):
+        module = api(); value = report(module)
+        child = next(row for row in value['distributed_exports']['modules'] if row['name'] == name)
+        cached = next(row for row in value['cache']['modules'] if row['name'] == name)
+        if change == 'file': child['metadata']['file'] = '/AUTHORED/different.so'
+        elif change in ('spec-name', 'spec-origin'):
+            child['metadata']['spec'] = dict(name='different' if change == 'spec-name' else None,
+                origin='/different' if change == 'spec-origin' else None, loader_type=None, submodule_search_locations=None)
+        elif change == 'spec-type': cached['spec_type'] = 'authored.SpecSubclass'
+        elif change == 'missing-edge': cached['exports'] = []
+        elif change == 'attribute': cached['exports'][0]['attribute'] = 'different'
+        else: cached['exports'][0]['producer'] = 'different'
+>       with pytest.raises(ValueError): module.validate_report(value, expected(), 'a' * 64, 'b' * 64)
+E       Failed: DID NOT RAISE <class 'ValueError'>
+
+tests/test_puck_cpu_distributed_observation_audit.py:210: Failed
+_ test_child_cache_metadata_and_exceptional_edges_cannot_contradict_projection[producer-torch._C._distributed_c10d] _
+
+name = 'torch._C._distributed_c10d', change = 'producer'
+
+    @pytest.mark.parametrize('name', NAMES)
+    @pytest.mark.parametrize('change', ['file', 'spec-name', 'spec-origin', 'spec-type', 'missing-edge', 'attribute', 'producer'])
+    def test_child_cache_metadata_and_exceptional_edges_cannot_contradict_projection(name, change):
+        module = api(); value = report(module)
+        child = next(row for row in value['distributed_exports']['modules'] if row['name'] == name)
+        cached = next(row for row in value['cache']['modules'] if row['name'] == name)
+        if change == 'file': child['metadata']['file'] = '/AUTHORED/different.so'
+        elif change in ('spec-name', 'spec-origin'):
+            child['metadata']['spec'] = dict(name='different' if change == 'spec-name' else None,
+                origin='/different' if change == 'spec-origin' else None, loader_type=None, submodule_search_locations=None)
+        elif change == 'spec-type': cached['spec_type'] = 'authored.SpecSubclass'
+        elif change == 'missing-edge': cached['exports'] = []
+        elif change == 'attribute': cached['exports'][0]['attribute'] = 'different'
+        else: cached['exports'][0]['producer'] = 'different'
+>       with pytest.raises(ValueError): module.validate_report(value, expected(), 'a' * 64, 'b' * 64)
+E       Failed: DID NOT RAISE <class 'ValueError'>
+
+tests/test_puck_cpu_distributed_observation_audit.py:210: Failed
+_ test_child_cache_metadata_and_exceptional_edges_cannot_contradict_projection[producer-torch._C._distributed_rpc] _
+
+name = 'torch._C._distributed_rpc', change = 'producer'
+
+    @pytest.mark.parametrize('name', NAMES)
+    @pytest.mark.parametrize('change', ['file', 'spec-name', 'spec-origin', 'spec-type', 'missing-edge', 'attribute', 'producer'])
+    def test_child_cache_metadata_and_exceptional_edges_cannot_contradict_projection(name, change):
+        module = api(); value = report(module)
+        child = next(row for row in value['distributed_exports']['modules'] if row['name'] == name)
+        cached = next(row for row in value['cache']['modules'] if row['name'] == name)
+        if change == 'file': child['metadata']['file'] = '/AUTHORED/different.so'
+        elif change in ('spec-name', 'spec-origin'):
+            child['metadata']['spec'] = dict(name='different' if change == 'spec-name' else None,
+                origin='/different' if change == 'spec-origin' else None, loader_type=None, submodule_search_locations=None)
+        elif change == 'spec-type': cached['spec_type'] = 'authored.SpecSubclass'
+        elif change == 'missing-edge': cached['exports'] = []
+        elif change == 'attribute': cached['exports'][0]['attribute'] = 'different'
+        else: cached['exports'][0]['producer'] = 'different'
+>       with pytest.raises(ValueError): module.validate_report(value, expected(), 'a' * 64, 'b' * 64)
+E       Failed: DID NOT RAISE <class 'ValueError'>
+
+tests/test_puck_cpu_distributed_observation_audit.py:210: Failed
+_ test_cli_publication_deadline_covers_serialization_flush_and_timely_return[serialization] _
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7249528771d0>
+stage = 'serialization'
+
+    @pytest.mark.parametrize('stage', ['serialization', 'flush', 'post-flush'])
+    def test_cli_publication_deadline_covers_serialization_flush_and_timely_return(monkeypatch, stage):
+        module = api(); saved = []; timer_active = []
+        monkeypatch.setattr(sys, 'argv', [str(SCRIPT), '--configuration', '/AUTHORED/config.json', '--sha256', 'a'*64,
+                                        '--transport', '/AUTHORED/transport.json', '--transport-sha256', 'b'*64])
+        monkeypatch.setattr(module, 'sys', types.SimpleNamespace(executable=module.PYTHON,
+            flags=types.SimpleNamespace(isolated=True, no_site=True), dont_write_bytecode=True))
+        monkeypatch.setattr(module, 'audit', lambda *args: dict(scope='AUTHORED no execution'))
+        original_handler = module.signal.getsignal(module.signal.SIGALRM)
+        original_timer = module.signal.setitimer; canonical = module.canonical
+        if stage != 'post-flush':
+            monkeypatch.setattr(module.signal, 'setitimer', lambda which, seconds: original_timer(which, .03 if seconds else 0))
+        clock = [0.]
+        if stage == 'post-flush': monkeypatch.setattr(module, 'time', types.SimpleNamespace(monotonic=lambda: clock[0]))
+        if stage == 'serialization':
+            def slow_canonical(value):
+                time.sleep(.06)
+                return canonical(value)
+            monkeypatch.setattr(module, 'canonical', slow_canonical)
+        class Writer(io.StringIO):
+            def flush(self):
+                timer_active.append(module.signal.getitimer(module.signal.ITIMER_REAL)[0] > 0)
+                if stage == 'flush': time.sleep(.06)
+                if stage == 'post-flush': clock[0] = 181.
+        writer = Writer()
+        def publish(value, **kwargs):
+            saved.append(json.loads(value))
+            print(value, file=writer, **kwargs)
+        monkeypatch.setattr(module, 'print', publish, raising=False)
+        try:
+            code = module.main()
+        finally:
+            original_timer(module.signal.ITIMER_REAL, 0)
+            module.signal.signal(module.signal.SIGALRM, original_handler)
+>       assert code == 1
+E       assert 0 == 1
+
+tests/test_puck_cpu_distributed_observation_audit.py:435: AssertionError
+_ test_cli_publication_deadline_covers_serialization_flush_and_timely_return[flush] _
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x72495296a6d0>
+stage = 'flush'
+
+    @pytest.mark.parametrize('stage', ['serialization', 'flush', 'post-flush'])
+    def test_cli_publication_deadline_covers_serialization_flush_and_timely_return(monkeypatch, stage):
+        module = api(); saved = []; timer_active = []
+        monkeypatch.setattr(sys, 'argv', [str(SCRIPT), '--configuration', '/AUTHORED/config.json', '--sha256', 'a'*64,
+                                        '--transport', '/AUTHORED/transport.json', '--transport-sha256', 'b'*64])
+        monkeypatch.setattr(module, 'sys', types.SimpleNamespace(executable=module.PYTHON,
+            flags=types.SimpleNamespace(isolated=True, no_site=True), dont_write_bytecode=True))
+        monkeypatch.setattr(module, 'audit', lambda *args: dict(scope='AUTHORED no execution'))
+        original_handler = module.signal.getsignal(module.signal.SIGALRM)
+        original_timer = module.signal.setitimer; canonical = module.canonical
+        if stage != 'post-flush':
+            monkeypatch.setattr(module.signal, 'setitimer', lambda which, seconds: original_timer(which, .03 if seconds else 0))
+        clock = [0.]
+        if stage == 'post-flush': monkeypatch.setattr(module, 'time', types.SimpleNamespace(monotonic=lambda: clock[0]))
+        if stage == 'serialization':
+            def slow_canonical(value):
+                time.sleep(.06)
+                return canonical(value)
+            monkeypatch.setattr(module, 'canonical', slow_canonical)
+        class Writer(io.StringIO):
+            def flush(self):
+                timer_active.append(module.signal.getitimer(module.signal.ITIMER_REAL)[0] > 0)
+                if stage == 'flush': time.sleep(.06)
+                if stage == 'post-flush': clock[0] = 181.
+        writer = Writer()
+        def publish(value, **kwargs):
+            saved.append(json.loads(value))
+            print(value, file=writer, **kwargs)
+        monkeypatch.setattr(module, 'print', publish, raising=False)
+        try:
+            code = module.main()
+        finally:
+            original_timer(module.signal.ITIMER_REAL, 0)
+            module.signal.signal(module.signal.SIGALRM, original_handler)
+>       assert code == 1
+E       assert 0 == 1
+
+tests/test_puck_cpu_distributed_observation_audit.py:435: AssertionError
+_ test_cli_publication_deadline_covers_serialization_flush_and_timely_return[post-flush] _
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x724952c33150>
+stage = 'post-flush'
+
+    @pytest.mark.parametrize('stage', ['serialization', 'flush', 'post-flush'])
+    def test_cli_publication_deadline_covers_serialization_flush_and_timely_return(monkeypatch, stage):
+        module = api(); saved = []; timer_active = []
+        monkeypatch.setattr(sys, 'argv', [str(SCRIPT), '--configuration', '/AUTHORED/config.json', '--sha256', 'a'*64,
+                                        '--transport', '/AUTHORED/transport.json', '--transport-sha256', 'b'*64])
+        monkeypatch.setattr(module, 'sys', types.SimpleNamespace(executable=module.PYTHON,
+            flags=types.SimpleNamespace(isolated=True, no_site=True), dont_write_bytecode=True))
+        monkeypatch.setattr(module, 'audit', lambda *args: dict(scope='AUTHORED no execution'))
+        original_handler = module.signal.getsignal(module.signal.SIGALRM)
+        original_timer = module.signal.setitimer; canonical = module.canonical
+        if stage != 'post-flush':
+            monkeypatch.setattr(module.signal, 'setitimer', lambda which, seconds: original_timer(which, .03 if seconds else 0))
+        clock = [0.]
+        if stage == 'post-flush': monkeypatch.setattr(module, 'time', types.SimpleNamespace(monotonic=lambda: clock[0]))
+        if stage == 'serialization':
+            def slow_canonical(value):
+                time.sleep(.06)
+                return canonical(value)
+            monkeypatch.setattr(module, 'canonical', slow_canonical)
+        class Writer(io.StringIO):
+            def flush(self):
+                timer_active.append(module.signal.getitimer(module.signal.ITIMER_REAL)[0] > 0)
+                if stage == 'flush': time.sleep(.06)
+                if stage == 'post-flush': clock[0] = 181.
+        writer = Writer()
+        def publish(value, **kwargs):
+            saved.append(json.loads(value))
+            print(value, file=writer, **kwargs)
+        monkeypatch.setattr(module, 'print', publish, raising=False)
+        try:
+            code = module.main()
+        finally:
+            original_timer(module.signal.ITIMER_REAL, 0)
+            module.signal.signal(module.signal.SIGALRM, original_handler)
+>       assert code == 1
+E       assert 0 == 1
+
+tests/test_puck_cpu_distributed_observation_audit.py:435: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_puck_cpu_distributed_observation_audit.py::test_child_cache_metadata_and_exceptional_edges_cannot_contradict_projection[file-torch._C._distributed_autograd]
+FAILED tests/test_puck_cpu_distributed_observation_audit.py::test_child_cache_metadata_and_exceptional_edges_cannot_contradict_projection[file-torch._C._distributed_c10d]
+FAILED tests/test_puck_cpu_distributed_observation_audit.py::test_child_cache_metadata_and_exceptional_edges_cannot_contradict_projection[file-torch._C._distributed_rpc]
+FAILED tests/test_puck_cpu_distributed_observation_audit.py::test_child_cache_metadata_and_exceptional_edges_cannot_contradict_projection[spec-name-torch._C._distributed_autograd]
+FAILED tests/test_puck_cpu_distributed_observation_audit.py::test_child_cache_metadata_and_exceptional_edges_cannot_contradict_projection[spec-name-torch._C._distributed_c10d]
+FAILED tests/test_puck_cpu_distributed_observation_audit.py::test_child_cache_metadata_and_exceptional_edges_cannot_contradict_projection[spec-name-torch._C._distributed_rpc]
+FAILED tests/test_puck_cpu_distributed_observation_audit.py::test_child_cache_metadata_and_exceptional_edges_cannot_contradict_projection[spec-origin-torch._C._distributed_autograd]
+FAILED tests/test_puck_cpu_distributed_observation_audit.py::test_child_cache_metadata_and_exceptional_edges_cannot_contradict_projection[spec-origin-torch._C._distributed_c10d]
+FAILED tests/test_puck_cpu_distributed_observation_audit.py::test_child_cache_metadata_and_exceptional_edges_cannot_contradict_projection[spec-origin-torch._C._distributed_rpc]
+FAILED tests/test_puck_cpu_distributed_observation_audit.py::test_child_cache_metadata_and_exceptional_edges_cannot_contradict_projection[spec-type-torch._C._distributed_autograd]
+FAILED tests/test_puck_cpu_distributed_observation_audit.py::test_child_cache_metadata_and_exceptional_edges_cannot_contradict_projection[spec-type-torch._C._distributed_c10d]
+FAILED tests/test_puck_cpu_distributed_observation_audit.py::test_child_cache_metadata_and_exceptional_edges_cannot_contradict_projection[spec-type-torch._C._distributed_rpc]
+FAILED tests/test_puck_cpu_distributed_observation_audit.py::test_child_cache_metadata_and_exceptional_edges_cannot_contradict_projection[missing-edge-torch._C._distributed_autograd]
+FAILED tests/test_puck_cpu_distributed_observation_audit.py::test_child_cache_metadata_and_exceptional_edges_cannot_contradict_projection[missing-edge-torch._C._distributed_c10d]
+FAILED tests/test_puck_cpu_distributed_observation_audit.py::test_child_cache_metadata_and_exceptional_edges_cannot_contradict_projection[missing-edge-torch._C._distributed_rpc]
+FAILED tests/test_puck_cpu_distributed_observation_audit.py::test_child_cache_metadata_and_exceptional_edges_cannot_contradict_projection[attribute-torch._C._distributed_autograd]
+FAILED tests/test_puck_cpu_distributed_observation_audit.py::test_child_cache_metadata_and_exceptional_edges_cannot_contradict_projection[attribute-torch._C._distributed_c10d]
+FAILED tests/test_puck_cpu_distributed_observation_audit.py::test_child_cache_metadata_and_exceptional_edges_cannot_contradict_projection[attribute-torch._C._distributed_rpc]
+FAILED tests/test_puck_cpu_distributed_observation_audit.py::test_child_cache_metadata_and_exceptional_edges_cannot_contradict_projection[producer-torch._C._distributed_autograd]
+FAILED tests/test_puck_cpu_distributed_observation_audit.py::test_child_cache_metadata_and_exceptional_edges_cannot_contradict_projection[producer-torch._C._distributed_c10d]
+FAILED tests/test_puck_cpu_distributed_observation_audit.py::test_child_cache_metadata_and_exceptional_edges_cannot_contradict_projection[producer-torch._C._distributed_rpc]
+FAILED tests/test_puck_cpu_distributed_observation_audit.py::test_cli_publication_deadline_covers_serialization_flush_and_timely_return[serialization]
+FAILED tests/test_puck_cpu_distributed_observation_audit.py::test_cli_publication_deadline_covers_serialization_flush_and_timely_return[flush]
+FAILED tests/test_puck_cpu_distributed_observation_audit.py::test_cli_publication_deadline_covers_serialization_flush_and_timely_return[post-flush]
+24 failed, 2 passed, 114 deselected in 0.48s
