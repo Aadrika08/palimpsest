@@ -20,6 +20,16 @@ CPU runtime configuration proposal; no automatic actual retry follows. The previ
 [execution/evidence history](plans/simulation-release-execution-goal-history-2026-10-15.md)
 is preserved byte-identically. All 26 requirement and seven gate statuses are unchanged.
 
+[Draft PR #140](https://github.com/Aadrika08/palimpsest/pull/140) resolves the measured
+Btrfs held-directory enumeration gap using fresh bounded descriptor-relative
+censuses. Full33 condition checks pass on Btrfs84.40s and tmpfs47.93s; root88 new/
+admission checks and369 affected legacy checks pass. Independent source review
+found no concrete defect. The [source report](https://github.com/Aadrika08/palimpsest/blob/research/memory-directory-census-v1/docs/reports/memory-directory-census-v1-source.md)
+preserves both diagnostics, original failures and exact source profiles. Scientific
+fields, original protocol/extension/freeze files and all33 statuses are unchanged.
+Actual family qualification/binding, CPU configuration, case close and all seven
+release gates remain open; no original actual allocation was retried.
+
 [Draft PR #139](https://github.com/Aadrika08/palimpsest/pull/139) adds closed-admission
 memory condition sealing. Root53 helper checks and builder33 condition checks pass;
 root six tmpfs spotchecks pass, while all six Btrfs cases fail in the unchanged

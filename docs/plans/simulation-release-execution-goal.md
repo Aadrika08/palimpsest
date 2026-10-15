@@ -42,6 +42,10 @@ substitute for numerical results, capability, actual browser use or human accept
 | 5 | Integrate and experience the product. | One candidate supports the lab and all six artworks; actual browser, mapping, replay, export, interruption and endurance checks pass. |
 | 6 | Accept and deliver that candidate. | Artistic/operator sessions, final verification and all seven gate records are complete; the installation and evidence package are reproducible. |
 
+**Current next action:** complete the resource-feasible CPU runtime proposal and
+prepare the reviewed family-case qualification binding. The filesystem gap is
+resolved in authored source paths; the first actual family admission remains open.
+
 Independent source work can proceed while actual qualification or a decision is
 pending. Stages interleave when their dependencies permit. Every new prerequisite
 must name the blocked deliverable and its finite exit; do not grow an unbounded
@@ -61,13 +65,14 @@ CPU runtime compatibility, staging RAM or custody.
   audited CPU package metadata and a reviewed four-import worker source route.
   The complete executable configuration and actual installed-stack qualification
   remain unfinished. Metadata sizes are estimates, not installed-payload proof.
-- [Draft PR #139](https://github.com/Aadrika08/palimpsest/pull/139) adds memory
-  condition sealing with authored tmpfs evidence. Project Btrfs fixtures fail in
-  the unchanged source producer before reaching the new sealer; resolve held-FD
-  directory enumeration before closing milestone1. Its [source report](https://github.com/Aadrika08/palimpsest/blob/research/memory-condition-seal-v1/docs/reports/memory-condition-seal-v1-source.md)
-  preserves both outcomes. Actual qualification, case closure and a reviewed
-  seed400-to-family-case proof binding remain unfinished; amendment02 alone does
-  not establish family-use admission.
+- [Draft PR #140](https://github.com/Aadrika08/palimpsest/pull/140) resolves the
+  directory-enumeration gap: all33 authored condition checks pass on Btrfs and
+  tmpfs, with369 affected legacy checks and88 census/admission/profile checks.
+  Its [source report](https://github.com/Aadrika08/palimpsest/blob/research/memory-directory-census-v1/docs/reports/memory-directory-census-v1-source.md)
+  preserves the corrected/confounded diagnostics and original failures. The new
+  prospective profiles preserve all scientific fields and original frozen files.
+  Actual family admission, a reviewed seed400-to-case proof binding and case close
+  remain unfinished; amendment02 alone does not establish family-use admission.
 - The [memory ordering audit](../reports/memory-condition-case-close-gap-audit.md)
   finds oracle before own in 42/48 families (126/144 cases), conflicting with
   existing prior-own and condition-close requirements. No resolution is selected.
