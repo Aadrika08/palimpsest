@@ -12,12 +12,22 @@ import sys
 import time
 
 ROOT=Path(__file__).resolve().parents[1]
-OUTPUT='runs/puck-cpu-runtime-characterization-01'
+OUTPUT='runs/puck-cpu-runtime-characterization-02'
 SITE='runs/puck-cpu-install-01/site'
 WORKER='scripts/characterize_puck_runtime_imports.py'
 PYTHON='/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/bin/python3.11'
 ACCEPTED_SHA='32605ca0d48537a6eabf98a54d605ad23bf525456760d83726381aeaf38e3e96'
 ARCHIVE='docs/reports/puck-cpu-retained-admission-02'
+PRIOR_ARCHIVE='docs/reports/puck-cpu-characterization-01'
+PRIOR_PINS=dict(
+    prior_configuration=dict(path=PRIOR_ARCHIVE+'/frozen-configuration.json',size_bytes=9898,
+        sha256='b11daf4719daf3a838ece18cf6c0604875d3fcba65b0ab0b5354b9428be6b8ca'),
+    prior_result=dict(path=PRIOR_ARCHIVE+'/raw/result.json',size_bytes=613,
+        sha256='bd700625635bd47a170b70ce955097c47c0e4a27c1c3d9a04c137461d848288a'),
+    prior_audit=dict(path=PRIOR_ARCHIVE+'/failure-audit-01.json',size_bytes=1509,
+        sha256='26dd167d4d06ce4a8d45598a06dcd5c0e5a6c1b171550cfa11c0b039b655fbf9'))
+NATIVE_METADATA_PIN=dict(path='docs/plans/puck-cpu-characterization-native-metadata-05.json',
+    size_bytes=1618086,sha256='64a9e46f60700f12712262879547fbf26d785fb8a825098940e6494482dae2aa')
 MiB=1024**2
 VERSIONS=dict(numpy='2.2.5',torch='2.9.0+cpu',torchvision='0.24.0+cpu',mujoco='3.3.6')
 ENVIRONMENT=dict(PYTHONDONTWRITEBYTECODE='1',LC_ALL='C.UTF-8',LANG='C.UTF-8',
@@ -37,7 +47,8 @@ ROLES=dict(baseline='docs/plans/puck-python-louvain-host-baseline-v1.json',
     accepted_audit=ARCHIVE+'/acceptance-audit-03.json',
     accepted_configuration='docs/plans/puck-cpu-retained-admission-02.json',
     accepted_index=ARCHIVE+'/evidence-index.json',
-    native_metadata='docs/plans/puck-cpu-characterization-native-metadata-04.json')
+    native_metadata=NATIVE_METADATA_PIN['path'],
+    **{role:row['path'] for role,row in PRIOR_PINS.items()})
 SOURCES=tuple(sorted(('scripts/characterize_puck_cpu_runtime.py',WORKER,
     'scripts/build_puck_python_louvain.py','scripts/install_puck_cpu.py',
     'scripts/acquire_puck_cpu_payloads.py',
@@ -45,7 +56,9 @@ SOURCES=tuple(sorted(('scripts/characterize_puck_cpu_runtime.py',WORKER,
     'src/palimpsest/bounded_qualification.py','src/palimpsest/evaluate.py',
     'src/palimpsest/puck_execution_files.py','src/palimpsest/puck_retained_installation.py',
     'src/palimpsest/puck_build_inputs.py','src/palimpsest/puck_package_payloads.py',
-    'docs/plans/puck-cpu-characterization-v1.md')))
+    'docs/plans/puck-cpu-characterization-v2.md')))
+PRIOR_SOURCES=tuple(path.replace('puck-cpu-characterization-v2.md','puck-cpu-characterization-v1.md')
+                    for path in SOURCES)
 CLAIMS=dict(runtime_qualified=False,native_authorized=False,collection_authorized=False,
     study_authorized=False,executable=False,qualification_claims=[])
 PROBE="""import json,os,pathlib,stat,sys
@@ -89,10 +102,75 @@ def validate_configuration(config):
             or config.get('environment')!=ENVIRONMENT or config.get('expected_versions')!=VERSIONS
             or tuple(row['path'] for row in config['sources'])!=SOURCES):
         raise ValueError('Exact CPU characterization configuration required')
+    if config['inputs']!=required_input_rows(read_prior_configuration()):
+        raise ValueError('Exact CPU characterization input closure required')
+
+
+def read_prior_configuration():
+    row=PRIOR_PINS['prior_configuration'];raw=read(ROOT/row['path'],MiB)
+    if len(raw)!=row['size_bytes'] or hashlib.sha256(raw).hexdigest()!=row['sha256']:
+        raise ValueError('Frozen prior configuration bytes differ')
+    return json.loads(raw)
+
+
+def required_input_rows(prior):
+    """Derive this epoch's 12 role pins and 16+14 historical source pins."""
+    prior_roles={role:path for role,path in ROLES.items() if role not in PRIOR_PINS}
+    prior_roles['native_metadata']='docs/plans/puck-cpu-characterization-native-metadata-04.json'
+    if (prior.get('kind')!='puck-cpu-runtime-characterization-v1' or type(prior.get('version')) is not int
+            or prior['version']!=1 or prior.get('output')!='runs/puck-cpu-runtime-characterization-01'
+            or prior.get('site_root')!=SITE or prior.get('roles')!=prior_roles
+            or prior.get('limits')!=LIMITS or prior.get('environment')!=ENVIRONMENT
+            or prior.get('expected_versions')!=VERSIONS
+            or tuple(row['path'] for row in prior['sources'])!=PRIOR_SOURCES):
+        raise ValueError('Frozen prior characterization configuration differs')
+    old_inputs={row['path']:row for row in prior['inputs']}
+    accepted_caps={path for path in old_inputs if path.startswith(ARCHIVE+'/source/')}
+    if (len(prior['inputs'])!=25 or len(accepted_caps)!=16
+            or set(old_inputs)!=set(prior_roles.values())|accepted_caps):
+        raise ValueError('Frozen prior characterization input closure differs')
+    rows={path:dict(row) for path,row in old_inputs.items() if path!=prior_roles['native_metadata']}
+    rows[NATIVE_METADATA_PIN['path']]=dict(NATIVE_METADATA_PIN)
+    rows.update((row['path'],dict(row)) for row in PRIOR_PINS.values())
+    for row in prior['sources']:
+        path=PRIOR_ARCHIVE+'/source/'+row['path'];rows[path]=dict(row,path=path)
+    if len(rows)!=42:raise ValueError('CPU characterization input closure differs')
+    return [rows[path] for path in sorted(rows)]
+
+
+def validate_prior_characterization(config,result,audit,pins):
+    for row in required_input_rows(config):
+        if pins.get(row['path'])!=row:
+            raise ValueError('Prior characterization input pins differ')
+    prior_sha=PRIOR_PINS['prior_configuration']['sha256']
+    closure=result.get('closure',{});elapsed=result.get('elapsed_seconds')
+    verified=audit.get('verified',{})
+    if (result.get('kind')!='puck-cpu-characterization-outcome-v1' or result.get('status')!='FAIL'
+            or result.get('configuration_sha256')!=prior_sha
+            or result.get('error_type')!='RuntimeError' or result.get('error')!='CPU worker did not complete normally'
+            or any(result.get(key) is not False for key in CLAIMS if key!='qualification_claims')
+            or result.get('qualification_claims')!=[]
+            or type(elapsed) not in (int,float) or not 0<elapsed<LIMITS['normal_seconds']
+            or closure.get('active_children')!=[] or closure.get('active_non_main_threads')!=[]
+            or closure.get('all_handles_closed') is not True or closure.get('all_receipts_fsynced') is not True
+            or type(closure.get('fd_count_before')) is not int or closure['fd_count_before']<0
+            or type(closure.get('fd_count_after')) is not int or closure['fd_count_before']!=closure['fd_count_after']
+            or audit.get('kind')!='cpu-characterization-independent-failure-audit-v1'
+            or audit.get('status')!='PRESERVED_FAILURE_VERIFIED'
+            or any(audit.get(key) is not False for key in (*CLAIMS,'native_qualified','ordinary_imports_observed','target_code_executed_by_auditor') if key!='qualification_claims')
+            or audit.get('qualification_claims')!=[] or verified.get('configuration_sha256')!=prior_sha
+            or verified.get('parent_result_sha256')!=PRIOR_PINS['prior_result']['sha256']
+            or type(verified.get('worker_returncode')) is not int or verified['worker_returncode']!=1
+            or 'worker_failure' not in verified or verified['worker_failure'] is not None
+            or verified.get('first_import')!='numpy'
+            or verified.get('reported_error_type')!='builtins.ImportError'
+            or verified.get('source_pins')!=14 or verified.get('input_pins')!=25
+            or verified.get('archived_acceptance_source_pins')!=16):
+        raise ValueError('Prior characterization must retain its exact normal failed outcome')
 
 
 def validate_native_metadata(native):
-    if (native.get('kind')!='puck-cpu-characterization-native-metadata-v4'
+    if (native.get('kind')!='puck-cpu-characterization-native-metadata-v5'
             or native.get('root_scope')!='installed_shared_objects_and_interpreter'
             or native.get('errors')!=[] or native.get('oversized_native_files')!=[]
             or native.get('status')!='COMPLETE' or native.get('required_missing_names')!=[]
@@ -176,6 +254,7 @@ def execute(config,digest,started):
                 get=lambda role:inputs.read_json(ROLES[role])
                 old,audit,snapshot,accepted=(get(role) for role in ('accepted_result','accepted_audit','accepted_snapshot','accepted_configuration'))
                 pins={row['path']:row for row in rows}
+                validate_prior_characterization(*(get(role) for role in ('prior_configuration','prior_result','prior_audit')),pins)
                 if (old['status']!='PASS' or old['claims']['package_preparation_accepted'] is not True
                         or any(old['claims'].get(k) is not False for k in ('runtime_qualified','numerical_imports_executed','study_authorized','collection_authorized'))
                         or audit['status']!='PASS' or audit['package_preparation_accepted'] is not True
@@ -233,6 +312,7 @@ def execute(config,digest,started):
                     after=build.verify_baseline(baseline,deadline);native_checks()
                     if before!=after:raise ValueError('Trusted baseline changed')
                     bounds.write_new(output/'baseline-after.json',after)
+                    validate_prior_characterization(*(get(role) for role in ('prior_configuration','prior_result','prior_audit')),pins)
                     held.recheck();inputs.recheck();check()
                     result.update(report_sha256=hashlib.sha256(read(output/'payload/imports.json',MiB)).hexdigest(),
                         versions=VERSIONS,namespace_probe_completed=True,worker_supervision_status=observed['status'],

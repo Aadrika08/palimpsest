@@ -1,0 +1,37 @@
+{
+  "actual02_invoked": false,
+  "collection_authorized": false,
+  "configuration": {
+    "canonical_copy_bytes": 11701,
+    "input_pins": 42,
+    "path": "docs/plans/puck-cpu-runtime-characterization-02.json",
+    "sha256": "4b98ff368e97351b2079ff44c75cb910d08559e5e037a6afc4887c28cd38fea8",
+    "size_bytes": 13940,
+    "source_pins": 14
+  },
+  "independent_auditor": {
+    "invoked": false,
+    "path": "audit-v2.py",
+    "sha256": "6cf9bd0625f493f2dc7db3cda1db6d72984632ed427bf60b7eed160a5307955b"
+  },
+  "kind": "cpu-characterization02-source-verification-v1",
+  "native_authorized": false,
+  "parent_verification": {
+    "final_focused_passed": 41,
+    "final_focused_seconds": 0.39,
+    "initial_red_failed": 23,
+    "initial_red_passed": 16,
+    "required_field_red_failed": 1,
+    "required_field_red_passed": 40
+  },
+  "qualification_claims": [],
+  "root_verification": {
+    "affected_passed": 234,
+    "exit_code": 0,
+    "seconds": 6.74,
+    "session_id": 77196,
+    "terminal_chunk": "c817aa"
+  },
+  "runtime_qualified": false,
+  "study_authorized": false
+}
