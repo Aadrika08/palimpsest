@@ -41,11 +41,10 @@ supplies observations; PR147 supplies the prospective CPU profile and tmpfs copi
 and PR148 supplies the dedicated bounded source parent and authored end-to-end
 fixtures. PR149 adds reviewed PREPARE controls, the independent standard-library
 auditor and external observer. Actual preparation01 and its audit pass; the
-subsequent independently reviewed qualifications01–03 are each invoked once
-and fail.03 corrects the observed optional import and reaches an unresolved
-native producer attribute. The closed04 diagnostic source transition and exact
-actual controls are now reviewed and committed;04 remains uninvoked. Preserve
-01–03 without retries. Any prospective
+subsequent independently reviewed qualifications01–04 are each invoked once
+and fail.04 now identifies `torch._C._autograd` at native_create. Exact source
+inspection supports later creation, but no replacement phase is accepted.
+Preserve01–04 without retries. No05 exists. Any prospective
 actual amendment needs exact source/data binding, independent review, current
 staged-byte checks and fresh admission. Passing held qualification and its
 independent audit remain required before the episode. Resolve the episode/catalog
@@ -83,8 +82,8 @@ actual evidence copies match originals under independent review.01–03 remain
 failed/consumed. The source checkpoint below now supplies bounded failure
 context and preserved cause/refusal. It cannot recover03's unlogged row. Review
 the exact diagnostic source transition before invocation and require observed
-evidence before a profile/phase correction. That04 transition and exact frozen
-controls are now independently reviewed; actual04 remains uninvoked. All33
+evidence before a profile/phase correction. The separately reviewed04 below
+has now run once and failed with exact binding context. All33
 statuses and all seven open gates remain unchanged; the recorded/replayed/
 exported episode bundle remains the next exit.
 
@@ -111,12 +110,31 @@ all data, acceptance anchors, exact03 policy, versions, limits and refusal.
 The04 sources are deployed; exact actual04 configuration and independently
 [reviewed frozen controls](https://github.com/Aadrika08/palimpsest/blob/de2d4ca49f4d784ea1128824a19ea6d8d912e853/docs/plans/puck-cpu-held-qualification-04-freeze.json)
 are committed at `de2d4ca`. Review verifies 44 current pins, six controls, 34
-historical capsule leaves and four separate data-proof pins. Actual04 remains
-uninvoked. Next, freshly verify pins/preservation/absent paths and staged-byte/
-resource admission, invoke04 once and independently audit the real outcome.
-Preserve failure without implicit05; any binding correction requires observed
-context and source evidence. Held qualification and the actual episode remain
-open; all33 statuses and seven release gates remain unchanged.
+historical capsule leaves and four separate data-proof pins. The subsequent
+[actual04 report](https://github.com/Aadrika08/palimpsest/blob/c9adf32ba54854d2edaec792abf8c0c375686814/docs/reports/puck-cpu-held-qualification-04.md)
+retains one freshly admitted normal exit1/no timeout in43.401521891s. The chained
+trace identifies producer `torch._C`, phase `native_create`, export
+`torch._C._autograd`, missing component `_autograd` at index0. Native creation
+returns, but native execution and all four imports do not complete. All48 exact
+evidence copies match originals/Git blobs; parent FD5→5 and independent host
+observation finds all three tracked PID/start identities absent at16:32:02UTC.
+
+The frozen acceptance auditor exits1 normally in0.064069714s on
+`Normal external transport exit required`, before post-stage byte checks.
+`baseline-after.json` is absent; the dated pre04 data census is not post04
+acceptance. Package-declared exact-commit C++ source and byte-matching installed
+Python source support later `_autograd` creation during `torch.autograd`
+initialization. This is static inference, not a later runtime trace or linked-binary
+build proof. Ordinary export completion occurs after producer execution, so an
+intervening guard may still reject a simple phase-only move. No replacement phase
+or blanket change to the36 native-create rows is accepted.
+
+Next, prove declared child publication followed by a fresh nested helper import
+in the existing authored fixture, then the finite producer/phase/raw-edge/cache
+identity and terminal-closure contract, preserving strict unprepared negatives.
+Review any correction separately before another actual allocation.04 and01–03
+remain failed/consumed; no05 exists. Held qualification and the actual episode
+remain open; all33 statuses and seven release gates remain unchanged.
 
 The [actual preparation report](https://github.com/Aadrika08/palimpsest/blob/4036a382b87ab99640bed96f6b2f8aeaa7873b2c/docs/reports/puck-cpu-held-preparation-01.md)
 records external exit0 in 25.5215614 s and frozen independent auditor normal
@@ -156,7 +174,7 @@ actual invocation requires a separately numbered, reviewed amendment, a fresh
 authenticated source capsule, current staged-byte checks and fresh resource
 admission, without speculative missing-import roster additions. Preparation01's
 worker source contains the old bootstrap and cannot be reused with the new source
-hash. Qualifications01–03 stay failed and consumed; no04 has been created.
+hash. Qualifications01–04 stay failed and consumed; no05 has been created.
 
 [Draft PR #149](https://github.com/Aadrika08/palimpsest/pull/149) retains the
 [source report](https://github.com/Aadrika08/palimpsest/blob/acd14e2861f8e0ec0209085dbd6b2ec302b26b64/docs/reports/puck-cpu-held-allocation-v1.md).

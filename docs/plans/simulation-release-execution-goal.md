@@ -72,11 +72,15 @@ ordered checklist is:
 - [x] Implement and independently review the closed04 diagnostic source epoch,
   pass 246 affected checks and preserve the dated pre04 data-only census.
 - [x] Deploy the reviewed04 sources and freeze/review the exact actual04
-  configuration and controls at `de2d4ca`. Actual04 remains uninvoked.
-- [ ] Freshly recheck the frozen04 pins, preserved artifacts, absent outputs
-  and resources, then invoke04 once and independently audit its outcome.
+  configuration and controls at `de2d4ca` before invocation.
+- [x] Freshly verify04 pins/preservation/absence/resources, invoke once and
+  preserve its FAIL and failed acceptance audit. The diagnostic identifies
+  `torch._C._autograd` at native_create; this does not accept the runtime.
+- [ ] Prove and correct delayed export publication/custody with authored
+  intermediate-import tests, then independently review the source/profile
+  amendment before any separately numbered actual attempt. No05 exists.
 - [ ] Obtain passing held four-import qualification and an independent terminal,
-  identity, staged-byte and cleanup audit. All01–03 failed; their acceptance
+  identity, staged-byte and cleanup audit. All01–04 failed; their acceptance
   auditors refused before post-stage byte checks. No accepted held-import result
   or current post-qualification byte acceptance exists.
 - [ ] Specify the engineering episode's exact model, scene, seed, limits and
@@ -90,87 +94,77 @@ ordered checklist is:
 The accepted ordinary observation02 supplies actual NumPy, Torch, torchvision
 and MuJoCo import/version and bounded module/native-map data. It does not establish
 held-runtime, native-closure, renderer, operator, model or episode qualification.
-The CPU profile, tmpfs copier and dedicated CPU parent are implemented in the
-source checkpoints below. PR149 adds reviewed controls and the independent
-terminal auditor. Actual preparation01 and its byte audit pass; actual
-qualifications01–03 fail and are consumed. The03 correction passes the earlier
-optional-import denial and reaches a missing native producer attribute. The
-diagnostic source patch now provides bounded failure context with authored proof.
-It cannot recover03's unlogged row. The closed04 source epoch is now verified,
-deployed and independently reviewed; actual04 configuration and frozen controls
-exist. Actual04 remains uninvoked. Next, recheck pins/absence and admit fresh
-resources before one invocation and an independent outcome audit. Do not
-rerun01–03. An unchanged accepted tree
-does not need another installation or retained-data admission.
+Actual preparation01 has a dated scoped PASS. Qualifications01–04 each ran once
+and failed; each is consumed.04 exposes a premature `torch._C._autograd` check.
+The source-supported explanation below identifies later creation but establishes
+no accepted replacement phase or current post-qualification byte result. Preserve
+01–04 without retry. No05 exists. Passing held qualification and the actual
+recorded/replayed/exported episode remain checkpoint A's required exit. An unchanged
+accepted package tree does not need another installation or retained-data admission.
 
 Every added prerequisite must identify the checkpoint and smallest blocked check;
 source-only hardening is not a substitute for reaching the episode deliverable.
 A failed actual stage retains its outcome and consumed allocation. No study or
 numerical invocation follows from a source fixture alone.
 
-## Current CPU result: qualification03 reaches native binding
-
-[Draft PR #152](https://github.com/Aadrika08/palimpsest/pull/152) retains the
-[source amendment](https://github.com/Aadrika08/palimpsest/blob/70c6c61063ba87d7f4ea64457d07f36f6f4310ff/docs/reports/puck-cpu-held-qualification-amendment-03.md)
-and [actual03 failure](https://github.com/Aadrika08/palimpsest/blob/70c6c61063ba87d7f4ea64457d07f36f6f4310ff/docs/reports/puck-cpu-held-qualification-03.md).
-All185 affected source checks pass in53.58s. Independent source/configuration
-review precedes the single admitted actual03 invocation. It exits1 normally,
-without timeout, in45.516436608s; parent FD5→5 and all three tracked PID/start
-identities are absent at15:17:38UTC. All35 indexed actual evidence copies match.
-
-The only policy delta adds the observed optional `torch._rocm_init` miss; historical
-preparation, the16 data inputs, four roots, versions and limits stay fixed.03 gets
-past02's denial and fails in `ExportBindings.complete(torch._C, native_create)`
-with `Dependency producer attribute binding is missing`. The native create call
-returned, but native execution and all four imports did not complete. The exact
-failing export/attribute remains unknown among36 declared rows. Nothing proves a
-replacement producer or phase. [Preserved02](https://github.com/Aadrika08/palimpsest/blob/e0b5f9af621419b99da91bbbe18184a8594d98c9/docs/reports/puck-cpu-held-qualification-02.md)
-and01 remain failed and consumed.
-
-The acceptance auditor exits1 normally in0.051284271s and refuses before post-stage
-byte checks. `baseline-after.json` remains absent. A separate pre03 data-only
-census passes27,255 files/1,318,494,346B in13.446514741s at15:06:59UTC. Its dated
-PASS is neither held qualification nor post03 byte acceptance. There is no accepted
-held-import result or current post-qualification byte acceptance. The separate
-reviewed04 controls below exist; actual04 remains uninvoked.
-
-The source checkpoint below now supplies bounded producer/phase/export/path/
-component context and preserved-cause proof. Its closed04 transition and exact
-controls are independently reviewed. A freshly admitted invocation may
-identify the binding. Any later profile/phase correction follows observed evidence.
-Skip no row and guess no producer. The recorded/replayed/exported episode remains
-checkpointA's exit; all seven release gates remain open.
-
-## Current source checkpoint: qualification04 ready for fresh admission
+## Current CPU result: qualification04 identifies a delayed export
 
 [Draft PR #154](https://github.com/Aadrika08/palimpsest/pull/154) retains the
-[closed04 source proof](https://github.com/Aadrika08/palimpsest/blob/0211912d978c3d4ae5a45021e721bdff2e0b7744/docs/reports/puck-cpu-held-qualification-amendment-04.md).
-All 246 affected checks pass in 86.90s. Independent source review finds no material
-issues. The closed transition admits only the reviewed diagnostic bindings and
-existing parent/bootstrap differences from historical preparation. V1–v3,
-historical capsules, all 16 data inputs, four roots, acceptance anchors, exact03
-missing-import roster, versions, limits and refusal behavior remain unchanged.
-Authored positive/negative and tamper checks are source proof, not Torch results.
+[actual04 report](https://github.com/Aadrika08/palimpsest/blob/c9adf32ba54854d2edaec792abf8c0c375686814/docs/reports/puck-cpu-held-qualification-04.md).
+One independently reviewed, frozen and freshly admitted invocation exits1 normally
+without timeout in43.401521891s. The original RuntimeError cause is preserved and
+identifies producer `torch._C`, phase `native_create`, export `torch._C._autograd`,
+attributes `['_autograd']`, missing component `_autograd` at index0. Native creation
+returns, but native execution and all four imports do not complete. This observed04
+row does not recover03's unlogged row or qualify the other35 native-create rows.
+The [03 failure](https://github.com/Aadrika08/palimpsest/blob/70c6c61063ba87d7f4ea64457d07f36f6f4310ff/docs/reports/puck-cpu-held-qualification-03.md)
+and all earlier consumed outcomes remain preserved.
 
-The separate pre04 data-only census passes 27,255 files / 1,318,494,346 B in
-15.542632212 s at 16:06:25 UTC. It does not reaccept preparation, accept failed01–03,
-qualify the held runtime or supply post04 byte acceptance. All 162 source-evidence
-copies match. The earlier [binding diagnostics](https://github.com/Aadrika08/palimpsest/blob/911efa32fc5777167a6c0cb0b4dd3e8d45730608/docs/reports/puck-cpu-binding-diagnostics-v1.md)
-retain their separate 202 affected checks and authored chained-failure proof;
-they do not recover03's unlogged row.
+The frozen acceptance auditor exits1 normally in0.064069714s and refuses before
+post-stage byte checks. `baseline-after.json` is absent. Parent descriptors remain
+5→5 with no children/non-main threads; independent host observation at16:32:02UTC
+finds all three tracked PID/start identities absent. All48 indexed evidence copies
+match originals and Git blobs, including zero-byte streams. These are failed
+qualification and reported operational cleanup, not held-runtime acceptance,
+post04 byte acceptance, hostile containment or hard timing guarantees.
 
-The exact sources are deployed in the data-owning worktree. The actual04
-[configuration](https://github.com/Aadrika08/palimpsest/blob/de2d4ca49f4d784ea1128824a19ea6d8d912e853/docs/plans/puck-cpu-held-qualification-04.json)
-and [reviewed freeze](https://github.com/Aadrika08/palimpsest/blob/de2d4ca49f4d784ea1128824a19ea6d8d912e853/docs/plans/puck-cpu-held-qualification-04-freeze.json)
-are committed at `de2d4ca` before invocation. Independent deployment/control
-review verifies 44 current pins, six controls, 34 historical capsule leaves and
-four separate data-proof pins. Actual04 remains uninvoked. Recheck current pins,
-preservation, absent output paths and fresh resources before invoking it once.
-The qualification floors remain 2 GiB available RAM, 256 MiB tmpfs and 4 GiB project
-space; disk clearance alone does not admit execution. Audit its actual terminal,
-identity, staged bytes and cleanup; preserve any failure without implicit05.
-Passing held qualification and the episode bundle remain open. No full suite,
-scientific, renderer, controller, artwork, human or physical acceptance is claimed.
+Admission at16:30:08UTC verifies44 current pins, six controls, four dated data-proof
+pins,95 old archive entries,83 immutable originals and54 capsule leaves. Available
+RAM3,096,526,848B, tmpfs free3,579,727,872B and project free98,637,963,264B meet the
+unchanged2GiB/256MiB/4GiB floors. The separate pre04 census passes27,255 files /
+1,318,494,346B at16:06:25UTC; it remains dated data-only evidence before04.
+
+Static inspection of the package-declared exact PyTorch commit explains the timing:
+the installed `torch/autograd/__init__.py` matches upstream bytes, calls
+`_autograd_init` at line558, then imports the child at562. The matching C++ source
+maps that callback to creation of `_autograd` during this later initialization.
+This is source-supported inference, not a later runtime trace or linked-binary
+build provenance. A simple move to producer completion is not yet sufficient proof:
+the child can appear before reentrant guards, while ordinary exports are prepared
+only after execution. No replacement producer/phase has been accepted. Skip no row,
+move no whole roster and preserve refusal until the intermediate lifecycle is proved.
+
+Next, use the existing authored export fixture to publish a declared raw child,
+then import a fresh registered helper before returning. Prove intermediate identity,
+cache custody, creator/phase attribution and terminal closure, including mutation
+and wrong-phase negatives. A future finite contract must preserve current strict
+unprepared-export behavior and historical source/data identities. Review the
+source/profile amendment separately before any new actual attempt.04 is consumed;
+no05 configuration or invocation exists. The episode bundle remains the next
+product deliverable; all seven release gates remain open.
+
+## Completed source checkpoint: closed04 diagnostic controls
+
+The [source proof](https://github.com/Aadrika08/palimpsest/blob/0211912d978c3d4ae5a45021e721bdff2e0b7744/docs/reports/puck-cpu-held-qualification-amendment-04.md)
+retains246 passing affected checks in86.90s,162 exact evidence copies and independent
+review with no material findings. Authored positive/negative and tamper tests are
+source proof, not Torch results. The transition preserves v1–v3, historical capsules,
+all16 inputs, four roots, preparation anchors, exact03 missing-import roster,
+versions, limits and refusal behavior. The exact configuration and reviewed freeze
+were committed at `de2d4ca` before actual04. The earlier
+[binding diagnostics](https://github.com/Aadrika08/palimpsest/blob/911efa32fc5777167a6c0cb0b4dd3e8d45730608/docs/reports/puck-cpu-binding-diagnostics-v1.md)
+retain their separate202 affected checks and39 exact copies. Neither source suite
+nor the data-only census closes an actual runtime, episode or release gate.
 
 ## Earlier CPU result: preparation accepted, qualification01 failed
 
@@ -218,7 +212,7 @@ Any later actual invocation needs a separately numbered, reviewed amendment,
 a fresh source capsule, current-byte checks and fresh resource admission.
 Preparation01's worker-source capsule contains the old bootstrap; do not reuse
 it with a new source hash. Qualification01's original primary error remains unexposed;
-qualifications01–03 remain consumed. The episode bundle remains checkpoint A's exit.
+qualifications01–04 remain consumed. The episode bundle remains checkpoint A's exit.
 
 ## Earlier source checkpoint: reviewed PREPARE controls and refused preflight
 
@@ -410,17 +404,16 @@ test counts cannot satisfy either actual-runtime exit below.
    16 input roles and four roots under the declared interpreter, native/EGL,
    staging and custody bindings. This is scoped preparation acceptance. The
    failed later qualification has no passing post-stage byte census.
-2. **Qualify that exact runtime — acceptance remains open.** Each independently
-   reviewed qualification01–03 ran once and failed.03 corrects02's optional-import
-   denial and reaches an unresolved native producer attribute. Its exact binding
-   remains unknown; source diagnostics cannot recover03's unlogged row. The04
-   source transition and exact controls are now reviewed and committed, but04
-   remains uninvoked. All three prior acceptance auditors refuse before
-   post-stage byte checks. Any actual allocation needs a separately numbered, reviewed
-   source/data amendment, fresh staged-byte/resource checks, exact versions and
-   custody, finite limits, normal cleanup and an independent audit. Never rerun
-   01–03. Even passing imports do not qualify operators, rendering, physics,
-   inference or collection.
+2. **Qualify that exact runtime — acceptance remains open.** Independently reviewed
+   qualifications01–04 each ran once and failed.04 identifies the premature
+   `torch._C._autograd` native-create check; a delayed-publication correction
+   needs intermediate cache/producer/closure proof, not just a later phase label.
+   All four acceptance auditors refuse before post-stage byte checks. No05 exists.
+   Any later actual allocation needs a separately numbered reviewed source/data
+   amendment, exact versions/custody, current staged bytes, fresh resource admission,
+   finite limits, normal cleanup and an independent audit. Never rerun01–04.
+   Even passing imports do not qualify operators, rendering, physics, inference
+   or collection.
 3. **Prove the complete episode route.** Finish input/scene admission and the
    durable parent/worker collection path. Prospectively specify the exact model,
    scene, seed and finite episode allocation, including required operator and
@@ -468,26 +461,29 @@ substitute for numerical results, capability, actual browser use or human accept
 | 5 | Integrate and experience the product. | One candidate supports the lab and all six artworks; actual browser, mapping, replay, export, interruption and endurance checks pass. |
 | 6 | Accept and deliver that candidate. | Artistic/operator sessions, final verification and all seven gate records are complete; the installation and evidence package are reproducible. |
 
-**Current next action:** freshly admit and execute the already reviewed04
-diagnostic attempt once, then use its observed outcome to unblock the episode.
+**Current next action:** prove the delayed-export lifecycle and implement the
+smallest reviewed correction needed to obtain passing actual held qualification.
 
-1. Recheck the 44 current pins, six frozen controls, four dated data-proof pins,
-   historical capsules and preserved01–03 artifacts. Require04 output, stream,
-   transport and audit paths absent. Refresh staged-byte/resource admission;
-   refuse execution if any unchanged floor or identity check fails.
-2. Invoke only the exact frozen04 observer command once. Retain its terminal
-   outcome and independently invoke the frozen acceptance auditor against the
-   real new transport hash. Preserve failed evidence without implicit05. A
-   refusal before byte checks supplies no post-stage byte acceptance.
-3. If04 identifies a binding failure, inspect the exact installed/upstream source
-   and observed producer/phase/export/component before a prospective correction.
-   Guess no producer or phase and skip no row. Passing held qualification and its
-   independent terminal/byte/cleanup audit remain required before the episode.
+1. Extend `tests/test_puck_dependency_profile.py`'s authored producer fixture:
+   publish its declared raw child into the module cache, then import a fresh
+   registered helper before the producer returns. Preserve the existing strict
+   unprepared-export and native-create negatives. Test the intended finite contract
+   before implementation; do not treat a pending name as accepted cache custody.
+2. Bind any intermediate publication to the exact producer, creator phase, raw
+   attribute edge and module/cache object identity. Test wrong phase, replacement,
+   disappearance, dispatch mutation and incomplete terminal closure. Reuse the
+   existing binding/phase machinery; add no configurable exemption. Inspect other
+   declared exports individually before changing their creation declarations.
+3. Independently review the source/profile correction and its authored proof.
+   Only then prepare a separately numbered actual amendment with exact reviewed
+   controls, current staged bytes, fresh resource admission and an independent
+   terminal/identity/byte/cleanup audit. Preserve04 and all earlier failures;
+   no05 is created or authorized by a failing receipt alone.
 4. Complete the distinct CPU engineering episode envelope, fixed authenticated
-   worker entry, bounded parent and existing writer/replay/export connection.
-   Resolve catalog access before protected reads; declare the exact model, scene,
-   seed, limits, operator/renderer probes and replay criterion. Run the bounded
-   episode and independently audit the actual portable bundle.
+   worker entry, bounded parent and durable writer/replay/export connection.
+   Resolve catalog access before protected reads; declare the model, scene, seed,
+   limits, operator/renderer probes and replay criterion. Run and independently
+   audit the actual portable bundle after runtime qualification passes.
 
 The immediate milestone passes only with that bundle and its actual route checks.
 A natural task failure can prove recording/replay/export, but cannot pass a
@@ -496,7 +492,7 @@ controller capability gate. Source fixtures and test totals cannot close either.
 Required cache, version, custody or cleanup failures stop the stage and retain
 its outcome and consumed allocation; there is no implicit retry. A source
 candidate or ordinary import pass does not satisfy actual held qualification.
-Preserve failed CPU qualifications01–03, characterization01 and every earlier
+Preserve failed CPU qualifications01–04, characterization01 and every earlier
 consumed allocation.
 
 The next independent source work is the distinct CPU collection envelope and
@@ -519,7 +515,7 @@ and 3,583,029,248 B on `/tmp`. This dated snapshot removes the immediate disk
 shortfall; it is not future admission. Disk clearance permits fresh admission
 checks; it does not qualify the CPU/EGL
 stack. The earlier PR149 RAM refusal is preserved, followed by admitted actual
-preparation01 and its passing audit. Qualifications01–03 then fail and are
+preparation01 and its passing audit. Qualifications01–04 then fail and are
 consumed; no acceptance auditor provides post-stage byte acceptance. Resource snapshots
 are transient and must be refreshed before any separately reviewed future stage.
 The observed 1,318,494,346-byte preparation copy is content only, not a future
@@ -535,8 +531,8 @@ qualification. The older RAM shortfall in PR #138 remains historical evidence.
   release gate. Observation02 above now supplies ordinary CPU import data;
   PR148 supplies the dedicated source parent and PR149 the reviewed PREPARE
   controls and auditor. Actual preparation01 and its independent audit pass;
-  real-pin qualifications01–03 are frozen and invoked once each, but fail.03
-  passes02's optional-import denial and reaches the unresolved native binding.
+  real-pin qualifications01–04 are frozen and invoked once each, but fail.04
+  identifies the delayed `_autograd` binding after03's generic native refusal.
   Passing held qualification/audit
   and the actual episode remain open. No real simulator
   episode or scientific allocation ran in this unit.
@@ -607,7 +603,7 @@ CPU installation01 and retained admission01 remain failed and consumed; their
 read-only evidence does not grant historical acceptance. Distinct admission02
 accepts only current package preparation. CPU characterization01 also remains
 failed and consumed; distinct02 accepts ordinary imports only. Actual CPU held
-preparation01 has its dated scoped PASS, while CPU held qualifications01–03
+preparation01 has its dated scoped PASS, while CPU held qualifications01–04
 remain failed and consumed with no passing post-stage byte audit. The earlier
 preparation01,
 qualification01, runtime observations01/02 and navigation attempts1/2 remain
