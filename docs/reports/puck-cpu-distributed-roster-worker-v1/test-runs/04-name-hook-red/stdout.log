@@ -1,0 +1,40 @@
+F.                                                                       [100%]
+=================================== FAILURES ===================================
+__________ test_bad_raw_name_is_rejected_before_value_equality_hooks ___________
+
+    def test_bad_raw_name_is_rejected_before_value_equality_hooks():
+        module = api()
+        cache, expected = authored_cache()
+    
+        class EqualityTrap:
+            def __eq__(self, other):
+                raise AssertionError('raw name equality hook invoked')
+    
+        vars(cache[NAMES[0]])['__name__'] = EqualityTrap()
+        with pytest.raises(ValueError):
+>           capture(module, cache, expected)
+
+tests/test_puck_cpu_distributed_exports.py:119: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_puck_cpu_distributed_exports.py:31: in capture
+    return function(cache, expected)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+scripts/characterize_puck_runtime_imports.py:222: in describe_distributed_exports
+    rows, seals = _distributed_state(cache)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^
+scripts/characterize_puck_runtime_imports.py:191: in _distributed_state
+    if raw.get('__name__') != name or type(raw.get('__name__')) is not str:
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <test_puck_cpu_distributed_exports.test_bad_raw_name_is_rejected_before_value_equality_hooks.<locals>.EqualityTrap object at 0x7f320c559c50>
+other = 'torch._C._distributed_autograd'
+
+    def __eq__(self, other):
+>       raise AssertionError('raw name equality hook invoked')
+E       AssertionError: raw name equality hook invoked
+
+tests/test_puck_cpu_distributed_exports.py:115: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_puck_cpu_distributed_exports.py::test_bad_raw_name_is_rejected_before_value_equality_hooks
+1 failed, 1 passed in 0.20s
