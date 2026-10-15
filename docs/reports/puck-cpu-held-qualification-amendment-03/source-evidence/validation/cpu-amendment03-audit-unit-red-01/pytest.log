@@ -1,0 +1,77 @@
+FF.............FF..F..F............FF.....                               [100%]
+=================================== FAILURES ===================================
+__________ test_only_closed03_policy_can_reach_the_new_output[False] ___________
+tests/test_puck_cpu_amendment03_audit.py:21: in test_only_closed03_policy_can_reach_the_new_output
+    m=api();value=configuration03(m,authored);m.configuration(value,authored)
+                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+scripts/audit_puck_cpu_held_runtime.py:196: in configuration
+    require(phase in OUTPUTS and (not amended or phase=='qualify') and set(config)==keys and config['kind']=='puck-cpu-held-runtime-allocation-v'+str(version) and type(config['version']) is int and config['version']==version and type(config['allocation_id']) is int and config['allocation_id']==version,'Exact allocation configuration required')
+scripts/audit_puck_cpu_held_runtime.py:39: in require
+    if not value:raise ValueError(message)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^
+E   ValueError: Exact allocation configuration required
+___________ test_only_closed03_policy_can_reach_the_new_output[True] ___________
+tests/test_puck_cpu_amendment03_audit.py:21: in test_only_closed03_policy_can_reach_the_new_output
+    m=api();value=configuration03(m,authored);m.configuration(value,authored)
+                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+scripts/audit_puck_cpu_held_runtime.py:196: in configuration
+    require(phase in OUTPUTS and (not amended or phase=='qualify') and set(config)==keys and config['kind']=='puck-cpu-held-runtime-allocation-v'+str(version) and type(config['version']) is int and config['version']==version and type(config['allocation_id']) is int and config['allocation_id']==version,'Exact allocation configuration required')
+scripts/audit_puck_cpu_held_runtime.py:39: in require
+    if not value:raise ValueError(message)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^
+E   ValueError: Exact allocation configuration required
+_____ test03_only_changes_the_current_missing_roster_by_the_observed_name ______
+tests/test_puck_cpu_amendment03_audit.py:50: in test03_only_changes_the_current_missing_roster_by_the_observed_name
+    m=api();current,old,prep=epoch(m);m.preparation_epoch(current,old,prep)
+                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+scripts/audit_puck_cpu_held_runtime.py:222: in preparation_epoch
+    require(all(canonical(current[k])==canonical(historical[k]) for k in shared),'Historical preparation data or policy changed')
+scripts/audit_puck_cpu_held_runtime.py:39: in require
+    if not value:raise ValueError(message)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^
+E   ValueError: Historical preparation data or policy changed
+____ test03_does_not_relabel_changed_historical_policy_or_inputs[not-added] ____
+tests/test_puck_cpu_amendment03_audit.py:63: in test03_does_not_relabel_changed_historical_policy_or_inputs
+    with pytest.raises(ValueError):m.preparation_epoch(current,old,prep)
+E   Failed: DID NOT RAISE <class 'ValueError'>
+____ test03_does_not_relabel_changed_historical_policy_or_inputs[old-added] ____
+tests/test_puck_cpu_amendment03_audit.py:63: in test03_does_not_relabel_changed_historical_policy_or_inputs
+    with pytest.raises(ValueError):m.preparation_epoch(current,old,prep)
+E   Failed: DID NOT RAISE <class 'ValueError'>
+____________ test03_keeps_the_original_preparation_auditor_identity ____________
+tests/test_puck_cpu_amendment03_audit.py:72: in test03_keeps_the_original_preparation_auditor_identity
+    old,prep,audit=m.historical_acceptance(held,current,True)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+scripts/audit_puck_cpu_held_runtime.py:235: in historical_acceptance
+    outcome(prep,old,sha(oldraw));preparation_epoch(current,old,prep)
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+scripts/audit_puck_cpu_held_runtime.py:222: in preparation_epoch
+    require(all(canonical(current[k])==canonical(historical[k]) for k in shared),'Historical preparation data or policy changed')
+scripts/audit_puck_cpu_held_runtime.py:39: in require
+    if not value:raise ValueError(message)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^
+E   ValueError: Historical preparation data or policy changed
+___ test_qualification03_uses_fresh_paths_preserving_both_consumed_epochs[0] ___
+tests/test_puck_cpu_held_observer.py:128: in test_qualification03_uses_fresh_paths_preserving_both_consumed_epochs
+    result=module.observe(path,sha)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+scripts/observe_puck_cpu_held_allocation.py:66: in observe
+    raise ValueError('Exact CPU parent allocation root and phase required')
+E   ValueError: Exact CPU parent allocation root and phase required
+___ test_qualification03_uses_fresh_paths_preserving_both_consumed_epochs[7] ___
+tests/test_puck_cpu_held_observer.py:128: in test_qualification03_uses_fresh_paths_preserving_both_consumed_epochs
+    result=module.observe(path,sha)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+scripts/observe_puck_cpu_held_allocation.py:66: in observe
+    raise ValueError('Exact CPU parent allocation root and phase required')
+E   ValueError: Exact CPU parent allocation root and phase required
+=========================== short test summary info ============================
+FAILED tests/test_puck_cpu_amendment03_audit.py::test_only_closed03_policy_can_reach_the_new_output[False]
+FAILED tests/test_puck_cpu_amendment03_audit.py::test_only_closed03_policy_can_reach_the_new_output[True]
+FAILED tests/test_puck_cpu_amendment03_audit.py::test03_only_changes_the_current_missing_roster_by_the_observed_name
+FAILED tests/test_puck_cpu_amendment03_audit.py::test03_does_not_relabel_changed_historical_policy_or_inputs[not-added]
+FAILED tests/test_puck_cpu_amendment03_audit.py::test03_does_not_relabel_changed_historical_policy_or_inputs[old-added]
+FAILED tests/test_puck_cpu_amendment03_audit.py::test03_keeps_the_original_preparation_auditor_identity
+FAILED tests/test_puck_cpu_held_observer.py::test_qualification03_uses_fresh_paths_preserving_both_consumed_epochs[0]
+FAILED tests/test_puck_cpu_held_observer.py::test_qualification03_uses_fresh_paths_preserving_both_consumed_epochs[7]
+8 failed, 34 passed in 0.93s

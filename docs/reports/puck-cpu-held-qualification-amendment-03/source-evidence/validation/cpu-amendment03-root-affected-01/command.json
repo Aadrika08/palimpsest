@@ -1,0 +1,28 @@
+{
+  "command": [
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/r0-reproduction/.venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "tests/test_puck_cpu_held_parent.py",
+    "tests/test_puck_cpu_held_parent_integration.py",
+    "tests/test_puck_cpu_held_amendment.py",
+    "tests/test_puck_cpu_held_amendment03.py",
+    "tests/test_puck_cpu_held_runtime_audit.py",
+    "tests/test_puck_cpu_held_audit_integration.py",
+    "tests/test_puck_cpu_held_observer.py",
+    "tests/test_puck_cpu_amendment_audit.py",
+    "tests/test_puck_cpu_amendment03_audit.py",
+    "--basetemp=/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/runs/source-validation/cpu-amendment03-root-affected-01/tmp",
+    "--tb=short"
+  ],
+  "cwd": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03",
+  "environment_overrides": {
+    "PYTHONPATH": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/src",
+    "PYTEST_DISABLE_PLUGIN_AUTOLOAD": "1",
+    "PYTHONDONTWRITEBYTECODE": "1"
+  },
+  "serialized_lock": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/runs/source-validation/qualification-amendment03-test.lock"
+}

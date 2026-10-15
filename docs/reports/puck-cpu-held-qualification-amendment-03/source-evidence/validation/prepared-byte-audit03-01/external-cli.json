@@ -1,0 +1,32 @@
+{
+  "accepted_current_byte_census": true,
+  "at": "2026-10-15T15:06:59.882618+00:00",
+  "command": [
+    "/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/bin/python3.11",
+    "-I",
+    "-S",
+    "-B",
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/runs/source-validation/prepared-byte-audit03-01/runner.py"
+  ],
+  "elapsed_seconds": 13.446514741051942,
+  "error_type": null,
+  "kind": "externally-observed-pre03-data-only-auditor-cli-v1",
+  "normal_return": true,
+  "observed_returncode": 0,
+  "published": {
+    "path": "/tmp/palimpsest-puck-cpu-prepared-byte-audit-03-01.json",
+    "sha256": "373215b8fbd7137982451ca602701802c233778b53f3754cd1ccc80749ff51b9",
+    "size_bytes": 1358
+  },
+  "scope": "current prepared bytes/custody only; no qualification or failure acceptance",
+  "stderr": {
+    "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/runs/source-validation/prepared-byte-audit03-01/stderr.log",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "size_bytes": 0
+  },
+  "stdout": {
+    "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/runs/source-validation/prepared-byte-audit03-01/stdout.log",
+    "sha256": "373215b8fbd7137982451ca602701802c233778b53f3754cd1ccc80749ff51b9",
+    "size_bytes": 1358
+  }
+}

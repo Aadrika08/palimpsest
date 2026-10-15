@@ -1,0 +1,50 @@
+{
+  "scope": "AUTHORED source tests only; no actual CPU stack invocation",
+  "runs": [
+    {
+      "label": "red-01",
+      "cwd": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03",
+      "command": [
+        "flock",
+        "-x",
+        "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/runs/source-validation/qualification-amendment03-test.lock",
+        "env",
+        "PYTHONPATH=/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/src",
+        "PYTEST_DISABLE_PLUGIN_AUTOLOAD=1",
+        "PYTHONDONTWRITEBYTECODE=1",
+        "/home/utkarsh/Work/shraddha/brain/.worktrees/r0-reproduction/.venv/bin/python",
+        "-m",
+        "pytest",
+        "-q",
+        "tests/test_puck_cpu_held_amendment03.py",
+        "--basetemp=runs/source-validation/cpu-parent-amendment03/red-01"
+      ],
+      "stdout_stderr": "runs/source-validation/cpu-parent-amendment03/red-01.log",
+      "exit_code": 1
+    },
+    {
+      "label": "green-01",
+      "cwd": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03",
+      "command": [
+        "flock",
+        "-x",
+        "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/runs/source-validation/qualification-amendment03-test.lock",
+        "env",
+        "PYTHONPATH=/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/src",
+        "PYTEST_DISABLE_PLUGIN_AUTOLOAD=1",
+        "PYTHONDONTWRITEBYTECODE=1",
+        "/home/utkarsh/Work/shraddha/brain/.worktrees/r0-reproduction/.venv/bin/python",
+        "-m",
+        "pytest",
+        "-q",
+        "tests/test_puck_cpu_held_amendment03.py",
+        "tests/test_puck_cpu_held_amendment.py",
+        "tests/test_puck_cpu_held_parent.py",
+        "tests/test_puck_cpu_held_parent_integration.py",
+        "--basetemp=runs/source-validation/cpu-parent-amendment03/green-01"
+      ],
+      "stdout_stderr": "runs/source-validation/cpu-parent-amendment03/green-01.log",
+      "exit_code": 0
+    }
+  ]
+}

@@ -45,7 +45,7 @@ def write(root,name,value):
     return dict(path=name,size_bytes=len(raw),sha256=digest(raw))
 
 
-def project(tmp_path):
+def project(tmp_path,*,rocm_probe=False):
     project=tmp_path/'authored-project';project.mkdir(mode=0o700)
     current=load(ROOT/PARENT,'cpu_authored_current_parent')
     marker=b'min_available_ram_bytes=(4096 if phase==\'prepare\' else 2048)*MiB'
@@ -64,6 +64,12 @@ def project(tmp_path):
             assert changed.count(scope)==1
             changed=changed.replace(scope,authored_scope)
             assert changed.replace(authored_scope,scope).replace(replacement,marker)==raw
+            roster=b"PREPARATION_NEGATIVE_IMPORTS=['numpy._distributor_init_local','org']"
+            authored_roster=b"PREPARATION_NEGATIVE_IMPORTS=['org']"
+            if roster in changed:
+                assert changed.count(roster)==1
+                changed=changed.replace(roster,authored_roster)
+                assert changed.replace(authored_roster,roster).replace(authored_scope,scope).replace(replacement,marker)==raw
             raw=changed
         write(project,name,raw)
     api=load(project/PARENT,'cpu_authored_cloned_parent')
@@ -78,9 +84,13 @@ def project(tmp_path):
     entries=[];modules=[];wheels=[]
     for name,version in api.VERSIONS.items():
         source=("__version__ = "+repr(version)+"\n").encode()
-        write(site,name+'.py',source)
-        entries.append(dict(path=name+'.py',size_bytes=len(source),sha256=digest(source)))
-        modules.append(dict(name=name,root_index=0,path=name+'.py',kind='python',is_package=False))
+        package=rocm_probe and name=='torch'
+        if package:
+            source+=b'try:\n    from . import _rocm_init\nexcept ImportError:\n    OPTIONAL_ROCM_ABSENT = True\n'
+        module_path=name+'/__init__.py' if package else name+'.py'
+        write(site,module_path,source)
+        entries.append(dict(path=module_path,size_bytes=len(source),sha256=digest(source)))
+        modules.append(dict(name=name,root_index=0,path=module_path,kind='python',is_package=package))
         metadata=(f'Name: {name}\nVersion: {version}\n\n').encode()
         path=name+'-'+version+'.dist-info/METADATA';write(site,path,metadata)
         entries.append(dict(path=path,size_bytes=len(metadata),sha256=digest(metadata)))
@@ -88,7 +98,7 @@ def project(tmp_path):
     inert=b'inert authored bytecode data, never executed'
     write(site,'inert.pyc',inert);entries.append(dict(path='inert.pyc',size_bytes=len(inert),sha256=digest(inert)))
     (site/'empty/nested').mkdir(mode=0o700,parents=True)
-    directories=sorted([r['metadata_path'].split('/')[0] for r in wheels]+['empty','empty/nested'])
+    directories=sorted([r['metadata_path'].split('/')[0] for r in wheels]+['empty','empty/nested']+(['torch'] if rocm_probe else []))
     inventory=dict(kind='puck-cpu-installed-files-v1',entries=sorted(entries,key=lambda r:r['path']),
                    file_count=len(entries),directory_count=len(directories),total_bytes=sum(r['size_bytes'] for r in entries))
     # Inventory has an exact schema, so its authorship label lives in this test.
