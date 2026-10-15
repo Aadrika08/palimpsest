@@ -155,3 +155,24 @@ def test_package_system_exit_zero_cannot_masquerade_as_success(tmp_path):
     assert report['status']=='failed' and report['error']['type']=='builtins.SystemExit'
     assert report['observation_scope']=='post_failure'
     assert report['cache'] is not None and report['maps'] is not None
+
+
+def test_environment_change_during_metadata_observation_cannot_pass(tmp_path,monkeypatch):
+    import types
+    module=api();environment=dict(os.environ)
+    monkeypatch.setattr(sys,'path',list(sys.path))
+    def imported(name):
+        value=types.ModuleType(name);value.__version__='authored';return value
+    monkeypatch.setattr(module,'importlib',types.SimpleNamespace(import_module=imported))
+    monkeypatch.setattr(module,'describe_cache',lambda cache:{'modules':[]})
+    calls=0
+    def maps():
+        nonlocal calls
+        calls+=1
+        if calls==2:monkeypatch.setenv('AUTHORED_LATE_MUTATION','changed')
+        return {'images':[],'persistent_snapshot_only':True}
+    monkeypatch.setattr(module,'mapped_images',maps)
+    report=module.observe({'site_root':str(tmp_path),'environment':environment},'0'*64)
+    assert report['status']=='failed'
+    assert report['error']['message']=='Exact environment changed during observation'
+    assert report['environment_delta']['added'][0]['name']=='AUTHORED_LATE_MUTATION'
