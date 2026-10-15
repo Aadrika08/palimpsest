@@ -22,6 +22,18 @@ no automatic actual retry or new scientific-study attempt follows. The previous
 [execution/evidence history](plans/simulation-release-execution-goal-history-2026-10-15.md)
 is preserved byte-identically. All 26 requirement and seven gate statuses are unchanged.
 
+[Draft PR #141](https://github.com/Aadrika08/palimpsest/pull/141) closes the CPU
+archive-payload verification gap with one actual acquisition:71 archives,
+385,328,518B,55.276s and exit0. Independent terminal audit checks all70 wheels,
+26,913 regular members, complete RECORD evidence and147 retained single-link files;
+no worker-group survivors or matching acquisition routes remain. The
+[report](https://github.com/Aadrika08/palimpsest/blob/research/puck-cpu-payload-verification-v1/docs/reports/puck-cpu-payload-verification-v1.md)
+retains exact raw outcomes, source/configuration, audit program and checksums.
+135 affected source checks and70 legacy checks pass; default pytest retains its
+ten FastAPI/httpx collection errors. The next source-wheel build is prospective;
+packages remain uninstalled, actual numerical runtime unqualified and all33
+requirement/release statuses unchanged. No consumed numerical allocation was retried.
+
 [Draft PR #140](https://github.com/Aadrika08/palimpsest/pull/140) resolves the measured
 Btrfs held-directory enumeration gap using fresh bounded descriptor-relative
 censuses. Full33 condition checks pass on Btrfs84.40s and tmpfs47.93s; root88 new/
@@ -41,7 +53,8 @@ limits. This implementation milestone and all seven release gates remain open.
 
 [Draft PR #138](https://github.com/Aadrika08/palimpsest/pull/138) retains independently
 audited CPU metadata:70 wheels/71 candidate distributions,1,304,650,469 declared
-expanded bytes and26,913 files. python-louvain remains source-only; full payload,
+expanded bytes and26,913 files. That assessment left full payload verification open;
+the newer package-only result above closes it. python-louvain remains source-only;
 installed-size/licence/native/render closure and RAM/staging admission remain open.
 The retained assessment snapshot fails the proposed wheel-only RAM planning scenario;
 the refreshed goal records current resources without treating them as admission. A reviewed
