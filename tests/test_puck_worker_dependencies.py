@@ -40,7 +40,7 @@ def dependency_fixture(tmp_path, body, *, native=False, mutate=None):
         subprocess.run(['cc','-shared','-fPIC','-I'+sysconfig.get_paths()['include'],str(c),'-o',str(package/relative)],
                        check=True,capture_output=True,timeout=15)
         modules.append({'name':'fixture_dep._native','root_index':0,'path':relative,'kind':'extension','is_package':False})
-    files = sorted(p for p in package.rglob('*') if p.is_file())
+    files = sorted((p for p in package.rglob('*') if p.is_file()), key=lambda p:p.relative_to(package).as_posix())
     deps = {'kind':'puck-worker-dependencies-v1','version':1,
         'roots':[{'root':str(package),'kind':'package','files':[descriptor(p,p.relative_to(package).as_posix()) for p in files]}],
         'modules':modules,'namespaces':[],
@@ -86,6 +86,9 @@ def test_bad_dependency_admission_never_executes_entry(tmp_path,defect):
         else: deps['roots'][0]['files'][0]['sha256']='0'*64
     result,_ = dependency_fixture(tmp_path,'import fixture_dep\nreturn {}',mutate=mutate)
     assert result.returncode != 0
+    reasons = {'missing-module':'Unregistered', 'version':'Name or Version differs',
+               'extra-file':'extra or missing files', 'wrong-sha':'SHA-256 or size differs'}
+    assert reasons[defect] in result.stderr, result.stderr
     assert result.stdout == ''
 
 

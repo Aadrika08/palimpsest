@@ -142,10 +142,18 @@ def _parse(raw, expected):
     if type(raw) is not bytes or not 0 < len(raw) <= MiB or digest(raw) != _hash(expected):
         raise ValueError('Externally pinned bounded worker registration required')
     reg = _decode(raw)
-    if (set(reg) != _FIELDS or reg['kind'] != 'puck-worker-source-bootstrap-v1'
-            or type(reg['version']) is not int or reg['version'] != 1
+    if (type(reg.get('version')) is not int or reg['version'] not in (1, 2)
+            or set(reg) != (_FIELDS if reg['version'] == 1 else _FIELDS | {'dependencies'})
+            or reg['kind'] != 'puck-worker-source-bootstrap-v'+str(reg['version'])
             or reg['qualification_claims'] != [] or reg['executable'] is not False):
         raise ValueError('Exact source-only bootstrap registration required')
+    if reg['version'] == 2:
+        dep = reg['dependencies']
+        if type(dep) is not dict or set(dep) != {'path', 'size_bytes', 'sha256'}:
+            raise ValueError('Exact dependency registration reference required')
+        _path(dep['path']); _hash(dep['sha256'])
+        if type(dep['size_bytes']) is not int or not 0 < dep['size_bytes'] <= 16*MiB:
+            raise ValueError('Dependency registration reference ceiling exceeded')
     _path(reg['source_root']); _path(reg['cwd'])
     files = reg['source_files']
     if type(files) is not list or not 1 <= len(files) <= 512:
@@ -242,7 +250,7 @@ class _SourceFinder(importlib.abc.MetaPathFinder):
     def __init__(self, owner): self.owner = owner
     def find_spec(self, fullname, path=None, target=None):
         try:
-            self.owner.recheck()
+            self.owner._import_recheck()
             if fullname in self.owner._modules:
                 source = self.owner._modules[fullname]
                 loader = _SourceLoader(self.owner, fullname, source)
@@ -251,9 +259,18 @@ class _SourceFinder(importlib.abc.MetaPathFinder):
             if fullname in self.owner._namespaces:
                 return importlib.util.spec_from_loader(fullname, _SourceLoader(self.owner, fullname, None),
                     origin=str(self.owner._source.root/self.owner._namespaces[fullname]), is_package=True)
+            if self.owner._dependencies is not None:
+                spec = self.owner._dependencies.find_spec(fullname)
+                if spec is not None: return spec
             if fullname.split('.')[0] not in sys.stdlib_module_names:
                 raise ImportError('Unregistered local or external dependency import: '+fullname)
             return None
+        except BaseException as error:
+            self.owner._fail(error); raise
+
+    def find_distributions(self, context):
+        if self.owner._dependencies is None: return iter(())
+        try: return self.owner._dependencies.find_distributions(context)
         except BaseException as error:
             self.owner._fail(error); raise
 
@@ -271,6 +288,7 @@ class HeldWorkerBootstrap:
         self._loading = set()
         self._finder = None; self._meta_path = None; self._source = None; self._runtime = None
         self._early_runtime_fds = []
+        self._dependencies = None
 
     def _clock(self):
         if time.monotonic() >= self._deadline: raise TimeoutError('Fresh worker deadline exhausted')
@@ -373,6 +391,17 @@ class HeldWorkerBootstrap:
                 raise ValueError('Dedicated worker session/group required')
             self._meta_path = list(sys.meta_path); self._finder = _SourceFinder(self)
             sys.meta_path.insert(0, self._finder); self._state = 'active'
+            if self._reg['version'] == 2:
+                from palimpsest.puck_dependency_imports import DependencyImports, HeldDependencyNamespace
+                dep = self._reg['dependencies']
+                raw = _read_initial(dep['path'], dep['sha256'], maximum=16*MiB)
+                if len(raw) != dep['size_bytes']:
+                    raise ValueError('Dependency registration reference size differs')
+                provider = self._enter(HeldDependencyNamespace(raw, expected_sha256=dep['sha256'],
+                    deadline=self._deadline, registration_path=dep['path']))
+                self._dependencies = DependencyImports(provider, self._import_recheck, self.recheck, self._fail,
+                    self._modules.keys() | self._namespaces.keys(),
+                    [self._reg['source_root'], self._reg['runtime']['root']])
             self.recheck(); return self
         except BaseException as error: self._fail(error); raise
 
@@ -428,13 +457,23 @@ class HeldWorkerBootstrap:
                     for member, slot in list(vars(value).items()): bind(value, member, slot)
 
     def recheck(self):
+        return self._check(full=True)
+
+    def _import_recheck(self):
+        # Imported local code stays bound. External consumption uses its held
+        # leaf/ancestor/lease guards; full source hashes and forest checks occur
+        # at public admission, local import, native and terminal boundaries.
+        return self._check(full=self._dependencies is None)
+
+    def _check(self, *, full):
         try:
             if self._state != 'active': raise RuntimeError('Bootstrap inactive or poisoned')
             self._clock()
             if sys.meta_path != [self._finder, *self._meta_path]: raise RuntimeError('Source import dispatch changed')
             for name in sys.modules:
                 if (name.split('.')[0] not in sys.stdlib_module_names and
-                        name not in {'__main__', '_puck_held_file_bootstrap'}|self._loaded.keys()|self._loading):
+                        name not in {'__main__', '_puck_held_file_bootstrap'}|self._loaded.keys()|self._loading
+                        | (self._dependencies.loaded.keys() | self._dependencies.loading if self._dependencies else set())):
                     raise RuntimeError('Unregistered module cache entry: '+name)
             for name, binding in self._loaded.items():
                 module, filename, loader, spec, origin, spec_loader, package, search, spec_name, spec_search, _, _ = binding
@@ -451,7 +490,18 @@ class HeldWorkerBootstrap:
                         or cls.__bases__ != bases or tuple(vars(cls)) != keys):
                     raise RuntimeError('Authenticated class binding changed')
             # Check support dispatch before invoking its guard methods.
-            for child in self._children: child.recheck()
+            for child in self._children:
+                if full: child.recheck()
+                elif child is self._dependencies.provider: child._active(); child._check_signal()
+                else:
+                    child._active(); child._check_dirs()
+                    for fd, parent, name, expected in child._files.values():
+                        if (_identity(os.fstat(fd)) != expected or
+                                _identity(os.stat(name, dir_fd=parent, follow_symlinks=False)) != expected):
+                            raise RuntimeError('Held source/runtime file metadata changed')
+            if self._dependencies is not None:
+                self._dependencies.recheck()
+                if full: self._dependencies.images()
             if _identity(os.stat('/proc/self/exe')) != self._image: raise RuntimeError('Running interpreter object differs')
             if _process(os.getpid()) != self._process or _process(os.getppid()) != self._parent:
                 raise RuntimeError('Worker or parent identity changed')
@@ -472,6 +522,7 @@ class HeldWorkerBootstrap:
                 'trusted_boundary':['CPython stdlib', 'interpreter ELF dependencies'],
                 'runtime_qualified':False, 'dependencies_qualified':False, 'native_authorized':False,
                 'collection_authorized':False, 'executable':False, 'qualification_claims':[]}
+            if self._dependencies is not None: result['dependencies'] = self._dependencies.snapshot()
             if len(canonical(result)) > MiB: raise ValueError('Bootstrap receipt ceiling exceeded')
             self.recheck(); return copy.deepcopy(result)
         except BaseException as error: self._fail(error); raise
