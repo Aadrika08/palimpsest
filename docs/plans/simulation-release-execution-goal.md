@@ -18,19 +18,22 @@ exact source/runtime/input admission, bounded failure handling, durable terminal
 records and independent review. It is not complete because another parser, plan
 or source-only PR passes.
 
-**First implementation unit:** prepare the separately numbered development
-amendment after PR #132's consumed numerical-import observation. Implement bounded
-environment-delta and partial-cache/image failure diagnostics, declare the
-source-derived EGL environment contract, then freeze and review the exact changed
-source/request before another installed-stack invocation. Do not silently rerun
-observation 01. Authored native compatibility source work can proceed independently.
+**First implementation unit:** implement the explicit finite held-import profile
+from PR #133's audited development observations. Bind exported objects and
+module replacement/reclassification/class identities to registered producer
+source and import phases. Preserve rejection of unknown cache entries and the
+existing exact-file-FD native contract. Prove any explicitly declared
+origin-relative native alternative with authored libraries and its distinct
+before/after/mapped-image guarantees before adoption. Then freeze and review the
+exact supported configuration before a separate held-runtime qualification.
 
-The real characterizer now exists: 50 focused checks pass. Observation 01 failed
-exact-environment admission during MuJoCo import after observing NumPy and Torch;
-all eleven lossless records and five source hashes were independently audited.
-It reached no full cache/export/maps census and grants no held runtime or
-collection qualification. Use supported observations to resolve actual held-worker
-compatibility before binding the complete collection route.
+Development observation02 passed ordinary NumPy 2.2.5, Torch 2.9.0+cu128 and MuJoCo 3.3.6
+imports with the explicit EGL environment. Its 1,131-entry cache, 52 numerical
+exceptional rows (including 12 module subclasses) and 105 persistent file images
+are retained and independently audited. Observation01's failure remains intact;
+no refresh/retry of either consumed observation is allowed. This is finite input
+for the missing held profile, not runtime/collection qualification. Continue from
+that profile into the complete parent/worker collection route.
 
 ## Clear goal and completion boundary
 
@@ -61,40 +64,47 @@ attempt requires its prospective decision instead of changed thresholds or retri
 
 ## Execution focus after disk cleanup
 
-At **2026-10-15 01:17:25 UTC**, immediately before observation 01, this filesystem
-had **99,769,405,440 bytes free (about 92.9 GiB)**, above the frozen memory
+At **2026-10-15 01:37:44 UTC**, immediately before observation02, this filesystem
+had **99,738,644,480 bytes free (about 92.9 GiB)**, above the frozen memory
 minimum of **63,786,975,232 bytes (about 59.4 GiB)**. Space is sufficient at this check. Required inputs, free space
 and exact stage admission must be checked again immediately before execution.
 
 | Order | Work | Exit before advancing |
 | --- | --- | --- |
-| 1 | Implement and review the separately numbered development amendment after observation 01's preserved environment failure; resolve observed held-runtime incompatibilities. | Bounded environment-delta and partial-failure diagnostics pass authored checks, the EGL environment contract is explicit, and the changed exact source/request is reviewed before another installed-stack invocation. Retain observation 01 unchanged. Use valid finite observations plus authored native checks to define a supported profile; freeze/review it before separate held-runtime qualification. |
+| 1 | Implement the finite held-import profile and native compatibility route from the audited observation02 data. | Authored tests bind all declared exported objects, module replacements/reclassifications and producer/class identities; unknown entries remain denied. Explicit native origin behavior passes authored libraries without silently changing the old file-FD contract. Freeze/review the exact source/runtime/dependency/environment profile before separate held-runtime qualification; ordinary-import snapshots grant none. |
 | 2 | Connect declared inventory, reservation/scene seals, model custody and the authenticated worker to natural-episode recording close. | One executable parent/worker route covers exact environment/process identity, progress and escaped descendants, one-owner lease, storage and every fixed clock bucket. Fault checks and independent review pass; the complete source/runtime/input allocation is admitted before actual collection. |
 | 3 | Finish memory replay-to-condition/case close, pruning and family admission. | After explicit amendment-02 approval, invoke the registered replay once and independently audit it. A pass precedes complete nine-condition/case-close admission and the full study. Independent source work can proceed while approval is pending. |
 | 4 | Execute separately admitted memory and puck studies; resolve the next MaleCNS study prospectively. | Complete valid development and separately admitted held-out evidence meets the unchanged scientific/capability boundaries. A failed stage stops its lane with evidence and a concrete prospective decision. |
 | 5 | Integrate supported results into the lab and six artworks. | Actual browser encounters and declared-duration visual/audio/keyboard/viewport, mapping, export, replay, recovery and endurance checks pass on the integrated candidate. |
 | 6 | Conduct artistic/operator acceptance and deliver the reproducible release. | Recorded user acceptance, independent installation and all six modes, final integrated verification and all seven gate records are complete. |
 
-**Observation-01 allocation (consumed; not permission to rerun):** the existing
-bounded supervisor used 60 seconds normal / 70 seconds hard, a sampled 1 GiB
-parent-plus-child RSS stop threshold, 64 MiB output, 1 GiB free-space floor and
-at most one child. It invoked ordinary NumPy/Torch/MuJoCo imports from the exact
-registered site/environment. NumPy and Torch versions were observed before the
-MuJoCo environment failure; the intended full cache/export/maps census was not
-reached. No model, scene, catalog, retained-study or fitting inputs were opened.
-Its result grants no scientific attempt, native-owner execution, collection,
-complete native/JIT closure or release qualification. A new development allocation
-must be separately numbered and reviewed; do not automatically retry. The sampled
-RSS stop threshold is not a hard memory bound.
+**Development observations01/02 are consumed; do not rerun their commands.**
+Both used the existing bounded supervisor, 60s normal/70s hard, sampled 1 GiB
+parent-plus-child RSS stop threshold, 64 MiB output, 1 GiB free floor and at most one child.
+Observation01 failed environment admission. Separately numbered/reviewed02 added
+only the explicit EGL key and passed ordinary imports in 1.569026201s, sampled
+637,472,768 bytes, no matching group survivors. Its full terminal is 304,584 bytes; there was
+no detected environment drift or diagnostic error. Original01 artifacts remain
+unchanged. No model/scene/catalog/retained-study/fitting inputs were opened.
+These observations grant no owner, collection, held runtime, transient/anonymous/
+JIT native closure or release qualification. Sampled RSS and process-group cleanup
+are operational controls, not hard memory or escaped-descendant proof.
 
-**Why this unit comes first:** the held worker entry is still preflight-only.
-The held file-descriptor native route fails an authored origin-relative library
-fixture, and Torch's finite virtual cache exports still need explicit admission.
-The actual development observation now also establishes a MuJoCo environment
-failure. Full runtime compatibility remains unqualified. Resolve these concrete
-contracts before held numerical qualification or an actual collection owner.
-PRs #128, #130 and #131 provide inventory, dependency custody and recording-close
-source mechanisms; reuse them in the complete route.
+**Why this unit comes first:** the held worker is still preflight-only. The
+finite observation identifies 52 exceptional Torch cache rows, including spec-less
+file-backed native children and 12 module subclasses. The loader does not yet bind
+these replacement/reclassification/export contracts. Its file-FD native route also
+fails the authored origin-relative library fixture. Resolve these concrete gaps
+before actual held qualification or collection. Reuse PRs #128/#130/#131's
+inventory, dependency custody and recording close in the complete route.
+
+**Memory source work remains available:** implement durable condition sealing
+that invokes existing cell replay internally and persists a registration-bound
+receipt, reuse it for all nine ordered conditions, then close the whole case.
+The existing replay/custody/compact/source seals were revalidated source-only at
+`2514c47`; no condition/case seals were implemented by that review. A trusted
+successful qualification descriptor still requires the pending memory amendment02
+approval, execution and independent close. Do not invent a passing descriptor.
 
 **Three prospective decisions remain pending:** memory qualification amendment 02
 in PR #119; public mixed-catalog collision access versus independent identity-only
@@ -458,11 +468,11 @@ remain required. All seven simulation gates remain open.
 
 ## First action when pursuing this goal
 
-Start with the separately numbered, source-derived development amendment and
-failure diagnostics described above. Observation 01 in PR #132 is consumed;
-ordinary import evidence remains separate from held-runtime qualification.
-Review changed exact source/request before another installed-stack invocation,
-then establish the supported held-runtime profile. Continue the **puck durable
+Start with the finite held-import profile, explicit export/module/class phase
+bindings and authored native origin-relative handling described above. PR #133
+now supplies independently audited ordinary-import data; it grants no actual held
+runtime or collection. Observations01/02 are consumed. Freeze/review the separate
+supported held-runtime qualification before execution. Continue the **puck durable
 owner/stage launcher** from PR #121's independently
 audited original-bundle result, PR #120's descriptor-held execution context,
 and PR #122's reviewed native publication and fixed-clock integration. Use
@@ -584,3 +594,26 @@ continue authored native compatibility work without consuming another actual
 installed-stack observation. All seven release gates and three pending decisions
 remain open. Default pytest produced ten FastAPI/httpx collection errors (1.78s),
 not a full-suite pass.
+
+
+[Draft PR #133](https://github.com/Aadrika08/palimpsest/pull/133), published at
+`8cca8ba`, adds bounded hashed environment deltas, independent partial failure
+cache/maps, preserved primary errors on diagnostic overflow, SystemExit(0) refusal
+and terminal environment guards. Root63 focused checks pass3.48s; independent
+source/exact-freeze review passes13 amendment cases0.63s. The separately numbered
+reviewed observation02 passed ordinary NP2.2.5/Torch2.9.0+cu128/MuJoCo3.3.6 imports
+with explicit PYOPENGL_PLATFORM=egl: exit0,1.569026201s, sampled637472768B, no
+matching group survivors, detected drift or diagnostic errors. Independent outcome
+audit validated ten lossless records309449dataB and all derived row/image lists:
+1131cacheentries1125moduleobjects;95exceptional-binding/shared-identity rows,
+52numerical(allTorch),12numericalsubclasses;105persistentimages12baseline93new
+(44site49outside). The49462edge figure is the retained worker counter, not
+independently recoverable from the row census. All fourteen observation01 artifacts
+remain unchanged. The [source/evidence report](https://github.com/Aadrika08/palimpsest/blob/research/puck-v3-runtime-amendment-02/docs/reports/puck-v3-runtime-amendment-02-source.md)
+retains exact review/input/results and all trust/process/native limits. No held
+finder, model/inference/renderer/physics, owner, collection, fitting or study ran.
+Next implement explicit finite export/replacement/reclassification/class contracts
+and authored native compatibility, then separately admit the held configuration.
+Memory condition and case close remain required; approval/qualification descriptor
+is pending. All seven gates and three prospective decisions stay open; default
+pytest retains ten FastAPI/httpx collection errors1.78s, no full-suite pass.
