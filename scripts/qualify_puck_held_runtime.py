@@ -25,7 +25,8 @@ CANDIDATE='docs/plans/puck-v3-observed-import-profile-candidate.json'
 WORKER_SOURCES=tuple(sorted((BOOTSTRAP,'src/palimpsest/__init__.py',
     'src/palimpsest/puck_execution_files.py','src/palimpsest/puck_dependency_files.py',
     'src/palimpsest/puck_dependency_bindings.py','src/palimpsest/puck_dependency_imports.py',
-    'src/palimpsest/puck_native_origins.py','src/palimpsest/puck_worker_preflight.py',
+    'src/palimpsest/puck_native_origins.py','src/palimpsest/puck_native_identity.py',
+    'src/palimpsest/puck_worker_preflight.py',
     'src/palimpsest/puck_runtime_qualification.py')))
 SOURCES=tuple(sorted((*WORKER_SOURCES,'src/palimpsest/puck_runtime_registration.py',
     'src/palimpsest/bounded_qualification.py','src/palimpsest/evaluate.py',
