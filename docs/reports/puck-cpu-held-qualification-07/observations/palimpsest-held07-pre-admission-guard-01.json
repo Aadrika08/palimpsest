@@ -1,0 +1,20 @@
+{
+  "admission_invoked": false,
+  "all501_pins_match": true,
+  "at_utc": "2026-10-15T22:51:37.719558+00:00",
+  "elapsed_seconds": 0.2217537530232221,
+  "frozen_commit": "1a1ffa06b325d0a0a60b26cff14f70992ca995ec",
+  "interpreter_and_timeout_match": true,
+  "kind": "held07-pre-admission-metadata-resource-guard-v1",
+  "new_outputs_absent": 16,
+  "observer_invoked": false,
+  "resources": {
+    "mem_available_bytes": 4928577536,
+    "nofile_hard": 524288,
+    "nofile_soft": 65536,
+    "project_free_bytes": 76222976000,
+    "tmpfs_executable_writable": true,
+    "tmpfs_free_bytes": 3416948736
+  },
+  "status": "READY"
+}

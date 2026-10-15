@@ -1,0 +1,174 @@
+{
+  "empty_directories": [
+    "raw/outer"
+  ],
+  "entries": [
+    {
+      "path": "acceptance-audit-02.json",
+      "sha256": "68ed193cb1bda91440351fbf837b44a921c54b6490a096c134994f15c43ffeb6",
+      "size_bytes": 402
+    },
+    {
+      "path": "acceptance-audit-02.py",
+      "sha256": "4e3907b995cc14ab6a0f35d150049a398c6085abcab0a9223b31f159b095ac48",
+      "size_bytes": 15271
+    },
+    {
+      "path": "acceptance-audit-03.json",
+      "sha256": "130b97c8253f2b824f382dbbbe32d049bfcaacf9d0169307611454d39b02aef3",
+      "size_bytes": 1263
+    },
+    {
+      "path": "acceptance-audit-03.py",
+      "sha256": "f6229e92238f260e001b6e49cf545dcddd9a371fb272118881fbec8b38961469",
+      "size_bytes": 15635
+    },
+    {
+      "path": "acceptance-audit-helper.py",
+      "sha256": "a8945d3dc432831522e66c7817c0f3281e278e2a930ab1e31cbb14a26e17e406",
+      "size_bytes": 33686
+    },
+    {
+      "path": "authored-scale/preflight.py",
+      "sha256": "a6307f3494d90ddc05a3dab64ee1290f8fa9ec9b0639cb565511b792d7779acb",
+      "size_bytes": 6863
+    },
+    {
+      "path": "authored-scale/report.json",
+      "sha256": "f949989addf5f81742b38120e812ab71adb5a02205b3c6760a08681816c3053c",
+      "size_bytes": 2720
+    },
+    {
+      "path": "external-observation.json",
+      "sha256": "d62c423a6b50e5f67c337f2b6ef5085be19f341bf6238c97236f034dfb33c59d",
+      "size_bytes": 1551
+    },
+    {
+      "path": "raw/baseline-after.json",
+      "sha256": "8e69fa24c5367b19acfad5f5f3c12f1804eed23d0889df6a9e58f20da4376dfb",
+      "size_bytes": 196
+    },
+    {
+      "path": "raw/baseline-before.json",
+      "sha256": "8e69fa24c5367b19acfad5f5f3c12f1804eed23d0889df6a9e58f20da4376dfb",
+      "size_bytes": 196
+    },
+    {
+      "path": "raw/configuration.json",
+      "sha256": "e6d51a1511e593ff2f21e442154960bbcd61103789630a050c9174fe45b40fad",
+      "size_bytes": 25530
+    },
+    {
+      "path": "raw/inventory.json",
+      "sha256": "d1dac91f2b69e193d6eafc8b6c47a37204bb2cb51925faad5b895dea83701b35",
+      "size_bytes": 3996631
+    },
+    {
+      "path": "raw/invocation.json",
+      "sha256": "bc0ad31b83e5f3696253f5a3762533abfcfbf86a9f73f28acf085de47b30eb31",
+      "size_bytes": 178
+    },
+    {
+      "path": "raw/result.json",
+      "sha256": "29a9e4a84d16cb9a20ee95749a44d12631aa7d21ba5a9019f091a674ad80d618",
+      "size_bytes": 1154
+    },
+    {
+      "path": "raw/snapshot.json",
+      "sha256": "db66e69a1a39e950b0bbfe8c7f1e9134cd3c3e3251dceb82db3692e6b407f70b",
+      "size_bytes": 663
+    },
+    {
+      "path": "source-configuration.json",
+      "sha256": "32605ca0d48537a6eabf98a54d605ad23bf525456760d83726381aeaf38e3e96",
+      "size_bytes": 30043
+    },
+    {
+      "path": "source/docs/plans/puck-cpu-retained-installation-admission-execution-v1.md",
+      "sha256": "b36b87380f5cb19f078b7438f575abd0fcfba0e37abdb100ff7d3006f1260ff5",
+      "size_bytes": 4623
+    },
+    {
+      "path": "source/docs/plans/puck-cpu-retained-installation-admission-execution-v2.md",
+      "sha256": "0bae8dc173c51f64e6029d2a8137b49479ebdde600d3e425645561ae555c2c25",
+      "size_bytes": 3921
+    },
+    {
+      "path": "source/docs/plans/puck-cpu-retained-installation-admission-v1.md",
+      "sha256": "acd67fd22330e3471a73d4c89caff61a640ae79b8acf088c8bb67a3595b738f9",
+      "size_bytes": 3994
+    },
+    {
+      "path": "source/pyproject.toml",
+      "sha256": "13435cdf27674955809c67d3d81410c502bf0f258b661e68ed82197842fbc800",
+      "size_bytes": 1103
+    },
+    {
+      "path": "source/scripts/acquire_puck_cpu_payloads.py",
+      "sha256": "4c08f22f56485fa492982f404c2e0e62863244deedd1743d82600310bc8a2730",
+      "size_bytes": 22918
+    },
+    {
+      "path": "source/scripts/admit_puck_retained_installation.py",
+      "sha256": "33d44a1355cec9759938232138675451325843105e55b1cc1c66edda2099b486",
+      "size_bytes": 12686
+    },
+    {
+      "path": "source/scripts/build_puck_python_louvain.py",
+      "sha256": "0fce7b437f00ebd2348ecaf29c4f00f444f707e797297419a2844c8513285fb6",
+      "size_bytes": 24118
+    },
+    {
+      "path": "source/scripts/install_puck_cpu.py",
+      "sha256": "a14a67553e3a2774cbf2ab701d3f6b89af154de8b3566af550db9d4f0b32ab1a",
+      "size_bytes": 21527
+    },
+    {
+      "path": "source/src/palimpsest/__init__.py",
+      "sha256": "bb99e30d22e4662c4ded455b1b23f49b77ce811dcfa1b69bf358925487a566d8",
+      "size_bytes": 63
+    },
+    {
+      "path": "source/src/palimpsest/bounded_qualification.py",
+      "sha256": "bbade752b1a20e1f702f1b7e43e00c19287c1ed29dd56249237af7985b6367f7",
+      "size_bytes": 16316
+    },
+    {
+      "path": "source/src/palimpsest/evaluate.py",
+      "sha256": "74a9afb710b36a366ab680462e9440f285730a0360bda704af25ebbcfd74256a",
+      "size_bytes": 19531
+    },
+    {
+      "path": "source/src/palimpsest/puck_build_inputs.py",
+      "sha256": "b08f83a19a2fa0d6f49d349512b5f69d08a6781930af4b13164f67779615cb65",
+      "size_bytes": 13905
+    },
+    {
+      "path": "source/src/palimpsest/puck_execution_files.py",
+      "sha256": "ac059455bc45437c45330d01aaca761fd571d6de1637a4a8d7ebfbd796622062",
+      "size_bytes": 15001
+    },
+    {
+      "path": "source/src/palimpsest/puck_package_payloads.py",
+      "sha256": "75f99498cfbcfe761fe151d089c0b383b9c48c39c0f89d22e7c3715ef056fe76",
+      "size_bytes": 15959
+    },
+    {
+      "path": "source/src/palimpsest/puck_retained_installation.py",
+      "sha256": "b5e202d37cf8e8155295b607d5daa4dcaa3869cbeda3871cefdf00d2b159fdcc",
+      "size_bytes": 6213
+    },
+    {
+      "path": "source/tests/test_puck_retained_installation.py",
+      "sha256": "9eca4e10e6d0e0779c31efa93a29390c3f6e5c7bd64af5d8ee5f2f2aabf65da9",
+      "size_bytes": 7364
+    },
+    {
+      "path": "source/uv.lock",
+      "sha256": "8a7a880d020c1907e221575fda65642241f809fc628a55381f1b6137bff1b732",
+      "size_bytes": 160034
+    }
+  ],
+  "kind": "retained-admission-02-evidence-index-v1",
+  "source_commit": "41e128c025ac2d9c52f434ca674bdf4d1f31dadf"
+}
