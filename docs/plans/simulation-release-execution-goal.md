@@ -25,8 +25,8 @@ is complete only when:
    export validates and the independent outcome/byte/cleanup audit passes.
 
 **First unfinished action:** connect the verified three-module metadata worker
-to the closed parent, bounded external observer and independent auditor, then
-prove that complete route with authored fixtures. Next, freeze and review exact
+and bounded external observer to the closed parent and independent auditor,
+then prove that complete route with authored fixtures. Next, freeze and review exact
 controls for one actual metadata observation, use its evidence to finish the
 profile correction, and qualify the runtime before admitting the episode.
 Source fixtures demonstrate implementation only; the real episode bundle is
@@ -76,11 +76,16 @@ already-present children after four imports and retains source-roster difference
 without accepting a profile. Independent review finds no material issue within
 that new-reader scope; the legacy cache inspector is unchanged.
 
+**The observer component is now source-verified too.** [The retained report](https://github.com/Aadrika08/palimpsest/blob/fb1bf346e6a67f98ecf73fb476edb240b583c1b6/docs/reports/puck-cpu-distributed-observer-v1.md)
+binds source `e2f3242` and 57 authored checks, independently repeated by root in
+1.49s. Exact configuration/source checks, exclusive bounded streams, failure
+receipts and sampled cleanup pass in those fixtures. Sampling is not exhaustive
+or atomic PID-lifetime proof; no real observation or full integration ran.
+
 **The next bounded work unit is the complete observation execution route.**
-Integrate a closed new CPU parent epoch, finite ordinary external observer and
+Connect the verified worker and observer to a closed new CPU parent epoch and
 separately pinned independent terminal/identity/full-byte auditor. The current
-parent still emits request-v2; the earlier terminal evidence is not a reusable
-observer executable. Use the [read-only integration map](https://github.com/Aadrika08/palimpsest/blob/d71c206d327f4c8a1c1d844db00aec961b4bd95e/docs/reports/puck-cpu-distributed-roster-worker-v1/integration-map.json)
+parent still emits request-v2. Use the [read-only integration map](https://github.com/Aadrika08/palimpsest/blob/d71c206d327f4c8a1c1d844db00aec961b4bd95e/docs/reports/puck-cpu-distributed-roster-worker-v1/integration-map.json)
 as the finite starting point, preserving observation02 and every earlier outcome.
 
 The source exit is an authored parent→worker→observer→independent-auditor proof
@@ -164,9 +169,9 @@ fixes the layout without a production namespace change. All 97 artifacts/692,265
 including 11 empty logs, match originals and Git-HEAD bytes. Independent source
 review finds no material issue. Full repository tests and CI were not run.
 
-The current CPU parent still emits request-v2. A closed new parent epoch, ordinary
-observer executable, independent outcome/byte auditor and complete authored route
-remain required. Six known new observation/held05 controls/output paths are absent
+The current CPU parent still emits request-v2. A closed new parent epoch,
+integration with the observer, independent outcome/byte auditor and complete
+authored route remain required. Six known new observation/held05 controls/output paths are absent
 in the data-owning checkout. No actual new observation, installed vendor import,
 model/scene/catalog read, operator, renderer, episode or study ran. Package/profile
 bytes were not revised or newly accepted. Qualifications01–04 remain failed and
