@@ -24,14 +24,12 @@ is complete only when:
 3. Replay meets the comparison criterion declared before execution; the portable
    export validates and the independent outcome/byte/cleanup audit passes.
 
-**First unfinished action:** freeze and independently review exact observation03
-source/input/control bytes, then freshly admit current installation bytes, pins,
-absence conditions and resources before one actual metadata observation. Its
-complete parent/worker/observer/independent-auditor source route is verified. Use
-accepted roster evidence to finish the profile correction and qualify the runtime
-before separately admitting the episode.
-Source fixtures demonstrate implementation only; the real episode bundle is
-the milestone's exit. Preserve every consumed attempt; no implicit retry.
+**First unfinished action:** use the accepted observation03 metadata to review the
+explicit three-row distributed profile correction and its closed parent/auditor
+admission. Then qualify the exact runtime before separately admitting the episode.
+The observation measured all 11/69/29 proposed names with no missing or extra names;
+its independent audit passes. Profile acceptance and held-runtime qualification
+remain false. Preserve every consumed attempt; no implicit retry.
 
 The complete project goal remains the release above: reproducible installation,
 supported controllers, valid memory results, the integrated lab, all six artworks
@@ -57,11 +55,15 @@ evidence requirements. Disk clearance removes the disk blocker only. It does not
 resolve failed controller scores, the memory ordering conflict or human acceptance.
 
 **Current readiness:** the retained CPU installation, ordinary four-import
-observation02 and dated held preparation01 have passing scoped audits. Held
-qualifications01–04 each failed and are consumed. Delayed-publication handling
-and the one-row `_autograd` correction have authored source proof. The complete
-real-runtime profile is unfinished; no actual05 configuration exists. The detailed
-results below remain evidence, not tasks to repeat.
+observations02/03 and dated held preparation01 have passing scoped audits.
+Observation03 completed once after fresh full-byte/resource admission: observer
+exit0 in14.16s and independent auditor exit0/PASS in3.56s. Its stable three-child
+projection matches11/69/29 proposed names exactly, with ordinary closure and final
+sampled PID/start absence. This is terminal metadata evidence only. Held
+qualifications01–04 each failed and remain consumed; no actual05 configuration
+exists. The complete profile correction and the real recorded/replayed/exported
+episode are still unfinished. The detailed results below remain evidence, not
+tasks to repeat.
 
 **The 35-row source sweep is complete:** 32 rows have source support for their
 existing native-create phase; the three distributed children require correction.
@@ -93,22 +95,27 @@ Independent review findings have genuine covered RED→GREEN fixes. All532 retai
 artifacts/8,919,896B match originals and committed Git bytes, including30 empty
 files. Full repository tests and CI were not run.
 
-**The next bounded work unit is actual observation03 control freeze and admission.**
-Keep the35-row source sweep and completed source integration closed. Freeze and
-independently review the exact current configuration,19 source/63 input pins,
-observer, auditor and command; freshly check full installed bytes, fixed native/
-baseline inputs, absence conditions and resources before one invocation. Require
-normal timely external exits, complete stable projections, independent byte/
-identity/cleanup audit and preserved history. Do not add metadata features or
-relax the existing namespace or limits. No actual configuration, vendor import,
-model, scene, protected input, operator, renderer, episode or study ran in this
-source checkpoint.
+**Actual observation03 is complete within its metadata scope.** [The retained report](https://github.com/Aadrika08/palimpsest/blob/5408f55fd9cc704edea9bd3b73dfcb4914e82987/docs/reports/puck-cpu-characterization-03.md)
+binds frozen controls `c998fa3`, exact19 sources/63 inputs/19 roles, one observer
+and one independent auditor invocation. Fresh admission rehashed all27,225 files/
+1,304,701,872B, selected native inputs and the complete trusted interpreter prefix.
+All three terminal projections are stable and match the proposed11/69/29 names;
+parent descriptors remain5→5 with no owned children/non-main threads. The observer
+finds no survivor among five sampled identities; sampling is neither exhaustive
+nor atomic lifetime proof. All profile/runtime/native/study authorities remain
+false. Source integration and observation are closed steps; do not repeat them.
 
-The source proposals contain 11/69/29 names, but private build flags remain
-unproved. Measure the terminal rosters once under separately reviewed controls,
-retain discrepancies and attribute every observed name before accepting a new
-profile. Complete observation data can pass while profile acceptance remains
-false. Terminal rosters do not prove creator-close timing or intermediate
+**The next bounded work unit is the explicit three-row profile correction.**
+Attribute every observed name against the retained creator/closure source proof;
+review the prospective candidate and exact independent parent/auditor admission.
+Preserve the tested one-row candidate and the other32 declarations. Only that
+source exit can precede separately frozen actual05. No actual05, model, scene,
+protected input, operator, renderer, episode or study ran in observation03.
+
+The source proposals and actual terminal rosters agree on11/69/29 names, but
+private build provenance remains unproved. Attribute every observed name before
+accepting a new profile. Complete observation data passes while profile acceptance
+remains false. Terminal rosters do not prove creator-close timing or intermediate
 publication; those remain separate source/held-runtime obligations.
 
 **Checkpoint A finishes with the actual episode bundle.** Its remaining sequence is:
@@ -118,10 +125,11 @@ publication; those remain separate source/held-runtime obligations.
 - [x] Implement/review the fixed worker projection, including legacy compatibility,
   intended hook-regression REDs and exact pinned-interpreter authored namespace proof.
 - [x] Complete the closed new parent, ordinary observer, independent auditor and
-  authored end-to-end source proof:414 affected checks pass. No actual observation
-  controls exist yet; fixtures do not admit an installed-stack invocation.
-- [ ] Separately freeze/review, freshly admit, invoke once and independently audit
-  the actual ordinary metadata observation. Worker fixtures do not satisfy this exit.
+  authored end-to-end source proof:414 affected checks pass. Those fixtures alone
+  did not admit an installed-stack invocation.
+- [x] Separately freeze/review, freshly admit, invoke once and independently audit
+  actual ordinary metadata observation03. Observer and independent auditor exit0;
+  complete stable11/69/29 snapshots match, with profile/runtime acceptance false.
 - [ ] Review the complete explicit prospective profile/admission correction from
   the accepted roster evidence, with focused authored checks and independent review.
 - [ ] Freeze and independently review actual05 only after that profile is ready.
@@ -157,7 +165,7 @@ source-only hardening is not a substitute for reaching the episode deliverable.
 A failed actual stage retains its outcome and consumed allocation. No study or
 numerical invocation follows from a source fixture alone.
 
-## Current source result: distributed worker verified
+## Completed source checkpoint: distributed worker verified
 
 [PR157](https://github.com/Aadrika08/palimpsest/pull/157) retains the
 [worker source/evidence and integration gaps](https://github.com/Aadrika08/palimpsest/blob/d71c206d327f4c8a1c1d844db00aec961b4bd95e/docs/reports/puck-cpu-distributed-roster-worker-v1.md).
@@ -451,7 +459,7 @@ parent, and PR149 adds reviewed preparation controls. The later actual
 preparation passes, but qualification01 fails; passing held qualification and
 its independent audit remain required. All seven release gates stay open.
 
-## Latest checkpoint A result: ordinary CPU observation02 accepted
+## Earlier checkpoint A result: ordinary CPU observation02 accepted
 
 [Draft PR #146](https://github.com/Aadrika08/palimpsest/pull/146) retains the
 [actual02 report](https://github.com/Aadrika08/palimpsest/blob/b329093685ee2854c2bbd517accfc3cbdd9f1170/docs/reports/puck-cpu-characterization-02.md).
@@ -599,34 +607,25 @@ substitute for numerical results, capability, actual browser use or human accept
 | 5 | Integrate and experience the product. | One candidate supports the lab and all six artworks; actual browser, mapping, replay, export, interruption and endurance checks pass. |
 | 6 | Accept and deliver that candidate. | Artistic/operator sessions, final verification and all seven gate records are complete; the installation and evidence package are reproducible. |
 
-**Current next action:** freeze and independently review actual observation03
-controls, then freshly admit and observe once. Preserve the completed source sweep
-and authored integration; do not restart them.
+**Current next action:** review the complete prospective three-row distributed
+profile correction using accepted observation03 and the completed35-row source
+map. Keep source integration and the actual metadata observation closed.
 
-1. Bind the final19 current sources,63 inputs and19 roles, including all immutable
-   helpers, source proposals and observation02 history. Freeze the exact canonical
-   configuration, observer/auditor bytes and commands for the data-owning checkout.
-   Independently review that concrete control package before any invocation.
-2. Refresh full current installation/native/baseline bytes, exact pins, output and
-   stream/transport absence, disk/RAM and descriptor admission. Invoke the fixed
-   observer once, retain its raw terminal evidence and independently audit the
-   complete projection, bytes, identities and cleanup. Require timely normal exits;
-   keep complete differences as data for attribution. Failure consumes this stage
-   and grants no implicit retry. A passing observation supplies terminal roster
-   evidence only; it does not accept a profile or qualify the held runtime.
-
-3. Review the explicit broader prospective profile and closed independent
-   parent/auditor admission, preserving the one-row candidate as history and
-   the other 32 native-create declarations. Only after that source exit, deploy
-   exact reviewed bytes, freeze and independently review actual05, recheck current
-   staged bytes/pins/absence/resources, invoke once and independently audit the
-   terminal, identity, full-byte and cleanup outcome. Preserve01–04; no implicit06.
-4. Complete the distinct CPU engineering episode envelope, fixed authenticated
+1. Attribute every measured name and bind the complete prospective profile plus
+   closed independent parent/auditor admission. Preserve the one-row candidate as
+   history and the other32 native-create declarations; do not infer creator-close
+   timing or intermediate lifecycle from terminal snapshots.
+2. After that source exit, deploy exact reviewed bytes, freeze and independently
+   review actual05, recheck staged bytes/pins/absence/resources, invoke once and
+   independently audit the terminal, identity, full-byte and cleanup outcome.
+   Preserve failed01–04; no implicit06. Observation03 does not qualify this stage.
+3. Complete the distinct CPU engineering episode envelope, fixed authenticated
    worker entry, bounded parent and durable writer/replay/export connection.
-   Resolve catalog access before protected reads; declare the model, scene, seed,
-   limits, operator/renderer probes and replay criterion before its separate
-   episode admission. Run and independently audit the portable bundle after
-   runtime qualification passes.
+   Resolve catalog access before protected reads; declare model, scene, seed,
+   limits, operator/renderer probes and replay criterion before separate episode
+   admission. Import qualification alone does not admit a scientific allocation.
+4. Run the admitted episode after runtime qualification passes, compare its replay,
+   validate the portable export and independently audit complete evidence/cleanup.
 
 The immediate milestone passes only with that bundle and its actual route checks.
 A natural task failure can prove recording/replay/export, but cannot pass a
