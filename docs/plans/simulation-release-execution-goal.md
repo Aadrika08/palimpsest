@@ -31,14 +31,32 @@ and the pending study decisions; C and D retain their own browser and human
 evidence requirements. Disk clearance removes the disk blocker only. It does not
 resolve failed controller scores, the memory ordering conflict or human acceptance.
 
-The immediate action within A is to finish the exact CPU preparation/qualification
-parent and complete tmpfs staging for the accepted package tree. Bind a finite
-CPU-specific import/native/EGL profile, emit descriptor-v3, freeze the exact source,
-configuration and whole-stage resource limits, then review and qualify it once.
-The worker's four-import route already exists; the older parent and registration
-builder still emit three-import/dependency-v2 contracts and need substantive
-staging/configuration work. An unchanged tree does not need another installation
-or retained-data admission to start that implementation.
+**The next work unit is checkpoint A, ending with the episode bundle.** Its
+ordered checklist is:
+
+- [x] Accept the exact installed CPU package tree and retain its independent audit.
+- [ ] Finish and review the bounded CPU import observation: exact configuration,
+  selected native mounts, four required versions, resource limits and cleanup.
+  Run its distinct engineering allocation once and audit the actual outcome.
+  This supplies CPU profile data; it does not qualify the runtime.
+- [ ] Use that profile to finish tmpfs staging and the four-import qualification
+  parent. Emit dependency-v3/descriptor-v3, review the exact configuration, then
+  qualify the actual held runtime and independently audit its outcome.
+- [ ] Specify the engineering episode's exact model, scene, seed, limits and
+  required operator/renderer probes; complete the durable collection route.
+  Resolve catalog access before any protected read.
+- [ ] Run that episode, record its complete state/events, replay against the
+  declared comparison criterion, export the portable bundle and verify cleanup.
+- [ ] Independently audit the bundle and report checkpoint A's actual outcome,
+  the first remaining gap and the next concrete action.
+
+The ordinary observation parent and direct-log changes have local source checks;
+the static native-mount metadata has no required missing names. These are
+preparation, not evidence that real CPU imports or an episode have passed.
+The older qualification parent and registration builder still emit
+three-import/dependency-v2 contracts. Complete their substantive staging and
+configuration work; do not relabel an old observation. An unchanged accepted tree
+does not need another installation or retained-data admission.
 
 Every added prerequisite must identify the checkpoint and smallest blocked check;
 source-only hardening is not a substitute for reaching the episode deliverable.
@@ -162,18 +180,18 @@ substitute for numerical results, capability, actual browser use or human accept
 | 5 | Integrate and experience the product. | One candidate supports the lab and all six artworks; actual browser, mapping, replay, export, interruption and endurance checks pass. |
 | 6 | Accept and deliver that candidate. | Artistic/operator sessions, final verification and all seven gate records are complete; the installation and evidence package are reproducible. |
 
-**Current next action:** implement the separate CPU preparation/qualification
-parent and staging builder, reusing the reviewed descriptor-v3/four-import worker.
-Bind the admitted inventory/snapshot/result/audit; stage every required package
-and native leaf on tmpfs; preserve inert-bytecode restrictions and the original
-trusted interpreter/stdlib baseline. Resolve the CPU-specific finite import and
-native/EGL profile before freezing the executable configuration. A version-field
-change or old retained observation is insufficient. If new characterization is
-required, freeze and independently review its own distinct finite engineering
-allocation; do not silently rerun observations01/02. Recheck full-stage RAM,
-storage, descriptor and process admission before an actual invocation.
-Then obtain a passing exact four-import qualification with normal cleanup and an
-independent audit. Steps1–2 must pass before the real episode allocation begins.
+**Current next action:** finish the exact configuration and independent review
+of the distinct CPU four-import observation already being prepared. Check fresh
+resources, freeze its sources and configuration, then obtain and audit its actual
+outcome. Preserve observations01/02 and every consumed allocation unchanged.
+Use the resulting CPU profile to finish the separate preparation/qualification
+parent and tmpfs staging builder, reusing the descriptor-v3/four-import worker.
+Bind the admitted inventory/snapshot/result/audit, stage every required package
+and native leaf, and preserve inert-bytecode restrictions and the original
+trusted interpreter/stdlib baseline. Recheck full-stage RAM, storage, descriptors
+and processes before invocation. A version-field change or an ordinary import
+observation is insufficient: require actual held-runtime qualification, normal
+cleanup and an independent audit before the real episode allocation begins.
 Review the family qualification binding in parallel without opening a new
 scientific allocation. The directory-enumeration source fix is complete within
 its tested scope; the first actual family admission remains open.
@@ -185,9 +203,9 @@ source-hardening programme or count test totals as release progress.
 
 ## Current starting point and decisions
 
-At **2026-10-15 08:52:09 UTC**, the project filesystem has **99,580,465,152 bytes
-(92.74 GiB) available**. The same metadata-only check reports **3,690,725,376 bytes
-(3.44 GiB) MemAvailable**. Disk clearance removes the reported disk blocker;
+At **2026-10-15 09:36:42 UTC**, the project filesystem has **99,478,708,224 bytes
+(92.65 GiB) available**. The same metadata-only check reports **2,988,199,936 bytes
+(2.78 GiB) MemAvailable**. Disk clearance removes the reported disk blocker;
 available RAM is transient and this snapshot does not admit the complete CPU/EGL
 closure. Keep archives and build scratch on the project disk; stage only the exact
 required runtime inputs on tmpfs under its reviewed native-identity policy.
