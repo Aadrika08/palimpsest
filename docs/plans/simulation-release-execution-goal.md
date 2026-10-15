@@ -80,9 +80,12 @@ ordered checklist is:
   including intermediate fresh imports, nested-creator negatives and exact
   worker/parent/auditor proof. All650 affected authored checks pass; this is source
   proof only, with no real profile or actual configuration change.
-- [ ] Authenticate the finite `_autograd` creator/raw-path/dispatch declaration
-  and independently review its separate source/profile admission before any
-  separately numbered actual attempt. No05 exists.
+- [x] Authenticate the41-name `_autograd` declaration and independently review
+  its closed single-row source/profile transition. All395 affected authored checks
+  pass; this candidate is source evidence, not a ready complete real profile.
+- [ ] Resolve the three additional distributed creation-phase conflicts and
+  finish the remaining32 native-create rows' per-row preflight. Review a broader
+  explicit prospective profile/admission before freezing actual05; none exists.
 - [ ] Obtain passing held four-import qualification and an independent terminal,
   identity, staged-byte and cleanup audit. All01–04 failed; their acceptance
   auditors refused before post-stage byte checks. No accepted held-import result
@@ -111,30 +114,36 @@ source-only hardening is not a substitute for reaching the episode deliverable.
 A failed actual stage retains its outcome and consumed allocation. No study or
 numerical invocation follows from a source fixture alone.
 
-## Completed source checkpoint: explicit delayed publication
+## Current CPU source result: one-row transition verified, phase gaps remain
 
-[Draft PR #155](https://github.com/Aadrika08/palimpsest/pull/155) retains the
-[source report](https://github.com/Aadrika08/palimpsest/blob/27a5c134613747c8c782829b8084834e92a53d66/docs/reports/puck-delayed-export-publication-v1.md).
-Code `f537b36` binds explicit Python publication to the exact innermost creator,
-raw producer edge, module/cache identity, observed metadata, monotonic finite
-dispatch references and terminal closure. Worker, parent and independent auditor
-require the same exact sorted proof. Ordinary exports and native-cache rules stay
-strict; old profiles reject unsolicited publication proof.
+[Draft PR #156](https://github.com/Aadrika08/palimpsest/pull/156) retains the
+[source proof and remaining-phase review](https://github.com/Aadrika08/palimpsest/blob/3bdc4c1de856af47d9cb51202164c644d27f6039/docs/reports/puck-cpu-held-qualification-amendment-05.md).
+The plan/candidate were committed at `8968023` before implementation; code
+`92ef331` admits only the exact four-source change and candidate-only one-row
+replacement. Parent and independent auditor bind old preparation controls and
+new qualification projection separately, preserving physical files/identities,
+all other15 input pins and old v1–v4 restrictions. The inherited
+[PR155 publication contract](https://github.com/Aadrika08/palimpsest/pull/155)
+continues to bind creator, raw/cache identity, metadata, finite dispatch and closure.
 
-All650 affected authored checks pass:263 tmpfs workers in154.97s and387 persistent
-planner/parent/auditor checks in115.50s. The new separate prepare/qualify fixture
-passes both auditor paths, fully rebound semantic tamper refusal, exact capsule
-pins, identity/closure checks and owned-stage cleanup. Review exposed and corrected
-a nested helper's incorrectly attributed delegate growth; both regression variants
-show RED before GREEN. All200 indexed copies/2,361,975B match originals and Git
-blobs, including19 empty files. Confounded baseline/broad/wrapper runs are retained;
-no fully green original baseline or full repository suite is claimed.
+All395 affected authored checks pass in131.39s, including compiled-empty-native
+plus Python publication, historical failure, current separate parent/API/CLI audits,
+fully rebound tampering, old bytes/identities, reentry and cleanup. Independent
+review confirms all six static source pins, exactly one changed row and all41
+names. All224 indexed copies/3,338,333B match originals and Git blobs, including15
+empty files; both intended REDs and the corrected transport-hash fixture failure
+are preserved. No full repository suite or installed-runtime acceptance is claimed.
 
-These are AUTHORED source checks, not installed-stack acceptance. The real profile,
-actual configuration, installed data and historical source admission are unchanged.
-All01–04 remain failed/consumed; no05 exists. The next action is the finite real
-profile and source-transition review below, followed by actual held qualification.
-The recorded/replayed/exported episode is still checkpoint A's product exit.
+Before freezing a real attempt, static preflight finds the same phase conflict
+in `_distributed_autograd`, `_distributed_c10d` and `_distributed_rpc`: native
+module creation registers callbacks, while later physical Python initializers
+create the children. Their rosters/build branches and intermediate lifecycle
+remain unqualified;32 other native-create rows were not reviewed in that added
+preflight. Preserve the tested one-row candidate; review an explicit broader
+prospective correction rather than spend actual05 on known source conflicts.
+Nothing is deployed to the data-owning ROOT by this source slice. Actual01–04
+remain failed/consumed; no actual05 configuration or invocation exists. The real
+episode bundle remains checkpoint A's product exit; all seven gates stay open.
 
 ## Current CPU result: qualification04 identifies a delayed export
 
@@ -173,15 +182,14 @@ the child can appear before reentrant guards, while ordinary exports are prepare
 only after execution. No replacement producer/phase has been accepted. Skip no row,
 move no whole roster and preserve refusal until the intermediate lifecycle is proved.
 
-The authored publication contract above now proves that intermediate lifecycle
-within its source scope. The real `_autograd` declaration remains uncorrected.
-Retained source supports creator `torch.autograd` and raw path
-`['torch','_C','_autograd']`; its final `python_tracer::init()` call and possible later
-writes still need exact inspection before a complete dispatch roster is frozen.
-Inspect other rows individually; no whole-roster phase change is supported.
-Review the separate real-profile/source admission before another actual attempt.
-04 is consumed; no05 configuration or invocation exists. The episode bundle
-remains the next product deliverable; all seven release gates remain open.
+The source checkpoint above now authenticates a prospective41-name declaration
+and its exact creator/raw path. The original actual04 profile remains preserved.
+Additional source preflight exposes three distributed phase conflicts, so the
+single-row candidate is not a complete real-profile correction. Finish per-row
+phase/roster/lifecycle review before a broader prospective source/profile revision
+and any actual05 freeze.04 is consumed; no actual05 configuration or invocation
+exists. The episode bundle remains the next product deliverable; all seven
+release gates remain open.
 
 ## Completed source checkpoint: closed04 diagnostic controls
 
@@ -491,24 +499,26 @@ substitute for numerical results, capability, actual browser use or human accept
 | 5 | Integrate and experience the product. | One candidate supports the lab and all six artworks; actual browser, mapping, replay, export, interruption and endurance checks pass. |
 | 6 | Accept and deliver that candidate. | Artistic/operator sessions, final verification and all seven gate records are complete; the installation and evidence package are reproducible. |
 
-**Current next action:** authenticate the exact `_autograd` publication roster
-and review its narrowly bound real-profile/source admission.
+**Current next action:** resolve the three distributed source phase conflicts
+and finish per-row creation/closure preflight before freezing actual05.
 
-1. Inspect the exact-version initializer's remaining tracer initialization and
-   later writes. Bind the supported Python creator `torch.autograd` and raw path
-   `['torch','_C','_autograd']`; freeze the complete finite direct-dispatch roster.
-   Current static leads are not an accepted roster or linked-binary build proof.
-   Preserve the other35 native-create declarations unless individually supported.
-2. Implement and independently review the explicit prospective source/profile
-   transition. Preserve all historical capsules, source restrictions, frozen
-   controls and consumed outcomes; changed current imports/profile inputs cannot
-   silently reuse an old source/data epoch. Reuse the now-proved publication
-   contract rather than adding exemptions or another binding framework.
-3. Only after that review, freeze a separately numbered actual configuration,
-   verify exact pins/current staged bytes/absence conditions, admit fresh
-   resources and invoke once. Require an independent terminal, identity, full-byte
-   and cleanup audit. Preserve04 and every earlier failure; no05 is created or
-   authorized by a failing receipt or authored fixture alone.
+1. Inspect `_distributed_autograd`, `_distributed_c10d` and `_distributed_rpc`
+   individually. Their exact source registers callbacks at native creation and
+   creates children during later Python initialization. Derive finite dispatch
+   rosters with CPU/build branches accounted for, and prove whether their fresh
+   nested imports need publication handling. If static inputs cannot establish a
+   roster, specify a separately reviewed bounded metadata observation; do not
+   invent a roster, execute an unfrozen probe or use an actual attempt as a scout.
+2. Finish the remaining32 native-create declarations' creation/closure preflight.
+   Preserve supported rows and record exact evidence for every correction. Keep
+   the reviewed one-row candidate/plan as history; introduce an explicit broader
+   prospective candidate and closed admission revision with authored tests and
+   independent review. Add no whole-roster move or configurable exemption.
+3. Once the complete profile is reviewed, deploy exact source/control bytes,
+   freeze a separately numbered actual05 configuration and independently review
+   it. Verify current staged bytes, all old pins/absence conditions and fresh
+   resources before one invocation. Require independent terminal, identity, full
+   byte and cleanup audit. Preserve01–04; failure grants no implicit06.
 4. Complete the distinct CPU engineering episode envelope, fixed authenticated
    worker entry, bounded parent and durable writer/replay/export connection.
    Resolve catalog access before protected reads; declare the model, scene, seed,

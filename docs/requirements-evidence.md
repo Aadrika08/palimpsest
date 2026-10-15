@@ -139,14 +139,24 @@ passes audits, digest-rebound semantic tamper refusal, capsule/identity/closure 
 stage cleanup. Review's nested-creator growth defect shows RED before its fix;
 all200 exact copies/2,361,975B include19 empty files and preserved confounded runs.
 
-Real profile/configuration/data/source admission is unchanged. Next authenticate
-the complete `_autograd` dispatch roster, including remaining tracer/later-write
-evidence, then review its explicit creator/path/profile/source transition before
-any separately numbered actual allocation. Static source supports prospective
-creator `torch.autograd` / `['torch','_C','_autograd']`, not an accepted finite roster
-or a blanket move of the other35 declarations.04 and01–03 remain failed/consumed;
-no05 exists. Held qualification and the actual recorded/replayed/exported episode
-remain open; all33 statuses and seven release gates remain unchanged.
+[Draft PR #156](https://github.com/Aadrika08/palimpsest/pull/156) now supplies the
+[closed single-row transition proof and remaining phase review](https://github.com/Aadrika08/palimpsest/blob/3bdc4c1de856af47d9cb51202164c644d27f6039/docs/reports/puck-cpu-held-qualification-amendment-05.md).
+All395 affected authored checks pass in131.39s. Independent review verifies the
+exact41-name `_autograd` roster, six source pins and one-row candidate difference.
+Parent and standalone auditor separately bind historical preparation and current
+qualification projections; the other15 inputs, physical bytes/identities, old
+capsules and v1–v4 restrictions stay fixed. All224 copies/3,338,333B match originals
+and Git blobs, including15 empty files and preserved RED/failed fixture evidence.
+
+The complete real profile is still unfinished. Static preflight identifies later
+Python creation of `_distributed_autograd`, `_distributed_c10d` and
+`_distributed_rpc`, still declared at native_create. Their finite rosters/build
+branches and intermediate lifecycle need review;32 more native-create rows were
+not reviewed in that added preflight. Preserve this one-row candidate and review
+an explicit broader prospective revision before actual05 freeze. Nothing is
+deployed to the data-owning ROOT; no actual05 configuration or invocation exists.
+04 and01–03 remain failed/consumed. Held qualification and the real recorded/
+replayed/exported episode remain open; all33 statuses and seven gates are unchanged.
 
 The [actual preparation report](https://github.com/Aadrika08/palimpsest/blob/4036a382b87ab99640bed96f6b2f8aeaa7873b2c/docs/reports/puck-cpu-held-preparation-01.md)
 records external exit0 in 25.5215614 s and frozen independent auditor normal
