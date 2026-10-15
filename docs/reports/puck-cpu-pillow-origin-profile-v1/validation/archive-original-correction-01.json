@@ -1,0 +1,31 @@
+{
+  "failed_check": {
+    "command": [
+      "python",
+      "-I",
+      "-S",
+      "-B",
+      "docs/reports/puck-cpu-pillow-origin-profile-v1/verify_evidence.py",
+      "--originals",
+      "--git-revision",
+      "HEAD"
+    ],
+    "error": "AssertionError: report.md",
+    "returncode": 1,
+    "tool_chunk": "464301"
+  },
+  "history_rewritten": false,
+  "kind": "pillow-source-archive-original-path-correction-v1",
+  "original_snapshot_path": "/tmp/palimpsest-pillow-origin-report-at-archive.md",
+  "previous_original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/docs/reports/puck-cpu-pillow-origin-profile-v1.md",
+  "prior_originals_verification": {
+    "returncode": 0,
+    "tool_chunk": "4bc661"
+  },
+  "reason": "Root added reviewed PR links and a note preserving raw pytest whitespace to the mutable parent report after its packet snapshot. No source, candidate, runtime, test or failed allocation evidence changed.",
+  "recovered_from_commit": "2ae5b558cf6239f5232d01314bef800be8bc729f",
+  "retained_report_sha256": "ca82324ab61b98ab9a26e0490235c445f15134d92d71cf4a55485ee93f4d0feb",
+  "retained_report_size_bytes": 6223,
+  "runtime_acceptance": false,
+  "status": "DOCUMENT_SNAPSHOT_POINTER_CORRECTED"
+}

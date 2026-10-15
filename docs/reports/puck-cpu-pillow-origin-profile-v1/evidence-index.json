@@ -1,6 +1,6 @@
 {
   "artifact_bytes": 4406732,
-  "artifact_count": 152,
+  "artifact_count": 153,
   "artifacts": [
     {
       "archived_path": "affected-coverage.json",
@@ -677,9 +677,19 @@
     {
       "archived_path": "report.md",
       "category": "source-result-report",
-      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/docs/reports/puck-cpu-pillow-origin-profile-v1.md",
+      "original_path": "/tmp/palimpsest-pillow-origin-report-at-archive.md",
+      "original_role": "Immutable report draft, verified against its then-original before live parent report curation; snapshot recovered from the retained committed bytes.",
+      "previous_original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/docs/reports/puck-cpu-pillow-origin-profile-v1.md",
       "sha256": "ca82324ab61b98ab9a26e0490235c445f15134d92d71cf4a55485ee93f4d0feb",
-      "size_bytes": 6223
+      "size_bytes": 6223,
+      "snapshot_recovered_from_commit": "2ae5b558cf6239f5232d01314bef800be8bc729f"
+    },
+    {
+      "archived_path": "source-snapshot-binding.json",
+      "category": "authored-packet-metadata",
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/docs/reports/puck-cpu-pillow-origin-profile-v1/source-snapshot-binding.json",
+      "sha256": "fa2028cf513ec813f37392922b6b736677517a7f233d7f39fefda8d5a97b25f0",
+      "size_bytes": 5619
     },
     {
       "archived_path": "source/docs/plans/puck-cpu-characterization-native-metadata-05.json",
@@ -717,6 +727,20 @@
       "size_bytes": 340908
     },
     {
+      "archived_path": "source/docs/plans/puck-cpu-pillow-origin-profile-v1.json",
+      "category": "committed-source",
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/docs/plans/puck-cpu-pillow-origin-profile-v1.json",
+      "sha256": "6eba35557f64b8f7108558b1334d488da20b2381d0e69ffece090645f8fb8d3d",
+      "size_bytes": 346424
+    },
+    {
+      "archived_path": "source/docs/plans/puck-cpu-pillow-origin-profile-v1.md",
+      "category": "committed-source",
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/docs/plans/puck-cpu-pillow-origin-profile-v1.md",
+      "sha256": "4564647f080f528c657826aed07392497c859f27c7de30699606fbbd96176e93",
+      "size_bytes": 4825
+    },
+    {
       "archived_path": "source/docs/plans/puck-cpu-pillow-origin-profile-v1/README.md",
       "category": "committed-source",
       "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/docs/plans/puck-cpu-pillow-origin-profile-v1/README.md",
@@ -743,20 +767,6 @@
       "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/docs/plans/puck-cpu-pillow-origin-profile-v1/projection.json",
       "sha256": "b8aa91886a1c5b8a71af476ad2c150c1cfd1e1fd018a4bb8c700d0f2451ede55",
       "size_bytes": 19311
-    },
-    {
-      "archived_path": "source/docs/plans/puck-cpu-pillow-origin-profile-v1.json",
-      "category": "committed-source",
-      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/docs/plans/puck-cpu-pillow-origin-profile-v1.json",
-      "sha256": "6eba35557f64b8f7108558b1334d488da20b2381d0e69ffece090645f8fb8d3d",
-      "size_bytes": 346424
-    },
-    {
-      "archived_path": "source/docs/plans/puck-cpu-pillow-origin-profile-v1.md",
-      "category": "committed-source",
-      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/docs/plans/puck-cpu-pillow-origin-profile-v1.md",
-      "sha256": "4564647f080f528c657826aed07392497c859f27c7de30699606fbbd96176e93",
-      "size_bytes": 4825
     },
     {
       "archived_path": "source/docs/reports/puck-cpu-held-qualification-06/external/palimpsest-held06-native-failure-review.json",
@@ -864,11 +874,11 @@
       "size_bytes": 8645
     },
     {
-      "archived_path": "source-snapshot-binding.json",
-      "category": "authored-packet-metadata",
-      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/docs/reports/puck-cpu-pillow-origin-profile-v1/source-snapshot-binding.json",
-      "sha256": "fa2028cf513ec813f37392922b6b736677517a7f233d7f39fefda8d5a97b25f0",
-      "size_bytes": 5619
+      "archived_path": "validation/archive-original-correction-01.json",
+      "original_path": "/tmp/palimpsest-pillow-archive-original-correction-01.json",
+      "role": "Preserved verifier refusal and transparent report-draft original-path correction",
+      "sha256": "bf28755d4fa2fe1afc0b74e940c39f9cd68da91164076cc4b43ef4a2a75336b4",
+      "size_bytes": 1264
     },
     {
       "archived_path": "validation/palimpsest-distributed-profile-check.py",
