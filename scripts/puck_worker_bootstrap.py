@@ -160,15 +160,27 @@ def _parse(raw, expected):
     if reg['version']==3:
         q=reg['qualification']
         if (type(q) is not dict or set(q)!= {'kind','version','expected_versions','stdlib_cache_aliases','negative_imports'}
-                or q['kind']!='puck-held-runtime-import-qualification-v1'
-                or type(q['version']) is not int or q['version']!=1
+                or type(q['version']) is not int or q['version'] not in (1,2)
+                or q['kind']!='puck-held-runtime-import-qualification-v'+str(q['version'])
                 or type(q['expected_versions']) is not dict
                 or set(q['expected_versions'])!={'numpy','torch','mujoco'}
                 or any(type(v) is not str or not 1<=len(v)<=128 for v in q['expected_versions'].values())
                 or type(q['stdlib_cache_aliases']) is not dict
-                or q['stdlib_cache_aliases']!={'__mp_main__':'__main__'}
-                or q['negative_imports']!=['org']):
+                or q['stdlib_cache_aliases']!={'__mp_main__':'__main__'}):
             raise ValueError('Exact fixed runtime qualification descriptor required')
+        negatives=q['negative_imports']
+        if q['version']==1:
+            if negatives!=['org']:raise ValueError('Exact legacy qualification denial required')
+        else:
+            if (type(negatives) is not list or not 1<=len(negatives)<=128 or any(
+                    type(name) is not str or len(name)>512 or not name.isascii()
+                    or name in ('__main__','__mp_main__','_puck_held_file_bootstrap')
+                    for name in negatives)):
+                raise ValueError('Bounded expected missing import declaration required')
+            for name in negatives:_name(name)
+            if negatives!=sorted(set(negatives)) or any(
+                    name.startswith(parent+'.') for index,name in enumerate(negatives) for parent in negatives[:index]):
+                raise ValueError('Expected missing imports must be sorted, unique and nonoverlapping')
     _path(reg['source_root']); _path(reg['cwd'])
     files = reg['source_files']
     if type(files) is not list or not 1 <= len(files) <= 512:
@@ -207,6 +219,10 @@ def _parse(raw, expected):
         parent = name.rpartition('.')[0]
         if parent and parent not in namespaces and (parent not in modules or not modules[parent].endswith('/__init__.py')):
             raise ValueError('Unregistered package parent')
+    if reg['version']==3 and reg['qualification']['version']==2:
+        local_tops={name.split('.')[0] for name in modules.keys()|namespaces.keys()}
+        if any(name.split('.')[0] in local_tops for name in reg['qualification']['negative_imports']):
+            raise ValueError('Expected missing import overlaps authenticated local source')
     runtime = reg['runtime']
     if type(runtime) is not dict or set(runtime) != {'root', 'files', 'python_version'}:
         raise ValueError('Exact interpreter registration required')
@@ -268,9 +284,13 @@ class _SourceFinder(importlib.abc.MetaPathFinder):
         try:
             self.owner._import_recheck()
             if (self.owner._reg['version']==3 and
-                    fullname in self.owner._reg['qualification']['negative_imports']):
-                # CPython pickle's Jython probe expects ImportError on Linux.
-                # Deny this exact name without ambient loader fallback or poison.
+                    fullname in self.owner._negative_imports):
+                # V1 preserves the original exact org denial. V2 additionally
+                # verifies finite absence in the live held package namespace.
+                if self.owner._missing_policy_version==2:
+                    if self.owner._dependencies is None:
+                        raise RuntimeError('Expected missing import requires admitted dependency custody')
+                    self.owner._dependencies.provider.require_absent_imports((fullname,))
                 self.owner._denied_imports.add(fullname); expected_denial=True
                 raise ModuleNotFoundError('Explicit qualification import denial: '+fullname,name=fullname)
             if fullname in self.owner._modules:
@@ -313,6 +333,9 @@ class HeldWorkerBootstrap:
         self._early_runtime_fds = []
         self._dependencies = None; self._dependency_dispatch = None
         self._main_module=sys.modules.get('__main__'); self._denied_imports=set()
+        q=self._reg.get('qualification',{})
+        self._missing_policy_version=q.get('version',0)
+        self._negative_imports=tuple(q.get('negative_imports',()))
 
     def _clock(self):
         if time.monotonic() >= self._deadline: raise TimeoutError('Fresh worker deadline exhausted')
@@ -429,6 +452,8 @@ class HeldWorkerBootstrap:
                     self._modules.keys() | self._namespaces.keys(),
                     [self._reg['source_root'], self._reg['runtime']['root']])
                 self._dependency_dispatch=(self._dependencies,DependencyImports)
+                if self._missing_policy_version==2:
+                    provider.require_absent_imports(self._negative_imports)
             self.recheck(); return self
         except BaseException as error: self._fail(error); raise
 
@@ -521,6 +546,10 @@ class HeldWorkerBootstrap:
                 exported=cls.recheck(receiver)
             aliases=set()
             if self._reg['version']==3:
+                q=self._reg['qualification']
+                if (q['version']!=self._missing_policy_version
+                        or tuple(q['negative_imports'])!=self._negative_imports):
+                    raise RuntimeError('Expected missing import declaration changed')
                 if sys.modules.get('__main__') is not self._main_module:
                     raise RuntimeError('Runtime qualification main alias target changed')
                 if '__mp_main__' in sys.modules:
@@ -569,6 +598,8 @@ class HeldWorkerBootstrap:
             if self._reg['version']==3:
                 result['stdlib_cache_aliases']=({'__mp_main__':'__main__'} if '__mp_main__' in sys.modules else {})
                 result['denied_imports']=sorted(self._denied_imports)
+                if self._missing_policy_version==2:
+                    result['expected_missing_imports']=list(self._negative_imports)
             if len(canonical(result)) > MiB: raise ValueError('Bootstrap receipt ceiling exceeded')
             self.recheck(); return copy.deepcopy(result)
         except BaseException as error: self._fail(error); raise
