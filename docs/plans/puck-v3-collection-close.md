@@ -76,3 +76,8 @@ not replace that route or the full release goal with a component-test exit.
   Its timing against fixed parent/return buckets is not qualified; integrated
   measurement and a reviewed custody-preserving optimization may be needed.
   No clock borrowing or timing-cap change is authorized by these fixtures.
+
+Independent final-source repetition: 25 focused passed/47.77s and 1395 affected
+passed/six inherited exclusions/125.66s, both exit0; all processes stopped.
+Default pytest retains missing-FastAPI collection error, 0.30s. No review minors.
+Source report records exact boundaries and remaining complete launcher work.
