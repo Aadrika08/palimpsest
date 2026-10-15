@@ -1,0 +1,818 @@
+[
+  {
+    "compressed_size": 538,
+    "compression": 8,
+    "crc32": 380661778,
+    "external_attr": 2175008768,
+    "name": "etils/__init__.py",
+    "size_bytes": 860
+  },
+  {
+    "compressed_size": 665,
+    "compression": 8,
+    "crc32": 2629730953,
+    "external_attr": 2175008768,
+    "name": "etils/array_types/__init__.py",
+    "size_bytes": 1412
+  },
+  {
+    "compressed_size": 439,
+    "compression": 8,
+    "crc32": 4136209013,
+    "external_attr": 2175008768,
+    "name": "etils/eapp/__init__.py",
+    "size_bytes": 720
+  },
+  {
+    "compressed_size": 1328,
+    "compression": 8,
+    "crc32": 1942439465,
+    "external_attr": 2175008768,
+    "name": "etils/eapp/dataclass_flags.py",
+    "size_bytes": 2868
+  },
+  {
+    "compressed_size": 1935,
+    "compression": 8,
+    "crc32": 3824143284,
+    "external_attr": 2175008768,
+    "name": "etils/eapp/logging_utils.py",
+    "size_bytes": 4052
+  },
+  {
+    "compressed_size": 675,
+    "compression": 8,
+    "crc32": 1678907909,
+    "external_attr": 2175008768,
+    "name": "etils/ecolab/__init__.py",
+    "size_bytes": 1574
+  },
+  {
+    "compressed_size": 967,
+    "compression": 8,
+    "crc32": 2094920710,
+    "external_attr": 2175008768,
+    "name": "etils/ecolab/adhoc_error.py",
+    "size_bytes": 1851
+  },
+  {
+    "compressed_size": 2451,
+    "compression": 8,
+    "crc32": 4243782276,
+    "external_attr": 2175008768,
+    "name": "etils/ecolab/array_as_img.py",
+    "size_bytes": 6749
+  },
+  {
+    "compressed_size": 4963,
+    "compression": 8,
+    "crc32": 2125514777,
+    "external_attr": 2175008768,
+    "name": "etils/ecolab/auto_display_utils.py",
+    "size_bytes": 14418
+  },
+  {
+    "compressed_size": 2222,
+    "compression": 8,
+    "crc32": 4063441084,
+    "external_attr": 2175008768,
+    "name": "etils/ecolab/cell_autoreload.py",
+    "size_bytes": 5846
+  },
+  {
+    "compressed_size": 2825,
+    "compression": 8,
+    "crc32": 130301383,
+    "external_attr": 2175008768,
+    "name": "etils/ecolab/colab_utils.py",
+    "size_bytes": 6502
+  },
+  {
+    "compressed_size": 821,
+    "compression": 8,
+    "crc32": 2992604297,
+    "external_attr": 2175008768,
+    "name": "etils/ecolab/highlight_util.py",
+    "size_bytes": 1569
+  },
+  {
+    "compressed_size": 3942,
+    "compression": 8,
+    "crc32": 3547115544,
+    "external_attr": 2175008768,
+    "name": "etils/ecolab/inplace_reload.py",
+    "size_bytes": 11575
+  },
+  {
+    "compressed_size": 861,
+    "compression": 8,
+    "crc32": 264629575,
+    "external_attr": 2175008768,
+    "name": "etils/ecolab/ip_utils.py",
+    "size_bytes": 1713
+  },
+  {
+    "compressed_size": 2244,
+    "compression": 8,
+    "crc32": 1405237109,
+    "external_attr": 2175008768,
+    "name": "etils/ecolab/lazy_imports.py",
+    "size_bytes": 5866
+  },
+  {
+    "compressed_size": 3989,
+    "compression": 8,
+    "crc32": 1823455373,
+    "external_attr": 2175008768,
+    "name": "etils/ecolab/lazy_utils.py",
+    "size_bytes": 11309
+  },
+  {
+    "compressed_size": 756,
+    "compression": 8,
+    "crc32": 3995408202,
+    "external_attr": 2175008768,
+    "name": "etils/ecolab/mock_colab.py",
+    "size_bytes": 1459
+  },
+  {
+    "compressed_size": 1084,
+    "compression": 8,
+    "crc32": 1085041157,
+    "external_attr": 2175008768,
+    "name": "etils/ecolab/patch_utils.py",
+    "size_bytes": 2351
+  },
+  {
+    "compressed_size": 857,
+    "compression": 8,
+    "crc32": 1092549302,
+    "external_attr": 2175008768,
+    "name": "etils/ecolab/tabs.py",
+    "size_bytes": 1621
+  },
+  {
+    "compressed_size": 1309,
+    "compression": 8,
+    "crc32": 19344891,
+    "external_attr": 2175008768,
+    "name": "etils/ecolab/adhoc_lib/module_deps_utils.py",
+    "size_bytes": 3041
+  },
+  {
+    "compressed_size": 3429,
+    "compression": 8,
+    "crc32": 107096464,
+    "external_attr": 2175008768,
+    "name": "etils/ecolab/adhoc_lib/reload_workspace_lib.py",
+    "size_bytes": 10051
+  },
+  {
+    "compressed_size": 370,
+    "compression": 8,
+    "crc32": 58200611,
+    "external_attr": 2175008768,
+    "name": "etils/ecolab/inspects/__init__.py",
+    "size_bytes": 583
+  },
+  {
+    "compressed_size": 821,
+    "compression": 8,
+    "crc32": 1136027074,
+    "external_attr": 2175008768,
+    "name": "etils/ecolab/inspects/attrs.py",
+    "size_bytes": 1500
+  },
+  {
+    "compressed_size": 1081,
+    "compression": 8,
+    "crc32": 2104047008,
+    "external_attr": 2175008768,
+    "name": "etils/ecolab/inspects/auto_utils.py",
+    "size_bytes": 2354
+  },
+  {
+    "compressed_size": 988,
+    "compression": 8,
+    "crc32": 2094475461,
+    "external_attr": 2175008768,
+    "name": "etils/ecolab/inspects/core.py",
+    "size_bytes": 2050
+  },
+  {
+    "compressed_size": 1076,
+    "compression": 8,
+    "crc32": 539816496,
+    "external_attr": 2175008768,
+    "name": "etils/ecolab/inspects/html_helper.py",
+    "size_bytes": 2047
+  },
+  {
+    "compressed_size": 4972,
+    "compression": 8,
+    "crc32": 2439460723,
+    "external_attr": 2175008768,
+    "name": "etils/ecolab/inspects/nodes.py",
+    "size_bytes": 16520
+  },
+  {
+    "compressed_size": 812,
+    "compression": 8,
+    "crc32": 1919973532,
+    "external_attr": 2175008768,
+    "name": "etils/ecolab/inspects/resource_utils.py",
+    "size_bytes": 1536
+  },
+  {
+    "compressed_size": 130,
+    "compression": 8,
+    "crc32": 2738211770,
+    "external_attr": 2175008768,
+    "name": "etils/ecolab/inspects/static/auto_activate.css",
+    "size_bytes": 191
+  },
+  {
+    "compressed_size": 704,
+    "compression": 8,
+    "crc32": 3550592181,
+    "external_attr": 2175008768,
+    "name": "etils/ecolab/inspects/static/auto_activate.js",
+    "size_bytes": 1500
+  },
+  {
+    "compressed_size": 997,
+    "compression": 8,
+    "crc32": 1003159690,
+    "external_attr": 2175008768,
+    "name": "etils/ecolab/inspects/static/main.js",
+    "size_bytes": 2487
+  },
+  {
+    "compressed_size": 877,
+    "compression": 8,
+    "crc32": 1754176611,
+    "external_attr": 2175008768,
+    "name": "etils/ecolab/inspects/static/theme.css",
+    "size_bytes": 2557
+  },
+  {
+    "compressed_size": 449,
+    "compression": 8,
+    "crc32": 2149100496,
+    "external_attr": 2175008768,
+    "name": "etils/ecolab/pyjs_com/__init__.py",
+    "size_bytes": 756
+  },
+  {
+    "compressed_size": 1000,
+    "compression": 8,
+    "crc32": 1606808929,
+    "external_attr": 2175008768,
+    "name": "etils/ecolab/pyjs_com/py_js_com.js",
+    "size_bytes": 3031
+  },
+  {
+    "compressed_size": 2003,
+    "compression": 8,
+    "crc32": 4222336854,
+    "external_attr": 2175008768,
+    "name": "etils/ecolab/pyjs_com/py_js_com.py",
+    "size_bytes": 4460
+  },
+  {
+    "compressed_size": 474,
+    "compression": 8,
+    "crc32": 4130498025,
+    "external_attr": 2175008768,
+    "name": "etils/ecolab/static/highlight.css",
+    "size_bytes": 1080
+  },
+  {
+    "compressed_size": 504,
+    "compression": 8,
+    "crc32": 1250215203,
+    "external_attr": 2175008768,
+    "name": "etils/edc/__init__.py",
+    "size_bytes": 951
+  },
+  {
+    "compressed_size": 920,
+    "compression": 8,
+    "crc32": 119686418,
+    "external_attr": 2175008768,
+    "name": "etils/edc/cast_utils.py",
+    "size_bytes": 1678
+  },
+  {
+    "compressed_size": 1310,
+    "compression": 8,
+    "crc32": 2103210197,
+    "external_attr": 2175008768,
+    "name": "etils/edc/context.py",
+    "size_bytes": 3160
+  },
+  {
+    "compressed_size": 2946,
+    "compression": 8,
+    "crc32": 4157553324,
+    "external_attr": 2175008768,
+    "name": "etils/edc/dataclass_utils.py",
+    "size_bytes": 8036
+  },
+  {
+    "compressed_size": 2119,
+    "compression": 8,
+    "crc32": 2450844580,
+    "external_attr": 2175008768,
+    "name": "etils/edc/field_utils.py",
+    "size_bytes": 5668
+  },
+  {
+    "compressed_size": 2891,
+    "compression": 8,
+    "crc32": 1202122105,
+    "external_attr": 2175008768,
+    "name": "etils/edc/frozen_utils.py",
+    "size_bytes": 8178
+  },
+  {
+    "compressed_size": 1960,
+    "compression": 8,
+    "crc32": 2438533070,
+    "external_attr": 2175008768,
+    "name": "etils/edc/helpers.py",
+    "size_bytes": 5001
+  },
+  {
+    "compressed_size": 1045,
+    "compression": 8,
+    "crc32": 1537752079,
+    "external_attr": 2175008768,
+    "name": "etils/edc/stack.py",
+    "size_bytes": 2125
+  },
+  {
+    "compressed_size": 863,
+    "compression": 8,
+    "crc32": 1603160430,
+    "external_attr": 2175008768,
+    "name": "etils/enp/__init__.py",
+    "size_bytes": 2026
+  },
+  {
+    "compressed_size": 2241,
+    "compression": 8,
+    "crc32": 2170969303,
+    "external_attr": 2175008768,
+    "name": "etils/enp/array_spec.py",
+    "size_bytes": 6720
+  },
+  {
+    "compressed_size": 3706,
+    "compression": 8,
+    "crc32": 2214978642,
+    "external_attr": 2175008768,
+    "name": "etils/enp/checking.py",
+    "size_bytes": 10149
+  },
+  {
+    "compressed_size": 1545,
+    "compression": 8,
+    "crc32": 2365935244,
+    "external_attr": 2175008768,
+    "name": "etils/enp/compat.py",
+    "size_bytes": 4289
+  },
+  {
+    "compressed_size": 805,
+    "compression": 8,
+    "crc32": 1039799337,
+    "external_attr": 2175008768,
+    "name": "etils/enp/einops_utils.py",
+    "size_bytes": 1693
+  },
+  {
+    "compressed_size": 1149,
+    "compression": 8,
+    "crc32": 1373775399,
+    "external_attr": 2175008768,
+    "name": "etils/enp/geo_utils.py",
+    "size_bytes": 2726
+  },
+  {
+    "compressed_size": 1906,
+    "compression": 8,
+    "crc32": 3938555698,
+    "external_attr": 2175008768,
+    "name": "etils/enp/interp_utils.py",
+    "size_bytes": 4128
+  },
+  {
+    "compressed_size": 602,
+    "compression": 8,
+    "crc32": 894927832,
+    "external_attr": 2175008768,
+    "name": "etils/enp/linalg.py",
+    "size_bytes": 1034
+  },
+  {
+    "compressed_size": 3508,
+    "compression": 8,
+    "crc32": 3469455124,
+    "external_attr": 2175008768,
+    "name": "etils/enp/numpy_utils.py",
+    "size_bytes": 10941
+  },
+  {
+    "compressed_size": 1369,
+    "compression": 8,
+    "crc32": 3063723501,
+    "external_attr": 2175008768,
+    "name": "etils/enp/testing.py",
+    "size_bytes": 2901
+  },
+  {
+    "compressed_size": 1015,
+    "compression": 8,
+    "crc32": 877984985,
+    "external_attr": 2175008768,
+    "name": "etils/enp/type_parsing.py",
+    "size_bytes": 2086
+  },
+  {
+    "compressed_size": 784,
+    "compression": 8,
+    "crc32": 2739905105,
+    "external_attr": 2175008768,
+    "name": "etils/enp/typing.py",
+    "size_bytes": 2063
+  },
+  {
+    "compressed_size": 383,
+    "compression": 8,
+    "crc32": 10271319,
+    "external_attr": 2175008768,
+    "name": "etils/enp/array_types/__init__.py",
+    "size_bytes": 603
+  },
+  {
+    "compressed_size": 2774,
+    "compression": 8,
+    "crc32": 946431327,
+    "external_attr": 2175008768,
+    "name": "etils/enp/array_types/dtypes.py",
+    "size_bytes": 7867
+  },
+  {
+    "compressed_size": 1642,
+    "compression": 8,
+    "crc32": 1249070317,
+    "external_attr": 2175008768,
+    "name": "etils/enp/array_types/typing.py",
+    "size_bytes": 3725
+  },
+  {
+    "compressed_size": 526,
+    "compression": 8,
+    "crc32": 3273708066,
+    "external_attr": 2175008768,
+    "name": "etils/epath/__init__.py",
+    "size_bytes": 1033
+  },
+  {
+    "compressed_size": 3124,
+    "compression": 8,
+    "crc32": 3378032158,
+    "external_attr": 2175008768,
+    "name": "etils/epath/abstract_path.py",
+    "size_bytes": 8948
+  },
+  {
+    "compressed_size": 3980,
+    "compression": 8,
+    "crc32": 361930348,
+    "external_attr": 2175008768,
+    "name": "etils/epath/backend.py",
+    "size_bytes": 18883
+  },
+  {
+    "compressed_size": 1120,
+    "compression": 8,
+    "crc32": 1556764890,
+    "external_attr": 2175008768,
+    "name": "etils/epath/flags.py",
+    "size_bytes": 3159
+  },
+  {
+    "compressed_size": 3767,
+    "compression": 8,
+    "crc32": 1478911888,
+    "external_attr": 2175008768,
+    "name": "etils/epath/gpath.py",
+    "size_bytes": 10843
+  },
+  {
+    "compressed_size": 1439,
+    "compression": 8,
+    "crc32": 645225344,
+    "external_attr": 2175008768,
+    "name": "etils/epath/register.py",
+    "size_bytes": 3550
+  },
+  {
+    "compressed_size": 2392,
+    "compression": 8,
+    "crc32": 612237207,
+    "external_attr": 2175008768,
+    "name": "etils/epath/resource_utils.py",
+    "size_bytes": 5853
+  },
+  {
+    "compressed_size": 614,
+    "compression": 8,
+    "crc32": 163943421,
+    "external_attr": 2175008768,
+    "name": "etils/epath/stat_utils.py",
+    "size_bytes": 1142
+  },
+  {
+    "compressed_size": 1730,
+    "compression": 8,
+    "crc32": 561593019,
+    "external_attr": 2175008768,
+    "name": "etils/epath/testing.py",
+    "size_bytes": 5471
+  },
+  {
+    "compressed_size": 562,
+    "compression": 8,
+    "crc32": 4225263906,
+    "external_attr": 2175008768,
+    "name": "etils/epath/typing.py",
+    "size_bytes": 977
+  },
+  {
+    "compressed_size": 853,
+    "compression": 8,
+    "crc32": 220151610,
+    "external_attr": 2175008768,
+    "name": "etils/epy/__init__.py",
+    "size_bytes": 2181
+  },
+  {
+    "compressed_size": 922,
+    "compression": 8,
+    "crc32": 2173882421,
+    "external_attr": 2175008768,
+    "name": "etils/epy/_internal.py",
+    "size_bytes": 1860
+  },
+  {
+    "compressed_size": 583,
+    "compression": 8,
+    "crc32": 963782592,
+    "external_attr": 2175008768,
+    "name": "etils/epy/_multiprocess.py",
+    "size_bytes": 1010
+  },
+  {
+    "compressed_size": 1321,
+    "compression": 8,
+    "crc32": 3480144377,
+    "external_attr": 2175008768,
+    "name": "etils/epy/contextlib.py",
+    "size_bytes": 3031
+  },
+  {
+    "compressed_size": 673,
+    "compression": 8,
+    "crc32": 1115523091,
+    "external_attr": 2175008768,
+    "name": "etils/epy/descriptors.py",
+    "size_bytes": 1141
+  },
+  {
+    "compressed_size": 692,
+    "compression": 8,
+    "crc32": 2888466037,
+    "external_attr": 2175008768,
+    "name": "etils/epy/env_utils.py",
+    "size_bytes": 1296
+  },
+  {
+    "compressed_size": 1699,
+    "compression": 8,
+    "crc32": 4196001654,
+    "external_attr": 2175008768,
+    "name": "etils/epy/itertools.py",
+    "size_bytes": 3777
+  },
+  {
+    "compressed_size": 1862,
+    "compression": 8,
+    "crc32": 1553665511,
+    "external_attr": 2175008768,
+    "name": "etils/epy/lazy_api_imports_utils.py",
+    "size_bytes": 4861
+  },
+  {
+    "compressed_size": 3035,
+    "compression": 8,
+    "crc32": 1290601731,
+    "external_attr": 2175008768,
+    "name": "etils/epy/lazy_imports_utils.py",
+    "size_bytes": 8360
+  },
+  {
+    "compressed_size": 2363,
+    "compression": 8,
+    "crc32": 2608123112,
+    "external_attr": 2175008768,
+    "name": "etils/epy/py_utils.py",
+    "size_bytes": 5695
+  },
+  {
+    "compressed_size": 749,
+    "compression": 8,
+    "crc32": 3372314380,
+    "external_attr": 2175008768,
+    "name": "etils/epy/re_utils.py",
+    "size_bytes": 1381
+  },
+  {
+    "compressed_size": 2024,
+    "compression": 8,
+    "crc32": 1625605230,
+    "external_attr": 2175008768,
+    "name": "etils/epy/reraise_utils.py",
+    "size_bytes": 5596
+  },
+  {
+    "compressed_size": 1250,
+    "compression": 8,
+    "crc32": 3462533967,
+    "external_attr": 2175008768,
+    "name": "etils/epy/testing.py",
+    "size_bytes": 2843
+  },
+  {
+    "compressed_size": 4149,
+    "compression": 8,
+    "crc32": 104592914,
+    "external_attr": 2175008768,
+    "name": "etils/epy/text_utils.py",
+    "size_bytes": 14355
+  },
+  {
+    "compressed_size": 485,
+    "compression": 8,
+    "crc32": 506116741,
+    "external_attr": 2175008768,
+    "name": "etils/epy/typing.py",
+    "size_bytes": 790
+  },
+  {
+    "compressed_size": 370,
+    "compression": 8,
+    "crc32": 58200611,
+    "external_attr": 2175008768,
+    "name": "etils/epy/adhoc_utils/__init__.py",
+    "size_bytes": 583
+  },
+  {
+    "compressed_size": 1138,
+    "compression": 8,
+    "crc32": 1567198968,
+    "external_attr": 2175008768,
+    "name": "etils/epy/adhoc_utils/binary_import.py",
+    "size_bytes": 2368
+  },
+  {
+    "compressed_size": 1057,
+    "compression": 8,
+    "crc32": 836024365,
+    "external_attr": 2175008768,
+    "name": "etils/epy/adhoc_utils/curr_args.py",
+    "size_bytes": 2373
+  },
+  {
+    "compressed_size": 1980,
+    "compression": 8,
+    "crc32": 1808874832,
+    "external_attr": 2175008768,
+    "name": "etils/epy/adhoc_utils/module_utils.py",
+    "size_bytes": 4826
+  },
+  {
+    "compressed_size": 990,
+    "compression": 8,
+    "crc32": 275349125,
+    "external_attr": 2175008768,
+    "name": "etils/epy/adhoc_utils/utils.py",
+    "size_bytes": 1991
+  },
+  {
+    "compressed_size": 407,
+    "compression": 8,
+    "crc32": 2285599267,
+    "external_attr": 2175008768,
+    "name": "etils/etqdm/__init__.py",
+    "size_bytes": 642
+  },
+  {
+    "compressed_size": 797,
+    "compression": 8,
+    "crc32": 686261008,
+    "external_attr": 2175008768,
+    "name": "etils/etqdm/tqdm_utils.py",
+    "size_bytes": 1454
+  },
+  {
+    "compressed_size": 620,
+    "compression": 8,
+    "crc32": 2867917039,
+    "external_attr": 2175008768,
+    "name": "etils/etree/__init__.py",
+    "size_bytes": 1210
+  },
+  {
+    "compressed_size": 2472,
+    "compression": 8,
+    "crc32": 1867750811,
+    "external_attr": 2175008768,
+    "name": "etils/etree/backend.py",
+    "size_bytes": 9735
+  },
+  {
+    "compressed_size": 2101,
+    "compression": 8,
+    "crc32": 319211124,
+    "external_attr": 2175008768,
+    "name": "etils/etree/tree_utils.py",
+    "size_bytes": 5469
+  },
+  {
+    "compressed_size": 601,
+    "compression": 8,
+    "crc32": 3964404902,
+    "external_attr": 2175008768,
+    "name": "etils/etree/typing.py",
+    "size_bytes": 961
+  },
+  {
+    "compressed_size": 524,
+    "compression": 8,
+    "crc32": 1789617849,
+    "external_attr": 2175008768,
+    "name": "etils/exm/__init__.py",
+    "size_bytes": 1032
+  },
+  {
+    "compressed_size": 703,
+    "compression": 8,
+    "crc32": 2573721805,
+    "external_attr": 2175008768,
+    "name": "etils/exm/dummy.py",
+    "size_bytes": 1443
+  },
+  {
+    "compressed_size": 519,
+    "compression": 8,
+    "crc32": 3084362019,
+    "external_attr": 2175008768,
+    "name": "etils/lazy_imports/__init__.py",
+    "size_bytes": 965
+  },
+  {
+    "compressed_size": 3948,
+    "compression": 8,
+    "crc32": 1040978172,
+    "external_attr": 2175008768,
+    "name": "etils-1.14.0.dist-info/licenses/LICENSE",
+    "size_bytes": 11357
+  },
+  {
+    "compressed_size": 83,
+    "compression": 8,
+    "crc32": 3003415567,
+    "external_attr": 2175008768,
+    "name": "etils-1.14.0.dist-info/WHEEL",
+    "size_bytes": 82
+  },
+  {
+    "compressed_size": 1777,
+    "compression": 8,
+    "crc32": 548639009,
+    "external_attr": 2175008768,
+    "name": "etils-1.14.0.dist-info/METADATA",
+    "size_bytes": 6476
+  },
+  {
+    "compressed_size": 4600,
+    "compression": 8,
+    "crc32": 4216146446,
+    "external_attr": 2175008768,
+    "name": "etils-1.14.0.dist-info/RECORD",
+    "size_bytes": 8515
+  }
+]

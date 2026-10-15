@@ -1,0 +1,890 @@
+[
+  {
+    "compressed_size": 3017,
+    "compression": 8,
+    "crc32": 3984572182,
+    "external_attr": 2175008768,
+    "name": "pydantic/__init__.py",
+    "size_bytes": 15812
+  },
+  {
+    "compressed_size": 2669,
+    "compression": 8,
+    "crc32": 139779684,
+    "external_attr": 2175008768,
+    "name": "pydantic/_migration.py",
+    "size_bytes": 12160
+  },
+  {
+    "compressed_size": 727,
+    "compression": 8,
+    "crc32": 1345757290,
+    "external_attr": 2175008768,
+    "name": "pydantic/alias_generators.py",
+    "size_bytes": 2124
+  },
+  {
+    "compressed_size": 1358,
+    "compression": 8,
+    "crc32": 1768816101,
+    "external_attr": 2175008768,
+    "name": "pydantic/aliases.py",
+    "size_bytes": 4937
+  },
+  {
+    "compressed_size": 1249,
+    "compression": 8,
+    "crc32": 3468431881,
+    "external_attr": 2175008768,
+    "name": "pydantic/annotated_handlers.py",
+    "size_bytes": 4407
+  },
+  {
+    "compressed_size": 99,
+    "compression": 8,
+    "crc32": 3668324070,
+    "external_attr": 2175008768,
+    "name": "pydantic/class_validators.py",
+    "size_bytes": 148
+  },
+  {
+    "compressed_size": 6162,
+    "compression": 8,
+    "crc32": 67689257,
+    "external_attr": 2175008768,
+    "name": "pydantic/color.py",
+    "size_bytes": 21481
+  },
+  {
+    "compressed_size": 11416,
+    "compression": 8,
+    "crc32": 2757017882,
+    "external_attr": 2175008768,
+    "name": "pydantic/config.py",
+    "size_bytes": 44533
+  },
+  {
+    "compressed_size": 5502,
+    "compression": 8,
+    "crc32": 3423859233,
+    "external_attr": 2175008768,
+    "name": "pydantic/dataclasses.py",
+    "size_bytes": 18963
+  },
+  {
+    "compressed_size": 103,
+    "compression": 8,
+    "crc32": 2592117144,
+    "external_attr": 2175008768,
+    "name": "pydantic/datetime_parse.py",
+    "size_bytes": 150
+  },
+  {
+    "compressed_size": 99,
+    "compression": 8,
+    "crc32": 3646504310,
+    "external_attr": 2175008768,
+    "name": "pydantic/decorator.py",
+    "size_bytes": 145
+  },
+  {
+    "compressed_size": 101,
+    "compression": 8,
+    "crc32": 3471403828,
+    "external_attr": 2175008768,
+    "name": "pydantic/env_settings.py",
+    "size_bytes": 148
+  },
+  {
+    "compressed_size": 102,
+    "compression": 8,
+    "crc32": 1727721489,
+    "external_attr": 2175008768,
+    "name": "pydantic/error_wrappers.py",
+    "size_bytes": 150
+  },
+  {
+    "compressed_size": 1923,
+    "compression": 8,
+    "crc32": 3895246203,
+    "external_attr": 2175008768,
+    "name": "pydantic/errors.py",
+    "size_bytes": 6013
+  },
+  {
+    "compressed_size": 17706,
+    "compression": 8,
+    "crc32": 1304134166,
+    "external_attr": 2175008768,
+    "name": "pydantic/fields.py",
+    "size_bytes": 82023
+  },
+  {
+    "compressed_size": 4259,
+    "compression": 8,
+    "crc32": 1053490738,
+    "external_attr": 2175008768,
+    "name": "pydantic/functional_serializers.py",
+    "size_bytes": 18117
+  },
+  {
+    "compressed_size": 6623,
+    "compression": 8,
+    "crc32": 1162486988,
+    "external_attr": 2175008768,
+    "name": "pydantic/functional_validators.py",
+    "size_bytes": 31724
+  },
+  {
+    "compressed_size": 98,
+    "compression": 8,
+    "crc32": 2609011785,
+    "external_attr": 2175008768,
+    "name": "pydantic/generics.py",
+    "size_bytes": 144
+  },
+  {
+    "compressed_size": 96,
+    "compression": 8,
+    "crc32": 2373207788,
+    "external_attr": 2175008768,
+    "name": "pydantic/json.py",
+    "size_bytes": 140
+  },
+  {
+    "compressed_size": 26603,
+    "compression": 8,
+    "crc32": 3182944581,
+    "external_attr": 2175008768,
+    "name": "pydantic/json_schema.py",
+    "size_bytes": 125955
+  },
+  {
+    "compressed_size": 19009,
+    "compression": 8,
+    "crc32": 123487299,
+    "external_attr": 2175008768,
+    "name": "pydantic/main.py",
+    "size_bytes": 85334
+  },
+  {
+    "compressed_size": 15379,
+    "compression": 8,
+    "crc32": 3969820296,
+    "external_attr": 2175008768,
+    "name": "pydantic/mypy.py",
+    "size_bytes": 61074
+  },
+  {
+    "compressed_size": 8741,
+    "compression": 8,
+    "crc32": 429670331,
+    "external_attr": 2175008768,
+    "name": "pydantic/networks.py",
+    "size_bytes": 42102
+  },
+  {
+    "compressed_size": 94,
+    "compression": 8,
+    "crc32": 2263819298,
+    "external_attr": 2175008768,
+    "name": "pydantic/parse.py",
+    "size_bytes": 141
+  },
+  {
+    "compressed_size": 2,
+    "compression": 8,
+    "crc32": 0,
+    "external_attr": 2175008768,
+    "name": "pydantic/py.typed",
+    "size_bytes": 0
+  },
+  {
+    "compressed_size": 2120,
+    "compression": 8,
+    "crc32": 2782412183,
+    "external_attr": 2175008768,
+    "name": "pydantic/root_model.py",
+    "size_bytes": 6394
+  },
+  {
+    "compressed_size": 94,
+    "compression": 8,
+    "crc32": 4256163733,
+    "external_attr": 2175008768,
+    "name": "pydantic/schema.py",
+    "size_bytes": 142
+  },
+  {
+    "compressed_size": 93,
+    "compression": 8,
+    "crc32": 4157778308,
+    "external_attr": 2175008768,
+    "name": "pydantic/tools.py",
+    "size_bytes": 141
+  },
+  {
+    "compressed_size": 8248,
+    "compression": 8,
+    "crc32": 848185023,
+    "external_attr": 2175008768,
+    "name": "pydantic/type_adapter.py",
+    "size_bytes": 36123
+  },
+  {
+    "compressed_size": 20777,
+    "compression": 8,
+    "crc32": 2278131851,
+    "external_attr": 2175008768,
+    "name": "pydantic/types.py",
+    "size_bytes": 105961
+  },
+  {
+    "compressed_size": 92,
+    "compression": 8,
+    "crc32": 947827964,
+    "external_attr": 2175008768,
+    "name": "pydantic/typing.py",
+    "size_bytes": 138
+  },
+  {
+    "compressed_size": 94,
+    "compression": 8,
+    "crc32": 516421071,
+    "external_attr": 2175008768,
+    "name": "pydantic/utils.py",
+    "size_bytes": 141
+  },
+  {
+    "compressed_size": 1389,
+    "compression": 8,
+    "crc32": 2192505431,
+    "external_attr": 2175008768,
+    "name": "pydantic/validate_call_decorator.py",
+    "size_bytes": 4416
+  },
+  {
+    "compressed_size": 99,
+    "compression": 8,
+    "crc32": 2299335725,
+    "external_attr": 2175008768,
+    "name": "pydantic/validators.py",
+    "size_bytes": 146
+  },
+  {
+    "compressed_size": 1656,
+    "compression": 8,
+    "crc32": 2850304836,
+    "external_attr": 2175008768,
+    "name": "pydantic/version.py",
+    "size_bytes": 3985
+  },
+  {
+    "compressed_size": 1115,
+    "compression": 8,
+    "crc32": 3136240411,
+    "external_attr": 2175008768,
+    "name": "pydantic/warnings.py",
+    "size_bytes": 4822
+  },
+  {
+    "compressed_size": 2,
+    "compression": 8,
+    "crc32": 0,
+    "external_attr": 2175008768,
+    "name": "pydantic/_internal/__init__.py",
+    "size_bytes": 0
+  },
+  {
+    "compressed_size": 4225,
+    "compression": 8,
+    "crc32": 2551168763,
+    "external_attr": 2175008768,
+    "name": "pydantic/_internal/_config.py",
+    "size_bytes": 14839
+  },
+  {
+    "compressed_size": 1671,
+    "compression": 8,
+    "crc32": 469446679,
+    "external_attr": 2175008768,
+    "name": "pydantic/_internal/_core_metadata.py",
+    "size_bytes": 5162
+  },
+  {
+    "compressed_size": 2115,
+    "compression": 8,
+    "crc32": 2199332916,
+    "external_attr": 2175008768,
+    "name": "pydantic/_internal/_core_utils.py",
+    "size_bytes": 6487
+  },
+  {
+    "compressed_size": 4026,
+    "compression": 8,
+    "crc32": 1151001440,
+    "external_attr": 2175008768,
+    "name": "pydantic/_internal/_dataclasses.py",
+    "size_bytes": 13188
+  },
+  {
+    "compressed_size": 7792,
+    "compression": 8,
+    "crc32": 1532519138,
+    "external_attr": 2175008768,
+    "name": "pydantic/_internal/_decorators.py",
+    "size_bytes": 33620
+  },
+  {
+    "compressed_size": 1620,
+    "compression": 8,
+    "crc32": 3311532859,
+    "external_attr": 2175008768,
+    "name": "pydantic/_internal/_decorators_v1.py",
+    "size_bytes": 6185
+  },
+  {
+    "compressed_size": 6271,
+    "compression": 8,
+    "crc32": 1355712508,
+    "external_attr": 2175008768,
+    "name": "pydantic/_internal/_discriminated_union.py",
+    "size_bytes": 26255
+  },
+  {
+    "compressed_size": 1482,
+    "compression": 8,
+    "crc32": 3379988010,
+    "external_attr": 2175008768,
+    "name": "pydantic/_internal/_docs_extraction.py",
+    "size_bytes": 4127
+  },
+  {
+    "compressed_size": 7843,
+    "compression": 8,
+    "crc32": 1060057788,
+    "external_attr": 2175008768,
+    "name": "pydantic/_internal/_fields.py",
+    "size_bytes": 31557
+  },
+  {
+    "compressed_size": 304,
+    "compression": 8,
+    "crc32": 1899151784,
+    "external_attr": 2175008768,
+    "name": "pydantic/_internal/_forward_ref.py",
+    "size_bytes": 611
+  },
+  {
+    "compressed_size": 28969,
+    "compression": 8,
+    "crc32": 3397613433,
+    "external_attr": 2175008768,
+    "name": "pydantic/_internal/_generate_schema.py",
+    "size_bytes": 136348
+  },
+  {
+    "compressed_size": 7194,
+    "compression": 8,
+    "crc32": 3114700461,
+    "external_attr": 2175008768,
+    "name": "pydantic/_internal/_generics.py",
+    "size_bytes": 23393
+  },
+  {
+    "compressed_size": 435,
+    "compression": 8,
+    "crc32": 2255528045,
+    "external_attr": 2175008768,
+    "name": "pydantic/_internal/_git.py",
+    "size_bytes": 809
+  },
+  {
+    "compressed_size": 175,
+    "compression": 8,
+    "crc32": 3863294455,
+    "external_attr": 2175008768,
+    "name": "pydantic/_internal/_import_utils.py",
+    "size_bytes": 402
+  },
+  {
+    "compressed_size": 113,
+    "compression": 8,
+    "crc32": 3573075154,
+    "external_attr": 2175008768,
+    "name": "pydantic/_internal/_internal_dataclass.py",
+    "size_bytes": 144
+  },
+  {
+    "compressed_size": 4887,
+    "compression": 8,
+    "crc32": 890863301,
+    "external_attr": 2175008768,
+    "name": "pydantic/_internal/_known_annotated_metadata.py",
+    "size_bytes": 16805
+  },
+  {
+    "compressed_size": 1630,
+    "compression": 8,
+    "crc32": 1245887397,
+    "external_attr": 2175008768,
+    "name": "pydantic/_internal/_mock_val_ser.py",
+    "size_bytes": 8885
+  },
+  {
+    "compressed_size": 10501,
+    "compression": 8,
+    "crc32": 2203292921,
+    "external_attr": 2175008768,
+    "name": "pydantic/_internal/_model_construction.py",
+    "size_bytes": 38928
+  },
+  {
+    "compressed_size": 3981,
+    "compression": 8,
+    "crc32": 2586907730,
+    "external_attr": 2175008768,
+    "name": "pydantic/_internal/_namespace_utils.py",
+    "size_bytes": 12878
+  },
+  {
+    "compressed_size": 1769,
+    "compression": 8,
+    "crc32": 2979638649,
+    "external_attr": 2175008768,
+    "name": "pydantic/_internal/_repr.py",
+    "size_bytes": 5172
+  },
+  {
+    "compressed_size": 2101,
+    "compression": 8,
+    "crc32": 2052952894,
+    "external_attr": 2175008768,
+    "name": "pydantic/_internal/_schema_gather.py",
+    "size_bytes": 9052
+  },
+  {
+    "compressed_size": 1310,
+    "compression": 8,
+    "crc32": 2523188341,
+    "external_attr": 2175008768,
+    "name": "pydantic/_internal/_schema_generation_shared.py",
+    "size_bytes": 4842
+  },
+  {
+    "compressed_size": 607,
+    "compression": 8,
+    "crc32": 1860711099,
+    "external_attr": 2175008768,
+    "name": "pydantic/_internal/_serializers.py",
+    "size_bytes": 1491
+  },
+  {
+    "compressed_size": 2054,
+    "compression": 8,
+    "crc32": 1429796412,
+    "external_attr": 2175008768,
+    "name": "pydantic/_internal/_signature.py",
+    "size_bytes": 6808
+  },
+  {
+    "compressed_size": 8844,
+    "compression": 8,
+    "crc32": 3538020461,
+    "external_attr": 2175008768,
+    "name": "pydantic/_internal/_typing_extra.py",
+    "size_bytes": 31574
+  },
+  {
+    "compressed_size": 5214,
+    "compression": 8,
+    "crc32": 1154421642,
+    "external_attr": 2175008768,
+    "name": "pydantic/_internal/_utils.py",
+    "size_bytes": 15959
+  },
+  {
+    "compressed_size": 1381,
+    "compression": 8,
+    "crc32": 1030917428,
+    "external_attr": 2175008768,
+    "name": "pydantic/_internal/_validate_call.py",
+    "size_bytes": 5366
+  },
+  {
+    "compressed_size": 5077,
+    "compression": 8,
+    "crc32": 4219286935,
+    "external_attr": 2175008768,
+    "name": "pydantic/_internal/_validators.py",
+    "size_bytes": 20563
+  },
+  {
+    "compressed_size": 2,
+    "compression": 8,
+    "crc32": 0,
+    "external_attr": 2175008768,
+    "name": "pydantic/deprecated/__init__.py",
+    "size_bytes": 0
+  },
+  {
+    "compressed_size": 2665,
+    "compression": 8,
+    "crc32": 1822319082,
+    "external_attr": 2175008768,
+    "name": "pydantic/deprecated/class_validators.py",
+    "size_bytes": 10281
+  },
+  {
+    "compressed_size": 965,
+    "compression": 8,
+    "crc32": 2486764811,
+    "external_attr": 2175008768,
+    "name": "pydantic/deprecated/config.py",
+    "size_bytes": 2663
+  },
+  {
+    "compressed_size": 1932,
+    "compression": 8,
+    "crc32": 1940437891,
+    "external_attr": 2175008768,
+    "name": "pydantic/deprecated/copy_internals.py",
+    "size_bytes": 7618
+  },
+  {
+    "compressed_size": 2755,
+    "compression": 8,
+    "crc32": 744944819,
+    "external_attr": 2175008768,
+    "name": "pydantic/deprecated/decorator.py",
+    "size_bytes": 10845
+  },
+  {
+    "compressed_size": 1619,
+    "compression": 8,
+    "crc32": 29749205,
+    "external_attr": 2175008768,
+    "name": "pydantic/deprecated/json.py",
+    "size_bytes": 4657
+  },
+  {
+    "compressed_size": 838,
+    "compression": 8,
+    "crc32": 2954021475,
+    "external_attr": 2175008768,
+    "name": "pydantic/deprecated/parse.py",
+    "size_bytes": 2511
+  },
+  {
+    "compressed_size": 963,
+    "compression": 8,
+    "crc32": 1256285374,
+    "external_attr": 2175008768,
+    "name": "pydantic/deprecated/tools.py",
+    "size_bytes": 3330
+  },
+  {
+    "compressed_size": 87,
+    "compression": 8,
+    "crc32": 4032112093,
+    "external_attr": 2175008768,
+    "name": "pydantic/experimental/__init__.py",
+    "size_bytes": 104
+  },
+  {
+    "compressed_size": 722,
+    "compression": 8,
+    "crc32": 1079203807,
+    "external_attr": 2175008768,
+    "name": "pydantic/experimental/arguments_schema.py",
+    "size_bytes": 1866
+  },
+  {
+    "compressed_size": 111,
+    "compression": 8,
+    "crc32": 1737240337,
+    "external_attr": 2175008768,
+    "name": "pydantic/experimental/missing_sentinel.py",
+    "size_bytes": 127
+  },
+  {
+    "compressed_size": 5043,
+    "compression": 8,
+    "crc32": 2435850573,
+    "external_attr": 2175008768,
+    "name": "pydantic/experimental/pipeline.py",
+    "size_bytes": 23956
+  },
+  {
+    "compressed_size": 1648,
+    "compression": 8,
+    "crc32": 3709291491,
+    "external_attr": 2175008768,
+    "name": "pydantic/plugin/__init__.py",
+    "size_bytes": 7333
+  },
+  {
+    "compressed_size": 857,
+    "compression": 8,
+    "crc32": 1644700489,
+    "external_attr": 2175008768,
+    "name": "pydantic/plugin/_loader.py",
+    "size_bytes": 2213
+  },
+  {
+    "compressed_size": 1670,
+    "compression": 8,
+    "crc32": 2377296333,
+    "external_attr": 2175008768,
+    "name": "pydantic/plugin/_schema_validator.py",
+    "size_bytes": 5815
+  },
+  {
+    "compressed_size": 924,
+    "compression": 8,
+    "crc32": 2593156113,
+    "external_attr": 2175008768,
+    "name": "pydantic/v1/__init__.py",
+    "size_bytes": 2946
+  },
+  {
+    "compressed_size": 4447,
+    "compression": 8,
+    "crc32": 109059120,
+    "external_attr": 2175008768,
+    "name": "pydantic/v1/_hypothesis_plugin.py",
+    "size_bytes": 14847
+  },
+  {
+    "compressed_size": 1141,
+    "compression": 8,
+    "crc32": 3077950515,
+    "external_attr": 2175008768,
+    "name": "pydantic/v1/annotated_types.py",
+    "size_bytes": 3157
+  },
+  {
+    "compressed_size": 3531,
+    "compression": 8,
+    "crc32": 52325393,
+    "external_attr": 2175008768,
+    "name": "pydantic/v1/class_validators.py",
+    "size_bytes": 14672
+  },
+  {
+    "compressed_size": 4943,
+    "compression": 8,
+    "crc32": 1759587595,
+    "external_attr": 2175008768,
+    "name": "pydantic/v1/color.py",
+    "size_bytes": 16844
+  },
+  {
+    "compressed_size": 2028,
+    "compression": 8,
+    "crc32": 1894145470,
+    "external_attr": 2175008768,
+    "name": "pydantic/v1/config.py",
+    "size_bytes": 6532
+  },
+  {
+    "compressed_size": 4552,
+    "compression": 8,
+    "crc32": 1872358103,
+    "external_attr": 2175008768,
+    "name": "pydantic/v1/dataclasses.py",
+    "size_bytes": 18172
+  },
+  {
+    "compressed_size": 2308,
+    "compression": 8,
+    "crc32": 180610677,
+    "external_attr": 2175008768,
+    "name": "pydantic/v1/datetime_parse.py",
+    "size_bytes": 7724
+  },
+  {
+    "compressed_size": 2607,
+    "compression": 8,
+    "crc32": 1477915167,
+    "external_attr": 2175008768,
+    "name": "pydantic/v1/decorator.py",
+    "size_bytes": 10339
+  },
+  {
+    "compressed_size": 3786,
+    "compression": 8,
+    "crc32": 4252147191,
+    "external_attr": 2175008768,
+    "name": "pydantic/v1/env_settings.py",
+    "size_bytes": 14105
+  },
+  {
+    "compressed_size": 1757,
+    "compression": 8,
+    "crc32": 3759944565,
+    "external_attr": 2175008768,
+    "name": "pydantic/v1/error_wrappers.py",
+    "size_bytes": 5196
+  },
+  {
+    "compressed_size": 3424,
+    "compression": 8,
+    "crc32": 2897416468,
+    "external_attr": 2175008768,
+    "name": "pydantic/v1/errors.py",
+    "size_bytes": 17726
+  },
+  {
+    "compressed_size": 11294,
+    "compression": 8,
+    "crc32": 513219869,
+    "external_attr": 2175008768,
+    "name": "pydantic/v1/fields.py",
+    "size_bytes": 50649
+  },
+  {
+    "compressed_size": 5469,
+    "compression": 8,
+    "crc32": 3599131660,
+    "external_attr": 2175008768,
+    "name": "pydantic/v1/generics.py",
+    "size_bytes": 17829
+  },
+  {
+    "compressed_size": 1257,
+    "compression": 8,
+    "crc32": 3982296997,
+    "external_attr": 2175008768,
+    "name": "pydantic/v1/json.py",
+    "size_bytes": 3390
+  },
+  {
+    "compressed_size": 10745,
+    "compression": 8,
+    "crc32": 2282278309,
+    "external_attr": 2175008768,
+    "name": "pydantic/v1/main.py",
+    "size_bytes": 45697
+  },
+  {
+    "compressed_size": 9987,
+    "compression": 8,
+    "crc32": 542756356,
+    "external_attr": 2175008768,
+    "name": "pydantic/v1/mypy.py",
+    "size_bytes": 38860
+  },
+  {
+    "compressed_size": 5638,
+    "compression": 8,
+    "crc32": 145062258,
+    "external_attr": 2175008768,
+    "name": "pydantic/v1/networks.py",
+    "size_bytes": 22124
+  },
+  {
+    "compressed_size": 624,
+    "compression": 8,
+    "crc32": 4294343795,
+    "external_attr": 2175008768,
+    "name": "pydantic/v1/parse.py",
+    "size_bytes": 1821
+  },
+  {
+    "compressed_size": 2,
+    "compression": 8,
+    "crc32": 0,
+    "external_attr": 2175008768,
+    "name": "pydantic/v1/py.typed",
+    "size_bytes": 0
+  },
+  {
+    "compressed_size": 10176,
+    "compression": 8,
+    "crc32": 3660656047,
+    "external_attr": 2175008768,
+    "name": "pydantic/v1/schema.py",
+    "size_bytes": 47801
+  },
+  {
+    "compressed_size": 835,
+    "compression": 8,
+    "crc32": 2618477824,
+    "external_attr": 2175008768,
+    "name": "pydantic/v1/tools.py",
+    "size_bytes": 2881
+  },
+  {
+    "compressed_size": 6959,
+    "compression": 8,
+    "crc32": 2176919378,
+    "external_attr": 2175008768,
+    "name": "pydantic/v1/types.py",
+    "size_bytes": 35455
+  },
+  {
+    "compressed_size": 5747,
+    "compression": 8,
+    "crc32": 1214650859,
+    "external_attr": 2175008768,
+    "name": "pydantic/v1/typing.py",
+    "size_bytes": 20102
+  },
+  {
+    "compressed_size": 8061,
+    "compression": 8,
+    "crc32": 764113593,
+    "external_attr": 2175008768,
+    "name": "pydantic/v1/utils.py",
+    "size_bytes": 26014
+  },
+  {
+    "compressed_size": 5121,
+    "compression": 8,
+    "crc32": 2746476793,
+    "external_attr": 2175008768,
+    "name": "pydantic/v1/validators.py",
+    "size_bytes": 22187
+  },
+  {
+    "compressed_size": 492,
+    "compression": 8,
+    "crc32": 3487355733,
+    "external_attr": 2175008768,
+    "name": "pydantic/v1/version.py",
+    "size_bytes": 1039
+  },
+  {
+    "compressed_size": 20140,
+    "compression": 8,
+    "crc32": 1608479618,
+    "external_attr": 27525120,
+    "name": "pydantic-2.13.5.dist-info/METADATA",
+    "size_bytes": 110178
+  },
+  {
+    "compressed_size": 85,
+    "compression": 8,
+    "crc32": 28400612,
+    "external_attr": 27525120,
+    "name": "pydantic-2.13.5.dist-info/WHEEL",
+    "size_bytes": 87
+  },
+  {
+    "compressed_size": 668,
+    "compression": 8,
+    "crc32": 831234074,
+    "external_attr": 27525120,
+    "name": "pydantic-2.13.5.dist-info/licenses/LICENSE",
+    "size_bytes": 1129
+  },
+  {
+    "compressed_size": 4905,
+    "compression": 8,
+    "crc32": 1026142632,
+    "external_attr": 27525120,
+    "name": "pydantic-2.13.5.dist-info/RECORD",
+    "size_bytes": 9339
+  }
+]

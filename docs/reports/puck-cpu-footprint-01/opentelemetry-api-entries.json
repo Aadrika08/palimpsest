@@ -1,0 +1,378 @@
+[
+  {
+    "compressed_size": 2,
+    "compression": 8,
+    "crc32": 0,
+    "external_attr": 2175008768,
+    "name": "opentelemetry/py.typed",
+    "size_bytes": 0
+  },
+  {
+    "compressed_size": 577,
+    "compression": 8,
+    "crc32": 3079088580,
+    "external_attr": 2175008768,
+    "name": "opentelemetry/_logs/__init__.py",
+    "size_bytes": 1366
+  },
+  {
+    "compressed_size": 2,
+    "compression": 8,
+    "crc32": 0,
+    "external_attr": 2175008768,
+    "name": "opentelemetry/_logs/py.typed",
+    "size_bytes": 0
+  },
+  {
+    "compressed_size": 3071,
+    "compression": 8,
+    "crc32": 456064062,
+    "external_attr": 2175008768,
+    "name": "opentelemetry/_logs/_internal/__init__.py",
+    "size_bytes": 15469
+  },
+  {
+    "compressed_size": 494,
+    "compression": 8,
+    "crc32": 753279585,
+    "external_attr": 2175008768,
+    "name": "opentelemetry/_logs/severity/__init__.py",
+    "size_bytes": 1007
+  },
+  {
+    "compressed_size": 2631,
+    "compression": 8,
+    "crc32": 1250433161,
+    "external_attr": 2175008768,
+    "name": "opentelemetry/attributes/__init__.py",
+    "size_bytes": 9503
+  },
+  {
+    "compressed_size": 2,
+    "compression": 8,
+    "crc32": 0,
+    "external_attr": 2175008768,
+    "name": "opentelemetry/attributes/py.typed",
+    "size_bytes": 0
+  },
+  {
+    "compressed_size": 1023,
+    "compression": 8,
+    "crc32": 908175722,
+    "external_attr": 2175008768,
+    "name": "opentelemetry/baggage/__init__.py",
+    "size_bytes": 3564
+  },
+  {
+    "compressed_size": 2,
+    "compression": 8,
+    "crc32": 0,
+    "external_attr": 2175008768,
+    "name": "opentelemetry/baggage/py.typed",
+    "size_bytes": 0
+  },
+  {
+    "compressed_size": 1671,
+    "compression": 8,
+    "crc32": 2817495011,
+    "external_attr": 2175008768,
+    "name": "opentelemetry/baggage/propagation/__init__.py",
+    "size_bytes": 5607
+  },
+  {
+    "compressed_size": 1611,
+    "compression": 8,
+    "crc32": 3725157438,
+    "external_attr": 2175008768,
+    "name": "opentelemetry/context/__init__.py",
+    "size_bytes": 4710
+  },
+  {
+    "compressed_size": 647,
+    "compression": 8,
+    "crc32": 4182978923,
+    "external_attr": 2175008768,
+    "name": "opentelemetry/context/context.py",
+    "size_bytes": 1722
+  },
+  {
+    "compressed_size": 533,
+    "compression": 8,
+    "crc32": 1436064198,
+    "external_attr": 2175008768,
+    "name": "opentelemetry/context/contextvars_context.py",
+    "size_bytes": 1299
+  },
+  {
+    "compressed_size": 2,
+    "compression": 8,
+    "crc32": 0,
+    "external_attr": 2175008768,
+    "name": "opentelemetry/context/py.typed",
+    "size_bytes": 0
+  },
+  {
+    "compressed_size": 709,
+    "compression": 8,
+    "crc32": 2928128722,
+    "external_attr": 2175008768,
+    "name": "opentelemetry/environment_variables/__init__.py",
+    "size_bytes": 1859
+  },
+  {
+    "compressed_size": 2,
+    "compression": 8,
+    "crc32": 0,
+    "external_attr": 2175008768,
+    "name": "opentelemetry/environment_variables/py.typed",
+    "size_bytes": 0
+  },
+  {
+    "compressed_size": 885,
+    "compression": 8,
+    "crc32": 3989890021,
+    "external_attr": 2175008768,
+    "name": "opentelemetry/metrics/__init__.py",
+    "size_bytes": 3068
+  },
+  {
+    "compressed_size": 2,
+    "compression": 8,
+    "crc32": 0,
+    "external_attr": 2175008768,
+    "name": "opentelemetry/metrics/py.typed",
+    "size_bytes": 0
+  },
+  {
+    "compressed_size": 5174,
+    "compression": 8,
+    "crc32": 1780921688,
+    "external_attr": 2175008768,
+    "name": "opentelemetry/metrics/_internal/__init__.py",
+    "size_bytes": 30867
+  },
+  {
+    "compressed_size": 2866,
+    "compression": 8,
+    "crc32": 652559586,
+    "external_attr": 2175008768,
+    "name": "opentelemetry/metrics/_internal/instrument.py",
+    "size_bytes": 15981
+  },
+  {
+    "compressed_size": 504,
+    "compression": 8,
+    "crc32": 4008789643,
+    "external_attr": 2175008768,
+    "name": "opentelemetry/metrics/_internal/observation.py",
+    "size_bytes": 1378
+  },
+  {
+    "compressed_size": 1988,
+    "compression": 8,
+    "crc32": 4000545805,
+    "external_attr": 2175008768,
+    "name": "opentelemetry/propagate/__init__.py",
+    "size_bytes": 6303
+  },
+  {
+    "compressed_size": 2,
+    "compression": 8,
+    "crc32": 0,
+    "external_attr": 2175008768,
+    "name": "opentelemetry/propagate/py.typed",
+    "size_bytes": 0
+  },
+  {
+    "compressed_size": 1118,
+    "compression": 8,
+    "crc32": 3749656066,
+    "external_attr": 2175008768,
+    "name": "opentelemetry/propagators/_envcarrier.py",
+    "size_bytes": 3117
+  },
+  {
+    "compressed_size": 791,
+    "compression": 8,
+    "crc32": 3597447663,
+    "external_attr": 2175008768,
+    "name": "opentelemetry/propagators/composite.py",
+    "size_bytes": 2724
+  },
+  {
+    "compressed_size": 2,
+    "compression": 8,
+    "crc32": 0,
+    "external_attr": 2175008768,
+    "name": "opentelemetry/propagators/py.typed",
+    "size_bytes": 0
+  },
+  {
+    "compressed_size": 1656,
+    "compression": 8,
+    "crc32": 475281484,
+    "external_attr": 2175008768,
+    "name": "opentelemetry/propagators/textmap.py",
+    "size_bytes": 6017
+  },
+  {
+    "compressed_size": 5655,
+    "compression": 8,
+    "crc32": 1283923256,
+    "external_attr": 2175008768,
+    "name": "opentelemetry/trace/__init__.py",
+    "size_bytes": 23188
+  },
+  {
+    "compressed_size": 2,
+    "compression": 8,
+    "crc32": 0,
+    "external_attr": 2175008768,
+    "name": "opentelemetry/trace/py.typed",
+    "size_bytes": 0
+  },
+  {
+    "compressed_size": 5554,
+    "compression": 8,
+    "crc32": 3354992236,
+    "external_attr": 2175008768,
+    "name": "opentelemetry/trace/span.py",
+    "size_bytes": 20552
+  },
+  {
+    "compressed_size": 686,
+    "compression": 8,
+    "crc32": 3666164262,
+    "external_attr": 2175008768,
+    "name": "opentelemetry/trace/status.py",
+    "size_bytes": 1959
+  },
+  {
+    "compressed_size": 465,
+    "compression": 8,
+    "crc32": 3034014319,
+    "external_attr": 2175008768,
+    "name": "opentelemetry/trace/propagation/__init__.py",
+    "size_bytes": 1136
+  },
+  {
+    "compressed_size": 1052,
+    "compression": 8,
+    "crc32": 1941169066,
+    "external_attr": 2175008768,
+    "name": "opentelemetry/trace/propagation/tracecontext.py",
+    "size_bytes": 3553
+  },
+  {
+    "compressed_size": 1221,
+    "compression": 8,
+    "crc32": 2381830738,
+    "external_attr": 2175008768,
+    "name": "opentelemetry/util/_decorator.py",
+    "size_bytes": 2991
+  },
+  {
+    "compressed_size": 784,
+    "compression": 8,
+    "crc32": 954815909,
+    "external_attr": 2175008768,
+    "name": "opentelemetry/util/_importlib_metadata.py",
+    "size_bytes": 1833
+  },
+  {
+    "compressed_size": 458,
+    "compression": 8,
+    "crc32": 3867419574,
+    "external_attr": 2175008768,
+    "name": "opentelemetry/util/_once.py",
+    "size_bytes": 941
+  },
+  {
+    "compressed_size": 550,
+    "compression": 8,
+    "crc32": 3783774878,
+    "external_attr": 2175008768,
+    "name": "opentelemetry/util/_providers.py",
+    "size_bytes": 1317
+  },
+  {
+    "compressed_size": 2,
+    "compression": 8,
+    "crc32": 0,
+    "external_attr": 2175008768,
+    "name": "opentelemetry/util/py.typed",
+    "size_bytes": 0
+  },
+  {
+    "compressed_size": 1576,
+    "compression": 8,
+    "crc32": 854728659,
+    "external_attr": 2175008768,
+    "name": "opentelemetry/util/re.py",
+    "size_bytes": 4068
+  },
+  {
+    "compressed_size": 415,
+    "compression": 8,
+    "crc32": 2211593383,
+    "external_attr": 2175008768,
+    "name": "opentelemetry/util/types.py",
+    "size_bytes": 866
+  },
+  {
+    "compressed_size": 102,
+    "compression": 8,
+    "crc32": 773034935,
+    "external_attr": 2175008768,
+    "name": "opentelemetry/version/__init__.py",
+    "size_bytes": 100
+  },
+  {
+    "compressed_size": 2,
+    "compression": 8,
+    "crc32": 0,
+    "external_attr": 2175008768,
+    "name": "opentelemetry/version/py.typed",
+    "size_bytes": 0
+  },
+  {
+    "compressed_size": 529,
+    "compression": 8,
+    "crc32": 1101431918,
+    "external_attr": 27525120,
+    "name": "opentelemetry_api-1.45.0.dist-info/METADATA",
+    "size_bytes": 1411
+  },
+  {
+    "compressed_size": 86,
+    "compression": 8,
+    "crc32": 3905176223,
+    "external_attr": 27525120,
+    "name": "opentelemetry_api-1.45.0.dist-info/WHEEL",
+    "size_bytes": 87
+  },
+  {
+    "compressed_size": 209,
+    "compression": 8,
+    "crc32": 4226582203,
+    "external_attr": 27525120,
+    "name": "opentelemetry_api-1.45.0.dist-info/entry_points.txt",
+    "size_bytes": 573
+  },
+  {
+    "compressed_size": 3948,
+    "compression": 8,
+    "crc32": 2069693628,
+    "external_attr": 27525120,
+    "name": "opentelemetry_api-1.45.0.dist-info/licenses/LICENSE",
+    "size_bytes": 11357
+  },
+  {
+    "compressed_size": 1793,
+    "compression": 8,
+    "crc32": 2913083838,
+    "external_attr": 27525120,
+    "name": "opentelemetry_api-1.45.0.dist-info/RECORD",
+    "size_bytes": 4274
+  }
+]

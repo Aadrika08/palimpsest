@@ -1,0 +1,410 @@
+[
+  {
+    "compressed_size": 106,
+    "compression": 8,
+    "crc32": 4230625760,
+    "external_attr": 2175008768,
+    "name": "uvicorn/__init__.py",
+    "size_bytes": 147
+  },
+  {
+    "compressed_size": 55,
+    "compression": 8,
+    "crc32": 634259978,
+    "external_attr": 2175008768,
+    "name": "uvicorn/__main__.py",
+    "size_bytes": 62
+  },
+  {
+    "compressed_size": 307,
+    "compression": 8,
+    "crc32": 763119176,
+    "external_attr": 2175008768,
+    "name": "uvicorn/_ansi.py",
+    "size_bytes": 617
+  },
+  {
+    "compressed_size": 883,
+    "compression": 8,
+    "crc32": 4159854821,
+    "external_attr": 2175008768,
+    "name": "uvicorn/_compat.py",
+    "size_bytes": 2916
+  },
+  {
+    "compressed_size": 1022,
+    "compression": 8,
+    "crc32": 786197144,
+    "external_attr": 2175008768,
+    "name": "uvicorn/_subprocess.py",
+    "size_bytes": 2776
+  },
+  {
+    "compressed_size": 2149,
+    "compression": 8,
+    "crc32": 3832476978,
+    "external_attr": 2175008768,
+    "name": "uvicorn/_types.py",
+    "size_bytes": 7830
+  },
+  {
+    "compressed_size": 6569,
+    "compression": 8,
+    "crc32": 4235651548,
+    "external_attr": 2175008768,
+    "name": "uvicorn/config.py",
+    "size_bytes": 25482
+  },
+  {
+    "compressed_size": 414,
+    "compression": 8,
+    "crc32": 1946979466,
+    "external_attr": 2175008768,
+    "name": "uvicorn/importer.py",
+    "size_bytes": 1128
+  },
+  {
+    "compressed_size": 1245,
+    "compression": 8,
+    "crc32": 1647456078,
+    "external_attr": 2175008768,
+    "name": "uvicorn/logging.py",
+    "size_bytes": 4256
+  },
+  {
+    "compressed_size": 4751,
+    "compression": 8,
+    "crc32": 3056113721,
+    "external_attr": 2175008768,
+    "name": "uvicorn/main.py",
+    "size_bytes": 19049
+  },
+  {
+    "compressed_size": 3,
+    "compression": 8,
+    "crc32": 852952723,
+    "external_attr": 2175008768,
+    "name": "uvicorn/py.typed",
+    "size_bytes": 1
+  },
+  {
+    "compressed_size": 3767,
+    "compression": 8,
+    "crc32": 1820014999,
+    "external_attr": 2175008768,
+    "name": "uvicorn/server.py",
+    "size_bytes": 13705
+  },
+  {
+    "compressed_size": 1304,
+    "compression": 8,
+    "crc32": 853106842,
+    "external_attr": 2175008768,
+    "name": "uvicorn/workers.py",
+    "size_bytes": 3873
+  },
+  {
+    "compressed_size": 2,
+    "compression": 8,
+    "crc32": 0,
+    "external_attr": 2175008768,
+    "name": "uvicorn/lifespan/__init__.py",
+    "size_bytes": 0
+  },
+  {
+    "compressed_size": 189,
+    "compression": 8,
+    "crc32": 3259356824,
+    "external_attr": 2175008768,
+    "name": "uvicorn/lifespan/off.py",
+    "size_bytes": 332
+  },
+  {
+    "compressed_size": 1215,
+    "compression": 8,
+    "crc32": 2235169063,
+    "external_attr": 2175008768,
+    "name": "uvicorn/lifespan/on.py",
+    "size_bytes": 5173
+  },
+  {
+    "compressed_size": 2,
+    "compression": 8,
+    "crc32": 0,
+    "external_attr": 2175008768,
+    "name": "uvicorn/loops/__init__.py",
+    "size_bytes": 0
+  },
+  {
+    "compressed_size": 199,
+    "compression": 8,
+    "crc32": 572191801,
+    "external_attr": 2175008768,
+    "name": "uvicorn/loops/asyncio.py",
+    "size_bytes": 333
+  },
+  {
+    "compressed_size": 244,
+    "compression": 8,
+    "crc32": 3019701412,
+    "external_attr": 2175008768,
+    "name": "uvicorn/loops/auto.py",
+    "size_bytes": 566
+  },
+  {
+    "compressed_size": 160,
+    "compression": 8,
+    "crc32": 3893263024,
+    "external_attr": 2175008768,
+    "name": "uvicorn/loops/uvloop.py",
+    "size_bytes": 236
+  },
+  {
+    "compressed_size": 161,
+    "compression": 8,
+    "crc32": 91862621,
+    "external_attr": 2175008768,
+    "name": "uvicorn/loops/zuvloop.py",
+    "size_bytes": 239
+  },
+  {
+    "compressed_size": 2,
+    "compression": 8,
+    "crc32": 0,
+    "external_attr": 2175008768,
+    "name": "uvicorn/middleware/__init__.py",
+    "size_bytes": 0
+  },
+  {
+    "compressed_size": 211,
+    "compression": 8,
+    "crc32": 4135262731,
+    "external_attr": 2175008768,
+    "name": "uvicorn/middleware/asgi2.py",
+    "size_bytes": 394
+  },
+  {
+    "compressed_size": 893,
+    "compression": 8,
+    "crc32": 4239289927,
+    "external_attr": 2175008768,
+    "name": "uvicorn/middleware/message_logger.py",
+    "size_bytes": 2859
+  },
+  {
+    "compressed_size": 2399,
+    "compression": 8,
+    "crc32": 2760524668,
+    "external_attr": 2175008768,
+    "name": "uvicorn/middleware/proxy_headers.py",
+    "size_bytes": 7421
+  },
+  {
+    "compressed_size": 2204,
+    "compression": 8,
+    "crc32": 4190485351,
+    "external_attr": 2175008768,
+    "name": "uvicorn/middleware/wsgi.py",
+    "size_bytes": 7125
+  },
+  {
+    "compressed_size": 2,
+    "compression": 8,
+    "crc32": 0,
+    "external_attr": 2175008768,
+    "name": "uvicorn/protocols/__init__.py",
+    "size_bytes": 0
+  },
+  {
+    "compressed_size": 632,
+    "compression": 8,
+    "crc32": 2717822325,
+    "external_attr": 2175008768,
+    "name": "uvicorn/protocols/utils.py",
+    "size_bytes": 2058
+  },
+  {
+    "compressed_size": 2,
+    "compression": 8,
+    "crc32": 0,
+    "external_attr": 2175008768,
+    "name": "uvicorn/protocols/http/__init__.py",
+    "size_bytes": 0
+  },
+  {
+    "compressed_size": 183,
+    "compression": 8,
+    "crc32": 3043743810,
+    "external_attr": 2175008768,
+    "name": "uvicorn/protocols/http/auto.py",
+    "size_bytes": 403
+  },
+  {
+    "compressed_size": 1091,
+    "compression": 8,
+    "crc32": 4055013522,
+    "external_attr": 2175008768,
+    "name": "uvicorn/protocols/http/auto_zttp_impl.py",
+    "size_bytes": 3272
+  },
+  {
+    "compressed_size": 568,
+    "compression": 8,
+    "crc32": 2555720229,
+    "external_attr": 2175008768,
+    "name": "uvicorn/protocols/http/flow_control.py",
+    "size_bytes": 1701
+  },
+  {
+    "compressed_size": 5108,
+    "compression": 8,
+    "crc32": 3414170748,
+    "external_attr": 2175008768,
+    "name": "uvicorn/protocols/http/h11_impl.py",
+    "size_bytes": 20886
+  },
+  {
+    "compressed_size": 5491,
+    "compression": 8,
+    "crc32": 2340578978,
+    "external_attr": 2175008768,
+    "name": "uvicorn/protocols/http/httptools_impl.py",
+    "size_bytes": 22564
+  },
+  {
+    "compressed_size": 5464,
+    "compression": 8,
+    "crc32": 1561234272,
+    "external_attr": 2175008768,
+    "name": "uvicorn/protocols/http/zttp_h2_impl.py",
+    "size_bytes": 21697
+  },
+  {
+    "compressed_size": 5249,
+    "compression": 8,
+    "crc32": 206105437,
+    "external_attr": 2175008768,
+    "name": "uvicorn/protocols/http/zttp_impl.py",
+    "size_bytes": 21835
+  },
+  {
+    "compressed_size": 2,
+    "compression": 8,
+    "crc32": 0,
+    "external_attr": 2175008768,
+    "name": "uvicorn/protocols/websockets/__init__.py",
+    "size_bytes": 0
+  },
+  {
+    "compressed_size": 246,
+    "compression": 8,
+    "crc32": 2971276024,
+    "external_attr": 2175008768,
+    "name": "uvicorn/protocols/websockets/auto.py",
+    "size_bytes": 611
+  },
+  {
+    "compressed_size": 4114,
+    "compression": 8,
+    "crc32": 3398191309,
+    "external_attr": 2175008768,
+    "name": "uvicorn/protocols/websockets/websockets_impl.py",
+    "size_bytes": 15784
+  },
+  {
+    "compressed_size": 5407,
+    "compression": 8,
+    "crc32": 639007955,
+    "external_attr": 2175008768,
+    "name": "uvicorn/protocols/websockets/websockets_sansio_impl.py",
+    "size_bytes": 23861
+  },
+  {
+    "compressed_size": 4814,
+    "compression": 8,
+    "crc32": 1089181924,
+    "external_attr": 2175008768,
+    "name": "uvicorn/protocols/websockets/wsproto_impl.py",
+    "size_bytes": 21138
+  },
+  {
+    "compressed_size": 237,
+    "compression": 8,
+    "crc32": 2434298818,
+    "external_attr": 2175008768,
+    "name": "uvicorn/supervisors/__init__.py",
+    "size_bytes": 507
+  },
+  {
+    "compressed_size": 1309,
+    "compression": 8,
+    "crc32": 94345286,
+    "external_attr": 2175008768,
+    "name": "uvicorn/supervisors/basereload.py",
+    "size_bytes": 4018
+  },
+  {
+    "compressed_size": 2725,
+    "compression": 8,
+    "crc32": 686994548,
+    "external_attr": 2175008768,
+    "name": "uvicorn/supervisors/multiprocess.py",
+    "size_bytes": 10271
+  },
+  {
+    "compressed_size": 628,
+    "compression": 8,
+    "crc32": 950377368,
+    "external_attr": 2175008768,
+    "name": "uvicorn/supervisors/statreload.py",
+    "size_bytes": 1548
+  },
+  {
+    "compressed_size": 953,
+    "compression": 8,
+    "crc32": 3907303815,
+    "external_attr": 2175008768,
+    "name": "uvicorn/supervisors/watchfilesreload.py",
+    "size_bytes": 2923
+  },
+  {
+    "compressed_size": 2756,
+    "compression": 8,
+    "crc32": 830382655,
+    "external_attr": 27525120,
+    "name": "uvicorn-0.54.0.dist-info/METADATA",
+    "size_bytes": 6607
+  },
+  {
+    "compressed_size": 86,
+    "compression": 8,
+    "crc32": 965398679,
+    "external_attr": 27525120,
+    "name": "uvicorn-0.54.0.dist-info/WHEEL",
+    "size_bytes": 87
+  },
+  {
+    "compressed_size": 40,
+    "compression": 8,
+    "crc32": 4095142075,
+    "external_attr": 27525120,
+    "name": "uvicorn-0.54.0.dist-info/entry_points.txt",
+    "size_bytes": 46
+  },
+  {
+    "compressed_size": 812,
+    "compression": 8,
+    "crc32": 3555351090,
+    "external_attr": 27525120,
+    "name": "uvicorn-0.54.0.dist-info/licenses/LICENSE.md",
+    "size_bytes": 1526
+  },
+  {
+    "compressed_size": 2174,
+    "compression": 8,
+    "crc32": 3210088032,
+    "external_attr": 27525120,
+    "name": "uvicorn-0.54.0.dist-info/RECORD",
+    "size_bytes": 4316
+  }
+]

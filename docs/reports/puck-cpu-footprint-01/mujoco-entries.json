@@ -1,0 +1,930 @@
+[
+  {
+    "compressed_size": 0,
+    "compression": 0,
+    "crc32": 0,
+    "external_attr": 1106051088,
+    "name": "mujoco/",
+    "size_bytes": 0
+  },
+  {
+    "compressed_size": 0,
+    "compression": 0,
+    "crc32": 0,
+    "external_attr": 1106051088,
+    "name": "mujoco-3.3.6.dist-info/",
+    "size_bytes": 0
+  },
+  {
+    "compressed_size": 0,
+    "compression": 0,
+    "crc32": 0,
+    "external_attr": 1106051088,
+    "name": "mujoco.libs/",
+    "size_bytes": 0
+  },
+  {
+    "compressed_size": 0,
+    "compression": 0,
+    "crc32": 0,
+    "external_attr": 1106051088,
+    "name": "mujoco/cgl/",
+    "size_bytes": 0
+  },
+  {
+    "compressed_size": 0,
+    "compression": 0,
+    "crc32": 0,
+    "external_attr": 1106051088,
+    "name": "mujoco/egl/",
+    "size_bytes": 0
+  },
+  {
+    "compressed_size": 0,
+    "compression": 0,
+    "crc32": 0,
+    "external_attr": 1106051088,
+    "name": "mujoco/include/",
+    "size_bytes": 0
+  },
+  {
+    "compressed_size": 0,
+    "compression": 0,
+    "crc32": 0,
+    "external_attr": 1106051088,
+    "name": "mujoco/introspect/",
+    "size_bytes": 0
+  },
+  {
+    "compressed_size": 0,
+    "compression": 0,
+    "crc32": 0,
+    "external_attr": 1106051088,
+    "name": "mujoco/testdata/",
+    "size_bytes": 0
+  },
+  {
+    "compressed_size": 0,
+    "compression": 0,
+    "crc32": 0,
+    "external_attr": 1106051088,
+    "name": "mujoco/glfw/",
+    "size_bytes": 0
+  },
+  {
+    "compressed_size": 0,
+    "compression": 0,
+    "crc32": 0,
+    "external_attr": 1106051088,
+    "name": "mujoco/plugin/",
+    "size_bytes": 0
+  },
+  {
+    "compressed_size": 0,
+    "compression": 0,
+    "crc32": 0,
+    "external_attr": 1106051088,
+    "name": "mujoco/usd/",
+    "size_bytes": 0
+  },
+  {
+    "compressed_size": 0,
+    "compression": 0,
+    "crc32": 0,
+    "external_attr": 1106051088,
+    "name": "mujoco/osmesa/",
+    "size_bytes": 0
+  },
+  {
+    "compressed_size": 1416,
+    "compression": 8,
+    "crc32": 1982702330,
+    "external_attr": 2175008768,
+    "name": "mujoco/msh2obj.py",
+    "size_bytes": 3926
+  },
+  {
+    "compressed_size": 5664,
+    "compression": 8,
+    "crc32": 261824642,
+    "external_attr": 2175008768,
+    "name": "mujoco/minimize.py",
+    "size_bytes": 18579
+  },
+  {
+    "compressed_size": 770,
+    "compression": 8,
+    "crc32": 2616907933,
+    "external_attr": 2175008768,
+    "name": "mujoco/gl_context.py",
+    "size_bytes": 1849
+  },
+  {
+    "compressed_size": 227312,
+    "compression": 8,
+    "crc32": 2009077315,
+    "external_attr": 2175008768,
+    "name": "mujoco/_callbacks.cpython-311-x86_64-linux-gnu.so",
+    "size_bytes": 626304
+  },
+  {
+    "compressed_size": 1344,
+    "compression": 8,
+    "crc32": 1618467667,
+    "external_attr": 2175008768,
+    "name": "mujoco/renderer_test.py",
+    "size_bytes": 4954
+  },
+  {
+    "compressed_size": 247045,
+    "compression": 8,
+    "crc32": 2486379706,
+    "external_attr": 2175008768,
+    "name": "mujoco/_rollout.cpython-311-x86_64-linux-gnu.so",
+    "size_bytes": 661136
+  },
+  {
+    "compressed_size": 932,
+    "compression": 8,
+    "crc32": 4205180300,
+    "external_attr": 2175008768,
+    "name": "mujoco/msh2obj_test.py",
+    "size_bytes": 2070
+  },
+  {
+    "compressed_size": 134969,
+    "compression": 8,
+    "crc32": 434272231,
+    "external_attr": 2175008768,
+    "name": "mujoco/_constants.cpython-311-x86_64-linux-gnu.so",
+    "size_bytes": 359336
+  },
+  {
+    "compressed_size": 835847,
+    "compression": 8,
+    "crc32": 1725485011,
+    "external_attr": 2175008768,
+    "name": "mujoco/_structs.cpython-311-x86_64-linux-gnu.so",
+    "size_bytes": 2987352
+  },
+  {
+    "compressed_size": 1181,
+    "compression": 8,
+    "crc32": 3622738301,
+    "external_attr": 2175008768,
+    "name": "mujoco/memory_leak_test.py",
+    "size_bytes": 2379
+  },
+  {
+    "compressed_size": 10184,
+    "compression": 8,
+    "crc32": 1930659452,
+    "external_attr": 2175008768,
+    "name": "mujoco/specs_test.py",
+    "size_bytes": 51827
+  },
+  {
+    "compressed_size": 13183,
+    "compression": 8,
+    "crc32": 2147682806,
+    "external_attr": 2175008768,
+    "name": "mujoco/bindings_test.py",
+    "size_bytes": 61515
+  },
+  {
+    "compressed_size": 281602,
+    "compression": 8,
+    "crc32": 2430816185,
+    "external_attr": 2175008768,
+    "name": "mujoco/_render.cpython-311-x86_64-linux-gnu.so",
+    "size_bytes": 771432
+  },
+  {
+    "compressed_size": 4839,
+    "compression": 8,
+    "crc32": 3473827255,
+    "external_attr": 2175008768,
+    "name": "mujoco/rollout_test.py",
+    "size_bytes": 33524
+  },
+  {
+    "compressed_size": 133049,
+    "compression": 8,
+    "crc32": 529773720,
+    "external_attr": 2175008768,
+    "name": "mujoco/_errors.cpython-311-x86_64-linux-gnu.so",
+    "size_bytes": 355272
+  },
+  {
+    "compressed_size": 1923970,
+    "compression": 8,
+    "crc32": 3107833483,
+    "external_attr": 2175008768,
+    "name": "mujoco/libmujoco.so.3.3.6",
+    "size_bytes": 5002648
+  },
+  {
+    "compressed_size": 1466,
+    "compression": 8,
+    "crc32": 3879963116,
+    "external_attr": 2175008768,
+    "name": "mujoco/render_test.py",
+    "size_bytes": 3912
+  },
+  {
+    "compressed_size": 5621,
+    "compression": 8,
+    "crc32": 4277450501,
+    "external_attr": 2175008768,
+    "name": "mujoco/viewer.py",
+    "size_bytes": 18520
+  },
+  {
+    "compressed_size": 2551,
+    "compression": 8,
+    "crc32": 4034182274,
+    "external_attr": 2175008768,
+    "name": "mujoco/__init__.py",
+    "size_bytes": 6961
+  },
+  {
+    "compressed_size": 698016,
+    "compression": 8,
+    "crc32": 1999982584,
+    "external_attr": 2175008768,
+    "name": "mujoco/_enums.cpython-311-x86_64-linux-gnu.so",
+    "size_bytes": 2340296
+  },
+  {
+    "compressed_size": 644893,
+    "compression": 8,
+    "crc32": 1355378945,
+    "external_attr": 2175008768,
+    "name": "mujoco/_specs.cpython-311-x86_64-linux-gnu.so",
+    "size_bytes": 2135944
+  },
+  {
+    "compressed_size": 2132,
+    "compression": 8,
+    "crc32": 3380177415,
+    "external_attr": 2175008768,
+    "name": "mujoco/minimize_test.py",
+    "size_bytes": 10267
+  },
+  {
+    "compressed_size": 350498,
+    "compression": 8,
+    "crc32": 1093766076,
+    "external_attr": 2175008768,
+    "name": "mujoco/_simulate.cpython-311-x86_64-linux-gnu.so",
+    "size_bytes": 920696
+  },
+  {
+    "compressed_size": 3949,
+    "compression": 8,
+    "crc32": 3725102907,
+    "external_attr": 2175008768,
+    "name": "mujoco/renderer.py",
+    "size_bytes": 11616
+  },
+  {
+    "compressed_size": 342265,
+    "compression": 8,
+    "crc32": 228453865,
+    "external_attr": 2175008768,
+    "name": "mujoco/_functions.cpython-311-x86_64-linux-gnu.so",
+    "size_bytes": 998040
+  },
+  {
+    "compressed_size": 3634,
+    "compression": 8,
+    "crc32": 3584983268,
+    "external_attr": 2175008768,
+    "name": "mujoco/rollout.py",
+    "size_bytes": 14139
+  },
+  {
+    "compressed_size": 550,
+    "compression": 8,
+    "crc32": 1789954095,
+    "external_attr": 2175008768,
+    "name": "mujoco/viewer_test.py",
+    "size_bytes": 979
+  },
+  {
+    "compressed_size": 1850,
+    "compression": 8,
+    "crc32": 1524698522,
+    "external_attr": 2175008768,
+    "name": "mujoco/cgl/cgl.py",
+    "size_bytes": 5215
+  },
+  {
+    "compressed_size": 988,
+    "compression": 8,
+    "crc32": 3972949104,
+    "external_attr": 2175008768,
+    "name": "mujoco/cgl/__init__.py",
+    "size_bytes": 2367
+  },
+  {
+    "compressed_size": 1185,
+    "compression": 8,
+    "crc32": 1304929784,
+    "external_attr": 2175008768,
+    "name": "mujoco/egl/egl_ext.py",
+    "size_bytes": 2783
+  },
+  {
+    "compressed_size": 1941,
+    "compression": 8,
+    "crc32": 230705697,
+    "external_attr": 2175008768,
+    "name": "mujoco/egl/__init__.py",
+    "size_bytes": 5039
+  },
+  {
+    "compressed_size": 0,
+    "compression": 0,
+    "crc32": 0,
+    "external_attr": 1106051088,
+    "name": "mujoco/include/mujoco/",
+    "size_bytes": 0
+  },
+  {
+    "compressed_size": 2467,
+    "compression": 8,
+    "crc32": 2767228501,
+    "external_attr": 2175008768,
+    "name": "mujoco/include/mujoco/materialAPI.h",
+    "size_bytes": 7895
+  },
+  {
+    "compressed_size": 968,
+    "compression": 8,
+    "crc32": 3104636661,
+    "external_attr": 2175008768,
+    "name": "mujoco/include/mujoco/mjsan.h",
+    "size_bytes": 2211
+  },
+  {
+    "compressed_size": 17586,
+    "compression": 8,
+    "crc32": 3842473082,
+    "external_attr": 2175008768,
+    "name": "mujoco/include/mujoco/mujoco.h",
+    "size_bytes": 75768
+  },
+  {
+    "compressed_size": 3870,
+    "compression": 8,
+    "crc32": 1929808058,
+    "external_attr": 2175008768,
+    "name": "mujoco/include/mujoco/mjui.h",
+    "size_bytes": 14360
+  },
+  {
+    "compressed_size": 5210,
+    "compression": 8,
+    "crc32": 408558662,
+    "external_attr": 2175008768,
+    "name": "mujoco/include/mujoco/mjvisualize.h",
+    "size_bytes": 19184
+  },
+  {
+    "compressed_size": 6567,
+    "compression": 8,
+    "crc32": 3083112309,
+    "external_attr": 2175008768,
+    "name": "mujoco/include/mujoco/mjdata.h",
+    "size_bytes": 27364
+  },
+  {
+    "compressed_size": 2353,
+    "compression": 8,
+    "crc32": 1247798928,
+    "external_attr": 2175008768,
+    "name": "mujoco/include/mujoco/siteAPI.h",
+    "size_bytes": 6632
+  },
+  {
+    "compressed_size": 2622,
+    "compression": 8,
+    "crc32": 825740284,
+    "external_attr": 2175008768,
+    "name": "mujoco/include/mujoco/keyframe.h",
+    "size_bytes": 11535
+  },
+  {
+    "compressed_size": 647,
+    "compression": 8,
+    "crc32": 2083795550,
+    "external_attr": 2175008768,
+    "name": "mujoco/include/mujoco/utils.h",
+    "size_bytes": 1264
+  },
+  {
+    "compressed_size": 8390,
+    "compression": 8,
+    "crc32": 711883247,
+    "external_attr": 2175008768,
+    "name": "mujoco/include/mujoco/sceneAPI.h",
+    "size_bytes": 78612
+  },
+  {
+    "compressed_size": 770,
+    "compression": 8,
+    "crc32": 1303717869,
+    "external_attr": 2175008768,
+    "name": "mujoco/include/mujoco/writer.h",
+    "size_bytes": 1529
+  },
+  {
+    "compressed_size": 5930,
+    "compression": 8,
+    "crc32": 3916377065,
+    "external_attr": 2175008768,
+    "name": "mujoco/include/mujoco/actuator.h",
+    "size_bytes": 39211
+  },
+  {
+    "compressed_size": 2440,
+    "compression": 8,
+    "crc32": 1558228452,
+    "external_attr": 2175008768,
+    "name": "mujoco/include/mujoco/mjplugin.h",
+    "size_bytes": 7676
+  },
+  {
+    "compressed_size": 2375,
+    "compression": 8,
+    "crc32": 231242527,
+    "external_attr": 2175008768,
+    "name": "mujoco/include/mujoco/imageableAPI.h",
+    "size_bytes": 6791
+  },
+  {
+    "compressed_size": 714,
+    "compression": 8,
+    "crc32": 3214919951,
+    "external_attr": 2175008768,
+    "name": "mujoco/include/mujoco/mjmacro.h",
+    "size_bytes": 1336
+  },
+  {
+    "compressed_size": 2686,
+    "compression": 8,
+    "crc32": 1565665168,
+    "external_attr": 2175008768,
+    "name": "mujoco/include/mujoco/meshCollisionAPI.h",
+    "size_bytes": 8384
+  },
+  {
+    "compressed_size": 696,
+    "compression": 8,
+    "crc32": 1254516675,
+    "external_attr": 2175008768,
+    "name": "mujoco/include/mujoco/layer_sink.h",
+    "size_bytes": 1287
+  },
+  {
+    "compressed_size": 3206,
+    "compression": 8,
+    "crc32": 26862649,
+    "external_attr": 2175008768,
+    "name": "mujoco/include/mujoco/collisionAPI.h",
+    "size_bytes": 15659
+  },
+  {
+    "compressed_size": 755,
+    "compression": 8,
+    "crc32": 3692849139,
+    "external_attr": 2175008768,
+    "name": "mujoco/include/mujoco/usd.h",
+    "size_bytes": 1762
+  },
+  {
+    "compressed_size": 769,
+    "compression": 8,
+    "crc32": 1305994845,
+    "external_attr": 2175008768,
+    "name": "mujoco/include/mujoco/mjthread.h",
+    "size_bytes": 1543
+  },
+  {
+    "compressed_size": 635,
+    "compression": 8,
+    "crc32": 882922327,
+    "external_attr": 2175008768,
+    "name": "mujoco/include/mujoco/mjexport.h",
+    "size_bytes": 1533
+  },
+  {
+    "compressed_size": 7581,
+    "compression": 8,
+    "crc32": 3566604144,
+    "external_attr": 2175008768,
+    "name": "mujoco/include/mujoco/mjxmacro.h",
+    "size_bytes": 57110
+  },
+  {
+    "compressed_size": 643,
+    "compression": 8,
+    "crc32": 1179101344,
+    "external_attr": 2175008768,
+    "name": "mujoco/include/mujoco/mjtnum.h",
+    "size_bytes": 1382
+  },
+  {
+    "compressed_size": 5170,
+    "compression": 8,
+    "crc32": 161937277,
+    "external_attr": 2175008768,
+    "name": "mujoco/include/mujoco/jointAPI.h",
+    "size_bytes": 28690
+  },
+  {
+    "compressed_size": 578,
+    "compression": 8,
+    "crc32": 382239206,
+    "external_attr": 2175008768,
+    "name": "mujoco/include/mujoco/api.h",
+    "size_bytes": 1381
+  },
+  {
+    "compressed_size": 7660,
+    "compression": 8,
+    "crc32": 1551782230,
+    "external_attr": 2175008768,
+    "name": "mujoco/include/mujoco/mjspec.h",
+    "size_bytes": 33879
+  },
+  {
+    "compressed_size": 2436,
+    "compression": 8,
+    "crc32": 3044984544,
+    "external_attr": 2175008768,
+    "name": "mujoco/include/mujoco/mjrender.h",
+    "size_bytes": 8058
+  },
+  {
+    "compressed_size": 3372,
+    "compression": 8,
+    "crc32": 1196974576,
+    "external_attr": 2175008768,
+    "name": "mujoco/include/mujoco/tokens.h",
+    "size_bytes": 21185
+  },
+  {
+    "compressed_size": 16840,
+    "compression": 8,
+    "crc32": 3437103133,
+    "external_attr": 2175008768,
+    "name": "mujoco/include/mujoco/mjmodel.h",
+    "size_bytes": 76369
+  },
+  {
+    "compressed_size": 0,
+    "compression": 0,
+    "crc32": 0,
+    "external_attr": 1106051088,
+    "name": "mujoco/introspect/codegen/",
+    "size_bytes": 0
+  },
+  {
+    "compressed_size": 5217,
+    "compression": 8,
+    "crc32": 2162776504,
+    "external_attr": 2175008768,
+    "name": "mujoco/introspect/enums.py",
+    "size_bytes": 27704
+  },
+  {
+    "compressed_size": 752,
+    "compression": 8,
+    "crc32": 3486081359,
+    "external_attr": 2175008768,
+    "name": "mujoco/introspect/type_parsing_test.py",
+    "size_bytes": 1999
+  },
+  {
+    "compressed_size": 1383,
+    "compression": 8,
+    "crc32": 1909880071,
+    "external_attr": 2175008768,
+    "name": "mujoco/introspect/structs_test.py",
+    "size_bytes": 5548
+  },
+  {
+    "compressed_size": 30016,
+    "compression": 8,
+    "crc32": 1438451930,
+    "external_attr": 2175008768,
+    "name": "mujoco/introspect/structs.py",
+    "size_bytes": 407235
+  },
+  {
+    "compressed_size": 2088,
+    "compression": 8,
+    "crc32": 3620424918,
+    "external_attr": 2175008768,
+    "name": "mujoco/introspect/type_parsing.py",
+    "size_bytes": 5929
+  },
+  {
+    "compressed_size": 385,
+    "compression": 8,
+    "crc32": 3618890835,
+    "external_attr": 2175008768,
+    "name": "mujoco/introspect/__init__.py",
+    "size_bytes": 674
+  },
+  {
+    "compressed_size": 951,
+    "compression": 8,
+    "crc32": 2398081356,
+    "external_attr": 2175008768,
+    "name": "mujoco/introspect/functions_test.py",
+    "size_bytes": 2975
+  },
+  {
+    "compressed_size": 626,
+    "compression": 8,
+    "crc32": 3296782583,
+    "external_attr": 2175008768,
+    "name": "mujoco/introspect/mjxmacro.py",
+    "size_bytes": 1518
+  },
+  {
+    "compressed_size": 2667,
+    "compression": 8,
+    "crc32": 2182080452,
+    "external_attr": 2175008768,
+    "name": "mujoco/introspect/ast_nodes.py",
+    "size_bytes": 9085
+  },
+  {
+    "compressed_size": 949,
+    "compression": 8,
+    "crc32": 1415447120,
+    "external_attr": 2175008768,
+    "name": "mujoco/introspect/enums_test.py",
+    "size_bytes": 2858
+  },
+  {
+    "compressed_size": 24430,
+    "compression": 8,
+    "crc32": 2761352186,
+    "external_attr": 2175008768,
+    "name": "mujoco/introspect/functions.py",
+    "size_bytes": 376382
+  },
+  {
+    "compressed_size": 1584,
+    "compression": 8,
+    "crc32": 2041286464,
+    "external_attr": 2175008768,
+    "name": "mujoco/introspect/ast_nodes_test.py",
+    "size_bytes": 7828
+  },
+  {
+    "compressed_size": 1643,
+    "compression": 8,
+    "crc32": 4091527862,
+    "external_attr": 2175008768,
+    "name": "mujoco/introspect/codegen/formatter.py",
+    "size_bytes": 4756
+  },
+  {
+    "compressed_size": 2204,
+    "compression": 8,
+    "crc32": 460591044,
+    "external_attr": 2175008768,
+    "name": "mujoco/introspect/codegen/generate_functions.py",
+    "size_bytes": 6630
+  },
+  {
+    "compressed_size": 2926,
+    "compression": 8,
+    "crc32": 4099625723,
+    "external_attr": 2175008768,
+    "name": "mujoco/introspect/codegen/generate_structs.py",
+    "size_bytes": 9159
+  },
+  {
+    "compressed_size": 1544,
+    "compression": 8,
+    "crc32": 2287955641,
+    "external_attr": 2175008768,
+    "name": "mujoco/introspect/codegen/generate_enums.py",
+    "size_bytes": 4070
+  },
+  {
+    "compressed_size": 2242,
+    "compression": 8,
+    "crc32": 1570843769,
+    "external_attr": 2175008768,
+    "name": "mujoco/testdata/model.xml",
+    "size_bytes": 7772
+  },
+  {
+    "compressed_size": 45422,
+    "compression": 8,
+    "crc32": 134489692,
+    "external_attr": 2175008768,
+    "name": "mujoco/testdata/abdomen_1_body.msh",
+    "size_bytes": 157480
+  },
+  {
+    "compressed_size": 655,
+    "compression": 8,
+    "crc32": 1111129185,
+    "external_attr": 2175008768,
+    "name": "mujoco/testdata/simple_usd_preview_surface.usda",
+    "size_bytes": 2626
+  },
+  {
+    "compressed_size": 964,
+    "compression": 8,
+    "crc32": 543210067,
+    "external_attr": 2175008768,
+    "name": "mujoco/testdata/usd_golden.usda",
+    "size_bytes": 2846
+  },
+  {
+    "compressed_size": 70,
+    "compression": 8,
+    "crc32": 846585285,
+    "external_attr": 2175008768,
+    "name": "mujoco/testdata/msh.xml",
+    "size_bytes": 100
+  },
+  {
+    "compressed_size": 640,
+    "compression": 8,
+    "crc32": 1474278449,
+    "external_attr": 2175008768,
+    "name": "mujoco/glfw/__init__.py",
+    "size_bytes": 1401
+  },
+  {
+    "compressed_size": 108072,
+    "compression": 8,
+    "crc32": 3237920819,
+    "external_attr": 2175008768,
+    "name": "mujoco/plugin/libsdf_plugin.so",
+    "size_bytes": 366432
+  },
+  {
+    "compressed_size": 100955,
+    "compression": 8,
+    "crc32": 4177592996,
+    "external_attr": 2175008768,
+    "name": "mujoco/plugin/libelasticity.so",
+    "size_bytes": 339512
+  },
+  {
+    "compressed_size": 191444,
+    "compression": 8,
+    "crc32": 2254975877,
+    "external_attr": 2175008768,
+    "name": "mujoco/plugin/libsensor.so",
+    "size_bytes": 644200
+  },
+  {
+    "compressed_size": 94875,
+    "compression": 8,
+    "crc32": 1898580578,
+    "external_attr": 2175008768,
+    "name": "mujoco/plugin/libactuator.so",
+    "size_bytes": 324544
+  },
+  {
+    "compressed_size": 993,
+    "compression": 8,
+    "crc32": 1304959855,
+    "external_attr": 2175008768,
+    "name": "mujoco/usd/camera.py",
+    "size_bytes": 2077
+  },
+  {
+    "compressed_size": 3185,
+    "compression": 8,
+    "crc32": 1931956347,
+    "external_attr": 2175008768,
+    "name": "mujoco/usd/shapes.py",
+    "size_bytes": 13303
+  },
+  {
+    "compressed_size": 1067,
+    "compression": 8,
+    "crc32": 3479714233,
+    "external_attr": 2175008768,
+    "name": "mujoco/usd/lights.py",
+    "size_bytes": 2938
+  },
+  {
+    "compressed_size": 1099,
+    "compression": 8,
+    "crc32": 3040609584,
+    "external_attr": 2175008768,
+    "name": "mujoco/usd/exporter_test.py",
+    "size_bytes": 2277
+  },
+  {
+    "compressed_size": 1080,
+    "compression": 8,
+    "crc32": 4211013885,
+    "external_attr": 2175008768,
+    "name": "mujoco/usd/demo.py",
+    "size_bytes": 2602
+  },
+  {
+    "compressed_size": 544,
+    "compression": 8,
+    "crc32": 2949443223,
+    "external_attr": 2175008768,
+    "name": "mujoco/usd/utils.py",
+    "size_bytes": 1119
+  },
+  {
+    "compressed_size": 4220,
+    "compression": 8,
+    "crc32": 1174860262,
+    "external_attr": 2175008768,
+    "name": "mujoco/usd/objects.py",
+    "size_bytes": 19533
+  },
+  {
+    "compressed_size": 4716,
+    "compression": 8,
+    "crc32": 2693007015,
+    "external_attr": 2175008768,
+    "name": "mujoco/usd/exporter.py",
+    "size_bytes": 16711
+  },
+  {
+    "compressed_size": 1089,
+    "compression": 8,
+    "crc32": 960325690,
+    "external_attr": 2175008768,
+    "name": "mujoco/osmesa/__init__.py",
+    "size_bytes": 2556
+  },
+  {
+    "compressed_size": 0,
+    "compression": 0,
+    "crc32": 0,
+    "external_attr": 1106051088,
+    "name": "mujoco-3.3.6.dist-info/licenses/",
+    "size_bytes": 0
+  },
+  {
+    "compressed_size": 4742,
+    "compression": 8,
+    "crc32": 3340885196,
+    "external_attr": 2176057344,
+    "name": "mujoco-3.3.6.dist-info/RECORD",
+    "size_bytes": 8942
+  },
+  {
+    "compressed_size": 115,
+    "compression": 8,
+    "crc32": 788251424,
+    "external_attr": 2175008768,
+    "name": "mujoco-3.3.6.dist-info/WHEEL",
+    "size_bytes": 152
+  },
+  {
+    "compressed_size": 11426,
+    "compression": 8,
+    "crc32": 1894679514,
+    "external_attr": 2175008768,
+    "name": "mujoco-3.3.6.dist-info/METADATA",
+    "size_bytes": 41991
+  },
+  {
+    "compressed_size": 9,
+    "compression": 8,
+    "crc32": 3557035423,
+    "external_attr": 2175008768,
+    "name": "mujoco-3.3.6.dist-info/top_level.txt",
+    "size_bytes": 7
+  },
+  {
+    "compressed_size": 3949,
+    "compression": 8,
+    "crc32": 2263004340,
+    "external_attr": 2175008768,
+    "name": "mujoco-3.3.6.dist-info/licenses/LICENSE",
+    "size_bytes": 11358
+  },
+  {
+    "compressed_size": 9807,
+    "compression": 8,
+    "crc32": 1800621545,
+    "external_attr": 2175008768,
+    "name": "mujoco-3.3.6.dist-info/licenses/LICENSES_THIRD_PARTY.md",
+    "size_bytes": 37638
+  }
+]
