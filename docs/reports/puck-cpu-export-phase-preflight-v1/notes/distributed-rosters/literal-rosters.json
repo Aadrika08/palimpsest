@@ -1,0 +1,1004 @@
+{
+  "kind": "distributed-export-source-rosters-v1",
+  "rows": {
+    "autograd": {
+      "direct_data_assignments": [],
+      "dispatch_by_condition": {
+        "unconditional": [
+          "DistAutogradContext",
+          "_current_context",
+          "_get_debug_info",
+          "_get_max_id",
+          "_init",
+          "_is_valid_context",
+          "_new_context",
+          "_release_context",
+          "_retrieve_context",
+          "backward",
+          "get_gradients"
+        ]
+      },
+      "literal_direct_dispatch": [
+        {
+          "conditions": [],
+          "kind": "class",
+          "line": 36,
+          "name": "DistAutogradContext"
+        },
+        {
+          "conditions": [],
+          "kind": "function",
+          "line": 83,
+          "name": "_new_context"
+        },
+        {
+          "conditions": [],
+          "kind": "function",
+          "line": 91,
+          "name": "_release_context"
+        },
+        {
+          "conditions": [],
+          "kind": "function",
+          "line": 98,
+          "name": "_get_max_id"
+        },
+        {
+          "conditions": [],
+          "kind": "function",
+          "line": 103,
+          "name": "_is_valid_context"
+        },
+        {
+          "conditions": [],
+          "kind": "function",
+          "line": 110,
+          "name": "_retrieve_context"
+        },
+        {
+          "conditions": [],
+          "kind": "function",
+          "line": 118,
+          "name": "_current_context"
+        },
+        {
+          "conditions": [],
+          "kind": "function",
+          "line": 126,
+          "name": "_init"
+        },
+        {
+          "conditions": [],
+          "kind": "function",
+          "line": 131,
+          "name": "_get_debug_info"
+        },
+        {
+          "conditions": [],
+          "kind": "function",
+          "line": 139,
+          "name": "backward"
+        },
+        {
+          "conditions": [],
+          "kind": "function",
+          "line": 184,
+          "name": "get_gradients"
+        }
+      ],
+      "source": {
+        "path": "docs/reports/puck-cpu-held-qualification-amendment-05/remaining-phase-review/upstream/torch/csrc/distributed/autograd/init.cpp",
+        "sha256": "086d39e23700fba3ef98506ceaf9f608112e9c48cb5a61801afb54157ecd5b5e",
+        "size_bytes": 8435
+      }
+    },
+    "c10d": {
+      "direct_data_assignments": [
+        {
+          "conditions": [],
+          "kind": "data assignment; inspect RHS separately",
+          "line": 3984,
+          "name": "_DEFAULT_FIRST_BUCKET_BYTES"
+        },
+        {
+          "conditions": [],
+          "kind": "data assignment; inspect RHS separately",
+          "line": 3985,
+          "name": "_DEFAULT_PG_TIMEOUT"
+        },
+        {
+          "conditions": [
+            "defined(USE_C10D_NCCL)"
+          ],
+          "kind": "data assignment; inspect RHS separately",
+          "line": 3987,
+          "name": "_DEFAULT_PG_NCCL_TIMEOUT"
+        },
+        {
+          "conditions": [],
+          "kind": "data assignment; inspect RHS separately",
+          "line": 3990,
+          "name": "_DEFAULT_NO_TIMEOUT"
+        }
+      ],
+      "dispatch_by_condition": {
+        "!defined(_WIN32)": [
+          "HashStore"
+        ],
+        "defined(USE_C10D_GLOO)": [
+          "ProcessGroupGloo",
+          "_ProcessGroupWrapper"
+        ],
+        "defined(USE_C10D_MPI)": [
+          "ProcessGroupMPI"
+        ],
+        "defined(USE_C10D_NCCL)": [
+          "ProcessGroupNCCL",
+          "_dump_nccl_trace",
+          "_dump_nccl_trace_json",
+          "_get_intra_node_comm_usage_counter",
+          "_hash_tensors"
+        ],
+        "defined(USE_C10D_UCC)": [
+          "ProcessGroupUCC"
+        ],
+        "defined(USE_C10D_XCCL)": [
+          "ProcessGroupXCCL",
+          "_dump_xccl_trace",
+          "get_xccl_version"
+        ],
+        "defined(USE_NVSHMEM)": [
+          "_is_nvshmem_available",
+          "_nvshmemx_cumodule_init"
+        ],
+        "unconditional": [
+          "AllToAllOptions",
+          "AllgatherOptions",
+          "AllreduceCoalescedOptions",
+          "AllreduceOptions",
+          "Backend",
+          "BarrierOptions",
+          "BroadcastOptions",
+          "BuiltinCommHookType",
+          "DDPLoggingData",
+          "DebugLevel",
+          "ErrorType",
+          "FakeProcessGroup",
+          "FakeWork",
+          "FileStore",
+          "GatherOptions",
+          "GradBucket",
+          "Logger",
+          "OpType",
+          "PrefixStore",
+          "ProcessGroup",
+          "ReduceOp",
+          "ReduceOptions",
+          "ReduceScatterOptions",
+          "Reducer",
+          "ScatterOptions",
+          "Store",
+          "TCPStore",
+          "Work",
+          "WorkInfo",
+          "WorkResult",
+          "_ControlCollectives",
+          "_DMAConnectivity",
+          "_DistributedBackendOptions",
+          "_Request",
+          "_Response",
+          "_StoreCollectives",
+          "_SymmetricMemory",
+          "_WorkerServer",
+          "_allow_inflight_collective_as_graph_input",
+          "_broadcast_coalesced",
+          "_compute_bucket_assignment_by_size",
+          "_create_work_from_future",
+          "_current_process_group",
+          "_detect_dma_connectivity",
+          "_dump_fr_trace",
+          "_dump_fr_trace_json",
+          "_get_handler",
+          "_get_handler_names",
+          "_get_work_registry_size",
+          "_make_nccl_premul_sum",
+          "_register_builtin_comm_hook",
+          "_register_comm_hook",
+          "_register_process_group",
+          "_register_work",
+          "_resolve_process_group",
+          "_set_allow_inflight_collective_as_graph_input",
+          "_set_global_rank",
+          "_set_process_group",
+          "_set_thread_isolation_mode",
+          "_test_python_store",
+          "_unregister_all_process_groups",
+          "_unregister_process_group",
+          "_verify_params_across_processes",
+          "get_debug_level",
+          "set_debug_level",
+          "set_debug_level_from_env"
+        ]
+      },
+      "literal_direct_dispatch": [
+        {
+          "conditions": [],
+          "kind": "function",
+          "line": 472,
+          "name": "_register_comm_hook"
+        },
+        {
+          "conditions": [],
+          "kind": "function",
+          "line": 479,
+          "name": "_register_builtin_comm_hook"
+        },
+        {
+          "conditions": [],
+          "kind": "class",
+          "line": 486,
+          "name": "GradBucket"
+        },
+        {
+          "conditions": [],
+          "kind": "enum",
+          "line": 551,
+          "name": "BuiltinCommHookType"
+        },
+        {
+          "conditions": [],
+          "kind": "class",
+          "line": 556,
+          "name": "Reducer"
+        },
+        {
+          "conditions": [],
+          "kind": "class",
+          "line": 733,
+          "name": "Logger"
+        },
+        {
+          "conditions": [],
+          "kind": "enum",
+          "line": 781,
+          "name": "DebugLevel"
+        },
+        {
+          "conditions": [],
+          "kind": "function",
+          "line": 793,
+          "name": "get_debug_level"
+        },
+        {
+          "conditions": [],
+          "kind": "function",
+          "line": 797,
+          "name": "set_debug_level"
+        },
+        {
+          "conditions": [],
+          "kind": "function",
+          "line": 801,
+          "name": "set_debug_level_from_env"
+        },
+        {
+          "conditions": [],
+          "kind": "class",
+          "line": 812,
+          "name": "ReduceOp"
+        },
+        {
+          "conditions": [],
+          "kind": "function",
+          "line": 930,
+          "name": "_make_nccl_premul_sum"
+        },
+        {
+          "conditions": [],
+          "kind": "function",
+          "line": 936,
+          "name": "_make_nccl_premul_sum"
+        },
+        {
+          "conditions": [],
+          "kind": "function",
+          "line": 943,
+          "name": "_set_thread_isolation_mode"
+        },
+        {
+          "conditions": [],
+          "kind": "function",
+          "line": 952,
+          "name": "_register_process_group"
+        },
+        {
+          "conditions": [],
+          "kind": "function",
+          "line": 962,
+          "name": "_resolve_process_group"
+        },
+        {
+          "conditions": [],
+          "kind": "function",
+          "line": 969,
+          "name": "_register_work"
+        },
+        {
+          "conditions": [],
+          "kind": "function",
+          "line": 980,
+          "name": "_get_work_registry_size"
+        },
+        {
+          "conditions": [],
+          "kind": "function",
+          "line": 985,
+          "name": "_set_allow_inflight_collective_as_graph_input"
+        },
+        {
+          "conditions": [],
+          "kind": "function",
+          "line": 991,
+          "name": "_allow_inflight_collective_as_graph_input"
+        },
+        {
+          "conditions": [],
+          "kind": "function",
+          "line": 997,
+          "name": "_unregister_process_group"
+        },
+        {
+          "conditions": [],
+          "kind": "function",
+          "line": 1004,
+          "name": "_unregister_all_process_groups"
+        },
+        {
+          "conditions": [
+            "defined(USE_NVSHMEM)"
+          ],
+          "kind": "function",
+          "line": 1012,
+          "name": "_nvshmemx_cumodule_init"
+        },
+        {
+          "conditions": [
+            "defined(USE_NVSHMEM)"
+          ],
+          "kind": "function",
+          "line": 1018,
+          "name": "_is_nvshmem_available"
+        },
+        {
+          "conditions": [],
+          "kind": "class",
+          "line": 1021,
+          "name": "BroadcastOptions"
+        },
+        {
+          "conditions": [],
+          "kind": "class",
+          "line": 1028,
+          "name": "AllreduceOptions"
+        },
+        {
+          "conditions": [],
+          "kind": "class",
+          "line": 1035,
+          "name": "AllreduceCoalescedOptions"
+        },
+        {
+          "conditions": [],
+          "kind": "class",
+          "line": 1041,
+          "name": "ReduceOptions"
+        },
+        {
+          "conditions": [],
+          "kind": "class",
+          "line": 1049,
+          "name": "AllgatherOptions"
+        },
+        {
+          "conditions": [],
+          "kind": "class",
+          "line": 1054,
+          "name": "GatherOptions"
+        },
+        {
+          "conditions": [],
+          "kind": "class",
+          "line": 1060,
+          "name": "ScatterOptions"
+        },
+        {
+          "conditions": [],
+          "kind": "class",
+          "line": 1066,
+          "name": "ReduceScatterOptions"
+        },
+        {
+          "conditions": [],
+          "kind": "class",
+          "line": 1072,
+          "name": "BarrierOptions"
+        },
+        {
+          "conditions": [],
+          "kind": "class",
+          "line": 1079,
+          "name": "AllToAllOptions"
+        },
+        {
+          "conditions": [],
+          "kind": "class",
+          "line": 1085,
+          "name": "_DistributedBackendOptions"
+        },
+        {
+          "conditions": [],
+          "kind": "class",
+          "line": 1100,
+          "name": "_DMAConnectivity"
+        },
+        {
+          "conditions": [],
+          "kind": "function",
+          "line": 1106,
+          "name": "_detect_dma_connectivity"
+        },
+        {
+          "conditions": [],
+          "kind": "class",
+          "line": 1110,
+          "name": "_SymmetricMemory"
+        },
+        {
+          "conditions": [],
+          "kind": "class",
+          "line": 1244,
+          "name": "Store"
+        },
+        {
+          "conditions": [],
+          "kind": "class",
+          "line": 1659,
+          "name": "FileStore"
+        },
+        {
+          "conditions": [
+            "!defined(_WIN32)"
+          ],
+          "kind": "class",
+          "line": 1690,
+          "name": "HashStore"
+        },
+        {
+          "conditions": [],
+          "kind": "class",
+          "line": 1708,
+          "name": "TCPStore"
+        },
+        {
+          "conditions": [],
+          "kind": "class",
+          "line": 1806,
+          "name": "PrefixStore"
+        },
+        {
+          "conditions": [],
+          "kind": "class",
+          "line": 1844,
+          "name": "_ControlCollectives"
+        },
+        {
+          "conditions": [],
+          "kind": "class",
+          "line": 2031,
+          "name": "_StoreCollectives"
+        },
+        {
+          "conditions": [],
+          "kind": "class",
+          "line": 2045,
+          "name": "ProcessGroup"
+        },
+        {
+          "conditions": [],
+          "kind": "function",
+          "line": 2683,
+          "name": "_set_process_group"
+        },
+        {
+          "conditions": [],
+          "kind": "function",
+          "line": 2684,
+          "name": "_current_process_group"
+        },
+        {
+          "conditions": [],
+          "kind": "class",
+          "line": 2704,
+          "name": "Backend"
+        },
+        {
+          "conditions": [
+            "defined(USE_C10D_GLOO)"
+          ],
+          "kind": "class",
+          "line": 3110,
+          "name": "ProcessGroupGloo"
+        },
+        {
+          "conditions": [
+            "defined(USE_C10D_GLOO)"
+          ],
+          "kind": "class",
+          "line": 3230,
+          "name": "_ProcessGroupWrapper"
+        },
+        {
+          "conditions": [
+            "defined(USE_C10D_NCCL)"
+          ],
+          "kind": "class",
+          "line": 3250,
+          "name": "ProcessGroupNCCL"
+        },
+        {
+          "conditions": [
+            "defined(USE_C10D_NCCL)"
+          ],
+          "kind": "function",
+          "line": 3381,
+          "name": "_get_intra_node_comm_usage_counter"
+        },
+        {
+          "conditions": [
+            "defined(USE_C10D_MPI)"
+          ],
+          "kind": "class",
+          "line": 3503,
+          "name": "ProcessGroupMPI"
+        },
+        {
+          "conditions": [
+            "defined(USE_C10D_XCCL)"
+          ],
+          "kind": "class",
+          "line": 3519,
+          "name": "ProcessGroupXCCL"
+        },
+        {
+          "conditions": [
+            "defined(USE_C10D_XCCL)"
+          ],
+          "kind": "function",
+          "line": 3543,
+          "name": "_dump_xccl_trace"
+        },
+        {
+          "conditions": [
+            "defined(USE_C10D_XCCL)"
+          ],
+          "kind": "function",
+          "line": 3564,
+          "name": "get_xccl_version"
+        },
+        {
+          "conditions": [
+            "defined(USE_C10D_UCC)"
+          ],
+          "kind": "class",
+          "line": 3571,
+          "name": "ProcessGroupUCC"
+        },
+        {
+          "conditions": [],
+          "kind": "enum",
+          "line": 3590,
+          "name": "OpType"
+        },
+        {
+          "conditions": [],
+          "kind": "enum",
+          "line": 3612,
+          "name": "WorkResult"
+        },
+        {
+          "conditions": [],
+          "kind": "enum",
+          "line": 3618,
+          "name": "ErrorType"
+        },
+        {
+          "conditions": [],
+          "kind": "class",
+          "line": 3625,
+          "name": "WorkInfo"
+        },
+        {
+          "conditions": [],
+          "kind": "class",
+          "line": 3636,
+          "name": "Work"
+        },
+        {
+          "conditions": [],
+          "kind": "class",
+          "line": 3824,
+          "name": "FakeProcessGroup"
+        },
+        {
+          "conditions": [],
+          "kind": "class",
+          "line": 3847,
+          "name": "FakeWork"
+        },
+        {
+          "conditions": [],
+          "kind": "class",
+          "line": 3853,
+          "name": "DDPLoggingData"
+        },
+        {
+          "conditions": [],
+          "kind": "function",
+          "line": 3859,
+          "name": "_compute_bucket_assignment_by_size"
+        },
+        {
+          "conditions": [],
+          "kind": "function",
+          "line": 3890,
+          "name": "_verify_params_across_processes"
+        },
+        {
+          "conditions": [],
+          "kind": "function",
+          "line": 3908,
+          "name": "_broadcast_coalesced"
+        },
+        {
+          "conditions": [],
+          "kind": "function",
+          "line": 3926,
+          "name": "_test_python_store"
+        },
+        {
+          "conditions": [],
+          "kind": "function",
+          "line": 3993,
+          "name": "_set_global_rank"
+        },
+        {
+          "conditions": [],
+          "kind": "function",
+          "line": 4006,
+          "name": "_create_work_from_future"
+        },
+        {
+          "conditions": [
+            "defined(USE_C10D_NCCL)"
+          ],
+          "kind": "function",
+          "line": 4037,
+          "name": "_hash_tensors"
+        },
+        {
+          "conditions": [
+            "defined(USE_C10D_NCCL)"
+          ],
+          "kind": "function",
+          "line": 4047,
+          "name": "_dump_nccl_trace_json"
+        },
+        {
+          "conditions": [
+            "defined(USE_C10D_NCCL)"
+          ],
+          "kind": "function",
+          "line": 4064,
+          "name": "_dump_nccl_trace"
+        },
+        {
+          "conditions": [],
+          "kind": "function",
+          "line": 4088,
+          "name": "_dump_fr_trace_json"
+        },
+        {
+          "conditions": [],
+          "kind": "function",
+          "line": 4105,
+          "name": "_dump_fr_trace"
+        },
+        {
+          "conditions": [],
+          "kind": "class",
+          "line": 4128,
+          "name": "_WorkerServer"
+        },
+        {
+          "conditions": [],
+          "kind": "function",
+          "line": 4140,
+          "name": "_get_handler"
+        },
+        {
+          "conditions": [],
+          "kind": "function",
+          "line": 4154,
+          "name": "_get_handler_names"
+        },
+        {
+          "conditions": [],
+          "kind": "class",
+          "line": 4163,
+          "name": "_Request"
+        },
+        {
+          "conditions": [],
+          "kind": "class",
+          "line": 4177,
+          "name": "_Response"
+        }
+      ],
+      "source": {
+        "path": "docs/reports/puck-cpu-held-qualification-amendment-05/remaining-phase-review/upstream/torch/csrc/distributed/c10d/init.cpp",
+        "sha256": "9e0e0a3c4f09fa12bbcff6dec059087bf7ccb3c94274d3e4646edfe5d401e3b8",
+        "size_bytes": 172574
+      }
+    },
+    "rpc": {
+      "direct_data_assignments": [
+        {
+          "conditions": [],
+          "kind": "data assignment; inspect RHS separately",
+          "line": 79,
+          "name": "_DEFAULT_RPC_TIMEOUT_SEC"
+        },
+        {
+          "conditions": [],
+          "kind": "data assignment; inspect RHS separately",
+          "line": 80,
+          "name": "_UNSET_RPC_TIMEOUT"
+        },
+        {
+          "conditions": [],
+          "kind": "data assignment; inspect RHS separately",
+          "line": 81,
+          "name": "_DEFAULT_INIT_METHOD"
+        },
+        {
+          "conditions": [],
+          "kind": "data assignment; inspect RHS separately",
+          "line": 82,
+          "name": "_DEFAULT_NUM_WORKER_THREADS"
+        }
+      ],
+      "dispatch_by_condition": {
+        "defined(USE_TENSORPIPE)": [
+          "TensorPipeAgent",
+          "_TensorPipeRpcBackendOptionsBase"
+        ],
+        "unconditional": [
+          "PyRRef",
+          "RemoteProfilerManager",
+          "RpcAgent",
+          "RpcBackendOptions",
+          "WorkerInfo",
+          "_cleanup_python_rpc_handler",
+          "_delete_all_user_and_unforked_owner_rrefs",
+          "_destroy_rref_context",
+          "_disable_jit_rref_pickle",
+          "_disable_server_process_global_profiler",
+          "_enable_jit_rref_pickle",
+          "_enable_server_process_global_profiler",
+          "_get_current_rpc_agent",
+          "_invoke_remote_builtin",
+          "_invoke_remote_python_udf",
+          "_invoke_remote_torchscript",
+          "_invoke_rpc_builtin",
+          "_invoke_rpc_python_udf",
+          "_invoke_rpc_torchscript",
+          "_is_current_rpc_agent_set",
+          "_reset_current_rpc_agent",
+          "_rref_context_get_debug_info",
+          "_set_and_start_rpc_agent",
+          "_set_profiler_node_id",
+          "_set_rpc_timeout",
+          "enable_gil_profiling",
+          "get_rpc_timeout"
+        ]
+      },
+      "literal_direct_dispatch": [
+        {
+          "conditions": [],
+          "kind": "class",
+          "line": 54,
+          "name": "RpcBackendOptions"
+        },
+        {
+          "conditions": [],
+          "kind": "class",
+          "line": 88,
+          "name": "WorkerInfo"
+        },
+        {
+          "conditions": [],
+          "kind": "class",
+          "line": 137,
+          "name": "RpcAgent"
+        },
+        {
+          "conditions": [],
+          "kind": "class",
+          "line": 178,
+          "name": "PyRRef"
+        },
+        {
+          "conditions": [
+            "defined(USE_TENSORPIPE)"
+          ],
+          "kind": "class",
+          "line": 538,
+          "name": "_TensorPipeRpcBackendOptionsBase"
+        },
+        {
+          "conditions": [
+            "defined(USE_TENSORPIPE)"
+          ],
+          "kind": "class",
+          "line": 573,
+          "name": "TensorPipeAgent"
+        },
+        {
+          "conditions": [],
+          "kind": "function",
+          "line": 650,
+          "name": "_is_current_rpc_agent_set"
+        },
+        {
+          "conditions": [],
+          "kind": "function",
+          "line": 652,
+          "name": "_get_current_rpc_agent"
+        },
+        {
+          "conditions": [],
+          "kind": "function",
+          "line": 655,
+          "name": "_set_and_start_rpc_agent"
+        },
+        {
+          "conditions": [],
+          "kind": "function",
+          "line": 675,
+          "name": "_reset_current_rpc_agent"
+        },
+        {
+          "conditions": [],
+          "kind": "function",
+          "line": 680,
+          "name": "_delete_all_user_and_unforked_owner_rrefs"
+        },
+        {
+          "conditions": [],
+          "kind": "function",
+          "line": 687,
+          "name": "_destroy_rref_context"
+        },
+        {
+          "conditions": [],
+          "kind": "function",
+          "line": 695,
+          "name": "_rref_context_get_debug_info"
+        },
+        {
+          "conditions": [],
+          "kind": "function",
+          "line": 700,
+          "name": "_cleanup_python_rpc_handler"
+        },
+        {
+          "conditions": [],
+          "kind": "function",
+          "line": 705,
+          "name": "_invoke_rpc_builtin"
+        },
+        {
+          "conditions": [],
+          "kind": "function",
+          "line": 717,
+          "name": "_invoke_rpc_python_udf"
+        },
+        {
+          "conditions": [],
+          "kind": "function",
+          "line": 733,
+          "name": "_invoke_rpc_torchscript"
+        },
+        {
+          "conditions": [],
+          "kind": "function",
+          "line": 751,
+          "name": "_invoke_remote_builtin"
+        },
+        {
+          "conditions": [],
+          "kind": "function",
+          "line": 756,
+          "name": "_invoke_remote_python_udf"
+        },
+        {
+          "conditions": [],
+          "kind": "function",
+          "line": 761,
+          "name": "_invoke_remote_torchscript"
+        },
+        {
+          "conditions": [],
+          "kind": "function",
+          "line": 766,
+          "name": "get_rpc_timeout"
+        },
+        {
+          "conditions": [],
+          "kind": "function",
+          "line": 780,
+          "name": "enable_gil_profiling"
+        },
+        {
+          "conditions": [],
+          "kind": "function",
+          "line": 793,
+          "name": "_set_rpc_timeout"
+        },
+        {
+          "conditions": [],
+          "kind": "function",
+          "line": 812,
+          "name": "_enable_server_process_global_profiler"
+        },
+        {
+          "conditions": [],
+          "kind": "function",
+          "line": 815,
+          "name": "_disable_server_process_global_profiler"
+        },
+        {
+          "conditions": [],
+          "kind": "function",
+          "line": 818,
+          "name": "_set_profiler_node_id"
+        },
+        {
+          "conditions": [],
+          "kind": "class",
+          "line": 823,
+          "name": "RemoteProfilerManager"
+        },
+        {
+          "conditions": [],
+          "kind": "function",
+          "line": 830,
+          "name": "_enable_jit_rref_pickle"
+        },
+        {
+          "conditions": [],
+          "kind": "function",
+          "line": 845,
+          "name": "_disable_jit_rref_pickle"
+        }
+      ],
+      "source": {
+        "path": "docs/reports/puck-cpu-held-qualification-amendment-05/remaining-phase-review/upstream/torch/csrc/distributed/rpc/init.cpp",
+        "sha256": "cda572b256fd02105c5bd7f56cfe15177d9482130a87927907774bece78b2358",
+        "size_bytes": 36555
+      }
+    }
+  },
+  "scope": "static literal registration analysis; no vendor import, runtime census, binary or study qualification",
+  "upstream_commit": "0fabc3ba44823f257e70ce397d989c8de5e362c1"
+}

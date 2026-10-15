@@ -1,0 +1,153 @@
+{
+  "commit": "0fabc3ba44823f257e70ce397d989c8de5e362c1",
+  "files": [
+    {
+      "path": "torch/csrc/Module.cpp",
+      "git_blob_sha1": "bf615360b657df6cdca5eff91b3f6ac815a915c8"
+    },
+    {
+      "path": "torch/csrc/dynamo/init.cpp",
+      "git_blob_sha1": "2b642ce0bfe8048cec788acc2dd616c8be7856f6"
+    },
+    {
+      "path": "torch/csrc/dynamo/compiled_autograd.cpp",
+      "git_blob_sha1": "9b1dfff58c6530c32adbd5a6f5f62f09b0dc9b81"
+    },
+    {
+      "path": "torch/csrc/dynamo/python_compiled_autograd.cpp",
+      "git_blob_sha1": "1e1783477d2e0a13b6b6c7961ec9b30dcfc490c2"
+    },
+    {
+      "path": "torch/csrc/dynamo/eval_frame.c",
+      "git_blob_sha1": "07d28e7c77cfbdba4ef814e8171913ef66cf57c2"
+    },
+    {
+      "path": "torch/csrc/dynamo/guards.cpp",
+      "git_blob_sha1": "c8e0ae9c273605a4aba74bd9312a7d05496c4499"
+    },
+    {
+      "path": "torch/csrc/dynamo/utils.cpp",
+      "git_blob_sha1": "72d980a835ea7619a29c0552c71bd3f61e2de54e"
+    },
+    {
+      "path": "torch/csrc/export/pybind.cpp",
+      "git_blob_sha1": "eedd8666ea168bd79763ffd1b0e888afb4a6822e"
+    },
+    {
+      "path": "torch/csrc/export/pt2_archive_constants.h",
+      "git_blob_sha1": "1583f759acb657856fb20b5baba49fe81b939dfc"
+    },
+    {
+      "path": "torch/csrc/monitor/python_init.cpp",
+      "git_blob_sha1": "2438395c4d373f151302d22eaa101109d8f54417"
+    },
+    {
+      "path": "torch/csrc/jit/python/init.cpp",
+      "git_blob_sha1": "1cc439aa65b20975c814a00830ac3ccca5c5b48f"
+    },
+    {
+      "path": "torch/csrc/jit/python/script_init.cpp",
+      "git_blob_sha1": "b9fbf4d1ec30f780ad1f6e60bcd2d5798e0fc9c8"
+    },
+    {
+      "path": "torch/csrc/jit/python/python_tree_views.cpp",
+      "git_blob_sha1": "63d9dbc92901ac867d4b4c3789bca20d7aacb1ce"
+    },
+    {
+      "path": "torch/csrc/jit/tensorexpr/tensorexpr_init.cpp",
+      "git_blob_sha1": "6c7c9c060c915c228b4f6e2ff107623af07e9f63"
+    },
+    {
+      "path": "torch/csrc/api/src/python/init.cpp",
+      "git_blob_sha1": "e5c62edf13205de7dc61f8a8e7b9847c4beabdcf"
+    },
+    {
+      "path": "torch/csrc/lazy/python/init.cpp",
+      "git_blob_sha1": "4807aa6a4c7d12249207f8bbb5bbaadb740a38e2"
+    },
+    {
+      "path": "torch/csrc/profiler/python/init.cpp",
+      "git_blob_sha1": "aa7abe9433fe1dc4b8610a6f9bdb68392054e0fe"
+    },
+    {
+      "path": "torch/csrc/functorch/init.cpp",
+      "git_blob_sha1": "3ad53c3f403f6040a359bab5e6a6b5af57031745"
+    },
+    {
+      "path": "torch/csrc/inductor/aoti_runner/pybind.cpp",
+      "git_blob_sha1": "ff0d198aeaeb6af8cee4047f0906a41b7c21ee66"
+    },
+    {
+      "path": "torch/csrc/inductor/aoti_package/pybind.cpp",
+      "git_blob_sha1": "b207aa2a2ae0cf512842c390538fffca44701b55"
+    },
+    {
+      "path": "torch/csrc/instruction_counter/Module.cpp",
+      "git_blob_sha1": "aafae0dd3cbd4882a27201e91cc99b56d443e26f"
+    },
+    {
+      "path": "torch/csrc/functionalization/Module.cpp",
+      "git_blob_sha1": "d38cb1078054a3806e915c2d355b08fbfab88fae"
+    },
+    {
+      "path": "torch/csrc/utils/verbose.cpp",
+      "git_blob_sha1": "09d09074b726d9928207d32ba98f2d4439f99b5e"
+    },
+    {
+      "path": "torch/csrc/cpu/Module.cpp",
+      "git_blob_sha1": "38fea7f995c3e497f4895fc8c875b213bea6a681"
+    },
+    {
+      "path": "torch/csrc/itt.cpp",
+      "git_blob_sha1": "8410dfea06ff3404f15526be327c07d68b18ab28"
+    },
+    {
+      "path": "torch/csrc/onnx/init.cpp",
+      "git_blob_sha1": "6d009b72bb46609719a9915716a31f3d3510a8b1"
+    },
+    {
+      "path": "tools/autograd/gen_python_functions.py",
+      "git_blob_sha1": "5a003cadf6b326b3b4e2a58abfd87599645089ae"
+    },
+    {
+      "path": "torch/nativert/python/Bindings.cpp",
+      "git_blob_sha1": "77939702a2d94d6a928fbacfb16a6ed7bc63640f"
+    },
+    {
+      "path": "torch/nativert/python/Bindings.h",
+      "git_blob_sha1": "1821d211e27d83dc7511d8a0484e0f721ce4ead0"
+    },
+    {
+      "path": "torch/CMakeLists.txt",
+      "git_blob_sha1": "1632147f0220e2dbb6a19488ebe3f11f11f5fd3e"
+    },
+    {
+      "path": "tools/autograd/templates/python_fft_functions.cpp",
+      "git_blob_sha1": "71ac4e2226d2db418eba5690995424d3f007e620"
+    },
+    {
+      "path": "tools/autograd/templates/python_nn_functions.cpp",
+      "git_blob_sha1": "8eabb0da2332283a02e98e54dd0a277a83a55ad6"
+    },
+    {
+      "path": "tools/autograd/templates/python_linalg_functions.cpp",
+      "git_blob_sha1": "c93752a3ddbfcf111426f98c3ea68fc625e94def"
+    },
+    {
+      "path": "tools/autograd/templates/python_nested_functions.cpp",
+      "git_blob_sha1": "3acb5128cee1e180de887080106e7cf5559f15ee"
+    },
+    {
+      "path": "tools/autograd/templates/python_sparse_functions.cpp",
+      "git_blob_sha1": "648d91442102e9b950cb2ddb8db545c4b4e1100e"
+    },
+    {
+      "path": "tools/autograd/templates/python_special_functions.cpp",
+      "git_blob_sha1": "bf9e109b4a77352cd85ba828b97d67d329543867"
+    },
+    {
+      "path": "tools/autograd/templates/python_return_types.cpp",
+      "git_blob_sha1": "139e6b8958336cfcc8328fa33581e9f1ab6d5532"
+    }
+  ]
+}
