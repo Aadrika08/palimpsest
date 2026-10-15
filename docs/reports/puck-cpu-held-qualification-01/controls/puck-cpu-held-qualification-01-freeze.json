@@ -1,0 +1,113 @@
+{
+  "audit": {
+    "acceptance": [
+      "normal externally observed zero auditor CLI exit",
+      "published and stdout PASS bytes identical",
+      "auditor_source_sha256 equals frozen auditor pin",
+      "evidence_scope ordinary CPU held allocation only",
+      "all broader authority fields false"
+    ],
+    "command_prefix": [
+      "/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/bin/python3.11",
+      "-I",
+      "-S",
+      "-B",
+      "/home/utkarsh/.codex/worktrees/0071/brain/scripts/audit_puck_cpu_held_runtime.py",
+      "--configuration",
+      "/home/utkarsh/.codex/worktrees/0071/brain/docs/plans/puck-cpu-held-qualification-01.json",
+      "--sha256",
+      "3de376aef0bfec46aa9a8042706c40954ea0a5cc4425d51ad4f09525bcf930fb",
+      "--transport",
+      "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-held-qualification-01-external-cli-transport.json"
+    ],
+    "output": "/tmp/palimpsest-puck-cpu-held-qualification-01-audit-01.json",
+    "transport_sha256_binding": "Compute from the new raw fixed-observer transport after its single completed invocation; never use a placeholder digest"
+  },
+  "collection_authorized": false,
+  "command": [
+    "/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/bin/python3.11",
+    "-I",
+    "-S",
+    "-B",
+    "/home/utkarsh/.codex/worktrees/0071/brain/scripts/observe_puck_cpu_held_allocation.py",
+    "--configuration",
+    "/home/utkarsh/.codex/worktrees/0071/brain/docs/plans/puck-cpu-held-qualification-01.json",
+    "--sha256",
+    "3de376aef0bfec46aa9a8042706c40954ea0a5cc4425d51ad4f09525bcf930fb"
+  ],
+  "created_at": "2026-10-15T13:32:07.204693+00:00",
+  "cwd": "/home/utkarsh/.codex/worktrees/0071/brain",
+  "environment": {
+    "LANG": "C.UTF-8",
+    "LC_ALL": "C.UTF-8",
+    "PATH": "/usr/bin:/bin",
+    "PYTHONDONTWRITEBYTECODE": "1"
+  },
+  "executable": false,
+  "fresh_admission_required": true,
+  "kind": "puck-cpu-held-qualification-prospective-freeze-v1",
+  "native_authorized": false,
+  "pins": {
+    "auditor": {
+      "path": "scripts/audit_puck_cpu_held_runtime.py",
+      "sha256": "19723b4ec19c6cd8fd29d38b5cbabab60f89c136ee37564f6e94175439b4eed9",
+      "size_bytes": 58090
+    },
+    "configuration": {
+      "path": "docs/plans/puck-cpu-held-qualification-01.json",
+      "sha256": "3de376aef0bfec46aa9a8042706c40954ea0a5cc4425d51ad4f09525bcf930fb",
+      "size_bytes": 8065
+    },
+    "observer": {
+      "path": "scripts/observe_puck_cpu_held_allocation.py",
+      "sha256": "c7ec9aa2cdf639f77a42b26444c3eacbb5f6a1a188c66fd262e4e32fab332dc2",
+      "size_bytes": 5554
+    }
+  },
+  "preparation_acceptance": {
+    "auditor_source_sha256": "19723b4ec19c6cd8fd29d38b5cbabab60f89c136ee37564f6e94175439b4eed9",
+    "externally_observed_auditor_cli": {
+      "path": "/tmp/palimpsest-puck-cpu-held-preparation-01-audit-01.external-cli.json",
+      "sha256": "f29d2fe71e8a937f88de0251753f74740dbc161ed261b33a55aeb5b8e6dd5d21",
+      "size_bytes": 1465
+    },
+    "independent_audit": {
+      "path": "/tmp/palimpsest-puck-cpu-held-preparation-01-audit-01.json",
+      "sha256": "ca79be2e58b67c41bfbf83dda15dfed8864d0c1d197fbd48eb6e035f3a94eba9",
+      "size_bytes": 1563
+    },
+    "required_cli_returncode": 0,
+    "required_status": "PASS",
+    "result": {
+      "path": "runs/puck-cpu-held-preparation-01/result.json",
+      "sha256": "9d49c6ee3a0be61505cfe7d2267b659290be17365d6e35fb5fdbdc38e103f47d",
+      "size_bytes": 7330
+    }
+  },
+  "qualification_claims": [],
+  "qualification_configuration_frozen": true,
+  "review": {
+    "conditions": [
+      "recheck frozen controls/source/input and actual preparation/audit pins",
+      "fresh full qualification resource admission",
+      "qualification, external transport and audit output paths absent",
+      "one invocation; retain any failure without implicit retry"
+    ],
+    "reviewed_at": "2026-10-15T13:34:12+00:00",
+    "reviewed_configuration_sha256": "3de376aef0bfec46aa9a8042706c40954ea0a5cc4425d51ad4f09525bcf930fb",
+    "scope": "independent metadata/source/configuration review after actual preparation PASS; not qualification outcome",
+    "status": "GO for one actual qualification after fresh admission"
+  },
+  "runtime_qualified": false,
+  "scope": "One actual held CPU four-import qualification after accepted preparation; fresh qualification admission and independent review required",
+  "source_commit": "acd14e2861f8e0ec0209085dbd6b2ec302b26b64",
+  "study_authorized": false,
+  "transport_path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-held-qualification-01-external-cli-transport.json",
+  "verification": {
+    "actual_preparation_audit_external_seconds": 11.53997772099683,
+    "actual_preparation_external_seconds": 25.521561399975326,
+    "scope": "configuration_template and exact validate_configuration; same frozen source controls",
+    "source_affected_tests_previously_passed": 55
+  },
+  "version": 1
+}
