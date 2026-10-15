@@ -17,7 +17,7 @@ import re
 import sys
 
 from .puck_dependency_files import HeldDependencyNamespace
-from .puck_dependency_bindings import ExportBindings, module_dict
+from .puck_dependency_bindings import ExportBindings, ModuleSeal, module_dict, require_instance_dispatch
 from .puck_native_origins import native_load_path, require_native_target
 
 
@@ -122,8 +122,8 @@ class _Loader(importlib.abc.Loader):
             # CPython create_dynamic consumes spec.origin, not just loader.path.
             spec.origin = self.native.path
             module = self.native.create_module(spec)
-            owner.bindings.begin(spec.name,module)
-            owner.bindings.complete(spec.name,'native_create')
+            ExportBindings.begin(owner.bindings,spec.name,module)
+            ExportBindings.complete(owner.bindings,spec.name,'native_create')
             owner.full_guard(); owner.images()
             require_native_target(owner.provider,self.row,policy,owner._observed)
             return module
@@ -142,13 +142,13 @@ class _Loader(importlib.abc.Loader):
                 module.__file__ = self.get_filename(name)
                 if self.row['is_package']: module.__path__ = []
                 code=compile(payload, module.__file__, 'exec', dont_inherit=True)
-                owner.bindings.begin(name,module,code)
+                ExportBindings.begin(owner.bindings,name,module,code)
                 exec(code,module_dict(module))
             else:
                 module.__file__ = None; module.__path__ = []
-            if self.row.get('kind')!='python': owner.bindings.begin(name,module)
-            owner.bindings.complete(name,'module_exec')
-            owner.capture(name, module)
+            if self.row.get('kind')!='python': ExportBindings.begin(owner.bindings,name,module)
+            ExportBindings.complete(owner.bindings,name,'module_exec')
+            DependencyImports.capture(owner,name,module)
             owner.guard(); owner.images()
         except BaseException as error:
             owner.fail(error); raise
@@ -180,6 +180,7 @@ class DependencyImports:
         self.distributions = provider.distribution_records()
         profile=provider.import_profile()
         self.bindings=ExportBindings(profile)
+        self._binding_receiver=self.bindings; self._provider_receiver=provider
         self.native_origins={v['name']:v['policy'] for v in profile['native_origins']}
         if {v['name'] for v in profile['exports']} & set(local_names):
             raise ValueError('Dependency export and source import mappings overlap')
@@ -204,16 +205,24 @@ class DependencyImports:
         name = context.name
         return iter(_Distribution(self, row) for row in self.distributions
                     if name is None or _normalized(name) == _normalized(row['name']))
+    def _check_dispatch(self):
+        require_instance_dispatch(self,DependencyImports)
+        if self.bindings is not self._binding_receiver or self.provider is not self._provider_receiver:
+            raise RuntimeError('Authenticated dependency helper receiver dispatch changed')
+        require_instance_dispatch(self.bindings,ExportBindings)
+        require_instance_dispatch(self.provider,HeldDependencyNamespace)
     def capture(self, name, module):
-        current,seal=self.bindings.finish_module(name,module)
+        DependencyImports._check_dispatch(self)
+        current,seal=ExportBindings.finish_module(self.bindings,name,module)
         self.loaded[name]=(current,seal)
     def recheck(self):
+        DependencyImports._check_dispatch(self)
         self.provider._active(); self.provider._check_signal()
-        active=self.bindings.recheck()
+        active=ExportBindings.recheck(self.bindings)
         for name,(module,seal) in self.loaded.items():
             if sys.modules.get(name) is not module:
                 raise RuntimeError('Held dependency module dispatch changed')
-            seal.recheck()
+            ModuleSeal.recheck(seal)
         return active
     def images(self):
         observed = _maps()
@@ -240,6 +249,10 @@ class DependencyImports:
                                       for name in sorted(self.loaded)]
         receipt['exported_modules']=[{'name':name,'producer':self.bindings.prepared[name][0]['producer']}
                                      for name in sorted(self.bindings.active)]
+        receipt['module_dispatch_bindings']=[{'name':name,
+            'original_metadata_bound':name in self.bindings.originals,
+            'delegate_attributes':[key for key,_ in seal.delegates]}
+            for name,(_,seal) in sorted(self.loaded.items())]
         receipt['native_origin_policies']=dict(self.native_origins)
         receipt['images'] = self.images()
         return receipt

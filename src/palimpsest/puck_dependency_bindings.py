@@ -136,6 +136,17 @@ def _functions(slot):
     return ()
 
 
+def require_instance_dispatch(instance, expected_class):
+    """Reject a changed receiver or an instance shadow of authenticated methods."""
+    if type(instance) is not expected_class:
+        raise RuntimeError('Authenticated dependency instance dispatch type changed')
+    namespace=object.__getattribute__(instance,'__dict__')
+    for cls in expected_class.__mro__:
+        for key,slot in vars(cls).items():
+            if key in namespace and type(slot) in (types.FunctionType,staticmethod,classmethod,property):
+                raise RuntimeError('Authenticated dependency instance dispatch shadow changed')
+
+
 class _ClassSeal:
     def __init__(self, cls):
         if type(cls) is not type or not issubclass(cls,types.ModuleType):
@@ -150,6 +161,7 @@ class _ClassSeal:
             functions=tuple((fn,fn.__code__) for _,slot in items for fn in _functions(slot))
             self.rows.append((base,base.__bases__,items,functions))
     def recheck(self):
+        require_instance_dispatch(self,_ClassSeal)
         for cls,bases,items,functions in self.rows:
             current=type.__getattribute__(cls,'__dict__')
             if (cls.__bases__!=bases or tuple(current)!=tuple(k for k,_ in items)
@@ -163,6 +175,13 @@ class ModuleSeal:
         self.module=module; self.cls=type(module); self.virtual=virtual
         self.expected_name=expected_name
         self.state=self._state()
+        # Capture direct dispatch-reference edges created by the trusted producer.
+        # New data attributes remain possible; existing module/class/function
+        # delegates cannot switch objects after this phase closes.
+        self.delegates=tuple((key,value) for key,value in module_dict(module).items()
+            if virtual and isinstance(value,(types.ModuleType,type,types.FunctionType,types.BuiltinFunctionType)))
+        if len(self.delegates)>MAX_CLASS_SLOTS:
+            raise ValueError('Dependency delegate binding ceiling exceeded')
     def _state(self):
         raw=module_dict(self.module)
         spec=raw.get('__spec__')
@@ -183,6 +202,10 @@ class ModuleSeal:
         return (type(self.module),raw.get('__name__'),raw.get('__loader__'),spec_state,
                 raw.get('__file__'),raw.get('__package__'),tuple(path))
     def recheck(self):
+        require_instance_dispatch(self,ModuleSeal)
+        raw=module_dict(self.module)
+        if any(raw.get(key,_MISSING) is not value for key,value in self.delegates):
+            raise RuntimeError('Held dependency delegate binding changed')
         current=self._state(); expected=self.state
         spec,old_spec=current[3],expected[3]
         spec_changed=((spec is None)!=(old_spec is None) or
@@ -198,8 +221,9 @@ class ExportBindings:
     def __init__(self, profile):
         self.profile=profile; self.producers={}; self.code={}; self.prepared={}; self.active={}
         self.changes={v['name']:v for v in profile['module_changes']}
-        self.class_seals=[]; self.anchors=[]
+        self.class_seals=[]; self.anchors=[]; self.originals={}
     def begin(self, name, module, code=None):
+        require_instance_dispatch(self,ExportBindings)
         if name in self.producers and self.producers[name] is not module:
             raise RuntimeError('Dependency producer cannot be reinitialized')
         self.producers[name]=module
@@ -234,6 +258,7 @@ class ExportBindings:
             self.anchors.append((value,None,value.__code__))
         self.class_seals.append(_ClassSeal(cls))
     def complete(self, name, phase):
+        require_instance_dispatch(self,ExportBindings)
         producer=self.producers[name]
         for row in self.profile['exports']:
             if row['producer']!=name or row['phase']!=phase: continue
@@ -241,8 +266,9 @@ class ExportBindings:
             value=_resolve(producer,row['attributes'])
             self.bind_class(type(value),row['class_binding'])
             self.prepared[row['name']]=(row,ModuleSeal(value,virtual=True))
-        self.recheck()
+        ExportBindings.recheck(self)
     def finish_module(self, name, original):
+        require_instance_dispatch(self,ExportBindings)
         current=sys.modules.get(name)
         change=self.changes.get(name)
         if change is None:
@@ -252,16 +278,20 @@ class ExportBindings:
             if (current is original)!=(change['kind']=='reclassify'):
                 raise RuntimeError('Dependency module transition kind differs')
             self.bind_class(type(current),change['class_binding'])
+            if current is not original:
+                self.originals[name]=ModuleSeal(original,expected_name=name)
         return current,ModuleSeal(current,virtual=change is not None,expected_name=name)
     def recheck(self):
+        require_instance_dispatch(self,ExportBindings)
+        for seal in self.originals.values(): ModuleSeal.recheck(seal)
         for producer,path,value in self.anchors:
             if (producer.__code__ is not value if path is None else _resolve(producer,path) is not value):
                 raise RuntimeError('Held dependency producer/class anchor changed')
-        for seal in self.class_seals: seal.recheck()
+        for seal in self.class_seals: _ClassSeal.recheck(seal)
         for name,(row,seal) in self.prepared.items():
             if _resolve(self.producers[row['producer']],row['attributes']) is not seal.module:
                 raise RuntimeError('Held dependency export producer edge changed')
-            seal.recheck()
+            ModuleSeal.recheck(seal)
             current=sys.modules.get(name,_MISSING)
             if current is not _MISSING:
                 if current is not seal.module: raise RuntimeError('Held dependency export cache object changed')

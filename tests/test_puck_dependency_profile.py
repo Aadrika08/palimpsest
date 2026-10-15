@@ -276,3 +276,57 @@ def test_loader_identity_cannot_be_replaced_by_equal_comparing_object(tmp_path,f
     result,_=dependency_fixture(tmp_path,body)
     assert result.returncode!=0 and result.stdout==''
     assert 'Held dependency module dispatch changed' in result.stderr,result.stderr
+
+
+
+def proxy_profile(deps,root):
+    profile=upgrade(deps)
+    add_source(deps,root,'fixture_dep.wrapper',
+        'import sys,types\n'
+        'class Wrapper(types.ModuleType):\n'
+        '    def __init__(self,name,delegate):\n'
+        '        super().__init__(name)\n'
+        '        self.delegate=delegate\n'
+        '    def answer(self): return self.delegate.value\n'
+        'value=51\noriginal=sys.modules[__name__]\n'
+        'sys.modules[__name__]=Wrapper(__name__,original)\n')
+    profile['module_changes']=[{'name':'fixture_dep.wrapper','kind':'replace',
+                               'class_binding':direct('fixture_dep.wrapper','Wrapper')}]
+
+
+def test_review_retained_original_metadata_is_bound_after_replacement(tmp_path):
+    result,_=dependency_fixture(tmp_path,'import fixture_dep.wrapper as w\n'
+        'w.delegate.__spec__.name="foreign"\nreturn {"answer":w.answer()}',mutate=proxy_profile)
+    assert result.returncode!=0 and result.stdout==''
+    assert 'dependency' in result.stderr.lower() and ('spec' in result.stderr or 'dispatch' in result.stderr),result.stderr
+
+
+def test_review_proxy_delegate_cannot_switch_to_unrelated_module(tmp_path):
+    result,_=dependency_fixture(tmp_path,'import fixture_dep.wrapper as w\nimport types\n'
+        'w.delegate=types.ModuleType("foreign")\nw.delegate.value=99\nreturn {"answer":w.answer()}',
+        mutate=proxy_profile)
+    assert result.returncode!=0 and result.stdout==''
+    assert 'dependency' in result.stderr.lower() and 'delegate' in result.stderr.lower(),result.stderr
+
+
+def test_review_instance_shadow_cannot_authorize_foreign_export(tmp_path):
+    body=('import fixture_dep.producer as p\nimport sys,types\n'
+          'sys.modules["fixture_dep.virtual"]=p.namespace\nadmission.recheck()\n'
+          'admission._dependencies.bindings.recheck=lambda: {"fixture_dep.virtual"}\n'
+          'sys.modules["fixture_dep.virtual"]=types.ModuleType("foreign")\nreturn {}')
+    result,_=dependency_fixture(tmp_path,body,mutate=fixture_profile)
+    assert result.returncode!=0 and result.stdout==''
+    assert 'dispatch' in result.stderr.lower(),result.stderr
+
+
+@pytest.mark.parametrize('receiver',['imports','module_seal','class_seal'])
+def test_review_other_helper_receivers_cannot_shadow_recheck(tmp_path,receiver):
+    prefix=('import fixture_dep.producer as p\nimport sys\n'
+            'sys.modules["fixture_dep.virtual"]=p.namespace\nadmission.recheck()\n')
+    target={'imports':'admission._dependencies',
+            'module_seal':'admission._dependencies.bindings.prepared["fixture_dep.virtual"][1]',
+            'class_seal':'admission._dependencies.bindings.class_seals[0]'}[receiver]
+    body=prefix+target+'.recheck=lambda *args: {"fixture_dep.virtual"}\nreturn {}'
+    result,_=dependency_fixture(tmp_path,body,mutate=fixture_profile)
+    assert result.returncode!=0 and result.stdout==''
+    assert 'dispatch' in result.stderr.lower(),result.stderr
