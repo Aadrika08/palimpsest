@@ -1,0 +1,220 @@
+{
+  "authored_capsule": {
+    "api_audit": "PASS",
+    "authored06_status": "FAIL",
+    "authored07_status": "imports_completed",
+    "authored_negatives": 18,
+    "cleanup": {
+      "absent": true,
+      "actual_vendor_imports": false,
+      "authored_scope": "AUTHORED fixture only; no real package acceptance or independent audit",
+      "owned_stage": "/tmp/palimpsest-puck-cpu-held-authored-publication05-a66e8488d43d13b9043933ff"
+    },
+    "cli_audit": "PASS",
+    "negative_count_reason": "Existing project fixture PREP/org patch; real metadata stays exact nineteen-name06 roster.",
+    "observations": {
+      "actual_vendor_imports": false,
+      "authored_negative_imports": [
+        "OpenGL_accelerate",
+        "accimage",
+        "av",
+        "colorama",
+        "defusedxml",
+        "dill",
+        "flint",
+        "gmpy",
+        "gmpy2",
+        "monkeytype",
+        "opt_einsum",
+        "org",
+        "pydot",
+        "pynvml",
+        "torch._rocm_init",
+        "torchdistx",
+        "tqdm",
+        "triton"
+      ],
+      "authored_package_elfs": [
+        {
+          "path": "PIL/_imaging.cpython-311-x86_64-linux-gnu.so",
+          "sha256": "1f3fa1fc34cee2fe40d0516b6830a62fc76c4516ac12feaa00eb83d14d005ab2",
+          "size_bytes": 15728
+        },
+        {
+          "path": "PIL/_imagingft.cpython-311-x86_64-linux-gnu.so",
+          "sha256": "330a1841ea224113d7875f5913920abe4404222d9401e17acab8330cda505d25",
+          "size_bytes": 15728
+        },
+        {
+          "path": "pillow.libs/libpalimpsest_pillow_helper.so",
+          "sha256": "89dc57a34e07ce79cbb3ced0dc63e7231bba1f64256838301e0b238fa8099c03",
+          "size_bytes": 15360
+        },
+        {
+          "path": "pillow.libs/libpalimpsest_pillow_transitive.so",
+          "sha256": "15812a8c09a60c73cc5be1aafcb02465bc4d10ee501c47001cb5259b8ea10e67",
+          "size_bytes": 15168
+        }
+      ],
+      "authored_scope": "AUTHORED fixture only; no real package acceptance or independent audit",
+      "declared_actual_negative_import_count": 19,
+      "held_imports07_completed": true,
+      "legacy_bytes_preserved": true,
+      "native_origins": [
+        {
+          "name": "PIL._imaging",
+          "policy": "held-directory-observed-v1"
+        },
+        {
+          "name": "PIL._imagingft",
+          "policy": "held-directory-observed-v1"
+        }
+      ],
+      "prepared_root_identities_unchanged": true,
+      "reentry_refused": true,
+      "retained_failed06": true,
+      "stage_cleanup": "owned fixture finally block"
+    },
+    "real_metadata_negatives": 19,
+    "scope": "Named selected authored-project files only",
+    "selected_file_count": 94
+  },
+  "batches": [
+    {
+      "counting_role": "RED",
+      "driver_seconds": 1.1174089199630544,
+      "failed": 2,
+      "label": "pillow-origin-epoch07-observer-red-01",
+      "passed": 32,
+      "pytest_seconds": 0.74,
+      "returncode": 1,
+      "summary": "2 failed, 32 passed in 0.74s",
+      "test_files": [
+        "tests/test_puck_cpu_held_observer.py"
+      ],
+      "timed_out": false
+    },
+    {
+      "counting_role": "RED",
+      "driver_seconds": 7.531779435987119,
+      "failed": 101,
+      "label": "pillow-origin-epoch07-contract-red-01",
+      "passed": 6,
+      "pytest_seconds": 7.25,
+      "returncode": 1,
+      "summary": "101 failed, 6 passed in 7.25s",
+      "test_files": [
+        "tests/test_puck_cpu_held_amendment07.py"
+      ],
+      "timed_out": false
+    },
+    {
+      "counting_role": "focused-overlap",
+      "driver_seconds": 6.679133386001922,
+      "failed": 0,
+      "label": "pillow-origin-epoch07-contract-green-01",
+      "passed": 141,
+      "pytest_seconds": 6.37,
+      "returncode": 0,
+      "summary": "141 passed in 6.37s",
+      "test_files": [
+        "tests/test_puck_cpu_held_amendment07.py",
+        "tests/test_puck_cpu_held_observer.py"
+      ],
+      "timed_out": false
+    },
+    {
+      "counting_role": "disjoint-final",
+      "driver_seconds": 119.83196035400033,
+      "failed": 0,
+      "label": "pillow-origin-epochs-regression-01",
+      "passed": 667,
+      "pytest_seconds": 119.4,
+      "returncode": 0,
+      "summary": "667 passed in 119.40s (0:01:59)",
+      "test_files": [
+        "tests/test_puck_cpu_held_parent.py",
+        "tests/test_puck_cpu_held_amendment.py",
+        "tests/test_puck_cpu_held_amendment03.py",
+        "tests/test_puck_cpu_held_amendment04.py",
+        "tests/test_puck_cpu_held_amendment05.py",
+        "tests/test_puck_cpu_held_amendment06.py",
+        "tests/test_puck_cpu_held_amendment07.py",
+        "tests/test_puck_cpu_held_runtime_audit.py",
+        "tests/test_puck_cpu_amendment_audit.py",
+        "tests/test_puck_cpu_amendment03_audit.py",
+        "tests/test_puck_cpu_amendment04_audit.py",
+        "tests/test_puck_cpu_held_observer.py"
+      ],
+      "timed_out": false
+    },
+    {
+      "counting_role": "disjoint-final",
+      "driver_seconds": 39.31309600797249,
+      "failed": 0,
+      "label": "pillow-origin-publication-regression-01",
+      "passed": 2,
+      "pytest_seconds": 39.04,
+      "returncode": 0,
+      "summary": "2 passed in 39.04s",
+      "test_files": [
+        "tests/test_puck_cpu_held_amendment05_integration.py",
+        "tests/test_puck_cpu_held_amendment06_integration.py"
+      ],
+      "timed_out": false
+    },
+    {
+      "counting_role": "disjoint-final",
+      "driver_seconds": 20.810007150983438,
+      "failed": 0,
+      "label": "pillow-origin-epoch07-integration-01",
+      "passed": 1,
+      "pytest_seconds": 20.55,
+      "returncode": 0,
+      "summary": "1 passed in 20.55s",
+      "test_files": [
+        "tests/test_puck_cpu_held_amendment07_integration.py"
+      ],
+      "timed_out": false
+    }
+  ],
+  "claims": {
+    "actual07_authorized": false,
+    "all_seven_simulation_release_gates_open": true,
+    "collection_authorized": false,
+    "native_authorized": false,
+    "release_accepted": false,
+    "runtime_qualified": false,
+    "study_authorized": false
+  },
+  "disjoint_final_counts": {
+    "contract_regressions": 667,
+    "new_integration": 1,
+    "new_native_cases": 8,
+    "old_integrations": 2
+  },
+  "focused141_is_overlapping": true,
+  "independent_review_status": "NO_MATERIAL_FINDINGS",
+  "kind": "puck-cpu-pillow-origin-authored-coverage-v1",
+  "limitations": [
+    "Test counts are preserved summaries and disjoint test-file groups; no collection/tests were rerun in this lane. Focused141 overlaps667 and REDs are excluded from678.",
+    "All selected07 controls/results are inside the pytest authored-project; no actual07 configuration/admission/output/invocation exists from this source task.",
+    "The selected capsule is not a complete standalone fixture, test-dependency, compiler or toolchain archive.",
+    "Native8 has stdout only, as explicitly recorded.",
+    "No full suite/CI or installed vendor/runtime test is claimed.",
+    "Post06 complete current forest/prefix/native/interpreter custody remains unproved; source tests/selected hashes do not replace that gate."
+  ],
+  "native8": {
+    "passed": 8,
+    "pytest_seconds": 1.48,
+    "receipt_limit": "Original stdout only; no separate command/stderr/returncode/transport receipt supplied. Source identity is bound by the committed test and root report.",
+    "scope": "Tiny authored C libraries",
+    "stdout": "validation/palimpsest-pillow-native-origins-01.log",
+    "test_file": "tests/test_puck_pillow_native_origins.py"
+  },
+  "planning_commit": "d3c2663d41231f3e2b0c46f6259639fae49b7c89",
+  "planning_commit_scope": "Planning Markdown only; D/proof and implementation belong to source_commit",
+  "source_commit": "d3bce4e162200982ac63c18e4aa2366990352634",
+  "unique_affected_cases": 678,
+  "version": 1
+}

@@ -1,0 +1,137 @@
+{
+  "all_nine_proof_and_input_pins_matched_in_completed_review": true,
+  "baseline_method": "Byte comparison against retained qualification06 source snapshots authenticated by frozen06 source/control pins; no Git command used.",
+  "checked_proof_and_input_pins": [
+    {
+      "path": "docs/plans/puck-cpu-pillow-origin-profile-v1.json",
+      "sha256": "6eba35557f64b8f7108558b1334d488da20b2381d0e69ffece090645f8fb8d3d",
+      "size_bytes": 346424
+    },
+    {
+      "path": "docs/plans/puck-cpu-pillow-origin-profile-v1/projection.json",
+      "sha256": "b8aa91886a1c5b8a71af476ad2c150c1cfd1e1fd018a4bb8c700d0f2451ede55",
+      "size_bytes": 19311
+    },
+    {
+      "path": "docs/plans/puck-cpu-pillow-origin-profile-v1/native-evidence.json",
+      "sha256": "d65e59289302aeeaec35c7af47cf0de7121c01eb01cbe33af837eff1f0a41fe3",
+      "size_bytes": 87746
+    },
+    {
+      "path": "docs/plans/puck-cpu-pillow-origin-profile-v1/README.md",
+      "sha256": "16c0b036a6b7ceb9c5d6740e9e62f6672a98d705e9ff2b0e35332c2ceaf6a41b",
+      "size_bytes": 1879
+    },
+    {
+      "path": "docs/plans/puck-cpu-distributed-publication-profile-v1.json",
+      "sha256": "6532308a421d73fee2d7a7843528f40ba7613df49b283bdc0d25d67b2795620a",
+      "size_bytes": 346230
+    },
+    {
+      "path": "docs/plans/puck-cpu-observed-import-profile-candidate-01.json",
+      "sha256": "d20076cd2e1961d1514bb135746b1701a14567136b80ee073fecedb389f929df",
+      "size_bytes": 340908
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-06/external/palimpsest-held06-native-failure-review.json",
+      "sha256": "7faa83dfa535111f72abaf3e482877c2143bf9e2569098ade7ed12f570d5c74d",
+      "size_bytes": 165833
+    },
+    {
+      "path": "docs/plans/puck-cpu-characterization-native-metadata-05.json",
+      "sha256": "64a9e46f60700f12712262879547fbf26d785fb8a825098940e6494482dae2aa",
+      "size_bytes": 1618086
+    },
+    {
+      "path": "docs/plans/puck-cpu-held-qualification-06.json",
+      "sha256": "da630b05b871508686a4c92402725820b40b27253b2652b47c686a8f441a04e8",
+      "size_bytes": 8995
+    }
+  ],
+  "checks": [
+    "Closed kind/version/allocation_id07 selects only qualification07; exact06 nineteen-name negative roster and limits retained.",
+    "Parent and independent auditor compose H to C using exactly four publication replacements, then for07 only add the two fixed sorted Pillow origin rows.",
+    "Authenticated H/C/D bytes; independently reconstructed exact H-to-C and C-to-D object projections and exact194-byte C-to-D insertion.",
+    "Default projection remains strict four-publication-only; old epoch1-6 branches and source/input/custody machinery unchanged in retained06 comparison.",
+    "Historical preparation and candidate/dependency pins remain separate from current profile and fresh worker-source capsule.",
+    "All nine proof-index file/input size/hash pins matched."
+  ],
+  "claims": {
+    "actual07_authorized": false,
+    "collection_authorized": false,
+    "current_payload_census_performed": false,
+    "release_accepted": false,
+    "runtime_qualified": false,
+    "study_authorized": false,
+    "target_runtime_executed": false,
+    "tests_executed": false
+  },
+  "comparison_base": "9846534",
+  "findings": [],
+  "kind": "puck-cpu-pillow-origin-independent-source-review-v1",
+  "limitations": [
+    "Read-only source and metadata review; no tests rerun, repository imports, vendor imports, native loads, runtime invocation, namespace probe, target census or Git command.",
+    "Root-reported source-test results were not independently executed by this reviewer.",
+    "Retained native evidence supports a prospective existing-policy correction, not successful installed-runtime loading.",
+    "The pending complete current full-byte/custody preflight is not closed by this source review.",
+    "No actual07 configuration/admission/allocation/runtime, numerical, operator, renderer, model, episode, study or release acceptance is granted."
+  ],
+  "proof_index": {
+    "path": "docs/plans/puck-cpu-pillow-origin-profile-v1/evidence-index.json",
+    "sha256": "cb847e4b4a80f536c2247c7607eeacbcab0aedbc13e5c2641c16280bc4db5a7d",
+    "size_bytes": 2718
+  },
+  "reported_source_head": "d3c2663",
+  "review_recorded_at": "2026-10-15T22:07:49.631108+00:00",
+  "review_status": "NO_MATERIAL_FINDINGS",
+  "source_pins": [
+    {
+      "path": "scripts/qualify_puck_cpu_held_runtime.py",
+      "sha256": "b65f0ff3b49976039f8f07edb3ce610262a10761ec509611cb31b4324e21b63b",
+      "size_bytes": 58724
+    },
+    {
+      "path": "scripts/audit_puck_cpu_held_runtime.py",
+      "sha256": "420c3d6f3b8c7ae799732184507e84177a546b74573fccf1f32728dbfc64440d",
+      "size_bytes": 76254
+    },
+    {
+      "path": "scripts/observe_puck_cpu_held_allocation.py",
+      "sha256": "e105134d1069e268f39f45797e256b8316212f2c427a6c4c6a7ecb49d196ddb0",
+      "size_bytes": 6553
+    }
+  ],
+  "source_references": [
+    {
+      "lines": [
+        226,
+        278,
+        307,
+        709
+      ],
+      "path": "scripts/qualify_puck_cpu_held_runtime.py"
+    },
+    {
+      "lines": [
+        262,
+        291,
+        650,
+        663,
+        673,
+        688
+      ],
+      "path": "scripts/audit_puck_cpu_held_runtime.py"
+    },
+    {
+      "lines": [
+        49,
+        58,
+        64,
+        73
+      ],
+      "path": "scripts/observe_puck_cpu_held_allocation.py"
+    }
+  ],
+  "source_root": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03",
+  "version": 1
+}

@@ -1,0 +1,23 @@
+{
+  "actual_runtime_invoked": false,
+  "exact194byte_insertion_reconstructs_C": true,
+  "opposite_epoch_projections_refused": true,
+  "proof_pins_verified": 9,
+  "real_H_to_C_and_H_to_D_pass": true,
+  "status": "PASS",
+  "syntax_checked": [
+    "scripts/qualify_puck_cpu_held_runtime.py",
+    "scripts/audit_puck_cpu_held_runtime.py",
+    "scripts/observe_puck_cpu_held_allocation.py",
+    "tests/test_puck_cpu_held_parent_integration.py",
+    "tests/test_puck_cpu_held_amendment05_integration.py",
+    "tests/test_puck_cpu_held_observer.py",
+    "tests/test_puck_cpu_held_amendment07.py",
+    "tests/test_puck_cpu_held_amendment07_integration.py",
+    "tests/test_puck_pillow_native_origins.py"
+  ],
+  "validators_checked": [
+    "scripts/qualify_puck_cpu_held_runtime.py",
+    "scripts/audit_puck_cpu_held_runtime.py"
+  ]
+}
