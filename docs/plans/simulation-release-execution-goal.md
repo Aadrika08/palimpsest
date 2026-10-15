@@ -35,40 +35,46 @@ this engineering route; it cannot pass a controller capability gate.
 
 ## Current result and first unfinished action
 
-Disk clearance removed the immediate disk shortage. Actual preparation01 and
-ordinary observations02/03 have passing scoped audits. The complete four-row
-publication correction has reviewed source attribution and547 affected authored
+Disk clearance removed the immediate disk shortage. Actual preparation 01 and
+ordinary observations 02/03 have passing scoped audits. The complete four-row
+publication correction has reviewed source attribution and 547 affected authored
 passes in [PR159](https://github.com/Aadrika08/palimpsest/pull/159).
 These are preparation, observation and source evidence; installed held-runtime
 qualification remains open.
 
-[Actual05 in PR160](https://github.com/Aadrika08/palimpsest/pull/160) was separately
+[Actual 05 in PR160](https://github.com/Aadrika08/palimpsest/pull/160) was separately
 reviewed and frozen at `fb258cd` before one invocation. Fresh admission passed
-in26.537s, including complete installed/staged/native/interpreter bytes. The
-observer then returned1 normally in45.859s without timeout. First fatal denial:
+in 26.537s, including complete installed/staged/native/interpreter bytes. The
+observer then returned1 normally in 45.859s without timeout. First fatal denial:
 optional `pynvml` requested by Torch's CUDA initializer. The guard closes custody
 and retains that violation even though Torch catches the import error. The later
 `torch.cuda.memory` error is a teardown symptom; its registered physical file is intact.
 The independent qualification auditor correctly refuses the failed terminal.
 
-A separate post-failure read-only audit passes in28.411s: current source/input,
+A separate post-failure read-only audit passes in 28.411s: current source/input,
 installed/staged/native/interpreter bytes and original staged identities remain
 intact. Parent closure is5→5 descriptors with no children/threads; data audits
 close4→4. None of the three recorded worker PID/start identities remains; this
 is not exhaustive or atomic lifetime proof. The eight historical missing receipts
-remain missing. Failed qualifications01–05 are consumed. Complete four-import
+remain missing. Failed qualifications 01–05 are consumed. Complete four-import
 creator closure, runtime acceptance and every episode/release gate remain unproved.
 
-**Next action: review the finite optional-import contract offline before proposing
-another allocation.** The ordinary observations record completed imports and
-terminal caches, not attempted missing imports. Review the exact fixed import
-route, physical package source, caught optional requests and existing declared-
-absence mechanism; retain explicit unresolved dynamic/conditional cases. Require
-an authored regression for the caught-import failure and continued refusal of
-unexpected imports before any source change is accepted. Do not infer a need to
-install CUDA or relax unexpected-import poisoning. Preserve05 controls and outcome;
-no repeated05 or automatic06 follows. A later attempt needs a separate prospective
-numbered freeze, independent review and fresh admission.
+**The finite optional-import source contract is ready for prospective controls.**
+[PR161](https://github.com/Aadrika08/palimpsest/pull/161) adds closed epoch 06
+parent/observer/independent-auditor support for nineteen exact absent names using
+the unchanged guard. All 616 affected authored cases pass, including an authored 05
+caught-import failure followed by 06 success and independent API/CLI audits.
+Independent source review found no material findings; all 1,760 surveyed source
+hashes and the complete original 05 archive verify. Static coverage is not executed
+or dynamic/native completeness; forty-five nonliteral sites remain unresolved.
+This is source evidence only: no actual 06 controls, output or invocation exists.
+
+**Next action: separately freeze and review qualification 06 controls, then refresh
+complete admission before one actual invocation.** Bind current source/auditor and
+proof bytes, the unchanged publication candidate, all 15 other inputs, preparation
+acceptance and consumed outcomes. Preserve failures 01–05. Keep unexpected imports
+fatal and all limits unchanged; no repeated 05 or automatic retry follows. A pass
+must receive independent actual-runtime acceptance before admitting the episode.
 
 **Keep checkpoint A tied to the episode deliverable.** Reuse the existing
 `Engine` → UUID `RunWriter` → initial snapshot → replay → bundle-export route.
@@ -110,7 +116,7 @@ substitute for numerical results, capability, actual browser use or human accept
 
 | Order | Deliverable | Finite exit |
 | --- | --- | --- |
-| 1 | Establish the exact local CPU runtime. | Resolve and review the finite optional-import contract, then obtain a passing separately frozen actual qualification and independent audit. Preserve every failed allocation; proposals and source tests are not this exit. |
+| 1 | Establish the exact local CPU runtime. | Freeze/review distinct 06 controls, refresh complete admission, then obtain one passing actual qualification and independent audit. Preserve every failed allocation; proposals and source tests are not this exit. |
 | 2 | Record, replay and export one actual simulator episode. | Admit the exact public engineering route, retain complete inputs/records/snapshots, pass declared replay/export and operator/renderer checks, and independently audit normal cleanup and the portable bundle. This does not qualify a learned controller. |
 | 3 | Complete memory family admission and case closure. | Finish the historical-seed-to-case binding and single-condition admission, qualify the exact admitted configuration, and resolve oracle/own ordering before all-nine/case closure. Preserve raw evidence and publication/quarantine checks. |
 | 4 | Complete studies and controller capability. | Valid development and separately admitted held-out results meet the unchanged memory/scientific and puck/MaleCNS gates above. Preserve failures and resolve any new study prospectively. |
@@ -119,19 +125,19 @@ substitute for numerical results, capability, actual browser use or human accept
 
 ## Decisions and evidence boundaries
 
-- Memory qualification amendment02 in [PR119](https://github.com/Aadrika08/palimpsest/pull/119)
-  remains uninvoked. Oracle precedes own in42/48 families (126/144 cases),
+- Memory qualification amendment 02 in [PR119](https://github.com/Aadrika08/palimpsest/pull/119)
+  remains uninvoked. Oracle precedes own in 42/48 families (126/144 cases),
   conflicting with prior-own/condition-close requirements. No resolution is selected;
-  do not reorder the frozen protocol. The reviewed seed400-to-case binding,
+  do not reorder the frozen protocol. The reviewed seed 400-to-case binding,
   exact single-condition/family admission and remaining cells still need closure.
 - Protected mixed-catalog access versus independent identity projections in
   [PR123](https://github.com/Aadrika08/palimpsest/pull/123) remains a user decision.
   Use declared public engineering inputs while it is unresolved; continuation or
   disk clearance does not authorize protected reads.
-- Navigation attempts1/2 are consumed; no attempt3 is authorized. R3 and the new
+- Navigation attempts 1/2 are consumed; no attempt 3 is authorized. R3 and the new
   navigation study/held-out decision remain open. Existing failed controller scores
   do not pass the capability thresholds above.
-- Installation01, retained admission01, characterization01 and every earlier
+- Installation 01, retained admission 01, characterization 01 and every earlier
   consumed allocation remain historical failures. Distinct later scoped passes
   do not rewrite them. Never fabricate a missing receipt or silently retry.
 - Runtime-import qualification cannot admit operators, rendering, physics,
@@ -139,7 +145,7 @@ substitute for numerical results, capability, actual browser use or human accept
   with exact source/input/custody/versions, finite limits, fresh resources and
   independent outcome checks. Keep build/evidence scratch on project disk and
   stage only required inputs on executable/writable tmpfs under the existing
-  identity policy. Existing preparation/qualification RAM floors remain4/2GiB;
+  identity policy. Existing preparation/qualification RAM floors remain 4/2GiB;
   every future admission refreshes its own exact limits and bytes.
 
 ## Ownership and scope
