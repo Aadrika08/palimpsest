@@ -3,8 +3,9 @@
 ## Present state
 
 BasePR134 ce4b55f. Registration builder6893acf; fixed entry8dee733;
-complete two-stage parent8b9145b. Current source is ready for one fresh independent
-whole-branch and exact preparation-freeze review. Neither actual preparation01 nor
+complete two-stage parent8b9145b. Fresh review of875f8bb found one Important hard-watchdog gap; the
+one RED/GREEN fix pass retains terminal publication/transport inside the guard.
+See [review and fix evidence](puck-v3-held-runtime-qualification-review.md). Neither actual preparation01 nor
 actual qualification01 has run. The production collection entry remains preflight-only;
 only explicit v3 registration selects the fixed qualification entry. All seven
 simulation release gates and three prospective study decisions remain open.
@@ -98,3 +99,8 @@ terminal. Independently audit the preparation and exact qualification freeze bef
 qualifying01 once; retain/audit pass or terminal failure without rerun. No study,
 original-model, catalog access or navigation decision follows. Current account quota
 telemetry is unavailable; no remaining quota percentage is asserted.
+
+Post-review verification:216 affected checks pass75.84s; default suite10 inherited
+FastAPI/httpx collection errors1.96s. No second whole-source review is claimed.
+The rejected unexecuted freeze is retained; a refreshed exact freeze must be
+independently audited before preparation01.

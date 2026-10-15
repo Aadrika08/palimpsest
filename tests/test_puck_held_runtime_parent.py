@@ -5,6 +5,7 @@ import json
 from pathlib import Path
 import shutil
 import subprocess
+import time
 
 import pytest
 from test_puck_worker_bootstrap import ROOT, descriptor
@@ -156,3 +157,32 @@ def test_separate_qualification_rechecks_frozen_preparation_before_or_during_wor
     if output.exists():
         outcome=json.loads((output/'outcome.json').read_bytes());assert outcome['status']=='failed'
         assert outcome['runtime_qualified'] is outcome['collection_authorized'] is False
+
+
+@pytest.mark.parametrize('terminal',['success','failure'])
+def test_hard_clock_covers_terminal_publication_and_transport(tmp_path,terminal):
+    module,root,site,common,prepare=case(tmp_path)
+    script=root/'scripts/qualify_puck_held_runtime.py'
+    source=script.read_text()
+    # Fault injection changes only this authored source copy; authenticate the
+    # changed bytes normally. Use the real watchdog, process group and transport.
+    source=source.replace("started+f['limits']['hard_seconds']",'started+0.3')
+    if terminal=='success':
+        source=source.replace("print(canonical(receipt).decode(),end='',flush=True)",
+                              "time.sleep(2);print(canonical(receipt).decode(),end='',flush=True)")
+    else:
+        source=source.replace('def write(filename,raw,maximum=MiB):',
+            "def write(filename,raw,maximum=MiB):\n    if filename.name=='outcome.json':time.sleep(2)")
+        candidate=root/module.CANDIDATE;value=json.loads(candidate.read_bytes())
+        value['executable']=True;candidate.write_bytes(encoded(value))
+        prepare['candidate']=descriptor(candidate,module.CANDIDATE)
+    script.write_text(source)
+    prepare['sources']=[descriptor(root/name,name) for name in module.SOURCES]
+    started=time.monotonic();result=run(root,freeze_file(root,'prepare',prepare))
+    elapsed=time.monotonic()-started
+    assert result.returncode==-9,(result.returncode,elapsed,result.stderr)
+    assert elapsed<1.5,elapsed
+    output=root/module.PREPARATION
+    assert output.exists() and not (root/module.QUALIFICATION).exists()
+    if terminal=='success':assert (output/'preparation.json').exists()
+    else:assert not (output/'outcome.json').exists()

@@ -62,7 +62,7 @@ trusted parent/source native windows; complete failure/outcome cleanup records.
 
 - [x] Task1: RED fixed v3 entry/alias/strict descriptor cases; implement; GREEN
   existing v1/v2 and149 profile/custody/bootstrap regressions.
-- [ ] Task2: builder RED/GREEN authored snapshots/deadlines/path/identity/maps;
+- [x] Task2: builder RED/GREEN authored snapshots/deadlines/path/identity/maps;
   integrate exact source capsule and parent freeze, allocation and durable close.
 - [ ] Task3: authored parent positive/negative/no-retry proof, full-suite attempt,
   one fresh whole-branch and exact actual-freeze review. Fix important findings
@@ -82,3 +82,9 @@ uninvoked. Exact freezes and independent prospective review are still required.
 Ruling: separate preparation from imports so actual dependency/source hashes exist
 before exact qualification review. Cost if skipped: qualification would authorize
 its own newly discovered inputs. Ordinary observations stay consumed/unmodified.
+
+Review875f8bb: one Important watchdog-publication gap. One fix pass: two real-guard
+publication regressions RED→GREEN; parent15pass6.01s; affected216pass75.84s.
+Default suite10 inherited FastAPI/httpx collection errors1.96s. Source review
+verdict retained, no second code review. Refresh and independently audit exact
+preparation freeze before the first actual invocation.

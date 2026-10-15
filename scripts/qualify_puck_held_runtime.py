@@ -197,8 +197,9 @@ def execute(f,prepare,sources,freeze_raw,bounds):
     base={'kind':'puck-held-runtime-allocation-outcome-v1','version':1,'allocation_id':1,
           'freeze_sha256':sha(freeze_raw),'runtime_qualified':False,'native_authorized':False,
           'collection_authorized':False,'executable':False,'qualification_claims':[]}
-    try:
-        with bounds.hard_guard(started+f['limits']['hard_seconds'],state):
+    # Keep terminal publication and transport inside the allocation watchdog.
+    with bounds.hard_guard(started+f['limits']['hard_seconds'],state):
+        try:
             write(output/'freeze.json',freeze_raw)
             if resource.getrlimit(resource.RLIMIT_NOFILE)[0]<f['limits']['fd_floor']:
                 raise ValueError('Held-runtime FD limit below frozen floor')
@@ -298,17 +299,17 @@ def execute(f,prepare,sources,freeze_raw,bounds):
             artifacts(output,f['limits']['artifact_bytes']-MiB)
             receipt.update(seconds=time.monotonic()-started,parent_peak_rss_bytes=peak)
             write(output/('preparation.json' if prepare else 'outcome.json'),canonical(receipt))
-        if time.monotonic()-started>=180:raise TimeoutError('Allocation return deadline exhausted')
-        print(canonical(receipt).decode(),end='',flush=True)
-        return 0
-    except BaseException as error:
-        failure=dict(base,status='failed',phase=phase,error={'type':type(error).__name__,'message':str(error)[:2048]},
-                     seconds=time.monotonic()-started,supervision=supervision)
-        # Never replace an already published terminal. A failed preparation is
-        # rejected by any later qualification even if its prepared marker exists.
-        if not (output/'outcome.json').exists():write(output/'outcome.json',canonical(failure))
-        print(type(error).__name__+': '+str(error)[:2048],file=sys.stderr,flush=True)
-        return 1
+            if time.monotonic()-started>=180:raise TimeoutError('Allocation return deadline exhausted')
+            print(canonical(receipt).decode(),end='',flush=True)
+            return 0
+        except BaseException as error:
+            failure=dict(base,status='failed',phase=phase,error={'type':type(error).__name__,'message':str(error)[:2048]},
+                         seconds=time.monotonic()-started,supervision=supervision)
+            # Never replace an already published terminal. A failed preparation is
+            # rejected by any later qualification even if its prepared marker exists.
+            if not (output/'outcome.json').exists():write(output/'outcome.json',canonical(failure))
+            print(type(error).__name__+': '+str(error)[:2048],file=sys.stderr,flush=True)
+            return 1
 
 
 def main():
