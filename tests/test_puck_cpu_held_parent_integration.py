@@ -96,7 +96,7 @@ def project(tmp_path,*,rocm_probe=False,binding_failure=False,published_export=F
                      b"sys.modules['torch.authored_publication'] = authored_child\n"
                      b'import _authored_cpu_generated\n')
         if autograd_publication and name=='torch':
-            source+=b'import torch._C\nimport torch.autograd\n'
+            source+=b'import torch._C\nimport torch.autograd\nimport torch.distributed\nimport torch.distributed.autograd\nimport torch.distributed.rpc\n'
         module_path=name+'/__init__.py' if package else name+'.py'
         write(site,module_path,source)
         entries.append(dict(path=module_path,size_bytes=len(source),sha256=digest(source)))
@@ -108,17 +108,27 @@ def project(tmp_path,*,rocm_probe=False,binding_failure=False,published_export=F
     if autograd_publication:
         import importlib.machinery
         import sysconfig
-        from test_puck_cpu_held_amendment05 import DELEGATES
-        source=(b'import sys, types, torch\n'
-                b'def authored_delegate():\n    return 47\n'
-                b"torch._C._autograd = types.ModuleType('torch._C._autograd')\n"
-                b'torch._C._autograd.__file__ = __file__\n'
-                b"sys.modules['torch._C._autograd'] = torch._C._autograd\n"
-                b'import _authored_cpu_generated\n'+
-                ('for name in '+repr(DELEGATES)+':\n    setattr(torch._C._autograd, name, authored_delegate)\n').encode())
-        path='torch/autograd/__init__.py';write(site,path,source)
-        entries.append(dict(path=path,size_bytes=len(source),sha256=digest(source)))
-        modules.append(dict(name='torch.autograd',root_index=0,path=path,kind='python',is_package=True))
+        from test_puck_cpu_held_amendment05 import PUBLICATION_EXPORTS
+        # Keep the old fixture switch, now exercising all four declarations.
+        # Every creator crosses a distinct fresh physical import while its
+        # published module is empty, then fills the exact roster before close.
+        for row in PUBLICATION_EXPORTS:
+            producer=row['producer'];name=row['name'];attribute=name.rsplit('.',1)[1]
+            helper='_authored_publication_gate_'+attribute.lstrip('_')
+            source=(b'import sys, types, torch\n'
+                    b'def authored_delegate():\n    return 47\n'+
+                    ('torch._C.'+attribute+' = types.ModuleType('+repr(name)+')\n').encode()+
+                    ('torch._C.'+attribute+'.__file__ = __file__\n').encode()+
+                    ('sys.modules['+repr(name)+'] = torch._C.'+attribute+'\n').encode()+
+                    ('import '+helper+'\n').encode()+
+                    ('for name in '+repr(row['delegate_attributes'])+':\n    setattr(torch._C.'+attribute+', name, authored_delegate)\n').encode())
+            path=producer.replace('.','/')+'/__init__.py';write(site,path,source)
+            entries.append(dict(path=path,size_bytes=len(source),sha256=digest(source)))
+            modules.append(dict(name=producer,root_index=0,path=path,kind='python',is_package=True))
+            helper_source=b'AUTHORED_PUBLICATION_GATE = True\n'
+            path=helper+'.py';write(site,path,helper_source)
+            entries.append(dict(path=path,size_bytes=len(helper_source),sha256=digest(helper_source)))
+            modules.append(dict(name=helper,root_index=0,path=path,kind='python',is_package=False))
         extension='torch/_C'+importlib.machinery.EXTENSION_SUFFIXES[0]
         native=project/'authored-autograd.c'
         native.write_text('#include <Python.h>\n'
@@ -133,7 +143,8 @@ def project(tmp_path,*,rocm_probe=False,binding_failure=False,published_export=F
     write(site,'inert.pyc',inert);entries.append(dict(path='inert.pyc',size_bytes=len(inert),sha256=digest(inert)))
     (site/'empty/nested').mkdir(mode=0o700,parents=True)
     directories=sorted([r['metadata_path'].split('/')[0] for r in wheels]+['empty','empty/nested']+
-        (['torch'] if rocm_probe or autograd_publication else [])+(['torch/autograd'] if autograd_publication else []))
+        (['torch'] if rocm_probe or autograd_publication else [])+
+        (['torch/autograd','torch/distributed','torch/distributed/autograd','torch/distributed/rpc'] if autograd_publication else []))
     inventory=dict(kind='puck-cpu-installed-files-v1',entries=sorted(entries,key=lambda r:r['path']),
                    file_count=len(entries),directory_count=len(directories),total_bytes=sum(r['size_bytes'] for r in entries))
     # Inventory has an exact schema, so its authorship label lives in this test.
@@ -193,8 +204,9 @@ def project(tmp_path,*,rocm_probe=False,binding_failure=False,published_export=F
         exports.append(dict(name='torch.authored_publication',producer='torch',phase='module_exec_publish',
                             attributes=['authored_child'],class_binding=None,delegate_attributes=['answer']))
     if autograd_publication:
-        exports.append(dict(name='torch._C._autograd',producer='torch._C',phase='native_create',
-                            attributes=['_autograd'],class_binding=None))
+        exports.extend(dict(name=row['name'],producer='torch._C',phase='native_create',
+                            attributes=[row['name'].rsplit('.',1)[1]],class_binding=None)
+                       for row in PUBLICATION_EXPORTS)
     document('candidate',dict(kind='puck-cpu-observed-import-profile-candidate-v1',version=1,
         expected_versions=dict(api.VERSIONS),module_paths=sorted(modules,key=lambda r:r['name']),namespaces=[],
         import_profile=dict(kind='puck-producer-import-profile-v2',version=2,exports=exports,module_changes=[],native_origins=[],native_cache=[]),

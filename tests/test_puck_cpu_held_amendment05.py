@@ -1,6 +1,8 @@
 """Closed05 candidate transition, using authored metadata and no vendor imports."""
 import copy
+import hashlib
 import json
+from pathlib import Path
 
 import pytest
 
@@ -30,6 +32,10 @@ DELEGATES=[
     '_supported_activities','_toggle_collection_dynamic','_top_saved_tensors_default_hooks',
     '_unsafe_set_version_counter','kineto_available',
 ]
+PROFILE_PATH=Path(__file__).resolve().parents[1]/'docs/plans/puck-cpu-distributed-publication-profile-v1.json'
+PUBLICATION_EXPORTS=sorted((row for row in json.loads(PROFILE_PATH.read_bytes())['import_profile']['exports']
+    if row['phase']=='module_exec_publish'),key=lambda row:row['name'])
+DISTRIBUTED_EXPORTS=[row for row in PUBLICATION_EXPORTS if row['name']!=TARGET]
 
 
 def candidate_pair():
@@ -49,10 +55,16 @@ def candidate_pair():
                 dict(name='torch.authored_other',producer='torch',phase='module_exec',
                     attributes=['authored_other'],class_binding=None)],
             module_changes=[],native_origins=[],native_cache=[]))
+    old['import_profile']['exports'].extend(dict(name=row['name'],producer='torch._C',
+        phase='native_create',attributes=[row['attributes'][-1]],class_binding=None)
+        for row in DISTRIBUTED_EXPORTS)
     new=copy.deepcopy(old)
     new['import_profile']['exports'][0]=dict(name=TARGET,producer='torch.autograd',
         phase='module_exec_publish',attributes=['torch','_C','_autograd'],
         class_binding=None,delegate_attributes=list(DELEGATES))
+    replacements={row['name']:row for row in DISTRIBUTED_EXPORTS}
+    new['import_profile']['exports']=[copy.deepcopy(replacements.get(row['name'],row))
+                                    for row in new['import_profile']['exports']]
     return old,new
 
 
@@ -98,6 +110,112 @@ def test05_accepts_only_explicit_source_and_candidate_epochs():
     assert len(DELEGATES)==41 and DELEGATES==sorted(set(DELEGATES))
     m.validate_publication_candidate(old,new)
     auditor_api().publication_candidate(old,new)
+
+
+@pytest.mark.parametrize('provider',['parent','independent'])
+def test05_requires_complete_reviewed_four_row_candidate(provider):
+    m,_,_,old,new=acceptance05_case()
+    validator=m.validate_publication_candidate if provider=='parent' else auditor_api().publication_candidate
+    validator(old,new)
+    assert len(PUBLICATION_EXPORTS)==4 and [len(row['delegate_attributes']) for row in DISTRIBUTED_EXPORTS]==[11,69,29]
+    one_row=copy.deepcopy(old)
+    one_row['import_profile']['exports'][0]=copy.deepcopy(new['import_profile']['exports'][0])
+    with pytest.raises(ValueError):validator(old,one_row)
+
+
+@pytest.mark.parametrize('provider',['parent','independent'])
+@pytest.mark.parametrize('mask',range(15))
+def test05_refuses_every_partial_publication_correction(provider,mask):
+    m,_,_,old,_=acceptance05_case()
+    validator=m.validate_publication_candidate if provider=='parent' else auditor_api().publication_candidate
+    selected={row['name']:row for i,row in enumerate(PUBLICATION_EXPORTS) if mask&(1<<i)}
+    partial=copy.deepcopy(old)
+    partial['import_profile']['exports']=[copy.deepcopy(selected.get(row['name'],row))
+                                        for row in partial['import_profile']['exports']]
+    with pytest.raises(ValueError):validator(old,partial)
+
+
+@pytest.mark.parametrize('provider',['parent','independent'])
+@pytest.mark.parametrize('name',[row['name'] for row in DISTRIBUTED_EXPORTS])
+@pytest.mark.parametrize('defect',[
+    'old-missing','old-duplicate','old-row','missing','duplicate','creator','phase','path',
+    'class','missing-delegate','extra-delegate','reordered','duplicate-delegate','extra-field',
+])
+def test05_each_distributed_row_refuses_fully_rebound_tampering(provider,name,defect):
+    m,config,blobs,old,new=acceptance05_case()
+    validator=m.validate_publication_candidate if provider=='parent' else auditor_api().publication_candidate
+    validator(old,new)
+    rows=new['import_profile']['exports']; target=next(row for row in rows if row['name']==name)
+    original=next(row for row in old['import_profile']['exports'] if row['name']==name)
+    if defect=='old-missing':old['import_profile']['exports'].remove(original)
+    elif defect=='old-duplicate':old['import_profile']['exports'].append(copy.deepcopy(original))
+    elif defect=='old-row':original['attributes']=['foreign']
+    elif defect=='missing':rows.remove(target)
+    elif defect=='duplicate':rows.append(copy.deepcopy(target))
+    elif defect=='creator':target['producer']='torch._C'
+    elif defect=='phase':target['phase']='module_exec'
+    elif defect=='path':target['attributes']=[name.rsplit('.',1)[-1]]
+    elif defect=='class':target['class_binding']={'kind':'foreign'}
+    elif defect=='missing-delegate':target['delegate_attributes'].pop()
+    elif defect=='extra-delegate':target['delegate_attributes']=sorted(target['delegate_attributes']+['_authored_extra'])
+    elif defect=='reordered':target['delegate_attributes'].reverse()
+    elif defect=='duplicate-delegate':target['delegate_attributes'].append(target['delegate_attributes'][0])
+    else:target['caller_selected_policy']=True
+    bind_old_candidate(m,config,blobs,old)
+    config['inputs']['candidate']=candidate_pin(m,new,'docs/authored-candidate-05.json')
+    validate_both(m,config,blobs)
+    with pytest.raises(ValueError):validator(old,new)
+
+
+@pytest.mark.parametrize('provider',['parent','independent'])
+def test05_accepts_exact_real_prospective_candidate_without_changing_other_rows(provider):
+    m,_,_,_,_=acceptance05_case()
+    validator=m.validate_publication_candidate if provider=='parent' else auditor_api().publication_candidate
+    root=PROFILE_PATH.parents[2]
+    old=json.loads((root/'docs/reports/puck-cpu-held-qualification-04/inspection/profile-candidate.json').read_bytes())
+    one=json.loads((root/'docs/plans/puck-cpu-autograd-publication-profile-v1.json').read_bytes())
+    new=json.loads(PROFILE_PATH.read_bytes())
+    validator(old,new)
+    assert len(new['import_profile']['exports'])==38
+    assert sum(row['phase']=='native_create' for row in new['import_profile']['exports'])==32
+    changed=[a['name'] for a,b in zip(one['import_profile']['exports'],new['import_profile']['exports']) if a!=b]
+    assert changed==[row['name'] for row in DISTRIBUTED_EXPORTS]
+    assert all(new[key] is False for key in ('held_runtime_qualified','native_authorized','collection_authorized','study_authorized','executable'))
+
+
+def test_distributed_source_proof_binds_all_observed_names_and_retained_source_lines():
+    root=PROFILE_PATH.parents[2]
+    proof=json.loads((PROFILE_PATH.with_suffix('')/'source-proof.json').read_bytes())
+    pins=[proof[key] for key in ('candidate','previous_one_row_candidate','previous_one_row_source_proof',
+                                'original_preparation_candidate','attribution','admission_review')]
+    pins+=proof['evidence_pins']+proof['observation03_anchors']
+    for row in pins:
+        raw=(root/row['path']).read_bytes()
+        assert len(raw)==row['size_bytes'] and hashlib.sha256(raw).hexdigest()==row['sha256']
+    prepared=json.loads((root/'docs/reports/puck-cpu-held-preparation-01/raw/configuration.json').read_bytes())
+    assert prepared['inputs']['candidate']==proof['original_preparation_candidate']
+    attribution=json.loads((root/proof['attribution']['path']).read_bytes())
+    observation=json.loads((root/'docs/reports/puck-cpu-characterization-03/raw/payload/imports.json').read_bytes())
+    observed={row['name']:row for row in observation['distributed_exports']['modules']}
+    names=references=0
+    for row in attribution['replacement_rows']:
+        declaration=row['replacement_export']; actual=observed[declaration['name']]
+        assert declaration==next(item for item in DISTRIBUTED_EXPORTS if item['name']==declaration['name'])
+        assert declaration['delegate_attributes']==actual['delegate_attributes']
+        assert actual['comparison']['missing']==actual['comparison']['extra']==[]
+        assert actual['cache_identity'] is actual['raw_attribute_identity'] is True
+        assert [item['name'] for item in row['dispatch_attributions']]==declaration['delegate_attributes']
+        for item in row['dispatch_attributions']:
+            lines=(root/item['source']).read_text().splitlines()
+            for reference in item['registrations']:
+                assert '"'+item['name']+'"' in lines[reference['line']-1]
+                references+=1
+            names+=1
+    assert (names,references)==(109,110)
+    assert observation['distributed_exports']['stable'] is True
+    assert observation['distributed_exports']['profile_accepted'] is False
+    assert attribution['coverage']['unattributed_names']==[]
+    assert proof['profile_accepted'] is proof['runtime_qualified'] is proof['actual05_configuration_created'] is proof['actual05_invoked'] is False
 
 
 @pytest.mark.parametrize('defect',['kind','version','id','bool-id','phase','output','allowlist','legacy-preparation'])
@@ -201,7 +319,7 @@ def test_legacy_epochs_cannot_admit05_source_and_candidate_delta(version):
 @pytest.mark.parametrize('provider',['parent','independent'])
 @pytest.mark.parametrize('defect',[
     'other-row','module-map','namespace','helper','provenance','top-field','native-cache',
-    'module-change','missing-target','duplicate-target','old-missing-target','old-duplicate-target',
+    'module-change','native-origin','reorder-exports','missing-target','duplicate-target','old-missing-target','old-duplicate-target',
     'old-row','creator','path','phase','class','missing-delegates','extra-delegates',
     'unsorted-delegates','duplicate-delegates','missing-delegate-field','extra-row-field',
 ])
@@ -218,6 +336,8 @@ def test05_semantic_candidate_delta_refuses_fully_rebound_tampering(provider,def
     elif defect=='top-field':new['caller_selected_policy']=True
     elif defect=='native-cache':new['import_profile']['native_cache'].append(dict(name='foreign'))
     elif defect=='module-change':new['import_profile']['module_changes'].append(dict(name='foreign',kind='replace'))
+    elif defect=='native-origin':new['import_profile']['native_origins'].append(dict(name='foreign',policy='foreign'))
+    elif defect=='reorder-exports':new['import_profile']['exports'].reverse()
     elif defect=='missing-target':new['import_profile']['exports'].pop(0)
     elif defect=='duplicate-target':new['import_profile']['exports'].append(copy.deepcopy(target))
     elif defect=='old-missing-target':old['import_profile']['exports'].pop(0)
