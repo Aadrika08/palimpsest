@@ -79,11 +79,24 @@ baseline-after or post03 byte acceptance exists. The separately reviewed pre03
 data-only census passes27,255 files/1,318,494,346B in13.446514741s at15:06:59UTC;
 its dated PASS does not accept bytes after03 or establish qualification. All35
 actual evidence copies match originals under independent review.01–03 remain
-failed/consumed. No04 exists. Next source work exposes bounded binding-failure
-context with preserved cause/refusal. Source fixtures cannot recover03's unlogged
-row. Review the diagnostic source/data transition before any separately numbered
-actual invocation, and require observed evidence before a profile/phase correction.
-All33 statuses and all seven open gates remain unchanged; the recorded/replayed/exported episode bundle remains the next exit.
+failed/consumed. The source checkpoint below now supplies bounded failure
+context and preserved cause/refusal. It cannot recover03's unlogged row. Review
+the exact diagnostic source transition before a future invocation and require
+observed evidence before a profile/phase correction. No04 configuration or
+invocation exists. All33 statuses and all seven open gates remain unchanged; the recorded/replayed/exported episode bundle remains the next exit.
+
+[Draft PR #153](https://github.com/Aadrika08/palimpsest/pull/153) retains the
+[binding-diagnostic source report](https://github.com/Aadrika08/palimpsest/blob/911efa32fc5777167a6c0cb0b4dd3e8d45730608/docs/reports/puck-cpu-binding-diagnostics-v1.md).
+All202 affected checks pass in113.47s; three new regressions show RED before GREEN.
+Both completion phases identify the second nested failure without hooks, preserve
+its RuntimeError cause and leave the third row untouched. Fresh authored worker
+refusal and a separate retained2,420B chained trace are source evidence, not Torch
+observations or actual qualification. All39 indexed copies match. The execution
+worktree and frozen03 controls remain unchanged; current source-epoch contracts
+still refuse changed bindings. Next is a closed reviewed diagnostic source epoch,
+preserving historical/current capsules and every data/policy/limit contract before
+any separately numbered actual invocation. No04 exists. No full suite or new
+runtime, episode, scientific, artwork or human gate is accepted.
 
 The [actual preparation report](https://github.com/Aadrika08/palimpsest/blob/4036a382b87ab99640bed96f6b2f8aeaa7873b2c/docs/reports/puck-cpu-held-preparation-01.md)
 records external exit0 in 25.5215614 s and frozen independent auditor normal
