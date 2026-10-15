@@ -11,10 +11,33 @@ This is the active execution goal. It continues the
 is preserved unchanged; its commands and consumed allocations are historical,
 not instructions to rerun. Implementation history must not obscure what remains.
 
+## Immediate work unit: deliver the installed CPU runtime
+
+**Produce one fresh offline installation from the 71 verified wheel artifacts.**
+All 71 artifacts are available; they have not yet been installed. Disk installation
+is the next executable preparation step, separate from tmpfs staging, numerical
+qualification and any scientific study.
+
+- [ ] Install the exact wheels into one fresh directory using the pinned local
+  installer and interpreter, with no dependency expansion, network access,
+  source builds, bytecode compilation or target-package execution.
+- [ ] Retain the complete installed file census and hashes, distribution and
+  wheel identities, actual relocation results, measured installed size and
+  licence contents. Preserve the exact invocation, limits, logs, terminal result
+  and process cleanup in the preparation receipt.
+- [ ] Audit that result and publish the installation location and reproducible
+  preparation instructions. Use the measured tree to specify the subsequent
+  tmpfs/native/EGL custody and four-import qualification configuration.
+
+**Exit:** an actual retained installation with an audited preparation receipt.
+A new proposal, helper or fixture pass does not complete this work unit. This
+exit qualifies package preparation only; all seven release gates remain open.
+
 ## Next milestone: one real simulator episode
 
-**Run one bounded episode on the exact qualified local CPU runtime, then record,
-replay and export it with an independently audited result.**
+**Run one bounded episode on the exact local CPU runtime after its held-import
+qualification passes, then record, replay and export it with an independently
+audited result.**
 
 The deliverable is a portable bundle containing the exact source/runtime and
 model/scene identities, seed and declared limits; complete episode records and
@@ -31,8 +54,9 @@ test counts cannot satisfy either actual-runtime exit below.
 1. **Prepare the installed runtime.** The pinned package payloads and wheel RECORD
    entries have actual audited evidence in PR #141. PR #142 adds the built and
    independently verified python-louvain wheel: all 71 candidate wheel artifacts
-   are now available. Measure the complete installed namespace and retain licence
-   contents. Specify the exact interpreter, native/EGL paths, staging and custody.
+   are now available. Complete the disk-installation exit above before preparing
+   the tmpfs configuration. Specify the exact interpreter, native/EGL paths,
+   staging and custody from the measured installation.
    Finish the CPU preparation/qualification parent using the reviewed four-import
    entry. This produces a reviewable executable configuration, not a passing run.
 2. **Qualify that exact runtime.** After prospective review and any required
@@ -45,7 +69,8 @@ test counts cannot satisfy either actual-runtime exit below.
 3. **Prove the complete episode route.** Finish input/scene admission and the
    durable parent/worker collection path. Prospectively specify the exact model,
    scene, seed and finite episode allocation, including required operator and
-   renderer checks. Retain the actual episode, snapshots, contiguous records,
+   renderer checks, replay comparison criterion, export validation and cleanup
+   conditions. Retain the actual episode, snapshots, contiguous records,
    replay comparisons, exported bundle identities and normal cleanup, with an
    independent audit. Required catalog-access decisions precede protected reads.
    This is an engineering demonstration, separate from development and held-out
@@ -64,7 +89,7 @@ All seven gates must close on **one integrated candidate**. All seven are open.
 | Gate | Required evidence |
 | --- | --- |
 | Memory / R2 | Complete valid nine-condition development and held-out studies, independently audited family analysis and controls. A valid positive or null result is acceptable; missing or invalid cells are not a null result. |
-| Learned puck | Every required relabeled model reaches at least 3/4 development and 6/8 held-out goals; mechanism replay and lab integration pass. |
+| Learned puck and supported tasks | Every required relabeled puck model reaches at least 3/4 development and 6/8 held-out goals; mechanism replay and lab integration pass. Supported exploration, homing and adaptation retain their scoped evidence. |
 | MaleCNS | Every required seed reaches at least 3/4 development and 6/8 held-out goals under matched budgets. A topology benefit is not required. |
 | Lab | Asset-backed installation and actual browser inspection, replay, exports, interruption/recovery and required endurance pass. |
 | Six artworks | Sufficient portable inputs and declared-duration visual, audio, keyboard, viewport, faithful mapping, control and provenance checks pass for every encounter. |
@@ -88,13 +113,13 @@ substitute for numerical results, capability, actual browser use or human accept
 | 5 | Integrate and experience the product. | One candidate supports the lab and all six artworks; actual browser, mapping, replay, export, interruption and endurance checks pass. |
 | 6 | Accept and deliver that candidate. | Artistic/operator sessions, final verification and all seven gate records are complete; the installation and evidence package are reproducible. |
 
-**Current next action:** prepare and measure the complete installed CPU runtime.
-Use only the 71 exact verified wheel artifacts in a fresh bounded installation;
-retain its file inventory, hashes and licence contents. Finish the interpreter,
-stdlib, native/EGL paths, tmpfs custody and executable four-import qualification
-configuration, using the measured installed sizes for fresh resource admission.
-Review each actual configuration before invocation. The next runtime result must
-satisfy steps 1–2 above before episode collection begins.
+**Current next action:** deliver the actual disk installation and preparation
+receipt specified above. Use only the 71 exact verified wheel artifacts in a
+fresh bounded directory; retain its file inventory, hashes and licence contents.
+Then finish the interpreter, stdlib, native/EGL paths, tmpfs custody and executable
+four-import qualification configuration, using measured installed sizes for fresh
+resource admission. Review each actual configuration before invocation. The next
+runtime result must satisfy steps 1–2 above before episode collection begins.
 Review the family qualification binding in parallel without opening a new
 scientific allocation. The directory-enumeration source fix is complete within
 its tested scope; the first actual family admission remains open.
@@ -106,9 +131,9 @@ source-hardening programme or count test totals as release progress.
 
 ## Current starting point and decisions
 
-At **2026-10-15 07:17:50 UTC**, the project filesystem has **98,701,819,904 bytes
-(91.92 GiB) available**. The same metadata-only check reports **5,615,665,152 bytes
-(5.23 GiB) MemAvailable**. Disk clearance removes the reported disk blocker;
+At **2026-10-15 07:30:20 UTC**, the project filesystem has **105,339,097,088 bytes
+(98.10 GiB) available**. The same metadata-only check reports **4,917,227,520 bytes
+(4.58 GiB) MemAvailable**. Disk clearance removes the reported disk blocker;
 available RAM is transient and this snapshot does not admit the complete CPU/EGL
 closure. Keep archives and build scratch on the project disk; stage only the exact
 required runtime inputs on tmpfs under its reviewed native-identity policy.
