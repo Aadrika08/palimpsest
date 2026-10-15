@@ -18,12 +18,19 @@ exact source/runtime/input admission, bounded failure handling, durable terminal
 records and independent review. It is not complete because another parser, plan
 or source-only PR passes.
 
-**First implementation unit:** finish the bounded numerical-import characterization
-in `research/puck-v3-runtime-interop`, then use its actual observations to resolve
-the held worker's NumPy/Torch/MuJoCo compatibility blockers. Its plan and five
-negative/fixture tests exist; the characterization script is still missing.
-No actual characterization or held numerical qualification has run. Ordinary
-imports characterize compatibility; they do not qualify the held execution route.
+**First implementation unit:** prepare the separately numbered development
+amendment after PR #132's consumed numerical-import observation. Implement bounded
+environment-delta and partial-cache/image failure diagnostics, declare the
+source-derived EGL environment contract, then freeze and review the exact changed
+source/request before another installed-stack invocation. Do not silently rerun
+observation 01. Authored native compatibility source work can proceed independently.
+
+The real characterizer now exists: 50 focused checks pass. Observation 01 failed
+exact-environment admission during MuJoCo import after observing NumPy and Torch;
+all eleven lossless records and five source hashes were independently audited.
+It reached no full cache/export/maps census and grants no held runtime or
+collection qualification. Use supported observations to resolve actual held-worker
+compatibility before binding the complete collection route.
 
 ## Clear goal and completion boundary
 
@@ -44,7 +51,7 @@ a separate operator proves the installation and encounter instructions work.
 
 The six encounters are Afterimage; One map, many possible lives; Counterfactual
 choir; Borrowed body; Atlas of what disappears; and The space between two flies.
-All are completed and assessed in simulation first. Physical rover work, physical
+Complete and assess all six in simulation first. Physical rover work, physical
 art fabrication, purchases, paid cloud and CI are outside this goal.
 
 **Done means all seven gates pass their stated boundaries on one integrated
@@ -54,38 +61,40 @@ attempt requires its prospective decision instead of changed thresholds or retri
 
 ## Execution focus after disk cleanup
 
-At **2026-10-15 01:02 UTC**, this filesystem had **99,770,359,808 bytes free
-(about 92.9 GiB)**, above the frozen memory minimum of **63,786,975,232 bytes
-(about 59.4 GiB)**. Space is sufficient at this check. Required inputs, free space
+At **2026-10-15 01:17:25 UTC**, immediately before observation 01, this filesystem
+had **99,769,405,440 bytes free (about 92.9 GiB)**, above the frozen memory
+minimum of **63,786,975,232 bytes (about 59.4 GiB)**. Space is sufficient at this check. Required inputs, free space
 and exact stage admission must be checked again immediately before execution.
 
 | Order | Work | Exit before advancing |
 | --- | --- | --- |
-| 1 | Finish the bounded numerical-import characterization and resolve observed held-runtime incompatibilities. | Fixed-source fixture checks pass; one bounded development characterization retains its exact request/environment/source/invocation and pass or failure. An explicit supported dependency profile and authored native compatibility checks follow the observations. Freeze and review the exact held-runtime configuration before its separate qualification. |
+| 1 | Implement and review the separately numbered development amendment after observation 01's preserved environment failure; resolve observed held-runtime incompatibilities. | Bounded environment-delta and partial-failure diagnostics pass authored checks, the EGL environment contract is explicit, and the changed exact source/request is reviewed before another installed-stack invocation. Retain observation 01 unchanged. Use valid finite observations plus authored native checks to define a supported profile; freeze/review it before separate held-runtime qualification. |
 | 2 | Connect declared inventory, reservation/scene seals, model custody and the authenticated worker to natural-episode recording close. | One executable parent/worker route covers exact environment/process identity, progress and escaped descendants, one-owner lease, storage and every fixed clock bucket. Fault checks and independent review pass; the complete source/runtime/input allocation is admitted before actual collection. |
 | 3 | Finish memory replay-to-condition/case close, pruning and family admission. | After explicit amendment-02 approval, invoke the registered replay once and independently audit it. A pass precedes complete nine-condition/case-close admission and the full study. Independent source work can proceed while approval is pending. |
 | 4 | Execute separately admitted memory and puck studies; resolve the next MaleCNS study prospectively. | Complete valid development and separately admitted held-out evidence meets the unchanged scientific/capability boundaries. A failed stage stops its lane with evidence and a concrete prospective decision. |
 | 5 | Integrate supported results into the lab and six artworks. | Actual browser encounters and declared-duration visual/audio/keyboard/viewport, mapping, export, replay, recovery and endurance checks pass on the integrated candidate. |
 | 6 | Conduct artistic/operator acceptance and deliver the reproducible release. | Recorded user acceptance, independent installation and all six modes, final integrated verification and all seven gate records are complete. |
 
-**Immediate characterization allocation:** use the existing bounded supervisor,
-60 seconds normal / 70 seconds hard, a sampled 1 GiB parent-plus-child RSS stop
-threshold, 64 MiB output, 1 GiB free-space floor and at most one child. Import only
-NumPy, Torch and MuJoCo from the exact registered site root/environment. Retain
-actual cache/alias/producer identities, raw versions and persistent mapped-image
-observations. No model, scene, catalog, retained-study or fitting inputs are opened.
-This development observation grants no scientific attempt, native-owner execution,
-collection, complete native/JIT closure or release qualification. Preserve a failure;
-do not automatically retry. The sampled RSS stop threshold is not a hard memory bound.
+**Observation-01 allocation (consumed; not permission to rerun):** the existing
+bounded supervisor used 60 seconds normal / 70 seconds hard, a sampled 1 GiB
+parent-plus-child RSS stop threshold, 64 MiB output, 1 GiB free-space floor and
+at most one child. It invoked ordinary NumPy/Torch/MuJoCo imports from the exact
+registered site/environment. NumPy and Torch versions were observed before the
+MuJoCo environment failure; the intended full cache/export/maps census was not
+reached. No model, scene, catalog, retained-study or fitting inputs were opened.
+Its result grants no scientific attempt, native-owner execution, collection,
+complete native/JIT closure or release qualification. A new development allocation
+must be separately numbered and reviewed; do not automatically retry. The sampled
+RSS stop threshold is not a hard memory bound.
 
-**Why this unit comes first:** the current worker entry is preflight-only. The
-held file-descriptor native route fails an authored origin-relative shared-library
-fixture; installed-source inspection identifies Torch virtual cache exports and
-NumPy environment changes the present import guard does not support. Actual
-compatibility is unqualified. Resolve those observed contracts before attempting
-held numerical qualification or dispatching a real collection owner. PRs #128,
-#130 and #131 provide inventory, dependency custody and recording-close source
-mechanisms; reuse them in the complete route.
+**Why this unit comes first:** the held worker entry is still preflight-only.
+The held file-descriptor native route fails an authored origin-relative library
+fixture, and Torch's finite virtual cache exports still need explicit admission.
+The actual development observation now also establishes a MuJoCo environment
+failure. Full runtime compatibility remains unqualified. Resolve these concrete
+contracts before held numerical qualification or an actual collection owner.
+PRs #128, #130 and #131 provide inventory, dependency custody and recording-close
+source mechanisms; reuse them in the complete route.
 
 **Three prospective decisions remain pending:** memory qualification amendment 02
 in PR #119; public mixed-catalog collision access versus independent identity-only
@@ -449,9 +458,11 @@ remain required. All seven simulation gates remain open.
 
 ## First action when pursuing this goal
 
-Start with the bounded numerical-import characterization and explicit held-runtime
-compatibility profile described above. Its result is development evidence, not a
-held-runtime or collection qualification. Then continue the **puck durable
+Start with the separately numbered, source-derived development amendment and
+failure diagnostics described above. Observation 01 in PR #132 is consumed;
+ordinary import evidence remains separate from held-runtime qualification.
+Review changed exact source/request before another installed-stack invocation,
+then establish the supported held-runtime profile. Continue the **puck durable
 owner/stage launcher** from PR #121's independently
 audited original-bundle result, PR #120's descriptor-held execution context,
 and PR #122's reviewed native publication and fixed-clock integration. Use
@@ -552,3 +563,24 @@ progress/escaped-descendant drain, shared lease, storage/clock acceptance and th
 complete launcher remain required. No actual original/catalog/model/owner/study
 ran. Default pytest still stops at missing FastAPI. All seven release gates and
 three prospective decisions stay open; no consumed attempt was retried.
+
+
+[Draft PR #132](https://github.com/Aadrika08/palimpsest/pull/132), published at
+`8b6d798`, implements the bounded numerical-import characterizer and fixed parent
+capsule. Final source `f3a70fc` passes 50 focused checks (2.86s); fresh initial
+review passed 15 authored fixtures independently before the tested data-shape
+amendment. The single installed-stack observation failed exact-environment
+admission during MuJoCo import, after NumPy2.2.5 and Torch2.9.0+cu128 were observed.
+Supervisor exit1, 1.825320657s, sampled633090048B, no matching group survivors.
+An independent outcome audit validated all eleven lossless records (5917 dataB)
+and all five source hashes. Source inspection shows EGL assigns an absent
+PYOPENGL_PLATFORM; the missing runtime delta prevents sole-mutation proof.
+The [source/evidence report](https://github.com/Aadrika08/palimpsest/blob/research/puck-v3-runtime-interop/docs/reports/puck-v3-runtime-interop-source.md)
+retains the failure, review boundaries, budget deviations and exact invocation.
+No full cache/export/maps census, original-model inference, physics, collection
+or study ran. No automatic rerun follows. Next implement bounded failure
+diagnostics and a separately numbered reviewed development environment amendment;
+continue authored native compatibility work without consuming another actual
+installed-stack observation. All seven release gates and three pending decisions
+remain open. Default pytest produced ten FastAPI/httpx collection errors (1.78s),
+not a full-suite pass.
