@@ -16,7 +16,8 @@ The [creator/source evidence](puck-cpu-held-preparation-v1/source-evidence.md)
 and [derivation program](puck-cpu-held-preparation-v1/derive-profile-01.py) explain
 the exact predictions and separately rendered Torch helper. The final plan uses
 four disjoint roots: SITE0, selected/usr1, selected/etc2, generated helper3.
-The original29 host metadata entries span/usr and/etc; they cannot be represented
+The archived Torch licence keeps its original bytes and whitespace; only that
+file has a scoped whitespace-check attribute. The original29 host metadata entries span/usr and/etc; they cannot be represented
 as one/usr/lib source root. The helper index was corrected before publication.
 
 The explicitly versioned profile is accepted only by dependency-v3. It binds the
