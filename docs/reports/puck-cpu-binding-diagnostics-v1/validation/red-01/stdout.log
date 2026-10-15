@@ -1,0 +1,99 @@
+FFF                                                                      [100%]
+=================================== FAILURES ===================================
+_ test_export_resolution_failure_identifies_second_row_without_running_hooks[native_create] _
+
+phase = 'native_create'
+
+    @pytest.mark.parametrize('phase', ['native_create', 'module_exec'])
+    def test_export_resolution_failure_identifies_second_row_without_running_hooks(phase):
+        import types
+        from palimpsest.puck_dependency_bindings import ExportBindings
+    
+        class RawOnly(types.ModuleType):
+            def __getattribute__(self, name):
+                raise AssertionError('ATTRIBUTE_HOOK_RAN')
+    
+            def __getattr__(self, name):
+                raise AssertionError('MISSING_HOOK_RAN')
+    
+        producer = RawOnly('authored_dep.producer')
+        producer.ready = types.ModuleType('authored_dep.ready')
+        producer.nested = RawOnly('authored_dep.nested')
+        producer.later = types.ModuleType('authored_dep.later')
+        profile = {'module_changes': [], 'native_origins': [], 'exports': [
+            {'name': 'authored_dep.ready', 'producer': 'authored_dep.producer',
+             'phase': phase, 'attributes': ['ready'], 'class_binding': None},
+            {'name': 'authored_dep.unavailable', 'producer': 'authored_dep.producer',
+             'phase': phase, 'attributes': ['nested', 'unavailable'], 'class_binding': None},
+            {'name': 'authored_dep.later', 'producer': 'authored_dep.producer',
+             'phase': phase, 'attributes': ['later'], 'class_binding': None},
+        ]}
+        bindings = ExportBindings(profile)
+        bindings.begin('authored_dep.producer', producer)
+        with pytest.raises(RuntimeError) as caught:
+            bindings.complete('authored_dep.producer', phase)
+        message = str(caught.value)
+>       assert "producer='authored_dep.producer'" in message
+E       assert "producer='authored_dep.producer'" in 'Dependency producer attribute binding is missing'
+
+tests/test_puck_dependency_profile.py:91: AssertionError
+_ test_export_resolution_failure_identifies_second_row_without_running_hooks[module_exec] _
+
+phase = 'module_exec'
+
+    @pytest.mark.parametrize('phase', ['native_create', 'module_exec'])
+    def test_export_resolution_failure_identifies_second_row_without_running_hooks(phase):
+        import types
+        from palimpsest.puck_dependency_bindings import ExportBindings
+    
+        class RawOnly(types.ModuleType):
+            def __getattribute__(self, name):
+                raise AssertionError('ATTRIBUTE_HOOK_RAN')
+    
+            def __getattr__(self, name):
+                raise AssertionError('MISSING_HOOK_RAN')
+    
+        producer = RawOnly('authored_dep.producer')
+        producer.ready = types.ModuleType('authored_dep.ready')
+        producer.nested = RawOnly('authored_dep.nested')
+        producer.later = types.ModuleType('authored_dep.later')
+        profile = {'module_changes': [], 'native_origins': [], 'exports': [
+            {'name': 'authored_dep.ready', 'producer': 'authored_dep.producer',
+             'phase': phase, 'attributes': ['ready'], 'class_binding': None},
+            {'name': 'authored_dep.unavailable', 'producer': 'authored_dep.producer',
+             'phase': phase, 'attributes': ['nested', 'unavailable'], 'class_binding': None},
+            {'name': 'authored_dep.later', 'producer': 'authored_dep.producer',
+             'phase': phase, 'attributes': ['later'], 'class_binding': None},
+        ]}
+        bindings = ExportBindings(profile)
+        bindings.begin('authored_dep.producer', producer)
+        with pytest.raises(RuntimeError) as caught:
+            bindings.complete('authored_dep.producer', phase)
+        message = str(caught.value)
+>       assert "producer='authored_dep.producer'" in message
+E       assert "producer='authored_dep.producer'" in 'Dependency producer attribute binding is missing'
+
+tests/test_puck_dependency_profile.py:91: AssertionError
+____ test_fresh_worker_retains_export_resolution_context_and_original_cause ____
+
+tmp_path = PosixPath('/tmp/palimpsest-cpu-binding-diagnostics-red-01/test_fresh_worker_retains_expo0')
+
+    def test_fresh_worker_retains_export_resolution_context_and_original_cause(tmp_path):
+        def mutate(deps, root):
+            profile = fixture_profile(deps, root)
+            profile['exports'][1]['attributes'] = ['nested', 'unavailable']
+    
+        result, _ = dependency_fixture(tmp_path,
+            'import fixture_dep.producer\nraise AssertionError("AFTER_IMPORT_RAN")', mutate=mutate)
+        assert result.returncode != 0 and result.stdout == ''
+        assert 'AFTER_IMPORT_RAN' not in result.stderr and 'HOOK' not in result.stderr
+>       assert "producer='fixture_dep.producer'" in result.stderr
+E       assert "producer='fixture_dep.producer'" in 'Traceback (most recent call last):\n  File "<string>", line 10, in <module>\n  File "/tmp/palimpsest-cpu-binding-diag...^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nRuntimeError: Dependency producer attribute binding is missing\n'
+E        +  where 'Traceback (most recent call last):\n  File "<string>", line 10, in <module>\n  File "/tmp/palimpsest-cpu-binding-diag...^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nRuntimeError: Dependency producer attribute binding is missing\n' = CompletedProcess(args=['/home/utkarsh/Work/shraddha/brain/.worktrees/r0-reproduction/.venv/bin/python', '-I', '-B', '-...^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nRuntimeError: Dependency producer attribute binding is missing\n').stderr
+
+tests/test_puck_dependency_profile.py:109: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_puck_dependency_profile.py::test_export_resolution_failure_identifies_second_row_without_running_hooks[native_create]
+FAILED tests/test_puck_dependency_profile.py::test_export_resolution_failure_identifies_second_row_without_running_hooks[module_exec]
+FAILED tests/test_puck_dependency_profile.py::test_fresh_worker_retains_export_resolution_context_and_original_cause
+3 failed, 42 deselected in 1.32s

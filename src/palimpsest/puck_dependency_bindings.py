@@ -147,9 +147,11 @@ def _namespace(value):
 
 def _resolve(module, attributes):
     value=module
-    for key in attributes:
+    for index,key in enumerate(attributes):
         namespace=_namespace(value)
-        if key not in namespace: raise RuntimeError('Dependency producer attribute binding is missing')
+        if key not in namespace:
+            raise RuntimeError('Dependency producer attribute binding is missing: '
+                               f'component {key!r} at index {index}')
         value=namespace[key]
     return value
 
@@ -372,7 +374,12 @@ class ExportBindings:
         for row in self.profile['exports']:
             if row['producer']!=name or row['phase']!=phase: continue
             if row['name'] in self.prepared: raise RuntimeError('Dependency export phase repeated')
-            value=_resolve(producer,row['attributes'])
+            try:
+                value=_resolve(producer,row['attributes'])
+            except RuntimeError as error:
+                raise RuntimeError('Dependency export binding resolution failed: '
+                    f'producer={name!r}; phase={phase!r}; export={row["name"]!r}; '
+                    f'attributes={row["attributes"]!r}') from error
             self.bind_class(type(value),row['class_binding'])
             self.prepared[row['name']]=(row,ModuleSeal(value,virtual=True))
         ExportBindings.recheck(self)

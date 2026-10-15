@@ -1,0 +1,31 @@
+Traceback (most recent call last):
+  File "/tmp/palimpsest-cpu-binding-diagnostics-observation-01/source/src/palimpsest/puck_dependency_bindings.py", line 378, in complete
+    value=_resolve(producer,row['attributes'])
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/palimpsest-cpu-binding-diagnostics-observation-01/source/src/palimpsest/puck_dependency_bindings.py", line 153, in _resolve
+    raise RuntimeError('Dependency producer attribute binding is missing: '
+RuntimeError: Dependency producer attribute binding is missing: component 'unavailable' at index 1
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "<string>", line 10, in <module>
+  File "/tmp/palimpsest-cpu-binding-diagnostics-observation-01/source/scripts/puck_worker_bootstrap.py", line 651, in <module>
+    if __name__ == '__main__': main()
+                               ^^^^^^
+  File "/tmp/palimpsest-cpu-binding-diagnostics-observation-01/source/scripts/puck_worker_bootstrap.py", line 644, in main
+    receipt = admission.invoke()
+              ^^^^^^^^^^^^^^^^^^
+  File "/tmp/palimpsest-cpu-binding-diagnostics-observation-01/source/scripts/puck_worker_bootstrap.py", line 617, in invoke
+    self.recheck(); result = module.qualify(self) if qualification else module.preflight(self); self.recheck()
+                                                                        ^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/palimpsest-cpu-binding-diagnostics-observation-01/source/src/palimpsest/puck_worker_preflight.py", line 2, in preflight
+    import fixture_dep.producer
+  File "<frozen importlib._bootstrap>", line 1176, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1147, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 690, in _load_unlocked
+  File "/tmp/palimpsest-cpu-binding-diagnostics-observation-01/source/src/palimpsest/puck_dependency_imports.py", line 160, in exec_module
+    ExportBindings.complete(owner.bindings,name,'module_exec')
+  File "/tmp/palimpsest-cpu-binding-diagnostics-observation-01/source/src/palimpsest/puck_dependency_bindings.py", line 380, in complete
+    raise RuntimeError('Dependency export binding resolution failed: '
+RuntimeError: Dependency export binding resolution failed: producer='fixture_dep.producer'; phase='module_exec'; export='fixture_dep.cache_name'; attributes=['nested', 'unavailable']

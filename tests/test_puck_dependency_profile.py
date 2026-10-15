@@ -59,6 +59,61 @@ def test_declared_export_is_prepared_before_later_cache_publication_without_hook
     assert receipt['dependencies_qualified'] is receipt['collection_authorized'] is False
 
 
+@pytest.mark.parametrize('phase', ['native_create', 'module_exec'])
+def test_export_resolution_failure_identifies_second_row_without_running_hooks(phase):
+    import types
+    from palimpsest.puck_dependency_bindings import ExportBindings
+
+    class RawOnly(types.ModuleType):
+        def __getattribute__(self, name):
+            raise AssertionError('ATTRIBUTE_HOOK_RAN')
+
+        def __getattr__(self, name):
+            raise AssertionError('MISSING_HOOK_RAN')
+
+    producer = RawOnly('authored_dep.producer')
+    producer.ready = types.ModuleType('authored_dep.ready')
+    producer.nested = RawOnly('authored_dep.nested')
+    producer.later = types.ModuleType('authored_dep.later')
+    profile = {'module_changes': [], 'native_origins': [], 'exports': [
+        {'name': 'authored_dep.ready', 'producer': 'authored_dep.producer',
+         'phase': phase, 'attributes': ['ready'], 'class_binding': None},
+        {'name': 'authored_dep.unavailable', 'producer': 'authored_dep.producer',
+         'phase': phase, 'attributes': ['nested', 'unavailable'], 'class_binding': None},
+        {'name': 'authored_dep.later', 'producer': 'authored_dep.producer',
+         'phase': phase, 'attributes': ['later'], 'class_binding': None},
+    ]}
+    bindings = ExportBindings(profile)
+    bindings.begin('authored_dep.producer', producer)
+    with pytest.raises(RuntimeError) as caught:
+        bindings.complete('authored_dep.producer', phase)
+    message = str(caught.value)
+    assert "producer='authored_dep.producer'" in message
+    assert 'phase='+repr(phase) in message
+    assert "export='authored_dep.unavailable'" in message
+    assert "attributes=['nested', 'unavailable']" in message
+    assert type(caught.value.__cause__) is RuntimeError
+    assert "component 'unavailable' at index 1" in str(caught.value.__cause__)
+    assert set(bindings.prepared) == {'authored_dep.ready'}
+
+
+def test_fresh_worker_retains_export_resolution_context_and_original_cause(tmp_path):
+    def mutate(deps, root):
+        profile = fixture_profile(deps, root)
+        profile['exports'][1]['attributes'] = ['nested', 'unavailable']
+
+    result, _ = dependency_fixture(tmp_path,
+        'import fixture_dep.producer\nraise AssertionError("AFTER_IMPORT_RAN")', mutate=mutate)
+    assert result.returncode != 0 and result.stdout == ''
+    assert 'AFTER_IMPORT_RAN' not in result.stderr and 'HOOK' not in result.stderr
+    assert "producer='fixture_dep.producer'" in result.stderr
+    assert "phase='module_exec'" in result.stderr
+    assert "export='fixture_dep.cache_name'" in result.stderr
+    assert "attributes=['nested', 'unavailable']" in result.stderr
+    assert "component 'unavailable' at index 1" in result.stderr
+    assert 'The above exception was the direct cause' in result.stderr
+
+
 @pytest.mark.parametrize('change', ['object','edge','class','code','missing','metadata','unknown','unprepared'])
 def test_export_declarations_never_allow_wrong_objects_or_later_drift(tmp_path, change):
     actions={
