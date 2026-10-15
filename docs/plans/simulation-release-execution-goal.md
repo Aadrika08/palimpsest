@@ -31,58 +31,56 @@ and the pending study decisions; C and D retain their own browser and human
 evidence requirements. Disk clearance removes the disk blocker only. It does not
 resolve failed controller scores, the memory ordering conflict or human acceptance.
 
-The immediate action within A is to finish and review configuration02 for the
-existing retained package tree, invoke that read-only admission once, and audit
-its actual outcome. A passing preparation receipt is followed by the exact
-four-import qualification and real episode route below. Preserve a failed stage
-and diagnose its recorded cause before proposing another numbered configuration.
+The immediate action within A is to finish the exact CPU preparation/qualification
+parent and complete tmpfs staging for the accepted package tree. Bind a finite
+CPU-specific import/native/EGL profile, emit descriptor-v3, freeze the exact source,
+configuration and whole-stage resource limits, then review and qualify it once.
+The worker's four-import route already exists; the older parent and registration
+builder still emit three-import/dependency-v2 contracts and need substantive
+staging/configuration work. An unchanged tree does not need another installation
+or retained-data admission to start that implementation.
+
 Every added prerequisite must identify the checkpoint and smallest blocked check;
 source-only hardening is not a substitute for reaching the episode deliverable.
+A failed actual stage retains its outcome and consumed allocation. No study or
+numerical invocation follows from a source fixture alone.
 
-## Current step within checkpoint A: accept the installed package tree
+## Completed dependency within checkpoint A: accepted package data
 
-**Deliver an accepted, measured local installation of the 71 verified wheels.**
-All71 artifacts were installed in allocation01, but its parent/supervisor failed
-log teardown. The separate failure audit measures27,225 files/1,304,701,872 regular
-bytes and retains96 licence files. This is verified retained data, not installation
-acceptance. The [actual report](https://github.com/Aadrika08/palimpsest/blob/research/puck-cpu-install-v1/docs/reports/puck-cpu-install-01.md)
-keeps both failures and all original missing finalizer receipts explicit.
-Complete the separately reviewed retained-tree admission before tmpfs staging,
-numerical qualification or scientific work; do not rerun allocation01.
+**The exact retained71-wheel tree now has passing preparation acceptance.**
+[Draft PR #144](https://github.com/Aadrika08/palimpsest/pull/144) retains the
+[actual admission02 report](https://github.com/Aadrika08/palimpsest/blob/research/puck-cpu-retained-admission-v1/docs/reports/puck-cpu-retained-admission-02.md),
+source freeze `41e128c025ac2d9c52f434ca674bdf4d1f31dadf`, exact configuration
+SHA256 `32605ca0d48537a6eabf98a54d605ad23bf525456760d83726381aeaf38e3e96`,
+and independently verified current bytes/receipts. The actual parent returns0
+in15.475359s, admitting27,225 regular files/1,304,701,872B and2,074 directories.
+The independent audit03 returns0 in4.676837s and verifies96 licence identities,
+all124 source/input pins and132 receipt fingerprints. Peak sampled parent RSS
+is75,276,288B; closure records zero children/threads and5→5 descriptors.
 
-Retained-tree admission01 also ran once and failed after87.950787s on a held
-directory/ancestor identity check. Its diagnostic did not identify the path;
-preparation acceptance remains false. The original result, missing receipts,
-acceptance-audit failure and frozen source are preserved in CPU branch
-`research/puck-cpu-retained-admission-v1`, evidence commit
-`5f5c7343527aed84461f1b509c917d49bb56aeb1`. A subsequent bounded observation shows
-current unrelated outside-ancestor timestamp activity; it does not establish
-admission01's historical failed path.
+Installation01 and retained admission01 remain FAIL. The latter failed a held
+ancestor/directory check after87.950787s without naming the path; subsequent
+outside-ancestor activity does not establish that historical failed path.
+Admission02 uses a separately reviewed private profile with full selected-tree
+metadata/contents/hashes and stable outside-ancestor pathname identities.
+Public collection/dependency profiles are unchanged. The sole authenticated NumPy
+`.pyc` remains inert data. All124 focused source checks pass.
 
-The private corrected profile keeps full metadata, exact contents and hashes
-inside the selected package tree, while checking outside ancestors by stable
-path identity. Authored sibling-change/ancestor-redirection regressions and the
-separate namespace-scale fixture pass within their scopes; independent source
-review found no critical or important issue. This remains uncommitted source
-work pending the distinct configuration02 freeze/review and actual outcome.
-Public collection/dependency policies and every study boundary remain unchanged.
+Checker02's configuration-serialization assumption failed before its package
+census. Its source and FAIL remain preserved. The separate reviewed checker03
+validates the original input hash and exact compact receipt bytes required by
+the frozen writer; the actual admission was not rerun. The report retains33
+byte-identical indexed files, both checker outcomes and normal terminal evidence.
 
-- [ ] Accept the exact wheel tree under a distinct reviewed preparation receipt.
-  The offline installation uses the pinned local installer/interpreter, with no
-  dependency expansion, network access, source builds, bytecode compilation or
-  target-package execution. A new data-only admission must explicitly handle the
-  one unchanged authenticated NumPy `.pyc`; the original blanket refusal stands.
-- [x] Retain the complete installed file census and hashes, distribution and
-  wheel identities, actual relocation results, measured installed size and
-  licence contents. Preserve the exact invocation, limits, logs, terminal result
-  and process cleanup as failed-allocation and separate derivative evidence.
-- [ ] Audit that result and publish the installation location and reproducible
-  preparation instructions. Use the measured tree to specify the subsequent
-  tmpfs/native/EGL custody and four-import qualification configuration.
+- [x] Accept the exact current package tree under a distinct reviewed receipt.
+- [x] Retain complete census/hashes, wheel/distribution/relocation identities,
+  measured installed size and licence contents with original failed evidence.
+- [x] Independently audit the result and publish the installed location,
+  preparation provenance, actual limits and source/configuration evidence.
 
-**Exit:** an actual retained installation with a distinct passing preparation receipt.
-A new proposal, helper or fixture pass does not complete this work unit. This
-exit qualifies package preparation only; all seven release gates remain open.
+**Scope:** package preparation only. The numerical stack, native/render/operator
+behavior and real episode remain unqualified; all seven release gates stay open.
+Use this measured accepted tree for the next tmpfs/four-import configuration.
 
 ## Next milestone: one real simulator episode
 
@@ -105,8 +103,8 @@ test counts cannot satisfy either actual-runtime exit below.
 1. **Prepare the installed runtime.** The pinned package payloads and wheel RECORD
    entries have actual audited evidence in PR #141. PR #142 adds the built and
    independently verified python-louvain wheel: all 71 candidate wheel artifacts
-   are now available. Complete the installed-tree admission exit above before preparing
-   the tmpfs configuration. Specify the exact interpreter, native/EGL paths,
+   are now available, and admission02 above accepts the retained installed tree.
+   Build the tmpfs configuration from that measured tree. Specify the exact interpreter, native/EGL paths,
    staging and custody from the measured installation.
    Finish the CPU preparation/qualification parent using the reviewed four-import
    entry. This produces a reviewable executable configuration, not a passing run.
@@ -164,19 +162,18 @@ substitute for numerical results, capability, actual browser use or human accept
 | 5 | Integrate and experience the product. | One candidate supports the lab and all six artworks; actual browser, mapping, replay, export, interruption and endurance checks pass. |
 | 6 | Accept and deliver that candidate. | Artistic/operator sessions, final verification and all seven gate records are complete; the installation and evidence package are reproducible. |
 
-**Current next action:** finish and independently review the distinct retained
-admission02 configuration under
-`docs/plans/puck-cpu-retained-installation-admission-execution-v2.md` in CPU branch
-`research/puck-cpu-retained-admission-v1`. Freeze its exact source, outside-ancestor
-identity policy, measured installed namespace, authenticated inert-bytecode
-exception, limits and durable new receipts. Recheck resources, invoke02 once and
-independently audit the actual result. Preserve installation01 and admission01
-as FAIL; their missing receipts stay missing. Package acceptance requires02's
-actual passing outcome under its declared checks.
-Then finish interpreter/stdlib/native/EGL/tmpfs custody and the executable fixed
-four-import configuration using measured sizes and fresh resource admission.
-Review each actual configuration before invocation. Steps1–2 must pass before
-any episode collection begins.
+**Current next action:** implement the separate CPU preparation/qualification
+parent and staging builder, reusing the reviewed descriptor-v3/four-import worker.
+Bind the admitted inventory/snapshot/result/audit; stage every required package
+and native leaf on tmpfs; preserve inert-bytecode restrictions and the original
+trusted interpreter/stdlib baseline. Resolve the CPU-specific finite import and
+native/EGL profile before freezing the executable configuration. A version-field
+change or old retained observation is insufficient. If new characterization is
+required, freeze and independently review its own distinct finite engineering
+allocation; do not silently rerun observations01/02. Recheck full-stage RAM,
+storage, descriptor and process admission before an actual invocation.
+Then obtain a passing exact four-import qualification with normal cleanup and an
+independent audit. Steps1–2 must pass before the real episode allocation begins.
 Review the family qualification binding in parallel without opening a new
 scientific allocation. The directory-enumeration source fix is complete within
 its tested scope; the first actual family admission remains open.
@@ -188,9 +185,9 @@ source-hardening programme or count test totals as release progress.
 
 ## Current starting point and decisions
 
-At **2026-10-15 08:34:19 UTC**, the project filesystem has **99,596,255,232 bytes
-(92.76 GiB) available**. The same metadata-only check reports **2,631,467,008 bytes
-(2.45 GiB) MemAvailable**. Disk clearance removes the reported disk blocker;
+At **2026-10-15 08:52:09 UTC**, the project filesystem has **99,580,465,152 bytes
+(92.74 GiB) available**. The same metadata-only check reports **3,690,725,376 bytes
+(3.44 GiB) MemAvailable**. Disk clearance removes the reported disk blocker;
 available RAM is transient and this snapshot does not admit the complete CPU/EGL
 closure. Keep archives and build scratch on the project disk; stage only the exact
 required runtime inputs on tmpfs under its reviewed native-identity policy.
@@ -198,6 +195,12 @@ Recheck retained inputs, actual installed sizes, writable/executable staging,
 custody and all resource limits immediately before each admitted stage. The older
 RAM shortfall in PR #138 remains a historical observation, not a new measurement.
 
+- [Draft PR #144](https://github.com/Aadrika08/palimpsest/pull/144) supplies
+  accepted retained package preparation as detailed above. It does not accept the
+  historical installer teardown, qualify the numerical runtime or close any
+  release gate. Complete tmpfs/native/EGL staging, the CPU import profile and the
+  exact four-import parent remain the next executable gap. No real simulator
+  episode or scientific allocation ran in this unit.
 - [Draft PR #143](https://github.com/Aadrika08/palimpsest/pull/143) supplies the
   actual offline installation and independently verified retained namespace:
   all71 distributions,27,225 regular files/1,304,701,872B,2,074 directories and
@@ -210,7 +213,8 @@ RAM shortfall in PR #138 remains a historical observation, not a new measurement
   retains both programs and136 byte-identical indexed artifacts. All124 focused
   source checks pass, including the real authored namespace fixture. The current
   host/tool baseline matches; the missing original post-baseline receipt stays
-  missing. No numerical runtime, controller or release gate is qualified.
+  missing. Admission02 above now supplies a distinct preparation acceptance;
+  no numerical runtime, controller or release gate is qualified.
 - [PR #137](https://github.com/Aadrika08/palimpsest/pull/137) supplies the reviewed
   tmpfs-only native dependency identity policy; [PR #136](https://github.com/Aadrika08/palimpsest/pull/136)
   supplies finite expected-missing-import handling.
@@ -227,7 +231,8 @@ RAM shortfall in PR #138 remains a historical observation, not a new measurement
   retain exact source/configuration, complete raw evidence and the audit program.
   Invocation 01 remains a preserved namespace-launch failure; its independent
   failure-audit stdout bookkeeping error is recorded. Packages were uninstalled
-  at that stage; PR143 above now retains an unaccepted installed tree. No numerical
+  at that stage; PR143 retained installation data and PR144 above now accepts that
+  data under a distinct preparation receipt. No numerical
   runtime, study, controller or release gate is qualified.
 - [Draft PR #141](https://github.com/Aadrika08/palimpsest/pull/141) supplies actual
   full-payload evidence:71 archives/385,328,518B,70 wheels with complete RECORD
@@ -259,9 +264,10 @@ study; and a concrete resolution of the memory ordering conflict. Continuation
 and disk clearance do not approve those decisions.
 
 CPU installation01 and retained admission01 remain failed and consumed; their
-read-only evidence does not grant preparation acceptance. Preparation01, qualification01, runtime
-observations01/02 and navigation
-attempts 1/2 remain consumed. Memory amendment 02 remains uninvoked. No silent
+read-only evidence does not grant historical acceptance. Distinct admission02
+accepts only current package preparation. The earlier preparation01,
+qualification01, runtime observations01/02 and navigation attempts1/2 remain
+consumed. Memory amendment 02 remains uninvoked. No silent
 retry, reordered study, altered threshold or invented passing receipt is permitted.
 A failed actual stage stops its lane with preserved evidence and a concrete
 prospective next decision; independent implementation work may continue.
