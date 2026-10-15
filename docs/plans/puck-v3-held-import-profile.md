@@ -34,9 +34,9 @@ before child imports; exported instances published later; fresh generated classe
 per factory invocation; raw metadata hooks; post-import object/class/code/edge
 mutation; unknown/declared-but-unprepared names; helper dispatch tampering.
 
-- [ ] Task1: authored fresh-worker RED fixtures for declarations and transitions;
+- [x] Task1: authored fresh-worker RED fixtures for declarations and transitions;
   strict finite schema and phase integration; green existing v1 regressions.
-- [ ] Task2: authored C RED/GREEN origin proof preserving v1, explicit v2 loader
+- [x] Task2: authored C RED/GREEN origin proof preserving v1, explicit v2 loader
   integration and unknown persistent-image rejection; record host limitations.
 - [ ] Task3: complete native-create export fixture and generated-factory mutation
   negatives, exact candidate profile covering 52 observed exceptional rows, source
@@ -59,3 +59,14 @@ census. Native helper APIs frozen in the independent authored-fixture task.
 Ruling: implement inline, with independent bounded native-helper task permitted by
 efficient-frontier; single fresh integration review at end. Preserve scope and
 all source/runtime qualification distinctions. No new prospective study decision.
+
+Progress: implementation and all authored integration paths pass143 checks55.66s.
+Native phase, late publication, early replacement, generated-per-call class,
+metadata-hook avoidance, unknown/unprepared entry, copied-code, exact loader and
+support callback checks are exercised. Full-suite attempt stops at ten inherited
+FastAPI/httpx collection errors1.87s. Fresh whole-branch review/publication pending.
+Ruling: generated factory association trusts held initialization, with exact held
+factory/method code, local name/base and captured class identities. It does not
+prove arbitrary construction provenance against malicious in-process package code;
+claiming isolation would invalidate qualification. Native directory origin likewise
+trusts initialization and detects persistent mismatches after a possible race.
