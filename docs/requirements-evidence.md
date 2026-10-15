@@ -182,14 +182,23 @@ unchanged; no final execution/runtime GO is claimed.
 
 
 The [execution goal](plans/simulation-release-execution-goal.md#active-objective-and-next-deliverable)
-now separates the full seven-gate simulation release from its next executable
-milestone. The first unit is a bounded numerical-import characterization, then
-observed held-runtime compatibility fixes and the complete collection launcher.
-The runtime-interop branch currently has a plan and missing-script fixture tests;
-no characterization or held numerical qualification has run. At 15 October 01:02 UTC,
-99,770,359,808 bytes were free (about 92.9 GiB), above the unchanged memory floor.
-No study or human acceptance occurred in this documentation update. All seven
-release statuses and all three prospective decisions remain unchanged.
+retains the full seven-gate simulation release. [Draft PR #132](https://github.com/Aadrika08/palimpsest/pull/132),
+head `8b6d798`, adds the bounded numerical-import characterizer and fixed parent.
+Final source `f3a70fc` passes 50 focused checks (2.86s). The single installed-stack
+observation failed exact-environment admission during MuJoCo import after observing
+NumPy2.2.5 and Torch2.9.0+cu128: exit1, 1.825320657s, sampled633090048B and no
+matching group survivors. An independent failure-evidence audit checked all eleven
+lossless records and all five source hashes. No full cache/export/maps census,
+original-model inference, physics, collection, study or browser workflow ran.
+The [source/evidence report](https://github.com/Aadrika08/palimpsest/blob/research/puck-v3-runtime-interop/docs/reports/puck-v3-runtime-interop-source.md)
+retains exact inputs, outcome and scope. EGL source explains a likely mutation;
+without a captured delta it is not sole-mutation proof. Do not automatically retry.
+Next implement bounded failure diagnostics and a separately numbered development
+environment amendment, reviewing its exact source/request before another invocation.
+Prelaunch free space was 99,769,405,440 bytes at 15 October 01:17:25 UTC, above the
+unchanged memory floor. Default pytest retains ten FastAPI/httpx collection errors;
+no full-suite pass is claimed. All seven release statuses and three prospective
+decisions remain unchanged.
 
 ## Functional matrix
 
