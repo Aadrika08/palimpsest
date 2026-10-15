@@ -620,7 +620,11 @@ class HeldWorkerBootstrap:
             # Result data cannot overwrite receipt identity or authority fields.
             receipt = self.snapshot(); receipt['entry_result'] = copy.deepcopy(result)
             return receipt
-        except BaseException as error: self._fail(error); raise
+        except BaseException as error:
+            self._fail(error)
+            if error is not self._first_failure:
+                raise error from self._first_failure
+            raise
 
     def __exit__(self, exc_type, exc, tb):
         if exc is not None:
