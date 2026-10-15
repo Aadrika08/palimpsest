@@ -95,3 +95,9 @@ admission, then separately freeze actual05 only after that source exit. Preserve
 the one-row candidate and the other 32 declarations. The product milestone remains
 one admitted real episode with verified recording, replay and portable export.
 All seven release gates remain open; physical rover work follows accepted simulation.
+
+The initial post-commit archive check caught three indexed input copies omitted
+by the existing `runs/` Git ignore rule. The [archive correction](puck-cpu-characterization-03-archive-correction.json)
+retains that failed check and force-adds only the exact three unchanged files.
+The index, original evidence and runtime sources remain unchanged; no actual
+observation or outcome-auditor invocation was repeated.
