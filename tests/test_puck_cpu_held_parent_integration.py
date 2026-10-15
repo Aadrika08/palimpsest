@@ -45,7 +45,7 @@ def write(root,name,value):
     return dict(path=name,size_bytes=len(raw),sha256=digest(raw))
 
 
-def project(tmp_path,*,rocm_probe=False):
+def project(tmp_path,*,rocm_probe=False,binding_failure=False):
     project=tmp_path/'authored-project';project.mkdir(mode=0o700)
     current=load(ROOT/PARENT,'cpu_authored_current_parent')
     marker=b'min_available_ram_bytes=(4096 if phase==\'prepare\' else 2048)*MiB'
@@ -152,9 +152,11 @@ def project(tmp_path,*,rocm_probe=False):
                            observation_result='raw/result.json',observation_audit='outcome-audit-02.json')
     document('observation_index',dict(kind='cpu-characterization-evidence-index-v2',
         entries=[dict(inputs[role],path=path) for role,path in observation_names.items()]))
+    exports=([dict(name='torch._authored_missing',producer='torch',phase='module_exec',
+                   attributes=['_authored_missing'],class_binding=None)] if binding_failure else [])
     document('candidate',dict(kind='puck-cpu-observed-import-profile-candidate-v1',version=1,
         expected_versions=dict(api.VERSIONS),module_paths=sorted(modules,key=lambda r:r['name']),namespaces=[],
-        import_profile=dict(kind='puck-producer-import-profile-v2',version=2,exports=[],module_changes=[],native_origins=[],native_cache=[]),
+        import_profile=dict(kind='puck-producer-import-profile-v2',version=2,exports=exports,module_changes=[],native_origins=[],native_cache=[]),
         additional_package_inputs=[dict(root='docs/authored/generated',files=[dict(inputs['generated'],path=helper_name)])],
         retained_inventory_sha256=inputs['inventory']['sha256'],observation_report_sha256=inputs['observation_report']['sha256'],
         configuration_sha256=inputs['observation_configuration']['sha256'],outcome_audit_sha256=inputs['observation_audit']['sha256'],

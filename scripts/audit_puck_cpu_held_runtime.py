@@ -26,6 +26,7 @@ INTERPRETER=dict(path=PYTHON,size_bytes=21662864,sha256='572cfa2a8597e2f431c7856
 PARENT='scripts/qualify_puck_cpu_held_runtime.py'
 HISTORICAL_AUDITOR_SHA256='19723b4ec19c6cd8fd29d38b5cbabab60f89c136ee37564f6e94175439b4eed9'
 BOOTSTRAP='scripts/puck_worker_bootstrap.py'
+BINDINGS='src/palimpsest/puck_dependency_bindings.py'
 OUTPUTS=dict(prepare='runs/puck-cpu-held-preparation-01',qualify='runs/puck-cpu-held-qualification-01')
 VERSIONS=dict(numpy='2.2.5',torch='2.9.0+cpu',torchvision='0.24.0+cpu',mujoco='3.3.6')
 CLAIMS=dict(runtime_qualified=False,native_authorized=False,collection_authorized=False,study_authorized=False,executable=False,qualification_claims=[])
@@ -190,7 +191,7 @@ def limits(phase,authored):
 
 
 def configuration(config,authored):
-    phase=config.get('phase');version={'puck-cpu-held-runtime-allocation-v2':2,'puck-cpu-held-runtime-allocation-v3':3}.get(config.get('kind'),1);amended=version in (2,3)
+    phase=config.get('phase');version={'puck-cpu-held-runtime-allocation-v2':2,'puck-cpu-held-runtime-allocation-v3':3,'puck-cpu-held-runtime-allocation-v4':4}.get(config.get('kind'),1);amended=version in (2,3,4)
     keys={'kind','version','phase','allocation_id','root','stage_parent','sources','inputs','interpreter','environment','expected_versions','limits','negative_imports','claims'}
     if phase=='qualify':keys.add('preparation_acceptance' if amended else 'preparation')
     require(phase in OUTPUTS and (not amended or phase=='qualify') and set(config)==keys and config['kind']=='puck-cpu-held-runtime-allocation-v'+str(version) and type(config['version']) is int and config['version']==version and type(config['allocation_id']) is int and config['allocation_id']==version,'Exact allocation configuration required')
@@ -203,7 +204,7 @@ def configuration(config,authored):
     for row in config['inputs'].values():pin(row)
     require(len({r['path'] for r in rows})==len(rows),'Overlapping source/input paths')
     expected=['org'] if authored else ['numpy._distributor_init_local','org']
-    if version==3:expected=expected+['torch._rocm_init']
+    if version in (3,4):expected=expected+['torch._rocm_init']
     require(config['negative_imports']==expected,'Exact finite missing-import roster required')
     if amended:
         acceptance=config['preparation_acceptance']
@@ -214,13 +215,13 @@ def configuration(config,authored):
 
 
 def allocation_output(config):
-    return {2:'runs/puck-cpu-held-qualification-02',3:'runs/puck-cpu-held-qualification-03'}[config['version']] if config['version'] in (2,3) else OUTPUTS[config['phase']]
+    return {2:'runs/puck-cpu-held-qualification-02',3:'runs/puck-cpu-held-qualification-03',4:'runs/puck-cpu-held-qualification-04'}[config['version']] if config['version'] in (2,3,4) else OUTPUTS[config['phase']]
 
 
 def preparation_epoch(current,historical,prep):
     require(historical.get('kind')=='puck-cpu-held-runtime-allocation-v1' and type(historical.get('version')) is int and historical['version']==1 and historical.get('phase')=='prepare' and type(historical.get('allocation_id')) is int and historical['allocation_id']==1,'Historical preparation01 configuration required')
     shared=('root','stage_parent','inputs','interpreter','environment','expected_versions','negative_imports','claims')
-    if current['version']==3:
+    if current['version'] in (3,4):
         shared=tuple(k for k in shared if k!='negative_imports')
         old_missing=historical['negative_imports']
         require(old_missing in (['org'],['numpy._distributor_init_local','org']) and current['negative_imports']==old_missing+['torch._rocm_init'],'Qualification03 missing-import delta differs')
@@ -229,7 +230,9 @@ def preparation_epoch(current,historical,prep):
     old={r['path']:r for r in historical['sources']};new={r['path']:r for r in current['sources']}
     require(list(old)==list(SOURCES) and list(new)==list(SOURCES),'Historical/current source roster differs')
     changed={name for name in old if canonical(old[name])!=canonical(new[name])}
-    require(BOOTSTRAP in changed and changed<={PARENT,BOOTSTRAP},'Source amendment must change bootstrap and only parent/bootstrap')
+    if current['version']==4:
+        require({BOOTSTRAP,BINDINGS}<=changed<={PARENT,BOOTSTRAP,BINDINGS},'Qualification04 must change bootstrap/bindings and only optional parent')
+    else:require(BOOTSTRAP in changed and changed<={PARENT,BOOTSTRAP},'Source amendment must change bootstrap and only parent/bootstrap')
 
 
 def historical_acceptance(held,current,authored):
@@ -486,7 +489,7 @@ def namespace_command(config,data,phase,worker_command):
         if phase=='qualify' and path not in expected:origin=stage+'/inputs/'+('root-0001' if path.startswith('/usr/') else 'root-0002')+'/'+path[5:]
         command+=['--ro-bind',origin,path]
     for path,target in sorted(aliases.items(),key=lambda item:(item[0].count('/'),item[0])):command+=['--symlink',target,path]
-    source=base/'worker-source' if phase=='qualify' and config['version'] in (2,3) else prepared/('parent-source' if phase=='prepare' else 'worker-source')
+    source=base/'worker-source' if phase=='qualify' and config['version'] in (2,3,4) else prepared/('parent-source' if phase=='prepare' else 'worker-source')
     command+=['--ro-bind',str(source),'/puck/source','--ro-bind',str(base/'control'),'/puck/control']
     if phase=='prepare':
         command+=['--bind',stage,'/puck/staged']
@@ -516,7 +519,7 @@ def audit(config_path,expected_sha256,transport_path,expected_transport_sha256,*
         if not authored:require(transport.get('phase')==phase and transport.get('timed_out') is False,'Normal phase-matched external transport required')
         command=[PYTHON,'-I','-S','-B',str(root/PARENT),'--configuration',str(config_path),'--sha256',expected_sha256];require(transport.get('command')==command,'Exact isolated parent transport command required')
         for name in ('stdout','stderr'):
-            row=pin(transport.get(name));expectedpath=('authored-'+({2:'qualify02',3:'qualify03'}[config['version']] if config['version'] in (2,3) else phase)+'-cli.'+name) if authored else allocation_output(config)+'-external-cli.'+name
+            row=pin(transport.get(name));expectedpath=('authored-'+({2:'qualify02',3:'qualify03',4:'qualify04'}[config['version']] if config['version'] in (2,3,4) else phase)+'-cli.'+name) if authored else allocation_output(config)+'-external-cli.'+name
             require(row['path']==expectedpath,'Exact external transport stream path required');held.file(root/row['path'],row,16*MiB,raw=True)
         retained,_=held.json(base/'configuration.json',maximum=MiB,lf=True);require(retained==config and held.files[str(base/'configuration.json')]['raw']==raw,'Retained configuration bytes differ')
         blobs={};data={};sources={}
@@ -538,7 +541,7 @@ def audit(config_path,expected_sha256,transport_path,expected_transport_sha256,*
         prepbase=root/OUTPUTS['prepare']
         if phase=='prepare':prep=result;prepconfig=config
         else:
-            if config['version'] in (2,3):
+            if config['version'] in (2,3,4):
                 prepconfig,prep,prior_audit=historical_acceptance(held,config,authored)
                 _,pcraw=held.json(prepbase/'configuration.json',maximum=MiB,lf=True)
                 require(pcraw==held.files[str(root/config['preparation_acceptance']['configuration']['path'])]['raw'],'Historical retained configuration bytes differ')
@@ -550,7 +553,7 @@ def audit(config_path,expected_sha256,transport_path,expected_transport_sha256,*
         for folder,names in (('parent-source',SOURCES),('worker-source',WORKER)):
             for name in names:
                 row=next(r for r in prepconfig['sources'] if r['path']==name);held.file(prepbase/folder/name,row,MiB)
-        if config['version'] in (2,3):
+        if config['version'] in (2,3,4):
             for name in WORKER:
                 row=next(r for r in config['sources'] if r['path']==name);held.file(base/'worker-source'/name,row,MiB)
         copy,_=held.json(prepbase/'control/copy-registration.json',lf=False);require(canonical(copy,False)==canonical(source,False),'Independent source file plan differs')
@@ -561,7 +564,7 @@ def audit(config_path,expected_sha256,transport_path,expected_transport_sha256,*
         stage,stage_raw=held.json(prepbase/'payload/stage.json',maximum=MiB,lf=True);no_authority(stage);require(stage.get('kind')=='puck-cpu-tmpfs-preparation-receipt-v1' and stage.get('status')=='prepared' and stage.get('dependencies')==ref and stage.get('staged_roots')==prep.get('staged_roots'),'Preparation stage receipt differs')
         require(held.file(prepbase/'logs/stdout.log',maximum=MiB,raw=True)==stage_raw,'Preparation stdout/stage receipt differs')
         held.file(prepbase/'logs/stderr.log',maximum=16*MiB)
-        if config['version'] in (2,3):
+        if config['version'] in (2,3,4):
             require(prior_audit.get('file_count')==sum(len(r['files']) for r in dep['roots']) and prior_audit.get('input_bytes')==sum(f['size_bytes'] for r in dep['roots'] for f in r['files']) and prior_audit.get('directory_count')==sum(len(d) for d in directories),'Historical preparation audit data totals differ')
         tree=forest(held,config,dependency,directories,prep['staged_roots'])
         if phase=='qualify':
@@ -576,7 +579,7 @@ def audit(config_path,expected_sha256,transport_path,expected_transport_sha256,*
         require(forest(held,config,dependency,directories,prep['staged_roots'])==tree,'Staged namespace changed during audit')
         own=held.file(absolute(str(Path(__file__).resolve())),maximum=MiB);held.recheck();held.clock()
         report=dict(CLAIMS,kind='puck-cpu-held-runtime-independent-audit-v1',version=1,status='PASS',phase=phase,evidence_scope='AUTHORED fixture only' if authored else 'ordinary CPU held allocation only',configuration_sha256=expected_sha256,transport_sha256=expected_transport_sha256,auditor_source_sha256=own['sha256'],result_sha256=sha(result_raw),dependencies_sha256=sha(depraw),root_count=4,file_count=sum(len(r['files']) for r in dep['roots']),directory_count=sum(len(d) for d in directories),input_bytes=sum(f['size_bytes'] for r in dep['roots'] for f in r['files']),baseline=summary,observed_status=result['status'],held_four_imports_observed=phase=='qualify',external_returncode=0,supervision_scope='descendants' if phase=='qualify' else 'group',configured_process_limit=3,tracked_process_identities=len(observed.get('tracked_processes',[])),limitations=['RSS and process enforcement are sampled operational observations; preparation has no retained process-count peak.','No numerical, model, renderer, collection, study or release authority is granted.'])
-        if config['version'] in (2,3):
+        if config['version'] in (2,3,4):
             report.update(kind='puck-cpu-held-runtime-independent-audit-v'+str(config['version']),version=config['version'],allocation_id=config['allocation_id'],preparation_configuration_sha256=config['preparation_acceptance']['configuration']['sha256'],preparation_result_sha256=config['preparation_acceptance']['result']['sha256'],historical_source_epoch_sha256=sha(canonical(prepconfig['sources'],False)),current_source_epoch_sha256=sha(canonical(config['sources'],False)))
     finally:held.close()
     require(len(os.listdir('/proc/self/fd'))==before and not Path('/proc/self/task/'+str(os.getpid())+'/children').read_text().split() and len(os.listdir('/proc/self/task'))==1,'Auditor closure failed')
