@@ -1,0 +1,915 @@
+F...................................................FFFFFFFFFFFFFFFFFFFF [ 73%]
+FFFFFFFFFFFFFFFFFFFFFFFFFF                                               [100%]
+=================================== FAILURES ===================================
+___________ test05_accepts_only_explicit_source_and_candidate_epochs ___________
+
+    def test05_accepts_only_explicit_source_and_candidate_epochs():
+        m,config,blobs,old,new=acceptance05_case()
+>       prior,prepared=validate_both(m,config,blobs)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_puck_cpu_held_amendment05.py:92: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_puck_cpu_held_amendment05.py:83: in validate_both
+    m.validate_configuration(config)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+config = {'allocation_id': 5, 'claims': {'collection_authorized': False, 'executable': False, 'native_authorized': False, 'qual....}, 'expected_versions': {'mujoco': '3.3.6', 'numpy': '2.2.5', 'torch': '2.9.0+cpu', 'torchvision': '0.24.0+cpu'}, ...}
+
+    def validate_configuration(config):
+        keys={'kind','version','phase','allocation_id','root','stage_parent','sources','inputs',
+              'interpreter','environment','expected_versions','limits','negative_imports','claims'}
+        phase=config.get('phase') if type(config) is dict else None
+        kind=config.get('kind') if type(config) is dict else None
+        epoch=4 if kind=='puck-cpu-held-runtime-allocation-v4' else 3 if kind=='puck-cpu-held-runtime-allocation-v3' else 2 if kind=='puck-cpu-held-runtime-allocation-v2' else 1
+        amended=epoch in (2,3,4)
+        if amended:keys.add('preparation_acceptance')
+        elif phase=='qualify':keys.add('preparation')
+        if (phase not in LIMITS or set(config)!=keys or (amended and phase!='qualify')
+                or config['kind']!='puck-cpu-held-runtime-allocation-v'+str(epoch)
+                or type(config['version']) is not int or config['version']!=epoch
+                or type(config['allocation_id']) is not int or config['allocation_id']!=epoch
+                or config['root']!=str(ROOT) or canonical(config['limits'])!=canonical(LIMITS[phase])
+                or config['interpreter']!=INTERPRETER or canonical(config['environment'])!=canonical(ENVIRONMENT)
+                or config['expected_versions']!=VERSIONS or canonical(config['claims'])!=canonical(CLAIMS)):
+>           raise ValueError('Exact CPU allocation configuration required')
+E           ValueError: Exact CPU allocation configuration required
+
+scripts/qualify_puck_cpu_held_runtime.py:170: ValueError
+_ test05_semantic_candidate_delta_refuses_fully_rebound_tampering[other-row-parent] _
+
+provider = 'parent', defect = 'other-row'
+
+    @pytest.mark.parametrize('provider',['parent','independent'])
+    @pytest.mark.parametrize('defect',[
+        'other-row','module-map','namespace','helper','provenance','top-field','native-cache',
+        'module-change','missing-target','duplicate-target','old-missing-target','old-duplicate-target',
+        'old-row','creator','path','phase','class','missing-delegates','extra-delegates',
+        'unsorted-delegates','duplicate-delegates','missing-delegate-field','extra-row-field',
+    ])
+    def test05_semantic_candidate_delta_refuses_fully_rebound_tampering(provider,defect):
+        m,config,blobs,old,new=acceptance05_case()
+>       validator=m.validate_publication_candidate if provider=='parent' else auditor_api().publication_candidate
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'cpu_held_parent_test' has no attribute 'validate_publication_candidate'
+
+tests/test_puck_cpu_held_amendment05.py:210: AttributeError
+_ test05_semantic_candidate_delta_refuses_fully_rebound_tampering[other-row-independent] _
+
+provider = 'independent', defect = 'other-row'
+
+    @pytest.mark.parametrize('provider',['parent','independent'])
+    @pytest.mark.parametrize('defect',[
+        'other-row','module-map','namespace','helper','provenance','top-field','native-cache',
+        'module-change','missing-target','duplicate-target','old-missing-target','old-duplicate-target',
+        'old-row','creator','path','phase','class','missing-delegates','extra-delegates',
+        'unsorted-delegates','duplicate-delegates','missing-delegate-field','extra-row-field',
+    ])
+    def test05_semantic_candidate_delta_refuses_fully_rebound_tampering(provider,defect):
+        m,config,blobs,old,new=acceptance05_case()
+>       validator=m.validate_publication_candidate if provider=='parent' else auditor_api().publication_candidate
+                                                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'independent_cpu_audit_test' has no attribute 'publication_candidate'
+
+tests/test_puck_cpu_held_amendment05.py:210: AttributeError
+_ test05_semantic_candidate_delta_refuses_fully_rebound_tampering[module-map-parent] _
+
+provider = 'parent', defect = 'module-map'
+
+    @pytest.mark.parametrize('provider',['parent','independent'])
+    @pytest.mark.parametrize('defect',[
+        'other-row','module-map','namespace','helper','provenance','top-field','native-cache',
+        'module-change','missing-target','duplicate-target','old-missing-target','old-duplicate-target',
+        'old-row','creator','path','phase','class','missing-delegates','extra-delegates',
+        'unsorted-delegates','duplicate-delegates','missing-delegate-field','extra-row-field',
+    ])
+    def test05_semantic_candidate_delta_refuses_fully_rebound_tampering(provider,defect):
+        m,config,blobs,old,new=acceptance05_case()
+>       validator=m.validate_publication_candidate if provider=='parent' else auditor_api().publication_candidate
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'cpu_held_parent_test' has no attribute 'validate_publication_candidate'
+
+tests/test_puck_cpu_held_amendment05.py:210: AttributeError
+_ test05_semantic_candidate_delta_refuses_fully_rebound_tampering[module-map-independent] _
+
+provider = 'independent', defect = 'module-map'
+
+    @pytest.mark.parametrize('provider',['parent','independent'])
+    @pytest.mark.parametrize('defect',[
+        'other-row','module-map','namespace','helper','provenance','top-field','native-cache',
+        'module-change','missing-target','duplicate-target','old-missing-target','old-duplicate-target',
+        'old-row','creator','path','phase','class','missing-delegates','extra-delegates',
+        'unsorted-delegates','duplicate-delegates','missing-delegate-field','extra-row-field',
+    ])
+    def test05_semantic_candidate_delta_refuses_fully_rebound_tampering(provider,defect):
+        m,config,blobs,old,new=acceptance05_case()
+>       validator=m.validate_publication_candidate if provider=='parent' else auditor_api().publication_candidate
+                                                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'independent_cpu_audit_test' has no attribute 'publication_candidate'
+
+tests/test_puck_cpu_held_amendment05.py:210: AttributeError
+_ test05_semantic_candidate_delta_refuses_fully_rebound_tampering[namespace-parent] _
+
+provider = 'parent', defect = 'namespace'
+
+    @pytest.mark.parametrize('provider',['parent','independent'])
+    @pytest.mark.parametrize('defect',[
+        'other-row','module-map','namespace','helper','provenance','top-field','native-cache',
+        'module-change','missing-target','duplicate-target','old-missing-target','old-duplicate-target',
+        'old-row','creator','path','phase','class','missing-delegates','extra-delegates',
+        'unsorted-delegates','duplicate-delegates','missing-delegate-field','extra-row-field',
+    ])
+    def test05_semantic_candidate_delta_refuses_fully_rebound_tampering(provider,defect):
+        m,config,blobs,old,new=acceptance05_case()
+>       validator=m.validate_publication_candidate if provider=='parent' else auditor_api().publication_candidate
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'cpu_held_parent_test' has no attribute 'validate_publication_candidate'
+
+tests/test_puck_cpu_held_amendment05.py:210: AttributeError
+_ test05_semantic_candidate_delta_refuses_fully_rebound_tampering[namespace-independent] _
+
+provider = 'independent', defect = 'namespace'
+
+    @pytest.mark.parametrize('provider',['parent','independent'])
+    @pytest.mark.parametrize('defect',[
+        'other-row','module-map','namespace','helper','provenance','top-field','native-cache',
+        'module-change','missing-target','duplicate-target','old-missing-target','old-duplicate-target',
+        'old-row','creator','path','phase','class','missing-delegates','extra-delegates',
+        'unsorted-delegates','duplicate-delegates','missing-delegate-field','extra-row-field',
+    ])
+    def test05_semantic_candidate_delta_refuses_fully_rebound_tampering(provider,defect):
+        m,config,blobs,old,new=acceptance05_case()
+>       validator=m.validate_publication_candidate if provider=='parent' else auditor_api().publication_candidate
+                                                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'independent_cpu_audit_test' has no attribute 'publication_candidate'
+
+tests/test_puck_cpu_held_amendment05.py:210: AttributeError
+_ test05_semantic_candidate_delta_refuses_fully_rebound_tampering[helper-parent] _
+
+provider = 'parent', defect = 'helper'
+
+    @pytest.mark.parametrize('provider',['parent','independent'])
+    @pytest.mark.parametrize('defect',[
+        'other-row','module-map','namespace','helper','provenance','top-field','native-cache',
+        'module-change','missing-target','duplicate-target','old-missing-target','old-duplicate-target',
+        'old-row','creator','path','phase','class','missing-delegates','extra-delegates',
+        'unsorted-delegates','duplicate-delegates','missing-delegate-field','extra-row-field',
+    ])
+    def test05_semantic_candidate_delta_refuses_fully_rebound_tampering(provider,defect):
+        m,config,blobs,old,new=acceptance05_case()
+>       validator=m.validate_publication_candidate if provider=='parent' else auditor_api().publication_candidate
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'cpu_held_parent_test' has no attribute 'validate_publication_candidate'
+
+tests/test_puck_cpu_held_amendment05.py:210: AttributeError
+_ test05_semantic_candidate_delta_refuses_fully_rebound_tampering[helper-independent] _
+
+provider = 'independent', defect = 'helper'
+
+    @pytest.mark.parametrize('provider',['parent','independent'])
+    @pytest.mark.parametrize('defect',[
+        'other-row','module-map','namespace','helper','provenance','top-field','native-cache',
+        'module-change','missing-target','duplicate-target','old-missing-target','old-duplicate-target',
+        'old-row','creator','path','phase','class','missing-delegates','extra-delegates',
+        'unsorted-delegates','duplicate-delegates','missing-delegate-field','extra-row-field',
+    ])
+    def test05_semantic_candidate_delta_refuses_fully_rebound_tampering(provider,defect):
+        m,config,blobs,old,new=acceptance05_case()
+>       validator=m.validate_publication_candidate if provider=='parent' else auditor_api().publication_candidate
+                                                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'independent_cpu_audit_test' has no attribute 'publication_candidate'
+
+tests/test_puck_cpu_held_amendment05.py:210: AttributeError
+_ test05_semantic_candidate_delta_refuses_fully_rebound_tampering[provenance-parent] _
+
+provider = 'parent', defect = 'provenance'
+
+    @pytest.mark.parametrize('provider',['parent','independent'])
+    @pytest.mark.parametrize('defect',[
+        'other-row','module-map','namespace','helper','provenance','top-field','native-cache',
+        'module-change','missing-target','duplicate-target','old-missing-target','old-duplicate-target',
+        'old-row','creator','path','phase','class','missing-delegates','extra-delegates',
+        'unsorted-delegates','duplicate-delegates','missing-delegate-field','extra-row-field',
+    ])
+    def test05_semantic_candidate_delta_refuses_fully_rebound_tampering(provider,defect):
+        m,config,blobs,old,new=acceptance05_case()
+>       validator=m.validate_publication_candidate if provider=='parent' else auditor_api().publication_candidate
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'cpu_held_parent_test' has no attribute 'validate_publication_candidate'
+
+tests/test_puck_cpu_held_amendment05.py:210: AttributeError
+_ test05_semantic_candidate_delta_refuses_fully_rebound_tampering[provenance-independent] _
+
+provider = 'independent', defect = 'provenance'
+
+    @pytest.mark.parametrize('provider',['parent','independent'])
+    @pytest.mark.parametrize('defect',[
+        'other-row','module-map','namespace','helper','provenance','top-field','native-cache',
+        'module-change','missing-target','duplicate-target','old-missing-target','old-duplicate-target',
+        'old-row','creator','path','phase','class','missing-delegates','extra-delegates',
+        'unsorted-delegates','duplicate-delegates','missing-delegate-field','extra-row-field',
+    ])
+    def test05_semantic_candidate_delta_refuses_fully_rebound_tampering(provider,defect):
+        m,config,blobs,old,new=acceptance05_case()
+>       validator=m.validate_publication_candidate if provider=='parent' else auditor_api().publication_candidate
+                                                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'independent_cpu_audit_test' has no attribute 'publication_candidate'
+
+tests/test_puck_cpu_held_amendment05.py:210: AttributeError
+_ test05_semantic_candidate_delta_refuses_fully_rebound_tampering[top-field-parent] _
+
+provider = 'parent', defect = 'top-field'
+
+    @pytest.mark.parametrize('provider',['parent','independent'])
+    @pytest.mark.parametrize('defect',[
+        'other-row','module-map','namespace','helper','provenance','top-field','native-cache',
+        'module-change','missing-target','duplicate-target','old-missing-target','old-duplicate-target',
+        'old-row','creator','path','phase','class','missing-delegates','extra-delegates',
+        'unsorted-delegates','duplicate-delegates','missing-delegate-field','extra-row-field',
+    ])
+    def test05_semantic_candidate_delta_refuses_fully_rebound_tampering(provider,defect):
+        m,config,blobs,old,new=acceptance05_case()
+>       validator=m.validate_publication_candidate if provider=='parent' else auditor_api().publication_candidate
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'cpu_held_parent_test' has no attribute 'validate_publication_candidate'
+
+tests/test_puck_cpu_held_amendment05.py:210: AttributeError
+_ test05_semantic_candidate_delta_refuses_fully_rebound_tampering[top-field-independent] _
+
+provider = 'independent', defect = 'top-field'
+
+    @pytest.mark.parametrize('provider',['parent','independent'])
+    @pytest.mark.parametrize('defect',[
+        'other-row','module-map','namespace','helper','provenance','top-field','native-cache',
+        'module-change','missing-target','duplicate-target','old-missing-target','old-duplicate-target',
+        'old-row','creator','path','phase','class','missing-delegates','extra-delegates',
+        'unsorted-delegates','duplicate-delegates','missing-delegate-field','extra-row-field',
+    ])
+    def test05_semantic_candidate_delta_refuses_fully_rebound_tampering(provider,defect):
+        m,config,blobs,old,new=acceptance05_case()
+>       validator=m.validate_publication_candidate if provider=='parent' else auditor_api().publication_candidate
+                                                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'independent_cpu_audit_test' has no attribute 'publication_candidate'
+
+tests/test_puck_cpu_held_amendment05.py:210: AttributeError
+_ test05_semantic_candidate_delta_refuses_fully_rebound_tampering[native-cache-parent] _
+
+provider = 'parent', defect = 'native-cache'
+
+    @pytest.mark.parametrize('provider',['parent','independent'])
+    @pytest.mark.parametrize('defect',[
+        'other-row','module-map','namespace','helper','provenance','top-field','native-cache',
+        'module-change','missing-target','duplicate-target','old-missing-target','old-duplicate-target',
+        'old-row','creator','path','phase','class','missing-delegates','extra-delegates',
+        'unsorted-delegates','duplicate-delegates','missing-delegate-field','extra-row-field',
+    ])
+    def test05_semantic_candidate_delta_refuses_fully_rebound_tampering(provider,defect):
+        m,config,blobs,old,new=acceptance05_case()
+>       validator=m.validate_publication_candidate if provider=='parent' else auditor_api().publication_candidate
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'cpu_held_parent_test' has no attribute 'validate_publication_candidate'
+
+tests/test_puck_cpu_held_amendment05.py:210: AttributeError
+_ test05_semantic_candidate_delta_refuses_fully_rebound_tampering[native-cache-independent] _
+
+provider = 'independent', defect = 'native-cache'
+
+    @pytest.mark.parametrize('provider',['parent','independent'])
+    @pytest.mark.parametrize('defect',[
+        'other-row','module-map','namespace','helper','provenance','top-field','native-cache',
+        'module-change','missing-target','duplicate-target','old-missing-target','old-duplicate-target',
+        'old-row','creator','path','phase','class','missing-delegates','extra-delegates',
+        'unsorted-delegates','duplicate-delegates','missing-delegate-field','extra-row-field',
+    ])
+    def test05_semantic_candidate_delta_refuses_fully_rebound_tampering(provider,defect):
+        m,config,blobs,old,new=acceptance05_case()
+>       validator=m.validate_publication_candidate if provider=='parent' else auditor_api().publication_candidate
+                                                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'independent_cpu_audit_test' has no attribute 'publication_candidate'
+
+tests/test_puck_cpu_held_amendment05.py:210: AttributeError
+_ test05_semantic_candidate_delta_refuses_fully_rebound_tampering[module-change-parent] _
+
+provider = 'parent', defect = 'module-change'
+
+    @pytest.mark.parametrize('provider',['parent','independent'])
+    @pytest.mark.parametrize('defect',[
+        'other-row','module-map','namespace','helper','provenance','top-field','native-cache',
+        'module-change','missing-target','duplicate-target','old-missing-target','old-duplicate-target',
+        'old-row','creator','path','phase','class','missing-delegates','extra-delegates',
+        'unsorted-delegates','duplicate-delegates','missing-delegate-field','extra-row-field',
+    ])
+    def test05_semantic_candidate_delta_refuses_fully_rebound_tampering(provider,defect):
+        m,config,blobs,old,new=acceptance05_case()
+>       validator=m.validate_publication_candidate if provider=='parent' else auditor_api().publication_candidate
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'cpu_held_parent_test' has no attribute 'validate_publication_candidate'
+
+tests/test_puck_cpu_held_amendment05.py:210: AttributeError
+_ test05_semantic_candidate_delta_refuses_fully_rebound_tampering[module-change-independent] _
+
+provider = 'independent', defect = 'module-change'
+
+    @pytest.mark.parametrize('provider',['parent','independent'])
+    @pytest.mark.parametrize('defect',[
+        'other-row','module-map','namespace','helper','provenance','top-field','native-cache',
+        'module-change','missing-target','duplicate-target','old-missing-target','old-duplicate-target',
+        'old-row','creator','path','phase','class','missing-delegates','extra-delegates',
+        'unsorted-delegates','duplicate-delegates','missing-delegate-field','extra-row-field',
+    ])
+    def test05_semantic_candidate_delta_refuses_fully_rebound_tampering(provider,defect):
+        m,config,blobs,old,new=acceptance05_case()
+>       validator=m.validate_publication_candidate if provider=='parent' else auditor_api().publication_candidate
+                                                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'independent_cpu_audit_test' has no attribute 'publication_candidate'
+
+tests/test_puck_cpu_held_amendment05.py:210: AttributeError
+_ test05_semantic_candidate_delta_refuses_fully_rebound_tampering[missing-target-parent] _
+
+provider = 'parent', defect = 'missing-target'
+
+    @pytest.mark.parametrize('provider',['parent','independent'])
+    @pytest.mark.parametrize('defect',[
+        'other-row','module-map','namespace','helper','provenance','top-field','native-cache',
+        'module-change','missing-target','duplicate-target','old-missing-target','old-duplicate-target',
+        'old-row','creator','path','phase','class','missing-delegates','extra-delegates',
+        'unsorted-delegates','duplicate-delegates','missing-delegate-field','extra-row-field',
+    ])
+    def test05_semantic_candidate_delta_refuses_fully_rebound_tampering(provider,defect):
+        m,config,blobs,old,new=acceptance05_case()
+>       validator=m.validate_publication_candidate if provider=='parent' else auditor_api().publication_candidate
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'cpu_held_parent_test' has no attribute 'validate_publication_candidate'
+
+tests/test_puck_cpu_held_amendment05.py:210: AttributeError
+_ test05_semantic_candidate_delta_refuses_fully_rebound_tampering[missing-target-independent] _
+
+provider = 'independent', defect = 'missing-target'
+
+    @pytest.mark.parametrize('provider',['parent','independent'])
+    @pytest.mark.parametrize('defect',[
+        'other-row','module-map','namespace','helper','provenance','top-field','native-cache',
+        'module-change','missing-target','duplicate-target','old-missing-target','old-duplicate-target',
+        'old-row','creator','path','phase','class','missing-delegates','extra-delegates',
+        'unsorted-delegates','duplicate-delegates','missing-delegate-field','extra-row-field',
+    ])
+    def test05_semantic_candidate_delta_refuses_fully_rebound_tampering(provider,defect):
+        m,config,blobs,old,new=acceptance05_case()
+>       validator=m.validate_publication_candidate if provider=='parent' else auditor_api().publication_candidate
+                                                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'independent_cpu_audit_test' has no attribute 'publication_candidate'
+
+tests/test_puck_cpu_held_amendment05.py:210: AttributeError
+_ test05_semantic_candidate_delta_refuses_fully_rebound_tampering[duplicate-target-parent] _
+
+provider = 'parent', defect = 'duplicate-target'
+
+    @pytest.mark.parametrize('provider',['parent','independent'])
+    @pytest.mark.parametrize('defect',[
+        'other-row','module-map','namespace','helper','provenance','top-field','native-cache',
+        'module-change','missing-target','duplicate-target','old-missing-target','old-duplicate-target',
+        'old-row','creator','path','phase','class','missing-delegates','extra-delegates',
+        'unsorted-delegates','duplicate-delegates','missing-delegate-field','extra-row-field',
+    ])
+    def test05_semantic_candidate_delta_refuses_fully_rebound_tampering(provider,defect):
+        m,config,blobs,old,new=acceptance05_case()
+>       validator=m.validate_publication_candidate if provider=='parent' else auditor_api().publication_candidate
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'cpu_held_parent_test' has no attribute 'validate_publication_candidate'
+
+tests/test_puck_cpu_held_amendment05.py:210: AttributeError
+_ test05_semantic_candidate_delta_refuses_fully_rebound_tampering[duplicate-target-independent] _
+
+provider = 'independent', defect = 'duplicate-target'
+
+    @pytest.mark.parametrize('provider',['parent','independent'])
+    @pytest.mark.parametrize('defect',[
+        'other-row','module-map','namespace','helper','provenance','top-field','native-cache',
+        'module-change','missing-target','duplicate-target','old-missing-target','old-duplicate-target',
+        'old-row','creator','path','phase','class','missing-delegates','extra-delegates',
+        'unsorted-delegates','duplicate-delegates','missing-delegate-field','extra-row-field',
+    ])
+    def test05_semantic_candidate_delta_refuses_fully_rebound_tampering(provider,defect):
+        m,config,blobs,old,new=acceptance05_case()
+>       validator=m.validate_publication_candidate if provider=='parent' else auditor_api().publication_candidate
+                                                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'independent_cpu_audit_test' has no attribute 'publication_candidate'
+
+tests/test_puck_cpu_held_amendment05.py:210: AttributeError
+_ test05_semantic_candidate_delta_refuses_fully_rebound_tampering[old-missing-target-parent] _
+
+provider = 'parent', defect = 'old-missing-target'
+
+    @pytest.mark.parametrize('provider',['parent','independent'])
+    @pytest.mark.parametrize('defect',[
+        'other-row','module-map','namespace','helper','provenance','top-field','native-cache',
+        'module-change','missing-target','duplicate-target','old-missing-target','old-duplicate-target',
+        'old-row','creator','path','phase','class','missing-delegates','extra-delegates',
+        'unsorted-delegates','duplicate-delegates','missing-delegate-field','extra-row-field',
+    ])
+    def test05_semantic_candidate_delta_refuses_fully_rebound_tampering(provider,defect):
+        m,config,blobs,old,new=acceptance05_case()
+>       validator=m.validate_publication_candidate if provider=='parent' else auditor_api().publication_candidate
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'cpu_held_parent_test' has no attribute 'validate_publication_candidate'
+
+tests/test_puck_cpu_held_amendment05.py:210: AttributeError
+_ test05_semantic_candidate_delta_refuses_fully_rebound_tampering[old-missing-target-independent] _
+
+provider = 'independent', defect = 'old-missing-target'
+
+    @pytest.mark.parametrize('provider',['parent','independent'])
+    @pytest.mark.parametrize('defect',[
+        'other-row','module-map','namespace','helper','provenance','top-field','native-cache',
+        'module-change','missing-target','duplicate-target','old-missing-target','old-duplicate-target',
+        'old-row','creator','path','phase','class','missing-delegates','extra-delegates',
+        'unsorted-delegates','duplicate-delegates','missing-delegate-field','extra-row-field',
+    ])
+    def test05_semantic_candidate_delta_refuses_fully_rebound_tampering(provider,defect):
+        m,config,blobs,old,new=acceptance05_case()
+>       validator=m.validate_publication_candidate if provider=='parent' else auditor_api().publication_candidate
+                                                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'independent_cpu_audit_test' has no attribute 'publication_candidate'
+
+tests/test_puck_cpu_held_amendment05.py:210: AttributeError
+_ test05_semantic_candidate_delta_refuses_fully_rebound_tampering[old-duplicate-target-parent] _
+
+provider = 'parent', defect = 'old-duplicate-target'
+
+    @pytest.mark.parametrize('provider',['parent','independent'])
+    @pytest.mark.parametrize('defect',[
+        'other-row','module-map','namespace','helper','provenance','top-field','native-cache',
+        'module-change','missing-target','duplicate-target','old-missing-target','old-duplicate-target',
+        'old-row','creator','path','phase','class','missing-delegates','extra-delegates',
+        'unsorted-delegates','duplicate-delegates','missing-delegate-field','extra-row-field',
+    ])
+    def test05_semantic_candidate_delta_refuses_fully_rebound_tampering(provider,defect):
+        m,config,blobs,old,new=acceptance05_case()
+>       validator=m.validate_publication_candidate if provider=='parent' else auditor_api().publication_candidate
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'cpu_held_parent_test' has no attribute 'validate_publication_candidate'
+
+tests/test_puck_cpu_held_amendment05.py:210: AttributeError
+_ test05_semantic_candidate_delta_refuses_fully_rebound_tampering[old-duplicate-target-independent] _
+
+provider = 'independent', defect = 'old-duplicate-target'
+
+    @pytest.mark.parametrize('provider',['parent','independent'])
+    @pytest.mark.parametrize('defect',[
+        'other-row','module-map','namespace','helper','provenance','top-field','native-cache',
+        'module-change','missing-target','duplicate-target','old-missing-target','old-duplicate-target',
+        'old-row','creator','path','phase','class','missing-delegates','extra-delegates',
+        'unsorted-delegates','duplicate-delegates','missing-delegate-field','extra-row-field',
+    ])
+    def test05_semantic_candidate_delta_refuses_fully_rebound_tampering(provider,defect):
+        m,config,blobs,old,new=acceptance05_case()
+>       validator=m.validate_publication_candidate if provider=='parent' else auditor_api().publication_candidate
+                                                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'independent_cpu_audit_test' has no attribute 'publication_candidate'
+
+tests/test_puck_cpu_held_amendment05.py:210: AttributeError
+_ test05_semantic_candidate_delta_refuses_fully_rebound_tampering[old-row-parent] _
+
+provider = 'parent', defect = 'old-row'
+
+    @pytest.mark.parametrize('provider',['parent','independent'])
+    @pytest.mark.parametrize('defect',[
+        'other-row','module-map','namespace','helper','provenance','top-field','native-cache',
+        'module-change','missing-target','duplicate-target','old-missing-target','old-duplicate-target',
+        'old-row','creator','path','phase','class','missing-delegates','extra-delegates',
+        'unsorted-delegates','duplicate-delegates','missing-delegate-field','extra-row-field',
+    ])
+    def test05_semantic_candidate_delta_refuses_fully_rebound_tampering(provider,defect):
+        m,config,blobs,old,new=acceptance05_case()
+>       validator=m.validate_publication_candidate if provider=='parent' else auditor_api().publication_candidate
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'cpu_held_parent_test' has no attribute 'validate_publication_candidate'
+
+tests/test_puck_cpu_held_amendment05.py:210: AttributeError
+_ test05_semantic_candidate_delta_refuses_fully_rebound_tampering[old-row-independent] _
+
+provider = 'independent', defect = 'old-row'
+
+    @pytest.mark.parametrize('provider',['parent','independent'])
+    @pytest.mark.parametrize('defect',[
+        'other-row','module-map','namespace','helper','provenance','top-field','native-cache',
+        'module-change','missing-target','duplicate-target','old-missing-target','old-duplicate-target',
+        'old-row','creator','path','phase','class','missing-delegates','extra-delegates',
+        'unsorted-delegates','duplicate-delegates','missing-delegate-field','extra-row-field',
+    ])
+    def test05_semantic_candidate_delta_refuses_fully_rebound_tampering(provider,defect):
+        m,config,blobs,old,new=acceptance05_case()
+>       validator=m.validate_publication_candidate if provider=='parent' else auditor_api().publication_candidate
+                                                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'independent_cpu_audit_test' has no attribute 'publication_candidate'
+
+tests/test_puck_cpu_held_amendment05.py:210: AttributeError
+_ test05_semantic_candidate_delta_refuses_fully_rebound_tampering[creator-parent] _
+
+provider = 'parent', defect = 'creator'
+
+    @pytest.mark.parametrize('provider',['parent','independent'])
+    @pytest.mark.parametrize('defect',[
+        'other-row','module-map','namespace','helper','provenance','top-field','native-cache',
+        'module-change','missing-target','duplicate-target','old-missing-target','old-duplicate-target',
+        'old-row','creator','path','phase','class','missing-delegates','extra-delegates',
+        'unsorted-delegates','duplicate-delegates','missing-delegate-field','extra-row-field',
+    ])
+    def test05_semantic_candidate_delta_refuses_fully_rebound_tampering(provider,defect):
+        m,config,blobs,old,new=acceptance05_case()
+>       validator=m.validate_publication_candidate if provider=='parent' else auditor_api().publication_candidate
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'cpu_held_parent_test' has no attribute 'validate_publication_candidate'
+
+tests/test_puck_cpu_held_amendment05.py:210: AttributeError
+_ test05_semantic_candidate_delta_refuses_fully_rebound_tampering[creator-independent] _
+
+provider = 'independent', defect = 'creator'
+
+    @pytest.mark.parametrize('provider',['parent','independent'])
+    @pytest.mark.parametrize('defect',[
+        'other-row','module-map','namespace','helper','provenance','top-field','native-cache',
+        'module-change','missing-target','duplicate-target','old-missing-target','old-duplicate-target',
+        'old-row','creator','path','phase','class','missing-delegates','extra-delegates',
+        'unsorted-delegates','duplicate-delegates','missing-delegate-field','extra-row-field',
+    ])
+    def test05_semantic_candidate_delta_refuses_fully_rebound_tampering(provider,defect):
+        m,config,blobs,old,new=acceptance05_case()
+>       validator=m.validate_publication_candidate if provider=='parent' else auditor_api().publication_candidate
+                                                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'independent_cpu_audit_test' has no attribute 'publication_candidate'
+
+tests/test_puck_cpu_held_amendment05.py:210: AttributeError
+_ test05_semantic_candidate_delta_refuses_fully_rebound_tampering[path-parent] _
+
+provider = 'parent', defect = 'path'
+
+    @pytest.mark.parametrize('provider',['parent','independent'])
+    @pytest.mark.parametrize('defect',[
+        'other-row','module-map','namespace','helper','provenance','top-field','native-cache',
+        'module-change','missing-target','duplicate-target','old-missing-target','old-duplicate-target',
+        'old-row','creator','path','phase','class','missing-delegates','extra-delegates',
+        'unsorted-delegates','duplicate-delegates','missing-delegate-field','extra-row-field',
+    ])
+    def test05_semantic_candidate_delta_refuses_fully_rebound_tampering(provider,defect):
+        m,config,blobs,old,new=acceptance05_case()
+>       validator=m.validate_publication_candidate if provider=='parent' else auditor_api().publication_candidate
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'cpu_held_parent_test' has no attribute 'validate_publication_candidate'
+
+tests/test_puck_cpu_held_amendment05.py:210: AttributeError
+_ test05_semantic_candidate_delta_refuses_fully_rebound_tampering[path-independent] _
+
+provider = 'independent', defect = 'path'
+
+    @pytest.mark.parametrize('provider',['parent','independent'])
+    @pytest.mark.parametrize('defect',[
+        'other-row','module-map','namespace','helper','provenance','top-field','native-cache',
+        'module-change','missing-target','duplicate-target','old-missing-target','old-duplicate-target',
+        'old-row','creator','path','phase','class','missing-delegates','extra-delegates',
+        'unsorted-delegates','duplicate-delegates','missing-delegate-field','extra-row-field',
+    ])
+    def test05_semantic_candidate_delta_refuses_fully_rebound_tampering(provider,defect):
+        m,config,blobs,old,new=acceptance05_case()
+>       validator=m.validate_publication_candidate if provider=='parent' else auditor_api().publication_candidate
+                                                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'independent_cpu_audit_test' has no attribute 'publication_candidate'
+
+tests/test_puck_cpu_held_amendment05.py:210: AttributeError
+_ test05_semantic_candidate_delta_refuses_fully_rebound_tampering[phase-parent] _
+
+provider = 'parent', defect = 'phase'
+
+    @pytest.mark.parametrize('provider',['parent','independent'])
+    @pytest.mark.parametrize('defect',[
+        'other-row','module-map','namespace','helper','provenance','top-field','native-cache',
+        'module-change','missing-target','duplicate-target','old-missing-target','old-duplicate-target',
+        'old-row','creator','path','phase','class','missing-delegates','extra-delegates',
+        'unsorted-delegates','duplicate-delegates','missing-delegate-field','extra-row-field',
+    ])
+    def test05_semantic_candidate_delta_refuses_fully_rebound_tampering(provider,defect):
+        m,config,blobs,old,new=acceptance05_case()
+>       validator=m.validate_publication_candidate if provider=='parent' else auditor_api().publication_candidate
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'cpu_held_parent_test' has no attribute 'validate_publication_candidate'
+
+tests/test_puck_cpu_held_amendment05.py:210: AttributeError
+_ test05_semantic_candidate_delta_refuses_fully_rebound_tampering[phase-independent] _
+
+provider = 'independent', defect = 'phase'
+
+    @pytest.mark.parametrize('provider',['parent','independent'])
+    @pytest.mark.parametrize('defect',[
+        'other-row','module-map','namespace','helper','provenance','top-field','native-cache',
+        'module-change','missing-target','duplicate-target','old-missing-target','old-duplicate-target',
+        'old-row','creator','path','phase','class','missing-delegates','extra-delegates',
+        'unsorted-delegates','duplicate-delegates','missing-delegate-field','extra-row-field',
+    ])
+    def test05_semantic_candidate_delta_refuses_fully_rebound_tampering(provider,defect):
+        m,config,blobs,old,new=acceptance05_case()
+>       validator=m.validate_publication_candidate if provider=='parent' else auditor_api().publication_candidate
+                                                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'independent_cpu_audit_test' has no attribute 'publication_candidate'
+
+tests/test_puck_cpu_held_amendment05.py:210: AttributeError
+_ test05_semantic_candidate_delta_refuses_fully_rebound_tampering[class-parent] _
+
+provider = 'parent', defect = 'class'
+
+    @pytest.mark.parametrize('provider',['parent','independent'])
+    @pytest.mark.parametrize('defect',[
+        'other-row','module-map','namespace','helper','provenance','top-field','native-cache',
+        'module-change','missing-target','duplicate-target','old-missing-target','old-duplicate-target',
+        'old-row','creator','path','phase','class','missing-delegates','extra-delegates',
+        'unsorted-delegates','duplicate-delegates','missing-delegate-field','extra-row-field',
+    ])
+    def test05_semantic_candidate_delta_refuses_fully_rebound_tampering(provider,defect):
+        m,config,blobs,old,new=acceptance05_case()
+>       validator=m.validate_publication_candidate if provider=='parent' else auditor_api().publication_candidate
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'cpu_held_parent_test' has no attribute 'validate_publication_candidate'
+
+tests/test_puck_cpu_held_amendment05.py:210: AttributeError
+_ test05_semantic_candidate_delta_refuses_fully_rebound_tampering[class-independent] _
+
+provider = 'independent', defect = 'class'
+
+    @pytest.mark.parametrize('provider',['parent','independent'])
+    @pytest.mark.parametrize('defect',[
+        'other-row','module-map','namespace','helper','provenance','top-field','native-cache',
+        'module-change','missing-target','duplicate-target','old-missing-target','old-duplicate-target',
+        'old-row','creator','path','phase','class','missing-delegates','extra-delegates',
+        'unsorted-delegates','duplicate-delegates','missing-delegate-field','extra-row-field',
+    ])
+    def test05_semantic_candidate_delta_refuses_fully_rebound_tampering(provider,defect):
+        m,config,blobs,old,new=acceptance05_case()
+>       validator=m.validate_publication_candidate if provider=='parent' else auditor_api().publication_candidate
+                                                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'independent_cpu_audit_test' has no attribute 'publication_candidate'
+
+tests/test_puck_cpu_held_amendment05.py:210: AttributeError
+_ test05_semantic_candidate_delta_refuses_fully_rebound_tampering[missing-delegates-parent] _
+
+provider = 'parent', defect = 'missing-delegates'
+
+    @pytest.mark.parametrize('provider',['parent','independent'])
+    @pytest.mark.parametrize('defect',[
+        'other-row','module-map','namespace','helper','provenance','top-field','native-cache',
+        'module-change','missing-target','duplicate-target','old-missing-target','old-duplicate-target',
+        'old-row','creator','path','phase','class','missing-delegates','extra-delegates',
+        'unsorted-delegates','duplicate-delegates','missing-delegate-field','extra-row-field',
+    ])
+    def test05_semantic_candidate_delta_refuses_fully_rebound_tampering(provider,defect):
+        m,config,blobs,old,new=acceptance05_case()
+>       validator=m.validate_publication_candidate if provider=='parent' else auditor_api().publication_candidate
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'cpu_held_parent_test' has no attribute 'validate_publication_candidate'
+
+tests/test_puck_cpu_held_amendment05.py:210: AttributeError
+_ test05_semantic_candidate_delta_refuses_fully_rebound_tampering[missing-delegates-independent] _
+
+provider = 'independent', defect = 'missing-delegates'
+
+    @pytest.mark.parametrize('provider',['parent','independent'])
+    @pytest.mark.parametrize('defect',[
+        'other-row','module-map','namespace','helper','provenance','top-field','native-cache',
+        'module-change','missing-target','duplicate-target','old-missing-target','old-duplicate-target',
+        'old-row','creator','path','phase','class','missing-delegates','extra-delegates',
+        'unsorted-delegates','duplicate-delegates','missing-delegate-field','extra-row-field',
+    ])
+    def test05_semantic_candidate_delta_refuses_fully_rebound_tampering(provider,defect):
+        m,config,blobs,old,new=acceptance05_case()
+>       validator=m.validate_publication_candidate if provider=='parent' else auditor_api().publication_candidate
+                                                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'independent_cpu_audit_test' has no attribute 'publication_candidate'
+
+tests/test_puck_cpu_held_amendment05.py:210: AttributeError
+_ test05_semantic_candidate_delta_refuses_fully_rebound_tampering[extra-delegates-parent] _
+
+provider = 'parent', defect = 'extra-delegates'
+
+    @pytest.mark.parametrize('provider',['parent','independent'])
+    @pytest.mark.parametrize('defect',[
+        'other-row','module-map','namespace','helper','provenance','top-field','native-cache',
+        'module-change','missing-target','duplicate-target','old-missing-target','old-duplicate-target',
+        'old-row','creator','path','phase','class','missing-delegates','extra-delegates',
+        'unsorted-delegates','duplicate-delegates','missing-delegate-field','extra-row-field',
+    ])
+    def test05_semantic_candidate_delta_refuses_fully_rebound_tampering(provider,defect):
+        m,config,blobs,old,new=acceptance05_case()
+>       validator=m.validate_publication_candidate if provider=='parent' else auditor_api().publication_candidate
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'cpu_held_parent_test' has no attribute 'validate_publication_candidate'
+
+tests/test_puck_cpu_held_amendment05.py:210: AttributeError
+_ test05_semantic_candidate_delta_refuses_fully_rebound_tampering[extra-delegates-independent] _
+
+provider = 'independent', defect = 'extra-delegates'
+
+    @pytest.mark.parametrize('provider',['parent','independent'])
+    @pytest.mark.parametrize('defect',[
+        'other-row','module-map','namespace','helper','provenance','top-field','native-cache',
+        'module-change','missing-target','duplicate-target','old-missing-target','old-duplicate-target',
+        'old-row','creator','path','phase','class','missing-delegates','extra-delegates',
+        'unsorted-delegates','duplicate-delegates','missing-delegate-field','extra-row-field',
+    ])
+    def test05_semantic_candidate_delta_refuses_fully_rebound_tampering(provider,defect):
+        m,config,blobs,old,new=acceptance05_case()
+>       validator=m.validate_publication_candidate if provider=='parent' else auditor_api().publication_candidate
+                                                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'independent_cpu_audit_test' has no attribute 'publication_candidate'
+
+tests/test_puck_cpu_held_amendment05.py:210: AttributeError
+_ test05_semantic_candidate_delta_refuses_fully_rebound_tampering[unsorted-delegates-parent] _
+
+provider = 'parent', defect = 'unsorted-delegates'
+
+    @pytest.mark.parametrize('provider',['parent','independent'])
+    @pytest.mark.parametrize('defect',[
+        'other-row','module-map','namespace','helper','provenance','top-field','native-cache',
+        'module-change','missing-target','duplicate-target','old-missing-target','old-duplicate-target',
+        'old-row','creator','path','phase','class','missing-delegates','extra-delegates',
+        'unsorted-delegates','duplicate-delegates','missing-delegate-field','extra-row-field',
+    ])
+    def test05_semantic_candidate_delta_refuses_fully_rebound_tampering(provider,defect):
+        m,config,blobs,old,new=acceptance05_case()
+>       validator=m.validate_publication_candidate if provider=='parent' else auditor_api().publication_candidate
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'cpu_held_parent_test' has no attribute 'validate_publication_candidate'
+
+tests/test_puck_cpu_held_amendment05.py:210: AttributeError
+_ test05_semantic_candidate_delta_refuses_fully_rebound_tampering[unsorted-delegates-independent] _
+
+provider = 'independent', defect = 'unsorted-delegates'
+
+    @pytest.mark.parametrize('provider',['parent','independent'])
+    @pytest.mark.parametrize('defect',[
+        'other-row','module-map','namespace','helper','provenance','top-field','native-cache',
+        'module-change','missing-target','duplicate-target','old-missing-target','old-duplicate-target',
+        'old-row','creator','path','phase','class','missing-delegates','extra-delegates',
+        'unsorted-delegates','duplicate-delegates','missing-delegate-field','extra-row-field',
+    ])
+    def test05_semantic_candidate_delta_refuses_fully_rebound_tampering(provider,defect):
+        m,config,blobs,old,new=acceptance05_case()
+>       validator=m.validate_publication_candidate if provider=='parent' else auditor_api().publication_candidate
+                                                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'independent_cpu_audit_test' has no attribute 'publication_candidate'
+
+tests/test_puck_cpu_held_amendment05.py:210: AttributeError
+_ test05_semantic_candidate_delta_refuses_fully_rebound_tampering[duplicate-delegates-parent] _
+
+provider = 'parent', defect = 'duplicate-delegates'
+
+    @pytest.mark.parametrize('provider',['parent','independent'])
+    @pytest.mark.parametrize('defect',[
+        'other-row','module-map','namespace','helper','provenance','top-field','native-cache',
+        'module-change','missing-target','duplicate-target','old-missing-target','old-duplicate-target',
+        'old-row','creator','path','phase','class','missing-delegates','extra-delegates',
+        'unsorted-delegates','duplicate-delegates','missing-delegate-field','extra-row-field',
+    ])
+    def test05_semantic_candidate_delta_refuses_fully_rebound_tampering(provider,defect):
+        m,config,blobs,old,new=acceptance05_case()
+>       validator=m.validate_publication_candidate if provider=='parent' else auditor_api().publication_candidate
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'cpu_held_parent_test' has no attribute 'validate_publication_candidate'
+
+tests/test_puck_cpu_held_amendment05.py:210: AttributeError
+_ test05_semantic_candidate_delta_refuses_fully_rebound_tampering[duplicate-delegates-independent] _
+
+provider = 'independent', defect = 'duplicate-delegates'
+
+    @pytest.mark.parametrize('provider',['parent','independent'])
+    @pytest.mark.parametrize('defect',[
+        'other-row','module-map','namespace','helper','provenance','top-field','native-cache',
+        'module-change','missing-target','duplicate-target','old-missing-target','old-duplicate-target',
+        'old-row','creator','path','phase','class','missing-delegates','extra-delegates',
+        'unsorted-delegates','duplicate-delegates','missing-delegate-field','extra-row-field',
+    ])
+    def test05_semantic_candidate_delta_refuses_fully_rebound_tampering(provider,defect):
+        m,config,blobs,old,new=acceptance05_case()
+>       validator=m.validate_publication_candidate if provider=='parent' else auditor_api().publication_candidate
+                                                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'independent_cpu_audit_test' has no attribute 'publication_candidate'
+
+tests/test_puck_cpu_held_amendment05.py:210: AttributeError
+_ test05_semantic_candidate_delta_refuses_fully_rebound_tampering[missing-delegate-field-parent] _
+
+provider = 'parent', defect = 'missing-delegate-field'
+
+    @pytest.mark.parametrize('provider',['parent','independent'])
+    @pytest.mark.parametrize('defect',[
+        'other-row','module-map','namespace','helper','provenance','top-field','native-cache',
+        'module-change','missing-target','duplicate-target','old-missing-target','old-duplicate-target',
+        'old-row','creator','path','phase','class','missing-delegates','extra-delegates',
+        'unsorted-delegates','duplicate-delegates','missing-delegate-field','extra-row-field',
+    ])
+    def test05_semantic_candidate_delta_refuses_fully_rebound_tampering(provider,defect):
+        m,config,blobs,old,new=acceptance05_case()
+>       validator=m.validate_publication_candidate if provider=='parent' else auditor_api().publication_candidate
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'cpu_held_parent_test' has no attribute 'validate_publication_candidate'
+
+tests/test_puck_cpu_held_amendment05.py:210: AttributeError
+_ test05_semantic_candidate_delta_refuses_fully_rebound_tampering[missing-delegate-field-independent] _
+
+provider = 'independent', defect = 'missing-delegate-field'
+
+    @pytest.mark.parametrize('provider',['parent','independent'])
+    @pytest.mark.parametrize('defect',[
+        'other-row','module-map','namespace','helper','provenance','top-field','native-cache',
+        'module-change','missing-target','duplicate-target','old-missing-target','old-duplicate-target',
+        'old-row','creator','path','phase','class','missing-delegates','extra-delegates',
+        'unsorted-delegates','duplicate-delegates','missing-delegate-field','extra-row-field',
+    ])
+    def test05_semantic_candidate_delta_refuses_fully_rebound_tampering(provider,defect):
+        m,config,blobs,old,new=acceptance05_case()
+>       validator=m.validate_publication_candidate if provider=='parent' else auditor_api().publication_candidate
+                                                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'independent_cpu_audit_test' has no attribute 'publication_candidate'
+
+tests/test_puck_cpu_held_amendment05.py:210: AttributeError
+_ test05_semantic_candidate_delta_refuses_fully_rebound_tampering[extra-row-field-parent] _
+
+provider = 'parent', defect = 'extra-row-field'
+
+    @pytest.mark.parametrize('provider',['parent','independent'])
+    @pytest.mark.parametrize('defect',[
+        'other-row','module-map','namespace','helper','provenance','top-field','native-cache',
+        'module-change','missing-target','duplicate-target','old-missing-target','old-duplicate-target',
+        'old-row','creator','path','phase','class','missing-delegates','extra-delegates',
+        'unsorted-delegates','duplicate-delegates','missing-delegate-field','extra-row-field',
+    ])
+    def test05_semantic_candidate_delta_refuses_fully_rebound_tampering(provider,defect):
+        m,config,blobs,old,new=acceptance05_case()
+>       validator=m.validate_publication_candidate if provider=='parent' else auditor_api().publication_candidate
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'cpu_held_parent_test' has no attribute 'validate_publication_candidate'
+
+tests/test_puck_cpu_held_amendment05.py:210: AttributeError
+_ test05_semantic_candidate_delta_refuses_fully_rebound_tampering[extra-row-field-independent] _
+
+provider = 'independent', defect = 'extra-row-field'
+
+    @pytest.mark.parametrize('provider',['parent','independent'])
+    @pytest.mark.parametrize('defect',[
+        'other-row','module-map','namespace','helper','provenance','top-field','native-cache',
+        'module-change','missing-target','duplicate-target','old-missing-target','old-duplicate-target',
+        'old-row','creator','path','phase','class','missing-delegates','extra-delegates',
+        'unsorted-delegates','duplicate-delegates','missing-delegate-field','extra-row-field',
+    ])
+    def test05_semantic_candidate_delta_refuses_fully_rebound_tampering(provider,defect):
+        m,config,blobs,old,new=acceptance05_case()
+>       validator=m.validate_publication_candidate if provider=='parent' else auditor_api().publication_candidate
+                                                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'independent_cpu_audit_test' has no attribute 'publication_candidate'
+
+tests/test_puck_cpu_held_amendment05.py:210: AttributeError
+=========================== short test summary info ============================
+FAILED tests/test_puck_cpu_held_amendment05.py::test05_accepts_only_explicit_source_and_candidate_epochs
+FAILED tests/test_puck_cpu_held_amendment05.py::test05_semantic_candidate_delta_refuses_fully_rebound_tampering[other-row-parent]
+FAILED tests/test_puck_cpu_held_amendment05.py::test05_semantic_candidate_delta_refuses_fully_rebound_tampering[other-row-independent]
+FAILED tests/test_puck_cpu_held_amendment05.py::test05_semantic_candidate_delta_refuses_fully_rebound_tampering[module-map-parent]
+FAILED tests/test_puck_cpu_held_amendment05.py::test05_semantic_candidate_delta_refuses_fully_rebound_tampering[module-map-independent]
+FAILED tests/test_puck_cpu_held_amendment05.py::test05_semantic_candidate_delta_refuses_fully_rebound_tampering[namespace-parent]
+FAILED tests/test_puck_cpu_held_amendment05.py::test05_semantic_candidate_delta_refuses_fully_rebound_tampering[namespace-independent]
+FAILED tests/test_puck_cpu_held_amendment05.py::test05_semantic_candidate_delta_refuses_fully_rebound_tampering[helper-parent]
+FAILED tests/test_puck_cpu_held_amendment05.py::test05_semantic_candidate_delta_refuses_fully_rebound_tampering[helper-independent]
+FAILED tests/test_puck_cpu_held_amendment05.py::test05_semantic_candidate_delta_refuses_fully_rebound_tampering[provenance-parent]
+FAILED tests/test_puck_cpu_held_amendment05.py::test05_semantic_candidate_delta_refuses_fully_rebound_tampering[provenance-independent]
+FAILED tests/test_puck_cpu_held_amendment05.py::test05_semantic_candidate_delta_refuses_fully_rebound_tampering[top-field-parent]
+FAILED tests/test_puck_cpu_held_amendment05.py::test05_semantic_candidate_delta_refuses_fully_rebound_tampering[top-field-independent]
+FAILED tests/test_puck_cpu_held_amendment05.py::test05_semantic_candidate_delta_refuses_fully_rebound_tampering[native-cache-parent]
+FAILED tests/test_puck_cpu_held_amendment05.py::test05_semantic_candidate_delta_refuses_fully_rebound_tampering[native-cache-independent]
+FAILED tests/test_puck_cpu_held_amendment05.py::test05_semantic_candidate_delta_refuses_fully_rebound_tampering[module-change-parent]
+FAILED tests/test_puck_cpu_held_amendment05.py::test05_semantic_candidate_delta_refuses_fully_rebound_tampering[module-change-independent]
+FAILED tests/test_puck_cpu_held_amendment05.py::test05_semantic_candidate_delta_refuses_fully_rebound_tampering[missing-target-parent]
+FAILED tests/test_puck_cpu_held_amendment05.py::test05_semantic_candidate_delta_refuses_fully_rebound_tampering[missing-target-independent]
+FAILED tests/test_puck_cpu_held_amendment05.py::test05_semantic_candidate_delta_refuses_fully_rebound_tampering[duplicate-target-parent]
+FAILED tests/test_puck_cpu_held_amendment05.py::test05_semantic_candidate_delta_refuses_fully_rebound_tampering[duplicate-target-independent]
+FAILED tests/test_puck_cpu_held_amendment05.py::test05_semantic_candidate_delta_refuses_fully_rebound_tampering[old-missing-target-parent]
+FAILED tests/test_puck_cpu_held_amendment05.py::test05_semantic_candidate_delta_refuses_fully_rebound_tampering[old-missing-target-independent]
+FAILED tests/test_puck_cpu_held_amendment05.py::test05_semantic_candidate_delta_refuses_fully_rebound_tampering[old-duplicate-target-parent]
+FAILED tests/test_puck_cpu_held_amendment05.py::test05_semantic_candidate_delta_refuses_fully_rebound_tampering[old-duplicate-target-independent]
+FAILED tests/test_puck_cpu_held_amendment05.py::test05_semantic_candidate_delta_refuses_fully_rebound_tampering[old-row-parent]
+FAILED tests/test_puck_cpu_held_amendment05.py::test05_semantic_candidate_delta_refuses_fully_rebound_tampering[old-row-independent]
+FAILED tests/test_puck_cpu_held_amendment05.py::test05_semantic_candidate_delta_refuses_fully_rebound_tampering[creator-parent]
+FAILED tests/test_puck_cpu_held_amendment05.py::test05_semantic_candidate_delta_refuses_fully_rebound_tampering[creator-independent]
+FAILED tests/test_puck_cpu_held_amendment05.py::test05_semantic_candidate_delta_refuses_fully_rebound_tampering[path-parent]
+FAILED tests/test_puck_cpu_held_amendment05.py::test05_semantic_candidate_delta_refuses_fully_rebound_tampering[path-independent]
+FAILED tests/test_puck_cpu_held_amendment05.py::test05_semantic_candidate_delta_refuses_fully_rebound_tampering[phase-parent]
+FAILED tests/test_puck_cpu_held_amendment05.py::test05_semantic_candidate_delta_refuses_fully_rebound_tampering[phase-independent]
+FAILED tests/test_puck_cpu_held_amendment05.py::test05_semantic_candidate_delta_refuses_fully_rebound_tampering[class-parent]
+FAILED tests/test_puck_cpu_held_amendment05.py::test05_semantic_candidate_delta_refuses_fully_rebound_tampering[class-independent]
+FAILED tests/test_puck_cpu_held_amendment05.py::test05_semantic_candidate_delta_refuses_fully_rebound_tampering[missing-delegates-parent]
+FAILED tests/test_puck_cpu_held_amendment05.py::test05_semantic_candidate_delta_refuses_fully_rebound_tampering[missing-delegates-independent]
+FAILED tests/test_puck_cpu_held_amendment05.py::test05_semantic_candidate_delta_refuses_fully_rebound_tampering[extra-delegates-parent]
+FAILED tests/test_puck_cpu_held_amendment05.py::test05_semantic_candidate_delta_refuses_fully_rebound_tampering[extra-delegates-independent]
+FAILED tests/test_puck_cpu_held_amendment05.py::test05_semantic_candidate_delta_refuses_fully_rebound_tampering[unsorted-delegates-parent]
+FAILED tests/test_puck_cpu_held_amendment05.py::test05_semantic_candidate_delta_refuses_fully_rebound_tampering[unsorted-delegates-independent]
+FAILED tests/test_puck_cpu_held_amendment05.py::test05_semantic_candidate_delta_refuses_fully_rebound_tampering[duplicate-delegates-parent]
+FAILED tests/test_puck_cpu_held_amendment05.py::test05_semantic_candidate_delta_refuses_fully_rebound_tampering[duplicate-delegates-independent]
+FAILED tests/test_puck_cpu_held_amendment05.py::test05_semantic_candidate_delta_refuses_fully_rebound_tampering[missing-delegate-field-parent]
+FAILED tests/test_puck_cpu_held_amendment05.py::test05_semantic_candidate_delta_refuses_fully_rebound_tampering[missing-delegate-field-independent]
+FAILED tests/test_puck_cpu_held_amendment05.py::test05_semantic_candidate_delta_refuses_fully_rebound_tampering[extra-row-field-parent]
+FAILED tests/test_puck_cpu_held_amendment05.py::test05_semantic_candidate_delta_refuses_fully_rebound_tampering[extra-row-field-independent]
+47 failed, 51 passed in 2.63s

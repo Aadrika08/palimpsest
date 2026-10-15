@@ -1,0 +1,26 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+___ test_authored05_corrects_only_publication_profile_and_audits_both_epochs ___
+
+tmp_path = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/runs/source-validation/cpu-amendment05/isolated-persistent-red-integration-01/tmp/test_authored05_corrects_only_0')
+
+    def test_authored05_corrects_only_publication_profile_and_audits_both_epochs(tmp_path):
+        auditor_path=ROOT/'scripts/audit_puck_cpu_held_runtime.py'
+        auditor=load(auditor_path,'cpu_authored_publication05_auditor')
+        before_fds=len(os.listdir('/proc/self/fd'))
+        with publication05_fixture(tmp_path) as case:
+            root,api,config,stage,prepbase=(case[k] for k in ('root','api','config','stage','prepbase'))
+            identities=[(p.stat().st_dev,p.stat().st_ino) for p in sorted((stage/'inputs').iterdir())]
+            historical_dep=(prepbase/'payload/dependencies.json').read_bytes()
+            code,stdout,stderr=run_cli(root,api,'qualify05',config)
+            base=root/'runs/puck-cpu-held-qualification-05';result_path=base/'result.json'
+            result_raw=result_path.read_bytes() if result_path.exists() else b''
+>           assert code==0,(code,stdout,stderr,result_raw)
+E           AssertionError: (1, b'{"allocation_id":5,"closure":{"active_children":[],"active_non_main_threads":[],"fd_count_after":5,"fd_count_bef..."qualify","qualification_claims":[],"runtime_qualified":false,"status":"FAIL","study_authorized":false,"version":5}
+E             ')
+E           assert 1 == 0
+
+tests/test_puck_cpu_held_amendment05_integration.py:142: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_puck_cpu_held_amendment05_integration.py::test_authored05_corrects_only_publication_profile_and_audits_both_epochs
+1 failed in 6.01s
