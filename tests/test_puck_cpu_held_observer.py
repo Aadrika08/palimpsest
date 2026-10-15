@@ -145,18 +145,19 @@ def test_qualification03_observer_rejects_epoch_alias_before_launch(tmp_path,mon
 
 
 @pytest.mark.parametrize('code',[0,7])
-def test_qualification04_observer_preserves_prior_epochs_and_reserves_once(tmp_path,monkeypatch,code):
+@pytest.mark.parametrize('version',[4,5])
+def test_qualification04_05_observer_preserves_prior_epochs_and_reserves_once(tmp_path,monkeypatch,code,version):
     module,path,_=setup(tmp_path,monkeypatch,'import sys\nprint("authored04")\nsys.exit('+str(code)+')\n')
-    config=json.loads(path.read_bytes());config.update(kind='puck-cpu-held-runtime-allocation-v4',version=4,allocation_id=4,phase='qualify')
+    config=json.loads(path.read_bytes());config.update(kind='puck-cpu-held-runtime-allocation-v'+str(version),version=version,allocation_id=version,phase='qualify')
     raw=module.canonical(config);path.write_bytes(raw);sha=hashlib.sha256(raw).hexdigest()
-    for epoch in ('01','02','03'):
+    for epoch in (str(i).zfill(2) for i in range(1,version)):
         stem='runs/puck-cpu-held-qualification-'+epoch;old=tmp_path/stem;old.mkdir();(old/'result.json').write_bytes(b'preserved consumed'+epoch.encode())
         for suffix in ('-external-cli.stdout','-external-cli.stderr','-external-cli-transport.json'):
             (tmp_path/(stem+suffix)).write_bytes(b'preserved'+epoch.encode()+suffix.encode())
     legacy={p:p.read_bytes() for p in (tmp_path/'runs').rglob('*') if p.is_file()}
     result=module.observe(path,sha)
     assert result['observed_returncode']==code and result['timed_out'] is False
-    assert result['stdout']['path']=='runs/puck-cpu-held-qualification-04-external-cli.stdout'
+    assert result['stdout']['path']=='runs/puck-cpu-held-qualification-'+str(version).zfill(2)+'-external-cli.stdout'
     assert (tmp_path/result['stdout']['path']).read_bytes()==b'authored04\n'
     assert all(p.read_bytes()==raw for p,raw in legacy.items())
     captured={p:p.read_bytes() for p in (tmp_path/'runs').rglob('*') if p.is_file()}
@@ -165,9 +166,10 @@ def test_qualification04_observer_preserves_prior_epochs_and_reserves_once(tmp_p
 
 
 @pytest.mark.parametrize('field,value',[('allocation_id',3),('phase','prepare')])
-def test_qualification04_observer_refuses_wrong_closed_selector(tmp_path,monkeypatch,field,value):
+@pytest.mark.parametrize('version',[4,5])
+def test_qualification04_05_observer_refuses_wrong_closed_selector(tmp_path,monkeypatch,field,value,version):
     module,path,_=setup(tmp_path,monkeypatch,'raise AssertionError("must not run")\n')
-    config=json.loads(path.read_bytes());config.update(kind='puck-cpu-held-runtime-allocation-v4',version=4,allocation_id=4,phase='qualify');config[field]=value
+    config=json.loads(path.read_bytes());config.update(kind='puck-cpu-held-runtime-allocation-v'+str(version),version=version,allocation_id=version,phase='qualify');config[field]=value
     raw=module.canonical(config);path.write_bytes(raw)
     with pytest.raises(ValueError):module.observe(path,hashlib.sha256(raw).hexdigest())
     assert list((tmp_path/'runs').iterdir())==[]
