@@ -1,0 +1,24 @@
+{
+  "command": [
+    "/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/bin/python3.11",
+    "-I",
+    "-S",
+    "-B",
+    "/home/utkarsh/.codex/worktrees/0071/brain/scripts/audit_puck_cpu_held_runtime.py",
+    "--configuration",
+    "/home/utkarsh/.codex/worktrees/0071/brain/docs/plans/puck-cpu-held-qualification-07.json",
+    "--sha256",
+    "1ed4b198a38512c751cca43e11fdb1cd00e7683031be545e6ccd12016555ee60",
+    "--transport",
+    "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-held-qualification-07-external-cli-transport.json",
+    "--transport-sha256",
+    "9509cbbff66603e5906c57f72950fcc77f600d4dbcffb611462506a58360aca7",
+    "--output",
+    "/tmp/palimpsest-puck-cpu-held-qualification-07-audit-01.json"
+  ],
+  "failed_transport_preserved": true,
+  "kind": "held07-measured-concrete-audit-command-v1",
+  "observer_invocations": 1,
+  "transport_sha256": "9509cbbff66603e5906c57f72950fcc77f600d4dbcffb611462506a58360aca7",
+  "transport_size_bytes": 951
+}

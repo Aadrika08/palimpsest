@@ -1,0 +1,15 @@
+{
+  "kind": "held07-audit-tool-observation-v1",
+  "frozen_commit": "1a1ffa06b325d0a0a60b26cff14f70992ca995ec",
+  "terminal": {
+    "chunk_id": "594510",
+    "wall_time_seconds": 0.109003552,
+    "exit_code": 1,
+    "original_token_count": 121,
+    "output": "{\"accepted\": false, \"elapsed_seconds\": 0.06534697097958997, \"receipt\": \"/tmp/palimpsest-held07-audit-external.json\", \"returncode\": 1, \"stderr\": {\"path\": \"/tmp/palimpsest-held07-audit-external.stderr\", \"sha256\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\", \"size_bytes\": 0}, \"stdout\": {\"path\": \"/tmp/palimpsest-held07-audit-external.stdout\", \"sha256\": \"adb464cdc5ec9d55676bad8524bb6fe9f98143e7914a2ed1344408a8a1988aea\", \"size_bytes\": 616}, \"timed_out\": false}\n"
+  },
+  "invocations": 1,
+  "wall_time_scope": "Tool chunk only; wrapper measures complete elapsed.",
+  "observer_invocations": 1,
+  "qualification_pass": false
+}

@@ -1,0 +1,159 @@
+{
+  "actual07_admission_observer_auditor_invoked": false,
+  "actual07_output_paths_opened_or_written": false,
+  "all_extracted_FS_paths_in_memory_under_unit": true,
+  "census_or_payload_probe_performed": false,
+  "checks": [
+    {
+      "name": "source_and_metadata_pins_exactly_two_function_AST_nodes",
+      "status": "PASS"
+    },
+    {
+      "budget": 145,
+      "name": "admission_whole_budget_remaining_after_freeze_and_exact_receipt_digests",
+      "remaining_child_seconds": 137.5,
+      "status": "PASS"
+    },
+    {
+      "budget": 240,
+      "name": "observer_whole_budget_remaining_after_freeze_and_exact_receipt_digests",
+      "remaining_child_seconds": 232.5,
+      "status": "PASS"
+    },
+    {
+      "budget": 145,
+      "name": "audit_whole_budget_remaining_after_freeze_and_exact_receipt_digests",
+      "remaining_child_seconds": 137.5,
+      "status": "PASS"
+    },
+    {
+      "name": "outcome_7_retains_transport_status_and_refuses_acceptance",
+      "status": "PASS"
+    },
+    {
+      "name": "outcome_-9_retains_transport_status_and_refuses_acceptance",
+      "status": "PASS"
+    },
+    {
+      "name": "outcome_timeout_retains_transport_status_and_refuses_acceptance",
+      "status": "PASS"
+    },
+    {
+      "name": "outcome_oserror_retains_transport_status_and_refuses_acceptance",
+      "status": "PASS"
+    },
+    {
+      "name": "late_hash_zero_child_cannot_produce_wrapper_zero",
+      "status": "PASS"
+    },
+    {
+      "name": "late_fsync_zero_child_cannot_produce_wrapper_zero",
+      "status": "PASS"
+    },
+    {
+      "name": "late_print_zero_child_cannot_produce_wrapper_zero",
+      "status": "PASS"
+    },
+    {
+      "name": "stream_exact_16MiB_allowed",
+      "status": "PASS"
+    },
+    {
+      "name": "stream_16MiB_plus_one_refused_with_bounded_reads",
+      "status": "PASS"
+    },
+    {
+      "name": "existing_json_refused_before_launch_without_mutation",
+      "status": "PASS"
+    },
+    {
+      "name": "existing_stdout_refused_before_launch_without_mutation",
+      "status": "PASS"
+    },
+    {
+      "name": "existing_stderr_refused_before_launch_without_mutation",
+      "status": "PASS"
+    },
+    {
+      "name": "receipt_exclusive_open_race_refuses_before_child_or_stream_creation",
+      "status": "PASS"
+    },
+    {
+      "name": "reentry_refuses_second_launch_and_preserves_first_files",
+      "status": "PASS"
+    },
+    {
+      "name": "admission_freeze_consumed_budget_refuses_before_child",
+      "status": "PASS"
+    },
+    {
+      "name": "observer_freeze_consumed_budget_refuses_before_child",
+      "status": "PASS"
+    },
+    {
+      "name": "audit_freeze_consumed_budget_refuses_before_child",
+      "status": "PASS"
+    },
+    {
+      "name": "unknown_phase_refused",
+      "status": "PASS"
+    },
+    {
+      "name": "extra_cli_option_refused",
+      "status": "PASS"
+    },
+    {
+      "name": "audit_concrete_command_must_match_frozen_prefix_and_shape",
+      "status": "PASS"
+    }
+  ],
+  "extracted_functions": [
+    "stream_pin",
+    "main"
+  ],
+  "extracted_main_executed_with_fakes": true,
+  "freeze_metadata": {
+    "path": "/home/utkarsh/.codex/worktrees/0071/brain/docs/plans/puck-cpu-held-qualification-07-freeze.json",
+    "sha256": "6230a4072b3606efd41efc694f0da15671d248f2cd39203f4eb2ca39ead22d17",
+    "size_bytes": 124995
+  },
+  "full_coordinator_imported_or_executed": false,
+  "kind": "held07-external-isolated-unit-check-v1",
+  "late_completion_observations": [
+    {
+      "child_returncode": 0,
+      "receipt_timed_out": true,
+      "stage": "hash",
+      "summary_accepted": false,
+      "wrapper_returncode": 1
+    },
+    {
+      "child_returncode": 0,
+      "receipt_timed_out": false,
+      "stage": "fsync",
+      "summary_accepted": false,
+      "wrapper_returncode": 1
+    },
+    {
+      "child_returncode": 0,
+      "receipt_timed_out": false,
+      "stage": "print",
+      "summary_accepted": true,
+      "wrapper_returncode": 1
+    }
+  ],
+  "limitations": [
+    "These are authored fake-clock/process/in-memory-FS unit cases, not coordinator/admission execution.",
+    "Real freeze bytes were read only as authenticated metadata for the fake fixture.",
+    "Late print can leave pre-print summary accepted=true, but the final post-print return gate is1; callers must require wrapper zero in addition to child/summary data.",
+    "No OS process-kill, filesystem durability, real wall-clock deadline or native/runtime behavior is qualified."
+  ],
+  "meaningful_check_count": 24,
+  "real_subprocess_target_launched": false,
+  "source": {
+    "path": "/tmp/palimpsest-held07-external.py",
+    "sha256": "3eb0c77ad3d7ba6ea3f7f00fcba650db364262c1a57b81be37f73cd80d2f898a",
+    "size_bytes": 4194
+  },
+  "status": "PASS"
+}
