@@ -1,0 +1,202 @@
+{
+  "allocation_retry_performed": false,
+  "elapsed_seconds": 47.000235176004935,
+  "ended": {
+    "monotonic_seconds": 440372.709519419,
+    "utc": "2026-10-15T08:24:10.932771+00:00"
+  },
+  "final": [
+    {
+      "metadata": {
+        "ctime_ns": 1786628301225937926,
+        "dev": 31,
+        "inode": 256,
+        "mode": 16749,
+        "mtime_ns": 1779539988846100621,
+        "nlink": 1,
+        "size": 142
+      },
+      "path": "/"
+    },
+    {
+      "metadata": {
+        "ctime_ns": 1779555719786043917,
+        "dev": 57,
+        "inode": 256,
+        "mode": 16877,
+        "mtime_ns": 1779555719786043917,
+        "nlink": 1,
+        "size": 14
+      },
+      "path": "/home"
+    },
+    {
+      "metadata": {
+        "ctime_ns": 1791995246875403570,
+        "dev": 57,
+        "inode": 257,
+        "mode": 16832,
+        "mtime_ns": 1791995246875403570,
+        "nlink": 1,
+        "size": 2012
+      },
+      "path": "/home/utkarsh"
+    },
+    {
+      "metadata": {
+        "ctime_ns": 1792052650753786404,
+        "dev": 57,
+        "inode": 2977835,
+        "mode": 16877,
+        "mtime_ns": 1792052650753786404,
+        "nlink": 1,
+        "size": 1866
+      },
+      "path": "/home/utkarsh/.codex"
+    },
+    {
+      "metadata": {
+        "ctime_ns": 1792029213555424636,
+        "dev": 57,
+        "inode": 26048991,
+        "mode": 16877,
+        "mtime_ns": 1792029213555424636,
+        "nlink": 1,
+        "size": 16
+      },
+      "path": "/home/utkarsh/.codex/worktrees"
+    },
+    {
+      "metadata": {
+        "ctime_ns": 1792029213563424710,
+        "dev": 57,
+        "inode": 26729432,
+        "mode": 16877,
+        "mtime_ns": 1792029213563424710,
+        "nlink": 1,
+        "size": 10
+      },
+      "path": "/home/utkarsh/.codex/worktrees/0071"
+    }
+  ],
+  "historical_failed_path_identified": false,
+  "initial": [
+    {
+      "metadata": {
+        "ctime_ns": 1786628301225937926,
+        "dev": 31,
+        "inode": 256,
+        "mode": 16749,
+        "mtime_ns": 1779539988846100621,
+        "nlink": 1,
+        "size": 142
+      },
+      "path": "/"
+    },
+    {
+      "metadata": {
+        "ctime_ns": 1779555719786043917,
+        "dev": 57,
+        "inode": 256,
+        "mode": 16877,
+        "mtime_ns": 1779555719786043917,
+        "nlink": 1,
+        "size": 14
+      },
+      "path": "/home"
+    },
+    {
+      "metadata": {
+        "ctime_ns": 1791995246875403570,
+        "dev": 57,
+        "inode": 257,
+        "mode": 16832,
+        "mtime_ns": 1791995246875403570,
+        "nlink": 1,
+        "size": 2012
+      },
+      "path": "/home/utkarsh"
+    },
+    {
+      "metadata": {
+        "ctime_ns": 1792052470306705927,
+        "dev": 57,
+        "inode": 2977835,
+        "mode": 16877,
+        "mtime_ns": 1792052470306705927,
+        "nlink": 1,
+        "size": 1866
+      },
+      "path": "/home/utkarsh/.codex"
+    },
+    {
+      "metadata": {
+        "ctime_ns": 1792029213555424636,
+        "dev": 57,
+        "inode": 26048991,
+        "mode": 16877,
+        "mtime_ns": 1792029213555424636,
+        "nlink": 1,
+        "size": 16
+      },
+      "path": "/home/utkarsh/.codex/worktrees"
+    },
+    {
+      "metadata": {
+        "ctime_ns": 1792029213563424710,
+        "dev": 57,
+        "inode": 26729432,
+        "mode": 16877,
+        "mtime_ns": 1792029213563424710,
+        "nlink": 1,
+        "size": 10
+      },
+      "path": "/home/utkarsh/.codex/worktrees/0071"
+    }
+  ],
+  "interval_seconds": 0.2,
+  "kind": "palimpsest-retained-admission-ancestor-observation-v1",
+  "maximum_observation_seconds": 60.0,
+  "paths": [
+    "/",
+    "/home",
+    "/home/utkarsh",
+    "/home/utkarsh/.codex",
+    "/home/utkarsh/.codex/worktrees",
+    "/home/utkarsh/.codex/worktrees/0071"
+  ],
+  "sample_count": 236,
+  "scope": "metadata only on six explicitly named outside ancestors",
+  "started": {
+    "monotonic_seconds": 440325.709284243,
+    "utc": "2026-10-15T08:23:23.932527+00:00"
+  },
+  "stop_reason": "first_observed_metadata_change",
+  "transitions": [
+    {
+      "after": {
+        "ctime_ns": 1792052650753786404,
+        "dev": 57,
+        "inode": 2977835,
+        "mode": 16877,
+        "mtime_ns": 1792052650753786404,
+        "nlink": 1,
+        "size": 1866
+      },
+      "before": {
+        "ctime_ns": 1792052470306705927,
+        "dev": 57,
+        "inode": 2977835,
+        "mode": 16877,
+        "mtime_ns": 1792052470306705927,
+        "nlink": 1,
+        "size": 1866
+      },
+      "observed": {
+        "monotonic_seconds": 440372.709440571,
+        "utc": "2026-10-15T08:24:10.932669+00:00"
+      },
+      "path": "/home/utkarsh/.codex"
+    }
+  ]
+}

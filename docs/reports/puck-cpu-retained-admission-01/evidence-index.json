@@ -1,0 +1,119 @@
+{
+  "entries": [
+    {
+      "path": ".gitattributes",
+      "sha256": "705fd4d6451a31d36b3df7de96f83f30ac976c9b4a6d1e51671d8e2f33e2d0da",
+      "size_bytes": 8
+    },
+    {
+      "path": "acceptance-audit.json",
+      "sha256": "23a6dda887e4bdb884064a59ba19602a3cfa86e2ab15537862bd10a38d8fa0a5",
+      "size_bytes": 506
+    },
+    {
+      "path": "acceptance-audit.py",
+      "sha256": "fc9e691d6830b51fcb860b173666b9834bb79aca69b790014b576acecace7349",
+      "size_bytes": 12169
+    },
+    {
+      "path": "ancestor-observation.json",
+      "sha256": "38ce96d32474e90c37a4f58ac968be7f941a1d9d1abcc6a38f2c7686a8a72aad",
+      "size_bytes": 4635
+    },
+    {
+      "path": "raw/baseline-before.json",
+      "sha256": "8e69fa24c5367b19acfad5f5f3c12f1804eed23d0889df6a9e58f20da4376dfb",
+      "size_bytes": 196
+    },
+    {
+      "path": "raw/configuration.json",
+      "sha256": "ddfd7561db53f62ff42c333c17288705a05dda1ec482afe651bc905ce4778f73",
+      "size_bytes": 25049
+    },
+    {
+      "path": "raw/invocation.json",
+      "sha256": "7330ca9f5738210134fdeacd97d105de360fc8aba8af5c12d28cd3a0c0d864c9",
+      "size_bytes": 178
+    },
+    {
+      "path": "raw/result.json",
+      "sha256": "14bfe97b5792136e156ddaa6d84767e934fb8358e7b5c2426caefa19a786674e",
+      "size_bytes": 484
+    },
+    {
+      "path": "source/docs/plans/puck-cpu-retained-installation-admission-execution-v1.md",
+      "sha256": "b36b87380f5cb19f078b7438f575abd0fcfba0e37abdb100ff7d3006f1260ff5",
+      "size_bytes": 4623
+    },
+    {
+      "path": "source/docs/plans/puck-cpu-retained-installation-admission-v1.md",
+      "sha256": "acd67fd22330e3471a73d4c89caff61a640ae79b8acf088c8bb67a3595b738f9",
+      "size_bytes": 3994
+    },
+    {
+      "path": "source/pyproject.toml",
+      "sha256": "13435cdf27674955809c67d3d81410c502bf0f258b661e68ed82197842fbc800",
+      "size_bytes": 1103
+    },
+    {
+      "path": "source/scripts/acquire_puck_cpu_payloads.py",
+      "sha256": "4c08f22f56485fa492982f404c2e0e62863244deedd1743d82600310bc8a2730",
+      "size_bytes": 22918
+    },
+    {
+      "path": "source/scripts/admit_puck_retained_installation.py",
+      "sha256": "6c0dbfb4d5d0845e20540f61a88a800132ac568fccd48ef23dd51748aae8bc1b",
+      "size_bytes": 11650
+    },
+    {
+      "path": "source/scripts/build_puck_python_louvain.py",
+      "sha256": "0fce7b437f00ebd2348ecaf29c4f00f444f707e797297419a2844c8513285fb6",
+      "size_bytes": 24118
+    },
+    {
+      "path": "source/scripts/install_puck_cpu.py",
+      "sha256": "a14a67553e3a2774cbf2ab701d3f6b89af154de8b3566af550db9d4f0b32ab1a",
+      "size_bytes": 21527
+    },
+    {
+      "path": "source/src/palimpsest/__init__.py",
+      "sha256": "bb99e30d22e4662c4ded455b1b23f49b77ce811dcfa1b69bf358925487a566d8",
+      "size_bytes": 63
+    },
+    {
+      "path": "source/src/palimpsest/bounded_qualification.py",
+      "sha256": "bbade752b1a20e1f702f1b7e43e00c19287c1ed29dd56249237af7985b6367f7",
+      "size_bytes": 16316
+    },
+    {
+      "path": "source/src/palimpsest/evaluate.py",
+      "sha256": "74a9afb710b36a366ab680462e9440f285730a0360bda704af25ebbcfd74256a",
+      "size_bytes": 19531
+    },
+    {
+      "path": "source/src/palimpsest/puck_build_inputs.py",
+      "sha256": "b08f83a19a2fa0d6f49d349512b5f69d08a6781930af4b13164f67779615cb65",
+      "size_bytes": 13905
+    },
+    {
+      "path": "source/src/palimpsest/puck_execution_files.py",
+      "sha256": "ac059455bc45437c45330d01aaca761fd571d6de1637a4a8d7ebfbd796622062",
+      "size_bytes": 15001
+    },
+    {
+      "path": "source/src/palimpsest/puck_package_payloads.py",
+      "sha256": "75f99498cfbcfe761fe151d089c0b383b9c48c39c0f89d22e7c3715ef056fe76",
+      "size_bytes": 15959
+    },
+    {
+      "path": "source/src/palimpsest/puck_retained_installation.py",
+      "sha256": "07aaaa5aaf418e21d66f9613a5466f5d7af2ff18a34628586fec8f33842cf342",
+      "size_bytes": 4746
+    },
+    {
+      "path": "source/uv.lock",
+      "sha256": "8a7a880d020c1907e221575fda65642241f809fc628a55381f1b6137bff1b732",
+      "size_bytes": 160034
+    }
+  ]
+}
