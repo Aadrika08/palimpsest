@@ -1,7 +1,7 @@
 {
   "actual06_invoked": true,
   "all_seven_release_gates_open": true,
-  "artifact_count": 346,
+  "artifact_count": 347,
   "artifacts": [
     {
       "archived_path": "source/docs/plans/puck-cpu-characterization-native-metadata-05.json",
@@ -2051,7 +2051,9 @@
     },
     {
       "archived_path": "external/palimpsest-held06-report.md",
-      "original_path": "/tmp/palimpsest-held06-report.md",
+      "original_path": "/tmp/palimpsest-held06-report-at-archive.md",
+      "previous_original_path": "/tmp/palimpsest-held06-report.md",
+      "role": "captured mutable draft snapshot, before final root report",
       "sha256": "23d7d641d23bb12abf37e407ed76001f1250640084245ab64e92296306a9884d",
       "size_bytes": 3839
     },
@@ -2078,6 +2080,12 @@
       "original_path": "/tmp/palimpsest-held06-verify-evidence.py",
       "sha256": "3348554e92a41e62357b2995cabde321d18e605e764334f218cfffe19a103e8a",
       "size_bytes": 2129
+    },
+    {
+      "archived_path": "external/palimpsest-held06-archive-original-draft-refusal.json",
+      "original_path": "/tmp/palimpsest-held06-archive-original-draft-refusal.json",
+      "sha256": "09ca66b2c038813754e9330e1e06e5d680d45c67c13ef5688fa6838bf0b07910",
+      "size_bytes": 438
     }
   ],
   "collection_authorized": false,
@@ -2402,6 +2410,6 @@
     "src/palimpsest/puck_worker_preflight.py"
   ],
   "study_authorized": false,
-  "total_bytes": 38422650,
+  "total_bytes": 38423088,
   "version": 1
 }

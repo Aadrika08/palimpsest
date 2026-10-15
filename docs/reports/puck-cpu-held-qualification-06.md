@@ -71,3 +71,7 @@ remain open; the goal remains a real recorded/replayed/exported episode followed
 by valid studies, capable controllers, lab/six artworks and human acceptance.
 No model, protected catalogue, numerical episode, renderer/operator or study ran.
 Main is unchanged. Full-repository checks and CI were not run.
+
+An archive recheck caught a mutable draft-note original changing after collection.
+The captured draft is preserved under its own original snapshot and the index
+records that role; runtime/control bytes were unchanged. The refusal is retained.
