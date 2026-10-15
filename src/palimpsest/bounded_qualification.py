@@ -182,18 +182,18 @@ def _group_members(group):
     return result
 
 
-def _output_bytes(root):
+def _output_bytes(root, *, max_files=32, max_directories=2):
     """Bound the entire attempt namespace, including both pairs of logs."""
     total = count = directories_seen = 0
     with publication_directory(root) as held:
         for directory, directories, files in os.walk(f'/proc/self/fd/{held}', followlinks=False):
             directories_seen += len(directories)
-            if directories_seen > 2 or any((Path(directory) / name).is_symlink() for name in directories):
+            if directories_seen > max_directories or any((Path(directory) / name).is_symlink() for name in directories):
                 raise ValueError('Qualification output namespace differs')
             for name in files:
                 count += 1
                 value = (Path(directory) / name).lstat()
-                if count > 32 or not stat.S_ISREG(value.st_mode) or value.st_nlink != 1:
+                if count > max_files or not stat.S_ISREG(value.st_mode) or value.st_nlink != 1:
                     raise ValueError('Qualification output namespace differs')
                 total += value.st_size
     return total
@@ -269,7 +269,7 @@ def hard_guard(deadline, state):
 
 def supervised(command, output, *, cwd, normal_deadline, hard_deadline,
                rss_bytes, output_bytes, min_free_bytes, max_processes=1,
-               output_root=None, guard_state=None):
+               output_root=None, guard_state=None, output_namespace_limits=(32, 2)):
     """Observe one owned group, bound retained logs and deny late/failing returns."""
     output = _absolute(output)
     output_root = _absolute(output_root) if output_root is not None else output
@@ -281,6 +281,13 @@ def supervised(command, output, *, cwd, normal_deadline, hard_deadline,
                    for value in (normal_deadline, hard_deadline))
             or normal_deadline > hard_deadline):
         raise ValueError('Qualification process limits are invalid')
+    if (type(output_namespace_limits) is not tuple or len(output_namespace_limits) != 2
+            or type(output_namespace_limits[0]) is not int
+            or not 1 <= output_namespace_limits[0] <= 512
+            or type(output_namespace_limits[1]) is not int
+            or not 1 <= output_namespace_limits[1] <= 16):
+        raise ValueError('Qualification output namespace limits are invalid')
+    max_files, max_directories = output_namespace_limits
     failure = []
     process = None
     peak = 0
@@ -295,7 +302,7 @@ def supervised(command, output, *, cwd, normal_deadline, hard_deadline,
         if len(members) > max_processes: failed('unexpected child process')
         elif rss > rss_bytes: failed('sampled RSS stop threshold')
         elif shutil.disk_usage(output_root).free < min_free_bytes: failed('free-space floor')
-        elif _output_bytes(output_root) > output_bytes: failed('aggregate output cap')
+        elif _output_bytes(output_root, max_files=max_files, max_directories=max_directories) > output_bytes: failed('aggregate output cap')
         now = time.monotonic()
         if now >= hard_deadline: failed('hard deadline')
         elif now >= normal_deadline: failed('normal-return deadline')

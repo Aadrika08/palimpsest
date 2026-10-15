@@ -250,3 +250,36 @@ def test_control_same_bytes_leaf_swap_during_fsync_refuses(tmp_path,monkeypatch)
     monkeypatch.setattr(module.os,'fsync',swap)
     with pytest.raises(RuntimeError,match='publication'):
         module.write_new(target,{'value':1})
+
+
+def test_explicit_package_namespace_allows_more_than_legacy32_files(tmp_path):
+    code = ("from pathlib import Path\n"
+            "p=Path('attempt/archives');p.mkdir()\n"
+            "for n in range(40):(p/str(n)).write_bytes(b'archive')\n")
+    result, output = supervise(tmp_path, code, output_namespace_limits=(50, 2))
+    assert result["status"] == "completed"
+    assert result["returncode"] == 0 and result["matching_survivors"] == []
+    assert len(list((output.parent / "archives").iterdir())) == 40
+
+
+@pytest.mark.parametrize("limits", [(True,2), (0,2), (513,2), (50,True), (50,0), (50,17), [50,2]])
+def test_package_namespace_requires_exact_bounded_count_pair(tmp_path, limits):
+    with pytest.raises(ValueError):
+        supervise(tmp_path, "raise RuntimeError('must not execute')",
+                  output_namespace_limits=limits)
+
+
+def test_explicit_package_namespace_still_refuses_excess_files(tmp_path):
+    code = ("from pathlib import Path\n"
+            "p=Path('attempt/archives');p.mkdir()\n"
+            "for n in range(40):(p/str(n)).write_bytes(b'archive')\n")
+    with pytest.raises(ValueError):
+        supervise(tmp_path, code, output_namespace_limits=(41, 2))
+
+
+def test_legacy_default_namespace_still_refuses_more_than32_files(tmp_path):
+    code = ("from pathlib import Path\n"
+            "p=Path('attempt/archives');p.mkdir()\n"
+            "for n in range(40):(p/str(n)).write_bytes(b'archive')\n")
+    with pytest.raises(ValueError):
+        supervise(tmp_path, code)
