@@ -45,3 +45,13 @@ are retained; direct producer edges are restricted to exceptional identities
 explicit output scope. This prospective shape amendment precedes the one actual
 observation and is covered by authored fixtures. Source review and results are
 recorded in `docs/reports/puck-v3-runtime-interop-source.md`.
+
+Observation 01 was executed once on source f3a70fc and failed exact-environment
+admission during MuJoCo import. NumPy2.2.5 and Torch2.9.0+cu128 were observed;
+no full cache/export/maps census was reached. Supervisor1.825320657s, sampled
+633090048B, exit1, no matching process-group survivors. All eleven lossless
+records are retained in `docs/reports/puck-v3-runtime-interop/attempt-01/`.
+No rerun follows automatically. Prepare a separately numbered development
+amendment for bounded environment-delta/partial diagnostics and an explicitly
+source-derived EGL environment; review its exact source/freeze before another
+installed-stack invocation. Authored native compatibility work can continue.

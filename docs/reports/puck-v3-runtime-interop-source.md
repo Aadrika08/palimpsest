@@ -115,7 +115,7 @@ held numerical configuration and complete inventory/reservation/scene/model,
 worker dispatch, parent identity/progress/drain, lease/storage/clock integration.
 The six artworks remain simulation-first; CI and physical rover remain excluded.
 
-Frozen invocation (prospective until the retained result below is added):
+Frozen invocation (executed once; retained result below):
 
 ```bash
 /home/utkarsh/Work/shraddha/brain/.worktrees/r0-reproduction/.venv/bin/python \
@@ -153,3 +153,63 @@ The request/environment/allocation are unchanged; only the worker hash and
 external freeze SHA change. The pre-execution old freeze is retained in git
 history. The amended source/freeze was author-checked against the recommendation
 and regression evidence; no independent exact-final-source/runtime GO is claimed.
+
+## Consumed development observation 01: failed environment admission
+
+The single installed-stack invocation ran on source
+`f3a70fc9358ab8e466bd102bb857da302f66ffb7`, final freeze SHA
+`d6b322fc43f8cbce3da3c0d02dd604b9f82f27f685a095ffe9345963cbc7126f`.
+Prelaunch observation at **2026-10-15 01:17:25 UTC** found all five source hashes
+matching, the invocation directory absent, and **99,769,405,440 bytes free**.
+This invocation is consumed and was not retried. It is not a consumed memory,
+navigation, original-bundle, collection, fitting or scientific attempt.
+
+The [lossless manifest](puck-v3-runtime-interop/attempt-01/manifest.json) and all
+its eleven records retain the exact freeze/request/invocation, worker report,
+child logs, outer logs, supervision, prelaunch and bounded static-inspection index.
+Original output remains under `runs/puck-runtime-import-characterization-01/`;
+the committed copies are byte-identical. The outer result agrees with the
+supervision record; no source or allocation was modified after launch.
+
+- Supervisor status **failed**, child exit **1**, operational failure field null,
+  matching process-group survivors **[]**. Supervised duration **1.825320657s**,
+  sampled parent-plus-child peak RSS **633,090,048 bytes** (about 603.8 MiB).
+  No hard memory or escaped-descendant qualification follows.
+- Worker reports NumPy **2.2.5**, import **0.053446557s**, cache count **180**;
+  Torch **2.9.0+cu128**, import **1.012049174s**, cache count **1060**.
+- MuJoCo's import returned, but the following exact-environment check failed:
+  **`Exact environment changed during mujoco import`**. Its raw version was not
+  recorded; no successful MuJoCo observation is claimed. Worker observed duration
+  **1.364564914s**. No full cache/export or mapped-image census was reached.
+- The failed terminal is **1068 bytes**, SHA
+  `281330709018ec370ad84dc571e465f5e02cf4c528de1091d97d11a296082dc4`.
+  It contains no qualification claims and all runtime/collection/executable
+  authority remains false. Child stderr is empty; stdout is a hash-bound failure
+  receipt. Actual source/frozen input checks passed before this failure.
+
+A subsequent **source-only** inspection read exactly **13,849 bytes** across
+`mujoco/egl/__init__.py`, `mujoco/gl_context.py`, `mujoco/__init__.py` under a
+64 KiB budget, with file hashes retained. EGL initialization source lines 21–24
+assign `PYOPENGL_PLATFORM='egl'` when absent; the frozen environment omitted that
+key. The GL-context selector imports EGL for this frozen Linux/EGL selection.
+This is consistent with the observed failure. The consumed worker did not record
+an environment delta, so it does not prove that this was the only mutation.
+No numerical import, rendering, model/physics call or rerun accompanied inspection.
+
+Ruling: stop actual installed-stack runs after this failure. A separately numbered
+prospective development amendment must improve bounded failure diagnostics and
+partial observation retention, declare the EGL environment contract from source,
+retain this result unchanged, and review its exact source/request before another
+invocation. Do not silently add the variable and rerun observation 01. Authored
+native compatibility fixtures and held import source work can continue without
+another installed-stack invocation. All seven release gates remain open.
+
+An independent **failure-evidence audit** found no mismatch: all eleven records
+and their 5,917 data bytes match the manifest and original outputs; all five
+executed source hashes (including full `evaluate.py`) were checked. Freeze,
+request, environment, invocation, receipt, worker source, PID, limits and failure
+states reconcile. Parent stdout equals supervision byte-for-byte. All three
+static-inspection hashes and the source explanation were independently checked.
+Audit reads stayed below 96 KiB; it added zero imports, tests, model calls or
+invocations. This validates the preserved failure, not amended-source approval,
+held-runtime qualification or release authority.
