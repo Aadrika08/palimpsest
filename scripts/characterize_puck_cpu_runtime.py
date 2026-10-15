@@ -2,6 +2,7 @@
 import argparse
 import hashlib
 import json
+import math
 import os
 from pathlib import Path
 import resource
@@ -59,6 +60,34 @@ SOURCES=tuple(sorted(('scripts/characterize_puck_cpu_runtime.py',WORKER,
     'docs/plans/puck-cpu-characterization-v2.md')))
 PRIOR_SOURCES=tuple(path.replace('puck-cpu-characterization-v2.md','puck-cpu-characterization-v1.md')
                     for path in SOURCES)
+ROSTER_OUTPUT='runs/puck-cpu-runtime-characterization-03'
+OBSERVATION_ARCHIVE='docs/reports/puck-cpu-characterization-02'
+OBSERVATION_PINS=dict(
+    observation_configuration=dict(path=OBSERVATION_ARCHIVE+'/frozen-configuration.json',size_bytes=13940,
+        sha256='4b98ff368e97351b2079ff44c75cb910d08559e5e037a6afc4887c28cd38fea8'),
+    observation_result=dict(path=OBSERVATION_ARCHIVE+'/raw/result.json',size_bytes=837,
+        sha256='c3959dbb45d760c59e953caf11d05993c97c0d3912a801d957cf6f8dcbcfb3ff'),
+    observation_report=dict(path=OBSERVATION_ARCHIVE+'/raw/payload/imports.json',size_bytes=534299,
+        sha256='f5c307bd361cd97e0f5a912610e2e639d62aa410aca4c393719667b24654b448'),
+    observation_audit=dict(path=OBSERVATION_ARCHIVE+'/outcome-audit-02.json',size_bytes=1452,
+        sha256='68db69256149ca20d4b698860898d33c4e6cbee2b840e4eeeb2fd5f21359eff3'),
+    observation_index=dict(path=OBSERVATION_ARCHIVE+'/evidence-index.json',size_bytes=17046,
+        sha256='c827dc11dd3bcfe60a3020dccc008c385c779f19f60ad2bf6f930d69fcd654da'),
+    observation_terminal=dict(path=OBSERVATION_ARCHIVE+'/external-terminal-observations.json',size_bytes=1170,
+        sha256='32ed28951e741dc00de6daa9f168347520361b17d26f99ee908e0b1eef1162c5'))
+DISTRIBUTED_PROPOSAL_PIN=dict(
+    path='docs/reports/puck-cpu-export-phase-preflight-v1/notes/distributed-rosters/review.json',
+    size_bytes=11683,sha256='de1aa2a7c7a0832b59f72cc07ffee5965a37657618ef8f70ea8f08238a815e04')
+ROSTER_ROLES=dict(ROLES,**{role:row['path'] for role,row in OBSERVATION_PINS.items()},
+    distributed_proposal=DISTRIBUTED_PROPOSAL_PIN['path'])
+ROSTER_SOURCES=tuple(sorted(set(SOURCES)-{'docs/plans/puck-cpu-characterization-v2.md'}|{
+    'docs/plans/puck-cpu-distributed-roster-observation-01-proposal.md',
+    'scripts/observe_puck_cpu_runtime_characterization.py',
+    'scripts/audit_puck_cpu_runtime_characterization.py',
+    *(OBSERVATION_ARCHIVE+'/'+name for name in ('audit-support-characterization-v1.py',
+        'audit-helper-install-v1.py','audit-helper-admission-v3.py'))}))
+DISTRIBUTED_NAMES=tuple('torch._C.'+suffix for suffix in (
+    '_distributed_autograd','_distributed_c10d','_distributed_rpc'))
 CLAIMS=dict(runtime_qualified=False,native_authorized=False,collection_authorized=False,
     study_authorized=False,executable=False,qualification_claims=[])
 PROBE="""import json,os,pathlib,stat,sys
@@ -95,6 +124,25 @@ def read(path,maximum):
 
 
 def validate_configuration(config):
+    if type(config) is dict and config.get('kind')=='puck-cpu-runtime-characterization-v2':
+        if (set(config)!={'kind','version','output','site_root','sources','inputs','roles','limits','environment','expected_versions'}
+                or type(config.get('version')) is not int or config['version']!=2
+                or config.get('output')!=ROSTER_OUTPUT or config.get('site_root')!=SITE
+                or config.get('roles')!=ROSTER_ROLES or config.get('limits')!=LIMITS
+                or config.get('environment')!=ENVIRONMENT or config.get('expected_versions')!=VERSIONS
+                or type(config.get('sources')) is not list):
+            raise ValueError('Exact distributed CPU characterization configuration required')
+        for row in config['sources']:
+            if (type(row) is not dict or set(row)!={'path','size_bytes','sha256'}
+                    or type(row['size_bytes']) is not int or not 0<row['size_bytes']<=MiB
+                    or type(row['sha256']) is not str or len(row['sha256'])!=64
+                    or any(c not in '0123456789abcdef' for c in row['sha256'])):
+                raise ValueError('Exact distributed CPU source pin required')
+        if tuple(row['path'] for row in config['sources'])!=ROSTER_SOURCES:
+            raise ValueError('Exact distributed CPU source closure required')
+        if config['inputs']!=required_roster_input_rows(read_observation_configuration()):
+            raise ValueError('Exact distributed CPU characterization input closure required')
+        return
     if (set(config)!={'kind','version','output','site_root','sources','inputs','roles','limits','environment','expected_versions'}
             or type(config.get('version')) is not int or config.get('kind')!='puck-cpu-runtime-characterization-v1' or config.get('version')!=1
             or config.get('output')!=OUTPUT or config.get('site_root')!=SITE
@@ -104,6 +152,55 @@ def validate_configuration(config):
         raise ValueError('Exact CPU characterization configuration required')
     if config['inputs']!=required_input_rows(read_prior_configuration()):
         raise ValueError('Exact CPU characterization input closure required')
+
+
+def read_observation_configuration():
+    row=OBSERVATION_PINS['observation_configuration'];raw=read(ROOT/row['path'],MiB)
+    if len(raw)!=row['size_bytes'] or hashlib.sha256(raw).hexdigest()!=row['sha256']:
+        raise ValueError('Frozen observation02 configuration bytes differ')
+    return json.loads(raw)
+
+
+def required_roster_input_rows(observation):
+    if (type(observation) is not dict or observation.get('kind')!='puck-cpu-runtime-characterization-v1'
+            or observation.get('output')!=OUTPUT):
+        raise ValueError('Frozen observation02 scope differs')
+    validate_configuration(observation)
+    rows={row['path']:dict(row) for row in observation['inputs']}
+    rows.update((row['path'],dict(row)) for row in OBSERVATION_PINS.values())
+    rows[DISTRIBUTED_PROPOSAL_PIN['path']]=dict(DISTRIBUTED_PROPOSAL_PIN)
+    for row in observation['sources']:
+        path=OBSERVATION_ARCHIVE+'/source/'+row['path'];rows[path]=dict(row,path=path)
+    if len(rows)!=63:raise ValueError('Distributed CPU input closure differs')
+    return [rows[path] for path in sorted(rows)]
+
+
+def distributed_expected(proposal):
+    acceptance=proposal.get('acceptance',{})
+    if (proposal.get('kind')!='distributed-export-prospective-roster-review-v1'
+            or proposal.get('upstream_commit')!='0fabc3ba44823f257e70ce397d989c8de5e362c1'
+            or proposal.get('proposal_counts')!={'autograd':11,'c10d':69,'rpc':29}
+            or set(acceptance)!={'actual_configuration_created','collection_authorized','dispatch_roster_observed',
+                'executable','native_authorized','qualification_claims','replacement_phase_accepted',
+                'runtime_qualified','study_authorized'}
+            or any(acceptance[k] is not False for k in acceptance if k!='qualification_claims')
+            or acceptance['qualification_claims']!=[]
+            or type(proposal.get('proposed_rows')) is not dict
+            or set(proposal['proposed_rows'])!={'autograd','c10d','rpc'}):
+        raise ValueError('Exact prospective distributed source proposal required')
+    expected={}
+    for key,name,producer in zip(('autograd','c10d','rpc'),DISTRIBUTED_NAMES,
+            ('torch.distributed.autograd','torch.distributed','torch.distributed.rpc'),strict=True):
+        row=proposal['proposed_rows'][key];names=row.get('delegate_attributes')
+        if (set(row)!={'name','producer','phase','attributes','class_binding','delegate_attributes'}
+                or row['name']!=name or row['producer']!=producer or row['phase']!='module_exec_publish'
+                or row['attributes']!=name.split('.') or row['class_binding'] is not None
+                or type(names) is not list or len(names)!=proposal['proposal_counts'][key]
+                or any(type(item) is not str or not item or len(item)>512 or '\0' in item for item in names)
+                or names!=sorted(set(names))):
+            raise ValueError('Distributed proposal target, phase or bounded names differ')
+        expected[name]=list(names)
+    return expected
 
 
 def read_prior_configuration():
@@ -169,6 +266,138 @@ def validate_prior_characterization(config,result,audit,pins):
         raise ValueError('Prior characterization must retain its exact normal failed outcome')
 
 
+def validate_observation02(config,result,report,audit,index,terminal,pins):
+    for row in required_roster_input_rows(config):
+        if pins.get(row['path'])!=row:
+            raise ValueError('Observation02 historical input pin differs')
+    config_sha=OBSERVATION_PINS['observation_configuration']['sha256']
+    report_sha=OBSERVATION_PINS['observation_report']['sha256']
+    closure=result.get('closure',{});verified=audit.get('verified',{})
+    if (result.get('kind')!='puck-cpu-characterization-outcome-v1' or result.get('status')!='observed'
+            or result.get('configuration_sha256')!=config_sha or result.get('report_sha256')!=report_sha
+            or any(k in result for k in ('error','error_type'))
+            or any(result.get(k) is not False for k in CLAIMS if k!='qualification_claims')
+            or result.get('qualification_claims')!=[] or result.get('versions')!=VERSIONS
+            or result.get('namespace_probe_completed') is not True
+            or result.get('accepted_package_preparation_preserved') is not True
+            or result.get('worker_supervision_status')!='completed'
+            or not finite(result.get('elapsed_seconds'),LIMITS['normal_seconds'])
+            or closure.get('active_children')!=[] or closure.get('active_non_main_threads')!=[]
+            or closure.get('all_handles_closed') is not True or closure.get('all_receipts_fsynced') is not True
+            or type(closure.get('fd_count_before')) is not int or closure['fd_count_before']<0
+            or type(closure.get('fd_count_after')) is not int or closure['fd_count_after']!=closure['fd_count_before']
+            or report.get('kind')!='puck-runtime-import-characterization-result-v3'
+            or type(report.get('version')) is not int or report['version']!=3
+            or report.get('profile')!='cpu-four-imports-v1' or report.get('status')!='observed'
+            or report.get('versions')!=VERSIONS or report.get('expected_versions')!=VERSIONS
+            or report.get('observation_errors')!=[] or report.get('environment_delta') is not None
+            or report.get('observation_scope')!='completed_imports' or 'error' in report
+            or any(report.get(k) is not False for k in CLAIMS if k!='qualification_claims')
+            or report.get('qualification_claims')!=[]
+            or audit.get('kind')!='cpu-characterization-independent-outcome-audit-v2'
+            or audit.get('status')!='PASS' or audit.get('expected_outcome')!='success'
+            or type(audit.get('caller_supplied_observed_parent_exit_code')) is not int
+            or audit['caller_supplied_observed_parent_exit_code']!=0
+            or audit.get('ordinary_imports_observed') is not True
+            or any(audit.get(k) is not False for k in (*CLAIMS,'native_qualified','target_code_executed_by_auditor') if k!='qualification_claims')
+            or audit.get('qualification_claims')!=[]
+            or any(verified.get(k)!=v for k,v in dict(configuration_sha256=config_sha,report_sha256=report_sha,
+                result_sha256=OBSERVATION_PINS['observation_result']['sha256'],source_pins=14,input_pins=42,
+                accepted_source_capsules=16,prior_source_capsules=14,parent_status='observed',
+                worker_status='observed',worker_returncode=0,baseline_after_present=True).items())
+            or index.get('kind')!='cpu-characterization-evidence-index-v2'
+            or index.get('actual_retry_performed') is not False or index.get('original_output')!=OUTPUT
+            or terminal.get('kind')!='cpu-characterization-external-terminal-observations-v2'
+            or terminal.get('configuration_sha256')!=config_sha or terminal.get('actual_retry_performed') is not False
+            or type(terminal.get('actual',{}).get('exit_code')) is not int or terminal['actual']['exit_code']!=0
+            or terminal.get('outcome_audit',{}).get('status')!='PASS'
+            or type(terminal['outcome_audit'].get('exit_code')) is not int or terminal['outcome_audit']['exit_code']!=0):
+        raise ValueError('Observation02 must retain its exact scoped normal success')
+
+
+def finite(value,maximum):
+    return type(value) in (int,float) and math.isfinite(value) and 0<=value<maximum
+
+
+def validate_distributed_report(report,request_sha,worker_sha,expected):
+    fields={'kind','version','status','request_sha256','source_sha256','environment_sha256',
+        'python_version','executable_path','pid','ppid','runtime_qualified','collection_authorized',
+        'executable','qualification_claims','versions','imports','cache','maps','baseline_maps',
+        'environment_delta','observation_errors','profile','expected_versions','pycache_prefix',
+        'native_authorized','study_authorized','distributed_exports','observation_scope','seconds'}
+    if (type(report) is not dict or set(report)!=fields
+            or report['kind']!='puck-runtime-import-characterization-result-v4'
+            or type(report['version']) is not int or report['version']!=4
+            or report['profile']!='cpu-distributed-terminal-v1' or report['status']!='observed'
+            or report['request_sha256']!=request_sha or report['source_sha256']!=worker_sha
+            or report['versions']!=VERSIONS or report['expected_versions']!=VERSIONS
+            or any(report[k] is not False for k in CLAIMS if k!='qualification_claims')
+            or report['qualification_claims']!=[] or report['observation_errors']!=[]
+            or report['environment_delta'] is not None or report['observation_scope']!='completed_imports'
+            or report['pycache_prefix']!='/scratch/pycache' or report['executable_path']!=PYTHON
+            or report['environment_sha256']!=hashlib.sha256((json.dumps(ENVIRONMENT,sort_keys=True,separators=(',',':'))+'\n').encode()).hexdigest()
+            or type(report['python_version']) is not str or not report['python_version'].startswith('3.11.15 ')
+            or len(report['python_version'])>4096 or type(report['pid']) is not int or report['pid']<=0
+            or type(report['ppid']) is not int or report['ppid']<0
+            or not finite(report['seconds'],LIMITS['normal_seconds'])
+            or type(report['imports']) is not list or len(report['imports'])!=4):
+        raise ValueError('Complete fixed CPU distributed import report required')
+    for row,name in zip(report['imports'],VERSIONS,strict=True):
+        if (type(row) is not dict or set(row)!={'name','status','seconds','cache_entries'}
+                or row['name']!=name or row['status']!='observed'
+                or not finite(row['seconds'],LIMITS['normal_seconds'])
+                or type(row['cache_entries']) is not int or not 0<=row['cache_entries']<=8192):
+            raise ValueError('Complete ordered CPU imports required')
+    if (type(report['cache']) is not dict or type(report['maps']) is not dict
+            or type(report['baseline_maps']) is not dict):
+        raise ValueError('Complete independent cache/maps observations required')
+    value=report['distributed_exports']
+    if (type(value) is not dict or set(value)!={'kind','version','capture_point','stable',
+            'profile_accepted','runtime_qualified','modules'}
+            or value['kind']!='puck-cpu-distributed-exports-v1' or type(value['version']) is not int
+            or value['version']!=1 or value['capture_point']!='after_four_fixed_imports'
+            or value['stable'] is not True or value['profile_accepted'] is not False
+            or value['runtime_qualified'] is not False or type(value['modules']) is not list
+            or len(value['modules'])!=3 or set(expected)!=set(DISTRIBUTED_NAMES)):
+        raise ValueError('Complete stable fixed distributed projection required')
+    def text(item,maximum=4096):
+        if item is not None and (type(item) is not str or len(item)>maximum or '\0' in item):
+            raise ValueError('Bounded distributed metadata text required')
+    def paths(items):
+        if type(items) is not list or len(items)>128 or any(type(item) is not str for item in items):
+            raise ValueError('Bounded distributed metadata paths required')
+        for item in items:text(item)
+    for row,name in zip(value['modules'],DISTRIBUTED_NAMES,strict=True):
+        if (type(row) is not dict or set(row)!={'name','raw_attribute_identity','cache_identity',
+                'metadata','delegate_attributes','comparison'} or row['name']!=name
+                or row['raw_attribute_identity'] is not True or row['cache_identity'] is not True):
+            raise ValueError('Exact distributed target and identity required')
+        names=row['delegate_attributes'];metadata=row['metadata'];comparison=row['comparison']
+        if (type(names) is not list or len(names)>4096
+                or any(type(item) is not str or not item or len(item)>512 or '\0' in item for item in names)
+                or names!=sorted(set(names))):
+            raise ValueError('Bounded sorted distinct observed dispatch required')
+        missing=sorted(set(expected[name])-set(names));extra=sorted(set(names)-set(expected[name]))
+        if (type(comparison) is not dict or set(comparison)!={'expected','missing','extra','matches'}
+                or comparison['expected']!=expected[name] or comparison['missing']!=missing
+                or comparison['extra']!=extra or type(comparison['matches']) is not bool
+                or comparison['matches']!=(not missing and not extra)):
+            raise ValueError('Exact distributed source comparison required')
+        if (type(metadata) is not dict or set(metadata)!={'name','module_type','file','package','loader_type','spec','path'}
+                or metadata['name']!=name or metadata['module_type']!='builtins.module'):
+            raise ValueError('Exact distributed metadata required')
+        text(metadata['file']);text(metadata['package']);text(metadata['loader_type'],512);paths(metadata['path'])
+        spec=metadata['spec']
+        if spec is not None:
+            if type(spec) is not dict or set(spec)!={'name','origin','loader_type','submodule_search_locations'}:
+                raise ValueError('Exact distributed spec metadata required')
+            text(spec['name'],512);text(spec['origin']);text(spec['loader_type'],512)
+            if spec['submodule_search_locations'] is not None:paths(spec['submodule_search_locations'])
+    if (len((json.dumps(value,sort_keys=True,separators=(',',':'),allow_nan=False)+'\n').encode())>256*1024
+            or len((json.dumps(report,sort_keys=True,separators=(',',':'),allow_nan=False)+'\n').encode())>MiB):
+        raise ValueError('Distributed projection/report exceeds byte bounds')
+
+
 def validate_native_metadata(native):
     if (native.get('kind')!='puck-cpu-characterization-native-metadata-v5'
             or native.get('root_scope')!='installed_shared_objects_and_interpreter'
@@ -220,7 +449,9 @@ def execute(config,digest,started):
     from palimpsest import bounded_qualification as bounds
     from palimpsest.puck_retained_installation import AdmissionInputs,HeldInstalledFiles
     from admit_puck_retained_installation import completion_state
-    output=ROOT/OUTPUT;deadline=started+LIMITS['normal_seconds'];state={};result=dict(CLAIMS)
+    roster=config['kind']=='puck-cpu-runtime-characterization-v2'
+    roles=ROSTER_ROLES if roster else ROLES
+    output=ROOT/config['output'];deadline=started+LIMITS['normal_seconds'];state={};result=dict(CLAIMS)
     rows=sorted(config['sources']+config['inputs']+[config['_configuration_row']],key=lambda r:r['path'])
     limits=resource.getrlimit(resource.RLIMIT_NOFILE)
     available=int(next(line.split()[1] for line in Path('/proc/meminfo').read_text().splitlines() if line.startswith('MemAvailable:')))*1024
@@ -235,7 +466,8 @@ def execute(config,digest,started):
     for name in ('payload','probe-logs','worker-logs'):(output/name).mkdir(mode=0o700)
     bounds.write_new(output/'configuration.json',{k:v for k,v in config.items() if not k.startswith('_')})
     before_fds=len(os.listdir('/proc/self/fd'))
-    result.update(kind='puck-cpu-characterization-outcome-v1',status='FAIL',configuration_sha256=digest)
+    result.update(kind='puck-cpu-characterization-outcome-v2' if roster else 'puck-cpu-characterization-outcome-v1',
+        status='FAIL',configuration_sha256=digest)
     last=[0.];parent_peak=[0]
     def check():
         now=time.monotonic()
@@ -251,10 +483,15 @@ def execute(config,digest,started):
     try:
         with bounds.hard_guard(started+LIMITS['hard_seconds'],state):
             with AdmissionInputs(ROOT,rows,deadline) as inputs:
-                get=lambda role:inputs.read_json(ROLES[role])
+                get=lambda role:inputs.read_json(roles[role])
                 old,audit,snapshot,accepted=(get(role) for role in ('accepted_result','accepted_audit','accepted_snapshot','accepted_configuration'))
                 pins={row['path']:row for row in rows}
                 validate_prior_characterization(*(get(role) for role in ('prior_configuration','prior_result','prior_audit')),pins)
+                def observation_history():
+                    if roster:
+                        validate_observation02(*(get(role) for role in ('observation_configuration','observation_result',
+                            'observation_report','observation_audit','observation_index','observation_terminal')),pins)
+                observation_history()
                 if (old['status']!='PASS' or old['claims']['package_preparation_accepted'] is not True
                         or any(old['claims'].get(k) is not False for k in ('runtime_qualified','numerical_imports_executed','study_authorized','collection_authorized'))
                         or audit['status']!='PASS' or audit['package_preparation_accepted'] is not True
@@ -286,6 +523,9 @@ def execute(config,digest,started):
                     request=dict(kind='puck-runtime-import-characterization-v2',version=2,
                         site_root=str(ROOT/SITE),output_root='/output',environment=ENVIRONMENT,
                         expected_versions=VERSIONS,pycache_prefix='/scratch/pycache')
+                    if roster:
+                        expected=distributed_expected(get('distributed_proposal'))
+                        request.update(kind='puck-runtime-import-characterization-v3',version=3,distributed_expected=expected)
                     bounds.write_new(output/'request.json',request)
                     for probe,name in ((True,'probe'),(False,'worker')):
                         command=sandbox_command(baseline,native,output/'payload',output/'request.json',probe=probe)
@@ -302,8 +542,13 @@ def execute(config,digest,started):
                             if namespace!={'kind':'cpu-characterization-namespace-v1','network_isolated':True,'site_readonly':True,'project_hidden':True,'private_pycache_empty':True}:
                                 raise ValueError('Namespace probe receipt differs')
                             bounds.write_new(output/'namespace.json',namespace)
-                    report=json.loads(read(output/'payload/imports.json',MiB))
-                    if (report['kind']!='puck-runtime-import-characterization-result-v3' or report['status']!='observed'
+                    report_raw=read(output/'payload/imports.json',MiB);report=json.loads(report_raw)
+                    if roster:
+                        if (json.dumps(report,sort_keys=True,separators=(',',':'),allow_nan=False)+'\n').encode()!=report_raw:
+                            raise ValueError('Canonical distributed worker report required')
+                        validate_distributed_report(report,hashlib.sha256(read(output/'request.json',MiB)).hexdigest(),
+                            pins[WORKER]['sha256'],expected)
+                    elif (report['kind']!='puck-runtime-import-characterization-result-v3' or report['status']!='observed'
                             or report['request_sha256']!=hashlib.sha256(read(output/'request.json',MiB)).hexdigest()
                             or report['source_sha256']!=pins[WORKER]['sha256']
                             or report['versions']!=VERSIONS or [r['name'] for r in report['imports']]!=list(VERSIONS)
@@ -313,6 +558,7 @@ def execute(config,digest,started):
                     if before!=after:raise ValueError('Trusted baseline changed')
                     bounds.write_new(output/'baseline-after.json',after)
                     validate_prior_characterization(*(get(role) for role in ('prior_configuration','prior_result','prior_audit')),pins)
+                    observation_history()
                     held.recheck();inputs.recheck();check()
                     result.update(report_sha256=hashlib.sha256(read(output/'payload/imports.json',MiB)).hexdigest(),
                         versions=VERSIONS,namespace_probe_completed=True,worker_supervision_status=observed['status'],
@@ -328,22 +574,30 @@ def execute(config,digest,started):
 
 def main():
     parser=argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--configuration',required=True,type=Path);parser.add_argument('--sha256',required=True)
+    parser.add_argument('--configuration',required=True);parser.add_argument('--sha256',required=True)
     args=parser.parse_args();started=time.monotonic()
     if os.getpgrp()!=os.getpid():os.setsid()
     signal.signal(signal.SIGALRM,signal.SIG_DFL);signal.setitimer(signal.ITIMER_REAL,LIMITS['hard_seconds'])
     try:
-        raw=read(args.configuration,MiB)
+        configuration=Path(args.configuration);raw=read(configuration,MiB)
         if hashlib.sha256(raw).hexdigest()!=args.sha256:raise ValueError('Configuration SHA differs')
         config=json.loads(raw);validate_configuration(config)
+        if config['kind']=='puck-cpu-runtime-characterization-v2':
+            if (str(configuration)!=args.configuration or not configuration.is_absolute()
+                    or not configuration.is_relative_to(ROOT) or configuration.resolve(strict=True)!=configuration
+                    or (json.dumps(config,sort_keys=True,indent=2,allow_nan=False)+'\n').encode()!=raw):
+                raise ValueError('Canonical root-contained frozen distributed configuration required')
         for row in config['sources']:
-            if hashlib.sha256(read(ROOT/row['path'],MiB)).hexdigest()!=row['sha256']:raise ValueError('Trusted source differs')
+            source=read(ROOT/row['path'],MiB)
+            if (hashlib.sha256(source).hexdigest()!=row['sha256']
+                    or (config['kind']=='puck-cpu-runtime-characterization-v2' and len(source)!=row['size_bytes'])):
+                raise ValueError('Trusted source differs')
         if (Path(sys.executable).resolve()!=Path(PYTHON) or not(sys.flags.isolated and sys.flags.no_site and sys.dont_write_bytecode)
                 or os.environ.get('LD_PRELOAD') or os.environ.get('LD_LIBRARY_PATH')):
             raise ValueError('Original isolated CPU interpreter and loader environment required')
-        if os.path.lexists(ROOT/OUTPUT):raise ValueError('CPU observation allocation already reserved')
-        sys.pycache_prefix=str(ROOT/OUTPUT/'unused-parent-pycache')
-        config['_configuration_row']=dict(path=args.configuration.relative_to(ROOT).as_posix(),size_bytes=len(raw),sha256=args.sha256)
+        if os.path.lexists(ROOT/config['output']):raise ValueError('CPU observation allocation already reserved')
+        sys.pycache_prefix=str(ROOT/config['output']/'unused-parent-pycache')
+        config['_configuration_row']=dict(path=configuration.relative_to(ROOT).as_posix(),size_bytes=len(raw),sha256=args.sha256)
         result=execute(config,args.sha256,started)
         print(json.dumps(result,sort_keys=True),flush=True)
         return 0 if (result['status']=='observed' and not any(k in result for k in ('error','error_type'))
