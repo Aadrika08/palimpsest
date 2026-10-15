@@ -1,0 +1,158 @@
+{
+  "checks": [
+    {
+      "exit_code": 1,
+      "failed": 19,
+      "name": "initial native fixture attempt",
+      "passed": 11,
+      "scope": "confounded: fixture descriptor ordering and broad error assertion; corrected before semantic RED",
+      "seconds": 21.66,
+      "session": 96121,
+      "terminal": "7120d8"
+    },
+    {
+      "exit_code": 1,
+      "failed": 33,
+      "name": "semantic cache-binding RED",
+      "passed": 1,
+      "seconds": 28.54,
+      "session": 28868,
+      "terminal": "b92005"
+    },
+    {
+      "deselected": 31,
+      "exit_code": 1,
+      "failed": 4,
+      "name": "finite delegate RED",
+      "seconds": 5.29,
+      "session": 4810,
+      "terminal": "4c14f9"
+    },
+    {
+      "exit_code": 1,
+      "failed": 2,
+      "name": "cache first GREEN attempt",
+      "passed": 33,
+      "scope": "two fixtures refused changed outside ancestor metadata; concurrent temp activity possible, actor not established",
+      "seconds": 33.77,
+      "session": 34771,
+      "terminal": "fcca98"
+    },
+    {
+      "deselected": 35,
+      "exit_code": 1,
+      "failed": 1,
+      "name": "terminal completion RED",
+      "scope": "proved prior source accepted a terminal without creating required cache modules",
+      "seconds": 1.57,
+      "session": 38913,
+      "terminal": "0c6d8e"
+    },
+    {
+      "exit_code": 0,
+      "name": "cache and staging focused GREEN",
+      "passed": 62,
+      "seconds": 36.84,
+      "session": 30959,
+      "terminal": "54bbd9"
+    },
+    {
+      "exit_code": 1,
+      "failed": 6,
+      "name": "full affected persistent-filesystem slice",
+      "passed": 336,
+      "seconds": 138.93,
+      "session": 77931,
+      "terminal": "10b29e"
+    },
+    {
+      "exit_code": 1,
+      "failed": 5,
+      "name": "five persistent native failures on exact published-base source",
+      "seconds": 3.97,
+      "session": 20819,
+      "source_commit": "b329093685ee2854c2bbd517accfc3cbdd9f1170",
+      "terminal": "97242f"
+    },
+    {
+      "exit_code": 0,
+      "name": "legacy native slice on supported tmpfs",
+      "passed": 66,
+      "seconds": 59.59,
+      "session": 26737,
+      "terminal": "6dc256"
+    }
+  ],
+  "collection_authorized": false,
+  "data_only_derivation": {
+    "final_candidate_sha256": "d20076cd2e1961d1514bb135746b1701a14567136b80ee073fecedb389f929df",
+    "fresh_reproduction": {
+      "exit_code": 0,
+      "method": "same retained derivation with only two output destinations replaced; candidate and helper bytes compare equal",
+      "terminal": "aa85fb",
+      "tool_wall_seconds": 0.394262754
+    },
+    "generated_origin_gap": "Torch temporary helper is not part of accepted SITE; prospective deterministic registered source is separate",
+    "initial_candidate_sha256": "105a29eb73e8536423ce290de0bc18807b2f5044b16282f3449b0949f382ad24",
+    "initial_failures": [
+      "nonmodule row omitted exports field",
+      "relative site root passed to absolute-path mapper"
+    ],
+    "root_index_correction": "before publication, use helper root3 because native05 spans selected /usr and /etc roots"
+  },
+  "held_qualification_invoked": false,
+  "independent_review": {
+    "execution_performed": false,
+    "material_finding": "terminal completion missing",
+    "resolution": "reproduced RED, require_complete checks every cache sealed/closed and no open initializer phase; final static review no further material findings"
+  },
+  "installed_package_imports_executed": false,
+  "installed_tree_staged": false,
+  "kind": "cpu-held-preparation-source-verification-v1",
+  "qualification_claims": [],
+  "runtime_qualified": false,
+  "source_commit": "884bb0a7a2e8c3b1ee6a835acf0538f5d12f6f3d",
+  "sources": [
+    {
+      "path": "src/palimpsest/puck_dependency_bindings.py",
+      "sha256": "5110aec2eb6961bbbb6fdc40431b46c42d5ad6fff2f43d86c69125a8fa0644a7",
+      "size_bytes": 23102
+    },
+    {
+      "path": "src/palimpsest/puck_dependency_files.py",
+      "sha256": "d1ca386780212b174a6e931a8ac4ce88e68c31b27fb1c0e16346a2150560fca1",
+      "size_bytes": 33543
+    },
+    {
+      "path": "src/palimpsest/puck_dependency_imports.py",
+      "sha256": "62ac7f05e451bf6b6b58eff84032561f49411479ef55c87ec15d6e28cd6bb7d7",
+      "size_bytes": 14468
+    },
+    {
+      "path": "src/palimpsest/puck_runtime_registration.py",
+      "sha256": "33825b07a2e3837a96101a25539c4a1722bc0fc469b5a9d9388edbc5cb67f4e2",
+      "size_bytes": 17632
+    },
+    {
+      "path": "src/palimpsest/puck_runtime_staging.py",
+      "sha256": "a73c1cfe26d20281b923dfa5110a8acb1665b60a3d01296afb91c8c11b36beb6",
+      "size_bytes": 12544
+    },
+    {
+      "path": "tests/test_puck_native_cache_bindings.py",
+      "sha256": "40be4716c55ed07494036ccd91f71aa04c81b5a9e788c23e03dda319bf9aa8bb",
+      "size_bytes": 14256
+    },
+    {
+      "path": "tests/test_puck_runtime_staging.py",
+      "sha256": "59f49a8aef8c27b77f7f90a58a662af698015fed94a158069126f87457cfb129",
+      "size_bytes": 11093
+    },
+    {
+      "path": "tests/test_puck_runtime_registration.py",
+      "sha256": "ea42af3a77756abd2227c5bd6371290b646d3b9d9790331cda899732875c24ed",
+      "size_bytes": 12409
+    }
+  ],
+  "study_authorized": false
+}

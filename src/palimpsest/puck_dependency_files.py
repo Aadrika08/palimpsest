@@ -317,7 +317,9 @@ class HeldDependencyNamespace:
             if normalized in distributions: raise ValueError('Duplicate dependency distribution')
             distributions.add(normalized)
 
-        if reg['version'] in (2, 3): validate_profile(reg['import_profile'],reg['modules'],reg['namespaces'])
+        if reg['version'] in (2, 3):
+            validate_profile(reg['import_profile'],reg['modules'],reg['namespaces'],
+                             allow_native_cache=reg['version']==3)
 
     def _clock(self):
         if time.monotonic() >= self._deadline: raise TimeoutError('Dependency custody deadline exhausted')
@@ -419,6 +421,9 @@ class HeldDependencyNamespace:
             if len(_canonical(self._metadata())) + len(self._raw) > MAX_METADATA_BYTES:
                 raise ValueError('Dependency serialized metadata exceeds 64 MiB')
             self._state = 'active'; self.recheck()
+            cache=self._registration.get('import_profile',{}).get('native_cache',[])
+            if cache:
+                self._require_absent_imports(tuple(sorted(row['name'] for row in cache)), cache_creation=True)
             for row in self._registration['distributions']:
                 raw = self.read(row['root_index'], row['metadata_path'])
                 raw.decode('utf-8')
@@ -443,6 +448,9 @@ class HeldDependencyNamespace:
 
     def require_absent_imports(self, names):
         """Prove finite exact import names absent from the held package forest."""
+        return self._require_absent_imports(names)
+
+    def _require_absent_imports(self, names, *, cache_creation=False):
         try:
             self._recheck()
             if (type(names) is not tuple or not 1 <= len(names) <= 128 or any(
@@ -455,6 +463,8 @@ class HeldDependencyNamespace:
             reg = self._registration
             declared = {row['name'] for row in reg['modules'] + reg['namespaces']}
             declared.update(row['name'] for row in reg.get('import_profile', {}).get('exports', []))
+            if not cache_creation:
+                declared.update(row['name'] for row in reg.get('import_profile', {}).get('native_cache', []))
             packages = {row['name']:row for row in reg['modules'] if row['is_package']}
             packages.update({row['name']:row for row in reg['namespaces']})
             censuses = {index:{path for path, identity in child._namespace}

@@ -19,7 +19,7 @@ import sys
 import time
 
 from .puck_dependency_files import HeldDependencyNamespace, _absolute, _canonical, _NAME
-from .puck_dependency_bindings import validate_profile
+from .puck_dependency_bindings import validate_profile, _profile_groups
 from .puck_execution_files import _identity, _relative
 
 MiB = 1024 ** 2
@@ -225,17 +225,14 @@ def _distribution(path, raw):
     return {'name': names[0], 'version': versions[0], 'root_index': 0, 'metadata_path': path}
 
 
-def _module_maps(site_root, observation, profile, census):
+def _module_maps(site_root, observation, profile, census, *, allow_native_cache=False):
     cache = observation.get('cache')
     if type(cache) is not dict or type(cache.get('modules')) is not list:
         raise ValueError('Dependency observation lacks retained module cache')
     rows = cache['modules']
     if len(rows) > MAX_FILES:
         raise ValueError('Dependency retained cache count exceeds bound')
-    if type(profile) is not dict or set(profile) != {'exports', 'module_changes', 'native_origins'}:
-        raise ValueError('Dependency import profile fields differ')
-    if any(type(value) is not list for value in profile.values()) or sum(map(len, profile.values())) > 1024:
-        raise ValueError('Dependency import profile row bound exceeded')
+    _profile_groups(profile, allow_native_cache=allow_native_cache)
     def profile_names(key):
         result = set()
         for item in profile[key]:
@@ -246,6 +243,7 @@ def _module_maps(site_root, observation, profile, census):
             result.add(item['name'])
         return result
     exports = profile_names('exports'); changes = profile_names('module_changes')
+    cached=profile_names('native_cache') if 'native_cache' in profile else set()
     regular = {path for path, identity in census.items() if stat.S_ISREG(identity[2])}
     directories = {path for path, identity in census.items() if stat.S_ISDIR(identity[2])}
     physical = []; namespaces = []; seen = set()
@@ -261,6 +259,11 @@ def _module_maps(site_root, observation, profile, census):
         if name in ('__main__', '__mp_main__') or name.split('.')[0] in sys.stdlib_module_names:
             continue
         if name in exports:
+            continue
+        if name in cached:
+            if (row.get('classification')!='virtual' or row.get('file') is not None
+                    or row.get('spec_name') is not None):
+                raise ValueError('Native cache observation must retain its cache-only identity')
             continue
         file = row.get('file')
         if name in changes and file is None:
@@ -294,7 +297,9 @@ def _module_maps(site_root, observation, profile, census):
         physical.append({'name': name, 'root_index': 0, 'path': path, 'kind': kind, 'is_package': package})
     if not changes <= {row['name'] for row in physical}:
         raise ValueError('Dependency module-change identity is absent from retained cache')
-    validate_profile(profile, physical, namespaces)
+    if not cached<=seen:
+        raise ValueError('Native cache identity is absent from retained observation')
+    validate_profile(profile, physical, namespaces, allow_native_cache=allow_native_cache)
     return sorted(physical, key=lambda row: row['name']), sorted(namespaces, key=lambda row: row['name'])
 
 

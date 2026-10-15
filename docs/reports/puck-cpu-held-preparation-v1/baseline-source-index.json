@@ -1,0 +1,70 @@
+{
+  "commit": "b329093685ee2854c2bbd517accfc3cbdd9f1170",
+  "files": [
+    {
+      "path": "scripts/puck_worker_bootstrap.py",
+      "size_bytes": 38250,
+      "sha256": "7aac915251166b79abec77f7a51559ada588fe9ee92b9f1dc5c5e4cebb64feb9"
+    },
+    {
+      "path": "src/palimpsest/__init__.py",
+      "size_bytes": 63,
+      "sha256": "bb99e30d22e4662c4ded455b1b23f49b77ce811dcfa1b69bf358925487a566d8"
+    },
+    {
+      "path": "src/palimpsest/puck_execution_files.py",
+      "size_bytes": 15001,
+      "sha256": "ac059455bc45437c45330d01aaca761fd571d6de1637a4a8d7ebfbd796622062"
+    },
+    {
+      "path": "src/palimpsest/puck_dependency_files.py",
+      "size_bytes": 32978,
+      "sha256": "f717be0e39fe10bf4c7cccf3e88cad40e33d62f13024744eacfe60de2047f923"
+    },
+    {
+      "path": "src/palimpsest/puck_dependency_imports.py",
+      "size_bytes": 13172,
+      "sha256": "fbe2944f2f3d6d22e975f44ed288acc4fb217a66b0263e13f2c8989d8eabad0d"
+    },
+    {
+      "path": "src/palimpsest/puck_dependency_bindings.py",
+      "size_bytes": 16304,
+      "sha256": "56922c13246d9abd6768474001ccab18e8be952f1e8d2490d6bea6b9af90690c"
+    },
+    {
+      "path": "src/palimpsest/puck_native_origins.py",
+      "size_bytes": 1660,
+      "sha256": "e6deea2bc378968371bf1093b869dfc442eeb7def27198695d1c0f872da519e1"
+    },
+    {
+      "path": "src/palimpsest/puck_native_identity.py",
+      "size_bytes": 2837,
+      "sha256": "6e5b56e5c6494398dbd6a7c7d07e771e86c63d56e7374692d1d1d8213b721ebb"
+    },
+    {
+      "path": "src/palimpsest/puck_runtime_qualification.py",
+      "size_bytes": 2190,
+      "sha256": "45e1bca7f5420bd6dd4aed5a27af429783124a12f02def92e1db1db8d2199085"
+    },
+    {
+      "path": "tests/test_puck_worker_bootstrap.py",
+      "size_bytes": 13905,
+      "sha256": "d7496440a050ec61971dbbe91935e9e2d89dfaceb4e472654618f964b13b3fb5"
+    },
+    {
+      "path": "tests/test_puck_worker_dependencies.py",
+      "size_bytes": 9438,
+      "sha256": "af0cf29b876cd91859316da3a0bcef535ae145781e451198ad3d7399f8708ce6"
+    },
+    {
+      "path": "tests/test_puck_dependency_profile.py",
+      "size_bytes": 19338,
+      "sha256": "871ca2764ac524df9d841e244c140405d2d6e7a0583ba179efcdc601b7eb12cd"
+    },
+    {
+      "path": "tests/test_puck_native_origins.py",
+      "size_bytes": 8667,
+      "sha256": "2c1150c67efd66630585d191959f1d806954a686b87a75b94eed69bd0e39d463"
+    }
+  ]
+}
