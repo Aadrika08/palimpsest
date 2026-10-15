@@ -1,0 +1,100 @@
+{
+  "base_commit": "9d4e425372c9457e363e198ddef2657190b9994b",
+  "evidence_boundaries": [
+    "622 authored checks passed is parent-reported context; this lane did not execute tests or independently bind their completed logs. The two storage/layout-dependent historical integrations were pending at task dispatch and are not claimed passing here.",
+    "New observer test preserves synthetic07 empty logs and absent receipts; it does not implement or prove actual08 historical07 terminal-custody admission. That future distinct control/data contract remains required.",
+    "Candidate semantic mutation tests are inherited unchanged from07 and positive08 routing is covered by new authored integration; no complete dynamic import/native path coverage is claimed.",
+    "Authored integration uses tiny authored dependencies/native fixtures and fixture-specific resource adaptations. It is not installed-runtime acceptance, current payload/namespace custody, actual08 allocation or an explanation of07 timeout.",
+    "No material test gap requiring production change identified. Actual08 still needs finished source evidence, independent control review/freeze, fresh complete admission and at-most-once execution/outcome/current-byte audits. All release and episode gates remain separate."
+  ],
+  "head_commit": "b89ef4ab2a13ff17dc4191ec0370e1c9274d18f9",
+  "kind": "puck-cpu-diagnostic-epoch08-independent-source-review-v1",
+  "material_findings": [],
+  "pins": [
+    {
+      "path": "docs/plans/puck-cpu-diagnostic-epoch08-v1.md",
+      "sha256": "d271a7854a766f1162c61204644a4b4d540ada45b3d13b54cf1e40cb8836c011",
+      "size_bytes": 3172
+    },
+    {
+      "path": "scripts/qualify_puck_cpu_held_runtime.py",
+      "sha256": "0cc637ffeb2accdf843894a6f30abd917b59a940cecd53ef3709fd9200e50fe8",
+      "size_bytes": 59227
+    },
+    {
+      "path": "scripts/audit_puck_cpu_held_runtime.py",
+      "sha256": "0406bfa94f6b230fca440d57f65e5d429a30d70d054e2cdd29bafb0da1ca2b35",
+      "size_bytes": 76648
+    },
+    {
+      "path": "scripts/observe_puck_cpu_held_allocation.py",
+      "sha256": "b8ad9846ab0222d4fb7c603d2caff886dbaaff665db6a46df417a72d0f5228ad",
+      "size_bytes": 6633
+    },
+    {
+      "path": "tests/test_puck_cpu_held_amendment05_integration.py",
+      "sha256": "d1c4afd436854edac8a2b0dbd9b6ce49c9a73cbec3435cc2457de45006dcef17",
+      "size_bytes": 17875
+    },
+    {
+      "path": "tests/test_puck_cpu_held_amendment08.py",
+      "sha256": "b6e6ebeef761d03d291763315c8f08b629df5c56c10c937b977df4252acd2156",
+      "size_bytes": 6886
+    },
+    {
+      "path": "tests/test_puck_cpu_held_amendment08_integration.py",
+      "sha256": "421dea6b86a1ace393fddee29b0f0dbf470f302c43ccbc5bed849785095ca02e",
+      "size_bytes": 6176
+    },
+    {
+      "path": "scripts/puck_worker_bootstrap.py",
+      "sha256": "71263511b6f8b1828a59f2a82f74473f9151f1ec7b28dfe8bfa8c637ccac9c0e",
+      "size_bytes": 39944
+    },
+    {
+      "path": "src/palimpsest/puck_runtime_qualification.py",
+      "sha256": "81e7f5df42115dd6714be05b6cf62cf5f0804564065130aaee8289f4b962768a",
+      "size_bytes": 2440
+    }
+  ],
+  "reviewed_at_utc": "2026-10-15T23:51:48.117431+00:00",
+  "reviewed_invariants": [
+    {
+      "anchor": "scripts/qualify_puck_cpu_held_runtime.py:336; scripts/audit_puck_cpu_held_runtime.py:332",
+      "finding": "Only08 admits exactly parent/bootstrap/dependency-bindings/dependency-imports/runtime-qualification changed from preparation01;05\u201307 keep exact four. Missing each of five, sixth path and legacy fifth-path refusals have authored tests."
+    },
+    {
+      "anchor": "scripts/qualify_puck_cpu_held_runtime.py:232,265,271,642,653,719,723,733; scripts/audit_puck_cpu_held_runtime.py:263,277,288,601,631,653,663,666,676,687,691,704,706; scripts/observe_puck_cpu_held_allocation.py:58,64",
+      "finding": "08 exact identity, output, amendment, historical candidate, fresh worker capsule, namespace, current dependency and outcome/audit report selectors agree. No stale07-only selector found on these routes."
+    },
+    {
+      "anchor": "scripts/qualify_puck_cpu_held_runtime.py:723; scripts/audit_puck_cpu_held_runtime.py:666",
+      "finding": "Both route08 through unchanged strict H-to-D publication plus two Pillow origin projection, matching07; no general candidate or caller-selected delta policy was introduced."
+    },
+    {
+      "anchor": "scripts/qualify_puck_cpu_held_runtime.py:229; scripts/audit_puck_cpu_held_runtime.py:262; scripts/observe_puck_cpu_held_allocation.py:70",
+      "finding": "Existing source/input/preparation-anchor rosters, finite19 negatives, interpreter/environment, limits, exclusive paths, source pins, worker qualification-v3, terminal stdout and acceptance/closure guards are retained. Production diff only extends closed epoch selection and adds exact08 source predicate."
+    },
+    {
+      "anchor": "tests/test_puck_cpu_held_amendment05_integration.py:32-50,101-117; tests/test_puck_cpu_held_amendment08_integration.py:19-27",
+      "finding": "phase_trace defaults False. True substitutes archived qualifier before historical preparation, restores current qualifier before08 and checks exactly five differences. This avoids a fixture that already prepared with the new qualifier."
+    },
+    {
+      "anchor": "tests/test_puck_cpu_held_amendment08_integration.py:34-83",
+      "finding": "Authored integration checks normal08 terminal/result, ordered four import versions,18 diagnostics, exact fresh worker source, API and CLI independent audit, dependencies, no authority, closure, prepared identities/bytes and exclusive reentry."
+    },
+    {
+      "anchor": "docs/plans/puck-cpu-diagnostic-epoch08-v1.md:24-46",
+      "finding": "Plan accurately separates source work from future controls/fresh current-byte/resource admission; preserves consumed01\u201307 and07 missing result/baseline-after, unchanged180s/2GiB constraints and no trace-only acceptance."
+    }
+  ],
+  "reviewed_state": "Plan and metadata tests committed at HEAD; three production scripts, historical fixture and new08 integration inspected as current working bytes. Verdict binds the file pins, not a future commit.",
+  "root": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-diagnostic-epoch08-v1",
+  "scope": [
+    "Read all seven added/modified files, three production diffs and relevant surrounding validation/execution/audit paths against base9d4e425.",
+    "Independent read-only selector crosscheck returned no material finding.",
+    "Read-only Git status/diff/selector searches and small source-byte hashes only; git diff --check passed. No tests, helpers, installed imports, package/native loads, namespace, controls or allocation executed. Only this report was written."
+  ],
+  "status": "GO_SCOPED_SOURCE_REVIEW",
+  "version": 1
+}

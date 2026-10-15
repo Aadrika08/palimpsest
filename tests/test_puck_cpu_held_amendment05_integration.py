@@ -29,12 +29,13 @@ def file_pin(root,path):
 
 
 @contextmanager
-def publication05_fixture(tmp_path,*,caught_optional_import=False,pillow_origins=False):
+def publication05_fixture(tmp_path,*,caught_optional_import=False,pillow_origins=False,phase_trace=False):
     assert tmp_path.resolve().is_relative_to((ROOT/'runs').resolve()), 'Use persistent runs/ basetemp'
     root,current,inputs,_=project(tmp_path,autograd_publication=True,
         caught_optional_import=caught_optional_import,pillow_origins=pillow_origins)
     legacy=ROOT/'docs/reports/puck-cpu-held-preparation-01'
     changed={PARENT,current.BOOTSTRAP,BINDINGS,IMPORTS}
+    if phase_trace:changed.add('src/palimpsest/puck_runtime_qualification.py')
     fresh={name:(root/name).read_bytes() for name in changed}
     for name in changed:
         folder='parent-source' if name==PARENT else 'worker-source'
