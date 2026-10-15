@@ -162,7 +162,11 @@ class _DependencyFiles(_HeldFileCore):
         if not self._census: return
         root_key = self.root.parts[1:]
         found = set(); namespace = []
+        remaining = MAX_CENSUS_ENTRIES - sum(
+            child._census_entries for child in self._owner._holders if child is not self)
+        observed = 0
         def walk(key, relative):
+            nonlocal observed
             if len(relative.split('/')) > 32:
                 raise ValueError('Dependency namespace depth exceeds 32')
             directory = self._directory(key)
@@ -170,8 +174,9 @@ class _DependencyFiles(_HeldFileCore):
             with os.scandir(directory) as items:
                 for item in items:
                     self._clock()
-                    if len(namespace) + len(names) >= MAX_CENSUS_ENTRIES:
+                    if observed >= remaining:
                         raise ValueError('Dependency namespace census exceeds global bound')
+                    observed += 1
                     names.append(item.name)
             names.sort()
             for name in names:
@@ -337,7 +342,9 @@ class HeldDependencyNamespace:
             signal.pthread_sigmask(signal.SIG_BLOCK, {signal.SIGIO})
             while signal.SIGIO in signal.sigpending(): signal.sigwait({signal.SIGIO})
             signal.signal(signal.SIGIO, self._old_handler)
-            signal.pthread_sigmask(signal.SIG_SETMASK, self._old_mask)
+            signal.pthread_sigmask(
+                signal.SIG_BLOCK if signal.SIGIO in self._old_mask else signal.SIG_UNBLOCK,
+                {signal.SIGIO})
             _LEASE_OWNER = None
         if errors: raise errors[0]
 

@@ -366,3 +366,46 @@ def test_caught_active_reentry_poison_cannot_close_successfully(tmp_path):
     with pytest.raises(RuntimeError, match='failed|closed'): holder.read(0, 'demo/__init__.py')
     with pytest.raises(RuntimeError): holder.__exit__(None, None, None)
     assert signal.getsignal(signal.SIGIO) == signal.SIG_DFL
+
+
+def test_aggregate_census_stops_before_walking_another_full_root(tmp_path, monkeypatch):
+    import contextlib
+    import shutil
+    module = api()
+    root, leaf, reg, path = setup(tmp_path)
+    second = tmp_path/'other-packages'; shutil.copytree(root, second)
+    reg['roots'].append(dict(reg['roots'][0],root=str(second)))
+    holder = held(reg,path)
+    monkeypatch.setattr(module,'MAX_CENSUS_ENTRIES',7)
+    original = module.os.scandir
+    count = 0
+    @contextlib.contextmanager
+    def scan(fd):
+        nonlocal count
+        with original(fd) as entries:
+            def counted():
+                nonlocal count
+                for entry in entries:
+                    if os.readlink('/proc/self/fd/'+str(fd)).startswith(str(second)):
+                        count += 1
+                    yield entry
+            yield counted()
+    monkeypatch.setattr(module.os,'scandir',scan)
+    with pytest.raises(ValueError,match='census'):
+        with holder: pass
+    # First root has five entries; the second may observe its two remaining
+    # admitted entries plus one observation to detect overflow.
+    assert count <= 3
+    assert signal.getsignal(signal.SIGIO) == signal.SIG_DFL
+
+
+def test_cleanup_preserves_unrelated_signal_mask_changes(tmp_path):
+    root, leaf, reg, path = setup(tmp_path)
+    holder = held(reg,path)
+    before = signal.pthread_sigmask(signal.SIG_BLOCK, [])
+    try:
+        with holder:
+            signal.pthread_sigmask(signal.SIG_BLOCK, {signal.SIGUSR1})
+        assert signal.SIGUSR1 in signal.pthread_sigmask(signal.SIG_BLOCK, [])
+    finally:
+        signal.pthread_sigmask(signal.SIG_SETMASK, before)

@@ -81,7 +81,9 @@ class _Resource(importlib.resources.abc.Traversable):
 class _Reader(importlib.resources.abc.TraversableResources):
     def __init__(self, owner, row): self.owner, self.row = owner, row
     def files(self):
-        return _Resource(self.owner, self.row['root_index'], self.row['path'].rsplit('/', 1)[0])
+        directory = (self.row['path'].rsplit('/', 1)[0]
+                     if self.row.get('is_package') else self.row['path'])
+        return _Resource(self.owner, self.row['root_index'], directory)
 
 
 class _Distribution(importlib.metadata.Distribution):
@@ -144,7 +146,7 @@ class _Loader(importlib.abc.Loader):
     def get_filename(self, fullname):
         return str(self.owner.provider._holders[self.row['root_index']].root/self.row['path'])
     def get_resource_reader(self, fullname):
-        return _Reader(self.owner, self.row) if self.row.get('is_package') else None
+        return _Reader(self.owner, self.row) if self.row.get('is_package', True) else None
     def get_source(self, fullname):
         if self.row.get('kind') != 'python': return None
         self.owner.guard()

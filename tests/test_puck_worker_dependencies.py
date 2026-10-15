@@ -134,3 +134,16 @@ def test_dependency_module_cache_replacement_cannot_close_successfully(tmp_path)
     assert result.returncode != 0
     assert 'Held dependency module dispatch changed' in result.stderr, result.stderr
     assert result.stdout == ''
+
+
+def test_registered_namespace_resources_are_read_from_held_bytes(tmp_path):
+    def mutate(deps,root):
+        directory = root/'fixture_ns'; directory.mkdir()
+        path = directory/'data.txt'; path.write_text('namespace resource\n')
+        deps['roots'][0]['files'].append(descriptor(path,'fixture_ns/data.txt'))
+        deps['roots'][0]['files'].sort(key=lambda row:row['path'])
+        deps['namespaces'] = [{'name':'fixture_ns','root_index':0,'path':'fixture_ns'}]
+    result,_ = dependency_fixture(tmp_path,'import fixture_ns,importlib.resources\n'
+        'return {"resource":importlib.resources.files(fixture_ns).joinpath("data.txt").read_text()}',mutate=mutate)
+    assert result.returncode == 0, result.stderr
+    assert json.loads(result.stdout)['entry_result'] == {'resource':'namespace resource\n'}

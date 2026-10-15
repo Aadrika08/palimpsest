@@ -40,9 +40,9 @@ entire native execution history. All runtime/native/collection grants stay false
 
 - [x] Preserve the original file holder behavior around core extraction:
   59 original checks before; 85 original/bootstrap checks after, 4.82 seconds.
-- [ ] Observe dependency holder and real fresh-worker Python/native REDs on
+- [x] Observe dependency holder and real fresh-worker Python/native REDs on
   authored tiny temporary namespaces, without importing installed simulation deps.
-- [ ] Implement dependency custody, importer/resources/metadata and worker v2
+- [x] Implement dependency custody, importer/resources/metadata and worker v2
   integration; preserve terminal refusal and source/model limits.
 - [ ] Review complete source, fix concrete findings with regression proof and
   serialize meaningful focused/affected verification; retain suite limitations.
@@ -52,3 +52,30 @@ entire native execution history. All runtime/native/collection grants stay false
 Memory amendment02, catalog access and navigation decisions remain pending.
 No actual dependency qualification, inventory/model/native owner/study invocation.
 CI and physical rover remain excluded. All seven simulation gates stay open.
+
+## Implementation ledger
+
+- Core extraction `a39db1f`; plan/integration API REDs `469a66d`.
+- Dependency/import integration `43a861d`: 146 focused passed, 11.87s.
+- Seed atime regression reproduced before correction; content/identity comparison
+  excludes access time, preserving byte/hash/inode/mode/size/mtime/ctime/nlink pins.
+  Native boundary characterization `42859cd`: 150 focused passed, 16.37s;
+  1367 affected passed, six inherited excluded, 77.64s.
+- Whole-branch review found aggregate census enforcement after traversal, missing
+  namespace resource readers and unrelated signal-mask restoration. Each was
+  reproduced RED and fixed in one pass; precise second-root census RED observed
+  five entries where the remaining budget plus one allows three. Corrected source:
+  153 focused passed, 16.53s; 1370 affected passed, six inherited excluded, 77.01s.
+- Default test command stops at missing FastAPI in R0 interpreter: one collection
+  error, 0.31s. No whole-repository pass or numerical qualification claimed.
+- Ruling: v2 external Python/resource imports use bound local dispatch and source
+  metadata plus targeted dependency byte/ancestor/lease checks; full source hashes,
+  dependency census and image observations remain public/native/terminal boundaries.
+  This avoids repeatedly hashing the interpreter and whole dependency forest for
+  every import. Cost if wrong: mutations outside the consumed path can be observed
+  only at the next full boundary; this is trusted-source custody, not a sandbox or
+  atomic forest proof. V1 full checks remain unchanged.
+- Deferred minor: resource listing derives directory names from registered files;
+  authenticated empty directories are not exposed through resource traversal.
+- Actual origin-relative ELF fixture refuses because held-FD loading changes its
+  lookup origin. No pathname fallback or native transitive compatibility claimed.
