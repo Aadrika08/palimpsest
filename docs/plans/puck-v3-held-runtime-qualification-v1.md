@@ -64,10 +64,10 @@ trusted parent/source native windows; complete failure/outcome cleanup records.
   existing v1/v2 and149 profile/custody/bootstrap regressions.
 - [x] Task2: builder RED/GREEN authored snapshots/deadlines/path/identity/maps;
   integrate exact source capsule and parent freeze, allocation and durable close.
-- [ ] Task3: authored parent positive/negative/no-retry proof, full-suite attempt,
+- [x] Task3: authored parent positive/negative/no-retry proof, full-suite attempt,
   one fresh whole-branch and exact actual-freeze review. Fix important findings
   once with explicit RED/GREEN; any change of actual freeze requires exact review.
-- [ ] Task4: after source+freeze admission, execute allocation01 once, preserve
+- [x] Task4: after source+freeze admission, execute allocation01 once, preserve
   every terminal/failure record, independent outcome audit without rerun, publish
   incremental commits/draftPR and update goal/matrix with unchanged release gates.
 
@@ -88,3 +88,10 @@ publication regressions RED→GREEN; parent15pass6.01s; affected216pass75.84s.
 Default suite10 inherited FastAPI/httpx collection errors1.96s. Source review
 verdict retained, no second code review. Refresh and independently audit exact
 preparation freeze before the first actual invocation.
+
+Actual preparation01 exit0,14.444051507s external; independent outcome accepted.
+Actual qualification01 exit1,28.075810656s external, consumed: NumPy optional
+numpy._distributor_init_local is undeclared and poisons, first cause retained.
+No completed three-import result. Independent final outcome audit accepted preserved failure; no scoped evidence defect.
+No actual retry or ordinary observation refresh. Next source-only unit is a finite
+expected-missing-import contract and a concrete separately reviewable proposal.

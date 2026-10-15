@@ -2,13 +2,20 @@
 
 ## Present state
 
-BasePR134 ce4b55f. Registration builder6893acf; fixed entry8dee733;
-complete two-stage parent8b9145b. Fresh review of875f8bb found one Important hard-watchdog gap; the
-one RED/GREEN fix pass retains terminal publication/transport inside the guard.
-See [review and fix evidence](puck-v3-held-runtime-qualification-review.md). Neither actual preparation01 nor
-actual qualification01 has run. The production collection entry remains preflight-only;
-only explicit v3 registration selects the fixed qualification entry. All seven
-simulation release gates and three prospective study decisions remain open.
+BasePR134 ce4b55f. DraftPR135 adds bounded registration, fixed v3 imports and
+the two-stage parent. Fresh review875f8bb found one Important hard-watchdog gap;
+root fixed it in one RED/GREEN pass atdc938f5,216 affected checks75.84s. Original
+independent SOURCE NO-GO is historical; no post-fix independent code GO is claimed.
+See [review and fix evidence](puck-v3-held-runtime-qualification-review.md).
+
+Exact preparation-freeze GO preceded preparation01: exit0, independently accepted
+31049file/8172376285B preparation. Separate exact qualification-freeze GO preceded
+qualification01: exit1 in28.075810656s during NumPy's undeclared optional
+numpy._distributor_init_local probe. No three-import compatibility result exists.
+Both allocations are consumed; raw artifacts and first cause are retained in
+[puck-v3-held-runtime-qualification-01/qualification-result.md](puck-v3-held-runtime-qualification-01/qualification-result.md).
+Independent final outcome audit accepted the preserved failure with no scoped evidence defect. No actual rerun follows. All seven
+release gates and three prospective study decisions remain open.
 
 ## Implemented route and boundaries
 
@@ -42,7 +49,7 @@ ELF/baseline-native trust, transient/anonymous/JIT code, malicious in-process so
 inherited scalar metadata, native directory-origin race windows and escaped
 processes remain unqualified; no sandbox, hard RSS, WCET or owner grant is claimed.
 
-## Prospective actual preparation freeze
+## Admitted actual preparation freeze (now consumed)
 
 `puck-v3-held-runtime-qualification-01/preparation-freeze.json` SHA:
 `7ba637bcc563df74789cc031bfffb6bfe74002ad669628303d9185ccf048fc18`.
@@ -96,13 +103,13 @@ remain unchanged. Registration bounds16GiB logical,2GiB/file,32768files,
   being promoted to held-code, hard-memory/native-closure or escaped-child proof.
   Cost if overstated: the runtime result would grant authority it cannot support.
 
-After source/preparation-freeze GO, invoke preparation01 once and preserve its
-terminal. Independently audit the preparation and exact qualification freeze before
-qualifying01 once; retain/audit pass or terminal failure without rerun. No study,
-original-model, catalog access or navigation decision follows. Current account quota
-telemetry is unavailable; no remaining quota percentage is asserted.
+Both admitted actual stages have now run once. Preparation was independently
+accepted; qualification failed with preserved optional-import first cause and
+was independently accepted as a preserved terminal failure. No runtime/collection/owner/scientific/release grant.
+Next source-only work: finite declared expected-missing-import contract against
+the registered namespace with authored regressions; any later actual allocation
+needs its own prospective scope/configuration review. Observations01/02 stay
+consumed. Account quota telemetry is unavailable; no remaining percentage is asserted.
 
 Post-review verification:216 affected checks pass75.84s; default suite10 inherited
-FastAPI/httpx collection errors1.96s. No second whole-source review is claimed.
-The rejected unexecuted freeze is retained; a refreshed exact freeze must be
-independently audited before preparation01.
+FastAPI/httpx collection errors1.96s. No source changes after frozen admission.
