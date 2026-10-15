@@ -33,6 +33,11 @@ QUALIFY03='runs/puck-cpu-held-qualification-03'
 QUALIFY04='runs/puck-cpu-held-qualification-04'
 QUALIFY05='runs/puck-cpu-held-qualification-05'
 QUALIFY06='runs/puck-cpu-held-qualification-06'
+QUALIFY07='runs/puck-cpu-held-qualification-07'
+PILLOW_NATIVE_ORIGINS=(
+    dict(name='PIL._imaging',policy='held-directory-observed-v1'),
+    dict(name='PIL._imagingft',policy='held-directory-observed-v1'),
+)
 AUTOGRAD_EXPORT=dict(name='torch._C._autograd',producer='torch.autograd',
     phase='module_exec_publish',attributes=['torch','_C','_autograd'],class_binding=None,
     delegate_attributes=[
@@ -223,8 +228,8 @@ def validate_configuration(config):
           'interpreter','environment','expected_versions','limits','negative_imports','claims'}
     phase=config.get('phase') if type(config) is dict else None
     kind=config.get('kind') if type(config) is dict else None
-    epoch=6 if kind=='puck-cpu-held-runtime-allocation-v6' else 5 if kind=='puck-cpu-held-runtime-allocation-v5' else 4 if kind=='puck-cpu-held-runtime-allocation-v4' else 3 if kind=='puck-cpu-held-runtime-allocation-v3' else 2 if kind=='puck-cpu-held-runtime-allocation-v2' else 1
-    amended=epoch in (2,3,4,5,6)
+    epoch=7 if kind=='puck-cpu-held-runtime-allocation-v7' else 6 if kind=='puck-cpu-held-runtime-allocation-v6' else 5 if kind=='puck-cpu-held-runtime-allocation-v5' else 4 if kind=='puck-cpu-held-runtime-allocation-v4' else 3 if kind=='puck-cpu-held-runtime-allocation-v3' else 2 if kind=='puck-cpu-held-runtime-allocation-v2' else 1
+    amended=epoch in (2,3,4,5,6,7)
     if amended:keys.add('preparation_acceptance')
     elif phase=='qualify':keys.add('preparation')
     if (phase not in LIMITS or set(config)!=keys or (amended and phase!='qualify')
@@ -256,12 +261,13 @@ def validate_configuration(config):
     _negative_imports(config['negative_imports'])
     if epoch in (3,4,5) and config['negative_imports']!=QUALIFY03_NEGATIVE_IMPORTS:
         raise ValueError('Exact CPU qualification0'+str(epoch)+' missing-import roster required')
-    if epoch==6 and config['negative_imports']!=QUALIFY06_NEGATIVE_IMPORTS:
-        raise ValueError('Exact CPU qualification06 missing-import roster required')
+    if epoch in (6,7) and config['negative_imports']!=QUALIFY06_NEGATIVE_IMPORTS:
+        raise ValueError('Exact CPU qualification0'+str(epoch)+' missing-import roster required')
 
 
 def allocation_output(config):
     validate_configuration(config)
+    if config['version']==7:return QUALIFY07
     if config['version']==6:return QUALIFY06
     if config['version']==5:return QUALIFY05
     if config['version']==4:return QUALIFY04
@@ -269,7 +275,7 @@ def allocation_output(config):
     return QUALIFY02 if config['version']==2 else OUTPUTS[config['phase']]
 
 
-def validate_publication_candidate(prior,current):
+def validate_publication_candidate(prior,current,*,pillow_origins=False):
     if type(prior) is not dict or type(current) is not dict:
         raise ValueError('CPU publication candidate objects required')
     profile=prior.get('import_profile')
@@ -284,14 +290,24 @@ def validate_publication_candidate(prior,current):
         if len(targets)!=1 or rows[targets[0]]!=old:
             raise ValueError('Exact historical publication export declaration required')
         expected['import_profile']['exports'][targets[0]]=copy.deepcopy(replacement)
+    if pillow_origins:
+        origins=profile.get('native_origins')
+        if type(origins) is not list or any(type(row) is not dict or type(row.get('name')) is not str for row in origins):
+            raise ValueError('Historical native origin declarations required')
+        names=[row['name'] for row in origins]
+        if names!=sorted(set(names)) or set(names)&{row['name'] for row in PILLOW_NATIVE_ORIGINS}:
+            raise ValueError('Historical Pillow origins must be undeclared in a sorted unique roster')
+        expected['import_profile']['native_origins']=sorted(
+            copy.deepcopy(origins)+list(PILLOW_NATIVE_ORIGINS),key=lambda row:row['name'])
     if canonical(current)!=canonical(expected):
-        raise ValueError('CPU publication candidate must change only the exact four declarations')
+        raise ValueError('CPU candidate must change only four publication and two Pillow origin declarations'
+                         if pillow_origins else 'CPU publication candidate must change only the exact four declarations')
 
 
 def validate_preparation_acceptance(config,blobs):
     """Bind historical data acceptance without assigning its old source proof to new bytes."""
     validate_configuration(config)
-    if config['version'] not in (2,3,4,5,6):raise ValueError('CPU amendment02–06 configuration required')
+    if config['version'] not in (2,3,4,5,6,7):raise ValueError('CPU amendment02–07 configuration required')
     acceptance=config['preparation_acceptance'];values={}
     for role,row in acceptance.items():
         raw=blobs[role]
@@ -304,18 +320,18 @@ def validate_preparation_acceptance(config,blobs):
     validate_configuration(prior)
     if prior['version']!=1 or prior['phase']!='prepare':raise ValueError('Historical CPU preparation01 required')
     shared=('root','stage_parent','inputs','interpreter','environment','expected_versions','negative_imports','claims')
-    if config['version'] in (3,4,5,6):
+    if config['version'] in (3,4,5,6,7):
         if prior['negative_imports']!=PREPARATION_NEGATIVE_IMPORTS:
             raise ValueError('Exact historical CPU preparation missing-import roster required')
         shared=tuple(k for k in shared if k!='negative_imports')
-    if config['version'] in (5,6):
+    if config['version'] in (5,6,7):
         shared=tuple(k for k in shared if k!='inputs')
         if (any(prior['inputs'][k]!=config['inputs'][k] for k in INPUT_ROLES if k!='candidate')
                 or any(prior['inputs']['candidate'][k]==config['inputs']['candidate'][k] for k in ('path','sha256'))):
             raise ValueError('CPU publication amendment must change only a distinct candidate pin')
     if any(prior[k]!=config[k] for k in shared):raise ValueError('CPU amendment changed prepared data or policy')
     changed={old['path'] for old,new in zip(prior['sources'],config['sources']) if old!=new}
-    if config['version'] in (5,6):
+    if config['version'] in (5,6,7):
         if changed!={BOOTSTRAP,'scripts/qualify_puck_cpu_held_runtime.py',DIAGNOSTIC_BINDINGS,'src/palimpsest/puck_dependency_imports.py'}:
             raise ValueError('CPU publication amendment requires exactly four changed source paths')
     elif config['version']==4:
@@ -617,7 +633,7 @@ def execute(config,raw,started):
     from palimpsest.puck_cpu_registration import build_cpu_source_registration,attach_cpu_candidate
     from palimpsest.puck_cpu_namespace import sandbox_command
     phase=config['phase'];limits=config['limits'];output=ROOT/allocation_output(config);stage=Path(config['stage_parent'])
-    amended=config['version'] in (2,3,4,5,6)
+    amended=config['version'] in (2,3,4,5,6,7)
     rows=config['sources']+list(config['inputs'].values())
     unique={r['path']:r for r in rows}
     if len(unique)!=len(rows):raise ValueError('Overlapping CPU source/input pins')
@@ -628,7 +644,7 @@ def execute(config,raw,started):
             acceptance=config['preparation_acceptance'];rows+=list(acceptance.values())
             prior_raw=read(ROOT/acceptance['configuration']['path'],MiB,acceptance['configuration']['sha256'])
             prior=decode(prior_raw);validate_configuration(prior)
-            if config['version'] in (5,6):rows.append(prior['inputs']['candidate'])
+            if config['version'] in (5,6,7):rows.append(prior['inputs']['candidate'])
             old_configuration=OUTPUTS['prepare']+'/configuration.json'
             if acceptance['configuration']['path']!=old_configuration:
                 rows.append(dict(acceptance['configuration'],path=old_configuration))
@@ -694,11 +710,11 @@ def execute(config,raw,started):
                     dependency_raw=read(prepared/'payload/dependencies.json',16*MiB,dep['sha256'])
                     if len(dependency_raw)!=dep['size_bytes']:raise ValueError('CPU prepared registration size differs')
                     dependencies=decode(dependency_raw);expected=dependencies
-                    if config['version'] in (5,6):
+                    if config['version'] in (5,6,7):
                         old_pin=prior['inputs']['candidate']
                         old_raw=read(ROOT/old_pin['path'],16*MiB,old_pin['sha256'])
                         if len(old_raw)!=old_pin['size_bytes']:raise ValueError('Historical candidate size differs')
-                        validate_publication_candidate(decode(old_raw),candidate)
+                        validate_publication_candidate(decode(old_raw),candidate,pillow_origins=config['version']==7)
                         if (read(prepared/'control/candidate.json',16*MiB,old_pin['sha256'])!=old_raw
                                 or attach_cpu_candidate(dependencies,old_raw,expected_sha256=old_pin['sha256'],deadline=deadline)!=dependencies):
                             raise ValueError('Historical candidate/prepared dependency profile differs')
@@ -708,7 +724,7 @@ def execute(config,raw,started):
                     if (attached!=expected or dependencies.get('distributions')!=source_reg['distributions']
                             or any(a.get('files')!=b['files'] for a,b in zip(dependencies['roots'],source_reg['roots']))):
                         raise ValueError('CPU prepared bytes/profile differ from accepted source plan')
-                    if config['version'] in (5,6):
+                    if config['version'] in (5,6,7):
                         dependencies=attached;dependency_raw=canonical(attached)[:-1]
                     if amended:
                         audit=decode(old_blobs['independent_audit'])

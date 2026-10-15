@@ -145,8 +145,8 @@ def test_qualification03_observer_rejects_epoch_alias_before_launch(tmp_path,mon
 
 
 @pytest.mark.parametrize('code',[0,7])
-@pytest.mark.parametrize('version',[4,5,6])
-def test_qualification04_05_06_observer_preserves_prior_epochs_and_reserves_once(tmp_path,monkeypatch,code,version):
+@pytest.mark.parametrize('version',[4,5,6,7])
+def test_qualification04_05_06_07_observer_preserves_prior_epochs_and_reserves_once(tmp_path,monkeypatch,code,version):
     module,path,_=setup(tmp_path,monkeypatch,'import sys\nprint("authored04")\nsys.exit('+str(code)+')\n')
     config=json.loads(path.read_bytes());config.update(kind='puck-cpu-held-runtime-allocation-v'+str(version),version=version,allocation_id=version,phase='qualify')
     raw=module.canonical(config);path.write_bytes(raw);sha=hashlib.sha256(raw).hexdigest()
@@ -166,8 +166,8 @@ def test_qualification04_05_06_observer_preserves_prior_epochs_and_reserves_once
 
 
 @pytest.mark.parametrize('field,value',[('allocation_id',3),('phase','prepare')])
-@pytest.mark.parametrize('version',[4,5,6])
-def test_qualification04_05_06_observer_refuses_wrong_closed_selector(tmp_path,monkeypatch,field,value,version):
+@pytest.mark.parametrize('version',[4,5,6,7])
+def test_qualification04_05_06_07_observer_refuses_wrong_closed_selector(tmp_path,monkeypatch,field,value,version):
     module,path,_=setup(tmp_path,monkeypatch,'raise AssertionError("must not run")\n')
     config=json.loads(path.read_bytes());config.update(kind='puck-cpu-held-runtime-allocation-v'+str(version),version=version,allocation_id=version,phase='qualify');config[field]=value
     raw=module.canonical(config);path.write_bytes(raw)
