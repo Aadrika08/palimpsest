@@ -120,6 +120,7 @@ class _HeldCollectionExecution:
         self._model_graph=None
         self._arrays=None
         self._description=None
+        self._episode_state='unused'
 
     def _active(self):
         if self._state!='active':
@@ -130,6 +131,7 @@ class _HeldCollectionExecution:
 
     def _fail(self):
         self._state='failed'
+        self._episode_state='failed'
         # Pass exceptional close to already-poisoned holders so their refusal
         # of nominal success does not replace the original admission failure.
         import sys
@@ -330,6 +332,8 @@ class _HeldCollectionExecution:
     def stage_interval(self,sensors,world,teacher_mode,own,*,terminal_reason,capture_query_state):
         self._active()
         try:
+            if self._episode_state=='completed':
+                raise RuntimeError('Completed held episode cannot label or predict again')
             self.check_parameters()
             admission._equal(world.get('goal_xy'),self._description['scene']['layout']['goal_xy'],
                              'Collection scene goal')
@@ -341,6 +345,26 @@ class _HeldCollectionExecution:
             self._fail()
             raise
 
+    def _begin_collection_episode(self):
+        try:
+            self._active()
+            if self._episode_state!='unused':
+                raise RuntimeError('Held collection episode is one-shot')
+            self._episode_state='running'
+            self.check_parameters()
+        except BaseException:
+            self._fail();raise
+
+    def _finish_collection_episode(self):
+        try:
+            self._active()
+            if self._episode_state!='running':
+                raise RuntimeError('Held collection episode is not running')
+            self.check_parameters()
+            self._episode_state='completed'
+        except BaseException:
+            self._fail();raise
+
     def native_interval(self,env,observation,state,world,contact,own,teacher_mode,
                         probe,writer):
         """One custodied native/publication interval; no owner allocation grant.
@@ -351,6 +375,8 @@ class _HeldCollectionExecution:
         """
         try:
             self._active()
+            if self._episode_state=='completed':
+                raise RuntimeError('Completed held episode cannot continue')
             from scripts.verify_puck_mechanics import on_policy_interval
             return on_policy_interval(env,observation,state,world,contact,own,
                 teacher_mode,None,probe,writer,execution=self)
