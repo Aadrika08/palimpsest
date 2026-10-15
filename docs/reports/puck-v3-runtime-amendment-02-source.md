@@ -1,8 +1,8 @@
 # Runtime development observation 02: diagnostics and explicit EGL contract
 
 Continue the full seven-gate simulation goal from PR #132, preserving its consumed
-observation01. This is an independently reviewed prospective **development**
-amendment, distinct from memory qualification amendment02. It grants no memory,
+observation01. This is a prospective **development** amendment requiring independent source/
+freeze review, distinct from memory qualification amendment02. It grants no memory,
 catalog, navigation, original-model, native-owner, physics, fitting or study run.
 No held-runtime or release qualification follows from ordinary package imports.
 
