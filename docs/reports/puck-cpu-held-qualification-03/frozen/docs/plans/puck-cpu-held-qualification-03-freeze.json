@@ -1,0 +1,179 @@
+{
+  "actual03_invoked": false,
+  "audit": {
+    "command_prefix": [
+      "/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/bin/python3.11",
+      "-I",
+      "-S",
+      "-B",
+      "/home/utkarsh/.codex/worktrees/0071/brain/scripts/audit_puck_cpu_held_runtime.py",
+      "--configuration",
+      "/home/utkarsh/.codex/worktrees/0071/brain/docs/plans/puck-cpu-held-qualification-03.json",
+      "--sha256",
+      "c6f5807c71e4dc18dcd371aec0da833cd6de3d675e32c1f7686739068a529772",
+      "--transport",
+      "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-held-qualification-03-external-cli-transport.json"
+    ],
+    "output": "/tmp/palimpsest-puck-cpu-held-qualification-03-audit-01.json",
+    "required_external_returncode": 0,
+    "required_status": "PASS",
+    "transport_sha256_binding": "Bind exact new raw observer transport after its completed invocation; no placeholder"
+  },
+  "changed_source_paths": [
+    "scripts/puck_worker_bootstrap.py",
+    "scripts/qualify_puck_cpu_held_runtime.py"
+  ],
+  "collection_authorized": false,
+  "command": [
+    "/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/bin/python3.11",
+    "-I",
+    "-S",
+    "-B",
+    "/home/utkarsh/.codex/worktrees/0071/brain/scripts/observe_puck_cpu_held_allocation.py",
+    "--configuration",
+    "/home/utkarsh/.codex/worktrees/0071/brain/docs/plans/puck-cpu-held-qualification-03.json",
+    "--sha256",
+    "c6f5807c71e4dc18dcd371aec0da833cd6de3d675e32c1f7686739068a529772"
+  ],
+  "created_at": "2026-10-15T15:11:34.893830+00:00",
+  "current_prepared_bytes_only": {
+    "authenticated_auditor": {
+      "path": "docs/reports/puck-cpu-held-qualification-amendment-03/source-evidence/validation/prepared-byte-audit03-01/authenticated-auditor.py",
+      "sha256": "01bc2c99634cb3ec2e7bfc92f4fc96b219e07c8a5ea10351227a5cfb1181d4cf",
+      "size_bytes": 65522
+    },
+    "externally_observed_cli": {
+      "path": "docs/reports/puck-cpu-held-qualification-amendment-03/source-evidence/validation/prepared-byte-audit03-01/external-cli.json",
+      "sha256": "113ff65bffe2b45a765ff35dab865c13262c26c2a7b1cb318450793b3084a630",
+      "size_bytes": 1412
+    },
+    "publication": {
+      "path": "docs/reports/puck-cpu-held-qualification-amendment-03/source-evidence/validation/prepared-byte-audit03-01/publication.json",
+      "sha256": "373215b8fbd7137982451ca602701802c233778b53f3754cd1ccc80749ff51b9",
+      "size_bytes": 1358
+    },
+    "runner": {
+      "path": "docs/reports/puck-cpu-held-qualification-amendment-03/source-evidence/validation/prepared-byte-audit03-01/runner.py",
+      "sha256": "c7db07e57940b7ff95b0f2cd577d60033dd0863732dc96561bbed363ee1e2a9e",
+      "size_bytes": 7316
+    }
+  },
+  "cwd": "/home/utkarsh/.codex/worktrees/0071/brain",
+  "environment": {
+    "LANG": "C.UTF-8",
+    "LC_ALL": "C.UTF-8",
+    "PATH": "/usr/bin:/bin",
+    "PYTHONDONTWRITEBYTECODE": "1"
+  },
+  "executable": false,
+  "fresh_admission_required": true,
+  "kind": "puck-cpu-held-qualification-amendment-prospective-freeze-v3",
+  "limits": {
+    "address_space_bytes": 8589934592,
+    "child_hard_seconds": 190,
+    "file_bytes": 16777216,
+    "hard_seconds": 200,
+    "max_fds": 40000,
+    "max_processes": 3,
+    "min_available_ram_bytes": 2147483648,
+    "min_free_bytes": 4294967296,
+    "min_tmpfs_free_bytes": 268435456,
+    "normal_seconds": 180,
+    "output_bytes": 67108864,
+    "rss_bytes": 2147483648,
+    "scratch_bytes": 67108864
+  },
+  "native_authorized": false,
+  "pins": {
+    "auditor": {
+      "path": "scripts/audit_puck_cpu_held_runtime.py",
+      "sha256": "629e9d255651e4289089099abc319f62ac2ef098b07ba03911a23742a4a44aae",
+      "size_bytes": 66169
+    },
+    "bootstrap": {
+      "path": "scripts/puck_worker_bootstrap.py",
+      "sha256": "436b1ffe34b96fca166f6fb38022ad7392daef3517e58157092db2d9fd84c69f",
+      "size_bytes": 38375
+    },
+    "configuration": {
+      "path": "docs/plans/puck-cpu-held-qualification-03.json",
+      "sha256": "c6f5807c71e4dc18dcd371aec0da833cd6de3d675e32c1f7686739068a529772",
+      "size_bytes": 8835
+    },
+    "observer": {
+      "path": "scripts/observe_puck_cpu_held_allocation.py",
+      "sha256": "b5c0c0b3f8de763f78edef69249d93d12e1d0eb005aca196cb9449c3c8493a62",
+      "size_bytes": 6233
+    },
+    "parent": {
+      "path": "scripts/qualify_puck_cpu_held_runtime.py",
+      "sha256": "41e86a695de51a338181fcde30b167fe10010374c9d0fb50689a5412aa3b6e73",
+      "size_bytes": 48179
+    }
+  },
+  "policy_delta": {
+    "current": [
+      "numpy._distributor_init_local",
+      "org",
+      "torch._rocm_init"
+    ],
+    "historical": [
+      "numpy._distributor_init_local",
+      "org"
+    ]
+  },
+  "preparation_acceptance": {
+    "configuration": {
+      "path": "docs/plans/puck-cpu-held-preparation-01.json",
+      "sha256": "38134e016eff974e06806f1ac74492dc51e0a5721d8cd13d1123a1fd950fe8a6",
+      "size_bytes": 7903
+    },
+    "externally_observed_auditor_cli": {
+      "path": "docs/reports/puck-cpu-held-qualification-amendment-02/current-byte-audit-02/palimpsest-puck-cpu-held-preparation-01-current-byte-audit-02.external-cli.json",
+      "sha256": "9d8d740a9f09d4d945c1d6a46d707165d9b08a954187b46a4ea020eebfc00935",
+      "size_bytes": 1680
+    },
+    "independent_audit": {
+      "path": "docs/reports/puck-cpu-held-qualification-amendment-02/current-byte-audit-02/palimpsest-puck-cpu-held-preparation-01-current-byte-audit-02.json",
+      "sha256": "00595d2fa5270fc69ddeb633cd7b894a68b7e6ddfd80df123190ad43d3c9ae4d",
+      "size_bytes": 1563
+    },
+    "result": {
+      "path": "runs/puck-cpu-held-preparation-01/result.json",
+      "sha256": "9d49c6ee3a0be61505cfe7d2267b659290be17365d6e35fb5fdbdc38e103f47d",
+      "size_bytes": 7330
+    }
+  },
+  "prior_qualifications01_02_failed_consumed": true,
+  "qualification_claims": [],
+  "review": {
+    "conditions": [
+      "recheck exact controls/source/input/historical acceptance and current byte-proof pins",
+      "fresh RAM2GiB/tmpfs256MiB/project4GiB qualification admission",
+      "qualification03 output/streams/transport/audit paths absent",
+      "one invocation; preserve failure without implicit04"
+    ],
+    "material_findings": [],
+    "metadata_terminal": "205785",
+    "reviewed_at": "2026-10-15T15:14:32.256527+00:00",
+    "reviewed_configuration_sha256": "c6f5807c71e4dc18dcd371aec0da833cd6de3d675e32c1f7686739068a529772",
+    "reviewed_freeze_input_sha256": "db722060d4e9eb9dedfa22a63689e328f521d3a8ef65183934c11431deccc3bf",
+    "scope": "independent exact source/deployment/configuration and dated byte-publication review; no resource admission or runtime",
+    "status": "GO for one actual03 after fresh admission",
+    "verified_controls": 5,
+    "verified_current_pins": 44,
+    "verified_historical_capsules": 34,
+    "verified_separate_current_byte_pins": 4
+  },
+  "runtime_qualified": false,
+  "scope": "one actual held CPU four-import qualification03 with exact observed optional-import correction; no episode/study/renderer authority",
+  "source_commit": "991ea783239305eceb519c8864b3ff71d4c7cb0e",
+  "study_authorized": false,
+  "transport_path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-held-qualification-03-external-cli-transport.json",
+  "verification": {
+    "affected_tests": 185,
+    "current_data_only_audit_external_seconds": 13.446514741051942,
+    "pytest_seconds": 53.58
+  },
+  "version": 3
+}

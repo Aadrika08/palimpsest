@@ -1,0 +1,59 @@
+{
+  "acceptance_auditor": {
+    "error": "Normal external transport exit required",
+    "external_elapsed_seconds": 0.051284271001350135,
+    "normal_return": true,
+    "passing_failure_preservation_audit": false,
+    "refused_before_post_stage_byte_checks": true,
+    "returncode": 1,
+    "status": "FAIL",
+    "terminal": "2b1134"
+  },
+  "kind": "actual-qualification03-terminal-ledger-v1",
+  "negative_import_policy_delta": [
+    "torch._rocm_init"
+  ],
+  "observer": {
+    "elapsed_seconds": 45.51643660804257,
+    "normal_return": true,
+    "returncode": 1,
+    "terminal": "82ce07",
+    "timed_out": false
+  },
+  "parent": {
+    "closure": {
+      "active_children": [],
+      "active_non_main_threads": [],
+      "fd_count_after": 5,
+      "fd_count_before": 5
+    },
+    "elapsed_seconds": 45.43247786100255,
+    "status": "FAIL"
+  },
+  "post_terminal_custody": {
+    "all_three_tracked_identities_absent": true,
+    "at": "2026-10-15T15:17:38.267433+00:00",
+    "terminal": "ab8037"
+  },
+  "pre03_current_data_audit": {
+    "scope": "dated pre03 data-only census, not post03 acceptance",
+    "sha256": "373215b8fbd7137982451ca602701802c233778b53f3754cd1ccc80749ff51b9",
+    "status": "PASS"
+  },
+  "prior_qualifications01_02_unchanged": true,
+  "qualification03_consumed": true,
+  "qualification04_created": false,
+  "scope": "actual failed held four-import qualification; no accepted runtime or post-qualification byte outcome",
+  "static_binding_inspection": {
+    "candidate_sha256": "d20076cd2e1961d1514bb135746b1701a14567136b80ee073fecedb389f929df",
+    "declared_export_rows_at_phase": 36,
+    "dependency_sha256": "25ea4e912919116b3196b8a8ed537f5dde02f40a35c295d97fe0c0509d67277f",
+    "exact_failed_export_or_attribute": null,
+    "interpretation": "ExportBindings.complete fails in raw attribute resolution before close_phase; the generic error does not identify its row or justify a replacement producer or phase.",
+    "native_create_returned": true,
+    "native_exec_module_completed": false,
+    "phase": "native_create",
+    "producer": "torch._C",
+    "scope": "source/profile inspection only; no runtime import, census or allocation"
+  }
+}
