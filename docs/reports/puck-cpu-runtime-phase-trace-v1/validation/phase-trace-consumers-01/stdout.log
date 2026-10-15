@@ -1,0 +1,314 @@
+.F...................................................................... [ 54%]
+........................................................FFF              [100%]
+=================================== FAILURES ===================================
+_______ test_native_extension_initializes_from_held_file_and_is_observed _______
+
+tmp_path = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-runtime-phase-trace-v1/runs/source-validation/phase-trace-consumers-01/tmp/test_native_extension_initiali0')
+
+    def test_native_extension_initializes_from_held_file_and_is_observed(tmp_path):
+        result, _ = dependency_fixture(tmp_path,'from fixture_dep import _native\nreturn {"answer":_native.answer()}',native=True)
+>       assert result.returncode == 0, result.stderr
+E       AssertionError: Traceback (most recent call last):
+E           File "<string>", line 10, in <module>
+E           File "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-runtime-phase-trace-v1/runs/source-validation/phase-trace-consumers-01/tmp/test_native_extension_initiali0/source/scripts/puck_worker_bootstrap.py", line 682, in <module>
+E             if __name__ == '__main__': main()
+E                                        ^^^^^^
+E           File "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-runtime-phase-trace-v1/runs/source-validation/phase-trace-consumers-01/tmp/test_native_extension_initiali0/source/scripts/puck_worker_bootstrap.py", line 675, in main
+E             receipt = admission.invoke()
+E                       ^^^^^^^^^^^^^^^^^^
+E           File "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-runtime-phase-trace-v1/runs/source-validation/phase-trace-consumers-01/tmp/test_native_extension_initiali0/source/scripts/puck_worker_bootstrap.py", line 644, in invoke
+E             self.recheck(); result = module.qualify(self) if qualification else module.preflight(self)
+E                                                                                 ^^^^^^^^^^^^^^^^^^^^^^
+E           File "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-runtime-phase-trace-v1/runs/source-validation/phase-trace-consumers-01/tmp/test_native_extension_initiali0/source/src/palimpsest/puck_worker_preflight.py", line 2, in preflight
+E             from fixture_dep import _native
+E           File "<frozen importlib._bootstrap>", line 1176, in _find_and_load
+E           File "<frozen importlib._bootstrap>", line 1147, in _find_and_load_unlocked
+E           File "<frozen importlib._bootstrap>", line 676, in _load_unlocked
+E           File "<frozen importlib._bootstrap>", line 573, in module_from_spec
+E           File "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-runtime-phase-trace-v1/runs/source-validation/phase-trace-consumers-01/tmp/test_native_extension_initiali0/source/src/palimpsest/puck_dependency_imports.py", line 129, in create_module
+E             owner.full_guard(); owner.images()
+E             ^^^^^^^^^^^^^^^^^^
+E           File "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-runtime-phase-trace-v1/runs/source-validation/phase-trace-consumers-01/tmp/test_native_extension_initiali0/source/scripts/puck_worker_bootstrap.py", line 542, in recheck
+E             return self._check(full=True)
+E                    ^^^^^^^^^^^^^^^^^^^^^^
+E           File "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-runtime-phase-trace-v1/runs/source-validation/phase-trace-consumers-01/tmp/test_native_extension_initiali0/source/scripts/puck_worker_bootstrap.py", line 606, in _check
+E             if full: self._dependencies.images()
+E                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           File "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-runtime-phase-trace-v1/runs/source-validation/phase-trace-consumers-01/tmp/test_native_extension_initiali0/source/src/palimpsest/puck_dependency_imports.py", line 249, in images
+E             raise RuntimeError('Unregistered native file image: '+path)
+E         RuntimeError: Unregistered native file image: /home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-runtime-phase-trace-v1/runs/source-validation/phase-trace-consumers-01/tmp/test_native_extension_initiali0/dependency/fixture_dep/_native.cpython-311-x86_64-linux-gnu.so
+E         
+E       assert 1 == 0
+E        +  where 1 = CompletedProcess(args=['/home/utkarsh/Work/shraddha/brain/.worktrees/r0-reproduction/.venv/bin/python', '-I', '-B', '-...ace-consumers-01/tmp/test_native_extension_initiali0/dependency/fixture_dep/_native.cpython-311-x86_64-linux-gnu.so\n').returncode
+
+tests/test_puck_worker_dependencies.py:89: AssertionError
+___ test_authored05_corrects_only_publication_profile_and_audits_both_epochs ___
+
+tmp_path = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-runtime-phase-trace-v1/runs/source-validation/phase-trace-consumers-01/tmp/test_authored05_corrects_only_0')
+
+    def test_authored05_corrects_only_publication_profile_and_audits_both_epochs(tmp_path):
+        auditor_path=ROOT/'scripts/audit_puck_cpu_held_runtime.py'
+        auditor=load(auditor_path,'cpu_authored_publication05_auditor')
+        before_fds=len(os.listdir('/proc/self/fd'))
+>       with publication05_fixture(tmp_path) as case:
+
+tests/test_puck_cpu_held_amendment05_integration.py:135: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/contextlib.py:137: in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+tmp_path = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-runtime-phase-trace-v1/runs/source-validation/phase-trace-consumers-01/tmp/test_authored05_corrects_only_0')
+
+    @contextmanager
+    def publication05_fixture(tmp_path,*,caught_optional_import=False,pillow_origins=False):
+        assert tmp_path.resolve().is_relative_to((ROOT/'runs').resolve()), 'Use persistent runs/ basetemp'
+        root,current,inputs,_=project(tmp_path,autograd_publication=True,
+            caught_optional_import=caught_optional_import,pillow_origins=pillow_origins)
+        legacy=ROOT/'docs/reports/puck-cpu-held-preparation-01'
+        changed={PARENT,current.BOOTSTRAP,BINDINGS,IMPORTS}
+        fresh={name:(root/name).read_bytes() for name in changed}
+        for name in changed:
+            folder='parent-source' if name==PARENT else 'worker-source'
+            raw=(legacy/'raw'/folder/name).read_bytes()
+            if name==PARENT:
+                marker=b"min_available_ram_bytes=(4096 if phase=='prepare' else 2048)*MiB"
+                replacement=b'min_available_ram_bytes=128*MiB'
+                assert raw.count(marker)==1
+                adapted=raw.replace(marker,replacement)
+                assert adapted.replace(replacement,marker)==raw
+                raw=adapted
+            (root/name).write_bytes(raw)
+        historical=load(root/PARENT,'cpu_authored_publication_old_parent')
+        auditor_path=root/'scripts/audit_puck_cpu_held_runtime.py'
+        auditor_raw=(legacy/'controls/scripts/audit_puck_cpu_held_runtime.py').read_bytes()
+        assert digest(auditor_raw)==LEGACY_AUDITOR_SHA
+        auditor_path.write_bytes(auditor_raw)
+        stage=Path('/tmp')/('palimpsest-puck-cpu-held-authored-publication05-'+secrets.token_hex(12))
+        assert not os.path.lexists(stage)
+        try:
+            prepare=historical.configuration_template(phase='prepare',root=str(root),stage_parent=str(stage),
+                sources=source_pins(root,historical),inputs=inputs,negative_imports=['org'])
+            code,stdout,stderr=run_cli(root,historical,'prepare',prepare)
+            prepbase=root/historical.OUTPUTS['prepare'];result_path=prepbase/'result.json'
+            prepared_raw=result_path.read_bytes() if result_path.exists() else b''
+            assert code==0,(code,stdout,stderr,prepared_raw)
+            prepared=json.loads(prepared_raw)
+            assert stdout==prepared_raw and prepared['status']=='prepared'
+            configuration=root/'authored-prepare-configuration.json'
+            transport=root/'authored-prepare-transport.json'
+            published=root/'docs/authored/historical-publication05-audit.json'
+            command=[historical.PYTHON,'-I','-S','-B',str(auditor_path),
+                '--configuration',str(configuration),'--sha256',digest(configuration.read_bytes()),
+                '--transport',str(transport),'--transport-sha256',digest(transport.read_bytes()),'--output',str(published)]
+            started=time.monotonic()
+            process=subprocess.run(command,cwd=root,capture_output=True,timeout=30,
+                env=dict(PATH='/usr/bin:/bin',LANG='C.UTF-8',LC_ALL='C.UTF-8',PYTHONDONTWRITEBYTECODE='1'))
+            channels={}
+            for channel,raw in (('stdout',process.stdout),('stderr',process.stderr)):
+                path=root/('authored-publication05-historical-audit.'+channel);path.write_bytes(raw)
+                channels[channel]=dict(path=str(path),size_bytes=len(raw),sha256=digest(raw))
+            assert process.returncode==0,(process.returncode,process.stdout,process.stderr)
+            assert process.stdout==published.read_bytes() and process.stderr==b''
+            assert json.loads(process.stdout)['status']=='PASS'
+            cli=root/'docs/authored/historical-publication05-audit-cli.json'
+            cli.write_bytes(canonical(dict(kind='externally-observed-cpu-auditor-cli-v1',
+                command=command,observed_returncode=process.returncode,elapsed_seconds=time.monotonic()-started,
+                published=dict(path=str(published),size_bytes=published.stat().st_size,sha256=digest(published.read_bytes())),**channels)))
+            qualification=historical.configuration_template(phase='qualify',root=str(root),stage_parent=str(stage),
+                sources=source_pins(root,historical),inputs=inputs,negative_imports=['org'],preparation=file_pin(root,result_path))
+            code,stdout,stderr=run_cli(root,historical,'qualify',qualification)
+            failed_base=root/historical.OUTPUTS['qualify']
+            assert code==1,(code,stdout,stderr)
+            failed=json.loads(stdout)
+            assert failed['status']=='FAIL' and failed['held_four_imports_observed'] is False
+            assert not (failed_base/'baseline-after.json').exists()
+>           assert b'Dependency producer attribute binding is missing' in (failed_base/'logs/stderr.log').read_bytes()
+E           assert b'Dependency producer attribute binding is missing' in b'Traceback (most recent call last):\n  File "<string>", line 10, in <module>\n  File "/puck/source/scripts/puck_worke...'.enter\')\n            ^^^^^^^^^^^^^^^^\nAttributeError: \'HeldWorkerBootstrap\' object has no attribute \'_phase\'\n'
+E            +  where b'Traceback (most recent call last):\n  File "<string>", line 10, in <module>\n  File "/puck/source/scripts/puck_worke...'.enter\')\n            ^^^^^^^^^^^^^^^^\nAttributeError: \'HeldWorkerBootstrap\' object has no attribute \'_phase\'\n' = read_bytes()
+E            +    where read_bytes = (PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-runtime-phase-trace-v1/runs/source-validation/phase-trace-consumers-01/tmp/test_authored05_corrects_only_0/authored-project/runs/puck-cpu-held-qualification-01') / 'logs/stderr.log').read_bytes
+
+tests/test_puck_cpu_held_amendment05_integration.py:94: AssertionError
+_ test_authored06_declares_caught_optional_absence_without_changing05_candidate_or_old_evidence _
+
+tmp_path = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-runtime-phase-trace-v1/runs/source-validation/phase-trace-consumers-01/tmp/test_authored06_declares_caugh0')
+
+    def test_authored06_declares_caught_optional_absence_without_changing05_candidate_or_old_evidence(tmp_path):
+        auditor_path=ROOT/'scripts/audit_puck_cpu_held_runtime.py'
+        auditor=load(auditor_path,'cpu_authored_optional06_auditor')
+        before_fds=len(os.listdir('/proc/self/fd'))
+>       with publication05_fixture(tmp_path,caught_optional_import=True) as case:
+
+tests/test_puck_cpu_held_amendment06_integration.py:29: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/contextlib.py:137: in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+tmp_path = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-runtime-phase-trace-v1/runs/source-validation/phase-trace-consumers-01/tmp/test_authored06_declares_caugh0')
+
+    @contextmanager
+    def publication05_fixture(tmp_path,*,caught_optional_import=False,pillow_origins=False):
+        assert tmp_path.resolve().is_relative_to((ROOT/'runs').resolve()), 'Use persistent runs/ basetemp'
+        root,current,inputs,_=project(tmp_path,autograd_publication=True,
+            caught_optional_import=caught_optional_import,pillow_origins=pillow_origins)
+        legacy=ROOT/'docs/reports/puck-cpu-held-preparation-01'
+        changed={PARENT,current.BOOTSTRAP,BINDINGS,IMPORTS}
+        fresh={name:(root/name).read_bytes() for name in changed}
+        for name in changed:
+            folder='parent-source' if name==PARENT else 'worker-source'
+            raw=(legacy/'raw'/folder/name).read_bytes()
+            if name==PARENT:
+                marker=b"min_available_ram_bytes=(4096 if phase=='prepare' else 2048)*MiB"
+                replacement=b'min_available_ram_bytes=128*MiB'
+                assert raw.count(marker)==1
+                adapted=raw.replace(marker,replacement)
+                assert adapted.replace(replacement,marker)==raw
+                raw=adapted
+            (root/name).write_bytes(raw)
+        historical=load(root/PARENT,'cpu_authored_publication_old_parent')
+        auditor_path=root/'scripts/audit_puck_cpu_held_runtime.py'
+        auditor_raw=(legacy/'controls/scripts/audit_puck_cpu_held_runtime.py').read_bytes()
+        assert digest(auditor_raw)==LEGACY_AUDITOR_SHA
+        auditor_path.write_bytes(auditor_raw)
+        stage=Path('/tmp')/('palimpsest-puck-cpu-held-authored-publication05-'+secrets.token_hex(12))
+        assert not os.path.lexists(stage)
+        try:
+            prepare=historical.configuration_template(phase='prepare',root=str(root),stage_parent=str(stage),
+                sources=source_pins(root,historical),inputs=inputs,negative_imports=['org'])
+            code,stdout,stderr=run_cli(root,historical,'prepare',prepare)
+            prepbase=root/historical.OUTPUTS['prepare'];result_path=prepbase/'result.json'
+            prepared_raw=result_path.read_bytes() if result_path.exists() else b''
+            assert code==0,(code,stdout,stderr,prepared_raw)
+            prepared=json.loads(prepared_raw)
+            assert stdout==prepared_raw and prepared['status']=='prepared'
+            configuration=root/'authored-prepare-configuration.json'
+            transport=root/'authored-prepare-transport.json'
+            published=root/'docs/authored/historical-publication05-audit.json'
+            command=[historical.PYTHON,'-I','-S','-B',str(auditor_path),
+                '--configuration',str(configuration),'--sha256',digest(configuration.read_bytes()),
+                '--transport',str(transport),'--transport-sha256',digest(transport.read_bytes()),'--output',str(published)]
+            started=time.monotonic()
+            process=subprocess.run(command,cwd=root,capture_output=True,timeout=30,
+                env=dict(PATH='/usr/bin:/bin',LANG='C.UTF-8',LC_ALL='C.UTF-8',PYTHONDONTWRITEBYTECODE='1'))
+            channels={}
+            for channel,raw in (('stdout',process.stdout),('stderr',process.stderr)):
+                path=root/('authored-publication05-historical-audit.'+channel);path.write_bytes(raw)
+                channels[channel]=dict(path=str(path),size_bytes=len(raw),sha256=digest(raw))
+            assert process.returncode==0,(process.returncode,process.stdout,process.stderr)
+            assert process.stdout==published.read_bytes() and process.stderr==b''
+            assert json.loads(process.stdout)['status']=='PASS'
+            cli=root/'docs/authored/historical-publication05-audit-cli.json'
+            cli.write_bytes(canonical(dict(kind='externally-observed-cpu-auditor-cli-v1',
+                command=command,observed_returncode=process.returncode,elapsed_seconds=time.monotonic()-started,
+                published=dict(path=str(published),size_bytes=published.stat().st_size,sha256=digest(published.read_bytes())),**channels)))
+            qualification=historical.configuration_template(phase='qualify',root=str(root),stage_parent=str(stage),
+                sources=source_pins(root,historical),inputs=inputs,negative_imports=['org'],preparation=file_pin(root,result_path))
+            code,stdout,stderr=run_cli(root,historical,'qualify',qualification)
+            failed_base=root/historical.OUTPUTS['qualify']
+            assert code==1,(code,stdout,stderr)
+            failed=json.loads(stdout)
+            assert failed['status']=='FAIL' and failed['held_four_imports_observed'] is False
+            assert not (failed_base/'baseline-after.json').exists()
+>           assert b'Dependency producer attribute binding is missing' in (failed_base/'logs/stderr.log').read_bytes()
+E           assert b'Dependency producer attribute binding is missing' in b'Traceback (most recent call last):\n  File "<string>", line 10, in <module>\n  File "/puck/source/scripts/puck_worke...'.enter\')\n            ^^^^^^^^^^^^^^^^\nAttributeError: \'HeldWorkerBootstrap\' object has no attribute \'_phase\'\n'
+E            +  where b'Traceback (most recent call last):\n  File "<string>", line 10, in <module>\n  File "/puck/source/scripts/puck_worke...'.enter\')\n            ^^^^^^^^^^^^^^^^\nAttributeError: \'HeldWorkerBootstrap\' object has no attribute \'_phase\'\n' = read_bytes()
+E            +    where read_bytes = (PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-runtime-phase-trace-v1/runs/source-validation/phase-trace-consumers-01/tmp/test_authored06_declares_caugh0/authored-project/runs/puck-cpu-held-qualification-01') / 'logs/stderr.log').read_bytes
+
+tests/test_puck_cpu_held_amendment05_integration.py:94: AssertionError
+_ test_authored07_binds_only_pillow_origins_after_real06_failure_and_independent_audits _
+
+tmp_path = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-runtime-phase-trace-v1/runs/source-validation/phase-trace-consumers-01/tmp/test_authored07_binds_only_pil0')
+
+    def test_authored07_binds_only_pillow_origins_after_real06_failure_and_independent_audits(tmp_path):
+        auditor_path=ROOT/'scripts/audit_puck_cpu_held_runtime.py'
+        auditor=load(auditor_path,'cpu_authored_pillow07_auditor')
+        before_fds=len(os.listdir('/proc/self/fd'))
+>       with publication05_fixture(tmp_path,pillow_origins=True) as case:
+
+tests/test_puck_cpu_held_amendment07_integration.py:21: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/contextlib.py:137: in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+tmp_path = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-runtime-phase-trace-v1/runs/source-validation/phase-trace-consumers-01/tmp/test_authored07_binds_only_pil0')
+
+    @contextmanager
+    def publication05_fixture(tmp_path,*,caught_optional_import=False,pillow_origins=False):
+        assert tmp_path.resolve().is_relative_to((ROOT/'runs').resolve()), 'Use persistent runs/ basetemp'
+        root,current,inputs,_=project(tmp_path,autograd_publication=True,
+            caught_optional_import=caught_optional_import,pillow_origins=pillow_origins)
+        legacy=ROOT/'docs/reports/puck-cpu-held-preparation-01'
+        changed={PARENT,current.BOOTSTRAP,BINDINGS,IMPORTS}
+        fresh={name:(root/name).read_bytes() for name in changed}
+        for name in changed:
+            folder='parent-source' if name==PARENT else 'worker-source'
+            raw=(legacy/'raw'/folder/name).read_bytes()
+            if name==PARENT:
+                marker=b"min_available_ram_bytes=(4096 if phase=='prepare' else 2048)*MiB"
+                replacement=b'min_available_ram_bytes=128*MiB'
+                assert raw.count(marker)==1
+                adapted=raw.replace(marker,replacement)
+                assert adapted.replace(replacement,marker)==raw
+                raw=adapted
+            (root/name).write_bytes(raw)
+        historical=load(root/PARENT,'cpu_authored_publication_old_parent')
+        auditor_path=root/'scripts/audit_puck_cpu_held_runtime.py'
+        auditor_raw=(legacy/'controls/scripts/audit_puck_cpu_held_runtime.py').read_bytes()
+        assert digest(auditor_raw)==LEGACY_AUDITOR_SHA
+        auditor_path.write_bytes(auditor_raw)
+        stage=Path('/tmp')/('palimpsest-puck-cpu-held-authored-publication05-'+secrets.token_hex(12))
+        assert not os.path.lexists(stage)
+        try:
+            prepare=historical.configuration_template(phase='prepare',root=str(root),stage_parent=str(stage),
+                sources=source_pins(root,historical),inputs=inputs,negative_imports=['org'])
+            code,stdout,stderr=run_cli(root,historical,'prepare',prepare)
+            prepbase=root/historical.OUTPUTS['prepare'];result_path=prepbase/'result.json'
+            prepared_raw=result_path.read_bytes() if result_path.exists() else b''
+            assert code==0,(code,stdout,stderr,prepared_raw)
+            prepared=json.loads(prepared_raw)
+            assert stdout==prepared_raw and prepared['status']=='prepared'
+            configuration=root/'authored-prepare-configuration.json'
+            transport=root/'authored-prepare-transport.json'
+            published=root/'docs/authored/historical-publication05-audit.json'
+            command=[historical.PYTHON,'-I','-S','-B',str(auditor_path),
+                '--configuration',str(configuration),'--sha256',digest(configuration.read_bytes()),
+                '--transport',str(transport),'--transport-sha256',digest(transport.read_bytes()),'--output',str(published)]
+            started=time.monotonic()
+            process=subprocess.run(command,cwd=root,capture_output=True,timeout=30,
+                env=dict(PATH='/usr/bin:/bin',LANG='C.UTF-8',LC_ALL='C.UTF-8',PYTHONDONTWRITEBYTECODE='1'))
+            channels={}
+            for channel,raw in (('stdout',process.stdout),('stderr',process.stderr)):
+                path=root/('authored-publication05-historical-audit.'+channel);path.write_bytes(raw)
+                channels[channel]=dict(path=str(path),size_bytes=len(raw),sha256=digest(raw))
+            assert process.returncode==0,(process.returncode,process.stdout,process.stderr)
+            assert process.stdout==published.read_bytes() and process.stderr==b''
+            assert json.loads(process.stdout)['status']=='PASS'
+            cli=root/'docs/authored/historical-publication05-audit-cli.json'
+            cli.write_bytes(canonical(dict(kind='externally-observed-cpu-auditor-cli-v1',
+                command=command,observed_returncode=process.returncode,elapsed_seconds=time.monotonic()-started,
+                published=dict(path=str(published),size_bytes=published.stat().st_size,sha256=digest(published.read_bytes())),**channels)))
+            qualification=historical.configuration_template(phase='qualify',root=str(root),stage_parent=str(stage),
+                sources=source_pins(root,historical),inputs=inputs,negative_imports=['org'],preparation=file_pin(root,result_path))
+            code,stdout,stderr=run_cli(root,historical,'qualify',qualification)
+            failed_base=root/historical.OUTPUTS['qualify']
+            assert code==1,(code,stdout,stderr)
+            failed=json.loads(stdout)
+            assert failed['status']=='FAIL' and failed['held_four_imports_observed'] is False
+            assert not (failed_base/'baseline-after.json').exists()
+>           assert b'Dependency producer attribute binding is missing' in (failed_base/'logs/stderr.log').read_bytes()
+E           assert b'Dependency producer attribute binding is missing' in b'Traceback (most recent call last):\n  File "<string>", line 10, in <module>\n  File "/puck/source/scripts/puck_worke...'.enter\')\n            ^^^^^^^^^^^^^^^^\nAttributeError: \'HeldWorkerBootstrap\' object has no attribute \'_phase\'\n'
+E            +  where b'Traceback (most recent call last):\n  File "<string>", line 10, in <module>\n  File "/puck/source/scripts/puck_worke...'.enter\')\n            ^^^^^^^^^^^^^^^^\nAttributeError: \'HeldWorkerBootstrap\' object has no attribute \'_phase\'\n' = read_bytes()
+E            +    where read_bytes = (PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-runtime-phase-trace-v1/runs/source-validation/phase-trace-consumers-01/tmp/test_authored07_binds_only_pil0/authored-project/runs/puck-cpu-held-qualification-01') / 'logs/stderr.log').read_bytes
+
+tests/test_puck_cpu_held_amendment05_integration.py:94: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_puck_worker_dependencies.py::test_native_extension_initializes_from_held_file_and_is_observed
+FAILED tests/test_puck_cpu_held_amendment05_integration.py::test_authored05_corrects_only_publication_profile_and_audits_both_epochs
+FAILED tests/test_puck_cpu_held_amendment06_integration.py::test_authored06_declares_caught_optional_absence_without_changing05_candidate_or_old_evidence
+FAILED tests/test_puck_cpu_held_amendment07_integration.py::test_authored07_binds_only_pillow_origins_after_real06_failure_and_independent_audits
+4 failed, 127 passed in 72.25s (0:01:12)
