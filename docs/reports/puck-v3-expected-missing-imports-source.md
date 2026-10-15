@@ -101,3 +101,14 @@ test_male_recovery_data.py,test_train_male_recovery.py,
 test_verify_body_adaptation.py,test_verify_body_runtime.py,
 test_verify_body_turns.py,test_verify_task_phases.py,test_verify_task_starts.py.
 No default or full affected-suite pass is claimed.
+
+## Independent source close and next action
+
+Fresh whole-branch review off25cb3a found no concrete Critical/Important/Minor
+source defect;90 authored+legacy entry checks pass20.27s independently. Proposal
+identities and false authority verified. [Review](puck-v3-expected-missing-imports-review.md).
+Broader affected slice and default suite remain unqualified as recorded above.
+The source policy unit is reviewed; actual runtime compatibility is not proved.
+[Next source deliverable](puck-v3-native-filesystem-identity-next.md) is an explicit
+native mapped-object identity contract for the actual filesystem, with authored
+proof and a separately reviewed configuration proposal. No actual retry follows.
