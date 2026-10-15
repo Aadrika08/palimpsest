@@ -15,7 +15,7 @@ def dependency_fixture(tmp_path, body, *, native=False, native_link=None, mutate
     bootstrap, reg, manifest, script, script_sha = fixture(tmp_path, body)
     source = Path(reg['source_root'])
     for name in ('puck_dependency_files', 'puck_dependency_imports',
-                 'puck_dependency_bindings', 'puck_native_origins', 'puck_runtime_qualification'):
+                 'puck_dependency_bindings', 'puck_native_origins', 'puck_native_identity', 'puck_runtime_qualification'):
         path = source / ('src/palimpsest/'+name+'.py')
         original = ROOT / ('src/palimpsest/'+name+'.py')
         if name in ('puck_dependency_bindings', 'puck_native_origins', 'puck_runtime_qualification') and not original.is_file():

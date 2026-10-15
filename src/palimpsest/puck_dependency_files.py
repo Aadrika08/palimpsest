@@ -24,6 +24,7 @@ import time
 
 from .puck_execution_files import _HeldFileCore, _identity, _relative
 from .puck_dependency_bindings import validate_profile
+from . import puck_native_identity
 
 MiB = 1024 ** 2
 MAX_REGISTRATION_BYTES = 16 * MiB
@@ -219,15 +220,23 @@ class HeldDependencyNamespace:
         self._registration_path = _absolute(registration_path)
         self._registration = _decode(registration_raw, expected_sha256)
         self._validate()
+        if self._registration['version'] == 3:
+            # Load trusted stdlib before this holder is attached as an entering
+            # child. Its import hook rechecks attached holders, which must
+            # already be active. Legacy registrations keep their old baseline.
+            import ctypes
 
     def _validate(self):
         reg = self._registration
         keys=('kind', 'version', 'roots', 'modules', 'namespaces', 'distributions')
-        if type(reg) is dict and reg.get('version')==2: keys+=('import_profile',)
+        if type(reg) is dict and reg.get('version') in (2, 3): keys+=('import_profile',)
+        if type(reg) is dict and reg.get('version') == 3: keys+=('native_identity',)
         _fields(reg, keys)
-        if (type(reg['version']) is not int or reg['version'] not in (1,2)
+        if (type(reg['version']) is not int or reg['version'] not in (1,2,3)
                 or reg['kind'] != 'puck-worker-dependencies-v'+str(reg['version'])):
             raise ValueError('Unknown dependency registration kind or version')
+        if reg['version'] == 3 and reg['native_identity'] != puck_native_identity.TMPFS_IDENTITY_POLICY:
+            raise ValueError('Unknown dependency native identity policy')
         for key in ('roots', 'modules', 'namespaces', 'distributions'):
             if type(reg[key]) is not list: raise ValueError('Dependency rows must be lists')
         if not 1 <= len(reg['roots']) <= 32: raise ValueError('Dependency root count exceeds bound')
@@ -235,6 +244,8 @@ class HeldDependencyNamespace:
         for row in reg['roots']:
             _fields(row, ('root', 'kind', 'files')); root = _absolute(row['root'])
             if row['kind'] not in ('package', 'system_images'): raise ValueError('Unknown dependency root kind')
+            if reg['version'] == 3 and row['kind'] != 'package':
+                raise ValueError('Tmpfs native identity requires fully censused leased package roots')
             if any(root == old or root.startswith(old + '/') or old.startswith(root + '/') for old in roots):
                 raise ValueError('Dependency roots overlap')
             if self._registration_path == root or self._registration_path.startswith(root + '/'):
@@ -306,7 +317,7 @@ class HeldDependencyNamespace:
             if normalized in distributions: raise ValueError('Duplicate dependency distribution')
             distributions.add(normalized)
 
-        if reg['version']==2: validate_profile(reg['import_profile'],reg['modules'],reg['namespaces'])
+        if reg['version'] in (2, 3): validate_profile(reg['import_profile'],reg['modules'],reg['namespaces'])
 
     def _clock(self):
         if time.monotonic() >= self._deadline: raise TimeoutError('Dependency custody deadline exhausted')
@@ -400,6 +411,11 @@ class HeldDependencyNamespace:
                     identity = (value[3][0], value[3][1])
                     if identity in identities: raise ValueError('Dependency selected inode aliases cross roots or registration')
                     identities.add(identity)
+                    if self._registration['version'] == 3:
+                        # Check every held leaf, including inert bytes and images.
+                        # A root filesystem check would miss a mounted subtree.
+                        if puck_native_identity.require_tmpfs_descriptor(value[0]) != identity:
+                            raise ValueError('Dependency native descriptor raw identity differs')
             if len(_canonical(self._metadata())) + len(self._raw) > MAX_METADATA_BYTES:
                 raise ValueError('Dependency serialized metadata exceeds 64 MiB')
             self._state = 'active'; self.recheck()
@@ -549,6 +565,8 @@ class HeldDependencyNamespace:
                 'external_hardlink_names_covered': False, 'hostile_root_protection': False,
                 'runtime_qualified': False, 'source_closure': False, 'collection_authorized': False,
                 'reservation_authorized': False, 'executable': False, 'claims': []}
+            if self._registration['version'] == 3:
+                receipt['native_identity'] = self._registration['native_identity']
             if self._metadata_size() + len(_canonical(receipt)) > MAX_METADATA_BYTES:
                 raise ValueError('Dependency receipt exceeds metadata bound')
             self._recheck(); return receipt
