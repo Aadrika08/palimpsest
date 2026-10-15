@@ -115,7 +115,7 @@ def fixture(root, *, natural_failure=False):
         for role in ('job', 'supervisor', 'stdout', 'stderr', 'cleanup')}
     controls['audit'] = raw_audit
     qualification = write(root, 'qualification.json', {'authored': True})
-    extension = ROOT / 'docs/plans/memory-condition-seal-v1-protocol.json'
+    extension = ROOT / module().EXTENSION_PATH
     contract = {'schema': 'memory-family-condition-finalization-registration-v1',
         'protocol_sha256': compact.PROTOCOL_SHA256,
         'extension_sha256': hashlib.sha256(extension.read_bytes()).hexdigest(),

@@ -23,10 +23,11 @@ from scripts.memory_condition_replay_admission_v1 import (
     qualified_replay as _qualified_replay,
     require_qualification_pin as _require_qualification_pin,
 )
+from scripts.memory_directory_census_v1 import directory_names
 
 ROOT = Path(__file__).resolve().parents[1]
 MiB = compact.MiB
-EXTENSION_PATH = 'docs/plans/memory-condition-seal-v1-protocol.json'
+EXTENSION_PATH = 'docs/plans/memory-condition-seal-v1-directory-census-v1-protocol.json'
 REGISTRATION_KEYS = {'schema', 'protocol_sha256', 'extension_sha256', 'case',
     'run_id', 'condition', 'source_run_id', 'owner_source_sha256', 'source',
     'raw_audit', 'owner_record', 'controls', 'history_bundles',
@@ -237,7 +238,7 @@ class _Anchor:
                 self.parts[index - 1], dir_fd=self.fds[index - 1], follow_symlinks=False)
             if self.identity(os.fstat(self.fds[index])) != expected or self.identity(named) != expected:
                 raise RuntimeError('Condition publication ancestor changed')
-        if 'quarantine.json' in os.listdir(self.case_fd):
+        if 'quarantine.json' in directory_names(self.case_fd, max_entries=64):
             raise ValueError('Condition case is quarantined')
 
     def close(self):
@@ -344,11 +345,11 @@ def _owner(root, contract, deadline, lifetime):
 def _bundle(anchor, lifetime, deadline, expected_extra):
     directory = anchor.condition_fd
     expected = {'owner.json', 'recording', 'worker-report.json', 'snapshot-reference.json', *expected_extra}
-    if set(os.listdir(directory)) != expected:
+    if set(directory_names(directory, max_entries=64, deadline=deadline)) != expected:
         raise ValueError('Condition output has unregistered or missing entries')
     recording = os.open('recording', os.O_RDONLY | os.O_DIRECTORY | os.O_NOFOLLOW, dir_fd=directory)
     source._hold_directory(lifetime, directory, 'recording', recording)
-    names = set(os.listdir(recording))
+    names = set(directory_names(recording, max_entries=64, deadline=deadline))
     if names != METADATA | {'chunks', 'raw-audit.json', 'conversion.json'}:
         raise ValueError('Condition recording namespace differs')
     maxima = {'manifest.json': MiB, 'legacy-manifest.json': MiB,
@@ -362,7 +363,7 @@ def _bundle(anchor, lifetime, deadline, expected_extra):
     if type(index.get('chunks')) is not list or not 1 <= len(index['chunks']) <= 29:
         raise ValueError('Condition chunk count exceeds 29')
     expected_chunks = {f'{i:06d}.npz' for i in range(len(index['chunks']))}
-    if set(os.listdir(chunks)) != expected_chunks:
+    if set(directory_names(chunks, max_entries=64, deadline=deadline)) != expected_chunks:
         raise ValueError('Condition chunks differ from exact index')
     for name in sorted(expected_chunks):
         bundle['chunks/' + name] = source._read_file(chunks, name,
@@ -377,16 +378,18 @@ def _bundle(anchor, lifetime, deadline, expected_extra):
             lifetime=lifetime, deadline=deadline)
     # Directory checks permit only the owned marker's atomic rename transition.
     def check_namespace():
-        now = {'commit.json' if 'commit.json' in os.listdir(directory) else '.commit.tmp'}
+        now = {'commit.json' if 'commit.json' in directory_names(
+            directory, max_entries=64, deadline=deadline) else '.commit.tmp'}
         extras = expected_extra - {'.commit.tmp', 'commit.json'}
         marker_expected = now if expected_extra & {'.commit.tmp', 'commit.json'} else set()
-        current = set(os.listdir(directory))
+        current = set(directory_names(directory, max_entries=64, deadline=deadline))
         base = {'owner.json', 'recording', 'worker-report.json', 'snapshot-reference.json'}
         valid = (current == base | extras | marker_expected if expected_extra else
             base <= current <= base | {'pair-admission.json', '.commit.tmp', 'commit.json'}
             and not {'.commit.tmp', 'commit.json'} <= current)
         if (not valid
-                or set(os.listdir(recording)) != names or set(os.listdir(chunks)) != expected_chunks):
+                or set(directory_names(recording, max_entries=64, deadline=deadline)) != names
+                or set(directory_names(chunks, max_entries=64, deadline=deadline)) != expected_chunks):
             raise RuntimeError('Condition output namespace changed while held')
         anchor.recheck()
     lifetime.callback(check_namespace)
@@ -429,7 +432,7 @@ def _validate_replay(result, contract, read):
 
 
 def _quarantine(anchor, contract, error):
-    if 'quarantine.json' in os.listdir(anchor.case_fd):
+    if 'quarantine.json' in directory_names(anchor.case_fd, max_entries=64):
         return
     source._write_file(anchor.case_fd, 'quarantine.json', memory.canonical_bytes({
         'schema': 'memory-family-condition-quarantine-v1',
@@ -479,7 +482,7 @@ def _consume(root, registration, case_id, condition, deadline, *, publish):
             anchor = _Anchor(root, case_id, condition)
             directory = anchor.condition_fd
             if publish:
-                if set(os.listdir(directory)) != {'owner.json'}:
+                if set(directory_names(directory, max_entries=64, deadline=deadline)) != {'owner.json'}:
                     raise FileExistsError('Condition has a prior candidate, seal or quarantine')
                 state['started'] = True
                 os.mkdir('recording', 0o700, dir_fd=directory)

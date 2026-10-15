@@ -21,7 +21,7 @@ from scripts.memory_family_replay_custody_v4 import HeldReplayFiles, _relative
 ROOT = Path(__file__).resolve().parents[1]
 MiB = 1024 ** 2
 TRUST_ANCHOR_PATH = 'scripts/memory_condition_qualification_pins_v1.py'
-EXTENSION_PATH = 'docs/plans/memory-condition-seal-v1-protocol.json'
+EXTENSION_PATH = 'docs/plans/memory-condition-seal-v1-directory-census-v1-protocol.json'
 EXTENSION_SOURCES = (
     'docs/plans/memory-condition-seal-v1.md',
     'scripts/memory_condition_replay_admission_v1.py',
@@ -71,7 +71,7 @@ def _base_sources():
     values = [{key: row[key] for key in ('path', 'size_bytes', 'sha256')}
               for row in compact.PROTOCOL['behavior_sources']]
     values += copy.deepcopy(compact.PROTOCOL['cell_replay']['upstream_sources'])
-    values.append({'path': 'docs/plans/memory-family-compact-evidence-v4-protocol.json',
+    values.append({'path': compact.PROTOCOL_PATH.relative_to(ROOT).as_posix(),
                    'size_bytes': len(compact.PROTOCOL_BYTES), 'sha256': compact.PROTOCOL_SHA256})
     return {row['path']: row for row in values}
 

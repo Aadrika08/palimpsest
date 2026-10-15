@@ -23,7 +23,7 @@ from palimpsest import artifacts, memory, snapshots
 
 
 ROOT = Path(__file__).resolve().parents[1]
-PROTOCOL_PATH = ROOT / 'docs/plans/memory-family-compact-evidence-v4-protocol.json'
+PROTOCOL_PATH = ROOT / 'docs/plans/memory-family-compact-evidence-v4-directory-census-v1-protocol.json'
 MiB = 1024**2
 CHUNK_ROWS = 32
 CAMERAS = ('cam_left', 'cam_right', 'raw_cam_left', 'raw_cam_right')

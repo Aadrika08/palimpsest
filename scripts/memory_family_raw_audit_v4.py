@@ -94,7 +94,7 @@ def deadline_from_seconds(seconds):
 
 def _protocol_descriptor():
     return {
-        'path': 'docs/plans/memory-family-compact-evidence-v4-protocol.json',
+        'path': compact.PROTOCOL_PATH.relative_to(REPO_ROOT).as_posix(),
         'size_bytes': len(PROTOCOL_BYTES), 'sha256': PROTOCOL_SHA256,
     }
 

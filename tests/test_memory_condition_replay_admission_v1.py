@@ -32,14 +32,14 @@ def receipt():
                    for row in compact.PROTOCOL['behavior_sources']]
     source_rows += copy.deepcopy(compact.PROTOCOL['cell_replay']['upstream_sources'])
     paths = {row['path']: row for row in source_rows}
-    for path in ('docs/plans/memory-family-compact-evidence-v4-protocol.json',
+    for path in (compact.PROTOCOL_PATH.relative_to(compact.ROOT).as_posix(),
                  'scripts/memory_condition_replay_admission_v1.py',
                  'scripts/memory_family_condition_seal_v4.py',
-                 'docs/plans/memory-condition-seal-v1-protocol.json',
+                 module().EXTENSION_PATH,
                  'docs/plans/memory-condition-seal-v1.md'):
         paths[path] = descriptor(path)
-    paths['docs/plans/memory-family-compact-evidence-v4-protocol.json'] = descriptor(
-        'docs/plans/memory-family-compact-evidence-v4-protocol.json', compact.PROTOCOL_BYTES)
+    active_path = compact.PROTOCOL_PATH.relative_to(compact.ROOT).as_posix()
+    paths[active_path] = descriptor(active_path, compact.PROTOCOL_BYTES)
     edge = 'graph/connections_princeton.csv'
     checkpoint = 'connectome_rnn_dagger_princeton_full_vision.pt'
     asset_paths = [edge, checkpoint, *('graph/' + name for name in assets.MAPPING_NAMES)]

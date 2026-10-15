@@ -16,6 +16,7 @@ from scripts import memory_family_compact_v4 as compact
 from scripts import memory_family_raw_audit_v4 as audit
 from scripts import memory_family_oracle_admission_v3 as legacy
 from scripts import memory_family_oracle_admission_v4 as pair
+from scripts.memory_directory_census_v1 import directory_names
 
 PROTOCOL = compact.PROTOCOL
 MiB = compact.MiB
@@ -144,11 +145,11 @@ def _source_directory(root, case_id, *, check_exit=True, publication=None):
 
 
 def _case_tree(case_fd, run_id=None):
-    if set(os.listdir(case_fd)) != {'source', '.raw'}:
+    if set(directory_names(case_fd, max_entries=64)) != {'source', '.raw'}:
         raise ValueError('Source stage contains unaccounted case entries')
     raw = os.open('.raw', os.O_RDONLY | os.O_DIRECTORY | os.O_NOFOLLOW, dir_fd=case_fd)
     try:
-        names = os.listdir(raw)
+        names = directory_names(raw, max_entries=64)
         if len(names) != 1:
             raise ValueError('Source stage contains unaccounted raw-parent entries')
         pair._run_id(names[0])
@@ -159,7 +160,7 @@ def _case_tree(case_fd, run_id=None):
 
 
 def _readonly_source_namespace(lifetime, source_fd, case_fd, run_id):
-    if set(os.listdir(source_fd)) != {'snapshots', 'owner.json',
+    if set(directory_names(source_fd, max_entries=64)) != {'snapshots', 'owner.json',
             'worker-report.json', 'recording', 'commit.json'}:
         raise ValueError('Source lacks the exact sealed namespace')
     source_before = compact._file_identity(os.fstat(source_fd))
@@ -167,7 +168,7 @@ def _readonly_source_namespace(lifetime, source_fd, case_fd, run_id):
     def recheck():
         if (compact._file_identity(os.fstat(source_fd)) != source_before
                 or compact._file_identity(os.fstat(case_fd)) != case_before
-                or set(os.listdir(source_fd)) != {'snapshots', 'owner.json',
+                or set(directory_names(source_fd, max_entries=64)) != {'snapshots', 'owner.json',
                     'worker-report.json', 'recording', 'commit.json'}):
             raise RuntimeError('Sealed source/case namespace changed while read')
         _case_tree(case_fd, run_id)
@@ -278,14 +279,14 @@ def _hold_directory(lifetime, parent, name, fd):
 
 
 def _disk_bundle(source_fd, *, extras, lifetime=None, deadline=None):
-    if set(os.listdir(source_fd)) != {'snapshots', 'owner.json', 'worker-report.json', 'recording', *extras}:
+    if set(directory_names(source_fd, max_entries=64, deadline=deadline)) != {'snapshots', 'owner.json', 'worker-report.json', 'recording', *extras}:
         raise ValueError('Source output contains unregistered files')
     recording = os.open('recording', os.O_RDONLY | os.O_DIRECTORY | os.O_NOFOLLOW, dir_fd=source_fd)
     if lifetime is not None:
         _hold_directory(lifetime, source_fd, 'recording', recording)
     chunks = None
     try:
-        names = set(os.listdir(recording))
+        names = set(directory_names(recording, max_entries=64, deadline=deadline))
         metadata = {'manifest.json', 'legacy-manifest.json', 'legacy-events.jsonl',
                     'chunk-index.json', 'audit-frames.npz'}
         allowed = metadata | {'chunks', 'raw-audit.json', 'conversion.json'}
@@ -302,7 +303,7 @@ def _disk_bundle(source_fd, *, extras, lifetime=None, deadline=None):
         if type(index.get('chunks')) is not list or not 1 <= len(index['chunks']) <= 38:
             raise ValueError('Source chunk count exceeds its frozen ceiling')
         expected = {f'{i:06d}.npz' for i in range(len(index['chunks']))}
-        if set(os.listdir(chunks)) != expected:
+        if set(directory_names(chunks, max_entries=64, deadline=deadline)) != expected:
             raise ValueError('Source chunk tree differs from its exact index')
         for name in sorted(expected):
             bundle[f'chunks/{name}'] = _read_file(chunks, name,
@@ -314,7 +315,7 @@ def _disk_bundle(source_fd, *, extras, lifetime=None, deadline=None):
         if lifetime is not None:
             _hold_directory(lifetime, source_fd, 'snapshots', snapshots_fd)
         try:
-            if set(os.listdir(snapshots_fd)) != {'initial.snp'}:
+            if set(directory_names(snapshots_fd, max_entries=64, deadline=deadline)) != {'initial.snp'}:
                 raise ValueError('Source contains duplicate or unregistered snapshots')
         finally:
             if lifetime is None:
@@ -453,8 +454,8 @@ def _prepare_compact_source(evidence_root, registration, *, case_id, deadline):
         if len(worker) > PROTOCOL['storage']['transient']['converter_scratch_bytes']:
             raise ValueError('Raw report exceeds sole converter scratch allowance')
         source_fd, case_fd, output_check = lifetime.enter_context(_source_directory(root, case_id))
-        if ('quarantine.json' in os.listdir(case_fd)
-                or set(os.listdir(source_fd)) != {'snapshots', 'owner.json'}):
+        if ('quarantine.json' in directory_names(case_fd, max_entries=64, deadline=deadline)
+                or set(directory_names(source_fd, max_entries=64, deadline=deadline)) != {'snapshots', 'owner.json'}):
             raise FileExistsError('Source has a prior seal, candidate or quarantine')
         recording = chunks = None
         started = False
@@ -474,7 +475,7 @@ def _prepare_compact_source(evidence_root, registration, *, case_id, deadline):
                             path.removeprefix('chunks/'), payload)
             _write_file(recording, 'raw-audit.json', receipt_bytes)
             _write_file(source_fd, 'worker-report.json', worker)
-            disk = _disk_bundle(source_fd, extras=set())
+            disk = _disk_bundle(source_fd, extras=set(), deadline=deadline)
             if disk != bundle:
                 raise ValueError('Disk compact candidate differs from converted bytes')
             _prove(raw_data, disk, receipt)
@@ -491,7 +492,7 @@ def _prepare_compact_source(evidence_root, registration, *, case_id, deadline):
             for check in checks:
                 check()
             output_check()
-            if _disk_bundle(source_fd, extras=set()) != bundle:
+            if _disk_bundle(source_fd, extras=set(), deadline=deadline) != bundle:
                 raise RuntimeError('Compact source changed before marker publication')
             if (_read_file(source_fd, 'worker-report.json', MiB) != worker
                     or _read_file(recording, 'raw-audit.json', MiB) != receipt_bytes
@@ -544,8 +545,8 @@ def seal_compact_source(evidence_root, registration, *, case_id, deadline):
     publication = {'committed': False, 'teardown_errors': []}
     with _source_directory(evidence_root, case_id, check_exit=False,
                            publication=publication) as (source_fd, case_fd, recheck):
-        if ('quarantine.json' in os.listdir(case_fd)
-                or set(os.listdir(source_fd)) != {'snapshots', 'owner.json'}):
+        if ('quarantine.json' in directory_names(case_fd, max_entries=64, deadline=deadline)
+                or set(directory_names(source_fd, max_entries=64, deadline=deadline)) != {'snapshots', 'owner.json'}):
             raise FileExistsError('Source has a prior seal, candidate or quarantine')
         _case_tree(case_fd)
         try:
@@ -559,7 +560,10 @@ def seal_compact_source(evidence_root, registration, *, case_id, deadline):
             publication['committed'] = True
             return result
         except BaseException as error:
-            if 'recording' in os.listdir(source_fd) and 'quarantine.json' not in os.listdir(case_fd):
+            # Quarantine remains possible after the normal deadline expires.
+            # These cleanup-only censuses retain the fixed namespace bound.
+            if ('recording' in directory_names(source_fd, max_entries=64)
+                    and 'quarantine.json' not in directory_names(case_fd, max_entries=64)):
                 try:
                     _write_file(case_fd, 'quarantine.json', memory.canonical_bytes({
                         'schema': 'memory-family-source-quarantine-v1', 'case_id': case_id,
@@ -570,7 +574,7 @@ def seal_compact_source(evidence_root, registration, *, case_id, deadline):
             raise
 
 def _retained_source_namespace(lifetime, source_fd, case_fd, run_id, condition_run_id):
-    names = set(os.listdir(case_fd))
+    names = set(directory_names(case_fd, max_entries=64))
     if 'source' not in names or names - {'source', '.raw', 'conditions'}:
         raise ValueError('Retained source stage contains unaccounted case entries')
     if condition_run_id is not None:
@@ -580,7 +584,7 @@ def _retained_source_namespace(lifetime, source_fd, case_fd, run_id, condition_r
     for name in names - {'source'}:
         fd = os.open(name, os.O_RDONLY | os.O_DIRECTORY | os.O_NOFOLLOW, dir_fd=case_fd)
         _hold_directory(lifetime, case_fd, name, fd)
-        entries = set(os.listdir(fd))
+        entries = set(directory_names(fd, max_entries=64))
         if name == '.raw':
             expected = set() if condition_run_id is None else {condition_run_id}
             if entries != expected:
@@ -595,7 +599,7 @@ def _retained_source_namespace(lifetime, source_fd, case_fd, run_id, condition_r
     def recheck():
         if (compact._file_identity(os.fstat(source_fd)) != source_before
                 or compact._file_identity(os.fstat(case_fd)) != case_before
-                or set(os.listdir(case_fd)) != names):
+                or set(directory_names(case_fd, max_entries=64)) != names):
             raise RuntimeError('Retained source/case namespace changed while read')
     lifetime.callback(recheck)
 
@@ -631,7 +635,7 @@ def _read_sealed_source(evidence_root, registration, *, case_id, deadline,
             _case_tree(case_fd, run_id)
         else:
             _retained_source_namespace(lifetime, source_fd, case_fd, run_id, condition_run_id)
-        if 'quarantine.json' in os.listdir(case_fd):
+        if 'quarantine.json' in directory_names(case_fd, max_entries=64, deadline=deadline):
             raise ValueError('Source is quarantined')
         marker_bytes = _read_file(source_fd, 'commit.json', MiB, lifetime=lifetime, deadline=deadline)
         if source_commit is not None:

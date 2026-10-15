@@ -16,7 +16,7 @@ from palimpsest import artifacts, memory, snapshots
 
 
 ROOT = Path(__file__).parents[1]
-PROTOCOL_PATH = ROOT / 'docs/plans/memory-family-compact-evidence-v4-protocol.json'
+PROTOCOL_PATH = ROOT / 'docs/plans/memory-family-compact-evidence-v4-directory-census-v1-protocol.json'
 RETAINED = (
     'encoded_input', 'sensors', 'action', 'control', 'pose', 'next_pose',
     'reward', 'simulation_time', 'raw_output', 'eyes', 'revision',
