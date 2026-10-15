@@ -1,0 +1,10 @@
+Traceback (most recent call last):
+  File "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/runs/source-validation/distributed-roster-worker/distributed-observation-final-route-01/tmp/test_authored_distributed_obse0/authored-project/scripts/observe_puck_cpu_runtime_characterization.py", line 344, in <module>
+    raise SystemExit(main())
+                     ^^^^^^
+  File "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/runs/source-validation/distributed-roster-worker/distributed-observation-final-route-01/tmp/test_authored_distributed_obse0/authored-project/scripts/observe_puck_cpu_runtime_characterization.py", line 334, in main
+    result = observe(args.configuration, args.sha256)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/runs/source-validation/distributed-roster-worker/distributed-observation-final-route-01/tmp/test_authored_distributed_obse0/authored-project/scripts/observe_puck_cpu_runtime_characterization.py", line 228, in observe
+    raise FileExistsError('CPU external observation or allocation already reserved')
+FileExistsError: CPU external observation or allocation already reserved

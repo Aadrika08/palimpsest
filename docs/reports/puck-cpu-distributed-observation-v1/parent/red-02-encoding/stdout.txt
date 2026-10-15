@@ -1,0 +1,18 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+__ test_projection_byte_limit_uses_the_workers_actual_ascii_escaped_encoding ___
+
+    def test_projection_byte_limit_uses_the_workers_actual_ascii_escaped_encoding():
+        m = api(); value, expected = report(m)
+        projection = value['distributed_exports']
+        for row in projection['modules']:
+            row['metadata']['path'] = ['é' * 128] * 128
+        assert len(json.dumps(projection, ensure_ascii=False).encode()) < 256 * 1024
+        assert len(json.dumps(projection).encode()) > 256 * 1024
+>       with pytest.raises(ValueError):
+E       Failed: DID NOT RAISE <class 'ValueError'>
+
+tests/test_puck_cpu_distributed_epoch.py:163: Failed
+=========================== short test summary info ============================
+FAILED tests/test_puck_cpu_distributed_epoch.py::test_projection_byte_limit_uses_the_workers_actual_ascii_escaped_encoding
+1 failed in 0.06s

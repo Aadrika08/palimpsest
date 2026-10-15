@@ -1,0 +1,14 @@
+[
+  "flock",
+  "-x",
+  "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/runs/source-validation/distributed-observation-test.lock",
+  "/home/utkarsh/Work/shraddha/brain/.worktrees/r0-reproduction/.venv/bin/python",
+  "-m",
+  "pytest",
+  "-q",
+  "--tb=short",
+  "-p",
+  "no:cacheprovider",
+  "tests/test_puck_cpu_distributed_observation_integration.py",
+  "--basetemp=runs/source-validation/distributed-integration/route-02/pytest"
+]

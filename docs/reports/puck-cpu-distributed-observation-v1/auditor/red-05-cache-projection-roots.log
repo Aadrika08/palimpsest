@@ -1,0 +1,319 @@
+FFFFFFFFFFFFFFF                                                          [100%]
+=================================== FAILURES ===================================
+_ test_projection_fixed_roots_must_also_be_plain_modules_in_cache[missing-torch] _
+
+name = 'torch', change = 'missing'
+
+    @pytest.mark.parametrize('name', ['torch', 'torch._C', *NAMES])
+    @pytest.mark.parametrize('change', ['missing', 'nonmodule', 'subclass'])
+    def test_projection_fixed_roots_must_also_be_plain_modules_in_cache(name, change):
+        module = api(); value = report(module)
+        rows = value['cache']['modules']; row = next(row for row in rows if row['name'] == name)
+        if change == 'missing':
+            rows.remove(row); value['cache'].update(cache_entries=4, module_objects=4)
+        elif change == 'nonmodule':
+            row.clear(); row.update(name=name, classification='nonmodule', type='builtins.int')
+            value['cache']['module_objects'] = 4
+        else:
+            row['type'] = 'authored.ModuleSubclass'
+>       with pytest.raises(ValueError): module.validate_report(value, expected(), 'a' * 64, 'b' * 64)
+E       Failed: DID NOT RAISE <class 'ValueError'>
+
+tests/test_puck_cpu_distributed_observation_audit.py:189: Failed
+_ test_projection_fixed_roots_must_also_be_plain_modules_in_cache[missing-torch._C] _
+
+name = 'torch._C', change = 'missing'
+
+    @pytest.mark.parametrize('name', ['torch', 'torch._C', *NAMES])
+    @pytest.mark.parametrize('change', ['missing', 'nonmodule', 'subclass'])
+    def test_projection_fixed_roots_must_also_be_plain_modules_in_cache(name, change):
+        module = api(); value = report(module)
+        rows = value['cache']['modules']; row = next(row for row in rows if row['name'] == name)
+        if change == 'missing':
+            rows.remove(row); value['cache'].update(cache_entries=4, module_objects=4)
+        elif change == 'nonmodule':
+            row.clear(); row.update(name=name, classification='nonmodule', type='builtins.int')
+            value['cache']['module_objects'] = 4
+        else:
+            row['type'] = 'authored.ModuleSubclass'
+>       with pytest.raises(ValueError): module.validate_report(value, expected(), 'a' * 64, 'b' * 64)
+E       Failed: DID NOT RAISE <class 'ValueError'>
+
+tests/test_puck_cpu_distributed_observation_audit.py:189: Failed
+_ test_projection_fixed_roots_must_also_be_plain_modules_in_cache[missing-torch._C._distributed_autograd] _
+
+name = 'torch._C._distributed_autograd', change = 'missing'
+
+    @pytest.mark.parametrize('name', ['torch', 'torch._C', *NAMES])
+    @pytest.mark.parametrize('change', ['missing', 'nonmodule', 'subclass'])
+    def test_projection_fixed_roots_must_also_be_plain_modules_in_cache(name, change):
+        module = api(); value = report(module)
+        rows = value['cache']['modules']; row = next(row for row in rows if row['name'] == name)
+        if change == 'missing':
+            rows.remove(row); value['cache'].update(cache_entries=4, module_objects=4)
+        elif change == 'nonmodule':
+            row.clear(); row.update(name=name, classification='nonmodule', type='builtins.int')
+            value['cache']['module_objects'] = 4
+        else:
+            row['type'] = 'authored.ModuleSubclass'
+>       with pytest.raises(ValueError): module.validate_report(value, expected(), 'a' * 64, 'b' * 64)
+E       Failed: DID NOT RAISE <class 'ValueError'>
+
+tests/test_puck_cpu_distributed_observation_audit.py:189: Failed
+_ test_projection_fixed_roots_must_also_be_plain_modules_in_cache[missing-torch._C._distributed_c10d] _
+
+name = 'torch._C._distributed_c10d', change = 'missing'
+
+    @pytest.mark.parametrize('name', ['torch', 'torch._C', *NAMES])
+    @pytest.mark.parametrize('change', ['missing', 'nonmodule', 'subclass'])
+    def test_projection_fixed_roots_must_also_be_plain_modules_in_cache(name, change):
+        module = api(); value = report(module)
+        rows = value['cache']['modules']; row = next(row for row in rows if row['name'] == name)
+        if change == 'missing':
+            rows.remove(row); value['cache'].update(cache_entries=4, module_objects=4)
+        elif change == 'nonmodule':
+            row.clear(); row.update(name=name, classification='nonmodule', type='builtins.int')
+            value['cache']['module_objects'] = 4
+        else:
+            row['type'] = 'authored.ModuleSubclass'
+>       with pytest.raises(ValueError): module.validate_report(value, expected(), 'a' * 64, 'b' * 64)
+E       Failed: DID NOT RAISE <class 'ValueError'>
+
+tests/test_puck_cpu_distributed_observation_audit.py:189: Failed
+_ test_projection_fixed_roots_must_also_be_plain_modules_in_cache[missing-torch._C._distributed_rpc] _
+
+name = 'torch._C._distributed_rpc', change = 'missing'
+
+    @pytest.mark.parametrize('name', ['torch', 'torch._C', *NAMES])
+    @pytest.mark.parametrize('change', ['missing', 'nonmodule', 'subclass'])
+    def test_projection_fixed_roots_must_also_be_plain_modules_in_cache(name, change):
+        module = api(); value = report(module)
+        rows = value['cache']['modules']; row = next(row for row in rows if row['name'] == name)
+        if change == 'missing':
+            rows.remove(row); value['cache'].update(cache_entries=4, module_objects=4)
+        elif change == 'nonmodule':
+            row.clear(); row.update(name=name, classification='nonmodule', type='builtins.int')
+            value['cache']['module_objects'] = 4
+        else:
+            row['type'] = 'authored.ModuleSubclass'
+>       with pytest.raises(ValueError): module.validate_report(value, expected(), 'a' * 64, 'b' * 64)
+E       Failed: DID NOT RAISE <class 'ValueError'>
+
+tests/test_puck_cpu_distributed_observation_audit.py:189: Failed
+_ test_projection_fixed_roots_must_also_be_plain_modules_in_cache[nonmodule-torch] _
+
+name = 'torch', change = 'nonmodule'
+
+    @pytest.mark.parametrize('name', ['torch', 'torch._C', *NAMES])
+    @pytest.mark.parametrize('change', ['missing', 'nonmodule', 'subclass'])
+    def test_projection_fixed_roots_must_also_be_plain_modules_in_cache(name, change):
+        module = api(); value = report(module)
+        rows = value['cache']['modules']; row = next(row for row in rows if row['name'] == name)
+        if change == 'missing':
+            rows.remove(row); value['cache'].update(cache_entries=4, module_objects=4)
+        elif change == 'nonmodule':
+            row.clear(); row.update(name=name, classification='nonmodule', type='builtins.int')
+            value['cache']['module_objects'] = 4
+        else:
+            row['type'] = 'authored.ModuleSubclass'
+>       with pytest.raises(ValueError): module.validate_report(value, expected(), 'a' * 64, 'b' * 64)
+E       Failed: DID NOT RAISE <class 'ValueError'>
+
+tests/test_puck_cpu_distributed_observation_audit.py:189: Failed
+_ test_projection_fixed_roots_must_also_be_plain_modules_in_cache[nonmodule-torch._C] _
+
+name = 'torch._C', change = 'nonmodule'
+
+    @pytest.mark.parametrize('name', ['torch', 'torch._C', *NAMES])
+    @pytest.mark.parametrize('change', ['missing', 'nonmodule', 'subclass'])
+    def test_projection_fixed_roots_must_also_be_plain_modules_in_cache(name, change):
+        module = api(); value = report(module)
+        rows = value['cache']['modules']; row = next(row for row in rows if row['name'] == name)
+        if change == 'missing':
+            rows.remove(row); value['cache'].update(cache_entries=4, module_objects=4)
+        elif change == 'nonmodule':
+            row.clear(); row.update(name=name, classification='nonmodule', type='builtins.int')
+            value['cache']['module_objects'] = 4
+        else:
+            row['type'] = 'authored.ModuleSubclass'
+>       with pytest.raises(ValueError): module.validate_report(value, expected(), 'a' * 64, 'b' * 64)
+E       Failed: DID NOT RAISE <class 'ValueError'>
+
+tests/test_puck_cpu_distributed_observation_audit.py:189: Failed
+_ test_projection_fixed_roots_must_also_be_plain_modules_in_cache[nonmodule-torch._C._distributed_autograd] _
+
+name = 'torch._C._distributed_autograd', change = 'nonmodule'
+
+    @pytest.mark.parametrize('name', ['torch', 'torch._C', *NAMES])
+    @pytest.mark.parametrize('change', ['missing', 'nonmodule', 'subclass'])
+    def test_projection_fixed_roots_must_also_be_plain_modules_in_cache(name, change):
+        module = api(); value = report(module)
+        rows = value['cache']['modules']; row = next(row for row in rows if row['name'] == name)
+        if change == 'missing':
+            rows.remove(row); value['cache'].update(cache_entries=4, module_objects=4)
+        elif change == 'nonmodule':
+            row.clear(); row.update(name=name, classification='nonmodule', type='builtins.int')
+            value['cache']['module_objects'] = 4
+        else:
+            row['type'] = 'authored.ModuleSubclass'
+>       with pytest.raises(ValueError): module.validate_report(value, expected(), 'a' * 64, 'b' * 64)
+E       Failed: DID NOT RAISE <class 'ValueError'>
+
+tests/test_puck_cpu_distributed_observation_audit.py:189: Failed
+_ test_projection_fixed_roots_must_also_be_plain_modules_in_cache[nonmodule-torch._C._distributed_c10d] _
+
+name = 'torch._C._distributed_c10d', change = 'nonmodule'
+
+    @pytest.mark.parametrize('name', ['torch', 'torch._C', *NAMES])
+    @pytest.mark.parametrize('change', ['missing', 'nonmodule', 'subclass'])
+    def test_projection_fixed_roots_must_also_be_plain_modules_in_cache(name, change):
+        module = api(); value = report(module)
+        rows = value['cache']['modules']; row = next(row for row in rows if row['name'] == name)
+        if change == 'missing':
+            rows.remove(row); value['cache'].update(cache_entries=4, module_objects=4)
+        elif change == 'nonmodule':
+            row.clear(); row.update(name=name, classification='nonmodule', type='builtins.int')
+            value['cache']['module_objects'] = 4
+        else:
+            row['type'] = 'authored.ModuleSubclass'
+>       with pytest.raises(ValueError): module.validate_report(value, expected(), 'a' * 64, 'b' * 64)
+E       Failed: DID NOT RAISE <class 'ValueError'>
+
+tests/test_puck_cpu_distributed_observation_audit.py:189: Failed
+_ test_projection_fixed_roots_must_also_be_plain_modules_in_cache[nonmodule-torch._C._distributed_rpc] _
+
+name = 'torch._C._distributed_rpc', change = 'nonmodule'
+
+    @pytest.mark.parametrize('name', ['torch', 'torch._C', *NAMES])
+    @pytest.mark.parametrize('change', ['missing', 'nonmodule', 'subclass'])
+    def test_projection_fixed_roots_must_also_be_plain_modules_in_cache(name, change):
+        module = api(); value = report(module)
+        rows = value['cache']['modules']; row = next(row for row in rows if row['name'] == name)
+        if change == 'missing':
+            rows.remove(row); value['cache'].update(cache_entries=4, module_objects=4)
+        elif change == 'nonmodule':
+            row.clear(); row.update(name=name, classification='nonmodule', type='builtins.int')
+            value['cache']['module_objects'] = 4
+        else:
+            row['type'] = 'authored.ModuleSubclass'
+>       with pytest.raises(ValueError): module.validate_report(value, expected(), 'a' * 64, 'b' * 64)
+E       Failed: DID NOT RAISE <class 'ValueError'>
+
+tests/test_puck_cpu_distributed_observation_audit.py:189: Failed
+_ test_projection_fixed_roots_must_also_be_plain_modules_in_cache[subclass-torch] _
+
+name = 'torch', change = 'subclass'
+
+    @pytest.mark.parametrize('name', ['torch', 'torch._C', *NAMES])
+    @pytest.mark.parametrize('change', ['missing', 'nonmodule', 'subclass'])
+    def test_projection_fixed_roots_must_also_be_plain_modules_in_cache(name, change):
+        module = api(); value = report(module)
+        rows = value['cache']['modules']; row = next(row for row in rows if row['name'] == name)
+        if change == 'missing':
+            rows.remove(row); value['cache'].update(cache_entries=4, module_objects=4)
+        elif change == 'nonmodule':
+            row.clear(); row.update(name=name, classification='nonmodule', type='builtins.int')
+            value['cache']['module_objects'] = 4
+        else:
+            row['type'] = 'authored.ModuleSubclass'
+>       with pytest.raises(ValueError): module.validate_report(value, expected(), 'a' * 64, 'b' * 64)
+E       Failed: DID NOT RAISE <class 'ValueError'>
+
+tests/test_puck_cpu_distributed_observation_audit.py:189: Failed
+_ test_projection_fixed_roots_must_also_be_plain_modules_in_cache[subclass-torch._C] _
+
+name = 'torch._C', change = 'subclass'
+
+    @pytest.mark.parametrize('name', ['torch', 'torch._C', *NAMES])
+    @pytest.mark.parametrize('change', ['missing', 'nonmodule', 'subclass'])
+    def test_projection_fixed_roots_must_also_be_plain_modules_in_cache(name, change):
+        module = api(); value = report(module)
+        rows = value['cache']['modules']; row = next(row for row in rows if row['name'] == name)
+        if change == 'missing':
+            rows.remove(row); value['cache'].update(cache_entries=4, module_objects=4)
+        elif change == 'nonmodule':
+            row.clear(); row.update(name=name, classification='nonmodule', type='builtins.int')
+            value['cache']['module_objects'] = 4
+        else:
+            row['type'] = 'authored.ModuleSubclass'
+>       with pytest.raises(ValueError): module.validate_report(value, expected(), 'a' * 64, 'b' * 64)
+E       Failed: DID NOT RAISE <class 'ValueError'>
+
+tests/test_puck_cpu_distributed_observation_audit.py:189: Failed
+_ test_projection_fixed_roots_must_also_be_plain_modules_in_cache[subclass-torch._C._distributed_autograd] _
+
+name = 'torch._C._distributed_autograd', change = 'subclass'
+
+    @pytest.mark.parametrize('name', ['torch', 'torch._C', *NAMES])
+    @pytest.mark.parametrize('change', ['missing', 'nonmodule', 'subclass'])
+    def test_projection_fixed_roots_must_also_be_plain_modules_in_cache(name, change):
+        module = api(); value = report(module)
+        rows = value['cache']['modules']; row = next(row for row in rows if row['name'] == name)
+        if change == 'missing':
+            rows.remove(row); value['cache'].update(cache_entries=4, module_objects=4)
+        elif change == 'nonmodule':
+            row.clear(); row.update(name=name, classification='nonmodule', type='builtins.int')
+            value['cache']['module_objects'] = 4
+        else:
+            row['type'] = 'authored.ModuleSubclass'
+>       with pytest.raises(ValueError): module.validate_report(value, expected(), 'a' * 64, 'b' * 64)
+E       Failed: DID NOT RAISE <class 'ValueError'>
+
+tests/test_puck_cpu_distributed_observation_audit.py:189: Failed
+_ test_projection_fixed_roots_must_also_be_plain_modules_in_cache[subclass-torch._C._distributed_c10d] _
+
+name = 'torch._C._distributed_c10d', change = 'subclass'
+
+    @pytest.mark.parametrize('name', ['torch', 'torch._C', *NAMES])
+    @pytest.mark.parametrize('change', ['missing', 'nonmodule', 'subclass'])
+    def test_projection_fixed_roots_must_also_be_plain_modules_in_cache(name, change):
+        module = api(); value = report(module)
+        rows = value['cache']['modules']; row = next(row for row in rows if row['name'] == name)
+        if change == 'missing':
+            rows.remove(row); value['cache'].update(cache_entries=4, module_objects=4)
+        elif change == 'nonmodule':
+            row.clear(); row.update(name=name, classification='nonmodule', type='builtins.int')
+            value['cache']['module_objects'] = 4
+        else:
+            row['type'] = 'authored.ModuleSubclass'
+>       with pytest.raises(ValueError): module.validate_report(value, expected(), 'a' * 64, 'b' * 64)
+E       Failed: DID NOT RAISE <class 'ValueError'>
+
+tests/test_puck_cpu_distributed_observation_audit.py:189: Failed
+_ test_projection_fixed_roots_must_also_be_plain_modules_in_cache[subclass-torch._C._distributed_rpc] _
+
+name = 'torch._C._distributed_rpc', change = 'subclass'
+
+    @pytest.mark.parametrize('name', ['torch', 'torch._C', *NAMES])
+    @pytest.mark.parametrize('change', ['missing', 'nonmodule', 'subclass'])
+    def test_projection_fixed_roots_must_also_be_plain_modules_in_cache(name, change):
+        module = api(); value = report(module)
+        rows = value['cache']['modules']; row = next(row for row in rows if row['name'] == name)
+        if change == 'missing':
+            rows.remove(row); value['cache'].update(cache_entries=4, module_objects=4)
+        elif change == 'nonmodule':
+            row.clear(); row.update(name=name, classification='nonmodule', type='builtins.int')
+            value['cache']['module_objects'] = 4
+        else:
+            row['type'] = 'authored.ModuleSubclass'
+>       with pytest.raises(ValueError): module.validate_report(value, expected(), 'a' * 64, 'b' * 64)
+E       Failed: DID NOT RAISE <class 'ValueError'>
+
+tests/test_puck_cpu_distributed_observation_audit.py:189: Failed
+=========================== short test summary info ============================
+FAILED tests/test_puck_cpu_distributed_observation_audit.py::test_projection_fixed_roots_must_also_be_plain_modules_in_cache[missing-torch]
+FAILED tests/test_puck_cpu_distributed_observation_audit.py::test_projection_fixed_roots_must_also_be_plain_modules_in_cache[missing-torch._C]
+FAILED tests/test_puck_cpu_distributed_observation_audit.py::test_projection_fixed_roots_must_also_be_plain_modules_in_cache[missing-torch._C._distributed_autograd]
+FAILED tests/test_puck_cpu_distributed_observation_audit.py::test_projection_fixed_roots_must_also_be_plain_modules_in_cache[missing-torch._C._distributed_c10d]
+FAILED tests/test_puck_cpu_distributed_observation_audit.py::test_projection_fixed_roots_must_also_be_plain_modules_in_cache[missing-torch._C._distributed_rpc]
+FAILED tests/test_puck_cpu_distributed_observation_audit.py::test_projection_fixed_roots_must_also_be_plain_modules_in_cache[nonmodule-torch]
+FAILED tests/test_puck_cpu_distributed_observation_audit.py::test_projection_fixed_roots_must_also_be_plain_modules_in_cache[nonmodule-torch._C]
+FAILED tests/test_puck_cpu_distributed_observation_audit.py::test_projection_fixed_roots_must_also_be_plain_modules_in_cache[nonmodule-torch._C._distributed_autograd]
+FAILED tests/test_puck_cpu_distributed_observation_audit.py::test_projection_fixed_roots_must_also_be_plain_modules_in_cache[nonmodule-torch._C._distributed_c10d]
+FAILED tests/test_puck_cpu_distributed_observation_audit.py::test_projection_fixed_roots_must_also_be_plain_modules_in_cache[nonmodule-torch._C._distributed_rpc]
+FAILED tests/test_puck_cpu_distributed_observation_audit.py::test_projection_fixed_roots_must_also_be_plain_modules_in_cache[subclass-torch]
+FAILED tests/test_puck_cpu_distributed_observation_audit.py::test_projection_fixed_roots_must_also_be_plain_modules_in_cache[subclass-torch._C]
+FAILED tests/test_puck_cpu_distributed_observation_audit.py::test_projection_fixed_roots_must_also_be_plain_modules_in_cache[subclass-torch._C._distributed_autograd]
+FAILED tests/test_puck_cpu_distributed_observation_audit.py::test_projection_fixed_roots_must_also_be_plain_modules_in_cache[subclass-torch._C._distributed_c10d]
+FAILED tests/test_puck_cpu_distributed_observation_audit.py::test_projection_fixed_roots_must_also_be_plain_modules_in_cache[subclass-torch._C._distributed_rpc]
+15 failed, 99 deselected in 0.25s

@@ -1,0 +1,61 @@
+........................................................................ [ 75%]
+....F................F..                                                 [100%]
+=================================== FAILURES ===================================
+_________ test_retained_index_zero_byte_raw_stream_is_a_valid_byte_pin _________
+
+    def test_retained_index_zero_byte_raw_stream_is_a_valid_byte_pin():
+        module = api(); value = load(ARCHIVE / 'evidence-index.json')
+>       rows = module.pin_rows(value['entries'], value['file_count'])
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_puck_cpu_distributed_observation_audit.py:257: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+scripts/audit_puck_cpu_runtime_characterization.py:160: in pin_rows
+    require(integer(row['size_bytes'], 1 << 30, 1) and type(row['sha256']) is str
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+condition = False, message = 'Exact byte pin required'
+
+    def require(condition, message):
+        if not condition:
+>           raise ValueError(message)
+E           ValueError: Exact byte pin required
+
+scripts/audit_puck_cpu_runtime_characterization.py:112: ValueError
+__ test_full_trusted_prefix_census_hashes_bytes_and_rejects_escaping_symlink ___
+
+tmp_path = PosixPath('/tmp/pytest-of-utkarsh/pytest-485/test_full_trusted_prefix_censu0')
+
+    def test_full_trusted_prefix_census_hashes_bytes_and_rejects_escaping_symlink(tmp_path):
+        module = api(); p, a, _, _ = module.support()
+        prefix = tmp_path / 'prefix'; prefix.mkdir(); (prefix / 'bin').mkdir()
+        (prefix / 'bin/authored').write_bytes(b'AUTHORED bytes')
+        (prefix / 'bin/alias').symlink_to('authored')
+        value = module.prefix_inventory(prefix, p, a)
+        assert value['files'] == [['bin/authored', 14, hashlib.sha256(b'AUTHORED bytes').hexdigest()]]
+        assert value['symlinks'] == [['bin/alias', 'authored']]
+        (prefix / 'escape').symlink_to(tmp_path)
+>       with pytest.raises(ValueError): module.prefix_inventory(prefix, p, a)
+                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_puck_cpu_distributed_observation_audit.py:299: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+scripts/audit_puck_cpu_runtime_characterization.py:495: in prefix_inventory
+    p.remember(Path(directory), a.fingerprint(Path(directory).lstat()))
+docs/reports/puck-cpu-characterization-02/audit-support-characterization-v1.py:38: in remember
+    a.require(path not in STAMPS or STAMPS[path] == stamp, 'input changed between reads: ' + str(path))
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+condition = False
+message = 'input changed between reads: /tmp/pytest-of-utkarsh/pytest-485/test_full_trusted_prefix_censu0/prefix'
+
+    def require(condition, message):
+        if not condition:
+>           raise AuditError(message)
+E           palimpsest_cpu_install_audit_v1.AuditError: input changed between reads: /tmp/pytest-of-utkarsh/pytest-485/test_full_trusted_prefix_censu0/prefix
+
+docs/reports/puck-cpu-characterization-02/audit-helper-install-v1.py:45: AuditError
+=========================== short test summary info ============================
+FAILED tests/test_puck_cpu_distributed_observation_audit.py::test_retained_index_zero_byte_raw_stream_is_a_valid_byte_pin
+FAILED tests/test_puck_cpu_distributed_observation_audit.py::test_full_trusted_prefix_census_hashes_bytes_and_rejects_escaping_symlink
+2 failed, 94 passed in 0.36s
