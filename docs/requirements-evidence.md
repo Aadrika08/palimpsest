@@ -14,12 +14,19 @@ execution routes, complete valid research/capability gates, integrate the lab an
 all six artworks, record artistic/operator acceptance and deliver the runbook.
 Disk clearance permits fresh admission checks; CI and physical rover remain outside.
 The [clarified execution goal](plans/simulation-release-execution-goal.md) gives
-seven unchanged acceptance gates and six finite milestones. The immediate work
-unit is acceptance of the exact71-wheel installed tree under a distinct reviewed
+seven unchanged acceptance gates and four visible checkpoints: a real simulation
+route, supported study/controller results, the integrated lab/artworks, and
+accepted reproducible delivery. The immediate work unit is acceptance of the exact71-wheel installed tree under a distinct reviewed
 preparation receipt. Allocation01 produced actual files but failed log teardown;
 a separate audit retains the census, hashes, licence contents and measured size
-without accepting installation. The retained-tree admission proposal precedes
-tmpfs staging and numerical qualification; no installer retry is inferred.
+without accepting installation. The separate retained-tree admission01 also
+failed on a directory/ancestor identity check after87.951s, before final receipts;
+its diagnostic did not identify the path. Source and evidence are preserved in
+CPU branch `research/puck-cpu-retained-admission-v1`, commit `5f5c734`.
+The reviewed private profile correction and authored namespace-scale fixture are
+preparation evidence only. Freeze/review configuration02, recheck resources,
+invoke its distinct read-only admission once and audit the result before tmpfs
+staging or numerical qualification. No installer retry is inferred.
 The next milestone is one actual bounded simulator episode after held-import
 qualification and the episode's declared operator/renderer checks pass, recorded,
 replayed and exported through the durable public route. Its portable
@@ -42,10 +49,12 @@ launchers, licences and original receipts while keeping acceptance false. The
 retains frozen source/configuration, raw failures, audit programs, census and136
 byte-identical indexed artifacts. All124 focused checks pass, including a real
 namespace fixture; current trusted host/tool pins match. No original missing
-receipt was filled in. The concrete next proposal is distinct read-only admission
-of this retained tree with explicit authenticated inert-bytecode handling and
-durable new receipts. No numerical import, model/scene/catalog, physics or study
-ran. All33 requirement/gate statuses remain unchanged; all seven gates are open.
+receipt was filled in. The separate admission01 failure above also remains
+consumed. The concrete next preparation exit is configuration02's actual passing
+read-only admission of this tree, with explicit ancestor identity and authenticated
+inert-bytecode policies and durable new receipts. No numerical import,
+model/scene/catalog, physics or study ran. All33 requirement/gate statuses remain
+unchanged; all seven gates are open.
 
 [Draft PR #142](https://github.com/Aadrika08/palimpsest/pull/142) closes the
 missing CPU wheel artifact gap: the portable python-louvain wheel is 9,458B,
@@ -93,8 +102,9 @@ limits. This implementation milestone and all seven release gates remain open.
 audited CPU metadata:70 wheels/71 candidate distributions,1,304,650,469 declared
 expanded bytes and26,913 files. That assessment left full payload verification open;
 the newer package-only result above closes it. python-louvain was source-only in
-that assessment; PR #142 supplies its actual verified wheel. Installed-size/licence/
-native/render closure and RAM/staging admission remain open.
+that assessment; PR #142 supplies its actual verified wheel. PR #143 supplies
+measured installed-size and licence-content evidence, while installation
+acceptance, native/render closure and RAM/staging admission remain open.
 The retained assessment snapshot fails the proposed wheel-only RAM planning scenario;
 the refreshed goal records current resources without treating them as admission. A reviewed
 qualification descriptor-v3 now requires tmpfs dependency-v3 and fixed NumPy/Torch/
@@ -416,7 +426,7 @@ Passing R1 requirements does not make a later research or human gate pass.
 | Gate | Status | Evidence and remaining boundary |
 | --- | --- | --- |
 | SIM-LAB | failed | Scoped M3/R1 evidence passes, but the [fixed required manual-browser v3 gate](plans/simulation-first-completion-goal.md) was evaluated and failed after 56 ticks, before snapshot, branches, comparison or export. Browser preflight on 15 October 2026 locally again returned zero apps and browsers; no new browser workflow ran. Final integrated-candidate revalidation remains required; the measured 27.9809 Hz display limitation also remains. |
-| SIM-MEMORY | limited | The prospective family software and analysis contracts are recorded in the [goal](plans/simulation-completion-next-goal.md#family-prospective-analysis-contract-verified-8-october-2026). Reviewed [reader/raw auditing](https://github.com/Aadrika08/palimpsest/pull/107), [pair admission](https://github.com/Aadrika08/palimpsest/pull/109), [source seal](https://github.com/Aadrika08/palimpsest/pull/112) and [staged pair admission](https://github.com/Aadrika08/palimpsest/pull/113) have synthetic evidence. Staged admission passes 262 affected tests; independent GO reran 106 checks and eleven additional faults, preserving portable paths and source-marker continuity. The [retained-only source reader](https://github.com/Aadrika08/palimpsest/pull/115) passes 289 affected checks and independent review, binding retained source/SNP/worker/audit evidence without raw replay. Removed raw bytes remain pre-prune attestations; actual pruning stays forbidden. The [actual recurrent-cell consumer](https://github.com/Aadrika08/palimpsest/pull/117) passes 328 affected tests and independent review, using the actual upstream cell on temporary tiny-model fixtures. Full FLYNN positive replay, authenticated model/SNP custody and durable condition/case integration remain unqualified; all grants stay false. Native integration, complete condition/case close, cell replay, namespace/allocation admission and collection remain open. After the 14 October disk cleanup, the [execution goal](plans/simulation-release-execution-goal.md) records approximately 93.8 GiB free, above the 59.4 GiB minimum; fresh input, namespace, runtime and allocation admission remain required. Marker power-loss persistence remains unqualified. No development family or held-out block has been collected. |
+| SIM-MEMORY | limited | The prospective family software and analysis contracts are recorded in the [goal](plans/simulation-completion-next-goal.md#family-prospective-analysis-contract-verified-8-october-2026). Reviewed [reader/raw auditing](https://github.com/Aadrika08/palimpsest/pull/107), [pair admission](https://github.com/Aadrika08/palimpsest/pull/109), [source seal](https://github.com/Aadrika08/palimpsest/pull/112) and [staged pair admission](https://github.com/Aadrika08/palimpsest/pull/113) have synthetic evidence. Staged admission passes 262 affected tests; independent GO reran 106 checks and eleven additional faults, preserving portable paths and source-marker continuity. The [retained-only source reader](https://github.com/Aadrika08/palimpsest/pull/115) passes 289 affected checks and independent review, binding retained source/SNP/worker/audit evidence without raw replay. Removed raw bytes remain pre-prune attestations; actual pruning stays forbidden. The [actual recurrent-cell consumer](https://github.com/Aadrika08/palimpsest/pull/117) passes 328 affected tests and independent review, using the actual upstream cell on temporary tiny-model fixtures. Full FLYNN positive replay, authenticated model/SNP custody and durable condition/case integration remain unqualified; all grants stay false. Native integration, complete condition/case close, cell replay, namespace/allocation admission and collection remain open. The [execution goal](plans/simulation-release-execution-goal.md) records 92.76 GiB free disk and 2.45 GiB MemAvailable at 08:34:19 UTC on 15 October 2026; these are transient resource observations. Fresh input, namespace, runtime and allocation admission remain required. Marker power-loss persistence remains unqualified. No development family or held-out block has been collected. |
 | SIM-TASKS | failed | Exploration, homing and adaptation retain scoped passes, but both fixed learned-puck development arms score 0/4 per model against the required 3/4 gate. Reviewed [registry contracts](https://github.com/Aadrika08/palimpsest/pull/108), [interval staging](https://github.com/Aadrika08/palimpsest/pull/110), [recorded intervals](https://github.com/Aadrika08/palimpsest/pull/111) and [non-executable collection descriptions](https://github.com/Aadrika08/palimpsest/pull/114) have source evidence. Description admission passes 110 independently rerun affected tests and 49 additional metadata faults. The [supplied-byte provenance facade](https://github.com/Aadrika08/palimpsest/pull/116) passes 154 independently rerun pure checks and 23 additional faults, separating nine historical source inputs from current execution provenance. Its returned descriptions stay non-executable. The separately frozen [original-bundle qualification](https://github.com/Aadrika08/palimpsest/pull/121) now passes actual originals for seeds 21–23, three unchanged CPU model probes and all 18 negatives with independent audit. This grants no collection or capability qualification. PR #120 supplies reviewed input custody/model staging; original bundle materialization is qualified within PR #121's narrow scope. [PR #122](https://github.com/Aadrika08/palimpsest/pull/122) source-review passes held-model native publication and fixed clock accounting, with 411 passing affected checks and six explicitly retained baseline exclusions; its fake native fixtures do not qualify actual collection. Complete native capture/power-loss qualification, fresh-worker source/runtime/dependency binding, registry/scene reservations and full owner/manifest/process admission remain required before new collection, fitting and capability evaluation. [PR #123](https://github.com/Aadrika08/palimpsest/pull/123) source-review passes bounded Git enumeration and historical catalog extraction; whole-root/semantic discovery and the pending catalog-access boundary remain required before real registry/scene admission. Held-out and product integration remain locked. |
 | SIM-MALECNS | failed | All augmented models in the completed navigation-v2 development study score 0/4 against the per-seed 3/4 gate. The [matched-budget v3 follow-up](https://github.com/Aadrika08/palimpsest/pull/106) retained an argv failure before reservation and a separately frozen dependency failure before training. Attempt 2 is consumed, no models were published and no attempt 3 is authorized. Held-out remains locked and R3 remains open. |
 | SIM-ARTWORK | limited | The [six-mode offline handoff](reports/m9-offline-handoff.md) passes a short derivative export. The [portable local encounter](https://github.com/Aadrika08/palimpsest/pull/96) retains byte-verified inputs and native controls; real browser/audio/keyboard/viewport review remains unavailable. Afterimage still has only eight responses / 0.5 source seconds / 0.16 model seconds, insufficient for sustained assessment. Declared-duration use and artistic acceptance remain incomplete. |

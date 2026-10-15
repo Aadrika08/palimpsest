@@ -11,7 +11,35 @@ This is the active execution goal. It continues the
 is preserved unchanged; its commands and consumed allocations are historical,
 not instructions to rerun. Implementation history must not obscure what remains.
 
-## Immediate work unit: deliver the installed CPU runtime
+## Clear execution target after disk clearance
+
+**The next demonstrable outcome is one actual local CPU simulator episode that
+we can record, replay and export.** Package preparation and runtime qualification
+are dependencies of this outcome. The complete project goal remains the release
+above, with all seven gates below closed on one integrated candidate.
+
+| Checkpoint | Concrete deliverable | Pass condition |
+| --- | --- | --- |
+| A — working simulation route | An exact local runtime and one portable real-episode bundle. | Retained installation admission, four-import qualification, declared operator/renderer checks, recording, replay comparison, export validation and normal cleanup pass with independent audits. |
+| B — supported results | Complete memory studies and capable puck/MaleCNS controllers. | Valid nine-condition memory development and held-out analysis; every required puck model and MaleCNS seed meets 3/4 development and 6/8 held-out goals under its unchanged protocol. |
+| C — usable product | One integrated lab with all six artwork encounters. | Asset-backed browser, sustained visual/audio, keyboard/viewport, faithful mapping, provenance, replay/export, interruption/recovery and endurance checks pass. |
+| D — accepted delivery | A reproducible release and evidence package that another person can use. | User artistic acceptance, independent installation/all-six-mode session, final review, licences, runbook and every release-gate record are complete. |
+
+Work through A first. Continue independent memory-contract work when it does not
+open a scientific allocation. B depends on valid runtime/collection prerequisites
+and the pending study decisions; C and D retain their own browser and human
+evidence requirements. Disk clearance removes the disk blocker only. It does not
+resolve failed controller scores, the memory ordering conflict or human acceptance.
+
+The immediate action within A is to finish and review configuration02 for the
+existing retained package tree, invoke that read-only admission once, and audit
+its actual outcome. A passing preparation receipt is followed by the exact
+four-import qualification and real episode route below. Preserve a failed stage
+and diagnose its recorded cause before proposing another numbered configuration.
+Every added prerequisite must identify the checkpoint and smallest blocked check;
+source-only hardening is not a substitute for reaching the episode deliverable.
+
+## Current step within checkpoint A: accept the installed package tree
 
 **Deliver an accepted, measured local installation of the 71 verified wheels.**
 All71 artifacts were installed in allocation01, but its parent/supervisor failed
@@ -21,6 +49,23 @@ acceptance. The [actual report](https://github.com/Aadrika08/palimpsest/blob/res
 keeps both failures and all original missing finalizer receipts explicit.
 Complete the separately reviewed retained-tree admission before tmpfs staging,
 numerical qualification or scientific work; do not rerun allocation01.
+
+Retained-tree admission01 also ran once and failed after87.950787s on a held
+directory/ancestor identity check. Its diagnostic did not identify the path;
+preparation acceptance remains false. The original result, missing receipts,
+acceptance-audit failure and frozen source are preserved in CPU branch
+`research/puck-cpu-retained-admission-v1`, evidence commit
+`5f5c7343527aed84461f1b509c917d49bb56aeb1`. A subsequent bounded observation shows
+current unrelated outside-ancestor timestamp activity; it does not establish
+admission01's historical failed path.
+
+The private corrected profile keeps full metadata, exact contents and hashes
+inside the selected package tree, while checking outside ancestors by stable
+path identity. Authored sibling-change/ancestor-redirection regressions and the
+separate namespace-scale fixture pass within their scopes; independent source
+review found no critical or important issue. This remains uncommitted source
+work pending the distinct configuration02 freeze/review and actual outcome.
+Public collection/dependency policies and every study boundary remain unchanged.
 
 - [ ] Accept the exact wheel tree under a distinct reviewed preparation receipt.
   The offline installation uses the pinned local installer/interpreter, with no
@@ -119,12 +164,15 @@ substitute for numerical results, capability, actual browser use or human accept
 | 5 | Integrate and experience the product. | One candidate supports the lab and all six artworks; actual browser, mapping, replay, export, interruption and endurance checks pass. |
 | 6 | Accept and deliver that candidate. | Artistic/operator sessions, final verification and all seven gate records are complete; the installation and evidence package are reproducible. |
 
-**Current next action:** implement and independently review the
-[retained-tree admission proposal](https://github.com/Aadrika08/palimpsest/blob/research/puck-cpu-install-v1/docs/plans/puck-cpu-retained-installation-admission-v1.md).
-Freeze a distinct read-only configuration for the measured installed namespace,
-its authenticated inert-bytecode exception, complete custody and durable new
-receipts. Preserve allocation01's FAIL; no installer rerun or replacement of its
-missing outputs. Package acceptance requires that distinct stage's actual pass.
+**Current next action:** finish and independently review the distinct retained
+admission02 configuration under
+`docs/plans/puck-cpu-retained-installation-admission-execution-v2.md` in CPU branch
+`research/puck-cpu-retained-admission-v1`. Freeze its exact source, outside-ancestor
+identity policy, measured installed namespace, authenticated inert-bytecode
+exception, limits and durable new receipts. Recheck resources, invoke02 once and
+independently audit the actual result. Preserve installation01 and admission01
+as FAIL; their missing receipts stay missing. Package acceptance requires02's
+actual passing outcome under its declared checks.
 Then finish interpreter/stdlib/native/EGL/tmpfs custody and the executable fixed
 four-import configuration using measured sizes and fresh resource admission.
 Review each actual configuration before invocation. Steps1–2 must pass before
@@ -140,9 +188,9 @@ source-hardening programme or count test totals as release progress.
 
 ## Current starting point and decisions
 
-At **2026-10-15 07:57:52 UTC**, the project filesystem has **100,393,971,712 bytes
-(93.50 GiB) available**. The same metadata-only check reports **4,369,637,376 bytes
-(4.07 GiB) MemAvailable**. Disk clearance removes the reported disk blocker;
+At **2026-10-15 08:34:19 UTC**, the project filesystem has **99,596,255,232 bytes
+(92.76 GiB) available**. The same metadata-only check reports **2,631,467,008 bytes
+(2.45 GiB) MemAvailable**. Disk clearance removes the reported disk blocker;
 available RAM is transient and this snapshot does not admit the complete CPU/EGL
 closure. Keep archives and build scratch on the project disk; stage only the exact
 required runtime inputs on tmpfs under its reviewed native-identity policy.
@@ -210,8 +258,8 @@ versus independent identity projections in
 study; and a concrete resolution of the memory ordering conflict. Continuation
 and disk clearance do not approve those decisions.
 
-CPU installation01 also remains failed and consumed; its read-only byte audit
-does not grant preparation acceptance. Preparation01, qualification01, runtime
+CPU installation01 and retained admission01 remain failed and consumed; their
+read-only evidence does not grant preparation acceptance. Preparation01, qualification01, runtime
 observations01/02 and navigation
 attempts 1/2 remain consumed. Memory amendment 02 remains uninvoked. No silent
 retry, reordered study, altered threshold or invented passing receipt is permitted.
