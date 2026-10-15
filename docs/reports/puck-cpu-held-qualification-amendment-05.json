@@ -1,0 +1,196 @@
+{
+  "actual01_through04_failed_consumed": true,
+  "actual05_configuration_created": false,
+  "actual05_invoked": false,
+  "all_seven_release_gates_open": true,
+  "authored05_observations": {
+    "actual_vendor_imports": false,
+    "authored_scope": "AUTHORED fixture only; no real package acceptance or independent audit",
+    "consumed_reentry_refused": true,
+    "historical_bytes_preserved": true,
+    "historical_v1_failed": true,
+    "publication_delegates": [
+      "CreationMeta",
+      "DeviceType",
+      "ProfilerEvent",
+      "SavedTensor",
+      "TensorGeometry",
+      "_InputMetadata",
+      "_KinetoEvent",
+      "_ProfilerDisableOptions",
+      "_ProfilerResult",
+      "_add_metadata_json",
+      "_clear_callbacks",
+      "_disable_profiler",
+      "_disable_profiler_legacy",
+      "_enable_profiler",
+      "_enable_profiler_legacy",
+      "_enable_record_function",
+      "_get_creation_meta",
+      "_get_current_graph_task_keep_graph",
+      "_get_data_attr",
+      "_get_sequence_nr",
+      "_kineto_step",
+      "_pop_saved_tensors_default_hooks",
+      "_prepare_profiler",
+      "_profiler_enabled",
+      "_profiler_type",
+      "_push_saved_tensors_default_hooks",
+      "_record_function_with_args_enter",
+      "_record_function_with_args_exit",
+      "_saved_tensors_hooks_disable",
+      "_saved_tensors_hooks_enable",
+      "_saved_tensors_hooks_get_disabled_error_message",
+      "_saved_tensors_hooks_is_enabled",
+      "_saved_tensors_hooks_set_tracing",
+      "_set_creation_meta",
+      "_set_empty_test_observer",
+      "_soft_assert_raises",
+      "_supported_activities",
+      "_toggle_collection_dynamic",
+      "_top_saved_tensors_default_hooks",
+      "_unsafe_set_version_counter",
+      "kineto_available"
+    ],
+    "qualification05_audited": true,
+    "rebound_candidate_rejected": true,
+    "rebound_proof_rejected": true
+  },
+  "authored_stage_cleanup": {
+    "absent": true,
+    "actual_vendor_imports": false,
+    "authored_scope": "AUTHORED fixture only; no real package acceptance or independent audit",
+    "owned_stage": "/tmp/palimpsest-puck-cpu-held-authored-publication05-7a916423d1af40d76d3c601b"
+  },
+  "collection_authorized": false,
+  "evidence_index": {
+    "path": "puck-cpu-held-qualification-amendment-05/evidence-index.json",
+    "sha256": "c3f52a0c0128eaec3a7b7f501e1677dd4b23f8ac38bd010038176673668a24d3",
+    "size_bytes": 101460
+  },
+  "executable": false,
+  "independent_source_review": "No material source findings; exact6 static source pins/one-row candidate/41-name roster verified independently",
+  "installed_runtime_data_changed": false,
+  "kind": "puck-cpu-held-amendment05-source-report-v1",
+  "native_authorized": false,
+  "prospective_plan_commit": "8968023b14d4c466d75fa196ab2f3417348ff52b",
+  "qualification_claims": [],
+  "remaining_phase_preflight": {
+    "actual05_configuration_created": false,
+    "actual05_invoked": false,
+    "independent_review": "all three source-level misattributions confirmed; review finite rosters/build conditions/intermediate publication before changing declarations",
+    "kind": "puck-cpu-remaining-export-phase-preflight-v1",
+    "module_method_registration_lines": [
+      1997,
+      2006
+    ],
+    "remaining_native_create_rows_not_reviewed_here": 32,
+    "rows": [
+      {
+        "callback": "_dist_autograd_init",
+        "cpp_callback_mapping_line": 228,
+        "cpp_creation_line": 30,
+        "cpp_url": "https://github.com/pytorch/pytorch/blob/0fabc3ba44823f257e70ce397d989c8de5e362c1/torch/csrc/distributed/autograd/init.cpp",
+        "current_phase": "native_create",
+        "current_producer": "torch._C",
+        "dispatch_roster_qualified": false,
+        "installed_python_call_line": 16,
+        "name": "torch._C._distributed_autograd",
+        "prospective_python_creator": "torch.distributed.autograd",
+        "prospective_raw_attributes": [
+          "torch",
+          "_C",
+          "_distributed_autograd"
+        ],
+        "replacement_phase_accepted": false
+      },
+      {
+        "callback": "_c10d_init",
+        "cpp_callback_mapping_line": 4202,
+        "cpp_creation_line": 466,
+        "cpp_url": "https://github.com/pytorch/pytorch/blob/0fabc3ba44823f257e70ce397d989c8de5e362c1/torch/csrc/distributed/c10d/init.cpp",
+        "current_phase": "native_create",
+        "current_producer": "torch._C",
+        "dispatch_roster_qualified": false,
+        "installed_python_call_line": 29,
+        "name": "torch._C._distributed_c10d",
+        "prospective_python_creator": "torch.distributed",
+        "prospective_raw_attributes": [
+          "torch",
+          "_C",
+          "_distributed_c10d"
+        ],
+        "replacement_phase_accepted": false
+      },
+      {
+        "callback": "_rpc_init",
+        "cpp_callback_mapping_line": 854,
+        "cpp_creation_line": 47,
+        "cpp_url": "https://github.com/pytorch/pytorch/blob/0fabc3ba44823f257e70ce397d989c8de5e362c1/torch/csrc/distributed/rpc/init.cpp",
+        "current_phase": "native_create",
+        "current_producer": "torch._C",
+        "dispatch_roster_qualified": false,
+        "installed_python_call_line": 28,
+        "name": "torch._C._distributed_rpc",
+        "prospective_python_creator": "torch.distributed.rpc",
+        "prospective_raw_attributes": [
+          "torch",
+          "_C",
+          "_distributed_rpc"
+        ],
+        "replacement_phase_accepted": false
+      }
+    ],
+    "scope": "static exact-commit/installed-source evidence only; not binary/runtime acceptance",
+    "status": "three remaining source phase conflicts; actual05 freeze not ready"
+  },
+  "runtime_qualified": false,
+  "source_base_commit": "27a5c134613747c8c782829b8084834e92a53d66",
+  "source_code_commit": "92ef33114c535a7d039e31ba6ed34da29cc56d79",
+  "status": "single-row source verified; real profile incomplete",
+  "study_authorized": false,
+  "verification": {
+    "green-unit-01": {
+      "elapsed_seconds": 3.4912985380506143,
+      "normal_return": true,
+      "pytest_summary": "98 passed in 3.13s",
+      "returncode": 0,
+      "scope": "authored source checks; no new actual allocation"
+    },
+    "isolated-persistent-affected-01": {
+      "elapsed_seconds": 131.62742639600765,
+      "normal_return": true,
+      "pytest_summary": "395 passed in 131.39s (0:02:11)",
+      "returncode": 0,
+      "scope": "authored source checks; no new actual allocation"
+    },
+    "isolated-persistent-green-integration-01": {
+      "elapsed_seconds": 10.695224972034339,
+      "normal_return": true,
+      "pytest_summary": "1 failed in 10.47s",
+      "returncode": 1,
+      "scope": "authored source checks; no new actual allocation"
+    },
+    "isolated-persistent-green-integration-02": {
+      "elapsed_seconds": 10.022376074979547,
+      "normal_return": true,
+      "pytest_summary": "1 passed in 9.85s",
+      "returncode": 0,
+      "scope": "authored source checks; no new actual allocation"
+    },
+    "isolated-persistent-red-integration-01": {
+      "elapsed_seconds": 6.255963889998384,
+      "normal_return": true,
+      "pytest_summary": "1 failed in 6.01s",
+      "returncode": 1,
+      "scope": "authored source checks; no new actual allocation"
+    },
+    "red-unit-01": {
+      "elapsed_seconds": 2.9382848989916965,
+      "normal_return": true,
+      "pytest_summary": "47 failed, 51 passed in 2.63s",
+      "returncode": 1,
+      "scope": "authored source checks; no new actual allocation"
+    }
+  }
+}

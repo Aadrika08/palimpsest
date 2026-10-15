@@ -1,0 +1,8 @@
+{
+  "kind": "upstream-source-retrieval-failure",
+  "path": "torch/CMakeLists.txt",
+  "commit": "0fabc3ba44823f257e70ce397d989c8de5e362c1",
+  "error": "GET api.github.com:443 dial tcp 20.207.73.85:443: i/o timeout",
+  "runtime_or_study_invoked": false,
+  "note": "36 other verified source files are retained; repeat only the missing read-only request."
+}
