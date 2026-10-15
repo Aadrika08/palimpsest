@@ -121,10 +121,35 @@ Frozen invocation (prospective until the retained result below is added):
 /home/utkarsh/Work/shraddha/brain/.worktrees/r0-reproduction/.venv/bin/python \
   -I -B -S docs/reports/puck-v3-runtime-interop/characterization-parent.py \
   docs/reports/puck-v3-runtime-interop/characterization-01-freeze.json \
-  d5b3cfa43f5269cae187bfd73e53361039331cc5410f412c5930e2dac8d432bc
+  d6b322fc43f8cbce3da3c0d02dd604b9f82f27f685a095ffe9345963cbc7126f
 ```
 
 The request SHA is
 `7c6331c64226b8ea4f36292a3fc3fedab60c54760d7e82e415400ed7e6cc0f89`.
 Do not rerun this command to refresh an observation; its exclusive attempt marker
 is retained after success or failure.
+
+
+## Source review and prospective data-shape amendment
+
+Fresh whole-branch review of `798f940` found no Critical or Important defect and
+permitted the bounded development observation only. Independently repeated
+15 authored characterization cases passed in 0.49s. The reviewer checked the
+reported freeze/request hashes and worker/parent/supervisor/package-init hashes;
+its partial read of `evaluate.py` was not represented as a complete hash check.
+The capsule verifies the declared complete file before execution.
+
+Ruling: adopt the reviewer's prospective report-shape recommendation before
+consuming the single actual observation. Keep identities for every cached
+module, but retain producer edges only for identities with any alias, an absent
+or nonstandard spec, an absent file or a ModuleType subclass. Ordinary producer
+edges are deliberately omitted. Report `export_scope` explicitly. This preserves
+the finite exceptional-export evidence needed by the next held profile within
+the unchanged one-MiB limit; actual fit remains unproven until the observation.
+
+A new authored ordinary/alias/file-backed-subclass fixture failed before the
+change (0.05s), then the complete focused slice passed **50 checks in 2.86s**.
+The request/environment/allocation are unchanged; only the worker hash and
+external freeze SHA change. The pre-execution old freeze is retained in git
+history. The amended source/freeze was author-checked against the recommendation
+and regression evidence; no independent exact-final-source/runtime GO is claimed.

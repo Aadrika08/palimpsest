@@ -38,3 +38,10 @@ normal numerical import or an ordinary module list qualifies the held route.
 All seven release gates remain open. Memory amendment02 and prospective navigation
 remain pending; no consumed attempt or threshold changes. CI/physical rover remain
 excluded; the six artworks remain simulation-first.
+
+Progress: source characterizer and fixed parent are implemented. All cache identities
+are retained; direct producer edges are restricted to exceptional identities
+(aliases, missing/nonstandard spec, missing file or ModuleType subclass), with
+explicit output scope. This prospective shape amendment precedes the one actual
+observation and is covered by authored fixtures. Source review and results are
+recorded in `docs/reports/puck-v3-runtime-interop-source.md`.

@@ -220,3 +220,27 @@ def test_parent_read_does_not_mistake_access_time_update_for_input_drift(tmp_pat
     path=tmp_path/'unchanged';path.write_bytes(b'authored input')
     os.utime(path,ns=(0,path.stat().st_mtime_ns))
     assert parent.bounded_read(path,1024)==b'authored input'
+
+
+def test_export_observation_keeps_exceptional_bindings_and_ordinary_identities():
+    module=api()
+    def ordinary(name):
+        value=types.ModuleType(name);value.__file__='/authored/'+name+'.py'
+        value.__spec__=importlib.util.spec_from_loader(name,None,origin=value.__file__)
+        return value
+    producer=ordinary('fixture');regular=ordinary('fixture.regular');alias=ordinary('fixture.real')
+    producer.regular=regular;producer.aliased=alias
+    class Proxy(types.ModuleType):
+        def __getattr__(self,name):raise AssertionError('Framework metadata lookup: '+name)
+    proxy=Proxy('fixture.proxy');proxy.__file__='/authored/proxy.py'
+    proxy.__spec__=importlib.util.spec_from_loader('fixture.proxy',None,origin=proxy.__file__)
+    producer.proxy=proxy
+    result=module.describe_cache({'fixture':producer,'fixture.regular':regular,
+        'fixture.real':alias,'fixture.alias':alias,'fixture.proxy':proxy})
+    rows={row['name']:row for row in result['modules']}
+    assert rows['fixture.regular']['exports']==[]
+    assert rows['fixture.regular']['file']=='/authored/fixture.regular.py'
+    assert rows['fixture.real']['exports']==[{'producer':'fixture','attribute':'aliased'}]
+    assert rows['fixture.alias']['same_object_cache_names']==['fixture.alias','fixture.real']
+    assert rows['fixture.proxy']['exports']==[{'producer':'fixture','attribute':'proxy'}]
+    assert result['export_scope']=='exceptional_cache_identities'

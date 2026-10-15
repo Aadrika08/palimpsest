@@ -65,6 +65,18 @@ def describe_cache(cache):
             raise ValueError('Module cache key is not an exact string')
         if isinstance(value, types.ModuleType):
             identities.setdefault(id(value), []).append(name)
+    exceptional = set()
+    for name, value in entries:
+        if not isinstance(value, types.ModuleType):
+            continue
+        attributes = module_dict(value)
+        spec = attributes.get('__spec__')
+        spec_name = (text_value(object.__getattribute__(spec, '__dict__').get('name'), 512)
+                     if type(spec) is ModuleSpec else None)
+        if (len(identities[id(value)]) > 1 or type(value) is not types.ModuleType
+                or type(spec) is not ModuleSpec or attributes.get('__file__') is None
+                or spec_name != name):
+            exceptional.add(id(value))
     exports = {}
     inspected = set()
     edges = 0
@@ -77,7 +89,7 @@ def describe_cache(cache):
         if edges > ATTRIBUTE_EDGES:
             raise ValueError('Module attribute edge budget exceeded')
         for attribute, value in list(attributes.items()):
-            if isinstance(value, types.ModuleType) and id(value) in identities:
+            if isinstance(value, types.ModuleType) and id(value) in exceptional:
                 if type(attribute) is not str:
                     raise ValueError('Module export attribute is not an exact string')
                 text_value(attribute, 512)
@@ -112,7 +124,8 @@ def describe_cache(cache):
             row['same_object_cache_names'] = sorted(identities[id(value)])
         rows.append(row)
     return {'modules': rows, 'attribute_edges': edges,
-            'module_objects': len(identities), 'cache_entries': len(entries)}
+            'module_objects': len(identities), 'cache_entries': len(entries),
+            'export_scope': 'exceptional_cache_identities'}
 
 
 def describe_maps(raw):
