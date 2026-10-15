@@ -35,13 +35,17 @@ serialization. The actual admission was not rerun. Installation01 and admission0
 remain FAIL, with their missing receipts absent. The private selected-tree policy
 and inert-bytecode exception grant package-data acceptance only.
 
-The immediate next work is the CPU preparation/qualification parent and complete
-tmpfs builder: consume that accepted measured tree, bind the CPU-specific finite
-import/native/EGL profile and emit the existing descriptor-v3/four-import worker
-contract. Older three-import/dependency-v2 parents need substantive staging and
-configuration changes. Fresh full-stage RAM/storage/FD/process admission and
-independent review precede any numerical invocation. No actual qualification,
-real episode, study or browser/human session ran in this unit. Resource snapshots
+The [next work unit](plans/simulation-release-execution-goal.md#clear-execution-target-after-disk-clearance)
+ends with that actual episode bundle. First finish, freeze and independently
+review the distinct bounded CPU four-import observation already being prepared;
+run it once and audit the outcome. Its observations supply the CPU profile,
+without qualifying the runtime. Then complete tmpfs staging and the
+descriptor-v3/four-import qualification parent, qualify that actual runtime, and
+prove recording/replay/export with declared operator/renderer checks. Older
+three-import/dependency-v2 parents need substantive staging and configuration
+changes. Fresh full-stage RAM/storage/FD/process admission and independent
+review precede actual execution. No actual qualification, real episode, study
+or browser/human session ran in this goal-clarification unit. Resource snapshots
 are transient and do not admit the runtime. The previous
 [execution/evidence history](plans/simulation-release-execution-goal-history-2026-10-15.md)
 is preserved byte-identically. All26 requirement and seven gate statuses remain
