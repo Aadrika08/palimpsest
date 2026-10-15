@@ -55,13 +55,13 @@ def observe(configuration,expected_sha256):
     config=json.loads(raw)
     if canonical(config)!=raw:raise ValueError('Canonical CPU configuration required')
     phase=config.get('phase')
-    version={'puck-cpu-held-runtime-allocation-v2':2,'puck-cpu-held-runtime-allocation-v3':3,'puck-cpu-held-runtime-allocation-v4':4,'puck-cpu-held-runtime-allocation-v5':5,'puck-cpu-held-runtime-allocation-v6':6,'puck-cpu-held-runtime-allocation-v7':7}.get(config.get('kind'))
+    version={'puck-cpu-held-runtime-allocation-v2':2,'puck-cpu-held-runtime-allocation-v3':3,'puck-cpu-held-runtime-allocation-v4':4,'puck-cpu-held-runtime-allocation-v5':5,'puck-cpu-held-runtime-allocation-v6':6,'puck-cpu-held-runtime-allocation-v7':7,'puck-cpu-held-runtime-allocation-v8':8}.get(config.get('kind'))
     amended=version is not None
     if amended:
         if (phase!='qualify' or type(config.get('version')) is not int or config['version']!=version
                 or type(config.get('allocation_id')) is not int or config['allocation_id']!=version):
             raise ValueError('Exact amended qualification allocation identity required')
-        output_name={2:'runs/puck-cpu-held-qualification-02',3:'runs/puck-cpu-held-qualification-03',4:'runs/puck-cpu-held-qualification-04',5:'runs/puck-cpu-held-qualification-05',6:'runs/puck-cpu-held-qualification-06',7:'runs/puck-cpu-held-qualification-07'}[version]
+        output_name={2:'runs/puck-cpu-held-qualification-02',3:'runs/puck-cpu-held-qualification-03',4:'runs/puck-cpu-held-qualification-04',5:'runs/puck-cpu-held-qualification-05',6:'runs/puck-cpu-held-qualification-06',7:'runs/puck-cpu-held-qualification-07',8:'runs/puck-cpu-held-qualification-08'}[version]
     else:
         if config.get('kind')!='puck-cpu-held-runtime-allocation-v1' or phase not in OUTPUTS:
             raise ValueError('Exact CPU parent allocation root and phase required')
