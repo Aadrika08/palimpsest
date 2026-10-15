@@ -160,6 +160,27 @@ prospective decisions remain unchanged. Default pytest still stops at missing
 FastAPI in the R0 interpreter; no full-suite pass or final execution GO is claimed.
 
 
+
+[Draft PR #131](https://github.com/Aadrika08/palimpsest/pull/131) connects held native
+intervals to one natural episode and durable owner/collection recording closes.
+Final source `f93aa96` passes 1395 affected checks at root and independently with
+the same six exclusions (125.72s / 125.66s); independent focused repetition passes
+25 cases in 47.77s, including an exact 600-interval authored CPU/fake-native close.
+Review findings for episode reuse, hidden recording files and publisher read caps
+were reproduced RED and fixed. Complete twelve-owner data reduction preserves
+all rows and records per-model coverage failure without authorizing fitting.
+The [source report](https://github.com/Aadrika08/palimpsest/blob/research/puck-v3-collection-close/docs/reports/puck-v3-collection-close-source.md)
+retains fixture corrections, the initial 30s fixture deadline refusal and the
+source/data boundary. Recording terminals do not prove runtime/process/study
+acceptance. Actual supported runtime, parent input/scene seals, authenticated
+worker dispatch, exact environment/identity/progress/escaped-descendant handling,
+lease/storage/clock acceptance and integrated collection remain required. Full
+rereads are not timing-qualified against the parent/return buckets. No actual
+original/catalog/model/study or consumed-attempt retry ran. Default pytest retains
+missing FastAPI. All seven release statuses and three pending decisions remain
+unchanged; no final execution/runtime GO is claimed.
+
+
 ## Functional matrix
 
 | PRD ID | Status | Acceptance boundary | Runnable coverage | Observed evidence and limits |
