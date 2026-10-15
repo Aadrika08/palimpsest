@@ -1,0 +1,4658 @@
+[
+  {
+    "compressed_size": 478,
+    "compression": 8,
+    "crc32": 2927111933,
+    "external_attr": 2175008768,
+    "name": "networkx/__init__.py",
+    "size_bytes": 1274
+  },
+  {
+    "compressed_size": 2491,
+    "compression": 8,
+    "crc32": 3798664203,
+    "external_attr": 2175008768,
+    "name": "networkx/conftest.py",
+    "size_bytes": 8883
+  },
+  {
+    "compressed_size": 3812,
+    "compression": 8,
+    "crc32": 2392427167,
+    "external_attr": 2175008768,
+    "name": "networkx/convert.py",
+    "size_bytes": 16025
+  },
+  {
+    "compressed_size": 10684,
+    "compression": 8,
+    "crc32": 1208814675,
+    "external_attr": 2175008768,
+    "name": "networkx/convert_matrix.py",
+    "size_bytes": 45383
+  },
+  {
+    "compressed_size": 1310,
+    "compression": 8,
+    "crc32": 4088384246,
+    "external_attr": 2175008768,
+    "name": "networkx/exception.py",
+    "size_bytes": 3787
+  },
+  {
+    "compressed_size": 2089,
+    "compression": 8,
+    "crc32": 2359299889,
+    "external_attr": 2175008768,
+    "name": "networkx/lazy_imports.py",
+    "size_bytes": 5764
+  },
+  {
+    "compressed_size": 3195,
+    "compression": 8,
+    "crc32": 3040222446,
+    "external_attr": 2175008768,
+    "name": "networkx/relabel.py",
+    "size_bytes": 10300
+  },
+  {
+    "compressed_size": 1045,
+    "compression": 8,
+    "crc32": 1621985697,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/__init__.py",
+    "size_bytes": 6559
+  },
+  {
+    "compressed_size": 2011,
+    "compression": 8,
+    "crc32": 174854584,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/asteroidal.py",
+    "size_bytes": 5865
+  },
+  {
+    "compressed_size": 1568,
+    "compression": 8,
+    "crc32": 1672695558,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/boundary.py",
+    "size_bytes": 5339
+  },
+  {
+    "compressed_size": 1932,
+    "compression": 8,
+    "crc32": 536765125,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/bridges.py",
+    "size_bytes": 6066
+  },
+  {
+    "compressed_size": 1811,
+    "compression": 8,
+    "crc32": 2453993104,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/broadcasting.py",
+    "size_bytes": 4890
+  },
+  {
+    "compressed_size": 2461,
+    "compression": 8,
+    "crc32": 245520422,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/chains.py",
+    "size_bytes": 6968
+  },
+  {
+    "compressed_size": 3796,
+    "compression": 8,
+    "crc32": 1647265165,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/chordal.py",
+    "size_bytes": 13411
+  },
+  {
+    "compressed_size": 6993,
+    "compression": 8,
+    "crc32": 1873929676,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/clique.py",
+    "size_bytes": 25872
+  },
+  {
+    "compressed_size": 5257,
+    "compression": 8,
+    "crc32": 1336917375,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/cluster.py",
+    "size_bytes": 20359
+  },
+  {
+    "compressed_size": 1260,
+    "compression": 8,
+    "crc32": 11599586,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/communicability_alg.py",
+    "size_bytes": 4545
+  },
+  {
+    "compressed_size": 4520,
+    "compression": 8,
+    "crc32": 853335858,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/core.py",
+    "size_bytes": 19184
+  },
+  {
+    "compressed_size": 1803,
+    "compression": 8,
+    "crc32": 1769185338,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/covering.py",
+    "size_bytes": 5294
+  },
+  {
+    "compressed_size": 2084,
+    "compression": 8,
+    "crc32": 1803699782,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/cuts.py",
+    "size_bytes": 9990
+  },
+  {
+    "compressed_size": 11703,
+    "compression": 8,
+    "crc32": 2517269370,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/cycles.py",
+    "size_bytes": 43237
+  },
+  {
+    "compressed_size": 7416,
+    "compression": 8,
+    "crc32": 500208043,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/d_separation.py",
+    "size_bytes": 27283
+  },
+  {
+    "compressed_size": 11044,
+    "compression": 8,
+    "crc32": 3542604806,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/dag.py",
+    "size_bytes": 45070
+  },
+  {
+    "compressed_size": 7577,
+    "compression": 8,
+    "crc32": 2731845683,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/distance_measures.py",
+    "size_bytes": 34195
+  },
+  {
+    "compressed_size": 2132,
+    "compression": 8,
+    "crc32": 2075046245,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/distance_regular.py",
+    "size_bytes": 7053
+  },
+  {
+    "compressed_size": 1077,
+    "compression": 8,
+    "crc32": 1160813876,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/dominance.py",
+    "size_bytes": 3450
+  },
+  {
+    "compressed_size": 969,
+    "compression": 8,
+    "crc32": 1415180994,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/dominating.py",
+    "size_bytes": 2669
+  },
+  {
+    "compressed_size": 1182,
+    "compression": 8,
+    "crc32": 670114933,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/efficiency_measures.py",
+    "size_bytes": 4741
+  },
+  {
+    "compressed_size": 3731,
+    "compression": 8,
+    "crc32": 3448586030,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/euler.py",
+    "size_bytes": 14205
+  },
+  {
+    "compressed_size": 3709,
+    "compression": 8,
+    "crc32": 996816861,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/graph_hashing.py",
+    "size_bytes": 12556
+  },
+  {
+    "compressed_size": 4041,
+    "compression": 8,
+    "crc32": 3178390983,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/graphical.py",
+    "size_bytes": 15831
+  },
+  {
+    "compressed_size": 884,
+    "compression": 8,
+    "crc32": 1742023314,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/hierarchy.py",
+    "size_bytes": 1786
+  },
+  {
+    "compressed_size": 1707,
+    "compression": 8,
+    "crc32": 1665736233,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/hybrid.py",
+    "size_bytes": 6209
+  },
+  {
+    "compressed_size": 706,
+    "compression": 8,
+    "crc32": 131334454,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/isolate.py",
+    "size_bytes": 2301
+  },
+  {
+    "compressed_size": 4056,
+    "compression": 8,
+    "crc32": 2905370091,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/link_prediction.py",
+    "size_bytes": 22253
+  },
+  {
+    "compressed_size": 2953,
+    "compression": 8,
+    "crc32": 2371905263,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/lowest_common_ancestors.py",
+    "size_bytes": 9198
+  },
+  {
+    "compressed_size": 10395,
+    "compression": 8,
+    "crc32": 707381463,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/matching.py",
+    "size_bytes": 44550
+  },
+  {
+    "compressed_size": 932,
+    "compression": 8,
+    "crc32": 1257335107,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/mis.py",
+    "size_bytes": 2344
+  },
+  {
+    "compressed_size": 703,
+    "compression": 8,
+    "crc32": 3237703726,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/moral.py",
+    "size_bytes": 1535
+  },
+  {
+    "compressed_size": 1833,
+    "compression": 8,
+    "crc32": 3252358599,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/node_classification.py",
+    "size_bytes": 6469
+  },
+  {
+    "compressed_size": 1313,
+    "compression": 8,
+    "crc32": 3747245990,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/non_randomness.py",
+    "size_bytes": 3068
+  },
+  {
+    "compressed_size": 4623,
+    "compression": 8,
+    "crc32": 3495602721,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/planar_drawing.py",
+    "size_bytes": 16254
+  },
+  {
+    "compressed_size": 10300,
+    "compression": 8,
+    "crc32": 4001103839,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/planarity.py",
+    "size_bytes": 47249
+  },
+  {
+    "compressed_size": 3809,
+    "compression": 8,
+    "crc32": 3657170702,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/polynomials.py",
+    "size_bytes": 11278
+  },
+  {
+    "compressed_size": 976,
+    "compression": 8,
+    "crc32": 1158395865,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/reciprocity.py",
+    "size_bytes": 2855
+  },
+  {
+    "compressed_size": 1767,
+    "compression": 8,
+    "crc32": 3880207449,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/regular.py",
+    "size_bytes": 6794
+  },
+  {
+    "compressed_size": 2086,
+    "compression": 8,
+    "crc32": 2253816793,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/richclub.py",
+    "size_bytes": 4892
+  },
+  {
+    "compressed_size": 11885,
+    "compression": 8,
+    "crc32": 96109032,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/similarity.py",
+    "size_bytes": 61093
+  },
+  {
+    "compressed_size": 7524,
+    "compression": 8,
+    "crc32": 3663162465,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/simple_paths.py",
+    "size_bytes": 30320
+  },
+  {
+    "compressed_size": 3465,
+    "compression": 8,
+    "crc32": 30737160,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/smallworld.py",
+    "size_bytes": 13565
+  },
+  {
+    "compressed_size": 440,
+    "compression": 8,
+    "crc32": 2224749165,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/smetric.py",
+    "size_bytes": 770
+  },
+  {
+    "compressed_size": 2786,
+    "compression": 8,
+    "crc32": 2860759335,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/sparsifiers.py",
+    "size_bytes": 10048
+  },
+  {
+    "compressed_size": 2714,
+    "compression": 8,
+    "crc32": 237083546,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/structuralholes.py",
+    "size_bytes": 9342
+  },
+  {
+    "compressed_size": 6381,
+    "compression": 8,
+    "crc32": 1342139245,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/summarization.py",
+    "size_bytes": 23251
+  },
+  {
+    "compressed_size": 3711,
+    "compression": 8,
+    "crc32": 3105985563,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/swap.py",
+    "size_bytes": 14744
+  },
+  {
+    "compressed_size": 8074,
+    "compression": 8,
+    "crc32": 1834828143,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/threshold.py",
+    "size_bytes": 31150
+  },
+  {
+    "compressed_size": 2253,
+    "compression": 8,
+    "crc32": 346181465,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/time_dependent.py",
+    "size_bytes": 5762
+  },
+  {
+    "compressed_size": 3364,
+    "compression": 8,
+    "crc32": 2580215478,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/tournament.py",
+    "size_bytes": 11579
+  },
+  {
+    "compressed_size": 5170,
+    "compression": 8,
+    "crc32": 527801431,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/triads.py",
+    "size_bytes": 16853
+  },
+  {
+    "compressed_size": 984,
+    "compression": 8,
+    "crc32": 3137315347,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/vitality.py",
+    "size_bytes": 2289
+  },
+  {
+    "compressed_size": 1315,
+    "compression": 8,
+    "crc32": 1687839309,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/voronoi.py",
+    "size_bytes": 3183
+  },
+  {
+    "compressed_size": 1027,
+    "compression": 8,
+    "crc32": 3607493708,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/walks.py",
+    "size_bytes": 2427
+  },
+  {
+    "compressed_size": 2081,
+    "compression": 8,
+    "crc32": 2750679651,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/wiener.py",
+    "size_bytes": 7639
+  },
+  {
+    "compressed_size": 352,
+    "compression": 8,
+    "crc32": 598613198,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/approximation/__init__.py",
+    "size_bytes": 1178
+  },
+  {
+    "compressed_size": 2342,
+    "compression": 8,
+    "crc32": 1022008492,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/approximation/clique.py",
+    "size_bytes": 7691
+  },
+  {
+    "compressed_size": 960,
+    "compression": 8,
+    "crc32": 2627043002,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/approximation/clustering_coefficient.py",
+    "size_bytes": 2164
+  },
+  {
+    "compressed_size": 3287,
+    "compression": 8,
+    "crc32": 4294261906,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/approximation/connectivity.py",
+    "size_bytes": 13118
+  },
+  {
+    "compressed_size": 1990,
+    "compression": 8,
+    "crc32": 4022935638,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/approximation/distance_measures.py",
+    "size_bytes": 5805
+  },
+  {
+    "compressed_size": 1703,
+    "compression": 8,
+    "crc32": 2886645946,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/approximation/dominating_set.py",
+    "size_bytes": 4710
+  },
+  {
+    "compressed_size": 4316,
+    "compression": 8,
+    "crc32": 2114924536,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/approximation/kcomponents.py",
+    "size_bytes": 13285
+  },
+  {
+    "compressed_size": 578,
+    "compression": 8,
+    "crc32": 3077897322,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/approximation/matching.py",
+    "size_bytes": 1175
+  },
+  {
+    "compressed_size": 1351,
+    "compression": 8,
+    "crc32": 4159873160,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/approximation/maxcut.py",
+    "size_bytes": 4333
+  },
+  {
+    "compressed_size": 627,
+    "compression": 8,
+    "crc32": 276281548,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/approximation/ramsey.py",
+    "size_bytes": 1358
+  },
+  {
+    "compressed_size": 2784,
+    "compression": 8,
+    "crc32": 2166321786,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/approximation/steinertree.py",
+    "size_bytes": 8048
+  },
+  {
+    "compressed_size": 13465,
+    "compression": 8,
+    "crc32": 992073184,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/approximation/traveling_salesman.py",
+    "size_bytes": 55943
+  },
+  {
+    "compressed_size": 2694,
+    "compression": 8,
+    "crc32": 3649322482,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/approximation/treewidth.py",
+    "size_bytes": 8216
+  },
+  {
+    "compressed_size": 1193,
+    "compression": 8,
+    "crc32": 132585031,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/approximation/vertex_cover.py",
+    "size_bytes": 2803
+  },
+  {
+    "compressed_size": 2,
+    "compression": 8,
+    "crc32": 0,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/approximation/tests/__init__.py",
+    "size_bytes": 0
+  },
+  {
+    "compressed_size": 301,
+    "compression": 8,
+    "crc32": 2971353920,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/approximation/tests/test_approx_clust_coeff.py",
+    "size_bytes": 1171
+  },
+  {
+    "compressed_size": 887,
+    "compression": 8,
+    "crc32": 4290702894,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/approximation/tests/test_clique.py",
+    "size_bytes": 3021
+  },
+  {
+    "compressed_size": 1281,
+    "compression": 8,
+    "crc32": 1906462399,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/approximation/tests/test_connectivity.py",
+    "size_bytes": 5952
+  },
+  {
+    "compressed_size": 529,
+    "compression": 8,
+    "crc32": 3658495279,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/approximation/tests/test_distance_measures.py",
+    "size_bytes": 2023
+  },
+  {
+    "compressed_size": 804,
+    "compression": 8,
+    "crc32": 2214271092,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/approximation/tests/test_dominating_set.py",
+    "size_bytes": 2686
+  },
+  {
+    "compressed_size": 2098,
+    "compression": 8,
+    "crc32": 1729820925,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/approximation/tests/test_kcomponents.py",
+    "size_bytes": 9346
+  },
+  {
+    "compressed_size": 126,
+    "compression": 8,
+    "crc32": 2489389827,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/approximation/tests/test_matching.py",
+    "size_bytes": 186
+  },
+  {
+    "compressed_size": 866,
+    "compression": 8,
+    "crc32": 2310673417,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/approximation/tests/test_maxcut.py",
+    "size_bytes": 2804
+  },
+  {
+    "compressed_size": 369,
+    "compression": 8,
+    "crc32": 1045496239,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/approximation/tests/test_ramsey.py",
+    "size_bytes": 1143
+  },
+  {
+    "compressed_size": 1887,
+    "compression": 8,
+    "crc32": 2098785736,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/approximation/tests/test_steinertree.py",
+    "size_bytes": 9671
+  },
+  {
+    "compressed_size": 6059,
+    "compression": 8,
+    "crc32": 4084351868,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/approximation/tests/test_traveling_salesman.py",
+    "size_bytes": 30842
+  },
+  {
+    "compressed_size": 1667,
+    "compression": 8,
+    "crc32": 2639173804,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/approximation/tests/test_treewidth.py",
+    "size_bytes": 9096
+  },
+  {
+    "compressed_size": 581,
+    "compression": 8,
+    "crc32": 842299302,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/approximation/tests/test_vertex_cover.py",
+    "size_bytes": 1942
+  },
+  {
+    "compressed_size": 94,
+    "compression": 8,
+    "crc32": 1661275377,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/assortativity/__init__.py",
+    "size_bytes": 294
+  },
+  {
+    "compressed_size": 1586,
+    "compression": 8,
+    "crc32": 2944284,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/assortativity/connectivity.py",
+    "size_bytes": 4220
+  },
+  {
+    "compressed_size": 1983,
+    "compression": 8,
+    "crc32": 3049935274,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/assortativity/correlation.py",
+    "size_bytes": 8689
+  },
+  {
+    "compressed_size": 1919,
+    "compression": 8,
+    "crc32": 1983982132,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/assortativity/mixing.py",
+    "size_bytes": 7586
+  },
+  {
+    "compressed_size": 1753,
+    "compression": 8,
+    "crc32": 1012199444,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/assortativity/neighbor_degree.py",
+    "size_bytes": 5282
+  },
+  {
+    "compressed_size": 1185,
+    "compression": 8,
+    "crc32": 3608422567,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/assortativity/pairs.py",
+    "size_bytes": 3841
+  },
+  {
+    "compressed_size": 2,
+    "compression": 8,
+    "crc32": 0,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/assortativity/tests/__init__.py",
+    "size_bytes": 0
+  },
+  {
+    "compressed_size": 596,
+    "compression": 8,
+    "crc32": 4127988797,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/assortativity/tests/base_test.py",
+    "size_bytes": 2651
+  },
+  {
+    "compressed_size": 846,
+    "compression": 8,
+    "crc32": 2341002745,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/assortativity/tests/test_connectivity.py",
+    "size_bytes": 4978
+  },
+  {
+    "compressed_size": 967,
+    "compression": 8,
+    "crc32": 2688550293,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/assortativity/tests/test_correlation.py",
+    "size_bytes": 5069
+  },
+  {
+    "compressed_size": 915,
+    "compression": 8,
+    "crc32": 1625880277,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/assortativity/tests/test_mixing.py",
+    "size_bytes": 6820
+  },
+  {
+    "compressed_size": 636,
+    "compression": 8,
+    "crc32": 2145490147,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/assortativity/tests/test_neighbor_degree.py",
+    "size_bytes": 3968
+  },
+  {
+    "compressed_size": 528,
+    "compression": 8,
+    "crc32": 3521801508,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/assortativity/tests/test_pairs.py",
+    "size_bytes": 3008
+  },
+  {
+    "compressed_size": 1415,
+    "compression": 8,
+    "crc32": 566886472,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/bipartite/__init__.py",
+    "size_bytes": 3825
+  },
+  {
+    "compressed_size": 2356,
+    "compression": 8,
+    "crc32": 500364895,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/bipartite/basic.py",
+    "size_bytes": 8375
+  },
+  {
+    "compressed_size": 2208,
+    "compression": 8,
+    "crc32": 3457000511,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/bipartite/centrality.py",
+    "size_bytes": 9156
+  },
+  {
+    "compressed_size": 2229,
+    "compression": 8,
+    "crc32": 4041104655,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/bipartite/cluster.py",
+    "size_bytes": 6935
+  },
+  {
+    "compressed_size": 847,
+    "compression": 8,
+    "crc32": 2363661723,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/bipartite/covering.py",
+    "size_bytes": 2163
+  },
+  {
+    "compressed_size": 3013,
+    "compression": 8,
+    "crc32": 2744442798,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/bipartite/edgelist.py",
+    "size_bytes": 11364
+  },
+  {
+    "compressed_size": 1494,
+    "compression": 8,
+    "crc32": 209214004,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/bipartite/extendability.py",
+    "size_bytes": 3989
+  },
+  {
+    "compressed_size": 4004,
+    "compression": 8,
+    "crc32": 2898175974,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/bipartite/generators.py",
+    "size_bytes": 20439
+  },
+  {
+    "compressed_size": 6210,
+    "compression": 8,
+    "crc32": 567073495,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/bipartite/matching.py",
+    "size_bytes": 21637
+  },
+  {
+    "compressed_size": 2297,
+    "compression": 8,
+    "crc32": 3840851283,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/bipartite/matrix.py",
+    "size_bytes": 6156
+  },
+  {
+    "compressed_size": 3506,
+    "compression": 8,
+    "crc32": 1466864561,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/bipartite/projection.py",
+    "size_bytes": 17252
+  },
+  {
+    "compressed_size": 1327,
+    "compression": 8,
+    "crc32": 2395789926,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/bipartite/redundancy.py",
+    "size_bytes": 3402
+  },
+  {
+    "compressed_size": 882,
+    "compression": 8,
+    "crc32": 3048548304,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/bipartite/spectral.py",
+    "size_bytes": 1902
+  },
+  {
+    "compressed_size": 2,
+    "compression": 8,
+    "crc32": 0,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/bipartite/tests/__init__.py",
+    "size_bytes": 0
+  },
+  {
+    "compressed_size": 934,
+    "compression": 8,
+    "crc32": 2101031818,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/bipartite/tests/test_basic.py",
+    "size_bytes": 4291
+  },
+  {
+    "compressed_size": 1296,
+    "compression": 8,
+    "crc32": 3809965570,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/bipartite/tests/test_centrality.py",
+    "size_bytes": 6362
+  },
+  {
+    "compressed_size": 791,
+    "compression": 8,
+    "crc32": 919794727,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/bipartite/tests/test_cluster.py",
+    "size_bytes": 2801
+  },
+  {
+    "compressed_size": 343,
+    "compression": 8,
+    "crc32": 451805671,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/bipartite/tests/test_covering.py",
+    "size_bytes": 1221
+  },
+  {
+    "compressed_size": 1787,
+    "compression": 8,
+    "crc32": 150884717,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/bipartite/tests/test_edgelist.py",
+    "size_bytes": 8471
+  },
+  {
+    "compressed_size": 977,
+    "compression": 8,
+    "crc32": 1979656327,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/bipartite/tests/test_extendability.py",
+    "size_bytes": 7043
+  },
+  {
+    "compressed_size": 1690,
+    "compression": 8,
+    "crc32": 2830731665,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/bipartite/tests/test_generators.py",
+    "size_bytes": 13241
+  },
+  {
+    "compressed_size": 2454,
+    "compression": 8,
+    "crc32": 305168454,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/bipartite/tests/test_matching.py",
+    "size_bytes": 11973
+  },
+  {
+    "compressed_size": 776,
+    "compression": 8,
+    "crc32": 68193565,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/bipartite/tests/test_matrix.py",
+    "size_bytes": 3094
+  },
+  {
+    "compressed_size": 1795,
+    "compression": 8,
+    "crc32": 2761152685,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/bipartite/tests/test_project.py",
+    "size_bytes": 15134
+  },
+  {
+    "compressed_size": 378,
+    "compression": 8,
+    "crc32": 2448680559,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/bipartite/tests/test_redundancy.py",
+    "size_bytes": 917
+  },
+  {
+    "compressed_size": 506,
+    "compression": 8,
+    "crc32": 2331013239,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/bipartite/tests/test_spectral_bipartivity.py",
+    "size_bytes": 2358
+  },
+  {
+    "compressed_size": 166,
+    "compression": 8,
+    "crc32": 3435479788,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/centrality/__init__.py",
+    "size_bytes": 558
+  },
+  {
+    "compressed_size": 3751,
+    "compression": 8,
+    "crc32": 2061027236,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/centrality/betweenness.py",
+    "size_bytes": 14383
+  },
+  {
+    "compressed_size": 2279,
+    "compression": 8,
+    "crc32": 735875191,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/centrality/betweenness_subset.py",
+    "size_bytes": 9336
+  },
+  {
+    "compressed_size": 3154,
+    "compression": 8,
+    "crc32": 3731471947,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/centrality/closeness.py",
+    "size_bytes": 10281
+  },
+  {
+    "compressed_size": 2766,
+    "compression": 8,
+    "crc32": 1757044983,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/centrality/current_flow_betweenness.py",
+    "size_bytes": 11848
+  },
+  {
+    "compressed_size": 1959,
+    "compression": 8,
+    "crc32": 2064140330,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/centrality/current_flow_betweenness_subset.py",
+    "size_bytes": 8107
+  },
+  {
+    "compressed_size": 1502,
+    "compression": 8,
+    "crc32": 403022648,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/centrality/current_flow_closeness.py",
+    "size_bytes": 3327
+  },
+  {
+    "compressed_size": 794,
+    "compression": 8,
+    "crc32": 181864175,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/centrality/degree_alg.py",
+    "size_bytes": 3894
+  },
+  {
+    "compressed_size": 1402,
+    "compression": 8,
+    "crc32": 4235753058,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/centrality/dispersion.py",
+    "size_bytes": 3631
+  },
+  {
+    "compressed_size": 4123,
+    "compression": 8,
+    "crc32": 3656124321,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/centrality/eigenvector.py",
+    "size_bytes": 13623
+  },
+  {
+    "compressed_size": 1206,
+    "compression": 8,
+    "crc32": 3935121071,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/centrality/flow_matrix.py",
+    "size_bytes": 3834
+  },
+  {
+    "compressed_size": 6177,
+    "compression": 8,
+    "crc32": 3009817799,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/centrality/group.py",
+    "size_bytes": 27960
+  },
+  {
+    "compressed_size": 1180,
+    "compression": 8,
+    "crc32": 710011837,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/centrality/harmonic.py",
+    "size_bytes": 2847
+  },
+  {
+    "compressed_size": 2927,
+    "compression": 8,
+    "crc32": 1680556773,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/centrality/katz.py",
+    "size_bytes": 11042
+  },
+  {
+    "compressed_size": 2108,
+    "compression": 8,
+    "crc32": 3708330952,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/centrality/laplacian.py",
+    "size_bytes": 5640
+  },
+  {
+    "compressed_size": 2278,
+    "compression": 8,
+    "crc32": 3515903590,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/centrality/load.py",
+    "size_bytes": 6859
+  },
+  {
+    "compressed_size": 1771,
+    "compression": 8,
+    "crc32": 537193948,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/centrality/percolation.py",
+    "size_bytes": 4419
+  },
+  {
+    "compressed_size": 2136,
+    "compression": 8,
+    "crc32": 589852733,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/centrality/reaching.py",
+    "size_bytes": 7243
+  },
+  {
+    "compressed_size": 2385,
+    "compression": 8,
+    "crc32": 2821466062,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/centrality/second_order.py",
+    "size_bytes": 5012
+  },
+  {
+    "compressed_size": 2678,
+    "compression": 8,
+    "crc32": 2884567522,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/centrality/subgraph_alg.py",
+    "size_bytes": 9513
+  },
+  {
+    "compressed_size": 1610,
+    "compression": 8,
+    "crc32": 1032088702,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/centrality/trophic.py",
+    "size_bytes": 4679
+  },
+  {
+    "compressed_size": 1202,
+    "compression": 8,
+    "crc32": 3692787918,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/centrality/voterank_alg.py",
+    "size_bytes": 3231
+  },
+  {
+    "compressed_size": 2,
+    "compression": 8,
+    "crc32": 0,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/centrality/tests/__init__.py",
+    "size_bytes": 0
+  },
+  {
+    "compressed_size": 3006,
+    "compression": 8,
+    "crc32": 513450333,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/centrality/tests/test_betweenness_centrality.py",
+    "size_bytes": 26795
+  },
+  {
+    "compressed_size": 1350,
+    "compression": 8,
+    "crc32": 1890323933,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/centrality/tests/test_betweenness_centrality_subset.py",
+    "size_bytes": 12554
+  },
+  {
+    "compressed_size": 2526,
+    "compression": 8,
+    "crc32": 4118317483,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/centrality/tests/test_closeness_centrality.py",
+    "size_bytes": 10210
+  },
+  {
+    "compressed_size": 1196,
+    "compression": 8,
+    "crc32": 3445746153,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/centrality/tests/test_current_flow_betweenness_centrality.py",
+    "size_bytes": 7870
+  },
+  {
+    "compressed_size": 654,
+    "compression": 8,
+    "crc32": 2561098354,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/centrality/tests/test_current_flow_betweenness_centrality_subset.py",
+    "size_bytes": 5839
+  },
+  {
+    "compressed_size": 422,
+    "compression": 8,
+    "crc32": 854073479,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/centrality/tests/test_current_flow_closeness.py",
+    "size_bytes": 1379
+  },
+  {
+    "compressed_size": 869,
+    "compression": 8,
+    "crc32": 3767310270,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/centrality/tests/test_degree_centrality.py",
+    "size_bytes": 4101
+  },
+  {
+    "compressed_size": 586,
+    "compression": 8,
+    "crc32": 3956942404,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/centrality/tests/test_dispersion.py",
+    "size_bytes": 1959
+  },
+  {
+    "compressed_size": 1032,
+    "compression": 8,
+    "crc32": 2981544810,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/centrality/tests/test_eigenvector_centrality.py",
+    "size_bytes": 5255
+  },
+  {
+    "compressed_size": 1198,
+    "compression": 8,
+    "crc32": 1858561998,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/centrality/tests/test_group.py",
+    "size_bytes": 8685
+  },
+  {
+    "compressed_size": 858,
+    "compression": 8,
+    "crc32": 3051301876,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/centrality/tests/test_harmonic_centrality.py",
+    "size_bytes": 3867
+  },
+  {
+    "compressed_size": 1524,
+    "compression": 8,
+    "crc32": 885641068,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/centrality/tests/test_katz_centrality.py",
+    "size_bytes": 11240
+  },
+  {
+    "compressed_size": 1505,
+    "compression": 8,
+    "crc32": 2800166986,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/centrality/tests/test_laplacian_centrality.py",
+    "size_bytes": 5916
+  },
+  {
+    "compressed_size": 2608,
+    "compression": 8,
+    "crc32": 1824264316,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/centrality/tests/test_load_centrality.py",
+    "size_bytes": 11343
+  },
+  {
+    "compressed_size": 734,
+    "compression": 8,
+    "crc32": 2652855788,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/centrality/tests/test_percolation_centrality.py",
+    "size_bytes": 2591
+  },
+  {
+    "compressed_size": 850,
+    "compression": 8,
+    "crc32": 3150518573,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/centrality/tests/test_reaching.py",
+    "size_bytes": 5090
+  },
+  {
+    "compressed_size": 549,
+    "compression": 8,
+    "crc32": 3716595388,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/centrality/tests/test_second_order_centrality.py",
+    "size_bytes": 1999
+  },
+  {
+    "compressed_size": 828,
+    "compression": 8,
+    "crc32": 2489295666,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/centrality/tests/test_subgraph.py",
+    "size_bytes": 3729
+  },
+  {
+    "compressed_size": 1803,
+    "compression": 8,
+    "crc32": 3675454953,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/centrality/tests/test_trophic.py",
+    "size_bytes": 8705
+  },
+  {
+    "compressed_size": 449,
+    "compression": 8,
+    "crc32": 1412239694,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/centrality/tests/test_voterank.py",
+    "size_bytes": 1687
+  },
+  {
+    "compressed_size": 95,
+    "compression": 8,
+    "crc32": 4261628430,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/coloring/__init__.py",
+    "size_bytes": 182
+  },
+  {
+    "compressed_size": 4658,
+    "compression": 8,
+    "crc32": 2315282485,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/coloring/equitable_coloring.py",
+    "size_bytes": 16315
+  },
+  {
+    "compressed_size": 5585,
+    "compression": 8,
+    "crc32": 1646156327,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/coloring/greedy_coloring.py",
+    "size_bytes": 20046
+  },
+  {
+    "compressed_size": 2,
+    "compression": 8,
+    "crc32": 0,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/coloring/tests/__init__.py",
+    "size_bytes": 0
+  },
+  {
+    "compressed_size": 4374,
+    "compression": 8,
+    "crc32": 1222764169,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/coloring/tests/test_coloring.py",
+    "size_bytes": 23697
+  },
+  {
+    "compressed_size": 407,
+    "compression": 8,
+    "crc32": 1465296372,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/community/__init__.py",
+    "size_bytes": 1179
+  },
+  {
+    "compressed_size": 2001,
+    "compression": 8,
+    "crc32": 2416228723,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/community/asyn_fluid.py",
+    "size_bytes": 5935
+  },
+  {
+    "compressed_size": 1997,
+    "compression": 8,
+    "crc32": 2304339169,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/community/centrality.py",
+    "size_bytes": 6635
+  },
+  {
+    "compressed_size": 452,
+    "compression": 8,
+    "crc32": 3673534955,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/community/community_utils.py",
+    "size_bytes": 908
+  },
+  {
+    "compressed_size": 1792,
+    "compression": 8,
+    "crc32": 2282977964,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/community/divisive.py",
+    "size_bytes": 6655
+  },
+  {
+    "compressed_size": 1030,
+    "compression": 8,
+    "crc32": 176120512,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/community/kclique.py",
+    "size_bytes": 2460
+  },
+  {
+    "compressed_size": 1765,
+    "compression": 8,
+    "crc32": 984032556,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/community/kernighan_lin.py",
+    "size_bytes": 4349
+  },
+  {
+    "compressed_size": 3718,
+    "compression": 8,
+    "crc32": 995908700,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/community/label_propagation.py",
+    "size_bytes": 11878
+  },
+  {
+    "compressed_size": 4349,
+    "compression": 8,
+    "crc32": 1426863923,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/community/louvain.py",
+    "size_bytes": 15365
+  },
+  {
+    "compressed_size": 2816,
+    "compression": 8,
+    "crc32": 3341972157,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/community/lukes.py",
+    "size_bytes": 8115
+  },
+  {
+    "compressed_size": 4868,
+    "compression": 8,
+    "crc32": 2031777277,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/community/modularity_max.py",
+    "size_bytes": 18082
+  },
+  {
+    "compressed_size": 3750,
+    "compression": 8,
+    "crc32": 768483430,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/community/quality.py",
+    "size_bytes": 11939
+  },
+  {
+    "compressed_size": 2,
+    "compression": 8,
+    "crc32": 0,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/community/tests/__init__.py",
+    "size_bytes": 0
+  },
+  {
+    "compressed_size": 721,
+    "compression": 8,
+    "crc32": 567199126,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/community/tests/test_asyn_fluid.py",
+    "size_bytes": 3332
+  },
+  {
+    "compressed_size": 735,
+    "compression": 8,
+    "crc32": 4083000003,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/community/tests/test_centrality.py",
+    "size_bytes": 2932
+  },
+  {
+    "compressed_size": 503,
+    "compression": 8,
+    "crc32": 3871310064,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/community/tests/test_divisive.py",
+    "size_bytes": 3441
+  },
+  {
+    "compressed_size": 659,
+    "compression": 8,
+    "crc32": 3264481852,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/community/tests/test_kclique.py",
+    "size_bytes": 2413
+  },
+  {
+    "compressed_size": 714,
+    "compression": 8,
+    "crc32": 1303412971,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/community/tests/test_kernighan_lin.py",
+    "size_bytes": 2710
+  },
+  {
+    "compressed_size": 1742,
+    "compression": 8,
+    "crc32": 1673894424,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/community/tests/test_label_propagation.py",
+    "size_bytes": 7985
+  },
+  {
+    "compressed_size": 1652,
+    "compression": 8,
+    "crc32": 1506081388,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/community/tests/test_louvain.py",
+    "size_bytes": 8071
+  },
+  {
+    "compressed_size": 1020,
+    "compression": 8,
+    "crc32": 3998549211,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/community/tests/test_lukes.py",
+    "size_bytes": 3961
+  },
+  {
+    "compressed_size": 2049,
+    "compression": 8,
+    "crc32": 2721342366,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/community/tests/test_modularity_max.py",
+    "size_bytes": 10617
+  },
+  {
+    "compressed_size": 1061,
+    "compression": 8,
+    "crc32": 2467131418,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/community/tests/test_quality.py",
+    "size_bytes": 5275
+  },
+  {
+    "compressed_size": 227,
+    "compression": 8,
+    "crc32": 95485724,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/community/tests/test_utils.py",
+    "size_bytes": 704
+  },
+  {
+    "compressed_size": 67,
+    "compression": 8,
+    "crc32": 3777445646,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/components/__init__.py",
+    "size_bytes": 173
+  },
+  {
+    "compressed_size": 792,
+    "compression": 8,
+    "crc32": 447717297,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/components/attracting.py",
+    "size_bytes": 2712
+  },
+  {
+    "compressed_size": 2511,
+    "compression": 8,
+    "crc32": 2757595789,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/components/biconnected.py",
+    "size_bytes": 12782
+  },
+  {
+    "compressed_size": 1190,
+    "compression": 8,
+    "crc32": 1871552597,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/components/connected.py",
+    "size_bytes": 4459
+  },
+  {
+    "compressed_size": 864,
+    "compression": 8,
+    "crc32": 3276389777,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/components/semiconnected.py",
+    "size_bytes": 2030
+  },
+  {
+    "compressed_size": 2527,
+    "compression": 8,
+    "crc32": 775272731,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/components/strongly_connected.py",
+    "size_bytes": 9542
+  },
+  {
+    "compressed_size": 1264,
+    "compression": 8,
+    "crc32": 1522763345,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/components/weakly_connected.py",
+    "size_bytes": 4455
+  },
+  {
+    "compressed_size": 2,
+    "compression": 8,
+    "crc32": 0,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/components/tests/__init__.py",
+    "size_bytes": 0
+  },
+  {
+    "compressed_size": 524,
+    "compression": 8,
+    "crc32": 2997146132,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/components/tests/test_attracting.py",
+    "size_bytes": 2243
+  },
+  {
+    "compressed_size": 1451,
+    "compression": 8,
+    "crc32": 3213487102,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/components/tests/test_biconnected.py",
+    "size_bytes": 6036
+  },
+  {
+    "compressed_size": 1280,
+    "compression": 8,
+    "crc32": 113689699,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/components/tests/test_connected.py",
+    "size_bytes": 4815
+  },
+  {
+    "compressed_size": 439,
+    "compression": 8,
+    "crc32": 1792998333,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/components/tests/test_semiconnected.py",
+    "size_bytes": 1792
+  },
+  {
+    "compressed_size": 1362,
+    "compression": 8,
+    "crc32": 3391998982,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/components/tests/test_strongly_connected.py",
+    "size_bytes": 6021
+  },
+  {
+    "compressed_size": 801,
+    "compression": 8,
+    "crc32": 1232067338,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/components/tests/test_weakly_connected.py",
+    "size_bytes": 3083
+  },
+  {
+    "compressed_size": 123,
+    "compression": 8,
+    "crc32": 2772084611,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/connectivity/__init__.py",
+    "size_bytes": 281
+  },
+  {
+    "compressed_size": 5294,
+    "compression": 8,
+    "crc32": 2902494913,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/connectivity/connectivity.py",
+    "size_bytes": 29367
+  },
+  {
+    "compressed_size": 4163,
+    "compression": 8,
+    "crc32": 353367480,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/connectivity/cuts.py",
+    "size_bytes": 23015
+  },
+  {
+    "compressed_size": 3388,
+    "compression": 8,
+    "crc32": 3964407263,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/connectivity/disjoint_paths.py",
+    "size_bytes": 14649
+  },
+  {
+    "compressed_size": 11373,
+    "compression": 8,
+    "crc32": 2881124174,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/connectivity/edge_augmentation.py",
+    "size_bytes": 44061
+  },
+  {
+    "compressed_size": 5238,
+    "compression": 8,
+    "crc32": 1281305651,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/connectivity/edge_kcomponents.py",
+    "size_bytes": 20894
+  },
+  {
+    "compressed_size": 3014,
+    "compression": 8,
+    "crc32": 1959253441,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/connectivity/kcomponents.py",
+    "size_bytes": 8171
+  },
+  {
+    "compressed_size": 3070,
+    "compression": 8,
+    "crc32": 3308297647,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/connectivity/kcutsets.py",
+    "size_bytes": 9371
+  },
+  {
+    "compressed_size": 1956,
+    "compression": 8,
+    "crc32": 4026563323,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/connectivity/stoerwagner.py",
+    "size_bytes": 5431
+  },
+  {
+    "compressed_size": 1206,
+    "compression": 8,
+    "crc32": 1117853890,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/connectivity/utils.py",
+    "size_bytes": 3217
+  },
+  {
+    "compressed_size": 2,
+    "compression": 8,
+    "crc32": 0,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/connectivity/tests/__init__.py",
+    "size_bytes": 0
+  },
+  {
+    "compressed_size": 2599,
+    "compression": 8,
+    "crc32": 4042636546,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/connectivity/tests/test_connectivity.py",
+    "size_bytes": 15027
+  },
+  {
+    "compressed_size": 1813,
+    "compression": 8,
+    "crc32": 2760260609,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/connectivity/tests/test_cuts.py",
+    "size_bytes": 10353
+  },
+  {
+    "compressed_size": 1203,
+    "compression": 8,
+    "crc32": 1579956833,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/connectivity/tests/test_disjoint_paths.py",
+    "size_bytes": 8392
+  },
+  {
+    "compressed_size": 4036,
+    "compression": 8,
+    "crc32": 1525909295,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/connectivity/tests/test_edge_augmentation.py",
+    "size_bytes": 15731
+  },
+  {
+    "compressed_size": 3936,
+    "compression": 8,
+    "crc32": 2686429178,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/connectivity/tests/test_edge_kcomponents.py",
+    "size_bytes": 16453
+  },
+  {
+    "compressed_size": 1973,
+    "compression": 8,
+    "crc32": 1908790389,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/connectivity/tests/test_kcomponents.py",
+    "size_bytes": 8554
+  },
+  {
+    "compressed_size": 2158,
+    "compression": 8,
+    "crc32": 4078618130,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/connectivity/tests/test_kcutsets.py",
+    "size_bytes": 8610
+  },
+  {
+    "compressed_size": 735,
+    "compression": 8,
+    "crc32": 3436728953,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/connectivity/tests/test_stoer_wagner.py",
+    "size_bytes": 3011
+  },
+  {
+    "compressed_size": 153,
+    "compression": 8,
+    "crc32": 2813100300,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/flow/__init__.py",
+    "size_bytes": 341
+  },
+  {
+    "compressed_size": 4139,
+    "compression": 8,
+    "crc32": 2802813437,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/flow/boykovkolmogorov.py",
+    "size_bytes": 13334
+  },
+  {
+    "compressed_size": 4085,
+    "compression": 8,
+    "crc32": 2337881263,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/flow/capacityscaling.py",
+    "size_bytes": 14469
+  },
+  {
+    "compressed_size": 2807,
+    "compression": 8,
+    "crc32": 3879140089,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/flow/dinitz_alg.py",
+    "size_bytes": 8341
+  },
+  {
+    "compressed_size": 2526,
+    "compression": 8,
+    "crc32": 1207173498,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/flow/edmondskarp.py",
+    "size_bytes": 8056
+  },
+  {
+    "compressed_size": 2179,
+    "compression": 8,
+    "crc32": 4039492040,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/flow/gomory_hu.py",
+    "size_bytes": 6345
+  },
+  {
+    "compressed_size": 2980,
+    "compression": 8,
+    "crc32": 175418570,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/flow/maxflow.py",
+    "size_bytes": 22795
+  },
+  {
+    "compressed_size": 2206,
+    "compression": 8,
+    "crc32": 227528024,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/flow/mincost.py",
+    "size_bytes": 12853
+  },
+  {
+    "compressed_size": 6371,
+    "compression": 8,
+    "crc32": 2007364771,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/flow/networksimplex.py",
+    "size_bytes": 25185
+  },
+  {
+    "compressed_size": 4508,
+    "compression": 8,
+    "crc32": 1550481457,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/flow/preflowpush.py",
+    "size_bytes": 15721
+  },
+  {
+    "compressed_size": 3295,
+    "compression": 8,
+    "crc32": 3640348449,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/flow/shortestaugmentingpath.py",
+    "size_bytes": 10372
+  },
+  {
+    "compressed_size": 2204,
+    "compression": 8,
+    "crc32": 3290493865,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/flow/utils.py",
+    "size_bytes": 6084
+  },
+  {
+    "compressed_size": 2,
+    "compression": 8,
+    "crc32": 0,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/flow/tests/__init__.py",
+    "size_bytes": 0
+  },
+  {
+    "compressed_size": 42575,
+    "compression": 8,
+    "crc32": 3716489522,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/flow/tests/gl1.gpickle.bz2",
+    "size_bytes": 44623
+  },
+  {
+    "compressed_size": 40977,
+    "compression": 8,
+    "crc32": 2644491895,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/flow/tests/gw1.gpickle.bz2",
+    "size_bytes": 42248
+  },
+  {
+    "compressed_size": 18911,
+    "compression": 8,
+    "crc32": 2518375305,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/flow/tests/netgen-2.gpickle.bz2",
+    "size_bytes": 18972
+  },
+  {
+    "compressed_size": 942,
+    "compression": 8,
+    "crc32": 3168755250,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/flow/tests/test_gomory_hu.py",
+    "size_bytes": 4471
+  },
+  {
+    "compressed_size": 3383,
+    "compression": 8,
+    "crc32": 2073650753,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/flow/tests/test_maxflow.py",
+    "size_bytes": 18940
+  },
+  {
+    "compressed_size": 1265,
+    "compression": 8,
+    "crc32": 3429941043,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/flow/tests/test_maxflow_large_graph.py",
+    "size_bytes": 4622
+  },
+  {
+    "compressed_size": 3137,
+    "compression": 8,
+    "crc32": 816841412,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/flow/tests/test_mincost.py",
+    "size_bytes": 17816
+  },
+  {
+    "compressed_size": 2444,
+    "compression": 8,
+    "crc32": 1841331133,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/flow/tests/test_networksimplex.py",
+    "size_bytes": 12103
+  },
+  {
+    "compressed_size": 85976,
+    "compression": 8,
+    "crc32": 499159169,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/flow/tests/wlm3.gpickle.bz2",
+    "size_bytes": 88132
+  },
+  {
+    "compressed_size": 109,
+    "compression": 8,
+    "crc32": 2924771942,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/isomorphism/__init__.py",
+    "size_bytes": 406
+  },
+  {
+    "compressed_size": 10199,
+    "compression": 8,
+    "crc32": 3634869292,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/isomorphism/ismags.py",
+    "size_bytes": 43239
+  },
+  {
+    "compressed_size": 1876,
+    "compression": 8,
+    "crc32": 1686437791,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/isomorphism/isomorph.py",
+    "size_bytes": 7114
+  },
+  {
+    "compressed_size": 8088,
+    "compression": 8,
+    "crc32": 3152931869,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/isomorphism/isomorphvf2.py",
+    "size_bytes": 46785
+  },
+  {
+    "compressed_size": 2191,
+    "compression": 8,
+    "crc32": 375641443,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/isomorphism/matchhelpers.py",
+    "size_bytes": 10884
+  },
+  {
+    "compressed_size": 2715,
+    "compression": 8,
+    "crc32": 1515192861,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/isomorphism/temporalisomorphvf2.py",
+    "size_bytes": 10948
+  },
+  {
+    "compressed_size": 3072,
+    "compression": 8,
+    "crc32": 3255773695,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/isomorphism/tree_isomorphism.py",
+    "size_bytes": 9454
+  },
+  {
+    "compressed_size": 6509,
+    "compression": 8,
+    "crc32": 2780406492,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/isomorphism/vf2pp.py",
+    "size_bytes": 36421
+  },
+  {
+    "compressed_size": 1808,
+    "compression": 8,
+    "crc32": 3308891909,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/isomorphism/vf2userfunc.py",
+    "size_bytes": 7371
+  },
+  {
+    "compressed_size": 2,
+    "compression": 8,
+    "crc32": 0,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/isomorphism/tests/__init__.py",
+    "size_bytes": 0
+  },
+  {
+    "compressed_size": 798,
+    "compression": 8,
+    "crc32": 3949904669,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/isomorphism/tests/iso_r01_s80.A99",
+    "size_bytes": 1442
+  },
+  {
+    "compressed_size": 794,
+    "compression": 8,
+    "crc32": 930775719,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/isomorphism/tests/iso_r01_s80.B99",
+    "size_bytes": 1442
+  },
+  {
+    "compressed_size": 164,
+    "compression": 8,
+    "crc32": 1508769120,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/isomorphism/tests/si2_b06_m200.A99",
+    "size_bytes": 310
+  },
+  {
+    "compressed_size": 986,
+    "compression": 8,
+    "crc32": 3486078220,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/isomorphism/tests/si2_b06_m200.B99",
+    "size_bytes": 1602
+  },
+  {
+    "compressed_size": 1975,
+    "compression": 8,
+    "crc32": 3255292465,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/isomorphism/tests/test_ismags.py",
+    "size_bytes": 10581
+  },
+  {
+    "compressed_size": 426,
+    "compression": 8,
+    "crc32": 1346047550,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/isomorphism/tests/test_isomorphism.py",
+    "size_bytes": 2022
+  },
+  {
+    "compressed_size": 2923,
+    "compression": 8,
+    "crc32": 2556404840,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/isomorphism/tests/test_isomorphvf2.py",
+    "size_bytes": 11747
+  },
+  {
+    "compressed_size": 594,
+    "compression": 8,
+    "crc32": 375737982,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/isomorphism/tests/test_match_helpers.py",
+    "size_bytes": 2483
+  },
+  {
+    "compressed_size": 878,
+    "compression": 8,
+    "crc32": 170807107,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/isomorphism/tests/test_temporalisomorphvf2.py",
+    "size_bytes": 7343
+  },
+  {
+    "compressed_size": 2151,
+    "compression": 8,
+    "crc32": 2831161538,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/isomorphism/tests/test_tree_isomorphism.py",
+    "size_bytes": 7412
+  },
+  {
+    "compressed_size": 5686,
+    "compression": 8,
+    "crc32": 1514135200,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/isomorphism/tests/test_vf2pp.py",
+    "size_bytes": 49924
+  },
+  {
+    "compressed_size": 7125,
+    "compression": 8,
+    "crc32": 1567115410,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/isomorphism/tests/test_vf2pp_helpers.py",
+    "size_bytes": 90125
+  },
+  {
+    "compressed_size": 1265,
+    "compression": 8,
+    "crc32": 3892229732,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/isomorphism/tests/test_vf2userfunc.py",
+    "size_bytes": 6625
+  },
+  {
+    "compressed_size": 71,
+    "compression": 8,
+    "crc32": 2924315877,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/link_analysis/__init__.py",
+    "size_bytes": 118
+  },
+  {
+    "compressed_size": 2406,
+    "compression": 8,
+    "crc32": 2378553796,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/link_analysis/hits_alg.py",
+    "size_bytes": 10421
+  },
+  {
+    "compressed_size": 3527,
+    "compression": 8,
+    "crc32": 3411816221,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/link_analysis/pagerank_alg.py",
+    "size_bytes": 17191
+  },
+  {
+    "compressed_size": 2,
+    "compression": 8,
+    "crc32": 0,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/link_analysis/tests/__init__.py",
+    "size_bytes": 0
+  },
+  {
+    "compressed_size": 733,
+    "compression": 8,
+    "crc32": 753573577,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/link_analysis/tests/test_hits.py",
+    "size_bytes": 2547
+  },
+  {
+    "compressed_size": 1639,
+    "compression": 8,
+    "crc32": 1690002470,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/link_analysis/tests/test_pagerank.py",
+    "size_bytes": 7283
+  },
+  {
+    "compressed_size": 303,
+    "compression": 8,
+    "crc32": 4217774203,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/minors/__init__.py",
+    "size_bytes": 587
+  },
+  {
+    "compressed_size": 6857,
+    "compression": 8,
+    "crc32": 2579083909,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/minors/contraction.py",
+    "size_bytes": 22870
+  },
+  {
+    "compressed_size": 2464,
+    "compression": 8,
+    "crc32": 3789640644,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/minors/tests/test_contraction.py",
+    "size_bytes": 14213
+  },
+  {
+    "compressed_size": 73,
+    "compression": 8,
+    "crc32": 544584642,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/operators/__init__.py",
+    "size_bytes": 201
+  },
+  {
+    "compressed_size": 2209,
+    "compression": 8,
+    "crc32": 4098267507,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/operators/all.py",
+    "size_bytes": 9652
+  },
+  {
+    "compressed_size": 3154,
+    "compression": 8,
+    "crc32": 438190186,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/operators/binary.py",
+    "size_bytes": 12948
+  },
+  {
+    "compressed_size": 4273,
+    "compression": 8,
+    "crc32": 3321915813,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/operators/product.py",
+    "size_bytes": 19632
+  },
+  {
+    "compressed_size": 695,
+    "compression": 8,
+    "crc32": 1433929499,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/operators/unary.py",
+    "size_bytes": 1795
+  },
+  {
+    "compressed_size": 2,
+    "compression": 8,
+    "crc32": 0,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/operators/tests/__init__.py",
+    "size_bytes": 0
+  },
+  {
+    "compressed_size": 1459,
+    "compression": 8,
+    "crc32": 2730890299,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/operators/tests/test_all.py",
+    "size_bytes": 8250
+  },
+  {
+    "compressed_size": 1678,
+    "compression": 8,
+    "crc32": 2495608815,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/operators/tests/test_binary.py",
+    "size_bytes": 12171
+  },
+  {
+    "compressed_size": 2008,
+    "compression": 8,
+    "crc32": 1640762613,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/operators/tests/test_product.py",
+    "size_bytes": 15155
+  },
+  {
+    "compressed_size": 459,
+    "compression": 8,
+    "crc32": 4162002290,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/operators/tests/test_unary.py",
+    "size_bytes": 1415
+  },
+  {
+    "compressed_size": 83,
+    "compression": 8,
+    "crc32": 795762492,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/shortest_paths/__init__.py",
+    "size_bytes": 285
+  },
+  {
+    "compressed_size": 2573,
+    "compression": 8,
+    "crc32": 1701524210,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/shortest_paths/astar.py",
+    "size_bytes": 8967
+  },
+  {
+    "compressed_size": 2409,
+    "compression": 8,
+    "crc32": 2760253661,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/shortest_paths/dense.py",
+    "size_bytes": 8211
+  },
+  {
+    "compressed_size": 4346,
+    "compression": 8,
+    "crc32": 3794515338,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/shortest_paths/generic.py",
+    "size_bytes": 25738
+  },
+  {
+    "compressed_size": 3386,
+    "compression": 8,
+    "crc32": 3367534087,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/shortest_paths/unweighted.py",
+    "size_bytes": 15642
+  },
+  {
+    "compressed_size": 12527,
+    "compression": 8,
+    "crc32": 1305712732,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/shortest_paths/weighted.py",
+    "size_bytes": 82465
+  },
+  {
+    "compressed_size": 2,
+    "compression": 8,
+    "crc32": 0,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/shortest_paths/tests/__init__.py",
+    "size_bytes": 0
+  },
+  {
+    "compressed_size": 1935,
+    "compression": 8,
+    "crc32": 3657769445,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/shortest_paths/tests/test_astar.py",
+    "size_bytes": 8941
+  },
+  {
+    "compressed_size": 1306,
+    "compression": 8,
+    "crc32": 1231568515,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/shortest_paths/tests/test_dense.py",
+    "size_bytes": 6747
+  },
+  {
+    "compressed_size": 650,
+    "compression": 8,
+    "crc32": 3391518811,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/shortest_paths/tests/test_dense_numpy.py",
+    "size_bytes": 2300
+  },
+  {
+    "compressed_size": 2627,
+    "compression": 8,
+    "crc32": 4118341313,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/shortest_paths/tests/test_generic.py",
+    "size_bytes": 18456
+  },
+  {
+    "compressed_size": 1332,
+    "compression": 8,
+    "crc32": 1469235565,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/shortest_paths/tests/test_unweighted.py",
+    "size_bytes": 5891
+  },
+  {
+    "compressed_size": 5733,
+    "compression": 8,
+    "crc32": 171014238,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/shortest_paths/tests/test_weighted.py",
+    "size_bytes": 35038
+  },
+  {
+    "compressed_size": 2,
+    "compression": 8,
+    "crc32": 0,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/tests/__init__.py",
+    "size_bytes": 0
+  },
+  {
+    "compressed_size": 183,
+    "compression": 8,
+    "crc32": 3857319164,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/tests/test_asteroidal.py",
+    "size_bytes": 502
+  },
+  {
+    "compressed_size": 1139,
+    "compression": 8,
+    "crc32": 915997841,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/tests/test_boundary.py",
+    "size_bytes": 6227
+  },
+  {
+    "compressed_size": 966,
+    "compression": 8,
+    "crc32": 1583907897,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/tests/test_bridges.py",
+    "size_bytes": 4026
+  },
+  {
+    "compressed_size": 585,
+    "compression": 8,
+    "crc32": 3238660133,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/tests/test_broadcasting.py",
+    "size_bytes": 2021
+  },
+  {
+    "compressed_size": 1260,
+    "compression": 8,
+    "crc32": 1878414289,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/tests/test_chains.py",
+    "size_bytes": 4364
+  },
+  {
+    "compressed_size": 1007,
+    "compression": 8,
+    "crc32": 1004090184,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/tests/test_chordal.py",
+    "size_bytes": 4438
+  },
+  {
+    "compressed_size": 1787,
+    "compression": 8,
+    "crc32": 491223290,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/tests/test_clique.py",
+    "size_bytes": 9413
+  },
+  {
+    "compressed_size": 1741,
+    "compression": 8,
+    "crc32": 2693935041,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/tests/test_cluster.py",
+    "size_bytes": 15883
+  },
+  {
+    "compressed_size": 738,
+    "compression": 8,
+    "crc32": 881478716,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/tests/test_communicability.py",
+    "size_bytes": 2938
+  },
+  {
+    "compressed_size": 1756,
+    "compression": 8,
+    "crc32": 2643668826,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/tests/test_core.py",
+    "size_bytes": 9555
+  },
+  {
+    "compressed_size": 690,
+    "compression": 8,
+    "crc32": 1009784516,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/tests/test_covering.py",
+    "size_bytes": 2718
+  },
+  {
+    "compressed_size": 1140,
+    "compression": 8,
+    "crc32": 3248885953,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/tests/test_cuts.py",
+    "size_bytes": 5376
+  },
+  {
+    "compressed_size": 6900,
+    "compression": 8,
+    "crc32": 1953696770,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/tests/test_cycles.py",
+    "size_bytes": 34424
+  },
+  {
+    "compressed_size": 2305,
+    "compression": 8,
+    "crc32": 2962602914,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/tests/test_d_separation.py",
+    "size_bytes": 10929
+  },
+  {
+    "compressed_size": 4939,
+    "compression": 8,
+    "crc32": 3785955955,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/tests/test_dag.py",
+    "size_bytes": 29385
+  },
+  {
+    "compressed_size": 3957,
+    "compression": 8,
+    "crc32": 588918406,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/tests/test_distance_measures.py",
+    "size_bytes": 26154
+  },
+  {
+    "compressed_size": 760,
+    "compression": 8,
+    "crc32": 1561345673,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/tests/test_distance_regular.py",
+    "size_bytes": 2915
+  },
+  {
+    "compressed_size": 1657,
+    "compression": 8,
+    "crc32": 2906856813,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/tests/test_dominance.py",
+    "size_bytes": 9194
+  },
+  {
+    "compressed_size": 409,
+    "compression": 8,
+    "crc32": 4249881158,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/tests/test_dominating.py",
+    "size_bytes": 1228
+  },
+  {
+    "compressed_size": 601,
+    "compression": 8,
+    "crc32": 3688066410,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/tests/test_efficiency.py",
+    "size_bytes": 1894
+  },
+  {
+    "compressed_size": 1742,
+    "compression": 8,
+    "crc32": 3954533508,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/tests/test_euler.py",
+    "size_bytes": 11209
+  },
+  {
+    "compressed_size": 3079,
+    "compression": 8,
+    "crc32": 2597739884,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/tests/test_graph_hashing.py",
+    "size_bytes": 24534
+  },
+  {
+    "compressed_size": 987,
+    "compression": 8,
+    "crc32": 1566124580,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/tests/test_graphical.py",
+    "size_bytes": 5366
+  },
+  {
+    "compressed_size": 391,
+    "compression": 8,
+    "crc32": 1535498412,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/tests/test_hierarchy.py",
+    "size_bytes": 1184
+  },
+  {
+    "compressed_size": 298,
+    "compression": 8,
+    "crc32": 3547210038,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/tests/test_hybrid.py",
+    "size_bytes": 720
+  },
+  {
+    "compressed_size": 214,
+    "compression": 8,
+    "crc32": 2618679804,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/tests/test_isolate.py",
+    "size_bytes": 555
+  },
+  {
+    "compressed_size": 1670,
+    "compression": 8,
+    "crc32": 1347616763,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/tests/test_link_prediction.py",
+    "size_bytes": 20004
+  },
+  {
+    "compressed_size": 2463,
+    "compression": 8,
+    "crc32": 3193994625,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/tests/test_lowest_common_ancestors.py",
+    "size_bytes": 13153
+  },
+  {
+    "compressed_size": 2700,
+    "compression": 8,
+    "crc32": 3833499304,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/tests/test_matching.py",
+    "size_bytes": 20174
+  },
+  {
+    "compressed_size": 1631,
+    "compression": 8,
+    "crc32": 2662514374,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/tests/test_max_weight_clique.py",
+    "size_bytes": 6739
+  },
+  {
+    "compressed_size": 743,
+    "compression": 8,
+    "crc32": 4283158853,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/tests/test_mis.py",
+    "size_bytes": 1865
+  },
+  {
+    "compressed_size": 208,
+    "compression": 8,
+    "crc32": 133216724,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/tests/test_moral.py",
+    "size_bytes": 452
+  },
+  {
+    "compressed_size": 627,
+    "compression": 8,
+    "crc32": 132191778,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/tests/test_node_classification.py",
+    "size_bytes": 4663
+  },
+  {
+    "compressed_size": 423,
+    "compression": 8,
+    "crc32": 505062495,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/tests/test_non_randomness.py",
+    "size_bytes": 1000
+  },
+  {
+    "compressed_size": 2317,
+    "compression": 8,
+    "crc32": 3332894426,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/tests/test_planar_drawing.py",
+    "size_bytes": 8765
+  },
+  {
+    "compressed_size": 3539,
+    "compression": 8,
+    "crc32": 1398392858,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/tests/test_planarity.py",
+    "size_bytes": 16386
+  },
+  {
+    "compressed_size": 632,
+    "compression": 8,
+    "crc32": 4278510852,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/tests/test_polynomials.py",
+    "size_bytes": 1983
+  },
+  {
+    "compressed_size": 373,
+    "compression": 8,
+    "crc32": 3127938071,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/tests/test_reciprocity.py",
+    "size_bytes": 1296
+  },
+  {
+    "compressed_size": 603,
+    "compression": 8,
+    "crc32": 3557415278,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/tests/test_regular.py",
+    "size_bytes": 2626
+  },
+  {
+    "compressed_size": 926,
+    "compression": 8,
+    "crc32": 2235655564,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/tests/test_richclub.py",
+    "size_bytes": 3965
+  },
+  {
+    "compressed_size": 4602,
+    "compression": 8,
+    "crc32": 152680957,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/tests/test_similarity.py",
+    "size_bytes": 33189
+  },
+  {
+    "compressed_size": 3608,
+    "compression": 8,
+    "crc32": 3159879975,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/tests/test_simple_paths.py",
+    "size_bytes": 25181
+  },
+  {
+    "compressed_size": 703,
+    "compression": 8,
+    "crc32": 1023007219,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/tests/test_smallworld.py",
+    "size_bytes": 2405
+  },
+  {
+    "compressed_size": 115,
+    "compression": 8,
+    "crc32": 3519588554,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/tests/test_smetric.py",
+    "size_bytes": 144
+  },
+  {
+    "compressed_size": 1027,
+    "compression": 8,
+    "crc32": 2636998576,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/tests/test_sparsifiers.py",
+    "size_bytes": 4044
+  },
+  {
+    "compressed_size": 1037,
+    "compression": 8,
+    "crc32": 3128970159,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/tests/test_structuralholes.py",
+    "size_bytes": 5290
+  },
+  {
+    "compressed_size": 2574,
+    "compression": 8,
+    "crc32": 1823883435,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/tests/test_summarization.py",
+    "size_bytes": 21312
+  },
+  {
+    "compressed_size": 1278,
+    "compression": 8,
+    "crc32": 1459716648,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/tests/test_swap.py",
+    "size_bytes": 6144
+  },
+  {
+    "compressed_size": 2094,
+    "compression": 8,
+    "crc32": 888868046,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/tests/test_threshold.py",
+    "size_bytes": 9751
+  },
+  {
+    "compressed_size": 1119,
+    "compression": 8,
+    "crc32": 894051892,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/tests/test_time_dependent.py",
+    "size_bytes": 13342
+  },
+  {
+    "compressed_size": 1055,
+    "compression": 8,
+    "crc32": 3608804526,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/tests/test_tournament.py",
+    "size_bytes": 4159
+  },
+  {
+    "compressed_size": 1835,
+    "compression": 8,
+    "crc32": 3700305863,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/tests/test_triads.py",
+    "size_bytes": 9383
+  },
+  {
+    "compressed_size": 350,
+    "compression": 8,
+    "crc32": 3111691025,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/tests/test_vitality.py",
+    "size_bytes": 1380
+  },
+  {
+    "compressed_size": 708,
+    "compression": 8,
+    "crc32": 4186762460,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/tests/test_voronoi.py",
+    "size_bytes": 3477
+  },
+  {
+    "compressed_size": 447,
+    "compression": 8,
+    "crc32": 2854264379,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/tests/test_walks.py",
+    "size_bytes": 1499
+  },
+  {
+    "compressed_size": 792,
+    "compression": 8,
+    "crc32": 1417971033,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/tests/test_wiener.py",
+    "size_bytes": 3209
+  },
+  {
+    "compressed_size": 63,
+    "compression": 8,
+    "crc32": 1857373529,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/traversal/__init__.py",
+    "size_bytes": 142
+  },
+  {
+    "compressed_size": 1490,
+    "compression": 8,
+    "crc32": 2434352486,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/traversal/beamsearch.py",
+    "size_bytes": 3473
+  },
+  {
+    "compressed_size": 4312,
+    "compression": 8,
+    "crc32": 1399654202,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/traversal/breadth_first_search.py",
+    "size_bytes": 18288
+  },
+  {
+    "compressed_size": 2591,
+    "compression": 8,
+    "crc32": 808590414,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/traversal/depth_first_search.py",
+    "size_bytes": 16795
+  },
+  {
+    "compressed_size": 2024,
+    "compression": 8,
+    "crc32": 1308413655,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/traversal/edgebfs.py",
+    "size_bytes": 6244
+  },
+  {
+    "compressed_size": 1893,
+    "compression": 8,
+    "crc32": 2556022909,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/traversal/edgedfs.py",
+    "size_bytes": 5957
+  },
+  {
+    "compressed_size": 2,
+    "compression": 8,
+    "crc32": 0,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/traversal/tests/__init__.py",
+    "size_bytes": 0
+  },
+  {
+    "compressed_size": 449,
+    "compression": 8,
+    "crc32": 2436432236,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/traversal/tests/test_beamsearch.py",
+    "size_bytes": 900
+  },
+  {
+    "compressed_size": 1324,
+    "compression": 8,
+    "crc32": 1579982370,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/traversal/tests/test_bfs.py",
+    "size_bytes": 6465
+  },
+  {
+    "compressed_size": 1579,
+    "compression": 8,
+    "crc32": 559093225,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/traversal/tests/test_dfs.py",
+    "size_bytes": 10604
+  },
+  {
+    "compressed_size": 883,
+    "compression": 8,
+    "crc32": 1687775539,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/traversal/tests/test_edgebfs.py",
+    "size_bytes": 4702
+  },
+  {
+    "compressed_size": 1124,
+    "compression": 8,
+    "crc32": 977463627,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/traversal/tests/test_edgedfs.py",
+    "size_bytes": 4775
+  },
+  {
+    "compressed_size": 71,
+    "compression": 8,
+    "crc32": 3079983489,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/tree/__init__.py",
+    "size_bytes": 149
+  },
+  {
+    "compressed_size": 9147,
+    "compression": 8,
+    "crc32": 1568903781,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/tree/branchings.py",
+    "size_bytes": 34339
+  },
+  {
+    "compressed_size": 3738,
+    "compression": 8,
+    "crc32": 3210921951,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/tree/coding.py",
+    "size_bytes": 13464
+  },
+  {
+    "compressed_size": 1250,
+    "compression": 8,
+    "crc32": 1294288033,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/tree/decomposition.py",
+    "size_bytes": 3071
+  },
+  {
+    "compressed_size": 10634,
+    "compression": 8,
+    "crc32": 3518778453,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/tree/mst.py",
+    "size_bytes": 46140
+  },
+  {
+    "compressed_size": 1563,
+    "compression": 8,
+    "crc32": 3801637774,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/tree/operations.py",
+    "size_bytes": 4042
+  },
+  {
+    "compressed_size": 2072,
+    "compression": 8,
+    "crc32": 2644526079,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/tree/recognition.py",
+    "size_bytes": 7569
+  },
+  {
+    "compressed_size": 2,
+    "compression": 8,
+    "crc32": 0,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/tree/tests/__init__.py",
+    "size_bytes": 0
+  },
+  {
+    "compressed_size": 4107,
+    "compression": 8,
+    "crc32": 1196923973,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/tree/tests/test_branchings.py",
+    "size_bytes": 17727
+  },
+  {
+    "compressed_size": 1050,
+    "compression": 8,
+    "crc32": 81328485,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/tree/tests/test_coding.py",
+    "size_bytes": 3955
+  },
+  {
+    "compressed_size": 361,
+    "compression": 8,
+    "crc32": 3156978207,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/tree/tests/test_decomposition.py",
+    "size_bytes": 1871
+  },
+  {
+    "compressed_size": 5348,
+    "compression": 8,
+    "crc32": 2029044908,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/tree/tests/test_mst.py",
+    "size_bytes": 31631
+  },
+  {
+    "compressed_size": 712,
+    "compression": 8,
+    "crc32": 4044160026,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/tree/tests/test_operations.py",
+    "size_bytes": 1961
+  },
+  {
+    "compressed_size": 859,
+    "compression": 8,
+    "crc32": 828155979,
+    "external_attr": 2175008768,
+    "name": "networkx/algorithms/tree/tests/test_recognition.py",
+    "size_bytes": 4521
+  },
+  {
+    "compressed_size": 137,
+    "compression": 8,
+    "crc32": 708053644,
+    "external_attr": 2175008768,
+    "name": "networkx/classes/__init__.py",
+    "size_bytes": 364
+  },
+  {
+    "compressed_size": 2199,
+    "compression": 8,
+    "crc32": 1039070119,
+    "external_attr": 2175008768,
+    "name": "networkx/classes/coreviews.py",
+    "size_bytes": 13143
+  },
+  {
+    "compressed_size": 10665,
+    "compression": 8,
+    "crc32": 1484553157,
+    "external_attr": 2175008768,
+    "name": "networkx/classes/digraph.py",
+    "size_bytes": 48101
+  },
+  {
+    "compressed_size": 693,
+    "compression": 8,
+    "crc32": 1499653768,
+    "external_attr": 2175008768,
+    "name": "networkx/classes/filters.py",
+    "size_bytes": 2817
+  },
+  {
+    "compressed_size": 8412,
+    "compression": 8,
+    "crc32": 725369063,
+    "external_attr": 2175008768,
+    "name": "networkx/classes/function.py",
+    "size_bytes": 38898
+  },
+  {
+    "compressed_size": 15688,
+    "compression": 8,
+    "crc32": 3611451029,
+    "external_attr": 2175008768,
+    "name": "networkx/classes/graph.py",
+    "size_bytes": 71102
+  },
+  {
+    "compressed_size": 2621,
+    "compression": 8,
+    "crc32": 4006465599,
+    "external_attr": 2175008768,
+    "name": "networkx/classes/graphviews.py",
+    "size_bytes": 8520
+  },
+  {
+    "compressed_size": 8689,
+    "compression": 8,
+    "crc32": 4228330788,
+    "external_attr": 2175008768,
+    "name": "networkx/classes/multidigraph.py",
+    "size_bytes": 36351
+  },
+  {
+    "compressed_size": 11460,
+    "compression": 8,
+    "crc32": 1891734831,
+    "external_attr": 2175008768,
+    "name": "networkx/classes/multigraph.py",
+    "size_bytes": 47248
+  },
+  {
+    "compressed_size": 8314,
+    "compression": 8,
+    "crc32": 491896263,
+    "external_attr": 2175008768,
+    "name": "networkx/classes/reportviews.py",
+    "size_bytes": 46132
+  },
+  {
+    "compressed_size": 2,
+    "compression": 8,
+    "crc32": 0,
+    "external_attr": 2175008768,
+    "name": "networkx/classes/tests/__init__.py",
+    "size_bytes": 0
+  },
+  {
+    "compressed_size": 1828,
+    "compression": 8,
+    "crc32": 3392231719,
+    "external_attr": 2175008768,
+    "name": "networkx/classes/tests/dispatch_interface.py",
+    "size_bytes": 6479
+  },
+  {
+    "compressed_size": 3014,
+    "compression": 8,
+    "crc32": 4145029171,
+    "external_attr": 2175008768,
+    "name": "networkx/classes/tests/historical_tests.py",
+    "size_bytes": 16174
+  },
+  {
+    "compressed_size": 1604,
+    "compression": 8,
+    "crc32": 771619525,
+    "external_attr": 2175008768,
+    "name": "networkx/classes/tests/test_coreviews.py",
+    "size_bytes": 12128
+  },
+  {
+    "compressed_size": 2331,
+    "compression": 8,
+    "crc32": 3387635597,
+    "external_attr": 2175008768,
+    "name": "networkx/classes/tests/test_digraph.py",
+    "size_bytes": 12283
+  },
+  {
+    "compressed_size": 726,
+    "compression": 8,
+    "crc32": 4092128353,
+    "external_attr": 2175008768,
+    "name": "networkx/classes/tests/test_digraph_historical.py",
+    "size_bytes": 3684
+  },
+  {
+    "compressed_size": 531,
+    "compression": 8,
+    "crc32": 2153583350,
+    "external_attr": 2175008768,
+    "name": "networkx/classes/tests/test_filters.py",
+    "size_bytes": 5851
+  },
+  {
+    "compressed_size": 5011,
+    "compression": 8,
+    "crc32": 1265222404,
+    "external_attr": 2175008768,
+    "name": "networkx/classes/tests/test_function.py",
+    "size_bytes": 34997
+  },
+  {
+    "compressed_size": 5874,
+    "compression": 8,
+    "crc32": 1102486824,
+    "external_attr": 2175008768,
+    "name": "networkx/classes/tests/test_graph.py",
+    "size_bytes": 30913
+  },
+  {
+    "compressed_size": 154,
+    "compression": 8,
+    "crc32": 4231849824,
+    "external_attr": 2175008768,
+    "name": "networkx/classes/tests/test_graph_historical.py",
+    "size_bytes": 274
+  },
+  {
+    "compressed_size": 2140,
+    "compression": 8,
+    "crc32": 3025725460,
+    "external_attr": 2175008768,
+    "name": "networkx/classes/tests/test_graphviews.py",
+    "size_bytes": 11466
+  },
+  {
+    "compressed_size": 2595,
+    "compression": 8,
+    "crc32": 1025414160,
+    "external_attr": 2175008768,
+    "name": "networkx/classes/tests/test_multidigraph.py",
+    "size_bytes": 16342
+  },
+  {
+    "compressed_size": 3743,
+    "compression": 8,
+    "crc32": 3599148951,
+    "external_attr": 2175008768,
+    "name": "networkx/classes/tests/test_multigraph.py",
+    "size_bytes": 18777
+  },
+  {
+    "compressed_size": 5127,
+    "compression": 8,
+    "crc32": 2214914672,
+    "external_attr": 2175008768,
+    "name": "networkx/classes/tests/test_reportviews.py",
+    "size_bytes": 41919
+  },
+  {
+    "compressed_size": 848,
+    "compression": 8,
+    "crc32": 3857800584,
+    "external_attr": 2175008768,
+    "name": "networkx/classes/tests/test_special.py",
+    "size_bytes": 4103
+  },
+  {
+    "compressed_size": 2322,
+    "compression": 8,
+    "crc32": 1995751543,
+    "external_attr": 2175008768,
+    "name": "networkx/classes/tests/test_subgraphviews.py",
+    "size_bytes": 13223
+  },
+  {
+    "compressed_size": 92,
+    "compression": 8,
+    "crc32": 263983457,
+    "external_attr": 2175008768,
+    "name": "networkx/drawing/__init__.py",
+    "size_bytes": 160
+  },
+  {
+    "compressed_size": 12228,
+    "compression": 8,
+    "crc32": 140168681,
+    "external_attr": 2175008768,
+    "name": "networkx/drawing/layout.py",
+    "size_bytes": 50243
+  },
+  {
+    "compressed_size": 4113,
+    "compression": 8,
+    "crc32": 599854039,
+    "external_attr": 2175008768,
+    "name": "networkx/drawing/nx_agraph.py",
+    "size_bytes": 13937
+  },
+  {
+    "compressed_size": 5764,
+    "compression": 8,
+    "crc32": 3281572361,
+    "external_attr": 2175008768,
+    "name": "networkx/drawing/nx_latex.py",
+    "size_bytes": 24805
+  },
+  {
+    "compressed_size": 2983,
+    "compression": 8,
+    "crc32": 1565386389,
+    "external_attr": 2175008768,
+    "name": "networkx/drawing/nx_pydot.py",
+    "size_bytes": 9591
+  },
+  {
+    "compressed_size": 13275,
+    "compression": 8,
+    "crc32": 2385900549,
+    "external_attr": 2175008768,
+    "name": "networkx/drawing/nx_pylab.py",
+    "size_bytes": 66369
+  },
+  {
+    "compressed_size": 2,
+    "compression": 8,
+    "crc32": 0,
+    "external_attr": 2175008768,
+    "name": "networkx/drawing/tests/__init__.py",
+    "size_bytes": 0
+  },
+  {
+    "compressed_size": 2209,
+    "compression": 8,
+    "crc32": 769821770,
+    "external_attr": 2175008768,
+    "name": "networkx/drawing/tests/test_agraph.py",
+    "size_bytes": 8789
+  },
+  {
+    "compressed_size": 2261,
+    "compression": 8,
+    "crc32": 2644917117,
+    "external_attr": 2175008768,
+    "name": "networkx/drawing/tests/test_latex.py",
+    "size_bytes": 8710
+  },
+  {
+    "compressed_size": 4514,
+    "compression": 8,
+    "crc32": 335411995,
+    "external_attr": 2175008768,
+    "name": "networkx/drawing/tests/test_layout.py",
+    "size_bytes": 20611
+  },
+  {
+    "compressed_size": 1592,
+    "compression": 8,
+    "crc32": 2037778396,
+    "external_attr": 2175008768,
+    "name": "networkx/drawing/tests/test_pydot.py",
+    "size_bytes": 4973
+  },
+  {
+    "compressed_size": 7768,
+    "compression": 8,
+    "crc32": 1553981434,
+    "external_attr": 2175008768,
+    "name": "networkx/drawing/tests/test_pylab.py",
+    "size_bytes": 35921
+  },
+  {
+    "compressed_size": 17885,
+    "compression": 8,
+    "crc32": 1063928987,
+    "external_attr": 2175008768,
+    "name": "networkx/drawing/tests/baseline/test_house_with_colors.png",
+    "size_bytes": 21918
+  },
+  {
+    "compressed_size": 274,
+    "compression": 8,
+    "crc32": 2435935458,
+    "external_attr": 2175008768,
+    "name": "networkx/generators/__init__.py",
+    "size_bytes": 1366
+  },
+  {
+    "compressed_size": 8892,
+    "compression": 8,
+    "crc32": 3365897356,
+    "external_attr": 2175008768,
+    "name": "networkx/generators/atlas.dat.gz",
+    "size_bytes": 8887
+  },
+  {
+    "compressed_size": 2022,
+    "compression": 8,
+    "crc32": 1982602320,
+    "external_attr": 2175008768,
+    "name": "networkx/generators/atlas.py",
+    "size_bytes": 5606
+  },
+  {
+    "compressed_size": 7776,
+    "compression": 8,
+    "crc32": 4169840780,
+    "external_attr": 2175008768,
+    "name": "networkx/generators/classic.py",
+    "size_bytes": 32000
+  },
+  {
+    "compressed_size": 787,
+    "compression": 8,
+    "crc32": 4236591881,
+    "external_attr": 2175008768,
+    "name": "networkx/generators/cographs.py",
+    "size_bytes": 1891
+  },
+  {
+    "compressed_size": 9248,
+    "compression": 8,
+    "crc32": 2431749045,
+    "external_attr": 2175008768,
+    "name": "networkx/generators/community.py",
+    "size_bytes": 34911
+  },
+  {
+    "compressed_size": 8084,
+    "compression": 8,
+    "crc32": 4046460353,
+    "external_attr": 2175008768,
+    "name": "networkx/generators/degree_seq.py",
+    "size_bytes": 30173
+  },
+  {
+    "compressed_size": 4069,
+    "compression": 8,
+    "crc32": 3479166292,
+    "external_attr": 2175008768,
+    "name": "networkx/generators/directed.py",
+    "size_bytes": 15696
+  },
+  {
+    "compressed_size": 1966,
+    "compression": 8,
+    "crc32": 1906349879,
+    "external_attr": 2175008768,
+    "name": "networkx/generators/duplication.py",
+    "size_bytes": 5831
+  },
+  {
+    "compressed_size": 759,
+    "compression": 8,
+    "crc32": 32380131,
+    "external_attr": 2175008768,
+    "name": "networkx/generators/ego.py",
+    "size_bytes": 1900
+  },
+  {
+    "compressed_size": 4295,
+    "compression": 8,
+    "crc32": 3453001786,
+    "external_attr": 2175008768,
+    "name": "networkx/generators/expanders.py",
+    "size_bytes": 14455
+  },
+  {
+    "compressed_size": 9840,
+    "compression": 8,
+    "crc32": 4263539100,
+    "external_attr": 2175008768,
+    "name": "networkx/generators/geometric.py",
+    "size_bytes": 39610
+  },
+  {
+    "compressed_size": 1640,
+    "compression": 8,
+    "crc32": 4023906518,
+    "external_attr": 2175008768,
+    "name": "networkx/generators/harary_graph.py",
+    "size_bytes": 6159
+  },
+  {
+    "compressed_size": 3944,
+    "compression": 8,
+    "crc32": 3997001533,
+    "external_attr": 2175008768,
+    "name": "networkx/generators/internet_as_graphs.py",
+    "size_bytes": 14172
+  },
+  {
+    "compressed_size": 1306,
+    "compression": 8,
+    "crc32": 2451041412,
+    "external_attr": 2175008768,
+    "name": "networkx/generators/intersection.py",
+    "size_bytes": 4101
+  },
+  {
+    "compressed_size": 869,
+    "compression": 8,
+    "crc32": 3212837876,
+    "external_attr": 2175008768,
+    "name": "networkx/generators/interval_graph.py",
+    "size_bytes": 2204
+  },
+  {
+    "compressed_size": 5684,
+    "compression": 8,
+    "crc32": 3089834435,
+    "external_attr": 2175008768,
+    "name": "networkx/generators/joint_degree_seq.py",
+    "size_bytes": 24773
+  },
+  {
+    "compressed_size": 3941,
+    "compression": 8,
+    "crc32": 364837361,
+    "external_attr": 2175008768,
+    "name": "networkx/generators/lattice.py",
+    "size_bytes": 13500
+  },
+  {
+    "compressed_size": 5422,
+    "compression": 8,
+    "crc32": 1862716259,
+    "external_attr": 2175008768,
+    "name": "networkx/generators/line.py",
+    "size_bytes": 17531
+  },
+  {
+    "compressed_size": 1301,
+    "compression": 8,
+    "crc32": 2592638880,
+    "external_attr": 2175008768,
+    "name": "networkx/generators/mycielski.py",
+    "size_bytes": 3314
+  },
+  {
+    "compressed_size": 2010,
+    "compression": 8,
+    "crc32": 3081490893,
+    "external_attr": 2175008768,
+    "name": "networkx/generators/nonisomorphic_trees.py",
+    "size_bytes": 6453
+  },
+  {
+    "compressed_size": 1684,
+    "compression": 8,
+    "crc32": 2721878791,
+    "external_attr": 2175008768,
+    "name": "networkx/generators/random_clustered.py",
+    "size_bytes": 4183
+  },
+  {
+    "compressed_size": 11407,
+    "compression": 8,
+    "crc32": 763909410,
+    "external_attr": 2175008768,
+    "name": "networkx/generators/random_graphs.py",
+    "size_bytes": 51346
+  },
+  {
+    "compressed_size": 6013,
+    "compression": 8,
+    "crc32": 2392914679,
+    "external_attr": 2175008768,
+    "name": "networkx/generators/small.py",
+    "size_bytes": 28171
+  },
+  {
+    "compressed_size": 4195,
+    "compression": 8,
+    "crc32": 33096392,
+    "external_attr": 2175008768,
+    "name": "networkx/generators/social.py",
+    "size_bytes": 23437
+  },
+  {
+    "compressed_size": 1798,
+    "compression": 8,
+    "crc32": 3606323829,
+    "external_attr": 2175008768,
+    "name": "networkx/generators/spectral_graph_forge.py",
+    "size_bytes": 4240
+  },
+  {
+    "compressed_size": 913,
+    "compression": 8,
+    "crc32": 312281908,
+    "external_attr": 2175008768,
+    "name": "networkx/generators/stochastic.py",
+    "size_bytes": 1981
+  },
+  {
+    "compressed_size": 1486,
+    "compression": 8,
+    "crc32": 219584258,
+    "external_attr": 2175008768,
+    "name": "networkx/generators/sudoku.py",
+    "size_bytes": 4288
+  },
+  {
+    "compressed_size": 1143,
+    "compression": 8,
+    "crc32": 4294193959,
+    "external_attr": 2175008768,
+    "name": "networkx/generators/time_series.py",
+    "size_bytes": 2439
+  },
+  {
+    "compressed_size": 7347,
+    "compression": 8,
+    "crc32": 170095326,
+    "external_attr": 2175008768,
+    "name": "networkx/generators/trees.py",
+    "size_bytes": 36533
+  },
+  {
+    "compressed_size": 957,
+    "compression": 8,
+    "crc32": 565981673,
+    "external_attr": 2175008768,
+    "name": "networkx/generators/triads.py",
+    "size_bytes": 2452
+  },
+  {
+    "compressed_size": 2,
+    "compression": 8,
+    "crc32": 0,
+    "external_attr": 2175008768,
+    "name": "networkx/generators/tests/__init__.py",
+    "size_bytes": 0
+  },
+  {
+    "compressed_size": 829,
+    "compression": 8,
+    "crc32": 2269721842,
+    "external_attr": 2175008768,
+    "name": "networkx/generators/tests/test_atlas.py",
+    "size_bytes": 2530
+  },
+  {
+    "compressed_size": 4183,
+    "compression": 8,
+    "crc32": 774639783,
+    "external_attr": 2175008768,
+    "name": "networkx/generators/tests/test_classic.py",
+    "size_bytes": 24021
+  },
+  {
+    "compressed_size": 235,
+    "compression": 8,
+    "crc32": 934672308,
+    "external_attr": 2175008768,
+    "name": "networkx/generators/tests/test_cographs.py",
+    "size_bytes": 458
+  },
+  {
+    "compressed_size": 2082,
+    "compression": 8,
+    "crc32": 252865288,
+    "external_attr": 2175008768,
+    "name": "networkx/generators/tests/test_community.py",
+    "size_bytes": 11311
+  },
+  {
+    "compressed_size": 1465,
+    "compression": 8,
+    "crc32": 841067091,
+    "external_attr": 2175008768,
+    "name": "networkx/generators/tests/test_degree_seq.py",
+    "size_bytes": 7093
+  },
+  {
+    "compressed_size": 1110,
+    "compression": 8,
+    "crc32": 2250095426,
+    "external_attr": 2175008768,
+    "name": "networkx/generators/tests/test_directed.py",
+    "size_bytes": 5259
+  },
+  {
+    "compressed_size": 693,
+    "compression": 8,
+    "crc32": 3129968879,
+    "external_attr": 2175008768,
+    "name": "networkx/generators/tests/test_duplication.py",
+    "size_bytes": 3155
+  },
+  {
+    "compressed_size": 354,
+    "compression": 8,
+    "crc32": 2521529562,
+    "external_attr": 2175008768,
+    "name": "networkx/generators/tests/test_ego.py",
+    "size_bytes": 1327
+  },
+  {
+    "compressed_size": 1345,
+    "compression": 8,
+    "crc32": 1912773486,
+    "external_attr": 2175008768,
+    "name": "networkx/generators/tests/test_expanders.py",
+    "size_bytes": 5602
+  },
+  {
+    "compressed_size": 3075,
+    "compression": 8,
+    "crc32": 3824392329,
+    "external_attr": 2175008768,
+    "name": "networkx/generators/tests/test_geometric.py",
+    "size_bytes": 18087
+  },
+  {
+    "compressed_size": 979,
+    "compression": 8,
+    "crc32": 1644182251,
+    "external_attr": 2175008768,
+    "name": "networkx/generators/tests/test_harary_graph.py",
+    "size_bytes": 4936
+  },
+  {
+    "compressed_size": 1320,
+    "compression": 8,
+    "crc32": 2930498846,
+    "external_attr": 2175008768,
+    "name": "networkx/generators/tests/test_internet_as_graphs.py",
+    "size_bytes": 6795
+  },
+  {
+    "compressed_size": 240,
+    "compression": 8,
+    "crc32": 2589866851,
+    "external_attr": 2175008768,
+    "name": "networkx/generators/tests/test_intersection.py",
+    "size_bytes": 819
+  },
+  {
+    "compressed_size": 841,
+    "compression": 8,
+    "crc32": 2912665141,
+    "external_attr": 2175008768,
+    "name": "networkx/generators/tests/test_interval_graph.py",
+    "size_bytes": 4277
+  },
+  {
+    "compressed_size": 1050,
+    "compression": 8,
+    "crc32": 2673295791,
+    "external_attr": 2175008768,
+    "name": "networkx/generators/tests/test_joint_degree_seq.py",
+    "size_bytes": 4270
+  },
+  {
+    "compressed_size": 1930,
+    "compression": 8,
+    "crc32": 3954782040,
+    "external_attr": 2175008768,
+    "name": "networkx/generators/tests/test_lattice.py",
+    "size_bytes": 9290
+  },
+  {
+    "compressed_size": 1737,
+    "compression": 8,
+    "crc32": 2672958472,
+    "external_attr": 2175008768,
+    "name": "networkx/generators/tests/test_line.py",
+    "size_bytes": 10378
+  },
+  {
+    "compressed_size": 326,
+    "compression": 8,
+    "crc32": 295253134,
+    "external_attr": 2175008768,
+    "name": "networkx/generators/tests/test_mycielski.py",
+    "size_bytes": 946
+  },
+  {
+    "compressed_size": 576,
+    "compression": 8,
+    "crc32": 3806437219,
+    "external_attr": 2175008768,
+    "name": "networkx/generators/tests/test_nonisomorphic_trees.py",
+    "size_bytes": 2454
+  },
+  {
+    "compressed_size": 391,
+    "compression": 8,
+    "crc32": 56162851,
+    "external_attr": 2175008768,
+    "name": "networkx/generators/tests/test_random_clustered.py",
+    "size_bytes": 1297
+  },
+  {
+    "compressed_size": 3601,
+    "compression": 8,
+    "crc32": 64313739,
+    "external_attr": 2175008768,
+    "name": "networkx/generators/tests/test_random_graphs.py",
+    "size_bytes": 18925
+  },
+  {
+    "compressed_size": 1237,
+    "compression": 8,
+    "crc32": 2926443931,
+    "external_attr": 2175008768,
+    "name": "networkx/generators/tests/test_small.py",
+    "size_bytes": 7060
+  },
+  {
+    "compressed_size": 487,
+    "compression": 8,
+    "crc32": 3174297193,
+    "external_attr": 2175008768,
+    "name": "networkx/generators/tests/test_spectral_graph_forge.py",
+    "size_bytes": 1594
+  },
+  {
+    "compressed_size": 535,
+    "compression": 8,
+    "crc32": 3290264038,
+    "external_attr": 2175008768,
+    "name": "networkx/generators/tests/test_stochastic.py",
+    "size_bytes": 2179
+  },
+  {
+    "compressed_size": 611,
+    "compression": 8,
+    "crc32": 1813881875,
+    "external_attr": 2175008768,
+    "name": "networkx/generators/tests/test_sudoku.py",
+    "size_bytes": 1968
+  },
+  {
+    "compressed_size": 567,
+    "compression": 8,
+    "crc32": 4270549657,
+    "external_attr": 2175008768,
+    "name": "networkx/generators/tests/test_time_series.py",
+    "size_bytes": 2230
+  },
+  {
+    "compressed_size": 1427,
+    "compression": 8,
+    "crc32": 1094669606,
+    "external_attr": 2175008768,
+    "name": "networkx/generators/tests/test_trees.py",
+    "size_bytes": 7006
+  },
+  {
+    "compressed_size": 210,
+    "compression": 8,
+    "crc32": 3218900352,
+    "external_attr": 2175008768,
+    "name": "networkx/generators/tests/test_triads.py",
+    "size_bytes": 333
+  },
+  {
+    "compressed_size": 134,
+    "compression": 8,
+    "crc32": 586018454,
+    "external_attr": 2175008768,
+    "name": "networkx/linalg/__init__.py",
+    "size_bytes": 568
+  },
+  {
+    "compressed_size": 5066,
+    "compression": 8,
+    "crc32": 1473801568,
+    "external_attr": 2175008768,
+    "name": "networkx/linalg/algebraicconnectivity.py",
+    "size_bytes": 21149
+  },
+  {
+    "compressed_size": 3197,
+    "compression": 8,
+    "crc32": 542946693,
+    "external_attr": 2175008768,
+    "name": "networkx/linalg/attrmatrix.py",
+    "size_bytes": 15509
+  },
+  {
+    "compressed_size": 1161,
+    "compression": 8,
+    "crc32": 3389683111,
+    "external_attr": 2175008768,
+    "name": "networkx/linalg/bethehessianmatrix.py",
+    "size_bytes": 2697
+  },
+  {
+    "compressed_size": 1981,
+    "compression": 8,
+    "crc32": 3050834539,
+    "external_attr": 2175008768,
+    "name": "networkx/linalg/graphmatrix.py",
+    "size_bytes": 5623
+  },
+  {
+    "compressed_size": 4689,
+    "compression": 8,
+    "crc32": 2858538642,
+    "external_attr": 2175008768,
+    "name": "networkx/linalg/laplacianmatrix.py",
+    "size_bytes": 20536
+  },
+  {
+    "compressed_size": 1379,
+    "compression": 8,
+    "crc32": 3809686097,
+    "external_attr": 2175008768,
+    "name": "networkx/linalg/modularitymatrix.py",
+    "size_bytes": 4706
+  },
+  {
+    "compressed_size": 1077,
+    "compression": 8,
+    "crc32": 3724617972,
+    "external_attr": 2175008768,
+    "name": "networkx/linalg/spectrum.py",
+    "size_bytes": 4215
+  },
+  {
+    "compressed_size": 2,
+    "compression": 8,
+    "crc32": 0,
+    "external_attr": 2175008768,
+    "name": "networkx/linalg/tests/__init__.py",
+    "size_bytes": 0
+  },
+  {
+    "compressed_size": 2352,
+    "compression": 8,
+    "crc32": 2866702963,
+    "external_attr": 2175008768,
+    "name": "networkx/linalg/tests/test_algebraic_connectivity.py",
+    "size_bytes": 13737
+  },
+  {
+    "compressed_size": 529,
+    "compression": 8,
+    "crc32": 74599511,
+    "external_attr": 2175008768,
+    "name": "networkx/linalg/tests/test_attrmatrix.py",
+    "size_bytes": 2833
+  },
+  {
+    "compressed_size": 485,
+    "compression": 8,
+    "crc32": 1566078150,
+    "external_attr": 2175008768,
+    "name": "networkx/linalg/tests/test_bethehessian.py",
+    "size_bytes": 1327
+  },
+  {
+    "compressed_size": 1257,
+    "compression": 8,
+    "crc32": 2920373047,
+    "external_attr": 2175008768,
+    "name": "networkx/linalg/tests/test_graphmatrix.py",
+    "size_bytes": 8708
+  },
+  {
+    "compressed_size": 2312,
+    "compression": 8,
+    "crc32": 348926898,
+    "external_attr": 2175008768,
+    "name": "networkx/linalg/tests/test_laplacian.py",
+    "size_bytes": 14081
+  },
+  {
+    "compressed_size": 837,
+    "compression": 8,
+    "crc32": 2536507390,
+    "external_attr": 2175008768,
+    "name": "networkx/linalg/tests/test_modularity.py",
+    "size_bytes": 3115
+  },
+  {
+    "compressed_size": 677,
+    "compression": 8,
+    "crc32": 2752891842,
+    "external_attr": 2175008768,
+    "name": "networkx/linalg/tests/test_spectrum.py",
+    "size_bytes": 2828
+  },
+  {
+    "compressed_size": 152,
+    "compression": 8,
+    "crc32": 821417241,
+    "external_attr": 2175008768,
+    "name": "networkx/readwrite/__init__.py",
+    "size_bytes": 561
+  },
+  {
+    "compressed_size": 2400,
+    "compression": 8,
+    "crc32": 824758251,
+    "external_attr": 2175008768,
+    "name": "networkx/readwrite/adjlist.py",
+    "size_bytes": 8435
+  },
+  {
+    "compressed_size": 3296,
+    "compression": 8,
+    "crc32": 3140952514,
+    "external_attr": 2175008768,
+    "name": "networkx/readwrite/edgelist.py",
+    "size_bytes": 14237
+  },
+  {
+    "compressed_size": 8637,
+    "compression": 8,
+    "crc32": 3409341806,
+    "external_attr": 2175008768,
+    "name": "networkx/readwrite/gexf.py",
+    "size_bytes": 39693
+  },
+  {
+    "compressed_size": 7538,
+    "compression": 8,
+    "crc32": 2675706641,
+    "external_attr": 2175008768,
+    "name": "networkx/readwrite/gml.py",
+    "size_bytes": 31150
+  },
+  {
+    "compressed_size": 2998,
+    "compression": 8,
+    "crc32": 2244473619,
+    "external_attr": 2175008768,
+    "name": "networkx/readwrite/graph6.py",
+    "size_bytes": 11401
+  },
+  {
+    "compressed_size": 8661,
+    "compression": 8,
+    "crc32": 1084838239,
+    "external_attr": 2175008768,
+    "name": "networkx/readwrite/graphml.py",
+    "size_bytes": 39318
+  },
+  {
+    "compressed_size": 1098,
+    "compression": 8,
+    "crc32": 1485207940,
+    "external_attr": 2175008768,
+    "name": "networkx/readwrite/leda.py",
+    "size_bytes": 2797
+  },
+  {
+    "compressed_size": 2631,
+    "compression": 8,
+    "crc32": 2138696560,
+    "external_attr": 2175008768,
+    "name": "networkx/readwrite/multiline_adjlist.py",
+    "size_bytes": 11301
+  },
+  {
+    "compressed_size": 1320,
+    "compression": 8,
+    "crc32": 2302967312,
+    "external_attr": 2175008768,
+    "name": "networkx/readwrite/p2g.py",
+    "size_bytes": 3092
+  },
+  {
+    "compressed_size": 2620,
+    "compression": 8,
+    "crc32": 1084264408,
+    "external_attr": 2175008768,
+    "name": "networkx/readwrite/pajek.py",
+    "size_bytes": 8738
+  },
+  {
+    "compressed_size": 3064,
+    "compression": 8,
+    "crc32": 3730601701,
+    "external_attr": 2175008768,
+    "name": "networkx/readwrite/sparse6.py",
+    "size_bytes": 10315
+  },
+  {
+    "compressed_size": 7472,
+    "compression": 8,
+    "crc32": 2392137143,
+    "external_attr": 2175008768,
+    "name": "networkx/readwrite/text.py",
+    "size_bytes": 29163
+  },
+  {
+    "compressed_size": 289,
+    "compression": 8,
+    "crc32": 23741812,
+    "external_attr": 2175008768,
+    "name": "networkx/readwrite/json_graph/__init__.py",
+    "size_bytes": 677
+  },
+  {
+    "compressed_size": 1407,
+    "compression": 8,
+    "crc32": 2645200651,
+    "external_attr": 2175008768,
+    "name": "networkx/readwrite/json_graph/adjacency.py",
+    "size_bytes": 4716
+  },
+  {
+    "compressed_size": 1468,
+    "compression": 8,
+    "crc32": 2027725308,
+    "external_attr": 2175008768,
+    "name": "networkx/readwrite/json_graph/cytoscape.py",
+    "size_bytes": 5338
+  },
+  {
+    "compressed_size": 2486,
+    "compression": 8,
+    "crc32": 2087356532,
+    "external_attr": 2175008768,
+    "name": "networkx/readwrite/json_graph/node_link.py",
+    "size_bytes": 10792
+  },
+  {
+    "compressed_size": 1161,
+    "compression": 8,
+    "crc32": 504087859,
+    "external_attr": 2175008768,
+    "name": "networkx/readwrite/json_graph/tree.py",
+    "size_bytes": 3851
+  },
+  {
+    "compressed_size": 2,
+    "compression": 8,
+    "crc32": 0,
+    "external_attr": 2175008768,
+    "name": "networkx/readwrite/json_graph/tests/__init__.py",
+    "size_bytes": 0
+  },
+  {
+    "compressed_size": 615,
+    "compression": 8,
+    "crc32": 3398572556,
+    "external_attr": 2175008768,
+    "name": "networkx/readwrite/json_graph/tests/test_adjacency.py",
+    "size_bytes": 2456
+  },
+  {
+    "compressed_size": 577,
+    "compression": 8,
+    "crc32": 4011050316,
+    "external_attr": 2175008768,
+    "name": "networkx/readwrite/json_graph/tests/test_cytoscape.py",
+    "size_bytes": 2044
+  },
+  {
+    "compressed_size": 1177,
+    "compression": 8,
+    "crc32": 2725926148,
+    "external_attr": 2175008768,
+    "name": "networkx/readwrite/json_graph/tests/test_node_link.py",
+    "size_bytes": 6468
+  },
+  {
+    "compressed_size": 428,
+    "compression": 8,
+    "crc32": 1528491833,
+    "external_attr": 2175008768,
+    "name": "networkx/readwrite/json_graph/tests/test_tree.py",
+    "size_bytes": 1352
+  },
+  {
+    "compressed_size": 2,
+    "compression": 8,
+    "crc32": 0,
+    "external_attr": 2175008768,
+    "name": "networkx/readwrite/tests/__init__.py",
+    "size_bytes": 0
+  },
+  {
+    "compressed_size": 1516,
+    "compression": 8,
+    "crc32": 1249704807,
+    "external_attr": 2175008768,
+    "name": "networkx/readwrite/tests/test_adjlist.py",
+    "size_bytes": 10134
+  },
+  {
+    "compressed_size": 2105,
+    "compression": 8,
+    "crc32": 4102433349,
+    "external_attr": 2175008768,
+    "name": "networkx/readwrite/tests/test_edgelist.py",
+    "size_bytes": 10113
+  },
+  {
+    "compressed_size": 3071,
+    "compression": 8,
+    "crc32": 4050232326,
+    "external_attr": 2175008768,
+    "name": "networkx/readwrite/tests/test_gexf.py",
+    "size_bytes": 19405
+  },
+  {
+    "compressed_size": 4490,
+    "compression": 8,
+    "crc32": 3283302129,
+    "external_attr": 2175008768,
+    "name": "networkx/readwrite/tests/test_gml.py",
+    "size_bytes": 21391
+  },
+  {
+    "compressed_size": 1314,
+    "compression": 8,
+    "crc32": 1139751067,
+    "external_attr": 2175008768,
+    "name": "networkx/readwrite/tests/test_graph6.py",
+    "size_bytes": 6067
+  },
+  {
+    "compressed_size": 8417,
+    "compression": 8,
+    "crc32": 2778945662,
+    "external_attr": 2175008768,
+    "name": "networkx/readwrite/tests/test_graphml.py",
+    "size_bytes": 67573
+  },
+  {
+    "compressed_size": 433,
+    "compression": 8,
+    "crc32": 2147748544,
+    "external_attr": 2175008768,
+    "name": "networkx/readwrite/tests/test_leda.py",
+    "size_bytes": 1392
+  },
+  {
+    "compressed_size": 474,
+    "compression": 8,
+    "crc32": 3294683552,
+    "external_attr": 2175008768,
+    "name": "networkx/readwrite/tests/test_p2g.py",
+    "size_bytes": 1320
+  },
+  {
+    "compressed_size": 1452,
+    "compression": 8,
+    "crc32": 2142177181,
+    "external_attr": 2175008768,
+    "name": "networkx/readwrite/tests/test_pajek.py",
+    "size_bytes": 4629
+  },
+  {
+    "compressed_size": 1358,
+    "compression": 8,
+    "crc32": 1861163431,
+    "external_attr": 2175008768,
+    "name": "networkx/readwrite/tests/test_sparse6.py",
+    "size_bytes": 5284
+  },
+  {
+    "compressed_size": 6408,
+    "compression": 8,
+    "crc32": 3402401515,
+    "external_attr": 2175008768,
+    "name": "networkx/readwrite/tests/test_text.py",
+    "size_bytes": 55319
+  },
+  {
+    "compressed_size": 2,
+    "compression": 8,
+    "crc32": 0,
+    "external_attr": 2175008768,
+    "name": "networkx/tests/__init__.py",
+    "size_bytes": 0
+  },
+  {
+    "compressed_size": 2492,
+    "compression": 8,
+    "crc32": 2740371418,
+    "external_attr": 2175008768,
+    "name": "networkx/tests/test_all_random_functions.py",
+    "size_bytes": 8673
+  },
+  {
+    "compressed_size": 2189,
+    "compression": 8,
+    "crc32": 4029424952,
+    "external_attr": 2175008768,
+    "name": "networkx/tests/test_convert.py",
+    "size_bytes": 12731
+  },
+  {
+    "compressed_size": 3989,
+    "compression": 8,
+    "crc32": 252261258,
+    "external_attr": 2175008768,
+    "name": "networkx/tests/test_convert_numpy.py",
+    "size_bytes": 19065
+  },
+  {
+    "compressed_size": 2719,
+    "compression": 8,
+    "crc32": 2882238423,
+    "external_attr": 2175008768,
+    "name": "networkx/tests/test_convert_pandas.py",
+    "size_bytes": 13346
+  },
+  {
+    "compressed_size": 2042,
+    "compression": 8,
+    "crc32": 3955510855,
+    "external_attr": 2175008768,
+    "name": "networkx/tests/test_convert_scipy.py",
+    "size_bytes": 10436
+  },
+  {
+    "compressed_size": 222,
+    "compression": 8,
+    "crc32": 252663919,
+    "external_attr": 2175008768,
+    "name": "networkx/tests/test_exceptions.py",
+    "size_bytes": 927
+  },
+  {
+    "compressed_size": 104,
+    "compression": 8,
+    "crc32": 148925233,
+    "external_attr": 2175008768,
+    "name": "networkx/tests/test_import.py",
+    "size_bytes": 220
+  },
+  {
+    "compressed_size": 805,
+    "compression": 8,
+    "crc32": 2790679354,
+    "external_attr": 2175008768,
+    "name": "networkx/tests/test_lazy_imports.py",
+    "size_bytes": 2680
+  },
+  {
+    "compressed_size": 2100,
+    "compression": 8,
+    "crc32": 3476294883,
+    "external_attr": 2175008768,
+    "name": "networkx/tests/test_relabel.py",
+    "size_bytes": 14517
+  },
+  {
+    "compressed_size": 96,
+    "compression": 8,
+    "crc32": 4138224489,
+    "external_attr": 2175008768,
+    "name": "networkx/utils/__init__.py",
+    "size_bytes": 302
+  },
+  {
+    "compressed_size": 26474,
+    "compression": 8,
+    "crc32": 4276227678,
+    "external_attr": 2175008768,
+    "name": "networkx/utils/backends.py",
+    "size_bytes": 113169
+  },
+  {
+    "compressed_size": 4369,
+    "compression": 8,
+    "crc32": 3111210942,
+    "external_attr": 2175008768,
+    "name": "networkx/utils/configs.py",
+    "size_bytes": 15023
+  },
+  {
+    "compressed_size": 12667,
+    "compression": 8,
+    "crc32": 1958756886,
+    "external_attr": 2175008768,
+    "name": "networkx/utils/decorators.py",
+    "size_bytes": 44836
+  },
+  {
+    "compressed_size": 2459,
+    "compression": 8,
+    "crc32": 69071460,
+    "external_attr": 2175008768,
+    "name": "networkx/utils/heaps.py",
+    "size_bytes": 10391
+  },
+  {
+    "compressed_size": 3037,
+    "compression": 8,
+    "crc32": 1069998080,
+    "external_attr": 2175008768,
+    "name": "networkx/utils/mapped_queue.py",
+    "size_bytes": 10184
+  },
+  {
+    "compressed_size": 6171,
+    "compression": 8,
+    "crc32": 3436188564,
+    "external_attr": 2175008768,
+    "name": "networkx/utils/misc.py",
+    "size_bytes": 21293
+  },
+  {
+    "compressed_size": 1595,
+    "compression": 8,
+    "crc32": 3756974437,
+    "external_attr": 2175008768,
+    "name": "networkx/utils/random_sequence.py",
+    "size_bytes": 4237
+  },
+  {
+    "compressed_size": 1360,
+    "compression": 8,
+    "crc32": 1113397090,
+    "external_attr": 2175008768,
+    "name": "networkx/utils/rcm.py",
+    "size_bytes": 4624
+  },
+  {
+    "compressed_size": 1276,
+    "compression": 8,
+    "crc32": 2582383805,
+    "external_attr": 2175008768,
+    "name": "networkx/utils/union_find.py",
+    "size_bytes": 3338
+  },
+  {
+    "compressed_size": 2,
+    "compression": 8,
+    "crc32": 0,
+    "external_attr": 2175008768,
+    "name": "networkx/utils/tests/__init__.py",
+    "size_bytes": 0
+  },
+  {
+    "compressed_size": 157,
+    "compression": 8,
+    "crc32": 2279260728,
+    "external_attr": 2175008768,
+    "name": "networkx/utils/tests/test__init.py",
+    "size_bytes": 363
+  },
+  {
+    "compressed_size": 1761,
+    "compression": 8,
+    "crc32": 1015042024,
+    "external_attr": 2175008768,
+    "name": "networkx/utils/tests/test_backends.py",
+    "size_bytes": 6108
+  },
+  {
+    "compressed_size": 1750,
+    "compression": 8,
+    "crc32": 1806987455,
+    "external_attr": 2175008768,
+    "name": "networkx/utils/tests/test_config.py",
+    "size_bytes": 7414
+  },
+  {
+    "compressed_size": 2670,
+    "compression": 8,
+    "crc32": 1703456576,
+    "external_attr": 2175008768,
+    "name": "networkx/utils/tests/test_decorators.py",
+    "size_bytes": 14050
+  },
+  {
+    "compressed_size": 965,
+    "compression": 8,
+    "crc32": 2449353998,
+    "external_attr": 2175008768,
+    "name": "networkx/utils/tests/test_heaps.py",
+    "size_bytes": 3711
+  },
+  {
+    "compressed_size": 1143,
+    "compression": 8,
+    "crc32": 3438466533,
+    "external_attr": 2175008768,
+    "name": "networkx/utils/tests/test_mapped_queue.py",
+    "size_bytes": 7354
+  },
+  {
+    "compressed_size": 2217,
+    "compression": 8,
+    "crc32": 2234778573,
+    "external_attr": 2175008768,
+    "name": "networkx/utils/tests/test_misc.py",
+    "size_bytes": 8671
+  },
+  {
+    "compressed_size": 320,
+    "compression": 8,
+    "crc32": 3843640476,
+    "external_attr": 2175008768,
+    "name": "networkx/utils/tests/test_random_sequence.py",
+    "size_bytes": 925
+  },
+  {
+    "compressed_size": 442,
+    "compression": 8,
+    "crc32": 276407759,
+    "external_attr": 2175008768,
+    "name": "networkx/utils/tests/test_rcm.py",
+    "size_bytes": 1421
+  },
+  {
+    "compressed_size": 658,
+    "compression": 8,
+    "crc32": 4068508691,
+    "external_attr": 2175008768,
+    "name": "networkx/utils/tests/test_unionfind.py",
+    "size_bytes": 1579
+  },
+  {
+    "compressed_size": 897,
+    "compression": 8,
+    "crc32": 2471257171,
+    "external_attr": 2175008768,
+    "name": "networkx-3.4.2.dist-info/LICENSE.txt",
+    "size_bytes": 1763
+  },
+  {
+    "compressed_size": 2126,
+    "compression": 8,
+    "crc32": 151565659,
+    "external_attr": 2175008768,
+    "name": "networkx-3.4.2.dist-info/METADATA",
+    "size_bytes": 6349
+  },
+  {
+    "compressed_size": 92,
+    "compression": 8,
+    "crc32": 1422223762,
+    "external_attr": 2175008768,
+    "name": "networkx-3.4.2.dist-info/WHEEL",
+    "size_bytes": 91
+  },
+  {
+    "compressed_size": 74,
+    "compression": 8,
+    "crc32": 4029042944,
+    "external_attr": 2175008768,
+    "name": "networkx-3.4.2.dist-info/entry_points.txt",
+    "size_bytes": 94
+  },
+  {
+    "compressed_size": 11,
+    "compression": 8,
+    "crc32": 2101780396,
+    "external_attr": 2175008768,
+    "name": "networkx-3.4.2.dist-info/top_level.txt",
+    "size_bytes": 9
+  },
+  {
+    "compressed_size": 25655,
+    "compression": 8,
+    "crc32": 477871385,
+    "external_attr": 2176057344,
+    "name": "networkx-3.4.2.dist-info/RECORD",
+    "size_bytes": 58044
+  }
+]
