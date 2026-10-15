@@ -1,0 +1,12 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+__________ test_actual_authored_prepare_qualify_and_independent_audit __________
+tests/test_puck_cpu_held_audit_integration.py:23: in test_actual_authored_prepare_qualify_and_independent_audit
+    assert AUDITOR.is_file(), 'Independent CPU held-runtime auditor is not implemented'
+E   AssertionError: Independent CPU held-runtime auditor is not implemented
+E   assert False
+E    +  where False = is_file()
+E    +    where is_file = PosixPath('/home/utkarsh/.codex/worktrees/0071/brain/scripts/audit_puck_cpu_held_runtime.py').is_file
+=========================== short test summary info ============================
+FAILED tests/test_puck_cpu_held_audit_integration.py::test_actual_authored_prepare_qualify_and_independent_audit
+1 failed in 0.07s
