@@ -1,0 +1,27 @@
+Traceback (most recent call last):
+  File "<string>", line 10, in <module>
+  File "/puck/source/scripts/puck_worker_bootstrap.py", line 647, in <module>
+    if __name__ == '__main__': main()
+                               ^^^^^^
+  File "/puck/source/scripts/puck_worker_bootstrap.py", line 640, in main
+    receipt = admission.invoke()
+              ^^^^^^^^^^^^^^^^^^
+  File "/puck/source/scripts/puck_worker_bootstrap.py", line 617, in invoke
+    self.recheck(); result = module.qualify(self) if qualification else module.preflight(self); self.recheck()
+                             ^^^^^^^^^^^^^^^^^^^^
+  File "/puck/source/src/palimpsest/puck_runtime_qualification.py", line 27, in qualify
+    module=importlib.import_module(name)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/importlib/__init__.py", line 126, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1204, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1176, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1147, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 690, in _load_unlocked
+  File "/puck/source/src/palimpsest/puck_dependency_imports.py", line 155, in exec_module
+    exec(code,module_dict(module))
+  File "/puck/staged/inputs/root-0000/torch/__init__.py", line 427, in <module>
+    from torch._C import *  # noqa: F403
+    ^^^^^^^^^^^^^^^^^^^^^^
+ModuleNotFoundError: No module named 'torch._C'

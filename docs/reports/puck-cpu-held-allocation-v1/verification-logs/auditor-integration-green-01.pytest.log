@@ -1,0 +1,23 @@
+F
+=================================== FAILURES ===================================
+__________ test_actual_authored_prepare_qualify_and_independent_audit __________
+tests/test_puck_cpu_held_audit_integration.py:65: in test_actual_authored_prepare_qualify_and_independent_audit
+    reports['qualify']=audit_phase('qualify')
+                       ^^^^^^^^^^^^^^^^^^^^^^
+tests/test_puck_cpu_held_audit_integration.py:36: in audit_phase
+    return auditor.audit(configuration,digest(configuration.read_bytes()),
+scripts/audit_puck_cpu_held_runtime.py:441: in audit
+    require(worker(held,base,config,dep,depraw,sources)==result.get('worker_stdout_sha256'),'Worker stdout digest differs');held.file(base/'logs/stderr.log',maximum=16*MiB)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+scripts/audit_puck_cpu_held_runtime.py:374: in worker
+    value=stdout.get('dependencies',{});no_authority(value,('runtime_qualified','collection_authorized','executable'))
+                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+scripts/audit_puck_cpu_held_runtime.py:183: in no_authority
+    require(type(value) is dict and all(value.get(k) is False for k in keys) and value.get('qualification_claims')==[],'False authority/claims required')
+scripts/audit_puck_cpu_held_runtime.py:38: in require
+    if not value:raise ValueError(message)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^
+E   ValueError: False authority/claims required
+=========================== short test summary info ============================
+FAILED tests/test_puck_cpu_held_audit_integration.py::test_actual_authored_prepare_qualify_and_independent_audit
+1 failed in 5.75s
