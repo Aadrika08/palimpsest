@@ -75,7 +75,21 @@ Independent review covered helper ABI, every-leaf admission, schema versions,
 lease cleanup/poisoning, worker sequencing, authenticated source closure and
 unchanged native map/origin checks. It found no concrete Critical, Important or
 Minor defect. Its 40 checks include all 33 new cases and seven legacy worker
-controls. This is source/fixture evidence, not installed-stack qualification.
+controls. Exact independent command (R0 Python is the existing reproduction venv):
+
+```bash
+env PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=src:.:tests \
+/home/utkarsh/Work/shraddha/brain/.worktrees/r0-reproduction/.venv/bin/python \
+-B -m pytest -q -p no:cacheprovider \
+tests/test_puck_native_identity.py tests/test_puck_tmpfs_dependencies.py \
+tests/test_puck_worker_dependencies.py::test_python_dependency_resources_and_distribution_metadata_are_held \
+tests/test_puck_worker_dependencies.py::test_bad_dependency_admission_never_executes_entry \
+tests/test_puck_worker_dependencies.py::test_held_descriptor_origin_relative_native_dependency_is_explicitly_unsupported \
+tests/test_puck_worker_dependencies.py::test_unregistered_persistent_native_image_refuses_terminal_success
+```
+
+The bad-admission node expands to four cases; the three other legacy nodes add
+three cases. This is source/fixture evidence, not installed-stack qualification.
 
 ## Feasibility proposal and exact next exit
 
