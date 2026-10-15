@@ -13,6 +13,7 @@ import secrets
 import shutil
 import signal
 import subprocess
+import time
 
 
 ROOT=Path(__file__).resolve().parents[1]
@@ -150,13 +151,23 @@ def run_cli(root,api,phase,config):
     raw=canonical(config);configuration=root/('authored-'+phase+'-configuration.json');configuration.write_bytes(raw)
     command=[api.PYTHON,'-I','-S','-B',str(root/PARENT),'--configuration',str(configuration),'--sha256',digest(raw)]
     env=dict(PATH='/usr/bin:/bin',LANG='C.UTF-8',LC_ALL='C.UTF-8',PYTHONDONTWRITEBYTECODE='1')
+    started=time.monotonic()
     process=subprocess.Popen(command,cwd=root,env=env,stdout=subprocess.PIPE,stderr=subprocess.PIPE,start_new_session=True)
     try:
         stdout,stderr=process.communicate(timeout=60)
     except BaseException:
         os.killpg(process.pid,signal.SIGKILL);process.communicate();raise
-    (root/('authored-'+phase+'-cli.stdout')).write_bytes(stdout)
-    (root/('authored-'+phase+'-cli.stderr')).write_bytes(stderr)
+    elapsed=time.monotonic()-started
+    channels={}
+    for name,payload in (('stdout',stdout),('stderr',stderr)):
+        leaf='authored-'+phase+'-cli.'+name
+        (root/leaf).write_bytes(payload)
+        channels[name]=dict(path=leaf,size_bytes=len(payload),sha256=digest(payload))
+    receipt=dict(kind='authored-cpu-parent-cli-transport-v1',authored_scope=AUTHORED,
+        command=command,configuration_sha256=digest(raw),observed_returncode=process.returncode,
+        elapsed_seconds=elapsed,**channels)
+    receipt_raw=canonical(receipt);assert len(receipt_raw)<=64*1024
+    (root/('authored-'+phase+'-transport.json')).write_bytes(receipt_raw)
     return process.returncode,stdout,stderr
 
 
@@ -171,6 +182,7 @@ def test_actual_authored_prepare_then_separate_held_four_import_cli(tmp_path):
         result_path=root/api.OUTPUTS['prepare']/'result.json'
         retained=result_path.read_bytes() if result_path.exists() else b''
         assert code==0,(code,stdout,stderr,retained)
+        prepare_code=code
         prep=json.loads(retained);assert json.loads(stdout)==prep and prep['status']=='prepared'
         assert prep['held_four_imports_observed'] is False
         dependencies=json.loads((root/api.OUTPUTS['prepare']/'payload/dependencies.json').read_bytes())
@@ -185,6 +197,7 @@ def test_actual_authored_prepare_then_separate_held_four_import_cli(tmp_path):
         final_path=root/api.OUTPUTS['qualify']/'result.json'
         final_raw=final_path.read_bytes() if final_path.exists() else b''
         assert code==0,(code,stdout,stderr,final_raw)
+        qualify_code=code;qualify_stdout=stdout;qualify_stderr=stderr
         final=json.loads(final_raw);assert json.loads(stdout)==final and final['status']=='imports_completed'
         assert final['held_four_imports_observed'] is True
         worker=json.loads((root/api.OUTPUTS['qualify']/'logs/stdout.log').read_bytes())
@@ -201,6 +214,24 @@ def test_actual_authored_prepare_then_separate_held_four_import_cli(tmp_path):
         code,_,stderr=run_cli(root,api,'qualify-rerun',qualify)
         assert code!=0 and b'CPU allocation already reserved' in stderr
         assert final_path.read_bytes()==final_raw
+        assert (root/'authored-qualify-cli.stdout').read_bytes()==qualify_stdout
+        assert (root/'authored-qualify-cli.stderr').read_bytes()==qualify_stderr
+        for label,observed in (('prepare',prepare_code),('qualify',qualify_code),('qualify-rerun',code)):
+            path=root/('authored-'+label+'-transport.json')
+            assert path.is_file(),'Observed external CLI transport receipt is missing: '+label
+            raw=path.read_bytes();assert len(raw)<=64*1024
+            transport=json.loads(raw)
+            assert transport['kind']=='authored-cpu-parent-cli-transport-v1'
+            assert transport['observed_returncode']==observed
+            assert transport['authored_scope']==AUTHORED
+            assert 0<transport['elapsed_seconds']<60
+            configuration=root/('authored-'+label+'-configuration.json')
+            assert transport['configuration_sha256']==digest(configuration.read_bytes())
+            assert transport['command']==[api.PYTHON,'-I','-S','-B',str(root/PARENT),
+                '--configuration',str(configuration),'--sha256',transport['configuration_sha256']]
+            for channel in ('stdout','stderr'):
+                name='authored-'+label+'-cli.'+channel;payload=(root/name).read_bytes()
+                assert transport[channel]==dict(path=name,size_bytes=len(payload),sha256=digest(payload))
         print(dict(authored_prepare_status=prep['status'],authored_qualify_status=final['status'],
                    prepare_seconds=prep['elapsed_seconds'],qualify_seconds=final['elapsed_seconds'],
                    rerun_refused=True,files=18,actual_vendor_imports=False))
