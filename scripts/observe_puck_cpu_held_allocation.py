@@ -55,11 +55,20 @@ def observe(configuration,expected_sha256):
     config=json.loads(raw)
     if canonical(config)!=raw:raise ValueError('Canonical CPU configuration required')
     phase=config.get('phase')
-    if config.get('kind')!='puck-cpu-held-runtime-allocation-v1' or phase not in OUTPUTS or config.get('root')!=str(ROOT):
-        raise ValueError('Exact CPU parent allocation root and phase required')
-    output=ROOT/OUTPUTS[phase]
-    paths={name:Path(OUTPUTS[phase]+'-external-cli.'+name) for name in ('stdout','stderr')}
-    receipt=Path(OUTPUTS[phase]+'-external-cli-transport.json')
+    amended=config.get('kind')=='puck-cpu-held-runtime-allocation-v2'
+    if amended:
+        if (phase!='qualify' or type(config.get('version')) is not int or config['version']!=2
+                or type(config.get('allocation_id')) is not int or config['allocation_id']!=2):
+            raise ValueError('Exact qualification02 allocation identity required')
+        output_name='runs/puck-cpu-held-qualification-02'
+    else:
+        if config.get('kind')!='puck-cpu-held-runtime-allocation-v1' or phase not in OUTPUTS:
+            raise ValueError('Exact CPU parent allocation root and phase required')
+        output_name=OUTPUTS[phase]
+    if config.get('root')!=str(ROOT):raise ValueError('Exact CPU parent allocation root required')
+    output=ROOT/output_name
+    paths={name:Path(output_name+'-external-cli.'+name) for name in ('stdout','stderr')}
+    receipt=Path(output_name+'-external-cli-transport.json')
     if any(os.path.lexists(p) for p in [output,ROOT/receipt,*[ROOT/p for p in paths.values()]]):
         raise FileExistsError('CPU external observation or allocation already reserved')
     command=[PYTHON,'-I','-S','-B',str(ROOT/'scripts/qualify_puck_cpu_held_runtime.py'),

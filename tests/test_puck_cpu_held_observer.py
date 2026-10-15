@@ -85,3 +85,31 @@ def test_preparation_can_copy_an_authored_payload_larger_than_log_limit(tmp_path
     assert result.returncode==0,(result.returncode,result.stdout,result.stderr,diagnostic)
     assert (tmp_path/'authored-payload.bin').stat().st_size==17*1024**2
     assert parent.LIMITS['qualify']['file_bytes']==16*1024**2
+
+
+@pytest.mark.parametrize('code',[0,7])
+def test_qualification02_uses_exclusive_new_paths_and_preserves01(tmp_path,monkeypatch,code):
+    module,path,_=setup(tmp_path,monkeypatch,'import sys\nprint("authored02")\nsys.exit('+str(code)+')\n')
+    config=json.loads(path.read_bytes());config.update(kind='puck-cpu-held-runtime-allocation-v2',version=2,allocation_id=2,phase='qualify')
+    raw=module.canonical(config);path.write_bytes(raw);sha=hashlib.sha256(raw).hexdigest()
+    old=tmp_path/'runs/puck-cpu-held-qualification-01';old.mkdir();(old/'result.json').write_bytes(b'preserved consumed01')
+    for suffix in ('-external-cli.stdout','-external-cli.stderr','-external-cli-transport.json'):
+        (tmp_path/('runs/puck-cpu-held-qualification-01'+suffix)).write_bytes(b'preserved01'+suffix.encode())
+    legacy={p:p.read_bytes() for p in (tmp_path/'runs').rglob('*') if p.is_file()}
+    result=module.observe(path,sha)
+    assert result['observed_returncode']==code and result['timed_out'] is False
+    assert result['stdout']['path']=='runs/puck-cpu-held-qualification-02-external-cli.stdout'
+    assert (tmp_path/result['stdout']['path']).read_bytes()==b'authored02\n'
+    assert all(p.read_bytes()==raw for p,raw in legacy.items())
+    captured={p:p.read_bytes() for p in (tmp_path/'runs').rglob('*') if p.is_file()}
+    with pytest.raises(FileExistsError):module.observe(path,sha)
+    assert all(p.read_bytes()==raw for p,raw in captured.items())
+
+
+@pytest.mark.parametrize('field,value',[('phase','prepare'),('version',True),('allocation_id',1),('allocation_id',True)])
+def test_qualification02_observer_refuses_wrong_closed_identity(tmp_path,monkeypatch,field,value):
+    module,path,_=setup(tmp_path,monkeypatch,'raise AssertionError("must not run")\n')
+    config=json.loads(path.read_bytes());config.update(kind='puck-cpu-held-runtime-allocation-v2',version=2,allocation_id=2,phase='qualify');config[field]=value
+    raw=module.canonical(config);path.write_bytes(raw)
+    with pytest.raises(ValueError):module.observe(path,hashlib.sha256(raw).hexdigest())
+    assert list((tmp_path/'runs').iterdir())==[]

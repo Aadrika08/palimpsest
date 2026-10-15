@@ -28,6 +28,8 @@ INTERPRETER=dict(path=PYTHON,size_bytes=21662864,sha256='572cfa2a8597e2f431c7856
 BOOTSTRAP='scripts/puck_worker_bootstrap.py'
 SITE='runs/puck-cpu-install-01/site'
 OUTPUTS=dict(prepare='runs/puck-cpu-held-preparation-01',qualify='runs/puck-cpu-held-qualification-01')
+QUALIFY02='runs/puck-cpu-held-qualification-02'
+LEGACY_AUDITOR_SHA256='19723b4ec19c6cd8fd29d38b5cbabab60f89c136ee37564f6e94175439b4eed9'
 VERSIONS=dict(numpy='2.2.5',torch='2.9.0+cpu',torchvision='0.24.0+cpu',mujoco='3.3.6')
 ENVIRONMENT=dict(PYTHONDONTWRITEBYTECODE='1',LC_ALL='C.UTF-8',LANG='C.UTF-8',
     HOME='/scratch/home',TMPDIR='/scratch/tmp',PWD='/puck/source',PATH='/nonexistent',TZ='UTC',
@@ -131,12 +133,16 @@ def _negative_imports(names):
         raise ValueError('Exact finite CPU missing-import roster required')
 
 
-def configuration_template(*,phase,root,stage_parent,sources,inputs,negative_imports,preparation=None):
+def configuration_template(*,phase,root,stage_parent,sources,inputs,negative_imports,preparation=None,preparation_acceptance=None):
     result=dict(kind='puck-cpu-held-runtime-allocation-v1',version=1,phase=phase,allocation_id=1,
         root=root,stage_parent=stage_parent,sources=sources,inputs=inputs,interpreter=dict(INTERPRETER),
         environment=dict(ENVIRONMENT),expected_versions=dict(VERSIONS),limits=copy.deepcopy(LIMITS[phase]),
         negative_imports=negative_imports,claims=copy.deepcopy(CLAIMS))
-    if phase=='qualify':result['preparation']=preparation
+    if preparation_acceptance is not None:
+        if preparation is not None:raise ValueError('One CPU preparation epoch required')
+        result.update(kind='puck-cpu-held-runtime-allocation-v2',version=2,allocation_id=2,
+                      preparation_acceptance=preparation_acceptance)
+    elif phase=='qualify':result['preparation']=preparation
     return result
 
 
@@ -144,10 +150,14 @@ def validate_configuration(config):
     keys={'kind','version','phase','allocation_id','root','stage_parent','sources','inputs',
           'interpreter','environment','expected_versions','limits','negative_imports','claims'}
     phase=config.get('phase') if type(config) is dict else None
-    if phase=='qualify':keys.add('preparation')
-    if (phase not in LIMITS or set(config)!=keys or config['kind']!='puck-cpu-held-runtime-allocation-v1'
-            or type(config['version']) is not int or config['version']!=1
-            or type(config['allocation_id']) is not int or config['allocation_id']!=1
+    amended=type(config) is dict and config.get('kind')=='puck-cpu-held-runtime-allocation-v2'
+    if amended:keys.add('preparation_acceptance')
+    elif phase=='qualify':keys.add('preparation')
+    epoch=2 if amended else 1
+    if (phase not in LIMITS or set(config)!=keys or (amended and phase!='qualify')
+            or config['kind']!='puck-cpu-held-runtime-allocation-v'+str(epoch)
+            or type(config['version']) is not int or config['version']!=epoch
+            or type(config['allocation_id']) is not int or config['allocation_id']!=epoch
             or config['root']!=str(ROOT) or canonical(config['limits'])!=canonical(LIMITS[phase])
             or config['interpreter']!=INTERPRETER or canonical(config['environment'])!=canonical(ENVIRONMENT)
             or config['expected_versions']!=VERSIONS or canonical(config['claims'])!=canonical(CLAIMS)):
@@ -161,10 +171,103 @@ def validate_configuration(config):
             or type(inputs) is not dict or set(inputs)!=set(INPUT_ROLES)):
         raise ValueError('Exact CPU source/input closure required')
     for row in inputs.values():pin(row)
-    if phase=='qualify':
+    if amended:
+        acceptance=config['preparation_acceptance']
+        if type(acceptance) is not dict or set(acceptance)!={'configuration','result','independent_audit','externally_observed_auditor_cli'}:
+            raise ValueError('Exact CPU historical preparation acceptance required')
+        for row in acceptance.values():pin(row)
+        if acceptance['result']['path']!=OUTPUTS['prepare']+'/result.json':raise ValueError('Exact CPU preparation receipt required')
+    elif phase=='qualify':
         pin(config['preparation'])
         if config['preparation']['path']!=OUTPUTS['prepare']+'/result.json':raise ValueError('Exact CPU preparation receipt required')
     _negative_imports(config['negative_imports'])
+
+
+def allocation_output(config):
+    validate_configuration(config)
+    return QUALIFY02 if config['version']==2 else OUTPUTS[config['phase']]
+
+
+def validate_preparation_acceptance(config,blobs):
+    """Bind historical data acceptance without assigning its old source proof to new bytes."""
+    validate_configuration(config)
+    if config['version']!=2:raise ValueError('CPU amendment02 configuration required')
+    acceptance=config['preparation_acceptance'];values={}
+    for role,row in acceptance.items():
+        raw=blobs[role]
+        if len(raw)!=row['size_bytes'] or digest(raw)!=row['sha256']:raise ValueError('Historical CPU preparation pin differs')
+        value=decode(raw)
+        if type(value) is not dict:raise ValueError('Historical CPU preparation object required')
+        if role in ('configuration','result') and canonical(value)!=raw:raise ValueError('Canonical historical CPU preparation bytes required')
+        values[role]=value
+    prior,prep,audit,cli=(values[k] for k in ('configuration','result','independent_audit','externally_observed_auditor_cli'))
+    validate_configuration(prior)
+    if prior['version']!=1 or prior['phase']!='prepare':raise ValueError('Historical CPU preparation01 required')
+    shared=('root','stage_parent','inputs','interpreter','environment','expected_versions','negative_imports','claims')
+    if any(prior[k]!=config[k] for k in shared):raise ValueError('CPU amendment changed prepared data or policy')
+    changed={old['path'] for old,new in zip(prior['sources'],config['sources']) if old!=new}
+    if BOOTSTRAP not in changed or not changed<={BOOTSTRAP,'scripts/qualify_puck_cpu_held_runtime.py'}:
+        raise ValueError('CPU amendment source changes must be bootstrap and optional parent only')
+    false_claims=lambda value:any(value.get(k)!=v or type(value.get(k)) is not type(v) for k,v in CLAIMS.items())
+    def closed(value,expected):
+        row=value.get('closure',{})
+        return (row.get('active_children')==[] and row.get('active_non_main_threads')==[]
+                and type(row.get('fd_count_before')) is int and row['fd_count_before']==expected
+                and type(row.get('fd_count_after')) is int and row['fd_count_before']==row['fd_count_after'])
+    def elapsed(value,maximum):
+        return type(value) in (int,float) and math.isfinite(value) and 0<value<maximum
+    if (prep.get('kind')!='puck-cpu-held-runtime-outcome-v1' or type(prep.get('version')) is not int or prep['version']!=1
+            or type(prep.get('allocation_id')) is not int or prep['allocation_id']!=1
+            or prep.get('phase')!='prepare' or prep.get('status')!='prepared' or any(k in prep for k in ('error','error_type'))
+            or prep.get('held_four_imports_observed') is not False or false_claims(prep)
+            or prep.get('configuration_sha256')!=acceptance['configuration']['sha256']
+            or prep.get('stage_parent')!=prior['stage_parent'] or prep.get('sources')!=prior['sources']
+            or prep.get('inputs')!=prior['inputs'] or not closed(prep,5) or not elapsed(prep.get('elapsed_seconds'),180)):
+        raise ValueError('Historical CPU preparation receipt differs or failed')
+    dep=pin(prep.get('dependencies'))
+    if dep['path']!='payload/dependencies.json':raise ValueError('Historical CPU dependency path differs')
+    if (audit.get('kind')!='puck-cpu-held-runtime-independent-audit-v1' or type(audit.get('version')) is not int or audit['version']!=1
+            or audit.get('status')!='PASS' or audit.get('phase')!='prepare' or audit.get('observed_status')!='prepared'
+            or any(k in audit for k in ('error','error_type'))
+            or audit.get('held_four_imports_observed') is not False or false_claims(audit)
+            or type(audit.get('external_returncode')) is not int or audit['external_returncode']!=0
+            or audit.get('auditor_source_sha256')!=LEGACY_AUDITOR_SHA256
+            or audit.get('configuration_sha256')!=acceptance['configuration']['sha256']
+            or audit.get('result_sha256')!=acceptance['result']['sha256'] or audit.get('dependencies_sha256')!=dep['sha256']
+            or type(audit.get('root_count')) is not int or audit['root_count']!=4
+            or audit.get('evidence_scope')!='ordinary CPU held allocation only'
+            or type(audit.get('transport_sha256')) is not str or re.fullmatch('[0-9a-f]{64}',audit['transport_sha256']) is None
+            or not closed(audit,4) or not elapsed(audit.get('elapsed_seconds'),120)):
+        raise ValueError('Historical CPU independent audit failed or provenance differs')
+    cli_keys={'kind','command','observed_returncode','elapsed_seconds','published','stdout','stderr'}
+    if (set(cli) not in (cli_keys,cli_keys|{'at','scope'})
+            or cli['kind']!='externally-observed-cpu-auditor-cli-v1'
+            or type(cli['observed_returncode']) is not int or cli['observed_returncode']!=0
+            or not elapsed(cli['elapsed_seconds'],130)):
+        raise ValueError('Historical CPU auditor CLI did not return normally')
+    if 'at' in cli and (type(cli['at']) is not str or not 0<len(cli['at'])<=128
+            or cli['scope']!='fresh read-only current-byte audit of prepared data; no preparation or qualification allocation invoked'):
+        raise ValueError('Historical CPU auditor CLI metadata differs')
+    for channel in ('published','stdout','stderr'):
+        row=cli[channel]
+        if (type(row) is not dict or set(row)!={'path','size_bytes','sha256'}
+                or type(row['path']) is not str or not row['path'].startswith('/') or str(Path(row['path']))!=row['path']):
+            raise ValueError('Historical CPU auditor CLI channel differs')
+        if (type(row['size_bytes']) is not int or not 0<=row['size_bytes']<=16*MiB
+                or type(row['sha256']) is not str or re.fullmatch('[0-9a-f]{64}',row['sha256']) is None):
+            raise ValueError('Historical CPU auditor CLI channel pin differs')
+    expected={k:acceptance['independent_audit'][k] for k in ('size_bytes','sha256')}
+    if (any({k:cli[name][k] for k in expected}!=expected for name in ('published','stdout'))
+            or cli['stderr']['size_bytes']!=0 or cli['stderr']['sha256']!=digest(b'')):
+        raise ValueError('Historical CPU auditor CLI stdout/publication differs')
+    command=cli['command']
+    if (type(command) is not list or len(command)!=15
+            or command[10] not in (str(ROOT/'authored-prepare-transport.json'),str(ROOT/'runs/puck-cpu-held-preparation-01-external-cli-transport.json'))
+            or command!=[PYTHON,'-I','-S','-B',str(ROOT/'scripts/audit_puck_cpu_held_runtime.py'),
+                '--configuration',str(ROOT/acceptance['configuration']['path']),'--sha256',acceptance['configuration']['sha256'],
+                '--transport',command[10],'--transport-sha256',audit.get('transport_sha256'),'--output',cli['published']['path']]):
+        raise ValueError('Historical CPU auditor CLI command differs')
+    return prior,prep
 
 
 def qualification_command(worker_command):
@@ -393,17 +496,29 @@ def execute(config,raw,started):
     from palimpsest.puck_retained_installation import AdmissionInputs
     from palimpsest.puck_cpu_registration import build_cpu_source_registration,attach_cpu_candidate
     from palimpsest.puck_cpu_namespace import sandbox_command
-    phase=config['phase'];limits=config['limits'];output=ROOT/OUTPUTS[phase];stage=Path(config['stage_parent'])
+    phase=config['phase'];limits=config['limits'];output=ROOT/allocation_output(config);stage=Path(config['stage_parent'])
+    amended=config['version']==2
     rows=config['sources']+list(config['inputs'].values())
     unique={r['path']:r for r in rows}
     if len(unique)!=len(rows):raise ValueError('Overlapping CPU source/input pins')
     admission=resource_admission(config)
     if phase=='prepare' and os.path.lexists(stage):raise FileExistsError('CPU tmpfs allocation already exists')
-    if phase=='qualify':rows=rows+[config['preparation']]
+    if phase=='qualify':
+        if amended:
+            acceptance=config['preparation_acceptance'];rows+=list(acceptance.values())
+            prior_raw=read(ROOT/acceptance['configuration']['path'],MiB,acceptance['configuration']['sha256'])
+            prior=decode(prior_raw);validate_configuration(prior)
+            old_configuration=OUTPUTS['prepare']+'/configuration.json'
+            if acceptance['configuration']['path']!=old_configuration:
+                rows.append(dict(acceptance['configuration'],path=old_configuration))
+            for capsule,names in (('parent-source',SOURCES),('worker-source',WORKER_SOURCES)):
+                rows.extend(dict(row,path=OUTPUTS['prepare']+'/'+capsule+'/'+row['path']) for row in prior['sources'] if row['path'] in names)
+            if len({r['path'] for r in rows})!=len(rows):raise ValueError('Overlapping CPU amendment source/input pins')
+        else:rows=rows+[config['preparation']]
     deadline=started+limits['normal_seconds'];state={};before_fds=len(os.listdir('/proc/self/fd'))
     bounds.reserve_output(output,dict(sources=dict(root=str(ROOT),files=rows)))
     for name in ('logs','control','payload'):(output/name).mkdir(mode=0o700)
-    result=dict(CLAIMS,kind='puck-cpu-held-runtime-outcome-v1',version=1,phase=phase,allocation_id=1,
+    result=dict(CLAIMS,kind='puck-cpu-held-runtime-outcome-v'+str(config['version']),version=config['version'],phase=phase,allocation_id=config['allocation_id'],
                 configuration_sha256=digest(raw),status='FAIL',held_four_imports_observed=False)
     bounds.write_new(output/'configuration.json',config)
     bounds.write_new(output/'resource-admission.json',admission)
@@ -441,8 +556,16 @@ def execute(config,raw,started):
                     command=[PYTHON,'-I','-S','-B','/puck/source/scripts/stage_puck_cpu_held_runtime.py',digest(request_raw)]
                     sandbox_source=driver_source
                 else:
-                    prep=decode(read(ROOT/config['preparation']['path'],MiB,config['preparation']['sha256']))
-                    if (prep.get('status')!='prepared' or prep.get('phase')!='prepare' or prep.get('stage_parent')!=str(stage)
+                    if amended:
+                        old_blobs={role:read(ROOT/row['path'],MiB,row['sha256']) for role,row in acceptance.items()}
+                        prior,prep=validate_preparation_acceptance(config,old_blobs)
+                        if read(ROOT/old_configuration,MiB,acceptance['configuration']['sha256'])!=old_blobs['configuration']:
+                            raise ValueError('Historical CPU preparation configuration copy differs')
+                        for capsule,names in (('parent-source',SOURCES),('worker-source',WORKER_SOURCES)):
+                            for row in prior['sources']:
+                                if row['path'] in names:read(ROOT/OUTPUTS['prepare']/capsule/row['path'],MiB,row['sha256'])
+                    else:prep=decode(read(ROOT/config['preparation']['path'],MiB,config['preparation']['sha256']))
+                    if not amended and (prep.get('status')!='prepared' or prep.get('phase')!='prepare' or prep.get('stage_parent')!=str(stage)
                             or prep.get('sources')!=config['sources'] or prep.get('inputs')!=config['inputs']
                             or any(prep.get(k) is not False for k in CLAIMS if k!='qualification_claims')
                             or prep.get('qualification_claims')!=[]):raise ValueError('CPU preparation receipt differs or failed')
@@ -454,15 +577,22 @@ def execute(config,raw,started):
                     if (attached!=dependencies or dependencies.get('distributions')!=source_reg['distributions']
                             or any(a.get('files')!=b['files'] for a,b in zip(dependencies['roots'],source_reg['roots']))):
                         raise ValueError('CPU prepared bytes/profile differ from accepted source plan')
+                    if amended:
+                        audit=decode(old_blobs['independent_audit'])
+                        if (audit.get('file_count')!=sum(len(r['files']) for r in dependencies['roots'])
+                                or audit.get('input_bytes')!=sum(f['size_bytes'] for r in dependencies['roots'] for f in r['files'])):
+                            raise ValueError('Historical CPU independent audit data counts differ')
                     verify_staged_roots(str(stage),dependencies,prep['staged_roots'])
                     controls.write(output/'control/dependencies.json',dependency_raw,16*MiB)
                     files=[r for r in config['sources'] if r['path'] in WORKER_SOURCES]
-                    for row in files:read(prepared/'worker-source'/row['path'],MiB,row['sha256'])
+                    sandbox_source=output/'worker-source' if amended else prepared/'worker-source'
+                    if amended:create_capsule(sandbox_source,WORKER_SOURCES,source_bytes,controls.write)
+                    for row in files:read(sandbox_source/row['path'],MiB,row['sha256'])
                     worker,command=worker_registration(files,dependency_raw,negative_imports=config['negative_imports'])
                     worker_raw=json.dumps(worker,sort_keys=True,separators=(',',':'),ensure_ascii=False,allow_nan=False).encode()
                     controls.write(output/'control/worker-registration.json',worker_raw)
                     command=qualification_command(command)
-                    sandbox_source=prepared/'worker-source';generated_root=None
+                    generated_root=None
                 command=sandbox_command(baseline,native,sorted(r['path'] for r in observation['baseline_maps']['images']),
                     phase=phase,stage_parent=str(stage),source_root=str(sandbox_source),control_root=str(output/'control'),
                     output_root=str(output/'payload'),command=command,environment=ENVIRONMENT,
@@ -517,8 +647,8 @@ def main():
         if (str(Path(sys.executable).resolve())!=PYTHON or not(sys.flags.isolated and sys.flags.no_site and sys.dont_write_bytecode)
                 or os.environ.get('LD_PRELOAD') or os.environ.get('LD_LIBRARY_PATH')):
             raise ValueError('Original isolated CPU parent interpreter required')
-        if os.path.lexists(ROOT/OUTPUTS[config['phase']]):raise FileExistsError('CPU allocation already reserved')
-        sys.pycache_prefix=str(ROOT/OUTPUTS[config['phase']]/'unused-parent-pycache')
+        if os.path.lexists(ROOT/allocation_output(config)):raise FileExistsError('CPU allocation already reserved')
+        sys.pycache_prefix=str(ROOT/allocation_output(config)/'unused-parent-pycache')
         for key in ('NOFILE','AS','FSIZE'):
             value=config['limits'][{'NOFILE':'max_fds','AS':'address_space_bytes','FSIZE':'file_bytes'}[key]]
             resource.setrlimit(getattr(resource,'RLIMIT_'+key),(value,value))
