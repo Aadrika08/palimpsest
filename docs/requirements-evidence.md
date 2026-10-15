@@ -40,17 +40,60 @@ ends with that actual episode bundle. Accepted ordinary characterization02 below
 supplies observations; PR147 supplies the prospective CPU profile and tmpfs copier,
 and PR148 supplies the dedicated bounded source parent and authored end-to-end
 fixtures. PR149 adds reviewed PREPARE controls, the independent standard-library
-auditor and external observer. The remaining ordered work is fresh resource
-admission, actual preparation once plus audit, qualification freeze/review using
-that real passing result, then qualification plus audit. Resolve the episode/catalog contract
-before protected reads and audit the actual recorded/replayed/exported episode
+auditor and external observer. Actual preparation01 and its audit pass; the
+subsequent independently reviewed qualification01 is invoked once and fails.
+The next boundary is a separately numbered, reviewed actual qualification
+amendment with a fresh authenticated source capsule, current staged-byte checks
+and fresh resource admission; never rerun01. Passing held qualification and its
+independent audit remain required before the episode. Resolve the episode/catalog
+contract before protected reads and audit the recorded/replayed/exported episode
 with its declared operator/renderer checks. Required cache/version/custody/cleanup
-failures stop and retain their allocation, with no implicit retry. The installed
-CPU stack has not been staged or held-qualified; no episode, study or browser/human
-session ran in this source checkpoint. The previous
+failures retain their consumed allocation. No episode, study or browser/human
+session ran in these CPU stages. Independent source work may address the distinct
+CPU collection envelope/authenticated worker dispatch and the reviewed memory
+seed400-to-case proof binding, without opening an allocation or resolving pending
+scientific/catalog decisions. The previous
 [execution/evidence history](plans/simulation-release-execution-goal-history-2026-10-15.md)
 is preserved byte-identically. All 26 requirement and seven gate statuses remain
 unchanged; all seven release gates remain open.
+
+The [actual preparation report](https://github.com/Aadrika08/palimpsest/blob/4036a382b87ab99640bed96f6b2f8aeaa7873b2c/docs/reports/puck-cpu-held-preparation-01.md)
+records external exit0 in 25.5215614 s and frozen independent auditor normal
+exit0 in 11.53997772 s, verifying 27,255 files / 1,318,494,346 B across four roots.
+Parent descriptors remain 5→5 and auditor descriptors 4→4, with no children.
+Admission at 2026-10-15 13:28:46 UTC recorded MemAvailable 4,518,219,776 B;
+this is a dated preparation admission, not a current resource guarantee.
+
+Qualification01's 8,065 B configuration and 4,940 B freeze were committed at
+`68744ed` and independently reviewed before its single actual invocation.
+The observer exits1 without timeout in 35.64802493399475 s; parent elapsed is
+35.5347 s. The worker reports `ModuleNotFoundError: torch._C` from Torch line 427,
+with stdout 0 B and stderr 1,650 B. Parent descriptors remain 5→5; all three
+supervisor-tracked PID/start identities were independently absent from `/proc`
+at 13:40:06 UTC. The [preserved qualification failure report](https://github.com/Aadrika08/palimpsest/blob/4036a382b87ab99640bed96f6b2f8aeaa7873b2c/docs/reports/puck-cpu-held-qualification-01.md)
+retains the actual outcome and failed acceptance audit.
+The frozen acceptance auditor exits1 normally in 0.064102 s, recording FAIL on
+`Normal external transport exit required` before staged-byte checks.
+`baseline-after.json` remains absent. Earlier preparation acceptance retains its
+dated scope, but no current post-qualification byte audit, complete held four-import
+result or general simulator qualification exists. Authored diagnostics pass two
+basic native-import cases and demonstrate that a caught undeclared import can
+mask a primary error with a secondary `ModuleNotFoundError`; Torch's actual
+primary error remains unknown. The source-only error-chaining fix is implemented
+on `research/puck-cpu-primary-import-failure-v1`, without relaxing guards or import
+policy. The regression first fails in 1.66 s, then passes in both affected
+three-file batches; each batch has 63 passes and one failure, respectively an
+ancestor refusal in 41.06 s and a persistent-native-image failure in 42.63 s.
+The ancestor case passes alone in 1.55 s; the persistent-native positive also
+fails on unchanged `4036a382` in 1.40 s. Independent new-source tmpfs-native positive
+plus regression checks pass 2/2 in 2.79 s. No fully passing three-file batch is
+claimed. [Draft PR #150](https://github.com/Aadrika08/palimpsest/pull/150) retains the immutable
+[source-fix report](https://github.com/Aadrika08/palimpsest/blob/7c8b85fc874dc41fb05bbd8a551e2d400097b0fa/docs/reports/puck-cpu-primary-import-failure-v1.md). Any later
+actual invocation requires a separately numbered, reviewed amendment, a fresh
+authenticated source capsule, current staged-byte checks and fresh resource
+admission, without speculative missing-import roster additions. Preparation01's
+worker source contains the old bootstrap and cannot be reused with the new source
+hash. Qualification01 stays failed and consumed, with no retry or attempt02 created.
 
 [Draft PR #149](https://github.com/Aadrika08/palimpsest/pull/149) retains the
 [source report](https://github.com/Aadrika08/palimpsest/blob/acd14e2861f8e0ec0209085dbd6b2ec302b26b64/docs/reports/puck-cpu-held-allocation-v1.md).
@@ -60,9 +103,10 @@ with 24 source pins, 16 input roles and the prospectively selected CPU roster
 `numpy._distributor_init_local`, `org`. The reviewed standard-library auditor is
 58,090 B, SHA256 `19723b4ec19c6cd8fd29d38b5cbabab60f89c136ee37564f6e94175439b4eed9`;
 the external observer is frozen and reviewed. The control freeze is committed
-at `7d368ebb91ee7e1d917190ae936e4cca12835618`. Qualification configuration is not
-frozen: the real preparation result and passing independent audit must exist
-first, with no placeholder preparation hash.
+at `7d368ebb91ee7e1d917190ae936e4cca12835618`. At that source checkpoint,
+qualification configuration was not frozen: real preparation and a passing audit
+were required first, without a placeholder hash. The subsequent actual outcomes
+are recorded above.
 
 Six accepted SITE metadata leaves exceed the old inherited 16 MiB file limit;
 the largest is 432,273,704 B. The prospective correction before any actual
@@ -76,14 +120,16 @@ The auditor's pure metadata plan matches the parent: 27,255 files / 1,318,494,34
 71 distributions, directory counts 2,074/2/0/0 and two prospective cache bindings.
 Those native creators remain unqualified on the actual held stack.
 
-Independent review permits one actual PREPARE after fresh resource admission,
+Independent review permitted one actual PREPARE after fresh resource admission,
 rechecking frozen control/source/input pins and confirming absent paths.
-The preflight at 2026-10-15 13:08:01.377406 UTC is **NOT_ADMITTED**: MemAvailable
-2,852,470,784 B is below the 4,294,967,296 B preparation floor. Project and `/tmp`
-free bytes are 99,317,600,256 / 4,988,243,968; all 40 source/input pins match and
-all actual allocation paths are absent. No production parent or namespace was
-started, and the actual preparation allocation remains unused. Refresh admission;
-qualification retains its separate 2 GiB RAM floor. No actual installed-stack,
+The earlier preflight at 2026-10-15 13:08:01.377406 UTC was **NOT_ADMITTED**:
+MemAvailable 2,852,470,784 B was below the 4,294,967,296 B preparation floor.
+Project and `/tmp` free bytes were 99,317,600,256 / 4,988,243,968; all 40
+source/input pins matched and all actual allocation paths were absent.
+No production parent or namespace started at that refused preflight; the
+allocation was then unused. The admitted preparation and failed qualification
+above are subsequent evidence. Qualification retains its separate 2 GiB RAM floor
+and any future invocation needs fresh admission. No passing held-runtime/native,
 operator, renderer, model, collection or scientific qualification is claimed.
 All 33 statuses, seven gates and pending scientific/catalog decisions are unchanged.
 
