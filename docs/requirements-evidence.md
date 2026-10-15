@@ -182,22 +182,27 @@ unchanged; no final execution/runtime GO is claimed.
 
 
 The [execution goal](plans/simulation-release-execution-goal.md#active-objective-and-next-deliverable)
-retains the full seven-gate simulation release. [Draft PR #132](https://github.com/Aadrika08/palimpsest/pull/132),
-head `8b6d798`, adds the bounded numerical-import characterizer and fixed parent.
-Final source `f3a70fc` passes 50 focused checks (2.86s). The single installed-stack
-observation failed exact-environment admission during MuJoCo import after observing
-NumPy2.2.5 and Torch2.9.0+cu128: exit1, 1.825320657s, sampled633090048B and no
-matching group survivors. An independent failure-evidence audit checked all eleven
-lossless records and all five source hashes. No full cache/export/maps census,
-original-model inference, physics, collection, study or browser workflow ran.
-The [source/evidence report](https://github.com/Aadrika08/palimpsest/blob/research/puck-v3-runtime-interop/docs/reports/puck-v3-runtime-interop-source.md)
-retains exact inputs, outcome and scope. EGL source explains a likely mutation;
-without a captured delta it is not sole-mutation proof. Do not automatically retry.
-Next implement bounded failure diagnostics and a separately numbered development
-environment amendment, reviewing its exact source/request before another invocation.
-Prelaunch free space was 99,769,405,440 bytes at 15 October 01:17:25 UTC, above the
-unchanged memory floor. Default pytest retains ten FastAPI/httpx collection errors;
-no full-suite pass is claimed. All seven release statuses and three prospective
+retains the full seven-gate simulation release. [Draft PR #133](https://github.com/Aadrika08/palimpsest/pull/133),
+head `8cca8ba`, adds reviewed bounded failure diagnostics and the explicit EGL
+development amendment. Root63 focused checks pass3.48s; independent source/freeze
+review passes13 amendment fixtures0.63s. Separately numbered observation02 passed
+ordinary NumPy2.2.5/Torch2.9.0+cu128/MuJoCo3.3.6 imports: exit0,1.569026201s,
+sampled637472768B, no matching group survivors, detected drift or diagnostic
+errors. Independent audit validated ten lossless records309449dataB and all derived
+cache/image row lists. The observed1131cacheentries,52numericalexceptional rows,
+12numericalmodule subclasses and105persistent images define the next finite
+held-import source work; they do not admit a runtime profile or collection.
+PR #132's environment failure and all fourteen original artifacts remain intact.
+The [source/evidence report](https://github.com/Aadrika08/palimpsest/blob/research/puck-v3-runtime-amendment-02/docs/reports/puck-v3-runtime-amendment-02-source.md)
+retains exact inputs, results, scope and audit limitations. No model/inference,
+renderer/physics, held finder, owner, collection, fitting, study or browser workflow
+ran. Prelaunch free space was99,738,644,480bytes at15October01:37:44UTC, above the
+unchanged memory floor. Memory source-only inspection identified condition seals
+then whole-case close as the next code gaps; its actual qualification approval
+and successful descriptor remain pending. Next implement finite import/class/
+replacement bindings and authored native compatibility before separate held-runtime
+admission. Default pytest retains ten FastAPI/httpx collection errors1.78s; no
+full-suite pass is claimed. All seven release statuses and three prospective
 decisions remain unchanged.
 
 ## Functional matrix
