@@ -1,0 +1,94 @@
+{
+  "acceptance_auditor": {
+    "error": "Normal external transport exit required",
+    "external_elapsed_seconds": 0.06406971404794604,
+    "normal_return": true,
+    "passing_failure_preservation_audit": false,
+    "refused_before_post_stage_byte_checks": true,
+    "returncode": 1,
+    "status": "FAIL",
+    "terminal": "acfed5",
+    "timed_out": false
+  },
+  "all_seven_release_gates_open": true,
+  "baseline_after_absent": true,
+  "binding": {
+    "all_four_imports_completed": false,
+    "attributes": [
+      "_autograd"
+    ],
+    "component_index": 0,
+    "export": "torch._C._autograd",
+    "missing_component": "_autograd",
+    "native_create_returned": true,
+    "native_exec_module_completed": false,
+    "other_export_rows_not_qualified": true,
+    "phase": "native_create",
+    "producer": "torch._C",
+    "replacement_producer_or_phase_selected": false
+  },
+  "collection_authorized": false,
+  "configuration_sha256": "6fa33667eb5c4d5ebe94f13a8e485be8ef3b2929f29c30ad1ee479baccfe47b8",
+  "consumed": true,
+  "evidence_index": {
+    "path": "puck-cpu-held-qualification-04/evidence-index.json",
+    "sha256": "c5072a09eabf65302ca9343ba7ece33c85d6446965b9ddccaf3b6a361d46fec3",
+    "size_bytes": 15188
+  },
+  "executable": false,
+  "freeze_sha256": "a34d83b15c41d8833daa9e28b63b406dd094472b41943d910326d663d4fc64e7",
+  "frozen_controls_commit": "de2d4ca49f4d784ea1128824a19ea6d8d912e853",
+  "kind": "puck-cpu-held-qualification04-actual-report-v1",
+  "native_authorized": false,
+  "observer": {
+    "elapsed_seconds": 43.40152189100627,
+    "normal_return": true,
+    "returncode": 1,
+    "terminal": "cb9b93",
+    "timed_out": false
+  },
+  "preflight": {
+    "disk_available_bytes": 98637963264,
+    "mem_available_bytes": 3096526848,
+    "tmpfs_available_bytes": 3579727872
+  },
+  "process_custody": {
+    "all_three_tracked_identities_absent": true,
+    "at": "2026-10-15T16:32:02.815077+00:00",
+    "terminal": "dd005e"
+  },
+  "qualification05_created": false,
+  "qualification_claims": [],
+  "result_sha256": "d2db585f4851b916e7c632ca268d7527ce4604e6949918ea6d89408ddbcc3889",
+  "runtime_qualified": false,
+  "source_code_commit": "277a634db58220c42bd69dcef0fc20f2fc72f80a",
+  "source_inspection": {
+    "inference": "The required _autograd module is created by a later _autograd_init callback during torch.autograd Python initialization, so the current native_create check is premature.",
+    "installed_autograd_initializer_matches_exact_upstream": true,
+    "limits": [
+      "The actual04 trace ends before that later callback.",
+      "Package git_version and source matching are not linked-binary provenance.",
+      "No alternative closure phase is accepted; cache admission before parent completion needs proof.",
+      "Do not move all36 rows, skip any row, or silently retry04."
+    ],
+    "package_git_version": "0fabc3ba44823f257e70ce397d989c8de5e362c1",
+    "python_initializer_call_line": 558,
+    "python_initializer_export_import_line": 562,
+    "python_initializer_sha256": "0439167a6a8a4c50f73457c9961698611109638a1b146f0a084fa1ee3825273d",
+    "scope": "static source-supported explanation; not a runtime call trace or linked-binary build proof",
+    "upstream_creation": {
+      "def_submodule_line": 135,
+      "function_line": 102,
+      "path": "torch/csrc/autograd/init.cpp"
+    },
+    "upstream_method_mapping": {
+      "line": 1564,
+      "path": "torch/csrc/Module.cpp"
+    }
+  },
+  "status": "FAIL",
+  "study_authorized": false,
+  "transport_sha256": "252502f0b6608a6b114efb5fb3c85e3bd04563e23402bfcd3b1b66e94c0479a4",
+  "worker_stderr_bytes": 2914,
+  "worker_stdout_bytes": 0
+}

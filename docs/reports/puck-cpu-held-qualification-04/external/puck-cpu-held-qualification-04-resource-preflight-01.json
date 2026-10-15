@@ -1,0 +1,63 @@
+{
+  "actual04_invoked": false,
+  "at": "2026-10-15T16:30:08.855582+00:00",
+  "byte_scope": "dated pre04 data-only census9f19b42f at16:06:25UTC; parent must freshly verify staged bytes under custody before imports",
+  "configuration_sha256": "6fa33667eb5c4d5ebe94f13a8e485be8ef3b2929f29c30ad1ee479baccfe47b8",
+  "freeze_sha256": "a34d83b15c41d8833daa9e28b63b406dd094472b41943d910326d663d4fc64e7",
+  "historical_live_script_comparisons_excluded": 10,
+  "kind": "puck-cpu-held-qualification04-preflight-v1",
+  "output_paths_absent": [
+    "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-held-qualification-04",
+    "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-held-qualification-04-external-cli.stdout",
+    "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-held-qualification-04-external-cli.stderr",
+    "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-held-qualification-04-external-cli-transport.json",
+    "/tmp/palimpsest-puck-cpu-held-qualification-04-audit-01.json"
+  ],
+  "prior_baseline_after_absent": true,
+  "prior_qualifications01_02_03_failed_consumed_preserved": true,
+  "qualification_claims": [],
+  "required": {
+    "disk_available_bytes": 4294967296,
+    "mem_available_bytes": 2147483648,
+    "tmpfs_available_bytes": 268435456
+  },
+  "resource": {
+    "disk_available_bytes": 98637963264,
+    "mem_available_bytes": 3096526848,
+    "tmpfs_available_bytes": 3579727872
+  },
+  "staged_roots": [
+    {
+      "device": 55,
+      "inode": 1831915,
+      "mode": "0700",
+      "path": "/tmp/palimpsest-puck-cpu-held-01/inputs/root-0000"
+    },
+    {
+      "device": 55,
+      "inode": 1831916,
+      "mode": "0700",
+      "path": "/tmp/palimpsest-puck-cpu-held-01/inputs/root-0001"
+    },
+    {
+      "device": 55,
+      "inode": 1831917,
+      "mode": "0700",
+      "path": "/tmp/palimpsest-puck-cpu-held-01/inputs/root-0002"
+    },
+    {
+      "device": 55,
+      "inode": 1831918,
+      "mode": "0700",
+      "path": "/tmp/palimpsest-puck-cpu-held-01/inputs/root-0003"
+    }
+  ],
+  "status": "ADMITTED",
+  "verified_all_prior_capsules": 54,
+  "verified_controls": 6,
+  "verified_current_byte_pins": 4,
+  "verified_current_source_input_acceptance_pins": 44,
+  "verified_historical_capsules": 34,
+  "verified_immutable_original_prior_artifacts": 83,
+  "verified_prior_archive_artifacts": 95
+}
