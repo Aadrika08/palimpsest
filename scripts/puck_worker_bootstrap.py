@@ -337,6 +337,28 @@ class HeldWorkerBootstrap:
         q=self._reg.get('qualification',{})
         self._missing_policy_version=q.get('version',0)
         self._negative_imports=tuple(q.get('negative_imports',()))
+        self._trace_enabled=self._missing_policy_version==3
+        self._trace_started=time.monotonic(); self._trace_count=0; self._trace_bytes=0
+
+    def _phase(self, phase):
+        # Diagnostic only: losing trace data must not replace the real outcome.
+        if not self._trace_enabled: return
+        try:
+            if type(phase) is not str or len(phase)>512:
+                self._trace_enabled=False; return
+            elapsed=time.monotonic()-self._trace_started
+            if not math.isfinite(elapsed) or elapsed<0:
+                self._trace_enabled=False; return
+            raw=canonical(dict(kind='puck-worker-phase-v1',diagnostic_only=True,
+                phase=phase,sequence=self._trace_count+1,elapsed_seconds=elapsed))+b'\n'
+            if self._trace_count>=24 or self._trace_bytes+len(raw)>16*1024:
+                self._trace_enabled=False; return
+            self._trace_count+=1; self._trace_bytes+=len(raw)
+            if os.write(2,raw)!=len(raw): self._trace_enabled=False
+        except Exception:
+            self._trace_enabled=False
+        except BaseException as error:
+            self._fail(error); raise
 
     def _clock(self):
         if time.monotonic() >= self._deadline: raise TimeoutError('Fresh worker deadline exhausted')
@@ -398,6 +420,7 @@ class HeldWorkerBootstrap:
         if self._state != 'new': raise RuntimeError('Fresh worker bootstrap is one-shot')
         try:
             self._clock()
+            self._phase('bootstrap.enter')
             flags = sys.flags
             if not (flags.isolated and flags.no_site and flags.dont_write_bytecode and not flags.optimize):
                 raise ValueError('Fresh isolated no-site no-bytecode worker required')
@@ -441,7 +464,9 @@ class HeldWorkerBootstrap:
                 raise ValueError('Dedicated worker session/group required')
             self._meta_path = list(sys.meta_path); self._finder = _SourceFinder(self)
             sys.meta_path.insert(0, self._finder); self._state = 'active'
+            self._phase('source.ready')
             if self._reg['version'] >= 2:
+                self._phase('dependencies.enter')
                 from palimpsest.puck_dependency_imports import DependencyImports, HeldDependencyNamespace
                 dep = self._reg['dependencies']
                 raw = _read_initial(dep['path'], dep['sha256'], maximum=16*MiB)
@@ -458,7 +483,8 @@ class HeldWorkerBootstrap:
                     raise ValueError('Four-import qualification requires admitted v3 tmpfs dependency custody')
                 if self._missing_policy_version>=2:
                     provider.require_absent_imports(self._negative_imports)
-            self.recheck(); return self
+                self._phase('dependencies.ready')
+            self.recheck(); self._phase('bootstrap.ready'); return self
         except BaseException as error: self._fail(error); raise
 
     def _census(self):
@@ -610,15 +636,18 @@ class HeldWorkerBootstrap:
 
     def invoke(self):
         try:
+            self._phase('entry.enter')
             self.recheck()
             qualification=self._reg['version']==3
             module = __import__(QUALIFICATION_ENTRY if qualification else ENTRY,
                 fromlist=['qualify' if qualification else 'preflight'])
-            self.recheck(); result = module.qualify(self) if qualification else module.preflight(self); self.recheck()
+            self.recheck(); result = module.qualify(self) if qualification else module.preflight(self)
+            self._phase('entry.returned'); self.recheck()
             if type(result) is not dict or len(canonical(result)) > 64*1024:
                 raise ValueError('Bounded source-preflight result required')
             # Result data cannot overwrite receipt identity or authority fields.
             receipt = self.snapshot(); receipt['entry_result'] = copy.deepcopy(result)
+            self._phase('entry.ready')
             return receipt
         except BaseException as error:
             self._fail(error)
@@ -630,9 +659,11 @@ class HeldWorkerBootstrap:
         if exc is not None:
             self._fail(exc); return False
         if self._state != 'active': raise RuntimeError('Failed bootstrap cannot close successfully')
+        self._phase('close.enter')
         self.recheck(); error = self._close()
         if error is not None: raise error
         self._clock()
+        self._phase('close.ready'); self._clock()
 
 
 def main():

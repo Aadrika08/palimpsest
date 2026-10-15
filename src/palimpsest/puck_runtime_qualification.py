@@ -21,10 +21,14 @@ def qualify(admission):
     # initializer can mutate the registration. Legacy descriptors keep v1 data.
     expected=(tuple((name,config['expected_versions'][name]) for name in CPU_MODULES)
               if cpu else None)
+    # Earlier admitted bootstrap owners have no diagnostic hook.
+    phase=getattr(admission,'_phase',None) if cpu else None
     rows=[]
     for index,name in enumerate(CPU_MODULES if cpu else MODULES):
         admission.recheck(); started=time.monotonic()
+        if phase is not None: phase('import.'+name+'.enter')
         module=importlib.import_module(name)
+        if phase is not None: phase('import.'+name+'.returned')
         admission.recheck()
         namespace=types.ModuleType.__dict__['__dict__'].__get__(module)
         version=namespace.get('__version__')
