@@ -38,7 +38,7 @@ mutation; unknown/declared-but-unprepared names; helper dispatch tampering.
   strict finite schema and phase integration; green existing v1 regressions.
 - [x] Task2: authored C RED/GREEN origin proof preserving v1, explicit v2 loader
   integration and unknown persistent-image rejection; record host limitations.
-- [ ] Task3: complete native-create export fixture and generated-factory mutation
+- [x] Task3: complete native-create export fixture and generated-factory mutation
   negatives, exact candidate profile covering 52 observed exceptional rows, source
   closure/dispatch regression; focused regression, full-suite attempt, one fresh
   whole-branch review and one RED/GREEN important-finding pass if required.
@@ -70,3 +70,10 @@ factory/method code, local name/base and captured class identities. It does not
 prove arbitrary construction provenance against malicious in-process package code;
 claiming isolation would invalidate qualification. Native directory origin likewise
 trusts initialization and detects persistent mismatches after a possible race.
+
+Final review:601ee9e had3 Important findings, no Critical/Minor. All reproduced in
+six REDs6.85s and fixed in a57cb0d; six GREEN6.65s, full affected149pass61.66s;
+default suite10 FastAPI/httpx collection errors1.83s. No second review or final
+independent-source GO claimed. Rulings and boundary limitations are retained in
+docs/reports/puck-v3-held-import-profile-review.md. Next: publication/goal sync,
+then a separately frozen/reviewed actual held-runtime qualification configuration.

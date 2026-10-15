@@ -3,7 +3,7 @@
 ## Boundary and configuration
 
 Base: `8cca8ba42c2eb600bb3f401f380de34655bcbb41` (draft PR133).
-Implementation commits: `c615f28`, `60b9438`, `be53322`; authored RED contracts
+Implementation commits: `c615f28`, `60b9438`, `be53322`, `a57cb0d`; authored RED contracts
 were retained in `2bf5da5`. Worktree: `/home/utkarsh/.codex/worktrees/0071/brain`,
 branch `research/puck-v3-held-import-profile`. Git identity is repository-local
 Aadrika Maurya <aadrikamaurya@gmail.com>; publication account Aadrika08.
@@ -34,6 +34,10 @@ remain open. The production preflight entry stays preflight-only.
   arbitrary class construction provenance against malicious in-process code.
 - Class/MRO namespace slot and method-code identities and raw module/spec/loader/
   file/package/search metadata are rechecked without framework metadata hooks.
+  Replacement originals retain independent metadata seals. Direct module/class/
+  function delegate edges captured at phase close keep exact reference identities
+  (at most4,096 per virtual seal); new data attributes remain possible. Helper
+  receiver/class identity and instance shadows are checked before callbacks.
   Mutable package data and arbitrary global/default/closure state are not a hostile
   in-process isolation boundary. Local support function/class dispatch is checked
   before reconciliation runs and before the complete cache census admits names.
@@ -90,7 +94,12 @@ with `PYTHONDONTWRITEBYTECODE=1`, `PYTHONPATH=src:.:tests`, no installs and pyte
 | Expanded profile boundary GREEN | 33 passed, 36.70s |
 | Candidate and expanded regression | 141 passed, 53.50s |
 | Exact module/spec-loader identity RED | 2 failed, 2.32s; equal-comparing loaders admitted |
-| Final root dependency/profile/native/bootstrap regression | 143 passed, 55.66s |
+| Pre-review root dependency/profile/native/bootstrap regression | 143 passed, 55.66s |
+| Independent sequential profile/native slice on601ee9e | 49 passed, 38.09s |
+| Independent review regression RED | Six failed, 6.85s |
+| Single review fix-pass GREEN | Six passed, 6.65s |
+| Final review-fixed root affected regression on a57cb0d | 149 passed, 61.66s |
+| Final default repository suite on a57cb0d | Ten collection errors, 1.83s; not a full-suite pass |
 | Default repository suite | Ten collection errors, 1.87s; not a full-suite pass |
 
 The exact final focused command is:
@@ -111,8 +120,21 @@ test_verify_body_runtime.py, test_verify_body_turns.py, test_verify_task_phases.
 and test_verify_task_starts.py lack httpx. These are the same documented environment
 limits as PR133; dependencies were not changed. No broad pass is claimed.
 
-Fresh whole-branch source review is pending at this report revision. Account quota
-telemetry is unavailable, so no remaining quota percentage is asserted.
+Fresh whole-branch review of `601ee9e` found three Important defects: retained
+original metadata, proxy delegate identity and instance helper shadowing. No
+Critical or Minor findings were reported. Root reproduced all three plus the
+other new helper receiver paths in six failing tests, then fixed them in one pass
+and ran149 affected checks. The fixed source is `a57cb0d`; it has not had a second
+independent review. The initial review verdict remains changes requested, with
+its reported findings addressed by explicit RED/GREEN proof rather than a claimed
+independent final GO. See [review and rulings](puck-v3-held-import-profile-review.md).
+
+The reviewer's initial concurrent run recorded48 passes/one held-ancestor refusal
+in37.62s while separate temporary-directory probes ran. The reviewer attributed
+the refusal to concurrent /tmp creation. That contaminated result is retained;
+the sequential49-pass38.09s run is the independent test evidence. Neither run is
+an installed-stack observation or scientific-attempt retry. Account quota telemetry
+is unavailable, so no remaining quota percentage is asserted.
 
 ## Next action and outstanding project work
 
