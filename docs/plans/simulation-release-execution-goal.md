@@ -29,9 +29,9 @@ pass a controller capability gate. Tiny fixtures, package metadata and source
 test counts cannot satisfy either actual-runtime exit below.
 
 1. **Prepare the installed runtime.** The pinned package payloads and wheel RECORD
-   entries now have actual audited evidence in PR #141. Build and hash the missing
-   python-louvain wheel under its own
-   bounded configuration; measure the installed namespace and retain licence
+   entries have actual audited evidence in PR #141. PR #142 adds the built and
+   independently verified python-louvain wheel: all 71 candidate wheel artifacts
+   are now available. Measure the complete installed namespace and retain licence
    contents. Specify the exact interpreter, native/EGL paths, staging and custody.
    Finish the CPU preparation/qualification parent using the reviewed four-import
    entry. This produces a reviewable executable configuration, not a passing run.
@@ -88,12 +88,13 @@ substitute for numerical results, capability, actual browser use or human accept
 | 5 | Integrate and experience the product. | One candidate supports the lab and all six artworks; actual browser, mapping, replay, export, interruption and endurance checks pass. |
 | 6 | Accept and deliver that candidate. | Artistic/operator sessions, final verification and all seven gate records are complete; the installation and evidence package are reproducible. |
 
-**Current next action:** produce the missing verified python-louvain wheel.
-Authenticate the proposed exact setuptools backend, finish the authored
-source/write-routing and isolation preflights, and review the exact bounded
-configuration before building. Then finish the installed namespace, licences,
-native paths and executable CPU qualification configuration. The next actual
-runtime result must satisfy steps 1–2 above before episode collection begins.
+**Current next action:** prepare and measure the complete installed CPU runtime.
+Use only the 71 exact verified wheel artifacts in a fresh bounded installation;
+retain its file inventory, hashes and licence contents. Finish the interpreter,
+stdlib, native/EGL paths, tmpfs custody and executable four-import qualification
+configuration, using the measured installed sizes for fresh resource admission.
+Review each actual configuration before invocation. The next runtime result must
+satisfy steps 1–2 above before episode collection begins.
 Review the family qualification binding in parallel without opening a new
 scientific allocation. The directory-enumeration source fix is complete within
 its tested scope; the first actual family admission remains open.
@@ -105,9 +106,9 @@ source-hardening programme or count test totals as release progress.
 
 ## Current starting point and decisions
 
-At **2026-10-15 06:30:08 UTC**, the project filesystem has **98,974,609,408 bytes
-(92.18 GiB) available**. The same metadata-only check reports **4,768,952,320 bytes
-(4.44 GiB) MemAvailable**. Disk clearance removes the reported disk blocker;
+At **2026-10-15 07:17:50 UTC**, the project filesystem has **98,701,819,904 bytes
+(91.92 GiB) available**. The same metadata-only check reports **5,615,665,152 bytes
+(5.23 GiB) MemAvailable**. Disk clearance removes the reported disk blocker;
 available RAM is transient and this snapshot does not admit the complete CPU/EGL
 closure. Keep archives and build scratch on the project disk; stage only the exact
 required runtime inputs on tmpfs under its reviewed native-identity policy.
@@ -122,6 +123,16 @@ RAM shortfall in PR #138 remains a historical observation, not a new measurement
   audited CPU package metadata and a reviewed four-import worker source route.
   The complete executable configuration and actual installed-stack qualification
   remain unfinished. Metadata sizes are estimates, not installed-payload proof.
+- [Draft PR #142](https://github.com/Aadrika08/palimpsest/pull/142) closes the
+  missing wheel artifact gap. Source-wheel invocation 02 exited 0 in 3.218s;
+  namespace, authored backend fixture and target build all completed with empty
+  worker groups. The portable wheel is 9,458B, with nine fully verified members.
+  All nine independent terminal-audit checks pass, findings empty; 236 affected
+  source checks pass. The [actual report and wheel](https://github.com/Aadrika08/palimpsest/blob/research/puck-python-louvain-build-v1/docs/reports/puck-python-louvain-build-02.md)
+  retain exact source/configuration, complete raw evidence and the audit program.
+  Invocation 01 remains a preserved namespace-launch failure; its independent
+  failure-audit stdout bookkeeping error is recorded. Packages remain uninstalled
+  and no numerical runtime, study, controller or release gate is qualified.
 - [Draft PR #141](https://github.com/Aadrika08/palimpsest/pull/141) supplies actual
   full-payload evidence:71 archives/385,328,518B,70 wheels with complete RECORD
   checks, and an independent terminal audit of all26,913 regular wheel members.
@@ -130,8 +141,8 @@ RAM shortfall in PR #138 remains a historical observation, not a new measurement
   retains raw outcomes, exact source/configuration, full checksum index and the
   independent audit program. The
   [source-wheel proposal](https://github.com/Aadrika08/palimpsest/blob/research/puck-cpu-payload-verification-v1/docs/plans/puck-python-louvain-build-v1-proposal.md)
-  selects an exact backend candidate; acquisition/build/installation of that
-  backend remains prospective. No numerical runtime or release gate is qualified.
+  recorded the backend candidate; PR #142 above adds actual backend verification
+  and the accepted target wheel. No numerical runtime or release gate is qualified.
 - [Draft PR #140](https://github.com/Aadrika08/palimpsest/pull/140) resolves the
   directory-enumeration gap: all33 authored condition checks pass on Btrfs and
   tmpfs, with369 affected legacy checks and88 census/admission/profile checks.

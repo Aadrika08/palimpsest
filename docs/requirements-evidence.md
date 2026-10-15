@@ -25,6 +25,19 @@ no automatic actual retry or new scientific-study attempt follows. The previous
 [execution/evidence history](plans/simulation-release-execution-goal-history-2026-10-15.md)
 is preserved byte-identically. All 26 requirement and seven gate statuses are unchanged.
 
+[Draft PR #142](https://github.com/Aadrika08/palimpsest/pull/142) closes the
+missing CPU wheel artifact gap: the portable python-louvain wheel is 9,458B,
+with nine fully verified members. Separately reviewed invocation 02 exited 0 in
+3.218s after the actual namespace probe and authored backend fixture passed;
+all worker groups were empty. All nine independent terminal-audit checks pass
+with no findings, and 236 affected source checks pass in 3.80s. The
+[actual report and artifact](https://github.com/Aadrika08/palimpsest/blob/research/puck-python-louvain-build-v1/docs/reports/puck-python-louvain-build-02.md)
+retain raw results, exact source/configuration and the independent audit program.
+Invocation 01 and its audit limitations remain explicit, failed and consumed.
+All 71 candidate wheel artifacts are now available; complete installed namespace,
+licences/native/EGL/tmpfs custody and actual four-import runtime qualification
+remain next. This closes no release gate; all 33 statuses remain unchanged.
+
 [Draft PR #141](https://github.com/Aadrika08/palimpsest/pull/141) closes the CPU
 archive-payload verification gap with one actual acquisition:71 archives,
 385,328,518B,55.276s and exit0. Independent terminal audit checks all70 wheels,
@@ -33,8 +46,8 @@ no worker-group survivors or matching acquisition routes remain. The
 [report](https://github.com/Aadrika08/palimpsest/blob/research/puck-cpu-payload-verification-v1/docs/reports/puck-cpu-payload-verification-v1.md)
 retains exact raw outcomes, source/configuration, audit program and checksums.
 135 affected source checks and70 legacy checks pass; default pytest retains its
-ten FastAPI/httpx collection errors. The next source-wheel build is prospective;
-packages remain uninstalled, actual numerical runtime unqualified and all33
+ten FastAPI/httpx collection errors. Newer PR #142 above closes the source-wheel
+gap; packages remain uninstalled, actual numerical runtime unqualified and all33
 requirement/release statuses unchanged. No consumed numerical allocation was retried.
 
 [Draft PR #140](https://github.com/Aadrika08/palimpsest/pull/140) resolves the measured
@@ -57,8 +70,9 @@ limits. This implementation milestone and all seven release gates remain open.
 [Draft PR #138](https://github.com/Aadrika08/palimpsest/pull/138) retains independently
 audited CPU metadata:70 wheels/71 candidate distributions,1,304,650,469 declared
 expanded bytes and26,913 files. That assessment left full payload verification open;
-the newer package-only result above closes it. python-louvain remains source-only;
-installed-size/licence/native/render closure and RAM/staging admission remain open.
+the newer package-only result above closes it. python-louvain was source-only in
+that assessment; PR #142 supplies its actual verified wheel. Installed-size/licence/
+native/render closure and RAM/staging admission remain open.
 The retained assessment snapshot fails the proposed wheel-only RAM planning scenario;
 the refreshed goal records current resources without treating them as admission. A reviewed
 qualification descriptor-v3 now requires tmpfs dependency-v3 and fixed NumPy/Torch/
