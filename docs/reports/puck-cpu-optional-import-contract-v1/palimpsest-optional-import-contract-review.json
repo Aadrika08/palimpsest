@@ -1,0 +1,324 @@
+{
+  "actual05_evidence": {
+    "basis": "Previously verified failure review plus reread raw05 stderr; no new vendor source inspection or execution in this review.",
+    "consumed": true,
+    "first_failure": "Unexpected pynvml request at held Torch CUDA initializer line63; optional ImportError caught by vendor, after bootstrap poison.",
+    "four_imports_completed": false,
+    "four_row_creator_closure_proven": false,
+    "later_symptom": "torch.cuda.memory missing exception after teardown. Memory is registered and its source is present with the accepted original/staged hash; this does not justify installing a package.",
+    "ordinary_observation_limit": "Observation02/03 terminal cache/maps and top-level completed imports omit attempted missing requests. Neither report establishes absence of additional optional attempts."
+  },
+  "alternatives": [
+    {
+      "decision": "Reject as admission for another runtime attempt.",
+      "id": "name_only_unreviewed_patch",
+      "reason": "Adding only pynvml addresses a confirmed first failure but supplies no finite request/catch inventory, meaningful regression or coverage argument. It may simply move discovery to the next consumed allocation."
+    },
+    {
+      "condition": "This is a proposed globally scoped exact-name absence policy, not caller-exclusive denial or complete path coverage. Do not infer next-run success.",
+      "decision": "Recommended smallest implementation after the proof gates below.",
+      "id": "reviewed_exact_negative_roster",
+      "reason": "Reuse current bootstrap/provider. Freeze only evidence-supported optional absence names and keep all undeclared misses fatal. This broadens tolerated missing conditions, while adding no new positive import provider or ambient search path.",
+      "tentative_confirmed_name_delta": [
+        "pynvml"
+      ],
+      "tentative_roster_if_no_additional_reviewed_names": [
+        "numpy._distributor_init_local",
+        "org",
+        "pynvml",
+        "torch._rocm_init"
+      ]
+    },
+    {
+      "decision": "Defer unless caller-exclusive semantics become an explicit requirement.",
+      "id": "caller_scoped_runtime_denial_descriptor",
+      "reason": "Would add schema, authenticated frame/code attribution, direct/relative/importlib/native-origin handling, immutable site bindings, event receipt and independent audit complexity. Denial does not grant a positive import capability; reviewed caller provenance is sufficient for the recommended global exact-name policy. A filename/line string or a naive stack walk alone is not authenticated caller proof."
+    },
+    {
+      "decision": "Conditional evidence step if the source survey leaves unresolved attempts relevant to this fixed route.",
+      "id": "separate_bounded_attempt_observation",
+      "reason": "A separately reviewed ordinary observation can record attempted request/outcome events without relaxing qualification. It must preserve normal import semantics, bound event count/bytes/time, identify unattributable native/dynamic cases, and mark incomplete capture. A cache snapshot, a builtins-only wrapper, or a finder that logs a request without its final resolution outcome cannot alone claim complete attempted-miss coverage. No observation is authorized by this review."
+    },
+    {
+      "decision": "Reject.",
+      "id": "catch_all_missing_fallback_or_install_optional_packages",
+      "reason": "Catching every ImportError as benign, adding arbitrary host/site fallbacks, wildcard negatives or installing CUDA/pynvml changes the contract without source-backed necessity and can conceal real required-import or guard failures."
+    }
+  ],
+  "claims": {
+    "collection_authorized": false,
+    "executable": false,
+    "native_authorized": false,
+    "qualification_claims": [],
+    "runtime_qualified": false,
+    "study_authorized": false
+  },
+  "confirmed_current_contract": [
+    {
+      "fact": "Worker qualification v2/v3 already accepts1..128 sorted unique exact ASCII nonstdlib negative names, with bounded lengths, no wildcard, overlapping parent/child declarations or local-source overlap. Parent configurations03\u201305 additionally require their exact frozen three-name roster.",
+      "refs": [
+        "scripts/puck_worker_bootstrap.py:160",
+        "scripts/puck_worker_bootstrap.py:223",
+        "scripts/qualify_puck_cpu_held_runtime.py:195"
+      ]
+    },
+    {
+      "fact": "All declared negatives are checked before entry. Every requested declared name first passes import guard rechecks, then require_absent_imports for that exact request. Only after successful absence checking is expected_denial set and ModuleNotFoundError(name=fullname) raised without poisoning.",
+      "refs": [
+        "scripts/puck_worker_bootstrap.py:459",
+        "scripts/puck_worker_bootstrap.py:283",
+        "src/palimpsest/puck_dependency_files.py:449"
+      ]
+    },
+    {
+      "fact": "Absence rechecks active custody, signals and full held namespaces. It refuses overlap with mapped modules/namespaces/exports/native-cache declarations and physical Python, extension, directory/namespace or bytecode alternatives in all held package roots; child names also require a registered parent package/namespace. This is held-forest proof, not arbitrary host filesystem absence.",
+      "refs": [
+        "src/palimpsest/puck_dependency_files.py:453"
+      ]
+    },
+    {
+      "fact": "Undeclared nonstdlib import failure poisons admission, retains first_failure, closes holders and restores prior import dispatch. A vendor catch does not reset admission. Already executing vendor frames can continue until another failure/boundary; poison is not synchronous termination.",
+      "refs": [
+        "scripts/puck_worker_bootstrap.py:309",
+        "scripts/puck_worker_bootstrap.py:344",
+        "scripts/puck_worker_bootstrap.py:359",
+        "scripts/puck_worker_bootstrap.py:625"
+      ]
+    },
+    {
+      "fact": "The successful receipt records expected_missing_imports and a set of seen denied names. Parent and independent auditor require the exact registered roster and seen-name subset. It records neither counts, ordering nor requesting caller for each attempt, and does not claim all declared negatives were requested.",
+      "refs": [
+        "scripts/puck_worker_bootstrap.py:604",
+        "scripts/qualify_puck_cpu_held_runtime.py:416",
+        "scripts/audit_puck_cpu_held_runtime.py:525"
+      ]
+    }
+  ],
+  "current_review_checks": {
+    "new_allocation_invoked": false,
+    "production_files_edited": false,
+    "root_ast_survey_results_independently_not_assumed": true,
+    "runtime_or_vendor_imports_executed": false,
+    "selected_source_ast_parse": true,
+    "selected_source_byte_identity_between_worktrees": true,
+    "source_readonly_clean_head_confirmed": true,
+    "tests_executed": false,
+    "vendor_source_read_this_review": false
+  },
+  "current_source_branch_parent_reported": "research/puck-cpu-optional-import-contract-v1",
+  "current_source_head_parent_reported": "3af492540780190881aabea9e82c1c67b4accf9e",
+  "data_head": "3af492540780190881aabea9e82c1c67b4accf9e",
+  "data_worktree": "/home/utkarsh/.codex/worktrees/0071/brain",
+  "exact_touch_map_for_future_implementation_if_selected": [
+    {
+      "action": "Add one closed separately numbered successor identity/output and exact reviewed roster. Keep epochs03\u201305 roster constants/behavior unchanged. Carry every v5 publication/current-candidate branch into the successor where semantically required; keep exact historical source/input projection and immutable anchors. Worker registration can pass the roster through existing v3 schema; change result checks only for explicitly claimed seen-denial evidence.",
+      "path": "scripts/qualify_puck_cpu_held_runtime.py",
+      "symbols": [
+        "validate_configuration",
+        "allocation_output",
+        "validate_preparation_acceptance",
+        "run",
+        "worker_registration",
+        "validate_worker_result"
+      ]
+    },
+    {
+      "action": "Independently encode the closed successor and exact negative delta. Preserve v5 H-to-C candidate proof, historical dependencies and acceptance bytes, current source capsule selection, transport paths and worker receipts. Update every closed version/path selector and publication projection branch, not merely configuration validation.",
+      "path": "scripts/audit_puck_cpu_held_runtime.py",
+      "symbols": [
+        "configuration",
+        "allocation_output",
+        "preparation_epoch",
+        "worker",
+        "namespace_command",
+        "audit"
+      ]
+    },
+    {
+      "action": "If a successor is approved, extend only its closed exact kind/id/output maps. Preserve exclusive files, one invocation, fixed environment, limits and transport semantics.",
+      "path": "scripts/observe_puck_cpu_held_allocation.py",
+      "symbols": [
+        "observe"
+      ]
+    },
+    {
+      "action": "No change needed for a global exact-name roster amendment; existing v3 policy supports the case. Any caller-scoped/event-ledger redesign is a different, larger contract requiring new proof.",
+      "path": "scripts/puck_worker_bootstrap.py",
+      "symbols": [
+        "_parse",
+        "_SourceFinder.find_spec",
+        "HeldWorkerBootstrap.__enter__",
+        "_fail",
+        "snapshot"
+      ]
+    },
+    {
+      "action": "Reuse unchanged. Preserve pre-entry plus per-request full held-namespace absence checks and all declared/physical alternatives.",
+      "path": "src/palimpsest/puck_dependency_files.py",
+      "symbols": [
+        "HeldDependencyNamespace.require_absent_imports",
+        "HeldDependencyNamespace._require_absent_imports"
+      ]
+    },
+    {
+      "action": "No change; empty package search path and authenticated held dispatch stay intact.",
+      "path": "src/palimpsest/puck_dependency_imports.py",
+      "symbols": [
+        "_Loader.exec_module"
+      ]
+    },
+    {
+      "action": "Reuse existing exact top/relative/child, ambient fallback, undeclared poison, declared-present, callback-shadow and live-namespace mutation coverage. Add only the missing CUDA-shaped continued-import regression or place it in a focused new successor test file.",
+      "path": "tests/test_puck_expected_missing_imports.py"
+    },
+    {
+      "action": "Reuse the existing three-case declared-absent/undeclared-absent/declared-present fixture pattern; preserve its historical assertions.",
+      "path": "tests/test_puck_cpu_held_amendment03.py"
+    },
+    {
+      "action": "Keep exact03\u201305 roster and historical projection rejection tests; a new successor must not weaken them.",
+      "path": "tests/test_puck_cpu_held_amendment05.py"
+    },
+    {
+      "action": "Reuse authored end-to-end parent/observer/auditor fixture style. Proposed new successor unit/integration test files should verify the complete new route without installed packages and all old consumed artifacts unchanged.",
+      "path": "tests/test_puck_cpu_held_amendment05_integration.py"
+    },
+    {
+      "action": "Only after a decision: name new paths explicitly, bind reviewed source/roster/proof pins, retain candidateC and all16 input pins unless a separately justified change is approved, preserve the original four preparation anchors, and record no implicit retry. No files are created by this review.",
+      "path": "new separately numbered proposal/configuration/execution/freeze/admission controls"
+    }
+  ],
+  "examined_source_files_byte_identical_between_worktrees": true,
+  "kind": "palimpsest-optional-import-contract-architecture-review-v1",
+  "limitations": [
+    "This bounded review did not enumerate every reachable optional request or dynamic/native import path; root owns the separate AST survey.",
+    "Authored test names and expectations above are proposed verification, not results.",
+    "No new allocation, observation, global fallback, package installation or release qualification is authorized."
+  ],
+  "minimal_authored_regression_plan_not_run": [
+    {
+      "case": "declared_absent_cuda_shape",
+      "expected": "Authored torch.cuda module uses nested ModuleNotFoundError and outer ImportError handling for top-level pynvml, then imports registered torch.cuda.memory. With exact declaration, real isolated held worker completes four tiny authored imports, keeps active custody through the follow-up import, records pynvml denial, closes normally and grants no authority."
+    },
+    {
+      "case": "same_miss_undeclared",
+      "expected": "Same caught optional miss remains fatal; first cause contains pynvml even if follow-up memory/native import produces a secondary error, stdout contains no successful receipt."
+    },
+    {
+      "case": "declared_target_present",
+      "expected": "Mapped or physically present but unmapped pynvml Python/bytecode/extension/package-namespace alternative is refused before numerical initializer execution. Keep ambient-path sentinel unexecuted; denial never imports host code."
+    },
+    {
+      "case": "live_alternative_or_callback_tamper",
+      "expected": "Reuse existing tests proving a post-admission namespace change or shadowed absence callback poisons rather than benefiting from the exemption."
+    },
+    {
+      "case": "closed_successor_parent_auditor_roundtrip",
+      "expected": "Authored parent/observer/independent auditor agree on the exact new roster, output and historical publication projection. Reject wrong/extra/removed names, altered historical anchors/input/source sets, forged denied names and nonzero transport. Old03\u201305 configurations retain their exact policy; preserve failed allocations byte-for-byte."
+    }
+  ],
+  "necessary_proof_before_proposing_an_allocation": [
+    {
+      "item": "pinned_request_table",
+      "requirement": "For every proposed negative, record exact normalized fullname, direct/relative/importlib form, requesting module and pinned source path/hash with exact statement/catch location, branch/environment condition, expected exception type/name, and the ordinary fallback behavior after the catch. Separate confirmed executed05 request, source-possible requests and unsupported/unresolved requests."
+    },
+    {
+      "item": "caller_scope",
+      "requirement": "Review why each tolerated request is optional for the fixed CPU route. Keep caller provenance as evidence unless runtime caller-exclusive enforcement is explicitly selected. Do not label the existing set-only denied_imports receipt as per-request/caller history."
+    },
+    {
+      "item": "inventory_and_absence",
+      "requirement": "Bind roster proof to exact candidate module/namespace/export/native-cache mappings and complete held package inventories, interpreter/environment and stage identities. Require the existing pre-entry and per-request live absence checks; never replace them with static inventory lookup or importlib.util.find_spec in the host environment."
+    },
+    {
+      "item": "coverage",
+      "requirement": "Reconcile the root-owned finite AST survey with literal and dynamic import sites, exceptions, branch guards, unmapped files and native-generated requests. A source census can list potential sites but cannot prove runtime occurrence or all dynamic/native requests. Do not auto-allow every name inside an except ImportError block or infer closure from completed imports."
+    },
+    {
+      "item": "preflight",
+      "requirement": "Before any new real allocation, require meaningful authored fixtures, parent/auditor adversarial schema and history checks, finite current-byte resource/absence admission, exact independent review/freeze and one-shot execution controls. A prospective trace if needed is separately numbered and reviewed. Preserve05 and01\u201304 unchanged."
+    },
+    {
+      "item": "independent_auditor",
+      "requirement": "Keep auditor reconstruction independent of producer validation helpers. It must bind exact version/roster, registration, current/historical source epochs, original preparation anchors, H-to-C four-row candidate projection, transport normalexit and complete worker/creator/closure results. If a new acceptance claim requires pynvml actually requested, require its seen denial explicitly rather than assuming membership in the allowed roster proves occurrence."
+    }
+  ],
+  "prior_failure_review_pin": {
+    "path": "/tmp/palimpsest-held05-failure-review.json",
+    "sha256": "fb9d3dcbb92a7b6bb2c53a98ba0437655dda24c68c1686f28f70921e27fd3da7",
+    "size_bytes": 13279
+  },
+  "raw05_stderr_pin": {
+    "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-held-qualification-05/logs/stderr.log",
+    "sha256": "2b3774acb8b5946ebce7d9ee993d3ab4b48b576c3f8e1a73ac411fae4d24c048",
+    "size_bytes": 2509
+  },
+  "reviewed_at_utc": "2026-10-15T21:02:06.787089+00:00",
+  "root_parallel_work_note": "Parent reports a new branch with production bytes unchanged and only a proposed CUDA-shaped authored regression being written. This review neither executes nor claims that regression passes.",
+  "source_evidence_pins": [
+    {
+      "path": "scripts/puck_worker_bootstrap.py",
+      "sha256": "436b1ffe34b96fca166f6fb38022ad7392daef3517e58157092db2d9fd84c69f",
+      "size_bytes": 38375
+    },
+    {
+      "path": "src/palimpsest/puck_dependency_files.py",
+      "sha256": "d1ca386780212b174a6e931a8ac4ce88e68c31b27fb1c0e16346a2150560fca1",
+      "size_bytes": 33543
+    },
+    {
+      "path": "src/palimpsest/puck_dependency_imports.py",
+      "sha256": "e35b941c351971c15f225255170cd45530aa2304943fe2edd461b8d94080943b",
+      "size_bytes": 14868
+    },
+    {
+      "path": "scripts/qualify_puck_cpu_held_runtime.py",
+      "sha256": "c179bf7333409a19c02cf194d4b83a847053868561b08610b2fd755e5f0599cc",
+      "size_bytes": 56930
+    },
+    {
+      "path": "scripts/audit_puck_cpu_held_runtime.py",
+      "sha256": "5962e16b568633abff8916f6c1ee6c350087bc59f6bf1b5ff17d2983fbf3d229",
+      "size_bytes": 74689
+    },
+    {
+      "path": "scripts/observe_puck_cpu_held_allocation.py",
+      "sha256": "31c883c328ff1cf6db6e2209c52917010b80561f0065a8896ab98d56f9f11f53",
+      "size_bytes": 6393
+    },
+    {
+      "path": "tests/test_puck_expected_missing_imports.py",
+      "sha256": "1be19f6f88e83c3f41b97c39ed55ffe738963531cd1dc81199bf4d506c87d49c",
+      "size_bytes": 6098
+    },
+    {
+      "path": "tests/test_puck_cpu_runtime_entry.py",
+      "sha256": "4f3c63f3cf3c26419c88e08636bdb5c20c3884e866da783aa12fbfb30abd6b22",
+      "size_bytes": 9292
+    },
+    {
+      "path": "tests/test_puck_cpu_held_amendment03.py",
+      "sha256": "c95dfceefabf46086017e85c9f96c7c7654e38f01ac7cf026a4aa467b78ca2cc",
+      "size_bytes": 10195
+    },
+    {
+      "path": "tests/test_puck_cpu_held_amendment05.py",
+      "sha256": "e3f38f8f97b147cc9191b16a7e7eb1a4d7d555f9cc1719859655e97afcf17bf3",
+      "size_bytes": 22284
+    },
+    {
+      "path": "tests/test_puck_cpu_held_amendment05_integration.py",
+      "sha256": "00d7c29526c1a155ff0971d305ce2369e7b5d8b6192fa9b5a560ae7910f39366",
+      "size_bytes": 17641
+    },
+    {
+      "path": "tests/test_puck_worker_dependencies.py",
+      "sha256": "fb311232bcea45c52d9ba45a78361ab586c9025800a8bb72fd354870c75b5f09",
+      "size_bytes": 10502
+    }
+  ],
+  "source_head_verified_at_review_start": "22b4180459d0782f0dd5d591a0ef460e477107c9",
+  "source_worktree": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03",
+  "verdict": "REUSE_FINITE_ABSENCE_MECHANISM_REQUIRE_CONTRACT_PROOF_BEFORE_ANY_NEW_ALLOCATION",
+  "version": 1
+}

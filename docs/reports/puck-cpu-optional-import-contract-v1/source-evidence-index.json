@@ -1,0 +1,31 @@
+{
+  "collection_authorized": false,
+  "files": [
+    {
+      "path": "docs/reports/puck-cpu-optional-import-contract-v1/palimpsest-held05-optional-source-survey.json",
+      "sha256": "dfd35a621187ff9a1bb9f64de53aa0833f334a9600d055dd883b2c74cd704067",
+      "size_bytes": 1765809
+    },
+    {
+      "path": "docs/reports/puck-cpu-optional-import-contract-v1/palimpsest-held05-optional-source-survey.md",
+      "sha256": "958577cb5759af8182a1d0e9f3a399b91969326db88b0e205d079c8cbbbadb41",
+      "size_bytes": 7289
+    },
+    {
+      "path": "docs/reports/puck-cpu-optional-import-contract-v1/palimpsest-optional-numeric-callpaths.json",
+      "sha256": "12d73cc246e0e162fe13d86e636aa4990ce799f261f05cbc48c26c1a441d3f86",
+      "size_bytes": 21226
+    },
+    {
+      "path": "docs/reports/puck-cpu-optional-import-contract-v1/palimpsest-optional-import-contract-review.json",
+      "sha256": "fff25d859024d1d318482cdc64300eccec9d5835f004838d138ff88b363d8674",
+      "size_bytes": 19520
+    }
+  ],
+  "kind": "puck-cpu-optional-source-evidence-index-v1",
+  "qualification_claims": [],
+  "runtime_qualified": false,
+  "scope": "Offline source data only; no real06 allocation or invocation.",
+  "study_authorized": false,
+  "version": 1
+}
