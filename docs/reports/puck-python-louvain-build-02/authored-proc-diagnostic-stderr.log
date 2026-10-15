@@ -1,0 +1,12 @@
+Traceback (most recent call last):
+  File "/driver.py", line 169, in <module>
+    main()
+  File "/driver.py", line 160, in main
+    result = probe(sys.argv[2], sys.argv[3])
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/driver.py", line 89, in probe
+    readonly(path)
+  File "/driver.py", line 68, in readonly
+    fd = os.open(path, os.O_WRONLY | os.O_CREAT | os.O_EXCL, 0o600)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/proc/.palimpsest-write-refusal'
