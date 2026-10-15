@@ -1,0 +1,146 @@
+{
+  "accepted_installation": false,
+  "blanket_pyc_policy_nonconformance": true,
+  "bounds": {
+    "max_files": 40000,
+    "max_individual_bytes": 1073741824,
+    "max_site_bytes": 3221225472,
+    "wall_seconds": 180
+  },
+  "collection_authorized": false,
+  "derivative_inventory": {
+    "path": "inventory.json",
+    "sha256": "b9c54829b43ca84d2208eb685598523531eb74d14aff7c9475f2ee4a7c708c3e",
+    "size_bytes": 4922311
+  },
+  "derivative_licences_manifest": {
+    "path": "licences.json",
+    "sha256": "13e7a73a0f521ea13b974b97e8f3a39fff703c5f8e649e31f6904cae7b35876b",
+    "size_bytes": 18224
+  },
+  "elapsed_seconds": 8.913721060031094,
+  "ended_at_utc": "2026-10-15T07:52:19.720453+00:00",
+  "helper_sha256": "a8945d3dc432831522e66c7817c0f3281e278e2a930ab1e31cbb14a26e17e406",
+  "inert_fixture_files_verified": 10,
+  "inherited_authenticated_pyc_paths": [
+    "numpy/distutils/__pycache__/conv_template.cpython-311.pyc"
+  ],
+  "inherited_pyc_count": 1,
+  "installer_retry_performed": false,
+  "kind": "puck-cpu-install-preserved-failure-audit-v1",
+  "measured_installed_bytes": 1304701872,
+  "measured_installed_directories": 2074,
+  "measured_installed_files": 27225,
+  "missing_original_receipts": [
+    "inventory.json",
+    "licences.json",
+    "baseline-after.json",
+    "logs/namespace.json"
+  ],
+  "no_gate_closed": true,
+  "numerical_imports_executed": false,
+  "original_allocation_status": "FAIL",
+  "original_licence_copy_directory_empty": true,
+  "original_receipts": [
+    {
+      "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/result.json",
+      "sha256": "d6d33b99dfe0300fc57b018e9cbadce0fb570debfe359974b55984a9ed687ea1",
+      "size_bytes": 1279
+    },
+    {
+      "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/configuration.json",
+      "sha256": "edc9f98bb546212f9f8e07722f04ca4be0a3cbf63d68a38033b50ae3d44709b4",
+      "size_bytes": 30444
+    },
+    {
+      "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/baseline-before.json",
+      "sha256": "8e69fa24c5367b19acfad5f5f3c12f1804eed23d0889df6a9e58f20da4376dfb",
+      "size_bytes": 196
+    },
+    {
+      "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/logs/supervisor.json",
+      "sha256": "fc0263c40b5f387826787af5d4f4f092d76db25c38079fcf2392d3112a8411f6",
+      "size_bytes": 317
+    },
+    {
+      "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/logs/command.json",
+      "sha256": "97897698e09e0038b41258915bac212470a28112070df66c5a1dee4d22ac082d",
+      "size_bytes": 43061
+    },
+    {
+      "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/logs/stdout.log",
+      "sha256": "5a5e2863335a5a9b58ca819280733d09763709be12e665ab249981f9d263b595",
+      "size_bytes": 10609
+    },
+    {
+      "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/logs/stderr.log",
+      "sha256": "fd968f1dfff42122912bb6ba7eafc5d47bfe4b1cdfb769026ae5722a64f273ec",
+      "size_bytes": 12350
+    },
+    {
+      "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/fixture/logs/supervisor.json",
+      "sha256": "06b45663201badca710eef311f09b5c95074f5f6d8637fcd92b3c65fce954796",
+      "size_bytes": 280
+    },
+    {
+      "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/fixture/logs/command.json",
+      "sha256": "0c3e3f1e15e99cc28d3a8d5a2c7bce88303c563449864362620a1453455def6a",
+      "size_bytes": 3353
+    },
+    {
+      "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/fixture/logs/stdout.log",
+      "sha256": "e0782e55060fdab75fb891bab143028b76a546bd2ade456c2d54a5c076629861",
+      "size_bytes": 824
+    },
+    {
+      "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/fixture/logs/stderr.log",
+      "sha256": "ae4a700fa6830cefa8a09d903281f5eb4a5c4fcc4633da077098772497f88939",
+      "size_bytes": 355
+    },
+    {
+      "path": "/tmp/palimpsest-cpu-install-acceptance-audit-01.json",
+      "sha256": "7015fbe7dd968b1271d22eccd6c3333e73ce3408518531e7668a3c1cc3fb5470",
+      "size_bytes": 577
+    }
+  ],
+  "original_supervisors": {
+    "fixture": {
+      "failure": null,
+      "finished_monotonic": 438012.782425055,
+      "matching_survivors": [],
+      "mutable_failures": [],
+      "mutable_sampling_seconds": 0.1,
+      "pid": 2370311,
+      "returncode": 0,
+      "rss_sampling_seconds": 0.05,
+      "sampled_mutable_peak_bytes": 42624,
+      "sampled_peak_rss_bytes": 155324416,
+      "status": "completed"
+    },
+    "target": {
+      "failure": "native log drain/final sync timed out",
+      "finished_monotonic": 438029.843993793,
+      "matching_survivors": [],
+      "mutable_failures": [],
+      "mutable_sampling_seconds": 0.1,
+      "pid": 2370341,
+      "returncode": 0,
+      "rss_sampling_seconds": 0.05,
+      "sampled_mutable_peak_bytes": 2444216286,
+      "sampled_peak_rss_bytes": 232443904,
+      "status": "failed"
+    }
+  },
+  "pyc_origin": "unchanged authenticated numpy wheel member; no inference of installer compilation",
+  "retained_licence_bytes": 1576818,
+  "retained_licence_files": 96,
+  "runtime_qualified": false,
+  "scope": "Derivative failed-namespace byte evidence only; missing parent outputs remain missing; no installed acceptance or runtime qualification",
+  "status": "PRESERVED_FAILURE_VERIFIED",
+  "study_authorized": false,
+  "target_code_executed_by_auditor": false,
+  "target_packages_imported_by_auditor": false,
+  "target_pth_count": 0,
+  "verified_distributions": 71,
+  "verified_expanded_archive_bytes": 1304676600
+}
