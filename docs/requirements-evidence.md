@@ -20,6 +20,13 @@ CPU runtime configuration proposal; no automatic actual retry follows. The previ
 [execution/evidence history](plans/simulation-release-execution-goal-history-2026-10-15.md)
 is preserved byte-identically. All 26 requirement and seven gate statuses are unchanged.
 
+[Draft PR #139](https://github.com/Aadrika08/palimpsest/pull/139) adds closed-admission
+memory condition sealing. Root53 helper checks and builder33 condition checks pass;
+root six tmpfs spotchecks pass, while all six Btrfs cases fail in the unchanged
+source fixture before the new consumer. The [source report](https://github.com/Aadrika08/palimpsest/blob/research/memory-condition-seal-v1/docs/reports/memory-condition-seal-v1-source.md)
+preserves the directory-enumeration diagnostic and remaining seed/qualification
+limits. This implementation milestone and all seven release gates remain open.
+
 [Draft PR #138](https://github.com/Aadrika08/palimpsest/pull/138) retains independently
 audited CPU metadata:70 wheels/71 candidate distributions,1,304,650,469 declared
 expanded bytes and26,913 files. python-louvain remains source-only; full payload,
