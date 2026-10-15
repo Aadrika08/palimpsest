@@ -45,8 +45,10 @@ processes remain unqualified; no sandbox, hard RSS, WCET or owner grant is claim
 ## Prospective actual preparation freeze
 
 `puck-v3-held-runtime-qualification-01/preparation-freeze.json` SHA:
-`be4582e0981e90e7057a096e2856a0634734ef9aa8a77770ca1a84fa287d853d`.
-Thirteen source files185699bytes, original21,662,864-byte3.11.15 interpreter SHA
+`7ba637bcc563df74789cc031bfffb6bfe74002ad669628303d9185ccf048fc18`.
+This refreshed unexecuted freeze includes watchdog fixdc938f5; the initial
+review-rejected candidate is retained as preparation-freeze-unexecuted-review-rejected.json.
+Thirteen source files185821bytes, original21,662,864-byte3.11.15 interpreter SHA
 `572cfa2a8597e2f431c785613539b1d219fa99eecf5ffb5765731a2ebc3e692a`,
 retained304584-byte observation report SHA
 `a1b70f800a329d1f7c01ca90f836cc37c45a29478707d04ce331444805207045`,
