@@ -55,9 +55,10 @@ All seven gate statuses below remain unchanged.
 
 The clarified execution goal now targets two complete working paths: memory
 replay-to-case-close and puck inventory-to-collection, followed by the fixed
-studies, integrated lab/artworks and human acceptance. The next source unit is
-Markdown/reference parsing and full project-scope/semantic/root aggregation
-after PR #127 report-family, PR #126 registry and PR #125 retained components.
+studies, integrated lab/artworks and human acceptance. PR #128 now assembles the
+Markdown/reference and full declared project scope; PR #130 connects registered
+dependencies to the fresh worker. The next executable exit remains exact runtime
+qualification and the complete inventory-to-durable-collection route.
 Unsupported protocol variants and missing historical context stay explicit.
 Disk was refreshed at 14 October 22:01 UTC to 99,986,862,080 bytes (~93.1 GiB),
 above the frozen memory floor. Required inputs and free space must still be
@@ -139,6 +140,25 @@ results, not final exact runtime/execution GO: stdlib/ELF remain trusted and ext
 package/native imports remain denied. Complete collection/worker integration,
 supervision and durable close stay open. No actual inventory/model/native/study
 stage ran; default pytest stops at missing FastAPI. All seven statuses remain unchanged.
+
+
+[Draft PR #130](https://github.com/Aadrika08/palimpsest/pull/130) adds separate
+Linux-leased dependency custody and fresh-worker v2 imports/resources/distribution
+metadata plus held-descriptor extension initialization. Final source `7db611b`
+passes 153 focused and 1370 affected checks at root and independently, with the
+same six inherited exclusions (affected 77.01s / 78.32s). Three review regressions
+and seed access-time drift were reproduced and fixed. The
+[source report](https://github.com/Aadrika08/palimpsest/blob/research/puck-v3-dependency-custody/docs/reports/puck-v3-dependency-custody-source.md)
+retains native origin-relative incompatibility, persistent-image-only observations,
+trusted host/stdlib limits, the targeted/full-check ruling and deferred empty
+resource-directory listing. The installed dependency census was metadata-only:
+31,000 files / 7,633,845,149 logical bytes; no actual numerical dependency/native
+qualification or inventory/model/owner/study ran. Actual runtime qualification,
+complete worker/inventory/envelope/reservation/supervision/durable-close integration
+and memory case-close remain required. All seven release statuses and three pending
+prospective decisions remain unchanged. Default pytest still stops at missing
+FastAPI in the R0 interpreter; no full-suite pass or final execution GO is claimed.
+
 
 ## Functional matrix
 
