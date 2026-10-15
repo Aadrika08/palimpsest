@@ -53,10 +53,10 @@ Independent static review finds the TIFF file present with pinned bytes. Exactly
 two registered Pillow extensions use leaf-FD origins despite requiring
 `$ORIGIN/../pillow.libs`. The finite review covers all 23 extension seeds and their
 declared dependency routes; selected hashes match. It does not establish dynamic
-loading or full post-06 custody. The full post-failure byte check did not finish:
+loading or full post-06 custody. Two earlier post-failure byte checks did not finish:
 check 01 refused the wrong host interpreter before data work; separately numbered
 check 02 used the pinned interpreter but exhausted its 120s staged-forest deadline.
-Preserve both refusals and missing receipts; full current post-06 bytes remain unproved.
+Both refusals and missing receipts remain preserved; the distinct03 result follows.
 
 The complete failure packet preserves 347 artifacts/38,423,088B, including empty
 files, and verifies against originals and committed bytes. Archive integrity is
@@ -75,15 +75,24 @@ cases pass, including a transitive Pillow-shaped native failure then audited
 success. Independent source review found no material findings. This is not an
 installed-runtime pass, and no actual07 controls or allocation exists.
 
-**Next action: obtain complete separately reviewed current-byte/custody admission.**
-Prepare separately numbered data-only post06 check03 with bounded phase timing,
-complete forests and final byte rehash, preserving the 120s normal/130s hard caps.
-Its proposed 4 GiB initial RAM floor is specific to03; retain the existing 2 GiB final
-floor and qualification limits. Fresh headroom is required before invocation;
-disk clearance alone does not establish it. Preserve checks01/02 and all six
-failed qualifications. After full custody passes, separately freeze and review
-any future qualification before its one invocation. The product exit remains
-the real recorded, replayed and exported episode bundle.
+**The complete data-only post06 check03 passed once in PR164.** Its exact controls
+were independently reviewed and pushed at `0dd615d4` before invocation. Fresh
+resources and all control pins passed. Outer and child exited0 normally without
+timeout in26.972s. Complete SITE/staged forests, source/input/native/interpreter/
+baseline bytes, nineteen absences and final full held rehash passed; descriptors
+closed4→4 with no children/threads. All eight phase markers completed. Independent
+receipt consistency review found no findings and did not repeat the payload rehash.
+This dated pass covers the unchanged DATA06/C runtime only. It preserves checks01/02
+and all six failed qualifications; it does not admit candidate D/source07.
+
+**Next action: freeze and review the distinct07 runtime qualification.** Bind the
+exact source07 parent/observer/auditor, candidate D and evidence against immutable
+historical06 source snapshots; never compare replaced live scripts to old06 pins.
+Preserve the remaining inputs, nineteen absences, limits and staged identities.
+Pass its own fresh full data/resource admission, then invoke at most once under
+reviewed controls. No actual07 configuration, admission program, output or
+invocation exists. The product exit remains the real recorded, replayed and
+exported episode bundle.
 
 **Keep checkpoint A tied to the episode deliverable.** Reuse the existing
 `Engine` → UUID `RunWriter` → initial snapshot → replay → bundle-export route.
@@ -125,7 +134,7 @@ substitute for numerical results, capability, actual browser use or human accept
 
 | Order | Deliverable | Finite exit |
 | --- | --- | --- |
-| 1 | Establish the exact local CPU runtime. | The two-Pillow-row source correction is reviewed in PR164. Obtain complete current-byte/custody admission, then a separately frozen passing actual qualification and independent audit. Preserve every failed allocation; source tests are not this exit. |
+| 1 | Establish the exact local CPU runtime. | PR164 reviews the two-Pillow-row source correction; data-only post06 check03 passes for retained06/C bytes. Freeze distinct07 with exact new bindings, fresh full admission, one runtime invocation and independent audit. Preserve every failed allocation; source/data-only passes are not this exit. |
 | 2 | Record, replay and export one actual simulator episode. | Admit the exact public engineering route, retain complete inputs/records/snapshots, pass declared replay/export and operator/renderer checks, and independently audit normal cleanup and the portable bundle. This does not qualify a learned controller. |
 | 3 | Complete memory family admission and case closure. | Finish the historical-seed-to-case binding and single-condition admission, qualify the exact admitted configuration, and resolve oracle/own ordering before all-nine/case closure. Preserve raw evidence and publication/quarantine checks. |
 | 4 | Complete studies and controller capability. | Valid development and separately admitted held-out results meet the unchanged memory/scientific and puck/MaleCNS gates above. Preserve failures and resolve any new study prospectively. |
