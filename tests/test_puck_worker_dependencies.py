@@ -11,7 +11,7 @@ import pytest
 from test_puck_worker_bootstrap import fixture, descriptor, raw, sha, ROOT
 
 
-def dependency_fixture(tmp_path, body, *, native=False, mutate=None):
+def dependency_fixture(tmp_path, body, *, native=False, native_link=None, mutate=None):
     bootstrap, reg, manifest, script, script_sha = fixture(tmp_path, body)
     source = Path(reg['source_root'])
     for name in ('puck_dependency_files', 'puck_dependency_imports'):
@@ -37,8 +37,21 @@ def dependency_fixture(tmp_path, body, *, native=False, mutate=None):
             'static struct PyModuleDef mod={PyModuleDef_HEAD_INIT,"_native",NULL,-1,methods};\n'
             'PyMODINIT_FUNC PyInit__native(void){return PyModule_Create(&mod);}\n')
         relative = 'fixture_dep/_native'+importlib.machinery.EXTENSION_SUFFIXES[0]
-        subprocess.run(['cc','-shared','-fPIC','-I'+sysconfig.get_paths()['include'],str(c),'-o',str(package/relative)],
-                       check=True,capture_output=True,timeout=15)
+        link = []
+        if native_link:
+            directory = package/'fixture_dep' if native_link == 'held-relative' else tmp_path/'foreign'
+            directory.mkdir(exist_ok=True)
+            helper = directory/'helper.c'; helper.write_text('int fixture_answer(void){return 47;}')
+            library = directory/'libfixturehelper.so'
+            subprocess.run(['cc','-shared','-fPIC',str(helper),'-o',str(library)],
+                           check=True,capture_output=True,timeout=15)
+            c.write_text(c.read_text().replace('return PyLong_FromLong(47);',
+                'return PyLong_FromLong(fixture_answer());').replace('#include <Python.h>',
+                '#include <Python.h>\nextern int fixture_answer(void);'))
+            origin = '$ORIGIN' if native_link == 'held-relative' else str(directory)
+            link = ['-L'+str(directory),'-lfixturehelper','-Wl,-rpath,'+origin]
+        subprocess.run(['cc','-shared','-fPIC','-I'+sysconfig.get_paths()['include'],str(c),
+                        '-o',str(package/relative),*link],check=True,capture_output=True,timeout=15)
         modules.append({'name':'fixture_dep._native','root_index':0,'path':relative,'kind':'extension','is_package':False})
     files = sorted((p for p in package.rglob('*') if p.is_file()), key=lambda p:p.relative_to(package).as_posix())
     deps = {'kind':'puck-worker-dependencies-v1','version':1,
@@ -96,4 +109,28 @@ def test_unregistered_import_has_no_ambient_fallback(tmp_path):
     result,_ = dependency_fixture(tmp_path,'import numpy\nreturn {}')
     assert result.returncode != 0
     assert 'Unregistered' in result.stderr
+    assert result.stdout == ''
+
+
+def test_held_descriptor_origin_relative_native_dependency_is_explicitly_unsupported(tmp_path):
+    result,_ = dependency_fixture(tmp_path,'from fixture_dep import _native\nreturn {}',
+                                  native=True,native_link='held-relative')
+    assert result.returncode != 0
+    assert 'libfixturehelper.so: cannot open shared object file' in result.stderr, result.stderr
+    assert result.stdout == ''
+
+
+def test_unregistered_persistent_native_image_refuses_terminal_success(tmp_path):
+    result,_ = dependency_fixture(tmp_path,'from fixture_dep import _native\nreturn {}',
+                                  native=True,native_link='unregistered-absolute')
+    assert result.returncode != 0
+    assert 'Unregistered native file image:' in result.stderr, result.stderr
+    assert 'libfixturehelper.so' in result.stderr
+    assert result.stdout == ''
+
+
+def test_dependency_module_cache_replacement_cannot_close_successfully(tmp_path):
+    result,_ = dependency_fixture(tmp_path,'import fixture_dep,sys,types\nsys.modules["fixture_dep"]=types.ModuleType("fixture_dep")\nreturn {}')
+    assert result.returncode != 0
+    assert 'Held dependency module dispatch changed' in result.stderr, result.stderr
     assert result.stdout == ''

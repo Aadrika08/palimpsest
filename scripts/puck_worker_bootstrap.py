@@ -32,12 +32,13 @@ _FIELDS = {'kind', 'version', 'source_root', 'source_files', 'modules', 'namespa
 # execute pathname-loaded local source first and then claim its hash was enough.
 SEED = '''import os,sys,stat,hashlib
 p,h=sys.argv[1:3]
+def identity(s): return (s.st_dev,s.st_ino,s.st_mode,s.st_size,s.st_mtime_ns,s.st_ctime_ns,s.st_nlink)
 f=os.open(p,os.O_RDONLY|os.O_NOFOLLOW|os.O_NONBLOCK)
 try:
  s=os.fstat(f)
  if not stat.S_ISREG(s.st_mode) or s.st_nlink!=1 or not 0<s.st_size<=1048576: raise ValueError('Bootstrap file refused')
  with os.fdopen(os.dup(f),'rb') as q: r=q.read(1048577)
- if len(r)!=s.st_size or hashlib.sha256(r).hexdigest()!=h or os.fstat(f)!=s: raise ValueError('Bootstrap bytes differ')
+ if len(r)!=s.st_size or hashlib.sha256(r).hexdigest()!=h or identity(os.fstat(f))!=identity(s): raise ValueError('Bootstrap bytes differ')
  exec(compile(r,p,'exec'),{'__name__':'__main__','__file__':p,'__bootstrap_raw__':r,'__bootstrap_fd__':f})
 finally: os.close(f)
 '''
