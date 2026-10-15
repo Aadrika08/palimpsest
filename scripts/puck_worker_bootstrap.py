@@ -471,11 +471,6 @@ class HeldWorkerBootstrap:
             if self._state != 'active': raise RuntimeError('Bootstrap inactive or poisoned')
             self._clock()
             if sys.meta_path != [self._finder, *self._meta_path]: raise RuntimeError('Source import dispatch changed')
-            for name in sys.modules:
-                if (name.split('.')[0] not in sys.stdlib_module_names and
-                        name not in {'__main__', '_puck_held_file_bootstrap'}|self._loaded.keys()|self._loading
-                        | (self._dependencies.loaded.keys() | self._dependencies.loading if self._dependencies else set())):
-                    raise RuntimeError('Unregistered module cache entry: '+name)
             for name, binding in self._loaded.items():
                 module, filename, loader, spec, origin, spec_loader, package, search, spec_name, spec_search, _, _ = binding
                 if (sys.modules.get(name) is not module or module.__file__ != filename or module.__loader__ is not loader
@@ -490,6 +485,13 @@ class HeldWorkerBootstrap:
                 if (vars(owner).get(key) is not cls or type(cls) is not metaclass
                         or cls.__bases__ != bases or tuple(vars(cls)) != keys):
                     raise RuntimeError('Authenticated class binding changed')
+            # Bind support dispatch before calling any dependency reconciliation.
+            exported=self._dependencies.recheck() if self._dependencies else set()
+            for name in sys.modules:
+                if (name.split('.')[0] not in sys.stdlib_module_names and
+                        name not in {'__main__', '_puck_held_file_bootstrap'}|self._loaded.keys()|self._loading
+                        | (self._dependencies.loaded.keys() | self._dependencies.loading | exported if self._dependencies else set())):
+                    raise RuntimeError('Unregistered module cache entry: '+name)
             # Check support dispatch before invoking its guard methods.
             for child in self._children:
                 if full: child.recheck()

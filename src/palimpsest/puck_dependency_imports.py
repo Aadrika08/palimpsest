@@ -17,6 +17,8 @@ import re
 import sys
 
 from .puck_dependency_files import HeldDependencyNamespace
+from .puck_dependency_bindings import ExportBindings, module_dict
+from .puck_native_origins import native_load_path, require_native_target
 
 
 def _normalized(name):
@@ -114,18 +116,22 @@ class _Loader(importlib.abc.Loader):
         owner.loading.add(spec.name)
         try:
             owner.full_guard()
-            fd = owner.provider._holders[self.row['root_index']]._files[self.row['path']][0]
-            self.native = importlib.machinery.ExtensionFileLoader(spec.name, '/proc/self/fd/'+str(fd))
+            policy=owner.native_origins.get(spec.name,'exact-file-fd-v1')
+            self.native = importlib.machinery.ExtensionFileLoader(spec.name,
+                native_load_path(owner.provider,self.row,policy))
             # CPython create_dynamic consumes spec.origin, not just loader.path.
             spec.origin = self.native.path
             module = self.native.create_module(spec)
+            owner.bindings.begin(spec.name,module)
+            owner.bindings.complete(spec.name,'native_create')
             owner.full_guard(); owner.images()
+            require_native_target(owner.provider,self.row,policy,owner._observed)
             return module
         except BaseException as error:
             owner.fail(error); raise
         finally: owner.loading.discard(spec.name)
     def exec_module(self, module):
-        owner = self.owner; name = module.__name__
+        owner = self.owner; name = self.row['name']
         owner.loading.add(name)
         try:
             owner.guard()
@@ -135,9 +141,13 @@ class _Loader(importlib.abc.Loader):
                 payload = owner.provider.read(self.row['root_index'], self.row['path'])
                 module.__file__ = self.get_filename(name)
                 if self.row['is_package']: module.__path__ = []
-                exec(compile(payload, module.__file__, 'exec', dont_inherit=True), module.__dict__)
+                code=compile(payload, module.__file__, 'exec', dont_inherit=True)
+                owner.bindings.begin(name,module,code)
+                exec(code,module_dict(module))
             else:
                 module.__file__ = None; module.__path__ = []
+            if self.row.get('kind')!='python': owner.bindings.begin(name,module)
+            owner.bindings.complete(name,'module_exec')
             owner.capture(name, module)
             owner.guard(); owner.images()
         except BaseException as error:
@@ -168,6 +178,11 @@ class DependencyImports:
         self.modules = {r['name']:r for r in provider.module_records()}
         self.namespaces = {r['name']:r for r in provider.namespace_records()}
         self.distributions = provider.distribution_records()
+        profile=provider.import_profile()
+        self.bindings=ExportBindings(profile)
+        self.native_origins={v['name']:v['policy'] for v in profile['native_origins']}
+        if {v['name'] for v in profile['exports']} & set(local_names):
+            raise ValueError('Dependency export and source import mappings overlap')
         if (self.modules.keys() | self.namespaces.keys()) & set(local_names):
             raise ValueError('Dependency and source import mappings overlap')
         roots = [str(v.root) for v in provider._holders]
@@ -190,20 +205,16 @@ class DependencyImports:
         return iter(_Distribution(self, row) for row in self.distributions
                     if name is None or _normalized(name) == _normalized(row['name']))
     def capture(self, name, module):
-        spec = module.__spec__
-        self.loaded[name] = (module, module.__loader__, spec, spec.loader, spec.origin,
-            getattr(module, '__file__', None), module.__package__, tuple(getattr(module, '__path__', ())),
-            tuple(spec.submodule_search_locations or ()))
+        current,seal=self.bindings.finish_module(name,module)
+        self.loaded[name]=(current,seal)
     def recheck(self):
         self.provider._active(); self.provider._check_signal()
-        for name, row in self.loaded.items():
-            module, loader, spec, spec_loader, origin, filename, package, search, spec_search = row
-            if (sys.modules.get(name) is not module or module.__loader__ is not loader
-                    or module.__spec__ is not spec or spec.loader is not spec_loader or spec.origin != origin
-                    or spec.name != name or getattr(module, '__file__', None) != filename
-                    or module.__package__ != package or tuple(getattr(module, '__path__', ())) != search
-                    or tuple(spec.submodule_search_locations or ()) != spec_search):
+        active=self.bindings.recheck()
+        for name,(module,seal) in self.loaded.items():
+            if sys.modules.get(name) is not module:
                 raise RuntimeError('Held dependency module dispatch changed')
+            seal.recheck()
+        return active
     def images(self):
         observed = _maps()
         for key, paths in observed.items():
@@ -227,5 +238,8 @@ class DependencyImports:
         receipt = self.provider.snapshot()
         receipt['loaded_modules'] = [{'name':name, 'path':(self.modules.get(name) or self.namespaces[name])['path']}
                                       for name in sorted(self.loaded)]
+        receipt['exported_modules']=[{'name':name,'producer':self.bindings.prepared[name][0]['producer']}
+                                     for name in sorted(self.bindings.active)]
+        receipt['native_origin_policies']=dict(self.native_origins)
         receipt['images'] = self.images()
         return receipt
