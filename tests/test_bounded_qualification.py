@@ -283,3 +283,115 @@ def test_legacy_default_namespace_still_refuses_more_than32_files(tmp_path):
             "for n in range(40):(p/str(n)).write_bytes(b'archive')\n")
     with pytest.raises(ValueError):
         supervise(tmp_path, code)
+
+
+@pytest.mark.parametrize('mode', [None, True, 'DIRECT', []])
+def test_unknown_log_mode_refuses_before_child(tmp_path, mode):
+    with pytest.raises(ValueError, match='log mode'):
+        supervise(tmp_path, "raise RuntimeError('must not execute')", log_mode=mode)
+
+
+def test_direct_logs_are_regular_and_closed_before_completed(tmp_path, monkeypatch):
+    module=helper();before=len(os.listdir('/proc/self/fd'))
+    def drained(*args, **kwargs):
+        raise AssertionError('Direct mode must not start pipe drains')
+    monkeypatch.setattr(module,'_owned_logs',drained)
+    code=("import os,stat\n"
+          "assert all(stat.S_ISREG(os.fstat(fd).st_mode) and os.fstat(fd).st_nlink==1 for fd in (1,2))\n"
+          "os.write(1,b'direct stdout\\n');os.write(2,b'direct stderr\\n')\n")
+    result,output=supervise(tmp_path,code,log_mode='direct')
+    assert result['status']=='completed' and result['returncode']==0
+    assert result['matching_survivors']==[]
+    assert (output/'stdout.log').read_bytes()==b'direct stdout\n'
+    assert (output/'stderr.log').read_bytes()==b'direct stderr\n'
+    assert len(os.listdir('/proc/self/fd'))==before
+
+
+@pytest.mark.parametrize('name',['stdout.log','stderr.log'])
+def test_direct_log_creation_never_replaces_existing_bytes(tmp_path, name):
+    module=helper();output=tmp_path/'logs';output.mkdir();(output/name).write_bytes(b'preserved')
+    before=len(os.listdir('/proc/self/fd'));now=time.monotonic()
+    with pytest.raises(FileExistsError):
+        module.supervised(command("raise RuntimeError('must not execute')"),output,cwd=tmp_path,
+                          normal_deadline=now+2,hard_deadline=now+3,rss_bytes=1024**3,
+                          output_bytes=16*MiB,min_free_bytes=0,log_mode='direct')
+    assert (output/name).read_bytes()==b'preserved'
+    assert len(os.listdir('/proc/self/fd'))==before
+
+
+def test_direct_final_fsync_is_inside_normal_return_clock(tmp_path, monkeypatch):
+    module=helper();original=module.os.fsync;synced=[];before=len(os.listdir('/proc/self/fd'))
+    def delayed(fd):
+        original(fd)
+        name=Path(os.readlink(f'/proc/self/fd/{fd}')).name
+        if name.endswith('.log'):
+            synced.append(name)
+            if name=='stdout.log':time.sleep(.15)
+    monkeypatch.setattr(module.os,'fsync',delayed)
+    now=time.monotonic()
+    result,_=supervise(tmp_path,'pass',log_mode='direct',normal_deadline=now+.12,hard_deadline=now+1)
+    assert result['status']=='failed' and result['failure']=='normal-return deadline'
+    assert synced==['stdout.log','stderr.log']
+    assert len(os.listdir('/proc/self/fd'))==before
+
+
+def test_direct_fsync_error_closes_both_logs(tmp_path, monkeypatch):
+    module=helper();original=module.os.fsync;before=len(os.listdir('/proc/self/fd'));synced=[]
+    def failing(fd):
+        name=Path(os.readlink(f'/proc/self/fd/{fd}')).name
+        if name.endswith('.log'):
+            synced.append(name)
+            if name=='stdout.log':raise OSError('authored direct-log fsync failure')
+        original(fd)
+    monkeypatch.setattr(module.os,'fsync',failing)
+    with pytest.raises(OSError,match='authored direct-log fsync failure'):
+        supervise(tmp_path,'pass',log_mode='direct')
+    assert synced==['stdout.log','stderr.log']
+    assert len(os.listdir('/proc/self/fd'))==before
+
+
+@pytest.mark.parametrize('leaf_fails', [False, True])
+def test_direct_directory_sync_failure_follows_leaf_closure(tmp_path, monkeypatch, leaf_fails):
+    module=helper();original=module.os.fsync;before=len(os.listdir('/proc/self/fd'))
+    leaves=[];directories=[];output=tmp_path/'attempt/outer'
+    def failing(fd):
+        path=Path(os.readlink(f'/proc/self/fd/{fd}'))
+        if path.name.endswith('.log'):
+            leaves.append(fd)
+            if leaf_fails and path.name=='stdout.log':
+                raise OSError('authored direct-log leaf fsync failure')
+        elif path==output:
+            directories.append(path)
+            assert len(leaves)==2
+            for leaf in leaves:
+                with pytest.raises(OSError):os.fstat(leaf)
+            raise OSError('authored direct-log directory fsync failure')
+        original(fd)
+    monkeypatch.setattr(module.os,'fsync',failing)
+    expected='leaf fsync failure' if leaf_fails else 'directory fsync failure'
+    with pytest.raises(OSError,match=expected):
+        supervise(tmp_path,'pass',log_mode='direct')
+    assert directories==[output]
+    assert len(os.listdir('/proc/self/fd'))==before
+
+
+@pytest.mark.parametrize('change',['unlink','replace','hardlink','symlink','fifo'])
+def test_direct_log_leaf_changes_during_final_sync_refuse_and_close(tmp_path, monkeypatch, change):
+    module=helper();original=module.os.fsync;before=len(os.listdir('/proc/self/fd'));changed=False
+    def altering(fd):
+        nonlocal changed
+        original(fd)
+        path=Path(os.readlink(f'/proc/self/fd/{fd}'))
+        if path.name=='stdout.log' and not changed:
+            changed=True
+            if change=='hardlink':os.link(path,tmp_path/'alias')
+            else:
+                path.unlink()
+                if change=='replace':path.write_bytes(b'plain child\n')
+                elif change=='symlink':path.symlink_to(tmp_path/'missing')
+                elif change=='fifo':os.mkfifo(path)
+    monkeypatch.setattr(module.os,'fsync',altering)
+    with pytest.raises((RuntimeError,ValueError,OSError)):
+        supervise(tmp_path,"print('plain child')",log_mode='direct')
+    assert changed
+    assert len(os.listdir('/proc/self/fd'))==before

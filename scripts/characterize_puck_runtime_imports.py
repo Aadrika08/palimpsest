@@ -23,6 +23,9 @@ ATTRIBUTE_EDGES = 262144
 MAP_BYTES = 4 * 1024 ** 2
 MAP_LINES = 65536
 PACKAGES = ('numpy', 'torch', 'mujoco')
+CPU_PACKAGES = ('numpy', 'torch', 'torchvision', 'mujoco')
+CPU_VERSIONS = {'numpy': '2.2.5', 'torch': '2.9.0+cpu',
+                'torchvision': '0.24.0+cpu', 'mujoco': '3.3.6'}
 
 
 def canonical(value):
@@ -202,10 +205,15 @@ def request_at(path, expected_sha):
         raise ValueError('Request SHA mismatch')
     value = json.loads(raw)
     fields = {'kind', 'version', 'site_root', 'output_root', 'environment'}
+    cpu = type(value) is dict and type(value.get('version')) is int and value['version'] == 2
+    if cpu:
+        fields |= {'expected_versions', 'pycache_prefix'}
     if (type(value) is not dict or set(value) != fields or canonical(value) != raw
-            or value['kind'] != 'puck-runtime-import-characterization-v1'
-            or type(value['version']) is not int or value['version'] != 1):
+            or type(value['version']) is not int or value['version'] not in (1, 2)
+            or value['kind'] != 'puck-runtime-import-characterization-v' + str(value['version'])):
         raise ValueError('Request schema/canonical bytes mismatch')
+    if cpu and (type(value['expected_versions']) is not dict or value['expected_versions'] != CPU_VERSIONS):
+        raise ValueError('CPU expected versions differ from the fixed profile')
     site = exact_directory(value['site_root'])
     output = exact_directory(value['output_root'])
     if site == output or site in output.parents or output in site.parents:
@@ -221,6 +229,21 @@ def request_at(path, expected_sha):
         raise ValueError('Exact environment mismatch')
     if not (sys.flags.isolated and sys.flags.no_site and sys.dont_write_bytecode):
         raise ValueError('Worker must use -I -B -S')
+    if cpu:
+        try:
+            prefix = exact_directory(value['pycache_prefix'])
+        except (OSError, ValueError) as error:
+            raise ValueError('CPU pycache prefix must be canonical, present and nonsymlinked') from error
+        if any(prefix == root or prefix in root.parents or root in prefix.parents for root in (site, output)):
+            raise ValueError('CPU pycache prefix overlaps site or output')
+        state = prefix.stat()
+        if state.st_uid != os.geteuid() or stat.S_IMODE(state.st_mode) & 0o077:
+            raise ValueError('CPU pycache prefix must be private and owned by this user')
+        with os.scandir(prefix) as entries:
+            if next(entries, None) is not None:
+                raise ValueError('CPU pycache prefix must be empty')
+        if sys.pycache_prefix != str(prefix):
+            raise ValueError('CPU pycache prefix differs from the actual interpreter setting')
     return value
 
 
@@ -288,6 +311,8 @@ def failure_detail(error):
 
 
 def observe(request, request_sha):
+    cpu = request.get('version') == 2
+    expected = tuple((name, request['expected_versions'][name]) for name in CPU_PACKAGES) if cpu else ()
     report = {'kind': 'puck-runtime-import-characterization-result-v2', 'version': 2,
               'status': 'failed', 'request_sha256': request_sha,
               'source_sha256': sha(read_bounded(__file__, REPORT_BYTES)),
@@ -298,6 +323,11 @@ def observe(request, request_sha):
               'executable': False, 'qualification_claims': [],
               'versions': {}, 'imports': [], 'cache': None, 'maps': None,
               'baseline_maps': None, 'environment_delta': None, 'observation_errors': []}
+    if cpu:
+        report.update(kind='puck-runtime-import-characterization-result-v3', version=3,
+                      profile='cpu-four-imports-v1', expected_versions=dict(expected),
+                      pycache_prefix=request['pycache_prefix'], native_authorized=False,
+                      study_authorized=False)
     started = time.monotonic()
     error = None
     imports_complete = False
@@ -306,16 +336,20 @@ def observe(request, request_sha):
         # -I -S removes ambient site initialization; one explicit site is appended.
         sys.path.append(request['site_root'])
         report['baseline_maps'] = mapped_images()
-        for name in PACKAGES:
+        for index, name in enumerate(CPU_PACKAGES if cpu else PACKAGES):
             before = time.monotonic()
             row = {'name': name, 'status': 'failed'}
             report['imports'].append(row)
             value = importlib.import_module(name)
             if dict(os.environ) != request['environment']:
                 raise ValueError('Exact environment changed during ' + name + ' import')
+            if cpu and sys.pycache_prefix != report['pycache_prefix']:
+                raise ValueError('CPU pycache prefix changed during ' + name + ' import')
             report['versions'][name] = text_value(module_dict(value).get('__version__'), 512)
             if report['versions'][name] is None:
                 raise ValueError('Missing raw package version: ' + name)
+            if cpu and report['versions'][name] != expected[index][1]:
+                raise ValueError('CPU package version differs: ' + name)
             row.update(status='observed', seconds=time.monotonic() - before,
                        cache_entries=len(sys.modules))
         imports_complete = True
@@ -339,6 +373,8 @@ def observe(request, request_sha):
         except BaseException as failure:
             report['observation_errors'].append(dict(failure_detail(failure), stage=stage))
     terminal_environment = dict(os.environ)
+    if cpu and sys.pycache_prefix != report['pycache_prefix'] and error is None:
+        error = failure_detail(ValueError('CPU pycache prefix changed during observation'))
     if terminal_environment != request['environment']:
         if error is None:
             error = failure_detail(ValueError('Exact environment changed during observation'))
