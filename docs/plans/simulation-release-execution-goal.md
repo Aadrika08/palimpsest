@@ -27,10 +27,11 @@ Passing parser fixtures or publishing another plan is progress, not this exit.
 
 Perform the work in this order:
 
-1. Complete external dependency/native import admission for PR #129's working
-   stdlib worker preflight, then connect it to PR #128's reviewed declared inventory
-   (`22cf8aa`). Actual project compatibility and complete runtime qualification
-   remain unqualified; use authored fixtures while catalog access is pending.
+1. Use PR #130's registered dependency custody and fresh-worker v2 import path
+   with PR #128's reviewed declared inventory (`22cf8aa`). Freeze and qualify an
+   exact supported dependency/runtime configuration; actual numerical compatibility
+   and complete native closure remain unqualified. Use authored fixtures for owner
+   integration while catalog access is pending.
 2. Bind that worker to the existing reservation, model custody, native recorder,
    clock accounting, supervision and durable collection close. Freeze and review
    the complete executable path before an actual collection.
@@ -488,8 +489,8 @@ Continue the **puck durable owner/stage launcher** from PR #121's independently
 audited original-bundle result, PR #120's descriptor-held execution context,
 and PR #122's reviewed native publication and fixed-clock integration. Use
 PR #128's declared repository/retained-root and semantic/reference/Markdown
-assembly and PR #129's executable stdlib worker preflight, then complete
-external dependency/native import admission and bind source/runtime identities,
+assembly, PR #129's executable stdlib worker preflight and PR #130's registered
+dependency/native import source path. Complete actual runtime admission and bind source/runtime identities,
 exact invocation,
 reservation, registry/scene/model custody, supervision and terminal publication
 into a working path. Actual collection remains unauthorized until the complete
@@ -539,3 +540,25 @@ Default pytest still stops at missing FastAPI. External dependency/native import
 worker-to-envelope/inventory/reservation binding, exact-environment supervision,
 lease/descendant/resource handling and durable terminal collection remain required.
 All seven simulation release gates stay open; frozen decisions remain pending.
+
+
+[Draft PR #130](https://github.com/Aadrika08/palimpsest/pull/130) connects separate
+Linux-leased dependency custody to worker v2 Python/namespace/resource/distribution
+and held-descriptor extension imports. Final source
+`7db611bb142d35cc2a5683001647a0a36057cf5c` passes 153 focused checks at root and
+independently (16.53s / 16.38s), and 1370 affected checks with the same six inherited
+exclusions (77.01s / 78.32s). Whole-branch review's census, namespace-resource and
+signal-mask findings were reproduced RED and fixed. A deterministic seed-access-time
+RED separately fixed a real read-induced refusal. The
+[source report](https://github.com/Aadrika08/palimpsest/blob/research/puck-v3-dependency-custody/docs/reports/puck-v3-dependency-custody-source.md)
+retains exact checks, the targeted/full-check granularity decision and the deferred
+empty-resource-directory minor. Authored native fixtures establish held-FD loading
+and terminal image refusal; origin-relative shared libraries remain unsupported.
+The existing installed dependency tree was censused only by metadata (31,000 files,
+7,633,845,149 logical bytes); actual payload/runtime/native closure is unqualified.
+No actual inventory/model/native owner or study ran, no consumed attempt retried,
+and default pytest still stops at missing FastAPI. Next qualify the exact runtime
+and connect inventory/envelope/reservation/model/scene custody, parent supervision,
+leases/descendants/resources and durable terminal collection. Memory case-close
+source work remains required. All seven gates and three prospective decisions stay
+open; neither component verification nor publication completes this release goal.
