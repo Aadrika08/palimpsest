@@ -35,10 +35,12 @@ resolve failed controller scores, the memory ordering conflict or human acceptan
 ordered checklist is:
 
 - [x] Accept the exact installed CPU package tree and retain its independent audit.
-- [ ] Finish and review the bounded CPU import observation: exact configuration,
-  selected native mounts, four required versions, resource limits and cleanup.
-  Run its distinct engineering allocation once and audit the actual outcome.
-  This supplies CPU profile data; it does not qualify the runtime.
+- [ ] Complete an accepted bounded CPU import observation with four required
+  versions, intact pins and normal cleanup. Allocation01 failed during NumPy
+  import and is preserved. Finish and review the distinct02 configuration with
+  the static host-zlib correction and bounded cause/context diagnostics, then
+  run it once and independently audit the actual outcome. Ordinary observation
+  supplies CPU profile data; it does not qualify the runtime.
 - [ ] Use that profile to finish tmpfs staging and the four-import qualification
   parent. Emit dependency-v3/descriptor-v3, review the exact configuration, then
   qualify the actual held runtime and independently audit its outcome.
@@ -50,9 +52,10 @@ ordered checklist is:
 - [ ] Independently audit the bundle and report checkpoint A's actual outcome,
   the first remaining gap and the next concrete action.
 
-The ordinary observation parent and direct-log changes have local source checks;
-the static native-mount metadata has no required missing names. These are
-preparation, not evidence that real CPU imports or an episode have passed.
+The ordinary observation parent and direct-log changes have source checks and
+actual failure evidence. Metadata05 corrects a statically identified zlib-path
+omission, and the worker now retains bounded error chains. These corrections are
+preparation; no successful four-import observation or episode is established.
 The older qualification parent and registration builder still emit
 three-import/dependency-v2 contracts. Complete their substantive staging and
 configuration work; do not relabel an old observation. An unchanged accepted tree
@@ -62,6 +65,40 @@ Every added prerequisite must identify the checkpoint and smallest blocked check
 source-only hardening is not a substitute for reaching the episode deliverable.
 A failed actual stage retains its outcome and consumed allocation. No study or
 numerical invocation follows from a source fixture alone.
+
+## Latest checkpoint A result: CPU observation failed and preserved
+
+[Draft PR #145](https://github.com/Aadrika08/palimpsest/pull/145) retains the
+[actual01 report](https://github.com/Aadrika08/palimpsest/blob/05c3193d2626d670bdc9bac1ecb861b80c8ad5a8/docs/reports/puck-cpu-characterization-01.md).
+The sole actual invocation exits1 in8.909677s at the first NumPy import, before
+any package version is reported. The private namespace probe returns0; the worker
+returns1 without a monitor failure or group survivors. Parent closure reports
+zero children/threads and5→5 descriptors. The normal route's after-baseline receipt
+remains absent. Source freeze `9b41aa0ab3bd205800ca85e0311b06decf89a504` and
+configuration SHA256
+`b11daf4719daf3a838ece18cf6c0604875d3fcba65b0ab0b5354b9428be6b8ca`
+are preserved with64 byte-identical indexed files/6,804,246B.
+
+The separate preservation audit exits0 in5.887243s and verifies all39 source/input
+pins,16 historical admission sources, the full27,225-file/2,074-directory current
+tree, declared native/interpreter identities and5,388 receipt fingerprints. It
+verifies the failure and eight absent receipts; it does not accept imports or
+runtime. The successful-outcome auditor was not invoked.
+
+Static inspection finds that metadata04 resolved NumPy's `libz.so.1` edge to an
+unrelated torchvision private provider, outside NumPy's loader paths, while the
+host zlib leaf/alias was not mounted. This is a likely cause, not an observed
+underlying exception:01 retained NumPy's generic wrapper only. Separately reviewed
+metadata05 adds the exact host zlib fallback and preserves04; its data-only helper
+returns0 in0.181258s. Bounded CPU-only cause/context diagnostics and the reviewed
+secondary-formatting failure fix pass209 affected checks in6.62s. These are source/
+static corrections, not another actual CPU observation.
+
+The [distinct02 proposal](https://github.com/Aadrika08/palimpsest/blob/05c3193d2626d670bdc9bac1ecb861b80c8ad5a8/docs/plans/puck-cpu-characterization-02-proposal.md)
+specifies the remaining parent, prior-failure binding, exact configuration and
+outcome-auditor work. No02 executable configuration or actual invocation exists.
+Do not rerun01 or use its stale configuration against the changed worker.
+Package preparation remains separately accepted below; all seven gates stay open.
 
 ## Completed dependency within checkpoint A: accepted package data
 
@@ -180,10 +217,12 @@ substitute for numerical results, capability, actual browser use or human accept
 | 5 | Integrate and experience the product. | One candidate supports the lab and all six artworks; actual browser, mapping, replay, export, interruption and endurance checks pass. |
 | 6 | Accept and deliver that candidate. | Artistic/operator sessions, final verification and all seven gate records are complete; the installation and evidence package are reproducible. |
 
-**Current next action:** finish the exact configuration and independent review
-of the distinct CPU four-import observation already being prepared. Check fresh
-resources, freeze its sources and configuration, then obtain and audit its actual
-outcome. Preserve observations01/02 and every consumed allocation unchanged.
+**Current next action:** implement the exact, separately numbered CPU
+characterization02 parent/configuration and independent outcome auditor from the
+linked proposal. Admit metadata-v5, bind the accepted package receipts and prior01
+failure/source capsule, and freeze/review the current sources and configuration.
+Check fresh resources before its sole actual invocation; audit the actual outcome.
+Preserve failed characterization01, observations01/02 and all consumed allocations.
 Use the resulting CPU profile to finish the separate preparation/qualification
 parent and tmpfs staging builder, reusing the descriptor-v3/four-import worker.
 Bind the admitted inventory/snapshot/result/audit, stage every required package
@@ -203,9 +242,9 @@ source-hardening programme or count test totals as release progress.
 
 ## Current starting point and decisions
 
-At **2026-10-15 09:36:42 UTC**, the project filesystem has **99,478,708,224 bytes
-(92.65 GiB) available**. The same metadata-only check reports **2,988,199,936 bytes
-(2.78 GiB) MemAvailable**. Disk clearance removes the reported disk blocker;
+At **2026-10-15 10:06:55 UTC**, the project filesystem has **99,470,229,504 bytes
+(92.64 GiB) available**. The same metadata-only check reports **3,689,852,928 bytes
+(3.44 GiB) MemAvailable**. Disk clearance removes the reported disk blocker;
 available RAM is transient and this snapshot does not admit the complete CPU/EGL
 closure. Keep archives and build scratch on the project disk; stage only the exact
 required runtime inputs on tmpfs under its reviewed native-identity policy.
@@ -283,7 +322,8 @@ and disk clearance do not approve those decisions.
 
 CPU installation01 and retained admission01 remain failed and consumed; their
 read-only evidence does not grant historical acceptance. Distinct admission02
-accepts only current package preparation. The earlier preparation01,
+accepts only current package preparation. CPU characterization01 also remains
+failed and consumed;02 is prospective and uninvoked. The earlier preparation01,
 qualification01, runtime observations01/02 and navigation attempts1/2 remain
 consumed. Memory amendment 02 remains uninvoked. No silent
 retry, reordered study, altered threshold or invented passing receipt is permitted.

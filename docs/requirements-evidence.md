@@ -36,20 +36,42 @@ remain FAIL, with their missing receipts absent. The private selected-tree polic
 and inert-bytecode exception grant package-data acceptance only.
 
 The [next work unit](plans/simulation-release-execution-goal.md#clear-execution-target-after-disk-clearance)
-ends with that actual episode bundle. First finish, freeze and independently
-review the distinct bounded CPU four-import observation already being prepared;
-run it once and audit the outcome. Its observations supply the CPU profile,
-without qualifying the runtime. Then complete tmpfs staging and the
+ends with that actual episode bundle. Characterization01 below failed and remains
+consumed. Finish the distinct02 parent/configuration and outcome auditor, bind
+the accepted package and prior-failure capsules, then freeze/review it and run it
+once after fresh admission. An accepted ordinary observation supplies the CPU
+profile without qualifying the runtime. Then complete tmpfs staging and the
 descriptor-v3/four-import qualification parent, qualify that actual runtime, and
 prove recording/replay/export with declared operator/renderer checks. Older
 three-import/dependency-v2 parents need substantive staging and configuration
 changes. Fresh full-stage RAM/storage/FD/process admission and independent
-review precede actual execution. No actual qualification, real episode, study
-or browser/human session ran in this goal-clarification unit. Resource snapshots
+review precede actual execution. No actual held qualification, real episode,
+study or browser/human session ran in this unit. Resource snapshots
 are transient and do not admit the runtime. The previous
 [execution/evidence history](plans/simulation-release-execution-goal-history-2026-10-15.md)
 is preserved byte-identically. All26 requirement and seven gate statuses remain
 unchanged; all seven release gates remain open.
+
+[Draft PR #145](https://github.com/Aadrika08/palimpsest/pull/145) retains the sole
+ordinary CPU characterization01 failure: actual exit1 in8.909677s on first NumPy
+import, with no successful package version. Namespace probe returns0, worker1;
+normal parent closure reports zero children/threads and5→5 descriptors. A separate
+preservation audit returns0 in5.887243s, checking all39 source/input pins, the
+complete current27,225-file/2,074-directory tree and5,388 receipt fingerprints,
+while keeping the original post-baseline and seven historical receipts absent.
+The [report](https://github.com/Aadrika08/palimpsest/blob/05c3193d2626d670bdc9bac1ecb861b80c8ad5a8/docs/reports/puck-cpu-characterization-01.md)
+retains64 byte-identical indexed files/6,804,246B and exact source/configuration.
+The successful-outcome auditor was not invoked.
+
+Static inspection finds an unreachable zlib-provider selection in metadata04;
+the actual error retains only NumPy's generic wrapper, so this is a likely cause,
+not a proven sole cause. Reviewed metadata05 adds the exact host zlib leaf/alias;
+its data-only helper returns0 in0.181258s. Bounded CPU cause/context diagnostics
+and the secondary-formatting failure regression pass209 affected checks in6.62s.
+The [distinct02 proposal](https://github.com/Aadrika08/palimpsest/blob/05c3193d2626d670bdc9bac1ecb861b80c8ad5a8/docs/plans/puck-cpu-characterization-02-proposal.md)
+is prospective; its parent/configuration/auditor freeze and actual invocation
+remain open. These source/static corrections grant no runtime, renderer, operator
+or scientific qualification. All33 statuses and seven open gates are unchanged.
 
 [Draft PR #143](https://github.com/Aadrika08/palimpsest/pull/143) retains the
 actual offline installation:71 distributions,27,225 regular files/1,304,701,872B,
