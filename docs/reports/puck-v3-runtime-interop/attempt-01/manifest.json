@@ -1,0 +1,67 @@
+{
+  "collection_authorized": false,
+  "files": [
+    {
+      "path": "freeze.json",
+      "sha256": "d6b322fc43f8cbce3da3c0d02dd604b9f82f27f685a095ffe9345963cbc7126f",
+      "size_bytes": 1649
+    },
+    {
+      "path": "invocation.json",
+      "sha256": "c8657afdf16fdf87390ec28d36dfd6ace007789f192b430066067ea3a684dc03",
+      "size_bytes": 811
+    },
+    {
+      "path": "outer/stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    {
+      "path": "outer/stdout.log",
+      "sha256": "3abb35bd17087f7c412b38cdccbe9a3df034f4168cd26c95db840ac7c6f76d70",
+      "size_bytes": 123
+    },
+    {
+      "path": "payload/imports.json",
+      "sha256": "281330709018ec370ad84dc571e465f5e02cf4c528de1091d97d11a296082dc4",
+      "size_bytes": 1068
+    },
+    {
+      "path": "request.json",
+      "sha256": "7c6331c64226b8ea4f36292a3fc3fedab60c54760d7e82e415400ed7e6cc0f89",
+      "size_bytes": 611
+    },
+    {
+      "path": "supervision.json",
+      "sha256": "d39723bba6d3de68aa79114f43e75b30cc418fa09b5fa26385eb00d14409d11a",
+      "size_bytes": 300
+    },
+    {
+      "path": "installed-prelaunch.json",
+      "sha256": "b365150eb407051cc25fadf452db61a88c5f171a5416048b5b518ecbd8ef6552",
+      "size_bytes": 372
+    },
+    {
+      "path": "installed-parent.stdout.log",
+      "sha256": "d39723bba6d3de68aa79114f43e75b30cc418fa09b5fa26385eb00d14409d11a",
+      "size_bytes": 300
+    },
+    {
+      "path": "installed-parent.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    {
+      "path": "mujoco-static-inspection.json",
+      "sha256": "068dd72b37143f00f752eb9b26586a12fefb75b5da69d560815bf13078c33663",
+      "size_bytes": 683
+    }
+  ],
+  "freeze_sha256": "d6b322fc43f8cbce3da3c0d02dd604b9f82f27f685a095ffe9345963cbc7126f",
+  "kind": "puck-runtime-import-characterization-evidence-v1",
+  "qualification_claims": [],
+  "runtime_qualified": false,
+  "source_commit": "f3a70fc9358ab8e466bd102bb857da302f66ffb7",
+  "status": "failed",
+  "version": 1
+}
