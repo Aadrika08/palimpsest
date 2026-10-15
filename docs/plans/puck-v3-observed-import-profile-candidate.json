@@ -1,0 +1,595 @@
+{
+  "collection_authorized": false,
+  "executable": false,
+  "held_runtime_qualified": false,
+  "import_profile": {
+    "exports": [
+      {
+        "attributes": [
+          "_aoti"
+        ],
+        "class_binding": null,
+        "name": "torch._C._aoti",
+        "phase": "native_create",
+        "producer": "torch._C"
+      },
+      {
+        "attributes": [
+          "_autograd"
+        ],
+        "class_binding": null,
+        "name": "torch._C._autograd",
+        "phase": "native_create",
+        "producer": "torch._C"
+      },
+      {
+        "attributes": [
+          "_cpu"
+        ],
+        "class_binding": null,
+        "name": "torch._C._cpu",
+        "phase": "native_create",
+        "producer": "torch._C"
+      },
+      {
+        "attributes": [
+          "_cudart"
+        ],
+        "class_binding": null,
+        "name": "torch._C._cudart",
+        "phase": "native_create",
+        "producer": "torch._C"
+      },
+      {
+        "attributes": [
+          "_cudnn"
+        ],
+        "class_binding": null,
+        "name": "torch._C._cudnn",
+        "phase": "native_create",
+        "producer": "torch._C"
+      },
+      {
+        "attributes": [
+          "_cusparselt"
+        ],
+        "class_binding": null,
+        "name": "torch._C._cusparselt",
+        "phase": "native_create",
+        "producer": "torch._C"
+      },
+      {
+        "attributes": [
+          "_distributed_autograd"
+        ],
+        "class_binding": null,
+        "name": "torch._C._distributed_autograd",
+        "phase": "native_create",
+        "producer": "torch._C"
+      },
+      {
+        "attributes": [
+          "_distributed_c10d"
+        ],
+        "class_binding": null,
+        "name": "torch._C._distributed_c10d",
+        "phase": "native_create",
+        "producer": "torch._C"
+      },
+      {
+        "attributes": [
+          "_distributed_rpc"
+        ],
+        "class_binding": null,
+        "name": "torch._C._distributed_rpc",
+        "phase": "native_create",
+        "producer": "torch._C"
+      },
+      {
+        "attributes": [
+          "_dynamo"
+        ],
+        "class_binding": null,
+        "name": "torch._C._dynamo",
+        "phase": "native_create",
+        "producer": "torch._C"
+      },
+      {
+        "attributes": [
+          "_dynamo",
+          "compiled_autograd"
+        ],
+        "class_binding": null,
+        "name": "torch._C._dynamo.autograd_compiler",
+        "phase": "native_create",
+        "producer": "torch._C"
+      },
+      {
+        "attributes": [
+          "_dynamo",
+          "eval_frame"
+        ],
+        "class_binding": null,
+        "name": "torch._C._dynamo.eval_frame",
+        "phase": "native_create",
+        "producer": "torch._C"
+      },
+      {
+        "attributes": [
+          "_dynamo",
+          "guards"
+        ],
+        "class_binding": null,
+        "name": "torch._C._dynamo.guards",
+        "phase": "native_create",
+        "producer": "torch._C"
+      },
+      {
+        "attributes": [
+          "_dynamo",
+          "utils"
+        ],
+        "class_binding": null,
+        "name": "torch._C._dynamo.utils",
+        "phase": "native_create",
+        "producer": "torch._C"
+      },
+      {
+        "attributes": [
+          "_export"
+        ],
+        "class_binding": null,
+        "name": "torch._C._export",
+        "phase": "native_create",
+        "producer": "torch._C"
+      },
+      {
+        "attributes": [
+          "_export",
+          "pt2_archive_constants"
+        ],
+        "class_binding": null,
+        "name": "torch._C._export.pt2_archive_constants",
+        "phase": "native_create",
+        "producer": "torch._C"
+      },
+      {
+        "attributes": [
+          "_fft"
+        ],
+        "class_binding": null,
+        "name": "torch._C._fft",
+        "phase": "native_create",
+        "producer": "torch._C"
+      },
+      {
+        "attributes": [
+          "_functionalization"
+        ],
+        "class_binding": null,
+        "name": "torch._C._functionalization",
+        "phase": "native_create",
+        "producer": "torch._C"
+      },
+      {
+        "attributes": [
+          "_functorch"
+        ],
+        "class_binding": null,
+        "name": "torch._C._functorch",
+        "phase": "native_create",
+        "producer": "torch._C"
+      },
+      {
+        "attributes": [
+          "_instruction_counter"
+        ],
+        "class_binding": null,
+        "name": "torch._C._instruction_counter",
+        "phase": "native_create",
+        "producer": "torch._C"
+      },
+      {
+        "attributes": [
+          "_itt"
+        ],
+        "class_binding": null,
+        "name": "torch._C._itt",
+        "phase": "native_create",
+        "producer": "torch._C"
+      },
+      {
+        "attributes": [
+          "_jit"
+        ],
+        "class_binding": null,
+        "name": "torch._C._jit",
+        "phase": "native_create",
+        "producer": "torch._C"
+      },
+      {
+        "attributes": [
+          "_jit_tree_views"
+        ],
+        "class_binding": null,
+        "name": "torch._C._jit_tree_views",
+        "phase": "native_create",
+        "producer": "torch._C"
+      },
+      {
+        "attributes": [
+          "_lazy"
+        ],
+        "class_binding": null,
+        "name": "torch._C._lazy",
+        "phase": "native_create",
+        "producer": "torch._C"
+      },
+      {
+        "attributes": [
+          "_lazy_ts_backend"
+        ],
+        "class_binding": null,
+        "name": "torch._C._lazy_ts_backend",
+        "phase": "native_create",
+        "producer": "torch._C"
+      },
+      {
+        "attributes": [
+          "_linalg"
+        ],
+        "class_binding": null,
+        "name": "torch._C._linalg",
+        "phase": "native_create",
+        "producer": "torch._C"
+      },
+      {
+        "attributes": [
+          "_monitor"
+        ],
+        "class_binding": null,
+        "name": "torch._C._monitor",
+        "phase": "native_create",
+        "producer": "torch._C"
+      },
+      {
+        "attributes": [
+          "_nativert"
+        ],
+        "class_binding": null,
+        "name": "torch._C._nativert",
+        "phase": "native_create",
+        "producer": "torch._C"
+      },
+      {
+        "attributes": [
+          "_nested"
+        ],
+        "class_binding": null,
+        "name": "torch._C._nested",
+        "phase": "native_create",
+        "producer": "torch._C"
+      },
+      {
+        "attributes": [
+          "_nn"
+        ],
+        "class_binding": null,
+        "name": "torch._C._nn",
+        "phase": "native_create",
+        "producer": "torch._C"
+      },
+      {
+        "attributes": [
+          "_nvtx"
+        ],
+        "class_binding": null,
+        "name": "torch._C._nvtx",
+        "phase": "native_create",
+        "producer": "torch._C"
+      },
+      {
+        "attributes": [
+          "_onnx"
+        ],
+        "class_binding": null,
+        "name": "torch._C._onnx",
+        "phase": "native_create",
+        "producer": "torch._C"
+      },
+      {
+        "attributes": [
+          "_profiler"
+        ],
+        "class_binding": null,
+        "name": "torch._C._profiler",
+        "phase": "native_create",
+        "producer": "torch._C"
+      },
+      {
+        "attributes": [
+          "_return_types"
+        ],
+        "class_binding": null,
+        "name": "torch._C._return_types",
+        "phase": "native_create",
+        "producer": "torch._C"
+      },
+      {
+        "attributes": [
+          "_sparse"
+        ],
+        "class_binding": null,
+        "name": "torch._C._sparse",
+        "phase": "native_create",
+        "producer": "torch._C"
+      },
+      {
+        "attributes": [
+          "_special"
+        ],
+        "class_binding": null,
+        "name": "torch._C._special",
+        "phase": "native_create",
+        "producer": "torch._C"
+      },
+      {
+        "attributes": [
+          "_te"
+        ],
+        "class_binding": null,
+        "name": "torch._C._te",
+        "phase": "native_create",
+        "producer": "torch._C"
+      },
+      {
+        "attributes": [
+          "_verbose"
+        ],
+        "class_binding": null,
+        "name": "torch._C._verbose",
+        "phase": "native_create",
+        "producer": "torch._C"
+      },
+      {
+        "attributes": [
+          "cpp"
+        ],
+        "class_binding": null,
+        "name": "torch._C.cpp",
+        "phase": "native_create",
+        "producer": "torch._C"
+      },
+      {
+        "attributes": [
+          "cpp",
+          "nn"
+        ],
+        "class_binding": null,
+        "name": "torch._C.cpp.nn",
+        "phase": "native_create",
+        "producer": "torch._C"
+      },
+      {
+        "attributes": [
+          "classes"
+        ],
+        "class_binding": {
+          "attributes": [
+            "_Classes"
+          ],
+          "kind": "direct",
+          "producer": "torch._classes"
+        },
+        "name": "torch.classes",
+        "phase": "module_exec",
+        "producer": "torch._classes"
+      },
+      {
+        "attributes": [
+          "ops"
+        ],
+        "class_binding": {
+          "attributes": [
+            "_Ops"
+          ],
+          "kind": "direct",
+          "producer": "torch._ops"
+        },
+        "name": "torch.ops",
+        "phase": "module_exec",
+        "producer": "torch._ops"
+      }
+    ],
+    "module_changes": [
+      {
+        "class_binding": {
+          "attributes": [
+            "VFModule"
+          ],
+          "kind": "direct",
+          "producer": "torch._VF"
+        },
+        "kind": "replace",
+        "name": "torch._VF"
+      },
+      {
+        "class_binding": {
+          "attributes": [
+            "GenericModule"
+          ],
+          "kind": "direct",
+          "producer": "torch.backends"
+        },
+        "kind": "replace",
+        "name": "torch.backends"
+      },
+      {
+        "class_binding": {
+          "attributes": [
+            "CudnnModule"
+          ],
+          "kind": "direct",
+          "producer": "torch.backends.cudnn"
+        },
+        "kind": "replace",
+        "name": "torch.backends.cudnn"
+      },
+      {
+        "class_binding": {
+          "attributes": [
+            "MiopenModule"
+          ],
+          "kind": "direct",
+          "producer": "torch.backends.miopen"
+        },
+        "kind": "replace",
+        "name": "torch.backends.miopen"
+      },
+      {
+        "class_binding": {
+          "attributes": [
+            "MkldnnModule"
+          ],
+          "kind": "direct",
+          "producer": "torch.backends.mkldnn"
+        },
+        "kind": "replace",
+        "name": "torch.backends.mkldnn"
+      },
+      {
+        "class_binding": {
+          "attributes": [
+            "OptEinsumModule"
+          ],
+          "kind": "direct",
+          "producer": "torch.backends.opt_einsum"
+        },
+        "kind": "replace",
+        "name": "torch.backends.opt_einsum"
+      },
+      {
+        "class_binding": {
+          "attributes": [
+            "QuantizedEngine"
+          ],
+          "kind": "direct",
+          "producer": "torch.backends.quantized"
+        },
+        "kind": "replace",
+        "name": "torch.backends.quantized"
+      },
+      {
+        "class_binding": {
+          "attributes": [
+            "install_config_module"
+          ],
+          "bases": [
+            {
+              "attributes": [
+                "ConfigModule"
+              ],
+              "kind": "direct",
+              "producer": "torch.utils._config_module"
+            }
+          ],
+          "kind": "factory",
+          "nested": "ConfigModuleInstance",
+          "producer": "torch.utils._config_module"
+        },
+        "kind": "reclassify",
+        "name": "torch.compiler.config"
+      },
+      {
+        "class_binding": {
+          "attributes": [
+            "install_config_module"
+          ],
+          "bases": [
+            {
+              "attributes": [
+                "ConfigModule"
+              ],
+              "kind": "direct",
+              "producer": "torch.utils._config_module"
+            }
+          ],
+          "kind": "factory",
+          "nested": "ConfigModuleInstance",
+          "producer": "torch.utils._config_module"
+        },
+        "kind": "reclassify",
+        "name": "torch.fx.experimental._config"
+      },
+      {
+        "class_binding": {
+          "attributes": [
+            "_Deterministic"
+          ],
+          "kind": "direct",
+          "producer": "torch.utils.deterministic"
+        },
+        "kind": "reclassify",
+        "name": "torch.utils.deterministic"
+      }
+    ],
+    "native_origins": [
+      {
+        "name": "mujoco._callbacks",
+        "policy": "held-directory-observed-v1"
+      },
+      {
+        "name": "mujoco._constants",
+        "policy": "held-directory-observed-v1"
+      },
+      {
+        "name": "mujoco._enums",
+        "policy": "held-directory-observed-v1"
+      },
+      {
+        "name": "mujoco._errors",
+        "policy": "held-directory-observed-v1"
+      },
+      {
+        "name": "mujoco._functions",
+        "policy": "held-directory-observed-v1"
+      },
+      {
+        "name": "mujoco._render",
+        "policy": "held-directory-observed-v1"
+      },
+      {
+        "name": "mujoco._specs",
+        "policy": "held-directory-observed-v1"
+      },
+      {
+        "name": "mujoco._structs",
+        "policy": "held-directory-observed-v1"
+      },
+      {
+        "name": "numpy._core._multiarray_umath",
+        "policy": "held-directory-observed-v1"
+      },
+      {
+        "name": "numpy.linalg._umath_linalg",
+        "policy": "held-directory-observed-v1"
+      },
+      {
+        "name": "torch._C",
+        "policy": "held-directory-observed-v1"
+      }
+    ]
+  },
+  "kind": "puck-observed-import-profile-candidate-v1",
+  "limitations": [
+    "Static candidate from consumed ordinary-import observation02, not a dependency registration.",
+    "Native-create phase is a prospective hypothesis; separately held qualification must verify it.",
+    "Registered producer file hashes, complete roots/images and actual runtime configuration remain required.",
+    "Directory-origin policy observes persistent target identities after trusted native initialization; it does not prevent swaps.",
+    "No transient/anonymous/JIT closure or scientific/capability claim."
+  ],
+  "native_phase_qualified": false,
+  "observation_report_sha256": "a1b70f800a329d1f7c01ca90f836cc37c45a29478707d04ce331444805207045",
+  "qualification_claims": [],
+  "version": 1
+}

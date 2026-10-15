@@ -23,6 +23,7 @@ import threading
 import time
 
 from .puck_execution_files import _HeldFileCore, _identity, _relative
+from .puck_dependency_bindings import validate_profile
 
 MiB = 1024 ** 2
 MAX_REGISTRATION_BYTES = 16 * MiB
@@ -221,8 +222,11 @@ class HeldDependencyNamespace:
 
     def _validate(self):
         reg = self._registration
-        _fields(reg, ('kind', 'version', 'roots', 'modules', 'namespaces', 'distributions'))
-        if reg['kind'] != 'puck-worker-dependencies-v1' or type(reg['version']) is not int or reg['version'] != 1:
+        keys=('kind', 'version', 'roots', 'modules', 'namespaces', 'distributions')
+        if type(reg) is dict and reg.get('version')==2: keys+=('import_profile',)
+        _fields(reg, keys)
+        if (type(reg['version']) is not int or reg['version'] not in (1,2)
+                or reg['kind'] != 'puck-worker-dependencies-v'+str(reg['version'])):
             raise ValueError('Unknown dependency registration kind or version')
         for key in ('roots', 'modules', 'namespaces', 'distributions'):
             if type(reg[key]) is not list: raise ValueError('Dependency rows must be lists')
@@ -301,6 +305,8 @@ class HeldDependencyNamespace:
             normalized = re.sub(r'[-_.]+', '-', row['name']).lower()
             if normalized in distributions: raise ValueError('Duplicate dependency distribution')
             distributions.add(normalized)
+
+        if reg['version']==2: validate_profile(reg['import_profile'],reg['modules'],reg['namespaces'])
 
     def _clock(self):
         if time.monotonic() >= self._deadline: raise TimeoutError('Dependency custody deadline exhausted')
@@ -477,7 +483,8 @@ class HeldDependencyNamespace:
     def _records(self, kind):
         try:
             self._recheck(); size = self._metadata_size()
-            result = copy.deepcopy(self._registration[kind])
+            result = copy.deepcopy(self._registration.get(kind,
+                {'exports':[], 'module_changes':[], 'native_origins':[]}))
             if size + len(_canonical(result)) > MAX_METADATA_BYTES:
                 raise ValueError('Dependency returned metadata exceeds global ceiling')
             self._recheck(); return result
@@ -486,6 +493,7 @@ class HeldDependencyNamespace:
     def module_records(self): return self._records('modules')
     def namespace_records(self): return self._records('namespaces')
     def distribution_records(self): return self._records('distributions')
+    def import_profile(self): return self._records('import_profile')
 
     def snapshot(self):
         try:

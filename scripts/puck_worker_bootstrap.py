@@ -289,7 +289,7 @@ class HeldWorkerBootstrap:
         self._loading = set()
         self._finder = None; self._meta_path = None; self._source = None; self._runtime = None
         self._early_runtime_fds = []
-        self._dependencies = None
+        self._dependencies = None; self._dependency_dispatch = None
 
     def _clock(self):
         if time.monotonic() >= self._deadline: raise TimeoutError('Fresh worker deadline exhausted')
@@ -403,6 +403,7 @@ class HeldWorkerBootstrap:
                 self._dependencies = DependencyImports(provider, self._import_recheck, self.recheck, self._fail,
                     self._modules.keys() | self._namespaces.keys(),
                     [self._reg['source_root'], self._reg['runtime']['root']])
+                self._dependency_dispatch=(self._dependencies,DependencyImports)
             self.recheck(); return self
         except BaseException as error: self._fail(error); raise
 
@@ -471,11 +472,6 @@ class HeldWorkerBootstrap:
             if self._state != 'active': raise RuntimeError('Bootstrap inactive or poisoned')
             self._clock()
             if sys.meta_path != [self._finder, *self._meta_path]: raise RuntimeError('Source import dispatch changed')
-            for name in sys.modules:
-                if (name.split('.')[0] not in sys.stdlib_module_names and
-                        name not in {'__main__', '_puck_held_file_bootstrap'}|self._loaded.keys()|self._loading
-                        | (self._dependencies.loaded.keys() | self._dependencies.loading if self._dependencies else set())):
-                    raise RuntimeError('Unregistered module cache entry: '+name)
             for name, binding in self._loaded.items():
                 module, filename, loader, spec, origin, spec_loader, package, search, spec_name, spec_search, _, _ = binding
                 if (sys.modules.get(name) is not module or module.__file__ != filename or module.__loader__ is not loader
@@ -490,6 +486,18 @@ class HeldWorkerBootstrap:
                 if (vars(owner).get(key) is not cls or type(cls) is not metaclass
                         or cls.__bases__ != bases or tuple(vars(cls)) != keys):
                     raise RuntimeError('Authenticated class binding changed')
+            # Bind support dispatch before calling any dependency reconciliation.
+            exported=set()
+            if self._dependencies is not None:
+                receiver,cls=self._dependency_dispatch
+                if self._dependencies is not receiver or type(receiver) is not cls:
+                    raise RuntimeError('Authenticated dependency receiver dispatch changed')
+                exported=cls.recheck(receiver)
+            for name in sys.modules:
+                if (name.split('.')[0] not in sys.stdlib_module_names and
+                        name not in {'__main__', '_puck_held_file_bootstrap'}|self._loaded.keys()|self._loading
+                        | (self._dependencies.loaded.keys() | self._dependencies.loading | exported if self._dependencies else set())):
+                    raise RuntimeError('Unregistered module cache entry: '+name)
             # Check support dispatch before invoking its guard methods.
             for child in self._children:
                 if full: child.recheck()
@@ -501,7 +509,7 @@ class HeldWorkerBootstrap:
                                 _identity(os.stat(name, dir_fd=parent, follow_symlinks=False)) != expected):
                             raise RuntimeError('Held source/runtime file metadata changed')
             if self._dependencies is not None:
-                self._dependencies.recheck()
+                cls.recheck(receiver)
                 if full: self._dependencies.images()
             if _identity(os.stat('/proc/self/exe')) != self._image: raise RuntimeError('Running interpreter object differs')
             if _process(os.getpid()) != self._process or _process(os.getppid()) != self._parent:
