@@ -9,6 +9,15 @@ boundary has scoped evidence, even when the evidence column retains limitations;
 `failed` means a fixed gate was evaluated and missed; `limited` means required
 evidence remains incomplete; and `deferred` is outside the simulation release.
 
+The 15 October goal refresh defines one reproducible simulation release and five
+execution stages: complete both execution paths, qualify the actual configuration,
+finish the studies/capabilities, complete the integrated lab/six artworks, and
+record artistic/operator acceptance. Its immediate implementation target remains
+the finite held-import profile; source checks cannot close qualification or release
+gates. Free space was rechecked at 02:01 UTC: 99,717,603,328 bytes (~92.9 GiB).
+No qualification, study, browser or human acceptance session ran in this refresh;
+all 26 requirement statuses and seven release-gate statuses remain unchanged.
+
 The current [simulation execution goal](plans/simulation-release-execution-goal.md)
 retains all seven release gates as open. [Draft PR #119](https://github.com/Aadrika08/palimpsest/pull/119)
 has independent source/freeze GO and 108 passing focused checks for memory
