@@ -36,21 +36,36 @@ remain FAIL, with their missing receipts absent. The private selected-tree polic
 and inert-bytecode exception grant package-data acceptance only.
 
 The [next work unit](plans/simulation-release-execution-goal.md#clear-execution-target-after-disk-clearance)
-ends with that actual episode bundle. Characterization01 below failed and remains
-consumed. Finish the distinct02 parent/configuration and outcome auditor, bind
-the accepted package and prior-failure capsules, then freeze/review it and run it
-once after fresh admission. An accepted ordinary observation supplies the CPU
-profile without qualifying the runtime. Then complete tmpfs staging and the
-descriptor-v3/four-import qualification parent, qualify that actual runtime, and
-prove recording/replay/export with declared operator/renderer checks. Older
-three-import/dependency-v2 parents need substantive staging and configuration
-changes. Fresh full-stage RAM/storage/FD/process admission and independent
-review precede actual execution. No actual held qualification, real episode,
-study or browser/human session ran in this unit. Resource snapshots
-are transient and do not admit the runtime. The previous
+ends with that actual episode bundle. Accepted ordinary characterization02 below
+now supplies the CPU profile observations. Derive that profile, complete tmpfs
+staging and the descriptor-v3/four-import qualification parent, then qualify the
+actual held runtime before proving recording/replay/export with declared
+operator/renderer checks. The current producer-bound profile cannot represent
+observed `cython_runtime` and `_cython_3_0_12`, which lack file/spec/producer
+attribute edges; bind their native creation explicitly before held qualification,
+without skipping modules or guessing producers.
+Older three-import/dependency-v2 parents need
+substantive staging and configuration changes. Fresh full-stage RAM/storage/FD/
+process admission and independent configuration review precede actual
+qualification. No held qualification, real episode, study or browser/human session
+ran in this unit. Resource snapshots remain transient. The previous
 [execution/evidence history](plans/simulation-release-execution-goal-history-2026-10-15.md)
 is preserved byte-identically. All26 requirement and seven gate statuses remain
 unchanged; all seven release gates remain open.
+
+[Draft PR #146](https://github.com/Aadrika08/palimpsest/pull/146) accepts the distinct
+ordinary CPU characterization02: actual parent exit0 in17.546290720s, with
+NumPy2.2.5, Torch2.9.0+cpu, torchvision0.24.0+cpu and MuJoCo3.3.6 observed in order.
+The private namespace probe and worker complete normally; parent closure records
+zero children/threads and5→5 descriptors. Sampled peak parent RSS is82,993,152B;
+parent+worker peak is412,393,472B. Independent outcome audit returns0 in4.098550721s.
+The [report](https://github.com/Aadrika08/palimpsest/blob/b329093685ee2854c2bbd517accfc3cbdd9f1170/docs/reports/puck-cpu-characterization-02.md)
+retains82 indexed files/8,224,498B, exact source/configuration and terminal outcomes;
+234 affected source checks pass. Index SHA256 is
+`c827dc11dd3bcfe60a3020dccc008c385c779f19f60ad2bf6f930d69fcd654da`.
+All runtime/native/collection/study/executable authority remains false. Ordinary
+imports do not qualify held execution, native closure, rendering, operators,
+models or episodes. All33 statuses and seven open gates remain unchanged.
 
 [Draft PR #145](https://github.com/Aadrika08/palimpsest/pull/145) retains the sole
 ordinary CPU characterization01 failure: actual exit1 in8.909677s on first NumPy
@@ -63,15 +78,10 @@ The [report](https://github.com/Aadrika08/palimpsest/blob/05c3193d2626d670bdc9ba
 retains64 byte-identical indexed files/6,804,246B and exact source/configuration.
 The successful-outcome auditor was not invoked.
 
-Static inspection finds an unreachable zlib-provider selection in metadata04;
-the actual error retains only NumPy's generic wrapper, so this is a likely cause,
-not a proven sole cause. Reviewed metadata05 adds the exact host zlib leaf/alias;
-its data-only helper returns0 in0.181258s. Bounded CPU cause/context diagnostics
-and the secondary-formatting failure regression pass209 affected checks in6.62s.
-The [distinct02 proposal](https://github.com/Aadrika08/palimpsest/blob/05c3193d2626d670bdc9bac1ecb861b80c8ad5a8/docs/plans/puck-cpu-characterization-02-proposal.md)
-is prospective; its parent/configuration/auditor freeze and actual invocation
-remain open. These source/static corrections grant no runtime, renderer, operator
-or scientific qualification. All33 statuses and seven open gates are unchanged.
+The distinct02 profile adds the pinned host-zlib fallback and bounded cause/
+context diagnostics. Passing02 does not recover01's unrecorded underlying
+exception or change its preserved failure. Actual held qualification and the
+recorded/replayed/exported episode remain the next exits.
 
 [Draft PR #143](https://github.com/Aadrika08/palimpsest/pull/143) retains the
 actual offline installation:71 distributions,27,225 regular files/1,304,701,872B,

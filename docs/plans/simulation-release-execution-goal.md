@@ -35,12 +35,9 @@ resolve failed controller scores, the memory ordering conflict or human acceptan
 ordered checklist is:
 
 - [x] Accept the exact installed CPU package tree and retain its independent audit.
-- [ ] Complete an accepted bounded CPU import observation with four required
-  versions, intact pins and normal cleanup. Allocation01 failed during NumPy
-  import and is preserved. Finish and review the distinct02 configuration with
-  the static host-zlib correction and bounded cause/context diagnostics, then
-  run it once and independently audit the actual outcome. Ordinary observation
-  supplies CPU profile data; it does not qualify the runtime.
+- [x] Accept the bounded CPU four-import observation with exact versions,
+  intact pins, normal cleanup and an independent outcome audit. Distinct02
+  passes; failed01 remains preserved. This supplies CPU profile data only.
 - [ ] Use that profile to finish tmpfs staging and the four-import qualification
   parent. Emit dependency-v3/descriptor-v3, review the exact configuration, then
   qualify the actual held runtime and independently audit its outcome.
@@ -52,10 +49,9 @@ ordered checklist is:
 - [ ] Independently audit the bundle and report checkpoint A's actual outcome,
   the first remaining gap and the next concrete action.
 
-The ordinary observation parent and direct-log changes have source checks and
-actual failure evidence. Metadata05 corrects a statically identified zlib-path
-omission, and the worker now retains bounded error chains. These corrections are
-preparation; no successful four-import observation or episode is established.
+The accepted ordinary observation02 supplies actual NumPy, Torch, torchvision
+and MuJoCo import/version and bounded module/native-map data. It does not establish
+held-runtime, native-closure, renderer, operator, model or episode qualification.
 The older qualification parent and registration builder still emit
 three-import/dependency-v2 contracts. Complete their substantive staging and
 configuration work; do not relabel an old observation. An unchanged accepted tree
@@ -66,39 +62,30 @@ source-only hardening is not a substitute for reaching the episode deliverable.
 A failed actual stage retains its outcome and consumed allocation. No study or
 numerical invocation follows from a source fixture alone.
 
-## Latest checkpoint A result: CPU observation failed and preserved
+## Latest checkpoint A result: ordinary CPU observation02 accepted
 
-[Draft PR #145](https://github.com/Aadrika08/palimpsest/pull/145) retains the
-[actual01 report](https://github.com/Aadrika08/palimpsest/blob/05c3193d2626d670bdc9bac1ecb861b80c8ad5a8/docs/reports/puck-cpu-characterization-01.md).
-The sole actual invocation exits1 in8.909677s at the first NumPy import, before
-any package version is reported. The private namespace probe returns0; the worker
-returns1 without a monitor failure or group survivors. Parent closure reports
-zero children/threads and5→5 descriptors. The normal route's after-baseline receipt
-remains absent. Source freeze `9b41aa0ab3bd205800ca85e0311b06decf89a504` and
-configuration SHA256
-`b11daf4719daf3a838ece18cf6c0604875d3fcba65b0ab0b5354b9428be6b8ca`
-are preserved with64 byte-identical indexed files/6,804,246B.
+[Draft PR #146](https://github.com/Aadrika08/palimpsest/pull/146) retains the
+[actual02 report](https://github.com/Aadrika08/palimpsest/blob/b329093685ee2854c2bbd517accfc3cbdd9f1170/docs/reports/puck-cpu-characterization-02.md).
+The separately frozen parent exits0 in17.546290720s. NumPy2.2.5, Torch2.9.0+cpu,
+torchvision0.24.0+cpu and MuJoCo3.3.6 are observed in the fixed order. The private
+namespace probe and worker complete normally; closure reports zero children/
+threads and5→5 descriptors. Sampled parent peak RSS is82,993,152B and sampled
+parent+worker peak is412,393,472B.
 
-The separate preservation audit exits0 in5.887243s and verifies all39 source/input
-pins,16 historical admission sources, the full27,225-file/2,074-directory current
-tree, declared native/interpreter identities and5,388 receipt fingerprints. It
-verifies the failure and eight absent receipts; it does not accept imports or
-runtime. The successful-outcome auditor was not invoked.
+The independent outcome audit exits0 in4.098550721s. The publication retains82
+indexed files/8,224,498B, exact source/configuration, raw receipts and terminal
+outcomes;234 affected source checks pass. Evidence-index SHA256 is
+`c827dc11dd3bcfe60a3020dccc008c385c779f19f60ad2bf6f930d69fcd654da`.
+These results accept ordinary import observation only; all runtime/native/
+collection/study/executable authority remains false and all seven gates stay open.
 
-Static inspection finds that metadata04 resolved NumPy's `libz.so.1` edge to an
-unrelated torchvision private provider, outside NumPy's loader paths, while the
-host zlib leaf/alias was not mounted. This is a likely cause, not an observed
-underlying exception:01 retained NumPy's generic wrapper only. Separately reviewed
-metadata05 adds the exact host zlib fallback and preserves04; its data-only helper
-returns0 in0.181258s. Bounded CPU-only cause/context diagnostics and the reviewed
-secondary-formatting failure fix pass209 affected checks in6.62s. These are source/
-static corrections, not another actual CPU observation.
-
-The [distinct02 proposal](https://github.com/Aadrika08/palimpsest/blob/05c3193d2626d670bdc9bac1ecb861b80c8ad5a8/docs/plans/puck-cpu-characterization-02-proposal.md)
-specifies the remaining parent, prior-failure binding, exact configuration and
-outcome-auditor work. No02 executable configuration or actual invocation exists.
-Do not rerun01 or use its stale configuration against the changed worker.
-Package preparation remains separately accepted below; all seven gates stay open.
+[Characterization01](https://github.com/Aadrika08/palimpsest/blob/05c3193d2626d670bdc9bac1ecb861b80c8ad5a8/docs/reports/puck-cpu-characterization-01.md)
+remains failed and consumed, with its original source, configuration, generic
+NumPy error, missing receipts and independent preservation audit unchanged.
+The host-zlib correction and bounded diagnostics belong to the distinct02 profile;
+the passing observation does not recover01's unrecorded underlying exception.
+Next derive the CPU profile, complete tmpfs staging and qualify the exact held
+runtime before any engineering episode allocation.
 
 ## Completed dependency within checkpoint A: accepted package data
 
@@ -217,20 +204,22 @@ substitute for numerical results, capability, actual browser use or human accept
 | 5 | Integrate and experience the product. | One candidate supports the lab and all six artworks; actual browser, mapping, replay, export, interruption and endurance checks pass. |
 | 6 | Accept and deliver that candidate. | Artistic/operator sessions, final verification and all seven gate records are complete; the installation and evidence package are reproducible. |
 
-**Current next action:** implement the exact, separately numbered CPU
-characterization02 parent/configuration and independent outcome auditor from the
-linked proposal. Admit metadata-v5, bind the accepted package receipts and prior01
-failure/source capsule, and freeze/review the current sources and configuration.
-Check fresh resources before its sole actual invocation; audit the actual outcome.
-Preserve failed characterization01, observations01/02 and all consumed allocations.
-Use the resulting CPU profile to finish the separate preparation/qualification
-parent and tmpfs staging builder, reusing the descriptor-v3/four-import worker.
-Bind the admitted inventory/snapshot/result/audit, stage every required package
-and native leaf, and preserve inert-bytecode restrictions and the original
-trusted interpreter/stdlib baseline. Recheck full-stage RAM, storage, descriptors
-and processes before invocation. A version-field change or an ordinary import
-observation is insufficient: require actual held-runtime qualification, normal
-cleanup and an independent audit before the real episode allocation begins.
+**Current next action:** derive the CPU profile from accepted observation02 and
+finish the separate preparation/qualification parent and tmpfs staging builder,
+reusing the descriptor-v3/four-import worker. The current producer-bound profile
+cannot represent observed `cython_runtime` and `_cython_3_0_12`, which lack file/
+spec/producer attribute edges; bind their native creation explicitly before held
+qualification, without skipping modules or guessing producers.
+Bind the admitted package receipts
+and02's frozen source/configuration and observed module/native-map identities.
+Stage every required package and native leaf; preserve inert-bytecode restrictions
+and the original trusted interpreter/stdlib baseline. Recheck full-stage RAM,
+storage, descriptor and process admission, then freeze and independently review
+the exact executable configuration before its separately numbered qualification.
+Require actual held-runtime qualification, normal cleanup and an independent
+audit before the real episode allocation begins. An ordinary import pass supplies
+profile data; it does not satisfy held-native, operator, renderer or collection
+checks. Preserve failed characterization01 and every earlier consumed allocation.
 Review the family qualification binding in parallel without opening a new
 scientific allocation. The directory-enumeration source fix is complete within
 its tested scope; the first actual family admission remains open.
@@ -255,8 +244,9 @@ RAM shortfall in PR #138 remains a historical observation, not a new measurement
 - [Draft PR #144](https://github.com/Aadrika08/palimpsest/pull/144) supplies
   accepted retained package preparation as detailed above. It does not accept the
   historical installer teardown, qualify the numerical runtime or close any
-  release gate. Complete tmpfs/native/EGL staging, the CPU import profile and the
-  exact four-import parent remain the next executable gap. No real simulator
+  release gate. Observation02 above now supplies ordinary CPU import data;
+  complete tmpfs/native/EGL staging and the exact held four-import qualification
+  parent remain the next executable gap. No real simulator
   episode or scientific allocation ran in this unit.
 - [Draft PR #143](https://github.com/Aadrika08/palimpsest/pull/143) supplies the
   actual offline installation and independently verified retained namespace:
@@ -323,7 +313,8 @@ and disk clearance do not approve those decisions.
 CPU installation01 and retained admission01 remain failed and consumed; their
 read-only evidence does not grant historical acceptance. Distinct admission02
 accepts only current package preparation. CPU characterization01 also remains
-failed and consumed;02 is prospective and uninvoked. The earlier preparation01,
+failed and consumed; distinct02 accepts ordinary imports only. The earlier
+preparation01,
 qualification01, runtime observations01/02 and navigation attempts1/2 remain
 consumed. Memory amendment 02 remains uninvoked. No silent
 retry, reordered study, altered threshold or invented passing receipt is permitted.
