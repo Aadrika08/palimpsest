@@ -46,7 +46,7 @@ entire native execution history. All runtime/native/collection grants stay false
   integration; preserve terminal refusal and source/model limits.
 - [x] Review complete source, fix concrete findings with regression proof and
   serialize meaningful focused/affected verification; retain suite limitations.
-- [ ] Commit/push a stacked draft PR and update goal/matrix. Then finish actual
+- [x] Commit/push a stacked draft PR and update goal/matrix. Then finish actual
   runtime qualification and the complete inventory-to-durable-collection route.
 
 Memory amendment02, catalog access and navigation decisions remain pending.
@@ -82,3 +82,6 @@ CI and physical rover remain excluded. All seven simulation gates stay open.
 
 Independent final-source repetition: 153 focused/16.38s and 1370 affected/78.32s,
 same six exclusions, exit0. All test processes stopped. See the source report.
+
+Published draft PR #130; goal PR #94 and matrix PR #102 updated.
+All seven release gates remain open; next runtime/owner integration is unfinished.
