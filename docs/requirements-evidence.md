@@ -21,17 +21,31 @@ checks. Source/runtime/model/scene identities, seed, limits, complete records an
 snapshots, replay comparisons, export hashes and normal cleanup belong in its
 portable bundle.
 
-The [immediate work unit](plans/simulation-release-execution-goal.md#clear-execution-target-after-disk-clearance)
-is a finite 35-row export preflight: three known distributed conflicts and 32 other
-native-create declarations. Classify each row as source-supported, correction
-required or unresolved, with exact creation/closure and build assumptions. Close
-the sweep after all 35 are classified; any unresolved group needs a separately
-reviewed bounded observation or decision. This does not qualify the installed
-binary or authorize an actual invocation. Review the complete profile before
-freezing qualification05; separately admit the exact public engineering episode
-and replay criteria before execution. Protected input access remains a pending
-decision. The product exit is still the audited recorded/replayed/exported
-episode, followed by the unchanged remaining release gates.
+The [35-row source preflight](https://github.com/Aadrika08/palimpsest/blob/e3748c0a48faebfe7cbb9178fc5fae85b3a38118/docs/reports/puck-cpu-export-phase-preflight-v1.md)
+is complete: 32 source-supported creation rows and three distributed phase
+corrections. The unchanged candidate/other 32 declarations remain preserved.
+The source map retains conditional/generated and visible lifecycle assumptions;
+it makes no installed-binary claim. 65 indexed artifacts/1,792,892B match originals
+and Git HEAD, 42 upstream Git blobs are verified, and seven selected installed
+files match accepted inventory pins. The initial verifier's valid-empty-branch
+assertion fix and one read-only CMake retrieval timeout remain preserved. The
+14-row core and 18-row standard source lanes and prospective proposal have
+independent review within their stated scope.
+
+The [next bounded work unit](plans/simulation-release-execution-goal.md#clear-execution-target-after-disk-clearance)
+is the fixed raw terminal metadata projection for only the three already-present
+distributed children through the existing ordinary four-import route. The
+[reviewed proposal](https://github.com/Aadrika08/palimpsest/blob/e3748c0a48faebfe7cbb9178fc5fae85b3a38118/docs/plans/puck-cpu-distributed-roster-observation-01-proposal.md)
+requires source checks and separately frozen/reviewed controls before one actual
+observation. Its 11/69/29 source roster proposals are not measured data or proof of
+private build flags; retain discrepancies for source attribution. Terminal roster
+measurement is not intermediate-publication or creator-close proof. Do not reopen
+the completed 35-row sweep or spend actual05 as a scout. No production source,
+profile, actual configuration or data changed in this source-only slice; no vendor
+import, operator, renderer, protected input, episode or study ran. 01–04 remain
+failed/consumed; six actual05 paths remain absent. All 33 statuses, seven gates and
+preserved history bytes stay unchanged; the audited episode bundle remains the
+next product exit.
 
 [Draft PR #144](https://github.com/Aadrika08/palimpsest/pull/144) closes the
 package-preparation dependency with distinct read-only admission02: actual
@@ -95,7 +109,7 @@ failed/consumed. The source checkpoint below now supplies bounded failure
 context and preserved cause/refusal. It cannot recover03's unlogged row. Review
 the exact diagnostic source transition before invocation and require observed
 evidence before a profile/phase correction. The separately reviewed04 below
-has now run once and failed with exact binding context. All33
+has now run once and failed with exact binding context. All 33
 statuses and all seven open gates remain unchanged; the recorded/replayed/
 exported episode bundle remains the next exit.
 
@@ -289,7 +303,7 @@ retains82 indexed files/8,224,498B, exact source/configuration and terminal outc
 `c827dc11dd3bcfe60a3020dccc008c385c779f19f60ad2bf6f930d69fcd654da`.
 All runtime/native/collection/study/executable authority remains false. Ordinary
 imports do not qualify held execution, native closure, rendering, operators,
-models or episodes. All33 statuses and seven open gates remain unchanged.
+models or episodes. All 33 statuses and seven open gates remain unchanged.
 
 [Draft PR #145](https://github.com/Aadrika08/palimpsest/pull/145) retains the sole
 ordinary CPU characterization01 failure: actual exit1 in8.909677s on first NumPy
@@ -321,7 +335,7 @@ namespace fixture; current trusted host/tool pins match. No original missing
 receipt was filled in. The separate admission01 failure also remains consumed.
 Admission02 above now supplies distinct package-preparation acceptance; numerical
 runtime, model/scene/catalog, physics and study qualification remain open.
-All33 requirement/gate statuses remain unchanged; all seven gates are open.
+All 33 requirement/gate statuses remain unchanged; all seven gates are open.
 
 [Draft PR #142](https://github.com/Aadrika08/palimpsest/pull/142) closes the
 missing CPU wheel artifact gap: the portable python-louvain wheel is 9,458B,
@@ -384,7 +398,7 @@ The [memory source audit](reports/memory-condition-case-close-gap-audit.md) veri
 that126/144 scheduled cases put oracle before own despite requiring prior-own
 admission. Resolve that contract prospectively before all-nine close; no ordering
 or derivation amendment follows from this audit. No actual study/runtime allocation,
-collection or browser/human session ran. All33 statuses remain unchanged.
+collection or browser/human session ran. All 33 statuses remain unchanged.
 
 [Draft PR #137](https://github.com/Aadrika08/palimpsest/pull/137) adds explicit
 dependency-v3 tmpfs-only all-leaf identity admission, full census/read leases and
@@ -396,7 +410,7 @@ checks pass14.22s. The broader slice has191passes/1/tmp ancestor-change refusal
 shows the original8.17GB namespace exceeds each available8.01GB tmpfs before
 reserves. CPU-only footprint, complete stdlib/external-library lookup, stable
 staging and exact admission remain open. No installed stack, actual allocation,
-collection, study or browser/human session ran. All33 statuses remain unchanged.
+collection, study or browser/human session ran. All 33 statuses remain unchanged.
 
 [Draft PR #136](https://github.com/Aadrika08/palimpsest/pull/136) adds an explicit
 versioned finite expected-missing-import source policy. Independent whole-branch
