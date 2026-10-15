@@ -1,0 +1,117 @@
+........................................................................ [ 31%]
+........................................................................ [ 62%]
+............................................................FFFF........ [ 94%]
+.............                                                            [100%]
+=================================== FAILURES ===================================
+___________ test_real_hard_guard_kills_outer_and_its_own_group[True] ___________
+
+tmp_path = PosixPath('/tmp/palimpsest-louvain-build-source-v1/test_real_hard_guard_kills_out0')
+registered = True
+
+    @pytest.mark.parametrize('registered', [True, False])
+    def test_real_hard_guard_kills_outer_and_its_own_group(tmp_path, registered):
+        helper()
+        pidfile=tmp_path/'child.pid'
+        code=f"""import os,sys,time,subprocess
+    from palimpsest.bounded_qualification import hard_guard
+    state={{}}
+    with hard_guard(time.monotonic()+.35,state):
+     child=subprocess.Popen([sys.executable,'-c','import time;time.sleep(10)'],start_new_session=True)
+     if {registered!r}:state['group']=child.pid
+     open({str(pidfile)!r},'w').write(str(child.pid))
+     time.sleep(10)
+    """
+        parent=subprocess.Popen(command(code),start_new_session=True)
+        try:
+>           assert parent.wait(timeout=3) == -signal.SIGKILL
+E           AssertionError: assert 1 == -<Signals.SIGKILL: 9>
+E            +  where 1 = wait(timeout=3)
+E            +    where wait = <Popen: returncode: 1 args: ['/home/utkarsh/Work/shraddha/brain/.worktrees/r...>.wait
+E            +  and   <Signals.SIGKILL: 9> = signal.SIGKILL
+
+tests/test_bounded_qualification.py:169: AssertionError
+----------------------------- Captured stderr call -----------------------------
+Traceback (most recent call last):
+  File "<string>", line 2, in <module>
+ModuleNotFoundError: No module named 'palimpsest.bounded_qualification'
+__________ test_real_hard_guard_kills_outer_and_its_own_group[False] ___________
+
+tmp_path = PosixPath('/tmp/palimpsest-louvain-build-source-v1/test_real_hard_guard_kills_out1')
+registered = False
+
+    @pytest.mark.parametrize('registered', [True, False])
+    def test_real_hard_guard_kills_outer_and_its_own_group(tmp_path, registered):
+        helper()
+        pidfile=tmp_path/'child.pid'
+        code=f"""import os,sys,time,subprocess
+    from palimpsest.bounded_qualification import hard_guard
+    state={{}}
+    with hard_guard(time.monotonic()+.35,state):
+     child=subprocess.Popen([sys.executable,'-c','import time;time.sleep(10)'],start_new_session=True)
+     if {registered!r}:state['group']=child.pid
+     open({str(pidfile)!r},'w').write(str(child.pid))
+     time.sleep(10)
+    """
+        parent=subprocess.Popen(command(code),start_new_session=True)
+        try:
+>           assert parent.wait(timeout=3) == -signal.SIGKILL
+E           AssertionError: assert 1 == -<Signals.SIGKILL: 9>
+E            +  where 1 = wait(timeout=3)
+E            +    where wait = <Popen: returncode: 1 args: ['/home/utkarsh/Work/shraddha/brain/.worktrees/r...>.wait
+E            +  and   <Signals.SIGKILL: 9> = signal.SIGKILL
+
+tests/test_bounded_qualification.py:169: AssertionError
+----------------------------- Captured stderr call -----------------------------
+Traceback (most recent call last):
+  File "<string>", line 2, in <module>
+ModuleNotFoundError: No module named 'palimpsest.bounded_qualification'
+______________ test_import_does_not_load_model_or_native_modules _______________
+
+    def test_import_does_not_load_model_or_native_modules():
+        helper()
+        result=subprocess.run(command(f'import sys;import {NAME};assert not {{"torch","mujoco","numpy","palimpsest.engine"}} & set(sys.modules)'),capture_output=True,text=True)
+>       assert result.returncode==0,result.stderr
+E       AssertionError: Traceback (most recent call last):
+E           File "<string>", line 1, in <module>
+E         ModuleNotFoundError: No module named 'palimpsest.bounded_qualification'
+E         
+E       assert 1 == 0
+E        +  where 1 = CompletedProcess(args=['/home/utkarsh/Work/shraddha/brain/.worktrees/r0-reproduction/.venv/bin/python', '-c', 'import ...\n  File "<string>", line 1, in <module>\nModuleNotFoundError: No module named \'palimpsest.bounded_qualification\'\n').returncode
+
+tests/test_bounded_qualification.py:180: AssertionError
+____________ test_hard_guard_exit_clock_denies_stopped_timer_thread ____________
+
+tmp_path = PosixPath('/tmp/palimpsest-louvain-build-source-v1/test_hard_guard_exit_clock_den0')
+
+    def test_hard_guard_exit_clock_denies_stopped_timer_thread(tmp_path):
+        helper()
+        code="""import time
+    from palimpsest import bounded_qualification as q
+    class DelayedThread:
+     def __init__(self,*args,**kwargs):pass
+     def start(self):pass
+     def join(self,*args,**kwargs):pass
+    q.threading.Thread=DelayedThread
+    with q.hard_guard(time.monotonic()+.02,{}):
+     time.sleep(.05)
+    raise AssertionError('Expired hard guard returned successfully')
+    """
+        parent=subprocess.Popen(command(code),start_new_session=True)
+>       try: assert parent.wait(timeout=3)==-signal.SIGKILL
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AssertionError: assert 1 == -<Signals.SIGKILL: 9>
+E        +  where 1 = wait(timeout=3)
+E        +    where wait = <Popen: returncode: 1 args: ['/home/utkarsh/Work/shraddha/brain/.worktrees/r...>.wait
+E        +  and   <Signals.SIGKILL: 9> = signal.SIGKILL
+
+tests/test_bounded_qualification.py:197: AssertionError
+----------------------------- Captured stderr call -----------------------------
+Traceback (most recent call last):
+  File "<string>", line 2, in <module>
+ImportError: cannot import name 'bounded_qualification' from 'palimpsest' (/home/utkarsh/Work/shraddha/brain/.worktrees/r0-reproduction/src/palimpsest/__init__.py)
+=========================== short test summary info ============================
+FAILED tests/test_bounded_qualification.py::test_real_hard_guard_kills_outer_and_its_own_group[True]
+FAILED tests/test_bounded_qualification.py::test_real_hard_guard_kills_outer_and_its_own_group[False]
+FAILED tests/test_bounded_qualification.py::test_import_does_not_load_model_or_native_modules
+FAILED tests/test_bounded_qualification.py::test_hard_guard_exit_clock_denies_stopped_timer_thread
+4 failed, 225 passed in 2.32s

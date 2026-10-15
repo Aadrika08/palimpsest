@@ -1,0 +1,156 @@
+{
+  "audits": {
+    "failure_phase": {
+      "exit_code": 1,
+      "published_status": "PRESERVED_FAILURE_VERIFIED",
+      "terminal_error": "KeyError('findings') after report fsync; no rerun or exit-zero claim."
+    },
+    "success_contract": {
+      "exit_code": 1,
+      "status": "FAIL",
+      "wheel_accepted": false
+    }
+  },
+  "backend": {
+    "archive_bytes": 818216,
+    "archive_sha256": "51a52592b3b99e102b609654876bd65f19f999935166d1352678931132b0c670",
+    "filename": "setuptools-84.0.0-py3-none-any.whl",
+    "regular_members": 343,
+    "uncompressed_bytes": 2773629
+  },
+  "collection_authorized": false,
+  "configuration": {
+    "path": "docs/plans/puck-python-louvain-build-01.json",
+    "sha256": "e57b32033656c1bdc300ce3b6441f5f103f6569dc979b6e38e464273965ed418",
+    "size_bytes": 3261
+  },
+  "external_observation": {
+    "elapsed_seconds_reported": 1.141797761025373,
+    "exec_session": 19137,
+    "exit_code": 1,
+    "final_chunk": "327a1a"
+  },
+  "first_stage": {
+    "matching_survivors": [],
+    "pid": 2344325,
+    "returncode": 1,
+    "sampled_peak_rss_bytes": 38232064,
+    "stderr": "bwrap: --disable-userns requires --unshare-user\n"
+  },
+  "installed": false,
+  "kind": "puck-python-louvain-build-01-evidence-v1",
+  "qualification_claims": [],
+  "raw": [
+    {
+      "path": "docs/reports/puck-python-louvain-build-01/outcome.json",
+      "sha256": "39c96365dc41c26283aa9c101b306896c0d0e984f625c59397b1dcf9122d324e",
+      "size_bytes": 828
+    },
+    {
+      "path": "docs/reports/puck-python-louvain-build-01/outer-supervision.json",
+      "sha256": "04a315323084cb88fc97917c6e64d66665b84e6e3063bf727083747af7ed56ed",
+      "size_bytes": 188
+    },
+    {
+      "path": "docs/reports/puck-python-louvain-build-01/outer-invocation.json",
+      "sha256": "a5147ef0c4738e6a8034c7dc67f45c74e0dc169ed92b0ce20a4bcd7e30aff296",
+      "size_bytes": 1882
+    },
+    {
+      "path": "docs/reports/puck-python-louvain-build-01/outer-stderr.log",
+      "sha256": "439cf3d5f5dfb2f4a7325bee00f3038ea12b6a3dfba7eb53f12c55963f8af731",
+      "size_bytes": 48
+    },
+    {
+      "path": "docs/reports/puck-python-louvain-build-01/outer-stdout.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    {
+      "path": "docs/reports/puck-python-louvain-build-01/source-manifest.json",
+      "sha256": "5c608ccabef3cd319d180995919bce713251df4865efc5a2caca0f726acff83a",
+      "size_bytes": 7338
+    },
+    {
+      "path": "docs/reports/puck-python-louvain-build-01/backend-manifest.json",
+      "sha256": "39adb5f5be1b5dea2f622fc3d1057c6c5873b9f145844852e9b5e12df50dba72",
+      "size_bytes": 111251
+    },
+    {
+      "path": "docs/reports/puck-python-louvain-build-01/backend-archive-verification.json",
+      "sha256": "30b84263130089d6abefc87ed8720fed7fa9b1559bcc5aca9956ec548c9f5ca8",
+      "size_bytes": 60709
+    },
+    {
+      "path": "docs/reports/puck-python-louvain-build-01/fixture-manifest.json",
+      "sha256": "f91373a213cbc123b12d38800ca791ed8a35ae19ef6338384397e5765fd7301e",
+      "size_bytes": 568
+    },
+    {
+      "path": "docs/reports/puck-python-louvain-build-01/baseline-before.json",
+      "sha256": "8e69fa24c5367b19acfad5f5f3c12f1804eed23d0889df6a9e58f20da4376dfb",
+      "size_bytes": 196
+    },
+    {
+      "path": "docs/reports/puck-python-louvain-build-01/audit.json",
+      "sha256": "adbb1bdfab1d5e3aa3dc4dd4c34d144d25bc129f00fabb939b8b7acbe971435c",
+      "size_bytes": 73917
+    },
+    {
+      "path": "docs/reports/puck-python-louvain-build-01/audit-program.py",
+      "sha256": "adf57f209cfa59bee40c3bb5a95c606386b31abc32f932d336a423869b7b12f1",
+      "size_bytes": 51980
+    },
+    {
+      "path": "docs/reports/puck-python-louvain-build-01/failure-audit.json",
+      "sha256": "69fb4f64c3bee6c549ca99490acfaed852034c6bfdb7e36c5fac286b445f5647",
+      "size_bytes": 77228
+    },
+    {
+      "path": "docs/reports/puck-python-louvain-build-01/failure-audit-program.py",
+      "sha256": "b938cac1be45ec9e94d5a52fd6a753446ef24cab923dab1e4d26b677d4d47e3d",
+      "size_bytes": 16968
+    },
+    {
+      "path": "docs/reports/puck-python-louvain-build-01/source-tests.log",
+      "sha256": "58d6fe7597f2aede1d3ccea2c7aea3e91621aed213390bdddb20ea5a7986082e",
+      "size_bytes": 340
+    },
+    {
+      "path": "docs/reports/puck-python-louvain-build-01/initial-child-import-diagnostic.log",
+      "sha256": "99d495990e5a1498f5dee2c6221c3e4bd250f221e096f0fc425ba9f12172ffc8",
+      "size_bytes": 6359
+    },
+    {
+      "path": "docs/reports/puck-python-louvain-build-01/clock-red.log",
+      "sha256": "32de11ccb1dffbe6dac0bf1e43557c4330c2fac8247216dd1fc0243cb0cbc9c7",
+      "size_bytes": 5786
+    },
+    {
+      "path": "docs/reports/puck-python-louvain-build-01/stdout-guard-red.log",
+      "sha256": "aeafa5c7e203019f9aa6c2a720a96d9b0bb7ac1498002a95b497cc9a8ce56af9",
+      "size_bytes": 2185
+    }
+  ],
+  "runtime_qualified": false,
+  "source": {
+    "bytes": 745075,
+    "directories": 11,
+    "files": 52,
+    "physical_headers": 128
+  },
+  "source_commit": "8895441e3d1be8492378606a10d6391b5fdc1f86",
+  "source_tests": {
+    "passed": 233,
+    "prior_wrong_child_import_run": {
+      "corrected_by": "Bind child PYTHONPATH to this worktree; no product source change.",
+      "failed": 4,
+      "passed": 225,
+      "seconds": 2.32
+    },
+    "seconds": 3.78
+  },
+  "status": "failed_before_namespace_worker",
+  "study_authorized": false,
+  "version": 1
+}
