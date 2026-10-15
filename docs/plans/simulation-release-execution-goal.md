@@ -58,8 +58,11 @@ ordered checklist is:
 - [x] Implement and review the separate qualification02 source capsule, pass
   132 affected checks, freeze exact controls, admit resources and invoke once.
   Preserve its FAIL and consumed allocation; this is not qualification acceptance.
+- [x] Implement and review the exact optional-import correction in03, pass
+  185 affected checks, freeze controls, admit resources and invoke once. Preserve
+  its native producer-attribute FAIL; this is not qualification acceptance.
 - [ ] Obtain passing held four-import qualification and an independent terminal,
-  identity, staged-byte and cleanup audit. Both01 and02 failed; their acceptance
+  identity, staged-byte and cleanup audit. All01–03 failed; their acceptance
   auditors refused before post-stage byte checks. No accepted held-import result
   or current post-qualification byte acceptance exists.
 - [ ] Specify the engineering episode's exact model, scene, seed, limits and
@@ -76,44 +79,50 @@ held-runtime, native-closure, renderer, operator, model or episode qualification
 The CPU profile, tmpfs copier and dedicated CPU parent are implemented in the
 source checkpoints below. PR149 adds reviewed controls and the independent
 terminal auditor. Actual preparation01 and its byte audit pass; actual
-qualifications01 and02 fail and are consumed. The next boundary is a prospective
-policy amendment for02's observed optional missing import, with exact source/data
-binding, independent review and fresh admission. Neither01 nor02 may be rerun. An unchanged accepted tree does not need another installation or
-retained-data admission.
+qualifications01–03 fail and are consumed. The03 correction passes the earlier
+optional-import denial and reaches a missing native producer attribute. The next
+source check must add bounded context capable of identifying the binding in a
+separately reviewed future invocation. Source fixtures cannot recover03's unlogged
+row. No04 exists. Do not rerun01–03. An unchanged accepted tree does not need
+another installation or retained-data admission.
 
 Every added prerequisite must identify the checkpoint and smallest blocked check;
 source-only hardening is not a substitute for reaching the episode deliverable.
 A failed actual stage retains its outcome and consumed allocation. No study or
 numerical invocation follows from a source fixture alone.
 
-## Current CPU result: qualification02 exposes the first denial
+## Current CPU result: qualification03 reaches native binding
 
-[Draft PR #151](https://github.com/Aadrika08/palimpsest/pull/151) retains the
-[source amendment](https://github.com/Aadrika08/palimpsest/blob/e0b5f9af621419b99da91bbbe18184a8594d98c9/docs/reports/puck-cpu-held-qualification-amendment-02.md)
-and [actual02 failure](https://github.com/Aadrika08/palimpsest/blob/e0b5f9af621419b99da91bbbe18184a8594d98c9/docs/reports/puck-cpu-held-qualification-02.md).
-All132 affected source checks pass in31.04s. Independent source/configuration
-review precedes the single admitted actual02 invocation. It exits1 normally,
-without timeout, in38.754315594s; parent closure remains5→5. Its fresh capsule
-uses current source pins while historical capsules retain their original pins.
-The16 data inputs, four roots, import policy and resource limits stay unchanged.
+[Draft PR #152](https://github.com/Aadrika08/palimpsest/pull/152) retains the
+[source amendment](https://github.com/Aadrika08/palimpsest/blob/70c6c61063ba87d7f4ea64457d07f36f6f4310ff/docs/reports/puck-cpu-held-qualification-amendment-03.md)
+and [actual03 failure](https://github.com/Aadrika08/palimpsest/blob/70c6c61063ba87d7f4ea64457d07f36f6f4310ff/docs/reports/puck-cpu-held-qualification-03.md).
+All185 affected source checks pass in53.58s. Independent source/configuration
+review precedes the single admitted actual03 invocation. It exits1 normally,
+without timeout, in45.516436608s; parent FD5→5 and all three tracked PID/start
+identities are absent at15:17:38UTC. All35 indexed actual evidence copies match.
 
-The primary guard denial is `torch._rocm_init` at Torch line152, followed by the
-explicitly chained `torch._C` error at line427. Byte-authenticated local source
-catches the optional ROCm import with `except ImportError`; the registered CPU
-root contains no matching leaf. This identifies02's first blocker, not01's
-unexposed primary cause or every later qualification failure. Policy is unchanged.
+The only policy delta adds the observed optional `torch._rocm_init` miss; historical
+preparation, the16 data inputs, four roots, versions and limits stay fixed.03 gets
+past02's denial and fails in `ExportBindings.complete(torch._C, native_create)`
+with `Dependency producer attribute binding is missing`. The native create call
+returned, but native execution and all four imports did not complete. The exact
+failing export/attribute remains unknown among36 declared rows. Nothing proves a
+replacement producer or phase. [Preserved02](https://github.com/Aadrika08/palimpsest/blob/e0b5f9af621419b99da91bbbe18184a8594d98c9/docs/reports/puck-cpu-held-qualification-02.md)
+and01 remain failed and consumed.
 
-The frozen acceptance auditor exits1 normally in0.053527704s and refuses before
-post-stage byte checks. `baseline-after.json` remains absent. All three tracked
-PID/start identities are independently absent at14:42:33UTC. The fresh pre-02
-byte audit passes27,255 files/1,318,494,346B at14:11:55UTC; it is a dated observation,
-not post-02 byte acceptance. All36 actual evidence copies match originals under
-independent review. Both01 and02 remain FAIL/consumed; no03 exists.
+The acceptance auditor exits1 normally in0.051284271s and refuses before post-stage
+byte checks. `baseline-after.json` remains absent. A separate pre03 data-only
+census passes27,255 files/1,318,494,346B in13.446514741s at15:06:59UTC. Its dated
+PASS is neither held qualification nor post03 byte acceptance. There is no accepted
+held-import result or current post-qualification byte acceptance. No04 exists.
 
-Next: specify and review a narrow prospective policy amendment for this observed
-optional missing import, then obtain passing held qualification and its audit.
-Do not skip modules or guess producers. The actual recorded/replayed/exported
-episode remains checkpointA's exit; all seven release gates remain open.
+Next: add bounded failure context for producer, phase, export and missing attribute
+component at the shared resolution failure; prove unchanged refusal and preserved
+cause with authored exports. Review that diagnostic source/data transition before
+any separately numbered actual invocation; its retained context may identify the
+binding. Any later profile/phase correction must follow the observed evidence.
+Skip no row and guess no producer. The recorded/replayed/exported episode remains checkpointA's exit;
+all seven release gates remain open.
 
 ## Earlier CPU result: preparation accepted, qualification01 failed
 
@@ -161,7 +170,7 @@ Any later actual invocation needs a separately numbered, reviewed amendment,
 a fresh source capsule, current-byte checks and fresh resource admission.
 Preparation01's worker-source capsule contains the old bootstrap; do not reuse
 it with a new source hash. Qualification01's original primary error remains unexposed;
-qualification01 and02 remain consumed. The episode bundle remains checkpoint A's exit.
+qualifications01–03 remain consumed. The episode bundle remains checkpoint A's exit.
 
 ## Earlier source checkpoint: reviewed PREPARE controls and refused preflight
 
@@ -353,17 +362,17 @@ test counts cannot satisfy either actual-runtime exit below.
    16 input roles and four roots under the declared interpreter, native/EGL,
    staging and custody bindings. This is scoped preparation acceptance. The
    failed later qualification has no passing post-stage byte census.
-2. **Qualify that exact runtime — acceptance remains open.** Qualification01 was
-   frozen with the real preparation result and passing audit, independently
-   reviewed, and invoked once. It fails on `torch._C`; its acceptance auditor
-   refuses before post-stage byte checks. Preserve that allocation; PR150's
-   source-only error-chaining fix does not establish Torch's actual primary error.
-   Any later actual invocation
-   requires a separately numbered, reviewed amendment and fresh admission, with
-   exact NumPy, Torch, torchvision and MuJoCo versions, unchanged identity/custody
-   checks, finite resource limits, normal cleanup and an independent audit.
-   Never rerun01. Even a passing import result does not qualify operators,
-   rendering, physics, inference or collection.
+2. **Qualify that exact runtime — acceptance remains open.** Each independently
+   reviewed qualification01–03 ran once and failed.03 corrects02's optional-import
+   denial and reaches an unresolved native producer attribute. Its exact binding
+   remains unknown; source diagnostics cannot recover03's unlogged row. Add bounded
+   failure context and review that diagnostic transition before a future invocation.
+   All three acceptance auditors refuse before post-stage byte checks. No04
+   exists. Any later actual allocation needs a separately numbered, reviewed
+   source/data amendment, fresh staged-byte/resource checks, exact versions and
+   custody, finite limits, normal cleanup and an independent audit. Never rerun
+   01–03. Even passing imports do not qualify operators, rendering, physics,
+   inference or collection.
 3. **Prove the complete episode route.** Finish input/scene admission and the
    durable parent/worker collection path. Prospectively specify the exact model,
    scene, seed and finite episode allocation, including required operator and
@@ -411,28 +420,30 @@ substitute for numerical results, capability, actual browser use or human accept
 | 5 | Integrate and experience the product. | One candidate supports the lab and all six artworks; actual browser, mapping, replay, export, interruption and endurance checks pass. |
 | 6 | Accept and deliver that candidate. | Artistic/operator sessions, final verification and all seven gate records are complete; the installation and evidence package are reproducible. |
 
-**Current next action:** specify a prospective, separately numbered policy
-amendment for the observed optional import, then return to the episode route:
+**Current next action:** identify the exact native binding refusal blocking
+runtime qualification, then return to the episode route:
 
-1. Bind the observed `torch._rocm_init` denial, authenticated optional-import
-   source and absent registered leaf to a finite correction. Propose only the
-   demonstrated missing-import entry; keep every other guard and data input.
-   No03 configuration or invocation exists, and further denials may remain.
-2. Test the exact source/data-policy transition with authored fixtures, preserve
-   both consumed outcomes, freeze the new controls and obtain independent review.
-   Reuse accepted data only with current byte/custody and fresh resource checks;
-   retain a correctly authenticated execution capsule. Do not rerun01 or02.
-3. Obtain a passing actual held four-import result and independent terminal,
-   staged-byte, identity and cleanup audit. The predicted native/cache-creator
-   bindings remain unqualified; skip no module and guess no producer.
-4. Resolve the engineering episode and catalog contract before protected reads,
-   then run the actual recorded/replayed/exported episode with declared
-   operator/renderer checks and an independent bundle audit.
+1. Add bounded producer/phase/export/attribute-component context at the shared
+   resolution failure. An authored two-export regression must resolve the first,
+   identify the second nested failure, preserve its cause and refuse unchanged.
+   This source check blocks runtime exit2; it opens no actual04 allocation.
+2. Review the diagnostic source/data transition before any separately numbered
+   actual invocation. Its retained context may identify the binding; any later
+   profile/phase correction must follow that observed evidence. Keep every guard
+   and consumed outcome. A new actual amendment needs independent review, exact
+   controls/capsule, current staged-byte checks and fresh admission.
+3. Obtain passing actual held four-import qualification and its independent
+   terminal, staged-byte, identity and cleanup audit. Skip no module or export;
+   guess no producer. Source checks alone do not satisfy this exit.
+4. Complete the distinct CPU engineering episode envelope, fixed authenticated
+   worker entry, bounded parent and existing writer/replay/export connection.
+   Resolve catalog access before protected reads, specify model/scene/seed and
+   operator/renderer checks, then run and independently audit the actual bundle.
 
 Required cache, version, custody or cleanup failures stop the stage and retain
 its outcome and consumed allocation; there is no implicit retry. A source
 candidate or ordinary import pass does not satisfy actual held qualification.
-Preserve failed CPU qualifications01/02, characterization01 and every earlier
+Preserve failed CPU qualifications01–03, characterization01 and every earlier
 consumed allocation.
 
 The next independent source work is the distinct CPU collection envelope and
@@ -452,8 +463,8 @@ source-hardening programme or count test totals as release progress.
 
 Disk clearance permits fresh admission checks; it does not qualify the CPU/EGL
 stack. The earlier PR149 RAM refusal is preserved, followed by admitted actual
-preparation01 and its passing audit. Qualifications01 and02 then fail and are
-consumed; neither acceptance auditor provides post-stage byte acceptance. Resource snapshots
+preparation01 and its passing audit. Qualifications01–03 then fail and are
+consumed; no acceptance auditor provides post-stage byte acceptance. Resource snapshots
 are transient and must be refreshed before any separately reviewed future stage.
 The observed 1,318,494,346-byte preparation copy is content only, not a future
 RAM admission or a current post-qualification byte census. Keep archives and build scratch on the project
@@ -468,8 +479,9 @@ qualification. The older RAM shortfall in PR #138 remains historical evidence.
   release gate. Observation02 above now supplies ordinary CPU import data;
   PR148 supplies the dedicated source parent and PR149 the reviewed PREPARE
   controls and auditor. Actual preparation01 and its independent audit pass;
-  real-pin qualifications01 and02 are frozen and invoked, but fail. The02 trace
-  exposes its first optional-import guard denial. Passing held qualification/audit
+  real-pin qualifications01–03 are frozen and invoked once each, but fail.03
+  passes02's optional-import denial and reaches the unresolved native binding.
+  Passing held qualification/audit
   and the actual episode remain open. No real simulator
   episode or scientific allocation ran in this unit.
 - [Draft PR #143](https://github.com/Aadrika08/palimpsest/pull/143) supplies the
@@ -539,8 +551,8 @@ CPU installation01 and retained admission01 remain failed and consumed; their
 read-only evidence does not grant historical acceptance. Distinct admission02
 accepts only current package preparation. CPU characterization01 also remains
 failed and consumed; distinct02 accepts ordinary imports only. Actual CPU held
-preparation01 has its dated scoped PASS, while CPU held qualification01 remains
-failed and consumed with no passing post-stage byte audit. The earlier
+preparation01 has its dated scoped PASS, while CPU held qualifications01–03
+remain failed and consumed with no passing post-stage byte audit. The earlier
 preparation01,
 qualification01, runtime observations01/02 and navigation attempts1/2 remain
 consumed. Memory amendment 02 remains uninvoked. No silent
