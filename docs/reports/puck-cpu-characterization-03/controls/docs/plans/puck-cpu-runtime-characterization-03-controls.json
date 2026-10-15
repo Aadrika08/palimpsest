@@ -1,0 +1,105 @@
+{
+  "admission_normal_seconds": 180,
+  "auditor_invocations": 1,
+  "auditor_normal_seconds": 180,
+  "auditor_transport_rule": {
+    "algorithm": "sha256",
+    "append_digest_as_only_final_argument_to_auditor_prefix": true,
+    "measure_only_after_normal_timely_observer_exit_zero": true,
+    "path": "runs/puck-cpu-runtime-characterization-03-external-cli-transport.json",
+    "retain_concretized_command_before_one_auditor_invocation": true
+  },
+  "branch": "research/puck-cpu-distributed-roster-observation-03",
+  "collection_authorized": false,
+  "commands": {
+    "admission": [
+      "/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/bin/python3.11",
+      "-I",
+      "-S",
+      "-B",
+      "/home/utkarsh/.codex/worktrees/0071/brain/docs/plans/puck-cpu-runtime-characterization-03-admission.py"
+    ],
+    "auditor_prefix": [
+      "/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/bin/python3.11",
+      "-I",
+      "-S",
+      "-B",
+      "/home/utkarsh/.codex/worktrees/0071/brain/scripts/audit_puck_cpu_runtime_characterization.py",
+      "--configuration",
+      "/home/utkarsh/.codex/worktrees/0071/brain/docs/plans/puck-cpu-runtime-characterization-03.json",
+      "--sha256",
+      "69cc87fb68e3c745196b3435c4caaa547ad3bb120ceac6d4834d6b24eecb4e49",
+      "--transport",
+      "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-runtime-characterization-03-external-cli-transport.json",
+      "--transport-sha256"
+    ],
+    "observer": [
+      "/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/bin/python3.11",
+      "-I",
+      "-S",
+      "-B",
+      "/home/utkarsh/.codex/worktrees/0071/brain/scripts/observe_puck_cpu_runtime_characterization.py",
+      "--configuration",
+      "/home/utkarsh/.codex/worktrees/0071/brain/docs/plans/puck-cpu-runtime-characterization-03.json",
+      "--sha256",
+      "69cc87fb68e3c745196b3435c4caaa547ad3bb120ceac6d4834d6b24eecb4e49"
+    ]
+  },
+  "held05_created": false,
+  "implicit_retry": false,
+  "kind": "puck-cpu-observation03-frozen-controls-v1",
+  "native_authorized": false,
+  "observer_invocations": 1,
+  "observer_normal_seconds": 210,
+  "observer_outer_alarm_seconds": 225,
+  "outer_environment": {
+    "LANG": "C.UTF-8",
+    "LC_ALL": "C.UTF-8",
+    "PATH": "/usr/bin:/bin",
+    "PYTHONDONTWRITEBYTECODE": "1"
+  },
+  "pins": [
+    {
+      "path": "docs/plans/puck-cpu-runtime-characterization-03-admission.py",
+      "sha256": "bfa51276101dea166f9fde32f6098e7496bdedc9d3a7585adef1cdb40ee24961",
+      "size_bytes": 14727
+    },
+    {
+      "path": "docs/plans/puck-cpu-runtime-characterization-03-execution.md",
+      "sha256": "7a08beaec565e57e59c8b4db6d69ef767a974e189ca4b55f707a6596e044e496",
+      "size_bytes": 5592
+    },
+    {
+      "path": "docs/plans/puck-cpu-runtime-characterization-03.json",
+      "sha256": "69cc87fb68e3c745196b3435c4caaa547ad3bb120ceac6d4834d6b24eecb4e49",
+      "size_bytes": 20311
+    },
+    {
+      "path": "scripts/audit_puck_cpu_runtime_characterization.py",
+      "sha256": "be7e1321356c554750baa6e0982dc939a23546eca1574b8f5f68b2bbdec3afa4",
+      "size_bytes": 53991
+    },
+    {
+      "path": "scripts/characterize_puck_cpu_runtime.py",
+      "sha256": "3165fa464d4950690da5c6673f1320ea4c8bc7d310aca54026ad4b113194986e",
+      "size_bytes": 44371
+    },
+    {
+      "path": "scripts/characterize_puck_runtime_imports.py",
+      "sha256": "ef16972ee5a7657c2a5d2144473610913be2b97278e71644af1f768d4e05bd8d",
+      "size_bytes": 29023
+    },
+    {
+      "path": "scripts/observe_puck_cpu_runtime_characterization.py",
+      "sha256": "35f969bf9288d5ba079c2a84c8e868a62f3e432a2a15b1c94599ce8817121d0b",
+      "size_bytes": 16239
+    }
+  ],
+  "preflight_refusal_allows_observer": false,
+  "qualification_claims": [],
+  "root": "/home/utkarsh/.codex/worktrees/0071/brain",
+  "runtime_qualified": false,
+  "source_commit": "32d1dc690d93ffdfa820bcbe871515266acde5b0",
+  "study_authorized": false,
+  "version": 1
+}

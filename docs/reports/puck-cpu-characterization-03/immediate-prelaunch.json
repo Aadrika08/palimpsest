@@ -1,0 +1,35 @@
+{
+  "at_utc": "2026-10-15T20:06:47.349006+00:00",
+  "configuration_sha256": "69cc87fb68e3c745196b3435c4caaa547ad3bb120ceac6d4834d6b24eecb4e49",
+  "control_commit": "c998fa3842d8efb2103ec8d23c9bc0eb2f04764b",
+  "control_pins": 7,
+  "controls_match_git": true,
+  "kind": "puck-cpu-observation03-immediate-prelaunch-v1",
+  "manifest_sha256": "435a4679c2bcc525ef78c6cd4de878b3599f3c23ff3ab69112473ec36000a523",
+  "mem_available_bytes": 3928092672,
+  "nofile": [
+    65536,
+    524288
+  ],
+  "observer_command": [
+    "/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/bin/python3.11",
+    "-I",
+    "-S",
+    "-B",
+    "/home/utkarsh/.codex/worktrees/0071/brain/scripts/observe_puck_cpu_runtime_characterization.py",
+    "--configuration",
+    "/home/utkarsh/.codex/worktrees/0071/brain/docs/plans/puck-cpu-runtime-characterization-03.json",
+    "--sha256",
+    "69cc87fb68e3c745196b3435c4caaa547ad3bb120ceac6d4834d6b24eecb4e49"
+  ],
+  "outer_environment": {
+    "LANG": "C.UTF-8",
+    "LC_ALL": "C.UTF-8",
+    "PATH": "/usr/bin:/bin",
+    "PYTHONDONTWRITEBYTECODE": "1"
+  },
+  "output_paths_absent": 4,
+  "project_free_bytes": 96778465280,
+  "runtime_qualified": false,
+  "status": "ADMITTED"
+}
