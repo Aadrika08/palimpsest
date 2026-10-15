@@ -1,0 +1,22 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+__ test_authored04_preserves03_generic_failure_and_adds_exact_chained_context __
+
+tmp_path = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/runs/source-validation/cpu-amendment04/red-negative-03/tmp/test_authored04_preserves03_ge0')
+
+    def test_authored04_preserves03_generic_failure_and_adds_exact_chained_context(tmp_path):
+        with amendment04_fixture(tmp_path,binding_failure=True) as case:
+            root,m,config=(case[k] for k in ('root','api','config'))
+            code,stdout,stderr=run_cli(root,m,'qualify04',config)
+            output=root/'runs/puck-cpu-held-qualification-04'
+            assert code==1,(code,stdout,stderr)
+>           assert (output/'result.json').is_file(), 'Closed04 must retain a failed terminal outcome'
+E           AssertionError: Closed04 must retain a failed terminal outcome
+E           assert False
+E            +  where False = is_file()
+E            +    where is_file = (PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-03/runs/source-validatio...-amendment04/red-negative-03/tmp/test_authored04_preserves03_ge0/authored-project/runs/puck-cpu-held-qualification-04') / 'result.json').is_file
+
+tests/test_puck_cpu_held_amendment04_integration.py:87: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_puck_cpu_held_amendment04_integration.py::test_authored04_preserves03_generic_failure_and_adds_exact_chained_context
+1 failed in 7.89s
