@@ -9,14 +9,26 @@ boundary has scoped evidence, even when the evidence column retains limitations;
 `failed` means a fixed gate was evaluated and missed; `limited` means required
 evidence remains incomplete; and `deferred` is outside the simulation release.
 
-The 15 October goal refresh defines one reproducible simulation release and five
-execution stages: complete both execution paths, qualify the actual configuration,
-finish the studies/capabilities, complete the integrated lab/six artworks, and
-record artistic/operator acceptance. Its immediate implementation target remains
-the finite held-import profile; source checks cannot close qualification or release
-gates. Free space was rechecked at 02:01 UTC: 99,717,603,328 bytes (~92.9 GiB).
-No qualification, study, browser or human acceptance session ran in this refresh;
-all 26 requirement statuses and seven release-gate statuses remain unchanged.
+The active goal is one reproducible local simulation release: qualify the actual
+execution routes, complete valid research/capability gates, integrate the lab and
+all six artworks, record artistic/operator acceptance and deliver the runbook.
+Disk clearance permits fresh admission checks; CI and physical rover remain outside.
+The next source goal is a finite verifiable expected-missing-import contract,
+followed by a separately reviewed runtime proposal; no automatic retry follows.
+
+[Draft PR #135](https://github.com/Aadrika08/palimpsest/pull/135) implements the fixed
+held-import entry and two-stage exact configuration.216 affected checks pass75.84s;
+the source review's Important watchdog gap was fixed in one RED/GREEN pass.
+Default pytest retains ten FastAPI/httpx collection errors1.96s. Independent exact
+configuration audits preceded preparation01 and qualification01; preparation's
+outcome was independently accepted. Preparation exit0 in14.444051507s registered
+31049 files8172376285B. Qualification exit1 in28.075810656s began NumPy, then
+refused undeclared optional numpy._distributor_init_local; Torch/MuJoCo were not
+reached. Sampled peak191426560B, matching group survivors empty. All actual raw
+artifacts and failure cause are retained. Independent final outcome audit accepted the preserved failure, verified the pin chain and unchanged preparation, and found no scoped evidence defect. Both
+allocations and observations01/02 are consumed; no retry, compatibility/collection
+claim, study or browser/human session follows. All26 requirement and seven gate
+statuses remain unchanged.
 
 [Draft PR #134](https://github.com/Aadrika08/palimpsest/pull/134) connects finite
 producer exports, module/class/original/delegate bindings and explicit native

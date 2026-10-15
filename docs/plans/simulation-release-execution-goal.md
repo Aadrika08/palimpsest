@@ -11,6 +11,28 @@ inspect/replay/export evidence and recover from interruptions using the runbook.
 The user must accept the artistic experience. The seven gates below define done;
 all seven remain open. CI and physical fabrication are outside this goal.
 
+### Immediate milestone and stopping rule
+
+**Next goal: make expected missing imports explicit and verifiable, then obtain
+a valid held-runtime result before actual collection.** Preparation01 passed
+once; qualification01 failed once during NumPy's optional
+`numpy._distributor_init_local` probe. Both allocations are consumed and retained
+in [draft PR #135](https://github.com/Aadrika08/palimpsest/pull/135). No import
+compatibility, collection or release qualification passed.
+
+The immediate source-only deliverable is a finite declared expected-missing-import
+contract tied to the registered dependency namespace. Authored tests must prove
+exact root/child misses, refusal when the target exists, unchanged poisoning for
+undeclared imports, exact error identity and no ambient fallback. Freeze the
+actual missing-name scope and any new allocation prospectively before another
+runtime invocation; do not silently add exceptions or retry this allocation.
+This unit exits with reviewed source, meaningful regressions and a concrete
+reviewable configuration proposal, or a documented defect requiring a decision.
+
+After a valid scoped runtime result: complete collection, valid studies and
+capability gates, the integrated lab and all six artworks, artistic/operator
+acceptance, then reproducible delivery. All seven release gates remain open.
+
 This continues the existing [completion goal](simulation-completion-next-goal.md).
 It does not replace frozen protocols or lower their acceptance thresholds.
 
@@ -29,26 +51,28 @@ a successful qualification receipt waits for that actual proof. Never synthesize
 a passing receipt to make the implementation appear complete. Independent authored
 source fixtures may proceed while actual qualification is pending.
 
-**Next implementation/execution target: freeze and review the exact actual held-runtime
-qualification configuration.** PR #134 connects finite producer exports, module
-replacement/reclassification, class/original/delegate identities and explicit native
-origins to the real worker path. Its reviewed findings are regression-fixed on
-`a57cb0d`;149 authored affected checks pass61.66s. This completes that source unit,
-not actual installed-stack compatibility or runtime qualification.
+**Current implementation/execution result: preparation01 passed; held-runtime
+qualification01 failed and is consumed.**
+[Draft PR #135](https://github.com/Aadrika08/palimpsest/pull/135) adds the fixed v3
+three-import entry, bounded registration and separately frozen preparation and
+qualification parents. Its source review found one Important terminal-watchdog
+defect, fixed in one RED/GREEN pass;216 affected checks pass75.84s. Independent
+exact configuration audits preceded both actual stages; preparation outcome was
+accepted. Original source NO-GO remains historical; no independent post-fix code
+GO is claimed. Default suite has ten FastAPI/httpx collection errors1.96s.
 
-The next qualification must use the authenticated worker and held finder, with
-exact source/interpreter/dependency/image/environment/input identities, a fixed
-qualification entry, bounded resource/process/terminal behavior and independent
-prospective review. The production entry is still preflight-only: its snapshot
-alone cannot demonstrate numerical imports. The 52-row candidate has no admitted
-roots/file hashes; native-create availability and actual directory-origin behavior
-remain unqualified. Do not rerun either consumed ordinary-import observation.
+Preparation01 exit0 in14.444051507s created exact hashes for31000 site files and
+49 retained /usr/lib images,827 physical modules and the minimal source capsule
+(31049files,8172376285 logical bytes;4731302B registration). Qualification01
+exit1 in28.075810656s, sampled peak191426560B and no matching group survivors.
+NumPy began but the undeclared optional numpy._distributor_init_local probe
+poisoned the bootstrap; no completed three-import receipt exists. Torch/MuJoCo
+were not reached by the sequential entry. Raw failures and first cause remain
+retained. Independent final outcome audit accepted the preserved terminal failure, verified the pin chain and unchanged preparation, and found no evidence defect within scope.
 
-**Exit from the next unit:** one separately admitted bounded held-runtime invocation
-has a durable terminal result and independent outcome audit. A pass establishes
-only the reviewed import/runtime scope. A failure preserves its evidence and stops
-that allocation; no automatic retry follows. Then complete the actual parent/worker
-collection route. Add components only for a named remaining route requirement.
+Next source work is the finite expected-missing-import contract above. No automatic
+actual retry, ordinary observation refresh, collection, fitting, physics, catalog
+access, navigation attempt3 or physical rover follows. All authority remains false.
 
 Development observation02 passed ordinary NumPy 2.2.5, Torch 2.9.0+cu128 and MuJoCo
 3.3.6 imports with the explicit EGL environment. Its 1,131-entry cache, 52 numerical
@@ -103,7 +127,7 @@ measurement: 99,738,644,480 bytes at 01:37:44 UTC.
 
 | Order | Work | Exit before advancing |
 | --- | --- | --- |
-| 1 | Freeze/review the actual held-runtime qualification using PR #134's integrated finite profile and native contract. | Exact source/interpreter/dependency/image/environment configuration and bounded fixed entry are prospectively reviewed; one admitted invocation and independent outcome audit produce a scoped pass or preserved terminal failure. Native phase hypotheses and the 52-row static candidate are not qualifications. Observations01/02 remain consumed. |
+| 1 | Resolve qualification01's declared optional-missing-import gap using authored source fixtures; prepare a separately reviewed actual configuration proposal. | Exact absent-name/namespace/error policy has meaningful source proof and review; any later actual allocation is prospectively admitted and independently audited. Preparation01/qualification01 and observations01/02 remain consumed. No automatic retry or compatibility claim follows. |
 | 2 | Connect declared inventory, reservation/scene seals, model custody and the authenticated worker to natural-episode recording close. | One executable parent/worker route covers exact environment/process identity, progress and escaped descendants, one-owner lease, storage and every fixed clock bucket. Fault checks and independent review pass; the complete source/runtime/input allocation is admitted before actual collection. |
 | 3 | Finish memory replay-to-condition/case close, pruning and family admission. | After explicit amendment-02 approval, invoke the registered replay once and independently audit it. A pass precedes complete nine-condition/case-close admission and the full study. Independent source work can proceed while approval is pending. |
 | 4 | Execute separately admitted memory and puck studies; resolve the next MaleCNS study prospectively. | Complete valid development and separately admitted held-out evidence meets the unchanged scientific/capability boundaries. A failed stage stops its lane with evidence and a concrete prospective decision. |
@@ -160,7 +184,7 @@ to their evidence. Do not extend a completed unit with unrelated hardening.
   audited original-bundle qualification; it is not a collection or capability study.
 - All seven simulation release gates remain open. Historical failed capability
   results and consumed navigation attempts remain unchanged.
-- The latest disk observation is recorded in the execution-focus section above.
+- The latest qualification launcher recorded 99662282752 bytes free at 2026-10-15T03:21:39.945622+00:00; FDsoft65536. Historical disk observations remain above.
   The earlier disk shortage is resolved at that observation; allocation and
   launcher admission are still open.
 - Recheck required model, upstream and retained evidence inventories after the
@@ -500,15 +524,18 @@ remain required. All seven simulation gates remain open.
 
 ## First action when pursuing this goal
 
-Freeze a separate actual held-runtime qualification from PR #134's integrated
-profile source and PR #133's independently audited ordinary-import data. Register
-exact source/interpreter/dependency roots/file hashes, persistent-image scope,
-environment, fixed entry and allocation; review before a single admitted invocation
-and independent outcome audit. Keep the candidate's native-create phase assumption
-and directory-origin trust window explicit. The existing entry is still stdlib
-preflight-only; wire the fixed qualification entry through the authenticated route
-rather than treating its snapshot as numerical compatibility. Observations01/02
-remain consumed; no ordinary-characterizer rerun follows.
+Qualification01's failed terminal is preserved and independently audited in
+draftPR135. Now implement the finite expected-missing-import source contract described at the
+top. Use authored fixtures and retained evidence. Distinguish a declared absent
+module from an existing registered source, namespace, export or undeclared import;
+never allow arbitrary caught ImportError or ambient loading.
+
+Preparation01 and qualification01 are consumed. Their admitted freeze SHAs are
+`7ba637bcc563df74789cc031bfffb6bfe74002ad669628303d9185ccf048fc18` and
+`6382710ba0a2dd29e3c42aa60ff2cfd8804e03c6faf11ea7c6a1cdee714a1446`.
+A later actual attempt requires its own numbered prospective scope, immutable
+configuration and separate admission. No source fixture grants runtime/collection/
+native/scientific authority or permission to rewrite the consumed failure.
 
 After scoped runtime admission, complete the **puck durable owner/stage launcher**
 using PRs #120–#131: inventory/reservation/scene and model custody, exact invocation,
