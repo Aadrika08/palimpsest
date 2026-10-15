@@ -1,0 +1,1436 @@
+{
+  "attribute_edges": 49462,
+  "baseline_image_count": 12,
+  "cache_classification_counts": {
+    "alias": 3,
+    "module": 1081,
+    "nonmodule": 2,
+    "virtual": 45
+  },
+  "cache_entries": 1131,
+  "collection_authorized": false,
+  "exceptional_binding_rows": 95,
+  "executable": false,
+  "export_scope": "exceptional_cache_identities",
+  "kind": "puck-runtime-import-observation-summary-v1",
+  "module_objects": 1125,
+  "new_image_count": 93,
+  "new_outside_site_images": [
+    {
+      "device": "00:1d",
+      "executable": true,
+      "inode": 59399,
+      "path": "/usr/lib/libXau.so.6.0.0",
+      "segments": 5
+    },
+    {
+      "device": "00:1d",
+      "executable": true,
+      "inode": 59467,
+      "path": "/usr/lib/libxcb-dri3.so.0.1.0",
+      "segments": 5
+    },
+    {
+      "device": "00:1d",
+      "executable": true,
+      "inode": 59473,
+      "path": "/usr/lib/libxcb-present.so.0.0.0",
+      "segments": 5
+    },
+    {
+      "device": "00:1d",
+      "executable": true,
+      "inode": 59476,
+      "path": "/usr/lib/libxcb-randr.so.0.1.0",
+      "segments": 5
+    },
+    {
+      "device": "00:1d",
+      "executable": true,
+      "inode": 59494,
+      "path": "/usr/lib/libxcb-shm.so.0.0.0",
+      "segments": 5
+    },
+    {
+      "device": "00:1d",
+      "executable": true,
+      "inode": 59497,
+      "path": "/usr/lib/libxcb-sync.so.1.0.0",
+      "segments": 5
+    },
+    {
+      "device": "00:1d",
+      "executable": true,
+      "inode": 59503,
+      "path": "/usr/lib/libxcb-xfixes.so.0.0.0",
+      "segments": 5
+    },
+    {
+      "device": "00:1d",
+      "executable": true,
+      "inode": 59524,
+      "path": "/usr/lib/libxcb.so.1.1.0",
+      "segments": 5
+    },
+    {
+      "device": "00:1d",
+      "executable": true,
+      "inode": 65141,
+      "path": "/usr/lib/libxshmfence.so.1.0.0",
+      "segments": 5
+    },
+    {
+      "device": "00:1d",
+      "executable": true,
+      "inode": 65275,
+      "path": "/usr/lib/libsensors.so.5.0.0",
+      "segments": 5
+    },
+    {
+      "device": "00:1d",
+      "executable": true,
+      "inode": 65521,
+      "path": "/usr/lib/libEGL.so.1.1.0",
+      "segments": 5
+    },
+    {
+      "device": "00:1d",
+      "executable": true,
+      "inode": 65533,
+      "path": "/usr/lib/libGLdispatch.so.0.0.0",
+      "segments": 5
+    },
+    {
+      "device": "00:1d",
+      "executable": true,
+      "inode": 65536,
+      "path": "/usr/lib/libOpenGL.so.0.0.0",
+      "segments": 5
+    },
+    {
+      "device": "00:1d",
+      "executable": true,
+      "inode": 467666,
+      "path": "/usr/lib/libz.so.1.3.2",
+      "segments": 5
+    },
+    {
+      "device": "00:1d",
+      "executable": true,
+      "inode": 467743,
+      "path": "/usr/lib/libncursesw.so.6.6",
+      "segments": 5
+    },
+    {
+      "device": "00:1d",
+      "executable": true,
+      "inode": 471435,
+      "path": "/usr/lib/libXdmcp.so.6.0.0",
+      "segments": 5
+    },
+    {
+      "device": "00:1d",
+      "executable": true,
+      "inode": 471458,
+      "path": "/usr/lib/libX11-xcb.so.1.0.0",
+      "segments": 5
+    },
+    {
+      "device": "00:1d",
+      "executable": true,
+      "inode": 471461,
+      "path": "/usr/lib/libX11.so.6.4.0",
+      "segments": 5
+    },
+    {
+      "device": "00:1d",
+      "executable": true,
+      "inode": 473275,
+      "path": "/usr/lib/libzstd.so.1.5.7",
+      "segments": 5
+    },
+    {
+      "device": "00:1d",
+      "executable": false,
+      "inode": 483474,
+      "path": "/usr/lib/libicudata.so.78.3",
+      "segments": 2
+    },
+    {
+      "device": "00:1d",
+      "executable": true,
+      "inode": 483489,
+      "path": "/usr/lib/libicuuc.so.78.3",
+      "segments": 5
+    },
+    {
+      "device": "00:1d",
+      "executable": true,
+      "inode": 487571,
+      "path": "/usr/lib/libpciaccess.so.0.11.1",
+      "segments": 5
+    },
+    {
+      "device": "00:1d",
+      "executable": true,
+      "inode": 487696,
+      "path": "/usr/lib/libedit.so.0.0.78",
+      "segments": 5
+    },
+    {
+      "device": "00:1d",
+      "executable": true,
+      "inode": 4049911,
+      "path": "/usr/lib/libgcc_s.so.1",
+      "segments": 5
+    },
+    {
+      "device": "00:1d",
+      "executable": true,
+      "inode": 4049919,
+      "path": "/usr/lib/libstdc++.so.6.0.36",
+      "segments": 5
+    },
+    {
+      "device": "00:1d",
+      "executable": true,
+      "inode": 4058601,
+      "path": "/usr/lib/libffi.so.8.5.0",
+      "segments": 5
+    },
+    {
+      "device": "00:1d",
+      "executable": true,
+      "inode": 4060836,
+      "path": "/usr/lib/libwayland-client.so.0.26.0",
+      "segments": 5
+    },
+    {
+      "device": "00:1d",
+      "executable": true,
+      "inode": 4060845,
+      "path": "/usr/lib/libwayland-server.so.0.26.0",
+      "segments": 5
+    },
+    {
+      "device": "00:1d",
+      "executable": true,
+      "inode": 4062494,
+      "path": "/usr/lib/libdrm.so.2.134.0",
+      "segments": 5
+    },
+    {
+      "device": "00:1d",
+      "executable": true,
+      "inode": 4062497,
+      "path": "/usr/lib/libdrm_amdgpu.so.1.134.0",
+      "segments": 5
+    },
+    {
+      "device": "00:1d",
+      "executable": true,
+      "inode": 4062500,
+      "path": "/usr/lib/libdrm_intel.so.1.134.0",
+      "segments": 5
+    },
+    {
+      "device": "00:1d",
+      "executable": true,
+      "inode": 4062528,
+      "path": "/usr/lib/libLLVM.so.22.1",
+      "segments": 5
+    },
+    {
+      "device": "00:1d",
+      "executable": true,
+      "inode": 4062580,
+      "path": "/usr/lib/libSPIRV-Tools.so",
+      "segments": 5
+    },
+    {
+      "device": "00:1d",
+      "executable": true,
+      "inode": 4062700,
+      "path": "/usr/lib/libEGL_nvidia.so.610.57.04",
+      "segments": 6
+    },
+    {
+      "device": "00:1d",
+      "executable": true,
+      "inode": 4062712,
+      "path": "/usr/lib/libcuda.so.610.57.04",
+      "segments": 6
+    },
+    {
+      "device": "00:1d",
+      "executable": true,
+      "inode": 4062728,
+      "path": "/usr/lib/libnvidia-eglcore.so.610.57.04",
+      "segments": 6
+    },
+    {
+      "device": "00:1d",
+      "executable": true,
+      "inode": 4062738,
+      "path": "/usr/lib/libnvidia-glsi.so.610.57.04",
+      "segments": 5
+    },
+    {
+      "device": "00:1d",
+      "executable": true,
+      "inode": 4062742,
+      "path": "/usr/lib/libnvidia-gpucomp.so.610.57.04",
+      "segments": 5
+    },
+    {
+      "device": "00:1d",
+      "executable": true,
+      "inode": 4413997,
+      "path": "/usr/lib/libelf-0.196.so",
+      "segments": 5
+    },
+    {
+      "device": "00:1d",
+      "executable": true,
+      "inode": 5260486,
+      "path": "/usr/lib/libexpat.so.1.12.4",
+      "segments": 5
+    },
+    {
+      "device": "00:1d",
+      "executable": true,
+      "inode": 5260549,
+      "path": "/usr/lib/libxml2.so.16.1.4",
+      "segments": 5
+    },
+    {
+      "device": "00:1d",
+      "executable": true,
+      "inode": 5268082,
+      "path": "/usr/lib/libEGL_mesa.so.0.0.0",
+      "segments": 5
+    },
+    {
+      "device": "00:1d",
+      "executable": true,
+      "inode": 5268087,
+      "path": "/usr/lib/libgallium-26.2.2-arch1.1.so",
+      "segments": 5
+    },
+    {
+      "device": "00:1d",
+      "executable": true,
+      "inode": 5268090,
+      "path": "/usr/lib/libgbm.so.1.0.0",
+      "segments": 5
+    },
+    {
+      "device": "00:1d",
+      "executable": true,
+      "inode": 5268126,
+      "path": "/usr/lib/libnvidia-egl-gbm.so.1.1.3",
+      "segments": 5
+    },
+    {
+      "device": "00:1d",
+      "executable": true,
+      "inode": 5268135,
+      "path": "/usr/lib/libnvidia-egl-wayland.so.1.1.22",
+      "segments": 5
+    },
+    {
+      "device": "00:1d",
+      "executable": true,
+      "inode": 5268149,
+      "path": "/usr/lib/libnvidia-egl-wayland2.so.1.0.2",
+      "segments": 5
+    },
+    {
+      "device": "00:1d",
+      "executable": true,
+      "inode": 5268158,
+      "path": "/usr/lib/libnvidia-egl-xcb.so.1.0.6",
+      "segments": 5
+    },
+    {
+      "device": "00:1d",
+      "executable": true,
+      "inode": 5268161,
+      "path": "/usr/lib/libnvidia-egl-xlib.so.1.0.6",
+      "segments": 5
+    }
+  ],
+  "new_site_images": [
+    {
+      "device": "00:1d",
+      "executable": true,
+      "inode": 19478270,
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/lab-hardening/.venv/lib/python3.11/site-packages/nvidia/cudnn/lib/libcudnn.so.9",
+      "segments": 4
+    },
+    {
+      "device": "00:1d",
+      "executable": true,
+      "inode": 19478306,
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/lab-hardening/.venv/lib/python3.11/site-packages/torch/_C.cpython-311-x86_64-linux-gnu.so",
+      "segments": 6
+    },
+    {
+      "device": "00:1d",
+      "executable": true,
+      "inode": 19489876,
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/lab-hardening/.venv/lib/python3.11/site-packages/torch/lib/libc10.so",
+      "segments": 6
+    },
+    {
+      "device": "00:1d",
+      "executable": true,
+      "inode": 19489877,
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/lab-hardening/.venv/lib/python3.11/site-packages/torch/lib/libc10_cuda.so",
+      "segments": 6
+    },
+    {
+      "device": "00:1d",
+      "executable": true,
+      "inode": 19489879,
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/lab-hardening/.venv/lib/python3.11/site-packages/torch/lib/libgomp.so.1",
+      "segments": 5
+    },
+    {
+      "device": "00:1d",
+      "executable": true,
+      "inode": 19489880,
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/lab-hardening/.venv/lib/python3.11/site-packages/torch/lib/libshm.so",
+      "segments": 6
+    },
+    {
+      "device": "00:1d",
+      "executable": true,
+      "inode": 19489881,
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/lab-hardening/.venv/lib/python3.11/site-packages/torch/lib/libtorch.so",
+      "segments": 6
+    },
+    {
+      "device": "00:1d",
+      "executable": true,
+      "inode": 19489882,
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/lab-hardening/.venv/lib/python3.11/site-packages/torch/lib/libtorch_cpu.so",
+      "segments": 6
+    },
+    {
+      "device": "00:1d",
+      "executable": true,
+      "inode": 19559545,
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/lab-hardening/.venv/lib/python3.11/site-packages/torch/lib/libtorch_cuda.so",
+      "segments": 6
+    },
+    {
+      "device": "00:1d",
+      "executable": true,
+      "inode": 19590334,
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/lab-hardening/.venv/lib/python3.11/site-packages/nvidia/cublas/lib/libcublas.so.12",
+      "segments": 4
+    },
+    {
+      "device": "00:1d",
+      "executable": true,
+      "inode": 19590348,
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/lab-hardening/.venv/lib/python3.11/site-packages/nvidia/cublas/lib/libcublasLt.so.12",
+      "segments": 8
+    },
+    {
+      "device": "00:1d",
+      "executable": true,
+      "inode": 19590374,
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/lab-hardening/.venv/lib/python3.11/site-packages/torch/lib/libtorch_global_deps.so",
+      "segments": 5
+    },
+    {
+      "device": "00:1d",
+      "executable": true,
+      "inode": 19590375,
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/lab-hardening/.venv/lib/python3.11/site-packages/torch/lib/libtorch_nvshmem.so",
+      "segments": 6
+    },
+    {
+      "device": "00:1d",
+      "executable": true,
+      "inode": 19590376,
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/lab-hardening/.venv/lib/python3.11/site-packages/torch/lib/libtorch_python.so",
+      "segments": 6
+    },
+    {
+      "device": "00:1d",
+      "executable": true,
+      "inode": 19591312,
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/lab-hardening/.venv/lib/python3.11/site-packages/nvidia/nccl/lib/libnccl.so.2",
+      "segments": 4
+    },
+    {
+      "device": "00:1d",
+      "executable": true,
+      "inode": 19661167,
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/lab-hardening/.venv/lib/python3.11/site-packages/nvidia/cusparse/lib/libcusparse.so.12",
+      "segments": 6
+    },
+    {
+      "device": "00:1d",
+      "executable": true,
+      "inode": 19661192,
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/lab-hardening/.venv/lib/python3.11/site-packages/nvidia/cusparselt/lib/libcusparseLt.so.0",
+      "segments": 7
+    },
+    {
+      "device": "00:1d",
+      "executable": true,
+      "inode": 19661263,
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/lab-hardening/.venv/lib/python3.11/site-packages/nvidia/cufft/lib/libcufft.so.11",
+      "segments": 10
+    },
+    {
+      "device": "00:1d",
+      "executable": true,
+      "inode": 19661382,
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/lab-hardening/.venv/lib/python3.11/site-packages/nvidia/nvshmem/lib/libnvshmem_host.so.3",
+      "segments": 4
+    },
+    {
+      "device": "00:1d",
+      "executable": true,
+      "inode": 19661777,
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/lab-hardening/.venv/lib/python3.11/site-packages/nvidia/cuda_nvrtc/lib/libnvrtc-builtins.so.12.8",
+      "segments": 4
+    },
+    {
+      "device": "00:1d",
+      "executable": true,
+      "inode": 19662003,
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/lab-hardening/.venv/lib/python3.11/site-packages/nvidia/cuda_nvrtc/lib/libnvrtc.so.12",
+      "segments": 6
+    },
+    {
+      "device": "00:1d",
+      "executable": true,
+      "inode": 19662073,
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/lab-hardening/.venv/lib/python3.11/site-packages/nvidia/curand/lib/libcurand.so.10",
+      "segments": 4
+    },
+    {
+      "device": "00:1d",
+      "executable": true,
+      "inode": 19662092,
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/lab-hardening/.venv/lib/python3.11/site-packages/nvidia/nvjitlink/lib/libnvJitLink.so.12",
+      "segments": 6
+    },
+    {
+      "device": "00:1d",
+      "executable": true,
+      "inode": 19663030,
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/lab-hardening/.venv/lib/python3.11/site-packages/numpy/_core/_multiarray_umath.cpython-311-x86_64-linux-gnu.so",
+      "segments": 6
+    },
+    {
+      "device": "00:1d",
+      "executable": true,
+      "inode": 19663718,
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/lab-hardening/.venv/lib/python3.11/site-packages/numpy/linalg/_umath_linalg.cpython-311-x86_64-linux-gnu.so",
+      "segments": 7
+    },
+    {
+      "device": "00:1d",
+      "executable": true,
+      "inode": 19664397,
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/lab-hardening/.venv/lib/python3.11/site-packages/numpy.libs/libgfortran-040039e1-0352e75f.so.5.0.0",
+      "segments": 5
+    },
+    {
+      "device": "00:1d",
+      "executable": true,
+      "inode": 19664405,
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/lab-hardening/.venv/lib/python3.11/site-packages/numpy.libs/libscipy_openblas64_-6bb31eeb.so",
+      "segments": 6
+    },
+    {
+      "device": "00:1d",
+      "executable": true,
+      "inode": 19664672,
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/lab-hardening/.venv/lib/python3.11/site-packages/numpy.libs/libquadmath-96973f99-934c22de.so.0.0.0",
+      "segments": 4
+    },
+    {
+      "device": "00:1d",
+      "executable": true,
+      "inode": 19664803,
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/lab-hardening/.venv/lib/python3.11/site-packages/nvidia/cuda_cupti/lib/libcupti.so.12",
+      "segments": 6
+    },
+    {
+      "device": "00:1d",
+      "executable": true,
+      "inode": 19666758,
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/lab-hardening/.venv/lib/python3.11/site-packages/mujoco/_callbacks.cpython-311-x86_64-linux-gnu.so",
+      "segments": 4
+    },
+    {
+      "device": "00:1d",
+      "executable": true,
+      "inode": 19666762,
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/lab-hardening/.venv/lib/python3.11/site-packages/mujoco/_constants.cpython-311-x86_64-linux-gnu.so",
+      "segments": 4
+    },
+    {
+      "device": "00:1d",
+      "executable": true,
+      "inode": 19666763,
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/lab-hardening/.venv/lib/python3.11/site-packages/mujoco/_structs.cpython-311-x86_64-linux-gnu.so",
+      "segments": 4
+    },
+    {
+      "device": "00:1d",
+      "executable": true,
+      "inode": 19666767,
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/lab-hardening/.venv/lib/python3.11/site-packages/mujoco/_render.cpython-311-x86_64-linux-gnu.so",
+      "segments": 4
+    },
+    {
+      "device": "00:1d",
+      "executable": true,
+      "inode": 19666769,
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/lab-hardening/.venv/lib/python3.11/site-packages/mujoco/_errors.cpython-311-x86_64-linux-gnu.so",
+      "segments": 4
+    },
+    {
+      "device": "00:1d",
+      "executable": true,
+      "inode": 19666770,
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/lab-hardening/.venv/lib/python3.11/site-packages/mujoco/libmujoco.so.3.3.6",
+      "segments": 4
+    },
+    {
+      "device": "00:1d",
+      "executable": true,
+      "inode": 19666786,
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/lab-hardening/.venv/lib/python3.11/site-packages/mujoco/_enums.cpython-311-x86_64-linux-gnu.so",
+      "segments": 4
+    },
+    {
+      "device": "00:1d",
+      "executable": true,
+      "inode": 19666870,
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/lab-hardening/.venv/lib/python3.11/site-packages/mujoco/_specs.cpython-311-x86_64-linux-gnu.so",
+      "segments": 4
+    },
+    {
+      "device": "00:1d",
+      "executable": true,
+      "inode": 19666976,
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/lab-hardening/.venv/lib/python3.11/site-packages/mujoco/_functions.cpython-311-x86_64-linux-gnu.so",
+      "segments": 4
+    },
+    {
+      "device": "00:1d",
+      "executable": true,
+      "inode": 19667057,
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/lab-hardening/.venv/lib/python3.11/site-packages/mujoco/plugin/libsdf_plugin.so",
+      "segments": 4
+    },
+    {
+      "device": "00:1d",
+      "executable": true,
+      "inode": 19667058,
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/lab-hardening/.venv/lib/python3.11/site-packages/mujoco/plugin/libelasticity.so",
+      "segments": 4
+    },
+    {
+      "device": "00:1d",
+      "executable": true,
+      "inode": 19667285,
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/lab-hardening/.venv/lib/python3.11/site-packages/mujoco/plugin/libsensor.so",
+      "segments": 4
+    },
+    {
+      "device": "00:1d",
+      "executable": true,
+      "inode": 19667287,
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/lab-hardening/.venv/lib/python3.11/site-packages/mujoco/plugin/libactuator.so",
+      "segments": 4
+    },
+    {
+      "device": "00:1d",
+      "executable": true,
+      "inode": 19671464,
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/lab-hardening/.venv/lib/python3.11/site-packages/nvidia/cufile/lib/libcufile.so.0",
+      "segments": 7
+    },
+    {
+      "device": "00:1d",
+      "executable": true,
+      "inode": 19671580,
+      "path": "/home/utkarsh/Work/shraddha/brain/.worktrees/lab-hardening/.venv/lib/python3.11/site-packages/nvidia/cuda_runtime/lib/libcudart.so.12",
+      "segments": 4
+    }
+  ],
+  "numerical_exceptional_binding_rows": 52,
+  "numerical_exceptional_bindings": [
+    {
+      "classification": "virtual",
+      "exports": [
+        {
+          "attribute": "_aoti",
+          "producer": "torch._C"
+        }
+      ],
+      "file": null,
+      "name": "torch._C._aoti",
+      "spec_name": null
+    },
+    {
+      "classification": "module",
+      "exports": [
+        {
+          "attribute": "_autograd",
+          "producer": "torch._C"
+        }
+      ],
+      "file": "/home/utkarsh/Work/shraddha/brain/.worktrees/lab-hardening/.venv/lib/python3.11/site-packages/torch/_C.cpython-311-x86_64-linux-gnu.so",
+      "name": "torch._C._autograd",
+      "spec_name": null,
+      "spec_origin": null
+    },
+    {
+      "classification": "virtual",
+      "exports": [
+        {
+          "attribute": "_cpu",
+          "producer": "torch._C"
+        }
+      ],
+      "file": null,
+      "name": "torch._C._cpu",
+      "spec_name": null
+    },
+    {
+      "classification": "virtual",
+      "exports": [
+        {
+          "attribute": "_cudart",
+          "producer": "torch._C"
+        },
+        {
+          "attribute": "_cudart",
+          "producer": "torch.cuda"
+        }
+      ],
+      "file": null,
+      "name": "torch._C._cudart",
+      "spec_name": null
+    },
+    {
+      "classification": "virtual",
+      "exports": [
+        {
+          "attribute": "_cudnn",
+          "producer": "torch._C"
+        }
+      ],
+      "file": null,
+      "name": "torch._C._cudnn",
+      "spec_name": null
+    },
+    {
+      "classification": "virtual",
+      "exports": [
+        {
+          "attribute": "_cusparselt",
+          "producer": "torch._C"
+        },
+        {
+          "attribute": "_cusparselt",
+          "producer": "torch.backends.cusparselt"
+        }
+      ],
+      "file": null,
+      "name": "torch._C._cusparselt",
+      "spec_name": null
+    },
+    {
+      "classification": "module",
+      "exports": [
+        {
+          "attribute": "_distributed_autograd",
+          "producer": "torch._C"
+        }
+      ],
+      "file": "/home/utkarsh/Work/shraddha/brain/.worktrees/lab-hardening/.venv/lib/python3.11/site-packages/torch/_C.cpython-311-x86_64-linux-gnu.so",
+      "name": "torch._C._distributed_autograd",
+      "spec_name": null,
+      "spec_origin": null
+    },
+    {
+      "classification": "module",
+      "exports": [
+        {
+          "attribute": "_distributed_c10d",
+          "producer": "torch._C"
+        }
+      ],
+      "file": "/home/utkarsh/Work/shraddha/brain/.worktrees/lab-hardening/.venv/lib/python3.11/site-packages/torch/_C.cpython-311-x86_64-linux-gnu.so",
+      "name": "torch._C._distributed_c10d",
+      "spec_name": null,
+      "spec_origin": null
+    },
+    {
+      "classification": "module",
+      "exports": [
+        {
+          "attribute": "_distributed_rpc",
+          "producer": "torch._C"
+        }
+      ],
+      "file": "/home/utkarsh/Work/shraddha/brain/.worktrees/lab-hardening/.venv/lib/python3.11/site-packages/torch/_C.cpython-311-x86_64-linux-gnu.so",
+      "name": "torch._C._distributed_rpc",
+      "spec_name": null,
+      "spec_origin": null
+    },
+    {
+      "classification": "virtual",
+      "exports": [
+        {
+          "attribute": "_dynamo",
+          "producer": "torch._C"
+        }
+      ],
+      "file": null,
+      "name": "torch._C._dynamo",
+      "spec_name": null
+    },
+    {
+      "classification": "virtual",
+      "exports": [
+        {
+          "attribute": "compiled_autograd",
+          "producer": "torch._C._dynamo"
+        }
+      ],
+      "file": null,
+      "name": "torch._C._dynamo.autograd_compiler",
+      "spec_name": null
+    },
+    {
+      "classification": "virtual",
+      "exports": [
+        {
+          "attribute": "eval_frame",
+          "producer": "torch._C._dynamo"
+        }
+      ],
+      "file": null,
+      "name": "torch._C._dynamo.eval_frame",
+      "spec_name": null
+    },
+    {
+      "classification": "virtual",
+      "exports": [
+        {
+          "attribute": "guards",
+          "producer": "torch._C._dynamo"
+        }
+      ],
+      "file": null,
+      "name": "torch._C._dynamo.guards",
+      "spec_name": null
+    },
+    {
+      "classification": "virtual",
+      "exports": [
+        {
+          "attribute": "utils",
+          "producer": "torch._C._dynamo"
+        }
+      ],
+      "file": null,
+      "name": "torch._C._dynamo.utils",
+      "spec_name": null
+    },
+    {
+      "classification": "virtual",
+      "exports": [
+        {
+          "attribute": "_export",
+          "producer": "torch._C"
+        }
+      ],
+      "file": null,
+      "name": "torch._C._export",
+      "spec_name": null
+    },
+    {
+      "classification": "virtual",
+      "exports": [
+        {
+          "attribute": "pt2_archive_constants",
+          "producer": "torch._C._export"
+        }
+      ],
+      "file": null,
+      "name": "torch._C._export.pt2_archive_constants",
+      "spec_name": null
+    },
+    {
+      "classification": "virtual",
+      "exports": [
+        {
+          "attribute": "_fft",
+          "producer": "torch._C"
+        },
+        {
+          "attribute": "_fft",
+          "producer": "torch.fft"
+        }
+      ],
+      "file": null,
+      "name": "torch._C._fft",
+      "spec_name": null
+    },
+    {
+      "classification": "virtual",
+      "exports": [
+        {
+          "attribute": "_functionalization",
+          "producer": "torch._C"
+        }
+      ],
+      "file": null,
+      "name": "torch._C._functionalization",
+      "spec_name": null
+    },
+    {
+      "classification": "virtual",
+      "exports": [
+        {
+          "attribute": "_functorch",
+          "producer": "torch._C"
+        }
+      ],
+      "file": null,
+      "name": "torch._C._functorch",
+      "spec_name": null
+    },
+    {
+      "classification": "virtual",
+      "exports": [
+        {
+          "attribute": "_instruction_counter",
+          "producer": "torch._C"
+        }
+      ],
+      "file": null,
+      "name": "torch._C._instruction_counter",
+      "spec_name": null
+    },
+    {
+      "classification": "virtual",
+      "exports": [
+        {
+          "attribute": "_itt",
+          "producer": "torch._C"
+        },
+        {
+          "attribute": "_itt",
+          "producer": "torch.profiler.itt"
+        }
+      ],
+      "file": null,
+      "name": "torch._C._itt",
+      "spec_name": null
+    },
+    {
+      "classification": "virtual",
+      "exports": [
+        {
+          "attribute": "_jit",
+          "producer": "torch._C"
+        }
+      ],
+      "file": null,
+      "name": "torch._C._jit",
+      "spec_name": null
+    },
+    {
+      "classification": "virtual",
+      "exports": [
+        {
+          "attribute": "_jit_tree_views",
+          "producer": "torch._C"
+        }
+      ],
+      "file": null,
+      "name": "torch._C._jit_tree_views",
+      "spec_name": null
+    },
+    {
+      "classification": "virtual",
+      "exports": [
+        {
+          "attribute": "_lazy",
+          "producer": "torch._C"
+        }
+      ],
+      "file": null,
+      "name": "torch._C._lazy",
+      "spec_name": null
+    },
+    {
+      "classification": "virtual",
+      "exports": [
+        {
+          "attribute": "_lazy_ts_backend",
+          "producer": "torch._C"
+        }
+      ],
+      "file": null,
+      "name": "torch._C._lazy_ts_backend",
+      "spec_name": null
+    },
+    {
+      "classification": "virtual",
+      "exports": [
+        {
+          "attribute": "_linalg",
+          "producer": "torch._C"
+        },
+        {
+          "attribute": "_linalg",
+          "producer": "torch.linalg"
+        }
+      ],
+      "file": null,
+      "name": "torch._C._linalg",
+      "spec_name": null
+    },
+    {
+      "classification": "virtual",
+      "exports": [
+        {
+          "attribute": "_monitor",
+          "producer": "torch._C"
+        }
+      ],
+      "file": null,
+      "name": "torch._C._monitor",
+      "spec_name": null
+    },
+    {
+      "classification": "virtual",
+      "exports": [
+        {
+          "attribute": "_nativert",
+          "producer": "torch._C"
+        }
+      ],
+      "file": null,
+      "name": "torch._C._nativert",
+      "spec_name": null
+    },
+    {
+      "classification": "virtual",
+      "exports": [
+        {
+          "attribute": "_nested",
+          "producer": "torch._C"
+        },
+        {
+          "attribute": "_nested",
+          "producer": "torch.nested"
+        }
+      ],
+      "file": null,
+      "name": "torch._C._nested",
+      "spec_name": null
+    },
+    {
+      "classification": "virtual",
+      "exports": [
+        {
+          "attribute": "_nn",
+          "producer": "torch._C"
+        }
+      ],
+      "file": null,
+      "name": "torch._C._nn",
+      "spec_name": null
+    },
+    {
+      "classification": "virtual",
+      "exports": [
+        {
+          "attribute": "_nvtx",
+          "producer": "torch._C"
+        },
+        {
+          "attribute": "_nvtx",
+          "producer": "torch.cuda.nvtx"
+        }
+      ],
+      "file": null,
+      "name": "torch._C._nvtx",
+      "spec_name": null
+    },
+    {
+      "classification": "virtual",
+      "exports": [
+        {
+          "attribute": "_onnx",
+          "producer": "torch._C"
+        }
+      ],
+      "file": null,
+      "name": "torch._C._onnx",
+      "spec_name": null
+    },
+    {
+      "classification": "virtual",
+      "exports": [
+        {
+          "attribute": "_profiler",
+          "producer": "torch._C"
+        }
+      ],
+      "file": null,
+      "name": "torch._C._profiler",
+      "spec_name": null
+    },
+    {
+      "classification": "virtual",
+      "exports": [
+        {
+          "attribute": "_return_types",
+          "producer": "torch._C"
+        },
+        {
+          "attribute": "return_types",
+          "producer": "torch.return_types"
+        }
+      ],
+      "file": null,
+      "name": "torch._C._return_types",
+      "spec_name": null
+    },
+    {
+      "classification": "virtual",
+      "exports": [
+        {
+          "attribute": "_sparse",
+          "producer": "torch._C"
+        },
+        {
+          "attribute": "_sparse",
+          "producer": "torch.sparse"
+        }
+      ],
+      "file": null,
+      "name": "torch._C._sparse",
+      "spec_name": null
+    },
+    {
+      "classification": "virtual",
+      "exports": [
+        {
+          "attribute": "_special",
+          "producer": "torch._C"
+        },
+        {
+          "attribute": "_special",
+          "producer": "torch.special"
+        }
+      ],
+      "file": null,
+      "name": "torch._C._special",
+      "spec_name": null
+    },
+    {
+      "classification": "virtual",
+      "exports": [
+        {
+          "attribute": "_te",
+          "producer": "torch._C"
+        }
+      ],
+      "file": null,
+      "name": "torch._C._te",
+      "spec_name": null
+    },
+    {
+      "classification": "virtual",
+      "exports": [
+        {
+          "attribute": "_verbose",
+          "producer": "torch._C"
+        }
+      ],
+      "file": null,
+      "name": "torch._C._verbose",
+      "spec_name": null
+    },
+    {
+      "classification": "virtual",
+      "exports": [
+        {
+          "attribute": "cpp",
+          "producer": "torch"
+        },
+        {
+          "attribute": "cpp",
+          "producer": "torch._C"
+        }
+      ],
+      "file": null,
+      "name": "torch._C.cpp",
+      "spec_name": null
+    },
+    {
+      "classification": "virtual",
+      "exports": [
+        {
+          "attribute": "nn",
+          "producer": "torch._C.cpp"
+        }
+      ],
+      "file": null,
+      "name": "torch._C.cpp.nn",
+      "spec_name": null
+    },
+    {
+      "classification": "virtual",
+      "exports": [
+        {
+          "attribute": "_VF",
+          "producer": "torch"
+        },
+        {
+          "attribute": "_VF",
+          "producer": "torch.ao.nn.quantized.reference.modules.rnn"
+        },
+        {
+          "attribute": "_VF",
+          "producer": "torch.functional"
+        },
+        {
+          "attribute": "_VF",
+          "producer": "torch.nn.functional"
+        },
+        {
+          "attribute": "_VF",
+          "producer": "torch.nn.modules.rnn"
+        },
+        {
+          "attribute": "_VF",
+          "producer": "torch.nn.utils.rnn"
+        }
+      ],
+      "file": null,
+      "name": "torch._VF",
+      "spec_name": null,
+      "type": "torch._VF.VFModule"
+    },
+    {
+      "classification": "virtual",
+      "exports": [
+        {
+          "attribute": "backends",
+          "producer": "torch"
+        }
+      ],
+      "file": null,
+      "name": "torch.backends",
+      "spec_name": null,
+      "type": "torch.backends.GenericModule"
+    },
+    {
+      "classification": "virtual",
+      "exports": [
+        {
+          "attribute": "cudnn",
+          "producer": "torch.backends"
+        },
+        {
+          "attribute": "cudnn",
+          "producer": "torch.jit._builtins"
+        }
+      ],
+      "file": null,
+      "name": "torch.backends.cudnn",
+      "spec_name": null,
+      "type": "torch.backends.cudnn.CudnnModule"
+    },
+    {
+      "classification": "virtual",
+      "exports": [
+        {
+          "attribute": "miopen",
+          "producer": "torch.backends"
+        }
+      ],
+      "file": null,
+      "name": "torch.backends.miopen",
+      "spec_name": null,
+      "type": "torch.backends.miopen.MiopenModule"
+    },
+    {
+      "classification": "virtual",
+      "exports": [
+        {
+          "attribute": "mkldnn",
+          "producer": "torch.backends"
+        }
+      ],
+      "file": null,
+      "name": "torch.backends.mkldnn",
+      "spec_name": null,
+      "type": "torch.backends.mkldnn.MkldnnModule"
+    },
+    {
+      "classification": "virtual",
+      "exports": [
+        {
+          "attribute": "opt_einsum",
+          "producer": "torch.backends"
+        }
+      ],
+      "file": null,
+      "name": "torch.backends.opt_einsum",
+      "spec_name": null,
+      "type": "torch.backends.opt_einsum.OptEinsumModule"
+    },
+    {
+      "classification": "virtual",
+      "exports": [
+        {
+          "attribute": "quantized",
+          "producer": "torch.backends"
+        }
+      ],
+      "file": null,
+      "name": "torch.backends.quantized",
+      "spec_name": null,
+      "type": "torch.backends.quantized.QuantizedEngine"
+    },
+    {
+      "classification": "virtual",
+      "exports": [
+        {
+          "attribute": "classes",
+          "producer": "torch"
+        },
+        {
+          "attribute": "classes",
+          "producer": "torch._classes"
+        },
+        {
+          "attribute": "classes",
+          "producer": "torch.jit._script"
+        }
+      ],
+      "file": null,
+      "name": "torch.classes",
+      "spec_name": null,
+      "type": "torch._classes._Classes"
+    },
+    {
+      "classification": "module",
+      "exports": [
+        {
+          "attribute": "config",
+          "producer": "torch.compiler"
+        }
+      ],
+      "file": "/home/utkarsh/Work/shraddha/brain/.worktrees/lab-hardening/.venv/lib/python3.11/site-packages/torch/compiler/config.py",
+      "name": "torch.compiler.config",
+      "spec_name": "torch.compiler.config",
+      "type": "torch.utils._config_module.install_config_module.<locals>.ConfigModuleInstance"
+    },
+    {
+      "classification": "module",
+      "exports": [
+        {
+          "attribute": "exp_config",
+          "producer": "torch._meta_registrations"
+        },
+        {
+          "attribute": "_config",
+          "producer": "torch.fx.experimental"
+        }
+      ],
+      "file": "/home/utkarsh/Work/shraddha/brain/.worktrees/lab-hardening/.venv/lib/python3.11/site-packages/torch/fx/experimental/_config.py",
+      "name": "torch.fx.experimental._config",
+      "spec_name": "torch.fx.experimental._config",
+      "type": "torch.utils._config_module.install_config_module.<locals>.ConfigModuleInstance"
+    },
+    {
+      "classification": "virtual",
+      "exports": [
+        {
+          "attribute": "ops",
+          "producer": "torch"
+        },
+        {
+          "attribute": "ops",
+          "producer": "torch._ops"
+        },
+        {
+          "attribute": "ops",
+          "producer": "torch.ao.nn.quantized.dynamic.modules.conv"
+        },
+        {
+          "attribute": "ops",
+          "producer": "torch.ao.nn.quantized.modules.conv"
+        },
+        {
+          "attribute": "ops",
+          "producer": "torch.ao.nn.quantized.modules.functional_modules"
+        },
+        {
+          "attribute": "_ops",
+          "producer": "torch.fx.node"
+        }
+      ],
+      "file": null,
+      "name": "torch.ops",
+      "spec_name": null,
+      "type": "torch._ops._Ops"
+    },
+    {
+      "classification": "module",
+      "exports": [
+        {
+          "attribute": "deterministic",
+          "producer": "torch.utils"
+        }
+      ],
+      "file": "/home/utkarsh/Work/shraddha/brain/.worktrees/lab-hardening/.venv/lib/python3.11/site-packages/torch/utils/deterministic.py",
+      "name": "torch.utils.deterministic",
+      "spec_name": "torch.utils.deterministic",
+      "type": "torch.utils.deterministic._Deterministic"
+    }
+  ],
+  "numerical_module_subclasses": {
+    "torch._VF": "torch._VF.VFModule",
+    "torch.backends": "torch.backends.GenericModule",
+    "torch.backends.cudnn": "torch.backends.cudnn.CudnnModule",
+    "torch.backends.miopen": "torch.backends.miopen.MiopenModule",
+    "torch.backends.mkldnn": "torch.backends.mkldnn.MkldnnModule",
+    "torch.backends.opt_einsum": "torch.backends.opt_einsum.OptEinsumModule",
+    "torch.backends.quantized": "torch.backends.quantized.QuantizedEngine",
+    "torch.classes": "torch._classes._Classes",
+    "torch.compiler.config": "torch.utils._config_module.install_config_module.<locals>.ConfigModuleInstance",
+    "torch.fx.experimental._config": "torch.utils._config_module.install_config_module.<locals>.ConfigModuleInstance",
+    "torch.ops": "torch._ops._Ops",
+    "torch.utils.deterministic": "torch.utils.deterministic._Deterministic"
+  },
+  "observation_id": 2,
+  "persistent_image_count": 105,
+  "qualification_claims": [],
+  "report_sha256": "a1b70f800a329d1f7c01ca90f836cc37c45a29478707d04ce331444805207045",
+  "runtime_qualified": false,
+  "version": 1
+}

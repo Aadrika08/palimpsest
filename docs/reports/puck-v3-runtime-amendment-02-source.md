@@ -89,7 +89,7 @@ A fresh whole-branch source and exact-freeze review precedes the one actual run.
 At this source checkpoint observation02 is **not invoked**. A failure consumes its
 allocation and stops actual installed-stack runs; no automatic observation03.
 
-Prospective command (do not invoke until source/freeze review passes):
+Frozen command (executed once as recorded below; do not rerun):
 
 ```bash
 /home/utkarsh/Work/shraddha/brain/.worktrees/r0-reproduction/.venv/bin/python \
@@ -123,3 +123,102 @@ actual owner execution or task capability. Finish that runtime/parent collection
 route and memory case-close, then execute only separately admitted studies,
 integrate lab/six artworks and obtain user/operator acceptance. All seven gates
 and the three prospective memory/catalog/navigation decisions remain open.
+
+## Fresh source/exact-freeze review and actual observation02
+
+Fresh review of clean `380fa2c` (executable source `51d33a7`) found no Critical
+or Important defect and passed the exact freeze for **one development observation02
+only**. All five source hashes, interpreter hash and prior failure SHA were
+independently checked. The fourteen tracked observation01 artifact-tree files
+remain byte-identical to the parent. Site/limits match; the only environment
+addition is `PYOPENGL_PLATFORM=egl`. The thirteen amendment fixtures independently
+passed in **0.63s**; no actual installed package import accompanied review.
+
+The reviewed invocation then ran once on source
+`380fa2cb18e44cca3d06680ccc8e8f7e80c97183` at **2026-10-15 01:37:44 UTC**.
+Prelaunch checked all source/prior hashes, an absent exclusive directory and
+**99,738,644,480 bytes free**. No allocation or source changed after launch.
+Observation02 is now consumed; do not rerun its command to refresh evidence.
+
+**Result: observed / supervisor completed, child exit0.** There were no detected
+environment changes or diagnostic errors, no supervisor operational failure and
+no matching process-group survivors. This is successful ordinary-import evidence,
+not a passed held-runtime, model, owner, native-closure or release gate.
+
+| Measured item | Retained result |
+| --- | --- |
+| Supervisor duration | 1.569026201s |
+| Worker observed duration, including diagnostic snapshots | 1.148922862s |
+| Sampled parent-plus-child peak RSS | 637,472,768 bytes, about 607.9 MiB |
+| NumPy | 2.2.5; import 0.044382101s; cache180 |
+| Torch | 2.9.0+cu128; import 1.013691987s; cache1060 |
+| MuJoCo | 3.3.6; import 0.078123365s; cache1131 |
+| Worker terminal | 304,584 bytes; SHA `a1b70f800a329d1f7c01ca90f836cc37c45a29478707d04ce331444805207045` |
+| Cache | 1131 entries /1125 distinct module objects /49462 inspected attribute edges |
+| Persistent mapped-file observations | 105 total /12 baseline /93 new; 44 new in selected site,49 outside |
+
+The [lossless manifest](puck-v3-runtime-amendment-02/observation-02/manifest.json)
+and ten records retain all **309,449 data bytes** of the exact freeze, request,
+invocation, child report/logs, supervision, prelaunch and outer logs. Original
+outputs remain under `runs/puck-runtime-import-characterization-02/`; committed
+copies are byte-identical. The [derived compatibility observations](puck-v3-runtime-amendment-02/compatibility-observations.json)
+retain their source report SHA and deny all runtime/collection/executable authority.
+The successful frozen configuration supports the EGL hypothesis; it does not
+retroactively prove the unrecorded full mutation set of observation01.
+
+## Actual finite profile gaps, not an admitted runtime profile
+
+There are **95** cache rows with exceptional producer bindings or aliases; **52**
+belong to the three numerical top-level namespaces (in this observation these
+are Torch entries). File-backed native-produced modules can have no spec, so
+`__file__` alone cannot make an ordinary extension-loader registration. The three
+explicit alias rows are stdlib aliases; two nonmodule cache entries are stdlib
+`typing.io`/`typing.re`. Full raw identities and finite producer edges are retained;
+this is no wildcard permission for `torch._C.*` or another namespace.
+
+The twelve numerical module subclasses include VFModule, GenericModule, backend
+wrappers, ops/classes, two generated ConfigModuleInstance types and Deterministic.
+The current held loader assumes the original ordinary module survives import.
+Its future profile needs explicit finite exported-object, replacement/reclassification
+and class identity contracts, including the spec-less file-backed `_C` children.
+Names/types alone are observations, not source-bound runtime grants. Observe and
+bind initialization phase boundaries before admitting cache entries.
+
+New persistent images include packaged CUDA libraries, system GPU/EGL drivers,
+MuJoCo plugins and ordinary system libraries even with CUDA visibility empty.
+This does not establish GPU computation, CPU model inference or renderer/physics
+qualification: no model, render or simulator API was called by the characterizer.
+Image membership does not establish held-byte consumption, transient-image or
+anonymous/JIT closure. Source/path/plugin/origin-relative handling and root-owned
+system-image declarations still need explicit review and actual held qualification.
+
+Next implement a reviewed finite dependency/import profile using these exact
+observations and authored fixtures, including distinct module-class/replacement
+bindings. Prove the chosen origin-relative native route with authored libraries,
+retain the existing exact-file-FD contract, then separately freeze/qualify the
+supported held numerical configuration. Connect the complete parent/worker
+inventory/reservation/scene/model route, identity/progress/drain/lease/storage/clock
+contracts and terminal acceptance before real collection. No study, held-out,
+original inference, fitting, browser workflow or consumed science retry ran here.
+
+A parallel bounded source-only memory inspection revalidated `2514c47`: existing
+cell replay/custody/compact/source seals can support a condition seal that invokes
+replay internally and persists its receipt. All nine ordered condition seals and
+then whole-case close remain missing. Those API suggestions are proposed, not
+implemented; the trusted successful qualification descriptor remains dependent
+on pending memory amendment02 approval, execution and independent close. No
+retained payload/model/SNP read, numerical import, edit or test accompanied that
+inspection. All seven project gates and three prospective decisions remain open.
+
+An independent retained-outcome audit found no Critical or Important mismatch.
+All ten records /309,449 data bytes match the original outputs, and the exact
+freeze/request/five source hashes/prior failure binding/expected interpreter SHA,
+invocation, receipt, child PID and supervision reconcile. All retained summary
+row/image lists and counts were independently recomputed. The 49,462 attribute
+edge figure agrees with the worker's counter but is not independently recoverable
+from the retained row census. All fourteen observation01 artifacts remain unchanged.
+Audit reads stayed within 2 MiB and added no invocation, numerical import, edit
+or test. Exactly-once history relies on the exclusive directory and retained
+records; no universal process-history or escaped-descendant proof is implied.
+The audit validates ordinary-import evidence only, not held-runtime/native-closure,
+GPU/model/physics capability or release authority.

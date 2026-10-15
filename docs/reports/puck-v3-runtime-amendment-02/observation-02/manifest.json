@@ -1,0 +1,63 @@
+{
+  "collection_authorized": false,
+  "files": [
+    {
+      "path": "freeze.json",
+      "sha256": "aa3dcb432f600d2b84a3b705d19552edb0e390b3bb96ae47a356cf95b1d6e06a",
+      "size_bytes": 1884
+    },
+    {
+      "path": "invocation.json",
+      "sha256": "7d510b1ab0c1aebfd6fd7e480bf03e30b3b5cc2bb15198f89d175fcfc631d5fb",
+      "size_bytes": 826
+    },
+    {
+      "path": "outer/stderr.log",
+      "sha256": "96f410ec8c72249f6adee3cf3fcc6c3dfb9062c3d24bfb704b250e05abf3e7e9",
+      "size_bytes": 302
+    },
+    {
+      "path": "outer/stdout.log",
+      "sha256": "4399a27d1be99be603313d869d0879fa0c3d540689e62ac10148692e51db8a98",
+      "size_bytes": 127
+    },
+    {
+      "path": "payload/imports.json",
+      "sha256": "a1b70f800a329d1f7c01ca90f836cc37c45a29478707d04ce331444805207045",
+      "size_bytes": 304584
+    },
+    {
+      "path": "request.json",
+      "sha256": "eed779fe3ada56378d1bbc36015bc753a70e0dbf9c18d21bfd1e05f13781322d",
+      "size_bytes": 642
+    },
+    {
+      "path": "supervision.json",
+      "sha256": "324b51f6b6a527131cb0a28952cb43d135a4a4bb783b61d70a10b69e0de3f4e3",
+      "size_bytes": 302
+    },
+    {
+      "path": "installed-prelaunch.json",
+      "sha256": "910a2c3125ed866abbb874e1920a1ddc7e7de034ea68db0a53f8c36c75859544",
+      "size_bytes": 480
+    },
+    {
+      "path": "installed-parent.stdout.log",
+      "sha256": "324b51f6b6a527131cb0a28952cb43d135a4a4bb783b61d70a10b69e0de3f4e3",
+      "size_bytes": 302
+    },
+    {
+      "path": "installed-parent.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    }
+  ],
+  "freeze_sha256": "aa3dcb432f600d2b84a3b705d19552edb0e390b3bb96ae47a356cf95b1d6e06a",
+  "kind": "puck-runtime-import-characterization-evidence-v1",
+  "observation_id": 2,
+  "qualification_claims": [],
+  "runtime_qualified": false,
+  "source_commit": "380fa2cb18e44cca3d06680ccc8e8f7e80c97183",
+  "status": "observed",
+  "version": 1
+}

@@ -43,3 +43,13 @@ source-on-disk as well as its immutable Git and evidence identities. Manual
 creation completed in the same discovery batch that first exposed a native
 managed-worktree API; keep the existing worktree and do not create a duplicate.
 This is a workflow deviation, not a claim that native creation was used.
+
+Completed source review and the single actual observation02. Source63 checks
+pass; independent amendment13 cases pass0.63s. Actual supervisor exit0 in
+1.569026201s, sampled637472768B, no matching group survivors. NP2.2.5,
+Torch2.9.0+cu128 and MuJoCo3.3.6 observed without detected environment drift.
+Full1131-entry cache and105-image snapshots fit304584B. Ten lossless records
+(309449dataB) and derived finite observations are retained. Observation02 is
+consumed; no refresh/retry. Ordinary-import success grants no held runtime or
+collection. Next implement finite export/module-replacement/class contracts
+and authored origin-relative native handling before actual held qualification.
