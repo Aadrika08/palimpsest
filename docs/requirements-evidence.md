@@ -21,6 +21,18 @@ checks. Source/runtime/model/scene identities, seed, limits, complete records an
 snapshots, replay comparisons, export hashes and normal cleanup belong in its
 portable bundle.
 
+The [immediate work unit](plans/simulation-release-execution-goal.md#clear-execution-target-after-disk-clearance)
+is a finite 35-row export preflight: three known distributed conflicts and 32 other
+native-create declarations. Classify each row as source-supported, correction
+required or unresolved, with exact creation/closure and build assumptions. Close
+the sweep after all 35 are classified; any unresolved group needs a separately
+reviewed bounded observation or decision. This does not qualify the installed
+binary or authorize an actual invocation. Review the complete profile before
+freezing qualification05; separately admit the exact public engineering episode
+and replay criteria before execution. Protected input access remains a pending
+decision. The product exit is still the audited recorded/replayed/exported
+episode, followed by the unchanged remaining release gates.
+
 [Draft PR #144](https://github.com/Aadrika08/palimpsest/pull/144) closes the
 package-preparation dependency with distinct read-only admission02: actual
 exit0 in15.475359s,27,225 files/2,074 directories/1,304,701,872B. The independent
