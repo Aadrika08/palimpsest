@@ -1,0 +1,22 @@
+................................F............................            [100%]
+=================================== FAILURES ===================================
+______ test_authored02_uses_fresh_capsule_preserves01_and_refuses_reentry ______
+
+tmp_path = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-02/runs/source-validation/cpu-parent-amendment02/green-02/test_authored02_uses_fresh_cap0')
+
+    def test_authored02_uses_fresh_capsule_preserves01_and_refuses_reentry(tmp_path):
+        with amendment_fixture(tmp_path) as case:
+            root,m,config,stage=(case[k] for k in ('root','api','config','stage'))
+            before=[(p.stat().st_dev,p.stat().st_ino) for p in sorted((stage/'inputs').iterdir())]
+            code,stdout,stderr=run_cli(root,m,'qualify02',config)
+            output=root/'runs/puck-cpu-held-qualification-02'
+            retained=(output/'result.json').read_bytes() if (output/'result.json').exists() else b''
+>           assert code==0,(code,stdout,stderr,retained)
+E           AssertionError: (1, b'{"allocation_id":2,"closure":{"active_children":[],"active_non_main_threads":[],"fd_count_after":5,"fd_count_bef..."qualify","qualification_claims":[],"runtime_qualified":false,"status":"FAIL","study_authorized":false,"version":2}
+E             ')
+E           assert 1 == 0
+
+tests/test_puck_cpu_held_amendment.py:228: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_puck_cpu_held_amendment.py::test_authored02_uses_fresh_capsule_preserves01_and_refuses_reentry
+1 failed, 60 passed in 10.40s

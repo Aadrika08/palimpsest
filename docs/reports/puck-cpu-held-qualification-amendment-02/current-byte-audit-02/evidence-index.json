@@ -1,0 +1,38 @@
+{
+  "auditor_source_sha256": "19723b4ec19c6cd8fd29d38b5cbabab60f89c136ee37564f6e94175439b4eed9",
+  "entries": [
+    {
+      "original_path": "/tmp/palimpsest-puck-cpu-held-preparation-01-current-byte-audit-02.json",
+      "path": "palimpsest-puck-cpu-held-preparation-01-current-byte-audit-02.json",
+      "sha256": "00595d2fa5270fc69ddeb633cd7b894a68b7e6ddfd80df123190ad43d3c9ae4d",
+      "size_bytes": 1563
+    },
+    {
+      "original_path": "/tmp/palimpsest-puck-cpu-held-preparation-01-current-byte-audit-02.stdout",
+      "path": "palimpsest-puck-cpu-held-preparation-01-current-byte-audit-02.stdout",
+      "sha256": "00595d2fa5270fc69ddeb633cd7b894a68b7e6ddfd80df123190ad43d3c9ae4d",
+      "size_bytes": 1563
+    },
+    {
+      "original_path": "/tmp/palimpsest-puck-cpu-held-preparation-01-current-byte-audit-02.stderr",
+      "path": "palimpsest-puck-cpu-held-preparation-01-current-byte-audit-02.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    {
+      "original_path": "/tmp/palimpsest-puck-cpu-held-preparation-01-current-byte-audit-02.external-cli.json",
+      "path": "palimpsest-puck-cpu-held-preparation-01-current-byte-audit-02.external-cli.json",
+      "sha256": "9d8d740a9f09d4d945c1d6a46d707165d9b08a954187b46a4ea020eebfc00935",
+      "size_bytes": 1680
+    }
+  ],
+  "external_elapsed_seconds": 13.745720409031492,
+  "external_returncode": 0,
+  "kind": "read-only-preparation-current-byte-audit-02-index-v1",
+  "qualification01_baseline_after_absent_preserved": true,
+  "qualification01_still_failed": true,
+  "qualification_claims": [],
+  "runtime_qualified": false,
+  "scope": "dated fresh byte audit of prepared data; no preparation/qualification allocation invoked",
+  "terminal": "0aeddc"
+}

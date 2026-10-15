@@ -1,0 +1,367 @@
+{
+  "entries": [
+    {
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-02/scripts/qualify_puck_cpu_held_runtime.py",
+      "path": "source-evidence/controls/scripts/qualify_puck_cpu_held_runtime.py",
+      "sha256": "3226dbf4cc948863fe2e8e3be348ebf2fe2aef821e4594733c7f5c4d5d9b67e8",
+      "size_bytes": 47416
+    },
+    {
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-02/scripts/audit_puck_cpu_held_runtime.py",
+      "path": "source-evidence/controls/scripts/audit_puck_cpu_held_runtime.py",
+      "sha256": "01bc2c99634cb3ec2e7bfc92f4fc96b219e07c8a5ea10351227a5cfb1181d4cf",
+      "size_bytes": 65522
+    },
+    {
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-02/scripts/observe_puck_cpu_held_allocation.py",
+      "path": "source-evidence/controls/scripts/observe_puck_cpu_held_allocation.py",
+      "sha256": "42f06433df0c36ee338271e0f147b015f6330ab2208f6829bd990dc05504130f",
+      "size_bytes": 6082
+    },
+    {
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-02/scripts/puck_worker_bootstrap.py",
+      "path": "source-evidence/controls/scripts/puck_worker_bootstrap.py",
+      "sha256": "436b1ffe34b96fca166f6fb38022ad7392daef3517e58157092db2d9fd84c69f",
+      "size_bytes": 38375
+    },
+    {
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-02/tests/test_puck_cpu_held_parent_integration.py",
+      "path": "source-evidence/controls/tests/test_puck_cpu_held_parent_integration.py",
+      "sha256": "3d8a965b249c412ec18058f6587f35e17d52983890d832d28c43ca76a732d2a2",
+      "size_bytes": 16855
+    },
+    {
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-02/tests/test_puck_cpu_held_observer.py",
+      "path": "source-evidence/controls/tests/test_puck_cpu_held_observer.py",
+      "sha256": "e7965d359f96fc242dabebac41809ba45fc78ded05f1a54e4db4a5eb60c68d58",
+      "size_bytes": 7186
+    },
+    {
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-02/tests/test_puck_cpu_held_amendment.py",
+      "path": "source-evidence/controls/tests/test_puck_cpu_held_amendment.py",
+      "sha256": "0faae379ed5dcd37261886a395ecfe83bcbca46786bae5c706e3540debb55d73",
+      "size_bytes": 17392
+    },
+    {
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-02/tests/test_puck_cpu_amendment_audit.py",
+      "path": "source-evidence/controls/tests/test_puck_cpu_amendment_audit.py",
+      "sha256": "67394fb10b35c63d0a71f2b87fa161e35923731e0d43d9f07f9ffee78fcfda78",
+      "size_bytes": 12265
+    },
+    {
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-02/runs/source-validation/cpu-amendment-audit-error-red-01/command.json",
+      "path": "source-evidence/validation/cpu-amendment-audit-error-red-01/command.json",
+      "sha256": "5789bde44c45daed631b55eef8b85f8df362c257b86b854197107da57096a9cd",
+      "size_bytes": 725
+    },
+    {
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-02/runs/source-validation/cpu-amendment-audit-error-red-01/pytest.log",
+      "path": "source-evidence/validation/cpu-amendment-audit-error-red-01/pytest.log",
+      "sha256": "1965b7640216c4d9a5cd3fc0dc605e00b286ccdb613232f0d8b9386290542994",
+      "size_bytes": 716
+    },
+    {
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-02/runs/source-validation/cpu-amendment-audit-error-red-01/result.json",
+      "path": "source-evidence/validation/cpu-amendment-audit-error-red-01/result.json",
+      "sha256": "34ef12139af25e455603d3e51117833b490fa18e0d66f40bb2b91f00486ec0b4",
+      "size_bytes": 172
+    },
+    {
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-02/runs/source-validation/cpu-amendment-audit-integration-green-01/command.json",
+      "path": "source-evidence/validation/cpu-amendment-audit-integration-green-01/command.json",
+      "sha256": "f26098cd657d0ee20e032a326f09e79b4898678577286ef476893b8eb87119e2",
+      "size_bytes": 907
+    },
+    {
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-02/runs/source-validation/cpu-amendment-audit-integration-green-01/pytest.log",
+      "path": "source-evidence/validation/cpu-amendment-audit-integration-green-01/pytest.log",
+      "sha256": "823e207697df07fefe3823bedd13ac6517be84b077ab8acf04b27af3a94c5f8f",
+      "size_bytes": 100
+    },
+    {
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-02/runs/source-validation/cpu-amendment-audit-integration-green-01/result.json",
+      "path": "source-evidence/validation/cpu-amendment-audit-integration-green-01/result.json",
+      "sha256": "282dd15cfaa8c6e9a9771f9bb578285abbd6fb078e8befb908394e3b37d26868",
+      "size_bytes": 172
+    },
+    {
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-02/runs/source-validation/cpu-amendment-audit-receipt-green-01/command.json",
+      "path": "source-evidence/validation/cpu-amendment-audit-receipt-green-01/command.json",
+      "sha256": "8c90f06f08aa3e165a911a41798eee924819ea789d00743d07ce41cd42bfcce1",
+      "size_bytes": 903
+    },
+    {
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-02/runs/source-validation/cpu-amendment-audit-receipt-green-01/pytest.log",
+      "path": "source-evidence/validation/cpu-amendment-audit-receipt-green-01/pytest.log",
+      "sha256": "d8caa2b9c80a7cbed11e80000642bac59b9a4c014d610a9c5c7df09e49aa9618",
+      "size_bytes": 99
+    },
+    {
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-02/runs/source-validation/cpu-amendment-audit-receipt-green-01/result.json",
+      "path": "source-evidence/validation/cpu-amendment-audit-receipt-green-01/result.json",
+      "sha256": "27b66fd470e1e59c86bcc8e343491dbe9841d72e6efe1390fe6ff37dab0d0cbf",
+      "size_bytes": 171
+    },
+    {
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-02/runs/source-validation/cpu-amendment-audit-receipt-red-01/command.json",
+      "path": "source-evidence/validation/cpu-amendment-audit-receipt-red-01/command.json",
+      "sha256": "c465ee08965761e74160a0debeb67b6f09119d5f95d47ca3ce68432648a7fa39",
+      "size_bytes": 901
+    },
+    {
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-02/runs/source-validation/cpu-amendment-audit-receipt-red-01/pytest.log",
+      "path": "source-evidence/validation/cpu-amendment-audit-receipt-red-01/pytest.log",
+      "sha256": "2f46b7e87b6b5be9a8ab3385aeab3704ccbbc4996cb2e3fe2534a129c73ccf59",
+      "size_bytes": 1165
+    },
+    {
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-02/runs/source-validation/cpu-amendment-audit-receipt-red-01/result.json",
+      "path": "source-evidence/validation/cpu-amendment-audit-receipt-red-01/result.json",
+      "sha256": "fdc2e76292ff4b451d090043127ccd749e71f312bf5ec745608e502615a86b34",
+      "size_bytes": 173
+    },
+    {
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-02/runs/source-validation/cpu-amendment-audit-unit-green-01/command.json",
+      "path": "source-evidence/validation/cpu-amendment-audit-unit-green-01/command.json",
+      "sha256": "6f8b6861f806d751b0bfd2ee7d2e04a286381ac6e14cea3d42067ca6090cb521",
+      "size_bytes": 993
+    },
+    {
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-02/runs/source-validation/cpu-amendment-audit-unit-green-01/pytest.log",
+      "path": "source-evidence/validation/cpu-amendment-audit-unit-green-01/pytest.log",
+      "sha256": "eca40c088a950c0f42481e94c64ca8bc19cfb4d58fe8e2cb665454e61d7dd090",
+      "size_bytes": 99
+    },
+    {
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-02/runs/source-validation/cpu-amendment-audit-unit-green-01/result.json",
+      "path": "source-evidence/validation/cpu-amendment-audit-unit-green-01/result.json",
+      "sha256": "04737c3a58630b4da90db806bdb1eb9cf9f2c5c55dbf56f1831f33ab35fa6fe2",
+      "size_bytes": 215
+    },
+    {
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-02/runs/source-validation/cpu-amendment-audit-unit-red-01/command.json",
+      "path": "source-evidence/validation/cpu-amendment-audit-unit-red-01/command.json",
+      "sha256": "b8783870cf69ccb54f520bbc2f8f08b73f2f8856adca441a7576b7cc1d4f6a44",
+      "size_bytes": 942
+    },
+    {
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-02/runs/source-validation/cpu-amendment-audit-unit-red-01/pytest.log",
+      "path": "source-evidence/validation/cpu-amendment-audit-unit-red-01/pytest.log",
+      "sha256": "cdc8934da8c84ba7d2f1a277b451ed9b799793ef2f2127f673af66203167b757",
+      "size_bytes": 6650
+    },
+    {
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-02/runs/source-validation/cpu-amendment-audit-unit-red-01/result.json",
+      "path": "source-evidence/validation/cpu-amendment-audit-unit-red-01/result.json",
+      "sha256": "9bb148d99fb91cfeede189356ff9f6f7db2f4d0e9c443c20e005df1ce2baf7ac",
+      "size_bytes": 217
+    },
+    {
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-02/runs/source-validation/cpu-amendment02-root-affected-01/command.json",
+      "path": "source-evidence/validation/cpu-amendment02-root-affected-01/command.json",
+      "sha256": "90450da8c37a801681d4277dbb946a7dd52422fc9de7dc723118e7d1363e00e7",
+      "size_bytes": 1180
+    },
+    {
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-02/runs/source-validation/cpu-amendment02-root-affected-01/result.json",
+      "path": "source-evidence/validation/cpu-amendment02-root-affected-01/result.json",
+      "sha256": "5c338d89521d3c94f7ea30f0009c7cdd643eebcee7032a3e566fa5cd526e1017",
+      "size_bytes": 599
+    },
+    {
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-02/runs/source-validation/cpu-amendment02-root-affected-01/stderr.log",
+      "path": "source-evidence/validation/cpu-amendment02-root-affected-01/stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    {
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-02/runs/source-validation/cpu-amendment02-root-affected-01/stdout.log",
+      "path": "source-evidence/validation/cpu-amendment02-root-affected-01/stdout.log",
+      "sha256": "64258e7693a232301b821c8c8a550e9f1e183bfc6d912c63cd5d03f3f47d8bb6",
+      "size_bytes": 181
+    },
+    {
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-02/runs/source-validation/cpu-parent-amendment02/commands.json",
+      "path": "source-evidence/validation/cpu-parent-amendment02/commands.json",
+      "sha256": "07270c641f536ddefe2df9b15284c70189365db8fed86db96e46364f57eae758",
+      "size_bytes": 8076
+    },
+    {
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-02/runs/source-validation/cpu-parent-amendment02/green-02.exit",
+      "path": "source-evidence/validation/cpu-parent-amendment02/green-02.exit",
+      "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865",
+      "size_bytes": 2
+    },
+    {
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-02/runs/source-validation/cpu-parent-amendment02/green-02.log",
+      "path": "source-evidence/validation/cpu-parent-amendment02/green-02.log",
+      "sha256": "def19b247475cc5e9f2f6e5a180766b2a8f46f5f094c04cc4cbecf1603f8c47f",
+      "size_bytes": 1636
+    },
+    {
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-02/runs/source-validation/cpu-parent-amendment02/green-03.exit",
+      "path": "source-evidence/validation/cpu-parent-amendment02/green-03.exit",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "size_bytes": 2
+    },
+    {
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-02/runs/source-validation/cpu-parent-amendment02/green-03.log",
+      "path": "source-evidence/validation/cpu-parent-amendment02/green-03.log",
+      "sha256": "75e39ddb98643ada9411d01d853c3f4cce5bae92480ba2d53beb50727d633cb7",
+      "size_bytes": 100
+    },
+    {
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-02/runs/source-validation/cpu-parent-amendment02/green-error-01.exit",
+      "path": "source-evidence/validation/cpu-parent-amendment02/green-error-01.exit",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "size_bytes": 2
+    },
+    {
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-02/runs/source-validation/cpu-parent-amendment02/green-error-01.log",
+      "path": "source-evidence/validation/cpu-parent-amendment02/green-error-01.log",
+      "sha256": "9cd578ddc0ad1fcb40429542b9645c31bfbd72b46e6d714c0ee1ecc0ebe6f966",
+      "size_bytes": 113
+    },
+    {
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-02/runs/source-validation/cpu-parent-amendment02/green-unit-01.exit",
+      "path": "source-evidence/validation/cpu-parent-amendment02/green-unit-01.exit",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "size_bytes": 2
+    },
+    {
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-02/runs/source-validation/cpu-parent-amendment02/green-unit-01.log",
+      "path": "source-evidence/validation/cpu-parent-amendment02/green-unit-01.log",
+      "sha256": "cc9e111292c79b6b4c08597f34bf8cb91eb0aa1537e893cd76e6f03699f3d464",
+      "size_bytes": 99
+    },
+    {
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-02/runs/source-validation/cpu-parent-amendment02/red-01.exit",
+      "path": "source-evidence/validation/cpu-parent-amendment02/red-01.exit",
+      "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865",
+      "size_bytes": 2
+    },
+    {
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-02/runs/source-validation/cpu-parent-amendment02/red-01.log",
+      "path": "source-evidence/validation/cpu-parent-amendment02/red-01.log",
+      "sha256": "711ee3f3aa0058cb8f479e56e0d7bfb1e8bcebf14621e0ff3ba30cf9c51ca57e",
+      "size_bytes": 54561
+    },
+    {
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-02/runs/source-validation/cpu-parent-amendment02/red-error-01.exit",
+      "path": "source-evidence/validation/cpu-parent-amendment02/red-error-01.exit",
+      "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865",
+      "size_bytes": 2
+    },
+    {
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-02/runs/source-validation/cpu-parent-amendment02/red-error-01.log",
+      "path": "source-evidence/validation/cpu-parent-amendment02/red-error-01.log",
+      "sha256": "40bd5029adbef2a0a2da752f264195bb92d9c9f0c719f66e6ac9d67e584ce82f",
+      "size_bytes": 2733
+    },
+    {
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-02/runs/source-validation/cpu-parent-amendment02/red-integration-01.exit",
+      "path": "source-evidence/validation/cpu-parent-amendment02/red-integration-01.exit",
+      "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865",
+      "size_bytes": 2
+    },
+    {
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-02/runs/source-validation/cpu-parent-amendment02/red-integration-01.log",
+      "path": "source-evidence/validation/cpu-parent-amendment02/red-integration-01.log",
+      "sha256": "626718720d017964034dac24b8abdf19e058e074346181c78334fdf8bd979713",
+      "size_bytes": 1660
+    },
+    {
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-02/runs/source-validation/cpu-parent-amendment02/red-metadata-01.exit",
+      "path": "source-evidence/validation/cpu-parent-amendment02/red-metadata-01.exit",
+      "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865",
+      "size_bytes": 2
+    },
+    {
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-02/runs/source-validation/cpu-parent-amendment02/red-metadata-01.log",
+      "path": "source-evidence/validation/cpu-parent-amendment02/red-metadata-01.log",
+      "sha256": "57d255ed637711ef2331f875f721656e7587f05ee1757a515b9501700e145a99",
+      "size_bytes": 12744
+    },
+    {
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-02/runs/source-validation/cpu-parent-amendment02/green-02/test_authored02_uses_fresh_cap0/authored-project/runs/puck-cpu-held-qualification-02/result.json",
+      "path": "source-evidence/validation/intermediate-fixture-scope-failure.json",
+      "sha256": "6f155ff57980c4b9fd1c758deb9ac144425c34617042a3dc7ec0a1a444e8ed61",
+      "size_bytes": 621
+    },
+    {
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-02/runs/source-validation/cpu-amendment02-root-affected-01/tmp/test_real_authored02_has_indep0/authored-project/authored-amendment-api-audit.json",
+      "path": "source-evidence/authored/authored-amendment-api-audit.json",
+      "sha256": "6b44a960acfae10f12ff3a6d8514424fb594af89f2c87248265061e4794cfdf5",
+      "size_bytes": 1970
+    },
+    {
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-02/runs/source-validation/cpu-amendment02-root-affected-01/tmp/test_real_authored02_has_indep0/authored-project/authored-amendment-audit-cli-external.json",
+      "path": "source-evidence/authored/authored-amendment-audit-cli-external.json",
+      "sha256": "21b678667780218e691afa78decb68a5a5d1ee830096cc365649cc1f18e1be05",
+      "size_bytes": 1601
+    },
+    {
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-02/runs/source-validation/cpu-amendment02-root-affected-01/tmp/test_real_authored02_has_indep0/authored-project/authored-amendment-audit-cli.json",
+      "path": "source-evidence/authored/authored-amendment-audit-cli.json",
+      "sha256": "6f979e5a4760dd2c372e3ca0d8ef66a607e8cba44c03d48865ae27a1a8b4030f",
+      "size_bytes": 1967
+    },
+    {
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-02/runs/source-validation/cpu-amendment02-root-affected-01/tmp/test_real_authored02_has_indep0/authored-project/authored-amendment-audit-cli.stderr",
+      "path": "source-evidence/authored/authored-amendment-audit-cli.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    {
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-02/runs/source-validation/cpu-amendment02-root-affected-01/tmp/test_real_authored02_has_indep0/authored-project/authored-amendment-audit-cli.stdout",
+      "path": "source-evidence/authored/authored-amendment-audit-cli.stdout",
+      "sha256": "6f979e5a4760dd2c372e3ca0d8ef66a607e8cba44c03d48865ae27a1a8b4030f",
+      "size_bytes": 1967
+    },
+    {
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-02/runs/source-validation/cpu-amendment02-root-affected-01/tmp/test_real_authored02_has_indep0/authored-project/authored-amendment-audit-refusals.json",
+      "path": "source-evidence/authored/authored-amendment-audit-refusals.json",
+      "sha256": "202fc7edd9a84f4fc71a943ebaf7fc172e358a8e58ecc4298657505f9b444174",
+      "size_bytes": 454
+    },
+    {
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-02/runs/source-validation/cpu-amendment02-root-affected-01/tmp/test_real_authored02_has_indep0/authored-project/authored-amendment-stage-cleanup.json",
+      "path": "source-evidence/authored/authored-amendment-stage-cleanup.json",
+      "sha256": "9a136c59044187456152db10c98adff7b3aeb78c9dd2eeda3b45c68caadda712",
+      "size_bytes": 130
+    },
+    {
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-02/runs/source-validation/cpu-amendment02-root-affected-01/tmp/test_real_authored02_has_indep0/authored-project/runs/puck-cpu-held-qualification-02/configuration.json",
+      "path": "source-evidence/authored/qualification02/configuration.json",
+      "sha256": "ded3f3e5692d67b2fbab51d00cbecf584bcc1af53b836b8a21ea405453db6456",
+      "size_bytes": 8327
+    },
+    {
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-02/runs/source-validation/cpu-amendment02-root-affected-01/tmp/test_real_authored02_has_indep0/authored-project/runs/puck-cpu-held-qualification-02/result.json",
+      "path": "source-evidence/authored/qualification02/result.json",
+      "sha256": "e949f22ec09caa31872d79214ec88c9eee2c32818eff7a7b1bbf7394cfb2ef22",
+      "size_bytes": 625
+    },
+    {
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-02/runs/source-validation/cpu-amendment02-root-affected-01/tmp/test_real_authored02_has_indep0/authored-project/runs/puck-cpu-held-qualification-02/invocation.json",
+      "path": "source-evidence/authored/qualification02/invocation.json",
+      "sha256": "4e227b97ad098b499cfcdcfaf64bc6bd872a8be6cfd54e65eaa9c6a438303ffe",
+      "size_bytes": 4060
+    },
+    {
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-02/runs/source-validation/cpu-amendment02-root-affected-01/tmp/test_real_authored02_has_indep0/authored-project/runs/puck-cpu-held-qualification-02/supervision.json",
+      "path": "source-evidence/authored/qualification02/supervision.json",
+      "sha256": "b91bee9032d472ada43ef838a7012037f42e5597d98b8bf04aa95b9a5ca9b5ab",
+      "size_bytes": 360
+    },
+    {
+      "original": "git diff608711..7fcbc6",
+      "path": "source-evidence/source.diff",
+      "sha256": "1b0bfdc4c44960801a65422ce2934c0772bfb9bd4ed54fc9392c605652a8f30f",
+      "size_bytes": 77800
+    }
+  ],
+  "kind": "puck-cpu-held-qualification-amendment02-source-evidence-v1",
+  "scope": "source tests and authored fixtures only; no actual qualification02 invocation",
+  "source_commit": "7fcbc6dd2013584342f0b7bcaacd0e5bcbb1203d"
+}

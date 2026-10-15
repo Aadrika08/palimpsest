@@ -56,6 +56,14 @@ def project(tmp_path):
             assert raw.count(marker)==1
             changed=raw.replace(marker,replacement)
             assert changed.replace(replacement,marker)==raw
+            # The real legacy auditor labels these inert fixtures explicitly.
+            # Adapt only this authenticated test clone; production acceptance
+            # continues to require the ordinary actual-data scope.
+            scope=b"audit.get('evidence_scope')!='ordinary CPU held allocation only'"
+            authored_scope=b"audit.get('evidence_scope')!='AUTHORED fixture only'"
+            assert changed.count(scope)==1
+            changed=changed.replace(scope,authored_scope)
+            assert changed.replace(authored_scope,scope).replace(replacement,marker)==raw
             raw=changed
         write(project,name,raw)
     api=load(project/PARENT,'cpu_authored_cloned_parent')

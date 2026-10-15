@@ -1,0 +1,697 @@
+F.........FFFFFFFFFFFFFFFFFF                                             [100%]
+=================================== FAILURES ===================================
+__ test_qualification02_accepts_separate_historical_and_current_source_epochs __
+
+    def test_qualification02_accepts_separate_historical_and_current_source_epochs():
+        m,config,blobs=acceptance_case()
+>       m.validate_configuration(config)
+
+tests/test_puck_cpu_held_amendment.py:64: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+config = {'allocation_id': 2, 'claims': {'collection_authorized': False, 'executable': False, 'native_authorized': False, 'qual....}, 'expected_versions': {'mujoco': '3.3.6', 'numpy': '2.2.5', 'torch': '2.9.0+cpu', 'torchvision': '0.24.0+cpu'}, ...}
+
+    def validate_configuration(config):
+        keys={'kind','version','phase','allocation_id','root','stage_parent','sources','inputs',
+              'interpreter','environment','expected_versions','limits','negative_imports','claims'}
+        phase=config.get('phase') if type(config) is dict else None
+        if phase=='qualify':keys.add('preparation')
+        if (phase not in LIMITS or set(config)!=keys or config['kind']!='puck-cpu-held-runtime-allocation-v1'
+                or type(config['version']) is not int or config['version']!=1
+                or type(config['allocation_id']) is not int or config['allocation_id']!=1
+                or config['root']!=str(ROOT) or canonical(config['limits'])!=canonical(LIMITS[phase])
+                or config['interpreter']!=INTERPRETER or canonical(config['environment'])!=canonical(ENVIRONMENT)
+                or config['expected_versions']!=VERSIONS or canonical(config['claims'])!=canonical(CLAIMS)):
+>           raise ValueError('Exact CPU allocation configuration required')
+E           ValueError: Exact CPU allocation configuration required
+
+scripts/qualify_puck_cpu_held_runtime.py:154: ValueError
+____ test_amendment_rejects_rebound_semantic_tampering[no-bootstrap-change] ____
+
+defect = 'no-bootstrap-change'
+
+    @pytest.mark.parametrize('defect',['no-bootstrap-change','foreign-source','input','roster','stage','historical-source','audit-failed',
+        'audit-authority','audit-source','audit-result','audit-dependency','audit-exit','cli-exit','cli-bool-exit','cli-stdout','cli-stderr','cli-command','noncanonical'])
+    def test_amendment_rejects_rebound_semantic_tampering(defect):
+        m,config,blobs=acceptance_case()
+        historical=json.loads(blobs['configuration']);prepared=json.loads(blobs['result'])
+        audit=json.loads(blobs['independent_audit']);cli=json.loads(blobs['externally_observed_auditor_cli'])
+        if defect=='no-bootstrap-change':next(r for r in config['sources'] if r['path']==m.BOOTSTRAP)['sha256']='a'*64
+        elif defect=='foreign-source':next(r for r in config['sources'] if r['path'].endswith('puck_dependency_imports.py'))['sha256']='f'*64
+        elif defect=='input':config['inputs']['candidate']['sha256']='0'*64
+        elif defect=='roster':config['negative_imports']=['missing','org']
+        elif defect=='stage':config['stage_parent']='/tmp/palimpsest-puck-cpu-held-other'
+        elif defect=='historical-source':prepared['sources'][0]['sha256']='0'*64;rebind(m,config,blobs,'result',prepared)
+        elif defect.startswith('audit-'):
+            key,value={'audit-failed':('status','FAIL'),'audit-authority':('runtime_qualified',True),
+                'audit-source':('auditor_source_sha256','0'*64),'audit-result':('result_sha256','0'*64),
+                'audit-dependency':('dependencies_sha256','0'*64),'audit-exit':('external_returncode',1)}[defect]
+            audit[key]=value;rebind(m,config,blobs,'independent_audit',audit)
+        elif defect.startswith('cli-'):
+            if defect=='cli-exit':cli['observed_returncode']=1
+            elif defect=='cli-bool-exit':cli['observed_returncode']=False
+            elif defect=='cli-stdout':cli['stdout']['sha256']='0'*64
+            elif defect=='cli-stderr':cli['stderr']['size_bytes']=1
+            else:cli['command'][4]='/unrelated/auditor.py'
+            rebind(m,config,blobs,'externally_observed_auditor_cli',cli)
+        else:
+            blobs['configuration']=json.dumps(historical,indent=2).encode()
+            config['preparation_acceptance']['configuration'].update(size_bytes=len(blobs['configuration']),sha256=m.digest(blobs['configuration']))
+>       with pytest.raises(ValueError):m.validate_preparation_acceptance(config,blobs)
+                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'cpu_held_parent_test' has no attribute 'validate_preparation_acceptance'
+
+tests/test_puck_cpu_held_amendment.py:113: AttributeError
+______ test_amendment_rejects_rebound_semantic_tampering[foreign-source] _______
+
+defect = 'foreign-source'
+
+    @pytest.mark.parametrize('defect',['no-bootstrap-change','foreign-source','input','roster','stage','historical-source','audit-failed',
+        'audit-authority','audit-source','audit-result','audit-dependency','audit-exit','cli-exit','cli-bool-exit','cli-stdout','cli-stderr','cli-command','noncanonical'])
+    def test_amendment_rejects_rebound_semantic_tampering(defect):
+        m,config,blobs=acceptance_case()
+        historical=json.loads(blobs['configuration']);prepared=json.loads(blobs['result'])
+        audit=json.loads(blobs['independent_audit']);cli=json.loads(blobs['externally_observed_auditor_cli'])
+        if defect=='no-bootstrap-change':next(r for r in config['sources'] if r['path']==m.BOOTSTRAP)['sha256']='a'*64
+        elif defect=='foreign-source':next(r for r in config['sources'] if r['path'].endswith('puck_dependency_imports.py'))['sha256']='f'*64
+        elif defect=='input':config['inputs']['candidate']['sha256']='0'*64
+        elif defect=='roster':config['negative_imports']=['missing','org']
+        elif defect=='stage':config['stage_parent']='/tmp/palimpsest-puck-cpu-held-other'
+        elif defect=='historical-source':prepared['sources'][0]['sha256']='0'*64;rebind(m,config,blobs,'result',prepared)
+        elif defect.startswith('audit-'):
+            key,value={'audit-failed':('status','FAIL'),'audit-authority':('runtime_qualified',True),
+                'audit-source':('auditor_source_sha256','0'*64),'audit-result':('result_sha256','0'*64),
+                'audit-dependency':('dependencies_sha256','0'*64),'audit-exit':('external_returncode',1)}[defect]
+            audit[key]=value;rebind(m,config,blobs,'independent_audit',audit)
+        elif defect.startswith('cli-'):
+            if defect=='cli-exit':cli['observed_returncode']=1
+            elif defect=='cli-bool-exit':cli['observed_returncode']=False
+            elif defect=='cli-stdout':cli['stdout']['sha256']='0'*64
+            elif defect=='cli-stderr':cli['stderr']['size_bytes']=1
+            else:cli['command'][4]='/unrelated/auditor.py'
+            rebind(m,config,blobs,'externally_observed_auditor_cli',cli)
+        else:
+            blobs['configuration']=json.dumps(historical,indent=2).encode()
+            config['preparation_acceptance']['configuration'].update(size_bytes=len(blobs['configuration']),sha256=m.digest(blobs['configuration']))
+>       with pytest.raises(ValueError):m.validate_preparation_acceptance(config,blobs)
+                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'cpu_held_parent_test' has no attribute 'validate_preparation_acceptance'
+
+tests/test_puck_cpu_held_amendment.py:113: AttributeError
+___________ test_amendment_rejects_rebound_semantic_tampering[input] ___________
+
+defect = 'input'
+
+    @pytest.mark.parametrize('defect',['no-bootstrap-change','foreign-source','input','roster','stage','historical-source','audit-failed',
+        'audit-authority','audit-source','audit-result','audit-dependency','audit-exit','cli-exit','cli-bool-exit','cli-stdout','cli-stderr','cli-command','noncanonical'])
+    def test_amendment_rejects_rebound_semantic_tampering(defect):
+        m,config,blobs=acceptance_case()
+        historical=json.loads(blobs['configuration']);prepared=json.loads(blobs['result'])
+        audit=json.loads(blobs['independent_audit']);cli=json.loads(blobs['externally_observed_auditor_cli'])
+        if defect=='no-bootstrap-change':next(r for r in config['sources'] if r['path']==m.BOOTSTRAP)['sha256']='a'*64
+        elif defect=='foreign-source':next(r for r in config['sources'] if r['path'].endswith('puck_dependency_imports.py'))['sha256']='f'*64
+        elif defect=='input':config['inputs']['candidate']['sha256']='0'*64
+        elif defect=='roster':config['negative_imports']=['missing','org']
+        elif defect=='stage':config['stage_parent']='/tmp/palimpsest-puck-cpu-held-other'
+        elif defect=='historical-source':prepared['sources'][0]['sha256']='0'*64;rebind(m,config,blobs,'result',prepared)
+        elif defect.startswith('audit-'):
+            key,value={'audit-failed':('status','FAIL'),'audit-authority':('runtime_qualified',True),
+                'audit-source':('auditor_source_sha256','0'*64),'audit-result':('result_sha256','0'*64),
+                'audit-dependency':('dependencies_sha256','0'*64),'audit-exit':('external_returncode',1)}[defect]
+            audit[key]=value;rebind(m,config,blobs,'independent_audit',audit)
+        elif defect.startswith('cli-'):
+            if defect=='cli-exit':cli['observed_returncode']=1
+            elif defect=='cli-bool-exit':cli['observed_returncode']=False
+            elif defect=='cli-stdout':cli['stdout']['sha256']='0'*64
+            elif defect=='cli-stderr':cli['stderr']['size_bytes']=1
+            else:cli['command'][4]='/unrelated/auditor.py'
+            rebind(m,config,blobs,'externally_observed_auditor_cli',cli)
+        else:
+            blobs['configuration']=json.dumps(historical,indent=2).encode()
+            config['preparation_acceptance']['configuration'].update(size_bytes=len(blobs['configuration']),sha256=m.digest(blobs['configuration']))
+>       with pytest.raises(ValueError):m.validate_preparation_acceptance(config,blobs)
+                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'cpu_held_parent_test' has no attribute 'validate_preparation_acceptance'
+
+tests/test_puck_cpu_held_amendment.py:113: AttributeError
+__________ test_amendment_rejects_rebound_semantic_tampering[roster] ___________
+
+defect = 'roster'
+
+    @pytest.mark.parametrize('defect',['no-bootstrap-change','foreign-source','input','roster','stage','historical-source','audit-failed',
+        'audit-authority','audit-source','audit-result','audit-dependency','audit-exit','cli-exit','cli-bool-exit','cli-stdout','cli-stderr','cli-command','noncanonical'])
+    def test_amendment_rejects_rebound_semantic_tampering(defect):
+        m,config,blobs=acceptance_case()
+        historical=json.loads(blobs['configuration']);prepared=json.loads(blobs['result'])
+        audit=json.loads(blobs['independent_audit']);cli=json.loads(blobs['externally_observed_auditor_cli'])
+        if defect=='no-bootstrap-change':next(r for r in config['sources'] if r['path']==m.BOOTSTRAP)['sha256']='a'*64
+        elif defect=='foreign-source':next(r for r in config['sources'] if r['path'].endswith('puck_dependency_imports.py'))['sha256']='f'*64
+        elif defect=='input':config['inputs']['candidate']['sha256']='0'*64
+        elif defect=='roster':config['negative_imports']=['missing','org']
+        elif defect=='stage':config['stage_parent']='/tmp/palimpsest-puck-cpu-held-other'
+        elif defect=='historical-source':prepared['sources'][0]['sha256']='0'*64;rebind(m,config,blobs,'result',prepared)
+        elif defect.startswith('audit-'):
+            key,value={'audit-failed':('status','FAIL'),'audit-authority':('runtime_qualified',True),
+                'audit-source':('auditor_source_sha256','0'*64),'audit-result':('result_sha256','0'*64),
+                'audit-dependency':('dependencies_sha256','0'*64),'audit-exit':('external_returncode',1)}[defect]
+            audit[key]=value;rebind(m,config,blobs,'independent_audit',audit)
+        elif defect.startswith('cli-'):
+            if defect=='cli-exit':cli['observed_returncode']=1
+            elif defect=='cli-bool-exit':cli['observed_returncode']=False
+            elif defect=='cli-stdout':cli['stdout']['sha256']='0'*64
+            elif defect=='cli-stderr':cli['stderr']['size_bytes']=1
+            else:cli['command'][4]='/unrelated/auditor.py'
+            rebind(m,config,blobs,'externally_observed_auditor_cli',cli)
+        else:
+            blobs['configuration']=json.dumps(historical,indent=2).encode()
+            config['preparation_acceptance']['configuration'].update(size_bytes=len(blobs['configuration']),sha256=m.digest(blobs['configuration']))
+>       with pytest.raises(ValueError):m.validate_preparation_acceptance(config,blobs)
+                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'cpu_held_parent_test' has no attribute 'validate_preparation_acceptance'
+
+tests/test_puck_cpu_held_amendment.py:113: AttributeError
+___________ test_amendment_rejects_rebound_semantic_tampering[stage] ___________
+
+defect = 'stage'
+
+    @pytest.mark.parametrize('defect',['no-bootstrap-change','foreign-source','input','roster','stage','historical-source','audit-failed',
+        'audit-authority','audit-source','audit-result','audit-dependency','audit-exit','cli-exit','cli-bool-exit','cli-stdout','cli-stderr','cli-command','noncanonical'])
+    def test_amendment_rejects_rebound_semantic_tampering(defect):
+        m,config,blobs=acceptance_case()
+        historical=json.loads(blobs['configuration']);prepared=json.loads(blobs['result'])
+        audit=json.loads(blobs['independent_audit']);cli=json.loads(blobs['externally_observed_auditor_cli'])
+        if defect=='no-bootstrap-change':next(r for r in config['sources'] if r['path']==m.BOOTSTRAP)['sha256']='a'*64
+        elif defect=='foreign-source':next(r for r in config['sources'] if r['path'].endswith('puck_dependency_imports.py'))['sha256']='f'*64
+        elif defect=='input':config['inputs']['candidate']['sha256']='0'*64
+        elif defect=='roster':config['negative_imports']=['missing','org']
+        elif defect=='stage':config['stage_parent']='/tmp/palimpsest-puck-cpu-held-other'
+        elif defect=='historical-source':prepared['sources'][0]['sha256']='0'*64;rebind(m,config,blobs,'result',prepared)
+        elif defect.startswith('audit-'):
+            key,value={'audit-failed':('status','FAIL'),'audit-authority':('runtime_qualified',True),
+                'audit-source':('auditor_source_sha256','0'*64),'audit-result':('result_sha256','0'*64),
+                'audit-dependency':('dependencies_sha256','0'*64),'audit-exit':('external_returncode',1)}[defect]
+            audit[key]=value;rebind(m,config,blobs,'independent_audit',audit)
+        elif defect.startswith('cli-'):
+            if defect=='cli-exit':cli['observed_returncode']=1
+            elif defect=='cli-bool-exit':cli['observed_returncode']=False
+            elif defect=='cli-stdout':cli['stdout']['sha256']='0'*64
+            elif defect=='cli-stderr':cli['stderr']['size_bytes']=1
+            else:cli['command'][4]='/unrelated/auditor.py'
+            rebind(m,config,blobs,'externally_observed_auditor_cli',cli)
+        else:
+            blobs['configuration']=json.dumps(historical,indent=2).encode()
+            config['preparation_acceptance']['configuration'].update(size_bytes=len(blobs['configuration']),sha256=m.digest(blobs['configuration']))
+>       with pytest.raises(ValueError):m.validate_preparation_acceptance(config,blobs)
+                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'cpu_held_parent_test' has no attribute 'validate_preparation_acceptance'
+
+tests/test_puck_cpu_held_amendment.py:113: AttributeError
+_____ test_amendment_rejects_rebound_semantic_tampering[historical-source] _____
+
+defect = 'historical-source'
+
+    @pytest.mark.parametrize('defect',['no-bootstrap-change','foreign-source','input','roster','stage','historical-source','audit-failed',
+        'audit-authority','audit-source','audit-result','audit-dependency','audit-exit','cli-exit','cli-bool-exit','cli-stdout','cli-stderr','cli-command','noncanonical'])
+    def test_amendment_rejects_rebound_semantic_tampering(defect):
+        m,config,blobs=acceptance_case()
+        historical=json.loads(blobs['configuration']);prepared=json.loads(blobs['result'])
+        audit=json.loads(blobs['independent_audit']);cli=json.loads(blobs['externally_observed_auditor_cli'])
+        if defect=='no-bootstrap-change':next(r for r in config['sources'] if r['path']==m.BOOTSTRAP)['sha256']='a'*64
+        elif defect=='foreign-source':next(r for r in config['sources'] if r['path'].endswith('puck_dependency_imports.py'))['sha256']='f'*64
+        elif defect=='input':config['inputs']['candidate']['sha256']='0'*64
+        elif defect=='roster':config['negative_imports']=['missing','org']
+        elif defect=='stage':config['stage_parent']='/tmp/palimpsest-puck-cpu-held-other'
+        elif defect=='historical-source':prepared['sources'][0]['sha256']='0'*64;rebind(m,config,blobs,'result',prepared)
+        elif defect.startswith('audit-'):
+            key,value={'audit-failed':('status','FAIL'),'audit-authority':('runtime_qualified',True),
+                'audit-source':('auditor_source_sha256','0'*64),'audit-result':('result_sha256','0'*64),
+                'audit-dependency':('dependencies_sha256','0'*64),'audit-exit':('external_returncode',1)}[defect]
+            audit[key]=value;rebind(m,config,blobs,'independent_audit',audit)
+        elif defect.startswith('cli-'):
+            if defect=='cli-exit':cli['observed_returncode']=1
+            elif defect=='cli-bool-exit':cli['observed_returncode']=False
+            elif defect=='cli-stdout':cli['stdout']['sha256']='0'*64
+            elif defect=='cli-stderr':cli['stderr']['size_bytes']=1
+            else:cli['command'][4]='/unrelated/auditor.py'
+            rebind(m,config,blobs,'externally_observed_auditor_cli',cli)
+        else:
+            blobs['configuration']=json.dumps(historical,indent=2).encode()
+            config['preparation_acceptance']['configuration'].update(size_bytes=len(blobs['configuration']),sha256=m.digest(blobs['configuration']))
+>       with pytest.raises(ValueError):m.validate_preparation_acceptance(config,blobs)
+                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'cpu_held_parent_test' has no attribute 'validate_preparation_acceptance'
+
+tests/test_puck_cpu_held_amendment.py:113: AttributeError
+_______ test_amendment_rejects_rebound_semantic_tampering[audit-failed] ________
+
+defect = 'audit-failed'
+
+    @pytest.mark.parametrize('defect',['no-bootstrap-change','foreign-source','input','roster','stage','historical-source','audit-failed',
+        'audit-authority','audit-source','audit-result','audit-dependency','audit-exit','cli-exit','cli-bool-exit','cli-stdout','cli-stderr','cli-command','noncanonical'])
+    def test_amendment_rejects_rebound_semantic_tampering(defect):
+        m,config,blobs=acceptance_case()
+        historical=json.loads(blobs['configuration']);prepared=json.loads(blobs['result'])
+        audit=json.loads(blobs['independent_audit']);cli=json.loads(blobs['externally_observed_auditor_cli'])
+        if defect=='no-bootstrap-change':next(r for r in config['sources'] if r['path']==m.BOOTSTRAP)['sha256']='a'*64
+        elif defect=='foreign-source':next(r for r in config['sources'] if r['path'].endswith('puck_dependency_imports.py'))['sha256']='f'*64
+        elif defect=='input':config['inputs']['candidate']['sha256']='0'*64
+        elif defect=='roster':config['negative_imports']=['missing','org']
+        elif defect=='stage':config['stage_parent']='/tmp/palimpsest-puck-cpu-held-other'
+        elif defect=='historical-source':prepared['sources'][0]['sha256']='0'*64;rebind(m,config,blobs,'result',prepared)
+        elif defect.startswith('audit-'):
+            key,value={'audit-failed':('status','FAIL'),'audit-authority':('runtime_qualified',True),
+                'audit-source':('auditor_source_sha256','0'*64),'audit-result':('result_sha256','0'*64),
+                'audit-dependency':('dependencies_sha256','0'*64),'audit-exit':('external_returncode',1)}[defect]
+            audit[key]=value;rebind(m,config,blobs,'independent_audit',audit)
+        elif defect.startswith('cli-'):
+            if defect=='cli-exit':cli['observed_returncode']=1
+            elif defect=='cli-bool-exit':cli['observed_returncode']=False
+            elif defect=='cli-stdout':cli['stdout']['sha256']='0'*64
+            elif defect=='cli-stderr':cli['stderr']['size_bytes']=1
+            else:cli['command'][4]='/unrelated/auditor.py'
+            rebind(m,config,blobs,'externally_observed_auditor_cli',cli)
+        else:
+            blobs['configuration']=json.dumps(historical,indent=2).encode()
+            config['preparation_acceptance']['configuration'].update(size_bytes=len(blobs['configuration']),sha256=m.digest(blobs['configuration']))
+>       with pytest.raises(ValueError):m.validate_preparation_acceptance(config,blobs)
+                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'cpu_held_parent_test' has no attribute 'validate_preparation_acceptance'
+
+tests/test_puck_cpu_held_amendment.py:113: AttributeError
+______ test_amendment_rejects_rebound_semantic_tampering[audit-authority] ______
+
+defect = 'audit-authority'
+
+    @pytest.mark.parametrize('defect',['no-bootstrap-change','foreign-source','input','roster','stage','historical-source','audit-failed',
+        'audit-authority','audit-source','audit-result','audit-dependency','audit-exit','cli-exit','cli-bool-exit','cli-stdout','cli-stderr','cli-command','noncanonical'])
+    def test_amendment_rejects_rebound_semantic_tampering(defect):
+        m,config,blobs=acceptance_case()
+        historical=json.loads(blobs['configuration']);prepared=json.loads(blobs['result'])
+        audit=json.loads(blobs['independent_audit']);cli=json.loads(blobs['externally_observed_auditor_cli'])
+        if defect=='no-bootstrap-change':next(r for r in config['sources'] if r['path']==m.BOOTSTRAP)['sha256']='a'*64
+        elif defect=='foreign-source':next(r for r in config['sources'] if r['path'].endswith('puck_dependency_imports.py'))['sha256']='f'*64
+        elif defect=='input':config['inputs']['candidate']['sha256']='0'*64
+        elif defect=='roster':config['negative_imports']=['missing','org']
+        elif defect=='stage':config['stage_parent']='/tmp/palimpsest-puck-cpu-held-other'
+        elif defect=='historical-source':prepared['sources'][0]['sha256']='0'*64;rebind(m,config,blobs,'result',prepared)
+        elif defect.startswith('audit-'):
+            key,value={'audit-failed':('status','FAIL'),'audit-authority':('runtime_qualified',True),
+                'audit-source':('auditor_source_sha256','0'*64),'audit-result':('result_sha256','0'*64),
+                'audit-dependency':('dependencies_sha256','0'*64),'audit-exit':('external_returncode',1)}[defect]
+            audit[key]=value;rebind(m,config,blobs,'independent_audit',audit)
+        elif defect.startswith('cli-'):
+            if defect=='cli-exit':cli['observed_returncode']=1
+            elif defect=='cli-bool-exit':cli['observed_returncode']=False
+            elif defect=='cli-stdout':cli['stdout']['sha256']='0'*64
+            elif defect=='cli-stderr':cli['stderr']['size_bytes']=1
+            else:cli['command'][4]='/unrelated/auditor.py'
+            rebind(m,config,blobs,'externally_observed_auditor_cli',cli)
+        else:
+            blobs['configuration']=json.dumps(historical,indent=2).encode()
+            config['preparation_acceptance']['configuration'].update(size_bytes=len(blobs['configuration']),sha256=m.digest(blobs['configuration']))
+>       with pytest.raises(ValueError):m.validate_preparation_acceptance(config,blobs)
+                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'cpu_held_parent_test' has no attribute 'validate_preparation_acceptance'
+
+tests/test_puck_cpu_held_amendment.py:113: AttributeError
+_______ test_amendment_rejects_rebound_semantic_tampering[audit-source] ________
+
+defect = 'audit-source'
+
+    @pytest.mark.parametrize('defect',['no-bootstrap-change','foreign-source','input','roster','stage','historical-source','audit-failed',
+        'audit-authority','audit-source','audit-result','audit-dependency','audit-exit','cli-exit','cli-bool-exit','cli-stdout','cli-stderr','cli-command','noncanonical'])
+    def test_amendment_rejects_rebound_semantic_tampering(defect):
+        m,config,blobs=acceptance_case()
+        historical=json.loads(blobs['configuration']);prepared=json.loads(blobs['result'])
+        audit=json.loads(blobs['independent_audit']);cli=json.loads(blobs['externally_observed_auditor_cli'])
+        if defect=='no-bootstrap-change':next(r for r in config['sources'] if r['path']==m.BOOTSTRAP)['sha256']='a'*64
+        elif defect=='foreign-source':next(r for r in config['sources'] if r['path'].endswith('puck_dependency_imports.py'))['sha256']='f'*64
+        elif defect=='input':config['inputs']['candidate']['sha256']='0'*64
+        elif defect=='roster':config['negative_imports']=['missing','org']
+        elif defect=='stage':config['stage_parent']='/tmp/palimpsest-puck-cpu-held-other'
+        elif defect=='historical-source':prepared['sources'][0]['sha256']='0'*64;rebind(m,config,blobs,'result',prepared)
+        elif defect.startswith('audit-'):
+            key,value={'audit-failed':('status','FAIL'),'audit-authority':('runtime_qualified',True),
+                'audit-source':('auditor_source_sha256','0'*64),'audit-result':('result_sha256','0'*64),
+                'audit-dependency':('dependencies_sha256','0'*64),'audit-exit':('external_returncode',1)}[defect]
+            audit[key]=value;rebind(m,config,blobs,'independent_audit',audit)
+        elif defect.startswith('cli-'):
+            if defect=='cli-exit':cli['observed_returncode']=1
+            elif defect=='cli-bool-exit':cli['observed_returncode']=False
+            elif defect=='cli-stdout':cli['stdout']['sha256']='0'*64
+            elif defect=='cli-stderr':cli['stderr']['size_bytes']=1
+            else:cli['command'][4]='/unrelated/auditor.py'
+            rebind(m,config,blobs,'externally_observed_auditor_cli',cli)
+        else:
+            blobs['configuration']=json.dumps(historical,indent=2).encode()
+            config['preparation_acceptance']['configuration'].update(size_bytes=len(blobs['configuration']),sha256=m.digest(blobs['configuration']))
+>       with pytest.raises(ValueError):m.validate_preparation_acceptance(config,blobs)
+                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'cpu_held_parent_test' has no attribute 'validate_preparation_acceptance'
+
+tests/test_puck_cpu_held_amendment.py:113: AttributeError
+_______ test_amendment_rejects_rebound_semantic_tampering[audit-result] ________
+
+defect = 'audit-result'
+
+    @pytest.mark.parametrize('defect',['no-bootstrap-change','foreign-source','input','roster','stage','historical-source','audit-failed',
+        'audit-authority','audit-source','audit-result','audit-dependency','audit-exit','cli-exit','cli-bool-exit','cli-stdout','cli-stderr','cli-command','noncanonical'])
+    def test_amendment_rejects_rebound_semantic_tampering(defect):
+        m,config,blobs=acceptance_case()
+        historical=json.loads(blobs['configuration']);prepared=json.loads(blobs['result'])
+        audit=json.loads(blobs['independent_audit']);cli=json.loads(blobs['externally_observed_auditor_cli'])
+        if defect=='no-bootstrap-change':next(r for r in config['sources'] if r['path']==m.BOOTSTRAP)['sha256']='a'*64
+        elif defect=='foreign-source':next(r for r in config['sources'] if r['path'].endswith('puck_dependency_imports.py'))['sha256']='f'*64
+        elif defect=='input':config['inputs']['candidate']['sha256']='0'*64
+        elif defect=='roster':config['negative_imports']=['missing','org']
+        elif defect=='stage':config['stage_parent']='/tmp/palimpsest-puck-cpu-held-other'
+        elif defect=='historical-source':prepared['sources'][0]['sha256']='0'*64;rebind(m,config,blobs,'result',prepared)
+        elif defect.startswith('audit-'):
+            key,value={'audit-failed':('status','FAIL'),'audit-authority':('runtime_qualified',True),
+                'audit-source':('auditor_source_sha256','0'*64),'audit-result':('result_sha256','0'*64),
+                'audit-dependency':('dependencies_sha256','0'*64),'audit-exit':('external_returncode',1)}[defect]
+            audit[key]=value;rebind(m,config,blobs,'independent_audit',audit)
+        elif defect.startswith('cli-'):
+            if defect=='cli-exit':cli['observed_returncode']=1
+            elif defect=='cli-bool-exit':cli['observed_returncode']=False
+            elif defect=='cli-stdout':cli['stdout']['sha256']='0'*64
+            elif defect=='cli-stderr':cli['stderr']['size_bytes']=1
+            else:cli['command'][4]='/unrelated/auditor.py'
+            rebind(m,config,blobs,'externally_observed_auditor_cli',cli)
+        else:
+            blobs['configuration']=json.dumps(historical,indent=2).encode()
+            config['preparation_acceptance']['configuration'].update(size_bytes=len(blobs['configuration']),sha256=m.digest(blobs['configuration']))
+>       with pytest.raises(ValueError):m.validate_preparation_acceptance(config,blobs)
+                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'cpu_held_parent_test' has no attribute 'validate_preparation_acceptance'
+
+tests/test_puck_cpu_held_amendment.py:113: AttributeError
+_____ test_amendment_rejects_rebound_semantic_tampering[audit-dependency] ______
+
+defect = 'audit-dependency'
+
+    @pytest.mark.parametrize('defect',['no-bootstrap-change','foreign-source','input','roster','stage','historical-source','audit-failed',
+        'audit-authority','audit-source','audit-result','audit-dependency','audit-exit','cli-exit','cli-bool-exit','cli-stdout','cli-stderr','cli-command','noncanonical'])
+    def test_amendment_rejects_rebound_semantic_tampering(defect):
+        m,config,blobs=acceptance_case()
+        historical=json.loads(blobs['configuration']);prepared=json.loads(blobs['result'])
+        audit=json.loads(blobs['independent_audit']);cli=json.loads(blobs['externally_observed_auditor_cli'])
+        if defect=='no-bootstrap-change':next(r for r in config['sources'] if r['path']==m.BOOTSTRAP)['sha256']='a'*64
+        elif defect=='foreign-source':next(r for r in config['sources'] if r['path'].endswith('puck_dependency_imports.py'))['sha256']='f'*64
+        elif defect=='input':config['inputs']['candidate']['sha256']='0'*64
+        elif defect=='roster':config['negative_imports']=['missing','org']
+        elif defect=='stage':config['stage_parent']='/tmp/palimpsest-puck-cpu-held-other'
+        elif defect=='historical-source':prepared['sources'][0]['sha256']='0'*64;rebind(m,config,blobs,'result',prepared)
+        elif defect.startswith('audit-'):
+            key,value={'audit-failed':('status','FAIL'),'audit-authority':('runtime_qualified',True),
+                'audit-source':('auditor_source_sha256','0'*64),'audit-result':('result_sha256','0'*64),
+                'audit-dependency':('dependencies_sha256','0'*64),'audit-exit':('external_returncode',1)}[defect]
+            audit[key]=value;rebind(m,config,blobs,'independent_audit',audit)
+        elif defect.startswith('cli-'):
+            if defect=='cli-exit':cli['observed_returncode']=1
+            elif defect=='cli-bool-exit':cli['observed_returncode']=False
+            elif defect=='cli-stdout':cli['stdout']['sha256']='0'*64
+            elif defect=='cli-stderr':cli['stderr']['size_bytes']=1
+            else:cli['command'][4]='/unrelated/auditor.py'
+            rebind(m,config,blobs,'externally_observed_auditor_cli',cli)
+        else:
+            blobs['configuration']=json.dumps(historical,indent=2).encode()
+            config['preparation_acceptance']['configuration'].update(size_bytes=len(blobs['configuration']),sha256=m.digest(blobs['configuration']))
+>       with pytest.raises(ValueError):m.validate_preparation_acceptance(config,blobs)
+                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'cpu_held_parent_test' has no attribute 'validate_preparation_acceptance'
+
+tests/test_puck_cpu_held_amendment.py:113: AttributeError
+________ test_amendment_rejects_rebound_semantic_tampering[audit-exit] _________
+
+defect = 'audit-exit'
+
+    @pytest.mark.parametrize('defect',['no-bootstrap-change','foreign-source','input','roster','stage','historical-source','audit-failed',
+        'audit-authority','audit-source','audit-result','audit-dependency','audit-exit','cli-exit','cli-bool-exit','cli-stdout','cli-stderr','cli-command','noncanonical'])
+    def test_amendment_rejects_rebound_semantic_tampering(defect):
+        m,config,blobs=acceptance_case()
+        historical=json.loads(blobs['configuration']);prepared=json.loads(blobs['result'])
+        audit=json.loads(blobs['independent_audit']);cli=json.loads(blobs['externally_observed_auditor_cli'])
+        if defect=='no-bootstrap-change':next(r for r in config['sources'] if r['path']==m.BOOTSTRAP)['sha256']='a'*64
+        elif defect=='foreign-source':next(r for r in config['sources'] if r['path'].endswith('puck_dependency_imports.py'))['sha256']='f'*64
+        elif defect=='input':config['inputs']['candidate']['sha256']='0'*64
+        elif defect=='roster':config['negative_imports']=['missing','org']
+        elif defect=='stage':config['stage_parent']='/tmp/palimpsest-puck-cpu-held-other'
+        elif defect=='historical-source':prepared['sources'][0]['sha256']='0'*64;rebind(m,config,blobs,'result',prepared)
+        elif defect.startswith('audit-'):
+            key,value={'audit-failed':('status','FAIL'),'audit-authority':('runtime_qualified',True),
+                'audit-source':('auditor_source_sha256','0'*64),'audit-result':('result_sha256','0'*64),
+                'audit-dependency':('dependencies_sha256','0'*64),'audit-exit':('external_returncode',1)}[defect]
+            audit[key]=value;rebind(m,config,blobs,'independent_audit',audit)
+        elif defect.startswith('cli-'):
+            if defect=='cli-exit':cli['observed_returncode']=1
+            elif defect=='cli-bool-exit':cli['observed_returncode']=False
+            elif defect=='cli-stdout':cli['stdout']['sha256']='0'*64
+            elif defect=='cli-stderr':cli['stderr']['size_bytes']=1
+            else:cli['command'][4]='/unrelated/auditor.py'
+            rebind(m,config,blobs,'externally_observed_auditor_cli',cli)
+        else:
+            blobs['configuration']=json.dumps(historical,indent=2).encode()
+            config['preparation_acceptance']['configuration'].update(size_bytes=len(blobs['configuration']),sha256=m.digest(blobs['configuration']))
+>       with pytest.raises(ValueError):m.validate_preparation_acceptance(config,blobs)
+                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'cpu_held_parent_test' has no attribute 'validate_preparation_acceptance'
+
+tests/test_puck_cpu_held_amendment.py:113: AttributeError
+_________ test_amendment_rejects_rebound_semantic_tampering[cli-exit] __________
+
+defect = 'cli-exit'
+
+    @pytest.mark.parametrize('defect',['no-bootstrap-change','foreign-source','input','roster','stage','historical-source','audit-failed',
+        'audit-authority','audit-source','audit-result','audit-dependency','audit-exit','cli-exit','cli-bool-exit','cli-stdout','cli-stderr','cli-command','noncanonical'])
+    def test_amendment_rejects_rebound_semantic_tampering(defect):
+        m,config,blobs=acceptance_case()
+        historical=json.loads(blobs['configuration']);prepared=json.loads(blobs['result'])
+        audit=json.loads(blobs['independent_audit']);cli=json.loads(blobs['externally_observed_auditor_cli'])
+        if defect=='no-bootstrap-change':next(r for r in config['sources'] if r['path']==m.BOOTSTRAP)['sha256']='a'*64
+        elif defect=='foreign-source':next(r for r in config['sources'] if r['path'].endswith('puck_dependency_imports.py'))['sha256']='f'*64
+        elif defect=='input':config['inputs']['candidate']['sha256']='0'*64
+        elif defect=='roster':config['negative_imports']=['missing','org']
+        elif defect=='stage':config['stage_parent']='/tmp/palimpsest-puck-cpu-held-other'
+        elif defect=='historical-source':prepared['sources'][0]['sha256']='0'*64;rebind(m,config,blobs,'result',prepared)
+        elif defect.startswith('audit-'):
+            key,value={'audit-failed':('status','FAIL'),'audit-authority':('runtime_qualified',True),
+                'audit-source':('auditor_source_sha256','0'*64),'audit-result':('result_sha256','0'*64),
+                'audit-dependency':('dependencies_sha256','0'*64),'audit-exit':('external_returncode',1)}[defect]
+            audit[key]=value;rebind(m,config,blobs,'independent_audit',audit)
+        elif defect.startswith('cli-'):
+            if defect=='cli-exit':cli['observed_returncode']=1
+            elif defect=='cli-bool-exit':cli['observed_returncode']=False
+            elif defect=='cli-stdout':cli['stdout']['sha256']='0'*64
+            elif defect=='cli-stderr':cli['stderr']['size_bytes']=1
+            else:cli['command'][4]='/unrelated/auditor.py'
+            rebind(m,config,blobs,'externally_observed_auditor_cli',cli)
+        else:
+            blobs['configuration']=json.dumps(historical,indent=2).encode()
+            config['preparation_acceptance']['configuration'].update(size_bytes=len(blobs['configuration']),sha256=m.digest(blobs['configuration']))
+>       with pytest.raises(ValueError):m.validate_preparation_acceptance(config,blobs)
+                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'cpu_held_parent_test' has no attribute 'validate_preparation_acceptance'
+
+tests/test_puck_cpu_held_amendment.py:113: AttributeError
+_______ test_amendment_rejects_rebound_semantic_tampering[cli-bool-exit] _______
+
+defect = 'cli-bool-exit'
+
+    @pytest.mark.parametrize('defect',['no-bootstrap-change','foreign-source','input','roster','stage','historical-source','audit-failed',
+        'audit-authority','audit-source','audit-result','audit-dependency','audit-exit','cli-exit','cli-bool-exit','cli-stdout','cli-stderr','cli-command','noncanonical'])
+    def test_amendment_rejects_rebound_semantic_tampering(defect):
+        m,config,blobs=acceptance_case()
+        historical=json.loads(blobs['configuration']);prepared=json.loads(blobs['result'])
+        audit=json.loads(blobs['independent_audit']);cli=json.loads(blobs['externally_observed_auditor_cli'])
+        if defect=='no-bootstrap-change':next(r for r in config['sources'] if r['path']==m.BOOTSTRAP)['sha256']='a'*64
+        elif defect=='foreign-source':next(r for r in config['sources'] if r['path'].endswith('puck_dependency_imports.py'))['sha256']='f'*64
+        elif defect=='input':config['inputs']['candidate']['sha256']='0'*64
+        elif defect=='roster':config['negative_imports']=['missing','org']
+        elif defect=='stage':config['stage_parent']='/tmp/palimpsest-puck-cpu-held-other'
+        elif defect=='historical-source':prepared['sources'][0]['sha256']='0'*64;rebind(m,config,blobs,'result',prepared)
+        elif defect.startswith('audit-'):
+            key,value={'audit-failed':('status','FAIL'),'audit-authority':('runtime_qualified',True),
+                'audit-source':('auditor_source_sha256','0'*64),'audit-result':('result_sha256','0'*64),
+                'audit-dependency':('dependencies_sha256','0'*64),'audit-exit':('external_returncode',1)}[defect]
+            audit[key]=value;rebind(m,config,blobs,'independent_audit',audit)
+        elif defect.startswith('cli-'):
+            if defect=='cli-exit':cli['observed_returncode']=1
+            elif defect=='cli-bool-exit':cli['observed_returncode']=False
+            elif defect=='cli-stdout':cli['stdout']['sha256']='0'*64
+            elif defect=='cli-stderr':cli['stderr']['size_bytes']=1
+            else:cli['command'][4]='/unrelated/auditor.py'
+            rebind(m,config,blobs,'externally_observed_auditor_cli',cli)
+        else:
+            blobs['configuration']=json.dumps(historical,indent=2).encode()
+            config['preparation_acceptance']['configuration'].update(size_bytes=len(blobs['configuration']),sha256=m.digest(blobs['configuration']))
+>       with pytest.raises(ValueError):m.validate_preparation_acceptance(config,blobs)
+                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'cpu_held_parent_test' has no attribute 'validate_preparation_acceptance'
+
+tests/test_puck_cpu_held_amendment.py:113: AttributeError
+________ test_amendment_rejects_rebound_semantic_tampering[cli-stdout] _________
+
+defect = 'cli-stdout'
+
+    @pytest.mark.parametrize('defect',['no-bootstrap-change','foreign-source','input','roster','stage','historical-source','audit-failed',
+        'audit-authority','audit-source','audit-result','audit-dependency','audit-exit','cli-exit','cli-bool-exit','cli-stdout','cli-stderr','cli-command','noncanonical'])
+    def test_amendment_rejects_rebound_semantic_tampering(defect):
+        m,config,blobs=acceptance_case()
+        historical=json.loads(blobs['configuration']);prepared=json.loads(blobs['result'])
+        audit=json.loads(blobs['independent_audit']);cli=json.loads(blobs['externally_observed_auditor_cli'])
+        if defect=='no-bootstrap-change':next(r for r in config['sources'] if r['path']==m.BOOTSTRAP)['sha256']='a'*64
+        elif defect=='foreign-source':next(r for r in config['sources'] if r['path'].endswith('puck_dependency_imports.py'))['sha256']='f'*64
+        elif defect=='input':config['inputs']['candidate']['sha256']='0'*64
+        elif defect=='roster':config['negative_imports']=['missing','org']
+        elif defect=='stage':config['stage_parent']='/tmp/palimpsest-puck-cpu-held-other'
+        elif defect=='historical-source':prepared['sources'][0]['sha256']='0'*64;rebind(m,config,blobs,'result',prepared)
+        elif defect.startswith('audit-'):
+            key,value={'audit-failed':('status','FAIL'),'audit-authority':('runtime_qualified',True),
+                'audit-source':('auditor_source_sha256','0'*64),'audit-result':('result_sha256','0'*64),
+                'audit-dependency':('dependencies_sha256','0'*64),'audit-exit':('external_returncode',1)}[defect]
+            audit[key]=value;rebind(m,config,blobs,'independent_audit',audit)
+        elif defect.startswith('cli-'):
+            if defect=='cli-exit':cli['observed_returncode']=1
+            elif defect=='cli-bool-exit':cli['observed_returncode']=False
+            elif defect=='cli-stdout':cli['stdout']['sha256']='0'*64
+            elif defect=='cli-stderr':cli['stderr']['size_bytes']=1
+            else:cli['command'][4]='/unrelated/auditor.py'
+            rebind(m,config,blobs,'externally_observed_auditor_cli',cli)
+        else:
+            blobs['configuration']=json.dumps(historical,indent=2).encode()
+            config['preparation_acceptance']['configuration'].update(size_bytes=len(blobs['configuration']),sha256=m.digest(blobs['configuration']))
+>       with pytest.raises(ValueError):m.validate_preparation_acceptance(config,blobs)
+                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'cpu_held_parent_test' has no attribute 'validate_preparation_acceptance'
+
+tests/test_puck_cpu_held_amendment.py:113: AttributeError
+________ test_amendment_rejects_rebound_semantic_tampering[cli-stderr] _________
+
+defect = 'cli-stderr'
+
+    @pytest.mark.parametrize('defect',['no-bootstrap-change','foreign-source','input','roster','stage','historical-source','audit-failed',
+        'audit-authority','audit-source','audit-result','audit-dependency','audit-exit','cli-exit','cli-bool-exit','cli-stdout','cli-stderr','cli-command','noncanonical'])
+    def test_amendment_rejects_rebound_semantic_tampering(defect):
+        m,config,blobs=acceptance_case()
+        historical=json.loads(blobs['configuration']);prepared=json.loads(blobs['result'])
+        audit=json.loads(blobs['independent_audit']);cli=json.loads(blobs['externally_observed_auditor_cli'])
+        if defect=='no-bootstrap-change':next(r for r in config['sources'] if r['path']==m.BOOTSTRAP)['sha256']='a'*64
+        elif defect=='foreign-source':next(r for r in config['sources'] if r['path'].endswith('puck_dependency_imports.py'))['sha256']='f'*64
+        elif defect=='input':config['inputs']['candidate']['sha256']='0'*64
+        elif defect=='roster':config['negative_imports']=['missing','org']
+        elif defect=='stage':config['stage_parent']='/tmp/palimpsest-puck-cpu-held-other'
+        elif defect=='historical-source':prepared['sources'][0]['sha256']='0'*64;rebind(m,config,blobs,'result',prepared)
+        elif defect.startswith('audit-'):
+            key,value={'audit-failed':('status','FAIL'),'audit-authority':('runtime_qualified',True),
+                'audit-source':('auditor_source_sha256','0'*64),'audit-result':('result_sha256','0'*64),
+                'audit-dependency':('dependencies_sha256','0'*64),'audit-exit':('external_returncode',1)}[defect]
+            audit[key]=value;rebind(m,config,blobs,'independent_audit',audit)
+        elif defect.startswith('cli-'):
+            if defect=='cli-exit':cli['observed_returncode']=1
+            elif defect=='cli-bool-exit':cli['observed_returncode']=False
+            elif defect=='cli-stdout':cli['stdout']['sha256']='0'*64
+            elif defect=='cli-stderr':cli['stderr']['size_bytes']=1
+            else:cli['command'][4]='/unrelated/auditor.py'
+            rebind(m,config,blobs,'externally_observed_auditor_cli',cli)
+        else:
+            blobs['configuration']=json.dumps(historical,indent=2).encode()
+            config['preparation_acceptance']['configuration'].update(size_bytes=len(blobs['configuration']),sha256=m.digest(blobs['configuration']))
+>       with pytest.raises(ValueError):m.validate_preparation_acceptance(config,blobs)
+                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'cpu_held_parent_test' has no attribute 'validate_preparation_acceptance'
+
+tests/test_puck_cpu_held_amendment.py:113: AttributeError
+________ test_amendment_rejects_rebound_semantic_tampering[cli-command] ________
+
+defect = 'cli-command'
+
+    @pytest.mark.parametrize('defect',['no-bootstrap-change','foreign-source','input','roster','stage','historical-source','audit-failed',
+        'audit-authority','audit-source','audit-result','audit-dependency','audit-exit','cli-exit','cli-bool-exit','cli-stdout','cli-stderr','cli-command','noncanonical'])
+    def test_amendment_rejects_rebound_semantic_tampering(defect):
+        m,config,blobs=acceptance_case()
+        historical=json.loads(blobs['configuration']);prepared=json.loads(blobs['result'])
+        audit=json.loads(blobs['independent_audit']);cli=json.loads(blobs['externally_observed_auditor_cli'])
+        if defect=='no-bootstrap-change':next(r for r in config['sources'] if r['path']==m.BOOTSTRAP)['sha256']='a'*64
+        elif defect=='foreign-source':next(r for r in config['sources'] if r['path'].endswith('puck_dependency_imports.py'))['sha256']='f'*64
+        elif defect=='input':config['inputs']['candidate']['sha256']='0'*64
+        elif defect=='roster':config['negative_imports']=['missing','org']
+        elif defect=='stage':config['stage_parent']='/tmp/palimpsest-puck-cpu-held-other'
+        elif defect=='historical-source':prepared['sources'][0]['sha256']='0'*64;rebind(m,config,blobs,'result',prepared)
+        elif defect.startswith('audit-'):
+            key,value={'audit-failed':('status','FAIL'),'audit-authority':('runtime_qualified',True),
+                'audit-source':('auditor_source_sha256','0'*64),'audit-result':('result_sha256','0'*64),
+                'audit-dependency':('dependencies_sha256','0'*64),'audit-exit':('external_returncode',1)}[defect]
+            audit[key]=value;rebind(m,config,blobs,'independent_audit',audit)
+        elif defect.startswith('cli-'):
+            if defect=='cli-exit':cli['observed_returncode']=1
+            elif defect=='cli-bool-exit':cli['observed_returncode']=False
+            elif defect=='cli-stdout':cli['stdout']['sha256']='0'*64
+            elif defect=='cli-stderr':cli['stderr']['size_bytes']=1
+            else:cli['command'][4]='/unrelated/auditor.py'
+            rebind(m,config,blobs,'externally_observed_auditor_cli',cli)
+        else:
+            blobs['configuration']=json.dumps(historical,indent=2).encode()
+            config['preparation_acceptance']['configuration'].update(size_bytes=len(blobs['configuration']),sha256=m.digest(blobs['configuration']))
+>       with pytest.raises(ValueError):m.validate_preparation_acceptance(config,blobs)
+                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'cpu_held_parent_test' has no attribute 'validate_preparation_acceptance'
+
+tests/test_puck_cpu_held_amendment.py:113: AttributeError
+_______ test_amendment_rejects_rebound_semantic_tampering[noncanonical] ________
+
+defect = 'noncanonical'
+
+    @pytest.mark.parametrize('defect',['no-bootstrap-change','foreign-source','input','roster','stage','historical-source','audit-failed',
+        'audit-authority','audit-source','audit-result','audit-dependency','audit-exit','cli-exit','cli-bool-exit','cli-stdout','cli-stderr','cli-command','noncanonical'])
+    def test_amendment_rejects_rebound_semantic_tampering(defect):
+        m,config,blobs=acceptance_case()
+        historical=json.loads(blobs['configuration']);prepared=json.loads(blobs['result'])
+        audit=json.loads(blobs['independent_audit']);cli=json.loads(blobs['externally_observed_auditor_cli'])
+        if defect=='no-bootstrap-change':next(r for r in config['sources'] if r['path']==m.BOOTSTRAP)['sha256']='a'*64
+        elif defect=='foreign-source':next(r for r in config['sources'] if r['path'].endswith('puck_dependency_imports.py'))['sha256']='f'*64
+        elif defect=='input':config['inputs']['candidate']['sha256']='0'*64
+        elif defect=='roster':config['negative_imports']=['missing','org']
+        elif defect=='stage':config['stage_parent']='/tmp/palimpsest-puck-cpu-held-other'
+        elif defect=='historical-source':prepared['sources'][0]['sha256']='0'*64;rebind(m,config,blobs,'result',prepared)
+        elif defect.startswith('audit-'):
+            key,value={'audit-failed':('status','FAIL'),'audit-authority':('runtime_qualified',True),
+                'audit-source':('auditor_source_sha256','0'*64),'audit-result':('result_sha256','0'*64),
+                'audit-dependency':('dependencies_sha256','0'*64),'audit-exit':('external_returncode',1)}[defect]
+            audit[key]=value;rebind(m,config,blobs,'independent_audit',audit)
+        elif defect.startswith('cli-'):
+            if defect=='cli-exit':cli['observed_returncode']=1
+            elif defect=='cli-bool-exit':cli['observed_returncode']=False
+            elif defect=='cli-stdout':cli['stdout']['sha256']='0'*64
+            elif defect=='cli-stderr':cli['stderr']['size_bytes']=1
+            else:cli['command'][4]='/unrelated/auditor.py'
+            rebind(m,config,blobs,'externally_observed_auditor_cli',cli)
+        else:
+            blobs['configuration']=json.dumps(historical,indent=2).encode()
+            config['preparation_acceptance']['configuration'].update(size_bytes=len(blobs['configuration']),sha256=m.digest(blobs['configuration']))
+>       with pytest.raises(ValueError):m.validate_preparation_acceptance(config,blobs)
+                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'cpu_held_parent_test' has no attribute 'validate_preparation_acceptance'
+
+tests/test_puck_cpu_held_amendment.py:113: AttributeError
+=========================== short test summary info ============================
+FAILED tests/test_puck_cpu_held_amendment.py::test_qualification02_accepts_separate_historical_and_current_source_epochs
+FAILED tests/test_puck_cpu_held_amendment.py::test_amendment_rejects_rebound_semantic_tampering[no-bootstrap-change]
+FAILED tests/test_puck_cpu_held_amendment.py::test_amendment_rejects_rebound_semantic_tampering[foreign-source]
+FAILED tests/test_puck_cpu_held_amendment.py::test_amendment_rejects_rebound_semantic_tampering[input]
+FAILED tests/test_puck_cpu_held_amendment.py::test_amendment_rejects_rebound_semantic_tampering[roster]
+FAILED tests/test_puck_cpu_held_amendment.py::test_amendment_rejects_rebound_semantic_tampering[stage]
+FAILED tests/test_puck_cpu_held_amendment.py::test_amendment_rejects_rebound_semantic_tampering[historical-source]
+FAILED tests/test_puck_cpu_held_amendment.py::test_amendment_rejects_rebound_semantic_tampering[audit-failed]
+FAILED tests/test_puck_cpu_held_amendment.py::test_amendment_rejects_rebound_semantic_tampering[audit-authority]
+FAILED tests/test_puck_cpu_held_amendment.py::test_amendment_rejects_rebound_semantic_tampering[audit-source]
+FAILED tests/test_puck_cpu_held_amendment.py::test_amendment_rejects_rebound_semantic_tampering[audit-result]
+FAILED tests/test_puck_cpu_held_amendment.py::test_amendment_rejects_rebound_semantic_tampering[audit-dependency]
+FAILED tests/test_puck_cpu_held_amendment.py::test_amendment_rejects_rebound_semantic_tampering[audit-exit]
+FAILED tests/test_puck_cpu_held_amendment.py::test_amendment_rejects_rebound_semantic_tampering[cli-exit]
+FAILED tests/test_puck_cpu_held_amendment.py::test_amendment_rejects_rebound_semantic_tampering[cli-bool-exit]
+FAILED tests/test_puck_cpu_held_amendment.py::test_amendment_rejects_rebound_semantic_tampering[cli-stdout]
+FAILED tests/test_puck_cpu_held_amendment.py::test_amendment_rejects_rebound_semantic_tampering[cli-stderr]
+FAILED tests/test_puck_cpu_held_amendment.py::test_amendment_rejects_rebound_semantic_tampering[cli-command]
+FAILED tests/test_puck_cpu_held_amendment.py::test_amendment_rejects_rebound_semantic_tampering[noncanonical]
+19 failed, 9 passed in 0.27s
