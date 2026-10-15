@@ -41,10 +41,12 @@ supplies observations; PR147 supplies the prospective CPU profile and tmpfs copi
 and PR148 supplies the dedicated bounded source parent and authored end-to-end
 fixtures. PR149 adds reviewed PREPARE controls, the independent standard-library
 auditor and external observer. Actual preparation01 and its audit pass; the
-subsequent independently reviewed qualifications01 and02 are each invoked once
-and fail. The next boundary is a prospective policy amendment for02's observed
-optional missing import, with exact source/data binding, independent review,
-current staged-byte checks and fresh admission; never rerun01 or02. Passing held qualification and its
+subsequent independently reviewed qualifications01–03 are each invoked once
+and fail.03 corrects the observed optional import and reaches an unresolved
+native producer attribute. Expose the exact failure context before proposing a
+binding correction; no04 exists. Preserve01–03 without retries. Any prospective
+actual amendment needs exact source/data binding, independent review, current
+staged-byte checks and fresh admission. Passing held qualification and its
 independent audit remain required before the episode. Resolve the episode/catalog
 contract before protected reads and audit the recorded/replayed/exported episode
 with its declared operator/renderer checks. Required cache/version/custody/cleanup
@@ -57,25 +59,31 @@ scientific/catalog decisions. The previous
 is preserved byte-identically. All 26 requirement and seven gate statuses remain
 unchanged; all seven release gates remain open.
 
-[Draft PR #151](https://github.com/Aadrika08/palimpsest/pull/151) retains the
-[source amendment](https://github.com/Aadrika08/palimpsest/blob/e0b5f9af621419b99da91bbbe18184a8594d98c9/docs/reports/puck-cpu-held-qualification-amendment-02.md)
-and [actual02 report](https://github.com/Aadrika08/palimpsest/blob/e0b5f9af621419b99da91bbbe18184a8594d98c9/docs/reports/puck-cpu-held-qualification-02.md).
-All132 affected checks pass in31.04s. Source/configuration review and fresh
-admission precede one actual02 invocation: normal external exit1 without timeout
-in38.754315594s, parent FD5→5. A fresh capsule uses current sources, historical
-capsules use historical pins, and all16 data inputs/policy/limits remain fixed.
-Its first guard denial is `torch._rocm_init` at Torch line152, explicitly chained
-to the secondary `torch._C` error. Authenticated local source treats the ROCm
-module as optional and catches ImportError; the registered CPU root has no leaf.
-This identifies02's first blocker, not01's unknown primary or every later issue.
-The independent acceptance auditor exits1 normally in0.053527704s before byte
-checks. All three tracked PID/start identities are absent at14:42:33UTC; no
-baseline-after or post-02 byte acceptance exists. The earlier fresh pre-02 byte
-audit passes27,255 files/1,318,494,346B in13.74572s within its dated scope. All36
-actual evidence copies match originals under independent review. Both01 and02
-remain failed/consumed. No policy change or03 exists; the next source work is a
-narrow prospective amendment for the observed optional import. All33 statuses
-and all seven open gates remain unchanged; the episode bundle remains the exit.
+[Draft PR #152](https://github.com/Aadrika08/palimpsest/pull/152) retains the
+[source amendment](https://github.com/Aadrika08/palimpsest/blob/70c6c61063ba87d7f4ea64457d07f36f6f4310ff/docs/reports/puck-cpu-held-qualification-amendment-03.md)
+and [actual03 report](https://github.com/Aadrika08/palimpsest/blob/70c6c61063ba87d7f4ea64457d07f36f6f4310ff/docs/reports/puck-cpu-held-qualification-03.md).
+All185 affected checks pass in53.58s. The exact policy delta adds only the observed
+optional `torch._rocm_init` miss; historical preparation,16 data pins, four roots,
+versions and limits stay fixed. Source/configuration review and fresh admission
+precede one actual03 invocation: normal external exit1 without timeout in
+45.516436608s, parent FD5→5. Native creation returns, then export binding fails in
+`ExportBindings.complete(torch._C, native_create)` with a missing producer
+attribute. The exact failing row/component remains unknown among36 declared rows;
+native execution and all four imports do not complete. The
+[prior02 failure](https://github.com/Aadrika08/palimpsest/blob/e0b5f9af621419b99da91bbbe18184a8594d98c9/docs/reports/puck-cpu-held-qualification-02.md)
+remains preserved with01.
+
+The frozen acceptance auditor exits1 normally in0.051284271s before post-stage
+byte checks. All three tracked PID/start identities are absent at15:17:38UTC; no
+baseline-after or post03 byte acceptance exists. The separately reviewed pre03
+data-only census passes27,255 files/1,318,494,346B in13.446514741s at15:06:59UTC;
+its dated PASS does not accept bytes after03 or establish qualification. All35
+actual evidence copies match originals under independent review.01–03 remain
+failed/consumed. No04 exists. Next source work exposes bounded binding-failure
+context with preserved cause/refusal. Source fixtures cannot recover03's unlogged
+row. Review the diagnostic source/data transition before any separately numbered
+actual invocation, and require observed evidence before a profile/phase correction.
+All33 statuses and all seven open gates remain unchanged; the recorded/replayed/exported episode bundle remains the next exit.
 
 The [actual preparation report](https://github.com/Aadrika08/palimpsest/blob/4036a382b87ab99640bed96f6b2f8aeaa7873b2c/docs/reports/puck-cpu-held-preparation-01.md)
 records external exit0 in 25.5215614 s and frozen independent auditor normal
@@ -99,7 +107,9 @@ dated scope, but no current post-qualification byte audit, complete held four-im
 result or general simulator qualification exists. Authored diagnostics pass two
 basic native-import cases and demonstrate that a caught undeclared import can
 mask a primary error with a secondary `ModuleNotFoundError`; qualification01's
-primary error remains unexposed. Qualification02 above now identifies its own first denial. The source-only error-chaining fix is implemented
+primary error remains unexposed. Preserved02 identifies its own optional-import
+denial;03 above reaches the distinct native binding failure. The source-only
+error-chaining fix is implemented
 on `research/puck-cpu-primary-import-failure-v1`, without relaxing guards or import
 policy. The regression first fails in 1.66 s, then passes in both affected
 three-file batches; each batch has 63 passes and one failure, respectively an
@@ -113,7 +123,7 @@ actual invocation requires a separately numbered, reviewed amendment, a fresh
 authenticated source capsule, current staged-byte checks and fresh resource
 admission, without speculative missing-import roster additions. Preparation01's
 worker source contains the old bootstrap and cannot be reused with the new source
-hash. Qualifications01 and02 stay failed and consumed; no03 has been created.
+hash. Qualifications01–03 stay failed and consumed; no04 has been created.
 
 [Draft PR #149](https://github.com/Aadrika08/palimpsest/pull/149) retains the
 [source report](https://github.com/Aadrika08/palimpsest/blob/acd14e2861f8e0ec0209085dbd6b2ec302b26b64/docs/reports/puck-cpu-held-allocation-v1.md).
