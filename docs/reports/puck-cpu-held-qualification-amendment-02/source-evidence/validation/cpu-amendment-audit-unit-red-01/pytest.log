@@ -1,0 +1,79 @@
+F.........FFFFFFFF.....FF....                                            [100%]
+=================================== FAILURES ===================================
+_____________ test_v2_is_a_closed_qualification_only_configuration _____________
+tests/test_puck_cpu_amendment_audit.py:35: in test_v2_is_a_closed_qualification_only_configuration
+    m=api();value=configuration(m);m.configuration(value,True)
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+scripts/audit_puck_cpu_held_runtime.py:194: in configuration
+    require(phase in OUTPUTS and set(config)==keys and config['kind']=='puck-cpu-held-runtime-allocation-v1' and type(config['version']) is int and config['version']==1 and type(config['allocation_id']) is int and config['allocation_id']==1,'Exact allocation configuration required')
+scripts/audit_puck_cpu_held_runtime.py:38: in require
+    if not value:raise ValueError(message)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^
+E   ValueError: Exact allocation configuration required
+________ test_historical_source_epoch_is_distinct_but_data_stays_exact _________
+tests/test_puck_cpu_amendment_audit.py:53: in test_historical_source_epoch_is_distinct_but_data_stays_exact
+    m.preparation_epoch(current,old,prep)
+    ^^^^^^^^^^^^^^^^^^^
+E   AttributeError: module 'independent_cpu_audit_test' has no attribute 'preparation_epoch'
+_ test_source_amendment_cannot_inherit_changed_data_or_foreign_source[bootstrap-unchanged] _
+tests/test_puck_cpu_amendment_audit.py:68: in test_source_amendment_cannot_inherit_changed_data_or_foreign_source
+    with pytest.raises(ValueError):m.preparation_epoch(current,old,prep)
+                                   ^^^^^^^^^^^^^^^^^^^
+E   AttributeError: module 'independent_cpu_audit_test' has no attribute 'preparation_epoch'
+_ test_source_amendment_cannot_inherit_changed_data_or_foreign_source[foreign-source] _
+tests/test_puck_cpu_amendment_audit.py:68: in test_source_amendment_cannot_inherit_changed_data_or_foreign_source
+    with pytest.raises(ValueError):m.preparation_epoch(current,old,prep)
+                                   ^^^^^^^^^^^^^^^^^^^
+E   AttributeError: module 'independent_cpu_audit_test' has no attribute 'preparation_epoch'
+__ test_source_amendment_cannot_inherit_changed_data_or_foreign_source[input] __
+tests/test_puck_cpu_amendment_audit.py:68: in test_source_amendment_cannot_inherit_changed_data_or_foreign_source
+    with pytest.raises(ValueError):m.preparation_epoch(current,old,prep)
+                                   ^^^^^^^^^^^^^^^^^^^
+E   AttributeError: module 'independent_cpu_audit_test' has no attribute 'preparation_epoch'
+_ test_source_amendment_cannot_inherit_changed_data_or_foreign_source[environment] _
+tests/test_puck_cpu_amendment_audit.py:68: in test_source_amendment_cannot_inherit_changed_data_or_foreign_source
+    with pytest.raises(ValueError):m.preparation_epoch(current,old,prep)
+                                   ^^^^^^^^^^^^^^^^^^^
+E   AttributeError: module 'independent_cpu_audit_test' has no attribute 'preparation_epoch'
+_ test_source_amendment_cannot_inherit_changed_data_or_foreign_source[negative] _
+tests/test_puck_cpu_amendment_audit.py:68: in test_source_amendment_cannot_inherit_changed_data_or_foreign_source
+    with pytest.raises(ValueError):m.preparation_epoch(current,old,prep)
+                                   ^^^^^^^^^^^^^^^^^^^
+E   AttributeError: module 'independent_cpu_audit_test' has no attribute 'preparation_epoch'
+__ test_source_amendment_cannot_inherit_changed_data_or_foreign_source[stage] __
+tests/test_puck_cpu_amendment_audit.py:68: in test_source_amendment_cannot_inherit_changed_data_or_foreign_source
+    with pytest.raises(ValueError):m.preparation_epoch(current,old,prep)
+                                   ^^^^^^^^^^^^^^^^^^^
+E   AttributeError: module 'independent_cpu_audit_test' has no attribute 'preparation_epoch'
+_ test_source_amendment_cannot_inherit_changed_data_or_foreign_source[old-source] _
+tests/test_puck_cpu_amendment_audit.py:68: in test_source_amendment_cannot_inherit_changed_data_or_foreign_source
+    with pytest.raises(ValueError):m.preparation_epoch(current,old,prep)
+                                   ^^^^^^^^^^^^^^^^^^^
+E   AttributeError: module 'independent_cpu_audit_test' has no attribute 'preparation_epoch'
+_______ test_qualification02_uses_exclusive_new_paths_and_preserves01[0] _______
+tests/test_puck_cpu_held_observer.py:99: in test_qualification02_uses_exclusive_new_paths_and_preserves01
+    result=module.observe(path,sha)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+scripts/observe_puck_cpu_held_allocation.py:59: in observe
+    raise ValueError('Exact CPU parent allocation root and phase required')
+E   ValueError: Exact CPU parent allocation root and phase required
+_______ test_qualification02_uses_exclusive_new_paths_and_preserves01[7] _______
+tests/test_puck_cpu_held_observer.py:99: in test_qualification02_uses_exclusive_new_paths_and_preserves01
+    result=module.observe(path,sha)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+scripts/observe_puck_cpu_held_allocation.py:59: in observe
+    raise ValueError('Exact CPU parent allocation root and phase required')
+E   ValueError: Exact CPU parent allocation root and phase required
+=========================== short test summary info ============================
+FAILED tests/test_puck_cpu_amendment_audit.py::test_v2_is_a_closed_qualification_only_configuration
+FAILED tests/test_puck_cpu_amendment_audit.py::test_historical_source_epoch_is_distinct_but_data_stays_exact
+FAILED tests/test_puck_cpu_amendment_audit.py::test_source_amendment_cannot_inherit_changed_data_or_foreign_source[bootstrap-unchanged]
+FAILED tests/test_puck_cpu_amendment_audit.py::test_source_amendment_cannot_inherit_changed_data_or_foreign_source[foreign-source]
+FAILED tests/test_puck_cpu_amendment_audit.py::test_source_amendment_cannot_inherit_changed_data_or_foreign_source[input]
+FAILED tests/test_puck_cpu_amendment_audit.py::test_source_amendment_cannot_inherit_changed_data_or_foreign_source[environment]
+FAILED tests/test_puck_cpu_amendment_audit.py::test_source_amendment_cannot_inherit_changed_data_or_foreign_source[negative]
+FAILED tests/test_puck_cpu_amendment_audit.py::test_source_amendment_cannot_inherit_changed_data_or_foreign_source[stage]
+FAILED tests/test_puck_cpu_amendment_audit.py::test_source_amendment_cannot_inherit_changed_data_or_foreign_source[old-source]
+FAILED tests/test_puck_cpu_held_observer.py::test_qualification02_uses_exclusive_new_paths_and_preserves01[0]
+FAILED tests/test_puck_cpu_held_observer.py::test_qualification02_uses_exclusive_new_paths_and_preserves01[7]
+11 failed, 18 passed in 0.70s

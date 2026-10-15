@@ -1,0 +1,51 @@
+{
+  "actual02_invoked": false,
+  "affected_tests": {
+    "external_returncode": 0,
+    "external_seconds": 31.32672252203338,
+    "passed": 132,
+    "pytest_seconds": 31.04,
+    "terminal": "ec0126"
+  },
+  "all_seven_release_gates_open": true,
+  "collection_authorized": false,
+  "controls": [
+    {
+      "path": "scripts/qualify_puck_cpu_held_runtime.py",
+      "sha256": "3226dbf4cc948863fe2e8e3be348ebf2fe2aef821e4594733c7f5c4d5d9b67e8",
+      "size_bytes": 47416
+    },
+    {
+      "path": "scripts/audit_puck_cpu_held_runtime.py",
+      "sha256": "01bc2c99634cb3ec2e7bfc92f4fc96b219e07c8a5ea10351227a5cfb1181d4cf",
+      "size_bytes": 65522
+    },
+    {
+      "path": "scripts/observe_puck_cpu_held_allocation.py",
+      "sha256": "42f06433df0c36ee338271e0f147b015f6330ab2208f6829bd990dc05504130f",
+      "size_bytes": 6082
+    },
+    {
+      "path": "scripts/puck_worker_bootstrap.py",
+      "sha256": "436b1ffe34b96fca166f6fb38022ad7392daef3517e58157092db2d9fd84c69f",
+      "size_bytes": 38375
+    }
+  ],
+  "evidence_index": {
+    "path": "puck-cpu-held-qualification-amendment-02/source-evidence-index.json",
+    "sha256": "70686f269b792fb569904bbad5b88022457c7d87d354eeba69a96bb9466c4b9f",
+    "size_bytes": 23978
+  },
+  "kind": "puck-cpu-held-qualification-amendment02-source-report-v1",
+  "native_authorized": false,
+  "qualification_claims": [],
+  "runtime_qualified": false,
+  "scope": "source tests and authored fixtures only; no actual qualification02 invocation",
+  "source_commit": "7fcbc6dd2013584342f0b7bcaacd0e5bcbb1203d",
+  "source_review": {
+    "material_findings": [],
+    "status": "GO source only"
+  },
+  "status": "SOURCE_VERIFIED_ACTUAL_PENDING",
+  "study_authorized": false
+}

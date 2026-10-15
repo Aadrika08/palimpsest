@@ -1,0 +1,24 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+______ test_authored02_uses_fresh_capsule_preserves01_and_refuses_reentry ______
+
+tmp_path = PosixPath('/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qualification-amendment-02/runs/source-validation/cpu-parent-amendment02/red-integration-01/test_authored02_uses_fresh_cap0')
+
+    def test_authored02_uses_fresh_capsule_preserves01_and_refuses_reentry(tmp_path):
+        with amendment_fixture(tmp_path) as case:
+            root,m,config,stage=(case[k] for k in ('root','api','config','stage'))
+            before=[(p.stat().st_dev,p.stat().st_ino) for p in sorted((stage/'inputs').iterdir())]
+            code,stdout,stderr=run_cli(root,m,'qualify02',config)
+            output=root/'runs/puck-cpu-held-qualification-02'
+            retained=(output/'result.json').read_bytes() if (output/'result.json').exists() else b''
+>           assert code==0,(code,stdout,stderr,retained)
+E           AssertionError: (1, b'', b'Traceback (most recent call last):
+E               File "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-held-qual...    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E             FileExistsError: CPU allocation already reserved
+E             ', b'')
+E           assert 1 == 0
+
+tests/test_puck_cpu_held_amendment.py:213: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_puck_cpu_held_amendment.py::test_authored02_uses_fresh_capsule_preserves01_and_refuses_reentry
+1 failed in 5.31s

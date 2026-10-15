@@ -1,0 +1,14 @@
+.........................FF....                                          [100%]
+=================================== FAILURES ===================================
+_ test_reauthenticated_historical_receipt_tampering_still_refuses[cli-unknown] _
+tests/test_puck_cpu_amendment_audit.py:129: in test_reauthenticated_historical_receipt_tampering_still_refuses
+    with pytest.raises(ValueError):m.historical_acceptance(held,current,True)
+E   Failed: DID NOT RAISE <class 'ValueError'>
+_ test_reauthenticated_historical_receipt_tampering_still_refuses[cli-metadata-type] _
+tests/test_puck_cpu_amendment_audit.py:129: in test_reauthenticated_historical_receipt_tampering_still_refuses
+    with pytest.raises(ValueError):m.historical_acceptance(held,current,True)
+E   Failed: DID NOT RAISE <class 'ValueError'>
+=========================== short test summary info ============================
+FAILED tests/test_puck_cpu_amendment_audit.py::test_reauthenticated_historical_receipt_tampering_still_refuses[cli-unknown]
+FAILED tests/test_puck_cpu_amendment_audit.py::test_reauthenticated_historical_receipt_tampering_still_refuses[cli-metadata-type]
+2 failed, 29 passed in 0.41s

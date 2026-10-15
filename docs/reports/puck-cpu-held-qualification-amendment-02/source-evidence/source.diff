@@ -1,0 +1,958 @@
+diff --git a/scripts/audit_puck_cpu_held_runtime.py b/scripts/audit_puck_cpu_held_runtime.py
+index 2b750a4..f4a9ed6 100644
+--- a/scripts/audit_puck_cpu_held_runtime.py
++++ b/scripts/audit_puck_cpu_held_runtime.py
+@@ -24,6 +24,7 @@ MiB=1024**2
+ PYTHON='/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/bin/python3.11'
+ INTERPRETER=dict(path=PYTHON,size_bytes=21662864,sha256='572cfa2a8597e2f431c785613539b1d219fa99eecf5ffb5765731a2ebc3e692a')
+ PARENT='scripts/qualify_puck_cpu_held_runtime.py'
++HISTORICAL_AUDITOR_SHA256='19723b4ec19c6cd8fd29d38b5cbabab60f89c136ee37564f6e94175439b4eed9'
+ BOOTSTRAP='scripts/puck_worker_bootstrap.py'
+ OUTPUTS=dict(prepare='runs/puck-cpu-held-preparation-01',qualify='runs/puck-cpu-held-qualification-01')
+ VERSIONS=dict(numpy='2.2.5',torch='2.9.0+cpu',torchvision='0.24.0+cpu',mujoco='3.3.6')
+@@ -189,9 +190,10 @@ def limits(phase,authored):
+ 
+ 
+ def configuration(config,authored):
+-    phase=config.get('phase');keys={'kind','version','phase','allocation_id','root','stage_parent','sources','inputs','interpreter','environment','expected_versions','limits','negative_imports','claims'}
+-    if phase=='qualify':keys.add('preparation')
+-    require(phase in OUTPUTS and set(config)==keys and config['kind']=='puck-cpu-held-runtime-allocation-v1' and type(config['version']) is int and config['version']==1 and type(config['allocation_id']) is int and config['allocation_id']==1,'Exact allocation configuration required')
++    phase=config.get('phase');amended=config.get('kind')=='puck-cpu-held-runtime-allocation-v2';version=2 if amended else 1
++    keys={'kind','version','phase','allocation_id','root','stage_parent','sources','inputs','interpreter','environment','expected_versions','limits','negative_imports','claims'}
++    if phase=='qualify':keys.add('preparation_acceptance' if amended else 'preparation')
++    require(phase in OUTPUTS and (not amended or phase=='qualify') and set(config)==keys and config['kind']=='puck-cpu-held-runtime-allocation-v'+str(version) and type(config['version']) is int and config['version']==version and type(config['allocation_id']) is int and config['allocation_id']==version,'Exact allocation configuration required')
+     absolute(config['root']);stage=absolute(config['stage_parent'])
+     require(re.fullmatch('/tmp/palimpsest-puck-cpu-held-[A-Za-z0-9_-]+',stage) is not None,'Private direct tmpfs allocation required')
+     require(config['interpreter']==INTERPRETER and canonical(config['environment'])==canonical(ENVIRONMENT) and config['expected_versions']==VERSIONS and canonical(config['limits'])==canonical(limits(phase,authored)),'Exact interpreter/environment/resource limits required')
+@@ -202,7 +204,52 @@ def configuration(config,authored):
+     require(len({r['path'] for r in rows})==len(rows),'Overlapping source/input paths')
+     expected=['org'] if authored else ['numpy._distributor_init_local','org']
+     require(config['negative_imports']==expected,'Exact finite missing-import roster required')
+-    if phase=='qualify':require(pin(config['preparation'])['path']==OUTPUTS['prepare']+'/result.json','Exact preparation pin required')
++    if amended:
++        acceptance=config['preparation_acceptance']
++        require(type(acceptance) is dict and set(acceptance)=={'configuration','result','independent_audit','externally_observed_auditor_cli'},'Exact historical preparation acceptance required')
++        for row in acceptance.values():pin(row)
++        require(acceptance['result']['path']==OUTPUTS['prepare']+'/result.json' and len({r['path'] for r in acceptance.values()})==4,'Exact distinct preparation01 acceptance pins required')
++    elif phase=='qualify':require(pin(config['preparation'])['path']==OUTPUTS['prepare']+'/result.json','Exact preparation pin required')
++
++
++def allocation_output(config):
++    return 'runs/puck-cpu-held-qualification-02' if config['version']==2 else OUTPUTS[config['phase']]
++
++
++def preparation_epoch(current,historical,prep):
++    require(historical.get('kind')=='puck-cpu-held-runtime-allocation-v1' and type(historical.get('version')) is int and historical['version']==1 and historical.get('phase')=='prepare' and type(historical.get('allocation_id')) is int and historical['allocation_id']==1,'Historical preparation01 configuration required')
++    shared=('root','stage_parent','inputs','interpreter','environment','expected_versions','negative_imports','claims')
++    require(all(canonical(current[k])==canonical(historical[k]) for k in shared),'Historical preparation data or policy changed')
++    require(prep.get('sources')==historical.get('sources') and prep.get('inputs')==historical.get('inputs'),'Preparation historical source/input binding differs')
++    old={r['path']:r for r in historical['sources']};new={r['path']:r for r in current['sources']}
++    require(list(old)==list(SOURCES) and list(new)==list(SOURCES),'Historical/current source roster differs')
++    changed={name for name in old if canonical(old[name])!=canonical(new[name])}
++    require(BOOTSTRAP in changed and changed<={PARENT,BOOTSTRAP},'Source amendment must change bootstrap and only parent/bootstrap')
++
++
++def historical_acceptance(held,current,authored):
++    root=Path(current['root']);pins=current['preparation_acceptance']
++    old,oldraw=held.json(root/pins['configuration']['path'],pins['configuration'],MiB,lf=True)
++    configuration(old,authored)
++    prep,prepraw=held.json(root/pins['result']['path'],pins['result'],MiB,lf=True)
++    outcome(prep,old,sha(oldraw));preparation_epoch(current,old,prep)
++    audit,araw=held.json(root/pins['independent_audit']['path'],pins['independent_audit'],MiB)
++    no_authority(audit)
++    require(not {'error','error_type'}&set(audit),'Historical preparation audit contains an error')
++    require(audit.get('kind')=='puck-cpu-held-runtime-independent-audit-v1' and type(audit.get('version')) is int and audit['version']==1 and audit.get('status')=='PASS' and audit.get('phase')=='prepare' and audit.get('observed_status')=='prepared' and audit.get('held_four_imports_observed') is False and audit.get('auditor_source_sha256')==HISTORICAL_AUDITOR_SHA256 and audit.get('configuration_sha256')==sha(oldraw) and audit.get('result_sha256')==sha(prepraw) and audit.get('dependencies_sha256')==prep.get('dependencies',{}).get('sha256') and type(audit.get('external_returncode')) is int and audit['external_returncode']==0 and audit.get('evidence_scope')==('AUTHORED fixture only' if authored else 'ordinary CPU held allocation only') and finite(audit.get('elapsed_seconds'),120),'Historical preparation PASS audit binding differs')
++    require(audit.get('closure')==dict(fd_count_before=4,fd_count_after=4,active_children=[],active_non_main_threads=[]) and type(audit.get('root_count')) is int and audit['root_count']==4,'Historical preparation audit closure/root count differs')
++    cli,_=held.json(root/pins['externally_observed_auditor_cli']['path'],pins['externally_observed_auditor_cli'],64*1024)
++    required={'kind','command','observed_returncode','elapsed_seconds','published','stdout','stderr'}
++    require(set(cli) in (required,required|{'at','scope'}) and ('at' not in cli or type(cli['at']) is str and 0<len(cli['at'])<=128 and cli['scope']=='fresh read-only current-byte audit of prepared data; no preparation or qualification allocation invoked'),'Historical audit CLI fields/metadata differ')
++    require(cli.get('kind')=='externally-observed-cpu-auditor-cli-v1' and type(cli.get('observed_returncode')) is int and cli['observed_returncode']==0 and finite(cli.get('elapsed_seconds'),130) and not {'error','error_type'}&set(cli),'Normal historical preparation audit CLI required')
++    for channel in ('published','stdout','stderr'):
++        row=cli.get(channel);require(type(row) is dict and set(row)=={'path','size_bytes','sha256'},'Historical audit stream descriptor differs');absolute(row['path'])
++        require(type(row['size_bytes']) is int and row['size_bytes']==(0 if channel=='stderr' else len(araw)) and row['sha256']==(sha(b'') if channel=='stderr' else sha(araw)),'Historical audit published/stdout/stderr byte pin differs')
++    transport='authored-prepare-transport.json' if authored else OUTPUTS['prepare']+'-external-cli-transport.json'
++    expected=[PYTHON,'-I','-S','-B',str(root/'scripts/audit_puck_cpu_held_runtime.py'),'--configuration',str(root/pins['configuration']['path']),'--sha256',sha(oldraw),'--transport',str(root/transport),'--transport-sha256',audit.get('transport_sha256'),'--output',cli['published']['path']]
++    require(type(audit.get('transport_sha256')) is str and re.fullmatch('[0-9a-f]{64}',audit['transport_sha256']) is not None and cli.get('command')==expected,'Historical preparation audit invocation differs')
++    return old,prep,audit
++
+ 
+ 
+ def inputs_binding(config,data,blobs):
+@@ -347,8 +394,8 @@ def baseline(held,value):
+ 
+ 
+ def outcome(value,config,configsha):
+-    no_authority(value);phase=config['phase'];closure=value.get('closure')
+-    require(value.get('kind')=='puck-cpu-held-runtime-outcome-v1' and type(value.get('version')) is int and value['version']==1 and value.get('phase')==phase and type(value.get('allocation_id')) is int and value['allocation_id']==1 and value.get('configuration_sha256')==configsha and value.get('status')==('prepared' if phase=='prepare' else 'imports_completed') and value.get('held_four_imports_observed') is (phase=='qualify') and 'error' not in value and 'error_type' not in value and finite(value.get('elapsed_seconds'),180),'Normal successful parent outcome required')
++    no_authority(value);phase=config['phase'];closure=value.get('closure');version=config['version']
++    require(value.get('kind')=='puck-cpu-held-runtime-outcome-v'+str(version) and type(value.get('version')) is int and value['version']==version and value.get('phase')==phase and type(value.get('allocation_id')) is int and value['allocation_id']==config['allocation_id'] and value.get('configuration_sha256')==configsha and value.get('status')==('prepared' if phase=='prepare' else 'imports_completed') and value.get('held_four_imports_observed') is (phase=='qualify') and 'error' not in value and 'error_type' not in value and finite(value.get('elapsed_seconds'),180),'Normal successful parent outcome required')
+     require(closure==dict(active_children=[],active_non_main_threads=[],fd_count_before=5,fd_count_after=5) and all(type(closure[k]) is int for k in ('fd_count_before','fd_count_after')),'Parent descriptor/process/thread closure differs')
+     if phase=='prepare':require(value.get('stage_parent')==config['stage_parent'] and value.get('sources')==config['sources'] and value.get('inputs')==config['inputs'],'Preparation input/source custody differs')
+ 
+@@ -425,7 +472,7 @@ def namespace_command(config,data,phase,worker_command):
+         require(type(rows) is list and len(rows)<=128,'Namespace alias bound differs')
+         for path,target in rows:
+             absolute(path);relative(target);require(path not in paths and (path not in aliases or aliases[path]==target),'Namespace alias shadows/contradicts native file');aliases[path]=target
+-    base=Path(config['root'])/OUTPUTS[phase];prepared=Path(config['root'])/OUTPUTS['prepare'];stage=config['stage_parent']
++    base=Path(config['root'])/(OUTPUTS['prepare'] if phase=='prepare' else allocation_output(config));prepared=Path(config['root'])/OUTPUTS['prepare'];stage=config['stage_parent']
+     command=['/usr/bin/bwrap','--unshare-all','--unshare-user']
+     if phase=='prepare':command+=['--as-pid-1']
+     command+=['--disable-userns','--die-with-parent','--cap-drop','ALL','--clearenv','--hostname','palimpsest-cpu-held','--ro-bind',prefix,prefix]
+@@ -434,7 +481,8 @@ def namespace_command(config,data,phase,worker_command):
+         if phase=='qualify' and path not in expected:origin=stage+'/inputs/'+('root-0001' if path.startswith('/usr/') else 'root-0002')+'/'+path[5:]
+         command+=['--ro-bind',origin,path]
+     for path,target in sorted(aliases.items(),key=lambda item:(item[0].count('/'),item[0])):command+=['--symlink',target,path]
+-    command+=['--ro-bind',str(prepared/('parent-source' if phase=='prepare' else 'worker-source')),'/puck/source','--ro-bind',str(base/'control'),'/puck/control']
++    source=base/'worker-source' if phase=='qualify' and config['version']==2 else prepared/('parent-source' if phase=='prepare' else 'worker-source')
++    command+=['--ro-bind',str(source),'/puck/source','--ro-bind',str(base/'control'),'/puck/control']
+     if phase=='prepare':
+         command+=['--bind',stage,'/puck/staged']
+         for path in (config['root']+'/runs/puck-cpu-install-01/site',str((Path(config['root'])/config['inputs']['generated']['path']).parent)):command+=['--ro-bind',path,path]
+@@ -457,13 +505,13 @@ def audit(config_path,expected_sha256,transport_path,expected_transport_sha256,*
+         traw=held.file(absolute(str(transport_path)),maximum=64*1024,raw=True);require(sha(traw)==expected_transport_sha256,'Transport SHA/hash pin differs');transport=decode(traw);require(traw==canonical(transport),'Canonical transport receipt required')
+         authored=transport.get('kind')=='authored-cpu-parent-cli-transport-v1';require(authored or transport.get('kind')=='puck-cpu-held-cli-transport-v1','External transport kind differs')
+         if authored:require(type(transport.get('authored_scope')) is str and transport['authored_scope'].startswith('AUTHORED fixture only;'),'Explicit authored transport scope required')
+-        configuration(config,authored);root=Path(config['root']);phase=config['phase'];base=root/OUTPUTS[phase]
++        configuration(config,authored);root=Path(config['root']);phase=config['phase'];base=root/allocation_output(config)
+         require(Path(config_path).is_relative_to(root) and Path(transport_path).is_relative_to(root),'External control files must belong to configuration root')
+         require(transport.get('configuration_sha256')==expected_sha256 and type(transport.get('observed_returncode')) is int and transport['observed_returncode']==0 and finite(transport.get('elapsed_seconds'),210),'Normal external transport exit required')
+         if not authored:require(transport.get('phase')==phase and transport.get('timed_out') is False,'Normal phase-matched external transport required')
+         command=[PYTHON,'-I','-S','-B',str(root/PARENT),'--configuration',str(config_path),'--sha256',expected_sha256];require(transport.get('command')==command,'Exact isolated parent transport command required')
+         for name in ('stdout','stderr'):
+-            row=pin(transport.get(name));expectedpath=('authored-'+phase+'-cli.'+name) if authored else OUTPUTS[phase]+'-external-cli.'+name
++            row=pin(transport.get(name));expectedpath=('authored-'+('qualify02' if config['version']==2 else phase)+'-cli.'+name) if authored else allocation_output(config)+'-external-cli.'+name
+             require(row['path']==expectedpath,'Exact external transport stream path required');held.file(root/row['path'],row,16*MiB,raw=True)
+         retained,_=held.json(base/'configuration.json',maximum=MiB,lf=True);require(retained==config and held.files[str(base/'configuration.json')]['raw']==raw,'Retained configuration bytes differ')
+         blobs={};data={};sources={}
+@@ -485,13 +533,21 @@ def audit(config_path,expected_sha256,transport_path,expected_transport_sha256,*
+         prepbase=root/OUTPUTS['prepare']
+         if phase=='prepare':prep=result;prepconfig=config
+         else:
+-            prep,prepraw=held.json(root/config['preparation']['path'],config['preparation'],MiB,lf=True);prepconfig,pcraw=held.json(prepbase/'configuration.json',maximum=MiB,lf=True);configuration(prepconfig,authored);outcome(prep,prepconfig,sha(pcraw))
+-            require(prepconfig['phase']=='prepare' and all(prepconfig[k]==config[k] for k in config if k not in ('phase','limits','preparation')),'Qualification preparation epoch/input binding differs')
++            if config['version']==2:
++                prepconfig,prep,prior_audit=historical_acceptance(held,config,authored)
++                _,pcraw=held.json(prepbase/'configuration.json',maximum=MiB,lf=True)
++                require(pcraw==held.files[str(root/config['preparation_acceptance']['configuration']['path'])]['raw'],'Historical retained configuration bytes differ')
++            else:
++                prep,prepraw=held.json(root/config['preparation']['path'],config['preparation'],MiB,lf=True);prepconfig,pcraw=held.json(prepbase/'configuration.json',maximum=MiB,lf=True);configuration(prepconfig,authored);outcome(prep,prepconfig,sha(pcraw))
++                require(prepconfig['phase']=='prepare' and all(prepconfig[k]==config[k] for k in config if k not in ('phase','limits','preparation')),'Qualification preparation epoch/input binding differs')
+             psummary,_=held.json(prepbase/'baseline-before.json',lf=True);asummary,_=held.json(prepbase/'baseline-after.json',lf=True);require(psummary==asummary==summary,'Preparation baseline summaries differ')
+             pobs,_=held.json(prepbase/'supervision.json',maximum=MiB,lf=True);supervision(pobs,'prepare')
+         for folder,names in (('parent-source',SOURCES),('worker-source',WORKER)):
+             for name in names:
+-                row=next(r for r in config['sources'] if r['path']==name);held.file(prepbase/folder/name,row,MiB)
++                row=next(r for r in prepconfig['sources'] if r['path']==name);held.file(prepbase/folder/name,row,MiB)
++        if config['version']==2:
++            for name in WORKER:
++                row=next(r for r in config['sources'] if r['path']==name);held.file(base/'worker-source'/name,row,MiB)
+         copy,_=held.json(prepbase/'control/copy-registration.json',lf=False);require(canonical(copy,False)==canonical(source,False),'Independent source file plan differs')
+         for role in ('candidate','layout'):require(held.file(prepbase/('control/'+role+'.json'),maximum=16*MiB,raw=True)==blobs[role],'Retained preparation input differs')
+         request,requestraw=held.json(prepbase/'control/stage-request.json',maximum=MiB,lf=True)
+@@ -500,6 +556,8 @@ def audit(config_path,expected_sha256,transport_path,expected_transport_sha256,*
+         stage,stage_raw=held.json(prepbase/'payload/stage.json',maximum=MiB,lf=True);no_authority(stage);require(stage.get('kind')=='puck-cpu-tmpfs-preparation-receipt-v1' and stage.get('status')=='prepared' and stage.get('dependencies')==ref and stage.get('staged_roots')==prep.get('staged_roots'),'Preparation stage receipt differs')
+         require(held.file(prepbase/'logs/stdout.log',maximum=MiB,raw=True)==stage_raw,'Preparation stdout/stage receipt differs')
+         held.file(prepbase/'logs/stderr.log',maximum=16*MiB)
++        if config['version']==2:
++            require(prior_audit.get('file_count')==sum(len(r['files']) for r in dep['roots']) and prior_audit.get('input_bytes')==sum(f['size_bytes'] for r in dep['roots'] for f in r['files']) and prior_audit.get('directory_count')==sum(len(d) for d in directories),'Historical preparation audit data totals differ')
+         tree=forest(held,config,dependency,directories,prep['staged_roots'])
+         if phase=='qualify':
+             require(held.file(base/'control/dependencies.json',maximum=16*MiB,raw=True)==depraw,'Qualification control dependency bytes differ')
+@@ -513,6 +571,8 @@ def audit(config_path,expected_sha256,transport_path,expected_transport_sha256,*
+         require(forest(held,config,dependency,directories,prep['staged_roots'])==tree,'Staged namespace changed during audit')
+         own=held.file(absolute(str(Path(__file__).resolve())),maximum=MiB);held.recheck();held.clock()
+         report=dict(CLAIMS,kind='puck-cpu-held-runtime-independent-audit-v1',version=1,status='PASS',phase=phase,evidence_scope='AUTHORED fixture only' if authored else 'ordinary CPU held allocation only',configuration_sha256=expected_sha256,transport_sha256=expected_transport_sha256,auditor_source_sha256=own['sha256'],result_sha256=sha(result_raw),dependencies_sha256=sha(depraw),root_count=4,file_count=sum(len(r['files']) for r in dep['roots']),directory_count=sum(len(d) for d in directories),input_bytes=sum(f['size_bytes'] for r in dep['roots'] for f in r['files']),baseline=summary,observed_status=result['status'],held_four_imports_observed=phase=='qualify',external_returncode=0,supervision_scope='descendants' if phase=='qualify' else 'group',configured_process_limit=3,tracked_process_identities=len(observed.get('tracked_processes',[])),limitations=['RSS and process enforcement are sampled operational observations; preparation has no retained process-count peak.','No numerical, model, renderer, collection, study or release authority is granted.'])
++        if config['version']==2:
++            report.update(kind='puck-cpu-held-runtime-independent-audit-v2',version=2,allocation_id=2,preparation_configuration_sha256=config['preparation_acceptance']['configuration']['sha256'],preparation_result_sha256=config['preparation_acceptance']['result']['sha256'],historical_source_epoch_sha256=sha(canonical(prepconfig['sources'],False)),current_source_epoch_sha256=sha(canonical(config['sources'],False)))
+     finally:held.close()
+     require(len(os.listdir('/proc/self/fd'))==before and not Path('/proc/self/task/'+str(os.getpid())+'/children').read_text().split() and len(os.listdir('/proc/self/task'))==1,'Auditor closure failed')
+     if time.monotonic()>=deadline:raise TimeoutError('Independent CPU audit final closure deadline')
+diff --git a/scripts/observe_puck_cpu_held_allocation.py b/scripts/observe_puck_cpu_held_allocation.py
+index 2c6d852..ea99edc 100644
+--- a/scripts/observe_puck_cpu_held_allocation.py
++++ b/scripts/observe_puck_cpu_held_allocation.py
+@@ -55,11 +55,20 @@ def observe(configuration,expected_sha256):
+     config=json.loads(raw)
+     if canonical(config)!=raw:raise ValueError('Canonical CPU configuration required')
+     phase=config.get('phase')
+-    if config.get('kind')!='puck-cpu-held-runtime-allocation-v1' or phase not in OUTPUTS or config.get('root')!=str(ROOT):
+-        raise ValueError('Exact CPU parent allocation root and phase required')
+-    output=ROOT/OUTPUTS[phase]
+-    paths={name:Path(OUTPUTS[phase]+'-external-cli.'+name) for name in ('stdout','stderr')}
+-    receipt=Path(OUTPUTS[phase]+'-external-cli-transport.json')
++    amended=config.get('kind')=='puck-cpu-held-runtime-allocation-v2'
++    if amended:
++        if (phase!='qualify' or type(config.get('version')) is not int or config['version']!=2
++                or type(config.get('allocation_id')) is not int or config['allocation_id']!=2):
++            raise ValueError('Exact qualification02 allocation identity required')
++        output_name='runs/puck-cpu-held-qualification-02'
++    else:
++        if config.get('kind')!='puck-cpu-held-runtime-allocation-v1' or phase not in OUTPUTS:
++            raise ValueError('Exact CPU parent allocation root and phase required')
++        output_name=OUTPUTS[phase]
++    if config.get('root')!=str(ROOT):raise ValueError('Exact CPU parent allocation root required')
++    output=ROOT/output_name
++    paths={name:Path(output_name+'-external-cli.'+name) for name in ('stdout','stderr')}
++    receipt=Path(output_name+'-external-cli-transport.json')
+     if any(os.path.lexists(p) for p in [output,ROOT/receipt,*[ROOT/p for p in paths.values()]]):
+         raise FileExistsError('CPU external observation or allocation already reserved')
+     command=[PYTHON,'-I','-S','-B',str(ROOT/'scripts/qualify_puck_cpu_held_runtime.py'),
+diff --git a/scripts/qualify_puck_cpu_held_runtime.py b/scripts/qualify_puck_cpu_held_runtime.py
+index d2319fa..13c9834 100644
+--- a/scripts/qualify_puck_cpu_held_runtime.py
++++ b/scripts/qualify_puck_cpu_held_runtime.py
+@@ -28,6 +28,8 @@ INTERPRETER=dict(path=PYTHON,size_bytes=21662864,sha256='572cfa2a8597e2f431c7856
+ BOOTSTRAP='scripts/puck_worker_bootstrap.py'
+ SITE='runs/puck-cpu-install-01/site'
+ OUTPUTS=dict(prepare='runs/puck-cpu-held-preparation-01',qualify='runs/puck-cpu-held-qualification-01')
++QUALIFY02='runs/puck-cpu-held-qualification-02'
++LEGACY_AUDITOR_SHA256='19723b4ec19c6cd8fd29d38b5cbabab60f89c136ee37564f6e94175439b4eed9'
+ VERSIONS=dict(numpy='2.2.5',torch='2.9.0+cpu',torchvision='0.24.0+cpu',mujoco='3.3.6')
+ ENVIRONMENT=dict(PYTHONDONTWRITEBYTECODE='1',LC_ALL='C.UTF-8',LANG='C.UTF-8',
+     HOME='/scratch/home',TMPDIR='/scratch/tmp',PWD='/puck/source',PATH='/nonexistent',TZ='UTC',
+@@ -131,12 +133,16 @@ def _negative_imports(names):
+         raise ValueError('Exact finite CPU missing-import roster required')
+ 
+ 
+-def configuration_template(*,phase,root,stage_parent,sources,inputs,negative_imports,preparation=None):
++def configuration_template(*,phase,root,stage_parent,sources,inputs,negative_imports,preparation=None,preparation_acceptance=None):
+     result=dict(kind='puck-cpu-held-runtime-allocation-v1',version=1,phase=phase,allocation_id=1,
+         root=root,stage_parent=stage_parent,sources=sources,inputs=inputs,interpreter=dict(INTERPRETER),
+         environment=dict(ENVIRONMENT),expected_versions=dict(VERSIONS),limits=copy.deepcopy(LIMITS[phase]),
+         negative_imports=negative_imports,claims=copy.deepcopy(CLAIMS))
+-    if phase=='qualify':result['preparation']=preparation
++    if preparation_acceptance is not None:
++        if preparation is not None:raise ValueError('One CPU preparation epoch required')
++        result.update(kind='puck-cpu-held-runtime-allocation-v2',version=2,allocation_id=2,
++                      preparation_acceptance=preparation_acceptance)
++    elif phase=='qualify':result['preparation']=preparation
+     return result
+ 
+ 
+@@ -144,10 +150,14 @@ def validate_configuration(config):
+     keys={'kind','version','phase','allocation_id','root','stage_parent','sources','inputs',
+           'interpreter','environment','expected_versions','limits','negative_imports','claims'}
+     phase=config.get('phase') if type(config) is dict else None
+-    if phase=='qualify':keys.add('preparation')
+-    if (phase not in LIMITS or set(config)!=keys or config['kind']!='puck-cpu-held-runtime-allocation-v1'
+-            or type(config['version']) is not int or config['version']!=1
+-            or type(config['allocation_id']) is not int or config['allocation_id']!=1
++    amended=type(config) is dict and config.get('kind')=='puck-cpu-held-runtime-allocation-v2'
++    if amended:keys.add('preparation_acceptance')
++    elif phase=='qualify':keys.add('preparation')
++    epoch=2 if amended else 1
++    if (phase not in LIMITS or set(config)!=keys or (amended and phase!='qualify')
++            or config['kind']!='puck-cpu-held-runtime-allocation-v'+str(epoch)
++            or type(config['version']) is not int or config['version']!=epoch
++            or type(config['allocation_id']) is not int or config['allocation_id']!=epoch
+             or config['root']!=str(ROOT) or canonical(config['limits'])!=canonical(LIMITS[phase])
+             or config['interpreter']!=INTERPRETER or canonical(config['environment'])!=canonical(ENVIRONMENT)
+             or config['expected_versions']!=VERSIONS or canonical(config['claims'])!=canonical(CLAIMS)):
+@@ -161,12 +171,105 @@ def validate_configuration(config):
+             or type(inputs) is not dict or set(inputs)!=set(INPUT_ROLES)):
+         raise ValueError('Exact CPU source/input closure required')
+     for row in inputs.values():pin(row)
+-    if phase=='qualify':
++    if amended:
++        acceptance=config['preparation_acceptance']
++        if type(acceptance) is not dict or set(acceptance)!={'configuration','result','independent_audit','externally_observed_auditor_cli'}:
++            raise ValueError('Exact CPU historical preparation acceptance required')
++        for row in acceptance.values():pin(row)
++        if acceptance['result']['path']!=OUTPUTS['prepare']+'/result.json':raise ValueError('Exact CPU preparation receipt required')
++    elif phase=='qualify':
+         pin(config['preparation'])
+         if config['preparation']['path']!=OUTPUTS['prepare']+'/result.json':raise ValueError('Exact CPU preparation receipt required')
+     _negative_imports(config['negative_imports'])
+ 
+ 
++def allocation_output(config):
++    validate_configuration(config)
++    return QUALIFY02 if config['version']==2 else OUTPUTS[config['phase']]
++
++
++def validate_preparation_acceptance(config,blobs):
++    """Bind historical data acceptance without assigning its old source proof to new bytes."""
++    validate_configuration(config)
++    if config['version']!=2:raise ValueError('CPU amendment02 configuration required')
++    acceptance=config['preparation_acceptance'];values={}
++    for role,row in acceptance.items():
++        raw=blobs[role]
++        if len(raw)!=row['size_bytes'] or digest(raw)!=row['sha256']:raise ValueError('Historical CPU preparation pin differs')
++        value=decode(raw)
++        if type(value) is not dict:raise ValueError('Historical CPU preparation object required')
++        if role in ('configuration','result') and canonical(value)!=raw:raise ValueError('Canonical historical CPU preparation bytes required')
++        values[role]=value
++    prior,prep,audit,cli=(values[k] for k in ('configuration','result','independent_audit','externally_observed_auditor_cli'))
++    validate_configuration(prior)
++    if prior['version']!=1 or prior['phase']!='prepare':raise ValueError('Historical CPU preparation01 required')
++    shared=('root','stage_parent','inputs','interpreter','environment','expected_versions','negative_imports','claims')
++    if any(prior[k]!=config[k] for k in shared):raise ValueError('CPU amendment changed prepared data or policy')
++    changed={old['path'] for old,new in zip(prior['sources'],config['sources']) if old!=new}
++    if BOOTSTRAP not in changed or not changed<={BOOTSTRAP,'scripts/qualify_puck_cpu_held_runtime.py'}:
++        raise ValueError('CPU amendment source changes must be bootstrap and optional parent only')
++    false_claims=lambda value:any(value.get(k)!=v or type(value.get(k)) is not type(v) for k,v in CLAIMS.items())
++    def closed(value,expected):
++        row=value.get('closure',{})
++        return (row.get('active_children')==[] and row.get('active_non_main_threads')==[]
++                and type(row.get('fd_count_before')) is int and row['fd_count_before']==expected
++                and type(row.get('fd_count_after')) is int and row['fd_count_before']==row['fd_count_after'])
++    def elapsed(value,maximum):
++        return type(value) in (int,float) and math.isfinite(value) and 0<value<maximum
++    if (prep.get('kind')!='puck-cpu-held-runtime-outcome-v1' or type(prep.get('version')) is not int or prep['version']!=1
++            or type(prep.get('allocation_id')) is not int or prep['allocation_id']!=1
++            or prep.get('phase')!='prepare' or prep.get('status')!='prepared' or any(k in prep for k in ('error','error_type'))
++            or prep.get('held_four_imports_observed') is not False or false_claims(prep)
++            or prep.get('configuration_sha256')!=acceptance['configuration']['sha256']
++            or prep.get('stage_parent')!=prior['stage_parent'] or prep.get('sources')!=prior['sources']
++            or prep.get('inputs')!=prior['inputs'] or not closed(prep,5) or not elapsed(prep.get('elapsed_seconds'),180)):
++        raise ValueError('Historical CPU preparation receipt differs or failed')
++    dep=pin(prep.get('dependencies'))
++    if dep['path']!='payload/dependencies.json':raise ValueError('Historical CPU dependency path differs')
++    if (audit.get('kind')!='puck-cpu-held-runtime-independent-audit-v1' or type(audit.get('version')) is not int or audit['version']!=1
++            or audit.get('status')!='PASS' or audit.get('phase')!='prepare' or audit.get('observed_status')!='prepared'
++            or any(k in audit for k in ('error','error_type'))
++            or audit.get('held_four_imports_observed') is not False or false_claims(audit)
++            or type(audit.get('external_returncode')) is not int or audit['external_returncode']!=0
++            or audit.get('auditor_source_sha256')!=LEGACY_AUDITOR_SHA256
++            or audit.get('configuration_sha256')!=acceptance['configuration']['sha256']
++            or audit.get('result_sha256')!=acceptance['result']['sha256'] or audit.get('dependencies_sha256')!=dep['sha256']
++            or type(audit.get('root_count')) is not int or audit['root_count']!=4
++            or audit.get('evidence_scope')!='ordinary CPU held allocation only'
++            or type(audit.get('transport_sha256')) is not str or re.fullmatch('[0-9a-f]{64}',audit['transport_sha256']) is None
++            or not closed(audit,4) or not elapsed(audit.get('elapsed_seconds'),120)):
++        raise ValueError('Historical CPU independent audit failed or provenance differs')
++    cli_keys={'kind','command','observed_returncode','elapsed_seconds','published','stdout','stderr'}
++    if (set(cli) not in (cli_keys,cli_keys|{'at','scope'})
++            or cli['kind']!='externally-observed-cpu-auditor-cli-v1'
++            or type(cli['observed_returncode']) is not int or cli['observed_returncode']!=0
++            or not elapsed(cli['elapsed_seconds'],130)):
++        raise ValueError('Historical CPU auditor CLI did not return normally')
++    if 'at' in cli and (type(cli['at']) is not str or not 0<len(cli['at'])<=128
++            or cli['scope']!='fresh read-only current-byte audit of prepared data; no preparation or qualification allocation invoked'):
++        raise ValueError('Historical CPU auditor CLI metadata differs')
++    for channel in ('published','stdout','stderr'):
++        row=cli[channel]
++        if (type(row) is not dict or set(row)!={'path','size_bytes','sha256'}
++                or type(row['path']) is not str or not row['path'].startswith('/') or str(Path(row['path']))!=row['path']):
++            raise ValueError('Historical CPU auditor CLI channel differs')
++        if (type(row['size_bytes']) is not int or not 0<=row['size_bytes']<=16*MiB
++                or type(row['sha256']) is not str or re.fullmatch('[0-9a-f]{64}',row['sha256']) is None):
++            raise ValueError('Historical CPU auditor CLI channel pin differs')
++    expected={k:acceptance['independent_audit'][k] for k in ('size_bytes','sha256')}
++    if (any({k:cli[name][k] for k in expected}!=expected for name in ('published','stdout'))
++            or cli['stderr']['size_bytes']!=0 or cli['stderr']['sha256']!=digest(b'')):
++        raise ValueError('Historical CPU auditor CLI stdout/publication differs')
++    command=cli['command']
++    if (type(command) is not list or len(command)!=15
++            or command[10] not in (str(ROOT/'authored-prepare-transport.json'),str(ROOT/'runs/puck-cpu-held-preparation-01-external-cli-transport.json'))
++            or command!=[PYTHON,'-I','-S','-B',str(ROOT/'scripts/audit_puck_cpu_held_runtime.py'),
++                '--configuration',str(ROOT/acceptance['configuration']['path']),'--sha256',acceptance['configuration']['sha256'],
++                '--transport',command[10],'--transport-sha256',audit.get('transport_sha256'),'--output',cli['published']['path']]):
++        raise ValueError('Historical CPU auditor CLI command differs')
++    return prior,prep
++
++
+ def qualification_command(worker_command):
+     # bwrap's PID1 remains the real observable parent. The trusted PID2 launcher
+     # creates the dedicated session, then exec preserves the exact frozen argv.
+@@ -393,17 +496,29 @@ def execute(config,raw,started):
+     from palimpsest.puck_retained_installation import AdmissionInputs
+     from palimpsest.puck_cpu_registration import build_cpu_source_registration,attach_cpu_candidate
+     from palimpsest.puck_cpu_namespace import sandbox_command
+-    phase=config['phase'];limits=config['limits'];output=ROOT/OUTPUTS[phase];stage=Path(config['stage_parent'])
++    phase=config['phase'];limits=config['limits'];output=ROOT/allocation_output(config);stage=Path(config['stage_parent'])
++    amended=config['version']==2
+     rows=config['sources']+list(config['inputs'].values())
+     unique={r['path']:r for r in rows}
+     if len(unique)!=len(rows):raise ValueError('Overlapping CPU source/input pins')
+     admission=resource_admission(config)
+     if phase=='prepare' and os.path.lexists(stage):raise FileExistsError('CPU tmpfs allocation already exists')
+-    if phase=='qualify':rows=rows+[config['preparation']]
++    if phase=='qualify':
++        if amended:
++            acceptance=config['preparation_acceptance'];rows+=list(acceptance.values())
++            prior_raw=read(ROOT/acceptance['configuration']['path'],MiB,acceptance['configuration']['sha256'])
++            prior=decode(prior_raw);validate_configuration(prior)
++            old_configuration=OUTPUTS['prepare']+'/configuration.json'
++            if acceptance['configuration']['path']!=old_configuration:
++                rows.append(dict(acceptance['configuration'],path=old_configuration))
++            for capsule,names in (('parent-source',SOURCES),('worker-source',WORKER_SOURCES)):
++                rows.extend(dict(row,path=OUTPUTS['prepare']+'/'+capsule+'/'+row['path']) for row in prior['sources'] if row['path'] in names)
++            if len({r['path'] for r in rows})!=len(rows):raise ValueError('Overlapping CPU amendment source/input pins')
++        else:rows=rows+[config['preparation']]
+     deadline=started+limits['normal_seconds'];state={};before_fds=len(os.listdir('/proc/self/fd'))
+     bounds.reserve_output(output,dict(sources=dict(root=str(ROOT),files=rows)))
+     for name in ('logs','control','payload'):(output/name).mkdir(mode=0o700)
+-    result=dict(CLAIMS,kind='puck-cpu-held-runtime-outcome-v1',version=1,phase=phase,allocation_id=1,
++    result=dict(CLAIMS,kind='puck-cpu-held-runtime-outcome-v'+str(config['version']),version=config['version'],phase=phase,allocation_id=config['allocation_id'],
+                 configuration_sha256=digest(raw),status='FAIL',held_four_imports_observed=False)
+     bounds.write_new(output/'configuration.json',config)
+     bounds.write_new(output/'resource-admission.json',admission)
+@@ -441,8 +556,16 @@ def execute(config,raw,started):
+                     command=[PYTHON,'-I','-S','-B','/puck/source/scripts/stage_puck_cpu_held_runtime.py',digest(request_raw)]
+                     sandbox_source=driver_source
+                 else:
+-                    prep=decode(read(ROOT/config['preparation']['path'],MiB,config['preparation']['sha256']))
+-                    if (prep.get('status')!='prepared' or prep.get('phase')!='prepare' or prep.get('stage_parent')!=str(stage)
++                    if amended:
++                        old_blobs={role:read(ROOT/row['path'],MiB,row['sha256']) for role,row in acceptance.items()}
++                        prior,prep=validate_preparation_acceptance(config,old_blobs)
++                        if read(ROOT/old_configuration,MiB,acceptance['configuration']['sha256'])!=old_blobs['configuration']:
++                            raise ValueError('Historical CPU preparation configuration copy differs')
++                        for capsule,names in (('parent-source',SOURCES),('worker-source',WORKER_SOURCES)):
++                            for row in prior['sources']:
++                                if row['path'] in names:read(ROOT/OUTPUTS['prepare']/capsule/row['path'],MiB,row['sha256'])
++                    else:prep=decode(read(ROOT/config['preparation']['path'],MiB,config['preparation']['sha256']))
++                    if not amended and (prep.get('status')!='prepared' or prep.get('phase')!='prepare' or prep.get('stage_parent')!=str(stage)
+                             or prep.get('sources')!=config['sources'] or prep.get('inputs')!=config['inputs']
+                             or any(prep.get(k) is not False for k in CLAIMS if k!='qualification_claims')
+                             or prep.get('qualification_claims')!=[]):raise ValueError('CPU preparation receipt differs or failed')
+@@ -454,15 +577,22 @@ def execute(config,raw,started):
+                     if (attached!=dependencies or dependencies.get('distributions')!=source_reg['distributions']
+                             or any(a.get('files')!=b['files'] for a,b in zip(dependencies['roots'],source_reg['roots']))):
+                         raise ValueError('CPU prepared bytes/profile differ from accepted source plan')
++                    if amended:
++                        audit=decode(old_blobs['independent_audit'])
++                        if (audit.get('file_count')!=sum(len(r['files']) for r in dependencies['roots'])
++                                or audit.get('input_bytes')!=sum(f['size_bytes'] for r in dependencies['roots'] for f in r['files'])):
++                            raise ValueError('Historical CPU independent audit data counts differ')
+                     verify_staged_roots(str(stage),dependencies,prep['staged_roots'])
+                     controls.write(output/'control/dependencies.json',dependency_raw,16*MiB)
+                     files=[r for r in config['sources'] if r['path'] in WORKER_SOURCES]
+-                    for row in files:read(prepared/'worker-source'/row['path'],MiB,row['sha256'])
++                    sandbox_source=output/'worker-source' if amended else prepared/'worker-source'
++                    if amended:create_capsule(sandbox_source,WORKER_SOURCES,source_bytes,controls.write)
++                    for row in files:read(sandbox_source/row['path'],MiB,row['sha256'])
+                     worker,command=worker_registration(files,dependency_raw,negative_imports=config['negative_imports'])
+                     worker_raw=json.dumps(worker,sort_keys=True,separators=(',',':'),ensure_ascii=False,allow_nan=False).encode()
+                     controls.write(output/'control/worker-registration.json',worker_raw)
+                     command=qualification_command(command)
+-                    sandbox_source=prepared/'worker-source';generated_root=None
++                    generated_root=None
+                 command=sandbox_command(baseline,native,sorted(r['path'] for r in observation['baseline_maps']['images']),
+                     phase=phase,stage_parent=str(stage),source_root=str(sandbox_source),control_root=str(output/'control'),
+                     output_root=str(output/'payload'),command=command,environment=ENVIRONMENT,
+@@ -517,8 +647,8 @@ def main():
+         if (str(Path(sys.executable).resolve())!=PYTHON or not(sys.flags.isolated and sys.flags.no_site and sys.dont_write_bytecode)
+                 or os.environ.get('LD_PRELOAD') or os.environ.get('LD_LIBRARY_PATH')):
+             raise ValueError('Original isolated CPU parent interpreter required')
+-        if os.path.lexists(ROOT/OUTPUTS[config['phase']]):raise FileExistsError('CPU allocation already reserved')
+-        sys.pycache_prefix=str(ROOT/OUTPUTS[config['phase']]/'unused-parent-pycache')
++        if os.path.lexists(ROOT/allocation_output(config)):raise FileExistsError('CPU allocation already reserved')
++        sys.pycache_prefix=str(ROOT/allocation_output(config)/'unused-parent-pycache')
+         for key in ('NOFILE','AS','FSIZE'):
+             value=config['limits'][{'NOFILE':'max_fds','AS':'address_space_bytes','FSIZE':'file_bytes'}[key]]
+             resource.setrlimit(getattr(resource,'RLIMIT_'+key),(value,value))
+diff --git a/tests/test_puck_cpu_amendment_audit.py b/tests/test_puck_cpu_amendment_audit.py
+new file mode 100644
+index 0000000..bd274e4
+--- /dev/null
++++ b/tests/test_puck_cpu_amendment_audit.py
+@@ -0,0 +1,189 @@
++"""Independent qualification02 schema/custody checks on authored inputs only."""
++import copy
++import json
++import os
++import subprocess
++import time
++from pathlib import Path
++
++import pytest
++
++from test_puck_cpu_held_runtime_audit import api
++
++
++def configuration(m):
++    row=lambda path:dict(path=path,size_bytes=1,sha256='a'*64)
++    return dict(kind='puck-cpu-held-runtime-allocation-v2',version=2,phase='qualify',allocation_id=2,
++        root='/authored',stage_parent='/tmp/palimpsest-puck-cpu-held-authored-schema',
++        sources=[row(p) for p in m.SOURCES],inputs={k:row('inputs/'+k+'.json') for k in m.ROLES},
++        interpreter=dict(m.INTERPRETER),environment=dict(m.ENVIRONMENT),expected_versions=dict(m.VERSIONS),
++        limits=m.limits('qualify',True),negative_imports=['org'],claims=copy.deepcopy(m.CLAIMS),
++        preparation_acceptance=dict(configuration=row('authored-prepare-configuration.json'),
++            result=row(m.OUTPUTS['prepare']+'/result.json'),independent_audit=row('archive/preparation-audit.json'),
++            externally_observed_auditor_cli=row('archive/preparation-audit-cli.json')))
++
++
++def historical(m,current):
++    old=copy.deepcopy(current);old.update(kind='puck-cpu-held-runtime-allocation-v1',version=1,phase='prepare',
++        allocation_id=1,limits=m.limits('prepare',True));old.pop('preparation_acceptance')
++    for row in old['sources']:
++        if row['path'] in (m.PARENT,m.BOOTSTRAP):row['sha256']='b'*64
++    prep=dict(m.CLAIMS,kind='puck-cpu-held-runtime-outcome-v1',version=1,phase='prepare',allocation_id=1,
++        configuration_sha256='c'*64,status='prepared',held_four_imports_observed=False,stage_parent=old['stage_parent'],
++        sources=copy.deepcopy(old['sources']),inputs=copy.deepcopy(old['inputs']))
++    return old,prep
++
++
++def test_v2_is_a_closed_qualification_only_configuration():
++    m=api();value=configuration(m);m.configuration(value,True)
++
++
++@pytest.mark.parametrize('field,value',[('kind','puck-cpu-held-runtime-allocation-v1'),('version',True),
++    ('allocation_id',1),('allocation_id',True),('phase','prepare')])
++def test_v2_aliases_and_wrong_allocation_refuse(field,value):
++    m=api();config=configuration(m);config[field]=value
++    with pytest.raises(ValueError):m.configuration(config,True)
++
++
++@pytest.mark.parametrize('role',['configuration','result','independent_audit','externally_observed_auditor_cli'])
++def test_v2_requires_each_historical_acceptance_pin(role):
++    m=api();config=configuration(m);del config['preparation_acceptance'][role]
++    with pytest.raises(ValueError):m.configuration(config,True)
++
++
++def test_historical_source_epoch_is_distinct_but_data_stays_exact():
++    m=api();current=configuration(m);old,prep=historical(m,current)
++    m.preparation_epoch(current,old,prep)
++
++
++@pytest.mark.parametrize('defect',['bootstrap-unchanged','foreign-source','input','environment','negative','stage','old-source'])
++def test_source_amendment_cannot_inherit_changed_data_or_foreign_source(defect):
++    m=api();current=configuration(m);old,prep=historical(m,current)
++    if defect=='bootstrap-unchanged':
++        next(r for r in current['sources'] if r['path']==m.BOOTSTRAP)['sha256']='b'*64
++    elif defect=='foreign-source':
++        next(r for r in current['sources'] if r['path']=='src/palimpsest/puck_runtime_qualification.py')['sha256']='d'*64
++    elif defect=='old-source':prep['sources'][0]['sha256']='d'*64
++    elif defect=='input':current['inputs']['candidate']['sha256']='d'*64
++    elif defect=='environment':current['environment']['CUDA_VISIBLE_DEVICES']='0'
++    elif defect=='negative':current['negative_imports'].append('guessed_optional')
++    else:current['stage_parent']+='-other'
++    with pytest.raises(ValueError):m.preparation_epoch(current,old,prep)
++
++
++def acceptance_files(m,tmp_path,defect=None):
++    current=configuration(m);current['root']=str(tmp_path)
++    old,prep=historical(m,current);oldraw=m.canonical(old)
++    prep.update(configuration_sha256=m.sha(oldraw),elapsed_seconds=1.0,
++        dependencies=dict(path='payload/dependencies.json',size_bytes=2,sha256='d'*64),
++        closure=dict(active_children=[],active_non_main_threads=[],fd_count_before=5,fd_count_after=5))
++    prepraw=m.canonical(prep)
++    receipt=dict(m.CLAIMS,kind='puck-cpu-held-runtime-independent-audit-v1',version=1,status='PASS',
++        phase='prepare',observed_status='prepared',held_four_imports_observed=False,
++        auditor_source_sha256=m.HISTORICAL_AUDITOR_SHA256,configuration_sha256=m.sha(oldraw),
++        result_sha256=m.sha(prepraw),dependencies_sha256='d'*64,external_returncode=0,
++        evidence_scope='AUTHORED fixture only',elapsed_seconds=1.0,root_count=4,transport_sha256='e'*64,
++        closure=dict(fd_count_before=4,fd_count_after=4,active_children=[],active_non_main_threads=[]))
++    if defect=='audit-source':receipt['auditor_source_sha256']='0'*64
++    if defect=='audit-authority':receipt['runtime_qualified']=True
++    if defect=='audit-result':receipt['result_sha256']='0'*64
++    if defect=='audit-dependency':receipt['dependencies_sha256']='0'*64
++    if defect=='audit-exit':receipt['external_returncode']=False
++    if defect=='audit-closure':receipt['closure']['active_children']=[123]
++    if defect=='audit-error':receipt['error_type']='OSError'
++    araw=m.canonical(receipt);published=dict(path='/historical/audit.json',size_bytes=len(araw),sha256=m.sha(araw))
++    cli=dict(kind='externally-observed-cpu-auditor-cli-v1',observed_returncode=0,elapsed_seconds=1.0,
++        at='2026-10-15T14:11:55.277125+00:00',scope='fresh read-only current-byte audit of prepared data; no preparation or qualification allocation invoked',
++        command=[m.PYTHON,'-I','-S','-B',str(tmp_path/'scripts/audit_puck_cpu_held_runtime.py'),
++            '--configuration',str(tmp_path/current['preparation_acceptance']['configuration']['path']),
++            '--sha256',m.sha(oldraw),'--transport',str(tmp_path/'authored-prepare-transport.json'),
++            '--transport-sha256','e'*64,'--output',published['path']],published=published,
++        stdout=dict(published,path='/historical/audit.stdout'),
++        stderr=dict(path='/historical/audit.stderr',size_bytes=0,sha256=m.sha(b'')))
++    if defect=='cli-unknown':cli['acceptance_override']=True
++    if defect=='cli-metadata-type':cli['scope']=False
++    if defect=='cli-exit':cli['observed_returncode']=False
++    if defect=='cli-command':cli['command'][6]=str(tmp_path/'runs/puck-cpu-held-preparation-01/configuration.json')
++    if defect=='cli-stdout':cli['stdout']['sha256']='0'*64
++    if defect=='cli-stderr':cli['stderr']['size_bytes']=1
++    blobs=dict(configuration=oldraw,result=prepraw,independent_audit=araw,
++        externally_observed_auditor_cli=m.canonical(cli))
++    for role,raw in blobs.items():
++        pin=current['preparation_acceptance'][role];pin.update(size_bytes=len(raw),sha256=m.sha(raw))
++        path=tmp_path/pin['path'];path.parent.mkdir(parents=True,exist_ok=True);path.write_bytes(raw)
++    return current
++
++
++def test_historical_cli_labels_bind_relative_bytes_without_reopening_absolute_paths(tmp_path):
++    m=api();current=acceptance_files(m,tmp_path);held=m.Held(time.monotonic()+10)
++    try:
++        old,prep,receipt=m.historical_acceptance(held,current,True)
++        assert prep['sources']==old['sources']!=current['sources']
++        assert receipt['auditor_source_sha256']==m.HISTORICAL_AUDITOR_SHA256
++        held.recheck()
++    finally:held.close()
++
++
++@pytest.mark.parametrize('defect',['audit-source','audit-authority','audit-result','audit-dependency',
++    'audit-exit','audit-closure','audit-error','cli-unknown','cli-metadata-type','cli-exit','cli-command','cli-stdout','cli-stderr'])
++def test_reauthenticated_historical_receipt_tampering_still_refuses(tmp_path,defect):
++    m=api();current=acceptance_files(m,tmp_path,defect);held=m.Held(time.monotonic()+10)
++    try:
++        with pytest.raises(ValueError):m.historical_acceptance(held,current,True)
++    finally:held.close()
++
++
++def test_real_authored02_has_independent_current_epoch_audit_and_exclusive_cli(tmp_path):
++    from test_puck_cpu_held_amendment import amendment_fixture
++    from test_puck_cpu_held_parent_integration import run_cli
++    m=api()
++    with amendment_fixture(tmp_path) as case:
++        root,parent,config,stage=(case[k] for k in ('root','api','config','stage'))
++        code,stdout,stderr=run_cli(root,parent,'qualify02',config)
++        assert code==0,(code,stdout,stderr)
++        path=root/'authored-qualify02-configuration.json';transport=root/'authored-qualify02-transport.json'
++        configsha=m.sha(path.read_bytes());transportsha=m.sha(transport.read_bytes())
++        def observe():
++            before=len(os.listdir('/proc/self/fd'))
++            try:return m.audit(path,configsha,transport,transportsha,deadline=time.monotonic()+30)
++            finally:assert len(os.listdir('/proc/self/fd'))==before
++        result=observe();(root/'authored-amendment-api-audit.json').write_bytes(m.canonical(result))
++        assert (result['kind'],result['version'],result['allocation_id'],result['status'])==('puck-cpu-held-runtime-independent-audit-v2',2,2,'PASS')
++        assert result['historical_source_epoch_sha256']!=result['current_source_epoch_sha256']
++        assert result['evidence_scope']=='AUTHORED fixture only' and result['held_four_imports_observed'] is True
++        assert result['file_count']==18 and result['root_count']==4
++        assert result['auditor_source_sha256']==m.sha(Path(m.__file__).read_bytes())
++        assert all(result[k]==value for k,value in m.CLAIMS.items())
++        failures=[]
++        capsule=root/'runs/puck-cpu-held-qualification-02/worker-source'/m.BOOTSTRAP
++        original=capsule.read_bytes();capsule.write_bytes(original+b'\n# reauthenticated source cannot replace this capsule\n')
++        try:
++            with pytest.raises(ValueError,match='(?i)(pin|hash|SHA)') as error:observe()
++            failures.append(dict(case='fresh-worker-capsule',error=str(error.value)))
++        finally:capsule.write_bytes(original)
++        original=transport.read_bytes();value=json.loads(original);value['observed_returncode']=1;transport.write_bytes(m.canonical(value))
++        transportsha=m.sha(transport.read_bytes())
++        try:
++            with pytest.raises(ValueError,match='Normal external transport exit required') as error:observe()
++            failures.append(dict(case='nonzero-transport',error=str(error.value)))
++        finally:transport.write_bytes(original);transportsha=m.sha(original)
++        (root/'authored-amendment-audit-refusals.json').write_bytes(m.canonical(dict(authored=True,cases=failures)))
++        script=Path(m.__file__);output=root/'authored-amendment-audit-cli.json'
++        command=[m.PYTHON,'-I','-S','-B',str(script),'--configuration',str(path),'--sha256',configsha,
++            '--transport',str(transport),'--transport-sha256',transportsha,'--output',str(output)]
++        started=time.monotonic();process=subprocess.run(command,capture_output=True,timeout=30)
++        elapsed=time.monotonic()-started
++        receipt=dict(kind='authored-amendment-audit-cli-observation-v1',authored_scope='AUTHORED fixture only',
++            command=command,observed_returncode=process.returncode,elapsed_seconds=elapsed)
++        for name,raw in (('stdout',process.stdout),('stderr',process.stderr)):
++            channel=root/('authored-amendment-audit-cli.'+name);channel.write_bytes(raw)
++            receipt[name]=dict(path=str(channel.relative_to(root)),size_bytes=len(raw),sha256=m.sha(raw))
++        (root/'authored-amendment-audit-cli-external.json').write_bytes(m.canonical(receipt))
++        assert process.returncode==0,(process.returncode,process.stdout,process.stderr)
++        assert process.stdout==output.read_bytes() and process.stderr==b''
++        cli=json.loads(process.stdout);assert cli['status']=='PASS' and cli['auditor_source_sha256']==m.sha(script.read_bytes())
++        assert cli['closure']==dict(active_children=[],active_non_main_threads=[],fd_count_before=4,fd_count_after=4)
++        repeat=subprocess.run(command,capture_output=True,timeout=30)
++        assert repeat.returncode!=0 and output.read_bytes()==process.stdout
++        for relative,raw in case['legacy_bytes'].items():assert (root/relative).read_bytes()==raw
++    assert not stage.exists()
+diff --git a/tests/test_puck_cpu_held_amendment.py b/tests/test_puck_cpu_held_amendment.py
+new file mode 100644
+index 0000000..889e255
+--- /dev/null
++++ b/tests/test_puck_cpu_held_amendment.py
+@@ -0,0 +1,257 @@
++"""Qualification02 source epochs, using authored data and retained v1 proofs only."""
++import copy
++import json
++from pathlib import Path
++
++import pytest
++
++from test_puck_cpu_held_parent import api
++
++
++PARENT='scripts/qualify_puck_cpu_held_runtime.py'
++LEGACY_AUDITOR_SHA='19723b4ec19c6cd8fd29d38b5cbabab60f89c136ee37564f6e94175439b4eed9'
++EMPTY_SHA='e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855'
++
++
++def acceptance_case():
++    m=api()
++    sources=[dict(path=p,size_bytes=1,sha256='a'*64) for p in m.SOURCES]
++    inputs={role:dict(path='docs/authored-'+role+'.json',size_bytes=1,sha256='b'*64) for role in m.INPUT_ROLES}
++    historical=m.configuration_template(phase='prepare',root=str(m.ROOT),
++        stage_parent='/tmp/palimpsest-puck-cpu-held-authored',sources=sources,inputs=inputs,negative_imports=['org'])
++    historical_raw=m.canonical(historical)
++    preparation=dict(m.CLAIMS,kind='puck-cpu-held-runtime-outcome-v1',version=1,allocation_id=1,phase='prepare',
++        status='prepared',held_four_imports_observed=False,configuration_sha256=m.digest(historical_raw),
++        stage_parent=historical['stage_parent'],sources=copy.deepcopy(sources),inputs=copy.deepcopy(inputs),
++        dependencies=dict(path='payload/dependencies.json',size_bytes=2,sha256='d'*64),
++        staged_roots=[dict(root_index=i,device=1,inode=i+2) for i in range(4)],
++        elapsed_seconds=1.0,closure=dict(active_children=[],active_non_main_threads=[],fd_count_before=5,fd_count_after=5))
++    prepared_raw=m.canonical(preparation)
++    audit=dict(m.CLAIMS,kind='puck-cpu-held-runtime-independent-audit-v1',version=1,status='PASS',phase='prepare',
++        observed_status='prepared',held_four_imports_observed=False,external_returncode=0,
++        auditor_source_sha256=LEGACY_AUDITOR_SHA,configuration_sha256=m.digest(historical_raw),
++        result_sha256=m.digest(prepared_raw),dependencies_sha256='d'*64,transport_sha256='e'*64,
++        evidence_scope='ordinary CPU held allocation only',
++        root_count=4,file_count=18,input_bytes=100,elapsed_seconds=1.0,configured_process_limit=3,
++        closure=dict(active_children=[],active_non_main_threads=[],fd_count_before=4,fd_count_after=4))
++    audit_raw=m.canonical(audit)
++    config_pin=dict(path='authored-prepare-configuration.json',size_bytes=len(historical_raw),sha256=m.digest(historical_raw))
++    published=dict(path=str(m.ROOT/'authored-old-audit.json'),size_bytes=len(audit_raw),sha256=m.digest(audit_raw))
++    cli=dict(kind='externally-observed-cpu-auditor-cli-v1',observed_returncode=0,elapsed_seconds=1.0,
++        command=[m.PYTHON,'-I','-S','-B',str(m.ROOT/'scripts/audit_puck_cpu_held_runtime.py'),
++            '--configuration',str(m.ROOT/config_pin['path']),'--sha256',config_pin['sha256'],
++            '--transport',str(m.ROOT/'authored-prepare-transport.json'),'--transport-sha256','e'*64,
++            '--output',published['path']],published=published,stdout=dict(published,path=str(m.ROOT/'authored-old-audit.stdout')),
++        stderr=dict(path=str(m.ROOT/'authored-old-audit.stderr'),size_bytes=0,sha256=EMPTY_SHA))
++    blobs=dict(configuration=historical_raw,result=prepared_raw,independent_audit=audit_raw,externally_observed_auditor_cli=m.canonical(cli))
++    paths=dict(configuration=config_pin['path'],result='runs/puck-cpu-held-preparation-01/result.json',
++        independent_audit='docs/authored-old-audit.json',externally_observed_auditor_cli='docs/authored-old-audit-cli.json')
++    current=copy.deepcopy(historical)
++    current.update(kind='puck-cpu-held-runtime-allocation-v2',version=2,phase='qualify',allocation_id=2,
++        limits=copy.deepcopy(m.LIMITS['qualify']),preparation_acceptance={k:dict(path=paths[k],size_bytes=len(v),sha256=m.digest(v)) for k,v in blobs.items()})
++    for row in current['sources']:
++        if row['path']==m.BOOTSTRAP:row['sha256']='c'*64
++        if row['path']==PARENT:row['sha256']='f'*64
++    return m,current,blobs
++
++
++def rebind(m,config,blobs,role,value):
++    blobs[role]=m.canonical(value)
++    config['preparation_acceptance'][role].update(size_bytes=len(blobs[role]),sha256=m.digest(blobs[role]))
++    if role=='result':
++        audit=json.loads(blobs['independent_audit']);audit['result_sha256']=m.digest(blobs[role])
++        rebind(m,config,blobs,'independent_audit',audit)
++    elif role=='independent_audit':
++        cli=json.loads(blobs['externally_observed_auditor_cli'])
++        for channel in ('published','stdout'):
++            cli[channel].update(size_bytes=len(blobs[role]),sha256=m.digest(blobs[role]))
++        cli['command'][12]=value['transport_sha256']
++        rebind(m,config,blobs,'externally_observed_auditor_cli',cli)
++
++
++def test_qualification02_accepts_separate_historical_and_current_source_epochs():
++    m,config,blobs=acceptance_case()
++    m.validate_configuration(config)
++    historical,prepared=m.validate_preparation_acceptance(config,blobs)
++    assert prepared['sources']==historical['sources']
++    assert prepared['sources']!=config['sources']
++    assert m.allocation_output(config)=='runs/puck-cpu-held-qualification-02'
++
++
++def test_historical_cli_accepts_exact_retained_current_byte_audit_metadata():
++    m,config,blobs=acceptance_case()
++    retained=m.ROOT/'docs/reports/puck-cpu-held-qualification-amendment-02/current-byte-audit-02/palimpsest-puck-cpu-held-preparation-01-current-byte-audit-02.external-cli.json'
++    recorded=json.loads(retained.read_bytes())
++    cli=json.loads(blobs['externally_observed_auditor_cli'])
++    cli.update({k:recorded[k] for k in ('at','scope')})
++    rebind(m,config,blobs,'externally_observed_auditor_cli',cli)
++    m.validate_preparation_acceptance(config,blobs)
++
++
++@pytest.mark.parametrize('role',['result','independent_audit'])
++@pytest.mark.parametrize('key',['error','error_type'])
++def test_successful_receipt_with_rebound_error_fields_is_refused(role,key):
++    m,config,blobs=acceptance_case()
++    value=json.loads(blobs[role]);value[key]='contradictory failure'
++    rebind(m,config,blobs,role,value)
++    with pytest.raises(ValueError):m.validate_preparation_acceptance(config,blobs)
++
++
++@pytest.mark.parametrize('defect',['kind','version','bool-id','id','phase','missing-role','absolute-role','result-path','unknown'])
++def test_qualification02_has_one_closed_schema_and_output_epoch(defect):
++    m,config,_=acceptance_case()
++    if defect=='kind':config['kind']='puck-cpu-held-runtime-allocation-v3'
++    elif defect=='version':config['version']=1
++    elif defect=='bool-id':config['allocation_id']=True
++    elif defect=='id':config['allocation_id']=3
++    elif defect=='phase':config['phase']='prepare';config['limits']=copy.deepcopy(m.LIMITS['prepare'])
++    elif defect=='missing-role':config['preparation_acceptance'].pop('independent_audit')
++    elif defect=='absolute-role':config['preparation_acceptance']['independent_audit']['path']='/tmp/audit.json'
++    elif defect=='result-path':config['preparation_acceptance']['result']['path']='runs/other/result.json'
++    else:config['output']='runs/overwrite01'
++    with pytest.raises(ValueError):m.validate_configuration(config)
++
++
++@pytest.mark.parametrize('defect',['no-bootstrap-change','foreign-source','input','roster','stage','historical-source','audit-failed',
++    'audit-authority','audit-source','audit-result','audit-dependency','audit-exit','audit-scope','audit-closure','audit-transport',
++    'cli-exit','cli-bool-exit','cli-stdout','cli-stderr','cli-command','noncanonical'])
++def test_amendment_rejects_rebound_semantic_tampering(defect):
++    m,config,blobs=acceptance_case()
++    historical=json.loads(blobs['configuration']);prepared=json.loads(blobs['result'])
++    audit=json.loads(blobs['independent_audit']);cli=json.loads(blobs['externally_observed_auditor_cli'])
++    if defect=='no-bootstrap-change':next(r for r in config['sources'] if r['path']==m.BOOTSTRAP)['sha256']='a'*64
++    elif defect=='foreign-source':next(r for r in config['sources'] if r['path'].endswith('puck_dependency_imports.py'))['sha256']='f'*64
++    elif defect=='input':config['inputs']['candidate']['sha256']='0'*64
++    elif defect=='roster':config['negative_imports']=['missing','org']
++    elif defect=='stage':config['stage_parent']='/tmp/palimpsest-puck-cpu-held-other'
++    elif defect=='historical-source':prepared['sources'][0]['sha256']='0'*64;rebind(m,config,blobs,'result',prepared)
++    elif defect.startswith('audit-'):
++        key,value={'audit-failed':('status','FAIL'),'audit-authority':('runtime_qualified',True),
++            'audit-source':('auditor_source_sha256','0'*64),'audit-result':('result_sha256','0'*64),
++            'audit-dependency':('dependencies_sha256','0'*64),'audit-exit':('external_returncode',1),
++            'audit-scope':('evidence_scope','unrelated'),'audit-closure':('closure',dict(active_children=[],active_non_main_threads=[],fd_count_before=0,fd_count_after=0)),
++            'audit-transport':('transport_sha256','not-a-sha')}[defect]
++        audit[key]=value;rebind(m,config,blobs,'independent_audit',audit)
++    elif defect.startswith('cli-'):
++        if defect=='cli-exit':cli['observed_returncode']=1
++        elif defect=='cli-bool-exit':cli['observed_returncode']=False
++        elif defect=='cli-stdout':cli['stdout']['sha256']='0'*64
++        elif defect=='cli-stderr':cli['stderr']['size_bytes']=1
++        else:cli['command'][4]='/unrelated/auditor.py'
++        rebind(m,config,blobs,'externally_observed_auditor_cli',cli)
++    else:
++        blobs['configuration']=json.dumps(historical,indent=2).encode()
++        config['preparation_acceptance']['configuration'].update(size_bytes=len(blobs['configuration']),sha256=m.digest(blobs['configuration']))
++    with pytest.raises(ValueError):m.validate_preparation_acceptance(config,blobs)
++
++
++# Shared with the independent audit lane. This executes only tiny authored
++# modules, retaining a real legacy audit CLI before any amendment02 invocation.
++from contextlib import contextmanager
++import os
++import secrets
++import shutil
++import subprocess
++import time
++
++from test_puck_cpu_held_parent_integration import ROOT, canonical, digest, load, project, run_cli
++
++
++@contextmanager
++def amendment_fixture(tmp_path):
++    assert tmp_path.resolve().is_relative_to((ROOT/'runs').resolve()), 'Use persistent runs/ basetemp'
++    root,current,inputs,_=project(tmp_path)
++    legacy=ROOT/'docs/reports/puck-cpu-held-preparation-01'
++    archived_auditor=legacy/'controls/scripts/audit_puck_cpu_held_runtime.py'
++    archived_raw=archived_auditor.read_bytes()
++    assert digest(archived_raw)==LEGACY_AUDITOR_SHA
++    (root/'scripts/audit_puck_cpu_held_runtime.py').write_bytes(archived_raw)
++    bootstrap=root/current.BOOTSTRAP
++    fresh_bootstrap=bootstrap.read_bytes()
++    old_bootstrap=(legacy/'raw/worker-source'/current.BOOTSTRAP).read_bytes()
++    assert old_bootstrap!=fresh_bootstrap
++    bootstrap.write_bytes(old_bootstrap)
++    sources=lambda:[dict(path=name,size_bytes=(root/name).stat().st_size,sha256=digest((root/name).read_bytes())) for name in current.SOURCES]
++    stage=Path('/tmp')/('palimpsest-puck-cpu-held-authored-amendment-'+secrets.token_hex(12))
++    assert not stage.exists()
++    try:
++        prepare=current.configuration_template(phase='prepare',root=str(root),stage_parent=str(stage),
++            sources=sources(),inputs=inputs,negative_imports=['org'])
++        code,stdout,stderr=run_cli(root,current,'prepare',prepare)
++        assert code==0,(code,stdout,stderr)
++        prepare_result=root/current.OUTPUTS['prepare']/'result.json'
++        prepared_raw=prepare_result.read_bytes()
++        assert json.loads(prepared_raw)['status']=='prepared'
++        configuration=root/'authored-prepare-configuration.json'
++        transport=root/'authored-prepare-transport.json'
++        audit_output=root/'docs/authored/historical-audit.json'
++        command=[current.PYTHON,'-I','-S','-B',str(root/'scripts/audit_puck_cpu_held_runtime.py'),
++            '--configuration',str(configuration),'--sha256',digest(configuration.read_bytes()),
++            '--transport',str(transport),'--transport-sha256',digest(transport.read_bytes()),'--output',str(audit_output)]
++        started=time.monotonic()
++        process=subprocess.run(command,cwd=root,env=dict(PATH='/usr/bin:/bin',LANG='C.UTF-8',LC_ALL='C.UTF-8',PYTHONDONTWRITEBYTECODE='1'),
++            capture_output=True,timeout=30)
++        elapsed=time.monotonic()-started
++        channels={}
++        for name,raw in (('stdout',process.stdout),('stderr',process.stderr)):
++            path=root/('authored-historical-audit.'+name);path.write_bytes(raw)
++            channels[name]=dict(path=str(path),size_bytes=len(raw),sha256=digest(raw))
++        cli=dict(kind='externally-observed-cpu-auditor-cli-v1',command=command,observed_returncode=process.returncode,
++            elapsed_seconds=elapsed,published=dict(path=str(audit_output),size_bytes=audit_output.stat().st_size,sha256=digest(audit_output.read_bytes())),**channels)
++        cli_path=root/'docs/authored/historical-audit-cli.json';cli_path.write_bytes(canonical(cli))
++        assert process.returncode==0,(process.returncode,process.stdout,process.stderr)
++        assert process.stdout==audit_output.read_bytes() and not process.stderr
++        assert json.loads(process.stdout)['status']=='PASS'
++        preparation=dict(path=str(prepare_result.relative_to(root)),size_bytes=len(prepared_raw),sha256=digest(prepared_raw))
++        qualify=current.configuration_template(phase='qualify',root=str(root),stage_parent=str(stage),
++            sources=sources(),inputs=inputs,negative_imports=['org'],preparation=preparation)
++        code,stdout,stderr=run_cli(root,current,'qualify',qualify)
++        assert code==0,(code,stdout,stderr)
++        assert json.loads(stdout)['status']=='imports_completed'
++        paths=[p for phase in ('prepare','qualify') for p in (root/current.OUTPUTS[phase]).rglob('*') if p.is_file()]
++        paths += [configuration,transport,audit_output,cli_path]
++        paths += list(root.glob('authored-prepare-cli.*'))+list(root.glob('authored-qualify-*'))+list(root.glob('authored-historical-audit.*'))
++        legacy_bytes={str(p.relative_to(root)):p.read_bytes() for p in paths if p.is_file()}
++        bootstrap.write_bytes(fresh_bootstrap)
++        acceptance={role:dict(path=str(path.relative_to(root)),size_bytes=path.stat().st_size,sha256=digest(path.read_bytes()))
++            for role,path in dict(configuration=configuration,result=prepare_result,independent_audit=audit_output,
++                externally_observed_auditor_cli=cli_path).items()}
++        config=current.configuration_template(phase='qualify',root=str(root),stage_parent=str(stage),
++            sources=sources(),inputs=inputs,negative_imports=['org'],preparation_acceptance=acceptance)
++        assert not (root/'runs/puck-cpu-held-qualification-02').exists()
++        yield dict(root=root,api=current,config=config,stage=stage,legacy_bytes=legacy_bytes)
++    finally:
++        if stage.exists():
++            assert stage.is_dir() and not stage.is_symlink()
++            shutil.rmtree(stage)
++            (root/'authored-amendment-stage-cleanup.json').write_bytes(canonical(dict(stage=str(stage),absent=not stage.exists(),actual_vendor_imports=False)))
++
++
++def test_authored02_uses_fresh_capsule_preserves01_and_refuses_reentry(tmp_path):
++    with amendment_fixture(tmp_path) as case:
++        root,m,config,stage=(case[k] for k in ('root','api','config','stage'))
++        before=[(p.stat().st_dev,p.stat().st_ino) for p in sorted((stage/'inputs').iterdir())]
++        code,stdout,stderr=run_cli(root,m,'qualify02',config)
++        output=root/'runs/puck-cpu-held-qualification-02'
++        retained=(output/'result.json').read_bytes() if (output/'result.json').exists() else b''
++        assert code==0,(code,stdout,stderr,retained)
++        result=json.loads(retained)
++        assert json.loads(stdout)==result
++        assert (result['kind'],result['version'],result['allocation_id'],result['status'])==('puck-cpu-held-runtime-outcome-v2',2,2,'imports_completed')
++        worker=json.loads((output/'control/worker-registration.json').read_bytes())
++        assert worker['source_files']==[r for r in config['sources'] if r['path'] in m.WORKER_SOURCES]
++        for row in worker['source_files']:
++            raw=(output/'worker-source'/row['path']).read_bytes()
++            assert len(raw)==row['size_bytes'] and digest(raw)==row['sha256']
++        invocation=json.loads((output/'invocation.json').read_bytes())
++        assert ['--ro-bind',str(output/'worker-source'),'/puck/source']==invocation['command'][invocation['command'].index(str(output/'worker-source'))-1:invocation['command'].index(str(output/'worker-source'))+2]
++        assert before==[(p.stat().st_dev,p.stat().st_ino) for p in sorted((stage/'inputs').iterdir())]
++        for path,raw in case['legacy_bytes'].items():assert (root/path).read_bytes()==raw
++        assert result['held_four_imports_observed'] is True
++        assert all(result[k]==v for k,v in m.CLAIMS.items())
++        assert result['closure']['active_children']==result['closure']['active_non_main_threads']==[]
++        assert result['closure']['fd_count_before']==result['closure']['fd_count_after']
++        code,_,stderr=run_cli(root,m,'qualify02-rerun',config)
++        assert code!=0 and b'CPU allocation already reserved' in stderr
++        assert (output/'result.json').read_bytes()==retained
++        for path,raw in case['legacy_bytes'].items():assert (root/path).read_bytes()==raw
+diff --git a/tests/test_puck_cpu_held_observer.py b/tests/test_puck_cpu_held_observer.py
+index 678f79d..3ac25a7 100644
+--- a/tests/test_puck_cpu_held_observer.py
++++ b/tests/test_puck_cpu_held_observer.py
+@@ -85,3 +85,31 @@ def test_preparation_can_copy_an_authored_payload_larger_than_log_limit(tmp_path
+     assert result.returncode==0,(result.returncode,result.stdout,result.stderr,diagnostic)
+     assert (tmp_path/'authored-payload.bin').stat().st_size==17*1024**2
+     assert parent.LIMITS['qualify']['file_bytes']==16*1024**2
++
++
++@pytest.mark.parametrize('code',[0,7])
++def test_qualification02_uses_exclusive_new_paths_and_preserves01(tmp_path,monkeypatch,code):
++    module,path,_=setup(tmp_path,monkeypatch,'import sys\nprint("authored02")\nsys.exit('+str(code)+')\n')
++    config=json.loads(path.read_bytes());config.update(kind='puck-cpu-held-runtime-allocation-v2',version=2,allocation_id=2,phase='qualify')
++    raw=module.canonical(config);path.write_bytes(raw);sha=hashlib.sha256(raw).hexdigest()
++    old=tmp_path/'runs/puck-cpu-held-qualification-01';old.mkdir();(old/'result.json').write_bytes(b'preserved consumed01')
++    for suffix in ('-external-cli.stdout','-external-cli.stderr','-external-cli-transport.json'):
++        (tmp_path/('runs/puck-cpu-held-qualification-01'+suffix)).write_bytes(b'preserved01'+suffix.encode())
++    legacy={p:p.read_bytes() for p in (tmp_path/'runs').rglob('*') if p.is_file()}
++    result=module.observe(path,sha)
++    assert result['observed_returncode']==code and result['timed_out'] is False
++    assert result['stdout']['path']=='runs/puck-cpu-held-qualification-02-external-cli.stdout'
++    assert (tmp_path/result['stdout']['path']).read_bytes()==b'authored02\n'
++    assert all(p.read_bytes()==raw for p,raw in legacy.items())
++    captured={p:p.read_bytes() for p in (tmp_path/'runs').rglob('*') if p.is_file()}
++    with pytest.raises(FileExistsError):module.observe(path,sha)
++    assert all(p.read_bytes()==raw for p,raw in captured.items())
++
++
++@pytest.mark.parametrize('field,value',[('phase','prepare'),('version',True),('allocation_id',1),('allocation_id',True)])
++def test_qualification02_observer_refuses_wrong_closed_identity(tmp_path,monkeypatch,field,value):
++    module,path,_=setup(tmp_path,monkeypatch,'raise AssertionError("must not run")\n')
++    config=json.loads(path.read_bytes());config.update(kind='puck-cpu-held-runtime-allocation-v2',version=2,allocation_id=2,phase='qualify');config[field]=value
++    raw=module.canonical(config);path.write_bytes(raw)
++    with pytest.raises(ValueError):module.observe(path,hashlib.sha256(raw).hexdigest())
++    assert list((tmp_path/'runs').iterdir())==[]
+diff --git a/tests/test_puck_cpu_held_parent_integration.py b/tests/test_puck_cpu_held_parent_integration.py
+index 3ff6fbb..7d96b84 100644
+--- a/tests/test_puck_cpu_held_parent_integration.py
++++ b/tests/test_puck_cpu_held_parent_integration.py
+@@ -56,6 +56,14 @@ def project(tmp_path):
+             assert raw.count(marker)==1
+             changed=raw.replace(marker,replacement)
+             assert changed.replace(replacement,marker)==raw
++            # The real legacy auditor labels these inert fixtures explicitly.
++            # Adapt only this authenticated test clone; production acceptance
++            # continues to require the ordinary actual-data scope.
++            scope=b"audit.get('evidence_scope')!='ordinary CPU held allocation only'"
++            authored_scope=b"audit.get('evidence_scope')!='AUTHORED fixture only'"
++            assert changed.count(scope)==1
++            changed=changed.replace(scope,authored_scope)
++            assert changed.replace(authored_scope,scope).replace(replacement,marker)==raw
+             raw=changed
+         write(project,name,raw)
+     api=load(project/PARENT,'cpu_authored_cloned_parent')
