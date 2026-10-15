@@ -263,6 +263,12 @@ class DependencyImports:
                                       for name in sorted(self.loaded)]
         receipt['exported_modules']=[{'name':name,'producer':self.bindings.prepared[name][0]['producer']}
                                      for name in sorted(self.bindings.active)]
+        if self.bindings.published:
+            receipt['published_export_modules']=[dict(name=name,producer=row['producer'],
+                phase=row['phase'],attributes=list(row['attributes']),
+                delegate_attributes=list(row['delegate_attributes']))
+                for name,row in sorted(self.bindings.published.items())
+                if name in self.bindings.publication_closed]
         receipt['module_dispatch_bindings']=[{'name':name,
             'original_metadata_bound':name in self.bindings.originals,
             'delegate_attributes':[key for key,_ in seal.delegates]}

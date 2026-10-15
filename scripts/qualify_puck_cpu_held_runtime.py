@@ -328,6 +328,9 @@ def validate_worker_result(result,*,registration_sha256,dependency_sha256,depend
     count=sum(len(r['files']) for r in dependencies['roots'])
     byte_count=sum(f['size_bytes'] for r in dependencies['roots'] for f in r['files'])
     caches=sorted(dependencies['import_profile'].get('native_cache',[]),key=lambda r:r['name'])
+    publications=[{key:row[key] for key in ('name','producer','phase','attributes','delegate_attributes')}
+        for row in sorted(dependencies['import_profile'].get('exports',[]),key=lambda r:r['name'])
+        if row.get('phase')=='module_exec_publish']
     if (result.get('kind')!='puck-worker-source-bootstrap-receipt-v1'
             or result.get('registration_sha256')!=registration_sha256
             or result.get('interpreter_object_bound') is not True or result.get('python_version')!='3.11.15'
@@ -339,6 +342,8 @@ def validate_worker_result(result,*,registration_sha256,dependency_sha256,depend
             or type(dep.get('file_count')) is not int or dep['file_count']!=count
             or type(dep.get('input_bytes')) is not int or dep['input_bytes']!=byte_count
             or dep.get('native_cache_modules',[])!=caches
+            or (dep.get('published_export_modules')!=publications if publications
+                else 'published_export_modules' in dep)
             or entry.get('kind')!='puck-held-runtime-import-qualification-result-v2'
             or type(entry.get('version')) is not int or entry['version']!=2
             or type(entry.get('qualification_version')) is not int or entry['qualification_version']!=3
