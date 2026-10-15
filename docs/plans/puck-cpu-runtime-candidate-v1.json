@@ -44,6 +44,7 @@
   "installed_size_verified": false,
   "kind": "puck-cpu-runtime-candidate-v1",
   "licence_contents_audited": false,
+  "metadata_assessment_base_commit": "19b640e0a0bc7df927b72976809d1d2b3faac763",
   "proposed_layout": {
     "allocation_root": "/dev/shm/palimpsest-<fresh-allocation>",
     "censused_input_roots": [
@@ -66,7 +67,7 @@
   "required_before_actual_admission": [
     "Build and independently hash an exact python-louvain0.16 wheel under an admitted bounded build configuration; inspect resulting metadata and sizes",
     "Acquire and verify full wheel payload SHA256/RECORD/licence contents without executing target code, then measure the complete installed namespace",
-    "Implement and review a separately versioned four-import worker/descriptor path including torchvision; retain the existing three-import contract",
+    "Implement and review the separately numbered CPU preparation/qualification parent for reviewed descriptor-v3/result-v2; allocation01 parent remains three-import and consumed",
     "Specify exact interpreter/stdlib baseline and complete native/image/origin paths; do not assume that interpreter copying is required or solved",
     "Select and prospectively declare exact EGL/vendor/renderer paths; CPU Torch metadata is not software-renderer qualification",
     "Resolve shared-root staging churn under the unchanged ancestor guard; precreate own mutable scratch/output paths",
@@ -74,7 +75,21 @@
     "Create a new prospective numbered configuration/observation decision where required, independent exact audit, bounded authorized invocation and independent outcome audit"
   ],
   "runtime_qualified": false,
-  "source_baseline_commit": "19b640e0a0bc7df927b72976809d1d2b3faac763",
+  "source_candidate": {
+    "actual_parent_supports_descriptor_v3": false,
+    "commit": "2a1b3aa976b682adc65d87ba58facdf27f2c0f99",
+    "fixed_imports": [
+      "numpy",
+      "torch",
+      "torchvision",
+      "mujoco"
+    ],
+    "new_authored_cases": 25,
+    "qualification_descriptor_version": 3,
+    "qualification_result_version": 2,
+    "report": "docs/reports/puck-cpu-runtime-entry-source.md",
+    "source_review": "no concrete Critical/Important/Minor findings"
+  },
   "status": "prospective-incomplete-not-admitted",
   "study_authorized": false,
   "target": {

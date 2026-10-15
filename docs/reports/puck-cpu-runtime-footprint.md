@@ -106,9 +106,10 @@ No privileges or mounts were changed.
   files, actual tmpfs allocation and licences. Licence fields/file names are not
   a bundled-licence audit; PyOpenGL and seaborn have no retained licence field,
   expression or License-File declaration in this metadata.
-- Implement/review a versioned four-import qualification entry including torchvision.
-  The existing fixed entry imports only NumPy/Torch/MuJoCo. Importing torchvision
-  would still not prove its operators/codecs or model-inference capability.
+- Integrate the [reviewed four-import entry](puck-cpu-runtime-entry-source.md)
+  into a separately numbered exact CPU parent/configuration. The allocation01
+  parent remains three-import and consumed. The new source includes torchvision;
+  an import result still does not prove its operators/codecs or inference.
 - Specify the exact interpreter/stdlib trusted baseline, all native origins and
   external-library paths, EGL vendor/renderer configuration and shared-root custody.
   Do not assume this exact interpreter needs copying: historical maps contain no
