@@ -10,10 +10,12 @@ Implementation history is preserved in the unchanged [earlier history](simulatio
 and the [byte-identical prior goal snapshot](simulation-release-execution-goal-history-2026-10-16.md).
 Those dated records are evidence, not instructions to repeat consumed attempts.
 
-## Immediate goal: one real episode bundle
+## Next checkpoint: prove one complete simulation episode
 
-**Produce one portable bundle from a real local CPU simulation episode, with
-recording, replay and export verified.** Finish these steps in order:
+**Run one public manual CPU episode, record it with snapshots, replay every
+recorded tick under the declared comparison, and export a portable evidence
+bundle. This checkpoint finishes only when independent checks verify the inputs,
+recording, replay, exports and normal cleanup.** Finish these steps in order:
 
 1. Pass the exact local runtime's separately reviewed qualification and independent audit.
 2. Admit and run one bounded episode with declared model/controller, scene, seed,
@@ -70,16 +72,25 @@ source validations remain retained without a new root-cause claim for their
 storage-metadata/native persistent failures. These authored checks do not explain
 the installed 07 timeout or establish installed-runtime acceptance.
 
-**First unfinished action:** define and review a separately closed diagnostic
-epoch that explicitly admits the qualifier as a fifth preparation-relative source
-change. Preserve the old 05–07 predicates, all failed/consumed 01–07 outcomes and
-existing limits. Freeze its exact controls, pass fresh complete byte/custody/resource
-admission, then invoke at most once with an independent outcome/byte audit. No
-actual 08 controls or invocation exist; the new source checks add no episode,
-operator/renderer, model or study evidence. Once the installed runtime qualifies,
-separately admit the public manual CPU episode route. The product exit remains
-the real recorded, replayed and exported episode bundle. Detailed raw results
-remain in the linked PR/report packets, dated histories and Git history.
+[PR167](https://github.com/Aadrika08/palimpsest/pull/167) implements the closed
+diagnostic 08 source support and is independently reviewed with no material
+findings. All 630 disjoint authored cases pass: 622 private cases in
+26.42s and eight persistent integrations in 119.48s. The initial three REDs and
+mixed-layout source-validation result (two failures/622 passes) remain retained.
+No actual 08 controls, admission or allocation exist; this source result is not an
+installed-runtime pass.
+
+**First unfinished action:** freeze and independently review the actual 08 controls.
+Bind the genuine failed 07 transport, supervision and empty worker logs, preserving
+its absent result/baseline-after receipts; use immutable historical source archives
+after rollout. Preserve the old 05–07 predicates and all failed/consumed 01–07 outcomes.
+Pass fresh complete current-byte/custody/resource admission with the unchanged
+2GiB RAM floor, then invoke at most once under the unchanged 180s normal-return
+runtime deadline and independently audit the outcome and bytes. Once the installed
+runtime qualifies, separately admit the public manual CPU episode route. The
+product exit remains the real recorded, replayed and exported episode bundle.
+Detailed raw results remain in the linked PR/report packets, dated histories and
+Git history.
 
 [PR163](https://github.com/Aadrika08/palimpsest/pull/163) already implements the
 manual constructor seam with exact arguments and seed/reset order preserved;
