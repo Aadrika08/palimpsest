@@ -1,0 +1,33 @@
+{
+  "episode_invoked": false,
+  "files": [
+    {
+      "path": "docs/reports/public-manual-episode-constructor-v1/palimpsest-public-episode-constructor-seam.json",
+      "sha256": "594c323754de284f95c29cd6727c59fddd5551cd5ab7e07c5e0629eaebcc8634",
+      "size_bytes": 17172
+    },
+    {
+      "path": "docs/reports/public-manual-episode-constructor-v1/palimpsest-public-manual-constructor-review.json",
+      "sha256": "18c7e4fcd6e28c98047fc016b785dccfe4c8c012a3f677928d4b1de3d9420ff0",
+      "size_bytes": 7622
+    },
+    {
+      "path": "docs/reports/public-manual-episode-constructor-v1/palimpsest-public-manual-constructor-red-01.log",
+      "sha256": "9dce281d1bd0507dbb2bdc05b1a5be319e86add37dd583347402f1aa711e2d2b",
+      "size_bytes": 5765
+    },
+    {
+      "path": "docs/reports/public-manual-episode-constructor-v1/palimpsest-public-manual-constructor-green-01.log",
+      "sha256": "b84a5f56832006ce4e2bf9f759666949900308668a781b362e5aab41c6c2b8e8",
+      "size_bytes": 99
+    }
+  ],
+  "root_verification": {
+    "command": "PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 PYTHONDONTWRITEBYTECODE=1 /home/utkarsh/Work/shraddha/brain/.venv/bin/python -m pytest -q -p no:cacheprovider tests/test_public_manual_episode_constructor.py",
+    "passed": 19,
+    "seconds": 0.42,
+    "tool_chunk": "e85c92"
+  },
+  "runtime_qualified": false,
+  "scope": "source-only manual environment seam, fake vendor boundaries; no actual episode"
+}

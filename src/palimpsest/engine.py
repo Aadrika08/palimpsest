@@ -78,6 +78,20 @@ def _teacher_fingerprint(teacher):
     return hashlib.sha256(encoded.encode("utf-8")).hexdigest()
 
 
+def _make_manual_environment(repo_root, profile, texture):
+    """Preserve the pinned runner's environment without its training imports."""
+    from .flynn import import_upstream
+
+    environment = import_upstream(repo_root, "environment.mujoco_two_cam_env_random_obstacles")
+    return environment.MuJoCoTwoCamEnv(
+        width=profile['width'], height=profile['height'],
+        max_episode_steps=profile['max_steps'], n_obstacles=profile['n_obstacles'],
+        arena_half_extent=profile['arena'], render_mode=None,
+        end_on_collision=False, goal_bonus=0, contact_penalty=0,
+        time_penalty=.01, prog_scale=10., ctrl_penalty=.001,
+        texture_mode=texture)
+
+
 class Engine:
     MAX_QUEUE = 128
     MAX_IDS = 4096
@@ -319,8 +333,11 @@ class Engine:
             np.random.seed(seed)
             torch.manual_seed(seed)
             torch.set_num_threads(2)
-            reference = import_upstream(root, "run_connectome_rnn_checkpoint")
-            env = reference._make_env(None, profile['n_obstacles'], texture_mode=texture)
+            if controller == "manual":
+                env = _make_manual_environment(root, profile, texture)
+            else:
+                reference = import_upstream(root, "run_connectome_rnn_checkpoint")
+                env = reference._make_env(None, profile['n_obstacles'], texture_mode=texture)
             configure_world(env)
             policy = teacher = None
             if controller == "flynn":

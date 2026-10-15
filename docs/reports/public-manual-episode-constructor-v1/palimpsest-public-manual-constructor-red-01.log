@@ -1,0 +1,92 @@
+FFFF...............                                                      [100%]
+=================================== FAILURES ===================================
+_ test_manual_uses_public_constructor_with_exact_runner_arguments[reproduction-checker-20] _
+
+route = namespace(trace=[('diagnose',), ('python.seed', 19), ('numpy.seed', 19), ('torch.seed', 19), ('torch.threads', 2), ('i...male=<module '_authored_public_manual_constructor.male_policy'>, open=<function route.<locals>.open at 0x799ef3b0a3e0>)
+scenario = 'reproduction', texture = 'checker', obstacles = 20
+
+    @pytest.mark.parametrize('scenario,texture,obstacles',[
+        ('reproduction','checker',20),('sparse-navigation','checker',5),
+        ('texture-variation','realistic',20),
+    ])
+    def test_manual_uses_public_constructor_with_exact_runner_arguments(route,scenario,texture,obstacles):
+        engine=route.open(scenario=scenario,texture=texture)
+        try:
+>           assert route.imported==[PUBLIC]
+E           AssertionError: assert ['run_connect...n_checkpoint'] == ['environment...om_obstacles']
+E             
+E             At index 0 diff: 'run_connectome_rnn_checkpoint' != 'environment.mujoco_two_cam_env_random_obstacles'
+E             Use -v to get more diff
+
+tests/test_public_manual_episode_constructor.py:179: AssertionError
+_ test_manual_uses_public_constructor_with_exact_runner_arguments[sparse-navigation-checker-5] _
+
+route = namespace(trace=[('diagnose',), ('python.seed', 19), ('numpy.seed', 19), ('torch.seed', 19), ('torch.threads', 2), ('i...male=<module '_authored_public_manual_constructor.male_policy'>, open=<function route.<locals>.open at 0x799ef39fdb20>)
+scenario = 'sparse-navigation', texture = 'checker', obstacles = 5
+
+    @pytest.mark.parametrize('scenario,texture,obstacles',[
+        ('reproduction','checker',20),('sparse-navigation','checker',5),
+        ('texture-variation','realistic',20),
+    ])
+    def test_manual_uses_public_constructor_with_exact_runner_arguments(route,scenario,texture,obstacles):
+        engine=route.open(scenario=scenario,texture=texture)
+        try:
+>           assert route.imported==[PUBLIC]
+E           AssertionError: assert ['run_connect...n_checkpoint'] == ['environment...om_obstacles']
+E             
+E             At index 0 diff: 'run_connectome_rnn_checkpoint' != 'environment.mujoco_two_cam_env_random_obstacles'
+E             Use -v to get more diff
+
+tests/test_public_manual_episode_constructor.py:179: AssertionError
+_ test_manual_uses_public_constructor_with_exact_runner_arguments[texture-variation-realistic-20] _
+
+route = namespace(trace=[('diagnose',), ('python.seed', 19), ('numpy.seed', 19), ('torch.seed', 19), ('torch.threads', 2), ('i...male=<module '_authored_public_manual_constructor.male_policy'>, open=<function route.<locals>.open at 0x799ef39d09a0>)
+scenario = 'texture-variation', texture = 'realistic', obstacles = 20
+
+    @pytest.mark.parametrize('scenario,texture,obstacles',[
+        ('reproduction','checker',20),('sparse-navigation','checker',5),
+        ('texture-variation','realistic',20),
+    ])
+    def test_manual_uses_public_constructor_with_exact_runner_arguments(route,scenario,texture,obstacles):
+        engine=route.open(scenario=scenario,texture=texture)
+        try:
+>           assert route.imported==[PUBLIC]
+E           AssertionError: assert ['run_connect...n_checkpoint'] == ['environment...om_obstacles']
+E             
+E             At index 0 diff: 'run_connectome_rnn_checkpoint' != 'environment.mujoco_two_cam_env_random_obstacles'
+E             Use -v to get more diff
+
+tests/test_public_manual_episode_constructor.py:179: AssertionError
+__ test_global_seeds_constructor_default_then_declared_reset_keep_their_order __
+
+route = namespace(trace=[('diagnose',), ('python.seed', 19), ('numpy.seed', 19), ('torch.seed', 19), ('torch.threads', 2), ('i...male=<module '_authored_public_manual_constructor.male_policy'>, open=<function route.<locals>.open at 0x799ef39d0c20>)
+
+    def test_global_seeds_constructor_default_then_declared_reset_keep_their_order(route):
+        engine=route.open()
+        try:
+>           positions=[route.trace.index(row) for row in [
+                ('diagnose',),('python.seed',19),('numpy.seed',19),('torch.seed',19),
+                ('torch.threads',2),('import',PUBLIC),('construct',EXPECTED_KWARGS),
+                ('reset',None),('configure_world',),('reset',19),
+            ]]
+
+tests/test_public_manual_episode_constructor.py:190: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+.0 = <tuple_iterator object at 0x799ef3958340>
+
+>   positions=[route.trace.index(row) for row in [
+               ^^^^^^^^^^^^^^^^^^^^^^
+        ('diagnose',),('python.seed',19),('numpy.seed',19),('torch.seed',19),
+        ('torch.threads',2),('import',PUBLIC),('construct',EXPECTED_KWARGS),
+        ('reset',None),('configure_world',),('reset',19),
+    ]]
+E   ValueError: ('import', 'environment.mujoco_two_cam_env_random_obstacles') is not in list
+
+tests/test_public_manual_episode_constructor.py:190: ValueError
+=========================== short test summary info ============================
+FAILED tests/test_public_manual_episode_constructor.py::test_manual_uses_public_constructor_with_exact_runner_arguments[reproduction-checker-20]
+FAILED tests/test_public_manual_episode_constructor.py::test_manual_uses_public_constructor_with_exact_runner_arguments[sparse-navigation-checker-5]
+FAILED tests/test_public_manual_episode_constructor.py::test_manual_uses_public_constructor_with_exact_runner_arguments[texture-variation-realistic-20]
+FAILED tests/test_public_manual_episode_constructor.py::test_global_seeds_constructor_default_then_declared_reset_keep_their_order
+4 failed, 15 passed in 1.37s
