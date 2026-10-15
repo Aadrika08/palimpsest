@@ -1,0 +1,32 @@
+{
+  "at_utc": "2026-10-15T20:07:49.254469+00:00",
+  "command": [
+    "/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/bin/python3.11",
+    "-I",
+    "-S",
+    "-B",
+    "/home/utkarsh/.codex/worktrees/0071/brain/scripts/audit_puck_cpu_runtime_characterization.py",
+    "--configuration",
+    "/home/utkarsh/.codex/worktrees/0071/brain/docs/plans/puck-cpu-runtime-characterization-03.json",
+    "--sha256",
+    "69cc87fb68e3c745196b3435c4caaa547ad3bb120ceac6d4834d6b24eecb4e49",
+    "--transport",
+    "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-runtime-characterization-03-external-cli-transport.json",
+    "--transport-sha256",
+    "cf0aa869200d07b74be7a40e89a6de8213dd9bbc6ecba1628b8ab0684c7865d3"
+  ],
+  "kind": "puck-cpu-observation03-concrete-audit-command-v1",
+  "observer_external_exit_code": 0,
+  "outer_environment": {
+    "LANG": "C.UTF-8",
+    "LC_ALL": "C.UTF-8",
+    "PATH": "/usr/bin:/bin",
+    "PYTHONDONTWRITEBYTECODE": "1"
+  },
+  "runtime_qualified": false,
+  "transport": {
+    "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-runtime-characterization-03-external-cli-transport.json",
+    "sha256": "cf0aa869200d07b74be7a40e89a6de8213dd9bbc6ecba1628b8ab0684c7865d3",
+    "size_bytes": 1940
+  }
+}

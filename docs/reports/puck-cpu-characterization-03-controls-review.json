@@ -1,0 +1,66 @@
+{
+  "at_utc": "2026-10-15T20:05:39.119617+00:00",
+  "collection_authorized": false,
+  "conditions": [
+    "Commit exact reviewed controls before invocation.",
+    "Require externally normal timely exit0 DATA_ONLY_ADMITTED.",
+    "Immediately recheck transient resources, output absences and committed control hashes before one observer.",
+    "Invoke independent auditor once only after timely normal observer0 and measured receipt SHA."
+  ],
+  "configuration_counts": {
+    "inputs": 63,
+    "roles": 19,
+    "sources": 19
+  },
+  "kind": "puck-cpu-observation03-control-review-v1",
+  "material_findings": [],
+  "native_authorized": false,
+  "pins": [
+    {
+      "path": "docs/plans/puck-cpu-runtime-characterization-03.json",
+      "sha256": "69cc87fb68e3c745196b3435c4caaa547ad3bb120ceac6d4834d6b24eecb4e49",
+      "size_bytes": 20311
+    },
+    {
+      "path": "docs/plans/puck-cpu-runtime-characterization-03-admission.py",
+      "sha256": "bfa51276101dea166f9fde32f6098e7496bdedc9d3a7585adef1cdb40ee24961",
+      "size_bytes": 14727
+    },
+    {
+      "path": "docs/plans/puck-cpu-runtime-characterization-03-execution.md",
+      "sha256": "7a08beaec565e57e59c8b4db6d69ef767a974e189ca4b55f707a6596e044e496",
+      "size_bytes": 5592
+    },
+    {
+      "path": "docs/plans/puck-cpu-runtime-characterization-03-controls.json",
+      "sha256": "435a4679c2bcc525ef78c6cd4de878b3599f3c23ff3ab69112473ec36000a523",
+      "size_bytes": 3980
+    }
+  ],
+  "preparation_error": {
+    "cause": "Root selected a nonexistent worker filename; exact-count assertion refused before manifest creation.",
+    "correction": "Select existing scripts/characterize_puck_runtime_imports.py; final configuration/source/admission bytes unchanged.",
+    "exit_code": 1,
+    "stage": "pre-freeze manifest construction",
+    "state": "Admission copied unchanged; no actual observer or data-only admission invoked; no allocation consumed.",
+    "tool_chunk": "33b278"
+  },
+  "qualification_claims": [],
+  "reviewer": "/root/cpu_wheel_install_layout",
+  "root_checks": {
+    "actual_output_paths_absent": 4,
+    "admission_ast_parse": "PASS",
+    "canonical_manifest": true,
+    "control_pins": 7,
+    "git_local_email": "aadrikamaurya@gmail.com",
+    "git_local_name": "Aadrika Maurya",
+    "github_api_user": "Aadrika08",
+    "source_and_input_pins": 82,
+    "source_code_unchanged": true
+  },
+  "runtime_qualified": false,
+  "scope": "Independent static review of fixed observation03 configuration, admission control, execution plan and manifest; no execution, census, resource probe or mutation by reviewer.",
+  "source_commit": "32d1dc690d93ffdfa820bcbe871515266acde5b0",
+  "status": "GO_CONDITIONAL",
+  "study_authorized": false
+}
