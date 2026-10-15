@@ -1,0 +1,17 @@
+.................................F..............................         [100%]
+=================================== FAILURES ===================================
+_______________ test_unregistered_import_has_no_ambient_fallback _______________
+
+tmp_path = PosixPath('/tmp/pytest-of-utkarsh/pytest-464/test_unregistered_import_has_n0')
+
+    def test_unregistered_import_has_no_ambient_fallback(tmp_path):
+        result,_ = dependency_fixture(tmp_path,'import numpy\nreturn {}')
+        assert result.returncode != 0
+>       assert 'Unregistered' in result.stderr
+E       assert 'Unregistered' in 'Traceback (most recent call last):\n  File "<string>", line 10, in <module>\n  File "/tmp/pytest-of-utkarsh/pytest-46...llection root or ancestor changed while held\nBootstrap holder close: Collection root or ancestor changed while held\n'
+E        +  where 'Traceback (most recent call last):\n  File "<string>", line 10, in <module>\n  File "/tmp/pytest-of-utkarsh/pytest-46...llection root or ancestor changed while held\nBootstrap holder close: Collection root or ancestor changed while held\n' = CompletedProcess(args=['/home/utkarsh/Work/shraddha/brain/.venv/bin/python', '-I', '-B', '-S', '-c', "import os,sys,st...lection root or ancestor changed while held\nBootstrap holder close: Collection root or ancestor changed while held\n').stderr
+
+tests/test_puck_worker_dependencies.py:115: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_puck_worker_dependencies.py::test_unregistered_import_has_no_ambient_fallback
+1 failed, 63 passed in 41.06s

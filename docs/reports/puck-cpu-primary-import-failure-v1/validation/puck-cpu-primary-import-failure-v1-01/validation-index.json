@@ -1,0 +1,112 @@
+{
+  "base_commit": "4036a382b87ab99640bed96f6b2f8aeaa7873b2c",
+  "created_at": "2026-10-15T13:52:37.651714+00:00",
+  "evidence_files": [
+    {
+      "path": "runs/source-validation/puck-cpu-primary-import-failure-v1-01/green-command.json",
+      "sha256": "5402a1981049539fe3c6e8b1116e5a24c9b5c5aa741368fbf34558ff64ac0029",
+      "size_bytes": 777
+    },
+    {
+      "path": "runs/source-validation/puck-cpu-primary-import-failure-v1-01/green-result.json",
+      "sha256": "08e2f85a9b2e156b32b2475d2005a359bdd0ce4b7f8261d4bff6aab121d4277c",
+      "size_bytes": 970
+    },
+    {
+      "path": "runs/source-validation/puck-cpu-primary-import-failure-v1-01/green-terminal.json",
+      "sha256": "9dc0a5d114bf53c43109addad0a7153c8ce225ba73cc12bfe6538770527c45a2",
+      "size_bytes": 409
+    },
+    {
+      "path": "runs/source-validation/puck-cpu-primary-import-failure-v1-01/green.log",
+      "sha256": "401689dcce73703e302b49a7fd925f5c91898cc523c0b94610d518198493ae31",
+      "size_bytes": 1611
+    },
+    {
+      "path": "runs/source-validation/puck-cpu-primary-import-failure-v1-01/isolated-existing-command.json",
+      "sha256": "58169d02c71948efb182a6e0f0c02270a89cc356ceaaa466f91d67b12050d443",
+      "size_bytes": 892
+    },
+    {
+      "path": "runs/source-validation/puck-cpu-primary-import-failure-v1-01/isolated-existing-result.json",
+      "sha256": "9019dd64800295f4ae4fac6c8c2a908bdcc68dcec6a4c3d8d44705ca94be900d",
+      "size_bytes": 1085
+    },
+    {
+      "path": "runs/source-validation/puck-cpu-primary-import-failure-v1-01/isolated-existing-terminal.json",
+      "sha256": "2b8687720cff1e3a6c53e03a16327a38a34d59337a0601e2c16807b89db0d1b8",
+      "size_bytes": 191
+    },
+    {
+      "path": "runs/source-validation/puck-cpu-primary-import-failure-v1-01/isolated-existing.log",
+      "sha256": "d712501db6a5dd648dfe7d9ad8c2bf2d7c16acd6d77e574e1749d0cd9084e473",
+      "size_bytes": 98
+    },
+    {
+      "path": "runs/source-validation/puck-cpu-primary-import-failure-v1-01/red-command.json",
+      "sha256": "24ab4b6a5dd5c21563431052e62f545aeef78d445369b65903b8f24c15b22ec5",
+      "size_bytes": 744
+    },
+    {
+      "path": "runs/source-validation/puck-cpu-primary-import-failure-v1-01/red-result.json",
+      "sha256": "033f6a31920ce0c1c4844f41f90fee87e625c2c4bf0724ed6595acba4e0955b8",
+      "size_bytes": 937
+    },
+    {
+      "path": "runs/source-validation/puck-cpu-primary-import-failure-v1-01/red-terminal.json",
+      "sha256": "f30c2bf4ab2943de6296caecaf2bb70e6e5b774a7e5c8074ad760c4f3bb93e7f",
+      "size_bytes": 278
+    },
+    {
+      "path": "runs/source-validation/puck-cpu-primary-import-failure-v1-01/red.log",
+      "sha256": "6b440f7cb0b9595732480dc3feb91f21e935dfe517ac7ec1f2119810c89b908d",
+      "size_bytes": 4112
+    },
+    {
+      "path": "runs/source-validation/puck-cpu-primary-import-failure-v1-02/command.json",
+      "sha256": "7fb7b1318217a8093cb428a2010e0fbe85d0024599402a51989f79ae560b3ab9",
+      "size_bytes": 1121
+    },
+    {
+      "path": "runs/source-validation/puck-cpu-primary-import-failure-v1-02/pytest.log",
+      "sha256": "fc407aeaa65ac72e616851462398ba9003ca8583612a87aa3306df482489c009",
+      "size_bytes": 4922
+    },
+    {
+      "path": "runs/source-validation/puck-cpu-primary-import-failure-v1-02/result.json",
+      "sha256": "450e7d620f11f1cebc14f536cd6f7f1e2f91d1d582aa32e7177f3f30ac634bc4",
+      "size_bytes": 1314
+    },
+    {
+      "path": "runs/source-validation/puck-cpu-primary-import-failure-v1-02/terminal.json",
+      "sha256": "e0d7480e644e7014f5062cff0ea91667821fb0424cf588c3cb355925e1ff2b69",
+      "size_bytes": 446
+    }
+  ],
+  "kind": "puck-primary-import-source-validation-index-v1",
+  "limitations": [
+    "Actual Torch primary cause remains unknown.",
+    "No actual runtime retry or qualification performed.",
+    "No fully passing three-file run; both failing suite observations are retained."
+  ],
+  "outcomes": {
+    "affected_suite_private_persistent_tmp": "63 passed, 1 failed in 42.63s: native image refused",
+    "affected_suite_shared_tmp": "63 passed, 1 failed in 41.06s: ancestor changed",
+    "isolated_existing_failure_followup": "1 passed in 1.55s",
+    "new_regression_GREEN_in_both_affected_runs": true,
+    "regression_RED": "1 failed in 1.66s: primary denial absent"
+  },
+  "scope": "authored source/C fixtures only; no vendor runtime attempt",
+  "source_files": [
+    {
+      "path": "scripts/puck_worker_bootstrap.py",
+      "sha256": "436b1ffe34b96fca166f6fb38022ad7392daef3517e58157092db2d9fd84c69f",
+      "size_bytes": 38375
+    },
+    {
+      "path": "tests/test_puck_worker_dependencies.py",
+      "sha256": "fb311232bcea45c52d9ba45a78361ab586c9025800a8bb72fd354870c75b5f09",
+      "size_bytes": 10502
+    }
+  ]
+}

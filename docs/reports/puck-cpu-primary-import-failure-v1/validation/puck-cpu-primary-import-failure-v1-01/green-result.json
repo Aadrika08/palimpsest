@@ -1,0 +1,27 @@
+{
+  "bootstrap_sha256": "436b1ffe34b96fca166f6fb38022ad7392daef3517e58157092db2d9fd84c69f",
+  "command": [
+    "/home/utkarsh/Work/shraddha/brain/.venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "tests/test_puck_worker_bootstrap.py",
+    "tests/test_puck_worker_dependencies.py",
+    "tests/test_puck_cpu_runtime_entry.py"
+  ],
+  "cwd": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-primary-import-failure-v1",
+  "elapsed_seconds": 41.76505063404329,
+  "ended_at": "2026-10-15T13:50:02.098407+00:00",
+  "environment_overrides": {
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "PYTHONPATH": "src"
+  },
+  "kind": "puck-primary-import-source-test-v1",
+  "label": "GREEN-affected-suite",
+  "log_sha256": "401689dcce73703e302b49a7fd925f5c91898cc523c0b94610d518198493ae31",
+  "returncode": 1,
+  "started_at": "2026-10-15T13:49:20.332956+00:00",
+  "test_sha256": "fb311232bcea45c52d9ba45a78361ab586c9025800a8bb72fd354870c75b5f09"
+}
