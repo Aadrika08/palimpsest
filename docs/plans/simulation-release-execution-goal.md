@@ -13,21 +13,27 @@ all seven remain open. CI and physical fabrication are outside this goal.
 
 ### Immediate milestone and stopping rule
 
-**Next goal: make expected missing imports explicit and verifiable, then obtain
-a valid held-runtime result before actual collection.** Preparation01 passed
-once; qualification01 failed once during NumPy's optional
-`numpy._distributor_init_local` probe. Both allocations are consumed and retained
-in [draft PR #135](https://github.com/Aadrika08/palimpsest/pull/135). No import
-compatibility, collection or release qualification passed.
+**Next goal: establish a correct native mapped-object identity contract on the
+actual local filesystem before another held-runtime allocation.**
+[Draft PR #136](https://github.com/Aadrika08/palimpsest/pull/136) implements the
+finite expected-missing-import source policy; independent review found no concrete
+source defect and90 new/legacy checks pass20.27s. Its two-name proposal is
+non-executable. Actual runtime compatibility remains unproved.
 
-The immediate source-only deliverable is a finite declared expected-missing-import
-contract tied to the registered dependency namespace. Authored tests must prove
-exact root/child misses, refusal when the target exists, unchanged poisoning for
-undeclared imports, exact error identity and no ambient fallback. Freeze the
-actual missing-name scope and any new allocation prospectively before another
-runtime invocation; do not silently add exceptions or retry this allocation.
-This unit exits with reviewed source, meaningful regressions and a concrete
-reviewable configuration proposal, or a documented defect requiring a decision.
+Authored Btrfs native fixtures exposed a second gap: fstat/pathstat report a
+different device from proc maps for the same measured inode. The owned-storage
+affected run has288passes/5native failures94.14s. Tmpfs's corresponding tiny
+authored probe matches. Own map_files following stat is EPERM. Existing native
+checks were left intact. The [next source deliverable](https://github.com/Aadrika08/palimpsest/blob/research/puck-v3-expected-missing-imports/docs/reports/puck-v3-native-filesystem-identity-next.md)
+requires an explicit identity/observation contract, meaningful cross-filesystem/
+object/permission/failure tests and independent review. If this platform cannot
+provide the proof, prepare a concrete supported configuration with full resource/
+custody costs for review; do not silently replace identity with pathname equality.
+
+Preparation01 and qualification01 remain consumed. A later actual allocation
+requires its own numbered prospective decision, exact source/capsule/interpreter/
+dependency/environment/bounds admission and independent outcome audit. No automatic
+retry, privilege change, ordinary observation refresh or collection follows.
 
 After a valid scoped runtime result: complete collection, valid studies and
 capability gates, the integrated lab and all six artworks, artistic/operator
@@ -70,7 +76,7 @@ poisoned the bootstrap; no completed three-import receipt exists. Torch/MuJoCo
 were not reached by the sequential entry. Raw failures and first cause remain
 retained. Independent final outcome audit accepted the preserved terminal failure, verified the pin chain and unchanged preparation, and found no evidence defect within scope.
 
-Next source work is the finite expected-missing-import contract above. No automatic
+The finite expected-missing-import source contract is now reviewed in draftPR136; next source work is the native filesystem identity contract above. No automatic
 actual retry, ordinary observation refresh, collection, fitting, physics, catalog
 access, navigation attempt3 or physical rover follows. All authority remains false.
 
@@ -127,7 +133,7 @@ measurement: 99,738,644,480 bytes at 01:37:44 UTC.
 
 | Order | Work | Exit before advancing |
 | --- | --- | --- |
-| 1 | Resolve qualification01's declared optional-missing-import gap using authored source fixtures; prepare a separately reviewed actual configuration proposal. | Exact absent-name/namespace/error policy has meaningful source proof and review; any later actual allocation is prospectively admitted and independently audited. Preparation01/qualification01 and observations01/02 remain consumed. No automatic retry or compatibility claim follows. |
+| 1 | Resolve the measured native filesystem identity gap; retain PR136's reviewed finite missing-import policy and prepare a complete actual configuration proposal. | Correct mapped-object identity and refusal semantics have authored cross-filesystem/object/permission proof and independent source review; any later numbered actual allocation is prospectively admitted and independently audited. Preparation01/qualification01 and observations01/02 remain consumed. No automatic retry or compatibility claim follows. |
 | 2 | Connect declared inventory, reservation/scene seals, model custody and the authenticated worker to natural-episode recording close. | One executable parent/worker route covers exact environment/process identity, progress and escaped descendants, one-owner lease, storage and every fixed clock bucket. Fault checks and independent review pass; the complete source/runtime/input allocation is admitted before actual collection. |
 | 3 | Finish memory replay-to-condition/case close, pruning and family admission. | After explicit amendment-02 approval, invoke the registered replay once and independently audit it. A pass precedes complete nine-condition/case-close admission and the full study. Independent source work can proceed while approval is pending. |
 | 4 | Execute separately admitted memory and puck studies; resolve the next MaleCNS study prospectively. | Complete valid development and separately admitted held-out evidence meets the unchanged scientific/capability boundaries. A failed stage stops its lane with evidence and a concrete prospective decision. |
@@ -524,18 +530,22 @@ remain required. All seven simulation gates remain open.
 
 ## First action when pursuing this goal
 
-Qualification01's failed terminal is preserved and independently audited in
-draftPR135. Now implement the finite expected-missing-import source contract described at the
-top. Use authored fixtures and retained evidence. Distinguish a declared absent
-module from an existing registered source, namespace, export or undeclared import;
-never allow arbitrary caught ImportError or ambient loading.
+Implement and review the native mapped-object identity contract from draftPR136's
+retained Btrfs/tmpfs evidence. Determine an unprivileged descriptor-bound proof,
+or document an explicit supported configuration with complete costs and limits.
+Preserve filesystem/subvolume and distinct-object identities; raw inode equality,
+pathname text or globally ignoring the device field cannot supply that proof.
+Test the observed mismatch, exact target/helper, ambiguous raw keys, namespace
+changes and permission failure before another actual configuration is proposed.
 
-Preparation01 and qualification01 are consumed. Their admitted freeze SHAs are
+PR136's finite expected-missing-import policy is source-reviewed (90 checks);
+its proposed numpy._distributor_init_local/org list is still non-executable.
+The existing allocation01 parent remains descriptor-v1 only. A new parent/capsule/
+allocation must be separately implemented and prospectively admitted.
+Preparation01/qualification01 remain consumed, with original freeze SHAs
 `7ba637bcc563df74789cc031bfffb6bfe74002ad669628303d9185ccf048fc18` and
 `6382710ba0a2dd29e3c42aa60ff2cfd8804e03c6faf11ea7c6a1cdee714a1446`.
-A later actual attempt requires its own numbered prospective scope, immutable
-configuration and separate admission. No source fixture grants runtime/collection/
-native/scientific authority or permission to rewrite the consumed failure.
+No runtime/native/collection/scientific authority or retry is granted here.
 
 After scoped runtime admission, complete the **puck durable owner/stage launcher**
 using PRs #120–#131: inventory/reservation/scene and model custody, exact invocation,

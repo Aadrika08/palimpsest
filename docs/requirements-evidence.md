@@ -13,8 +13,22 @@ The active goal is one reproducible local simulation release: qualify the actual
 execution routes, complete valid research/capability gates, integrate the lab and
 all six artworks, record artistic/operator acceptance and deliver the runbook.
 Disk clearance permits fresh admission checks; CI and physical rover remain outside.
-The next source goal is a finite verifiable expected-missing-import contract,
-followed by a separately reviewed runtime proposal; no automatic retry follows.
+The next source goal is the measured native filesystem identity contract,
+followed by a complete separately reviewed runtime proposal; no automatic retry follows.
+
+[Draft PR #136](https://github.com/Aadrika08/palimpsest/pull/136) adds an explicit
+versioned finite expected-missing-import source policy. Independent whole-branch
+review found no concrete source defect;90 new/legacy checks pass20.27s. Broader
+validation remains incomplete: two/tmp-based slices refused changed ancestors;
+a diagnostic measured/tmp timestamp drift. Owned Btrfs storage yielded288passes/
+5native failures94.14s. Two tiny authored C probes measured fstat/proc_maps
+device mismatch on Btrfs and equality on tmpfs; map_files following stat is EPERM.
+Native checks remain unchanged, actual runtime remains unqualified, and default
+pytest still has ten FastAPI/httpx collection errors2.28s. The two-name proposal
+is non-executable. Next source work is a correct native mapped-object identity
+contract for the actual filesystem before another complete allocation proposal.
+No actual numerical-runtime allocation, study, collection or browser/human session
+ran in this unit. All26 requirement and seven gate statuses stay unchanged.
 
 [Draft PR #135](https://github.com/Aadrika08/palimpsest/pull/135) implements the fixed
 held-import entry and two-stage exact configuration.216 affected checks pass75.84s;
