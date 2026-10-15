@@ -65,14 +65,25 @@ separately removes the training-runner import from manual environment constructi
 preserving exact arguments and seed/reset order. Its 19 authored cases pass and
 independent review finds no material findings. No real episode or renderer ran.
 
-**Next action: implement and review the finite native-origin correction offline.**
-Reuse the existing held-directory policy for exactly `PIL._imaging` and
-`PIL._imagingft`, with a Pillow-shaped transitive-dependency regression and strict
-mismatch refusal. Bind the exact two-row candidate delta in both parent and
-independent auditor; preserve every other input, native mount, negative name and
-limit. Obtain complete separately reviewed current-byte/custody admission before
-any future separately frozen qualification. No 07 controls or allocation exists;
-no consumed attempt is retried. Keep the next product exit at the episode bundle.
+The source correction is committed in [PR164](https://github.com/Aadrika08/palimpsest/pull/164)
+at `d3bce4e`. Candidate D adds exactly two sorted existing held-directory policies,
+for `PIL._imaging` and `PIL._imagingft`, a 194-byte insertion that reconstructs C
+exactly when removed. Parent and independent auditor enforce the closed07
+projection; every other candidate field, historical epoch, input, native mount,
+negative name and limit remains unchanged. All 678 disjoint affected authored
+cases pass, including a transitive Pillow-shaped native failure then audited
+success. Independent source review found no material findings. This is not an
+installed-runtime pass, and no actual07 controls or allocation exists.
+
+**Next action: obtain complete separately reviewed current-byte/custody admission.**
+Prepare separately numbered data-only post06 check03 with bounded phase timing,
+complete forests and final byte rehash, preserving the 120s normal/130s hard caps.
+Its proposed 4 GiB initial RAM floor is specific to03; retain the existing 2 GiB final
+floor and qualification limits. Fresh headroom is required before invocation;
+disk clearance alone does not establish it. Preserve checks01/02 and all six
+failed qualifications. After full custody passes, separately freeze and review
+any future qualification before its one invocation. The product exit remains
+the real recorded, replayed and exported episode bundle.
 
 **Keep checkpoint A tied to the episode deliverable.** Reuse the existing
 `Engine` → UUID `RunWriter` → initial snapshot → replay → bundle-export route.
@@ -114,7 +125,7 @@ substitute for numerical results, capability, actual browser use or human accept
 
 | Order | Deliverable | Finite exit |
 | --- | --- | --- |
-| 1 | Establish the exact local CPU runtime. | Review the exact two-Pillow-row native-origin correction, obtain complete current-byte/custody admission, then obtain a separately frozen passing actual qualification and independent audit. Preserve every failed allocation; proposals and source tests are not this exit. |
+| 1 | Establish the exact local CPU runtime. | The two-Pillow-row source correction is reviewed in PR164. Obtain complete current-byte/custody admission, then a separately frozen passing actual qualification and independent audit. Preserve every failed allocation; source tests are not this exit. |
 | 2 | Record, replay and export one actual simulator episode. | Admit the exact public engineering route, retain complete inputs/records/snapshots, pass declared replay/export and operator/renderer checks, and independently audit normal cleanup and the portable bundle. This does not qualify a learned controller. |
 | 3 | Complete memory family admission and case closure. | Finish the historical-seed-to-case binding and single-condition admission, qualify the exact admitted configuration, and resolve oracle/own ordering before all-nine/case closure. Preserve raw evidence and publication/quarantine checks. |
 | 4 | Complete studies and controller capability. | Valid development and separately admitted held-out results meet the unchanged memory/scientific and puck/MaleCNS gates above. Preserve failures and resolve any new study prospectively. |
