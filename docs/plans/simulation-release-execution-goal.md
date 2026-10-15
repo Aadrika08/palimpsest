@@ -27,14 +27,38 @@ has191passes/1ancestor-change refusal36.90s, with the same native positive passi
 in isolation. This proves a narrow source policy, not the installed runtime.
 PR136's reviewed finite expected-missing-import policy remains a prerequisite.
 
-The [staging proposal](https://github.com/Aadrika08/palimpsest/blob/research/puck-v3-tmpfs-native-identity/docs/plans/puck-v3-tmpfs-native-staging-proposal.json)
-is explicitly non-executable. The original8,172,376,285-byte CUDA dependency set
-exceeds each available8,011,890,688-byte tmpfs before reserves. The next source/
-design task is to assess an exact CPU-only candidate's wheel metadata and expanded
-footprint, complete interpreter/stdlib and external-library lookup paths, and
-resolve a stable staging location with the existing ancestor guard. CPU variants
-remain proposed, uninstalled and unqualified. Do not silently replace the frozen
-CUDA configuration or weaken identity/custody checks to make it pass.
+[Draft PR #138](https://github.com/Aadrika08/palimpsest/pull/138) now supplies the
+CPU metadata assessment and a reviewed fixed four-import worker prerequisite.
+70 wheels plus one unresolved source-only distribution cover71 candidate
+simulation/lab/dev distributions. Independent audit confirms1,304,650,469 declared
+expanded bytes and1,372,884,992B at4KiB file rounding; full payload hashes,
+installed sizes and licences remain unverified. The first metadata serialization
+failure is preserved separately from corrected assessment02. The new qualification
+descriptor-v3 requires dependency-v3 tmpfs custody and imports NumPy, Torch,
+torchvision, MuJoCo in fixed order, emitting result-v2 with false authority.
+All25 new authored cases pass; broader source runs retain ancestor-change failures.
+Independent source review found no concrete defect. No actual installed stack ran.
+
+The [CPU candidate](https://github.com/Aadrika08/palimpsest/blob/research/puck-cpu-runtime-footprint/docs/plans/puck-cpu-runtime-candidate-v1.json)
+remains incomplete and non-executable. Its3,877,453,824B MemAvailable snapshot is
+below the4,594,110,464B wheel-only planning scenario with worker/reserve budgets;
+shared tmpfs ancestor churn is also unqualified. The original8.17GB CUDA staging
+proposal remains infeasible. Next CPU source/configuration work: an exact bounded
+python-louvain wheel-build/payload-verification route; a separately numbered staged
+preparation/qualification parent consuming the new four-import descriptor/result;
+complete interpreter/stdlib/native/EGL paths; and fresh whole-stage resource/custody
+admission. Allocation01's three-import parent is consumed and is not reused.
+Do not silently change the frozen CUDA environment, weaken guards or count
+metadata estimates as actual numerical qualification.
+
+A separate [memory source audit](../reports/memory-condition-case-close-gap-audit.md)
+verified a frozen-order conflict: oracle precedes own for42/48 families
+(126/144 cases), but oracle admission requires prior-own evidence and each
+condition must close before the next owner. Resolve that contract prospectively
+before all-nine/case close; do not reorder, add owners or invent receipts.
+Independent durable single-condition sealing can still be implemented with the
+internal production cell-replay call, full lifetime custody and versioned existing
+receipts. Real qualification remains required; amendment02 stays uninvoked.
 
 **Milestone exit:** a resource-feasible, fully specified configuration proposal,
 including source/capsule/interpreter/dependencies/environment, storage/RAM/FD/
@@ -91,8 +115,9 @@ were not reached by the sequential entry. Raw failures and first cause remain
 retained. Independent final outcome audit accepted the preserved terminal failure, verified the pin chain and unchanged preparation, and found no evidence defect within scope.
 
 The finite expected-missing-import source contract is reviewed in draftPR136;
-PR137 now adds reviewed tmpfs-only dependency identity. The next deliverable is the
-complete resource-feasible configuration proposal above. No automatic
+PR137 now adds reviewed tmpfs-only dependency identity. PR138 now adds independently audited CPU metadata and the reviewed four-import
+worker route. The complete resource-feasible parent/configuration proposal above
+still remains incomplete. No automatic
 actual retry, ordinary observation refresh, collection, fitting, physics, catalog
 access, navigation attempt3 or physical rover follows. All authority remains false.
 
@@ -183,6 +208,11 @@ The existing replay/custody/compact/source seals were revalidated source-only at
 `2514c47`; no condition/case seals were implemented by that review. A trusted
 successful qualification descriptor still requires the pending memory amendment02
 approval, execution and independent close. Do not invent a passing descriptor.
+
+**Additional source contract gap:** the frozen memory oracle/own schedule conflict
+is recorded in the audit above. No derivation/ordering amendment has been selected
+or authorized. Resolve it before complete all-nine/case admission while progressing
+independent source sealing. This does not replace any existing study decision.
 
 **Three prospective decisions remain pending:** memory qualification amendment 02
 in PR #119; public mixed-catalog collision access versus independent identity-only

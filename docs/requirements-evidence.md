@@ -16,6 +16,21 @@ Disk clearance permits fresh admission checks; CI and physical rover remain outs
 The next deliverable is a complete resource-feasible runtime configuration proposal,
 using the reviewed explicit tmpfs dependency identity policy; no automatic retry follows.
 
+[Draft PR #138](https://github.com/Aadrika08/palimpsest/pull/138) retains independently
+audited CPU metadata:70 wheels/71 candidate distributions,1,304,650,469 declared
+expanded bytes and26,913 files. python-louvain remains source-only; full payload,
+installed-size/licence/native/render closure and RAM/staging admission remain open.
+The current snapshot fails the proposed wheel-only RAM planning scenario. A reviewed
+qualification descriptor-v3 now requires tmpfs dependency-v3 and fixed NumPy/Torch/
+torchvision/MuJoCo order, result-v2 and false authority. All25 new authored checks
+pass; broader runs retain ancestor-change failures, with affected legacy controls
+passing separately. No full-suite or actual CPU-runtime pass is claimed.
+The [memory source audit](reports/memory-condition-case-close-gap-audit.md) verifies
+that126/144 scheduled cases put oracle before own despite requiring prior-own
+admission. Resolve that contract prospectively before all-nine close; no ordering
+or derivation amendment follows from this audit. No actual study/runtime allocation,
+collection or browser/human session ran. All33 statuses remain unchanged.
+
 [Draft PR #137](https://github.com/Aadrika08/palimpsest/pull/137) adds explicit
 dependency-v3 tmpfs-only all-leaf identity admission, full census/read leases and
 authenticated helper source. Legacy schemas and raw native map/origin checks stay
