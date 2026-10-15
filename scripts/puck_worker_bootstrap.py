@@ -160,10 +160,11 @@ def _parse(raw, expected):
     if reg['version']==3:
         q=reg['qualification']
         if (type(q) is not dict or set(q)!= {'kind','version','expected_versions','stdlib_cache_aliases','negative_imports'}
-                or type(q['version']) is not int or q['version'] not in (1,2)
+                or type(q['version']) is not int or q['version'] not in (1,2,3)
                 or q['kind']!='puck-held-runtime-import-qualification-v'+str(q['version'])
                 or type(q['expected_versions']) is not dict
-                or set(q['expected_versions'])!={'numpy','torch','mujoco'}
+                or set(q['expected_versions'])!=({'numpy','torch','torchvision','mujoco'}
+                    if q['version']==3 else {'numpy','torch','mujoco'})
                 or any(type(v) is not str or not 1<=len(v)<=128 for v in q['expected_versions'].values())
                 or type(q['stdlib_cache_aliases']) is not dict
                 or q['stdlib_cache_aliases']!={'__mp_main__':'__main__'}):
@@ -219,7 +220,7 @@ def _parse(raw, expected):
         parent = name.rpartition('.')[0]
         if parent and parent not in namespaces and (parent not in modules or not modules[parent].endswith('/__init__.py')):
             raise ValueError('Unregistered package parent')
-    if reg['version']==3 and reg['qualification']['version']==2:
+    if reg['version']==3 and reg['qualification']['version']>=2:
         local_tops={name.split('.')[0] for name in modules.keys()|namespaces.keys()}
         if any(name.split('.')[0] in local_tops for name in reg['qualification']['negative_imports']):
             raise ValueError('Expected missing import overlaps authenticated local source')
@@ -285,9 +286,9 @@ class _SourceFinder(importlib.abc.MetaPathFinder):
             self.owner._import_recheck()
             if (self.owner._reg['version']==3 and
                     fullname in self.owner._negative_imports):
-                # V1 preserves the original exact org denial. V2 additionally
+                # V1 preserves the original exact org denial. V2/V3 additionally
                 # verifies finite absence in the live held package namespace.
-                if self.owner._missing_policy_version==2:
+                if self.owner._missing_policy_version>=2:
                     if self.owner._dependencies is None:
                         raise RuntimeError('Expected missing import requires admitted dependency custody')
                     self.owner._dependencies.provider.require_absent_imports((fullname,))
@@ -452,7 +453,10 @@ class HeldWorkerBootstrap:
                     self._modules.keys() | self._namespaces.keys(),
                     [self._reg['source_root'], self._reg['runtime']['root']])
                 self._dependency_dispatch=(self._dependencies,DependencyImports)
-                if self._missing_policy_version==2:
+                if (self._missing_policy_version==3 and
+                        provider.snapshot().get('native_identity')!='tmpfs-raw-dev-inode-v1'):
+                    raise ValueError('Four-import qualification requires admitted v3 tmpfs dependency custody')
+                if self._missing_policy_version>=2:
                     provider.require_absent_imports(self._negative_imports)
             self.recheck(); return self
         except BaseException as error: self._fail(error); raise
@@ -598,7 +602,7 @@ class HeldWorkerBootstrap:
             if self._reg['version']==3:
                 result['stdlib_cache_aliases']=({'__mp_main__':'__main__'} if '__mp_main__' in sys.modules else {})
                 result['denied_imports']=sorted(self._denied_imports)
-                if self._missing_policy_version==2:
+                if self._missing_policy_version>=2:
                     result['expected_missing_imports']=list(self._negative_imports)
             if len(canonical(result)) > MiB: raise ValueError('Bootstrap receipt ceiling exceeded')
             self.recheck(); return copy.deepcopy(result)
