@@ -1,0 +1,219 @@
+{
+  "authority": {
+    "current_full_post06_bytes_accepted": false,
+    "new_allocation_authorized": false,
+    "new_check03_invoked": false,
+    "runtime_qualified": false,
+    "study_authorized": false
+  },
+  "current_host_observation": {
+    "at_utc": "2026-10-15T22:00:21.345198+00:00",
+    "limitation": "This is a later instantaneous host snapshot, not telemetry from the failed02 interval; cumulative counters and swap occupancy do not identify per-process I/O or cause.",
+    "meminfo_bytes": {
+      "Active(file)": 232284160,
+      "Dirty": 6172672,
+      "Inactive(file)": 3142582272,
+      "MemAvailable": 3422187520,
+      "MemTotal": 16023781376,
+      "Shmem": 198873088,
+      "SwapFree": 2607222784,
+      "SwapTotal": 16023285760,
+      "Writeback": 0
+    },
+    "pressure": {
+      "cpu": [
+        "some avg10=0.00 avg60=0.04 avg300=0.26 total=1121434019",
+        "full avg10=0.00 avg60=0.00 avg300=0.00 total=0"
+      ],
+      "io": [
+        "some avg10=4.08 avg60=8.67 avg300=10.27 total=2922163950",
+        "full avg10=3.47 avg60=7.31 avg300=8.41 total=2697529130"
+      ],
+      "memory": [
+        "some avg10=0.13 avg60=0.36 avg300=0.48 total=534164876",
+        "full avg10=0.10 avg60=0.29 avg300=0.41 total=511468424"
+      ]
+    },
+    "swaps": [
+      "Filename\t\t\t\tType\t\tSize\t\tUsed\t\tPriority",
+      "/dev/zram0                              partition\t15647740\t13101624\t100"
+    ]
+  },
+  "established": [
+    {
+      "external_elapsed_seconds": 31.586161162995268,
+      "fact": "Pre06 admission completed normally and published full dated data-only evidence.",
+      "program_elapsed_seconds": 31.436462603975087,
+      "resources_after": {
+        "at_utc": "2026-10-15T21:37:20.660303+00:00",
+        "mem_available_bytes": 3635085312,
+        "nofile_hard": 40000,
+        "nofile_soft": 40000,
+        "project_free_bytes": 90322046976,
+        "tmpfs_free_bytes": 3449196544
+      },
+      "resources_before": {
+        "at_utc": "2026-10-15T21:36:51.078574+00:00",
+        "mem_available_bytes": 4371296256,
+        "nofile_hard": 524288,
+        "nofile_soft": 65536,
+        "project_free_bytes": 90340225024,
+        "tmpfs_free_bytes": 3449200640
+      },
+      "returncode": 0
+    },
+    {
+      "fact": "Post02 failed at the normal120-second clock check while hashing a staged leaf during the first forest pass.",
+      "failed_leaf_unknown": true,
+      "phase_elapsed_and_bytes_unknown": true,
+      "polling_wall_time_not_total_duration": 0.80384598,
+      "published_full_receipt": false,
+      "trace_location": "post02:178 -> forest:353 -> Held.file:140 -> hash_fd:151 -> clock:103"
+    },
+    {
+      "added_payload_walks_before_failure": 0,
+      "comparison_assertion_passed": true,
+      "fact": "The entire substantive path from authenticated auditor read through the first forest call is text-identical except the extra fixed06 failure-result tuple. New receipt path/absence handling and post-check PID sampling are separate surrounding changes."
+    },
+    {
+      "fact": "Repeated Held.file requests reuse the open descriptor and cached digest, verify identity/pin/raw-role consistency, and do not reread content. The second forest performs namespace/identity/alias/tmpfs checks; final Held.recheck deliberately rehashes every held leaf.",
+      "payload_dedup_already_present": true
+    },
+    {
+      "fact": "Static later ELF review identifies exactly the two Pillow origin-policy rows and selected bytes, not complete forest custody.",
+      "full_post06_pass": false,
+      "native_review_elapsed_seconds": 6.0219641019939445,
+      "native_review_status": "STATIC_ORIGIN_POLICY_DEFECT_IDENTIFIED"
+    }
+  ],
+  "input_pins": [
+    {
+      "path": "/tmp/palimpsest-held06-post-byte-custody-02.py",
+      "sha256": "9551e20451631580d668e9a6dfa9d442576c85f75f06bfbef2826409e3412532",
+      "size_bytes": 16444
+    },
+    {
+      "path": "/tmp/palimpsest-held06-post-byte-custody-02-external-tool.json",
+      "sha256": "84ee9a0df26f4c043083a014a56a4531109603cb6a453891c113ac49e0ddcf48",
+      "size_bytes": 2150
+    },
+    {
+      "path": "/home/utkarsh/.codex/worktrees/0071/brain/docs/plans/puck-cpu-held-qualification-06-admission.py",
+      "sha256": "4a789e5fa76bdeb83f7aa1252ebc65e03527fb143f4830be9b8a1627bf613813",
+      "size_bytes": 15979
+    },
+    {
+      "path": "/tmp/palimpsest-held06-admission-external.json",
+      "sha256": "1397aaa93fabc6b17c66d21b9738c8d2c936b3ad54b95ad3e20ffe446b0886d6",
+      "size_bytes": 893
+    },
+    {
+      "path": "/tmp/palimpsest-held06-admission-external.stdout",
+      "sha256": "88428f44f2e633fe7e4974d315df8876848d559224c4735dbebaf0f48c5bacee",
+      "size_bytes": 3104
+    },
+    {
+      "path": "/tmp/palimpsest-held06-report.md",
+      "sha256": "1707665f9641afdba5118ec6e70a0e8a18a838492f97fffcc15b928f382d8c5e",
+      "size_bytes": 4890
+    },
+    {
+      "path": "/tmp/palimpsest-held06-native-failure-review.json",
+      "sha256": "7faa83dfa535111f72abaf3e482877c2143bf9e2569098ade7ed12f570d5c74d",
+      "size_bytes": 165833
+    },
+    {
+      "path": "/home/utkarsh/.codex/worktrees/0071/brain/docs/reports/puck-cpu-held-qualification-amendment-03/source-evidence/validation/prepared-byte-audit03-01/authenticated-auditor.py",
+      "sha256": "01bc2c99634cb3ec2e7bfc92f4fc96b219e07c8a5ea10351227a5cfb1181d4cf",
+      "size_bytes": 65522
+    },
+    {
+      "path": "/home/utkarsh/.codex/worktrees/0071/brain/scripts/audit_puck_cpu_held_runtime.py",
+      "sha256": "f910d6bdf592fe7b488591398332ac70131891bd4f7c95ea793d20be8b90f829",
+      "size_bytes": 75231
+    }
+  ],
+  "kind": "post06-full-byte-admission-finite-plan-v1",
+  "limits": {
+    "investigation_actual_program_time_limit_seconds": 30,
+    "investigation_named_file_limit": 120,
+    "investigation_read_limit_bytes": 16777216,
+    "scope": "Read-only source/retained JSON/text and permittedproc snapshots; no substantive control/main/helper execution, namespace, target import/native call, SITE/stage census, large payload hash, Git or network.",
+    "this_evidence_builder_bytes": 352154,
+    "this_evidence_builder_files": 14,
+    "this_evidence_builder_seconds": 0.0040888849762268364
+  },
+  "optional_source_optimization": {
+    "candidate": "Hoist per-root file-name sets once inside plan(), preserving identical mapping membership predicates and every bound; requires a separate tiny source delta, meaningful equivalence/refusal fixtures and independent review before freezing a helper.",
+    "limitation": "Do not assume this fixes the timeout; no measured timing attribution exists. Do not remove forest2, SITE final census, native/root checks or Held.recheck.",
+    "status": "Not required or authorized by this review"
+  },
+  "proven_small_extra_reads": [
+    {
+      "maximum_bytes": 16444,
+      "reason": "Successful admission own path also appears in the frozen manifest and is cached there; post02 additionally holds its distinct own file while still authenticating the original admission file from the manifest.",
+      "role": "Post02 own control under/tmp"
+    },
+    {
+      "reason": "One fixed small JSON receipt plus missing baseline-after assertion.",
+      "role": "Retained06 failed result",
+      "sha256": "e88a7f3317ae15b709409cf04a30f969629b20c51454a5ad6ca72d63d6378b88"
+    }
+  ],
+  "read_cost": {
+    "baseline_prefix_each_content_pass_bytes": 90314007,
+    "completed_program_minimum_content_bytes": 4122318578,
+    "note": "At least4,122,318,578B across initial SITE, initial staged forest and final held rehash plus prefix; metadata/native/external bytes add more. Two forest calls are not two content reads before the final rehash.",
+    "site_initial_bytes": 1304701872,
+    "staged_each_content_pass_bytes": 1318494346
+  },
+  "recommendation": {
+    "decision": "Prepare one separately numbered, reviewed DATA-ONLY post06 byte/custody check03; no qualification rerun or07 allocation.",
+    "exit": "One reviewed03 returns normal external0 within unchanged deadline, publishes complete all27225 SITE +27255 staged/4roots content matches, exact namespaces/root identities, native/baseline/source/input/history/19absences, final full held rehash, complete normal closure and sampled-identity scope. Only that dated evidence can precede a separate reviewed future runtime allocation.",
+    "failure": "A resource refusal or any03 timeout/mismatch/close/publication failure remains retainedFAIL/incomplete; no implicit04 data check or runtime07. If sufficient quieter resources cannot be obtained, stop for resources. If03 still times out, its bounded phase evidence selects one measured source optimization or a different host/resource window before another separately reviewed proposal.",
+    "prospective_files": [
+      "A new fixed post-byte-custody-03 control with external SHA and exclusive new output path",
+      "Separate bounded external stdout/stderr/exit receipt; preserve01refusal/02failure and all06 artifacts"
+    ],
+    "resource_action": "Quiesce competing large I/O/memory work and obtain fresh headroom comparable to the successful admission (before MemAvailable4371296256B). A prospective03-only4GiB RAM admission floor is a stronger gate, not evidence of causality or a completion guarantee; retain unchanged disk/tmpfs/FD/executable floors and all output absences.",
+    "smallest_change": "Retain the existing helper, all payload/namespace/identity/raw-role guards and120s normal/130s hard caps. Add only bounded phase-completion telemetry and explicit failure/closure evidence to the fixed control; run once after fresh, quieter host/resource admission.",
+    "telemetry": "At most12 bounded stderr JSON phase markers (<=64KiB total): controls/plans, SITE hash, host baseline/native, forest1, forest2, final SITE census, held recheck, close/publication; record elapsed, held.files count and held.total bytes. Capture initial/final resource/pressure snapshots. No per-file giant output or helper monkeypatch."
+  },
+  "source_line_references": {
+    "current_auditor": {
+      "def file(": 191,
+      "def forest(": 433,
+      "def hash_fd(": 214,
+      "def historical_acceptance(": 328,
+      "def plan(": 394,
+      "def recheck(": 235
+    },
+    "held_helper": {
+      "def file(": 125,
+      "def forest(": 335,
+      "def hash_fd(": 148,
+      "def historical_acceptance(": 230,
+      "def plan(": 296,
+      "def recheck(": 169
+    },
+    "post02": {
+      "deadline=started+120": 88,
+      "files,site_dirs,site_stamps=r.census": 147,
+      "held.recheck();held.clock()": 183,
+      "tree=m.forest": 178
+    },
+    "successful_admission": {
+      "deadline=started+120": 89,
+      "files,site_dirs,site_stamps=r.census": 148,
+      "held.recheck();held.clock()": 184,
+      "tree=m.forest": 179
+    }
+  },
+  "status": "PLAN_ONLY_NO_NEW_CHECK_EXECUTED",
+  "unresolved_causes": [
+    "No failed-interval resource/pressure record, CPU-time breakdown, per-phase timings, current leaf or hashed-byte progress was published.",
+    "Cold/swapped tmpfs pages, project-file I/O contention, reclaim or CPU/helper work are plausible mechanisms, not established causes. The later host I/O-pressure and occupied zram snapshot cannot distinguish them.",
+    "The existing plan validators rebuild a27225-path set for each root0 mapped module and run twice. This is proven repeated CPU work but its elapsed contribution is unmeasured; it also existed in the31.586-second success.",
+    "Per-leaf tmpfs ctypes/fstatfs, all-entry FD/named-edge checks, metadata decoding and final rehash are existing bounded costs, not newly identified defects."
+  ]
+}
