@@ -29,6 +29,9 @@ BOOTSTRAP='scripts/puck_worker_bootstrap.py'
 SITE='runs/puck-cpu-install-01/site'
 OUTPUTS=dict(prepare='runs/puck-cpu-held-preparation-01',qualify='runs/puck-cpu-held-qualification-01')
 QUALIFY02='runs/puck-cpu-held-qualification-02'
+QUALIFY03='runs/puck-cpu-held-qualification-03'
+PREPARATION_NEGATIVE_IMPORTS=['numpy._distributor_init_local','org']
+QUALIFY03_NEGATIVE_IMPORTS=PREPARATION_NEGATIVE_IMPORTS+['torch._rocm_init']
 LEGACY_AUDITOR_SHA256='19723b4ec19c6cd8fd29d38b5cbabab60f89c136ee37564f6e94175439b4eed9'
 VERSIONS=dict(numpy='2.2.5',torch='2.9.0+cpu',torchvision='0.24.0+cpu',mujoco='3.3.6')
 ENVIRONMENT=dict(PYTHONDONTWRITEBYTECODE='1',LC_ALL='C.UTF-8',LANG='C.UTF-8',
@@ -150,10 +153,11 @@ def validate_configuration(config):
     keys={'kind','version','phase','allocation_id','root','stage_parent','sources','inputs',
           'interpreter','environment','expected_versions','limits','negative_imports','claims'}
     phase=config.get('phase') if type(config) is dict else None
-    amended=type(config) is dict and config.get('kind')=='puck-cpu-held-runtime-allocation-v2'
+    kind=config.get('kind') if type(config) is dict else None
+    epoch=3 if kind=='puck-cpu-held-runtime-allocation-v3' else 2 if kind=='puck-cpu-held-runtime-allocation-v2' else 1
+    amended=epoch in (2,3)
     if amended:keys.add('preparation_acceptance')
     elif phase=='qualify':keys.add('preparation')
-    epoch=2 if amended else 1
     if (phase not in LIMITS or set(config)!=keys or (amended and phase!='qualify')
             or config['kind']!='puck-cpu-held-runtime-allocation-v'+str(epoch)
             or type(config['version']) is not int or config['version']!=epoch
@@ -181,17 +185,20 @@ def validate_configuration(config):
         pin(config['preparation'])
         if config['preparation']['path']!=OUTPUTS['prepare']+'/result.json':raise ValueError('Exact CPU preparation receipt required')
     _negative_imports(config['negative_imports'])
+    if epoch==3 and config['negative_imports']!=QUALIFY03_NEGATIVE_IMPORTS:
+        raise ValueError('Exact CPU qualification03 missing-import roster required')
 
 
 def allocation_output(config):
     validate_configuration(config)
+    if config['version']==3:return QUALIFY03
     return QUALIFY02 if config['version']==2 else OUTPUTS[config['phase']]
 
 
 def validate_preparation_acceptance(config,blobs):
     """Bind historical data acceptance without assigning its old source proof to new bytes."""
     validate_configuration(config)
-    if config['version']!=2:raise ValueError('CPU amendment02 configuration required')
+    if config['version'] not in (2,3):raise ValueError('CPU amendment02 or03 configuration required')
     acceptance=config['preparation_acceptance'];values={}
     for role,row in acceptance.items():
         raw=blobs[role]
@@ -204,6 +211,10 @@ def validate_preparation_acceptance(config,blobs):
     validate_configuration(prior)
     if prior['version']!=1 or prior['phase']!='prepare':raise ValueError('Historical CPU preparation01 required')
     shared=('root','stage_parent','inputs','interpreter','environment','expected_versions','negative_imports','claims')
+    if config['version']==3:
+        if prior['negative_imports']!=PREPARATION_NEGATIVE_IMPORTS:
+            raise ValueError('Exact historical CPU preparation missing-import roster required')
+        shared=tuple(k for k in shared if k!='negative_imports')
     if any(prior[k]!=config[k] for k in shared):raise ValueError('CPU amendment changed prepared data or policy')
     changed={old['path'] for old,new in zip(prior['sources'],config['sources']) if old!=new}
     if BOOTSTRAP not in changed or not changed<={BOOTSTRAP,'scripts/qualify_puck_cpu_held_runtime.py'}:
@@ -497,7 +508,7 @@ def execute(config,raw,started):
     from palimpsest.puck_cpu_registration import build_cpu_source_registration,attach_cpu_candidate
     from palimpsest.puck_cpu_namespace import sandbox_command
     phase=config['phase'];limits=config['limits'];output=ROOT/allocation_output(config);stage=Path(config['stage_parent'])
-    amended=config['version']==2
+    amended=config['version'] in (2,3)
     rows=config['sources']+list(config['inputs'].values())
     unique={r['path']:r for r in rows}
     if len(unique)!=len(rows):raise ValueError('Overlapping CPU source/input pins')

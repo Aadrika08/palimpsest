@@ -158,9 +158,9 @@ from test_puck_cpu_held_parent_integration import ROOT, canonical, digest, load,
 
 
 @contextmanager
-def amendment_fixture(tmp_path):
+def amendment_fixture(tmp_path,*,rocm_probe=False):
     assert tmp_path.resolve().is_relative_to((ROOT/'runs').resolve()), 'Use persistent runs/ basetemp'
-    root,current,inputs,_=project(tmp_path)
+    root,current,inputs,_=project(tmp_path,rocm_probe=rocm_probe)
     legacy=ROOT/'docs/reports/puck-cpu-held-preparation-01'
     archived_auditor=legacy/'controls/scripts/audit_puck_cpu_held_runtime.py'
     archived_raw=archived_auditor.read_bytes()
@@ -206,8 +206,11 @@ def amendment_fixture(tmp_path):
         qualify=current.configuration_template(phase='qualify',root=str(root),stage_parent=str(stage),
             sources=sources(),inputs=inputs,negative_imports=['org'],preparation=preparation)
         code,stdout,stderr=run_cli(root,current,'qualify',qualify)
-        assert code==0,(code,stdout,stderr)
-        assert json.loads(stdout)['status']=='imports_completed'
+        assert code==(1 if rocm_probe else 0),(code,stdout,stderr)
+        assert json.loads(stdout)['status']==('FAIL' if rocm_probe else 'imports_completed')
+        if rocm_probe:
+            assert not (root/current.OUTPUTS['qualify']/'baseline-after.json').exists()
+            assert b'torch._rocm_init' in (root/current.OUTPUTS['qualify']/'logs/stderr.log').read_bytes()
         paths=[p for phase in ('prepare','qualify') for p in (root/current.OUTPUTS[phase]).rglob('*') if p.is_file()]
         paths += [configuration,transport,audit_output,cli_path]
         paths += list(root.glob('authored-prepare-cli.*'))+list(root.glob('authored-qualify-*'))+list(root.glob('authored-historical-audit.*'))
