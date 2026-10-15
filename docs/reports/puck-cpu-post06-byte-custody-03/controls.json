@@ -1,0 +1,209 @@
+{
+  "actual07_configuration_created": false,
+  "actual07_invoked": false,
+  "admission_plan": {
+    "path": "/tmp/palimpsest-post06-full-byte-admission-plan.json",
+    "sha256": "6466ebf6ed2b7b33c596620bb8d51c1669611d1d32dbc60676f0237944c45d42",
+    "size_bytes": 11594
+  },
+  "base06_controls": {
+    "configuration": {
+      "path": "/home/utkarsh/.codex/worktrees/0071/brain/docs/plans/puck-cpu-held-qualification-06.json",
+      "sha256": "da630b05b871508686a4c92402725820b40b27253b2652b47c686a8f441a04e8",
+      "size_bytes": 8995
+    },
+    "external_runner": {
+      "path": "/tmp/palimpsest-held06-external.py",
+      "sha256": "214cb6a7d6195d9f6eb957641ca69ac6b03134da3abb737c81c3e1e5f731889e",
+      "size_bytes": 2083
+    },
+    "freeze": {
+      "path": "/home/utkarsh/.codex/worktrees/0071/brain/docs/plans/puck-cpu-held-qualification-06-freeze.json",
+      "sha256": "54dfca9f7a2bccff7a436e12d232f80944f564fce48a66480dacb77d1693e61c",
+      "size_bytes": 73052
+    },
+    "post02_runner": {
+      "path": "/tmp/palimpsest-held06-post-byte-custody-02.py",
+      "sha256": "9551e20451631580d668e9a6dfa9d442576c85f75f06bfbef2826409e3412532",
+      "size_bytes": 16444
+    }
+  },
+  "check03_invoked": false,
+  "collection_authorized": false,
+  "command": [
+    "/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/bin/python3.11",
+    "-I",
+    "-S",
+    "-B",
+    "/tmp/palimpsest-held06-post-byte-custody-03.py"
+  ],
+  "created_at": "2026-10-15T22:16:53.936186+00:00",
+  "current_resource_guard_established": false,
+  "custody": {
+    "absence_scope": "These12 fixed named paths only; repeated by wrapper at invocation, not a global filesystem absence proof.",
+    "all_known_actual07_paths_required_absent": [
+      "/home/utkarsh/.codex/worktrees/0071/brain/docs/plans/puck-cpu-held-qualification-07.json",
+      "/home/utkarsh/.codex/worktrees/0071/brain/docs/plans/puck-cpu-held-qualification-07-admission.py",
+      "/home/utkarsh/.codex/worktrees/0071/brain/docs/plans/puck-cpu-held-qualification-07-freeze.json",
+      "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-held-qualification-07",
+      "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-held-qualification-07-external-cli.stdout",
+      "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-held-qualification-07-external-cli.stderr",
+      "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-held-qualification-07-external-cli-transport.json",
+      "/tmp/palimpsest-puck-cpu-held-qualification-07-audit-01.json"
+    ],
+    "external_receipt_reserved_exclusively_before_launch": true,
+    "failure_or_partial_reservation_consumes03_paths": true,
+    "historical01_02_and_all06_artifacts_unchanged": true,
+    "named_absences_observed_during_preparation": [
+      {
+        "absent": true,
+        "path": "/tmp/palimpsest-held06-post-byte-custody-03-external.stdout"
+      },
+      {
+        "absent": true,
+        "path": "/tmp/palimpsest-held06-post-byte-custody-03-external.stderr"
+      },
+      {
+        "absent": true,
+        "path": "/tmp/palimpsest-held06-post-byte-custody-03-external.json"
+      },
+      {
+        "absent": true,
+        "path": "/tmp/palimpsest-held06-post-byte-custody-03.json"
+      },
+      {
+        "absent": true,
+        "path": "/home/utkarsh/.codex/worktrees/0071/brain/docs/plans/puck-cpu-held-qualification-07.json"
+      },
+      {
+        "absent": true,
+        "path": "/home/utkarsh/.codex/worktrees/0071/brain/docs/plans/puck-cpu-held-qualification-07-admission.py"
+      },
+      {
+        "absent": true,
+        "path": "/home/utkarsh/.codex/worktrees/0071/brain/docs/plans/puck-cpu-held-qualification-07-freeze.json"
+      },
+      {
+        "absent": true,
+        "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-held-qualification-07"
+      },
+      {
+        "absent": true,
+        "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-held-qualification-07-external-cli.stdout"
+      },
+      {
+        "absent": true,
+        "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-held-qualification-07-external-cli.stderr"
+      },
+      {
+        "absent": true,
+        "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-held-qualification-07-external-cli-transport.json"
+      },
+      {
+        "absent": true,
+        "path": "/tmp/palimpsest-puck-cpu-held-qualification-07-audit-01.json"
+      }
+    ],
+    "raw_streams_exclusive": true,
+    "reentry_cannot_overwrite": true,
+    "source_and_config_and_freeze_hash_before_launch": true,
+    "success_output_required_absent": true
+  },
+  "cwd": "/home/utkarsh/.codex/worktrees/0071/brain",
+  "environment": {
+    "LANG": "C.UTF-8",
+    "LC_ALL": "C.UTF-8",
+    "PATH": "/usr/bin:/bin",
+    "PYTHONDONTWRITEBYTECODE": "1"
+  },
+  "executable": false,
+  "external_wrapper_invoked": false,
+  "fixed_root": "/home/utkarsh/.codex/worktrees/0071/brain",
+  "implicit_retry": false,
+  "kind": "held06-post-byte-custody03-fixed-external-controls-v1",
+  "limits": {
+    "external_deadline_seconds": 145,
+    "external_timeout": "remaining145-second budget measured from wrapper main start",
+    "final_minimum_available_ram_bytes": 2147483648,
+    "initial_minimum_available_ram_bytes": 4294967296,
+    "internal_address_space_bytes": 536870912,
+    "internal_core_bytes": 0,
+    "internal_file_bytes": 16777216,
+    "internal_hard_seconds": 130,
+    "internal_max_fds": 40000,
+    "internal_normal_seconds": 120,
+    "maximum_external_receipt_bytes": 65536,
+    "maximum_internal_stderr_marker_bytes": 65536,
+    "maximum_printed_summary_bytes": 4096,
+    "maximum_raw_stream_bytes_each": 16777216,
+    "minimum_project_free_bytes": 4294967296,
+    "minimum_tmpfs_free_bytes": 268435456
+  },
+  "native_authorized": false,
+  "new_allocation_authorized": false,
+  "outputs": {
+    "json": "/tmp/palimpsest-held06-post-byte-custody-03-external.json",
+    "stderr": "/tmp/palimpsest-held06-post-byte-custody-03-external.stderr",
+    "stdout": "/tmp/palimpsest-held06-post-byte-custody-03-external.stdout",
+    "success": "/tmp/palimpsest-held06-post-byte-custody-03.json"
+  },
+  "pending": [
+    "Independent review and external freeze of exact wrapper/control/source pins.",
+    "Fresh quieter-host initialRAM>=4GiB and all unchanged source resource/executable/FD/disk/tmpfs gates; root last reported availableRAM below initialfloor, not refreshed here.",
+    "Fresh repeated fixed output/actual07 absences and original isolated pinned interpreter command with no LD_PRELOAD/LD_LIBRARY_PATH.",
+    "One explicit reviewed03 invocation followed by full terminal/stream/result byte review; no implicit04 data check or runtime07."
+  ],
+  "qualification_claims": [],
+  "runtime_qualified": false,
+  "source": {
+    "path": "/tmp/palimpsest-held06-post-byte-custody-03.py",
+    "sha256": "96e496cef4ba2b1c2250e8a2a45737cb930b18cb019c8cc2b32d565830c522ff",
+    "size_bytes": 19086
+  },
+  "source_review": {
+    "path": "/tmp/palimpsest-held06-post-byte-custody-03-source-review.json",
+    "sha256": "82f8be30f3e6885709c6c274b97a2d750be1d63f17ba60251d063a539a0c192d",
+    "size_bytes": 15986
+  },
+  "static_checks": {
+    "ast_parse_and_compile_only": true,
+    "control_pins_final_wrapper_without_self_reference": true,
+    "fixed_command_ast": true,
+    "imports_stdlib_only": [
+      "pathlib",
+      "hashlib",
+      "json",
+      "os",
+      "subprocess",
+      "sys",
+      "time"
+    ],
+    "no_exec_or_eval": true,
+    "no_module_main_or_helper_execution": true,
+    "source_config_and_freeze_literal_pins_match": true
+  },
+  "status": "PREPARED_NOT_INVOKED_PENDING_RESOURCE_GUARD_AND_INDEPENDENT_REVIEW",
+  "study_authorized": false,
+  "transport": {
+    "actual_child_returncode_and_timeout_recorded": true,
+    "close_fds": true,
+    "deadline_scope": "Subprocess wait uses remaining145-second budget; late observed wrapper completion is refused. This is an operational deadline, not a hard WCET or exhaustive process-lifetime proof.",
+    "elapsed_scope": "Wrapper main start through authentication, exclusive reservation, child wait, stream close and byte hashes; normal acceptance checked again after receipt flush and printed summary.",
+    "printed_output": "Single bounded metadata summary only; no full source, stream contents or payload data.",
+    "stdin": "DEVNULL",
+    "stream_pins": "Exact size and SHA256 of each retained raw stream, bounded16MiB each."
+  },
+  "version": 1,
+  "wrapper": {
+    "path": "/tmp/palimpsest-held06-post-byte-custody-03-external.py",
+    "sha256": "ccf23f71abe9b20cccc78109ea9ecc6be7397fffaca13e55dbc67bf7392cb63e",
+    "size_bytes": 5215
+  },
+  "wrapper_command": [
+    "/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/bin/python3.11",
+    "-I",
+    "-S",
+    "-B",
+    "/tmp/palimpsest-held06-post-byte-custody-03-external.py"
+  ]
+}

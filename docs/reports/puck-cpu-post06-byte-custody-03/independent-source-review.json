@@ -1,0 +1,131 @@
+{
+  "authenticated_holder_source": {
+    "path": "/home/utkarsh/.codex/worktrees/0071/brain/docs/reports/puck-cpu-held-qualification-amendment-03/source-evidence/validation/prepared-byte-audit03-01/authenticated-auditor.py",
+    "read_only_verified": true,
+    "sha256": "01bc2c99634cb3ec2e7bfc92f4fc96b219e07c8a5ea10351227a5cfb1181d4cf",
+    "size_bytes": 65522
+  },
+  "checked_pins": [
+    {
+      "path": "/tmp/palimpsest-held06-post-byte-custody-02.py",
+      "sha256": "9551e20451631580d668e9a6dfa9d442576c85f75f06bfbef2826409e3412532",
+      "size_bytes": 16444
+    },
+    {
+      "path": "/tmp/palimpsest-held06-post-byte-custody-03.py",
+      "sha256": "96e496cef4ba2b1c2250e8a2a45737cb930b18cb019c8cc2b32d565830c522ff",
+      "size_bytes": 19086
+    },
+    {
+      "path": "/tmp/palimpsest-held06-post-byte-custody-03-source-review.json",
+      "sha256": "82f8be30f3e6885709c6c274b97a2d750be1d63f17ba60251d063a539a0c192d",
+      "size_bytes": 15986
+    }
+  ],
+  "claims": {
+    "collection_authorized": false,
+    "current_full_byte_custody_pass": false,
+    "execution_approved": false,
+    "prepared03_executed": false,
+    "runtime_qualified": false,
+    "study_authorized": false,
+    "tests_executed": false
+  },
+  "findings": [],
+  "independently_verified_static_checks": {
+    "ast_parse_only": true,
+    "main_exact_after_removing_only_instrumentation_and_initial_RAM_argument": true,
+    "old_constant_changes": [
+      "OUTPUT"
+    ],
+    "resource_function_exact_after_reverting_only_parameterization": true,
+    "success_result_construction_identical": true,
+    "unchanged_functions": {
+      "absent": true,
+      "check_absences": true,
+      "module": true
+    }
+  },
+  "kind": "held06-post-byte-custody03-independent-source-review-v1",
+  "limitations": [
+    "Source and finite small-control inspection/AST only. No prepared03/main/helper/auditor/census, tests, namespace, vendor/native code or substantive program was executed.",
+    "No live resources refreshed. Approximately3.39GB RAM was root-reported historical context below4GiB, not a current measurement or invocation admission.",
+    "As in02, initial interpreter/environment/resource/absence checks precede the internal120/130s timer; new initial failure telemetry also precedes it. A separately frozen external observer must bound the whole process.",
+    "Default SIGALRM or external kill may prevent Python failure telemetry. Completed phase prefixes and external termination evidence remain necessary.",
+    "A published success JSON alone is insufficient: publication precedes final stderr/stdout/deadline checks. Require normal external0 and complete canonical stdout before accepting it.",
+    "CURRENT_BYTES_PRESERVED_AFTER_FAILED06 is data-only; it cannot grant runtime07, operator, renderer, episode, study or release authority.",
+    "No payload pass removed, guard weakened, historical result replaced, retry or runtime allocation approved."
+  ],
+  "limits": {
+    "address_space_bytes": 536870912,
+    "file_bytes": 16777216,
+    "final_available_ram_bytes": 2147483648,
+    "hard_seconds": 130,
+    "initial_available_ram_bytes": 4294967296,
+    "max_fds": 40000,
+    "normal_seconds": 120,
+    "project_free_bytes": 4294967296,
+    "tmpfs_free_bytes": 268435456
+  },
+  "reviewed_at_utc": "2026-10-15T22:14:59.133297+00:00",
+  "reviewed_mechanism": [
+    {
+      "conclusion": "Unchanged120s normal deadline,130s SIGALRM default termination,512MiB address space,40000FD,16MiB file and zero-core guards.",
+      "lines": [
+        134,
+        135,
+        138,
+        141
+      ]
+    },
+    {
+      "conclusion": "INITIAL alone requires4GiB available RAM; FINAL retains original2GiB default. Project4GiB and tmpfs256MiB floors unchanged.",
+      "lines": [
+        28,
+        34,
+        130,
+        235
+      ]
+    },
+    {
+      "conclusion": "Original exact source/input/raw-role/history/absence checks, full SITE hash, native/baseline/aliases, both complete forests, final SITE metadata equality and full Held.recheck content reread remain.",
+      "lines": [
+        151,
+        192,
+        195,
+        226,
+        228,
+        236
+      ]
+    },
+    {
+      "conclusion": "Telemetry is limited to12 records,8192bytes each and64KiB total; eight fixed phase completions carry elapsed and held counts only. Failure telemetry suppresses its own exceptions; both outer handlers bare-raise their original caught exception.",
+      "lines": [
+        87,
+        121
+      ]
+    },
+    {
+      "conclusion": "Failure closure appears only after successful held.close and completed local observations. It reports actual FD/child/thread observations without asserting successful closure equality. A close exception leaves held_close_completed unclaimed.",
+      "lines": [
+        109,
+        117,
+        240,
+        244
+      ]
+    },
+    {
+      "conclusion": "New03 success path uses unchanged authenticated O_EXCL/no-follow publication and retains postpublication/stdout normal-deadline checks. Success result constructor is AST-identical to02.",
+      "lines": [
+        18,
+        255,
+        259
+      ]
+    }
+  ],
+  "reviewer_tool_notes": [
+    "Two reviewer-only AST-normalization attempts were corrected for semicolon-separated assignments; these did not invoke reviewed controls or change source. Final normalized comparison matched."
+  ],
+  "status": "SOURCE_ONLY_APPROVED_NO_MATERIAL_FINDINGS",
+  "version": 1
+}

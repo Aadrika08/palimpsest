@@ -45,7 +45,7 @@ def write(root,name,value):
     return dict(path=name,size_bytes=len(raw),sha256=digest(raw))
 
 
-def project(tmp_path,*,rocm_probe=False,binding_failure=False,published_export=False,autograd_publication=False,caught_optional_import=False):
+def project(tmp_path,*,rocm_probe=False,binding_failure=False,published_export=False,autograd_publication=False,caught_optional_import=False,pillow_origins=False):
     project=tmp_path/'authored-project';project.mkdir(mode=0o700)
     current=load(ROOT/PARENT,'cpu_authored_current_parent')
     marker=b'min_available_ram_bytes=(4096 if phase==\'prepare\' else 2048)*MiB'
@@ -100,6 +100,7 @@ def project(tmp_path,*,rocm_probe=False,binding_failure=False,published_export=F
         if caught_optional_import and name=='torch':
             assert autograd_publication, 'The caught optional seam follows all four authored creators'
             source+=b'try:\n    import pynvml\nexcept ImportError:\n    AUTHORED_OPTIONAL_PYNVML_ABSENT = True\n'
+        if pillow_origins and name=='torchvision':source+=b'import PIL\n'
         module_path=name+'/__init__.py' if package else name+'.py'
         write(site,module_path,source)
         entries.append(dict(path=module_path,size_bytes=len(source),sha256=digest(source)))
@@ -142,12 +143,26 @@ def project(tmp_path,*,rocm_probe=False,binding_failure=False,published_export=F
         raw=(site/extension).read_bytes()
         entries.append(dict(path=extension,size_bytes=len(raw),sha256=digest(raw)))
         modules.append(dict(name='torch._C',root_index=0,path=extension,kind='extension',is_package=False))
+    if pillow_origins:
+        from test_puck_pillow_native_origins import authored_pillow_images
+        images=authored_pillow_images(site,project/'authored-pillow-build',python_extensions=True)
+        for image in images:
+            path=str(image.relative_to(site));raw=image.read_bytes()
+            entries.append(dict(path=path,size_bytes=len(raw),sha256=digest(raw)))
+            if path.startswith('PIL/'):
+                modules.append(dict(name='PIL.'+image.name.split('.',1)[0],root_index=0,
+                    path=path,kind='extension',is_package=False))
+        source=b'from . import _imaging\nfrom . import _imagingft\n'
+        write(site,'PIL/__init__.py',source)
+        entries.append(dict(path='PIL/__init__.py',size_bytes=len(source),sha256=digest(source)))
+        modules.append(dict(name='PIL',root_index=0,path='PIL/__init__.py',kind='python',is_package=True))
     inert=b'inert authored bytecode data, never executed'
     write(site,'inert.pyc',inert);entries.append(dict(path='inert.pyc',size_bytes=len(inert),sha256=digest(inert)))
     (site/'empty/nested').mkdir(mode=0o700,parents=True)
     directories=sorted([r['metadata_path'].split('/')[0] for r in wheels]+['empty','empty/nested']+
         (['torch'] if rocm_probe or autograd_publication else [])+
-        (['torch/autograd','torch/distributed','torch/distributed/autograd','torch/distributed/rpc'] if autograd_publication else []))
+        (['torch/autograd','torch/distributed','torch/distributed/autograd','torch/distributed/rpc'] if autograd_publication else [])+
+        (['PIL','pillow.libs'] if pillow_origins else []))
     inventory=dict(kind='puck-cpu-installed-files-v1',entries=sorted(entries,key=lambda r:r['path']),
                    file_count=len(entries),directory_count=len(directories),total_bytes=sum(r['size_bytes'] for r in entries))
     # Inventory has an exact schema, so its authorship label lives in this test.

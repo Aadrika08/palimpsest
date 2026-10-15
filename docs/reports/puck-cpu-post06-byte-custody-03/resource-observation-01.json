@@ -1,0 +1,36 @@
+{
+  "actual07_created_or_invoked": false,
+  "at_utc": "2026-10-15T22:18:09.770061+00:00",
+  "check03_invoked": false,
+  "checks": {
+    "fd_headroom": true,
+    "fixed_outputs_absent": true,
+    "initial_ram": true,
+    "project_disk": true,
+    "tmpfs_executable_writable": true,
+    "tmpfs_space": true
+  },
+  "control": {
+    "path": "/tmp/palimpsest-held06-post-byte-custody-03-control.json",
+    "sha256": "18da6c330c4255f4eda2a839757c9ccba45471177ec71acce7aed7b50a344d75",
+    "size_bytes": 8877
+  },
+  "data_head": "984653438961f5b6300a81ee1710156f2f331872",
+  "data_worktree_clean": true,
+  "full_post06_bytes_accepted": false,
+  "kind": "held06-post03-pre-invocation-resource-observation-v1",
+  "pressure_io": "some avg10=2.35 avg60=11.12 avg300=10.19 total=2995628592\nfull avg10=2.10 avg60=9.62 avg300=8.71 total=2761168276\n",
+  "resources": {
+    "initial_minimum_available_ram_bytes": 4294967296,
+    "mem_available_bytes": 5819232256,
+    "nofile_hard": 524288,
+    "nofile_soft": 65536,
+    "project_free_bytes": 79973842944,
+    "tmpfs_executable": true,
+    "tmpfs_free_bytes": 3419123712,
+    "tmpfs_writable": true
+  },
+  "scope": "Only small control pins, fixed output absences and current proc/statvfs/Git metadata; no census, payload hash, audit/control invocation or allocation. Fresh observation must precede any future invocation.",
+  "status": "RESOURCE_GUARD_READY_PENDING_REVIEW",
+  "wrapper_invoked": false
+}

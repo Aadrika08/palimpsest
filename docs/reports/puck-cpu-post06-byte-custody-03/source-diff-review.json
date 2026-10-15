@@ -1,0 +1,117 @@
+{
+  "base": {
+    "path": "/tmp/palimpsest-held06-post-byte-custody-02.py",
+    "sha256": "9551e20451631580d668e9a6dfa9d442576c85f75f06bfbef2826409e3412532",
+    "size_bytes": 16444
+  },
+  "changes": [
+    "accurate_post06_check03_docstring",
+    "exclusive_numbered03_success_output",
+    "default_final_RAM_floor_preserved_with_initial_only_parameter",
+    "resource_predicate_uses_explicit_initial_floor_or_original_default",
+    "bounded_stderr_phase_and_failure_helpers_no_new_imports",
+    "initial_only_4GiB_admission_and_early_failure_evidence",
+    "initialize_observation_only_cleanup_state",
+    "controls_plans_completed",
+    "SITE_content_completed",
+    "host_and_first_forest_completed",
+    "second_forest_completed",
+    "final_SITE_metadata_completed",
+    "all_held_bytes_rehash_completed",
+    "observe_successful_close_only_after_existing_close_returns",
+    "normal_close_and_exclusive_publication_completed",
+    "failure_evidence_before_original_alarm_cancellation",
+    "bounded_failure_message_and_optional_closure_fallback_keep_core_failure_record_small"
+  ],
+  "kind": "held06-post-byte-custody03-source-equivalence-review-v1",
+  "limits": {
+    "address_space_bytes": 536870912,
+    "core_bytes": 0,
+    "file_bytes": 16777216,
+    "final_minimum_available_ram_bytes": 2147483648,
+    "hard_seconds": 130,
+    "initial_final_resources": "Existing resource snapshots/result fields retained. Only INITIAL RAM gate is stronger; final retains2GiB. Optional PSI omitted to minimize change.",
+    "initial_minimum_available_ram_bytes": 4294967296,
+    "max_fds": 40000,
+    "minimum_project_free_bytes": 4294967296,
+    "minimum_tmpfs_free_bytes": 268435456,
+    "normal_seconds": 120
+  },
+  "not_executed": [
+    "No check03 module/main/helper or auditor control invoked.",
+    "No DATA/SOURCE repository/Git writes, namespace, installed vendor/native imports, large payload hashes, forest/SITE census, live resource admission or runtime allocation."
+  ],
+  "plan": {
+    "path": "/tmp/palimpsest-post06-full-byte-admission-plan.json",
+    "sha256": "6466ebf6ed2b7b33c596620bb8d51c1669611d1d32dbc60676f0237944c45d42",
+    "size_bytes": 11594
+  },
+  "preparation_attempts": [
+    {
+      "attempt": 1,
+      "reason": "Initial builder marker-list AST traversal assertion; corrected to lexical line order. No prepared control was invoked.",
+      "status": "STATIC_ASSERTION_STOPPED_BEFORE_WRITES"
+    }
+  ],
+  "prepared": {
+    "path": "/tmp/palimpsest-held06-post-byte-custody-03.py",
+    "sha256": "96e496cef4ba2b1c2250e8a2a45737cb930b18cb019c8cc2b32d565830c522ff",
+    "size_bytes": 19086
+  },
+  "preserved_checks": [
+    "Every source/role/pin/raw-role and historical01-06 check, frozen06 controls/configuration/candidate, initial full SITE content census, baseline/native/interpreter/aliases, all four staged roots, forest1, forest2 equality, final SITE metadata census, nineteen absence declarations, full Held.recheck content reread, exact native/root/PID-start identities and normal closure.",
+    "Success result schema and canonical stdout path unchanged; runner_sha256 now binds the new03 own source and output path is separately exclusive. No helper monkeypatch or optimization."
+  ],
+  "static_checks": {
+    "ast_parse": true,
+    "compile_only_no_execution": true,
+    "initial_only4GiB_final_original2GiB": true,
+    "old_main_exact_after_removing_only_instrumentation_and_initial_floor_argument": true,
+    "original_main_entrypoint_unchanged": true,
+    "resource_checks_exact_after_reverting_only_parameterization": true,
+    "unchanged_frozen_control_and_input_constants_except_output": true,
+    "unchanged_functions": {
+      "absent": true,
+      "check_absences": true,
+      "module": true
+    },
+    "unchanged_imports": true
+  },
+  "status": "PREPARED_STATIC_ONLY_NOT_INVOKED",
+  "success_output": "/tmp/palimpsest-held06-post-byte-custody-03.json",
+  "telemetry": {
+    "channel": "stderr only",
+    "failure": "One bounded type/message (1024characters)/elapsed record; closure only after successful held.close and completed local observations, omitted if its JSON exceeds the8192-byte record cap; telemetry errors suppressed while re-raising original exception. stderr write is outside assert. No partial-success stdout.",
+    "fields": [
+      "phase",
+      "elapsed_seconds",
+      "held.files count",
+      "held.total bytes"
+    ],
+    "hard_abort_limit": "SIGALRM/default termination or external kill may leave only completed phase prefixes and external terminal evidence; Python failure handler cannot promise a receipt for those signals.",
+    "held_close_note": "Authenticated Held.close clears held.files; close/publication reports zero open held files and retained held.total; fullrecheck captures pre-close count.",
+    "per_file_progress": false,
+    "phase_completion_count": 8,
+    "phases": [
+      "controls/plans",
+      "SITEhash",
+      "hostbaseline/native",
+      "forest1",
+      "forest2",
+      "finalSITEcensus",
+      "fullrecheck",
+      "close/publication"
+    ],
+    "record_count_ceiling_including_failure": 12,
+    "single_record_bytes_ceiling": 8192,
+    "total_record_bytes_ceiling": 65536
+  },
+  "unfinished_preflight": [
+    "Root reports MemAvailable about3.39GB below initial4GiB floor; not refreshed here and not ready for invocation.",
+    "Independent review of exact03 source/manifest, external SHA freeze and fixed isolated original-interpreter command.",
+    "Fresh quieter-host initial RAM>=4GiB, project disk>=4GiB, tmpfs>=256MiB, inherited40kFD headroom, /tmp executable/writable, exact output/log/external receipt absences; finalRAM floor remains2GiB.",
+    "External bounded stdout/stderr/exit/deadline/resource capture, one invocation after full independent admission, preserve01/02 failures/all06 artifacts.",
+    "No normal PASS or current full post06 byte acceptance established; no runtime07 authority or implicit04 data check."
+  ],
+  "unified_diff": "--- /tmp/palimpsest-held06-post-byte-custody-02.py\n+++ /tmp/palimpsest-held06-post-byte-custody-03.py\n@@ -1,4 +1,4 @@\n-\"\"\"Fixed read-only pre06 admission; no allocation, qualification or vendor import.\"\"\"\n+\"\"\"Fixed DATA-ONLY post-failure06 byte/custody check03; no runtime allocation or vendor import.\"\"\"\n import datetime\n import importlib.machinery\n import hashlib\n@@ -15,7 +15,7 @@\n ROOT=Path('/home/utkarsh/.codex/worktrees/0071/brain')\n AUDITOR=ROOT/'docs/reports/puck-cpu-held-qualification-amendment-03/source-evidence/validation/prepared-byte-audit03-01/authenticated-auditor.py'\n AUDITOR_SHA='01bc2c99634cb3ec2e7bfc92f4fc96b219e07c8a5ea10351227a5cfb1181d4cf'\n-OUTPUT=Path('/tmp/palimpsest-held06-post-byte-custody-02.json')\n+OUTPUT=Path('/tmp/palimpsest-held06-post-byte-custody-03.json')\n CONFIGURATION=ROOT/'docs/plans/puck-cpu-held-qualification-06.json'\n CONFIG_SHA='da630b05b871508686a4c92402725820b40b27253b2652b47c686a8f441a04e8'\n AUDITOR_CURRENT_SHA='f910d6bdf592fe7b488591398332ac70131891bd4f7c95ea793d20be8b90f829'\n@@ -25,12 +25,12 @@\n DEP_SHA='25ea4e912919116b3196b8a8ed537f5dde02f40a35c295d97fe0c0509d67277f'\n \n \n-def resources():\n+def resources(minimum_ram_bytes=2<<30):\n     available=int(next(line.split()[1] for line in Path('/proc/meminfo').read_text().splitlines() if line.startswith('MemAvailable:')))*1024\n     soft,hard=resource.getrlimit(resource.RLIMIT_NOFILE)\n     flags=__import__('os').statvfs('/tmp').f_flag\n     value=dict(at_utc=datetime.datetime.now(datetime.timezone.utc).isoformat(),mem_available_bytes=available,project_free_bytes=shutil.disk_usage(ROOT).free,tmpfs_free_bytes=shutil.disk_usage('/tmp').free,nofile_soft=soft,nofile_hard=hard)\n-    assert available>=2<<30 and value['project_free_bytes']>=4<<30 and value['tmpfs_free_bytes']>=256<<20\n+    assert available>=minimum_ram_bytes and value['project_free_bytes']>=4<<30 and value['tmpfs_free_bytes']>=256<<20\n     assert all(v==resource.RLIM_INFINITY or v>=40000 for v in (soft,hard)) and not flags & (os.ST_RDONLY|os.ST_NOEXEC)\n     return value\n \n@@ -80,13 +80,60 @@\n             assert not any(p.startswith(cache) and p.endswith('.pyc') and '/' not in p[len(cache):] for p in paths),name\n     return dict(names=names,scope='current declarations and re-censused held staged forests; not ambient or executed-request coverage')\n \n+_MARKER_COUNT=0\n+_MARKER_BYTES=0\n+\n+\n+def _stderr_record(value):\n+    global _MARKER_COUNT,_MARKER_BYTES\n+    raw=(json.dumps(value,sort_keys=True,separators=(',',':'),allow_nan=False)+'\\n').encode()\n+    assert _MARKER_COUNT<12 and len(raw)<=8192 and _MARKER_BYTES+len(raw)<=64*1024\n+    written=os.write(2,raw)\n+    assert written==len(raw)\n+    _MARKER_COUNT+=1;_MARKER_BYTES+=len(raw)\n+\n+\n+def _phase(name,started,held):\n+    _stderr_record(dict(kind='held06-post-byte-custody-phase-v1',check_id=3,\n+        status='phase_completed',phase=name,elapsed_seconds=time.monotonic()-started,\n+        held=dict(files=len(held.files),total=held.total)))\n+\n+\n+def _failure(error,started,before=None,held_closed=False):\n+    # Telemetry failure must never replace the original exception. Omit closure\n+    # unless this control observed a normal held.close and all fields below.\n+    try:\n+        value=dict(kind='held06-post-byte-custody-failure-v1',check_id=3,status='FAIL',\n+            error_type=type(error).__name__,error=str(error)[:1024],\n+            elapsed_seconds=time.monotonic()-started)\n+        if held_closed and before is not None:\n+            try:\n+                after=len(os.listdir('/proc/self/fd'))\n+                children=Path('/proc/self/task/'+str(os.getpid())+'/children').read_text().split()\n+                threads=[name for name in os.listdir('/proc/self/task') if name!=str(os.getpid())]\n+                value['closure']=dict(fd_count_before=before,fd_count_after=after,\n+                    active_children=children,active_non_main_threads=threads,\n+                    held_close_completed=True,scope='current process observations only')\n+            except BaseException:pass\n+        if len((json.dumps(value,sort_keys=True,separators=(',',':'),allow_nan=False)+'\\n').encode())>8192:\n+            value.pop('closure',None)\n+        _stderr_record(value)\n+    except BaseException:pass\n+\n+\n def main():\n-    assert len(sys.argv)==1 and sys.flags.isolated and sys.flags.no_site and sys.dont_write_bytecode\n-    assert Path(sys.executable).resolve()==Path('/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/bin/python3.11')\n-    assert 'LD_PRELOAD' not in os.environ and 'LD_LIBRARY_PATH' not in os.environ\n-    initial_resources=resources();absence=absent()\n+    started=time.monotonic()\n+    try:\n+        assert len(sys.argv)==1 and sys.flags.isolated and sys.flags.no_site and sys.dont_write_bytecode\n+        assert Path(sys.executable).resolve()==Path('/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/bin/python3.11')\n+        assert 'LD_PRELOAD' not in os.environ and 'LD_LIBRARY_PATH' not in os.environ\n+        initial_resources=resources(4<<30);absence=absent()\n+    except BaseException as error:\n+        _failure(error,started)\n+        raise\n     started=time.monotonic();deadline=started+120\n     signal.signal(signal.SIGALRM,signal.SIG_DFL);signal.setitimer(signal.ITIMER_REAL,130)\n+    held=None;before=None;held_closed=False\n     try:\n         for key,value in [('AS',512*1024**2),('NOFILE',40000),('FSIZE',16*1024**2),('CORE',0)]:\n             _,hard=resource.getrlimit(getattr(resource,'RLIMIT_'+key))\n@@ -143,10 +190,12 @@\n             expected=json.loads(m.canonical(dependency));expected['import_profile']=selected['candidate']['import_profile']\n             assert current_dependency==expected\n             negative_absence=check_absences(current_dependency,current_dirs,frozen['negative_imports'])\n+            _phase('controls/plans',started,held)\n             site=ROOT/'runs/puck-cpu-install-01/site'\n             files,site_dirs,site_stamps=r.census(site)\n             assert files==r.rows_to_map(data['inventory']['entries']) and site_dirs==set(data['layout']['predicted_destination_directories'])\n             assert (len(files),len(site_dirs),sum(row['size_bytes'] for row in files.values()))==(27225,2074,1304701872)\n+            _phase('SITEhash',started,held)\n             copy,copyraw=held.json(prepbase/'control/copy-registration.json',lf=False)\n             assert copyraw==m.canonical(source,False)\n             for role in ['candidate','layout']:\n@@ -175,15 +224,22 @@\n                 assert m.sha(fraw)==expected and failed['status']=='FAIL' and failed['allocation_id']==int(allocation)\n                 m.no_authority(failed)\n                 assert not os.path.lexists(failurebase/'baseline-after.json')\n+            _phase('hostbaseline/native',started,held)\n             tree=m.forest(held,config,dependency,directories,prep['staged_roots'])\n+            _phase('forest1',started,held)\n             assert m.forest(held,config,dependency,directories,prep['staged_roots'])==tree\n+            _phase('forest2',started,held)\n             _,final_dirs,final_stamps=r.census(site,hashes=False)\n             assert final_dirs==site_dirs and final_stamps==site_stamps\n+            _phase('finalSITEcensus',started,held)\n             absence=absent();final_resources=resources()\n             held.recheck();held.clock()\n+            _phase('fullrecheck',started,held)\n             totals=dict(file_count=sum(len(r['files']) for r in dependency['roots']),directory_count=sum(len(d) for d in directories),input_bytes=sum(f['size_bytes'] for r in dependency['roots'] for f in r['files']))\n             assert totals==dict(file_count=27255,directory_count=2076,input_bytes=1318494346)\n-        finally:held.close()\n+        finally:\n+            held.close()\n+            held_closed=True\n         after=len(os.listdir('/proc/self/fd'))\n         assert before==after and not Path('/proc/self/task/'+str(os.getpid())+'/children').read_text().split() and len(os.listdir('/proc/self/task'))==1\n         sampled=[]\n@@ -197,10 +253,14 @@\n             sampled.append(dict(pid=identity[0],start_ticks=identity[1],matching_identity_present=matches))\n         result=dict(m.CLAIMS,kind='puck-cpu-held06-post-failure-byte-custody-v1',version=1,status='CURRENT_BYTES_PRESERVED_AFTER_FAILED06',scope='post-failure current source/input/SITE/staged/native/interpreter bytes only; no allocation, target import or runtime acceptance',preparation_configuration_sha256=PREP_SHA,preparation_result_sha256=RESULT_SHA,dependencies_sha256=DEP_SHA,auditor_source_sha256=AUDITOR_SHA,runner_sha256=own['sha256'],baseline=summary,root_count=4,historical_capsule_files=34,input_pins=16,**totals,closure=dict(fd_count_before=before,fd_count_after=after,active_children=[],active_non_main_threads=[]),elapsed_seconds=time.monotonic()-started,qualifications01_02_03_04_05_06_still_failed_consumed=True,qualification06_invoked=True,configuration_sha256=CONFIG_SHA,current_auditor_sha256=AUDITOR_CURRENT_SHA,resources_before=initial_resources,resources_after=final_resources,absence=absence,site_files=27225,site_directories=2074,site_bytes=1304701872,process_identity_samples=sampled,process_scope='three recorded identities only; nonexhaustive non-atomic lifetime observation',current_sources=24,current_inputs=16,negative_absence=negative_absence,source_commit='6a4ba958021c70f4ec310370b34923aa36324087')\n         assert time.monotonic()<deadline;m.publish(OUTPUT,result)\n+        _phase('close/publication',started,held)\n         assert time.monotonic()<deadline\n         print(m.canonical(result).decode(),end='',flush=True)\n         assert time.monotonic()<deadline\n         return 0\n+    except BaseException as error:\n+        _failure(error,started,before,held_closed)\n+        raise\n     finally:signal.setitimer(signal.ITIMER_REAL,0)\n \n \n"
+}

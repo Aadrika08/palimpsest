@@ -1,0 +1,9 @@
+# Prospective Pillow origin candidate D
+
+This directory contains source data and a byte-exact projection proof. It does not admit an allocation or an episode. Candidate D adds exactly `PIL._imaging` and `PIL._imagingft` with `held-directory-observed-v1` to authenticated candidate C; every other candidate field is unchanged. All acceptance and authority flags stay false.
+
+`projection.json` binds H, C and D and records the two-row byte insertion plus the composition with the historical four publication replacements. `native-evidence.json` projects the existing pinned actual06 native review into the 23 registered extension rows, the two Pillow extensions' finite transitive library closure, and the relevant loader source pins. The original retained report remains authoritative for those historical observations. No installed/staged ELF was reread, loaded or executed in this authoring lane.
+
+The retained review supports the missing relative-origin route: both registered Pillow extensions have `$ORIGIN/../pillow.libs` RPATH but C defaults to exact leaf-FD loading. The named TIFF exists with pinned bytes. D selects the existing directory policy for both extensions; it adds no library, namespace mount or global search path. That policy still trusts native initialization, cannot prevent directory-edge races, and observes persistent target/map identities only.
+
+Keep epochs01–06 unchanged and consumed. Preserve the post06 full-census gap: the separately named post01 interpreter refusal and post02 deadline refusal did not produce a complete current-byte PASS. Before any new actual allocation, a separate reviewed source amendment must close its exact producer/auditor epoch projection, authored regressions, input/source controls and data custody. Successful held imports, episode admission, renderer/recording/replay/export and release evidence remain separate.

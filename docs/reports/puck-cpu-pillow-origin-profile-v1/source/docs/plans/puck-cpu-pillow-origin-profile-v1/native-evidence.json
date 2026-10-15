@@ -1,0 +1,2108 @@
+{
+  "candidate_D": {
+    "path": "docs/plans/puck-cpu-pillow-origin-profile-v1.json",
+    "sha256": "6eba35557f64b8f7108558b1334d488da20b2381d0e69ffece090645f8fb8d3d",
+    "size_bytes": 346424
+  },
+  "claims": {
+    "collection_authorized": false,
+    "executable": false,
+    "held_runtime_qualified": false,
+    "native_authorized": false,
+    "native_phase_qualified": false,
+    "qualification_claims": [],
+    "runtime_qualified": false,
+    "study_authorized": false
+  },
+  "current_repository_loader_source_pins_matching_retained_review": [
+    {
+      "path": "src/palimpsest/puck_native_origins.py",
+      "sha256": "e6deea2bc378968371bf1093b869dfc442eeb7def27198695d1c0f872da519e1",
+      "size_bytes": 1660
+    },
+    {
+      "path": "src/palimpsest/puck_dependency_imports.py",
+      "sha256": "e35b941c351971c15f225255170cd45530aa2304943fe2edd461b8d94080943b",
+      "size_bytes": 14868
+    },
+    {
+      "path": "src/palimpsest/puck_native_identity.py",
+      "sha256": "6e5b56e5c6494398dbd6a7c7d07e771e86c63d56e7374692d1d1d8213b721ebb",
+      "size_bytes": 2837
+    },
+    {
+      "path": "src/palimpsest/puck_dependency_files.py",
+      "sha256": "d1ca386780212b174a6e931a8ac4ce88e68c31b27fb1c0e16346a2150560fca1",
+      "size_bytes": 33543
+    },
+    {
+      "path": "src/palimpsest/puck_cpu_namespace.py",
+      "sha256": "9a82a9cd67000e9bc4a1ee1bfb9020be4ed1b2b41bc439985f33b48dc973a04e",
+      "size_bytes": 9569
+    }
+  ],
+  "evidence_boundaries": [
+    "All 23 registered extension dynamic-tag rows and the declared finite closure of 45 package plus 9 explicitly mounted system ELFs were reviewed historically. All 202 DT_NEEDED edges had a static content-origin/default namespace route in that review; this is not an implementation of the dynamic loader or a proof of successful symbol resolution.",
+    "Historical selected hashes were stable during sequential reads and matched native metadata05, with 1,069,210,770 bytes hashed. They are not an atomic snapshot, full forest/prefix post06 census, or current candidate-authoring ELF-byte check.",
+    "Only the two PIL registered extension rows had packaged direct dependencies and the default exact-file-FD policy. That finite statement does not cover unregistered package extensions, future imports, dlopen/ctypes/plugins, CPU features, symbol/version resolution, IFUNC/TLS or native initializer behavior.",
+    "The actual06 failure plus source and ELF metadata support an origin/search-route diagnosis. No dynamic-loader lookup trace was collected, so the exact lookup sequence remains inferred.",
+    "The independently audited actual06 allocation failed and had no four-import success. Post01 refused its interpreter precondition, post02 exhausted its fixed deadline in the first forest hash, and no complete post06 current-byte PASS exists. D does not repair or erase that evidence gap.",
+    "All acceptance/authority flags remain false; the native directory policy trust/race limitations remain unchanged."
+  ],
+  "explanation": "PIL._imaging and PIL._imagingft both declare DT_RPATH $ORIGIN/../pillow.libs and DT_NEEDED dependencies stored under staged root0/pillow.libs. Exact leaf-FD origins lose that relative directory route. The retained TIFF path and bytes exist. D selects the already implemented held-directory policy for exactly both registered Pillow extensions; it does not add any ELF payload, mount or dependency authority.",
+  "kind": "puck-cpu-pillow-origin-retained-native-evidence-v1",
+  "native_metadata05": {
+    "path": "docs/plans/puck-cpu-characterization-native-metadata-05.json",
+    "sha256": "64a9e46f60700f12712262879547fbf26d785fb8a825098940e6494482dae2aa",
+    "size_bytes": 1618086
+  },
+  "pillow_transitive_elf_files": [
+    {
+      "namespace_path": "/puck/staged/inputs/root-0000/PIL/_imaging.cpython-311-x86_64-linux-gnu.so",
+      "retained_original_staged_hash_observations": {
+        "namespace_path": "/puck/staged/inputs/root-0000/PIL/_imaging.cpython-311-x86_64-linux-gnu.so",
+        "original": {
+          "device": 57,
+          "inode": 26832544,
+          "matches_pinned_size_sha256": true,
+          "nlink": 1,
+          "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/PIL/_imaging.cpython-311-x86_64-linux-gnu.so",
+          "sha256": "b55dc49c50e6bad027caa57e6d0f7d7e793993e4693cd8d80cec38dc102790ff",
+          "size_bytes": 3385961,
+          "stable_during_read": true
+        },
+        "staged": {
+          "device": 55,
+          "inode": 1837330,
+          "matches_pinned_size_sha256": true,
+          "nlink": 1,
+          "path": "/tmp/palimpsest-puck-cpu-held-01/inputs/root-0000/PIL/_imaging.cpython-311-x86_64-linux-gnu.so",
+          "sha256": "b55dc49c50e6bad027caa57e6d0f7d7e793993e4693cd8d80cec38dc102790ff",
+          "size_bytes": 3385961,
+          "stable_during_read": true
+        }
+      },
+      "retained_readelf": {
+        "matches_native_metadata05": true,
+        "namespace_path": "/puck/staged/inputs/root-0000/PIL/_imaging.cpython-311-x86_64-linux-gnu.so",
+        "needed": [
+          "libtiff-fc87e79d.so.6.2.0",
+          "libjpeg-31e2ca52.so.62.4.0",
+          "libopenjp2-b07f72ad.so.2.5.4",
+          "libz.so.1",
+          "libxcb-ad31f5a3.so.1.1.0",
+          "libpthread.so.0",
+          "libc.so.6"
+        ],
+        "readelf_input": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/PIL/_imaging.cpython-311-x86_64-linux-gnu.so",
+        "rpath": [
+          "$ORIGIN/../pillow.libs"
+        ],
+        "runpath": [],
+        "soname": null
+      }
+    },
+    {
+      "namespace_path": "/puck/staged/inputs/root-0000/PIL/_imagingft.cpython-311-x86_64-linux-gnu.so",
+      "retained_original_staged_hash_observations": {
+        "namespace_path": "/puck/staged/inputs/root-0000/PIL/_imagingft.cpython-311-x86_64-linux-gnu.so",
+        "original": {
+          "device": 57,
+          "inode": 26832582,
+          "matches_pinned_size_sha256": true,
+          "nlink": 1,
+          "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/PIL/_imagingft.cpython-311-x86_64-linux-gnu.so",
+          "sha256": "8f7f03397dd21518ed13f4322b7461be44c867459f539e6f0759f8c282995cbb",
+          "size_bytes": 322969,
+          "stable_during_read": true
+        },
+        "staged": {
+          "device": 55,
+          "inode": 1837334,
+          "matches_pinned_size_sha256": true,
+          "nlink": 1,
+          "path": "/tmp/palimpsest-puck-cpu-held-01/inputs/root-0000/PIL/_imagingft.cpython-311-x86_64-linux-gnu.so",
+          "sha256": "8f7f03397dd21518ed13f4322b7461be44c867459f539e6f0759f8c282995cbb",
+          "size_bytes": 322969,
+          "stable_during_read": true
+        }
+      },
+      "retained_readelf": {
+        "matches_native_metadata05": true,
+        "namespace_path": "/puck/staged/inputs/root-0000/PIL/_imagingft.cpython-311-x86_64-linux-gnu.so",
+        "needed": [
+          "libfreetype-9fc94c80.so.6.20.6",
+          "libharfbuzz-172d1f63.so.0.61421.0",
+          "libpthread.so.0",
+          "libc.so.6"
+        ],
+        "readelf_input": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/PIL/_imagingft.cpython-311-x86_64-linux-gnu.so",
+        "rpath": [
+          "$ORIGIN/../pillow.libs"
+        ],
+        "runpath": [],
+        "soname": null
+      }
+    },
+    {
+      "namespace_path": "/puck/staged/inputs/root-0000/pillow.libs/libXau-154567c4.so.6.0.0",
+      "retained_original_staged_hash_observations": {
+        "namespace_path": "/puck/staged/inputs/root-0000/pillow.libs/libXau-154567c4.so.6.0.0",
+        "original": {
+          "device": 57,
+          "inode": 26832912,
+          "matches_pinned_size_sha256": true,
+          "nlink": 1,
+          "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/pillow.libs/libXau-154567c4.so.6.0.0",
+          "sha256": "05484d24bf78cb8ed03169f1cb067204d829cb7af21de8820400d29d115e4320",
+          "size_bytes": 22081,
+          "stable_during_read": true
+        },
+        "staged": {
+          "device": 55,
+          "inode": 1843153,
+          "matches_pinned_size_sha256": true,
+          "nlink": 1,
+          "path": "/tmp/palimpsest-puck-cpu-held-01/inputs/root-0000/pillow.libs/libXau-154567c4.so.6.0.0",
+          "sha256": "05484d24bf78cb8ed03169f1cb067204d829cb7af21de8820400d29d115e4320",
+          "size_bytes": 22081,
+          "stable_during_read": true
+        }
+      },
+      "retained_readelf": {
+        "matches_native_metadata05": true,
+        "namespace_path": "/puck/staged/inputs/root-0000/pillow.libs/libXau-154567c4.so.6.0.0",
+        "needed": [
+          "libc.so.6"
+        ],
+        "readelf_input": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/pillow.libs/libXau-154567c4.so.6.0.0",
+        "rpath": [],
+        "runpath": [],
+        "soname": "libXau-154567c4.so.6.0.0"
+      }
+    },
+    {
+      "namespace_path": "/puck/staged/inputs/root-0000/pillow.libs/libbrotlicommon-53534446.so.1.2.0",
+      "retained_original_staged_hash_observations": {
+        "namespace_path": "/puck/staged/inputs/root-0000/pillow.libs/libbrotlicommon-53534446.so.1.2.0",
+        "original": {
+          "device": 57,
+          "inode": 26833257,
+          "matches_pinned_size_sha256": true,
+          "nlink": 1,
+          "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/pillow.libs/libbrotlicommon-53534446.so.1.2.0",
+          "sha256": "d0034d3c0dc0dc698266f9ce61ef1701402960eb0f18c0defadc61b91f793d88",
+          "size_bytes": 144425,
+          "stable_during_read": true
+        },
+        "staged": {
+          "device": 55,
+          "inode": 1843155,
+          "matches_pinned_size_sha256": true,
+          "nlink": 1,
+          "path": "/tmp/palimpsest-puck-cpu-held-01/inputs/root-0000/pillow.libs/libbrotlicommon-53534446.so.1.2.0",
+          "sha256": "d0034d3c0dc0dc698266f9ce61ef1701402960eb0f18c0defadc61b91f793d88",
+          "size_bytes": 144425,
+          "stable_during_read": true
+        }
+      },
+      "retained_readelf": {
+        "matches_native_metadata05": true,
+        "namespace_path": "/puck/staged/inputs/root-0000/pillow.libs/libbrotlicommon-53534446.so.1.2.0",
+        "needed": [
+          "libm.so.6",
+          "libc.so.6"
+        ],
+        "readelf_input": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/pillow.libs/libbrotlicommon-53534446.so.1.2.0",
+        "rpath": [],
+        "runpath": [],
+        "soname": "libbrotlicommon-53534446.so.1.2.0"
+      }
+    },
+    {
+      "namespace_path": "/puck/staged/inputs/root-0000/pillow.libs/libbrotlidec-7e5462ba.so.1.2.0",
+      "retained_original_staged_hash_observations": {
+        "namespace_path": "/puck/staged/inputs/root-0000/pillow.libs/libbrotlidec-7e5462ba.so.1.2.0",
+        "original": {
+          "device": 57,
+          "inode": 26833031,
+          "matches_pinned_size_sha256": true,
+          "nlink": 1,
+          "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/pillow.libs/libbrotlidec-7e5462ba.so.1.2.0",
+          "sha256": "301d8f1b7365c0204485f7bdc89165936fa8212b36c4f78563fe4229df53863c",
+          "size_bytes": 66441,
+          "stable_during_read": true
+        },
+        "staged": {
+          "device": 55,
+          "inode": 1843156,
+          "matches_pinned_size_sha256": true,
+          "nlink": 1,
+          "path": "/tmp/palimpsest-puck-cpu-held-01/inputs/root-0000/pillow.libs/libbrotlidec-7e5462ba.so.1.2.0",
+          "sha256": "301d8f1b7365c0204485f7bdc89165936fa8212b36c4f78563fe4229df53863c",
+          "size_bytes": 66441,
+          "stable_during_read": true
+        }
+      },
+      "retained_readelf": {
+        "matches_native_metadata05": true,
+        "namespace_path": "/puck/staged/inputs/root-0000/pillow.libs/libbrotlidec-7e5462ba.so.1.2.0",
+        "needed": [
+          "libm.so.6",
+          "libbrotlicommon-53534446.so.1.2.0",
+          "libc.so.6"
+        ],
+        "readelf_input": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/pillow.libs/libbrotlidec-7e5462ba.so.1.2.0",
+        "rpath": [
+          "$ORIGIN"
+        ],
+        "runpath": [],
+        "soname": "libbrotlidec-7e5462ba.so.1.2.0"
+      }
+    },
+    {
+      "namespace_path": "/puck/staged/inputs/root-0000/pillow.libs/libfreetype-9fc94c80.so.6.20.6",
+      "retained_original_staged_hash_observations": {
+        "namespace_path": "/puck/staged/inputs/root-0000/pillow.libs/libfreetype-9fc94c80.so.6.20.6",
+        "original": {
+          "device": 57,
+          "inode": 26833042,
+          "matches_pinned_size_sha256": true,
+          "nlink": 1,
+          "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/pillow.libs/libfreetype-9fc94c80.so.6.20.6",
+          "sha256": "994d650f4fe686013580524dd868d7001325fa3bbf408800eaa4778138a7e690",
+          "size_bytes": 1467713,
+          "stable_during_read": true
+        },
+        "staged": {
+          "device": 55,
+          "inode": 1843157,
+          "matches_pinned_size_sha256": true,
+          "nlink": 1,
+          "path": "/tmp/palimpsest-puck-cpu-held-01/inputs/root-0000/pillow.libs/libfreetype-9fc94c80.so.6.20.6",
+          "sha256": "994d650f4fe686013580524dd868d7001325fa3bbf408800eaa4778138a7e690",
+          "size_bytes": 1467713,
+          "stable_during_read": true
+        }
+      },
+      "retained_readelf": {
+        "matches_native_metadata05": true,
+        "namespace_path": "/puck/staged/inputs/root-0000/pillow.libs/libfreetype-9fc94c80.so.6.20.6",
+        "needed": [
+          "libpng16-abb096d5.so.16.58.0",
+          "libz.so.1",
+          "libm.so.6",
+          "libdl.so.2",
+          "libbrotlidec-7e5462ba.so.1.2.0",
+          "libpthread.so.0",
+          "libc.so.6"
+        ],
+        "readelf_input": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/pillow.libs/libfreetype-9fc94c80.so.6.20.6",
+        "rpath": [
+          "$ORIGIN"
+        ],
+        "runpath": [],
+        "soname": "libfreetype-9fc94c80.so.6.20.6"
+      }
+    },
+    {
+      "namespace_path": "/puck/staged/inputs/root-0000/pillow.libs/libharfbuzz-172d1f63.so.0.61421.0",
+      "retained_original_staged_hash_observations": {
+        "namespace_path": "/puck/staged/inputs/root-0000/pillow.libs/libharfbuzz-172d1f63.so.0.61421.0",
+        "original": {
+          "device": 57,
+          "inode": 26832878,
+          "matches_pinned_size_sha256": true,
+          "nlink": 1,
+          "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/pillow.libs/libharfbuzz-172d1f63.so.0.61421.0",
+          "sha256": "7ff87422406706600619c8467a2daa42a8122207dcb95337273ae18419f7a220",
+          "size_bytes": 970233,
+          "stable_during_read": true
+        },
+        "staged": {
+          "device": 55,
+          "inode": 1843158,
+          "matches_pinned_size_sha256": true,
+          "nlink": 1,
+          "path": "/tmp/palimpsest-puck-cpu-held-01/inputs/root-0000/pillow.libs/libharfbuzz-172d1f63.so.0.61421.0",
+          "sha256": "7ff87422406706600619c8467a2daa42a8122207dcb95337273ae18419f7a220",
+          "size_bytes": 970233,
+          "stable_during_read": true
+        }
+      },
+      "retained_readelf": {
+        "matches_native_metadata05": true,
+        "namespace_path": "/puck/staged/inputs/root-0000/pillow.libs/libharfbuzz-172d1f63.so.0.61421.0",
+        "needed": [
+          "libm.so.6",
+          "libfreetype-9fc94c80.so.6.20.6",
+          "libpthread.so.0",
+          "libc.so.6"
+        ],
+        "readelf_input": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/pillow.libs/libharfbuzz-172d1f63.so.0.61421.0",
+        "rpath": [
+          "$ORIGIN"
+        ],
+        "runpath": [],
+        "soname": "libharfbuzz-172d1f63.so.0.61421.0"
+      }
+    },
+    {
+      "namespace_path": "/puck/staged/inputs/root-0000/pillow.libs/libjpeg-31e2ca52.so.62.4.0",
+      "retained_original_staged_hash_observations": {
+        "namespace_path": "/puck/staged/inputs/root-0000/pillow.libs/libjpeg-31e2ca52.so.62.4.0",
+        "original": {
+          "device": 57,
+          "inode": 26833091,
+          "matches_pinned_size_sha256": true,
+          "nlink": 1,
+          "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/pillow.libs/libjpeg-31e2ca52.so.62.4.0",
+          "sha256": "6d7c754529b30aff22efaaf88ba02061714591702c03f297f00ccb32ee6d9d9a",
+          "size_bytes": 829137,
+          "stable_during_read": true
+        },
+        "staged": {
+          "device": 55,
+          "inode": 1843159,
+          "matches_pinned_size_sha256": true,
+          "nlink": 1,
+          "path": "/tmp/palimpsest-puck-cpu-held-01/inputs/root-0000/pillow.libs/libjpeg-31e2ca52.so.62.4.0",
+          "sha256": "6d7c754529b30aff22efaaf88ba02061714591702c03f297f00ccb32ee6d9d9a",
+          "size_bytes": 829137,
+          "stable_during_read": true
+        }
+      },
+      "retained_readelf": {
+        "matches_native_metadata05": true,
+        "namespace_path": "/puck/staged/inputs/root-0000/pillow.libs/libjpeg-31e2ca52.so.62.4.0",
+        "needed": [
+          "libc.so.6",
+          "ld-linux-x86-64.so.2"
+        ],
+        "readelf_input": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/pillow.libs/libjpeg-31e2ca52.so.62.4.0",
+        "rpath": [],
+        "runpath": [],
+        "soname": "libjpeg-31e2ca52.so.62.4.0"
+      }
+    },
+    {
+      "namespace_path": "/puck/staged/inputs/root-0000/pillow.libs/liblzma-2be87c3e.so.5.8.3",
+      "retained_original_staged_hash_observations": {
+        "namespace_path": "/puck/staged/inputs/root-0000/pillow.libs/liblzma-2be87c3e.so.5.8.3",
+        "original": {
+          "device": 57,
+          "inode": 26833106,
+          "matches_pinned_size_sha256": true,
+          "nlink": 1,
+          "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/pillow.libs/liblzma-2be87c3e.so.5.8.3",
+          "sha256": "535737fa00b49f62d14d6d9bce76482440df700b33d2666d636894f751dd25f1",
+          "size_bytes": 266369,
+          "stable_during_read": true
+        },
+        "staged": {
+          "device": 55,
+          "inode": 1843161,
+          "matches_pinned_size_sha256": true,
+          "nlink": 1,
+          "path": "/tmp/palimpsest-puck-cpu-held-01/inputs/root-0000/pillow.libs/liblzma-2be87c3e.so.5.8.3",
+          "sha256": "535737fa00b49f62d14d6d9bce76482440df700b33d2666d636894f751dd25f1",
+          "size_bytes": 266369,
+          "stable_during_read": true
+        }
+      },
+      "retained_readelf": {
+        "matches_native_metadata05": true,
+        "namespace_path": "/puck/staged/inputs/root-0000/pillow.libs/liblzma-2be87c3e.so.5.8.3",
+        "needed": [
+          "libpthread.so.0",
+          "libc.so.6"
+        ],
+        "readelf_input": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/pillow.libs/liblzma-2be87c3e.so.5.8.3",
+        "rpath": [],
+        "runpath": [],
+        "soname": "liblzma-2be87c3e.so.5.8.3"
+      }
+    },
+    {
+      "namespace_path": "/puck/staged/inputs/root-0000/pillow.libs/libopenjp2-b07f72ad.so.2.5.4",
+      "retained_original_staged_hash_observations": {
+        "namespace_path": "/puck/staged/inputs/root-0000/pillow.libs/libopenjp2-b07f72ad.so.2.5.4",
+        "original": {
+          "device": 57,
+          "inode": 26833222,
+          "matches_pinned_size_sha256": true,
+          "nlink": 1,
+          "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/pillow.libs/libopenjp2-b07f72ad.so.2.5.4",
+          "sha256": "185cb358047fd8b351c1d05b84a7e906c59d68d7f41222805f7042895ae266d8",
+          "size_bytes": 585849,
+          "stable_during_read": true
+        },
+        "staged": {
+          "device": 55,
+          "inode": 1843162,
+          "matches_pinned_size_sha256": true,
+          "nlink": 1,
+          "path": "/tmp/palimpsest-puck-cpu-held-01/inputs/root-0000/pillow.libs/libopenjp2-b07f72ad.so.2.5.4",
+          "sha256": "185cb358047fd8b351c1d05b84a7e906c59d68d7f41222805f7042895ae266d8",
+          "size_bytes": 585849,
+          "stable_during_read": true
+        }
+      },
+      "retained_readelf": {
+        "matches_native_metadata05": true,
+        "namespace_path": "/puck/staged/inputs/root-0000/pillow.libs/libopenjp2-b07f72ad.so.2.5.4",
+        "needed": [
+          "libm.so.6",
+          "libpthread.so.0",
+          "libc.so.6"
+        ],
+        "readelf_input": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/pillow.libs/libopenjp2-b07f72ad.so.2.5.4",
+        "rpath": [],
+        "runpath": [],
+        "soname": "libopenjp2-b07f72ad.so.2.5.4"
+      }
+    },
+    {
+      "namespace_path": "/puck/staged/inputs/root-0000/pillow.libs/libpng16-abb096d5.so.16.58.0",
+      "retained_original_staged_hash_observations": {
+        "namespace_path": "/puck/staged/inputs/root-0000/pillow.libs/libpng16-abb096d5.so.16.58.0",
+        "original": {
+          "device": 57,
+          "inode": 26832788,
+          "matches_pinned_size_sha256": true,
+          "nlink": 1,
+          "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/pillow.libs/libpng16-abb096d5.so.16.58.0",
+          "sha256": "44f1d1d821c9b57cda2b32d4a278eeaa03bc9930ae9da0ec0f384c3daf165e12",
+          "size_bytes": 278001,
+          "stable_during_read": true
+        },
+        "staged": {
+          "device": 55,
+          "inode": 1843163,
+          "matches_pinned_size_sha256": true,
+          "nlink": 1,
+          "path": "/tmp/palimpsest-puck-cpu-held-01/inputs/root-0000/pillow.libs/libpng16-abb096d5.so.16.58.0",
+          "sha256": "44f1d1d821c9b57cda2b32d4a278eeaa03bc9930ae9da0ec0f384c3daf165e12",
+          "size_bytes": 278001,
+          "stable_during_read": true
+        }
+      },
+      "retained_readelf": {
+        "matches_native_metadata05": true,
+        "namespace_path": "/puck/staged/inputs/root-0000/pillow.libs/libpng16-abb096d5.so.16.58.0",
+        "needed": [
+          "libz.so.1",
+          "libm.so.6",
+          "libc.so.6"
+        ],
+        "readelf_input": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/pillow.libs/libpng16-abb096d5.so.16.58.0",
+        "rpath": [],
+        "runpath": [],
+        "soname": "libpng16-abb096d5.so.16.58.0"
+      }
+    },
+    {
+      "namespace_path": "/puck/staged/inputs/root-0000/pillow.libs/libtiff-fc87e79d.so.6.2.0",
+      "retained_original_staged_hash_observations": {
+        "namespace_path": "/puck/staged/inputs/root-0000/pillow.libs/libtiff-fc87e79d.so.6.2.0",
+        "original": {
+          "device": 57,
+          "inode": 26832893,
+          "matches_pinned_size_sha256": true,
+          "nlink": 1,
+          "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/pillow.libs/libtiff-fc87e79d.so.6.2.0",
+          "sha256": "522bafb6812978fc53db6c32e5c57786186b551fc5fd6a7c61b857ca01261d16",
+          "size_bytes": 762929,
+          "stable_during_read": true
+        },
+        "staged": {
+          "device": 55,
+          "inode": 1843165,
+          "matches_pinned_size_sha256": true,
+          "nlink": 1,
+          "path": "/tmp/palimpsest-puck-cpu-held-01/inputs/root-0000/pillow.libs/libtiff-fc87e79d.so.6.2.0",
+          "sha256": "522bafb6812978fc53db6c32e5c57786186b551fc5fd6a7c61b857ca01261d16",
+          "size_bytes": 762929,
+          "stable_during_read": true
+        }
+      },
+      "retained_readelf": {
+        "matches_native_metadata05": true,
+        "namespace_path": "/puck/staged/inputs/root-0000/pillow.libs/libtiff-fc87e79d.so.6.2.0",
+        "needed": [
+          "libzstd-44be1190.so.1.5.7",
+          "liblzma-2be87c3e.so.5.8.3",
+          "libjpeg-31e2ca52.so.62.4.0",
+          "libz.so.1",
+          "libm.so.6",
+          "libpthread.so.0",
+          "libc.so.6"
+        ],
+        "readelf_input": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/pillow.libs/libtiff-fc87e79d.so.6.2.0",
+        "rpath": [
+          "$ORIGIN"
+        ],
+        "runpath": [],
+        "soname": "libtiff-fc87e79d.so.6.2.0"
+      }
+    },
+    {
+      "namespace_path": "/puck/staged/inputs/root-0000/pillow.libs/libxcb-ad31f5a3.so.1.1.0",
+      "retained_original_staged_hash_observations": {
+        "namespace_path": "/puck/staged/inputs/root-0000/pillow.libs/libxcb-ad31f5a3.so.1.1.0",
+        "original": {
+          "device": 57,
+          "inode": 26832966,
+          "matches_pinned_size_sha256": true,
+          "nlink": 1,
+          "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/pillow.libs/libxcb-ad31f5a3.so.1.1.0",
+          "sha256": "633fe8df9f1bfc0ef60de6a3495a599ec56e56216491b90b79604cfecfb88000",
+          "size_bytes": 271913,
+          "stable_during_read": true
+        },
+        "staged": {
+          "device": 55,
+          "inode": 1843169,
+          "matches_pinned_size_sha256": true,
+          "nlink": 1,
+          "path": "/tmp/palimpsest-puck-cpu-held-01/inputs/root-0000/pillow.libs/libxcb-ad31f5a3.so.1.1.0",
+          "sha256": "633fe8df9f1bfc0ef60de6a3495a599ec56e56216491b90b79604cfecfb88000",
+          "size_bytes": 271913,
+          "stable_during_read": true
+        }
+      },
+      "retained_readelf": {
+        "matches_native_metadata05": true,
+        "namespace_path": "/puck/staged/inputs/root-0000/pillow.libs/libxcb-ad31f5a3.so.1.1.0",
+        "needed": [
+          "libXau-154567c4.so.6.0.0",
+          "libc.so.6"
+        ],
+        "readelf_input": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/pillow.libs/libxcb-ad31f5a3.so.1.1.0",
+        "rpath": [
+          "$ORIGIN"
+        ],
+        "runpath": [],
+        "soname": "libxcb-ad31f5a3.so.1.1.0"
+      }
+    },
+    {
+      "namespace_path": "/puck/staged/inputs/root-0000/pillow.libs/libzstd-44be1190.so.1.5.7",
+      "retained_original_staged_hash_observations": {
+        "namespace_path": "/puck/staged/inputs/root-0000/pillow.libs/libzstd-44be1190.so.1.5.7",
+        "original": {
+          "device": 57,
+          "inode": 26833147,
+          "matches_pinned_size_sha256": true,
+          "nlink": 1,
+          "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/pillow.libs/libzstd-44be1190.so.1.5.7",
+          "sha256": "9501ab40e92a57491cadd2d02df46b596f24e74e6c0476b8500793f822fa0072",
+          "size_bytes": 1800497,
+          "stable_during_read": true
+        },
+        "staged": {
+          "device": 55,
+          "inode": 1843170,
+          "matches_pinned_size_sha256": true,
+          "nlink": 1,
+          "path": "/tmp/palimpsest-puck-cpu-held-01/inputs/root-0000/pillow.libs/libzstd-44be1190.so.1.5.7",
+          "sha256": "9501ab40e92a57491cadd2d02df46b596f24e74e6c0476b8500793f822fa0072",
+          "size_bytes": 1800497,
+          "stable_during_read": true
+        }
+      },
+      "retained_readelf": {
+        "matches_native_metadata05": true,
+        "namespace_path": "/puck/staged/inputs/root-0000/pillow.libs/libzstd-44be1190.so.1.5.7",
+        "needed": [
+          "libpthread.so.0",
+          "libc.so.6"
+        ],
+        "readelf_input": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/pillow.libs/libzstd-44be1190.so.1.5.7",
+        "rpath": [],
+        "runpath": [],
+        "soname": "libzstd-44be1190.so.1.5.7"
+      }
+    }
+  ],
+  "provenance": "All installed/staged ELF observations below are copied or projected from the pinned retained actual06 native review. No installed or staged ELF was reread or executed during candidate authoring. Small repository source/input files were read and hashed to bind the retained evidence.",
+  "retained_declared_package_closure_paths": [
+    {
+      "namespace_path": "/puck/staged/inputs/root-0000/PIL/_imaging.cpython-311-x86_64-linux-gnu.so",
+      "sha256": "b55dc49c50e6bad027caa57e6d0f7d7e793993e4693cd8d80cec38dc102790ff",
+      "size_bytes": 3385961
+    },
+    {
+      "namespace_path": "/puck/staged/inputs/root-0000/PIL/_imagingft.cpython-311-x86_64-linux-gnu.so",
+      "sha256": "8f7f03397dd21518ed13f4322b7461be44c867459f539e6f0759f8c282995cbb",
+      "size_bytes": 322969
+    },
+    {
+      "namespace_path": "/puck/staged/inputs/root-0000/mujoco/_callbacks.cpython-311-x86_64-linux-gnu.so",
+      "sha256": "b3ef6f7e68ab49d5ad33cdd182a3a8fd945cfca0552a912edb5b101a19b21666",
+      "size_bytes": 626304
+    },
+    {
+      "namespace_path": "/puck/staged/inputs/root-0000/mujoco/_constants.cpython-311-x86_64-linux-gnu.so",
+      "sha256": "ac800e9c526a8479c04de00f37420e1a0e1e25fb17f39a819d405480bfe1ccf9",
+      "size_bytes": 359336
+    },
+    {
+      "namespace_path": "/puck/staged/inputs/root-0000/mujoco/_enums.cpython-311-x86_64-linux-gnu.so",
+      "sha256": "c416a0eff44e867c90177f3925d02a84ac0ab504fe6c9c8685632d9e19cd6406",
+      "size_bytes": 2340296
+    },
+    {
+      "namespace_path": "/puck/staged/inputs/root-0000/mujoco/_errors.cpython-311-x86_64-linux-gnu.so",
+      "sha256": "68dd1ea6aa811736800b4600dc1f9babe48d58d41c21766fe504fc35a7bde9bd",
+      "size_bytes": 355272
+    },
+    {
+      "namespace_path": "/puck/staged/inputs/root-0000/mujoco/_functions.cpython-311-x86_64-linux-gnu.so",
+      "sha256": "8483657af2ac1248f87f324e877ca7866e52760304b270460eebda968d3d2473",
+      "size_bytes": 998040
+    },
+    {
+      "namespace_path": "/puck/staged/inputs/root-0000/mujoco/_render.cpython-311-x86_64-linux-gnu.so",
+      "sha256": "c515257ed2ed6dddc580cf8b34c15fe198b2d41d30015b083e741bb1aaf01c8c",
+      "size_bytes": 771432
+    },
+    {
+      "namespace_path": "/puck/staged/inputs/root-0000/mujoco/_specs.cpython-311-x86_64-linux-gnu.so",
+      "sha256": "1641f751415a4008099063603fbeef29f6f62f5fa94435ccec18e667eb7b6f69",
+      "size_bytes": 2135944
+    },
+    {
+      "namespace_path": "/puck/staged/inputs/root-0000/mujoco/_structs.cpython-311-x86_64-linux-gnu.so",
+      "sha256": "bd3f1f5506ba856a9695651bd3f9afc7f0f3a78818744b412cf65ff754948712",
+      "size_bytes": 2987352
+    },
+    {
+      "namespace_path": "/puck/staged/inputs/root-0000/mujoco/libmujoco.so.3.3.6",
+      "sha256": "b9173509d0c282a9b24b7f5825a40177a9967df0cd6395a9dc39522196e44495",
+      "size_bytes": 5002648
+    },
+    {
+      "namespace_path": "/puck/staged/inputs/root-0000/numpy.libs/libgfortran-040039e1-0352e75f.so.5.0.0",
+      "sha256": "c6090048eccc763522c12ef016f81da6b627cb3a044f55cf0479a839c41c0980",
+      "size_bytes": 2833617
+    },
+    {
+      "namespace_path": "/puck/staged/inputs/root-0000/numpy.libs/libquadmath-96973f99-934c22de.so.0.0.0",
+      "sha256": "6ed5137f412781ad7863439fb543613f620b43c32b63292a0029246162f5bbc6",
+      "size_bytes": 250985
+    },
+    {
+      "namespace_path": "/puck/staged/inputs/root-0000/numpy.libs/libscipy_openblas64_-6bb31eeb.so",
+      "sha256": "e131eb06546123210af109320a1fd4e2a2f808504cd1eb52f221ae4418348084",
+      "size_bytes": 22468673
+    },
+    {
+      "namespace_path": "/puck/staged/inputs/root-0000/numpy/_core/_multiarray_umath.cpython-311-x86_64-linux-gnu.so",
+      "sha256": "5c88e49167e07caf0660c06cd686951ca9dfbc21a3d49c4a08a6f01aae310efe",
+      "size_bytes": 10445089
+    },
+    {
+      "namespace_path": "/puck/staged/inputs/root-0000/numpy/fft/_pocketfft_umath.cpython-311-x86_64-linux-gnu.so",
+      "sha256": "bdf266bd798225e5a1fedc24f792b4b45d52bd960adc94fd3cb76108b253d42b",
+      "size_bytes": 649272
+    },
+    {
+      "namespace_path": "/puck/staged/inputs/root-0000/numpy/linalg/_umath_linalg.cpython-311-x86_64-linux-gnu.so",
+      "sha256": "85b345399f416ae07c5713a9213990ae45700cf6e6ff69a43cbc09fcc227d0a3",
+      "size_bytes": 227657
+    },
+    {
+      "namespace_path": "/puck/staged/inputs/root-0000/numpy/random/_bounded_integers.cpython-311-x86_64-linux-gnu.so",
+      "sha256": "da3a662e22f929be22b1a4d810bf60906a4ff95e745ef2409d3f7d8ba64efae1",
+      "size_bytes": 366800
+    },
+    {
+      "namespace_path": "/puck/staged/inputs/root-0000/numpy/random/_common.cpython-311-x86_64-linux-gnu.so",
+      "sha256": "17f99f57cd1e129065457dbbe17099120a54a3249149457b7a2f5bac254d4745",
+      "size_bytes": 276728
+    },
+    {
+      "namespace_path": "/puck/staged/inputs/root-0000/numpy/random/_generator.cpython-311-x86_64-linux-gnu.so",
+      "sha256": "a1610b201f1e5386852e3b51e92de9dbdb90c6a09cc02902a96c1c84a6adde0c",
+      "size_bytes": 1061400
+    },
+    {
+      "namespace_path": "/puck/staged/inputs/root-0000/numpy/random/_mt19937.cpython-311-x86_64-linux-gnu.so",
+      "sha256": "215e48c83d2473d71cfe24995090bff9fa0788fd2b6ecd067e1418a6c5f8176c",
+      "size_bytes": 141824
+    },
+    {
+      "namespace_path": "/puck/staged/inputs/root-0000/numpy/random/_pcg64.cpython-311-x86_64-linux-gnu.so",
+      "sha256": "7ebf09c9ee4742d0b16caf17d1cc0c8935165a73bba9dc4cb7c56bbbdf7a1f47",
+      "size_bytes": 148704
+    },
+    {
+      "namespace_path": "/puck/staged/inputs/root-0000/numpy/random/_philox.cpython-311-x86_64-linux-gnu.so",
+      "sha256": "d5aebb518a7aaba575a0645bfc1f8a80cf44c70799c814bfad2ccb5837df29d0",
+      "size_bytes": 128872
+    },
+    {
+      "namespace_path": "/puck/staged/inputs/root-0000/numpy/random/_sfc64.cpython-311-x86_64-linux-gnu.so",
+      "sha256": "f330ac40276b20109f2040991c2749dbe6b527c178070d6d6486b808605f63e9",
+      "size_bytes": 89448
+    },
+    {
+      "namespace_path": "/puck/staged/inputs/root-0000/numpy/random/bit_generator.cpython-311-x86_64-linux-gnu.so",
+      "sha256": "d25ee62c3eafa15e48b6488207a6a3db76744e2f636c578da3df10575810452d",
+      "size_bytes": 254072
+    },
+    {
+      "namespace_path": "/puck/staged/inputs/root-0000/numpy/random/mtrand.cpython-311-x86_64-linux-gnu.so",
+      "sha256": "80efcbd68ef32dbcaefe1e8ac8f0eec269e5cd832e6286e12613d09e3ddccf57",
+      "size_bytes": 850752
+    },
+    {
+      "namespace_path": "/puck/staged/inputs/root-0000/pillow.libs/libXau-154567c4.so.6.0.0",
+      "sha256": "05484d24bf78cb8ed03169f1cb067204d829cb7af21de8820400d29d115e4320",
+      "size_bytes": 22081
+    },
+    {
+      "namespace_path": "/puck/staged/inputs/root-0000/pillow.libs/libbrotlicommon-53534446.so.1.2.0",
+      "sha256": "d0034d3c0dc0dc698266f9ce61ef1701402960eb0f18c0defadc61b91f793d88",
+      "size_bytes": 144425
+    },
+    {
+      "namespace_path": "/puck/staged/inputs/root-0000/pillow.libs/libbrotlidec-7e5462ba.so.1.2.0",
+      "sha256": "301d8f1b7365c0204485f7bdc89165936fa8212b36c4f78563fe4229df53863c",
+      "size_bytes": 66441
+    },
+    {
+      "namespace_path": "/puck/staged/inputs/root-0000/pillow.libs/libfreetype-9fc94c80.so.6.20.6",
+      "sha256": "994d650f4fe686013580524dd868d7001325fa3bbf408800eaa4778138a7e690",
+      "size_bytes": 1467713
+    },
+    {
+      "namespace_path": "/puck/staged/inputs/root-0000/pillow.libs/libharfbuzz-172d1f63.so.0.61421.0",
+      "sha256": "7ff87422406706600619c8467a2daa42a8122207dcb95337273ae18419f7a220",
+      "size_bytes": 970233
+    },
+    {
+      "namespace_path": "/puck/staged/inputs/root-0000/pillow.libs/libjpeg-31e2ca52.so.62.4.0",
+      "sha256": "6d7c754529b30aff22efaaf88ba02061714591702c03f297f00ccb32ee6d9d9a",
+      "size_bytes": 829137
+    },
+    {
+      "namespace_path": "/puck/staged/inputs/root-0000/pillow.libs/liblzma-2be87c3e.so.5.8.3",
+      "sha256": "535737fa00b49f62d14d6d9bce76482440df700b33d2666d636894f751dd25f1",
+      "size_bytes": 266369
+    },
+    {
+      "namespace_path": "/puck/staged/inputs/root-0000/pillow.libs/libopenjp2-b07f72ad.so.2.5.4",
+      "sha256": "185cb358047fd8b351c1d05b84a7e906c59d68d7f41222805f7042895ae266d8",
+      "size_bytes": 585849
+    },
+    {
+      "namespace_path": "/puck/staged/inputs/root-0000/pillow.libs/libpng16-abb096d5.so.16.58.0",
+      "sha256": "44f1d1d821c9b57cda2b32d4a278eeaa03bc9930ae9da0ec0f384c3daf165e12",
+      "size_bytes": 278001
+    },
+    {
+      "namespace_path": "/puck/staged/inputs/root-0000/pillow.libs/libtiff-fc87e79d.so.6.2.0",
+      "sha256": "522bafb6812978fc53db6c32e5c57786186b551fc5fd6a7c61b857ca01261d16",
+      "size_bytes": 762929
+    },
+    {
+      "namespace_path": "/puck/staged/inputs/root-0000/pillow.libs/libxcb-ad31f5a3.so.1.1.0",
+      "sha256": "633fe8df9f1bfc0ef60de6a3495a599ec56e56216491b90b79604cfecfb88000",
+      "size_bytes": 271913
+    },
+    {
+      "namespace_path": "/puck/staged/inputs/root-0000/pillow.libs/libzstd-44be1190.so.1.5.7",
+      "sha256": "9501ab40e92a57491cadd2d02df46b596f24e74e6c0476b8500793f822fa0072",
+      "size_bytes": 1800497
+    },
+    {
+      "namespace_path": "/puck/staged/inputs/root-0000/torch/_C.cpython-311-x86_64-linux-gnu.so",
+      "sha256": "89e10a79609b8b9981445f880798883d1c6ef19ae8c91f8811fd5999831c5570",
+      "size_bytes": 25137
+    },
+    {
+      "namespace_path": "/puck/staged/inputs/root-0000/torch/lib/libc10.so",
+      "sha256": "79c9a9b5564ed4ac03cfce9e00dd41cafa3ba1372e001842763eb31560efe3aa",
+      "size_bytes": 1374664
+    },
+    {
+      "namespace_path": "/puck/staged/inputs/root-0000/torch/lib/libgomp.so.1",
+      "sha256": "78511033caddec6ccae8f4d62b94d56135f377c4cee33120e6d7df2ef499f69f",
+      "size_bytes": 253849
+    },
+    {
+      "namespace_path": "/puck/staged/inputs/root-0000/torch/lib/libshm.so",
+      "sha256": "76f03731bad6c1858d6a0b2958e5f6cdc0edc36d2a2877be127a5365a0408874",
+      "size_bytes": 36952
+    },
+    {
+      "namespace_path": "/puck/staged/inputs/root-0000/torch/lib/libtorch.so",
+      "sha256": "59a95807d56ca89993351a173839f160ca9c2c6ec6f6b89a5e691d8f1392d3ff",
+      "size_bytes": 8032
+    },
+    {
+      "namespace_path": "/puck/staged/inputs/root-0000/torch/lib/libtorch_cpu.so",
+      "sha256": "74c9fbcda45bb86543088eeef7ce8ff4a28946b157dd87436dbbeba3ac32cd72",
+      "size_bytes": 432273704
+    },
+    {
+      "namespace_path": "/puck/staged/inputs/root-0000/torch/lib/libtorch_python.so",
+      "sha256": "2422421da56794e398d0415bedb028b9baafe49de3ac51014597c74c226fc302",
+      "size_bytes": 30179712
+    }
+  ],
+  "retained_first_failure": {
+    "chain": [
+      "torchvision.__init__:10",
+      "torchvision.datasets.__init__:1",
+      "torchvision.datasets._optical_flow:10",
+      "PIL.Image:95",
+      "puck_dependency_imports._Loader.create_module:125"
+    ],
+    "error": "ImportError: libtiff-fc87e79d.so.6.2.0: cannot open shared object file: No such file or directory",
+    "held_four_imports_observed": false,
+    "interpretation": "Failure source plus source policy and ELF metadata support the origin mismatch. No dynamic-loader search trace was collected, so exact loader lookup sequence remains inferred.",
+    "observed_native_create_module_failure": true
+  },
+  "retained_namespace": {
+    "clearenv": true,
+    "ld_library_path_declared": false,
+    "ld_preload_declared": false,
+    "libtiff_namespace_path": "/puck/staged/inputs/root-0000/pillow.libs/libtiff-fc87e79d.so.6.2.0",
+    "pillow_libs_namespace_path": "/puck/staged/inputs/root-0000/pillow.libs",
+    "qualify_original_site_not_bound": true,
+    "root0_readonly_bind": true,
+    "system_bind_count": 29
+  },
+  "retained_registered_extensions": [
+    {
+      "kind": "extension",
+      "module_path": "PIL/_imaging.cpython-311-x86_64-linux-gnu.so",
+      "name": "PIL._imaging",
+      "needed": [
+        "libtiff-fc87e79d.so.6.2.0",
+        "libjpeg-31e2ca52.so.62.4.0",
+        "libopenjp2-b07f72ad.so.2.5.4",
+        "libz.so.1",
+        "libxcb-ad31f5a3.so.1.1.0",
+        "libpthread.so.0",
+        "libc.so.6"
+      ],
+      "packaged_direct_dependencies": [
+        "libtiff-fc87e79d.so.6.2.0",
+        "libjpeg-31e2ca52.so.62.4.0",
+        "libopenjp2-b07f72ad.so.2.5.4",
+        "libxcb-ad31f5a3.so.1.1.0"
+      ],
+      "policy_in_C": "exact-file-fd-v1",
+      "policy_in_D": "held-directory-observed-v1",
+      "retained_hash_observations": {
+        "namespace_path": "/puck/staged/inputs/root-0000/PIL/_imaging.cpython-311-x86_64-linux-gnu.so",
+        "original": {
+          "device": 57,
+          "inode": 26832544,
+          "matches_pinned_size_sha256": true,
+          "nlink": 1,
+          "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/PIL/_imaging.cpython-311-x86_64-linux-gnu.so",
+          "sha256": "b55dc49c50e6bad027caa57e6d0f7d7e793993e4693cd8d80cec38dc102790ff",
+          "size_bytes": 3385961,
+          "stable_during_read": true
+        },
+        "staged": {
+          "device": 55,
+          "inode": 1837330,
+          "matches_pinned_size_sha256": true,
+          "nlink": 1,
+          "path": "/tmp/palimpsest-puck-cpu-held-01/inputs/root-0000/PIL/_imaging.cpython-311-x86_64-linux-gnu.so",
+          "sha256": "b55dc49c50e6bad027caa57e6d0f7d7e793993e4693cd8d80cec38dc102790ff",
+          "size_bytes": 3385961,
+          "stable_during_read": true
+        }
+      },
+      "retained_origin_policy_defect": true,
+      "retained_readelf_input": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/PIL/_imaging.cpython-311-x86_64-linux-gnu.so",
+      "root_index": 0,
+      "rpath": [
+        "$ORIGIN/../pillow.libs"
+      ],
+      "runpath": [],
+      "sha256": "b55dc49c50e6bad027caa57e6d0f7d7e793993e4693cd8d80cec38dc102790ff",
+      "size_bytes": 3385961,
+      "soname": null
+    },
+    {
+      "kind": "extension",
+      "module_path": "PIL/_imagingft.cpython-311-x86_64-linux-gnu.so",
+      "name": "PIL._imagingft",
+      "needed": [
+        "libfreetype-9fc94c80.so.6.20.6",
+        "libharfbuzz-172d1f63.so.0.61421.0",
+        "libpthread.so.0",
+        "libc.so.6"
+      ],
+      "packaged_direct_dependencies": [
+        "libfreetype-9fc94c80.so.6.20.6",
+        "libharfbuzz-172d1f63.so.0.61421.0"
+      ],
+      "policy_in_C": "exact-file-fd-v1",
+      "policy_in_D": "held-directory-observed-v1",
+      "retained_hash_observations": {
+        "namespace_path": "/puck/staged/inputs/root-0000/PIL/_imagingft.cpython-311-x86_64-linux-gnu.so",
+        "original": {
+          "device": 57,
+          "inode": 26832582,
+          "matches_pinned_size_sha256": true,
+          "nlink": 1,
+          "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/PIL/_imagingft.cpython-311-x86_64-linux-gnu.so",
+          "sha256": "8f7f03397dd21518ed13f4322b7461be44c867459f539e6f0759f8c282995cbb",
+          "size_bytes": 322969,
+          "stable_during_read": true
+        },
+        "staged": {
+          "device": 55,
+          "inode": 1837334,
+          "matches_pinned_size_sha256": true,
+          "nlink": 1,
+          "path": "/tmp/palimpsest-puck-cpu-held-01/inputs/root-0000/PIL/_imagingft.cpython-311-x86_64-linux-gnu.so",
+          "sha256": "8f7f03397dd21518ed13f4322b7461be44c867459f539e6f0759f8c282995cbb",
+          "size_bytes": 322969,
+          "stable_during_read": true
+        }
+      },
+      "retained_origin_policy_defect": true,
+      "retained_readelf_input": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/PIL/_imagingft.cpython-311-x86_64-linux-gnu.so",
+      "root_index": 0,
+      "rpath": [
+        "$ORIGIN/../pillow.libs"
+      ],
+      "runpath": [],
+      "sha256": "8f7f03397dd21518ed13f4322b7461be44c867459f539e6f0759f8c282995cbb",
+      "size_bytes": 322969,
+      "soname": null
+    },
+    {
+      "kind": "extension",
+      "module_path": "mujoco/_callbacks.cpython-311-x86_64-linux-gnu.so",
+      "name": "mujoco._callbacks",
+      "needed": [
+        "libmujoco.so.3.3.6",
+        "librt.so.1",
+        "libpthread.so.0",
+        "libm.so.6",
+        "libc.so.6",
+        "ld-linux-x86-64.so.2",
+        "libdl.so.2"
+      ],
+      "packaged_direct_dependencies": [
+        "libmujoco.so.3.3.6"
+      ],
+      "policy_in_C": "held-directory-observed-v1",
+      "policy_in_D": "held-directory-observed-v1",
+      "retained_hash_observations": {
+        "namespace_path": "/puck/staged/inputs/root-0000/mujoco/_callbacks.cpython-311-x86_64-linux-gnu.so",
+        "original": {
+          "device": 57,
+          "inode": 26840482,
+          "matches_pinned_size_sha256": true,
+          "nlink": 1,
+          "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/mujoco/_callbacks.cpython-311-x86_64-linux-gnu.so",
+          "sha256": "b3ef6f7e68ab49d5ad33cdd182a3a8fd945cfca0552a912edb5b101a19b21666",
+          "size_bytes": 626304,
+          "stable_during_read": true
+        },
+        "staged": {
+          "device": 55,
+          "inode": 1839772,
+          "matches_pinned_size_sha256": true,
+          "nlink": 1,
+          "path": "/tmp/palimpsest-puck-cpu-held-01/inputs/root-0000/mujoco/_callbacks.cpython-311-x86_64-linux-gnu.so",
+          "sha256": "b3ef6f7e68ab49d5ad33cdd182a3a8fd945cfca0552a912edb5b101a19b21666",
+          "size_bytes": 626304,
+          "stable_during_read": true
+        }
+      },
+      "retained_origin_policy_defect": false,
+      "retained_readelf_input": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/mujoco/_callbacks.cpython-311-x86_64-linux-gnu.so",
+      "root_index": 0,
+      "rpath": [],
+      "runpath": [
+        "$ORIGIN"
+      ],
+      "sha256": "b3ef6f7e68ab49d5ad33cdd182a3a8fd945cfca0552a912edb5b101a19b21666",
+      "size_bytes": 626304,
+      "soname": null
+    },
+    {
+      "kind": "extension",
+      "module_path": "mujoco/_constants.cpython-311-x86_64-linux-gnu.so",
+      "name": "mujoco._constants",
+      "needed": [
+        "libmujoco.so.3.3.6",
+        "libm.so.6",
+        "libc.so.6",
+        "ld-linux-x86-64.so.2",
+        "libdl.so.2",
+        "libpthread.so.0"
+      ],
+      "packaged_direct_dependencies": [
+        "libmujoco.so.3.3.6"
+      ],
+      "policy_in_C": "held-directory-observed-v1",
+      "policy_in_D": "held-directory-observed-v1",
+      "retained_hash_observations": {
+        "namespace_path": "/puck/staged/inputs/root-0000/mujoco/_constants.cpython-311-x86_64-linux-gnu.so",
+        "original": {
+          "device": 57,
+          "inode": 26840868,
+          "matches_pinned_size_sha256": true,
+          "nlink": 1,
+          "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/mujoco/_constants.cpython-311-x86_64-linux-gnu.so",
+          "sha256": "ac800e9c526a8479c04de00f37420e1a0e1e25fb17f39a819d405480bfe1ccf9",
+          "size_bytes": 359336,
+          "stable_during_read": true
+        },
+        "staged": {
+          "device": 55,
+          "inode": 1839773,
+          "matches_pinned_size_sha256": true,
+          "nlink": 1,
+          "path": "/tmp/palimpsest-puck-cpu-held-01/inputs/root-0000/mujoco/_constants.cpython-311-x86_64-linux-gnu.so",
+          "sha256": "ac800e9c526a8479c04de00f37420e1a0e1e25fb17f39a819d405480bfe1ccf9",
+          "size_bytes": 359336,
+          "stable_during_read": true
+        }
+      },
+      "retained_origin_policy_defect": false,
+      "retained_readelf_input": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/mujoco/_constants.cpython-311-x86_64-linux-gnu.so",
+      "root_index": 0,
+      "rpath": [],
+      "runpath": [
+        "$ORIGIN"
+      ],
+      "sha256": "ac800e9c526a8479c04de00f37420e1a0e1e25fb17f39a819d405480bfe1ccf9",
+      "size_bytes": 359336,
+      "soname": null
+    },
+    {
+      "kind": "extension",
+      "module_path": "mujoco/_enums.cpython-311-x86_64-linux-gnu.so",
+      "name": "mujoco._enums",
+      "needed": [
+        "libmujoco.so.3.3.6",
+        "libm.so.6",
+        "libc.so.6",
+        "ld-linux-x86-64.so.2",
+        "libdl.so.2",
+        "libpthread.so.0"
+      ],
+      "packaged_direct_dependencies": [
+        "libmujoco.so.3.3.6"
+      ],
+      "policy_in_C": "held-directory-observed-v1",
+      "policy_in_D": "held-directory-observed-v1",
+      "retained_hash_observations": {
+        "namespace_path": "/puck/staged/inputs/root-0000/mujoco/_enums.cpython-311-x86_64-linux-gnu.so",
+        "original": {
+          "device": 57,
+          "inode": 26840568,
+          "matches_pinned_size_sha256": true,
+          "nlink": 1,
+          "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/mujoco/_enums.cpython-311-x86_64-linux-gnu.so",
+          "sha256": "c416a0eff44e867c90177f3925d02a84ac0ab504fe6c9c8685632d9e19cd6406",
+          "size_bytes": 2340296,
+          "stable_during_read": true
+        },
+        "staged": {
+          "device": 55,
+          "inode": 1839774,
+          "matches_pinned_size_sha256": true,
+          "nlink": 1,
+          "path": "/tmp/palimpsest-puck-cpu-held-01/inputs/root-0000/mujoco/_enums.cpython-311-x86_64-linux-gnu.so",
+          "sha256": "c416a0eff44e867c90177f3925d02a84ac0ab504fe6c9c8685632d9e19cd6406",
+          "size_bytes": 2340296,
+          "stable_during_read": true
+        }
+      },
+      "retained_origin_policy_defect": false,
+      "retained_readelf_input": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/mujoco/_enums.cpython-311-x86_64-linux-gnu.so",
+      "root_index": 0,
+      "rpath": [],
+      "runpath": [
+        "$ORIGIN"
+      ],
+      "sha256": "c416a0eff44e867c90177f3925d02a84ac0ab504fe6c9c8685632d9e19cd6406",
+      "size_bytes": 2340296,
+      "soname": null
+    },
+    {
+      "kind": "extension",
+      "module_path": "mujoco/_errors.cpython-311-x86_64-linux-gnu.so",
+      "name": "mujoco._errors",
+      "needed": [
+        "libmujoco.so.3.3.6",
+        "libm.so.6",
+        "libc.so.6",
+        "ld-linux-x86-64.so.2",
+        "libdl.so.2",
+        "libpthread.so.0"
+      ],
+      "packaged_direct_dependencies": [
+        "libmujoco.so.3.3.6"
+      ],
+      "policy_in_C": "held-directory-observed-v1",
+      "policy_in_D": "held-directory-observed-v1",
+      "retained_hash_observations": {
+        "namespace_path": "/puck/staged/inputs/root-0000/mujoco/_errors.cpython-311-x86_64-linux-gnu.so",
+        "original": {
+          "device": 57,
+          "inode": 26840850,
+          "matches_pinned_size_sha256": true,
+          "nlink": 1,
+          "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/mujoco/_errors.cpython-311-x86_64-linux-gnu.so",
+          "sha256": "68dd1ea6aa811736800b4600dc1f9babe48d58d41c21766fe504fc35a7bde9bd",
+          "size_bytes": 355272,
+          "stable_during_read": true
+        },
+        "staged": {
+          "device": 55,
+          "inode": 1839775,
+          "matches_pinned_size_sha256": true,
+          "nlink": 1,
+          "path": "/tmp/palimpsest-puck-cpu-held-01/inputs/root-0000/mujoco/_errors.cpython-311-x86_64-linux-gnu.so",
+          "sha256": "68dd1ea6aa811736800b4600dc1f9babe48d58d41c21766fe504fc35a7bde9bd",
+          "size_bytes": 355272,
+          "stable_during_read": true
+        }
+      },
+      "retained_origin_policy_defect": false,
+      "retained_readelf_input": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/mujoco/_errors.cpython-311-x86_64-linux-gnu.so",
+      "root_index": 0,
+      "rpath": [],
+      "runpath": [
+        "$ORIGIN"
+      ],
+      "sha256": "68dd1ea6aa811736800b4600dc1f9babe48d58d41c21766fe504fc35a7bde9bd",
+      "size_bytes": 355272,
+      "soname": null
+    },
+    {
+      "kind": "extension",
+      "module_path": "mujoco/_functions.cpython-311-x86_64-linux-gnu.so",
+      "name": "mujoco._functions",
+      "needed": [
+        "librt.so.1",
+        "libpthread.so.0",
+        "libmujoco.so.3.3.6",
+        "libm.so.6",
+        "libc.so.6",
+        "ld-linux-x86-64.so.2",
+        "libdl.so.2"
+      ],
+      "packaged_direct_dependencies": [
+        "libmujoco.so.3.3.6"
+      ],
+      "policy_in_C": "held-directory-observed-v1",
+      "policy_in_D": "held-directory-observed-v1",
+      "retained_hash_observations": {
+        "namespace_path": "/puck/staged/inputs/root-0000/mujoco/_functions.cpython-311-x86_64-linux-gnu.so",
+        "original": {
+          "device": 57,
+          "inode": 26840458,
+          "matches_pinned_size_sha256": true,
+          "nlink": 1,
+          "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/mujoco/_functions.cpython-311-x86_64-linux-gnu.so",
+          "sha256": "8483657af2ac1248f87f324e877ca7866e52760304b270460eebda968d3d2473",
+          "size_bytes": 998040,
+          "stable_during_read": true
+        },
+        "staged": {
+          "device": 55,
+          "inode": 1839776,
+          "matches_pinned_size_sha256": true,
+          "nlink": 1,
+          "path": "/tmp/palimpsest-puck-cpu-held-01/inputs/root-0000/mujoco/_functions.cpython-311-x86_64-linux-gnu.so",
+          "sha256": "8483657af2ac1248f87f324e877ca7866e52760304b270460eebda968d3d2473",
+          "size_bytes": 998040,
+          "stable_during_read": true
+        }
+      },
+      "retained_origin_policy_defect": false,
+      "retained_readelf_input": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/mujoco/_functions.cpython-311-x86_64-linux-gnu.so",
+      "root_index": 0,
+      "rpath": [],
+      "runpath": [
+        "$ORIGIN"
+      ],
+      "sha256": "8483657af2ac1248f87f324e877ca7866e52760304b270460eebda968d3d2473",
+      "size_bytes": 998040,
+      "soname": null
+    },
+    {
+      "kind": "extension",
+      "module_path": "mujoco/_render.cpython-311-x86_64-linux-gnu.so",
+      "name": "mujoco._render",
+      "needed": [
+        "librt.so.1",
+        "libpthread.so.0",
+        "libmujoco.so.3.3.6",
+        "libm.so.6",
+        "libc.so.6",
+        "ld-linux-x86-64.so.2",
+        "libdl.so.2"
+      ],
+      "packaged_direct_dependencies": [
+        "libmujoco.so.3.3.6"
+      ],
+      "policy_in_C": "held-directory-observed-v1",
+      "policy_in_D": "held-directory-observed-v1",
+      "retained_hash_observations": {
+        "namespace_path": "/puck/staged/inputs/root-0000/mujoco/_render.cpython-311-x86_64-linux-gnu.so",
+        "original": {
+          "device": 57,
+          "inode": 26840785,
+          "matches_pinned_size_sha256": true,
+          "nlink": 1,
+          "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/mujoco/_render.cpython-311-x86_64-linux-gnu.so",
+          "sha256": "c515257ed2ed6dddc580cf8b34c15fe198b2d41d30015b083e741bb1aaf01c8c",
+          "size_bytes": 771432,
+          "stable_during_read": true
+        },
+        "staged": {
+          "device": 55,
+          "inode": 1839777,
+          "matches_pinned_size_sha256": true,
+          "nlink": 1,
+          "path": "/tmp/palimpsest-puck-cpu-held-01/inputs/root-0000/mujoco/_render.cpython-311-x86_64-linux-gnu.so",
+          "sha256": "c515257ed2ed6dddc580cf8b34c15fe198b2d41d30015b083e741bb1aaf01c8c",
+          "size_bytes": 771432,
+          "stable_during_read": true
+        }
+      },
+      "retained_origin_policy_defect": false,
+      "retained_readelf_input": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/mujoco/_render.cpython-311-x86_64-linux-gnu.so",
+      "root_index": 0,
+      "rpath": [],
+      "runpath": [
+        "$ORIGIN"
+      ],
+      "sha256": "c515257ed2ed6dddc580cf8b34c15fe198b2d41d30015b083e741bb1aaf01c8c",
+      "size_bytes": 771432,
+      "soname": null
+    },
+    {
+      "kind": "extension",
+      "module_path": "mujoco/_specs.cpython-311-x86_64-linux-gnu.so",
+      "name": "mujoco._specs",
+      "needed": [
+        "libmujoco.so.3.3.6",
+        "librt.so.1",
+        "libpthread.so.0",
+        "libm.so.6",
+        "libc.so.6",
+        "ld-linux-x86-64.so.2",
+        "libdl.so.2"
+      ],
+      "packaged_direct_dependencies": [
+        "libmujoco.so.3.3.6"
+      ],
+      "policy_in_C": "held-directory-observed-v1",
+      "policy_in_D": "held-directory-observed-v1",
+      "retained_hash_observations": {
+        "namespace_path": "/puck/staged/inputs/root-0000/mujoco/_specs.cpython-311-x86_64-linux-gnu.so",
+        "original": {
+          "device": 57,
+          "inode": 26840664,
+          "matches_pinned_size_sha256": true,
+          "nlink": 1,
+          "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/mujoco/_specs.cpython-311-x86_64-linux-gnu.so",
+          "sha256": "1641f751415a4008099063603fbeef29f6f62f5fa94435ccec18e667eb7b6f69",
+          "size_bytes": 2135944,
+          "stable_during_read": true
+        },
+        "staged": {
+          "device": 55,
+          "inode": 1839780,
+          "matches_pinned_size_sha256": true,
+          "nlink": 1,
+          "path": "/tmp/palimpsest-puck-cpu-held-01/inputs/root-0000/mujoco/_specs.cpython-311-x86_64-linux-gnu.so",
+          "sha256": "1641f751415a4008099063603fbeef29f6f62f5fa94435ccec18e667eb7b6f69",
+          "size_bytes": 2135944,
+          "stable_during_read": true
+        }
+      },
+      "retained_origin_policy_defect": false,
+      "retained_readelf_input": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/mujoco/_specs.cpython-311-x86_64-linux-gnu.so",
+      "root_index": 0,
+      "rpath": [],
+      "runpath": [
+        "$ORIGIN"
+      ],
+      "sha256": "1641f751415a4008099063603fbeef29f6f62f5fa94435ccec18e667eb7b6f69",
+      "size_bytes": 2135944,
+      "soname": null
+    },
+    {
+      "kind": "extension",
+      "module_path": "mujoco/_structs.cpython-311-x86_64-linux-gnu.so",
+      "name": "mujoco._structs",
+      "needed": [
+        "librt.so.1",
+        "libpthread.so.0",
+        "libmujoco.so.3.3.6",
+        "libm.so.6",
+        "libc.so.6",
+        "ld-linux-x86-64.so.2",
+        "libdl.so.2"
+      ],
+      "packaged_direct_dependencies": [
+        "libmujoco.so.3.3.6"
+      ],
+      "policy_in_C": "held-directory-observed-v1",
+      "policy_in_D": "held-directory-observed-v1",
+      "retained_hash_observations": {
+        "namespace_path": "/puck/staged/inputs/root-0000/mujoco/_structs.cpython-311-x86_64-linux-gnu.so",
+        "original": {
+          "device": 57,
+          "inode": 26840890,
+          "matches_pinned_size_sha256": true,
+          "nlink": 1,
+          "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/mujoco/_structs.cpython-311-x86_64-linux-gnu.so",
+          "sha256": "bd3f1f5506ba856a9695651bd3f9afc7f0f3a78818744b412cf65ff754948712",
+          "size_bytes": 2987352,
+          "stable_during_read": true
+        },
+        "staged": {
+          "device": 55,
+          "inode": 1839781,
+          "matches_pinned_size_sha256": true,
+          "nlink": 1,
+          "path": "/tmp/palimpsest-puck-cpu-held-01/inputs/root-0000/mujoco/_structs.cpython-311-x86_64-linux-gnu.so",
+          "sha256": "bd3f1f5506ba856a9695651bd3f9afc7f0f3a78818744b412cf65ff754948712",
+          "size_bytes": 2987352,
+          "stable_during_read": true
+        }
+      },
+      "retained_origin_policy_defect": false,
+      "retained_readelf_input": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/mujoco/_structs.cpython-311-x86_64-linux-gnu.so",
+      "root_index": 0,
+      "rpath": [],
+      "runpath": [
+        "$ORIGIN"
+      ],
+      "sha256": "bd3f1f5506ba856a9695651bd3f9afc7f0f3a78818744b412cf65ff754948712",
+      "size_bytes": 2987352,
+      "soname": null
+    },
+    {
+      "kind": "extension",
+      "module_path": "numpy/_core/_multiarray_umath.cpython-311-x86_64-linux-gnu.so",
+      "name": "numpy._core._multiarray_umath",
+      "needed": [
+        "libscipy_openblas64_-6bb31eeb.so",
+        "libstdc++.so.6",
+        "libm.so.6",
+        "libgcc_s.so.1",
+        "libc.so.6",
+        "ld-linux-x86-64.so.2"
+      ],
+      "packaged_direct_dependencies": [
+        "libscipy_openblas64_-6bb31eeb.so"
+      ],
+      "policy_in_C": "held-directory-observed-v1",
+      "policy_in_D": "held-directory-observed-v1",
+      "retained_hash_observations": {
+        "namespace_path": "/puck/staged/inputs/root-0000/numpy/_core/_multiarray_umath.cpython-311-x86_64-linux-gnu.so",
+        "original": {
+          "device": 57,
+          "inode": 26844808,
+          "matches_pinned_size_sha256": true,
+          "nlink": 1,
+          "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/numpy/_core/_multiarray_umath.cpython-311-x86_64-linux-gnu.so",
+          "sha256": "5c88e49167e07caf0660c06cd686951ca9dfbc21a3d49c4a08a6f01aae310efe",
+          "size_bytes": 10445089,
+          "stable_during_read": true
+        },
+        "staged": {
+          "device": 55,
+          "inode": 1840508,
+          "matches_pinned_size_sha256": true,
+          "nlink": 1,
+          "path": "/tmp/palimpsest-puck-cpu-held-01/inputs/root-0000/numpy/_core/_multiarray_umath.cpython-311-x86_64-linux-gnu.so",
+          "sha256": "5c88e49167e07caf0660c06cd686951ca9dfbc21a3d49c4a08a6f01aae310efe",
+          "size_bytes": 10445089,
+          "stable_during_read": true
+        }
+      },
+      "retained_origin_policy_defect": false,
+      "retained_readelf_input": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/numpy/_core/_multiarray_umath.cpython-311-x86_64-linux-gnu.so",
+      "root_index": 0,
+      "rpath": [
+        "$ORIGIN/../../numpy.libs"
+      ],
+      "runpath": [],
+      "sha256": "5c88e49167e07caf0660c06cd686951ca9dfbc21a3d49c4a08a6f01aae310efe",
+      "size_bytes": 10445089,
+      "soname": null
+    },
+    {
+      "kind": "extension",
+      "module_path": "numpy/fft/_pocketfft_umath.cpython-311-x86_64-linux-gnu.so",
+      "name": "numpy.fft._pocketfft_umath",
+      "needed": [
+        "libstdc++.so.6",
+        "libm.so.6",
+        "libgcc_s.so.1",
+        "libc.so.6"
+      ],
+      "packaged_direct_dependencies": [],
+      "policy_in_C": "exact-file-fd-v1",
+      "policy_in_D": "exact-file-fd-v1",
+      "retained_hash_observations": {
+        "namespace_path": "/puck/staged/inputs/root-0000/numpy/fft/_pocketfft_umath.cpython-311-x86_64-linux-gnu.so",
+        "original": {
+          "device": 57,
+          "inode": 26846033,
+          "matches_pinned_size_sha256": true,
+          "nlink": 1,
+          "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/numpy/fft/_pocketfft_umath.cpython-311-x86_64-linux-gnu.so",
+          "sha256": "bdf266bd798225e5a1fedc24f792b4b45d52bd960adc94fd3cb76108b253d42b",
+          "size_bytes": 649272,
+          "stable_during_read": true
+        },
+        "staged": {
+          "device": 55,
+          "inode": 1841050,
+          "matches_pinned_size_sha256": true,
+          "nlink": 1,
+          "path": "/tmp/palimpsest-puck-cpu-held-01/inputs/root-0000/numpy/fft/_pocketfft_umath.cpython-311-x86_64-linux-gnu.so",
+          "sha256": "bdf266bd798225e5a1fedc24f792b4b45d52bd960adc94fd3cb76108b253d42b",
+          "size_bytes": 649272,
+          "stable_during_read": true
+        }
+      },
+      "retained_origin_policy_defect": false,
+      "retained_readelf_input": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/numpy/fft/_pocketfft_umath.cpython-311-x86_64-linux-gnu.so",
+      "root_index": 0,
+      "rpath": [],
+      "runpath": [],
+      "sha256": "bdf266bd798225e5a1fedc24f792b4b45d52bd960adc94fd3cb76108b253d42b",
+      "size_bytes": 649272,
+      "soname": null
+    },
+    {
+      "kind": "extension",
+      "module_path": "numpy/linalg/_umath_linalg.cpython-311-x86_64-linux-gnu.so",
+      "name": "numpy.linalg._umath_linalg",
+      "needed": [
+        "libscipy_openblas64_-6bb31eeb.so",
+        "libm.so.6",
+        "libgcc_s.so.1",
+        "libc.so.6"
+      ],
+      "packaged_direct_dependencies": [
+        "libscipy_openblas64_-6bb31eeb.so"
+      ],
+      "policy_in_C": "held-directory-observed-v1",
+      "policy_in_D": "held-directory-observed-v1",
+      "retained_hash_observations": {
+        "namespace_path": "/puck/staged/inputs/root-0000/numpy/linalg/_umath_linalg.cpython-311-x86_64-linux-gnu.so",
+        "original": {
+          "device": 57,
+          "inode": 26845091,
+          "matches_pinned_size_sha256": true,
+          "nlink": 1,
+          "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/numpy/linalg/_umath_linalg.cpython-311-x86_64-linux-gnu.so",
+          "sha256": "85b345399f416ae07c5713a9213990ae45700cf6e6ff69a43cbc09fcc227d0a3",
+          "size_bytes": 227657,
+          "stable_during_read": true
+        },
+        "staged": {
+          "device": 55,
+          "inode": 1841155,
+          "matches_pinned_size_sha256": true,
+          "nlink": 1,
+          "path": "/tmp/palimpsest-puck-cpu-held-01/inputs/root-0000/numpy/linalg/_umath_linalg.cpython-311-x86_64-linux-gnu.so",
+          "sha256": "85b345399f416ae07c5713a9213990ae45700cf6e6ff69a43cbc09fcc227d0a3",
+          "size_bytes": 227657,
+          "stable_during_read": true
+        }
+      },
+      "retained_origin_policy_defect": false,
+      "retained_readelf_input": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/numpy/linalg/_umath_linalg.cpython-311-x86_64-linux-gnu.so",
+      "root_index": 0,
+      "rpath": [
+        "$ORIGIN/../../numpy.libs"
+      ],
+      "runpath": [],
+      "sha256": "85b345399f416ae07c5713a9213990ae45700cf6e6ff69a43cbc09fcc227d0a3",
+      "size_bytes": 227657,
+      "soname": null
+    },
+    {
+      "kind": "extension",
+      "module_path": "numpy/random/_bounded_integers.cpython-311-x86_64-linux-gnu.so",
+      "name": "numpy.random._bounded_integers",
+      "needed": [
+        "libm.so.6",
+        "libc.so.6"
+      ],
+      "packaged_direct_dependencies": [],
+      "policy_in_C": "exact-file-fd-v1",
+      "policy_in_D": "exact-file-fd-v1",
+      "retained_hash_observations": {
+        "namespace_path": "/puck/staged/inputs/root-0000/numpy/random/_bounded_integers.cpython-311-x86_64-linux-gnu.so",
+        "original": {
+          "device": 57,
+          "inode": 26837839,
+          "matches_pinned_size_sha256": true,
+          "nlink": 1,
+          "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/numpy/random/_bounded_integers.cpython-311-x86_64-linux-gnu.so",
+          "sha256": "da3a662e22f929be22b1a4d810bf60906a4ff95e745ef2409d3f7d8ba64efae1",
+          "size_bytes": 366800,
+          "stable_during_read": true
+        },
+        "staged": {
+          "device": 55,
+          "inode": 1841236,
+          "matches_pinned_size_sha256": true,
+          "nlink": 1,
+          "path": "/tmp/palimpsest-puck-cpu-held-01/inputs/root-0000/numpy/random/_bounded_integers.cpython-311-x86_64-linux-gnu.so",
+          "sha256": "da3a662e22f929be22b1a4d810bf60906a4ff95e745ef2409d3f7d8ba64efae1",
+          "size_bytes": 366800,
+          "stable_during_read": true
+        }
+      },
+      "retained_origin_policy_defect": false,
+      "retained_readelf_input": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/numpy/random/_bounded_integers.cpython-311-x86_64-linux-gnu.so",
+      "root_index": 0,
+      "rpath": [],
+      "runpath": [],
+      "sha256": "da3a662e22f929be22b1a4d810bf60906a4ff95e745ef2409d3f7d8ba64efae1",
+      "size_bytes": 366800,
+      "soname": null
+    },
+    {
+      "kind": "extension",
+      "module_path": "numpy/random/_common.cpython-311-x86_64-linux-gnu.so",
+      "name": "numpy.random._common",
+      "needed": [
+        "libc.so.6"
+      ],
+      "packaged_direct_dependencies": [],
+      "policy_in_C": "exact-file-fd-v1",
+      "policy_in_D": "exact-file-fd-v1",
+      "retained_hash_observations": {
+        "namespace_path": "/puck/staged/inputs/root-0000/numpy/random/_common.cpython-311-x86_64-linux-gnu.so",
+        "original": {
+          "device": 57,
+          "inode": 26837743,
+          "matches_pinned_size_sha256": true,
+          "nlink": 1,
+          "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/numpy/random/_common.cpython-311-x86_64-linux-gnu.so",
+          "sha256": "17f99f57cd1e129065457dbbe17099120a54a3249149457b7a2f5bac254d4745",
+          "size_bytes": 276728,
+          "stable_during_read": true
+        },
+        "staged": {
+          "device": 55,
+          "inode": 1841238,
+          "matches_pinned_size_sha256": true,
+          "nlink": 1,
+          "path": "/tmp/palimpsest-puck-cpu-held-01/inputs/root-0000/numpy/random/_common.cpython-311-x86_64-linux-gnu.so",
+          "sha256": "17f99f57cd1e129065457dbbe17099120a54a3249149457b7a2f5bac254d4745",
+          "size_bytes": 276728,
+          "stable_during_read": true
+        }
+      },
+      "retained_origin_policy_defect": false,
+      "retained_readelf_input": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/numpy/random/_common.cpython-311-x86_64-linux-gnu.so",
+      "root_index": 0,
+      "rpath": [],
+      "runpath": [],
+      "sha256": "17f99f57cd1e129065457dbbe17099120a54a3249149457b7a2f5bac254d4745",
+      "size_bytes": 276728,
+      "soname": null
+    },
+    {
+      "kind": "extension",
+      "module_path": "numpy/random/_generator.cpython-311-x86_64-linux-gnu.so",
+      "name": "numpy.random._generator",
+      "needed": [
+        "libm.so.6",
+        "libc.so.6"
+      ],
+      "packaged_direct_dependencies": [],
+      "policy_in_C": "exact-file-fd-v1",
+      "policy_in_D": "exact-file-fd-v1",
+      "retained_hash_observations": {
+        "namespace_path": "/puck/staged/inputs/root-0000/numpy/random/_generator.cpython-311-x86_64-linux-gnu.so",
+        "original": {
+          "device": 57,
+          "inode": 26837631,
+          "matches_pinned_size_sha256": true,
+          "nlink": 1,
+          "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/numpy/random/_generator.cpython-311-x86_64-linux-gnu.so",
+          "sha256": "a1610b201f1e5386852e3b51e92de9dbdb90c6a09cc02902a96c1c84a6adde0c",
+          "size_bytes": 1061400,
+          "stable_during_read": true
+        },
+        "staged": {
+          "device": 55,
+          "inode": 1841247,
+          "matches_pinned_size_sha256": true,
+          "nlink": 1,
+          "path": "/tmp/palimpsest-puck-cpu-held-01/inputs/root-0000/numpy/random/_generator.cpython-311-x86_64-linux-gnu.so",
+          "sha256": "a1610b201f1e5386852e3b51e92de9dbdb90c6a09cc02902a96c1c84a6adde0c",
+          "size_bytes": 1061400,
+          "stable_during_read": true
+        }
+      },
+      "retained_origin_policy_defect": false,
+      "retained_readelf_input": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/numpy/random/_generator.cpython-311-x86_64-linux-gnu.so",
+      "root_index": 0,
+      "rpath": [],
+      "runpath": [],
+      "sha256": "a1610b201f1e5386852e3b51e92de9dbdb90c6a09cc02902a96c1c84a6adde0c",
+      "size_bytes": 1061400,
+      "soname": null
+    },
+    {
+      "kind": "extension",
+      "module_path": "numpy/random/_mt19937.cpython-311-x86_64-linux-gnu.so",
+      "name": "numpy.random._mt19937",
+      "needed": [
+        "libc.so.6"
+      ],
+      "packaged_direct_dependencies": [],
+      "policy_in_C": "exact-file-fd-v1",
+      "policy_in_D": "exact-file-fd-v1",
+      "retained_hash_observations": {
+        "namespace_path": "/puck/staged/inputs/root-0000/numpy/random/_mt19937.cpython-311-x86_64-linux-gnu.so",
+        "original": {
+          "device": 57,
+          "inode": 26837591,
+          "matches_pinned_size_sha256": true,
+          "nlink": 1,
+          "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/numpy/random/_mt19937.cpython-311-x86_64-linux-gnu.so",
+          "sha256": "215e48c83d2473d71cfe24995090bff9fa0788fd2b6ecd067e1418a6c5f8176c",
+          "size_bytes": 141824,
+          "stable_during_read": true
+        },
+        "staged": {
+          "device": 55,
+          "inode": 1841249,
+          "matches_pinned_size_sha256": true,
+          "nlink": 1,
+          "path": "/tmp/palimpsest-puck-cpu-held-01/inputs/root-0000/numpy/random/_mt19937.cpython-311-x86_64-linux-gnu.so",
+          "sha256": "215e48c83d2473d71cfe24995090bff9fa0788fd2b6ecd067e1418a6c5f8176c",
+          "size_bytes": 141824,
+          "stable_during_read": true
+        }
+      },
+      "retained_origin_policy_defect": false,
+      "retained_readelf_input": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/numpy/random/_mt19937.cpython-311-x86_64-linux-gnu.so",
+      "root_index": 0,
+      "rpath": [],
+      "runpath": [],
+      "sha256": "215e48c83d2473d71cfe24995090bff9fa0788fd2b6ecd067e1418a6c5f8176c",
+      "size_bytes": 141824,
+      "soname": null
+    },
+    {
+      "kind": "extension",
+      "module_path": "numpy/random/_pcg64.cpython-311-x86_64-linux-gnu.so",
+      "name": "numpy.random._pcg64",
+      "needed": [
+        "libc.so.6"
+      ],
+      "packaged_direct_dependencies": [],
+      "policy_in_C": "exact-file-fd-v1",
+      "policy_in_D": "exact-file-fd-v1",
+      "retained_hash_observations": {
+        "namespace_path": "/puck/staged/inputs/root-0000/numpy/random/_pcg64.cpython-311-x86_64-linux-gnu.so",
+        "original": {
+          "device": 57,
+          "inode": 26836990,
+          "matches_pinned_size_sha256": true,
+          "nlink": 1,
+          "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/numpy/random/_pcg64.cpython-311-x86_64-linux-gnu.so",
+          "sha256": "7ebf09c9ee4742d0b16caf17d1cc0c8935165a73bba9dc4cb7c56bbbdf7a1f47",
+          "size_bytes": 148704,
+          "stable_during_read": true
+        },
+        "staged": {
+          "device": 55,
+          "inode": 1841251,
+          "matches_pinned_size_sha256": true,
+          "nlink": 1,
+          "path": "/tmp/palimpsest-puck-cpu-held-01/inputs/root-0000/numpy/random/_pcg64.cpython-311-x86_64-linux-gnu.so",
+          "sha256": "7ebf09c9ee4742d0b16caf17d1cc0c8935165a73bba9dc4cb7c56bbbdf7a1f47",
+          "size_bytes": 148704,
+          "stable_during_read": true
+        }
+      },
+      "retained_origin_policy_defect": false,
+      "retained_readelf_input": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/numpy/random/_pcg64.cpython-311-x86_64-linux-gnu.so",
+      "root_index": 0,
+      "rpath": [],
+      "runpath": [],
+      "sha256": "7ebf09c9ee4742d0b16caf17d1cc0c8935165a73bba9dc4cb7c56bbbdf7a1f47",
+      "size_bytes": 148704,
+      "soname": null
+    },
+    {
+      "kind": "extension",
+      "module_path": "numpy/random/_philox.cpython-311-x86_64-linux-gnu.so",
+      "name": "numpy.random._philox",
+      "needed": [
+        "libc.so.6"
+      ],
+      "packaged_direct_dependencies": [],
+      "policy_in_C": "exact-file-fd-v1",
+      "policy_in_D": "exact-file-fd-v1",
+      "retained_hash_observations": {
+        "namespace_path": "/puck/staged/inputs/root-0000/numpy/random/_philox.cpython-311-x86_64-linux-gnu.so",
+        "original": {
+          "device": 57,
+          "inode": 26837949,
+          "matches_pinned_size_sha256": true,
+          "nlink": 1,
+          "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/numpy/random/_philox.cpython-311-x86_64-linux-gnu.so",
+          "sha256": "d5aebb518a7aaba575a0645bfc1f8a80cf44c70799c814bfad2ccb5837df29d0",
+          "size_bytes": 128872,
+          "stable_during_read": true
+        },
+        "staged": {
+          "device": 55,
+          "inode": 1841253,
+          "matches_pinned_size_sha256": true,
+          "nlink": 1,
+          "path": "/tmp/palimpsest-puck-cpu-held-01/inputs/root-0000/numpy/random/_philox.cpython-311-x86_64-linux-gnu.so",
+          "sha256": "d5aebb518a7aaba575a0645bfc1f8a80cf44c70799c814bfad2ccb5837df29d0",
+          "size_bytes": 128872,
+          "stable_during_read": true
+        }
+      },
+      "retained_origin_policy_defect": false,
+      "retained_readelf_input": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/numpy/random/_philox.cpython-311-x86_64-linux-gnu.so",
+      "root_index": 0,
+      "rpath": [],
+      "runpath": [],
+      "sha256": "d5aebb518a7aaba575a0645bfc1f8a80cf44c70799c814bfad2ccb5837df29d0",
+      "size_bytes": 128872,
+      "soname": null
+    },
+    {
+      "kind": "extension",
+      "module_path": "numpy/random/_sfc64.cpython-311-x86_64-linux-gnu.so",
+      "name": "numpy.random._sfc64",
+      "needed": [
+        "libc.so.6"
+      ],
+      "packaged_direct_dependencies": [],
+      "policy_in_C": "exact-file-fd-v1",
+      "policy_in_D": "exact-file-fd-v1",
+      "retained_hash_observations": {
+        "namespace_path": "/puck/staged/inputs/root-0000/numpy/random/_sfc64.cpython-311-x86_64-linux-gnu.so",
+        "original": {
+          "device": 57,
+          "inode": 26838043,
+          "matches_pinned_size_sha256": true,
+          "nlink": 1,
+          "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/numpy/random/_sfc64.cpython-311-x86_64-linux-gnu.so",
+          "sha256": "f330ac40276b20109f2040991c2749dbe6b527c178070d6d6486b808605f63e9",
+          "size_bytes": 89448,
+          "stable_during_read": true
+        },
+        "staged": {
+          "device": 55,
+          "inode": 1841257,
+          "matches_pinned_size_sha256": true,
+          "nlink": 1,
+          "path": "/tmp/palimpsest-puck-cpu-held-01/inputs/root-0000/numpy/random/_sfc64.cpython-311-x86_64-linux-gnu.so",
+          "sha256": "f330ac40276b20109f2040991c2749dbe6b527c178070d6d6486b808605f63e9",
+          "size_bytes": 89448,
+          "stable_during_read": true
+        }
+      },
+      "retained_origin_policy_defect": false,
+      "retained_readelf_input": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/numpy/random/_sfc64.cpython-311-x86_64-linux-gnu.so",
+      "root_index": 0,
+      "rpath": [],
+      "runpath": [],
+      "sha256": "f330ac40276b20109f2040991c2749dbe6b527c178070d6d6486b808605f63e9",
+      "size_bytes": 89448,
+      "soname": null
+    },
+    {
+      "kind": "extension",
+      "module_path": "numpy/random/bit_generator.cpython-311-x86_64-linux-gnu.so",
+      "name": "numpy.random.bit_generator",
+      "needed": [
+        "libc.so.6"
+      ],
+      "packaged_direct_dependencies": [],
+      "policy_in_C": "exact-file-fd-v1",
+      "policy_in_D": "exact-file-fd-v1",
+      "retained_hash_observations": {
+        "namespace_path": "/puck/staged/inputs/root-0000/numpy/random/bit_generator.cpython-311-x86_64-linux-gnu.so",
+        "original": {
+          "device": 57,
+          "inode": 26837000,
+          "matches_pinned_size_sha256": true,
+          "nlink": 1,
+          "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/numpy/random/bit_generator.cpython-311-x86_64-linux-gnu.so",
+          "sha256": "d25ee62c3eafa15e48b6488207a6a3db76744e2f636c578da3df10575810452d",
+          "size_bytes": 254072,
+          "stable_during_read": true
+        },
+        "staged": {
+          "device": 55,
+          "inode": 1841259,
+          "matches_pinned_size_sha256": true,
+          "nlink": 1,
+          "path": "/tmp/palimpsest-puck-cpu-held-01/inputs/root-0000/numpy/random/bit_generator.cpython-311-x86_64-linux-gnu.so",
+          "sha256": "d25ee62c3eafa15e48b6488207a6a3db76744e2f636c578da3df10575810452d",
+          "size_bytes": 254072,
+          "stable_during_read": true
+        }
+      },
+      "retained_origin_policy_defect": false,
+      "retained_readelf_input": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/numpy/random/bit_generator.cpython-311-x86_64-linux-gnu.so",
+      "root_index": 0,
+      "rpath": [],
+      "runpath": [],
+      "sha256": "d25ee62c3eafa15e48b6488207a6a3db76744e2f636c578da3df10575810452d",
+      "size_bytes": 254072,
+      "soname": null
+    },
+    {
+      "kind": "extension",
+      "module_path": "numpy/random/mtrand.cpython-311-x86_64-linux-gnu.so",
+      "name": "numpy.random.mtrand",
+      "needed": [
+        "libm.so.6",
+        "libc.so.6"
+      ],
+      "packaged_direct_dependencies": [],
+      "policy_in_C": "exact-file-fd-v1",
+      "policy_in_D": "exact-file-fd-v1",
+      "retained_hash_observations": {
+        "namespace_path": "/puck/staged/inputs/root-0000/numpy/random/mtrand.cpython-311-x86_64-linux-gnu.so",
+        "original": {
+          "device": 57,
+          "inode": 26837695,
+          "matches_pinned_size_sha256": true,
+          "nlink": 1,
+          "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/numpy/random/mtrand.cpython-311-x86_64-linux-gnu.so",
+          "sha256": "80efcbd68ef32dbcaefe1e8ac8f0eec269e5cd832e6286e12613d09e3ddccf57",
+          "size_bytes": 850752,
+          "stable_during_read": true
+        },
+        "staged": {
+          "device": 55,
+          "inode": 1841264,
+          "matches_pinned_size_sha256": true,
+          "nlink": 1,
+          "path": "/tmp/palimpsest-puck-cpu-held-01/inputs/root-0000/numpy/random/mtrand.cpython-311-x86_64-linux-gnu.so",
+          "sha256": "80efcbd68ef32dbcaefe1e8ac8f0eec269e5cd832e6286e12613d09e3ddccf57",
+          "size_bytes": 850752,
+          "stable_during_read": true
+        }
+      },
+      "retained_origin_policy_defect": false,
+      "retained_readelf_input": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/numpy/random/mtrand.cpython-311-x86_64-linux-gnu.so",
+      "root_index": 0,
+      "rpath": [],
+      "runpath": [],
+      "sha256": "80efcbd68ef32dbcaefe1e8ac8f0eec269e5cd832e6286e12613d09e3ddccf57",
+      "size_bytes": 850752,
+      "soname": null
+    },
+    {
+      "kind": "extension",
+      "module_path": "torch/_C.cpython-311-x86_64-linux-gnu.so",
+      "name": "torch._C",
+      "needed": [
+        "libtorch_python.so",
+        "libpthread.so.0",
+        "libc.so.6"
+      ],
+      "packaged_direct_dependencies": [
+        "libtorch_python.so"
+      ],
+      "policy_in_C": "held-directory-observed-v1",
+      "policy_in_D": "held-directory-observed-v1",
+      "retained_hash_observations": {
+        "namespace_path": "/puck/staged/inputs/root-0000/torch/_C.cpython-311-x86_64-linux-gnu.so",
+        "original": {
+          "device": 57,
+          "inode": 26858575,
+          "matches_pinned_size_sha256": true,
+          "nlink": 1,
+          "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/torch/_C.cpython-311-x86_64-linux-gnu.so",
+          "sha256": "89e10a79609b8b9981445f880798883d1c6ef19ae8c91f8811fd5999831c5570",
+          "size_bytes": 25137,
+          "stable_during_read": true
+        },
+        "staged": {
+          "device": 55,
+          "inode": 1848555,
+          "matches_pinned_size_sha256": true,
+          "nlink": 1,
+          "path": "/tmp/palimpsest-puck-cpu-held-01/inputs/root-0000/torch/_C.cpython-311-x86_64-linux-gnu.so",
+          "sha256": "89e10a79609b8b9981445f880798883d1c6ef19ae8c91f8811fd5999831c5570",
+          "size_bytes": 25137,
+          "stable_during_read": true
+        }
+      },
+      "retained_origin_policy_defect": false,
+      "retained_readelf_input": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/torch/_C.cpython-311-x86_64-linux-gnu.so",
+      "root_index": 0,
+      "rpath": [],
+      "runpath": [
+        "$ORIGIN:$ORIGIN/lib"
+      ],
+      "sha256": "89e10a79609b8b9981445f880798883d1c6ef19ae8c91f8811fd5999831c5570",
+      "size_bytes": 25137,
+      "soname": null
+    }
+  ],
+  "retained_review": {
+    "path": "docs/reports/puck-cpu-held-qualification-06/external/palimpsest-held06-native-failure-review.json",
+    "sha256": "7faa83dfa535111f72abaf3e482877c2143bf9e2569098ade7ed12f570d5c74d",
+    "size_bytes": 165833
+  },
+  "retained_scope": {
+    "all_selected_dynamic_tables_match_pinned_metadata": true,
+    "bounds": {
+      "max_package_bytes_one_copy": 734003200,
+      "max_seconds": 70,
+      "max_selected_elf": 96,
+      "readelf_max_stdout_bytes_each": 131072,
+      "readelf_timeout_seconds_each": 4
+    },
+    "dependency_edges": 202,
+    "fresh_hash_bytes_total": 1069210770,
+    "fresh_selected_hash_errors": [],
+    "fresh_selected_hashes_complete": true,
+    "hash_mismatches": [],
+    "method": "BFS from all 23 registered extension rows through pinned DT_NEEDED; resolve own declared RPATH/RUNPATH after content-origin expansion or explicit namespace default-lib aliases. Fresh readelf --wide --dynamic on every selected ELF, comparing NEEDED/RPATH/RUNPATH/SONAME to native metadata05. No basename-only/SO-NAME-only global resolution and no ldd. This is declared-route coverage, not a complete glibc loader emulator, import-path proof, or native execution.",
+    "package_bytes_one_copy": 531097085,
+    "package_elf_count": 45,
+    "seed_extension_count": 23,
+    "system_elf_count": 9,
+    "unresolved_static_route_edges": []
+  },
+  "retained_system_closure_paths": [
+    {
+      "namespace_path": "/usr/lib/ld-linux-x86-64.so.2",
+      "sha256": "d011113b7054c641c8ca064f58bcc23804fd2654a3dff2444dad06ddeda61bfb",
+      "size_bytes": 263152
+    },
+    {
+      "namespace_path": "/usr/lib/libc.so.6",
+      "sha256": "e221b10fee9ee4776d8f0f1701253bc06817f7a4dbe6c5292487277d0bf8ffff",
+      "size_bytes": 2215072
+    },
+    {
+      "namespace_path": "/usr/lib/libdl.so.2",
+      "sha256": "9b3812e7f6b766e2d0a1d9eeca1a58c1272392859e8b04f708b2f86b2256d03c",
+      "size_bytes": 14352
+    },
+    {
+      "namespace_path": "/usr/lib/libgcc_s.so.1",
+      "sha256": "e618cb9c90c2eb3a1dad1cfea5b6c1eebcf2e799ad805976f4ae47bdd61c716a",
+      "size_bytes": 182512
+    },
+    {
+      "namespace_path": "/usr/lib/libm.so.6",
+      "sha256": "965106704753eefe8c31ae7da6daba3ead3d18c52b19b5fcc41178bcc4aa999d",
+      "size_bytes": 1268336
+    },
+    {
+      "namespace_path": "/usr/lib/libpthread.so.0",
+      "sha256": "839b91403f89fa4c6888d50deb2b59cd0612f8cfe3d57dd9d6314832b4cb31ab",
+      "size_bytes": 14360
+    },
+    {
+      "namespace_path": "/usr/lib/librt.so.1",
+      "sha256": "e06e12b8a78494908d08376838c380fb3817bfd7d54f6a86ef050016f7ade5f8",
+      "size_bytes": 14424
+    },
+    {
+      "namespace_path": "/usr/lib/libstdc++.so.6.0.36",
+      "sha256": "f5fc7380f2ae46fa4053a64be04e7b98109f1066a4bbfff3c37042488aa0be0e",
+      "size_bytes": 2939928
+    },
+    {
+      "namespace_path": "/usr/lib/libz.so.1.3.2",
+      "sha256": "9ba92a0b85dc9b659e8f5e596a69452cec801def6ece0883a8a2c1f032e52397",
+      "size_bytes": 104464
+    }
+  ],
+  "source_locations": [
+    {
+      "fact": "Absent explicit policy defaults to exact-file-fd-v1. ExtensionFileLoader uses native_load_path, spec.origin is its path, and create_module performs native initialization; failures poison/refuse through owner.fail.",
+      "lines": [
+        119,
+        120,
+        121,
+        123,
+        125,
+        132,
+        133
+      ],
+      "path": "src/palimpsest/puck_dependency_imports.py"
+    },
+    {
+      "fact": "Exact-file policy returns /proc/self/fd/<leafFD>; held-directory returns /proc/self/fd/<parentFD>/<leaf>, after target recheck. Directory policy requires raw device/inode target-map presence and another target recheck after load.",
+      "lines": [
+        17,
+        21,
+        22,
+        23,
+        24,
+        25,
+        28,
+        33,
+        34,
+        35,
+        36
+      ],
+      "path": "src/palimpsest/puck_native_origins.py"
+    },
+    {
+      "fact": "Directory policy trusts the native initializer and detects persistent mismatches only; directory-edge races can execute changed code before refusal and transient/anonymous/JIT mappings are outside the contract.",
+      "lines": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "path": "src/palimpsest/puck_native_origins.py"
+    },
+    {
+      "fact": "Qualify namespace uses explicit native mounts and read-only staged inputs, without original site exposure or a new global Pillow library search path.",
+      "lines": [
+        102,
+        126,
+        139,
+        146,
+        148,
+        153,
+        163,
+        164,
+        168,
+        170
+      ],
+      "path": "src/palimpsest/puck_cpu_namespace.py"
+    }
+  ],
+  "version": 1
+}

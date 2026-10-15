@@ -29,9 +29,10 @@ def file_pin(root,path):
 
 
 @contextmanager
-def publication05_fixture(tmp_path,*,caught_optional_import=False):
+def publication05_fixture(tmp_path,*,caught_optional_import=False,pillow_origins=False):
     assert tmp_path.resolve().is_relative_to((ROOT/'runs').resolve()), 'Use persistent runs/ basetemp'
-    root,current,inputs,_=project(tmp_path,autograd_publication=True,caught_optional_import=caught_optional_import)
+    root,current,inputs,_=project(tmp_path,autograd_publication=True,
+        caught_optional_import=caught_optional_import,pillow_origins=pillow_origins)
     legacy=ROOT/'docs/reports/puck-cpu-held-preparation-01'
     changed={PARENT,current.BOOTSTRAP,BINDINGS,IMPORTS}
     fresh={name:(root/name).read_bytes() for name in changed}
