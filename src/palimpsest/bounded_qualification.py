@@ -182,6 +182,84 @@ def _group_members(group):
     return result
 
 
+def _process_record(pid):
+    """One live Linux process identity; zombies cannot execute or retain RSS."""
+    try:
+        values = Path(f'/proc/{pid}/stat').read_text().rsplit(')', 1)[1].split()
+        if values[0] in ('Z', 'X'):
+            return None
+        return {'parent_pid': int(values[1]), 'start_ticks': int(values[19]),
+                'rss_bytes': int(values[21]) * os.sysconf('SC_PAGE_SIZE')}
+    except (FileNotFoundError, ProcessLookupError):
+        return None
+
+
+def _descendant_members(root, tracked):
+    """Observe PPID descendants and retain previously seen orphan identities.
+
+    Sampling cannot discover a process that forks and reparents between samples.
+    This is an operational trusted-worker scope, not hostile fork containment.
+    """
+    records = {}
+    children = {}
+    for path in Path('/proc').iterdir():
+        if path.name.isdecimal():
+            pid = int(path.name)
+            row = _process_record(pid)
+            if row is not None:
+                records[pid] = row
+                children.setdefault(row['parent_pid'], []).append(pid)
+    if root not in tracked and root in records:
+        tracked[root] = records[root]['start_ticks']
+    members = {pid: records[pid] for pid, ticks in tuple(tracked.items())
+               if pid in records and records[pid]['start_ticks'] == ticks}
+    pending = list(members)
+    while pending:
+        for pid in children.get(pending.pop(), ()):
+            if pid not in members:
+                members[pid] = records[pid]
+                tracked[pid] = records[pid]['start_ticks']
+                pending.append(pid)
+    return members
+
+
+def _signal_tracked(tracked, signum):
+    """Signal a stable Linux pidfd only after rechecking its start identity."""
+    if not tracked:
+        return
+    # The frozen CPython build omits os.pidfd_open; libc exposes the same Linux
+    # interfaces. Keep this import out of the unchanged empty-map/group path.
+    import ctypes
+    import errno
+    if (os.uname().sysname != 'Linux' or ctypes.sizeof(ctypes.c_void_p) != 8
+            or ctypes.sizeof(ctypes.c_long) != 8):
+        raise RuntimeError('Tracked process cleanup requires Linux LP64 pidfds')
+    libc = ctypes.CDLL(None, use_errno=True)
+    opened = libc.pidfd_open
+    opened.argtypes = (ctypes.c_int, ctypes.c_uint)
+    opened.restype = ctypes.c_int
+    send = libc.pidfd_send_signal
+    send.argtypes = (ctypes.c_int, ctypes.c_int, ctypes.c_void_p, ctypes.c_uint)
+    send.restype = ctypes.c_int
+    for pid, ticks in tuple(tracked.items()):
+        if pid == os.getpid():
+            continue
+        fd = opened(pid, 0)
+        if fd < 0:
+            code = ctypes.get_errno()
+            if code == errno.ESRCH:
+                continue
+            raise OSError(code, os.strerror(code))
+        try:
+            row = _process_record(pid)
+            if row is not None and row['start_ticks'] == ticks and send(fd, signum, None, 0) < 0:
+                code = ctypes.get_errno()
+                if code != errno.ESRCH:
+                    raise OSError(code, os.strerror(code))
+        finally:
+            os.close(fd)
+
+
 def _output_bytes(root, *, max_files=32, max_directories=2):
     """Bound the entire attempt namespace, including both pairs of logs."""
     total = count = directories_seen = 0
@@ -260,6 +338,7 @@ def _kill_owned_groups(state):
     if state.get('group') and state['group'] != own_group:
         with suppress(ProcessLookupError):
             os.killpg(state['group'], signal.SIGKILL)
+    _signal_tracked(state.get('tracked_processes', {}), signal.SIGKILL)
     # Popen can still be waiting for exec before returning its PID. Direct
     # children of this dedicated monitor are also its owned launches.
     for path in Path('/proc').iterdir():
@@ -317,8 +396,14 @@ def hard_guard(deadline, state):
 def supervised(command, output, *, cwd, normal_deadline, hard_deadline,
                rss_bytes, output_bytes, min_free_bytes, max_processes=1,
                output_root=None, guard_state=None, output_namespace_limits=(32, 2),
-               log_mode='drained'):
-    """Observe one owned group, bound retained logs and deny late/failing returns."""
+               log_mode='drained', process_scope='group'):
+    """Observe one owned launch, bound logs and deny late/failing returns.
+
+    Descendant scope also observes children that create a new session. Its
+    PID/start-tick records are sampled operational evidence, not containment.
+    """
+    if type(process_scope) is not str or process_scope not in ('group', 'descendants'):
+        raise ValueError('Qualification process scope is invalid')
     if type(log_mode) is not str or log_mode not in ('drained', 'direct'):
         raise ValueError('Qualification log mode is invalid')
     output = _absolute(output)
@@ -341,11 +426,21 @@ def supervised(command, output, *, cwd, normal_deadline, hard_deadline,
     failure = []
     process = None
     peak = 0
+    tracked = {}
+    if process_scope == 'descendants' and guard_state is not None:
+        guard_state['tracked_processes'] = tracked
+    scope_name = 'process-group' if process_scope == 'group' else 'descendant'
+    def members_of(root):
+        return (_group_members(root) if process_scope == 'group'
+                else _descendant_members(root, tracked))
+    def signal_scope(signum):
+        with suppress(ProcessLookupError): os.killpg(process.pid, signum)
+        if process_scope == 'descendants': _signal_tracked(tracked, signum)
     def failed(reason):
         if not failure: failure.append(reason)
     def observe(group=None):
         nonlocal peak
-        members = _group_members(group) if group is not None else {}
+        members = members_of(group) if group is not None else {}
         parent_rss = int(Path('/proc/self/statm').read_text().split()[1]) * os.sysconf('SC_PAGE_SIZE')
         rss = parent_rss + sum(row['rss_bytes'] for row in members.values())
         peak = max(peak, rss)
@@ -375,26 +470,26 @@ def supervised(command, output, *, cwd, normal_deadline, hard_deadline,
                     monitor_error = error
                     failed('process monitor error')
                 if failure:
-                    with suppress(ProcessLookupError): os.killpg(process.pid, signal.SIGTERM)
+                    signal_scope(signal.SIGTERM)
                 try:
                     process.wait(timeout=max(.001, hard_deadline - time.monotonic()))
                 except subprocess.TimeoutExpired:
                     failed('hard deadline')
-                    with suppress(ProcessLookupError): os.killpg(process.pid, signal.SIGKILL)
+                    signal_scope(signal.SIGKILL)
                     process.wait(timeout=1)
-                members = _group_members(process.pid)
+                members = members_of(process.pid)
                 if members:
-                    failed('matching process-group survivors')
-                    with suppress(ProcessLookupError): os.killpg(process.pid, signal.SIGKILL)
+                    failed('matching ' + scope_name + ' survivors')
+                    signal_scope(signal.SIGKILL)
                 if monitor_error is not None: raise monitor_error
         if process is not None:
-            survivors = sorted(_group_members(process.pid))
+            survivors = sorted(members_of(process.pid))
             until = min(hard_deadline, time.monotonic() + .5)
             while survivors and time.monotonic() < until:
-                with suppress(ProcessLookupError): os.killpg(process.pid, signal.SIGKILL)
+                signal_scope(signal.SIGKILL)
                 time.sleep(.01)
-                survivors = sorted(_group_members(process.pid))
-            if survivors: failed('matching process-group survivors after cleanup')
+                survivors = sorted(members_of(process.pid))
+            if survivors: failed('matching ' + scope_name + ' survivors after cleanup')
             elif guard_state is not None: guard_state['group'] = None
         else:
             survivors = []
@@ -403,9 +498,14 @@ def supervised(command, output, *, cwd, normal_deadline, hard_deadline,
     finished = time.monotonic()
     if finished >= hard_deadline: failed('hard deadline')
     elif finished >= normal_deadline: failed('normal-return deadline')
-    return {'status': 'completed' if process is not None and process.returncode == 0 and not failure else 'failed',
+    result = {'status': 'completed' if process is not None and process.returncode == 0 and not failure else 'failed',
             'returncode': process.returncode if process is not None else None,
             'failure': failure[0] if failure else None, 'matching_survivors': survivors,
             'sampled_peak_rss_bytes': peak, 'rss_sampling_seconds': .05,
             'pid': process.pid if process is not None else None,
             'finished_monotonic': finished}
+
+    if process_scope == 'descendants':
+        result.update(process_scope=process_scope, tracked_processes=[
+            {'pid': pid, 'start_ticks': ticks} for pid, ticks in sorted(tracked.items())])
+    return result
