@@ -11,6 +11,43 @@ This is the active execution goal. It continues the
 is preserved unchanged; its commands and consumed allocations are historical,
 not instructions to rerun. Implementation history must not obscure what remains.
 
+## Immediate goal: reach a real simulation result
+
+**Prepare and qualify one exact CPU runtime on this machine, then use the admitted
+execution route to record, replay and export one bounded simulator episode.**
+This is the next engineering milestone toward the complete release. A natural
+task failure can still establish the recording/replay route; it cannot pass a
+controller capability gate. Tiny fixtures and package metadata cannot satisfy
+either actual-runtime exit below.
+
+1. **Prepare the installed runtime.** Verify the full pinned package payloads and
+   RECORD entries; build and hash the missing python-louvain wheel under its own
+   bounded configuration; measure the installed namespace and retain licence
+   contents. Specify the exact interpreter, native/EGL paths, staging and custody.
+   Finish the CPU preparation/qualification parent using the reviewed four-import
+   entry. This produces a reviewable executable configuration, not a passing run.
+2. **Qualify that exact runtime.** After prospective review and any required
+   decision, run the separately numbered qualification once. Require actual
+   NumPy, Torch, torchvision and MuJoCo versions, the unchanged identity/custody
+   checks, normal process cleanup and an independent terminal-outcome audit.
+   Freeze the source, invocation and finite wall-clock, output, storage, RAM,
+   file-descriptor and process limits before invocation. An import pass alone
+   does not qualify operators, rendering, physics, inference or collection.
+3. **Prove the complete episode route.** Finish input/scene admission and the
+   durable parent/worker collection path. Prospectively specify the exact model,
+   scene, seed and finite episode allocation, including required operator and
+   renderer checks. Retain the actual episode, snapshots, contiguous records,
+   replay comparisons, exported bundle identities and normal cleanup, with an
+   independent audit. Required catalog-access decisions precede protected reads.
+   This is an engineering demonstration, separate from development and held-out
+   studies; it grants no new navigation or memory study attempt.
+
+Stop an actual allocation on its declared failure boundary and preserve the
+outcome. A failed allocation remains failed. Before adding another prerequisite,
+identify which of these three exits it blocks and the smallest check that resolves
+it. Do not turn this milestone into a general package-security framework or
+another sequence of source-only milestones.
+
 ## What counts as finished
 
 All seven gates must close on **one integrated candidate**. All seven are open.
@@ -35,16 +72,18 @@ substitute for numerical results, capability, actual browser use or human accept
 
 | Order | Deliverable | Finite exit |
 | --- | --- | --- |
-| 1 | Finish the current memory single-condition sealing source unit. | Reviewed registration-bound close calls production cell replay internally, holds inputs/model through publication, retains raw evidence and quarantines indeterminate publication. Meaningful success/failure source checks pass. The public path refuses until genuine qualification is trusted. This closes an implementation gap, not a release gate. |
-| 2 | Complete one CPU runtime configuration that fits this machine. | Specify and independently review the source, interpreter, dependencies, unresolved python-louvain wheel build, payload verification, native/EGL paths, staging, storage/RAM/FD/process/clock bounds and trusted baseline. If it cannot fit or preserve custody, revise the proposal before allocating. |
-| 3 | Qualify exact admitted configurations and finish execution routes. | Separately numbered prospective review/decision precedes each actual qualification; independent outcome audit follows it. Complete the puck parent/worker natural-episode recording route and memory all-nine/case closure. Resolve the frozen oracle/own ordering conflict before whole-case admission. |
+| 1 | Establish the exact local CPU runtime. | Complete preparation and obtain a passing actual qualification under exits 1–2 above, with fresh resource admission and independent outcome audit. A failed allocation stops the lane with retained evidence; a proposal or test count is not the exit. |
+| 2 | Record, replay and export one actual simulator episode. | Complete exit 3 above through the durable public collection route, retaining exact inputs, records, replay/export checks and cleanup. This does not qualify a learned controller. |
+| 3 | Complete memory family admission and case closure. | Finish the reviewed historical-seed-to-case binding and single-condition admission, qualify the exact admitted configuration, and resolve the frozen oracle/own ordering conflict before all-nine/case closure. Preserve raw evidence and publication/quarantine checks. |
 | 4 | Complete studies and controller capability. | Valid development and separately admitted held-out results meet the unchanged memory/scientific and puck/MaleCNS capability boundaries above. Preserve failures and resolve the next study prospectively. |
 | 5 | Integrate and experience the product. | One candidate supports the lab and all six artworks; actual browser, mapping, replay, export, interruption and endurance checks pass. |
 | 6 | Accept and deliver that candidate. | Artistic/operator sessions, final verification and all seven gate records are complete; the installation and evidence package are reproducible. |
 
-**Current next action:** complete the resource-feasible CPU runtime proposal and
-prepare the reviewed family-case qualification binding. The filesystem gap is
-resolved in authored source paths; the first actual family admission remains open.
+**Current next action:** verify the complete CPU package payloads and prepare the
+exact source-wheel build and installed-runtime configuration. Review the family
+qualification binding in parallel without opening a new scientific allocation.
+The directory-enumeration source fix is complete within its tested scope; the
+first actual family admission remains open.
 
 Independent source work can proceed while actual qualification or a decision is
 pending. Stages interleave when their dependencies permit. Every new prerequisite
@@ -53,10 +92,15 @@ source-hardening programme or count test totals as release progress.
 
 ## Current starting point and decisions
 
-The live disk check on 2026-10-15 shows approximately **93 GiB free** on the project
-filesystem. Disk capacity is no longer the reported blocker. Recheck inputs and
-resources before each admitted stage: clearance does not prove retained inputs,
-CPU runtime compatibility, staging RAM or custody.
+At **2026-10-15 05:41 UTC**, the project filesystem has **99,398,934,528 bytes
+(92.6 GiB) available**. The same metadata-only check reports **4,679,802,880 bytes
+(4.36 GiB) MemAvailable**. Disk clearance removes the reported disk blocker;
+available RAM is transient and this snapshot does not admit the complete CPU/EGL
+closure. Keep archives and build scratch on the project disk; stage only the exact
+required runtime inputs on tmpfs under its reviewed native-identity policy.
+Recheck retained inputs, actual installed sizes, writable/executable staging,
+custody and all resource limits immediately before each admitted stage. The older
+RAM shortfall in PR #138 remains a historical observation, not a new measurement.
 
 - [PR #137](https://github.com/Aadrika08/palimpsest/pull/137) supplies the reviewed
   tmpfs-only native dependency identity policy; [PR #136](https://github.com/Aadrika08/palimpsest/pull/136)
