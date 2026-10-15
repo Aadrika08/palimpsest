@@ -1,0 +1,48 @@
+{
+  "actual03_exact_failed_row_known": false,
+  "actual03_failed_consumed": true,
+  "actual04_created": false,
+  "actual_execution_worktree_unchanged": true,
+  "affected": {
+    "external_seconds": 113.62513191998005,
+    "normal_return": true,
+    "passed": 202,
+    "pytest_seconds": 113.47,
+    "returncode": 0,
+    "terminal": "ae10ab"
+  },
+  "authored_observation": {
+    "normal_return": true,
+    "observer_returncode": 0,
+    "stderr_sha256": "a50e462edd63e3712a07dc729e2bc296cca836008ea0f17a5c643112dca0c229",
+    "terminal": "87b627",
+    "worker_returncode": 1,
+    "worker_stderr_bytes": 2420,
+    "worker_stdout_bytes": 0
+  },
+  "focused_green": {
+    "deselected": 42,
+    "normal_return": true,
+    "passed": 3,
+    "pytest_seconds": 1.27,
+    "returncode": 0,
+    "terminal": "5e5542"
+  },
+  "independent_source_review": {
+    "material_findings": [],
+    "scope": "read-only code/test review; no reviewer execution",
+    "source_sha256": "b686c841ee95a0bd6c86bd9183cf0609990038b2666ed2aa924c4321f2a6caae"
+  },
+  "kind": "cpu-binding-diagnostic-source-observation-ledger-v1",
+  "qualification_claims": [],
+  "red": {
+    "deselected": 42,
+    "failed": 3,
+    "normal_return": true,
+    "pytest_seconds": 1.32,
+    "returncode": 1,
+    "terminal": "6b8248"
+  },
+  "runtime_qualified": false,
+  "scope": "authored source checks only; no installed CPU runtime or actual allocation"
+}
