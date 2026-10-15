@@ -64,3 +64,24 @@ def test_times_out_and_reaps_owned_child(tmp_path,monkeypatch):
     assert result['timed_out'] is True and result['observed_returncode']==-signal.SIGKILL
     assert not Path('/proc/'+str(pid)).exists()
     assert result['elapsed_seconds']<5
+
+
+def test_preparation_can_copy_an_authored_payload_larger_than_log_limit(tmp_path):
+    # The real accepted tree contains a432MB library. A17MiB inert payload is
+    # enough to reproduce the inherited16MiB ceiling without vendor execution.
+    module=api();spec=importlib.util.spec_from_file_location('cpu_parent_file_limit',ROOT/'scripts/qualify_puck_cpu_held_runtime.py')
+    parent=importlib.util.module_from_spec(spec);spec.loader.exec_module(parent)
+    (tmp_path/'scripts').mkdir();(tmp_path/'runs').mkdir()
+    observer=tmp_path/'scripts/observe_puck_cpu_held_allocation.py';observer.write_bytes(SCRIPT.read_bytes())
+    ceiling=parent.LIMITS['prepare']['file_bytes']
+    body='import resource\nfrom pathlib import Path\nresource.setrlimit(resource.RLIMIT_FSIZE,('+str(ceiling)+','+str(ceiling)+'))\nwith Path("authored-payload.bin").open("wb") as stream:\n for i in range(17):stream.write(b"x"*(1024**2))\nprint("authored copy complete",flush=True)\n'
+    (tmp_path/'scripts/qualify_puck_cpu_held_runtime.py').write_text(body)
+    config=dict(kind='puck-cpu-held-runtime-allocation-v1',phase='prepare',root=str(tmp_path))
+    raw=(json.dumps(config,sort_keys=True,separators=(',',':'))+'\n').encode();configuration=tmp_path/'configuration.json';configuration.write_bytes(raw)
+    import subprocess
+    result=subprocess.run([module.PYTHON,'-I','-S','-B',str(observer),'--configuration',str(configuration),
+        '--sha256',hashlib.sha256(raw).hexdigest()],cwd=tmp_path,env=module.ENVIRONMENT,stdout=subprocess.PIPE,stderr=subprocess.PIPE,timeout=20)
+    diagnostic=(tmp_path/'runs/puck-cpu-held-preparation-01-external-cli.stderr').read_bytes()
+    assert result.returncode==0,(result.returncode,result.stdout,result.stderr,diagnostic)
+    assert (tmp_path/'authored-payload.bin').stat().st_size==17*1024**2
+    assert parent.LIMITS['qualify']['file_bytes']==16*1024**2

@@ -16,6 +16,7 @@ NORMAL_SECONDS=210
 CLEANUP_SECONDS=5
 HARD_SECONDS=225
 MAX_STREAM_BYTES=16*1024**2
+MAX_INHERITED_FILE_BYTES=1024**3
 OUTPUTS=dict(prepare='runs/puck-cpu-held-preparation-01',qualify='runs/puck-cpu-held-qualification-01')
 ENVIRONMENT=dict(PATH='/usr/bin:/bin',LANG='C.UTF-8',LC_ALL='C.UTF-8',PYTHONDONTWRITEBYTECODE='1')
 
@@ -97,8 +98,8 @@ def main():
     def alarm(signum,frame):raise TimeoutError('CPU observation outer alarm')
     signal.signal(signal.SIGALRM,alarm);signal.setitimer(signal.ITIMER_REAL,HARD_SECONDS)
     try:
-        # These inherited limits match the parent's exact required ceilings.
-        for key,value in (('NOFILE',40000),('AS',8192*1024**2),('FSIZE',MAX_STREAM_BYTES)):
+        # Permit the parent's preparation payload ceiling; qualification narrows it.
+        for key,value in (('NOFILE',40000),('AS',8192*1024**2),('FSIZE',MAX_INHERITED_FILE_BYTES)):
             resource.setrlimit(getattr(resource,'RLIMIT_'+key),(value,value))
         result=observe(args.configuration,args.sha256)
         print(canonical(result).decode(),end='',flush=True)

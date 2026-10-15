@@ -9,7 +9,10 @@ checks alone cannot finish that checkpoint. PR148 is the unchanged source base.
 1. Freeze the canonical production preparation configuration, exact 24-source
    roster and 16 input roles, accepted package/observation02 identities, four
    roots and original interpreter/native baseline. Keep 4GiB preparation and
-   2GiB qualification RAM floors and all other parent limits unchanged.
+   2GiB qualification RAM floors. Preparation has a1GiB file ceiling matching
+   its admitted package leaves; qualification keeps16MiB. The previous16MiB
+   preparation ceiling could not copy six accepted libraries and is corrected
+   prospectively before allocation. Metadata/log and64MiB output bounds stay.
 2. Select exactly `numpy._distributor_init_local` and `org` as finite expected
    misses for the new CPU v3 allocation. Authenticated NumPy source explicitly
    probes the first optional name; neither has a declared module mapping. The
@@ -19,7 +22,9 @@ checks alone cannot finish that checkpoint. PR148 is the unchanged source base.
    invoke only the fixed isolated original-Python parent command, retain new
    stdout/stderr files, observed exit/elapsed and byte hashes, and refuse any
    existing external artifact or parent output. Bound external collection to
-   210s plus 5s cleanup, with an outer 225s alarm. This records transport only;
+   210s plus 5s cleanup, with an outer 225s alarm. Its inherited file hard
+   ceiling permits1GiB preparation payloads; external streams are read/accepted
+   only up to16MiB each. This records transport only;
    the parent and independent auditor own runtime/byte acceptance.
 4. Implement an independent stdlib-only auditor. Authenticate configuration,
    source/input pins, exact external transport, phase/result/supervision/closure,

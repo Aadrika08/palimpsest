@@ -54,7 +54,7 @@ CLAIMS=dict(runtime_qualified=False,native_authorized=False,collection_authorize
     study_authorized=False,executable=False,qualification_claims=[])
 LIMITS={phase:dict(normal_seconds=180,child_hard_seconds=190,hard_seconds=200,
     rss_bytes=2048*MiB,address_space_bytes=8192*MiB,output_bytes=64*MiB,
-    scratch_bytes=64*MiB,file_bytes=16*MiB,min_free_bytes=4096*MiB,
+    scratch_bytes=64*MiB,file_bytes=(1024 if phase=='prepare' else 16)*MiB,min_free_bytes=4096*MiB,
     min_available_ram_bytes=(4096 if phase=='prepare' else 2048)*MiB,
     min_tmpfs_free_bytes=(2048 if phase=='prepare' else 256)*MiB,
     max_processes=3,max_fds=40000) for phase in ('prepare','qualify')}

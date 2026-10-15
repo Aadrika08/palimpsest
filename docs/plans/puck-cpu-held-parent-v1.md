@@ -56,8 +56,11 @@ hostile fork containment or hard timing bounds. The isolated namespace and
 Both phases have a 180-second normal return limit, 190-second child kill limit
 and 200-second outer kernel alarm, retained through closure, publication and
 terminal output. Limits include 2GiB sampled parent-plus-owned RSS, 8GiB address
-space, 64MiB output and private scratch, 16MiB per written file, 40,000 descriptors
-and at most three owned processes. Preparation requires 4GiB available RAM and
+space, 64MiB output and private scratch, a 1GiB preparation file ceiling (16MiB
+for qualification), 40,000 descriptors and at most three owned processes. The
+preparation ceiling corrects the earlier source-only 16MiB limit, which cannot
+copy six accepted libraries; no actual allocation used that configuration.
+Preparation requires 4GiB available RAM and
 2GiB free tmpfs; qualification requires 2GiB available RAM and 256MiB free tmpfs.
 Both require 4GiB free project storage. A fresh named regular-file probe verifies
 tmpfs admission without weakening the regular-file native identity API.
