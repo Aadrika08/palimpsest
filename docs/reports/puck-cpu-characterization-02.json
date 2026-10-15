@@ -1,0 +1,49 @@
+{
+  "actual_exit_code": 0,
+  "closure": {
+    "active_children": [],
+    "active_non_main_threads": [],
+    "all_handles_closed": true,
+    "all_receipts_fsynced": true,
+    "fd_count_after": 5,
+    "fd_count_before": 5
+  },
+  "collection_authorized": false,
+  "configuration_sha256": "4b98ff368e97351b2079ff44c75cb910d08559e5e037a6afc4887c28cd38fea8",
+  "elapsed_seconds": 17.54629071999807,
+  "evidence_index": {
+    "file_count": 82,
+    "path": "puck-cpu-characterization-02/evidence-index.json",
+    "sha256": "c827dc11dd3bcfe60a3020dccc008c385c779f19f60ad2bf6f930d69fcd654da",
+    "total_bytes": 8224498
+  },
+  "executable": false,
+  "freeze_commit": "5e9b7856625bd7e09bea74c87e076bb809494f41",
+  "historical_failures_preserved": true,
+  "independent_outcome_audit": {
+    "elapsed_seconds": 4.098550721013453,
+    "exit_code": 0,
+    "sha256": "68db69256149ca20d4b698860898d33c4e6cbee2b840e4eeeb2fd5f21359eff3",
+    "size_bytes": 1452,
+    "status": "PASS"
+  },
+  "kind": "cpu-characterization-observation-report-v2",
+  "namespace_probe_exit_code": 0,
+  "native_authorized": false,
+  "next_action": "derive CPU profile and implement bounded tmpfs dependency-v3 staging and held four-import qualification before the engineering episode",
+  "ordinary_imports_observed": true,
+  "qualification_claims": [],
+  "release_gates_closed": 0,
+  "runtime_qualified": false,
+  "sampled_parent_peak_rss_bytes": 82993152,
+  "sampled_parent_worker_peak_rss_bytes": 412393472,
+  "status": "PASS",
+  "study_authorized": false,
+  "versions": {
+    "mujoco": "3.3.6",
+    "numpy": "2.2.5",
+    "torch": "2.9.0+cpu",
+    "torchvision": "0.24.0+cpu"
+  },
+  "worker_exit_code": 0
+}

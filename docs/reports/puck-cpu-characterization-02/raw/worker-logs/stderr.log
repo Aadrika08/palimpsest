@@ -1,0 +1,2 @@
+/driver.py:95: FutureWarning: `torch.distributed.reduce_op` is deprecated, please use `torch.distributed.ReduceOp` instead
+  if isinstance(value, types.ModuleType) and id(value) in exceptional:
