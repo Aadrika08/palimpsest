@@ -32,9 +32,11 @@ Perform the work in this order:
    exact supported dependency/runtime configuration; actual numerical compatibility
    and complete native closure remain unqualified. Use authored fixtures for owner
    integration while catalog access is pending.
-2. Bind that worker to the existing reservation, model custody, native recorder,
-   clock accounting, supervision and durable collection close. Freeze and review
-   the complete executable path before an actual collection.
+2. Bind that worker to the reservation/scene seal, model custody and PR #131's
+   natural-episode recording close. Connect exact-environment process identity,
+   progress/escaped-descendant drain, parent lease/storage and all clock buckets.
+   Recording terminals alone grant no execution or fitting. Freeze and review the
+   complete executable path before an actual collection.
 3. Complete the memory condition/case-close source path. After explicit approval
    of amendment 02, execute and independently audit the one registered full-model
    replay; a passing result is required before admitting the complete memory study.
@@ -111,10 +113,12 @@ Clearing space does not authorize a consumed-attempt retry or change a protocol.
 | 5 | Integrate and validate the lab and all six simulated artwork encounters. | Real browser workflows, declared-duration artwork inputs, audiovisual/keyboard/viewport checks, exports, replay and recovery pass on the integrated candidate. | Sustained portable inputs, browser access and reviewed integration. |
 | 6 | Conduct user artistic review, independent operator acceptance and final handoff. | User acceptance, independently completed install/runbook and all seven release gates with linked evidence on one reproducible release candidate. | Human sessions and the completed studies/product gates. |
 
-**Start now:** complete external dependency/native import admission and connect
-PR #129's working stdlib worker preflight to PR #128's declared inventory and the
-complete durable launcher. Source bootstrap is verified; the complete runtime and
-collection route remain unqualified. These follow PR #127's report-family adapters
+**Start now:** qualify the actual supported dependency/runtime configuration
+and connect PR #130's authenticated worker to PR #128's declared inventory and
+PR #131's held natural-episode recording-close route. The worker entry still
+performs preflight only; bind complete parent admission and dispatch before any
+actual collection. The complete runtime, parent clock and collection route remain
+unqualified. These follow PR #127's report-family adapters
 and PR #126's registry path. Selected report/retained/registry parsers,
 pinned reference resolvers and existing root/catalog components do not establish
 full coverage or reservation admission. Unsupported embedded protocol variants
@@ -562,3 +566,26 @@ and connect inventory/envelope/reservation/model/scene custody, parent supervisi
 leases/descendants/resources and durable terminal collection. Memory case-close
 source work remains required. All seven gates and three prospective decisions stay
 open; neither component verification nor publication completes this release goal.
+
+
+[Draft PR #131](https://github.com/Aadrika08/palimpsest/pull/131) connects held native
+intervals to one natural episode and typed durable owner/collection recording
+closes. Final source `f93aa9668748b54f89d9bb9bdd0f07ba8f2a9e21` passes 1395 affected
+checks at root and independently with the same six inherited exclusions
+(125.72s / 125.66s); independent focused repetition passes 25 cases in 47.77s.
+An authored CPU-model/fake-native fixture completes exactly 600 intervals and the
+unchanged time_limit close under the existing 180s allocation. Review REDs fixed
+reused episodes, hidden recording files and oversized publisher rereads; completed
+contexts also refuse extra labels/predictions. Fixed twelve-owner reduction keeps
+all rows and records per-model coverage failure without fitting authorization.
+The [source report](https://github.com/Aadrika08/palimpsest/blob/research/puck-v3-collection-close/docs/reports/puck-v3-collection-close-source.md)
+retains fixture corrections, the original 30s fixture deadline refusal and the
+source-before-runtime/clock rulings. Recording close is not process/native/study
+acceptance. Full reread costs are unqualified against final parent/return buckets;
+measure and review any custody-preserving optimization without clock borrowing.
+The fixed worker entry still performs preflight only. Actual numerical runtime,
+parent inventory/reservation/scene seal, worker dispatch, independent identity/
+progress/escaped-descendant drain, shared lease, storage/clock acceptance and the
+complete launcher remain required. No actual original/catalog/model/owner/study
+ran. Default pytest still stops at missing FastAPI. All seven release gates and
+three prospective decisions stay open; no consumed attempt was retried.
