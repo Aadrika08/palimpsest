@@ -11,14 +11,22 @@ This is the active execution goal. It continues the
 is preserved unchanged; its commands and consumed allocations are historical,
 not instructions to rerun. Implementation history must not obscure what remains.
 
-## Immediate goal: reach a real simulation result
+## Next milestone: one real simulator episode
 
-**Prepare and qualify one exact CPU runtime on this machine, then use the admitted
-execution route to record, replay and export one bounded simulator episode.**
-This is the next engineering milestone toward the complete release. A natural
-task failure can still establish the recording/replay route; it cannot pass a
-controller capability gate. Tiny fixtures and package metadata cannot satisfy
-either actual-runtime exit below.
+**Run one bounded episode on the exact qualified local CPU runtime, then record,
+replay and export it with an independently audited result.**
+
+The deliverable is a portable bundle containing the exact source/runtime and
+model/scene identities, seed and declared limits; complete episode records and
+snapshots; the replay comparison; exported-file hashes; and the terminal outcome
+with normal process cleanup. Complete the three steps below in order. This
+milestone passes only when runtime qualification and the complete episode route
+both pass their declared checks.
+
+This is an engineering demonstration toward the complete release. A natural
+task failure can still establish the recording/replay/export route; it cannot
+pass a controller capability gate. Tiny fixtures, package metadata and source
+test counts cannot satisfy either actual-runtime exit below.
 
 1. **Prepare the installed runtime.** The pinned package payloads and wheel RECORD
    entries now have actual audited evidence in PR #141. Build and hash the missing
@@ -80,13 +88,15 @@ substitute for numerical results, capability, actual browser use or human accept
 | 5 | Integrate and experience the product. | One candidate supports the lab and all six artworks; actual browser, mapping, replay, export, interruption and endurance checks pass. |
 | 6 | Accept and deliver that candidate. | Artistic/operator sessions, final verification and all seven gate records are complete; the installation and evidence package are reproducible. |
 
-**Current next action:** authenticate the proposed exact setuptools backend and
-freeze the bounded python-louvain wheel-build configuration, including authored
-source/write-routing and isolation preflights, before its actual build. Then
-complete the installed-runtime configuration. Review the family
-qualification binding in parallel without opening a new scientific allocation.
-The directory-enumeration source fix is complete within its tested scope; the
-first actual family admission remains open.
+**Current next action:** produce the missing verified python-louvain wheel.
+Authenticate the proposed exact setuptools backend, finish the authored
+source/write-routing and isolation preflights, and review the exact bounded
+configuration before building. Then finish the installed namespace, licences,
+native paths and executable CPU qualification configuration. The next actual
+runtime result must satisfy steps 1–2 above before episode collection begins.
+Review the family qualification binding in parallel without opening a new
+scientific allocation. The directory-enumeration source fix is complete within
+its tested scope; the first actual family admission remains open.
 
 Independent source work can proceed while actual qualification or a decision is
 pending. Stages interleave when their dependencies permit. Every new prerequisite
@@ -95,9 +105,9 @@ source-hardening programme or count test totals as release progress.
 
 ## Current starting point and decisions
 
-At **2026-10-15 05:41 UTC**, the project filesystem has **99,398,934,528 bytes
-(92.6 GiB) available**. The same metadata-only check reports **4,679,802,880 bytes
-(4.36 GiB) MemAvailable**. Disk clearance removes the reported disk blocker;
+At **2026-10-15 06:30:08 UTC**, the project filesystem has **98,974,609,408 bytes
+(92.18 GiB) available**. The same metadata-only check reports **4,768,952,320 bytes
+(4.44 GiB) MemAvailable**. Disk clearance removes the reported disk blocker;
 available RAM is transient and this snapshot does not admit the complete CPU/EGL
 closure. Keep archives and build scratch on the project disk; stage only the exact
 required runtime inputs on tmpfs under its reviewed native-identity policy.
