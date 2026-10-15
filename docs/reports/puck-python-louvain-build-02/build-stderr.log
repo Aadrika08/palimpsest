@@ -1,0 +1,67 @@
+/backend/setuptools/dist.py:765: SetuptoolsDeprecationWarning: License classifiers are deprecated.
+!!
+
+        ********************************************************************************
+        Please consider removing the following classifiers in favor of a SPDX license expression:
+
+        License :: OSI Approved :: BSD License
+
+        See https://packaging.python.org/en/latest/guides/writing-pyproject-toml/#license for details.
+        ********************************************************************************
+
+!!
+  self._finalize_license_expression()
+running build
+running build_py
+creating /work/build/lib/community
+copying community/__init__.py -> /work/build/lib/community
+copying community/community_louvain.py -> /work/build/lib/community
+copying community/community_status.py -> /work/build/lib/community
+warning: build_py: byte-compiling is disabled, skipping.
+
+running build_scripts
+creating /work/build/scripts-3.11
+copying and adjusting bin/community -> /work/build/scripts-3.11
+changing mode of /work/build/scripts-3.11/community from 644 to 755
+running egg_info
+creating /work/egg/python_louvain.egg-info
+writing /work/egg/python_louvain.egg-info/PKG-INFO
+writing dependency_links to /work/egg/python_louvain.egg-info/dependency_links.txt
+writing requirements to /work/egg/python_louvain.egg-info/requires.txt
+writing top-level names to /work/egg/python_louvain.egg-info/top_level.txt
+writing manifest file '/work/egg/python_louvain.egg-info/SOURCES.txt'
+reading manifest file '/work/egg/python_louvain.egg-info/SOURCES.txt'
+reading manifest template 'MANIFEST.in'
+adding license file 'LICENSE'
+writing manifest file '/work/egg/python_louvain.egg-info/SOURCES.txt'
+running bdist_wheel
+installing to /work/bdist
+running install
+running install_lib
+creating /work/bdist
+creating /work/bdist/community
+copying /work/build/lib/community/community_status.py -> /work/bdist/./community
+copying /work/build/lib/community/community_louvain.py -> /work/bdist/./community
+copying /work/build/lib/community/__init__.py -> /work/bdist/./community
+warning: install_lib: byte-compiling is disabled, skipping.
+
+running install_egg_info
+Copying /work/egg/python_louvain.egg-info to /work/bdist/./python_louvain-0.16-py3.11.egg-info
+running install_scripts
+running build_scripts
+copying and adjusting bin/community -> /work/build/scripts-3.11
+creating /work/bdist/python_louvain-0.16.data/scripts
+copying /work/build/scripts-3.11/community -> /work/bdist/python_louvain-0.16.data/scripts
+changing mode of /work/bdist/python_louvain-0.16.data/scripts/community to 755
+creating /work/bdist/python_louvain-0.16.dist-info/WHEEL
+creating '/work/wheel-output/.tmp-zwsqmqsr/python_louvain-0.16-py3-none-any.whl' and adding '/work/bdist' to it
+adding 'community/__init__.py'
+adding 'community/community_louvain.py'
+adding 'community/community_status.py'
+adding 'python_louvain-0.16.data/scripts/community'
+adding 'python_louvain-0.16.dist-info/licenses/LICENSE'
+adding 'python_louvain-0.16.dist-info/METADATA'
+adding 'python_louvain-0.16.dist-info/WHEEL'
+adding 'python_louvain-0.16.dist-info/top_level.txt'
+adding 'python_louvain-0.16.dist-info/RECORD'
+removing /work/bdist
