@@ -14,9 +14,12 @@ from test_puck_worker_bootstrap import fixture, descriptor, raw, sha, ROOT
 def dependency_fixture(tmp_path, body, *, native=False, native_link=None, mutate=None):
     bootstrap, reg, manifest, script, script_sha = fixture(tmp_path, body)
     source = Path(reg['source_root'])
-    for name in ('puck_dependency_files', 'puck_dependency_imports'):
+    for name in ('puck_dependency_files', 'puck_dependency_imports',
+                 'puck_dependency_bindings', 'puck_native_origins'):
         path = source / ('src/palimpsest/'+name+'.py')
         original = ROOT / ('src/palimpsest/'+name+'.py')
+        if name in ('puck_dependency_bindings', 'puck_native_origins') and not original.is_file():
+            continue  # RED fixtures also exercise the unchanged v1 implementation.
         assert original.is_file(), 'Held dependency importer missing: '+name
         path.write_bytes(original.read_bytes())
         reg['source_files'].append(descriptor(path, 'src/palimpsest/'+name+'.py'))
