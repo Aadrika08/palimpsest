@@ -14,9 +14,13 @@ execution routes, complete valid research/capability gates, integrate the lab an
 all six artworks, record artistic/operator acceptance and deliver the runbook.
 Disk clearance permits fresh admission checks; CI and physical rover remain outside.
 The [clarified execution goal](plans/simulation-release-execution-goal.md) gives
-seven unchanged acceptance gates and six finite milestones. The next milestone is
-one actual bounded simulator episode on the exact qualified local CPU runtime,
-recorded, replayed and exported through the durable public route. Its portable
+seven unchanged acceptance gates and six finite milestones. The immediate work
+unit is one fresh offline disk installation of the 71 verified wheels, retaining
+the complete installed census, hashes, licence contents, measured size and audited
+preparation receipt. This precedes tmpfs staging and numerical qualification.
+The next milestone is one actual bounded simulator episode after held-import
+qualification and the episode's declared operator/renderer checks pass, recorded,
+replayed and exported through the durable public route. Its portable
 bundle must retain source/runtime/model/scene identities, seed and limits, complete
 records and snapshots, replay comparisons, export hashes and normal cleanup.
 The goal records a fresh disk/RAM snapshot; disk clearance alone does not admit
