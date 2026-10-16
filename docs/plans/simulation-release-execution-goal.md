@@ -10,22 +10,23 @@ Implementation history is preserved in the unchanged [earlier history](simulatio
 and the [byte-identical prior goal snapshot](simulation-release-execution-goal-history-2026-10-16.md).
 Those dated records are evidence, not instructions to repeat consumed attempts.
 
-## Active work unit: review a compatible guard fastpath
+## Active work unit: prepare closed 09 source support
 
-**Review the current mutation and dispatch contract, then decide whether a
-small fastpath can preserve it.** This is the immediate task toward checkpoint A;
-the complete simulation release above remains the goal.
+**Implement and independently review closed 09 support for the accounting
+bootstrap.** This is the immediate task toward checkpoint A; the complete
+simulation release above remains the goal.
 
-1. Use the retained measurements and authored cases to describe the guard's
-   existing cache callbacks, container overrides and mutation visibility,
-   including legitimate acceptance and required refusals.
-2. Review the smallest compatible fastpath design against that contract. Preserve
-   current callback/container behavior and custody checks; a stronger restriction
-   is a contract change, not an equivalent optimization.
-3. Independently review the design. If no small compatible design is supported,
-   retain the original guard and define bounded guard-time accounting before
-   further installed qualification. This unit ends with a reviewed design or a
-   retain-and-account decision; it does not create a general framework.
+1. Add fixed 09 identity/output handling to the existing parent, observer and
+   independent auditor. Preserve old 05–08 predicates; 09 uses the same exact five
+   preparation-relative source paths, candidate D, input closure and 19 absences.
+2. Verify authored metadata, observer and full parent/API/CLI integrations.
+   Keep the q3 registration/result schemas and acceptance checks unchanged;
+   best-effort accounting rows must not become mandatory acceptance evidence.
+3. Finish independent source and evidence review before any actual 09 controls.
+   Its later data-only admission must bind genuine failed 08 streams/refusal and
+   all 14 historical missing outputs, including missing 07/08 results and baselines;
+   never assume every earlier qualification produced a result. Keep this source
+   unit finite; no new general framework.
 
 Authored measurements cannot prove the installed timeout's cause or qualify the
 runtime. Any later installed qualification needs distinct reviewed controls and
@@ -137,14 +138,27 @@ including three empty files, verify against originals, source Git and the commit
 archive. These synthetic cases do not establish the cause of 08's timeout,
 installed qualification or independent FD proof.
 
-**First unfinished action:** review the narrow mutation/dispatch contract and a
-small compatible fastpath design preserving current cache callback/container
-acceptance, refusal and custody. If no such design is supported, retain the
-original guard and define bounded guard-time accounting before further installed
-qualification. Require independent source review before separately reviewed future
-controls. Preserve the old 05–07 predicates, failed/consumed 01–08 outcomes and the
-unchanged 2GiB RAM floor/180s normal-return deadline. No 09 controls, admission or
-invocation exist, and there is no silent 08 retry.
+Bounded guard accounting in [PR170](https://github.com/Aadrika08/palimpsest/pull/170) at
+[`d76b9f3`](https://github.com/Aadrika08/palimpsest/commit/d76b9f332c034a994bc2e867604a551df8c66a1f) retains the original union: restricting cache
+values to exact built-in types cannot prevent asynchronous mutation. This unit
+changes only bootstrap production source; the qualifier is unchanged. Its q3
+cost channel is separately bounded to 32 attempts/32KiB and 1024B per row, with a
+cooperative 10s cadence; the phase channel remains 24 attempts/16KiB. The final 304
+disjoint authored cases pass: 302 private cases in 242.70s and two persistent
+integrations in 24.43s. Independent source and final evidence review
+found no material findings. All 136 artifacts/1,560,197B (13 empty files) verify
+against originals, source Git and the committed archive. These source checks neither identify 08's installed timeout cause
+nor establish installed qualification. No actual 09 controls, admission or runtime
+invocation exist; attempts 01–08 remain consumed.
+
+**First unfinished action:** implement and review closed 09 source support in the
+parent, independent auditor and observer, with authored metadata/transport and
+full parent/API/CLI tests. Preserve old 05–08 predicates and the exact five-path
+preparation-relative closure, candidate D, all inputs, 19 absences and unchanged
+2GiB/180s limits. Complete independent source/evidence review before separately
+reviewed future controls and fresh full current-byte/custody/resource admission.
+Keep failed 08 proof and all 14 missing historical outputs intact. No actual 09
+controls, admission or invocation exist, and there is no silent 08 retry.
 After runtime qualification and separate operator/renderer admission, the product
 exit remains one real recorded, replayed and exported public manual CPU episode.
 Detailed raw results remain in the linked PR/report packets, dated histories and
