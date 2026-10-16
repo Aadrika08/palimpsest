@@ -1,0 +1,83 @@
+{"kind": "authored-q4-guard-contract-case-v1", "stderr": "{\"diagnostic_only\":true,\"elapsed_seconds\":7.194001227617264e-06,\"kind\":\"puck-worker-phase-v1\",\"phase\":\"bootstrap.enter\",\"sequence\":1}\n{\"diagnostic_only\":true,\"elapsed_seconds\":0.056220112019218504,\"kind\":\"puck-worker-phase-v1\",\"phase\":\"source.ready\",\"sequence\":2}\n{\"diagnostic_only\":true,\"elapsed_seconds\":0.05626235099043697,\"kind\":\"puck-worker-phase-v1\",\"phase\":\"dependencies.enter\",\"sequence\":3}\n{\"diagnostic_only\":true,\"elapsed_seconds\":1.2883996599703096,\"kind\":\"puck-worker-phase-v1\",\"phase\":\"dependencies.ready\",\"sequence\":4}\n{\"diagnostic_only\":true,\"elapsed_seconds\":1.3063960180152208,\"kind\":\"puck-worker-phase-v1\",\"phase\":\"bootstrap.ready\",\"sequence\":5}\n{\"diagnostic_only\":true,\"elapsed_seconds\":1.3064448299701326,\"kind\":\"puck-worker-phase-v1\",\"phase\":\"entry.enter\",\"sequence\":6}\n{\"active\":null,\"context\":\"import.numpy.enter\",\"diagnostic_only\":true,\"elapsed_nanoseconds\":1357140101,\"full\":{\"completed\":76,\"started\":76},\"kind\":\"puck-worker-guard-cost-v1\",\"light\":{\"completed\":1,\"started\":1},\"nested_checks\":0,\"sections\":{\"bindings\":{\"nanoseconds\":9585624,\"visits\":85},\"cache\":{\"nanoseconds\":2612693,\"visits\":77},\"custody\":{\"nanoseconds\":1282867754,\"visits\":85},\"images\":{\"nanoseconds\":1804226,\"visits\":7}},\"sequence\":1,\"trigger\":\"checkpoint\"}\n{\"diagnostic_only\":true,\"elapsed_seconds\":1.4135480159893632,\"kind\":\"puck-worker-phase-v1\",\"phase\":\"import.numpy.enter\",\"sequence\":7}\nQ4_BODY_ENTERED\nTraceback (most recent call last):\n  File \"<string>\", line 10, in <module>\n  File \"/tmp/palimpsest-tmpfs-deps-_i2x0ael/source/scripts/puck_worker_bootstrap.py\", line 877, in <module>\n    if __name__ == '__main__': main()\n                               ^^^^^^\n  File \"/tmp/palimpsest-tmpfs-deps-_i2x0ael/source/scripts/puck_worker_bootstrap.py\", line 870, in main\n    receipt = admission.invoke()\n              ^^^^^^^^^^^^^^^^^^\n  File \"/tmp/palimpsest-tmpfs-deps-_i2x0ael/source/scripts/puck_worker_bootstrap.py\", line 839, in invoke\n    self.recheck(); result = module.qualify(self) if qualification else module.preflight(self)\n                             ^^^^^^^^^^^^^^^^^^^^\n  File \"/tmp/palimpsest-tmpfs-deps-_i2x0ael/source/src/palimpsest/puck_runtime_qualification.py\", line 31, in qualify\n    module=importlib.import_module(name)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/importlib/__init__.py\", line 126, in import_module\n    return _bootstrap._gcd_import(name[level:], package, level)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<frozen importlib._bootstrap>\", line 1204, in _gcd_import\n  File \"<frozen importlib._bootstrap>\", line 1176, in _find_and_load\n  File \"<frozen importlib._bootstrap>\", line 1147, in _find_and_load_unlocked\n  File \"<frozen importlib._bootstrap>\", line 690, in _load_unlocked\n  File \"/tmp/palimpsest-tmpfs-deps-_i2x0ael/source/src/palimpsest/puck_dependency_imports.py\", line 155, in exec_module\n    exec(code,module_dict(module))\n  File \"/tmp/palimpsest-tmpfs-deps-_i2x0ael/dependency/numpy/__init__.py\", line 61, in <module>\n    expect_refusal(restore=restore)\n  File \"/tmp/palimpsest-tmpfs-deps-_i2x0ael/dependency/numpy/__init__.py\", line 31, in expect_refusal\n    raise AssertionError('Q4_EXPECTED_REFUSAL_SKIPPED')\nAssertionError: Q4_EXPECTED_REFUSAL_SKIPPED\n", "stdout": "", "worker_returncode": 1}
+F
+=================================== FAILURES ===================================
+_______ test_q4_completion_cannot_replace_both_stdlib_baseline_receivers _______
+
+    def test_q4_completion_cannot_replace_both_stdlib_baseline_receivers():
+>       refused(run_q4('''
+            original_stdlib = sys.stdlib_module_names
+            original_baseline = owner._stdlib_names
+            original_completed = owner._guard_checks[False][1]
+            replacement = frozenset(original_stdlib) | {'fixture_q4_coordinated_stdlib'}
+            assert original_baseline is original_stdlib
+            fired = False
+            class Completed(int):
+                def __add__(self, value):
+                    global fired
+                    fired = True
+                    sys.stdlib_module_names = replacement
+                    owner._stdlib_names = replacement
+                    return int(self)+value
+            owner._guard_checks[False][1] = Completed(original_completed)
+            def restore():
+                sys.stdlib_module_names = original_stdlib
+                owner._stdlib_names = original_baseline
+                owner._guard_checks[False][1] = original_completed
+            expect_refusal(restore=restore)
+            assert fired, 'Q4_COORDINATED_STDLIB_CALLBACK_NOT_REACHED'
+        '''))
+
+tests/test_puck_guard_contract_v4.py:474: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+result = CompletedProcess(args=['/home/utkarsh/Work/shraddha/brain/.worktrees/r0-reproduction/.venv/bin/python', '-I', '-B', '-...ect_refusal\n    raise AssertionError(\'Q4_EXPECTED_REFUSAL_SKIPPED\')\nAssertionError: Q4_EXPECTED_REFUSAL_SKIPPED\n')
+
+    def refused(result):
+        assert result.returncode != 0 and result.stdout == ''
+        assert 'Q4_BODY_ENTERED\n' in result.stderr, result.stderr
+>       assert 'Q4_CASE_COMPLETED\n' in result.stderr, result.stderr
+E       AssertionError: {"diagnostic_only":true,"elapsed_seconds":7.194001227617264e-06,"kind":"puck-worker-phase-v1","phase":"bootstrap.enter","sequence":1}
+E         {"diagnostic_only":true,"elapsed_seconds":0.056220112019218504,"kind":"puck-worker-phase-v1","phase":"source.ready","sequence":2}
+E         {"diagnostic_only":true,"elapsed_seconds":0.05626235099043697,"kind":"puck-worker-phase-v1","phase":"dependencies.enter","sequence":3}
+E         {"diagnostic_only":true,"elapsed_seconds":1.2883996599703096,"kind":"puck-worker-phase-v1","phase":"dependencies.ready","sequence":4}
+E         {"diagnostic_only":true,"elapsed_seconds":1.3063960180152208,"kind":"puck-worker-phase-v1","phase":"bootstrap.ready","sequence":5}
+E         {"diagnostic_only":true,"elapsed_seconds":1.3064448299701326,"kind":"puck-worker-phase-v1","phase":"entry.enter","sequence":6}
+E         {"active":null,"context":"import.numpy.enter","diagnostic_only":true,"elapsed_nanoseconds":1357140101,"full":{"completed":76,"started":76},"kind":"puck-worker-guard-cost-v1","light":{"completed":1,"started":1},"nested_checks":0,"sections":{"bindings":{"nanoseconds":9585624,"visits":85},"cache":{"nanoseconds":2612693,"visits":77},"custody":{"nanoseconds":1282867754,"visits":85},"images":{"nanoseconds":1804226,"visits":7}},"sequence":1,"trigger":"checkpoint"}
+E         {"diagnostic_only":true,"elapsed_seconds":1.4135480159893632,"kind":"puck-worker-phase-v1","phase":"import.numpy.enter","sequence":7}
+E         Q4_BODY_ENTERED
+E         Traceback (most recent call last):
+E           File "<string>", line 10, in <module>
+E           File "/tmp/palimpsest-tmpfs-deps-_i2x0ael/source/scripts/puck_worker_bootstrap.py", line 877, in <module>
+E             if __name__ == '__main__': main()
+E                                        ^^^^^^
+E           File "/tmp/palimpsest-tmpfs-deps-_i2x0ael/source/scripts/puck_worker_bootstrap.py", line 870, in main
+E             receipt = admission.invoke()
+E                       ^^^^^^^^^^^^^^^^^^
+E           File "/tmp/palimpsest-tmpfs-deps-_i2x0ael/source/scripts/puck_worker_bootstrap.py", line 839, in invoke
+E             self.recheck(); result = module.qualify(self) if qualification else module.preflight(self)
+E                                      ^^^^^^^^^^^^^^^^^^^^
+E           File "/tmp/palimpsest-tmpfs-deps-_i2x0ael/source/src/palimpsest/puck_runtime_qualification.py", line 31, in qualify
+E             module=importlib.import_module(name)
+E                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           File "/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/importlib/__init__.py", line 126, in import_module
+E             return _bootstrap._gcd_import(name[level:], package, level)
+E                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           File "<frozen importlib._bootstrap>", line 1204, in _gcd_import
+E           File "<frozen importlib._bootstrap>", line 1176, in _find_and_load
+E           File "<frozen importlib._bootstrap>", line 1147, in _find_and_load_unlocked
+E           File "<frozen importlib._bootstrap>", line 690, in _load_unlocked
+E           File "/tmp/palimpsest-tmpfs-deps-_i2x0ael/source/src/palimpsest/puck_dependency_imports.py", line 155, in exec_module
+E             exec(code,module_dict(module))
+E           File "/tmp/palimpsest-tmpfs-deps-_i2x0ael/dependency/numpy/__init__.py", line 61, in <module>
+E             expect_refusal(restore=restore)
+E           File "/tmp/palimpsest-tmpfs-deps-_i2x0ael/dependency/numpy/__init__.py", line 31, in expect_refusal
+E             raise AssertionError('Q4_EXPECTED_REFUSAL_SKIPPED')
+E         AssertionError: Q4_EXPECTED_REFUSAL_SKIPPED
+E         
+E       assert 'Q4_CASE_COMPLETED\n' in '{"diagnostic_only":true,"elapsed_seconds":7.194001227617264e-06,"kind":"puck-worker-phase-v1","phase":"bootstrap.ente...pect_refusal\n    raise AssertionError(\'Q4_EXPECTED_REFUSAL_SKIPPED\')\nAssertionError: Q4_EXPECTED_REFUSAL_SKIPPED\n'
+E        +  where '{"diagnostic_only":true,"elapsed_seconds":7.194001227617264e-06,"kind":"puck-worker-phase-v1","phase":"bootstrap.ente...pect_refusal\n    raise AssertionError(\'Q4_EXPECTED_REFUSAL_SKIPPED\')\nAssertionError: Q4_EXPECTED_REFUSAL_SKIPPED\n' = CompletedProcess(args=['/home/utkarsh/Work/shraddha/brain/.worktrees/r0-reproduction/.venv/bin/python', '-I', '-B', '-...ect_refusal\n    raise AssertionError(\'Q4_EXPECTED_REFUSAL_SKIPPED\')\nAssertionError: Q4_EXPECTED_REFUSAL_SKIPPED\n').stderr
+
+tests/test_puck_guard_contract_v4.py:94: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_puck_guard_contract_v4.py::test_q4_completion_cannot_replace_both_stdlib_baseline_receivers
+1 failed, 29 deselected in 1.68s

@@ -50,7 +50,7 @@ def expect_refusal(action=None, restore=None, reason=None):
 '''
 
 
-def run_q4(body):
+def run_q4(body, *, native=False):
     def packages(deps, root):
         cpu_setup(deps, root)
         path = root/'numpy/__init__.py'
@@ -66,7 +66,7 @@ def run_q4(body):
 
     with authored() as base:
         result, _ = dependency_fixture(base, 'raise AssertionError("Q4_PREFLIGHT_RAN")',
-            mutate=packages, source_change=policy)
+            mutate=packages, source_change=policy, native=native)
     print(json.dumps({'kind':'authored-q4-guard-contract-case-v1',
         'worker_returncode':result.returncode, 'stdout':result.stdout, 'stderr':result.stderr},
         sort_keys=True))
@@ -161,7 +161,7 @@ def test_q4_rejects_container_subclasses_before_their_hooks(receiver):
                 setattr(target, attribute, previous)
         expect_refusal(restore=restore)
         assert events == [], 'Q4_CONTAINER_HOOK_RAN'
-    '''.replace('RECEIVER', repr(receiver))))
+    '''.replace('receiver = RECEIVER', 'receiver = '+repr(receiver))))
 
 
 @pytest.mark.parametrize('receiver', ['cache', 'source-loaded', 'dependency-loading'])
@@ -209,7 +209,7 @@ def test_q4_rejects_str_subclass_names_before_hash_lookup_or_split(receiver):
                 deps.loading.discard(key)
         expect_refusal(restore=restore)
         assert events == [], 'Q4_NAME_HOOK_RAN'
-    '''.replace('RECEIVER', repr(receiver))))
+    '''.replace('receiver = RECEIVER', 'receiver = '+repr(receiver))))
 
 
 @pytest.mark.parametrize('mutation', ['cache-object', 'cache-key', 'allowance-content',
@@ -266,7 +266,7 @@ def test_q4_late_observed_change_cannot_escape_fail_closed_snapshot(mutation):
         os.write = write
         expect_refusal(restore=restore)
         assert fired, 'Q4_LATE_MUTATION_NOT_REACHED'
-    '''.replace('MUTATION', repr(mutation))))
+    '''.replace('mutation = MUTATION', 'mutation = '+repr(mutation))))
 
 
 def test_q4_completion_counter_callback_cannot_change_cache_after_late_check():
@@ -381,9 +381,131 @@ def test_q4_cache_name_ceiling_has_exact_boundary_and_one_over(count):
         else:
             expect_refusal(restore=restore)
         assert len(sys.modules) == original_count
-    '''.replace('TARGET', str(count))
+    '''.replace('target = TARGET', 'target = '+str(count))
     result = run_q4(body)
     (succeeded if count == 65536 else refused)(result)
+
+
+@pytest.mark.parametrize('field', ['owner-version', 'descriptor-version'])
+def test_q4_late_diagnostic_cannot_downgrade_the_selected_guard_policy(field):
+    refused(run_q4('''
+        field = FIELD
+        original_write = os.write
+        policy = owner._reg['qualification']
+        original_owner_version = owner._missing_policy_version
+        original_descriptor_version = policy['version']
+        fired = False
+        def write(fd, payload):
+            global fired
+            result = original_write(fd, payload)
+            if b'"kind":"puck-worker-guard-cost-v1"' in payload:
+                if not fired and b'"active":null' in payload:
+                    fired = True
+                    if field == 'owner-version':
+                        owner._missing_policy_version = 3
+                    else:
+                        policy['version'] = 3
+                owner._guard_next = 0
+            return result
+        def restore():
+            os.write = original_write
+            owner._missing_policy_version = original_owner_version
+            policy['version'] = original_descriptor_version
+        owner._guard_next = 0
+        os.write = write
+        expect_refusal(restore=restore)
+        assert fired, 'Q4_POLICY_DOWNGRADE_CALLBACK_NOT_REACHED'
+    '''.replace('field = FIELD', 'field = '+repr(field))))
+
+
+def test_q4_begin_diagnostic_revalidates_name_shapes_before_lookup_hooks():
+    refused(run_q4('''
+        original_write = os.write
+        fired = False
+        armed = False
+        events = []
+        class Key(str):
+            def __hash__(self):
+                if armed:
+                    events.append('hash')
+                    raise AssertionError('Q4_BEGIN_NAME_HOOK_RAN')
+                return str.__hash__(self)
+            def split(self, *args, **kwargs):
+                events.append('split')
+                raise AssertionError('Q4_BEGIN_NAME_HOOK_RAN')
+        key = Key('json.fixture_q4_begin_callback')
+        module = types.ModuleType(str(key))
+        def write(fd, payload):
+            global fired, armed
+            result = original_write(fd, payload)
+            if not fired and b'"kind":"puck-worker-guard-cost-v1"' in payload and b'"section":"bindings"' in payload:
+                fired = True
+                sys.modules[key] = module
+                armed = True
+            return result
+        def restore():
+            global armed
+            os.write = original_write
+            armed = False
+            sys.modules.pop(key, None)
+        owner._guard_next = 0
+        os.write = write
+        expect_refusal(restore=restore)
+        assert fired, 'Q4_BEGIN_CALLBACK_NOT_REACHED'
+        assert events == [], 'Q4_BEGIN_NAME_HOOK_RAN'
+    '''))
+
+
+def test_q4_retains_authored_native_dependency_import_and_image_observation():
+    result = run_q4('''
+        from fixture_dep import _native
+        assert _native.answer() == 47
+        owner.recheck()
+        assert deps.loaded['fixture_dep._native'][0] is _native
+    ''', native=True)
+    succeeded(result)
+    receipt = json.loads(result.stdout)['dependencies']
+    assert any(row['name'] == 'fixture_dep._native' for row in receipt['loaded_modules'])
+    assert receipt['images']['held_file_images']
+    assert receipt['images']['native_closure_qualified'] is False
+
+
+def test_q4_completion_cannot_replace_both_stdlib_baseline_receivers():
+    refused(run_q4('''
+        original_stdlib = sys.stdlib_module_names
+        original_baseline = owner._stdlib_names
+        original_completed = owner._guard_checks[False][1]
+        replacement = frozenset(original_stdlib) | {'fixture_q4_coordinated_stdlib'}
+        assert original_baseline is original_stdlib
+        fired = False
+        class Completed(int):
+            def __add__(self, value):
+                global fired
+                fired = True
+                sys.stdlib_module_names = replacement
+                owner._stdlib_names = replacement
+                return int(self)+value
+        owner._guard_checks[False][1] = Completed(original_completed)
+        def restore():
+            sys.stdlib_module_names = original_stdlib
+            owner._stdlib_names = original_baseline
+            owner._guard_checks[False][1] = original_completed
+        expect_refusal(restore=restore)
+        assert fired, 'Q4_COORDINATED_STDLIB_CALLBACK_NOT_REACHED'
+    '''))
+
+
+def test_q4_selector_comparison_exception_keeps_guard_cleanup_and_first_failure():
+    refused(run_q4('''
+        original_selector = owner._missing_policy_version
+        class Selector(int):
+            def __eq__(self, other):
+                raise RuntimeError('Q4_SELECTOR_COMPARISON_FAILURE')
+        owner._missing_policy_version = Selector(original_selector)
+        def restore():
+            owner._missing_policy_version = original_selector
+        expect_refusal(restore=restore, reason='Q4_SELECTOR_COMPARISON_FAILURE')
+    '''))
 
 
 @pytest.mark.parametrize('count', [65536, 65537])
@@ -421,6 +543,6 @@ def test_q4_combined_allowance_ceiling_counts_duplicate_input_entries(count):
         else:
             expect_refusal(restore=restore)
         assert owner._loading == source_before and deps.loading == dependency_before
-    '''.replace('TARGET', str(count))
+    '''.replace('target = TARGET', 'target = '+str(count))
     result = run_q4(body)
     (succeeded if count == 65536 else refused)(result)

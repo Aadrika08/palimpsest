@@ -11,7 +11,9 @@ command=['/usr/bin/timeout','--signal=TERM','--kill-after=5s',str(cap)+'s','/usr
  '--chdir',str(ROOT),'--',PYTHON,'-B','-m','pytest','-q','-s','-p','no:cacheprovider','--basetemp','/tmp/q4-'+label,*tests]
 paths=['scripts/puck_worker_bootstrap.py','docs/plans/puck-cpu-guard-v4-prospective.md',
  'tests/test_puck_worker_bootstrap.py','tests/test_puck_worker_dependencies.py','tests/test_puck_cpu_runtime_entry.py',
- 'tests/test_puck_tmpfs_dependencies.py',*[p for p in tests if p.startswith('tests/') and '::' not in p]]
+ 'tests/test_puck_tmpfs_dependencies.py','tests/test_puck_held_runtime_entry.py',
+ 'tests/test_puck_dependency_files.py','tests/test_puck_cpu_held_parent.py',
+ *[p for p in tests if p.startswith('tests/') and '::' not in p]]
 paths+=['src/palimpsest/'+name+'.py' for name in ('puck_execution_files','puck_dependency_files',
  'puck_dependency_imports','puck_dependency_bindings','puck_native_origins','puck_native_identity','puck_runtime_qualification')]
 pins=[]

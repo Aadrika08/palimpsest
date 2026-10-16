@@ -95,3 +95,15 @@ def test_q4_initializer_cannot_rewrite_the_captured_expected_version():
     assert result.returncode != 0 and result.stdout == ''
     assert 'Runtime qualification version differs: torchvision' in result.stderr, result.stderr
     assert 'DEFAULT_ENTRY_RAN' not in result.stderr
+
+
+def test_existing_cpu_parent_does_not_implicitly_accept_q4_result():
+    from test_puck_cpu_held_parent import result_case
+
+    parent, dependencies, result = result_case()
+    arguments = dict(registration_sha256='a'*64, dependency_sha256='b'*64,
+                     dependencies=dependencies, negative_imports=['org'])
+    parent.validate_worker_result(result, **arguments)
+    result['entry_result']['qualification_version'] = 4
+    with pytest.raises(ValueError, match='CPU held-import terminal'):
+        parent.validate_worker_result(result, **arguments)
