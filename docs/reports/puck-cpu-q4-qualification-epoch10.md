@@ -66,3 +66,9 @@ The sealed packet contains 242 artifacts / 3,373,267 bytes / eight empty files,
 including 38 final source paths. Its verifier passes against retained originals
 and source Git. The forty authored witnesses are selected evidence, not a complete
 portable rerunnable fixture/staging tree. The index SHA-256 is `501c202b7ea2bda918fb0b55c8eac09eeba7b759f101f0d70e8dfddab13602e7`.
+
+The first archive commit omitted 23 nested authored `runs/` witnesses because
+Git ignored that directory name. Committed-membership verification caught the
+omission before publication. Those exact manifest paths were explicitly added;
+no source or sealed-packet bytes changed. Final committed verification is required
+before publishing this branch.
