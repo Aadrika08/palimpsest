@@ -10,28 +10,29 @@ Implementation history is preserved in the unchanged [earlier history](simulatio
 and the [byte-identical prior goal snapshot](simulation-release-execution-goal-history-2026-10-16.md).
 Those dated records are evidence, not instructions to repeat consumed attempts.
 
-## Active work unit: fresh admission for actual 09
+## Active work unit: prove a compatible reduction in guard cost
 
-**Perform one fresh data-only admission for the reviewed actual 09 controls and
-independently review its receipt before at most one runtime invocation.** This is
-the immediate prerequisite for checkpoint A; the complete simulation release
-above remains the goal.
+**Review and test a small source change that reduces repeated guard work while
+preserving the existing acceptance, refusal and dispatch behavior.** This is the
+next bounded prerequisite for checkpoint A; one real recorded/replayed/exported
+episode remains the product exit.
 
-1. Use the published fixed 09 source and controls below. They bind genuine failed
-   08 evidence, preserve the historical missing outputs and reserve 07/08 raw
-   streams before manifest holding.
-2. Run one full current-byte/custody/resource admission through the fixed data-only
-   coordinator. Keep candidate D, all inputs, 19 probes, custody/refusal checks and
-   the existing 180s/2GiB runtime limits. Disk clearance is not resource admission.
-3. Independently review the normal-zero admission receipt and its retained bytes.
-   Only then refresh pins, resources and output absences before the sole observer
-   invocation and independent outcome/byte audit. Retain any failure; no silent
-   retry or widening of limits.
+1. Use the retained actual 09 cost observations to select one narrow source path.
+   Compare it with the original guard and the preserved direct-membership and
+   hoisting counterexamples; the diagnostics do not prove the full timeout cause.
+2. Prove the required mutation/dispatch contract before changing production.
+   Use authored fixtures and bounded measurement. Retain the existing predicates,
+   refusal checks, input identities and resource limits; do not weaken tests.
+3. Independently review the source result and evidence. If equivalence cannot be
+   established without a general framework, record the concrete prospective
+   contract decision needed rather than silently changing acceptance.
 
-**Current status (2026-10-16): controls prepared and independently reviewed;
-fresh 09 admission and observer invocation pending.** Authored and metadata checks
-cannot prove 08's installed timeout cause or qualify the runtime. Attempts 01–08
-remain consumed.
+**Current status (2026-10-16): actual 09 is failed and consumed.** Its fresh
+data-only admission passed, but its sole runtime invocation exhausted the 180s
+normal-return deadline. The independent auditor refused the nonzero transport.
+No installed-runtime pass, completed episode or actual 10 controls/admission/run
+exists. A distinct future actual attempt still needs reviewed, frozen and pushed
+source/controls, fresh complete admission, independent receipt review and audit.
 
 Disk clearance permits preparation; each actual execution still needs its own
 fresh resource checks. After runtime and separate operator/renderer qualification,
@@ -166,21 +167,37 @@ As of 2026-10-16, actual 09 controls are prepared and independently reviewed at
 checks pass. The metadata-only self-check covers 1,259 pins / 81,114,419B; exact
 control and proof-roster reviews found no material findings. These checks retain
 the genuine failed 08 evidence and the unchanged byte/custody, absence and limit
-contracts. **Execution is pending: no fresh 09 data-only admission or observer
-invocation has run.** Controls and metadata checks are not current payload,
-resource or runtime acceptance.
+contracts. These were pre-execution source/control checks, not runtime acceptance.
 
+[PR172](https://github.com/Aadrika08/palimpsest/pull/172), with outcome at
+[`31d980b`](https://github.com/Aadrika08/palimpsest/commit/31d980be15921b206eb77d2455931cc44c06270e), preserves consumed actual 09.
+Fresh data-only admission passed once in 29.175485s externally, with full current
+byte/custody checks and normal FD4→4 closure; independent receipt review passed.
+**The sole runtime invocation failed at the unchanged 180s deadline** (external
+normal exit 1 in 180.517676s, no external timeout). Supervision stopped the worker
+with SIGTERM(-15); its sampled matching-survivor list was empty. Final result and
+baseline-after remain absent; no parent-closure or completed four-import receipt
+exists. The one audit correctly refused the nonzero transport, without a complete
+post-run payload audit.
 
-**First unfinished action:** run one fresh full data-only admission against the
-published 09 controls, then independently review its normal-zero receipt and
-retained bytes. Only after that review may fresh pin/resource/output-absence
-checks precede the sole observer invocation and independent outcome/byte audit.
-Preserve candidate D, all inputs, 19 probes, custody/refusal checks and 180s/2GiB
-limits. Fresh 09 admission and observer invocation remain pending; there is no
-08 retry. After runtime qualification and separate operator/renderer admission,
-the product exit remains one real recorded, replayed and exported public manual
-CPU episode. Detailed raw results remain in linked PR/report packets, dated
-histories and Git history.
+The retained stream has eleven phase and nineteen optional cost rows. NumPy and
+Torch returned; the last phase is Torchvision entry at 87.536113s. The final cost
+row at 175.091295s reports cumulative cache 59.248136s, bindings 31.626744s and
+custody 30.099583s. These incomplete, unauthenticated source counters may include
+nested work and instrumentation; they are not exclusive timing or proof of the
+full timeout cause. Independent outcome/publication reviews found no material
+findings. All 144 artifacts / 13,668,698B / seven empty files match the retained
+originals and source/control Git origins. Attempts 01–09 remain consumed; no
+actual 10 controls, admission or invocation exist.
+
+**First unfinished action:** review the measured guard paths and prove one small
+compatible source optimization against the original mutation/dispatch behavior,
+then verify it with the retained refusal cases, authored integration tests,
+bounded measurements and independent review. If its contract must change,
+describe that prospective decision explicitly. Do not retry 09, widen limits or
+create another actual run from source tests alone. After runtime and separate
+operator/renderer qualification, complete the real public episode bundle.
+Detailed evidence remains in the linked reports, dated histories and Git.
 
 [PR163](https://github.com/Aadrika08/palimpsest/pull/163) already implements the
 manual constructor seam with exact arguments and seed/reset order preserved;
