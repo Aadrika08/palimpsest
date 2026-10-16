@@ -77,18 +77,34 @@ diagnostic 08 source support and is independently reviewed with no material
 findings. All 630 disjoint authored cases pass: 622 private cases in
 26.42s and eight persistent integrations in 119.48s. The initial three REDs and
 mixed-layout source-validation result (two failures/622 passes) remain retained.
-No actual 08 controls, admission or allocation exist; this source result is not an
-installed-runtime pass.
 
-**First unfinished action:** freeze and independently review the actual 08 controls.
-Bind the genuine failed 07 transport, supervision and empty worker logs, preserving
-its absent result/baseline-after receipts; use immutable historical source archives
-after rollout. Preserve the old 05–07 predicates and all failed/consumed 01–07 outcomes.
-Pass fresh complete current-byte/custody/resource admission with the unchanged
-2GiB RAM floor, then invoke at most once under the unchanged 180s normal-return
-runtime deadline and independently audit the outcome and bytes. Once the installed
-runtime qualifies, separately admit the public manual CPU episode route. The
-product exit remains the real recorded, replayed and exported episode bundle.
+[PR168](https://github.com/Aadrika08/palimpsest/pull/168) preserves actual 08.
+Its controls were reviewed and pushed at `2f74653` before execution. A
+pre-execution raw-stream-cache fix passed five control checks, including the
+original four; its uninvoked revision remains retained. Fresh 08/D data-only
+admission passed once (33.702s externally; 33.522s in the source receipt), with full
+SITE/staged/native/current-control byte checks, nineteen absences, six old PID
+identity samples and 4→4 descriptors/no children or threads. Independent receipt
+review was GO; this was data admission, not runtime acceptance.
+
+**The sole 08 runtime invocation failed at the 180s normal-return deadline.** The
+external observer returned 1 normally in 180.464s without external timeout;
+supervision stopped the worker with SIGTERM(-15) and sampled no matching survivors.
+Eleven worker-relative markers include NumPy return at 38.084s, Torch return at
+79.741s and last-seen Torchvision entry at 81.564s. No later marker, result,
+baseline-after, completed four-import receipt or parent-closure evidence exists.
+The last marker does not identify where the remaining time was spent. The audit
+CLI correctly refused the nonzero transport; it did not perform a full post-run
+payload check. Attempt 08 is consumed; the cause remains unknown.
+
+**First unfinished action:** measure repeated guard computation with authored
+fixtures. Implement only a proven redundancy fix that preserves acceptance,
+refusal and custody checks, the old 05–07 predicates, and the unchanged 2GiB RAM
+floor/180s normal-return deadline. Require independent source review before any
+separately reviewed future controls. Preserve failed/consumed 01–08 outcomes;
+no 09 controls, admission or invocation exist, and there is no silent 08 retry.
+After runtime qualification and separate operator/renderer admission, the product
+exit remains one real recorded, replayed and exported public manual CPU episode.
 Detailed raw results remain in the linked PR/report packets, dated histories and
 Git history.
 
