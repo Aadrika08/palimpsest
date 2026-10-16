@@ -10,33 +10,39 @@ Implementation history is preserved in the unchanged [earlier history](simulatio
 and the [byte-identical prior goal snapshot](simulation-release-execution-goal-history-2026-10-16.md).
 Those dated records are evidence, not instructions to repeat consumed attempts.
 
-## Active work unit: implement and prove the explicit q4 guard contract
+## Active work unit: close q4's CPU qualification source epoch
 
-**Implement the separately versioned q4 cache-boundary contract, prove its
-authored semantics and measure its bounded guard cost.** The prospective
-[engineering contract](https://github.com/Aadrika08/palimpsest/blob/69af058e9e59815e6731affe7cc7fc3f03111a2f/docs/plans/puck-cpu-guard-v4-prospective.md)
-is selected for this next source unit. It changes acceptance semantics; it is
-not an equivalent optimization of arbitrary callbacks. The product exit remains
-one real recorded/replayed/exported public episode before the complete release.
+**Make q4 explicitly admissible in a distinct parent/observer/independent-auditor
+source epoch. Then prepare fresh reviewed controls and data-only admission before
+any actual 10 allocation.** The product exit remains one real public episode
+recorded with snapshots, replayed and exported before the complete release.
 
-1. Write failing authored q4 descriptor, strict-type, snapshot and refusal cases
-   before production changes. Preserve q1–q3 tags, defaults, predicates, operator
-   dispatch, diagnostics and existing tests, including all rejected shortcuts.
-2. Add only the explicit q4 branch: early canonical container/name validation,
-   one allowance snapshot after reconciliation, unchanged identity/seal/native/
-   custody/process/environment checks and a late fail-closed stability comparison
-   after callback-capable work. Keep close/poison, final deadlines and finite
-   bounds. Observed mutation refuses; no snapshot retry or atomicity claim.
-3. Only after semantic checks pass, run the declared 128/512/2048 authored workload
-   and independently review the source, raw results and bytes. Source improvement
-   is not installed qualification. Existing outer epochs stay strict; a distinct
-   later source epoch and fresh reviewed controls/admission precede any actual run.
+1. Add the closed q4 source-epoch identities and authored metadata, observer and
+   full parent/worker/auditor integration proof. Explicitly bind the q4 descriptor,
+   result and current source bytes. Keep old epochs strict, candidate D, nineteen
+   negative imports, original preparation anchors, environment and 180s/2GiB
+   conditions unchanged. Preserve every consumed attempt and missing receipt.
+2. Independently review and publish that source closure and its exact evidence.
+   Only then prepare separately frozen controls with current byte/custody checks,
+   output absences and fresh resource admission. No actual invocation is part of
+   this source unit; there is no implicit retry of attempts 01–09.
 
-**Current status (2026-10-16): the in-place equivalence candidate is rejected.**
-Baseline passes seven cases; the candidate fails the new reflected-union case.
-Production remains unchanged. Q4 is designed, not implemented or validated.
-Attempts 01–09 remain consumed; no actual 10 controls/admission/run exists.
-All seven release gates remain open.
+**Current status (2026-10-16): q4 is implemented and has authored source proof.**
+[PR174](https://github.com/Aadrika08/palimpsest/pull/174), with
+[source commit `1fa9421`](https://github.com/Aadrika08/palimpsest/commit/1fa94213f583a30e6c5533a45bef5575b45e9095)
+adds the explicit boundary-snapshot contract while preserving q1–q3 behavior.
+Passing evidence covers 41 distinct guard/entry cases, 397 legacy cases and three
+cost cases: 441 distinct cases across batches, not one all-green invocation.
+The retained legacy batch had four child import-path failures; only those four
+reran successfully after the environment correction, with no production change.
+The unpaired authored cost comparison shows useful reduction at larger sizes and
+slightly worse cost at 128 names. It proves neither equivalent semantics nor
+installed speedup, actual 09's cause or runtime qualification.
+
+Existing parent/observer/auditor epochs remain unchanged; old-parent admission
+still refuses q4. Attempts 01–09 remain consumed; no actual 10 controls, admission or run exists. All seven release
+gates remain open. Boundary comparisons are non-atomic and cannot detect every
+ABA or change after the final observation.
 
 Disk clearance permits preparation; each actual execution still needs its own
 fresh resource checks. After runtime and separate operator/renderer qualification,
@@ -206,19 +212,30 @@ Independent source/outcome/publication reviews found no material findings. All
 test-first source Git. This rejects one rewrite, not every possible optimization.
 No installed-runtime or performance acceptance follows.
 
-The selected prospective q4 contract uses canonical names/containers, one
-boundary snapshot and a late fail-closed comparison. It deliberately changes
-sampling/dispatch semantics, retains q1–q3 and cannot detect every asynchronous
-ABA/remove-and-restore event. It is not implemented or qualified yet. This
-engineering decision changes no scientific protocol, model threshold or human
-acceptance gate.
+The explicit q4 boundary-snapshot guard is implemented in source commit
+[`1fa9421`](https://github.com/Aadrika08/palimpsest/commit/1fa94213f583a30e6c5533a45bef5575b45e9095);
+[source evidence](https://github.com/Aadrika08/palimpsest/blob/89f51ab1ec08b2a210152b5fe4b675a281aa24c5/docs/reports/puck-cpu-guard-contract-v4.md)
+records 41 distinct q4 guard/entry, 397 legacy and three cost cases with passing
+evidence: 441 across split batches, not one all-green invocation. Four retained
+legacy import-path failures passed a targeted environment-only correction.
+Historical median batch/3 costs were 0.705/5.833/93.742ms at 128/512/2048 names;
+q4 measured 0.721/1.517/4.729ms. This unpaired authored comparison uses different
+contracts/context/diagnostics; q4 is slightly slower at 128 and shows bounded
+reduction at larger sizes, without installed-speed or actual 09-cause proof.
+Q4 deliberately changes sampling semantics, preserves q1–q3 and remains
+non-atomic with ABA/post-observation limits. Existing outer epochs remain
+unchanged; old-parent admission still refuses q4. No installed runtime or actual
+10 is qualified or invoked. Scientific protocols, model thresholds and human
+acceptance gates remain unchanged; all seven release gates remain open.
 
-**First unfinished action:** add authored q4 contract/refusal tests and implement
-the reviewed source-only branch while preserving all legacy paths. Independently
-verify snapshot boundaries, late mutation refusal, close/poison and bounded cost
-before a separate future actual source/control epoch. Do not retry 09 or create
-actual 10 from source tests alone. After runtime/operator/renderer qualification,
-complete the real public episode bundle.
+**First unfinished action:** add and independently review the distinct closed CPU
+source epoch that explicitly binds q4 in its parent, observer and independent
+auditor, with authored integration and exact source evidence. Keep old epochs
+strict and attempts 01–09 consumed. After that source closure, prepare separately
+frozen controls and fresh byte/custody/resource admission before any actual 10;
+no actual invocation belongs to this source unit. Once runtime and the separate
+operator/renderer route qualify, complete the real recorded/replayed/exported
+public episode bundle.
 
 [PR163](https://github.com/Aadrika08/palimpsest/pull/163) already implements the
 manual constructor seam with exact arguments and seed/reset order preserved;
