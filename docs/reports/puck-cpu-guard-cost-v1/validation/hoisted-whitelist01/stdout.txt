@@ -1,0 +1,73 @@
+{"allowances_clean": true, "cache_clean": true, "checks_per_sample": 3, "dependency_keys_calls_per_profiled_check": 1, "elapsed_ns": [1325237, 1020142, 1042975], "kind": "authored-guard-cost-v1", "synthetic_cache_entries": 128}
+.{"allowances_clean": true, "cache_clean": true, "checks_per_sample": 3, "dependency_keys_calls_per_profiled_check": 1, "elapsed_ns": [1396260, 1195412, 1536073], "kind": "authored-guard-cost-v1", "synthetic_cache_entries": 512}
+.{"allowances_clean": true, "cache_clean": true, "checks_per_sample": 3, "dependency_keys_calls_per_profiled_check": 1, "elapsed_ns": [3202894, 3465638, 2603945], "kind": "authored-guard-cost-v1", "synthetic_cache_entries": 2048}
+......F
+=================================== FAILURES ===================================
+__ test_cache_denial_poisons_and_closes_even_after_cleanup[callback-removal] ___
+
+tmp_path = PosixPath('/tmp/puck-guard-cost-hoisted01/test_cache_denial_poisons_and_2')
+defect = 'callback-removal'
+
+    @pytest.mark.parametrize('defect', ['unknown', 'lying-true', 'callback-removal'])
+    def test_cache_denial_poisons_and_closes_even_after_cleanup(tmp_path, defect):
+        body = textwrap.dedent('''\
+            import sys, types
+            deps = admission._dependencies
+            original = deps.loading
+            class TrueMembership(set):
+                def __contains__(self, key): return True
+            class RemovingName(str):
+                def split(self, *args):
+                    deps.loading.discard(str(self))
+                    return super().split(*args)
+            name = RemovingName('fixture_guard_denial') if DEFECT == 'callback-removal' else 'fixture_guard_denial'
+            if DEFECT == 'lying-true': deps.loading = TrueMembership(original)
+            if DEFECT == 'callback-removal': deps.loading.add(str(name))
+            sys.modules[name] = types.ModuleType(str(name))
+            try:
+                admission._check(full=False)
+            except RuntimeError as first:
+                assert str(first) == 'Unregistered module cache entry: fixture_guard_denial'
+                assert admission._first_failure is first
+                assert admission._children == []
+            else:
+                raise AssertionError('UNREGISTERED_CACHE_ACCEPTED')
+            finally:
+                sys.modules.pop(name, None)
+                deps.loading.discard(str(name))
+                deps.loading = original
+            try:
+                admission._check(full=False)
+            except RuntimeError as poisoned:
+                assert str(poisoned) == 'Bootstrap inactive or poisoned'
+                assert admission._first_failure is poisoned.__cause__
+            else:
+                raise AssertionError('FAILED_GUARD_REARMED')
+            sys.stderr.write('CACHE_REFUSAL_AND_POISON_CONFIRMED\\n')
+            return {}
+            ''').replace('DEFECT', repr(defect))
+        result, _ = dependency_fixture(tmp_path, body)
+        assert result.returncode != 0 and result.stdout == ''
+>       assert 'CACHE_REFUSAL_AND_POISON_CONFIRMED' in result.stderr, result.stderr
+E       AssertionError: Traceback (most recent call last):
+E           File "<string>", line 10, in <module>
+E           File "/tmp/puck-guard-cost-hoisted01/test_cache_denial_poisons_and_2/source/scripts/puck_worker_bootstrap.py", line 682, in <module>
+E             if __name__ == '__main__': main()
+E                                        ^^^^^^
+E           File "/tmp/puck-guard-cost-hoisted01/test_cache_denial_poisons_and_2/source/scripts/puck_worker_bootstrap.py", line 675, in main
+E             receipt = admission.invoke()
+E                       ^^^^^^^^^^^^^^^^^^
+E           File "/tmp/puck-guard-cost-hoisted01/test_cache_denial_poisons_and_2/source/scripts/puck_worker_bootstrap.py", line 644, in invoke
+E             self.recheck(); result = module.qualify(self) if qualification else module.preflight(self)
+E                                                                                 ^^^^^^^^^^^^^^^^^^^^^^
+E           File "/tmp/puck-guard-cost-hoisted01/test_cache_denial_poisons_and_2/source/src/palimpsest/puck_worker_preflight.py", line 22, in preflight
+E             raise AssertionError('UNREGISTERED_CACHE_ACCEPTED')
+E         AssertionError: UNREGISTERED_CACHE_ACCEPTED
+E         
+E       assert 'CACHE_REFUSAL_AND_POISON_CONFIRMED' in 'Traceback (most recent call last):\n  File "<string>", line 10, in <module>\n  File "/tmp/puck-guard-cost-hoisted01/t...in preflight\n    raise AssertionError(\'UNREGISTERED_CACHE_ACCEPTED\')\nAssertionError: UNREGISTERED_CACHE_ACCEPTED\n'
+E        +  where 'Traceback (most recent call last):\n  File "<string>", line 10, in <module>\n  File "/tmp/puck-guard-cost-hoisted01/t...in preflight\n    raise AssertionError(\'UNREGISTERED_CACHE_ACCEPTED\')\nAssertionError: UNREGISTERED_CACHE_ACCEPTED\n' = CompletedProcess(args=['/home/utkarsh/Work/shraddha/brain/.worktrees/r0-reproduction/.venv/bin/python', '-I', '-B', '-...n preflight\n    raise AssertionError(\'UNREGISTERED_CACHE_ACCEPTED\')\nAssertionError: UNREGISTERED_CACHE_ACCEPTED\n').stderr
+
+tests/test_puck_guard_cost.py:124: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_puck_guard_cost.py::test_cache_denial_poisons_and_closes_even_after_cleanup[callback-removal]
+1 failed, 8 passed in 15.86s

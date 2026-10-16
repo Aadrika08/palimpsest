@@ -1,0 +1,17 @@
+{
+  "original_bootstrap_sha256": "71263511b6f8b1828a59f2a82f74473f9151f1ec7b28dfe8bfa8c637ccac9c0e",
+  "variants": [
+    {
+      "variant": "direct-dependency",
+      "path": "runs/puck-cpu-guard-cost-v1/experimental-sources/direct-dependency.py",
+      "sha256": "1b1063a069f174b1e4f6db9bffcb81807c0c0751b09f020e8ea0442fe513cb54",
+      "experimental_only": true
+    },
+    {
+      "variant": "hoisted-whitelist",
+      "path": "runs/puck-cpu-guard-cost-v1/experimental-sources/hoisted-whitelist.py",
+      "sha256": "5615ac8803aa92edfe59c5eecbd221533e1ac1ac85af491e0a3c2d14a826f079",
+      "experimental_only": true
+    }
+  ]
+}

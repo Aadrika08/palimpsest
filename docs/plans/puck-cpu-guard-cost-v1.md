@@ -38,11 +38,11 @@ episodes. No native fixture extension, model, renderer or protected data is used
   membership and a hoisted whitelist. Run the same behavior cases against each
   to test the static counterexamples. Retain their source and failed checks;
   neither experimental copy replaces production code.
-- [ ] Review the measurement and choose the smallest supported change, or retain
+- [x] Review the measurement and choose the smallest supported change, or retain
   the current loop if preserving behavior requires disproportionate machinery.
   Any production correction first needs a meaningful failing regression, affected
   guard/CPU compatibility checks and independent review.
-- [ ] Publish the evidence, limitations, decision and next concrete action;
+- [x] Publish the evidence, limitations, decision and next concrete action;
   commit and push the bounded source/evidence branch. Installed qualification
   remains unstarted by this work unit.
 
