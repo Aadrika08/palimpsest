@@ -1,0 +1,29 @@
+{
+  "command": [
+    "/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/bin/python3.11",
+    "-I",
+    "-S",
+    "-B",
+    "/home/utkarsh/.codex/worktrees/0071/brain/docs/plans/puck-cpu-held-qualification-11-source-evidence/history-check.py"
+  ],
+  "cwd": "/home/utkarsh/.codex/worktrees/0071/brain",
+  "environment": {
+    "LANG": "C.UTF-8",
+    "LC_ALL": "C.UTF-8",
+    "PATH": "/usr/bin:/bin",
+    "PYTHONDONTWRITEBYTECODE": "1"
+  },
+  "pins": [
+    {
+      "path": "docs/plans/puck-cpu-held-qualification-11-admission.py",
+      "sha256": "36e0214803c1e223e3595a1b209d4be36522a2e07650074002ffab4466bf2a21",
+      "size_bytes": 57795
+    },
+    {
+      "path": "docs/plans/puck-cpu-held-qualification-11-source-evidence/history-check.py",
+      "sha256": "b951004e5c3ea2af43e26bc18905c153bc09d41bd8e789c889c8eacb8850e5c9",
+      "size_bytes": 12473
+    }
+  ],
+  "scope": "small historical/configuration metadata only; no admission/main, SITE/staged census, vendor or runtime"
+}
