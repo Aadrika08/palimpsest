@@ -1,4 +1,4 @@
-"""Authored preparation → policy-v5 epoch11 → API/CLI audits; no installed vendors."""
+"""Authored preparation02 → policy-v5 epoch11 → API/CLI audits; no installed vendors."""
 import copy
 import json
 import os
@@ -7,11 +7,10 @@ import time
 
 import pytest
 
-from test_puck_cpu_held_amendment05_integration import file_pin, publication05_fixture
-from test_puck_cpu_held_amendment07 import PILLOW_ORIGINS
-from test_puck_cpu_held_amendment08 import DIAGNOSTIC_SOURCES, QUALIFIER
+from test_puck_cpu_held_amendment08 import QUALIFIER
 from test_puck_cpu_held_amendment11 import HIDDEN11, ROSTER11
 from test_puck_cpu_held_parent_integration import ROOT, canonical, digest, load, run_cli
+from test_puck_cpu_held_preparation02_integration import preparation02_fixture
 
 
 AUTHORED_ROSTER11=[name for name in ROSTER11 if name!='numpy._distributor_init_local']
@@ -22,20 +21,19 @@ def test_authored11_binds_policy_v5_rosters_and_independent_audits(tmp_path):
     before=len(os.listdir('/proc/self/fd'))
     auditor_path=ROOT/'scripts/audit_puck_cpu_held_runtime.py'
     auditor=load(auditor_path,'cpu_authored_v5epoch11_auditor')
-    with publication05_fixture(tmp_path,pillow_origins=True,phase_trace=True,stock_absence_probe=True) as case:
-        root,api,config,stage,prepbase=(case[k] for k in ('root','api','config','stage','prepbase'))
+    with preparation02_fixture(tmp_path) as case:
+        root,api,stage,prepbase=(case[k] for k in ('root','api','stage','prepbase'))
         historical_dep=(prepbase/'payload/dependencies.json').read_bytes()
         identities=[(p.stat().st_dev,p.stat().st_ino) for p in sorted((stage/'inputs').iterdir())]
-        old_sources={r['path']:r for r in case['prepared']['sources']}
-        assert {r['path'] for r in config['sources'] if r!=old_sources[r['path']]}==set(DIAGNOSTIC_SOURCES)
-        assert next(r for r in config['sources'] if r['path']==QUALIFIER)['sha256']==digest((ROOT/QUALIFIER).read_bytes())
-        candidate=copy.deepcopy(case['candidate'])
-        candidate['import_profile']['native_origins']=copy.deepcopy(PILLOW_ORIGINS)
-        path=root/'docs/authored/candidate-v5epoch11.json';path.write_bytes(canonical(candidate))
-        config['inputs']['candidate']=file_pin(root,path)
         assert len(AUTHORED_ROSTER11)==31 and api.QUALIFY11_NEGATIVE_IMPORTS==AUTHORED_ROSTER11
-        config.update(kind='puck-cpu-held-runtime-allocation-v11',version=11,allocation_id=11,
-            negative_imports=list(AUTHORED_ROSTER11))
+        config=api.configuration_template(phase='qualify',root=str(root),stage_parent=str(stage),
+            sources=copy.deepcopy(case['prepare']['sources']),inputs=case['updated_inputs'],
+            negative_imports=list(AUTHORED_ROSTER11),preparation_acceptance=case['acceptance'])
+        config.update(kind='puck-cpu-held-runtime-allocation-v11',version=11,allocation_id=11)
+        assert config['sources']==case['prepared']['sources']
+        assert next(r for r in config['sources'] if r['path']==QUALIFIER)['sha256']==digest((ROOT/QUALIFIER).read_bytes())
+        assert config['preparation_acceptance']['result']['path']=='runs/puck-cpu-held-preparation-02/result.json'
+        legacy_bytes={str(p.relative_to(root)):p.read_bytes() for p in prepbase.rglob('*') if p.is_file()}
         code,stdout,stderr=run_cli(root,api,'qualify11',config)
         base=root/'runs/puck-cpu-held-qualification-11'
         raw=(base/'result.json').read_bytes() if (base/'result.json').exists() else b''
@@ -72,6 +70,8 @@ def test_authored11_binds_policy_v5_rosters_and_independent_audits(tmp_path):
             'puck-cpu-held-runtime-independent-audit-v11',11,11,'PASS')
         (root/'authored-v5epoch11-api-audit.json').write_bytes(canonical(report))
         assert report['historical_dependencies_sha256']==digest(historical_dep)
+        assert report['preparation_result_sha256']==digest(case['prepared_raw'])
+        assert report['historical_source_epoch_sha256']==report['current_source_epoch_sha256']
         assert report['current_dependencies_sha256']==report['dependencies_sha256']==digest(current_dep)
         published=root/'authored-v5epoch11-cli-audit.json'
         command=[api.PYTHON,'-I','-S','-B',str(auditor_path),'--configuration',str(configuration),
@@ -115,16 +115,15 @@ def test_authored11_binds_policy_v5_rosters_and_independent_audits(tmp_path):
                         auditor.worker(held,base,config,json.loads(current_dep),current_dep,sources)
                 finally:held.close()
             finally:target.write_bytes(original)
+        # Consumed epoch10 stays bound to preparation01: it cannot claim preparation02.
         legacy_config=copy.deepcopy(config)
         legacy_config.update(kind='puck-cpu-held-runtime-allocation-v10',version=10,allocation_id=10,
             negative_imports=[name for name in legacy_config['negative_imports'] if name in api.QUALIFY06_NEGATIVE_IMPORTS])
-        auditor.configuration(legacy_config,True)
-        held=auditor.Held(time.monotonic()+30)
-        try:
-            with pytest.raises(ValueError,match='^Exact worker registration differs$'):
-                auditor.worker(held,base,legacy_config,json.loads(current_dep),current_dep,sources)
-        finally:held.close()
-        for name,previous in case['legacy_bytes'].items():assert (root/name).read_bytes()==previous
+        with pytest.raises(ValueError,match='^Exact distinct preparation01 acceptance pins required$'):
+            auditor.configuration(legacy_config,True)
+        with pytest.raises(ValueError,match='^Exact CPU preparation receipt required$'):
+            api.validate_configuration(legacy_config)
+        for name,previous in legacy_bytes.items():assert (root/name).read_bytes()==previous
         code,_,stderr=run_cli(root,api,'qualify11-rerun',config)
         assert code!=0 and b'CPU allocation already reserved' in stderr
         assert (base/'result.json').read_bytes()==raw

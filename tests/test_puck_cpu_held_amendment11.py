@@ -1,9 +1,10 @@
-"""Policy v5 stock absence in epoch11; authored metadata/transport, no vendors."""
+"""Policy v5 stock absence in epoch11 on preparation02; authored metadata/transport, no vendors."""
 import copy
 import json
 
 import pytest
 
+from test_puck_cpu_held_amendment import rebind
 from test_puck_cpu_held_amendment05 import validate_both
 from test_puck_cpu_held_amendment06 import OTHER_INPUTS, ROSTER06
 from test_puck_cpu_held_amendment08 import DIAGNOSTIC_SOURCES
@@ -23,12 +24,41 @@ ROSTER11=[
     'torch._rocm_init','torch2trt','torchdistx','tqdm','tree','triton','tvm','xarray',
 ]
 HIDDEN11=['networkx','pandas','sklearn','torch.utils._cxx_pytree']
+PREPARATION02='runs/puck-cpu-held-preparation-02'
+STAGE02='/tmp/palimpsest-puck-cpu-held-02-authored'
+
+
+def bind_preparation02(m,config,blobs,*,version=12,stage=STAGE02):
+    """Re-express the authored accepted preparation as a fresh epoch over current sources.
+
+    version=12 is the real preparation02 identity; version=1 keeps preparation01's
+    identity while moving its stage/sources, isolating the identity refusal."""
+    prior=json.loads(blobs['configuration'])
+    prior.update(stage_parent=stage,sources=copy.deepcopy(config['sources']))
+    if version==12:prior.update(kind='puck-cpu-held-runtime-allocation-v12',version=12,allocation_id=12)
+    raw=m.canonical(prior);acceptance=config['preparation_acceptance']
+    acceptance['configuration'].update(path='authored-prepare02-configuration.json',size_bytes=len(raw),sha256=m.digest(raw))
+    acceptance['result']['path']=PREPARATION02+'/result.json';blobs['configuration']=raw
+    prepared=json.loads(blobs['result'])
+    prepared.update(stage_parent=stage,sources=copy.deepcopy(prior['sources']),configuration_sha256=m.digest(raw))
+    audit=json.loads(blobs['independent_audit']);audit['configuration_sha256']=m.digest(raw)
+    cli=json.loads(blobs['externally_observed_auditor_cli'])
+    cli['command'][6]=str(m.ROOT/acceptance['configuration']['path']);cli['command'][8]=m.digest(raw)
+    if version==12:
+        prepared.update(kind='puck-cpu-held-runtime-outcome-v12',version=12,allocation_id=12)
+        audit.update(kind='puck-cpu-held-runtime-independent-audit-v12',version=12,allocation_id=12,
+                     auditor_source_sha256=m.PREPARATION02_AUDITOR_SHA256)
+        cli['command'][10]=str(m.ROOT/'authored-prepare02-transport.json')
+    blobs['independent_audit']=m.canonical(audit);blobs['externally_observed_auditor_cli']=m.canonical(cli)
+    rebind(m,config,blobs,'result',prepared)
+    config['stage_parent']=stage
 
 
 def acceptance11_case():
     m,config,blobs,old,candidate_c,candidate_d=acceptance10_case()
     config.update(kind='puck-cpu-held-runtime-allocation-v11',version=11,allocation_id=11,
                   negative_imports=list(ROSTER11))
+    bind_preparation02(m,config,blobs)
     return m,config,blobs,old,candidate_c,candidate_d
 
 
@@ -37,36 +67,91 @@ def worker_files(m):
             for p in m.WORKER_SOURCES]
 
 
-def test11_fixes_exact_policy_v5_rosters_and_preserves_preparation_projection():
+def test11_fixes_exact_policy_v5_rosters_and_binds_preparation02():
     m,config,blobs,old,_,candidate_d=acceptance11_case()
     prior,prepared=validate_both(m,config,blobs)
     assert m.allocation_output(config)==auditor_api().allocation_output(config)=='runs/puck-cpu-held-qualification-11'
-    assert {r['path'] for r in config['sources'] if r!=next(p for p in prior['sources'] if p['path']==r['path'])}==set(DIAGNOSTIC_SOURCES)
+    assert (prior['kind'],prior['version'],prior['allocation_id'],prior['phase'])==(
+        'puck-cpu-held-runtime-allocation-v12',12,12,'prepare')
+    assert config['preparation_acceptance']['result']['path']==PREPARATION02+'/result.json'
+    assert config['stage_parent']==prior['stage_parent']==prepared['stage_parent']==STAGE02
+    assert prior['sources']==config['sources']==prepared['sources']
     assert len(config['sources'])==24 and len(config['inputs'])==16
     assert len(ROSTER11)==32 and ROSTER11==sorted(set(ROSTER06+OPTIONAL11))
     assert config['negative_imports']==m.QUALIFY11_NEGATIVE_IMPORTS==ROSTER11
     assert m.QUALIFY11_HIDDEN_IMPORTS==auditor_api().HIDDEN11_IMPORTS==HIDDEN11
     assert all(config['inputs'][key]==prior['inputs'][key] for key in OTHER_INPUTS)
-    assert prepared['sources']==prior['sources'] and prepared['inputs']==prior['inputs']
+    assert prepared['inputs']==prior['inputs'] and prior['inputs']['candidate']!=config['inputs']['candidate']
     assert config['limits']==m.LIMITS['qualify']
     m.validate_publication_candidate(old,candidate_d,pillow_origins=True)
     auditor_api().publication_candidate(old,candidate_d,pillow_origins=True)
 
 
-@pytest.mark.parametrize('path',DIAGNOSTIC_SOURCES)
-def test11_refuses_missing_preparation_relative_source_changes(path):
+@pytest.mark.parametrize('path',DIAGNOSTIC_SOURCES+['src/palimpsest/puck_native_origins.py'])
+def test11_refuses_any_source_change_after_preparation02(path):
     m,config,blobs,*_=acceptance11_case();prior,_=validate_both(m,config,blobs)
-    original=next(row for row in prior['sources'] if row['path']==path)
-    config['sources']=[copy.deepcopy(original) if row['path']==path else row for row in config['sources']]
+    next(row for row in config['sources'] if row['path']==path)['sha256']='0'*64
     with pytest.raises(ValueError):m.validate_preparation_acceptance(config,blobs)
     with pytest.raises(ValueError):auditor_api().preparation_epoch(config,prior,json.loads(blobs['result']))
 
 
-def test11_refuses_an_additional_source_change():
-    m,config,blobs,*_=acceptance11_case();prior,_=validate_both(m,config,blobs)
-    next(row for row in config['sources'] if row['path']=='src/palimpsest/puck_native_origins.py')['sha256']='0'*64
+def test11_refuses_preparation01_acceptance():
+    m,config,blobs,*_=acceptance10_case()
+    config.update(kind='puck-cpu-held-runtime-allocation-v11',version=11,allocation_id=11,negative_imports=list(ROSTER11))
+    prior=json.loads(blobs['configuration']);prepared=json.loads(blobs['result'])
+    with pytest.raises(ValueError):m.validate_configuration(config)
     with pytest.raises(ValueError):m.validate_preparation_acceptance(config,blobs)
-    with pytest.raises(ValueError):auditor_api().preparation_epoch(config,prior,json.loads(blobs['result']))
+    with pytest.raises(ValueError):auditor_api().configuration(config,False)
+    with pytest.raises(ValueError,match='preparation02'):auditor_api().preparation_epoch(config,prior,prepared)
+    # Even at preparation02's paths and stage, a preparation01 identity is refused.
+    bind_preparation02(m,config,blobs,version=1);m.validate_configuration(config)
+    with pytest.raises(ValueError,match='^Accepted CPU preparation02 required$'):m.validate_preparation_acceptance(config,blobs)
+    with pytest.raises(ValueError,match='preparation02'):
+        auditor_api().preparation_epoch(config,json.loads(blobs['configuration']),json.loads(blobs['result']))
+
+
+def test10_refuses_preparation02_acceptance():
+    m,config,blobs,*_=acceptance10_case();validate_both(m,config,blobs)
+    bind_preparation02(m,config,blobs)
+    with pytest.raises(ValueError):m.validate_configuration(config)
+    with pytest.raises(ValueError):auditor_api().configuration(config,False)
+    config['preparation_acceptance']['result']['path']='runs/puck-cpu-held-preparation-01/result.json'
+    m.validate_configuration(config)
+    with pytest.raises(ValueError,match='^Historical CPU preparation01 required$'):m.validate_preparation_acceptance(config,blobs)
+    with pytest.raises(ValueError,match='^Historical preparation01 configuration required$'):
+        auditor_api().preparation_epoch(config,json.loads(blobs['configuration']),json.loads(blobs['result']))
+
+
+@pytest.mark.parametrize('defect',['outcome-kind','outcome-version','outcome-id','audit-kind','audit-version','audit-id',
+    'audit-legacy-auditor','audit-foreign-auditor','cli-prep01-transport','prior-stage01','prior-stage-other'])
+def test11_preparation02_acceptance_identity_is_exact(defect):
+    m,config,blobs,*_=acceptance11_case();validate_both(m,config,blobs)
+    prepared=json.loads(blobs['result']);audit=json.loads(blobs['independent_audit'])
+    cli=json.loads(blobs['externally_observed_auditor_cli']);prior=json.loads(blobs['configuration'])
+    if defect=='outcome-kind':prepared['kind']='puck-cpu-held-runtime-outcome-v1';rebind(m,config,blobs,'result',prepared)
+    elif defect=='outcome-version':prepared['version']=1;rebind(m,config,blobs,'result',prepared)
+    elif defect=='outcome-id':prepared['allocation_id']=1;rebind(m,config,blobs,'result',prepared)
+    elif defect=='audit-kind':audit['kind']='puck-cpu-held-runtime-independent-audit-v1';rebind(m,config,blobs,'independent_audit',audit)
+    elif defect=='audit-version':audit['version']=1;rebind(m,config,blobs,'independent_audit',audit)
+    elif defect=='audit-id':audit['allocation_id']=1;rebind(m,config,blobs,'independent_audit',audit)
+    elif defect=='audit-legacy-auditor':
+        audit['auditor_source_sha256']=m.LEGACY_AUDITOR_SHA256;rebind(m,config,blobs,'independent_audit',audit)
+    elif defect=='audit-foreign-auditor':
+        audit['auditor_source_sha256']='0'*64;rebind(m,config,blobs,'independent_audit',audit)
+    elif defect=='cli-prep01-transport':
+        cli['command'][10]=str(m.ROOT/'runs/puck-cpu-held-preparation-01-external-cli-transport.json')
+        rebind(m,config,blobs,'externally_observed_auditor_cli',cli)
+    else:
+        stage='/tmp/palimpsest-puck-cpu-held-01' if defect=='prior-stage01' else '/tmp/palimpsest-puck-cpu-held-authored'
+        bind_preparation02(m,config,blobs,stage=stage)
+    with pytest.raises(ValueError):
+        m.validate_configuration(config);m.validate_preparation_acceptance(config,blobs)
+
+
+def test_preparation02_auditor_pin_is_the_current_independent_auditor():
+    m,*_=acceptance11_case()
+    assert m.PREPARATION02_AUDITOR_SHA256==m.digest((m.ROOT/'scripts/audit_puck_cpu_held_runtime.py').read_bytes())
+    assert m.PREPARATION02_AUDITOR_SHA256!=m.LEGACY_AUDITOR_SHA256
 
 
 @pytest.mark.parametrize('defect',['old-kind','old-version','old-id','bool-version','bool-id','prepare','limits',
