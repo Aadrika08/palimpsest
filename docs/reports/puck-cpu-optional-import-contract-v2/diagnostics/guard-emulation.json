@@ -1,0 +1,84 @@
+{
+ "kind": "diagnostic-guard-emulation-probe-v1",
+ "diagnostic_only": true,
+ "completed": [
+  [
+   "numpy",
+   "2.2.5"
+  ],
+  [
+   "torch",
+   "2.9.0+cpu"
+  ],
+  [
+   "torchvision",
+   "0.24.0+cpu"
+  ],
+  [
+   "mujoco",
+   "3.3.6"
+  ]
+ ],
+ "refused": {
+  "torch.utils._cxx_pytree": [
+   "torch/distributed/tensor/_dtensor_spec.py:6",
+   "torch/distributed/tensor/placement_types.py:8",
+   "torch/distributed/_functional_collectives.py:17"
+  ],
+  "networkx": [
+   "torch/_dynamo/symbolic_convert.py:59",
+   "torch/_dynamo/trace_rules.py:3843",
+   "torch/_dynamo/trace_rules.py:3664"
+  ],
+  "pandas": [
+   "torch/_dynamo/symbolic_convert.py:59",
+   "torch/_dynamo/trace_rules.py:3843",
+   "torch/_dynamo/trace_rules.py:3664"
+  ],
+  "sklearn": [
+   "torch/_dynamo/symbolic_convert.py:59",
+   "torch/_dynamo/trace_rules.py:3843",
+   "torch/_dynamo/trace_rules.py:3664"
+  ]
+ },
+ "denied": [
+  "OpenGL_accelerate",
+  "accimage",
+  "av",
+  "backports_abc",
+  "colorama",
+  "defusedxml",
+  "dill",
+  "flint",
+  "fx2trt_oss",
+  "gmpy",
+  "gmpy2",
+  "hypothesis",
+  "monkeytype",
+  "numpy._distributor_init_local",
+  "onnx",
+  "onnx_tf",
+  "onnxruntime",
+  "opt_einsum",
+  "org",
+  "pydot",
+  "pynvml",
+  "tabulate",
+  "tensorflow",
+  "tensorrt",
+  "torch._rocm_init",
+  "torch2trt",
+  "torchdistx",
+  "tqdm",
+  "tree",
+  "triton",
+  "tvm",
+  "xarray"
+ ],
+ "loaded_unregistered": [
+  "torch._C._autograd",
+  "torch._C._distributed_autograd",
+  "torch._C._distributed_c10d",
+  "torch._C._distributed_rpc"
+ ]
+}

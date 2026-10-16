@@ -1,0 +1,627 @@
+{
+ "kind": "diagnostic-missing-import-census-v1",
+ "diagnostic_only": true,
+ "runtime_qualified": false,
+ "python": "3.11.15 (main, Jun 23 2026, 15:19:43) [Clang 22.1.3 ]",
+ "imports": [
+  {
+   "name": "numpy",
+   "version": "2.2.5",
+   "seconds": 0.15923440898768604
+  },
+  {
+   "name": "torch",
+   "version": "2.9.0+cpu",
+   "seconds": 1.776975743996445
+  },
+  {
+   "name": "torchvision",
+   "version": "0.24.0+cpu",
+   "seconds": 2.369596146978438
+  },
+  {
+   "name": "mujoco",
+   "version": "3.3.6",
+   "seconds": 0.1872479830053635
+  }
+ ],
+ "non_stdlib_missing": [
+  "OpenGL_accelerate",
+  "accimage",
+  "av",
+  "backports_abc",
+  "colorama",
+  "defusedxml",
+  "dill",
+  "flint",
+  "fx2trt_oss",
+  "gmpy",
+  "gmpy2",
+  "hypothesis",
+  "monkeytype",
+  "numpy._distributor_init_local",
+  "onnx",
+  "onnx_tf",
+  "onnxruntime",
+  "opt_einsum",
+  "org",
+  "pydot",
+  "pynvml",
+  "tabulate",
+  "tensorflow",
+  "tensorrt",
+  "torch._rocm_init",
+  "torch2trt",
+  "torchdistx",
+  "tqdm",
+  "tree",
+  "triton",
+  "tvm",
+  "xarray"
+ ],
+ "misses": [
+  {
+   "name": "numpy._distributor_init_local",
+   "top": "numpy",
+   "stdlib": false,
+   "phase": "numpy",
+   "stack": [
+    "/tmp/census.py:28",
+    "/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/importlib/__init__.py:126",
+    "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/numpy/__init__.py:111",
+    "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/numpy/_distributor_init.py:13"
+   ]
+  },
+  {
+   "name": "org",
+   "top": "org",
+   "stdlib": false,
+   "phase": "numpy",
+   "stack": [
+    "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/numpy/_core/shape_base.py:11",
+    "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/numpy/_core/fromnumeric.py:16",
+    "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/numpy/_core/_methods.py:7",
+    "/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/pickle.py:103"
+   ]
+  },
+  {
+   "name": "msvcrt",
+   "top": "msvcrt",
+   "stdlib": true,
+   "phase": "torch",
+   "stack": [
+    "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/torch/__init__.py:50",
+    "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/torch/_utils_internal.py:12",
+    "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/torch/_strobelight/compile_time_profiler.py:7",
+    "/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/subprocess.py:71"
+   ]
+  },
+  {
+   "name": "torch._rocm_init",
+   "top": "torch",
+   "stdlib": false,
+   "phase": "torch",
+   "stack": [
+    "/tmp/census.py:28",
+    "/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/importlib/__init__.py:126",
+    "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/torch/__init__.py:152"
+   ]
+  },
+  {
+   "name": "org",
+   "top": "org",
+   "stdlib": false,
+   "phase": "torch",
+   "stack": [
+    "/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/importlib/__init__.py:126",
+    "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/torch/__init__.py:1848",
+    "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/torch/_tensor.py:7",
+    "/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/copy.py:60"
+   ]
+  },
+  {
+   "name": "pynvml",
+   "top": "pynvml",
+   "stdlib": false,
+   "phase": "torch",
+   "stack": [
+    "/tmp/census.py:28",
+    "/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/importlib/__init__.py:126",
+    "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/torch/__init__.py:2099",
+    "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/torch/cuda/__init__.py:63"
+   ]
+  },
+  {
+   "name": "dill",
+   "top": "dill",
+   "stdlib": false,
+   "phase": "torch",
+   "stack": [
+    "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/torch/utils/data/datapipes/utils/common.py:25",
+    "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/torch/utils/_import_utils.py:23",
+    "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/torch/utils/_import_utils.py:15",
+    "<frozen importlib.util>:104"
+   ]
+  },
+  {
+   "name": "_winapi",
+   "top": "_winapi",
+   "stdlib": true,
+   "phase": "torch",
+   "stack": [
+    "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/torchgen/model.py:11",
+    "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/torchgen/utils.py:12",
+    "/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/pathlib.py:4",
+    "<frozen ntpath>:47"
+   ]
+  },
+  {
+   "name": "nt",
+   "top": "nt",
+   "stdlib": true,
+   "phase": "torch",
+   "stack": [
+    "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/torchgen/model.py:11",
+    "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/torchgen/utils.py:12",
+    "/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/pathlib.py:4",
+    "<frozen ntpath>:288"
+   ]
+  },
+  {
+   "name": "nt",
+   "top": "nt",
+   "stdlib": true,
+   "phase": "torch",
+   "stack": [
+    "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/torchgen/model.py:11",
+    "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/torchgen/utils.py:12",
+    "/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/pathlib.py:4",
+    "<frozen ntpath>:450"
+   ]
+  },
+  {
+   "name": "nt",
+   "top": "nt",
+   "stdlib": true,
+   "phase": "torch",
+   "stack": [
+    "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/torchgen/model.py:11",
+    "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/torchgen/utils.py:12",
+    "/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/pathlib.py:4",
+    "<frozen ntpath>:521"
+   ]
+  },
+  {
+   "name": "nt",
+   "top": "nt",
+   "stdlib": true,
+   "phase": "torch",
+   "stack": [
+    "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/torchgen/model.py:11",
+    "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/torchgen/utils.py:12",
+    "/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/pathlib.py:4",
+    "<frozen ntpath>:535"
+   ]
+  },
+  {
+   "name": "nt",
+   "top": "nt",
+   "stdlib": true,
+   "phase": "torch",
+   "stack": [
+    "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/torchgen/model.py:11",
+    "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/torchgen/utils.py:12",
+    "/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/pathlib.py:4",
+    "<frozen ntpath>:821"
+   ]
+  },
+  {
+   "name": "opt_einsum",
+   "top": "opt_einsum",
+   "stdlib": false,
+   "phase": "torch",
+   "stack": [
+    "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/torch/nn/__init__.py:9",
+    "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/torch/nn/attention/__init__.py:9",
+    "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/torch/backends/__init__.py:127",
+    "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/torch/backends/opt_einsum/__init__.py:12"
+   ]
+  },
+  {
+   "name": "monkeytype",
+   "top": "monkeytype",
+   "stdlib": false,
+   "phase": "torch",
+   "stack": [
+    "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/torch/jit/__init__.py:27",
+    "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/torch/jit/_freeze.py:11",
+    "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/torch/jit/_script.py:26",
+    "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/torch/jit/_monkeytype_config.py:16"
+   ]
+  },
+  {
+   "name": "tqdm",
+   "top": "tqdm",
+   "stdlib": false,
+   "phase": "torch",
+   "stack": [
+    "/tmp/census.py:28",
+    "/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/importlib/__init__.py:126",
+    "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/torch/__init__.py:2204",
+    "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/torch/hub.py:64"
+   ]
+  },
+  {
+   "name": "_winapi",
+   "top": "_winapi",
+   "stdlib": true,
+   "phase": "torch",
+   "stack": [
+    "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/torch/__init__.py:2204",
+    "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/torch/multiprocessing/__init__.py:42",
+    "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/torch/multiprocessing/spawn.py:4",
+    "/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/multiprocessing/connection.py:31"
+   ]
+  },
+  {
+   "name": "pydot",
+   "top": "pydot",
+   "stdlib": false,
+   "phase": "torch",
+   "stack": [
+    "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/torch/ao/quantization/pt2e/graph_utils.py:9",
+    "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/torch/export/__init__.py:11",
+    "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/torch/fx/passes/__init__.py:1",
+    "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/torch/fx/passes/graph_drawer.py:24"
+   ]
+  },
+  {
+   "name": "defusedxml",
+   "top": "defusedxml",
+   "stdlib": false,
+   "phase": "torchvision",
+   "stack": [
+    "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/torchvision/__init__.py:10",
+    "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/torchvision/datasets/__init__.py:1",
+    "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/torchvision/datasets/_optical_flow.py:10",
+    "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/PIL/Image.py:62"
+   ]
+  },
+  {
+   "name": "av",
+   "top": "av",
+   "stdlib": false,
+   "phase": "torchvision",
+   "stack": [
+    "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/torchvision/datasets/__init__.py:1",
+    "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/torchvision/datasets/_optical_flow.py:12",
+    "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/torchvision/io/__init__.py:35",
+    "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/torchvision/io/video.py:17"
+   ]
+  },
+  {
+   "name": "av",
+   "top": "av",
+   "stdlib": false,
+   "phase": "torchvision",
+   "stack": [
+    "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/torchvision/datasets/__init__.py:1",
+    "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/torchvision/datasets/_optical_flow.py:12",
+    "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/torchvision/io/__init__.py:36",
+    "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/torchvision/io/video_reader.py:26"
+   ]
+  },
+  {
+   "name": "accimage",
+   "top": "accimage",
+   "stdlib": false,
+   "phase": "torchvision",
+   "stack": [
+    "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/torchvision/datasets/__init__.py:23",
+    "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/torchvision/datasets/fakedata.py:5",
+    "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/torchvision/transforms/__init__.py:1",
+    "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/torchvision/transforms/transforms.py:12"
+   ]
+  },
+  {
+   "name": "accimage",
+   "top": "accimage",
+   "stdlib": false,
+   "phase": "torchvision",
+   "stack": [
+    "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/torchvision/datasets/fakedata.py:5",
+    "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/torchvision/transforms/__init__.py:1",
+    "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/torchvision/transforms/transforms.py:17",
+    "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/torchvision/transforms/functional.py:15"
+   ]
+  },
+  {
+   "name": "accimage",
+   "top": "accimage",
+   "stdlib": false,
+   "phase": "torchvision",
+   "stack": [
+    "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/torchvision/transforms/__init__.py:1",
+    "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/torchvision/transforms/transforms.py:17",
+    "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/torchvision/transforms/functional.py:20",
+    "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/torchvision/transforms/_functional_pil.py:12"
+   ]
+  },
+  {
+   "name": "defusedxml",
+   "top": "defusedxml",
+   "stdlib": false,
+   "phase": "torchvision",
+   "stack": [
+    "/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/importlib/__init__.py:126",
+    "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/torchvision/__init__.py:10",
+    "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/torchvision/datasets/__init__.py:57",
+    "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/torchvision/datasets/voc.py:8"
+   ]
+  },
+  {
+   "name": "gmpy2",
+   "top": "gmpy2",
+   "stdlib": false,
+   "phase": "torchvision",
+   "stack": [
+    "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/mpmath/ctx_base.py:3",
+    "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/mpmath/libmp/__init__.py:1",
+    "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/mpmath/libmp/libmpf.py:17",
+    "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/mpmath/libmp/backend.py:70"
+   ]
+  },
+  {
+   "name": "gmpy",
+   "top": "gmpy",
+   "stdlib": false,
+   "phase": "torchvision",
+   "stack": [
+    "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/mpmath/ctx_base.py:3",
+    "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/mpmath/libmp/__init__.py:1",
+    "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/mpmath/libmp/libmpf.py:17",
+    "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/mpmath/libmp/backend.py:73"
+   ]
+  },
+  {
+   "name": "flint",
+   "top": "flint",
+   "stdlib": false,
+   "phase": "torchvision",
+   "stack": [
+    "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/sympy/core/expr.py:11",
+    "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/sympy/core/evalf.py:26",
+    "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/sympy/external/gmpy.py:160",
+    "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/sympy/external/gmpy.py:115"
+   ]
+  },
+  {
+   "name": "gmpy2",
+   "top": "gmpy2",
+   "stdlib": false,
+   "phase": "torchvision",
+   "stack": [
+    "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/sympy/core/evalf.py:26",
+    "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/sympy/external/gmpy.py:167",
+    "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/sympy/external/gmpy.py:139",
+    "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/sympy/external/importtools.py:145"
+   ]
+  },
+  {
+   "name": "backports_abc",
+   "top": "backports_abc",
+   "stdlib": false,
+   "phase": "torchvision",
+   "stack": [
+    "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/torch/_dynamo/utils.py:137",
+    "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/numpy/__init__.py:340",
+    "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/numpy/random/__init__.py:180",
+    "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/numpy/random/_pickle.py:1"
+   ]
+  },
+  {
+   "name": "triton",
+   "top": "triton",
+   "stdlib": false,
+   "phase": "torchvision",
+   "stack": [
+    "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/torch/_dynamo/symbolic_convert.py:53",
+    "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/torch/_dynamo/exc.py:45",
+    "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/torch/_dynamo/utils.py:2414",
+    "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/torch/utils/_triton.py:9"
+   ]
+  },
+  {
+   "name": "colorama",
+   "top": "colorama",
+   "stdlib": false,
+   "phase": "torchvision",
+   "stack": [
+    "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/torch/_inductor/cpp_builder.py:30",
+    "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/torch/_inductor/cpu_vec_isa.py:14",
+    "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/torch/_inductor/utils.py:130",
+    "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/torch/_inductor/runtime/runtime_utils.py:106"
+   ]
+  },
+  {
+   "name": "torchdistx",
+   "top": "torchdistx",
+   "stdlib": false,
+   "phase": "torchvision",
+   "stack": [
+    "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/torch/_dynamo/variables/functions.py:88",
+    "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/torch/distributed/fsdp/__init__.py:11",
+    "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/torch/distributed/fsdp/fully_sharded_data_parallel.py:32",
+    "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/torch/distributed/fsdp/_init_utils.py:55"
+   ]
+  },
+  {
+   "name": "fx2trt_oss",
+   "top": "fx2trt_oss",
+   "stdlib": false,
+   "phase": "torchvision",
+   "stack": [
+    "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/torch/_dynamo/symbolic_convert.py:59",
+    "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/torch/_dynamo/trace_rules.py:3843",
+    "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/torch/_dynamo/trace_rules.py:3664",
+    "<frozen importlib.util>:104"
+   ]
+  },
+  {
+   "name": "hypothesis",
+   "top": "hypothesis",
+   "stdlib": false,
+   "phase": "torchvision",
+   "stack": [
+    "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/torch/_dynamo/symbolic_convert.py:59",
+    "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/torch/_dynamo/trace_rules.py:3843",
+    "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/torch/_dynamo/trace_rules.py:3664",
+    "<frozen importlib.util>:104"
+   ]
+  },
+  {
+   "name": "onnx",
+   "top": "onnx",
+   "stdlib": false,
+   "phase": "torchvision",
+   "stack": [
+    "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/torch/_dynamo/symbolic_convert.py:59",
+    "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/torch/_dynamo/trace_rules.py:3843",
+    "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/torch/_dynamo/trace_rules.py:3664",
+    "<frozen importlib.util>:104"
+   ]
+  },
+  {
+   "name": "onnxruntime",
+   "top": "onnxruntime",
+   "stdlib": false,
+   "phase": "torchvision",
+   "stack": [
+    "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/torch/_dynamo/symbolic_convert.py:59",
+    "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/torch/_dynamo/trace_rules.py:3843",
+    "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/torch/_dynamo/trace_rules.py:3664",
+    "<frozen importlib.util>:104"
+   ]
+  },
+  {
+   "name": "onnx_tf",
+   "top": "onnx_tf",
+   "stdlib": false,
+   "phase": "torchvision",
+   "stack": [
+    "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/torch/_dynamo/symbolic_convert.py:59",
+    "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/torch/_dynamo/trace_rules.py:3843",
+    "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/torch/_dynamo/trace_rules.py:3664",
+    "<frozen importlib.util>:104"
+   ]
+  },
+  {
+   "name": "tabulate",
+   "top": "tabulate",
+   "stdlib": false,
+   "phase": "torchvision",
+   "stack": [
+    "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/torch/_dynamo/symbolic_convert.py:59",
+    "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/torch/_dynamo/trace_rules.py:3843",
+    "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/torch/_dynamo/trace_rules.py:3664",
+    "<frozen importlib.util>:104"
+   ]
+  },
+  {
+   "name": "tensorflow",
+   "top": "tensorflow",
+   "stdlib": false,
+   "phase": "torchvision",
+   "stack": [
+    "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/torch/_dynamo/symbolic_convert.py:59",
+    "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/torch/_dynamo/trace_rules.py:3843",
+    "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/torch/_dynamo/trace_rules.py:3664",
+    "<frozen importlib.util>:104"
+   ]
+  },
+  {
+   "name": "tensorrt",
+   "top": "tensorrt",
+   "stdlib": false,
+   "phase": "torchvision",
+   "stack": [
+    "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/torch/_dynamo/symbolic_convert.py:59",
+    "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/torch/_dynamo/trace_rules.py:3843",
+    "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/torch/_dynamo/trace_rules.py:3664",
+    "<frozen importlib.util>:104"
+   ]
+  },
+  {
+   "name": "torch2trt",
+   "top": "torch2trt",
+   "stdlib": false,
+   "phase": "torchvision",
+   "stack": [
+    "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/torch/_dynamo/symbolic_convert.py:59",
+    "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/torch/_dynamo/trace_rules.py:3843",
+    "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/torch/_dynamo/trace_rules.py:3664",
+    "<frozen importlib.util>:104"
+   ]
+  },
+  {
+   "name": "tqdm",
+   "top": "tqdm",
+   "stdlib": false,
+   "phase": "torchvision",
+   "stack": [
+    "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/torch/_dynamo/symbolic_convert.py:59",
+    "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/torch/_dynamo/trace_rules.py:3843",
+    "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/torch/_dynamo/trace_rules.py:3664",
+    "<frozen importlib.util>:104"
+   ]
+  },
+  {
+   "name": "tree",
+   "top": "tree",
+   "stdlib": false,
+   "phase": "torchvision",
+   "stack": [
+    "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/torch/_dynamo/symbolic_convert.py:59",
+    "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/torch/_dynamo/trace_rules.py:3843",
+    "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/torch/_dynamo/trace_rules.py:3664",
+    "<frozen importlib.util>:104"
+   ]
+  },
+  {
+   "name": "tvm",
+   "top": "tvm",
+   "stdlib": false,
+   "phase": "torchvision",
+   "stack": [
+    "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/torch/_dynamo/symbolic_convert.py:59",
+    "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/torch/_dynamo/trace_rules.py:3843",
+    "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/torch/_dynamo/trace_rules.py:3664",
+    "<frozen importlib.util>:104"
+   ]
+  },
+  {
+   "name": "xarray",
+   "top": "xarray",
+   "stdlib": false,
+   "phase": "torchvision",
+   "stack": [
+    "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/torch/_dynamo/symbolic_convert.py:59",
+    "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/torch/_dynamo/trace_rules.py:3843",
+    "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/torch/_dynamo/trace_rules.py:3664",
+    "<frozen importlib.util>:104"
+   ]
+  },
+  {
+   "name": "OpenGL_accelerate",
+   "top": "OpenGL_accelerate",
+   "stdlib": false,
+   "phase": "mujoco",
+   "stack": [
+    "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/OpenGL/raw/EGL/_types.py:5",
+    "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/OpenGL/extensions.py:7",
+    "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/OpenGL/latebind.py:2",
+    "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-install-01/site/OpenGL/acceleratesupport.py:9"
+   ]
+  }
+ ]
+}
