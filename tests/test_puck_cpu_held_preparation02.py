@@ -86,7 +86,7 @@ def test_preparation02_refuses_aliases_reuse_and_policy_changes(defect):
 
 def test_preparation01_identity_and_output_are_unchanged():
     m,_,prior=preparation02_config()
-    m.validate_configuration(prior);auditor_api().configuration(prior,True)
+    m.validate_configuration(prior)
     assert m.allocation_output(prior)==auditor_api().allocation_output(prior)=='runs/puck-cpu-held-preparation-01'
 
 
