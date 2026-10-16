@@ -1,0 +1,40 @@
+{
+  "command": [
+    "/usr/bin/timeout",
+    "--signal=TERM",
+    "--kill-after=5s",
+    "60s",
+    "/usr/bin/bwrap",
+    "--unshare-user",
+    "--uid",
+    "1000",
+    "--gid",
+    "1000",
+    "--bind",
+    "/",
+    "/",
+    "--tmpfs",
+    "/tmp",
+    "--dev",
+    "/dev",
+    "--proc",
+    "/proc",
+    "--chdir",
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-guard-cost-v1",
+    "--",
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/r0-reproduction/.venv/bin/python",
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-guard-cost-v1/runs/puck-cpu-guard-cost-v1/experimental-sources/run_candidate.py",
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-guard-cost-v1/runs/puck-cpu-guard-cost-v1/experimental-sources/direct-dependency.py",
+    "/tmp/puck-guard-cost-direct01"
+  ],
+  "environment_overrides": {
+    "PYTEST_DISABLE_PLUGIN_AUTOLOAD": "1",
+    "PYTHONDONTWRITEBYTECODE": "1"
+  },
+  "pins": {
+    "runs/puck-cpu-guard-cost-v1/experimental-sources/run_candidate.py": "018e76324601820a789033e369de6a5bfae1f91527fa81d25b5478f42263ded6",
+    "runs/puck-cpu-guard-cost-v1/experimental-sources/direct-dependency.py": "1b1063a069f174b1e4f6db9bffcb81807c0c0751b09f020e8ea0442fe513cb54",
+    "tests/test_puck_guard_cost.py": "0f3d4ad250dc6662132d923d20abe99416869d0eb2bfec25d8a0c653501c3874"
+  },
+  "scope": "Experimental fixture bootstrap only; production source unchanged. Refusal regressions expected."
+}

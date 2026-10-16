@@ -1,0 +1,160 @@
+{
+  "kind": "puck-authored-guard-cost-comparison-v1",
+  "production_bootstrap_sha256": "71263511b6f8b1828a59f2a82f74473f9151f1ec7b28dfe8bfa8c637ccac9c0e",
+  "results": [
+    {
+      "run": "baseline01",
+      "terminal": {
+        "returncode": 0,
+        "elapsed_seconds": 14.191201355017256
+      },
+      "measurements": [
+        {
+          "allowances_clean": true,
+          "cache_clean": true,
+          "checks_per_sample": 3,
+          "dependency_keys_calls_per_profiled_check": 138,
+          "elapsed_ns": [
+            2232536,
+            2102270,
+            2114223
+          ],
+          "kind": "authored-guard-cost-v1",
+          "synthetic_cache_entries": 128,
+          "median_ms_per_check": 0.704741
+        },
+        {
+          "allowances_clean": true,
+          "cache_clean": true,
+          "checks_per_sample": 3,
+          "dependency_keys_calls_per_profiled_check": 522,
+          "elapsed_ns": [
+            17872779,
+            17500147,
+            16795029
+          ],
+          "kind": "authored-guard-cost-v1",
+          "synthetic_cache_entries": 512,
+          "median_ms_per_check": 5.833382333333333
+        },
+        {
+          "allowances_clean": true,
+          "cache_clean": true,
+          "checks_per_sample": 3,
+          "dependency_keys_calls_per_profiled_check": 2058,
+          "elapsed_ns": [
+            273678950,
+            281227039,
+            289247659
+          ],
+          "kind": "authored-guard-cost-v1",
+          "synthetic_cache_entries": 2048,
+          "median_ms_per_check": 93.74234633333333
+        }
+      ]
+    },
+    {
+      "run": "direct-dependency01",
+      "terminal": {
+        "returncode": 1,
+        "elapsed_seconds": 15.749713520985097
+      },
+      "measurements": [
+        {
+          "allowances_clean": true,
+          "cache_clean": true,
+          "checks_per_sample": 3,
+          "dependency_keys_calls_per_profiled_check": 0,
+          "elapsed_ns": [
+            1305289,
+            1231500,
+            1054156
+          ],
+          "kind": "authored-guard-cost-v1",
+          "synthetic_cache_entries": 128,
+          "median_ms_per_check": 0.4105
+        },
+        {
+          "allowances_clean": true,
+          "cache_clean": true,
+          "checks_per_sample": 3,
+          "dependency_keys_calls_per_profiled_check": 0,
+          "elapsed_ns": [
+            1820179,
+            1881524,
+            1648365
+          ],
+          "kind": "authored-guard-cost-v1",
+          "synthetic_cache_entries": 512,
+          "median_ms_per_check": 0.6067263333333334
+        },
+        {
+          "allowances_clean": true,
+          "cache_clean": true,
+          "checks_per_sample": 3,
+          "dependency_keys_calls_per_profiled_check": 0,
+          "elapsed_ns": [
+            4702228,
+            4551473,
+            4214619
+          ],
+          "kind": "authored-guard-cost-v1",
+          "synthetic_cache_entries": 2048,
+          "median_ms_per_check": 1.5171576666666668
+        }
+      ]
+    },
+    {
+      "run": "hoisted-whitelist01",
+      "terminal": {
+        "returncode": 1,
+        "elapsed_seconds": 16.130170807009563
+      },
+      "measurements": [
+        {
+          "allowances_clean": true,
+          "cache_clean": true,
+          "checks_per_sample": 3,
+          "dependency_keys_calls_per_profiled_check": 1,
+          "elapsed_ns": [
+            1325237,
+            1020142,
+            1042975
+          ],
+          "kind": "authored-guard-cost-v1",
+          "synthetic_cache_entries": 128,
+          "median_ms_per_check": 0.3476583333333333
+        },
+        {
+          "allowances_clean": true,
+          "cache_clean": true,
+          "checks_per_sample": 3,
+          "dependency_keys_calls_per_profiled_check": 1,
+          "elapsed_ns": [
+            1396260,
+            1195412,
+            1536073
+          ],
+          "kind": "authored-guard-cost-v1",
+          "synthetic_cache_entries": 512,
+          "median_ms_per_check": 0.46542
+        },
+        {
+          "allowances_clean": true,
+          "cache_clean": true,
+          "checks_per_sample": 3,
+          "dependency_keys_calls_per_profiled_check": 1,
+          "elapsed_ns": [
+            3202894,
+            3465638,
+            2603945
+          ],
+          "kind": "authored-guard-cost-v1",
+          "synthetic_cache_entries": 2048,
+          "median_ms_per_check": 1.0676313333333332
+        }
+      ]
+    }
+  ],
+  "scope": "Sequential local authored samples; no initialized installed dependencies, runtime acceptance or timeout-cause claim."
+}
