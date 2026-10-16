@@ -24,21 +24,35 @@ records 732 passing affected cases, including 51 new cases, and independent revi
 with no material findings. Old allocations 1–9 still select q3. These are authored
 source checks, not an installed-runtime pass.
 
-1. Freeze a distinct qualification-10 control packet against source `cbe48b3`.
-   Bind current source/input bytes, candidate D, nineteen negative imports,
-   original preparation anchors, exact environment and limits. Preserve every
-   consumed attempt 01–09, old receipt and historical absence. Independently
-   review the exact controls before execution.
-2. Perform fresh full byte/custody/resource admission and review its outcome.
-   Disk clearance alone is not admission. Only after passing those checks and the
-   final pre-invocation guard, invoke qualification 10 once under its observer.
-3. Independently audit the outcome, four ordered imports, exact source and
-   dependency identities, final byte checks, normal process/descriptor closure
-   and complete receipts. This unit passes only if all required checks pass.
-   Preserve any failure as a consumed attempt; never silently rerun it.
+1. Preserve the original qualification-10 controls and consumed data-admission01.
+   Complete the separately named admission amendment02: compact canonical config
+   with identical parsed values, explicit canonical preflight, and distinct
+   runner/freeze/wrapper/envelope/output paths. Independently review and publish
+   those exact controls before any new admission. Keep source e723/cbe, candidate
+   D, nineteen negatives, original preparation, environment and limits unchanged.
+2. Perform fresh full byte/custody/resource admission02 and independently review
+   its outcome. Only after it passes and a fresh pre-observer guard succeeds,
+   invoke qualification10 exactly once. Disk clearance alone is not admission.
+3. Independently audit the outcome, four ordered imports, exact source/dependency
+   identities, final byte checks, normal closure and complete receipts. Preserve
+   all failed admissions/attempts; never overwrite or silently retry them.
 
-**Current status (2026-10-16): source ready; real controls, admission and runtime
-invocation 10 have not been performed. All seven release gates remain open.**
+**Current status (2026-10-16): controls published; admission01 failed before
+payload checks; runtime10 remains uninvoked. All seven release gates are open.**
+[PR176](https://github.com/Aadrika08/palimpsest/pull/176) preserves the original
+controls pushed at b3d50f5 and the sole normal nonzero admission outcome. The
+[report](https://github.com/Aadrika08/palimpsest/blob/58bef84897b07b7a6d3111608f484721084251b8/docs/reports/puck-cpu-held-qualification-10-admission-01.md)
+records the pretty-versus-compact canonical JSON mismatch at the authenticated
+configuration reader, before manifest/plans/SITE/staged-payload checks. No full
+custody or DATA_ONLY_ADMITTED result exists. Failure telemetry observes FD4→4
+and no current-process children/threads; it is not runtime-parent closure.
+
+The separate prospective amendment02 configuration now passes a canonical-byte
+preflight with identical parsed values and formatter AST matching the authenticated
+reader. Its RED was committed first at fa0db6f; compact 8,988B bytes pass GREEN.
+This is metadata proof only. Its runner, frozen controls, independent review and
+fresh full admission remain unfinished. No observer or actual runtime10 ran.
+
 About 45GiB of project-disk space is available at this check; each execution must
 refresh its own resource checks. After import qualification, separately qualify
 the finite operator/renderer route and finish the real public episode bundle.
@@ -234,14 +248,23 @@ normal authored closure, optional-cost-row acceptance and specific mixed-tag
 refusals. Authored fixtures use 18 missing names and 128MiB floors; production
 still requires nineteen names and 180s/2GiB. No installed qualification follows.
 
-**First unfinished action:** freeze and independently review the distinct actual
-10 controls against that fixed source, then complete fresh full byte/custody/
-resource admission. Once admission and its review pass, invoke actual 10 exactly
-once and independently audit the outcome. Preserve attempts 01–09 and every
-historical missing receipt. This is the finite exit from the current runtime
-prerequisite; it does not admit operator/renderer, physics, inference or studies.
-After the separate operator/renderer route qualifies, finish the real recorded,
-replayed and exported public episode bundle. The full release remains the goal.
+[PR176](https://github.com/Aadrika08/palimpsest/pull/176) now preserves consumed
+qualification10 data-admission01 and its exact pre-execution controls. The controls
+bound 1,998 pins/107,657,006B; thirteen history checks and semantic metadata checks
+passed. The sole admission failed normally at compact canonical JSON validation,
+before manifest or payload checks. Independent outcome review confirms the narrow
+failure boundary. All 89 archived artifacts/1,341,886B/six empty files verify
+against originals, source Git and committed archive. The canonical-only prospective
+amendment02 config passes its new metadata RED→GREEN check with unchanged values;
+this does not establish a full admission or qualify any runtime.
+
+**First unfinished action:** complete and independently review admission
+amendment02's distinct runner/freeze/wrapper/envelope/output controls; publish
+them, then perform one fresh full data-only admission and receipt review. Preserve
+the failed admission01 and attempts 01–09. Only after successful admission and a
+fresh pre-observer guard may actual10 be invoked once and audited. After separate
+operator/renderer qualification, finish the real recorded/replayed/exported public
+episode bundle. The full simulation release remains the goal.
 
 [PR163](https://github.com/Aadrika08/palimpsest/pull/163) already implements the
 manual constructor seam with exact arguments and seed/reset order preserved;
