@@ -10,30 +10,28 @@ Implementation history is preserved in the unchanged [earlier history](simulatio
 and the [byte-identical prior goal snapshot](simulation-release-execution-goal-history-2026-10-16.md).
 Those dated records are evidence, not instructions to repeat consumed attempts.
 
-## Active work unit: prepare reviewed actual 09 controls
+## Active work unit: fresh admission for actual 09
 
-**Prepare and independently review the fixed actual 09 controls, then perform
-and independently review fresh admission before at most one invocation.** This
-is the immediate task toward checkpoint A; the complete simulation release above
-remains the goal.
+**Perform one fresh data-only admission for the reviewed actual 09 controls and
+independently review its receipt before at most one runtime invocation.** This is
+the immediate prerequisite for checkpoint A; the complete simulation release
+above remains the goal.
 
-1. Bind the exact reviewed/pushed 09 source snapshot in distinct controls.
-   The control plan must bind genuine failed 08 configuration, transport,
-   supervision, external streams, worker stderr's eleven markers and the auditor
-   refusal, while preserving all 14 historical missing outputs.
-2. Reserve 07/08 external and worker raw streams before manifest holding. Validate
-   genuine failure-result JSON only for 01–06; 07/08 results and baselines stay absent.
-   Preserve old 05–08 predicates, candidate D, all inputs, 19 probes, custody checks
-   and the existing 180s/2GiB limits.
-3. Independently review, freeze and push the exact source and controls before fresh
-   full current-byte/custody/resource admission. Only after that admission passes
-   and its receipt is independently reviewed, invoke at most once and independently audit the outcome and bytes. Retain any
-   failure; no silent retry or widening of limits.
+1. Use the published fixed 09 source and controls below. They bind genuine failed
+   08 evidence, preserve the historical missing outputs and reserve 07/08 raw
+   streams before manifest holding.
+2. Run one full current-byte/custody/resource admission through the fixed data-only
+   coordinator. Keep candidate D, all inputs, 19 probes, custody/refusal checks and
+   the existing 180s/2GiB runtime limits. Disk clearance is not resource admission.
+3. Independently review the normal-zero admission receipt and its retained bytes.
+   Only then refresh pins, resources and output absences before the sole observer
+   invocation and independent outcome/byte audit. Retain any failure; no silent
+   retry or widening of limits.
 
-Authored measurements cannot prove 08's installed timeout cause or qualify the
-runtime. Attempts 01–08 remain consumed. No actual 09 controls, admission or
-invocation exist yet. Source support is reviewed; actual controls and admission
-remain the next separate unit.
+**Current status (2026-10-16): controls prepared and independently reviewed;
+fresh 09 admission and observer invocation pending.** Authored and metadata checks
+cannot prove 08's installed timeout cause or qualify the runtime. Attempts 01–08
+remain consumed.
 
 Disk clearance permits preparation; each actual execution still needs its own
 fresh resource checks. After runtime and separate operator/renderer qualification,
@@ -149,8 +147,8 @@ disjoint authored cases pass: 302 private cases in 242.70s and two persistent
 integrations in 24.43s. Independent source and final evidence review
 found no material findings. All 136 artifacts/1,560,197B (13 empty files) verify
 against originals, source Git and the committed archive. These source checks neither identify 08's installed timeout cause
-nor establish installed qualification. No actual 09 controls, admission or runtime
-invocation exist; attempts 01–08 remain consumed.
+nor establish installed qualification. At that source-only checkpoint, no actual
+09 controls, admission or runtime invocation existed; attempts 01–08 remained consumed.
 
 Closed 09 source support in [PR171](https://github.com/Aadrika08/palimpsest/pull/171) at
 [`96ace37`](https://github.com/Aadrika08/palimpsest/commit/96ace37062fd14e20ae1ebd2371b90fa88f8d7ab) changes only the parent, independent auditor and
@@ -159,22 +157,30 @@ API coverage includes normal acceptance when optional cost rows are absent.
 Final validation passes 673 disjoint authored cases: 664 private cases in 24.71s
 and nine persistent integrations in 110.19s. Independent source and final evidence
 reviews found no material findings. All 145 artifacts/2,138,968B (eight empty files)
-verify against originals, source Git and committed archive bytes. No actual 09
-controls, admission or runtime invocation exist.
+verify against originals, source Git and committed archive bytes. At that
+source-only checkpoint, no actual 09 controls, admission or runtime invocation existed.
 
-**First unfinished action:** prepare and independently review the fixed actual 09
-controls against the reviewed and pushed source. Bind genuine failed 08
-configuration/transport/supervision, external and worker streams and
-nonzero-transport audit refusal; preserve all 14 historical absences and reserve
-07/08 raw streams before manifest holding. Only 01–06 have genuine failure-result
-validation. Freeze and push the reviewed source and controls before fresh complete
-current-byte/custody/resource admission and independent receipt review; only then
-invoke at most once and audit independently. Preserve D, 19 probes, custody/refusal checks and 180s/2GiB limits.
-No actual 09 controls, admission or invocation exist yet, and there is no 08 retry.
-After runtime qualification and separate operator/renderer admission, the product
-exit remains one real recorded, replayed and exported public manual CPU episode.
-Detailed raw results remain in the linked PR/report packets, dated histories and
-Git history.
+As of 2026-10-16, actual 09 controls are prepared and independently reviewed at
+[`60e5756`](https://github.com/Aadrika08/palimpsest/commit/60e5756d8c670e898320b26b3a2cee267577e53c)
+([PR172](https://github.com/Aadrika08/palimpsest/pull/172)), binding source `96ace37`. Nine small history-control
+checks pass. The metadata-only self-check covers 1,259 pins / 81,114,419B; exact
+control and proof-roster reviews found no material findings. These checks retain
+the genuine failed 08 evidence and the unchanged byte/custody, absence and limit
+contracts. **Execution is pending: no fresh 09 data-only admission or observer
+invocation has run.** Controls and metadata checks are not current payload,
+resource or runtime acceptance.
+
+
+**First unfinished action:** run one fresh full data-only admission against the
+published 09 controls, then independently review its normal-zero receipt and
+retained bytes. Only after that review may fresh pin/resource/output-absence
+checks precede the sole observer invocation and independent outcome/byte audit.
+Preserve candidate D, all inputs, 19 probes, custody/refusal checks and 180s/2GiB
+limits. Fresh 09 admission and observer invocation remain pending; there is no
+08 retry. After runtime qualification and separate operator/renderer admission,
+the product exit remains one real recorded, replayed and exported public manual
+CPU episode. Detailed raw results remain in linked PR/report packets, dated
+histories and Git history.
 
 [PR163](https://github.com/Aadrika08/palimpsest/pull/163) already implements the
 manual constructor seam with exact arguments and seed/reset order preserved;
