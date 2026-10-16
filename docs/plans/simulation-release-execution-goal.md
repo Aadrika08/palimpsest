@@ -65,8 +65,21 @@ is pending. Offline timing places `backports_abc` at 70% of Torchvision's 990
 module loads (~106s guarded), projecting ~135-145s for all four imports against
 the 180s deadline; the margin is tight and unproven.
 
+**Reboot invalidated preparation01 (2026-10-16 21:33).** Its staged tmpfs forest
+is gone, so neither admission11 nor runtime11 can pass on it. Recreating its
+identities would forge custody. Attempt-11 controls `d83dab3` passed every byte,
+history and diff check, but independent review 01 is NO-GO for this reason
+(`0b9c67f`). The reviewer measured 38,243 held entries against the 40,000 limit.
+An offline public-episode census (branch `research/public-episode-census-v1`)
+completed a 12-tick manual episode, replay and export without Torchvision. It
+also lists the registration, absence and process needs for the episode route.
+
 The next actions, in order, are:
 
+0. Add CPU preparation epoch 02 (distinct output and stage parent), run it once
+   and accept it independently. Re-derive the attempt-11 controls on it. Every guard
+   before a one-shot step stat-checks the staged roots, so a reboot fails closed.
+   The host must not reboot between preparation02 and runtime11.
 1. Finish policy v5: declared-absent (32) and declared-hidden (4) names are
    verified, recorded and return `None`; remaining finders must not resolve them;
    undeclared requests still poison. Add epoch 11 to parent, observer and auditor.
