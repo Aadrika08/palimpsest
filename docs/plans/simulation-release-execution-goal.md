@@ -32,63 +32,53 @@ on the same integrated release candidate.
    candidate, with final review/verification, reproducible installation, licences,
    limitations, runbook and a complete requirements-to-evidence matrix.
 
-## Active work unit: resolve the blocked dependency import
+## Active work unit: stock-absence import policy v5 and attempt 11
 
-**Next finite exit:** prove how `backports_abc` must be handled on the exact
-installed import route, then implement and independently review the smallest
-prospective dependency-plan correction with passing regression checks. Preserve
-qualification10 and its frozen contract unchanged. A successor runtime attempt
-comes only after that proof, distinct controls and fresh admission.
+**Next finite exit:** independently reviewed source for missing-import policy v5
+and CPU qualification epoch 11, with passing RED-to-GREEN regression checks.
+Then freeze distinct epoch-11 controls, pass fresh admission and invoke attempt 11
+once under the unchanged 180s/2GiB limits with an independent outcome audit.
 
-**Verified status (2026-10-16):** the source prerequisite in
-[PR175](https://github.com/Aadrika08/palimpsest/pull/175) passed 732 affected authored
-cases, including 51 new cases. Source `e723db037ed1f790c2618798d59f56913054754f`
-and published controls `796359a099131157b5b91db38f14784628d5d7c5` preceded execution.
-[PR176](https://github.com/Aadrika08/palimpsest/pull/176) retains the original
-admission01 failure, separate canonical admission02 and actual runtime10 outcome.
+**Verified status (2026-10-16):** runtime10 failed normally after 114.82s, before
+its deadline. Its first refusal is unregistered `backports_abc` from
+`numpy.random._common` during Torchvision → `torch._dynamo`. Evidence is in
+[PR176](https://github.com/Aadrika08/palimpsest/pull/176) (local commit `a492e2e`,
+not yet pushed). Attempts01–10 and admission01 remain immutable history.
 
-The corrected guard passes its RED-to-GREEN fixture and seventeen history checks;
-its frozen original and all 2,150 pins remain unchanged. Fresh full data-only
-admission02 passed once in 26.06s externally, with byte/custody rechecks, FD4→4,
-no children or extra threads and independent receipt review. Its fresh
-pre-observer guard passed before the sole runtime10 invocation.
+The [contract v2](https://github.com/Aadrika08/palimpsest/blob/research/puck-cpu-optional-import-contract-v2/docs/plans/puck-cpu-optional-import-contract-v2.md)
+proves, with read-only offline diagnostics on the inventory-matched held site:
 
-**Runtime10 failed normally after 114.82s, before its 180s deadline.** The retained
-worker traceback first refuses unregistered `backports_abc` during
-Torchvision → `torch._dynamo` → `numpy.random` → the compiled bit-generator
-initializer. The later poisoned-bootstrap exception follows that refusal. The
-failure result reports FD5→5/no children or extra threads; baseline-after and a
-completed four-import receipt are absent. The one independent audit refused the
-nonzero transport. Independent outcome review accepts the retained failure record,
-not runtime acceptance or full post-run payload custody. All seven release gates
-remain open; no real episode or renderer has run.
+- `backports_abc` is optional: Cython 3.0.12 `__Pyx_patch_abc` clears the failure
+  and initialization continues. It is absent from the held site and inventory.
+- The planned one-name successor would still fail. `torch._dynamo.trace_rules`
+  calls bare `find_spec()` without a handler for its third-party skip list.
+  The current raise semantics fail Torchvision on frozen negative `tqdm`.
+- The four imports make 32 unresolved non-stdlib requests and four refused
+  present-but-unregistered requests (`networkx`, `pandas`, `sklearn`,
+  `torch.utils._cxx_pytree`). Stock absence (`None`) for exactly these names
+  completes all four imports with the expected versions.
+
+Policy v5 and epoch 11 source is implemented locally on the contract-v2 branch
+(`bf6b980` RED tests, `ec4de6b` implementation): new and affected suites pass,
+including 163 unit and 2 integration cases rechecked by root. Independent review
+is pending. Offline timing places `backports_abc` at 70% of Torchvision's 990
+module loads (~106s guarded), projecting ~135-145s for all four imports against
+the 180s deadline; the margin is tight and unproven.
 
 The next actions, in order, are:
 
-1. Authenticate the importer bytes and matching upstream source/provenance. Prove
-   whether missing `backports_abc` is caught and leaves the bit generator valid.
-   The traceback proves an import request; it does not prove optionality.
-2. Check exact absence in held module, namespace, file and distribution
-   inventories. If it is present or required, register its exact bytes/origin
-   instead of declaring an absence.
-3. If optionality and absence are proved, prepare a separately named successor
-   declaration containing the frozen nineteen negatives plus exactly this name.
-   Reuse the existing expected-missing-import mechanism; keep unknown imports
-   fail-closed. Preserve candidate D, preparation01 and every existing config,
-   source, receipt and frozen negative roster unchanged.
-4. Prove the regression cases: undeclared imports still poison; declared proven
-   absence remains catchable and recorded; present/substituted targets refuse
-   before initialization; subsequent guards remain active; old attempts remain
-   immutable. Independently review the source and exact prospective controls.
-5. Require fresh full admission and pre-execution guards before one distinct
-   successor runtime invocation. Retain the 180s/2GiB limits and independent
-   outcome audit. No successor runtime has been prepared or invoked here.
+1. Finish policy v5: declared-absent (32) and declared-hidden (4) names are
+   verified, recorded and return `None`; remaining finders must not resolve them;
+   undeclared requests still poison. Add epoch 11 to parent, observer and auditor.
+   Policies v1–v4 and epochs 1–10 stay unchanged.
+2. Independently review the source and its regression evidence.
+3. Freeze distinct epoch-11 controls, independently review them, run fresh full
+   admission and pre-execution guards, then invoke attempt 11 exactly once.
 
 After accepted import qualification, separately qualify the finite public
 operator/renderer route and produce the real episode bundle in milestone 1.
-Consumed runtime attempts01–10 and failed admission01 are historical evidence;
-never overwrite or silently retry them. A newly discovered import is not permission
-to relax the loader or a release threshold.
+A failure consumes its named attempt; never overwrite or silently retry.
+A newly discovered import is not permission to relax the loader or a threshold.
 
 Project disk has about 45GiB free at the 2026-10-16 check. Every execution must
 refresh its own resource checks; clearing disk space is not admission. Scientific
