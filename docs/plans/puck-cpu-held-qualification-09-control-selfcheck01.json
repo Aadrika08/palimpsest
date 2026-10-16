@@ -1,0 +1,27 @@
+{
+  "admission_main_invoked": false,
+  "changed_config_sources": 2,
+  "changed_live_sources": 4,
+  "configuration_sha256": "2c441b2465c86baf2982a5c023ce5923c1c144bd5789576807ffee6f19beb6c0",
+  "freeze": {
+    "sha256": "efb5bbe5ad22dfb5c2559e64a4565b35424f51ba3bbbc6d080b7eda81acd85a5",
+    "size_bytes": 301670
+  },
+  "historical_missing_receipts": 14,
+  "legacy_failure_loop_baselines": 6,
+  "new_helper_paths": 6,
+  "payload_census_or_rehash": false,
+  "pinned_bytes": 81114419,
+  "pins": 1259,
+  "preparation_relative_changed_source_paths": [
+    "scripts/puck_worker_bootstrap.py",
+    "scripts/qualify_puck_cpu_held_runtime.py",
+    "src/palimpsest/puck_dependency_bindings.py",
+    "src/palimpsest/puck_dependency_imports.py",
+    "src/palimpsest/puck_runtime_qualification.py"
+  ],
+  "process_identity_samples": 9,
+  "runtime_invoked": false,
+  "status": "PASS_CONTROL_METADATA_ONLY",
+  "wrapper_names_size_hash_only": true
+}

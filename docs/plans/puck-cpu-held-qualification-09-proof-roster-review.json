@@ -1,0 +1,373 @@
+{
+  "absences_and_raw_roles": {
+    "concrete_audit_command_separately_reserved": true,
+    "eight07_08_streams_raw_before_manifest": true,
+    "fixed_absences_currently_observed": true,
+    "fresh_resource_admission_performed": false,
+    "helper_total": 20,
+    "historical": 14,
+    "initial_raw_json_roles": "16inputs,4anchors,Hcandidate,01-06results,HISTORICAL07_JSON,HISTORICAL08_JSON",
+    "legacy_baselines_outside14": 4,
+    "legacy_baselines_separate": 6,
+    "new_helper_paths": 6,
+    "references": [
+      "docs/plans/puck-cpu-held-qualification-09-admission.py:37-42",
+      "docs/plans/puck-cpu-held-qualification-09-admission.py:175-184",
+      "docs/plans/puck-cpu-held-qualification-09-admission.py:302-308",
+      "docs/plans/puck-cpu-held-qualification-09-admission.py:363-370"
+    ],
+    "wrapper_own_exclusive_outputs_per_phase": 3
+  },
+  "admission_preservation": {
+    "19_negative_declaration_staged_path_checks": true,
+    "deadline_through_publication_stdout_flush": true,
+    "full_SITE_inputs_preparation_native_baseline_forests_final_census_held_recheck_close_checks_preserved": true,
+    "limits": {
+      "address_space_bytes": 536870912,
+      "file_bytes": 16777216,
+      "final_ram_bytes": 2147483648,
+      "hard_seconds": 130,
+      "initial_ram_bytes": 2147483648,
+      "max_fds": 40000,
+      "normal_seconds": 120
+    },
+    "nine_fixed_PID_start_samples": true,
+    "phase_failure_telemetry_only_epoch_labels_change": true,
+    "reference": "docs/plans/puck-cpu-held-qualification-09-admission.py:263-408",
+    "runtime_limits_equal08": true,
+    "verbatim_old_nodes": [
+      "HISTORICAL07_JSON",
+      "check_consumed07",
+      "resources",
+      "module",
+      "check_absences",
+      "_stderr_record"
+    ]
+  },
+  "authority": {
+    "actual09_admission_accepted": false,
+    "actual09_runtime_accepted": false,
+    "collection_authorized": false,
+    "executable": false,
+    "native_authorized": false,
+    "qualification_claims": [],
+    "runtime_qualified": false,
+    "study_authorized": false
+  },
+  "branch": "research/puck-cpu-held-qualification-09",
+  "config_invariants": {
+    "all_other_fields_equal08_except_kind_version_allocation_id": true,
+    "candidate_D": {
+      "path": "docs/plans/puck-cpu-pillow-origin-profile-v1.json",
+      "sha256": "6eba35557f64b8f7108558b1334d488da20b2381d0e69ffece090645f8fb8d3d",
+      "size_bytes": 346424
+    },
+    "config_canonical_compact_sorted_utf8_lf": true,
+    "exact_preparation_relative_changes": [
+      "scripts/puck_worker_bootstrap.py",
+      "scripts/qualify_puck_cpu_held_runtime.py",
+      "src/palimpsest/puck_dependency_bindings.py",
+      "src/palimpsest/puck_dependency_imports.py",
+      "src/palimpsest/puck_runtime_qualification.py"
+    ],
+    "exact_source_row_changes_vs08": [
+      "scripts/puck_worker_bootstrap.py",
+      "scripts/qualify_puck_cpu_held_runtime.py"
+    ],
+    "freeze_canonical_indent2_sorted_lf": true,
+    "identity": [
+      "puck-cpu-held-runtime-allocation-v9",
+      9,
+      9,
+      "qualify"
+    ],
+    "inputs": 16,
+    "minimum_ram_bytes": 2147483648,
+    "negative_probes": 19,
+    "noncandidate_inputs_equal_prep01": 15,
+    "normal_seconds": 180,
+    "prep_anchors": 4,
+    "reference": "scripts/qualify_puck_cpu_held_runtime.py:227-345",
+    "sources": 24,
+    "stage_parent": "/tmp/palimpsest-puck-cpu-held-01",
+    "workers": 10
+  },
+  "historical_rebase": {
+    "added_records": 510,
+    "all_four_original08_pins_equal_frozen_immutable08_archives": true,
+    "exact_live_changes": [
+      "scripts/audit_puck_cpu_held_runtime.py",
+      "scripts/observe_puck_cpu_held_allocation.py",
+      "scripts/puck_worker_bootstrap.py",
+      "scripts/qualify_puck_cpu_held_runtime.py"
+    ],
+    "old_bytes": 58476477,
+    "old_paths_missing": 0,
+    "old_records": 749,
+    "reference": "docs/plans/puck-cpu-held-qualification-09-source-evidence/freeze-builder.py:33-43"
+  },
+  "history": {
+    "07": {
+      "result_and_baseline_after_absent": true,
+      "returncode": 1,
+      "sampled_matching_survivors": [],
+      "supervisor_returncode": -15,
+      "timed_out": false,
+      "worker_stderr_bytes": 0
+    },
+    "08": {
+      "last_marker": "import.torchvision.enter",
+      "markers": 11,
+      "result_and_baseline_after_absent": true,
+      "returncode": 1,
+      "sampled_matching_survivors": [],
+      "supervisor_returncode": -15,
+      "timed_out": false,
+      "worker_stderr_bytes": 1469,
+      "worker_stderr_sha256": "12fd091b446124bfd8c40a8ef0b962b81b7e3bbc0c94b716736cc3fddf34ca3f"
+    },
+    "genuine_failed_result_json_epochs": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "preserved_rollout_records": 57,
+    "reference": "docs/plans/puck-cpu-held-qualification-09-admission.py:28-162",
+    "refusals": "Both authentic independent audits FAIL for Normal external transport exit required with matching config/transport hashes and false authority. Both outer observer/audit transports normal1/no timeout. No parent closure/four-import/full-post-payload proof or timeout-cause inference."
+  },
+  "kind": "puck-cpu-held09-independent-proof-roster-review-v1",
+  "limitations": [
+    "No admission/control/module/main/auditor/support-function/namespace/vendor/test/job execution. Only AST parsing and inline stdlib metadata checks.",
+    "No installed SITE/staged/host-native/interpreter runtime payload census/rehash. Four frozen archived authored fixture ELF records only were hashed.",
+    "No fresh RAM/disk/tmpfs/FD/PID-start resource or liveness checks. Preserved samples do not prove current/global/atomic process absence.",
+    "Sequential byte equality does not establish continuous custody, hostile-host isolation, hard WCET, installed qualification, optional diagnostic authenticity/completeness,08 timeout cause, episode/operator/renderer/study/release authority.",
+    "Retained tests were read/hash-checked, not rerun. Source equality used read-only Git objects; no Git mutation/network.",
+    "Reviewer-only prechecks were narrowed to approved archived ELF records, intended epoch-only telemetry labels and transitive helper pins. An oversized in-memory review draft was refused before file creation. No producer/control failure or extra output was created."
+  ],
+  "material_findings": [],
+  "outstanding": [
+    "Bind exact postfreeze wrapper/envelope/compatibility proof/selfcheck source+result/independent reviews in reviewed committed/pushed control packet. Files were untracked at review; later commit/push not verified.",
+    "Fresh complete current-byte/custody/resource data-only admission and independent receipt review remain required before observer; disk clearance is not admission.",
+    "At-most-once actual09 observer invocation and independent complete outcome/byte audit are not established by this review."
+  ],
+  "pins": {
+    "admission": {
+      "path": "/home/utkarsh/.codex/worktrees/0071/brain/docs/plans/puck-cpu-held-qualification-09-admission.py",
+      "sha256": "5ee0931ae42ba94de7db82b8c33028e1749ddaec819ac2c51a7a0d2189727652",
+      "size_bytes": 31965
+    },
+    "builder": {
+      "path": "/home/utkarsh/.codex/worktrees/0071/brain/docs/plans/puck-cpu-held-qualification-09-source-evidence/freeze-builder.py",
+      "sha256": "2684aa4cd335b463e22ab0afad6f3e2083c6ccf0ec98a0cfce55be494d99ad75",
+      "size_bytes": 7240
+    },
+    "compatibility_proof": {
+      "path": "/home/utkarsh/.codex/worktrees/0071/brain/docs/plans/puck-cpu-held-qualification-09-wrapper-proof.json",
+      "sha256": "60ebb75e760b627020c5cbf0f031435eda1b5ada98557bbfb780dd96ce9f4cc0",
+      "size_bytes": 825
+    },
+    "config": {
+      "path": "/home/utkarsh/.codex/worktrees/0071/brain/docs/plans/puck-cpu-held-qualification-09.json",
+      "sha256": "2c441b2465c86baf2982a5c023ce5923c1c144bd5789576807ffee6f19beb6c0",
+      "size_bytes": 8985
+    },
+    "envelope": {
+      "path": "/home/utkarsh/.codex/worktrees/0071/brain/docs/plans/puck-cpu-held-qualification-09-execution.json",
+      "sha256": "0cdea1d32ec49d0f04da3f4e8b9cf98c6d1d0e0842811d5bc85021ea22341118",
+      "size_bytes": 3636
+    },
+    "freeze": {
+      "path": "/home/utkarsh/.codex/worktrees/0071/brain/docs/plans/puck-cpu-held-qualification-09-freeze.json",
+      "sha256": "efb5bbe5ad22dfb5c2559e64a4565b35424f51ba3bbbc6d080b7eda81acd85a5",
+      "size_bytes": 301670
+    },
+    "history_record": {
+      "path": "/home/utkarsh/.codex/worktrees/0071/brain/docs/plans/puck-cpu-held-qualification-09-source-evidence/history-check-record.json",
+      "sha256": "68efb74b8239518dbcb8b1e034543bbcade066e3d2fe7c12ece3cf8cfbd9d9aa",
+      "size_bytes": 1001
+    },
+    "history_tests": {
+      "path": "/home/utkarsh/.codex/worktrees/0071/brain/docs/plans/puck-cpu-held-qualification-09-source-evidence/history-check.py",
+      "sha256": "717c53e1f901febb9b9c3b24d7e2b0ff1bdfd8349e47189796fb80c97fd47888",
+      "size_bytes": 5554
+    },
+    "scripts/audit_puck_cpu_held_runtime.py": {
+      "path": "/home/utkarsh/.codex/worktrees/0071/brain/scripts/audit_puck_cpu_held_runtime.py",
+      "sha256": "dffcec25696948da18b18abda32dae764fa933a1175c622f45d33a3bca27d234",
+      "size_bytes": 76808
+    },
+    "scripts/observe_puck_cpu_held_allocation.py": {
+      "path": "/home/utkarsh/.codex/worktrees/0071/brain/scripts/observe_puck_cpu_held_allocation.py",
+      "sha256": "5971324a655cd2f02c4c4ac3ba9dd18a9c6ff1d15b8a0041ed659792cb4c2784",
+      "size_bytes": 6713
+    },
+    "scripts/puck_worker_bootstrap.py": {
+      "path": "/home/utkarsh/.codex/worktrees/0071/brain/scripts/puck_worker_bootstrap.py",
+      "sha256": "f137429398dc30270e67ef198c508231f9e2cf02d3aeedb98663630cafa51451",
+      "size_bytes": 45915
+    },
+    "scripts/qualify_puck_cpu_held_runtime.py": {
+      "path": "/home/utkarsh/.codex/worktrees/0071/brain/scripts/qualify_puck_cpu_held_runtime.py",
+      "sha256": "4bf31ad194e9e2dec3a6dd714fd5b86cde124733d5b95d0168d3ed115e7051e6",
+      "size_bytes": 59425
+    },
+    "selfcheck_result": {
+      "path": "/tmp/palimpsest-held09-control-selfcheck01.json",
+      "sha256": "be22c836f7b42119da1d26dce5c3e99bd4c8c53f1f0dff15e74f6a36ebd84692",
+      "size_bytes": 934
+    },
+    "selfcheck_source": {
+      "path": "/tmp/palimpsest-held09-control-selfcheck.py",
+      "sha256": "6874c4ffd5dd86f0b6168fd8b9f8581f16b2668cccd98d0fe3943f2e32d40545",
+      "size_bytes": 5991
+    },
+    "src/palimpsest/puck_runtime_qualification.py": {
+      "path": "/home/utkarsh/.codex/worktrees/0071/brain/src/palimpsest/puck_runtime_qualification.py",
+      "sha256": "81e7f5df42115dd6714be05b6cf62cf5f0804564065130aaee8289f4b962768a",
+      "size_bytes": 2440
+    },
+    "wrapper": {
+      "path": "/home/utkarsh/.codex/worktrees/0071/brain/docs/plans/puck-cpu-held-qualification-09-external.py",
+      "sha256": "49a4806ee0e8156d0be4c227f512f623f4e8972ea9609154291405e67857fca6",
+      "size_bytes": 4194
+    }
+  },
+  "postfreeze_binding": {
+    "caps_seconds": {
+      "admission": 145,
+      "audit": 145,
+      "observer": 240
+    },
+    "chain": "Freeze pins prefreeze config/admission/proofs; wrapper pins freeze; envelope pins wrapper+freeze; compatibility proof/selfcheck/reviews require later committed/pushed control packet. No circular frozen selfpin.",
+    "freeze_excludes_self_wrapper_envelope_compatibilityproof_tmp_selfchecks": true,
+    "independent_delegated_wrapper_subset": "No material finding; reconciled exact pins.",
+    "kill_grace_seconds": 5,
+    "outer_term_seconds": {
+      "admission": 155,
+      "audit": 155,
+      "observer": 250
+    },
+    "references": [
+      "docs/plans/puck-cpu-held-qualification-09-external.py:26-73",
+      "docs/plans/puck-cpu-held-qualification-09-execution.json:7-105",
+      "docs/plans/puck-cpu-held-qualification-09-source-evidence/freeze-map.json:1"
+    ],
+    "status": "ACYCLIC_STRUCTURE_PASS_CONTROL_COMMIT_PENDING",
+    "wrapper_caps_environment_equal08": true,
+    "wrapper_inverse_exact08_restoration": true
+  },
+  "proof_closure": {
+    "all_reports_indexes_every_declared_child_frozen_and_hashed": true,
+    "missing_children": 0,
+    "new_proof_directory": {
+      "bytes": 221549,
+      "detail": "27 proof files plus builder; no current unpinned file.",
+      "files": 28
+    },
+    "packets": [
+      {
+        "artifacts": 135,
+        "bytes": 13569797,
+        "name": "puck-cpu-held-qualification-08"
+      },
+      {
+        "artifacts": 32,
+        "bytes": 291335,
+        "name": "puck-cpu-guard-cost-v1"
+      },
+      {
+        "artifacts": 136,
+        "bytes": 1560197,
+        "name": "puck-cpu-guard-accounting-v1"
+      },
+      {
+        "artifacts": 145,
+        "bytes": 2138968,
+        "name": "puck-cpu-diagnostic-epoch09-v1"
+      }
+    ],
+    "reference": "docs/plans/puck-cpu-held-qualification-09-source-evidence/freeze-builder.py:46-59"
+  },
+  "retained_tests": {
+    "coverage": "Genuine07/08, changed transports07/08, fabricated result/baseline07/08,19-pin manifest-first warm-read custody slice and eight streams.",
+    "current_admission_equals_green_snapshot": true,
+    "earlier_partial_setup_preserved_never_launched_tests": true,
+    "green01": {
+      "errors": 0,
+      "failures": 0,
+      "passed": 9,
+      "returncode": 0,
+      "tests": 9
+    },
+    "not_rerun": true,
+    "red02": {
+      "errors": 3,
+      "failures": 2,
+      "passed": 4,
+      "returncode": 1,
+      "tests": 9
+    },
+    "red03": {
+      "errors": 1,
+      "failures": 0,
+      "passed": 8,
+      "returncode": 1,
+      "tests": 9
+    },
+    "reference": "docs/plans/puck-cpu-held-qualification-09-source-evidence/history-check-record.json"
+  },
+  "reviewed_at_utc": "2026-10-16T02:40:15.884635+00:00",
+  "reviewer_writes": [
+    "/tmp/palimpsest-held09-proof-roster-review.json"
+  ],
+  "root": "/home/utkarsh/.codex/worktrees/0071/brain",
+  "roster": {
+    "method": "Read and SHA256 every exact frozen record sequentially. No installed SITE/staged/host-native runtime payload reads. Four tiny archived authored Pillow fixture ELFs were hashed only as explicitly frozen archive artifacts.",
+    "no_symlink_parent_within_root": true,
+    "pinned_bytes": 81114419,
+    "records": 1259,
+    "regular_single_link_canonical_paths": true,
+    "size_or_sha_mismatches": 0,
+    "sorted": true,
+    "unique": 1259
+  },
+  "source_head": "96ace37062fd14e20ae1ebd2371b90fa88f8d7ab",
+  "source_pin_closure": {
+    "24sources_plus_auditor_observer_bytes_equal_existing_source_commit": 26,
+    "config24_sources_inputs16_anchors4_directly_frozen": true,
+    "helper_note": "Three live observation-helper paths are not separate freeze rows. Frozen observation auditor authenticates all3 literal path/size/SHA constants before execution; equal archived copies are frozen; admission holds same SUPPORT pins. Complete transitive pin closure, not unpinned dynamic loading.",
+    "historical_data_auditor_frozen_and_authenticated": true,
+    "observation_helpers": [
+      {
+        "frozen_archive": "docs/reports/puck-cpu-held-qualification-05/source/docs/reports/puck-cpu-characterization-02/audit-support-characterization-v1.py",
+        "path": "/home/utkarsh/.codex/worktrees/0071/brain/docs/reports/puck-cpu-characterization-02/audit-support-characterization-v1.py",
+        "sha256": "ba1f54b2885901cae837bb710bb725e211d5aaf5fcddb8fc6bfeb786f2daac4e",
+        "size_bytes": 15971
+      },
+      {
+        "frozen_archive": "docs/reports/puck-cpu-held-qualification-05/source/docs/reports/puck-cpu-characterization-02/audit-helper-install-v1.py",
+        "path": "/home/utkarsh/.codex/worktrees/0071/brain/docs/reports/puck-cpu-characterization-02/audit-helper-install-v1.py",
+        "sha256": "a8945d3dc432831522e66c7817c0f3281e278e2a930ab1e31cbb14a26e17e406",
+        "size_bytes": 33686
+      },
+      {
+        "frozen_archive": "docs/reports/puck-cpu-held-qualification-05/source/docs/reports/puck-cpu-characterization-02/audit-helper-admission-v3.py",
+        "path": "/home/utkarsh/.codex/worktrees/0071/brain/docs/reports/puck-cpu-characterization-02/audit-helper-admission-v3.py",
+        "sha256": "f6229e92238f260e001b6e49cf545dcddd9a371fb272118881fbec8b38961469",
+        "size_bytes": 15635
+      }
+    ],
+    "references": [
+      "scripts/audit_puck_cpu_runtime_characterization.py:41-47",
+      "scripts/audit_puck_cpu_runtime_characterization.py:393-423",
+      "docs/plans/puck-cpu-held-qualification-09-admission.py:281-308"
+    ],
+    "static_worker10_roster_exact_subset": true
+  },
+  "status": "PASS_CONTROL_PROOF_METADATA_ONLY",
+  "verdict": "NO_MATERIAL_FINDING_IN_REVIEWED_SCOPE",
+  "version": 1
+}

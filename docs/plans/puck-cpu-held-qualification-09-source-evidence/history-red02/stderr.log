@@ -1,0 +1,69 @@
+test_changed07_transport_is_refused (__main__.HistoryChecks.test_changed07_transport_is_refused) ... ok
+test_changed08_transport_is_refused (__main__.HistoryChecks.test_changed08_transport_is_refused) ... ERROR
+test_fabricated07_baseline_after_is_refused (__main__.HistoryChecks.test_fabricated07_baseline_after_is_refused) ... ok
+test_fabricated07_result_is_refused (__main__.HistoryChecks.test_fabricated07_result_is_refused) ... ok
+test_fabricated08_baseline_after_is_refused (__main__.HistoryChecks.test_fabricated08_baseline_after_is_refused) ... FAIL
+test_fabricated08_result_is_refused (__main__.HistoryChecks.test_fabricated08_result_is_refused) ... FAIL
+test_genuine07_failure_has_no_success_or_closure_receipt (__main__.HistoryChecks.test_genuine07_failure_has_no_success_or_closure_receipt) ... ok
+test_genuine08_failure_has_no_success_or_closure_receipt (__main__.HistoryChecks.test_genuine08_failure_has_no_success_or_closure_receipt) ... ERROR
+test_manifest_first_reads_preserve_historical07_and08_stream_bytes (__main__.HistoryChecks.test_manifest_first_reads_preserve_historical07_and08_stream_bytes) ... ERROR
+
+======================================================================
+ERROR: test_changed08_transport_is_refused (__main__.HistoryChecks.test_changed08_transport_is_refused)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/palimpsest-held09-history-check.py", line 84, in test_changed08_transport_is_refused
+    def test_changed08_transport_is_refused(self):self.changed_transport('08')
+                                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/palimpsest-held09-history-check.py", line 81, in changed_transport
+    with self.assertRaises(AssertionError):getattr(control,'check_consumed'+epoch)(ChangedTransport())
+                                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'held09_history_control' has no attribute 'check_consumed08'
+
+======================================================================
+ERROR: test_genuine08_failure_has_no_success_or_closure_receipt (__main__.HistoryChecks.test_genuine08_failure_has_no_success_or_closure_receipt)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/palimpsest-held09-history-check.py", line 48, in test_genuine08_failure_has_no_success_or_closure_receipt
+    def test_genuine08_failure_has_no_success_or_closure_receipt(self):self.genuine('08')
+                                                                       ^^^^^^^^^^^^^^^^^^
+  File "/tmp/palimpsest-held09-history-check.py", line 32, in genuine
+    value=getattr(control,'check_consumed'+epoch)(held)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'held09_history_control' has no attribute 'check_consumed08'
+
+======================================================================
+ERROR: test_manifest_first_reads_preserve_historical07_and08_stream_bytes (__main__.HistoryChecks.test_manifest_first_reads_preserve_historical07_and08_stream_bytes)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/palimpsest-held09-history-check.py", line 53, in test_manifest_first_reads_preserve_historical07_and08_stream_bytes
+    selected=set(control.HISTORICAL07_JSON)|set(control.HISTORICAL08_JSON)
+                                                ^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'held09_history_control' has no attribute 'HISTORICAL08_JSON'
+
+======================================================================
+FAIL: test_fabricated08_baseline_after_is_refused (__main__.HistoryChecks.test_fabricated08_baseline_after_is_refused)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/palimpsest-held09-history-check.py", line 99, in test_fabricated08_baseline_after_is_refused
+    def test_fabricated08_baseline_after_is_refused(self):self.check_missing('08','baseline-after.json')
+                                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/palimpsest-held09-history-check.py", line 93, in check_missing
+    with self.assertRaises(AssertionError):control.absent()
+AssertionError: AssertionError not raised
+
+======================================================================
+FAIL: test_fabricated08_result_is_refused (__main__.HistoryChecks.test_fabricated08_result_is_refused)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/palimpsest-held09-history-check.py", line 98, in test_fabricated08_result_is_refused
+    def test_fabricated08_result_is_refused(self):self.check_missing('08','result.json')
+                                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/palimpsest-held09-history-check.py", line 93, in check_missing
+    with self.assertRaises(AssertionError):control.absent()
+AssertionError: AssertionError not raised
+
+----------------------------------------------------------------------
+Ran 9 tests in 0.007s
+
+FAILED (failures=2, errors=3)
