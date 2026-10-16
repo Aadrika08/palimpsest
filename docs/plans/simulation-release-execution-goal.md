@@ -10,44 +10,40 @@ Implementation history is preserved in the unchanged [earlier history](simulatio
 and the [byte-identical prior goal snapshot](simulation-release-execution-goal-history-2026-10-16.md).
 Those dated records are evidence, not instructions to repeat consumed attempts.
 
-## Active work unit: close q4's CPU qualification source epoch
+## Active work unit: qualify the exact local CPU runtime
 
-**Make q4 explicitly admissible in a distinct parent/observer/independent-auditor
-source epoch. Then prepare fresh reviewed controls and data-only admission before
-any actual 10 allocation.** The product exit remains one real public episode
-recorded with snapshots, replayed and exported before the complete release.
+**Obtain one normal, independently audited completion of qualification 10 on the
+exact installed CPU runtime. Keep the existing 180s normal limit and 2GiB resource
+floor. This qualifies the import route only; it is the first prerequisite to the
+real recorded, replayed and exported episode below.**
 
-1. Add the closed q4 source-epoch identities and authored metadata, observer and
-   full parent/worker/auditor integration proof. Explicitly bind the q4 descriptor,
-   result and current source bytes. Keep old epochs strict, candidate D, nineteen
-   negative imports, original preparation anchors, environment and 180s/2GiB
-   conditions unchanged. Preserve every consumed attempt and missing receipt.
-2. Independently review and publish that source closure and its exact evidence.
-   Only then prepare separately frozen controls with current byte/custody checks,
-   output absences and fresh resource admission. No actual invocation is part of
-   this source unit; there is no implicit retry of attempts 01–09.
+The source prerequisite is complete in [PR175](https://github.com/Aadrika08/palimpsest/pull/175):
+the parent, observer and independent auditor explicitly bind q4 only to allocation
+10. [Retained source evidence](https://github.com/Aadrika08/palimpsest/blob/e723db037ed1f790c2618798d59f56913054754f/docs/reports/puck-cpu-q4-qualification-epoch10.md)
+records 732 passing affected cases, including 51 new cases, and independent review
+with no material findings. Old allocations 1–9 still select q3. These are authored
+source checks, not an installed-runtime pass.
 
-**Current status (2026-10-16): q4 is implemented and has authored source proof.**
-[PR174](https://github.com/Aadrika08/palimpsest/pull/174), with
-[source commit `1fa9421`](https://github.com/Aadrika08/palimpsest/commit/1fa94213f583a30e6c5533a45bef5575b45e9095)
-adds the explicit boundary-snapshot contract while preserving q1–q3 behavior.
-Passing evidence covers 41 distinct guard/entry cases, 397 legacy cases and three
-cost cases: 441 distinct cases across batches, not one all-green invocation.
-The retained legacy batch had four child import-path failures; only those four
-reran successfully after the environment correction, with no production change.
-The unpaired authored cost comparison shows useful reduction at larger sizes and
-slightly worse cost at 128 names. It proves neither equivalent semantics nor
-installed speedup, actual 09's cause or runtime qualification.
+1. Freeze a distinct qualification-10 control packet against source `cbe48b3`.
+   Bind current source/input bytes, candidate D, nineteen negative imports,
+   original preparation anchors, exact environment and limits. Preserve every
+   consumed attempt 01–09, old receipt and historical absence. Independently
+   review the exact controls before execution.
+2. Perform fresh full byte/custody/resource admission and review its outcome.
+   Disk clearance alone is not admission. Only after passing those checks and the
+   final pre-invocation guard, invoke qualification 10 once under its observer.
+3. Independently audit the outcome, four ordered imports, exact source and
+   dependency identities, final byte checks, normal process/descriptor closure
+   and complete receipts. This unit passes only if all required checks pass.
+   Preserve any failure as a consumed attempt; never silently rerun it.
 
-Existing parent/observer/auditor epochs remain unchanged; old-parent admission
-still refuses q4. Attempts 01–09 remain consumed; no actual 10 controls, admission or run exists. All seven release
-gates remain open. Boundary comparisons are non-atomic and cannot detect every
-ABA or change after the final observation.
-
-Disk clearance permits preparation; each actual execution still needs its own
-fresh resource checks. After runtime and separate operator/renderer qualification,
-finish the real episode bundle below. Scientific study decisions and artistic or
-independent-operator acceptance remain with their named owners.
+**Current status (2026-10-16): source ready; real controls, admission and runtime
+invocation 10 have not been performed. All seven release gates remain open.**
+About 45GiB of project-disk space is available at this check; each execution must
+refresh its own resource checks. After import qualification, separately qualify
+the finite operator/renderer route and finish the real public episode bundle.
+Scientific study decisions and artistic or independent-operator acceptance
+remain with their named owners.
 
 ## Next checkpoint: prove one complete simulation episode
 
@@ -223,19 +219,29 @@ q4 measured 0.721/1.517/4.729ms. This unpaired authored comparison uses differen
 contracts/context/diagnostics; q4 is slightly slower at 128 and shows bounded
 reduction at larger sizes, without installed-speed or actual 09-cause proof.
 Q4 deliberately changes sampling semantics, preserves q1–q3 and remains
-non-atomic with ABA/post-observation limits. Existing outer epochs remain
-unchanged; old-parent admission still refuses q4. No installed runtime or actual
-10 is qualified or invoked. Scientific protocols, model thresholds and human
-acceptance gates remain unchanged; all seven release gates remain open.
+non-atomic with ABA/post-observation limits. At that source-only checkpoint,
+existing outer epochs remained unchanged and old-parent admission refused q4.
+No installed runtime or actual 10 was qualified or invoked by that source unit.
+Scientific protocols, model thresholds and human acceptance gates remain unchanged; all seven release gates remain open.
 
-**First unfinished action:** add and independently review the distinct closed CPU
-source epoch that explicitly binds q4 in its parent, observer and independent
-auditor, with authored integration and exact source evidence. Keep old epochs
-strict and attempts 01–09 consumed. After that source closure, prepare separately
-frozen controls and fresh byte/custody/resource admission before any actual 10;
-no actual invocation belongs to this source unit. Once runtime and the separate
-operator/renderer route qualify, complete the real recorded/replayed/exported
-public episode bundle.
+[PR175](https://github.com/Aadrika08/palimpsest/pull/175) closes the distinct CPU
+qualification-10 source epoch at `cbe48b3`. Its complete authored parent→q4 worker→
+independent API/CLI route passes. The affected regression passes 732 cases in
+122.64s, including all 51 new cases; these counts overlap. Independent review
+found no material findings. The [report](https://github.com/Aadrika08/palimpsest/blob/e723db037ed1f790c2618798d59f56913054754f/docs/reports/puck-cpu-q4-qualification-epoch10.md)
+preserves the initial fixture mistakes and intended REDs, exact source pins,
+normal authored closure, optional-cost-row acceptance and specific mixed-tag
+refusals. Authored fixtures use 18 missing names and 128MiB floors; production
+still requires nineteen names and 180s/2GiB. No installed qualification follows.
+
+**First unfinished action:** freeze and independently review the distinct actual
+10 controls against that fixed source, then complete fresh full byte/custody/
+resource admission. Once admission and its review pass, invoke actual 10 exactly
+once and independently audit the outcome. Preserve attempts 01–09 and every
+historical missing receipt. This is the finite exit from the current runtime
+prerequisite; it does not admit operator/renderer, physics, inference or studies.
+After the separate operator/renderer route qualifies, finish the real recorded,
+replayed and exported public episode bundle. The full release remains the goal.
 
 [PR163](https://github.com/Aadrika08/palimpsest/pull/163) already implements the
 manual constructor seam with exact arguments and seed/reset order preserved;
