@@ -140,6 +140,23 @@ def _name(name):
     return name
 
 
+def _q4_copy(value, kind, maximum=65536):
+    if type(value) is not kind:
+        raise ValueError('Q4 exact builtin cache/allowance container required')
+    if len(value)>maximum:
+        raise ValueError('Q4 cache/allowance entry ceiling exceeded')
+    result={} if kind is dict else set()
+    rows=value.items() if kind is dict else ((name,None) for name in value)
+    for count,(name,item) in enumerate(rows,1):
+        if count>maximum:
+            raise ValueError('Q4 cache/allowance entry ceiling exceeded')
+        if type(name) is not str:
+            raise ValueError('Q4 exact string cache/allowance name required')
+        if kind is dict: result[name]=item
+        else: result.add(name)
+    return result if kind is dict else frozenset(result)
+
+
 def _parse(raw, expected):
     if type(raw) is not bytes or not 0 < len(raw) <= MiB or digest(raw) != _hash(expected):
         raise ValueError('Externally pinned bounded worker registration required')
@@ -160,15 +177,16 @@ def _parse(raw, expected):
     if reg['version']==3:
         q=reg['qualification']
         if (type(q) is not dict or set(q)!= {'kind','version','expected_versions','stdlib_cache_aliases','negative_imports'}
-                or type(q['version']) is not int or q['version'] not in (1,2,3)
+                or type(q['version']) is not int or q['version'] not in (1,2,3,4)
                 or q['kind']!='puck-held-runtime-import-qualification-v'+str(q['version'])
                 or type(q['expected_versions']) is not dict
                 or set(q['expected_versions'])!=({'numpy','torch','torchvision','mujoco'}
-                    if q['version']==3 else {'numpy','torch','mujoco'})
+                    if q['version'] in (3,4) else {'numpy','torch','mujoco'})
                 or any(type(v) is not str or not 1<=len(v)<=128 for v in q['expected_versions'].values())
                 or type(q['stdlib_cache_aliases']) is not dict
                 or q['stdlib_cache_aliases']!={'__mp_main__':'__main__'}):
             raise ValueError('Exact fixed runtime qualification descriptor required')
+        if q['version']==4: _q4_copy(sys.stdlib_module_names,frozenset)
         negatives=q['negative_imports']
         if q['version']==1:
             if negatives!=['org']:raise ValueError('Exact legacy qualification denial required')
@@ -333,14 +351,16 @@ class HeldWorkerBootstrap:
         self._finder = None; self._meta_path = None; self._source = None; self._runtime = None
         self._early_runtime_fds = []
         self._dependencies = None; self._dependency_dispatch = None
-        self._main_module=sys.modules.get('__main__'); self._denied_imports=set()
         q=self._reg.get('qualification',{})
         self._missing_policy_version=q.get('version',0)
         self._negative_imports=tuple(q.get('negative_imports',()))
-        self._trace_enabled=self._missing_policy_version==3
+        self._stdlib_names=sys.stdlib_module_names if self._missing_policy_version==4 else None
+        if self._missing_policy_version==4: self._q4_snapshot(set(),set())
+        self._main_module=sys.modules.get('__main__'); self._denied_imports=set()
+        self._trace_enabled=self._missing_policy_version in (3,4)
         self._trace_started=time.monotonic(); self._trace_count=0; self._trace_bytes=0
         self._diagnostic_io=True
-        self._guard_enabled=self._missing_policy_version==3
+        self._guard_enabled=self._missing_policy_version in (3,4)
         self._guard_origin=None; self._guard_last=None; self._guard_next=0; self._guard_context=''
         self._guard_count=0; self._guard_bytes=0; self._guard_busy=False
         self._guard_depth=0; self._guard_current=None; self._guard_nested=0
@@ -546,6 +566,7 @@ class HeldWorkerBootstrap:
             if sys.version_info[:3] != (3, 11, 15): raise ValueError('Measured Python version differs')
             if (globals().get('__bootstrap_raw__') is None or digest(__bootstrap_raw__) != descriptors[BOOTSTRAP]['sha256']):
                 raise ValueError('Bootstrap was not compiled from seeded authenticated bytes')
+            if self._missing_policy_version==4: self._q4_snapshot(set(),set())
             allowed = set(sys.stdlib_module_names)|{'__main__'}
             if any(name.split('.')[0] not in allowed for name in sys.modules):
                 raise ValueError('Foreign or local source was preloaded before bootstrap')
@@ -587,7 +608,7 @@ class HeldWorkerBootstrap:
                     self._modules.keys() | self._namespaces.keys(),
                     [self._reg['source_root'], self._reg['runtime']['root']])
                 self._dependency_dispatch=(self._dependencies,DependencyImports)
-                if (self._missing_policy_version==3 and
+                if (self._missing_policy_version in (3,4) and
                         provider.snapshot().get('native_identity')!='tmpfs-raw-dev-inode-v1'):
                     raise ValueError('Four-import qualification requires admitted v3 tmpfs dependency custody')
                 if self._missing_policy_version>=2:
@@ -656,13 +677,69 @@ class HeldWorkerBootstrap:
         # at public admission, local import, native and terminal boundaries.
         return self._check(full=self._dependencies is None)
 
+    def _q4_snapshot(self, exported, aliases):
+        # shortcut: samples miss ABA and later mutation; revisit for concurrent writers.
+        dependency=self._dependencies
+        maps=(sys.modules,self._loaded)
+        sets=(self._loading,exported,aliases)
+        if dependency is not None:
+            receiver,cls=self._dependency_dispatch
+            if dependency is not receiver or type(receiver) is not cls:
+                raise RuntimeError('Authenticated dependency receiver dispatch changed')
+            maps+=(dependency.loaded,)
+            sets+=(dependency.loading,)
+        if (type(sys.stdlib_module_names) is not frozenset
+                or sys.stdlib_module_names is not self._stdlib_names):
+            raise RuntimeError('Q4 stdlib name baseline changed')
+        if any(type(value) is not dict for value in maps) or any(type(value) is not set for value in sets):
+            raise ValueError('Q4 exact builtin cache/allowance container required')
+        if len(maps[0])>65536 or 2+sum(map(len,maps[1:]))+sum(map(len,sets))>65536:
+            raise ValueError('Q4 cache/allowance entry ceiling exceeded')
+        cache=_q4_copy(maps[0],dict)
+        copies=[cache]; remaining=65536-2
+        for value in maps[1:]:
+            copied=_q4_copy(value,dict,remaining); copies.append(copied); remaining-=len(copied)
+        names=[]
+        for value in sets:
+            copied=_q4_copy(value,set,remaining); names.append(copied); remaining-=len(copied)
+        return dependency,maps,sets,tuple(copies),tuple(names),self._stdlib_names
+
+    def _q4_stable(self, snapshot, exported, second_exported, aliases, negative_imports):
+        if self._state!='active':
+            raise RuntimeError('Bootstrap inactive or poisoned') from self._first_failure
+        q=self._reg.get('qualification')
+        if (type(self._missing_policy_version) is not int or self._missing_policy_version!=4
+                or type(q) is not dict or type(q.get('version')) is not int or q['version']!=4
+                or q.get('kind')!='puck-held-runtime-import-qualification-v4'
+                or type(q.get('negative_imports')) is not list
+                or any(type(name) is not str for name in q['negative_imports'])
+                or tuple(q['negative_imports'])!=negative_imports or self._negative_imports!=negative_imports):
+            raise RuntimeError('Expected missing import declaration changed')
+        if sys.stdlib_module_names is not snapshot[5] or self._stdlib_names is not snapshot[5]:
+            raise RuntimeError('Q4 stdlib name baseline changed')
+        late=self._q4_snapshot(exported,aliases)
+        remaining=65536-2-sum(map(len,late[3][1:]))-sum(map(len,late[4]))+len(late[4][1])
+        if (late[0] is not snapshot[0] or len(late[1])!=len(snapshot[1])
+                or len(late[2])!=len(snapshot[2])
+                or any(a is not b for a,b in zip(late[1]+late[2],snapshot[1]+snapshot[2]))
+                or late[4]!=snapshot[4]
+                or any(a.keys()!=b.keys() or any(a[name] is not item for name,item in b.items())
+                       for a,b in zip(late[3],snapshot[3]))
+                or _q4_copy(second_exported,set,remaining)!=snapshot[4][1]):
+            raise RuntimeError('Q4 cache/allowance boundary changed')
+
     def _check(self, *, full):
         token=None
         try:
             if self._state != 'active':
                 raise RuntimeError('Bootstrap inactive or poisoned') from self._first_failure
+            q4=self._missing_policy_version==4
+            stdlib=self._stdlib_names if q4 else None
+            negative_imports=self._negative_imports if q4 else None
             self._clock()
+            if q4: self._q4_snapshot(set(),set())
             token=self._guard_begin(full)
+            if q4: self._q4_snapshot(set(),set())
             if sys.meta_path != [self._finder, *self._meta_path]: raise RuntimeError('Source import dispatch changed')
             for name, binding in self._loaded.items():
                 module, filename, loader, spec, origin, spec_loader, package, search, spec_name, spec_search, _, _ = binding
@@ -684,7 +761,9 @@ class HeldWorkerBootstrap:
                 receiver,cls=self._dependency_dispatch
                 if self._dependencies is not receiver or type(receiver) is not cls:
                     raise RuntimeError('Authenticated dependency receiver dispatch changed')
+                if q4: self._q4_snapshot(set(),set())
                 exported=cls.recheck(receiver)
+                if q4: self._q4_snapshot(exported,set())
             aliases=set()
             if self._reg['version']==3:
                 q=self._reg['qualification']
@@ -697,12 +776,24 @@ class HeldWorkerBootstrap:
                     if sys.modules['__mp_main__'] is not self._main_module:
                         raise RuntimeError('Runtime qualification stdlib alias identity changed')
                     aliases.add('__mp_main__')
+            if q4:
+                snapshot=self._q4_snapshot(exported,aliases)
+                if snapshot[5] is not stdlib:
+                    raise RuntimeError('Q4 stdlib name baseline changed')
+                allowed={'__main__','_puck_held_file_bootstrap'}
+                for mapping in snapshot[3][1:]: allowed.update(mapping)
+                for names in snapshot[4]: allowed.update(names)
             self._guard_step(token,'cache')
-            for name in sys.modules:
-                if (name.split('.')[0] not in sys.stdlib_module_names and
-                        name not in {'__main__', '_puck_held_file_bootstrap'}|aliases|self._loaded.keys()|self._loading
-                        | (self._dependencies.loaded.keys() | self._dependencies.loading | exported if self._dependencies else set())):
-                    raise RuntimeError('Unregistered module cache entry: '+name)
+            if q4:
+                for name in snapshot[3][0]:
+                    if name.split('.')[0] not in stdlib and name not in allowed:
+                        raise RuntimeError('Unregistered module cache entry: '+name)
+            else:
+                for name in sys.modules:
+                    if (name.split('.')[0] not in sys.stdlib_module_names and
+                            name not in {'__main__', '_puck_held_file_bootstrap'}|aliases|self._loaded.keys()|self._loading
+                            | (self._dependencies.loaded.keys() | self._dependencies.loading | exported if self._dependencies else set())):
+                        raise RuntimeError('Unregistered module cache entry: '+name)
             self._guard_step(token,'custody')
             # Check support dispatch before invoking its guard methods.
             for child in self._children:
@@ -716,7 +807,8 @@ class HeldWorkerBootstrap:
                             raise RuntimeError('Held source/runtime file metadata changed')
             if self._dependencies is not None:
                 self._guard_step(token,'bindings')
-                cls.recheck(receiver)
+                if q4: self._q4_snapshot(exported,aliases)
+                second_exported=cls.recheck(receiver)
                 if full:
                     self._guard_step(token,'images')
                     self._dependencies.images()
@@ -729,6 +821,9 @@ class HeldWorkerBootstrap:
             self._guard_end(token); completed=token; token=None
             self._clock()
             self._guard_complete(completed)
+            if q4:
+                self._q4_stable(snapshot,exported,second_exported if self._dependencies is not None else set(),aliases,negative_imports)
+                self._clock()
         except BaseException as error: self._fail(error); raise
         finally: self._guard_end(token)
 

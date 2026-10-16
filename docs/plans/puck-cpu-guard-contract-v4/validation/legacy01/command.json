@@ -1,0 +1,194 @@
+{
+  "command": [
+    "/usr/bin/timeout",
+    "--signal=TERM",
+    "--kill-after=5s",
+    "360s",
+    "/usr/bin/bwrap",
+    "--unshare-user",
+    "--uid",
+    "1000",
+    "--gid",
+    "1000",
+    "--bind",
+    "/",
+    "/",
+    "--tmpfs",
+    "/tmp",
+    "--dev",
+    "/dev",
+    "--proc",
+    "/proc",
+    "--chdir",
+    "/home/utkarsh/.codex/worktrees/293b/brain",
+    "--",
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/r0-reproduction/.venv/bin/python",
+    "-B",
+    "-m",
+    "pytest",
+    "-q",
+    "-s",
+    "-p",
+    "no:cacheprovider",
+    "--basetemp",
+    "/tmp/q4-legacy01",
+    "-k",
+    "not authored_cache_workload",
+    "tests/test_puck_worker_bootstrap.py",
+    "tests/test_puck_worker_dependencies.py",
+    "tests/test_puck_tmpfs_dependencies.py",
+    "tests/test_puck_held_runtime_entry.py",
+    "tests/test_puck_cpu_runtime_entry.py",
+    "tests/test_puck_guard_cost.py",
+    "tests/test_puck_guard_union_dispatch.py",
+    "tests/test_puck_guard_time_diagnostics.py",
+    "tests/test_puck_cpu_phase_trace.py",
+    "tests/test_puck_dependency_profile.py",
+    "tests/test_puck_dependency_files.py",
+    "tests/test_puck_native_identity.py",
+    "tests/test_puck_native_cache_bindings.py",
+    "tests/test_puck_native_origins.py",
+    "tests/test_puck_cpu_held_parent.py",
+    "tests/test_puck_cpu_held_runtime_audit.py",
+    "tests/test_puck_cpu_held_observer.py"
+  ],
+  "cwd": "/home/utkarsh/.codex/worktrees/293b/brain",
+  "environment_overrides": {
+    "PYTEST_DISABLE_PLUGIN_AUTOLOAD": "1",
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "TMPDIR": "/tmp"
+  },
+  "pins": [
+    {
+      "path": "docs/plans/puck-cpu-guard-v4-prospective.md",
+      "sha256": "020398de1a4737420538f4113d1dad1c837d2ee52d306d80fe96fe4c721e17fe",
+      "size_bytes": 5353
+    },
+    {
+      "path": "scripts/puck_worker_bootstrap.py",
+      "sha256": "525d40b6d69fd82af0d86b807bc8a3645163ff1541d9b0fd85b032463650669c",
+      "size_bytes": 51608
+    },
+    {
+      "path": "src/palimpsest/puck_dependency_bindings.py",
+      "sha256": "7012888d030917434d1536285bb97fd2de15b5b83e9da87ee1503cda970a7147",
+      "size_bytes": 28299
+    },
+    {
+      "path": "src/palimpsest/puck_dependency_files.py",
+      "sha256": "d1ca386780212b174a6e931a8ac4ce88e68c31b27fb1c0e16346a2150560fca1",
+      "size_bytes": 33543
+    },
+    {
+      "path": "src/palimpsest/puck_dependency_imports.py",
+      "sha256": "e35b941c351971c15f225255170cd45530aa2304943fe2edd461b8d94080943b",
+      "size_bytes": 14868
+    },
+    {
+      "path": "src/palimpsest/puck_execution_files.py",
+      "sha256": "ac059455bc45437c45330d01aaca761fd571d6de1637a4a8d7ebfbd796622062",
+      "size_bytes": 15001
+    },
+    {
+      "path": "src/palimpsest/puck_native_identity.py",
+      "sha256": "6e5b56e5c6494398dbd6a7c7d07e771e86c63d56e7374692d1d1d8213b721ebb",
+      "size_bytes": 2837
+    },
+    {
+      "path": "src/palimpsest/puck_native_origins.py",
+      "sha256": "e6deea2bc378968371bf1093b869dfc442eeb7def27198695d1c0f872da519e1",
+      "size_bytes": 1660
+    },
+    {
+      "path": "src/palimpsest/puck_runtime_qualification.py",
+      "sha256": "7c2d0dca9edf3bea23f96b224d813f4ab40859b95c10e3103e394e49c7976db5",
+      "size_bytes": 2514
+    },
+    {
+      "path": "tests/test_puck_cpu_held_observer.py",
+      "sha256": "27695f8160971eda80de2e6fa5f75fe3b0964955d70b87db8f89aed0c2ec54b5",
+      "size_bytes": 11748
+    },
+    {
+      "path": "tests/test_puck_cpu_held_parent.py",
+      "sha256": "972c49620e9806bc3a9c207ff096357eaca08600bd2c15cae1a1e672e377b5b2",
+      "size_bytes": 11497
+    },
+    {
+      "path": "tests/test_puck_cpu_held_runtime_audit.py",
+      "sha256": "bc434f04be47793f51dcc1c037cda0f969bf56cc01ae8bad7f2d39204a61db46",
+      "size_bytes": 6420
+    },
+    {
+      "path": "tests/test_puck_cpu_phase_trace.py",
+      "sha256": "df588e48cb8a9c9fc398939507b722ce9b2373ce0675ef180cbf090911ecfafd",
+      "size_bytes": 12774
+    },
+    {
+      "path": "tests/test_puck_cpu_runtime_entry.py",
+      "sha256": "4f3c63f3cf3c26419c88e08636bdb5c20c3884e866da783aa12fbfb30abd6b22",
+      "size_bytes": 9292
+    },
+    {
+      "path": "tests/test_puck_dependency_files.py",
+      "sha256": "9440be85b19b2e22d7222a5e5eea3f8e546bbc992459369b0a07b221d33a1ea8",
+      "size_bytes": 17905
+    },
+    {
+      "path": "tests/test_puck_dependency_profile.py",
+      "sha256": "f151629eb81cea9f1d75da72e43be0b146bcb1b96b3793f3674042c5af2df97f",
+      "size_bytes": 22117
+    },
+    {
+      "path": "tests/test_puck_guard_cost.py",
+      "sha256": "0f3d4ad250dc6662132d923d20abe99416869d0eb2bfec25d8a0c653501c3874",
+      "size_bytes": 5614
+    },
+    {
+      "path": "tests/test_puck_guard_time_diagnostics.py",
+      "sha256": "1b99f75bfa46a5128b1e3708028436dde991df6a58e9b857fa272526aa8b572f",
+      "size_bytes": 17051
+    },
+    {
+      "path": "tests/test_puck_guard_union_dispatch.py",
+      "sha256": "973b1b9c4262396384374d8682bc7a22eb938e7f7ced2b585a43656b35dbddb7",
+      "size_bytes": 2022
+    },
+    {
+      "path": "tests/test_puck_held_runtime_entry.py",
+      "sha256": "e230e9ebe9e914f35a2080701edd9bb0b15c876761d31a082771212f892a9398",
+      "size_bytes": 5027
+    },
+    {
+      "path": "tests/test_puck_native_cache_bindings.py",
+      "sha256": "40be4716c55ed07494036ccd91f71aa04c81b5a9e788c23e03dda319bf9aa8bb",
+      "size_bytes": 14256
+    },
+    {
+      "path": "tests/test_puck_native_identity.py",
+      "sha256": "10df05d252f0c31700704335a1988609c60583a5b6945eb9196f23fd0e151a05",
+      "size_bytes": 5567
+    },
+    {
+      "path": "tests/test_puck_native_origins.py",
+      "sha256": "2c1150c67efd66630585d191959f1d806954a686b87a75b94eed69bd0e39d463",
+      "size_bytes": 8667
+    },
+    {
+      "path": "tests/test_puck_tmpfs_dependencies.py",
+      "sha256": "c80c193206e3aa005a2be770dfdfd105d364f988ba9606f012e3a46c0d3fff0c",
+      "size_bytes": 6108
+    },
+    {
+      "path": "tests/test_puck_worker_bootstrap.py",
+      "sha256": "d7496440a050ec61971dbbe91935e9e2d89dfaceb4e472654618f964b13b3fb5",
+      "size_bytes": 13905
+    },
+    {
+      "path": "tests/test_puck_worker_dependencies.py",
+      "sha256": "fb311232bcea45c52d9ba45a78361ab586c9025800a8bb72fd354870c75b5f09",
+      "size_bytes": 10502
+    }
+  ],
+  "scope": "Authored packages and real-worker guard semantics only. No installed runtime, actual10 or qualification authority."
+}
