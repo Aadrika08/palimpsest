@@ -1,0 +1,101 @@
+{
+  "checkout": {
+    "all_diff_paths_have_qualification10_prefix": true,
+    "branch": "research/puck-cpu-held-qualification-10",
+    "changed_files": 44,
+    "clean": true,
+    "path": "/home/utkarsh/.codex/worktrees/0071/brain",
+    "production_scripts_src_changed": false
+  },
+  "commits": {
+    "base_and_source": "e723db037ed1f790c2618798d59f56913054754f",
+    "historical09_source": "96ace37062fd14e20ae1ebd2371b90fa88f8d7ab",
+    "implementation": "cbe48b339f4839ec4d2b5ef153d0dc0820be712e",
+    "reviewed_head": "8ceae544053ec2951e625a06cad8bca43325732d"
+  },
+  "decision": "GO_CONTROLS_ONLY",
+  "exact_checks": [
+    {
+      "archived_live_substitutions": 5,
+      "check": "All frozen pins independently lstat/read/hash checked; sorted unique roster and exact builder membership reconstructed without execution",
+      "freeze_bytes": 480590,
+      "freeze_sha256": "f0e56235825dc549c43d58e02b9d47de9bd81edab122a5786bd8038a3a6d47fc",
+      "new_packet_artifact_memberships": 676,
+      "pinned_bytes": 107657006,
+      "pins": 1998,
+      "result": "PASS",
+      "unchanged_prior09_pins": 1254
+    },
+    {
+      "check": "Current24 source rows equal both e723 and cbe Git blobs; five archived09 replacements equal96ace; q4 and actual09 source packets equal declared source commits",
+      "git_blob_comparisons": 127,
+      "result": "PASS"
+    },
+    {
+      "check": "Exact config v10/version10/id10/qualify,24 source rows; only bootstrap,parent,qualifier differ vs09; five preparation-relative paths;16 inputs/candidateD,4 anchors,19 negatives,env/interpreter/versions/limits/claims unchanged",
+      "configuration_bytes": 10951,
+      "configuration_sha256": "b7da3957cd81f017f7c59beb764577551384d54c634062f9841053c839d12915",
+      "result": "PASS"
+    },
+    {
+      "check": "Admission current/legacy/observation auditors and source pins, fixed root, original01 preparation, H-to-D projection; full SITE census, twice forest, final census, held.recheck/clock, FD/children/thread closure, 120s normal/130s hard and final publication deadline retained",
+      "evidence": "admission.py:334-481; current parent/auditor version10 routing and q4 tag reviewed as source only",
+      "result": "PASS_STATIC_SOURCE"
+    },
+    {
+      "check": "All07/08/09 JSON and12 raw stream roles reserved before manifest first reads; genuine09 deadline/-15 failure and early auditor refusal retained;16 absent receipts plus six legacy baseline checks;12 PID/start samples explicitly nonexhaustive",
+      "evidence": "admission.py:37-42,165-233,246-255,373-380,435-476;17 historical JSON pins checked",
+      "result": "PASS_STATIC_SOURCE_AND_METADATA"
+    },
+    {
+      "check": "External wrapper inverse transformations exactly restore09 bytes; tracked/tmp copies match; pinned freeze/config command binding,145/145/240s caps, outer155/155/250s+5s, exclusive receipts/streams, concrete audit prefix/output, no retries",
+      "result": "PASS_SOURCE_METADATA_ONLY",
+      "wrapper_bytes": 4194,
+      "wrapper_sha256": "8370e1ea6a036ff4906d35084ec6a49b542c192382fd42da4765dc337b4b5b80"
+    },
+    {
+      "changed_python_files_ast_parsed": 16,
+      "check": "Retained13-case RED/GREEN command pins and archived sources authenticated; GREEN sources equal current; selfcheck01 failure retained, selfcheck02 only two prospective keys differ, output equals published metadata receipt; parser-authoring failure preserved before admission write",
+      "observed_exit_codes": {
+        "history_green01": 0,
+        "history_red01": 1,
+        "selfcheck01": 1,
+        "selfcheck02": 0
+      },
+      "rerun_by_reviewer": false,
+      "result": "PASS_TRANSCRIPT_METADATA"
+    },
+    {
+      "check": "Future allocation/transport/admission/audit/external outputs absent; pre-admission guard template statically read; snapshot79 historical metadata files rehashed and20 absences checked",
+      "guard_remaining_literals": [
+        "CONTROL",
+        "COUNT"
+      ],
+      "guard_template_bound_or_executed": false,
+      "result": "PASS_METADATA"
+    }
+  ],
+  "findings": {
+    "critical": [],
+    "important": [],
+    "minor": []
+  },
+  "kind": "palimpsest-actual10-independent-controls-review-v1",
+  "limitations": [
+    "No project modules executed/imported, no pytest/history/selfcheck reruns, no admission/observer/auditor main, no network, no repository writes.",
+    "No SITE, staged forest, native, interpreter or protected payload bytes read. Their current identity/resources/closure remain unproved until fresh full admission.",
+    "Retained test and selfcheck outcomes were authenticated as metadata, not independently rerun. Static AST parsing and metadata/hash checks were reviewer-run.",
+    "Controls-only GO establishes neither runtime qualification, import completion, physical/scientific evidence nor operator/renderer/episode/study authorization. Account quota telemetry unavailable."
+  ],
+  "nonblocking_observations": [
+    "Git has44 changed files, not the46 described in the handoff. All44 are under the authorized prefix and the checkout is clean.",
+    "Frozen static control-map has logs/baseline-after.json typo; reviewed root ruling and executable09 absence checks use allocation-root baseline-after.json. No missing receipt was created.",
+    "Phase ordering is an operator/review guard obligation. The wrapper itself allows selecting observer; fresh successful DATA_ONLY admission and independently reviewed pre-observer guard remain required."
+  ],
+  "required_next_gates": [
+    "Publish the reviewed controls; bind and verify exact CONTROL and complete diff COUNT in the pre-admission guard before sole admission.",
+    "One fresh full DATA-ONLY admission and independent bytes/resources/history/normal-closure review; then a fresh pre-observer guard before one actual10 observer.",
+    "Bind one concrete auditor command to actual10 transport digest; preserve all failure/missing receipts and no implicit retries. All seven release gates remain open."
+  ],
+  "scope": "Fresh independent read-only BASE..HEAD review of all qualification10 controls, source-evidence and control-validation; no admission or runtime authorization."
+}
