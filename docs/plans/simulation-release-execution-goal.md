@@ -10,22 +10,22 @@ Implementation history is preserved in the unchanged [earlier history](simulatio
 and the [byte-identical prior goal snapshot](simulation-release-execution-goal-history-2026-10-16.md).
 Those dated records are evidence, not instructions to repeat consumed attempts.
 
-## Active work unit: unblock the first episode
+## Active work unit: review a compatible guard fastpath
 
-**Deliver a reviewed measurement of repeated runtime-guard work and decide
-whether a small, safe reduction is justified.** This is the immediate task toward
-checkpoint A; the complete simulation release above remains the goal.
+**Review the current mutation and dispatch contract, then decide whether a
+small fastpath can preserve it.** This is the immediate task toward checkpoint A;
+the complete simulation release above remains the goal.
 
-1. Measure the existing guard through real worker entry points with bounded,
-   authored fixtures. Retain source identities, commands, workload sizes,
-   operation counts and timings so the comparison can be reproduced.
-2. If the measurements identify redundant work, test the smallest correction
-   against legitimate imports and existing refusals, including mutable module
-   caches and overridden container behavior. Keep the current code if a safe
-   benefit is not demonstrated; report the remaining uncertainty.
-3. Independently review the result and any patch, run the affected regressions,
-   and commit the measured evidence. This work unit ends with a supported
-   decision to retain or change the guard, not another unmeasured optimization.
+1. Use the retained measurements and authored cases to describe the guard's
+   existing cache callbacks, container overrides and mutation visibility,
+   including legitimate acceptance and required refusals.
+2. Review the smallest compatible fastpath design against that contract. Preserve
+   current callback/container behavior and custody checks; a stronger restriction
+   is a contract change, not an equivalent optimization.
+3. Independently review the design. If no small compatible design is supported,
+   retain the original guard and define bounded guard-time accounting before
+   further installed qualification. This unit ends with a reviewed design or a
+   retain-and-account decision; it does not create a general framework.
 
 Authored measurements cannot prove the installed timeout's cause or qualify the
 runtime. Any later installed qualification needs distinct reviewed controls and
@@ -125,12 +125,26 @@ The last marker does not identify where the remaining time was spent. The audit
 CLI correctly refused the nonzero transport; it did not perform a full post-run
 payload check. Attempt 08 is consumed; the cause remains unknown.
 
-**First unfinished action:** measure repeated guard computation with authored
-fixtures. Implement only a proven redundancy fix that preserves acceptance,
-refusal and custody checks, the old 05–07 predicates, and the unchanged 2GiB RAM
-floor/180s normal-return deadline. Require independent source review before any
-separately reviewed future controls. Preserve failed/consumed 01–08 outcomes;
-no 09 controls, admission or invocation exist, and there is no silent 08 retry.
+[PR169](https://github.com/Aadrika08/palimpsest/pull/169), pushed at
+[`3975f8a`](https://github.com/Aadrika08/palimpsest/commit/3975f8a158c0899e9c640b323488de9a0f0a40df),
+completes the authored guard-cost measurement. The original passes nine cases in
+13.43s; its 2048-entry cache median is 93.742ms/check. The direct variant measures
+1.517ms/check but has two failures/seven passes on overridden container membership.
+The hoisted variant measures 1.068ms/check but has one failure/eight passes on callback removal.
+Both faster probes change current behavior; production remains unchanged.
+Independent outcome review found no material findings. All 32 artifacts/291,335B,
+including three empty files, verify against originals, source Git and the committed
+archive. These synthetic cases do not establish the cause of 08's timeout,
+installed qualification or independent FD proof.
+
+**First unfinished action:** review the narrow mutation/dispatch contract and a
+small compatible fastpath design preserving current cache callback/container
+acceptance, refusal and custody. If no such design is supported, retain the
+original guard and define bounded guard-time accounting before further installed
+qualification. Require independent source review before separately reviewed future
+controls. Preserve the old 05–07 predicates, failed/consumed 01–08 outcomes and the
+unchanged 2GiB RAM floor/180s normal-return deadline. No 09 controls, admission or
+invocation exist, and there is no silent 08 retry.
 After runtime qualification and separate operator/renderer admission, the product
 exit remains one real recorded, replayed and exported public manual CPU episode.
 Detailed raw results remain in the linked PR/report packets, dated histories and
