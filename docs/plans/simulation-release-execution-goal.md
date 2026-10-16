@@ -10,29 +10,33 @@ Implementation history is preserved in the unchanged [earlier history](simulatio
 and the [byte-identical prior goal snapshot](simulation-release-execution-goal-history-2026-10-16.md).
 Those dated records are evidence, not instructions to repeat consumed attempts.
 
-## Active work unit: prove a compatible reduction in guard cost
+## Active work unit: implement and prove the explicit q4 guard contract
 
-**Review and test a small source change that reduces repeated guard work while
-preserving the existing acceptance, refusal and dispatch behavior.** This is the
-next bounded prerequisite for checkpoint A; one real recorded/replayed/exported
-episode remains the product exit.
+**Implement the separately versioned q4 cache-boundary contract, prove its
+authored semantics and measure its bounded guard cost.** The prospective
+[engineering contract](https://github.com/Aadrika08/palimpsest/blob/69af058e9e59815e6731affe7cc7fc3f03111a2f/docs/plans/puck-cpu-guard-v4-prospective.md)
+is selected for this next source unit. It changes acceptance semantics; it is
+not an equivalent optimization of arbitrary callbacks. The product exit remains
+one real recorded/replayed/exported public episode before the complete release.
 
-1. Use the retained actual 09 cost observations to select one narrow source path.
-   Compare it with the original guard and the preserved direct-membership and
-   hoisting counterexamples; the diagnostics do not prove the full timeout cause.
-2. Prove the required mutation/dispatch contract before changing production.
-   Use authored fixtures and bounded measurement. Retain the existing predicates,
-   refusal checks, input identities and resource limits; do not weaken tests.
-3. Independently review the source result and evidence. If equivalence cannot be
-   established without a general framework, record the concrete prospective
-   contract decision needed rather than silently changing acceptance.
+1. Write failing authored q4 descriptor, strict-type, snapshot and refusal cases
+   before production changes. Preserve q1–q3 tags, defaults, predicates, operator
+   dispatch, diagnostics and existing tests, including all rejected shortcuts.
+2. Add only the explicit q4 branch: early canonical container/name validation,
+   one allowance snapshot after reconciliation, unchanged identity/seal/native/
+   custody/process/environment checks and a late fail-closed stability comparison
+   after callback-capable work. Keep close/poison, final deadlines and finite
+   bounds. Observed mutation refuses; no snapshot retry or atomicity claim.
+3. Only after semantic checks pass, run the declared 128/512/2048 authored workload
+   and independently review the source, raw results and bytes. Source improvement
+   is not installed qualification. Existing outer epochs stay strict; a distinct
+   later source epoch and fresh reviewed controls/admission precede any actual run.
 
-**Current status (2026-10-16): actual 09 is failed and consumed.** Its fresh
-data-only admission passed, but its sole runtime invocation exhausted the 180s
-normal-return deadline. The independent auditor refused the nonzero transport.
-No installed-runtime pass, completed episode or actual 10 controls/admission/run
-exists. A distinct future actual attempt still needs reviewed, frozen and pushed
-source/controls, fresh complete admission, independent receipt review and audit.
+**Current status (2026-10-16): the in-place equivalence candidate is rejected.**
+Baseline passes seven cases; the candidate fails the new reflected-union case.
+Production remains unchanged. Q4 is designed, not implemented or validated.
+Attempts 01–09 remain consumed; no actual 10 controls/admission/run exists.
+All seven release gates remain open.
 
 Disk clearance permits preparation; each actual execution still needs its own
 fresh resource checks. After runtime and separate operator/renderer qualification,
@@ -190,14 +194,31 @@ findings. All 144 artifacts / 13,668,698B / seven empty files match the retained
 originals and source/control Git origins. Attempts 01–09 remain consumed; no
 actual 10 controls, admission or invocation exist.
 
-**First unfinished action:** review the measured guard paths and prove one small
-compatible source optimization against the original mutation/dispatch behavior,
-then verify it with the retained refusal cases, authored integration tests,
-bounded measurements and independent review. If its contract must change,
-describe that prospective decision explicitly. Do not retry 09, widen limits or
-create another actual run from source tests alone. After runtime and separate
-operator/renderer qualification, complete the real public episode bundle.
-Detailed evidence remains in the linked reports, dated histories and Git.
+The completed authored equivalence experiment is preserved in
+[PR173](https://github.com/Aadrika08/palimpsest/pull/173) at [`69af058`](https://github.com/Aadrika08/palimpsest/commit/69af058e9e59815e6731affe7cc7fc3f03111a2f).
+Its plan and new case were committed first at `fb20e74`. Unchanged production
+passes seven semantic cases in 10.01s; the sole in-place candidate passes six and
+fails one in 9.73s. Both deselect the three timing cases. The original propagates
+the reflected-union sentinel, closes owned holders and stays poisoned; the
+candidate skips that exception. It is rejected without a performance run.
+Independent source/outcome/publication reviews found no material findings. All
+63 artifacts / 680,759B / two empty files verify against retained originals and
+test-first source Git. This rejects one rewrite, not every possible optimization.
+No installed-runtime or performance acceptance follows.
+
+The selected prospective q4 contract uses canonical names/containers, one
+boundary snapshot and a late fail-closed comparison. It deliberately changes
+sampling/dispatch semantics, retains q1–q3 and cannot detect every asynchronous
+ABA/remove-and-restore event. It is not implemented or qualified yet. This
+engineering decision changes no scientific protocol, model threshold or human
+acceptance gate.
+
+**First unfinished action:** add authored q4 contract/refusal tests and implement
+the reviewed source-only branch while preserving all legacy paths. Independently
+verify snapshot boundaries, late mutation refusal, close/poison and bounded cost
+before a separate future actual source/control epoch. Do not retry 09 or create
+actual 10 from source tests alone. After runtime/operator/renderer qualification,
+complete the real public episode bundle.
 
 [PR163](https://github.com/Aadrika08/palimpsest/pull/163) already implements the
 manual constructor seam with exact arguments and seed/reset order preserved;
