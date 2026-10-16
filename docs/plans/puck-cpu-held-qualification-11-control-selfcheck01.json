@@ -1,0 +1,58 @@
+{
+  "admission_main_invoked": false,
+  "closure": {
+    "children": [],
+    "fd_after": 4,
+    "fd_before": 4,
+    "threads": []
+  },
+  "compact_configuration_authenticated": true,
+  "configuration": {
+    "sha256": "6e28bef8bebd6daecfdf34e762584312f984e0d77c7a822a119e0c89e136b212",
+    "size_bytes": 9130
+  },
+  "consumed": {
+    "admission10_01": "FAILED_CONSUMED",
+    "admission10_02": "ADMITTED_CONSUMED_BY_RUNTIME10",
+    "qualifications07_10": "FAILED_CONSUMED"
+  },
+  "freeze": {
+    "sha256": "d9c34de3177fb3ea18849ece9133334e1abb963b6fc49f8e7b21988a47582983",
+    "size_bytes": 588680
+  },
+  "full_manifest_warm_raw_roles": true,
+  "hidden_imports_undeclared": [
+    "networkx",
+    "pandas",
+    "sklearn",
+    "torch.utils._cxx_pytree"
+  ],
+  "historical_absent_paths": 21,
+  "historical_missing_receipts": 17,
+  "historical_run_files": 102,
+  "negative_absence_names": 32,
+  "new_helper_paths": 6,
+  "payload_census_or_rehash": false,
+  "pinned_bytes": 121346836,
+  "pins": 2427,
+  "preparation_relative_changed_source_paths": [
+    "scripts/puck_worker_bootstrap.py",
+    "scripts/qualify_puck_cpu_held_runtime.py",
+    "src/palimpsest/puck_dependency_bindings.py",
+    "src/palimpsest/puck_dependency_imports.py",
+    "src/palimpsest/puck_runtime_qualification.py"
+  ],
+  "pretty_manifest_authenticated": true,
+  "prior_amendment02_and_original10_pins_preserved": true,
+  "qualifier_validate_configuration": true,
+  "replaced_live_sources_archived": [
+    "scripts/audit_puck_cpu_held_runtime.py",
+    "scripts/observe_puck_cpu_held_allocation.py",
+    "scripts/puck_worker_bootstrap.py",
+    "scripts/qualify_puck_cpu_held_runtime.py",
+    "src/palimpsest/puck_runtime_qualification.py"
+  ],
+  "runtime_invoked": false,
+  "status": "PASS_AUTHENTICATED_CONTROL_METADATA_ONLY",
+  "worker_qualification": "v5"
+}
