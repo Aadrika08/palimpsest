@@ -37,6 +37,7 @@ QUALIFY07='runs/puck-cpu-held-qualification-07'
 QUALIFY08='runs/puck-cpu-held-qualification-08'
 QUALIFY09='runs/puck-cpu-held-qualification-09'
 QUALIFY10='runs/puck-cpu-held-qualification-10'
+QUALIFY11='runs/puck-cpu-held-qualification-11'
 PILLOW_NATIVE_ORIGINS=(
     dict(name='PIL._imaging',policy='held-directory-observed-v1'),
     dict(name='PIL._imagingft',policy='held-directory-observed-v1'),
@@ -109,6 +110,12 @@ QUALIFY06_NEGATIVE_IMPORTS=sorted(QUALIFY03_NEGATIVE_IMPORTS+[
     'OpenGL_accelerate','accimage','av','colorama','defusedxml','dill','flint',
     'gmpy','gmpy2','monkeytype','opt_einsum','pydot','pynvml','torchdistx','tqdm','triton',
 ])
+# Policy v5: absent names answer like stock misses; hidden names are present but unavailable.
+QUALIFY11_NEGATIVE_IMPORTS=sorted(QUALIFY06_NEGATIVE_IMPORTS+[
+    'backports_abc','fx2trt_oss','hypothesis','onnx','onnx_tf','onnxruntime','tabulate',
+    'tensorflow','tensorrt','torch2trt','tree','tvm','xarray',
+])
+QUALIFY11_HIDDEN_IMPORTS=['networkx','pandas','sklearn','torch.utils._cxx_pytree']
 LEGACY_AUDITOR_SHA256='19723b4ec19c6cd8fd29d38b5cbabab60f89c136ee37564f6e94175439b4eed9'
 VERSIONS=dict(numpy='2.2.5',torch='2.9.0+cpu',torchvision='0.24.0+cpu',mujoco='3.3.6')
 ENVIRONMENT=dict(PYTHONDONTWRITEBYTECODE='1',LC_ALL='C.UTF-8',LANG='C.UTF-8',
@@ -213,6 +220,12 @@ def _negative_imports(names):
         raise ValueError('Exact finite CPU missing-import roster required')
 
 
+def _hidden_imports(names,negative_imports):
+    _negative_imports(names)
+    if any(a==b or a.startswith(b+'.') or b.startswith(a+'.') for a in names for b in negative_imports):
+        raise ValueError('Exact finite CPU hidden-import roster required')
+
+
 def configuration_template(*,phase,root,stage_parent,sources,inputs,negative_imports,preparation=None,preparation_acceptance=None):
     result=dict(kind='puck-cpu-held-runtime-allocation-v1',version=1,phase=phase,allocation_id=1,
         root=root,stage_parent=stage_parent,sources=sources,inputs=inputs,interpreter=dict(INTERPRETER),
@@ -231,8 +244,8 @@ def validate_configuration(config):
           'interpreter','environment','expected_versions','limits','negative_imports','claims'}
     phase=config.get('phase') if type(config) is dict else None
     kind=config.get('kind') if type(config) is dict else None
-    epoch=10 if kind=='puck-cpu-held-runtime-allocation-v10' else 9 if kind=='puck-cpu-held-runtime-allocation-v9' else 8 if kind=='puck-cpu-held-runtime-allocation-v8' else 7 if kind=='puck-cpu-held-runtime-allocation-v7' else 6 if kind=='puck-cpu-held-runtime-allocation-v6' else 5 if kind=='puck-cpu-held-runtime-allocation-v5' else 4 if kind=='puck-cpu-held-runtime-allocation-v4' else 3 if kind=='puck-cpu-held-runtime-allocation-v3' else 2 if kind=='puck-cpu-held-runtime-allocation-v2' else 1
-    amended=epoch in (2,3,4,5,6,7,8,9,10)
+    epoch=11 if kind=='puck-cpu-held-runtime-allocation-v11' else 10 if kind=='puck-cpu-held-runtime-allocation-v10' else 9 if kind=='puck-cpu-held-runtime-allocation-v9' else 8 if kind=='puck-cpu-held-runtime-allocation-v8' else 7 if kind=='puck-cpu-held-runtime-allocation-v7' else 6 if kind=='puck-cpu-held-runtime-allocation-v6' else 5 if kind=='puck-cpu-held-runtime-allocation-v5' else 4 if kind=='puck-cpu-held-runtime-allocation-v4' else 3 if kind=='puck-cpu-held-runtime-allocation-v3' else 2 if kind=='puck-cpu-held-runtime-allocation-v2' else 1
+    amended=epoch in (2,3,4,5,6,7,8,9,10,11)
     if amended:keys.add('preparation_acceptance')
     elif phase=='qualify':keys.add('preparation')
     if (phase not in LIMITS or set(config)!=keys or (amended and phase!='qualify')
@@ -266,10 +279,13 @@ def validate_configuration(config):
         raise ValueError('Exact CPU qualification0'+str(epoch)+' missing-import roster required')
     if epoch in (6,7,8,9,10) and config['negative_imports']!=QUALIFY06_NEGATIVE_IMPORTS:
         raise ValueError('Exact CPU qualification0'+str(epoch)+' missing-import roster required')
+    if epoch==11 and config['negative_imports']!=QUALIFY11_NEGATIVE_IMPORTS:
+        raise ValueError('Exact CPU qualification11 missing-import roster required')
 
 
 def allocation_output(config):
     validate_configuration(config)
+    if config['version']==11:return QUALIFY11
     if config['version']==10:return QUALIFY10
     if config['version']==9:return QUALIFY09
     if config['version']==8:return QUALIFY08
@@ -313,7 +329,7 @@ def validate_publication_candidate(prior,current,*,pillow_origins=False):
 def validate_preparation_acceptance(config,blobs):
     """Bind historical data acceptance without assigning its old source proof to new bytes."""
     validate_configuration(config)
-    if config['version'] not in (2,3,4,5,6,7,8,9,10):raise ValueError('CPU amendment02–10 configuration required')
+    if config['version'] not in (2,3,4,5,6,7,8,9,10,11):raise ValueError('CPU amendment02–11 configuration required')
     acceptance=config['preparation_acceptance'];values={}
     for role,row in acceptance.items():
         raw=blobs[role]
@@ -326,18 +342,18 @@ def validate_preparation_acceptance(config,blobs):
     validate_configuration(prior)
     if prior['version']!=1 or prior['phase']!='prepare':raise ValueError('Historical CPU preparation01 required')
     shared=('root','stage_parent','inputs','interpreter','environment','expected_versions','negative_imports','claims')
-    if config['version'] in (3,4,5,6,7,8,9,10):
+    if config['version'] in (3,4,5,6,7,8,9,10,11):
         if prior['negative_imports']!=PREPARATION_NEGATIVE_IMPORTS:
             raise ValueError('Exact historical CPU preparation missing-import roster required')
         shared=tuple(k for k in shared if k!='negative_imports')
-    if config['version'] in (5,6,7,8,9,10):
+    if config['version'] in (5,6,7,8,9,10,11):
         shared=tuple(k for k in shared if k!='inputs')
         if (any(prior['inputs'][k]!=config['inputs'][k] for k in INPUT_ROLES if k!='candidate')
                 or any(prior['inputs']['candidate'][k]==config['inputs']['candidate'][k] for k in ('path','sha256'))):
             raise ValueError('CPU publication amendment must change only a distinct candidate pin')
     if any(prior[k]!=config[k] for k in shared):raise ValueError('CPU amendment changed prepared data or policy')
     changed={old['path'] for old,new in zip(prior['sources'],config['sources']) if old!=new}
-    if config['version'] in (8,9,10):
+    if config['version'] in (8,9,10,11):
         if changed!={BOOTSTRAP,'scripts/qualify_puck_cpu_held_runtime.py',DIAGNOSTIC_BINDINGS,
                      'src/palimpsest/puck_dependency_imports.py','src/palimpsest/puck_runtime_qualification.py'}:
             raise ValueError('CPU diagnostic0'+str(config['version'])+' requires exactly five changed source paths')
@@ -420,10 +436,12 @@ def qualification_command(worker_command):
     return [PYTHON,'-I','-B','-S','-c',launcher]+list(worker_command)
 
 
-def worker_registration(source_files,dependency_raw,*,negative_imports,qualification_version=3):
-    if type(qualification_version) is not int or qualification_version not in (3,4):
+def worker_registration(source_files,dependency_raw,*,negative_imports,qualification_version=3,hidden_imports=None):
+    if type(qualification_version) is not int or qualification_version not in (3,4,5):
         raise ValueError('Exact CPU worker qualification version required')
     _negative_imports(negative_imports)
+    if qualification_version==5:_hidden_imports(hidden_imports,negative_imports)
+    elif hidden_imports is not None:raise ValueError('CPU hidden imports require worker qualification v5')
     if [pin(r)['path'] for r in source_files]!=list(WORKER_SOURCES):raise ValueError('Exact CPU worker source closure required')
     bootstrap=next(r for r in source_files if r['path']==BOOTSTRAP)
     raw=read(ROOT/BOOTSTRAP,MiB,bootstrap['sha256'])
@@ -443,15 +461,19 @@ def worker_registration(source_files,dependency_raw,*,negative_imports,qualifica
         environment=dict(ENVIRONMENT),cwd='/puck/source',argv_prefix=prefix,
         dependencies=dict(path='/puck/control/dependencies.json',size_bytes=len(dependency_raw),sha256=digest(dependency_raw)),
         qualification=dict(kind='puck-held-runtime-import-qualification-v'+str(qualification_version),version=qualification_version,
-            expected_versions=dict(VERSIONS),stdlib_cache_aliases={'__mp_main__':'__main__'},negative_imports=list(negative_imports)),
+            expected_versions=dict(VERSIONS),stdlib_cache_aliases={'__mp_main__':'__main__'},negative_imports=list(negative_imports),
+            **({'hidden_imports':list(hidden_imports)} if qualification_version==5 else {})),
         qualification_claims=[],executable=False)
     worker_raw=api.canonical(result)
     return result,prefix+[digest(worker_raw)]
 
 
-def validate_worker_result(result,*,registration_sha256,dependency_sha256,dependencies,negative_imports,qualification_version=3):
-    if type(qualification_version) is not int or qualification_version not in (3,4):
+def validate_worker_result(result,*,registration_sha256,dependency_sha256,dependencies,negative_imports,qualification_version=3,hidden_imports=None):
+    if type(qualification_version) is not int or qualification_version not in (3,4,5):
         raise ValueError('Exact CPU worker qualification version required')
+    if qualification_version==5:_hidden_imports(hidden_imports,negative_imports)
+    elif hidden_imports is not None:raise ValueError('CPU hidden imports require worker qualification v5')
+    declared=set(negative_imports)|set(hidden_imports or ())
     dep=result.get('dependencies',{});entry=result.get('entry_result',{});imports=entry.get('imports',[])
     count=sum(len(r['files']) for r in dependencies['roots'])
     byte_count=sum(f['size_bytes'] for r in dependencies['roots'] for f in r['files'])
@@ -464,7 +486,8 @@ def validate_worker_result(result,*,registration_sha256,dependency_sha256,depend
             or result.get('interpreter_object_bound') is not True or result.get('python_version')!='3.11.15'
             or any(result.get(k) is not False for k in ('runtime_qualified','dependencies_qualified','native_authorized','collection_authorized','executable'))
             or result.get('qualification_claims')!=[] or result.get('expected_missing_imports')!=negative_imports
-            or type(result.get('denied_imports')) is not list or not set(result['denied_imports'])<=set(negative_imports)
+            or type(result.get('denied_imports')) is not list or not set(result['denied_imports'])<=declared
+            or (qualification_version==5 and result.get('expected_hidden_imports')!=hidden_imports)
             or dep.get('registration_sha256')!=dependency_sha256 or dep.get('native_identity')!='tmpfs-raw-dev-inode-v1'
             or type(dep.get('root_count')) is not int or dep['root_count']!=4
             or type(dep.get('file_count')) is not int or dep['file_count']!=count
@@ -647,7 +670,7 @@ def execute(config,raw,started):
     from palimpsest.puck_cpu_registration import build_cpu_source_registration,attach_cpu_candidate
     from palimpsest.puck_cpu_namespace import sandbox_command
     phase=config['phase'];limits=config['limits'];output=ROOT/allocation_output(config);stage=Path(config['stage_parent'])
-    amended=config['version'] in (2,3,4,5,6,7,8,9,10)
+    amended=config['version'] in (2,3,4,5,6,7,8,9,10,11)
     rows=config['sources']+list(config['inputs'].values())
     unique={r['path']:r for r in rows}
     if len(unique)!=len(rows):raise ValueError('Overlapping CPU source/input pins')
@@ -658,7 +681,7 @@ def execute(config,raw,started):
             acceptance=config['preparation_acceptance'];rows+=list(acceptance.values())
             prior_raw=read(ROOT/acceptance['configuration']['path'],MiB,acceptance['configuration']['sha256'])
             prior=decode(prior_raw);validate_configuration(prior)
-            if config['version'] in (5,6,7,8,9,10):rows.append(prior['inputs']['candidate'])
+            if config['version'] in (5,6,7,8,9,10,11):rows.append(prior['inputs']['candidate'])
             old_configuration=OUTPUTS['prepare']+'/configuration.json'
             if acceptance['configuration']['path']!=old_configuration:
                 rows.append(dict(acceptance['configuration'],path=old_configuration))
@@ -724,11 +747,11 @@ def execute(config,raw,started):
                     dependency_raw=read(prepared/'payload/dependencies.json',16*MiB,dep['sha256'])
                     if len(dependency_raw)!=dep['size_bytes']:raise ValueError('CPU prepared registration size differs')
                     dependencies=decode(dependency_raw);expected=dependencies
-                    if config['version'] in (5,6,7,8,9,10):
+                    if config['version'] in (5,6,7,8,9,10,11):
                         old_pin=prior['inputs']['candidate']
                         old_raw=read(ROOT/old_pin['path'],16*MiB,old_pin['sha256'])
                         if len(old_raw)!=old_pin['size_bytes']:raise ValueError('Historical candidate size differs')
-                        validate_publication_candidate(decode(old_raw),candidate,pillow_origins=config['version'] in (7,8,9,10))
+                        validate_publication_candidate(decode(old_raw),candidate,pillow_origins=config['version'] in (7,8,9,10,11))
                         if (read(prepared/'control/candidate.json',16*MiB,old_pin['sha256'])!=old_raw
                                 or attach_cpu_candidate(dependencies,old_raw,expected_sha256=old_pin['sha256'],deadline=deadline)!=dependencies):
                             raise ValueError('Historical candidate/prepared dependency profile differs')
@@ -738,7 +761,7 @@ def execute(config,raw,started):
                     if (attached!=expected or dependencies.get('distributions')!=source_reg['distributions']
                             or any(a.get('files')!=b['files'] for a,b in zip(dependencies['roots'],source_reg['roots']))):
                         raise ValueError('CPU prepared bytes/profile differ from accepted source plan')
-                    if config['version'] in (5,6,7,8,9,10):
+                    if config['version'] in (5,6,7,8,9,10,11):
                         dependencies=attached;dependency_raw=canonical(attached)[:-1]
                     if amended:
                         audit=decode(old_blobs['independent_audit'])
@@ -751,9 +774,10 @@ def execute(config,raw,started):
                     sandbox_source=output/'worker-source' if amended else prepared/'worker-source'
                     if amended:create_capsule(sandbox_source,WORKER_SOURCES,source_bytes,controls.write)
                     for row in files:read(sandbox_source/row['path'],MiB,row['sha256'])
-                    qualification_version=4 if config['version']==10 else 3
+                    qualification_version=5 if config['version']==11 else 4 if config['version']==10 else 3
+                    hidden_imports=QUALIFY11_HIDDEN_IMPORTS if qualification_version==5 else None
                     worker,command=worker_registration(files,dependency_raw,negative_imports=config['negative_imports'],
-                        qualification_version=qualification_version)
+                        qualification_version=qualification_version,hidden_imports=hidden_imports)
                     worker_raw=json.dumps(worker,sort_keys=True,separators=(',',':'),ensure_ascii=False,allow_nan=False).encode()
                     controls.write(output/'control/worker-registration.json',worker_raw)
                     command=qualification_command(command)
@@ -783,7 +807,7 @@ def execute(config,raw,started):
                     worker_result=decode(read(output/'logs/stdout.log',MiB))
                     validate_worker_result(worker_result,registration_sha256=digest(worker_raw),dependency_sha256=digest(dependency_raw),
                         dependencies=decode(dependency_raw),negative_imports=config['negative_imports'],
-                        qualification_version=qualification_version)
+                        qualification_version=qualification_version,hidden_imports=hidden_imports)
                     verify_staged_roots(str(stage),dependencies,prep['staged_roots'])
                     result.update(status='imports_completed',held_four_imports_observed=True,worker_stdout_sha256=digest(read(output/'logs/stdout.log',MiB)))
                 native_checks()

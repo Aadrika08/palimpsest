@@ -17,7 +17,7 @@ def qualify(admission):
     if admission._reg['version']!=3 or type(config) is not dict:
         raise ValueError('Fixed runtime qualification registration required')
     qualification_version=config['version']
-    cpu=qualification_version in (3,4)
+    cpu=qualification_version in (3,4,5)
     # Capture the prospective four-import expectations before any dependency
     # initializer can mutate the registration. Legacy descriptors keep v1 data.
     expected=(tuple((name,config['expected_versions'][name]) for name in CPU_MODULES)

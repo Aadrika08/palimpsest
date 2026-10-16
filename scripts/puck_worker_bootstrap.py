@@ -176,30 +176,36 @@ def _parse(raw, expected):
             raise ValueError('Dependency registration reference ceiling exceeded')
     if reg['version']==3:
         q=reg['qualification']
-        if (type(q) is not dict or set(q)!= {'kind','version','expected_versions','stdlib_cache_aliases','negative_imports'}
-                or type(q['version']) is not int or q['version'] not in (1,2,3,4)
+        keys={'kind','version','expected_versions','stdlib_cache_aliases','negative_imports'}
+        if (type(q) is not dict or type(q.get('version')) is not int or q['version'] not in (1,2,3,4,5)
+                or set(q)!=(keys|{'hidden_imports'} if q['version']==5 else keys)
                 or q['kind']!='puck-held-runtime-import-qualification-v'+str(q['version'])
                 or type(q['expected_versions']) is not dict
                 or set(q['expected_versions'])!=({'numpy','torch','torchvision','mujoco'}
-                    if q['version'] in (3,4) else {'numpy','torch','mujoco'})
+                    if q['version'] in (3,4,5) else {'numpy','torch','mujoco'})
                 or any(type(v) is not str or not 1<=len(v)<=128 for v in q['expected_versions'].values())
                 or type(q['stdlib_cache_aliases']) is not dict
                 or q['stdlib_cache_aliases']!={'__mp_main__':'__main__'}):
             raise ValueError('Exact fixed runtime qualification descriptor required')
-        if q['version']==4: _q4_copy(sys.stdlib_module_names,frozenset)
+        if q['version'] in (4,5): _q4_copy(sys.stdlib_module_names,frozenset)
         negatives=q['negative_imports']
         if q['version']==1:
             if negatives!=['org']:raise ValueError('Exact legacy qualification denial required')
         else:
-            if (type(negatives) is not list or not 1<=len(negatives)<=128 or any(
-                    type(name) is not str or len(name)>512 or not name.isascii()
-                    or name in ('__main__','__mp_main__','_puck_held_file_bootstrap')
-                    for name in negatives)):
-                raise ValueError('Bounded expected missing import declaration required')
-            for name in negatives:_name(name)
-            if negatives!=sorted(set(negatives)) or any(
-                    name.startswith(parent+'.') for index,name in enumerate(negatives) for parent in negatives[:index]):
-                raise ValueError('Expected missing imports must be sorted, unique and nonoverlapping')
+            # V5 hidden names (present but unavailable) obey the absent-name format.
+            for names in ((negatives,q['hidden_imports']) if q['version']==5 else (negatives,)):
+                if (type(names) is not list or not 1<=len(names)<=128 or any(
+                        type(name) is not str or len(name)>512 or not name.isascii()
+                        or name in ('__main__','__mp_main__','_puck_held_file_bootstrap')
+                        for name in names)):
+                    raise ValueError('Bounded expected missing import declaration required')
+                for name in names:_name(name)
+                if names!=sorted(set(names)) or any(
+                        name.startswith(parent+'.') for index,name in enumerate(names) for parent in names[:index]):
+                    raise ValueError('Expected missing imports must be sorted, unique and nonoverlapping')
+            if q['version']==5 and any(a==b or a.startswith(b+'.') or b.startswith(a+'.')
+                    for a in q['hidden_imports'] for b in negatives):
+                raise ValueError('Expected hidden imports must be disjoint from expected missing imports')
     _path(reg['source_root']); _path(reg['cwd'])
     files = reg['source_files']
     if type(files) is not list or not 1 <= len(files) <= 512:
@@ -240,7 +246,8 @@ def _parse(raw, expected):
             raise ValueError('Unregistered package parent')
     if reg['version']==3 and reg['qualification']['version']>=2:
         local_tops={name.split('.')[0] for name in modules.keys()|namespaces.keys()}
-        if any(name.split('.')[0] in local_tops for name in reg['qualification']['negative_imports']):
+        if any(name.split('.')[0] in local_tops for name in
+                reg['qualification']['negative_imports']+reg['qualification'].get('hidden_imports',[])):
             raise ValueError('Expected missing import overlaps authenticated local source')
     runtime = reg['runtime']
     if type(runtime) is not dict or set(runtime) != {'root', 'files', 'python_version'}:
@@ -310,8 +317,17 @@ class _SourceFinder(importlib.abc.MetaPathFinder):
                     if self.owner._dependencies is None:
                         raise RuntimeError('Expected missing import requires admitted dependency custody')
                     self.owner._dependencies.provider.require_absent_imports((fullname,))
-                self.owner._denied_imports.add(fullname); expected_denial=True
+                self.owner._denied_imports.add(fullname)
+                # V5 answers like stock CPython; v1-v4 keep their explicit raise.
+                if self.owner._missing_policy_version==5: return self._stock_miss(fullname, path, target)
+                expected_denial=True
                 raise ModuleNotFoundError('Explicit qualification import denial: '+fullname,name=fullname)
+            if self.owner._missing_policy_version==5 and fullname in self.owner._hidden_imports:
+                # Present but unregistered: unavailable, never located or executed.
+                if self.owner._dependencies is None:
+                    raise RuntimeError('Expected unavailable import requires admitted dependency custody')
+                self.owner._denied_imports.add(fullname)
+                return self._stock_miss(fullname, path, target)
             if fullname in self.owner._modules:
                 source = self.owner._modules[fullname]
                 loader = _SourceLoader(self.owner, fullname, source)
@@ -329,6 +345,13 @@ class _SourceFinder(importlib.abc.MetaPathFinder):
         except BaseException as error:
             if not expected_denial: self.owner._fail(error)
             raise
+
+    def _stock_miss(self, fullname, path, target):
+        # Returning None defers to the original finders; none may resolve it.
+        for finder in self.owner._meta_path:
+            if finder.find_spec(fullname, path, target) is not None:
+                raise ImportError('Declared unavailable import resolved by a later finder: '+fullname, name=fullname)
+        return None
 
     def find_distributions(self, context):
         if self.owner._dependencies is None: return iter(())
@@ -354,13 +377,14 @@ class HeldWorkerBootstrap:
         q=self._reg.get('qualification',{})
         self._missing_policy_version=q.get('version',0)
         self._negative_imports=tuple(q.get('negative_imports',()))
-        self._stdlib_names=sys.stdlib_module_names if self._missing_policy_version==4 else None
-        if self._missing_policy_version==4: self._q4_snapshot(set(),set())
+        self._hidden_imports=tuple(q.get('hidden_imports',()))
+        self._stdlib_names=sys.stdlib_module_names if self._missing_policy_version in (4,5) else None
+        if self._missing_policy_version in (4,5): self._q4_snapshot(set(),set())
         self._main_module=sys.modules.get('__main__'); self._denied_imports=set()
-        self._trace_enabled=self._missing_policy_version in (3,4)
+        self._trace_enabled=self._missing_policy_version in (3,4,5)
         self._trace_started=time.monotonic(); self._trace_count=0; self._trace_bytes=0
         self._diagnostic_io=True
-        self._guard_enabled=self._missing_policy_version in (3,4)
+        self._guard_enabled=self._missing_policy_version in (3,4,5)
         self._guard_origin=None; self._guard_last=None; self._guard_next=0; self._guard_context=''
         self._guard_count=0; self._guard_bytes=0; self._guard_busy=False
         self._guard_depth=0; self._guard_current=None; self._guard_nested=0
@@ -566,7 +590,7 @@ class HeldWorkerBootstrap:
             if sys.version_info[:3] != (3, 11, 15): raise ValueError('Measured Python version differs')
             if (globals().get('__bootstrap_raw__') is None or digest(__bootstrap_raw__) != descriptors[BOOTSTRAP]['sha256']):
                 raise ValueError('Bootstrap was not compiled from seeded authenticated bytes')
-            if self._missing_policy_version==4: self._q4_snapshot(set(),set())
+            if self._missing_policy_version in (4,5): self._q4_snapshot(set(),set())
             allowed = set(sys.stdlib_module_names)|{'__main__'}
             if any(name.split('.')[0] not in allowed for name in sys.modules):
                 raise ValueError('Foreign or local source was preloaded before bootstrap')
@@ -608,11 +632,18 @@ class HeldWorkerBootstrap:
                     self._modules.keys() | self._namespaces.keys(),
                     [self._reg['source_root'], self._reg['runtime']['root']])
                 self._dependency_dispatch=(self._dependencies,DependencyImports)
-                if (self._missing_policy_version in (3,4) and
+                if (self._missing_policy_version in (3,4,5) and
                         provider.snapshot().get('native_identity')!='tmpfs-raw-dev-inode-v1'):
                     raise ValueError('Four-import qualification requires admitted v3 tmpfs dependency custody')
                 if self._missing_policy_version>=2:
                     provider.require_absent_imports(self._negative_imports)
+                if self._missing_policy_version==5:
+                    profile=provider.import_profile()
+                    registered=(self._dependencies.modules.keys()|self._dependencies.namespaces.keys()
+                        |{row['name'] for key in ('exports','native_cache') for row in profile.get(key,[])})
+                    for hidden in self._hidden_imports:
+                        if any(name==hidden or name.startswith(hidden+'.') for name in registered):
+                            raise ValueError('Hidden import overlaps a registered dependency module, namespace or export: '+hidden)
                 self._phase('dependencies.ready')
             self.recheck(); self._phase('bootstrap.ready'); return self
         except BaseException as error: self._fail(error); raise
@@ -704,16 +735,19 @@ class HeldWorkerBootstrap:
             copied=_q4_copy(value,set,remaining); names.append(copied); remaining-=len(copied)
         return dependency,maps,sets,tuple(copies),tuple(names),self._stdlib_names
 
-    def _q4_stable(self, snapshot, exported, second_exported, aliases, negative_imports):
+    def _q4_stable(self, snapshot, exported, second_exported, aliases, negative_imports, hidden_imports):
         if self._state!='active':
             raise RuntimeError('Bootstrap inactive or poisoned') from self._first_failure
-        q=self._reg.get('qualification')
-        if (type(self._missing_policy_version) is not int or self._missing_policy_version!=4
-                or type(q) is not dict or type(q.get('version')) is not int or q['version']!=4
-                or q.get('kind')!='puck-held-runtime-import-qualification-v4'
+        q=self._reg.get('qualification'); version=self._missing_policy_version
+        if (type(version) is not int or version not in (4,5)
+                or type(q) is not dict or type(q.get('version')) is not int or q['version']!=version
+                or q.get('kind')!='puck-held-runtime-import-qualification-v'+str(version)
                 or type(q.get('negative_imports')) is not list
                 or any(type(name) is not str for name in q['negative_imports'])
-                or tuple(q['negative_imports'])!=negative_imports or self._negative_imports!=negative_imports):
+                or tuple(q['negative_imports'])!=negative_imports or self._negative_imports!=negative_imports
+                or (version==5 and (type(q.get('hidden_imports')) is not list
+                    or any(type(name) is not str for name in q['hidden_imports'])
+                    or tuple(q['hidden_imports'])!=hidden_imports or self._hidden_imports!=hidden_imports))):
             raise RuntimeError('Expected missing import declaration changed')
         if sys.stdlib_module_names is not snapshot[5] or self._stdlib_names is not snapshot[5]:
             raise RuntimeError('Q4 stdlib name baseline changed')
@@ -733,9 +767,10 @@ class HeldWorkerBootstrap:
         try:
             if self._state != 'active':
                 raise RuntimeError('Bootstrap inactive or poisoned') from self._first_failure
-            q4=self._missing_policy_version==4
+            q4=self._missing_policy_version in (4,5)
             stdlib=self._stdlib_names if q4 else None
             negative_imports=self._negative_imports if q4 else None
+            hidden_imports=self._hidden_imports if q4 else None
             self._clock()
             if q4: self._q4_snapshot(set(),set())
             token=self._guard_begin(full)
@@ -768,7 +803,8 @@ class HeldWorkerBootstrap:
             if self._reg['version']==3:
                 q=self._reg['qualification']
                 if (q['version']!=self._missing_policy_version
-                        or tuple(q['negative_imports'])!=self._negative_imports):
+                        or tuple(q['negative_imports'])!=self._negative_imports
+                        or (self._missing_policy_version==5 and tuple(q['hidden_imports'])!=self._hidden_imports)):
                     raise RuntimeError('Expected missing import declaration changed')
                 if sys.modules.get('__main__') is not self._main_module:
                     raise RuntimeError('Runtime qualification main alias target changed')
@@ -822,7 +858,8 @@ class HeldWorkerBootstrap:
             self._clock()
             self._guard_complete(completed)
             if q4:
-                self._q4_stable(snapshot,exported,second_exported if self._dependencies is not None else set(),aliases,negative_imports)
+                self._q4_stable(snapshot,exported,second_exported if self._dependencies is not None else set(),aliases,
+                    negative_imports,hidden_imports)
                 self._clock()
         except BaseException as error: self._fail(error); raise
         finally: self._guard_end(token)
@@ -845,6 +882,8 @@ class HeldWorkerBootstrap:
                 result['denied_imports']=sorted(self._denied_imports)
                 if self._missing_policy_version>=2:
                     result['expected_missing_imports']=list(self._negative_imports)
+                if self._missing_policy_version==5:
+                    result['expected_hidden_imports']=list(self._hidden_imports)
             if len(canonical(result)) > MiB: raise ValueError('Bootstrap receipt ceiling exceeded')
             self.recheck(); return copy.deepcopy(result)
         except BaseException as error: self._fail(error); raise

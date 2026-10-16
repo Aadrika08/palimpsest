@@ -259,7 +259,8 @@ def test_v5_keeps_q4_stdlib_baseline_guard():
     poisoned(run('''
         assert owner._stdlib_names is sys.stdlib_module_names
         original = sys.stdlib_module_names
-        sys.stdlib_module_names = frozenset(original)
+        sys.stdlib_module_names = frozenset(list(original))  # frozenset(frozenset) is identity
+        assert sys.stdlib_module_names is not original and sys.stdlib_module_names == original
         try:
             owner._import_recheck()
         except RuntimeError as error:
