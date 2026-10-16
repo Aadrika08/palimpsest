@@ -40,7 +40,11 @@ def test_authored08_binds_fifth_source_diagnostics_and_independent_audits(tmp_pa
             'puck-cpu-held-runtime-outcome-v8',8,8,'imports_completed')
         worker=json.loads((base/'logs/stdout.log').read_bytes())
         assert [(r['name'],r['version']) for r in worker['entry_result']['imports']]==list(api.VERSIONS.items())
-        trace=[json.loads(line) for line in (base/'logs/stderr.log').read_bytes().splitlines()]
+        records=[(line,json.loads(line)) for line in (base/'logs/stderr.log').read_bytes().splitlines()]
+        trace=[row for _,row in records if row['kind']=='puck-worker-phase-v1']
+        costs=[(line,row) for line,row in records if row['kind']=='puck-worker-guard-cost-v1']
+        assert 0<len(costs)<=32 and sum(len(line)+1 for line,_ in costs)<=32*1024
+        assert all(len(line)+1<=1024 and row['diagnostic_only'] is True for line,row in costs)
         assert [row['phase'] for row in trace]==[
             'bootstrap.enter','source.ready','dependencies.enter','dependencies.ready','bootstrap.ready','entry.enter',
             'import.numpy.enter','import.numpy.returned','import.torch.enter','import.torch.returned',

@@ -32,7 +32,9 @@ def test_guard_costs_cover_import_boundaries_without_changing_phase_or_terminal(
     assert result.returncode == 0, result.stderr
     rows = checkpoints(result.stderr)
     assert [row['context'] for _, row in rows] == CONTEXTS
-    assert [row['sequence'] for _, row in rows] == list(range(1, 9))
+    sequence = [row['sequence'] for _, row in rows]
+    assert sequence == sorted(set(sequence))
+    assert [row['sequence'] for _, row in costs(result.stderr)] == list(range(1, len(costs(result.stderr))+1))
     previous = {name: 0 for name in SECTIONS}
     for line, row in rows:
         assert len(line.encode())+1 <= 1024
@@ -87,6 +89,24 @@ def test_cost_byte_budget_refuses_the_next_row_without_affecting_phase():
     assert [row['phase'] for _, row in traces(result.stderr)] == PHASES
 
 
+def test_oversized_cost_row_is_not_written():
+    result = run_cpu(code=('import sys\nowner = sys.meta_path[0].owner\n'
+        'owner._guard_nested = 10**1000\nowner._guard_emit(force=True)\n'))
+    assert result.returncode == 0, result.stderr
+    assert [row['context'] for _, row in checkpoints(result.stderr)] == CONTEXTS[:5]
+    assert [row['phase'] for _, row in traces(result.stderr)] == PHASES
+
+
+def test_phase_budget_does_not_disable_cost_checkpoints():
+    result = run_cpu(code=('import sys\nowner = sys.meta_path[0].owner\n'
+        'for _ in range(30): owner._phase("authored.extra")\n'
+        'owner._guard_emit(force=True)\n'))
+    assert result.returncode == 0, result.stderr
+    assert len(traces(result.stderr)) == 24
+    assert len(checkpoints(result.stderr)) == 9
+    assert checkpoints(result.stderr)[-1][1]['context'] == 'import.mujoco.returned'
+
+
 @pytest.mark.parametrize('bad', ['-1', 'float("nan")'])
 def test_bad_accounting_clock_disables_only_costs(bad):
     result = run_cpu(code=('import sys,time\nowner = sys.meta_path[0].owner\n'
@@ -104,6 +124,65 @@ def test_malformed_accounting_state_preserves_real_operation(field):
     assert result.returncode == 0, result.stderr
     assert [row['context'] for _, row in checkpoints(result.stderr)] == CONTEXTS[:5]
     assert [row['phase'] for _, row in traces(result.stderr)] == PHASES
+
+
+def test_accounting_clock_cannot_move_backwards_between_records():
+    result = run_cpu(code=('import sys,time\nowner = sys.meta_path[0].owner\n'
+        'original = time.monotonic_ns\nowner._guard_last = original()\n'
+        'time.monotonic_ns = lambda: owner._guard_last-1\n'
+        'try:\n owner._guard_emit(force=True)\nfinally:\n time.monotonic_ns = original\n'))
+    assert result.returncode == 0, result.stderr
+    assert [row['context'] for _, row in checkpoints(result.stderr)] == CONTEXTS[:5]
+    assert [row['phase'] for _, row in traces(result.stderr)] == PHASES
+
+
+@pytest.mark.parametrize('channel', ['phase', 'cost'])
+def test_reentrant_clock_io_failure_prevents_outer_write(channel):
+    clock = 'monotonic' if channel == 'phase' else 'monotonic_ns'
+    nested = 'owner._guard_emit(force=True)' if channel == 'phase' else 'owner._phase("authored.nested")'
+    outer = 'owner._phase("authored.outer")' if channel == 'phase' else 'owner._guard_emit(force=True)'
+    result = run_cpu(code=('import sys,time,os\nowner = sys.meta_path[0].owner\n'
+        'original_clock = time.'+clock+'\noriginal_write = os.write\ncalls = 0\n'
+        'def write(fd,payload):\n global calls\n calls += 1\n raise OSError("AUTHORED_CLOCK_IO")\n'
+        'def clock():\n time.'+clock+' = original_clock\n '+nested+'\n return original_clock()\n'
+        'time.'+clock+' = clock\nos.write = write\n'+outer+'\n'
+        'time.'+clock+' = original_clock\nos.write = original_write\n'
+        'assert calls == 1, "OUTER_WRITE_AFTER_NESTED_IO_FAILURE"\n'))
+    assert result.returncode == 0, result.stderr
+    assert [row['phase'] for _, row in traces(result.stderr)] == PHASES[:11]
+
+
+def test_cost_encoder_reentry_is_suppressed_before_reserving_another_row():
+    result = run_cpu(code=('import sys\nowner = sys.meta_path[0].owner\n'
+        'namespace = owner._phase.__func__.__globals__\noriginal = namespace["canonical"]\ncalls = 0\n'
+        'def encode(value):\n global calls\n calls += 1\n'
+        ' if calls == 1: owner._guard_emit(force=True)\n'
+        ' return original(value)\n'
+        'namespace["canonical"] = encode\n'
+        'try:\n owner._guard_emit(force=True)\nfinally:\n namespace["canonical"] = original\n'
+        'assert calls == 1, "COST_ENCODER_REENTERED"\n'))
+    assert result.returncode == 0, result.stderr
+    assert len(checkpoints(result.stderr)) == 9
+
+
+def test_cost_clock_callback_cannot_emit_after_caught_real_refusal():
+    result = run_cpu(code=('import sys,types,time,os\nowner = sys.meta_path[0].owner\n'
+        'original_clock = time.monotonic_ns\noriginal_write = os.write\nafter_failure = 0\n'
+        'def clock():\n time.monotonic_ns = original_clock\n'
+        ' sys.modules["fixture_clock_refusal"] = types.ModuleType("fixture_clock_refusal")\n'
+        ' try:\n  owner._import_recheck()\n except RuntimeError:\n  pass\n'
+        ' return original_clock()\n'
+        'def write(fd,payload):\n global after_failure\n'
+        ' if owner._state == "failed": after_failure += 1\n return original_write(fd,payload)\n'
+        'time.monotonic_ns = clock\nos.write = write\n'
+        'try:\n owner._guard_emit(force=True)\n'
+        'finally:\n time.monotonic_ns = original_clock\n os.write = original_write\n'
+        ' sys.modules.pop("fixture_clock_refusal",None)\n'
+        'assert after_failure == 0, "COST_WRITTEN_AFTER_POISON"\n'
+        'os.write(2,b"CLOCK_REFUSAL_EMISSION_SUPPRESSED\\n")\n'))
+    assert result.returncode != 0 and result.stdout == ''
+    assert 'CLOCK_REFUSAL_EMISSION_SUPPRESSED' in result.stderr, result.stderr
+    assert 'RuntimeError: Unregistered module cache entry: fixture_clock_refusal' in result.stderr
 
 
 @pytest.mark.parametrize('writer', ['short', 'error'])
@@ -179,6 +258,28 @@ def test_real_refusal_has_no_diagnostic_clock_or_write_after_poisoning():
     assert result.returncode != 0 and result.stdout == ''
     assert 'GUARD_PRIMARY_FAILURE_RETAINED' in result.stderr, result.stderr
     assert 'DIAGNOSTIC_AFTER_FAIL' not in result.stderr
+
+
+def test_guard_end_diagnostic_cannot_bypass_final_deadline():
+    result = run_cpu(code=('import sys,os\nowner = sys.meta_path[0].owner\noriginal = os.write\n'
+        'def write(fd,payload):\n result = original(fd,payload)\n'
+        ' if b\'"kind":"puck-worker-guard-cost-v1"\' in payload:\n'
+        '  if b\'"active":null\' in payload: owner._deadline = 0\n'
+        '  else: owner._guard_next = 0\n return result\n'
+        'owner._guard_next = 0\nos.write = write\n'
+        'try:\n owner._import_recheck()\n'
+        'except TimeoutError as error:\n'
+        ' assert owner._first_failure is error and not owner._children and not owner._early_runtime_fds\n'
+        'else:\n raise AssertionError("GUARD_END_BYPASSED_DEADLINE")\n'
+        'finally:\n os.write = original\n'
+        'os.write(2,b"GUARD_END_DEADLINE_CLOSED\\n")\n'))
+    assert result.returncode != 0 and result.stdout == ''
+    assert 'GUARD_END_DEADLINE_CLOSED' in result.stderr, result.stderr
+    assert 'TimeoutError: Fresh worker deadline exhausted' in result.stderr
+    assert 'GUARD_END_BYPASSED_DEADLINE' not in result.stderr
+    pending = [row for _, row in costs(result.stderr)
+               if row['trigger'] == 'periodic' and row['active'] is None]
+    assert pending and pending[-1]['light']['started'] == pending[-1]['light']['completed']+1
 
 
 def test_successful_cost_write_cannot_rearm_nested_phase_io_failure():

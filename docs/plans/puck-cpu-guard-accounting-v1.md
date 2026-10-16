@@ -21,6 +21,8 @@ admission or invocation. Keep the 180s deadline and 2GiB RAM floor unchanged.
   cache scanning, held custody/identity and native-image observation. Time only
   outermost checks; nested guards remain charged to their caller's section.
   Record outer full/light started/completed counts and nested-check count.
+  Completion increments only after the original final deadline check succeeds;
+  an end-of-section diagnostic may still show a pending completion.
 - Emit separate `puck-worker-guard-cost-v1` stderr records at the eight exact
   import entry/return phase boundaries. Cooperatively emit at guard entry/section
   boundaries after ten seconds, resetting the next update without catch-up bursts.
@@ -45,10 +47,10 @@ resource/byte/custody admission.
 
 ## Verification and exit
 
-- [ ] Preserve initial REDs for rows/counts/contexts, periodic updates, budgets,
+- [x] Preserve initial REDs for rows/counts/contexts, periodic updates, budgets,
   ordinary and reentrant I/O failures, malformed clocks, cancellation and cleanup.
-- [ ] Implement the extension without changing guard predicates or qualifier.
-- [ ] Run focused authored diagnostics, existing phase/refusal/legacy and nearest
+- [x] Implement the extension without changing guard predicates or qualifier.
+- [x] Run focused authored diagnostics, existing phase/refusal/legacy and nearest
   worker/consumer checks under their required storage conditions.
 - [ ] Independently review source and evidence, retain raw outcomes and exact
   source identities, commit/push the source unit and update the active goal.
