@@ -1,0 +1,285 @@
+{
+  "base_commit": "d76b9f332c034a994bc2e867604a551df8c66a1f",
+  "checks": [
+    {
+      "finding": "Closed kindv9/version9/id9, exact-int checks reject bools/numeric aliases, qualification-only shape and fixed output09. No caller output or policy field accepted.",
+      "refs": [
+        "scripts/qualify_puck_cpu_held_runtime.py:228",
+        "scripts/qualify_puck_cpu_held_runtime.py:271",
+        "scripts/audit_puck_cpu_held_runtime.py:263",
+        "scripts/audit_puck_cpu_held_runtime.py:288",
+        "scripts/observe_puck_cpu_held_allocation.py:58"
+      ],
+      "scope": "Exact09 identity/output"
+    },
+    {
+      "finding": "Historical preparation01 four acceptance anchors,19723 auditor anchor and old source capsules remain distinct from current24 source pins.09 requires exactly parent/bootstrap/bindings/imports/qualifier changes relative to preparation.05-07 remain exactly four and08 exactly five; all unchanged historical branches normalize exactly to base.",
+      "refs": [
+        "scripts/qualify_puck_cpu_held_runtime.py:313",
+        "scripts/qualify_puck_cpu_held_runtime.py:338",
+        "scripts/qualify_puck_cpu_held_runtime.py:650",
+        "scripts/audit_puck_cpu_held_runtime.py:313",
+        "scripts/audit_puck_cpu_held_runtime.py:332",
+        "scripts/audit_puck_cpu_held_runtime.py:653",
+        "scripts/audit_puck_cpu_held_runtime.py:673"
+      ],
+      "scope": "Preparation and current source epochs"
+    },
+    {
+      "finding": "Same24 sources/16 input roles,19 missing probes, versions/environment/false claims and limits. Every noncandidate input stays preparation-identical. H-to-D semantic projection remains pillow_origins=True for07/08/09, with complete physical/module/namespace/distribution/root projection bound to preparation.",
+      "refs": [
+        "scripts/qualify_puck_cpu_held_runtime.py:248",
+        "scripts/qualify_puck_cpu_held_runtime.py:263",
+        "scripts/qualify_puck_cpu_held_runtime.py:331",
+        "scripts/qualify_puck_cpu_held_runtime.py:721",
+        "scripts/audit_puck_cpu_held_runtime.py:270",
+        "scripts/audit_puck_cpu_held_runtime.py:322",
+        "scripts/audit_puck_cpu_held_runtime.py:663"
+      ],
+      "scope": "Input/profile/policy closure"
+    },
+    {
+      "finding": "09 follows amended execution, reserves its own output, builds fresh current10-source worker capsule and mounts it at/puck/source. Auditor independently requires09 current capsule and reconstructs that same namespace command. Old historical capsules remain separately authenticated.",
+      "refs": [
+        "scripts/qualify_puck_cpu_held_runtime.py:644",
+        "scripts/qualify_puck_cpu_held_runtime.py:747",
+        "scripts/qualify_puck_cpu_held_runtime.py:752",
+        "scripts/audit_puck_cpu_held_runtime.py:601",
+        "scripts/audit_puck_cpu_held_runtime.py:676"
+      ],
+      "scope": "Execution namespace/capsules"
+    },
+    {
+      "finding": "Existing observer command/env/deadlines and exclusive output/stdout/stderr/receipt checks unchanged. Authored label isqualify09; ordinary streams derive fixed output09. Normal-zero transport remains required before byte audit. Successful parent/auditor outcomes derive typedv9/id9; current/historical candidate/dependency/source digests included. Existing failed-audit diagnosticv1 semantics remain unchanged.",
+      "refs": [
+        "scripts/observe_puck_cpu_held_allocation.py:70",
+        "scripts/audit_puck_cpu_held_runtime.py:625",
+        "scripts/audit_puck_cpu_held_runtime.py:631",
+        "scripts/audit_puck_cpu_held_runtime.py:691",
+        "scripts/audit_puck_cpu_held_runtime.py:704",
+        "scripts/audit_puck_cpu_held_runtime.py:737"
+      ],
+      "scope": "Transport/report/normal closure"
+    },
+    {
+      "finding": "Worker/bootstrap/qualifier and all10 worker files equal base bytes. q3 registration/resultv2 wire shape unchanged. Parent and auditor require no phase/cost parsing; stderr remains bounded held data. New authored integration removes only cost rows, invokes auditor API again and restores original bytes, directly preserving best-effort semantics.",
+      "refs": [
+        "scripts/audit_puck_cpu_held_runtime.py:545",
+        "scripts/audit_puck_cpu_held_runtime.py:692",
+        "tests/test_puck_cpu_held_amendment09_integration.py:91"
+      ],
+      "scope": "Diagnostics and worker compatibility"
+    }
+  ],
+  "design_review": {
+    "path": "/tmp/palimpsest-epoch09-design-review.json",
+    "sha256": "9f9668ebfc526317116c0e8d04608793f6eca58c208c90cba4ae9d62c5c63823",
+    "size_bytes": 11453
+  },
+  "head_at_review": "80fc2fa5151c2fb062e7b378a2fe71904516ece6",
+  "kind": "puck-cpu-diagnostic-epoch09-independent-source-review-v1",
+  "limitations": [
+    "Read-only finite source review; no tests or jobs were run or polled. No repository source, tests, controls or plans were changed. Only this review JSON was written.",
+    "No installed/staged vendor payload, protected catalog/model/study data, native imports, namespace, admission or allocation was read or invoked.",
+    "A source GO is not test completion, installed CPU qualification, operator/renderer/episode evidence, scientific authority or release approval.",
+    "No actual09 configuration, admission, freeze or invocation is authorized here. Later controls must separately bind genuine consumed08 failure streams/refusal and14 historical absences, current full bytes/custody/resources and immutable old source archives.",
+    "Accounting remains best-effort diagnostic information, not authenticated/exhaustive timing, hard WCET or a required heartbeat. Original180s/2GiB conditions and all seven open release gates remain unchanged."
+  ],
+  "limits": {
+    "cost_attempts": 32,
+    "cost_bytes": 32768,
+    "cost_row_bytes": 1024,
+    "normal_seconds": 180,
+    "phase_attempts": 24,
+    "phase_bytes": 16384,
+    "ram_floor_bytes": 2147483648,
+    "unchanged": true
+  },
+  "material_findings": [],
+  "plan_identity": {
+    "current": {
+      "path": "docs/plans/puck-cpu-diagnostic-epoch09-v1.md",
+      "sha256": "e3d0c77464770517fb439fa77ea0ef95c2d04cc3631bfc38f75ca31e01843714",
+      "size_bytes": 4234
+    },
+    "design_review_plan": {
+      "path": "docs/plans/puck-cpu-diagnostic-epoch09-v1.md",
+      "sha256": "e3d0c77464770517fb439fa77ea0ef95c2d04cc3631bfc38f75ca31e01843714",
+      "size_bytes": 4234
+    },
+    "note": "This review binds exact current plan bytes. Future checklist/report edits require their own pin distinction; source/test pins remain separately listed."
+  },
+  "production_scope": {
+    "changed_paths": [
+      "scripts/audit_puck_cpu_held_runtime.py",
+      "scripts/observe_puck_cpu_held_allocation.py",
+      "scripts/qualify_puck_cpu_held_runtime.py"
+    ],
+    "normalization": "Removed only the added09 constant/kind/output/authored-label mappings, added09 tuple memberships and09 output branch; restored08-only five-source predicate and its original diagnostic error strings. Each entire production file then equals its base bytes. No target source was imported or executed.",
+    "normalized_compatibility_proof": [
+      {
+        "base_sha256": "0cc637ffeb2accdf843894a6f30abd917b59a940cecd53ef3709fd9200e50fe8",
+        "normalized_bytes_equal_base": true,
+        "path": "scripts/qualify_puck_cpu_held_runtime.py",
+        "reviewed_sha256": "4bf31ad194e9e2dec3a6dd714fd5b86cde124733d5b95d0168d3ed115e7051e6"
+      },
+      {
+        "base_sha256": "0406bfa94f6b230fca440d57f65e5d429a30d70d054e2cdd29bafb0da1ca2b35",
+        "normalized_bytes_equal_base": true,
+        "path": "scripts/audit_puck_cpu_held_runtime.py",
+        "reviewed_sha256": "dffcec25696948da18b18abda32dae764fa933a1175c622f45d33a3bca27d234"
+      },
+      {
+        "base_sha256": "b8ad9846ab0222d4fb7c603d2caff886dbaaff665db6a46df417a72d0f5228ad",
+        "normalized_bytes_equal_base": true,
+        "path": "scripts/observe_puck_cpu_held_allocation.py",
+        "reviewed_sha256": "5971324a655cd2f02c4c4ac3ba9dd18a9c6ff1d15b8a0041ed659792cb4c2784"
+      }
+    ],
+    "only_parent_auditor_observer": true
+  },
+  "reviewed_at_utc": "2026-10-16T01:56:11.026008+00:00",
+  "reviewed_pins": [
+    {
+      "path": "scripts/qualify_puck_cpu_held_runtime.py",
+      "sha256": "4bf31ad194e9e2dec3a6dd714fd5b86cde124733d5b95d0168d3ed115e7051e6",
+      "size_bytes": 59425
+    },
+    {
+      "path": "scripts/audit_puck_cpu_held_runtime.py",
+      "sha256": "dffcec25696948da18b18abda32dae764fa933a1175c622f45d33a3bca27d234",
+      "size_bytes": 76808
+    },
+    {
+      "path": "scripts/observe_puck_cpu_held_allocation.py",
+      "sha256": "5971324a655cd2f02c4c4ac3ba9dd18a9c6ff1d15b8a0041ed659792cb4c2784",
+      "size_bytes": 6713
+    },
+    {
+      "path": "tests/test_puck_cpu_held_amendment09.py",
+      "sha256": "6b300220a8a5a14d0959ea7faacfa1d87759a2e10c44fa95e137e79b85df58c3",
+      "size_bytes": 7241
+    },
+    {
+      "path": "tests/test_puck_cpu_held_amendment09_integration.py",
+      "sha256": "6fbb5c2f8bdf8b17bff43d7bc393575cc12568451491f80c9abad5115a3a3e4e",
+      "size_bytes": 7757
+    },
+    {
+      "path": "docs/plans/puck-cpu-diagnostic-epoch09-v1.md",
+      "sha256": "e3d0c77464770517fb439fa77ea0ef95c2d04cc3631bfc38f75ca31e01843714",
+      "size_bytes": 4234
+    }
+  ],
+  "root": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-diagnostic-epoch09-v1",
+  "status": "GO_SOURCE_ONLY_VALIDATION_PENDING",
+  "test_source_assessment": {
+    "covered_in_authored_source": [
+      "Both parent/independent positive09 configuration and exact five-source projection.",
+      "Each missing preparation-relative source change plus a sixth change.",
+      "kind08/kind10/version08/id08/bool identities, prepare phase, caller output/source-policy, roster/env/limit expansion.",
+      "Every15 noncandidate preparation input pin.",
+      "Observer normal0/nonzero7 transport, consumed07/08 stream preservation, their missing result/baseline leaves, exclusive reentry and prelaunch aliases.",
+      "Full real authored parent\u2192worker09\u2192API and CLI audit; typed outcomes, q3/current source pins, same data roots, false authority, balanced descriptors/children/threads and preserved history.",
+      "Bounded diagnostic rows in normal authored route; no-cost API acceptance. Explicit API JSON and CLI observed-returncode receipt retained by test source."
+    ],
+    "remaining": "This is inspection of assertions and production semantics only. Final root-owned test results and retained evidence need a separate evidence review. No new critical source-test gap found. Generic absent configuration/source-row keys use unchanged exact-key/roster validators; no new09 omission-specific case is required for this selector-only change.",
+    "rosters": [
+      {
+        "authored_test_functions": [
+          {
+            "line": 22,
+            "name": "test09_accepts_only_fixed_identity_and_five_source_projection"
+          },
+          {
+            "line": 44,
+            "name": "test09_requires_each_of_five_preparation_relative_source_changes"
+          },
+          {
+            "line": 52,
+            "name": "test09_rejects_sixth_preparation_relative_source_change"
+          },
+          {
+            "line": 63,
+            "name": "test09_rejects_identity_aliases_and_policy_expansion"
+          },
+          {
+            "line": 82,
+            "name": "test09_preserves_every_noncandidate_preparation_input"
+          },
+          {
+            "line": 90,
+            "name": "test09_observer_preserves_consumed07_08_and_reserves_once"
+          },
+          {
+            "line": 117,
+            "name": "test09_observer_rejects_alias_before_launch"
+          }
+        ],
+        "path": "tests/test_puck_cpu_held_amendment09.py"
+      },
+      {
+        "authored_test_functions": [
+          {
+            "line": 15,
+            "name": "test_authored09_binds_fifth_source_diagnostics_and_independent_audits"
+          }
+        ],
+        "path": "tests/test_puck_cpu_held_amendment09_integration.py"
+      }
+    ]
+  },
+  "unchanged_worker_roster": [
+    {
+      "path": "scripts/puck_worker_bootstrap.py",
+      "sha256": "f137429398dc30270e67ef198c508231f9e2cf02d3aeedb98663630cafa51451",
+      "size_bytes": 45915
+    },
+    {
+      "path": "src/palimpsest/__init__.py",
+      "sha256": "bb99e30d22e4662c4ded455b1b23f49b77ce811dcfa1b69bf358925487a566d8",
+      "size_bytes": 63
+    },
+    {
+      "path": "src/palimpsest/puck_execution_files.py",
+      "sha256": "ac059455bc45437c45330d01aaca761fd571d6de1637a4a8d7ebfbd796622062",
+      "size_bytes": 15001
+    },
+    {
+      "path": "src/palimpsest/puck_dependency_files.py",
+      "sha256": "d1ca386780212b174a6e931a8ac4ce88e68c31b27fb1c0e16346a2150560fca1",
+      "size_bytes": 33543
+    },
+    {
+      "path": "src/palimpsest/puck_dependency_bindings.py",
+      "sha256": "7012888d030917434d1536285bb97fd2de15b5b83e9da87ee1503cda970a7147",
+      "size_bytes": 28299
+    },
+    {
+      "path": "src/palimpsest/puck_dependency_imports.py",
+      "sha256": "e35b941c351971c15f225255170cd45530aa2304943fe2edd461b8d94080943b",
+      "size_bytes": 14868
+    },
+    {
+      "path": "src/palimpsest/puck_native_origins.py",
+      "sha256": "e6deea2bc378968371bf1093b869dfc442eeb7def27198695d1c0f872da519e1",
+      "size_bytes": 1660
+    },
+    {
+      "path": "src/palimpsest/puck_native_identity.py",
+      "sha256": "6e5b56e5c6494398dbd6a7c7d07e771e86c63d56e7374692d1d1d8213b721ebb",
+      "size_bytes": 2837
+    },
+    {
+      "path": "src/palimpsest/puck_worker_preflight.py",
+      "sha256": "dc5806d7f39913f4110b2aed8e4512c74f453b2f175f438771d72e78cca770f7",
+      "size_bytes": 465
+    },
+    {
+      "path": "src/palimpsest/puck_runtime_qualification.py",
+      "sha256": "81e7f5df42115dd6714be05b6cf62cf5f0804564065130aaee8289f4b962768a",
+      "size_bytes": 2440
+    }
+  ],
+  "version": 1
+}

@@ -55,7 +55,7 @@ No new worker protocol, dependency, policy surface or general framework.
 - [x] Run affected metadata/parent/auditor/observer/worker suites in private tmpfs;
   run complete historical integrations in their required persistent project paths.
   Preserve all commands, source pins, raw logs and terminal outcomes, including REDs.
-- [ ] Independently review source and final evidence; retain a finite byte-verifiable
+- [x] Independently review source and final evidence; retain a finite byte-verifiable
   packet/report, commit/push a draft source PR and update both active goal mirrors.
 
 Use the existing CPython3.11 R0 environment with pytest plugin autoload, bytecode
