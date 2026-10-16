@@ -1,0 +1,879 @@
+{
+  "actual09_controls_created": false,
+  "all_seven_release_gates_open": true,
+  "artifact_count": 136,
+  "artifacts": [
+    {
+      "archived_path": "archive_evidence.py",
+      "original_path": "/tmp/palimpsest-guard-accounting-archive.py",
+      "sha256": "eea7ebd7211113e51032b9e71328fe3cd91939ed4a37e84983b19f4d5ee1ff57",
+      "size_bytes": 5341
+    },
+    {
+      "archived_path": "authored08/authored-diagnostic08-cli-audit.json",
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-guard-accounting-v1/runs/source-validation/guard-accounting-persistent01/tmp/test_authored08_binds_fifth_so0/authored-project/authored-diagnostic08-cli-audit.json",
+      "sha256": "88fa2483535b32262eede00fad46c139bf2b3a0a9e2e3b2ac95e42cae350a7de",
+      "size_bytes": 2357
+    },
+    {
+      "archived_path": "authored08/authored-diagnostic08-cli-audit.stderr",
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-guard-accounting-v1/runs/source-validation/guard-accounting-persistent01/tmp/test_authored08_binds_fifth_so0/authored-project/authored-diagnostic08-cli-audit.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    {
+      "archived_path": "authored08/authored-diagnostic08-cli-audit.stdout",
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-guard-accounting-v1/runs/source-validation/guard-accounting-persistent01/tmp/test_authored08_binds_fifth_so0/authored-project/authored-diagnostic08-cli-audit.stdout",
+      "sha256": "88fa2483535b32262eede00fad46c139bf2b3a0a9e2e3b2ac95e42cae350a7de",
+      "size_bytes": 2357
+    },
+    {
+      "archived_path": "authored08/authored-qualify08-configuration.json",
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-guard-accounting-v1/runs/source-validation/guard-accounting-persistent01/tmp/test_authored08_binds_fifth_so0/authored-project/authored-qualify08-configuration.json",
+      "sha256": "642b1cedb28dd6a47cd583d99e2bcf64ddb636e5d47e61b4f96a1e0bf65da6aa",
+      "size_bytes": 8538
+    },
+    {
+      "archived_path": "authored08/authored-qualify08-transport.json",
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-guard-accounting-v1/runs/source-validation/guard-accounting-persistent01/tmp/test_authored08_binds_fifth_so0/authored-project/authored-qualify08-transport.json",
+      "sha256": "7fa2b751c198d26c5175edf060f055fd677d995b85b14bda1a7cffeaf88873e6",
+      "size_bytes": 1225
+    },
+    {
+      "archived_path": "authored08/baseline-after.json",
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-guard-accounting-v1/runs/source-validation/guard-accounting-persistent01/tmp/test_authored08_binds_fifth_so0/authored-project/runs/puck-cpu-held-qualification-08/baseline-after.json",
+      "sha256": "8e69fa24c5367b19acfad5f5f3c12f1804eed23d0889df6a9e58f20da4376dfb",
+      "size_bytes": 196
+    },
+    {
+      "archived_path": "authored08/baseline-before.json",
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-guard-accounting-v1/runs/source-validation/guard-accounting-persistent01/tmp/test_authored08_binds_fifth_so0/authored-project/runs/puck-cpu-held-qualification-08/baseline-before.json",
+      "sha256": "8e69fa24c5367b19acfad5f5f3c12f1804eed23d0889df6a9e58f20da4376dfb",
+      "size_bytes": 196
+    },
+    {
+      "archived_path": "authored08/configuration.json",
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-guard-accounting-v1/runs/source-validation/guard-accounting-persistent01/tmp/test_authored08_binds_fifth_so0/authored-project/runs/puck-cpu-held-qualification-08/configuration.json",
+      "sha256": "642b1cedb28dd6a47cd583d99e2bcf64ddb636e5d47e61b4f96a1e0bf65da6aa",
+      "size_bytes": 8538
+    },
+    {
+      "archived_path": "authored08/control/dependencies.json",
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-guard-accounting-v1/runs/source-validation/guard-accounting-persistent01/tmp/test_authored08_binds_fifth_so0/authored-project/runs/puck-cpu-held-qualification-08/control/dependencies.json",
+      "sha256": "47c030ae144a617caa2495d3a65dd9ec2a0b9dcb0269de82f2bba582d8953035",
+      "size_bytes": 11519
+    },
+    {
+      "archived_path": "authored08/control/worker-registration.json",
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-guard-accounting-v1/runs/source-validation/guard-accounting-persistent01/tmp/test_authored08_binds_fifth_so0/authored-project/runs/puck-cpu-held-qualification-08/control/worker-registration.json",
+      "sha256": "9353763a6761b7ef918640f632185aefeaa409654ba5e8943449df775ff3fd1b",
+      "size_bytes": 4680
+    },
+    {
+      "archived_path": "authored08/invocation.json",
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-guard-accounting-v1/runs/source-validation/guard-accounting-persistent01/tmp/test_authored08_binds_fifth_so0/authored-project/runs/puck-cpu-held-qualification-08/invocation.json",
+      "sha256": "7650d0bc741efad29d31d465c7e5e23ba7b0ed9a4c4ff88d23747c62ccea3003",
+      "size_bytes": 4019
+    },
+    {
+      "archived_path": "authored08/logs/stderr.log",
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-guard-accounting-v1/runs/source-validation/guard-accounting-persistent01/tmp/test_authored08_binds_fifth_so0/authored-project/runs/puck-cpu-held-qualification-08/logs/stderr.log",
+      "sha256": "a1fd3d88cec12a3767561d144ce06f1d3d56e3baa25428568d4d428fb438fc47",
+      "size_bytes": 6164
+    },
+    {
+      "archived_path": "authored08/logs/stdout.log",
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-guard-accounting-v1/runs/source-validation/guard-accounting-persistent01/tmp/test_authored08_binds_fifth_so0/authored-project/runs/puck-cpu-held-qualification-08/logs/stdout.log",
+      "sha256": "49f959a9c59261cc173c90fc0aa33e6913707ad7fa48905941583bab543b90ac",
+      "size_bytes": 11375
+    },
+    {
+      "archived_path": "authored08/resource-admission.json",
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-guard-accounting-v1/runs/source-validation/guard-accounting-persistent01/tmp/test_authored08_binds_fifth_so0/authored-project/runs/puck-cpu-held-qualification-08/resource-admission.json",
+      "sha256": "590ff4f5f38044101ab2fb283905289ab5bebd2e2920c4cb534dd0f7c18268c2",
+      "size_bytes": 105
+    },
+    {
+      "archived_path": "authored08/result.json",
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-guard-accounting-v1/runs/source-validation/guard-accounting-persistent01/tmp/test_authored08_binds_fifth_so0/authored-project/runs/puck-cpu-held-qualification-08/result.json",
+      "sha256": "b520aafb1bd07194849a9ea4d021f2cc95428b972a4da5621394484967a2f953",
+      "size_bytes": 623
+    },
+    {
+      "archived_path": "authored08/supervision.json",
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-guard-accounting-v1/runs/source-validation/guard-accounting-persistent01/tmp/test_authored08_binds_fifth_so0/authored-project/runs/puck-cpu-held-qualification-08/supervision.json",
+      "sha256": "67c38f229a3ba37cda0ebf5148bf90c4dcc02c70cf640bed5fc566a6ad5488ab",
+      "size_bytes": 360
+    },
+    {
+      "archived_path": "reviews/palimpsest-guard-accounting-source-review.json",
+      "original_path": "/tmp/palimpsest-guard-accounting-source-review.json",
+      "sha256": "d28b26e2329b17e758b902342f1b8e11aff116a2906091c2a37ad4e20a241d36",
+      "size_bytes": 5711
+    },
+    {
+      "archived_path": "reviews/palimpsest-guard-accounting-source-review02.json",
+      "original_path": "/tmp/palimpsest-guard-accounting-source-review02.json",
+      "sha256": "edec36e62fe0f2ec812eb0019d828dad8dc6472b4f82c83fc75a757ba7bbbdaf",
+      "size_bytes": 5625
+    },
+    {
+      "archived_path": "reviews/palimpsest-guard-accounting-validation-review.json",
+      "original_path": "/tmp/palimpsest-guard-accounting-validation-review.json",
+      "sha256": "04a4b1e3afa4fb11e6cf7878f63676a599d66155c3ceecd634268455fcbc4c32",
+      "size_bytes": 44094
+    },
+    {
+      "archived_path": "reviews/reviewed-plan.md",
+      "original_path": "/tmp/palimpsest-guard-accounting-reviewed-plan.md",
+      "sha256": "e978b7db271bec528726937ea1f1abd5d878872f76c3e951c5e5cb48f7020c60",
+      "size_bytes": 3782
+    },
+    {
+      "archived_path": "source/scripts/audit_puck_cpu_held_runtime.py",
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-guard-accounting-v1/scripts/audit_puck_cpu_held_runtime.py",
+      "sha256": "0406bfa94f6b230fca440d57f65e5d429a30d70d054e2cdd29bafb0da1ca2b35",
+      "size_bytes": 76648
+    },
+    {
+      "archived_path": "source/scripts/observe_puck_cpu_held_allocation.py",
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-guard-accounting-v1/scripts/observe_puck_cpu_held_allocation.py",
+      "sha256": "b8ad9846ab0222d4fb7c603d2caff886dbaaff665db6a46df417a72d0f5228ad",
+      "size_bytes": 6633
+    },
+    {
+      "archived_path": "source/scripts/puck_worker_bootstrap.py",
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-guard-accounting-v1/scripts/puck_worker_bootstrap.py",
+      "sha256": "f137429398dc30270e67ef198c508231f9e2cf02d3aeedb98663630cafa51451",
+      "size_bytes": 45915
+    },
+    {
+      "archived_path": "source/scripts/qualify_puck_cpu_held_runtime.py",
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-guard-accounting-v1/scripts/qualify_puck_cpu_held_runtime.py",
+      "sha256": "0cc637ffeb2accdf843894a6f30abd917b59a940cecd53ef3709fd9200e50fe8",
+      "size_bytes": 59227
+    },
+    {
+      "archived_path": "source/src/palimpsest/__init__.py",
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-guard-accounting-v1/src/palimpsest/__init__.py",
+      "sha256": "bb99e30d22e4662c4ded455b1b23f49b77ce811dcfa1b69bf358925487a566d8",
+      "size_bytes": 63
+    },
+    {
+      "archived_path": "source/src/palimpsest/puck_dependency_bindings.py",
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-guard-accounting-v1/src/palimpsest/puck_dependency_bindings.py",
+      "sha256": "7012888d030917434d1536285bb97fd2de15b5b83e9da87ee1503cda970a7147",
+      "size_bytes": 28299
+    },
+    {
+      "archived_path": "source/src/palimpsest/puck_dependency_files.py",
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-guard-accounting-v1/src/palimpsest/puck_dependency_files.py",
+      "sha256": "d1ca386780212b174a6e931a8ac4ce88e68c31b27fb1c0e16346a2150560fca1",
+      "size_bytes": 33543
+    },
+    {
+      "archived_path": "source/src/palimpsest/puck_dependency_imports.py",
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-guard-accounting-v1/src/palimpsest/puck_dependency_imports.py",
+      "sha256": "e35b941c351971c15f225255170cd45530aa2304943fe2edd461b8d94080943b",
+      "size_bytes": 14868
+    },
+    {
+      "archived_path": "source/src/palimpsest/puck_execution_files.py",
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-guard-accounting-v1/src/palimpsest/puck_execution_files.py",
+      "sha256": "ac059455bc45437c45330d01aaca761fd571d6de1637a4a8d7ebfbd796622062",
+      "size_bytes": 15001
+    },
+    {
+      "archived_path": "source/src/palimpsest/puck_native_identity.py",
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-guard-accounting-v1/src/palimpsest/puck_native_identity.py",
+      "sha256": "6e5b56e5c6494398dbd6a7c7d07e771e86c63d56e7374692d1d1d8213b721ebb",
+      "size_bytes": 2837
+    },
+    {
+      "archived_path": "source/src/palimpsest/puck_native_origins.py",
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-guard-accounting-v1/src/palimpsest/puck_native_origins.py",
+      "sha256": "e6deea2bc378968371bf1093b869dfc442eeb7def27198695d1c0f872da519e1",
+      "size_bytes": 1660
+    },
+    {
+      "archived_path": "source/src/palimpsest/puck_runtime_qualification.py",
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-guard-accounting-v1/src/palimpsest/puck_runtime_qualification.py",
+      "sha256": "81e7f5df42115dd6714be05b6cf62cf5f0804564065130aaee8289f4b962768a",
+      "size_bytes": 2440
+    },
+    {
+      "archived_path": "source/src/palimpsest/puck_worker_preflight.py",
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-guard-accounting-v1/src/palimpsest/puck_worker_preflight.py",
+      "sha256": "dc5806d7f39913f4110b2aed8e4512c74f453b2f175f438771d72e78cca770f7",
+      "size_bytes": 465
+    },
+    {
+      "archived_path": "source/tests/test_puck_cpu_held_amendment.py",
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-guard-accounting-v1/tests/test_puck_cpu_held_amendment.py",
+      "sha256": "6a6dcacea1c777d1eff3cbbc2500730e43ae42d7abdf3688ff907101a13c2fdf",
+      "size_bytes": 18283
+    },
+    {
+      "archived_path": "source/tests/test_puck_cpu_held_amendment03.py",
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-guard-accounting-v1/tests/test_puck_cpu_held_amendment03.py",
+      "sha256": "c95dfceefabf46086017e85c9f96c7c7654e38f01ac7cf026a4aa467b78ca2cc",
+      "size_bytes": 10195
+    },
+    {
+      "archived_path": "source/tests/test_puck_cpu_held_amendment04.py",
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-guard-accounting-v1/tests/test_puck_cpu_held_amendment04.py",
+      "sha256": "087055d1fbab122684b284add7e55c02788344762493343294dd1f679af0fcae",
+      "size_bytes": 4999
+    },
+    {
+      "archived_path": "source/tests/test_puck_cpu_held_amendment05.py",
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-guard-accounting-v1/tests/test_puck_cpu_held_amendment05.py",
+      "sha256": "e3f38f8f97b147cc9191b16a7e7eb1a4d7d555f9cc1719859655e97afcf17bf3",
+      "size_bytes": 22284
+    },
+    {
+      "archived_path": "source/tests/test_puck_cpu_held_amendment05_integration.py",
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-guard-accounting-v1/tests/test_puck_cpu_held_amendment05_integration.py",
+      "sha256": "d1c4afd436854edac8a2b0dbd9b6ce49c9a73cbec3435cc2457de45006dcef17",
+      "size_bytes": 17875
+    },
+    {
+      "archived_path": "source/tests/test_puck_cpu_held_amendment06.py",
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-guard-accounting-v1/tests/test_puck_cpu_held_amendment06.py",
+      "sha256": "5d0f0c154bb4b75f44417955067320612e770c0271d3c3a2db6045bff3df5d44",
+      "size_bytes": 11822
+    },
+    {
+      "archived_path": "source/tests/test_puck_cpu_held_amendment06_integration.py",
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-guard-accounting-v1/tests/test_puck_cpu_held_amendment06_integration.py",
+      "sha256": "b38d185e46ce10065d116ed84e95a3182dac481b3cbadeec7f3ceccd285fed47",
+      "size_bytes": 9914
+    },
+    {
+      "archived_path": "source/tests/test_puck_cpu_held_amendment07.py",
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-guard-accounting-v1/tests/test_puck_cpu_held_amendment07.py",
+      "sha256": "22a31385386f562b49307e5650955018a1586b6cda6774cf97d400d84edd366d",
+      "size_bytes": 11888
+    },
+    {
+      "archived_path": "source/tests/test_puck_cpu_held_amendment08.py",
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-guard-accounting-v1/tests/test_puck_cpu_held_amendment08.py",
+      "sha256": "b6e6ebeef761d03d291763315c8f08b629df5c56c10c937b977df4252acd2156",
+      "size_bytes": 6886
+    },
+    {
+      "archived_path": "source/tests/test_puck_cpu_held_amendment08_integration.py",
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-guard-accounting-v1/tests/test_puck_cpu_held_amendment08_integration.py",
+      "sha256": "730a42b253fd7d95011a1289f86332fa937e02eec304ef4cb070eb92bcbb3907",
+      "size_bytes": 6537
+    },
+    {
+      "archived_path": "source/tests/test_puck_cpu_held_observer.py",
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-guard-accounting-v1/tests/test_puck_cpu_held_observer.py",
+      "sha256": "27695f8160971eda80de2e6fa5f75fe3b0964955d70b87db8f89aed0c2ec54b5",
+      "size_bytes": 11748
+    },
+    {
+      "archived_path": "source/tests/test_puck_cpu_held_parent.py",
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-guard-accounting-v1/tests/test_puck_cpu_held_parent.py",
+      "sha256": "972c49620e9806bc3a9c207ff096357eaca08600bd2c15cae1a1e672e377b5b2",
+      "size_bytes": 11497
+    },
+    {
+      "archived_path": "source/tests/test_puck_cpu_held_parent_integration.py",
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-guard-accounting-v1/tests/test_puck_cpu_held_parent_integration.py",
+      "sha256": "cadcfecde4f9eb982d7cce0664b91060717f5cd61f4c129c6ad4fd66a47d8eeb",
+      "size_bytes": 23157
+    },
+    {
+      "archived_path": "source/tests/test_puck_cpu_held_runtime_audit.py",
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-guard-accounting-v1/tests/test_puck_cpu_held_runtime_audit.py",
+      "sha256": "bc434f04be47793f51dcc1c037cda0f969bf56cc01ae8bad7f2d39204a61db46",
+      "size_bytes": 6420
+    },
+    {
+      "archived_path": "source/tests/test_puck_cpu_phase_trace.py",
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-guard-accounting-v1/tests/test_puck_cpu_phase_trace.py",
+      "sha256": "df588e48cb8a9c9fc398939507b722ce9b2373ce0675ef180cbf090911ecfafd",
+      "size_bytes": 12774
+    },
+    {
+      "archived_path": "source/tests/test_puck_cpu_runtime_entry.py",
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-guard-accounting-v1/tests/test_puck_cpu_runtime_entry.py",
+      "sha256": "4f3c63f3cf3c26419c88e08636bdb5c20c3884e866da783aa12fbfb30abd6b22",
+      "size_bytes": 9292
+    },
+    {
+      "archived_path": "source/tests/test_puck_dependency_files.py",
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-guard-accounting-v1/tests/test_puck_dependency_files.py",
+      "sha256": "9440be85b19b2e22d7222a5e5eea3f8e546bbc992459369b0a07b221d33a1ea8",
+      "size_bytes": 17905
+    },
+    {
+      "archived_path": "source/tests/test_puck_dependency_profile.py",
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-guard-accounting-v1/tests/test_puck_dependency_profile.py",
+      "sha256": "f151629eb81cea9f1d75da72e43be0b146bcb1b96b3793f3674042c5af2df97f",
+      "size_bytes": 22117
+    },
+    {
+      "archived_path": "source/tests/test_puck_guard_cost.py",
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-guard-accounting-v1/tests/test_puck_guard_cost.py",
+      "sha256": "0f3d4ad250dc6662132d923d20abe99416869d0eb2bfec25d8a0c653501c3874",
+      "size_bytes": 5614
+    },
+    {
+      "archived_path": "source/tests/test_puck_guard_time_diagnostics.py",
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-guard-accounting-v1/tests/test_puck_guard_time_diagnostics.py",
+      "sha256": "1b99f75bfa46a5128b1e3708028436dde991df6a58e9b857fa272526aa8b572f",
+      "size_bytes": 17051
+    },
+    {
+      "archived_path": "source/tests/test_puck_held_runtime_entry.py",
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-guard-accounting-v1/tests/test_puck_held_runtime_entry.py",
+      "sha256": "e230e9ebe9e914f35a2080701edd9bb0b15c876761d31a082771212f892a9398",
+      "size_bytes": 5027
+    },
+    {
+      "archived_path": "source/tests/test_puck_pillow_native_origins.py",
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-guard-accounting-v1/tests/test_puck_pillow_native_origins.py",
+      "sha256": "8ff258bd926e858f04f8158fd20ebd56ef1b1b58d0fb4a7b4fcb105788724fd9",
+      "size_bytes": 8645
+    },
+    {
+      "archived_path": "source/tests/test_puck_published_exports.py",
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-guard-accounting-v1/tests/test_puck_published_exports.py",
+      "sha256": "fa4c20e159d0df7fde14051ae62e9dea94124c186c8496dfb67db67cbb7e405d",
+      "size_bytes": 9444
+    },
+    {
+      "archived_path": "source/tests/test_puck_tmpfs_dependencies.py",
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-guard-accounting-v1/tests/test_puck_tmpfs_dependencies.py",
+      "sha256": "c80c193206e3aa005a2be770dfdfd105d364f988ba9606f012e3a46c0d3fff0c",
+      "size_bytes": 6108
+    },
+    {
+      "archived_path": "source/tests/test_puck_worker_bootstrap.py",
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-guard-accounting-v1/tests/test_puck_worker_bootstrap.py",
+      "sha256": "d7496440a050ec61971dbbe91935e9e2d89dfaceb4e472654618f964b13b3fb5",
+      "size_bytes": 13905
+    },
+    {
+      "archived_path": "source/tests/test_puck_worker_dependencies.py",
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-guard-accounting-v1/tests/test_puck_worker_dependencies.py",
+      "sha256": "fb311232bcea45c52d9ba45a78361ab586c9025800a8bb72fd354870c75b5f09",
+      "size_bytes": 10502
+    },
+    {
+      "archived_path": "validation-record.json",
+      "original_path": "/tmp/palimpsest-guard-accounting-validation-record.json",
+      "sha256": "f391d1adde5f7cc6f7550b20d61ea9d08ae676fbd92bf332a6f00b20ce259915",
+      "size_bytes": 8181
+    },
+    {
+      "archived_path": "validation/consumer-red01/command.json",
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-guard-accounting-v1/runs/source-validation/guard-accounting-consumer-red01/command.json",
+      "sha256": "f23e147954d9617b51a5ca4cf32a0008026e6bc713259a4bceb89acde5e8315d",
+      "size_bytes": 1256
+    },
+    {
+      "archived_path": "validation/consumer-red01/source/scripts/puck_worker_bootstrap.py",
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-guard-accounting-v1/runs/source-validation/guard-accounting-consumer-red01/source/scripts/puck_worker_bootstrap.py",
+      "sha256": "0988a0e85b0f386cc27e46931483063cb682a7fa7e41b888bab705058200249a",
+      "size_bytes": 45710
+    },
+    {
+      "archived_path": "validation/consumer-red01/source/tests/test_puck_cpu_held_amendment08_integration.py",
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-guard-accounting-v1/runs/source-validation/guard-accounting-consumer-red01/source/tests/test_puck_cpu_held_amendment08_integration.py",
+      "sha256": "421dea6b86a1ace393fddee29b0f0dbf470f302c43ccbc5bed849785095ca02e",
+      "size_bytes": 6176
+    },
+    {
+      "archived_path": "validation/consumer-red01/stderr.txt",
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-guard-accounting-v1/runs/source-validation/guard-accounting-consumer-red01/stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    {
+      "archived_path": "validation/consumer-red01/stdout.txt",
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-guard-accounting-v1/runs/source-validation/guard-accounting-consumer-red01/stdout.txt",
+      "sha256": "c35e799ab3b5de3d3385c4a7073ddb12f0e03d48e671e00baeb5ded10ab470a7",
+      "size_bytes": 4249
+    },
+    {
+      "archived_path": "validation/consumer-red01/terminal.json",
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-guard-accounting-v1/runs/source-validation/guard-accounting-consumer-red01/terminal.json",
+      "sha256": "53d3335d2e1fec8441f8aeda3db3297fcb329f31ada4dd1ae67fb6feab6bc944",
+      "size_bytes": 63
+    },
+    {
+      "archived_path": "validation/green01/command.json",
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-guard-accounting-v1/runs/source-validation/guard-accounting-green01/command.json",
+      "sha256": "46a125bf2e5b3aa29d929694b1e4ef3a171a7640bb09bc85ba736e375cd92c9c",
+      "size_bytes": 1110
+    },
+    {
+      "archived_path": "validation/green01/source/scripts/puck_worker_bootstrap.py",
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-guard-accounting-v1/runs/source-validation/guard-accounting-green01/source/scripts/puck_worker_bootstrap.py",
+      "sha256": "691222948e90892a8d602a4ba9fbd9692598344a9cdec63961df0d2c17be6b5c",
+      "size_bytes": 45384
+    },
+    {
+      "archived_path": "validation/green01/source/tests/test_puck_guard_time_diagnostics.py",
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-guard-accounting-v1/runs/source-validation/guard-accounting-green01/source/tests/test_puck_guard_time_diagnostics.py",
+      "sha256": "c330218e64a5a42f6c4b8b1caa798609566113bdca527d9b46e3a077d2877958",
+      "size_bytes": 11040
+    },
+    {
+      "archived_path": "validation/green01/stderr.txt",
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-guard-accounting-v1/runs/source-validation/guard-accounting-green01/stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    {
+      "archived_path": "validation/green01/stdout.txt",
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-guard-accounting-v1/runs/source-validation/guard-accounting-green01/stdout.txt",
+      "sha256": "8a41fa93c9203c3e8a2dc00224f2ef06376ed624ccc1d5ee15d05b4e668cb537",
+      "size_bytes": 100
+    },
+    {
+      "archived_path": "validation/green01/terminal.json",
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-guard-accounting-v1/runs/source-validation/guard-accounting-green01/terminal.json",
+      "sha256": "e18e5bd3edfa4f94dc2af0c25e3a0b5869cd67d04fe186fdc12a52c8b2840427",
+      "size_bytes": 63
+    },
+    {
+      "archived_path": "validation/green02/command.json",
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-guard-accounting-v1/runs/source-validation/guard-accounting-green02/command.json",
+      "sha256": "532c7bd4b0ba3b61e741f37ffdc058c964f17b4873250d13954c350d06db0cf1",
+      "size_bytes": 1165
+    },
+    {
+      "archived_path": "validation/green02/source/scripts/puck_worker_bootstrap.py",
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-guard-accounting-v1/runs/source-validation/guard-accounting-green02/source/scripts/puck_worker_bootstrap.py",
+      "sha256": "6a1099b4b5f30243569e93194f0a298c58b28a167c52e3a759f256480c4435c0",
+      "size_bytes": 45431
+    },
+    {
+      "archived_path": "validation/green02/source/tests/test_puck_guard_time_diagnostics.py",
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-guard-accounting-v1/runs/source-validation/guard-accounting-green02/source/tests/test_puck_guard_time_diagnostics.py",
+      "sha256": "9eae9228eede06d0870c95fb36f56d9e0221dc9912e0751b31a5e84a53e72349",
+      "size_bytes": 12147
+    },
+    {
+      "archived_path": "validation/green02/stderr.txt",
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-guard-accounting-v1/runs/source-validation/guard-accounting-green02/stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    {
+      "archived_path": "validation/green02/stdout.txt",
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-guard-accounting-v1/runs/source-validation/guard-accounting-green02/stdout.txt",
+      "sha256": "882c1e332c8226dabd2ba4a015047b18cd9172ce1434aaeffc36b577ee6c91db",
+      "size_bytes": 110
+    },
+    {
+      "archived_path": "validation/green02/terminal.json",
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-guard-accounting-v1/runs/source-validation/guard-accounting-green02/terminal.json",
+      "sha256": "ee49eeeb7f039807389d6777e6aab233faaaa92a00b5ad782e28c888da90abf6",
+      "size_bytes": 63
+    },
+    {
+      "archived_path": "validation/green03/command.json",
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-guard-accounting-v1/runs/source-validation/guard-accounting-green03/command.json",
+      "sha256": "5a4d68be4c80f3c62b1cc2ff2fbfdaad3bd6488b93d16e955f651264c7a4c145",
+      "size_bytes": 1170
+    },
+    {
+      "archived_path": "validation/green03/source/scripts/puck_worker_bootstrap.py",
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-guard-accounting-v1/runs/source-validation/guard-accounting-green03/source/scripts/puck_worker_bootstrap.py",
+      "sha256": "0988a0e85b0f386cc27e46931483063cb682a7fa7e41b888bab705058200249a",
+      "size_bytes": 45710
+    },
+    {
+      "archived_path": "validation/green03/source/tests/test_puck_guard_time_diagnostics.py",
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-guard-accounting-v1/runs/source-validation/guard-accounting-green03/source/tests/test_puck_guard_time_diagnostics.py",
+      "sha256": "db86c2914b0ce3e7633ad764dce3e00e115b91bbd0f3eda268c681420f6dd669",
+      "size_bytes": 16690
+    },
+    {
+      "archived_path": "validation/green03/stderr.txt",
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-guard-accounting-v1/runs/source-validation/guard-accounting-green03/stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    {
+      "archived_path": "validation/green03/stdout.txt",
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-guard-accounting-v1/runs/source-validation/guard-accounting-green03/stdout.txt",
+      "sha256": "af7d0fa3cb1b5cd7d1dd9b403c56f3debe402ebf88085fc9ee438b7c6821c970",
+      "size_bytes": 110
+    },
+    {
+      "archived_path": "validation/green03/terminal.json",
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-guard-accounting-v1/runs/source-validation/guard-accounting-green03/terminal.json",
+      "sha256": "ae532973f345b67006d2e4635ffffaa3b7fcbe9ae72dbb726966047a51972bc5",
+      "size_bytes": 62
+    },
+    {
+      "archived_path": "validation/persistent01/command.json",
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-guard-accounting-v1/runs/source-validation/guard-accounting-persistent01/command.json",
+      "sha256": "fe1865fed7d728f54fa3475d1cc16debbad15f7dde11beb0429108e0a0c1c0df",
+      "size_bytes": 1456
+    },
+    {
+      "archived_path": "validation/persistent01/source/scripts/puck_worker_bootstrap.py",
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-guard-accounting-v1/runs/source-validation/guard-accounting-persistent01/source/scripts/puck_worker_bootstrap.py",
+      "sha256": "f137429398dc30270e67ef198c508231f9e2cf02d3aeedb98663630cafa51451",
+      "size_bytes": 45915
+    },
+    {
+      "archived_path": "validation/persistent01/source/tests/test_puck_cpu_held_amendment08_integration.py",
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-guard-accounting-v1/runs/source-validation/guard-accounting-persistent01/source/tests/test_puck_cpu_held_amendment08_integration.py",
+      "sha256": "730a42b253fd7d95011a1289f86332fa937e02eec304ef4cb070eb92bcbb3907",
+      "size_bytes": 6537
+    },
+    {
+      "archived_path": "validation/persistent01/source/tests/test_puck_guard_time_diagnostics.py",
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-guard-accounting-v1/runs/source-validation/guard-accounting-persistent01/source/tests/test_puck_guard_time_diagnostics.py",
+      "sha256": "1b99f75bfa46a5128b1e3708028436dde991df6a58e9b857fa272526aa8b572f",
+      "size_bytes": 17051
+    },
+    {
+      "archived_path": "validation/persistent01/stderr.txt",
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-guard-accounting-v1/runs/source-validation/guard-accounting-persistent01/stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    {
+      "archived_path": "validation/persistent01/stdout.txt",
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-guard-accounting-v1/runs/source-validation/guard-accounting-persistent01/stdout.txt",
+      "sha256": "a25e1c7ad6aa89d16b1b860bd09ba9339e04f44b519d36309c60f845dc311c2d",
+      "size_bytes": 99
+    },
+    {
+      "archived_path": "validation/persistent01/terminal.json",
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-guard-accounting-v1/runs/source-validation/guard-accounting-persistent01/terminal.json",
+      "sha256": "4dc5971fcb0a3c509b1ab5105f52106554ba130e1892005a24e73e3901a478a1",
+      "size_bytes": 63
+    },
+    {
+      "archived_path": "validation/private01/command.json",
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-guard-accounting-v1/runs/source-validation/guard-accounting-private01/command.json",
+      "sha256": "4e132dfd70ee5352beeb8feeb1cd2f24fdaefd3769e0347782a8641c73a1c6b3",
+      "size_bytes": 1792
+    },
+    {
+      "archived_path": "validation/private01/source/scripts/puck_worker_bootstrap.py",
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-guard-accounting-v1/runs/source-validation/guard-accounting-private01/source/scripts/puck_worker_bootstrap.py",
+      "sha256": "f137429398dc30270e67ef198c508231f9e2cf02d3aeedb98663630cafa51451",
+      "size_bytes": 45915
+    },
+    {
+      "archived_path": "validation/private01/source/tests/test_puck_cpu_held_amendment08_integration.py",
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-guard-accounting-v1/runs/source-validation/guard-accounting-private01/source/tests/test_puck_cpu_held_amendment08_integration.py",
+      "sha256": "730a42b253fd7d95011a1289f86332fa937e02eec304ef4cb070eb92bcbb3907",
+      "size_bytes": 6537
+    },
+    {
+      "archived_path": "validation/private01/source/tests/test_puck_guard_time_diagnostics.py",
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-guard-accounting-v1/runs/source-validation/guard-accounting-private01/source/tests/test_puck_guard_time_diagnostics.py",
+      "sha256": "1b99f75bfa46a5128b1e3708028436dde991df6a58e9b857fa272526aa8b572f",
+      "size_bytes": 17051
+    },
+    {
+      "archived_path": "validation/private01/stderr.txt",
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-guard-accounting-v1/runs/source-validation/guard-accounting-private01/stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    {
+      "archived_path": "validation/private01/stdout.txt",
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-guard-accounting-v1/runs/source-validation/guard-accounting-private01/stdout.txt",
+      "sha256": "81d659cd282e10ced765f756678a9739ebbaa060be174ed9c08fc4535e9a62cc",
+      "size_bytes": 432
+    },
+    {
+      "archived_path": "validation/private01/terminal.json",
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-guard-accounting-v1/runs/source-validation/guard-accounting-private01/terminal.json",
+      "sha256": "2008161d08589fd5aa2279fc0e8712228403a7d52a20afd61754dd49611380e9",
+      "size_bytes": 63
+    },
+    {
+      "archived_path": "validation/red01/command.json",
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-guard-accounting-v1/runs/source-validation/guard-accounting-red01/command.json",
+      "sha256": "7aaad6814cc91d73ead7028b29eae15e085d37c8eb5b315ce9d73ff0be4013d6",
+      "size_bytes": 1096
+    },
+    {
+      "archived_path": "validation/red01/source/scripts/puck_worker_bootstrap.py",
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-guard-accounting-v1/runs/source-validation/guard-accounting-red01/source/scripts/puck_worker_bootstrap.py",
+      "sha256": "71263511b6f8b1828a59f2a82f74473f9151f1ec7b28dfe8bfa8c637ccac9c0e",
+      "size_bytes": 39944
+    },
+    {
+      "archived_path": "validation/red01/source/tests/test_puck_guard_time_diagnostics.py",
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-guard-accounting-v1/runs/source-validation/guard-accounting-red01/source/tests/test_puck_guard_time_diagnostics.py",
+      "sha256": "3751ead9ca2d61895abc8d1430b7dacacf5b3b09089dd6b47d633bba48e310a9",
+      "size_bytes": 7501
+    },
+    {
+      "archived_path": "validation/red01/stderr.txt",
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-guard-accounting-v1/runs/source-validation/guard-accounting-red01/stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    {
+      "archived_path": "validation/red01/stdout.txt",
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-guard-accounting-v1/runs/source-validation/guard-accounting-red01/stdout.txt",
+      "sha256": "2d752508c2d7c73a2de35dda8f8a0311f9a703a34b5b5a3ab460ece2192ef4b4",
+      "size_bytes": 38765
+    },
+    {
+      "archived_path": "validation/red01/terminal.json",
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-guard-accounting-v1/runs/source-validation/guard-accounting-red01/terminal.json",
+      "sha256": "3333104e842422b4413eb30bea079cd2a4db19ab94dd8c2a5a224e1a5a55a8ca",
+      "size_bytes": 63
+    },
+    {
+      "archived_path": "validation/red02/command.json",
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-guard-accounting-v1/runs/source-validation/guard-accounting-red02/command.json",
+      "sha256": "b0155e1673211744d5abba7fa30dc26389ae923833024739b3687f0fa8bc320d",
+      "size_bytes": 1284
+    },
+    {
+      "archived_path": "validation/red02/source/scripts/puck_worker_bootstrap.py",
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-guard-accounting-v1/runs/source-validation/guard-accounting-red02/source/scripts/puck_worker_bootstrap.py",
+      "sha256": "71263511b6f8b1828a59f2a82f74473f9151f1ec7b28dfe8bfa8c637ccac9c0e",
+      "size_bytes": 39944
+    },
+    {
+      "archived_path": "validation/red02/source/tests/test_puck_guard_time_diagnostics.py",
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-guard-accounting-v1/runs/source-validation/guard-accounting-red02/source/tests/test_puck_guard_time_diagnostics.py",
+      "sha256": "4858bed6c7e6c087e0e00c8164b903fd3d878300e9f314c42e44bd6f3d55b38b",
+      "size_bytes": 8036
+    },
+    {
+      "archived_path": "validation/red02/stderr.txt",
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-guard-accounting-v1/runs/source-validation/guard-accounting-red02/stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    {
+      "archived_path": "validation/red02/stdout.txt",
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-guard-accounting-v1/runs/source-validation/guard-accounting-red02/stdout.txt",
+      "sha256": "d883133d2581e7ee2a89d2e7397537797c6de70a8fda0556c7c16b9151e1447e",
+      "size_bytes": 8282
+    },
+    {
+      "archived_path": "validation/red02/terminal.json",
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-guard-accounting-v1/runs/source-validation/guard-accounting-red02/terminal.json",
+      "sha256": "7c63e2e12b24dad02f2a809aca922c8e8a4b6735bf890ee397aa24f62aec0b61",
+      "size_bytes": 62
+    },
+    {
+      "archived_path": "validation/red03/command.json",
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-guard-accounting-v1/runs/source-validation/guard-accounting-red03/command.json",
+      "sha256": "da3fa9ddbd46f8355bd29441f8e7b2eb6d3402fee00d0c8a2016957f4d0dc9f3",
+      "size_bytes": 1423
+    },
+    {
+      "archived_path": "validation/red03/source/scripts/puck_worker_bootstrap.py",
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-guard-accounting-v1/runs/source-validation/guard-accounting-red03/source/scripts/puck_worker_bootstrap.py",
+      "sha256": "71263511b6f8b1828a59f2a82f74473f9151f1ec7b28dfe8bfa8c637ccac9c0e",
+      "size_bytes": 39944
+    },
+    {
+      "archived_path": "validation/red03/source/tests/test_puck_guard_time_diagnostics.py",
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-guard-accounting-v1/runs/source-validation/guard-accounting-red03/source/tests/test_puck_guard_time_diagnostics.py",
+      "sha256": "c330218e64a5a42f6c4b8b1caa798609566113bdca527d9b46e3a077d2877958",
+      "size_bytes": 11040
+    },
+    {
+      "archived_path": "validation/red03/stderr.txt",
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-guard-accounting-v1/runs/source-validation/guard-accounting-red03/stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    {
+      "archived_path": "validation/red03/stdout.txt",
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-guard-accounting-v1/runs/source-validation/guard-accounting-red03/stdout.txt",
+      "sha256": "d8131fce9e3502a402f92489af6b769be94d1f4506621d34fd25e5e53773e453",
+      "size_bytes": 10577
+    },
+    {
+      "archived_path": "validation/red03/terminal.json",
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-guard-accounting-v1/runs/source-validation/guard-accounting-red03/terminal.json",
+      "sha256": "12c401c8eb3dc4ece05d61b06c19559475bf55b27583f7fc2e20e275d33f118c",
+      "size_bytes": 62
+    },
+    {
+      "archived_path": "validation/red04/command.json",
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-guard-accounting-v1/runs/source-validation/guard-accounting-red04/command.json",
+      "sha256": "b21a28346b75bdc0f5ed11076e306f23a34287bfe76c3b995ead1e6a1856165b",
+      "size_bytes": 1149
+    },
+    {
+      "archived_path": "validation/red04/source/scripts/puck_worker_bootstrap.py",
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-guard-accounting-v1/runs/source-validation/guard-accounting-red04/source/scripts/puck_worker_bootstrap.py",
+      "sha256": "691222948e90892a8d602a4ba9fbd9692598344a9cdec63961df0d2c17be6b5c",
+      "size_bytes": 45384
+    },
+    {
+      "archived_path": "validation/red04/source/tests/test_puck_guard_time_diagnostics.py",
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-guard-accounting-v1/runs/source-validation/guard-accounting-red04/source/tests/test_puck_guard_time_diagnostics.py",
+      "sha256": "9eae9228eede06d0870c95fb36f56d9e0221dc9912e0751b31a5e84a53e72349",
+      "size_bytes": 12147
+    },
+    {
+      "archived_path": "validation/red04/stderr.txt",
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-guard-accounting-v1/runs/source-validation/guard-accounting-red04/stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    {
+      "archived_path": "validation/red04/stdout.txt",
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-guard-accounting-v1/runs/source-validation/guard-accounting-red04/stdout.txt",
+      "sha256": "494bb34210adac6b5bd739da85776a1b8138391b15cb10b7b7589526d702d4bc",
+      "size_bytes": 11418
+    },
+    {
+      "archived_path": "validation/red04/terminal.json",
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-guard-accounting-v1/runs/source-validation/guard-accounting-red04/terminal.json",
+      "sha256": "7c35a30aa4c41defa9ef6dd5fefdd3b8c87d648e5bce809e6b1cf950a299be9f",
+      "size_bytes": 63
+    },
+    {
+      "archived_path": "validation/red05/command.json",
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-guard-accounting-v1/runs/source-validation/guard-accounting-red05/command.json",
+      "sha256": "3b55cac985f49eacb63f77e7250a02a5dc04e7d14d284beda9dbcc302f900b3f",
+      "size_bytes": 1526
+    },
+    {
+      "archived_path": "validation/red05/source/scripts/puck_worker_bootstrap.py",
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-guard-accounting-v1/runs/source-validation/guard-accounting-red05/source/scripts/puck_worker_bootstrap.py",
+      "sha256": "6a1099b4b5f30243569e93194f0a298c58b28a167c52e3a759f256480c4435c0",
+      "size_bytes": 45431
+    },
+    {
+      "archived_path": "validation/red05/source/tests/test_puck_guard_time_diagnostics.py",
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-guard-accounting-v1/runs/source-validation/guard-accounting-red05/source/tests/test_puck_guard_time_diagnostics.py",
+      "sha256": "db86c2914b0ce3e7633ad764dce3e00e115b91bbd0f3eda268c681420f6dd669",
+      "size_bytes": 16690
+    },
+    {
+      "archived_path": "validation/red05/stderr.txt",
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-guard-accounting-v1/runs/source-validation/guard-accounting-red05/stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    {
+      "archived_path": "validation/red05/stdout.txt",
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-guard-accounting-v1/runs/source-validation/guard-accounting-red05/stdout.txt",
+      "sha256": "faaa20a59133acfa29caf947971f617da90b82c779b7145a1c0d3f13fdd4ec2e",
+      "size_bytes": 34895
+    },
+    {
+      "archived_path": "validation/red05/terminal.json",
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-guard-accounting-v1/runs/source-validation/guard-accounting-red05/terminal.json",
+      "sha256": "ef00a20f1f3fdafcaac54ce7dd636ac5fe681fec1a43415edd2e36486d5e21a0",
+      "size_bytes": 62
+    },
+    {
+      "archived_path": "validation/red07/command.json",
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-guard-accounting-v1/runs/source-validation/guard-accounting-red07/command.json",
+      "sha256": "8e8bab05f65aaec144db33fee66c54f73cb4e18370d19bee04fc656f0769b8a5",
+      "size_bytes": 1171
+    },
+    {
+      "archived_path": "validation/red07/source/scripts/puck_worker_bootstrap.py",
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-guard-accounting-v1/runs/source-validation/guard-accounting-red07/source/scripts/puck_worker_bootstrap.py",
+      "sha256": "0988a0e85b0f386cc27e46931483063cb682a7fa7e41b888bab705058200249a",
+      "size_bytes": 45710
+    },
+    {
+      "archived_path": "validation/red07/source/tests/test_puck_guard_time_diagnostics.py",
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-guard-accounting-v1/runs/source-validation/guard-accounting-red07/source/tests/test_puck_guard_time_diagnostics.py",
+      "sha256": "1b99f75bfa46a5128b1e3708028436dde991df6a58e9b857fa272526aa8b572f",
+      "size_bytes": 17051
+    },
+    {
+      "archived_path": "validation/red07/stderr.txt",
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-guard-accounting-v1/runs/source-validation/guard-accounting-red07/stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    {
+      "archived_path": "validation/red07/stdout.txt",
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-guard-accounting-v1/runs/source-validation/guard-accounting-red07/stdout.txt",
+      "sha256": "0737b6935b5e464cf3e8b215402ccef168ed1aacb17b25aabfc9b28140f4379e",
+      "size_bytes": 2092
+    },
+    {
+      "archived_path": "validation/red07/terminal.json",
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-guard-accounting-v1/runs/source-validation/guard-accounting-red07/terminal.json",
+      "sha256": "8fc62391a3219505a8a96133ee4f1b7787f01293c25ef08aecadc6416a2501c9",
+      "size_bytes": 63
+    },
+    {
+      "archived_path": "verify_evidence.py",
+      "original_path": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-guard-accounting-v1/docs/reports/puck-cpu-runtime-phase-trace-v1/verify_evidence.py",
+      "sha256": "d5b874df818e72295d6951873e25a6fc8fc0deb0a79ec6183ca805508c19a759",
+      "size_bytes": 2128
+    }
+  ],
+  "final_disjoint_authored_passes": 304,
+  "kind": "puck-guard-accounting-authored-evidence-v1",
+  "preserved_consumed_attempts": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8
+  ],
+  "runtime_qualified": false,
+  "source_commit": "57e2e793edddc8fddc20b4af77e8a8a0035463a0",
+  "source_paths": [
+    "scripts/audit_puck_cpu_held_runtime.py",
+    "scripts/observe_puck_cpu_held_allocation.py",
+    "scripts/puck_worker_bootstrap.py",
+    "scripts/qualify_puck_cpu_held_runtime.py",
+    "src/palimpsest/__init__.py",
+    "src/palimpsest/puck_dependency_bindings.py",
+    "src/palimpsest/puck_dependency_files.py",
+    "src/palimpsest/puck_dependency_imports.py",
+    "src/palimpsest/puck_execution_files.py",
+    "src/palimpsest/puck_native_identity.py",
+    "src/palimpsest/puck_native_origins.py",
+    "src/palimpsest/puck_runtime_qualification.py",
+    "src/palimpsest/puck_worker_preflight.py",
+    "tests/test_puck_cpu_held_amendment.py",
+    "tests/test_puck_cpu_held_amendment03.py",
+    "tests/test_puck_cpu_held_amendment04.py",
+    "tests/test_puck_cpu_held_amendment05.py",
+    "tests/test_puck_cpu_held_amendment05_integration.py",
+    "tests/test_puck_cpu_held_amendment06.py",
+    "tests/test_puck_cpu_held_amendment06_integration.py",
+    "tests/test_puck_cpu_held_amendment07.py",
+    "tests/test_puck_cpu_held_amendment08.py",
+    "tests/test_puck_cpu_held_amendment08_integration.py",
+    "tests/test_puck_cpu_held_observer.py",
+    "tests/test_puck_cpu_held_parent.py",
+    "tests/test_puck_cpu_held_parent_integration.py",
+    "tests/test_puck_cpu_held_runtime_audit.py",
+    "tests/test_puck_cpu_phase_trace.py",
+    "tests/test_puck_cpu_runtime_entry.py",
+    "tests/test_puck_dependency_files.py",
+    "tests/test_puck_dependency_profile.py",
+    "tests/test_puck_guard_cost.py",
+    "tests/test_puck_guard_time_diagnostics.py",
+    "tests/test_puck_held_runtime_entry.py",
+    "tests/test_puck_pillow_native_origins.py",
+    "tests/test_puck_published_exports.py",
+    "tests/test_puck_tmpfs_dependencies.py",
+    "tests/test_puck_worker_bootstrap.py",
+    "tests/test_puck_worker_dependencies.py"
+  ],
+  "source_review": "GO_SCOPED"
+}

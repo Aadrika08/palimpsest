@@ -52,7 +52,7 @@ resource/byte/custody admission.
 - [x] Implement the extension without changing guard predicates or qualifier.
 - [x] Run focused authored diagnostics, existing phase/refusal/legacy and nearest
   worker/consumer checks under their required storage conditions.
-- [ ] Independently review source and evidence, retain raw outcomes and exact
+- [x] Independently review source and evidence, retain raw outcomes and exact
   source identities, commit/push the source unit and update the active goal.
 
 The seven simulation-release gates remain open; no fixture pass substitutes for

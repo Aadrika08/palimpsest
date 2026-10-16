@@ -1,0 +1,44 @@
+{
+  "command": [
+    "/usr/bin/timeout",
+    "--signal=TERM",
+    "--kill-after=5s",
+    "75s",
+    "/usr/bin/bwrap",
+    "--unshare-user",
+    "--uid",
+    "1000",
+    "--gid",
+    "1000",
+    "--bind",
+    "/",
+    "/",
+    "--tmpfs",
+    "/tmp",
+    "--dev",
+    "/dev",
+    "--proc",
+    "/proc",
+    "--chdir",
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-guard-accounting-v1",
+    "--",
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/r0-reproduction/.venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "--basetemp",
+    "/tmp/puck-guard-accounting-green01",
+    "tests/test_puck_guard_time_diagnostics.py"
+  ],
+  "environment_overrides": {
+    "PYTEST_DISABLE_PLUGIN_AUTOLOAD": "1",
+    "PYTHONDONTWRITEBYTECODE": "1"
+  },
+  "pins": {
+    "scripts/puck_worker_bootstrap.py": "691222948e90892a8d602a4ba9fbd9692598344a9cdec63961df0d2c17be6b5c",
+    "tests/test_puck_guard_time_diagnostics.py": "c330218e64a5a42f6c4b8b1caa798609566113bdca527d9b46e3a077d2877958"
+  },
+  "scope": "First authored diagnostic GREEN attempt; no installed qualification."
+}

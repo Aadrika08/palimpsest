@@ -1,0 +1,195 @@
+{
+  "kind": "puck-guard-accounting-authored-validation-v1",
+  "batches": [
+    {
+      "label": "red01",
+      "directory": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-guard-accounting-v1/runs/source-validation/guard-accounting-red01",
+      "tool_session_id": 58642,
+      "tool_chunk_id": "fba623",
+      "tool_exit_code": 1,
+      "terminal": {
+        "returncode": 1,
+        "elapsed_seconds": 21.318250459968112
+      },
+      "pins": {
+        "scripts/puck_worker_bootstrap.py": "71263511b6f8b1828a59f2a82f74473f9151f1ec7b28dfe8bfa8c637ccac9c0e",
+        "tests/test_puck_guard_time_diagnostics.py": "3751ead9ca2d61895abc8d1430b7dacacf5b3b09089dd6b47d633bba48e310a9"
+      }
+    },
+    {
+      "label": "red02",
+      "directory": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-guard-accounting-v1/runs/source-validation/guard-accounting-red02",
+      "tool_session_id": 3027,
+      "tool_chunk_id": "64fd89",
+      "tool_exit_code": 1,
+      "terminal": {
+        "returncode": 1,
+        "elapsed_seconds": 5.347577893990092
+      },
+      "pins": {
+        "scripts/puck_worker_bootstrap.py": "71263511b6f8b1828a59f2a82f74473f9151f1ec7b28dfe8bfa8c637ccac9c0e",
+        "tests/test_puck_guard_time_diagnostics.py": "4858bed6c7e6c087e0e00c8164b903fd3d878300e9f314c42e44bd6f3d55b38b"
+      }
+    },
+    {
+      "label": "red03",
+      "directory": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-guard-accounting-v1/runs/source-validation/guard-accounting-red03",
+      "tool_session_id": 96946,
+      "tool_chunk_id": "d7927b",
+      "tool_exit_code": 1,
+      "terminal": {
+        "returncode": 1,
+        "elapsed_seconds": 4.973954487009905
+      },
+      "pins": {
+        "scripts/puck_worker_bootstrap.py": "71263511b6f8b1828a59f2a82f74473f9151f1ec7b28dfe8bfa8c637ccac9c0e",
+        "tests/test_puck_guard_time_diagnostics.py": "c330218e64a5a42f6c4b8b1caa798609566113bdca527d9b46e3a077d2877958"
+      }
+    },
+    {
+      "label": "green01",
+      "directory": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-guard-accounting-v1/runs/source-validation/guard-accounting-green01",
+      "tool_session_id": 28436,
+      "tool_chunk_id": "a46062",
+      "tool_exit_code": 0,
+      "terminal": {
+        "returncode": 0,
+        "elapsed_seconds": 28.318151429994032
+      },
+      "pins": {
+        "scripts/puck_worker_bootstrap.py": "691222948e90892a8d602a4ba9fbd9692598344a9cdec63961df0d2c17be6b5c",
+        "tests/test_puck_guard_time_diagnostics.py": "c330218e64a5a42f6c4b8b1caa798609566113bdca527d9b46e3a077d2877958"
+      }
+    },
+    {
+      "label": "red04",
+      "directory": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-guard-accounting-v1/runs/source-validation/guard-accounting-red04",
+      "tool_session_id": 14158,
+      "tool_chunk_id": "cba3b5",
+      "tool_exit_code": 1,
+      "terminal": {
+        "returncode": 1,
+        "elapsed_seconds": 2.0210317710298114
+      },
+      "pins": {
+        "scripts/puck_worker_bootstrap.py": "691222948e90892a8d602a4ba9fbd9692598344a9cdec63961df0d2c17be6b5c",
+        "tests/test_puck_guard_time_diagnostics.py": "9eae9228eede06d0870c95fb36f56d9e0221dc9912e0751b31a5e84a53e72349"
+      }
+    },
+    {
+      "label": "green02",
+      "directory": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-guard-accounting-v1/runs/source-validation/guard-accounting-green02",
+      "tool_session_id": 81457,
+      "tool_chunk_id": "2b0d6b",
+      "tool_exit_code": 0,
+      "terminal": {
+        "returncode": 0,
+        "elapsed_seconds": 62.642620580038056
+      },
+      "pins": {
+        "scripts/puck_worker_bootstrap.py": "6a1099b4b5f30243569e93194f0a298c58b28a167c52e3a759f256480c4435c0",
+        "tests/test_puck_guard_time_diagnostics.py": "9eae9228eede06d0870c95fb36f56d9e0221dc9912e0751b31a5e84a53e72349"
+      }
+    },
+    {
+      "label": "red05",
+      "directory": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-guard-accounting-v1/runs/source-validation/guard-accounting-red05",
+      "tool_session_id": 78787,
+      "tool_chunk_id": "6c4479",
+      "tool_exit_code": 1,
+      "terminal": {
+        "returncode": 1,
+        "elapsed_seconds": 8.695638614997733
+      },
+      "pins": {
+        "scripts/puck_worker_bootstrap.py": "6a1099b4b5f30243569e93194f0a298c58b28a167c52e3a759f256480c4435c0",
+        "tests/test_puck_guard_time_diagnostics.py": "db86c2914b0ce3e7633ad764dce3e00e115b91bbd0f3eda268c681420f6dd669"
+      }
+    },
+    {
+      "label": "green03",
+      "directory": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-guard-accounting-v1/runs/source-validation/guard-accounting-green03",
+      "tool_session_id": 91958,
+      "tool_chunk_id": "f3e123",
+      "tool_exit_code": 0,
+      "terminal": {
+        "returncode": 0,
+        "elapsed_seconds": 77.45666615001392
+      },
+      "pins": {
+        "scripts/puck_worker_bootstrap.py": "0988a0e85b0f386cc27e46931483063cb682a7fa7e41b888bab705058200249a",
+        "tests/test_puck_guard_time_diagnostics.py": "db86c2914b0ce3e7633ad764dce3e00e115b91bbd0f3eda268c681420f6dd669"
+      }
+    },
+    {
+      "label": "consumer-red01",
+      "directory": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-guard-accounting-v1/runs/source-validation/guard-accounting-consumer-red01",
+      "tool_session_id": 17046,
+      "tool_chunk_id": "01cb25",
+      "tool_exit_code": 1,
+      "terminal": {
+        "returncode": 1,
+        "elapsed_seconds": 14.740263509040233
+      },
+      "pins": {
+        "scripts/puck_worker_bootstrap.py": "0988a0e85b0f386cc27e46931483063cb682a7fa7e41b888bab705058200249a",
+        "tests/test_puck_cpu_held_amendment08_integration.py": "421dea6b86a1ace393fddee29b0f0dbf470f302c43ccbc5bed849785095ca02e"
+      }
+    },
+    {
+      "label": "red07",
+      "directory": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-guard-accounting-v1/runs/source-validation/guard-accounting-red07",
+      "tool_session_id": 90385,
+      "tool_chunk_id": "60a8e0",
+      "tool_exit_code": 1,
+      "terminal": {
+        "returncode": 1,
+        "elapsed_seconds": 1.9815851150196977
+      },
+      "pins": {
+        "scripts/puck_worker_bootstrap.py": "0988a0e85b0f386cc27e46931483063cb682a7fa7e41b888bab705058200249a",
+        "tests/test_puck_guard_time_diagnostics.py": "1b99f75bfa46a5128b1e3708028436dde991df6a58e9b857fa272526aa8b572f"
+      }
+    },
+    {
+      "label": "private01",
+      "directory": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-guard-accounting-v1/runs/source-validation/guard-accounting-private01",
+      "tool_session_id": 94971,
+      "tool_chunk_id": "4df5c6",
+      "tool_exit_code": 0,
+      "terminal": {
+        "returncode": 0,
+        "elapsed_seconds": 242.97998296900187
+      },
+      "pins": {
+        "scripts/puck_worker_bootstrap.py": "f137429398dc30270e67ef198c508231f9e2cf02d3aeedb98663630cafa51451",
+        "tests/test_puck_guard_time_diagnostics.py": "1b99f75bfa46a5128b1e3708028436dde991df6a58e9b857fa272526aa8b572f",
+        "tests/test_puck_cpu_held_amendment08_integration.py": "730a42b253fd7d95011a1289f86332fa937e02eec304ef4cb070eb92bcbb3907"
+      }
+    },
+    {
+      "label": "persistent01",
+      "directory": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-guard-accounting-v1/runs/source-validation/guard-accounting-persistent01",
+      "tool_session_id": 77468,
+      "tool_chunk_id": "32058f",
+      "tool_exit_code": 0,
+      "terminal": {
+        "returncode": 0,
+        "elapsed_seconds": 24.652745555038564
+      },
+      "pins": {
+        "scripts/puck_worker_bootstrap.py": "f137429398dc30270e67ef198c508231f9e2cf02d3aeedb98663630cafa51451",
+        "tests/test_puck_guard_time_diagnostics.py": "1b99f75bfa46a5128b1e3708028436dde991df6a58e9b857fa272526aa8b572f",
+        "tests/test_puck_cpu_held_amendment08_integration.py": "730a42b253fd7d95011a1289f86332fa937e02eec304ef4cb070eb92bcbb3907"
+      }
+    }
+  ],
+  "final_disjoint_cases": 304,
+  "private_cases": 302,
+  "persistent_cases": 2,
+  "earlier_batches_overlap": true,
+  "source_only": true,
+  "runtime_qualified": false,
+  "actual09_controls_created": false,
+  "initial_cancellation_assertion_corrected": true
+}

@@ -1,0 +1,75 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+____________ test_guard_end_diagnostic_cannot_bypass_final_deadline ____________
+
+    def test_guard_end_diagnostic_cannot_bypass_final_deadline():
+        result = run_cpu(code=('import sys,os\nowner = sys.meta_path[0].owner\noriginal = os.write\n'
+            'def write(fd,payload):\n result = original(fd,payload)\n'
+            ' if b\'"kind":"puck-worker-guard-cost-v1"\' in payload:\n'
+            '  if b\'"active":null\' in payload: owner._deadline = 0\n'
+            '  else: owner._guard_next = 0\n return result\n'
+            'owner._guard_next = 0\nos.write = write\n'
+            'try:\n owner._import_recheck()\n'
+            'except TimeoutError as error:\n'
+            ' assert owner._first_failure is error and not owner._children and not owner._early_runtime_fds\n'
+            'else:\n raise AssertionError("GUARD_END_BYPASSED_DEADLINE")\n'
+            'finally:\n os.write = original\n'
+            'os.write(2,b"GUARD_END_DEADLINE_CLOSED\\n")\n'))
+        assert result.returncode != 0 and result.stdout == ''
+>       assert 'GUARD_END_DEADLINE_CLOSED' in result.stderr, result.stderr
+E       AssertionError: {"diagnostic_only":true,"elapsed_seconds":7.434049621224403e-06,"kind":"puck-worker-phase-v1","phase":"bootstrap.enter","sequence":1}
+E         {"diagnostic_only":true,"elapsed_seconds":0.058337552996817976,"kind":"puck-worker-phase-v1","phase":"source.ready","sequence":2}
+E         {"diagnostic_only":true,"elapsed_seconds":0.0583795320126228,"kind":"puck-worker-phase-v1","phase":"dependencies.enter","sequence":3}
+E         {"diagnostic_only":true,"elapsed_seconds":1.2462399440119043,"kind":"puck-worker-phase-v1","phase":"dependencies.ready","sequence":4}
+E         {"diagnostic_only":true,"elapsed_seconds":1.2632781580323353,"kind":"puck-worker-phase-v1","phase":"bootstrap.ready","sequence":5}
+E         {"diagnostic_only":true,"elapsed_seconds":1.2633374700089917,"kind":"puck-worker-phase-v1","phase":"entry.enter","sequence":6}
+E         {"active":null,"context":"import.numpy.enter","diagnostic_only":true,"elapsed_nanoseconds":1310138377,"full":{"completed":76,"started":76},"kind":"puck-worker-guard-cost-v1","light":{"completed":1,"started":1},"nested_checks":0,"sections":{"bindings":{"nanoseconds":5642222,"visits":85},"cache":{"nanoseconds":3653540,"visits":77},"custody":{"nanoseconds":1247151312,"visits":85},"images":{"nanoseconds":1869350,"visits":7}},"sequence":1,"trigger":"checkpoint"}
+E         {"diagnostic_only":true,"elapsed_seconds":1.3686191200395115,"kind":"puck-worker-phase-v1","phase":"import.numpy.enter","sequence":7}
+E         {"active":null,"context":"import.numpy.returned","diagnostic_only":true,"elapsed_nanoseconds":1318893534,"full":{"completed":76,"started":76},"kind":"puck-worker-guard-cost-v1","light":{"completed":13,"started":13},"nested_checks":0,"sections":{"bindings":{"nanoseconds":7332809,"visits":109},"cache":{"nanoseconds":4153471,"visits":89},"custody":{"nanoseconds":1249648401,"visits":109},"images":{"nanoseconds":1869350,"visits":7}},"sequence":2,"trigger":"checkpoint"}
+E         {"diagnostic_only":true,"elapsed_seconds":1.3773697680444457,"kind":"puck-worker-phase-v1","phase":"import.numpy.returned","sequence":8}
+E         {"active":null,"context":"import.torch.enter","diagnostic_only":true,"elapsed_nanoseconds":1354604850,"full":{"completed":78,"started":78},"kind":"puck-worker-guard-cost-v1","light":{"completed":13,"started":13},"nested_checks":0,"sections":{"bindings":{"nanoseconds":7762690,"visits":113},"cache":{"nanoseconds":4365490,"visits":91},"custody":{"nanoseconds":1284136211,"visits":113},"images":{"nanoseconds":2377417,"visits":9}},"sequence":3,"trigger":"checkpoint"}
+E         {"diagnostic_only":true,"elapsed_seconds":1.4131010010023601,"kind":"puck-worker-phase-v1","phase":"import.torch.enter","sequence":9}
+E         {"active":null,"context":"import.torch.returned","diagnostic_only":true,"elapsed_nanoseconds":1356757523,"full":{"completed":78,"started":78},"kind":"puck-worker-guard-cost-v1","light":{"completed":16,"started":16},"nested_checks":0,"sections":{"bindings":{"nanoseconds":8381605,"visits":119},"cache":{"nanoseconds":4521303,"visits":94},"custody":{"nanoseconds":1284777569,"visits":119},"images":{"nanoseconds":2377417,"visits":9}},"sequence":4,"trigger":"checkpoint"}
+E         {"diagnostic_only":true,"elapsed_seconds":1.4152296290267259,"kind":"puck-worker-phase-v1","phase":"import.torch.returned","sequence":10}
+E         {"active":null,"context":"import.torchvision.enter","diagnostic_only":true,"elapsed_nanoseconds":1391887605,"full":{"completed":80,"started":80},"kind":"puck-worker-guard-cost-v1","light":{"completed":16,"started":16},"nested_checks":0,"sections":{"bindings":{"nanoseconds":8817866,"visits":123},"cache":{"nanoseconds":4615480,"visits":96},"custody":{"nanoseconds":1318729082,"visits":123},"images":{"nanoseconds":2958381,"visits":11}},"sequence":5,"trigger":"checkpoint"}
+E         {"diagnostic_only":true,"elapsed_seconds":1.450367596000433,"kind":"puck-worker-phase-v1","phase":"import.torchvision.enter","sequence":11}
+E         {"active":{"full":false,"section":"bindings"},"context":"import.torchvision.enter","diagnostic_only":true,"elapsed_nanoseconds":1393350760,"full":{"completed":80,"started":80},"kind":"puck-worker-guard-cost-v1","light":{"completed":18,"started":19},"nested_checks":0,"sections":{"bindings":{"nanoseconds":9169328,"visits":127},"cache":{"nanoseconds":4722000,"visits":98},"custody":{"nanoseconds":1319119858,"visits":127},"images":{"nanoseconds":2958381,"visits":11}},"sequence":6,"trigger":"periodic"}
+E         {"active":{"full":false,"section":"cache"},"context":"import.torchvision.enter","diagnostic_only":true,"elapsed_nanoseconds":1393519838,"full":{"completed":80,"started":80},"kind":"puck-worker-guard-cost-v1","light":{"completed":18,"started":19},"nested_checks":0,"sections":{"bindings":{"nanoseconds":9338406,"visits":128},"cache":{"nanoseconds":4722000,"visits":98},"custody":{"nanoseconds":1319119858,"visits":127},"images":{"nanoseconds":2958381,"visits":11}},"sequence":7,"trigger":"periodic"}
+E         {"active":{"full":false,"section":"custody"},"context":"import.torchvision.enter","diagnostic_only":true,"elapsed_nanoseconds":1393582556,"full":{"completed":80,"started":80},"kind":"puck-worker-guard-cost-v1","light":{"completed":18,"started":19},"nested_checks":0,"sections":{"bindings":{"nanoseconds":9338406,"visits":128},"cache":{"nanoseconds":4784718,"visits":99},"custody":{"nanoseconds":1319119858,"visits":127},"images":{"nanoseconds":2958381,"visits":11}},"sequence":8,"trigger":"periodic"}
+E         {"active":{"full":false,"section":"bindings"},"context":"import.torchvision.enter","diagnostic_only":true,"elapsed_nanoseconds":1393737238,"full":{"completed":80,"started":80},"kind":"puck-worker-guard-cost-v1","light":{"completed":18,"started":19},"nested_checks":0,"sections":{"bindings":{"nanoseconds":9338406,"visits":128},"cache":{"nanoseconds":4784718,"visits":99},"custody":{"nanoseconds":1319274540,"visits":128},"images":{"nanoseconds":2958381,"visits":11}},"sequence":9,"trigger":"periodic"}
+E         {"active":{"full":false,"section":"custody"},"context":"import.torchvision.enter","diagnostic_only":true,"elapsed_nanoseconds":1393787081,"full":{"completed":80,"started":80},"kind":"puck-worker-guard-cost-v1","light":{"completed":18,"started":19},"nested_checks":0,"sections":{"bindings":{"nanoseconds":9388249,"visits":129},"cache":{"nanoseconds":4784718,"visits":99},"custody":{"nanoseconds":1319274540,"visits":128},"images":{"nanoseconds":2958381,"visits":11}},"sequence":10,"trigger":"periodic"}
+E         {"active":null,"context":"import.torchvision.enter","diagnostic_only":true,"elapsed_nanoseconds":1393872482,"full":{"completed":80,"started":80},"kind":"puck-worker-guard-cost-v1","light":{"completed":19,"started":19},"nested_checks":0,"sections":{"bindings":{"nanoseconds":9388249,"visits":129},"cache":{"nanoseconds":4784718,"visits":99},"custody":{"nanoseconds":1319359941,"visits":129},"images":{"nanoseconds":2958381,"visits":11}},"sequence":11,"trigger":"periodic"}
+E         Traceback (most recent call last):
+E           File "<string>", line 10, in <module>
+E           File "/tmp/palimpsest-tmpfs-deps-tz6f54q4/source/scripts/puck_worker_bootstrap.py", line 792, in <module>
+E             if __name__ == '__main__': main()
+E                                        ^^^^^^
+E           File "/tmp/palimpsest-tmpfs-deps-tz6f54q4/source/scripts/puck_worker_bootstrap.py", line 785, in main
+E             receipt = admission.invoke()
+E                       ^^^^^^^^^^^^^^^^^^
+E           File "/tmp/palimpsest-tmpfs-deps-tz6f54q4/source/scripts/puck_worker_bootstrap.py", line 754, in invoke
+E             self.recheck(); result = module.qualify(self) if qualification else module.preflight(self)
+E                                      ^^^^^^^^^^^^^^^^^^^^
+E           File "/tmp/palimpsest-tmpfs-deps-tz6f54q4/source/src/palimpsest/puck_runtime_qualification.py", line 30, in qualify
+E             module=importlib.import_module(name)
+E                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           File "/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/importlib/__init__.py", line 126, in import_module
+E             return _bootstrap._gcd_import(name[level:], package, level)
+E                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           File "<frozen importlib._bootstrap>", line 1204, in _gcd_import
+E           File "<frozen importlib._bootstrap>", line 1176, in _find_and_load
+E           File "<frozen importlib._bootstrap>", line 1147, in _find_and_load_unlocked
+E           File "<frozen importlib._bootstrap>", line 690, in _load_unlocked
+E           File "/tmp/palimpsest-tmpfs-deps-tz6f54q4/source/src/palimpsest/puck_dependency_imports.py", line 155, in exec_module
+E             exec(code,module_dict(module))
+E           File "/tmp/palimpsest-tmpfs-deps-tz6f54q4/dependency/torchvision/__init__.py", line 20, in <module>
+E             raise AssertionError("GUARD_END_BYPASSED_DEADLINE")
+E         AssertionError: GUARD_END_BYPASSED_DEADLINE
+E         
+E       assert 'GUARD_END_DEADLINE_CLOSED' in '{"diagnostic_only":true,"elapsed_seconds":7.434049621224403e-06,"kind":"puck-worker-phase-v1","phase":"bootstrap.ente...0, in <module>\n    raise AssertionError("GUARD_END_BYPASSED_DEADLINE")\nAssertionError: GUARD_END_BYPASSED_DEADLINE\n'
+E        +  where '{"diagnostic_only":true,"elapsed_seconds":7.434049621224403e-06,"kind":"puck-worker-phase-v1","phase":"bootstrap.ente...0, in <module>\n    raise AssertionError("GUARD_END_BYPASSED_DEADLINE")\nAssertionError: GUARD_END_BYPASSED_DEADLINE\n' = CompletedProcess(args=['/home/utkarsh/Work/shraddha/brain/.worktrees/r0-reproduction/.venv/bin/python', '-I', '-B', '-..., in <module>\n    raise AssertionError("GUARD_END_BYPASSED_DEADLINE")\nAssertionError: GUARD_END_BYPASSED_DEADLINE\n').stderr
+
+tests/test_puck_guard_time_diagnostics.py:198: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_puck_guard_time_diagnostics.py::test_guard_end_diagnostic_cannot_bypass_final_deadline
+1 failed in 1.76s
