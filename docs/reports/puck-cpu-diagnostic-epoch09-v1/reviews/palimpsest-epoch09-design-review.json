@@ -1,0 +1,156 @@
+{
+  "caller_fixture_interactions": [
+    {
+      "note": "New acceptance09_case can reuse acceptance08_case, changing only fixed identity9 for metadata. Reuse validate_both and both independent candidate validators. Test exact source set, each omitted path and sixth path, every noncandidate input, D equality,19 names,limits and malformed/aliased identities. Leave existing08 tests intact.",
+      "refs": "tests/test_puck_cpu_held_amendment08.py18-36,39-84"
+    },
+    {
+      "note": "Use publication05_fixture(pillow_origins=True,phase_trace=True); phase_trace is needed to create the fifth qualifier-source delta from the historical prepared capsule. Default fixture bytes/paths need no new hook. Current bootstrap accounting is copied via normal source pins.",
+      "refs": "tests/test_puck_cpu_held_amendment05_integration.py32-38;tests/test_puck_cpu_held_parent_integration.py48,241;tests/test_puck_cpu_held_amendment08_integration.py19-85"
+    },
+    {
+      "note": "Call run_cli with qualify09 consistently so generated configuration,transport and stdout/stderr paths match auditor authored labels. Reentry may use qualify09-rerun as an outer authored label, but allocation_output remains fixed09 and must refuse without rewriting the first result.",
+      "refs": "tests/test_puck_cpu_held_parent_integration.py241;tests/test_puck_cpu_held_amendment08_integration.py34,59-60,85"
+    },
+    {
+      "note": "Authored normal-I/O integration may assert separate cost<=32 rows/32KiB/1024B and phase<=24/16KiB budgets. Production acceptance must still pass a legitimate normal terminal if best-effort costs are absent; never require combined per-channel budgets or infer wall-time causality from cumulative counters.",
+      "refs": "tests/test_puck_cpu_held_amendment08_integration.pyworker stderr/source checks;plan51-54"
+    },
+    {
+      "note": "New09 observer cases should preserve both failed07 and failed08 byte snapshots and absent result/baseline paths, including normal and nonzero child exit, exclusive reentry and prelaunch aliases. Existing08 preservation case covers only07; do not accidentally reuse output08. Authored nonzero observer transport is not a runtime PASS.",
+      "refs": "tests/test_puck_cpu_held_amendment08.py87-115;tests/test_puck_cpu_held_observer.py149-184"
+    },
+    {
+      "note": "Keep fast metadata/worker checks in their private layout and full historical publication integrations in required persistent project paths. Do not treat private-layout refusal as an implementation failure or silently alter fixture identities/floors to make it pass.",
+      "refs": "plan55-57 and existing08 integration"
+    }
+  ],
+  "design_confirmation": [
+    "Plan3-12 and19-35 describe the minimal source unit: only parent/auditor/observer production changes, fixedv9/id9/output09, unchanged q3 worker registration/result protocol, no dependency/role/schema extension.",
+    "Keep exact24-source/16-input names and candidateD plus all19 missing probes and exact current limits/environment/versions/claims. The09-versus-preparation01 source delta stays exactly bootstrap,parent,bindings,imports,qualifier.",
+    "Old05-07 must still use their exact four-path delta; old08 keeps its exact five-path delta. Extend the explicit08 five-path branch to(8,9), not to a generic future-version range.",
+    "Cost stderr remains diagnostic-only and best-effort. Existing worker stdout, custody, source/registration, dependency/image, closure and normal deadline proof remain the acceptance mechanism.",
+    "Consumed01-08 outcomes,14 historical absences and genuine failed08 stream/refusal bindings belong to later separately frozen actual09 controls/admission, not a new runtime input role or this source unit."
+  ],
+  "future_control_boundary": {
+    "custody": "Use old source archive paths after rollout,not old hashes at replaced live script paths. CandidateD and historical H/preparation/staged identity remain exact. Fresh complete source/input/SITE/staged/native/interpreter/baseline/resource admission is still required with2GiB and180s runtime limits unchanged.",
+    "genuine08": "Later fixed data-only admission must authenticate actual08 config/transport/supervision/external streams,empty worker stdout,nonempty eleven-phase worker stderr,independent nonzero-transport refusal and external observer/audit receipts from committed immutable archives. Its result/baseline-after stay absent;07 empty-log assumptions must not be copied to08.",
+    "history": "Retain the six exact01-06 failed-result pins. Do not extend a result loop to range(1,9); check07/08 as consumed failed terminal observations with missing receipts.",
+    "missing14": {
+      "characterization01_baseline_after": 1,
+      "install01_inventory_licences_baseline_namespace": 4,
+      "qualification05_baseline": 1,
+      "qualification06_baseline": 1,
+      "qualification07_result_baseline": 2,
+      "qualification08_result_baseline": 2,
+      "retained01_inventory_snapshot_baseline": 3
+    },
+    "not_part_of_this_source_unit": "No actual09 configuration/admission/freeze/outer command/stream/output is needed or authorized here.",
+    "raw_roles": "Reserve H candidate,01-06 result JSON,all preparation/current input anchors,07/08 terminal JSON and all external/worker raw streams before first manifest holding. Keep raw role checks strict; no metadata-first then raw decode workaround."
+  },
+  "kind": "puck-cpu-diagnostic-epoch09-design-review-v1",
+  "material_findings": [],
+  "next_review": "After RED/GREEN and complete authored integrations, independently review exact three-script diff and final byte-bound source/evidence packet. This design review grants no installed/runtime/episode/study acceptance.",
+  "not_done": [
+    "No edits to repository,source,tests,plans or controls. Only this JSON review authored.",
+    "No pytest/baseline polling,application/vendor/control/native imports or runtime invocations.",
+    "No installed/protected data reads,census,payload hashes,Git/network actions or09controls."
+  ],
+  "optional_test_precision": [
+    "One full authored09 consumer/API+CLI case with cost output disabled/dropped would directly preserve the explicit best-effort acceptance rule; current source unit accounting tests already cover several drop/clock/I/O paths.",
+    "Explicit old08 positive five-path and missing/sixth-path negatives plus old05-07 extra-qualifier negatives should remain. Never widen old predicates merely to share code."
+  ],
+  "pins_at_report": [
+    {
+      "path": "docs/plans/puck-cpu-diagnostic-epoch09-v1.md",
+      "sha256": "e3d0c77464770517fb439fa77ea0ef95c2d04cc3631bfc38f75ca31e01843714",
+      "size_bytes": 4234
+    },
+    {
+      "path": "scripts/qualify_puck_cpu_held_runtime.py",
+      "sha256": "0cc637ffeb2accdf843894a6f30abd917b59a940cecd53ef3709fd9200e50fe8",
+      "size_bytes": 59227
+    },
+    {
+      "path": "scripts/audit_puck_cpu_held_runtime.py",
+      "sha256": "0406bfa94f6b230fca440d57f65e5d429a30d70d054e2cdd29bafb0da1ca2b35",
+      "size_bytes": 76648
+    },
+    {
+      "path": "scripts/observe_puck_cpu_held_allocation.py",
+      "sha256": "b8ad9846ab0222d4fb7c603d2caff886dbaaff665db6a46df417a72d0f5228ad",
+      "size_bytes": 6633
+    },
+    {
+      "path": "scripts/puck_worker_bootstrap.py",
+      "sha256": "f137429398dc30270e67ef198c508231f9e2cf02d3aeedb98663630cafa51451",
+      "size_bytes": 45915
+    },
+    {
+      "path": "src/palimpsest/puck_runtime_qualification.py",
+      "sha256": "81e7f5df42115dd6714be05b6cf62cf5f0804564065130aaee8289f4b962768a",
+      "size_bytes": 2440
+    },
+    {
+      "path": "tests/test_puck_cpu_held_amendment08.py",
+      "sha256": "b6e6ebeef761d03d291763315c8f08b629df5c56c10c937b977df4252acd2156",
+      "size_bytes": 6886
+    },
+    {
+      "path": "tests/test_puck_cpu_held_amendment08_integration.py",
+      "sha256": "730a42b253fd7d95011a1289f86332fa937e02eec304ef4cb070eb92bcbb3907",
+      "size_bytes": 6537
+    },
+    {
+      "path": "tests/test_puck_cpu_held_amendment05_integration.py",
+      "sha256": "d1c4afd436854edac8a2b0dbd9b6ce49c9a73cbec3435cc2457de45006dcef17",
+      "size_bytes": 17875
+    },
+    {
+      "path": "tests/test_puck_cpu_held_parent_integration.py",
+      "sha256": "cadcfecde4f9eb982d7cce0664b91060717f5cd61f4c129c6ad4fd66a47d8eeb",
+      "size_bytes": 23157
+    }
+  ],
+  "production_drift_since_explicit08_read": [],
+  "reported_base": "d76b9f332c034a994bc2e867604a551df8c66a1f",
+  "root": "/home/utkarsh/Work/shraddha/brain/.worktrees/puck-cpu-diagnostic-epoch09-v1",
+  "scope": "Read-only plan/compatibility review of explicit08 source and authored fixture seams before09 implementation. Not a final review of any concurrently edited09 code, test result or runtime controls.",
+  "touch_map": [
+    {
+      "file": "scripts/qualify_puck_cpu_held_runtime.py",
+      "refs": "37;227-277;309-347;632-658;719-746",
+      "required": [
+        "Add QUALIFY09 and exact kind/version/allocation-id9 selectors. Keep exactint checks, qualify-only amendment shape and fixed output; no caller output/policy key.",
+        "Extend amended memberships, fixed19 roster, candidate/H holding and preparation acceptance through9; change only version==8 source predicate to version in(8,9).",
+        "Include9 in execute amended/source-capsule paths, oldH candidate holding, H-to-D semantic check with pillow_origins=True, dependency projection and sandbox worker-source creation.",
+        "worker_registration419 and validate_worker_result446 need no wire/schema change; configuration_template214 stays its historicalv1 template. Generic outcome kind664 already derives config.version."
+      ]
+    },
+    {
+      "file": "scripts/audit_puck_cpu_held_runtime.py",
+      "refs": "262-288;313-340;601;631;653-706",
+      "required": [
+        "Extend configuration, exact19 roster, allocation_output and historical preparation/candidate branches explicitly through9; preserve05-07 versus08/09 source predicates.",
+        "Easy-to-miss namespace_command601 must choose new allocation worker-source for9, not historical preparation worker-source.",
+        "Authored transport631 must expect authored-qualify09-cli.stdout/stderr; extend both its label map and membership.",
+        "Include9 in historical acceptance653, oldH/D projection663-691, worker-source holds676, historical totals687, current dependency selection691 and amended/versioned report/digest branches704-706.",
+        "outcome508 already derives kind/version generically; worker545 keeps q3/resultv2. Do not require accounting rows or invent accounting fields in normal stdout/report acceptance."
+      ]
+    },
+    {
+      "file": "scripts/observe_puck_cpu_held_allocation.py",
+      "refs": "49-101,especially58-64",
+      "required": [
+        "Add only fixed kindv9->9 and output09 mappings. Retain exactint identity/qualify-only checks, unchanged parent command/environment/deadlines and exclusive output/stream/transport reservation.",
+        "Observer remains transport, not a replacement for full parent/auditor source/input validation. Preserve old selectors and refusal behavior."
+      ]
+    }
+  ],
+  "verdict": "NO_MATERIAL_DESIGN_FINDING",
+  "version": 1,
+  "wording_precision": {
+    "note": "For final wording, read its exact five changed source paths as the09-versus-preparation01 delta. Preparation01 itself has no changed-source set. Plan24-27 already resolves this; not a blocker.",
+    "refs": "plan8-9"
+  }
+}
