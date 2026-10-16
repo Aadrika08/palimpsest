@@ -10,6 +10,34 @@ Implementation history is preserved in the unchanged [earlier history](simulatio
 and the [byte-identical prior goal snapshot](simulation-release-execution-goal-history-2026-10-16.md).
 Those dated records are evidence, not instructions to repeat consumed attempts.
 
+## Active work unit: unblock the first episode
+
+**Deliver a reviewed measurement of repeated runtime-guard work and decide
+whether a small, safe reduction is justified.** This is the immediate task toward
+checkpoint A; the complete simulation release above remains the goal.
+
+1. Measure the existing guard through real worker entry points with bounded,
+   authored fixtures. Retain source identities, commands, workload sizes,
+   operation counts and timings so the comparison can be reproduced.
+2. If the measurements identify redundant work, test the smallest correction
+   against legitimate imports and existing refusals, including mutable module
+   caches and overridden container behavior. Keep the current code if a safe
+   benefit is not demonstrated; report the remaining uncertainty.
+3. Independently review the result and any patch, run the affected regressions,
+   and commit the measured evidence. This work unit ends with a supported
+   decision to retain or change the guard, not another unmeasured optimization.
+
+Authored measurements cannot prove the installed timeout's cause or qualify the
+runtime. Any later installed qualification needs distinct reviewed controls and
+fresh resource admission. Attempts 01–08 stay consumed; this work unit creates
+no 09 controls and invokes no installed qualification. Preserve the 180s deadline,
+2GiB qualification RAM floor and all custody and refusal checks.
+
+Disk clearance permits preparation; each actual execution still needs its own
+fresh resource checks. After runtime and separate operator/renderer qualification,
+finish the real episode bundle below. Scientific study decisions and artistic or
+independent-operator acceptance remain with their named owners.
+
 ## Next checkpoint: prove one complete simulation episode
 
 **Run one public manual CPU episode, record it with snapshots, replay every
