@@ -1,0 +1,21 @@
+{
+  "command": [
+    "/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/bin/python3.11",
+    "-I",
+    "-S",
+    "-B",
+    "/home/utkarsh/.codex/worktrees/0071/brain/docs/plans/puck-cpu-held-qualification-10-control-selfcheck.py"
+  ],
+  "cwd": "/home/utkarsh/.codex/worktrees/0071/brain",
+  "environment": {
+    "LANG": "C.UTF-8",
+    "LC_ALL": "C.UTF-8",
+    "PATH": "/usr/bin:/bin",
+    "PYTHONDONTWRITEBYTECODE": "1"
+  },
+  "scope": "metadata-only; no admission/main or vendor",
+  "source": {
+    "sha256": "54bcb687f4c6115338a9dca85c8b8947f2dc80f96c7408d87c7b8358be44df78",
+    "size_bytes": 7044
+  }
+}

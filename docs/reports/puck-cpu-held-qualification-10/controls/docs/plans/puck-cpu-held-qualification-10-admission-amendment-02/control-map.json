@@ -1,0 +1,31 @@
+{
+"status":"STATIC_DELTA_MAP_ONLY",
+"head":"58bef84897b07b7a6d3111608f484721084251b8 (parent supplied)",
+"source":"e723db037ed1f790c2618798d59f56913054754f",
+"implementation":"cbe48b339f4839ec4d2b5ef153d0dc0820be712e",
+"base":"docs/plans/puck-cpu-held-qualification-10-admission-amendment-02/",
+"checked_pins":{
+"configuration.json":[8988,"4cc0cf9ab118eba0cdb8522014ee9990c33502f44e3e32f9366c65ff4bd40170"],
+"canonical-preflight.py":[1659,"4d2080721d2eff0512fbe563f4aa715faf297af4a4b4703af4cc12842a587f9e"],
+"original-freeze":[480590,"f0e56235825dc549c43d58e02b9d47de9bd81edab122a5786bd8038a3a6d47fc"],
+"failure-packet-index":"5449c756c22ff0ea65446a40af827bfb6dd7e8074362f41e188c202523db2fb0",
+"failure-outcome":"26ab4b3b312d06790377b036774fcb89468d2c381f996f1f1b791628f4dde566"
+},
+"delta":[
+"No source replacements:24 sources,16 inputs,D,4 prep anchors,19 negatives,12 PID identities,16 historical missing leaves and180s/2GiB limits unchanged. Original pretty config b7da3957... stays immutable; only new serialization changes.",
+"Runner derives original with OUTPUT=/tmp/palimpsest-puck-cpu-held-qualification-10-admission-02.json,CONFIGURATION=base/configuration.json,CONFIG_SHA=4cc0...,manifest=base/freeze.json. Keep reader lf=True at original367 and distinct pretty+LF manifest check371-372. Preserve guards,censuses,limits,closure,publish and07-09 history.",
+"New freeze retains all1998 original pins unchanged; add original freeze,47 original control paths from failed index.control_paths,89 archived artifacts plus index/report,and finite amendment config/runner/plan/preflight/REDGREEN/proofs. Deduplicate identical pins; reject conflicts. Do not reuse source rollover changed3/live5 assertions: amendment source deltas are zero.",
+"Pin admission01 failed-consumed normal1/no timeout and missing admitted receipt. It reached canonical reader before manifest/SITE/staged custody; runtime10 remains uninvoked. Distinguish admission01 previously invoked from admission02 not invoked; globally false admission-invoked metadata would be stale. Original dated freeze stays unchanged.",
+"Acyclic order: finalize config/runner/proofs+commands; exclusive freeze; wrapper with final freeze path/size/SHA; envelope binds freeze+wrapper. Freeze excludes itself,new wrapper/envelope and proofs containing final downstream hashes. Post-freeze selfcheck/report binds downstream controls separately. Never modify old controls to close cycles.",
+"Frozen admission uses base/admission.py. Observer and auditor_prefix use base/configuration.json AND4cc0...; ROOT/runs/puck-cpu-held-qualification-10 and3 parent streams unchanged. Unused audit01 output may remain. Fix concrete-audit-command path explicitly,prefer distinct amendment02; bind genuine future transport SHA only after terminal.",
+"Use distinct wrapper and /tmp/palimpsest-held10-amendment02-{phase}-external.{json,stdout,stderr}. Original external11-12/32 freeze binding,35 concrete path,42 stem change; receipt label may distinguish amendment. Keep phase allowlist,145/240s whole budget,16MiB streams,exclusive JSON/streams,fsync,late refusal; outer155/250s and5s grace.",
+"Absence guard retains actual10 root+3 parent streams+unused audit+new admission output. Separately require old admission01 receipt absent; do not silently change historical16 to17. Preserve original failure triple including empty stdout. Fresh admission/observer guards need distinct outputs and current resources. No observer before admission02 plus independent receipt review pass."
+],
+"metadata_checks_to_run_later":[
+"Retained canonical RED normal1/GREEN normal0 are metadata-only. Check authenticated configuration-reader semantics on8988B compact+LF,not only parsed schema equality; old pretty still fails. Compare unchanged parsed values and formatter AST with authenticated reader.",
+"Assert original1998-pin subset,47 live controls,89 closed archive membership/pins,source Git e723/cbe and control Git b3d50f5. Recompute new unique counts/bytes and <=1MiB freeze cap; no old-count assumption.",
+"Check exact new config path/SHA/commands/output closure,budgets,old failure evidence/absence and actual10 absence. Repeat13 history metadata cases against new runner. Warm Held manifest retains raw bytes for later-consumed JSON/streams,including added admission01 checks. Never canonical-read old pretty config.",
+"AST/diff allowlist and syntax-only runner/wrapper check; parent.validate_configuration,auditor.configuration,preparation acceptance,H-to-D,q4 tag4/defaultq3 preserved. No main,installed imports or payload scans in metadata checks."
+],
+"limits":"No tests/imports/control execution/vendor/native/interpreter/staged/protected payload reads/network.1998/47/89 parsed counts,not fresh leaf census. No new admission or observer executed; all7 gates open."
+}

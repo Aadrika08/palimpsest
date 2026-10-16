@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/home/utkarsh/.codex/worktrees/0071/brain/docs/plans/puck-cpu-held-qualification-10-control-selfcheck.py", line 17, in <module>
+    assert freeze['actual09_invoked_at_freeze'] is freeze['actual09_admission_invoked_at_freeze'] is False
+           ~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+KeyError: 'actual09_invoked_at_freeze'

@@ -1,0 +1,24 @@
+{
+  "command": [
+    "/usr/bin/timeout",
+    "--signal=TERM",
+    "--kill-after=5s",
+    "155s",
+    "/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/bin/python3.11",
+    "-I",
+    "-S",
+    "-B",
+    "/tmp/palimpsest-held10-amendment02-external.py",
+    "audit"
+  ],
+  "control_commit": "796359a099131157b5b91db38f14784628d5d7c5",
+  "cwd": "/home/utkarsh/.codex/worktrees/0071/brain",
+  "environment": {
+    "LANG": "C.UTF-8",
+    "LC_ALL": "C.UTF-8",
+    "PATH": "/usr/bin:/bin",
+    "PYTHONDONTWRITEBYTECODE": "1"
+  },
+  "runner_sha256": "aa41e25ba5ebbf3cbf49e960e6883d03445ac51479f1bef58e4afa4cdac1b50c",
+  "scope": "sole independent audit of the measured actual runtime10 transport"
+}

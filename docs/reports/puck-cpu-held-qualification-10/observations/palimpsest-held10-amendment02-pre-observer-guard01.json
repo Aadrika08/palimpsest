@@ -1,0 +1,39 @@
+{
+  "absence": {
+    "future_output_paths": [
+      "/tmp/palimpsest-held10-amendment02-observer-external.json",
+      "/tmp/palimpsest-held10-amendment02-observer-external.stderr",
+      "/tmp/palimpsest-held10-amendment02-observer-external.stdout",
+      "/tmp/palimpsest-held10-amendment02-audit-external.json",
+      "/tmp/palimpsest-held10-amendment02-audit-external.stderr",
+      "/tmp/palimpsest-held10-amendment02-audit-external.stdout",
+      "/tmp/palimpsest-puck-cpu-held-qualification-10-audit-01.json",
+      "/tmp/palimpsest-held10-amendment02-concrete-audit-command.json",
+      "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-held-qualification-10",
+      "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-held-qualification-10-external-cli.stdout",
+      "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-held-qualification-10-external-cli.stderr",
+      "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-held-qualification-10-external-cli-transport.json"
+    ],
+    "historical_missing_receipts": 16
+  },
+  "admission_main_invoked": true,
+  "admission_receipt_sha256": "33a425040db69d220fea247faf0077883ebd8c99644a20f929d3cbfe886567b9",
+  "checked_at_utc": "2026-10-16T05:27:19.298354+00:00",
+  "control_commit": "796359a099131157b5b91db38f14784628d5d7c5",
+  "control_files": 74,
+  "historical_records_unchanged": 79,
+  "payload_census_or_rehash": false,
+  "pinned_bytes": 109838923,
+  "pins": 2150,
+  "resources": {
+    "at_utc": "2026-10-16T05:27:19.285469+00:00",
+    "mem_available_bytes": 3902504960,
+    "nofile_hard": 524288,
+    "nofile_soft": 65536,
+    "project_free_bytes": 48020709376,
+    "tmpfs_free_bytes": 3057012736
+  },
+  "runtime_invoked": false,
+  "source_commit": "e723db037ed1f790c2618798d59f56913054754f",
+  "status": "PASS_PRE_OBSERVER_GUARD_ONLY"
+}
