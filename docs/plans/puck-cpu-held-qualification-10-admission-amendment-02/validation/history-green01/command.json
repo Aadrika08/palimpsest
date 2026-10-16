@@ -1,0 +1,29 @@
+{
+  "command": [
+    "/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/bin/python3.11",
+    "-I",
+    "-S",
+    "-B",
+    "/home/utkarsh/.codex/worktrees/0071/brain/docs/plans/puck-cpu-held-qualification-10-admission-amendment-02/history-check.py"
+  ],
+  "cwd": "/home/utkarsh/.codex/worktrees/0071/brain",
+  "environment": {
+    "LANG": "C.UTF-8",
+    "LC_ALL": "C.UTF-8",
+    "PATH": "/usr/bin:/bin",
+    "PYTHONDONTWRITEBYTECODE": "1"
+  },
+  "pins": [
+    {
+      "path": "admission.py",
+      "sha256": "98c693c98f4870e17a661354a8dcdd1cd34ec7124f8cc739dbb835a263b5513a",
+      "size_bytes": 43523
+    },
+    {
+      "path": "history-check.py",
+      "sha256": "c2ff75e81a39da9c4710aabebd6fcb9a5e04fef641353fb9803aefb226283919",
+      "size_bytes": 8209
+    }
+  ],
+  "scope": "small history metadata only; no admission/main, census, vendor or runtime"
+}

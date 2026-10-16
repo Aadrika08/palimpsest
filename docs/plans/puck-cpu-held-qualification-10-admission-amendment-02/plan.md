@@ -19,3 +19,14 @@ Ruling: this is an engineering serialization correction, not permission to rerun
 admission01 or alter consumed01–09. Source e723/cbe, preparation01, candidate D,
 19 negatives, environment and 180s/2GiB qualification limits remain unchanged.
 No observer, renderer, operator, inference, study, protected data or rover work.
+
+Observed controls proof: 17 small history cases reached RED (four missing-guard
+errors, thirteen passing old cases), then all17 passed with six exact RAW roles
+for admission01. The new canonical preflight already proves compact config bytes
+against the authenticated formatter AST. Original config/controls stay unchanged.
+
+Ruling: preserve indented sorted+LF for the freeze manifest because admission
+requires that separate format. Use the actual authenticated Held reader in the
+metadata self-check for compact config, pretty freeze, full warm metadata roster,
+07–09 histories, consumed admission01 and exact preparation/candidate projection.
+No SITE/staged/native census or new admission/main belongs to those checks.

@@ -233,6 +233,45 @@ def check_consumed09(held):
             scope='retained unauthenticated optional stderr bytes only; no completeness, cause or acceptance authority'))
 
 
+ADMISSION01_PINS={'docs/plans/puck-cpu-held-qualification-10.json': {'size_bytes': 10951, 'sha256': 'b7da3957cd81f017f7c59beb764577551384d54c634062f9841053c839d12915'}, 'docs/reports/puck-cpu-held-qualification-10-admission-01/outcome.json': {'size_bytes': 1438, 'sha256': '26ab4b3b312d06790377b036774fcb89468d2c381f996f1f1b791628f4dde566'}, 'docs/reports/puck-cpu-held-qualification-10-admission-01/observations/palimpsest-held10-admission-external.json': {'size_bytes': 1114, 'sha256': '74942615a5f78018d5ff4a0758521fda0d9d34c09675fbd284034fc8ab4d2fa9'}, 'docs/reports/puck-cpu-held-qualification-10-admission-01/observations/palimpsest-held10-admission-tool-terminal.json': {'size_bytes': 141, 'sha256': '42fe28488780075d98765fd814f59aed889b1f02e52c7f53917663c1cb0ecc1e'}, 'docs/reports/puck-cpu-held-qualification-10-admission-01/observations/palimpsest-held10-admission-external.stderr': {'size_bytes': 1901, 'sha256': 'e171d09cca3d7925c14c93307f2c3134abe03a84097cc0c374f3f95e2911f6de'}, 'docs/reports/puck-cpu-held-qualification-10-admission-01/observations/palimpsest-held10-admission-external.stdout': {'size_bytes': 0, 'sha256': 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855'}}
+
+def check_consumed_admission01(held,current):
+    values=[]
+    # The old pretty config is immutable historical data, not the new input.
+    for name in list(ADMISSION01_PINS)[:4]:
+        row=ADMISSION01_PINS[name]
+        value,raw=held.json(ROOT/name,row,maximum=1024**2)
+        assert len(raw)==row['size_bytes'] and hashlib.sha256(raw).hexdigest()==row['sha256'],name
+        values.append(value)
+    previous,outcome,external,tool=values
+    assert previous==current
+    assert outcome['status']=='DATA_ADMISSION_FAILED_CONSUMED' and outcome['admission_invocations']==1
+    assert outcome['control_commit']=='b3d50f5d8efbd36c56337c323d66768831c0f43f'
+    assert outcome['source_commit']=='e723db037ed1f790c2618798d59f56913054754f'
+    assert outcome['actual_runtime10_invoked'] is outcome['full_payload_custody'] is False
+    assert external['kind']=='puck-cpu-held10-external-transport-v1' and external['phase']=='admission'
+    assert type(external['returncode']) is int and external['returncode']==1
+    assert external['normal_exit'] is True and external['timed_out'] is external['implicit_retry'] is False
+    assert 0<external['elapsed_seconds']<145 and external['external_deadline_seconds']==145
+    assert external['command']==[str(Path(sys.executable).resolve()),'-I','-S','-B',str(ROOT/'docs/plans/puck-cpu-held-qualification-10-admission.py')]
+    assert external['environment']==dict(PATH='/usr/bin:/bin',LANG='C.UTF-8',LC_ALL='C.UTF-8',PYTHONDONTWRITEBYTECODE='1')
+    assert external['runtime_qualified'] is external['study_authorized'] is False
+    assert tool['exit_code']==1 and tool['outer_timeout'] is tool['runtime_invoked'] is False
+    assert 0<tool['elapsed_seconds']<155
+    stderr_name,stdout_name=list(ADMISSION01_PINS)[4:]
+    stderr=held.file(ROOT/stderr_name,ADMISSION01_PINS[stderr_name],1024**2,raw=True)
+    stdout=held.file(ROOT/stdout_name,ADMISSION01_PINS[stdout_name],1024**2,raw=True)
+    assert stdout==b'' and hashlib.sha256(stderr).hexdigest()==external['stderr']['sha256']
+    failure=json.loads(stderr.splitlines()[0])
+    assert failure['kind']=='held10-data-admission-failure-v1' and failure['check_id']==10 and failure['status']=='FAIL'
+    assert failure['error_type']=='ValueError' and failure['error']=='Canonical JSON bytes differ: '+str(ROOT/'docs/plans/puck-cpu-held-qualification-10.json')
+    assert failure['closure']==dict(fd_count_before=4,fd_count_after=4,active_children=[],active_non_main_threads=[],held_close_completed=True,scope='current process observations only')
+    assert not os.path.lexists('/tmp/palimpsest-puck-cpu-held-qualification-10-admission-01.json')
+    assert not os.path.lexists(ROOT/'runs/puck-cpu-held-qualification-10')
+    return dict(status='FAILED_CONSUMED',actual_runtime10_invoked=False,full_payload_custody=False,
+        failure='canonical configuration bytes',scope='genuine historical admission01 metadata only')
+
+
 def resources(minimum_ram_bytes=2<<30):
     available=int(next(line.split()[1] for line in Path('/proc/meminfo').read_text().splitlines() if line.startswith('MemAvailable:')))*1024
     soft,hard=resource.getrlimit(resource.RLIMIT_NOFILE)
@@ -377,7 +416,9 @@ def main():
             raw_paths.update(HISTORICAL07_JSON)
             raw_paths.update(HISTORICAL08_JSON)
             raw_paths.update(HISTORICAL09_JSON)
+            raw_paths.update(ADMISSION01_PINS)
             hold_manifest(held,manifest['pins'],raw_paths)
+            consumed_admission01=check_consumed_admission01(held,frozen)
             assert manifest['source_commit']=='e723db037ed1f790c2618798d59f56913054754f' and manifest['observer_invocations']==1 and manifest['implicit_retry'] is False
             config,configraw=held.json(ROOT/'docs/plans/puck-cpu-held-preparation-01.json',maximum=1024**2,lf=True)
             assert m.sha(configraw)==PREP_SHA;m.configuration(config,False)
@@ -468,7 +509,7 @@ def main():
             except FileNotFoundError:matches=False
             assert not matches
             sampled.append(dict(pid=identity[0],start_ticks=identity[1],matching_identity_present=matches))
-        result=dict(m.CLAIMS,kind='puck-cpu-held10-admission02-data-only-admission-v1',version=1,status='DATA_ONLY_ADMITTED',scope='dated current10/D source/input/SITE/staged/native/interpreter bytes and resources only; no allocation, target import or preparation reacceptance',preparation_configuration_sha256=PREP_SHA,preparation_result_sha256=RESULT_SHA,dependencies_sha256=DEP_SHA,current_dependencies_sha256=m.sha(m.canonical(current_dependency,False)),current_candidate_sha256=m.sha(candidate_raw),auditor_source_sha256=AUDITOR_SHA,runner_sha256=own['sha256'],baseline=summary,root_count=4,historical_capsule_files=34,input_pins=16,**totals,closure=dict(fd_count_before=before,fd_count_after=after,active_children=[],active_non_main_threads=[]),elapsed_seconds=time.monotonic()-started,qualifications01_02_03_04_05_06_07_08_09_still_failed_consumed=True,qualification06_invoked=True,qualification07_invoked=True,qualification08_invoked=True,qualification09_invoked=True,qualification10_invoked=False,configuration_sha256=CONFIG_SHA,current_auditor_sha256=AUDITOR_CURRENT_SHA,resources_before=initial_resources,resources_after=final_resources,absence=absence,site_files=27225,site_directories=2074,site_bytes=1304701872,process_identity_samples=sampled,process_scope='twelve recorded identities only; nonexhaustive non-atomic lifetime observation',qualification07_failure=consumed07,qualification08_failure=consumed08,qualification09_failure=consumed09,current_sources=24,current_inputs=16,negative_absence=negative_absence,source_commit='e723db037ed1f790c2618798d59f56913054754f')
+        result=dict(m.CLAIMS,kind='puck-cpu-held10-admission02-data-only-admission-v1',version=1,status='DATA_ONLY_ADMITTED',scope='dated current10/D source/input/SITE/staged/native/interpreter bytes and resources only; no allocation, target import or preparation reacceptance',preparation_configuration_sha256=PREP_SHA,preparation_result_sha256=RESULT_SHA,dependencies_sha256=DEP_SHA,current_dependencies_sha256=m.sha(m.canonical(current_dependency,False)),current_candidate_sha256=m.sha(candidate_raw),auditor_source_sha256=AUDITOR_SHA,runner_sha256=own['sha256'],baseline=summary,root_count=4,historical_capsule_files=34,input_pins=16,**totals,closure=dict(fd_count_before=before,fd_count_after=after,active_children=[],active_non_main_threads=[]),elapsed_seconds=time.monotonic()-started,qualifications01_02_03_04_05_06_07_08_09_still_failed_consumed=True,qualification06_invoked=True,qualification07_invoked=True,qualification08_invoked=True,qualification09_invoked=True,qualification10_invoked=False,admission_check_id=2,admission01_failed_consumed=True,admission01_failure=consumed_admission01,configuration_sha256=CONFIG_SHA,current_auditor_sha256=AUDITOR_CURRENT_SHA,resources_before=initial_resources,resources_after=final_resources,absence=absence,site_files=27225,site_directories=2074,site_bytes=1304701872,process_identity_samples=sampled,process_scope='twelve recorded identities only; nonexhaustive non-atomic lifetime observation',qualification07_failure=consumed07,qualification08_failure=consumed08,qualification09_failure=consumed09,current_sources=24,current_inputs=16,negative_absence=negative_absence,source_commit='e723db037ed1f790c2618798d59f56913054754f')
         assert time.monotonic()<deadline;m.publish(OUTPUT,result)
         _phase('close/publication',started,held)
         assert time.monotonic()<deadline
