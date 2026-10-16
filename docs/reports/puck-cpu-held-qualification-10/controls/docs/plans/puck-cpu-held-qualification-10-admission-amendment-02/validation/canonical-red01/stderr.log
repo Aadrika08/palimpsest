@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/home/utkarsh/.codex/worktrees/0071/brain/docs/plans/puck-cpu-held-qualification-10-admission-amendment-02/canonical-preflight.py", line 21, in <module>
+    assert candidate==canonical(value),'Canonical JSON bytes differ'
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Canonical JSON bytes differ
