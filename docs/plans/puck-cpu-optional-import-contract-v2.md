@@ -36,6 +36,14 @@ diagnosed held files match `runs/puck-cpu-retained-admission-02/inventory.json`.
    `torch.utils._cxx_pytree` (present; stock import raises `ImportError` because
    `optree` is absent, and `_functional_collectives` catches it and falls back to
    `torch.utils._pytree`). Its pre-raise code imports only already-loaded modules.
+5. **Exact v5 semantics pass offline.** With all 36 declared names unresolvable by
+   every finder and runtime10's registry, the four imports complete with the
+   expected versions, request every declared name, execute no hidden module and
+   make no other unregistered request.
+6. **Deadline margin is tight.** `backports_abc` is requested after 70% of
+   Torchvision's 990 module loads; runtime10 reached it at about 106s guarded.
+   Linear extrapolation projects about 135-145s for all four imports against the
+   unchanged 180s deadline. This is an estimate, not a timing proof.
 
 ## Decision
 
@@ -57,7 +65,9 @@ only declared names:
 
 The deviations from stock are explicit: hidden packages are unavailable, so
 Dynamo's skip list omits their directories, and `_cxx_pytree` reports
-`ModuleNotFoundError` instead of its optree message. Neither admits
+`ModuleNotFoundError` instead of its optree message. Held distribution metadata
+still lists networkx, pandas and scikit-learn although importing them fails.
+None of these admits
 `torch.compile`, CUDA or any operator. Policies v1–v4 and consumed epochs 1–10
 keep their old behavior and bytes.
 
@@ -75,5 +85,13 @@ keep their old behavior and bytes.
    name poisons; v4 and epochs 1–10 unchanged.
 4. Independent source review, then the existing frozen-controls, fresh-admission
    and single-invocation sequence for attempt 11 under unchanged 180s/2GiB limits.
+
+**Status (2026-10-16):** `bf6b980` (RED) and `ec4de6b` (implementation) pass the
+new and affected suites. Independent review of `d03b85d..ec4de6b` approved with
+no Critical or Important findings; it confirmed the rosters equal the census and
+emulation evidence, v1–v4 and epochs 1–10 are unchanged, and returning `None`
+cannot reach the held site because the worker's `sys.path` is stdlib-only.
+Minor follow-ups (native-cache overlap test, test-comment accuracy, a
+documented recheck window, receipt-field hardening) are applied separately.
 
 Passing source tests and these diagnostics are not installed-runtime qualification.

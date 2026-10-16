@@ -1,0 +1,64 @@
+{
+ "kind": "diagnostic-v5-semantics-probe-v1",
+ "diagnostic_only": true,
+ "completed": [
+  [
+   "numpy",
+   "2.2.5"
+  ],
+  [
+   "torch",
+   "2.9.0+cpu"
+  ],
+  [
+   "torchvision",
+   "0.24.0+cpu"
+  ],
+  [
+   "mujoco",
+   "3.3.6"
+  ]
+ ],
+ "error": null,
+ "denied": [
+  "OpenGL_accelerate",
+  "accimage",
+  "av",
+  "backports_abc",
+  "colorama",
+  "defusedxml",
+  "dill",
+  "flint",
+  "fx2trt_oss",
+  "gmpy",
+  "gmpy2",
+  "hypothesis",
+  "monkeytype",
+  "networkx",
+  "numpy._distributor_init_local",
+  "onnx",
+  "onnx_tf",
+  "onnxruntime",
+  "opt_einsum",
+  "org",
+  "pandas",
+  "pydot",
+  "pynvml",
+  "sklearn",
+  "tabulate",
+  "tensorflow",
+  "tensorrt",
+  "torch._rocm_init",
+  "torch.utils._cxx_pytree",
+  "torch2trt",
+  "torchdistx",
+  "tqdm",
+  "tree",
+  "triton",
+  "tvm",
+  "xarray"
+ ],
+ "refused": {},
+ "executed_hidden": [],
+ "denied_outside_declared": []
+}
