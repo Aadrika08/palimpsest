@@ -1,0 +1,80 @@
+{
+  "actual10_invoked": false,
+  "baseline": {
+    "path": "docs/reports/puck-cpu-guard-cost-v1/validation/baseline01/stdout.txt",
+    "sha256": "59edd65da6d3b868428c77a584cee067f0d653d2724fbfdd038aa938d1c847b9",
+    "size_bytes": 730
+  },
+  "baseline_source": {
+    "path": "docs/reports/puck-cpu-guard-cost-v1/source/scripts/puck_worker_bootstrap.py",
+    "sha256": "71263511b6f8b1828a59f2a82f74473f9151f1ec7b28dfe8bfa8c637ccac9c0e",
+    "size_bytes": 39944
+  },
+  "caveats": [
+    "Unpaired historical source and different q4 initializer context/semantics/diagnostics; do not attribute the full difference to whitelist construction.",
+    "Each raw sample times three sequential complete light checks; batch divided by3 is descriptive, not a per-check latency distribution or hard bound.",
+    "No newly attached profiler in timed batches; one separate profiled check counts only C keys calls on original deps.loaded. Zero does not mean zero key work or allocations.",
+    "128-entry median is slightly worse; publish all raw samples without selection. No installed throughput, actual09 cause, model capability, physics, renderer or runtime qualification follows."
+  ],
+  "kind": "puck-q4-authored-guard-cost-comparison-v1",
+  "q4_source": {
+    "path": "scripts/puck_worker_bootstrap.py",
+    "sha256": "525d40b6d69fd82af0d86b807bc8a3645163ff1541d9b0fd85b032463650669c",
+    "size_bytes": 51608
+  },
+  "rows": [
+    {
+      "entries": 128,
+      "historical_median_batch_divided_by_three_ms": 0.704741,
+      "historical_original_dependency_keys_calls": 138,
+      "historical_three_check_ns": [
+        2232536,
+        2102270,
+        2114223
+      ],
+      "q4_median_batch_divided_by_three_ms": 0.7213636666666666,
+      "q4_original_dependency_keys_calls": 0,
+      "q4_three_check_ns": [
+        2341726,
+        2140306,
+        2164091
+      ]
+    },
+    {
+      "entries": 512,
+      "historical_median_batch_divided_by_three_ms": 5.833382333333333,
+      "historical_original_dependency_keys_calls": 522,
+      "historical_three_check_ns": [
+        17872779,
+        17500147,
+        16795029
+      ],
+      "q4_median_batch_divided_by_three_ms": 1.5165466666666667,
+      "q4_original_dependency_keys_calls": 0,
+      "q4_three_check_ns": [
+        4562585,
+        4549640,
+        4193468
+      ]
+    },
+    {
+      "entries": 2048,
+      "historical_median_batch_divided_by_three_ms": 93.74234633333333,
+      "historical_original_dependency_keys_calls": 2058,
+      "historical_three_check_ns": [
+        273678950,
+        281227039,
+        289247659
+      ],
+      "q4_median_batch_divided_by_three_ms": 4.729078333333333,
+      "q4_original_dependency_keys_calls": 0,
+      "q4_three_check_ns": [
+        14626443,
+        13476674,
+        14187235
+      ]
+    }
+  ],
+  "runtime_qualified": false,
+  "status": "USEFUL_BOUNDED_REDUCTION_OBSERVED_NOT_INSTALLED_QUALIFICATION"
+}

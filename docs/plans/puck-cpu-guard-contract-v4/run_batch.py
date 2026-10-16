@@ -20,7 +20,7 @@ pins=[]
 for name in sorted(set(paths)):
  raw=(ROOT/name).read_bytes();p=out/'source'/name;p.parent.mkdir(parents=True,exist_ok=True);p.write_bytes(raw)
  pins.append(dict(path=name,size_bytes=len(raw),sha256=hashlib.sha256(raw).hexdigest()))
-overrides=dict(PYTEST_DISABLE_PLUGIN_AUTOLOAD='1',PYTHONDONTWRITEBYTECODE='1',TMPDIR='/tmp')
+overrides=dict(PYTEST_DISABLE_PLUGIN_AUTOLOAD='1',PYTHONDONTWRITEBYTECODE='1',TMPDIR='/tmp',PYTHONPATH=str(ROOT/'src'))
 (out/'command.json').write_text(json.dumps(dict(command=command,cwd=str(ROOT),environment_overrides=overrides,pins=pins,
  scope='Authored packages and real-worker guard semantics only. No installed runtime, actual10 or qualification authority.'),sort_keys=True,indent=2)+'\n')
 started=time.monotonic();expired=False
