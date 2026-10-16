@@ -1,0 +1,3959 @@
+{
+  "actual07_inputs_unchanged": true,
+  "actual08_admission_invoked_at_freeze": false,
+  "actual08_invoked_at_freeze": false,
+  "admission_limits": {
+    "address_space_bytes": 536870912,
+    "core_bytes": 0,
+    "file_bytes": 16777216,
+    "final_ram_bytes": 2147483648,
+    "hard_seconds": 130,
+    "initial_ram_bytes": 2147483648,
+    "max_fds": 40000,
+    "normal_seconds": 120
+  },
+  "admission_refusal_allows_observer": false,
+  "admission_required_status": "DATA_ONLY_ADMITTED",
+  "audit_required_status": "PASS",
+  "branch": "research/puck-cpu-held-qualification-08",
+  "changed_preparation_source_paths": [
+    "scripts/puck_worker_bootstrap.py",
+    "scripts/qualify_puck_cpu_held_runtime.py",
+    "src/palimpsest/puck_dependency_bindings.py",
+    "src/palimpsest/puck_dependency_imports.py",
+    "src/palimpsest/puck_runtime_qualification.py"
+  ],
+  "collection_authorized": false,
+  "commands": {
+    "admission": [
+      "/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/bin/python3.11",
+      "-I",
+      "-S",
+      "-B",
+      "/home/utkarsh/.codex/worktrees/0071/brain/docs/plans/puck-cpu-held-qualification-08-admission.py"
+    ],
+    "auditor_output": "/tmp/palimpsest-puck-cpu-held-qualification-08-audit-01.json",
+    "auditor_prefix": [
+      "/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/bin/python3.11",
+      "-I",
+      "-S",
+      "-B",
+      "/home/utkarsh/.codex/worktrees/0071/brain/scripts/audit_puck_cpu_held_runtime.py",
+      "--configuration",
+      "/home/utkarsh/.codex/worktrees/0071/brain/docs/plans/puck-cpu-held-qualification-08.json",
+      "--sha256",
+      "67076970caffe64b6162c4344f11d943b620dd2e0fb43ace72e39f508fa7ee60",
+      "--transport",
+      "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-held-qualification-08-external-cli-transport.json",
+      "--transport-sha256"
+    ],
+    "observer": [
+      "/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/bin/python3.11",
+      "-I",
+      "-S",
+      "-B",
+      "/home/utkarsh/.codex/worktrees/0071/brain/scripts/observe_puck_cpu_held_allocation.py",
+      "--configuration",
+      "/home/utkarsh/.codex/worktrees/0071/brain/docs/plans/puck-cpu-held-qualification-08.json",
+      "--sha256",
+      "67076970caffe64b6162c4344f11d943b620dd2e0fb43ace72e39f508fa7ee60"
+    ]
+  },
+  "created_at": "2026-10-16T00:05:10.179956+00:00",
+  "current_candidate": {
+    "path": "docs/plans/puck-cpu-pillow-origin-profile-v1.json",
+    "sha256": "6eba35557f64b8f7108558b1334d488da20b2381d0e69ffece090645f8fb8d3d",
+    "size_bytes": 346424
+  },
+  "executable": false,
+  "historical07_missing_receipts": [
+    "runs/puck-cpu-held-qualification-07/result.json",
+    "runs/puck-cpu-held-qualification-07/baseline-after.json"
+  ],
+  "historical07_replaced_live_sources": [
+    {
+      "archived_pin": {
+        "path": "docs/reports/puck-cpu-held-qualification-07/source/scripts/audit_puck_cpu_held_runtime.py",
+        "sha256": "420c3d6f3b8c7ae799732184507e84177a546b74573fccf1f32728dbfc64440d",
+        "size_bytes": 76254
+      },
+      "current_pin": {
+        "path": "scripts/audit_puck_cpu_held_runtime.py",
+        "sha256": "0406bfa94f6b230fca440d57f65e5d429a30d70d054e2cdd29bafb0da1ca2b35",
+        "size_bytes": 76648
+      },
+      "historical_live_path": "scripts/audit_puck_cpu_held_runtime.py",
+      "historical_pin": {
+        "path": "scripts/audit_puck_cpu_held_runtime.py",
+        "sha256": "420c3d6f3b8c7ae799732184507e84177a546b74573fccf1f32728dbfc64440d",
+        "size_bytes": 76254
+      }
+    },
+    {
+      "archived_pin": {
+        "path": "docs/reports/puck-cpu-held-qualification-07/source/scripts/observe_puck_cpu_held_allocation.py",
+        "sha256": "e105134d1069e268f39f45797e256b8316212f2c427a6c4c6a7ecb49d196ddb0",
+        "size_bytes": 6553
+      },
+      "current_pin": {
+        "path": "scripts/observe_puck_cpu_held_allocation.py",
+        "sha256": "b8ad9846ab0222d4fb7c603d2caff886dbaaff665db6a46df417a72d0f5228ad",
+        "size_bytes": 6633
+      },
+      "historical_live_path": "scripts/observe_puck_cpu_held_allocation.py",
+      "historical_pin": {
+        "path": "scripts/observe_puck_cpu_held_allocation.py",
+        "sha256": "e105134d1069e268f39f45797e256b8316212f2c427a6c4c6a7ecb49d196ddb0",
+        "size_bytes": 6553
+      }
+    },
+    {
+      "archived_pin": {
+        "path": "docs/reports/puck-cpu-held-qualification-07/source/scripts/puck_worker_bootstrap.py",
+        "sha256": "436b1ffe34b96fca166f6fb38022ad7392daef3517e58157092db2d9fd84c69f",
+        "size_bytes": 38375
+      },
+      "current_pin": {
+        "path": "scripts/puck_worker_bootstrap.py",
+        "sha256": "71263511b6f8b1828a59f2a82f74473f9151f1ec7b28dfe8bfa8c637ccac9c0e",
+        "size_bytes": 39944
+      },
+      "historical_live_path": "scripts/puck_worker_bootstrap.py",
+      "historical_pin": {
+        "path": "scripts/puck_worker_bootstrap.py",
+        "sha256": "436b1ffe34b96fca166f6fb38022ad7392daef3517e58157092db2d9fd84c69f",
+        "size_bytes": 38375
+      }
+    },
+    {
+      "archived_pin": {
+        "path": "docs/reports/puck-cpu-held-qualification-07/source/scripts/qualify_puck_cpu_held_runtime.py",
+        "sha256": "b65f0ff3b49976039f8f07edb3ce610262a10761ec509611cb31b4324e21b63b",
+        "size_bytes": 58724
+      },
+      "current_pin": {
+        "path": "scripts/qualify_puck_cpu_held_runtime.py",
+        "sha256": "0cc637ffeb2accdf843894a6f30abd917b59a940cecd53ef3709fd9200e50fe8",
+        "size_bytes": 59227
+      },
+      "historical_live_path": "scripts/qualify_puck_cpu_held_runtime.py",
+      "historical_pin": {
+        "path": "scripts/qualify_puck_cpu_held_runtime.py",
+        "sha256": "b65f0ff3b49976039f8f07edb3ce610262a10761ec509611cb31b4324e21b63b",
+        "size_bytes": 58724
+      }
+    },
+    {
+      "archived_pin": {
+        "path": "docs/reports/puck-cpu-held-qualification-07/source/src/palimpsest/puck_runtime_qualification.py",
+        "sha256": "45e1bca7f5420bd6dd4aed5a27af429783124a12f02def92e1db1db8d2199085",
+        "size_bytes": 2190
+      },
+      "current_pin": {
+        "path": "src/palimpsest/puck_runtime_qualification.py",
+        "sha256": "81e7f5df42115dd6714be05b6cf62cf5f0804564065130aaee8289f4b962768a",
+        "size_bytes": 2440
+      },
+      "historical_live_path": "src/palimpsest/puck_runtime_qualification.py",
+      "historical_pin": {
+        "path": "src/palimpsest/puck_runtime_qualification.py",
+        "sha256": "45e1bca7f5420bd6dd4aed5a27af429783124a12f02def92e1db1db8d2199085",
+        "size_bytes": 2190
+      }
+    }
+  ],
+  "implicit_retry": false,
+  "kind": "puck-cpu-held-qualification08-frozen-controls-v1",
+  "limits": {
+    "address_space_bytes": 8589934592,
+    "child_hard_seconds": 190,
+    "file_bytes": 16777216,
+    "hard_seconds": 200,
+    "max_fds": 40000,
+    "max_processes": 3,
+    "min_available_ram_bytes": 2147483648,
+    "min_free_bytes": 4294967296,
+    "min_tmpfs_free_bytes": 268435456,
+    "normal_seconds": 180,
+    "output_bytes": 67108864,
+    "rss_bytes": 2147483648,
+    "scratch_bytes": 67108864
+  },
+  "native_authorized": false,
+  "negative_imports": [
+    "OpenGL_accelerate",
+    "accimage",
+    "av",
+    "colorama",
+    "defusedxml",
+    "dill",
+    "flint",
+    "gmpy",
+    "gmpy2",
+    "monkeytype",
+    "numpy._distributor_init_local",
+    "opt_einsum",
+    "org",
+    "pydot",
+    "pynvml",
+    "torch._rocm_init",
+    "torchdistx",
+    "tqdm",
+    "triton"
+  ],
+  "observer_invocations": 1,
+  "outer_environment": {
+    "LANG": "C.UTF-8",
+    "LC_ALL": "C.UTF-8",
+    "PATH": "/usr/bin:/bin",
+    "PYTHONDONTWRITEBYTECODE": "1"
+  },
+  "pins": [
+    {
+      "path": "docs/plans/puck-cpu-characterization-native-metadata-05.json",
+      "sha256": "64a9e46f60700f12712262879547fbf26d785fb8a825098940e6494482dae2aa",
+      "size_bytes": 1618086
+    },
+    {
+      "path": "docs/plans/puck-cpu-distributed-publication-profile-v1.json",
+      "sha256": "6532308a421d73fee2d7a7843528f40ba7613df49b283bdc0d25d67b2795620a",
+      "size_bytes": 346230
+    },
+    {
+      "path": "docs/plans/puck-cpu-distributed-publication-profile-v1/admission-review.md",
+      "sha256": "1d7a51a03e27c7ea426d1b05a33d101a753e82c47174713e363af4a8a6937f68",
+      "size_bytes": 18252
+    },
+    {
+      "path": "docs/plans/puck-cpu-distributed-publication-profile-v1/attribution.json",
+      "sha256": "51376c707e68b72c7bf275ba7cc410adaa6acdf51b9ee957840c325c1eb8f91b",
+      "size_bytes": 73151
+    },
+    {
+      "path": "docs/plans/puck-cpu-distributed-publication-profile-v1/source-proof.json",
+      "sha256": "af7c78508b05ce56017bb814a408a8781219b2c198f9f31751ecaf47f62dc959",
+      "size_bytes": 10106
+    },
+    {
+      "path": "docs/plans/puck-cpu-held-preparation-01.json",
+      "sha256": "38134e016eff974e06806f1ac74492dc51e0a5721d8cd13d1123a1fd950fe8a6",
+      "size_bytes": 7903
+    },
+    {
+      "path": "docs/plans/puck-cpu-held-qualification-05-admission.py",
+      "sha256": "448503e23ef22abfca63cca525b5543f08da8dd4003a03724471a3471936aec1",
+      "size_bytes": 13506
+    },
+    {
+      "path": "docs/plans/puck-cpu-held-qualification-05-execution.md",
+      "sha256": "74a7e65f222940a756d00da0e7259f3fa295c7b2e7ad6314e5c1c664665cc299",
+      "size_bytes": 4322
+    },
+    {
+      "path": "docs/plans/puck-cpu-held-qualification-05-freeze.json",
+      "sha256": "9219d49273b3ff6837d99238035909cc4f150c882b4c9eda46f03ea762880f96",
+      "size_bytes": 7421
+    },
+    {
+      "path": "docs/plans/puck-cpu-held-qualification-05.json",
+      "sha256": "584f687eeb11797eb48caf0514fc0ea7f5b7f8e46af0c6a5304ef59a714cb3b8",
+      "size_bytes": 8833
+    },
+    {
+      "path": "docs/plans/puck-cpu-held-qualification-06-admission.py",
+      "sha256": "4a789e5fa76bdeb83f7aa1252ebc65e03527fb143f4830be9b8a1627bf613813",
+      "size_bytes": 15979
+    },
+    {
+      "path": "docs/plans/puck-cpu-held-qualification-06-execution.md",
+      "sha256": "57bd3602e3bc745f83af497ff674e504867135bd56d5e56b583da2554f43bd75",
+      "size_bytes": 4653
+    },
+    {
+      "path": "docs/plans/puck-cpu-held-qualification-06-freeze.json",
+      "sha256": "54dfca9f7a2bccff7a436e12d232f80944f564fce48a66480dacb77d1693e61c",
+      "size_bytes": 73052
+    },
+    {
+      "path": "docs/plans/puck-cpu-held-qualification-06.json",
+      "sha256": "da630b05b871508686a4c92402725820b40b27253b2652b47c686a8f441a04e8",
+      "size_bytes": 8995
+    },
+    {
+      "path": "docs/plans/puck-cpu-held-qualification-07-admission-source-review.json",
+      "sha256": "61401f53dbadbadf48d18f464f790de1ff2d5e64605f2e6366b70c5378343a3d",
+      "size_bytes": 19655
+    },
+    {
+      "path": "docs/plans/puck-cpu-held-qualification-07-admission.py",
+      "sha256": "7f9b695f7f01ad7e91c97c1f9caf0d3273b65f80f042f4694fb643b32534b99d",
+      "size_bytes": 19575
+    },
+    {
+      "path": "docs/plans/puck-cpu-held-qualification-07-freeze.json",
+      "sha256": "6230a4072b3606efd41efc694f0da15671d248f2cd39203f4eb2ca39ead22d17",
+      "size_bytes": 124995
+    },
+    {
+      "path": "docs/plans/puck-cpu-held-qualification-07-proof-roster-review.json",
+      "sha256": "040ee0cbf857b4abdd05a6a076f9d4b413218f5ca650948984207a3fcd269ab8",
+      "size_bytes": 34648
+    },
+    {
+      "path": "docs/plans/puck-cpu-held-qualification-07-review.md",
+      "sha256": "c5cbb7143d45358a617129e077bc485a929d0e0c7aad0219e41360ac739b46f7",
+      "size_bytes": 3280
+    },
+    {
+      "path": "docs/plans/puck-cpu-held-qualification-07-source-evidence/evidence-index.json",
+      "sha256": "6b6346a5d6af0148202245c29f0817ff6c4d7f7653da14f369f1161ee8178add",
+      "size_bytes": 2993
+    },
+    {
+      "path": "docs/plans/puck-cpu-held-qualification-07-source-evidence/external-final-static-check.json",
+      "sha256": "71b59a83cb2ede0d9ade4cbce8d60fd7ffce15451ff4420e8de3fd2ad390ce95",
+      "size_bytes": 406
+    },
+    {
+      "path": "docs/plans/puck-cpu-held-qualification-07-source-evidence/external-unit/check.json",
+      "sha256": "97cebc93135f11074da62e3a1742db74effe1b8e79a304e6ceabb518e5a2894a",
+      "size_bytes": 4728
+    },
+    {
+      "path": "docs/plans/puck-cpu-held-qualification-07-source-evidence/external-unit/check.py",
+      "sha256": "7ab34bcf56569e3690323ac01ad4ead8bc1eaa736b2af12adfbe93b9847b1869",
+      "size_bytes": 14183
+    },
+    {
+      "path": "docs/plans/puck-cpu-held-qualification-07-source-evidence/external-unit/command.json",
+      "sha256": "ce165a30c5d0d306afc00a8868c7ffea6a0976b982d2877926f0ab8c0023ab47",
+      "size_bytes": 264
+    },
+    {
+      "path": "docs/plans/puck-cpu-held-qualification-07-source-evidence/external-unit/result.json",
+      "sha256": "904578f3439e37522298b188abc3989c2b73588e8eeff0da66fac6bbdba8b6ab",
+      "size_bytes": 888
+    },
+    {
+      "path": "docs/plans/puck-cpu-held-qualification-07-source-evidence/external-unit/stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    {
+      "path": "docs/plans/puck-cpu-held-qualification-07-source-evidence/external-unit/stdout.log",
+      "sha256": "97cebc93135f11074da62e3a1742db74effe1b8e79a304e6ceabb518e5a2894a",
+      "size_bytes": 4728
+    },
+    {
+      "path": "docs/plans/puck-cpu-held-qualification-07-source-evidence/external-v1-before-review.py",
+      "sha256": "e9d87965a537ce48e1e98501fa5a340e86f60272f212aa6f4d4fcb8266ed5277",
+      "size_bytes": 2376
+    },
+    {
+      "path": "docs/plans/puck-cpu-held-qualification-07-source-evidence/freeze-builder.py",
+      "sha256": "4f818743937f14196ea71b90b1ec58e5554d184f3f586f6251b628ea950eeeb4",
+      "size_bytes": 5652
+    },
+    {
+      "path": "docs/plans/puck-cpu-held-qualification-07-source-evidence/verify_evidence.py",
+      "sha256": "d5b874df818e72295d6951873e25a6fc8fc0deb0a79ec6183ca805508c19a759",
+      "size_bytes": 2128
+    },
+    {
+      "path": "docs/plans/puck-cpu-held-qualification-07.json",
+      "sha256": "1ed4b198a38512c751cca43e11fdb1cd00e7683031be545e6ccd12016555ee60",
+      "size_bytes": 8985
+    },
+    {
+      "path": "docs/plans/puck-cpu-held-qualification-08-admission.py",
+      "sha256": "1c5b94c1cf458b99d2af4d59e98e7de43c41ffac1ebaf693c2b74db819863085",
+      "size_bytes": 24409
+    },
+    {
+      "path": "docs/plans/puck-cpu-held-qualification-08-review.md",
+      "sha256": "8d0f10149790b79bf86997ff43981fbf8a6545bf65903d856ba7d00f732aaa76",
+      "size_bytes": 2712
+    },
+    {
+      "path": "docs/plans/puck-cpu-held-qualification-08-source-evidence/freeze-builder.py",
+      "sha256": "4749faee4d8d717da2cddc8ce9e7e4578cbd4cf3ceab7a2c514bb7fdc8c6f3a4",
+      "size_bytes": 9774
+    },
+    {
+      "path": "docs/plans/puck-cpu-held-qualification-08-source-evidence/history-admission-before.py",
+      "sha256": "31ec531682d6eda574742fef8b85b7901282e0d08d738a06784dd2e4b8977ced",
+      "size_bytes": 19607
+    },
+    {
+      "path": "docs/plans/puck-cpu-held-qualification-08-source-evidence/history-check-record.json",
+      "sha256": "9c1745c6ce6a3f5648ed2790b3333b4d3b726572c30129621fc4094c84a97b1d",
+      "size_bytes": 735
+    },
+    {
+      "path": "docs/plans/puck-cpu-held-qualification-08-source-evidence/history-check.py",
+      "sha256": "77dc2649c2cfd548348c1678818b48b99171a19074ce046031782ee479f12b80",
+      "size_bytes": 2471
+    },
+    {
+      "path": "docs/plans/puck-cpu-held-qualification-08-source-evidence/history-green01.stderr",
+      "sha256": "6860c9a0ba5324dfd5296a5bfa754a53c0180fd815052c744799b6a03fcaa4c0",
+      "size_bytes": 568
+    },
+    {
+      "path": "docs/plans/puck-cpu-held-qualification-08-source-evidence/history-green01.stdout",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    {
+      "path": "docs/plans/puck-cpu-held-qualification-08-source-evidence/history-red01.stderr",
+      "sha256": "26c4a8a344771ad3260bc023a86d8236f8b739406fedba6c9fc6e609f4880059",
+      "size_bytes": 3328
+    },
+    {
+      "path": "docs/plans/puck-cpu-held-qualification-08-source-evidence/history-red01.stdout",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    {
+      "path": "docs/plans/puck-cpu-held-qualification-08.json",
+      "sha256": "67076970caffe64b6162c4344f11d943b620dd2e0fb43ace72e39f508fa7ee60",
+      "size_bytes": 8985
+    },
+    {
+      "path": "docs/plans/puck-cpu-observed-import-profile-candidate-01.json",
+      "sha256": "d20076cd2e1961d1514bb135746b1701a14567136b80ee073fecedb389f929df",
+      "size_bytes": 340908
+    },
+    {
+      "path": "docs/plans/puck-cpu-optional-import-contract-v1.md",
+      "sha256": "8bfbb01acfeb662979d1c3389c2cfa94c1de85670a4c7c4af0b1fff98cba6e59",
+      "size_bytes": 4857
+    },
+    {
+      "path": "docs/plans/puck-cpu-pillow-origin-profile-v1.json",
+      "sha256": "6eba35557f64b8f7108558b1334d488da20b2381d0e69ffece090645f8fb8d3d",
+      "size_bytes": 346424
+    },
+    {
+      "path": "docs/plans/puck-cpu-pillow-origin-profile-v1.md",
+      "sha256": "4564647f080f528c657826aed07392497c859f27c7de30699606fbbd96176e93",
+      "size_bytes": 4825
+    },
+    {
+      "path": "docs/plans/puck-cpu-pillow-origin-profile-v1/README.md",
+      "sha256": "16c0b036a6b7ceb9c5d6740e9e62f6672a98d705e9ff2b0e35332c2ceaf6a41b",
+      "size_bytes": 1879
+    },
+    {
+      "path": "docs/plans/puck-cpu-pillow-origin-profile-v1/evidence-index.json",
+      "sha256": "cb847e4b4a80f536c2247c7607eeacbcab0aedbc13e5c2641c16280bc4db5a7d",
+      "size_bytes": 2718
+    },
+    {
+      "path": "docs/plans/puck-cpu-pillow-origin-profile-v1/native-evidence.json",
+      "sha256": "d65e59289302aeeaec35c7af47cf0de7121c01eb01cbe33af837eff1f0a41fe3",
+      "size_bytes": 87746
+    },
+    {
+      "path": "docs/plans/puck-cpu-pillow-origin-profile-v1/projection.json",
+      "sha256": "b8aa91886a1c5b8a71af476ad2c150c1cfd1e1fd018a4bb8c700d0f2451ede55",
+      "size_bytes": 19311
+    },
+    {
+      "path": "docs/plans/puck-cpu-retained-admission-02.json",
+      "sha256": "32605ca0d48537a6eabf98a54d605ad23bf525456760d83726381aeaf38e3e96",
+      "size_bytes": 30043
+    },
+    {
+      "path": "docs/plans/puck-python-louvain-host-baseline-v1.json",
+      "sha256": "b00901ffcf70799682b0092168163d300c264083e615fed16850b9b557e8a207",
+      "size_bytes": 552822
+    },
+    {
+      "path": "docs/reports/puck-cpu-characterization-02/evidence-index.json",
+      "sha256": "c827dc11dd3bcfe60a3020dccc008c385c779f19f60ad2bf6f930d69fcd654da",
+      "size_bytes": 17046
+    },
+    {
+      "path": "docs/reports/puck-cpu-characterization-02/frozen-configuration.json",
+      "sha256": "4b98ff368e97351b2079ff44c75cb910d08559e5e037a6afc4887c28cd38fea8",
+      "size_bytes": 13940
+    },
+    {
+      "path": "docs/reports/puck-cpu-characterization-02/outcome-audit-02.json",
+      "sha256": "68db69256149ca20d4b698860898d33c4e6cbee2b840e4eeeb2fd5f21359eff3",
+      "size_bytes": 1452
+    },
+    {
+      "path": "docs/reports/puck-cpu-characterization-02/raw/payload/imports.json",
+      "sha256": "f5c307bd361cd97e0f5a912610e2e639d62aa410aca4c393719667b24654b448",
+      "size_bytes": 534299
+    },
+    {
+      "path": "docs/reports/puck-cpu-characterization-02/raw/result.json",
+      "sha256": "c3959dbb45d760c59e953caf11d05993c97c0d3912a801d957cf6f8dcbcfb3ff",
+      "size_bytes": 837
+    },
+    {
+      "path": "docs/reports/puck-cpu-diagnostic-epoch08-v1.md",
+      "sha256": "d7c1dcfa173804d21e67a3e46817f6f7218822db41d31861d571eff51137f64c",
+      "size_bytes": 3293
+    },
+    {
+      "path": "docs/reports/puck-cpu-diagnostic-epoch08-v1/archive_evidence.py",
+      "sha256": "af79f87f568a11dd8f5da2a09763039473f99c1407b72f0ff928952e433fe603",
+      "size_bytes": 6669
+    },
+    {
+      "path": "docs/reports/puck-cpu-diagnostic-epoch08-v1/authored/authored-diagnostic08-cli-audit.json",
+      "sha256": "f5ea3d2f6ae8f1d1326e544eadcad9754b81b9ddbe3ff99890b6319def47749e",
+      "size_bytes": 2357
+    },
+    {
+      "path": "docs/reports/puck-cpu-diagnostic-epoch08-v1/authored/authored-diagnostic08-cli-audit.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    {
+      "path": "docs/reports/puck-cpu-diagnostic-epoch08-v1/authored/authored-diagnostic08-cli-audit.stdout",
+      "sha256": "f5ea3d2f6ae8f1d1326e544eadcad9754b81b9ddbe3ff99890b6319def47749e",
+      "size_bytes": 2357
+    },
+    {
+      "path": "docs/reports/puck-cpu-diagnostic-epoch08-v1/authored/authored-publication05-stage-cleanup.json",
+      "sha256": "e414a66afa55956ee6c2f12eead208322d8d4d0006213a308b242fc3028e67f4",
+      "size_bytes": 230
+    },
+    {
+      "path": "docs/reports/puck-cpu-diagnostic-epoch08-v1/authored/authored-qualify08-cli.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    {
+      "path": "docs/reports/puck-cpu-diagnostic-epoch08-v1/authored/authored-qualify08-cli.stdout",
+      "sha256": "e80ef9b5a129283daff7841854f20924636af49d5302b910ba2b7371d60c322b",
+      "size_bytes": 624
+    },
+    {
+      "path": "docs/reports/puck-cpu-diagnostic-epoch08-v1/authored/authored-qualify08-configuration.json",
+      "sha256": "e93910313c1fffd36464ad046ef52534f343001fc691f038bc491b756fbf9f81",
+      "size_bytes": 8543
+    },
+    {
+      "path": "docs/reports/puck-cpu-diagnostic-epoch08-v1/authored/authored-qualify08-transport.json",
+      "sha256": "71fa3f222518754389e2a0d55ac56a66f1765248725a898100fc5b2152fc8b8b",
+      "size_bytes": 1235
+    },
+    {
+      "path": "docs/reports/puck-cpu-diagnostic-epoch08-v1/authored/qualify08/baseline-after.json",
+      "sha256": "8e69fa24c5367b19acfad5f5f3c12f1804eed23d0889df6a9e58f20da4376dfb",
+      "size_bytes": 196
+    },
+    {
+      "path": "docs/reports/puck-cpu-diagnostic-epoch08-v1/authored/qualify08/baseline-before.json",
+      "sha256": "8e69fa24c5367b19acfad5f5f3c12f1804eed23d0889df6a9e58f20da4376dfb",
+      "size_bytes": 196
+    },
+    {
+      "path": "docs/reports/puck-cpu-diagnostic-epoch08-v1/authored/qualify08/configuration.json",
+      "sha256": "e93910313c1fffd36464ad046ef52534f343001fc691f038bc491b756fbf9f81",
+      "size_bytes": 8543
+    },
+    {
+      "path": "docs/reports/puck-cpu-diagnostic-epoch08-v1/authored/qualify08/control/dependencies.json",
+      "sha256": "47c030ae144a617caa2495d3a65dd9ec2a0b9dcb0269de82f2bba582d8953035",
+      "size_bytes": 11519
+    },
+    {
+      "path": "docs/reports/puck-cpu-diagnostic-epoch08-v1/authored/qualify08/control/worker-registration.json",
+      "sha256": "88151576c9ea6dd7646e49999a803b1f5b5127c9962d436d436e27213208f7b1",
+      "size_bytes": 4680
+    },
+    {
+      "path": "docs/reports/puck-cpu-diagnostic-epoch08-v1/authored/qualify08/invocation.json",
+      "sha256": "227adcc95d034c2b42846dd6da09d9dad4724a8c908fc5ad227d3231c65e8ce3",
+      "size_bytes": 4034
+    },
+    {
+      "path": "docs/reports/puck-cpu-diagnostic-epoch08-v1/authored/qualify08/logs/stderr.log",
+      "sha256": "831c7ff11f693d8592de0e0c3f22c5204894206d61d5a405bedd11a8f844c0a3",
+      "size_bytes": 2406
+    },
+    {
+      "path": "docs/reports/puck-cpu-diagnostic-epoch08-v1/authored/qualify08/logs/stdout.log",
+      "sha256": "69eae1291f7e605556ae352d3bc54d009bfc63e9bbc409f132e95db26d1ba6d9",
+      "size_bytes": 11368
+    },
+    {
+      "path": "docs/reports/puck-cpu-diagnostic-epoch08-v1/authored/qualify08/resource-admission.json",
+      "sha256": "960da7a5a2e2a60564f792084408483cdcdac6fa489d81dbaae9fc8d07db4fe5",
+      "size_bytes": 105
+    },
+    {
+      "path": "docs/reports/puck-cpu-diagnostic-epoch08-v1/authored/qualify08/result.json",
+      "sha256": "e80ef9b5a129283daff7841854f20924636af49d5302b910ba2b7371d60c322b",
+      "size_bytes": 624
+    },
+    {
+      "path": "docs/reports/puck-cpu-diagnostic-epoch08-v1/authored/qualify08/supervision.json",
+      "sha256": "2981294c82d3e3d9368802fd453814e541c5c98ebe6e4688085bf6aed1ca6b78",
+      "size_bytes": 360
+    },
+    {
+      "path": "docs/reports/puck-cpu-diagnostic-epoch08-v1/evidence-index.json",
+      "sha256": "6e665f82b5f8b4dd9ff100c09db18f60d5fe5bfdcc240876dbd9826835555a8f",
+      "size_bytes": 16239
+    },
+    {
+      "path": "docs/reports/puck-cpu-diagnostic-epoch08-v1/reviews/source-review.json",
+      "sha256": "0b551168b6e31d91cd9ec4aba8052b72b75cf587afd9d051f28916c92a1aaacf",
+      "size_bytes": 6798
+    },
+    {
+      "path": "docs/reports/puck-cpu-diagnostic-epoch08-v1/source/docs/plans/puck-cpu-diagnostic-epoch08-v1.md",
+      "sha256": "d271a7854a766f1162c61204644a4b4d540ada45b3d13b54cf1e40cb8836c011",
+      "size_bytes": 3172
+    },
+    {
+      "path": "docs/reports/puck-cpu-diagnostic-epoch08-v1/source/scripts/audit_puck_cpu_held_runtime.py",
+      "sha256": "0406bfa94f6b230fca440d57f65e5d429a30d70d054e2cdd29bafb0da1ca2b35",
+      "size_bytes": 76648
+    },
+    {
+      "path": "docs/reports/puck-cpu-diagnostic-epoch08-v1/source/scripts/observe_puck_cpu_held_allocation.py",
+      "sha256": "b8ad9846ab0222d4fb7c603d2caff886dbaaff665db6a46df417a72d0f5228ad",
+      "size_bytes": 6633
+    },
+    {
+      "path": "docs/reports/puck-cpu-diagnostic-epoch08-v1/source/scripts/puck_worker_bootstrap.py",
+      "sha256": "71263511b6f8b1828a59f2a82f74473f9151f1ec7b28dfe8bfa8c637ccac9c0e",
+      "size_bytes": 39944
+    },
+    {
+      "path": "docs/reports/puck-cpu-diagnostic-epoch08-v1/source/scripts/qualify_puck_cpu_held_runtime.py",
+      "sha256": "0cc637ffeb2accdf843894a6f30abd917b59a940cecd53ef3709fd9200e50fe8",
+      "size_bytes": 59227
+    },
+    {
+      "path": "docs/reports/puck-cpu-diagnostic-epoch08-v1/source/src/palimpsest/puck_runtime_qualification.py",
+      "sha256": "81e7f5df42115dd6714be05b6cf62cf5f0804564065130aaee8289f4b962768a",
+      "size_bytes": 2440
+    },
+    {
+      "path": "docs/reports/puck-cpu-diagnostic-epoch08-v1/source/tests/test_puck_cpu_held_amendment05_integration.py",
+      "sha256": "d1c4afd436854edac8a2b0dbd9b6ce49c9a73cbec3435cc2457de45006dcef17",
+      "size_bytes": 17875
+    },
+    {
+      "path": "docs/reports/puck-cpu-diagnostic-epoch08-v1/source/tests/test_puck_cpu_held_amendment08.py",
+      "sha256": "b6e6ebeef761d03d291763315c8f08b629df5c56c10c937b977df4252acd2156",
+      "size_bytes": 6886
+    },
+    {
+      "path": "docs/reports/puck-cpu-diagnostic-epoch08-v1/source/tests/test_puck_cpu_held_amendment08_integration.py",
+      "sha256": "421dea6b86a1ace393fddee29b0f0dbf470f302c43ccbc5bed849785095ca02e",
+      "size_bytes": 6176
+    },
+    {
+      "path": "docs/reports/puck-cpu-diagnostic-epoch08-v1/validation/integration01/stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    {
+      "path": "docs/reports/puck-cpu-diagnostic-epoch08-v1/validation/integration01/stdout.log",
+      "sha256": "00450c1c1efc1e6eff8e7aeb3c88eff95d4c72a7bbf0c6ac0a52d89dc8bb6332",
+      "size_bytes": 110
+    },
+    {
+      "path": "docs/reports/puck-cpu-diagnostic-epoch08-v1/validation/metadata01/stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    {
+      "path": "docs/reports/puck-cpu-diagnostic-epoch08-v1/validation/metadata01/stdout.log",
+      "sha256": "01143f59616faf310c00cff586f1bdba5e678f01d9907fbbdaf9399cc316e39b",
+      "size_bytes": 5405
+    },
+    {
+      "path": "docs/reports/puck-cpu-diagnostic-epoch08-v1/validation/metadata02/stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    {
+      "path": "docs/reports/puck-cpu-diagnostic-epoch08-v1/validation/metadata02/stdout.log",
+      "sha256": "b47af0725b4806af0a1d6e01954e1cbc071c6c651e2df6153ee15c8259b30159",
+      "size_bytes": 755
+    },
+    {
+      "path": "docs/reports/puck-cpu-diagnostic-epoch08-v1/validation/record.json",
+      "sha256": "64f48c663f6f6d09c03eab857b0106e5971a5a411fb89b175de8b3bd4abd5b07",
+      "size_bytes": 9433
+    },
+    {
+      "path": "docs/reports/puck-cpu-diagnostic-epoch08-v1/validation/red01/stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    {
+      "path": "docs/reports/puck-cpu-diagnostic-epoch08-v1/validation/red01/stdout.log",
+      "sha256": "443de6dce1a194669818bc9bd8b6ce6c4c516e154b4aefb31874fd132a2b4a55",
+      "size_bytes": 9942
+    },
+    {
+      "path": "docs/reports/puck-cpu-diagnostic-epoch08-v1/verify_evidence.py",
+      "sha256": "d5b874df818e72295d6951873e25a6fc8fc0deb0a79ec6183ca805508c19a759",
+      "size_bytes": 2128
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-preparation-v1/generated/_remote_module_non_scriptable.py",
+      "sha256": "8205b16956fb264841ecd8644784a0d157f87df79b17c16825dc1163433ce5d8",
+      "size_bytes": 2355
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-05/admission/combined-tool-output.txt",
+      "sha256": "603dd746c5f06e76f58bbc7c1b4db0d7a8d4e3f1468b4d2ed80770c50cb50369",
+      "size_bytes": 2741
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-05/admission/external-tool.json",
+      "sha256": "9135fb90c68e20ca8eac2910463a0c7d3415f9299c57c82514f3746794a46a03",
+      "size_bytes": 3852
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-05/admission/final-resource-control-check.json",
+      "sha256": "4ba815f305ae47f72143573cb8250cf4184c63ba098c8fd493ac791bb0f8bcea",
+      "size_bytes": 1022
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-05/admission/result.json",
+      "sha256": "603dd746c5f06e76f58bbc7c1b4db0d7a8d4e3f1468b4d2ed80770c50cb50369",
+      "size_bytes": 2741
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-05/audit/combined-tool-output.txt",
+      "sha256": "cf0b4a4f2bcebe97c1e33695b864516ef029b8bd52f461de10ecc8d7a903b2cf",
+      "size_bytes": 617
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-05/audit/concrete-command.json",
+      "sha256": "35620cdba5fbbf58ba1c71c9060de0046bd01a50d2032f9731add96e016e9d06",
+      "size_bytes": 1390
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-05/audit/external-tool.json",
+      "sha256": "a4e4425e47a9f7a9949f08124090674280d3a581b98f2e198a8098e57372c96a",
+      "size_bytes": 1882
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-05/audit/result.json",
+      "sha256": "cf0b4a4f2bcebe97c1e33695b864516ef029b8bd52f461de10ecc8d7a903b2cf",
+      "size_bytes": 617
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-05/evidence-index.json",
+      "sha256": "f1617c73367b81ecc8ed324c3cbe98a9686ab8a271125e1ea330a8e452e6b731",
+      "size_bytes": 56135
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-05/historical/acceptance/docs/plans/puck-cpu-held-preparation-01.json",
+      "sha256": "38134e016eff974e06806f1ac74492dc51e0a5721d8cd13d1123a1fd950fe8a6",
+      "size_bytes": 7903
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-05/historical/acceptance/docs/reports/puck-cpu-held-qualification-amendment-02/current-byte-audit-02/palimpsest-puck-cpu-held-preparation-01-current-byte-audit-02.external-cli.json",
+      "sha256": "9d8d740a9f09d4d945c1d6a46d707165d9b08a954187b46a4ea020eebfc00935",
+      "size_bytes": 1680
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-05/historical/acceptance/docs/reports/puck-cpu-held-qualification-amendment-02/current-byte-audit-02/palimpsest-puck-cpu-held-preparation-01-current-byte-audit-02.json",
+      "sha256": "00595d2fa5270fc69ddeb633cd7b894a68b7e6ddfd80df123190ad43d3c9ae4d",
+      "size_bytes": 1563
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-05/historical/acceptance/runs/puck-cpu-held-preparation-01/result.json",
+      "sha256": "9d49c6ee3a0be61505cfe7d2267b659290be17365d6e35fb5fdbdc38e103f47d",
+      "size_bytes": 7330
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-05/historical/failed01/configuration.json",
+      "sha256": "3de376aef0bfec46aa9a8042706c40954ea0a5cc4425d51ad4f09525bcf930fb",
+      "size_bytes": 8065
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-05/historical/failed01/result.json",
+      "sha256": "224cb9bdb18228f6e8da7a47e7455cd604a6e756df5fd017294b9221f26d9299",
+      "size_bytes": 618
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-05/historical/failed02/configuration.json",
+      "sha256": "253bf8727fe7890d97e0d2c5af98c2ffe7e7edaf763c0eb0537a57c882f5fd77",
+      "size_bytes": 8816
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-05/historical/failed02/result.json",
+      "sha256": "085d19bdd39d392aaeab0c1590ec92b99e0bb2a4e8945f5d23dd51733fbab56b",
+      "size_bytes": 616
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-05/historical/failed03/configuration.json",
+      "sha256": "c6f5807c71e4dc18dcd371aec0da833cd6de3d675e32c1f7686739068a529772",
+      "size_bytes": 8835
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-05/historical/failed03/result.json",
+      "sha256": "ba5cad51576c3dd593c479d052328fcb4181943d3f5acdbdaa7cdee145f1254b",
+      "size_bytes": 617
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-05/historical/failed04/configuration.json",
+      "sha256": "6fa33667eb5c4d5ebe94f13a8e485be8ef3b2929f29c30ad1ee479baccfe47b8",
+      "size_bytes": 8835
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-05/historical/failed04/result.json",
+      "sha256": "d2db585f4851b916e7c632ca268d7527ce4604e6949918ea6d89408ddbcc3889",
+      "size_bytes": 617
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-05/historical/original-candidate.json",
+      "sha256": "d20076cd2e1961d1514bb135746b1701a14567136b80ee073fecedb389f929df",
+      "size_bytes": 340908
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-05/historical/preparation-source/parent-source/scripts/acquire_puck_cpu_payloads.py",
+      "sha256": "4c08f22f56485fa492982f404c2e0e62863244deedd1743d82600310bc8a2730",
+      "size_bytes": 22918
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-05/historical/preparation-source/parent-source/scripts/build_puck_python_louvain.py",
+      "sha256": "0fce7b437f00ebd2348ecaf29c4f00f444f707e797297419a2844c8513285fb6",
+      "size_bytes": 24118
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-05/historical/preparation-source/parent-source/scripts/puck_worker_bootstrap.py",
+      "sha256": "7aac915251166b79abec77f7a51559ada588fe9ee92b9f1dc5c5e4cebb64feb9",
+      "size_bytes": 38250
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-05/historical/preparation-source/parent-source/scripts/qualify_puck_cpu_held_runtime.py",
+      "sha256": "ec4b8a4bee2c3956c1b687635ddb4a48064bba49b8422e6ea9d5fd526e1b0be4",
+      "size_bytes": 36880
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-05/historical/preparation-source/parent-source/scripts/qualify_puck_held_runtime.py",
+      "sha256": "411459fa82ba3fbf7e6b71d71f81e66afce80c5bfa77a8e7c52f700b8d8d751e",
+      "size_bytes": 20696
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-05/historical/preparation-source/parent-source/scripts/stage_puck_cpu_held_runtime.py",
+      "sha256": "c5cb012459cc532a79cf40e357839ad27ffef7b6eacde8200e815371a2cad4f9",
+      "size_bytes": 2306
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-05/historical/preparation-source/parent-source/src/palimpsest/__init__.py",
+      "sha256": "bb99e30d22e4662c4ded455b1b23f49b77ce811dcfa1b69bf358925487a566d8",
+      "size_bytes": 63
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-05/historical/preparation-source/parent-source/src/palimpsest/bounded_qualification.py",
+      "sha256": "7331de4b1a3634e75b0a25b6add491b96a00d01767a7904adb096dd991c1e45a",
+      "size_bytes": 22914
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-05/historical/preparation-source/parent-source/src/palimpsest/evaluate.py",
+      "sha256": "74a9afb710b36a366ab680462e9440f285730a0360bda704af25ebbcfd74256a",
+      "size_bytes": 19531
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-05/historical/preparation-source/parent-source/src/palimpsest/puck_build_inputs.py",
+      "sha256": "b08f83a19a2fa0d6f49d349512b5f69d08a6781930af4b13164f67779615cb65",
+      "size_bytes": 13905
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-05/historical/preparation-source/parent-source/src/palimpsest/puck_cpu_namespace.py",
+      "sha256": "9a82a9cd67000e9bc4a1ee1bfb9020be4ed1b2b41bc439985f33b48dc973a04e",
+      "size_bytes": 9569
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-05/historical/preparation-source/parent-source/src/palimpsest/puck_cpu_registration.py",
+      "sha256": "36dedf73180dc76422b09eff9f9d04bdc62ad2e2ea54c3ff0c401b9ba51865b0",
+      "size_bytes": 15508
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-05/historical/preparation-source/parent-source/src/palimpsest/puck_dependency_bindings.py",
+      "sha256": "5110aec2eb6961bbbb6fdc40431b46c42d5ad6fff2f43d86c69125a8fa0644a7",
+      "size_bytes": 23102
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-05/historical/preparation-source/parent-source/src/palimpsest/puck_dependency_files.py",
+      "sha256": "d1ca386780212b174a6e931a8ac4ce88e68c31b27fb1c0e16346a2150560fca1",
+      "size_bytes": 33543
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-05/historical/preparation-source/parent-source/src/palimpsest/puck_dependency_imports.py",
+      "sha256": "62ac7f05e451bf6b6b58eff84032561f49411479ef55c87ec15d6e28cd6bb7d7",
+      "size_bytes": 14468
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-05/historical/preparation-source/parent-source/src/palimpsest/puck_execution_files.py",
+      "sha256": "ac059455bc45437c45330d01aaca761fd571d6de1637a4a8d7ebfbd796622062",
+      "size_bytes": 15001
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-05/historical/preparation-source/parent-source/src/palimpsest/puck_native_identity.py",
+      "sha256": "6e5b56e5c6494398dbd6a7c7d07e771e86c63d56e7374692d1d1d8213b721ebb",
+      "size_bytes": 2837
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-05/historical/preparation-source/parent-source/src/palimpsest/puck_native_origins.py",
+      "sha256": "e6deea2bc378968371bf1093b869dfc442eeb7def27198695d1c0f872da519e1",
+      "size_bytes": 1660
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-05/historical/preparation-source/parent-source/src/palimpsest/puck_package_payloads.py",
+      "sha256": "75f99498cfbcfe761fe151d089c0b383b9c48c39c0f89d22e7c3715ef056fe76",
+      "size_bytes": 15959
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-05/historical/preparation-source/parent-source/src/palimpsest/puck_retained_installation.py",
+      "sha256": "b5e202d37cf8e8155295b607d5daa4dcaa3869cbeda3871cefdf00d2b159fdcc",
+      "size_bytes": 6213
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-05/historical/preparation-source/parent-source/src/palimpsest/puck_runtime_qualification.py",
+      "sha256": "45e1bca7f5420bd6dd4aed5a27af429783124a12f02def92e1db1db8d2199085",
+      "size_bytes": 2190
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-05/historical/preparation-source/parent-source/src/palimpsest/puck_runtime_registration.py",
+      "sha256": "33825b07a2e3837a96101a25539c4a1722bc0fc469b5a9d9388edbc5cb67f4e2",
+      "size_bytes": 17632
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-05/historical/preparation-source/parent-source/src/palimpsest/puck_runtime_staging.py",
+      "sha256": "a73c1cfe26d20281b923dfa5110a8acb1665b60a3d01296afb91c8c11b36beb6",
+      "size_bytes": 12544
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-05/historical/preparation-source/parent-source/src/palimpsest/puck_worker_preflight.py",
+      "sha256": "dc5806d7f39913f4110b2aed8e4512c74f453b2f175f438771d72e78cca770f7",
+      "size_bytes": 465
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-05/historical/preparation-source/worker-source/scripts/puck_worker_bootstrap.py",
+      "sha256": "7aac915251166b79abec77f7a51559ada588fe9ee92b9f1dc5c5e4cebb64feb9",
+      "size_bytes": 38250
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-05/historical/preparation-source/worker-source/src/palimpsest/__init__.py",
+      "sha256": "bb99e30d22e4662c4ded455b1b23f49b77ce811dcfa1b69bf358925487a566d8",
+      "size_bytes": 63
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-05/historical/preparation-source/worker-source/src/palimpsest/puck_dependency_bindings.py",
+      "sha256": "5110aec2eb6961bbbb6fdc40431b46c42d5ad6fff2f43d86c69125a8fa0644a7",
+      "size_bytes": 23102
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-05/historical/preparation-source/worker-source/src/palimpsest/puck_dependency_files.py",
+      "sha256": "d1ca386780212b174a6e931a8ac4ce88e68c31b27fb1c0e16346a2150560fca1",
+      "size_bytes": 33543
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-05/historical/preparation-source/worker-source/src/palimpsest/puck_dependency_imports.py",
+      "sha256": "62ac7f05e451bf6b6b58eff84032561f49411479ef55c87ec15d6e28cd6bb7d7",
+      "size_bytes": 14468
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-05/historical/preparation-source/worker-source/src/palimpsest/puck_execution_files.py",
+      "sha256": "ac059455bc45437c45330d01aaca761fd571d6de1637a4a8d7ebfbd796622062",
+      "size_bytes": 15001
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-05/historical/preparation-source/worker-source/src/palimpsest/puck_native_identity.py",
+      "sha256": "6e5b56e5c6494398dbd6a7c7d07e771e86c63d56e7374692d1d1d8213b721ebb",
+      "size_bytes": 2837
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-05/historical/preparation-source/worker-source/src/palimpsest/puck_native_origins.py",
+      "sha256": "e6deea2bc378968371bf1093b869dfc442eeb7def27198695d1c0f872da519e1",
+      "size_bytes": 1660
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-05/historical/preparation-source/worker-source/src/palimpsest/puck_runtime_qualification.py",
+      "sha256": "45e1bca7f5420bd6dd4aed5a27af429783124a12f02def92e1db1db8d2199085",
+      "size_bytes": 2190
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-05/historical/preparation-source/worker-source/src/palimpsest/puck_worker_preflight.py",
+      "sha256": "dc5806d7f39913f4110b2aed8e4512c74f453b2f175f438771d72e78cca770f7",
+      "size_bytes": 465
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-05/historical/preparation/baseline-after.json",
+      "sha256": "8e69fa24c5367b19acfad5f5f3c12f1804eed23d0889df6a9e58f20da4376dfb",
+      "size_bytes": 196
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-05/historical/preparation/baseline-before.json",
+      "sha256": "8e69fa24c5367b19acfad5f5f3c12f1804eed23d0889df6a9e58f20da4376dfb",
+      "size_bytes": 196
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-05/historical/preparation/configuration.json",
+      "sha256": "38134e016eff974e06806f1ac74492dc51e0a5721d8cd13d1123a1fd950fe8a6",
+      "size_bytes": 7903
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-05/historical/preparation/control/candidate.json",
+      "sha256": "d20076cd2e1961d1514bb135746b1701a14567136b80ee073fecedb389f929df",
+      "size_bytes": 340908
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-05/historical/preparation/control/copy-registration.json",
+      "sha256": "815a075ab559b0f9f691acf989ff1146e09a5048809525e768a1a302facb9652",
+      "size_bytes": 4008466
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-05/historical/preparation/control/stage-request.json",
+      "sha256": "9020e1d77801df3c4434247681a143639d1ca7364443b0af893f5eec144ba6b0",
+      "size_bytes": 391
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-05/historical/preparation/invocation.json",
+      "sha256": "b2ca5b5500d1cfc3c3f824cedd2645a99edc28c362186e231b6e11f678eef8fa",
+      "size_bytes": 5481
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-05/historical/preparation/payload/dependencies.json",
+      "sha256": "25ea4e912919116b3196b8a8ed537f5dde02f40a35c295d97fe0c0509d67277f",
+      "size_bytes": 4249688
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-05/historical/preparation/payload/stage.json",
+      "sha256": "eeeff6b900992678277d5b64953571d03d920f7ff09406f9891361f94780d65d",
+      "size_bytes": 567
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-05/historical/preparation/supervision.json",
+      "sha256": "b00e4753e826872d0aeffea150ec23ef714749f381975a9de106e17f4bc5f15e",
+      "size_bytes": 192
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-05/independent-failure-review.json",
+      "sha256": "fb9d3dcbb92a7b6bb2c53a98ba0437655dda24c68c1686f28f70921e27fd3da7",
+      "size_bytes": 13279
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-05/independent-terminal-review.json",
+      "sha256": "a634e8bdc1624895650a4c70142a5f99b8b2bae503205b77bbace6e60baf89ac",
+      "size_bytes": 9546
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-05/inputs/docs/plans/puck-cpu-characterization-native-metadata-05.json",
+      "sha256": "64a9e46f60700f12712262879547fbf26d785fb8a825098940e6494482dae2aa",
+      "size_bytes": 1618086
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-05/inputs/docs/plans/puck-cpu-distributed-publication-profile-v1.json",
+      "sha256": "6532308a421d73fee2d7a7843528f40ba7613df49b283bdc0d25d67b2795620a",
+      "size_bytes": 346230
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-05/inputs/docs/plans/puck-cpu-retained-admission-02.json",
+      "sha256": "32605ca0d48537a6eabf98a54d605ad23bf525456760d83726381aeaf38e3e96",
+      "size_bytes": 30043
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-05/inputs/docs/plans/puck-python-louvain-host-baseline-v1.json",
+      "sha256": "b00901ffcf70799682b0092168163d300c264083e615fed16850b9b557e8a207",
+      "size_bytes": 552822
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-05/inputs/docs/reports/puck-cpu-characterization-02/evidence-index.json",
+      "sha256": "c827dc11dd3bcfe60a3020dccc008c385c779f19f60ad2bf6f930d69fcd654da",
+      "size_bytes": 17046
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-05/inputs/docs/reports/puck-cpu-characterization-02/frozen-configuration.json",
+      "sha256": "4b98ff368e97351b2079ff44c75cb910d08559e5e037a6afc4887c28cd38fea8",
+      "size_bytes": 13940
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-05/inputs/docs/reports/puck-cpu-characterization-02/outcome-audit-02.json",
+      "sha256": "68db69256149ca20d4b698860898d33c4e6cbee2b840e4eeeb2fd5f21359eff3",
+      "size_bytes": 1452
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-05/inputs/docs/reports/puck-cpu-characterization-02/raw/payload/imports.json",
+      "sha256": "f5c307bd361cd97e0f5a912610e2e639d62aa410aca4c393719667b24654b448",
+      "size_bytes": 534299
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-05/inputs/docs/reports/puck-cpu-characterization-02/raw/result.json",
+      "sha256": "c3959dbb45d760c59e953caf11d05993c97c0d3912a801d957cf6f8dcbcfb3ff",
+      "size_bytes": 837
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-05/inputs/docs/reports/puck-cpu-held-preparation-v1/generated/_remote_module_non_scriptable.py",
+      "sha256": "8205b16956fb264841ecd8644784a0d157f87df79b17c16825dc1163433ce5d8",
+      "size_bytes": 2355
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-05/inputs/docs/reports/puck-cpu-install-01/wheel-layout.json",
+      "sha256": "82076ef08db0cb07c19d26376d6f501dd3a8d072738d0150641dd6691c9fda5b",
+      "size_bytes": 517010
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-05/inputs/docs/reports/puck-cpu-retained-admission-02/acceptance-audit-03.json",
+      "sha256": "130b97c8253f2b824f382dbbbe32d049bfcaacf9d0169307611454d39b02aef3",
+      "size_bytes": 1263
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-05/inputs/docs/reports/puck-cpu-retained-admission-02/evidence-index.json",
+      "sha256": "6ef83ddd81474b7aa94bca7924f03b2fa13410864a2ac21fb17f39dff117b9de",
+      "size_bytes": 5935
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-05/inputs/runs/puck-cpu-retained-admission-02/inventory.json",
+      "sha256": "d1dac91f2b69e193d6eafc8b6c47a37204bb2cb51925faad5b895dea83701b35",
+      "size_bytes": 3996631
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-05/inputs/runs/puck-cpu-retained-admission-02/result.json",
+      "sha256": "29a9e4a84d16cb9a20ee95749a44d12631aa7d21ba5a9019f091a674ad80d618",
+      "size_bytes": 1154
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-05/inputs/runs/puck-cpu-retained-admission-02/snapshot.json",
+      "sha256": "db66e69a1a39e950b0bbfe8c7f1e9134cd3c3e3251dceb82db3692e6b407f70b",
+      "size_bytes": 663
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-05/inspection/original/torch/cuda/__init__.py",
+      "sha256": "9ba786aee9b5aac710f49c3beade1722610a0d6d8ec406fad9a9793df1316e99",
+      "size_bytes": 64667
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-05/inspection/original/torch/cuda/memory.py",
+      "sha256": "38f5d4bcb7ae3f8a912dd6cfe4870dfcc6ddd64736f8986284d119c429338bf9",
+      "size_bytes": 46306
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-05/inspection/staged/torch/cuda/__init__.py",
+      "sha256": "9ba786aee9b5aac710f49c3beade1722610a0d6d8ec406fad9a9793df1316e99",
+      "size_bytes": 64667
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-05/inspection/staged/torch/cuda/memory.py",
+      "sha256": "38f5d4bcb7ae3f8a912dd6cfe4870dfcc6ddd64736f8986284d119c429338bf9",
+      "size_bytes": 46306
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-05/observer-combined-tool-output.txt",
+      "sha256": "7350fc1e7552205b73975b422f3241cf44e124d3d00617232569946c860dbe82",
+      "size_bytes": 950
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-05/observer-external-tool.json",
+      "sha256": "60d30cc46136b1d3d5e545db250620aea0d4aa232a1bfb0d4f796405f0a608f9",
+      "size_bytes": 2336
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-05/post-custody/combined-tool-output.txt",
+      "sha256": "d2b62b1fd547639566f617865b20002101786b2956db37e7c2f60bf4c34d4901",
+      "size_bytes": 7906
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-05/post-custody/control.py",
+      "sha256": "c391971a08daf41f8c61bd7b49888b4284f601d104fdd96124549340bda3230f",
+      "size_bytes": 20829
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-05/post-custody/external-tool.json",
+      "sha256": "a798ba503b4866017344a35884352c85e25bc6e817231e175ded054d9d405d1a",
+      "size_bytes": 9154
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-05/post-custody/result.json",
+      "sha256": "d2b62b1fd547639566f617865b20002101786b2956db37e7c2f60bf4c34d4901",
+      "size_bytes": 7906
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-05/prospective-control-map-before-format-correction.json",
+      "sha256": "9ec3ae09614da69fa0898ed5319ed979cb0222ae8d44bb730033e1d623cbcabe",
+      "size_bytes": 26809
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-05/prospective-public-episode-map.json",
+      "sha256": "e64136e549baa70713a7adbd0ec6a4ee133b2b9ec079278a3c5cdf0dcdaa381e",
+      "size_bytes": 23133
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-05/raw/baseline-before.json",
+      "sha256": "8e69fa24c5367b19acfad5f5f3c12f1804eed23d0889df6a9e58f20da4376dfb",
+      "size_bytes": 196
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-05/raw/configuration.json",
+      "sha256": "584f687eeb11797eb48caf0514fc0ea7f5b7f8e46af0c6a5304ef59a714cb3b8",
+      "size_bytes": 8833
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-05/raw/control/dependencies.json",
+      "sha256": "c3cf3b8579f476ff957e44bd47b57bc52fff4dd32674523baa0ce696851b420e",
+      "size_bytes": 4253196
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-05/raw/control/worker-registration.json",
+      "sha256": "cfddb0c68d6b63d2dd3e871951a0c77ae9708cdb8b49cb5889106d6029abb5e3",
+      "size_bytes": 4552
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-05/raw/invocation.json",
+      "sha256": "ecfcc0bb528fb177bf7cbbbd38dd8afdf5c17a6098713b6c08a9136620d8f9ef",
+      "size_bytes": 7029
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-05/raw/logs/stderr.log",
+      "sha256": "2b3774acb8b5946ebce7d9ee993d3ab4b48b576c3f8e1a73ac411fae4d24c048",
+      "size_bytes": 2509
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-05/raw/logs/stdout.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-05/raw/observer-external-cli-transport.json",
+      "sha256": "7350fc1e7552205b73975b422f3241cf44e124d3d00617232569946c860dbe82",
+      "size_bytes": 950
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-05/raw/observer-external-cli.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-05/raw/observer-external-cli.stdout",
+      "sha256": "c5d2d2037ed248834d971278cbe2d6637b0324eb5b1518933e5201980b493e67",
+      "size_bytes": 618
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-05/raw/resource-admission.json",
+      "sha256": "4115790fc04475e1458e2a71473e128f8fd5e5872f06ee0611590f579fb761e1",
+      "size_bytes": 105
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-05/raw/result.json",
+      "sha256": "c5d2d2037ed248834d971278cbe2d6637b0324eb5b1518933e5201980b493e67",
+      "size_bytes": 618
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-05/raw/supervision.json",
+      "sha256": "ca663d925aa6f163843a4315d0a789a6081ab06a7add3b17fc074621a6175de7",
+      "size_bytes": 357
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-05/raw/worker-source/scripts/puck_worker_bootstrap.py",
+      "sha256": "436b1ffe34b96fca166f6fb38022ad7392daef3517e58157092db2d9fd84c69f",
+      "size_bytes": 38375
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-05/raw/worker-source/src/palimpsest/__init__.py",
+      "sha256": "bb99e30d22e4662c4ded455b1b23f49b77ce811dcfa1b69bf358925487a566d8",
+      "size_bytes": 63
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-05/raw/worker-source/src/palimpsest/puck_dependency_bindings.py",
+      "sha256": "7012888d030917434d1536285bb97fd2de15b5b83e9da87ee1503cda970a7147",
+      "size_bytes": 28299
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-05/raw/worker-source/src/palimpsest/puck_dependency_files.py",
+      "sha256": "d1ca386780212b174a6e931a8ac4ce88e68c31b27fb1c0e16346a2150560fca1",
+      "size_bytes": 33543
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-05/raw/worker-source/src/palimpsest/puck_dependency_imports.py",
+      "sha256": "e35b941c351971c15f225255170cd45530aa2304943fe2edd461b8d94080943b",
+      "size_bytes": 14868
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-05/raw/worker-source/src/palimpsest/puck_execution_files.py",
+      "sha256": "ac059455bc45437c45330d01aaca761fd571d6de1637a4a8d7ebfbd796622062",
+      "size_bytes": 15001
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-05/raw/worker-source/src/palimpsest/puck_native_identity.py",
+      "sha256": "6e5b56e5c6494398dbd6a7c7d07e771e86c63d56e7374692d1d1d8213b721ebb",
+      "size_bytes": 2837
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-05/raw/worker-source/src/palimpsest/puck_native_origins.py",
+      "sha256": "e6deea2bc378968371bf1093b869dfc442eeb7def27198695d1c0f872da519e1",
+      "size_bytes": 1660
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-05/raw/worker-source/src/palimpsest/puck_runtime_qualification.py",
+      "sha256": "45e1bca7f5420bd6dd4aed5a27af429783124a12f02def92e1db1db8d2199085",
+      "size_bytes": 2190
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-05/raw/worker-source/src/palimpsest/puck_worker_preflight.py",
+      "sha256": "dc5806d7f39913f4110b2aed8e4512c74f453b2f175f438771d72e78cca770f7",
+      "size_bytes": 465
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-05/source/docs/plans/puck-cpu-distributed-publication-profile-v1.json",
+      "sha256": "6532308a421d73fee2d7a7843528f40ba7613df49b283bdc0d25d67b2795620a",
+      "size_bytes": 346230
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-05/source/docs/plans/puck-cpu-distributed-publication-profile-v1/admission-review.md",
+      "sha256": "1d7a51a03e27c7ea426d1b05a33d101a753e82c47174713e363af4a8a6937f68",
+      "size_bytes": 18252
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-05/source/docs/plans/puck-cpu-distributed-publication-profile-v1/attribution.json",
+      "sha256": "51376c707e68b72c7bf275ba7cc410adaa6acdf51b9ee957840c325c1eb8f91b",
+      "size_bytes": 73151
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-05/source/docs/plans/puck-cpu-distributed-publication-profile-v1/source-proof.json",
+      "sha256": "af7c78508b05ce56017bb814a408a8781219b2c198f9f31751ecaf47f62dc959",
+      "size_bytes": 10106
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-05/source/docs/plans/puck-cpu-held-qualification-05-admission.py",
+      "sha256": "448503e23ef22abfca63cca525b5543f08da8dd4003a03724471a3471936aec1",
+      "size_bytes": 13506
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-05/source/docs/plans/puck-cpu-held-qualification-05-execution.md",
+      "sha256": "74a7e65f222940a756d00da0e7259f3fa295c7b2e7ad6314e5c1c664665cc299",
+      "size_bytes": 4322
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-05/source/docs/plans/puck-cpu-held-qualification-05-freeze.json",
+      "sha256": "9219d49273b3ff6837d99238035909cc4f150c882b4c9eda46f03ea762880f96",
+      "size_bytes": 7421
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-05/source/docs/plans/puck-cpu-held-qualification-05.json",
+      "sha256": "584f687eeb11797eb48caf0514fc0ea7f5b7f8e46af0c6a5304ef59a714cb3b8",
+      "size_bytes": 8833
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-05/source/docs/reports/puck-cpu-characterization-02/audit-helper-admission-v3.py",
+      "sha256": "f6229e92238f260e001b6e49cf545dcddd9a371fb272118881fbec8b38961469",
+      "size_bytes": 15635
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-05/source/docs/reports/puck-cpu-characterization-02/audit-helper-install-v1.py",
+      "sha256": "a8945d3dc432831522e66c7817c0f3281e278e2a930ab1e31cbb14a26e17e406",
+      "size_bytes": 33686
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-05/source/docs/reports/puck-cpu-characterization-02/audit-support-characterization-v1.py",
+      "sha256": "ba1f54b2885901cae837bb710bb725e211d5aaf5fcddb8fc6bfeb786f2daac4e",
+      "size_bytes": 15971
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-05/source/docs/reports/puck-cpu-held-qualification-05-controls-review.json",
+      "sha256": "533f79c7f423219ab731a3ecd94ccf425a2d1822ae467ff4ee7b01173c9c6a9a",
+      "size_bytes": 6095
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-05/source/docs/reports/puck-cpu-held-qualification-05-controls-self-check.json",
+      "sha256": "22e20926c6bc6d20fdd54f99ec111df3a96475b911b2193b78422dd772da648d",
+      "size_bytes": 11502
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-05/source/docs/reports/puck-cpu-held-qualification-amendment-03/source-evidence/validation/prepared-byte-audit03-01/authenticated-auditor.py",
+      "sha256": "01bc2c99634cb3ec2e7bfc92f4fc96b219e07c8a5ea10351227a5cfb1181d4cf",
+      "size_bytes": 65522
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-05/source/scripts/acquire_puck_cpu_payloads.py",
+      "sha256": "4c08f22f56485fa492982f404c2e0e62863244deedd1743d82600310bc8a2730",
+      "size_bytes": 22918
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-05/source/scripts/audit_puck_cpu_held_runtime.py",
+      "sha256": "5962e16b568633abff8916f6c1ee6c350087bc59f6bf1b5ff17d2983fbf3d229",
+      "size_bytes": 74689
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-05/source/scripts/audit_puck_cpu_runtime_characterization.py",
+      "sha256": "be7e1321356c554750baa6e0982dc939a23546eca1574b8f5f68b2bbdec3afa4",
+      "size_bytes": 53991
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-05/source/scripts/build_puck_python_louvain.py",
+      "sha256": "0fce7b437f00ebd2348ecaf29c4f00f444f707e797297419a2844c8513285fb6",
+      "size_bytes": 24118
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-05/source/scripts/observe_puck_cpu_held_allocation.py",
+      "sha256": "31c883c328ff1cf6db6e2209c52917010b80561f0065a8896ab98d56f9f11f53",
+      "size_bytes": 6393
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-05/source/scripts/puck_worker_bootstrap.py",
+      "sha256": "436b1ffe34b96fca166f6fb38022ad7392daef3517e58157092db2d9fd84c69f",
+      "size_bytes": 38375
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-05/source/scripts/qualify_puck_cpu_held_runtime.py",
+      "sha256": "c179bf7333409a19c02cf194d4b83a847053868561b08610b2fd755e5f0599cc",
+      "size_bytes": 56930
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-05/source/scripts/qualify_puck_held_runtime.py",
+      "sha256": "411459fa82ba3fbf7e6b71d71f81e66afce80c5bfa77a8e7c52f700b8d8d751e",
+      "size_bytes": 20696
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-05/source/scripts/stage_puck_cpu_held_runtime.py",
+      "sha256": "c5cb012459cc532a79cf40e357839ad27ffef7b6eacde8200e815371a2cad4f9",
+      "size_bytes": 2306
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-05/source/src/palimpsest/__init__.py",
+      "sha256": "bb99e30d22e4662c4ded455b1b23f49b77ce811dcfa1b69bf358925487a566d8",
+      "size_bytes": 63
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-05/source/src/palimpsest/bounded_qualification.py",
+      "sha256": "7331de4b1a3634e75b0a25b6add491b96a00d01767a7904adb096dd991c1e45a",
+      "size_bytes": 22914
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-05/source/src/palimpsest/evaluate.py",
+      "sha256": "74a9afb710b36a366ab680462e9440f285730a0360bda704af25ebbcfd74256a",
+      "size_bytes": 19531
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-05/source/src/palimpsest/puck_build_inputs.py",
+      "sha256": "b08f83a19a2fa0d6f49d349512b5f69d08a6781930af4b13164f67779615cb65",
+      "size_bytes": 13905
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-05/source/src/palimpsest/puck_cpu_namespace.py",
+      "sha256": "9a82a9cd67000e9bc4a1ee1bfb9020be4ed1b2b41bc439985f33b48dc973a04e",
+      "size_bytes": 9569
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-05/source/src/palimpsest/puck_cpu_registration.py",
+      "sha256": "36dedf73180dc76422b09eff9f9d04bdc62ad2e2ea54c3ff0c401b9ba51865b0",
+      "size_bytes": 15508
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-05/source/src/palimpsest/puck_dependency_bindings.py",
+      "sha256": "7012888d030917434d1536285bb97fd2de15b5b83e9da87ee1503cda970a7147",
+      "size_bytes": 28299
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-05/source/src/palimpsest/puck_dependency_files.py",
+      "sha256": "d1ca386780212b174a6e931a8ac4ce88e68c31b27fb1c0e16346a2150560fca1",
+      "size_bytes": 33543
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-05/source/src/palimpsest/puck_dependency_imports.py",
+      "sha256": "e35b941c351971c15f225255170cd45530aa2304943fe2edd461b8d94080943b",
+      "size_bytes": 14868
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-05/source/src/palimpsest/puck_execution_files.py",
+      "sha256": "ac059455bc45437c45330d01aaca761fd571d6de1637a4a8d7ebfbd796622062",
+      "size_bytes": 15001
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-05/source/src/palimpsest/puck_native_identity.py",
+      "sha256": "6e5b56e5c6494398dbd6a7c7d07e771e86c63d56e7374692d1d1d8213b721ebb",
+      "size_bytes": 2837
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-05/source/src/palimpsest/puck_native_origins.py",
+      "sha256": "e6deea2bc378968371bf1093b869dfc442eeb7def27198695d1c0f872da519e1",
+      "size_bytes": 1660
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-05/source/src/palimpsest/puck_package_payloads.py",
+      "sha256": "75f99498cfbcfe761fe151d089c0b383b9c48c39c0f89d22e7c3715ef056fe76",
+      "size_bytes": 15959
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-05/source/src/palimpsest/puck_retained_installation.py",
+      "sha256": "b5e202d37cf8e8155295b607d5daa4dcaa3869cbeda3871cefdf00d2b159fdcc",
+      "size_bytes": 6213
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-05/source/src/palimpsest/puck_runtime_qualification.py",
+      "sha256": "45e1bca7f5420bd6dd4aed5a27af429783124a12f02def92e1db1db8d2199085",
+      "size_bytes": 2190
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-05/source/src/palimpsest/puck_runtime_registration.py",
+      "sha256": "33825b07a2e3837a96101a25539c4a1722bc0fc469b5a9d9388edbc5cb67f4e2",
+      "size_bytes": 17632
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-05/source/src/palimpsest/puck_runtime_staging.py",
+      "sha256": "a73c1cfe26d20281b923dfa5110a8acb1665b60a3d01296afb91c8c11b36beb6",
+      "size_bytes": 12544
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-05/source/src/palimpsest/puck_worker_preflight.py",
+      "sha256": "dc5806d7f39913f4110b2aed8e4512c74f453b2f175f438771d72e78cca770f7",
+      "size_bytes": 465
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-05/verify_evidence.py",
+      "sha256": "078092f4d86196803f96a153c5d147bd779030df440139919b6302172018d8af",
+      "size_bytes": 2129
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-06.md",
+      "sha256": "8a0660cdab9b67ed7127c9e7d91493567a022b0cf0cbd73a53db264c920408c9",
+      "size_bytes": 5134
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-06/evidence-index.json",
+      "sha256": "598552ccd8bea9e0f5aa0213c670fc8ae5bfca2c5f35836188aeb2e951f8606f",
+      "size_bytes": 167317
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-06/source/docs/plans/puck-cpu-held-qualification-06-admission.py",
+      "sha256": "4a789e5fa76bdeb83f7aa1252ebc65e03527fb143f4830be9b8a1627bf613813",
+      "size_bytes": 15979
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-06/source/docs/plans/puck-cpu-held-qualification-06-freeze.json",
+      "sha256": "54dfca9f7a2bccff7a436e12d232f80944f564fce48a66480dacb77d1693e61c",
+      "size_bytes": 73052
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-06/source/scripts/audit_puck_cpu_held_runtime.py",
+      "sha256": "f910d6bdf592fe7b488591398332ac70131891bd4f7c95ea793d20be8b90f829",
+      "size_bytes": 75231
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-06/source/scripts/observe_puck_cpu_held_allocation.py",
+      "sha256": "2390113cc9e37ea0d4c8b106010d370073ac512a9a4b8198a16c144422f2375a",
+      "size_bytes": 6473
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-06/source/scripts/qualify_puck_cpu_held_runtime.py",
+      "sha256": "3e06f55d2c788e40c211f9e2a3561d68bd01567f7c81caca319668715aebb3f9",
+      "size_bytes": 57514
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-07.md",
+      "sha256": "8b5ef25c99e4a0f6c79baf7b99bf87d426e0e8d1eb691c08bd0fbc44a2e020b3",
+      "size_bytes": 4627
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-07/controls/docs/plans/puck-cpu-held-qualification-07-admission-source-review.json",
+      "sha256": "61401f53dbadbadf48d18f464f790de1ff2d5e64605f2e6366b70c5378343a3d",
+      "size_bytes": 19655
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-07/controls/docs/plans/puck-cpu-held-qualification-07-admission.py",
+      "sha256": "7f9b695f7f01ad7e91c97c1f9caf0d3273b65f80f042f4694fb643b32534b99d",
+      "size_bytes": 19575
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-07/controls/docs/plans/puck-cpu-held-qualification-07-execution.json",
+      "sha256": "743c06bf40b4d52343881c1a9996e15741896b80a86bcb87fa97d70da3535c0b",
+      "size_bytes": 3636
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-07/controls/docs/plans/puck-cpu-held-qualification-07-external.py",
+      "sha256": "3eb0c77ad3d7ba6ea3f7f00fcba650db364262c1a57b81be37f73cd80d2f898a",
+      "size_bytes": 4194
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-07/controls/docs/plans/puck-cpu-held-qualification-07-freeze.json",
+      "sha256": "6230a4072b3606efd41efc694f0da15671d248f2cd39203f4eb2ca39ead22d17",
+      "size_bytes": 124995
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-07/controls/docs/plans/puck-cpu-held-qualification-07-independent-review.json",
+      "sha256": "7deb47f60143eaa6a98d50e94a9f93710c7ed6e22400a9b86d4fdc1980631f21",
+      "size_bytes": 9205
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-07/controls/docs/plans/puck-cpu-held-qualification-07-proof-roster-review.json",
+      "sha256": "040ee0cbf857b4abdd05a6a076f9d4b413218f5ca650948984207a3fcd269ab8",
+      "size_bytes": 34648
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-07/controls/docs/plans/puck-cpu-held-qualification-07-review.md",
+      "sha256": "c5cbb7143d45358a617129e077bc485a929d0e0c7aad0219e41360ac739b46f7",
+      "size_bytes": 3280
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-07/controls/docs/plans/puck-cpu-held-qualification-07.json",
+      "sha256": "1ed4b198a38512c751cca43e11fdb1cd00e7683031be545e6ccd12016555ee60",
+      "size_bytes": 8985
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-07/evidence-index.json",
+      "sha256": "9cb449d1d8fcbf4f77e5a2852dbb2967976dc7badafbd596fb19303366bc3251",
+      "size_bytes": 36989
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-07/external/palimpsest-held07-admission-external.json",
+      "sha256": "00c062c7f7e5b9d58433397c82a04cf2a0a8ccce0227c8640e5cba7c4194cb7f",
+      "size_bytes": 1116
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-07/external/palimpsest-held07-admission-external.stderr",
+      "sha256": "8b9e2b36a1664182a72ad4013f044f90d482f8403a9ef966d454e23c9def3fbd",
+      "size_bytes": 1456
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-07/external/palimpsest-held07-admission-external.stdout",
+      "sha256": "fc17a093b1fdb455c480c312abe014a0689a6fed46af3667befe64150d58efdd",
+      "size_bytes": 3677
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-07/external/palimpsest-held07-audit-external.json",
+      "sha256": "90d9cf0f63f884bf6047aa0487543c46e755135506bef554897d08157a6d09d3",
+      "size_bytes": 1606
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-07/external/palimpsest-held07-audit-external.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-07/external/palimpsest-held07-audit-external.stdout",
+      "sha256": "adb464cdc5ec9d55676bad8524bb6fe9f98143e7914a2ed1344408a8a1988aea",
+      "size_bytes": 616
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-07/external/palimpsest-held07-observer-external.json",
+      "sha256": "928bdc0f3090696bf9976e3b411cdb295b13f86c0e5c06ea9285c57613835857",
+      "size_bytes": 1305
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-07/external/palimpsest-held07-observer-external.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-07/external/palimpsest-held07-observer-external.stdout",
+      "sha256": "9509cbbff66603e5906c57f72950fcc77f600d4dbcffb611462506a58360aca7",
+      "size_bytes": 951
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-07/inputs/docs/plans/puck-cpu-characterization-native-metadata-05.json",
+      "sha256": "64a9e46f60700f12712262879547fbf26d785fb8a825098940e6494482dae2aa",
+      "size_bytes": 1618086
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-07/inputs/docs/plans/puck-cpu-held-preparation-01.json",
+      "sha256": "38134e016eff974e06806f1ac74492dc51e0a5721d8cd13d1123a1fd950fe8a6",
+      "size_bytes": 7903
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-07/inputs/docs/plans/puck-cpu-observed-import-profile-candidate-01.json",
+      "sha256": "d20076cd2e1961d1514bb135746b1701a14567136b80ee073fecedb389f929df",
+      "size_bytes": 340908
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-07/inputs/docs/plans/puck-cpu-pillow-origin-profile-v1.json",
+      "sha256": "6eba35557f64b8f7108558b1334d488da20b2381d0e69ffece090645f8fb8d3d",
+      "size_bytes": 346424
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-07/inputs/docs/plans/puck-cpu-retained-admission-02.json",
+      "sha256": "32605ca0d48537a6eabf98a54d605ad23bf525456760d83726381aeaf38e3e96",
+      "size_bytes": 30043
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-07/inputs/docs/plans/puck-python-louvain-host-baseline-v1.json",
+      "sha256": "b00901ffcf70799682b0092168163d300c264083e615fed16850b9b557e8a207",
+      "size_bytes": 552822
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-07/inputs/docs/reports/puck-cpu-characterization-02/evidence-index.json",
+      "sha256": "c827dc11dd3bcfe60a3020dccc008c385c779f19f60ad2bf6f930d69fcd654da",
+      "size_bytes": 17046
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-07/inputs/docs/reports/puck-cpu-characterization-02/frozen-configuration.json",
+      "sha256": "4b98ff368e97351b2079ff44c75cb910d08559e5e037a6afc4887c28cd38fea8",
+      "size_bytes": 13940
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-07/inputs/docs/reports/puck-cpu-characterization-02/outcome-audit-02.json",
+      "sha256": "68db69256149ca20d4b698860898d33c4e6cbee2b840e4eeeb2fd5f21359eff3",
+      "size_bytes": 1452
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-07/inputs/docs/reports/puck-cpu-characterization-02/raw/payload/imports.json",
+      "sha256": "f5c307bd361cd97e0f5a912610e2e639d62aa410aca4c393719667b24654b448",
+      "size_bytes": 534299
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-07/inputs/docs/reports/puck-cpu-characterization-02/raw/result.json",
+      "sha256": "c3959dbb45d760c59e953caf11d05993c97c0d3912a801d957cf6f8dcbcfb3ff",
+      "size_bytes": 837
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-07/inputs/docs/reports/puck-cpu-held-preparation-v1/generated/_remote_module_non_scriptable.py",
+      "sha256": "8205b16956fb264841ecd8644784a0d157f87df79b17c16825dc1163433ce5d8",
+      "size_bytes": 2355
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-07/inputs/docs/reports/puck-cpu-held-qualification-amendment-02/current-byte-audit-02/palimpsest-puck-cpu-held-preparation-01-current-byte-audit-02.external-cli.json",
+      "sha256": "9d8d740a9f09d4d945c1d6a46d707165d9b08a954187b46a4ea020eebfc00935",
+      "size_bytes": 1680
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-07/inputs/docs/reports/puck-cpu-held-qualification-amendment-02/current-byte-audit-02/palimpsest-puck-cpu-held-preparation-01-current-byte-audit-02.json",
+      "sha256": "00595d2fa5270fc69ddeb633cd7b894a68b7e6ddfd80df123190ad43d3c9ae4d",
+      "size_bytes": 1563
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-07/inputs/docs/reports/puck-cpu-install-01/wheel-layout.json",
+      "sha256": "82076ef08db0cb07c19d26376d6f501dd3a8d072738d0150641dd6691c9fda5b",
+      "size_bytes": 517010
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-07/inputs/docs/reports/puck-cpu-retained-admission-02/acceptance-audit-03.json",
+      "sha256": "130b97c8253f2b824f382dbbbe32d049bfcaacf9d0169307611454d39b02aef3",
+      "size_bytes": 1263
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-07/inputs/docs/reports/puck-cpu-retained-admission-02/evidence-index.json",
+      "sha256": "6ef83ddd81474b7aa94bca7924f03b2fa13410864a2ac21fb17f39dff117b9de",
+      "size_bytes": 5935
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-07/inputs/runs/puck-cpu-held-preparation-01/result.json",
+      "sha256": "9d49c6ee3a0be61505cfe7d2267b659290be17365d6e35fb5fdbdc38e103f47d",
+      "size_bytes": 7330
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-07/inputs/runs/puck-cpu-held-qualification-01/result.json",
+      "sha256": "224cb9bdb18228f6e8da7a47e7455cd604a6e756df5fd017294b9221f26d9299",
+      "size_bytes": 618
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-07/inputs/runs/puck-cpu-held-qualification-02/result.json",
+      "sha256": "085d19bdd39d392aaeab0c1590ec92b99e0bb2a4e8945f5d23dd51733fbab56b",
+      "size_bytes": 616
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-07/inputs/runs/puck-cpu-held-qualification-03/result.json",
+      "sha256": "ba5cad51576c3dd593c479d052328fcb4181943d3f5acdbdaa7cdee145f1254b",
+      "size_bytes": 617
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-07/inputs/runs/puck-cpu-held-qualification-04/result.json",
+      "sha256": "d2db585f4851b916e7c632ca268d7527ce4604e6949918ea6d89408ddbcc3889",
+      "size_bytes": 617
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-07/inputs/runs/puck-cpu-held-qualification-05/result.json",
+      "sha256": "c5d2d2037ed248834d971278cbe2d6637b0324eb5b1518933e5201980b493e67",
+      "size_bytes": 618
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-07/inputs/runs/puck-cpu-held-qualification-06/result.json",
+      "sha256": "e88a7f3317ae15b709409cf04a30f969629b20c51454a5ad6ca72d63d6378b88",
+      "size_bytes": 617
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-07/inputs/runs/puck-cpu-retained-admission-02/inventory.json",
+      "sha256": "d1dac91f2b69e193d6eafc8b6c47a37204bb2cb51925faad5b895dea83701b35",
+      "size_bytes": 3996631
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-07/inputs/runs/puck-cpu-retained-admission-02/result.json",
+      "sha256": "29a9e4a84d16cb9a20ee95749a44d12631aa7d21ba5a9019f091a674ad80d618",
+      "size_bytes": 1154
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-07/inputs/runs/puck-cpu-retained-admission-02/snapshot.json",
+      "sha256": "db66e69a1a39e950b0bbfe8c7f1e9134cd3c3e3251dceb82db3692e6b407f70b",
+      "size_bytes": 663
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-07/observations/palimpsest-held07-admission-result-review.json",
+      "sha256": "c01b5c6c4cabe72fdd83e783eeaf0dc6d2454423e2da9613c74ef27d70712cc0",
+      "size_bytes": 7866
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-07/observations/palimpsest-held07-concrete-audit-command.json",
+      "sha256": "8bcade7e7a32860ed1651d421552223a69eaca9f4e348a6bc54fea319a8d0b6a",
+      "size_bytes": 996
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-07/observations/palimpsest-held07-outcome-independent-review.json",
+      "sha256": "49a69b7a5190b96261aafdb1ec1c7dc7f7a09bb2273acc0e73337cd119a92caf",
+      "size_bytes": 9768
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-07/observations/palimpsest-held07-pre-admission-guard-01.json",
+      "sha256": "e59ef44789802df6154dec7804a150d40414329af040ae96e476ab333da6148b",
+      "size_bytes": 621
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-07/observations/palimpsest-held07-pre-observer-guard-01-refusal.json",
+      "sha256": "fcf376d709871610584993af2edd38b47db61b2387bbc9078274a82c6e86432f",
+      "size_bytes": 339
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-07/observations/palimpsest-held07-pre-observer-guard-02.json",
+      "sha256": "d28273325c9ed9f25dee3f1060695938a3903741664542a37eeb4c0ffaf23e60",
+      "size_bytes": 635
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-07/observations/palimpsest-puck-cpu-held-qualification-07-admission-01.json",
+      "sha256": "fc17a093b1fdb455c480c312abe014a0689a6fed46af3667befe64150d58efdd",
+      "size_bytes": 3677
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-07/observations/palimpsest-puck-cpu-held-qualification-07-audit-01.json",
+      "sha256": "adb464cdc5ec9d55676bad8524bb6fe9f98143e7914a2ed1344408a8a1988aea",
+      "size_bytes": 616
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-07/raw/baseline-before.json",
+      "sha256": "8e69fa24c5367b19acfad5f5f3c12f1804eed23d0889df6a9e58f20da4376dfb",
+      "size_bytes": 196
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-07/raw/configuration.json",
+      "sha256": "1ed4b198a38512c751cca43e11fdb1cd00e7683031be545e6ccd12016555ee60",
+      "size_bytes": 8985
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-07/raw/control/dependencies.json",
+      "sha256": "c82ddc9777f8c26cc68bb8a6a2010b1309085b3567c74d101d67732508be53fc",
+      "size_bytes": 4253322
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-07/raw/control/worker-registration.json",
+      "sha256": "23babbff6101b7727a2e4f7c4c113f09c6870c036e828eea8dd1a4d4489ee14d",
+      "size_bytes": 4714
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-07/raw/invocation.json",
+      "sha256": "816cd714d843d06f5fc156a50d568ed57cde62bec52f7739adf504abd82276a1",
+      "size_bytes": 7029
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-07/raw/logs/stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-07/raw/logs/stdout.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-07/raw/resource-admission.json",
+      "sha256": "a3c2de9bdcc4bc9627bdd61a54bf3afb18783c257e7a285cd1e5fab187582c14",
+      "size_bytes": 105
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-07/raw/supervision.json",
+      "sha256": "92da80ef71f86b3fd921c9d3febd35a1c9e1e795ca5b013435ef3cce61b35d61",
+      "size_bytes": 380
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-07/raw/worker-source/scripts/puck_worker_bootstrap.py",
+      "sha256": "436b1ffe34b96fca166f6fb38022ad7392daef3517e58157092db2d9fd84c69f",
+      "size_bytes": 38375
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-07/raw/worker-source/src/palimpsest/__init__.py",
+      "sha256": "bb99e30d22e4662c4ded455b1b23f49b77ce811dcfa1b69bf358925487a566d8",
+      "size_bytes": 63
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-07/raw/worker-source/src/palimpsest/puck_dependency_bindings.py",
+      "sha256": "7012888d030917434d1536285bb97fd2de15b5b83e9da87ee1503cda970a7147",
+      "size_bytes": 28299
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-07/raw/worker-source/src/palimpsest/puck_dependency_files.py",
+      "sha256": "d1ca386780212b174a6e931a8ac4ce88e68c31b27fb1c0e16346a2150560fca1",
+      "size_bytes": 33543
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-07/raw/worker-source/src/palimpsest/puck_dependency_imports.py",
+      "sha256": "e35b941c351971c15f225255170cd45530aa2304943fe2edd461b8d94080943b",
+      "size_bytes": 14868
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-07/raw/worker-source/src/palimpsest/puck_execution_files.py",
+      "sha256": "ac059455bc45437c45330d01aaca761fd571d6de1637a4a8d7ebfbd796622062",
+      "size_bytes": 15001
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-07/raw/worker-source/src/palimpsest/puck_native_identity.py",
+      "sha256": "6e5b56e5c6494398dbd6a7c7d07e771e86c63d56e7374692d1d1d8213b721ebb",
+      "size_bytes": 2837
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-07/raw/worker-source/src/palimpsest/puck_native_origins.py",
+      "sha256": "e6deea2bc378968371bf1093b869dfc442eeb7def27198695d1c0f872da519e1",
+      "size_bytes": 1660
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-07/raw/worker-source/src/palimpsest/puck_runtime_qualification.py",
+      "sha256": "45e1bca7f5420bd6dd4aed5a27af429783124a12f02def92e1db1db8d2199085",
+      "size_bytes": 2190
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-07/raw/worker-source/src/palimpsest/puck_worker_preflight.py",
+      "sha256": "dc5806d7f39913f4110b2aed8e4512c74f453b2f175f438771d72e78cca770f7",
+      "size_bytes": 465
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-07/source/scripts/acquire_puck_cpu_payloads.py",
+      "sha256": "4c08f22f56485fa492982f404c2e0e62863244deedd1743d82600310bc8a2730",
+      "size_bytes": 22918
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-07/source/scripts/audit_puck_cpu_held_runtime.py",
+      "sha256": "420c3d6f3b8c7ae799732184507e84177a546b74573fccf1f32728dbfc64440d",
+      "size_bytes": 76254
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-07/source/scripts/build_puck_python_louvain.py",
+      "sha256": "0fce7b437f00ebd2348ecaf29c4f00f444f707e797297419a2844c8513285fb6",
+      "size_bytes": 24118
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-07/source/scripts/observe_puck_cpu_held_allocation.py",
+      "sha256": "e105134d1069e268f39f45797e256b8316212f2c427a6c4c6a7ecb49d196ddb0",
+      "size_bytes": 6553
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-07/source/scripts/puck_worker_bootstrap.py",
+      "sha256": "436b1ffe34b96fca166f6fb38022ad7392daef3517e58157092db2d9fd84c69f",
+      "size_bytes": 38375
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-07/source/scripts/qualify_puck_cpu_held_runtime.py",
+      "sha256": "b65f0ff3b49976039f8f07edb3ce610262a10761ec509611cb31b4324e21b63b",
+      "size_bytes": 58724
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-07/source/scripts/qualify_puck_held_runtime.py",
+      "sha256": "411459fa82ba3fbf7e6b71d71f81e66afce80c5bfa77a8e7c52f700b8d8d751e",
+      "size_bytes": 20696
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-07/source/scripts/stage_puck_cpu_held_runtime.py",
+      "sha256": "c5cb012459cc532a79cf40e357839ad27ffef7b6eacde8200e815371a2cad4f9",
+      "size_bytes": 2306
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-07/source/src/palimpsest/__init__.py",
+      "sha256": "bb99e30d22e4662c4ded455b1b23f49b77ce811dcfa1b69bf358925487a566d8",
+      "size_bytes": 63
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-07/source/src/palimpsest/bounded_qualification.py",
+      "sha256": "7331de4b1a3634e75b0a25b6add491b96a00d01767a7904adb096dd991c1e45a",
+      "size_bytes": 22914
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-07/source/src/palimpsest/evaluate.py",
+      "sha256": "74a9afb710b36a366ab680462e9440f285730a0360bda704af25ebbcfd74256a",
+      "size_bytes": 19531
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-07/source/src/palimpsest/puck_build_inputs.py",
+      "sha256": "b08f83a19a2fa0d6f49d349512b5f69d08a6781930af4b13164f67779615cb65",
+      "size_bytes": 13905
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-07/source/src/palimpsest/puck_cpu_namespace.py",
+      "sha256": "9a82a9cd67000e9bc4a1ee1bfb9020be4ed1b2b41bc439985f33b48dc973a04e",
+      "size_bytes": 9569
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-07/source/src/palimpsest/puck_cpu_registration.py",
+      "sha256": "36dedf73180dc76422b09eff9f9d04bdc62ad2e2ea54c3ff0c401b9ba51865b0",
+      "size_bytes": 15508
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-07/source/src/palimpsest/puck_dependency_bindings.py",
+      "sha256": "7012888d030917434d1536285bb97fd2de15b5b83e9da87ee1503cda970a7147",
+      "size_bytes": 28299
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-07/source/src/palimpsest/puck_dependency_files.py",
+      "sha256": "d1ca386780212b174a6e931a8ac4ce88e68c31b27fb1c0e16346a2150560fca1",
+      "size_bytes": 33543
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-07/source/src/palimpsest/puck_dependency_imports.py",
+      "sha256": "e35b941c351971c15f225255170cd45530aa2304943fe2edd461b8d94080943b",
+      "size_bytes": 14868
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-07/source/src/palimpsest/puck_execution_files.py",
+      "sha256": "ac059455bc45437c45330d01aaca761fd571d6de1637a4a8d7ebfbd796622062",
+      "size_bytes": 15001
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-07/source/src/palimpsest/puck_native_identity.py",
+      "sha256": "6e5b56e5c6494398dbd6a7c7d07e771e86c63d56e7374692d1d1d8213b721ebb",
+      "size_bytes": 2837
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-07/source/src/palimpsest/puck_native_origins.py",
+      "sha256": "e6deea2bc378968371bf1093b869dfc442eeb7def27198695d1c0f872da519e1",
+      "size_bytes": 1660
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-07/source/src/palimpsest/puck_package_payloads.py",
+      "sha256": "75f99498cfbcfe761fe151d089c0b383b9c48c39c0f89d22e7c3715ef056fe76",
+      "size_bytes": 15959
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-07/source/src/palimpsest/puck_retained_installation.py",
+      "sha256": "b5e202d37cf8e8155295b607d5daa4dcaa3869cbeda3871cefdf00d2b159fdcc",
+      "size_bytes": 6213
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-07/source/src/palimpsest/puck_runtime_qualification.py",
+      "sha256": "45e1bca7f5420bd6dd4aed5a27af429783124a12f02def92e1db1db8d2199085",
+      "size_bytes": 2190
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-07/source/src/palimpsest/puck_runtime_registration.py",
+      "sha256": "33825b07a2e3837a96101a25539c4a1722bc0fc469b5a9d9388edbc5cb67f4e2",
+      "size_bytes": 17632
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-07/source/src/palimpsest/puck_runtime_staging.py",
+      "sha256": "a73c1cfe26d20281b923dfa5110a8acb1665b60a3d01296afb91c8c11b36beb6",
+      "size_bytes": 12544
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-07/source/src/palimpsest/puck_worker_preflight.py",
+      "sha256": "dc5806d7f39913f4110b2aed8e4512c74f453b2f175f438771d72e78cca770f7",
+      "size_bytes": 465
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-07/tools/archive_evidence.py",
+      "sha256": "168b9fa4b162aa9f3941a3e3817a40ca4c57e36d4e53c0147602fd0333e6c699",
+      "size_bytes": 7609
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-07/tools/palimpsest-held07-admission-terminal-tool.json",
+      "sha256": "2d794f0d4800c37acf328396a1b09691e25d52906a3265137ff0904dccaf4d8e",
+      "size_bytes": 1054
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-07/tools/palimpsest-held07-audit-terminal-tool.json",
+      "sha256": "de912c944225243dc686505ebd44ecad9a32f3adf81676ef29b076155e9b3588",
+      "size_bytes": 942
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-07/tools/palimpsest-held07-observer-terminal-tool.json",
+      "sha256": "c61241d09269168b32d8a6274742946c77d621cd3ce12061e72d4123ad54199f",
+      "size_bytes": 1110
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-07/transport/puck-cpu-held-qualification-07-external-cli-transport.json",
+      "sha256": "9509cbbff66603e5906c57f72950fcc77f600d4dbcffb611462506a58360aca7",
+      "size_bytes": 951
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-07/transport/puck-cpu-held-qualification-07-external-cli.stderr",
+      "sha256": "a9aa3be0a53b8dcecc67c7fc69ed91efb0b5f0dfc9dea34e7e58e78e5d1f08b5",
+      "size_bytes": 798
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-07/transport/puck-cpu-held-qualification-07-external-cli.stdout",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-07/verify_evidence.py",
+      "sha256": "d5b874df818e72295d6951873e25a6fc8fc0deb0a79ec6183ca805508c19a759",
+      "size_bytes": 2128
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-amendment-02/current-byte-audit-02/palimpsest-puck-cpu-held-preparation-01-current-byte-audit-02.external-cli.json",
+      "sha256": "9d8d740a9f09d4d945c1d6a46d707165d9b08a954187b46a4ea020eebfc00935",
+      "size_bytes": 1680
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-amendment-02/current-byte-audit-02/palimpsest-puck-cpu-held-preparation-01-current-byte-audit-02.json",
+      "sha256": "00595d2fa5270fc69ddeb633cd7b894a68b7e6ddfd80df123190ad43d3c9ae4d",
+      "size_bytes": 1563
+    },
+    {
+      "path": "docs/reports/puck-cpu-held-qualification-amendment-03/source-evidence/validation/prepared-byte-audit03-01/authenticated-auditor.py",
+      "sha256": "01bc2c99634cb3ec2e7bfc92f4fc96b219e07c8a5ea10351227a5cfb1181d4cf",
+      "size_bytes": 65522
+    },
+    {
+      "path": "docs/reports/puck-cpu-install-01/wheel-layout.json",
+      "sha256": "82076ef08db0cb07c19d26376d6f501dd3a8d072738d0150641dd6691c9fda5b",
+      "size_bytes": 517010
+    },
+    {
+      "path": "docs/reports/puck-cpu-optional-import-contract-v1.md",
+      "sha256": "f13451e06862f8b1dafa32dfa3028366012dc6b7d5e1fb6df4210bf998a12121",
+      "size_bytes": 5276
+    },
+    {
+      "path": "docs/reports/puck-cpu-optional-import-contract-v1/palimpsest-held05-optional-source-survey.json",
+      "sha256": "dfd35a621187ff9a1bb9f64de53aa0833f334a9600d055dd883b2c74cd704067",
+      "size_bytes": 1765809
+    },
+    {
+      "path": "docs/reports/puck-cpu-optional-import-contract-v1/palimpsest-held05-optional-source-survey.md",
+      "sha256": "958577cb5759af8182a1d0e9f3a399b91969326db88b0e205d079c8cbbbadb41",
+      "size_bytes": 7289
+    },
+    {
+      "path": "docs/reports/puck-cpu-optional-import-contract-v1/palimpsest-optional-import-contract-review.json",
+      "sha256": "fff25d859024d1d318482cdc64300eccec9d5835f004838d138ff88b363d8674",
+      "size_bytes": 19520
+    },
+    {
+      "path": "docs/reports/puck-cpu-optional-import-contract-v1/palimpsest-optional-numeric-callpaths.json",
+      "sha256": "12d73cc246e0e162fe13d86e636aa4990ce799f261f05cbc48c26c1a441d3f86",
+      "size_bytes": 21226
+    },
+    {
+      "path": "docs/reports/puck-cpu-optional-import-contract-v1/palimpsest-optional-source-current-byte-check.json",
+      "sha256": "ab91f7bca797c7f8d68629663af58f40d3e976c6e73774b697a9323a57d8d49c",
+      "size_bytes": 617
+    },
+    {
+      "path": "docs/reports/puck-cpu-optional-import-contract-v1/palimpsest-optional-v6-decision-review.json",
+      "sha256": "10c435f70d2d3aa952f08ef9d6105bdb73338d8a868be81cb4853dd8363634fd",
+      "size_bytes": 12025
+    },
+    {
+      "path": "docs/reports/puck-cpu-optional-import-contract-v1/palimpsest-optional-v6-implementation-review.json",
+      "sha256": "f44c32bdc8f679e77c582801caf2babb163ac632be91b165e7db1732bb776391",
+      "size_bytes": 8668
+    },
+    {
+      "path": "docs/reports/puck-cpu-optional-import-contract-v1/source-evidence-index.json",
+      "sha256": "767e7e189d50b855fb2cfc0a2f48a6e694ecabf6d572bcb75f7d3ba9d7084540",
+      "size_bytes": 16536
+    },
+    {
+      "path": "docs/reports/puck-cpu-optional-import-contract-v1/verification-summary.json",
+      "sha256": "7dd2df6019e1a53cc92bdff1237b108635a2bbb9a761aeabd261f6dd21ab37e3",
+      "size_bytes": 2957
+    },
+    {
+      "path": "docs/reports/puck-cpu-optional-import-contract-v1/verification/driver.py",
+      "sha256": "d8f454a7f6a6e5a466c223beb53150c4e92b1d82612239922563dd8ab098edee",
+      "size_bytes": 1941
+    },
+    {
+      "path": "docs/reports/puck-cpu-optional-import-contract-v1/verification/optional-import-contract-characterization-01/command.json",
+      "sha256": "05b117ea56e39b6abb896322455e1dfc0d292ce050fdd920870fefc0e5ca1145",
+      "size_bytes": 813
+    },
+    {
+      "path": "docs/reports/puck-cpu-optional-import-contract-v1/verification/optional-import-contract-characterization-01/result.json",
+      "sha256": "0a48d19c962d901390218ca1b8477f42e170a1013dc186f687f055205f81c35d",
+      "size_bytes": 75
+    },
+    {
+      "path": "docs/reports/puck-cpu-optional-import-contract-v1/verification/optional-import-contract-characterization-01/stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    {
+      "path": "docs/reports/puck-cpu-optional-import-contract-v1/verification/optional-import-contract-characterization-01/stdout.log",
+      "sha256": "c9c2679a4b2c8450f7c10cccb3aca0fe26d06a7210cee93e81b49244ab60ab7c",
+      "size_bytes": 98
+    },
+    {
+      "path": "docs/reports/puck-cpu-optional-import-contract-v1/verification/optional-import-contract-guard-01/command.json",
+      "sha256": "c9c3a49c185be478c9f7e121b304353051fa1a39ce8e3e932ead86874a4cca39",
+      "size_bytes": 908
+    },
+    {
+      "path": "docs/reports/puck-cpu-optional-import-contract-v1/verification/optional-import-contract-guard-01/result.json",
+      "sha256": "6bb1f6a9bd45f28176d514a53b1f5847d264ea6546224de588910696ad58d8b5",
+      "size_bytes": 76
+    },
+    {
+      "path": "docs/reports/puck-cpu-optional-import-contract-v1/verification/optional-import-contract-guard-01/stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    {
+      "path": "docs/reports/puck-cpu-optional-import-contract-v1/verification/optional-import-contract-guard-01/stdout.log",
+      "sha256": "2552c536cc382a32475131880b2c831bf2690233eca063a6deca10975e38fdf7",
+      "size_bytes": 100
+    },
+    {
+      "path": "docs/reports/puck-cpu-optional-import-contract-v1/verification/optional-import-epoch06-contract-green-01/command.json",
+      "sha256": "68b91299bae0fa71aaab302b17f78ac83d177aa62c3d35584dc065fee7493e8d",
+      "size_bytes": 805
+    },
+    {
+      "path": "docs/reports/puck-cpu-optional-import-contract-v1/verification/optional-import-epoch06-contract-green-01/result.json",
+      "sha256": "382b770b0272c156d83b9f1ac37ea092e4ae636b6966f15df09cbe015c6f5ed6",
+      "size_bytes": 77
+    },
+    {
+      "path": "docs/reports/puck-cpu-optional-import-contract-v1/verification/optional-import-epoch06-contract-green-01/stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    {
+      "path": "docs/reports/puck-cpu-optional-import-contract-v1/verification/optional-import-epoch06-contract-green-01/stdout.log",
+      "sha256": "af4a418bb13c78ce405933a1d870275c008e205f3bd71ee90642748e6f3f744d",
+      "size_bytes": 2971
+    },
+    {
+      "path": "docs/reports/puck-cpu-optional-import-contract-v1/verification/optional-import-epoch06-contract-green-02/command.json",
+      "sha256": "68b91299bae0fa71aaab302b17f78ac83d177aa62c3d35584dc065fee7493e8d",
+      "size_bytes": 805
+    },
+    {
+      "path": "docs/reports/puck-cpu-optional-import-contract-v1/verification/optional-import-epoch06-contract-green-02/result.json",
+      "sha256": "804df08a72bbe637b6137280e660a1f9f2da30666db1069a4b639290b4272199",
+      "size_bytes": 76
+    },
+    {
+      "path": "docs/reports/puck-cpu-optional-import-contract-v1/verification/optional-import-epoch06-contract-green-02/stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    {
+      "path": "docs/reports/puck-cpu-optional-import-contract-v1/verification/optional-import-epoch06-contract-green-02/stdout.log",
+      "sha256": "c2c9801964b86a6efd69bca39c8588149399399cc1beb96828e33f941e3c8943",
+      "size_bytes": 179
+    },
+    {
+      "path": "docs/reports/puck-cpu-optional-import-contract-v1/verification/optional-import-epoch06-contract-red-01/command.json",
+      "sha256": "68b91299bae0fa71aaab302b17f78ac83d177aa62c3d35584dc065fee7493e8d",
+      "size_bytes": 805
+    },
+    {
+      "path": "docs/reports/puck-cpu-optional-import-contract-v1/verification/optional-import-epoch06-contract-red-01/result.json",
+      "sha256": "b13b53893ffe157b508745ddca5fdc0089b7dcfe06aeea1d2514e1feeaa31f5d",
+      "size_bytes": 76
+    },
+    {
+      "path": "docs/reports/puck-cpu-optional-import-contract-v1/verification/optional-import-epoch06-contract-red-01/stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    {
+      "path": "docs/reports/puck-cpu-optional-import-contract-v1/verification/optional-import-epoch06-contract-red-01/stdout.log",
+      "sha256": "f8efedbf9d15d528faa9232c2d4a72153fbf5ed13c890d0def65d1b5663c84c6",
+      "size_bytes": 203002
+    },
+    {
+      "path": "docs/reports/puck-cpu-optional-import-contract-v1/verification/optional-import-epoch06-integration-01/command.json",
+      "sha256": "6afc05d67041dbc68e3eebee008b2269332ce36e3624e57c9b604d9d5268265f",
+      "size_bytes": 965
+    },
+    {
+      "path": "docs/reports/puck-cpu-optional-import-contract-v1/verification/optional-import-epoch06-integration-01/result.json",
+      "sha256": "2ad852b2299bf69d74963f7ed93e010cdfb12ef8f7b9eb1b67e2d105e5854cf5",
+      "size_bytes": 77
+    },
+    {
+      "path": "docs/reports/puck-cpu-optional-import-contract-v1/verification/optional-import-epoch06-integration-01/stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    {
+      "path": "docs/reports/puck-cpu-optional-import-contract-v1/verification/optional-import-epoch06-integration-01/stdout.log",
+      "sha256": "020d424a5cc06c9961ed10bd41118d2a8f9fc548c15afbe4e5ae2fa85d656423",
+      "size_bytes": 99
+    },
+    {
+      "path": "docs/reports/puck-cpu-optional-import-contract-v1/verification/optional-import-epoch06-observer-green-01/command.json",
+      "sha256": "ac15240d25e8e86d3069e3ab1b2668f8c523f8956cb3c3f3d603346e0aa242f7",
+      "size_bytes": 802
+    },
+    {
+      "path": "docs/reports/puck-cpu-optional-import-contract-v1/verification/optional-import-epoch06-observer-green-01/result.json",
+      "sha256": "b0c8b199bc3d51a4e9b7027a0c1226b40cadc97fe75b3b686b1f9fa06bec1076",
+      "size_bytes": 77
+    },
+    {
+      "path": "docs/reports/puck-cpu-optional-import-contract-v1/verification/optional-import-epoch06-observer-green-01/stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    {
+      "path": "docs/reports/puck-cpu-optional-import-contract-v1/verification/optional-import-epoch06-observer-green-01/stdout.log",
+      "sha256": "20f0fe45e2c39782006d22b5e93a43e2efeb985d6a69ddcce818c9f13e8956f5",
+      "size_bytes": 99
+    },
+    {
+      "path": "docs/reports/puck-cpu-optional-import-contract-v1/verification/optional-import-epoch06-observer-red-01/command.json",
+      "sha256": "ac170e7385e7a9637103a2fc3748a3286267309efdaa726cdaf46119da78aae1",
+      "size_bytes": 841
+    },
+    {
+      "path": "docs/reports/puck-cpu-optional-import-contract-v1/verification/optional-import-epoch06-observer-red-01/result.json",
+      "sha256": "68a9b3abeb80add6e77bab6329ed8d5d9d18acb21f65192ad069c103c744fe95",
+      "size_bytes": 77
+    },
+    {
+      "path": "docs/reports/puck-cpu-optional-import-contract-v1/verification/optional-import-epoch06-observer-red-01/stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    {
+      "path": "docs/reports/puck-cpu-optional-import-contract-v1/verification/optional-import-epoch06-observer-red-01/stdout.log",
+      "sha256": "82f135a8cf3c19b706508cc1e6a220d6b503cf35b6fca83c3674c191a78d93a0",
+      "size_bytes": 7472
+    },
+    {
+      "path": "docs/reports/puck-cpu-optional-import-contract-v1/verification/optional-import-epochs-regression-01/command.json",
+      "sha256": "6d2dd13d83dfa34ea56441477f2fd3acf54be6d5bb742d9db6aefa30400127e8",
+      "size_bytes": 1175
+    },
+    {
+      "path": "docs/reports/puck-cpu-optional-import-contract-v1/verification/optional-import-epochs-regression-01/result.json",
+      "sha256": "2a6012cf2124d47083c133e10b20e3b63e7b5397c67532d084f756a0ff624e16",
+      "size_bytes": 78
+    },
+    {
+      "path": "docs/reports/puck-cpu-optional-import-contract-v1/verification/optional-import-epochs-regression-01/stderr.log",
+      "sha256": "31405de7f90721864beab6eda07b29564fd1eb9765d8bde57cc047a9cab38ca8",
+      "size_bytes": 73
+    },
+    {
+      "path": "docs/reports/puck-cpu-optional-import-contract-v1/verification/optional-import-epochs-regression-01/stdout.log",
+      "sha256": "a6fc53a5cef0fe8278c459c532a5e372bbe2dd65e4c365a7d7757a210299799f",
+      "size_bytes": 23
+    },
+    {
+      "path": "docs/reports/puck-cpu-optional-import-contract-v1/verification/optional-import-epochs-regression-02/command.json",
+      "sha256": "968a27ef697d4b0161cf2af738c369e2301e8f94bad34d24c0ffb3240634c762",
+      "size_bytes": 1414
+    },
+    {
+      "path": "docs/reports/puck-cpu-optional-import-contract-v1/verification/optional-import-epochs-regression-02/result.json",
+      "sha256": "0d350cd3996e9dd9ded292bc158e9bfc5402f1c77b7d6b07fd933826281e8df6",
+      "size_bytes": 77
+    },
+    {
+      "path": "docs/reports/puck-cpu-optional-import-contract-v1/verification/optional-import-epochs-regression-02/stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    {
+      "path": "docs/reports/puck-cpu-optional-import-contract-v1/verification/optional-import-epochs-regression-02/stdout.log",
+      "sha256": "1569d8677e615fb76a75cd689fe05f12b25c2ac5af7be8757e95ff75fa528953",
+      "size_bytes": 672
+    },
+    {
+      "path": "docs/reports/puck-cpu-optional-import-contract-v1/verification/optional-import-guard-regression-02/command.json",
+      "sha256": "c9c3a49c185be478c9f7e121b304353051fa1a39ce8e3e932ead86874a4cca39",
+      "size_bytes": 908
+    },
+    {
+      "path": "docs/reports/puck-cpu-optional-import-contract-v1/verification/optional-import-guard-regression-02/result.json",
+      "sha256": "821c62276582fe8890b228b3c37fb942a2f9507400f1eb98ff2451cd62bcae72",
+      "size_bytes": 77
+    },
+    {
+      "path": "docs/reports/puck-cpu-optional-import-contract-v1/verification/optional-import-guard-regression-02/stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    {
+      "path": "docs/reports/puck-cpu-optional-import-contract-v1/verification/optional-import-guard-regression-02/stdout.log",
+      "sha256": "077740314798b3938c0d4c2d5203c96a0cdf1180df42204b93e3e015147de2a3",
+      "size_bytes": 100
+    },
+    {
+      "path": "docs/reports/puck-cpu-optional-import-contract-v1/verification/optional-import-numeric-characterization-01/command.json",
+      "sha256": "05b117ea56e39b6abb896322455e1dfc0d292ce050fdd920870fefc0e5ca1145",
+      "size_bytes": 813
+    },
+    {
+      "path": "docs/reports/puck-cpu-optional-import-contract-v1/verification/optional-import-numeric-characterization-01/result.json",
+      "sha256": "f7115495e3fc64c1ca1f28c0948cbb97f4043d868c457ef874e1e1dc087c90a8",
+      "size_bytes": 77
+    },
+    {
+      "path": "docs/reports/puck-cpu-optional-import-contract-v1/verification/optional-import-numeric-characterization-01/stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    {
+      "path": "docs/reports/puck-cpu-optional-import-contract-v1/verification/optional-import-numeric-characterization-01/stdout.log",
+      "sha256": "94e7dcc97cfc68d83f46bedc86ffcc41e534648ed3bd6b99198588e647523226",
+      "size_bytes": 1800
+    },
+    {
+      "path": "docs/reports/puck-cpu-optional-import-contract-v1/verification/optional-import-numeric-characterization-02/command.json",
+      "sha256": "05b117ea56e39b6abb896322455e1dfc0d292ce050fdd920870fefc0e5ca1145",
+      "size_bytes": 813
+    },
+    {
+      "path": "docs/reports/puck-cpu-optional-import-contract-v1/verification/optional-import-numeric-characterization-02/result.json",
+      "sha256": "ee22235a1391d114aa229e61b5c90f5bc59cb033c0894e44862e7dbe132e4b2d",
+      "size_bytes": 77
+    },
+    {
+      "path": "docs/reports/puck-cpu-optional-import-contract-v1/verification/optional-import-numeric-characterization-02/stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    {
+      "path": "docs/reports/puck-cpu-optional-import-contract-v1/verification/optional-import-numeric-characterization-02/stdout.log",
+      "sha256": "1a4fc8a1c014e61992a205b559d170c7a45b8e466318d2e4535901ea7e1c57b3",
+      "size_bytes": 99
+    },
+    {
+      "path": "docs/reports/puck-cpu-optional-import-contract-v1/verification/optional-import-publication05-regression-01/command.json",
+      "sha256": "7c0f03d15de968b765c8a05cea55ebb74707aeca966ad6044b71bf41b6df7eee",
+      "size_bytes": 970
+    },
+    {
+      "path": "docs/reports/puck-cpu-optional-import-contract-v1/verification/optional-import-publication05-regression-01/result.json",
+      "sha256": "0c62331b18623e286591d49bdd0688dc7fc8d03b959aa6c844a8668881bd59b3",
+      "size_bytes": 77
+    },
+    {
+      "path": "docs/reports/puck-cpu-optional-import-contract-v1/verification/optional-import-publication05-regression-01/stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    {
+      "path": "docs/reports/puck-cpu-optional-import-contract-v1/verification/optional-import-publication05-regression-01/stdout.log",
+      "sha256": "8aa27e05078753ad3e37db9944206c66cad0cc4c39376439a5f54d3d04f280ed",
+      "size_bytes": 99
+    },
+    {
+      "path": "docs/reports/puck-cpu-pillow-origin-profile-v1.md",
+      "sha256": "56511f543e4b823c859163cc5b5687bdb204b152dc122c49e38dbecb2ea42597",
+      "size_bytes": 7057
+    },
+    {
+      "path": "docs/reports/puck-cpu-pillow-origin-profile-v1/affected-coverage.json",
+      "sha256": "885188af74b601c03386e9c3f911425ae011895e4309dc3ec93287b0f4edb5f7",
+      "size_bytes": 7746
+    },
+    {
+      "path": "docs/reports/puck-cpu-pillow-origin-profile-v1/authored-project/authored-autograd.c",
+      "sha256": "17f9b45faec0eacd4ba40a1c1dd9d2b4040ae6555a18843cb10b55a98d03cbb2",
+      "size_bytes": 161
+    },
+    {
+      "path": "docs/reports/puck-cpu-pillow-origin-profile-v1/authored-project/authored-pillow-build/_imaging.c",
+      "sha256": "d1438c4826b30c0eb08fc5bac4fab8012ae2c7907f330721f2eb4066f2e92be9",
+      "size_bytes": 327
+    },
+    {
+      "path": "docs/reports/puck-cpu-pillow-origin-profile-v1/authored-project/authored-pillow-build/_imagingft.c",
+      "sha256": "a2f32cbc22fc3dcfc404b55a6e3d9034121216cfe58dbdeea2a9b5a6eb39e6ae",
+      "size_bytes": 331
+    },
+    {
+      "path": "docs/reports/puck-cpu-pillow-origin-profile-v1/authored-project/authored-pillow-build/helper.c",
+      "sha256": "2b16ad292cc84ad19c22e282625eaa8bdc68a5aa93b932a337602b2452e9a5ad",
+      "size_bytes": 125
+    },
+    {
+      "path": "docs/reports/puck-cpu-pillow-origin-profile-v1/authored-project/authored-pillow-build/transitive.c",
+      "sha256": "072d16af8905e8cc13a8ae28a616b0efb68d06887a15eed5f3f274f399d6c879",
+      "size_bytes": 51
+    },
+    {
+      "path": "docs/reports/puck-cpu-pillow-origin-profile-v1/authored-project/authored-pillow07-api-audit.json",
+      "sha256": "4b4f9eaa08c2ef47fd5e393f6c1793972d31a3bf5cb6cc4f7ed789957418499e",
+      "size_bytes": 2359
+    },
+    {
+      "path": "docs/reports/puck-cpu-pillow-origin-profile-v1/authored-project/authored-pillow07-cli-audit-transport.json",
+      "sha256": "fa2ae990016c4c6d1e5688e5533d8f33ff11fcc1ca5b0ea19c6831eb95f196b8",
+      "size_bytes": 1736
+    },
+    {
+      "path": "docs/reports/puck-cpu-pillow-origin-profile-v1/authored-project/authored-pillow07-cli-audit.json",
+      "sha256": "c02da1cac5b76e94af5fe5cffbc084dac9df9dccc2d6821b015cc4925c2c2218",
+      "size_bytes": 2357
+    },
+    {
+      "path": "docs/reports/puck-cpu-pillow-origin-profile-v1/authored-project/authored-pillow07-cli-audit.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    {
+      "path": "docs/reports/puck-cpu-pillow-origin-profile-v1/authored-project/authored-pillow07-cli-audit.stdout",
+      "sha256": "c02da1cac5b76e94af5fe5cffbc084dac9df9dccc2d6821b015cc4925c2c2218",
+      "size_bytes": 2357
+    },
+    {
+      "path": "docs/reports/puck-cpu-pillow-origin-profile-v1/authored-project/authored-pillow07-observations.json",
+      "sha256": "df662d492a48d8e467b43115dd504aa19b2e0f3aa9c6b4cf0aa01c8ad875d5ee",
+      "size_bytes": 1357
+    },
+    {
+      "path": "docs/reports/puck-cpu-pillow-origin-profile-v1/authored-project/authored-prepare-cli.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    {
+      "path": "docs/reports/puck-cpu-pillow-origin-profile-v1/authored-project/authored-prepare-cli.stdout",
+      "sha256": "bc66ad11d8cc458b2e671a7c0f41e4abadc5fbaa2ac31b28a408911d096614db",
+      "size_bytes": 6935
+    },
+    {
+      "path": "docs/reports/puck-cpu-pillow-origin-profile-v1/authored-project/authored-prepare-configuration.json",
+      "sha256": "a9d4d250fc3764cb43a15e9889c4c76ab6dc668e1de0bf556e604c561cd33a6b",
+      "size_bytes": 7680
+    },
+    {
+      "path": "docs/reports/puck-cpu-pillow-origin-profile-v1/authored-project/authored-prepare-transport.json",
+      "sha256": "9d61a036674294eaa2d924d750f394b368b5ee594e841002617cfc101f88b715",
+      "size_bytes": 1310
+    },
+    {
+      "path": "docs/reports/puck-cpu-pillow-origin-profile-v1/authored-project/authored-publication05-historical-audit.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    {
+      "path": "docs/reports/puck-cpu-pillow-origin-profile-v1/authored-project/authored-publication05-historical-audit.stdout",
+      "sha256": "d4fdc475b0a13cd16ed7d0b6e95f9c496938d505f661b7faf1bc5e08dba2dc9e",
+      "size_bytes": 1543
+    },
+    {
+      "path": "docs/reports/puck-cpu-pillow-origin-profile-v1/authored-project/authored-publication05-stage-cleanup.json",
+      "sha256": "cb9a08d8e9d42eab22fb043e511edd4323ae5d16697dd3ddbfa9ca0cda58ea81",
+      "size_bytes": 230
+    },
+    {
+      "path": "docs/reports/puck-cpu-pillow-origin-profile-v1/authored-project/authored-qualify-cli.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    {
+      "path": "docs/reports/puck-cpu-pillow-origin-profile-v1/authored-project/authored-qualify-cli.stdout",
+      "sha256": "525a06ed76731b91c56825e9c313382101d867de35005506c8af76523a56c7f6",
+      "size_bytes": 617
+    },
+    {
+      "path": "docs/reports/puck-cpu-pillow-origin-profile-v1/authored-project/authored-qualify-configuration.json",
+      "sha256": "c7713a13a45fe940f732472cb747a5106141a22e788ae56680314a649266b032",
+      "size_bytes": 7842
+    },
+    {
+      "path": "docs/reports/puck-cpu-pillow-origin-profile-v1/authored-project/authored-qualify-transport.json",
+      "sha256": "b20fb4e5e660b419023e535c69948b606289fb3b0527a511f38b78736686fd41",
+      "size_bytes": 1310
+    },
+    {
+      "path": "docs/reports/puck-cpu-pillow-origin-profile-v1/authored-project/authored-qualify06-cli.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    {
+      "path": "docs/reports/puck-cpu-pillow-origin-profile-v1/authored-project/authored-qualify06-cli.stdout",
+      "sha256": "58f01a1adcac2d38d7f341c8c33ff5244b45b73df4a2696c76cdb95d03ac9424",
+      "size_bytes": 617
+    },
+    {
+      "path": "docs/reports/puck-cpu-pillow-origin-profile-v1/authored-project/authored-qualify06-configuration.json",
+      "sha256": "fbb27aae7b243d69082ba4b2141aa980e0d99b0355a11ffe3c03380d347e2bf1",
+      "size_bytes": 8584
+    },
+    {
+      "path": "docs/reports/puck-cpu-pillow-origin-profile-v1/authored-project/authored-qualify06-transport.json",
+      "sha256": "a048d3b71404971929d6f2a5ce14ceb86e7089e84643f57232c6fd0ecf5d88b3",
+      "size_bytes": 1315
+    },
+    {
+      "path": "docs/reports/puck-cpu-pillow-origin-profile-v1/authored-project/authored-qualify07-cli.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    {
+      "path": "docs/reports/puck-cpu-pillow-origin-profile-v1/authored-project/authored-qualify07-cli.stdout",
+      "sha256": "aa84428815c9926f4c74b9a00eee295fef58efbf99d198a1c289d4b9c1860cee",
+      "size_bytes": 625
+    },
+    {
+      "path": "docs/reports/puck-cpu-pillow-origin-profile-v1/authored-project/authored-qualify07-configuration.json",
+      "sha256": "62f39f4ab28bd1426e43f3c004dc8dc935bc976a61a6ada2755589cd815bcc4b",
+      "size_bytes": 8579
+    },
+    {
+      "path": "docs/reports/puck-cpu-pillow-origin-profile-v1/authored-project/authored-qualify07-rerun-cli.stderr",
+      "sha256": "d2d899ec45ef7dbb9237eabe0317987e29fb58773d82da4ed057b1412b422538",
+      "size_bytes": 1005
+    },
+    {
+      "path": "docs/reports/puck-cpu-pillow-origin-profile-v1/authored-project/authored-qualify07-rerun-cli.stdout",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    {
+      "path": "docs/reports/puck-cpu-pillow-origin-profile-v1/authored-project/authored-qualify07-rerun-configuration.json",
+      "sha256": "62f39f4ab28bd1426e43f3c004dc8dc935bc976a61a6ada2755589cd815bcc4b",
+      "size_bytes": 8579
+    },
+    {
+      "path": "docs/reports/puck-cpu-pillow-origin-profile-v1/authored-project/authored-qualify07-rerun-transport.json",
+      "sha256": "a5029857ba6a92feb244211999ae3476ec65ced8a03615039c39509e1ab3c1b7",
+      "size_bytes": 1336
+    },
+    {
+      "path": "docs/reports/puck-cpu-pillow-origin-profile-v1/authored-project/authored-qualify07-transport.json",
+      "sha256": "7bfd98ead91cadcd82b1ba5171c0b78b0c1a4d1fd62672e735bb56166d126ac4",
+      "size_bytes": 1315
+    },
+    {
+      "path": "docs/reports/puck-cpu-pillow-origin-profile-v1/authored-project/docs/authored/accepted_audit.json",
+      "sha256": "9d2c9595144fa4c74613f5c8dbbcce7d53cc7c10d77d7bd00978a1d322ffb14c",
+      "size_bytes": 247
+    },
+    {
+      "path": "docs/reports/puck-cpu-pillow-origin-profile-v1/authored-project/docs/authored/accepted_configuration.json",
+      "sha256": "2606a75d05cd6e171ba12d0a242f2595cef7803df3f5b50c78794e01c7db2a4a",
+      "size_bytes": 294
+    },
+    {
+      "path": "docs/reports/puck-cpu-pillow-origin-profile-v1/authored-project/docs/authored/accepted_index.json",
+      "sha256": "0ec4eb68e574d0e65b55a5036b006bc2aebcd37f12b023370491828d30477700",
+      "size_bytes": 775
+    },
+    {
+      "path": "docs/reports/puck-cpu-pillow-origin-profile-v1/authored-project/docs/authored/accepted_result.json",
+      "sha256": "0bdfc96df140bf3fcefd63951dcc30b6cd64a721ba39315d216f769d54463d55",
+      "size_bytes": 834
+    },
+    {
+      "path": "docs/reports/puck-cpu-pillow-origin-profile-v1/authored-project/docs/authored/accepted_snapshot.json",
+      "sha256": "3f26521910436026c7ff0626007e52b76e48f36ddb617ca2dbd1730e8a153288",
+      "size_bytes": 498
+    },
+    {
+      "path": "docs/reports/puck-cpu-pillow-origin-profile-v1/authored-project/docs/authored/baseline.json",
+      "sha256": "b00901ffcf70799682b0092168163d300c264083e615fed16850b9b557e8a207",
+      "size_bytes": 552822
+    },
+    {
+      "path": "docs/reports/puck-cpu-pillow-origin-profile-v1/authored-project/docs/authored/candidate-pillow07.json",
+      "sha256": "fd7bab86428af59a7c1016a2f32aaf32c9a6c072d0ddcb64a4b931870f3c7ab3",
+      "size_bytes": 7465
+    },
+    {
+      "path": "docs/reports/puck-cpu-pillow-origin-profile-v1/authored-project/docs/authored/candidate-publication05.json",
+      "sha256": "ab1ef1430e754eda68173cc1d1f6c805bc554f1c468b7f3741b5db821d123a26",
+      "size_bytes": 7340
+    },
+    {
+      "path": "docs/reports/puck-cpu-pillow-origin-profile-v1/authored-project/docs/authored/candidate.json",
+      "sha256": "296ed063ac466f34c2953434560b9c3eaf197b06571ec4993aa60eb66bef8a0f",
+      "size_bytes": 3832
+    },
+    {
+      "path": "docs/reports/puck-cpu-pillow-origin-profile-v1/authored-project/docs/authored/generated/_authored_cpu_generated.py",
+      "sha256": "86e4a45b3e90d0d92a765eca8585c7cfff2c56612bd461a4c19705c6d967d69f",
+      "size_bytes": 35
+    },
+    {
+      "path": "docs/reports/puck-cpu-pillow-origin-profile-v1/authored-project/docs/authored/historical-publication05-audit-cli.json",
+      "sha256": "39a40f58c0c4df93ad7301888df532eae985c30eafeadaa3d0a6948a065f5ec0",
+      "size_bytes": 2660
+    },
+    {
+      "path": "docs/reports/puck-cpu-pillow-origin-profile-v1/authored-project/docs/authored/historical-publication05-audit.json",
+      "sha256": "d4fdc475b0a13cd16ed7d0b6e95f9c496938d505f661b7faf1bc5e08dba2dc9e",
+      "size_bytes": 1543
+    },
+    {
+      "path": "docs/reports/puck-cpu-pillow-origin-profile-v1/authored-project/docs/authored/inventory.json",
+      "sha256": "3a519cae3199a8bc27bbbb31cda763bebcffa7a9d1e8a633c3eb242ae8103300",
+      "size_bytes": 3254
+    },
+    {
+      "path": "docs/reports/puck-cpu-pillow-origin-profile-v1/authored-project/docs/authored/layout.json",
+      "sha256": "2e6f1151c40b1232f5d73f0b39098007b7a7798907a13b1519fa4dd8a3a7bbab",
+      "size_bytes": 1560
+    },
+    {
+      "path": "docs/reports/puck-cpu-pillow-origin-profile-v1/authored-project/docs/authored/native.json",
+      "sha256": "54c5ab9b78d45a8925e2f1689eaae529568df3bd31bfec040c46fd83588f92e7",
+      "size_bytes": 1406
+    },
+    {
+      "path": "docs/reports/puck-cpu-pillow-origin-profile-v1/authored-project/docs/authored/observation_audit.json",
+      "sha256": "135aeff90647613bbc13525b9d1b34164f0ad3f64cfb23423148da2eb9551ff8",
+      "size_bytes": 320
+    },
+    {
+      "path": "docs/reports/puck-cpu-pillow-origin-profile-v1/authored-project/docs/authored/observation_configuration.json",
+      "sha256": "57aba9585d9cc5471e1779c1ac8112b95c05b051d49d04c94d33e5a0ddfe39d6",
+      "size_bytes": 1962
+    },
+    {
+      "path": "docs/reports/puck-cpu-pillow-origin-profile-v1/authored-project/docs/authored/observation_index.json",
+      "sha256": "56be6ec158b020f51d834945cb1ffc5e384c5e503b24f6cdc35031e5b80f2180",
+      "size_bytes": 658
+    },
+    {
+      "path": "docs/reports/puck-cpu-pillow-origin-profile-v1/authored-project/docs/authored/observation_report.json",
+      "sha256": "015f4a6659799085cd88b93d9a47b9bf85882e0e810f31513c12f74a77724d82",
+      "size_bytes": 978
+    },
+    {
+      "path": "docs/reports/puck-cpu-pillow-origin-profile-v1/authored-project/docs/authored/observation_result.json",
+      "sha256": "2ec4af14f6180ee94cfe44e9bb669b4f7eea76f196a04d7170c365a118c53e1c",
+      "size_bytes": 530
+    },
+    {
+      "path": "docs/reports/puck-cpu-pillow-origin-profile-v1/authored-project/runs/puck-cpu-held-preparation-01/baseline-after.json",
+      "sha256": "8e69fa24c5367b19acfad5f5f3c12f1804eed23d0889df6a9e58f20da4376dfb",
+      "size_bytes": 196
+    },
+    {
+      "path": "docs/reports/puck-cpu-pillow-origin-profile-v1/authored-project/runs/puck-cpu-held-preparation-01/baseline-before.json",
+      "sha256": "8e69fa24c5367b19acfad5f5f3c12f1804eed23d0889df6a9e58f20da4376dfb",
+      "size_bytes": 196
+    },
+    {
+      "path": "docs/reports/puck-cpu-pillow-origin-profile-v1/authored-project/runs/puck-cpu-held-preparation-01/configuration.json",
+      "sha256": "a9d4d250fc3764cb43a15e9889c4c76ab6dc668e1de0bf556e604c561cd33a6b",
+      "size_bytes": 7680
+    },
+    {
+      "path": "docs/reports/puck-cpu-pillow-origin-profile-v1/authored-project/runs/puck-cpu-held-preparation-01/control/candidate.json",
+      "sha256": "296ed063ac466f34c2953434560b9c3eaf197b06571ec4993aa60eb66bef8a0f",
+      "size_bytes": 3832
+    },
+    {
+      "path": "docs/reports/puck-cpu-pillow-origin-profile-v1/authored-project/runs/puck-cpu-held-preparation-01/control/copy-registration.json",
+      "sha256": "9e57bd6d72edc0819a9866cc6e555133bf2ac6b65c7f6d9c1dc1636dbcce4487",
+      "size_bytes": 5547
+    },
+    {
+      "path": "docs/reports/puck-cpu-pillow-origin-profile-v1/authored-project/runs/puck-cpu-held-preparation-01/control/layout.json",
+      "sha256": "2e6f1151c40b1232f5d73f0b39098007b7a7798907a13b1519fa4dd8a3a7bbab",
+      "size_bytes": 1560
+    },
+    {
+      "path": "docs/reports/puck-cpu-pillow-origin-profile-v1/authored-project/runs/puck-cpu-held-preparation-01/control/stage-request.json",
+      "sha256": "c17667d36fbaceca5765fbebcb78731579fb27b58d2d1a159e1c9d288002ae29",
+      "size_bytes": 391
+    },
+    {
+      "path": "docs/reports/puck-cpu-pillow-origin-profile-v1/authored-project/runs/puck-cpu-held-preparation-01/invocation.json",
+      "sha256": "6344985452881552c8623caf57630a3419d49ab9e59ca5c5a26e3235d7c4bf98",
+      "size_bytes": 4227
+    },
+    {
+      "path": "docs/reports/puck-cpu-pillow-origin-profile-v1/authored-project/runs/puck-cpu-held-preparation-01/logs/stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    {
+      "path": "docs/reports/puck-cpu-pillow-origin-profile-v1/authored-project/runs/puck-cpu-held-preparation-01/logs/stdout.log",
+      "sha256": "e4e303f5a960e1a852d1e49c7cbb7f5b7629e2270d8d96abb6aa84c9ea104ed8",
+      "size_bytes": 544
+    },
+    {
+      "path": "docs/reports/puck-cpu-pillow-origin-profile-v1/authored-project/runs/puck-cpu-held-preparation-01/payload/dependencies.json",
+      "sha256": "57a7313475eec1ef8ee538212ffb608aa47da149a3d5f382a2ce7e3901a7a5c6",
+      "size_bytes": 7886
+    },
+    {
+      "path": "docs/reports/puck-cpu-pillow-origin-profile-v1/authored-project/runs/puck-cpu-held-preparation-01/payload/stage.json",
+      "sha256": "e4e303f5a960e1a852d1e49c7cbb7f5b7629e2270d8d96abb6aa84c9ea104ed8",
+      "size_bytes": 544
+    },
+    {
+      "path": "docs/reports/puck-cpu-pillow-origin-profile-v1/authored-project/runs/puck-cpu-held-preparation-01/resource-admission.json",
+      "sha256": "f9b95ddffb22344601fd5523e897aa6a9180ebc9fc7f5c47180c195dc42b8bbe",
+      "size_bytes": 105
+    },
+    {
+      "path": "docs/reports/puck-cpu-pillow-origin-profile-v1/authored-project/runs/puck-cpu-held-preparation-01/result.json",
+      "sha256": "bc66ad11d8cc458b2e671a7c0f41e4abadc5fbaa2ac31b28a408911d096614db",
+      "size_bytes": 6935
+    },
+    {
+      "path": "docs/reports/puck-cpu-pillow-origin-profile-v1/authored-project/runs/puck-cpu-held-preparation-01/supervision.json",
+      "sha256": "e1bbb821c786be29577aa06fed4336de2055a37ffa42b6cb4eb581e2026597c8",
+      "size_bytes": 191
+    },
+    {
+      "path": "docs/reports/puck-cpu-pillow-origin-profile-v1/authored-project/runs/puck-cpu-held-qualification-06/baseline-before.json",
+      "sha256": "8e69fa24c5367b19acfad5f5f3c12f1804eed23d0889df6a9e58f20da4376dfb",
+      "size_bytes": 196
+    },
+    {
+      "path": "docs/reports/puck-cpu-pillow-origin-profile-v1/authored-project/runs/puck-cpu-held-qualification-06/configuration.json",
+      "sha256": "fbb27aae7b243d69082ba4b2141aa980e0d99b0355a11ffe3c03380d347e2bf1",
+      "size_bytes": 8584
+    },
+    {
+      "path": "docs/reports/puck-cpu-pillow-origin-profile-v1/authored-project/runs/puck-cpu-held-qualification-06/control/dependencies.json",
+      "sha256": "ec855719587477143e8109e9d0ef677f0e20e7b8aadd76adb686874475586b59",
+      "size_bytes": 11394
+    },
+    {
+      "path": "docs/reports/puck-cpu-pillow-origin-profile-v1/authored-project/runs/puck-cpu-held-qualification-06/control/worker-registration.json",
+      "sha256": "55fd6daf2e218b1189dd1aa235b91f7216136fefbd6c95bd9c2669348b258ea8",
+      "size_bytes": 4680
+    },
+    {
+      "path": "docs/reports/puck-cpu-pillow-origin-profile-v1/authored-project/runs/puck-cpu-held-qualification-06/invocation.json",
+      "sha256": "93457d3b414f0422b71d45ff4280435574ff09b7b4955ccc2698861773d4c65f",
+      "size_bytes": 4154
+    },
+    {
+      "path": "docs/reports/puck-cpu-pillow-origin-profile-v1/authored-project/runs/puck-cpu-held-qualification-06/logs/stderr.log",
+      "sha256": "de5e36eb63992d031417e14bad6ba3d56c47afd28766a18739a7272e18afcd00",
+      "size_bytes": 2057
+    },
+    {
+      "path": "docs/reports/puck-cpu-pillow-origin-profile-v1/authored-project/runs/puck-cpu-held-qualification-06/logs/stdout.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    {
+      "path": "docs/reports/puck-cpu-pillow-origin-profile-v1/authored-project/runs/puck-cpu-held-qualification-06/resource-admission.json",
+      "sha256": "7ebcd75328c980395d63851b16edecf96f3f0cd1faa34149ad45ab6d8cc8899c",
+      "size_bytes": 105
+    },
+    {
+      "path": "docs/reports/puck-cpu-pillow-origin-profile-v1/authored-project/runs/puck-cpu-held-qualification-06/result.json",
+      "sha256": "58f01a1adcac2d38d7f341c8c33ff5244b45b73df4a2696c76cdb95d03ac9424",
+      "size_bytes": 617
+    },
+    {
+      "path": "docs/reports/puck-cpu-pillow-origin-profile-v1/authored-project/runs/puck-cpu-held-qualification-06/supervision.json",
+      "sha256": "1fde0283f403b44cd690f5d73c98609bc78356beab1a2d0b429b2b87f0441cca",
+      "size_bytes": 357
+    },
+    {
+      "path": "docs/reports/puck-cpu-pillow-origin-profile-v1/authored-project/runs/puck-cpu-held-qualification-07/baseline-after.json",
+      "sha256": "8e69fa24c5367b19acfad5f5f3c12f1804eed23d0889df6a9e58f20da4376dfb",
+      "size_bytes": 196
+    },
+    {
+      "path": "docs/reports/puck-cpu-pillow-origin-profile-v1/authored-project/runs/puck-cpu-held-qualification-07/baseline-before.json",
+      "sha256": "8e69fa24c5367b19acfad5f5f3c12f1804eed23d0889df6a9e58f20da4376dfb",
+      "size_bytes": 196
+    },
+    {
+      "path": "docs/reports/puck-cpu-pillow-origin-profile-v1/authored-project/runs/puck-cpu-held-qualification-07/configuration.json",
+      "sha256": "62f39f4ab28bd1426e43f3c004dc8dc935bc976a61a6ada2755589cd815bcc4b",
+      "size_bytes": 8579
+    },
+    {
+      "path": "docs/reports/puck-cpu-pillow-origin-profile-v1/authored-project/runs/puck-cpu-held-qualification-07/control/dependencies.json",
+      "sha256": "47c030ae144a617caa2495d3a65dd9ec2a0b9dcb0269de82f2bba582d8953035",
+      "size_bytes": 11519
+    },
+    {
+      "path": "docs/reports/puck-cpu-pillow-origin-profile-v1/authored-project/runs/puck-cpu-held-qualification-07/control/worker-registration.json",
+      "sha256": "33dc5b2b7f3cc1d59c4c5a0839cd08284f6c47d77fdacbb0f22f102f88a8802d",
+      "size_bytes": 4680
+    },
+    {
+      "path": "docs/reports/puck-cpu-pillow-origin-profile-v1/authored-project/runs/puck-cpu-held-qualification-07/invocation.json",
+      "sha256": "853879b88f321f0c1c0a754affd47e62b02d4ad32bae559189a8bcada5bb10e3",
+      "size_bytes": 4154
+    },
+    {
+      "path": "docs/reports/puck-cpu-pillow-origin-profile-v1/authored-project/runs/puck-cpu-held-qualification-07/logs/stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    {
+      "path": "docs/reports/puck-cpu-pillow-origin-profile-v1/authored-project/runs/puck-cpu-held-qualification-07/logs/stdout.log",
+      "sha256": "fa6501ca032402dde75c5b989214169f0d92c215eee5986d24a6b08fa49e7302",
+      "size_bytes": 11368
+    },
+    {
+      "path": "docs/reports/puck-cpu-pillow-origin-profile-v1/authored-project/runs/puck-cpu-held-qualification-07/resource-admission.json",
+      "sha256": "904bdb5252b8ca75d5f8749c6aa8e1ec5095079fd8956d94f085be175fa4272a",
+      "size_bytes": 105
+    },
+    {
+      "path": "docs/reports/puck-cpu-pillow-origin-profile-v1/authored-project/runs/puck-cpu-held-qualification-07/result.json",
+      "sha256": "aa84428815c9926f4c74b9a00eee295fef58efbf99d198a1c289d4b9c1860cee",
+      "size_bytes": 625
+    },
+    {
+      "path": "docs/reports/puck-cpu-pillow-origin-profile-v1/authored-project/runs/puck-cpu-held-qualification-07/supervision.json",
+      "sha256": "6cdbb392332a98021c0a97e013121609da7dc94b8053c2306e738e664f8c3836",
+      "size_bytes": 360
+    },
+    {
+      "path": "docs/reports/puck-cpu-pillow-origin-profile-v1/authored-project/runs/puck-cpu-install-01/site/PIL/_imaging.cpython-311-x86_64-linux-gnu.so",
+      "sha256": "1f3fa1fc34cee2fe40d0516b6830a62fc76c4516ac12feaa00eb83d14d005ab2",
+      "size_bytes": 15728
+    },
+    {
+      "path": "docs/reports/puck-cpu-pillow-origin-profile-v1/authored-project/runs/puck-cpu-install-01/site/PIL/_imagingft.cpython-311-x86_64-linux-gnu.so",
+      "sha256": "330a1841ea224113d7875f5913920abe4404222d9401e17acab8330cda505d25",
+      "size_bytes": 15728
+    },
+    {
+      "path": "docs/reports/puck-cpu-pillow-origin-profile-v1/authored-project/runs/puck-cpu-install-01/site/pillow.libs/libpalimpsest_pillow_helper.so",
+      "sha256": "89dc57a34e07ce79cbb3ced0dc63e7231bba1f64256838301e0b238fa8099c03",
+      "size_bytes": 15360
+    },
+    {
+      "path": "docs/reports/puck-cpu-pillow-origin-profile-v1/authored-project/runs/puck-cpu-install-01/site/pillow.libs/libpalimpsest_pillow_transitive.so",
+      "sha256": "15812a8c09a60c73cc5be1aafcb02465bc4d10ee501c47001cb5259b8ea10e67",
+      "size_bytes": 15168
+    },
+    {
+      "path": "docs/reports/puck-cpu-pillow-origin-profile-v1/evidence-index.json",
+      "sha256": "5a8df98bb3eec17863d491640c08afcc0f6483286457260bc1bf3f68605fd7b8",
+      "size_bytes": 78980
+    },
+    {
+      "path": "docs/reports/puck-cpu-pillow-origin-profile-v1/independent-review.json",
+      "sha256": "1dcfc1481bcc712edd67ded5a6f42961530e99216b9b147a504368f4a7b47362",
+      "size_bytes": 5503
+    },
+    {
+      "path": "docs/reports/puck-cpu-pillow-origin-profile-v1/report.md",
+      "sha256": "ca82324ab61b98ab9a26e0490235c445f15134d92d71cf4a55485ee93f4d0feb",
+      "size_bytes": 6223
+    },
+    {
+      "path": "docs/reports/puck-cpu-pillow-origin-profile-v1/source-snapshot-binding.json",
+      "sha256": "fa2028cf513ec813f37392922b6b736677517a7f233d7f39fefda8d5a97b25f0",
+      "size_bytes": 5619
+    },
+    {
+      "path": "docs/reports/puck-cpu-pillow-origin-profile-v1/source/docs/plans/puck-cpu-characterization-native-metadata-05.json",
+      "sha256": "64a9e46f60700f12712262879547fbf26d785fb8a825098940e6494482dae2aa",
+      "size_bytes": 1618086
+    },
+    {
+      "path": "docs/reports/puck-cpu-pillow-origin-profile-v1/source/docs/plans/puck-cpu-distributed-publication-profile-v1.json",
+      "sha256": "6532308a421d73fee2d7a7843528f40ba7613df49b283bdc0d25d67b2795620a",
+      "size_bytes": 346230
+    },
+    {
+      "path": "docs/reports/puck-cpu-pillow-origin-profile-v1/source/docs/plans/puck-cpu-held-preparation-01.json",
+      "sha256": "38134e016eff974e06806f1ac74492dc51e0a5721d8cd13d1123a1fd950fe8a6",
+      "size_bytes": 7903
+    },
+    {
+      "path": "docs/reports/puck-cpu-pillow-origin-profile-v1/source/docs/plans/puck-cpu-held-qualification-06.json",
+      "sha256": "da630b05b871508686a4c92402725820b40b27253b2652b47c686a8f441a04e8",
+      "size_bytes": 8995
+    },
+    {
+      "path": "docs/reports/puck-cpu-pillow-origin-profile-v1/source/docs/plans/puck-cpu-observed-import-profile-candidate-01.json",
+      "sha256": "d20076cd2e1961d1514bb135746b1701a14567136b80ee073fecedb389f929df",
+      "size_bytes": 340908
+    },
+    {
+      "path": "docs/reports/puck-cpu-pillow-origin-profile-v1/source/docs/plans/puck-cpu-pillow-origin-profile-v1.json",
+      "sha256": "6eba35557f64b8f7108558b1334d488da20b2381d0e69ffece090645f8fb8d3d",
+      "size_bytes": 346424
+    },
+    {
+      "path": "docs/reports/puck-cpu-pillow-origin-profile-v1/source/docs/plans/puck-cpu-pillow-origin-profile-v1.md",
+      "sha256": "4564647f080f528c657826aed07392497c859f27c7de30699606fbbd96176e93",
+      "size_bytes": 4825
+    },
+    {
+      "path": "docs/reports/puck-cpu-pillow-origin-profile-v1/source/docs/plans/puck-cpu-pillow-origin-profile-v1/README.md",
+      "sha256": "16c0b036a6b7ceb9c5d6740e9e62f6672a98d705e9ff2b0e35332c2ceaf6a41b",
+      "size_bytes": 1879
+    },
+    {
+      "path": "docs/reports/puck-cpu-pillow-origin-profile-v1/source/docs/plans/puck-cpu-pillow-origin-profile-v1/evidence-index.json",
+      "sha256": "cb847e4b4a80f536c2247c7607eeacbcab0aedbc13e5c2641c16280bc4db5a7d",
+      "size_bytes": 2718
+    },
+    {
+      "path": "docs/reports/puck-cpu-pillow-origin-profile-v1/source/docs/plans/puck-cpu-pillow-origin-profile-v1/native-evidence.json",
+      "sha256": "d65e59289302aeeaec35c7af47cf0de7121c01eb01cbe33af837eff1f0a41fe3",
+      "size_bytes": 87746
+    },
+    {
+      "path": "docs/reports/puck-cpu-pillow-origin-profile-v1/source/docs/plans/puck-cpu-pillow-origin-profile-v1/projection.json",
+      "sha256": "b8aa91886a1c5b8a71af476ad2c150c1cfd1e1fd018a4bb8c700d0f2451ede55",
+      "size_bytes": 19311
+    },
+    {
+      "path": "docs/reports/puck-cpu-pillow-origin-profile-v1/source/docs/reports/puck-cpu-held-qualification-06/external/palimpsest-held06-native-failure-review.json",
+      "sha256": "7faa83dfa535111f72abaf3e482877c2143bf9e2569098ade7ed12f570d5c74d",
+      "size_bytes": 165833
+    },
+    {
+      "path": "docs/reports/puck-cpu-pillow-origin-profile-v1/source/scripts/audit_puck_cpu_held_runtime.py",
+      "sha256": "420c3d6f3b8c7ae799732184507e84177a546b74573fccf1f32728dbfc64440d",
+      "size_bytes": 76254
+    },
+    {
+      "path": "docs/reports/puck-cpu-pillow-origin-profile-v1/source/scripts/observe_puck_cpu_held_allocation.py",
+      "sha256": "e105134d1069e268f39f45797e256b8316212f2c427a6c4c6a7ecb49d196ddb0",
+      "size_bytes": 6553
+    },
+    {
+      "path": "docs/reports/puck-cpu-pillow-origin-profile-v1/source/scripts/qualify_puck_cpu_held_runtime.py",
+      "sha256": "b65f0ff3b49976039f8f07edb3ce610262a10761ec509611cb31b4324e21b63b",
+      "size_bytes": 58724
+    },
+    {
+      "path": "docs/reports/puck-cpu-pillow-origin-profile-v1/source/src/palimpsest/puck_cpu_namespace.py",
+      "sha256": "9a82a9cd67000e9bc4a1ee1bfb9020be4ed1b2b41bc439985f33b48dc973a04e",
+      "size_bytes": 9569
+    },
+    {
+      "path": "docs/reports/puck-cpu-pillow-origin-profile-v1/source/src/palimpsest/puck_dependency_files.py",
+      "sha256": "d1ca386780212b174a6e931a8ac4ce88e68c31b27fb1c0e16346a2150560fca1",
+      "size_bytes": 33543
+    },
+    {
+      "path": "docs/reports/puck-cpu-pillow-origin-profile-v1/source/src/palimpsest/puck_dependency_imports.py",
+      "sha256": "e35b941c351971c15f225255170cd45530aa2304943fe2edd461b8d94080943b",
+      "size_bytes": 14868
+    },
+    {
+      "path": "docs/reports/puck-cpu-pillow-origin-profile-v1/source/src/palimpsest/puck_native_identity.py",
+      "sha256": "6e5b56e5c6494398dbd6a7c7d07e771e86c63d56e7374692d1d1d8213b721ebb",
+      "size_bytes": 2837
+    },
+    {
+      "path": "docs/reports/puck-cpu-pillow-origin-profile-v1/source/src/palimpsest/puck_native_origins.py",
+      "sha256": "e6deea2bc378968371bf1093b869dfc442eeb7def27198695d1c0f872da519e1",
+      "size_bytes": 1660
+    },
+    {
+      "path": "docs/reports/puck-cpu-pillow-origin-profile-v1/source/tests/test_puck_cpu_held_amendment05_integration.py",
+      "sha256": "b0dd9260699711385c4b211b7aa03542eaeaa4ce665b42e8e9080dfd9ec63f90",
+      "size_bytes": 17778
+    },
+    {
+      "path": "docs/reports/puck-cpu-pillow-origin-profile-v1/source/tests/test_puck_cpu_held_amendment07.py",
+      "sha256": "22a31385386f562b49307e5650955018a1586b6cda6774cf97d400d84edd366d",
+      "size_bytes": 11888
+    },
+    {
+      "path": "docs/reports/puck-cpu-pillow-origin-profile-v1/source/tests/test_puck_cpu_held_amendment07_integration.py",
+      "sha256": "39de579099b700abdfa74aea0c45f1627d2f103e453d87cff2cea123a03ab9cd",
+      "size_bytes": 10057
+    },
+    {
+      "path": "docs/reports/puck-cpu-pillow-origin-profile-v1/source/tests/test_puck_cpu_held_observer.py",
+      "sha256": "27695f8160971eda80de2e6fa5f75fe3b0964955d70b87db8f89aed0c2ec54b5",
+      "size_bytes": 11748
+    },
+    {
+      "path": "docs/reports/puck-cpu-pillow-origin-profile-v1/source/tests/test_puck_cpu_held_parent_integration.py",
+      "sha256": "cadcfecde4f9eb982d7cce0664b91060717f5cd61f4c129c6ad4fd66a47d8eeb",
+      "size_bytes": 23157
+    },
+    {
+      "path": "docs/reports/puck-cpu-pillow-origin-profile-v1/source/tests/test_puck_pillow_native_origins.py",
+      "sha256": "8ff258bd926e858f04f8158fd20ebd56ef1b1b58d0fb4a7b4fcb105788724fd9",
+      "size_bytes": 8645
+    },
+    {
+      "path": "docs/reports/puck-cpu-pillow-origin-profile-v1/validation/archive-original-correction-01.json",
+      "sha256": "bf28755d4fa2fe1afc0b74e940c39f9cd68da91164076cc4b43ef4a2a75336b4",
+      "size_bytes": 1264
+    },
+    {
+      "path": "docs/reports/puck-cpu-pillow-origin-profile-v1/validation/palimpsest-distributed-profile-check.py",
+      "sha256": "d8f454a7f6a6e5a466c223beb53150c4e92b1d82612239922563dd8ab098edee",
+      "size_bytes": 1941
+    },
+    {
+      "path": "docs/reports/puck-cpu-pillow-origin-profile-v1/validation/palimpsest-pillow-native-origins-01.log",
+      "sha256": "315af93b37b675c12c438052ce2a5c1c3dc52629525ee9c4f2fdb9ec6e4f96be",
+      "size_bytes": 98
+    },
+    {
+      "path": "docs/reports/puck-cpu-pillow-origin-profile-v1/validation/pillow-origin-epoch07-contract-green-01/command.json",
+      "sha256": "7df1540307df63114c734999d5b5459c4ae939d24a9d498f0ecfd408e3a4b404",
+      "size_bytes": 849
+    },
+    {
+      "path": "docs/reports/puck-cpu-pillow-origin-profile-v1/validation/pillow-origin-epoch07-contract-green-01/result.json",
+      "sha256": "e9a383bb41c6704d4b7159a022fec5884838a9cec302bbae2917f43010c6c4b4",
+      "size_bytes": 76
+    },
+    {
+      "path": "docs/reports/puck-cpu-pillow-origin-profile-v1/validation/pillow-origin-epoch07-contract-green-01/stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    {
+      "path": "docs/reports/puck-cpu-pillow-origin-profile-v1/validation/pillow-origin-epoch07-contract-green-01/stdout.log",
+      "sha256": "856f9ea95354271b28c974fb0485539f236113d3d128bb0b68f7bcd1620b035e",
+      "size_bytes": 180
+    },
+    {
+      "path": "docs/reports/puck-cpu-pillow-origin-profile-v1/validation/pillow-origin-epoch07-contract-red-01/command.json",
+      "sha256": "18aaf784a90da8767b3c3094631f5182516c1e6214c9833bb0160e1d80cd796a",
+      "size_bytes": 805
+    },
+    {
+      "path": "docs/reports/puck-cpu-pillow-origin-profile-v1/validation/pillow-origin-epoch07-contract-red-01/result.json",
+      "sha256": "3230e983af84dae597bf3a0ea4785768a3e05fc74306f712ebc48bc8b670a3e8",
+      "size_bytes": 76
+    },
+    {
+      "path": "docs/reports/puck-cpu-pillow-origin-profile-v1/validation/pillow-origin-epoch07-contract-red-01/stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    {
+      "path": "docs/reports/puck-cpu-pillow-origin-profile-v1/validation/pillow-origin-epoch07-contract-red-01/stdout.log",
+      "sha256": "a22daa5a1868657192c56b30e4660473d12cced52a1f7c1af51980d182a1ff76",
+      "size_bytes": 287958
+    },
+    {
+      "path": "docs/reports/puck-cpu-pillow-origin-profile-v1/validation/pillow-origin-epoch07-integration-01/command.json",
+      "sha256": "764abf5968e8fb44bd770f39f464b6cb015277bd5e10e76ac2b9357c8f9b3f06",
+      "size_bytes": 963
+    },
+    {
+      "path": "docs/reports/puck-cpu-pillow-origin-profile-v1/validation/pillow-origin-epoch07-integration-01/result.json",
+      "sha256": "8ec88ac1668a91ac59d98f8c6ac9b965f5c986c2e7effa10444f9fc275b2680d",
+      "size_bytes": 77
+    },
+    {
+      "path": "docs/reports/puck-cpu-pillow-origin-profile-v1/validation/pillow-origin-epoch07-integration-01/stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    {
+      "path": "docs/reports/puck-cpu-pillow-origin-profile-v1/validation/pillow-origin-epoch07-integration-01/stdout.log",
+      "sha256": "f11196ada50f569ab781c7da6657eb854c2101bb623322636c6b30cabe4933bd",
+      "size_bytes": 99
+    },
+    {
+      "path": "docs/reports/puck-cpu-pillow-origin-profile-v1/validation/pillow-origin-epoch07-observer-red-01/command.json",
+      "sha256": "ac15240d25e8e86d3069e3ab1b2668f8c523f8956cb3c3f3d603346e0aa242f7",
+      "size_bytes": 802
+    },
+    {
+      "path": "docs/reports/puck-cpu-pillow-origin-profile-v1/validation/pillow-origin-epoch07-observer-red-01/result.json",
+      "sha256": "b3288c0e6d0283f09d9da6a41ed33412aa04979fd5d38e86a97c9b1ca01dfe7a",
+      "size_bytes": 77
+    },
+    {
+      "path": "docs/reports/puck-cpu-pillow-origin-profile-v1/validation/pillow-origin-epoch07-observer-red-01/stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    {
+      "path": "docs/reports/puck-cpu-pillow-origin-profile-v1/validation/pillow-origin-epoch07-observer-red-01/stdout.log",
+      "sha256": "5989a69d9458e341b38674c5d5563eebd2bbe8efb6b78a01fdb00d5c1c711523",
+      "size_bytes": 7639
+    },
+    {
+      "path": "docs/reports/puck-cpu-pillow-origin-profile-v1/validation/pillow-origin-epochs-regression-01/command.json",
+      "sha256": "b6671cc30e4e523ac5407fb7ea132e596af97619846879d4f2805b0df562b31a",
+      "size_bytes": 1459
+    },
+    {
+      "path": "docs/reports/puck-cpu-pillow-origin-profile-v1/validation/pillow-origin-epochs-regression-01/result.json",
+      "sha256": "42f70f9e3266500f00763c8decc34c1379b5aeb0d3b6e27fbeb1d79c466fa924",
+      "size_bytes": 77
+    },
+    {
+      "path": "docs/reports/puck-cpu-pillow-origin-profile-v1/validation/pillow-origin-epochs-regression-01/stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    {
+      "path": "docs/reports/puck-cpu-pillow-origin-profile-v1/validation/pillow-origin-epochs-regression-01/stdout.log",
+      "sha256": "51d01ce539212323dd94d52402b645d5a1c1945a324ff02a736d06c74fb08e7e",
+      "size_bytes": 832
+    },
+    {
+      "path": "docs/reports/puck-cpu-pillow-origin-profile-v1/validation/pillow-origin-publication-regression-01/command.json",
+      "sha256": "212ee5ef23ca5a5c9fb0ca74bab9bfd4459671b444c503b0a0b4687141cb012b",
+      "size_bytes": 1025
+    },
+    {
+      "path": "docs/reports/puck-cpu-pillow-origin-profile-v1/validation/pillow-origin-publication-regression-01/result.json",
+      "sha256": "552dc3e28c968b3b400ea8dda23c1362d94dc0741e15480933e7868062ed7bd5",
+      "size_bytes": 76
+    },
+    {
+      "path": "docs/reports/puck-cpu-pillow-origin-profile-v1/validation/pillow-origin-publication-regression-01/stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    {
+      "path": "docs/reports/puck-cpu-pillow-origin-profile-v1/validation/pillow-origin-publication-regression-01/stdout.log",
+      "sha256": "a3af7f07d82e545f011feaae7ea422fa49c83a96a4af03503cefa91956dc6a3d",
+      "size_bytes": 99
+    },
+    {
+      "path": "docs/reports/puck-cpu-pillow-origin-profile-v1/validation/source-final-check-01.json",
+      "sha256": "a42b74898419a65caaa3f44f164361cc016b90a21917a848996856117ef426d3",
+      "size_bytes": 826
+    },
+    {
+      "path": "docs/reports/puck-cpu-pillow-origin-profile-v1/verify_evidence.py",
+      "sha256": "d5b874df818e72295d6951873e25a6fc8fc0deb0a79ec6183ca805508c19a759",
+      "size_bytes": 2128
+    },
+    {
+      "path": "docs/reports/puck-cpu-post06-byte-custody-03.md",
+      "sha256": "272f8a56aa9349f214d8664899d82dc01d23055dd439ebcd9de8a9d569ac3885",
+      "size_bytes": 4767
+    },
+    {
+      "path": "docs/reports/puck-cpu-post06-byte-custody-03/admission-plan.json",
+      "sha256": "6466ebf6ed2b7b33c596620bb8d51c1669611d1d32dbc60676f0237944c45d42",
+      "size_bytes": 11594
+    },
+    {
+      "path": "docs/reports/puck-cpu-post06-byte-custody-03/base/configuration06.json",
+      "sha256": "da630b05b871508686a4c92402725820b40b27253b2652b47c686a8f441a04e8",
+      "size_bytes": 8995
+    },
+    {
+      "path": "docs/reports/puck-cpu-post06-byte-custody-03/base/external06.py",
+      "sha256": "214cb6a7d6195d9f6eb957641ca69ac6b03134da3abb737c81c3e1e5f731889e",
+      "size_bytes": 2083
+    },
+    {
+      "path": "docs/reports/puck-cpu-post06-byte-custody-03/base/freeze06.json",
+      "sha256": "54dfca9f7a2bccff7a436e12d232f80944f564fce48a66480dacb77d1693e61c",
+      "size_bytes": 73052
+    },
+    {
+      "path": "docs/reports/puck-cpu-post06-byte-custody-03/base/post02.py",
+      "sha256": "9551e20451631580d668e9a6dfa9d442576c85f75f06bfbef2826409e3412532",
+      "size_bytes": 16444
+    },
+    {
+      "path": "docs/reports/puck-cpu-post06-byte-custody-03/check03.py",
+      "sha256": "96e496cef4ba2b1c2250e8a2a45737cb930b18cb019c8cc2b32d565830c522ff",
+      "size_bytes": 19086
+    },
+    {
+      "path": "docs/reports/puck-cpu-post06-byte-custody-03/controls.json",
+      "sha256": "18da6c330c4255f4eda2a839757c9ccba45471177ec71acce7aed7b50a344d75",
+      "size_bytes": 8877
+    },
+    {
+      "path": "docs/reports/puck-cpu-post06-byte-custody-03/evidence-index.json",
+      "sha256": "1d794019c2ee9d1518c454a5bcff09a93cfa8c8d58947febede4144be9dced32",
+      "size_bytes": 8091
+    },
+    {
+      "path": "docs/reports/puck-cpu-post06-byte-custody-03/external03.py",
+      "sha256": "ccf23f71abe9b20cccc78109ea9ecc6be7397fffaca13e55dbc67bf7392cb63e",
+      "size_bytes": 5215
+    },
+    {
+      "path": "docs/reports/puck-cpu-post06-byte-custody-03/independent-external-review.json",
+      "sha256": "905a7b1835a172174ad44ea15e8a04b29ac961962052c4f316bf9bf7ad9b1b7e",
+      "size_bytes": 6366
+    },
+    {
+      "path": "docs/reports/puck-cpu-post06-byte-custody-03/independent-outer-review.json",
+      "sha256": "f87bb8d198f54ac095cc15a9120770a6b41e136407412b5de6a6222ea3bb801d",
+      "size_bytes": 3360
+    },
+    {
+      "path": "docs/reports/puck-cpu-post06-byte-custody-03/independent-source-review.json",
+      "sha256": "ebe13840f9cdca0a6499ce9b82b8e0dc3c151eb42b0ec54e9c7e5375636a6061",
+      "size_bytes": 5434
+    },
+    {
+      "path": "docs/reports/puck-cpu-post06-byte-custody-03/outer-envelope.json",
+      "sha256": "4e41d6ea229ae962a0df5d4fdd72d6b9ab4d35544b9c4b803d2041dfd4ea6bed",
+      "size_bytes": 1481
+    },
+    {
+      "path": "docs/reports/puck-cpu-post06-byte-custody-03/resource-observation-01.json",
+      "sha256": "0a5a0c256beaf14fbaccdf1d97b4ea637254741b75622aec4723e66d26e49113",
+      "size_bytes": 1439
+    },
+    {
+      "path": "docs/reports/puck-cpu-post06-byte-custody-03/result/external.json",
+      "sha256": "a4ef62fefaf128ed1ca54c0a481f05db151120dba1f6d5a47db7bc5003a5d6f6",
+      "size_bytes": 1834
+    },
+    {
+      "path": "docs/reports/puck-cpu-post06-byte-custody-03/result/external.stderr",
+      "sha256": "eae6bcef63a3aa747486f81dd92b851a1ca191029a0f6b92854dec0649d1f2f9",
+      "size_bytes": 1479
+    },
+    {
+      "path": "docs/reports/puck-cpu-post06-byte-custody-03/result/external.stdout",
+      "sha256": "000829dee6142af39f53a5f88e16b61d5f6e059ea645e250d65303dc3592d498",
+      "size_bytes": 2997
+    },
+    {
+      "path": "docs/reports/puck-cpu-post06-byte-custody-03/result/independent-receipt-review.json",
+      "sha256": "021e6aa2fbb1570d32c0f9588654888b570b78df400ae473867767af2385c86c",
+      "size_bytes": 6903
+    },
+    {
+      "path": "docs/reports/puck-cpu-post06-byte-custody-03/result/resource-observation-02.json",
+      "sha256": "a26900e22bf082e3aa6c4439a421dc02172476e4d79739b58cbfad8e77425bbb",
+      "size_bytes": 854
+    },
+    {
+      "path": "docs/reports/puck-cpu-post06-byte-custody-03/result/root-readback-check.json",
+      "sha256": "53adfdd77285550afbba9976bd6c93e8992372b9a438bd017535ba8624636e42",
+      "size_bytes": 1158
+    },
+    {
+      "path": "docs/reports/puck-cpu-post06-byte-custody-03/result/success.json",
+      "sha256": "000829dee6142af39f53a5f88e16b61d5f6e059ea645e250d65303dc3592d498",
+      "size_bytes": 2997
+    },
+    {
+      "path": "docs/reports/puck-cpu-post06-byte-custody-03/result/terminal-tool.json",
+      "sha256": "1fd34b459f116d66b554a18b7c3b7ecf14a1e7a4b1b1fa53c51b092ae33376e8",
+      "size_bytes": 1218
+    },
+    {
+      "path": "docs/reports/puck-cpu-post06-byte-custody-03/source-diff-review.json",
+      "sha256": "82f8be30f3e6885709c6c274b97a2d750be1d63f17ba60251d063a539a0c192d",
+      "size_bytes": 15986
+    },
+    {
+      "path": "docs/reports/puck-cpu-post06-byte-custody-03/telemetry/check.json",
+      "sha256": "f7d45ec519d5215d3572335ce1c466c4338a409adaa75d628456283bf79acd79",
+      "size_bytes": 3012
+    },
+    {
+      "path": "docs/reports/puck-cpu-post06-byte-custody-03/telemetry/check.py",
+      "sha256": "5197a585635b1ccd297151c717504ee03cf85e4318b482b7c507e4ff4fc163d8",
+      "size_bytes": 10185
+    },
+    {
+      "path": "docs/reports/puck-cpu-post06-byte-custody-03/telemetry/check.result.json",
+      "sha256": "b541f9ea043a75ff7013bfc31bb8ed4237ffc70df90b7472f76b80dcb4bf31a3",
+      "size_bytes": 1065
+    },
+    {
+      "path": "docs/reports/puck-cpu-post06-byte-custody-03/telemetry/check.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    {
+      "path": "docs/reports/puck-cpu-post06-byte-custody-03/telemetry/check.stdout",
+      "sha256": "f7d45ec519d5215d3572335ce1c466c4338a409adaa75d628456283bf79acd79",
+      "size_bytes": 3012
+    },
+    {
+      "path": "docs/reports/puck-cpu-post06-byte-custody-03/verify_evidence.py",
+      "sha256": "d5b874df818e72295d6951873e25a6fc8fc0deb0a79ec6183ca805508c19a759",
+      "size_bytes": 2128
+    },
+    {
+      "path": "docs/reports/puck-cpu-retained-admission-02/acceptance-audit-03.json",
+      "sha256": "130b97c8253f2b824f382dbbbe32d049bfcaacf9d0169307611454d39b02aef3",
+      "size_bytes": 1263
+    },
+    {
+      "path": "docs/reports/puck-cpu-retained-admission-02/evidence-index.json",
+      "sha256": "6ef83ddd81474b7aa94bca7924f03b2fa13410864a2ac21fb17f39dff117b9de",
+      "size_bytes": 5935
+    },
+    {
+      "path": "docs/reports/puck-cpu-runtime-phase-trace-v1.md",
+      "sha256": "d93ea546b32cd2f039255803eecaf5e0bfe03ebbdf8f48c158f288948ebb4c2a",
+      "size_bytes": 5341
+    },
+    {
+      "path": "docs/reports/puck-cpu-runtime-phase-trace-v1/archive_evidence.py",
+      "sha256": "0bd4ac37763949ac728c3e75c40d9e75e575eff9dd3e1ec7e28fa33818c4d779",
+      "size_bytes": 7350
+    },
+    {
+      "path": "docs/reports/puck-cpu-runtime-phase-trace-v1/evidence-index.json",
+      "sha256": "fcb139b777e4224cc36990edcb6150548c6be21e1a594b1ffd16c4ef8d48fb06",
+      "size_bytes": 13164
+    },
+    {
+      "path": "docs/reports/puck-cpu-runtime-phase-trace-v1/pre-fix-reentrant/pins.json",
+      "sha256": "cf9ccf3dc9f58d616cff5d415d27fb9e4d0ce2ef0834c504ad5c12c9763a9e4b",
+      "size_bytes": 698
+    },
+    {
+      "path": "docs/reports/puck-cpu-runtime-phase-trace-v1/pre-fix-reentrant/scripts/puck_worker_bootstrap.py",
+      "sha256": "05c22bbfb898983c64153d282bbb118e26f0b2aa2bb4275aaed127261d329aca",
+      "size_bytes": 39934
+    },
+    {
+      "path": "docs/reports/puck-cpu-runtime-phase-trace-v1/pre-fix-reentrant/src/palimpsest/puck_runtime_qualification.py",
+      "sha256": "b81e59a3c2b29d8edd67418d81bcc8bf7b1f241c3b1d5e859f6f7db78ef31cb2",
+      "size_bytes": 2309
+    },
+    {
+      "path": "docs/reports/puck-cpu-runtime-phase-trace-v1/pre-fix-reentrant/tests/test_puck_cpu_phase_trace.py",
+      "sha256": "df588e48cb8a9c9fc398939507b722ce9b2373ce0675ef180cbf090911ecfafd",
+      "size_bytes": 12774
+    },
+    {
+      "path": "docs/reports/puck-cpu-runtime-phase-trace-v1/reviews/palimpsest-phase-trace-final-source-review-02.json",
+      "sha256": "ebabea4bfb9e2a8d1e322168fdea20d1b6b0a743e26605bc72b3040ef3df0b6f",
+      "size_bytes": 7688
+    },
+    {
+      "path": "docs/reports/puck-cpu-runtime-phase-trace-v1/reviews/palimpsest-phase-trace-final-source-review.json",
+      "sha256": "7a3ef757b053116b75e41b32dc8b754d14d42ddbc195b738d437dfb66d7f440a",
+      "size_bytes": 7298
+    },
+    {
+      "path": "docs/reports/puck-cpu-runtime-phase-trace-v1/reviews/palimpsest-phase-trace-final-validation-review.json",
+      "sha256": "4083a69befdd91213ae0848a7ecb95b54ae562b1b63e5d0ee4306fa350a1f912",
+      "size_bytes": 5789
+    },
+    {
+      "path": "docs/reports/puck-cpu-runtime-phase-trace-v1/reviews/palimpsest-phase-trace-publication-terminal.json",
+      "sha256": "14283e15c6c3e9e1a5bf125c345ac64829f2d46973450fa9dc093466bfdb0aa6",
+      "size_bytes": 365
+    },
+    {
+      "path": "docs/reports/puck-cpu-runtime-phase-trace-v1/source/scripts/puck_worker_bootstrap.py",
+      "sha256": "71263511b6f8b1828a59f2a82f74473f9151f1ec7b28dfe8bfa8c637ccac9c0e",
+      "size_bytes": 39944
+    },
+    {
+      "path": "docs/reports/puck-cpu-runtime-phase-trace-v1/source/src/palimpsest/puck_runtime_qualification.py",
+      "sha256": "81e7f5df42115dd6714be05b6cf62cf5f0804564065130aaee8289f4b962768a",
+      "size_bytes": 2440
+    },
+    {
+      "path": "docs/reports/puck-cpu-runtime-phase-trace-v1/source/tests/test_puck_cpu_phase_trace.py",
+      "sha256": "df588e48cb8a9c9fc398939507b722ce9b2373ce0675ef180cbf090911ecfafd",
+      "size_bytes": 12774
+    },
+    {
+      "path": "docs/reports/puck-cpu-runtime-phase-trace-v1/validation-record.json",
+      "sha256": "03d6b9610848a931935af7a8a7d9cc98491e6d241b35d4829acb5a6c53cf6d9d",
+      "size_bytes": 17374
+    },
+    {
+      "path": "docs/reports/puck-cpu-runtime-phase-trace-v1/validation/phase-trace-baseline-01/stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    {
+      "path": "docs/reports/puck-cpu-runtime-phase-trace-v1/validation/phase-trace-baseline-01/stdout.log",
+      "sha256": "57c1f3c3ebfacacde2762039106810cc1724ed90f84eac5f38f1d07427221ab2",
+      "size_bytes": 100
+    },
+    {
+      "path": "docs/reports/puck-cpu-runtime-phase-trace-v1/validation/phase-trace-cancel-red-01/stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    {
+      "path": "docs/reports/puck-cpu-runtime-phase-trace-v1/validation/phase-trace-cancel-red-01/stdout.log",
+      "sha256": "7592fec0b7411b7248923f860c592d420daa04d78e96cec5559a4e33ac49555b",
+      "size_bytes": 1612
+    },
+    {
+      "path": "docs/reports/puck-cpu-runtime-phase-trace-v1/validation/phase-trace-consumers-01/stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    {
+      "path": "docs/reports/puck-cpu-runtime-phase-trace-v1/validation/phase-trace-consumers-01/stdout.log",
+      "sha256": "60acfce3a33725302cfc6212aec72ae3673d84c6ef692f188a2222275135ba9e",
+      "size_bytes": 25969
+    },
+    {
+      "path": "docs/reports/puck-cpu-runtime-phase-trace-v1/validation/phase-trace-green-01/stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    {
+      "path": "docs/reports/puck-cpu-runtime-phase-trace-v1/validation/phase-trace-green-01/stdout.log",
+      "sha256": "51b37868a328552fcf1a9dd99076cb0cc5f013bd4981bd9dfb60510fc72a70d9",
+      "size_bytes": 5905
+    },
+    {
+      "path": "docs/reports/puck-cpu-runtime-phase-trace-v1/validation/phase-trace-green-02/stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    {
+      "path": "docs/reports/puck-cpu-runtime-phase-trace-v1/validation/phase-trace-green-02/stdout.log",
+      "sha256": "4a7e4352f388a4d00299f501ad36bebb34f351e96e3a5255f68b1e1326659c9c",
+      "size_bytes": 190
+    },
+    {
+      "path": "docs/reports/puck-cpu-runtime-phase-trace-v1/validation/phase-trace-green-03/stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    {
+      "path": "docs/reports/puck-cpu-runtime-phase-trace-v1/validation/phase-trace-green-03/stdout.log",
+      "sha256": "6abaa59b127e39f951230458ba45f5fb686e6c958e3e22707978403d161c0598",
+      "size_bytes": 190
+    },
+    {
+      "path": "docs/reports/puck-cpu-runtime-phase-trace-v1/validation/phase-trace-private-consumers-02/stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    {
+      "path": "docs/reports/puck-cpu-runtime-phase-trace-v1/validation/phase-trace-private-consumers-02/stdout.log",
+      "sha256": "4e48a2912c721a976aea89ed7bd44931c7b223400a3ed68289d2eac243744cfb",
+      "size_bytes": 272
+    },
+    {
+      "path": "docs/reports/puck-cpu-runtime-phase-trace-v1/validation/phase-trace-private-root-diagnostic-01/stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    {
+      "path": "docs/reports/puck-cpu-runtime-phase-trace-v1/validation/phase-trace-private-root-diagnostic-01/stdout.log",
+      "sha256": "91d5f5fccbc8cc2fd0ddf4c865dc82c10b7db76dd9bcf89233855254e3424227",
+      "size_bytes": 99
+    },
+    {
+      "path": "docs/reports/puck-cpu-runtime-phase-trace-v1/validation/phase-trace-publication-integrations-02/stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    {
+      "path": "docs/reports/puck-cpu-runtime-phase-trace-v1/validation/phase-trace-publication-integrations-02/stdout.log",
+      "sha256": "6adb1abb936d4f076d8bf49014f45cb8145aea10729709fcb85f164d57ba768b",
+      "size_bytes": 99
+    },
+    {
+      "path": "docs/reports/puck-cpu-runtime-phase-trace-v1/validation/phase-trace-red-01/stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    {
+      "path": "docs/reports/puck-cpu-runtime-phase-trace-v1/validation/phase-trace-red-01/stdout.log",
+      "sha256": "388c8a5fe96bfd6cd8f7355d3f1f4cf0001794dbe30c31cfb77d0affddcd4ccd",
+      "size_bytes": 18830
+    },
+    {
+      "path": "docs/reports/puck-cpu-runtime-phase-trace-v1/validation/phase-trace-reentrant-red-01/stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    {
+      "path": "docs/reports/puck-cpu-runtime-phase-trace-v1/validation/phase-trace-reentrant-red-01/stdout.log",
+      "sha256": "557627c4bc54419555c362b2d69ac191e074622fe4648753463c0de57605dd3c",
+      "size_bytes": 5440
+    },
+    {
+      "path": "docs/reports/puck-cpu-runtime-phase-trace-v1/verify_evidence.py",
+      "sha256": "d5b874df818e72295d6951873e25a6fc8fc0deb0a79ec6183ca805508c19a759",
+      "size_bytes": 2128
+    },
+    {
+      "path": "runs/puck-cpu-held-preparation-01/result.json",
+      "sha256": "9d49c6ee3a0be61505cfe7d2267b659290be17365d6e35fb5fdbdc38e103f47d",
+      "size_bytes": 7330
+    },
+    {
+      "path": "runs/puck-cpu-held-qualification-01/result.json",
+      "sha256": "224cb9bdb18228f6e8da7a47e7455cd604a6e756df5fd017294b9221f26d9299",
+      "size_bytes": 618
+    },
+    {
+      "path": "runs/puck-cpu-held-qualification-02/result.json",
+      "sha256": "085d19bdd39d392aaeab0c1590ec92b99e0bb2a4e8945f5d23dd51733fbab56b",
+      "size_bytes": 616
+    },
+    {
+      "path": "runs/puck-cpu-held-qualification-03/result.json",
+      "sha256": "ba5cad51576c3dd593c479d052328fcb4181943d3f5acdbdaa7cdee145f1254b",
+      "size_bytes": 617
+    },
+    {
+      "path": "runs/puck-cpu-held-qualification-04/result.json",
+      "sha256": "d2db585f4851b916e7c632ca268d7527ce4604e6949918ea6d89408ddbcc3889",
+      "size_bytes": 617
+    },
+    {
+      "path": "runs/puck-cpu-held-qualification-05-external-cli-transport.json",
+      "sha256": "7350fc1e7552205b73975b422f3241cf44e124d3d00617232569946c860dbe82",
+      "size_bytes": 950
+    },
+    {
+      "path": "runs/puck-cpu-held-qualification-05-external-cli.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    {
+      "path": "runs/puck-cpu-held-qualification-05-external-cli.stdout",
+      "sha256": "c5d2d2037ed248834d971278cbe2d6637b0324eb5b1518933e5201980b493e67",
+      "size_bytes": 618
+    },
+    {
+      "path": "runs/puck-cpu-held-qualification-05/result.json",
+      "sha256": "c5d2d2037ed248834d971278cbe2d6637b0324eb5b1518933e5201980b493e67",
+      "size_bytes": 618
+    },
+    {
+      "path": "runs/puck-cpu-held-qualification-06/result.json",
+      "sha256": "e88a7f3317ae15b709409cf04a30f969629b20c51454a5ad6ca72d63d6378b88",
+      "size_bytes": 617
+    },
+    {
+      "path": "runs/puck-cpu-held-qualification-07-external-cli-transport.json",
+      "sha256": "9509cbbff66603e5906c57f72950fcc77f600d4dbcffb611462506a58360aca7",
+      "size_bytes": 951
+    },
+    {
+      "path": "runs/puck-cpu-held-qualification-07-external-cli.stderr",
+      "sha256": "a9aa3be0a53b8dcecc67c7fc69ed91efb0b5f0dfc9dea34e7e58e78e5d1f08b5",
+      "size_bytes": 798
+    },
+    {
+      "path": "runs/puck-cpu-held-qualification-07-external-cli.stdout",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    {
+      "path": "runs/puck-cpu-held-qualification-07/baseline-before.json",
+      "sha256": "8e69fa24c5367b19acfad5f5f3c12f1804eed23d0889df6a9e58f20da4376dfb",
+      "size_bytes": 196
+    },
+    {
+      "path": "runs/puck-cpu-held-qualification-07/configuration.json",
+      "sha256": "1ed4b198a38512c751cca43e11fdb1cd00e7683031be545e6ccd12016555ee60",
+      "size_bytes": 8985
+    },
+    {
+      "path": "runs/puck-cpu-held-qualification-07/control/dependencies.json",
+      "sha256": "c82ddc9777f8c26cc68bb8a6a2010b1309085b3567c74d101d67732508be53fc",
+      "size_bytes": 4253322
+    },
+    {
+      "path": "runs/puck-cpu-held-qualification-07/control/worker-registration.json",
+      "sha256": "23babbff6101b7727a2e4f7c4c113f09c6870c036e828eea8dd1a4d4489ee14d",
+      "size_bytes": 4714
+    },
+    {
+      "path": "runs/puck-cpu-held-qualification-07/invocation.json",
+      "sha256": "816cd714d843d06f5fc156a50d568ed57cde62bec52f7739adf504abd82276a1",
+      "size_bytes": 7029
+    },
+    {
+      "path": "runs/puck-cpu-held-qualification-07/logs/stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    {
+      "path": "runs/puck-cpu-held-qualification-07/logs/stdout.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    {
+      "path": "runs/puck-cpu-held-qualification-07/resource-admission.json",
+      "sha256": "a3c2de9bdcc4bc9627bdd61a54bf3afb18783c257e7a285cd1e5fab187582c14",
+      "size_bytes": 105
+    },
+    {
+      "path": "runs/puck-cpu-held-qualification-07/supervision.json",
+      "sha256": "92da80ef71f86b3fd921c9d3febd35a1c9e1e795ca5b013435ef3cce61b35d61",
+      "size_bytes": 380
+    },
+    {
+      "path": "runs/puck-cpu-held-qualification-07/worker-source/scripts/puck_worker_bootstrap.py",
+      "sha256": "436b1ffe34b96fca166f6fb38022ad7392daef3517e58157092db2d9fd84c69f",
+      "size_bytes": 38375
+    },
+    {
+      "path": "runs/puck-cpu-held-qualification-07/worker-source/src/palimpsest/__init__.py",
+      "sha256": "bb99e30d22e4662c4ded455b1b23f49b77ce811dcfa1b69bf358925487a566d8",
+      "size_bytes": 63
+    },
+    {
+      "path": "runs/puck-cpu-held-qualification-07/worker-source/src/palimpsest/puck_dependency_bindings.py",
+      "sha256": "7012888d030917434d1536285bb97fd2de15b5b83e9da87ee1503cda970a7147",
+      "size_bytes": 28299
+    },
+    {
+      "path": "runs/puck-cpu-held-qualification-07/worker-source/src/palimpsest/puck_dependency_files.py",
+      "sha256": "d1ca386780212b174a6e931a8ac4ce88e68c31b27fb1c0e16346a2150560fca1",
+      "size_bytes": 33543
+    },
+    {
+      "path": "runs/puck-cpu-held-qualification-07/worker-source/src/palimpsest/puck_dependency_imports.py",
+      "sha256": "e35b941c351971c15f225255170cd45530aa2304943fe2edd461b8d94080943b",
+      "size_bytes": 14868
+    },
+    {
+      "path": "runs/puck-cpu-held-qualification-07/worker-source/src/palimpsest/puck_execution_files.py",
+      "sha256": "ac059455bc45437c45330d01aaca761fd571d6de1637a4a8d7ebfbd796622062",
+      "size_bytes": 15001
+    },
+    {
+      "path": "runs/puck-cpu-held-qualification-07/worker-source/src/palimpsest/puck_native_identity.py",
+      "sha256": "6e5b56e5c6494398dbd6a7c7d07e771e86c63d56e7374692d1d1d8213b721ebb",
+      "size_bytes": 2837
+    },
+    {
+      "path": "runs/puck-cpu-held-qualification-07/worker-source/src/palimpsest/puck_native_origins.py",
+      "sha256": "e6deea2bc378968371bf1093b869dfc442eeb7def27198695d1c0f872da519e1",
+      "size_bytes": 1660
+    },
+    {
+      "path": "runs/puck-cpu-held-qualification-07/worker-source/src/palimpsest/puck_runtime_qualification.py",
+      "sha256": "45e1bca7f5420bd6dd4aed5a27af429783124a12f02def92e1db1db8d2199085",
+      "size_bytes": 2190
+    },
+    {
+      "path": "runs/puck-cpu-held-qualification-07/worker-source/src/palimpsest/puck_worker_preflight.py",
+      "sha256": "dc5806d7f39913f4110b2aed8e4512c74f453b2f175f438771d72e78cca770f7",
+      "size_bytes": 465
+    },
+    {
+      "path": "runs/puck-cpu-retained-admission-02/inventory.json",
+      "sha256": "d1dac91f2b69e193d6eafc8b6c47a37204bb2cb51925faad5b895dea83701b35",
+      "size_bytes": 3996631
+    },
+    {
+      "path": "runs/puck-cpu-retained-admission-02/result.json",
+      "sha256": "29a9e4a84d16cb9a20ee95749a44d12631aa7d21ba5a9019f091a674ad80d618",
+      "size_bytes": 1154
+    },
+    {
+      "path": "runs/puck-cpu-retained-admission-02/snapshot.json",
+      "sha256": "db66e69a1a39e950b0bbfe8c7f1e9134cd3c3e3251dceb82db3692e6b407f70b",
+      "size_bytes": 663
+    },
+    {
+      "path": "scripts/acquire_puck_cpu_payloads.py",
+      "sha256": "4c08f22f56485fa492982f404c2e0e62863244deedd1743d82600310bc8a2730",
+      "size_bytes": 22918
+    },
+    {
+      "path": "scripts/audit_puck_cpu_held_runtime.py",
+      "sha256": "0406bfa94f6b230fca440d57f65e5d429a30d70d054e2cdd29bafb0da1ca2b35",
+      "size_bytes": 76648
+    },
+    {
+      "path": "scripts/audit_puck_cpu_runtime_characterization.py",
+      "sha256": "be7e1321356c554750baa6e0982dc939a23546eca1574b8f5f68b2bbdec3afa4",
+      "size_bytes": 53991
+    },
+    {
+      "path": "scripts/build_puck_python_louvain.py",
+      "sha256": "0fce7b437f00ebd2348ecaf29c4f00f444f707e797297419a2844c8513285fb6",
+      "size_bytes": 24118
+    },
+    {
+      "path": "scripts/observe_puck_cpu_held_allocation.py",
+      "sha256": "b8ad9846ab0222d4fb7c603d2caff886dbaaff665db6a46df417a72d0f5228ad",
+      "size_bytes": 6633
+    },
+    {
+      "path": "scripts/puck_worker_bootstrap.py",
+      "sha256": "71263511b6f8b1828a59f2a82f74473f9151f1ec7b28dfe8bfa8c637ccac9c0e",
+      "size_bytes": 39944
+    },
+    {
+      "path": "scripts/qualify_puck_cpu_held_runtime.py",
+      "sha256": "0cc637ffeb2accdf843894a6f30abd917b59a940cecd53ef3709fd9200e50fe8",
+      "size_bytes": 59227
+    },
+    {
+      "path": "scripts/qualify_puck_held_runtime.py",
+      "sha256": "411459fa82ba3fbf7e6b71d71f81e66afce80c5bfa77a8e7c52f700b8d8d751e",
+      "size_bytes": 20696
+    },
+    {
+      "path": "scripts/stage_puck_cpu_held_runtime.py",
+      "sha256": "c5cb012459cc532a79cf40e357839ad27ffef7b6eacde8200e815371a2cad4f9",
+      "size_bytes": 2306
+    },
+    {
+      "path": "src/palimpsest/__init__.py",
+      "sha256": "bb99e30d22e4662c4ded455b1b23f49b77ce811dcfa1b69bf358925487a566d8",
+      "size_bytes": 63
+    },
+    {
+      "path": "src/palimpsest/bounded_qualification.py",
+      "sha256": "7331de4b1a3634e75b0a25b6add491b96a00d01767a7904adb096dd991c1e45a",
+      "size_bytes": 22914
+    },
+    {
+      "path": "src/palimpsest/evaluate.py",
+      "sha256": "74a9afb710b36a366ab680462e9440f285730a0360bda704af25ebbcfd74256a",
+      "size_bytes": 19531
+    },
+    {
+      "path": "src/palimpsest/puck_build_inputs.py",
+      "sha256": "b08f83a19a2fa0d6f49d349512b5f69d08a6781930af4b13164f67779615cb65",
+      "size_bytes": 13905
+    },
+    {
+      "path": "src/palimpsest/puck_cpu_namespace.py",
+      "sha256": "9a82a9cd67000e9bc4a1ee1bfb9020be4ed1b2b41bc439985f33b48dc973a04e",
+      "size_bytes": 9569
+    },
+    {
+      "path": "src/palimpsest/puck_cpu_registration.py",
+      "sha256": "36dedf73180dc76422b09eff9f9d04bdc62ad2e2ea54c3ff0c401b9ba51865b0",
+      "size_bytes": 15508
+    },
+    {
+      "path": "src/palimpsest/puck_dependency_bindings.py",
+      "sha256": "7012888d030917434d1536285bb97fd2de15b5b83e9da87ee1503cda970a7147",
+      "size_bytes": 28299
+    },
+    {
+      "path": "src/palimpsest/puck_dependency_files.py",
+      "sha256": "d1ca386780212b174a6e931a8ac4ce88e68c31b27fb1c0e16346a2150560fca1",
+      "size_bytes": 33543
+    },
+    {
+      "path": "src/palimpsest/puck_dependency_imports.py",
+      "sha256": "e35b941c351971c15f225255170cd45530aa2304943fe2edd461b8d94080943b",
+      "size_bytes": 14868
+    },
+    {
+      "path": "src/palimpsest/puck_execution_files.py",
+      "sha256": "ac059455bc45437c45330d01aaca761fd571d6de1637a4a8d7ebfbd796622062",
+      "size_bytes": 15001
+    },
+    {
+      "path": "src/palimpsest/puck_native_identity.py",
+      "sha256": "6e5b56e5c6494398dbd6a7c7d07e771e86c63d56e7374692d1d1d8213b721ebb",
+      "size_bytes": 2837
+    },
+    {
+      "path": "src/palimpsest/puck_native_origins.py",
+      "sha256": "e6deea2bc378968371bf1093b869dfc442eeb7def27198695d1c0f872da519e1",
+      "size_bytes": 1660
+    },
+    {
+      "path": "src/palimpsest/puck_package_payloads.py",
+      "sha256": "75f99498cfbcfe761fe151d089c0b383b9c48c39c0f89d22e7c3715ef056fe76",
+      "size_bytes": 15959
+    },
+    {
+      "path": "src/palimpsest/puck_retained_installation.py",
+      "sha256": "b5e202d37cf8e8155295b607d5daa4dcaa3869cbeda3871cefdf00d2b159fdcc",
+      "size_bytes": 6213
+    },
+    {
+      "path": "src/palimpsest/puck_runtime_qualification.py",
+      "sha256": "81e7f5df42115dd6714be05b6cf62cf5f0804564065130aaee8289f4b962768a",
+      "size_bytes": 2440
+    },
+    {
+      "path": "src/palimpsest/puck_runtime_registration.py",
+      "sha256": "33825b07a2e3837a96101a25539c4a1722bc0fc469b5a9d9388edbc5cb67f4e2",
+      "size_bytes": 17632
+    },
+    {
+      "path": "src/palimpsest/puck_runtime_staging.py",
+      "sha256": "a73c1cfe26d20281b923dfa5110a8acb1665b60a3d01296afb91c8c11b36beb6",
+      "size_bytes": 12544
+    },
+    {
+      "path": "src/palimpsest/puck_worker_preflight.py",
+      "sha256": "dc5806d7f39913f4110b2aed8e4512c74f453b2f175f438771d72e78cca770f7",
+      "size_bytes": 465
+    }
+  ],
+  "post03_index": {
+    "path": "docs/reports/puck-cpu-post06-byte-custody-03/evidence-index.json",
+    "sha256": "1d794019c2ee9d1518c454a5bcff09a93cfa8c8d58947febede4144be9dced32",
+    "size_bytes": 8091
+  },
+  "post03_result": {
+    "path": "docs/reports/puck-cpu-post06-byte-custody-03/result/success.json",
+    "sha256": "000829dee6142af39f53a5f88e16b61d5f6e059ea645e250d65303dc3592d498",
+    "size_bytes": 2997
+  },
+  "post03_scope": "Dated DATA06/C retention only; does not replace fresh08/D full admission",
+  "preparation_acceptance": {
+    "configuration": {
+      "path": "docs/plans/puck-cpu-held-preparation-01.json",
+      "sha256": "38134e016eff974e06806f1ac74492dc51e0a5721d8cd13d1123a1fd950fe8a6",
+      "size_bytes": 7903
+    },
+    "externally_observed_auditor_cli": {
+      "path": "docs/reports/puck-cpu-held-qualification-amendment-02/current-byte-audit-02/palimpsest-puck-cpu-held-preparation-01-current-byte-audit-02.external-cli.json",
+      "sha256": "9d8d740a9f09d4d945c1d6a46d707165d9b08a954187b46a4ea020eebfc00935",
+      "size_bytes": 1680
+    },
+    "independent_audit": {
+      "path": "docs/reports/puck-cpu-held-qualification-amendment-02/current-byte-audit-02/palimpsest-puck-cpu-held-preparation-01-current-byte-audit-02.json",
+      "sha256": "00595d2fa5270fc69ddeb633cd7b894a68b7e6ddfd80df123190ad43d3c9ae4d",
+      "size_bytes": 1563
+    },
+    "result": {
+      "path": "runs/puck-cpu-held-preparation-01/result.json",
+      "sha256": "9d49c6ee3a0be61505cfe7d2267b659290be17365d6e35fb5fdbdc38e103f47d",
+      "size_bytes": 7330
+    }
+  },
+  "previous07_freeze": {
+    "path": "docs/plans/puck-cpu-held-qualification-07-freeze.json",
+    "sha256": "6230a4072b3606efd41efc694f0da15671d248f2cd39203f4eb2ca39ead22d17",
+    "size_bytes": 124995
+  },
+  "process_identity_samples": [
+    {
+      "pid": 3569912,
+      "start_ticks": 53431366
+    },
+    {
+      "pid": 3569913,
+      "start_ticks": 53431366
+    },
+    {
+      "pid": 3569914,
+      "start_ticks": 53431367
+    },
+    {
+      "pid": 3798021,
+      "start_ticks": 53913806
+    },
+    {
+      "pid": 3798022,
+      "start_ticks": 53913806
+    },
+    {
+      "pid": 3798023,
+      "start_ticks": 53913807
+    }
+  ],
+  "process_scope": "six recorded identities only; nonexhaustive non-atomic lifetime observation",
+  "qualification_claims": [],
+  "qualifications01_02_03_04_05_06_07_failed_consumed": true,
+  "required_external_returncode": 0,
+  "root": "/home/utkarsh/.codex/worktrees/0071/brain",
+  "runtime_qualified": false,
+  "scope": "one separately admitted held four-import diagnostic qualification08; no episode, renderer, operator or scientific study",
+  "source_commit": "f5523dc69c8d05ee2f3ff1118c633512c4b6a2e0",
+  "study_authorized": false,
+  "transport_sha256_binding": "Only the measured complete exclusive observer transport SHA256 after its single invocation; record concrete command before audit",
+  "unchanged_non_candidate_input_pins": 15,
+  "version": 1
+}
