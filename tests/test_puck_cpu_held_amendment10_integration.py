@@ -5,6 +5,8 @@ import os
 import subprocess
 import time
 
+import pytest
+
 from test_puck_cpu_held_amendment05_integration import file_pin, publication05_fixture
 from test_puck_cpu_held_amendment06_integration import AUTHORED_ROSTER06
 from test_puck_cpu_held_amendment07 import PILLOW_ORIGINS
@@ -112,11 +114,18 @@ def test_authored10_binds_fifth_source_diagnostics_and_independent_audits(tmp_pa
                 target.write_bytes(payload)
                 held=auditor.Held(time.monotonic()+30)
                 try:
-                    import pytest
                     with pytest.raises(ValueError,match='^'+marker+'$'):
                         auditor.worker(held,base,config,json.loads(current_dep),current_dep,sources)
                 finally:held.close()
             finally:target.write_bytes(original)
+        legacy_config=copy.deepcopy(config)
+        legacy_config.update(kind='puck-cpu-held-runtime-allocation-v9',version=9,allocation_id=9)
+        auditor.configuration(legacy_config,True)
+        held=auditor.Held(time.monotonic()+30)
+        try:
+            with pytest.raises(ValueError,match='^Exact worker registration differs$'):
+                auditor.worker(held,base,legacy_config,json.loads(current_dep),current_dep,sources)
+        finally:held.close()
         for name,previous in case['legacy_bytes'].items():assert (root/name).read_bytes()==previous
         code,_,stderr=run_cli(root,api,'qualify10-rerun',config)
         assert code!=0 and b'CPU allocation already reserved' in stderr

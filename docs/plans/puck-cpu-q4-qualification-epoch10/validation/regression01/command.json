@@ -1,0 +1,255 @@
+{
+  "command": [
+    "/usr/bin/timeout",
+    "--signal=TERM",
+    "--kill-after=5s",
+    "240s",
+    "/usr/bin/bwrap",
+    "--unshare-user",
+    "--uid",
+    "1000",
+    "--gid",
+    "1000",
+    "--bind",
+    "/",
+    "/",
+    "--tmpfs",
+    "/tmp",
+    "--dev",
+    "/dev",
+    "--proc",
+    "/proc",
+    "--chdir",
+    "/home/utkarsh/.codex/worktrees/293b/brain",
+    "--",
+    "/home/utkarsh/Work/shraddha/brain/.worktrees/r0-reproduction/.venv/bin/python",
+    "-B",
+    "-m",
+    "pytest",
+    "-q",
+    "-s",
+    "-p",
+    "no:cacheprovider",
+    "--basetemp",
+    "/home/utkarsh/.codex/worktrees/293b/brain/runs/q4-epoch10-regression01",
+    "tests/test_puck_cpu_held_amendment10.py",
+    "tests/test_puck_cpu_held_amendment10_integration.py",
+    "tests/test_puck_cpu_held_parent.py",
+    "tests/test_puck_cpu_held_runtime_audit.py",
+    "tests/test_puck_cpu_held_observer.py",
+    "tests/test_puck_cpu_held_amendment.py",
+    "tests/test_puck_cpu_held_amendment03.py",
+    "tests/test_puck_cpu_held_amendment04.py",
+    "tests/test_puck_cpu_held_amendment05.py",
+    "tests/test_puck_cpu_held_amendment06.py",
+    "tests/test_puck_cpu_held_amendment07.py",
+    "tests/test_puck_cpu_held_amendment08.py",
+    "tests/test_puck_cpu_held_amendment09.py",
+    "tests/test_puck_runtime_entry_v4.py",
+    "tests/test_puck_cpu_held_amendment09_integration.py",
+    "tests/test_puck_cpu_held_amendment08_integration.py",
+    "tests/test_puck_cpu_held_amendment07_integration.py",
+    "tests/test_puck_cpu_held_parent_integration.py",
+    "tests/test_puck_cpu_held_audit_integration.py"
+  ],
+  "cwd": "/home/utkarsh/.codex/worktrees/293b/brain",
+  "environment_overrides": {
+    "PYTEST_DISABLE_PLUGIN_AUTOLOAD": "1",
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "PYTHONPATH": "/home/utkarsh/.codex/worktrees/293b/brain/src",
+    "TMPDIR": "/tmp"
+  },
+  "pins": [
+    {
+      "path": "docs/plans/puck-cpu-q4-qualification-epoch10.md",
+      "sha256": "c4db207166e275cf23966940061976b4bcabfffb3c7703a758d57c616d7b4de4",
+      "size_bytes": 2116
+    },
+    {
+      "path": "scripts/audit_puck_cpu_held_runtime.py",
+      "sha256": "7d87485b1bfcbeeb625a2fc71a59f697cdde5850dabec5a5d29bd7b7f7ac16fa",
+      "size_bytes": 77086
+    },
+    {
+      "path": "scripts/observe_puck_cpu_held_allocation.py",
+      "sha256": "467fcf3ac6bebe52f1abb998f35288885b4d3265bf99386b1b177ddbca1b1aed",
+      "size_bytes": 6796
+    },
+    {
+      "path": "scripts/puck_worker_bootstrap.py",
+      "sha256": "525d40b6d69fd82af0d86b807bc8a3645163ff1541d9b0fd85b032463650669c",
+      "size_bytes": 51608
+    },
+    {
+      "path": "scripts/qualify_puck_cpu_held_runtime.py",
+      "sha256": "0d63df2244d83e682dc57079f99316a09d288d85d4161c644b63f54727e61064",
+      "size_bytes": 60258
+    },
+    {
+      "path": "src/palimpsest/puck_dependency_bindings.py",
+      "sha256": "7012888d030917434d1536285bb97fd2de15b5b83e9da87ee1503cda970a7147",
+      "size_bytes": 28299
+    },
+    {
+      "path": "src/palimpsest/puck_dependency_files.py",
+      "sha256": "d1ca386780212b174a6e931a8ac4ce88e68c31b27fb1c0e16346a2150560fca1",
+      "size_bytes": 33543
+    },
+    {
+      "path": "src/palimpsest/puck_dependency_imports.py",
+      "sha256": "e35b941c351971c15f225255170cd45530aa2304943fe2edd461b8d94080943b",
+      "size_bytes": 14868
+    },
+    {
+      "path": "src/palimpsest/puck_execution_files.py",
+      "sha256": "ac059455bc45437c45330d01aaca761fd571d6de1637a4a8d7ebfbd796622062",
+      "size_bytes": 15001
+    },
+    {
+      "path": "src/palimpsest/puck_native_identity.py",
+      "sha256": "6e5b56e5c6494398dbd6a7c7d07e771e86c63d56e7374692d1d1d8213b721ebb",
+      "size_bytes": 2837
+    },
+    {
+      "path": "src/palimpsest/puck_native_origins.py",
+      "sha256": "e6deea2bc378968371bf1093b869dfc442eeb7def27198695d1c0f872da519e1",
+      "size_bytes": 1660
+    },
+    {
+      "path": "src/palimpsest/puck_runtime_qualification.py",
+      "sha256": "7c2d0dca9edf3bea23f96b224d813f4ab40859b95c10e3103e394e49c7976db5",
+      "size_bytes": 2514
+    },
+    {
+      "path": "tests/test_puck_cpu_held_amendment.py",
+      "sha256": "6a6dcacea1c777d1eff3cbbc2500730e43ae42d7abdf3688ff907101a13c2fdf",
+      "size_bytes": 18283
+    },
+    {
+      "path": "tests/test_puck_cpu_held_amendment03.py",
+      "sha256": "c95dfceefabf46086017e85c9f96c7c7654e38f01ac7cf026a4aa467b78ca2cc",
+      "size_bytes": 10195
+    },
+    {
+      "path": "tests/test_puck_cpu_held_amendment04.py",
+      "sha256": "087055d1fbab122684b284add7e55c02788344762493343294dd1f679af0fcae",
+      "size_bytes": 4999
+    },
+    {
+      "path": "tests/test_puck_cpu_held_amendment05.py",
+      "sha256": "e3f38f8f97b147cc9191b16a7e7eb1a4d7d555f9cc1719859655e97afcf17bf3",
+      "size_bytes": 22284
+    },
+    {
+      "path": "tests/test_puck_cpu_held_amendment05_integration.py",
+      "sha256": "d1c4afd436854edac8a2b0dbd9b6ce49c9a73cbec3435cc2457de45006dcef17",
+      "size_bytes": 17875
+    },
+    {
+      "path": "tests/test_puck_cpu_held_amendment06.py",
+      "sha256": "5d0f0c154bb4b75f44417955067320612e770c0271d3c3a2db6045bff3df5d44",
+      "size_bytes": 11822
+    },
+    {
+      "path": "tests/test_puck_cpu_held_amendment07.py",
+      "sha256": "22a31385386f562b49307e5650955018a1586b6cda6774cf97d400d84edd366d",
+      "size_bytes": 11888
+    },
+    {
+      "path": "tests/test_puck_cpu_held_amendment07_integration.py",
+      "sha256": "39de579099b700abdfa74aea0c45f1627d2f103e453d87cff2cea123a03ab9cd",
+      "size_bytes": 10057
+    },
+    {
+      "path": "tests/test_puck_cpu_held_amendment08.py",
+      "sha256": "b6e6ebeef761d03d291763315c8f08b629df5c56c10c937b977df4252acd2156",
+      "size_bytes": 6886
+    },
+    {
+      "path": "tests/test_puck_cpu_held_amendment08_integration.py",
+      "sha256": "730a42b253fd7d95011a1289f86332fa937e02eec304ef4cb070eb92bcbb3907",
+      "size_bytes": 6537
+    },
+    {
+      "path": "tests/test_puck_cpu_held_amendment09.py",
+      "sha256": "6b300220a8a5a14d0959ea7faacfa1d87759a2e10c44fa95e137e79b85df58c3",
+      "size_bytes": 7241
+    },
+    {
+      "path": "tests/test_puck_cpu_held_amendment09_integration.py",
+      "sha256": "6fbb5c2f8bdf8b17bff43d7bc393575cc12568451491f80c9abad5115a3a3e4e",
+      "size_bytes": 7757
+    },
+    {
+      "path": "tests/test_puck_cpu_held_amendment10.py",
+      "sha256": "a3938dce61956581ba62ace64fc93a1d404c3af8bb0928cdd3938c257572f168",
+      "size_bytes": 8323
+    },
+    {
+      "path": "tests/test_puck_cpu_held_amendment10_integration.py",
+      "sha256": "59154a249b283b903c62195d76fd73e02b7267078cf650abdddd62d7a7dc86d8",
+      "size_bytes": 9619
+    },
+    {
+      "path": "tests/test_puck_cpu_held_audit_integration.py",
+      "sha256": "a6d3f03dbe0749038aee95b86a922570438a1c8137a1f441a05aedc365f6d36e",
+      "size_bytes": 8904
+    },
+    {
+      "path": "tests/test_puck_cpu_held_observer.py",
+      "sha256": "27695f8160971eda80de2e6fa5f75fe3b0964955d70b87db8f89aed0c2ec54b5",
+      "size_bytes": 11748
+    },
+    {
+      "path": "tests/test_puck_cpu_held_parent.py",
+      "sha256": "972c49620e9806bc3a9c207ff096357eaca08600bd2c15cae1a1e672e377b5b2",
+      "size_bytes": 11497
+    },
+    {
+      "path": "tests/test_puck_cpu_held_parent_integration.py",
+      "sha256": "cadcfecde4f9eb982d7cce0664b91060717f5cd61f4c129c6ad4fd66a47d8eeb",
+      "size_bytes": 23157
+    },
+    {
+      "path": "tests/test_puck_cpu_held_runtime_audit.py",
+      "sha256": "bc434f04be47793f51dcc1c037cda0f969bf56cc01ae8bad7f2d39204a61db46",
+      "size_bytes": 6420
+    },
+    {
+      "path": "tests/test_puck_cpu_runtime_entry.py",
+      "sha256": "4f3c63f3cf3c26419c88e08636bdb5c20c3884e866da783aa12fbfb30abd6b22",
+      "size_bytes": 9292
+    },
+    {
+      "path": "tests/test_puck_dependency_files.py",
+      "sha256": "9440be85b19b2e22d7222a5e5eea3f8e546bbc992459369b0a07b221d33a1ea8",
+      "size_bytes": 17905
+    },
+    {
+      "path": "tests/test_puck_held_runtime_entry.py",
+      "sha256": "e230e9ebe9e914f35a2080701edd9bb0b15c876761d31a082771212f892a9398",
+      "size_bytes": 5027
+    },
+    {
+      "path": "tests/test_puck_runtime_entry_v4.py",
+      "sha256": "eb374c8015ab1a3be99415b506138525b8dba1ac43c85da007d00eaf769f76d6",
+      "size_bytes": 4991
+    },
+    {
+      "path": "tests/test_puck_tmpfs_dependencies.py",
+      "sha256": "c80c193206e3aa005a2be770dfdfd105d364f988ba9606f012e3a46c0d3fff0c",
+      "size_bytes": 6108
+    },
+    {
+      "path": "tests/test_puck_worker_bootstrap.py",
+      "sha256": "d7496440a050ec61971dbbe91935e9e2d89dfaceb4e472654618f964b13b3fb5",
+      "size_bytes": 13905
+    },
+    {
+      "path": "tests/test_puck_worker_dependencies.py",
+      "sha256": "fb311232bcea45c52d9ba45a78361ab586c9025800a8bb72fd354870c75b5f09",
+      "size_bytes": 10502
+    }
+  ],
+  "scope": "Authored epoch10 metadata or tiny-package parent/worker/auditor integration only. No actual10 controls, installed runtime, protected inputs or qualification authority."
+}
