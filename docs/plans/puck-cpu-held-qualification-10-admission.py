@@ -36,7 +36,7 @@ HISTORICAL07_JSON={
 
 def hold_manifest(held,pins,raw_paths):
     raw_paths=set(raw_paths)
-    for epoch in ('07','08'):
+    for epoch in ('07','08','09'):
         raw_paths.update('runs/puck-cpu-held-qualification-'+epoch+'-external-cli.'+name for name in ('stdout','stderr'))
         raw_paths.update('runs/puck-cpu-held-qualification-'+epoch+'/logs/'+name+'.log' for name in ('stdout','stderr'))
     for row in pins:held.file(ROOT/row['path'],row,16*1024**2,raw=row['path'] in raw_paths)
@@ -162,6 +162,77 @@ def check_consumed08(held):
             scope='retained unauthenticated optional stderr bytes only; no completeness, cause or acceptance authority'))
 
 
+HISTORICAL09_JSON={'docs/plans/puck-cpu-held-qualification-09.json': '2c441b2465c86baf2982a5c023ce5923c1c144bd5789576807ffee6f19beb6c0', 'runs/puck-cpu-held-qualification-09-external-cli-transport.json': '7e8396f9b44a83980459b5f59e2b544b7e02fc7da431e5a0e99e13b42b1feec1', 'runs/puck-cpu-held-qualification-09/supervision.json': '7b05d199e19f7906d3755571752be323fcd96464dcde54883901aba54bafa0bc', 'docs/reports/puck-cpu-held-qualification-09/observations/palimpsest-puck-cpu-held-qualification-09-audit-01.json': 'c2b6b6e7c8e4c93bb79e906a751038295b2135ad8551f029f3f18fdc8d21d009', 'docs/reports/puck-cpu-held-qualification-09/external/palimpsest-held09-observer-external.json': 'b11b02d3af9047d16353d25994989bc6766425255261bd99aac47f5d272a0338', 'docs/reports/puck-cpu-held-qualification-09/external/palimpsest-held09-audit-external.json': 'dca21e8573bc5e4b9a8d89ff580c0e85a482c5c3be1f51711a0e977c2ebcd78f'}
+
+
+def check_consumed09(held):
+    rows=[]
+    for path,expected in HISTORICAL09_JSON.items():
+        value,raw=held.json(ROOT/path,maximum=64*1024)
+        assert hashlib.sha256(raw).hexdigest()==expected,path
+        rows.append(value)
+    config,transport,supervision,refusal,outer_observer,outer_audit=rows
+    config_sha=HISTORICAL09_JSON['docs/plans/puck-cpu-held-qualification-09.json']
+    transport_sha=HISTORICAL09_JSON['runs/puck-cpu-held-qualification-09-external-cli-transport.json']
+    held.file(ROOT/'runs/puck-cpu-held-qualification-09/configuration.json',
+        dict(size_bytes=8985,sha256=config_sha),64*1024)
+    assert config['kind']=='puck-cpu-held-runtime-allocation-v9' and config['phase']=='qualify'
+    assert type(config['version']) is int and config['version']==9 and type(config['allocation_id']) is int and config['allocation_id']==9
+    assert config['root']==str(ROOT) and config['limits']['normal_seconds']==180 and config['limits']['min_available_ram_bytes']==2<<30
+    assert transport['kind']=='puck-cpu-held-cli-transport-v1' and transport['phase']=='qualify'
+    assert transport['configuration_sha256']==config_sha and transport['observed_returncode']==1 and transport['timed_out'] is False
+    assert 0<transport['elapsed_seconds']<210
+    python=str(Path(sys.executable).resolve())
+    parent_command=[python,'-I','-S','-B',str(ROOT/'scripts/qualify_puck_cpu_held_runtime.py'),
+        '--configuration',str(ROOT/'docs/plans/puck-cpu-held-qualification-09.json'),'--sha256',config_sha]
+    assert transport['command']==parent_command
+    for name in ('stdout','stderr'):
+        row=transport[name]
+        assert row['path']=='runs/puck-cpu-held-qualification-09-external-cli.'+name
+        raw=held.file(ROOT/row['path'],row,16*1024**2,raw=True)
+        assert raw==b'' if name=='stdout' else b'CPU allocation normal return deadline' in raw
+    assert supervision['status']=='failed' and supervision['failure']=='normal-return deadline' and supervision['returncode']==-15
+    assert supervision['process_scope']=='descendants' and supervision['matching_survivors']==[]
+    assert supervision['tracked_processes']==[dict(pid=104005,start_ticks=55289090),dict(pid=104006,start_ticks=55289091),dict(pid=104007,start_ticks=55289092)]
+    empty_sha='e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855'
+    assert held.file(ROOT/'runs/puck-cpu-held-qualification-09/logs/stdout.log',
+        dict(size_bytes=0,sha256=empty_sha),16*1024**2,raw=True)==b''
+    diagnostic_raw=held.file(ROOT/'runs/puck-cpu-held-qualification-09/logs/stderr.log',
+        dict(size_bytes=11086,sha256='c548022a96e5cc22dfb8bbd9d9bb5c0c0ef446dc5a662401dc3e91bc06714a61'),16*1024**2,raw=True)
+    # This authenticates retained historical bytes, not marker authorship,
+    # completeness, import/version acceptance, work location, timing or cause.
+    # No optional marker from the prospective09 invocation is required here.
+    diagnostics=[json.loads(line) for line in diagnostic_raw.splitlines()]
+    assert refusal['kind']=='puck-cpu-held-runtime-independent-audit-v1' and refusal['version']==1 and refusal['status']=='FAIL'
+    assert refusal['configuration_sha256']==config_sha and refusal['transport_sha256']==transport_sha
+    assert refusal['auditor_source_sha256']=='dffcec25696948da18b18abda32dae764fa933a1175c622f45d33a3bca27d234'
+    assert refusal['error']=='Normal external transport exit required' and refusal['qualification_claims']==[]
+    assert all(refusal[key] is False for key in ('collection_authorized','executable','native_authorized','runtime_qualified','study_authorized'))
+    environment=dict(PATH='/usr/bin:/bin',LANG='C.UTF-8',LC_ALL='C.UTF-8',PYTHONDONTWRITEBYTECODE='1')
+    observer_command=[python,'-I','-S','-B',str(ROOT/'scripts/observe_puck_cpu_held_allocation.py'),*parent_command[5:]]
+    audit_command=[python,'-I','-S','-B',str(ROOT/'scripts/audit_puck_cpu_held_runtime.py'),*parent_command[5:],
+        '--transport',str(ROOT/'runs/puck-cpu-held-qualification-09-external-cli-transport.json'),
+        '--transport-sha256',transport_sha,'--output','/tmp/palimpsest-puck-cpu-held-qualification-09-audit-01.json']
+    for phase,value,stdout_sha,stdout_size,budget,command in [
+            ('observer',outer_observer,transport_sha,951,240,observer_command),
+            ('audit',outer_audit,HISTORICAL09_JSON['docs/reports/puck-cpu-held-qualification-09/observations/palimpsest-puck-cpu-held-qualification-09-audit-01.json'],617,145,audit_command)]:
+        assert value['kind']=='puck-cpu-held09-external-transport-v1' and value['phase']==phase
+        assert value['returncode']==1 and value['normal_exit'] is True and value['timed_out'] is False
+        assert value['command']==command and value['cwd']==str(ROOT) and value['environment']==environment
+        assert value['external_deadline_seconds']==budget and 0<value['elapsed_seconds']<budget
+        assert value['stdout']['sha256']==stdout_sha and value['stdout']['size_bytes']==stdout_size
+        assert value['stderr']['sha256']==empty_sha and value['stderr']['size_bytes']==0
+        assert value['implicit_retry'] is False and value['runtime_qualified'] is False and value['study_authorized'] is False
+    missing=['runs/puck-cpu-held-qualification-09/'+name for name in ('result.json','baseline-after.json')]
+    assert all(not os.path.lexists(ROOT/path) for path in missing)
+    return dict(status='FAILED_CONSUMED',configuration_sha256=config_sha,transport_sha256=transport_sha,
+        parent_closure_receipt=False,completed_four_import_receipt=False,missing_receipts=missing,
+        supervision='failed normal-return deadline; sampled matching_survivors empty',independent_audit_status='FAIL',
+        post_failure_full_payload_custody=False,
+        diagnostic_stream=dict(records=len(diagnostics),last_record=diagnostics[-1],
+            scope='retained unauthenticated optional stderr bytes only; no completeness, cause or acceptance authority'))
+
+
 def resources(minimum_ram_bytes=2<<30):
     available=int(next(line.split()[1] for line in Path('/proc/meminfo').read_text().splitlines() if line.startswith('MemAvailable:')))*1024
     soft,hard=resource.getrlimit(resource.RLIMIT_NOFILE)
@@ -179,7 +250,7 @@ def absent():
     for allocation,leaves in [('puck-cpu-install-01',('inventory.json','licences.json','baseline-after.json','logs/namespace.json')),('puck-cpu-retained-admission-01',('inventory.json','snapshot.json','baseline-after.json'))]:
         missing.extend(ROOT/'runs'/allocation/leaf for leaf in leaves)
     missing.extend(ROOT/('runs/puck-cpu-held-qualification-'+n+'/baseline-after.json') for n in ('05','06'))
-    missing.extend(ROOT/('runs/puck-cpu-held-qualification-'+epoch+'/'+name) for epoch in ('07','08') for name in ('result.json','baseline-after.json'))
+    missing.extend(ROOT/('runs/puck-cpu-held-qualification-'+epoch+'/'+name) for epoch in ('07','08','09') for name in ('result.json','baseline-after.json'))
     assert all(not os.path.lexists(path) for path in paths+missing)
     return dict(new_paths=[str(p) for p in paths],historical_missing_receipts=len(missing))
 
@@ -305,6 +376,7 @@ def main():
             raw_paths.update('runs/puck-cpu-held-qualification-'+str(i).zfill(2)+'/result.json' for i in range(1,7))
             raw_paths.update(HISTORICAL07_JSON)
             raw_paths.update(HISTORICAL08_JSON)
+            raw_paths.update(HISTORICAL09_JSON)
             hold_manifest(held,manifest['pins'],raw_paths)
             assert manifest['source_commit']=='e723db037ed1f790c2618798d59f56913054754f' and manifest['observer_invocations']==1 and manifest['implicit_retry'] is False
             config,configraw=held.json(ROOT/'docs/plans/puck-cpu-held-preparation-01.json',maximum=1024**2,lf=True)
@@ -368,6 +440,7 @@ def main():
                 assert not os.path.lexists(failurebase/'baseline-after.json')
             consumed07=check_consumed07(held)
             consumed08=check_consumed08(held)
+            consumed09=check_consumed09(held)
             _phase('hostbaseline/native',started,held)
             tree=m.forest(held,config,dependency,directories,prep['staged_roots'])
             _phase('forest1',started,held)
@@ -387,7 +460,7 @@ def main():
         after=len(os.listdir('/proc/self/fd'))
         assert before==after and not Path('/proc/self/task/'+str(os.getpid())+'/children').read_text().split() and len(os.listdir('/proc/self/task'))==1
         sampled=[]
-        for identity in [(3569912,53431366),(3569913,53431366),(3569914,53431367),(3798021,53913806),(3798022,53913806),(3798023,53913807),(3996069,54384185),(3996070,54384185),(3996071,54384186)]:
+        for identity in [(3569912,53431366),(3569913,53431366),(3569914,53431367),(3798021,53913806),(3798022,53913806),(3798023,53913807),(3996069,54384185),(3996070,54384185),(3996071,54384186),(104005,55289090),(104006,55289091),(104007,55289092)]:
             path=Path('/proc')/str(identity[0])/'stat'
             try:
                 current=int(path.read_text().rsplit(')',1)[1].split()[19])
@@ -395,7 +468,7 @@ def main():
             except FileNotFoundError:matches=False
             assert not matches
             sampled.append(dict(pid=identity[0],start_ticks=identity[1],matching_identity_present=matches))
-        result=dict(m.CLAIMS,kind='puck-cpu-held10-data-only-admission-v1',version=1,status='DATA_ONLY_ADMITTED',scope='dated current10/D source/input/SITE/staged/native/interpreter bytes and resources only; no allocation, target import or preparation reacceptance',preparation_configuration_sha256=PREP_SHA,preparation_result_sha256=RESULT_SHA,dependencies_sha256=DEP_SHA,current_dependencies_sha256=m.sha(m.canonical(current_dependency,False)),current_candidate_sha256=m.sha(candidate_raw),auditor_source_sha256=AUDITOR_SHA,runner_sha256=own['sha256'],baseline=summary,root_count=4,historical_capsule_files=34,input_pins=16,**totals,closure=dict(fd_count_before=before,fd_count_after=after,active_children=[],active_non_main_threads=[]),elapsed_seconds=time.monotonic()-started,qualifications01_02_03_04_05_06_07_08_still_failed_consumed=True,qualification06_invoked=True,qualification07_invoked=True,qualification08_invoked=True,qualification09_invoked=False,configuration_sha256=CONFIG_SHA,current_auditor_sha256=AUDITOR_CURRENT_SHA,resources_before=initial_resources,resources_after=final_resources,absence=absence,site_files=27225,site_directories=2074,site_bytes=1304701872,process_identity_samples=sampled,process_scope='nine recorded identities only; nonexhaustive non-atomic lifetime observation',qualification07_failure=consumed07,qualification08_failure=consumed08,current_sources=24,current_inputs=16,negative_absence=negative_absence,source_commit='e723db037ed1f790c2618798d59f56913054754f')
+        result=dict(m.CLAIMS,kind='puck-cpu-held10-data-only-admission-v1',version=1,status='DATA_ONLY_ADMITTED',scope='dated current10/D source/input/SITE/staged/native/interpreter bytes and resources only; no allocation, target import or preparation reacceptance',preparation_configuration_sha256=PREP_SHA,preparation_result_sha256=RESULT_SHA,dependencies_sha256=DEP_SHA,current_dependencies_sha256=m.sha(m.canonical(current_dependency,False)),current_candidate_sha256=m.sha(candidate_raw),auditor_source_sha256=AUDITOR_SHA,runner_sha256=own['sha256'],baseline=summary,root_count=4,historical_capsule_files=34,input_pins=16,**totals,closure=dict(fd_count_before=before,fd_count_after=after,active_children=[],active_non_main_threads=[]),elapsed_seconds=time.monotonic()-started,qualifications01_02_03_04_05_06_07_08_09_still_failed_consumed=True,qualification06_invoked=True,qualification07_invoked=True,qualification08_invoked=True,qualification09_invoked=True,qualification10_invoked=False,configuration_sha256=CONFIG_SHA,current_auditor_sha256=AUDITOR_CURRENT_SHA,resources_before=initial_resources,resources_after=final_resources,absence=absence,site_files=27225,site_directories=2074,site_bytes=1304701872,process_identity_samples=sampled,process_scope='twelve recorded identities only; nonexhaustive non-atomic lifetime observation',qualification07_failure=consumed07,qualification08_failure=consumed08,qualification09_failure=consumed09,current_sources=24,current_inputs=16,negative_absence=negative_absence,source_commit='e723db037ed1f790c2618798d59f56913054754f')
         assert time.monotonic()<deadline;m.publish(OUTPUT,result)
         _phase('close/publication',started,held)
         assert time.monotonic()<deadline

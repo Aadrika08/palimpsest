@@ -29,3 +29,14 @@ bytes equal cbe48b3. Preserve old live bytes through the existing 09 source arch
 
 Scope: import-route evidence only. No operator, renderer, physics, inference,
 collection, protected inputs, scientific studies, CI, cloud or rover execution.
+
+Observed history RED: 13 cases, three failures/three errors from missing09 guard,
+raw reservation and absence coverage. GREEN: all13 pass in0.014s (0.114s externally),
+with unchanged genuine07/08 coverage and real Held warm-read custody/FD checks.
+A parser authoring failure occurred before any admission-source write: Python
+dict trailing commas were parsed as JSON; use ast.literal_eval instead. Its
+source and note are retained. No admission or actual qualification ran.
+
+Ruling: the static control map's `logs/baseline-after.json` spelling is a typo;
+the genuine09 missing baseline is allocation-root `baseline-after.json`, verified
+by source, old outcome and fresh small-history checks. No missing receipt created.
