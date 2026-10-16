@@ -1,0 +1,26 @@
+{
+  "command": [
+    "/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/bin/python3.11",
+    "-I",
+    "-S",
+    "-B",
+    "/tmp/palimpsest-held08-history-check.py"
+  ],
+  "green": {
+    "errors": 0,
+    "exit_code": 0,
+    "failures": 0,
+    "tests": 5,
+    "tool_chunk": "6b2989"
+  },
+  "limitations": "Initial4 are included in final5. Warm regression executes the real manifest-read helper and historical checker with the authenticated byte holder; no admission main or installed imports.",
+  "outer_timeout_seconds": 30,
+  "red": {
+    "errors": 1,
+    "exit_code": 1,
+    "failure": "Repeated metadata/data role differs",
+    "tests": 5,
+    "tool_chunk": "92bfd4"
+  },
+  "scope": "five small control checks, no admission main/payload census/runtime"
+}

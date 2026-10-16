@@ -1,0 +1,70 @@
+{
+  "at_utc": "2026-10-16T00:21:36.224980+00:00",
+  "completed_four_import_receipt": false,
+  "diagnostic_records": 11,
+  "independent_audit": {
+    "auditor_source_sha256": "0406bfa94f6b230fca440d57f65e5d429a30d70d054e2cdd29bafb0da1ca2b35",
+    "collection_authorized": false,
+    "configuration_sha256": "67076970caffe64b6162c4344f11d943b620dd2e0fb43ace72e39f508fa7ee60",
+    "elapsed_seconds": 0.002360432001296431,
+    "error": "Normal external transport exit required",
+    "error_type": "ValueError",
+    "executable": false,
+    "kind": "puck-cpu-held-runtime-independent-audit-v1",
+    "native_authorized": false,
+    "qualification_claims": [],
+    "runtime_qualified": false,
+    "status": "FAIL",
+    "study_authorized": false,
+    "transport_sha256": "d80f60a10cf611c660e5bda25bf6f055c49415686681db33ca6ae44f868841b4",
+    "version": 1
+  },
+  "independent_audit_sha256": "93fb936dcf82bcf46a592026e8744c5900bf5bd9b283465d5e5dfad13d346ba9",
+  "kind": "held08-post-outcome-observation-v1",
+  "last_diagnostic": {
+    "diagnostic_only": true,
+    "elapsed_seconds": 81.56448395497864,
+    "kind": "puck-worker-phase-v1",
+    "phase": "import.torchvision.enter",
+    "sequence": 11
+  },
+  "missing_receipts": [
+    "result.json",
+    "baseline-after.json"
+  ],
+  "observer_elapsed_seconds": 180.40697938401718,
+  "observer_invocations": 1,
+  "observer_returncode": 1,
+  "observer_timed_out": false,
+  "parent_closure_receipt": false,
+  "post_failure_full_payload_custody": false,
+  "runtime_qualified": false,
+  "status": "FAILED_CONSUMED",
+  "supervision": {
+    "failure": "normal-return deadline",
+    "finished_monotonic": 497703.016780332,
+    "matching_survivors": [],
+    "pid": 3996069,
+    "process_scope": "descendants",
+    "returncode": -15,
+    "rss_sampling_seconds": 0.05,
+    "sampled_peak_rss_bytes": 610668544,
+    "status": "failed",
+    "tracked_processes": [
+      {
+        "pid": 3996069,
+        "start_ticks": 54384185
+      },
+      {
+        "pid": 3996070,
+        "start_ticks": 54384185
+      },
+      {
+        "pid": 3996071,
+        "start_ticks": 54384186
+      }
+    ]
+  },
+  "worker_stderr_bytes": 1469,
+  "worker_stdout_bytes": 0
+}

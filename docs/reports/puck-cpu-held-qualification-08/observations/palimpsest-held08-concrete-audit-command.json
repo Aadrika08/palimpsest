@@ -1,0 +1,32 @@
+{
+  "at_utc": "2026-10-16T00:20:23.571426+00:00",
+  "audit_invoked": false,
+  "command": [
+    "/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/bin/python3.11",
+    "-I",
+    "-S",
+    "-B",
+    "/home/utkarsh/.codex/worktrees/0071/brain/scripts/audit_puck_cpu_held_runtime.py",
+    "--configuration",
+    "/home/utkarsh/.codex/worktrees/0071/brain/docs/plans/puck-cpu-held-qualification-08.json",
+    "--sha256",
+    "67076970caffe64b6162c4344f11d943b620dd2e0fb43ace72e39f508fa7ee60",
+    "--transport",
+    "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-held-qualification-08-external-cli-transport.json",
+    "--transport-sha256",
+    "d80f60a10cf611c660e5bda25bf6f055c49415686681db33ca6ae44f868841b4",
+    "--output",
+    "/tmp/palimpsest-puck-cpu-held-qualification-08-audit-01.json"
+  ],
+  "control_commit": "2f74653367f14f0156479a52314f625d7400fc57",
+  "kind": "measured08-concrete-auditor-command-v1",
+  "observer_returncode": 1,
+  "observer_timed_out": false,
+  "runtime_qualified": false,
+  "source_commit": "f5523dc69c8d05ee2f3ff1118c633512c4b6a2e0",
+  "transport": {
+    "path": "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-held-qualification-08-external-cli-transport.json",
+    "sha256": "d80f60a10cf611c660e5bda25bf6f055c49415686681db33ca6ae44f868841b4",
+    "size_bytes": 951
+  }
+}
