@@ -1,289 +1,83 @@
-# Goal: deliver Palimpsest in simulation
+# Goal: prove and deliver Palimpsest in simulation
 
-**Deliver one reproducible local Palimpsest simulation release that a new operator
-can install, run, inspect, replay, export and recover, with supported controllers
-and all six artworks. Prove and accept that simulation before starting the physical
-rover.**
+**Deliver a reproducible local Palimpsest simulation release with all six artworks
+that another person can install, experience, inspect, replay, export and recover.
+Complete and accept the simulation before starting the physical rover.**
 
-This is the active goal. It continues the [original completion scope](simulation-completion-next-goal.md).
-Implementation history is preserved in the unchanged [earlier history](simulation-release-execution-goal-history-2026-10-15.md)
-and the [byte-identical prior goal snapshot](simulation-release-execution-goal-history-2026-10-16.md).
-Those dated records are evidence, not instructions to repeat consumed attempts.
+The first visible proof is **one real manual CPU episode**: run it, record it with
+registered snapshots, replay every recorded tick against a comparison declared
+before execution, and export a portable bundle that independent checks accept.
+Then finish the scientific results, supported controllers and all six encounters
+on the same integrated release candidate.
 
-## Active work unit: qualify the exact local CPU runtime
+## Measurable milestones
 
-**Obtain one normal, independently audited completion of qualification 10 on the
-exact installed CPU runtime. Keep the existing 180s normal limit and 2GiB resource
-floor. This qualifies the import route only; it is the first prerequisite to the
-real recorded, replayed and exported episode below.**
+1. **One working episode.** Qualify the exact installed CPU runtime and the
+   separate operator/renderer route. Run one bounded public episode with declared
+   inputs, scene, controller, seed and limits. Retain source/runtime/input
+   identities, recording, snapshots, replay comparison, source and replay exports,
+   member hashes, terminal state and independently verified normal cleanup.
+2. **Valid results and capable controllers.** Complete valid nine-condition
+   memory development and separately admitted held-out analysis. Every required
+   puck model and MaleCNS seed must meet the unchanged 3/4 development and 6/8
+   held-out goal thresholds, with required mechanism replay and lab integration.
+   A natural task failure may prove the engineering route in milestone 1; it
+   cannot satisfy this capability milestone.
+3. **A usable six-artwork lab.** Integrate all six encounters and pass actual
+   browser, declared-duration visual/audio, keyboard/viewport, faithful mapping,
+   provenance, replay/export, interruption/recovery and endurance checks.
+4. **Human acceptance.** Record the user's artistic acceptance and an independent
+   operator's installation and complete all-six-mode session.
+5. **Reproducible delivery.** Close all seven existing release gates on that same
+   candidate, with final review/verification, reproducible installation, licences,
+   limitations, runbook and a complete requirements-to-evidence matrix.
 
-The source prerequisite is complete in [PR175](https://github.com/Aadrika08/palimpsest/pull/175):
-the parent, observer and independent auditor explicitly bind q4 only to allocation
-10. [Retained source evidence](https://github.com/Aadrika08/palimpsest/blob/e723db037ed1f790c2618798d59f56913054754f/docs/reports/puck-cpu-q4-qualification-epoch10.md)
-records 732 passing affected cases, including 51 new cases, and independent review
-with no material findings. Old allocations 1–9 still select q3. These are authored
-source checks, not an installed-runtime pass.
+## Active work unit: qualify the installed CPU runtime
 
-1. Preserve the original qualification-10 controls and consumed data-admission01.
-   Complete the separately named admission amendment02: compact canonical config
-   with identical parsed values, explicit canonical preflight, and distinct
-   runner/freeze/wrapper/envelope/output paths. Independently review and publish
-   those exact controls before any new admission. Keep source e723/cbe, candidate
-   D, nineteen negatives, original preparation, environment and limits unchanged.
-2. Perform fresh full byte/custody/resource admission02 and independently review
-   its outcome. Only after it passes and a fresh pre-observer guard succeeds,
-   invoke qualification10 exactly once. Disk clearance alone is not admission.
-3. Independently audit the outcome, four ordered imports, exact source/dependency
-   identities, final byte checks, normal closure and complete receipts. Preserve
-   all failed admissions/attempts; never overwrite or silently retry them.
+**Immediate exit:** qualification 10 completes normally on the exact installed
+CPU runtime within its unchanged 180s limit and 2GiB resource floor. An independent
+audit must accept all four ordered imports, exact identities and byte custody,
+complete receipts and normal closure. This proves the import route only; the
+operator/renderer and real episode remain separate work.
 
-**Current status (2026-10-16): controls published; admission01 failed before
-payload checks; runtime10 remains uninvoked. All seven release gates are open.**
-[PR176](https://github.com/Aadrika08/palimpsest/pull/176) preserves the original
-controls pushed at b3d50f5 and the sole normal nonzero admission outcome. The
-[report](https://github.com/Aadrika08/palimpsest/blob/58bef84897b07b7a6d3111608f484721084251b8/docs/reports/puck-cpu-held-qualification-10-admission-01.md)
-records the pretty-versus-compact canonical JSON mismatch at the authenticated
-configuration reader, before manifest/plans/SITE/staged-payload checks. No full
-custody or DATA_ONLY_ADMITTED result exists. Failure telemetry observes FD4→4
-and no current-process children/threads; it is not runtime-parent closure.
+The source prerequisite is complete in [PR175](https://github.com/Aadrika08/palimpsest/pull/175)
+at `e723db037ed1f790c2618798d59f56913054754f`: 732 affected authored cases passed,
+including 51 new cases. Those checks are source evidence, not installed-runtime
+acceptance. [PR176](https://github.com/Aadrika08/palimpsest/pull/176) holds the exact
+qualification-10 controls, consumed admission01 and separate admission amendment02.
 
-The separate prospective amendment02 configuration now passes a canonical-byte
-preflight with identical parsed values and formatter AST matching the authenticated
-reader. Its RED was committed first at fa0db6f; compact 8,988B bytes pass GREEN.
-This is metadata proof only. Its runner, frozen controls, independent review and
-fresh full admission remain unfinished. No observer or actual runtime10 ran.
+**Verified status (2026-10-16):** amendment02 controls are pushed at
+`796359a099131157b5b91db38f14784628d5d7c5`. Independent controls review found one
+guard-path bug; a separately named correction passes its RED-to-GREEN regression,
+and all seventeen history checks pass. The frozen original and all 2,150 pins
+remain unchanged. Fresh data-only admission02 returned 0 normally in 26.06s
+externally (25.94s in the source receipt), with full byte/custody rechecks and
+FD4→4/no children or threads. Independent admission review is pending;
+**runtime10 remains uninvoked and all seven release gates remain open.**
 
-About 45GiB of project-disk space is available at this check; each execution must
-refresh its own resource checks. After import qualification, separately qualify
-the finite operator/renderer route and finish the real public episode bundle.
-Scientific study decisions and artistic or independent-operator acceptance
-remain with their named owners.
+The next actions, in order, are:
 
-## Next checkpoint: prove one complete simulation episode
+1. Require one fresh full data-only admission02 and an independent outcome review.
+2. Refresh byte, resource and absence guards, then invoke runtime10 exactly once
+   under its fixed envelope. Independently audit and preserve the actual outcome.
+3. After an accepted import qualification, separately admit the finite public
+   operator/renderer route and produce the real episode bundle in milestone 1.
 
-**Run one public manual CPU episode, record it with snapshots, replay every
-recorded tick under the declared comparison, and export a portable evidence
-bundle. This checkpoint finishes only when independent checks verify the inputs,
-recording, replay, exports and normal cleanup.** Finish these steps in order:
+Source e723/cbe, preparation01, candidate D, nineteen negatives, environment and
+qualification limits stay fixed. Consumed runtime attempts01–09 and failed
+admission01 remain immutable. A failure consumes its named attempt; it does not
+authorize a silent retry or relax a release threshold.
 
-1. Pass the exact local runtime's separately reviewed qualification and independent audit.
-2. Admit and run one bounded episode with declared model/controller, scene, seed,
-   limits, operator/renderer checks, input identities, records and snapshots.
-3. Meet the replay comparison criterion declared before execution; validate the
-   portable export and independently audit the outcome, bytes and normal cleanup.
+Project disk has about 45GiB free at the 2026-10-16 check. Every execution must
+refresh its own resource checks; clearing disk space is not admission. Scientific
+protocol decisions, protected-data access and human acceptance retain their named
+owners. Physical rover work and CI are outside this goal.
 
-The bundle must retain the source/runtime/input identities, controls and limits,
-complete recording and snapshots, replay comparison, source and replay exports,
-member hashes and terminal/cleanup evidence. A natural task failure may prove
-this engineering route; it cannot pass a controller capability gate.
-
-| Checkpoint | Concrete deliverable | Pass condition |
-| --- | --- | --- |
-| A — working simulation route | Exact local runtime and one portable real-episode bundle. | Runtime qualification, declared operator/renderer checks, recording, replay comparison, export validation and normal cleanup pass with independent audits. |
-| B — supported results | Complete memory studies and capable puck/MaleCNS controllers. | Valid nine-condition memory development and held-out analysis; every required puck model and MaleCNS seed meets 3/4 development and 6/8 held-out goals under its unchanged protocol. |
-| C — usable product | One integrated lab with all six artwork encounters. | Asset-backed browser, sustained visual/audio, keyboard/viewport, faithful mapping, provenance, replay/export, interruption/recovery and endurance checks pass. |
-| D — accepted delivery | Reproducible release and evidence package another person can use. | User artistic acceptance, independent installation/all-six-mode session, final review, licences, runbook and every release-gate record are complete. |
-
-## Current result and first unfinished action
-
-**The next product result is the real recorded, replayed and exported episode
-bundle. Runtime qualification is its current prerequisite.** Preparation 01 and
-ordinary observations 02/03 have scoped passing audits; they do not establish an
-installed-runtime pass.
-
-- [PR162](https://github.com/Aadrika08/palimpsest/pull/162) preserves failed 06:
-  data admission passed, but Torchvision/PIL could not resolve its packaged TIFF
-  library. Qualifications 01–06 are consumed; their failures and missing receipts
-  remain preserved.
-- [PR164](https://github.com/Aadrika08/palimpsest/pull/164) corrects exactly the
-  two Pillow native-origin declarations in candidate D. All 678 affected authored
-  cases pass. The separate post-06 data-only check 03 passed once in 26.972s with
-  complete byte/forest rechecks and normal closure. Its receipt review found no
-  findings; that dated result covers 06/C, not source 07/D or runtime acceptance.
-- [PR165](https://github.com/Aadrika08/palimpsest/pull/165) freezes distinct 07 at
-  pushed commit `1a1ffa0`. Its fresh data-only admission passed once in 42.608s,
-  with independent receipt review. **Its one runtime invocation failed at the
-  180s normal-return deadline.** The external observer returned 1 normally in
-  180.400s; supervision stopped the worker with SIGTERM and sampled no matching
-  survivors. Both worker logs are empty, and final outcome/baseline-after receipts
-  are absent. The independent auditor correctly refused the nonzero transport.
-  Attempt 07 is consumed. No completed four-import or parent-closure claim follows,
-  and the retained evidence does not identify which worker phase exhausted time.
-
-The bounded diagnostic source is now implemented and reviewed at
-[`5ccde54`](https://github.com/Aadrika08/palimpsest/blob/5ccde54d8f41d1f83ec858b2cdb8eb12755c795e/docs/plans/puck-cpu-runtime-phase-trace-v1.md).
-Its final 217 disjoint authored checks pass: 214 worker/consumer cases in 119.86s
-and three persistent historical-publication integrations in 46.53s. It adds 18
-nominal stderr checkpoints with a best-effort cap of 24 attempts/16KiB; terminal
-stdout follows close. The reviewed nested-latch and old-bootstrap compatibility
-fixes preserve q1/q2 and owners without the optional hook. Failed green01/consumer01
-source validations remain retained without a new root-cause claim for their
-storage-metadata/native persistent failures. These authored checks do not explain
-the installed 07 timeout or establish installed-runtime acceptance.
-
-[PR167](https://github.com/Aadrika08/palimpsest/pull/167) implements the closed
-diagnostic 08 source support and is independently reviewed with no material
-findings. All 630 disjoint authored cases pass: 622 private cases in
-26.42s and eight persistent integrations in 119.48s. The initial three REDs and
-mixed-layout source-validation result (two failures/622 passes) remain retained.
-
-[PR168](https://github.com/Aadrika08/palimpsest/pull/168) preserves actual 08.
-Its controls were reviewed and pushed at `2f74653` before execution. A
-pre-execution raw-stream-cache fix passed five control checks, including the
-original four; its uninvoked revision remains retained. Fresh 08/D data-only
-admission passed once (33.702s externally; 33.522s in the source receipt), with full
-SITE/staged/native/current-control byte checks, nineteen absences, six old PID
-identity samples and 4→4 descriptors/no children or threads. Independent receipt
-review was GO; this was data admission, not runtime acceptance.
-
-**The sole 08 runtime invocation failed at the 180s normal-return deadline.** The
-external observer returned 1 normally in 180.464s without external timeout;
-supervision stopped the worker with SIGTERM(-15) and sampled no matching survivors.
-Eleven worker-relative markers include NumPy return at 38.084s, Torch return at
-79.741s and last-seen Torchvision entry at 81.564s. No later marker, result,
-baseline-after, completed four-import receipt or parent-closure evidence exists.
-The last marker does not identify where the remaining time was spent. The audit
-CLI correctly refused the nonzero transport; it did not perform a full post-run
-payload check. Attempt 08 is consumed; the cause remains unknown.
-
-[PR169](https://github.com/Aadrika08/palimpsest/pull/169), pushed at
-[`3975f8a`](https://github.com/Aadrika08/palimpsest/commit/3975f8a158c0899e9c640b323488de9a0f0a40df),
-completes the authored guard-cost measurement. The original passes nine cases in
-13.43s; its 2048-entry cache median is 93.742ms/check. The direct variant measures
-1.517ms/check but has two failures/seven passes on overridden container membership.
-The hoisted variant measures 1.068ms/check but has one failure/eight passes on callback removal.
-Both faster probes change current behavior; production remains unchanged.
-Independent outcome review found no material findings. All 32 artifacts/291,335B,
-including three empty files, verify against originals, source Git and the committed
-archive. These synthetic cases do not establish the cause of 08's timeout,
-installed qualification or independent FD proof.
-
-Bounded guard accounting in [PR170](https://github.com/Aadrika08/palimpsest/pull/170) at
-[`d76b9f3`](https://github.com/Aadrika08/palimpsest/commit/d76b9f332c034a994bc2e867604a551df8c66a1f) retains the original union: restricting cache
-values to exact built-in types cannot prevent asynchronous mutation. This unit
-changes only bootstrap production source; the qualifier is unchanged. Its q3
-cost channel is separately bounded to 32 attempts/32KiB and 1024B per row, with a
-cooperative 10s cadence; the phase channel remains 24 attempts/16KiB. The final 304
-disjoint authored cases pass: 302 private cases in 242.70s and two persistent
-integrations in 24.43s. Independent source and final evidence review
-found no material findings. All 136 artifacts/1,560,197B (13 empty files) verify
-against originals, source Git and the committed archive. These source checks neither identify 08's installed timeout cause
-nor establish installed qualification. At that source-only checkpoint, no actual
-09 controls, admission or runtime invocation existed; attempts 01–08 remained consumed.
-
-Closed 09 source support in [PR171](https://github.com/Aadrika08/palimpsest/pull/171) at
-[`96ace37`](https://github.com/Aadrika08/palimpsest/commit/96ace37062fd14e20ae1ebd2371b90fa88f8d7ab) changes only the parent, independent auditor and
-observer production scripts; bootstrap and qualifier are unchanged. The authored
-API coverage includes normal acceptance when optional cost rows are absent.
-Final validation passes 673 disjoint authored cases: 664 private cases in 24.71s
-and nine persistent integrations in 110.19s. Independent source and final evidence
-reviews found no material findings. All 145 artifacts/2,138,968B (eight empty files)
-verify against originals, source Git and committed archive bytes. At that
-source-only checkpoint, no actual 09 controls, admission or runtime invocation existed.
-
-As of 2026-10-16, actual 09 controls are prepared and independently reviewed at
-[`60e5756`](https://github.com/Aadrika08/palimpsest/commit/60e5756d8c670e898320b26b3a2cee267577e53c)
-([PR172](https://github.com/Aadrika08/palimpsest/pull/172)), binding source `96ace37`. Nine small history-control
-checks pass. The metadata-only self-check covers 1,259 pins / 81,114,419B; exact
-control and proof-roster reviews found no material findings. These checks retain
-the genuine failed 08 evidence and the unchanged byte/custody, absence and limit
-contracts. These were pre-execution source/control checks, not runtime acceptance.
-
-[PR172](https://github.com/Aadrika08/palimpsest/pull/172), with outcome at
-[`31d980b`](https://github.com/Aadrika08/palimpsest/commit/31d980be15921b206eb77d2455931cc44c06270e), preserves consumed actual 09.
-Fresh data-only admission passed once in 29.175485s externally, with full current
-byte/custody checks and normal FD4→4 closure; independent receipt review passed.
-**The sole runtime invocation failed at the unchanged 180s deadline** (external
-normal exit 1 in 180.517676s, no external timeout). Supervision stopped the worker
-with SIGTERM(-15); its sampled matching-survivor list was empty. Final result and
-baseline-after remain absent; no parent-closure or completed four-import receipt
-exists. The one audit correctly refused the nonzero transport, without a complete
-post-run payload audit.
-
-The retained stream has eleven phase and nineteen optional cost rows. NumPy and
-Torch returned; the last phase is Torchvision entry at 87.536113s. The final cost
-row at 175.091295s reports cumulative cache 59.248136s, bindings 31.626744s and
-custody 30.099583s. These incomplete, unauthenticated source counters may include
-nested work and instrumentation; they are not exclusive timing or proof of the
-full timeout cause. Independent outcome/publication reviews found no material
-findings. All 144 artifacts / 13,668,698B / seven empty files match the retained
-originals and source/control Git origins. Attempts 01–09 remain consumed; no
-actual 10 controls, admission or invocation exist.
-
-The completed authored equivalence experiment is preserved in
-[PR173](https://github.com/Aadrika08/palimpsest/pull/173) at [`69af058`](https://github.com/Aadrika08/palimpsest/commit/69af058e9e59815e6731affe7cc7fc3f03111a2f).
-Its plan and new case were committed first at `fb20e74`. Unchanged production
-passes seven semantic cases in 10.01s; the sole in-place candidate passes six and
-fails one in 9.73s. Both deselect the three timing cases. The original propagates
-the reflected-union sentinel, closes owned holders and stays poisoned; the
-candidate skips that exception. It is rejected without a performance run.
-Independent source/outcome/publication reviews found no material findings. All
-63 artifacts / 680,759B / two empty files verify against retained originals and
-test-first source Git. This rejects one rewrite, not every possible optimization.
-No installed-runtime or performance acceptance follows.
-
-The explicit q4 boundary-snapshot guard is implemented in source commit
-[`1fa9421`](https://github.com/Aadrika08/palimpsest/commit/1fa94213f583a30e6c5533a45bef5575b45e9095);
-[source evidence](https://github.com/Aadrika08/palimpsest/blob/89f51ab1ec08b2a210152b5fe4b675a281aa24c5/docs/reports/puck-cpu-guard-contract-v4.md)
-records 41 distinct q4 guard/entry, 397 legacy and three cost cases with passing
-evidence: 441 across split batches, not one all-green invocation. Four retained
-legacy import-path failures passed a targeted environment-only correction.
-Historical median batch/3 costs were 0.705/5.833/93.742ms at 128/512/2048 names;
-q4 measured 0.721/1.517/4.729ms. This unpaired authored comparison uses different
-contracts/context/diagnostics; q4 is slightly slower at 128 and shows bounded
-reduction at larger sizes, without installed-speed or actual 09-cause proof.
-Q4 deliberately changes sampling semantics, preserves q1–q3 and remains
-non-atomic with ABA/post-observation limits. At that source-only checkpoint,
-existing outer epochs remained unchanged and old-parent admission refused q4.
-No installed runtime or actual 10 was qualified or invoked by that source unit.
-Scientific protocols, model thresholds and human acceptance gates remain unchanged; all seven release gates remain open.
-
-[PR175](https://github.com/Aadrika08/palimpsest/pull/175) closes the distinct CPU
-qualification-10 source epoch at `cbe48b3`. Its complete authored parent→q4 worker→
-independent API/CLI route passes. The affected regression passes 732 cases in
-122.64s, including all 51 new cases; these counts overlap. Independent review
-found no material findings. The [report](https://github.com/Aadrika08/palimpsest/blob/e723db037ed1f790c2618798d59f56913054754f/docs/reports/puck-cpu-q4-qualification-epoch10.md)
-preserves the initial fixture mistakes and intended REDs, exact source pins,
-normal authored closure, optional-cost-row acceptance and specific mixed-tag
-refusals. Authored fixtures use 18 missing names and 128MiB floors; production
-still requires nineteen names and 180s/2GiB. No installed qualification follows.
-
-[PR176](https://github.com/Aadrika08/palimpsest/pull/176) now preserves consumed
-qualification10 data-admission01 and its exact pre-execution controls. The controls
-bound 1,998 pins/107,657,006B; thirteen history checks and semantic metadata checks
-passed. The sole admission failed normally at compact canonical JSON validation,
-before manifest or payload checks. Independent outcome review confirms the narrow
-failure boundary. All 89 archived artifacts/1,341,886B/six empty files verify
-against originals, source Git and committed archive. The canonical-only prospective
-amendment02 config passes its new metadata RED→GREEN check with unchanged values;
-this does not establish a full admission or qualify any runtime.
-
-**First unfinished action:** complete and independently review admission
-amendment02's distinct runner/freeze/wrapper/envelope/output controls; publish
-them, then perform one fresh full data-only admission and receipt review. Preserve
-the failed admission01 and attempts 01–09. Only after successful admission and a
-fresh pre-observer guard may actual10 be invoked once and audited. After separate
-operator/renderer qualification, finish the real recorded/replayed/exported public
-episode bundle. The full simulation release remains the goal.
-
-[PR163](https://github.com/Aadrika08/palimpsest/pull/163) already implements the
-manual constructor seam with exact arguments and seed/reset order preserved;
-its 19 authored cases pass. It has not run a real episode or renderer. Integrate
-that source work into the product route.
-
-Reuse `Engine` → UUID `RunWriter` → initial snapshot → replay → bundle export.
-The numeric `PuckIntervalWriter` format cannot simply be passed to those readers.
-The proposed public route uses the checker scene at upstream `8d964599`;
-protected inputs remain closed. Complete the finite CPU worker/import/operator/renderer bindings
-and the same admitted reopening route for replay. Declare the exact inputs,
-seed, limits and comparison criterion before execution, then package the source
-and replay exports with controls and comparison evidence without widening the
-export whitelist.
-
-Every prerequisite must name the blocked milestone and its smallest finite exit.
-Source fixtures, PRs and test totals do not replace the episode. Do not grow a
-general package-security framework. Independent episode and memory-contract
-implementation may proceed without opening an allocation.
+This continues the [original completion scope](simulation-completion-next-goal.md).
+Detailed prior status remains in the [unchanged pre-clarification goal](https://github.com/Aadrika08/palimpsest/blob/29c40a5983a20ea336ace7d9794720503fbbd553/docs/plans/simulation-release-execution-goal.md),
+[earlier history](simulation-release-execution-goal-history-2026-10-15.md) and
+[prior snapshot](simulation-release-execution-goal-history-2026-10-16.md).
+Historical records are evidence, not instructions to repeat consumed attempts.
 
 ## What counts as finished
 
