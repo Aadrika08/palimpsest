@@ -1,0 +1,32 @@
+{
+  "absence": {
+    "historical_missing_receipts": 14,
+    "new_paths": [
+      "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-held-qualification-09",
+      "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-held-qualification-09-external-cli.stdout",
+      "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-held-qualification-09-external-cli.stderr",
+      "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-held-qualification-09-external-cli-transport.json",
+      "/tmp/palimpsest-puck-cpu-held-qualification-09-audit-01.json",
+      "/tmp/palimpsest-puck-cpu-held-qualification-09-admission-01.json"
+    ]
+  },
+  "admission_main_invoked": false,
+  "checked_at_utc": "2026-10-16T02:42:22.341344+00:00",
+  "control_commit": "60e5756d8c670e898320b26b3a2cee267577e53c",
+  "control_files": 39,
+  "historical_records_unchanged": 57,
+  "payload_census_or_rehash": false,
+  "pinned_bytes": 81114419,
+  "pins": 1259,
+  "resources": {
+    "at_utc": "2026-10-16T02:42:22.329711+00:00",
+    "mem_available_bytes": 4547620864,
+    "nofile_hard": 524288,
+    "nofile_soft": 65536,
+    "project_free_bytes": 50749161472,
+    "tmpfs_free_bytes": 3058839552
+  },
+  "runtime_invoked": false,
+  "source_commit": "96ace37062fd14e20ae1ebd2371b90fa88f8d7ab",
+  "status": "PASS_PRE_ADMISSION_GUARD_ONLY"
+}
