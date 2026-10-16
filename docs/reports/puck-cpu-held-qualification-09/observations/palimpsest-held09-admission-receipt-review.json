@@ -1,0 +1,397 @@
+{
+ "absences": {
+  "guard_matches": true,
+  "historical": 14,
+  "negative_imports": {
+   "names": [
+    "OpenGL_accelerate",
+    "accimage",
+    "av",
+    "colorama",
+    "defusedxml",
+    "dill",
+    "flint",
+    "gmpy",
+    "gmpy2",
+    "monkeytype",
+    "numpy._distributor_init_local",
+    "opt_einsum",
+    "org",
+    "pydot",
+    "pynvml",
+    "torch._rocm_init",
+    "torchdistx",
+    "tqdm",
+    "triton"
+   ],
+   "scope": "current declarations and re-censused held staged forests; not ambient or executed-request coverage"
+  },
+  "new_before_publication": 6,
+  "note": "All six new paths were absent when checked before publication. Admission output now properly exists and is pinned here; do not claim all six remain absent after publication. Fresh preobserver guard must require its pinned receipt plus still-future output absences.",
+  "receipt": {
+   "historical_missing_receipts": 14,
+   "new_paths": [
+    "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-held-qualification-09",
+    "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-held-qualification-09-external-cli.stdout",
+    "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-held-qualification-09-external-cli.stderr",
+    "/home/utkarsh/.codex/worktrees/0071/brain/runs/puck-cpu-held-qualification-09-external-cli-transport.json",
+    "/tmp/palimpsest-puck-cpu-held-qualification-09-audit-01.json",
+    "/tmp/palimpsest-puck-cpu-held-qualification-09-admission-01.json"
+   ]
+  }
+ },
+ "admission": {
+  "baseline": {
+   "external_file_count": 10,
+   "prefix_manifest_sha256": "4d54b1dac0283b93ac036029c3cb669022b34a748a7f2bda019809930b5c9886",
+   "regular_file_bytes": 90314007,
+   "regular_file_count": 4233,
+   "symlink_count": 1048
+  },
+  "candidate_d_sha256": "6eba35557f64b8f7108558b1334d488da20b2381d0e69ffece090645f8fb8d3d",
+  "configuration_sha256": "2c441b2465c86baf2982a5c023ce5923c1c144bd5789576807ffee6f19beb6c0",
+  "control_commit": "60e5756d8c670e898320b26b3a2cee267577e53c",
+  "current_auditor_sha256": "dffcec25696948da18b18abda32dae764fa933a1175c622f45d33a3bca27d234",
+  "current_d_dependency_sha256": "c82ddc9777f8c26cc68bb8a6a2010b1309085b3567c74d101d67732508be53fc",
+  "current_inputs": 16,
+  "current_sources": 24,
+  "data_auditor_sha256": "01bc2c99634cb3ec2e7bfc92f4fc96b219e07c8a5ea10351227a5cfb1181d4cf",
+  "directory_count": 2076,
+  "elapsed_seconds": 29.070700966985896,
+  "file_count": 27255,
+  "helper_sha256": "5ee0931ae42ba94de7db82b8c33028e1749ddaec819ac2c51a7a0d2189727652",
+  "historical_capsule_files": 34,
+  "historical_h_dependency_sha256": "25ea4e912919116b3196b8a8ed537f5dde02f40a35c295d97fe0c0509d67277f",
+  "input_bytes": 1318494346,
+  "kind": "puck-cpu-held09-data-only-admission-v1",
+  "root_count": 4,
+  "site_bytes": 1304701872,
+  "site_directories": 2074,
+  "site_files": 27225,
+  "source_commit": "96ace37062fd14e20ae1ebd2371b90fa88f8d7ab",
+  "status": "DATA_ONLY_ADMITTED"
+ },
+ "authority": {
+  "collection_authorized": false,
+  "executable": false,
+  "native_authorized": false,
+  "qualification_claims": [],
+  "runtime_qualified": false,
+  "study_authorized": false
+ },
+ "closure": {
+  "active_children": [],
+  "active_non_main_threads": [],
+  "fd_count_after": 4,
+  "fd_count_before": 4
+ },
+ "control_pins": [
+  {
+   "path": "/home/utkarsh/.codex/worktrees/0071/brain/docs/plans/puck-cpu-held-qualification-09.json",
+   "sha256": "2c441b2465c86baf2982a5c023ce5923c1c144bd5789576807ffee6f19beb6c0",
+   "size_bytes": 8985
+  },
+  {
+   "path": "/home/utkarsh/.codex/worktrees/0071/brain/docs/plans/puck-cpu-held-qualification-09-freeze.json",
+   "sha256": "efb5bbe5ad22dfb5c2559e64a4565b35424f51ba3bbbc6d080b7eda81acd85a5",
+   "size_bytes": 301670
+  },
+  {
+   "path": "/home/utkarsh/.codex/worktrees/0071/brain/docs/plans/puck-cpu-held-qualification-09-admission.py",
+   "sha256": "5ee0931ae42ba94de7db82b8c33028e1749ddaec819ac2c51a7a0d2189727652",
+   "size_bytes": 31965
+  },
+  {
+   "path": "/home/utkarsh/.codex/worktrees/0071/brain/docs/plans/puck-cpu-held-qualification-09-external.py",
+   "sha256": "49a4806ee0e8156d0be4c227f512f623f4e8972ea9609154291405e67857fca6",
+   "size_bytes": 4194
+  },
+  {
+   "path": "/home/utkarsh/.codex/worktrees/0071/brain/docs/plans/puck-cpu-held-qualification-09-execution.json",
+   "sha256": "0cdea1d32ec49d0f04da3f4e8b9cf98c6d1d0e0842811d5bc85021ea22341118",
+   "size_bytes": 3636
+  }
+ ],
+ "external": {
+  "cap_seconds": 145,
+  "command": [
+   "/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/bin/python3.11",
+   "-I",
+   "-S",
+   "-B",
+   "/home/utkarsh/.codex/worktrees/0071/brain/docs/plans/puck-cpu-held-qualification-09-admission.py"
+  ],
+  "cwd": "/home/utkarsh/.codex/worktrees/0071/brain",
+  "elapsed_note": "Authoritative retained external receipt29.17548476002412s; later wrapper summary29.17572580499109s is a different checkpoint, not a conflict.",
+  "elapsed_seconds": 29.17548476002412,
+  "environment": {
+   "LANG": "C.UTF-8",
+   "LC_ALL": "C.UTF-8",
+   "PATH": "/usr/bin:/bin",
+   "PYTHONDONTWRITEBYTECODE": "1"
+  },
+  "normal_exit": true,
+  "outer_tool": {
+   "initial_chunk": "97c690",
+   "provenance": "Root handoff; raw outer-tool JSON was not part of this review set.",
+   "reported_exit_code": 0,
+   "session_id": 33664,
+   "terminal_chunk": "73d099"
+  },
+  "published_stdout_byte_equal": true,
+  "returncode": 0,
+  "stream_digests_match": true,
+  "timed_out": false,
+  "wrapper_summary_elapsed_seconds": 29.17572580499109
+ },
+ "history": {
+  "pid_samples": [
+   {
+    "matching_identity_present": false,
+    "pid": 3569912,
+    "start_ticks": 53431366
+   },
+   {
+    "matching_identity_present": false,
+    "pid": 3569913,
+    "start_ticks": 53431366
+   },
+   {
+    "matching_identity_present": false,
+    "pid": 3569914,
+    "start_ticks": 53431367
+   },
+   {
+    "matching_identity_present": false,
+    "pid": 3798021,
+    "start_ticks": 53913806
+   },
+   {
+    "matching_identity_present": false,
+    "pid": 3798022,
+    "start_ticks": 53913806
+   },
+   {
+    "matching_identity_present": false,
+    "pid": 3798023,
+    "start_ticks": 53913807
+   },
+   {
+    "matching_identity_present": false,
+    "pid": 3996069,
+    "start_ticks": 54384185
+   },
+   {
+    "matching_identity_present": false,
+    "pid": 3996070,
+    "start_ticks": 54384185
+   },
+   {
+    "matching_identity_present": false,
+    "pid": 3996071,
+    "start_ticks": 54384186
+   }
+  ],
+  "pid_scope": "nine recorded identities only; nonexhaustive non-atomic lifetime observation",
+  "qualification07": {
+   "completed_four_import_receipt": false,
+   "configuration_sha256": "1ed4b198a38512c751cca43e11fdb1cd00e7683031be545e6ccd12016555ee60",
+   "independent_audit_status": "FAIL",
+   "missing_receipts": [
+    "runs/puck-cpu-held-qualification-07/result.json",
+    "runs/puck-cpu-held-qualification-07/baseline-after.json"
+   ],
+   "parent_closure_receipt": false,
+   "status": "FAILED_CONSUMED",
+   "supervision": "failed normal-return deadline; sampled matching_survivors empty",
+   "transport_sha256": "9509cbbff66603e5906c57f72950fcc77f600d4dbcffb611462506a58360aca7"
+  },
+  "qualification08": {
+   "completed_four_import_receipt": false,
+   "configuration_sha256": "67076970caffe64b6162c4344f11d943b620dd2e0fb43ace72e39f508fa7ee60",
+   "diagnostic_stream": {
+    "last_record": {
+     "diagnostic_only": true,
+     "elapsed_seconds": 81.56448395497864,
+     "kind": "puck-worker-phase-v1",
+     "phase": "import.torchvision.enter",
+     "sequence": 11
+    },
+    "records": 11,
+    "scope": "retained unauthenticated optional stderr bytes only; no completeness, cause or acceptance authority"
+   },
+   "independent_audit_status": "FAIL",
+   "missing_receipts": [
+    "runs/puck-cpu-held-qualification-08/result.json",
+    "runs/puck-cpu-held-qualification-08/baseline-after.json"
+   ],
+   "parent_closure_receipt": false,
+   "post_failure_full_payload_custody": false,
+   "status": "FAILED_CONSUMED",
+   "supervision": "failed normal-return deadline; sampled matching_survivors empty",
+   "transport_sha256": "d80f60a10cf611c660e5bda25bf6f055c49415686681db33ca6ae44f868841b4"
+  },
+  "qualification09_invoked": false,
+  "qualifications01_08_still_failed_consumed": true
+ },
+ "kind": "puck-cpu-held09-independent-admission-receipt-review-v1",
+ "limitations": [
+  "No admission/helper/control function, tests, observer/auditor/runtime/vendor/native import, namespace, payload census/rehash or protected read was performed. Only requested/tmp review JSON written.",
+  "Program-reported fullSITE/forest/native/interpreter/baseline checks and finalrehash were checked for internal consistency with frozen reviewed source; this reviewer did not independently read installed/staged/native bytes.",
+  "Observed normal transport and dated holder4-to4/nochildren/threads support completed data-only admission. They do not establish future continuous custody, exhaustive process-lifetime closure or installed four-import qualification.",
+  "Nine PID/start checks are recorded nonexhaustive/non-atomic samples, not a fresh independent process census.",
+  "All01-08failures/missingreceipts remain consumed. Historical08lastmarker does not establish timeout cause or runtime acceptance; optional diagnostics remain non-authoritative.",
+  "Data-only admission is neither preparation reacceptance nor operator/renderer/model/episode/collection/study/release authority. All seven release gates remain open."
+ ],
+ "material_findings": [],
+ "next_step": "Only after a fresh preobserver exact-pin/interpreter/timeout/coordinator/resource/current-metadata/history/output-absence guard passes may the one already reviewed09 observer invocation proceed. Bind concrete audit command to its measured complete transport and independently audit. No runtime acceptance follows from this review.",
+ "phases": {
+  "all_eight_complete": true,
+  "bytes_counter_note": "Cumulative total stays1,513,799,733B after close; final zero-files plus closure are the recorded evidence, not a zero-byte counter.",
+  "final_held_files": 0,
+  "full_recheck_held_bytes": 1513799733,
+  "full_recheck_held_files": 32828,
+  "records": [
+   {
+    "check_id": 9,
+    "elapsed_seconds": 9.152348045958206,
+    "held": {
+     "files": 1298,
+     "total": 81993135
+    },
+    "kind": "held09-data-admission-phase-v1",
+    "phase": "controls/plans",
+    "status": "phase_completed"
+   },
+   {
+    "check_id": 9,
+    "elapsed_seconds": 17.080925560963806,
+    "held": {
+     "files": 1298,
+     "total": 81993135
+    },
+    "kind": "held09-data-admission-phase-v1",
+    "phase": "SITEhash",
+    "status": "phase_completed"
+   },
+   {
+    "check_id": 9,
+    "elapsed_seconds": 18.446189727983437,
+    "held": {
+     "files": 5573,
+     "total": 195305387
+    },
+    "kind": "held09-data-admission-phase-v1",
+    "phase": "hostbaseline/native",
+    "status": "phase_completed"
+   },
+   {
+    "check_id": 9,
+    "elapsed_seconds": 25.43331735394895,
+    "held": {
+     "files": 32828,
+     "total": 1513799733
+    },
+    "kind": "held09-data-admission-phase-v1",
+    "phase": "forest1",
+    "status": "phase_completed"
+   },
+   {
+    "check_id": 9,
+    "elapsed_seconds": 26.65343490097439,
+    "held": {
+     "files": 32828,
+     "total": 1513799733
+    },
+    "kind": "held09-data-admission-phase-v1",
+    "phase": "forest2",
+    "status": "phase_completed"
+   },
+   {
+    "check_id": 9,
+    "elapsed_seconds": 27.10916880198056,
+    "held": {
+     "files": 32828,
+     "total": 1513799733
+    },
+    "kind": "held09-data-admission-phase-v1",
+    "phase": "finalSITEcensus",
+    "status": "phase_completed"
+   },
+   {
+    "check_id": 9,
+    "elapsed_seconds": 28.95383916096762,
+    "held": {
+     "files": 32828,
+     "total": 1513799733
+    },
+    "kind": "held09-data-admission-phase-v1",
+    "phase": "fullrecheck",
+    "status": "phase_completed"
+   },
+   {
+    "check_id": 9,
+    "elapsed_seconds": 29.071166295965668,
+    "held": {
+     "files": 0,
+     "total": 1513799733
+    },
+    "kind": "held09-data-admission-phase-v1",
+    "phase": "close/publication",
+    "status": "phase_completed"
+   }
+  ]
+ },
+ "receipt_pins": [
+  {
+   "path": "/tmp/palimpsest-held09-admission-external.json",
+   "sha256": "05439de0302091492c1e4fe3342dbf3d0e989857bf0f6d562312cace8123f87c",
+   "size_bytes": 1115
+  },
+  {
+   "path": "/tmp/palimpsest-held09-admission-external.stdout",
+   "sha256": "ee2c52efc0dcf7ffdb14d826aca4569ccf6050e462088d6373dfaded85777e84",
+   "size_bytes": 5610
+  },
+  {
+   "path": "/tmp/palimpsest-held09-admission-external.stderr",
+   "sha256": "adef44efebf0482ad0f574544b4035156ee27446c9f56be6b3c8083e9e285675",
+   "size_bytes": 1457
+  },
+  {
+   "path": "/tmp/palimpsest-puck-cpu-held-qualification-09-admission-01.json",
+   "sha256": "ee2c52efc0dcf7ffdb14d826aca4569ccf6050e462088d6373dfaded85777e84",
+   "size_bytes": 5610
+  },
+  {
+   "path": "/tmp/palimpsest-held09-pre-admission-guard01.json",
+   "sha256": "5ff0bd754c4836dc9185e9075cf08c3b61b8aedae50c5b7f688957f3d069a407",
+   "size_bytes": 1317
+  }
+ ],
+ "resources": {
+  "after": {
+   "at_utc": "2026-10-16T02:43:58.257197+00:00",
+   "mem_available_bytes": 3615465472,
+   "nofile_hard": 40000,
+   "nofile_soft": 40000,
+   "project_free_bytes": 50753818624,
+   "tmpfs_free_bytes": 3058847744
+  },
+  "before": {
+   "at_utc": "2026-10-16T02:43:31.139967+00:00",
+   "mem_available_bytes": 4549582848,
+   "nofile_hard": 524288,
+   "nofile_soft": 65536,
+   "project_free_bytes": 50750595072,
+   "tmpfs_free_bytes": 3058851840
+  },
+  "frozen_initial_final_ram_floor_bytes": 2147483648,
+  "recorded_values_meet_floors": true,
+  "scope": "Dated snapshots; no inference about current availability, peak RAM, continuous resource headroom or hard timing."
+ },
+ "review_scope": "Small frozen-control and retained-receipt consistency audit only; no independent payload rehash or continuous current-custody observation.",
+ "reviewed_at_utc": "2026-10-16T02:47:05.298921+00:00",
+ "status": "GO_PRE_OBSERVER_FRESH_GUARD_REQUIRED",
+ "version": 1
+}

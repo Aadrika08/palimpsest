@@ -1,0 +1,30 @@
+{
+  "after": {
+    "st_atime_ns": 1792119330756157818,
+    "st_ctime_ns": 1792119046421518378,
+    "st_dev": 55,
+    "st_ino": 2046741,
+    "st_mode": 33152,
+    "st_mtime_ns": 1792119046421518378,
+    "st_nlink": 1,
+    "st_size": 617
+  },
+  "before": {
+    "st_atime_ns": 1792119297773676661,
+    "st_ctime_ns": 1792119046421518378,
+    "st_dev": 55,
+    "st_ino": 2046741,
+    "st_mode": 33152,
+    "st_mtime_ns": 1792119046421518378,
+    "st_nlink": 1,
+    "st_size": 617
+  },
+  "changed_fields": [
+    "st_atime_ns"
+  ],
+  "kind": "held09-readstamp-observation-v1",
+  "path": "/tmp/palimpsest-puck-cpu-held-qualification-09-audit-01.json",
+  "runtime_reinvoked": false,
+  "sha256": "c2b6b6e7c8e4c93bb79e906a751038295b2135ad8551f029f3f18fdc8d21d009",
+  "size_bytes": 617
+}

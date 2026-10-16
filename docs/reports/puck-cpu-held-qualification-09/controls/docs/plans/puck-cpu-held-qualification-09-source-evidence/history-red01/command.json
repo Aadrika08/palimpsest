@@ -1,0 +1,11 @@
+[
+  "/usr/bin/timeout",
+  "--signal=TERM",
+  "--kill-after=5s",
+  "30s",
+  "/home/utkarsh/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/bin/python3.11",
+  "-I",
+  "-S",
+  "-B",
+  "/tmp/palimpsest-held09-history-check.py"
+]
