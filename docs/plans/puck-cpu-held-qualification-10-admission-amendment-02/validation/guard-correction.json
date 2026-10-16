@@ -1,0 +1,33 @@
+{
+  "all_2150_pins_unchanged": true,
+  "finding": "I1",
+  "freeze_unchanged": true,
+  "kind": "admission02-independent-review-resolution-v1",
+  "regression": {
+    "green": {
+      "elapsed_seconds": 0.06401039398042485,
+      "exit_code": 0,
+      "outer_timeout": false
+    },
+    "red": {
+      "elapsed_seconds": 0.06397942500188947,
+      "exit_code": 1,
+      "outer_timeout": false
+    },
+    "scope": "real history-read AST node on isolated fixture; whole template compiled without execution"
+  },
+  "resolution": "Correct the joined Path history read in a separately named post-freeze guard; original frozen template unchanged.",
+  "review_decision": "NO_GO",
+  "reviewed_head": "3095ab2c9e7a3dc4ec4ca1f64237da1feeeb201e",
+  "ruling": "Accept independently reviewed controls with focused RED-to-GREEN I1 resolution; final Git tree and fresh guard bind all post-freeze files before admission. Risk if wrong: guard refuses admission before runtime.",
+  "runner_unchanged_since_authenticated_selfcheck": true,
+  "scope": "root one-pass reviewed-finding fix; no repeated whole-branch review, no admission/main or runtime executed",
+  "unchanged_history_suite": {
+    "cases": 17,
+    "terminal": {
+      "elapsed_seconds": 0.11426611302886158,
+      "exit_code": 0,
+      "outer_timeout": false
+    }
+  }
+}
