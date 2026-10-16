@@ -37,22 +37,22 @@ No new worker protocol, dependency, policy surface or general framework.
 ## Tasks and verification
 
 - [x] Record a clean existing 08 metadata/observer baseline before production edits.
-- [ ] Add 09 metadata tests using `acceptance08_case()` with fixed v9/id9. Require
+- [x] Add 09 metadata tests using `acceptance08_case()` with fixed v9/id9. Require
   both parent and auditor to accept only the exact five-path projection, reject
   each missing or sixth changed source, preserve noncandidate inputs, 19 probes,
   candidate D and all limits, and reject malformed/aliased identities. Run RED.
-- [ ] Add 09 observer tests for normal/nonzero transport, exact exclusive paths,
+- [x] Add 09 observer tests for normal/nonzero transport, exact exclusive paths,
   preserved failed 07/08 streams and missing receipts, no overwrite and prelaunch
   alias rejection. Run RED before changing observer mappings.
-- [ ] Extend explicit parent selectors/execution memberships through 09; extend
+- [x] Extend explicit parent selectors/execution memberships through 09; extend
   only the 08 five-path predicate to 08/09. Extend matching auditor identity,
   preparation, source namespace, authored transport and report branches; extend
   the observer's fixed mapping. Do not change worker or acceptance semantics.
-- [ ] Add a full authored 09 integration using the existing publication05 fixture:
+- [x] Add a full authored 09 integration using the existing publication05 fixture:
   current five-path source, candidate D, q3 imports, source identities, API and CLI
   audit, historical byte preservation, balanced descriptors/children/threads,
   exclusive 09 reentry and bounded diagnostic rows. Keep old integrations intact.
-- [ ] Run affected metadata/parent/auditor/observer/worker suites in private tmpfs;
+- [x] Run affected metadata/parent/auditor/observer/worker suites in private tmpfs;
   run complete historical integrations in their required persistent project paths.
   Preserve all commands, source pins, raw logs and terminal outcomes, including REDs.
 - [ ] Independently review source and final evidence; retain a finite byte-verifiable
